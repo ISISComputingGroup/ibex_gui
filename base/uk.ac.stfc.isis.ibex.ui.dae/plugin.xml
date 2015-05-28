@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.views">
+      <view
+            class="uk.ac.stfc.isis.ibex.ui.dae.DaeView"
+            id="uk.ac.stfc.isis.ibex.ui.dae.views.DaeView"
+            name="DAE Control Program">
+      </view>
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectives">
+      <perspective
+            class="uk.ac.stfc.isis.ibex.ui.dae.Perspective"
+            id="uk.ac.stfc.isis.ibex.ui.dae.perspective"
+            name="DAE Control Program">
+      </perspective>
+   </extension>
+   <extension
+         point="uk.ac.stfc.isis.ibex.ui.perspectives">
+      <contribution
+            class="uk.ac.stfc.isis.ibex.ui.dae.Perspective">
+      </contribution>
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectiveExtensions">
+      <perspectiveExtension
+            targetID="uk.ac.stfc.isis.ibex.ui.dae.perspective">
+         <view
+               closeable="false"
+               id="uk.ac.stfc.isis.ibex.ui.dae.views.DaeView"
+               minimized="false"
+               ratio="0.1f"
+               relationship="right"
+               relative="uk.ac.stfc.isis.ibex.ui.perspectives.PerspectiveSwitcher"
+               showTitle="false"
+               standalone="true"
+               visible="true">
+         </view>
+      </perspectiveExtension>
+   </extension>
+
+</plugin>

@@ -1,0 +1,8 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Model Tests
+Bundle-SymbolicName: uk.ac.stfc.isis.ibex.model.tests
+Bundle-Version: 1.0.0.qualifier
+Fragment-Host: uk.ac.stfc.isis.ibex.model;bundle-version="1.0.0"
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Require-Bundle: uk.ac.stfc.isis.ibex.tests;bundle-version="1.0.0"

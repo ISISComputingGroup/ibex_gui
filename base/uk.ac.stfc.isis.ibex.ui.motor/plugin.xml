@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.views">
+      <view
+            allowMultiple="true"
+            class="uk.ac.stfc.isis.ibex.ui.motor.views.MotorOPIView"
+            id="uk.ac.stfc.isis.ibex.ui.motor.views.MotorOPIView"
+            name="Motor"
+            restorable="true">
+      </view>
+      <view
+            class="uk.ac.stfc.isis.ibex.ui.motor.views.AllMotorsView"
+            icon="icons/big_cog_16.png"
+            id="uk.ac.stfc.isis.ibex.ui.motor.views.AllMotorsView"
+            name="All motors"
+            restorable="true">
+      </view>
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectives">
+      <perspective
+            class="uk.ac.stfc.isis.ibex.ui.motor.Perspective"
+            id="uk.ac.stfc.isis.ibex.ui.motor.perspective"
+            name="All motors">
+      </perspective>
+   </extension>
+   <extension
+         point="uk.ac.stfc.isis.ibex.ui.perspectives">
+      <contribution
+            class="uk.ac.stfc.isis.ibex.ui.motor.Perspective">
+      </contribution>
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectiveExtensions">
+      <perspectiveExtension
+            targetID="uk.ac.stfc.isis.ibex.ui.motor.perspective">
+         <view
+               closeable="false"
+               id="uk.ac.stfc.isis.ibex.ui.motor.views.AllMotorsView"
+               minimized="false"
+               ratio="0.1f"
+               relationship="right"
+               relative="uk.ac.stfc.isis.ibex.ui.perspectives.PerspectiveSwitcher"
+               showTitle="true"
+               standalone="true"
+               visible="true">
+         </view>
+         <view
+               closeable="true"
+               id="uk.ac.stfc.isis.ibex.ui.motor.views.MotorOPIView:*"
+               minimized="false"
+               moveable="false"
+               ratio="0.60f"
+               relationship="right"
+               relative="uk.ac.stfc.isis.ibex.ui.motor.views.AllMotorsView"
+               showTitle="true"
+               standalone="true"
+               visible="false">
+         </view>
+      </perspectiveExtension>
+   </extension>
+
+</plugin>

@@ -1,0 +1,156 @@
+package uk.ac.stfc.isis.ibex.ui.ioccontrol;
+
+import org.eclipse.core.databinding.DataBindingContext;
+import org.eclipse.core.databinding.UpdateValueStrategy;
+import org.eclipse.core.databinding.beans.BeanProperties;
+import org.eclipse.jface.databinding.swt.WidgetProperties;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.events.ModifyEvent;
+import org.eclipse.swt.events.ModifyListener;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.widgets.Text;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.widgets.Group;
+import org.eclipse.swt.layout.FillLayout;
+import org.eclipse.swt.widgets.Button;
+
+import uk.ac.stfc.isis.ibex.configserver.EditableIocState;
+import uk.ac.stfc.isis.ibex.configserver.IocControl;
+import uk.ac.stfc.isis.ibex.ui.ioccontrol.table.StatusColorConverter;
+import uk.ac.stfc.isis.ibex.ui.ioccontrol.table.StatusTextConverter;
+
+public class IocEditorPanel extends Composite {
+	
+	private final Label name;
+	private final Label status;	
+	private final Text description;
+	private final Button update;
+	private final IocButtonPanel buttons;
+
+	private EditableIocState ioc;
+	private final IocControl control;
+
+	private DataBindingContext bindingContext;
+	
+	private static final UpdateValueStrategy STATUS_TEXT_UPDATE_STRATEGY = new UpdateValueStrategy();
+	private static final UpdateValueStrategy STATUS_COLOR_UPDATE_STRATEGY = new UpdateValueStrategy();
+	static {
+		STATUS_TEXT_UPDATE_STRATEGY.setConverter(new StatusTextConverter());
+		STATUS_COLOR_UPDATE_STRATEGY.setConverter(new StatusColorConverter());
+	};
+	
+	private SelectionAdapter sendDescription = new SelectionAdapter() {
+		@Override
+		public void widgetSelected(SelectionEvent e) {
+			if (ioc != null) {
+				ioc.setDescription(description.getText());
+			}
+			
+			update.setEnabled(false);
+		}
+	};
+	
+	public IocEditorPanel(Composite parent, int style, IocControl control) {
+		super(parent, style);
+		this.control = control;
+		setLayout(new FillLayout(SWT.HORIZONTAL));
+
+		Group grpSelectedIoc = new Group(this, SWT.NONE);
+		grpSelectedIoc.setText("IOC");
+		grpSelectedIoc.setLayout(new GridLayout(5, false));
+		
+		Label lblName = new Label(grpSelectedIoc, SWT.NONE);
+		lblName.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
+		lblName.setText("Name:");
+		
+		name = new Label(grpSelectedIoc, SWT.NONE);
+		GridData gd_name = new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1);
+		gd_name.widthHint = 150;
+		name.setLayoutData(gd_name);
+		
+		Label lblStatus = new Label(grpSelectedIoc, SWT.NONE);
+		lblStatus.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
+		lblStatus.setText("Status:");
+		
+		status = new Label(grpSelectedIoc, SWT.NONE);
+		GridData gd_status = new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1);
+		gd_status.widthHint = 50;
+		status.setLayoutData(gd_status);
+		new Label(grpSelectedIoc, SWT.NONE);
+		
+		Label lblDescription = new Label(grpSelectedIoc, SWT.NONE);
+		lblDescription.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
+		lblDescription.setSize(63, 15);
+		lblDescription.setText("Description:");
+		
+		description = new Text(grpSelectedIoc, SWT.BORDER);
+		GridData gd_text = new GridData(SWT.FILL, SWT.FILL, false, false, 3, 1);
+		gd_text.widthHint = 120;
+		description.setLayoutData(gd_text);
+		description.addModifyListener(new ModifyListener() {		
+			@Override
+			public void modifyText(ModifyEvent arg0) {
+				update.setEnabled(true);
+			}
+		});
+		
+		update = new Button(grpSelectedIoc, SWT.NONE);
+		update.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false, 1, 1));
+		update.setText("Update");
+		update.addSelectionListener(sendDescription);
+		update.setEnabled(false);
+		
+		new Label(grpSelectedIoc, SWT.NONE);
+		new Label(grpSelectedIoc, SWT.NONE);
+		new Label(grpSelectedIoc, SWT.NONE);
+		new Label(grpSelectedIoc, SWT.NONE);
+		new Label(grpSelectedIoc, SWT.NONE);
+		new Label(grpSelectedIoc, SWT.NONE);
+		
+		buttons = new IocButtonPanel(grpSelectedIoc, SWT.NONE, control);
+		GridData gd_buttons = new GridData(SWT.LEFT, SWT.FILL, false, false, 3, 1);
+		gd_buttons.widthHint = 220;
+		buttons.setLayoutData(gd_buttons);
+		
+		setIoc(null);
+	}
+
+	public void setIoc(EditableIocState ioc) {
+		this.ioc = ioc;
+		buttons.setIoc(ioc);;
+
+		if (ioc == null) {
+			name.setText("");
+			name.setEnabled(false);
+			status.setText("");
+			status.setEnabled(false);
+			description.setText("");
+			description.setEnabled(false);
+			update.setEnabled(false);
+
+			bindingContext = null;
+			return;
+		}
+		
+		name.setEnabled(true);
+		status.setEnabled(true);
+		description.setEnabled(true);
+
+		if (bindingContext != null) {
+			bindingContext.dispose();
+		}
+		
+		bindingContext = new DataBindingContext();
+		bindingContext.bindValue(WidgetProperties.text().observe(name), BeanProperties.value("name").observe(ioc));
+		bindingContext.bindValue(WidgetProperties.text().observe(status), BeanProperties.value("isRunning").observe(ioc), null, STATUS_TEXT_UPDATE_STRATEGY);
+		bindingContext.bindValue(WidgetProperties.foreground().observe(status), BeanProperties.value("isRunning").observe(ioc), null, STATUS_COLOR_UPDATE_STRATEGY);
+		bindingContext.bindValue(WidgetProperties.text().observe(description), BeanProperties.value("description").observe(ioc));
+		bindingContext.bindValue(WidgetProperties.enabled().observe(description), BeanProperties.value("canSend").observe(control.startIoc()));
+		
+		update.setEnabled(false);
+	}
+}

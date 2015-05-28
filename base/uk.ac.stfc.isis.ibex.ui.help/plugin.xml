@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.commands">
+      <command
+      		defaultHandler="uk.ac.stfc.isis.ibex.ui.help.AboutHandler"
+            description="About Isis"
+            id="uk.ac.stfc.isis.ibex.ui.help.About"
+            name="About">
+      </command>
+   </extension>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            allPopups="false"
+            locationURI="menu:org.eclipse.ui.main.menu?after=helpConsole">
+            <menu
+            	id="helpMenu"
+                label="Help">
+		         <command
+		               commandId="uk.ac.stfc.isis.ibex.ui.help.About"
+		               label="About"
+		               style="push">
+		         </command>
+         	</menu>
+      </menuContribution>
+   </extension>
+</plugin>

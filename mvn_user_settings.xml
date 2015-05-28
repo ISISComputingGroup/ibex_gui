@@ -1,0 +1,19 @@
+<settings>
+  <proxies>
+   <proxy>
+      <active>true</active>
+      <protocol>http</protocol>
+      <host>wwwcache.rl.ac.uk</host>
+      <port>8080</port>
+      <nonProxyHosts>*.rl.ac.uk|*.stfc.ac.uk|*.cclrc.ac.uk</nonProxyHosts>
+    </proxy>
+   <proxy>
+      <active>true</active>
+      <protocol>https</protocol>
+      <host>wwwcache.rl.ac.uk</host>
+      <port>8080</port>
+      <nonProxyHosts>*.rl.ac.uk|*.stfc.ac.uk|*.cclrc.ac.uk</nonProxyHosts>
+    </proxy>
+  </proxies>
+</settings>
+

@@ -1,0 +1,15 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Help
+Bundle-SymbolicName: uk.ac.stfc.isis.ibex.ui.help;singleton:=true
+Bundle-Version: 1.0.0.qualifier
+Bundle-Activator: uk.ac.stfc.isis.ibex.ui.help.Activator
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ uk.ac.stfc.isis.ibex.ui.widgets;bundle-version="1.0.0",
+ uk.ac.stfc.isis.ibex.model;bundle-version="1.0.0",
+ uk.ac.stfc.isis.ibex.ui;bundle-version="1.0.0",
+ uk.ac.stfc.isis.ibex.help
+Bundle-ActivationPolicy: lazy
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Export-Package: uk.ac.stfc.isis.ibex.ui.help

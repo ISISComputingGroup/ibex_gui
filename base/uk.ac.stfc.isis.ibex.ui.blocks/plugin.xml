@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+
+   <extension
+         point="org.eclipse.ui.views">
+      <category
+            name="ISIS"
+            id="uk.ac.stfc.isis.ibex.ui.blocks">
+      </category>
+      <view
+            name="Blocks"
+            category="uk.ac.stfc.isis.ibex.ui.blocks"
+            class="uk.ac.stfc.isis.ibex.ui.blocks.views.BlocksView"
+            id="uk.ac.stfc.isis.ibex.ui.blocks.views.BlocksView">
+      </view>
+   </extension>
+
+</plugin>

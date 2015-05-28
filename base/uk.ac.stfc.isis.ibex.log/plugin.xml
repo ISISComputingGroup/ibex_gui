@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.preferencePages">
+      <page
+            class="uk.ac.stfc.isis.ibex.log.preferences.PreferencePage"
+            id="uk.ac.stfc.isis.ibex.log.preferences.LogPreferencePage"
+            name="IOC Log Messages">
+      </page>
+   </extension>
+   <extension
+         point="org.eclipse.core.runtime.preferences">
+      <initializer
+            class="uk.ac.stfc.isis.ibex.log.preferences.PreferenceInitializer">
+      </initializer>
+   </extension>
+   <extension
+         point="org.eclipse.ui.startup">
+      <startup
+            class="uk.ac.stfc.isis.ibex.log.Startup"></startup>
+   </extension>
+   <extension
+         point="uk.ac.stfc.isis.ibex.instrument.info">
+      <InstrumentInfoReceiver
+            class="uk.ac.stfc.isis.ibex.log.LogSettings">
+      </InstrumentInfoReceiver>
+   </extension>
+
+</plugin>

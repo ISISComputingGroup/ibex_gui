@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<instrument xmlns="http://www.isis.stfc.ac.uk//instrument">
+	<name>Larmor</name>
+	<components>
+		<component>
+			<name>Slit 1</name>
+			<type>JAWS</type>
+			<target>
+				<name>Target 1</name>
+				<type>OPI</type>
+				<properties>
+					<property>
+						<key>M</key>
+						<value>1</value>
+					</property>
+				</properties>			
+			</target>
+			<pvs>
+				<pv>
+					<displayname>HGap</displayname>
+					<address>$(P)$(JAWS)1:HGAP</address>
+					<recordtype>
+						<io>READ</io>
+					</recordtype>
+				</pv>
+			</pvs>
+			<components>
+				<component>
+					<name>Sub-component</name>
+					<type>JAWS</type>
+					<pvs>
+						<pv>
+							<displayname>HGap</displayname>
+							<address>$(P)$(JAWS)1:HGAP</address>
+							<recordtype>
+								<io>READ</io>
+							</recordtype>
+						</pv>
+					</pvs>
+				</component>
+			</components>
+		</component>
+		<component>
+			<name>Slit 2</name>
+			<type>JAWS</type>
+			<pvs>
+				<pv>
+					<address>$(P)$(JAWS)2:HGAP</address>
+					<recordtype>
+						<io>READ</io>
+					</recordtype>
+				</pv>
+				<pv>
+					<address>$(P)$(JAWS)2:VGAP</address>
+					<recordtype>
+						<io>READ</io>
+					</recordtype>
+				</pv>
+			</pvs>
+		</component>
+	</components>	
+</instrument>

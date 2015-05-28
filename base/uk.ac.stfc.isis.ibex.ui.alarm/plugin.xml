@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.views">
+      <view
+            class="uk.ac.stfc.isis.ibex.ui.alarm.AlarmView"
+            id="uk.ac.stfc.isis.ibex.ui.alarm.AlarmView"
+            name="Alarm"
+            restorable="true">
+      </view>
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectives">
+      <perspective
+            class="uk.ac.stfc.isis.ibex.ui.alarm.Perspective"
+            id="uk.ac.stfc.isis.ibex.ui.alarm.perspective"
+            name="Log">
+      </perspective>
+   </extension>
+   <extension
+         point="uk.ac.stfc.isis.ibex.ui.perspectives">
+      <contribution
+            class="uk.ac.stfc.isis.ibex.ui.alarm.Perspective">
+      </contribution>
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectiveExtensions">
+      <perspectiveExtension
+            targetID="uk.ac.stfc.isis.ibex.ui.alarm.perspective">
+         <view
+               closeable="false"
+               id="uk.ac.stfc.isis.ibex.ui.alarm.AlarmView"
+               minimized="false"
+               ratio="0.1f"
+               relationship="right"
+               relative="uk.ac.stfc.isis.ibex.ui.perspectives.PerspectiveSwitcher"
+               showTitle="false"
+               visible="true">
+         </view>
+      </perspectiveExtension>
+   </extension>
+   <extension
+         point="uk.ac.stfc.isis.ibex.instrument.info">
+      <InstrumentInfoReceiver
+            class="uk.ac.stfc.isis.ibex.ui.alarm.AlarmSettings">
+      </InstrumentInfoReceiver>
+   </extension>
+
+</plugin>

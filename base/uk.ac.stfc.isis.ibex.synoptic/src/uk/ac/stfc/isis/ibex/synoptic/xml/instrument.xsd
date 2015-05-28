@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema targetNamespace="http://www.isis.stfc.ac.uk//instrument" 
+		elementFormDefault="qualified" 
+		xmlns="http://www.w3.org/2001/XMLSchema" 
+		xmlns:tns="http://www.isis.stfc.ac.uk//instrument">
+
+	<annotation>
+	  <documentation xml:lang="en">
+	   Synoptic view schema for ISIS instruments
+	  </documentation>
+	</annotation>
+
+    <element name="instrument" type="tns:instrument"></element>
+
+    <complexType name="instrument">
+    	<sequence>
+    		<element name="name" type="string" maxOccurs="1"
+    			minOccurs="1">
+    		</element>
+    		<element name="components" type="tns:components" maxOccurs="1" minOccurs="0"></element>
+    	</sequence>
+
+    </complexType>
+
+    <complexType name="component">
+    	<sequence>
+    		<element name="name" type="string" maxOccurs="1"
+    			minOccurs="1">
+    		</element>
+    		<element name="type" type="tns:type" maxOccurs="1"
+    			minOccurs="1">
+    		</element>
+            <element name="target" type="tns:target" maxOccurs="1" minOccurs="0"></element>
+            <element name="pvs" type="tns:pvs" maxOccurs="1"
+    			minOccurs="0">
+    		</element>
+            <element name="components" type="tns:components"
+    			maxOccurs="1" minOccurs="0">
+    		</element>
+    	</sequence>
+    </complexType>
+
+    <simpleType name="type">
+    	<restriction base="string">
+    		<enumeration value="JAWS"></enumeration>
+    		<enumeration value="CHOPPER"></enumeration>
+    		<enumeration value="MONITOR"></enumeration>
+    		<enumeration value="SAMPLESTACK"></enumeration>
+    		<enumeration value="DAE"></enumeration>
+    		<enumeration value="CAEN"></enumeration>
+    		<enumeration value="BEAMSTOP"></enumeration>
+    		<enumeration value="MOVINGMONITOR"></enumeration>
+    		<enumeration value="ROTATINGBENCH"></enumeration>
+    		<enumeration value="SAMPLECHANGER"></enumeration>
+    		<enumeration value="MOVINGBEAMSTOP"></enumeration>
+    		<enumeration value="ANALYSER"></enumeration>
+    		<enumeration value="POLARISER"></enumeration>
+    		<enumeration value="JULABO"></enumeration>			
+			<enumeration value="EUROTHERM"></enumeration>  
+			<enumeration value="KEPCO"></enumeration>
+			<enumeration value="GONIOMETER"></enumeration>
+			<enumeration value="UNKNOWN"></enumeration>
+    	</restriction>
+    </simpleType>
+
+    <complexType name="pv">
+    	<sequence>
+            <element name="displayname" type="string" maxOccurs="1" minOccurs="0"></element>
+            <element name="address" type="string" maxOccurs="1"
+    			minOccurs="1">
+    		</element>
+    		<element name="recordtype" type="tns:recordtype"
+    			maxOccurs="1" minOccurs="1">
+    		</element>
+    	</sequence>
+    </complexType>
+
+
+    <complexType name="recordtype">
+    	<sequence>
+            <element name="io" type="tns:io"></element>
+    	</sequence>
+    </complexType>
+
+
+    <simpleType name="io">
+    	<restriction base="string">
+    		<enumeration value="READ"></enumeration>
+    		<enumeration value="WRITE"></enumeration>
+    	</restriction>
+    </simpleType>
+
+
+
+    <complexType name="components">
+    	<sequence>
+    		<element name="component" type="tns:component" maxOccurs="unbounded" minOccurs="0"></element>
+    	</sequence>
+    </complexType>
+
+    <complexType name="pvs">
+    	<sequence>
+    		<element name="pv" type="tns:pv" maxOccurs="unbounded" minOccurs="0"></element>
+    	</sequence>
+    </complexType>
+
+    <complexType name="target">
+    	<sequence>
+    		<element name="name" type="string" maxOccurs="1"
+    			minOccurs="1">
+    		</element>
+    		<element name="type" type="tns:targettype" maxOccurs="1"
+    			minOccurs="1">
+    		</element>
+    		<element name="properties" type="tns:targetproperties" maxOccurs="1" minOccurs="0"></element>
+    	</sequence>
+    </complexType>
+    
+    <simpleType name="targettype">
+    	<restriction base="string">
+    		<enumeration value="COMPONENT"></enumeration>
+    		<enumeration value="OPI"></enumeration>
+    	</restriction>
+    </simpleType>
+
+    <complexType name="targetproperty">
+    	<sequence>
+    		<element name="key" type="string"></element>
+    		<element name="value" type="string"></element>
+    	</sequence>
+    </complexType>
+
+    <complexType name="targetproperties">
+    	<sequence>
+    		<element name="property" type="tns:targetproperty" maxOccurs="unbounded" minOccurs="0"></element>
+    	</sequence>
+    </complexType>
+</schema>

@@ -1,0 +1,71 @@
+package uk.ac.stfc.isis.ibex.ui.dashboard.widgets;
+
+import org.eclipse.core.databinding.DataBindingContext;
+import org.eclipse.core.databinding.beans.BeanProperties;
+import org.eclipse.jface.databinding.swt.WidgetProperties;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.custom.StyledText;
+import org.eclipse.swt.graphics.Font;
+import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.wb.swt.SWTResourceManager;
+
+import uk.ac.stfc.isis.ibex.ui.dashboard.models.MonitorPanelModel;
+
+public class MonitorPanel extends Composite {
+
+	private final StyledText goodRawFrames;
+	private final StyledText monitorCounts;
+	private final StyledText currentTotal;
+	
+	public MonitorPanel(Composite parent, int style, MonitorPanelModel model, Font font) {
+		super(parent, style);
+		setEnabled(false);
+		setLayout(new GridLayout(2, false));
+		
+		Label lblGoodRaw = new Label(this, SWT.NONE);
+		lblGoodRaw.setFont(font);
+		lblGoodRaw.setText("Good / Raw Frames:");
+		
+		goodRawFrames = new StyledText(this, SWT.READ_ONLY | SWT.SINGLE);
+		goodRawFrames.setEnabled(false);
+		goodRawFrames.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_BACKGROUND));
+		goodRawFrames.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		goodRawFrames.setFont(font);
+		goodRawFrames.setText("xxx / xxx");
+		
+		Label lblCurrentTotal = new Label(this, SWT.NONE);
+		lblCurrentTotal.setFont(font);
+		lblCurrentTotal.setText("Current / Total:");
+		
+		currentTotal = new StyledText(this, SWT.READ_ONLY | SWT.SINGLE);
+		currentTotal.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_BACKGROUND));
+		currentTotal.setEditable(false);
+		currentTotal.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		currentTotal.setFont(font);
+		currentTotal.setText("d.dd / d.dd");
+		
+		Label lblMonitorCounts = new Label(this, SWT.NONE);
+		lblMonitorCounts.setFont(font);
+		lblMonitorCounts.setText("Monitor Counts:");
+		
+		monitorCounts = new StyledText(this, SWT.READ_ONLY | SWT.SINGLE);
+		monitorCounts.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_BACKGROUND));
+		monitorCounts.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		monitorCounts.setFont(font);
+		monitorCounts.setText("x count");
+		
+		if (model != null) {
+			bind(model);
+		}
+	}
+
+	private void bind(MonitorPanelModel model) {
+		DataBindingContext bindingContext = new DataBindingContext();
+		bindingContext.bindValue(WidgetProperties.text().observe(goodRawFrames), BeanProperties.value("value").observe(model.goodOverRawFrames()));
+		bindingContext.bindValue(WidgetProperties.text().observe(currentTotal), BeanProperties.value("value").observe(model.currentOverTotal()));
+		bindingContext.bindValue(WidgetProperties.text().observe(monitorCounts), BeanProperties.value("value").observe(model.monitorCounts()));
+	}
+}

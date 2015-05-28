@@ -1,0 +1,15 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Beamstatus
+Bundle-SymbolicName: uk.ac.stfc.isis.ibex.beamstatus;singleton:=true
+Bundle-Version: 1.0.0.qualifier
+Bundle-Activator: uk.ac.stfc.isis.ibex.beamstatus.BeamStatus
+Require-Bundle: uk.ac.stfc.isis.ibex.model;bundle-version="1.0.0",
+ org.eclipse.core.runtime,
+ org.epics.vtype;bundle-version="2.5.0",
+ uk.ac.stfc.isis.ibex.epics,
+ uk.ac.stfc.isis.ibex.instrument;bundle-version="1.0.0",
+ uk.ac.stfc.isis.ibex.instrument
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Export-Package: uk.ac.stfc.isis.ibex.beamstatus
+Bundle-ActivationPolicy: lazy

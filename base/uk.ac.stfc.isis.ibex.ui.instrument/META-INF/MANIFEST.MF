@@ -1,0 +1,17 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: InstrumentUI
+Bundle-SymbolicName: uk.ac.stfc.isis.ibex.ui.instrument;singleton:=true
+Bundle-Version: 1.0.0.qualifier
+Bundle-Activator: uk.ac.stfc.isis.ibex.ui.instrument.InstrumentUI
+Require-Bundle: org.eclipse.core.runtime,
+ org.eclipse.jface,
+ org.eclipse.ui.ide,
+ org.eclipse.ui.workbench,
+ uk.ac.stfc.isis.ibex.instrument,
+ org.eclipse.core.databinding,
+ org.eclipse.jface.databinding,
+ org.eclipse.ui;bundle-version="3.8.2",
+ uk.ac.stfc.isis.ibex.ui.scripting;bundle-version="1.0.0"
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Bundle-ActivationPolicy: lazy

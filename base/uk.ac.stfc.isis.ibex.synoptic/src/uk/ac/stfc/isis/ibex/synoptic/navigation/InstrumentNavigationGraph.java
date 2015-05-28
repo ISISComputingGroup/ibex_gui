@@ -1,0 +1,129 @@
+package uk.ac.stfc.isis.ibex.synoptic.navigation;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+
+import uk.ac.stfc.isis.ibex.synoptic.model.Component;
+import uk.ac.stfc.isis.ibex.synoptic.model.Instrument;
+import uk.ac.stfc.isis.ibex.synoptic.model.Target;
+import uk.ac.stfc.isis.ibex.synoptic.model.targets.GroupedComponentTarget;
+
+import com.google.common.base.Strings;
+
+public class InstrumentNavigationGraph {
+
+	private final Map<Component, TargetNode> targetNodes = new HashMap<>();
+	private final Map<String, TargetNode> targets = new LinkedHashMap<>();
+	
+	private final TargetNode graph;
+	
+	public InstrumentNavigationGraph(Instrument instrument) {
+		createTargetNodes(instrument.components());
+		graph = buildGraph(instrument);
+	}
+	
+	private TargetNode buildGraph(Instrument instrument) {
+		Target top = topNode(instrument);
+		TargetNode head = addTargetNode(top);
+		
+		if (instrument.components().isEmpty()) {
+			return head;
+		}
+		
+		head.setNext(nodeOfFirstChild(instrument.components()));
+		
+		connectHorizontally(instrument.components(), head);
+		connectVertically(instrument.components());
+		
+		return head;
+	}
+
+	public TargetNode head() {
+		return new TargetNode(graph);
+	}
+	
+	public Map<String, TargetNode> targets() {
+		return new LinkedHashMap<>(targets);
+	}
+	
+	private static Target topNode(Instrument instrument) {
+		String name = Strings.isNullOrEmpty(instrument.name()) ? "Instrument" : instrument.name();
+		Target top = new GroupedComponentTarget(name, instrument.components());
+		return top;
+	}
+	
+	private TargetNode addTargetNode(Target target) {
+		TargetNode node = new TargetNode(target);
+		
+		if (target != null) {
+			targets.put(target.name(), node);
+		}
+		
+		if (target instanceof GroupedComponentTarget) {
+			GroupedComponentTarget group = (GroupedComponentTarget) target;
+			if (!group.components().isEmpty()) {
+				Target extraTarget = group.components().get(0).target();
+				TargetNode extraNode = addTargetNode(extraTarget);
+				extraNode.setUp(node);
+			}
+		}
+		
+		return node;		
+	}
+	
+	private void connectVertically(List<? extends Component> components) {
+		for (Component component : components) {
+			TargetNode current = targetNodes.get(component);
+			if (hasChildren(component)) {
+				current.setDown(nodeOfFirstChild(component.components()));
+				connectHorizontally(component.components(), current);
+				connectVertically(component.components());
+			}
+		}
+	}
+
+	private void connectHorizontally(List<? extends Component> components, TargetNode up) {
+		TargetNode previous = null;
+		for (Component component : componentsWithTargets(components)) {
+			TargetNode current = targetNodes.get(component);
+			current.setUp(up);
+						
+			if (previous != null) { 
+				current.setPrevious(previous);
+				previous.setNext(current);
+			}
+			
+			previous = current;
+		}
+	}
+	
+	private static List<Component> componentsWithTargets(List<? extends Component> components) {
+		List<Component> withTargets = new ArrayList<>();
+		for (Component component : components) {
+			if (component.target() != null) {
+				withTargets.add(component);
+			}
+		}
+		
+		return withTargets;
+	}
+
+	private static boolean hasChildren(Component component) {
+		return !component.components().isEmpty();
+	}
+
+	private TargetNode nodeOfFirstChild(List<? extends Component> components) {
+		Component firstChild = components.get(0);
+		return targetNodes.get(firstChild);
+	}
+	
+	private void createTargetNodes(List<? extends Component> components) {
+		for (Component component : components) {
+			targetNodes.put(component, addTargetNode(component.target()));
+			createTargetNodes(component.components());
+		}
+	}
+}

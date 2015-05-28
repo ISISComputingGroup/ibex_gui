@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.startup">
+      <startup
+            class="uk.ac.stfc.isis.ibex.logger.Startup">
+      </startup>
+   </extension>
+   <extension
+         point="org.eclipse.core.runtime.preferences">
+      <initializer
+            class="uk.ac.stfc.isis.ibex.logger.preferences.PreferenceInitializer">
+      </initializer>
+   </extension>
+   <extension
+         point="org.eclipse.ui.preferencePages">
+      <page
+            class="uk.ac.stfc.isis.ibex.logger.preferences.PreferencePage"
+            id="uk.ac.stfc.isis.ibex.logger.preferences.PreferencePage"
+            name="ISIS Logger">
+      </page>
+   </extension>
+
+</plugin>

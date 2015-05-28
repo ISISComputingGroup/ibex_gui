@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension-point id="uk.ac.stfc.isis.ibex.ui.perspectives" name="IsisPerspectives" schema="schema/uk.ac.stfc.isis.ibex.ui.perspectives.exsd"/>
+   <extension
+         point="org.eclipse.ui.perspectives">
+      <perspective
+            class="uk.ac.stfc.isis.ibex.ui.perspectives.BasePerspective"
+            id="uk.ac.stfc.isis.ibex.ui.perspectives.base"
+            name="Base">
+      </perspective>
+      <perspective
+            class="uk.ac.stfc.isis.ibex.ui.perspectives.Startup"
+            fixed="true"
+            id="uk.ac.stfc.isis.ibex.ui.perspectives.startup"
+            name="Startup">
+      </perspective>
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectiveExtensions">
+      <perspectiveExtension
+            targetID="uk.ac.stfc.isis.ibex.ui.perspectives.synoptic">
+         <view
+               closeable="false"
+               id="uk.ac.stfc.isis.ibex.ui.goniometer.SynopticView"
+               minimized="false"
+               moveable="true"
+               ratio="0.1f"
+               relationship="right"
+               relative="uk.ac.stfc.isis.ibex.ui.perspectives.PerspectiveSwitcher"
+               showTitle="true"
+               standalone="false"
+               visible="true">
+         </view>
+      </perspectiveExtension>
+   </extension>
+   <extension
+         point="org.eclipse.ui.views">
+      <view
+            allowMultiple="false"
+            class="uk.ac.stfc.isis.ibex.ui.perspectives.switcher.PerspectiveSwitcherView"
+            id="uk.ac.stfc.isis.ibex.ui.perspectives.PerspectiveSwitcher"
+            name="Perspectives">
+      </view>
+      <view
+            allowMultiple="false"
+            class="uk.ac.stfc.isis.ibex.ui.perspectives.views.StartupView"
+            id="uk.ac.stfc.isis.ibex.ui.perspectives.views.StartupView"
+            name="Start up">
+      </view>
+      <view
+            class="uk.ac.stfc.isis.ibex.ui.perspectives.ViewPart1"
+            id="uk.ac.stfc.isis.ibex.ui.perspectives.view1"
+            name="name"
+            restorable="true">
+      </view>
+   </extension>
+</plugin>

@@ -1,0 +1,220 @@
+package uk.ac.stfc.isis.ibex.ui.dae;
+
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+
+import org.eclipse.jface.action.IMenuManager;
+import org.eclipse.jface.action.IToolBarManager;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.ui.part.ViewPart;
+import org.eclipse.swt.custom.CTabFolder;
+import org.eclipse.swt.custom.ScrolledComposite;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.layout.FillLayout;
+import org.eclipse.swt.custom.CTabItem;
+import org.eclipse.wb.swt.ResourceManager;
+import org.eclipse.swt.widgets.Label;
+import org.eclipse.wb.swt.SWTResourceManager;
+import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.graphics.Point;
+
+import uk.ac.stfc.isis.ibex.ui.dae.experimentsetup.ExperimentSetup;
+import uk.ac.stfc.isis.ibex.ui.dae.run.RunSummary;
+import uk.ac.stfc.isis.ibex.ui.dae.runinformation.RunInformationPanel;
+import uk.ac.stfc.isis.ibex.ui.dae.spectra.SpectraPlotsPanel;
+import uk.ac.stfc.isis.ibex.ui.dae.vetos.VetosPanel;
+
+public class DaeView extends ViewPart {
+	
+	public static final String ID = "uk.ac.stfc.isis.ibex.ui.dae.views.DaeView"; //$NON-NLS-1$
+	
+	private RunSummary runSummary;
+	private ExperimentSetup experimentSetup;
+	private VetosPanel vetosPanel;
+	private RunInformationPanel runInformation;
+	private SpectraPlotsPanel spectraPanel;
+
+	private DaeViewModel model;
+
+	
+	private static final Display DISPLAY = Display.getCurrent();
+	
+	public DaeView() {
+	}
+	
+	public void setModel(final DaeViewModel viewModel) {
+		runSummary.setModel(viewModel.runSummary());		
+		
+		viewModel.isRunning().addPropertyChangeListener(new PropertyChangeListener() {		
+			@Override
+			public void propertyChange(PropertyChangeEvent e) {
+				configureExperimentSetupForRunState(viewModel.isRunning().getValue());
+			}
+		}, true);
+		
+		experimentSetup.bind(viewModel.experimentSetup());	
+		vetosPanel.setModel(viewModel);
+		runInformation.setModel(viewModel);
+		spectraPanel.setModel(viewModel.spectra());
+	}
+	
+	@Override
+	public void dispose() {
+		super.dispose();
+		model.close();
+	}
+	
+	private void configureExperimentSetupForRunState(final Boolean isRunning) {
+		DISPLAY.asyncExec(new Runnable() {	
+			@Override
+			public void run() {
+				experimentSetup.setEnabled(!isRunning);				
+			}
+		});
+	}
+	
+	/**
+	 * Create contents of the view part.
+	 * @param parent
+	 */
+	@Override
+	public void createPartControl(Composite parent) {
+		parent.setLayout(new FillLayout(SWT.VERTICAL));
+		
+		model = DaeUI.getDefault().viewModel();
+		
+		ScrolledComposite scrolledComposite = new ScrolledComposite(parent, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
+		scrolledComposite.setExpandHorizontal(true);
+		scrolledComposite.setExpandVertical(true);
+		Composite container = new Composite(scrolledComposite, SWT.NONE);
+		scrolledComposite.setContent(container);
+		
+		GridData gd_container = new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1);
+		container.setLayoutData(gd_container);
+		GridLayout gl_container = new GridLayout(2, false);
+		gl_container.horizontalSpacing = 0;
+		gl_container.verticalSpacing = 0;
+		gl_container.marginWidth = 0;
+		gl_container.marginHeight = 0;
+		container.setLayout(gl_container);
+		
+		Composite titleComposite = new Composite(container, SWT.NONE);
+		titleComposite.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1));
+		titleComposite.setLayout(new GridLayout(1, false));
+		
+		Label lblTitle = new Label(titleComposite, SWT.NONE);
+		lblTitle.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		lblTitle.setAlignment(SWT.CENTER);
+		lblTitle.setFont(SWTResourceManager.getFont("Arial", 16, SWT.NORMAL));
+		lblTitle.setText("DAE Control Program");
+		
+		CTabFolder tabFolder = new CTabFolder(container, SWT.BORDER);
+		tabFolder.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		tabFolder.setSelectionBackground(Display.getCurrent().getSystemColor(SWT.COLOR_TITLE_INACTIVE_BACKGROUND_GRADIENT));
+
+		CTabItem tbtmRunSummary = new CTabItem(tabFolder, SWT.NONE);
+		tbtmRunSummary.setImage(ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui.dae", "icons/play.png"));
+		tbtmRunSummary.setText("Run Summary");
+			
+		Composite runSummaryComposite = new Composite(tabFolder, SWT.NONE);
+		tbtmRunSummary.setControl(runSummaryComposite);
+		runSummaryComposite.setLayout(new GridLayout(1, false));
+		runSummary = new RunSummary(runSummaryComposite, SWT.NONE, model.runSummary());
+		runSummary.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		
+		CTabItem tbtmExperimentSetup = new CTabItem(tabFolder, SWT.NONE);
+		tbtmExperimentSetup.setImage(ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui.dae", "icons/setup.png"));
+		tbtmExperimentSetup.setText("Experiment Setup");
+		
+		Composite experimentalSetupComposite = new Composite(tabFolder, SWT.NONE);
+		tbtmExperimentSetup.setControl(experimentalSetupComposite);
+		experimentalSetupComposite.setLayout(new FillLayout(SWT.HORIZONTAL));
+		experimentSetup = new ExperimentSetup(experimentalSetupComposite, SWT.NONE);
+		
+		CTabItem tbtmRunInformation = new CTabItem(tabFolder, SWT.NONE);
+		tbtmRunInformation.setImage(ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui.dae", "icons/info.png"));
+		tbtmRunInformation.setText("Run Information");
+		
+		Composite runInformationComposite = new Composite(tabFolder, SWT.NONE);
+		tbtmRunInformation.setControl(runInformationComposite);
+		runInformationComposite.setLayout(new FillLayout(SWT.HORIZONTAL));
+		runInformation = new RunInformationPanel(runInformationComposite, SWT.NONE);
+		
+		CTabItem tbtmSpectraPlots = new CTabItem(tabFolder, SWT.NONE);
+		tbtmSpectraPlots.setImage(ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui.dae", "icons/plot.png"));
+		tbtmSpectraPlots.setText("Spectra Plots");
+		
+		Composite spectraComposite = new Composite(tabFolder, SWT.NONE);
+		tbtmSpectraPlots.setControl(spectraComposite);
+		spectraComposite.setLayout(new FillLayout(SWT.HORIZONTAL));
+		
+		spectraPanel = new SpectraPlotsPanel(spectraComposite, SWT.NONE);
+		//spectraPanel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+
+		CTabItem tbtmDiagnostics = new CTabItem(tabFolder, SWT.NONE);
+		tbtmDiagnostics.setImage(ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui.dae", "icons/monitor.png"));
+		tbtmDiagnostics.setText("Diagnostics");
+		
+		CTabItem tbtmVetos = new CTabItem(tabFolder, SWT.NONE);
+		tbtmVetos.setImage(ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui.dae", "icons/veto.png"));
+		tbtmVetos.setText("Vetos");
+		
+		Composite vetosComposite = new Composite(tabFolder, SWT.NONE);
+		tbtmVetos.setControl(vetosComposite);
+		vetosComposite.setLayout(new GridLayout(1, false));
+		
+		vetosPanel = new VetosPanel(vetosComposite, SWT.NONE);
+		vetosPanel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		
+		
+		createActions();
+		initializeToolBar();
+		initializeMenu();
+		
+		setModel(DaeUI.getDefault().viewModel());
+		tabFolder.setSelection(0);
+		scrolledComposite.setMinSize(new Point(600, 500));
+		
+		Composite composite = new Composite(container, SWT.NONE);
+		composite.setLayout(new GridLayout(1, false));
+		GridData gd_composite = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
+		gd_composite.widthHint = 600;
+		composite.setLayoutData(gd_composite);
+		
+		Label label = new Label(composite, SWT.NONE);
+		label.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		new Label(container, SWT.NONE);
+		new Label(container, SWT.NONE);
+	}
+
+	/**
+	 * Create the actions.
+	 */
+	private void createActions() {
+		// Create the actions
+	}
+
+	/**
+	 * Initialize the toolbar.
+	 */
+	@SuppressWarnings("unused")
+	private void initializeToolBar() {
+		IToolBarManager toolbarManager = getViewSite().getActionBars()
+				.getToolBarManager();
+	}
+
+	/**
+	 * Initialize the menu.
+	 */
+	@SuppressWarnings("unused")
+	private void initializeMenu() {
+		IMenuManager menuManager = getViewSite().getActionBars()
+				.getMenuManager();
+	}
+
+	@Override
+	public void setFocus() {		
+	}
+}

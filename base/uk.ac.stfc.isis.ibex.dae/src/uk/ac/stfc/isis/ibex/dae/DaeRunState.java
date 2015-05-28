@@ -1,0 +1,19 @@
+package uk.ac.stfc.isis.ibex.dae;
+
+public enum DaeRunState {
+	PROCESSING,
+	SETUP,
+	RUNNING,
+	PAUSED,
+	WAITING,
+	VETOING,
+	ENDING,
+	SAVING,
+	RESUMING,
+	PAUSING,
+	BEGINNING,
+	ABORTING,
+	UPDATING,
+	STORING,
+	UNKNOWN,
+}

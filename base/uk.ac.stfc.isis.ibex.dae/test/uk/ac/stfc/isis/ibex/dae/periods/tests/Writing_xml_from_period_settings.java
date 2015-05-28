@@ -1,0 +1,160 @@
+package uk.ac.stfc.isis.ibex.dae.periods.tests;
+
+import static org.junit.Assert.*;
+
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
+
+import uk.ac.stfc.isis.ibex.dae.experimentsetup.periods.Period;
+import uk.ac.stfc.isis.ibex.dae.experimentsetup.periods.PeriodControlType;
+import uk.ac.stfc.isis.ibex.dae.experimentsetup.periods.PeriodSetupSource;
+import uk.ac.stfc.isis.ibex.dae.experimentsetup.periods.PeriodType;
+import uk.ac.stfc.isis.ibex.dae.experimentsetup.periods.XMLBackedPeriodSettings;
+import uk.ac.stfc.isis.ibex.dae.tests.FileReadingTest;
+
+import static org.hamcrest.CoreMatchers.*;
+
+import org.junit.Before;
+import org.junit.Test;
+
+
+public class Writing_xml_from_period_settings extends FileReadingTest {
+
+	private XMLBackedPeriodSettings periodSettings;
+	
+	@Override
+	protected URL fileLocation() throws MalformedURLException {
+		return getClass().getResource("/uk/ac/stfc/isis/ibex/dae/periods/tests/period_settings.xml");
+	}
+	
+	@Before
+	public void setup() throws IOException {
+		periodSettings = new XMLBackedPeriodSettings();
+		periodSettings.setXml(fileContent());
+	}
+	
+	@Test
+	public void period_type_is_updated() {
+		
+		Period period = periodSettings.getPeriods().get(7);
+		PeriodType newType = PeriodType.DAQ;
+		
+		assertThat(period.getType(), is(not(newType)));
+		period.setType(newType);
+		reloadSettingsFromCurrentValues();
+		
+		period = periodSettings.getPeriods().get(7);
+		assertThat(period.getType(), is(newType));
+	}
+	
+	@Test
+	public void period_frames_is_updated() {
+		Period period = periodSettings.getPeriods().get(2);
+		int newValue = 10;
+		
+		assertThat(period.getFrames(), is(not(newValue)));
+		period.setFrames(newValue);
+		reloadSettingsFromCurrentValues();
+		
+		period = periodSettings.getPeriods().get(2);
+		assertThat(period.getFrames(), is(newValue));
+	}
+
+	@Test
+	public void period_binary_output_is_updated() {
+		Period period = periodSettings.getPeriods().get(3);
+		int newValue = 2;
+		
+		assertThat(period.getBinaryOutput(), is(not(newValue)));
+		period.setBinaryOutput(newValue);
+		reloadSettingsFromCurrentValues();
+		
+		period = periodSettings.getPeriods().get(3);
+		assertThat(period.getBinaryOutput(), is(newValue));
+	}
+	
+	@Test
+	public void period_label_is_updated() {
+		Period period = periodSettings.getPeriods().get(4);
+		String newValue = "Test label";
+		
+		assertThat(period.getLabel(), is(not(newValue)));
+		period.setLabel(newValue);
+		reloadSettingsFromCurrentValues();
+		
+		period = periodSettings.getPeriods().get(4);
+		assertThat(period.getLabel(), is(newValue));
+	}
+	
+	@Test
+	public void setup_source_is_updated() {
+		PeriodSetupSource newValue = PeriodSetupSource.PARAMETERS;
+		
+		assertThat(periodSettings.getSetupSource(), is(not(newValue)));
+		periodSettings.setSetupSource(newValue);
+		reloadSettingsFromCurrentValues();
+		
+		assertThat(periodSettings.getSetupSource(), is(newValue));
+	}
+	
+
+	@Test
+	public void period_file_is_updated() {
+		String newValue = "new_path";
+		
+		assertThat(periodSettings.getPeriodFile(), is(not(newValue)));
+		periodSettings.setPeriodFile(newValue);
+		reloadSettingsFromCurrentValues();
+		
+		assertThat(periodSettings.getPeriodFile(), is(newValue));
+	}
+	
+	@Test
+	public void period_control_type_is_updated() {
+		PeriodControlType newValue = PeriodControlType.SOFTWARE;
+		
+		assertThat(periodSettings.getPeriodType(), is(not(newValue)));
+		periodSettings.setPeriodType(newValue);
+		reloadSettingsFromCurrentValues();
+		
+		assertThat(periodSettings.getPeriodType(), is(newValue));		
+	}
+	
+	@Test
+	public void software_periods_is_updated() {	
+		int newValue = 12121;
+		
+		assertThat(periodSettings.getSoftwarePeriods(), is(not(newValue)));
+		periodSettings.setSoftwarePeriods(newValue);
+		reloadSettingsFromCurrentValues();
+		
+		assertThat(periodSettings.getSoftwarePeriods(), is(newValue));		
+	}
+	
+	@Test
+	public void hardware_periods_is_updated() {
+		double newValue = 1.11;
+		
+		assertThat(periodSettings.getHardwarePeriods(), is(not(newValue)));
+		periodSettings.setHardwarePeriods(newValue);
+		reloadSettingsFromCurrentValues();
+		
+		assertThat(periodSettings.getHardwarePeriods(), is(newValue));			
+	}
+	
+	@Test
+	public void output_delay_is_updated() {
+		double newValue = 1d;
+		
+		assertThat(periodSettings.getOutputDelay(), is(not(newValue)));
+		periodSettings.setOutputDelay(newValue);
+		reloadSettingsFromCurrentValues();
+		
+		assertThat(periodSettings.getOutputDelay(), is(newValue));
+	}
+	
+	private void reloadSettingsFromCurrentValues() {
+		periodSettings.setXml(periodSettings.xml());		
+	}
+}

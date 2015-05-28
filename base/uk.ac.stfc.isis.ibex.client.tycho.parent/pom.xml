@@ -1,0 +1,166 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>CSS_ISIS</groupId>
+  <artifactId>uk.ac.stfc.isis.ibex.client.tycho.parent</artifactId>
+  <version>1.0.0-SNAPSHOT</version>
+  <packaging>pom</packaging>
+  
+  <properties>
+    <tycho.version>0.20.0</tycho.version>
+    <tycho-repo.url>https://oss.sonatype.org/content/groups/public/</tycho-repo.url>
+    <kepler-repo.url>http://download.eclipse.org/releases/kepler</kepler-repo.url>
+    <kepler-updates-repo.url>http://download.eclipse.org/eclipse/updates/3.8</kepler-updates-repo.url>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+
+  <repositories>
+    <repository>
+      <id>kepler-updates</id>
+      <layout>p2</layout>
+      <url>${kepler-updates-repo.url}</url>
+    </repository>
+  </repositories>
+  
+  <build>
+    <plugins>      
+          
+      <plugin>
+        <groupId>org.eclipse.tycho</groupId>
+        <artifactId>tycho-maven-plugin</artifactId>
+        <version>${tycho.version}</version>
+        <extensions>true</extensions>
+      </plugin>
+              
+      <plugin>
+		<groupId>org.eclipse.tycho</groupId>
+		<artifactId>target-platform-configuration</artifactId>
+		<version>${tycho.version}</version>
+			<configuration>
+				<target>
+					<artifact>
+					  <groupId>${project.groupId}</groupId>
+					  <artifactId>${project.artifactId}</artifactId>
+					  <version>${project.version}</version>
+					  <classifier>../../../base/uk.ac.stfc.isis.ibex.targetplatform/uk.ac.stfc.isis.ibex.targetplatform</classifier>
+					</artifact>
+				</target> 
+				  <!-- <environments>	
+						<environment>
+							<os>win32</os>
+							<ws>win32</ws>
+							<arch>x86_64</arch>
+						</environment>
+				  </environments> -->
+			</configuration>
+		</plugin>
+              
+      <plugin>
+         <groupId>org.eclipse.tycho</groupId>
+         <artifactId>tycho-packaging-plugin</artifactId>
+         <version>${tycho.version}</version>
+         <configuration>
+             <strictBinIncludes>false</strictBinIncludes>
+             <format>yyyyMMdd-HHmm</format>
+         </configuration>
+      </plugin>
+      
+      <!-- 
+	  		Run FindBugs checks as part of the build.
+	   -->
+ 	  <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>findbugs-maven-plugin</artifactId>
+            <version>2.5.2</version>
+            <configuration>
+                <!--
+                    Enables analysis which takes more memory but finds more bugs.
+                    If you run out of memory, changes the value of the effort element
+                    to 'Low'.
+                -->
+                <effort>Max</effort>
+                <!-- Build doesn't fail if problems are found -->
+                <failOnError>false</failOnError>
+                <!-- Reports all bugs (other values are medium and max) -->
+                <threshold>Low</threshold>
+                <!-- Produces XML report -->
+                <xmlOutput>true</xmlOutput>
+                <!-- Configures the directory in which the XML report is created -->
+                <findbugsXmlOutputDirectory>${project.build.directory}/findbugs</findbugsXmlOutputDirectory>
+            </configuration>
+            <executions>
+                <!-- Ensures that FindBugs inspects source code when project is compiled.-->
+                <execution>
+                    <id>analyze-compile</id>
+                    <phase>compile</phase>
+                    <goals>
+                        <goal>check</goal>
+                    </goals>
+                </execution>
+            </executions>
+        </plugin>
+		
+		
+		<!-- 
+	  		Run PMD checks as part of the build.
+	    -->
+		<plugin>
+			<groupId>org.apache.maven.plugins</groupId>
+			<artifactId>maven-pmd-plugin</artifactId>
+			<version>3.2</version>
+			<executions>
+          		<execution>
+            		<phase>verify</phase> 
+            		<goals>
+              			<goal>check</goal> 
+            		</goals>
+          		</execution>
+        	</executions>
+			<configuration>
+			  <failOnViolation>false</failOnViolation>
+	          <linkXref>true</linkXref>
+	          <verbose>true</verbose>
+	          <sourceEncoding>utf-8</sourceEncoding>
+	          <minimumTokens>100</minimumTokens>
+	          <targetJdk>1.7</targetJdk>
+	        </configuration>
+		</plugin>	
+        
+        <!--
+        	Run CheckStyle checks as part of the build.  
+        -->
+         <plugin>
+	        <groupId>org.apache.maven.plugins</groupId>
+	        <artifactId>maven-checkstyle-plugin</artifactId>
+	        <version>2.12.1</version>
+			<executions>
+          		<execution>
+            		<phase>verify</phase> 
+            		<goals>
+              			<goal>check</goal> 
+            		</goals>
+          		</execution>
+        	</executions>
+        	<configuration>
+        	    <configLocation>checkstyle.xml</configLocation>
+          		<failOnViolation>false</failOnViolation>
+          		<failsOnError>false</failsOnError>
+          		<linkXRef>true</linkXRef>
+        	</configuration>
+      	</plugin>
+                    
+    </plugins>
+  </build>
+  
+  <parent>
+  	<groupId>CSS_ISIS</groupId>
+  	<artifactId>uk.ac.stfc.isis.ibex.tycho.parent</artifactId>
+  	  <version>1.0.0-SNAPSHOT</version>
+  	<relativePath>../../../base/uk.ac.stfc.isis.ibex.tycho.parent</relativePath>
+  </parent>
+
+
+  <modules>
+    <module>../../../base/uk.ac.stfc.isis.ibex.tycho.parent</module>
+  	<module>../uk.ac.stfc.isis.ibex.client.product</module>
+  </modules>
+</project>

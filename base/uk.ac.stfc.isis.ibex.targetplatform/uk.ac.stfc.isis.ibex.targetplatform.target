@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?pde version="3.8"?><target name="uk.ac.stfc.isis.ibex.targetplatform" sequenceNumber="89">
+<locations>
+<location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
+<unit id="org.dawnsci.base.product.feature.feature.group" version="1.7.1.v20141013-1253"/>
+<repository location="file:////ndwvegas/installs$/Dawn_P2/"/>
+</location>
+<location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
+<unit id="org.csstudio.pvmanager.feature.feature.group" version="3.3.0.20140923-1503"/>
+<unit id="org.csstudio.pvmanager.ca.feature.feature.group" version="3.2.2.20140923-1511"/>
+<unit id="org.csstudio.core.util.feature.feature.group" version="3.1.0.20140923-1511"/>
+<unit id="org.csstudio.opibuilder.feature.feature.group" version="3.2.7.20140923-1511"/>
+<unit id="org.csstudio.trends.databrowser2.feature.feature.group" version="3.2.2.20140923-1511"/>
+<unit id="org.csstudio.boy.feature.feature.group" version="3.2.1.20140923-1511"/>
+<unit id="org.csstudio.alarm.beast.ui.feature.feature.group" version="3.2.1.20140923-1511"/>
+<repository location="file:////ndwvegas/installs$/CSStudio_P2/"/>
+</location>
+</locations>
+<environment>
+<os>win32</os>
+<ws>win32</ws>
+<arch>x86_64</arch>
+<nl>en_GB</nl>
+</environment>
+</target>

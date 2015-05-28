@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.commands">
+      <command
+            defaultHandler="uk.ac.stfc.isis.ibex.ui.ioccontrol.IocControlHandler"
+            id="uk.ac.stfc.isis.ibex.ui.ioccontrol.ioccontrol"
+            name="Start/Stop Iocs">
+      </command>
+   </extension>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            locationURI="menu:org.eclipse.ui.main.menu?after=synopticMenu">
+         <menu
+               id="iocMenu"
+               label="IOC">
+            <command
+                  commandId="uk.ac.stfc.isis.ibex.ui.ioccontrol.ioccontrol"
+                  id="uk.ac.stfc.isis.ibex.ui.ioc"
+                  label="Start/Stop IOCs"
+                  style="push"
+                  tooltip="Control which device drivers are running">
+            </command>
+         </menu>
+      </menuContribution>
+   </extension>
+
+</plugin>

@@ -1,0 +1,145 @@
+package uk.ac.stfc.isis.ibex.ui.synoptic.component;
+
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Event;
+import org.eclipse.swt.widgets.Listener;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.custom.CLabel;
+import org.eclipse.swt.graphics.Cursor;
+import org.eclipse.wb.swt.SWTResourceManager;
+
+import uk.ac.stfc.isis.ibex.synoptic.model.Component;
+import uk.ac.stfc.isis.ibex.ui.synoptic.Activator;
+import uk.ac.stfc.isis.ibex.ui.synoptic.SynopticPresenter;
+import uk.ac.stfc.isis.ibex.ui.synoptic.beamline.BeamlineComposite;
+import uk.ac.stfc.isis.ibex.ui.synoptic.beamline.BeamlineCompositeContainer;
+
+public class GroupView extends BeamlineComposite {
+
+	private final Cursor handCursor = new Cursor(getDisplay(), SWT.CURSOR_HAND);
+
+	private SynopticPresenter presenter = Activator.getDefault().presenter();
+	private String targetName;
+
+	private Composite groupPropertiesComposite;
+	private CLabel groupName;
+	private BeamlineCompositeContainer groupComponents;
+	private Component component;
+	
+	/**
+	 * @wbp.parser.constructor
+	 */
+	public GroupView(Composite parent) {
+		this(parent, null);
+	}
+	
+	public GroupView(Composite parent, Component component) {
+		super(parent, SWT.NONE);
+		GridLayout gridLayout = new GridLayout(1, false);
+		gridLayout.verticalSpacing = 0;
+		gridLayout.marginHeight = 0;
+		setLayout(gridLayout);
+		this.component = component;
+		
+		groupPropertiesComposite = new Composite(this, SWT.NONE);
+		groupPropertiesComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		groupPropertiesComposite.setLayout(new GridLayout(1, false));
+		
+		groupName = new CLabel(this, SWT.BORDER | SWT.CENTER);
+		groupName.setForeground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
+		groupName.setFont(SWTResourceManager.getFont("Arial", 12, SWT.BOLD));
+		GridData gd_groupName = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
+		gd_groupName.heightHint = 30;
+		gd_groupName.minimumHeight = 30;
+		groupName.setLayoutData(gd_groupName);
+		groupName.setAlignment(SWT.CENTER);
+		groupName.setBackground(SWTResourceManager.getColor(111, 94, 230));
+		
+		groupName.addListener(SWT.MouseEnter, new Listener() {	
+			@Override
+			public void handleEvent(Event event) {
+				setCursor(targetName == null ? null : handCursor);
+			}
+		});
+
+		groupName.addListener(SWT.MouseExit, new Listener() {	
+			@Override
+			public void handleEvent(Event event) {
+				setCursor(null);
+			}
+		});
+				
+		groupName.addListener(SWT.MouseUp, new Listener() {		
+			@Override
+			public void handleEvent(Event event) {
+				presenter.navigateTo(targetName);
+			}
+		});
+		
+		
+		groupComponents = new BeamlineCompositeContainer(this, SWT.NONE);
+		
+		if (component != null) {
+			setName(component);
+			setProperties(component);
+			setComponents(component);
+			if (component.target() != null) {
+				setTargetName(component.target().name());
+			}
+		}
+	}
+
+	private void setTargetName(String name) {
+		targetName = component.target().name();
+		groupName.setToolTipText(targetName);
+	}
+
+	@Override
+	public int beamLineHeight() {
+		return component.components().isEmpty() ? nameControlCentreLine() : componentsTargetLineHeight();
+	}
+	
+	private void setName(Component component) {
+		groupName.setText(component.name());
+	}
+
+	private int componentsTargetLineHeight() {       
+		return groupComponents.getBounds().y + groupComponents.beamLineHeight();
+	}
+
+	private int nameControlCentreLine() {
+		return groupName.getBounds().y + groupName.getBounds().height / 2;
+	}
+	
+	private void setProperties(Component component) {		
+		if (component.properties().isEmpty()) {
+			hideProperties();
+		} else {
+			addPropertiesView(component);
+		}
+	}
+
+	private void hideProperties() {
+		groupPropertiesComposite.setVisible(false);
+	}
+
+	private void addPropertiesView(Component component) {
+		ComponentPropertiesView propertiesView = new ComponentPropertiesView(groupPropertiesComposite, component);
+		
+		propertiesView.pack();
+		GridData gd = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
+		gd.minimumHeight = propertiesView.getSize().y;
+		gd.heightHint = gd.minimumHeight; 
+		propertiesView.setLayoutData(gd);
+	}
+
+	private void setComponents(Component component) {
+		for (Component child : component.components()) {
+			BeamlineComposite view = ComponentView.create(groupComponents, child);
+			groupComponents.registerBeamlineTarget(view);
+		}
+	}
+
+}

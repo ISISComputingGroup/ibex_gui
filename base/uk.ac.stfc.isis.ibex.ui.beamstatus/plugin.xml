@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+
+   <extension
+         point="org.eclipse.ui.views">
+      <category
+            name="ISIS"
+            id="uk.ac.stfc.isis.ibex.ui.beamstatus">
+      </category>
+      <view
+            name="Beam Status"
+            icon="icons/sample.gif"
+            category="uk.ac.stfc.isis.ibex.ui.beamstatus"
+            class="uk.ac.stfc.isis.ibex.ui.beamstatus.views.BeamStatusView"
+            id="uk.ac.stfc.isis.ibex.ui.beamstatus.views.BeamStatusView">
+      </view>
+      <view
+            class="uk.ac.stfc.isis.ibex.ui.beamstatus.views.BeamStatusView"
+            id="uk.ac.stfc.isis.ibex.ui.beamstatus.views.BeamStatusView"
+            name="Beam Status">
+      </view>
+   </extension>
+   <extension
+         name="Beam Status"
+         point="org.eclipse.ui.perspectives">
+      <perspective
+            class="uk.ac.stfc.isis.ibex.ui.beamstatus.Perspective"
+            id="uk.ac.stfc.isis.ibex.ui.beamstatus.perspective"
+            name="Beam Status">
+      </perspective>
+   </extension>
+   <extension
+         point="uk.ac.stfc.isis.ibex.ui.perspectives">
+      <contribution
+            class="uk.ac.stfc.isis.ibex.ui.beamstatus.Perspective">
+      </contribution>
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectiveExtensions">
+      <perspectiveExtension
+            targetID="uk.ac.stfc.isis.ibex.ui.beamstatus.perspective">
+         <view
+               closeable="false"
+               id="uk.ac.stfc.isis.ibex.ui.beamstatus.views.BeamStatusView"
+               minimized="false"
+               moveable="true"
+               ratio="0.1f"
+               relationship="right"
+               relative="uk.ac.stfc.isis.ibex.ui.perspectives.PerspectiveSwitcher"
+               showTitle="true"
+               standalone="false"
+               visible="true">
+         </view>
+      </perspectiveExtension>
+   </extension>
+   <extension
+         point="org.eclipse.help.contexts">
+      <contexts
+            file="contexts.xml">
+      </contexts>
+   </extension>
+
+</plugin>

@@ -1,0 +1,56 @@
+// Table showing macros for an IOC
+package uk.ac.stfc.isis.ibex.ui.configserver.editing.macros;
+
+import java.util.Collection;
+
+import org.eclipse.jface.viewers.TableViewerColumn;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.widgets.Composite;
+
+import uk.ac.stfc.isis.ibex.configserver.configuration.Macro;
+import uk.ac.stfc.isis.ibex.ui.tables.DataboundCellLabelProvider;
+import uk.ac.stfc.isis.ibex.ui.tables.DataboundTable;
+
+public class MacroTable extends DataboundTable<Macro> {
+	
+	public MacroTable(Composite parent, int style, int tableStyle) {
+		super(parent, style, Macro.class, tableStyle | SWT.BORDER);
+
+		initialise();
+	}
+	
+	@Override
+	public void setRows(Collection<Macro> rows) {
+		super.setRows(rows);
+	}
+
+	@Override
+	protected void addColumns() {
+		name();
+		value();
+	}
+	
+	private void name() {
+		TableViewerColumn name = createColumn("Name", 6);
+		name.setLabelProvider(new DataboundCellLabelProvider<Macro>(observeProperty("name")) {
+			@Override
+			protected String valueFromRow(Macro row) {
+				return row.getName();
+			}
+		});	
+	}
+	
+	private void value() {
+		TableViewerColumn value = createColumn("Value", 6);
+		value.setLabelProvider(new DataboundCellLabelProvider<Macro>(observeProperty("value")) {
+			@Override
+			protected String valueFromRow(Macro row) {
+				return row.getValue();
+			}
+		});	
+	}
+	
+	public void setSelection(int i) {
+		table().setSelection(i);
+	}
+}

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.commands">
+      <command
+            defaultHandler="uk.ac.stfc.isis.ibex.ui.synoptic.editor.commands.NewSynopticHandler"
+            id="uk.ac.stfc.isis.ibex.ui.synoptic.editor.commands.NewSynoptic"
+            name="New Synoptic">
+      </command>
+      <command
+            defaultHandler="uk.ac.stfc.isis.ibex.ui.synoptic.editor.commands.EditSynopticHandler"
+            id="uk.ac.stfc.isis.ibex.ui.synoptic.editor.commands.EditSynoptic"
+            name="Edit Synoptic">
+      </command>
+      <command
+            defaultHandler="uk.ac.stfc.isis.ibex.ui.synoptic.editor.commands.LoadSynopticHandler"
+            id="uk.ac.stfc.isis.ibex.ui.synoptic.editor.commands.LoadSynoptic"
+            name="Load Synoptic">
+      </command>
+      <command
+            defaultHandler="uk.ac.stfc.isis.ibex.ui.synoptic.editor.commands.DeleteSynopticHandler"
+            id="uk.ac.stfc.isis.ibex.ui.synoptic.editor.commands.DeleteSynoptic"
+            name="Edit Synoptic">
+      </command>
+   </extension>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            allPopups="false"
+            locationURI="menu:org.eclipse.ui.main.menu?after=configurationMenu">
+         <menu
+           id="synopticMenu"
+           label="Synoptic">
+           <command
+                 commandId="uk.ac.stfc.isis.ibex.ui.synoptic.editor.commands.NewSynoptic"
+                 id="uk.ac.stfc.isis.ibex.ui.synoptic"
+                 label="New"
+                 style="push"
+                 tooltip="Create a new synoptic">
+           </command>
+           <command
+                 commandId="uk.ac.stfc.isis.ibex.ui.synoptic.editor.commands.LoadSynoptic"
+                 id="uk.ac.stfc.isis.ibex.ui.synoptic"
+                 label="Load"
+                 style="push"
+                 tooltip="Load a synoptic into the synoptic view">
+           </command>
+           <command
+                 commandId="uk.ac.stfc.isis.ibex.ui.synoptic.editor.commands.EditSynoptic"
+                 id="uk.ac.stfc.isis.ibex.ui.synoptic"
+                 label="Edit"
+                 style="push"
+                 tooltip="Edit a synoptic">
+           </command>
+           <command
+                 commandId="uk.ac.stfc.isis.ibex.ui.synoptic.editor.commands.DeleteSynoptic"
+                 id="uk.ac.stfc.isis.ibex.ui.synoptic"
+                 label="Delete"
+                 style="push"
+                 tooltip="Delete a synoptic">
+           </command>
+         </menu>
+      </menuContribution>
+   </extension>
+</plugin>

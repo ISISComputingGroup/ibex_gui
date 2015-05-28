@@ -1,0 +1,12 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Experimentdetails
+Bundle-SymbolicName: uk.ac.stfc.isis.ibex.ui.experimentdetails;singleton:=true
+Bundle-Version: 1.0.0.qualifier
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Require-Bundle: uk.ac.stfc.isis.ibex.ui;bundle-version="1.0.0",
+ uk.ac.stfc.isis.ibex.experimentdetails;bundle-version="1.0.0",
+ uk.ac.stfc.isis.ibex.ui.perspectives;bundle-version="1.0.0",
+ uk.ac.stfc.isis.ibex.model;bundle-version="1.0.0",
+ uk.ac.stfc.isis.ibex.ui.widgets;bundle-version="1.0.0"
+Import-Package: uk.ac.stfc.isis.ibex.epics.writing
