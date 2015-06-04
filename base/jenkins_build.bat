@@ -5,7 +5,7 @@ set LOCINSTALLDIR=c:\Installers\CSStudio_ISIS\
 
 set PATH=%M2%;%JAVA_HOME%;%PYTHON%;%PATH%
 
-call mvn --settings=%CD%\..\mvn_user_settings.xml -f org.csstudio.isis.tycho.parent\pom.xml clean verify
+call mvn --settings=%CD%\..\mvn_user_settings.xml -f uk.ac.stfc.isis.ibex.tycho.parent\pom.xml clean verify
 if %errorlevel% neq 0 exit /b %errorlevel%
 
 REM Even if the build is successful this does not mean the executable works!
@@ -14,14 +14,14 @@ REM if %errorlevel% neq 0 exit /b %errorlevel%
 
 REM Copy zip to installs area
 REM Delete older versions?
-set INSTALLDIR=%LOCINSTALLDIR%\SVN%SVN_REVISION%
-mkdir %INSTALLDIR%
+REM set INSTALLDIR=%LOCINSTALLDIR%\SVN%SVN_REVISION%
+REM mkdir %INSTALLDIR%
 
 REM add svn revision number
-echo %SVN_REVISION% > SVN_REVISION.txt
-C:\"Program Files"\7-Zip\7z.exe a org.csstudio.isis.tycho.repository\target\products\repository.product-win32.win32.x86_64.zip SVN_REVISION.txt
-if %errorlevel% neq 0 exit /b %errorlevel%
+REM echo %SVN_REVISION% > SVN_REVISION.txt
+REM C:\"Program Files"\7-Zip\7z.exe a uk.ac.stfc.isis.ibex.tycho.repository\target\products\repository.product-win32.win32.x86_64.zip SVN_REVISION.txt
+REM if %errorlevel% neq 0 exit /b %errorlevel%
 
 REM copy zips to installs
-copy org.csstudio.isis.tycho.repository\target\products\*.zip %INSTALLDIR%\.
-if %errorlevel% neq 0 exit /b %errorlevel%
+REM copy uk.ac.stfc.isis.ibex.tycho.repository\target\products\*.zip %INSTALLDIR%\.
+REM if %errorlevel% neq 0 exit /b %errorlevel%
