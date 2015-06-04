@@ -41,7 +41,7 @@
 					  <groupId>${project.groupId}</groupId>
 					  <artifactId>${project.artifactId}</artifactId>
 					  <version>${project.version}</version>
-					  <classifier>../../../base/uk.ac.stfc.isis.ibex.targetplatform/uk.ac.stfc.isis.ibex.targetplatform</classifier>
+					  <classifier>../uk.ac.stfc.isis.ibex.targetplatform/uk.ac.stfc.isis.ibex.targetplatform</classifier>
 					</artifact>
 				</target> 
 				  <!-- <environments>	
@@ -155,12 +155,12 @@
   	<groupId>CSS_ISIS</groupId>
   	<artifactId>uk.ac.stfc.isis.ibex.tycho.parent</artifactId>
   	  <version>1.0.0-SNAPSHOT</version>
-  	<relativePath>../../../base/uk.ac.stfc.isis.ibex.tycho.parent</relativePath>
+  	<relativePath>../uk.ac.stfc.isis.ibex.tycho.parent</relativePath>
   </parent>
 
 
   <modules>
-    <module>../../../base/uk.ac.stfc.isis.ibex.tycho.parent</module>
   	<module>../uk.ac.stfc.isis.ibex.client.product</module>
+  	<module>../uk.ac.stfc.isis.ibex.tycho.parent</module>
   </modules>
 </project>
