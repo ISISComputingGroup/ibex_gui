@@ -13,8 +13,8 @@ call mvn --settings=%CD%\..\mvn_user_settings.xml -f uk.ac.stfc.isis.ibex.client
 if %errorlevel% neq 0 exit /b %errorlevel%
 
 REM Even if the build is successful this does not mean the executable works!
-REM python.exe check_jenkins_build.py
-REM if %errorlevel% neq 0 exit /b %errorlevel%
+python.exe check_jenkins_build.py
+if %errorlevel% neq 0 exit /b %errorlevel%
 
 REM Copy zip to installs area
 REM Delete older versions?
