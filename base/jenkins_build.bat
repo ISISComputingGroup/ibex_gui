@@ -19,41 +19,40 @@ if %errorlevel% neq 0 exit /b %errorlevel%
 REM Copy zip to installs area
 REM Delete older versions?
 REM the password for isis\builder is contained in the BUILDERPW system environment variable on the build server 
-REM net use p: /d
-REM net use p: \\isis\inst$ /user:isis\builder %BUILDERPW%
+net use p: /d
+net use p: \\isis\inst$ /user:isis\builder %BUILDERPW%
 
-REM python.exe ..\purge_archive_client.py
+REM python.exe purge_archive_client.py
 
-REM set INSTALLDIR=%LOCINSTALLDIR%\SVN%SVN_REVISION%
-REM set INSTALLBASEDIR=p:\Kits$\CompGroup\ICP\Client
-REM set INSTALLDIR=%INSTALLBASEDIR%\SVN%SVN_REVISION%\BUILD%BUILD_NUMBER%
-REM if not exist "%INSTALLDIR%\Client" (
-    REM @echo Creating client directory %INSTALLDIR%\Client
-    REM mkdir %INSTALLDIR%\Client
-REM )
+set INSTALLBASEDIR=p:\Kits$\CompGroup\ICP\Client
+set INSTALLDIR=%INSTALLBASEDIR%\BUILD%BUILD_NUMBER%
+if not exist "%INSTALLDIR%\Client" (
+    @echo Creating client directory %INSTALLDIR%\Client
+    mkdir %INSTALLDIR%\Client
+)
 
-REM robocopy %CD%\org.csstudio.isis.ibex.product\target\products\ibex.product\win32\win32\x86_64 %INSTALLDIR%\Client /MIR /R:1 /NFL /NDL /NP
-REM if %errorlevel% geq 4 (
-    REM if not "%INSTALLDIR%" == "" (
-        REM @echo Removing invalid client directory %INSTALLDIR%\Client
-        REM rd /q /s %INSTALLDIR%\Client
-    REM )
-    REM @echo Client copy failed
-    REM exit /b 1
-REM )
+robocopy %CD%\uk.ac.stfc.isis.ibex.client.product\target\products\ibex.product\win32\win32\x86_64 %INSTALLDIR%\Client /MIR /R:1 /NFL /NDL /NP
+if %errorlevel% geq 4 (
+    if not "%INSTALLDIR%" == "" (
+        @echo Removing invalid client directory %INSTALLDIR%\Client
+        rd /q /s %INSTALLDIR%\Client
+    )
+    @echo Client copy failed
+    exit /b 1
+)
 
 REM Copy the genie_python too
-REM mkdir %INSTALLDIR%\genie_python
-REM copy /Y %GENIEPYTHONDIR%\*.* %INSTALLDIR%\genie_python\.
-REM if %errorlevel% neq 0 (
-    REM @echo Genie python copy failed
-    REM exit /b %errorlevel%
-REM )
+mkdir %INSTALLDIR%\genie_python
+copy /Y %GENIEPYTHONDIR%\*.* %INSTALLDIR%\genie_python\.
+if %errorlevel% neq 0 (
+    @echo Genie python copy failed
+    exit /b %errorlevel%
+)
 
 REM Copy EPICS_UTILS
-REM mkdir %INSTALLDIR%\EPICS_UTILS\
-REM copy /Y %INSTALLBASEDIR%\EPICS_UTILS\*.* %INSTALLDIR%\EPICS_UTILS\.
-REM if %errorlevel% neq 0 (
-    REM @echo Epics utils copy failed
-    REM exit /b %errorlevel%
-REM )
+mkdir %INSTALLDIR%\EPICS_UTILS\
+copy /Y %INSTALLBASEDIR%\EPICS_UTILS\*.* %INSTALLDIR%\EPICS_UTILS\.
+if %errorlevel% neq 0 (
+    @echo Epics utils copy failed
+    exit /b %errorlevel%
+)
