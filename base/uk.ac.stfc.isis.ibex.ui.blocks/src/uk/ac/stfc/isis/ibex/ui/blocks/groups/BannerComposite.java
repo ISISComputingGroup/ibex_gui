@@ -14,7 +14,8 @@ public class BannerComposite extends Composite {
 		
 		CLabel lblText = new CLabel(this, SWT.CENTER);
 		lblText.setFont(SWTResourceManager.getFont("Arial", 10, SWT.NORMAL));
-		lblText.setText("No groups to display");
+		// Leave text blank
+		lblText.setText("");
 	}
 
 }
