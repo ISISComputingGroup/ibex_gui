@@ -1,2 +1,0 @@
-As the title says. 
-This is just to help GIT see the folder and include it so that the thing builds without causing confusion on a blank install for a developer
