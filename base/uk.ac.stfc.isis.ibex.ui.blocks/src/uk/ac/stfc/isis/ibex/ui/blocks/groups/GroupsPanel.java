@@ -74,7 +74,7 @@ public class GroupsPanel extends Composite {
 			public void run() {
 				clear();
 				if (groups.isEmpty()) {
-					showBanner("No groups to display");
+					showBanner("No groups to display!");
 					return;
 				}
 				addGroups(groups);
