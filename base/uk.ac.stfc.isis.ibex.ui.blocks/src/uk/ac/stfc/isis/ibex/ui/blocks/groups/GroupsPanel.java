@@ -37,7 +37,7 @@ public class GroupsPanel extends Composite {
 		scrolledComposite.setContent(mainComposite);
 		
 		configureMenu();
-		showBanner("No groups to display");
+		showBanner("");
 
 	}
 
@@ -74,7 +74,7 @@ public class GroupsPanel extends Composite {
 			public void run() {
 				clear();
 				if (groups.isEmpty()) {
-					showBanner("No groups to display");
+					showBanner("");
 					return;
 				}
 				addGroups(groups);
