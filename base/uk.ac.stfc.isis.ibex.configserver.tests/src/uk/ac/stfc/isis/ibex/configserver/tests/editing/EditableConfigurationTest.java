@@ -27,6 +27,7 @@ public class EditableConfigurationTest implements IocDescriber {
 
 	private static final String NAME = "base";
 	private static final String DESCRIPTION = "description";
+	private static final String SYNOPTIC = "";
 	
 	protected static final EditableIoc GALIL01 = new EditableIoc("GALIL_01");
 	protected static final Block GAPX = new Block("GAPX", "ADDRESS", true, true, null);
@@ -74,6 +75,7 @@ public class EditableConfigurationTest implements IocDescriber {
 		return new Configuration(
 				"Empty_config", 
 				"No Description",
+				"",
 				Collections.<Ioc>emptyList(), 
 				Collections.<Block>emptyList(),
 				Collections.<Group>emptyList(),
@@ -94,11 +96,11 @@ public class EditableConfigurationTest implements IocDescriber {
 	}
 	
 	protected Configuration config() {
-		return new Configuration(NAME, DESCRIPTION, iocs, blocks, groups, components, history);
+		return new Configuration(NAME, DESCRIPTION, SYNOPTIC, iocs, blocks, groups, components, history);
 	}
 	
 	protected EditableConfiguration edit(Configuration config) {
-		return new EditableConfiguration(config, allIocs, allComponents, allPvs, activePvs, this);
+		return new EditableConfiguration(config, allIocs, allComponents, allPvs, this);
 	}
 	
 	protected static <T> T getFirst(Iterable<T> items) {
