@@ -146,7 +146,6 @@ public class DoubleListEditor extends Composite {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				if (selectedList.getSelectionIndex() < selectedList.getItemCount() - 1){
-					//groupList.getSelectionIndex() < groupList.getItemCount() - 1)
 					int selectIndex = selectedList.getSelectionIndex();
 					String selected = selectedList.getItem(selectIndex);
 					String temp = selectedList.getItem(selectIndex + 1);
