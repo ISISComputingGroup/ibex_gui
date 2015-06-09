@@ -22,7 +22,7 @@ REM the password for isis\builder is contained in the BUILDERPW system environme
 net use p: /d
 net use p: \\isis\inst$ /user:isis\builder %BUILDERPW%
 
-REM python.exe purge_archive_client.py
+python.exe purge_archive_client.py
 
 set INSTALLBASEDIR=p:\Kits$\CompGroup\ICP\Client
 set INSTALLDIR=%INSTALLBASEDIR%\BUILD%BUILD_NUMBER%
