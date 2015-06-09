@@ -123,7 +123,7 @@ public class GroupsEditorPanel extends Composite {
 		grpBlocks.setLayout(new GridLayout(1, false));
 		grpBlocks.setText("Blocks");
 		
-		blocksEditor = new DoubleListEditor(grpBlocks, SWT.NONE, "name");
+		blocksEditor = new DoubleListEditor(grpBlocks, SWT.NONE, "name",true);
 		GridData gd_blocksEditor = new GridData(SWT.LEFT, SWT.FILL, true, true, 1, 1);
 		gd_blocksEditor.heightHint = 300;
 		gd_blocksEditor.widthHint = 300;
@@ -147,6 +147,7 @@ public class GroupsEditorPanel extends Composite {
 				EditableGroup group = getSelectedGroup();
 				if (group != null){
 			        group.toggleSelection(blocksEditor.selectedItems());
+			        System.out.println(group.getBlocks());
 				}
 			}
 		});
