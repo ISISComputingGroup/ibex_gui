@@ -3,6 +3,7 @@
   <auto_zoom_to_fit_all>false</auto_zoom_to_fit_all>
   <macros>
     <include_parent_macros>true</include_parent_macros>
+    <PV_ROOT>$(P)$(EURO)</PV_ROOT>
   </macros>
   <wuid>-336ad6f:141c65e96ed:-7fff</wuid>
   <boy_version>3.1.4.201301231545</boy_version>
@@ -215,7 +216,7 @@ $(pv_value)</tooltip>
       <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0">
         <macros>
           <include_parent_macros>true</include_parent_macros>
-          <EURO1>$(PV_ROOT)$(EURO):A01</EURO1>
+          <EURO1>$(PV_ROOT):A01</EURO1>
         </macros>
         <visible>true</visible>
         <wuid>2986015a:148e62770aa:-7625</wuid>
@@ -2776,7 +2777,7 @@ $(pv_value)</tooltip>
       <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0">
         <macros>
           <include_parent_macros>true</include_parent_macros>
-          <EURO1>$(PV_ROOT)$(EURO):A02</EURO1>
+          <EURO1>$(PV_ROOT):A02</EURO1>
         </macros>
         <visible>true</visible>
         <wuid>2986015a:148e62770aa:-746c</wuid>
@@ -5337,7 +5338,7 @@ $(pv_value)</tooltip>
       <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0">
         <macros>
           <include_parent_macros>true</include_parent_macros>
-          <EURO1>$(PV_ROOT)$(EURO):A03</EURO1>
+          <EURO1>$(PV_ROOT):A03</EURO1>
         </macros>
         <visible>true</visible>
         <wuid>2986015a:148e62770aa:-7243</wuid>
@@ -7898,7 +7899,7 @@ $(pv_value)</tooltip>
       <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0">
         <macros>
           <include_parent_macros>true</include_parent_macros>
-          <EURO1>$(PV_ROOT)$(EURO)A04</EURO1>
+          <EURO1>$(PV_ROOT):A04</EURO1>
         </macros>
         <visible>true</visible>
         <wuid>2986015a:148e62770aa:-7100</wuid>
