@@ -145,12 +145,13 @@ public class DoubleListEditor extends Composite {
 		btnDown.addSelectionListener(new SelectionAdapter(){
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				if (selectedList.getSelectionIndex() > 0){
+				if (selectedList.getSelectionIndex() < selectedList.getItemCount() - 1){
+					//groupList.getSelectionIndex() < groupList.getItemCount() - 1)
 					int selectIndex = selectedList.getSelectionIndex();
 					String selected = selectedList.getItem(selectIndex);
 					String temp = selectedList.getItem(selectIndex + 1);
-					selectedList.setItem(selectIndex, temp);
 					selectedList.setItem(selectIndex + 1, selected);
+					selectedList.setItem(selectIndex, temp);
 					selectedList.setSelection(selectIndex + 1);
 				}
 			}
