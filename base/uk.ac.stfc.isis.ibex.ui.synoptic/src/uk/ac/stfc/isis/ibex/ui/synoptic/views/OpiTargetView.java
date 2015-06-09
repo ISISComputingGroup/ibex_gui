@@ -21,6 +21,7 @@ public final class OpiTargetView extends OPIView {
 		this.opiName = opiName;
 		
 		macros.put("NAME", title);
+		macros.put("OPINAME", opiName);
 		addMacros(macros);	
 		initialiseOPI();
 	}
