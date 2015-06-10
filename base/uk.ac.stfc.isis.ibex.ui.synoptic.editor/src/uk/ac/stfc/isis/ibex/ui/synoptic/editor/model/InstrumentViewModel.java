@@ -216,8 +216,9 @@ public class InstrumentViewModel {
 		ComponentDescription component = getSelectedComponent();
 		if (component != null && component.target() != null) {
 			component.target().addProperty(property);
-			broadcastInstrumentUpdate(UpdateTypes.EDIT_PROPERTY);
+			broadcastInstrumentUpdate(UpdateTypes.NEW_PROPERTY);
 		}
+		setSelectedProperty(property);
 	}
 
 	public void removeSelectedProperty() {
@@ -225,7 +226,7 @@ public class InstrumentViewModel {
 		if (component != null && component.target() != null) {
 			if (component.target().removeProperty(getSelectedProperty())) {
 				setSelectedProperty(null);
-				broadcastInstrumentUpdate(UpdateTypes.EDIT_PROPERTY);
+				broadcastInstrumentUpdate(UpdateTypes.DELETE_PROPERTY);
 			}
 		}
 	}
