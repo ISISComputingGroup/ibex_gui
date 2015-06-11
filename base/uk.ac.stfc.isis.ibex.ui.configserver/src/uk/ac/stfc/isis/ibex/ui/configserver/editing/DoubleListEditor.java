@@ -172,12 +172,24 @@ public class DoubleListEditor extends Composite {
 		return unselectedItems;
 	}
 	
+	public String selectedItem(){
+		return selectedList.getItem(selectedList.getSelectionIndex());
+	}
+	
 	public void addSelectionListenerForSelecting(SelectionListener listener) {
 		select.addSelectionListener(listener);
 	}
 	
 	public void addSelectionListenerForUnselecting(SelectionListener listener) {
 		unselect.addSelectionListener(listener);
+	}
+	
+	public void addSelectionListenerForMovingUp(SelectionListener listener){
+		btnUp.addSelectionListener(listener);
+	}
+	
+	public void addSelectionListenerForMovingDown(SelectionListener listener){
+		btnDown.addSelectionListener(listener);
 	}
 	
 	@Override

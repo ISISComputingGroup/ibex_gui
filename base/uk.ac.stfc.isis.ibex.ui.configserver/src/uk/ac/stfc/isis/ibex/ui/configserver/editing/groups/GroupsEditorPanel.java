@@ -147,7 +147,28 @@ public class GroupsEditorPanel extends Composite {
 				EditableGroup group = getSelectedGroup();
 				if (group != null){
 			        group.toggleSelection(blocksEditor.selectedItems());
-			        System.out.println(group.getBlocks());
+				}
+			}
+		});
+		
+		blocksEditor.addSelectionListenerForMovingUp(new SelectionAdapter() {
+			@SuppressWarnings("unchecked")
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				EditableGroup group = getSelectedGroup();
+				if (group != null){
+					group.moveBlockUp(blocksEditor.selectedItem());
+				}
+			}
+		});
+		
+		blocksEditor.addSelectionListenerForMovingDown(new SelectionAdapter() {
+			@SuppressWarnings("unchecked")
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				EditableGroup group = getSelectedGroup();
+				if (group != null){
+					group.moveBlockDown(blocksEditor.selectedItem());
 				}
 			}
 		});

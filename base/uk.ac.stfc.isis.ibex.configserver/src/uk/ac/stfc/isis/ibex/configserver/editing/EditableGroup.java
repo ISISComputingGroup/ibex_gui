@@ -21,13 +21,20 @@ import com.google.common.collect.Lists;
 public class EditableGroup extends Group {
 
 	private final ExclusiveSetPair<EditableBlock> blocks;
+	private final List<EditableBlock> blocksInGroup;
+	private final List<EditableBlock> availableBlocks;
 	
 	public EditableGroup(final EditableConfiguration config, Group group) {
 		super(group);
 				
 		blocks = new ExclusiveSetPair<>(config.getEditableBlocks());
-		Collection<EditableBlock> selectedBlocks = lookupBlocksByName(config.getEditableBlocks(), group.getBlocks());
+		List<EditableBlock> selectedBlocks = lookupBlocksByName(config.getEditableBlocks(), group.getBlocks());
 		blocks.move(selectedBlocks);
+		blocksInGroup = selectedBlocks;
+		availableBlocks = (List<EditableBlock>) config.getEditableBlocks();
+		for (EditableBlock block : selectedBlocks){
+			availableBlocks.remove(block);
+		}
 		
 		config.addPropertyChangeListener(new PropertyChangeListener() {	
 			@Override
@@ -52,11 +59,11 @@ public class EditableGroup extends Group {
 	}
 	
 	public Collection<EditableBlock> getUnselectedBlocks() {
-		return new ArrayList<>(blocks.unselected());
+		return new ArrayList<>(availableBlocks);
 	}
 	
 	public Collection<EditableBlock> getSelectedBlocks() {
-		return new ArrayList<>(blocks.selected());
+		return new ArrayList<>(blocksInGroup);
 	}
 	
 	public void toggleSelection(Collection<EditableBlock> blocksToToggle) {
@@ -66,16 +73,43 @@ public class EditableGroup extends Group {
 		
 		for (EditableBlock block : blocksToToggle) {
 			blocks.move(block);
+			if (blocksInGroup.contains(block)){
+				blocksInGroup.remove(block);
+			}
+			else {
+				blocksInGroup.add(block);
+			}
 		}
 		
 		firePropertyChange("selectedBlocks", selectedBefore, getSelectedBlocks());
 		firePropertyChange("unselectedBlocks", unselectedBefore, getUnselectedBlocks());
 		firePropertyChange("blocks", blocksBefore, getBlocks());
+		
+	}
+	
+	public void moveBlockUp(String blockName){
+		EditableBlock blockToMoveUp = lookupBlockByName(blocksInGroup, blockName);
+		int blockToMoveUpIndex = blocksInGroup.indexOf(blockToMoveUp);
+		if (blockToMoveUpIndex > 0){
+			EditableBlock blockToMoveDown = blocksInGroup.get(blockToMoveUpIndex - 1);
+			blocksInGroup.set(blockToMoveUpIndex, blockToMoveDown);
+			blocksInGroup.set(blockToMoveUpIndex - 1, blockToMoveUp);
+		}
+	}
+	
+	public void moveBlockDown(String blockName){
+		EditableBlock blockToMoveDown = lookupBlockByName(blocksInGroup, blockName);
+		int blockToMoveDownIndex = blocksInGroup.indexOf(blockToMoveDown);
+		if (blockToMoveDownIndex < blocksInGroup.size() - 1){
+			EditableBlock blockToMoveUp = blocksInGroup.get(blockToMoveDownIndex + 1);
+			blocksInGroup.set(blockToMoveDownIndex, blockToMoveUp);
+			blocksInGroup.set(blockToMoveDownIndex + 1, blockToMoveDown);
+		}
 	}
 	
 	@Override
 	public Collection<String> getBlocks() {
-		return blockNames(blocks.selected());
+		return blockNames(blocksInGroup);
 	}
 	
 	public boolean isEditable() {
@@ -119,12 +153,26 @@ public class EditableGroup extends Group {
 	}
 	
 	private List<EditableBlock> lookupBlocksByName(Collection<EditableBlock> blocks, final Collection<String> names) {
-		return Lists.newArrayList(Iterables.filter(blocks, new Predicate<Block>() {
-			@Override
-			public boolean apply(final Block block) {
-				return anyNameMatches(names, block);
+		List<EditableBlock> selectedBlocks = new ArrayList<EditableBlock>();
+		List<String> allBlockNames = blockNames(blocks);
+		for (String name : names){
+			int blockIndex = allBlockNames.indexOf(name);
+			if (blockIndex >= 0){
+				EditableBlock block = Iterables.get(blocks, blockIndex);
+				selectedBlocks.add(block);
 			}
-		}));
+		}
+		return selectedBlocks;
+	}
+	
+	private EditableBlock lookupBlockByName(Collection<EditableBlock> blocks, final String name) {
+		EditableBlock block = new EditableBlock(new Block(name, "", true, true, null));
+		List<String> allBlockNames = blockNames(blocks);
+		int blockIndex = allBlockNames.indexOf(name);
+		if (blockIndex >= 0){
+			block = Iterables.get(blocks, blockIndex);
+		}
+		return block;
 	}
 	
 	private static boolean anyNameMatches(final Collection<String> names, final Block block) {
