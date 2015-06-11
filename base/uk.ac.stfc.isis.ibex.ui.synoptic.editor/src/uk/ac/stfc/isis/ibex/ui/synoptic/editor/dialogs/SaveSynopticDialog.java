@@ -105,6 +105,7 @@ public class SaveSynopticDialog extends TitleAreaDialog {
 	protected void createButtonsForButtonBar(Composite parent) {
 		Button button = createButton(parent, IDialogConstants.OK_ID, 
 				IDialogConstants.OK_LABEL, true);
+		button.setEnabled(false);
 		button.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
