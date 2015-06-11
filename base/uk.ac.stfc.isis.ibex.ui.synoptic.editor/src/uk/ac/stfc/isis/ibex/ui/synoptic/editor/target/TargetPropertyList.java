@@ -42,29 +42,29 @@ public class TargetPropertyList extends Composite {
 		instrument.addInstrumentUpdateListener(new IInstrumentUpdateListener() {	
 			@Override
 			public void instrumentUpdated(UpdateTypes updateType) {
-				switch (updateType) {
-					case EDIT_PROPERTY:
-						int selected = list.getList().getSelectionIndex();
-						showPropertyList(instrument.getSelectedComponent());
-						list.refresh();
-						list.getList().setSelection(selected);
-						setButtonStates();
-						break;
-					case NEW_PROPERTY: 
-						int lastItem = list.getList().getItemCount();
-						showPropertyList(instrument.getSelectedComponent());
-						list.getList().setSelection(lastItem);
-						list.refresh();
-						break;
-					case DELETE_PROPERTY:
-						showPropertyList(instrument.getSelectedComponent());
-						list.getList().setSelection(-1);
-						list.refresh();
-						break;
-					default:
-						break;
+				if (updateType == UpdateTypes.EDIT_PROPERTY ||
+					updateType == UpdateTypes.NEW_PROPERTY ||
+					updateType == UpdateTypes.DELETE_PROPERTY) {
+					
+					int selected;
+					
+					switch (updateType) {
+						case EDIT_PROPERTY:
+							selected = list.getList().getSelectionIndex();
+							break;
+						case NEW_PROPERTY: 
+							selected = list.getList().getItemCount();
+							break;
+						case DELETE_PROPERTY:
+						default:
+							selected = -1;
+							break;
+					}
+					showPropertyList(instrument.getSelectedComponent());
+					list.refresh();
+					list.getList().setSelection(selected);
+					setButtonStates();
 				}
-				setButtonStates();
 			}
 		});
 		
