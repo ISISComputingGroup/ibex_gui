@@ -30,7 +30,6 @@ public class SaveSynopticDialog extends TitleAreaDialog {
 	private Text txtName;
 	
 	private String newName = "";
-	private String currentName = "";
 	private List<String> existingSynoptics;
 	
 	public SaveSynopticDialog(
@@ -40,9 +39,6 @@ public class SaveSynopticDialog extends TitleAreaDialog {
 		super(parent);
 		setShellStyle(SWT.DIALOG_TRIM | SWT.APPLICATION_MODAL);
 		this.existingSynoptics = new ArrayList<>(existingSynoptics);
-		if (currentName != null) {
-			this.currentName = currentName;
-		}
 	}
 	
 	public String getNewName() {
