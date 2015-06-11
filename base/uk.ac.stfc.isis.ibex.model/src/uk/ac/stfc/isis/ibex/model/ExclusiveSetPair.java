@@ -2,7 +2,7 @@ package uk.ac.stfc.isis.ibex.model;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 /*
@@ -11,8 +11,8 @@ import java.util.Set;
  */
 public class ExclusiveSetPair<T> {
 
-	private Set<T> selected = new HashSet<>();
-	private Set<T> unselected = new HashSet<>();
+	private Set<T> selected = new LinkedHashSet<>();
+	private Set<T> unselected = new LinkedHashSet<>();
 	
 	public ExclusiveSetPair() {
 	}
@@ -36,7 +36,7 @@ public class ExclusiveSetPair<T> {
 	}
 		
 	public Set<T> all() {
-		Set<T> all = new HashSet<>();
+		Set<T> all = new LinkedHashSet<>();
 		all.addAll(selected);
 		all.addAll(unselected);
 		
@@ -123,7 +123,7 @@ public class ExclusiveSetPair<T> {
 	}
 
 	private Set<T> missing(Collection<T> items) {
-		Set<T> missing = new HashSet<>(all());
+		Set<T> missing = new LinkedHashSet<>(all());
 		missing.removeAll(items);
 		
 		return missing;
