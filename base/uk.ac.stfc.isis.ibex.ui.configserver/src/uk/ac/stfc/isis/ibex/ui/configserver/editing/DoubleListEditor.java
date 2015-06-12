@@ -9,6 +9,8 @@ import org.eclipse.jface.databinding.viewers.ObservableMapLabelProvider;
 import org.eclipse.jface.databinding.viewers.ViewerProperties;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.List;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.SWT;
@@ -21,6 +23,8 @@ public class DoubleListEditor extends Composite {
 	
 	private final Button select;
 	private final Button unselect;
+	private final Button btnUp;
+	private final Button btnDown;
 	private ListViewer selectedViewer;
 	private ListViewer unselectedViewer;
 	private List selectedList;
@@ -34,9 +38,9 @@ public class DoubleListEditor extends Composite {
 	private Label lblAvailable;
 	private Label lblSelected;
 	
-	public DoubleListEditor(Composite parent, int style, String observedProperty) {
+	public DoubleListEditor(Composite parent, int style, String observedProperty, boolean orderable) {
 		super(parent, style);
-		setLayout(new GridLayout(3, false));
+		setLayout(new GridLayout(4, false));		
 		
 		lblAvailable = new Label(this, SWT.NONE);
 		lblAvailable.setText("Available:");
@@ -44,6 +48,7 @@ public class DoubleListEditor extends Composite {
 		
 		lblSelected = new Label(this, SWT.NONE);
 		lblSelected.setText("Selected:");
+		new Label(this, SWT.NONE);
 		
 		unselectedViewer = new ListViewer(this, SWT.BORDER | SWT.V_SCROLL | SWT.MULTI);
 		configureViewer(unselectedViewer, observedProperty);
@@ -59,11 +64,31 @@ public class DoubleListEditor extends Composite {
 		configureViewer(selectedViewer, observedProperty);
 		selectedList = selectedViewer.getList();
 		selectedList.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 2));
-				
+		
+		btnUp =  new Button(this, SWT.NONE);
+		btnUp.setEnabled(false);
+		GridData gd_btnUp = new GridData(SWT.LEFT, SWT.BOTTOM, false, true, 1, 1);
+		gd_btnUp.widthHint = 80;
+		gd_btnUp.exclude = !orderable;
+		btnUp.setLayoutData(gd_btnUp);
+		btnUp.setText("Up");
+		btnUp.setEnabled(true);
+		if (orderable == false){
+			new Label(this, SWT.NONE);
+		}
+		
 		unselect = new Button(this, SWT.NONE);
 		unselect.setEnabled(false);
 		unselect.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, true, 1, 1));
 		unselect.setText("<");
+		
+		btnDown =  new Button(this, SWT.NONE);
+		GridData gd_btnDown = new GridData(SWT.LEFT, SWT.TOP, false, true, 1, 1);
+		gd_btnDown.widthHint = 80;
+		gd_btnDown.exclude = !orderable;
+		btnDown.setLayoutData(gd_btnDown);
+		btnDown.setText("Down");
+		btnDown.setEnabled(true);
 		
 		selectedItems = ViewerProperties.multipleSelection().observe(selectedViewer);
 		unselectedItems = ViewerProperties.multipleSelection().observe(unselectedViewer);
@@ -104,6 +129,34 @@ public class DoubleListEditor extends Composite {
 		});
 		
 		unselectedItems.addListChangeListener(clearSelectedItems);
+		
+		btnUp.addSelectionListener(new SelectionAdapter(){
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				if (selectedList.getSelectionIndex() > 0){
+					int selectIndex = selectedList.getSelectionIndex();
+					String selected = selectedList.getItem(selectIndex);
+					String temp = selectedList.getItem(selectIndex - 1);
+					selectedList.setItem(selectIndex, temp);
+					selectedList.setItem(selectIndex - 1, selected);
+					selectedList.setSelection(selectIndex - 1);
+				}
+			}
+		});
+		
+		btnDown.addSelectionListener(new SelectionAdapter(){
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				if (selectedList.getSelectionIndex() < selectedList.getItemCount() - 1){
+					int selectIndex = selectedList.getSelectionIndex();
+					String selected = selectedList.getItem(selectIndex);
+					String temp = selectedList.getItem(selectIndex + 1);
+					selectedList.setItem(selectIndex + 1, selected);
+					selectedList.setItem(selectIndex, temp);
+					selectedList.setSelection(selectIndex + 1);
+				}
+			}
+		});
 	}
 	 
 	public void bind(IObservableList unselected, IObservableList selected) {		
@@ -119,12 +172,24 @@ public class DoubleListEditor extends Composite {
 		return unselectedItems;
 	}
 	
+	public String selectedItem(){
+		return selectedList.getItem(selectedList.getSelectionIndex());
+	}
+	
 	public void addSelectionListenerForSelecting(SelectionListener listener) {
 		select.addSelectionListener(listener);
 	}
 	
 	public void addSelectionListenerForUnselecting(SelectionListener listener) {
 		unselect.addSelectionListener(listener);
+	}
+	
+	public void addSelectionListenerForMovingUp(SelectionListener listener){
+		btnUp.addSelectionListener(listener);
+	}
+	
+	public void addSelectionListenerForMovingDown(SelectionListener listener){
+		btnDown.addSelectionListener(listener);
 	}
 	
 	@Override
@@ -139,5 +204,13 @@ public class DoubleListEditor extends Composite {
 		viewer.setContentProvider(contentProvider);
 		viewer.setLabelProvider(
 				new ObservableMapLabelProvider(BeansObservables.observeMaps(contentProvider.getKnownElements(), new String[] { observedProperty } )));
+	}
+	
+	public void refreshViewer(){
+		int selectIndex = selectedList.getSelectionIndex();
+		String selected = selectedList.getItem(selectIndex);
+		selectedViewer.refresh();
+		selectIndex = selectedList.indexOf(selected);
+		selectedList.setSelection(selectIndex);
 	}
 }
