@@ -35,7 +35,7 @@
   <widget typeId="org.csstudio.opibuilder.widgets.tab" version="1.0">
     <macros>
       <include_parent_macros>true</include_parent_macros>
-      <PORT>$(IOC):P2:</PORT>
+      <PORT>$(DEV):P2:</PORT>
     </macros>
     <minimum_tab_height>10</minimum_tab_height>
     <active_tab>0</active_tab>
