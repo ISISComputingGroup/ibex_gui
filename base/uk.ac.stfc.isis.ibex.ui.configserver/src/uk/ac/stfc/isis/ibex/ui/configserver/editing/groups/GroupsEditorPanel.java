@@ -158,6 +158,7 @@ public class GroupsEditorPanel extends Composite {
 				EditableGroup group = getSelectedGroup();
 				if (group != null){
 					group.moveBlockUp(blocksEditor.selectedItem());
+					blocksEditor.refreshViewer();
 				}
 			}
 		});
@@ -169,6 +170,7 @@ public class GroupsEditorPanel extends Composite {
 				EditableGroup group = getSelectedGroup();
 				if (group != null){
 					group.moveBlockDown(blocksEditor.selectedItem());
+					blocksEditor.refreshViewer();
 				}
 			}
 		});

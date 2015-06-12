@@ -128,6 +128,8 @@ public class DoubleListEditor extends Composite {
 			}
 		});
 		
+		unselectedItems.addListChangeListener(clearSelectedItems);
+		
 		btnUp.addSelectionListener(new SelectionAdapter(){
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -155,8 +157,6 @@ public class DoubleListEditor extends Composite {
 				}
 			}
 		});
-		
-		unselectedItems.addListChangeListener(clearSelectedItems);
 	}
 	 
 	public void bind(IObservableList unselected, IObservableList selected) {		
@@ -204,5 +204,13 @@ public class DoubleListEditor extends Composite {
 		viewer.setContentProvider(contentProvider);
 		viewer.setLabelProvider(
 				new ObservableMapLabelProvider(BeansObservables.observeMaps(contentProvider.getKnownElements(), new String[] { observedProperty } )));
+	}
+	
+	public void refreshViewer(){
+		int selectIndex = selectedList.getSelectionIndex();
+		String selected = selectedList.getItem(selectIndex);
+		selectedViewer.refresh();
+		selectIndex = selectedList.indexOf(selected);
+		selectedList.setSelection(selectIndex);
 	}
 }
