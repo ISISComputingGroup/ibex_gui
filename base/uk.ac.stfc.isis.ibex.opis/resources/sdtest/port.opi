@@ -39,7 +39,7 @@
     <multiline_input>false</multiline_input>
     <auto_size>false</auto_size>
     <scripts />
-    <height>20</height>
+    <height>31</height>
     <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
     <precision_from_pv>true</precision_from_pv>
     <background_color>
@@ -94,7 +94,7 @@ $(pv_value)</tooltip>
     <wuid>1e6654b8:14de79a1429:-7fac</wuid>
     <auto_size>false</auto_size>
     <scripts />
-    <height>20</height>
+    <height>31</height>
     <name>Label</name>
     <scale_options>
       <width_scalable>true</width_scalable>
@@ -135,7 +135,7 @@ $(pv_value)</tooltip>
     <wuid>1e6654b8:14de79a1429:-7fa3</wuid>
     <auto_size>false</auto_size>
     <scripts />
-    <height>20</height>
+    <height>31</height>
     <name>Label_1</name>
     <scale_options>
       <width_scalable>true</width_scalable>
@@ -179,7 +179,7 @@ $(pv_value)</tooltip>
     <auto_size>false</auto_size>
     <rotation_angle>0.0</rotation_angle>
     <scripts />
-    <height>20</height>
+    <height>31</height>
     <name>Text Update</name>
     <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
     <scale_options>
@@ -243,12 +243,12 @@ $(pv_value)</tooltip>
     </foreground_color>
     <widget_type>Action Button</widget_type>
     <enabled>true</enabled>
-    <text>ASYN record</text>
+    <text>Open ASYN record</text>
     <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
     <font>
       <opifont.name fontName="Segoe UI" height="9" style="0">Default</opifont.name>
     </font>
-    <width>80</width>
+    <width>144</width>
     <border_style>0</border_style>
     <push_action_index>0</push_action_index>
     <image></image>
@@ -273,7 +273,7 @@ $(pv_value)</tooltip>
     </actions>
     <tooltip>$(pv_name)
 $(pv_value)</tooltip>
-    <x>99</x>
+    <x>624</x>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.TextInput" version="1.0">
     <border_alarm_sensitive>false</border_alarm_sensitive>
@@ -282,7 +282,7 @@ $(pv_value)</tooltip>
     <multiline_input>false</multiline_input>
     <auto_size>false</auto_size>
     <scripts />
-    <height>20</height>
+    <height>31</height>
     <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
     <precision_from_pv>true</precision_from_pv>
     <background_color>
@@ -337,7 +337,7 @@ $(pv_value)</tooltip>
     <wuid>1e6654b8:14de79a1429:-7ea2</wuid>
     <auto_size>false</auto_size>
     <scripts />
-    <height>20</height>
+    <height>33</height>
     <name>Label_2</name>
     <scale_options>
       <width_scalable>true</width_scalable>
@@ -378,7 +378,7 @@ $(pv_value)</tooltip>
     <wuid>1e6654b8:14de79a1429:-7c76</wuid>
     <auto_size>false</auto_size>
     <scripts />
-    <height>20</height>
+    <height>33</height>
     <name>Label_3</name>
     <scale_options>
       <width_scalable>true</width_scalable>
@@ -422,7 +422,7 @@ $(pv_value)</tooltip>
     <auto_size>false</auto_size>
     <rotation_angle>0.0</rotation_angle>
     <scripts />
-    <height>20</height>
+    <height>31</height>
     <name>Text Update_1</name>
     <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
     <scale_options>
