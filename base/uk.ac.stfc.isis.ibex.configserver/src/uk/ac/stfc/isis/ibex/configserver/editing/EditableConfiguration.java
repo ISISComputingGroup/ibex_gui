@@ -43,6 +43,7 @@ public class EditableConfiguration extends ModelObject {
 	private final List<EditableIoc> editableIocs = new ArrayList<>();
 	private final List<EditableGroup> editableGroups = new ArrayList<>();
 	private final List<EditableBlock> editableBlocks = new ArrayList<>();
+	private final List<EditableBlock> availableBlocks = new ArrayList<>();
 	private final EditableComponents editableComponents;
 	private List<String> history = new ArrayList<>();
 	
@@ -64,6 +65,9 @@ public class EditableConfiguration extends ModelObject {
 			Block oldBlock = new Block(renamed);
 			oldBlock.setName(oldName);
 			blocksBeforeRename.add(oldBlock);
+			
+			makeBlockUnavailable((EditableBlock) oldBlock);
+			makeBlockAvailable((EditableBlock) renamed);
 			
 			firePropertyChange("blocks", blocksBeforeRename, getBlocks());
 		}
@@ -91,6 +95,7 @@ public class EditableConfiguration extends ModelObject {
 		for (Block block : config.getBlocks()) {
 			EditableBlock eb = new EditableBlock(block);
 			editableBlocks.add(eb);
+			makeBlockAvailable(eb);
 			addRenameListener(eb);
 		}
 		
@@ -132,7 +137,6 @@ public class EditableConfiguration extends ModelObject {
 		else {
 			return "";
 		}
-		
 	}
 	
 	public void setName(String name) {
@@ -200,6 +204,10 @@ public class EditableConfiguration extends ModelObject {
 		return new ArrayList<>(editableBlocks);
 	}
 	
+	public Collection<EditableBlock> getAvailableBlocks() {
+		return new ArrayList<>(availableBlocks);
+	}
+	
 	public Collection<EditableGroup> getEditableGroups() {
 		return new ArrayList<>(DisplayUtils.removeOtherGroup(editableGroups));
 	}
@@ -218,6 +226,7 @@ public class EditableConfiguration extends ModelObject {
 		String name = blockName.getUnique(blockNames());
 		EditableBlock block = new EditableBlock(new Block(name, "", true, true, null));
 		editableBlocks.add(0, block);
+		makeBlockAvailable(block);
 		addRenameListener(block);
 		
 		firePropertyChange("blocks", blocksBeforeAdd, getBlocks());
@@ -225,9 +234,20 @@ public class EditableConfiguration extends ModelObject {
 		return block;
 	}
 	
+	public void makeBlockUnavailable(EditableBlock block) {
+		availableBlocks.remove(block);
+	}
+	
+	public void makeBlockAvailable(EditableBlock block){
+		if (!availableBlocks.contains(block)){
+			availableBlocks.add(0, block);
+		}
+	}
+	
 	public void removeBlock(EditableBlock block) {
 		Collection<Block> blocksBefore = getBlocks();
 		editableBlocks.remove(block);
+		makeBlockUnavailable(block);
 		firePropertyChange("blocks", blocksBefore, getBlocks());
 	}
 	

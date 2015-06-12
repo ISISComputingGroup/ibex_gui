@@ -4,36 +4,32 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
-
 import uk.ac.stfc.isis.ibex.configserver.configuration.Block;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Group;
 import uk.ac.stfc.isis.ibex.configserver.internal.DisplayUtils;
-import uk.ac.stfc.isis.ibex.model.ExclusiveSetPair;
-
 import com.google.common.base.Function;
-import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 
 public class EditableGroup extends Group {
 
-	private final ExclusiveSetPair<EditableBlock> blocks;
 	private final List<EditableBlock> blocksInGroup;
-	private final List<EditableBlock> availableBlocks;
+	private List<EditableBlock> availableBlocks;
+	private final EditableConfiguration config;
 	
-	public EditableGroup(final EditableConfiguration config, Group group) {
+	public EditableGroup(final EditableConfiguration configuration, Group group) {
 		super(group);
-				
-		blocks = new ExclusiveSetPair<>(config.getEditableBlocks());
+		
+		config = configuration;
 		List<EditableBlock> selectedBlocks = lookupBlocksByName(config.getEditableBlocks(), group.getBlocks());
-		blocks.move(selectedBlocks);
 		blocksInGroup = selectedBlocks;
-		availableBlocks = (List<EditableBlock>) config.getEditableBlocks();
+		availableBlocks = (List<EditableBlock>) config.getAvailableBlocks();
 		for (EditableBlock block : selectedBlocks){
 			availableBlocks.remove(block);
+			if (!group.getName().equals("NONE")){
+				config.makeBlockUnavailable(block);
+			}
 		}
 		
 		config.addPropertyChangeListener(new PropertyChangeListener() {	
@@ -59,7 +55,7 @@ public class EditableGroup extends Group {
 	}
 	
 	public Collection<EditableBlock> getUnselectedBlocks() {
-		return new ArrayList<>(availableBlocks);
+		return new ArrayList<>(config.getAvailableBlocks());
 	}
 	
 	public Collection<EditableBlock> getSelectedBlocks() {
@@ -72,19 +68,19 @@ public class EditableGroup extends Group {
 		Collection<String> blocksBefore = getBlocks();
 		
 		for (EditableBlock block : blocksToToggle) {
-			blocks.move(block);
 			if (blocksInGroup.contains(block)){
 				blocksInGroup.remove(block);
+				config.makeBlockAvailable(block);
 			}
 			else {
 				blocksInGroup.add(block);
+				config.makeBlockUnavailable(block);
 			}
 		}
 		
 		firePropertyChange("selectedBlocks", selectedBefore, getSelectedBlocks());
 		firePropertyChange("unselectedBlocks", unselectedBefore, getUnselectedBlocks());
-		firePropertyChange("blocks", blocksBefore, getBlocks());
-		
+		firePropertyChange("blocks", blocksBefore, getBlocks());	
 	}
 	
 	public void moveBlockUp(String blockName){
@@ -130,17 +126,16 @@ public class EditableGroup extends Group {
 	}
 
 	private void removeDeletedBlocks(EditableConfiguration config) {
-		Set<EditableBlock> missing = new HashSet<>(blocks.all());
-		missing.removeAll(config.getEditableBlocks());
-		for (EditableBlock block : missing) {
-			blocks.remove(block);
+		Collection<EditableBlock> configBlocks = config.getEditableBlocks();
+		for (EditableBlock block : blocksInGroup){
+			if (!configBlocks.contains(block)){
+				blocksInGroup.remove(block);
+			}
 		}
 	}
 	
 	private void addNewBlocks(EditableConfiguration config) {
-		for (EditableBlock block : config.getEditableBlocks()) {
-			blocks.addUnselected(block);
-		}
+		availableBlocks = (List<EditableBlock>) config.getAvailableBlocks();
 	}
 	
 	private List<String> blockNames(Collection<? extends Block> blocks) {
@@ -175,12 +170,4 @@ public class EditableGroup extends Group {
 		return block;
 	}
 	
-	private static boolean anyNameMatches(final Collection<String> names, final Block block) {
-		return Iterables.any(names, new Predicate<String>() {
-			@Override
-			public boolean apply(String name) {
-				return block.getName().equals(name);
-			}
-		});
-	}
 }
