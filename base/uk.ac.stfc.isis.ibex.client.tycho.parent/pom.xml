@@ -89,6 +89,8 @@
           		</execution>
         	</executions>
         	<configuration>
+        		<sourceDirectory>src</sourceDirectory>
+        		<!-- <consoleOutput>true</consoleOutput> -->
         	    <configLocation>checkstyle.xml</configLocation>
           		<failOnViolation>false</failOnViolation>
           		<failsOnError>false</failsOnError>
