@@ -13,7 +13,7 @@
   <snap_to_geometry>true</snap_to_geometry>
   <show_grid>true</show_grid>
   <background_color>
-    <color red="240" green="240" blue="240" />
+    <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
   </background_color>
   <foreground_color>
     <color red="192" green="192" blue="192" />
@@ -49,7 +49,7 @@
     <enabled>true</enabled>
     <text></text>
     <font>
-      <opifont.name fontName="Segoe UI" height="9" style="0">Default</opifont.name>
+      <opifont.name fontName="Arial" height="14" style="1">ISIS_Value</opifont.name>
     </font>
     <width>506</width>
     <border_style>3</border_style>
@@ -113,7 +113,7 @@ $(pv_value)</tooltip>
     <enabled>true</enabled>
     <text>Command</text>
     <font>
-      <opifont.name fontName="Segoe UI" height="9" style="0">Default</opifont.name>
+      <opifont.name fontName="Arial" height="14" style="1">ISIS_Label</opifont.name>
     </font>
     <width>150</width>
     <border_style>0</border_style>
@@ -154,7 +154,7 @@ $(pv_value)</tooltip>
     <enabled>true</enabled>
     <text>Reply</text>
     <font>
-      <opifont.name fontName="Segoe UI" height="9" style="0">Default</opifont.name>
+      <opifont.name fontName="Arial" height="14" style="1">ISIS_Label</opifont.name>
     </font>
     <width>150</width>
     <border_style>0</border_style>
@@ -203,7 +203,7 @@ $(pv_value)</tooltip>
     <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
     <precision>0</precision>
     <font>
-      <opifont.name fontName="Segoe UI" height="9" style="0">Default</opifont.name>
+      <opifont.name fontName="Arial" height="14" style="1">ISIS_Value</opifont.name>
     </font>
     <width>503</width>
     <border_style>0</border_style>
@@ -246,9 +246,9 @@ $(pv_value)</tooltip>
     <text>Open ASYN record</text>
     <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
     <font>
-      <opifont.name fontName="Segoe UI" height="9" style="0">Default</opifont.name>
+      <opifont.name fontName="Arial" height="14" style="1">ISIS_Button</opifont.name>
     </font>
-    <width>144</width>
+    <width>192</width>
     <border_style>0</border_style>
     <push_action_index>0</push_action_index>
     <image></image>
@@ -273,7 +273,7 @@ $(pv_value)</tooltip>
     </actions>
     <tooltip>$(pv_name)
 $(pv_value)</tooltip>
-    <x>624</x>
+    <x>576</x>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.TextInput" version="1.0">
     <border_alarm_sensitive>false</border_alarm_sensitive>
@@ -292,7 +292,7 @@ $(pv_value)</tooltip>
     <enabled>true</enabled>
     <text></text>
     <font>
-      <opifont.name fontName="Segoe UI" height="9" style="0">Default</opifont.name>
+      <opifont.name fontName="Arial" height="14" style="1">ISIS_Value</opifont.name>
     </font>
     <width>504</width>
     <border_style>3</border_style>
@@ -356,9 +356,9 @@ $(pv_value)</tooltip>
     <enabled>true</enabled>
     <text>Device Name</text>
     <font>
-      <opifont.name fontName="Segoe UI" height="9" style="0">Default</opifont.name>
+      <opifont.name fontName="Arial" height="14" style="1">ISIS_Label</opifont.name>
     </font>
-    <width>144</width>
+    <width>153</width>
     <border_style>0</border_style>
     <rules />
     <border_width>1</border_width>
@@ -370,7 +370,7 @@ $(pv_value)</tooltip>
     <y>64</y>
     <wrap_words>true</wrap_words>
     <tooltip></tooltip>
-    <x>105</x>
+    <x>96</x>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0">
     <visible>true</visible>
@@ -397,7 +397,7 @@ $(pv_value)</tooltip>
     <enabled>true</enabled>
     <text>Reply Async</text>
     <font>
-      <opifont.name fontName="Segoe UI" height="9" style="0">Default</opifont.name>
+      <opifont.name fontName="Arial" height="14" style="1">ISIS_Label</opifont.name>
     </font>
     <width>144</width>
     <border_style>0</border_style>
@@ -446,7 +446,7 @@ $(pv_value)</tooltip>
     <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
     <precision>0</precision>
     <font>
-      <opifont.name fontName="Segoe UI" height="9" style="0">Default</opifont.name>
+      <opifont.name fontName="Arial" height="14" style="1">ISIS_Value</opifont.name>
     </font>
     <width>502</width>
     <border_style>0</border_style>

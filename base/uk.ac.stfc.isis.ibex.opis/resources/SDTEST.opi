@@ -47,7 +47,7 @@
       <color red="255" green="255" blue="255" />
     </tab_4_background_color>
     <tab_5_font>
-      <opifont.name fontName="Segoe UI" height="9" style="0">Default</opifont.name>
+      <opifont.name fontName="Arial" height="9" style="0">ISIS_Label_Small</opifont.name>
     </tab_5_font>
     <minimum_tab_height>10</minimum_tab_height>
     <tab_5_title>P6</tab_5_title>
@@ -56,14 +56,14 @@
     <border_style>0</border_style>
     <tab_3_icon_path></tab_3_icon_path>
     <tab_4_font>
-      <opifont.name fontName="Segoe UI" height="9" style="0">Default</opifont.name>
+      <opifont.name fontName="Arial" height="9" style="0">ISIS_Label_Small</opifont.name>
     </tab_4_font>
     <tab_5_icon_path></tab_5_icon_path>
     <wuid>1e6654b8:14de79a1429:-7fd6</wuid>
     <tab_6_title>P7</tab_6_title>
     <tab_1_icon_path></tab_1_icon_path>
     <tab_2_font>
-      <opifont.name fontName="Segoe UI" height="9" style="0">Default</opifont.name>
+      <opifont.name fontName="Arial" height="9" style="0">ISIS_Label_Small</opifont.name>
     </tab_2_font>
     <tab_4_enabled>true</tab_4_enabled>
     <tab_4_foreground_color>
@@ -103,13 +103,13 @@
     <scripts />
     <tab_1_enabled>true</tab_1_enabled>
     <tab_6_font>
-      <opifont.name fontName="Segoe UI" height="9" style="0">Default</opifont.name>
+      <opifont.name fontName="Arial" height="9" style="0">ISIS_Label_Small</opifont.name>
     </tab_6_font>
     <height>445</height>
     <tab_5_enabled>true</tab_5_enabled>
     <horizontal_tabs>true</horizontal_tabs>
     <tab_1_font>
-      <opifont.name fontName="Segoe UI" height="9" style="0">Default</opifont.name>
+      <opifont.name fontName="Arial" height="9" style="0">ISIS_Label_Small</opifont.name>
     </tab_1_font>
     <tab_1_foreground_color>
       <color red="0" green="0" blue="0" />
@@ -117,10 +117,10 @@
     <tab_0_title>P1</tab_0_title>
     <tab_7_title>P8</tab_7_title>
     <tab_7_font>
-      <opifont.name fontName="Segoe UI" height="9" style="0">Default</opifont.name>
+      <opifont.name fontName="Arial" height="9" style="0">ISIS_Label_Small</opifont.name>
     </tab_7_font>
     <background_color>
-      <color red="240" green="240" blue="240" />
+      <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
     </background_color>
     <widget_type>Tabbed Container</widget_type>
     <enabled>true</enabled>
@@ -149,7 +149,7 @@
       <color red="255" green="255" blue="255" />
     </tab_5_background_color>
     <tab_0_font>
-      <opifont.name fontName="Segoe UI" height="9" style="0">Default</opifont.name>
+      <opifont.name fontName="Arial" height="9" style="0">ISIS_Label_Small</opifont.name>
     </tab_0_font>
     <rules />
     <tab_6_enabled>true</tab_6_enabled>
@@ -161,7 +161,7 @@
       <color red="0" green="0" blue="0" />
     </tab_2_foreground_color>
     <tab_3_font>
-      <opifont.name fontName="Segoe UI" height="9" style="0">Default</opifont.name>
+      <opifont.name fontName="Arial" height="9" style="0">ISIS_Label_Small</opifont.name>
     </tab_3_font>
     <tab_count>8</tab_count>
     <tooltip></tooltip>
@@ -226,7 +226,7 @@
           <color red="192" green="192" blue="192" />
         </foreground_color>
         <background_color>
-          <color red="240" green="240" blue="240" />
+          <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
         </background_color>
         <group_name></group_name>
         <enabled>true</enabled>
