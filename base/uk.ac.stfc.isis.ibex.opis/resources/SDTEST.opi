@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<display typeId="org.csstudio.opibuilder.Display" version="1.0">
+  <auto_zoom_to_fit_all>false</auto_zoom_to_fit_all>
+  <macros>
+    <include_parent_macros>true</include_parent_macros>
+  </macros>
+  <wuid>-71ff7ebf:14de3ccef7c:-7ca2</wuid>
+  <boy_version>3.1.4.201301231545</boy_version>
+  <scripts />
+  <show_ruler>true</show_ruler>
+  <height>600</height>
+  <name></name>
+  <snap_to_geometry>true</snap_to_geometry>
+  <show_grid>true</show_grid>
+  <background_color>
+    <color red="240" green="240" blue="240" />
+  </background_color>
+  <foreground_color>
+    <color red="192" green="192" blue="192" />
+  </foreground_color>
+  <widget_type>Display</widget_type>
+  <show_close_button>true</show_close_button>
+  <width>800</width>
+  <rules />
+  <show_edit_range>true</show_edit_range>
+  <grid_space>6</grid_space>
+  <auto_scale_widgets>
+    <auto_scale_widgets>false</auto_scale_widgets>
+    <min_width>-1</min_width>
+    <min_height>-1</min_height>
+  </auto_scale_widgets>
+  <actions hook="false" hook_all="false" />
+  <y>-1</y>
+  <x>-1</x>
+  <widget typeId="org.csstudio.opibuilder.widgets.tab" version="1.0">
+    <macros>
+      <include_parent_macros>true</include_parent_macros>
+      <PORT>$(IOC):P2:</PORT>
+    </macros>
+    <minimum_tab_height>10</minimum_tab_height>
+    <active_tab>0</active_tab>
+    <tab_1_title>SD2</tab_1_title>
+    <border_style>0</border_style>
+    <wuid>1e6654b8:14de79a1429:-7fd6</wuid>
+    <tab_1_icon_path></tab_1_icon_path>
+    <tab_0_background_color>
+      <color red="255" green="255" blue="255" />
+    </tab_0_background_color>
+    <foreground_color>
+      <color red="192" green="192" blue="192" />
+    </foreground_color>
+    <tab_0_foreground_color>
+      <color red="0" green="0" blue="0" />
+    </tab_0_foreground_color>
+    <tab_0_enabled>true</tab_0_enabled>
+    <border_color>
+      <color red="0" green="128" blue="255" />
+    </border_color>
+    <actions hook="false" hook_all="false" />
+    <y>96</y>
+    <x>78</x>
+    <visible>true</visible>
+    <scripts />
+    <tab_1_enabled>true</tab_1_enabled>
+    <height>445</height>
+    <horizontal_tabs>true</horizontal_tabs>
+    <tab_1_font>
+      <opifont.name fontName="Segoe UI" height="9" style="0">Default</opifont.name>
+    </tab_1_font>
+    <tab_1_foreground_color>
+      <color red="0" green="0" blue="0" />
+    </tab_1_foreground_color>
+    <tab_0_title>SD1</tab_0_title>
+    <background_color>
+      <color red="240" green="240" blue="240" />
+    </background_color>
+    <widget_type>Tabbed Container</widget_type>
+    <enabled>true</enabled>
+    <width>667</width>
+    <tab_1_background_color>
+      <color red="255" green="255" blue="255" />
+    </tab_1_background_color>
+    <border_width>1</border_width>
+    <name>Tabbed Container</name>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <tab_0_icon_path></tab_0_icon_path>
+    <tab_0_font>
+      <opifont.name fontName="Segoe UI" height="9" style="0">Default</opifont.name>
+    </tab_0_font>
+    <rules />
+    <tab_count>2</tab_count>
+    <tooltip></tooltip>
+    <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0">
+      <macros>
+        <include_parent_macros>true</include_parent_macros>
+      </macros>
+      <visible>true</visible>
+      <wuid>1e6654b8:14de79a1429:-7fd5</wuid>
+      <scripts />
+      <height>416</height>
+      <name>SD1</name>
+      <scale_options>
+        <width_scalable>true</width_scalable>
+        <height_scalable>true</height_scalable>
+        <keep_wh_ratio>false</keep_wh_ratio>
+      </scale_options>
+      <transparent>true</transparent>
+      <show_scrollbar>true</show_scrollbar>
+      <foreground_color>
+        <color red="192" green="192" blue="192" />
+      </foreground_color>
+      <background_color>
+        <color red="240" green="240" blue="240" />
+      </background_color>
+      <enabled>true</enabled>
+      <widget_type>Grouping Container</widget_type>
+      <font>
+        <opifont.name fontName="Segoe UI" height="9" style="0">Default</opifont.name>
+      </font>
+      <width>665</width>
+      <border_style>0</border_style>
+      <rules />
+      <lock_children>false</lock_children>
+      <border_width>1</border_width>
+      <border_color>
+        <color red="0" green="128" blue="255" />
+      </border_color>
+      <y>1</y>
+      <actions hook="false" hook_all="false" />
+      <x>1</x>
+      <tooltip></tooltip>
+      <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0">
+        <macros>
+          <include_parent_macros>true</include_parent_macros>
+          <PORT>$(DEV):P1:</PORT>
+        </macros>
+        <visible>true</visible>
+        <wuid>1e6654b8:14de79a1429:-7fc7</wuid>
+        <auto_size>false</auto_size>
+        <scripts />
+        <zoom_to_fit>true</zoom_to_fit>
+        <height>416</height>
+        <name>Linking Container</name>
+        <scale_options>
+          <width_scalable>true</width_scalable>
+          <height_scalable>true</height_scalable>
+          <keep_wh_ratio>false</keep_wh_ratio>
+        </scale_options>
+        <opi_file>sdtest/port.opi</opi_file>
+        <foreground_color>
+          <color red="192" green="192" blue="192" />
+        </foreground_color>
+        <background_color>
+          <color red="240" green="240" blue="240" />
+        </background_color>
+        <group_name></group_name>
+        <enabled>true</enabled>
+        <widget_type>Linking Container</widget_type>
+        <font>
+          <opifont.name fontName="Segoe UI" height="9" style="0">Default</opifont.name>
+        </font>
+        <width>665</width>
+        <border_style>3</border_style>
+        <rules />
+        <border_width>1</border_width>
+        <border_color>
+          <color red="0" green="128" blue="255" />
+        </border_color>
+        <y>0</y>
+        <actions hook="false" hook_all="false" />
+        <x>0</x>
+        <tooltip></tooltip>
+      </widget>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0">
+      <macros>
+        <include_parent_macros>true</include_parent_macros>
+      </macros>
+      <visible>false</visible>
+      <wuid>1e6654b8:14de79a1429:-7fd4</wuid>
+      <scripts />
+      <height>416</height>
+      <name>SD2</name>
+      <scale_options>
+        <width_scalable>true</width_scalable>
+        <height_scalable>true</height_scalable>
+        <keep_wh_ratio>false</keep_wh_ratio>
+      </scale_options>
+      <transparent>true</transparent>
+      <show_scrollbar>true</show_scrollbar>
+      <foreground_color>
+        <color red="192" green="192" blue="192" />
+      </foreground_color>
+      <background_color>
+        <color red="240" green="240" blue="240" />
+      </background_color>
+      <enabled>true</enabled>
+      <widget_type>Grouping Container</widget_type>
+      <font>
+        <opifont.name fontName="Segoe UI" height="9" style="0">Default</opifont.name>
+      </font>
+      <width>665</width>
+      <border_style>0</border_style>
+      <rules />
+      <lock_children>false</lock_children>
+      <border_width>1</border_width>
+      <border_color>
+        <color red="0" green="128" blue="255" />
+      </border_color>
+      <y>1</y>
+      <actions hook="false" hook_all="false" />
+      <x>1</x>
+      <tooltip></tooltip>
+      <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0">
+        <macros>
+          <include_parent_macros>true</include_parent_macros>
+        </macros>
+        <visible>true</visible>
+        <wuid>1e6654b8:14de79a1429:-7fc0</wuid>
+        <auto_size>false</auto_size>
+        <scripts />
+        <zoom_to_fit>true</zoom_to_fit>
+        <height>416</height>
+        <name>Linking Container</name>
+        <scale_options>
+          <width_scalable>true</width_scalable>
+          <height_scalable>true</height_scalable>
+          <keep_wh_ratio>false</keep_wh_ratio>
+        </scale_options>
+        <opi_file>sdtest/port.opi</opi_file>
+        <foreground_color>
+          <color red="192" green="192" blue="192" />
+        </foreground_color>
+        <background_color>
+          <color red="240" green="240" blue="240" />
+        </background_color>
+        <group_name></group_name>
+        <enabled>true</enabled>
+        <widget_type>Linking Container</widget_type>
+        <font>
+          <opifont.name fontName="Segoe UI" height="9" style="0">Default</opifont.name>
+        </font>
+        <width>665</width>
+        <border_style>3</border_style>
+        <rules />
+        <border_width>1</border_width>
+        <border_color>
+          <color red="0" green="128" blue="255" />
+        </border_color>
+        <y>0</y>
+        <actions hook="false" hook_all="false" />
+        <x>0</x>
+        <tooltip></tooltip>
+      </widget>
+    </widget>
+  </widget>
+</display>
