@@ -181,7 +181,6 @@
   	<module>../uk.ac.stfc.isis.ibex.instrument</module>
   	<module>../uk.ac.stfc.isis.ibex.epics</module>
   	<module>../uk.ac.stfc.isis.ibex.dae.tests</module>
-  	<!-- module>../com.google.gson</module-->
   	<module>../uk.ac.stfc.isis.ibex.banner</module>
   	<module>../uk.ac.stfc.isis.ibex.ui.banner</module>
   	<module>../uk.ac.stfc.isis.ibex.ui.weblinks</module>
