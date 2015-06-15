@@ -30,7 +30,6 @@ public class SaveSynopticDialog extends TitleAreaDialog {
 	private Text txtName;
 	
 	private String newName = "";
-	private String currentName = "";
 	private List<String> existingSynoptics;
 	
 	public SaveSynopticDialog(
@@ -40,9 +39,6 @@ public class SaveSynopticDialog extends TitleAreaDialog {
 		super(parent);
 		setShellStyle(SWT.DIALOG_TRIM | SWT.APPLICATION_MODAL);
 		this.existingSynoptics = new ArrayList<>(existingSynoptics);
-		if (currentName != null) {
-			this.currentName = currentName;
-		}
 	}
 	
 	public String getNewName() {
@@ -105,6 +101,7 @@ public class SaveSynopticDialog extends TitleAreaDialog {
 	protected void createButtonsForButtonBar(Composite parent) {
 		Button button = createButton(parent, IDialogConstants.OK_ID, 
 				IDialogConstants.OK_LABEL, true);
+		button.setEnabled(false);
 		button.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -118,13 +115,11 @@ public class SaveSynopticDialog extends TitleAreaDialog {
 	  protected void okPressed() {
 		if (validate(name())) {
 			newName = name();
-			if (compareIgnoringCase(newName, currentName)) {
-				//Warn about overwriting if already exists
-				if (isDuplicate(newName)) {
-					boolean userCancelled = askUserWhetherToOverwrite();
-					if (userCancelled) {
-						return;
-					}
+			//Warn about overwriting if already exists
+			if (isDuplicate(newName)) {
+				boolean userCancelled = askUserWhetherToOverwrite(newName);
+				if (userCancelled) {
+					return;
 				}
 			}
 			
@@ -134,9 +129,9 @@ public class SaveSynopticDialog extends TitleAreaDialog {
 		// else ignore the click
 	}
 
-	private boolean askUserWhetherToOverwrite() {
-		MessageBox box = new MessageBox(getShell(), SWT.YES | SWT.NO);
-		box.setMessage("The specified synoptic name already exists - do you want to replace it?");
+	private boolean askUserWhetherToOverwrite(String newName) {
+		MessageBox box = new MessageBox(getShell(), SWT.ICON_WARNING | SWT.YES | SWT.NO);
+		box.setMessage("The synoptic \"" + newName + "\" already exists. \n Do you want to replace it?");
 		
 		//Message boxes return the ID of the button to close, so need to check that value..
 		return box.open() != SWT.YES;
