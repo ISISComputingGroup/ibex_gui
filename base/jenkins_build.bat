@@ -9,7 +9,7 @@ for /F %%f in ('dir "C:\Program Files\Java\jdk1.7*" /b') do set JAVA_HOME=C:\Pro
 	
 set PATH=%M2%;%JAVA_HOME%;%PYTHON%;%PATH%
 
-call mvn --settings=%CD%\..\mvn_user_settings.xml -f uk.ac.stfc.isis.ibex.client.tycho.parent\pom.xml clean verify
+call build.bat
 if %errorlevel% neq 0 exit /b %errorlevel%
 
 REM Even if the build is successful this does not mean the executable works!

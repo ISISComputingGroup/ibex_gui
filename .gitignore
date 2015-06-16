@@ -1,2 +1,6 @@
 bin/
 target/
+surefire-reports/
+base/com.google.gson/.project
+base/uk.ac.stfc.isis.ibex.tycho.parent/.project
+base/workspace/.metadata/.log
