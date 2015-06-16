@@ -88,8 +88,8 @@
         <!-- Checks for Size Violations.                    -->
         <!-- See http://checkstyle.sf.net/config_sizes.html -->
         <!--<module name="LineLength"/>-->
-        <module name="MethodLength"/>
-        <module name="ParameterNumber"/>
+        <!--<module name="MethodLength"/>-->
+        <!--<module name="ParameterNumber"/>-->
 
 
         <!-- Checks for whitespace                               -->
@@ -142,7 +142,7 @@
         <module name="FinalClass"/>
         <module name="HideUtilityClassConstructor"/>
         <module name="InterfaceIsType"/>
-        <module name="VisibilityModifier"/>
+        <!--<module name="VisibilityModifier"/>-->
 
 
         <!-- Miscellaneous other checks.                   -->
