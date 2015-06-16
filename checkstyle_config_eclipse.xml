@@ -11,6 +11,7 @@
 <module name="Checker">
   <property name="severity" value="warning"/>
   <module name="TreeWalker">
+    <module name="FileContentsHolder"/>
     <module name="JavadocMethod"/>
     <module name="JavadocType"/>
     <module name="JavadocVariable"/>
@@ -65,13 +66,17 @@
     <module name="HideUtilityClassConstructor"/>
     <module name="InterfaceIsType"/>
     <module name="VisibilityModifier">
-        <property name="severity" value="ignore"/>
-        <metadata name="net.sf.eclipsecs.core.lastEnabledSeverity" value="inherit"/>
+      <property name="severity" value="ignore"/>
+      <metadata name="net.sf.eclipsecs.core.lastEnabledSeverity" value="inherit"/>
     </module>
     <module name="ArrayTypeStyle"/>
     <module name="TodoComment"/>
     <module name="UpperEll"/>
+    <module name="SuppressWarningsHolder"/>
+    <module name="SuppressWarnings"/>
   </module>
+  <module name="SuppressWarningsFilter"/>
+  <module name="SuppressionCommentFilter"/>
   <module name="JavadocPackage"/>
   <module name="Translation"/>
   <module name="FileLength">
