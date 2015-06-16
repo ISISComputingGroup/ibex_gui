@@ -68,7 +68,7 @@ public class EditConfigDialog extends TitleAreaDialog implements MessageDisplaye
 	
 	@Override
 	protected void createButtonsForButtonBar(Composite parent) {
-		if (isBlank == false){ 
+		if (isBlank == false && !this.config.getName().isEmpty()){ 
 			createButton(parent, IDialogConstants.OK_ID, "Save", true);
 		}
 		saveAsBtn = createButton(parent, IDialogConstants.CLIENT_ID + 1, "Save as ...", false);
