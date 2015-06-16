@@ -132,7 +132,7 @@ public class ComponentDropListener extends ViewerDropAdapter {
 		}
 		
 		//Fail if trying to drop a parent on to a child
-		if(sourceComponent.hasChild((ComponentDescription)targetObject)) {
+		if (sourceComponent.hasChild((ComponentDescription) targetObject)) {
 			return false;
 		}
 

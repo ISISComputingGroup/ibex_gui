@@ -35,7 +35,7 @@ public class LogListener implements ILogListener {
     @Override
     public void logging(IStatus status, String plugin) {
     	Level level = Level.INFO;
-    	switch(status.getSeverity()) {
+    	switch (status.getSeverity()) {
     		case Status.WARNING:
     			level = Level.WARN;
     			break;

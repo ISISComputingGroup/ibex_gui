@@ -20,9 +20,9 @@ public class ObservingSynopticModel {
 			}
 
 			@Override
-			public void onError(Exception e) {}
+			public void onError(Exception e) { }
 			@Override
-			public void onConnectionChanged(boolean isConnected) {}
+			public void onConnectionChanged(boolean isConnected) { }
 		};
 		
 	private final InitialisableObserver<Configuration> configSynopticObserver 
@@ -38,14 +38,14 @@ public class ObservingSynopticModel {
 			}
 
 			@Override
-			public void onError(Exception e) {}
+			public void onError(Exception e) { }
 			@Override
-			public void onConnectionChanged(boolean isConnected) {}
+			public void onConnectionChanged(boolean isConnected) { }
 		};
 	
 	private final SynopticModel model;
 	private final Variables variables;
-	private final ClosingSwitchableObservable <InstrumentDescription> synoptic;
+	private final ClosingSwitchableObservable<InstrumentDescription> synoptic;
 	
 	public ObservingSynopticModel(Variables variables, SynopticModel model) {
 		this.model = model;

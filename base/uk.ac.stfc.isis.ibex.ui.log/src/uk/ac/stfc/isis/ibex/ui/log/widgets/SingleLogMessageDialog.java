@@ -27,7 +27,7 @@ public class SingleLogMessageDialog extends Dialog {
 	 * Ordered list of fields to display in the dialog. Doesn't include contents
 	 * as that is treated differently.
 	 */
-	private static LogMessageFields[] FIELDS = { LogMessageFields.CLIENT_NAME,
+	private static LogMessageFields[] FIELDS = { LogMessageFields.CLIENT_NAME, 
 			LogMessageFields.CLIENT_HOST, LogMessageFields.APPLICATION_ID,
 			LogMessageFields.SEVERITY, LogMessageFields.TYPE,
 			LogMessageFields.EVENT_TIME, LogMessageFields.CREATE_TIME, };

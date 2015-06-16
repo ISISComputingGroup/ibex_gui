@@ -25,29 +25,22 @@ public class UsersConverter extends Converter {
 		
 		List<String> names = new ArrayList<String>();
 		
-		try
-		{
+		try {
 			names = new Gson().fromJson(arg0.toString(), new TypeToken<List<String>>() {}.getType());
 		}
-		catch(Exception err)
-		{
+		catch (Exception err) {
 			//It was not valid json, so just set users to nothing
 		}
 		
-		if (names != null && names.size() > 0)
-		{
-			for (int i=0; i < names.size(); ++i)
-			{
-				if (i == 0)
-				{
+		if (names != null && names.size() > 0) {
+			for (int i = 0; i < names.size(); ++i) {
+				if (i == 0) {
 					raw += names.get(i);
 				}
-				else if (i == names.size() - 1)
-				{
+				else if (i == names.size() - 1) {
 					raw += " and " + names.get(i);
 				}
-				else
-				{
+				else {
 					raw += ", " + names.get(i);
 				}	
 			}

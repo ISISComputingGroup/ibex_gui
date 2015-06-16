@@ -68,12 +68,12 @@ public class EditConfigDialog extends TitleAreaDialog implements MessageDisplaye
 	
 	@Override
 	protected void createButtonsForButtonBar(Composite parent) {
-		if (isBlank == false){ 
+		if (isBlank == false) { 
 			createButton(parent, IDialogConstants.OK_ID, "Save", true);
 		}
 		saveAsBtn = createButton(parent, IDialogConstants.CLIENT_ID + 1, "Save as ...", false);
 		
-		saveAsBtn.addSelectionListener(new SelectionAdapter(){
+		saveAsBtn.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				Collection<String> configNames = Configurations.getInstance().server().configNames();
@@ -81,7 +81,7 @@ public class EditConfigDialog extends TitleAreaDialog implements MessageDisplaye
 				boolean hasComponents = !config.getEditableComponents().getSelected().isEmpty();
 				SaveConfigDialog dlg = new SaveConfigDialog(null, config.getName(), config.getDescription(), configNames, componentNames, !isComponent, hasComponents);
 				if (dlg.open() == Window.OK) {
-					if (dlg.getNewName() != config.getName()){
+					if (dlg.getNewName() != config.getName()) {
 						config.setName(dlg.getNewName());
 					}
 					
@@ -116,14 +116,14 @@ public class EditConfigDialog extends TitleAreaDialog implements MessageDisplaye
 	// Show the current error messages
 	private void showErrorMessage() {
 		StringBuilder sb = new StringBuilder();
-		for ( String key : errorMessages.keySet() ) {
-			if (errorMessages.get(key)!=null) {
+		for (String key : errorMessages.keySet()) {
+			if (errorMessages.get(key) != null) {
 				sb.append(errorMessages.get(key));
 				sb.append("  ");
 			}
 		}
 		
-		if (sb.length()>0) {
+		if (sb.length() > 0) {
 			setErrorMessage(sb.toString());
 			// Don't allow save until errors are cleared
 			setOKEnabled(false);

@@ -15,7 +15,7 @@ public class DaeActions extends Closer {
 	public final Action cancelAbort;
 	public final Action save;
 	
-	public DaeActions(DaeWritables targets, DaeObservables observables){
+	public DaeActions(DaeWritables targets, DaeObservables observables) {
 		begin = registerForClose(new Begin(targets.begin, observables.inStateTransition, observables.runState));
 		end = registerForClose(new End(targets.end, observables.inStateTransition, observables.runState));
 		pause = registerForClose(new Pause(targets.pause, observables.inStateTransition, observables.runState));

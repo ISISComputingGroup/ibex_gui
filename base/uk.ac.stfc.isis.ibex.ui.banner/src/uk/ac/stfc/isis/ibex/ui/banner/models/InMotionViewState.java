@@ -10,8 +10,7 @@ public class InMotionViewState implements IndicatorViewStateConverter<InMotionSt
 	private InMotionState state;
 	
 	public void setState(InMotionState state) {
-		if (state == null)
-		{
+		if (state == null) {
 			this.state = InMotionState.UNKNOWN;
 		} else {
 			this.state = state;

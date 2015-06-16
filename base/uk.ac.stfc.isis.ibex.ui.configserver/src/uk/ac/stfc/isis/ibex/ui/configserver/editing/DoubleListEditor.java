@@ -73,7 +73,7 @@ public class DoubleListEditor extends Composite {
 		btnUp.setLayoutData(gd_btnUp);
 		btnUp.setText("Up");
 		btnUp.setEnabled(true);
-		if (orderable == false){
+		if (orderable == false) {
 			new Label(this, SWT.NONE);
 		}
 		
@@ -130,10 +130,10 @@ public class DoubleListEditor extends Composite {
 		
 		unselectedItems.addListChangeListener(clearSelectedItems);
 		
-		btnUp.addSelectionListener(new SelectionAdapter(){
+		btnUp.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				if (selectedList.getSelectionIndex() > 0){
+				if (selectedList.getSelectionIndex() > 0) {
 					int selectIndex = selectedList.getSelectionIndex();
 					String selected = selectedList.getItem(selectIndex);
 					String temp = selectedList.getItem(selectIndex - 1);
@@ -144,10 +144,10 @@ public class DoubleListEditor extends Composite {
 			}
 		});
 		
-		btnDown.addSelectionListener(new SelectionAdapter(){
+		btnDown.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				if (selectedList.getSelectionIndex() < selectedList.getItemCount() - 1){
+				if (selectedList.getSelectionIndex() < selectedList.getItemCount() - 1) {
 					int selectIndex = selectedList.getSelectionIndex();
 					String selected = selectedList.getItem(selectIndex);
 					String temp = selectedList.getItem(selectIndex + 1);
@@ -172,7 +172,7 @@ public class DoubleListEditor extends Composite {
 		return unselectedItems;
 	}
 	
-	public String selectedItem(){
+	public String selectedItem() {
 		return selectedList.getItem(selectedList.getSelectionIndex());
 	}
 	
@@ -184,11 +184,11 @@ public class DoubleListEditor extends Composite {
 		unselect.addSelectionListener(listener);
 	}
 	
-	public void addSelectionListenerForMovingUp(SelectionListener listener){
+	public void addSelectionListenerForMovingUp(SelectionListener listener) {
 		btnUp.addSelectionListener(listener);
 	}
 	
-	public void addSelectionListenerForMovingDown(SelectionListener listener){
+	public void addSelectionListenerForMovingDown(SelectionListener listener) {
 		btnDown.addSelectionListener(listener);
 	}
 	
@@ -206,7 +206,7 @@ public class DoubleListEditor extends Composite {
 				new ObservableMapLabelProvider(BeansObservables.observeMaps(contentProvider.getKnownElements(), new String[] { observedProperty } )));
 	}
 	
-	public void refreshViewer(){
+	public void refreshViewer() {
 		int selectIndex = selectedList.getSelectionIndex();
 		String selected = selectedList.getItem(selectIndex);
 		selectedViewer.refresh();

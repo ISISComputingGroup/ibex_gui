@@ -17,7 +17,7 @@ public class IocFilteredConfiguration extends Configuration {
 	}
 	
 	public static Collection<Ioc> filterIocs(Collection<Ioc> unfiltered) {
-		return Lists.newArrayList(Iterables.filter(unfiltered, new Predicate<Ioc>(){
+		return Lists.newArrayList(Iterables.filter(unfiltered, new Predicate<Ioc>() {
 			@Override
 			public boolean apply(Ioc ioc) {
 				return !isDefault(ioc);

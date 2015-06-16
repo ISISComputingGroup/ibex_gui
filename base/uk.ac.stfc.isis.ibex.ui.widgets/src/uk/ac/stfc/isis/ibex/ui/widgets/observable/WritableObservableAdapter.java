@@ -50,7 +50,7 @@ public class WritableObservableAdapter implements Closable {
 	}
 	
 	public void setText(String text) {
-		if (text != writer.lastWritten()){
+		if (text != writer.lastWritten()) {
 			writer.write(text);
 		}
 	}

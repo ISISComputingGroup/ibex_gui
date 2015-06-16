@@ -10,7 +10,7 @@ public class PropertyLabelProvider implements ILabelProvider {
 	
 	@Override
 	public String getText(Object element) {
-		if(element instanceof Property) {
+		if (element instanceof Property) {
 			Property property = (Property) element;
 			String display = property.key() + " | " + property.value();
 			return display;

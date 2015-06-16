@@ -8,7 +8,7 @@ import uk.ac.stfc.isis.ibex.model.UpdatedValue;
 import uk.ac.stfc.isis.ibex.ui.banner.controls.ControlModel;
 import uk.ac.stfc.isis.ibex.ui.banner.indicators.IndicatorStateObserver;
 
-public class MotionControlModel extends ModelObject implements ControlModel{
+public class MotionControlModel extends ModelObject implements ControlModel {
 	
 	private final ObservableMotionControl motionControl;
 	private static final String TEXT = "Stop All";

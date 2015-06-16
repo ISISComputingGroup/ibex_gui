@@ -9,8 +9,8 @@ public class PVPrefix {
 	private final String prefix;
 	
 	public PVPrefix(String machineName, String userName) {
-		prefix = isInstrument(machineName) ? 
-				instrumentPrefix(machineName) : userPrefix(machineName, userName);
+		prefix = isInstrument(machineName) 
+				? instrumentPrefix(machineName) : userPrefix(machineName, userName);
 	}
 	
 	public String get() {

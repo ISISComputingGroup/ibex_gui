@@ -10,7 +10,7 @@ public class SummaryDescriptionValidator implements IValidator {
 
 	private final MessageDisplayer messageDisplayer;
 	
-	public SummaryDescriptionValidator(MessageDisplayer messageDisplayer){
+	public SummaryDescriptionValidator(MessageDisplayer messageDisplayer) {
 		this.messageDisplayer = messageDisplayer;
 	}
 	

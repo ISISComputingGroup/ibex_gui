@@ -24,7 +24,7 @@ public abstract class ParameterFieldObserver extends BaseObserver<String> {
 	
 	protected abstract void updateField(String value);
 	
-	protected String defaultValue(){
+	protected String defaultValue() {
 		return "";
 	}
 

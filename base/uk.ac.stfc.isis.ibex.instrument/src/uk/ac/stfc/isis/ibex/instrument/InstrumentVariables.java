@@ -25,7 +25,7 @@ public class InstrumentVariables extends Closer {
 		return registerForClose(channels.getWriter(channelType, address));
 	}
 	
-	protected static <S,T> InitialiseOnSubscribeObservable<T> convert(ClosableCachingObservable<S> observable, Converter<S, T> converter) {
+	protected static <S, T> InitialiseOnSubscribeObservable<T> convert(ClosableCachingObservable<S> observable, Converter<S, T> converter) {
 		return autoInitialise(new ConvertingObservable<>(observable, converter));
 	}
 	

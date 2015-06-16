@@ -32,8 +32,7 @@ public abstract class SynopticHandler extends AbstractHandler {
 		}
 	}
 	
-	protected Shell shell()
-	{
+	protected Shell shell() {
 		return PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
 	}	
 	

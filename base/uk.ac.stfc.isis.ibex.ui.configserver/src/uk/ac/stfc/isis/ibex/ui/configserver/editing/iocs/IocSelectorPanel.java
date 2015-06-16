@@ -74,7 +74,7 @@ public class IocSelectorPanel extends Composite {
 			}
 		});
 
-		if (iocs.size()>0) {
+		if (iocs.size() > 0) {
 			iocCombo.setSelection(new StructuredSelection(iocs.iterator().next()));
 		}
 	}

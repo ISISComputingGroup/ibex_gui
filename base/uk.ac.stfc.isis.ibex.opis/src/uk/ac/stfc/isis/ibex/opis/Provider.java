@@ -25,7 +25,7 @@ public class Provider {
 		Path root = pathToFileResource("/resources/");
 		Iterator<File> itr = FileUtils.iterateFiles(root.toFile(), new SuffixFileFilter(".opi"), TrueFileFilter.INSTANCE);
 		
-		while(itr.hasNext()) {
+		while (itr.hasNext()) {
 			Path path = new Path(itr.next().getAbsolutePath());
 			relativeFilePaths.add(path.makeRelativeTo(root).toString());
 		}

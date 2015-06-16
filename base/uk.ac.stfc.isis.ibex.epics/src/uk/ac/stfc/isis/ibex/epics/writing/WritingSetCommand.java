@@ -9,7 +9,7 @@ public class WritingSetCommand<T> extends SetCommand<T> implements Closable {
 	private final Subscription destinationSubscription;
 	private final Subscription writerSubscription;	
 	
-	private final BaseWriter<T, T> destinationWriter = new BaseWriter<T, T>(){
+	private final BaseWriter<T, T> destinationWriter = new BaseWriter<T, T>() {
 		@Override
 		public void onCanWriteChanged(boolean canWrite) {
 			setCanSend(canWrite);

@@ -12,7 +12,7 @@ import com.google.common.collect.Lists;
 public class UsedIocFilter {
 	
 	public static Collection<EditableIoc> filterIocs(Collection<EditableIoc> unfiltered) {
-		return Lists.newArrayList(Iterables.filter(unfiltered, new Predicate<EditableIoc>(){
+		return Lists.newArrayList(Iterables.filter(unfiltered, new Predicate<EditableIoc>() {
 			@Override
 			public boolean apply(EditableIoc ioc) {
 				return !isDefault(ioc);

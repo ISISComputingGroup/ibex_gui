@@ -544,7 +544,7 @@ public class LogDisplay extends Canvas {
 
 		FileDialog dialog = new FileDialog(getShell(), SWT.SAVE);
 
-		dialog.setFilterNames(new String[] { "Log Files (*.log)",
+		dialog.setFilterNames(new String[] { "Log Files (*.log)", 
 				"All Files (*.*)" });
 		dialog.setFilterExtensions(new String[] { "*.log" });
 		dialog.setFilterPath("c:\\");

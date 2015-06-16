@@ -159,8 +159,8 @@ public class MinimalMotorView extends Composite {
 			@Override
 			public void run() {
 				Double setpt = motor.getSetpoint().getSetpoint();
-				String text = setpt != null ? 
-						String.format("SP: %.2f", setpt) : "";
+				String text = setpt != null 
+						? String.format("SP: %.2f", setpt) : "";
 				setpoint.setText(text);
 			}
 		});
@@ -171,8 +171,8 @@ public class MinimalMotorView extends Composite {
 			@Override
 			public void run() {
 				Double setpointValue = motor.getSetpoint().getValue();
-				String text = setpointValue != null ? 
-						String.format("Val: %.2f", setpointValue) : "";
+				String text = setpointValue != null 
+						? String.format("Val: %.2f", setpointValue) : "";
 				value.setText(text);
 			}
 		});

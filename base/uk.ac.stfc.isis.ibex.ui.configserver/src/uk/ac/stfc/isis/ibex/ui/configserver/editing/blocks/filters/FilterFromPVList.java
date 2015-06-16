@@ -10,22 +10,23 @@ import uk.ac.stfc.isis.ibex.epics.observing.BaseObserver;
 import uk.ac.stfc.isis.ibex.epics.observing.InitialisableObserver;
 import uk.ac.stfc.isis.ibex.epics.observing.InitialiseOnSubscribeObservable;
 
-public class FilterFromPVList extends PVFilter{
+public class FilterFromPVList extends PVFilter {
 	private FilterViewerFromPVList filter = new FilterViewerFromPVList();
 	
 	private final InitialisableObserver<Collection<PV>> observer = new BaseObserver<Collection<PV>>() {
 		@Override
 		public void onValue(Collection<PV> value) {
-			if (value != null)
+			if (value != null) {
 				updatePVList(value);
 				firePropertyChange("refresh", false, true);
+			}
 		}
 
 		@Override
-		public void onError(Exception e) {}
+		public void onError(Exception e) { }
 
 		@Override
-		public void onConnectionChanged(boolean isConnected) {}
+		public void onConnectionChanged(boolean isConnected) { }
 	};	
 	
 	public FilterFromPVList(InitialiseOnSubscribeObservable<Collection<PV>> pvList) {

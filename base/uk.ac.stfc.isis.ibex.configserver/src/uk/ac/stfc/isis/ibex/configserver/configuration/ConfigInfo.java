@@ -36,7 +36,7 @@ public class ConfigInfo {
 			return Collections.emptyList();
 		}
 		
-		return Lists.newArrayList(Iterables.transform(infos, new Function<ConfigInfo, String>(){
+		return Lists.newArrayList(Iterables.transform(infos, new Function<ConfigInfo, String>() {
 			@Override
 			public String apply(ConfigInfo info) {
 				return info.name();

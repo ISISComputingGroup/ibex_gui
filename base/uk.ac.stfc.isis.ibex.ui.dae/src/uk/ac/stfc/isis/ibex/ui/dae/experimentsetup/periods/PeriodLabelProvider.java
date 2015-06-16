@@ -16,7 +16,7 @@ public class PeriodLabelProvider extends LabelProvider implements ITableLabelPro
 	@Override
 	public String getColumnText(Object element, int columnIndex) {
 		Period period = (Period) element;
-		switch(columnIndex) {
+		switch (columnIndex) {
 			case 0: 
 				return Integer.toString(period.getNumber());
 			case 1:

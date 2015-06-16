@@ -123,7 +123,7 @@ public class GroupsEditorPanel extends Composite {
 		grpBlocks.setLayout(new GridLayout(1, false));
 		grpBlocks.setText("Blocks");
 		
-		blocksEditor = new DoubleListEditor(grpBlocks, SWT.NONE, "name",true);
+		blocksEditor = new DoubleListEditor(grpBlocks, SWT.NONE, "name", true);
 		GridData gd_blocksEditor = new GridData(SWT.LEFT, SWT.FILL, true, true, 1, 1);
 		gd_blocksEditor.heightHint = 300;
 		gd_blocksEditor.widthHint = 300;
@@ -134,7 +134,7 @@ public class GroupsEditorPanel extends Composite {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				EditableGroup group = getSelectedGroup();
-				if (group != null){
+				if (group != null) {
 			        group.toggleSelection(blocksEditor.unselectedItems());
 				}
 			}
@@ -145,7 +145,7 @@ public class GroupsEditorPanel extends Composite {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				EditableGroup group = getSelectedGroup();
-				if (group != null){
+				if (group != null) {
 			        group.toggleSelection(blocksEditor.selectedItems());
 				}
 			}
@@ -156,7 +156,7 @@ public class GroupsEditorPanel extends Composite {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				EditableGroup group = getSelectedGroup();
-				if (group != null){
+				if (group != null) {
 					group.moveBlockUp(blocksEditor.selectedItem());
 					blocksEditor.refreshViewer();
 				}
@@ -168,7 +168,7 @@ public class GroupsEditorPanel extends Composite {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				EditableGroup group = getSelectedGroup();
-				if (group != null){
+				if (group != null) {
 					group.moveBlockDown(blocksEditor.selectedItem());
 					blocksEditor.refreshViewer();
 				}
@@ -179,7 +179,7 @@ public class GroupsEditorPanel extends Composite {
 			@Override
 			public void selectionChanged(SelectionChangedEvent arg0) {
 				EditableGroup group = getSelectedGroup();
-				if (group != null){
+				if (group != null) {
 			        boolean groupIsSelected = group != null;
 					boolean canEdit = groupIsSelected && group.isEditable();
 					
@@ -247,17 +247,17 @@ public class GroupsEditorPanel extends Composite {
 		btnDown.setLayoutData(gd_btnDown);
 		btnDown.setText("Down");
 		
-		btnDown.addSelectionListener(new SelectionAdapter(){
+		btnDown.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				if (config != null) {
 					
-					if (groupList.getSelectionIndex() < groupList.getItemCount() - 1){
+					if (groupList.getSelectionIndex() < groupList.getItemCount() - 1) {
 						//Move down
 						EditableGroup group1 = getSelectedGroup();
 						EditableGroup group2 = (EditableGroup) groupsViewer.getElementAt(groupList.getSelectionIndex() + 1);
 						
-						if (group1 != null && group2 != null){
+						if (group1 != null && group2 != null) {
 							config.swapGroups(group1, group2);
 						}
 					}
@@ -269,11 +269,11 @@ public class GroupsEditorPanel extends Composite {
 		blocksEditor.bind(unselectedBlocks, selectedBlocks);
 	}
 	
-	private EditableGroup getSelectedGroup()	{
+	private EditableGroup getSelectedGroup() {
 		ISelection selection = groupsViewer.getSelection();
 		if (selection != null && (selection instanceof IStructuredSelection)) {
-			IStructuredSelection ss = (IStructuredSelection)groupsViewer.getSelection();
-	        EditableGroup group = (EditableGroup)ss.getFirstElement();
+			IStructuredSelection ss = (IStructuredSelection) groupsViewer.getSelection();
+	        EditableGroup group = (EditableGroup) ss.getFirstElement();
 	        return group;
 		}
 		

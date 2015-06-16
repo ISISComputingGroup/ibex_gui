@@ -19,7 +19,7 @@ public class DaeWritables extends Writables {
 
 	private static final String TITLE = "TITLE:SP";
 	private static final String DAE_SETTINGS = "DAESETTINGS:SP";
-	private static final String HARDWARE_PERIODS ="HARDWAREPERIODS:SP";
+	private static final String HARDWARE_PERIODS = "HARDWAREPERIODS:SP";
 	private static final String UPDATE_SETTINGS = "UPDATESETTINGS:SP";	
 	private static final String TIME_CHANNEL_SETTINGS = "TCBSETTINGS:SP";	
 

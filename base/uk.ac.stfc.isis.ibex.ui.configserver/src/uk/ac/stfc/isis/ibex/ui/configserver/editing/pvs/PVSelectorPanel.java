@@ -94,7 +94,7 @@ public class PVSelectorPanel extends Composite {
 		blockPVTable.addSelectionChangedListener(new ISelectionChangedListener() {
 			public void selectionChanged(SelectionChangedEvent arg0) {
 				IStructuredSelection selection = (IStructuredSelection) arg0.getSelection();
-				if (selection.size()>0) {
+				if (selection.size() > 0) {
 					PV pv = (PV)selection.getFirstElement();
 					pvAddress.setText(pv.getAddress());
 				}
@@ -123,7 +123,7 @@ public class PVSelectorPanel extends Composite {
 			@Override
 			public void selectionChanged(SelectionChangedEvent arg0) {
 				StructuredSelection selection = (StructuredSelection)arg0.getSelection();
-				InterestFilters interestFilter= (InterestFilters)selection.getFirstElement();
+				InterestFilters interestFilter = (InterestFilters)selection.getFirstElement();
 				changeInterestFilter(interestFilter);
 			}
 		});

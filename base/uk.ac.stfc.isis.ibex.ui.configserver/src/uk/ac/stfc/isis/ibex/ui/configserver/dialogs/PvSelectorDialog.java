@@ -20,7 +20,7 @@ import uk.ac.stfc.isis.ibex.ui.configserver.editing.pvs.PVSelectorPanel;
  * A dialog for selecting a PV
  *
  */
-public class PvSelectorDialog extends TitleAreaDialog{
+public class PvSelectorDialog extends TitleAreaDialog {
 
 	private PVSelectorPanel selector;
 	private EditableConfiguration config;

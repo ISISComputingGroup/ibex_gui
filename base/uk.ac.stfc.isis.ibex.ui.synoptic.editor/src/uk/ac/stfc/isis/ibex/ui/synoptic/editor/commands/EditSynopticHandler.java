@@ -28,8 +28,7 @@ public class EditSynopticHandler extends SynopticHandler {
 		return null;
 	}
 	
-	private InstrumentDescription load(SynopticInfo info)
-	{
+	private InstrumentDescription load(SynopticInfo info) {
 		UpdatedValue<InstrumentDescription> instrumentDescription = new UpdatedObservableAdapter<>(SYNOPTIC.synoptic(info));					
 		if (Awaited.returnedValue(instrumentDescription, 1)) {
 			return instrumentDescription.getValue();

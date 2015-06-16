@@ -108,7 +108,7 @@ public class JmsHandler extends ModelObject implements Runnable {
 			
 			if (isConnected()) 	{
 				try {
-					TextMessage message = (TextMessage)jmsConsumer.receive(50);
+					TextMessage message = (TextMessage) jmsConsumer.receive(50);
 					if (message != null) {
 						messageLogConsumer.newMessage(parseLogMessage(message));
 					}

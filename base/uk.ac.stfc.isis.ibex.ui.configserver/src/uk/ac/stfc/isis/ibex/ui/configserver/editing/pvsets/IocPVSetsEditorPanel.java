@@ -47,7 +47,7 @@ public class IocPVSetsEditorPanel extends Composite implements	IIocDependentPane
 		for (AvailablePVSet pvset : ioc.getAvailablePVSets()) {
 			EditablePVSet editableSet;
 			PVSet existingSet = ioc.findPVSet(pvset.getName());
-			if ( existingSet!=null ) {
+			if (existingSet != null) {
 				editableSet = new EditablePVSet(existingSet, pvset.getDescription());
 			}
 			else {
@@ -56,7 +56,7 @@ public class IocPVSetsEditorPanel extends Composite implements	IIocDependentPane
 			rows.add(editableSet);
 		}
 		
-		if ( ioc.isEditable() ) {
+		if (ioc.isEditable()) {
 			for (final EditablePVSet pvset : rows) {
 				pvset.addPropertyChangeListener(new PropertyChangeListener() {
 					// Ensure Ioc.getPVSets always contains the list of enabled sets
@@ -64,15 +64,15 @@ public class IocPVSetsEditorPanel extends Composite implements	IIocDependentPane
 					public void propertyChange(PropertyChangeEvent arg0) {
 						if (arg0.getPropertyName().equals("enabled")) {
 							PVSet existingSet = ioc.findPVSet(pvset.getName());
-							if ((boolean)arg0.getNewValue()) {
-								if ( existingSet!=null ) {
+							if ((boolean) arg0.getNewValue()) {
+								if (existingSet != null) {
 									existingSet.setEnabled(true);
 								}
 								else {
 									ioc.getPvSets().add(new PVSet(pvset.getName(), true));
 								}
 							}
-							else if ( existingSet!=null ) {
+							else if (existingSet != null) {
 								ioc.getPvSets().remove(existingSet);
 							}
 						}

@@ -12,7 +12,7 @@ import uk.ac.stfc.isis.ibex.model.Action;
 
 public abstract class DaeAction extends Action implements Closable {
 		
-	private final BaseWriter<String,String> actionWriter = new BaseWriter<String, String>() {
+	private final BaseWriter<String, String> actionWriter = new BaseWriter<String, String>() {
 
 		@Override
 		public void write(String value) {

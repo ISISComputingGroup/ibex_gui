@@ -64,7 +64,7 @@ public enum LogMessageFields {
 	}
 	
 	public static LogMessageFields getFieldByTagName(String tagName) throws Exception {
-		switch(tagName) {
+		switch (tagName) {
 			case LogMessageFieldTags.TAG_CONTENTS:
 				return CONTENTS;
 			case LogMessageFieldTags.TAG_SEVERITY:

@@ -17,10 +17,10 @@ import uk.ac.stfc.isis.ibex.instrument.channels.StringChannel;
 public class ExperimentDetailsVariables extends InstrumentVariables {
 
 	public final InitialiseOnSubscribeObservable<Collection<String>> availableSampleParameters 
-		= convert(reader(new CompressedCharWaveformChannel(),"CS:BLOCKSERVER:SAMPLE_PARS"), new ParametersConverter());
+		= convert(reader(new CompressedCharWaveformChannel(), "CS:BLOCKSERVER:SAMPLE_PARS"), new ParametersConverter());
 
 	public final InitialiseOnSubscribeObservable<Collection<String>> availableBeamParameters 
-		= convert(reader(new CompressedCharWaveformChannel(),"CS:BLOCKSERVER:BEAMLINE_PARS"), new ParametersConverter());
+		= convert(reader(new CompressedCharWaveformChannel(), "CS:BLOCKSERVER:BEAMLINE_PARS"), new ParametersConverter());
 
 	public final InitialiseOnSubscribeObservable<Collection<Parameter>> sampleParameters 
 		= autoInitialise(new ParametersObservable(this, availableSampleParameters));

@@ -16,7 +16,7 @@ public class TimeRegimeLabelProvider extends LabelProvider implements ITableLabe
 	@Override
 	public String getColumnText(Object element, int columnIndex) {
 		TimeRegimeRow row = (TimeRegimeRow) element;
-		switch(columnIndex) {
+		switch (columnIndex) {
 			case 0: 
 				return Double.toString(row.getFrom());
 			case 1:

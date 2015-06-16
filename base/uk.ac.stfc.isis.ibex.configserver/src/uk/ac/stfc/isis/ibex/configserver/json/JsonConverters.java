@@ -101,14 +101,14 @@ public class JsonConverters implements Converters {
 		};
 	}
 	
-	private static final Function<Configuration, Configuration> initialiseConfig = new Function<Configuration, Configuration>(){
+	private static final Function<Configuration, Configuration> initialiseConfig = new Function<Configuration, Configuration>() {
 		@Override
 		public Configuration apply(Configuration uninitialised) {
 			return new Configuration(uninitialised);
 		}
 	};
 
-	private static final Function<Component, Component> initialiseComponent = new Function<Component, Component>(){
+	private static final Function<Component, Component> initialiseComponent = new Function<Component, Component>() {
 		@Override
 		public Component apply(Component uninitialised) {
 			return new Component(uninitialised);

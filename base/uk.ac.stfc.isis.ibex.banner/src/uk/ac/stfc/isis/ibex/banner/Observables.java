@@ -10,7 +10,7 @@ import uk.ac.stfc.isis.ibex.instrument.channels.DoubleChannel;
 import uk.ac.stfc.isis.ibex.instrument.channels.EnumChannel;
 import uk.ac.stfc.isis.ibex.instrument.channels.LongChannel;
 
-public class Observables extends InstrumentVariables{
+public class Observables extends InstrumentVariables {
 	private Converter<Double, InMotionState> doubleToMotionState = new Converter<Double, InMotionState>() {
 		@Override
 		public InMotionState convert(Double value) throws ConversionException {

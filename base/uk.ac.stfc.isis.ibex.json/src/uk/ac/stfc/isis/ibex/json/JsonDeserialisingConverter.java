@@ -6,7 +6,7 @@ import uk.ac.stfc.isis.ibex.epics.conversion.Converter;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 
-public class JsonDeserialisingConverter<T> extends Converter<String, T>{
+public class JsonDeserialisingConverter<T> extends Converter<String, T> {
 
 	protected final Gson gson;
 	private final Class<T> classOfT;

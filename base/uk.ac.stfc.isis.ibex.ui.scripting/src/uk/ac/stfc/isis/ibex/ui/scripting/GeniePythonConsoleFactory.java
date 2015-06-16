@@ -20,10 +20,10 @@ public class GeniePythonConsoleFactory extends PydevConsoleFactory {
 	private final NullProgressMonitor monitor = new NullProgressMonitor();
 	
 	private final static String GENIE_INITIALISATION = 
-			"# Configuring GENIE PYTHON, please wait\n" +
-			"import sys;sys.executable=''\n" +
-			"from genie_python.genie_startup import * \n" +
-			"load_script(None, globals()) \n";
+			"# Configuring GENIE PYTHON, please wait\n" 
+			+ "import sys;sys.executable=''\n" 
+			+ "from genie_python.genie_startup import * \n" 
+			+ "load_script(None, globals()) \n";
 	
 	@Override
 	public void createConsole(String additionalInitialComands) {
@@ -36,7 +36,7 @@ public class GeniePythonConsoleFactory extends PydevConsoleFactory {
 	}
 	
 	private void setInitialInterpreterCommands() {
-		IPreferenceStore pydevDebugPreferenceStore = new ScopedPreferenceStore(InstanceScope.INSTANCE,"org.python.pydev.debug");
+		IPreferenceStore pydevDebugPreferenceStore = new ScopedPreferenceStore(InstanceScope.INSTANCE, "org.python.pydev.debug");
 		String commands = pydevDebugPreferenceStore.getDefaultString(PydevConsoleConstants.INITIAL_INTERPRETER_CMDS);
 		if (commands == null || commands.contains(GENIE_INITIALISATION)) {
 			return;

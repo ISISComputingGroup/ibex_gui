@@ -90,7 +90,7 @@ public class ExperimentDetailsPanel extends Composite {
 		btnClearUserDetails = new Button(experimentTeamButtons, SWT.NONE);
 		btnClearUserDetails.addSelectionListener(new SelectionAdapter() {
 			@Override
-			public void widgetSelected(SelectionEvent e){
+			public void widgetSelected(SelectionEvent e) {
 				viewModel.model.clearUserDetails();
 			}
 		});

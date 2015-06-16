@@ -27,7 +27,7 @@ public class NewConfigHandler extends ConfigHandler<Configuration> {
 
 		if (Awaited.returnedValue(config, 1)) {
 			openDialog(config.getValue());			
-		};
+		}
 		
 		return null;
 	}
