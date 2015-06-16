@@ -37,7 +37,7 @@ public class EditComponentHandler extends ConfigHandler<Configuration> {
 		UpdatedValue<EditableConfiguration> config = new UpdatedObservableAdapter<>(EDITING.component(componentName));
 		if (Awaited.<EditableConfiguration>returnedValue(config, 1)) {
 			openDialog(subTitle, config.getValue());
-		};
+		}
 	}
 
 	private void openDialog(String subTitle, EditableConfiguration config) {

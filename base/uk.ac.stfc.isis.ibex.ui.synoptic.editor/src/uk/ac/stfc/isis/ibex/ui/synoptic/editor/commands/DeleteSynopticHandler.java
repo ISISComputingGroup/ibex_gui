@@ -25,8 +25,7 @@ public class DeleteSynopticHandler extends SynopticHandler {
 		return null;
 	}
 	
-	private void delete(Collection<String> names)
-	{
+	private void delete(Collection<String> names) {
 		SYNOPTIC.edit().deleteSynoptics().write(names);
 	}
 }

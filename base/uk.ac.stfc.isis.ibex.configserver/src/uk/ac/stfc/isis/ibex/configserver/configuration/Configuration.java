@@ -55,7 +55,7 @@ public class Configuration extends ModelObject {
 			this.components.add(new Component(component));
 		}
 		
-		for (String date : history){
+		for (String date : history) {
 			this.history.add(date);
 		}
 	}

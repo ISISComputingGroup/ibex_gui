@@ -66,8 +66,8 @@ public class IocMacroDetailsPanel extends Composite {
 		availableMacrosTable.addSelectionChangedListener(new ISelectionChangedListener() {
 			public void selectionChanged(SelectionChangedEvent arg0) {
 				IStructuredSelection selection = (IStructuredSelection) arg0.getSelection();
-				if (selection.size()>0) {
-					Macro macro = (Macro)selection.getFirstElement();
+				if (selection.size() > 0) {
+					Macro macro = (Macro) selection.getFirstElement();
 					name.setText(macro.getName());
 				}
 			}
@@ -124,7 +124,7 @@ public class IocMacroDetailsPanel extends Composite {
 	private void setTextEnabled(boolean enabled) {
 		name.setEnabled(enabled);
 		value.setEnabled(enabled);
-		if ( !enabled ) {
+		if (!enabled) {
 			name.setText("");
 			value.setText("");
 		}

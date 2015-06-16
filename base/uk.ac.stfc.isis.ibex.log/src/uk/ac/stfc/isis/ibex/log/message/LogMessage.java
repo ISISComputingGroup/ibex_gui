@@ -24,7 +24,7 @@ public class LogMessage {
 	private String applicationId = "";
 	
 	public void setProperty(LogMessageFields property, String value) {
-		switch(property) {
+		switch (property) {
 			case CONTENTS:
 				contents = value;
 				break;
@@ -55,7 +55,7 @@ public class LogMessage {
 	}
 	
 	public String getProperty(LogMessageFields property) {
-		switch(property) {
+		switch (property) {
 			case CONTENTS:
 				return contents;
 			case SEVERITY:

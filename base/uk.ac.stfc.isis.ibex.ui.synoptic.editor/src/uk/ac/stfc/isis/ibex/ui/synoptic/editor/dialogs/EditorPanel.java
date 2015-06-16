@@ -34,7 +34,7 @@ public class EditorPanel extends Composite {
 	private Composite targetComposite;
 	private Composite propertyComposite;
 	
-	public EditorPanel (Composite parent, int style) {
+	public EditorPanel(Composite parent, int style) {
 		super(parent, style);
 		setLayout(new GridLayout(3, false));
 		

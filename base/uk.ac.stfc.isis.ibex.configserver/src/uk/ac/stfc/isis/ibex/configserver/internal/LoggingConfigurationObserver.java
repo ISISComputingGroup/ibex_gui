@@ -7,7 +7,7 @@ import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
 import uk.ac.stfc.isis.ibex.epics.observing.LoggingObserver;
 import uk.ac.stfc.isis.ibex.json.JsonSerialisingConverter;
 
-public class LoggingConfigurationObserver extends LoggingObserver<Configuration>{
+public class LoggingConfigurationObserver extends LoggingObserver<Configuration> {
 
 	public LoggingConfigurationObserver(Logger log, String id) {
 		super(log, id);

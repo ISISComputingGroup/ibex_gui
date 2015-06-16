@@ -27,7 +27,7 @@ public class RunSummaryViewModel extends Closer {
 		instrument = registerForClose(new TextUpdatedObservableAdapter(model.instrument()));
 		runStatus = registerForClose(new TextUpdatedObservableAdapter(registerForClose(new InstrumentState(model.runState()))));
 		runNumber = registerForClose(new TextUpdatedObservableAdapter(model.runNumber()));
-		isisCycle = registerForClose(new TextUpdatedObservableAdapter(model.isisCycle()));;
+		isisCycle = registerForClose(new TextUpdatedObservableAdapter(model.isisCycle()));
 		title = registerForClose(new WritableObservableAdapter(model.setTitle(), model.title()));
 								
 		logModel = Log.getInstance().producer();

@@ -12,8 +12,8 @@ public class PVFilterFactory {
 		this.availableIOCs = availableIOCs;
 	}
 	
-	public PVFilter getFilter(SourceFilters type){
-		switch(type) {
+	public PVFilter getFilter(SourceFilters type) {
+		switch (type) {
 			case ACTIVE:
 				return new FilterFromPVList(Configurations.getInstance().variables().active_pvs);
 			case ASSOCIATED:
@@ -23,8 +23,8 @@ public class PVFilterFactory {
 		}
 	}
 	
-	public PVFilter getFilter(InterestFilters type){
-		switch(type) {
+	public PVFilter getFilter(InterestFilters type) {
+		switch (type) {
 			case HIGH:
 				return new FilterFromPVList(Configurations.getInstance().variables().highInterestPVs);
 			case MEDIUM:

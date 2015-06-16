@@ -27,7 +27,7 @@ public class Awaited<T> extends UpdatedValue<T> {
 		}
 	}
 	
-	public static <T> boolean returnedValue(UpdatedValue<T> value, int secondsToWait){
+	public static <T> boolean returnedValue(UpdatedValue<T> value, int secondsToWait) {
 		return new Awaited<>(value).until(secondsToWait);
 	}
 	
@@ -45,7 +45,7 @@ public class Awaited<T> extends UpdatedValue<T> {
 	}
 
 	private void startCountdown(int secondsToWait) {
-		try{
+		try {
 			latch.await(secondsToWait, TimeUnit.SECONDS);
 		} catch (InterruptedException e) {
 			value.removePropertyChangeListener(set);

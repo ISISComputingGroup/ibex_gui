@@ -4,7 +4,7 @@ import uk.ac.stfc.isis.ibex.epics.observing.ClosableCachingObservable;
 import uk.ac.stfc.isis.ibex.epics.pv.Channels;
 import uk.ac.stfc.isis.ibex.epics.writing.ClosableWritable;
 
-public class LongChannel implements ChannelType<Long>{
+public class LongChannel implements ChannelType<Long> {
 
 	@Override
 	public ClosableCachingObservable<Long> reader(String address) {

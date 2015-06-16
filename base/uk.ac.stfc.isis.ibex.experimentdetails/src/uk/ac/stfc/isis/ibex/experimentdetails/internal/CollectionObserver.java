@@ -5,7 +5,7 @@ import java.util.Collection;
 
 import uk.ac.stfc.isis.ibex.epics.observing.BaseObserver;
 
-public abstract class CollectionObserver<T> extends BaseObserver<Collection<T>>{
+public abstract class CollectionObserver<T> extends BaseObserver<Collection<T>> {
 
 	@Override
 	public void onValue(Collection<T> value) {

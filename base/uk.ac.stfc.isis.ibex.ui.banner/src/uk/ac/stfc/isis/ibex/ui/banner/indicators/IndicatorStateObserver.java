@@ -10,7 +10,7 @@ import uk.ac.stfc.isis.ibex.epics.pv.Closable;
 import uk.ac.stfc.isis.ibex.model.SettableUpdatedValue;
 import uk.ac.stfc.isis.ibex.model.UpdatedValue;
 
-public class IndicatorStateObserver <T> implements Closable {
+public class IndicatorStateObserver<T> implements Closable {
 
 	private final InitialisableObserver<T> sourceObserver = new BaseObserver<T>() {
 		@Override

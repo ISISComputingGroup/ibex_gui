@@ -51,12 +51,12 @@ public class EditSynopticDialog extends Dialog {
 	
 	@Override
 	protected void createButtonsForButtonBar(Composite parent) {
-		if (isBlank == false){ 
+		if (isBlank == false) { 
 			createButton(parent, IDialogConstants.OK_ID, "Save", true);
 		}
 		saveAsBtn = createButton(parent, IDialogConstants.CLIENT_ID + 1, "Save as ...", false);
 		
-		saveAsBtn.addSelectionListener(new SelectionAdapter(){
+		saveAsBtn.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				SaveSynopticDialog dlg = new SaveSynopticDialog(null, synoptic.name(), SynopticInfo.names(Synoptic.getInstance().availableSynoptics()));

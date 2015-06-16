@@ -11,7 +11,7 @@ import uk.ac.stfc.isis.ibex.model.SettableUpdatedValue;
 import uk.ac.stfc.isis.ibex.model.UpdatedValue;
 import uk.ac.stfc.isis.ibex.ui.banner.indicators.IndicatorColours;
 
-public class BatonUserObserver implements Closable{
+public class BatonUserObserver implements Closable {
 	private Subscription subscription;
 	
 	private final InitialisableObserver<String> observer = new BaseObserver<String>() {
@@ -53,33 +53,28 @@ public class BatonUserObserver implements Closable{
 		subscription.cancel();
 	}
 	
-	private void checkSelf(String value) 
-	{
+	private void checkSelf(String value) {
 		String user = value.isEmpty() ? NONE : value;
 		
 		text.setValue("Current user: " +  user);
 		
-		if (value.equals(SELF))
-		{
+		if (value.equals(SELF)) {
 			color.setValue(IndicatorColours.GREEN);
 		} else {
 			color.setValue(IndicatorColours.BLACK);
 		}
 	}
 	
-	private void setUnknown()
-	{
+	private void setUnknown() {
 		text.setValue("Current user: " + UNKNOWN);
 		color.setValue(IndicatorColours.RED);
 	}
 	
-	public UpdatedValue<String> text()
-	{
+	public UpdatedValue<String> text() {
 		return text;
 	}
 
-	public UpdatedValue<Color> color()
-	{
+	public UpdatedValue<Color> color() {
 		return color;
 	}
 	

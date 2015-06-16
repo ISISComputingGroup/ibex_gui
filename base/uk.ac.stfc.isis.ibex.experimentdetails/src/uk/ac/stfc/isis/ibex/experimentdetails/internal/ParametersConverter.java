@@ -12,14 +12,14 @@ public class ParametersConverter extends Converter<String, Collection<String>> {
 	@Override
 	public Collection<String> convert(String value) throws ConversionException {
 		List<String> pvs = new ArrayList<>();
-		for (String pv : removeBracesAndSplit(value)){
+		for (String pv : removeBracesAndSplit(value)) {
 			pvs.add(unquote(pv));
 		}
 		return pvs;
 	}
 
 	private String unquote(String pv) {
-		return pv.replaceAll("\"","");
+		return pv.replaceAll("\"", "");
 	}
 
 	private String[] removeBracesAndSplit(String value) {

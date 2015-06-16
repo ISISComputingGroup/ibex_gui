@@ -25,9 +25,9 @@ public class EditableGroup extends Group {
 		List<EditableBlock> selectedBlocks = lookupBlocksByName(config.getEditableBlocks(), group.getBlocks());
 		blocksInGroup = selectedBlocks;
 		availableBlocks = (List<EditableBlock>) config.getAvailableBlocks();
-		for (EditableBlock block : selectedBlocks){
+		for (EditableBlock block : selectedBlocks) {
 			availableBlocks.remove(block);
-			if (!group.getName().equals("NONE")){
+			if (!group.getName().equals("NONE")) {
 				config.makeBlockUnavailable(block);
 			}
 		}
@@ -68,7 +68,7 @@ public class EditableGroup extends Group {
 		Collection<String> blocksBefore = getBlocks();
 		
 		for (EditableBlock block : blocksToToggle) {
-			if (blocksInGroup.contains(block)){
+			if (blocksInGroup.contains(block)) {
 				blocksInGroup.remove(block);
 				config.makeBlockAvailable(block);
 			}
@@ -83,20 +83,20 @@ public class EditableGroup extends Group {
 		firePropertyChange("blocks", blocksBefore, getBlocks());	
 	}
 	
-	public void moveBlockUp(String blockName){
+	public void moveBlockUp(String blockName) {
 		EditableBlock blockToMoveUp = lookupBlockByName(blocksInGroup, blockName);
 		int blockToMoveUpIndex = blocksInGroup.indexOf(blockToMoveUp);
-		if (blockToMoveUpIndex > 0){
+		if (blockToMoveUpIndex > 0) {
 			EditableBlock blockToMoveDown = blocksInGroup.get(blockToMoveUpIndex - 1);
 			blocksInGroup.set(blockToMoveUpIndex, blockToMoveDown);
 			blocksInGroup.set(blockToMoveUpIndex - 1, blockToMoveUp);
 		}
 	}
 	
-	public void moveBlockDown(String blockName){
+	public void moveBlockDown(String blockName) {
 		EditableBlock blockToMoveDown = lookupBlockByName(blocksInGroup, blockName);
 		int blockToMoveDownIndex = blocksInGroup.indexOf(blockToMoveDown);
-		if (blockToMoveDownIndex < blocksInGroup.size() - 1){
+		if (blockToMoveDownIndex < blocksInGroup.size() - 1) {
 			EditableBlock blockToMoveUp = blocksInGroup.get(blockToMoveDownIndex + 1);
 			blocksInGroup.set(blockToMoveDownIndex, blockToMoveUp);
 			blocksInGroup.set(blockToMoveDownIndex + 1, blockToMoveDown);
@@ -127,8 +127,8 @@ public class EditableGroup extends Group {
 
 	private void removeDeletedBlocks(EditableConfiguration config) {
 		Collection<EditableBlock> configBlocks = config.getEditableBlocks();
-		for (EditableBlock block : blocksInGroup){
-			if (!configBlocks.contains(block)){
+		for (EditableBlock block : blocksInGroup) {
+			if (!configBlocks.contains(block)) {
 				blocksInGroup.remove(block);
 			}
 		}
@@ -150,9 +150,9 @@ public class EditableGroup extends Group {
 	private List<EditableBlock> lookupBlocksByName(Collection<EditableBlock> blocks, final Collection<String> names) {
 		List<EditableBlock> selectedBlocks = new ArrayList<EditableBlock>();
 		List<String> allBlockNames = blockNames(blocks);
-		for (String name : names){
+		for (String name : names) {
 			int blockIndex = allBlockNames.indexOf(name);
-			if (blockIndex >= 0){
+			if (blockIndex >= 0) {
 				EditableBlock block = Iterables.get(blocks, blockIndex);
 				selectedBlocks.add(block);
 			}
@@ -164,7 +164,7 @@ public class EditableGroup extends Group {
 		EditableBlock block = new EditableBlock(new Block(name, "", true, true, null));
 		List<String> allBlockNames = blockNames(blocks);
 		int blockIndex = allBlockNames.indexOf(name);
-		if (blockIndex >= 0){
+		if (blockIndex >= 0) {
 			block = Iterables.get(blocks, blockIndex);
 		}
 		return block;

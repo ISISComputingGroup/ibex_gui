@@ -28,7 +28,7 @@ public class SynopticWriter
 			return XMLUtil.toXml(value);
 		} catch (JAXBException | SAXException e) {
 			onError(e);
-		};
+		}
 		
 		return null;
 	}

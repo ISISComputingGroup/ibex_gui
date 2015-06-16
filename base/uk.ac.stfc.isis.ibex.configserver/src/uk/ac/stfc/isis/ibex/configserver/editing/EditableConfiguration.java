@@ -132,7 +132,7 @@ public class EditableConfiguration extends ModelObject {
 	
 	public String getDateModified() {
 		if (history.size() != 0) {
-			return history.get(history.size()-1);
+			return history.get(history.size() - 1);
 		}
 		else {
 			return "";
@@ -238,8 +238,8 @@ public class EditableConfiguration extends ModelObject {
 		availableBlocks.remove(block);
 	}
 	
-	public void makeBlockAvailable(EditableBlock block){
-		if (!availableBlocks.contains(block)){
+	public void makeBlockAvailable(EditableBlock block) {
+		if (!availableBlocks.contains(block)) {
 			availableBlocks.add(0, block);
 		}
 	}
@@ -289,7 +289,7 @@ public class EditableConfiguration extends ModelObject {
 				Collections.<Component>emptyList(), config.getHistory());
 	}
 	
-	public void swapGroups(EditableGroup group1, EditableGroup group2){
+	public void swapGroups(EditableGroup group1, EditableGroup group2) {
 		Collection<EditableGroup> editableGroupsBefore = getEditableGroups();
 		Collection<Group> groupsBefore = getGroups();
 		

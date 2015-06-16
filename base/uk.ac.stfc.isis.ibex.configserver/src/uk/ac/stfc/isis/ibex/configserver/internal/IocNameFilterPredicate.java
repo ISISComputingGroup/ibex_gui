@@ -10,7 +10,7 @@ import com.google.common.base.Function;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 
-public class IocNameFilterPredicate implements FilterPredicate<EditableIoc>{
+public class IocNameFilterPredicate implements FilterPredicate<EditableIoc> {
 
 	@Override
 	public boolean apply(Collection<EditableIoc> toFilter, EditableIoc item) {
@@ -25,7 +25,7 @@ public class IocNameFilterPredicate implements FilterPredicate<EditableIoc>{
 	}
 
 	private Iterable<String> normaliseEach(Collection<EditableIoc> toFilter) {
-		return Iterables.transform(toFilter, new Function<EditableIoc, String>(){
+		return Iterables.transform(toFilter, new Function<EditableIoc, String>() {
 			@Override
 			public String apply(EditableIoc ioc) {
 				return normalise(ioc.getName());

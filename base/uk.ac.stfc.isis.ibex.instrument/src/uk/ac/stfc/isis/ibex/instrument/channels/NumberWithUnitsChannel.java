@@ -4,7 +4,7 @@ import uk.ac.stfc.isis.ibex.epics.observing.ClosableCachingObservable;
 import uk.ac.stfc.isis.ibex.epics.pv.Channels;
 import uk.ac.stfc.isis.ibex.epics.writing.ClosableWritable;
 
-public class NumberWithUnitsChannel implements ChannelType<String>{
+public class NumberWithUnitsChannel implements ChannelType<String> {
 
 	@Override
 	public ClosableCachingObservable<String> reader(String address) {

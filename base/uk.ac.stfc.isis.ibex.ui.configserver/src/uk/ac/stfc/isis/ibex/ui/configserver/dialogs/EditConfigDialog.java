@@ -63,12 +63,11 @@ public class EditConfigDialog extends TitleAreaDialog implements
 
 	@Override
 	protected void createButtonsForButtonBar(Composite parent) {
-		if (isBlank == false) {
+		if (isBlank == false) { 
 			createButton(parent, IDialogConstants.OK_ID, "Save", true);
 		}
-		saveAsBtn = createButton(parent, IDialogConstants.CLIENT_ID + 1,
-				"Save as ...", false);
-
+        
+		saveAsBtn = createButton(parent, IDialogConstants.CLIENT_ID + 1, "Save as ...", false);
 		saveAsBtn.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -123,7 +122,11 @@ public class EditConfigDialog extends TitleAreaDialog implements
 				sb.append("  ");
 			}
 		}
+<<<<<<< HEAD
 
+=======
+		
+>>>>>>> Ticket795
 		if (sb.length() > 0) {
 			setErrorMessage(sb.toString());
 			// Don't allow save until errors are cleared

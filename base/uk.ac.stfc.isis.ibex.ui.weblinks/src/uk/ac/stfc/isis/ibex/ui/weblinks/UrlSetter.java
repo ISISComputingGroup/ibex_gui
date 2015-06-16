@@ -12,7 +12,7 @@ public class UrlSetter implements InstrumentInfoReceiver {
 	
 	private static final String SECI_LINKS_URL = "http://dataweb.isis.rl.ac.uk/SeciLinks/default.htm?Instrument=";
 	
-	public static String getUrl(){
+	public static String getUrl() {
 		String instname = Instrument.getInstance().currentInstrument().name();
 		return SECI_LINKS_URL + instname;
 	}
@@ -21,17 +21,17 @@ public class UrlSetter implements InstrumentInfoReceiver {
 	public void setInstrument(InstrumentInfo instrument) {
 		IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
 		
-		if (page == null){
+		if (page == null) {
 			return;
 		}
 		
 		IViewPart view = page.findView(WebLinksView.ID);
 		
-		if (view == null){
+		if (view == null) {
 			return;
 		}
 		
-		if (view instanceof WebLinksView){
+		if (view instanceof WebLinksView) {
 			WebLinksView webview = (WebLinksView) view;
 			webview.setUrl(getUrl());
 		}

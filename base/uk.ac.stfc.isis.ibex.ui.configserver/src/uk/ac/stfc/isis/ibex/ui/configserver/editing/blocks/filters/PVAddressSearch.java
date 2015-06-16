@@ -29,7 +29,7 @@ public class PVAddressSearch extends ViewerFilter {
 		String upSearch = searchString.toUpperCase();
 		String upadd = p.getAddress().toUpperCase();
 		String updesc = p.getDescription().toUpperCase();
-		if (upadd.matches(upSearch) || updesc.matches(upSearch)){
+		if (upadd.matches(upSearch) || updesc.matches(upSearch)) {
 			return true;
 		}
 		return false;

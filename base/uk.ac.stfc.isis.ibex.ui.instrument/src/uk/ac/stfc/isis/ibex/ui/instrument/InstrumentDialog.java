@@ -29,7 +29,7 @@ public class InstrumentDialog extends Dialog {
 	@Override
 	protected void configureShell(Shell shell) {
 		super.configureShell(shell);
-		shell.setText(TITLE );
+		shell.setText(TITLE);
 	}
 
 	@Override

@@ -4,17 +4,16 @@ public enum Role {
 	PI("PI"),
 	USER("User"),
 	CONTACT("Contact"),
-	BLANK("")
-	;
+	BLANK("");
 	
 	private final String text;
 	
-	private Role(final String text){
+	private Role(final String text) {
 		this.text = text;
 	}
 	
 	@Override
-	public String toString(){
+	public String toString() {
 		return text;
 	}
 }

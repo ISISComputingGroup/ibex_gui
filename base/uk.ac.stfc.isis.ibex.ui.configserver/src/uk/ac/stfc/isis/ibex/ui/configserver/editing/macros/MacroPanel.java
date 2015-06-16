@@ -68,12 +68,12 @@ public class MacroPanel extends Composite implements IIocDependentPanel {
 		btnAdd.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				if (macros==null) return;
+				if (macros == null) return;
 
 				Macro selected = new Macro(generateNewName(), "NEW_VALUE", "", "");
 				macros.add(selected);
 				macroTable.setRows(macros);
-				macroTable.setSelection(macros.size()-1);
+				macroTable.setSelection(macros.size() - 1);
 				btnRemove.setEnabled(true);
 				setMacro(selected);
 			}
@@ -106,15 +106,15 @@ public class MacroPanel extends Composite implements IIocDependentPanel {
 			names.add(macro.getName());
 		}
 		String name;
-		int i=0;
+		int i = 0;
 		do {
 			name = "NEW_MACRO";
-			if ( i>0 ) {
+			if (i > 0) {
 				name = name + Integer.toString(i);
 			}
 			i++;
 		}
-		while ( names.contains(name));
+		while (names.contains(name));
 		
 		return name;
 	}

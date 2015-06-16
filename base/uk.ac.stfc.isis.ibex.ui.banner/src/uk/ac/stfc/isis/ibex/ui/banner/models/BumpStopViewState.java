@@ -6,12 +6,11 @@ import uk.ac.stfc.isis.ibex.banner.BumpStopState;
 import uk.ac.stfc.isis.ibex.ui.banner.indicators.IndicatorColours;
 import uk.ac.stfc.isis.ibex.ui.banner.indicators.IndicatorViewStateConverter;
 
-public class BumpStopViewState implements IndicatorViewStateConverter<BumpStopState>{
+public class BumpStopViewState implements IndicatorViewStateConverter<BumpStopState> {
 	private BumpStopState state;
 	
 	public void setState(BumpStopState state) {
-		if (state == null)
-		{
+		if (state == null) {
 			this.state = BumpStopState.UNKNOWN;
 		} else {
 			this.state = state;

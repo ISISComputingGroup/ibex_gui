@@ -42,9 +42,9 @@ public class TargetPropertyList extends Composite {
 		instrument.addInstrumentUpdateListener(new IInstrumentUpdateListener() {	
 			@Override
 			public void instrumentUpdated(UpdateTypes updateType) {
-				if (updateType == UpdateTypes.EDIT_PROPERTY ||
-					updateType == UpdateTypes.NEW_PROPERTY ||
-					updateType == UpdateTypes.DELETE_PROPERTY) {
+				if (updateType == UpdateTypes.EDIT_PROPERTY 
+					|| updateType == UpdateTypes.NEW_PROPERTY 
+					|| updateType == UpdateTypes.DELETE_PROPERTY) {
 					
 					int selected;
 					

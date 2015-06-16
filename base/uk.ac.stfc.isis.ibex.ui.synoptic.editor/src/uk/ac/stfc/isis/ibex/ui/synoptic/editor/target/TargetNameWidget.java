@@ -32,14 +32,14 @@ public class TargetNameWidget extends Composite {
 	private StackLayout layout;
 	private Collection<String> availableOPIs;
 	
-	public TargetNameWidget (Composite parent, final InstrumentViewModel instrument) {
+	public TargetNameWidget(Composite parent, final InstrumentViewModel instrument) {
 		super(parent, SWT.NONE);
 		
 		this.instrument = instrument;
 		
 		availableOPIs = Opi.getDefault().provider().getOPIList();
 		
-		layout = new StackLayout ();
+		layout = new StackLayout();
 		setLayout(layout);
 		
 		createControls(this);
@@ -66,7 +66,7 @@ public class TargetNameWidget extends Composite {
 			@Override
 			public void selectionChanged(SelectionChangedEvent e) {
 				IStructuredSelection selection = (IStructuredSelection) e.getSelection();	
-				String target = (String)selection.getFirstElement();
+				String target = (String) selection.getFirstElement();
 				
 				updateModel(target);
 			}
@@ -92,7 +92,7 @@ public class TargetNameWidget extends Composite {
 			case OPI:
 				layout.topControl = cmboOpiName.getCombo();
 				IStructuredSelection selection = (IStructuredSelection) cmboOpiName.getSelection();	
-				updateModel((String)selection.getFirstElement());
+				updateModel((String) selection.getFirstElement());
 				break;
 			case COMPONENT:
 				layout.topControl = txtName;
@@ -108,7 +108,7 @@ public class TargetNameWidget extends Composite {
 		if (target == null) {
 			txtName.setText("");
 			cmboOpiName.getCombo().select(-1);
-		}else{
+		} else {
 			setTargetType(target.type());
 			
 			switch (target.type()) {

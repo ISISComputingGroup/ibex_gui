@@ -193,7 +193,7 @@ public class SaveSynopticDialog extends TitleAreaDialog {
 			return "Name cannot be blank";
 		}
 		
-		if (!validate(name)){
+		if (!validate(name)) {
 			return "Name contains invalid characters";
 		}
 		

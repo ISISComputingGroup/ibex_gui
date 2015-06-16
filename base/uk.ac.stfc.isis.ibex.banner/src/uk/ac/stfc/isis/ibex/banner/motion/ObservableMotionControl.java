@@ -10,8 +10,7 @@ public class ObservableMotionControl extends ModelAdapter {
 	
 	private final SameTypeWriter<Long> stop = new SameTypeWriter<>();
 	
-	public ObservableMotionControl( 
-			Writable<Long> stop) {
+	public ObservableMotionControl(Writable<Long> stop) {
 		this.stop.writeTo(stop);
 	}
 

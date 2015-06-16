@@ -34,7 +34,7 @@ public class InstrumentSynoptic extends Composite {
 		scrolledComposite.setExpandHorizontal(true);
 		scrolledComposite.setExpandVertical(true);	
 		scrolledComposite.getHorizontalBar().setPageIncrement(500);
-		scrolledComposite.addControlListener(new ControlListener(){
+		scrolledComposite.addControlListener(new ControlListener() {
 			@Override
 			public void controlMoved(ControlEvent arg0) {
 				// Ignore

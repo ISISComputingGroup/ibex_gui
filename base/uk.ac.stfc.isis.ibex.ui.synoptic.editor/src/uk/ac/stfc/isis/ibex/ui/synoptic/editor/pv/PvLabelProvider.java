@@ -10,7 +10,7 @@ public class PvLabelProvider implements ILabelProvider {
 	
 	@Override
 	public String getText(Object element) {
-		if(element instanceof PV) {
+		if (element instanceof PV) {
 			PV pv = (PV) element;
 			String display = pv.displayName();
 			display += " (" + pv.recordType().io().name() + ")";

@@ -57,7 +57,7 @@ public class WritableObservingTextBox extends Composite {
 		textbox.addListener(SWT.Traverse, new Listener() {
 	        @Override
 	        public void handleEvent(Event event) {
-	            if(event.detail == SWT.TRAVERSE_RETURN) {
+	            if (event.detail == SWT.TRAVERSE_RETURN) {
 					setText(adapter);
 	            }
 	        }

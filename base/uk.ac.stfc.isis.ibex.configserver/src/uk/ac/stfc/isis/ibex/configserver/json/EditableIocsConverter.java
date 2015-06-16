@@ -29,11 +29,11 @@ public class EditableIocsConverter extends Converter<Map<String, IocParameters>,
 					ioc.setAvailableMacros(parameters.getMacros());
 				}
 				
-				if (parameters.getPVs()!=null) {
+				if (parameters.getPVs() != null) {
 					ioc.setAvailablePVs(parameters.getPVs());
 				}
 				
-				if (parameters.getPVSets()!=null) {
+				if (parameters.getPVSets() != null) {
 					ioc.setAvailablePVSets(parameters.getPVSets());
 				}
 				

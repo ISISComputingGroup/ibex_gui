@@ -30,7 +30,7 @@ public class SynopticInfo {
 			return Collections.emptyList();
 		}
 		
-		return Lists.newArrayList(Iterables.transform(infos, new Function<SynopticInfo, String>(){
+		return Lists.newArrayList(Iterables.transform(infos, new Function<SynopticInfo, String>() {
 			@Override
 			public String apply(SynopticInfo info) {
 				return info.name();

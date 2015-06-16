@@ -64,8 +64,8 @@ public class IocPVDetailsPanel extends Composite {
 		availablePVTable.addSelectionChangedListener(new ISelectionChangedListener() {
 			public void selectionChanged(SelectionChangedEvent arg0) {
 				IStructuredSelection selection = (IStructuredSelection) arg0.getSelection();
-				if (selection.size()>0) {
-					AvailablePV pv = (AvailablePV)selection.getFirstElement();
+				if (selection.size() > 0) {
+					AvailablePV pv = (AvailablePV) selection.getFirstElement();
 					name.setText(pv.getName());
 				}
 			}
@@ -107,7 +107,7 @@ public class IocPVDetailsPanel extends Composite {
 	private void setTextEnabled(boolean enabled) {
 		name.setEnabled(enabled);
 		value.setEnabled(enabled);
-		if ( !enabled ) {
+		if (!enabled) {
 			name.setText("");
 			value.setText("");
 		}
@@ -119,7 +119,7 @@ public class IocPVDetailsPanel extends Composite {
 	}
 	
 	private void updateAvailablePVs() {
-		if ( pvs!=null) {
+		if (pvs != null) {
 		   	availablePVTable.setRows(pvs);
 		}
 	}
