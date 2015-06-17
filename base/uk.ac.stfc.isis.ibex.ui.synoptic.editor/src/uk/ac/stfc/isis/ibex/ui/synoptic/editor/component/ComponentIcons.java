@@ -46,6 +46,8 @@ public final class ComponentIcons {
 			return icon("thumb/julabo_tb.png");
 		case EUROTHERM:
 			return icon("thumb/euro_tb.png");
+		case PINHOLESELECTOR: 
+			return icon("thumb/pinhole_selector_tb.png");
 		default:
 			return icon("thumb/cog_tb.png");
 		}
