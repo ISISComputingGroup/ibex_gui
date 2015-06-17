@@ -59,6 +59,7 @@
 			<enumeration value="EUROTHERM"></enumeration>  
 			<enumeration value="KEPCO"></enumeration>
 			<enumeration value="GONIOMETER"></enumeration>
+            <enumeration value="PINHOLESELECTOR"></enumeration>
 			<enumeration value="UNKNOWN"></enumeration>
     	</restriction>
     </simpleType>
