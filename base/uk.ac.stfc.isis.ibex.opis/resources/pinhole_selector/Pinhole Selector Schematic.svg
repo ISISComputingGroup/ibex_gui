@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="210mm"
+   height="297mm"
+   viewBox="0 0 744.09448819 1052.3622047"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.91 r13725"
+   sodipodi:docname="IMAT Pinhole Selector Schematic.svg">
+  <title
+     id="title4138">IMAT Pinhole Selector Schematic</title>
+  <defs
+     id="defs4" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.35"
+     inkscape:cx="1003.3938"
+     inkscape:cy="991.46794"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="true"
+     showborder="false"
+     inkscape:window-width="1303"
+     inkscape:window-height="906"
+     inkscape:window-x="360"
+     inkscape:window-y="66"
+     inkscape:window-maximized="0"
+     objecttolerance="10000"
+     guidetolerance="10000"
+     inkscape:snap-perpendicular="true">
+    <inkscape:grid
+       type="xygrid"
+       id="grid4144"
+       dotted="false"
+       empspacing="50"
+       spacingx="1"
+       spacingy="1" />
+  </sodipodi:namedview>
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title>IMAT Pinhole Selector Schematic</dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <rect
+       style="opacity:1;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:1.13960123;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="rect4192"
+       width="398.86041"
+       height="398.86041"
+       x="800.56982"
+       y="-847.06799"
+       inkscape:transform-center-y="-700" />
+    <path
+       style="opacity:1;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:1.13960123;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="M 1679.2148 -570.06445 L 1333.791 -370.63477 L 1533.2207 -25.210938 L 1878.6445 -224.64062 L 1679.2148 -570.06445 z M 1605.2188 -322.78516 A 24.916943 24.916943 0 0 1 1627.3848 -310.33398 A 24.916943 24.916943 0 0 1 1618.2656 -276.29688 A 24.916943 24.916943 0 0 1 1584.2266 -285.41797 A 24.916943 24.916943 0 0 1 1593.3477 -319.45508 A 24.916943 24.916943 0 0 1 1605.2188 -322.78516 z "
+       id="rect4194" />
+    <path
+       style="opacity:1;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:1.13960123;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="M 1533.2207 129.93555 L 1333.791 475.35938 L 1679.2148 674.78906 L 1878.6445 329.36523 L 1533.2207 129.93555 z M 1604.3125 353.6582 A 49.503315 49.503315 0 0 1 1631.3984 360.23633 A 49.503315 49.503315 0 0 1 1649.5195 427.85938 A 49.503315 49.503315 0 0 1 1581.8965 445.97852 A 49.503315 49.503315 0 0 1 1563.7773 378.35547 A 49.503315 49.503315 0 0 1 1604.3125 353.6582 z "
+       id="rect4196" />
+    <path
+       style="opacity:1;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:1.13960123;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="M 800.57031 552.93164 L 800.57031 951.79297 L 1199.4297 951.79297 L 1199.4297 552.93164 L 800.57031 552.93164 z M 999.75 680.96875 A 74.501663 74.501663 0 0 1 1074.25 755.4707 A 74.501663 74.501663 0 0 1 999.75 829.97266 A 74.501663 74.501663 0 0 1 925.24805 755.4707 A 74.501663 74.501663 0 0 1 999.75 680.96875 z "
+       id="rect4198" />
+    <path
+       style="opacity:1;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:1.13960123;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="M 466.7793 129.93555 L 121.35547 329.36523 L 320.78516 674.78906 L 666.20898 475.35938 L 466.7793 129.93555 z M 390.60547 304.15039 A 99.66777 99.66777 0 0 1 479.27148 353.95703 A 99.66777 99.66777 0 0 1 442.79102 490.10547 A 99.66777 99.66777 0 0 1 306.64258 453.625 A 99.66777 99.66777 0 0 1 343.12305 317.47656 A 99.66777 99.66777 0 0 1 390.60547 304.15039 z "
+       id="rect4200" />
+    <path
+       style="opacity:1;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:1.13960123;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="M 320.78516 -570.06445 L 121.35547 -224.64062 L 466.7793 -25.210938 L 666.20898 -370.63477 L 320.78516 -570.06445 z M 387.49219 -421.8457 A 124.58472 124.58472 0 0 1 455.66211 -405.29297 A 124.58472 124.58472 0 0 1 501.26367 -235.10742 A 124.58472 124.58472 0 0 1 331.07812 -189.50586 A 124.58472 124.58472 0 0 1 285.47656 -359.69141 A 124.58472 124.58472 0 0 1 387.49219 -421.8457 z "
+       id="rect4202" />
+    <ellipse
+       style="opacity:1;fill:none;fill-opacity:1;stroke:#000000;stroke-width:9.9568491;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="path4136"
+       cx="1000"
+       cy="52.362209"
+       rx="995.02161"
+       ry="995.02155" />
+    <circle
+       style="opacity:1;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:1.22549021;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="path4170"
+       cx="1000"
+       cy="52.362228"
+       r="30.637255" />
+    <g
+       id="g4255">
+      <path
+         inkscape:connector-curvature="0"
+         id="path4239"
+         d="m 952.02031,-647.99843 99.99999,0 0,0"
+         style="fill:none;fill-rule:evenodd;stroke:#ff0000;stroke-width:4.87950087;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+      <path
+         inkscape:connector-curvature="0"
+         id="path4241"
+         d="m 1000.2333,-695.62583 0,95.24071 0,0"
+         style="fill:none;fill-rule:evenodd;stroke:#ff0000;stroke-width:4.76195908;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+    </g>
+  </g>
+</svg>
