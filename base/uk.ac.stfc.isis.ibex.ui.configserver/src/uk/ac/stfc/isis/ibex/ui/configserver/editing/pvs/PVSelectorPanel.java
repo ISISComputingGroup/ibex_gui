@@ -32,7 +32,7 @@ import uk.ac.stfc.isis.ibex.ui.configserver.editing.blocks.filters.SourceFilters
 
 
 /**
- * A composite for selecting a PV
+ * A composite for selecting a PV.
  *
  */
 public class PVSelectorPanel extends Composite {
@@ -48,11 +48,13 @@ public class PVSelectorPanel extends Composite {
 	
 	public PVSelectorPanel(Composite parent, int style) {
 		super(parent, style);
-
+		
 		setLayout(new FillLayout(SWT.HORIZONTAL));
 		
 		Group grpPV = new Group(this, SWT.NONE);
 		grpPV.setText("PV Selector");
+		
+		GridLayout gdGrpPV = new GridLayout(2, false);
 		grpPV.setLayout(new GridLayout(2, false));
 		
 		Label lblViewPVs = new Label(grpPV, SWT.NONE);
@@ -89,19 +91,19 @@ public class PVSelectorPanel extends Composite {
 		pvAddress.setLayoutData(gd_pvAddress);
 		
 		blockPVTable = new BlockPVTable(grpPV, SWT.NONE, SWT.V_SCROLL | SWT.NO_SCROLL | SWT.FULL_SELECTION);
-		blockPVTable.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
+		GridData gdPvTable = new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1);
+		gdPvTable.heightHint = 300;
+		blockPVTable.setLayoutData(gdPvTable);
 		
 		blockPVTable.addSelectionChangedListener(new ISelectionChangedListener() {
 			public void selectionChanged(SelectionChangedEvent arg0) {
 				IStructuredSelection selection = (IStructuredSelection) arg0.getSelection();
 				if (selection.size() > 0) {
-					PV pv = (PV)selection.getFirstElement();
+					PV pv = (PV) selection.getFirstElement();
 					pvAddress.setText(pv.getAddress());
 				}
 			}
 		});
-
-
 	}
 	
 	public void setConfig(EditableConfiguration config, PV pv) {
@@ -113,8 +115,8 @@ public class PVSelectorPanel extends Composite {
 		pvSource.addSelectionChangedListener(new ISelectionChangedListener() {
 			@Override
 			public void selectionChanged(SelectionChangedEvent arg0) {
-				StructuredSelection selection = (StructuredSelection)arg0.getSelection();
-				SourceFilters PVfilter = (SourceFilters)selection.getFirstElement();
+				StructuredSelection selection = (StructuredSelection) arg0.getSelection();
+				SourceFilters PVfilter = (SourceFilters) selection.getFirstElement();
 				changeSourceFilter(PVfilter);
 			}
 		});
@@ -122,8 +124,8 @@ public class PVSelectorPanel extends Composite {
 		interestLevel.addSelectionChangedListener(new ISelectionChangedListener() {
 			@Override
 			public void selectionChanged(SelectionChangedEvent arg0) {
-				StructuredSelection selection = (StructuredSelection)arg0.getSelection();
-				InterestFilters interestFilter = (InterestFilters)selection.getFirstElement();
+				StructuredSelection selection = (StructuredSelection) arg0.getSelection();
+				InterestFilters interestFilter = (InterestFilters) selection.getFirstElement();
 				changeInterestFilter(interestFilter);
 			}
 		});
