@@ -8,6 +8,11 @@ public interface Writable<T> {
 
 	void write(T value);
 	
-	// Allow the writer to receive updates from the writable
+	/**
+	 * Allows the writer to receive updates from the writable.
+	 * 
+	 * @param writer
+	 * @return a subscription on which to listen
+	 */
 	Subscription subscribe(ConfigurableWriter<?,?> writer);
 }

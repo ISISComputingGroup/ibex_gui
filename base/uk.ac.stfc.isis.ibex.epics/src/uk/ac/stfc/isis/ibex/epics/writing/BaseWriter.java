@@ -6,6 +6,12 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import uk.ac.stfc.isis.ibex.epics.observing.Subscription;
 import uk.ac.stfc.isis.ibex.epics.observing.Unsubscriber;
 
+/**
+ * An abstract class for defining basic writer classes.
+ *
+ * @param <TIn> the type of data coming in
+ * @param <TOut> the type of data to output
+ */
 public abstract class BaseWriter<TIn, TOut> implements ConfigurableWriter<TIn, TOut> {
 		
 	private final Collection<Writable<TOut>> writables = new CopyOnWriteArrayList<>();
