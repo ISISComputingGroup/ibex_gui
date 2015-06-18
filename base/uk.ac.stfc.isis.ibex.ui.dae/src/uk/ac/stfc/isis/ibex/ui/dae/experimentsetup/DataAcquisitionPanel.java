@@ -255,6 +255,7 @@ public class DataAcquisitionPanel extends Composite {
 		bindingContext.bindValue(WidgetProperties.selection().observe(btnVeto2), BeanProperties.value("veto2").observe(model));
 		bindingContext.bindValue(WidgetProperties.selection().observe(btnVeto3), BeanProperties.value("veto3").observe(model));
 		
+		bindingContext.bindValue(WidgetProperties.selection().observe(btnSMP), BeanProperties.value("smpVeto").observe(model));
 		bindingContext.bindValue(WidgetProperties.selection().observe(btnFermiChopper), BeanProperties.value("fermiChopperVeto").observe(model));
 		bindingContext.bindValue(WidgetProperties.selection().observe(btnTs2Pulse), BeanProperties.value("ts2PulseVeto").observe(model));
 		bindingContext.bindValue(WidgetProperties.selection().observe(btnIsisHz), BeanProperties.value("isis50HzVeto").observe(model));
