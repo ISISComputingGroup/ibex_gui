@@ -82,7 +82,6 @@ public class BeamlineCompositeContainer extends BeamlineComposite {
 			Rectangle bounds = control.getBounds();
 			maxX = Math.max(bounds.width + bounds.x, maxX);
 			maxY = Math.max(bounds.height + bounds.y, maxY);
-			System.out.println(control.getBounds().width + ":" + control.getBounds().height);
 		}
 		
 		// Add the margins
