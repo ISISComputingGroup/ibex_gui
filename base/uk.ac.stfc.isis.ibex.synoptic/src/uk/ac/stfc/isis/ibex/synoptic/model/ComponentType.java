@@ -21,7 +21,8 @@ public enum ComponentType {
 	POLARISER,
 	JULABO,	
 	EUROTHERM,
-	GONIOMETER (new ViewTarget("Goniometer"));
+	GONIOMETER (new ViewTarget("Goniometer")) ,
+	PINHOLESELECTOR;
 	private Target target;
 
 	private ComponentType() {
