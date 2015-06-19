@@ -27,8 +27,6 @@ public abstract class ConfigHandler<T> extends AbstractHandler {
 	/**
 	 * This is an inner anonymous class inherited from SameTypeWriter with added functionality
 	 * for disabling the command if the underlying PV cannot be written to.
-	 * 
-	 * Inner anonymous class = new unnamed class being created and instanced at the same time!
 	 */
 	protected final SameTypeWriter<T> configService = new SameTypeWriter<T>() {	
 		@Override

@@ -3,7 +3,7 @@ package uk.ac.stfc.isis.ibex.epics.writing;
 import uk.ac.stfc.isis.ibex.epics.observing.Subscription;
 
 /**
- * An interface for classes that observe and write to a Writable.
+ * An interface for classes that observe and write to a Writable (PV).
  *
  * @param <TIn> the type coming in
  * @param <TOut> the type written out
