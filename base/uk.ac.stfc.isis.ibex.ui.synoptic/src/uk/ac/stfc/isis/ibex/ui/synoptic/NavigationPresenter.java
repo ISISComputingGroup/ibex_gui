@@ -53,7 +53,7 @@ public class NavigationPresenter extends ModelObject {
 	}
 	
 	public String nameOfPrevious() {
-		return getHasPrevious() ? display(current.previous().item().name()) : "";
+		return getHasPrevious() ? diaplayName(current.previous().item().name()) : "";
 	}
 
 	public void up() {
@@ -63,7 +63,7 @@ public class NavigationPresenter extends ModelObject {
 	}
 	
 	public String nameOfUp() {
-		return getHasUp() ? display(current.up().item().name()) : "";
+		return getHasUp() ? diaplayName(current.up().item().name()) : "";
 	}
 	
 	public void next() {
@@ -73,7 +73,13 @@ public class NavigationPresenter extends ModelObject {
 	}
 	
 	public String nameOfNext() {
-		return getHasNext() ? display(current.next().item().name()) : "";
+		String returnString = "";
+		
+		if (getHasNext() && (current.next().item() != null)) {
+			returnString = current.next().item().name();
+		}
+
+		return diaplayName(returnString);
 	}
 	
 	public void down() {
@@ -83,10 +89,10 @@ public class NavigationPresenter extends ModelObject {
 	}
 	
 	public String nameOfDown() {
-		return getHasDown() ? display(current.down().item().name()) : "";
+		return getHasDown() ? diaplayName(current.down().item().name()) : "";
 	}
 	
-	private String display(String name) {
+	private String diaplayName(String name) {
 		return name.trim();
 	}
 	
