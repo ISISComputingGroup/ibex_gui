@@ -7,4 +7,5 @@ import uk.ac.stfc.isis.ibex.model.UpdatedValue;
 public interface IndicatorModel {
 	public UpdatedValue<String> text();
 	public UpdatedValue<Color> color();
+	public UpdatedValue<Boolean> availability();
 }

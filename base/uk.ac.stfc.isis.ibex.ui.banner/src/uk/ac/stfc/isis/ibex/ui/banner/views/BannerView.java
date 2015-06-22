@@ -55,15 +55,15 @@ public class BannerView extends ViewPart implements ISizeProvider {
 		spacer = new Label(parent, SWT.NONE);
 		spacer.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 1, 1));
 		
-		batonUser = new Indicator(parent, SWT.NONE, batonUserModel, ALARM_FONT);
-		GridData gd_batonUser = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
-		gd_batonUser.widthHint = 210;
-		batonUser.setLayoutData(gd_batonUser);		
-		
 		bumpStop = new Indicator(parent, SWT.NONE, bumpStopModel, ALARM_FONT);
 		GridData gd_bumpStop = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
 		gd_bumpStop.widthHint = 180;
 		bumpStop.setLayoutData(gd_bumpStop);
+		
+		batonUser = new Indicator(parent, SWT.NONE, batonUserModel, ALARM_FONT);
+		GridData gd_batonUser = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+		gd_batonUser.widthHint = 210;
+		batonUser.setLayoutData(gd_batonUser);		
 		
 		inMotion = new Indicator(parent, SWT.NONE, inMotionModel, ALARM_FONT);
 		GridData gd_inMotion = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);

@@ -7,4 +7,5 @@ public interface IndicatorViewStateConverter<T> {
 	public String getName();
 	public Color color();
 	public Boolean toBool();
+	public Boolean availability();
 }

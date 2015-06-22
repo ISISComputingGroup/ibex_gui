@@ -23,4 +23,7 @@ public class BatonUserModel extends Closer implements IndicatorModel {
 		return batonUser.color();
 	}
 	
+	public UpdatedValue<Boolean> availability() {
+		return batonUser.availability();
+	}
 }

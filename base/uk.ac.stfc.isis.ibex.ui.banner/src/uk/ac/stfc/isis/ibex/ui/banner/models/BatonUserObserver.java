@@ -39,11 +39,14 @@ public class BatonUserObserver implements Closable {
 	
 	protected final SettableUpdatedValue<String> text;
 	protected final SettableUpdatedValue<Color> color;
+	protected final SettableUpdatedValue<Boolean> availability;
 	
 	public BatonUserObserver(
 			InitialiseOnSubscribeObservable<String> observable, String self) {
 		text = new SettableUpdatedValue<>();
 		color = new SettableUpdatedValue<>();
+		availability = new SettableUpdatedValue<>();
+		
 		subscription = observable.subscribe(observer);
 		SELF = self;
 	}
@@ -76,6 +79,10 @@ public class BatonUserObserver implements Closable {
 
 	public UpdatedValue<Color> color() {
 		return color;
+	}
+
+	public UpdatedValue<Boolean> availability() {
+		return availability;
 	}
 	
 }

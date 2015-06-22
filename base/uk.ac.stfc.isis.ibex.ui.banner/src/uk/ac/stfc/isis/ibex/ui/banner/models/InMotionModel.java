@@ -25,4 +25,8 @@ public class InMotionModel extends Closer implements IndicatorModel {
 		return inMotion.color();
 	}
 	
+	public UpdatedValue<Boolean> availability() {
+		return inMotion.availability();
+	}
+	
 }

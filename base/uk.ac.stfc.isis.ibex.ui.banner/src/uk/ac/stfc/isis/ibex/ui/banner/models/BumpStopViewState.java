@@ -23,8 +23,10 @@ public class BumpStopViewState implements IndicatorViewStateConverter<BumpStopSt
 	
 	public Color color() {
 		switch (state) { 
-			case NOT_TRIPPED:		
+			case NOT_TRIPPED:
+			case UNAVAILABLE:
 				return IndicatorColours.BLACK;
+
 			case TRIPPED:
 			case UNKNOWN:
 			default:
@@ -37,10 +39,25 @@ public class BumpStopViewState implements IndicatorViewStateConverter<BumpStopSt
 			case TRIPPED:
 				return true;
 			case NOT_TRIPPED:
+			case UNAVAILABLE:
 			case UNKNOWN:
 			default:
 				return false;
 		}
+	}
+	
+	public Boolean availability() {
+		switch (state) {
+			case UNAVAILABLE:
+				return false;
+			case NOT_TRIPPED:
+			case TRIPPED:
+			case UNKNOWN:
+			default:
+				return true;
+			}
+		
+
 	}	
 	
 }

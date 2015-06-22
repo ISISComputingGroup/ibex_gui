@@ -28,6 +28,7 @@ public class Indicator extends Composite {
 		text.setEnabled(false);
 		text.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_BACKGROUND));
 		text.setFont(font);
+		text.setVisible(true);
 		
 		if (model != null) {
 			bind(model);
@@ -38,5 +39,6 @@ public class Indicator extends Composite {
 		DataBindingContext bindingContext = new DataBindingContext();
 		bindingContext.bindValue(WidgetProperties.text().observe(text), BeanProperties.value("value").observe(model.text()));
 		bindingContext.bindValue(WidgetProperties.foreground().observe(text), BeanProperties.value("value").observe(model.color()));
+		bindingContext.bindValue(WidgetProperties.visible().observe(text), BeanProperties.value("value").observe(model.availability()));
 	}
 }
