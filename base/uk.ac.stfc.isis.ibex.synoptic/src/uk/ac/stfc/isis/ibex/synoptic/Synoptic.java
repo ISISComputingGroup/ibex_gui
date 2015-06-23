@@ -64,6 +64,10 @@ public class Synoptic extends Closer implements BundleActivator {
 		return variables.available.value();
 	}
 	
+	public SynopticInfo getSynopticInfo() {
+		return viewerModelObserver.getSynopticInfo();
+	}
+	
 	public InitialiseOnSubscribeObservable<InstrumentDescription> synoptic(SynopticInfo synoptic) {
 		return variables.getSynoptic(synoptic.pv());
 	}

@@ -10,6 +10,8 @@ import uk.ac.stfc.isis.ibex.synoptic.SynopticModel;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.InstrumentDescription;
 
 public class ObservingSynopticModel {
+	
+	private SynopticInfo synopticInfo;
 
 	private final InitialisableObserver<InstrumentDescription> descriptionObserver 
 		= new BaseObserver<InstrumentDescription>() {
@@ -58,6 +60,11 @@ public class ObservingSynopticModel {
 	}
 	
 	public void switchSynoptic(SynopticInfo newSynoptic) {
+		this.synopticInfo = newSynoptic;
 		synoptic.switchTo(variables.getSynoptic(newSynoptic.pv()));
+	}
+	
+	public SynopticInfo getSynopticInfo() {
+		return this.synopticInfo;
 	}
 }
