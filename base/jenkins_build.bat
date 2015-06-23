@@ -2,7 +2,7 @@ set M2=C:\Program Files\Apache Software Foundation\apache-maven-3.2.2\bin\
 set PYTHON=C:\Python27
 set PYTHON_HOME=C:\Python27
 set LOCINSTALLDIR=c:\Installers\CSStudio_ISIS\
-set GENIEPYTHONDIR=c:\Installers\genie_python\
+set GENIEPYTHONDIR=c:\Installers\genie_python
 
 REM Find latest Java 7 version
 for /F %%f in ('dir "C:\Program Files\Java\jdk1.7*" /b') do set JAVA_HOME=C:\Program Files\Java\%%f
@@ -43,7 +43,7 @@ if %errorlevel% geq 4 (
 
 REM Copy the genie_python too
 mkdir %INSTALLDIR%\genie_python
-copy /Y %GENIEPYTHONDIR%\*.* %INSTALLDIR%\genie_python\.
+xcopy /s /e /h %GENIEPYTHONDIR% %INSTALLDIR%\genie_python
 if %errorlevel% neq 0 (
     @echo Genie python copy failed
     exit /b %errorlevel%
