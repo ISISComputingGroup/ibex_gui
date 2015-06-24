@@ -108,6 +108,7 @@ public class InstrumentViewModel {
 		RecordType rt = new RecordType();
 		rt.setIO(IO.READ);
 		pv.setRecordType(rt);
+		pv.setPvType(PVType.LOCAL_PV);
 
 		int index = 0;
 		

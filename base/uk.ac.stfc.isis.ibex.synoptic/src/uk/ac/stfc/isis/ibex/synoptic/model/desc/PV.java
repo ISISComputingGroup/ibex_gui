@@ -40,14 +40,16 @@ public class PV {
 	
 	public String fullAddress() {
 		String addressToUse = address;
-		switch (this.pvType){
-		case LOCAL_PV:
-			String pvprefix = Instrument.getInstance().currentInstrument().pvPrefix();
-			addressToUse = pvprefix + addressToUse;
-			break;
-		default:
-			//Leave the address as that entered - could be remote
-			break;
+		if (this.pvType != null) {
+			switch (this.pvType){
+			case LOCAL_PV:
+				String pvprefix = Instrument.getInstance().currentInstrument().pvPrefix();
+				addressToUse = pvprefix + addressToUse;
+				break;
+			default:
+				//Leave the address as that entered - could be remote
+				break;
+			}
 		}
 		return addressToUse;
 	}

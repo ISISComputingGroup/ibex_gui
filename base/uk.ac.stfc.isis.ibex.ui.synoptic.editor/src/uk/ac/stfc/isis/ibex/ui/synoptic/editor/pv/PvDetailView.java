@@ -129,7 +129,7 @@ public class PvDetailView extends Composite {
 //			lblType.setText("Type");
 			
 			cmboType = new ComboViewer(fieldsComposite, SWT.READ_ONLY);
-			//Seperate out the Grid Data so that the control can be hidden whilst defaulting to Local
+			//Separate out the Grid Data so that the control can be hidden whilst defaulting to Local
 			GridData gd_cmboType = new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1);
 			gd_cmboType.exclude = true;
 			cmboType.getCombo().setLayoutData(gd_cmboType);
@@ -156,6 +156,7 @@ public class PvDetailView extends Composite {
 				@Override
 				public void widgetSelected(SelectionEvent e) {
 					openPvDialog();
+					updateModel();
 				}
 			});
 		}
