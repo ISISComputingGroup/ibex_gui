@@ -9,15 +9,19 @@ import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.IO;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.PV;
+import uk.ac.stfc.isis.ibex.synoptic.model.desc.PVType;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.IPVSelectionListener;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.InstrumentViewModel;
 
@@ -34,8 +38,12 @@ public class PvDetailView extends Composite {
 	private Text txtName;
 	private Text txtAddress;
 	private ComboViewer cmboMode;
+	private ComboViewer cmboType;
+	
+	private Button btnPickPV;
 	
 	private static IO[] modeList = IO.values();
+	private static PVType[] typeList = PVType.values();
 
 	public PvDetailView(Composite parent, InstrumentViewModel instrument) {
 		super(parent, SWT.NONE);
@@ -114,6 +122,43 @@ public class PvDetailView extends Composite {
 					updateModel();
 				}
 			});
+			
+			//Hide whilst only local is selectable
+//			Label lblType = new Label(fieldsComposite, SWT.NONE);
+//			lblType.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
+//			lblType.setText("Type");
+			
+			cmboType = new ComboViewer(fieldsComposite, SWT.READ_ONLY);
+			//Separate out the Grid Data so that the control can be hidden whilst defaulting to Local
+			GridData gd_cmboType = new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1);
+			gd_cmboType.exclude = true;
+			cmboType.getCombo().setLayoutData(gd_cmboType);
+			
+			//Hide so that only local is selectable initially
+//			cmboType.getCombo().setLayoutData(new GridData().exclude = true);
+//			GridData gd_btnUp = new GridData(SWT.LEFT, SWT.BOTTOM, false, true, 1, 1);
+//			gd_btnUp.widthHint = 80;
+//			gd_btnUp.exclude = !orderable;
+			
+			cmboType.setContentProvider(ArrayContentProvider.getInstance());
+			cmboType.setInput(typeList);
+			cmboType.getCombo().select(0);
+			cmboType.addSelectionChangedListener(new ISelectionChangedListener() {
+				@Override
+				public void selectionChanged(SelectionChangedEvent event) {
+					updateModel();
+				}
+			});
+			
+			btnPickPV = new Button(fieldsComposite, SWT.NONE);
+			btnPickPV.setText("Select PV");
+			btnPickPV.addSelectionListener(new SelectionAdapter() {
+				@Override
+				public void widgetSelected(SelectionEvent e) {
+					openPvDialog();
+					updateModel();
+				}
+			});
 		}
 	}
 
@@ -127,10 +172,16 @@ public class PvDetailView extends Composite {
 			labelComposite.setVisible(false);
 			
 			txtName.setText(selectedPv.displayName());
-			txtAddress.setText(selectedPv.address());
+			PVType type = selectedPv.getPvType();
+			int typeIndex = Arrays.asList(typeList).indexOf(type);
+			cmboType.getCombo().select(typeIndex);
+			
+			//Use the full address to avoid confusion
+			txtAddress.setText(selectedPv.fullAddress());
+//			txtAddress.setText(selectedPv.address());
 			
 			IO mode = selectedPv.recordType().io();
-			int typeIndex = Arrays.asList(modeList).indexOf(mode);
+			typeIndex = Arrays.asList(modeList).indexOf(mode);
 			cmboMode.getCombo().select(typeIndex);
 		} else {
 			fieldsComposite.setVisible(false);
@@ -139,6 +190,7 @@ public class PvDetailView extends Composite {
 			txtName.setText("");
 			txtAddress.setText("");
 			cmboMode.getCombo().select(0);
+			cmboType.getCombo().select(0);
 		}
 		
 		updateLock = false;
@@ -150,8 +202,21 @@ public class PvDetailView extends Composite {
 			IO mode = Arrays.asList(modeList).get(typeIndex);
 			String name = txtName.getText();
 			String address = txtAddress.getText();
+			typeIndex = cmboType.getCombo().getSelectionIndex();
+			PVType type = Arrays.asList(typeList).get(typeIndex);
 			
-			instrument.updateSelectedPV(name, address, mode);
+			//Hard coded to local as there issues with displaying remote PVs
+			instrument.updateSelectedPV(name, address, mode, PVType.LOCAL_PV);
 		}
+	}
+	
+	private void openPvDialog() {
+		PvSelector selectPV = new PvSelector();
+		try {
+			selectPV.execute(null);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		txtAddress.setText(selectPV.getPvAddress());
 	}
 }

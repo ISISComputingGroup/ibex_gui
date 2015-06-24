@@ -13,6 +13,7 @@ package uk.ac.stfc.isis.ibex.ui.synoptic.editor.model;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+import uk.ac.stfc.isis.ibex.instrument.Instrument;
 import uk.ac.stfc.isis.ibex.model.UpdatedValue;
 import uk.ac.stfc.isis.ibex.synoptic.Synoptic;
 import uk.ac.stfc.isis.ibex.synoptic.SynopticModel;
@@ -21,6 +22,7 @@ import uk.ac.stfc.isis.ibex.synoptic.model.desc.ComponentDescription;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.IO;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.InstrumentDescription;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.PV;
+import uk.ac.stfc.isis.ibex.synoptic.model.desc.PVType;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.Property;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.RecordType;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.TargetDescription;
@@ -106,6 +108,7 @@ public class InstrumentViewModel {
 		RecordType rt = new RecordType();
 		rt.setIO(IO.READ);
 		pv.setRecordType(rt);
+		pv.setPvType(PVType.LOCAL_PV);
 
 		int index = 0;
 		
@@ -180,17 +183,30 @@ public class InstrumentViewModel {
 		return selectedComponent;
 	}
 
-	public void updateSelectedPV(String name, String address, IO mode) {
+	public void updateSelectedPV(String name, String address, IO mode, PVType type) {
 		if (selectedPV == null) {
 			return;
 		}
 
 		selectedPV.setDisplayName(name);
-		selectedPV.setAddress(address);
 		RecordType recordType = new RecordType();
 		recordType.setIO(mode);
 		selectedPV.setRecordType(recordType);
+		selectedPV.setPvType(type);
 
+		String addressToUse = address;
+		switch (type){
+			case LOCAL_PV:
+				String pvprefix = Instrument.getInstance().currentInstrument().pvPrefix();
+				addressToUse = addressToUse.replace(pvprefix, "");
+				break;
+			default:
+				//Leave the address as that entered - could be remote or a block
+				break;
+		}
+		
+		selectedPV.setAddress(addressToUse);
+		
 		broadcastInstrumentUpdate(UpdateTypes.EDIT_PV);
 	}
 

@@ -66,21 +66,24 @@
 
     <complexType name="pv">
     	<sequence>
-            <element name="displayname" type="string" maxOccurs="1" minOccurs="0"></element>
-            <element name="address" type="string" maxOccurs="1"
+    		<element name="displayname" type="string" maxOccurs="1"
+    			minOccurs="0">
+    		</element>
+    		<element name="address" type="string" maxOccurs="1"
     			minOccurs="1">
     		</element>
     		<element name="recordtype" type="tns:recordtype"
     			maxOccurs="1" minOccurs="1">
     		</element>
-    	</sequence>
+            <element name="pvtype" type="string" maxOccurs="1" minOccurs="0"></element>
+        </sequence>
     </complexType>
 
 
     <complexType name="recordtype">
     	<sequence>
             <element name="io" type="tns:io"></element>
-    	</sequence>
+        </sequence>
     </complexType>
 
 
