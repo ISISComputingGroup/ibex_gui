@@ -2,5 +2,5 @@
 Title="IBEX Client Installer"
 ExtractTitle="Installing IBEX Client..."
 OverwriteMode="2"
-RunProgram="setup.bat"
+RunProgram="install_client_zip.bat"
 ;!@InstallEnd@!
