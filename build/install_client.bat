@@ -16,3 +16,4 @@ xcopy /s /e /h %BASEDIR%\..\EPICS_UTILS %UTILSDIR%
 
 REM genie_python already has its own script
 call %BASEDIR%\..\genie_python\genie_python_install.bat
+pause

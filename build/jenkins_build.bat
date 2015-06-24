@@ -91,7 +91,7 @@ if %errorlevel% neq 0 (
 )
 
 REM Copy to Kits
-xcopy /s /e /h ClientInstaller.exe %INSTALLDIR%
+xcopy ClientInstaller.exe %INSTALLDIR%
 if %errorlevel% neq 0 (
     @echo Installer copy failed
     exit /b %errorlevel%
