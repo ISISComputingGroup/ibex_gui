@@ -1,22 +1,23 @@
 package uk.ac.stfc.isis.ibex.ui.synoptic.views;
 
 import org.eclipse.jface.window.Window;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.ISizeProvider;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
-import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.graphics.Color;
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.layout.GridData;
 import org.eclipse.wb.swt.SWTResourceManager;
-import org.eclipse.swt.widgets.Button;
 
 import uk.ac.stfc.isis.ibex.synoptic.Synoptic;
+import uk.ac.stfc.isis.ibex.synoptic.SynopticInfo;
 import uk.ac.stfc.isis.ibex.ui.synoptic.SynopticSelectionDialog;
 import uk.ac.stfc.isis.ibex.ui.synoptic.widgets.InstrumentBreadCrumb;
 import uk.ac.stfc.isis.ibex.ui.synoptic.widgets.Navigator;
@@ -60,6 +61,19 @@ public class NavigationView extends ViewPart implements ISizeProvider {
 				if (dialog.open() == Window.OK) {
 					synoptic.setViewerSynoptic(dialog.selectedSynoptic());
 				}
+			}
+		});
+		
+		Button refreshButton = new Button(parent, SWT.NONE);
+		refreshButton.setText("Refresh Synoptic");
+		refreshButton.setLayoutData(new GridData(SWT.CENTER, SWT.FILL, false, false, 1, 1));
+		refreshButton.setBackground(BACKGROUND);
+		
+		refreshButton.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				SynopticInfo synopticToRefresh = synoptic.getSynopticInfo();
+				synoptic.setViewerSynoptic(synopticToRefresh);		
 			}
 		});
 		
