@@ -108,7 +108,7 @@ $(pv_value)</tooltip>
     <axis_1_time_format>0</axis_1_time_format>
     <trace_1_point_size>4</trace_1_point_size>
     <trace_0_plot_mode>0</trace_0_plot_mode>
-    <trace_count>2</trace_count>
+    <trace_count>3</trace_count>
     <axis_0_show_grid>true</axis_0_show_grid>
     <axis_0_log_scale>false</axis_0_log_scale>
     <trace_1_name>Set Point</trace_1_name>
@@ -121,10 +121,12 @@ $(pv_value)</tooltip>
     <axis_1_visible>true</axis_1_visible>
     <height>259</height>
     <axis_1_maximum>50.0</axis_1_maximum>
+    <trace_2_x_pv></trace_2_x_pv>
     <axis_1_title_font>
       <opifont.name fontName="Arial" height="9" style="1">ISIS_Header4</opifont.name>
     </axis_1_title_font>
     <border_width>1</border_width>
+    <trace_2_x_axis_index>0</trace_2_x_axis_index>
     <axis_0_axis_color>
       <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
     </axis_0_axis_color>
@@ -138,17 +140,22 @@ $(pv_value)</tooltip>
     <axis_0_grid_color>
       <color name="ISIS_Textbox_Readonly_Background" red="200" green="200" blue="200" />
     </axis_0_grid_color>
+    <trace_2_line_width>1</trace_2_line_width>
     <trace_1_line_width>1</trace_1_line_width>
+    <trace_2_y_axis_index>1</trace_2_y_axis_index>
     <axis_0_auto_scale_threshold>0.0</axis_0_auto_scale_threshold>
+    <trace_2_trace_type>0</trace_2_trace_type>
     <trace_0_name>Temperature</trace_0_name>
     <trace_1_anti_alias>true</trace_1_anti_alias>
     <trace_0_update_mode>0</trace_0_update_mode>
     <trace_1_buffer_size>1000</trace_1_buffer_size>
     <axis_0_axis_title>Time</axis_0_axis_title>
     <wuid>44c91a10:141c66a3085:-7c7d</wuid>
+    <trace_2_buffer_size>1000</trace_2_buffer_size>
     <axis_1_axis_color>
       <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
     </axis_1_axis_color>
+    <trace_2_update_mode>0</trace_2_update_mode>
     <foreground_color>
       <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
     </foreground_color>
@@ -159,11 +166,13 @@ $(pv_value)</tooltip>
     <axis_0_scale_font>
       <opifont.name fontName="Arial" height="9" style="0">ISIS_Label_Small</opifont.name>
     </axis_0_scale_font>
+    <trace_2_point_size>4</trace_2_point_size>
     <trace_1_y_pv_value />
     <axis_0_time_format>5</axis_0_time_format>
     <trace_1_plot_mode>0</trace_1_plot_mode>
     <axis_1_log_scale>false</axis_1_log_scale>
     <trace_1_point_style>0</trace_1_point_style>
+    <trace_2_plot_mode>0</trace_2_plot_mode>
     <title_font>
       <opifont.name fontName="Arial" height="9" style="1">ISIS_Header4</opifont.name>
     </title_font>
@@ -178,6 +187,7 @@ $(pv_value)</tooltip>
       <opifont.name fontName="Arial" height="9" style="1">ISIS_Header4</opifont.name>
     </axis_0_title_font>
     <axis_1_auto_scale>true</axis_1_auto_scale>
+    <trace_2_update_delay>100</trace_2_update_delay>
     <trace_0_concatenate_data>true</trace_0_concatenate_data>
     <actions hook="false" hook_all="false" />
     <trigger_pv_value />
@@ -189,8 +199,11 @@ $(pv_value)</tooltip>
     <trace_0_buffer_size>1000</trace_0_buffer_size>
     <trigger_pv>$(PV_ROOT):TEMP</trigger_pv>
     <axis_count>2</axis_count>
+    <trace_2_name>Ext. Temperature</trace_2_name>
     <transparent>false</transparent>
+    <trace_2_anti_alias>true</trace_2_anti_alias>
     <axis_0_dash_grid_line>true</axis_0_dash_grid_line>
+    <trace_2_visible>true</trace_2_visible>
     <trace_0_x_axis_index>0</trace_0_x_axis_index>
     <trace_0_point_style>0</trace_0_point_style>
     <tooltip>$(trace_0_y_pv)
@@ -205,6 +218,8 @@ $(trace_0_y_pv_value)</tooltip>
     <plot_area_background_color>
       <color name="ISIS_Textbox_Background" red="255" green="255" blue="255" />
     </plot_area_background_color>
+    <trace_2_concatenate_data>true</trace_2_concatenate_data>
+    <trace_2_point_style>0</trace_2_point_style>
     <title>Temperature</title>
     <trace_1_y_pv>$(PV_ROOT):TEMP:SP:RBV</trace_1_y_pv>
     <pv_name>$(PV_ROOT):TEMP</pv_name>
@@ -222,6 +237,9 @@ $(trace_0_y_pv_value)</tooltip>
     <trace_1_trace_color>
       <color name="ISIS_Trace" red="242" green="26" blue="26" />
     </trace_1_trace_color>
+    <trace_2_trace_color>
+      <color name="ISIS_Trace_2" red="33" green="179" blue="33" />
+    </trace_2_trace_color>
     <pv_value />
     <trace_1_y_axis_index>1</trace_1_y_axis_index>
     <scale_options>
@@ -231,6 +249,7 @@ $(trace_0_y_pv_value)</tooltip>
     </scale_options>
     <trace_1_concatenate_data>true</trace_1_concatenate_data>
     <rules />
+    <trace_2_y_pv>$(PV_ROOT):EXTTEMP</trace_2_y_pv>
     <trace_0_y_pv_value />
     <trace_0_trace_type>0</trace_0_trace_type>
     <axis_1_grid_color>
@@ -2100,7 +2119,7 @@ $(pv_value)</tooltip>
     <border_alarm_sensitive>false</border_alarm_sensitive>
     <read_only>true</read_only>
     <visible>true</visible>
-    <minimum>-Infinity</minimum>
+    <minimum>-1.7976931348623157E308</minimum>
     <next_focus>0</next_focus>
     <show_units>true</show_units>
     <multiline_input>false</multiline_input>
@@ -2108,7 +2127,7 @@ $(pv_value)</tooltip>
     <show_native_border>true</show_native_border>
     <auto_size>true</auto_size>
     <scripts />
-    <height>35</height>
+    <height>37</height>
     <password_input>false</password_input>
     <name>Text_1</name>
     <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
@@ -2134,12 +2153,12 @@ $(pv_value)</tooltip>
     <font>
       <opifont.name fontName="Arial" height="18" style="1">ISIS_Header1</opifont.name>
     </font>
-    <width>120</width>
+    <width>122</width>
     <border_style>1</border_style>
     <confirm_message></confirm_message>
     <rules />
     <pv_value />
-    <maximum>Infinity</maximum>
+    <maximum>1.7976931348623157E308</maximum>
     <border_width>1</border_width>
     <limits_from_pv>false</limits_from_pv>
     <horizontal_alignment>0</horizontal_alignment>
