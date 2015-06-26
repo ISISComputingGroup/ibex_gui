@@ -71,7 +71,7 @@ public class AllMotorsView extends ViewPart {
 		Label spacer = new Label(parent, SWT.NONE);
 		spacer.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		
-		overview.setMotors(Motors.getInstance().motors());
+		overview.setMotors(Motors.getInstance().getMotorsTable());
 	}
 
 	@Override

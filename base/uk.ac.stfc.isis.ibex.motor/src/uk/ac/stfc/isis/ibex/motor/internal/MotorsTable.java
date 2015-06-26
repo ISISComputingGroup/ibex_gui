@@ -13,15 +13,15 @@ import uk.ac.stfc.isis.ibex.motor.observable.ObservableMotor;
 public class MotorsTable extends Closer {
 	
 	private static final String MOTOR_NAME_FORMAT = "MTR%02d%02d";
-	private static final int CRATES = 7;
-	private static final int MOTORS = 8;
+	private int numberMotors;
 	
 	private List<Motor> motors = new ArrayList<>();
 	
-	public MotorsTable(Instrument instrument) {
+	public MotorsTable(Instrument instrument, int numberCrates, int numberMotors) {
+		this.numberMotors = numberMotors;
 		
-		for (int crate = 1; crate <= CRATES; crate++) {
-			for (int motorNumber = 1; motorNumber <= MOTORS; motorNumber++) {
+		for (int crate = 1; crate <= numberCrates; crate++) {
+			for (int motorNumber = 1; motorNumber <= numberMotors; motorNumber++) {
 				String name = motorName(crate, motorNumber);
 				MotorVariables variables = registerForClose(new MotorVariables(name, instrument));
 				Motor motor = new ObservableMotor(variables);
@@ -37,5 +37,9 @@ public class MotorsTable extends Closer {
 	
 	private String motorName(int row, int column) {
 		return String.format(MOTOR_NAME_FORMAT, row, column);
+	}
+	
+	public int getNumMotors() {
+		return numberMotors;
 	}
 }

@@ -1,21 +1,21 @@
 package uk.ac.stfc.isis.ibex.ui.motor.views;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.wb.swt.SWTResourceManager;
 import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.layout.FillLayout;
+import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.wb.swt.SWTResourceManager;
 
 import uk.ac.stfc.isis.ibex.motor.Motor;
+import uk.ac.stfc.isis.ibex.motor.internal.MotorsTable;
 
 public class MotorsOverview extends Composite {
 	private Composite motorComposite;
@@ -33,21 +33,22 @@ public class MotorsOverview extends Composite {
 		
 		motorComposite = new Composite(this, SWT.NONE);
 		motorComposite.setBackground(background);
-		motorComposite.setLayout(new GridLayout(9, false));
-		
-		addSpacerLabel();		
-		for (int i = 1; i <= 8; i++) {
-			addNumberLabel(i);
-		}
 	}
 	
-	public void setMotors(Collection<Motor> motors) {
+	public void setMotors(MotorsTable motorsTable) {
+		motorComposite.setLayout(new GridLayout(motorsTable.getNumMotors() + 1, false));
+		
+		addSpacerLabel();		
+		for (int i = 1; i <= motorsTable.getNumMotors(); i++) {
+			addNumberLabel(i);
+		}		
+		
 		resetViews();
 		
 		int i = 0;
-		for (Motor motor : motors) {
-			if (i % 8 == 0) {
-				addNumberLabel(1 + i / 8);
+		for (Motor motor : motorsTable.motors()) {
+			if (i % motorsTable.getNumMotors() == 0) {
+				addNumberLabel(1 + i / motorsTable.getNumMotors());
 			}
 			i++;
 			

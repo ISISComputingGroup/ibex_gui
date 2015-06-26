@@ -1,8 +1,5 @@
 package uk.ac.stfc.isis.ibex.motor;
 
-
-import java.util.Collection;
-
 import org.eclipse.core.runtime.Plugin;
 import org.osgi.framework.BundleContext;
 
@@ -26,11 +23,11 @@ public class Motors extends Plugin {
 		super();
 		instance = this;
 		
-		motorsTable = new MotorsTable(Instrument.getInstance());
+		motorsTable = new MotorsTable(Instrument.getInstance(), 7, 8);
 	}
-    
-	public Collection<Motor> motors() {
-		return motorsTable.motors();
+    	
+	public MotorsTable getMotorsTable() {
+		return motorsTable;
 	}
 		
 	static BundleContext getContext() {
