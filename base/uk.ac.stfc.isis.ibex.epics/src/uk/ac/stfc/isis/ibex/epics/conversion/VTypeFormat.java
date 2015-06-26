@@ -1,9 +1,11 @@
 package uk.ac.stfc.isis.ibex.epics.conversion;
 
+import java.text.NumberFormat;
 import java.util.Arrays;
 
 import org.epics.util.array.IteratorByte;
 import org.epics.util.array.IteratorFloat;
+import org.epics.vtype.Display;
 import org.epics.vtype.VByteArray;
 import org.epics.vtype.VDouble;
 import org.epics.vtype.VEnum;
@@ -14,7 +16,12 @@ import org.epics.vtype.VNumber;
 import org.epics.vtype.VShort;
 import org.epics.vtype.VString;
 import org.epics.vtype.VType;
+import org.epics.vtype.ValueUtil;
 
+/**
+ * This class is responsible for converting PVManager VType in to Java types.
+ *
+ */
 public final class VTypeFormat {
 	
 	private VTypeFormat() { }
@@ -41,6 +48,24 @@ public final class VTypeFormat {
 			@Override
 			public String convert(R value) throws ConversionException {
 				return value.getFormat().format(value.getValue()) + " " + value.getUnits();
+			}
+		};
+	}
+	
+	/**
+	 * @return a number formatted with the precision defined by the underlying PV 
+	 */
+	public static <R extends VNumber> Converter<R, Number> toNumberWithPrecision() {
+		return new Converter<R, Number>() {
+			@Override
+			public Number convert(R value) throws ConversionException {
+				VNumber val = (VNumber) value;
+				Display display = ValueUtil.displayOf(val);
+				if (display != null) {
+					NumberFormat formatter = display.getFormat();
+					return new Double(formatter.format(value.getValue()));
+				}
+				return value.getValue();
 			}
 		};
 	}
