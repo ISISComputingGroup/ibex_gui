@@ -12,10 +12,18 @@ import org.epics.vtype.VType;
 import uk.ac.stfc.isis.ibex.epics.pv.ObservablePV;
 import uk.ac.stfc.isis.ibex.epics.pv.PVInfo;
 
+/**
+ * A class for observing a PV via PVManager.
+ *
+ * @param <R> the PV type (must be a VType)
+ */
 public class PVManagerObservable<R extends VType> extends ObservablePV<R> {
 
 	private final PVReader<R> pv;	
 	
+	/**
+	 * An instance of an inner anonymous class for handling PV changes.
+	 */
 	private final PVReaderListener<R> observingListener = new PVReaderListener<R>() {
 		@Override
 		public void pvChanged(PVReaderEvent<R> evt) {

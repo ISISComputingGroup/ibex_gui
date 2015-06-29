@@ -5,8 +5,11 @@ import org.epics.vtype.VType;
 import uk.ac.stfc.isis.ibex.epics.observing.BaseCachingObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.ClosableCachingObservable;
 
+
 /**
- * An observable for an EPICS process variable.
+ * A class for observing an EPICS process variable.
+ *
+ * @param <T> the PV type (must be a VType)
  */
 public abstract class ObservablePV<T extends VType> extends BaseCachingObservable<T> implements PV<T>, ClosableCachingObservable<T> {
 

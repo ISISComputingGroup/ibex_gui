@@ -10,6 +10,11 @@ import uk.ac.stfc.isis.ibex.epics.pv.PVInfo;
 import uk.ac.stfc.isis.ibex.epics.pv.WritablePV;
 import uk.ac.stfc.isis.ibex.epics.writing.WriteException;
 
+/**
+ * A class for writing to a PV via PVManager.
+ *
+ * @param <T> the type of the PV
+ */
 public class PVManagerWritable<T> extends WritablePV<T> {
 
 	private final WriteExpressionImpl<T> writeExpression;
