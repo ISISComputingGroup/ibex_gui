@@ -188,5 +188,6 @@
   	<module>../uk.ac.stfc.isis.ibex.ui.weblinks</module>
   	<module>../uk.ac.stfc.isis.ibex.experimentdetails</module>
   	<module>../uk.ac.stfc.isis.ibex.ui.experimentdetails</module>
+  	<module>../uk.ac.stfc.isis.ibex.epics.tests</module>
   </modules>
 </project>
