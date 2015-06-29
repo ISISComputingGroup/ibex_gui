@@ -23,7 +23,10 @@ public class Motors extends Plugin {
 		super();
 		instance = this;
 		
-		motorsTable = new MotorsTable(Instrument.getInstance(), 7, 8);
+		int numCrates = 8;
+		int numMotors = 8;
+
+		motorsTable = new MotorsTable(Instrument.getInstance(), numCrates, numMotors);
 	}
     	
 	public MotorsTable getMotorsTable() {

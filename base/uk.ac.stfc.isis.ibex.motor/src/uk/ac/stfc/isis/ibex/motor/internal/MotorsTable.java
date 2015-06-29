@@ -14,11 +14,13 @@ public class MotorsTable extends Closer {
 	
 	private static final String MOTOR_NAME_FORMAT = "MTR%02d%02d";
 	private int numberMotors;
+	private int numberCrates;
 	
 	private List<Motor> motors = new ArrayList<>();
 	
 	public MotorsTable(Instrument instrument, int numberCrates, int numberMotors) {
 		this.numberMotors = numberMotors;
+		this.numberCrates = numberCrates;
 		
 		for (int crate = 1; crate <= numberCrates; crate++) {
 			for (int motorNumber = 1; motorNumber <= numberMotors; motorNumber++) {
@@ -41,5 +43,9 @@ public class MotorsTable extends Closer {
 	
 	public int getNumMotors() {
 		return numberMotors;
+	}
+	
+	public int getNumCrates() {
+		return numberCrates;
 	}
 }

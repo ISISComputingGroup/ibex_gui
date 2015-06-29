@@ -108,12 +108,13 @@ public class MotorsOverview extends Composite {
 	}
 	
 	private static GridData viewLayout() {
-		final GridData gd = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
-		int dimension = 85;
-		gd.minimumHeight = dimension;
-		gd.minimumWidth = dimension;
-		gd.widthHint = dimension;
-		gd.heightHint = dimension;
+		final GridData gd = new GridData(SWT.FILL, SWT.TOP, true, false, 1, 1);
+		int heightDimension = 90;
+		int widthDimension = 85;
+		gd.minimumHeight = heightDimension;
+		gd.minimumWidth = widthDimension;
+		gd.widthHint = widthDimension;
+		gd.heightHint = heightDimension;
 		
 		return gd;
 	}

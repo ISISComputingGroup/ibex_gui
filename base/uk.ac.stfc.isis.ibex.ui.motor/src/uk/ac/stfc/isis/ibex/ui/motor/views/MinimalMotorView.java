@@ -62,7 +62,7 @@ public class MinimalMotorView extends Composite {
 		
 		motorName = new Label(motorComposite, SWT.NONE);
 		motorName.setAlignment(SWT.CENTER);
-		GridData gd_motorName = new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1);
+		GridData gd_motorName = new GridData(SWT.TOP, SWT.TOP, false, false, 1, 1);
 		gd_motorName.minimumWidth = 80;
 		gd_motorName.widthHint = 80;
 		motorName.setLayoutData(gd_motorName);
@@ -70,21 +70,21 @@ public class MinimalMotorView extends Composite {
 		
 		status = new Label(motorComposite, SWT.NONE);
 		status.setAlignment(SWT.CENTER);
-		status.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
+		status.setLayoutData(new GridData(SWT.FILL, SWT.TOP, false, false, 1, 1));
 		status.setText("Status");
 		
 		value = new Label(motorComposite, SWT.NONE);
 		value.setAlignment(SWT.CENTER);
-		value.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+		value.setLayoutData(new GridData(SWT.FILL, SWT.TOP, false, false, 1, 1));
 		value.setText("Val: 2.12");
 		
 		setpoint = new Label(motorComposite, SWT.NONE);
 		setpoint.setAlignment(SWT.CENTER);
-		setpoint.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+		setpoint.setLayoutData(new GridData(SWT.FILL, SWT.TOP, false, false, 1, 1));
 		setpoint.setText("SP: 1.12");
 		
 		indicator = new MinimalMotionIndicator(motorComposite, SWT.NONE);
-		indicator.setLayoutData(new GridData(SWT.FILL, SWT.BOTTOM, true, true, 1, 1));
+		indicator.setLayoutData(new GridData(SWT.FILL, SWT.TOP, false, false, 1, 1));
 		
 		setMouseListeners();
 	}
