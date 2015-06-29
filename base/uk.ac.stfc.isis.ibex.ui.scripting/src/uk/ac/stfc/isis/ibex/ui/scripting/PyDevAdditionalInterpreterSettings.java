@@ -40,7 +40,7 @@ public class PyDevAdditionalInterpreterSettings extends InterpreterNewCustomEntr
 	}
 	
 	private String epicsBasePath() {
-		return "PATH=" + toOSPath(PreferenceSupplier.epicsBase())  + ";${PATH}";
+		return "PATH=" + toOSPath(PreferenceSupplier.epicsBase())  + ";" + toOSPath(PreferenceSupplier.epicsUtilsPath()) + ";${PATH}";
 	}
 	
 	private String pyEpicsPath() {
@@ -77,7 +77,10 @@ public class PyDevAdditionalInterpreterSettings extends InterpreterNewCustomEntr
         return epicsEnv;
 	}
 	
-	/** Get platform dependent path */
+	/**
+	 * @param path the file path
+	 * @return platform dependent path.
+	 */
 	private String toOSPath(String path) {
 		return new Path(path).toOSString();
 	}

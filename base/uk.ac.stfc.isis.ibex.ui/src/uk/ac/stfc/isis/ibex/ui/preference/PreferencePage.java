@@ -28,6 +28,7 @@ public class PreferencePage extends FieldEditorPreferencePage implements IWorkbe
 	protected void createFieldEditors() {
         addField(new FileFieldEditor(PreferenceSupplier.PYTHON_INTERPRETER_PATH, "Python interpreter path", getFieldEditorParent()));
         addField(new DirectoryFieldEditor(PreferenceSupplier.EPICS_BASE_DIRECTORY, "Epics base directory :", getFieldEditorParent()));
+        addField(new DirectoryFieldEditor(PreferenceSupplier.EPICS_UTILS_DIRECTORY, "Epics utils directory :", getFieldEditorParent()));
         addField(new DirectoryFieldEditor(PreferenceSupplier.GENIE_PYTHON_DIRECTORY, "Genie Python directory :", getFieldEditorParent()));
         addField(new DirectoryFieldEditor(PreferenceSupplier.PYEPICS_DIRECTORY, "PyEpics directory :", getFieldEditorParent()));
 	}
