@@ -8,7 +8,12 @@ import uk.ac.stfc.isis.ibex.instrument.channels.ChannelType;
 import uk.ac.stfc.isis.ibex.instrument.channels.DateTimeChannel;
 import uk.ac.stfc.isis.ibex.instrument.channels.EnumChannel;
 import uk.ac.stfc.isis.ibex.instrument.channels.NumberChannel;
+import uk.ac.stfc.isis.ibex.instrument.channels.NumberWithPrecisionChannel;
 
+/**
+ * Holds all the PV connections for the beam status UI.
+ *
+ */
 public class BeamStatusObservables extends Closer {
 	
 	private static final PVAddress SYNC = PVAddress.startWith("AC").append("SYNCH");
@@ -23,8 +28,8 @@ public class BeamStatusObservables extends Closer {
 	public TargetStation2 ts2 = new TargetStation2();
 
 	public class Synchrotron {
-		public final InitialiseOnSubscribeObservable<Number> beamCurrent = reader(new NumberChannel(), SYNC.endWith(BEAM_CURRENT));
-		public final InitialiseOnSubscribeObservable<Number> beamFrequency = reader(new NumberChannel(), SYNC.endWith(FREQ));
+		public final InitialiseOnSubscribeObservable<Number> beamCurrent = reader(new NumberWithPrecisionChannel(), SYNC.endWith(BEAM_CURRENT));
+		public final InitialiseOnSubscribeObservable<Number> beamFrequency = reader(new NumberWithPrecisionChannel(), SYNC.endWith(FREQ));
 		
 		private Synchrotron() {
 		}
@@ -32,8 +37,8 @@ public class BeamStatusObservables extends Closer {
 	
 	public class TargetStation1 extends EndStation {
 		
-		public final InitialiseOnSubscribeObservable<Number> methaneTemperature = reader(new NumberChannel(), "TG:TS1:MOD:METH:TEMP");		
-		public final InitialiseOnSubscribeObservable<Number> hydrogenTemperature = reader(new NumberChannel(), "TG:TS1:MOD:HDGN:TEMP");	
+		public final InitialiseOnSubscribeObservable<Number> methaneTemperature = reader(new NumberWithPrecisionChannel(), "TG:TS1:MOD:METH:TEMP");		
+		public final InitialiseOnSubscribeObservable<Number> hydrogenTemperature = reader(new NumberWithPrecisionChannel(), "TG:TS1:MOD:HDGN:TEMP");	
 		public final InitialiseOnSubscribeObservable<OnOff> muonKicker = reader(new EnumChannel<OnOff>(OnOff.class), "AC:MUON:KICKR:STAT");				
 
 		private TargetStation1() {
@@ -52,13 +57,13 @@ public class BeamStatusObservables extends Closer {
 
 		private TargetStation2() {
 			super(TS2);
-			coupledMethaneTemperature = reader(new NumberChannel(), TS2.endWith("CMOD:METH:TEMP"));
-			coupledHydrogenTemperature = reader(new NumberChannel(), TS2.endWith("CMOD:HDGN:TEMP"));
-			decoupledMethaneTemperature = reader(new NumberChannel(), "TG:TS2:DMOD:METH:TEMP");
-			decoupledModeratorRuntime = reader(new NumberChannel(), "TG:TS2:DMOD:RTIME:DUR");
-			decoupledModeratorRuntimeLimit = reader(new NumberChannel(), "TG:TS2:DMOD:RTLIM");
+			coupledMethaneTemperature = reader(new NumberWithPrecisionChannel(), TS2.endWith("CMOD:METH:TEMP"));
+			coupledHydrogenTemperature = reader(new NumberWithPrecisionChannel(), TS2.endWith("CMOD:HDGN:TEMP"));
+			decoupledMethaneTemperature = reader(new NumberWithPrecisionChannel(), "TG:TS2:DMOD:METH:TEMP");
+			decoupledModeratorRuntime = reader(new NumberWithPrecisionChannel(), "TG:TS2:DMOD:RTIME:DUR");
+			decoupledModeratorRuntimeLimit = reader(new NumberWithPrecisionChannel(), "TG:TS2:DMOD:RTLIM");
 			decoupledModeratorAnnealPressure = reader(new EnumChannel<YesNo>(YesNo.class), "TG:TS2:DMOD:ANNPLOW:STAT");
-			decoupledModeratorUAHBeam = reader(new NumberChannel(), "TG:TS2:DMOD:BEAM");		
+			decoupledModeratorUAHBeam = reader(new NumberWithPrecisionChannel(), "TG:TS2:DMOD:BEAM");		
 		}	
 	}
 	
@@ -73,8 +78,8 @@ public class BeamStatusObservables extends Closer {
 		protected EndStation(PVAddress suffix) {
 			beam = reader(new EnumChannel<OnOff>(OnOff.class), suffix.endWith("BEAM:STAT"));
 			pps = reader(new NumberChannel(), suffix.endWith("FREQ"));
-			beamCurrent = reader(new NumberChannel(), suffix.endWith("BEAM:CURR"));
-			uAHToday = reader(new NumberChannel(), suffix.endWith("BEAM:TOTAL"));
+			beamCurrent = reader(new NumberWithPrecisionChannel(), suffix.endWith("BEAM:CURR"));
+			uAHToday = reader(new NumberWithPrecisionChannel(), suffix.endWith("BEAM:TOTAL"));
 			lastBeamOff = reader(new DateTimeChannel(), suffix.endWith("BEAMOFF:TIME"));
 			lastBeamOn = reader(new DateTimeChannel(), suffix.endWith("BEAMOFF:TIME"));
 		}

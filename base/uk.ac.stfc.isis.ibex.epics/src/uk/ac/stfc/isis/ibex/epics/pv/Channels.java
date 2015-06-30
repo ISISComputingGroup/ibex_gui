@@ -24,6 +24,10 @@ import uk.ac.stfc.isis.ibex.epics.pvmanager.PVManagerWritable;
 import uk.ac.stfc.isis.ibex.epics.writing.ClosableWritable;
 import uk.ac.stfc.isis.ibex.epics.writing.ConvertingWritable;
 
+/**
+ * Contains all the different channel types used for communicating with PVs.
+ *
+ */
 public class Channels {
 		
 	public static class Default {
@@ -44,7 +48,10 @@ public class Channels {
 		}
 	}
 	
-	// Strings
+
+	/**
+	 * String I/O.
+	 */
 	public static class Strings {		
 		public static ClosableCachingObservable<String> reader(String pvAddress) {
 			return convertObservablePV(pvAddress, VString.class, VTypeFormat.fromVString());
@@ -71,21 +78,27 @@ public class Channels {
 		}
 	}
 	
-	// Integers
+	/**
+	 * Integer I/O.
+	 */
 	public static class Integers {
 		public static ClosableCachingObservable<Integer> reader(String pvAddress) {
 			return convertObservablePV(pvAddress, VInt.class, VTypeFormat.fromVInt());
 		}
 	}
 	
-	// Floats
+	/**
+	 * Float I/O.
+	 */
 	public static class Floats {
 		public static ClosableCachingObservable<float[]> reader(String pvAddress) {
 			return convertObservablePV(pvAddress, VType.class, VTypeFormat.fromVFloatArray());
 		}
 	}
 
-	// Doubles
+	/**
+	 * Double I/O.
+	 */
 	public static class Doubles {
 		public static ClosableCachingObservable<Double> reader(String pvAddress) {
 			return convertObservablePV(pvAddress, VDouble.class, VTypeFormat.fromDouble());
@@ -96,14 +109,18 @@ public class Channels {
 		}
 	}
 
-	// Shorts
+	/**
+	 * Short I/O.
+	 */
 	public static class Shorts {
 		public static ClosableCachingObservable<Short> reader(String pvAddress) {
 			return convertObservablePV(pvAddress, VShort.class, VTypeFormat.fromShort());
 		}
 	}
 	
-	// Doubles
+	/**
+	 * Long I/O.
+	 */
 	public static class Longs {
 		public static ClosableCachingObservable<Long> reader(String pvAddress) {
 			return convertObservablePV(pvAddress, VLong.class, VTypeFormat.fromLong());
@@ -114,7 +131,9 @@ public class Channels {
 		}
 	}
 	
-	// Times
+	/**
+	 * Time readers.
+	 */
 	public static class Times {
 		public static ClosableCachingObservable<String> elapsedTimeReader(String pvAddress) {
 			return convertObservablePV(pvAddress, VInt.class, VTypeFormat.toLong().apply(new ElapsedTimeFormatter()));
@@ -125,7 +144,9 @@ public class Channels {
 		}
 	}
 	
-	// Numbers
+	/**
+	 * Number readers.
+	 */
 	public static class Numbers {
 		public static ClosableCachingObservable<Number> reader(String pvAddress) {
 			return convertObservablePV(pvAddress, VNumber.class, VTypeFormat.toNumber());
@@ -134,9 +155,15 @@ public class Channels {
 		public static ClosableCachingObservable<String> readerWithUnits(String pvAddress) {
 			return convertObservablePV(pvAddress, VNumber.class, VTypeFormat.quantityWithUnits());
 		}
+		
+		public static ClosableCachingObservable<Number> readerWithPrecision(String pvAddress) {
+			return convertObservablePV(pvAddress, VNumber.class, VTypeFormat.toNumberWithPrecision());
+		}
 	}
 	
-	// Enums
+	/**
+	 * Enum readers.
+	 */
 	public static class Enums {
 		public static <E extends Enum<E>> ClosableCachingObservable<E> reader(String pvAddress, Class<E> enumType) {
 			return convertObservablePV(pvAddress, VEnum.class, VTypeFormat.toEnum(enumType));
@@ -147,7 +174,9 @@ public class Channels {
 		}
 	}
 	
-	// Booleans
+	/**
+	 * Boolean reader.
+	 */
 	public static class Booleans {
 		public static ClosableCachingObservable<Boolean> reader(String pvAddress) {
 			return new ConvertingObservable<>(Enums.reader(pvAddress), Convert.toBoolean());
