@@ -92,7 +92,7 @@ public class MotorsOverview extends Composite {
 	
 	private void addNumberLabel(int columnNumber) {
 		Label columnLabel = new Label(motorComposite, SWT.NONE);
-		GridData gd = new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1);
+		GridData gd = new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1);
 		gd.minimumWidth = 10;
 		columnLabel.setLayoutData(gd);
 		columnLabel.setAlignment(SWT.CENTER);
@@ -108,8 +108,8 @@ public class MotorsOverview extends Composite {
 	}
 	
 	private static GridData viewLayout() {
-		final GridData gd = new GridData(SWT.FILL, SWT.TOP, true, false, 1, 1);
-		int heightDimension = 90;
+		final GridData gd = new GridData(SWT.FILL, SWT.TOP, false, false, 1, 1);
+		int heightDimension = 74;
 		int widthDimension = 85;
 		gd.minimumHeight = heightDimension;
 		gd.minimumWidth = widthDimension;

@@ -31,7 +31,6 @@ public class MinimalMotorView extends Composite {
 
 	private Composite motorComposite;
 	private MinimalMotionIndicator indicator;
-	private Label status;
 	
 	private final Display display = Display.getDefault();
 	
@@ -67,12 +66,7 @@ public class MinimalMotorView extends Composite {
 		gd_motorName.widthHint = 80;
 		motorName.setLayoutData(gd_motorName);
 		motorName.setText("Motor name");
-		
-		status = new Label(motorComposite, SWT.NONE);
-		status.setAlignment(SWT.CENTER);
-		status.setLayoutData(new GridData(SWT.FILL, SWT.TOP, false, false, 1, 1));
-		status.setText("Status");
-		
+				
 		value = new Label(motorComposite, SWT.NONE);
 		value.setAlignment(SWT.CENTER);
 		value.setLayoutData(new GridData(SWT.FILL, SWT.TOP, false, false, 1, 1));
@@ -96,7 +90,6 @@ public class MinimalMotorView extends Composite {
 	public void setMotor(final Motor motor) {
 		this.motor = motor;
 		
-		bindingContext.bindValue(WidgetProperties.text().observe(status), BeanProperties.value("status").observe(motor));	
 		bindingContext.bindValue(WidgetProperties.text().observe(motorName), BeanProperties.value("description").observe(motor));	
 		
 		indicator.setMotor(motor);
@@ -148,7 +141,6 @@ public class MinimalMotorView extends Composite {
 		
 		motorComposite.addMouseListener(forwardDoubleClick);
 		motorName.addMouseListener(forwardDoubleClick);
-		status.addMouseListener(forwardDoubleClick);
 		value.addMouseListener(forwardDoubleClick);
 		setpoint.addMouseListener(forwardDoubleClick);
 		indicator.addMouseListener(forwardDoubleClick);
@@ -212,7 +204,6 @@ public class MinimalMotorView extends Composite {
 	private void setColor(Color color) {
 		motorComposite.setBackground(color);
 		indicator.setBackground(color);
-		status.setBackground(color);
 		motorName.setBackground(color);
 		value.setBackground(color);
 		setpoint.setBackground(color);
