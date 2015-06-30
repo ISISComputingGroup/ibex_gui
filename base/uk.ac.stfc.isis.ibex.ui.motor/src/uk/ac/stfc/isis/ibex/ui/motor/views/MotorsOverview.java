@@ -86,7 +86,7 @@ public class MotorsOverview extends Composite {
 	
 	private void addSpacerLabel() {
 		Label spacer = new Label(motorComposite, SWT.NONE);
-		spacer.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		spacer.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 		spacer.setBackground(background);
 	}
 	
