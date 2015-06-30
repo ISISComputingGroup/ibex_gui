@@ -42,7 +42,8 @@ public class MinimalMotorView extends Composite {
 		
 	private static final Color MOVINGCOLOR = SWTResourceManager.getColor(160, 250, 170);
 	private static final Color STOPPEDCOLOR = SWTResourceManager.getColor(255, 200, 200);
-	private static final Color DISABLEDCOLOR = SWTResourceManager.getColor(220, 220, 220);
+	private static final Color DISABLEDCOLOR = SWTResourceManager.getColor(200, 200, 200);
+	private static final Color UNAMEDCOLOR = SWTResourceManager.getColor(220, 220, 220);
 
 	private Label value;
 	private Label setpoint;
@@ -93,6 +94,14 @@ public class MinimalMotorView extends Composite {
 		bindingContext.bindValue(WidgetProperties.text().observe(motorName), BeanProperties.value("description").observe(motor));	
 		
 		indicator.setMotor(motor);
+		
+		motor.addPropertyChangeListener("description", new PropertyChangeListener() {	
+			@Override
+			public void propertyChange(PropertyChangeEvent arg0) {
+				setEnabled(motor.getEnabled());
+			}
+
+		});
 		
 		setEnabled(motor.getEnabled());
 		motor.addPropertyChangeListener("enabled", new PropertyChangeListener() {	
@@ -195,9 +204,10 @@ public class MinimalMotorView extends Composite {
 	private void setColor(Motor motor) {
 		Boolean movingValue = motor.getMoving();
 		boolean isMoving = movingValue != null && movingValue;
-		boolean isEnabled = motor.getEnabled() == MotorEnable.ENABLE;
+		boolean isEnabled = (motor.getEnabled() == MotorEnable.ENABLE);
+		boolean isNamed = (motor.getDescription() != "");
 
-		setColor(isEnabled ? (isMoving ? MOVINGCOLOR : STOPPEDCOLOR) : DISABLEDCOLOR);
+		setColor(isEnabled ? (isNamed ? (isMoving ? MOVINGCOLOR : STOPPEDCOLOR) : UNAMEDCOLOR) : DISABLEDCOLOR);
 		
 	}
 	
