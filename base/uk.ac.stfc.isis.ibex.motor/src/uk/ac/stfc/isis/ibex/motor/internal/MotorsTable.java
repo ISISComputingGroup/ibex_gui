@@ -18,11 +18,11 @@ public class MotorsTable extends Closer {
 	
 	private List<Motor> motors = new ArrayList<>();
 	
-	public MotorsTable(Instrument instrument, int numberCrates, int numberMotors) {
+	public MotorsTable(Instrument instrument, int numberCrates, int numberMotors, int startCrate) {
 		this.numberMotors = numberMotors;
 		this.numberCrates = numberCrates;
 		
-		for (int crate = 1; crate <= numberCrates; crate++) {
+		for (int crate = startCrate; crate < startCrate + numberCrates; crate++) {
 			for (int motorNumber = 1; motorNumber <= numberMotors; motorNumber++) {
 				String name = motorName(crate, motorNumber);
 				MotorVariables variables = registerForClose(new MotorVariables(name, instrument));

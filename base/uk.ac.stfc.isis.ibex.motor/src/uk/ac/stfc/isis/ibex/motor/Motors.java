@@ -24,8 +24,8 @@ public class Motors extends Plugin {
 		super();
 		instance = this;
 		
-		allMotorsTable = new MotorsTable(Instrument.getInstance(), 8, 8);
-		additionalMotorsTable = new MotorsTable(Instrument.getInstance(), 5, 5);
+		allMotorsTable = new MotorsTable(Instrument.getInstance(), 8, 8, 1);
+		additionalMotorsTable = new MotorsTable(Instrument.getInstance(), 5, 5, 3);
 	}
     	
 	public MotorsTable getMainMotorsTable() {
