@@ -17,6 +17,7 @@ import org.eclipse.swt.widgets.Label;
 
 import uk.ac.stfc.isis.ibex.motor.Motor;
 import uk.ac.stfc.isis.ibex.motor.Motors;
+import uk.ac.stfc.isis.ibex.motor.internal.MotorsTable;
 
 import com.google.common.base.Strings;
 
@@ -42,6 +43,19 @@ public class AllMotorsView extends ViewPart {
 	
 	@Override
 	public void createPartControl(Composite parent) {
+		
+		MotorsTable motorsTable;
+		
+		// TODO: must be a better way of switching this?
+		if (this.getTitle().equals("Main Motors")) {
+			motorsTable = Motors.getInstance().getMainMotorsTable();
+		} else if (this.getTitle().equals("Additional Motors")) {
+			motorsTable = Motors.getInstance().getAdditionalMotorsTable();
+		} else {
+			motorsTable = null;
+		}
+		
+		
 		GridLayout gl_parent = new GridLayout(2, false);
 		gl_parent.verticalSpacing = 0;
 		gl_parent.marginWidth = 0;
@@ -52,13 +66,13 @@ public class AllMotorsView extends ViewPart {
 		scrolledComposite = new ScrolledComposite(parent, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
 		scrolledComposite.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, true, true, 1, 1));
 		
-		int numCrates = Motors.getInstance().getMotorsTable().getNumCrates();
+		int numCrates = motorsTable.getNumCrates();
 		int motorHeight = 79;
 		
 		scrolledComposite.setMinHeight(numCrates * motorHeight + TABLE_MARGIN);
 		scrolledComposite.setExpandHorizontal(true);
 
-		int numMotors = Motors.getInstance().getMotorsTable().getNumMotors();
+		int numMotors = motorsTable.getNumMotors();
 		int motorWidth = 90;
 		
 		scrolledComposite.setMinWidth(numMotors * motorWidth + TABLE_MARGIN);
@@ -75,7 +89,7 @@ public class AllMotorsView extends ViewPart {
 		Label spacer = new Label(parent, SWT.NONE);
 		spacer.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		
-		overview.setMotors(Motors.getInstance().getMotorsTable());
+		overview.setMotors(motorsTable);
 	}
 
 	@Override

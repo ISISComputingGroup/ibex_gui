@@ -17,20 +17,23 @@ public class Motors extends Plugin {
     	return instance; 
     }
 	
-    private final MotorsTable motorsTable;
+    private final MotorsTable allMotorsTable;
+    private final MotorsTable additionalMotorsTable;
     
 	public Motors() {
 		super();
 		instance = this;
 		
-		int numCrates = 8;
-		int numMotors = 8;
-
-		motorsTable = new MotorsTable(Instrument.getInstance(), numCrates, numMotors);
+		allMotorsTable = new MotorsTable(Instrument.getInstance(), 8, 8);
+		additionalMotorsTable = new MotorsTable(Instrument.getInstance(), 5, 5);
 	}
     	
-	public MotorsTable getMotorsTable() {
-		return motorsTable;
+	public MotorsTable getMainMotorsTable() {
+		return allMotorsTable;
+	}
+	
+	public MotorsTable getAdditionalMotorsTable() {
+		return additionalMotorsTable;
 	}
 		
 	static BundleContext getContext() {
@@ -51,7 +54,7 @@ public class Motors extends Plugin {
 	 */
 	public void stop(BundleContext bundleContext) throws Exception {
 		Motors.context = null;
-		motorsTable.close();
+		allMotorsTable.close();
 	}
 
 }
