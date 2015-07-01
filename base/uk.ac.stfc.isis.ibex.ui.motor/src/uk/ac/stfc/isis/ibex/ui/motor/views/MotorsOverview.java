@@ -1,21 +1,21 @@
 package uk.ac.stfc.isis.ibex.ui.motor.views;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.wb.swt.SWTResourceManager;
 import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.layout.FillLayout;
+import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.wb.swt.SWTResourceManager;
 
 import uk.ac.stfc.isis.ibex.motor.Motor;
+import uk.ac.stfc.isis.ibex.motor.internal.MotorsTable;
 
 public class MotorsOverview extends Composite {
 	private Composite motorComposite;
@@ -33,21 +33,22 @@ public class MotorsOverview extends Composite {
 		
 		motorComposite = new Composite(this, SWT.NONE);
 		motorComposite.setBackground(background);
-		motorComposite.setLayout(new GridLayout(9, false));
-		
-		addSpacerLabel();		
-		for (int i = 1; i <= 8; i++) {
-			addNumberLabel(i);
-		}
 	}
 	
-	public void setMotors(Collection<Motor> motors) {
+	public void setMotors(MotorsTable motorsTable) {
+		motorComposite.setLayout(new GridLayout(motorsTable.getNumMotors() + 1, false));
+		
+		addSpacerLabel();		
+		for (int i = 1; i <= motorsTable.getNumMotors(); i++) {
+			addNumberLabel(i);
+		}		
+		
 		resetViews();
 		
 		int i = 0;
-		for (Motor motor : motors) {
-			if (i % 8 == 0) {
-				addNumberLabel(1 + i / 8);
+		for (Motor motor : motorsTable.motors()) {
+			if (i % motorsTable.getNumMotors() == 0) {
+				addNumberLabel(1 + i / motorsTable.getNumMotors());
 			}
 			i++;
 			
@@ -85,13 +86,13 @@ public class MotorsOverview extends Composite {
 	
 	private void addSpacerLabel() {
 		Label spacer = new Label(motorComposite, SWT.NONE);
-		spacer.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		spacer.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 		spacer.setBackground(background);
 	}
 	
 	private void addNumberLabel(int columnNumber) {
 		Label columnLabel = new Label(motorComposite, SWT.NONE);
-		GridData gd = new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1);
+		GridData gd = new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1);
 		gd.minimumWidth = 10;
 		columnLabel.setLayoutData(gd);
 		columnLabel.setAlignment(SWT.CENTER);
@@ -107,12 +108,13 @@ public class MotorsOverview extends Composite {
 	}
 	
 	private static GridData viewLayout() {
-		final GridData gd = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
-		int dimension = 85;
-		gd.minimumHeight = dimension;
-		gd.minimumWidth = dimension;
-		gd.widthHint = dimension;
-		gd.heightHint = dimension;
+		final GridData gd = new GridData(SWT.FILL, SWT.TOP, false, false, 1, 1);
+		int heightDimension = 74;
+		int widthDimension = 85;
+		gd.minimumHeight = heightDimension;
+		gd.minimumWidth = widthDimension;
+		gd.widthHint = widthDimension;
+		gd.heightHint = heightDimension;
 		
 		return gd;
 	}

@@ -25,7 +25,7 @@ public class AllMotorsView extends ViewPart {
 	private ScrolledComposite scrolledComposite;
 	private MotorsOverview overview;
 	
-	private static final int SIZE = 680;
+	private static final int TABLE_MARGIN = 20;
 	
 	private MouseListener motorSelection = new MouseAdapter() {
 		@Override
@@ -51,17 +51,21 @@ public class AllMotorsView extends ViewPart {
 				
 		scrolledComposite = new ScrolledComposite(parent, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
 		scrolledComposite.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, true, true, 1, 1));
-		scrolledComposite.setMinWidth(SIZE + 20);
-		scrolledComposite.setMinHeight(SIZE);
+		
+		int numCrates = Motors.getInstance().getMotorsTable().getNumCrates();
+		int motorHeight = 79;
+		
+		scrolledComposite.setMinHeight(numCrates * motorHeight + TABLE_MARGIN);
 		scrolledComposite.setExpandHorizontal(true);
+
+		int numMotors = Motors.getInstance().getMotorsTable().getNumMotors();
+		int motorWidth = 90;
+		
+		scrolledComposite.setMinWidth(numMotors * motorWidth + TABLE_MARGIN);
 		scrolledComposite.setExpandVertical(true);
 		
 		overview = new MotorsOverview(scrolledComposite, SWT.NONE);		
-		GridData gd_overview = new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1);
-		gd_overview.minimumWidth = SIZE;
-		gd_overview.heightHint = SIZE;
-		gd_overview.minimumHeight = SIZE;
-		gd_overview.widthHint = SIZE;
+		GridData gd_overview = new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1);
 		overview.setLayoutData(gd_overview);
 		
 		scrolledComposite.setContent(overview);
@@ -71,7 +75,7 @@ public class AllMotorsView extends ViewPart {
 		Label spacer = new Label(parent, SWT.NONE);
 		spacer.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		
-		overview.setMotors(Motors.getInstance().motors());
+		overview.setMotors(Motors.getInstance().getMotorsTable());
 	}
 
 	@Override
