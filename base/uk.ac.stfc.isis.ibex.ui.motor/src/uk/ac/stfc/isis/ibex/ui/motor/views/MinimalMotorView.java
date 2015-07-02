@@ -31,7 +31,6 @@ public class MinimalMotorView extends Composite {
 
 	private Composite motorComposite;
 	private MinimalMotionIndicator indicator;
-	private Label status;
 	
 	private final Display display = Display.getDefault();
 	
@@ -43,7 +42,8 @@ public class MinimalMotorView extends Composite {
 		
 	private static final Color MOVINGCOLOR = SWTResourceManager.getColor(160, 250, 170);
 	private static final Color STOPPEDCOLOR = SWTResourceManager.getColor(255, 200, 200);
-	private static final Color DISABLEDCOLOR = SWTResourceManager.getColor(220, 220, 220);
+	private static final Color DISABLEDCOLOR = SWTResourceManager.getColor(200, 200, 200);
+	private static final Color UNAMEDCOLOR = SWTResourceManager.getColor(220, 220, 220);
 
 	private Label value;
 	private Label setpoint;
@@ -62,29 +62,24 @@ public class MinimalMotorView extends Composite {
 		
 		motorName = new Label(motorComposite, SWT.NONE);
 		motorName.setAlignment(SWT.CENTER);
-		GridData gd_motorName = new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1);
+		GridData gd_motorName = new GridData(SWT.TOP, SWT.TOP, false, false, 1, 1);
 		gd_motorName.minimumWidth = 80;
 		gd_motorName.widthHint = 80;
 		motorName.setLayoutData(gd_motorName);
 		motorName.setText("Motor name");
-		
-		status = new Label(motorComposite, SWT.NONE);
-		status.setAlignment(SWT.CENTER);
-		status.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
-		status.setText("Status");
-		
+				
 		value = new Label(motorComposite, SWT.NONE);
 		value.setAlignment(SWT.CENTER);
-		value.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+		value.setLayoutData(new GridData(SWT.FILL, SWT.TOP, false, false, 1, 1));
 		value.setText("Val: 2.12");
 		
 		setpoint = new Label(motorComposite, SWT.NONE);
 		setpoint.setAlignment(SWT.CENTER);
-		setpoint.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+		setpoint.setLayoutData(new GridData(SWT.FILL, SWT.TOP, false, false, 1, 1));
 		setpoint.setText("SP: 1.12");
 		
 		indicator = new MinimalMotionIndicator(motorComposite, SWT.NONE);
-		indicator.setLayoutData(new GridData(SWT.FILL, SWT.BOTTOM, true, true, 1, 1));
+		indicator.setLayoutData(new GridData(SWT.FILL, SWT.TOP, false, false, 1, 1));
 		
 		setMouseListeners();
 	}
@@ -96,10 +91,17 @@ public class MinimalMotorView extends Composite {
 	public void setMotor(final Motor motor) {
 		this.motor = motor;
 		
-		bindingContext.bindValue(WidgetProperties.text().observe(status), BeanProperties.value("status").observe(motor));	
 		bindingContext.bindValue(WidgetProperties.text().observe(motorName), BeanProperties.value("description").observe(motor));	
 		
 		indicator.setMotor(motor);
+		
+		motor.addPropertyChangeListener("description", new PropertyChangeListener() {	
+			@Override
+			public void propertyChange(PropertyChangeEvent arg0) {
+				setEnabled(motor.getEnabled());
+			}
+
+		});
 		
 		setEnabled(motor.getEnabled());
 		motor.addPropertyChangeListener("enabled", new PropertyChangeListener() {	
@@ -148,7 +150,6 @@ public class MinimalMotorView extends Composite {
 		
 		motorComposite.addMouseListener(forwardDoubleClick);
 		motorName.addMouseListener(forwardDoubleClick);
-		status.addMouseListener(forwardDoubleClick);
 		value.addMouseListener(forwardDoubleClick);
 		setpoint.addMouseListener(forwardDoubleClick);
 		indicator.addMouseListener(forwardDoubleClick);
@@ -203,16 +204,16 @@ public class MinimalMotorView extends Composite {
 	private void setColor(Motor motor) {
 		Boolean movingValue = motor.getMoving();
 		boolean isMoving = movingValue != null && movingValue;
-		boolean isEnabled = motor.getEnabled() == MotorEnable.ENABLE;
+		boolean isEnabled = (motor.getEnabled() == MotorEnable.ENABLE);
+		boolean isNamed = (motor.getDescription() != "");
 
-		setColor(isEnabled ? (isMoving ? MOVINGCOLOR : STOPPEDCOLOR) : DISABLEDCOLOR);
+		setColor(isEnabled ? (isNamed ? (isMoving ? MOVINGCOLOR : STOPPEDCOLOR) : UNAMEDCOLOR) : DISABLEDCOLOR);
 		
 	}
 	
 	private void setColor(Color color) {
 		motorComposite.setBackground(color);
 		indicator.setBackground(color);
-		status.setBackground(color);
 		motorName.setBackground(color);
 		value.setBackground(color);
 		setpoint.setBackground(color);
