@@ -41,20 +41,11 @@ public class AllMotorsView extends ViewPart {
 	public AllMotorsView() {
 	}
 	
+	protected MotorsTable motorsTable;
+	
 	@Override
 	public void createPartControl(Composite parent) {
-		
-		MotorsTable motorsTable;
-		
-		// TODO: must be a better way of switching this?
-		if (this.getTitle().equals("Main Motors")) {
-			motorsTable = Motors.getInstance().getMainMotorsTable();
-		} else if (this.getTitle().equals("Additional Motors")) {
-			motorsTable = Motors.getInstance().getAdditionalMotorsTable();
-		} else {
-			motorsTable = null;
-		}
-		
+		setMotorsTable();		
 		
 		GridLayout gl_parent = new GridLayout(2, false);
 		gl_parent.verticalSpacing = 0;
@@ -115,5 +106,12 @@ public class AllMotorsView extends ViewPart {
 		} catch (PartInitException e) {
 			e.printStackTrace();
 		}			
+	}
+	
+	/**
+	 * Sets the MotorsTable for this view, overridden for other motor tabs.
+	 */
+	protected void setMotorsTable() {
+		this.motorsTable = Motors.getInstance().getMainMotorsTable();
 	}
 }
