@@ -8,7 +8,7 @@ import uk.ac.stfc.isis.ibex.motor.Motors;
  * This should not be needed once the table of motors is made more configurable.
  * </p>
  */
-public class AdditionalMotorsView extends AllMotorsView {
+public class AdditionalMotorsView extends MainMotorsView {
 	
 	@Override
 	protected void setMotorsTable() {

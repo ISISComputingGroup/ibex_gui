@@ -21,13 +21,17 @@ import uk.ac.stfc.isis.ibex.motor.internal.MotorsTable;
 
 import com.google.common.base.Strings;
 
-public class AllMotorsView extends ViewPart {
-	
-	private ScrolledComposite scrolledComposite;
-	private MotorsOverview overview;
-	
+/** A view that shows a collection of motors. */
+public class MainMotorsView extends ViewPart {
+
+	/** Pixel height of the minimalMotorView in table of motors. */
+	private static final int MOTOR_HEIGHT = 79;
+	/** Pixel width of the minimalMotorView in table of motors. */
+	private static final int MOTOR_WIDTH = 90;
+	/** Pixel margin to add on the right and bottom of the table. */
 	private static final int TABLE_MARGIN = 20;
 	
+	/** Listens for clicks on a motor in the table, and makes a call to open the OPI for that motor. */
 	private MouseListener motorSelection = new MouseAdapter() {
 		@Override
 		public void mouseDoubleClick(MouseEvent e) {
@@ -38,56 +42,59 @@ public class AllMotorsView extends ViewPart {
 		}
 	};
 	
-	public AllMotorsView() {
+	/**
+	 * Empty constructor.
+	 */
+	public MainMotorsView() {
 	}
 	
+	/** The MotorsTable used for this particular table of motors view. */
 	protected MotorsTable motorsTable;
 	
 	@Override
 	public void createPartControl(Composite parent) {
 		setMotorsTable();		
 		
-		GridLayout gl_parent = new GridLayout(2, false);
-		gl_parent.verticalSpacing = 0;
-		gl_parent.marginWidth = 0;
-		gl_parent.marginHeight = 0;
-		gl_parent.horizontalSpacing = 0;
-		parent.setLayout(gl_parent);
+		GridLayout glParent = new GridLayout(2, false);
+		glParent.verticalSpacing = 0;
+		glParent.marginWidth = 0;
+		glParent.marginHeight = 0;
+		glParent.horizontalSpacing = 0;
+		parent.setLayout(glParent);
 				
-		scrolledComposite = new ScrolledComposite(parent, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
+		ScrolledComposite scrolledComposite = new ScrolledComposite(parent, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
 		scrolledComposite.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, true, true, 1, 1));
 		
 		int numCrates = motorsTable.getNumCrates();
-		int motorHeight = 79;
-		
-		scrolledComposite.setMinHeight(numCrates * motorHeight + TABLE_MARGIN);
+		scrolledComposite.setMinHeight(numCrates * MOTOR_HEIGHT + TABLE_MARGIN);
 		scrolledComposite.setExpandHorizontal(true);
-
-		int numMotors = motorsTable.getNumMotors();
-		int motorWidth = 90;
 		
-		scrolledComposite.setMinWidth(numMotors * motorWidth + TABLE_MARGIN);
+		int numMotors = motorsTable.getNumMotors();
+		scrolledComposite.setMinWidth(numMotors * MOTOR_WIDTH + TABLE_MARGIN);
 		scrolledComposite.setExpandVertical(true);
 		
-		overview = new MotorsOverview(scrolledComposite, SWT.NONE);		
-		GridData gd_overview = new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1);
-		overview.setLayoutData(gd_overview);
+		MotorsOverview motorsOverview = new MotorsOverview(scrolledComposite, SWT.NONE);		
+		GridData gdOverview = new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1);
+		motorsOverview.setLayoutData(gdOverview);
 		
-		scrolledComposite.setContent(overview);
+		scrolledComposite.setContent(motorsOverview);
 		
-		overview.addMouseListener(motorSelection);
+		motorsOverview.addMouseListener(motorSelection);
 		
 		Label spacer = new Label(parent, SWT.NONE);
 		spacer.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		
-		overview.setMotors(motorsTable);
+		motorsOverview.setMotors(motorsTable);
 	}
 
 	@Override
 	public void setFocus() {	
 	}
 
-	
+	/**
+	 * Opens the motor OPI for a particular motor.
+	 * @param motor The motor to show
+	 */
 	private static void openMotorView(Motor motor) {
 		try {
     		// Display OPI motor view

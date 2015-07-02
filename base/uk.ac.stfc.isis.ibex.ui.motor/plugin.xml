@@ -11,7 +11,7 @@
             restorable="true">
       </view>
       <view
-            class="uk.ac.stfc.isis.ibex.ui.motor.views.AllMotorsView"
+            class="uk.ac.stfc.isis.ibex.ui.motor.views.MainMotorsView"
             icon="icons/big_cog_16.png"
             id="uk.ac.stfc.isis.ibex.ui.motor.views.MainMotorsView"
             name="Main Motors"
