@@ -41,6 +41,12 @@ public class ObservingSynopticModel {
 				if (newSynoptic == null) {
 					// If cannot find synoptic use the default even if it is wrong for the configuration		
 					newSynoptic = SynopticInfo.search(variables.available.value(), variables.default_synoptic.value().name());
+					
+					// If still null do nothing
+					if (newSynoptic == null) {
+						return;
+					}
+						
 				}
 				
 				switchSynoptic(newSynoptic);
