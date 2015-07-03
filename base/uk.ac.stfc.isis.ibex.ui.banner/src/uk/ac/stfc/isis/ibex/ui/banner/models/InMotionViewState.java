@@ -42,4 +42,8 @@ public class InMotionViewState implements IndicatorViewStateConverter<InMotionSt
 				return false;
 		}
 	}
+	
+	public Boolean availability() {
+		return true;
+	}
 }

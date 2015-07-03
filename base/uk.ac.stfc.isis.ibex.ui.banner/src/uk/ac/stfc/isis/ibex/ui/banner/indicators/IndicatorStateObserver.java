@@ -35,6 +35,7 @@ public class IndicatorStateObserver<T> implements Closable {
 	protected final SettableUpdatedValue<String> text;
 	protected final SettableUpdatedValue<Color> color;
 	protected final SettableUpdatedValue<Boolean> bool;	
+	protected final SettableUpdatedValue<Boolean> availability;
 	protected final IndicatorViewStateConverter<T> viewConverter;
 	
 	public IndicatorStateObserver(InitialiseOnSubscribeObservable<T> source, IndicatorViewStateConverter<T> viewConverter) {
@@ -42,6 +43,7 @@ public class IndicatorStateObserver<T> implements Closable {
 		text = new SettableUpdatedValue<>();
 		color = new SettableUpdatedValue<>();
 		bool = new SettableUpdatedValue<>();
+		availability = new SettableUpdatedValue<>();
 		sourceSubscription = source.subscribe(sourceObserver);
 	}	
 	
@@ -57,6 +59,10 @@ public class IndicatorStateObserver<T> implements Closable {
 		return bool;
 	}	
 	
+	public UpdatedValue<Boolean> availability() {
+		return bool;
+	}
+	
 	@Override
 	public void close() {
 		sourceSubscription.cancel();
@@ -67,6 +73,7 @@ public class IndicatorStateObserver<T> implements Closable {
 		text.setValue(viewConverter.getName());
 		color.setValue(viewConverter.color());
 		bool.setValue(viewConverter.toBool());
+		bool.setValue(viewConverter.availability());
 	}
 	
 }

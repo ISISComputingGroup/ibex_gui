@@ -25,4 +25,8 @@ public class BumpStopModel extends Closer implements IndicatorModel {
 		return bumpState.color();
 	}
 	
+	public UpdatedValue<Boolean> availability() {
+		return bumpState.availability();
+	}
+	
 }
