@@ -9,6 +9,10 @@ import uk.ac.stfc.isis.ibex.synoptic.SynopticInfo;
 import uk.ac.stfc.isis.ibex.synoptic.SynopticModel;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.InstrumentDescription;
 
+/**
+ * A class for linking the PV observables used to define the synoptic with the SynopticModel.
+ *
+ */
 public class ObservingSynopticModel {
 	
 	private SynopticInfo synopticInfo;
@@ -34,9 +38,12 @@ public class ObservingSynopticModel {
 			public void onValue(Configuration value) {
 				String synopticName = value.synoptic();
 				SynopticInfo newSynoptic = SynopticInfo.search(variables.available.value(), synopticName);
-				if (newSynoptic != null) {
-					switchSynoptic(newSynoptic);
+				if (newSynoptic == null) {
+					// If cannot find synoptic use the default even if it is wrong for the configuration		
+					newSynoptic = SynopticInfo.search(variables.available.value(), variables.default_synoptic.value().name());
 				}
+				
+				switchSynoptic(newSynoptic);
 			}
 
 			@Override
