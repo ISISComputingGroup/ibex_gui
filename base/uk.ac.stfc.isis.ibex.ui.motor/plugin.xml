@@ -11,17 +11,24 @@
             restorable="true">
       </view>
       <view
-            class="uk.ac.stfc.isis.ibex.ui.motor.views.MainMotorsView"
+            class="uk.ac.stfc.isis.ibex.ui.motor.views.TableOfMotorsView"
             icon="icons/big_cog_16.png"
             id="uk.ac.stfc.isis.ibex.ui.motor.views.MainMotorsView"
-            name="Main Motors"
+            name="Main Motors (Controllers 1 - 8)"
             restorable="true">
       </view>
       <view
-            class="uk.ac.stfc.isis.ibex.ui.motor.views.AdditionalMotorsView"
+            class="uk.ac.stfc.isis.ibex.ui.motor.views.TableOfMotorsView"
             icon="icons/big_cog_16.png"
             id="uk.ac.stfc.isis.ibex.ui.motor.views.AdditionalMotorsView"
-            name="Additional Motors"
+            name="Additional Motors (Controllers 9 - 16)"
+            restorable="true">
+      </view>
+      <view
+            class="uk.ac.stfc.isis.ibex.ui.motor.views.TableOfMotorsView"
+            icon="icons/big_cog_16.png"
+            id="uk.ac.stfc.isis.ibex.ui.motor.views.AdditionalMotorsView2"
+            name="Additional Motors (Controllers 17 - 24)"
             restorable="true">
       </view>
    </extension>
@@ -69,6 +76,17 @@
                ratio="0.1f"
                relationship="stack"
                relative="uk.ac.stfc.isis.ibex.ui.motor.views.MainMotorsView"
+               showTitle="true"
+               standalone="true"
+               visible="true">
+         </view>
+         <view
+               closeable="false"
+               id="uk.ac.stfc.isis.ibex.ui.motor.views.AdditionalMotorsView2"
+               minimized="false"
+               ratio="0.1f"
+               relationship="stack"
+               relative="uk.ac.stfc.isis.ibex.ui.motor.views.AdditionalMotorsView"
                showTitle="true"
                standalone="true"
                visible="true">

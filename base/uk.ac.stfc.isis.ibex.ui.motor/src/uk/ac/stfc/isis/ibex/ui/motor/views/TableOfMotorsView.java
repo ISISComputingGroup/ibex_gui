@@ -1,5 +1,8 @@
 package uk.ac.stfc.isis.ibex.ui.motor.views;
 
+import java.util.Arrays;
+import java.util.List;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.IViewPart;
@@ -22,7 +25,7 @@ import uk.ac.stfc.isis.ibex.motor.internal.MotorsTable;
 import com.google.common.base.Strings;
 
 /** A view that shows a collection of motors. */
-public class MainMotorsView extends ViewPart {
+public class TableOfMotorsView extends ViewPart {
 
 	/** Pixel height of the minimalMotorView in table of motors. */
 	private static final int MOTOR_HEIGHT = 79;
@@ -30,6 +33,11 @@ public class MainMotorsView extends ViewPart {
 	private static final int MOTOR_WIDTH = 90;
 	/** Pixel margin to add on the right and bottom of the table. */
 	private static final int TABLE_MARGIN = 20;
+	
+	/** List of the tab titles as defined in plugin.xml for this class. */
+	private List<String> tabTitles = Arrays.asList("Main Motors (Controllers 1 - 8)",
+												   "Additional Motors (Controllers 9 - 16)",
+												   "Additional Motors (Controllers 17 - 24)");
 	
 	/** Listens for clicks on a motor in the table, and makes a call to open the OPI for that motor. */
 	private MouseListener motorSelection = new MouseAdapter() {
@@ -45,7 +53,7 @@ public class MainMotorsView extends ViewPart {
 	/**
 	 * Empty constructor.
 	 */
-	public MainMotorsView() {
+	public TableOfMotorsView() {
 	}
 	
 	/** The MotorsTable used for this particular table of motors view. */
@@ -119,6 +127,9 @@ public class MainMotorsView extends ViewPart {
 	 * Sets the MotorsTable for this view, overridden for other motor tabs.
 	 */
 	protected void setMotorsTable() {
-		this.motorsTable = Motors.getInstance().getMainMotorsTable();
+		// This is not an ideal way of wiring up the tables to tabs, can probably be made more
+		// flexible by implementing in a similar way to the DAE view
+		int motorTableID = tabTitles.indexOf(getTitle());
+		this.motorsTable = Motors.getInstance().getMotorsTablesList().get(motorTableID);
 	}
 }
