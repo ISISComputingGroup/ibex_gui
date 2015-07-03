@@ -14,6 +14,8 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.ModifyEvent;
+import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -89,6 +91,12 @@ public class PVSelectorPanel extends Composite {
 		GridData gd_pvAddress = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
 		gd_pvAddress.widthHint = 250;
 		pvAddress.setLayoutData(gd_pvAddress);
+		
+		pvAddress.addModifyListener(new ModifyListener() {
+			public void modifyText(ModifyEvent arg0) {
+				blockPVTable.setSearch(pvAddress.getText());
+			}
+		});
 		
 		blockPVTable = new BlockPVTable(grpPV, SWT.NONE, SWT.V_SCROLL | SWT.NO_SCROLL | SWT.FULL_SELECTION);
 		GridData gdPvTable = new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1);
