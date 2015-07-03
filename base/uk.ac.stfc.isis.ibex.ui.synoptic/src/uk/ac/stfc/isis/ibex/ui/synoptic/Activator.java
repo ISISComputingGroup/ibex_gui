@@ -54,6 +54,14 @@ public class Activator extends AbstractUIPlugin {
 	public static Activator getDefault() {
 		return plugin;
 	}
+	
+	
+	/**
+	 * Closes any OPIs open on the synoptic.
+	 */
+	public void closeAllOPIs() {
+		presenter.closeAllOPIs();
+	}
 
 	/**
 	 * Returns an image descriptor for the image file at the given
