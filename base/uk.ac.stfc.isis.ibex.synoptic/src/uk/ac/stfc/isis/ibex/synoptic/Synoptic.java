@@ -1,5 +1,6 @@
 package uk.ac.stfc.isis.ibex.synoptic;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import org.apache.logging.log4j.Logger;
@@ -72,16 +73,29 @@ public class Synoptic extends Closer implements BundleActivator {
 		return variables.available.value();
 	}
 	
-	public String[] availableSynopticsNames() {
+	public ArrayList<String> availableSynopticNames() {
 		Collection<SynopticInfo> availableSynoptics = availableSynoptics();
 		
-		String[] synoptics = new String[availableSynoptics.size()];
+		ArrayList<String> synoptics = new ArrayList<>();
 		
-		for (int i = 0; i < availableSynoptics().size(); i++) {
-			synoptics[i] = ((SynopticInfo) availableSynoptics.toArray()[i]).name();
+		for (SynopticInfo synoptic : availableSynoptics) {
+			synoptics.add(synoptic.name());
 		}
 		
 		return synoptics;
+	}
+	
+	public int getSynopticNumber() {
+		// No synoptic loaded
+		if (getSynopticInfo() == null) {
+			return -1;
+		}
+		
+		String currentSynopticName = getSynopticInfo().name();
+		
+		ArrayList<String> availableSynoptics = availableSynopticNames();
+		
+		return availableSynoptics.indexOf(currentSynopticName);
 	}
 	
 	public SynopticInfo getSynopticInfo() {

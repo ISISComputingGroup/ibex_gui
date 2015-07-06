@@ -43,7 +43,7 @@ public class SynopticSelection extends Composite {
 		gd_synopticCombo.widthHint = 120;
 		synopticCombo.setLayoutData(gd_synopticCombo);
 		
-		String[] synoptics = Synoptic.getInstance().availableSynopticsNames();
+		String[] synoptics = synoptic.availableSynopticNames().toArray(new String[0]);
 		
 		synopticCombo.setItems(synoptics);
 		
@@ -53,7 +53,13 @@ public class SynopticSelection extends Composite {
 				String item = synopticCombo.getText();
 				synoptic.setViewerSynoptic(item);
 			}
-		});		
+		});
+		
+		// Show selected synoptic correctly on startup
+		int selectedSynopticNumber = synoptic.getSynopticNumber();
+		if (selectedSynopticNumber >= 0) {
+			synopticCombo.select(selectedSynopticNumber);
+		}
 		
 		Button refreshButton = new Button(parent, SWT.NONE);
 		refreshButton.setText("Refresh Synoptic");
