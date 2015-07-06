@@ -56,12 +56,32 @@ public class Synoptic extends Closer implements BundleActivator {
 		viewerModelObserver.switchSynoptic(info);
 	}
 	
+	public void setViewerSynoptic(String synopticName) {
+		for (SynopticInfo synoptic : availableSynoptics()) {
+			if (synoptic.name().equals(synopticName)) {
+				viewerModelObserver.switchSynoptic(synoptic);
+			}
+		}
+	}
+	
 	public SynopticModel getBlankModel() {
 		return new SynopticModel(variables);
 	}
 	
 	public Collection<SynopticInfo> availableSynoptics() {
 		return variables.available.value();
+	}
+	
+	public String[] availableSynopticsNames() {
+		Collection<SynopticInfo> availableSynoptics = availableSynoptics();
+		
+		String[] synoptics = new String[availableSynoptics.size()];
+		
+		for (int i = 0; i < availableSynoptics().size(); i++) {
+			synoptics[i] = ((SynopticInfo) availableSynoptics.toArray()[i]).name();
+		}
+		
+		return synoptics;
 	}
 	
 	public SynopticInfo getSynopticInfo() {

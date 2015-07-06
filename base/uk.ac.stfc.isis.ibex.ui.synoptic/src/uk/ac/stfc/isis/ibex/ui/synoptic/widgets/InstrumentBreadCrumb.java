@@ -13,7 +13,6 @@ import org.mihalis.opal.breadcrumb.BreadcrumbItem;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
-import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.graphics.Color;
@@ -31,7 +30,6 @@ public class InstrumentBreadCrumb extends Composite {
 	private final List<BreadcrumbItem> crumbs = new ArrayList<>(); 
 	
 	private final SynopticPresenter presenter;
-	private final Label locationLabel;
 	
 	public InstrumentBreadCrumb(Composite parent, int style) {
 		super(parent, style);
@@ -41,11 +39,6 @@ public class InstrumentBreadCrumb extends Composite {
 		gridLayout.marginHeight = 0;
 		setLayout(gridLayout);
 
-		locationLabel = new Label(this, SWT.NONE);
-		locationLabel.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-		locationLabel.setAlignment(SWT.RIGHT);
-		locationLabel.setText("Current Synoptic:");
-		
 		trail = new Breadcrumb(this, SWT.BORDER);
 		trail.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 
@@ -63,7 +56,6 @@ public class InstrumentBreadCrumb extends Composite {
 	@Override
 	public void setBackground(Color colour) {
 		super.setBackground(colour);
-		locationLabel.setBackground(colour);
 	}
 
 	private void updateTrail(final List<String> items) {
