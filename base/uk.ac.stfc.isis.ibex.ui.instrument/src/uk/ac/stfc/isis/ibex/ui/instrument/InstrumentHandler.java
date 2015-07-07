@@ -10,10 +10,16 @@ import org.eclipse.ui.PlatformUI;
 
 import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
 import uk.ac.stfc.isis.ibex.ui.scripting.Consoles;
+import uk.ac.stfc.isis.ibex.ui.synoptic.Activator;
 
+/**
+ * Handles the changing of the instrument pointed at.
+ *
+ */
 public class InstrumentHandler extends AbstractHandler {
 
 	private final Consoles consoles = Consoles.getDefault();
+	private final Activator synoptic = Activator.getDefault();
 	
 	@Override
 	public Object execute(ExecutionEvent arg0) throws ExecutionException {
@@ -24,6 +30,9 @@ public class InstrumentHandler extends AbstractHandler {
 			return null;
 		}
 		
+		// Close any OPIs in the synoptic
+		synoptic.closeAllOPIs();
+		
 		InstrumentInfo selected = dialog.selectedInstrument();
 		if (!consoles.anyActive()) {
 			setInstrument(selected);
@@ -33,6 +42,7 @@ public class InstrumentHandler extends AbstractHandler {
 		if (shouldCloseAllConsoles(dialog)) {
 			consoles.closeAll();
 		}
+		
 		setInstrument(selected);
 		consoles.createConsole();
 		
