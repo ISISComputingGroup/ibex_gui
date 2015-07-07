@@ -1,6 +1,13 @@
 package uk.ac.stfc.isis.ibex.ui.synoptic.widgets;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.KeyEvent;
+import org.eclipse.swt.events.KeyListener;
+import org.eclipse.swt.events.MouseEvent;
+import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Color;
@@ -43,10 +50,36 @@ public class SynopticSelection extends Composite {
 		gd_synopticCombo.widthHint = 120;
 		synopticCombo.setLayoutData(gd_synopticCombo);
 		
-		String[] synoptics = synoptic.availableSynopticNames().toArray(new String[0]);
+		synopticCombo.addKeyListener(new KeyListener() {
+			@Override
+			public void keyPressed(KeyEvent arg0) {
+				updateSynopticList();
+			}
+
+			// Do nothing
+			@Override
+			public void keyReleased(KeyEvent arg0) {}
+			
+		});
 		
-		synopticCombo.setItems(synoptics);
 		
+		synopticCombo.addMouseListener(new MouseListener() {
+			// Do nothing for these methods
+			@Override
+			public void mouseDoubleClick(MouseEvent arg0) {}
+			@Override
+			public void mouseDown(MouseEvent arg0) {
+
+			}
+
+			@Override
+			public void mouseUp(MouseEvent arg0) {
+				updateSynopticList();
+			}
+		});
+		
+		setSynopticList();
+				
 		synopticCombo.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -54,12 +87,6 @@ public class SynopticSelection extends Composite {
 				synoptic.setViewerSynoptic(item);
 			}
 		});
-		
-		// Show selected synoptic correctly on startup
-		int selectedSynopticNumber = synoptic.getSynopticNumber();
-		if (selectedSynopticNumber >= 0) {
-			synopticCombo.select(selectedSynopticNumber);
-		}
 		
 		Button refreshButton = new Button(parent, SWT.NONE);
 		refreshButton.setText("Refresh Synoptic");
@@ -73,6 +100,38 @@ public class SynopticSelection extends Composite {
 				synoptic.setViewerSynoptic(synopticToRefresh);		
 			}
 		});
+	}
+	
+	public void setSynopticList() {
+		String[] synoptics = synoptic.availableSynopticNames().toArray(new String[0]);
+		synopticCombo.setItems(synoptics);
+		
+		// Show selected synoptic correctly on startup
+		int selectedSynopticNumber = synoptic.getSynopticNumber();
+		if (selectedSynopticNumber >= 0) {
+			synopticCombo.select(selectedSynopticNumber);
+		}		
+	}
+	
+	public void updateSynopticList() {
+		String[] synoptics = synoptic.availableSynopticNames().toArray(new String[0]);
+		ArrayList<String> synopticsArrayList = new ArrayList<String>(Arrays.asList(synoptics)); 
+		String[] synopticComboItems = synopticCombo.getItems();
+		ArrayList<String> synopticComboItemsArrayList = new ArrayList<String>(Arrays.asList(synopticComboItems)); 
+		
+		// First add snyoptics not in list
+		for (String synoptic : synoptics) {
+			if (!synopticComboItemsArrayList.contains(synoptic)) {
+				synopticCombo.add(synoptic);
+			}
+		}
+		
+		// Then remove synoptics that have gone
+		for (String synoptic : synopticComboItems) {
+			if (!synopticsArrayList.contains(synoptic)) {
+				synopticCombo.remove(synoptic);
+			}
+		}
 	}
 
 }
