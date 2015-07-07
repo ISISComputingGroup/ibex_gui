@@ -100,6 +100,10 @@ public class SynopticSelection extends Composite {
 				synoptic.setViewerSynoptic(synopticToRefresh);		
 			}
 		});
+		
+		InstrumentBreadCrumb instrumentTrail = new InstrumentBreadCrumb(parent, SWT.NONE);
+		instrumentTrail.setLayoutData(new GridData(SWT.CENTER, SWT.FILL, false, false, 1, 1));
+		instrumentTrail.setBackground(BACKGROUND);
 	}
 	
 	public void setSynopticList() {
