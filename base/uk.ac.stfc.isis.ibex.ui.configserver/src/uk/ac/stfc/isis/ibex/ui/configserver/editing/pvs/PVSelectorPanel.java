@@ -1,3 +1,22 @@
+
+/*
+* This file is part of the ISIS IBEX application.
+* Copyright (C) 2012-2015 Science & Technology Facilities Council.
+* All rights reserved.
+*
+* This program is distributed in the hope that it will be useful.
+* This program and the accompanying materials are made available under the
+* terms of the Eclipse Public License v1.0 which accompanies this distribution.
+* EXCEPT AS EXPRESSLY SET FORTH IN THE ECLIPSE PUBLIC LICENSE V1.0, THE PROGRAM 
+* AND ACCOMPANYING MATERIALS ARE PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES 
+* OR CONDITIONS OF ANY KIND.  See the Eclipse Public License v1.0 for more details.
+*
+* You should have received a copy of the Eclipse Public License v1.0
+* along with this program; if not, you can obtain a copy from
+* https://www.eclipse.org/org/documents/epl-v10.php or 
+* http://opensource.org/licenses/eclipse-1.0.php
+*/
+
 package uk.ac.stfc.isis.ibex.ui.configserver.editing.pvs;
 
 import java.beans.PropertyChangeEvent;
@@ -14,6 +33,8 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.ModifyEvent;
+import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -32,7 +53,7 @@ import uk.ac.stfc.isis.ibex.ui.configserver.editing.blocks.filters.SourceFilters
 
 
 /**
- * A composite for selecting a PV
+ * A composite for selecting a PV.
  *
  */
 public class PVSelectorPanel extends Composite {
@@ -48,11 +69,13 @@ public class PVSelectorPanel extends Composite {
 	
 	public PVSelectorPanel(Composite parent, int style) {
 		super(parent, style);
-
+		
 		setLayout(new FillLayout(SWT.HORIZONTAL));
 		
 		Group grpPV = new Group(this, SWT.NONE);
 		grpPV.setText("PV Selector");
+		
+		GridLayout gdGrpPV = new GridLayout(2, false);
 		grpPV.setLayout(new GridLayout(2, false));
 		
 		Label lblViewPVs = new Label(grpPV, SWT.NONE);
@@ -88,20 +111,26 @@ public class PVSelectorPanel extends Composite {
 		gd_pvAddress.widthHint = 250;
 		pvAddress.setLayoutData(gd_pvAddress);
 		
+		pvAddress.addModifyListener(new ModifyListener() {
+			public void modifyText(ModifyEvent arg0) {
+				blockPVTable.setSearch(pvAddress.getText());
+			}
+		});
+		
 		blockPVTable = new BlockPVTable(grpPV, SWT.NONE, SWT.V_SCROLL | SWT.NO_SCROLL | SWT.FULL_SELECTION);
-		blockPVTable.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
+		GridData gdPvTable = new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1);
+		gdPvTable.heightHint = 300;
+		blockPVTable.setLayoutData(gdPvTable);
 		
 		blockPVTable.addSelectionChangedListener(new ISelectionChangedListener() {
 			public void selectionChanged(SelectionChangedEvent arg0) {
 				IStructuredSelection selection = (IStructuredSelection) arg0.getSelection();
-				if (selection.size()>0) {
-					PV pv = (PV)selection.getFirstElement();
+				if (selection.size() > 0) {
+					PV pv = (PV) selection.getFirstElement();
 					pvAddress.setText(pv.getAddress());
 				}
 			}
 		});
-
-
 	}
 	
 	public void setConfig(EditableConfiguration config, PV pv) {
@@ -113,8 +142,8 @@ public class PVSelectorPanel extends Composite {
 		pvSource.addSelectionChangedListener(new ISelectionChangedListener() {
 			@Override
 			public void selectionChanged(SelectionChangedEvent arg0) {
-				StructuredSelection selection = (StructuredSelection)arg0.getSelection();
-				SourceFilters PVfilter = (SourceFilters)selection.getFirstElement();
+				StructuredSelection selection = (StructuredSelection) arg0.getSelection();
+				SourceFilters PVfilter = (SourceFilters) selection.getFirstElement();
 				changeSourceFilter(PVfilter);
 			}
 		});
@@ -122,8 +151,8 @@ public class PVSelectorPanel extends Composite {
 		interestLevel.addSelectionChangedListener(new ISelectionChangedListener() {
 			@Override
 			public void selectionChanged(SelectionChangedEvent arg0) {
-				StructuredSelection selection = (StructuredSelection)arg0.getSelection();
-				InterestFilters interestFilter= (InterestFilters)selection.getFirstElement();
+				StructuredSelection selection = (StructuredSelection) arg0.getSelection();
+				InterestFilters interestFilter = (InterestFilters) selection.getFirstElement();
 				changeInterestFilter(interestFilter);
 			}
 		});

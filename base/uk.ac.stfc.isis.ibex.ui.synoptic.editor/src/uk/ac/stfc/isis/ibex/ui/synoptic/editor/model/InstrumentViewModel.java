@@ -1,3 +1,22 @@
+
+/*
+* This file is part of the ISIS IBEX application.
+* Copyright (C) 2012-2015 Science & Technology Facilities Council.
+* All rights reserved.
+*
+* This program is distributed in the hope that it will be useful.
+* This program and the accompanying materials are made available under the
+* terms of the Eclipse Public License v1.0 which accompanies this distribution.
+* EXCEPT AS EXPRESSLY SET FORTH IN THE ECLIPSE PUBLIC LICENSE V1.0, THE PROGRAM 
+* AND ACCOMPANYING MATERIALS ARE PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES 
+* OR CONDITIONS OF ANY KIND.  See the Eclipse Public License v1.0 for more details.
+*
+* You should have received a copy of the Eclipse Public License v1.0
+* along with this program; if not, you can obtain a copy from
+* https://www.eclipse.org/org/documents/epl-v10.php or 
+* http://opensource.org/licenses/eclipse-1.0.php
+*/
+
 /*
  * Copyright (C) 2013-2014 Research Councils UK (STFC)
  *
@@ -13,6 +32,7 @@ package uk.ac.stfc.isis.ibex.ui.synoptic.editor.model;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+import uk.ac.stfc.isis.ibex.instrument.Instrument;
 import uk.ac.stfc.isis.ibex.model.UpdatedValue;
 import uk.ac.stfc.isis.ibex.synoptic.Synoptic;
 import uk.ac.stfc.isis.ibex.synoptic.SynopticModel;
@@ -21,6 +41,7 @@ import uk.ac.stfc.isis.ibex.synoptic.model.desc.ComponentDescription;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.IO;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.InstrumentDescription;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.PV;
+import uk.ac.stfc.isis.ibex.synoptic.model.desc.PVType;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.Property;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.RecordType;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.TargetDescription;
@@ -106,6 +127,7 @@ public class InstrumentViewModel {
 		RecordType rt = new RecordType();
 		rt.setIO(IO.READ);
 		pv.setRecordType(rt);
+		pv.setPvType(PVType.LOCAL_PV);
 
 		int index = 0;
 		
@@ -180,17 +202,30 @@ public class InstrumentViewModel {
 		return selectedComponent;
 	}
 
-	public void updateSelectedPV(String name, String address, IO mode) {
+	public void updateSelectedPV(String name, String address, IO mode, PVType type) {
 		if (selectedPV == null) {
 			return;
 		}
 
 		selectedPV.setDisplayName(name);
-		selectedPV.setAddress(address);
 		RecordType recordType = new RecordType();
 		recordType.setIO(mode);
 		selectedPV.setRecordType(recordType);
+		selectedPV.setPvType(type);
 
+		String addressToUse = address;
+		switch (type){
+			case LOCAL_PV:
+				String pvprefix = Instrument.getInstance().currentInstrument().pvPrefix();
+				addressToUse = addressToUse.replace(pvprefix, "");
+				break;
+			default:
+				//Leave the address as that entered - could be remote or a block
+				break;
+		}
+		
+		selectedPV.setAddress(addressToUse);
+		
 		broadcastInstrumentUpdate(UpdateTypes.EDIT_PV);
 	}
 
@@ -216,8 +251,9 @@ public class InstrumentViewModel {
 		ComponentDescription component = getSelectedComponent();
 		if (component != null && component.target() != null) {
 			component.target().addProperty(property);
-			broadcastInstrumentUpdate(UpdateTypes.EDIT_PROPERTY);
+			broadcastInstrumentUpdate(UpdateTypes.NEW_PROPERTY);
 		}
+		setSelectedProperty(property);
 	}
 
 	public void removeSelectedProperty() {
@@ -225,7 +261,7 @@ public class InstrumentViewModel {
 		if (component != null && component.target() != null) {
 			if (component.target().removeProperty(getSelectedProperty())) {
 				setSelectedProperty(null);
-				broadcastInstrumentUpdate(UpdateTypes.EDIT_PROPERTY);
+				broadcastInstrumentUpdate(UpdateTypes.DELETE_PROPERTY);
 			}
 		}
 	}

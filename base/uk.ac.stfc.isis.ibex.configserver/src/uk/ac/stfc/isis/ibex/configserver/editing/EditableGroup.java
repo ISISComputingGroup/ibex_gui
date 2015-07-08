@@ -1,33 +1,55 @@
+
+/*
+* This file is part of the ISIS IBEX application.
+* Copyright (C) 2012-2015 Science & Technology Facilities Council.
+* All rights reserved.
+*
+* This program is distributed in the hope that it will be useful.
+* This program and the accompanying materials are made available under the
+* terms of the Eclipse Public License v1.0 which accompanies this distribution.
+* EXCEPT AS EXPRESSLY SET FORTH IN THE ECLIPSE PUBLIC LICENSE V1.0, THE PROGRAM 
+* AND ACCOMPANYING MATERIALS ARE PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES 
+* OR CONDITIONS OF ANY KIND.  See the Eclipse Public License v1.0 for more details.
+*
+* You should have received a copy of the Eclipse Public License v1.0
+* along with this program; if not, you can obtain a copy from
+* https://www.eclipse.org/org/documents/epl-v10.php or 
+* http://opensource.org/licenses/eclipse-1.0.php
+*/
+
 package uk.ac.stfc.isis.ibex.configserver.editing;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
-
 import uk.ac.stfc.isis.ibex.configserver.configuration.Block;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Group;
 import uk.ac.stfc.isis.ibex.configserver.internal.DisplayUtils;
-import uk.ac.stfc.isis.ibex.model.ExclusiveSetPair;
-
 import com.google.common.base.Function;
-import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 
 public class EditableGroup extends Group {
 
-	private final ExclusiveSetPair<EditableBlock> blocks;
+	private final List<EditableBlock> blocksInGroup;
+	private List<EditableBlock> availableBlocks;
+	private final EditableConfiguration config;
 	
-	public EditableGroup(final EditableConfiguration config, Group group) {
+	public EditableGroup(final EditableConfiguration configuration, Group group) {
 		super(group);
-				
-		blocks = new ExclusiveSetPair<>(config.getEditableBlocks());
-		Collection<EditableBlock> selectedBlocks = lookupBlocksByName(config.getEditableBlocks(), group.getBlocks());
-		blocks.move(selectedBlocks);
+		
+		config = configuration;
+		List<EditableBlock> selectedBlocks = lookupBlocksByName(config.getEditableBlocks(), group.getBlocks());
+		blocksInGroup = selectedBlocks;
+		availableBlocks = (List<EditableBlock>) config.getAvailableBlocks();
+		for (EditableBlock block : selectedBlocks) {
+			availableBlocks.remove(block);
+			if (!group.getName().equals("NONE")) {
+				config.makeBlockUnavailable(block);
+			}
+		}
 		
 		config.addPropertyChangeListener(new PropertyChangeListener() {	
 			@Override
@@ -52,11 +74,11 @@ public class EditableGroup extends Group {
 	}
 	
 	public Collection<EditableBlock> getUnselectedBlocks() {
-		return new ArrayList<>(blocks.unselected());
+		return new ArrayList<>(config.getAvailableBlocks());
 	}
 	
 	public Collection<EditableBlock> getSelectedBlocks() {
-		return new ArrayList<>(blocks.selected());
+		return new ArrayList<>(blocksInGroup);
 	}
 	
 	public void toggleSelection(Collection<EditableBlock> blocksToToggle) {
@@ -65,17 +87,44 @@ public class EditableGroup extends Group {
 		Collection<String> blocksBefore = getBlocks();
 		
 		for (EditableBlock block : blocksToToggle) {
-			blocks.move(block);
+			if (blocksInGroup.contains(block)) {
+				blocksInGroup.remove(block);
+				config.makeBlockAvailable(block);
+			}
+			else {
+				blocksInGroup.add(block);
+				config.makeBlockUnavailable(block);
+			}
 		}
 		
 		firePropertyChange("selectedBlocks", selectedBefore, getSelectedBlocks());
 		firePropertyChange("unselectedBlocks", unselectedBefore, getUnselectedBlocks());
-		firePropertyChange("blocks", blocksBefore, getBlocks());
+		firePropertyChange("blocks", blocksBefore, getBlocks());	
+	}
+	
+	public void moveBlockUp(String blockName) {
+		EditableBlock blockToMoveUp = lookupBlockByName(blocksInGroup, blockName);
+		int blockToMoveUpIndex = blocksInGroup.indexOf(blockToMoveUp);
+		if (blockToMoveUpIndex > 0) {
+			EditableBlock blockToMoveDown = blocksInGroup.get(blockToMoveUpIndex - 1);
+			blocksInGroup.set(blockToMoveUpIndex, blockToMoveDown);
+			blocksInGroup.set(blockToMoveUpIndex - 1, blockToMoveUp);
+		}
+	}
+	
+	public void moveBlockDown(String blockName) {
+		EditableBlock blockToMoveDown = lookupBlockByName(blocksInGroup, blockName);
+		int blockToMoveDownIndex = blocksInGroup.indexOf(blockToMoveDown);
+		if (blockToMoveDownIndex < blocksInGroup.size() - 1) {
+			EditableBlock blockToMoveUp = blocksInGroup.get(blockToMoveDownIndex + 1);
+			blocksInGroup.set(blockToMoveDownIndex, blockToMoveUp);
+			blocksInGroup.set(blockToMoveDownIndex + 1, blockToMoveDown);
+		}
 	}
 	
 	@Override
 	public Collection<String> getBlocks() {
-		return blockNames(blocks.selected());
+		return blockNames(blocksInGroup);
 	}
 	
 	public boolean isEditable() {
@@ -96,17 +145,16 @@ public class EditableGroup extends Group {
 	}
 
 	private void removeDeletedBlocks(EditableConfiguration config) {
-		Set<EditableBlock> missing = new HashSet<>(blocks.all());
-		missing.removeAll(config.getEditableBlocks());
-		for (EditableBlock block : missing) {
-			blocks.remove(block);
+		Collection<EditableBlock> configBlocks = config.getEditableBlocks();
+		for (EditableBlock block : blocksInGroup) {
+			if (!configBlocks.contains(block)) {
+				blocksInGroup.remove(block);
+			}
 		}
 	}
 	
 	private void addNewBlocks(EditableConfiguration config) {
-		for (EditableBlock block : config.getEditableBlocks()) {
-			blocks.addUnselected(block);
-		}
+		availableBlocks = (List<EditableBlock>) config.getAvailableBlocks();
 	}
 	
 	private List<String> blockNames(Collection<? extends Block> blocks) {
@@ -119,20 +167,26 @@ public class EditableGroup extends Group {
 	}
 	
 	private List<EditableBlock> lookupBlocksByName(Collection<EditableBlock> blocks, final Collection<String> names) {
-		return Lists.newArrayList(Iterables.filter(blocks, new Predicate<Block>() {
-			@Override
-			public boolean apply(final Block block) {
-				return anyNameMatches(names, block);
+		List<EditableBlock> selectedBlocks = new ArrayList<EditableBlock>();
+		List<String> allBlockNames = blockNames(blocks);
+		for (String name : names) {
+			int blockIndex = allBlockNames.indexOf(name);
+			if (blockIndex >= 0) {
+				EditableBlock block = Iterables.get(blocks, blockIndex);
+				selectedBlocks.add(block);
 			}
-		}));
+		}
+		return selectedBlocks;
 	}
 	
-	private static boolean anyNameMatches(final Collection<String> names, final Block block) {
-		return Iterables.any(names, new Predicate<String>() {
-			@Override
-			public boolean apply(String name) {
-				return block.getName().equals(name);
-			}
-		});
+	private EditableBlock lookupBlockByName(Collection<EditableBlock> blocks, final String name) {
+		EditableBlock block = new EditableBlock(new Block(name, "", true, true, null));
+		List<String> allBlockNames = blockNames(blocks);
+		int blockIndex = allBlockNames.indexOf(name);
+		if (blockIndex >= 0) {
+			block = Iterables.get(blocks, blockIndex);
+		}
+		return block;
 	}
+	
 }

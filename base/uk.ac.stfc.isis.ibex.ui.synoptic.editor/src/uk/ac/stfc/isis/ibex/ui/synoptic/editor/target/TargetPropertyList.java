@@ -1,3 +1,22 @@
+
+/*
+* This file is part of the ISIS IBEX application.
+* Copyright (C) 2012-2015 Science & Technology Facilities Council.
+* All rights reserved.
+*
+* This program is distributed in the hope that it will be useful.
+* This program and the accompanying materials are made available under the
+* terms of the Eclipse Public License v1.0 which accompanies this distribution.
+* EXCEPT AS EXPRESSLY SET FORTH IN THE ECLIPSE PUBLIC LICENSE V1.0, THE PROGRAM 
+* AND ACCOMPANYING MATERIALS ARE PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES 
+* OR CONDITIONS OF ANY KIND.  See the Eclipse Public License v1.0 for more details.
+*
+* You should have received a copy of the Eclipse Public License v1.0
+* along with this program; if not, you can obtain a copy from
+* https://www.eclipse.org/org/documents/epl-v10.php or 
+* http://opensource.org/licenses/eclipse-1.0.php
+*/
+
 package uk.ac.stfc.isis.ibex.ui.synoptic.editor.target;
 
 import org.eclipse.jface.viewers.ISelectionChangedListener;
@@ -42,9 +61,24 @@ public class TargetPropertyList extends Composite {
 		instrument.addInstrumentUpdateListener(new IInstrumentUpdateListener() {	
 			@Override
 			public void instrumentUpdated(UpdateTypes updateType) {
-				if (updateType == UpdateTypes.EDIT_PROPERTY) {
-
-					int selected = list.getList().getSelectionIndex();
+				if (updateType == UpdateTypes.EDIT_PROPERTY 
+					|| updateType == UpdateTypes.NEW_PROPERTY 
+					|| updateType == UpdateTypes.DELETE_PROPERTY) {
+					
+					int selected;
+					
+					switch (updateType) {
+						case EDIT_PROPERTY:
+							selected = list.getList().getSelectionIndex();
+							break;
+						case NEW_PROPERTY: 
+							selected = list.getList().getItemCount();
+							break;
+						case DELETE_PROPERTY:
+						default:
+							selected = -1;
+							break;
+					}
 					showPropertyList(instrument.getSelectedComponent());
 					list.refresh();
 					list.getList().setSelection(selected);

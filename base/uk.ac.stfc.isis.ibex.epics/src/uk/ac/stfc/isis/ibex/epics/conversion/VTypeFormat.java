@@ -1,9 +1,30 @@
+
+/*
+* This file is part of the ISIS IBEX application.
+* Copyright (C) 2012-2015 Science & Technology Facilities Council.
+* All rights reserved.
+*
+* This program is distributed in the hope that it will be useful.
+* This program and the accompanying materials are made available under the
+* terms of the Eclipse Public License v1.0 which accompanies this distribution.
+* EXCEPT AS EXPRESSLY SET FORTH IN THE ECLIPSE PUBLIC LICENSE V1.0, THE PROGRAM 
+* AND ACCOMPANYING MATERIALS ARE PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES 
+* OR CONDITIONS OF ANY KIND.  See the Eclipse Public License v1.0 for more details.
+*
+* You should have received a copy of the Eclipse Public License v1.0
+* along with this program; if not, you can obtain a copy from
+* https://www.eclipse.org/org/documents/epl-v10.php or 
+* http://opensource.org/licenses/eclipse-1.0.php
+*/
+
 package uk.ac.stfc.isis.ibex.epics.conversion;
 
+import java.text.NumberFormat;
 import java.util.Arrays;
 
 import org.epics.util.array.IteratorByte;
 import org.epics.util.array.IteratorFloat;
+import org.epics.vtype.Display;
 import org.epics.vtype.VByteArray;
 import org.epics.vtype.VDouble;
 import org.epics.vtype.VEnum;
@@ -14,7 +35,12 @@ import org.epics.vtype.VNumber;
 import org.epics.vtype.VShort;
 import org.epics.vtype.VString;
 import org.epics.vtype.VType;
+import org.epics.vtype.ValueUtil;
 
+/**
+ * This class is responsible for converting PVManager VType in to Java types.
+ *
+ */
 public final class VTypeFormat {
 	
 	private VTypeFormat() { }
@@ -41,6 +67,24 @@ public final class VTypeFormat {
 			@Override
 			public String convert(R value) throws ConversionException {
 				return value.getFormat().format(value.getValue()) + " " + value.getUnits();
+			}
+		};
+	}
+	
+	/**
+	 * @return a number formatted with the precision defined by the underlying PV 
+	 */
+	public static <R extends VNumber> Converter<R, Number> toNumberWithPrecision() {
+		return new Converter<R, Number>() {
+			@Override
+			public Number convert(R value) throws ConversionException {
+				VNumber val = (VNumber) value;
+				Display display = ValueUtil.displayOf(val);
+				if (display != null) {
+					NumberFormat formatter = display.getFormat();
+					return new Double(formatter.format(value.getValue()));
+				}
+				return value.getValue();
 			}
 		};
 	}

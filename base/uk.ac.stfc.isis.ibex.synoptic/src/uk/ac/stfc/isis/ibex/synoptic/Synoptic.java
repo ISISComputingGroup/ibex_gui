@@ -1,5 +1,25 @@
+
+/*
+* This file is part of the ISIS IBEX application.
+* Copyright (C) 2012-2015 Science & Technology Facilities Council.
+* All rights reserved.
+*
+* This program is distributed in the hope that it will be useful.
+* This program and the accompanying materials are made available under the
+* terms of the Eclipse Public License v1.0 which accompanies this distribution.
+* EXCEPT AS EXPRESSLY SET FORTH IN THE ECLIPSE PUBLIC LICENSE V1.0, THE PROGRAM 
+* AND ACCOMPANYING MATERIALS ARE PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES 
+* OR CONDITIONS OF ANY KIND.  See the Eclipse Public License v1.0 for more details.
+*
+* You should have received a copy of the Eclipse Public License v1.0
+* along with this program; if not, you can obtain a copy from
+* https://www.eclipse.org/org/documents/epl-v10.php or 
+* http://opensource.org/licenses/eclipse-1.0.php
+*/
+
 package uk.ac.stfc.isis.ibex.synoptic;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import org.apache.logging.log4j.Logger;
@@ -56,12 +76,49 @@ public class Synoptic extends Closer implements BundleActivator {
 		viewerModelObserver.switchSynoptic(info);
 	}
 	
+	public void setViewerSynoptic(String synopticName) {
+		for (SynopticInfo synoptic : availableSynoptics()) {
+			if (synoptic.name().equals(synopticName)) {
+				viewerModelObserver.switchSynoptic(synoptic);
+			}
+		}
+	}
+	
 	public SynopticModel getBlankModel() {
 		return new SynopticModel(variables);
 	}
 	
 	public Collection<SynopticInfo> availableSynoptics() {
 		return variables.available.value();
+	}
+	
+	public ArrayList<String> availableSynopticNames() {
+		Collection<SynopticInfo> availableSynoptics = availableSynoptics();
+		
+		ArrayList<String> synoptics = new ArrayList<>();
+		
+		for (SynopticInfo synoptic : availableSynoptics) {
+			synoptics.add(synoptic.name());
+		}
+		
+		return synoptics;
+	}
+	
+	public int getSynopticNumber() {
+		// No synoptic loaded
+		if (getSynopticInfo() == null) {
+			return -1;
+		}
+		
+		String currentSynopticName = getSynopticInfo().name();
+		
+		ArrayList<String> availableSynoptics = availableSynopticNames();
+		
+		return availableSynoptics.indexOf(currentSynopticName);
+	}
+	
+	public SynopticInfo getSynopticInfo() {
+		return viewerModelObserver.getSynopticInfo();
 	}
 	
 	public InitialiseOnSubscribeObservable<InstrumentDescription> synoptic(SynopticInfo synoptic) {

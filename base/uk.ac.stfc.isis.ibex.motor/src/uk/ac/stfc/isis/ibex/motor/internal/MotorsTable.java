@@ -1,3 +1,22 @@
+
+/*
+* This file is part of the ISIS IBEX application.
+* Copyright (C) 2012-2015 Science & Technology Facilities Council.
+* All rights reserved.
+*
+* This program is distributed in the hope that it will be useful.
+* This program and the accompanying materials are made available under the
+* terms of the Eclipse Public License v1.0 which accompanies this distribution.
+* EXCEPT AS EXPRESSLY SET FORTH IN THE ECLIPSE PUBLIC LICENSE V1.0, THE PROGRAM 
+* AND ACCOMPANYING MATERIALS ARE PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES 
+* OR CONDITIONS OF ANY KIND.  See the Eclipse Public License v1.0 for more details.
+*
+* You should have received a copy of the Eclipse Public License v1.0
+* along with this program; if not, you can obtain a copy from
+* https://www.eclipse.org/org/documents/epl-v10.php or 
+* http://opensource.org/licenses/eclipse-1.0.php
+*/
+
 package uk.ac.stfc.isis.ibex.motor.internal;
 
 import java.util.ArrayList;
@@ -13,15 +32,17 @@ import uk.ac.stfc.isis.ibex.motor.observable.ObservableMotor;
 public class MotorsTable extends Closer {
 	
 	private static final String MOTOR_NAME_FORMAT = "MTR%02d%02d";
-	private static final int CRATES = 7;
-	private static final int MOTORS = 8;
+	private int numberMotors;
+	private int numberCrates;
 	
 	private List<Motor> motors = new ArrayList<>();
 	
-	public MotorsTable(Instrument instrument) {
+	public MotorsTable(Instrument instrument, int numberCrates, int numberMotors, int startCrate) {
+		this.numberMotors = numberMotors;
+		this.numberCrates = numberCrates;
 		
-		for (int crate = 1; crate <= CRATES; crate++) {
-			for (int motorNumber = 1; motorNumber <= MOTORS; motorNumber++) {
+		for (int crate = startCrate; crate < startCrate + numberCrates; crate++) {
+			for (int motorNumber = 1; motorNumber <= numberMotors; motorNumber++) {
 				String name = motorName(crate, motorNumber);
 				MotorVariables variables = registerForClose(new MotorVariables(name, instrument));
 				Motor motor = new ObservableMotor(variables);
@@ -37,5 +58,13 @@ public class MotorsTable extends Closer {
 	
 	private String motorName(int row, int column) {
 		return String.format(MOTOR_NAME_FORMAT, row, column);
+	}
+	
+	public int getNumMotors() {
+		return numberMotors;
+	}
+	
+	public int getNumCrates() {
+		return numberCrates;
 	}
 }

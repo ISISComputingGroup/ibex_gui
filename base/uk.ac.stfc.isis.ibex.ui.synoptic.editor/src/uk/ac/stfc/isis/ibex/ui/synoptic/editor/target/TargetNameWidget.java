@@ -1,3 +1,22 @@
+
+/*
+* This file is part of the ISIS IBEX application.
+* Copyright (C) 2012-2015 Science & Technology Facilities Council.
+* All rights reserved.
+*
+* This program is distributed in the hope that it will be useful.
+* This program and the accompanying materials are made available under the
+* terms of the Eclipse Public License v1.0 which accompanies this distribution.
+* EXCEPT AS EXPRESSLY SET FORTH IN THE ECLIPSE PUBLIC LICENSE V1.0, THE PROGRAM 
+* AND ACCOMPANYING MATERIALS ARE PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES 
+* OR CONDITIONS OF ANY KIND.  See the Eclipse Public License v1.0 for more details.
+*
+* You should have received a copy of the Eclipse Public License v1.0
+* along with this program; if not, you can obtain a copy from
+* https://www.eclipse.org/org/documents/epl-v10.php or 
+* http://opensource.org/licenses/eclipse-1.0.php
+*/
+
 package uk.ac.stfc.isis.ibex.ui.synoptic.editor.target;
 
 import java.util.Collection;
@@ -32,14 +51,14 @@ public class TargetNameWidget extends Composite {
 	private StackLayout layout;
 	private Collection<String> availableOPIs;
 	
-	public TargetNameWidget (Composite parent, final InstrumentViewModel instrument) {
+	public TargetNameWidget(Composite parent, final InstrumentViewModel instrument) {
 		super(parent, SWT.NONE);
 		
 		this.instrument = instrument;
 		
 		availableOPIs = Opi.getDefault().provider().getOPIList();
 		
-		layout = new StackLayout ();
+		layout = new StackLayout();
 		setLayout(layout);
 		
 		createControls(this);
@@ -66,7 +85,7 @@ public class TargetNameWidget extends Composite {
 			@Override
 			public void selectionChanged(SelectionChangedEvent e) {
 				IStructuredSelection selection = (IStructuredSelection) e.getSelection();	
-				String target = (String)selection.getFirstElement();
+				String target = (String) selection.getFirstElement();
 				
 				updateModel(target);
 			}
@@ -92,7 +111,7 @@ public class TargetNameWidget extends Composite {
 			case OPI:
 				layout.topControl = cmboOpiName.getCombo();
 				IStructuredSelection selection = (IStructuredSelection) cmboOpiName.getSelection();	
-				updateModel((String)selection.getFirstElement());
+				updateModel((String) selection.getFirstElement());
 				break;
 			case COMPONENT:
 				layout.topControl = txtName;
@@ -108,7 +127,7 @@ public class TargetNameWidget extends Composite {
 		if (target == null) {
 			txtName.setText("");
 			cmboOpiName.getCombo().select(-1);
-		}else{
+		} else {
 			setTargetType(target.type());
 			
 			switch (target.type()) {

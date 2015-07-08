@@ -1,3 +1,22 @@
+
+/*
+* This file is part of the ISIS IBEX application.
+* Copyright (C) 2012-2015 Science & Technology Facilities Council.
+* All rights reserved.
+*
+* This program is distributed in the hope that it will be useful.
+* This program and the accompanying materials are made available under the
+* terms of the Eclipse Public License v1.0 which accompanies this distribution.
+* EXCEPT AS EXPRESSLY SET FORTH IN THE ECLIPSE PUBLIC LICENSE V1.0, THE PROGRAM 
+* AND ACCOMPANYING MATERIALS ARE PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES 
+* OR CONDITIONS OF ANY KIND.  See the Eclipse Public License v1.0 for more details.
+*
+* You should have received a copy of the Eclipse Public License v1.0
+* along with this program; if not, you can obtain a copy from
+* https://www.eclipse.org/org/documents/epl-v10.php or 
+* http://opensource.org/licenses/eclipse-1.0.php
+*/
+
 package uk.ac.stfc.isis.ibex.configserver.editing;
 
 import java.beans.PropertyChangeEvent;
@@ -43,6 +62,7 @@ public class EditableConfiguration extends ModelObject {
 	private final List<EditableIoc> editableIocs = new ArrayList<>();
 	private final List<EditableGroup> editableGroups = new ArrayList<>();
 	private final List<EditableBlock> editableBlocks = new ArrayList<>();
+	private final List<EditableBlock> availableBlocks = new ArrayList<>();
 	private final EditableComponents editableComponents;
 	private List<String> history = new ArrayList<>();
 	
@@ -64,6 +84,9 @@ public class EditableConfiguration extends ModelObject {
 			Block oldBlock = new Block(renamed);
 			oldBlock.setName(oldName);
 			blocksBeforeRename.add(oldBlock);
+			
+			makeBlockUnavailable((EditableBlock) oldBlock);
+			makeBlockAvailable((EditableBlock) renamed);
 			
 			firePropertyChange("blocks", blocksBeforeRename, getBlocks());
 		}
@@ -91,6 +114,7 @@ public class EditableConfiguration extends ModelObject {
 		for (Block block : config.getBlocks()) {
 			EditableBlock eb = new EditableBlock(block);
 			editableBlocks.add(eb);
+			makeBlockAvailable(eb);
 			addRenameListener(eb);
 		}
 		
@@ -127,12 +151,11 @@ public class EditableConfiguration extends ModelObject {
 	
 	public String getDateModified() {
 		if (history.size() != 0) {
-			return history.get(history.size()-1);
+			return history.get(history.size() - 1);
 		}
 		else {
 			return "";
 		}
-		
 	}
 	
 	public void setName(String name) {
@@ -200,6 +223,10 @@ public class EditableConfiguration extends ModelObject {
 		return new ArrayList<>(editableBlocks);
 	}
 	
+	public Collection<EditableBlock> getAvailableBlocks() {
+		return new ArrayList<>(availableBlocks);
+	}
+	
 	public Collection<EditableGroup> getEditableGroups() {
 		return new ArrayList<>(DisplayUtils.removeOtherGroup(editableGroups));
 	}
@@ -218,6 +245,7 @@ public class EditableConfiguration extends ModelObject {
 		String name = blockName.getUnique(blockNames());
 		EditableBlock block = new EditableBlock(new Block(name, "", true, true, null));
 		editableBlocks.add(0, block);
+		makeBlockAvailable(block);
 		addRenameListener(block);
 		
 		firePropertyChange("blocks", blocksBeforeAdd, getBlocks());
@@ -225,9 +253,20 @@ public class EditableConfiguration extends ModelObject {
 		return block;
 	}
 	
+	public void makeBlockUnavailable(EditableBlock block) {
+		availableBlocks.remove(block);
+	}
+	
+	public void makeBlockAvailable(EditableBlock block) {
+		if (!availableBlocks.contains(block)) {
+			availableBlocks.add(0, block);
+		}
+	}
+	
 	public void removeBlock(EditableBlock block) {
 		Collection<Block> blocksBefore = getBlocks();
 		editableBlocks.remove(block);
+		makeBlockUnavailable(block);
 		firePropertyChange("blocks", blocksBefore, getBlocks());
 	}
 	
@@ -269,7 +308,7 @@ public class EditableConfiguration extends ModelObject {
 				Collections.<Component>emptyList(), config.getHistory());
 	}
 	
-	public void swapGroups(EditableGroup group1, EditableGroup group2){
+	public void swapGroups(EditableGroup group1, EditableGroup group2) {
 		Collection<EditableGroup> editableGroupsBefore = getEditableGroups();
 		Collection<Group> groupsBefore = getGroups();
 		

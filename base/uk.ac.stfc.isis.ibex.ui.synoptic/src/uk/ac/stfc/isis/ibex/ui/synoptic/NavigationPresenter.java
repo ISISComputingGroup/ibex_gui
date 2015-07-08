@@ -1,3 +1,22 @@
+
+/*
+* This file is part of the ISIS IBEX application.
+* Copyright (C) 2012-2015 Science & Technology Facilities Council.
+* All rights reserved.
+*
+* This program is distributed in the hope that it will be useful.
+* This program and the accompanying materials are made available under the
+* terms of the Eclipse Public License v1.0 which accompanies this distribution.
+* EXCEPT AS EXPRESSLY SET FORTH IN THE ECLIPSE PUBLIC LICENSE V1.0, THE PROGRAM 
+* AND ACCOMPANYING MATERIALS ARE PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES 
+* OR CONDITIONS OF ANY KIND.  See the Eclipse Public License v1.0 for more details.
+*
+* You should have received a copy of the Eclipse Public License v1.0
+* along with this program; if not, you can obtain a copy from
+* https://www.eclipse.org/org/documents/epl-v10.php or 
+* http://opensource.org/licenses/eclipse-1.0.php
+*/
+
 package uk.ac.stfc.isis.ibex.ui.synoptic;
 
 import org.apache.logging.log4j.Logger;
@@ -53,7 +72,7 @@ public class NavigationPresenter extends ModelObject {
 	}
 	
 	public String nameOfPrevious() {
-		return getHasPrevious() ? display(current.previous().item().name()) : "";
+		return getHasPrevious() ? displayName(current.previous().item().name()) : "";
 	}
 
 	public void up() {
@@ -63,7 +82,7 @@ public class NavigationPresenter extends ModelObject {
 	}
 	
 	public String nameOfUp() {
-		return getHasUp() ? display(current.up().item().name()) : "";
+		return getHasUp() ? displayName(current.up().item().name()) : "";
 	}
 	
 	public void next() {
@@ -73,7 +92,13 @@ public class NavigationPresenter extends ModelObject {
 	}
 	
 	public String nameOfNext() {
-		return getHasNext() ? display(current.next().item().name()) : "";
+		String returnString = "";
+		
+		if (getHasNext() && (current.next().item() != null)) {
+			returnString = current.next().item().name();
+		}
+
+		return displayName(returnString);
 	}
 	
 	public void down() {
@@ -83,10 +108,10 @@ public class NavigationPresenter extends ModelObject {
 	}
 	
 	public String nameOfDown() {
-		return getHasDown() ? display(current.down().item().name()) : "";
+		return getHasDown() ? displayName(current.down().item().name()) : "";
 	}
 	
-	private String display(String name) {
+	private String displayName(String name) {
 		return name.trim();
 	}
 	

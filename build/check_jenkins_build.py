@@ -3,7 +3,7 @@ import time
 import subprocess
 import psutil
 
-full_path = os.path.abspath("uk.ac.stfc.isis.ibex.client.product\\target\\products\\ibex.product\\win32\\win32\\x86_64\\ibex-client.exe")
+full_path = os.path.abspath("..\\base\\uk.ac.stfc.isis.ibex.client.product\\target\\products\\ibex.product\\win32\\win32\\x86_64\\ibex-client.exe")
 
 if not os.path.isfile(full_path):
 	raise Exception("Executable could not be found")

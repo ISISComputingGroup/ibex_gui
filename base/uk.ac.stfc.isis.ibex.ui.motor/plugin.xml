@@ -11,10 +11,24 @@
             restorable="true">
       </view>
       <view
-            class="uk.ac.stfc.isis.ibex.ui.motor.views.AllMotorsView"
+            class="uk.ac.stfc.isis.ibex.ui.motor.views.TableOfMotorsView"
             icon="icons/big_cog_16.png"
-            id="uk.ac.stfc.isis.ibex.ui.motor.views.AllMotorsView"
-            name="All motors"
+            id="uk.ac.stfc.isis.ibex.ui.motor.views.MainMotorsView"
+            name="Main Motors (Controllers 1 - 8)"
+            restorable="true">
+      </view>
+      <view
+            class="uk.ac.stfc.isis.ibex.ui.motor.views.TableOfMotorsView"
+            icon="icons/big_cog_16.png"
+            id="uk.ac.stfc.isis.ibex.ui.motor.views.AdditionalMotorsView"
+            name="Additional Motors (Controllers 9 - 16)"
+            restorable="true">
+      </view>
+      <view
+            class="uk.ac.stfc.isis.ibex.ui.motor.views.TableOfMotorsView"
+            icon="icons/big_cog_16.png"
+            id="uk.ac.stfc.isis.ibex.ui.motor.views.AdditionalMotorsView2"
+            name="Additional Motors (Controllers 17 - 24)"
             restorable="true">
       </view>
    </extension>
@@ -23,7 +37,15 @@
       <perspective
             class="uk.ac.stfc.isis.ibex.ui.motor.Perspective"
             id="uk.ac.stfc.isis.ibex.ui.motor.perspective"
-            name="All motors">
+            name="Main motors">
+      </perspective>
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectives">
+      <perspective
+            class="uk.ac.stfc.isis.ibex.ui.motor.Perspective"
+            id="uk.ac.stfc.isis.ibex.ui.motor.perspective"
+            name="Additional motors">
       </perspective>
    </extension>
    <extension
@@ -38,11 +60,33 @@
             targetID="uk.ac.stfc.isis.ibex.ui.motor.perspective">
          <view
                closeable="false"
-               id="uk.ac.stfc.isis.ibex.ui.motor.views.AllMotorsView"
+               id="uk.ac.stfc.isis.ibex.ui.motor.views.MainMotorsView"
                minimized="false"
                ratio="0.1f"
                relationship="right"
                relative="uk.ac.stfc.isis.ibex.ui.perspectives.PerspectiveSwitcher"
+               showTitle="true"
+               standalone="true"
+               visible="true">
+         </view>
+         <view
+               closeable="false"
+               id="uk.ac.stfc.isis.ibex.ui.motor.views.AdditionalMotorsView"
+               minimized="false"
+               ratio="0.1f"
+               relationship="stack"
+               relative="uk.ac.stfc.isis.ibex.ui.motor.views.MainMotorsView"
+               showTitle="true"
+               standalone="true"
+               visible="true">
+         </view>
+         <view
+               closeable="false"
+               id="uk.ac.stfc.isis.ibex.ui.motor.views.AdditionalMotorsView2"
+               minimized="false"
+               ratio="0.1f"
+               relationship="stack"
+               relative="uk.ac.stfc.isis.ibex.ui.motor.views.AdditionalMotorsView"
                showTitle="true"
                standalone="true"
                visible="true">
@@ -54,7 +98,7 @@
                moveable="false"
                ratio="0.60f"
                relationship="right"
-               relative="uk.ac.stfc.isis.ibex.ui.motor.views.AllMotorsView"
+               relative="uk.ac.stfc.isis.ibex.ui.motor.views.MainMotorsView"
                showTitle="true"
                standalone="true"
                visible="false">

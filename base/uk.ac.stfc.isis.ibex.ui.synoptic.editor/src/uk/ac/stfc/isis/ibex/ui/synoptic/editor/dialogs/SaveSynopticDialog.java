@@ -1,3 +1,22 @@
+
+/*
+* This file is part of the ISIS IBEX application.
+* Copyright (C) 2012-2015 Science & Technology Facilities Council.
+* All rights reserved.
+*
+* This program is distributed in the hope that it will be useful.
+* This program and the accompanying materials are made available under the
+* terms of the Eclipse Public License v1.0 which accompanies this distribution.
+* EXCEPT AS EXPRESSLY SET FORTH IN THE ECLIPSE PUBLIC LICENSE V1.0, THE PROGRAM 
+* AND ACCOMPANYING MATERIALS ARE PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES 
+* OR CONDITIONS OF ANY KIND.  See the Eclipse Public License v1.0 for more details.
+*
+* You should have received a copy of the Eclipse Public License v1.0
+* along with this program; if not, you can obtain a copy from
+* https://www.eclipse.org/org/documents/epl-v10.php or 
+* http://opensource.org/licenses/eclipse-1.0.php
+*/
+
 package uk.ac.stfc.isis.ibex.ui.synoptic.editor.dialogs;
 
 import java.util.ArrayList;
@@ -30,7 +49,6 @@ public class SaveSynopticDialog extends TitleAreaDialog {
 	private Text txtName;
 	
 	private String newName = "";
-	private String currentName = "";
 	private List<String> existingSynoptics;
 	
 	public SaveSynopticDialog(
@@ -40,9 +58,6 @@ public class SaveSynopticDialog extends TitleAreaDialog {
 		super(parent);
 		setShellStyle(SWT.DIALOG_TRIM | SWT.APPLICATION_MODAL);
 		this.existingSynoptics = new ArrayList<>(existingSynoptics);
-		if (currentName != null) {
-			this.currentName = currentName;
-		}
 	}
 	
 	public String getNewName() {
@@ -105,6 +120,7 @@ public class SaveSynopticDialog extends TitleAreaDialog {
 	protected void createButtonsForButtonBar(Composite parent) {
 		Button button = createButton(parent, IDialogConstants.OK_ID, 
 				IDialogConstants.OK_LABEL, true);
+		button.setEnabled(false);
 		button.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -118,13 +134,11 @@ public class SaveSynopticDialog extends TitleAreaDialog {
 	  protected void okPressed() {
 		if (validate(name())) {
 			newName = name();
-			if (compareIgnoringCase(newName, currentName)) {
-				//Warn about overwriting if already exists
-				if (isDuplicate(newName)) {
-					boolean userCancelled = askUserWhetherToOverwrite();
-					if (userCancelled) {
-						return;
-					}
+			//Warn about overwriting if already exists
+			if (isDuplicate(newName)) {
+				boolean userCancelled = askUserWhetherToOverwrite(newName);
+				if (userCancelled) {
+					return;
 				}
 			}
 			
@@ -134,9 +148,9 @@ public class SaveSynopticDialog extends TitleAreaDialog {
 		// else ignore the click
 	}
 
-	private boolean askUserWhetherToOverwrite() {
-		MessageBox box = new MessageBox(getShell(), SWT.YES | SWT.NO);
-		box.setMessage("The specified synoptic name already exists - do you want to replace it?");
+	private boolean askUserWhetherToOverwrite(String newName) {
+		MessageBox box = new MessageBox(getShell(), SWT.ICON_WARNING | SWT.YES | SWT.NO);
+		box.setMessage("The synoptic \"" + newName + "\" already exists. \n Do you want to replace it?");
 		
 		//Message boxes return the ID of the button to close, so need to check that value..
 		return box.open() != SWT.YES;
@@ -198,7 +212,7 @@ public class SaveSynopticDialog extends TitleAreaDialog {
 			return "Name cannot be blank";
 		}
 		
-		if (!validate(name)){
+		if (!validate(name)) {
 			return "Name contains invalid characters";
 		}
 		

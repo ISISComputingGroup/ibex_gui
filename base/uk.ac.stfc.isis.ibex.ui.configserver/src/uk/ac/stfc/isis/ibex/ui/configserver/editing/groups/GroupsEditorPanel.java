@@ -1,3 +1,22 @@
+
+/*
+* This file is part of the ISIS IBEX application.
+* Copyright (C) 2012-2015 Science & Technology Facilities Council.
+* All rights reserved.
+*
+* This program is distributed in the hope that it will be useful.
+* This program and the accompanying materials are made available under the
+* terms of the Eclipse Public License v1.0 which accompanies this distribution.
+* EXCEPT AS EXPRESSLY SET FORTH IN THE ECLIPSE PUBLIC LICENSE V1.0, THE PROGRAM 
+* AND ACCOMPANYING MATERIALS ARE PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES 
+* OR CONDITIONS OF ANY KIND.  See the Eclipse Public License v1.0 for more details.
+*
+* You should have received a copy of the Eclipse Public License v1.0
+* along with this program; if not, you can obtain a copy from
+* https://www.eclipse.org/org/documents/epl-v10.php or 
+* http://opensource.org/licenses/eclipse-1.0.php
+*/
+
 package uk.ac.stfc.isis.ibex.ui.configserver.editing.groups;
 
 import org.eclipse.core.databinding.DataBindingContext;
@@ -123,7 +142,7 @@ public class GroupsEditorPanel extends Composite {
 		grpBlocks.setLayout(new GridLayout(1, false));
 		grpBlocks.setText("Blocks");
 		
-		blocksEditor = new DoubleListEditor(grpBlocks, SWT.NONE, "name");
+		blocksEditor = new DoubleListEditor(grpBlocks, SWT.NONE, "name", true);
 		GridData gd_blocksEditor = new GridData(SWT.LEFT, SWT.FILL, true, true, 1, 1);
 		gd_blocksEditor.heightHint = 300;
 		gd_blocksEditor.widthHint = 300;
@@ -134,7 +153,7 @@ public class GroupsEditorPanel extends Composite {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				EditableGroup group = getSelectedGroup();
-				if (group != null){
+				if (group != null) {
 			        group.toggleSelection(blocksEditor.unselectedItems());
 				}
 			}
@@ -145,8 +164,32 @@ public class GroupsEditorPanel extends Composite {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				EditableGroup group = getSelectedGroup();
-				if (group != null){
+				if (group != null) {
 			        group.toggleSelection(blocksEditor.selectedItems());
+				}
+			}
+		});
+		
+		blocksEditor.addSelectionListenerForMovingUp(new SelectionAdapter() {
+			@SuppressWarnings("unchecked")
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				EditableGroup group = getSelectedGroup();
+				if (group != null) {
+					group.moveBlockUp(blocksEditor.selectedItem());
+					blocksEditor.refreshViewer();
+				}
+			}
+		});
+		
+		blocksEditor.addSelectionListenerForMovingDown(new SelectionAdapter() {
+			@SuppressWarnings("unchecked")
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				EditableGroup group = getSelectedGroup();
+				if (group != null) {
+					group.moveBlockDown(blocksEditor.selectedItem());
+					blocksEditor.refreshViewer();
 				}
 			}
 		});
@@ -155,7 +198,7 @@ public class GroupsEditorPanel extends Composite {
 			@Override
 			public void selectionChanged(SelectionChangedEvent arg0) {
 				EditableGroup group = getSelectedGroup();
-				if (group != null){
+				if (group != null) {
 			        boolean groupIsSelected = group != null;
 					boolean canEdit = groupIsSelected && group.isEditable();
 					
@@ -223,17 +266,17 @@ public class GroupsEditorPanel extends Composite {
 		btnDown.setLayoutData(gd_btnDown);
 		btnDown.setText("Down");
 		
-		btnDown.addSelectionListener(new SelectionAdapter(){
+		btnDown.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				if (config != null) {
 					
-					if (groupList.getSelectionIndex() < groupList.getItemCount() - 1){
+					if (groupList.getSelectionIndex() < groupList.getItemCount() - 1) {
 						//Move down
 						EditableGroup group1 = getSelectedGroup();
 						EditableGroup group2 = (EditableGroup) groupsViewer.getElementAt(groupList.getSelectionIndex() + 1);
 						
-						if (group1 != null && group2 != null){
+						if (group1 != null && group2 != null) {
 							config.swapGroups(group1, group2);
 						}
 					}
@@ -245,11 +288,11 @@ public class GroupsEditorPanel extends Composite {
 		blocksEditor.bind(unselectedBlocks, selectedBlocks);
 	}
 	
-	private EditableGroup getSelectedGroup()	{
+	private EditableGroup getSelectedGroup() {
 		ISelection selection = groupsViewer.getSelection();
 		if (selection != null && (selection instanceof IStructuredSelection)) {
-			IStructuredSelection ss = (IStructuredSelection)groupsViewer.getSelection();
-	        EditableGroup group = (EditableGroup)ss.getFirstElement();
+			IStructuredSelection ss = (IStructuredSelection) groupsViewer.getSelection();
+	        EditableGroup group = (EditableGroup) ss.getFirstElement();
 	        return group;
 		}
 		
