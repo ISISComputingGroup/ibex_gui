@@ -1,3 +1,22 @@
+
+/*
+* This file is part of the ISIS IBEX application.
+* Copyright (C) 2012-2015 Science & Technology Facilities Council.
+* All rights reserved.
+*
+* This program is distributed in the hope that it will be useful.
+* This program and the accompanying materials are made available under the
+* terms of the Eclipse Public License v1.0 which accompanies this distribution.
+* EXCEPT AS EXPRESSLY SET FORTH IN THE ECLIPSE PUBLIC LICENSE V1.0, THE PROGRAM 
+* AND ACCOMPANYING MATERIALS ARE PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES 
+* OR CONDITIONS OF ANY KIND.  See the Eclipse Public License v1.0 for more details.
+*
+* You should have received a copy of the Eclipse Public License v1.0
+* along with this program; if not, you can obtain a copy from
+* https://www.eclipse.org/org/documents/epl-v10.php or 
+* http://opensource.org/licenses/eclipse-1.0.php
+*/
+
 package uk.ac.stfc.isis.ibex.ui.synoptic.widgets;
 
 import java.beans.PropertyChangeEvent;
@@ -13,7 +32,6 @@ import org.mihalis.opal.breadcrumb.BreadcrumbItem;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
-import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.graphics.Color;
@@ -31,7 +49,6 @@ public class InstrumentBreadCrumb extends Composite {
 	private final List<BreadcrumbItem> crumbs = new ArrayList<>(); 
 	
 	private final SynopticPresenter presenter;
-	private final Label locationLabel;
 	
 	public InstrumentBreadCrumb(Composite parent, int style) {
 		super(parent, style);
@@ -41,11 +58,6 @@ public class InstrumentBreadCrumb extends Composite {
 		gridLayout.marginHeight = 0;
 		setLayout(gridLayout);
 
-		locationLabel = new Label(this, SWT.NONE);
-		locationLabel.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-		locationLabel.setAlignment(SWT.RIGHT);
-		locationLabel.setText("Current Synoptic:");
-		
 		trail = new Breadcrumb(this, SWT.BORDER);
 		trail.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 
@@ -63,7 +75,6 @@ public class InstrumentBreadCrumb extends Composite {
 	@Override
 	public void setBackground(Color colour) {
 		super.setBackground(colour);
-		locationLabel.setBackground(colour);
 	}
 
 	private void updateTrail(final List<String> items) {
