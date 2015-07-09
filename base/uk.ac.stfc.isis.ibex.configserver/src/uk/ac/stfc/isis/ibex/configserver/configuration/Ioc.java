@@ -118,6 +118,10 @@ public class Ioc extends ModelObject implements Comparable<Ioc> {
 		return pvs;
 	}
 
+	public void setMacros(Collection<Macro> macros) {
+		firePropertyChange("macros", this.macros, this.macros = macros);
+	}
+	
 	public void setPvs(Collection<PVDefaultValue> pvs) {
 		firePropertyChange("pvs", this.pvs, this.pvs = pvs);
 	}

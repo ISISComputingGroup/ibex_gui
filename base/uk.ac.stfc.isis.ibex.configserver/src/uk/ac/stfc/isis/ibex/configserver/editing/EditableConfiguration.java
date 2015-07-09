@@ -35,7 +35,6 @@ import uk.ac.stfc.isis.ibex.configserver.configuration.Group;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Ioc;
 import uk.ac.stfc.isis.ibex.configserver.configuration.PV;
 import uk.ac.stfc.isis.ibex.configserver.internal.ComponentFilteredConfiguration;
-import uk.ac.stfc.isis.ibex.configserver.internal.DescribedIoc;
 import uk.ac.stfc.isis.ibex.configserver.internal.DisplayUtils;
 import uk.ac.stfc.isis.ibex.configserver.internal.IocDescriber;
 import uk.ac.stfc.isis.ibex.configserver.internal.IocFilteredConfiguration;
@@ -329,10 +328,12 @@ public class EditableConfiguration extends ModelObject {
 			addIoc(iocs, ioc);
 		}
 		
-		// IOCs from the actual config should
-		// replace the generic list of all IOCs.
+		// IOCs from the actual configuration contain the active macros and description
 		for (Ioc ioc : selected) {
-			addIoc(iocs, new EditableIoc(ioc));
+			String selectedIocName = ioc.getName();
+			EditableIoc iocToUpdate = iocs.get(selectedIocName);
+			iocToUpdate.setIocDescriber(descriptions.getDescription(selectedIocName));
+			iocToUpdate.setMacros(ioc.getMacros());
 		}
 		
 		editableIocs.addAll(iocs.values());
@@ -341,7 +342,7 @@ public class EditableConfiguration extends ModelObject {
 
 	private void addIoc(Map<String, EditableIoc> iocMap, EditableIoc ioc) {
 		String name = ioc.getName();
-		iocMap.put(name, new DescribedIoc(ioc, descriptions.getDescription(name)));
+		iocMap.put(name, ioc);
 	}
 	
 	private Collection<String> blockNames() {

@@ -19,20 +19,28 @@
 
 package uk.ac.stfc.isis.ibex.configserver.editing;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.Collection;
+
+import com.google.common.base.Strings;
 
 import uk.ac.stfc.isis.ibex.configserver.configuration.AvailablePV;
 import uk.ac.stfc.isis.ibex.configserver.configuration.AvailablePVSet;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Ioc;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Macro;
 import uk.ac.stfc.isis.ibex.configserver.configuration.PVSet;
+import uk.ac.stfc.isis.ibex.model.UpdatedValue;
 
 public class EditableIoc extends Ioc {
 
 	private Collection<Macro> availableMacros = new ArrayList<Macro>();
 	private Collection<AvailablePVSet> availablePVSets = new ArrayList<AvailablePVSet>();
 	private Collection<AvailablePV> availablePVs = new ArrayList<AvailablePV>();
+	
+	private UpdatedValue<String> description;
+	private String descriptionText = "";
 
 	public EditableIoc(String name) {
 		super(name);
@@ -83,7 +91,7 @@ public class EditableIoc extends Ioc {
 	}
 	
 	public String getDescription() {
-		return "";
+		return this.descriptionText;
 	}
 	
 	public boolean isEditable() {
@@ -109,5 +117,21 @@ public class EditableIoc extends Ioc {
 	}
 	public void setAvailablePVs(Collection<AvailablePV> pvs) {
 		firePropertyChange("availablePVs", this.availablePVs, this.availablePVs = pvs);
+	}
+	
+	public void setIocDescriber(UpdatedValue<String> description) {
+		this.description = description;
+		description.addPropertyChangeListener(updatedDesc, true);
+	}
+
+	private final PropertyChangeListener updatedDesc = new PropertyChangeListener() {	
+		@Override
+		public void propertyChange(PropertyChangeEvent evt) {
+			setDescription(Strings.nullToEmpty(description.getValue()));
+		}
+	};
+	
+	public void setDescription(String text) {
+		firePropertyChange("description", this.descriptionText, this.descriptionText = text);
 	}
 }
