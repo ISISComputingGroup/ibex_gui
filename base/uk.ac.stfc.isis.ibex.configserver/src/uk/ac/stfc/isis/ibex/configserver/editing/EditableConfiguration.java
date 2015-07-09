@@ -325,7 +325,7 @@ public class EditableConfiguration extends ModelObject {
 	private void mergeSelectedAndAvailableIocs(Collection<Ioc> selected, Collection<EditableIoc> available) {
 		Map<String, EditableIoc> iocs = new HashMap<>();
 		for (EditableIoc ioc : available) {
-			addIoc(iocs, ioc);
+			iocs.put(ioc.getName(), ioc);
 		}
 		
 		// IOCs from the actual configuration contain the active macros and description
@@ -338,11 +338,6 @@ public class EditableConfiguration extends ModelObject {
 		
 		editableIocs.addAll(iocs.values());
 		Collections.sort(editableIocs);
-	}
-
-	private void addIoc(Map<String, EditableIoc> iocMap, EditableIoc ioc) {
-		String name = ioc.getName();
-		iocMap.put(name, ioc);
 	}
 	
 	private Collection<String> blockNames() {
