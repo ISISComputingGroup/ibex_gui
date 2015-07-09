@@ -19,6 +19,8 @@
 
 package uk.ac.stfc.isis.ibex.ui.synoptic.editor.dialogs;
 
+import javax.xml.bind.JAXBException;
+
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.window.Window;
@@ -30,11 +32,14 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
+import org.xml.sax.SAXException;
 
 import uk.ac.stfc.isis.ibex.synoptic.Synoptic;
 import uk.ac.stfc.isis.ibex.synoptic.SynopticInfo;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.InstrumentDescription;
+import uk.ac.stfc.isis.ibex.synoptic.xml.XMLUtil;
 
 public class EditSynopticDialog extends Dialog {
 	
@@ -46,6 +51,7 @@ public class EditSynopticDialog extends Dialog {
 	private EditorPanel editor;
 	private boolean isBlank;
 	private Button saveAsBtn;
+	private Button saveBtn;
 	
 	public EditSynopticDialog(
 			Shell parentShell, 
@@ -70,8 +76,26 @@ public class EditSynopticDialog extends Dialog {
 	
 	@Override
 	protected void createButtonsForButtonBar(Composite parent) {
-		if (isBlank == false) { 
-			createButton(parent, IDialogConstants.OK_ID, "Save", true);
+		if (!isBlank) { 
+			// createButton(parent, IDialogConstants.OK_ID, "Save", true);
+			saveBtn = createButton(parent, IDialogConstants.CLIENT_ID + 2, "Save", false);
+
+			saveBtn.addSelectionListener(new SelectionAdapter() {
+				@Override
+				public void widgetSelected(SelectionEvent e) {
+					// Check synoptic is valid
+					try {
+						XMLUtil.toXml(synoptic);
+						okPressed();
+					} catch (JAXBException | SAXException e1) {
+						MessageBox dialog = new MessageBox(getShell(), SWT.ERROR | SWT.OK);
+						dialog.setText("Error saving synoptic");
+						dialog.setMessage("There was a problem saving the synoptic - is it is likely that there is an invalid component");
+						dialog.open();
+					}
+				}
+
+			});
 		}
 		saveAsBtn = createButton(parent, IDialogConstants.CLIENT_ID + 1, "Save as ...", false);
 		
@@ -82,7 +106,16 @@ public class EditSynopticDialog extends Dialog {
 				if (dlg.open() == Window.OK) {
 					synoptic.setName(dlg.getNewName());
 					
-					okPressed();
+					// Check synoptic is valid
+					try {
+						XMLUtil.toXml(synoptic);
+						okPressed();
+					} catch (JAXBException | SAXException e1) {
+						MessageBox dialog = new MessageBox(getShell(), SWT.ERROR | SWT.OK);
+						dialog.setText("Error saving synoptic");
+						dialog.setMessage("There was a problem saving the synoptic - is it is likely that there is an invalid component");
+						dialog.open();
+					}
 				}
 			}
 		});
