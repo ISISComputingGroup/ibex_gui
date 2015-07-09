@@ -22,8 +22,12 @@ package uk.ac.stfc.isis.ibex.ui.configserver.editing.macros;
 import java.awt.CompositeContext;
 import java.awt.RenderingHints;
 import java.awt.image.ColorModel;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashSet;
+import java.util.List;
 
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -151,13 +155,7 @@ public class MacroPanel extends Composite implements IIocDependentPanel {
 	
 	// Set the macro to be edited
 	private void setMacro(Macro macro) {
-		//if (macro == null) {
-		//	enableMacroEditing(false);
-		//	return;
-		//}
-		//
-		//enableMacroEditing(true);
-
+		availableMacros = sortMacroCollectionByName(availableMacros);
 		details.setMacro(macro, macros, availableMacros, canEditMacros);
 	}
 
@@ -171,5 +169,18 @@ public class MacroPanel extends Composite implements IIocDependentPanel {
 	@Override
 	public void setIoc(EditableIoc ioc) {
 		setMacros(ioc.getMacros(), ioc.getAvailableMacros(), ioc.isEditable());
+	}
+	
+	public static List<Macro> sortMacroCollectionByName(Collection<Macro> collection) {
+		Comparator<Macro> comparator = new Comparator<Macro>(){
+			public int compare(Macro macro1, Macro macro2) {
+				return macro1.getName().compareTo(macro2.getName());
+			}
+		};
+		
+		List<Macro> sortedList = new ArrayList<Macro>(collection);
+		Collections.sort(sortedList, comparator);
+				
+		return sortedList;
 	}
 }

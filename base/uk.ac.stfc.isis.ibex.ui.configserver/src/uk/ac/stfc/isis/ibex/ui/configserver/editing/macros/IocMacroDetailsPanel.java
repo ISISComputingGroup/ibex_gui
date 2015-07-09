@@ -93,7 +93,7 @@ public class IocMacroDetailsPanel extends Composite {
 		});
 	}
 	
-	public void setMacro(Macro macro, Collection<Macro> macros, Collection<Macro> availabeMacros, boolean canEdit) {
+	public void setMacro(Macro macro, Collection<Macro> macros, Collection<Macro> availableMacros, boolean canEdit) {
 		if (bindingContext != null) {
 			bindingContext.dispose();
 		}
@@ -108,7 +108,7 @@ public class IocMacroDetailsPanel extends Composite {
 		setEnabled(canEdit);
 		setTextEnabled(canEdit);
 		
-		macroSearcher = new AvailableMacroSearcher(availabeMacros);
+		macroSearcher = new AvailableMacroSearcher(availableMacros);
 		
 		bindingContext = new DataBindingContext();
 		nameStrategy.setBeforeSetValidator(new MacroNameValidator(macros, macro, messageDisplayer));
@@ -131,7 +131,7 @@ public class IocMacroDetailsPanel extends Composite {
 			}
 		});
 		
-		availableMacrosTable.setRows(availabeMacros);
+		availableMacrosTable.setRows(availableMacros);
 	}
 	
 	@Override
