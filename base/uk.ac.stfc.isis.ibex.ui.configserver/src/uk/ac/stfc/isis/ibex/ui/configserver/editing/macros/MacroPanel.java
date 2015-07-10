@@ -47,6 +47,11 @@ import uk.ac.stfc.isis.ibex.configserver.editing.EditableIoc;
 import uk.ac.stfc.isis.ibex.ui.configserver.dialogs.MessageDisplayer;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.iocs.IIocDependentPanel;
 
+/**
+ * This panel shows the macros that have been set for a given IOC, and allows macros to be added
+ * and removed.
+ *
+ */
 public class MacroPanel extends Composite implements IIocDependentPanel {
 	private MacroTable macroTable;
 	private Collection<Macro> macros;

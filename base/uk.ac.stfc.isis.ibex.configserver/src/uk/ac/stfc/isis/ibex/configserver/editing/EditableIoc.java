@@ -33,6 +33,12 @@ import uk.ac.stfc.isis.ibex.configserver.configuration.Macro;
 import uk.ac.stfc.isis.ibex.configserver.configuration.PVSet;
 import uk.ac.stfc.isis.ibex.model.UpdatedValue;
 
+/**
+ * Holds an Editable IOC, which is used by the configuration editor.
+ * 
+ * Also holds the descriptor for the IOC, describing what the IOC is physically used for.
+ *
+ */
 public class EditableIoc extends Ioc {
 
 	private Collection<Macro> availableMacros = new ArrayList<Macro>();
@@ -122,6 +128,7 @@ public class EditableIoc extends Ioc {
 		
 		return availablePVs;
 	}
+	
 	public void setAvailablePVs(Collection<AvailablePV> pvs) {
 		firePropertyChange("availablePVs", this.availablePVs, this.availablePVs = pvs);
 	}

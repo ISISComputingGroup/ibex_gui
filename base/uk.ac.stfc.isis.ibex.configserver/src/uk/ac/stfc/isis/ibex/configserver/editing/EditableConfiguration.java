@@ -47,6 +47,14 @@ import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 
+/**
+ * Holds an editable configuration, and notifies any listeners set to changes to this class.
+ * 
+ *  Configuration includes name, description, a default synoptic, date created, date modified
+ *  and lists of editable IOCs, groups, blocks and components and available blocks (blocks not
+ *  from the current instrument).
+ * 
+ */
 public class EditableConfiguration extends ModelObject {
 
 	private static final String DEFAULT_BLOCK_NAME = "NEW_BLOCK";
