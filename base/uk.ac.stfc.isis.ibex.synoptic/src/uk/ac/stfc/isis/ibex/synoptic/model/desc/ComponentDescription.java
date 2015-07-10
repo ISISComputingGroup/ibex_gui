@@ -31,6 +31,9 @@ import javax.xml.bind.annotation.XmlTransient;
 
 import uk.ac.stfc.isis.ibex.synoptic.model.ComponentType;
 
+/*
+ * Describes a component of the synoptic.
+ */
 @XmlRootElement(name = "component")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class ComponentDescription {
@@ -62,6 +65,12 @@ public class ComponentDescription {
 	}
 
 	public ComponentType type() {
+		if (type == null) {
+			// This means the synoptic contains a component type that the GUI 
+			// does not recognise perhaps because it is out of date
+			// In which case set to unknown
+			type = ComponentType.UNKNOWN;
+		}
 		return type;
 	}
 	

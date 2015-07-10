@@ -30,7 +30,7 @@ import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /*
- * Describes the target for navigation around the synoptic
+ * Describes the target for navigation around the synoptic.
  */
 @XmlRootElement(name = "pv")
 @XmlAccessorType(XmlAccessType.FIELD)
