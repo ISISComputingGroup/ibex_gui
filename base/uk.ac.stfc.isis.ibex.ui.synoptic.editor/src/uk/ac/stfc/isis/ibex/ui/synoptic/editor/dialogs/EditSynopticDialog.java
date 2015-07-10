@@ -90,7 +90,7 @@ public class EditSynopticDialog extends Dialog {
 					} catch (JAXBException | SAXException e1) {
 						MessageBox dialog = new MessageBox(getShell(), SWT.ERROR | SWT.OK);
 						dialog.setText("Error saving synoptic");
-						dialog.setMessage("There was a problem saving the synoptic - is it is likely that there is an invalid component");
+						dialog.setMessage("There was a problem saving the synoptic");
 						dialog.open();
 					}
 				}
@@ -113,7 +113,7 @@ public class EditSynopticDialog extends Dialog {
 					} catch (JAXBException | SAXException e1) {
 						MessageBox dialog = new MessageBox(getShell(), SWT.ERROR | SWT.OK);
 						dialog.setText("Error saving synoptic");
-						dialog.setMessage("There was a problem saving the synoptic - is it is likely that there is an invalid component");
+						dialog.setMessage("There was a problem saving the synoptic");
 						dialog.open();
 					}
 				}
