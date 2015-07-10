@@ -356,7 +356,7 @@ public class EditableConfiguration extends ModelObject {
 		Iterator<Entry<String, EditableIoc>> it = iocs.entrySet().iterator();
 		while (it.hasNext()) {
 			Map.Entry<String, EditableIoc> ioc = it.next();
-			ioc.getValue().setIocDescriber(descriptions.getDescription(ioc.getValue().getName()));
+			ioc.getValue().setIocDescriber(descriptions.getDescription(ioc.getKey()));
 		}
 	}
 	
