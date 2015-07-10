@@ -25,8 +25,10 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import uk.ac.stfc.isis.ibex.configserver.configuration.Block;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Component;
@@ -330,15 +332,32 @@ public class EditableConfiguration extends ModelObject {
 		
 		// IOCs from the actual configuration contain the active macros and description
 		for (Ioc ioc : selected) {
-			String selectedIocName = ioc.getName();
-			EditableIoc iocToUpdate = iocs.get(selectedIocName);
-			iocToUpdate.setIocDescriber(descriptions.getDescription(selectedIocName));
-			iocToUpdate.setMacros(ioc.getMacros());
-			iocToUpdate.setAutostart(ioc.getAutostart());
+			String name = ioc.getName();
+			EditableIoc replacementIoc = new EditableIoc(ioc);
+			EditableIoc iocToReplace = iocs.get(name);
+			
+			replacementIoc.setAvailableMacros(iocToReplace.getAvailableMacros());
+			// Put will replace existing entries
+			iocs.put(name, replacementIoc);
 		}
+		
+		setIocDescriptions(iocs);
 		
 		editableIocs.addAll(iocs.values());
 		Collections.sort(editableIocs);
+	}
+	
+	/**
+	 * Iterate over the IOCs in the map, and add the description.
+	 * 
+	 * @param iocs A map of the iocs
+	 */
+	private void setIocDescriptions(Map<String, EditableIoc> iocs) {
+		Iterator<Entry<String, EditableIoc>> it = iocs.entrySet().iterator();
+		while (it.hasNext()) {
+			Map.Entry<String, EditableIoc> ioc = it.next();
+			ioc.getValue().setIocDescriber(descriptions.getDescription(ioc.getValue().getName()));
+		}
 	}
 	
 	private Collection<String> blockNames() {

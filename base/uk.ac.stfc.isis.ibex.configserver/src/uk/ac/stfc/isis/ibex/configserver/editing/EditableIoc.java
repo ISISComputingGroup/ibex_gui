@@ -39,7 +39,7 @@ public class EditableIoc extends Ioc {
 	private Collection<AvailablePVSet> availablePVSets = new ArrayList<AvailablePVSet>();
 	private Collection<AvailablePV> availablePVs = new ArrayList<AvailablePV>();
 	
-	private UpdatedValue<String> description;
+	private UpdatedValue<String> describer;
 	private String descriptionText = "";
 
 	public EditableIoc(String name) {
@@ -64,6 +64,9 @@ public class EditableIoc extends Ioc {
 		for (AvailablePV pv : other.getAvailablePVs()) {
 			availablePVs.add(pv);
 		}
+		
+		this.describer = other.getDescriber();
+		this.descriptionText = other.getDescription();
 	}
 
 	public Collection<Macro> getAvailableMacros() {
@@ -88,6 +91,10 @@ public class EditableIoc extends Ioc {
 	
 	public void setAvailablePVSets(Collection<AvailablePVSet> availablePVSets) {
 		firePropertyChange("availablePVSets", this.availablePVSets, this.availablePVSets = availablePVSets);
+	}
+	
+	public UpdatedValue<String> getDescriber() {
+		return this.describer;
 	}
 	
 	public String getDescription() {
@@ -120,14 +127,14 @@ public class EditableIoc extends Ioc {
 	}
 	
 	public void setIocDescriber(UpdatedValue<String> description) {
-		this.description = description;
+		this.describer = description;
 		description.addPropertyChangeListener(updatedDesc, true);
 	}
 
 	private final PropertyChangeListener updatedDesc = new PropertyChangeListener() {	
 		@Override
 		public void propertyChange(PropertyChangeEvent evt) {
-			setDescription(Strings.nullToEmpty(description.getValue()));
+			setDescription(Strings.nullToEmpty(describer.getValue()));
 		}
 	};
 	
