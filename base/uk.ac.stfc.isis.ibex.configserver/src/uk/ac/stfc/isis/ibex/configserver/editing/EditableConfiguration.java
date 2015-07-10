@@ -334,6 +334,7 @@ public class EditableConfiguration extends ModelObject {
 			EditableIoc iocToUpdate = iocs.get(selectedIocName);
 			iocToUpdate.setIocDescriber(descriptions.getDescription(selectedIocName));
 			iocToUpdate.setMacros(ioc.getMacros());
+			iocToUpdate.setAutostart(ioc.getAutostart());
 		}
 		
 		editableIocs.addAll(iocs.values());
