@@ -27,40 +27,42 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
+import org.osgi.framework.FrameworkUtil;
 
 import uk.ac.stfc.isis.ibex.help.Help;
 
 public class VersionPanel extends Composite {
 
-	private Label date;
-	private Label version;
+	private Label clientVersion;
+	private Label serverVersion;
 
 	public VersionPanel(Composite parent, int style) {
 		super(parent, style);
 		setLayout(new GridLayout(2, false));
 		
-		Label lblVersion = new Label(this, SWT.NONE);
-		lblVersion.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-		lblVersion.setText("Version:");
+		Label lblClientVersion = new Label(this, SWT.NONE);
+		lblClientVersion.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
+		lblClientVersion.setText("Client Version:");
 		
-		version = new Label(this, SWT.NONE);
-		version.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		clientVersion = new Label(this, SWT.NONE);
+		clientVersion.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		clientVersion.setText(FrameworkUtil.getBundle(getClass()).getVersion().toString());
 		
-		Label lblDate = new Label(this, SWT.NONE);
-		lblDate.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-		lblDate.setText("Date:");
+		Label lblServerVersion = new Label(this, SWT.NONE);
+		lblServerVersion.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
+		lblServerVersion.setText("Version of code on Server:");
 		
-		date = new Label(this, SWT.NONE);
-		date.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		serverVersion = new Label(this, SWT.NONE);
+		serverVersion.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
 		if (Help.getInstance() != null) {
 			bind(Help.getInstance());
 		}
+		
 	}
 
 	private void bind(Help help) {
 		DataBindingContext bindingContext = new DataBindingContext();
-		bindingContext.bindValue(WidgetProperties.text().observe(version), BeanProperties.value("value").observe(help.revision()));
-		bindingContext.bindValue(WidgetProperties.text().observe(date), BeanProperties.value("value").observe(help.date()));		
+		bindingContext.bindValue(WidgetProperties.text().observe(serverVersion), BeanProperties.value("value").observe(help.revision()));	
 	}
 }
