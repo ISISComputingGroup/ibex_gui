@@ -26,6 +26,13 @@ import uk.ac.stfc.isis.ibex.model.ModelObject;
 
 import com.google.common.base.Strings;
 
+/**
+ * Holds an IOC, and notifies any listeners set to changes to this class.
+ * 
+ * Contains the IOC name, if it autostarts, auto-restarts and the simulation level. Contains lists
+ * of PVsets, PVDefaultValues and set Macros.
+ * 
+ */
 public class Ioc extends ModelObject implements Comparable<Ioc> {
 
 	private final String name;	
@@ -118,6 +125,10 @@ public class Ioc extends ModelObject implements Comparable<Ioc> {
 		return pvs;
 	}
 
+	public void setMacros(Collection<Macro> macros) {
+		firePropertyChange("macros", this.macros, this.macros = macros);
+	}
+	
 	public void setPvs(Collection<PVDefaultValue> pvs) {
 		firePropertyChange("pvs", this.pvs, this.pvs = pvs);
 	}

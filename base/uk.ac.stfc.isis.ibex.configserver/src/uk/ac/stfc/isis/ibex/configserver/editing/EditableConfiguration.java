@@ -25,8 +25,10 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import uk.ac.stfc.isis.ibex.configserver.configuration.Block;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Component;
@@ -35,7 +37,6 @@ import uk.ac.stfc.isis.ibex.configserver.configuration.Group;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Ioc;
 import uk.ac.stfc.isis.ibex.configserver.configuration.PV;
 import uk.ac.stfc.isis.ibex.configserver.internal.ComponentFilteredConfiguration;
-import uk.ac.stfc.isis.ibex.configserver.internal.DescribedIoc;
 import uk.ac.stfc.isis.ibex.configserver.internal.DisplayUtils;
 import uk.ac.stfc.isis.ibex.configserver.internal.IocDescriber;
 import uk.ac.stfc.isis.ibex.configserver.internal.IocFilteredConfiguration;
@@ -46,6 +47,14 @@ import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 
+/**
+ * Holds an editable configuration, and notifies any listeners set to changes to this class.
+ * 
+ *  Configuration includes name, description, a default synoptic, date created, date modified
+ *  and lists of editable IOCs, groups, blocks and components and available blocks (blocks not
+ *  from the current instrument).
+ * 
+ */
 public class EditableConfiguration extends ModelObject {
 
 	private static final String DEFAULT_BLOCK_NAME = "NEW_BLOCK";
@@ -326,22 +335,37 @@ public class EditableConfiguration extends ModelObject {
 	private void mergeSelectedAndAvailableIocs(Collection<Ioc> selected, Collection<EditableIoc> available) {
 		Map<String, EditableIoc> iocs = new HashMap<>();
 		for (EditableIoc ioc : available) {
-			addIoc(iocs, ioc);
+			iocs.put(ioc.getName(), ioc);
 		}
 		
-		// IOCs from the actual config should
-		// replace the generic list of all IOCs.
+		// IOCs from the actual configuration contain the active macros and description
 		for (Ioc ioc : selected) {
-			addIoc(iocs, new EditableIoc(ioc));
+			String name = ioc.getName();
+			EditableIoc replacementIoc = new EditableIoc(ioc);
+			EditableIoc iocToReplace = iocs.get(name);
+			
+			replacementIoc.setAvailableMacros(iocToReplace.getAvailableMacros());
+			// Put will replace existing entries
+			iocs.put(name, replacementIoc);
 		}
+		
+		setIocDescriptions(iocs);
 		
 		editableIocs.addAll(iocs.values());
 		Collections.sort(editableIocs);
 	}
-
-	private void addIoc(Map<String, EditableIoc> iocMap, EditableIoc ioc) {
-		String name = ioc.getName();
-		iocMap.put(name, new DescribedIoc(ioc, descriptions.getDescription(name)));
+	
+	/**
+	 * Iterate over the IOCs in the map, and add the description.
+	 * 
+	 * @param iocs A map of the iocs
+	 */
+	private void setIocDescriptions(Map<String, EditableIoc> iocs) {
+		Iterator<Entry<String, EditableIoc>> it = iocs.entrySet().iterator();
+		while (it.hasNext()) {
+			Map.Entry<String, EditableIoc> ioc = it.next();
+			ioc.getValue().setIocDescriber(descriptions.getDescription(ioc.getKey()));
+		}
 	}
 	
 	private Collection<String> blockNames() {

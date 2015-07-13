@@ -42,6 +42,14 @@ import org.eclipse.swt.widgets.Text;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Macro;
 import uk.ac.stfc.isis.ibex.ui.configserver.dialogs.MessageDisplayer;
 
+/**
+ * This panel allows macro names and values to be set, and shows a list of available macros for an
+ * IOC.
+ * 
+ * In the list of available macros a description and pattern is also shown. If the macro being set
+ * is in this list, the macro value is also checked against the pattern. 
+ * 
+ */
 public class IocMacroDetailsPanel extends Composite {
 	private final MessageDisplayer messageDisplayer;
 	private Text name;
@@ -93,7 +101,7 @@ public class IocMacroDetailsPanel extends Composite {
 		});
 	}
 	
-	public void setMacro(Macro macro, Collection<Macro> macros, Collection<Macro> availabeMacros, boolean canEdit) {
+	public void setMacro(Macro macro, Collection<Macro> macros, Collection<Macro> availableMacros, boolean canEdit) {
 		if (bindingContext != null) {
 			bindingContext.dispose();
 		}
@@ -108,7 +116,7 @@ public class IocMacroDetailsPanel extends Composite {
 		setEnabled(canEdit);
 		setTextEnabled(canEdit);
 		
-		macroSearcher = new AvailableMacroSearcher(availabeMacros);
+		macroSearcher = new AvailableMacroSearcher(availableMacros);
 		
 		bindingContext = new DataBindingContext();
 		nameStrategy.setBeforeSetValidator(new MacroNameValidator(macros, macro, messageDisplayer));
@@ -131,7 +139,7 @@ public class IocMacroDetailsPanel extends Composite {
 			}
 		});
 		
-		availableMacrosTable.setRows(availabeMacros);
+		availableMacrosTable.setRows(availableMacros);
 	}
 	
 	@Override
