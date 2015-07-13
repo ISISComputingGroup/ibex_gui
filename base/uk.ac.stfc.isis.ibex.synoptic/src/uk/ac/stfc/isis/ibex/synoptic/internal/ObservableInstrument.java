@@ -25,15 +25,15 @@ import java.util.List;
 import uk.ac.stfc.isis.ibex.synoptic.model.Component;
 import uk.ac.stfc.isis.ibex.synoptic.model.Instrument;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.ComponentDescription;
-import uk.ac.stfc.isis.ibex.synoptic.model.desc.InstrumentDescription;
+import uk.ac.stfc.isis.ibex.synoptic.model.desc.SynopticDescription;
 
 public class ObservableInstrument implements Instrument {
 	
-	private final InstrumentDescription instrument;
+	private final SynopticDescription instrument;
 
 	private final List<Component> components = new ArrayList<>();
 	
-	public ObservableInstrument(InstrumentDescription instrument, Variables variables) {
+	public ObservableInstrument(SynopticDescription instrument, Variables variables) {
 		this.instrument = instrument;
 		
 		for (ComponentDescription description : instrument.components()) {
@@ -52,7 +52,7 @@ public class ObservableInstrument implements Instrument {
 	}
 
 	@Override
-	public InstrumentDescription getDescription() {
+	public SynopticDescription getDescription() {
 		return instrument;
 	}
 }

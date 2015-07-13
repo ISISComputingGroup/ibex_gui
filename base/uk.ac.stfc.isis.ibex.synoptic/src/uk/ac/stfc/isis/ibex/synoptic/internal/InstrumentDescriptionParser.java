@@ -25,14 +25,14 @@ import org.xml.sax.SAXException;
 
 import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
 import uk.ac.stfc.isis.ibex.epics.conversion.Converter;
-import uk.ac.stfc.isis.ibex.synoptic.model.desc.InstrumentDescription;
+import uk.ac.stfc.isis.ibex.synoptic.model.desc.SynopticDescription;
 import uk.ac.stfc.isis.ibex.synoptic.xml.XMLUtil;
 
 public class InstrumentDescriptionParser extends
-		Converter<String, InstrumentDescription> {
+		Converter<String, SynopticDescription> {
 
 	@Override
-	public InstrumentDescription convert(String value)
+	public SynopticDescription convert(String value)
 			throws ConversionException {
 		try {
 			return XMLUtil.fromXml(value);

@@ -33,7 +33,7 @@ import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.Viewer;
 
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.ComponentDescription;
-import uk.ac.stfc.isis.ibex.synoptic.model.desc.InstrumentDescription;
+import uk.ac.stfc.isis.ibex.synoptic.model.desc.SynopticDescription;
 
 /**
  * Presents the Instrument and its descendant components in a form that can be
@@ -59,8 +59,8 @@ public class ComponentContentProvider implements ITreeContentProvider {
 		if (parentElement instanceof ComponentDescription) {
 			return ((ComponentDescription) parentElement).components()
 					.toArray();
-		} else if (parentElement instanceof InstrumentDescription) {
-			return ((InstrumentDescription) parentElement).components()
+		} else if (parentElement instanceof SynopticDescription) {
+			return ((SynopticDescription) parentElement).components()
 					.toArray();
 		} else {
 			return null;
@@ -82,8 +82,8 @@ public class ComponentContentProvider implements ITreeContentProvider {
 			ComponentDescription container = (ComponentDescription) element;
 			return container.components() != null
 					&& !container.components().isEmpty();
-		} else if (element instanceof InstrumentDescription) {
-			InstrumentDescription container = (InstrumentDescription) element;
+		} else if (element instanceof SynopticDescription) {
+			SynopticDescription container = (SynopticDescription) element;
 			return container.components() != null
 					&& !container.components().isEmpty();
 		} else {

@@ -21,7 +21,7 @@ package uk.ac.stfc.isis.ibex.synoptic.model;
 
 import java.util.List;
 
-import uk.ac.stfc.isis.ibex.synoptic.model.desc.InstrumentDescription;
+import uk.ac.stfc.isis.ibex.synoptic.model.desc.SynopticDescription;
 
 public interface Instrument {
 	
@@ -29,5 +29,5 @@ public interface Instrument {
 	
 	List<? extends Component> components();
 	
-	InstrumentDescription getDescription();	
+	SynopticDescription getDescription();	
 }

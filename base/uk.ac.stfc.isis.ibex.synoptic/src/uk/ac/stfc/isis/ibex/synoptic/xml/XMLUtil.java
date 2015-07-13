@@ -33,7 +33,7 @@ import javax.xml.validation.SchemaFactory;
 
 import org.xml.sax.SAXException;
 
-import uk.ac.stfc.isis.ibex.synoptic.model.desc.InstrumentDescription;
+import uk.ac.stfc.isis.ibex.synoptic.model.desc.SynopticDescription;
 
 public final class XMLUtil {
 	
@@ -47,15 +47,15 @@ public final class XMLUtil {
     
     private XMLUtil() { }
     
-	public static InstrumentDescription fromXml(String xml) throws JAXBException, SAXException {
+	public static SynopticDescription fromXml(String xml) throws JAXBException, SAXException {
 		if (context == null) {
 			initialise();
 		}
 	         
-		return (InstrumentDescription) unmarshaller.unmarshal(new StringReader(xml));
+		return (SynopticDescription) unmarshaller.unmarshal(new StringReader(xml));
 	}
 	
-	public static String toXml(InstrumentDescription instrument) throws JAXBException, SAXException {
+	public static String toXml(SynopticDescription instrument) throws JAXBException, SAXException {
 		if (context == null) {
 			initialise();
 		}
@@ -68,7 +68,7 @@ public final class XMLUtil {
 	
 	private static void initialise() throws JAXBException, SAXException {
 		try {
-			context = JAXBContext.newInstance(InstrumentDescription.class);
+			context = JAXBContext.newInstance(SynopticDescription.class);
 			schema = SF.newSchema(SCHEMA_LOCATION);
 			
 			marshaller = context.createMarshaller();

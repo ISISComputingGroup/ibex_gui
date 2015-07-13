@@ -39,7 +39,7 @@ import uk.ac.stfc.isis.ibex.synoptic.SynopticModel;
 import uk.ac.stfc.isis.ibex.synoptic.model.ComponentType;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.ComponentDescription;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.IO;
-import uk.ac.stfc.isis.ibex.synoptic.model.desc.InstrumentDescription;
+import uk.ac.stfc.isis.ibex.synoptic.model.desc.SynopticDescription;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.PV;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.PVType;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.Property;
@@ -51,7 +51,7 @@ public class InstrumentViewModel {
 	
 	private SynopticModel EDITING = Synoptic.getInstance().edit();
 	
-	private InstrumentDescription instrument;
+	private SynopticDescription instrument;
 
 	private ComponentDescription selectedComponent;
 	private PV selectedPV;
@@ -69,7 +69,7 @@ public class InstrumentViewModel {
 		loadCurrentInstrument();
 	}
 	
-	public void loadInstrumentDescription(InstrumentDescription description) {		
+	public void loadInstrumentDescription(SynopticDescription description) {		
 		instrument = description;
 		instrument.processChildComponents();
 		EDITING.setInstrumentFromDescription(description);
@@ -79,7 +79,7 @@ public class InstrumentViewModel {
 		broadcastInstrumentUpdate(UpdateTypes.NEW_INSTRUMENT);
 	}
 
-	public InstrumentDescription getInstrument() {
+	public SynopticDescription getInstrument() {
 		return instrument;
 	}
 

@@ -26,7 +26,7 @@ import uk.ac.stfc.isis.ibex.epics.observing.ClosingSwitchableObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.InitialisableObserver;
 import uk.ac.stfc.isis.ibex.synoptic.SynopticInfo;
 import uk.ac.stfc.isis.ibex.synoptic.SynopticModel;
-import uk.ac.stfc.isis.ibex.synoptic.model.desc.InstrumentDescription;
+import uk.ac.stfc.isis.ibex.synoptic.model.desc.SynopticDescription;
 
 /**
  * A class for linking the PV observables used to define the synoptic with the SynopticModel.
@@ -36,11 +36,11 @@ public class ObservingSynopticModel {
 	
 	private SynopticInfo synopticInfo;
 
-	private final InitialisableObserver<InstrumentDescription> descriptionObserver 
-		= new BaseObserver<InstrumentDescription>() {
+	private final InitialisableObserver<SynopticDescription> descriptionObserver 
+		= new BaseObserver<SynopticDescription>() {
 
 			@Override
-			public void onValue(InstrumentDescription value) {
+			public void onValue(SynopticDescription value) {
 				model.setInstrumentFromDescription(value);
 			}
 
@@ -79,21 +79,21 @@ public class ObservingSynopticModel {
 	
 	private final SynopticModel model;
 	private final Variables variables;
-	private final ClosingSwitchableObservable<InstrumentDescription> synoptic;
+	private final ClosingSwitchableObservable<SynopticDescription> synopticObservable;
 	
 	public ObservingSynopticModel(Variables variables, SynopticModel model) {
 		this.model = model;
 		this.variables = variables;
 				
-		this.synoptic = new ClosingSwitchableObservable<InstrumentDescription>(variables.getSynoptic(""));
-		this.synoptic.subscribe(descriptionObserver);
-		
+		this.synopticObservable = new ClosingSwitchableObservable<SynopticDescription>(variables.getSynopticDescription(""));
+		this.synopticObservable.subscribe(descriptionObserver);
+				
 		Configurations.getInstance().server().currentConfig().subscribe(configSynopticObserver);
 	}
 	
 	public void switchSynoptic(SynopticInfo newSynoptic) {
 		this.synopticInfo = newSynoptic;
-		synoptic.switchTo(variables.getSynoptic(newSynoptic.pv()));
+		synopticObservable.switchTo(variables.getSynopticDescription(newSynoptic.pv()));
 	}
 	
 	public SynopticInfo getSynopticInfo() {

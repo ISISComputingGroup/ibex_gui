@@ -28,7 +28,7 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.PlatformUI;
 
 import uk.ac.stfc.isis.ibex.synoptic.Synoptic;
-import uk.ac.stfc.isis.ibex.synoptic.model.desc.InstrumentDescription;
+import uk.ac.stfc.isis.ibex.synoptic.model.desc.SynopticDescription;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.dialogs.EditSynopticDialog;
 
 public abstract class SynopticHandler extends AbstractHandler {
@@ -44,7 +44,7 @@ public abstract class SynopticHandler extends AbstractHandler {
 		});
 	}		
 	
-	protected void openDialog(InstrumentDescription synoptic, String title, boolean isBlank) {
+	protected void openDialog(SynopticDescription synoptic, String title, boolean isBlank) {
 		EditSynopticDialog editDialog = new EditSynopticDialog(shell(), title, synoptic, isBlank);	
 		if (editDialog.open() == Window.OK) {
 			SYNOPTIC.edit().saveSynoptic().write(editDialog.getSynoptic());

@@ -32,7 +32,7 @@ import uk.ac.stfc.isis.ibex.instrument.Instrument;
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
 import uk.ac.stfc.isis.ibex.synoptic.internal.ObservingSynopticModel;
 import uk.ac.stfc.isis.ibex.synoptic.internal.Variables;
-import uk.ac.stfc.isis.ibex.synoptic.model.desc.InstrumentDescription;
+import uk.ac.stfc.isis.ibex.synoptic.model.desc.SynopticDescription;
 
 public class Synoptic extends Closer implements BundleActivator {
 
@@ -121,8 +121,8 @@ public class Synoptic extends Closer implements BundleActivator {
 		return viewerModelObserver.getSynopticInfo();
 	}
 	
-	public InitialiseOnSubscribeObservable<InstrumentDescription> synoptic(SynopticInfo synoptic) {
-		return variables.getSynoptic(synoptic.pv());
+	public InitialiseOnSubscribeObservable<SynopticDescription> synoptic(SynopticInfo synoptic) {
+		return variables.getSynopticDescription(synoptic.pv());
 	}
 	
 	static BundleContext getContext() {

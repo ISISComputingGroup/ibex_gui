@@ -34,7 +34,7 @@ import org.eclipse.swt.dnd.DropTargetEvent;
 import org.eclipse.swt.dnd.TransferData;
 
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.ComponentDescription;
-import uk.ac.stfc.isis.ibex.synoptic.model.desc.InstrumentDescription;
+import uk.ac.stfc.isis.ibex.synoptic.model.desc.SynopticDescription;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.instrument.InstrumentTreeView;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.InstrumentViewModel;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.UpdateTypes;
@@ -72,7 +72,7 @@ public class ComponentDropListener extends ViewerDropAdapter {
 				|| location == LOCATION_ON) {
 			if (sourceParent == null) {
 				// sourceParent is the instrument
-				InstrumentDescription parent = instrument.getInstrument();
+				SynopticDescription parent = instrument.getInstrument();
 				parent.removeComponent(sourceComponent);
 			} else {
 				sourceParent.removeComponent(sourceComponent);
@@ -85,7 +85,7 @@ public class ComponentDropListener extends ViewerDropAdapter {
 
 			// parent == instrument
 			if (targetParent == null) {
-				InstrumentDescription parent = instrument.getInstrument();
+				SynopticDescription parent = instrument.getInstrument();
 				int position = parent.components().indexOf(targetComponent);
 				if (location == LOCATION_AFTER) {
 					++position;

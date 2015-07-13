@@ -34,14 +34,14 @@ import org.eclipse.swt.widgets.Shell;
 
 import uk.ac.stfc.isis.ibex.synoptic.Synoptic;
 import uk.ac.stfc.isis.ibex.synoptic.SynopticInfo;
-import uk.ac.stfc.isis.ibex.synoptic.model.desc.InstrumentDescription;
+import uk.ac.stfc.isis.ibex.synoptic.model.desc.SynopticDescription;
 
 public class EditSynopticDialog extends Dialog {
 	
 	private static final Point INITIAL_SIZE = new Point(950, 800);
 	private final String title;
 	
-	private InstrumentDescription synoptic;
+	private SynopticDescription synoptic;
 	
 	private EditorPanel editor;
 	private boolean isBlank;
@@ -50,7 +50,7 @@ public class EditSynopticDialog extends Dialog {
 	public EditSynopticDialog(
 			Shell parentShell, 
 			String title, 
-			InstrumentDescription synoptic,
+			SynopticDescription synoptic,
 			boolean isBlank) {
 		super(parentShell);
 		setShellStyle(SWT.DIALOG_TRIM | SWT.RESIZE);
@@ -101,7 +101,7 @@ public class EditSynopticDialog extends Dialog {
 		return INITIAL_SIZE;
 	}
 	
-	public InstrumentDescription getSynoptic() {
+	public SynopticDescription getSynoptic() {
 		return synoptic;
 	}
 }
