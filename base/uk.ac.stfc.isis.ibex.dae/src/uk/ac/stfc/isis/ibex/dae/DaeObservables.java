@@ -63,6 +63,7 @@ public class DaeObservables extends InstrumentVariables {
 	public final InitialiseOnSubscribeObservable<String> detectorTables = reader(new CompressedCharWaveformChannel(), DAE.endWith("DETECTORTABLES"));
 	public final InitialiseOnSubscribeObservable<String> spectraTables = reader(new CompressedCharWaveformChannel(), DAE.endWith("SPECTRATABLES"));
 	public final InitialiseOnSubscribeObservable<String> wiringTables = reader(new CompressedCharWaveformChannel(), DAE.endWith("WIRINGTABLES"));
+	public final InitialiseOnSubscribeObservable<String> periodFiles = reader(new CompressedCharWaveformChannel(), DAE.endWith("PERIODFILES"));
 
 	public final InitialiseOnSubscribeObservable<String> vetos = reader(new CharWaveformChannel(), DAE.endWith("VETOSTATUS"));
 	

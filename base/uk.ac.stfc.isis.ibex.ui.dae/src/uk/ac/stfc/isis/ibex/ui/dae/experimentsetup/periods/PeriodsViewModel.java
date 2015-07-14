@@ -21,6 +21,7 @@ package uk.ac.stfc.isis.ibex.ui.dae.experimentsetup.periods;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.Collection;
 import java.util.List;
 
 import uk.ac.stfc.isis.ibex.dae.experimentsetup.periods.Period;
@@ -28,10 +29,12 @@ import uk.ac.stfc.isis.ibex.dae.experimentsetup.periods.PeriodControlType;
 import uk.ac.stfc.isis.ibex.dae.experimentsetup.periods.PeriodSettings;
 import uk.ac.stfc.isis.ibex.dae.experimentsetup.periods.PeriodSetupSource;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
+import uk.ac.stfc.isis.ibex.model.UpdatedValue;
 
 public class PeriodsViewModel extends ModelObject {
 
 	private PeriodSettings settings;
+	private UpdatedValue<Collection<String>> periodFiles;
 	
 	public void setSettings(PeriodSettings settings) {
 		this.settings = settings;
@@ -42,6 +45,27 @@ public class PeriodsViewModel extends ModelObject {
 				firePropertyChange(e.getPropertyName(), e.getOldValue(), e.getNewValue());
 			}
 		});	
+	}
+	
+	public void setPeriodFilesList(UpdatedValue<Collection<String>> files) {
+		periodFiles = files;
+		
+		periodFiles.addPropertyChangeListener(new PropertyChangeListener() {		
+			@Override
+			public void propertyChange(PropertyChangeEvent e) {
+				// Fire a property change event on periodFilesList not periodFiles
+				firePropertyChange("periodFilesList", null, null);
+			}
+		});	
+	}
+	
+	public String[] getPeriodFilesList() {
+		return valueOrEmpty(periodFiles);
+	}
+	
+	private String[] valueOrEmpty(UpdatedValue<Collection<String>> updated) {
+		Collection<String> value = updated.getValue();
+		return value != null ? value.toArray(new String[0]) : new String[0];
 	}
 	
 	public int getSetupSource() {

@@ -79,7 +79,7 @@ public class DataAcquisitionPanel extends Composite {
 		lblWiringTable.setSize(70, 15);
 		lblWiringTable.setText("Wiring Table:");
 		
-		wiringTable = new Combo(grpTables, SWT.NONE);	
+		wiringTable = new Combo(grpTables, SWT.DROP_DOWN | SWT.READ_ONLY);	
 		GridData gd_wiringTable = new GridData(SWT.LEFT, SWT.FILL, false, false, 1, 1);
 		gd_wiringTable.widthHint = 500;
 		wiringTable.setLayoutData(gd_wiringTable);
@@ -89,7 +89,7 @@ public class DataAcquisitionPanel extends Composite {
 		lblDetectorTable.setSize(80, 15);
 		lblDetectorTable.setText("Detector Table:");
 		
-		detectorTable = new Combo(grpTables, SWT.BORDER);
+		detectorTable = new Combo(grpTables, SWT.DROP_DOWN | SWT.READ_ONLY);
 		GridData gd_detectorTable = new GridData(SWT.LEFT, SWT.FILL, false, false, 1, 1);
 		gd_detectorTable.widthHint = 500;
 		detectorTable.setLayoutData(gd_detectorTable);
@@ -100,7 +100,7 @@ public class DataAcquisitionPanel extends Composite {
 		lblSpectraTable.setSize(74, 15);
 		lblSpectraTable.setText("Spectra Table:");
 		
-		spectraTable = new Combo(grpTables, SWT.BORDER);
+		spectraTable = new Combo(grpTables, SWT.DROP_DOWN | SWT.READ_ONLY);
 		GridData gd_spectraTable = new GridData(SWT.LEFT, SWT.FILL, false, false, 1, 1);
 		gd_spectraTable.widthHint = 500;
 		spectraTable.setLayoutData(gd_spectraTable);
@@ -232,7 +232,7 @@ public class DataAcquisitionPanel extends Composite {
 		lblDaeTimeingSource.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		lblDaeTimeingSource.setText("DAE Timing Source:");
 		
-		daeTimingSource = new Combo(grpTiming, SWT.NONE);
+		daeTimingSource = new Combo(grpTiming, SWT.DROP_DOWN | SWT.READ_ONLY);
 		daeTimingSource.setItems(DaeTimingSource.allToString().toArray(new String[0]));
 		GridData gd_daeTimingSource = new GridData(SWT.LEFT, SWT.FILL, false, false, 1, 1);
 		gd_daeTimingSource.widthHint = 100;
@@ -248,7 +248,7 @@ public class DataAcquisitionPanel extends Composite {
 		gd_autosaveFrequency.widthHint = 100;
 		autosaveFrequency.setLayoutData(gd_autosaveFrequency);
 		
-		autosaveUnits = new Combo(grpTiming, SWT.NONE);
+		autosaveUnits = new Combo(grpTiming, SWT.DROP_DOWN | SWT.READ_ONLY);
 		autosaveUnits.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false, 1, 1));
 		autosaveUnits.setItems(AutosaveUnit.allToString().toArray(new String[0]));
 	}

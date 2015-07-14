@@ -33,12 +33,8 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Text;
-import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Group;
-import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
 
 import uk.ac.stfc.isis.ibex.dae.experimentsetup.periods.Period;
 import uk.ac.stfc.isis.ibex.dae.experimentsetup.periods.PeriodControlType;
@@ -49,7 +45,7 @@ public class PeriodsPanel extends Composite {
 	private DataBindingContext bindingContext;
 	
 	private Combo setupSource;
-	private Text periodFile;
+	private Combo periodFile;
 	private Combo periodType;
 	private Text softwarePeriods;
 	private Text hardwarePeriods;
@@ -66,17 +62,16 @@ public class PeriodsPanel extends Composite {
 		Group composite = new Group(this, SWT.NONE);
 		composite.setText("Setup");
 		composite.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		composite.setLayout(new GridLayout(6, false));
+		composite.setLayout(new GridLayout(5, false));
 		
 		Label lblPeriodSetupSource = new Label(composite, SWT.NONE);
 		lblPeriodSetupSource.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		lblPeriodSetupSource.setSize(107, 15);
 		lblPeriodSetupSource.setText("Period setup source:");
 		
-		setupSource = new Combo(composite, SWT.NONE);
+		setupSource = new Combo(composite, SWT.DROP_DOWN | SWT.READ_ONLY);
 		setupSource.setSize(177, 23);
 		setupSource.setItems(PeriodSetupSource.allToString().toArray(new String[0]));
-		new Label(composite, SWT.NONE);
 		new Label(composite, SWT.NONE);
 		new Label(composite, SWT.NONE);
 		new Label(composite, SWT.NONE);
@@ -86,29 +81,18 @@ public class PeriodsPanel extends Composite {
 		lblPeriodFile.setSize(58, 15);
 		lblPeriodFile.setText("Period File:");
 		
-		periodFile = new Text(composite, SWT.BORDER);
+		periodFile = new Combo(composite, SWT.DROP_DOWN | SWT.READ_ONLY);
 		GridData gd_periodFile = new GridData(SWT.LEFT, SWT.FILL, false, false, 4, 1);
-		gd_periodFile.widthHint = 400;
+		gd_periodFile.widthHint = 500;
 		periodFile.setLayoutData(gd_periodFile);
 		periodFile.setSize(412, 25);
-		
-		Button btnNewButton = new Button(composite, SWT.NONE);
-		btnNewButton.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				String filePath = filePathFromDialog(periodFile.getText());
-				periodFile.setText(filePath);
-			}
-		});
-		btnNewButton.setSize(59, 25);
-		btnNewButton.setText("Browse...");
 		
 		Label lblPeriodType = new Label(composite, SWT.NONE);
 		lblPeriodType.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		lblPeriodType.setSize(66, 15);
 		lblPeriodType.setText("Period Type:");
 		
-		periodType = new Combo(composite, SWT.NONE);
+		periodType = new Combo(composite, SWT.DROP_DOWN | SWT.READ_ONLY);
 		periodType.setSize(177, 23);
 		periodType.setItems(PeriodControlType.allToString().toArray(new String[0]));
 		new Label(composite, SWT.NONE);
@@ -122,7 +106,6 @@ public class PeriodsPanel extends Composite {
 		gd_softwarePeriods.widthHint = 60;
 		softwarePeriods.setLayoutData(gd_softwarePeriods);
 		softwarePeriods.setSize(76, 23);
-		new Label(composite, SWT.NONE);
 		
 		Group periodsComposite = new Group(this, SWT.NONE);
 		periodsComposite.setText("Hardware Periods");
@@ -158,8 +141,11 @@ public class PeriodsPanel extends Composite {
 
 	public void setModel(final PeriodsViewModel viewModel) {
 		bindingContext = new DataBindingContext();	
+		
+		bindingContext.bindList(WidgetProperties.items().observe(periodFile), BeanProperties.list("periodFilesList").observe(viewModel));
+		bindingContext.bindValue(WidgetProperties.selection().observe(periodFile), BeanProperties.value("periodFile").observe(viewModel));
+
 		bindingContext.bindValue(WidgetProperties.singleSelectionIndex().observe(setupSource), BeanProperties.value("setupSource").observe(viewModel));
-		bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(periodFile), BeanProperties.value("periodFile").observe(viewModel));
 		bindingContext.bindValue(WidgetProperties.singleSelectionIndex().observe(periodType), BeanProperties.value("periodType").observe(viewModel));
 		bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(softwarePeriods), BeanProperties.value("softwarePeriods").observe(viewModel));
 		bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(hardwarePeriods), BeanProperties.value("hardwarePeriods").observe(viewModel));
@@ -181,12 +167,5 @@ public class PeriodsPanel extends Composite {
 				periods.setPeriods(newPeriods);
 			}
 		});
-	}
-	
-	private String filePathFromDialog(String filePath) {
-		FileDialog dialog = new FileDialog(this.getShell(), SWT.SINGLE);
-		dialog.setFileName(filePath);
-		
-		return dialog.open();
 	}
 }
