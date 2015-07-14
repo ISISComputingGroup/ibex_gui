@@ -19,6 +19,10 @@
 
 package uk.ac.stfc.isis.ibex.synoptic.internal;
 
+import javax.xml.bind.JAXBException;
+
+import org.xml.sax.SAXException;
+
 import uk.ac.stfc.isis.ibex.configserver.Configurations;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Configuration;
 import uk.ac.stfc.isis.ibex.epics.observing.BaseObserver;
@@ -27,6 +31,7 @@ import uk.ac.stfc.isis.ibex.epics.observing.InitialisableObserver;
 import uk.ac.stfc.isis.ibex.synoptic.SynopticInfo;
 import uk.ac.stfc.isis.ibex.synoptic.SynopticModel;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.InstrumentDescription;
+import uk.ac.stfc.isis.ibex.synoptic.xml.XMLUtil;
 
 /**
  * A class for linking the PV observables used to define the synoptic with the SynopticModel.
@@ -76,6 +81,27 @@ public class ObservingSynopticModel {
 			@Override
 			public void onConnectionChanged(boolean isConnected) { }
 		};
+		
+	private final InitialisableObserver<String> synopticSchemaObserver
+		= new BaseObserver<String>() {
+
+			@Override
+			public void onValue(String value) {
+				// Set the schema
+				try {
+					XMLUtil.setSchema(value);
+				} catch (SAXException e) {
+					e.printStackTrace();
+				} catch (JAXBException e) {
+					e.printStackTrace();
+				}
+			}
+
+			@Override
+			public void onError(Exception e) { }
+			@Override
+			public void onConnectionChanged(boolean isConnected) { }
+		};
 	
 	private final SynopticModel model;
 	private final Variables variables;
@@ -87,6 +113,8 @@ public class ObservingSynopticModel {
 				
 		this.synoptic = new ClosingSwitchableObservable<InstrumentDescription>(variables.getSynoptic(""));
 		this.synoptic.subscribe(descriptionObserver);
+		
+		this.variables.synopticSchema.subscribe(synopticSchemaObserver);
 		
 		Configurations.getInstance().server().currentConfig().subscribe(configSynopticObserver);
 	}

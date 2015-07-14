@@ -22,26 +22,31 @@ package uk.ac.stfc.isis.ibex.synoptic.model;
 import uk.ac.stfc.isis.ibex.synoptic.model.targets.PerspectiveTarget;
 import uk.ac.stfc.isis.ibex.synoptic.model.targets.ViewTarget;
 
+/**
+ * The type of components available to the synoptic.
+ * Basically, the things that appear on a beam-line.
+ */
 public enum ComponentType {
 	UNKNOWN,
 	JAWS,
 	CHOPPER,
 	MONITOR,
 	SAMPLESTACK,
-	DAE (new PerspectiveTarget("DAE")) ,
+	DAE (new PerspectiveTarget("DAE")),
 	CAEN,
 	KEPCO,
 	BEAMSTOP, 
 	MOVINGMONITOR,
-	ROTATINGBENCH (new ViewTarget("Rotating bench")) ,
+	ROTATINGBENCH (new ViewTarget("Rotating bench")),
 	SAMPLECHANGER,
 	MOVINGBEAMSTOP,
 	ANALYSER,
 	POLARISER,
 	JULABO,	
 	EUROTHERM,
-	GONIOMETER (new ViewTarget("Goniometer")) ,
-	PINHOLESELECTOR;
+	PINHOLESELECTOR,
+	GONIOMETER (new ViewTarget("Goniometer"));
+	
 	private Target target;
 
 	private ComponentType() {
