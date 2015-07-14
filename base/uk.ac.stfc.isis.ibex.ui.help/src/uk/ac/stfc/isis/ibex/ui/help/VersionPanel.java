@@ -50,7 +50,7 @@ public class VersionPanel extends Composite {
 		
 		Label lblServerVersion = new Label(this, SWT.NONE);
 		lblServerVersion.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-		lblServerVersion.setText("Version of code on Server:");
+		lblServerVersion.setText("Server Version:");
 		
 		serverVersion = new Label(this, SWT.NONE);
 		serverVersion.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
