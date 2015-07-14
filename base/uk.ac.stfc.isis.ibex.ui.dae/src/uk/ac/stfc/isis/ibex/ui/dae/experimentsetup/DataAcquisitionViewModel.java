@@ -69,7 +69,8 @@ public class DataAcquisitionViewModel extends ModelObject {
 		wiringTables.addPropertyChangeListener(new PropertyChangeListener() {		
 			@Override
 			public void propertyChange(PropertyChangeEvent e) {
-				firePropertyChange(e.getPropertyName(), null, null);
+				// Fire a property change event on wiringTableList not wiringTables
+				firePropertyChange("wiringTableList", null, null);
 			}
 		});	
 	}
@@ -80,7 +81,8 @@ public class DataAcquisitionViewModel extends ModelObject {
 		detectorTables.addPropertyChangeListener(new PropertyChangeListener() {		
 			@Override
 			public void propertyChange(PropertyChangeEvent e) {
-				firePropertyChange(e.getPropertyName(), null, null);
+				// Fire a property change event on detectorTableList not detectorTables
+				firePropertyChange("detectorTableList", null, null);
 			}
 		});	
 	}
@@ -91,7 +93,8 @@ public class DataAcquisitionViewModel extends ModelObject {
 		spectraTables.addPropertyChangeListener(new PropertyChangeListener() {		
 			@Override
 			public void propertyChange(PropertyChangeEvent e) {
-				firePropertyChange(e.getPropertyName(), null, null);
+				// Fire a property change event on spectraTableList not spectraTables
+				firePropertyChange("spectraTableList", null, null);
 			}
 		});	
 	}
