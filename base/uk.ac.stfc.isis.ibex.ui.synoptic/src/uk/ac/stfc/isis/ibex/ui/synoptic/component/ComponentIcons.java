@@ -62,8 +62,8 @@ public final class ComponentIcons {
 				return icon("euro.png");
 			case GONIOMETER:
 				return icon("ALF Gonio.png");
-			case PINHOLESELECTOR:
-				return icon("pinhole_selector.png");
+//			case PINHOLESELECTOR:
+//				return icon("pinhole_selector.png");
 			default:
 				return icon("cog.png");
 		}

@@ -28,6 +28,7 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
+import javax.xml.transform.stream.StreamSource;
 import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 
@@ -47,6 +48,12 @@ public final class XMLUtil {
     
     private XMLUtil() { }
     
+	/**
+	 * @param xml the synoptic XML received from the BlockServer
+	 * @return the synoptic data converted into an instrument description
+	 * @throws JAXBException
+	 * @throws SAXException
+	 */
 	public static SynopticDescription fromXml(String xml) throws JAXBException, SAXException {
 		if (context == null) {
 			initialise();
@@ -55,6 +62,14 @@ public final class XMLUtil {
 		return (SynopticDescription) unmarshaller.unmarshal(new StringReader(xml));
 	}
 	
+	/**
+	 * Converts the instrument description into the synoptic XML expected by the BlockServer.
+	 * 
+	 * @param instrument the instrument description
+	 * @return the XML for the synoptic
+	 * @throws JAXBException
+	 * @throws SAXException
+	 */
 	public static String toXml(SynopticDescription instrument) throws JAXBException, SAXException {
 		if (context == null) {
 			initialise();
@@ -66,16 +81,27 @@ public final class XMLUtil {
 		return writer.toString();		
 	}
 	
+	/**
+	 * @param rawSchema the XML schema for the synoptic as supplied by the BlockServer
+	 * @throws SAXException
+	 * @throws JAXBException 
+	 */
+	public static void setSchema(String rawSchema) throws SAXException, JAXBException
+	{
+		if (context == null) {
+			initialise();
+		}
+		
+		schema = SF.newSchema(new StreamSource(new StringReader(rawSchema)));
+		marshaller.setSchema(schema);
+		unmarshaller.setSchema(schema);
+	}
+	
 	private static void initialise() throws JAXBException, SAXException {
 		try {
 			context = JAXBContext.newInstance(SynopticDescription.class);
-			schema = SF.newSchema(SCHEMA_LOCATION);
-			
 			marshaller = context.createMarshaller();
-			marshaller.setSchema(schema);
-			
 			unmarshaller = context.createUnmarshaller();	
-			unmarshaller.setSchema(schema);
 		} catch (Exception e) {
 			context = null;
 			throw e;
