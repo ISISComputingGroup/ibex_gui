@@ -21,9 +21,13 @@ package uk.ac.stfc.isis.ibex.synoptic.internal;
 
 import uk.ac.stfc.isis.ibex.configserver.Configurations;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Configuration;
+import uk.ac.stfc.isis.ibex.epics.adapters.UpdatedObservableAdapter;
 import uk.ac.stfc.isis.ibex.epics.observing.BaseObserver;
 import uk.ac.stfc.isis.ibex.epics.observing.ClosingSwitchableObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.InitialisableObserver;
+import uk.ac.stfc.isis.ibex.epics.observing.InitialiseOnSubscribeObservable;
+import uk.ac.stfc.isis.ibex.model.Awaited;
+import uk.ac.stfc.isis.ibex.model.UpdatedValue;
 import uk.ac.stfc.isis.ibex.synoptic.SynopticInfo;
 import uk.ac.stfc.isis.ibex.synoptic.SynopticModel;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.SynopticDescription;
@@ -93,7 +97,13 @@ public class ObservingSynopticModel {
 	
 	public void switchSynoptic(SynopticInfo newSynoptic) {
 		this.synopticInfo = newSynoptic;
-		synopticObservable.switchTo(variables.getSynopticDescription(newSynoptic.pv()));
+		InitialiseOnSubscribeObservable<SynopticDescription> synopticDescriptionObservable = variables.getSynopticDescription(newSynoptic.pv());
+		
+		UpdatedValue<SynopticDescription> config = new UpdatedObservableAdapter<>(synopticDescriptionObservable);
+		
+		if (Awaited.returnedValue(config, 2)) {
+			synopticObservable.switchTo(synopticDescriptionObservable);
+		}
 	}
 	
 	public SynopticInfo getSynopticInfo() {
