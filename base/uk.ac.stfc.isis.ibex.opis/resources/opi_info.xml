@@ -171,5 +171,14 @@
 				</macros>
 			</value>
 		</entry>
+		<entry>
+			<key>Sample changer</key>
+			<value>
+				<path>stage/sample_changer.opi</path>
+				<description>Description required.</description>
+				<macros>
+				</macros>
+			</value>
+		</entry>
 	</opis>
 </descriptions>
