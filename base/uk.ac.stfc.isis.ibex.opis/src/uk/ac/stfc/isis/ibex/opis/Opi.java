@@ -22,13 +22,19 @@ package uk.ac.stfc.isis.ibex.opis;
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
 
+/**
+ * The activator for the plug-in.
+ *
+ */
 public class Opi implements BundleActivator {
 
 	private static BundleContext context;
 
 	private static Opi instance;
 	
-	private static Provider provider = new Provider();
+	private static OpiProvider opiProvider = new OpiProvider();
+	
+	private static DescriptionsProvider descProvider = new DescriptionsProvider();
 	
 	public Opi() {
 		instance = this;
@@ -38,8 +44,12 @@ public class Opi implements BundleActivator {
 		return instance;
 	}
 	
-	public Provider provider() {
-		return provider;
+	public OpiProvider opiProvider() {
+		return opiProvider;
+	}
+	
+	public DescriptionsProvider descriptionsProvider() {
+		return descProvider;
 	}
 	
 	static BundleContext getContext() {

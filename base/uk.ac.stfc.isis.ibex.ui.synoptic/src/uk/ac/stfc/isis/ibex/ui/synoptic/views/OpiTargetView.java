@@ -47,7 +47,15 @@ public final class OpiTargetView extends OPIView {
 		
 	@Override
 	protected Path opi() {
-		return Opi.getDefault().provider().pathFromName(opiName);
+		Path path = Opi.getDefault().descriptionsProvider().pathFromName(opiName);
+		
+		if (path != null) {
+			return path;
+		}
+		
+		// This is for back-compatibility; previously the opi name in the synoptic was the path
+		// At some point this can be removed.
+		return Opi.getDefault().opiProvider().pathFromName(opiName);
 	}
 	
 	private void addMacros(Map<String, String> macros) {

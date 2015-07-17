@@ -11,5 +11,6 @@ Require-Bundle: org.eclipse.core.runtime,
  org.apache.commons.io;bundle-version="2.4.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Bundle-ActivationPolicy: lazy
-Export-Package: uk.ac.stfc.isis.ibex.opis
+Export-Package: uk.ac.stfc.isis.ibex.opis,
+ uk.ac.stfc.isis.ibex.opis.desc
 Bundle-ClassPath: .

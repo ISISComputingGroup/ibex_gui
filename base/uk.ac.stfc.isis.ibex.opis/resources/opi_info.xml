@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<descriptions>
+	<opis>
+		<entry>
+			<key>Eurotherm</key>
+			<value>
+				<path>Eurotherm.opi</path>
+				<description>The OPI for the standard Eurotherm controller.</description>
+				<macros>
+				</macros>
+			</value>
+		</entry>
+		<entry>
+			<key>Pinhole Selector</key>
+			<value>
+				<path>pinhole_selector\pinhole_selector.opi</path>
+				<description>The OPI for the IMAT pinhole selector.</description>
+				<macros>
+					<macro>
+						<name>PH</name>
+						<description>The name in the positions look-up (e.g. PINHOLE)</description>
+					</macro>
+					<macro>
+						<name>MM</name>
+						<description>The motor PV to point at</description>
+					</macro>
+				</macros>
+			</value>
+		</entry>
+		<entry>
+			<key>Analyser</key>
+			<value>
+				<path>analyser.opi</path>
+				<description>The OPI for the analyser.</description>
+				<macros>
+				</macros>
+			</value>
+		</entry>
+		<entry>
+			<key>Beam-stop</key>
+			<value>
+				<path>beamstop.opi</path>
+				<description>Description required.</description>
+				<macros>
+				</macros>
+			</value>
+		</entry>
+		<entry>
+			<key>In Out Monitor</key>
+			<value>
+				<path>inout_monitor.opi</path>
+				<description>Description required.</description>
+				<macros>
+				</macros>
+			</value>
+		</entry>
+		<entry>
+			<key>Jaws</key>
+			<value>
+				<path>Jaws.opi</path>
+				<description>Description required.</description>
+				<macros>
+				</macros>
+			</value>
+		</entry>
+		<entry>
+			<key>Julabo FL300</key>
+			<value>
+				<path>JulaboFL300.opi</path>
+				<description>Description required.</description>
+				<macros>
+				</macros>
+			</value>
+		</entry>
+		<entry>
+			<key>Julabo FP50</key>
+			<value>
+				<path>JulaboFP50.opi</path>
+				<description>Description required.</description>
+				<macros>
+				</macros>
+			</value>
+		</entry>
+		<entry>
+			<key>Kepco</key>
+			<value>
+				<path>kepco.opi</path>
+				<description>Description required.</description>
+				<macros>
+				</macros>
+			</value>
+		</entry>
+		<entry>
+			<key>Mk3 Chopper</key>
+			<value>
+				<path>Mk3Chopper.opi</path>
+				<description>Description required.</description>
+				<macros>
+				</macros>
+			</value>
+		</entry>
+		<entry>
+			<key>Monitor</key>
+			<value>
+				<path>monitor.opi</path>
+				<description>Description required.</description>
+				<macros>
+				</macros>
+			</value>
+		</entry>
+		<entry>
+			<key>Pixelman</key>
+			<value>
+				<path>pixelman.opi</path>
+				<description>Description required.</description>
+				<macros>
+				</macros>
+			</value>
+		</entry>
+		<entry>
+			<key>Polariser</key>
+			<value>
+				<path>polariser.opi</path>
+				<description>Description required.</description>
+				<macros>
+				</macros>
+			</value>
+		</entry>
+		<entry>
+			<key>SD Test</key>
+			<value>
+				<path>SDTEST.opi</path>
+				<description>Description required.</description>
+				<macros>
+				</macros>
+			</value>
+		</entry>
+		<entry>
+			<key>Slit motors</key>
+			<value>
+				<path>slit_motors.opi</path>
+				<description>Description required.</description>
+				<macros>
+				</macros>
+			</value>
+		</entry>
+		<entry>
+			<key>TPG300</key>
+			<value>
+				<path>TPG300.opi</path>
+				<description>Description required.</description>
+				<macros>
+				</macros>
+			</value>
+		</entry>
+		<entry>
+			<key>Slit 1</key>
+			<value>
+				<path>slit1.opi</path>
+				<description>Description required.</description>
+				<macros>
+				</macros>
+			</value>
+		</entry>
+		<entry>
+			<key>Sample stage</key>
+			<value>
+				<path>stage/sample.opi</path>
+				<description>Description required.</description>
+				<macros>
+				</macros>
+			</value>
+		</entry>
+	</opis>
+</descriptions>

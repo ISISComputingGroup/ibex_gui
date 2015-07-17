@@ -28,6 +28,7 @@ import uk.ac.stfc.isis.ibex.ui.OPIView;
 
 public class MotorOPIView extends OPIView {
 		
+	private static final String MOTOR_OPI = "Motor/mymotor.opi";
 	private String partName = "Motor view";
 	
 	public MotorOPIView() {
@@ -54,6 +55,6 @@ public class MotorOPIView extends OPIView {
 
 	@Override
 	protected Path opi() {
-		return Opi.getDefault().provider().pathFromName("Motor/mymotor.opi");
+		return Opi.getDefault().opiProvider().pathFromName(MOTOR_OPI);
 	}
 }

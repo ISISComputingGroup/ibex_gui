@@ -56,7 +56,7 @@ public class TargetNameWidget extends Composite {
 		
 		this.instrument = instrument;
 		
-		availableOPIs = Opi.getDefault().provider().getOPIList();
+		availableOPIs = Opi.getDefault().descriptionsProvider().getOpiList();
 		
 		layout = new StackLayout();
 		setLayout(layout);
@@ -132,7 +132,14 @@ public class TargetNameWidget extends Composite {
 			
 			switch (target.type()) {
 				case OPI:
-					ISelection selection = new StructuredSelection(target.name());
+					// For back-compatibility reasons the name actually might be the path
+					String name = Opi.getDefault().descriptionsProvider().guessOpiName(target.name());
+					if (name == "") {
+						// If no OPI found leave the selection blank
+						cmboOpiName.setSelection(null);
+						break;
+					}
+					ISelection selection = new StructuredSelection(name);					
 					cmboOpiName.setSelection(selection);
 					break;
 				case COMPONENT:

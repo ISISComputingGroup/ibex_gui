@@ -39,7 +39,6 @@ import uk.ac.stfc.isis.ibex.synoptic.model.desc.InstrumentDescription;
 public final class XMLUtil {
 	
 	private static final SchemaFactory SF = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
-    private static final URL SCHEMA_LOCATION = XMLUtil.class.getResource("/uk/ac/stfc/isis/ibex/synoptic/xml/instrument.xsd");
     private static Schema schema; 
 
     private static JAXBContext context;
