@@ -19,44 +19,42 @@
 
 package uk.ac.stfc.isis.ibex.opis;
 
-import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Iterator;
 
-import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.filefilter.SuffixFileFilter;
-import org.apache.commons.io.filefilter.TrueFileFilter;
 import org.apache.logging.log4j.Logger;
-import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.FileLocator;
+import org.eclipse.core.runtime.Path;
 
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
 
-public class Provider {
+/**
+ * The base class for anything that provides information relating to the OPIs.
+ *
+ */
+public abstract class Provider {
 	
-	private static final Logger LOG = IsisLog.getLogger(Provider.class);
-
-	public Collection<String> getOPIList() {
-		Collection<String> relativeFilePaths = new ArrayList<String>();
-		Path root = pathToFileResource("/resources/");
-		Iterator<File> itr = FileUtils.iterateFiles(root.toFile(), new SuffixFileFilter(".opi"), TrueFileFilter.INSTANCE);
-		
-		while (itr.hasNext()) {
-			Path path = new Path(itr.next().getAbsolutePath());
-			relativeFilePaths.add(path.makeRelativeTo(root).toString());
-		}
-		
-		return relativeFilePaths;
-	}
+	protected static final Logger LOG = IsisLog.getLogger(OpiProvider.class);
 	
-	public Path pathFromName(String name) {
-		return pathToFileResource("/resources/" + name);
-	}
+	/**
+	 * @return a list of OPI names
+	 */
+	public abstract Collection<String> getOpiList();
 	
-	private final Path pathToFileResource(String relativePath) {	
+	/**
+	 * Gets the path associated with the OPI.
+	 * 
+	 * @param name the OPI's name/key in the description XML
+	 * @return the path
+	 */
+	public abstract Path pathFromName(String name);
+	
+	/**
+	 * @param relativePath the relative path to the OPI
+	 * @return the full path to the OPI
+	 */
+	protected final Path pathToFileResource(String relativePath) {	
 		Path path = null;
 		try {
 			URL url = getClass().getResource(relativePath);

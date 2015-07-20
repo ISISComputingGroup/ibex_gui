@@ -33,6 +33,7 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Text;
 
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.ComponentDescription;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.TargetDescription;
@@ -97,13 +98,6 @@ public class TargetDetailView extends Composite {
 		fieldsComposite.setLayout(new GridLayout(2, false));
 		fieldsComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 		{
-			Label lblName = new Label(fieldsComposite, SWT.NONE);
-			lblName.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-			lblName.setText("Name");
-			
-			nameSelect = new TargetNameWidget(fieldsComposite, instrument);
-			nameSelect.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-			
 			Label lblType = new Label(fieldsComposite, SWT.NONE);
 			lblType.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 			lblType.setText("Type");
@@ -123,6 +117,22 @@ public class TargetDetailView extends Composite {
 					nameSelect.setTargetType(type);
 				}
 			});
+			
+			Label lblName = new Label(fieldsComposite, SWT.NONE);
+			lblName.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
+			lblName.setText("Name");
+			
+			nameSelect = new TargetNameWidget(fieldsComposite, instrument);
+			nameSelect.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+			
+			Label lblDescription = new Label(fieldsComposite, SWT.NONE);
+			lblDescription.setLayoutData(new GridData(SWT.RIGHT, SWT.TOP, false, false, 1, 1));
+			lblDescription.setText("Description");
+			
+			TargetDescriptionWidget desc = new TargetDescriptionWidget(fieldsComposite, instrument);
+			GridData gdDescription = new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1);
+			gdDescription.heightHint = 100;
+			desc.setLayoutData(gdDescription);
 			
 			Label lblProperties = new Label(fieldsComposite, SWT.NONE);
 			lblProperties.setLayoutData(new GridData(SWT.RIGHT, SWT.TOP, false, false, 1, 1));
