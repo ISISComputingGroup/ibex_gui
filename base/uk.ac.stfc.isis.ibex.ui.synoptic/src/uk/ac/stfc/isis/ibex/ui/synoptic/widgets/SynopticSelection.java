@@ -1,5 +1,7 @@
 package uk.ac.stfc.isis.ibex.ui.synoptic.widgets;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -16,20 +18,29 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.wb.swt.SWTResourceManager;
 
 import uk.ac.stfc.isis.ibex.synoptic.Synoptic;
 import uk.ac.stfc.isis.ibex.synoptic.SynopticInfo;
+import uk.ac.stfc.isis.ibex.ui.synoptic.Activator;
+import uk.ac.stfc.isis.ibex.ui.synoptic.SynopticPresenter;
 
+/**
+ * Contains the widget showing the synoptic drop down menu for switching, refresh button, and bread crumb trail.
+ */
 public class SynopticSelection extends Composite {
 	
 	private static final Color BACKGROUND = SWTResourceManager.getColor(240, 240, 240);
 	
-	private Combo synopticCombo;
+	// The synoptic drop down menu selector
+	private Combo synopticCombo = new Combo(getParent(), SWT.READ_ONLY);
 	
 	private static Synoptic synoptic = Synoptic.getInstance();
-
+	private final SynopticPresenter presenter = Activator.getDefault().presenter();
+	private final Display display = Display.getCurrent();
+	
 	public SynopticSelection(Composite parent, int style) {
 		super(parent, style);
 		GridLayout gridLayout = new GridLayout(2, false);
@@ -44,11 +55,21 @@ public class SynopticSelection extends Composite {
 		synopticLabel.setLayoutData(gd_gotoLabel);
 		synopticLabel.setText("Synoptic:");
 		
-		// The synoptic drop down menu selector
-		synopticCombo = new Combo(parent, SWT.READ_ONLY);
 		GridData gd_synopticCombo = new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1);
 		gd_synopticCombo.widthHint = 120;
 		synopticCombo.setLayoutData(gd_synopticCombo);
+		
+		presenter.addPropertyChangeListener("components", new PropertyChangeListener() {
+		@Override
+		public void propertyChange(PropertyChangeEvent evt) {
+				display.asyncExec(new Runnable() {
+					@Override
+					public void run() {
+						setSynopticList();
+					}
+				});
+			}
+		});
 		
 		synopticCombo.addKeyListener(new KeyListener() {
 			@Override
