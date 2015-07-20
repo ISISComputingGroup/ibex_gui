@@ -47,6 +47,7 @@ public class ExperimentSetup extends Closer  {
 	private final UpdatedObservableAdapter<Collection<String>> detectorTables;
 	private final UpdatedObservableAdapter<Collection<String>> spectraTables;
 	private final UpdatedObservableAdapter<Collection<String>> wiringTables;
+	private final UpdatedObservableAdapter<Collection<String>> periodFiles;
 	
 	public ExperimentSetup(DaeObservables observables, DaeWritables writables) {
 		daeSettings = registerForClose(new ObservingDaeSettings(observables.daeSettings, writables.daeSettings));
@@ -57,6 +58,7 @@ public class ExperimentSetup extends Closer  {
 		detectorTables = createAdapter(observables.detectorTables);
 		spectraTables = createAdapter(observables.spectraTables);
 		wiringTables = createAdapter(observables.wiringTables);
+		periodFiles = createAdapter(observables.periodFiles);
 	}
 	
 	public DaeSettings daeSettings() {
@@ -73,6 +75,10 @@ public class ExperimentSetup extends Closer  {
 	
 	public UpdatedValue<Collection<String>> spectraTables() {
 		return spectraTables;
+	}
+	
+	public UpdatedValue<Collection<String>> periodFiles() {
+		return periodFiles;
 	}
 	
 	public UpdateSettings updateSettings() {

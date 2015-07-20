@@ -42,6 +42,13 @@ public class TimeChannelsViewModel extends ModelObject {
 				firePropertyChange(e.getPropertyName(), e.getOldValue(), e.getNewValue());
 			}
 		});
+		
+		model.addPropertyChangeListener("timeUnit", new PropertyChangeListener() {
+			@Override
+				public void propertyChange(PropertyChangeEvent e) {
+					firePropertyChange(e.getPropertyName(), e.getOldValue(), e.getNewValue());
+				}
+			});
 	}
 	
 	public List<TimeRegime> timeRegimes() {		

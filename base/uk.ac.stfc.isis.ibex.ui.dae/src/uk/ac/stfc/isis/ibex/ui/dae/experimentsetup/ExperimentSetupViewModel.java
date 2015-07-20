@@ -42,7 +42,8 @@ public class ExperimentSetupViewModel {
 		
 		timeChannels.setModel(model.timeChannels());
 		
-		periodSettings.setSettings(model.periodSettings());		
+		periodSettings.setSettings(model.periodSettings());
+		periodSettings.setPeriodFilesList(model.periodFiles());
 	}
 	
 	public void updateDae() {
