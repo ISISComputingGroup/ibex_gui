@@ -82,8 +82,8 @@ public class EditableConfiguration extends ModelObject {
 	private final PropertyChangeListener blockRenameListener = new PropertyChangeListener() {
 		@Override
 		public void propertyChange(PropertyChangeEvent evt) {
-			String oldName = (String)evt.getOldValue();
-			String newName = (String)evt.getNewValue();
+			String oldName = (String) evt.getOldValue();
+			String newName = (String) evt.getNewValue();
 			
 			// Recreate the collection before the rename occurred.
 			Collection<Block> blocksBeforeRename = getBlocks();
@@ -152,8 +152,7 @@ public class EditableConfiguration extends ModelObject {
 	public String getDateCreated() {
 		if (history.size() != 0) {
 			return history.get(0);
-		}
-		else {
+		} else {
 			return "";
 		}
 	}
@@ -161,8 +160,7 @@ public class EditableConfiguration extends ModelObject {
 	public String getDateModified() {
 		if (history.size() != 0) {
 			return history.get(history.size() - 1);
-		}
-		else {
+		} else {
 			return "";
 		}
 	}

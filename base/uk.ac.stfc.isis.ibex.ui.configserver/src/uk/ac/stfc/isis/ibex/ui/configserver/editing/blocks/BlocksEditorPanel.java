@@ -33,6 +33,7 @@ import uk.ac.stfc.isis.ibex.configserver.editing.EditableBlock;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
 import uk.ac.stfc.isis.ibex.ui.configserver.dialogs.MessageDisplayer;
 
+@SuppressWarnings({"checkstyle:magicnumber", "checkstyle:localvariablename"})
 public class BlocksEditorPanel extends Composite {
 
 	private final BlocksTable table;
