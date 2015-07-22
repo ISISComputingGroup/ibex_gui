@@ -22,7 +22,7 @@ package uk.ac.stfc.isis.ibex.ui.synoptic.editor.commands;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 
-import uk.ac.stfc.isis.ibex.synoptic.model.desc.InstrumentDescription;
+import uk.ac.stfc.isis.ibex.synoptic.model.desc.SynopticDescription;
 
 public class NewSynopticHandler extends SynopticHandler {
 
@@ -34,7 +34,7 @@ public class NewSynopticHandler extends SynopticHandler {
 	
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {	
-		openDialog(new InstrumentDescription(), TITLE, true);
+		openDialog(new SynopticDescription(), TITLE, true);
 		return null;
 	}
 }

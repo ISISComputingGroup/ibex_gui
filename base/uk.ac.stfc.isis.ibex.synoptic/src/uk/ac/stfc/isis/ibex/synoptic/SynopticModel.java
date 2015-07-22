@@ -29,7 +29,7 @@ import uk.ac.stfc.isis.ibex.model.ModelObject;
 import uk.ac.stfc.isis.ibex.synoptic.internal.ObservableInstrument;
 import uk.ac.stfc.isis.ibex.synoptic.internal.Variables;
 import uk.ac.stfc.isis.ibex.synoptic.model.Instrument;
-import uk.ac.stfc.isis.ibex.synoptic.model.desc.InstrumentDescription;
+import uk.ac.stfc.isis.ibex.synoptic.model.desc.SynopticDescription;
 import uk.ac.stfc.isis.ibex.synoptic.navigation.InstrumentNavigationGraph;
 
 public class SynopticModel extends ModelObject {
@@ -43,7 +43,7 @@ public class SynopticModel extends ModelObject {
 	
 	public SynopticModel(Variables variables) {
 		this.variables = variables;
-		instrument = getInstrument(new InstrumentDescription());
+		instrument = getInstrument(new SynopticDescription());
 		
 		setCurrentSynoptic = new SynopticWriter(variables.setSynoptic);
 	}
@@ -60,7 +60,7 @@ public class SynopticModel extends ModelObject {
 		return setCurrentSynoptic;
 	}
 	
-	public void setInstrumentFromDescription(InstrumentDescription description) {
+	public void setInstrumentFromDescription(SynopticDescription description) {
 		firePropertyChange("instrument", instrument, instrument = getInstrument(description));
 	}
 	
@@ -72,7 +72,7 @@ public class SynopticModel extends ModelObject {
 		return LOG;
 	}
 	
-	private ObservableInstrument getInstrument(InstrumentDescription description) {
+	private ObservableInstrument getInstrument(SynopticDescription description) {
 		return new ObservableInstrument(description, variables);
 	}
 }

@@ -35,7 +35,7 @@ import uk.ac.stfc.isis.ibex.instrument.channels.StringChannel;
 import uk.ac.stfc.isis.ibex.json.JsonDeserialisingConverter;
 import uk.ac.stfc.isis.ibex.json.JsonSerialisingConverter;
 import uk.ac.stfc.isis.ibex.synoptic.SynopticInfo;
-import uk.ac.stfc.isis.ibex.synoptic.model.desc.InstrumentDescription;
+import uk.ac.stfc.isis.ibex.synoptic.model.desc.SynopticDescription;
 
 /**
  * Holds all the PVs relating to the synoptic information.
@@ -46,7 +46,7 @@ public class Variables extends InstrumentVariables {
 	private static final String SYNOPTIC_ADDRESS = "CS:BLOCKSERVER:SYNOPTICS:";
 	private static final String GET_SYNOPTIC = ":GET";
 	
-	public final InitialiseOnSubscribeObservable<InstrumentDescription> default_synoptic 
+	public final InitialiseOnSubscribeObservable<SynopticDescription> default_synoptic 
 		= convert(readCompressed(SYNOPTIC_ADDRESS + "GET_DEFAULT"), new InstrumentDescriptionParser());
 	
 	public final Writable<String> setSynoptic = writeCompressed(SYNOPTIC_ADDRESS + "SET_DETAILS");
@@ -60,7 +60,7 @@ public class Variables extends InstrumentVariables {
 		return new JsonDeserialisingConverter<>(SynopticInfo[].class).apply(Convert.<SynopticInfo>toCollection());
 	}	
 	
-	public InitialiseOnSubscribeObservable<InstrumentDescription> getSynoptic(String synopticPV) {		
+	public InitialiseOnSubscribeObservable<SynopticDescription> getSynopticDescription(String synopticPV) {		
 		return convert(readCompressed(getFullPV(synopticPV)), new InstrumentDescriptionParser());
 	}
 	

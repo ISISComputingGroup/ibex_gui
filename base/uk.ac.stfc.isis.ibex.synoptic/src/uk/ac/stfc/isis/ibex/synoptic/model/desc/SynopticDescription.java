@@ -35,7 +35,7 @@ import uk.ac.stfc.isis.ibex.synoptic.xml.XMLUtil;
 
 @XmlRootElement(name = "instrument")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class InstrumentDescription {
+public class SynopticDescription {
 	private String name;
 	
 	@XmlElementWrapper(name = "components")

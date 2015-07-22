@@ -28,9 +28,13 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.PlatformUI;
 
 import uk.ac.stfc.isis.ibex.synoptic.Synoptic;
-import uk.ac.stfc.isis.ibex.synoptic.model.desc.InstrumentDescription;
+import uk.ac.stfc.isis.ibex.synoptic.model.desc.SynopticDescription;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.dialogs.EditSynopticDialog;
 
+/**
+ * Handles opening the Synoptic Editor and saving the synoptic when updated. 
+ * 
+ */
 public abstract class SynopticHandler extends AbstractHandler {
 
 	protected final Synoptic SYNOPTIC = Synoptic.getInstance();
@@ -44,10 +48,15 @@ public abstract class SynopticHandler extends AbstractHandler {
 		});
 	}		
 	
-	protected void openDialog(InstrumentDescription synoptic, String title, boolean isBlank) {
+	protected void openDialog(SynopticDescription synoptic, String title, boolean isBlank) {
 		EditSynopticDialog editDialog = new EditSynopticDialog(shell(), title, synoptic, isBlank);	
 		if (editDialog.open() == Window.OK) {
 			SYNOPTIC.edit().saveSynoptic().write(editDialog.getSynoptic());
+			
+			// Refresh the synoptic
+			if (editDialog.getSynoptic().name().equals(SYNOPTIC.getSynopticInfo().name())) {
+				SYNOPTIC.setViewerSynoptic(editDialog.getSynoptic().name());
+			}
 		}
 	}
 	

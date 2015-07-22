@@ -27,7 +27,7 @@ import uk.ac.stfc.isis.ibex.epics.writing.TransformingWriter;
 import uk.ac.stfc.isis.ibex.epics.writing.Writable;
 import uk.ac.stfc.isis.ibex.model.SettableUpdatedValue;
 import uk.ac.stfc.isis.ibex.model.UpdatedValue;
-import uk.ac.stfc.isis.ibex.synoptic.model.desc.InstrumentDescription;
+import uk.ac.stfc.isis.ibex.synoptic.model.desc.SynopticDescription;
 import uk.ac.stfc.isis.ibex.synoptic.xml.XMLUtil;
 
 
@@ -35,7 +35,7 @@ import uk.ac.stfc.isis.ibex.synoptic.xml.XMLUtil;
  * This class is responsible for writing the synoptic data back to the BlockServer.
  *
  */
-public class SynopticWriter extends TransformingWriter<InstrumentDescription, String> {
+public class SynopticWriter extends TransformingWriter<SynopticDescription, String> {
 	
 	private SettableUpdatedValue<Boolean> canSave = new SettableUpdatedValue<>();
 
@@ -46,7 +46,7 @@ public class SynopticWriter extends TransformingWriter<InstrumentDescription, St
 	}
 	
 	@Override
-	protected String transform(InstrumentDescription value) {
+	protected String transform(SynopticDescription value) {
 		// Converts the raw synoptic description into XML
 		try {
 			return XMLUtil.toXml(value);

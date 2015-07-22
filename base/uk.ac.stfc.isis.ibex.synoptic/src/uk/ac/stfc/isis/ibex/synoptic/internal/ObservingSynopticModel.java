@@ -25,12 +25,16 @@ import org.xml.sax.SAXException;
 
 import uk.ac.stfc.isis.ibex.configserver.Configurations;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Configuration;
+import uk.ac.stfc.isis.ibex.epics.adapters.UpdatedObservableAdapter;
 import uk.ac.stfc.isis.ibex.epics.observing.BaseObserver;
 import uk.ac.stfc.isis.ibex.epics.observing.ClosingSwitchableObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.InitialisableObserver;
+import uk.ac.stfc.isis.ibex.epics.observing.InitialiseOnSubscribeObservable;
+import uk.ac.stfc.isis.ibex.model.Awaited;
+import uk.ac.stfc.isis.ibex.model.UpdatedValue;
 import uk.ac.stfc.isis.ibex.synoptic.SynopticInfo;
 import uk.ac.stfc.isis.ibex.synoptic.SynopticModel;
-import uk.ac.stfc.isis.ibex.synoptic.model.desc.InstrumentDescription;
+import uk.ac.stfc.isis.ibex.synoptic.model.desc.SynopticDescription;
 import uk.ac.stfc.isis.ibex.synoptic.xml.XMLUtil;
 
 /**
@@ -41,11 +45,11 @@ public class ObservingSynopticModel {
 	
 	private SynopticInfo synopticInfo;
 
-	private final InitialisableObserver<InstrumentDescription> descriptionObserver 
-		= new BaseObserver<InstrumentDescription>() {
+	private final InitialisableObserver<SynopticDescription> descriptionObserver 
+		= new BaseObserver<SynopticDescription>() {
 
 			@Override
-			public void onValue(InstrumentDescription value) {
+			public void onValue(SynopticDescription value) {
 				model.setInstrumentFromDescription(value);
 			}
 
@@ -105,15 +109,15 @@ public class ObservingSynopticModel {
 	
 	private final SynopticModel model;
 	private final Variables variables;
-	private final ClosingSwitchableObservable<InstrumentDescription> synoptic;
+	private final ClosingSwitchableObservable<SynopticDescription> synopticObservable;
 	
 	public ObservingSynopticModel(Variables variables, SynopticModel model) {
 		this.model = model;
 		this.variables = variables;
 				
-		this.synoptic = new ClosingSwitchableObservable<InstrumentDescription>(variables.getSynoptic(""));
-		this.synoptic.subscribe(descriptionObserver);
-		
+		this.synopticObservable = new ClosingSwitchableObservable<SynopticDescription>(variables.getSynopticDescription(""));
+		this.synopticObservable.subscribe(descriptionObserver);
+				
 		this.variables.synopticSchema.subscribe(synopticSchemaObserver);
 		
 		Configurations.getInstance().server().currentConfig().subscribe(configSynopticObserver);
@@ -121,7 +125,13 @@ public class ObservingSynopticModel {
 	
 	public void switchSynoptic(SynopticInfo newSynoptic) {
 		this.synopticInfo = newSynoptic;
-		synoptic.switchTo(variables.getSynoptic(newSynoptic.pv()));
+		InitialiseOnSubscribeObservable<SynopticDescription> synopticDescriptionObservable = variables.getSynopticDescription(newSynoptic.pv());
+		
+		UpdatedValue<SynopticDescription> config = new UpdatedObservableAdapter<>(synopticDescriptionObservable);
+		
+		if (Awaited.returnedValue(config, 2)) {
+			synopticObservable.switchTo(synopticDescriptionObservable);
+		}
 	}
 	
 	public SynopticInfo getSynopticInfo() {

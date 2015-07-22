@@ -29,14 +29,14 @@ import org.eclipse.swt.widgets.Shell;
 
 import uk.ac.stfc.isis.ibex.synoptic.Synoptic;
 import uk.ac.stfc.isis.ibex.synoptic.SynopticModel;
-import uk.ac.stfc.isis.ibex.synoptic.model.desc.InstrumentDescription;
+import uk.ac.stfc.isis.ibex.synoptic.model.desc.SynopticDescription;
 import uk.ac.stfc.isis.ibex.ui.synoptic.widgets.InstrumentSynoptic;
 
 public class SynopticPreview extends Dialog {
 	private final SynopticModel model;
 
 	public SynopticPreview(Shell parent,
-			InstrumentDescription instrumentDescription) {
+			SynopticDescription instrumentDescription) {
 		super(parent);
 		model = Synoptic.getInstance().getBlankModel();
 		model.setInstrumentFromDescription(instrumentDescription);
