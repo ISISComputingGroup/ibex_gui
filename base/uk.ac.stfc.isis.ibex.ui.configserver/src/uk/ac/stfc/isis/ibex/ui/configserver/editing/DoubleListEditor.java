@@ -38,6 +38,7 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.jface.viewers.ListViewer;
 import org.eclipse.swt.widgets.Label;
 
+@SuppressWarnings({"checkstyle:magicnumber", "checkstyle:localvariablename"})
 public class DoubleListEditor extends Composite {
 	
 	private final Button select;
@@ -92,7 +93,7 @@ public class DoubleListEditor extends Composite {
 		btnUp.setLayoutData(gd_btnUp);
 		btnUp.setText("Up");
 		btnUp.setEnabled(true);
-		if (orderable == false) {
+		if (!orderable) {
 			new Label(this, SWT.NONE);
 		}
 		
@@ -222,7 +223,7 @@ public class DoubleListEditor extends Composite {
 		ObservableListContentProvider contentProvider = new ObservableListContentProvider();
 		viewer.setContentProvider(contentProvider);
 		viewer.setLabelProvider(
-				new ObservableMapLabelProvider(BeansObservables.observeMaps(contentProvider.getKnownElements(), new String[] { observedProperty } )));
+				new ObservableMapLabelProvider(BeansObservables.observeMaps(contentProvider.getKnownElements(), new String[] { observedProperty })));
 	}
 	
 	public void refreshViewer() {

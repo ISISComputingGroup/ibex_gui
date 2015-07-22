@@ -50,6 +50,7 @@ import uk.ac.stfc.isis.ibex.configserver.editing.EditableGroup;
 import uk.ac.stfc.isis.ibex.ui.configserver.dialogs.MessageDisplayer;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.DoubleListEditor;
 
+@SuppressWarnings({"checkstyle:magicnumber", "checkstyle:localvariablename"})
 public class GroupsEditorPanel extends Composite {
 
 	private final DoubleListEditor blocksEditor;
@@ -105,9 +106,9 @@ public class GroupsEditorPanel extends Composite {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				if (config != null) {
-					if (groupList.getSelectionIndex() != -1){					
+					if (groupList.getSelectionIndex() != -1) {					
 						EditableGroup group = getSelectedGroup();
-						if (group != null){
+						if (group != null) {
 					        config.removeGroup((EditableGroup) group);
 						}
 					}
@@ -222,7 +223,7 @@ public class GroupsEditorPanel extends Composite {
 				
 		bindingContext.bindValue(
 				WidgetProperties.text(SWT.Modify).observe(name), 
-				ViewerProperties.singleSelection().value(BeanProperties.value("name", Group.class)).observe(groupsViewer)
+				ViewerProperties.singleSelection().value(BeanProperties.value("name", EditableGroup.class)).observe(groupsViewer)
         );
 		
 		name.addModifyListener(new ModifyListener() {
@@ -231,8 +232,9 @@ public class GroupsEditorPanel extends Composite {
 			}
 		});
 		
-		IObservableList selectedBlocks = ViewerProperties.singleSelection().list(BeanProperties.list("selectedBlocks", Group.class)).observe(groupsViewer);
-		IObservableList unselectedBlocks = ViewerProperties.singleSelection().list(BeanProperties.list("unselectedBlocks", Group.class)).observe(groupsViewer);
+		IObservableList selectedBlocks = ViewerProperties.singleSelection().list(BeanProperties.list("selectedBlocks", EditableGroup.class)).observe(groupsViewer);
+		IObservableList unselectedBlocks = ViewerProperties.singleSelection().list(BeanProperties.list("unselectedBlocks", EditableGroup.class)).observe(groupsViewer);
+		
 		new Label(grpGroups, SWT.NONE);
 		
 		Button btnUp =  new Button(grpGroups, SWT.NONE);
@@ -241,17 +243,17 @@ public class GroupsEditorPanel extends Composite {
 		btnUp.setLayoutData(gd_btnUp);
 		btnUp.setText("Up");
 		
-		btnUp.addSelectionListener(new SelectionAdapter(){
+		btnUp.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				if (config != null) {
 					
-					if (groupList.getSelectionIndex() > 0){
-						//Move up
+					if (groupList.getSelectionIndex() > 0) {
+						// Move up
 						EditableGroup group1 = getSelectedGroup();
 						EditableGroup group2 = (EditableGroup) groupsViewer.getElementAt(groupList.getSelectionIndex() - 1);
 						
-						if (group1 != null && group2 != null){
+						if (group1 != null && group2 != null) {
 							config.swapGroups(group1, group2);
 						}
 					}
@@ -272,7 +274,7 @@ public class GroupsEditorPanel extends Composite {
 				if (config != null) {
 					
 					if (groupList.getSelectionIndex() < groupList.getItemCount() - 1) {
-						//Move down
+						// Move down
 						EditableGroup group1 = getSelectedGroup();
 						EditableGroup group2 = (EditableGroup) groupsViewer.getElementAt(groupList.getSelectionIndex() + 1);
 						
