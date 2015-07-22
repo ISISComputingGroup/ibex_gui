@@ -52,6 +52,11 @@ import uk.ac.stfc.isis.ibex.epics.conversion.VTypeFormat;
 public class VTypeFormatToConversionsTest {
 
 	// Byte array values missing as unable to produce from ValueFactory
+
+	/**
+	 * An Enum class to test with.
+	 */
+	private static final Class<TestingEnum> enumType = TestingEnum.class;
 	
 	@Test
 	public void convert_to_number() throws ConversionException {
@@ -67,7 +72,7 @@ public class VTypeFormatToConversionsTest {
 	}
 	
 	@Test
-	public void converst_to_number_with_precision() throws ConversionException {
+	public void convert_to_number_with_precision() throws ConversionException {
 		// Arrange
 		Converter<VNumber, Number> converter = VTypeFormat.toNumber();
 		
@@ -84,7 +89,7 @@ public class VTypeFormatToConversionsTest {
 	}
 	
 	@Test
-	public void converst_to_number_with_precision_greater_than_digits() throws ConversionException {
+	public void convert_to_number_with_precision_greater_than_digits() throws ConversionException {
 		// Arrange
 		Converter<VNumber, Number> converter = VTypeFormat.toNumber();
 		
@@ -148,31 +153,6 @@ public class VTypeFormatToConversionsTest {
 	public void convert_to_vfloat_array() throws ConversionException {
 		// Arrange
 		Converter<VType, VFloatArray> converter = VTypeFormat.toVFloatArray();
-		Time time = new Time() {
-			@Override
-			public boolean isTimeValid() {
-				return false;
-			}
-			@Override
-			public Timestamp getTimestamp() {
-				return Timestamp.now();
-			}
-			@Override
-			public Integer getTimeUserTag() {
-				return null;
-			}
-		};
-		Alarm alarm = new Alarm() {
-			@Override
-			public AlarmSeverity getAlarmSeverity() {
-				return AlarmSeverity.NONE;
-			}
-			@Override
-			public String getAlarmName() {
-				return null;
-			}
-		};
-		Display display = ValueFactory.newDisplay(0.0, 0.0, 0.0, "unit", NumberFormats.format(6), 0.0, 0.0, 0.0, 0.0, 0.0);
 		ListFloat data = new ListFloat() {
 			@Override
 			public int size() {
@@ -183,7 +163,7 @@ public class VTypeFormatToConversionsTest {
 				return 0;
 			}
 		};
-		VFloatArray test = ValueFactory.newVFloatArray(data , alarm, time, display);
+		VFloatArray test = ValueFactory.newVFloatArray(data, null, null, null);
 		
 		// Act
 		VFloatArray result = converter.convert(test);
@@ -196,73 +176,22 @@ public class VTypeFormatToConversionsTest {
 	public void convert_to_vint() throws ConversionException {
 		// Arrange
 		Converter<VType, VInt> converter = VTypeFormat.toVInt();
-		Time time = new Time() {
-			@Override
-			public boolean isTimeValid() {
-				return false;
-			}
-			@Override
-			public Timestamp getTimestamp() {
-				return Timestamp.now();
-			}
-			@Override
-			public Integer getTimeUserTag() {
-				return null;
-			}
-		};
-		Alarm alarm = new Alarm() {
-			@Override
-			public AlarmSeverity getAlarmSeverity() {
-				return AlarmSeverity.NONE;
-			}
-			@Override
-			public String getAlarmName() {
-				return null;
-			}
-		};
-		Display display = ValueFactory.newDisplay(0.0, 0.0, 0.0, "unit", NumberFormats.format(6), 0.0, 0.0, 0.0, 0.0, 0.0);
 		Integer test = 123;
-		VInt value = ValueFactory.newVInt(test, alarm, time, display);
+		VInt value = ValueFactory.newVInt(test, null, null, null);
 		
 		// Act
 		VInt result = converter.convert(value);
 		
 		// Assert
 		assertEquals(result, value);
-	}
-	
+	}	
 
 	@Test
 	public void convert_to_long() throws ConversionException {
 		// Arrange
 		Converter<VInt, Long> converter = VTypeFormat.toLong();
-		Time time = new Time() {
-			@Override
-			public boolean isTimeValid() {
-				return false;
-			}
-			@Override
-			public Timestamp getTimestamp() {
-				return Timestamp.now();
-			}
-			@Override
-			public Integer getTimeUserTag() {
-				return null;
-			}
-		};
-		Alarm alarm = new Alarm() {
-			@Override
-			public AlarmSeverity getAlarmSeverity() {
-				return AlarmSeverity.NONE;
-			}
-			@Override
-			public String getAlarmName() {
-				return null;
-			}
-		};
-		Display display = ValueFactory.newDisplay(0.0, 0.0, 0.0, "unit", NumberFormats.format(6), 0.0, 0.0, 0.0, 0.0, 0.0);
 		Integer test = 123;
-		VInt value = ValueFactory.newVInt(test, alarm, time, display);
+		VInt value = ValueFactory.newVInt(test, null, null, null);
 		
 		// Act
 		Long result = converter.convert(value);
@@ -271,43 +200,13 @@ public class VTypeFormatToConversionsTest {
 		Long check = (long) test;
 		assertEquals(result, check);
 	}
-
-	//An Enum class to test with
-
-	
-	private static final Class<TestingEnum> enumType = TestingEnum.class;
 	
 	@Test
 	public void convert_to_enum() throws ConversionException {
 		
 		// Arrange
-		Converter<VEnum, TestingEnum> converter = VTypeFormat.toEnum(enumType);
-		Time time = new Time() {
-			@Override
-			public boolean isTimeValid() {
-				return false;
-			}
-			@Override
-			public Timestamp getTimestamp() {
-				return Timestamp.now();
-			}
-			@Override
-			public Integer getTimeUserTag() {
-				return null;
-			}
-		};
-		Alarm alarm = new Alarm() {
-			@Override
-			public AlarmSeverity getAlarmSeverity() {
-				return AlarmSeverity.NONE;
-			}
-			@Override
-			public String getAlarmName() {
-				return null;
-			}
-		};
-				
-		VEnum value = ValueFactory.newVEnum(0, TestingEnum.TEST1.getNames(), alarm, time);
+		Converter<VEnum, TestingEnum> converter = VTypeFormat.toEnum(enumType);			
+		VEnum value = ValueFactory.newVEnum(0, TestingEnum.TEST1.getNames(), null, null);
 		
 		// Act
 		TestingEnum result = converter.convert(value);
@@ -320,33 +219,8 @@ public class VTypeFormatToConversionsTest {
 	public void convert_to_enumString() throws ConversionException {
 		
 		// Arrange
-		Converter<VEnum, String> converter = VTypeFormat.toEnumString();
-		Time time = new Time() {
-			@Override
-			public boolean isTimeValid() {
-				return false;
-			}
-			@Override
-			public Timestamp getTimestamp() {
-				return Timestamp.now();
-			}
-			@Override
-			public Integer getTimeUserTag() {
-				return null;
-			}
-		};
-		Alarm alarm = new Alarm() {
-			@Override
-			public AlarmSeverity getAlarmSeverity() {
-				return AlarmSeverity.NONE;
-			}
-			@Override
-			public String getAlarmName() {
-				return null;
-			}
-		};
-				
-		VEnum value = ValueFactory.newVEnum(0, TestingEnum.TEST1.getNames(), alarm, time);
+		Converter<VEnum, String> converter = VTypeFormat.toEnumString();				
+		VEnum value = ValueFactory.newVEnum(0, TestingEnum.TEST1.getNames(), null, null);
 		
 		// Act
 		String result = converter.convert(value);

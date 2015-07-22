@@ -61,32 +61,8 @@ public class VTypeFormatMiscTest {
 	public void convert_enum_value() throws ConversionException {
 		// Arrange
 		Converter<VEnum, String> converter = VTypeFormat.enumValue();
-		Time time = new Time() {
-			@Override
-			public boolean isTimeValid() {
-				return false;
-			}
-			@Override
-			public Timestamp getTimestamp() {
-				return Timestamp.now();
-			}
-			@Override
-			public Integer getTimeUserTag() {
-				return null;
-			}
-		};
-		Alarm alarm = new Alarm() {
-			@Override
-			public AlarmSeverity getAlarmSeverity() {
-				return AlarmSeverity.NONE;
-			}
-			@Override
-			public String getAlarmName() {
-				return null;
-			}
-		};
-		
-		VEnum value = ValueFactory.newVEnum(0, TestingEnum.TEST1.getNames(), alarm, time);
+				
+		VEnum value = ValueFactory.newVEnum(0, TestingEnum.TEST1.getNames(), null, null);
 		
 		// Act
 		String result = converter.convert(value);
@@ -99,31 +75,6 @@ public class VTypeFormatMiscTest {
 	public void convert_extract_floats() throws ConversionException {
 		// Arrange
 		Converter<VFloatArray, float[]> converter = VTypeFormat.extractFloats();
-		Time time = new Time() {
-			@Override
-			public boolean isTimeValid() {
-				return false;
-			}
-			@Override
-			public Timestamp getTimestamp() {
-				return Timestamp.now();
-			}
-			@Override
-			public Integer getTimeUserTag() {
-				return null;
-			}
-		};
-		Alarm alarm = new Alarm() {
-			@Override
-			public AlarmSeverity getAlarmSeverity() {
-				return AlarmSeverity.NONE;
-			}
-			@Override
-			public String getAlarmName() {
-				return null;
-			}
-		};
-		Display display = ValueFactory.newDisplay(0.0, 0.0, 0.0, "unit", NumberFormats.format(6), 0.0, 0.0, 0.0, 0.0, 0.0);
 		
 		ListFloat data = new ListFloat() {
 			@Override
@@ -135,7 +86,7 @@ public class VTypeFormatMiscTest {
 				return 0;
 			}
 		};
-		VFloatArray value = ValueFactory.newVFloatArray(data, alarm, time, display);
+		VFloatArray value = ValueFactory.newVFloatArray(data, null, null, null);
 		float[] test = new float[] {};
 		
 		// Act

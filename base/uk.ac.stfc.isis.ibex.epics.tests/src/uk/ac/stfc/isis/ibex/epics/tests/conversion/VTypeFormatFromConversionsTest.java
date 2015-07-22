@@ -56,32 +56,7 @@ public class VTypeFormatFromConversionsTest {
 	public void convert_from_vfloat_array() throws ConversionException {
 		// Arrange
 		Converter<VType, float[]> converter = VTypeFormat.fromVFloatArray();
-		Time time = new Time() {
-			@Override
-			public boolean isTimeValid() {
-				return false;
-			}
-			@Override
-			public Timestamp getTimestamp() {
-				return Timestamp.now();
-			}
-			@Override
-			public Integer getTimeUserTag() {
-				return null;
-			}
-		};
-		Alarm alarm = new Alarm() {
-			@Override
-			public AlarmSeverity getAlarmSeverity() {
-				return AlarmSeverity.NONE;
-			}
-			@Override
-			public String getAlarmName() {
-				return null;
-			}
-		};
-		Display display = ValueFactory.newDisplay(0.0, 0.0, 0.0, "unit", NumberFormats.format(6), 0.0, 0.0, 0.0, 0.0, 0.0);
-		
+				
 		ListFloat data = new ListFloat() {
 			@Override
 			public int size() {
@@ -92,7 +67,7 @@ public class VTypeFormatFromConversionsTest {
 				return 0;
 			}
 		};
-		VFloatArray value = ValueFactory.newVFloatArray(data, alarm, time, display);
+		VFloatArray value = ValueFactory.newVFloatArray(data, null, null, null);
 		
 		// Act
 		float[] result = converter.convert(value);
@@ -105,33 +80,9 @@ public class VTypeFormatFromConversionsTest {
 	public void convert_from_vstring() throws ConversionException {
 		// Arrange
 		Converter<VString, String> converter = VTypeFormat.fromVString();
-		Time time = new Time() {
-			@Override
-			public boolean isTimeValid() {
-				return false;
-			}
-			@Override
-			public Timestamp getTimestamp() {
-				return Timestamp.now();
-			}
-			@Override
-			public Integer getTimeUserTag() {
-				return null;
-			}
-		};
-		Alarm alarm = new Alarm() {
-			@Override
-			public AlarmSeverity getAlarmSeverity() {
-				return AlarmSeverity.NONE;
-			}
-			@Override
-			public String getAlarmName() {
-				return null;
-			}
-		};
-		
+				
 		String test = "Test";
-		VString value = ValueFactory.newVString(test , alarm, time);
+		VString value = ValueFactory.newVString(test , null, null);
 		
 		// Act
 		String result = converter.convert(value);
@@ -160,34 +111,10 @@ public class VTypeFormatFromConversionsTest {
 	public void convert_from_vint() throws ConversionException {
 		// Arrange
 		Converter<VInt, Integer> converter = VTypeFormat.fromVInt();
-		Time time = new Time() {
-			@Override
-			public boolean isTimeValid() {
-				return false;
-			}
-			@Override
-			public Timestamp getTimestamp() {
-				return Timestamp.now();
-			}
-			@Override
-			public Integer getTimeUserTag() {
-				return null;
-			}
-		};
-		Alarm alarm = new Alarm() {
-			@Override
-			public AlarmSeverity getAlarmSeverity() {
-				return AlarmSeverity.NONE;
-			}
-			@Override
-			public String getAlarmName() {
-				return null;
-			}
-		};
-		Display display = ValueFactory.newDisplay(0.0, 0.0, 0.0, "unit", NumberFormats.format(6), 0.0, 0.0, 0.0, 0.0, 0.0);
+	
 		Integer number = new Integer(123);
 		
-		VInt value = ValueFactory.newVInt(number, alarm, time, display);
+		VInt value = ValueFactory.newVInt(number, null, null, null);
 		
 		// Act
 		Integer result = converter.convert(value);
@@ -200,34 +127,10 @@ public class VTypeFormatFromConversionsTest {
 	public void convert_from_short() throws ConversionException {
 		// Arrange
 		Converter<VShort, Short> converter = VTypeFormat.fromShort();
-		Time time = new Time() {
-			@Override
-			public boolean isTimeValid() {
-				return false;
-			}
-			@Override
-			public Timestamp getTimestamp() {
-				return Timestamp.now();
-			}
-			@Override
-			public Integer getTimeUserTag() {
-				return null;
-			}
-		};
-		Alarm alarm = new Alarm() {
-			@Override
-			public AlarmSeverity getAlarmSeverity() {
-				return AlarmSeverity.NONE;
-			}
-			@Override
-			public String getAlarmName() {
-				return null;
-			}
-		};
-		Display display = ValueFactory.newDisplay(0.0, 0.0, 0.0, "unit", NumberFormats.format(6), 0.0, 0.0, 0.0, 0.0, 0.0);
+		
 		Short number = new Short((short) 123);
 		
-		VShort value = ValueFactory.newVShort(number, alarm, time, display);
+		VShort value = ValueFactory.newVShort(number, null, null, null);
 		
 		// Act
 		Short result = converter.convert(value);
@@ -240,34 +143,10 @@ public class VTypeFormatFromConversionsTest {
 	public void convert_from_long() throws ConversionException {
 		// Arrange
 		Converter<VLong, Long> converter = VTypeFormat.fromLong();
-		Time time = new Time() {
-			@Override
-			public boolean isTimeValid() {
-				return false;
-			}
-			@Override
-			public Timestamp getTimestamp() {
-				return Timestamp.now();
-			}
-			@Override
-			public Integer getTimeUserTag() {
-				return null;
-			}
-		};
-		Alarm alarm = new Alarm() {
-			@Override
-			public AlarmSeverity getAlarmSeverity() {
-				return AlarmSeverity.NONE;
-			}
-			@Override
-			public String getAlarmName() {
-				return null;
-			}
-		};
-		Display display = ValueFactory.newDisplay(0.0, 0.0, 0.0, "unit", NumberFormats.format(6), 0.0, 0.0, 0.0, 0.0, 0.0);
+		
 		Long number = new Long(123);
 		
-		VLong value = ValueFactory.newVLong(number, alarm, time, display);
+		VLong value = ValueFactory.newVLong(number, null, null, null);
 		
 		// Act
 		Long result = converter.convert(value);
