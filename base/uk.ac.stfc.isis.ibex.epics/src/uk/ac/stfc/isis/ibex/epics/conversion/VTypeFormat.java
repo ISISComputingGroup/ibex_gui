@@ -53,6 +53,9 @@ public final class VTypeFormat {
 		return new VTypeDefaultFormatter<R>().noUnits;
 	}
 	
+	/**
+	 * @return a number with no consideration for formatting or precision
+	 */
 	public static <R extends VNumber> Converter<R, Number> toNumber() {
 		return new Converter<R, Number>() {
 			@Override
@@ -62,6 +65,9 @@ public final class VTypeFormat {
 		};
 	}
 	
+	/**
+	 * @return a string of the number supplied with any associated units
+	 */
 	public static <R extends VNumber> Converter<R, String> quantityWithUnits() {
 		return new Converter<R, String>() {
 			@Override
