@@ -74,12 +74,12 @@ public class ObservablePair<T1, T2>
 	}
 
 	private T1 firstOrNull() {
-		Pair<T1, T2> pair = value();
+		Pair<T1, T2> pair = getValue();
 		return pair != null ? pair.first : null;
 	}
 	
 	private T2 secondOrNull() {
-		Pair<T1, T2> pair = value();
+		Pair<T1, T2> pair = getValue();
 		return pair != null ? pair.second : null;
 	}
 }

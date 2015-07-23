@@ -50,7 +50,7 @@ public abstract class TransformingObservable<T1, T2> extends BaseCachingObservab
 	public final void setSource(ClosableCachingObservable<T1> source) {
 		cancelSubscription();
 		this.source = source;
-		sourceObserver.update(source.value(), source.lastError(), source.isConnected());
+		sourceObserver.update(source.getValue(), source.lastError(), source.isConnected());
 		sourceSubscription = source.subscribe(sourceObserver);
 	}
 	

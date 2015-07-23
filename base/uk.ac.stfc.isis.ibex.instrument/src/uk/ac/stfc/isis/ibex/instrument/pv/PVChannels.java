@@ -42,7 +42,7 @@ public class PVChannels implements Channels {
 		
 	    final CachingObservable<String> address = addresses.resolvePV(addressSuffix);
 		final ClosingSwitchableObservable<T> channel = 
-				new ClosingSwitchableObservable<>(channelType.reader(address.value()));
+				new ClosingSwitchableObservable<>(channelType.reader(address.getValue()));
 		
 		// Update the source pv when the prefix changes
 		address.subscribe(new ObserverAdapter<String>() {			
@@ -58,7 +58,7 @@ public class PVChannels implements Channels {
 	@Override
 	public <T> ClosableWritable<T> getWriter(final ChannelType<T> channelType, String addressSuffix) {
 	    final BaseCachingObservable<String> address = addresses.resolvePV(addressSuffix);
-		final ClosingWritable<T> channel = new ClosingWritable<>(channelType.writer(address.value()));
+		final ClosingWritable<T> channel = new ClosingWritable<>(channelType.writer(address.getValue()));
 		
 		// Update the source pv when the prefix changes
 		address.subscribe(new ObserverAdapter<String>() {			

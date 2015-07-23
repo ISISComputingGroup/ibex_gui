@@ -89,7 +89,7 @@ public class Synoptic extends Closer implements BundleActivator {
 	}
 	
 	public Collection<SynopticInfo> availableSynoptics() {
-		return variables.available.value();
+		return variables.available.getValue();
 	}
 	
 	public ArrayList<String> availableSynopticNames() {

@@ -42,7 +42,7 @@ public class EditConfigHandler extends ConfigHandler<Configuration> {
 		
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {		
-		ConfigSelectionDialog selectionDialog = new ConfigSelectionDialog(shell(), TITLE, SERVER.configsInfo().value(), false);
+		ConfigSelectionDialog selectionDialog = new ConfigSelectionDialog(shell(), TITLE, SERVER.configsInfo().getValue(), false);
 		if (selectionDialog.open() == Window.OK) {
 			String configName = selectionDialog.selectedConfig();
 			edit(configName);

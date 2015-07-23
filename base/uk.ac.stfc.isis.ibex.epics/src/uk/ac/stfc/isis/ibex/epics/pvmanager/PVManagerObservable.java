@@ -38,7 +38,7 @@ import uk.ac.stfc.isis.ibex.epics.pv.PVInfo;
  */
 public class PVManagerObservable<R extends VType> extends ObservablePV<R> {
 
-	private final PVReader<R> pv;	
+	private PVReader<R> pv;	
 	
 	/**
 	 * An instance of an inner anonymous class for handling PV changes.
@@ -63,16 +63,22 @@ public class PVManagerObservable<R extends VType> extends ObservablePV<R> {
 	
 	public PVManagerObservable(PVInfo<R> info) {
 		super(info);
-
-		pv = PVManager
-				.read(channel(info.address(), info.type(), Object.class))
-				.readListener(observingListener)
-				.notifyOn(new CurrentThreadExecutor())
-				.maxRate(ofHertz(10));
 	}	
 	
 	@Override
 	public void close() {
 		pv.close();
+	}
+	
+	public void setPVReader(PVReader<R> pvReader) {
+		this.pv = pvReader;		
+	}
+	
+	public void setPVReaderFromPVInfo(PVInfo<R> info) {
+		pv = PVManager
+				.read(channel(info.address(), info.type(), Object.class))
+				.readListener(observingListener)
+				.notifyOn(new CurrentThreadExecutor())
+				.maxRate(ofHertz(10));
 	}
 }
