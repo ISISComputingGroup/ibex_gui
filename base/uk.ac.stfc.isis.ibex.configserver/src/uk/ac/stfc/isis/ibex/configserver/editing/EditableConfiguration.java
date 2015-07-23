@@ -94,9 +94,6 @@ public class EditableConfiguration extends ModelObject {
 			oldBlock.setName(oldName);
 			blocksBeforeRename.add(oldBlock);
 			
-			makeBlockUnavailable((EditableBlock) oldBlock);
-			makeBlockAvailable((EditableBlock) renamed);
-			
 			firePropertyChange("blocks", blocksBeforeRename, getBlocks());
 		}
 	};
