@@ -76,6 +76,7 @@ public class Instrument implements BundleActivator {
 		instruments.add(new InstrumentInfo("LARMOR"));
 		instruments.add(new InstrumentInfo("ALF"));
 		instruments.add(new InstrumentInfo("DEMO"));
+		instruments.add(new InstrumentInfo("IMAT"));
 		
 		addresses = new PVAddressBook(settings.pvPrefix());
 		channels = new PVChannels(addresses);
