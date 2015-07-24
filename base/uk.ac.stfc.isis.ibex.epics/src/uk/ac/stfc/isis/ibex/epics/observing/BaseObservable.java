@@ -29,7 +29,7 @@ import uk.ac.stfc.isis.ibex.epics.observing.Observer;
  * The abstract base class for observables
  *
  */
-public class BaseObservable<T> implements Observable<T> {
+public abstract class BaseObservable<T> implements Observable<T> {
 		
 	private final Collection<Observer<T>> observers = new CopyOnWriteArrayList<>();
 	

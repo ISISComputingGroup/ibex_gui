@@ -203,9 +203,7 @@ public class Channels {
 	}
 	
 	private static <V extends VType, T> ClosableCachingObservable<T> convertObservablePV(String pvAddress, Class<V> pvType, Converter<V, T> converter) {
-		PVManagerObservable pvMO = new PVManagerObservable<>(new PVInfo<>(pvAddress, pvType));
-		return new ConvertingObservable<>(pvMO, converter);
-		
+		return new ConvertingObservable<>(new PVManagerObservable<>(new PVInfo<>(pvAddress, pvType)), converter);		
 	}
 
 	private static <V, T> ClosableWritable<T> convertWritablePV(String pvAddress, Class<V> pvType, Converter<T, V> converter) {
