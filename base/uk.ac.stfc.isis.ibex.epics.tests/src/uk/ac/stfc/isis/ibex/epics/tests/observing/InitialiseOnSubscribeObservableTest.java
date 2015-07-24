@@ -50,10 +50,10 @@ public class InitialiseOnSubscribeObservableTest {
 	public void test_InitialiseOnSubscribeObservable_subscription() {
 		//Arrange	
 		// Mock observer, templated objects need cast
-		InitialisableObserver<String> mockObserver = (InitialisableObserver<String>) mock(InitialisableObserver.class);
+		InitialisableObserver<String> mockObserver = mock(InitialisableObserver.class);
 		
 		// Mock observable with stub method
-		CachingObservable<String> mockObservable = (CachingObservable<String>) mock(CachingObservable.class);
+		CachingObservable<String> mockObservable = mock(CachingObservable.class);
 		when(mockObservable.getValue()).thenReturn(value);
 		
 		// Object we are really testing
@@ -78,7 +78,7 @@ public class InitialiseOnSubscribeObservableTest {
 		//Arrange
 		TestableObservable<String> testableObservable = new TestableObservable<>();
 		
-		InitialisableObserver<String> mockObserver = (InitialisableObserver<String>) mock(InitialisableObserver.class);
+		InitialisableObserver<String> mockObserver = mock(InitialisableObserver.class);
 		
 		InitialiseOnSubscribeObservable<String> initObservable = new InitialiseOnSubscribeObservable<>(testableObservable);
 		
@@ -102,7 +102,7 @@ public class InitialiseOnSubscribeObservableTest {
 		//Arrange
 		TestableObservable<String> testableObservable = new TestableObservable<>();
 		
-		InitialisableObserver<String> mockObserver = (InitialisableObserver<String>) mock(InitialisableObserver.class);
+		InitialisableObserver<String> mockObserver = mock(InitialisableObserver.class);
 		
 		InitialiseOnSubscribeObservable<String> initObservable = new InitialiseOnSubscribeObservable<>(testableObservable);
 		
@@ -122,7 +122,7 @@ public class InitialiseOnSubscribeObservableTest {
 		//Arrange
 		TestableObservable<String> testableObservable = new TestableObservable<>();
 		
-		InitialisableObserver<String> mockObserver = (InitialisableObserver<String>) mock(InitialisableObserver.class);
+		InitialisableObserver<String> mockObserver = mock(InitialisableObserver.class);
 		
 		InitialiseOnSubscribeObservable<String> initObservable = new InitialiseOnSubscribeObservable<>(testableObservable);
 		
@@ -143,8 +143,8 @@ public class InitialiseOnSubscribeObservableTest {
 	public void test_InitialiseOnSubscribeObservable_with_multiple_observers() {
 		//Arrange	
 		// Two mock observers
-		InitialisableObserver<String> mockObserverOne = (InitialisableObserver<String>) mock(InitialisableObserver.class);
-		InitialisableObserver<String> mockObserverTwo = (InitialisableObserver<String>) mock(InitialisableObserver.class);
+		InitialisableObserver<String> mockObserverOne = mock(InitialisableObserver.class);
+		InitialisableObserver<String> mockObserverTwo = mock(InitialisableObserver.class);
 		
 		// Mock observable with stub method
 		TestableObservable<String> testableObservable = new TestableObservable<>();
@@ -170,8 +170,8 @@ public class InitialiseOnSubscribeObservableTest {
 	public void test_InitialiseOnSubscribeObservable_cancel_subscription_with_multiple_observers() {
 		//Arrange	
 		// Two mock observers
-		InitialisableObserver<String> mockObserverOne = (InitialisableObserver<String>) mock(InitialisableObserver.class);
-		InitialisableObserver<String> mockObserverTwo = (InitialisableObserver<String>) mock(InitialisableObserver.class);
+		InitialisableObserver<String> mockObserverOne = mock(InitialisableObserver.class);
+		InitialisableObserver<String> mockObserverTwo = mock(InitialisableObserver.class);
 		
 		// Mock observable with stub method
 		TestableObservable<String> testableObservable = new TestableObservable<>();
@@ -197,7 +197,7 @@ public class InitialiseOnSubscribeObservableTest {
 	@Test
 	public void test_InitialiseOnSubscribeObservable_cancel_subscription_to_observable() {
 		//Arrange
-		InitialisableObserver<String> mockObserver = (InitialisableObserver<String>) mock(InitialisableObserver.class);
+		InitialisableObserver<String> mockObserver = mock(InitialisableObserver.class);
 		
 		TestableObservable<String> testableObservable = new TestableObservable<>();
 		
@@ -218,7 +218,7 @@ public class InitialiseOnSubscribeObservableTest {
 		//Arrange
 		Exception exception = new Exception();
 		
-		InitialisableObserver<String> mockObserver = (InitialisableObserver<String>) mock(InitialisableObserver.class);
+		InitialisableObserver<String> mockObserver = mock(InitialisableObserver.class);
 		
 		TestableObservable<String> testableObservable = new TestableObservable<>();
 		testableObservable.setError(exception);
@@ -236,7 +236,7 @@ public class InitialiseOnSubscribeObservableTest {
 	public void test_InitialiseOnSubscribeObservable_adding_observer_more_than_once() {
 		//Arrange
 		
-		InitialisableObserver<String> mockObserver = (InitialisableObserver<String>) mock(InitialisableObserver.class);
+		InitialisableObserver<String> mockObserver = mock(InitialisableObserver.class);
 		
 		TestableObservable<String> testableObservable = new TestableObservable<>();
 		
@@ -257,7 +257,7 @@ public class InitialiseOnSubscribeObservableTest {
 	public void test_InitialiseOnSubscribeObservable_setting_null_value_does_not_trigger_onValue_call() {
 		//Arrange
 		
-		InitialisableObserver<String> mockObserver = (InitialisableObserver<String>) mock(InitialisableObserver.class);
+		InitialisableObserver<String> mockObserver = mock(InitialisableObserver.class);
 		
 		TestableObservable<String> testableObservable = new TestableObservable<>();
 		

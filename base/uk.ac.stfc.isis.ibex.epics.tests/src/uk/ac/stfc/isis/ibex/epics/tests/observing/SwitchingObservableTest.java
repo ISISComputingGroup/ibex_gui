@@ -1,20 +1,18 @@
 package uk.ac.stfc.isis.ibex.epics.tests.observing;
 
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import uk.ac.stfc.isis.ibex.epics.observing.BaseCachingObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.CachingObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.InitialisableObserver;
-import uk.ac.stfc.isis.ibex.epics.observing.InitialiseOnSubscribeObservable;
-import uk.ac.stfc.isis.ibex.epics.observing.Subscription;
 import uk.ac.stfc.isis.ibex.epics.observing.SwitchableObservable;
-import uk.ac.stfc.isis.ibex.epics.observing.Unsubscriber;
-
-import java.lang.String;
 
 // A lot of unchecked type conversions for mocking purposes
 @SuppressWarnings("unchecked")
@@ -37,13 +35,13 @@ public class SwitchingObservableTest {
 	public void test_SwitchingObservable_switch() {
 		//Arrange	
 		// Mock observer, templated objects need cast
-		InitialisableObserver<String> mockObserver = (InitialisableObserver<String>) mock(InitialisableObserver.class);
+		InitialisableObserver<String> mockObserver = mock(InitialisableObserver.class);
 		
 		// Mock observables with stub methods returning different values
-		CachingObservable<String> mockObservableOne = (CachingObservable<String>) mock(CachingObservable.class);
+		CachingObservable<String> mockObservableOne = mock(CachingObservable.class);
 		when(mockObservableOne.getValue()).thenReturn(value);
 		
-		CachingObservable<String> mockObservableTwo = (CachingObservable<String>) mock(CachingObservable.class);
+		CachingObservable<String> mockObservableTwo = mock(CachingObservable.class);
 		when(mockObservableTwo.getValue()).thenReturn(newValue);
 		
 		// Object we are really testing
@@ -55,7 +53,8 @@ public class SwitchingObservableTest {
 		switchableObservable.switchTo(mockObservableTwo);
 		
 		//Assert
-		// The initialisable observer has its onConnectionChanged called twice and onValue called once
+		// The initialisable observer has its onConnectionChanged called twice and onValue called once.
+		// Note here that the switch calls onValue on the observer, but the initialise does not.
 		verify(mockObserver, times(2)).onConnectionChanged(false);
 		verify(mockObserver, times(1)).onValue(newValue);
 		
@@ -67,13 +66,13 @@ public class SwitchingObservableTest {
 	public void test_SwitchingObservable_switch_to_object_with_null_value() {
 		//Arrange	
 		// Mock observer, templated objects need cast
-		InitialisableObserver<String> mockObserver = (InitialisableObserver<String>) mock(InitialisableObserver.class);
+		InitialisableObserver<String> mockObserver = mock(InitialisableObserver.class);
 		
 		// Mock observables with stub methods returning different values
-		CachingObservable<String> mockObservableOne = (CachingObservable<String>) mock(CachingObservable.class);
+		CachingObservable<String> mockObservableOne = mock(CachingObservable.class);
 		when(mockObservableOne.getValue()).thenReturn(value);
 		
-		CachingObservable<String> mockObservableTwo = (CachingObservable<String>) mock(CachingObservable.class);
+		CachingObservable<String> mockObservableTwo = mock(CachingObservable.class);
 		when(mockObservableTwo.getValue()).thenReturn(null);
 		
 		// Object we are really testing
