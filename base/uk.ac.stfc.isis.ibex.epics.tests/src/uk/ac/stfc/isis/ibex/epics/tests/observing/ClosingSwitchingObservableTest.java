@@ -22,7 +22,6 @@ package uk.ac.stfc.isis.ibex.epics.tests.observing;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
-import org.junit.Before;
 import org.junit.Test;
 
 import uk.ac.stfc.isis.ibex.epics.observing.ClosableCachingObservable;
@@ -31,35 +30,25 @@ import uk.ac.stfc.isis.ibex.epics.observing.InitialisableObserver;
 
 // A lot of unchecked type conversions for mocking purposes
 @SuppressWarnings("unchecked")
-/**
- * Test for SwitchingObservable. See InitialisOnSubscribeObservableTest for more test touching
- * the higher observable classes.
- */
 public class ClosingSwitchingObservableTest {
 	
-	private String value;
-	private String newValue;
-	
-	@Before
-	public void setUp() {
-		value = "value";
-		newValue = "new value";
-	}
+	private static final String value = "value";
+	private static final String newValue =  "new value";
 	
 	@Test
 	public void test_ClosableSwitchableObservable_close_source() {
-		//Arrange	
-		// Mock observer, templated objects need cast
+		// Arrange
+		// Mock observer
 		InitialisableObserver<String> mockObserver = mock(InitialisableObserver.class);
 		
-		// Mock observable
+		// Mock observable, that has a stub for getValue()
 		ClosableCachingObservable<String> mockObservable = mock(ClosableCachingObservable.class);
 		when(mockObservable.getValue()).thenReturn(value);
 		
 		// Object we are really testing
 		ClosingSwitchableObservable<String> switchableObservable = new ClosingSwitchableObservable<>(mockObservable);
 		
-		//Act
+		// Act
 		switchableObservable.subscribe(mockObserver);
 		switchableObservable.close();
 		
@@ -76,7 +65,7 @@ public class ClosingSwitchingObservableTest {
 	@Test
 	public void test_ClosableSwitchableObservable_switch_closes_observable() {
 		//Arrange	
-		// Mock observer, templated objects need cast
+		// Mock observer
 		InitialisableObserver<String> mockObserver = mock(InitialisableObserver.class);
 		
 		// Mock observables with stub methods returning different values
@@ -86,7 +75,7 @@ public class ClosingSwitchingObservableTest {
 		ClosableCachingObservable<String> mockObservableTwo = mock(ClosableCachingObservable.class);
 		when(mockObservableTwo.getValue()).thenReturn(newValue);
 		
-		// Object we are really testing
+		// Object we are really testing, subscribed to mockObservableOne
 		ClosingSwitchableObservable<String> switchableObservable = new ClosingSwitchableObservable<>(mockObservableOne);
 		
 		//Act

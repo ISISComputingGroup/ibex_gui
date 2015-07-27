@@ -41,53 +41,43 @@ import uk.ac.stfc.isis.ibex.epics.observing.Pair;
  */
 public class ObservablePairTest {
 	
-	private String stringValue;
-	private String newStringValue;
-	private Integer integerValue;
-	private Integer newIntegerValue;
+	private final static String stringValue = "value";
+	private final static String newStringValue = "new value";
+	private final static Integer integerValue = 314;
+	private final static Integer newIntegerValue = 413;
 	
 	@Captor ArgumentCaptor<Pair<String, Integer>> pairCaptor;
 	
 	@Before
-	public void setUp() {
-		stringValue = "value";
-		newStringValue = "new value";
-		integerValue = 314;
-		newIntegerValue = 413;
-		
+	public void setUp() {		
 		MockitoAnnotations.initMocks(this);
 	}
 	
 	@Test
 	public void test_ObservablePair_updates_first_then_second() {
 		//Arrange	
-		// Mock observer, templated objects need cast
 		InitialisableObserver<Pair<String, Integer>> mockObserver = mock(InitialisableObserver.class);
 		
-		// Testable observable with String type
+		// A test observable that has public set methods with String type, looked at by another observer
 		TestableObservable<String> testableStringObservable = new TestableObservable<>();
 		testableStringObservable.setValue(stringValue);
-		// InitialiseOnSubscribeObservable looking at the testable observable
 		InitialiseOnSubscribeObservable<String> initStringObservable = new InitialiseOnSubscribeObservable<>(testableStringObservable);
 		
-		// Testable observable with integer type
+		// A test observable that has public set methods with integer type, looked at by another observer
 		TestableObservable<Integer> testableIntegerObservable = new TestableObservable<Integer>();
 		testableIntegerObservable.setValue(integerValue);
-		// InitialiseOnSubscribeObservable looking at the testable observable
 		InitialiseOnSubscribeObservable<Integer> initIntegerObservable = new InitialiseOnSubscribeObservable<>(testableIntegerObservable);
 		
 		// Object we are really testing
 		ObservablePair<String, Integer> observablePair = new ObservablePair<String, Integer>(initStringObservable, initIntegerObservable);
-		observablePair.subscribe(mockObserver);
 		
 		//Act
+		observablePair.subscribe(mockObserver);
 		testableStringObservable.setValue(newStringValue);
 		testableIntegerObservable.setValue(newIntegerValue);
 		
 		//Assert
-		// The observer is called in the following way
-		verify(mockObserver, times(0)).update(new Pair<String, Integer>(null, null), null, false);
-		
+		// The observer has its on value method called twice, and has the new values
 		verify(mockObserver, times(2)).onValue(pairCaptor.capture());
 		assertEquals(newStringValue, pairCaptor.getValue().first);
 		assertEquals(newIntegerValue, pairCaptor.getValue().second);
@@ -96,33 +86,28 @@ public class ObservablePairTest {
 	@Test
 	public void test_ObservablePair_updates_second_then_first() {
 		//Arrange	
-		// Mock observer, templated objects need cast
 		InitialisableObserver<Pair<String, Integer>> mockObserver = mock(InitialisableObserver.class);
 		
-		// Testable observable with String type
+		// A test observable that has public set methods with String type, looked at by another observer
 		TestableObservable<String> testableStringObservable = new TestableObservable<>();
 		testableStringObservable.setValue(stringValue);
-		// InitialiseOnSubscribeObservable looking at the testable observable
 		InitialiseOnSubscribeObservable<String> initStringObservable = new InitialiseOnSubscribeObservable<>(testableStringObservable);
 		
-		// Testable observable with integer type
+		// A test observable that has public set methods with integer type, looked at by another observer
 		TestableObservable<Integer> testableIntegerObservable = new TestableObservable<Integer>();
 		testableIntegerObservable.setValue(integerValue);
-		// InitialiseOnSubscribeObservable looking at the testable observable
 		InitialiseOnSubscribeObservable<Integer> initIntegerObservable = new InitialiseOnSubscribeObservable<>(testableIntegerObservable);
 		
 		// Object we are really testing
 		ObservablePair<String, Integer> observablePair = new ObservablePair<String, Integer>(initStringObservable, initIntegerObservable);
-		observablePair.subscribe(mockObserver);
 		
 		//Act
+		observablePair.subscribe(mockObserver);
 		testableIntegerObservable.setValue(newIntegerValue);
 		testableStringObservable.setValue(newStringValue);
 		
 		//Assert
-		// The observer is called in the following way
-		verify(mockObserver, times(0)).update(new Pair<String, Integer>(null, null), null, false);
-		
+		// The observer has its on value method called twice, and has the new values
 		verify(mockObserver, times(2)).onValue(pairCaptor.capture());
 		assertEquals(newStringValue, pairCaptor.getValue().first);
 		assertEquals(newIntegerValue, pairCaptor.getValue().second);
@@ -130,27 +115,24 @@ public class ObservablePairTest {
 	
 	@Test
 	public void test_ObservablePair_cancel_subscription() {
-		//Arrange	
-		// Mock observer, templated objects need cast
+		//Arrange
 		InitialisableObserver<Pair<String, Integer>> mockObserver = mock(InitialisableObserver.class);
 		
-		// Testable observable with String type
+		// A test observable that has public set methods with String type, looked at by another observer
 		TestableObservable<String> testableStringObservable = new TestableObservable<>();
 		testableStringObservable.setValue(stringValue);
-		// InitialiseOnSubscribeObservable looking at the testable observable
 		InitialiseOnSubscribeObservable<String> initStringObservable = new InitialiseOnSubscribeObservable<>(testableStringObservable);
 		
-		// Testable observable with integer type
+		// A test observable that has public set methods with integer type, looked at by another observer
 		TestableObservable<Integer> testableIntegerObservable = new TestableObservable<Integer>();
 		testableIntegerObservable.setValue(integerValue);
-		// InitialiseOnSubscribeObservable looking at the testable observable
 		InitialiseOnSubscribeObservable<Integer> initIntegerObservable = new InitialiseOnSubscribeObservable<>(testableIntegerObservable);
 		
 		// Object we are really testing
 		ObservablePair<String, Integer> observablePair = new ObservablePair<String, Integer>(initStringObservable, initIntegerObservable);
-		observablePair.subscribe(mockObserver);
 		
 		//Act
+		observablePair.subscribe(mockObserver);
 		observablePair.close();
 		testableIntegerObservable.setValue(newIntegerValue);
 		testableStringObservable.setValue(newStringValue);
@@ -168,27 +150,25 @@ public class ObservablePairTest {
 		// Mock observer, templated objects need cast
 		InitialisableObserver<Pair<String, Integer>> mockObserver = mock(InitialisableObserver.class);
 		
-		// Testable observable with String type
+		// A test observable that has public set methods with String type, looked at by another observer
 		TestableObservable<String> testableStringObservable = new TestableObservable<>();
 		testableStringObservable.setValue(stringValue);
-		// InitialiseOnSubscribeObservable looking at the testable observable
 		InitialiseOnSubscribeObservable<String> initStringObservable = new InitialiseOnSubscribeObservable<>(testableStringObservable);
 		
-		// Testable observable with integer type
+		// A test observable that has public set methods with integer type, looked at by another observer
 		TestableObservable<Integer> testableIntegerObservable = new TestableObservable<Integer>();
 		testableIntegerObservable.setValue(integerValue);
-		// InitialiseOnSubscribeObservable looking at the testable observable
 		InitialiseOnSubscribeObservable<Integer> initIntegerObservable = new InitialiseOnSubscribeObservable<>(testableIntegerObservable);
 		
 		// Object we are really testing
 		ObservablePair<String, Integer> observablePair = new ObservablePair<>(initStringObservable, initIntegerObservable);
-		observablePair.subscribe(mockObserver);
 		
 		//Act
+		observablePair.subscribe(mockObserver);
 		testableStringObservable.setError(exception);
 		
 		//Assert
-		// Both subscriptions are closed, so no onValue calls
+		// The on error call is passed through
 		verify(mockObserver, times(1)).onError(exception);
 	}
 }

@@ -5,7 +5,7 @@ import uk.ac.stfc.isis.ibex.epics.observing.BaseCachingObservable;
 /**
  * Observable to be used for testing, allows access to setValue, setError and setConnectionChanged methods.
  * 
- * This is final, so no mocking this!
+ * This is final, so no mocking this, or using it outside testing!
  */
 final class TestableObservable<T> extends BaseCachingObservable<T> {
 	@Override

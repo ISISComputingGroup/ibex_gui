@@ -40,32 +40,30 @@ import java.lang.String;
 @SuppressWarnings("unchecked")
 public class ConvertingObservableTest {
 	
-	private Integer value;
-	private String convertedValue;
-	private String exceptionMessage;
+	private static final Integer value = 123;
+	private static final Integer newValue = 456;
+	private static final String convertedValue = "converted value";
+	private static final String newConvertedValue = "new converted value";
+	private static final String exceptionMessage = "converions exception!";
 	
 	@Captor ArgumentCaptor<Exception> exceptionCaptor;
 	
 	@Before
 	public void setUp() {
-		value = 123;
-		convertedValue = "converted value";
-		exceptionMessage = "conversion exception!";
-		
+		// This is to initialise the exceptionCaptor
 		MockitoAnnotations.initMocks(this);
 	}
 	
 	@Test
 	public void test_ConvertingObservable_converts() throws ConversionException {
 		//Arrange	
-		// Mock observer
 		InitialisableObserver<String> mockObserver = mock(InitialisableObserver.class);
 		
-		// Test observables
+		// initObservable is what our ConvertingObservable looks at, and testObservable we can call set methods on
 		TestableObservable<Integer> testObservable = new TestableObservable<>();
 		InitialiseOnSubscribeObservable<Integer> initObservable = new InitialiseOnSubscribeObservable<Integer>(testObservable);
 		
-		// Mock converter, with a stub method
+		// Mock converter, with a stub conversion method
 		Converter<Integer, String> mockConverter = mock(Converter.class);
 		when(mockConverter.convert(value)).thenReturn(convertedValue);
 		
@@ -78,21 +76,20 @@ public class ConvertingObservableTest {
 		testObservable.setValue(value);
 		
 		//Assert
-		// The initialisable observer has its update method called once
+		// The initialisable observer has its update method called once, with the converted value
 		verify(mockObserver, times(1)).onValue(convertedValue);
 	}
 	
 	@Test
 	public void test_ConvertingObservable_with_conversion_exception() throws ConversionException {
-		//Arrange	
-		// Mock observer
+		//Arrange
 		InitialisableObserver<String> mockObserver = mock(InitialisableObserver.class);
 		
-		// Test observables
+		// initObservable is what our ConvertingObservable looks at, and testObservable we can call set methods on
 		TestableObservable<Integer> testObservable = new TestableObservable<>();
 		InitialiseOnSubscribeObservable<Integer> initObservable = new InitialiseOnSubscribeObservable<Integer>(testObservable);
 		
-		// Mock converter, with a stub method
+		// Mock converter, with a stub conversion method
 		Converter<Integer, String> mockConverter = mock(Converter.class);
 		when(mockConverter.convert(value)).thenThrow(new ConversionException(exceptionMessage));
 		
@@ -105,9 +102,69 @@ public class ConvertingObservableTest {
 		testObservable.setValue(value);
 		
 		//Assert
-		// The initialisable observer has its update method called once
+		// The initialisable observer has its onError message called once, for the ConversionException
 		verify(mockObserver, times(0)).onValue(anyString());
 		verify(mockObserver, times(1)).onError(exceptionCaptor.capture());
 		assertEquals(exceptionMessage, exceptionCaptor.getValue().getMessage());
+	}
+	
+	@Test
+	public void test_ConvertingObservable_observable_has_error() throws ConversionException {
+		//Arrange
+		Exception exception = new Exception();
+		
+		InitialisableObserver<String> mockObserver = mock(InitialisableObserver.class);
+		
+		// initObservable is what our ConvertingObservable looks at, and testObservable we can call set methods on
+		TestableObservable<Integer> testObservable = new TestableObservable<>();
+		InitialiseOnSubscribeObservable<Integer> initObservable = new InitialiseOnSubscribeObservable<Integer>(testObservable);
+		
+		// Mock converter, with a stub conversion method
+		Converter<Integer, String> mockConverter = mock(Converter.class);
+		when(mockConverter.convert(value)).thenReturn(convertedValue);
+		
+		// Object we are really testing
+		ConvertingObservable<Integer, String> convertObservable = new ConvertingObservable<>(initObservable, mockConverter);
+		
+		//Act
+		convertObservable.subscribe(mockObserver);
+		convertObservable.setSource(initObservable);
+		testObservable.setError(exception);
+		
+		//Assert
+		// The initialisable observer has its update method called once
+		verify(mockObserver, times(1)).onError(exception);
+	}
+	
+	@Test
+	public void test_ConvertingObservable_closes_connection() throws ConversionException {
+		//Arrange	
+		// Mock observer
+		InitialisableObserver<String> mockObserver = mock(InitialisableObserver.class);
+		
+		// initObservable is what our ConvertingObservable looks at, and testObservable we can call set methods on
+		TestableObservable<Integer> testObservable = new TestableObservable<>();
+		InitialiseOnSubscribeObservable<Integer> initObservable = new InitialiseOnSubscribeObservable<Integer>(testObservable);
+		
+		// Mock converter, with a stub conversion method
+		Converter<Integer, String> mockConverter = mock(Converter.class);
+		when(mockConverter.convert(value)).thenReturn(convertedValue);
+		when(mockConverter.convert(newValue)).thenReturn(newConvertedValue);
+		
+		// Object we are really testing
+		ConvertingObservable<Integer, String> convertObservable = new ConvertingObservable<>(initObservable, mockConverter);
+		
+		//Act
+		// Subscribe to the observable, then close the converting observable
+		convertObservable.subscribe(mockObserver);
+		convertObservable.setSource(initObservable);
+		testObservable.setValue(value);
+		convertObservable.close();
+		testObservable.setValue(newValue);
+		
+		//Assert
+		// The initialisable observer has its update method called once, and not for the new value
+		verify(mockObserver, times(1)).onValue(convertedValue);
+		verify(mockObserver, times(0)).onValue(newConvertedValue);
 	}
 }

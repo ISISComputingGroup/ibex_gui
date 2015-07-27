@@ -22,7 +22,6 @@ package uk.ac.stfc.isis.ibex.epics.tests.observing;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
-import org.junit.Before;
 import org.junit.Test;
 
 import uk.ac.stfc.isis.ibex.epics.observing.CachingObservable;
@@ -37,19 +36,12 @@ import uk.ac.stfc.isis.ibex.epics.observing.SwitchableObservable;
  */
 public class SwitchableObservableTest {
 	
-	private String value;
-	private String newValue;
-	
-	@Before
-	public void setUp() {
-		value = "value";
-		newValue = "new value";
-	}
+	private final static String value = "value";
+	private final static String newValue = "new value";
 	
 	@Test
 	public void test_SwitchableObservable_switch() {
 		//Arrange	
-		// Mock observer, templated objects need cast
 		InitialisableObserver<String> mockObserver = mock(InitialisableObserver.class);
 		
 		// Mock observables with stub methods returning different values
@@ -79,8 +71,7 @@ public class SwitchableObservableTest {
 	
 	@Test
 	public void test_SwitchableObservable_switch_to_object_with_null_value() {
-		//Arrange	
-		// Mock observer, templated objects need cast
+		//Arrange
 		InitialisableObserver<String> mockObserver = mock(InitialisableObserver.class);
 		
 		// Mock observables with stub methods returning different values
