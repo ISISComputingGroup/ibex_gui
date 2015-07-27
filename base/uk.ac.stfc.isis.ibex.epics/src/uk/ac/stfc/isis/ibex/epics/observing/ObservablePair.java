@@ -24,7 +24,6 @@ import uk.ac.stfc.isis.ibex.epics.observing.BaseObserver;
 import uk.ac.stfc.isis.ibex.epics.observing.InitialisableObserver;
 import uk.ac.stfc.isis.ibex.epics.observing.InitialiseOnSubscribeObservable;
 
-
 /**
  * Links together two related observables.
  *

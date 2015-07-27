@@ -25,7 +25,6 @@ import static org.mockito.Mockito.*;
 import org.junit.Before;
 import org.junit.Test;
 
-import uk.ac.stfc.isis.ibex.epics.observing.BaseCachingObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.CachingObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.InitialisableObserver;
 import uk.ac.stfc.isis.ibex.epics.observing.InitialiseOnSubscribeObservable;
@@ -40,24 +39,6 @@ public class InitialiseOnSubscribeObservableTest {
 	
 	private String value;
 	private String newValue;
-	
-	// We need to do this to get access to the setters for testing
-	class TestableObservable<T> extends BaseCachingObservable<T> {
-		@Override
-		public void setValue(T value) {
-			super.setValue(value);
-		}
-	
-		@Override
-		public void setError(Exception e) {
-			super.setError(e);
-		}
-		
-		@Override
-		public void setConnectionChanged(boolean isConnected) {
-			super.setConnectionChanged(isConnected);
-		}
-	};
 	
 	@Before
 	public void setUp() {
