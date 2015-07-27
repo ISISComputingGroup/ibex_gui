@@ -20,12 +20,6 @@
 			<layout>p2</layout>
 			<url>${kepler-updates-repo.url}</url>
 		</repository>
-		<repository>
-			<id>orbit-kepler</id>
-			<url>http://download.eclipse.org/tools/orbit/downloads/drops/R20150519210750/repository/</url>
-			<layout>p2</layout>
-		</repository>
-
 	</repositories>
 
 	<build>
@@ -43,15 +37,6 @@
 				<artifactId>target-platform-configuration</artifactId>
 				<version>${tycho.version}</version>
 				<configuration>
-					<dependency-resolution>
-						<extraRequirements>
-							<requirement>
-								<type>eclipse-plugin</type>
-								<id>org.hamcrest</id>
-								<versionRange>0.0.0</versionRange>
-							</requirement>
-						</extraRequirements>
-					</dependency-resolution>
 					<target>
 						<artifact>
 							<groupId>${project.groupId}</groupId>
