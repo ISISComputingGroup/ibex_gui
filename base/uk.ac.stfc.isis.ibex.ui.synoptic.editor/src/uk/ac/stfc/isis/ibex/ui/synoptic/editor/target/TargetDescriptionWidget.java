@@ -32,11 +32,13 @@ public class TargetDescriptionWidget extends Composite {
 				if (component != null) {
 					// For back-compatibility reasons the name actually might be
 					// the path
-					String name = Opi.getDefault().descriptionsProvider().guessOpiName(component.target().name());
-					OpiDescription opi = Opi.getDefault().descriptionsProvider().getDescription(name);
-					if (opi != null) {
-						txtDescription.setText(generateDescription(opi));
-						return;
+					if (component.target() != null && component.target().name() != null) {
+						String name = Opi.getDefault().descriptionsProvider().guessOpiName(component.target().name());
+						OpiDescription opi = Opi.getDefault().descriptionsProvider().getDescription(name);
+						if (opi != null) {
+							txtDescription.setText(generateDescription(opi));
+							return;
+						}
 					}
 				}
 				txtDescription.setText("");
