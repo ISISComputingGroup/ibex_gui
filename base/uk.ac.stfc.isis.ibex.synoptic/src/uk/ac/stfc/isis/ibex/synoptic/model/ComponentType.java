@@ -45,7 +45,8 @@ public enum ComponentType {
 	JULABO,	
 	EUROTHERM,
 	PINHOLESELECTOR,
-	GONIOMETER (new ViewTarget("Goniometer"));
+	GONIOMETER (new ViewTarget("Goniometer")), 
+	SINGLESTAGE;
 	
 	private Target target;
 

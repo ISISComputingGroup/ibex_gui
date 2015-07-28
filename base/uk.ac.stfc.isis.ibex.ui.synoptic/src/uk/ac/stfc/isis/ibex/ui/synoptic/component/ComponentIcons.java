@@ -64,6 +64,8 @@ public final class ComponentIcons {
 				return icon("ALF Gonio.png");
 //			case PINHOLESELECTOR:
 //				return icon("pinhole_selector.png");
+			case SINGLESTAGE:
+				return icon("single_stage.png");
 			default:
 				return icon("cog.png");
 		}
