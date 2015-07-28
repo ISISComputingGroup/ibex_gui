@@ -180,5 +180,24 @@
 				</macros>
 			</value>
 		</entry>
+		<entry>
+			<key>Caen HV</key>
+			<value>
+				<path>HV/HVMonitorSummaryDisplay.opi</path>
+				<description>Summary Display for Caens (Maintenance of list via the button on this OPI). No Macros required.</description>
+				<macros>
+				</macros>
+			</value>
+		</entry>
+		<entry>
+			<key>Rotating Bench</key>
+			<value>
+				<path></path>
+				<description>Not currently available as an OPI</description>
+				<macros>
+				</macros>
+			</value>
+		</entry>
+		
 	</opis>
 </descriptions>
