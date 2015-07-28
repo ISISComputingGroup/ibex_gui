@@ -41,7 +41,7 @@ public class InitialiseOnSubscribeObservableTest {
 	
 	@Test
 	public void test_InitialiseOnSubscribeObservable_subscription() {
-		//Arrange
+		// Arrange
 		InitialisableObserver<String> mockObserver = mock(InitialisableObserver.class);
 		
 		// Mock observable with stub method for return value
@@ -51,10 +51,10 @@ public class InitialiseOnSubscribeObservableTest {
 		// Object we are really testing
 		InitialiseOnSubscribeObservable<String> initObservable = new InitialiseOnSubscribeObservable<>(mockObservable);
 		
-		//Act
+		// Act
 		Object returned = initObservable.subscribe(mockObserver);
 		
-		//Assert
+		// Assert
 		// The initialisable observer has its update method called once
 		verify(mockObserver, times(1)).update(value, null, false);
 		
@@ -67,8 +67,7 @@ public class InitialiseOnSubscribeObservableTest {
 	
 	@Test
 	public void test_initialise_on_subscribe_observable_on_value_change() {
-		//Arrange
-		
+		// Arrange
 		InitialisableObserver<String> mockObserver = mock(InitialisableObserver.class);
 		
 		// A test observable that has public set methods
@@ -77,13 +76,12 @@ public class InitialiseOnSubscribeObservableTest {
 		// Object we are really testing
 		InitialiseOnSubscribeObservable<String> initObservable = new InitialiseOnSubscribeObservable<>(testableObservable);
 		
-		//Act
+		// Act
 		testableObservable.setValue(value);
 		initObservable.subscribe(mockObserver);
 		testableObservable.setValue(newValue);
 				
-		//Assert
-		
+		// Assert		
 		// The initialisable observer has its update method called once, and on value method once
 		verify(mockObserver, times(1)).update(value, null, false);
 		verify(mockObserver, times(1)).onValue(newValue);
@@ -94,8 +92,7 @@ public class InitialiseOnSubscribeObservableTest {
 	
 	@Test
 	public void test_initialise_on_subscribe_observable_on_connection_changed() {
-		//Arrange
-	
+		// Arrange
 		InitialisableObserver<String> mockObserver = mock(InitialisableObserver.class);
 
 		// A test observable that has public set methods
@@ -104,12 +101,11 @@ public class InitialiseOnSubscribeObservableTest {
 		// Object we are really testing
 		InitialiseOnSubscribeObservable<String> initObservable = new InitialiseOnSubscribeObservable<>(testableObservable);
 		
-		//Act
+		// Act
 		initObservable.subscribe(mockObserver);
 		testableObservable.setConnectionChanged(true);
 				
-		//Assert
-		
+		// Assert
 		// The initialisable observer has its update method called once, and on connection changed once
 		verify(mockObserver, times(1)).update(null, null, false);
 		verify(mockObserver, times(1)).onConnectionChanged(true);
@@ -117,7 +113,7 @@ public class InitialiseOnSubscribeObservableTest {
 	
 	@Test
 	public void test_initialise_on_subscribe_observable_on_error() {
-		//Arrange
+		// Arrange
 		InitialisableObserver<String> mockObserver = mock(InitialisableObserver.class);
 
 		// A test observable that has public set methods
@@ -128,12 +124,11 @@ public class InitialiseOnSubscribeObservableTest {
 		
 		Exception exception = new Exception();
 		
-		//Act
+		// Act
 		initObservable.subscribe(mockObserver);
 		testableObservable.setError(exception);
 				
-		//Assert
-		
+		// Assert
 		// The initialisable observer has its update method called once, and on error once
 		verify(mockObserver, times(1)).update(null, null, false);
 		verify(mockObserver, times(1)).onError(exception);
@@ -141,7 +136,7 @@ public class InitialiseOnSubscribeObservableTest {
 	
 	@Test
 	public void test_InitialiseOnSubscribeObservable_with_multiple_observers() {
-		//Arrange	
+		// Arrange	
 		// Two mock observers
 		InitialisableObserver<String> mockObserverOne = mock(InitialisableObserver.class);
 		InitialisableObserver<String> mockObserverTwo = mock(InitialisableObserver.class);
@@ -152,13 +147,13 @@ public class InitialiseOnSubscribeObservableTest {
 		// Object we are really testing
 		InitialiseOnSubscribeObservable<String> initObservable = new InitialiseOnSubscribeObservable<>(testableObservable);
 		
-		//Act
+		// Act
 		testableObservable.setValue(value);
 		initObservable.subscribe(mockObserverOne);
 		initObservable.subscribe(mockObserverTwo);
 		testableObservable.setValue(newValue);
 		
-		//Assert
+		// Assert
 		// Both observables are initialised with the update method, and on value is called once
 		verify(mockObserverOne, times(1)).update(value, null, false);
 		verify(mockObserverTwo, times(1)).update(value, null, false);
@@ -168,7 +163,7 @@ public class InitialiseOnSubscribeObservableTest {
 	
 	@Test
 	public void test_InitialiseOnSubscribeObservable_cancel_subscription_to_observable() {
-		//Arrange
+		// Arrange
 		InitialisableObserver<String> mockObserver = mock(InitialisableObserver.class);
 
 		// A test observable that has public set methods
@@ -177,12 +172,12 @@ public class InitialiseOnSubscribeObservableTest {
 		// Object we are really testing
 		InitialiseOnSubscribeObservable<String> initObservable = new InitialiseOnSubscribeObservable<>(testableObservable);
 		
-		//Act
+		// Act
 		initObservable.subscribe(mockObserver);
 		initObservable.close();
 		testableObservable.setValue(newValue);
 		
-		//Assert
+		// Assert
 		// The observer has unsubscribed, so does not have on value method called
 		verify(mockObserver, times(1)).update(null, null, false);
 		verify(mockObserver, times(0)).onValue(any(String.class));
@@ -190,7 +185,7 @@ public class InitialiseOnSubscribeObservableTest {
 	
 	@Test
 	public void test_InitialiseOnSubscribeObservable_cancel_subscription_with_multiple_observers() {
-		//Arrange	
+		// Arrange	
 		// Two mock observers
 		InitialisableObserver<String> mockObserverOne = mock(InitialisableObserver.class);
 		InitialisableObserver<String> mockObserverTwo = mock(InitialisableObserver.class);
@@ -201,14 +196,14 @@ public class InitialiseOnSubscribeObservableTest {
 		// Object we are really testing
 		InitialiseOnSubscribeObservable<String> initObservable = new InitialiseOnSubscribeObservable<>(testableObservable);
 		
-		//Act
+		// Act
 		testableObservable.setValue(value);
 		initObservable.subscribe(mockObserverOne);
 		Subscription unsubscriber = initObservable.subscribe(mockObserverTwo);
 		unsubscriber.cancel();
 		testableObservable.setValue(newValue);
 		
-		//Assert
+		// Assert
 		// The first observer has update and on value called once each, the second just on value
 		verify(mockObserverOne, times(1)).update(value, null, false);
 		verify(mockObserverTwo, times(1)).update(value, null, false);
@@ -218,7 +213,7 @@ public class InitialiseOnSubscribeObservableTest {
 	
 	@Test
 	public void test_InitialiseOnSubscribeObservable_subscribe_with_to_observable_with_error() {
-		//Arrange
+		// Arrange
 		Exception exception = new Exception();
 		
 		InitialisableObserver<String> mockObserver = mock(InitialisableObserver.class);
@@ -231,17 +226,17 @@ public class InitialiseOnSubscribeObservableTest {
 		// Object we are really testing		
 		InitialiseOnSubscribeObservable<String> initObservable = new InitialiseOnSubscribeObservable<>(testableObservable);
 		
-		//Act
+		// Act
 		initObservable.subscribe(mockObserver);
 		
-		//Assert
+		// Assert
 		// The observers update method has the exception
 		verify(mockObserver, times(1)).update(null, exception, false);
 	}
 	
 	@Test
 	public void test_InitialiseOnSubscribeObservable_adding_observer_more_than_once() {
-		//Arrange
+		// Arrange
 		InitialisableObserver<String> mockObserver = mock(InitialisableObserver.class);
 
 		// A test observable that has public set methods
@@ -250,12 +245,12 @@ public class InitialiseOnSubscribeObservableTest {
 		// Object we are really testing		
 		InitialiseOnSubscribeObservable<String> initObservable = new InitialiseOnSubscribeObservable<>(testableObservable);
 		
-		//Act
+		// Act
 		initObservable.subscribe(mockObserver);
 		initObservable.subscribe(mockObserver);
 		testableObservable.setValue(newValue);
 		
-		//Assert
+		// Assert
 		// Should have update method called twice...
 		verify(mockObserver, times(2)).update(null, null, false);
 		// ...but on value only once
@@ -264,7 +259,7 @@ public class InitialiseOnSubscribeObservableTest {
 	
 	@Test
 	public void test_InitialiseOnSubscribeObservable_setting_null_value_does_not_trigger_onValue_call() {
-		//Arrange
+		// Arrange
 		InitialisableObserver<String> mockObserver = mock(InitialisableObserver.class);
 
 		// A test observable that has public set methods
@@ -273,11 +268,11 @@ public class InitialiseOnSubscribeObservableTest {
 		// Object we are really testing		
 		InitialiseOnSubscribeObservable<String> initObservable = new InitialiseOnSubscribeObservable<>(testableObservable);
 		
-		//Act
+		// Act
 		initObservable.subscribe(mockObserver);
 		testableObservable.setValue(null);
 		
-		//Assert
+		// Assert
 		// On value method should not be called
 		verify(mockObserver, times(0)).onValue(any(String.class));
 	}

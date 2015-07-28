@@ -16,7 +16,7 @@ public class UnsubscriberTest {
 	
 	@Test
 	public void test_Unsubscriber_cancel() {
-		//Arrange	
+		// Arrange	
 		// Mock observer
 		Observer<String> mockObserver = mock(Observer.class);
 		
@@ -28,12 +28,12 @@ public class UnsubscriberTest {
 		// Object we are really testing
 		Unsubscriber<String> subscription = (Unsubscriber<String>) observable.subscribe(mockObserver);
 		
-		//Act
+		// Act
 		testableObservable.setValue(firstValue);
 		subscription.cancel();
 		testableObservable.setValue(secondValue);
 		
-		//Assert
+		// Assert
 		// The initialisable observer has its update method called once
 		verify(mockObserver, times(1)).onValue(firstValue);
 		verify(mockObserver, times(0)).onValue(secondValue);
@@ -41,7 +41,7 @@ public class UnsubscriberTest {
 	
 	@Test
 	public void test_Unsubscriber_cancelling_twice_does_nothing() {
-		//Arrange	
+		// Arrange	
 		// Mock observer
 		Observer<String> mockObserver = mock(Observer.class);
 		
@@ -53,13 +53,13 @@ public class UnsubscriberTest {
 		// Object we are really testing
 		Unsubscriber<String> subscription = (Unsubscriber<String>) observable.subscribe(mockObserver);
 		
-		//Act
+		// Act
 		testableObservable.setValue(firstValue);
 		subscription.cancel();
 		subscription.cancel();
 		testableObservable.setValue(secondValue);
 		
-		//Assert
+		// Assert
 		// The initialisable observer has its update method called once
 		verify(mockObserver, times(1)).onValue(firstValue);
 		verify(mockObserver, times(0)).onValue(secondValue);

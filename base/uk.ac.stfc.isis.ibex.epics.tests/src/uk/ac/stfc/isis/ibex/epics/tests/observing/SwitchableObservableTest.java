@@ -41,7 +41,7 @@ public class SwitchableObservableTest {
 	
 	@Test
 	public void test_SwitchableObservable_switch() {
-		//Arrange	
+		// Arrange	
 		InitialisableObserver<String> mockObserver = mock(InitialisableObserver.class);
 		
 		// Mock observables with stub methods returning different values
@@ -54,12 +54,12 @@ public class SwitchableObservableTest {
 		// Object we are really testing
 		SwitchableObservable<String> switchableObservable = new SwitchableObservable<>(mockObservableOne);
 		
-		//Act
+		// Act
 		switchableObservable.subscribe(mockObserver);
 		// Do the switch
 		switchableObservable.switchTo(mockObservableTwo);
 		
-		//Assert
+		// Assert
 		// The initialisable observer has its onConnectionChanged called twice and onValue called once.
 		// Note here that the switch calls onValue on the observer, but the initialise does not.
 		verify(mockObserver, times(2)).onConnectionChanged(false);
@@ -71,7 +71,7 @@ public class SwitchableObservableTest {
 	
 	@Test
 	public void test_SwitchableObservable_switch_to_object_with_null_value() {
-		//Arrange
+		// Arrange
 		InitialisableObserver<String> mockObserver = mock(InitialisableObserver.class);
 		
 		// Mock observables with stub methods returning different values
@@ -84,12 +84,12 @@ public class SwitchableObservableTest {
 		// Object we are really testing
 		SwitchableObservable<String> switchableObservable = new SwitchableObservable<>(mockObservableOne);
 		
-		//Act
+		// Act
 		switchableObservable.subscribe(mockObserver);
 		// Do the switch
 		switchableObservable.switchTo(mockObservableTwo);
 		
-		//Assert
+		// Assert
 		// The initialisable observer has its onConnectionChanged called twice and onValue called once
 		verify(mockObserver, times(2)).onConnectionChanged(false);
 		verify(mockObserver, times(0)).onValue(any(String.class));

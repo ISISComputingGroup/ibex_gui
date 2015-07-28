@@ -35,7 +35,7 @@ public class LoggingObserverTest {
 	
 	@Test
 	public void test_LoggingObserver_on_value() {
-		//Arrange
+		// Arrange
 		String value = "value";
 
 		Logger mockLogger = mock(Logger.class);		
@@ -46,18 +46,18 @@ public class LoggingObserverTest {
 		// A test observable that has public set methods
 		TestableObservable<String> testableObservable = new TestableObservable<>();
 		
-		//Act
+		// Act
 		testableObservable.subscribe(loggingObserver);
 		testableObservable.setValue(value);
 		
-		//Assert
+		// Assert
 		// The log message is as expected
 		verify(mockLogger, times(1)).info(id + onValueMessage + value);
 	}
 	
 	@Test
 	public void test_LoggingObserver_on_error() {
-		//Arrange
+		// Arrange
 		Exception exception = new Exception();
 		
 		// The LoggingObserver to test
@@ -66,19 +66,19 @@ public class LoggingObserverTest {
 		
 		// A test observable that has public set methods
 		TestableObservable<String> testableObservable = new TestableObservable<>();
-		
-		//Act
+		 
+		// Act
 		testableObservable.subscribe(loggingObserver);
 		testableObservable.setError(exception);
 		
-		//Assert
+		// Assert
 		// The log message is as expected
 		verify(mockLogger, times(1)).error(id + onErrorMessage + exception);
 	}
 	
 	@Test
 	public void test_LoggingObserver_on_connection_changed() {
-		//Arrange
+		// Arrange
 		
 		boolean connectionChanged = true;
 		
@@ -89,11 +89,11 @@ public class LoggingObserverTest {
 		// A test observable that has public set methods
 		TestableObservable<String> testableObservable = new TestableObservable<>();
 		
-		//Act
+		// Act
 		testableObservable.subscribe(loggingObserver);
 		testableObservable.setConnectionChanged(connectionChanged);
 		
-		//Assert
+		// Assert
 		// The log message is as expected
 		verify(mockLogger, times(1)).info(id + onConnectionChangedMessage + connectionChanged);
 	}

@@ -55,7 +55,7 @@ public class ObservablePairTest {
 	
 	@Test
 	public void test_ObservablePair_updates_first_then_second() {
-		//Arrange	
+		// Arrange	
 		InitialisableObserver<Pair<String, Integer>> mockObserver = mock(InitialisableObserver.class);
 		
 		// A test observable that has public set methods with String type, looked at by another observer
@@ -71,12 +71,12 @@ public class ObservablePairTest {
 		// Object we are really testing
 		ObservablePair<String, Integer> observablePair = new ObservablePair<String, Integer>(initStringObservable, initIntegerObservable);
 		
-		//Act
+		// Act
 		observablePair.subscribe(mockObserver);
 		testableStringObservable.setValue(newStringValue);
 		testableIntegerObservable.setValue(newIntegerValue);
 		
-		//Assert
+		// Assert
 		// The observer has its on value method called twice, and has the new values
 		verify(mockObserver, times(2)).onValue(pairCaptor.capture());
 		assertEquals(newStringValue, pairCaptor.getValue().first);
@@ -85,7 +85,7 @@ public class ObservablePairTest {
 	
 	@Test
 	public void test_ObservablePair_updates_second_then_first() {
-		//Arrange	
+		// Arrange	
 		InitialisableObserver<Pair<String, Integer>> mockObserver = mock(InitialisableObserver.class);
 		
 		// A test observable that has public set methods with String type, looked at by another observer
@@ -101,12 +101,12 @@ public class ObservablePairTest {
 		// Object we are really testing
 		ObservablePair<String, Integer> observablePair = new ObservablePair<String, Integer>(initStringObservable, initIntegerObservable);
 		
-		//Act
+		// Act
 		observablePair.subscribe(mockObserver);
 		testableIntegerObservable.setValue(newIntegerValue);
 		testableStringObservable.setValue(newStringValue);
 		
-		//Assert
+		// Assert
 		// The observer has its on value method called twice, and has the new values
 		verify(mockObserver, times(2)).onValue(pairCaptor.capture());
 		assertEquals(newStringValue, pairCaptor.getValue().first);
@@ -115,7 +115,7 @@ public class ObservablePairTest {
 	
 	@Test
 	public void test_ObservablePair_cancel_subscription() {
-		//Arrange
+		// Arrange
 		InitialisableObserver<Pair<String, Integer>> mockObserver = mock(InitialisableObserver.class);
 		
 		// A test observable that has public set methods with String type, looked at by another observer
@@ -131,20 +131,20 @@ public class ObservablePairTest {
 		// Object we are really testing
 		ObservablePair<String, Integer> observablePair = new ObservablePair<String, Integer>(initStringObservable, initIntegerObservable);
 		
-		//Act
+		// Act
 		observablePair.subscribe(mockObserver);
 		observablePair.close();
 		testableIntegerObservable.setValue(newIntegerValue);
 		testableStringObservable.setValue(newStringValue);
 		
-		//Assert
+		// Assert
 		// Both subscriptions are closed, so no onValue calls
 		verify(mockObserver, times(0)).onValue(any(Pair.class));
 	}
 	
 	@Test
 	public void test_ObservablePair_on_error() {
-		//Arrange
+		// Arrange
 		Exception exception = new Exception();
 		
 		// Mock observer, templated objects need cast
@@ -163,11 +163,11 @@ public class ObservablePairTest {
 		// Object we are really testing
 		ObservablePair<String, Integer> observablePair = new ObservablePair<>(initStringObservable, initIntegerObservable);
 		
-		//Act
+		// Act
 		observablePair.subscribe(mockObserver);
 		testableStringObservable.setError(exception);
 		
-		//Assert
+		// Assert
 		// The on error call is passed through
 		verify(mockObserver, times(1)).onError(exception);
 	}
