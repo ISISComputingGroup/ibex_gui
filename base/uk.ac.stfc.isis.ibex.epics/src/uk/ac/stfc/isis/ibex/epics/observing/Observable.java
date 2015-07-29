@@ -25,5 +25,5 @@ package uk.ac.stfc.isis.ibex.epics.observing;
  *
  */
 public interface Observable<T> {
-	Subscription subscribe(Observer<T> observer);
+	Subscription addObserver(Observer<T> observer);
 }

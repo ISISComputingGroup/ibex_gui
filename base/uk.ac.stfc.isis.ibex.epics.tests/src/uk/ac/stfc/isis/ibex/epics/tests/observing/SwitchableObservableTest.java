@@ -29,15 +29,15 @@ import uk.ac.stfc.isis.ibex.epics.observing.InitialisableObserver;
 import uk.ac.stfc.isis.ibex.epics.observing.SwitchableObservable;
 
 // A lot of unchecked type conversions for mocking purposes
-@SuppressWarnings("unchecked")
+@SuppressWarnings({ "unchecked", "checkstyle:methodname" })
 /**
  * Test for SwitchingObservable. See InitialisOnSubscribeObservableTest for more test touching
  * the higher observable classes.
  */
 public class SwitchableObservableTest {
 	
-	private final static String value = "value";
-	private final static String newValue = "new value";
+	private final static String VALUE = "value";
+	private final static String NEW_VALUE = "new value";
 	
 	@Test
 	public void test_SwitchableObservable_switch() {
@@ -46,16 +46,16 @@ public class SwitchableObservableTest {
 		
 		// Mock observables with stub methods returning different values
 		CachingObservable<String> mockObservableOne = mock(CachingObservable.class);
-		when(mockObservableOne.getValue()).thenReturn(value);
+		when(mockObservableOne.getValue()).thenReturn(VALUE);
 		
 		CachingObservable<String> mockObservableTwo = mock(CachingObservable.class);
-		when(mockObservableTwo.getValue()).thenReturn(newValue);
+		when(mockObservableTwo.getValue()).thenReturn(NEW_VALUE);
 		
 		// Object we are really testing
 		SwitchableObservable<String> switchableObservable = new SwitchableObservable<>(mockObservableOne);
 		
 		// Act
-		switchableObservable.subscribe(mockObserver);
+		switchableObservable.addObserver(mockObserver);
 		// Do the switch
 		switchableObservable.switchTo(mockObservableTwo);
 		
@@ -63,10 +63,10 @@ public class SwitchableObservableTest {
 		// The initialisable observer has its onConnectionChanged called twice and onValue called once.
 		// Note here that the switch calls onValue on the observer, but the initialise does not.
 		verify(mockObserver, times(2)).onConnectionChanged(false);
-		verify(mockObserver, times(1)).onValue(newValue);
+		verify(mockObserver, times(1)).onValue(NEW_VALUE);
 		
 		// The SwitchableObservable has the new Obervable's value
-		assertEquals(switchableObservable.getValue(), newValue);
+		assertEquals(switchableObservable.getValue(), NEW_VALUE);
 	}
 	
 	@Test
@@ -76,7 +76,7 @@ public class SwitchableObservableTest {
 		
 		// Mock observables with stub methods returning different values
 		CachingObservable<String> mockObservableOne = mock(CachingObservable.class);
-		when(mockObservableOne.getValue()).thenReturn(value);
+		when(mockObservableOne.getValue()).thenReturn(VALUE);
 		
 		CachingObservable<String> mockObservableTwo = mock(CachingObservable.class);
 		when(mockObservableTwo.getValue()).thenReturn(null);
@@ -85,7 +85,7 @@ public class SwitchableObservableTest {
 		SwitchableObservable<String> switchableObservable = new SwitchableObservable<>(mockObservableOne);
 		
 		// Act
-		switchableObservable.subscribe(mockObserver);
+		switchableObservable.addObserver(mockObserver);
 		// Do the switch
 		switchableObservable.switchTo(mockObservableTwo);
 		
@@ -96,6 +96,6 @@ public class SwitchableObservableTest {
 		
 		// The SwitchableObservable has the old Obervable's value
 		// Might need to think about if this is desirable?
-		assertEquals(switchableObservable.getValue(), value);
+		assertEquals(switchableObservable.getValue(), VALUE);
 	}
 }

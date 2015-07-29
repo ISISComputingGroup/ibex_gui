@@ -34,17 +34,17 @@ import uk.ac.stfc.isis.ibex.epics.observing.ObservablePair;
 import uk.ac.stfc.isis.ibex.epics.observing.Pair;
 
 // A lot of unchecked type conversions for mocking purposes
-@SuppressWarnings("unchecked")
+@SuppressWarnings({ "unchecked", "checkstyle:methodname" })
 /**
  * Test for SwitchingObservable. See InitialisOnSubscribeObservableTest for more test touching
  * the higher observable classes.
  */
 public class ObservablePairTest {
 	
-	private final static String stringValue = "value";
-	private final static String newStringValue = "new value";
-	private final static Integer integerValue = 314;
-	private final static Integer newIntegerValue = 413;
+	private static final String STRING_VALUE = "value";
+	private static final String NEW_STRING_VALUE = "new value";
+	private static final Integer INTEGER_VALUE = 314;
+	private static final Integer NEW_INTEGER_VALUE = 413;
 	
 	@Captor ArgumentCaptor<Pair<String, Integer>> pairCaptor;
 	
@@ -60,27 +60,27 @@ public class ObservablePairTest {
 		
 		// A test observable that has public set methods with String type, looked at by another observer
 		TestableObservable<String> testableStringObservable = new TestableObservable<>();
-		testableStringObservable.setValue(stringValue);
+		testableStringObservable.setValue(STRING_VALUE);
 		InitialiseOnSubscribeObservable<String> initStringObservable = new InitialiseOnSubscribeObservable<>(testableStringObservable);
 		
 		// A test observable that has public set methods with integer type, looked at by another observer
 		TestableObservable<Integer> testableIntegerObservable = new TestableObservable<Integer>();
-		testableIntegerObservable.setValue(integerValue);
+		testableIntegerObservable.setValue(INTEGER_VALUE);
 		InitialiseOnSubscribeObservable<Integer> initIntegerObservable = new InitialiseOnSubscribeObservable<>(testableIntegerObservable);
 		
 		// Object we are really testing
 		ObservablePair<String, Integer> observablePair = new ObservablePair<String, Integer>(initStringObservable, initIntegerObservable);
 		
 		// Act
-		observablePair.subscribe(mockObserver);
-		testableStringObservable.setValue(newStringValue);
-		testableIntegerObservable.setValue(newIntegerValue);
+		observablePair.addObserver(mockObserver);
+		testableStringObservable.setValue(NEW_STRING_VALUE);
+		testableIntegerObservable.setValue(NEW_INTEGER_VALUE);
 		
 		// Assert
 		// The observer has its on value method called twice, and has the new values
 		verify(mockObserver, times(2)).onValue(pairCaptor.capture());
-		assertEquals(newStringValue, pairCaptor.getValue().first);
-		assertEquals(newIntegerValue, pairCaptor.getValue().second);
+		assertEquals(NEW_STRING_VALUE, pairCaptor.getValue().first);
+		assertEquals(NEW_INTEGER_VALUE, pairCaptor.getValue().second);
 	}
 	
 	@Test
@@ -90,27 +90,27 @@ public class ObservablePairTest {
 		
 		// A test observable that has public set methods with String type, looked at by another observer
 		TestableObservable<String> testableStringObservable = new TestableObservable<>();
-		testableStringObservable.setValue(stringValue);
+		testableStringObservable.setValue(STRING_VALUE);
 		InitialiseOnSubscribeObservable<String> initStringObservable = new InitialiseOnSubscribeObservable<>(testableStringObservable);
 		
 		// A test observable that has public set methods with integer type, looked at by another observer
 		TestableObservable<Integer> testableIntegerObservable = new TestableObservable<Integer>();
-		testableIntegerObservable.setValue(integerValue);
+		testableIntegerObservable.setValue(INTEGER_VALUE);
 		InitialiseOnSubscribeObservable<Integer> initIntegerObservable = new InitialiseOnSubscribeObservable<>(testableIntegerObservable);
 		
 		// Object we are really testing
 		ObservablePair<String, Integer> observablePair = new ObservablePair<String, Integer>(initStringObservable, initIntegerObservable);
 		
 		// Act
-		observablePair.subscribe(mockObserver);
-		testableIntegerObservable.setValue(newIntegerValue);
-		testableStringObservable.setValue(newStringValue);
+		observablePair.addObserver(mockObserver);
+		testableIntegerObservable.setValue(NEW_INTEGER_VALUE);
+		testableStringObservable.setValue(NEW_STRING_VALUE);
 		
 		// Assert
 		// The observer has its on value method called twice, and has the new values
 		verify(mockObserver, times(2)).onValue(pairCaptor.capture());
-		assertEquals(newStringValue, pairCaptor.getValue().first);
-		assertEquals(newIntegerValue, pairCaptor.getValue().second);
+		assertEquals(NEW_STRING_VALUE, pairCaptor.getValue().first);
+		assertEquals(NEW_INTEGER_VALUE, pairCaptor.getValue().second);
 	}
 	
 	@Test
@@ -120,22 +120,22 @@ public class ObservablePairTest {
 		
 		// A test observable that has public set methods with String type, looked at by another observer
 		TestableObservable<String> testableStringObservable = new TestableObservable<>();
-		testableStringObservable.setValue(stringValue);
+		testableStringObservable.setValue(STRING_VALUE);
 		InitialiseOnSubscribeObservable<String> initStringObservable = new InitialiseOnSubscribeObservable<>(testableStringObservable);
 		
 		// A test observable that has public set methods with integer type, looked at by another observer
 		TestableObservable<Integer> testableIntegerObservable = new TestableObservable<Integer>();
-		testableIntegerObservable.setValue(integerValue);
+		testableIntegerObservable.setValue(INTEGER_VALUE);
 		InitialiseOnSubscribeObservable<Integer> initIntegerObservable = new InitialiseOnSubscribeObservable<>(testableIntegerObservable);
 		
 		// Object we are really testing
 		ObservablePair<String, Integer> observablePair = new ObservablePair<String, Integer>(initStringObservable, initIntegerObservable);
 		
 		// Act
-		observablePair.subscribe(mockObserver);
+		observablePair.addObserver(mockObserver);
 		observablePair.close();
-		testableIntegerObservable.setValue(newIntegerValue);
-		testableStringObservable.setValue(newStringValue);
+		testableIntegerObservable.setValue(NEW_INTEGER_VALUE);
+		testableStringObservable.setValue(NEW_STRING_VALUE);
 		
 		// Assert
 		// Both subscriptions are closed, so no onValue calls
@@ -152,19 +152,19 @@ public class ObservablePairTest {
 		
 		// A test observable that has public set methods with String type, looked at by another observer
 		TestableObservable<String> testableStringObservable = new TestableObservable<>();
-		testableStringObservable.setValue(stringValue);
+		testableStringObservable.setValue(STRING_VALUE);
 		InitialiseOnSubscribeObservable<String> initStringObservable = new InitialiseOnSubscribeObservable<>(testableStringObservable);
 		
 		// A test observable that has public set methods with integer type, looked at by another observer
 		TestableObservable<Integer> testableIntegerObservable = new TestableObservable<Integer>();
-		testableIntegerObservable.setValue(integerValue);
+		testableIntegerObservable.setValue(INTEGER_VALUE);
 		InitialiseOnSubscribeObservable<Integer> initIntegerObservable = new InitialiseOnSubscribeObservable<>(testableIntegerObservable);
 		
 		// Object we are really testing
 		ObservablePair<String, Integer> observablePair = new ObservablePair<>(initStringObservable, initIntegerObservable);
 		
 		// Act
-		observablePair.subscribe(mockObserver);
+		observablePair.addObserver(mockObserver);
 		testableStringObservable.setError(exception);
 		
 		// Assert

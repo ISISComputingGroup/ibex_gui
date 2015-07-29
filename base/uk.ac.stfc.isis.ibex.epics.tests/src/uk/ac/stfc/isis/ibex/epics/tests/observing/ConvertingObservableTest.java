@@ -34,17 +34,15 @@ import uk.ac.stfc.isis.ibex.epics.observing.ConvertingObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.InitialisableObserver;
 import uk.ac.stfc.isis.ibex.epics.observing.InitialiseOnSubscribeObservable;
 
-import java.lang.String;
-
 // A lot of unchecked type conversions for mocking purposes
-@SuppressWarnings("unchecked")
+@SuppressWarnings({ "unchecked", "checkstyle:methodname" })
 public class ConvertingObservableTest {
 	
-	private static final Integer value = 123;
-	private static final Integer newValue = 456;
-	private static final String convertedValue = "converted value";
-	private static final String newConvertedValue = "new converted value";
-	private static final String exceptionMessage = "converions exception!";
+	private static final Integer VALUE = 123;
+	private static final Integer NEW_VALUE = 456;
+	private static final String CONVERTED_VALUE = "converted value";
+	private static final String NEW_CONVERTED_VALUE = "new converted value";
+	private static final String EXCEPTION_MESSAGE = "converions exception!";
 	
 	@Captor ArgumentCaptor<Exception> exceptionCaptor;
 	
@@ -65,19 +63,19 @@ public class ConvertingObservableTest {
 		
 		// Mock converter, with a stub conversion method
 		Converter<Integer, String> mockConverter = mock(Converter.class);
-		when(mockConverter.convert(value)).thenReturn(convertedValue);
+		when(mockConverter.convert(VALUE)).thenReturn(CONVERTED_VALUE);
 		
 		// Object we are really testing
 		ConvertingObservable<Integer, String> convertObservable = new ConvertingObservable<>(initObservable, mockConverter);
 		
 		//Act
-		convertObservable.subscribe(mockObserver);
+		convertObservable.addObserver(mockObserver);
 		convertObservable.setSource(initObservable);
-		testObservable.setValue(value);
+		testObservable.setValue(VALUE);
 		
 		//Assert
 		// The initialisable observer has its update method called once, with the converted value
-		verify(mockObserver, times(1)).onValue(convertedValue);
+		verify(mockObserver, times(1)).onValue(CONVERTED_VALUE);
 	}
 	
 	@Test
@@ -91,21 +89,21 @@ public class ConvertingObservableTest {
 		
 		// Mock converter, with a stub conversion method
 		Converter<Integer, String> mockConverter = mock(Converter.class);
-		when(mockConverter.convert(value)).thenThrow(new ConversionException(exceptionMessage));
+		when(mockConverter.convert(VALUE)).thenThrow(new ConversionException(EXCEPTION_MESSAGE));
 		
 		// Object we are really testing
 		ConvertingObservable<Integer, String> convertObservable = new ConvertingObservable<>(initObservable, mockConverter);
 		
 		//Act
-		convertObservable.subscribe(mockObserver);
+		convertObservable.addObserver(mockObserver);
 		convertObservable.setSource(initObservable);
-		testObservable.setValue(value);
+		testObservable.setValue(VALUE);
 		
 		//Assert
 		// The initialisable observer has its onError message called once, for the ConversionException
 		verify(mockObserver, times(0)).onValue(anyString());
 		verify(mockObserver, times(1)).onError(exceptionCaptor.capture());
-		assertEquals(exceptionMessage, exceptionCaptor.getValue().getMessage());
+		assertEquals(EXCEPTION_MESSAGE, exceptionCaptor.getValue().getMessage());
 	}
 	
 	@Test
@@ -121,13 +119,13 @@ public class ConvertingObservableTest {
 		
 		// Mock converter, with a stub conversion method
 		Converter<Integer, String> mockConverter = mock(Converter.class);
-		when(mockConverter.convert(value)).thenReturn(convertedValue);
+		when(mockConverter.convert(VALUE)).thenReturn(CONVERTED_VALUE);
 		
 		// Object we are really testing
 		ConvertingObservable<Integer, String> convertObservable = new ConvertingObservable<>(initObservable, mockConverter);
 		
 		//Act
-		convertObservable.subscribe(mockObserver);
+		convertObservable.addObserver(mockObserver);
 		convertObservable.setSource(initObservable);
 		testObservable.setError(exception);
 		
@@ -148,23 +146,23 @@ public class ConvertingObservableTest {
 		
 		// Mock converter, with a stub conversion method
 		Converter<Integer, String> mockConverter = mock(Converter.class);
-		when(mockConverter.convert(value)).thenReturn(convertedValue);
-		when(mockConverter.convert(newValue)).thenReturn(newConvertedValue);
+		when(mockConverter.convert(VALUE)).thenReturn(CONVERTED_VALUE);
+		when(mockConverter.convert(NEW_VALUE)).thenReturn(NEW_CONVERTED_VALUE);
 		
 		// Object we are really testing
 		ConvertingObservable<Integer, String> convertObservable = new ConvertingObservable<>(initObservable, mockConverter);
 		
 		//Act
 		// Subscribe to the observable, then close the converting observable
-		convertObservable.subscribe(mockObserver);
+		convertObservable.addObserver(mockObserver);
 		convertObservable.setSource(initObservable);
-		testObservable.setValue(value);
+		testObservable.setValue(VALUE);
 		convertObservable.close();
-		testObservable.setValue(newValue);
+		testObservable.setValue(NEW_VALUE);
 		
 		//Assert
 		// The initialisable observer has its update method called once, and not for the new value
-		verify(mockObserver, times(1)).onValue(convertedValue);
-		verify(mockObserver, times(0)).onValue(newConvertedValue);
+		verify(mockObserver, times(1)).onValue(CONVERTED_VALUE);
+		verify(mockObserver, times(0)).onValue(NEW_CONVERTED_VALUE);
 	}
 }

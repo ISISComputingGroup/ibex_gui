@@ -51,7 +51,7 @@ public abstract class TransformingObservable<T1, T2> extends BaseCachingObservab
 		cancelSubscription();
 		this.source = source;
 		sourceObserver.update(source.getValue(), source.lastError(), source.isConnected());
-		sourceSubscription = source.subscribe(sourceObserver);
+		sourceSubscription = source.addObserver(sourceObserver);
 	}
 	
 	protected abstract T2 transform(T1 value);

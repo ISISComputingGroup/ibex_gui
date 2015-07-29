@@ -30,14 +30,12 @@ import uk.ac.stfc.isis.ibex.epics.observing.InitialiseOnSubscribeObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.Subscription;
 import uk.ac.stfc.isis.ibex.epics.observing.Unsubscriber;
 
-import java.lang.String;
-
 // A lot of unchecked type conversions for mocking purposes
-@SuppressWarnings("unchecked")
+@SuppressWarnings({ "unchecked", "checkstyle:methodname" })
 public class InitialiseOnSubscribeObservableTest {
 	
-	private static final String value = "value";
-	private static final String newValue = "new value";
+	private static final String VALUE = "value";
+	private static final String NEW_VALUE = "new value";
 	
 	@Test
 	public void test_InitialiseOnSubscribeObservable_subscription() {
@@ -46,7 +44,7 @@ public class InitialiseOnSubscribeObservableTest {
 		
 		// Mock observable with stub method for return value
 		CachingObservable<String> mockObservable = mock(CachingObservable.class);
-		when(mockObservable.getValue()).thenReturn(value);
+		when(mockObservable.getValue()).thenReturn(VALUE);
 		
 		// Object we are really testing
 		InitialiseOnSubscribeObservable<String> initObservable = new InitialiseOnSubscribeObservable<>(mockObservable);
@@ -56,10 +54,10 @@ public class InitialiseOnSubscribeObservableTest {
 		
 		// Assert
 		// The initialisable observer has its update method called once
-		verify(mockObserver, times(1)).update(value, null, false);
+		verify(mockObserver, times(1)).update(VALUE, null, false);
 		
 		// The InitialiseOnSubscribeObservable has the value returned from the mock observable
-		assertEquals(initObservable.getValue(), value);
+		assertEquals(initObservable.getValue(), VALUE);
 		
 		// A Unsubscriber is returned
 		assertEquals(Unsubscriber.class, returned.getClass());
@@ -77,17 +75,17 @@ public class InitialiseOnSubscribeObservableTest {
 		InitialiseOnSubscribeObservable<String> initObservable = new InitialiseOnSubscribeObservable<>(testableObservable);
 		
 		// Act
-		testableObservable.setValue(value);
+		testableObservable.setValue(VALUE);
 		initObservable.subscribe(mockObserver);
-		testableObservable.setValue(newValue);
+		testableObservable.setValue(NEW_VALUE);
 				
 		// Assert		
 		// The initialisable observer has its update method called once, and on value method once
-		verify(mockObserver, times(1)).update(value, null, false);
-		verify(mockObserver, times(1)).onValue(newValue);
+		verify(mockObserver, times(1)).update(VALUE, null, false);
+		verify(mockObserver, times(1)).onValue(NEW_VALUE);
 		
 		// The InitialiseOnSubscribeObservable has the value returned from the mock observable
-		assertEquals(newValue, initObservable.getValue());
+		assertEquals(NEW_VALUE, initObservable.getValue());
 	}
 	
 	@Test
@@ -148,17 +146,17 @@ public class InitialiseOnSubscribeObservableTest {
 		InitialiseOnSubscribeObservable<String> initObservable = new InitialiseOnSubscribeObservable<>(testableObservable);
 		
 		// Act
-		testableObservable.setValue(value);
+		testableObservable.setValue(VALUE);
 		initObservable.subscribe(mockObserverOne);
 		initObservable.subscribe(mockObserverTwo);
-		testableObservable.setValue(newValue);
+		testableObservable.setValue(NEW_VALUE);
 		
 		// Assert
 		// Both observables are initialised with the update method, and on value is called once
-		verify(mockObserverOne, times(1)).update(value, null, false);
-		verify(mockObserverTwo, times(1)).update(value, null, false);
-		verify(mockObserverOne, times(1)).onValue(newValue);
-		verify(mockObserverTwo, times(1)).onValue(newValue);
+		verify(mockObserverOne, times(1)).update(VALUE, null, false);
+		verify(mockObserverTwo, times(1)).update(VALUE, null, false);
+		verify(mockObserverOne, times(1)).onValue(NEW_VALUE);
+		verify(mockObserverTwo, times(1)).onValue(NEW_VALUE);
 	}
 	
 	@Test
@@ -175,7 +173,7 @@ public class InitialiseOnSubscribeObservableTest {
 		// Act
 		initObservable.subscribe(mockObserver);
 		initObservable.close();
-		testableObservable.setValue(newValue);
+		testableObservable.setValue(NEW_VALUE);
 		
 		// Assert
 		// The observer has unsubscribed, so does not have on value method called
@@ -197,17 +195,17 @@ public class InitialiseOnSubscribeObservableTest {
 		InitialiseOnSubscribeObservable<String> initObservable = new InitialiseOnSubscribeObservable<>(testableObservable);
 		
 		// Act
-		testableObservable.setValue(value);
+		testableObservable.setValue(VALUE);
 		initObservable.subscribe(mockObserverOne);
 		Subscription unsubscriber = initObservable.subscribe(mockObserverTwo);
 		unsubscriber.cancel();
-		testableObservable.setValue(newValue);
+		testableObservable.setValue(NEW_VALUE);
 		
 		// Assert
 		// The first observer has update and on value called once each, the second just on value
-		verify(mockObserverOne, times(1)).update(value, null, false);
-		verify(mockObserverTwo, times(1)).update(value, null, false);
-		verify(mockObserverOne, times(1)).onValue(newValue);
+		verify(mockObserverOne, times(1)).update(VALUE, null, false);
+		verify(mockObserverTwo, times(1)).update(VALUE, null, false);
+		verify(mockObserverOne, times(1)).onValue(NEW_VALUE);
 		verify(mockObserverTwo, times(0)).onValue(any(String.class));
 	}
 	
@@ -248,13 +246,13 @@ public class InitialiseOnSubscribeObservableTest {
 		// Act
 		initObservable.subscribe(mockObserver);
 		initObservable.subscribe(mockObserver);
-		testableObservable.setValue(newValue);
+		testableObservable.setValue(NEW_VALUE);
 		
 		// Assert
 		// Should have update method called twice...
 		verify(mockObserver, times(2)).update(null, null, false);
 		// ...but on value only once
-		verify(mockObserver, times(1)).onValue(newValue);
+		verify(mockObserver, times(1)).onValue(NEW_VALUE);
 	}
 	
 	@Test
