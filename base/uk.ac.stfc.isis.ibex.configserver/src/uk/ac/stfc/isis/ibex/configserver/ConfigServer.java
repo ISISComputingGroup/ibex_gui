@@ -141,11 +141,11 @@ public class ConfigServer extends Closer {
 	}
 	
 	public Collection<String> configNames() {
-		return ConfigInfo.names(configsInfo().value());
+		return ConfigInfo.names(configsInfo().getValue());
 	}
 	
 	public Collection<String> componentNames() {
-		return ConfigInfo.names(componentsInfo().value());
+		return ConfigInfo.names(componentsInfo().getValue());
 	}
 	
 	public InitialiseOnSubscribeObservable<Collection<EditableIocState>> iocStates() {

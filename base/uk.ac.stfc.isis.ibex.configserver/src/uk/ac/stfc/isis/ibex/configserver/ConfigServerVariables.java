@@ -166,7 +166,7 @@ public class ConfigServerVariables extends InstrumentVariables {
 	
 	private String getConfigPV(final String configName) {
 		try {
-			return Iterables.find(configsInfo.value(), new Predicate<ConfigInfo>() {
+			return Iterables.find(configsInfo.getValue(), new Predicate<ConfigInfo>() {
 				@Override
 				public boolean apply(ConfigInfo info) {
 					return info.name().equals(configName);

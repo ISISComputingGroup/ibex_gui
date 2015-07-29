@@ -33,7 +33,7 @@ public class LoadConfigHandler extends ConfigHandler<String> {
 	
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {		
-		ConfigSelectionDialog dialog = new ConfigSelectionDialog(shell(), "Load Configuration", SERVER.configsInfo().value(), false);
+		ConfigSelectionDialog dialog = new ConfigSelectionDialog(shell(), "Load Configuration", SERVER.configsInfo().getValue(), false);
 		if (dialog.open() == Window.OK) {
 			configService.write(dialog.selectedConfig());
 		}

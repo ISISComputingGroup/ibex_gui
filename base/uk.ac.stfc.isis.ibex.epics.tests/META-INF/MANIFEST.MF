@@ -7,4 +7,6 @@ Fragment-Host: uk.ac.stfc.isis.ibex.epics;bundle-version="1.0.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Require-Bundle: org.junit4;bundle-version="4.8.1",
  org.epics.vtype,
- uk.ac.stfc.isis.ibex.epics
+ uk.ac.stfc.isis.ibex.epics,
+ org.mockito;bundle-version="1.9.5"
+Import-Package: org.apache.logging.log4j

@@ -62,6 +62,6 @@ public class ObservableEditableConfiguration
 	}
 	
 	private static <T> Collection<T> valueOrEmptyCollection(CachingObservable<Collection<T>> collection) {
-		return collection.value() != null ? collection.value() : Collections.<T>emptyList();
+		return collection.getValue() != null ? collection.getValue() : Collections.<T>emptyList();
 	}
 }

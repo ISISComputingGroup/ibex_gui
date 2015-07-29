@@ -34,14 +34,18 @@ public class ClosingSwitchableObservable<T> extends SwitchableObservable<T> impl
 	}
 
 	public void switchTo(ClosableCachingObservable<T> newSource) {
+		// Close the source
 		source.close();
 		source = newSource;
+		// Cancel the source subscription and create the new one
 		setSource(newSource);
 	}
 
 	@Override
 	public void close() {
+		// Close the source
 		source.close();
+		// Cancel the source subscription
 		super.close();
 	}
 }

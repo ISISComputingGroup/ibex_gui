@@ -35,13 +35,12 @@ public class ConvertingObservable<R ,T> extends TransformingObservable<R, T> {
 		setSource(source);
 	}
 	
+	/**
+	 * value here is guaranteed not to be null by checks higher up
+	 */
 	@Override
 	protected T transform(R value) {
 		try {
-			if (value == null) {
-				throw new ConversionException("value is null");
-			}
-			
 			return formatter.convert(value);
 		} catch (ConversionException e) {
 			setError(e);

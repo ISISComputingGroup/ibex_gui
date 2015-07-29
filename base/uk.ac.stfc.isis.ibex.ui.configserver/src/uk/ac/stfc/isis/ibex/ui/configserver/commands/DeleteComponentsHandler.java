@@ -35,7 +35,7 @@ public class DeleteComponentsHandler extends ConfigHandler<Collection<String>> {
 	
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {		
-		MultipleConfigsSelectionDialog dialog = new MultipleConfigsSelectionDialog(shell(), "Delete Components", SERVER.componentsInfo().value(), true);
+		MultipleConfigsSelectionDialog dialog = new MultipleConfigsSelectionDialog(shell(), "Delete Components", SERVER.componentsInfo().getValue(), true);
 		if (dialog.open() == Window.OK) {
 			configService.write(dialog.selectedConfigs());
 		}
