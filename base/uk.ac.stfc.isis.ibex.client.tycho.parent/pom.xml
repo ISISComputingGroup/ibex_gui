@@ -32,6 +32,19 @@
 				<extensions>true</extensions>
 			</plugin>
 
+            <plugin>
+              <groupId>org.jacoco</groupId>
+              <artifactId>jacoco-maven-plugin</artifactId>
+              <version>0.7.5.201505241946</version>
+              <executions>
+                  <execution>
+                     <goals>
+                        <goal>prepare-agent</goal>
+                     </goals>
+                  </execution>
+               </executions>
+            </plugin>
+            
 			<plugin>
 				<groupId>org.eclipse.tycho</groupId>
 				<artifactId>target-platform-configuration</artifactId>
@@ -183,7 +196,7 @@
 		<module>../uk.ac.stfc.isis.ibex.ui.weblinks</module>
 		<module>../uk.ac.stfc.isis.ibex.experimentdetails</module>
 		<module>../uk.ac.stfc.isis.ibex.ui.experimentdetails</module>
-		<module>../uk.ac.stfc.isis.ibex.epics.tests</module>
+        <module>../uk.ac.stfc.isis.ibex.epics.tests</module>
 		<module>../uk.ac.stfc.isis.ibex.opis.tests</module>
 	</modules>
 </project>
