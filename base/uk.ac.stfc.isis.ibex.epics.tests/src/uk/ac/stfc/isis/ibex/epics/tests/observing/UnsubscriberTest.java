@@ -8,11 +8,11 @@ import uk.ac.stfc.isis.ibex.epics.observing.InitialiseOnSubscribeObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.Observer;
 import uk.ac.stfc.isis.ibex.epics.observing.Unsubscriber;
 
-@SuppressWarnings("unchecked")
+@SuppressWarnings({ "unchecked", "checkstyle:methodname" })
 public class UnsubscriberTest {
 
-	private String firstValue = "first value";
-	private String secondValue = "second value";
+	private static final String FIRST_VALUE = "first value";
+	private static final String SECOND_VALUE = "second value";
 	
 	@Test
 	public void test_Unsubscriber_cancel() {
@@ -26,17 +26,17 @@ public class UnsubscriberTest {
 		InitialiseOnSubscribeObservable<String> observable = new InitialiseOnSubscribeObservable<String>(testableObservable);
 		
 		// Object we are really testing
-		Unsubscriber<String> subscription = (Unsubscriber<String>) observable.subscribe(mockObserver);
+		Unsubscriber<String> subscription = (Unsubscriber<String>) observable.addObserver(mockObserver);
 		
 		// Act
-		testableObservable.setValue(firstValue);
+		testableObservable.setValue(FIRST_VALUE);
 		subscription.cancel();
-		testableObservable.setValue(secondValue);
+		testableObservable.setValue(SECOND_VALUE);
 		
 		// Assert
 		// The initialisable observer has its update method called once
-		verify(mockObserver, times(1)).onValue(firstValue);
-		verify(mockObserver, times(0)).onValue(secondValue);
+		verify(mockObserver, times(1)).onValue(FIRST_VALUE);
+		verify(mockObserver, times(0)).onValue(SECOND_VALUE);
 	}
 	
 	@Test
@@ -51,17 +51,17 @@ public class UnsubscriberTest {
 		InitialiseOnSubscribeObservable<String> observable = new InitialiseOnSubscribeObservable<String>(testableObservable);
 		
 		// Object we are really testing
-		Unsubscriber<String> subscription = (Unsubscriber<String>) observable.subscribe(mockObserver);
+		Unsubscriber<String> subscription = (Unsubscriber<String>) observable.addObserver(mockObserver);
 		
 		// Act
-		testableObservable.setValue(firstValue);
+		testableObservable.setValue(FIRST_VALUE);
 		subscription.cancel();
 		subscription.cancel();
-		testableObservable.setValue(secondValue);
+		testableObservable.setValue(SECOND_VALUE);
 		
 		// Assert
 		// The initialisable observer has its update method called once
-		verify(mockObserver, times(1)).onValue(firstValue);
-		verify(mockObserver, times(0)).onValue(secondValue);
+		verify(mockObserver, times(1)).onValue(FIRST_VALUE);
+		verify(mockObserver, times(0)).onValue(SECOND_VALUE);
 	}
 }

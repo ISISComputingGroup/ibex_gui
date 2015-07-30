@@ -66,9 +66,9 @@ public class ObservableModel extends Model {
 	
 	
 	public ObservableModel(ExperimentDetailsVariables variables) {
-		variables.userDetails.subscribe(userDetailsObserver);
-		variables.sampleParameters.subscribe(sampleParametersObserver);
-		variables.beamParameters.subscribe(beamParametersObserver);
+		variables.userDetails.addObserver(userDetailsObserver);
+		variables.sampleParameters.addObserver(sampleParametersObserver);
+		variables.beamParameters.addObserver(beamParametersObserver);
 		this.variables = variables;
 	}
 

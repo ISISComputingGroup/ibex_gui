@@ -48,7 +48,7 @@ public class EditableIocState extends IocState {
 			InitialiseOnSubscribeObservable<String> description,
 			Writer<String> setDescription) {
 		super(iocState);
-		description.subscribe(descriptionObserver);
+		description.addObserver(descriptionObserver);
 		this.setDescription = setDescription;
 	}
 	

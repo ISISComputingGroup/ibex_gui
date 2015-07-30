@@ -61,7 +61,7 @@ public abstract class ForwardingObservable<T> extends BaseCachingObservable<T> i
 			sourceObserver.onValue(value);
 		}
 		
-		sourceSubscription = newSource.subscribe(sourceObserver);
+		sourceSubscription = newSource.addObserver(sourceObserver);
 	}
 	
 	@Override

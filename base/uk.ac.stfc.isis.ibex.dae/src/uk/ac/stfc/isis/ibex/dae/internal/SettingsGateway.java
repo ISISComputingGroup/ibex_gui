@@ -58,7 +58,7 @@ public abstract class SettingsGateway implements Closable {
 	};
 
 	public SettingsGateway(InitialiseOnSubscribeObservable<String> settingsSource, Writable<String> settingsDestination) {
-		sourceSubscription = settingsSource.subscribe(settingsObserver);
+		sourceSubscription = settingsSource.addObserver(settingsObserver);
 		destinationSubscription = settingsDestination.subscribe(updateWriter);
 		writerSubscription = updateWriter.writeTo(settingsDestination);
 	}

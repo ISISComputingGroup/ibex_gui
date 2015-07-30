@@ -62,8 +62,8 @@ public class ObservablePair<T1, T2>
 	private final Subscription secondSubscription;
 	
 	public ObservablePair(InitialiseOnSubscribeObservable<T1> firstSource, InitialiseOnSubscribeObservable<T2> secondSource) {
-		firstSubscription = firstSource.subscribe(firstObserver);
-		secondSubscription = secondSource.subscribe(secondObserver);
+		firstSubscription = firstSource.addObserver(firstObserver);
+		secondSubscription = secondSource.addObserver(secondObserver);
 	}
 	
 	@Override

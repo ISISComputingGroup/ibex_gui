@@ -26,12 +26,13 @@ import org.junit.Test;
 
 import uk.ac.stfc.isis.ibex.epics.observing.LoggingObserver;
 
+@SuppressWarnings({ "checkstyle:methodname" })
 public class LoggingObserverTest {
 	
-	private String onValueMessage = " value: ";
-	private String onErrorMessage = " error: ";
-	private String onConnectionChangedMessage = " connected: ";
-	private String id = "id";
+	private static final String ON_VALUE_MESSAGE = " value: ";
+	private static final String ON_ERROR_MESSAGE = " error: ";
+	private static final String ON_CONNECTION_CHANGED_MESSAGE = " connected: ";
+	private static final String ID = "id";
 	
 	@Test
 	public void test_LoggingObserver_on_value() {
@@ -41,18 +42,18 @@ public class LoggingObserverTest {
 		Logger mockLogger = mock(Logger.class);		
 
 		// The LoggingObserver to test
-		LoggingObserver<String> loggingObserver = new LoggingObserver<>(mockLogger, id);
+		LoggingObserver<String> loggingObserver = new LoggingObserver<>(mockLogger, ID);
 		
 		// A test observable that has public set methods
 		TestableObservable<String> testableObservable = new TestableObservable<>();
 		
 		// Act
-		testableObservable.subscribe(loggingObserver);
+		testableObservable.addObserver(loggingObserver);
 		testableObservable.setValue(value);
 		
 		// Assert
 		// The log message is as expected
-		verify(mockLogger, times(1)).info(id + onValueMessage + value);
+		verify(mockLogger, times(1)).info(ID + ON_VALUE_MESSAGE + value);
 	}
 	
 	@Test
@@ -62,18 +63,18 @@ public class LoggingObserverTest {
 		
 		// The LoggingObserver to test
 		Logger mockLogger = mock(Logger.class);		
-		LoggingObserver<String> loggingObserver = new LoggingObserver<>(mockLogger, id);
+		LoggingObserver<String> loggingObserver = new LoggingObserver<>(mockLogger, ID);
 		
 		// A test observable that has public set methods
 		TestableObservable<String> testableObservable = new TestableObservable<>();
 		 
 		// Act
-		testableObservable.subscribe(loggingObserver);
+		testableObservable.addObserver(loggingObserver);
 		testableObservable.setError(exception);
 		
 		// Assert
 		// The log message is as expected
-		verify(mockLogger, times(1)).error(id + onErrorMessage + exception);
+		verify(mockLogger, times(1)).error(ID + ON_ERROR_MESSAGE + exception);
 	}
 	
 	@Test
@@ -84,17 +85,17 @@ public class LoggingObserverTest {
 		
 		// The LoggingObserver to test
 		Logger mockLogger = mock(Logger.class);		
-		LoggingObserver<String> loggingObserver = new LoggingObserver<>(mockLogger, id);
+		LoggingObserver<String> loggingObserver = new LoggingObserver<>(mockLogger, ID);
 		
 		// A test observable that has public set methods
 		TestableObservable<String> testableObservable = new TestableObservable<>();
 		
 		// Act
-		testableObservable.subscribe(loggingObserver);
+		testableObservable.addObserver(loggingObserver);
 		testableObservable.setConnectionChanged(connectionChanged);
 		
 		// Assert
 		// The log message is as expected
-		verify(mockLogger, times(1)).info(id + onConnectionChangedMessage + connectionChanged);
+		verify(mockLogger, times(1)).info(ID + ON_CONNECTION_CHANGED_MESSAGE + connectionChanged);
 	}
 }

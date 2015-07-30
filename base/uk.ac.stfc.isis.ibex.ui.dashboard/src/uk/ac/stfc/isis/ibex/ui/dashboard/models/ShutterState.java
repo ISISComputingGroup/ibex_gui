@@ -54,7 +54,7 @@ public class ShutterState implements Closable {
 	
 	public ShutterState(InitialiseOnSubscribeObservable<ShutterStatus> source) {
 		text = new SettableUpdatedValue<>();
-		sourceSubscription = source.subscribe(sourceObserver);
+		sourceSubscription = source.addObserver(sourceObserver);
 	}
 
 	public UpdatedValue<String> text() {

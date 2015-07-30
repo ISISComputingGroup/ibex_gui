@@ -116,11 +116,11 @@ public class ObservingSynopticModel {
 		this.variables = variables;
 				
 		this.synopticObservable = new ClosingSwitchableObservable<SynopticDescription>(variables.getSynopticDescription(""));
-		this.synopticObservable.subscribe(descriptionObserver);
+		this.synopticObservable.addObserver(descriptionObserver);
 				
-		this.variables.synopticSchema.subscribe(synopticSchemaObserver);
+		this.variables.synopticSchema.addObserver(synopticSchemaObserver);
 		
-		Configurations.getInstance().server().currentConfig().subscribe(configSynopticObserver);
+		Configurations.getInstance().server().currentConfig().addObserver(configSynopticObserver);
 	}
 	
 	public void switchSynoptic(SynopticInfo newSynoptic) {

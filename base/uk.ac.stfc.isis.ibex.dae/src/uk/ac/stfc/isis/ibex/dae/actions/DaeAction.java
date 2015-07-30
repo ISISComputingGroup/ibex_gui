@@ -98,8 +98,8 @@ public abstract class DaeAction extends Action implements Closable {
 		
 		targetSubscribtion = target.subscribe(actionWriter);
 		writerSubscription = actionWriter.writeTo(target);
-		transitionSubscription = inStateTransition.subscribe(transitionObserver);
-		runStateSubscription = runState.subscribe(runStateObserver);
+		transitionSubscription = inStateTransition.addObserver(transitionObserver);
+		runStateSubscription = runState.addObserver(runStateObserver);
 	}
 
 	@Override

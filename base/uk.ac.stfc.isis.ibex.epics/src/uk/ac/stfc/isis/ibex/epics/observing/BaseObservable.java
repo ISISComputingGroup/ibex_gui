@@ -34,7 +34,7 @@ public abstract class BaseObservable<T> implements Observable<T> {
 	private final Collection<Observer<T>> observers = new CopyOnWriteArrayList<>();
 	
 	@Override
-	public Subscription subscribe(Observer<T> observer) {
+	public Subscription addObserver(Observer<T> observer) {
 		if (!observers.contains(observer)) {
 			observers.add(observer);
 		}
