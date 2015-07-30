@@ -45,7 +45,7 @@ public class FilterFromPVList extends PVFilter {
 		public void onError(Exception e) { }
 
 		@Override
-		public void onConnectionChanged(boolean isConnected) { }
+		public void onConnectionStatus(boolean isConnected) { }
 	};	
 	
 	public FilterFromPVList(InitialiseOnSubscribeObservable<Collection<PV>> pvList) {

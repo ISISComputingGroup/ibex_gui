@@ -58,9 +58,9 @@ public abstract class BaseObservable<T> implements Observable<T> {
 		}
 	}
 	
-	protected void setConnectionChanged(boolean isConnected) {
+	protected void setConnectionStatus(boolean isConnected) {
 		for (Observer<T> observer : observers) {
-			observer.onConnectionChanged(isConnected);
+			observer.onConnectionStatus(isConnected);
 		}
 	}
 }

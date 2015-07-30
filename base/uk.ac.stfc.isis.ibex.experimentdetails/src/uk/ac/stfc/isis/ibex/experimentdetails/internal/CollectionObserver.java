@@ -37,7 +37,7 @@ public abstract class CollectionObserver<T> extends BaseObserver<Collection<T>> 
 	}
 
 	@Override
-	public void onConnectionChanged(boolean isConnected) {
+	public void onConnectionStatus(boolean isConnected) {
 		if (!isConnected) {
 			clear();
 		}			

@@ -29,7 +29,7 @@ public abstract class ObserverAdapter<T> implements Observer<T>  {
 	}
 
 	@Override
-	public void onConnectionChanged(boolean isConnected) {
+	public void onConnectionStatus(boolean isConnected) {
 		
 	}
 }

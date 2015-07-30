@@ -34,7 +34,7 @@ public abstract class ParameterFieldObserver extends BaseObserver<String> {
 	}
 
 	@Override
-	public void onConnectionChanged(boolean isConnected) {
+	public void onConnectionStatus(boolean isConnected) {
 		if (!isConnected) {
 			updateField(defaultValue());
 		}

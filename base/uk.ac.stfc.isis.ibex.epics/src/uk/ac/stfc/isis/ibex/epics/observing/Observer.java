@@ -29,5 +29,5 @@ public interface Observer<T> {
     
     void onError(Exception e);
     
-    void onConnectionChanged(boolean isConnected);    
+    void onConnectionStatus(boolean isConnected);    
 }
