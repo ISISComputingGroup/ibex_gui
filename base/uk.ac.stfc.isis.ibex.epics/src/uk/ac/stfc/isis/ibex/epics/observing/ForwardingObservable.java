@@ -71,7 +71,7 @@ public abstract class ForwardingObservable<T> extends BaseCachingObservable<T> i
 	
 	private void cancelSubscription() {
 		if (sourceSubscription != null) {
-			sourceSubscription.cancel();
+			sourceSubscription.removeObserver();
 		}
 	}
 }

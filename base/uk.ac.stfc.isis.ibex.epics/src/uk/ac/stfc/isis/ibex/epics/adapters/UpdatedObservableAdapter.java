@@ -62,7 +62,7 @@ public class UpdatedObservableAdapter<T> extends SettableUpdatedValue<T> impleme
 	
 	@Override
 	public void close() {
-		subscription.cancel();
+		subscription.removeObserver();
 	}
 	
 	private void subscribeTo(InitialiseOnSubscribeObservable<T> observable) {

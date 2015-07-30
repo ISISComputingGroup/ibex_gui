@@ -66,11 +66,11 @@ public abstract class ForwardingWritable<TIn, TOut> extends BaseWritable<TIn> im
 
 	private void cancelSubscriptions() {
 		if (readingSubscription != null) {
-			readingSubscription.cancel();
+			readingSubscription.removeObserver();
 		}
 		
 		if (writingSubsciption != null) {
-			writingSubsciption.cancel();
+			writingSubsciption.removeObserver();
 		}
 	}
 }

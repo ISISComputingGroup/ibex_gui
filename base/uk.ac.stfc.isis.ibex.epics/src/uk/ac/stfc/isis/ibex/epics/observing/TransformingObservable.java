@@ -64,7 +64,7 @@ public abstract class TransformingObservable<T1, T2> extends BaseCachingObservab
 	
 	private void cancelSubscription() {
 		if (sourceSubscription != null) {
-			sourceSubscription.cancel();
+			sourceSubscription.removeObserver();
 		}
 	}	
 }

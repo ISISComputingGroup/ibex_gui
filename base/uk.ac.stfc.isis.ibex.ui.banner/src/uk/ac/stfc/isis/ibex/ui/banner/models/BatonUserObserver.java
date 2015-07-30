@@ -72,7 +72,7 @@ public class BatonUserObserver implements Closable {
 	
 	@Override
 	public void close() {
-		subscription.cancel();
+		subscription.removeObserver();
 	}
 	
 	private void checkSelf(String value) {
