@@ -42,7 +42,7 @@ public class UpdatedObservableAdapter<T> extends SettableUpdatedValue<T> impleme
 		}
 
 		@Override
-		public void onConnectionChanged(boolean isConnected) {
+		public void onConnectionStatus(boolean isConnected) {
 			connectionChanged(isConnected);
 		}
 	};

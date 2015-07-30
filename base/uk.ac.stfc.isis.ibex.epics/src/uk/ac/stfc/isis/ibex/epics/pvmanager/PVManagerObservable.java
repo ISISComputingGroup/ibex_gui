@@ -48,7 +48,7 @@ public class PVManagerObservable<R extends VType> extends ObservablePV<R> {
 		public void pvChanged(PVReaderEvent<R> evt) {
 			boolean isConnected = pv.isConnected();
 			if (evt.isConnectionChanged()) {
-				setConnectionChanged(isConnected);
+				setConnectionStatus(isConnected);
 			}
 			
 			if (evt.isExceptionChanged()) {

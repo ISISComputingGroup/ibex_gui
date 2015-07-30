@@ -47,7 +47,7 @@ public class LoggingObserver<T> extends BaseObserver<T> {
 	}
 
 	@Override
-	public void onConnectionChanged(boolean isConnected) {
+	public void onConnectionStatus(boolean isConnected) {
 		log.info(id + " connected: " + isConnected);
 	}
 }

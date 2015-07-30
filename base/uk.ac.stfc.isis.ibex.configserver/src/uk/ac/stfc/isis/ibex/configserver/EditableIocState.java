@@ -37,7 +37,7 @@ public class EditableIocState extends IocState {
 		}
 
 		@Override
-		public void onConnectionChanged(boolean isConnected) {			
+		public void onConnectionStatus(boolean isConnected) {			
 		}
 	};
 	

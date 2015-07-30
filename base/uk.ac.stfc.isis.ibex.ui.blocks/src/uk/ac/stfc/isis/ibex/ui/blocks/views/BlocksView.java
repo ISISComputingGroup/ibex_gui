@@ -69,7 +69,7 @@ public class BlocksView extends ViewPart implements ISizeProvider {
 		}
 
 		@Override
-		public void onConnectionChanged(boolean isConnected) {
+		public void onConnectionStatus(boolean isConnected) {
 			if (!isConnected) {
 				setUnknownConfiguration();
 			}

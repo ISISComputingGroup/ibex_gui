@@ -45,7 +45,7 @@ public class InstrumentState implements Closable {
 		}
 
 		@Override
-		public void onConnectionChanged(boolean isConnected) {
+		public void onConnectionStatus(boolean isConnected) {
 			if (!isConnected) {
 				setState(RunState.UNKNOWN);
 			}

@@ -19,7 +19,7 @@ final class TestableObservable<T> extends BaseCachingObservable<T> {
 	}
 	
 	@Override
-	public void setConnectionChanged(boolean isConnected) {
-		super.setConnectionChanged(isConnected);
+	public void setConnectionStatus(boolean isConnected) {
+		super.setConnectionStatus(isConnected);
 	}
 };

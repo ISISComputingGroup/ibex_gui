@@ -38,8 +38,8 @@ public abstract class ForwardingObservable<T> extends BaseCachingObservable<T> i
 		}
 
 		@Override
-		public void onConnectionChanged(boolean isConnected) {
-			setConnectionChanged(isConnected);
+		public void onConnectionStatus(boolean isConnected) {
+			setConnectionStatus(isConnected);
 		}
 	};
 	
@@ -47,9 +47,9 @@ public abstract class ForwardingObservable<T> extends BaseCachingObservable<T> i
 
 	protected synchronized void setSource(CachingObservable<T> newSource) {
 		cancelSubscription();	
-		sourceObserver.onConnectionChanged(false);
+		sourceObserver.onConnectionStatus(false);
 		
-		sourceObserver.onConnectionChanged(newSource.isConnected());
+		sourceObserver.onConnectionStatus(newSource.isConnected());
 		
 		Exception error = newSource.lastError();
 		if (error != null) {
