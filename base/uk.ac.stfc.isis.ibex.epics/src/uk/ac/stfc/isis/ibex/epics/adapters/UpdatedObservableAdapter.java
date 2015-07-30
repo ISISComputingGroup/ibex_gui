@@ -66,6 +66,6 @@ public class UpdatedObservableAdapter<T> extends SettableUpdatedValue<T> impleme
 	}
 	
 	private void subscribeTo(InitialiseOnSubscribeObservable<T> observable) {
-		subscription = observable.subscribe(observer);
+		subscription = observable.addObserver(observer);
 	}
 }

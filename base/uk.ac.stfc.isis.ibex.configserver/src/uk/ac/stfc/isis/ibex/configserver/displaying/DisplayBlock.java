@@ -79,8 +79,8 @@ public class DisplayBlock extends Block {
 		super(block);
 		this.blockServerAlias = blockServerAlias;
 				
-		valueSource.subscribe(valueAdapter);
-		descriptionSource.subscribe(descriptionAdapter);
+		valueSource.addObserver(valueAdapter);
+		descriptionSource.addObserver(descriptionAdapter);
 	}
 	
 	public String getValue() {

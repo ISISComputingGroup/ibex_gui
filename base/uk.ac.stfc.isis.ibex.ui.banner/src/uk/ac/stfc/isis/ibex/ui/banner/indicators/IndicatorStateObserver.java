@@ -63,7 +63,7 @@ public class IndicatorStateObserver<T> implements Closable {
 		color = new SettableUpdatedValue<>();
 		bool = new SettableUpdatedValue<>();
 		availability = new SettableUpdatedValue<>();
-		sourceSubscription = source.subscribe(sourceObserver);
+		sourceSubscription = source.addObserver(sourceObserver);
 	}	
 	
 	public UpdatedValue<String> text() {

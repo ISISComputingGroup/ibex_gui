@@ -66,7 +66,7 @@ public class BatonUserObserver implements Closable {
 		color = new SettableUpdatedValue<>();
 		availability = new SettableUpdatedValue<>();
 		
-		subscription = observable.subscribe(observer);
+		subscription = observable.addObserver(observer);
 		SELF = self;
 	}
 	

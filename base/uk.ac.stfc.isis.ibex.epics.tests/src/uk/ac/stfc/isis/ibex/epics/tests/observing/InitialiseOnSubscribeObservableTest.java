@@ -50,7 +50,7 @@ public class InitialiseOnSubscribeObservableTest {
 		InitialiseOnSubscribeObservable<String> initObservable = new InitialiseOnSubscribeObservable<>(mockObservable);
 		
 		// Act
-		Object returned = initObservable.subscribe(mockObserver);
+		Object returned = initObservable.addObserver(mockObserver);
 		
 		// Assert
 		// The initialisable observer has its update method called once
@@ -76,7 +76,7 @@ public class InitialiseOnSubscribeObservableTest {
 		
 		// Act
 		testableObservable.setValue(VALUE);
-		initObservable.subscribe(mockObserver);
+		initObservable.addObserver(mockObserver);
 		testableObservable.setValue(NEW_VALUE);
 				
 		// Assert		
@@ -100,7 +100,7 @@ public class InitialiseOnSubscribeObservableTest {
 		InitialiseOnSubscribeObservable<String> initObservable = new InitialiseOnSubscribeObservable<>(testableObservable);
 		
 		// Act
-		initObservable.subscribe(mockObserver);
+		initObservable.addObserver(mockObserver);
 		testableObservable.setConnectionChanged(true);
 				
 		// Assert
@@ -123,7 +123,7 @@ public class InitialiseOnSubscribeObservableTest {
 		Exception exception = new Exception();
 		
 		// Act
-		initObservable.subscribe(mockObserver);
+		initObservable.addObserver(mockObserver);
 		testableObservable.setError(exception);
 				
 		// Assert
@@ -147,8 +147,8 @@ public class InitialiseOnSubscribeObservableTest {
 		
 		// Act
 		testableObservable.setValue(VALUE);
-		initObservable.subscribe(mockObserverOne);
-		initObservable.subscribe(mockObserverTwo);
+		initObservable.addObserver(mockObserverOne);
+		initObservable.addObserver(mockObserverTwo);
 		testableObservable.setValue(NEW_VALUE);
 		
 		// Assert
@@ -171,7 +171,7 @@ public class InitialiseOnSubscribeObservableTest {
 		InitialiseOnSubscribeObservable<String> initObservable = new InitialiseOnSubscribeObservable<>(testableObservable);
 		
 		// Act
-		initObservable.subscribe(mockObserver);
+		initObservable.addObserver(mockObserver);
 		initObservable.close();
 		testableObservable.setValue(NEW_VALUE);
 		
@@ -196,8 +196,8 @@ public class InitialiseOnSubscribeObservableTest {
 		
 		// Act
 		testableObservable.setValue(VALUE);
-		initObservable.subscribe(mockObserverOne);
-		Subscription unsubscriber = initObservable.subscribe(mockObserverTwo);
+		initObservable.addObserver(mockObserverOne);
+		Subscription unsubscriber = initObservable.addObserver(mockObserverTwo);
 		unsubscriber.cancel();
 		testableObservable.setValue(NEW_VALUE);
 		
@@ -225,7 +225,7 @@ public class InitialiseOnSubscribeObservableTest {
 		InitialiseOnSubscribeObservable<String> initObservable = new InitialiseOnSubscribeObservable<>(testableObservable);
 		
 		// Act
-		initObservable.subscribe(mockObserver);
+		initObservable.addObserver(mockObserver);
 		
 		// Assert
 		// The observers update method has the exception
@@ -244,8 +244,8 @@ public class InitialiseOnSubscribeObservableTest {
 		InitialiseOnSubscribeObservable<String> initObservable = new InitialiseOnSubscribeObservable<>(testableObservable);
 		
 		// Act
-		initObservable.subscribe(mockObserver);
-		initObservable.subscribe(mockObserver);
+		initObservable.addObserver(mockObserver);
+		initObservable.addObserver(mockObserver);
 		testableObservable.setValue(NEW_VALUE);
 		
 		// Assert
@@ -267,7 +267,7 @@ public class InitialiseOnSubscribeObservableTest {
 		InitialiseOnSubscribeObservable<String> initObservable = new InitialiseOnSubscribeObservable<>(testableObservable);
 		
 		// Act
-		initObservable.subscribe(mockObserver);
+		initObservable.addObserver(mockObserver);
 		testableObservable.setValue(null);
 		
 		// Assert

@@ -86,8 +86,8 @@ public class ObservedSpectrum extends UpdatableSpectrum implements Closable {
 	
 	private void updateSubscriptions() {
 		cancelSubscriptions();
-		xSubscription = observables.spectrumXData(getNumber(), getPeriod()).subscribe(xDataObserver);
-		ySubscription = observables.spectrumYData(getNumber(), getPeriod()).subscribe(yDataObserver);
+		xSubscription = observables.spectrumXData(getNumber(), getPeriod()).addObserver(xDataObserver);
+		ySubscription = observables.spectrumYData(getNumber(), getPeriod()).addObserver(yDataObserver);
 	}
 
 	@Override

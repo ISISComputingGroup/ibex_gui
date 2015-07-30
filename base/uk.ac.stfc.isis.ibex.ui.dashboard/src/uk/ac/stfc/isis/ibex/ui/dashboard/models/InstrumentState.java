@@ -59,7 +59,7 @@ public class InstrumentState implements Closable {
 	public InstrumentState(InitialiseOnSubscribeObservable<DaeRunState> source) {
 		text = new SettableUpdatedValue<>();
 		color = new SettableUpdatedValue<>();
-		sourceSubscription = source.subscribe(sourceObserver);
+		sourceSubscription = source.addObserver(sourceObserver);
 	}
 
 	public UpdatedValue<String> text() {

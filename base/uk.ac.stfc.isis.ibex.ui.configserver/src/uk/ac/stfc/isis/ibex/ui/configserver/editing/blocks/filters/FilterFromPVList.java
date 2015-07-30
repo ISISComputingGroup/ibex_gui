@@ -49,7 +49,7 @@ public class FilterFromPVList extends PVFilter {
 	};	
 	
 	public FilterFromPVList(InitialiseOnSubscribeObservable<Collection<PV>> pvList) {
-		pvList.subscribe(observer);
+		pvList.addObserver(observer);
 	}
 
 	private void updatePVList(Collection<PV> pvs) {

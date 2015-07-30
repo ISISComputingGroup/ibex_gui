@@ -30,7 +30,7 @@ public class InitialiseOnSubscribeObservable<T> extends ForwardingObservable<T> 
 		setSource(source);
 	}
 
-	public Subscription subscribe(InitialisableObserver<T> observer) {
+	public Subscription addObserver(InitialisableObserver<T> observer) {
 		observer.update(getValue(), lastError(), isConnected());
 		return super.addObserver(observer);
 	}

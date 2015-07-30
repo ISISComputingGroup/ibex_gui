@@ -111,7 +111,7 @@ public class BlocksView extends ViewPart implements ISizeProvider {
 		groups = new GroupsPanel(parent, SWT.NONE);
 		groups.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 
-		configSubscription = CONFIG.subscribe(configObserver);
+		configSubscription = CONFIG.addObserver(configObserver);
 	}
 
 	@Override
