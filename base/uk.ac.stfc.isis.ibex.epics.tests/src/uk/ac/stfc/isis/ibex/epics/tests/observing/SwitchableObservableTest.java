@@ -62,7 +62,7 @@ public class SwitchableObservableTest {
 		// Assert
 		// The initialisable observer has its onConnectionChanged called twice and onValue called once.
 		// Note here that the switch calls onValue on the observer, but the initialise does not.
-		verify(mockObserver, times(2)).onConnectionStatus(false);
+		verify(mockObserver, times(2)).onConnectionChanged(false);
 		verify(mockObserver, times(1)).onValue(NEW_VALUE);
 		
 		// The SwitchableObservable has the new Obervable's value
@@ -91,7 +91,7 @@ public class SwitchableObservableTest {
 		
 		// Assert
 		// The initialisable observer has its onConnectionChanged called twice and onValue called once
-		verify(mockObserver, times(2)).onConnectionStatus(false);
+		verify(mockObserver, times(2)).onConnectionChanged(false);
 		verify(mockObserver, times(0)).onValue(any(String.class));
 		
 		// The SwitchableObservable has the old Obervable's value

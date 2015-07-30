@@ -92,7 +92,7 @@ public class LoggingObserverTest {
 		
 		// Act
 		testableObservable.addObserver(loggingObserver);
-		testableObservable.setConnectionStatus(connectionChanged);
+		testableObservable.setConnectionChanged(connectionChanged);
 		
 		// Assert
 		// The log message is as expected

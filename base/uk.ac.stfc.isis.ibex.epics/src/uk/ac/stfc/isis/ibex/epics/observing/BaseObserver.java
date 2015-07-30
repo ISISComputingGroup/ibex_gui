@@ -23,7 +23,7 @@ public abstract class BaseObserver<T> implements InitialisableObserver<T> {
 	
 	@Override
 	public void update(T value, Exception error, boolean isConnected) {		
-		onConnectionStatus(isConnected);
+		onConnectionChanged(isConnected);
 		
 		if (error != null) {
 			onError(error);

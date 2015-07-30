@@ -47,7 +47,7 @@ public abstract class DaeAction extends Action implements Closable {
 			
 	private final InitialisableObserver<Boolean> transitionObserver = new BaseObserver<Boolean>() {
 		@Override
-		public void onConnectionStatus(boolean isConnected) {
+		public void onConnectionChanged(boolean isConnected) {
 			if (!isConnected) {
 				setInTransition(true);
 			}
@@ -77,7 +77,7 @@ public abstract class DaeAction extends Action implements Closable {
 		}
 
 		@Override
-		public void onConnectionStatus(boolean isConnected) {
+		public void onConnectionChanged(boolean isConnected) {
 			setRunState(DaeRunState.UNKNOWN);
 		}
 	};

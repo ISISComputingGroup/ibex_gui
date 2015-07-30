@@ -39,8 +39,8 @@ public class ObservablePair<T1, T2>
 		}
 
 		@Override
-		public void onConnectionStatus(boolean isConnected) {
-			setConnectionStatus(isConnected);
+		public void onConnectionChanged(boolean isConnected) {
+			setConnectionChanged(isConnected);
 		}	
 	}
 	

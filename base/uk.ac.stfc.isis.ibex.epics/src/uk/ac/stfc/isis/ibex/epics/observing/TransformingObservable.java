@@ -42,8 +42,8 @@ public abstract class TransformingObservable<T1, T2> extends BaseCachingObservab
 		}
 
 		@Override
-		public void onConnectionStatus(boolean isConnected) {
-			setConnectionStatus(isConnected);
+		public void onConnectionChanged(boolean isConnected) {
+			setConnectionChanged(isConnected);
 		}
 	};
 

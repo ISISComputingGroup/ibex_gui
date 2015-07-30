@@ -60,8 +60,8 @@ public abstract class BaseCachingObservable<T> extends BaseObservable<T> impleme
 	}
 	
 	@Override
-	protected void setConnectionStatus(boolean isConnected) {
+	protected void setConnectionChanged(boolean isConnected) {
 		this.isConnected = isConnected;
-		super.setConnectionStatus(isConnected);
+		super.setConnectionChanged(isConnected);
 	}
 }

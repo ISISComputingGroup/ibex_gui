@@ -45,7 +45,7 @@ public class BatonUserObserver implements Closable {
 		}
 
 		@Override
-		public void onConnectionStatus(boolean isConnected) {
+		public void onConnectionChanged(boolean isConnected) {
 			if (!isConnected) {
 				setUnknown();
 			}

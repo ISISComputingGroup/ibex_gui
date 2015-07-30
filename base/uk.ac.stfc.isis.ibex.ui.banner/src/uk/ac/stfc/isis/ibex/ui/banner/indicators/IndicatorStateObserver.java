@@ -43,7 +43,7 @@ public class IndicatorStateObserver<T> implements Closable {
 		}
 
 		@Override
-		public void onConnectionStatus(boolean isConnected) {
+		public void onConnectionChanged(boolean isConnected) {
 			if (!isConnected) {
 				setState(null);
 			}
