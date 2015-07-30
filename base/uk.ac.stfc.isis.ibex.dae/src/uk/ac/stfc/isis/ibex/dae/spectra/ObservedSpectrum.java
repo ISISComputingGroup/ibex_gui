@@ -34,7 +34,7 @@ public class ObservedSpectrum extends UpdatableSpectrum implements Closable {
 		}
 
 		@Override
-		public void onConnectionChanged(boolean isConnected) {			
+		public void onConnectionStatus(boolean isConnected) {			
 		}
 		
 		protected double[] toDoubleArray(float[] value) {

@@ -41,7 +41,7 @@ public abstract class SettingsGateway implements Closable {
 		}
 
 		@Override
-		public void onConnectionChanged(boolean isConnected) {
+		public void onConnectionStatus(boolean isConnected) {
 			
 		}	
 	};
