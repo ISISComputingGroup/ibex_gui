@@ -180,5 +180,40 @@
 				</macros>
 			</value>
 		</entry>
+		<entry>
+			<key>Caen HV</key>
+			<value>
+				<path>HV/HVMonitorSummaryDisplay.opi</path>
+				<description>Summary Display for Caens (Maintenance of list via the button on this OPI). No Macros required.</description>
+				<macros>
+				</macros>
+			</value>
+		</entry>
+		<entry>
+			<key>Rotating Bench</key>
+			<value>
+				<path></path>
+				<description>Not currently available as an OPI</description>
+				<macros>
+				</macros>
+			</value>
+		</entry>
+		<entry>
+			<key>Single Stage</key>
+			<value>
+				<path>single_stage.opi</path>
+				<description>Displays a single Motor along with a designated ID</description>
+				<macros>
+					<macro>
+						<name>S</name>
+						<description>The name to display for the stage</description>
+					</macro>
+					<macro>
+						<name>MM</name>
+						<description>The MOT:MTRnnnn value relating to the motor controlling the stage</description>
+					</macro>
+				</macros>
+			</value>
+		</entry>	
 	</opis>
 </descriptions>
