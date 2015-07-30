@@ -80,7 +80,7 @@ public class WritableObservableAdapter implements Closable {
 
 	@Override
 	public void close() {
-		writerSubscription.cancel();
-		writableSubscription.cancel();
+		writerSubscription.removeObserver();
+		writableSubscription.removeObserver();
 	}
 }

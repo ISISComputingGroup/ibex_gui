@@ -57,7 +57,7 @@ public class WritingSetCommand<T> extends SetCommand<T> implements Closable {
 	
 	@Override
 	public void close() {
-		writerSubscription.cancel();
-		destinationSubscription.cancel();
+		writerSubscription.removeObserver();
+		destinationSubscription.removeObserver();
 	}
 }

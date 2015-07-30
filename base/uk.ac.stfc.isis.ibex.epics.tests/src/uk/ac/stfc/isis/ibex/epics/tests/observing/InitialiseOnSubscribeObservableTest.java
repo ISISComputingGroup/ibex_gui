@@ -198,7 +198,7 @@ public class InitialiseOnSubscribeObservableTest {
 		testableObservable.setValue(VALUE);
 		initObservable.addObserver(mockObserverOne);
 		Subscription unsubscriber = initObservable.addObserver(mockObserverTwo);
-		unsubscriber.cancel();
+		unsubscriber.removeObserver();
 		testableObservable.setValue(NEW_VALUE);
 		
 		// Assert

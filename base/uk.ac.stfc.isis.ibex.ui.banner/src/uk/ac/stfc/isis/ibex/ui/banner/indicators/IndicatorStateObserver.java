@@ -84,7 +84,7 @@ public class IndicatorStateObserver<T> implements Closable {
 	
 	@Override
 	public void close() {
-		sourceSubscription.cancel();
+		sourceSubscription.removeObserver();
 	}	
 	
 	protected void setState(T value) {

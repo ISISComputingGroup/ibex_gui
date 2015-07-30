@@ -33,7 +33,7 @@ public class Unsubscriber<T> implements Subscription {
 	}
 	
 	@Override
-	public void cancel() {
+	public void removeObserver() {
 		if (observer != null && observers.contains(observer)) {
 			observers.remove(observer);
 		}

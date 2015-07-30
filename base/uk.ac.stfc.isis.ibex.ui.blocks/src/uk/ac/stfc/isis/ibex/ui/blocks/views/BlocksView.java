@@ -97,7 +97,7 @@ public class BlocksView extends ViewPart implements ISizeProvider {
 		parent.setLayout(gl_parent);
 		
 		if (configSubscription != null) {
-			configSubscription.cancel();
+			configSubscription.removeObserver();
 		}
 		
 		lblConfiguration = new Label(parent, SWT.NONE);
@@ -117,7 +117,7 @@ public class BlocksView extends ViewPart implements ISizeProvider {
 	@Override
 	public void dispose() {
 		if (configSubscription != null) {
-			configSubscription.cancel();
+			configSubscription.removeObserver();
 		}
 	};
 	
