@@ -36,7 +36,7 @@ public class NavigationView extends ViewPart implements ISizeProvider {
 	public static final String ID = "uk.ac.stfc.isis.ibex.ui.synoptic.views.NavigationView"; //$NON-NLS-1$
 	
 	private static final Color BACKGROUND = SWTResourceManager.getColor(240, 240, 240);
-	public static final int FIXED_HEIGHT = 35;
+	public static final int FIXED_HEIGHT = 43;
 	
 	public NavigationView() {
 	}
@@ -45,14 +45,14 @@ public class NavigationView extends ViewPart implements ISizeProvider {
 	public void createPartControl(Composite parent) {
 		parent.setBackground(BACKGROUND);
 		parent.setLayout(new GridLayout(6, false));
-		
-		Navigator navigator = new Navigator(parent, SWT.NONE);
-		navigator.setLayoutData(new GridData(SWT.RIGHT, SWT.FILL, false, false, 1, 1));
-		navigator.setBackground(BACKGROUND);
-		
-		SynopticSelection synopticSelection = new SynopticSelection(parent, SWT.NONE);
-		synopticSelection.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1));
+
+		SynopticSelection synopticSelection = new SynopticSelection(parent, SWT.BORDER);
+		synopticSelection.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
 		synopticSelection.setBackground(BACKGROUND);		
+		
+		Navigator navigator = new Navigator(parent, SWT.BORDER);
+		navigator.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
+		navigator.setBackground(BACKGROUND);
 	}
 	
 	@Override
