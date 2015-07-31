@@ -5,6 +5,7 @@ import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.KeyListener;
@@ -35,7 +36,7 @@ public class SynopticSelection extends Composite {
 	private static final Color BACKGROUND = SWTResourceManager.getColor(240, 240, 240);
 	
 	// The synoptic drop down menu selector
-	private Combo synopticCombo = new Combo(getParent(), SWT.READ_ONLY);
+	private Combo synopticCombo;
 	
 	private static Synoptic synoptic = Synoptic.getInstance();
 	private final SynopticPresenter presenter = Activator.getDefault().presenter();
@@ -43,20 +44,24 @@ public class SynopticSelection extends Composite {
 	
 	public SynopticSelection(Composite parent, int style) {
 		super(parent, style);
-		GridLayout gridLayout = new GridLayout(2, false);
-		gridLayout.verticalSpacing = 0;
-		gridLayout.marginWidth = 0;
-		gridLayout.marginHeight = 0;
+		GridLayout gridLayout = new GridLayout(3, false);
+		gridLayout.marginHeight = 2;
+		gridLayout.marginRight = 5;
+		gridLayout.marginLeft = 5;
+		gridLayout.marginWidth = 2;
+
 		setLayout(gridLayout);
 		
 		Label synopticLabel = new Label(this, SWT.NONE);
 		GridData gd_gotoLabel = new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1);
 		gd_gotoLabel.verticalAlignment = SWT.CENTER;
 		synopticLabel.setLayoutData(gd_gotoLabel);
-		synopticLabel.setText("Synoptic:");
+		synopticLabel.setText("Synoptic");
+		synopticLabel.setFont(JFaceResources.getFontRegistry().getBold(""));
 		
 		GridData gd_synopticCombo = new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1);
 		gd_synopticCombo.widthHint = 120;
+		synopticCombo = new Combo(this, SWT.READ_ONLY);
 		synopticCombo.setLayoutData(gd_synopticCombo);
 		
 		presenter.addPropertyChangeListener("components", new PropertyChangeListener() {
@@ -109,7 +114,7 @@ public class SynopticSelection extends Composite {
 			}
 		});
 		
-		Button refreshButton = new Button(parent, SWT.NONE);
+		Button refreshButton = new Button(this, SWT.NONE);
 		refreshButton.setText("Refresh Synoptic");
 		refreshButton.setLayoutData(new GridData(SWT.CENTER, SWT.FILL, false, false, 1, 1));
 		refreshButton.setBackground(BACKGROUND);
@@ -121,10 +126,6 @@ public class SynopticSelection extends Composite {
 				synoptic.setViewerSynoptic(synopticToRefresh);		
 			}
 		});
-		
-		InstrumentBreadCrumb instrumentTrail = new InstrumentBreadCrumb(parent, SWT.NONE);
-		instrumentTrail.setLayoutData(new GridData(SWT.CENTER, SWT.FILL, false, false, 1, 1));
-		instrumentTrail.setBackground(BACKGROUND);
 	}
 	
 	public void setSynopticList() {
