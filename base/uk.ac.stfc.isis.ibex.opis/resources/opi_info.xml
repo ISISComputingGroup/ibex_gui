@@ -190,15 +190,6 @@
 			</value>
 		</entry>
 		<entry>
-			<key>Rotating Bench</key>
-			<value>
-				<path></path>
-				<description>Not currently available as an OPI</description>
-				<macros>
-				</macros>
-			</value>
-		</entry>
-		<entry>
 			<key>Single Stage</key>
 			<value>
 				<path>single_stage.opi</path>
@@ -211,6 +202,19 @@
 					<macro>
 						<name>MM</name>
 						<description>The MOT:MTRnnnn value relating to the motor controlling the stage</description>
+					</macro>
+				</macros>
+			</value>
+		</entry>
+		<entry>
+			<key>Rotating Bench</key>
+			<value>
+				<path>rotating_bench.opi</path>
+				<description>The OPI for the LARMOR rotating bench.</description>
+				<macros>
+					<macro>
+						<name>MM</name>
+						<description>The MOT:MTRnnnn value relating to the motor controlling the bench rotation</description>
 					</macro>
 				</macros>
 			</value>
