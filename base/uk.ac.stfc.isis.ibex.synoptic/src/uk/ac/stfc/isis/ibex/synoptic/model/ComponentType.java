@@ -37,7 +37,7 @@ public enum ComponentType {
 	KEPCO,
 	BEAMSTOP, 
 	MOVINGMONITOR,
-	ROTATINGBENCH (new ViewTarget("Rotating bench")),
+	ROTATINGBENCH,
 	SAMPLECHANGER,
 	MOVINGBEAMSTOP,
 	ANALYSER,
