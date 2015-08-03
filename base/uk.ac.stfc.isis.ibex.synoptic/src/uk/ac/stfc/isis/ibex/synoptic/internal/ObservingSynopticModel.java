@@ -65,6 +65,12 @@ public class ObservingSynopticModel {
 			@Override
 			public void onValue(Configuration value) {
 				String synopticName = value.synoptic();
+				
+				if (synopticName.isEmpty()) {
+					// There is no default specified
+					return;
+				}
+				
 				SynopticInfo newSynoptic = SynopticInfo.search(variables.available.getValue(), synopticName);
 				if (newSynoptic == null) {
 					// If cannot find synoptic use the default even if it is wrong for the configuration		
