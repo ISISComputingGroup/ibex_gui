@@ -14,11 +14,6 @@
             name="Edit Synoptic">
       </command>
       <command
-            defaultHandler="uk.ac.stfc.isis.ibex.ui.synoptic.editor.commands.LoadSynopticHandler"
-            id="uk.ac.stfc.isis.ibex.ui.synoptic.editor.commands.LoadSynoptic"
-            name="Load Synoptic">
-      </command>
-      <command
             defaultHandler="uk.ac.stfc.isis.ibex.ui.synoptic.editor.commands.DeleteSynopticHandler"
             id="uk.ac.stfc.isis.ibex.ui.synoptic.editor.commands.DeleteSynoptic"
             name="Edit Synoptic">
@@ -38,13 +33,6 @@
                  label="New"
                  style="push"
                  tooltip="Create a new synoptic">
-           </command>
-           <command
-                 commandId="uk.ac.stfc.isis.ibex.ui.synoptic.editor.commands.LoadSynoptic"
-                 id="uk.ac.stfc.isis.ibex.ui.synoptic"
-                 label="Load"
-                 style="push"
-                 tooltip="Load a synoptic into the synoptic view">
            </command>
            <command
                  commandId="uk.ac.stfc.isis.ibex.ui.synoptic.editor.commands.EditSynoptic"
