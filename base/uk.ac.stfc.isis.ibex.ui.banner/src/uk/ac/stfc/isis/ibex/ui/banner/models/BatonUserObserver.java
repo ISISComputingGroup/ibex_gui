@@ -45,7 +45,7 @@ public class BatonUserObserver implements Closable {
 		}
 
 		@Override
-		public void onConnectionChanged(boolean isConnected) {
+		public void onConnectionStatus(boolean isConnected) {
 			if (!isConnected) {
 				setUnknown();
 			}
@@ -72,7 +72,7 @@ public class BatonUserObserver implements Closable {
 	
 	@Override
 	public void close() {
-		subscription.cancel();
+		subscription.removeObserver();
 	}
 	
 	private void checkSelf(String value) {

@@ -42,6 +42,6 @@ public class Writers<T> extends BaseWriter<T, T> implements Closable {
 	
 	@Override
 	public void close() {
-		destinationSubscription.cancel();
+		destinationSubscription.removeObserver();
 	}
 }

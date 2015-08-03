@@ -34,7 +34,7 @@ public class ObservedSpectrum extends UpdatableSpectrum implements Closable {
 		}
 
 		@Override
-		public void onConnectionChanged(boolean isConnected) {			
+		public void onConnectionStatus(boolean isConnected) {			
 		}
 		
 		protected double[] toDoubleArray(float[] value) {
@@ -97,11 +97,11 @@ public class ObservedSpectrum extends UpdatableSpectrum implements Closable {
 
 	private void cancelSubscriptions() {
 		if (xSubscription != null) {
-			xSubscription.cancel();
+			xSubscription.removeObserver();
 		}
 		
 		if (ySubscription != null) {
-			ySubscription.cancel();
+			ySubscription.removeObserver();
 		}
 	}
 }

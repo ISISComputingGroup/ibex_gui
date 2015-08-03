@@ -39,8 +39,8 @@ public class ObservablePair<T1, T2>
 		}
 
 		@Override
-		public void onConnectionChanged(boolean isConnected) {
-			setConnectionChanged(isConnected);
+		public void onConnectionStatus(boolean isConnected) {
+			setConnectionStatus(isConnected);
 		}	
 	}
 	
@@ -68,8 +68,8 @@ public class ObservablePair<T1, T2>
 	
 	@Override
 	public void close() {
-		firstSubscription.cancel();
-		secondSubscription.cancel();
+		firstSubscription.removeObserver();
+		secondSubscription.removeObserver();
 	}
 
 	private T1 firstOrNull() {

@@ -41,7 +41,7 @@ public abstract class SettingsGateway implements Closable {
 		}
 
 		@Override
-		public void onConnectionChanged(boolean isConnected) {
+		public void onConnectionStatus(boolean isConnected) {
 			
 		}	
 	};
@@ -73,8 +73,8 @@ public abstract class SettingsGateway implements Closable {
 	
 	@Override
 	public void close() {
-		sourceSubscription.cancel();
-		destinationSubscription.cancel();
-		writerSubscription.cancel();
+		sourceSubscription.removeObserver();
+		destinationSubscription.removeObserver();
+		writerSubscription.removeObserver();
 	}
 }

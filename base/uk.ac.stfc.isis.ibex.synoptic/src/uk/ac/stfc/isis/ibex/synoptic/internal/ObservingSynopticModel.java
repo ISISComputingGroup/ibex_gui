@@ -56,7 +56,7 @@ public class ObservingSynopticModel {
 			@Override
 			public void onError(Exception e) { }
 			@Override
-			public void onConnectionChanged(boolean isConnected) { }
+			public void onConnectionStatus(boolean isConnected) { }
 		};
 		
 	private final InitialisableObserver<Configuration> configSynopticObserver 
@@ -89,7 +89,7 @@ public class ObservingSynopticModel {
 			@Override
 			public void onError(Exception e) { }
 			@Override
-			public void onConnectionChanged(boolean isConnected) { }
+			public void onConnectionStatus(boolean isConnected) { }
 		};
 		
 	private final InitialisableObserver<String> synopticSchemaObserver
@@ -110,7 +110,7 @@ public class ObservingSynopticModel {
 			@Override
 			public void onError(Exception e) { }
 			@Override
-			public void onConnectionChanged(boolean isConnected) { }
+			public void onConnectionStatus(boolean isConnected) { }
 		};
 	
 	private final SynopticModel model;

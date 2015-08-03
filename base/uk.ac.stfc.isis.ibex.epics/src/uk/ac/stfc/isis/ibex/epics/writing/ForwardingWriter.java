@@ -55,7 +55,7 @@ public abstract class ForwardingWriter<TIn, TOut> implements ConfigurableWriter<
 	@Override
 	public void close() {
 		for (Subscription subscription : subscriptions) {
-			subscription.cancel();
+			subscription.removeObserver();
 		}
 	}
 }

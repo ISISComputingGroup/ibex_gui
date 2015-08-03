@@ -45,7 +45,7 @@ public class DisplayBlock extends Block {
 		}
 
 		@Override
-		public void onConnectionChanged(boolean isConnected) {
+		public void onConnectionStatus(boolean isConnected) {
 			if (!isConnected) {
 				setValue("disconnected");
 			}
@@ -64,7 +64,7 @@ public class DisplayBlock extends Block {
 		}
 
 		@Override
-		public void onConnectionChanged(boolean isConnected) {
+		public void onConnectionStatus(boolean isConnected) {
 			if (!isConnected) {
 				setDescription("No description available");
 			}

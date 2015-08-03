@@ -24,5 +24,5 @@ package uk.ac.stfc.isis.ibex.epics.observing;
  *
  */
 public interface Subscription {
-	void cancel();
+	void removeObserver();
 }

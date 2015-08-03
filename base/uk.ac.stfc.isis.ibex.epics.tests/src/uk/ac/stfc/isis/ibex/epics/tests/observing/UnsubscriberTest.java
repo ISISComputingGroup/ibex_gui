@@ -30,7 +30,7 @@ public class UnsubscriberTest {
 		
 		// Act
 		testableObservable.setValue(FIRST_VALUE);
-		subscription.cancel();
+		subscription.removeObserver();
 		testableObservable.setValue(SECOND_VALUE);
 		
 		// Assert
@@ -55,8 +55,8 @@ public class UnsubscriberTest {
 		
 		// Act
 		testableObservable.setValue(FIRST_VALUE);
-		subscription.cancel();
-		subscription.cancel();
+		subscription.removeObserver();
+		subscription.removeObserver();
 		testableObservable.setValue(SECOND_VALUE);
 		
 		// Assert

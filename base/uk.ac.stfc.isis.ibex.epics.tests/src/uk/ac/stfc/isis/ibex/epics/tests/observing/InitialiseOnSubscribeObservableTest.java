@@ -101,12 +101,12 @@ public class InitialiseOnSubscribeObservableTest {
 		
 		// Act
 		initObservable.addObserver(mockObserver);
-		testableObservable.setConnectionChanged(true);
+		testableObservable.setConnectionStatus(true);
 				
 		// Assert
 		// The initialisable observer has its update method called once, and on connection changed once
 		verify(mockObserver, times(1)).update(null, null, false);
-		verify(mockObserver, times(1)).onConnectionChanged(true);
+		verify(mockObserver, times(1)).onConnectionStatus(true);
 	}
 	
 	@Test
@@ -198,7 +198,7 @@ public class InitialiseOnSubscribeObservableTest {
 		testableObservable.setValue(VALUE);
 		initObservable.addObserver(mockObserverOne);
 		Subscription unsubscriber = initObservable.addObserver(mockObserverTwo);
-		unsubscriber.cancel();
+		unsubscriber.removeObserver();
 		testableObservable.setValue(NEW_VALUE);
 		
 		// Assert
