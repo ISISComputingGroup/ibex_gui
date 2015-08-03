@@ -134,7 +134,7 @@ public class SaveSynopticDialog extends TitleAreaDialog {
 	  protected void okPressed() {
 		if (validate(name())) {
 			newName = name();
-			//Warn about overwriting if already exists
+			// Warn about overwriting if already exists
 			if (isDuplicate(newName)) {
 				boolean userCancelled = askUserWhetherToOverwrite(newName);
 				if (userCancelled) {
@@ -152,7 +152,7 @@ public class SaveSynopticDialog extends TitleAreaDialog {
 		MessageBox box = new MessageBox(getShell(), SWT.ICON_WARNING | SWT.YES | SWT.NO);
 		box.setMessage("The synoptic \"" + newName + "\" already exists. \n Do you want to replace it?");
 		
-		//Message boxes return the ID of the button to close, so need to check that value..
+		// Message boxes return the ID of the button to close, so need to check that value..
 		return box.open() != SWT.YES;
 	}
 	
@@ -185,7 +185,7 @@ public class SaveSynopticDialog extends TitleAreaDialog {
 	}
 	
 	private Boolean validate(String name) {		
-		//Must start with a letter and contain no spaces	
+		// Must start with a letter and contain no spaces	
 		return name.matches("^[a-zA-Z][a-zA-Z0-9_]*$");
 	}
 
