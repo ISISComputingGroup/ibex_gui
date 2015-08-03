@@ -5,7 +5,6 @@ import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.KeyListener;
@@ -20,7 +19,6 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Label;
 import org.eclipse.wb.swt.SWTResourceManager;
 
 import uk.ac.stfc.isis.ibex.synoptic.Synoptic;
@@ -45,21 +43,17 @@ public class SynopticSelection extends Composite {
 	public SynopticSelection(Composite parent, int style) {
 		super(parent, style);
 		GridLayout gridLayout = new GridLayout(3, false);
-		gridLayout.marginHeight = 2;
-		gridLayout.marginRight = 5;
-		gridLayout.marginLeft = 5;
-		gridLayout.marginWidth = 2;
+		gridLayout.marginRight = -2;
+		gridLayout.marginLeft = 0;
+		gridLayout.marginTop = -5;
+		gridLayout.marginBottom = -5;
 
 		setLayout(gridLayout);
 		
-		Label synopticLabel = new Label(this, SWT.NONE);
 		GridData gd_gotoLabel = new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1);
 		gd_gotoLabel.verticalAlignment = SWT.CENTER;
-		synopticLabel.setLayoutData(gd_gotoLabel);
-		synopticLabel.setText("Synoptic");
-		synopticLabel.setFont(JFaceResources.getFontRegistry().getBold(""));
 		
-		GridData gd_synopticCombo = new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1);
+		GridData gd_synopticCombo = new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1);
 		gd_synopticCombo.widthHint = 120;
 		synopticCombo = new Combo(this, SWT.READ_ONLY);
 		synopticCombo.setLayoutData(gd_synopticCombo);
@@ -116,7 +110,7 @@ public class SynopticSelection extends Composite {
 		
 		Button refreshButton = new Button(this, SWT.NONE);
 		refreshButton.setText("Refresh Synoptic");
-		refreshButton.setLayoutData(new GridData(SWT.CENTER, SWT.FILL, false, false, 1, 1));
+		refreshButton.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1));
 		refreshButton.setBackground(BACKGROUND);
 		
 		refreshButton.addSelectionListener(new SelectionAdapter() {
