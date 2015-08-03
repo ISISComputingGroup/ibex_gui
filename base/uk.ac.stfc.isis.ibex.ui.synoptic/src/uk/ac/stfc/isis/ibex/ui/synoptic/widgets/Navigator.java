@@ -26,7 +26,6 @@ import java.util.List;
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.beans.BeanProperties;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
-import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridLayout;
@@ -59,15 +58,11 @@ public class Navigator extends Composite {
 	public Navigator(Composite parent, int style) {
 		super(parent, style);
 		GridLayout gridLayout = new GridLayout(7, false);
-		gridLayout.marginHeight = 2;
-		gridLayout.marginRight = 5;
-		gridLayout.marginLeft = 5;
-		gridLayout.marginWidth = 2;
+		gridLayout.marginRight = 2;
+		gridLayout.marginLeft = 2;
+		gridLayout.marginTop = -5;
+		gridLayout.marginBottom = -5;
 		setLayout(gridLayout);
-				
-		Label navigationLabel = new Label(this, SWT.NONE);
-		navigationLabel.setText("Navigation");		
-		navigationLabel.setFont(JFaceResources.getFontRegistry().getBold(""));
 		
 		gotoCombo = new Combo(this, SWT.READ_ONLY);
 		GridData gd_gotoCombo = new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1);
@@ -94,7 +89,7 @@ public class Navigator extends Composite {
 		setModel(presenter.navigator());
 		
 		InstrumentBreadCrumb instrumentTrail = new InstrumentBreadCrumb(this, SWT.PUSH);
-		instrumentTrail.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
+		instrumentTrail.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1));
 		instrumentTrail.setBackground(BACKGROUND);
 	}
 	

@@ -24,6 +24,7 @@ import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Group;
 import org.eclipse.ui.ISizeProvider;
 import org.eclipse.ui.part.ViewPart;
 import org.eclipse.wb.swt.SWTResourceManager;
@@ -36,7 +37,7 @@ public class NavigationView extends ViewPart implements ISizeProvider {
 	public static final String ID = "uk.ac.stfc.isis.ibex.ui.synoptic.views.NavigationView"; //$NON-NLS-1$
 	
 	private static final Color BACKGROUND = SWTResourceManager.getColor(240, 240, 240);
-	public static final int FIXED_HEIGHT = 43;
+	public static final int FIXED_HEIGHT = 64;
 	
 	public NavigationView() {
 	}
@@ -44,14 +45,24 @@ public class NavigationView extends ViewPart implements ISizeProvider {
 	@Override
 	public void createPartControl(Composite parent) {
 		parent.setBackground(BACKGROUND);
-		parent.setLayout(new GridLayout(6, false));
-
-		SynopticSelection synopticSelection = new SynopticSelection(parent, SWT.BORDER);
-		synopticSelection.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
-		synopticSelection.setBackground(BACKGROUND);		
+		parent.setLayout(new GridLayout(2, false));
 		
-		Navigator navigator = new Navigator(parent, SWT.BORDER);
-		navigator.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
+		Group synopticGroup = new Group(parent, SWT.NONE);		
+	    synopticGroup.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1));
+	    synopticGroup.setLayout(new GridLayout(1, false));
+	    synopticGroup.setText("Synoptic Selection");
+
+		SynopticSelection synopticSelection = new SynopticSelection(synopticGroup, SWT.NONE);
+		synopticSelection.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1));
+		synopticSelection.setBackground(BACKGROUND);
+		
+		Group navigationGroup = new Group(parent, SWT.NONE);		
+		navigationGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+		navigationGroup.setLayout(new GridLayout(1, false));
+		navigationGroup.setText("Synoptic Navigation");
+				
+		Navigator navigator = new Navigator(navigationGroup, SWT.NONE);
+		navigator.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		navigator.setBackground(BACKGROUND);
 	}
 	
