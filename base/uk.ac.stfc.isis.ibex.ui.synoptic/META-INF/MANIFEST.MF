@@ -19,7 +19,6 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.swt,
  org.eclipse.ui.ide,
  uk.ac.stfc.isis.ibex.ui.dae;bundle-version="1.0.0",
- uk.ac.stfc.isis.ibex.ui.rotatingbench;bundle-version="1.0.0",
  uk.ac.stfc.isis.ibex.instrument;bundle-version="1.0.0"
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
