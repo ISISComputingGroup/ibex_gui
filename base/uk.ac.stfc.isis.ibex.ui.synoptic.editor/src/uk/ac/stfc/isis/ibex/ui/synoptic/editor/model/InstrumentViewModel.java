@@ -184,7 +184,7 @@ public class InstrumentViewModel {
 		if (component != null && component.target() == null) {
 			TargetDescription target = new TargetDescription();
 			target.setName("NONE");
-			target.setType(TargetType.COMPONENT);
+			target.setType(TargetType.OPI);
 			component.setTarget(target);
 
 			broadcastInstrumentUpdate(UpdateTypes.ADD_TARGET);
