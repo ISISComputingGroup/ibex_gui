@@ -45,8 +45,8 @@ public class SynopticSelection extends Composite {
 		GridLayout gridLayout = new GridLayout(3, false);
 		gridLayout.marginRight = -2;
 		gridLayout.marginLeft = 0;
-		gridLayout.marginTop = -5;
-		gridLayout.marginBottom = -5;
+		gridLayout.marginTop = -6;
+		gridLayout.marginBottom = -6;
 
 		setLayout(gridLayout);
 		
