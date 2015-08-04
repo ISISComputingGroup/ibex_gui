@@ -66,13 +66,14 @@ import uk.ac.stfc.isis.ibex.epics.conversion.Converter;
 import uk.ac.stfc.isis.ibex.epics.conversion.VTypeFormat;
 
 /**
- * This class is responsible for testing the default formatter and quantity conversions
+ * This class is responsible for testing the default formatter and quantity conversions.
+ * 
+ * Byte array values missing as unable to produce from ValueFactory.
  *
  */
+@SuppressWarnings({"checkstyle:methodname", "checkstyle:magicnumber"})
 public class VTypeFormatDefaultFormatterAndQuantityTest {
 
-	// Byte array values missing as unable to produce from ValueFactory
-	
 	@Test
 	public void default_convert_number_double_with_units() throws ConversionException {
 		// Arrange
@@ -568,7 +569,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 		// Arrange
 		Converter<VImage, String> converter = VTypeFormat.defaultFormatter();
 		
-		byte[] data = new byte[] {(byte)0};
+		byte[] data = new byte[] {(byte) 0};
 		
 		VImage value = ValueFactory.newVImage(1, 1, data);
 		
