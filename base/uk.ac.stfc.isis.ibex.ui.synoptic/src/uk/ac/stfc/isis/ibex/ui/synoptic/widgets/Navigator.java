@@ -37,6 +37,7 @@ import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.wb.swt.ResourceManager;
+import org.eclipse.wb.swt.SWTResourceManager;
 
 import uk.ac.stfc.isis.ibex.ui.synoptic.Activator;
 import uk.ac.stfc.isis.ibex.ui.synoptic.NavigationPresenter;
@@ -50,40 +51,18 @@ public class Navigator extends Composite {
 	private final Button up;
 	private final Button next;
 	
-	private final Label gotoLabel;
 	private final Combo gotoCombo;
+	
+	private static final Color BACKGROUND = SWTResourceManager.getColor(240, 240, 240);
 	
 	public Navigator(Composite parent, int style) {
 		super(parent, style);
 		GridLayout gridLayout = new GridLayout(6, false);
-		gridLayout.marginHeight = 0;
-		gridLayout.marginRight = 5;
-		gridLayout.marginLeft = 5;
-		gridLayout.horizontalSpacing = 7;
-		gridLayout.verticalSpacing = 0;
-		gridLayout.marginWidth = 0;
+		gridLayout.marginRight = 2;
+		gridLayout.marginLeft = 2;
+		gridLayout.marginTop = -6;
+		gridLayout.marginBottom = -6;
 		setLayout(gridLayout);
-		
-		previous = new Button(this, SWT.NONE);
-		previous.setImage(ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui.synoptic", "icons/navigate_left.png"));
-		previous.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
-		previous.setText("Prev");
-		
-		up = new Button(this, SWT.NONE);
-		up.setSelection(true);
-		up.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
-		up.setText("Up");
-		
-		next = new Button(this, SWT.NONE);
-		next.setImage(ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui.synoptic", "icons/navigate_right.png"));
-		next.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
-		next.setText("Next");
-		
-		gotoLabel = new Label(this, SWT.NONE);
-		GridData gd_gotoLabel = new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1);
-		gd_gotoLabel.horizontalIndent = 10;
-		gotoLabel.setLayoutData(gd_gotoLabel);
-		gotoLabel.setText("Go to:");
 		
 		gotoCombo = new Combo(this, SWT.READ_ONLY);
 		GridData gd_gotoCombo = new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1);
@@ -91,10 +70,27 @@ public class Navigator extends Composite {
 		gotoCombo.setLayoutData(gd_gotoCombo);
 		new Label(this, SWT.NONE);
 		
+		previous = new Button(this, SWT.NONE);
+		previous.setImage(ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui.synoptic", "icons/navigate_left.png"));
+		previous.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
+		
+		up = new Button(this, SWT.NONE);
+		up.setImage(ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui.synoptic", "icons/navigate_up.png"));
+		up.setSelection(true);
+		up.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
+		
+		next = new Button(this, SWT.NONE);
+		next.setImage(ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui.synoptic", "icons/navigate_right.png"));
+		next.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
+		
 		presenter = Activator.getDefault().presenter();
 		setTargets(presenter.getTargets());
 		
 		setModel(presenter.navigator());
+		
+		InstrumentBreadCrumb instrumentTrail = new InstrumentBreadCrumb(this, SWT.PUSH);
+		instrumentTrail.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1));
+		instrumentTrail.setBackground(BACKGROUND);
 	}
 	
 	private void setModel(final NavigationPresenter navigator) {
@@ -161,6 +157,5 @@ public class Navigator extends Composite {
 		previous.setBackground(color);
 		up.setBackground(color);
 		next.setBackground(color);
-		gotoLabel.setBackground(color);
 	}
 }

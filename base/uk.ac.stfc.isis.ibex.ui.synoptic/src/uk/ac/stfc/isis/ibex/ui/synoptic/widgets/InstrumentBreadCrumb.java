@@ -93,19 +93,13 @@ public class InstrumentBreadCrumb extends Composite {
 	public void setComponents(List<String> items) {
 		cleanupCrumbs();
 		
-		if (items.isEmpty()) {
+		if (items.isEmpty() || items.size() == 1) {
 			return;
-		} else if (items.size() == 1) {
-			configureSingleItemTrail(items.get(0));
 		} else {
 			configureMultipleCrumbTrail(items);			
 		}
 
 		selectLastCrumb();
-	}
-
-	private void configureSingleItemTrail(String item) {
-		addHeadCrumb(item, true);
 	}
 	
 	private void configureMultipleCrumbTrail(List<String> items) {
