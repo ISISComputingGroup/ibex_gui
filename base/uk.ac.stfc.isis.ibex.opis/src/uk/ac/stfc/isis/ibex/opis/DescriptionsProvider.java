@@ -25,8 +25,11 @@ import org.xml.sax.SAXException;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 import javax.xml.bind.JAXBException;
@@ -97,7 +100,9 @@ public class DescriptionsProvider extends Provider {
 
 	@Override
 	public Collection<String> getOpiList() {
-		return descriptions.getOpis().keySet();
+		List<String> list = new ArrayList<String>(descriptions.getOpis().keySet());
+		java.util.Collections.sort(list);
+		return list;
 	}
 
 	@Override
