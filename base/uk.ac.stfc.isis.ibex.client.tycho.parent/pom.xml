@@ -40,6 +40,9 @@
                     <includes>
                         <include>uk/ac/stfc/isis/**/*</include>
                     </includes>
+                    <excludes>
+                        <exclude>**/lib/*</exclude>
+                    </excludes>
                 </configuration>
               <executions>
                 <execution>
