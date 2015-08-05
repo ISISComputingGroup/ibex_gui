@@ -21,28 +21,10 @@ package uk.ac.stfc.isis.ibex.epics.tests.conversion;
 
 import static org.junit.Assert.*;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
-import org.epics.vtype.Alarm;
-import org.epics.vtype.AlarmSeverity;
-import org.epics.vtype.Display;
-import org.epics.vtype.Time;
-import org.epics.vtype.VByteArray;
-import org.epics.vtype.VDouble;
 import org.epics.vtype.VEnum;
 import org.epics.vtype.VFloatArray;
-import org.epics.vtype.VInt;
-import org.epics.vtype.VLong;
-import org.epics.vtype.VNumber;
-import org.epics.vtype.VShort;
-import org.epics.vtype.VString;
-import org.epics.vtype.VType;
 import org.epics.vtype.ValueFactory;
 import org.epics.util.array.ListFloat;
-import org.epics.util.text.NumberFormats;
-import org.epics.util.time.Timestamp;
 import org.junit.Test;
 
 import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
