@@ -25,14 +25,15 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.custom.CTabItem;
-import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 
+import uk.ac.stfc.isis.ibex.ui.dae.DaeUI;
 import uk.ac.stfc.isis.ibex.ui.dae.experimentsetup.periods.PeriodsPanel;
 import uk.ac.stfc.isis.ibex.ui.dae.experimentsetup.timechannels.TimeChannelsPanel;
+import uk.ac.stfc.isis.ibex.ui.dae.run.RunSummaryViewModel;
 
 public class ExperimentSetup extends Composite {
 
@@ -90,7 +91,8 @@ public class ExperimentSetup extends Composite {
 		sendChangesComposite.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		sendChangesComposite.setLayout(new GridLayout(1, false));
 		
-		Button btnSendChanges = new Button(sendChangesComposite, SWT.NONE);
+		RunSummaryViewModel rsvm = DaeUI.getDefault().viewModel().runSummary();
+		SendChangesButton btnSendChanges = new SendChangesButton(sendChangesComposite, SWT.NONE, rsvm.actions().begin);
 		btnSendChanges.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
