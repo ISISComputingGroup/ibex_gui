@@ -29,6 +29,12 @@
  */
 package uk.ac.stfc.isis.ibex.log.message;
 
+import uk.ac.stfc.isis.ibex.log.message.sql.LogMessageFieldsSql;
+
+/**
+ * This class is responsible for maintaining a log message either in relation to the XML or SQL database 
+ *
+ */
 public class LogMessage {
 	// message info
 	private String contents = "";
@@ -107,5 +113,36 @@ public class LogMessage {
 		}
 		
 		return values;		
+	}
+	
+	public void setProperty(LogMessageFieldsSql property, String value) {
+		switch (property) {
+			case CONTENTS:
+				contents = value;
+				break;
+			case SEVERITY:
+				severity = value;
+				break;
+			case EVENT_TIME:
+				eventTime = value;
+				break;
+			case CREATE_TIME:
+				createTime = value;
+				break;
+			case CLIENT_NAME:
+				clientName = value;
+				break;
+			case CLIENT_HOST:
+				clientHost = value;
+				break;
+			case TYPE:
+				type = value;
+				break;
+			case APPLICATION_ID:
+				applicationId = value;
+				break;
+			default:
+				new Throwable().getStackTrace();
+		}
 	}
 }

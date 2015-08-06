@@ -29,17 +29,20 @@ import java.util.List;
 
 import uk.ac.stfc.isis.ibex.log.message.LogMessage;
 import uk.ac.stfc.isis.ibex.log.message.LogMessageFields;
+import uk.ac.stfc.isis.ibex.log.message.sql.LogMessageFieldsSql;
+import uk.ac.stfc.isis.ibex.log.message.sql.LogMessageFieldsWhereSql;
+import uk.ac.stfc.isis.ibex.log.message.sql.LogMessageSql;
 
 public class LogMessageQuery {
-	private static final LogMessageFields[] SQL_SELECT_FIELDS = {
-		LogMessageFields.CREATE_TIME,
-		LogMessageFields.EVENT_TIME,
-		LogMessageFields.TYPE,
-		LogMessageFields.CONTENTS,
-		LogMessageFields.CLIENT_NAME,
-		LogMessageFields.SEVERITY,
-		LogMessageFields.CLIENT_HOST,
-		LogMessageFields.APPLICATION_ID
+	private static final LogMessageFieldsSql[] SQL_SELECT_FIELDS = {
+		LogMessageFieldsSql.CREATE_TIME,
+		LogMessageFieldsSql.EVENT_TIME,
+		LogMessageFieldsSql.TYPE,
+		LogMessageFieldsSql.CONTENTS,
+		LogMessageFieldsSql.CLIENT_NAME,
+		LogMessageFieldsSql.SEVERITY,
+		LogMessageFieldsSql.CLIENT_HOST,
+		LogMessageFieldsSql.APPLICATION_ID
 	};
 	
 	private final Rdb rdb;
@@ -58,9 +61,9 @@ public class LogMessageQuery {
 	 * @param from Consider only messages that occurred after this time (null = no limit).
 	 * @param to Consider only messages that occurred before this time (null = no limit).
 	 */
-	public List<LogMessage> getMessages(LogMessageFields searchField, String searchValue, 
+	public List<LogMessage> getMessages(LogMessageFieldsWhereSql searchField, String searchValue, 
 			Calendar from, Calendar to) throws Exception {
-		LogMessageFields[] whereLikeClauses = { searchField };
+		LogMessageFieldsWhereSql[] whereLikeClauses = { searchField };
 		
 		sqlStatement.setSelectFields(SQL_SELECT_FIELDS);
 		sqlStatement.setWhereLikeClause(whereLikeClauses);
@@ -106,15 +109,29 @@ public class LogMessageQuery {
 	 * in the same order as they were in the select statement.
 	 */
 	private LogMessage getMessageFromQueryResult(ResultSet result, 
-			LogMessageFields[] fields) throws SQLException {
+			LogMessageFieldsSql[] fields) throws SQLException {
 		LogMessage newMessage = new LogMessage();
 		
 		int ind = 0;
-		for (LogMessageFields field: fields) {
+		for (LogMessageFieldsSql field: fields) {
 			String value = result.getString(++ind);
 			newMessage.setProperty(field, value);
 		}
 		
 		return newMessage;
+	}
+	
+	/**
+	 * Performs a database search, returning all log messages in the DB that match the request parameters.
+	 * Converts the LogMessageField to the appropriate LogMessageFieldSql to allow for a schema change
+	 * @param searchField The log message field to search by.
+	 * @param searchValue Search the 'searchField' field of every record for this string value
+	 * @param from Consider only messages that occurred after this time (null = no limit).
+	 * @param to Consider only messages that occurred before this time (null = no limit).
+	 */
+	public List<LogMessage> getMessages(LogMessageFields searchField, String searchValue, 
+			Calendar from, Calendar to) throws Exception {
+		LogMessageFieldsWhereSql field = new LogMessageSql().getWhereSqlTag(searchField);
+		return getMessages(field, searchValue, from, to);
 	}
 }
