@@ -15,7 +15,8 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.jface,
  uk.ac.stfc.isis.ibex.epics,
  uk.ac.stfc.isis.ibex.instrument,
- uk.ac.stfc.isis.ibex.json
+ uk.ac.stfc.isis.ibex.json,
+ uk.ac.stfc.isis.ibex.runcontrol
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Bundle-ActivationPolicy: lazy
 Export-Package: uk.ac.stfc.isis.ibex.configserver;

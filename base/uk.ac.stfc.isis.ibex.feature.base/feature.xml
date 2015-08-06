@@ -220,20 +220,6 @@
          unpack="false"/>
 
    <plugin
-         id="uk.ac.stfc.isis.ibex.rotatingbench"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="uk.ac.stfc.isis.ibex.ui.rotatingbench"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
          id="com.google.gson"
          download-size="0"
          install-size="0"
@@ -329,7 +315,7 @@
          install-size="0"
          version="0.0.0"
          unpack="false"/>
-         
+
    <plugin
          id="uk.ac.stfc.isis.ibex.ui.synoptic"
          download-size="0"
@@ -344,20 +330,6 @@
          version="0.0.0"
          unpack="false"/>
 
-   <plugin
-         id="uk.ac.stfc.isis.ibex.rotatingbench"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="uk.ac.stfc.isis.ibex.ui.rotatingbench"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-         
    <plugin
          id="uk.ac.stfc.isis.ibex.goniometer"
          download-size="0"
@@ -374,6 +346,20 @@
 
    <plugin
          id="uk.ac.stfc.isis.ibex.ui.synoptic.editor"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="uk.ac.stfc.isis.ibex.runcontrol"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="uk.ac.stfc.isis.ibex.ui.runcontrol"
          download-size="0"
          install-size="0"
          version="0.0.0"
