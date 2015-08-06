@@ -1,3 +1,4 @@
+package uk.ac.stfc.isis.ibex.runcontrol;
 
 /*
 * This file is part of the ISIS IBEX application.
@@ -17,18 +18,30 @@
 * http://opensource.org/licenses/eclipse-1.0.php
 */
 
-package uk.ac.stfc.isis.ibex.configserver;
-
-import java.util.Collection;
-
-import uk.ac.stfc.isis.ibex.configserver.displaying.DisplayConfiguration;
 import uk.ac.stfc.isis.ibex.epics.observing.InitialiseOnSubscribeObservable;
-import uk.ac.stfc.isis.ibex.configserver.displaying.DisplayBlock;
+import uk.ac.stfc.isis.ibex.epics.pv.Closer;
 
-public interface Displaying {
-	/*
-	 * Configuration details for presentation to the user.
-	 */
-	InitialiseOnSubscribeObservable<DisplayConfiguration> displayCurrentConfig();
-	Collection<DisplayBlock> getDisplayBlocks();
+public class RunControlServer extends Closer {
+	private RunControlVariables variables;
+	
+	public RunControlServer(RunControlVariables variables) {
+		this.variables = variables;
+	}
+	
+	public InitialiseOnSubscribeObservable<String> blockRunControlLowLimit(String blockName) {
+		return variables.blockRunControlLowLimit(blockName);
+	}
+	
+	public InitialiseOnSubscribeObservable<String> blockRunControlHighLimit(String blockName) {
+		return variables.blockRunControlHighLimit(blockName);
+	}
+	
+	public InitialiseOnSubscribeObservable<String> blockRunControlInRange(String blockName) {
+		return variables.blockRunControlInRange(blockName);
+	}
+	
+	public InitialiseOnSubscribeObservable<String> blockRunControlEnabled(String blockName) {
+		return variables.blockRunControlEnabled(blockName);
+	}
+
 }

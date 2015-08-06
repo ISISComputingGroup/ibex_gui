@@ -17,7 +17,8 @@ Require-Bundle: org.eclipse.ui,
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Export-Package: uk.ac.stfc.isis.ibex.ui.configserver.commands,
- uk.ac.stfc.isis.ibex.ui.configserver.dialogs
+ uk.ac.stfc.isis.ibex.ui.configserver.dialogs,
+ uk.ac.stfc.isis.ibex.ui.configserver.editing
 Import-Package: org.eclipse.core.expressions,
  uk.ac.stfc.isis.ibex.model,
  uk.ac.stfc.isis.ibex.preferences,

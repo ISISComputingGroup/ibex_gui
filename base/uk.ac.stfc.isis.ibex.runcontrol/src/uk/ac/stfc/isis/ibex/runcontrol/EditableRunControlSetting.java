@@ -17,18 +17,16 @@
 * http://opensource.org/licenses/eclipse-1.0.php
 */
 
-package uk.ac.stfc.isis.ibex.configserver;
+package uk.ac.stfc.isis.ibex.runcontrol;
 
-import java.util.Collection;
+public class EditableRunControlSetting extends RunControlSetting {
 
-import uk.ac.stfc.isis.ibex.configserver.displaying.DisplayConfiguration;
-import uk.ac.stfc.isis.ibex.epics.observing.InitialiseOnSubscribeObservable;
-import uk.ac.stfc.isis.ibex.configserver.displaying.DisplayBlock;
+	public EditableRunControlSetting(String blockName, String lowLimit, String highLimit, boolean enabled) {
+		super(blockName, lowLimit, highLimit, enabled);
+	}
+	
+	public EditableRunControlSetting(RunControlSetting other) {
+		super(other);
+	}
 
-public interface Displaying {
-	/*
-	 * Configuration details for presentation to the user.
-	 */
-	InitialiseOnSubscribeObservable<DisplayConfiguration> displayCurrentConfig();
-	Collection<DisplayBlock> getDisplayBlocks();
 }

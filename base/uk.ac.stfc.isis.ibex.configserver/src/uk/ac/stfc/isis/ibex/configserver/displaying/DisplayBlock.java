@@ -32,6 +32,10 @@ public class DisplayBlock extends Block {
 
 	private String value;
 	private String description;
+	private Boolean inRange;
+	private String lowLimit;
+	private String highLimit;
+	private Boolean enabled;
 	
 	private final BaseObserver<String> valueAdapter = new BaseObserver<String>() {	
 		@Override
@@ -71,16 +75,114 @@ public class DisplayBlock extends Block {
 		}
 	};
 	
+	private final BaseObserver<String> inRangeAdapter = new BaseObserver<String>() {	
+		@Override
+		public void onValue(String value) {
+			if (value.equals("NO")) {
+				setInRange(false);
+			} else {
+				// If in doubt set to true
+				setInRange(true);
+			}
+		}
+
+		@Override
+		public void onError(Exception e) {
+			// If in doubt set to true
+			setInRange(true);
+		}
+
+		@Override
+		public void onConnectionStatus(boolean isConnected) {
+			if (!isConnected) {
+				// If in doubt set to true
+				setInRange(true);
+			}
+		}
+	};
+	
+	private final BaseObserver<String> lowLimitAdapter = new BaseObserver<String>() {	
+		@Override
+		public void onValue(String value) {
+			setLowLimit(value);
+		}
+
+		@Override
+		public void onError(Exception e) {
+			setLowLimit("error");
+		}
+
+		@Override
+		public void onConnectionStatus(boolean isConnected) {
+			if (!isConnected) {
+				setLowLimit("disconnected");
+			}
+		}
+	};
+	
+	private final BaseObserver<String> highLimitAdapter = new BaseObserver<String>() {	
+		@Override
+		public void onValue(String value) {
+			setHighLimit(value);
+		}
+
+		@Override
+		public void onError(Exception e) {
+			setHighLimit("error");
+		}
+
+		@Override
+		public void onConnectionStatus(boolean isConnected) {
+			if (!isConnected) {
+				setLowLimit("disconnected");
+			}
+		}
+	};
+	
+	private final BaseObserver<String> enabledAdapter = new BaseObserver<String>() {	
+		@Override
+		public void onValue(String value) {
+			if (value.equals("YES")) {
+				setEnabled(true);
+			} else {
+				// If in doubt set to false
+				setEnabled(false);
+			}
+		}
+
+		@Override
+		public void onError(Exception e) {
+			// If in doubt set to false
+			setEnabled(false);
+		}
+
+		@Override
+		public void onConnectionStatus(boolean isConnected) {
+			if (!isConnected) {
+				// If in doubt set to true
+				setEnabled(false);
+			}
+		}
+	};
+	
 	public DisplayBlock(
 			Block block,
 			InitialiseOnSubscribeObservable<String> valueSource,
 			InitialiseOnSubscribeObservable<String> descriptionSource,
+			InitialiseOnSubscribeObservable<String> inRangeSource,
+			InitialiseOnSubscribeObservable<String> lowLimitSource,
+			InitialiseOnSubscribeObservable<String> highLimitSource,
+			InitialiseOnSubscribeObservable<String> enabledSource,
 			String blockServerAlias) {
 		super(block);
 		this.blockServerAlias = blockServerAlias;
 				
 		valueSource.addObserver(valueAdapter);
 		descriptionSource.addObserver(descriptionAdapter);
+		inRangeSource.addObserver(inRangeAdapter);
+		lowLimitSource.addObserver(lowLimitAdapter);
+		highLimitSource.addObserver(highLimitAdapter);
+		enabledSource.addObserver(enabledAdapter);
 	}
 	
 	public String getValue() {
@@ -89,6 +191,22 @@ public class DisplayBlock extends Block {
 	
 	public String getDescription() {
 		return description;
+	}
+	
+	public Boolean getInRange() {
+		return inRange;
+	}
+	
+	public String getLowLimit() {
+		return lowLimit;
+	}
+	
+	public String getHighLimit() {
+		return highLimit;
+	}
+	
+	public Boolean getEnabled() {
+		return enabled;
 	}
 
 	public String blockServerAlias() {
@@ -101,5 +219,21 @@ public class DisplayBlock extends Block {
 	
 	private synchronized void setDescription(String description) {
 		firePropertyChange("description", this.description, this.description = Strings.nullToEmpty(description));
+	}
+	
+	private synchronized void setInRange(Boolean inRange) {
+		firePropertyChange("inRange", this.inRange, this.inRange = inRange);
+	}
+	
+	private synchronized void setLowLimit(String limit) {
+		firePropertyChange("lowLimit", this.lowLimit, this.lowLimit = limit);
+	}
+	
+	private synchronized void setHighLimit(String limit) {
+		firePropertyChange("highLimit", this.highLimit, this.highLimit = limit);
+	}
+	
+	private synchronized void setEnabled(Boolean enabled) {
+		firePropertyChange("enabled", this.enabled, this.enabled = enabled);
 	}
 }
