@@ -46,9 +46,5 @@ public class EditableRunControlSetting extends RunControlSetting {
 			runControlServer.blockRunControlEnabledSetter(blockName).write("NO");
 		}
 	}
-	
-	public boolean canWrite() {
-		return runControlServer.blockRunControlEnabledSetter(blockName).canWrite();
-	}
 
 }
