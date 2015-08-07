@@ -22,15 +22,16 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import uk.ac.stfc.isis.ibex.configserver.ConfigServer;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Block;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Group;
 import uk.ac.stfc.isis.ibex.configserver.internal.DisplayUtils;
-import uk.ac.stfc.isis.ibex.runcontrol.RunControlServer;
-
 import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 
+/**
+ * Contains the functionality to display a group and its blocks in a GUI.
+ *
+ */
 public class DisplayGroup {
 
 	private final String name;

@@ -20,7 +20,13 @@ package uk.ac.stfc.isis.ibex.runcontrol;
 
 import uk.ac.stfc.isis.ibex.epics.observing.InitialiseOnSubscribeObservable;
 import uk.ac.stfc.isis.ibex.epics.pv.Closer;
+import uk.ac.stfc.isis.ibex.epics.writing.Writer;
+import uk.ac.stfc.isis.ibex.epics.writing.Writers;
 
+/**
+ * The run-control server.
+ *
+ */
 public class RunControlServer extends Closer {
 	private RunControlVariables variables;
 	
@@ -44,4 +50,15 @@ public class RunControlServer extends Closer {
 		return variables.blockRunControlEnabled(blockName);
 	}
 
+	public Writer<String> blockRunControlLowLimitSetter(String blockName) {
+		return registerForClose(Writers.forDestination(variables.blockRunControlLowLimitSetter(blockName)));
+	}
+	
+	public Writer<String> blockRunControlHighLimitSetter(String blockName) {
+		return registerForClose(Writers.forDestination(variables.blockRunControlHighLimitSetter(blockName)));
+	}
+	
+	public Writer<String> blockRunControlEnabledSetter(String blockName) {
+		return registerForClose(Writers.forDestination(variables.blockRunControlEnabledSetter(blockName)));
+	}
 }

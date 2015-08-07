@@ -1,0 +1,100 @@
+
+/*
+* This file is part of the ISIS IBEX application.
+* Copyright (C) 2012-2015 Science & Technology Facilities Council.
+* All rights reserved.
+*
+* This program is distributed in the hope that it will be useful.
+* This program and the accompanying materials are made available under the
+* terms of the Eclipse Public License v1.0 which accompanies this distribution.
+* EXCEPT AS EXPRESSLY SET FORTH IN THE ECLIPSE PUBLIC LICENSE V1.0, THE PROGRAM 
+* AND ACCOMPANYING MATERIALS ARE PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES 
+* OR CONDITIONS OF ANY KIND.  See the Eclipse Public License v1.0 for more details.
+*
+* You should have received a copy of the Eclipse Public License v1.0
+* along with this program; if not, you can obtain a copy from
+* https://www.eclipse.org/org/documents/epl-v10.php or 
+* http://opensource.org/licenses/eclipse-1.0.php
+*/
+
+package uk.ac.stfc.isis.ibex.ui.runcontrol.dialogs;
+
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.util.Collection;
+
+import org.eclipse.jface.viewers.ISelectionChangedListener;
+import org.eclipse.jface.viewers.SelectionChangedEvent;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
+
+import uk.ac.stfc.isis.ibex.configserver.ConfigServer;
+import uk.ac.stfc.isis.ibex.configserver.Configurations;
+import uk.ac.stfc.isis.ibex.configserver.configuration.Configuration;
+import uk.ac.stfc.isis.ibex.configserver.displaying.DisplayBlock;
+import uk.ac.stfc.isis.ibex.epics.adapters.UpdatedObservableAdapter;
+import uk.ac.stfc.isis.ibex.model.UpdatedValue;
+import uk.ac.stfc.isis.ibex.runcontrol.RunControlServer;
+
+@SuppressWarnings({"checkstyle:magicnumber"})
+public class RunControlSettingsPanel extends Composite {
+
+	private final Display display = Display.getDefault();
+	private RunControlSettingsTable table;
+	private RunControlEditorPanel editor;
+	private final ConfigServer configServer;
+	private final RunControlServer runControlServer;
+	UpdatedValue<Configuration> config;
+
+	private PropertyChangeListener updateTable = new PropertyChangeListener() {
+		@Override
+		public void propertyChange(final PropertyChangeEvent arg0) {
+			display.asyncExec(new Runnable() {
+				@Override
+				public void run() {
+					setBlocks();
+				}
+			});
+		}
+	};
+
+	public RunControlSettingsPanel(Composite parent, int style, ConfigServer configServer, RunControlServer runControlServer) {
+		super(parent, style);
+		
+		this.configServer = configServer;
+		config = new UpdatedObservableAdapter<>(this.configServer.currentConfig());
+		config.addPropertyChangeListener(updateTable, true);
+		
+		this.runControlServer = runControlServer;
+		
+		setLayout(new GridLayout(1, false));
+
+		table = new RunControlSettingsTable(this, SWT.NONE, SWT.V_SCROLL | SWT.NO_SCROLL | SWT.FULL_SELECTION
+				| SWT.BORDER);
+		GridData gdTable = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
+		gdTable.heightHint = 200;
+		table.setLayoutData(gdTable);
+		table.addSelectionChangedListener(new ISelectionChangedListener() {
+			@Override
+			public void selectionChanged(SelectionChangedEvent arg0) {
+				editor.setBlock(table.firstSelectedRow());
+			}
+		});
+		
+		editor = new RunControlEditorPanel(this, SWT.NONE, this.configServer, this.runControlServer);
+		GridData gdEditor = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
+		table.setLayoutData(gdEditor);
+	}
+
+	private void setBlocks() {
+		Collection<DisplayBlock> settings = Configurations.getInstance().display().getDisplayBlocks();
+
+		if (settings != null) {
+			table.setRows(settings);
+		}
+	}
+
+}
