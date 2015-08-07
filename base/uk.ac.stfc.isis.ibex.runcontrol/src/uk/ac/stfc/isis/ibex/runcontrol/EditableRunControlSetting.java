@@ -19,14 +19,36 @@
 
 package uk.ac.stfc.isis.ibex.runcontrol;
 
+/**
+ * This class allows the run-control settings to be changed.
+ *
+ */
 public class EditableRunControlSetting extends RunControlSetting {
+	private final RunControlServer runControlServer;
+		
+	public EditableRunControlSetting(String blockName, RunControlServer runControlServer) {
+		super(blockName);
+		this.runControlServer = runControlServer;
+	}
 
-	public EditableRunControlSetting(String blockName, String lowLimit, String highLimit, boolean enabled) {
-		super(blockName, lowLimit, highLimit, enabled);
+	public void setLowLimit(String limit) {
+		runControlServer.blockRunControlLowLimitSetter(blockName).write(limit);
 	}
 	
-	public EditableRunControlSetting(RunControlSetting other) {
-		super(other);
+	public void setHighLimit(String limit) {
+		runControlServer.blockRunControlHighLimitSetter(blockName).write(limit);
+	}
+	
+	public void setEnabled(boolean enabled) {
+		if (enabled) {
+			runControlServer.blockRunControlEnabledSetter(blockName).write("YES");
+		} else {
+			runControlServer.blockRunControlEnabledSetter(blockName).write("NO");
+		}
+	}
+	
+	public boolean canWrite() {
+		return runControlServer.blockRunControlEnabledSetter(blockName).canWrite();
 	}
 
 }

@@ -25,6 +25,10 @@ import org.osgi.framework.BundleContext;
 import uk.ac.stfc.isis.ibex.epics.pv.Closer;
 import uk.ac.stfc.isis.ibex.instrument.Instrument;
 
+/**
+ * The Eclipse plug-in activator.
+ *
+ */
 public class RunControlActivator extends Closer implements BundleActivator {
 
 	private static BundleContext context;

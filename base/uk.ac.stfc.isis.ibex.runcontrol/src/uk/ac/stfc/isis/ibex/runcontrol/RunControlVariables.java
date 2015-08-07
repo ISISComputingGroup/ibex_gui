@@ -20,11 +20,16 @@
 package uk.ac.stfc.isis.ibex.runcontrol;
 
 import uk.ac.stfc.isis.ibex.epics.observing.InitialiseOnSubscribeObservable;
+import uk.ac.stfc.isis.ibex.epics.writing.Writable;
 import uk.ac.stfc.isis.ibex.instrument.Channels;
 import uk.ac.stfc.isis.ibex.instrument.InstrumentVariables;
 import uk.ac.stfc.isis.ibex.instrument.channels.DefaultChannel;
 import uk.ac.stfc.isis.ibex.instrument.channels.StringChannel;
 
+/**
+ * Creates the various run-control variables. 
+ *
+ */
 public class RunControlVariables extends InstrumentVariables {
 
 	private final RunControlAddresses runControlAddresses = new RunControlAddresses();
@@ -47,6 +52,18 @@ public class RunControlVariables extends InstrumentVariables {
 	
 	public InitialiseOnSubscribeObservable<String> blockRunControlEnabled(String blockName) {
 		return reader(new DefaultChannel(), runControlAddresses.getEnablePv(blockName));
+	}
+	
+	public Writable<String> blockRunControlLowLimitSetter(String blockName) {
+		return writable(new StringChannel(), runControlAddresses.getLowLimitPv(blockName));
+	}
+	
+	public Writable<String> blockRunControlHighLimitSetter(String blockName) {
+		return writable(new StringChannel(), runControlAddresses.getHighLimitPv(blockName));
+	}
+	
+	public Writable<String> blockRunControlEnabledSetter(String blockName) {
+		return writable(new StringChannel(), runControlAddresses.getEnablePv(blockName));
 	}
 
 }

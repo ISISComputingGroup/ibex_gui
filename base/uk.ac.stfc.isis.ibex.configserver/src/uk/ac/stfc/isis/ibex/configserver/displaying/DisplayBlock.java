@@ -26,6 +26,10 @@ import uk.ac.stfc.isis.ibex.instrument.Instrument;
 
 import com.google.common.base.Strings;
 
+/**
+ * Contains the functionality to display a blocks value and run-control settings in a GUI.
+ *
+ */
 public class DisplayBlock extends Block {
 
 	private final String blockServerAlias;
