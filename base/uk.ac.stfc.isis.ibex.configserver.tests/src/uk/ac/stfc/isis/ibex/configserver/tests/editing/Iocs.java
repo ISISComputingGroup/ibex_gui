@@ -34,10 +34,13 @@ public class Iocs extends EditableConfigurationTest {
 	
 	@Test
 	public void redundant_iocs_are_removed_from_the_config() {
+		// Arrange
 		GALIL01.setAutostart(false);
 		GALIL01.setRestart(false);
 		iocs.add(GALIL01);
 		EditableConfiguration edited = edit(config());
+		
+		// Assert
 		assertDoesNotContain(edited.asConfiguration().getIocs(), GALIL01);
 	}
 	

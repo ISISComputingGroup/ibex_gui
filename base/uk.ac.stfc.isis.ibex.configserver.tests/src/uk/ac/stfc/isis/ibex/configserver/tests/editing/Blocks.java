@@ -25,24 +25,39 @@ import uk.ac.stfc.isis.ibex.configserver.editing.EditableBlock;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
 
 public class Blocks extends EditableConfigurationTest {
+	
+	@Test
+	public void a_new_config_has_no_blocks() {
+		// Arrange
+		EditableConfiguration edited = edit(emptyConfig());
 		
+		// Assert
+		assertEmpty(edited.asConfiguration().getBlocks());
+	}	
+	
 	@Test
 	public void a_new_block_can_be_added() {
+		// Arrange
 		EditableConfiguration edited = edit(emptyConfig());
-		assertEmpty(edited.asConfiguration().getBlocks());
-		
+	
+		// Act
 		edited.addNewBlock();
+		
+		// Assert
 		assertNotEmpty(edited.asConfiguration().getBlocks());
 	}
 	
 	@Test
 	public void a_block_can_be_removed() {
+		// Arrange
 		blocks.add(GAPX);
 		EditableConfiguration edited = edit(config());
-		assertContains(edited.asConfiguration().getBlocks(), GAPX);
 		
+		// Act
 		EditableBlock gapx = getFirst(edited.getEditableBlocks());
 		edited.removeBlock(gapx);
+		
+		// Assert
 		assertEmpty(edited.asConfiguration().getBlocks());
 	}
 }
