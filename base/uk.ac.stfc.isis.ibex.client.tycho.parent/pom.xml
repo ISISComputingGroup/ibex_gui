@@ -180,7 +180,6 @@
 		<module>../uk.ac.stfc.isis.ibex.motor</module>
 		<module>../uk.ac.stfc.isis.ibex.opis</module>
 		<module>../uk.ac.stfc.isis.ibex.synoptic</module>
-		<module>../uk.ac.stfc.isis.ibex.rotatingbench</module>
 		<module>../uk.ac.stfc.isis.ibex.ui</module>
 		<module>../uk.ac.stfc.isis.ibex.ui.alarm</module>
 		<module>../uk.ac.stfc.isis.ibex.ui.widgets</module>
@@ -197,7 +196,6 @@
 		<module>../uk.ac.stfc.isis.ibex.ui.scripting</module>
 		<module>../uk.ac.stfc.isis.ibex.ui.synoptic</module>
 		<module>../uk.ac.stfc.isis.ibex.ui.synoptic.editor</module>
-		<module>../uk.ac.stfc.isis.ibex.ui.rotatingbench</module>
 		<module>../uk.ac.stfc.isis.ibex.ui.motor</module>
 		<module>../uk.ac.stfc.isis.ibex.ui.configserver</module>
 		<module>../uk.ac.stfc.isis.ibex.ui.ioccontrol</module>
@@ -214,5 +212,6 @@
 		<module>../uk.ac.stfc.isis.ibex.ui.experimentdetails</module>
         <module>../uk.ac.stfc.isis.ibex.epics.tests</module>
 		<module>../uk.ac.stfc.isis.ibex.opis.tests</module>
+		<module>../uk.ac.stfc.isis.ibex.configserver.tests</module>
 	</modules>
 </project>
