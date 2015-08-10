@@ -26,7 +26,7 @@ import org.junit.Test;
 
 import uk.ac.stfc.isis.ibex.epics.pv.PVAddress;
 
-public class Addresses {
+public class AddressesTest {
 
 	@Test
 	public void are_colon_separated_by_default() {

@@ -30,7 +30,7 @@ import org.junit.Test;
 
 import uk.ac.stfc.isis.ibex.configserver.editing.DefaultName;
 
-public class DefaultNames {
+public class DefaultNamesTest {
 	
 	private DefaultName name;
 	private static final String DEFAULT_NAME = "NAME";
