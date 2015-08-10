@@ -36,14 +36,6 @@
               <groupId>org.jacoco</groupId>
               <artifactId>jacoco-maven-plugin</artifactId>
               <version>0.7.4.201502262128</version>
-              <configuration>
-                    <includes>
-                        <include>uk/ac/stfc/isis/**/*</include>
-                    </includes>
-                    <excludes>
-                        <exclude>**/lib/*</exclude>
-                    </excludes>
-                </configuration>
               <executions>
                 <execution>
                   <id>pre-unit-test</id>
