@@ -5,3 +5,4 @@ Bundle-SymbolicName: uk.ac.stfc.isis.ibex.log.tests
 Bundle-Version: 1.0.0.qualifier
 Fragment-Host: uk.ac.stfc.isis.ibex.log;bundle-version="1.0.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Require-Bundle: org.mockito;bundle-version="1.9.5"
