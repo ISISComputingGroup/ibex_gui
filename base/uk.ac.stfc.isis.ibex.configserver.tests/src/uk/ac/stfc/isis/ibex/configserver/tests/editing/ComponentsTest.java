@@ -25,7 +25,7 @@ import org.junit.Test;
 
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
 
-public class Components extends EditableConfigurationTest {
+public class ComponentsTest extends EditableConfigurationTest {
 
 	@Test
 	public void a_configuration_can_have_components() {

@@ -19,45 +19,52 @@
 
 package uk.ac.stfc.isis.ibex.configserver.tests.editing;
 
+import static org.junit.Assert.assertEquals;
+
+import java.util.List;
+
 import org.junit.Test;
 
-import uk.ac.stfc.isis.ibex.configserver.editing.EditableBlock;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
+import uk.ac.stfc.isis.ibex.configserver.editing.EditableGroup;
 
-public class Blocks extends EditableConfigurationTest {
-	
-	@Test
-	public void a_new_config_has_no_blocks() {
-		// Arrange
-		EditableConfiguration edited = edit(emptyConfig());
+public class GroupsTest extends EditableConfigurationTest {
 		
-		// Assert
-		assertEmpty(edited.asConfiguration().getBlocks());
-	}	
-	
 	@Test
-	public void a_new_block_can_be_added() {
-		// Arrange
+	public void a_new_group_can_be_added() {
 		EditableConfiguration edited = edit(emptyConfig());
-	
-		// Act
-		edited.addNewBlock();
+		assertEmpty(edited.asConfiguration().getGroups());
 		
-		// Assert
-		assertNotEmpty(edited.asConfiguration().getBlocks());
+		edited.addNewGroup();
+		assertNotEmpty(edited.asConfiguration().getGroups());
 	}
 	
 	@Test
-	public void a_block_can_be_removed() {
-		// Arrange
-		blocks.add(GAPX);
+	public void a_group_can_be_removed() {
+		groups.add(JAWS);
+		EditableConfiguration edited = edit(config());
+
+		assertContains(edited.asConfiguration().getGroups(), JAWS);
+		
+		EditableGroup jaws = getFirst(edited.getEditableGroups());
+		edited.removeGroup(jaws);		
+		assertEmpty(edited.asConfiguration().getGroups());
+	}
+	
+	@Test
+	public void two_groups_can_be_swapped() {
+		groups.add(JAWS);
+		groups.add(TEMPERATURE);
 		EditableConfiguration edited = edit(config());
 		
-		// Act
-		EditableBlock gapx = getFirst(edited.getEditableBlocks());
-		edited.removeBlock(gapx);
+		List<EditableGroup> grps = (List<EditableGroup>) edited.getEditableGroups();
+
+		edited.swapGroups(grps.get(0), grps.get(1));
 		
-		// Assert
-		assertEmpty(edited.asConfiguration().getBlocks());
+		grps = (List<EditableGroup>) edited.getEditableGroups();
+			
+		assertEquals(grps.get(0).getName(), "TEMPERATURE");
+		assertEquals(grps.get(1).getName(), "JAWS");
+		
 	}
 }

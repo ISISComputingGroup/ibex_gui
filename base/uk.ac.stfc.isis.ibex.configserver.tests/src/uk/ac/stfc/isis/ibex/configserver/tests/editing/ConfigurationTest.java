@@ -23,7 +23,7 @@ import org.junit.Test;
 
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
 
-public class Configuration extends EditableConfigurationTest {
+public class ConfigurationTest extends EditableConfigurationTest {
 	
 	@Test
 	public void doing_nothing_to_an_empty_configuration_leaves_the_configuration_unchanged() {
