@@ -30,7 +30,7 @@ import org.junit.Test;
 
 import uk.ac.stfc.isis.ibex.configserver.editing.DefaultName;
 
-public class DefaultNames {
+public class DefaultNamesTest {
 	
 	private DefaultName name;
 	private static final String DEFAULT_NAME = "NAME";
@@ -64,7 +64,7 @@ public class DefaultNames {
 	public void next_available_number_is_appended_when_nonsequential() {
 		existing.add(DEFAULT_NAME);
 		existing.add(numberedDefault(2));
-		assertThat(name.getUnique(existing), is(numberedDefault(1)));
+		assertEquals(numberedDefault(1), name.getUnique(existing));
 	}
 	
 	@Test
@@ -74,6 +74,6 @@ public class DefaultNames {
 	}
 	
 	private String numberedDefault(Integer number) {
-		return DEFAULT_NAME + "(" + number.toString() + ")";
+		return DEFAULT_NAME + "_" + number.toString();
 	}
 }

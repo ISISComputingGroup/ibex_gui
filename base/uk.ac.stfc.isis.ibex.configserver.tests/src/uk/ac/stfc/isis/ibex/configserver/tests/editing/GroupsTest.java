@@ -19,39 +19,52 @@
 
 package uk.ac.stfc.isis.ibex.configserver.tests.editing;
 
+import static org.junit.Assert.assertEquals;
+
+import java.util.List;
+
 import org.junit.Test;
 
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
-import uk.ac.stfc.isis.ibex.configserver.editing.EditableIoc;
+import uk.ac.stfc.isis.ibex.configserver.editing.EditableGroup;
 
-public class Iocs extends EditableConfigurationTest {
+public class GroupsTest extends EditableConfigurationTest {
+		
 	@Test
-	public void an_editable_config_has_all_available_iocs_to_edit() {
-		allIocs.add(GALIL01);
-		EditableConfiguration edited = edit(config());
-		assertContains(edited.getEditableIocs(), new EditableIoc(GALIL01));
+	public void a_new_group_can_be_added() {
+		EditableConfiguration edited = edit(emptyConfig());
+		assertEmpty(edited.asConfiguration().getGroups());
+		
+		edited.addNewGroup();
+		assertNotEmpty(edited.asConfiguration().getGroups());
 	}
 	
 	@Test
-	public void redundant_iocs_are_removed_from_the_config() {
-		GALIL01.setAutostart(false);
-		GALIL01.setRestart(false);
-		iocs.add(GALIL01);
+	public void a_group_can_be_removed() {
+		groups.add(JAWS);
 		EditableConfiguration edited = edit(config());
-		assertDoesNotContain(edited.asConfiguration().getIocs(), GALIL01);
+
+		assertContains(edited.asConfiguration().getGroups(), JAWS);
+		
+		EditableGroup jaws = getFirst(edited.getEditableGroups());
+		edited.removeGroup(jaws);		
+		assertEmpty(edited.asConfiguration().getGroups());
 	}
 	
 	@Test
-	public void an_ioc_is_added_to_the_config_after_it_has_been_edited() {
-		GALIL01.setAutostart(false);
-		allIocs.add(GALIL01);
-		
+	public void two_groups_can_be_swapped() {
+		groups.add(JAWS);
+		groups.add(TEMPERATURE);
 		EditableConfiguration edited = edit(config());
-		assertDoesNotContain(edited.asConfiguration().getIocs(), GALIL01);
 		
-		EditableIoc galil = getFirst(edited.getEditableIocs());
-		galil.setAutostart(true);
+		List<EditableGroup> grps = (List<EditableGroup>) edited.getEditableGroups();
+
+		edited.swapGroups(grps.get(0), grps.get(1));
 		
-		assertContains(edited.asConfiguration().getIocs(), GALIL01);
+		grps = (List<EditableGroup>) edited.getEditableGroups();
+			
+		assertEquals(grps.get(0).getName(), "TEMPERATURE");
+		assertEquals(grps.get(1).getName(), "JAWS");
+		
 	}
 }

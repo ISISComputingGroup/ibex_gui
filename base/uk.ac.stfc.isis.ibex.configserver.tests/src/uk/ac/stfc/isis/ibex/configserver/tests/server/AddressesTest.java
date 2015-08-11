@@ -17,24 +17,31 @@
 * http://opensource.org/licenses/eclipse-1.0.php
 */
 
-package uk.ac.stfc.isis.ibex.configserver.tests.editing;
+package uk.ac.stfc.isis.ibex.configserver.tests.server;
+
+import static org.junit.Assert.*;
+import static org.hamcrest.CoreMatchers.*;
 
 import org.junit.Test;
 
-import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
+import uk.ac.stfc.isis.ibex.epics.pv.PVAddress;
 
-public class Configuration extends EditableConfigurationTest {
-	
+public class AddressesTest {
+
 	@Test
-	public void doing_nothing_to_an_empty_configuration_leaves_the_configuration_unchanged() {
-		EditableConfiguration edited = edit(emptyConfig());		
-		assertAreEqual(emptyConfig(), edited.asConfiguration());
+	public void are_colon_separated_by_default() {
+		assertThat(PVAddress.startWith("IN").append("LARMOR").toString(), is("IN:LARMOR"));
 	}
 	
 	@Test
-	public void doing_nothing_to_a_configuration_leaves_the_configuration_unchanged() {
-		populateConfig();
-		EditableConfiguration edited = edit(config());		
-		assertAreEqual(config(), edited.asConfiguration());
+	public void allow_fields_to_be_added(){
+		assertThat(PVAddress.startWith("IN").append("LARMOR").field("VAL").toString(), is("IN:LARMOR.VAL"));
+	}
+	
+	@Test
+	public void are_immutable() {
+		PVAddress address = PVAddress.startWith("IN");
+		address.append("ALF");
+		assertThat(address.append("LARMOR").toString(), is("IN:LARMOR"));
 	}
 }

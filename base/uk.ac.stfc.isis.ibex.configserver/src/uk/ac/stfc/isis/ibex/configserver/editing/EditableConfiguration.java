@@ -298,13 +298,19 @@ public class EditableConfiguration extends ModelObject {
 		firePropertyChange("groups", groupsBefore, getGroups());
 	}
 	
-	// Return in a form suitable for saving as a configuration
+	/**
+	 * Return in a form suitable for saving as a configuration.
+	 * @return the underlying configuration
+	 */
 	public Configuration asConfiguration() {
 		Configuration config = new Configuration(getName(), getDescription(), getSynoptic(), getIocs(), getBlocks(), getGroups(), getComponents(), getHistory());
 		return new IocFilteredConfiguration(new ComponentFilteredConfiguration(config));
 	}
 	
-	// Return in a form suitable for saving as a component - ie without contained components
+	/** Return in a form suitable for saving as a component - ie without contained components.
+	 * 
+	 * @return the configuration as a component
+	 */
 	public Configuration asComponent() {
 		Configuration config = asConfiguration();
 		return new Configuration(
@@ -316,7 +322,7 @@ public class EditableConfiguration extends ModelObject {
 		Collection<EditableGroup> editableGroupsBefore = getEditableGroups();
 		Collection<Group> groupsBefore = getGroups();
 		
-		//Need to find indexes because the NONE group may throw result in non-sequential numbers
+		// Need to find indexes because the NONE group may throw result in non-sequential numbers
 		int index1 = editableGroups.indexOf(group1);
 		int index2 = editableGroups.indexOf(group2);
 		
@@ -338,6 +344,10 @@ public class EditableConfiguration extends ModelObject {
 			String name = ioc.getName();
 			EditableIoc replacementIoc = new EditableIoc(ioc);
 			EditableIoc iocToReplace = iocs.get(name);
+			
+			if (iocToReplace == null) {
+				continue;
+			}
 			
 			replacementIoc.setAvailableMacros(iocToReplace.getAvailableMacros());
 			// Put will replace existing entries

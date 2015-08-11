@@ -24,6 +24,7 @@ import static org.junit.Assert.*;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 
 import org.junit.Before;
@@ -74,7 +75,8 @@ public class EditableConfigurationTest implements IocDescriber {
 		history = new ArrayList<>();
 		
 		allIocs =  new ArrayList<>();
-		GALIL01.setAutostart(true);
+		GALIL01.setAutostart(false);
+		allIocs.add(GALIL01);
 		
 		allComponents = new ArrayList<>();
 		allComponents.add(MOTOR);
@@ -85,9 +87,26 @@ public class EditableConfigurationTest implements IocDescriber {
 	
 	public static void assertAreEqual(Configuration expected, Configuration actual) {
 		assertEquals("Iocs", expected.getIocs(), actual.getIocs());
-		assertEquals("Blocks", expected.getBlocks(), actual.getBlocks());
+		assertBlocksAreEqual(expected.getBlocks(), actual.getBlocks());
 		assertEquals("Groups", expected.getGroups(), actual.getGroups());
 		assertEquals("Components", expected.getComponents(), actual.getComponents());
+	}
+	
+	public static void assertBlocksAreEqual(Collection<Block> expected, Collection<Block> actual) {
+		assertEquals(expected.size(), actual.size());
+		
+		Iterator<Block> itrExp = expected.iterator();
+		Iterator<Block> itrAct = actual.iterator();
+		
+	    while(itrExp.hasNext()) {
+	    	Block exp = itrExp.next();
+	    	Block act = itrAct.next();
+	    	
+	    	assertEquals(exp.getName(), act.getName());
+	    	assertEquals(exp.getPV(), act.getPV());
+	    	assertEquals(exp.getIsLocal(), act.getIsLocal());
+	    	assertEquals(exp.getIsVisible(), act.getIsVisible());
+		}
 	}
 	
 	public static Configuration emptyConfig() {
@@ -108,7 +127,10 @@ public class EditableConfigurationTest implements IocDescriber {
 	}
 	
 	protected void populateConfig() {
-		iocs.add(GALIL01);
+		EditableIoc copyGalil = new EditableIoc(GALIL01);
+		copyGalil.setAutostart(true);
+		
+		iocs.add(copyGalil);
 		blocks.add(GAPX);
 		groups.add(JAWS);
 		components.add(MOTOR);
