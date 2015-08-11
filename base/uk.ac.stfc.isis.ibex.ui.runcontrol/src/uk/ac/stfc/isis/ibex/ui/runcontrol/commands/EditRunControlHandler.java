@@ -17,18 +17,27 @@
 * http://opensource.org/licenses/eclipse-1.0.php
 */
 
-package uk.ac.stfc.isis.ibex.configserver;
+package uk.ac.stfc.isis.ibex.ui.runcontrol.commands;
 
-import java.util.Collection;
+import org.eclipse.core.commands.ExecutionEvent;
+import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.jface.window.Window;
 
-import uk.ac.stfc.isis.ibex.configserver.displaying.DisplayConfiguration;
-import uk.ac.stfc.isis.ibex.epics.observing.InitialiseOnSubscribeObservable;
-import uk.ac.stfc.isis.ibex.configserver.displaying.DisplayBlock;
+import uk.ac.stfc.isis.ibex.ui.runcontrol.dialogs.EditRunControlDialog;
 
-public interface Displaying {
-	/*
-	 * Configuration details for presentation to the user.
-	 */
-	InitialiseOnSubscribeObservable<DisplayConfiguration> displayCurrentConfig();
-	Collection<DisplayBlock> getDisplayBlocks();
+public class EditRunControlHandler extends RunControlHandler {
+
+	private static final String TITLE = "Run-control Settings";
+	
+	public EditRunControlHandler() {
+		super();
+	}
+	
+	public Object execute(ExecutionEvent event) throws ExecutionException {
+		EditRunControlDialog dialog = new EditRunControlDialog(shell(), TITLE, CONFIGSERVER, RUNCONTROLSERVER);
+		if (dialog.open() == Window.OK) {
+		
+		}
+		return null;
+	}
 }

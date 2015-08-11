@@ -17,18 +17,24 @@
 * http://opensource.org/licenses/eclipse-1.0.php
 */
 
-package uk.ac.stfc.isis.ibex.configserver;
+package uk.ac.stfc.isis.ibex.ui.runcontrol.commands;
 
-import java.util.Collection;
+import org.eclipse.core.commands.AbstractHandler;
+import org.eclipse.swt.widgets.Shell;
+import org.eclipse.ui.PlatformUI;
 
-import uk.ac.stfc.isis.ibex.configserver.displaying.DisplayConfiguration;
-import uk.ac.stfc.isis.ibex.epics.observing.InitialiseOnSubscribeObservable;
-import uk.ac.stfc.isis.ibex.configserver.displaying.DisplayBlock;
+import uk.ac.stfc.isis.ibex.configserver.ConfigServer;
+import uk.ac.stfc.isis.ibex.configserver.Configurations;
+import uk.ac.stfc.isis.ibex.runcontrol.RunControlActivator;
+import uk.ac.stfc.isis.ibex.runcontrol.RunControlServer;
 
-public interface Displaying {
-	/*
-	 * Configuration details for presentation to the user.
-	 */
-	InitialiseOnSubscribeObservable<DisplayConfiguration> displayCurrentConfig();
-	Collection<DisplayBlock> getDisplayBlocks();
+public abstract class RunControlHandler extends AbstractHandler {
+
+	protected static final ConfigServer CONFIGSERVER = Configurations.getInstance().server();
+	protected static final RunControlServer RUNCONTROLSERVER = RunControlActivator.getInstance().getServer();
+	
+	protected Shell shell() {
+		return PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
+	}
+
 }

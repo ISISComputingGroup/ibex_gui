@@ -47,7 +47,7 @@ import com.google.common.collect.Iterables;
 
 public class ConfigServerVariables extends InstrumentVariables {
 
-	private final BlockServerAddresses addresses = new BlockServerAddresses();
+	private final BlockServerAddresses blockServerAddresses = new BlockServerAddresses();
 	private final Converters converters;
 	
 	public final InitialiseOnSubscribeObservable<ServerStatus> serverStatus;
@@ -83,43 +83,43 @@ public class ConfigServerVariables extends InstrumentVariables {
 		super(channels);
 		this.converters = converters;
 		
-		serverStatus = convert(readCompressed(addresses.serverStatus()), converters.toServerStatus());
-		currentConfig = convert(readCompressed(addresses.currentConfig()), converters.toConfig());
-		blankConfig = convert(readCompressed(addresses.blankConfig()), converters.toConfig());
+		serverStatus = convert(readCompressed(blockServerAddresses.serverStatus()), converters.toServerStatus());
+		currentConfig = convert(readCompressed(blockServerAddresses.currentConfig()), converters.toConfig());
+		blankConfig = convert(readCompressed(blockServerAddresses.blankConfig()), converters.toConfig());
 
-		configsInfo = convert(readCompressed(addresses.configs()), converters.toConfigsInfo());
-		componentsInfo = convert(readCompressed(addresses.components()), converters.toConfigsInfo());
+		configsInfo = convert(readCompressed(blockServerAddresses.configs()), converters.toConfigsInfo());
+		componentsInfo = convert(readCompressed(blockServerAddresses.components()), converters.toConfigsInfo());
 		
-		components = convert(readCompressed(addresses.components()), converters.toComponents());
-		iocs = convert(readCompressed(addresses.iocs()), converters.toIocs());
-		pvs = convert(readCompressed(addresses.pvs()), converters.toPVs());
-		highInterestPVs = convert(readCompressed(addresses.highInterestPVs()), converters.toPVs());
-		mediumInterestPVs = convert(readCompressed(addresses.mediumInterestPVs()), converters.toPVs());
-		active_pvs = convert(readCompressed(addresses.activePVs()), converters.toPVs());
+		components = convert(readCompressed(blockServerAddresses.components()), converters.toComponents());
+		iocs = convert(readCompressed(blockServerAddresses.iocs()), converters.toIocs());
+		pvs = convert(readCompressed(blockServerAddresses.pvs()), converters.toPVs());
+		highInterestPVs = convert(readCompressed(blockServerAddresses.highInterestPVs()), converters.toPVs());
+		mediumInterestPVs = convert(readCompressed(blockServerAddresses.mediumInterestPVs()), converters.toPVs());
+		active_pvs = convert(readCompressed(blockServerAddresses.activePVs()), converters.toPVs());
 		
-		setCurrentConfiguration = convert(writeCompressed(addresses.setCurrentConfig()), converters.configToString());
-		loadConfiguration = convert(writeCompressed(addresses.loadConfig()), converters.nameToString());
-		saveConfiguration = convert(writeCompressed(addresses.saveConfig()), converters.nameToString());
-		saveAsConfiguration = convert(writeCompressed(addresses.saveNewConfig()), converters.configToString());
-		saveAsComponent = convert(writeCompressed(addresses.saveComponent()), converters.configToString());
+		setCurrentConfiguration = convert(writeCompressed(blockServerAddresses.setCurrentConfig()), converters.configToString());
+		loadConfiguration = convert(writeCompressed(blockServerAddresses.loadConfig()), converters.nameToString());
+		saveConfiguration = convert(writeCompressed(blockServerAddresses.saveConfig()), converters.nameToString());
+		saveAsConfiguration = convert(writeCompressed(blockServerAddresses.saveNewConfig()), converters.configToString());
+		saveAsComponent = convert(writeCompressed(blockServerAddresses.saveComponent()), converters.configToString());
 		
-		deleteConfigurations = convert(writeCompressed(addresses.deleteConfigs()), converters.namesToString());
-		deleteComponents = convert(writeCompressed(addresses.deleteComponents()), converters.namesToString());
+		deleteConfigurations = convert(writeCompressed(blockServerAddresses.deleteConfigs()), converters.namesToString());
+		deleteComponents = convert(writeCompressed(blockServerAddresses.deleteComponents()), converters.namesToString());
 
-		startIoc = convert(writeCompressed(addresses.startIocs()), converters.namesToString());
-		stopIoc = convert(writeCompressed(addresses.stopIocs()), converters.namesToString());
-		restartIoc = convert(writeCompressed(addresses.restartIocs()), converters.namesToString());
+		startIoc = convert(writeCompressed(blockServerAddresses.startIocs()), converters.namesToString());
+		stopIoc = convert(writeCompressed(blockServerAddresses.stopIocs()), converters.namesToString());
+		restartIoc = convert(writeCompressed(blockServerAddresses.restartIocs()), converters.namesToString());
 				
-		iocStates = convert(readCompressed(addresses.iocs()), converters.toIocStates());
-		protectedIocs = convert(readCompressed(addresses.iocsNotToStop()), converters.toNames());		
+		iocStates = convert(readCompressed(blockServerAddresses.iocs()), converters.toIocStates());
+		protectedIocs = convert(readCompressed(blockServerAddresses.iocsNotToStop()), converters.toNames());		
 	}
 
 	public InitialiseOnSubscribeObservable<Configuration> config(String configName) {		
-		return convert(readCompressed(addresses.config(getConfigPV(configName))), converters.toConfig());
+		return convert(readCompressed(blockServerAddresses.config(getConfigPV(configName))), converters.toConfig());
 	}
 
 	public InitialiseOnSubscribeObservable<Configuration> component(String componentName) {
-		return convert(readCompressed(addresses.component(componentName)), converters.toConfig());
+		return convert(readCompressed(blockServerAddresses.component(componentName)), converters.toConfig());
 	}
 
 	public InitialiseOnSubscribeObservable<String> iocDescription(String iocName) {
@@ -135,11 +135,11 @@ public class ConfigServerVariables extends InstrumentVariables {
 	}
 	
 	public InitialiseOnSubscribeObservable<String> blockDescription(String blockName) {
-		return reader(new StringChannel(), addresses.blockDescription(blockServerAlias(blockName)));
+		return reader(new StringChannel(), blockServerAddresses.blockDescription(blockServerAlias(blockName)));
 	}
 	
 	public String blockServerAlias(String name) {
-		return addresses.blockAlias(name);
+		return blockServerAddresses.blockAlias(name);
 	}
 	
 	private static String iocDescriptionAddress(String iocName) {
