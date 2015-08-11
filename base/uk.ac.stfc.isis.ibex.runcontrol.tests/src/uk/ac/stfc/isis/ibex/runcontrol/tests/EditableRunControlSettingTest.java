@@ -32,7 +32,6 @@ import uk.ac.stfc.isis.ibex.runcontrol.RunControlServer;
 // A lot of unchecked type conversions for mocking purposes
 @SuppressWarnings({ "unchecked", "checkstyle:methodname" })
 public class EditableRunControlSettingTest {
-
 	@Test
 	public void set_low_limit() {
 		// Arrange
