@@ -36,7 +36,7 @@ import org.eclipse.swt.layout.FillLayout;
 import uk.ac.stfc.isis.ibex.configserver.displaying.DisplayGroup;
 
 public class GroupsPanel extends Composite {
-			
+	
 	private final Display display = Display.getCurrent();
 	private final List<Group> groups = new ArrayList<>();
 	
@@ -47,6 +47,8 @@ public class GroupsPanel extends Composite {
 	private boolean showHiddenBlocks = false;
 	
 	private Collection<DisplayGroup> displayGroups;
+
+	public static final int GROUP_HEIGHT = 200;
 	
 	public GroupsPanel(Composite parent, int style) {
 		super(parent, SWT.NONE);
@@ -140,7 +142,7 @@ public class GroupsPanel extends Composite {
 	private Group groupWidget(DisplayGroup group) {
 		Group groupWidget = new Group(mainComposite, SWT.NONE, group, showHiddenBlocks);
 		GridData gd = new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1);
-		gd.heightHint = Group.BLOCK_HEIGHT;
+		gd.heightHint = Group.GROUP_HEIGHT;
 		gd.minimumHeight = gd.heightHint;
 		groupWidget.setLayoutData(gd);
 		groupWidget.pack();

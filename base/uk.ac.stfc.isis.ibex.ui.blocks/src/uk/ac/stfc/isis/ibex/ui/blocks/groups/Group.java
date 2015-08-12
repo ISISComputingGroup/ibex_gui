@@ -33,12 +33,13 @@ import uk.ac.stfc.isis.ibex.configserver.displaying.DisplayGroup;
 
 public class Group extends Composite {
 
-	public static final int BLOCK_HEIGHT = 218;
-
 	private static final Color WHITE = SWTResourceManager.getColor(SWT.COLOR_WHITE);
+	
+	Composite parent;
 			
 	public Group(Composite parent, int style, DisplayGroup group, boolean showHiddenBlocks) {
 		super(parent, style | SWT.BORDER);
+		this.parent = parent;
 		
         RowLayout layout = new RowLayout();
         layout.wrap = true;

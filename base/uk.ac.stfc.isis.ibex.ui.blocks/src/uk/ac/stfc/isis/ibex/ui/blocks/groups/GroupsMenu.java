@@ -65,20 +65,3 @@ public class GroupsMenu {
 		return manager.createContextMenu(groups);
 	}
 }
-
-//	final IAction displayBlockHistory = new Action("Display history") {
-//		@Override
-//		public void run() {
-//			//BlockViewModel selectedBlock = selectedRows().get(0);
-//			//selectedBlock.displayHistory();
-//		}
-//	};
-//	
-//	final IAction displayProperties = new Action("Properties") {
-//		@Override
-//		public void run() {
-//			//BlockViewModel selectedBlock = firstSelectedRow();
-//			//selectedBlock.displayProperties();
-//		}
-//	};
-

@@ -22,7 +22,7 @@ package uk.ac.stfc.isis.ibex.ui.blocks.groups;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.MenuManager;
-import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Menu;
 
 import uk.ac.stfc.isis.ibex.configserver.displaying.DisplayBlock;
@@ -50,7 +50,7 @@ public class BlocksMenu extends MenuManager {
 		add(displayHistory);
 	}
 	
-	public Menu createContextMenu(Composite composite) {
-		return super.createContextMenu(composite);
+	public Menu createContextMenu(Label label, GroupsMenu menu) {
+		return super.createContextMenu(label);
 	}
 }
