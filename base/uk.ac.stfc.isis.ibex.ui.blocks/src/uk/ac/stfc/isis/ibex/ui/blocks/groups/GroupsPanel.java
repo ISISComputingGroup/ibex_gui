@@ -38,7 +38,7 @@ import uk.ac.stfc.isis.ibex.configserver.displaying.DisplayGroup;
 public class GroupsPanel extends Composite {
 			
 	private final Display display = Display.getCurrent();
-	private final List<Group> groups = new ArrayList<>();
+	private final List<NewGroup> groups = new ArrayList<>();
 	
 	private Composite mainComposite;
 	private ScrolledComposite scrolledComposite;
@@ -65,7 +65,7 @@ public class GroupsPanel extends Composite {
 		GroupsMenu menu = new GroupsMenu(this);
 		Menu contextMenu = menu.get();
 		mainComposite.setMenu(contextMenu);
-		for (Group group : groups) {
+		for (NewGroup group : groups) {
 			group.setMenu(contextMenu);
 		}
 		scrolledComposite.setMenu(contextMenu);
@@ -81,7 +81,7 @@ public class GroupsPanel extends Composite {
 		}
 		
 		showHiddenBlocks = showHidden;
-		for (Group group : groups) {
+		for (NewGroup group : groups) {
 			group.showHiddenBlocks(showHidden);
 		}
 
@@ -117,7 +117,7 @@ public class GroupsPanel extends Composite {
 	private void layoutGroups() {
 		scrolledComposite.setContent(mainComposite);
 		mainComposite.pack(true);
-		for (Group group : groups) {
+		for (NewGroup group : groups) {
 			group.pack(true);
 		}
 
@@ -134,11 +134,11 @@ public class GroupsPanel extends Composite {
 		mainComposite.setLayout(new GridLayout(groups.size(), false));
 	}
 	
-	private Group groupWidget(DisplayGroup group) {
-		Group groupWidget = new Group(mainComposite, SWT.NONE, group);
-		GridData gd = new GridData(SWT.LEFT, SWT.FILL, true, true, 1, 1);
-		gd.widthHint = Group.BLOCK_WIDTH;
-		gd.minimumWidth = gd.widthHint;
+	private NewGroup groupWidget(DisplayGroup group) {
+		NewGroup groupWidget = new NewGroup(mainComposite, SWT.NONE, group);
+		GridData gd = new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1);
+		gd.heightHint = NewGroup.BLOCK_HEIGHT;
+		gd.minimumHeight = gd.heightHint;
 		groupWidget.setLayoutData(gd);
 		groupWidget.pack();
 		
@@ -153,7 +153,7 @@ public class GroupsPanel extends Composite {
 			banner.dispose();
 		}
 		
-		for (Group group : groups) {
+		for (NewGroup group : groups) {
 			group.dispose();
 		}
 		
