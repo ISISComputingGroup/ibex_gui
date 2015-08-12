@@ -48,7 +48,7 @@ public class GroupsPanel extends Composite {
 	
 	private Collection<DisplayGroup> displayGroups;
 
-	public static final int GROUP_HEIGHT = 200;
+	private static final int GROUP_HEIGHT = 200;
 	
 	public GroupsPanel(Composite parent, int style) {
 		super(parent, SWT.NONE);
@@ -142,7 +142,7 @@ public class GroupsPanel extends Composite {
 	private Group groupWidget(DisplayGroup group) {
 		Group groupWidget = new Group(mainComposite, SWT.NONE, group, showHiddenBlocks);
 		GridData gd = new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1);
-		gd.heightHint = Group.GROUP_HEIGHT;
+		gd.heightHint = GROUP_HEIGHT;
 		gd.minimumHeight = gd.heightHint;
 		groupWidget.setLayoutData(gd);
 		groupWidget.pack();
