@@ -140,7 +140,7 @@ public class IocEditorPanel extends Composite {
 
 	public void setIoc(EditableIocState ioc) {
 		this.ioc = ioc;
-		buttons.setIoc(ioc);;
+		buttons.setIoc(ioc);
 
 		if (ioc == null) {
 			name.setText("");

@@ -24,7 +24,6 @@
 
 	<build>
 		<plugins>
-
 			<plugin>
 				<groupId>org.eclipse.tycho</groupId>
 				<artifactId>tycho-maven-plugin</artifactId>
@@ -66,8 +65,6 @@
 							<classifier>../uk.ac.stfc.isis.ibex.targetplatform/uk.ac.stfc.isis.ibex.targetplatform</classifier>
 						</artifact>
 					</target>
-					<!-- <environments> <environment> <os>win32</os> <ws>win32</ws> <arch>x86_64</arch> 
-						</environment> </environments> -->
 				</configuration>
 			</plugin>
 
@@ -205,5 +202,8 @@
         <module>../uk.ac.stfc.isis.ibex.epics.tests</module>
 		<module>../uk.ac.stfc.isis.ibex.opis.tests</module>
 		<module>../uk.ac.stfc.isis.ibex.configserver.tests</module>
+		<module>../uk.ac.stfc.isis.ibex.runcontrol.tests</module>
+		<module>../uk.ac.stfc.isis.ibex.runcontrol</module>
+		<module>../uk.ac.stfc.isis.ibex.ui.runcontrol</module>
 	</modules>
 </project>

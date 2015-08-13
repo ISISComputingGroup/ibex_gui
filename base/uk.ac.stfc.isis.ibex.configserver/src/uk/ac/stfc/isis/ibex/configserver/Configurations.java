@@ -37,6 +37,8 @@ import uk.ac.stfc.isis.ibex.epics.observing.Subscription;
 import uk.ac.stfc.isis.ibex.epics.pv.Closer;
 import uk.ac.stfc.isis.ibex.instrument.Instrument;
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
+import uk.ac.stfc.isis.ibex.runcontrol.RunControlActivator;
+import uk.ac.stfc.isis.ibex.runcontrol.RunControlServer;
 
 public class Configurations extends Closer implements BundleActivator {
 
@@ -52,6 +54,7 @@ public class Configurations extends Closer implements BundleActivator {
 
 	private final ConfigServerVariables variables;
 	private final ConfigServer server;
+	private final RunControlServer runcontrol;
 	private final Collection<Subscription> loggingSubscriptions = new ArrayList<>();
 	
 	public Configurations() {
@@ -60,7 +63,9 @@ public class Configurations extends Closer implements BundleActivator {
 		recent = new RecentConfigList();		
 		variables = registerForClose(new ConfigServerVariables(Instrument.getInstance().channels(), new JsonConverters()));
 		server = registerForClose(new ConfigServer(variables));
-		displaying = registerForClose(new DisplayConfiguration(variables.currentConfig, server));	
+		runcontrol = RunControlActivator.getInstance().getServer();
+		
+		displaying = registerForClose(new DisplayConfiguration(variables.currentConfig, server, runcontrol));	
 		editing = registerForClose(new ConfigEditing(server));
 
 		iocControl = new IocControl(server);

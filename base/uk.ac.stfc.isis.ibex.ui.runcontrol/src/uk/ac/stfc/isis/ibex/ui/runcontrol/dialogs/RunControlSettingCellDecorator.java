@@ -17,18 +17,18 @@
 * http://opensource.org/licenses/eclipse-1.0.php
 */
 
-package uk.ac.stfc.isis.ibex.configserver;
+package uk.ac.stfc.isis.ibex.ui.runcontrol.dialogs;
 
-import java.util.Collection;
+import org.eclipse.jface.viewers.ViewerCell;
 
-import uk.ac.stfc.isis.ibex.configserver.displaying.DisplayConfiguration;
-import uk.ac.stfc.isis.ibex.epics.observing.InitialiseOnSubscribeObservable;
 import uk.ac.stfc.isis.ibex.configserver.displaying.DisplayBlock;
+import uk.ac.stfc.isis.ibex.ui.configserver.editing.CellDecorator;
 
-public interface Displaying {
-	/*
-	 * Configuration details for presentation to the user.
-	 */
-	InitialiseOnSubscribeObservable<DisplayConfiguration> displayCurrentConfig();
-	Collection<DisplayBlock> getDisplayBlocks();
+public class RunControlSettingCellDecorator extends CellDecorator<DisplayBlock> {
+
+	@Override
+	public void applyDecoration(ViewerCell cell) {
+		
+	}
+
 }

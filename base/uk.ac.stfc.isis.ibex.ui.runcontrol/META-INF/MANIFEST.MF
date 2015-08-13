@@ -1,0 +1,15 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Runcontrol
+Bundle-SymbolicName: uk.ac.stfc.isis.ibex.ui.runcontrol;singleton:=true
+Bundle-Version: 1.0.0.qualifier
+Bundle-Activator: uk.ac.stfc.isis.ibex.ui.runcontrol.Activator
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ uk.ac.stfc.isis.ibex.runcontrol,
+ uk.ac.stfc.isis.ibex.ui,
+ uk.ac.stfc.isis.ibex.ui.configserver;bundle-version="1.0.0",
+ uk.ac.stfc.isis.ibex.configserver;bundle-version="1.0.0",
+ uk.ac.stfc.isis.ibex.epics,
+ uk.ac.stfc.isis.ibex.model
+Bundle-ActivationPolicy: lazy
