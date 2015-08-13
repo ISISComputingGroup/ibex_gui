@@ -38,6 +38,8 @@ import org.eclipse.jface.preference.IPreferenceStore;
 
 import uk.ac.stfc.isis.ibex.log.Log;
 import uk.ac.stfc.isis.ibex.log.message.LogMessageFields;
+import uk.ac.stfc.isis.ibex.log.message.sql.LogMessageFieldsSql;
+import uk.ac.stfc.isis.ibex.log.message.sql.LogMessageFieldsWhereSql;
 import uk.ac.stfc.isis.ibex.log.preferences.PreferenceConstants;
 
 /**
@@ -50,8 +52,9 @@ public class SqlStatement {
     private String schemaName;
     private static int LIMIT = 1000;
     
-    private List<LogMessageFields> selectFields;
-    private List<LogMessageFields> whereLikeFields;
+    @SuppressWarnings("unused")
+	private List<LogMessageFieldsSql> selectFields;
+    private List<LogMessageFieldsWhereSql> whereLikeFields;
     
     private Calendar startTime;
     private Calendar endTime;
@@ -60,22 +63,22 @@ public class SqlStatement {
     	IPreferenceStore preferenceStore = Log.getDefault().getPreferenceStore();
     	schemaName = preferenceStore.getString(PreferenceConstants.P_SQL_SCHEMA);
     	
-    	this.selectFields = new ArrayList<LogMessageFields>();
-    	this.whereLikeFields = new ArrayList<LogMessageFields>();
+    	this.selectFields = new ArrayList<LogMessageFieldsSql>();
+    	this.whereLikeFields = new ArrayList<LogMessageFieldsWhereSql>();
     }
     
     /**
      * Set the (ordered) list of fields that will be retrieved by the select statement
      */
-    public void setSelectFields(LogMessageFields[] selectFields) {
-    	this.selectFields = new ArrayList<LogMessageFields>(Arrays.asList(selectFields));
+    public void setSelectFields(LogMessageFieldsSql[] selectFields) {
+    	this.selectFields = new ArrayList<LogMessageFieldsSql>(Arrays.asList(selectFields));
     }
     
     /**
      * Set the ordered list of fields that will be featured in "WHERE field LIKE ?" clauses.
      */
-    public void setWhereLikeClause(LogMessageFields[] whereLikeFields) {
-    	this.whereLikeFields = new ArrayList<LogMessageFields>(Arrays.asList(whereLikeFields));
+    public void setWhereLikeClause(LogMessageFieldsWhereSql[] whereLikeFields) {
+    	this.whereLikeFields = new ArrayList<LogMessageFieldsWhereSql>(Arrays.asList(whereLikeFields));
     }
     
     /**
@@ -93,7 +96,7 @@ public class SqlStatement {
      */
     public String getSelectStatement() {   	
 		return "SELECT " + selectList() 
-	            + " FROM " + schemaName + "." + TABLENAME 
+	            + " FROM " + selectTableList()
 	            + " WHERE " + whereList()
 	            + " LIMIT " + Integer.toString(LIMIT);
     }
@@ -104,15 +107,27 @@ public class SqlStatement {
 	private String selectList() {
 		StringBuilder cols = new StringBuilder();
     	
-		if (selectFields != null && selectFields.size() > 0) {
-			cols.append(selectFields.get(0).getTagName());
-			
-	    	for (int i = 1; i < selectFields.size(); ++i) {
-	    		cols.append(", " + selectFields.get(i).getTagName());
-	    	}
-		}
-    	
+		// Name the columns in order as this is now a composite lookup
+		cols.append("message.createTime, message.eventTime, message_type.type, message.contents, ");
+		cols.append("client_name.name, message_severity.severity, client_host.name, application.name, message.repeatCount");
+		
     	return cols.toString();
+	}
+	
+	/**
+     * Get string representation of the Tables list
+     */
+	private String selectTableList() {
+		StringBuilder tables = new StringBuilder();
+		// Append the main table
+		tables.append(schemaName + "." + TABLENAME);
+		// Append the other tables in use
+		tables.append(", " + schemaName + ".message_severity");
+		tables.append(", " + schemaName + ".client_name");
+		tables.append(", " + schemaName + ".client_host");
+		tables.append(", " + schemaName + ".message_type");
+		tables.append(", " + schemaName + ".application");
+		return tables.toString();
 	}
 	
 	/**
@@ -122,12 +137,17 @@ public class SqlStatement {
 	private String whereList() {
 		StringBuilder where = new StringBuilder();
 		
+		// Link the different tables together
+		where.append("message_severity.id = message.severity_id");
+		where.append(" AND client_name.id = message.clientName_id");
+		where.append(" AND client_host.id = message.clientHost_id");
+		where.append(" AND message_type.id = message.type_id");
+		where.append(" AND application.id = message.application_id");
+		
 		// 'WHERE field Like ?'
 		if (whereLikeFields.size() > 0) {
-			String clause = whereLikeFields.get(0).getTagName() + " LIKE ?";
-			where.append(clause);
-			
-	    	for (int i = 1; i < whereLikeFields.size(); ++i) {
+			String clause = null;
+	    	for (int i = 0; i < whereLikeFields.size(); ++i) {
 	    		clause = whereLikeFields.get(i).getTagName() + " LIKE ?";
 				where.append(" AND " + clause);
 	    	}
