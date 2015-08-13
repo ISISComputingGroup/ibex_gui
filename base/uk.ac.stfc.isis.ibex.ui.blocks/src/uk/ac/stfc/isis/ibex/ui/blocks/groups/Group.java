@@ -24,7 +24,15 @@ import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.FontData;
-import org.eclipse.swt.layout.RowLayout;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.eclipse.core.databinding.DataBindingContext;
+import org.eclipse.core.databinding.beans.BeanProperties;
+import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.wb.swt.SWTResourceManager;
@@ -35,32 +43,63 @@ public class Group extends Composite {
 
 	private static final Color WHITE = SWTResourceManager.getColor(SWT.COLOR_WHITE);
 	
+	private static final int NUMBER_OF_ROWS = 9;
+	
 	Composite parent;
 			
 	public Group(Composite parent, int style, DisplayGroup group, boolean showHiddenBlocks) {
 		super(parent, style | SWT.BORDER);
 		this.parent = parent;
 		
-        RowLayout layout = new RowLayout();
-        layout.wrap = true;
-        layout.type = SWT.VERTICAL;
-        this.setLayout(layout);
+		List<DisplayBlock> blocksList = new ArrayList<>(group.blocks());
+		int numberOfColumns = (blocksList.size() - 1) / NUMBER_OF_ROWS + 1 ;
+
+		GridLayout layout = new GridLayout(2 * numberOfColumns, false);
+		this.setLayout(layout);
         this.setBackground(WHITE);
-        
+        		
 		Label title = new Label(this, SWT.CENTER);
 		title.setText(group.name());
 		title.setBackground(WHITE);
-		
 		Font titleFont = getEditedLabelFont(parent, title, 10, SWT.BOLD);
 		title.setFont(titleFont);
-
-		for(DisplayBlock block : group.blocks()) {
-			if (block.getIsVisible() || showHiddenBlocks) {
-				Label blockName = new Label(this, SWT.LEFT);
-				blockName.setText(block.getName() + ": " + block.getValue());
+		
+		for (int i = 0; i < 1 + (numberOfColumns - 1) * 2; i++) {
+			Label blankTitle = new Label(this, SWT.CENTER);
+			blankTitle.setText("");
+			blankTitle.setBackground(WHITE);
+			blankTitle.setFont(titleFont);
+		}
+		
+		DataBindingContext bindingContext = new DataBindingContext();
+		
+		for (int i = 0; i < numberOfColumns; i++) {
+			for (int j = 0; j < NUMBER_OF_ROWS; j++) {
+				int position = i * NUMBER_OF_ROWS + j;
+				
+				if (position >= blocksList.size()) {
+					break;
+				}
+				
+				DisplayBlock currentBlock = blocksList.get(position);
+				
+				Label blockName = new Label(this, SWT.RIGHT);
+				blockName.setText(currentBlock.getName() + ": ");
 				blockName.setBackground(WHITE);
-				blockName.setToolTipText(block.getDescription());
-				blockName.setMenu(new BlocksMenu(block).createContextMenu(blockName));
+				blockName.setToolTipText(currentBlock.getDescription());
+				blockName.setMenu(new BlocksMenu(currentBlock).createContextMenu(blockName));
+				blockName.setLayoutData(new GridData(SWT.RIGHT, SWT.NONE, false, false, 1, 1));
+				
+				Label blockValue = new Label(this, SWT.RIGHT);
+				blockValue.setText(currentBlock.getValue());
+				blockValue.setBackground(WHITE);
+				blockValue.setToolTipText(currentBlock.getDescription());
+				blockValue.setMenu(new BlocksMenu(currentBlock).createContextMenu(blockName));
+				GridData gridData = new GridData(SWT.RIGHT, SWT.NONE, false, false, 1, 1);
+				gridData.widthHint = 100;
+				blockValue.setLayoutData(gridData);
+				
+				bindingContext.bindValue(WidgetProperties.text().observe(blockValue), BeanProperties.value("value").observe(currentBlock));
 			}
 		}
 	}
