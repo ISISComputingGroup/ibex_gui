@@ -39,6 +39,11 @@ import org.eclipse.wb.swt.SWTResourceManager;
 import uk.ac.stfc.isis.ibex.configserver.displaying.DisplayBlock;
 import uk.ac.stfc.isis.ibex.configserver.displaying.DisplayGroup;
 
+
+/**
+ * Provides the display of the groups, which contain the selected blocks. Allows showing and hiding of selected blocks. 
+ * 
+ */
 public class Group extends Composite {
 
 	private static final Color WHITE = SWTResourceManager.getColor(SWT.COLOR_WHITE);
@@ -59,67 +64,56 @@ public class Group extends Composite {
 			}
 		}
 		
+		// Calculate number of columns we need, each column holding one block with a name and value
 		int numberOfColumns = (blocksList.size() - 1) / NUMBER_OF_ROWS + 1;
 
-		GridLayout layout = new GridLayout(2 * numberOfColumns + + (numberOfColumns - 1), false);
+		// For each block we need two columns in the grid layout, one for name, one for value, and for
+		// every column but the last we need a divider label column
+		GridLayout layout = new GridLayout(2 * numberOfColumns + (numberOfColumns - 1), false);
 		layout.verticalSpacing = 7;
 		this.setLayout(layout);
         this.setBackground(WHITE);
         
-		Label title = new Label(this, SWT.CENTER);
-		title.setText(group.name());
-		title.setBackground(WHITE);
+        // In the first column put the title in
+		Label title = labelMaker(this, SWT.NONE, group.name(), "", null);
 		Font titleFont = getEditedLabelFont(parent, title, 10, SWT.BOLD);
 		title.setFont(titleFont);
 		
+		// For the title row, fill with blanks
 		for (int i = 0; i < 1 + (numberOfColumns - 1) * 2 + (numberOfColumns - 1); i++) {
-//			Label blankTitle = new Label(this, SWT.CENTER);
-//			blankTitle.setText("");
-//			blankTitle.setBackground(WHITE);
-//			blankTitle.setFont(titleFont);
 			labelMaker(this, SWT.NONE, "", "", titleFont);
 		}
 		
 		DataBindingContext bindingContext = new DataBindingContext();
 		
+		// Loop over the rows and columns. The GridLayout is filled with labels across rows first, then moving on to
+		// the next column. So blank labels need to be inserted so that columns are always filled.
 		for (int i = 0; i < NUMBER_OF_ROWS; i++) {
 			for (int j = 0; j < numberOfColumns; j++) {
 				int position = i + j * NUMBER_OF_ROWS;
 				
 				if (position >= blocksList.size()) {
-					Label blankTitle = new Label(this, SWT.CENTER);
-					blankTitle.setText("");
-					blankTitle.setBackground(WHITE);
-					
-					Label blankTitle2 = new Label(this, SWT.CENTER);
-					blankTitle2.setText("");
-					blankTitle2.setBackground(WHITE);
-					
+					// put blank labels in these name and value columns
+					labelMaker(this, SWT.NONE, "", "", null);
+					labelMaker(this, SWT.NONE, "", "", null);					
 					break;
 				}
 								
 				DisplayBlock currentBlock = blocksList.get(position);
-								
-				Label blockName = new Label(this, SWT.RIGHT);
-				blockName.setText(currentBlock.getName() + ": ");
-				blockName.setBackground(WHITE);
-				blockName.setToolTipText(currentBlock.getDescription());
+
+				Label blockName = labelMaker(this, SWT.NONE, currentBlock.getName() + ": ", currentBlock.getDescription(), null);
 				blockName.setMenu(new BlocksMenu(currentBlock).createContextMenu(blockName));
 				blockName.setLayoutData(new GridData(SWT.LEFT, SWT.NONE, false, false, 1, 1));
 				
-				Label blockValue = new Label(this, SWT.RIGHT);
-				blockValue.setText(currentBlock.getValue());
-				blockValue.setBackground(WHITE);
-				blockValue.setToolTipText(currentBlock.getDescription());
+				Label blockValue = labelMaker(this, SWT.RIGHT, currentBlock.getValue(), currentBlock.getDescription(), null);
 				blockValue.setMenu(new BlocksMenu(currentBlock).createContextMenu(blockName));
 				GridData gridData = new GridData(SWT.RIGHT, SWT.NONE, false, false, 1, 1);
 				gridData.widthHint = 70;
 				blockValue.setLayoutData(gridData);
 
 				if (j <  numberOfColumns - 1) {
-					Label divider = new Label(this, SWT.RIGHT);
-					divider.setText("   |   ");
-					divider.setBackground(WHITE);
+					// insert divider label
+					labelMaker(this, SWT.NONE, "   |   ", "", null);
 				}
 				
 				bindingContext.bindValue(WidgetProperties.text().observe(blockValue), BeanProperties.value("value").observe(currentBlock));
