@@ -43,7 +43,7 @@ public class Group extends Composite {
 
 	private static final Color WHITE = SWTResourceManager.getColor(SWT.COLOR_WHITE);
 	
-	private static final int NUMBER_OF_ROWS = 9;
+	private static final int NUMBER_OF_ROWS = 8;
 	
 	Composite parent;
 			
@@ -51,44 +51,61 @@ public class Group extends Composite {
 		super(parent, style | SWT.BORDER);
 		this.parent = parent;
 		
-		List<DisplayBlock> blocksList = new ArrayList<>(group.blocks());
-		int numberOfColumns = (blocksList.size() - 1) / NUMBER_OF_ROWS + 1 ;
+		// Add the blocks to the list if they are visible, or if showHiddenBlocks is true
+		List<DisplayBlock> blocksList = new ArrayList<>();
+		for (DisplayBlock block : group.blocks()) {
+			if (block.getIsVisible() || showHiddenBlocks) {
+				blocksList.add(block);
+			}
+		}
+		
+		int numberOfColumns = (blocksList.size() - 1) / NUMBER_OF_ROWS + 1;
 
-		GridLayout layout = new GridLayout(2 * numberOfColumns, false);
+		GridLayout layout = new GridLayout(2 * numberOfColumns + + (numberOfColumns - 1), false);
+		layout.verticalSpacing = 7;
 		this.setLayout(layout);
         this.setBackground(WHITE);
-        		
+        
 		Label title = new Label(this, SWT.CENTER);
 		title.setText(group.name());
 		title.setBackground(WHITE);
 		Font titleFont = getEditedLabelFont(parent, title, 10, SWT.BOLD);
 		title.setFont(titleFont);
 		
-		for (int i = 0; i < 1 + (numberOfColumns - 1) * 2; i++) {
-			Label blankTitle = new Label(this, SWT.CENTER);
-			blankTitle.setText("");
-			blankTitle.setBackground(WHITE);
-			blankTitle.setFont(titleFont);
+		for (int i = 0; i < 1 + (numberOfColumns - 1) * 2 + (numberOfColumns - 1); i++) {
+//			Label blankTitle = new Label(this, SWT.CENTER);
+//			blankTitle.setText("");
+//			blankTitle.setBackground(WHITE);
+//			blankTitle.setFont(titleFont);
+			labelMaker(this, SWT.NONE, "", "", titleFont);
 		}
 		
 		DataBindingContext bindingContext = new DataBindingContext();
 		
-		for (int i = 0; i < numberOfColumns; i++) {
-			for (int j = 0; j < NUMBER_OF_ROWS; j++) {
-				int position = i * NUMBER_OF_ROWS + j;
+		for (int i = 0; i < NUMBER_OF_ROWS; i++) {
+			for (int j = 0; j < numberOfColumns; j++) {
+				int position = i + j * NUMBER_OF_ROWS;
 				
 				if (position >= blocksList.size()) {
+					Label blankTitle = new Label(this, SWT.CENTER);
+					blankTitle.setText("");
+					blankTitle.setBackground(WHITE);
+					
+					Label blankTitle2 = new Label(this, SWT.CENTER);
+					blankTitle2.setText("");
+					blankTitle2.setBackground(WHITE);
+					
 					break;
 				}
-				
+								
 				DisplayBlock currentBlock = blocksList.get(position);
-				
+								
 				Label blockName = new Label(this, SWT.RIGHT);
 				blockName.setText(currentBlock.getName() + ": ");
 				blockName.setBackground(WHITE);
 				blockName.setToolTipText(currentBlock.getDescription());
 				blockName.setMenu(new BlocksMenu(currentBlock).createContextMenu(blockName));
-				blockName.setLayoutData(new GridData(SWT.RIGHT, SWT.NONE, false, false, 1, 1));
+				blockName.setLayoutData(new GridData(SWT.LEFT, SWT.NONE, false, false, 1, 1));
 				
 				Label blockValue = new Label(this, SWT.RIGHT);
 				blockValue.setText(currentBlock.getValue());
@@ -96,8 +113,14 @@ public class Group extends Composite {
 				blockValue.setToolTipText(currentBlock.getDescription());
 				blockValue.setMenu(new BlocksMenu(currentBlock).createContextMenu(blockName));
 				GridData gridData = new GridData(SWT.RIGHT, SWT.NONE, false, false, 1, 1);
-				gridData.widthHint = 100;
+				gridData.widthHint = 70;
 				blockValue.setLayoutData(gridData);
+
+				if (j <  numberOfColumns - 1) {
+					Label divider = new Label(this, SWT.RIGHT);
+					divider.setText("   |   ");
+					divider.setBackground(WHITE);
+				}
 				
 				bindingContext.bindValue(WidgetProperties.text().observe(blockValue), BeanProperties.value("value").observe(currentBlock));
 			}
@@ -109,6 +132,21 @@ public class Group extends Composite {
 		fD[0].setHeight(size);
 		fD[0].setStyle(style);
 		return new Font(parent.getDisplay(), fD[0]);
+	}
+	
+	private Label labelMaker(Composite composite, int style, String text, String toolTip, Font font) {
+		Label label = new Label(composite, style);
+		label.setText(text);
+		label.setBackground(WHITE);
+		if (!toolTip.equals("")) {
+			label.setToolTipText(toolTip);
+		}
+		
+		if (font != null) {
+			label.setFont(font);
+		}
+		
+		return label;	
 	}
 	
 	@Override

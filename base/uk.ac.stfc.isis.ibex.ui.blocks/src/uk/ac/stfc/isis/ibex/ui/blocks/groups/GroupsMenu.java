@@ -38,7 +38,7 @@ public class GroupsMenu {
 		}
 	};
 	
-	private final IAction hideBlocks = new Action("Don't show hidden blocks") {
+	private final IAction hideBlocks = new Action("Hide hidden blocks") {
 		@Override
 		public void run() {
 			groups.setShowHiddenBlocks(false);
