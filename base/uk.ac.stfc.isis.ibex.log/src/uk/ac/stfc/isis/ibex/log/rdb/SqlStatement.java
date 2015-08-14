@@ -1,32 +1,21 @@
-
 /*
-* This file is part of the ISIS IBEX application.
-* Copyright (C) 2012-2015 Science & Technology Facilities Council.
-* All rights reserved.
-*
-* This program is distributed in the hope that it will be useful.
-* This program and the accompanying materials are made available under the
-* terms of the Eclipse Public License v1.0 which accompanies this distribution.
-* EXCEPT AS EXPRESSLY SET FORTH IN THE ECLIPSE PUBLIC LICENSE V1.0, THE PROGRAM 
-* AND ACCOMPANYING MATERIALS ARE PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES 
-* OR CONDITIONS OF ANY KIND.  See the Eclipse Public License v1.0 for more details.
-*
-* You should have received a copy of the Eclipse Public License v1.0
-* along with this program; if not, you can obtain a copy from
-* https://www.eclipse.org/org/documents/epl-v10.php or 
-* http://opensource.org/licenses/eclipse-1.0.php
-*/
-
-/*
- * Copyright (C) 2013-2014 Research Councils UK (STFC)
+ * This file is part of the ISIS IBEX application.
+ * Copyright (C) 2012-2015 Science & Technology Facilities Council.
+ * All rights reserved.
  *
- * This file is part of the Instrument Control Project at ISIS.
+ * This program is distributed in the hope that it will be useful.
+ * This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v1.0 which accompanies this distribution.
+ * EXCEPT AS EXPRESSLY SET FORTH IN THE ECLIPSE PUBLIC LICENSE V1.0, THE PROGRAM 
+ * AND ACCOMPANYING MATERIALS ARE PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES 
+ * OR CONDITIONS OF ANY KIND.  See the Eclipse Public License v1.0 for more details.
  *
- * This code and information are provided "as is" without warranty of any 
- * kind, either expressed or implied, including but not limited to the
- * implied warranties of merchantability and/or fitness for a particular 
- * purpose.
+ * You should have received a copy of the Eclipse Public License v1.0
+ * along with this program; if not, you can obtain a copy from
+ * https://www.eclipse.org/org/documents/epl-v10.php or 
+ * http://opensource.org/licenses/eclipse-1.0.php
  */
+
 package uk.ac.stfc.isis.ibex.log.rdb;
 
 import java.util.ArrayList;
@@ -38,111 +27,137 @@ import org.eclipse.jface.preference.IPreferenceStore;
 
 import uk.ac.stfc.isis.ibex.log.Log;
 import uk.ac.stfc.isis.ibex.log.message.LogMessageFields;
+import uk.ac.stfc.isis.ibex.log.message.sql.LogMessageFieldsSql;
+import uk.ac.stfc.isis.ibex.log.message.sql.LogMessageFieldsWhereSql;
 import uk.ac.stfc.isis.ibex.log.preferences.PreferenceConstants;
 
 /**
- * Prepares the SQL 'insert into' statement for adding a message to the database.
- *
+ * Prepares the SQL 'insert into' statement for adding a message to the
+ * database.
+ * 
  */
 public class SqlStatement {
     private static final String TABLENAME = "message";
-    
+
     private String schemaName;
     private static int LIMIT = 1000;
-    
-    private List<LogMessageFields> selectFields;
-    private List<LogMessageFields> whereLikeFields;
-    
+
+    @SuppressWarnings("unused")
+    private List<LogMessageFieldsSql> selectFields;
+    private List<LogMessageFieldsWhereSql> whereLikeFields;
+
     private Calendar startTime;
     private Calendar endTime;
-    
+
     public SqlStatement() {
-    	IPreferenceStore preferenceStore = Log.getDefault().getPreferenceStore();
-    	schemaName = preferenceStore.getString(PreferenceConstants.P_SQL_SCHEMA);
-    	
-    	this.selectFields = new ArrayList<LogMessageFields>();
-    	this.whereLikeFields = new ArrayList<LogMessageFields>();
+	IPreferenceStore preferenceStore = Log.getDefault()
+		.getPreferenceStore();
+	schemaName = preferenceStore
+		.getString(PreferenceConstants.P_SQL_SCHEMA);
+
+	this.selectFields = new ArrayList<LogMessageFieldsSql>();
+	this.whereLikeFields = new ArrayList<LogMessageFieldsWhereSql>();
     }
-    
+
     /**
-     * Set the (ordered) list of fields that will be retrieved by the select statement
+     * Set the (ordered) list of fields that will be retrieved by the select
+     * statement
      */
-    public void setSelectFields(LogMessageFields[] selectFields) {
-    	this.selectFields = new ArrayList<LogMessageFields>(Arrays.asList(selectFields));
+    public void setSelectFields(LogMessageFieldsSql[] selectFields) {
+	this.selectFields = new ArrayList<LogMessageFieldsSql>(
+		Arrays.asList(selectFields));
     }
-    
+
     /**
-     * Set the ordered list of fields that will be featured in "WHERE field LIKE ?" clauses.
+     * Set the ordered list of fields that will be featured in
+     * "WHERE field LIKE ?" clauses.
      */
-    public void setWhereLikeClause(LogMessageFields[] whereLikeFields) {
-    	this.whereLikeFields = new ArrayList<LogMessageFields>(Arrays.asList(whereLikeFields));
+    public void setWhereLikeClause(LogMessageFieldsWhereSql[] whereLikeFields) {
+	this.whereLikeFields = new ArrayList<LogMessageFieldsWhereSql>(
+		Arrays.asList(whereLikeFields));
     }
-    
+
     /**
-     * Set the limits in which to search in terms of event time. Null values ignored.
+     * Set the limits in which to search in terms of event time. Null values
+     * ignored.
      */
     public void setTimeRange(Calendar startTime, Calendar endTime) {
-    	this.startTime = startTime;
-    	this.endTime = endTime;
+	this.startTime = startTime;
+	this.endTime = endTime;
     }
-    
+
     /**
-     * Return a string representation of the SQL select statement with SELECT fields, 
-     * WHERE clauses and time restrictions as appropriate. The values of the parameters
-     * to be filled in are given standard placeholders (?). 
+     * Return a string representation of the SQL select statement with SELECT
+     * fields, WHERE clauses and time restrictions as appropriate. The values of
+     * the parameters to be filled in are given standard placeholders (?).
      */
-    public String getSelectStatement() {   	
-		return "SELECT " + selectList() 
-	            + " FROM " + schemaName + "." + TABLENAME 
-	            + " WHERE " + whereList()
-	            + " LIMIT " + Integer.toString(LIMIT);
+    public String getSelectStatement() {
+	return "SELECT " + selectList() + " FROM " + selectTableList()
+		+ " WHERE " + whereList() + " LIMIT " + Integer.toString(LIMIT);
     }
 
     /**
      * Get string representation of the SELECT list
      */
-	private String selectList() {
-		StringBuilder cols = new StringBuilder();
-    	
-		if (selectFields != null && selectFields.size() > 0) {
-			cols.append(selectFields.get(0).getTagName());
-			
-	    	for (int i = 1; i < selectFields.size(); ++i) {
-	    		cols.append(", " + selectFields.get(i).getTagName());
-	    	}
-		}
-    	
-    	return cols.toString();
+    private String selectList() {
+	StringBuilder cols = new StringBuilder();
+
+	// Name the columns in order as this is now a composite lookup
+	cols.append("message.createTime, message.eventTime, message_type.type, message.contents, ");
+	cols.append("client_name.name, message_severity.severity, client_host.name, application.name, message.repeatCount");
+
+	return cols.toString();
+    }
+
+    /**
+     * Get string representation of the Tables list
+     */
+    private String selectTableList() {
+	StringBuilder tables = new StringBuilder();
+	// Append the main table
+	tables.append(schemaName + "." + TABLENAME);
+	// Append the other tables in use
+	tables.append(", " + schemaName + ".message_severity");
+	tables.append(", " + schemaName + ".client_name");
+	tables.append(", " + schemaName + ".client_host");
+	tables.append(", " + schemaName + ".message_type");
+	tables.append(", " + schemaName + ".application");
+	return tables.toString();
+    }
+
+    /**
+     * Get string representation of the list of WHERE clauses, including the
+     * date-time clauses.
+     */
+    private String whereList() {
+	StringBuilder where = new StringBuilder();
+
+	// Link the different tables together
+	where.append("message_severity.id = message.severity_id");
+	where.append(" AND client_name.id = message.clientName_id");
+	where.append(" AND client_host.id = message.clientHost_id");
+	where.append(" AND message_type.id = message.type_id");
+	where.append(" AND application.id = message.application_id");
+
+	// 'WHERE field Like ?'
+	if (whereLikeFields.size() > 0) {
+	    String clause = null;
+	    for (int i = 0; i < whereLikeFields.size(); ++i) {
+		clause = whereLikeFields.get(i).getTagName() + " LIKE ?";
+		where.append(" AND " + clause);
+	    }
 	}
-	
-	/**
-	 * Get string representation of the list of WHERE clauses, including
-	 * the date-time clauses.
-	 */
-	private String whereList() {
-		StringBuilder where = new StringBuilder();
-		
-		// 'WHERE field Like ?'
-		if (whereLikeFields.size() > 0) {
-			String clause = whereLikeFields.get(0).getTagName() + " LIKE ?";
-			where.append(clause);
-			
-	    	for (int i = 1; i < whereLikeFields.size(); ++i) {
-	    		clause = whereLikeFields.get(i).getTagName() + " LIKE ?";
-				where.append(" AND " + clause);
-	    	}
-		}
-		
-		if (startTime != null) {
-			String clause = LogMessageFields.EVENT_TIME.getTagName() + " > ?";
-			where.append(" AND " + clause);
-		}
-		
-		if (endTime != null) {
-			String clause = LogMessageFields.EVENT_TIME.getTagName() + " < ?";
-			where.append(" AND " + clause);
-		}
-		
-		return where.toString();
+
+	if (startTime != null) {
+	    String clause = LogMessageFields.EVENT_TIME.getTagName() + " > ?";
+	    where.append(" AND " + clause);
 	}
+
+	if (endTime != null) {
+	    String clause = LogMessageFields.EVENT_TIME.getTagName() + " < ?";
+	    where.append(" AND " + clause);
+	}
+
+	return where.toString();
+    }
 }
