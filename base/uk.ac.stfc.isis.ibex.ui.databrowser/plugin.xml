@@ -17,17 +17,6 @@
    </extension>
    <extension
          point="org.eclipse.ui.perspectiveExtensions">
-         <view
-               closeable="true"
-               id="org.csstudio.trends.databrowser.ploteditor.PlotEditor:*"
-               minimized="false"
-               ratio="0.1f"
-               relationship="right"
-               relative="uk.ac.stfc.isis.ibex.ui.perspectives.PerspectiveSwitcher"
-               showTitle="true"
-               standalone="true"
-               visible="true">
-         </view>
    </extension>
    <extension
          point="uk.ac.stfc.isis.ibex.ui.blocks.presentation">
