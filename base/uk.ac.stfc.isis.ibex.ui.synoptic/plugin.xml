@@ -82,18 +82,6 @@
                standalone="true"
                visible="false">
          </view>
-         <view
-               closeable="true"
-               id="uk.ac.stfc.isis.ibex.ui.rotatingbench"
-               minimized="false"
-               moveable="false"
-               ratio="0.6f"
-               relationship="right"
-               relative="uk.ac.stfc.isis.ibex.ui.synoptic.views.InstrumentView"
-               showTitle="true"
-               standalone="true"
-               visible="false">
-         </view>
       </perspectiveExtension>
    </extension>
    <extension
