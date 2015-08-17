@@ -130,9 +130,13 @@ public class Group extends Composite {
 	
 	private Label labelMaker(Composite composite, int style, String text, String toolTip, Font font) {
 		Label label = new Label(composite, style);
-		label.setText(text);
+		if (text != null) {
+			label.setText(text);
+		}
+		
 		label.setBackground(WHITE);
-		if (!toolTip.equals("")) {
+		
+		if (toolTip != null) {
 			label.setToolTipText(toolTip);
 		}
 		

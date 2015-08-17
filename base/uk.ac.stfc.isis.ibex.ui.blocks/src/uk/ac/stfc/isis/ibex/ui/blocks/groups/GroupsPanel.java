@@ -69,9 +69,6 @@ public class GroupsPanel extends Composite {
 		GroupsMenu menu = new GroupsMenu(this);
 		Menu contextMenu = menu.get();
 		mainComposite.setMenu(contextMenu);
-		for (Group group : groups) {
-			group.setMenu(contextMenu);
-		}
 		scrolledComposite.setMenu(contextMenu);
 	}
 
@@ -157,9 +154,12 @@ public class GroupsPanel extends Composite {
 			banner.dispose();
 		}
 		
-		for (Group group : groups) {
-			group.dispose();
-		}
+		// Disposing of the children one by one seems to sometimes fail, so dispose
+		// the parent instead
+		mainComposite.dispose();
+		mainComposite = new Composite(scrolledComposite, SWT.NONE);
+		mainComposite.setLayout(new GridLayout(1, false));
+		configureMenu();
 		
 		groups.clear();
 	}
