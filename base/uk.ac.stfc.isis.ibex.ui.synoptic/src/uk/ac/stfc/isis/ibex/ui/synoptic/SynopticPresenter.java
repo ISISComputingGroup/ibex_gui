@@ -226,6 +226,10 @@ public class SynopticPresenter extends ModelObject {
 		this.components = new ArrayList<>(components);
 		firePropertyChange("components", null, components());
 	}
+	
+	public boolean showBeam() {
+		return model.instrument().showBeam();
+	}
 
 	/**
 	 * Closes any OPIs that have been opened on the synoptic.

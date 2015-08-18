@@ -53,7 +53,7 @@ public class SynopticPreview extends Dialog {
 		container.setLayout(new FillLayout());
 		InstrumentSynoptic instrument = new InstrumentSynoptic(container,
 				SWT.NONE);
-		instrument.setComponents(model.instrument().components());
+		instrument.setComponents(model.instrument().components(), model.instrument().showBeam());
 
 		return instrument;
 	}

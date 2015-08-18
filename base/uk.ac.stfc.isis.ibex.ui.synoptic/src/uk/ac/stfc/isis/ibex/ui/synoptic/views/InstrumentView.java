@@ -46,7 +46,7 @@ public class InstrumentView extends ViewPart {
 	@Override
 	public void createPartControl(Composite parent) {		
 		instrument = new InstrumentSynoptic(parent, SWT.NONE);
-		instrument.setComponents(presenter.components());
+		instrument.setComponents(presenter.components(), presenter.showBeam());
 
 		presenter.addPropertyChangeListener("components", new PropertyChangeListener() {	
 		@Override
@@ -54,7 +54,7 @@ public class InstrumentView extends ViewPart {
 				display.asyncExec(new Runnable() {		
 					@Override
 					public void run() {
-						instrument.setComponents(presenter.components());						
+						instrument.setComponents(presenter.components(), presenter.showBeam());
 					}
 				});
 			}

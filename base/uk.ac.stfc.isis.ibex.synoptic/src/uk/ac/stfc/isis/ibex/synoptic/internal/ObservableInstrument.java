@@ -55,4 +55,9 @@ public class ObservableInstrument implements Instrument {
 	public SynopticDescription getDescription() {
 		return instrument;
 	}
+
+	@Override
+	public Boolean showBeam() {
+		return false;
+	}
 }

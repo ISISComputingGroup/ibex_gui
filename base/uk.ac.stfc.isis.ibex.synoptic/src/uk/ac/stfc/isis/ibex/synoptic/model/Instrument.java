@@ -29,5 +29,7 @@ public interface Instrument {
 	
 	List<? extends Component> components();
 	
+	Boolean showBeam();
+	
 	SynopticDescription getDescription();	
 }
