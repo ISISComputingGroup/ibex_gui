@@ -39,12 +39,12 @@ import uk.ac.stfc.isis.ibex.synoptic.model.desc.TargetDescription;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.TargetType;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.IComponentSelectionListener;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.IInstrumentUpdateListener;
-import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.InstrumentViewModel;
+import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.SynopticViewModel;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.UpdateTypes;
 
 public class TargetDetailView extends Composite {
 
-	private InstrumentViewModel instrument;
+	private SynopticViewModel instrument;
 	
 	private Composite labelComposite;
 	private Composite fieldsComposite;
@@ -55,7 +55,7 @@ public class TargetDetailView extends Composite {
 	
 	private static TargetType[] typeList = TargetType.values();
 	
-	public TargetDetailView(Composite parent, final InstrumentViewModel instrument) 
+	public TargetDetailView(Composite parent, final SynopticViewModel instrument) 
 	{
 		super(parent, SWT.NONE);
 		

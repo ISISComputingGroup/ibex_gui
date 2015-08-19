@@ -32,7 +32,7 @@ import uk.ac.stfc.isis.ibex.synoptic.model.desc.SynopticDescription;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.component.ComponentDetailView;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.instrument.InstrumentTreeControls;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.instrument.InstrumentTreeView;
-import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.InstrumentViewModel;
+import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.SynopticViewModel;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.pv.PvDetailView;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.target.TargetDetailView;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.target.TargetPropertyDetailView;
@@ -43,7 +43,7 @@ public class EditorPanel extends Composite {
 	
 	private static Font titleFont = SWTResourceManager.getFont("Segoe UI", 11, SWT.BOLD);
 	
-	private InstrumentViewModel instrumentViewModel = new InstrumentViewModel();
+	private SynopticViewModel instrumentViewModel = new SynopticViewModel();
 	
 	private Composite treeComposite;
 	private Composite detailBarComposite;

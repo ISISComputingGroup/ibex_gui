@@ -32,6 +32,10 @@ import uk.ac.stfc.isis.ibex.synoptic.SynopticModel;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.SynopticDescription;
 import uk.ac.stfc.isis.ibex.ui.synoptic.widgets.InstrumentSynoptic;
 
+/**
+ * Provides a preview of the final synoptic.
+ * 
+ */
 public class SynopticPreview extends Dialog {
 	private final SynopticModel model;
 

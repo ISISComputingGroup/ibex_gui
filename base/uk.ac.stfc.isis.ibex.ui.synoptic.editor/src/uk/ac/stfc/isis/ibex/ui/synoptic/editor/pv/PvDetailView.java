@@ -42,13 +42,13 @@ import uk.ac.stfc.isis.ibex.synoptic.model.desc.IO;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.PV;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.PVType;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.IPVSelectionListener;
-import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.InstrumentViewModel;
+import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.SynopticViewModel;
 
 public class PvDetailView extends Composite {
 	private Composite labelComposite;
 	private Composite fieldsComposite;
 	
-	private InstrumentViewModel instrument;
+	private SynopticViewModel instrument;
 	
 	private PV selectedPv;
 	
@@ -64,7 +64,7 @@ public class PvDetailView extends Composite {
 	private static IO[] modeList = IO.values();
 	private static PVType[] typeList = PVType.values();
 
-	public PvDetailView(Composite parent, InstrumentViewModel instrument) {
+	public PvDetailView(Composite parent, SynopticViewModel instrument) {
 		super(parent, SWT.NONE);
 		
 		this.instrument = instrument;

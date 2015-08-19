@@ -51,6 +51,10 @@ import uk.ac.stfc.isis.ibex.ui.UI;
 import uk.ac.stfc.isis.ibex.ui.synoptic.views.LinkedViews;
 import uk.ac.stfc.isis.ibex.ui.synoptic.views.OpiTargetView;
 
+/**
+ * Responsible for the presentation logic of the synoptic.
+ *  
+ */
 public class SynopticPresenter extends ModelObject {
 
 	private static final Logger LOG = IsisLog.getLogger(SynopticPresenter.class);

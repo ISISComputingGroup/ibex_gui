@@ -33,6 +33,14 @@ import org.xml.sax.SAXException;
 
 import uk.ac.stfc.isis.ibex.synoptic.xml.XMLUtil;
 
+/**
+ * This class is converted to XML, to be stored on the local file system and read 
+ * by the blockserver.
+ * 
+ * Note any changes here will require corresponding changes to 
+ * EPICS/schema/configurations/synoptic.xsd.
+ * 
+ */
 @XmlRootElement(name = "instrument")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class SynopticDescription {

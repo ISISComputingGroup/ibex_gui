@@ -36,7 +36,7 @@ import org.eclipse.swt.dnd.TransferData;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.ComponentDescription;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.SynopticDescription;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.instrument.InstrumentTreeView;
-import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.InstrumentViewModel;
+import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.SynopticViewModel;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.UpdateTypes;
 
 /**
@@ -46,10 +46,10 @@ import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.UpdateTypes;
  */
 public class ComponentDropListener extends ViewerDropAdapter {
 	private final InstrumentTreeView viewer;
-	private final InstrumentViewModel instrument;
+	private final SynopticViewModel instrument;
 
 	public ComponentDropListener(InstrumentTreeView viewer,
-			InstrumentViewModel instrument) {
+			SynopticViewModel instrument) {
 		super(viewer.getTreeViewer());
 		this.viewer = viewer;
 		this.instrument = instrument;

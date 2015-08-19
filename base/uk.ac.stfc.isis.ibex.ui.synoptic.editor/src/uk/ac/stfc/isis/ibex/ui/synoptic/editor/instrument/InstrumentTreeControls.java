@@ -30,12 +30,17 @@ import org.eclipse.swt.widgets.Composite;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.ComponentDescription;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.IComponentSelectionListener;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.IInstrumentUpdateListener;
-import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.InstrumentViewModel;
+import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.SynopticViewModel;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.UpdateTypes;
 
+/**
+ * This Composite provides the controls relating to the tree view of the instrument
+ * components.
+ * 
+ */
 public class InstrumentTreeControls extends Composite {
 	
-	private InstrumentViewModel instrumentViewModel;
+	private SynopticViewModel instrumentViewModel;
 
 	private Button btnDelete;
 	private Button btnAdd;
@@ -43,7 +48,7 @@ public class InstrumentTreeControls extends Composite {
 	private Button btnShowBeam;
 	
 	public InstrumentTreeControls(Composite parent,
-			InstrumentViewModel instrument) {
+			SynopticViewModel instrument) {
 		super(parent, SWT.NONE);
 
 		this.instrumentViewModel = instrument;

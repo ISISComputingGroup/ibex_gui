@@ -41,6 +41,11 @@ import uk.ac.stfc.isis.ibex.synoptic.SynopticInfo;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.SynopticDescription;
 import uk.ac.stfc.isis.ibex.synoptic.xml.XMLUtil;
 
+/**
+ * This class provides the dialog to edit the synoptic. While this class is responsible for
+ * saving, most of the layout for this dialogue is provided in the EditorPanel class.
+ * 
+ */
 public class EditSynopticDialog extends Dialog {
 	
 	private static final Point INITIAL_SIZE = new Point(950, 800);

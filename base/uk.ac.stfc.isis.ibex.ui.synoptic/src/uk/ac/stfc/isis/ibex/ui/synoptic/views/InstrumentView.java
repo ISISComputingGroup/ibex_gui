@@ -31,6 +31,10 @@ import uk.ac.stfc.isis.ibex.ui.synoptic.Activator;
 import uk.ac.stfc.isis.ibex.ui.synoptic.SynopticPresenter;
 import uk.ac.stfc.isis.ibex.ui.synoptic.widgets.InstrumentSynoptic;
 
+/**
+ * Provides the containing view for they synopitc.
+ * 
+ */
 public class InstrumentView extends ViewPart {
 	
 	public static final String ID = "uk.ac.stfc.isis.ibex.ui.synoptic.views.InstrumentView"; //$NON-NLS-1$

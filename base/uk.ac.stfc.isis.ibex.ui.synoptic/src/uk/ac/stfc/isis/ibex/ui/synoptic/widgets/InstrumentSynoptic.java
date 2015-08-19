@@ -37,7 +37,8 @@ import uk.ac.stfc.isis.ibex.ui.synoptic.beamline.LineDecoration;
 import uk.ac.stfc.isis.ibex.ui.synoptic.component.ComponentView;
 
 /*
- * The synoptic's components with an overlaid beamline. 
+ * The synoptic's components with an optionally overlaid beamline.
+ * 
  */
 public class InstrumentSynoptic extends Composite {
 

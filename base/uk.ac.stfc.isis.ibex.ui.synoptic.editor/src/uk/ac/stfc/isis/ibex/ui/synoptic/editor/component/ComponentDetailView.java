@@ -39,7 +39,7 @@ import uk.ac.stfc.isis.ibex.synoptic.model.ComponentType;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.ComponentDescription;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.IComponentSelectionListener;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.IInstrumentUpdateListener;
-import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.InstrumentViewModel;
+import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.SynopticViewModel;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.UpdateTypes;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.pv.PVList;
 
@@ -49,7 +49,7 @@ import uk.ac.stfc.isis.ibex.ui.synoptic.editor.pv.PVList;
  * 
  */
 public class ComponentDetailView extends Composite {
-	private InstrumentViewModel instrument;
+	private SynopticViewModel instrument;
 
 	private ComponentDescription component;
 
@@ -65,7 +65,7 @@ public class ComponentDetailView extends Composite {
 	private static ComponentType[] typeList = ComponentType.values();
 
 	public ComponentDetailView(Composite parent,
-			final InstrumentViewModel instrument) {
+			final SynopticViewModel instrument) {
 		super(parent, SWT.NONE);
 
 		this.instrument = instrument;
