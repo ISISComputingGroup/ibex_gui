@@ -38,7 +38,7 @@ import uk.ac.stfc.isis.ibex.synoptic.xml.XMLUtil;
 public class SynopticDescription {
 	private String name;
 	
-	private String showbeam = "TRUE";
+	private String showbeam;
 	
 	@XmlElementWrapper(name = "components")
 	@XmlElement(name = "component", type = ComponentDescription.class)

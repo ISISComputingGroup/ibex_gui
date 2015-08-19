@@ -40,6 +40,7 @@ public class InstrumentTreeControls extends Composite {
 	private Button btnDelete;
 	private Button btnAdd;
 	private Button btnPreview;
+	private Button btnShowBeam;
 	
 	public InstrumentTreeControls(Composite parent,
 			InstrumentViewModel instrument) {
@@ -96,6 +97,20 @@ public class InstrumentTreeControls extends Composite {
 		btnPreview.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false,
 				1, 1));
 		btnPreview.setText("Synoptic Preview");
+		
+		btnShowBeam = new Button(this, SWT.CHECK | SWT.CENTER);
+		btnShowBeam.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, false, 1, 1));
+		btnShowBeam.setText("Show Beam on Synoptic");
+		btnShowBeam.setSelection(instrumentViewModel.getShowBeam());
+		
+		btnShowBeam.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent event) {
+	            Button btn = (Button) event.getSource();
+	            instrumentViewModel.setShowBeam(btn.getSelection());			
+			}
+		});
+		
 		btnPreview.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -110,6 +125,7 @@ public class InstrumentTreeControls extends Composite {
 
 	public void refresh() {
 		ComponentDescription selected = instrumentViewModel.getSelectedComponent();
+		btnShowBeam.setSelection(instrumentViewModel.getShowBeam());
 		btnDelete.setEnabled(selected != null);
 	}
 }

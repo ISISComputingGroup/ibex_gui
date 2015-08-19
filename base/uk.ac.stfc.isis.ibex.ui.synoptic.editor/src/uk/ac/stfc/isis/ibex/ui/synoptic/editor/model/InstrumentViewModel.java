@@ -368,4 +368,12 @@ public class InstrumentViewModel {
 			listener.selectionChanged(oldProperty, newProperty);
 		}
 	}
+	
+	public void setShowBeam(Boolean showBeam) {
+		instrument.setShowBeam(showBeam);
+	}
+	
+	public Boolean getShowBeam() {
+		return instrument.showBeam();
+	}
 }
