@@ -58,6 +58,6 @@ public class ObservableInstrument implements Instrument {
 
 	@Override
 	public Boolean showBeam() {
-		return false;
+		return instrument.showBeam();
 	}
 }
