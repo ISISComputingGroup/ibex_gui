@@ -105,7 +105,7 @@ public class InstrumentTreeControls extends Composite {
 		
 		btnShowBeam = new Button(this, SWT.CHECK | SWT.CENTER);
 		btnShowBeam.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, false, 1, 1));
-		btnShowBeam.setText("Show Beam on Synoptic");
+		btnShowBeam.setText("Show Beam");
 		btnShowBeam.setSelection(instrumentViewModel.getShowBeam());
 		
 		btnShowBeam.addSelectionListener(new SelectionAdapter() {
