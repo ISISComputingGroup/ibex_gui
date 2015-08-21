@@ -43,6 +43,7 @@ import uk.ac.stfc.isis.ibex.synoptic.model.desc.PV;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.PVType;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.IPVSelectionListener;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.InstrumentViewModel;
+import org.eclipse.swt.layout.RowLayout;
 
 public class PvDetailView extends Composite {
 	private Composite labelComposite;
@@ -63,13 +64,13 @@ public class PvDetailView extends Composite {
 	
 	private static IO[] modeList = IO.values();
 	private static PVType[] typeList = PVType.values();
+	private Composite buttonsComposite;
+	private Button btnSelectBlock;
 
 	public PvDetailView(Composite parent, InstrumentViewModel instrument) {
 		super(parent, SWT.NONE);
 		
 		this.instrument = instrument;
-
-		setLayout(new GridLayout(1, false));
 		setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		
 		if (instrument != null) {
@@ -81,10 +82,37 @@ public class PvDetailView extends Composite {
 			});
 		}
 		createControls(this);
+		
+		buttonsComposite = new Composite(this, SWT.NONE);
+		GridData gd_composite = new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1);
+		gd_composite.widthHint = 234;
+		buttonsComposite.setLayoutData(gd_composite);
+		buttonsComposite.setLayout(new RowLayout(SWT.HORIZONTAL));
+		
+		btnSelectBlock = new Button(buttonsComposite, SWT.NONE);
+		btnSelectBlock.setText("Select Block");
+		btnSelectBlock.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				openBlockDialog();
+				updateModel();
+			}
+		});
+		
+		btnPickPV = new Button(buttonsComposite, SWT.NONE);
+		btnPickPV.setText("Select PV");
+		btnPickPV.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				openPvDialog();
+				updateModel();
+			}
+		});
 		showPV(null);
 	}
 	
 	public void createControls(Composite parent) {	
+		setLayout(new GridLayout(1, false));
 		labelComposite = new Composite(parent, SWT.NONE);
 		labelComposite.setLayoutData(new GridData(SWT.CENTER, SWT.FILL, true, false, 1, 1));
 		labelComposite.setLayout(new FillLayout());
@@ -94,8 +122,8 @@ public class PvDetailView extends Composite {
 		}
 		
 		fieldsComposite = new Composite(parent, SWT.NONE);
-		fieldsComposite.setLayout(new GridLayout(2, false));
 		fieldsComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+		fieldsComposite.setLayout(new GridLayout(2, false));
 		{
 			Label lblName = new Label(fieldsComposite, SWT.NONE);
 			lblName.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
@@ -168,16 +196,6 @@ public class PvDetailView extends Composite {
 					updateModel();
 				}
 			});
-			
-			btnPickPV = new Button(fieldsComposite, SWT.NONE);
-			btnPickPV.setText("Select PV");
-			btnPickPV.addSelectionListener(new SelectionAdapter() {
-				@Override
-				public void widgetSelected(SelectionEvent e) {
-					openPvDialog();
-					updateModel();
-				}
-			});
 		}
 	}
 
@@ -188,6 +206,7 @@ public class PvDetailView extends Composite {
 		
 		if (selectedPv != null) {
 			fieldsComposite.setVisible(true);
+			buttonsComposite.setVisible(true);
 			labelComposite.setVisible(false);
 			
 			txtName.setText(selectedPv.displayName());
@@ -204,6 +223,7 @@ public class PvDetailView extends Composite {
 			cmboMode.getCombo().select(typeIndex);
 		} else {
 			fieldsComposite.setVisible(false);
+			buttonsComposite.setVisible(false);
 			labelComposite.setVisible(true);
 			
 			txtName.setText("");
@@ -230,6 +250,16 @@ public class PvDetailView extends Composite {
 	}
 	
 	private void openPvDialog() {
+		PvSelector selectPV = new PvSelector();
+		try {
+			selectPV.execute(null);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		txtAddress.setText(selectPV.getPvAddress());
+	}
+	
+	private void openBlockDialog() {
 		PvSelector selectPV = new PvSelector();
 		try {
 			selectPV.execute(null);
