@@ -57,6 +57,10 @@ public class SynopticDescription {
 	}
 	
 	public boolean showBeam() {
+		if (showbeam == null) {
+			return true;
+		}
+		
 		return Boolean.valueOf(showbeam);
 	}
 	
