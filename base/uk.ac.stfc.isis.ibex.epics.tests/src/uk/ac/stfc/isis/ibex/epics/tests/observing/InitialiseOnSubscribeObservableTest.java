@@ -51,9 +51,9 @@ public class InitialiseOnSubscribeObservableTest {
 		mockObserver = mock(InitialisableObserver.class);
 		mockObserverTwo = mock(InitialisableObserver.class);
 		
-		mockObservable = TestHelpers.getCachingObservable(TestHelpers.VALUE);
+		mockObservable = TestHelpers.getCachingObservable(TestHelpers.STRING_VALUE);
 		testableObservable = new TestableObservable<>();
-		testableObservable.setValue(TestHelpers.VALUE);
+		testableObservable.setValue(TestHelpers.STRING_VALUE);
 		testableObservable.setError(TestHelpers.exception);		
 
 		// The real observables to test
@@ -69,13 +69,13 @@ public class InitialiseOnSubscribeObservableTest {
 	@Test
 	public void the_observable_is_created_and_returns_the_value_of_the_observable_it_watches() {
 		// Assert - The InitialiseOnSubscribeObservable has the value returned from the mock observable
-		assertEquals(initObservableCachingSource.getValue(), TestHelpers.VALUE);
+		assertEquals(initObservableCachingSource.getValue(), TestHelpers.STRING_VALUE);
 	}
 	
 	@Test
 	public void an_observer_is_added_and_the_observer_has_its_update_method_called() {
 		// Assert - The initialisable observer has its update method called twice, once for each observable subscribed to
-		verify(mockObserver, times(1)).update(TestHelpers.VALUE, TestHelpers.exception, false);
+		verify(mockObserver, times(1)).update(TestHelpers.STRING_VALUE, TestHelpers.exception, false);
 	}
 	
 	@Test
@@ -87,19 +87,19 @@ public class InitialiseOnSubscribeObservableTest {
 	@Test
 	public void setting_watched_observable_value_means_observable_watching_returns_new_value() {
 		// Act
-		testableObservable.setValue(TestHelpers.NEW_VALUE);
+		testableObservable.setValue(TestHelpers.NEW_STRING_VALUE);
 		
 		// Assert - The InitialiseOnSubscribeObservable has the value returned from the mock observable
-		assertEquals(TestHelpers.NEW_VALUE, initObservableTestableSource.getValue());
+		assertEquals(TestHelpers.NEW_STRING_VALUE, initObservableTestableSource.getValue());
 	}
 	
 	@Test
 	public void setting_watched_observable_value_calls_observer_onValue_method() {
 		// Act
-		testableObservable.setValue(TestHelpers.NEW_VALUE);
+		testableObservable.setValue(TestHelpers.NEW_STRING_VALUE);
 				
 		// Assert - The observer has its on value method called once, with the new value
-		verify(mockObserver, times(1)).onValue(TestHelpers.NEW_VALUE);
+		verify(mockObserver, times(1)).onValue(TestHelpers.NEW_STRING_VALUE);
 	}
 	
 	@Test
@@ -123,25 +123,25 @@ public class InitialiseOnSubscribeObservableTest {
 	@Test
 	public void with_multiple_observers_subscribed_all_observers_get_update_method_called() {
 		// Assert - Both observables are initialised with the update method
-		verify(mockObserver, times(1)).update(TestHelpers.VALUE, TestHelpers.exception, false);
-		verify(mockObserverTwo, times(1)).update(TestHelpers.VALUE, TestHelpers.exception, false);
+		verify(mockObserver, times(1)).update(TestHelpers.STRING_VALUE, TestHelpers.exception, false);
+		verify(mockObserverTwo, times(1)).update(TestHelpers.STRING_VALUE, TestHelpers.exception, false);
 	}
 	
 	@Test
 	public void multiple_observers_all_get_onValue_method_called_when_value_changes() {
 		// Act
-		testableObservable.setValue(TestHelpers.NEW_VALUE);
+		testableObservable.setValue(TestHelpers.NEW_STRING_VALUE);
 		
 		// Assert - Both observables have their on value called once
-		verify(mockObserver, times(1)).onValue(TestHelpers.NEW_VALUE);
-		verify(mockObserverTwo, times(1)).onValue(TestHelpers.NEW_VALUE);
+		verify(mockObserver, times(1)).onValue(TestHelpers.NEW_STRING_VALUE);
+		verify(mockObserverTwo, times(1)).onValue(TestHelpers.NEW_STRING_VALUE);
 	}
 		
 	@Test
 	public void calling_close_disconnects_from_watched_observable() {
 		// Act
 		initObservableTestableSource.close();
-		testableObservable.setValue(TestHelpers.NEW_VALUE);
+		testableObservable.setValue(TestHelpers.NEW_STRING_VALUE);
 		
 		// Assert - The observer has unsubscribed, so does not have on value method called
 		verify(mockObserver, times(0)).onValue(any(String.class));
@@ -151,10 +151,10 @@ public class InitialiseOnSubscribeObservableTest {
 	public void calling_removeObserver_on_unsubscriber_stops_observer_being_update_on_value_changes() {
 		// Act
 		((Unsubscriber<String>) addObserverReturnedObject).removeObserver();
-		testableObservable.setValue(TestHelpers.NEW_VALUE);
+		testableObservable.setValue(TestHelpers.NEW_STRING_VALUE);
 		
 		// Assert - The first observer does not have its onValue method called, the second does not
-		verify(mockObserver, times(0)).onValue(TestHelpers.NEW_VALUE);
+		verify(mockObserver, times(0)).onValue(TestHelpers.NEW_STRING_VALUE);
 		verify(mockObserverTwo, times(1)).onValue(any(String.class));
 	}
 
@@ -164,26 +164,35 @@ public class InitialiseOnSubscribeObservableTest {
 		initObservableCachingSource.addObserver(mockObserver);
 		
 		// Assert - Should have update method called
-		verify(mockObserver, atLeastOnce()).update(TestHelpers.VALUE, null, false);
+		verify(mockObserver, atLeastOnce()).update(TestHelpers.STRING_VALUE, null, false);
 	}
 	
 	@Test
 	public void adding_observer_more_than_once_only_calls_onValue_method_once() {		
 		// Act
 		initObservableCachingSource.addObserver(mockObserver);
-		testableObservable.setValue(TestHelpers.NEW_VALUE);
+		testableObservable.setValue(TestHelpers.NEW_STRING_VALUE);
 		
 		// Assert - Should only have the onValue method called once
-		verify(mockObserver, times(1)).onValue(TestHelpers.NEW_VALUE);
+		verify(mockObserver, times(1)).onValue(TestHelpers.NEW_STRING_VALUE);
 	}
 	
 	@Test
 	public void source_observable_having_null_value_set_does_not_update_observer() {
 		// Act
-		initObservableCachingSource.addObserver(mockObserver);
 		testableObservable.setValue(null);
 		
 		// Assert - On value method should not be called
 		verify(mockObserver, times(0)).onValue(any(String.class));
+	}
+	
+	@Test
+	public void source_observable_changing_from_null_value_to_non_null_value_updates_observer() {
+		// Act
+		testableObservable.setValue(null);
+		testableObservable.setValue(TestHelpers.NEW_STRING_VALUE);
+		
+		// Assert - On value method should not be called
+		verify(mockObserver, times(1)).onValue(TestHelpers.NEW_STRING_VALUE);
 	}
 }

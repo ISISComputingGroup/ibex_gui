@@ -38,8 +38,6 @@ import uk.ac.stfc.isis.ibex.epics.observing.InitialiseOnSubscribeObservable;
 @SuppressWarnings({ "unchecked", "checkstyle:methodname" })
 public class ConvertingObservableTest {
 	
-	private static final Integer INT_VALUE = 123;
-	private static final Integer NEW_INT_VALUE = 456;
 	private static final Integer INT_THROWS_EXCEPTION_VALUE = 666;
 	private static final String CONVERTED_VALUE = "converted from 123";
 	private static final String NEW_CONVERTED_VALUE = "converted from 456";
@@ -69,22 +67,22 @@ public class ConvertingObservableTest {
 		initObservable = new InitialiseOnSubscribeObservable<Integer>(testObservable);
 		
 		mockConverter = mock(Converter.class);
-		when(mockConverter.convert(INT_VALUE)).thenReturn(CONVERTED_VALUE);
+		when(mockConverter.convert(TestHelpers.INT_VALUE)).thenReturn(CONVERTED_VALUE);
 		when(mockConverter.convert(INT_THROWS_EXCEPTION_VALUE)).thenThrow(new ConversionException(EXCEPTION_MESSAGE));
-		when(mockConverter.convert(NEW_INT_VALUE)).thenReturn(NEW_CONVERTED_VALUE);
+		when(mockConverter.convert(TestHelpers.NEW_INT_VALUE)).thenReturn(NEW_CONVERTED_VALUE);
 		
 		convertObservable = new ConvertingObservable<>(initObservable, mockConverter);
 		convertObservable.addObserver(mockObserver);
 		convertObservable.setSource(initObservable);
 		
 		Converter<Integer, String> mockConverterWithException = mock(Converter.class);
-		when(mockConverterWithException.convert(INT_VALUE)).thenThrow(new ConversionException(EXCEPTION_MESSAGE));
+		when(mockConverterWithException.convert(TestHelpers.INT_VALUE)).thenThrow(new ConversionException(EXCEPTION_MESSAGE));
 	}
 	
 	@Test
 	public void when_observable_value_is_set_converted_value_is_returned_through_onValue_method_on_observer() {
 		// Act
-		testObservable.setValue(INT_VALUE);
+		testObservable.setValue(TestHelpers.INT_VALUE);
 		
 		//Assert - The initialisable observer has its update method called once, with the converted value
 		verify(mockObserver, times(1)).onValue(CONVERTED_VALUE);
@@ -123,7 +121,7 @@ public class ConvertingObservableTest {
 	public void when_observable_closes_source_observers_do_not_get_new_value() throws ConversionException {
 		//Act
 		convertObservable.close();
-		testObservable.setValue(NEW_INT_VALUE);
+		testObservable.setValue(TestHelpers.NEW_INT_VALUE);
 		
 		//Assert - The initialisable observer has its update method called once, and not for the new value
 		verify(mockObserver, times(0)).onValue(NEW_CONVERTED_VALUE);

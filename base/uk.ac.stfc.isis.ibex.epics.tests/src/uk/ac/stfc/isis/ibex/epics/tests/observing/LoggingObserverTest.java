@@ -22,6 +22,7 @@ package uk.ac.stfc.isis.ibex.epics.tests.observing;
 import static org.mockito.Mockito.*;
 
 import org.apache.logging.log4j.Logger;
+import org.junit.Before;
 import org.junit.Test;
 
 import uk.ac.stfc.isis.ibex.epics.observing.LoggingObserver;
@@ -34,68 +35,64 @@ public class LoggingObserverTest {
 	private static final String ON_CONNECTION_CHANGED_MESSAGE = " connected: ";
 	private static final String ID = "id";
 	
-	@Test
-	public void test_LoggingObserver_on_value() {
-		// Arrange
-		String value = "value";
-
-		Logger mockLogger = mock(Logger.class);		
-
-		// The LoggingObserver to test
-		LoggingObserver<String> loggingObserver = new LoggingObserver<>(mockLogger, ID);
+	private Logger mockLogger;
+	private LoggingObserver<String> loggingObserver;
+	
+	private TestableObservable<String> testableObservable;
+	
+	@Before
+	public void setUp() {
+		// Arrange		
+		mockLogger = mock(Logger.class);
+		loggingObserver = new LoggingObserver<>(mockLogger, ID);
 		
-		// A test observable that has public set methods
-		TestableObservable<String> testableObservable = new TestableObservable<>();
-		
-		// Act
+		testableObservable = new TestableObservable<>();
 		testableObservable.addObserver(loggingObserver);
-		testableObservable.setValue(value);
-		
-		// Assert
-		// The log message is as expected
-		verify(mockLogger, times(1)).info(ID + ON_VALUE_MESSAGE + value);
 	}
 	
 	@Test
-	public void test_LoggingObserver_on_error() {
-		// Arrange
-		Exception exception = new Exception();
-		
-		// The LoggingObserver to test
-		Logger mockLogger = mock(Logger.class);		
-		LoggingObserver<String> loggingObserver = new LoggingObserver<>(mockLogger, ID);
-		
-		// A test observable that has public set methods
-		TestableObservable<String> testableObservable = new TestableObservable<>();
-		 
+	public void setting_changed_value_change_creates_appropraite_log_messageat_info_level() {
 		// Act
-		testableObservable.addObserver(loggingObserver);
-		testableObservable.setError(exception);
+		testableObservable.setValue(TestHelpers.STRING_VALUE);
 		
-		// Assert
-		// The log message is as expected
-		verify(mockLogger, times(1)).error(ID + ON_ERROR_MESSAGE + exception);
+		// Assert - The log message is as expected
+		verify(mockLogger, times(1)).info(ID + ON_VALUE_MESSAGE + TestHelpers.STRING_VALUE);
 	}
 	
 	@Test
-	public void test_LoggingObserver_on_connection_changed() {
-		// Arrange
-		
-		boolean connectionChanged = true;
-		
-		// The LoggingObserver to test
-		Logger mockLogger = mock(Logger.class);		
-		LoggingObserver<String> loggingObserver = new LoggingObserver<>(mockLogger, ID);
-		
-		// A test observable that has public set methods
-		TestableObservable<String> testableObservable = new TestableObservable<>();
-		
+	public void setting_error_on_observable_creates_apporpriate_log_message_at_error_level() {
 		// Act
-		testableObservable.addObserver(loggingObserver);
-		testableObservable.setConnectionStatus(connectionChanged);
+		testableObservable.setError(TestHelpers.exception);
 		
-		// Assert
-		// The log message is as expected
-		verify(mockLogger, times(1)).info(ID + ON_CONNECTION_CHANGED_MESSAGE + connectionChanged);
+		// Assert - The log message is as expected
+		verify(mockLogger, times(1)).error(ID + ON_ERROR_MESSAGE + TestHelpers.exception);
 	}
+	
+	@Test
+	public void setting_connection_status_on_observable_creates_appropriate_log_message_at_info_level() {
+		// Act
+		testableObservable.setConnectionStatus(true);
+		
+		// Assert - The log message is as expected
+		verify(mockLogger, times(1)).info(ID + ON_CONNECTION_CHANGED_MESSAGE + true);
+	}
+	
+	@Test
+	public void changing_value_twice_to_same_value_creates_two_log_message() {
+		// Act
+		testableObservable.setValue(TestHelpers.STRING_VALUE);
+		testableObservable.setValue(TestHelpers.STRING_VALUE);
+		
+		// Assert - The log message is as expected
+		verify(mockLogger, times(2)).info(ID + ON_VALUE_MESSAGE + TestHelpers.STRING_VALUE);
+	}
+	
+	@Test
+	public void changing_to_null_value_does_not_create_log_message() {
+		// Act
+		testableObservable.setValue(null);
+		
+		// Assert - The log message is as expected
+		verify(mockLogger, times(0)).info(anyString());
+	}	
 }

@@ -22,6 +22,7 @@ package uk.ac.stfc.isis.ibex.epics.tests.observing;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import uk.ac.stfc.isis.ibex.epics.observing.CachingObservable;
@@ -36,66 +37,69 @@ import uk.ac.stfc.isis.ibex.epics.observing.SwitchableObservable;
  */
 public class SwitchableObservableTest {
 	
-	private final static String VALUE = "value";
-	private final static String NEW_VALUE = "new value";
+	private InitialisableObserver<String> mockObserver;
 	
-	@Test
-	public void test_SwitchableObservable_switch() {
-		// Arrange	
-		InitialisableObserver<String> mockObserver = mock(InitialisableObserver.class);
+	private CachingObservable<String> mockObservableOne;
+	private CachingObservable<String> mockObservableTwo;
+	private CachingObservable<String> mockObservableWithNullValue;
+	
+	private SwitchableObservable<String> switchableObservable;
+	
+	@Before
+	public void setUp() {
+		// Arrange
+		mockObserver = mock(InitialisableObserver.class);
 		
-		// Mock observables with stub methods returning different values
-		CachingObservable<String> mockObservableOne = mock(CachingObservable.class);
-		when(mockObservableOne.getValue()).thenReturn(VALUE);
+		mockObservableOne = TestHelpers.getCachingObservable(TestHelpers.STRING_VALUE);		
+		mockObservableTwo = TestHelpers.getCachingObservable(TestHelpers.NEW_STRING_VALUE);
+		mockObservableWithNullValue = TestHelpers.getCachingObservable(null);
 		
-		CachingObservable<String> mockObservableTwo = mock(CachingObservable.class);
-		when(mockObservableTwo.getValue()).thenReturn(NEW_VALUE);
-		
-		// Object we are really testing
-		SwitchableObservable<String> switchableObservable = new SwitchableObservable<>(mockObservableOne);
-		
-		// Act
+		switchableObservable = new SwitchableObservable<>(mockObservableOne);
 		switchableObservable.addObserver(mockObserver);
-		// Do the switch
-		switchableObservable.switchTo(mockObservableTwo);
-		
-		// Assert
-		// The initialisable observer has its onConnectionChanged called twice and onValue called once.
-		// Note here that the switch calls onValue on the observer, but the initialise does not.
-		verify(mockObserver, times(2)).onConnectionStatus(false);
-		verify(mockObserver, times(1)).onValue(NEW_VALUE);
-		
-		// The SwitchableObservable has the new Obervable's value
-		assertEquals(switchableObservable.getValue(), NEW_VALUE);
 	}
 	
 	@Test
-	public void test_SwitchableObservable_switch_to_object_with_null_value() {
-		// Arrange
-		InitialisableObserver<String> mockObserver = mock(InitialisableObserver.class);
-		
-		// Mock observables with stub methods returning different values
-		CachingObservable<String> mockObservableOne = mock(CachingObservable.class);
-		when(mockObservableOne.getValue()).thenReturn(VALUE);
-		
-		CachingObservable<String> mockObservableTwo = mock(CachingObservable.class);
-		when(mockObservableTwo.getValue()).thenReturn(null);
-		
-		// Object we are really testing
-		SwitchableObservable<String> switchableObservable = new SwitchableObservable<>(mockObservableOne);
-		
-		// Act
-		switchableObservable.addObserver(mockObserver);
-		// Do the switch
+	public void switching_observable_calls_on_connection_status_on_observer() {
+		// Act - Do the switch
 		switchableObservable.switchTo(mockObservableTwo);
 		
 		// Assert
-		// The initialisable observer has its onConnectionChanged called twice and onValue called once
-		verify(mockObserver, times(2)).onConnectionStatus(false);
-		verify(mockObserver, times(0)).onValue(any(String.class));
+		verify(mockObserver, atLeastOnce()).onConnectionStatus(false);
+	}
+	
+	@Test
+	public void switching_observable_returns_the_value_of_the_watched_observable() {
+		// Act - Do the switch
+		switchableObservable.switchTo(mockObservableTwo);
+				
+		// The SwitchableObservable has the new Obervable's value
+		assertEquals(switchableObservable.getValue(), TestHelpers.NEW_STRING_VALUE);
+	}
+	
+	@Test
+	public void switching_observable_calls_on_value_on_observer_with_new_value() {
+		// Act - Do the switch
+		switchableObservable.switchTo(mockObservableTwo);
 		
-		// The SwitchableObservable has the old Obervable's value
-		// Might need to think about if this is desirable?
-		assertEquals(switchableObservable.getValue(), VALUE);
+		// Assert
+		verify(mockObserver, times(1)).onValue(TestHelpers.NEW_STRING_VALUE);
+	}
+	
+	@Test
+	public void switching_to_observable_with_a_null_value_does_not_call_onValue_on_observer() {
+		// Act
+		switchableObservable.switchTo(mockObservableWithNullValue);
+		
+		// Assert - The initialisable observer has its onConnectionChanged called twice and onValue called once
+		verify(mockObserver, times(0)).onValue(any(String.class));
+	}
+	
+	@Test
+	public void switching_to_observable_with_a_null_value_means_old_observable_value_is_still_returned() {
+		// Act
+		switchableObservable.switchTo(mockObservableWithNullValue);
+		
+		// Assert - Might need to think about if this is desirable?
+		assertEquals(switchableObservable.getValue(), TestHelpers.STRING_VALUE);
 	}
 }

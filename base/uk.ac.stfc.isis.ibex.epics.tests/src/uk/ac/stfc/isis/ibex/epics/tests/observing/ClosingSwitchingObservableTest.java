@@ -45,8 +45,8 @@ public class ClosingSwitchingObservableTest {
 		// Arrange
 		mockObserver = mock(InitialisableObserver.class);
 		
-		mockObservableReturnsValue = TestHelpers.getClosableCachingObservable(TestHelpers.VALUE);
-		mockObservableReturnsNewValue = TestHelpers.getClosableCachingObservable(TestHelpers.NEW_VALUE);
+		mockObservableReturnsValue = TestHelpers.getClosableCachingObservable(TestHelpers.STRING_VALUE);
+		mockObservableReturnsNewValue = TestHelpers.getClosableCachingObservable(TestHelpers.NEW_STRING_VALUE);
 		mockObservableReturnsNull = TestHelpers.getClosableCachingObservable(null);
 
 		// The real observable to test
@@ -69,7 +69,7 @@ public class ClosingSwitchingObservableTest {
 		closableSwitchingObservable.close();
 		
 		// Assert - Even though it is closed value is still set
-		assertEquals(TestHelpers.VALUE, closableSwitchingObservable.getValue());
+		assertEquals(TestHelpers.STRING_VALUE, closableSwitchingObservable.getValue());
 	}
 	
 	@Test
@@ -114,7 +114,7 @@ public class ClosingSwitchingObservableTest {
 		closableSwitchingObservable.switchTo(mockObservableReturnsNewValue);
 
 		// Assert - The original ClosableCachingObservable is closed
-		assertEquals(TestHelpers.NEW_VALUE, closableSwitchingObservable.getValue());
+		assertEquals(TestHelpers.NEW_STRING_VALUE, closableSwitchingObservable.getValue());
 	}
 	
 	@Test
@@ -123,7 +123,7 @@ public class ClosingSwitchingObservableTest {
 		closableSwitchingObservable.switchTo(mockObservableReturnsNull);
 		
 		// Assert - The original value is returned
-		assertEquals(TestHelpers.VALUE, closableSwitchingObservable.getValue());
+		assertEquals(TestHelpers.STRING_VALUE, closableSwitchingObservable.getValue());
 	}
 	
 	@Test
