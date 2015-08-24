@@ -11,6 +11,8 @@ public class TestHelpers {
 	public static final String VALUE = "value";
 	public static final String NEW_VALUE = "new_value";
 	
+	public static final Exception exception = new Exception();
+	
 	/**
 	 * Creates a mock ClosableCachingObservable that returns the object value when the getValue method is called.
 	 *  

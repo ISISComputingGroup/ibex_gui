@@ -45,20 +45,16 @@ public class InitialiseOnSubscribeObservableTest {
 	InitialiseOnSubscribeObservable<String> initObservableCachingSource;
 	InitialiseOnSubscribeObservable<String> initObservableTestableSource;
 	
-	Exception exception;
-	
 	@Before
 	public void setUp() {
 		// Arrange
 		mockObserver = mock(InitialisableObserver.class);
 		mockObserverTwo = mock(InitialisableObserver.class);
 		
-		exception = new Exception();
-		
 		mockObservable = TestHelpers.getCachingObservable(TestHelpers.VALUE);
 		testableObservable = new TestableObservable<>();
 		testableObservable.setValue(TestHelpers.VALUE);
-		testableObservable.setError(exception);		
+		testableObservable.setError(TestHelpers.exception);		
 
 		// The real observables to test
 		initObservableCachingSource = new InitialiseOnSubscribeObservable<>(mockObservable);
@@ -79,7 +75,7 @@ public class InitialiseOnSubscribeObservableTest {
 	@Test
 	public void an_observer_is_added_and_the_observer_has_its_update_method_called() {
 		// Assert - The initialisable observer has its update method called twice, once for each observable subscribed to
-		verify(mockObserver, times(1)).update(TestHelpers.VALUE, exception, false);
+		verify(mockObserver, times(1)).update(TestHelpers.VALUE, TestHelpers.exception, false);
 	}
 	
 	@Test
@@ -118,17 +114,17 @@ public class InitialiseOnSubscribeObservableTest {
 	@Test
 	public void setting_watched_observable_error_status_calls_observer_onError_method() {
 		// Act
-		testableObservable.setError(exception);
+		testableObservable.setError(TestHelpers.exception);
 				
 		// Assert - The initialisable observer has its error method called once
-		verify(mockObserver, times(1)).onError(exception);
+		verify(mockObserver, times(1)).onError(TestHelpers.exception);
 	}
 	
 	@Test
 	public void with_multiple_observers_subscribed_all_observers_get_update_method_called() {
 		// Assert - Both observables are initialised with the update method
-		verify(mockObserver, times(1)).update(TestHelpers.VALUE, exception, false);
-		verify(mockObserverTwo, times(1)).update(TestHelpers.VALUE, exception, false);
+		verify(mockObserver, times(1)).update(TestHelpers.VALUE, TestHelpers.exception, false);
+		verify(mockObserverTwo, times(1)).update(TestHelpers.VALUE, TestHelpers.exception, false);
 	}
 	
 	@Test
@@ -167,8 +163,8 @@ public class InitialiseOnSubscribeObservableTest {
 		// Act
 		initObservableCachingSource.addObserver(mockObserver);
 		
-		// Assert - Should have update method called twice
-		verify(mockObserver, times(2)).update(TestHelpers.VALUE, null, false);
+		// Assert - Should have update method called
+		verify(mockObserver, atLeastOnce()).update(TestHelpers.VALUE, null, false);
 	}
 	
 	@Test
