@@ -21,6 +21,7 @@ package uk.ac.stfc.isis.ibex.epics.tests.observing;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import uk.ac.stfc.isis.ibex.epics.observing.ClosableCachingObservable;
@@ -31,60 +32,107 @@ import uk.ac.stfc.isis.ibex.epics.observing.InitialisableObserver;
 @SuppressWarnings({ "unchecked", "checkstyle:methodname" })
 public class ClosingSwitchingObservableTest {
 
-	private static final String VALUE = "value";
-	private static final String NEW_VALUE = "new value";
+	private InitialisableObserver<String> mockObserver;
+	
+	private ClosableCachingObservable<String> mockObservableReturnsValue;
+	private ClosableCachingObservable<String> mockObservableReturnsNewValue;
+	private ClosableCachingObservable<String> mockObservableReturnsNull;
+	
+	private ClosingSwitchableObservable<String> closableSwitchingObservable;
+	
+	@Before
+	public void setUp() {
+		// Arrange
+		mockObserver = mock(InitialisableObserver.class);
+		
+		mockObservableReturnsValue = TestHelpers.getClosableCachingObservable(TestHelpers.VALUE);
+		mockObservableReturnsNewValue = TestHelpers.getClosableCachingObservable(TestHelpers.NEW_VALUE);
+		mockObservableReturnsNull = TestHelpers.getClosableCachingObservable(null);
+
+		// The real observable to test
+		closableSwitchingObservable = new ClosingSwitchableObservable<>(mockObservableReturnsValue);
+		closableSwitchingObservable.addObserver(mockObserver);
+	}
 
 	@Test
-	public void test_ClosableSwitchableObservable_close_source() {
-		// Arrange
-		// Mock observer
-		InitialisableObserver<String> mockObserver = mock(InitialisableObserver.class);
-
-		// Mock observable, that has a stub for getValue()
-		ClosableCachingObservable<String> mockObservable = mock(ClosableCachingObservable.class);
-		when(mockObservable.getValue()).thenReturn(VALUE);
-
-		// Object we are really testing
-		ClosingSwitchableObservable<String> switchableObservable = new ClosingSwitchableObservable<>(mockObservable);
-
+	public void calling_close_calls_close_on_source_observable() {
 		// Act
-		switchableObservable.addObserver(mockObserver);
-		switchableObservable.close();
+		closableSwitchingObservable.close();
 
-		// Assert
-		// The original ClosableCachingObservable is closed
-		verify(mockObservable, times(1)).close();
-		// Even though it is closed value is still set
-		assertEquals(VALUE, switchableObservable.getValue());
-		// Observer never did anything
-		verify(mockObserver, times(0)).update(anyString(), any(Exception.class), anyBoolean());
+		// Assert - The original ClosableCachingObservable is closed
+		verify(mockObservableReturnsValue, times(1)).close();
+	}
+	
+	@Test
+	public void calling_close_still_returns_value_of_closed_observable() {
+		// Act
+		closableSwitchingObservable.close();
+		
+		// Assert - Even though it is closed value is still set
+		assertEquals(TestHelpers.VALUE, closableSwitchingObservable.getValue());
+	}
+	
+	@Test
+	public void calling_close_does_not_call_onValue_method_on_observer() {
+		// Act
+		closableSwitchingObservable.close();
+		
+		// Assert - Observer never did anything
 		verify(mockObserver, times(0)).onValue(anyString());
 	}
-
+	
 	@Test
-	public void test_ClosableSwitchableObservable_switch_closes_observable() {
-		// Arrange
-		// Mock observer
-		InitialisableObserver<String> mockObserver = mock(InitialisableObserver.class);
-
-		// Mock observables with stub methods returning different values
-		ClosableCachingObservable<String> mockObservableOne = mock(ClosableCachingObservable.class);
-		when(mockObservableOne.getValue()).thenReturn(VALUE);
-
-		ClosableCachingObservable<String> mockObservableTwo = mock(ClosableCachingObservable.class);
-		when(mockObservableTwo.getValue()).thenReturn(NEW_VALUE);
-
-		// Object we are really testing, subscribed to mockObservableOne
-		ClosingSwitchableObservable<String> switchableObservable = new ClosingSwitchableObservable<>(mockObservableOne);
-
+	public void calling_close_does_not_call_onError_method_on_observer() {
 		// Act
-		switchableObservable.addObserver(mockObserver);
-		// Do the switch
-		switchableObservable.switchTo(mockObservableTwo);
-
-		// Assert
-		// The original ClosableCachingObservable is closed
-		verify(mockObservableOne, times(1)).close();
+		closableSwitchingObservable.close();
+		
+		// Assert - Observer never did anything
+		verify(mockObserver, times(0)).onError(any(Exception.class));
 	}
+	
+	@Test
+	public void calling_close_does_not_call_onConnectionStatus_method_on_observer() {
+		// Act
+		closableSwitchingObservable.close();
+		
+		// Assert - Observer never did anything
+		verify(mockObserver, times(0)).onConnectionStatus(anyBoolean());
+	}
+	
+	@Test
+	public void switching_observables_calls_close_on_old_observable() {
+		// Act
+		closableSwitchingObservable.switchTo(mockObservableReturnsNewValue);
 
+		// Assert - The original ClosableCachingObservable is closed
+		verify(mockObservableReturnsValue, times(1)).close();
+	}
+	
+	@Test
+	public void switching_observables_returns_new_observables_value() {
+		// Act
+		closableSwitchingObservable.switchTo(mockObservableReturnsNewValue);
+
+		// Assert - The original ClosableCachingObservable is closed
+		assertEquals(TestHelpers.NEW_VALUE, closableSwitchingObservable.getValue());
+	}
+	
+	@Test
+	public void switching_to_null_observable_returns_old_value() {
+		// Act
+		closableSwitchingObservable.switchTo(mockObservableReturnsNull);
+		
+		// Assert - The original value is returned
+		assertEquals(TestHelpers.VALUE, closableSwitchingObservable.getValue());
+	}
+	
+	@Test
+	public void switching_to_null_observable_closes_old_observable() {
+		// Act
+		closableSwitchingObservable.switchTo(mockObservableReturnsNull);
+		
+		// Assert - The original value is returned
+		verify(mockObservableReturnsValue, times(1)).close();
+	}
 }
+
