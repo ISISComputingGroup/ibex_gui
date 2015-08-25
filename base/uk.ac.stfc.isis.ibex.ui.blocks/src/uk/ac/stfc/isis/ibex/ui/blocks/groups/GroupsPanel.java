@@ -36,7 +36,7 @@ import org.eclipse.swt.layout.FillLayout;
 import uk.ac.stfc.isis.ibex.configserver.displaying.DisplayGroup;
 
 public class GroupsPanel extends Composite {
-			
+	
 	private final Display display = Display.getCurrent();
 	private final List<Group> groups = new ArrayList<>();
 	
@@ -45,6 +45,10 @@ public class GroupsPanel extends Composite {
 	private CLabel banner;
 	
 	private boolean showHiddenBlocks = false;
+	
+	private Collection<DisplayGroup> displayGroups;
+
+	private static final int GROUP_HEIGHT = 200;
 	
 	public GroupsPanel(Composite parent, int style) {
 		super(parent, SWT.NONE);
@@ -65,9 +69,6 @@ public class GroupsPanel extends Composite {
 		GroupsMenu menu = new GroupsMenu(this);
 		Menu contextMenu = menu.get();
 		mainComposite.setMenu(contextMenu);
-		for (Group group : groups) {
-			group.setMenu(contextMenu);
-		}
 		scrolledComposite.setMenu(contextMenu);
 	}
 
@@ -81,14 +82,15 @@ public class GroupsPanel extends Composite {
 		}
 		
 		showHiddenBlocks = showHidden;
-		for (Group group : groups) {
-			group.showHiddenBlocks(showHidden);
-		}
 
-		layoutGroups();	
+		clear();
+		addGroups();
+		setRows();
+		layoutGroups();
 	}
 		
 	public synchronized void updateGroups(final Collection<DisplayGroup> groups) {
+		this.displayGroups = groups;
 		display.syncExec(new Runnable() {
 			@Override
 			public void run() {
@@ -98,7 +100,7 @@ public class GroupsPanel extends Composite {
 					showBanner("");
 					return;
 				}
-				addGroups(groups);
+				addGroups();
 				setRows();
 				layoutGroups();
 			}
@@ -124,8 +126,8 @@ public class GroupsPanel extends Composite {
 		mainComposite.layout(true, true);
 	}
 	
-	private void addGroups(Collection<DisplayGroup> configGroups) {
-		for (DisplayGroup group : configGroups) {
+	private void addGroups() {
+		for (DisplayGroup group : displayGroups) {
 			groups.add(groupWidget(group));
 		}
 	}
@@ -135,15 +137,14 @@ public class GroupsPanel extends Composite {
 	}
 	
 	private Group groupWidget(DisplayGroup group) {
-		Group groupWidget = new Group(mainComposite, SWT.NONE, group);
-		GridData gd = new GridData(SWT.LEFT, SWT.FILL, true, true, 1, 1);
-		gd.widthHint = Group.BLOCK_WIDTH;
-		gd.minimumWidth = gd.widthHint;
+		Group groupWidget = new Group(mainComposite, SWT.NONE, group, showHiddenBlocks);
+		GridData gd = new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1);
+		gd.heightHint = GROUP_HEIGHT;
+		gd.minimumHeight = gd.heightHint;
 		groupWidget.setLayoutData(gd);
 		groupWidget.pack();
 		
 		groups.add(groupWidget);
-		groupWidget.showHiddenBlocks(showHiddenBlocks);
 		
 		return groupWidget;
 	}
@@ -153,9 +154,12 @@ public class GroupsPanel extends Composite {
 			banner.dispose();
 		}
 		
-		for (Group group : groups) {
-			group.dispose();
-		}
+		// Disposing of the children one by one seems to sometimes fail, so dispose
+		// the parent instead
+		mainComposite.dispose();
+		mainComposite = new Composite(scrolledComposite, SWT.NONE);
+		mainComposite.setLayout(new GridLayout(1, false));
+		configureMenu();
 		
 		groups.clear();
 	}

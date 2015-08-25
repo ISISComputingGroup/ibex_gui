@@ -21,88 +21,135 @@ package uk.ac.stfc.isis.ibex.ui.blocks.groups;
 
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Menu;
-import org.eclipse.swt.events.FocusAdapter;
-import org.eclipse.swt.events.FocusEvent;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
-import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.eclipse.core.databinding.DataBindingContext;
+import org.eclipse.core.databinding.beans.BeanProperties;
+import org.eclipse.jface.databinding.swt.WidgetProperties;
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.wb.swt.SWTResourceManager;
-
+import uk.ac.stfc.isis.ibex.configserver.displaying.DisplayBlock;
 import uk.ac.stfc.isis.ibex.configserver.displaying.DisplayGroup;
-import uk.ac.stfc.isis.ibex.ui.blocks.groups.BlocksTable;
 
+
+/**
+ * Provides the display of the groups, which contain the selected blocks. Allows showing and hiding of selected blocks. 
+ * 
+ */
 public class Group extends Composite {
 
-	public static final int BLOCK_WIDTH = 200;
-
 	private static final Color WHITE = SWTResourceManager.getColor(SWT.COLOR_WHITE);
-	private static final Color BACKGROUND = SWTResourceManager.getColor(244, 238, 225);
-	private static final Font NAME_FONT = SWTResourceManager.getFont("Arial", 12, SWT.BOLD);
-	private static final Font TABLE_FONT = SWTResourceManager.getFont("Arial", 10, SWT.NONE);
 	
-	private final Composite titleBar;
-	private final BlocksTable blocks;
+	private static final int NUMBER_OF_ROWS = 8;
 	
-	public Group(Composite parent, int style, DisplayGroup group) {
+	Composite parent;
+			
+	public Group(Composite parent, int style, DisplayGroup group, boolean showHiddenBlocks) {
 		super(parent, style | SWT.BORDER);
-		GridLayout gridLayout = new GridLayout(1, false);
-		gridLayout.horizontalSpacing = 0;
-		gridLayout.verticalSpacing = 0;
-		gridLayout.marginWidth = 0;
-		gridLayout.marginHeight = 0;
-		setLayout(gridLayout);
+		this.parent = parent;
 		
-		titleBar = new Composite(this, SWT.NONE);
-		GridLayout gl_titleBar = new GridLayout(1, false);
-		gl_titleBar.verticalSpacing = 0;
-		gl_titleBar.marginWidth = 0;
-		gl_titleBar.marginHeight = 0;
-		gl_titleBar.horizontalSpacing = 0;
-		titleBar.setLayout(gl_titleBar);
-		GridData gd_titleBar = new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1);
-		gd_titleBar.heightHint = 25;
-		gd_titleBar.minimumHeight = 30;
-		titleBar.setLayoutData(gd_titleBar);
-		titleBar.setBounds(0, 0, 64, 64);
-		titleBar.setBackground(BACKGROUND);
-		
-		Label name = new Label(titleBar, SWT.NONE);
-		GridData gd_name = new GridData(SWT.LEFT, SWT.CENTER, true, true, 1, 1);
-		gd_name.horizontalIndent = 5;
-		name.setLayoutData(gd_name);
-		name.setText(group.name());
-		name.setFont(NAME_FONT);
-		name.setBackground(BACKGROUND);
-		
-		blocks = new BlocksTable(this, SWT.NONE, SWT.NONE);
-		GridData gd = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
-		gd.widthHint = BLOCK_WIDTH;
-		gd.minimumWidth = BLOCK_WIDTH;		
-		blocks.setLayoutData(gd);
-		
-		blocks.setRows(group.blocks());
-		blocks.setBackground(WHITE);
-		blocks.setFont(TABLE_FONT);
-		
-		blocks.addFocusListener(new FocusAdapter() {
-			@Override
-			public void focusLost(FocusEvent e) {
-				blocks.deselectAll();
+		// Add the blocks to the list if they are visible, or if showHiddenBlocks is true
+		List<DisplayBlock> blocksList = new ArrayList<>();
+		for (DisplayBlock block : group.blocks()) {
+			if (block.getIsVisible() || showHiddenBlocks) {
+				blocksList.add(block);
 			}
-		});
+		}
+		
+		// Calculate number of columns we need, each column holding one block with a name and value
+		int numberOfColumns = (blocksList.size() - 1) / NUMBER_OF_ROWS + 1;
+
+		// For each block we need two columns in the grid layout, one for name, one for value, and for
+		// every column but the last we need a divider label column
+		GridLayout layout = new GridLayout(2 * numberOfColumns + (numberOfColumns - 1), false);
+		layout.verticalSpacing = 7;
+		this.setLayout(layout);
+        this.setBackground(WHITE);
+        
+        // In the first column put the title in
+		Label title = labelMaker(this, SWT.NONE, group.name(), "", null);
+		Font titleFont = getEditedLabelFont(parent, title, 10, SWT.BOLD);
+		title.setFont(titleFont);
+		
+		// For the title row, fill with blanks
+		for (int i = 0; i < 1 + (numberOfColumns - 1) * 2 + (numberOfColumns - 1); i++) {
+			labelMaker(this, SWT.NONE, "", "", titleFont);
+		}
+		
+		DataBindingContext bindingContext = new DataBindingContext();
+		
+		// Loop over the rows and columns. The GridLayout is filled with labels across rows first, then moving on to
+		// the next column. So blank labels need to be inserted so that columns are always filled.
+		for (int i = 0; i < NUMBER_OF_ROWS; i++) {
+			for (int j = 0; j < numberOfColumns; j++) {
+				int position = i + j * NUMBER_OF_ROWS;
+				
+				if (position >= blocksList.size()) {
+					// put blank labels in these name and value columns
+					labelMaker(this, SWT.NONE, "", "", null);
+					labelMaker(this, SWT.NONE, "", "", null);					
+					break;
+				}
+								
+				DisplayBlock currentBlock = blocksList.get(position);
+
+				Label blockName = labelMaker(this, SWT.NONE, currentBlock.getName() + ": ", currentBlock.getDescription(), null);
+				blockName.setMenu(new BlocksMenu(currentBlock).createContextMenu(blockName));
+				blockName.setLayoutData(new GridData(SWT.LEFT, SWT.NONE, false, false, 1, 1));
+				
+				Label blockValue = labelMaker(this, SWT.RIGHT, currentBlock.getValue(), currentBlock.getDescription(), null);
+				blockValue.setMenu(new BlocksMenu(currentBlock).createContextMenu(blockName));
+				GridData gridData = new GridData(SWT.RIGHT, SWT.NONE, false, false, 1, 1);
+				gridData.widthHint = 70;
+				blockValue.setLayoutData(gridData);
+
+				if (j <  numberOfColumns - 1) {
+					// insert divider label
+					labelMaker(this, SWT.NONE, "   |   ", "", null);
+				}
+				
+				bindingContext.bindValue(WidgetProperties.text().observe(blockValue), BeanProperties.value("value").observe(currentBlock));
+			}
+		}
 	}
 	
-	public void showHiddenBlocks(boolean showHidden) {
-		blocks.showHiddenBlocks(showHidden);
+	private Font getEditedLabelFont(Composite parent, Label label, int size, int style) {
+		FontData[] fD = label.getFont().getFontData();
+		fD[0].setHeight(size);
+		fD[0].setStyle(style);
+		return new Font(parent.getDisplay(), fD[0]);
+	}
+	
+	private Label labelMaker(Composite composite, int style, String text, String toolTip, Font font) {
+		Label label = new Label(composite, style);
+		if (text != null) {
+			label.setText(text);
+		}
+		
+		label.setBackground(WHITE);
+		
+		if (toolTip != null) {
+			label.setToolTipText(toolTip);
+		}
+		
+		if (font != null) {
+			label.setFont(font);
+		}
+		
+		return label;	
 	}
 	
 	@Override
 	public void setMenu(Menu menu) {
 		super.setMenu(menu);
-		titleBar.setMenu(menu);
-		blocks.setMenu(menu);
+//		TODO: Implement this if needed
 	}
 }

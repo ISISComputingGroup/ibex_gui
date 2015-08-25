@@ -22,6 +22,7 @@ package uk.ac.stfc.isis.ibex.ui.blocks.groups;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.MenuManager;
+import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Menu;
 
 import uk.ac.stfc.isis.ibex.configserver.displaying.DisplayBlock;
@@ -29,19 +30,19 @@ import uk.ac.stfc.isis.ibex.ui.blocks.presentation.PVHistoryPresenter;
 import uk.ac.stfc.isis.ibex.ui.blocks.presentation.Presenter;
 
 public class BlocksMenu extends MenuManager {
-		
-	private final BlocksTable table;
+	
+	private final DisplayBlock block;
 	
 	private final IAction displayHistory;
 	private final PVHistoryPresenter pvHistoryPresenter = Presenter.getInstance().pvHistoryPresenter();
 	
-	public BlocksMenu(final BlocksTable table) {
-		this.table = table;
+	public BlocksMenu(DisplayBlock displayBlock) {
+		
+		this.block = displayBlock;
 		
 		displayHistory = new Action("Display block history") {
 			@Override
 			public void run() {
-				DisplayBlock block = table.firstSelectedRow();
 				pvHistoryPresenter.displayHistory(block.blockServerAlias());
 			}
 		};
@@ -49,7 +50,7 @@ public class BlocksMenu extends MenuManager {
 		add(displayHistory);
 	}
 	
-	public Menu createContextMenu() {
-		return super.createContextMenu(table);
+	public Menu createContextMenu(Label label, GroupsMenu menu) {
+		return super.createContextMenu(label);
 	}
 }
