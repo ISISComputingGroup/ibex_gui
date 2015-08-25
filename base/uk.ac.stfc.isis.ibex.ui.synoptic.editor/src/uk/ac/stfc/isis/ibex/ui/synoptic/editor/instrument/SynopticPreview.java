@@ -32,6 +32,10 @@ import uk.ac.stfc.isis.ibex.synoptic.SynopticModel;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.SynopticDescription;
 import uk.ac.stfc.isis.ibex.ui.synoptic.widgets.InstrumentSynoptic;
 
+/**
+ * Provides a preview of the final synoptic.
+ * 
+ */
 public class SynopticPreview extends Dialog {
 	private final SynopticModel model;
 
@@ -53,7 +57,7 @@ public class SynopticPreview extends Dialog {
 		container.setLayout(new FillLayout());
 		InstrumentSynoptic instrument = new InstrumentSynoptic(container,
 				SWT.NONE);
-		instrument.setComponents(model.instrument().components());
+		instrument.setComponents(model.instrument().components(), model.instrument().showBeam());
 
 		return instrument;
 	}

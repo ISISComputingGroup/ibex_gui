@@ -47,7 +47,12 @@ import uk.ac.stfc.isis.ibex.synoptic.model.desc.RecordType;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.TargetDescription;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.TargetType;
 
-public class InstrumentViewModel {
+/**
+ * Provides the model for the view of the synoptic. This is an observable
+ * model, which various other classes subscribe to.
+ * 
+ */
+public class SynopticViewModel {
 	
 	private SynopticModel EDITING = Synoptic.getInstance().edit();
 	
@@ -64,7 +69,7 @@ public class InstrumentViewModel {
 
 	public final UpdatedValue<Boolean> canSaveCurrentSynoptic;
 
-	public InstrumentViewModel() {
+	public SynopticViewModel() {
 		canSaveCurrentSynoptic = EDITING.saveSynoptic().canSave();
 		loadCurrentInstrument();
 	}
@@ -367,5 +372,13 @@ public class InstrumentViewModel {
 		for (IPropertySelectionListener listener : propertySelectionListeners) {
 			listener.selectionChanged(oldProperty, newProperty);
 		}
+	}
+	
+	public void setShowBeam(Boolean showBeam) {
+		instrument.setShowBeam(showBeam);
+	}
+	
+	public Boolean getShowBeam() {
+		return instrument.showBeam();
 	}
 }

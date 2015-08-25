@@ -23,22 +23,26 @@ import java.util.ArrayList;
 import java.util.List;
 
 import uk.ac.stfc.isis.ibex.synoptic.model.Component;
-import uk.ac.stfc.isis.ibex.synoptic.model.Instrument;
+import uk.ac.stfc.isis.ibex.synoptic.model.Synoptic;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.ComponentDescription;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.SynopticDescription;
 
-public class ObservableInstrument implements Instrument {
-	
+/**
+ * Defines the synoptic layout, observable for changes to synoptic.
+ * 
+ */
+public class ObservableSynoptic implements Synoptic {
+
 	private final SynopticDescription instrument;
 
 	private final List<Component> components = new ArrayList<>();
-	
-	public ObservableInstrument(SynopticDescription instrument, Variables variables) {
+
+	public ObservableSynoptic(SynopticDescription instrument, Variables variables) {
 		this.instrument = instrument;
-		
+
 		for (ComponentDescription description : instrument.components()) {
 			components.add(new ObservableComponent(description, variables));
-		} 
+		}
 	}
 
 	@Override
@@ -54,5 +58,10 @@ public class ObservableInstrument implements Instrument {
 	@Override
 	public SynopticDescription getDescription() {
 		return instrument;
+	}
+
+	@Override
+	public Boolean showBeam() {
+		return instrument.showBeam();
 	}
 }

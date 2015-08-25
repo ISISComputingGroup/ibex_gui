@@ -33,10 +33,20 @@ import org.xml.sax.SAXException;
 
 import uk.ac.stfc.isis.ibex.synoptic.xml.XMLUtil;
 
+/**
+ * This class is converted to XML, to be stored on the local file system and read 
+ * by the blockserver.
+ * 
+ * Note any changes here will require corresponding changes to 
+ * EPICS/schema/configurations/synoptic.xsd.
+ * 
+ */
 @XmlRootElement(name = "instrument")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class SynopticDescription {
 	private String name;
+	
+	private String showbeam;
 	
 	@XmlElementWrapper(name = "components")
 	@XmlElement(name = "component", type = ComponentDescription.class)
@@ -44,6 +54,22 @@ public class SynopticDescription {
 	
 	public String name() {
 		return name;
+	}
+	
+	public boolean showBeam() {
+		if (showbeam == null) {
+			return true;
+		}
+		
+		return Boolean.valueOf(showbeam);
+	}
+	
+	public void setShowBeam(boolean showBeam) {
+		if (showBeam) {
+			showbeam = "TRUE";
+		} else {
+			showbeam = "FALSE";
+		}
 	}
 	
 	public void setName(String name) {

@@ -26,9 +26,9 @@ import org.apache.logging.log4j.Logger;
 import uk.ac.stfc.isis.ibex.epics.writing.Writable;
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
-import uk.ac.stfc.isis.ibex.synoptic.internal.ObservableInstrument;
+import uk.ac.stfc.isis.ibex.synoptic.internal.ObservableSynoptic;
 import uk.ac.stfc.isis.ibex.synoptic.internal.Variables;
-import uk.ac.stfc.isis.ibex.synoptic.model.Instrument;
+import uk.ac.stfc.isis.ibex.synoptic.model.Synoptic;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.SynopticDescription;
 import uk.ac.stfc.isis.ibex.synoptic.navigation.InstrumentNavigationGraph;
 
@@ -38,7 +38,7 @@ public class SynopticModel extends ModelObject {
 	
 	private final Variables variables;
 
-	private ObservableInstrument instrument; 
+	private ObservableSynoptic instrument; 
 	private SynopticWriter setCurrentSynoptic;
 	
 	public SynopticModel(Variables variables) {
@@ -48,7 +48,7 @@ public class SynopticModel extends ModelObject {
 		setCurrentSynoptic = new SynopticWriter(variables.setSynoptic);
 	}
 
-	public Instrument instrument() {
+	public Synoptic instrument() {
 		return instrument;
 	}
 	
@@ -72,7 +72,7 @@ public class SynopticModel extends ModelObject {
 		return LOG;
 	}
 	
-	private ObservableInstrument getInstrument(SynopticDescription description) {
-		return new ObservableInstrument(description, variables);
+	private ObservableSynoptic getInstrument(SynopticDescription description) {
+		return new ObservableSynoptic(description, variables);
 	}
 }

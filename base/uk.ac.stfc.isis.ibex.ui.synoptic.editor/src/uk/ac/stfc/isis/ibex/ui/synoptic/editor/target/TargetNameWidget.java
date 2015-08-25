@@ -38,7 +38,7 @@ import org.eclipse.swt.widgets.Text;
 import uk.ac.stfc.isis.ibex.opis.Opi;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.TargetDescription;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.TargetType;
-import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.InstrumentViewModel;
+import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.SynopticViewModel;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.UpdateTypes;
 
 public class TargetNameWidget extends Composite {
@@ -46,12 +46,12 @@ public class TargetNameWidget extends Composite {
 	private Text txtName;
 	private ComboViewer cmboOpiName;
 	private boolean updateLock;
-	private InstrumentViewModel instrument;
+	private SynopticViewModel instrument;
 	private TargetType type;
 	private StackLayout layout;
 	private Collection<String> availableOPIs;
 	
-	public TargetNameWidget(Composite parent, final InstrumentViewModel instrument) {
+	public TargetNameWidget(Composite parent, final SynopticViewModel instrument) {
 		super(parent, SWT.NONE);
 		
 		this.instrument = instrument;
