@@ -30,9 +30,8 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Shell;
 
-import uk.ac.stfc.isis.ibex.configserver.configuration.PV;
+import uk.ac.stfc.isis.ibex.configserver.configuration.Block;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
-import uk.ac.stfc.isis.ibex.ui.synoptic.editor.pv.BlockSelectorPanel;
 
 
 /**
@@ -43,21 +42,21 @@ public class BlockSelectorDialog extends TitleAreaDialog {
 
 	private BlockSelectorPanel selector;
 	private EditableConfiguration config;
-	private PV pv;
+	private Block block;
 	
 	public BlockSelectorDialog(Shell parentShell, EditableConfiguration config, String address) {
 		super(parentShell);
 		setShellStyle(getShellStyle() | SWT.DIALOG_TRIM | SWT.RESIZE);
 		this.config = config;
-		pv = new PV(address, "", "", "");
+		block = new Block("", "", true, true, "");
 	}
 	
 	@Override
 	protected Control createDialogArea(Composite parent) {
 		selector = new BlockSelectorPanel(parent, SWT.NONE);
-		selector.setConfig(config, pv);
+		selector.setConfig(config, block);
 		selector.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));		
-		setTitle("PV Selector");
+		setTitle("Block Selector");
 		
 		return selector;
 	}
@@ -81,7 +80,7 @@ public class BlockSelectorDialog extends TitleAreaDialog {
 	}
 	
 	public String getPVAddress() {
-		return pv.getAddress();
+		return block.getPV();
 	}
 
 }

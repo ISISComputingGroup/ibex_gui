@@ -19,19 +19,14 @@
 
 package uk.ac.stfc.isis.ibex.ui.synoptic.editor.pv;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.util.Collection;
 
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.beans.BeanProperties;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
-import org.eclipse.jface.viewers.ArrayContentProvider;
-import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
-import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
@@ -44,15 +39,13 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 
 import uk.ac.stfc.isis.ibex.configserver.Configurations;
+import uk.ac.stfc.isis.ibex.configserver.configuration.Block;
 import uk.ac.stfc.isis.ibex.configserver.configuration.PV;
+import uk.ac.stfc.isis.ibex.configserver.editing.EditableBlock;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.blocks.BlocksTable;
-import uk.ac.stfc.isis.ibex.ui.configserver.editing.blocks.filters.InterestFilters;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.blocks.filters.PVFilter;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.blocks.filters.PVFilterFactory;
-import uk.ac.stfc.isis.ibex.ui.configserver.editing.blocks.filters.SourceFilters;
-
-import uk.ac.stfc.isis.ibex.ui.tables.DataboundTable;
 
 /**
  * A composite for selecting a PV.
@@ -73,17 +66,17 @@ public class BlockSelectorPanel extends Composite {
 		setLayout(new FillLayout(SWT.HORIZONTAL));
 		
 		Group grpPV = new Group(this, SWT.NONE);
-		grpPV.setText("PV Selector");
+		grpPV.setText("Block Selector");
 		
 		GridLayout gdGrpPV = new GridLayout(2, false);
 		grpPV.setLayout(new GridLayout(2, false));
 		
 		Label lblPvAddress = new Label(grpPV, SWT.NONE);
 		lblPvAddress.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-		lblPvAddress.setText("PV address:");
+		lblPvAddress.setText("Block PV address:");
 		
 		pvAddress = new Text(grpPV, SWT.BORDER);
-		GridData gd_pvAddress = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+		GridData gd_pvAddress = new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1);
 		gd_pvAddress.widthHint = 250;
 		pvAddress.setLayoutData(gd_pvAddress);
 		
@@ -102,24 +95,24 @@ public class BlockSelectorPanel extends Composite {
 			public void selectionChanged(SelectionChangedEvent arg0) {
 				IStructuredSelection selection = (IStructuredSelection) arg0.getSelection();
 				if (selection.size() > 0) {
-					PV pv = (PV) selection.getFirstElement();
-					pvAddress.setText(pv.getAddress());
+					EditableBlock block = (EditableBlock) selection.getFirstElement();
+					pvAddress.setText(block.getPV());
 				}
 			}
 		});
 		
-		blockPVTable.setRows(Configurations.getInstance().edit().currentConfig().getValue().getAvailableBlocks());
+		blockPVTable.setRows(Configurations.getInstance().edit().currentConfig().getValue().getEditableBlocks());
 		blockPVTable.refresh();
 	}
 	
-	public void setConfig(EditableConfiguration config, PV pv) {
+	public void setConfig(EditableConfiguration config, Block block) {
 		setPVs(config.pvs());
 		
 		filterFactory = new PVFilterFactory(config.getEditableIocs());
 		
 		//Set up the binding here
 		bindingContext = new DataBindingContext();		
-		bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(pvAddress), BeanProperties.value("address").observe(pv), null, null);
+		bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(pvAddress), BeanProperties.value("PV").observe(block), null, null);
 	}
 	
 	private void setPVs(Collection<PV> allPVs) {    
