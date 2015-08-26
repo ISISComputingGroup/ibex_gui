@@ -19,6 +19,8 @@
 
 package uk.ac.stfc.isis.ibex.ui.synoptic.component;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 import org.eclipse.swt.SWT;
@@ -46,18 +48,45 @@ public class ComponentPropertiesView extends Composite {
 	}
 
 	private void createPropertyViews(Set<ComponentProperty> properties) {
-		String precedingPropertyName = null;
-		for (ComponentProperty property : properties) {
-			if (property instanceof WritableComponentProperty) {
-				// Avoid duplication of property names
-				boolean shouldDisplayPropertyName = !property.displayName().equals(precedingPropertyName); 
-				createWriter((WritableComponentProperty) property, shouldDisplayPropertyName); 
-			} else if (property instanceof ReadableComponentProperty) {
-				createReader((ReadableComponentProperty) property); 
-			}
-			
-			precedingPropertyName = property.displayName();
-		}
+	 // Create a list for easier navigation for pairs
+	 		List<ComponentProperty> props = new ArrayList<>();
+	 		props.addAll(properties);
+
+	 		for (int i = 0; i < props.size(); ++i) {
+	 			ComponentProperty property1 = props.get(i);
+	 			if (i < props.size() - 1) {
+	 				ComponentProperty property2 = props.get(i + 1);
+	 				if (property1.displayName().equals(property2.displayName())) {
+	 					// Same name, so if one is read and one is write create pair
+	 					if (property1 instanceof ReadableComponentProperty
+	 							&& property2 instanceof WritableComponentProperty) {
+	 						createReaderWriterPair((ReadableComponentProperty) property1,
+	 								(WritableComponentProperty) property2);
+	 						++i;
+	 						continue;
+	 					} else if (property1 instanceof WritableComponentProperty
+	 							&& property2 instanceof ReadableComponentProperty) {
+	 						createReaderWriterPair((ReadableComponentProperty) property2,
+	 								(WritableComponentProperty) property1);
+	 						++i;
+	 						continue;
+	 					}
+	 				}
+	 			}
+
+	 			// Not paired, use on own
+	 			if (property1 instanceof WritableComponentProperty) {
+	 				createWriter((WritableComponentProperty) property1, true);
+	 			} else if (property1 instanceof ReadableComponentProperty) {
+	 				createReader((ReadableComponentProperty) property1);
+	 			}
+
+	 		}
+	}
+
+	private void createReaderWriterPair(ReadableComponentProperty reader, WritableComponentProperty writer) {
+		createReader((ReadableComponentProperty) reader); 
+		createWriter((WritableComponentProperty) writer, false); 
 	}
 
 	private void createReader(ReadableComponentProperty property) {
@@ -68,7 +97,7 @@ public class ComponentPropertiesView extends Composite {
 	private void createWriter(WritableComponentProperty property, boolean displayPropertyName) {
 		WritableComponentView propertyView = new WritableComponentView(this, property, displayPropertyName);
 		setViewSize(propertyView);
-	}	
+	}		
 
 	private static void setViewSize(Composite view) {
 		view.pack();
