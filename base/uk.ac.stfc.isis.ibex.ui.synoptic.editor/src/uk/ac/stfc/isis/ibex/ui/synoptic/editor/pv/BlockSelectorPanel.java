@@ -88,6 +88,7 @@ public class BlockSelectorPanel extends Composite {
 		GridData gd_pvAddress = new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1);
 		gd_pvAddress.widthHint = 250;
 		pvAddress.setLayoutData(gd_pvAddress);
+		pvAddress.setEditable(false);
 		
 		blockName.addModifyListener(new ModifyListener() {
 			public void modifyText(ModifyEvent arg0) {
