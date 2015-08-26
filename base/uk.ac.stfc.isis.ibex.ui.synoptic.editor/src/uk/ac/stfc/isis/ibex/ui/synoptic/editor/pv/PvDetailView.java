@@ -44,6 +44,7 @@ import uk.ac.stfc.isis.ibex.synoptic.model.desc.PVType;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.IPVSelectionListener;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.InstrumentViewModel;
 import org.eclipse.swt.layout.RowLayout;
+import org.eclipse.swt.layout.RowData;
 
 public class PvDetailView extends Composite {
 	private Composite labelComposite;
@@ -84,12 +85,14 @@ public class PvDetailView extends Composite {
 		createControls(this);
 		
 		buttonsComposite = new Composite(this, SWT.NONE);
-		GridData gd_composite = new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1);
-		gd_composite.widthHint = 234;
+		GridData gd_composite = new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1);
+		gd_composite.widthHint = 210;
 		buttonsComposite.setLayoutData(gd_composite);
-		buttonsComposite.setLayout(new RowLayout(SWT.HORIZONTAL));
+		RowLayout rl_buttonsComposite = new RowLayout(SWT.HORIZONTAL);
+		buttonsComposite.setLayout(rl_buttonsComposite);
 		
 		btnSelectBlock = new Button(buttonsComposite, SWT.NONE);
+		btnSelectBlock.setLayoutData(new RowData(100, SWT.DEFAULT));
 		btnSelectBlock.setText("Select Block");
 		btnSelectBlock.addSelectionListener(new SelectionAdapter() {
 			@Override
@@ -100,6 +103,7 @@ public class PvDetailView extends Composite {
 		});
 		
 		btnPickPV = new Button(buttonsComposite, SWT.NONE);
+		btnPickPV.setLayoutData(new RowData(100, SWT.DEFAULT));
 		btnPickPV.setText("Select PV");
 		btnPickPV.addSelectionListener(new SelectionAdapter() {
 			@Override
