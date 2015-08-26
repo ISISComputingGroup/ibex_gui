@@ -260,7 +260,7 @@ public class PvDetailView extends Composite {
 	}
 	
 	private void openBlockDialog() {
-		PvSelector selectPV = new PvSelector();
+		BlockSelector selectPV = new BlockSelector();
 		try {
 			selectPV.execute(null);
 		} catch (Exception e) {

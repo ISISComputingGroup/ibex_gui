@@ -57,7 +57,7 @@ public class BlockSelector extends ConfigHandler<Configuration> {
 	}
 	
 	private void openDialog(EditableConfiguration config) {
-		PvSelectorDialog dialog = new PvSelectorDialog(null, config, "");	
+		BlockSelectorDialog dialog = new BlockSelectorDialog(null, config, "");	
 		if (dialog.open() == Window.OK) {
 			pvAddress = dialog.getPVAddress();
 		}
