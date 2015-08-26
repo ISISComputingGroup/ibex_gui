@@ -46,6 +46,12 @@ import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.InstrumentViewModel;
 import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.layout.RowData;
 
+/**
+ * Composite that shows the options to set the PV details, and allows
+ * choosing a PV either by a block, or by a PV. Choosing a block will
+ * also automatically set the name.
+ *
+ */
 public class PvDetailView extends Composite {
 	private Composite labelComposite;
 	private Composite fieldsComposite;
@@ -246,7 +252,7 @@ public class PvDetailView extends Composite {
 			String name = txtName.getText();
 			String address = txtAddress.getText();
 			typeIndex = cmboType.getCombo().getSelectionIndex();
-			PVType type = Arrays.asList(typeList).get(typeIndex);
+//			PVType type = Arrays.asList(typeList).get(typeIndex);
 			
 			//Hard coded to local as there issues with displaying remote PVs
 			instrument.updateSelectedPV(name, address, mode, PVType.LOCAL_PV);

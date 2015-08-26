@@ -35,7 +35,7 @@ import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
 
 
 /**
- * A dialog for selecting a PV
+ * A dialog for selecting a block, providing the block name and block PV address.
  *
  */
 public class BlockSelectorDialog extends TitleAreaDialog {

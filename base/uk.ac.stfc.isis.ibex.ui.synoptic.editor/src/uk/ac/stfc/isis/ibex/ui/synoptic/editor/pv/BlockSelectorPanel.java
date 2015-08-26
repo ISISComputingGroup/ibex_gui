@@ -19,8 +19,6 @@
 
 package uk.ac.stfc.isis.ibex.ui.synoptic.editor.pv;
 
-import java.util.Collection;
-
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.beans.BeanProperties;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
@@ -43,11 +41,9 @@ import uk.ac.stfc.isis.ibex.configserver.configuration.Block;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableBlock;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.blocks.BlocksTable;
-import uk.ac.stfc.isis.ibex.ui.configserver.editing.blocks.filters.PVFilter;
-import uk.ac.stfc.isis.ibex.ui.configserver.editing.blocks.filters.PVFilterFactory;
 
 /**
- * A composite for selecting a PV.
+ * A composite for selecting a block.
  *
  */
 public class BlockSelectorPanel extends Composite {
@@ -55,9 +51,6 @@ public class BlockSelectorPanel extends Composite {
 	private final Text blockName;
 	private final Text pvAddress;
 	private final BlocksTable blockTable;
-	private PVFilterFactory filterFactory;
-	private PVFilter sourceFilter;
-	private PVFilter interestFilter;
 	private DataBindingContext bindingContext;
 	
 	public BlockSelectorPanel(Composite parent, int style) {
@@ -69,7 +62,7 @@ public class BlockSelectorPanel extends Composite {
 		grpPV.setText("Block Selector");
 		
 		GridLayout gdGrpPV = new GridLayout(2, false);
-		grpPV.setLayout(new GridLayout(2, false));
+		grpPV.setLayout(gdGrpPV);
 		
 		Label lblBlockName = new Label(grpPV, SWT.NONE);
 		lblBlockName.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
@@ -116,9 +109,7 @@ public class BlockSelectorPanel extends Composite {
 		blockTable.refresh();
 	}
 	
-	public void setConfig(EditableConfiguration config, Block block) {
-		filterFactory = new PVFilterFactory(config.getEditableIocs());
-		
+	public void setConfig(EditableConfiguration config, Block block) {		
 		//Set up the binding here
 		bindingContext = new DataBindingContext();
 		bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(blockName), BeanProperties.value("name").observe(block), null, null);

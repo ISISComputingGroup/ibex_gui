@@ -33,6 +33,11 @@ import uk.ac.stfc.isis.ibex.ui.configserver.editing.DecoratedCellLabelProvider;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.blocks.filters.BlockNameSearch;
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundTable;
 
+/**
+ * Provides a table to display blocks. Can be shown with or without block
+ * visibility. Also allows filtering/searching by block name.
+ * 
+ */
 public class BlocksTable extends DataboundTable<EditableBlock> {
 	
 	private TableViewerColumn enabled;

@@ -29,11 +29,10 @@ import uk.ac.stfc.isis.ibex.epics.adapters.UpdatedObservableAdapter;
 import uk.ac.stfc.isis.ibex.model.Awaited;
 import uk.ac.stfc.isis.ibex.model.UpdatedValue;
 import uk.ac.stfc.isis.ibex.ui.configserver.commands.ConfigHandler;
-import uk.ac.stfc.isis.ibex.ui.configserver.dialogs.PvSelectorDialog;
 
 /**
- * Provides access to the current configuration and displays the PV selection dialog
- * Provides access to the selected PV
+ * Provides access to the current configuration and displays the block selection dialog.
+ * Provides access to the selected block name and the block PV address.
  *
  */
 public class BlockSelector extends ConfigHandler<Configuration> {

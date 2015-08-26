@@ -23,8 +23,12 @@ import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerFilter;
 
 import uk.ac.stfc.isis.ibex.configserver.configuration.Block;
-import uk.ac.stfc.isis.ibex.configserver.configuration.PV;
 
+/**
+ * A filter for filtering/searching by block name. This should be case insensitive,
+ * and the search text should match to any part of the block name.
+ * 
+ */
 public class BlockNameSearch extends ViewerFilter {
 	private String searchString = ".*";
 	
@@ -38,14 +42,14 @@ public class BlockNameSearch extends ViewerFilter {
 		if (searchString == null || searchString.length() == 0) {
 			return true;
 		}
-		Block p = (Block) element;
-		if (p.getName().matches(searchString)) {
+		Block block = (Block) element;
+		if (block.getName().matches(searchString)) {
 			return true;
 		}
 
-		// Use uppercase checks to eliminate case sensitivity on the search - Story 600
+		// Use uppercase checks to eliminate case sensitivity on the search
 		String upSearch = searchString.toUpperCase();
-		String upadd = p.getName().toUpperCase();
+		String upadd = block.getName().toUpperCase();
 		if (upadd.matches(upSearch)) {
 			return true;
 		}
