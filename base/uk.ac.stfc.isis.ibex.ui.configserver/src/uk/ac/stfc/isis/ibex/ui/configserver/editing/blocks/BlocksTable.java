@@ -30,6 +30,7 @@ import org.eclipse.swt.widgets.Composite;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableBlock;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.CellDecorator;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.DecoratedCellLabelProvider;
+import uk.ac.stfc.isis.ibex.ui.configserver.editing.blocks.filters.BlockNameSearch;
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundTable;
 
 public class BlocksTable extends DataboundTable<EditableBlock> {
@@ -39,6 +40,8 @@ public class BlocksTable extends DataboundTable<EditableBlock> {
 	private BlockVisibilityLabelProvider visibilityLabelProvider;
 	private boolean isBlockVisibilityShown;
 	
+	private BlockNameSearch search;
+	
 	private CellDecorator<EditableBlock> rowDecorator = new BlockRowCellDecorator();
 	
 	public BlocksTable(Composite parent, int style, int tableStyle, boolean isBlockVisibilityShown) {
@@ -47,6 +50,9 @@ public class BlocksTable extends DataboundTable<EditableBlock> {
 		this.isBlockVisibilityShown = isBlockVisibilityShown;
 
 		initialise();
+		
+		search = new BlockNameSearch();
+		this.viewer().addFilter(search);
 	}
 
 	@Override
@@ -100,5 +106,10 @@ public class BlocksTable extends DataboundTable<EditableBlock> {
 		enabled = createColumn("Visible?", 2);
 		visibilityLabelProvider = new BlockVisibilityLabelProvider(stateProperties);
 		enabled.setLabelProvider(visibilityLabelProvider);		
+	}
+	
+	public void setSearch(String searchText) {
+		search.setSearchText(searchText);
+		this.viewer().refresh();
 	}
 }

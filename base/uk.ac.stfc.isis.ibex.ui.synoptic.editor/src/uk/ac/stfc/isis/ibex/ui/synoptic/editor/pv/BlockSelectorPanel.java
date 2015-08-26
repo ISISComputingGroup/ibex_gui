@@ -40,7 +40,6 @@ import org.eclipse.swt.widgets.Text;
 
 import uk.ac.stfc.isis.ibex.configserver.Configurations;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Block;
-import uk.ac.stfc.isis.ibex.configserver.configuration.PV;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableBlock;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.blocks.BlocksTable;
@@ -90,9 +89,9 @@ public class BlockSelectorPanel extends Composite {
 		gd_pvAddress.widthHint = 250;
 		pvAddress.setLayoutData(gd_pvAddress);
 		
-		pvAddress.addModifyListener(new ModifyListener() {
+		blockName.addModifyListener(new ModifyListener() {
 			public void modifyText(ModifyEvent arg0) {
-//				blockPVTable.setSearch(pvAddress.getText());
+				blockTable.setSearch(blockName.getText());
 			}
 		});
 		
