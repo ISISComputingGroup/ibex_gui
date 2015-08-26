@@ -35,7 +35,7 @@ import uk.ac.stfc.isis.ibex.synoptic.model.desc.ComponentDescription;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.PV;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.IComponentSelectionListener;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.IInstrumentUpdateListener;
-import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.InstrumentViewModel;
+import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.SynopticViewModel;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.UpdateTypes;
 
 public class PVList extends Composite {
@@ -46,9 +46,9 @@ public class PVList extends Composite {
 	private Button btnPlus;
 	private Button btnMinus;
 	
-	private InstrumentViewModel instrument;
+	private SynopticViewModel instrument;
 	
-	public PVList(Composite parent, final InstrumentViewModel instrument) {
+	public PVList(Composite parent, final SynopticViewModel instrument) {
 		super(parent, SWT.NONE);
 		
 		this.instrument = instrument;

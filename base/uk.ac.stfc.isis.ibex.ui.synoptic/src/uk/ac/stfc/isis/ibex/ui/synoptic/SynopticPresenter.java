@@ -24,7 +24,6 @@ import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
@@ -52,6 +51,10 @@ import uk.ac.stfc.isis.ibex.ui.UI;
 import uk.ac.stfc.isis.ibex.ui.synoptic.views.LinkedViews;
 import uk.ac.stfc.isis.ibex.ui.synoptic.views.OpiTargetView;
 
+/**
+ * Responsible for the presentation logic of the synoptic.
+ *  
+ */
 public class SynopticPresenter extends ModelObject {
 
 	private static final Logger LOG = IsisLog.getLogger(SynopticPresenter.class);
@@ -225,6 +228,10 @@ public class SynopticPresenter extends ModelObject {
 	private void setComponents(List<? extends Component> components) {
 		this.components = new ArrayList<>(components);
 		firePropertyChange("components", null, components());
+	}
+	
+	public boolean showBeam() {
+		return model.instrument().showBeam();
 	}
 
 	/**

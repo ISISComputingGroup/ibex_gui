@@ -35,7 +35,7 @@ import uk.ac.stfc.isis.ibex.synoptic.model.desc.ComponentDescription;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.Property;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.IComponentSelectionListener;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.IInstrumentUpdateListener;
-import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.InstrumentViewModel;
+import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.SynopticViewModel;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.UpdateTypes;
 
 public class TargetPropertyList extends Composite {
@@ -43,9 +43,9 @@ public class TargetPropertyList extends Composite {
 	private Button btnDelete;
 	private Button btnAdd;
 	
-	private InstrumentViewModel instrument;
+	private SynopticViewModel instrument;
 	
-	public TargetPropertyList(Composite parent, final InstrumentViewModel instrument) 
+	public TargetPropertyList(Composite parent, final SynopticViewModel instrument) 
 	{
 		super(parent, SWT.NONE);
 		

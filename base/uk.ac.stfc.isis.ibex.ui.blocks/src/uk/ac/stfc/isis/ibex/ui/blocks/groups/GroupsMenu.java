@@ -38,7 +38,7 @@ public class GroupsMenu {
 		}
 	};
 	
-	private final IAction hideBlocks = new Action("Don't show hidden blocks") {
+	private final IAction hideBlocks = new Action("Hide hidden blocks") {
 		@Override
 		public void run() {
 			groups.setShowHiddenBlocks(false);
@@ -65,20 +65,3 @@ public class GroupsMenu {
 		return manager.createContextMenu(groups);
 	}
 }
-
-//	final IAction displayBlockHistory = new Action("Display history") {
-//		@Override
-//		public void run() {
-//			//BlockViewModel selectedBlock = selectedRows().get(0);
-//			//selectedBlock.displayHistory();
-//		}
-//	};
-//	
-//	final IAction displayProperties = new Action("Properties") {
-//		@Override
-//		public void run() {
-//			//BlockViewModel selectedBlock = firstSelectedRow();
-//			//selectedBlock.displayProperties();
-//		}
-//	};
-

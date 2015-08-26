@@ -26,7 +26,7 @@ import java.util.List;
 import java.util.Map;
 
 import uk.ac.stfc.isis.ibex.synoptic.model.Component;
-import uk.ac.stfc.isis.ibex.synoptic.model.Instrument;
+import uk.ac.stfc.isis.ibex.synoptic.model.Synoptic;
 import uk.ac.stfc.isis.ibex.synoptic.model.Target;
 import uk.ac.stfc.isis.ibex.synoptic.model.targets.GroupedComponentTarget;
 
@@ -39,12 +39,12 @@ public class InstrumentNavigationGraph {
 	
 	private final TargetNode graph;
 	
-	public InstrumentNavigationGraph(Instrument instrument) {
+	public InstrumentNavigationGraph(Synoptic instrument) {
 		createTargetNodes(instrument.components());
 		graph = buildGraph(instrument);
 	}
 	
-	private TargetNode buildGraph(Instrument instrument) {
+	private TargetNode buildGraph(Synoptic instrument) {
 		Target top = topNode(instrument);
 		TargetNode head = addTargetNode(top);
 		
@@ -68,7 +68,7 @@ public class InstrumentNavigationGraph {
 		return new LinkedHashMap<>(targets);
 	}
 	
-	private static Target topNode(Instrument instrument) {
+	private static Target topNode(Synoptic instrument) {
 		String name = Strings.isNullOrEmpty(instrument.name()) ? "Instrument" : instrument.name();
 		Target top = new GroupedComponentTarget(name, instrument.components());
 		return top;

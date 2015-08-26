@@ -3,7 +3,7 @@
 <locations>
 <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
 <unit id="org.dawnsci.base.product.feature.feature.group" version="1.7.1.v20141013-1253"/>
-<repository location="file:////ndwvegas/installs$/Dawn_P2/"/>
+<repository location="http://shadow.nd.rl.ac.uk/ICP_P2/Dawn_P2/"/>
 </location>
 <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
 <unit id="org.csstudio.pvmanager.feature.feature.group" version="3.3.0.20140923-1503"/>
@@ -13,11 +13,11 @@
 <unit id="org.csstudio.trends.databrowser2.feature.feature.group" version="3.2.2.20140923-1511"/>
 <unit id="org.csstudio.boy.feature.feature.group" version="3.2.1.20140923-1511"/>
 <unit id="org.csstudio.alarm.beast.ui.feature.feature.group" version="3.2.1.20140923-1511"/>
-<repository location="file:////ndwvegas/installs$/CSStudio_P2/"/>
+<repository location="http://shadow.nd.rl.ac.uk/ICP_P2/CSStudio_P2/"/>
 </location>
 <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
 <unit id="org.mockito.feature.feature.group" version="1.0.0.20150724-1352"/>
-<repository location="file:////ndwvegas/installs$/Mockito_P2/"/>
+<repository location="http://shadow.nd.rl.ac.uk/ICP_P2/Mockito_P2/"/>
 </location>
 </locations>
 <environment>

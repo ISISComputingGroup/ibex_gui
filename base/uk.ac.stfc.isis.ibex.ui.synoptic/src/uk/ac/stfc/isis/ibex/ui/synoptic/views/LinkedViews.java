@@ -38,7 +38,6 @@ public final class LinkedViews {
 	
 	private static final Map<String, String> VIEWS = new CaseInsensitiveMap<String>();
 	static {
-		VIEWS.put("rotating bench", "uk.ac.stfc.isis.ibex.ui.rotatingbench");
 		VIEWS.put("goniometer", "uk.ac.stfc.isis.ibex.ui.goniometer");
 	}
 	

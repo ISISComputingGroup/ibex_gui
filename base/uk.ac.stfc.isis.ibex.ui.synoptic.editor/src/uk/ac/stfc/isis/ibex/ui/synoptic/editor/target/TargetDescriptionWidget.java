@@ -12,15 +12,15 @@ import uk.ac.stfc.isis.ibex.opis.desc.MacroInfo;
 import uk.ac.stfc.isis.ibex.opis.desc.OpiDescription;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.ComponentDescription;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.IInstrumentUpdateListener;
-import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.InstrumentViewModel;
+import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.SynopticViewModel;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.UpdateTypes;
 
 public class TargetDescriptionWidget extends Composite {
 
-	private InstrumentViewModel instrument;
+	private SynopticViewModel instrument;
 	private Text txtDescription;
 
-	public TargetDescriptionWidget(Composite parent, final InstrumentViewModel instrument) {
+	public TargetDescriptionWidget(Composite parent, final SynopticViewModel instrument) {
 		super(parent, SWT.NONE);
 
 		this.instrument = instrument;

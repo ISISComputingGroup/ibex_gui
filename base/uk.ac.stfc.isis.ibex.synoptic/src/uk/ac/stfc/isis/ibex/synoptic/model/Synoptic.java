@@ -23,11 +23,37 @@ import java.util.List;
 
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.SynopticDescription;
 
-public interface Instrument {
+/**
+ * Defines a synoptic view, displayed in IBEX and held on the blockserver as XML.
+ * 
+ */
+public interface Synoptic {
 	
+	/**
+	 * Get the synoptic name.
+	 * 
+	 * @return The synoptic name
+	 */
 	String name();
 	
+	/**
+	 * Get the list of components for the synoptic.
+	 * 
+	 * @return A list, extending type Component
+	 */
 	List<? extends Component> components();
 	
+	/**
+	 * Defines whether or not the beam is shown in the synoptic.
+	 *  
+	 * @return True if the beam is to be shown
+	 */
+	Boolean showBeam();
+	
+	/**
+	 * Return a description of the synoptic.
+	 * 
+	 * @return The description of the synoptic as a Sting
+	 */
 	SynopticDescription getDescription();	
 }

@@ -30,7 +30,7 @@ import org.eclipse.swt.widgets.Text;
 
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.Property;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.IPropertySelectionListener;
-import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.InstrumentViewModel;
+import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.SynopticViewModel;
 
 public class TargetPropertyDetailView extends Composite {
 	
@@ -38,7 +38,7 @@ public class TargetPropertyDetailView extends Composite {
 	private Composite propertyComposite;
 	private Text key;
 	private Text value;
-	private InstrumentViewModel model;
+	private SynopticViewModel model;
 
 	private boolean updateLock;
 	
@@ -91,7 +91,7 @@ public class TargetPropertyDetailView extends Composite {
 		value.addListener(SWT.FocusOut, propertyUpdateListener);
 	}
 	
-	public void setModel(InstrumentViewModel model) {
+	public void setModel(SynopticViewModel model) {
 		if (this.model != null) {
 			model.removePropertySelectionListener(propertyListener);
 		}

@@ -37,7 +37,8 @@ import uk.ac.stfc.isis.ibex.ui.synoptic.beamline.LineDecoration;
 import uk.ac.stfc.isis.ibex.ui.synoptic.component.ComponentView;
 
 /*
- * The synoptic's components with an overlaid beamline. 
+ * The synoptic's components with an optionally overlaid beamline.
+ * 
  */
 public class InstrumentSynoptic extends Composite {
 
@@ -67,9 +68,9 @@ public class InstrumentSynoptic extends Composite {
 		reset();
 	}
 
-	public void setComponents(List<? extends Component> components) {
+	public void setComponents(List<? extends Component> components, Boolean showBeam) {
 		reset();
-		display(components);
+		display(components, showBeam);
 		resize();
 	}
 
@@ -89,7 +90,7 @@ public class InstrumentSynoptic extends Composite {
 		}
 	}
 
-	private void display(List<? extends Component> components) {	
+	private void display(List<? extends Component> components, Boolean showBeam) {
 		if (components.isEmpty()) {
 			return;
 		}
@@ -98,7 +99,7 @@ public class InstrumentSynoptic extends Composite {
 			ComponentView.create(instrumentComposite, component);
 		}
 		
-		if (components.size() > 1) {
+		if (components.size() > 1 && showBeam) {
 			addBeamline();				
 		}
 	}

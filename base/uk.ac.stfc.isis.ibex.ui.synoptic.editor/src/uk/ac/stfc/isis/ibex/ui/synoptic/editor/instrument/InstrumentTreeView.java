@@ -56,18 +56,18 @@ import uk.ac.stfc.isis.ibex.ui.synoptic.editor.component.ComponentDropListener;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.component.ComponentLabelProvider;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.IComponentSelectionListener;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.IInstrumentUpdateListener;
-import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.InstrumentViewModel;
+import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.SynopticViewModel;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.UpdateTypes;
 
 public class InstrumentTreeView extends Composite {
-	private InstrumentViewModel instrumentViewModel;
+	private SynopticViewModel instrumentViewModel;
 	private ComponentDescription currentDragSource;
 
 	private TreeViewer treeViewer;
 	private MenuItem mnuDeleteSelected;
 
 	public InstrumentTreeView(Composite parent,
-			InstrumentViewModel instrumentViewModel) {
+			SynopticViewModel instrumentViewModel) {
 		super(parent, SWT.NONE);
 
 		this.instrumentViewModel = instrumentViewModel;
