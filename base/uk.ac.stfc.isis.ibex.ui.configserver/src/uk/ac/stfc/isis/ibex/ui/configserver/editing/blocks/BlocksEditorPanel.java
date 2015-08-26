@@ -47,7 +47,7 @@ public class BlocksEditorPanel extends Composite {
 		super(parent, style);
 		setLayout(new GridLayout(1, false));
 		
-		table = new BlocksTable(this, SWT.NONE, SWT.V_SCROLL | SWT.NO_SCROLL | SWT.FULL_SELECTION);
+		table = new BlocksTable(this, SWT.NONE, SWT.V_SCROLL | SWT.NO_SCROLL | SWT.FULL_SELECTION, true);
 		GridData gd_table = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
 		gd_table.heightHint = 200;
 		table.setLayoutData(gd_table);

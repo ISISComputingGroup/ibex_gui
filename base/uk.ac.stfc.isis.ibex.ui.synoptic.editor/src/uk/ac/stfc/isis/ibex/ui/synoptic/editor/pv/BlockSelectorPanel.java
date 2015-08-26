@@ -54,7 +54,7 @@ import uk.ac.stfc.isis.ibex.ui.configserver.editing.blocks.filters.PVFilterFacto
 public class BlockSelectorPanel extends Composite {
 
 	private final Text pvAddress;
-	private final BlocksTable blockPVTable;
+	private final BlocksTable blockTable;
 	private PVFilterFactory filterFactory;
 	private PVFilter sourceFilter;
 	private PVFilter interestFilter;
@@ -86,12 +86,12 @@ public class BlockSelectorPanel extends Composite {
 			}
 		});
 		
-		blockPVTable = new BlocksTable(grpPV, SWT.NONE, SWT.V_SCROLL | SWT.NO_SCROLL | SWT.FULL_SELECTION);
+		blockTable = new BlocksTable(grpPV, SWT.NONE, SWT.V_SCROLL | SWT.NO_SCROLL | SWT.FULL_SELECTION, false);
 		GridData gdPvTable = new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1);
 		gdPvTable.heightHint = 300;
-		blockPVTable.setLayoutData(gdPvTable);
+		blockTable.setLayoutData(gdPvTable);
 		
-		blockPVTable.addSelectionChangedListener(new ISelectionChangedListener() {
+		blockTable.addSelectionChangedListener(new ISelectionChangedListener() {
 			public void selectionChanged(SelectionChangedEvent arg0) {
 				IStructuredSelection selection = (IStructuredSelection) arg0.getSelection();
 				if (selection.size() > 0) {
@@ -101,8 +101,8 @@ public class BlockSelectorPanel extends Composite {
 			}
 		});
 		
-		blockPVTable.setRows(Configurations.getInstance().edit().currentConfig().getValue().getEditableBlocks());
-		blockPVTable.refresh();
+		blockTable.setRows(Configurations.getInstance().edit().currentConfig().getValue().getEditableBlocks());
+		blockTable.refresh();
 	}
 	
 	public void setConfig(EditableConfiguration config, Block block) {

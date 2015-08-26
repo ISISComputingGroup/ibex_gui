@@ -37,11 +37,14 @@ public class BlocksTable extends DataboundTable<EditableBlock> {
 	private TableViewerColumn enabled;
 	private IObservableMap[] stateProperties = { observeProperty("isVisible") };
 	private BlockVisibilityLabelProvider visibilityLabelProvider;
+	private boolean isBlockVisibilityShown;
 	
 	private CellDecorator<EditableBlock> rowDecorator = new BlockRowCellDecorator();
 	
-	public BlocksTable(Composite parent, int style, int tableStyle) {
+	public BlocksTable(Composite parent, int style, int tableStyle, boolean isBlockVisibilityShown) {
 		super(parent, style, EditableBlock.class, tableStyle | SWT.BORDER);
+		
+		this.isBlockVisibilityShown = isBlockVisibilityShown;
 
 		initialise();
 	}
@@ -50,7 +53,9 @@ public class BlocksTable extends DataboundTable<EditableBlock> {
 	protected void addColumns() {
 		name();
 		pv();
-		blockIsVisible();
+		if (isBlockVisibilityShown) {
+			blockIsVisible();
+		}
 	}
 	
 	@Override
@@ -60,9 +65,11 @@ public class BlocksTable extends DataboundTable<EditableBlock> {
 	}
 	
 	private void clear() {
-		visibilityLabelProvider.dispose();
-		visibilityLabelProvider = new BlockVisibilityLabelProvider(stateProperties);
-		enabled.setLabelProvider(visibilityLabelProvider);	
+		if (isBlockVisibilityShown) {
+			visibilityLabelProvider.dispose();
+			visibilityLabelProvider = new BlockVisibilityLabelProvider(stateProperties);
+			enabled.setLabelProvider(visibilityLabelProvider);
+		}
 	}
 	
 	private void name() {
