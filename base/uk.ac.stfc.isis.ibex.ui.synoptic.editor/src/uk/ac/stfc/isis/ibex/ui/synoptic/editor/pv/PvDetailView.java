@@ -270,6 +270,7 @@ public class PvDetailView extends Composite {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		txtName.setText(selectPV.getBlockName());
 		txtAddress.setText(selectPV.getPvAddress());
 	}
 }

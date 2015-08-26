@@ -53,6 +53,7 @@ import uk.ac.stfc.isis.ibex.ui.configserver.editing.blocks.filters.PVFilterFacto
  */
 public class BlockSelectorPanel extends Composite {
 
+	private final Text blockName;
 	private final Text pvAddress;
 	private final BlocksTable blockTable;
 	private PVFilterFactory filterFactory;
@@ -70,6 +71,15 @@ public class BlockSelectorPanel extends Composite {
 		
 		GridLayout gdGrpPV = new GridLayout(2, false);
 		grpPV.setLayout(new GridLayout(2, false));
+		
+		Label lblBlockName = new Label(grpPV, SWT.NONE);
+		lblBlockName.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
+		lblBlockName.setText("Block Name:");
+		
+		blockName = new Text(grpPV, SWT.BORDER);
+		GridData gd_blockName = new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1);
+		gd_blockName.widthHint = 250;
+		blockName.setLayoutData(gd_blockName);
 		
 		Label lblPvAddress = new Label(grpPV, SWT.NONE);
 		lblPvAddress.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
@@ -96,6 +106,7 @@ public class BlockSelectorPanel extends Composite {
 				IStructuredSelection selection = (IStructuredSelection) arg0.getSelection();
 				if (selection.size() > 0) {
 					EditableBlock block = (EditableBlock) selection.getFirstElement();
+					blockName.setText(block.getName());
 					pvAddress.setText(block.getPV());
 				}
 			}
@@ -106,17 +117,12 @@ public class BlockSelectorPanel extends Composite {
 	}
 	
 	public void setConfig(EditableConfiguration config, Block block) {
-		setPVs(config.pvs());
-		
 		filterFactory = new PVFilterFactory(config.getEditableIocs());
 		
 		//Set up the binding here
-		bindingContext = new DataBindingContext();		
+		bindingContext = new DataBindingContext();
+		bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(blockName), BeanProperties.value("name").observe(block), null, null);
 		bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(pvAddress), BeanProperties.value("PV").observe(block), null, null);
-	}
-	
-	private void setPVs(Collection<PV> allPVs) {    
-//	   	blockPVTable.setRows(allPVs);
 	}
 
 }

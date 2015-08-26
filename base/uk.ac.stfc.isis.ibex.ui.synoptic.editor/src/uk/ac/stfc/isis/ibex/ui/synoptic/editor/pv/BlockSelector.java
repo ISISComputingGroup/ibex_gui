@@ -38,6 +38,7 @@ import uk.ac.stfc.isis.ibex.ui.configserver.dialogs.PvSelectorDialog;
  */
 public class BlockSelector extends ConfigHandler<Configuration> {
 	
+	private String blockName = "";
 	private String pvAddress = "";
 
 	public BlockSelector() {
@@ -59,8 +60,13 @@ public class BlockSelector extends ConfigHandler<Configuration> {
 	private void openDialog(EditableConfiguration config) {
 		BlockSelectorDialog dialog = new BlockSelectorDialog(null, config, "");	
 		if (dialog.open() == Window.OK) {
+			blockName = dialog.getBlockName();
 			pvAddress = dialog.getPVAddress();
 		}
+	}
+	
+	public String getBlockName(){
+		return blockName;
 	}
 	
 	public String getPvAddress(){

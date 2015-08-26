@@ -79,6 +79,10 @@ public class BlockSelectorDialog extends TitleAreaDialog {
 				IDialogConstants.CANCEL_LABEL, false);
 	}
 	
+	public String getBlockName() {
+		return block.getName();
+	}
+	
 	public String getPVAddress() {
 		return block.getPV();
 	}
