@@ -41,6 +41,7 @@ import org.eclipse.swt.widgets.Text;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.IO;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.PV;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.PVType;
+import uk.ac.stfc.isis.ibex.ui.synoptic.editor.blockselector.BlockSelector;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.IPVSelectionListener;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.SynopticViewModel;
 import org.eclipse.swt.layout.RowLayout;
