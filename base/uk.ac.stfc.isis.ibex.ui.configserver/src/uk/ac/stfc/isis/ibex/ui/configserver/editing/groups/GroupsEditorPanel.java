@@ -173,7 +173,11 @@ public class GroupsEditorPanel extends Composite {
 		IObservableList selectedBlocks = ViewerProperties.singleSelection().list(BeanProperties.list("selectedBlocks", EditableGroup.class)).observe(groupsViewer);
 		IObservableList unselectedBlocks = ViewerProperties.singleSelection().list(BeanProperties.list("unselectedBlocks", EditableGroup.class)).observe(groupsViewer);
 		
-		new Label(grpGroups, SWT.NONE);
+		Button spacerButton = new Button(grpGroups, SWT.NONE);
+		GridData gd_spacerButton = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+		gd_spacerButton.heightHint = 201;
+		spacerButton.setLayoutData(gd_spacerButton);
+		spacerButton.setVisible(false);
 		
 		Button btnUp =  new Button(grpGroups, SWT.NONE);
 		GridData gd_btnUp = new GridData(SWT.LEFT, SWT.BOTTOM, false, false, 1, 1);
