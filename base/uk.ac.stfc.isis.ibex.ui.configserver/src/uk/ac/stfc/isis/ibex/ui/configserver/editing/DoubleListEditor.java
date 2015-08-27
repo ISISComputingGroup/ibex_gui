@@ -79,7 +79,7 @@ public class DoubleListEditor extends Composite {
 		select = new Button(this, SWT.NONE);
 		select.setEnabled(false);
 		select.setLayoutData(new GridData(SWT.LEFT, SWT.BOTTOM, false, true, 1, 1));
-		select.setText(">");
+		select.setImage(ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui", "icons/move_right.png"));
 		
 		selectedViewer = new ListViewer(this, SWT.BORDER | SWT.V_SCROLL | SWT.MULTI);
 		configureViewer(selectedViewer, observedProperty);
@@ -101,7 +101,7 @@ public class DoubleListEditor extends Composite {
 		unselect = new Button(this, SWT.NONE);
 		unselect.setEnabled(false);
 		unselect.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, true, 1, 1));
-		unselect.setText("<");
+		unselect.setImage(ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui", "icons/move_left.png"));
 		
 		btnDown =  new Button(this, SWT.NONE);
 		GridData gd_btnDown = new GridData(SWT.LEFT, SWT.TOP, false, true, 1, 1);

@@ -70,56 +70,21 @@ public class GroupsEditorPanel extends Composite {
 		setLayout(new GridLayout(2, false));
 		
 		Group grpGroups = new Group(this, SWT.NONE);
-		grpGroups.setLayoutData(new GridData(SWT.FILL, SWT.TOP, false, true, 1, 1));
+		grpGroups.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
 		grpGroups.setText("Groups");
 		grpGroups.setLayout(new GridLayout(3, false));
 	
 		groupsViewer = new ListViewer(grpGroups, SWT.BORDER | SWT.V_SCROLL | SWT.SINGLE);
 		groupList = groupsViewer.getList();
-		GridData gd_viewer = new GridData(SWT.FILL, SWT.FILL, false, false, 2, 6);
-		gd_viewer.widthHint = 100;
-		gd_viewer.heightHint = 350;
+		GridData gd_viewer = new GridData(SWT.FILL, SWT.FILL, true, true, 2, 6);
+		gd_viewer.widthHint = 125;
 		groupList.setLayoutData(gd_viewer);
-		
-		Button btnAdd = new Button(grpGroups, SWT.NONE);
-		GridData gd_btnAdd = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
-		gd_btnAdd.widthHint = 65;
-		btnAdd.setLayoutData(gd_btnAdd);
-		btnAdd.setText("Add");
-		
-		btnAdd.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				if (config != null) {
-					config.addNewGroup();
-				}
-			}
-		});
-		
-		final Button btnRemove = new Button(grpGroups, SWT.NONE);
-		btnRemove.setEnabled(false);
-		GridData gd_btnRemove = new GridData(SWT.LEFT, SWT.TOP, true, false, 1, 1);
-		gd_btnRemove.widthHint = 65;
-		btnRemove.setLayoutData(gd_btnRemove);
-		btnRemove.setText("Remove");
-		
-		btnRemove.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				if (config != null) {
-					if (groupList.getSelectionIndex() != -1) {					
-						EditableGroup group = getSelectedGroup();
-						if (group != null) {
-					        config.removeGroup((EditableGroup) group);
-						}
-					}
-				}
-			}
-		});
+		new Label(grpGroups, SWT.NONE);
+		new Label(grpGroups, SWT.NONE);
 		new Label(grpGroups, SWT.NONE);
 				
 		Group grpSelectedGroup = new Group(this, SWT.NONE);
-		grpSelectedGroup.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, true, 1, 1));
+		grpSelectedGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		grpSelectedGroup.setText("Selected group");
 		grpSelectedGroup.setLayout(new GridLayout(3, false));
 		
@@ -130,8 +95,8 @@ public class GroupsEditorPanel extends Composite {
 		lblEditName.setText("Name:");
 		
 		name = new Text(grpSelectedGroup, SWT.BORDER);
-		GridData gd_name = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
-		gd_name.widthHint = 100;
+		GridData gd_name = new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1);
+		gd_name.widthHint = 125;
 		name.setLayoutData(gd_name);
 		name.setEnabled(false);
 		
@@ -140,15 +105,13 @@ public class GroupsEditorPanel extends Composite {
 		componentDetails.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 		
 		Group grpBlocks = new Group(grpSelectedGroup, SWT.NONE);
-		grpBlocks.setLayoutData(new GridData(SWT.CENTER, SWT.FILL, false, true, 3, 1));
+		grpBlocks.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 3, 1));
 		grpBlocks.setLayout(new GridLayout(1, false));
 		grpBlocks.setText("Blocks");
 		
 		blocksEditor = new DoubleListEditor(grpBlocks, SWT.NONE, "name", true);
-		GridData gd_blocksEditor = new GridData(SWT.LEFT, SWT.FILL, true, true, 1, 1);
-		gd_blocksEditor.heightHint = 300;
-		gd_blocksEditor.widthHint = 300;
-		blocksEditor.setLayoutData(gd_blocksEditor);
+//		gd_blocksEditor.widthHint = 388;
+		blocksEditor.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		
 		blocksEditor.addSelectionListenerForSelecting(new SelectionAdapter() {
 			@SuppressWarnings("unchecked")
@@ -196,32 +159,6 @@ public class GroupsEditorPanel extends Composite {
 			}
 		});
 		
-		groupsViewer.addSelectionChangedListener(new ISelectionChangedListener(){
-			@Override
-			public void selectionChanged(SelectionChangedEvent arg0) {
-				EditableGroup group = getSelectedGroup();
-				if (group != null) {
-			        boolean groupIsSelected = group != null;
-					boolean canEdit = groupIsSelected && group.isEditable();
-					
-					btnRemove.setEnabled(canEdit);
-					name.setEnabled(canEdit);
-					blocksEditor.setEnabled(canEdit);
-					
-					componentDetails.setText(componentDetail(group, canEdit));
-				}
-			}	
-			
-			private String componentDetail(EditableGroup group, boolean canEdit) {
-				if (canEdit) {
-					return "";
-				}
-				
-				String componentName = group.subconfig() != null ? group.subconfig() : "unknown";
-				return "contributed by " + componentName;
-			}
-		});
-				
 		bindingContext.bindValue(
 				WidgetProperties.text(SWT.Modify).observe(name), 
 				ViewerProperties.singleSelection().value(BeanProperties.value("name", EditableGroup.class)).observe(groupsViewer)
@@ -268,6 +205,69 @@ public class GroupsEditorPanel extends Composite {
 		gd_btnDown.widthHint = 25;
 		btnDown.setLayoutData(gd_btnDown);
 		btnDown.setImage(ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui", "icons/move_down.png"));
+		
+		Button btnAdd = new Button(grpGroups, SWT.NONE);
+		GridData gd_btnAdd = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+		gd_btnAdd.widthHint = 70;
+		btnAdd.setLayoutData(gd_btnAdd);
+		btnAdd.setText("Add");
+		
+		btnAdd.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				if (config != null) {
+					config.addNewGroup();
+				}
+			}
+		});
+		
+		final Button btnRemove = new Button(grpGroups, SWT.NONE);
+		btnRemove.setEnabled(false);
+		GridData gd_btnRemove = new GridData(SWT.CENTER, SWT.CENTER, true, false, 1, 1);
+		gd_btnRemove.widthHint = 70;
+		btnRemove.setLayoutData(gd_btnRemove);
+		btnRemove.setText("Remove");
+		
+		btnRemove.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				if (config != null) {
+					if (groupList.getSelectionIndex() != -1) {					
+						EditableGroup group = getSelectedGroup();
+						if (group != null) {
+					        config.removeGroup((EditableGroup) group);
+						}
+					}
+				}
+			}
+		});
+		new Label(grpGroups, SWT.NONE);
+		
+		groupsViewer.addSelectionChangedListener(new ISelectionChangedListener(){
+			@Override
+			public void selectionChanged(SelectionChangedEvent arg0) {
+				EditableGroup group = getSelectedGroup();
+				if (group != null) {
+			        boolean groupIsSelected = group != null;
+					boolean canEdit = groupIsSelected && group.isEditable();
+					
+					btnRemove.setEnabled(canEdit);
+					name.setEnabled(canEdit);
+					blocksEditor.setEnabled(canEdit);
+					
+					componentDetails.setText(componentDetail(group, canEdit));
+				}
+			}	
+			
+			private String componentDetail(EditableGroup group, boolean canEdit) {
+				if (canEdit) {
+					return "";
+				}
+				
+				String componentName = group.subconfig() != null ? group.subconfig() : "unknown";
+				return "contributed by " + componentName;
+			}
+		});
 		
 		btnDown.addSelectionListener(new SelectionAdapter() {
 			@Override
