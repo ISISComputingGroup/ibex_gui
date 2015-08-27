@@ -17,7 +17,8 @@ Require-Bundle: org.eclipse.ui,
  uk.ac.stfc.isis.ibex.opis;bundle-version="1.0.0",
  uk.ac.stfc.isis.ibex.ui.configserver,
  uk.ac.stfc.isis.ibex.configserver,
- uk.ac.stfc.isis.ibex.instrument
+ uk.ac.stfc.isis.ibex.instrument,
+ uk.ac.stfc.isis.ibex.ui
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Bundle-ActivationPolicy: lazy
 Import-Package: org.apache.logging.log4j,
