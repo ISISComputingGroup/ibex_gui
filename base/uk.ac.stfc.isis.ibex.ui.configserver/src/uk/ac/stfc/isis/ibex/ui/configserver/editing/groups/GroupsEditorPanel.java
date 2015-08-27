@@ -34,6 +34,7 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.wb.swt.ResourceManager;
 import org.eclipse.wb.swt.SWTResourceManager;
 import org.eclipse.swt.widgets.List;
 import org.eclipse.jface.viewers.ISelection;
@@ -82,7 +83,7 @@ public class GroupsEditorPanel extends Composite {
 		
 		Button btnAdd = new Button(grpGroups, SWT.NONE);
 		GridData gd_btnAdd = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
-		gd_btnAdd.widthHint = 80;
+		gd_btnAdd.widthHint = 65;
 		btnAdd.setLayoutData(gd_btnAdd);
 		btnAdd.setText("Add");
 		
@@ -98,7 +99,7 @@ public class GroupsEditorPanel extends Composite {
 		final Button btnRemove = new Button(grpGroups, SWT.NONE);
 		btnRemove.setEnabled(false);
 		GridData gd_btnRemove = new GridData(SWT.LEFT, SWT.TOP, true, false, 1, 1);
-		gd_btnRemove.widthHint = 80;
+		gd_btnRemove.widthHint = 65;
 		btnRemove.setLayoutData(gd_btnRemove);
 		btnRemove.setText("Remove");
 		
@@ -239,9 +240,9 @@ public class GroupsEditorPanel extends Composite {
 		
 		Button btnUp =  new Button(grpGroups, SWT.NONE);
 		GridData gd_btnUp = new GridData(SWT.LEFT, SWT.BOTTOM, false, false, 1, 1);
-		gd_btnUp.widthHint = 80;
+		gd_btnUp.widthHint = 25;
 		btnUp.setLayoutData(gd_btnUp);
-		btnUp.setText("Up");
+		btnUp.setImage(ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui", "icons/move_up.png"));
 		
 		btnUp.addSelectionListener(new SelectionAdapter() {
 			@Override
@@ -264,9 +265,9 @@ public class GroupsEditorPanel extends Composite {
 		
 		Button btnDown =  new Button(grpGroups, SWT.NONE);
 		GridData gd_btnDown = new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1);
-		gd_btnDown.widthHint = 80;
+		gd_btnDown.widthHint = 25;
 		btnDown.setLayoutData(gd_btnDown);
-		btnDown.setText("Down");
+		btnDown.setImage(ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui", "icons/move_down.png"));
 		
 		btnDown.addSelectionListener(new SelectionAdapter() {
 			@Override

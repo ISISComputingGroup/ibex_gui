@@ -28,6 +28,7 @@ import org.eclipse.jface.databinding.viewers.ObservableMapLabelProvider;
 import org.eclipse.jface.databinding.viewers.ViewerProperties;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.List;
+import org.eclipse.wb.swt.ResourceManager;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
@@ -88,10 +89,10 @@ public class DoubleListEditor extends Composite {
 		btnUp =  new Button(this, SWT.NONE);
 		btnUp.setEnabled(false);
 		GridData gd_btnUp = new GridData(SWT.LEFT, SWT.BOTTOM, false, true, 1, 1);
-		gd_btnUp.widthHint = 80;
+		gd_btnUp.widthHint = 25;
 		gd_btnUp.exclude = !orderable;
 		btnUp.setLayoutData(gd_btnUp);
-		btnUp.setText("Up");
+		btnUp.setImage(ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui", "icons/move_up.png"));
 		btnUp.setEnabled(true);
 		if (!orderable) {
 			new Label(this, SWT.NONE);
@@ -104,10 +105,10 @@ public class DoubleListEditor extends Composite {
 		
 		btnDown =  new Button(this, SWT.NONE);
 		GridData gd_btnDown = new GridData(SWT.LEFT, SWT.TOP, false, true, 1, 1);
-		gd_btnDown.widthHint = 80;
+		gd_btnDown.widthHint = 25;
 		gd_btnDown.exclude = !orderable;
 		btnDown.setLayoutData(gd_btnDown);
-		btnDown.setText("Down");
+		btnDown.setImage(ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui", "icons/move_down.png"));
 		btnDown.setEnabled(true);
 		
 		selectedItems = ViewerProperties.multipleSelection().observe(selectedViewer);
