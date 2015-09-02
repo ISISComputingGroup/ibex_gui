@@ -116,7 +116,17 @@ public class Group extends Composite {
 					labelMaker(this, SWT.NONE, "   |   ", "", null);
 				}
 				
-				bindingContext.bindValue(WidgetProperties.text().observe(blockValue), BeanProperties.value("value").observe(currentBlock));
+				bindingContext.bindValue(
+						WidgetProperties.text().observe(blockValue), 
+						BeanProperties.value("value").observe(currentBlock));
+				
+				bindingContext.bindValue(
+						WidgetProperties.foreground().observe(blockValue), 
+						BeanProperties.value(DisplayBlock.TEXT_COLOR).observe(currentBlock));
+				
+				bindingContext.bindValue(
+						WidgetProperties.background().observe(blockValue), 
+						BeanProperties.value(DisplayBlock.BACKGROUND_COLOR).observe(currentBlock));
 			}
 		}
 	}

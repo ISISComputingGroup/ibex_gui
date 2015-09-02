@@ -24,6 +24,9 @@ import uk.ac.stfc.isis.ibex.epics.observing.BaseObserver;
 import uk.ac.stfc.isis.ibex.epics.observing.InitialiseOnSubscribeObservable;
 import uk.ac.stfc.isis.ibex.instrument.Instrument;
 
+import org.eclipse.swt.graphics.Color;
+import org.eclipse.wb.swt.SWTResourceManager;
+
 import com.google.common.base.Strings;
 
 /**
@@ -31,6 +34,13 @@ import com.google.common.base.Strings;
  *
  */
 public class DisplayBlock extends Block {
+	
+	public static final String TEXT_COLOR = "textColor";
+	public static final String BACKGROUND_COLOR = "backgroundColor";	
+	
+	public static final Color DARK_RED = SWTResourceManager.getColor(192, 0, 0);
+	public static final Color WHITE = SWTResourceManager.getColor(255, 255, 255);
+	public static final Color BLACK = SWTResourceManager.getColor(0, 0, 0);
 
 	private final String blockServerAlias;
 
@@ -40,6 +50,9 @@ public class DisplayBlock extends Block {
 	private String lowLimit;
 	private String highLimit;
 	private Boolean enabled;
+	
+	private Color textColor;
+	private Color backgroundColor;
 	
 	private final BaseObserver<String> valueAdapter = new BaseObserver<String>() {	
 		@Override
@@ -212,7 +225,15 @@ public class DisplayBlock extends Block {
 	public Boolean getEnabled() {
 		return enabled;
 	}
+	
+	public Color getTextColor() {
+		return textColor;
+	}
 
+	public Color getBackgroundColor() {
+		return backgroundColor;
+	}
+	
 	public String blockServerAlias() {
 		return Instrument.getInstance().currentInstrument().pvPrefix() + blockServerAlias;
 	}
@@ -226,6 +247,7 @@ public class DisplayBlock extends Block {
 	}
 	
 	private synchronized void setInRange(Boolean inRange) {
+		setColors(inRange);
 		firePropertyChange("inRange", this.inRange, this.inRange = inRange);
 	}
 	
@@ -239,5 +261,23 @@ public class DisplayBlock extends Block {
 	
 	private synchronized void setEnabled(Boolean enabled) {
 		firePropertyChange("enabled", this.enabled, this.enabled = enabled);
+	}
+	
+	public void setColors(boolean inRange) {
+		if (inRange) {
+			setTextColor(BLACK);
+			setBackgroundColor(WHITE);
+		} else {
+			setTextColor(WHITE);
+			setBackgroundColor(DARK_RED);
+		}		
+	}
+	
+	public void setTextColor(Color color) {
+		firePropertyChange(TEXT_COLOR, this.textColor, this.textColor = color);
+	}
+	
+	public void setBackgroundColor(Color color) {
+		firePropertyChange(BACKGROUND_COLOR, this.backgroundColor, this.backgroundColor = color);
 	}
 }
