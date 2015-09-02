@@ -98,7 +98,7 @@ public class SynopticSelectionDialog extends Dialog {
 		items = new List(container, SWT.BORDER | SWT.V_SCROLL);
 		items.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		String [] names = SynopticInfo.names(available).toArray(new String[0]);
-		Arrays.sort(names);
+		Arrays.sort(names, String.CASE_INSENSITIVE_ORDER);
 		items.setItems(names);
 		
 		Composite selected = new Composite(container, SWT.NONE);
