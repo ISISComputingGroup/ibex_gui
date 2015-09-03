@@ -2,6 +2,27 @@
 <descriptions>
 	<opis>
 		<entry>
+			<key>Double Monitor</key>
+			<value>
+				<path>double_monitor.opi</path>
+				<description>The OPI for a double fixed monitor.</description>
+				<macros>
+					<macro>
+						<name>M</name>
+						<description>The monitor number.</description>
+					</macro>				
+					<macro>
+						<name>MA</name>
+						<description>The internal number for the first channel.</description>
+					</macro>
+					<macro>
+						<name>MB</name>
+						<description>The internal number for the second channel.</description>
+					</macro>
+				</macros>
+			</value>
+		</entry>
+		<entry>
 			<key>Eurotherm</key>
 			<value>
 				<path>Eurotherm.opi</path>
