@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <display typeId="org.csstudio.opibuilder.Display" version="1.0">
   <auto_zoom_to_fit_all>false</auto_zoom_to_fit_all>
   <macros>
@@ -12,10 +13,10 @@
   <snap_to_geometry>true</snap_to_geometry>
   <show_grid>true</show_grid>
   <background_color>
-    <color blue="240" green="240" name="ISIS_OPI_Background" red="240" />
+    <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
   </background_color>
   <foreground_color>
-    <color blue="192" green="192" name="ISIS_OPI_Foreground" red="192" />
+    <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
   </foreground_color>
   <widget_type>Display</widget_type>
   <show_close_button>true</show_close_button>
@@ -47,10 +48,10 @@
     <transparent>false</transparent>
     <show_scrollbar>false</show_scrollbar>
     <background_color>
-      <color blue="240" green="240" name="ISIS_Label_Background" red="240" />
+      <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
     </background_color>
     <foreground_color>
-      <color blue="0" green="0" name="ISIS_Standard_Text" red="0" />
+      <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
     </foreground_color>
     <widget_type>Label</widget_type>
     <enabled>true</enabled>
@@ -63,13 +64,13 @@
     <rules />
     <border_width>1</border_width>
     <border_color>
-      <color blue="255" green="128" name="ISIS_Check_Border" red="0" />
+      <color name="ISIS_Check_Border" red="0" green="128" blue="255" />
     </border_color>
     <horizontal_alignment>1</horizontal_alignment>
     <actions hook="false" hook_all="false" />
     <y>94</y>
     <wrap_words>true</wrap_words>
-    <tooltip />
+    <tooltip></tooltip>
     <x>6</x>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0">
@@ -94,10 +95,10 @@
     <transparent>false</transparent>
     <pv_name>$(P)DAE:MON:$(M):C</pv_name>
     <background_color>
-      <color blue="200" green="200" name="ISIS_Textbox_Readonly_Background" red="200" />
+      <color name="ISIS_Textbox_Readonly_Background" red="200" green="200" blue="200" />
     </background_color>
     <foreground_color>
-      <color blue="0" green="0" name="ISIS_Standard_Text" red="0" />
+      <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
     </foreground_color>
     <widget_type>Text Update</widget_type>
     <enabled>true</enabled>
@@ -113,7 +114,7 @@
     <pv_value />
     <border_width>1</border_width>
     <border_color>
-      <color blue="255" green="128" name="ISIS_Check_Border" red="0" />
+      <color name="ISIS_Check_Border" red="0" green="128" blue="255" />
     </border_color>
     <horizontal_alignment>0</horizontal_alignment>
     <actions hook="false" hook_all="false" />
@@ -129,14 +130,14 @@ $(pv_value)</tooltip>
       <PV_ROOT>$(P)CAEN</PV_ROOT>
       <CHANNUM>0</CHANNUM>
     </macros>
-    <visible>true</visible>
+    <visible>false</visible>
     <wuid>-654d67a4:1443fbaccbd:-6502</wuid>
     <auto_size>false</auto_size>
     <scripts>
-      <path checkConnect="true" pathString="EmbeddedPy" seoe="false" sfe="false">
+      <path pathString="EmbeddedPy" checkConnect="true" sfe="false" seoe="false">
         <scriptName>EmbeddedScript</scriptName>
-        <scriptText>from org.csstudio.opibuilder.scriptUtil import PVUtil
-pvs[1].setValue(0)</scriptText>
+        <scriptText><![CDATA[from org.csstudio.opibuilder.scriptUtil import PVUtil
+pvs[1].setValue(0)]]></scriptText>
         <pv trig="true">loc://synoptic:where("")</pv>
         <pv trig="false">loc://CAEN:SLOT</pv>
       </path>
@@ -151,12 +152,12 @@ pvs[1].setValue(0)</scriptText>
     </scale_options>
     <opi_file>HV/HVChannelMonitorWithOnOff.opi</opi_file>
     <foreground_color>
-      <color blue="192" green="192" name="ISIS_OPI_Foreground" red="192" />
+      <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
     </foreground_color>
     <background_color>
-      <color blue="240" green="240" name="ISIS_OPI_Background" red="240" />
+      <color red="240" green="240" blue="240" />
     </background_color>
-    <group_name />
+    <group_name></group_name>
     <enabled>true</enabled>
     <widget_type>Linking Container</widget_type>
     <font>
@@ -164,15 +165,22 @@ pvs[1].setValue(0)</scriptText>
     </font>
     <width>618</width>
     <border_style>3</border_style>
-    <rules />
+    <rules>
+      <rule name="Visible_With_CAEN" prop_id="visible" out_exp="false">
+        <exp bool_exp="true">
+          <value>true</value>
+        </exp>
+        <pv trig="true">$(P)CAEN:crates</pv>
+      </rule>
+    </rules>
     <border_width>1</border_width>
     <border_color>
-      <color blue="255" green="128" name="ISIS_Check_Border" red="0" />
+      <color name="ISIS_Check_Border" red="0" green="128" blue="255" />
     </border_color>
     <y>230</y>
     <actions hook="false" hook_all="false" />
     <x>6</x>
-    <tooltip />
+    <tooltip></tooltip>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0">
     <border_alarm_sensitive>true</border_alarm_sensitive>
@@ -196,10 +204,10 @@ pvs[1].setValue(0)</scriptText>
     <transparent>false</transparent>
     <pv_name>$(P)ISISMONITORS:$(M):SELECTED</pv_name>
     <background_color>
-      <color blue="200" green="200" name="ISIS_Textbox_Readonly_Background" red="200" />
+      <color name="ISIS_Textbox_Readonly_Background" red="200" green="200" blue="200" />
     </background_color>
     <foreground_color>
-      <color blue="0" green="0" name="ISIS_Standard_Text" red="0" />
+      <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
     </foreground_color>
     <widget_type>Text Update</widget_type>
     <enabled>true</enabled>
@@ -212,7 +220,7 @@ pvs[1].setValue(0)</scriptText>
     <width>121</width>
     <border_style>0</border_style>
     <rules>
-      <rule name="Rule" out_exp="false" prop_id="name">
+      <rule name="Rule" prop_id="name" out_exp="false">
         <exp bool_exp="pv0==0">
           <value>N/A</value>
         </exp>
@@ -222,7 +230,7 @@ pvs[1].setValue(0)</scriptText>
     <pv_value />
     <border_width>1</border_width>
     <border_color>
-      <color blue="255" green="128" name="ISIS_Check_Border" red="0" />
+      <color name="ISIS_Check_Border" red="0" green="128" blue="255" />
     </border_color>
     <horizontal_alignment>0</horizontal_alignment>
     <actions hook="false" hook_all="false" />
@@ -248,10 +256,10 @@ $(pv_value)</tooltip>
     <transparent>false</transparent>
     <show_scrollbar>false</show_scrollbar>
     <background_color>
-      <color blue="240" green="240" name="ISIS_Label_Background" red="240" />
+      <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
     </background_color>
     <foreground_color>
-      <color blue="0" green="0" name="ISIS_Standard_Text" red="0" />
+      <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
     </foreground_color>
     <widget_type>Label</widget_type>
     <enabled>true</enabled>
@@ -264,13 +272,13 @@ $(pv_value)</tooltip>
     <rules />
     <border_width>1</border_width>
     <border_color>
-      <color blue="255" green="128" name="ISIS_Check_Border" red="0" />
+      <color name="ISIS_Check_Border" red="0" green="128" blue="255" />
     </border_color>
     <horizontal_alignment>1</horizontal_alignment>
     <actions hook="false" hook_all="false" />
     <y>60</y>
     <wrap_words>true</wrap_words>
-    <tooltip />
+    <tooltip></tooltip>
     <x>6</x>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0">
@@ -289,10 +297,10 @@ $(pv_value)</tooltip>
     <transparent>false</transparent>
     <show_scrollbar>false</show_scrollbar>
     <background_color>
-      <color blue="240" green="240" name="ISIS_Label_Background" red="240" />
+      <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
     </background_color>
     <foreground_color>
-      <color blue="0" green="0" name="ISIS_Standard_Text" red="0" />
+      <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
     </foreground_color>
     <widget_type>Label</widget_type>
     <enabled>true</enabled>
@@ -305,13 +313,13 @@ $(pv_value)</tooltip>
     <rules />
     <border_width>1</border_width>
     <border_color>
-      <color blue="255" green="128" name="ISIS_Check_Border" red="0" />
+      <color name="ISIS_Check_Border" red="0" green="128" blue="255" />
     </border_color>
     <horizontal_alignment>1</horizontal_alignment>
     <actions hook="false" hook_all="false" />
     <y>142</y>
     <wrap_words>true</wrap_words>
-    <tooltip />
+    <tooltip></tooltip>
     <x>6</x>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0">
@@ -336,10 +344,10 @@ $(pv_value)</tooltip>
     <transparent>false</transparent>
     <pv_name>$(P)DAE:MONITORFROM</pv_name>
     <background_color>
-      <color blue="200" green="200" name="ISIS_Textbox_Readonly_Background" red="200" />
+      <color name="ISIS_Textbox_Readonly_Background" red="200" green="200" blue="200" />
     </background_color>
     <foreground_color>
-      <color blue="0" green="0" name="ISIS_Standard_Text" red="0" />
+      <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
     </foreground_color>
     <widget_type>Text Update</widget_type>
     <enabled>true</enabled>
@@ -355,7 +363,7 @@ $(pv_value)</tooltip>
     <pv_value />
     <border_width>1</border_width>
     <border_color>
-      <color blue="255" green="128" name="ISIS_Check_Border" red="0" />
+      <color name="ISIS_Check_Border" red="0" green="128" blue="255" />
     </border_color>
     <horizontal_alignment>0</horizontal_alignment>
     <actions hook="false" hook_all="false" />
@@ -364,47 +372,6 @@ $(pv_value)</tooltip>
     <tooltip>$(pv_name)
 $(pv_value)</tooltip>
     <x>102</x>
-  </widget>
-  <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0">
-    <visible>true</visible>
-    <vertical_alignment>1</vertical_alignment>
-    <wuid>-654d67a4:1443fbaccbd:-64fb</wuid>
-    <auto_size>false</auto_size>
-    <scripts />
-    <height>27</height>
-    <name>Label_4</name>
-    <scale_options>
-      <width_scalable>true</width_scalable>
-      <height_scalable>true</height_scalable>
-      <keep_wh_ratio>false</keep_wh_ratio>
-    </scale_options>
-    <transparent>false</transparent>
-    <show_scrollbar>false</show_scrollbar>
-    <background_color>
-      <color blue="240" green="240" name="ISIS_Label_Background" red="240" />
-    </background_color>
-    <foreground_color>
-      <color blue="0" green="0" name="ISIS_Standard_Text" red="0" />
-    </foreground_color>
-    <widget_type>Label</widget_type>
-    <enabled>true</enabled>
-    <text>To</text>
-    <font>
-      <opifont.name fontName="Arial" height="14" style="1">ISIS_Label</opifont.name>
-    </font>
-    <width>86</width>
-    <border_style>0</border_style>
-    <rules />
-    <border_width>1</border_width>
-    <border_color>
-      <color blue="255" green="128" name="ISIS_Check_Border" red="0" />
-    </border_color>
-    <horizontal_alignment>1</horizontal_alignment>
-    <actions hook="false" hook_all="false" />
-    <y>178</y>
-    <wrap_words>true</wrap_words>
-    <tooltip />
-    <x>6</x>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0">
     <border_alarm_sensitive>true</border_alarm_sensitive>
@@ -428,10 +395,10 @@ $(pv_value)</tooltip>
     <transparent>false</transparent>
     <pv_name>$(P)DAE:MONITORTO</pv_name>
     <background_color>
-      <color blue="200" green="200" name="ISIS_Textbox_Readonly_Background" red="200" />
+      <color name="ISIS_Textbox_Readonly_Background" red="200" green="200" blue="200" />
     </background_color>
     <foreground_color>
-      <color blue="0" green="0" name="ISIS_Standard_Text" red="0" />
+      <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
     </foreground_color>
     <widget_type>Text Update</widget_type>
     <enabled>true</enabled>
@@ -447,7 +414,7 @@ $(pv_value)</tooltip>
     <pv_value />
     <border_width>1</border_width>
     <border_color>
-      <color blue="255" green="128" name="ISIS_Check_Border" red="0" />
+      <color name="ISIS_Check_Border" red="0" green="128" blue="255" />
     </border_color>
     <horizontal_alignment>0</horizontal_alignment>
     <actions hook="false" hook_all="false" />
@@ -470,12 +437,12 @@ $(pv_value)</tooltip>
       <height_scalable>true</height_scalable>
       <keep_wh_ratio>false</keep_wh_ratio>
     </scale_options>
-    <pv_name />
+    <pv_name></pv_name>
     <background_color>
-      <color blue="187" green="187" name="ISIS_Standard_Button" red="187" />
+      <color name="ISIS_Standard_Button" red="187" green="187" blue="187" />
     </background_color>
     <foreground_color>
-      <color blue="0" green="0" name="ISIS_Standard_Text" red="0" />
+      <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
     </foreground_color>
     <widget_type>Action Button</widget_type>
     <enabled>true</enabled>
@@ -487,13 +454,13 @@ $(pv_value)</tooltip>
     <width>80</width>
     <border_style>0</border_style>
     <push_action_index>0</push_action_index>
-    <image />
+    <image></image>
     <rules />
     <pv_value />
     <toggle_button>false</toggle_button>
     <border_width>1</border_width>
     <border_color>
-      <color blue="255" green="128" name="ISIS_Check_Border" red="0" />
+      <color name="ISIS_Check_Border" red="0" green="128" blue="255" />
     </border_color>
     <y>61</y>
     <actions hook="false" hook_all="false">
@@ -501,7 +468,7 @@ $(pv_value)</tooltip>
         <pv_name>$(P)DAE:MONITORSPECTRUM</pv_name>
         <value>$(N)</value>
         <timeout>10</timeout>
-        <description />
+        <description></description>
       </action>
     </actions>
     <tooltip>$(pv_name)
@@ -524,10 +491,10 @@ $(pv_value)</tooltip>
     <transparent>false</transparent>
     <show_scrollbar>false</show_scrollbar>
     <background_color>
-      <color blue="240" green="240" name="ISIS_Label_Background" red="240" />
+      <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
     </background_color>
     <foreground_color>
-      <color blue="0" green="0" name="ISIS_Standard_Text" red="0" />
+      <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
     </foreground_color>
     <widget_type>Label</widget_type>
     <enabled>true</enabled>
@@ -540,13 +507,54 @@ $(pv_value)</tooltip>
     <rules />
     <border_width>1</border_width>
     <border_color>
-      <color blue="255" green="128" name="ISIS_Check_Border" red="0" />
+      <color name="ISIS_Check_Border" red="0" green="128" blue="255" />
     </border_color>
     <horizontal_alignment>0</horizontal_alignment>
     <actions hook="false" hook_all="false" />
     <y>6</y>
     <wrap_words>true</wrap_words>
-    <tooltip />
+    <tooltip></tooltip>
+    <x>6</x>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0">
+    <visible>true</visible>
+    <vertical_alignment>1</vertical_alignment>
+    <wuid>404291cd:14f92696546:-7f2b</wuid>
+    <auto_size>false</auto_size>
+    <scripts />
+    <height>27</height>
+    <name>Label_5</name>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <transparent>false</transparent>
+    <show_scrollbar>false</show_scrollbar>
+    <background_color>
+      <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
+    </background_color>
+    <foreground_color>
+      <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
+    </foreground_color>
+    <widget_type>Label</widget_type>
+    <enabled>true</enabled>
+    <text>To</text>
+    <font>
+      <opifont.name fontName="Arial" height="14" style="1">ISIS_Label</opifont.name>
+    </font>
+    <width>86</width>
+    <border_style>0</border_style>
+    <rules />
+    <border_width>1</border_width>
+    <border_color>
+      <color name="ISIS_Check_Border" red="0" green="128" blue="255" />
+    </border_color>
+    <horizontal_alignment>1</horizontal_alignment>
+    <actions hook="false" hook_all="false" />
+    <y>178</y>
+    <wrap_words>true</wrap_words>
+    <tooltip></tooltip>
     <x>6</x>
   </widget>
 </display>
