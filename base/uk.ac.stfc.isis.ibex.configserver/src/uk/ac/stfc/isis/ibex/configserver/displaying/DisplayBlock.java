@@ -263,7 +263,7 @@ public class DisplayBlock extends Block {
 		firePropertyChange("enabled", this.enabled, this.enabled = enabled);
 	}
 	
-	public void setColors(boolean inRange) {
+	private void setColors(boolean inRange) {
 		if (inRange) {
 			setTextColor(BLACK);
 			setBackgroundColor(WHITE);
@@ -273,11 +273,11 @@ public class DisplayBlock extends Block {
 		}		
 	}
 	
-	public void setTextColor(Color color) {
+	private synchronized void setTextColor(Color color) {
 		firePropertyChange(TEXT_COLOR, this.textColor, this.textColor = color);
 	}
 	
-	public void setBackgroundColor(Color color) {
+	private synchronized void setBackgroundColor(Color color) {
 		firePropertyChange(BACKGROUND_COLOR, this.backgroundColor, this.backgroundColor = color);
 	}
 }
