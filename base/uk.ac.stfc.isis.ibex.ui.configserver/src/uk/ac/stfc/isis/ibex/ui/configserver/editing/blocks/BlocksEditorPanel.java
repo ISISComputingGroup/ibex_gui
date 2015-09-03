@@ -69,10 +69,12 @@ public class BlocksEditorPanel extends Composite {
 		add.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				EditableBlock added = config.addNewBlock();
-				setBlocks(config);
-				setSelectedBlock(added);
-				table.setSelected(added);
+//				EditableBlock added = config.addNewBlock();
+//				setBlocks(config);
+//				setSelectedBlock(added);
+//				table.setSelected(added);
+				EditBlockDialog dialog = new EditBlockDialog(getShell(), messageDisplayer);
+				dialog.open();
 			}
 		});
 		
