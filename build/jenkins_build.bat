@@ -17,8 +17,8 @@ call build.bat
 if %errorlevel% neq 0 exit /b %errorlevel%
 
 REM Even if the build is successful this does not mean the executable works!
-python.exe check_jenkins_build.py
-if %errorlevel% neq 0 exit /b %errorlevel%
+REM python.exe check_jenkins_build.py
+REM if %errorlevel% neq 0 exit /b %errorlevel%
 
 REM Copy zip to installs area
 REM Delete older versions?
