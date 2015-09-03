@@ -37,4 +37,5 @@ Export-Package: uk.ac.stfc.isis.ibex.configserver;
    uk.ac.stfc.isis.ibex.configserver,
    uk.ac.stfc.isis.ibex.configserver.configuration,
    uk.ac.stfc.isis.ibex.epics.observing"
-Import-Package: uk.ac.stfc.isis.ibex.instrument
+Import-Package: org.eclipse.wb.swt,
+ uk.ac.stfc.isis.ibex.instrument
