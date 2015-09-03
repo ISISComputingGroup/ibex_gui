@@ -38,6 +38,7 @@ public class BlocksEditorPanel extends Composite {
 
 	private final BlocksTable table;
 	private final Button add;
+	private final Button edit;
 	private final Button remove;
 	private final BlockDetailsPanel details;
 	
@@ -54,7 +55,7 @@ public class BlocksEditorPanel extends Composite {
 		
 		Composite composite = new Composite(this, SWT.NONE);
 		composite.setLayoutData(new GridData(SWT.RIGHT, SWT.FILL, true, false, 1, 1));
-		GridLayout gl_composite = new GridLayout(2, false);
+		GridLayout gl_composite = new GridLayout(3, false);
 		gl_composite.verticalSpacing = 0;
 		gl_composite.marginWidth = 0;
 		gl_composite.marginHeight = 0;
@@ -63,20 +64,32 @@ public class BlocksEditorPanel extends Composite {
 		add = new Button(composite, SWT.NONE);
 		GridData gd_add = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
 		gd_add.widthHint = 70;
+		
 		add.setLayoutData(gd_add);
-		add.setText("Add");
-		add.setEnabled(false);		
+		add.setText("Add");	
 		add.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-//				EditableBlock added = config.addNewBlock();
-//				setBlocks(config);
-//				setSelectedBlock(added);
-//				table.setSelected(added);
-				EditBlockDialog dialog = new EditBlockDialog(getShell(), messageDisplayer);
+				EditableBlock added = config.addNewBlock();
+				EditBlockDialog dialog = new EditBlockDialog(getShell(), messageDisplayer, added);
 				dialog.open();
 			}
 		});
+		
+		edit = new Button(composite, SWT.NONE);
+		GridData gd_edit = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+		gd_edit.widthHint = 70;
+		edit.setLayoutData(gd_edit);
+		edit.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				EditableBlock toEdit = table.firstSelectedRow();
+				EditBlockDialog dialog = new EditBlockDialog(getShell(), messageDisplayer, toEdit);
+				dialog.open();
+			}
+		});
+		edit.setText("Edit");
+		edit.setEnabled(false);
 		
 		remove = new Button(composite, SWT.NONE);
 		remove.setEnabled(false);
@@ -100,9 +113,8 @@ public class BlocksEditorPanel extends Composite {
 		});
 		
 		details = new BlockDetailsPanel(this, SWT.NONE, messageDisplayer);
-		GridData gd_details = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
 		//gd_details.heightHint = 200;
-		details.setLayoutData(gd_details);
+		details.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 		
 		table.addSelectionChangedListener(new ISelectionChangedListener() {
 			@Override
@@ -127,11 +139,12 @@ public class BlocksEditorPanel extends Composite {
 	}
 	
 	private void setSelectedBlock(EditableBlock selected) {
-		remove.setEnabled(removeEnabled(selected));
+		edit.setEnabled(editEnabled(selected));
+		remove.setEnabled(editEnabled(selected));
 		details.setBlock(selected);
 	}
 	
-	private boolean removeEnabled(EditableBlock block) {
+	private boolean editEnabled(EditableBlock block) {
 		return block != null && block.isEditable();
 	}
 }
