@@ -22,6 +22,8 @@ package uk.ac.stfc.isis.ibex.configserver.configuration;
 import java.util.Collection;
 import java.util.Collections;
 
+import uk.ac.stfc.isis.ibex.configserver.Configurations;
+
 import com.google.common.base.Function;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
@@ -48,6 +50,12 @@ public class ConfigInfo {
 	
 	public String pv() {
 		return pv;
+	}
+	
+	public static Collection<String> namesWithoutCurrent(Collection<ConfigInfo> infos) {
+		Collection<String> filteredNames = names(infos);
+		filteredNames.remove(Configurations.getInstance().display().displayCurrentConfig().getValue().name());
+		return filteredNames;
 	}
 	
 	public static Collection<String> names(Collection<ConfigInfo> infos) {
