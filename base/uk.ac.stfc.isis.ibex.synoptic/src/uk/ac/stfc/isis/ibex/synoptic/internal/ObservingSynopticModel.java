@@ -144,5 +144,5 @@ public class ObservingSynopticModel {
 
 	public SynopticInfo getSynopticInfo() {
 		return this.synopticInfo;
-	}
+    }
 }
