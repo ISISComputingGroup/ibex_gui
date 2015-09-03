@@ -131,13 +131,7 @@ public class ObservingSynopticModel {
 	
 	public void switchSynoptic(SynopticInfo newSynoptic) {
 		this.synopticInfo = newSynoptic;
-		InitialiseOnSubscribeObservable<SynopticDescription> synopticDescriptionObservable = variables.getSynopticDescription(newSynoptic.pv());
-		
-		UpdatedValue<SynopticDescription> config = new UpdatedObservableAdapter<>(synopticDescriptionObservable);
-		
-		if (Awaited.returnedValue(config, 2)) {
-			synopticObservable.switchTo(synopticDescriptionObservable);
-		}
+		synopticObservable.switchTo(variables.getSynopticDescription(newSynoptic.pv()));
 	}
 	
 	public SynopticInfo getSynopticInfo() {
