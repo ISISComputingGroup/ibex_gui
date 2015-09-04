@@ -21,6 +21,7 @@ package uk.ac.stfc.isis.ibex.ui.configserver.editing.blocks;
 
 import org.eclipse.jface.window.Window;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.FillLayout;
@@ -148,5 +149,9 @@ public class BlockDetailsPanel extends Composite {
 	
 	public boolean getIsVisible() {
 		return visible.getSelection();
+	}
+	
+	public void addNameModifyListener(ModifyListener modifyListener) {
+	    name.addModifyListener(modifyListener);
 	}
 }
