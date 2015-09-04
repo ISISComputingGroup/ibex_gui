@@ -61,7 +61,7 @@ public class BlocksEditorPanel extends Composite {
 		
 		add = new Button(composite, SWT.NONE);
 		GridData gd_add = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
-		gd_add.widthHint = 90;
+		gd_add.widthHint = 110;
 		
 		add.setLayoutData(gd_add);
 		add.setText("Add Block");	
@@ -79,7 +79,7 @@ public class BlocksEditorPanel extends Composite {
 		
 		edit = new Button(composite, SWT.NONE);
 		GridData gd_edit = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
-		gd_edit.widthHint = 90;
+		gd_edit.widthHint = 110;
 		edit.setLayoutData(gd_edit);
 		edit.addSelectionListener(new SelectionAdapter() {
 			@Override
@@ -95,7 +95,7 @@ public class BlocksEditorPanel extends Composite {
 		remove = new Button(composite, SWT.NONE);
 		remove.setEnabled(false);
 		GridData gd_remove = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
-		gd_remove.widthHint = 100;
+		gd_remove.widthHint = 110;
 		remove.setLayoutData(gd_remove);
 		remove.setText("Delete Block");
 		remove.addSelectionListener(new SelectionAdapter() {

@@ -59,6 +59,12 @@ public class EditBlockDialog extends TitleAreaDialog {
 	}
 	
 	@Override
+	protected void cancelPressed() {
+		config.removeBlock(block);		
+		super.cancelPressed();
+	}
+	
+	@Override
 	protected void configureShell(Shell newShell) {
 		super.configureShell(newShell);
 		newShell.setText("Block Configuration");
