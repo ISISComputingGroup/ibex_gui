@@ -5,6 +5,7 @@ import org.eclipse.jface.dialogs.TitleAreaDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
+import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
@@ -32,6 +33,10 @@ public class EditBlockDialog extends TitleAreaDialog {
 	protected Control createDialogArea(Composite parent) {
 		setTitle("Configure Block");
 		blockDetailsPanel = new BlockDetailsPanel(parent, SWT.NONE, block, config);
+		GridLayout gl_blockDetailsPanel = new GridLayout(1, false);
+		gl_blockDetailsPanel.marginRight = 2;
+		gl_blockDetailsPanel.marginLeft = 2;
+		blockDetailsPanel.setLayout(gl_blockDetailsPanel);
 		
 		blockDetailsPanel.addNameModifyListener(new ModifyListener() {
 		    @Override
@@ -82,5 +87,5 @@ public class EditBlockDialog extends TitleAreaDialog {
 	
     private void setSaveEnabled(boolean enabled) {
     	okButton.setEnabled(enabled);
-    }    
+    }
 }

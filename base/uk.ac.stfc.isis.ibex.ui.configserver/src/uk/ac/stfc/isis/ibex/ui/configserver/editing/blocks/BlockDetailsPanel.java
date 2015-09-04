@@ -56,33 +56,31 @@ public class BlockDetailsPanel extends Composite {
 		
 		Group grpBlock = new Group(this, SWT.NONE);
 		grpBlock.setText("Selected block");
-		grpBlock.setLayout(new GridLayout(7, false));
+		grpBlock.setLayout(new GridLayout(4, false));
 		
 		Label lblName = new Label(grpBlock, SWT.NONE);
 		lblName.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		lblName.setText("Name:");
 		
 		name = new Text(grpBlock, SWT.BORDER);
-		GridData gd_name = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+		GridData gd_name = new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1);
 		gd_name.widthHint = 100;
 		name.setLayoutData(gd_name);
-		new Label(grpBlock, SWT.NONE);
 		
 		visible = new Button(grpBlock, SWT.CHECK);
+		visible.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1));
 		visible.setText("Visible");
-		new Label(grpBlock, SWT.NONE);
 		
 		local = new Button(grpBlock, SWT.CHECK);
 		local.setText("Local");
-		new Label(grpBlock, SWT.NONE);
 		
 		Label lblPvAddress = new Label(grpBlock, SWT.NONE);
 		lblPvAddress.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		lblPvAddress.setText("PV address:");
 		
 		pvAddress = new Text(grpBlock, SWT.BORDER);
-		GridData gd_pvAddress = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
-		gd_pvAddress.widthHint = 250;
+		GridData gd_pvAddress = new GridData(SWT.CENTER, SWT.CENTER, true, false, 1, 1);
+		gd_pvAddress.minimumWidth = 380;
 		pvAddress.setLayoutData(gd_pvAddress);
 		
 		btnPickPV = new Button(grpBlock, SWT.NONE);
@@ -93,6 +91,7 @@ public class BlockDetailsPanel extends Composite {
 				openPvDialog();
 			}
 		});
+		new Label(grpBlock, SWT.NONE);
 		
 		setEnabled(false);
 		
