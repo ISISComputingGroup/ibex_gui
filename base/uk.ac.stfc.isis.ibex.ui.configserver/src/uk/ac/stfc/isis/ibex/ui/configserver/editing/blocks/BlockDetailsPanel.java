@@ -64,11 +64,11 @@ public class BlockDetailsPanel extends Composite {
 		
 		name = new Text(grpBlock, SWT.BORDER);
 		GridData gd_name = new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1);
-		gd_name.widthHint = 100;
+		gd_name.widthHint = 280;
 		name.setLayoutData(gd_name);
 		
 		visible = new Button(grpBlock, SWT.CHECK);
-		visible.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1));
+		visible.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, false, 1, 1));
 		visible.setText("Visible");
 		
 		local = new Button(grpBlock, SWT.CHECK);
@@ -79,11 +79,12 @@ public class BlockDetailsPanel extends Composite {
 		lblPvAddress.setText("PV address:");
 		
 		pvAddress = new Text(grpBlock, SWT.BORDER);
-		GridData gd_pvAddress = new GridData(SWT.CENTER, SWT.CENTER, true, false, 1, 1);
+		GridData gd_pvAddress = new GridData(SWT.CENTER, SWT.CENTER, true, false, 2, 1);
 		gd_pvAddress.minimumWidth = 380;
 		pvAddress.setLayoutData(gd_pvAddress);
 		
 		btnPickPV = new Button(grpBlock, SWT.NONE);
+		btnPickPV.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 1, 1));
 		btnPickPV.setText("Select PV");
 		btnPickPV.addSelectionListener(new SelectionAdapter() {
 			@Override
@@ -91,7 +92,6 @@ public class BlockDetailsPanel extends Composite {
 				openPvDialog();
 			}
 		});
-		new Label(grpBlock, SWT.NONE);
 		
 		setEnabled(false);
 		
