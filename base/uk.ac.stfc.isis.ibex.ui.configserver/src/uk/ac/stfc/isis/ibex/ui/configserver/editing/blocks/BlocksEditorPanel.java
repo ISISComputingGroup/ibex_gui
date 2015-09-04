@@ -40,7 +40,6 @@ public class BlocksEditorPanel extends Composite {
 	private final Button add;
 	private final Button edit;
 	private final Button remove;
-	private final BlockDetailsPanel details;
 	
 	private EditableConfiguration config;
 	
@@ -71,7 +70,7 @@ public class BlocksEditorPanel extends Composite {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				EditableBlock added = config.addNewBlock();
-				EditBlockDialog dialog = new EditBlockDialog(getShell(), messageDisplayer, added);
+				EditBlockDialog dialog = new EditBlockDialog(getShell(), added);
 				dialog.open();
 			}
 		});
@@ -84,7 +83,7 @@ public class BlocksEditorPanel extends Composite {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				EditableBlock toEdit = table.firstSelectedRow();
-				EditBlockDialog dialog = new EditBlockDialog(getShell(), messageDisplayer, toEdit);
+				EditBlockDialog dialog = new EditBlockDialog(getShell(), toEdit);
 				dialog.open();
 			}
 		});
@@ -112,10 +111,6 @@ public class BlocksEditorPanel extends Composite {
 			}
 		});
 		
-		details = new BlockDetailsPanel(this, SWT.NONE, messageDisplayer);
-		//gd_details.heightHint = 200;
-		details.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
-		
 		table.addSelectionChangedListener(new ISelectionChangedListener() {
 			@Override
 			public void selectionChanged(SelectionChangedEvent arg0) {
@@ -130,7 +125,6 @@ public class BlocksEditorPanel extends Composite {
 		
 		add.setEnabled(true);
 		setBlocks(config);
-		details.setConfig(config);
 	}
 	
 	private void setBlocks(EditableConfiguration config) {
@@ -141,7 +135,6 @@ public class BlocksEditorPanel extends Composite {
 	private void setSelectedBlock(EditableBlock selected) {
 		edit.setEnabled(editEnabled(selected));
 		remove.setEnabled(editEnabled(selected));
-		details.setBlock(selected);
 	}
 	
 	private boolean editEnabled(EditableBlock block) {

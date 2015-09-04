@@ -19,26 +19,21 @@
 
 package uk.ac.stfc.isis.ibex.ui.configserver.editing.blocks;
 
-import org.eclipse.core.databinding.DataBindingContext;
-import org.eclipse.core.databinding.UpdateValueStrategy;
-import org.eclipse.core.databinding.beans.BeanProperties;
-import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.window.Window;
-import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.widgets.Text;
+import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Group;
+import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Text;
 
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableBlock;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
-import uk.ac.stfc.isis.ibex.ui.configserver.dialogs.MessageDisplayer;
 import uk.ac.stfc.isis.ibex.ui.configserver.dialogs.PvSelectorDialog;
 
 public class BlockDetailsPanel extends Composite {
@@ -48,16 +43,11 @@ public class BlockDetailsPanel extends Composite {
 	private final Button visible;
 	private final Button local;
 	private final Button btnPickPV;
-	
-	private DataBindingContext bindingContext;
-	
-	private UpdateValueStrategy strategy = new UpdateValueStrategy();
-	private final MessageDisplayer messageDisplayer;
+		
 	private EditableConfiguration config;
 
-	public BlockDetailsPanel(Composite parent, int style, MessageDisplayer messageDisplayer) {
+	public BlockDetailsPanel(Composite parent, int style, EditableBlock block) {
 		super(parent, style);
-		this.messageDisplayer = messageDisplayer;		
 		
 		setLayout(new FillLayout(SWT.HORIZONTAL));
 		
@@ -102,6 +92,8 @@ public class BlockDetailsPanel extends Composite {
 		});
 		
 		setEnabled(false);
+		
+		setBlock(block);
 	}
 
 	public void setConfig(EditableConfiguration config) {
@@ -109,10 +101,6 @@ public class BlockDetailsPanel extends Composite {
 	}
 	
 	public void setBlock(EditableBlock block) {	
-		if (bindingContext != null) {
-			bindingContext.dispose();
-		}
-		
 		if (block == null) {
 			setEnabled(false);
 			name.setText("");
@@ -122,16 +110,13 @@ public class BlockDetailsPanel extends Composite {
 	
 			return;
 		}
+		
+		name.setText(block.getName());
+		pvAddress.setText(block.getPV());
+		local.setSelection(block.getIsLocal());
+		visible.setSelection(block.getIsVisible());
 			
 		setEnabled(block.isEditable());
-		
-		bindingContext = new DataBindingContext();
-		strategy.setBeforeSetValidator(new BlockNameValidator(config, block, messageDisplayer));
-		
-		bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(name), BeanProperties.value("name").observe(block), strategy, null); 
-		bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(pvAddress), BeanProperties.value("PV").observe(block));
-		bindingContext.bindValue(WidgetProperties.selection().observe(visible), BeanProperties.value("isVisible").observe(block));
-		bindingContext.bindValue(WidgetProperties.selection().observe(local), BeanProperties.value("isLocal").observe(block));
 	}
 	
 	@Override
@@ -151,4 +136,19 @@ public class BlockDetailsPanel extends Composite {
 		}
 	}
 	
+	public String getBlockName() {
+		return name.getText();
+	}
+	
+	public String getPV() {
+		return pvAddress.getText();
+	}
+	
+	public boolean getIsLocal() {
+		return local.getSelection();
+	}
+	
+	public boolean getIsVisible() {
+		return visible.getSelection();
+	}
 }
