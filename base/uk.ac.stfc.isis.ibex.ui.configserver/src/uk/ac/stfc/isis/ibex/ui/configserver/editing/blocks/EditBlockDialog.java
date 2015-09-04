@@ -35,8 +35,8 @@ public class EditBlockDialog extends TitleAreaDialog {
 		
 		blockDetailsPanel.addNameModifyListener(new ModifyListener() {
 		    @Override
-		    public void modifyText(ModifyEvent arg0) {
-		    	checkName(arg0);
+		    public void modifyText(ModifyEvent nameText) {
+		    	checkName(((Text) nameText.getSource()).getText());
 		    }
 		});
 		
@@ -65,27 +65,21 @@ public class EditBlockDialog extends TitleAreaDialog {
 		createButton(parent, IDialogConstants.CANCEL_ID, "Cancel", true);
 	}
 	
-	private void checkName(ModifyEvent arg0) {		
+	private void checkName(String name) {		
 		setErrorMessage(null);
 		setMessage(null);
 		
-		String name = ((Text) arg0.getSource()).getText();
+		BlockNameValidator nameVal = new BlockNameValidator(config, block);
+		Boolean nameIsValid = nameVal.validate(name);
 				
-		if (name.toString().length() == 0) {
-			setErrorMessage("Please enter a name for the block");
-			setSaveEnabled(false);
-		} else if (!validateName(name)) {
-			setErrorMessage("Name must start with a letter, and contain letters, numbers and underscores only");
-			setSaveEnabled(false);
-		} else {
+		if (nameIsValid) {
 			setSaveEnabled(true);
-		}		
+		} else {
+			setErrorMessage(nameVal.getError());
+			setSaveEnabled(false);
+		}	
 	}
 	
-    private Boolean validateName(String name) {
-		return name.matches("^[a-zA-Z][a-zA-Z0-9_]*$");
-    }
-    
     private void setSaveEnabled(boolean enabled) {
     	okButton.setEnabled(enabled);
     }    

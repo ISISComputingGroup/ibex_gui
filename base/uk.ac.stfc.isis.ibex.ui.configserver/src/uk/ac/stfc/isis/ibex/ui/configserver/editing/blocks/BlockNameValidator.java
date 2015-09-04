@@ -19,57 +19,59 @@
 
 package uk.ac.stfc.isis.ibex.ui.configserver.editing.blocks;
 
-import org.eclipse.core.databinding.validation.IValidator;
-import org.eclipse.core.databinding.validation.ValidationStatus;
-import org.eclipse.core.runtime.IStatus;
-
 import uk.ac.stfc.isis.ibex.configserver.configuration.Block;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableBlock;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
-import uk.ac.stfc.isis.ibex.ui.configserver.dialogs.MessageDisplayer;
 
-public class BlockNameValidator implements IValidator {
+public class BlockNameValidator {
 	
 	private static final String DUPLICATE_GROUP_MESSAGE = "Duplicate block name";
 	private static final String EMPTY_NAME_MESSAGE = "Block name must not be empty";
+	private static final String INVALID_START_CHAR = "Name should start with a letter";
 	private static final String INVALID_CHARS_MESSAGE = "Block name must not contain special characters";
 	
 	private final EditableConfiguration config;
 	private final Block selectedBlock;
-	private final MessageDisplayer messageDisplayer;
 	
-	public BlockNameValidator(EditableConfiguration config, Block selectedBlock, MessageDisplayer messageDisplayer) {
+	private String errorMessage;
+	
+	public BlockNameValidator(EditableConfiguration config, Block selectedBlock) {
 		this.config = config;
 		this.selectedBlock = selectedBlock;
-		this.messageDisplayer = messageDisplayer;
+		this.errorMessage = "";
 	}
 	
-	@Override
-	public IStatus validate(Object text) {
-		messageDisplayer.setErrorMessage("BlockNameValidator", null);
+	public Boolean validate(String text) {
 		
 		if (text.equals("")) {
-			return setError(EMPTY_NAME_MESSAGE);	
-		}
-		
-		if (config == null) {
-			return ValidationStatus.ok();
+			setError(EMPTY_NAME_MESSAGE);	
+			return false;
 		}
 		
 		if (nameIsDuplicated(text)) {
-			return setError(DUPLICATE_GROUP_MESSAGE + ": " + text);
+			setError(DUPLICATE_GROUP_MESSAGE + ": " + text);
+			return false;
 		}
 		
-		if (!checkText((String)text)) {
-			return setError(INVALID_CHARS_MESSAGE);
+		if (!validateFirstCharacterOfName((String)text)) {
+			setError(INVALID_START_CHAR);
+			return false;
+		}
+		
+		if (!validateForSpecialCharacters((String)text)) {
+			setError(INVALID_CHARS_MESSAGE);
+			return false;
 		}
 			
-		return ValidationStatus.ok();
+		return true;
 	}
 
-	private IStatus setError(String message) {
-		messageDisplayer.setErrorMessage("BlockNameValidator", message);
-		return ValidationStatus.error(message);	
+	private void setError(String errorMessage) {
+		this.errorMessage = errorMessage;
+	}
+	
+	public String getError() {
+		return errorMessage;
 	}
 	
 	private boolean nameIsDuplicated(Object text) {
@@ -88,8 +90,11 @@ public class BlockNameValidator implements IValidator {
 		return !block.equals(selectedBlock);
 	}
 	
-	private Boolean checkText(String name) {		
-		//Must start with a letter and contain no spaces	
-		return name.matches("^[a-zA-Z][a-zA-Z0-9_]*$");
+	private Boolean validateFirstCharacterOfName(String name) {
+		return name.substring(0, 1).matches("[a-zA-Z]");
 	}
+	
+    private Boolean validateForSpecialCharacters(String name) {
+		return name.matches("^[a-zA-Z0-9_]*$");
+    }
 }

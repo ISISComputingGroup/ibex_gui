@@ -31,7 +31,6 @@ import org.eclipse.swt.widgets.Button;
 
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableBlock;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
-import uk.ac.stfc.isis.ibex.ui.configserver.dialogs.MessageDisplayer;
 
 @SuppressWarnings({"checkstyle:magicnumber", "checkstyle:localvariablename"})
 public class BlocksEditorPanel extends Composite {
@@ -43,7 +42,7 @@ public class BlocksEditorPanel extends Composite {
 	
 	private EditableConfiguration config;
 	
-	public BlocksEditorPanel(Composite parent, int style, final MessageDisplayer messageDisplayer) {
+	public BlocksEditorPanel(Composite parent, int style) {
 		super(parent, style);
 		setLayout(new GridLayout(1, false));
 		
