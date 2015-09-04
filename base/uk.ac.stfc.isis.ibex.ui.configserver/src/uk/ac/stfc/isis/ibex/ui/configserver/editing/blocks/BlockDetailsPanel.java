@@ -46,8 +46,10 @@ public class BlockDetailsPanel extends Composite {
 		
 	private EditableConfiguration config;
 
-	public BlockDetailsPanel(Composite parent, int style, EditableBlock block) {
+	public BlockDetailsPanel(Composite parent, int style, EditableBlock block, EditableConfiguration config) {
 		super(parent, style);
+		
+		this.config = config;
 		
 		setLayout(new FillLayout(SWT.HORIZONTAL));
 		
@@ -94,10 +96,6 @@ public class BlockDetailsPanel extends Composite {
 		setEnabled(false);
 		
 		setBlock(block);
-	}
-
-	public void setConfig(EditableConfiguration config) {
-		this.config = config;
 	}
 	
 	public void setBlock(EditableBlock block) {	

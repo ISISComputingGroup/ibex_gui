@@ -8,20 +8,23 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Shell;
 
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableBlock;
+import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
 
 public class EditBlockDialog extends Dialog {
 	
+	EditableConfiguration config;
 	EditableBlock block;
 	BlockDetailsPanel blockDetailsPanel;
 
-	protected EditBlockDialog(Shell parentShell, EditableBlock block) {
+	protected EditBlockDialog(Shell parentShell, EditableBlock block, EditableConfiguration config) {
 		super(parentShell);
+		this.config = config;
 		this.block = block;
 	}
 	
 	@Override
 	protected Control createDialogArea(Composite parent) {
-		blockDetailsPanel = new BlockDetailsPanel(parent, SWT.NONE, block);
+		blockDetailsPanel = new BlockDetailsPanel(parent, SWT.NONE, block, config);
 		return blockDetailsPanel;
 	}
 	
