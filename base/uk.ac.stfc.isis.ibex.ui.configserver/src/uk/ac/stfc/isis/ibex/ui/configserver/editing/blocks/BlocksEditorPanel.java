@@ -72,6 +72,9 @@ public class BlocksEditorPanel extends Composite {
 				EditableBlock added = config.addNewBlock();
 				EditBlockDialog dialog = new EditBlockDialog(getShell(), added, config);
 				dialog.open();
+				setBlocks(config);
+				setSelectedBlock(added);
+				table.setSelected(added);
 			}
 		});
 		
