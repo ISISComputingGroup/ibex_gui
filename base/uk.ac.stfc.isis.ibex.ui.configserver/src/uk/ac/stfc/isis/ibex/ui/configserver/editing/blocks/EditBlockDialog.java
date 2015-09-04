@@ -73,7 +73,7 @@ public class EditBlockDialog extends TitleAreaDialog {
 	@Override
 	protected void createButtonsForButtonBar(Composite parent) {
 		okButton = createButton(parent, IDialogConstants.OK_ID, "Save", true);
-		createButton(parent, IDialogConstants.CANCEL_ID, "Cancel", true);
+		createButton(parent, IDialogConstants.CANCEL_ID, "Cancel", false);
 	}
 	
 	private void checkName(String name) {		

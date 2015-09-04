@@ -23,6 +23,7 @@ import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridLayout;
@@ -102,14 +103,22 @@ public class BlocksEditorPanel extends Composite {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				EditableBlock toRemove = table.firstSelectedRow();
-				int index = table.getSelectionIndex();
-				config.removeBlock(toRemove);
-				setBlocks(config);
 				
-				// Update new selection
-				int newIndex = index > 0 ? index - 1 : index;
-				table.setSelectionIndex(newIndex);
-				setSelectedBlock(table.firstSelectedRow());
+				MessageBox dialog = new MessageBox(getShell(), SWT.ICON_WARNING | SWT.OK| SWT.CANCEL);
+				dialog.setText("Delete Block");
+				dialog.setMessage("Do you really want to delete the block " + toRemove.getName() + "?");
+				int returnCode = dialog.open();
+				
+				if (returnCode == SWT.OK) {
+					int index = table.getSelectionIndex();
+					config.removeBlock(toRemove);
+					setBlocks(config);
+				
+					// Update new selection
+					int newIndex = index > 0 ? index - 1 : index;
+					table.setSelectionIndex(newIndex);
+					setSelectedBlock(table.firstSelectedRow());
+				}
 			}
 		});
 		
