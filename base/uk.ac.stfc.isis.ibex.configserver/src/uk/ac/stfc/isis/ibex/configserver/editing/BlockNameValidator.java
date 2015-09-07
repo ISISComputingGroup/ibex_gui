@@ -17,11 +17,9 @@
 * http://opensource.org/licenses/eclipse-1.0.php
 */
 
-package uk.ac.stfc.isis.ibex.ui.configserver.editing.blocks;
+package uk.ac.stfc.isis.ibex.configserver.editing;
 
 import uk.ac.stfc.isis.ibex.configserver.configuration.Block;
-import uk.ac.stfc.isis.ibex.configserver.editing.EditableBlock;
-import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
 
 public class BlockNameValidator {
 	
@@ -41,8 +39,7 @@ public class BlockNameValidator {
 		this.errorMessage = "";
 	}
 	
-	public Boolean validate(String text) {
-		
+	public Boolean validate(String text) {		
 		if (text.equals("")) {
 			setError(EMPTY_NAME_MESSAGE);	
 			return false;
