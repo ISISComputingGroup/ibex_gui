@@ -106,12 +106,12 @@ public class IocMacroDetailsPanel extends Composite {
 			bindingContext.dispose();
 		}
 		
-		if (macro == null) {
-			setEnabled(false);
-			setTextEnabled(false);
-	
-			return;
-		}
+//		if (macro == null) {
+//			setEnabled(false);
+//			setTextEnabled(false);
+//	
+//			return;
+//		}
 		
 		setEnabled(canEdit);
 		setTextEnabled(canEdit);

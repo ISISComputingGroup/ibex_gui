@@ -49,22 +49,33 @@ public class AddMacroTable extends DataboundTable<Macro> {
 	@Override
 	protected void addColumns() {
 		name();
+		value();
 		description();
 		pattern();
 	}
 	
 	private void name() {
-		TableViewerColumn desc = createColumn("Macro name", 8);
+		TableViewerColumn desc = createColumn("Macro name", 6);
 		desc.setLabelProvider(new DataboundCellLabelProvider<Macro>(observeProperty("name")) {
 			@Override
 			protected String valueFromRow(Macro row) {
 				return row.getName();
 			}
+		});
+	}
+	
+	private void value() {
+		TableViewerColumn desc = createColumn("Value", 5);
+		desc.setLabelProvider(new DataboundCellLabelProvider<Macro>(observeProperty("name")) {
+			@Override
+			protected String valueFromRow(Macro row) {
+				return row.getValue();
+			}
 		});	
 	}
 	
 	private void description() {
-		TableViewerColumn desc = createColumn("Description", 6);
+		TableViewerColumn desc = createColumn("Description", 8);
 		desc.setLabelProvider(new DataboundCellLabelProvider<Macro>(observeProperty("description")) {
 			@Override
 			protected String valueFromRow(Macro row) {
@@ -74,7 +85,7 @@ public class AddMacroTable extends DataboundTable<Macro> {
 	}
 	
 	private void pattern() {
-		TableViewerColumn desc = createColumn("Pattern", 6);
+		TableViewerColumn desc = createColumn("Pattern", 8);
 		desc.setLabelProvider(new DataboundCellLabelProvider<Macro>(observeProperty("pattern")) {
 			@Override
 			protected String valueFromRow(Macro row) {
