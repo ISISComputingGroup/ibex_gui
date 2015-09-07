@@ -46,6 +46,11 @@ public class Variables extends InstrumentVariables {
 	private static final String SYNOPTIC_ADDRESS = "CS:BLOCKSERVER:SYNOPTICS:";
 	private static final String GET_SYNOPTIC = ":GET";
 	
+	/**
+	 * The name associated with the "blank" synoptic from the BlockServer.
+	 */
+	public static final String NONE_SYNOPTIC_NAME = "-- NONE --";
+	
 	public final InitialiseOnSubscribeObservable<SynopticDescription> default_synoptic 
 		= convert(readCompressed(SYNOPTIC_ADDRESS + "GET_DEFAULT"), new InstrumentDescriptionParser());
 	

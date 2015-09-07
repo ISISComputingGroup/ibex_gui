@@ -30,6 +30,7 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.wb.swt.ResourceManager;
 
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.ComponentDescription;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.PV;
@@ -43,8 +44,8 @@ public class PVList extends Composite {
 	
 	private Button btnDelete;
 	private Button btnAdd;
-	private Button btnPlus;
-	private Button btnMinus;
+	private Button btnUp;
+	private Button btnDown;
 	
 	private SynopticViewModel instrument;
 	
@@ -97,22 +98,22 @@ public class PVList extends Composite {
 	    moveComposite.setLayout(new GridLayout(1, false));
 	    moveComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
 	    {
-	    	btnPlus = new Button(moveComposite, SWT.NONE);
-	    	btnPlus.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
-	    	btnPlus.setText("+");
-	    	btnPlus.setEnabled(false);
-	    	btnPlus.addSelectionListener(new SelectionAdapter() {
+	    	btnUp = new Button(moveComposite, SWT.NONE);
+	    	btnUp.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
+	    	btnUp.setImage(ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui", "icons/move_up.png"));
+	    	btnUp.setEnabled(false);
+	    	btnUp.addSelectionListener(new SelectionAdapter() {
 				@Override
 				public void widgetSelected(SelectionEvent e) {
 					instrument.promoteSelectedPV();
 				}
 			});
 	    	
-	    	btnMinus = new Button(moveComposite, SWT.NONE);
-	    	btnMinus.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
-	    	btnMinus.setText("-");
-	    	btnMinus.setEnabled(false);
-	    	btnMinus.addSelectionListener(new SelectionAdapter() {
+	    	btnDown = new Button(moveComposite, SWT.NONE);
+	    	btnDown.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
+	    	btnDown.setImage(ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui", "icons/move_down.png"));
+	    	btnDown.setEnabled(false);
+	    	btnDown.addSelectionListener(new SelectionAdapter() {
 				@Override
 				public void widgetSelected(SelectionEvent e) {
 					instrument.demoteSelectedPV();
@@ -162,8 +163,8 @@ public class PVList extends Composite {
 	
 	private void setButtonStates() {
 		btnDelete.setEnabled(getSelectedPV() != null);
-		btnPlus.setEnabled(instrument.canPromotePV());
-		btnMinus.setEnabled(instrument.canDemotePV());
+		btnUp.setEnabled(instrument.canPromotePV());
+		btnDown.setEnabled(instrument.canDemotePV());
 	}
 
 	private void updateSelection() {
