@@ -72,7 +72,7 @@ public class ConfigEditorPanel extends Composite {
 		TabItem blocksTab = new TabItem(editorTabs, SWT.NONE);
 		blocksTab.setText("Blocks");
 		
-		blocks = new BlocksEditorPanel(editorTabs, SWT.NONE, dialog);
+		blocks = new BlocksEditorPanel(editorTabs, SWT.NONE);
 		blocksTab.setControl(blocks);
 		
 		TabItem groupsTab = new TabItem(editorTabs, SWT.NONE);
