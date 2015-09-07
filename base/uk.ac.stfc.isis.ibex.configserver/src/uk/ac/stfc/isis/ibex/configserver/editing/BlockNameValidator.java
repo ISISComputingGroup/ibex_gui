@@ -23,10 +23,10 @@ import uk.ac.stfc.isis.ibex.configserver.configuration.Block;
 
 public class BlockNameValidator {
 	
-	private static final String DUPLICATE_GROUP_MESSAGE = "Duplicate block name";
-	private static final String EMPTY_NAME_MESSAGE = "Block name must not be empty";
-	private static final String INVALID_START_CHAR = "Name should start with a letter";
-	private static final String INVALID_CHARS_MESSAGE = "Block name must not contain special characters";
+	public static final String DUPLICATE_GROUP_MESSAGE = "Duplicate block name";
+	public static final String EMPTY_NAME_MESSAGE = "Block name must not be empty";
+	public static final String INVALID_START_CHAR = "Name should start with a letter";
+	public static final String INVALID_CHARS_MESSAGE = "Block name must not contain special characters";
 	
 	private final EditableConfiguration config;
 	private final Block selectedBlock;
@@ -59,7 +59,8 @@ public class BlockNameValidator {
 			setError(INVALID_CHARS_MESSAGE);
 			return false;
 		}
-			
+		
+		this.errorMessage = "";
 		return true;
 	}
 
