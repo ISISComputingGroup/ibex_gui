@@ -21,13 +21,9 @@ package uk.ac.stfc.isis.ibex.ui.synoptic.editor.commands;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
-import org.eclipse.jface.window.Window;
-
-import uk.ac.stfc.isis.ibex.epics.writing.Writable;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.SynopticDescription;
-import uk.ac.stfc.isis.ibex.ui.synoptic.editor.dialogs.EditSynopticDialog;
 
-public class NewSynopticHandler extends SynopticHandler {
+public class NewSynopticHandler extends SynopticHandler<String> {
 
 	private static final String TITLE = "New Synoptic";
 	

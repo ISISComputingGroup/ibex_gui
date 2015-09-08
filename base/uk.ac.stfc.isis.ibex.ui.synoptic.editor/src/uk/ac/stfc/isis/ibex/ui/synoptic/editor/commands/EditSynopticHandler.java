@@ -29,10 +29,8 @@ import uk.ac.stfc.isis.ibex.model.UpdatedValue;
 import uk.ac.stfc.isis.ibex.synoptic.SynopticInfo;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.SynopticDescription;
 import uk.ac.stfc.isis.ibex.ui.synoptic.SynopticSelectionDialog;
-import uk.ac.stfc.isis.ibex.ui.synoptic.editor.dialogs.EditSynopticDialog;
-import uk.ac.stfc.isis.ibex.ui.synoptic.editor.dialogs.MultipleSynopticsSelectionDialog;
 
-public class EditSynopticHandler extends SynopticHandler {
+public class EditSynopticHandler extends SynopticHandler<String> {
 
 	private static final String TITLE = "Edit Synoptic";
 

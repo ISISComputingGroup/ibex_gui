@@ -27,7 +27,7 @@ import org.eclipse.jface.window.Window;
 
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.dialogs.MultipleSynopticsSelectionDialog;
 
-public class DeleteSynopticHandler extends SynopticHandler {
+public class DeleteSynopticHandler extends SynopticHandler<Collection<String>> {
 
 	private static final String TITLE = "Delete Synoptic";
 

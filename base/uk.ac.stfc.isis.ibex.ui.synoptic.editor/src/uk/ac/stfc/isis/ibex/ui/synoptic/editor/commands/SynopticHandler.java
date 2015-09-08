@@ -19,9 +19,6 @@
 
 package uk.ac.stfc.isis.ibex.ui.synoptic.editor.commands;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.jface.window.Window;
 import org.eclipse.swt.widgets.Shell;
