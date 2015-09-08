@@ -43,95 +43,111 @@ public class BlockNameValidatorTest {
 		validator = new BlockNameValidator(mockConfig, testBlock);
 	}
 	
+	private void addBlock(EditableBlock block) {
+		blockList.add(block);
+	}
+	
 	@Test
 	public void empty_block_name_is_invalid() {
 		// Assert
-		assertFalse(validator.validate(""));
-		assertEquals(validator.getError(), BlockNameValidator.EMPTY_NAME_MESSAGE);
+		assertFalse(validator.isValidName(""));
+		assertEquals(validator.getErrorMessage(), BlockNameValidator.EMPTY_NAME_MESSAGE);
 	}
 	
 	@Test
 	public void block_name_starting_with_lower_case_is_valid() {
 		// Assert
-		assertTrue(validator.validate("aBlock"));
+		assertTrue(validator.isValidName("aBlock"));
 	}
 	
 	@Test
 	public void block_name_starting_with_a_capital_is_valid() {
 		// Assert
-		assertTrue(validator.validate("BlockName"));
+		assertTrue(validator.isValidName("BlockName"));
 	}
 	
 	@Test
 	public void block_name_with_an_underscore_is_valid() {
 		// Assert
-		assertTrue(validator.validate("a_new_Block"));
+		assertTrue(validator.isValidName("a_new_Block"));
 	}
 	
 	@Test
 	public void block_name_starting_with_a_number_is_invalid() {
 		// Assert
-		assertFalse(validator.validate("10_new_Blocks"));
-		assertEquals(validator.getError(), BlockNameValidator.INVALID_START_CHAR);
+		assertFalse(validator.isValidName("10_new_Blocks"));
+		assertEquals(validator.getErrorMessage(), BlockNameValidator.INVALID_START_CHAR);
 	}
 	
 	@Test
 	public void block_name_starting_with_an_underscore_is_invalid() {
 		// Assert
-		assertFalse(validator.validate("_new_Block"));
-		assertEquals(validator.getError(), BlockNameValidator.INVALID_START_CHAR);
+		assertFalse(validator.isValidName("_new_Block"));
+		assertEquals(validator.getErrorMessage(), BlockNameValidator.INVALID_START_CHAR);
 	}
 	
 	@Test
 	public void block_name_with_explanation_mark_is_invalid() {
 		// Assert
-		assertFalse(validator.validate("new_Block!"));
-		assertEquals(validator.getError(), BlockNameValidator.INVALID_CHARS_MESSAGE);
+		assertFalse(validator.isValidName("new_Block!"));
+		assertEquals(validator.getErrorMessage(), BlockNameValidator.INVALID_CHARS_MESSAGE);
 	}
 	
 	@Test
 	public void block_name_with_hyphen_is_invalid() {
 		// Assert
-		assertFalse(validator.validate("new-Block"));
-		assertEquals(validator.getError(), BlockNameValidator.INVALID_CHARS_MESSAGE);
+		assertFalse(validator.isValidName("new-Block"));
+		assertEquals(validator.getErrorMessage(), BlockNameValidator.INVALID_CHARS_MESSAGE);
 	}
 	
 	@Test
 	public void block_name_with_at_symbol_is_invalid() {
 		// Assert
-		assertFalse(validator.validate("new@Block"));
-		assertEquals(validator.getError(), BlockNameValidator.INVALID_CHARS_MESSAGE);
+		assertFalse(validator.isValidName("new@Block"));
+		assertEquals(validator.getErrorMessage(), BlockNameValidator.INVALID_CHARS_MESSAGE);
 	}
 	
 	@Test
 	public void duplicated_block_name_is_invalid() {
+		// Arrange
+		addBlock(testEditableBlock);
+		
 		// Assert
-		assertFalse(validator.validate(VALID_BLOCK_NAME));
-		assertEquals(validator.getError(), BlockNameValidator.DUPLICATE_GROUP_MESSAGE + ": " + VALID_BLOCK_NAME);
+		assertFalse(validator.isValidName(VALID_BLOCK_NAME));
+		assertEquals(validator.getErrorMessage(), BlockNameValidator.DUPLICATE_GROUP_MESSAGE + ": " + VALID_BLOCK_NAME);
+	}
+	
+	@Test
+	public void unique_block_name_is_valid() {
+		// setup
+		addBlock(testEditableBlock);
+		
+		// Assert
+		assertTrue(validator.isValidName("other_name"));
 	}
 	
 	@Test
 	public void error_message_is_empty_before_validation() {
 		// Assert
-		assertEquals(validator.getError(), "");
+		assertEquals(validator.getErrorMessage(), "");
 	}
 	
 	@Test
 	public void error_message_is_empty_on_success() {
 		// Act
-		assertTrue(validator.validate("aBlock"));
+		assertTrue(validator.isValidName("aBlock"));
 		
 		// Assert
-		assertEquals(validator.getError(), "");
+		assertEquals(validator.getErrorMessage(), "");
 	}
 	
 	@Test
-	public void error_message_is_empty_on_success_after_previous_failutre() {
+	public void error_message_is_empty_on_success_after_previous_failutre() {	
 		// Act
-		validator.validate("_!");
-		validator.validate("aBlock");
+		validator.isValidName("_!");
+		validator.isValidName("aBlock");
 		
 		// Assert
-		assertEquals(validator.getError(), "");
+		assertEquals(validator.getErrorMessage(), "");
 	}
 }

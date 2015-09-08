@@ -82,12 +82,12 @@ public class EditBlockDialog extends TitleAreaDialog {
 		setMessage(null);
 		
 		BlockNameValidator nameVal = new BlockNameValidator(config, block);
-		Boolean nameIsValid = nameVal.validate(name);
+		Boolean nameIsValid = nameVal.isValidName(name);
 				
 		if (nameIsValid) {
 			setSaveEnabled(true);
 		} else {
-			setErrorMessage(nameVal.getError());
+			setErrorMessage(nameVal.getErrorMessage());
 			setSaveEnabled(false);
 		}	
 	}
