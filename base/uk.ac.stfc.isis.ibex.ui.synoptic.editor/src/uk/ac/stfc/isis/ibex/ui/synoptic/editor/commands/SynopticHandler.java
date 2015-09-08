@@ -19,14 +19,13 @@
 
 package uk.ac.stfc.isis.ibex.ui.synoptic.editor.commands;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.jface.window.Window;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.PlatformUI;
 
+import uk.ac.stfc.isis.ibex.epics.writing.SameTypeWriter;
+import uk.ac.stfc.isis.ibex.epics.writing.Writable;
 import uk.ac.stfc.isis.ibex.synoptic.Synoptic;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.SynopticDescription;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.dialogs.EditSynopticDialog;
@@ -35,17 +34,30 @@ import uk.ac.stfc.isis.ibex.ui.synoptic.editor.dialogs.EditSynopticDialog;
  * Handles opening the Synoptic Editor and saving the synoptic when updated. 
  * 
  */
-public abstract class SynopticHandler extends AbstractHandler {
+public abstract class SynopticHandler<T> extends AbstractHandler {
 
-	protected final Synoptic SYNOPTIC = Synoptic.getInstance();
+	protected final static Synoptic SYNOPTIC = Synoptic.getInstance();
 	
-	public SynopticHandler() {
-		SYNOPTIC.edit().saveSynoptic().canSave().addPropertyChangeListener(new PropertyChangeListener() {
-			@Override
-			public void propertyChange(PropertyChangeEvent arg0) {
-				setBaseEnabled(SYNOPTIC.edit().saveSynoptic().canSave().getValue());
-			}
-		});
+	/**
+	 * This is an inner anonymous class inherited from SameTypeWriter with added functionality
+	 * for disabling the command if the underlying PV cannot be written to.
+	 */
+	protected final SameTypeWriter<T> synopticService = new SameTypeWriter<T>() {	
+		@Override
+		public void onCanWriteChanged(boolean canWrite) {
+			setBaseEnabled(canWrite);
+		};	
+	};
+	
+	
+	/**
+	 * Constructor.
+	 * 
+	 * @param destination where to write the data to
+	 */
+	public SynopticHandler(Writable<T> destination) {
+		synopticService.writeTo(destination);
+		destination.subscribe(synopticService);
 	}		
 	
 	protected void openDialog(SynopticDescription synoptic, String title, boolean isBlank) {

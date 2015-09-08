@@ -27,24 +27,20 @@ import org.eclipse.jface.window.Window;
 
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.dialogs.MultipleSynopticsSelectionDialog;
 
-public class DeleteSynopticHandler extends SynopticHandler {
+public class DeleteSynopticHandler extends SynopticHandler<Collection<String>> {
 
 	private static final String TITLE = "Delete Synoptic";
 
 	public DeleteSynopticHandler() {
-		super();
+		super(SYNOPTIC.delete());
 	}	
 	
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {		
 		MultipleSynopticsSelectionDialog dialog = new MultipleSynopticsSelectionDialog(shell(), TITLE, SYNOPTIC.availableSynoptics());
 		if (dialog.open() == Window.OK) {
-			delete(dialog.selectedSynoptics());
+			synopticService.write(dialog.selectedSynoptics());
 		}
 		return null;
-	}
-	
-	private void delete(Collection<String> names) {
-		SYNOPTIC.edit().deleteSynoptics().write(names);
 	}
 }
