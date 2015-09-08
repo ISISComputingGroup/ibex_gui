@@ -88,6 +88,46 @@ public class DisplayBlockTest {
 	}
 	
 	@Test
+	public void setting_in_range_to_false_then_true_sets_text_color_to_black() {
+		// Act
+		inRangeObservable.setValue("NO");
+		inRangeObservable.setValue("YES");
+		
+		// Assert
+		assertEquals(displayBlock.getTextColor(), DisplayBlock.BLACK);
+	}
+	
+	@Test
+	public void setting_in_range_to_false_then_true_sets_background_color_to_white() {
+		// Act
+		inRangeObservable.setValue("NO");
+		inRangeObservable.setValue("YES");
+		
+		// Assert
+		assertEquals(displayBlock.getBackgroundColor(), DisplayBlock.WHITE);
+	}
+
+	@Test
+	public void setting_in_range_to_true_then_false_sets_text_color_to_white() {
+		// Act
+		inRangeObservable.setValue("YES");
+		inRangeObservable.setValue("NO");
+		
+		// Assert
+		assertEquals(displayBlock.getTextColor(), DisplayBlock.WHITE);
+	}
+	
+	@Test
+	public void setting_in_range_to_true_then_false_sets_background_color_to_black() {
+		// Act
+		inRangeObservable.setValue("YES");
+		inRangeObservable.setValue("NO");
+		
+		// Assert
+		assertEquals(displayBlock.getBackgroundColor(), DisplayBlock.DARK_RED);
+	}
+	
+	@Test
 	public void setting_in_range_to_false_then_nonsense_sets_text_color_to_black() {
 		// Act
 		inRangeObservable.setValue("NO");
