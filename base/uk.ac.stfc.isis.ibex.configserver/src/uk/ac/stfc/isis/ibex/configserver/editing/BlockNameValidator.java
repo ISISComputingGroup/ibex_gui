@@ -21,78 +21,89 @@ package uk.ac.stfc.isis.ibex.configserver.editing;
 
 import uk.ac.stfc.isis.ibex.configserver.configuration.Block;
 
+/**
+ * This provides validation for block names. The validation checks for an empty block name, a name that starts with
+ * something other than [a-zA-Z], a name that contains characters other than [a-zA-Z_0-9] and duplicated block names.
+ * An error message can be obtained if the validation fails.
+ * 
+ */
 public class BlockNameValidator {
 	
 	public static final String DUPLICATE_GROUP_MESSAGE = "Duplicate block name";
 	public static final String EMPTY_NAME_MESSAGE = "Block name must not be empty";
 	public static final String INVALID_START_CHAR = "Name should start with a letter";
-	public static final String INVALID_CHARS_MESSAGE = "Block name must not contain special characters";
+	public static final String INVALID_CHARS_MESSAGE = "Block name should only contain letters, numbers and underscores";
+	private static final String NO_ERROR = "";
 	
 	private final EditableConfiguration config;
 	private final Block selectedBlock;
 	
 	private String errorMessage;
 	
+	/**
+	 * Creates a block name validator for a specific config and block, initialised with no error message.
+	 * 
+	 * @param config The configuration being edited
+	 * @param selectedBlock - The block being created or edited
+	 */
 	public BlockNameValidator(EditableConfiguration config, Block selectedBlock) {
 		this.config = config;
 		this.selectedBlock = selectedBlock;
-		this.errorMessage = "";
+		this.errorMessage = NO_ERROR;
 	}
 	
-	public Boolean validate(String text) {		
-		if (text.equals("")) {
-			setError(EMPTY_NAME_MESSAGE);	
-			return false;
-		}
+	/**
+	 * Checks the validity of a proposed block name, and sets the error message if the
+	 * name is invalid.
+	 * 
+	 * @param name The proposed name
+	 * @return True if the name is valid, else false with the error message set
+	 */
+	public Boolean isValidName(String name) {
 		
-		if (nameIsDuplicated(text)) {
-			setError(DUPLICATE_GROUP_MESSAGE + ": " + text);
-			return false;
+		boolean is_valid = false;
+
+		if (name.equals("")) {
+			setErrorMessage(EMPTY_NAME_MESSAGE);	
+		} else if (nameIsDuplicated(name)) {
+			setErrorMessage(DUPLICATE_GROUP_MESSAGE + ": " + name);
+		} else if (!startsWithLetter(name)) {
+			setErrorMessage(INVALID_START_CHAR);
+		} else if (containsSpecialCharacters(name)) {
+			setErrorMessage(INVALID_CHARS_MESSAGE);
+		} else {
+			is_valid = true;
+			setErrorMessage(NO_ERROR);
 		}
-		
-		if (!validateFirstCharacterOfName((String)text)) {
-			setError(INVALID_START_CHAR);
-			return false;
-		}
-		
-		if (!validateForSpecialCharacters((String)text)) {
-			setError(INVALID_CHARS_MESSAGE);
-			return false;
-		}
-		
-		this.errorMessage = "";
-		return true;
+		return is_valid;
 	}
 
-	private void setError(String errorMessage) {
+	private void setErrorMessage(String errorMessage) {
 		this.errorMessage = errorMessage;
 	}
 	
-	public String getError() {
+	public String getErrorMessage() {
 		return errorMessage;
 	}
 	
-	private boolean nameIsDuplicated(Object text) {
+	private boolean nameIsDuplicated(String text) {
 		for (EditableBlock block : config.getEditableBlocks()) {
-			if(isNotBlockBeingEdited(block)) {
-				if (block.getName().equals(text)) {
-					return true;
-				}
+			if (isNotSelectedBlock(block) && block.getName().equals(text)) {
+				return true;
 			}
-		}
-		
+		}		
 		return false;
 	}
 
-	private boolean isNotBlockBeingEdited(Block block) {
+	private boolean isNotSelectedBlock(Block block) {
 		return !block.equals(selectedBlock);
 	}
 	
-	private Boolean validateFirstCharacterOfName(String name) {
+	private Boolean startsWithLetter(String name) {
 		return name.substring(0, 1).matches("[a-zA-Z]");
 	}
 	
-    private Boolean validateForSpecialCharacters(String name) {
-		return name.matches("^[a-zA-Z0-9_]*$");
+    private Boolean containsSpecialCharacters(String name) {
+		return !name.matches("^[a-zA-Z0-9_]*$");
     }
 }
