@@ -23,6 +23,7 @@ import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridLayout;
@@ -31,30 +32,29 @@ import org.eclipse.swt.widgets.Button;
 
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableBlock;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
-import uk.ac.stfc.isis.ibex.ui.configserver.dialogs.MessageDisplayer;
 
 @SuppressWarnings({"checkstyle:magicnumber", "checkstyle:localvariablename"})
 public class BlocksEditorPanel extends Composite {
 
 	private final BlocksTable table;
 	private final Button add;
+	private final Button edit;
 	private final Button remove;
-	private final BlockDetailsPanel details;
 	
 	private EditableConfiguration config;
 	
-	public BlocksEditorPanel(Composite parent, int style, final MessageDisplayer messageDisplayer) {
+	public BlocksEditorPanel(Composite parent, int style) {
 		super(parent, style);
 		setLayout(new GridLayout(1, false));
 		
 		table = new BlocksTable(this, SWT.NONE, SWT.V_SCROLL | SWT.NO_SCROLL | SWT.FULL_SELECTION, true);
 		GridData gd_table = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
-		gd_table.heightHint = 200;
+		gd_table.heightHint = 90;
 		table.setLayoutData(gd_table);
 		
 		Composite composite = new Composite(this, SWT.NONE);
 		composite.setLayoutData(new GridData(SWT.RIGHT, SWT.FILL, true, false, 1, 1));
-		GridLayout gl_composite = new GridLayout(2, false);
+		GridLayout gl_composite = new GridLayout(3, false);
 		gl_composite.verticalSpacing = 0;
 		gl_composite.marginWidth = 0;
 		gl_composite.marginHeight = 0;
@@ -62,45 +62,65 @@ public class BlocksEditorPanel extends Composite {
 		
 		add = new Button(composite, SWT.NONE);
 		GridData gd_add = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
-		gd_add.widthHint = 70;
+		gd_add.widthHint = 110;
+		
 		add.setLayoutData(gd_add);
-		add.setText("Add");
-		add.setEnabled(false);		
+		add.setText("Add Block");	
 		add.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				EditableBlock added = config.addNewBlock();
+				EditBlockDialog dialog = new EditBlockDialog(getShell(), added, config);
+				dialog.open();
 				setBlocks(config);
 				setSelectedBlock(added);
 				table.setSelected(added);
 			}
 		});
 		
+		edit = new Button(composite, SWT.NONE);
+		GridData gd_edit = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+		gd_edit.widthHint = 110;
+		edit.setLayoutData(gd_edit);
+		edit.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				EditableBlock toEdit = table.firstSelectedRow();
+				EditBlockDialog dialog = new EditBlockDialog(getShell(), toEdit, config);
+				dialog.open();
+			}
+		});
+		edit.setText("Edit Block");
+		edit.setEnabled(false);
+		
 		remove = new Button(composite, SWT.NONE);
 		remove.setEnabled(false);
 		GridData gd_remove = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
-		gd_remove.widthHint = 70;
+		gd_remove.widthHint = 110;
 		remove.setLayoutData(gd_remove);
-		remove.setText("Remove");
+		remove.setText("Delete Block");
 		remove.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				EditableBlock toRemove = table.firstSelectedRow();
-				int index = table.getSelectionIndex();
-				config.removeBlock(toRemove);
-				setBlocks(config);
 				
-				// Update new selection
-				int newIndex = index > 0 ? index - 1 : index;
-				table.setSelectionIndex(newIndex);
-				setSelectedBlock(table.firstSelectedRow());
+				MessageBox dialog = new MessageBox(getShell(), SWT.ICON_WARNING | SWT.OK| SWT.CANCEL);
+				dialog.setText("Delete Block");
+				dialog.setMessage("Do you really want to delete the block " + toRemove.getName() + "?");
+				int returnCode = dialog.open();
+				
+				if (returnCode == SWT.OK) {
+					int index = table.getSelectionIndex();
+					config.removeBlock(toRemove);
+					setBlocks(config);
+				
+					// Update new selection
+					int newIndex = index > 0 ? index - 1 : index;
+					table.setSelectionIndex(newIndex);
+					setSelectedBlock(table.firstSelectedRow());
+				}
 			}
 		});
-		
-		details = new BlockDetailsPanel(this, SWT.NONE, messageDisplayer);
-		GridData gd_details = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
-		//gd_details.heightHint = 200;
-		details.setLayoutData(gd_details);
 		
 		table.addSelectionChangedListener(new ISelectionChangedListener() {
 			@Override
@@ -116,7 +136,6 @@ public class BlocksEditorPanel extends Composite {
 		
 		add.setEnabled(true);
 		setBlocks(config);
-		details.setConfig(config);
 	}
 	
 	private void setBlocks(EditableConfiguration config) {
@@ -125,11 +144,11 @@ public class BlocksEditorPanel extends Composite {
 	}
 	
 	private void setSelectedBlock(EditableBlock selected) {
-		remove.setEnabled(removeEnabled(selected));
-		details.setBlock(selected);
+		edit.setEnabled(editEnabled(selected));
+		remove.setEnabled(editEnabled(selected));
 	}
 	
-	private boolean removeEnabled(EditableBlock block) {
+	private boolean editEnabled(EditableBlock block) {
 		return block != null && block.isEditable();
 	}
 }
