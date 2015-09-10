@@ -22,14 +22,9 @@ package uk.ac.stfc.isis.ibex.ui.blocks.views;
 import java.util.Collection;
 import java.util.Collections;
 
-import org.eclipse.jface.action.IStatusLineManager;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.ISizeProvider;
-import org.eclipse.ui.IViewSite;
-import org.eclipse.ui.IWorkbenchPartSite;
-import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.layout.GridData;
@@ -51,8 +46,6 @@ public class BlocksView extends ViewPart implements ISizeProvider {
 
 	private static final InitialiseOnSubscribeObservable<DisplayConfiguration> CONFIG = 
 			Configurations.getInstance().display().displayCurrentConfig();
-	
-	private final Display display = Display.getCurrent();
 
 	private GroupsPanel groups;
 	private Subscription configSubscription;
@@ -60,7 +53,6 @@ public class BlocksView extends ViewPart implements ISizeProvider {
 	private final BaseObserver<DisplayConfiguration> configObserver = new BaseObserver<DisplayConfiguration>() {
 		@Override
 		public void onValue(DisplayConfiguration value) {
-			setTitle(value.name(), value.description());
 			setGroups(value.groups());
 		}
 
@@ -83,7 +75,6 @@ public class BlocksView extends ViewPart implements ISizeProvider {
 		}
 		
 		private void setUnknownConfiguration() {
-			setTitle("Unknown", "Unable to display the configuration");
 			setGroups(Collections.<DisplayGroup>emptyList());
 		}		
 	};	
@@ -128,20 +119,5 @@ public class BlocksView extends ViewPart implements ISizeProvider {
 	@Override
 	public void setFocus() {
 	}
-	
-	private void setTitle(final String title, final String description) {
-		display.asyncExec(new Runnable() {
-			@Override
-			public void run() {
-				IWorkbenchPartSite site = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getActivePart().getSite();
-				IViewSite vSite = (IViewSite) site;
-				IStatusLineManager statusLineManager = vSite.getActionBars().getStatusLineManager();
-				
-		    	StatusLineConfigLabel statusItem = (StatusLineConfigLabel)statusLineManager.find("CurrentConfigTitle");
-		    	statusItem.setConfig(title);
-		    	statusItem.setToolTip(description);
-		    	statusLineManager.update(true);
-			}
-		});
-	}
+
 }

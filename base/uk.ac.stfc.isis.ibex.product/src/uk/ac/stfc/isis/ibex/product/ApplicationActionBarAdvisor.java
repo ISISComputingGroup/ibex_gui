@@ -23,7 +23,7 @@ import org.eclipse.jface.action.IStatusLineManager;
 import org.eclipse.ui.application.ActionBarAdvisor;
 import org.eclipse.ui.application.IActionBarConfigurer;
 
-import uk.ac.stfc.isis.ibex.ui.blocks.views.StatusLineConfigLabel;
+import uk.ac.stfc.isis.ibex.ui.statusbar.StatusLineConfigLabel;
 
 
 /**

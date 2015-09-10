@@ -1,4 +1,4 @@
-package uk.ac.stfc.isis.ibex.ui.blocks.views;
+package uk.ac.stfc.isis.ibex.ui.statusbar;
 
 import org.eclipse.jface.action.ContributionItem;
 import org.eclipse.swt.SWT;
