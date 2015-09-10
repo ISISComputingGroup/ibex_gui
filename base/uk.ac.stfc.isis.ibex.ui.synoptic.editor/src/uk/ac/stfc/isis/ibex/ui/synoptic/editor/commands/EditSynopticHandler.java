@@ -30,12 +30,12 @@ import uk.ac.stfc.isis.ibex.synoptic.SynopticInfo;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.SynopticDescription;
 import uk.ac.stfc.isis.ibex.ui.synoptic.SynopticSelectionDialog;
 
-public class EditSynopticHandler extends SynopticHandler {
+public class EditSynopticHandler extends SynopticHandler<String> {
 
 	private static final String TITLE = "Edit Synoptic";
 
 	public EditSynopticHandler() {
-		super();
+		super(SYNOPTIC.editSynoptic());
 	}	
 	
 	@Override

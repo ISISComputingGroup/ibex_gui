@@ -28,6 +28,7 @@ import org.osgi.framework.BundleContext;
 
 import uk.ac.stfc.isis.ibex.epics.observing.InitialiseOnSubscribeObservable;
 import uk.ac.stfc.isis.ibex.epics.pv.Closer;
+import uk.ac.stfc.isis.ibex.epics.writing.Writable;
 import uk.ac.stfc.isis.ibex.instrument.Instrument;
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
 import uk.ac.stfc.isis.ibex.synoptic.internal.ObservingSynopticModel;
@@ -144,5 +145,17 @@ public class Synoptic extends Closer implements BundleActivator {
 	public void stop(BundleContext bundleContext) throws Exception {
 		Synoptic.context = null;
 		close();
+	}
+	
+
+	/**
+	 * The writables below were added for greying out the menu items - they are not used otherwise
+	 */
+	public Writable<Collection<String>> delete() {
+		return editorModel.deleteSynoptics();
+	}
+	
+	public Writable<String> editSynoptic() {
+		return editorModel.setSynoptic();
 	}
 }
