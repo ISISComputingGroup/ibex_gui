@@ -33,8 +33,6 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.widgets.Label;
-import org.eclipse.wb.swt.SWTResourceManager;
 
 import uk.ac.stfc.isis.ibex.configserver.Configurations;
 import uk.ac.stfc.isis.ibex.configserver.displaying.DisplayConfiguration;
@@ -54,7 +52,6 @@ public class BlocksView extends ViewPart implements ISizeProvider {
 	private static final InitialiseOnSubscribeObservable<DisplayConfiguration> CONFIG = 
 			Configurations.getInstance().display().displayCurrentConfig();
 	
-	private Label lblConfiguration;
 	private final Display display = Display.getCurrent();
 
 	private GroupsPanel groups;
@@ -104,14 +101,6 @@ public class BlocksView extends ViewPart implements ISizeProvider {
 			configSubscription.removeObserver();
 		}
 		
-		lblConfiguration = new Label(parent, SWT.NONE);
-		lblConfiguration.setFont(SWTResourceManager.getFont("Arial", 10, SWT.BOLD));
-		lblConfiguration.setText("Configuration: ");
-		GridData gd_lblConfiguration = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
-		gd_lblConfiguration.verticalIndent = 2;
-		gd_lblConfiguration.horizontalIndent = 5;
-		lblConfiguration.setLayoutData(gd_lblConfiguration);
-		
 		groups = new GroupsPanel(parent, SWT.NONE);
 		groups.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 
@@ -140,16 +129,10 @@ public class BlocksView extends ViewPart implements ISizeProvider {
 	public void setFocus() {
 	}
 	
-	private String title(String name) {
-		return "Configuration: " + name;
-	}
-	
 	private void setTitle(final String title, final String description) {
 		display.asyncExec(new Runnable() {
 			@Override
 			public void run() {
-				lblConfiguration.setText(title(title));
-				lblConfiguration.setToolTipText(description);
 				IWorkbenchPartSite site = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getActivePart().getSite();
 				IViewSite vSite = (IViewSite) site;
 				IStatusLineManager statusLineManager = vSite.getActionBars().getStatusLineManager();

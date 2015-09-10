@@ -48,7 +48,7 @@ public class GroupsPanel extends Composite {
 	
 	private Collection<DisplayGroup> displayGroups;
 
-	private static final int GROUP_HEIGHT = 200;
+	private static final int GROUP_HEIGHT = 235;
 	
 	public GroupsPanel(Composite parent, int style) {
 		super(parent, SWT.NONE);
