@@ -43,8 +43,7 @@ import uk.ac.stfc.isis.ibex.ui.configserver.editing.iocs.IIocDependentPanel;
  *
  */
 public class MacroPanel extends Composite implements IIocDependentPanel {
-	private Collection<Macro> macros;
-	private Collection<Macro> availableMacros;
+	private Collection<Macro> displayMacros;
 	private IocMacroDetailsPanel details;
 	
 	private boolean canEditMacros;
@@ -58,18 +57,28 @@ public class MacroPanel extends Composite implements IIocDependentPanel {
 	}
 	
 	// Initialise the tab with macro data for an IOC
-	public void setMacros(Collection<Macro> macros, Collection<Macro> availableMacros, boolean canEdit) {
-		this.macros = macros;
-		this.availableMacros = availableMacros;
+	public void setMacros(Collection<Macro> setMacros, Collection<Macro> availableMacros, boolean canEdit) {
+		this.displayMacros = new ArrayList<Macro>();
 		this.canEditMacros = canEdit;
 		
+		for (Macro availableMacro : availableMacros) {
+			Macro displayMacro = new Macro(availableMacro);
+			for (Macro setMacro : setMacros) {
+				if (setMacro.getName().equals(availableMacro.getName())) {
+					displayMacro.setValue(setMacro.getValue());
+				}
+			}
+
+			displayMacros.add(displayMacro);
+		}
+				
 		setMacro(null);
 	}
 	
 	// Set the macro to be edited
 	private void setMacro(Macro macro) {
-		availableMacros = sortMacroCollectionByName(availableMacros);
-		details.setMacro(macro, macros, availableMacros, canEditMacros);
+		displayMacros = sortMacroCollectionByName(displayMacros);
+		details.setMacro(macro, displayMacros, canEditMacros);
 	}
 
 	@Override

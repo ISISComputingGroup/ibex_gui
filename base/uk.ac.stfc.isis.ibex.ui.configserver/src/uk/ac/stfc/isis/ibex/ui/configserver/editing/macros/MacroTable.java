@@ -17,7 +17,6 @@
 * http://opensource.org/licenses/eclipse-1.0.php
 */
 
-// Table showing macros for an IOC
 package uk.ac.stfc.isis.ibex.ui.configserver.editing.macros;
 
 import java.util.Collection;
@@ -31,11 +30,15 @@ import uk.ac.stfc.isis.ibex.ui.tables.DataboundCellLabelProvider;
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundTable;
 
 public class MacroTable extends DataboundTable<Macro> {
+	private MacroAddressFilter filter;
 	
 	public MacroTable(Composite parent, int style, int tableStyle) {
 		super(parent, style, Macro.class, tableStyle | SWT.BORDER);
 
 		initialise();
+	
+		filter = new MacroAddressFilter();
+		this.viewer().addFilter(filter);
 	}
 	
 	@Override
@@ -47,29 +50,52 @@ public class MacroTable extends DataboundTable<Macro> {
 	protected void addColumns() {
 		name();
 		value();
+		description();
+		pattern();
 	}
 	
 	private void name() {
-		TableViewerColumn name = createColumn("Name", 6);
-		name.setLabelProvider(new DataboundCellLabelProvider<Macro>(observeProperty("name")) {
+		TableViewerColumn desc = createColumn("Macro name", 6);
+		desc.setLabelProvider(new DataboundCellLabelProvider<Macro>(observeProperty("name")) {
 			@Override
 			protected String valueFromRow(Macro row) {
 				return row.getName();
 			}
-		});	
+		});
 	}
 	
 	private void value() {
-		TableViewerColumn value = createColumn("Value", 6);
-		value.setLabelProvider(new DataboundCellLabelProvider<Macro>(observeProperty("value")) {
+		TableViewerColumn desc = createColumn("Value", 5);
+		desc.setLabelProvider(new DataboundCellLabelProvider<Macro>(observeProperty("value")) {
 			@Override
 			protected String valueFromRow(Macro row) {
 				return row.getValue();
 			}
+		});
+	}
+	
+	private void description() {
+		TableViewerColumn desc = createColumn("Description", 8);
+		desc.setLabelProvider(new DataboundCellLabelProvider<Macro>(observeProperty("description")) {
+			@Override
+			protected String valueFromRow(Macro row) {
+				return row.getDescription();
+			}
 		});	
 	}
 	
-	public void setSelection(int i) {
-		table().setSelection(i);
+	private void pattern() {
+		TableViewerColumn desc = createColumn("Pattern", 8);
+		desc.setLabelProvider(new DataboundCellLabelProvider<Macro>(observeProperty("pattern")) {
+			@Override
+			protected String valueFromRow(Macro row) {
+				return row.getPattern();
+			}
+		});	
+	}
+	
+	public void setFilter(String search) {
+		filter.setSearchText(search);
+		this.viewer().refresh();
 	}
 }
