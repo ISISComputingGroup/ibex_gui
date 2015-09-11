@@ -129,7 +129,7 @@ public class IocMacroDetailsPanel extends Composite {
 		macroValueErrorLabel.setLayoutData(gd_macroValueErrorLabel);
 		macroValueErrorLabel.setText("placeholder placeholder placeholder placeholder");
 		
-		displayMacrosTable = new MacroTable(grpSelectedPv, SWT.NONE, 0);
+		displayMacrosTable = new MacroTable(grpSelectedPv, SWT.NONE, SWT.FULL_SELECTION);
 		GridData gd_availableMacrosTable = new GridData(SWT.FILL, SWT.FILL, true, true, 4, 1);
 		gd_availableMacrosTable.widthHint = 428;
 		displayMacrosTable.setLayoutData(gd_availableMacrosTable);

@@ -30,15 +30,11 @@ import uk.ac.stfc.isis.ibex.ui.tables.DataboundCellLabelProvider;
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundTable;
 
 public class MacroTable extends DataboundTable<Macro> {
-	private MacroAddressFilter filter;
 	
 	public MacroTable(Composite parent, int style, int tableStyle) {
 		super(parent, style, Macro.class, tableStyle | SWT.BORDER);
 
 		initialise();
-	
-		filter = new MacroAddressFilter();
-		this.viewer().addFilter(filter);
 	}
 	
 	@Override
@@ -92,10 +88,5 @@ public class MacroTable extends DataboundTable<Macro> {
 				return row.getPattern();
 			}
 		});	
-	}
-	
-	public void setFilter(String search) {
-		filter.setSearchText(search);
-		this.viewer().refresh();
 	}
 }
