@@ -66,6 +66,7 @@ public class IocMacroDetailsPanel extends Composite {
 	
 	private Macro macro;
 	private Label errorIconLabel;
+	private Button clearMacro;
 	
 	public IocMacroDetailsPanel(Composite parent, int style) {
 		super(parent, style);
@@ -73,7 +74,7 @@ public class IocMacroDetailsPanel extends Composite {
 		
 		Group grpSelectedPv = new Group(this, SWT.NONE);
 		grpSelectedPv.setText("Selected Macro");
-		grpSelectedPv.setLayout(new GridLayout(3, false));
+		grpSelectedPv.setLayout(new GridLayout(4, false));
 		
 		Label lblName = new Label(grpSelectedPv, SWT.NONE);
 		lblName.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
@@ -81,8 +82,7 @@ public class IocMacroDetailsPanel extends Composite {
 		
 		name = new Text(grpSelectedPv, SWT.BORDER);
 		name.setEditable(false);
-		name.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		new Label(grpSelectedPv, SWT.NONE);
+		name.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 3, 1));
 		
 		Label lblValue = new Label(grpSelectedPv, SWT.NONE);
 		lblValue.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
@@ -97,9 +97,21 @@ public class IocMacroDetailsPanel extends Composite {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				macro.setValue(value.getText());
+				setClearButtonEnabled(true);
 			}
 		});
 		setMacroButton.setText("Set Macro");
+		
+		clearMacro = new Button(grpSelectedPv, SWT.NONE);
+		clearMacro.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				macro.setValue("");
+				value.setText("");
+				setClearButtonEnabled(false);
+			}
+		});
+		clearMacro.setText("Clear Macro");
 		
 		errorIconLabel = new Label(grpSelectedPv, SWT.NONE);
 		errorIconLabel.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
@@ -112,15 +124,16 @@ public class IocMacroDetailsPanel extends Composite {
 		errorIconLabel.setImage(scaled);
 		
 		macroValueErrorLabel = new Label(grpSelectedPv, SWT.NONE);
-		GridData gd_macroValueErrorLabel = new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1);
+		GridData gd_macroValueErrorLabel = new GridData(SWT.LEFT, SWT.CENTER, false, false, 3, 1);
 		gd_macroValueErrorLabel.widthHint = 300;
 		macroValueErrorLabel.setLayoutData(gd_macroValueErrorLabel);
 		macroValueErrorLabel.setText("placeholder placeholder placeholder placeholder");
 		
 		displayMacrosTable = new MacroTable(grpSelectedPv, SWT.NONE, 0);
-		GridData gd_availableMacrosTable = new GridData(SWT.FILL, SWT.FILL, true, true, 3, 1);
+		GridData gd_availableMacrosTable = new GridData(SWT.FILL, SWT.FILL, true, true, 4, 1);
 		gd_availableMacrosTable.widthHint = 428;
 		displayMacrosTable.setLayoutData(gd_availableMacrosTable);
+		new Label(grpSelectedPv, SWT.NONE);
 		new Label(grpSelectedPv, SWT.NONE);
 		new Label(grpSelectedPv, SWT.NONE);
 		new Label(grpSelectedPv, SWT.NONE);
@@ -202,5 +215,15 @@ public class IocMacroDetailsPanel extends Composite {
 		
 		// Force the validation to update, for example when selecting a macro
 		valueValidator.validate("");
+		
+		setClearButtonEnabled(enabled);
+	}
+	
+	private void setClearButtonEnabled(boolean enabled) {
+		if (macro == null || Strings.isNullOrEmpty(macro.getValue())) {
+			clearMacro.setEnabled(false);
+		} else {
+			clearMacro.setEnabled(enabled);
+		}
 	}
 }
