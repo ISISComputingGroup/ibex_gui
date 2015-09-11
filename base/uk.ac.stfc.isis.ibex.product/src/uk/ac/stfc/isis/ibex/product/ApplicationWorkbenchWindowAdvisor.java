@@ -27,8 +27,6 @@ import org.eclipse.ui.application.IActionBarConfigurer;
 import org.eclipse.ui.application.IWorkbenchWindowConfigurer;
 import org.eclipse.ui.application.WorkbenchWindowAdvisor;
 
-import uk.ac.stfc.isis.ibex.ui.statusbar.StatusBar;
-
 public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
 	
 	public ApplicationWorkbenchWindowAdvisor(IWorkbenchWindowConfigurer configurer) {
@@ -54,8 +52,7 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
     public void postWindowCreate() {
     	super.postWindowCreate();
         final Shell shell = getWindowConfigurer().getWindow().getShell();
-        shell.setMinimumSize(1100, 800);    
-        StatusBar.getInstance().bind();
+        shell.setMinimumSize(1100, 800);   
     }
     
     @Override

@@ -73,7 +73,7 @@ public class StatusBar extends AbstractUIPlugin{
 		return instance;
 	}
 	
-	public void bind() {
+	public void subscribeToConfig() {
 		InitialiseOnSubscribeObservable<DisplayConfiguration> CONFIG = 
 				Configurations.getInstance().display().displayCurrentConfig();
 		
