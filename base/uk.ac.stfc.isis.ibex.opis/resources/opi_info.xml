@@ -19,6 +19,14 @@
 						<name>MB</name>
 						<description>The internal number for the second channel.</description>
 					</macro>
+					<macro>
+						<name>MAHVCHAN</name>
+						<description>CAEN HV channel for A.</description>
+					</macro>
+					<macro>
+						<name>MBHVCHAN</name>
+						<description>CAEN HV channel for B.</description>
+					</macro>
 				</macros>
 			</value>
 		</entry>
