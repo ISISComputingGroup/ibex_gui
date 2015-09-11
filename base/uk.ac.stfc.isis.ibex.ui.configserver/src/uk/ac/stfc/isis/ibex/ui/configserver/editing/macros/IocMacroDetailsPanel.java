@@ -41,7 +41,8 @@ import org.eclipse.swt.widgets.Text;
 import com.google.common.base.Strings;
 
 import uk.ac.stfc.isis.ibex.configserver.configuration.Macro;
-import uk.ac.stfc.isis.ibex.ui.configserver.dialogs.MessageDisplayer;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 
 /**
  * This panel allows macro names and values to be set, and shows a list of available macros for an
@@ -52,19 +53,17 @@ import uk.ac.stfc.isis.ibex.ui.configserver.dialogs.MessageDisplayer;
  * 
  */
 public class IocMacroDetailsPanel extends Composite {
-	private final MessageDisplayer messageDisplayer;
 	private Text name;
 	private Text value;
 	private DataBindingContext bindingContext;
 	private MacroTable displayMacrosTable;
-	private UpdateValueStrategy nameStrategy = new UpdateValueStrategy();
 	private UpdateValueStrategy valueStrategy = new UpdateValueStrategy();
 	private MacroValueValidator valueValidator;
 	private Button setMacroButton;
+	private Label macroValueErrorLabel;
 	
-	public IocMacroDetailsPanel(Composite parent, int style, MessageDisplayer messageDisplayer) {
+	public IocMacroDetailsPanel(Composite parent, int style) {
 		super(parent, style);
-		this.messageDisplayer = messageDisplayer;
 		setLayout(new FillLayout(SWT.HORIZONTAL));
 		
 		Group grpSelectedPv = new Group(this, SWT.NONE);
@@ -89,7 +88,20 @@ public class IocMacroDetailsPanel extends Composite {
 		value.setEnabled(false);
 		
 		setMacroButton = new Button(grpSelectedPv, SWT.NONE);
+		setMacroButton.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+			}
+		});
 		setMacroButton.setText("Set Macro");
+		new Label(grpSelectedPv, SWT.NONE);
+		
+		macroValueErrorLabel = new Label(grpSelectedPv, SWT.NONE);
+		GridData gd_macroValueErrorLabel = new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1);
+		gd_macroValueErrorLabel.heightHint = 20;
+		gd_macroValueErrorLabel.widthHint = 300;
+		macroValueErrorLabel.setLayoutData(gd_macroValueErrorLabel);
+		macroValueErrorLabel.setText("placeholder placeholder placeholder placeholder");
 		
 		displayMacrosTable = new MacroTable(grpSelectedPv, SWT.NONE, 0);
 		GridData gd_availableMacrosTable = new GridData(SWT.FILL, SWT.FILL, true, true, 3, 1);
@@ -124,8 +136,7 @@ public class IocMacroDetailsPanel extends Composite {
 		setEnabled(canEdit);
 				
 		bindingContext = new DataBindingContext();
-		nameStrategy.setBeforeSetValidator(new MacroNameValidator(macros, macro, messageDisplayer));
-		valueValidator = new MacroValueValidator(macro, messageDisplayer);
+		valueValidator = new MacroValueValidator(macro, macroValueErrorLabel);
 		valueStrategy.setBeforeSetValidator(valueValidator);
 				
 		bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(value), BeanProperties.value("value").observe(macro), valueStrategy, null);
@@ -139,6 +150,8 @@ public class IocMacroDetailsPanel extends Composite {
 		} else {
 			setValueEditable(canEdit);
 		}
+		
+		valueValidator.setMacro(macro);
 		
 		value.setText(Strings.nullToEmpty(macro.getValue()));
 	}
