@@ -10,6 +10,13 @@
 *.properties text 
 *.js text 
 *.json text 
+*.opi text
+*.xml text
+*.py text
+*.txt text
+*.htm text
+*.html text
+
 
 # Declare files that will always have CRLF line endings on checkout.
 *.sln text     eol=crlf
@@ -28,3 +35,4 @@
 *.dll binary
 *.jar binary
 *.war binary
+*.zip binary
