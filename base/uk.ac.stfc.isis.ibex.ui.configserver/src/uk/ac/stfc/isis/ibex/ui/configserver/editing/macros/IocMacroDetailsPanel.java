@@ -34,6 +34,7 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
@@ -43,13 +44,14 @@ import com.google.common.base.Strings;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Macro;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.graphics.Image;
 
 /**
  * This panel allows macro names and values to be set, and shows a list of available macros for an
  * IOC.
  * 
- * In the list of available macros a description and pattern is also shown. If the macro being set
- * is in this list, the macro value is also checked against the pattern. 
+ * In the list of available macros a description and pattern is also shown. The macro can only be 
+ * set if the pattern is matched by the new value.
  * 
  */
 public class IocMacroDetailsPanel extends Composite {
@@ -63,6 +65,7 @@ public class IocMacroDetailsPanel extends Composite {
 	private Label macroValueErrorLabel;
 	
 	private Macro macro;
+	private Label errorIconLabel;
 	
 	public IocMacroDetailsPanel(Composite parent, int style) {
 		super(parent, style);
@@ -97,11 +100,19 @@ public class IocMacroDetailsPanel extends Composite {
 			}
 		});
 		setMacroButton.setText("Set Macro");
-		new Label(grpSelectedPv, SWT.NONE);
+		
+		errorIconLabel = new Label(grpSelectedPv, SWT.NONE);
+		errorIconLabel.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
+		errorIconLabel.setText("");
+		
+		Display display = Display.getCurrent(); 
+		Image img = display.getSystemImage(SWT.ICON_WARNING);
+		Image scaled = new Image(display, img.getImageData().scaledTo(20, 20));
+		
+		errorIconLabel.setImage(scaled);
 		
 		macroValueErrorLabel = new Label(grpSelectedPv, SWT.NONE);
 		GridData gd_macroValueErrorLabel = new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1);
-		gd_macroValueErrorLabel.heightHint = 20;
 		gd_macroValueErrorLabel.widthHint = 300;
 		macroValueErrorLabel.setLayoutData(gd_macroValueErrorLabel);
 		macroValueErrorLabel.setText("placeholder placeholder placeholder placeholder");
@@ -125,6 +136,11 @@ public class IocMacroDetailsPanel extends Composite {
 		});
 	}
 	
+	/**
+	 * Called when changing IOCs. Should reset everything such as name, selection etc.
+	 * @param macros The macros to display of the current IOC
+	 * @param canEdit If the IOC is editable
+	 */
 	public void setMacros(Collection<Macro> macros, boolean canEdit) {
 		this.macro = null;
 		
@@ -132,33 +148,42 @@ public class IocMacroDetailsPanel extends Composite {
 			bindingContext.dispose();
 		}
 		
-		if (macro == null) {
-			setValueEditable(false);
-		} else {
-			setValueEditable(canEdit);
-		}
-		
-		setEnabled(canEdit);
-				
 		bindingContext = new DataBindingContext();
 		valueValidator = new MacroValueValidator(macro, macroValueErrorLabel);
 		valueStrategy.setBeforeSetValidator(valueValidator);
-				
-		bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(value), BeanProperties.value("value").observe(macro), valueStrategy, null);
+		
+		setValueEditable(false);
+		setEnabled(canEdit);
+		
+		bindingContext.bindValue(
+				WidgetProperties.text(SWT.Modify).observe(value), 
+				BeanProperties.value("value").observe(macro), 
+				valueStrategy, null);
+		
+		bindingContext.bindValue(
+				WidgetProperties.enabled().observe(setMacroButton), 
+				BeanProperties.value(MacroValueValidator.NAME_IS_VALID).observe(valueValidator));
+		
+		bindingContext.bindValue(WidgetProperties.visible().observe(errorIconLabel), 
+				BeanProperties.value(MacroValueValidator.SHOW_WARNING_ICON).observe(valueValidator));
 		
 		displayMacrosTable.setRows(macros);
+		displayMacrosTable.deselectAll();
+		
+		name.setText("");
 	}
 	
-	public void setMacro(Macro macro, boolean canEdit) {
+	/**
+	 * Set a new selected macro.
+	 * 
+	 * @param macro The macro to set
+	 * @param canEdit If the macro is editable
+	 */
+	public void setMacro(Macro macro, boolean canEdit) {		
 		this.macro = macro;
 		
-		if (macro == null) {
-			setValueEditable(false);
-		} else {
-			setValueEditable(canEdit);
-		}
-		
 		valueValidator.setMacro(macro);
+		setValueEditable(canEdit);
 		
 		value.setText(Strings.nullToEmpty(macro.getValue()));
 	}
@@ -174,5 +199,8 @@ public class IocMacroDetailsPanel extends Composite {
 		if (!enabled) {
 			value.setText("");
 		}
+		
+		// Force the validation to update, for example when selecting a macro
+		valueValidator.validate("");
 	}
 }

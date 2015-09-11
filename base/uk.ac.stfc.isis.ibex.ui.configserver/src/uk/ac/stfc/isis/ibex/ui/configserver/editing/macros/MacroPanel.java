@@ -36,7 +36,6 @@ import org.eclipse.swt.widgets.Composite;
 
 import uk.ac.stfc.isis.ibex.configserver.configuration.Macro;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableIoc;
-import uk.ac.stfc.isis.ibex.ui.configserver.dialogs.MessageDisplayer;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.iocs.IIocDependentPanel;
 
 /**
@@ -50,7 +49,7 @@ public class MacroPanel extends Composite implements IIocDependentPanel {
 	
 	private boolean canEditMacros;
 	
-	public MacroPanel(Composite parent, int style, MessageDisplayer msgDisp) {
+	public MacroPanel(Composite parent, int style) {
 		super(parent, SWT.NONE);
 		setLayout(new FillLayout(SWT.HORIZONTAL));
 		
@@ -60,34 +59,12 @@ public class MacroPanel extends Composite implements IIocDependentPanel {
 	
 	// Initialise the tab with macro data for an IOC
 	public void setMacros(final Collection<Macro> setMacros, Collection<Macro> availableMacros, boolean canEdit) {
-		this.displayMacros = new ArrayList<Macro>();
 		this.canEditMacros = canEdit;
+		this.displayMacros = makeDisplayMacroList(setMacros, availableMacros);
 		
-		for (Macro availableMacro : availableMacros) {
-			boolean macroCurrentlySet = false;
-			final Macro displayMacro = new Macro(availableMacro);
-			for (final Macro setMacro : setMacros) {
-				if (setMacro.getName().equals(availableMacro.getName())) {
-					displayMacro.setValue(setMacro.getValue());
-					displayMacro.addPropertyChangeListener("value", updateValueListener(setMacro));
-					macroCurrentlySet = true;
-				}
-			}
-
-			displayMacros.add(displayMacro);
-			
-			if (!macroCurrentlySet) {
-				displayMacro.addPropertyChangeListener("value", addSetMacroListener(displayMacro, setMacros));
-			}
-		}
-				
-		setMacros();
-	}
-	
-	// Set the macro to be edited
-	private void setMacros() {
 		displayMacros = sortMacroCollectionByName(displayMacros);
 		details.setMacros(displayMacros, canEditMacros);
+
 	}
 
 	@Override
@@ -133,5 +110,37 @@ public class MacroPanel extends Composite implements IIocDependentPanel {
 				setMacros.add(newMacro);
 			}
 		};
+	}
+	
+	/**
+	 * Creates a list of macros to display, by combining available macros with the value of any macros set in
+	 * set macros.
+	 * 
+	 * @param setMacros A collection containing the macros that have been set
+	 * @param availableMacros A collection containing all the available macros
+	 * @return
+	 */
+	private Collection<Macro> makeDisplayMacroList(Collection<Macro> setMacros, Collection<Macro> availableMacros) {
+		displayMacros = new ArrayList<Macro>();
+		
+		for (Macro availableMacro : availableMacros) {
+			boolean macroCurrentlySet = false;
+			final Macro displayMacro = new Macro(availableMacro);
+			for (final Macro setMacro : setMacros) {
+				if (setMacro.getName().equals(availableMacro.getName())) {
+					displayMacro.setValue(setMacro.getValue());
+					displayMacro.addPropertyChangeListener("value", updateValueListener(setMacro));
+					macroCurrentlySet = true;
+				}
+			}
+
+			displayMacros.add(displayMacro);
+			
+			if (!macroCurrentlySet) {
+				displayMacro.addPropertyChangeListener("value", addSetMacroListener(displayMacro, setMacros));
+			}
+		}
+		
+		return displayMacros;
 	}
 }

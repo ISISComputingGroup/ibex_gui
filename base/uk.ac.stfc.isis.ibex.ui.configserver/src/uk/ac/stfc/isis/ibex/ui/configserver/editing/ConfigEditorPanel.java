@@ -99,10 +99,10 @@ public class ConfigEditorPanel extends Composite {
 		IIocPanelCreator macroFactory = new IIocPanelCreator() {
 			@Override
 			public IIocDependentPanel factory(Composite parent) {
-				return new MacroPanel(parent, SWT.NONE, msgDisp);
+				return new MacroPanel(parent, SWT.NONE);
 			}
 		};
-		iocMacros = new IocSelectorPanel(editorTabs, SWT.NONE, dialog, macroFactory);
+		iocMacros = new IocSelectorPanel(editorTabs, SWT.NONE, macroFactory);
 		tbtmIocMacros.setControl(iocMacros);
 		
 		TabItem tbtmIocPvValues = new TabItem(editorTabs, SWT.NONE);
@@ -114,7 +114,7 @@ public class ConfigEditorPanel extends Composite {
 				return new IocPVsEditorPanel(parent, SWT.NONE, msgDisp);
 			}
 		};
-		iocPVs = new IocSelectorPanel(editorTabs, SWT.NONE, dialog, pvsFactory);
+		iocPVs = new IocSelectorPanel(editorTabs, SWT.NONE, pvsFactory);
 		tbtmIocPvValues.setControl(iocPVs);
 		
 		TabItem tbtmIocPvSets = new TabItem(editorTabs, SWT.NONE);
@@ -126,7 +126,7 @@ public class ConfigEditorPanel extends Composite {
 				return new IocPVSetsEditorPanel(parent, SWT.NONE, msgDisp);
 			}
 		};
-		iocPVSets = new IocSelectorPanel(editorTabs, SWT.NONE, dialog, pvSetsFactory);
+		iocPVSets = new IocSelectorPanel(editorTabs, SWT.NONE, pvSetsFactory);
 		tbtmIocPvSets.setControl(iocPVSets);
 		
 		TabItem summaryTab = new TabItem(editorTabs, SWT.NONE);
