@@ -22,6 +22,8 @@ package uk.ac.stfc.isis.ibex.ui.configserver.editing.macros;
 import java.awt.CompositeContext;
 import java.awt.RenderingHints;
 import java.awt.image.ColorModel;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -57,28 +59,35 @@ public class MacroPanel extends Composite implements IIocDependentPanel {
 	}
 	
 	// Initialise the tab with macro data for an IOC
-	public void setMacros(Collection<Macro> setMacros, Collection<Macro> availableMacros, boolean canEdit) {
+	public void setMacros(final Collection<Macro> setMacros, Collection<Macro> availableMacros, boolean canEdit) {
 		this.displayMacros = new ArrayList<Macro>();
 		this.canEditMacros = canEdit;
 		
 		for (Macro availableMacro : availableMacros) {
-			Macro displayMacro = new Macro(availableMacro);
-			for (Macro setMacro : setMacros) {
+			boolean macroCurrentlySet = false;
+			final Macro displayMacro = new Macro(availableMacro);
+			for (final Macro setMacro : setMacros) {
 				if (setMacro.getName().equals(availableMacro.getName())) {
 					displayMacro.setValue(setMacro.getValue());
+					displayMacro.addPropertyChangeListener("value", updateValueListener(setMacro));
+					macroCurrentlySet = true;
 				}
 			}
 
 			displayMacros.add(displayMacro);
+			
+			if (!macroCurrentlySet) {
+				displayMacro.addPropertyChangeListener("value", addSetMacroListener(displayMacro, setMacros));
+			}
 		}
 				
-		setMacro(null);
+		setMacros();
 	}
 	
 	// Set the macro to be edited
-	private void setMacro(Macro macro) {
+	private void setMacros() {
 		displayMacros = sortMacroCollectionByName(displayMacros);
-		details.setMacro(macro, displayMacros, canEditMacros);
+		details.setMacros(displayMacros, canEditMacros);
 	}
 
 	@Override
@@ -104,5 +113,25 @@ public class MacroPanel extends Composite implements IIocDependentPanel {
 		Collections.sort(sortedList, comparator);
 				
 		return sortedList;
+	}
+	
+	private PropertyChangeListener updateValueListener(final Macro setMacro) {
+		return new PropertyChangeListener(){
+			@Override
+			public void propertyChange(PropertyChangeEvent newValue) {
+				setMacro.setValue((String) newValue.getNewValue());
+			}
+		};
+	}
+	
+	private PropertyChangeListener addSetMacroListener(final Macro displayMacro, final Collection<Macro> setMacros) {
+		return new PropertyChangeListener(){
+			@Override
+			public void propertyChange(PropertyChangeEvent newValue) {
+				Macro newMacro = new Macro(displayMacro);
+				displayMacro.setValue((String) newValue.getNewValue());
+				setMacros.add(newMacro);
+			}
+		};
 	}
 }

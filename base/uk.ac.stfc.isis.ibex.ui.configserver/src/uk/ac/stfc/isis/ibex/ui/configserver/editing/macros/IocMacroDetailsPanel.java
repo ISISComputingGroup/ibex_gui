@@ -62,6 +62,8 @@ public class IocMacroDetailsPanel extends Composite {
 	private Button setMacroButton;
 	private Label macroValueErrorLabel;
 	
+	private Macro macro;
+	
 	public IocMacroDetailsPanel(Composite parent, int style) {
 		super(parent, style);
 		setLayout(new FillLayout(SWT.HORIZONTAL));
@@ -91,6 +93,7 @@ public class IocMacroDetailsPanel extends Composite {
 		setMacroButton.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
+				macro.setValue(value.getText());
 			}
 		});
 		setMacroButton.setText("Set Macro");
@@ -122,7 +125,9 @@ public class IocMacroDetailsPanel extends Composite {
 		});
 	}
 	
-	public void setMacro(Macro macro, Collection<Macro> macros, boolean canEdit) {
+	public void setMacros(Collection<Macro> macros, boolean canEdit) {
+		this.macro = null;
+		
 		if (bindingContext != null) {
 			bindingContext.dispose();
 		}
@@ -145,6 +150,8 @@ public class IocMacroDetailsPanel extends Composite {
 	}
 	
 	public void setMacro(Macro macro, boolean canEdit) {
+		this.macro = macro;
+		
 		if (macro == null) {
 			setValueEditable(false);
 		} else {

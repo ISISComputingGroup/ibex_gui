@@ -71,9 +71,6 @@ public class MacroValueValidator extends ModelObject implements IValidator {
 	}
 	
 	private boolean matchesPattern(String text) {
-		System.out.println("pattern:--- " + macro);
-		System.out.println("pattern:" + macro.getPattern() + " --- " + text);
-				
 		String pattern = macro.getPattern();
 		
 		if (pattern == null || pattern.isEmpty()) {
