@@ -21,13 +21,8 @@ package uk.ac.stfc.isis.ibex.epics.tests.conversion;
 
 import static org.junit.Assert.*;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.epics.vtype.Alarm;
-import org.epics.vtype.AlarmSeverity;
 import org.epics.vtype.Display;
-import org.epics.vtype.Time;
+import org.epics.vtype.VByteArray;
 import org.epics.vtype.VDouble;
 import org.epics.vtype.VEnum;
 import org.epics.vtype.VFloatArray;
@@ -35,9 +30,9 @@ import org.epics.vtype.VInt;
 import org.epics.vtype.VNumber;
 import org.epics.vtype.VType;
 import org.epics.vtype.ValueFactory;
+import org.epics.util.array.ListByte;
 import org.epics.util.array.ListFloat;
 import org.epics.util.text.NumberFormats;
-import org.epics.util.time.Timestamp;
 import org.junit.Test;
 
 import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
@@ -172,6 +167,30 @@ public class VTypeFormatToConversionsTest {
 		assertEquals(result, test);
 	}
 
+	@Test
+	public void convert_to_vbyte_array() throws ConversionException {
+		// Arrange
+		Converter<VType, VByteArray> converter = VTypeFormat.toVByteArray();
+		ListByte data = new ListByte() {
+			@Override
+			public int size() {
+				return 0;
+			}
+
+			@Override
+			public byte getByte(int index) {
+				return 0;
+			}
+		};
+		VByteArray test = (VByteArray)ValueFactory.newVNumberArray(data, null, null, null);
+		
+		// Act
+		VByteArray result = converter.convert(test);
+		
+		// Assert
+		assertEquals(result, test);
+	}	
+	
 	@Test
 	public void convert_to_vint() throws ConversionException {
 		// Arrange

@@ -25,6 +25,11 @@ import org.junit.Test;
 import uk.ac.stfc.isis.ibex.epics.conversion.Compressor;
 import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
 
+/**
+ * Tests for the Compressor.
+ *
+ */
+@SuppressWarnings({ "checkstyle:methodname", "checkstyle:magicnumber" })
 public class CompressorTest {
 
     @Test
