@@ -1,0 +1,13 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Statusbar
+Bundle-SymbolicName: uk.ac.stfc.isis.ibex.ui.statusbar;singleton:=true
+Bundle-Version: 1.0.0.qualifier
+Bundle-Activator: uk.ac.stfc.isis.ibex.ui.statusbar.StatusBar
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ uk.ac.stfc.isis.ibex.configserver;bundle-version="1.0.0"
+Bundle-ActivationPolicy: lazy
+Import-Package: org.eclipse.wb.swt,
+ uk.ac.stfc.isis.ibex.epics.observing
+Export-Package: uk.ac.stfc.isis.ibex.ui.statusbar
