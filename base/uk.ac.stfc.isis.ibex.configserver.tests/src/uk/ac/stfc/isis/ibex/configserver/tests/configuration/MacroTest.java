@@ -59,9 +59,4 @@ public class MacroTest {
 		// Assert
 		assertEquals(m.getValue(), "new value");
 	}
-	
-	@Test
-	public void create_macro_from_json_produces_calls_the_super_constructor() {
-		// How can we test this?
-	}
 }
