@@ -9,25 +9,11 @@
    </extension>
   
    <extension
-         point="org.eclipse.ui.commands">
-      <command
-            defaultHandler="uk.ac.stfc.isis.ibex.preferences.PreferenceHandler"
-            description="Open the preferences dialog"
-            id="uk.ac.stfc.isis.ibex.preferences.commands.openPreferences"
-            name="Open Preferences">
-      </command>
-   </extension> <extension
          point="org.eclipse.ui.bindings">
          <key sequence="Ctrl+Alt+P"
          	schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
-         	commandId="uk.ac.stfc.isis.ibex.preferences.commands.openPreferences"
+         	commandId="org.eclipse.ui.window.preferences"
          	name="Open Preferences"/>
    </extension>
-                <extension
-                      point="uk.ac.stfc.isis.ibex.instrument.info">
-                   <InstrumentInfoReceiver
-                         class="uk.ac.stfc.isis.ibex.preferences.LogSettings">
-                   </InstrumentInfoReceiver>
-                </extension>
 
 </plugin>

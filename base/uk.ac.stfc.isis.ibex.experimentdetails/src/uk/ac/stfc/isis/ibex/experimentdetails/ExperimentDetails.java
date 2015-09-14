@@ -19,14 +19,14 @@
 
 package uk.ac.stfc.isis.ibex.experimentdetails;
 
-import org.osgi.framework.BundleActivator;
+import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
 import uk.ac.stfc.isis.ibex.experimentdetails.internal.ExperimentDetailsVariables;
 import uk.ac.stfc.isis.ibex.experimentdetails.internal.ObservableModel;
 import uk.ac.stfc.isis.ibex.instrument.Instrument;
 
-public class ExperimentDetails implements BundleActivator {
+public class ExperimentDetails extends AbstractUIPlugin {
 
 	private static BundleContext context;
 	private static ExperimentDetails instance;
