@@ -73,7 +73,7 @@ public class EditBlockDialog extends TitleAreaDialog {
 	
 	@Override
 	protected void createButtonsForButtonBar(Composite parent) {
-		okButton = createButton(parent, IDialogConstants.OK_ID, "Save", true);
+		okButton = createButton(parent, IDialogConstants.OK_ID, "OK", true);
 		createButton(parent, IDialogConstants.CANCEL_ID, "Cancel", false);
 	}
 	
@@ -85,14 +85,14 @@ public class EditBlockDialog extends TitleAreaDialog {
 		Boolean nameIsValid = nameVal.isValidName(name);
 				
 		if (nameIsValid) {
-			setSaveEnabled(true);
+			setOkEnabled(true);
 		} else {
 			setErrorMessage(nameVal.getErrorMessage());
-			setSaveEnabled(false);
+			setOkEnabled(false);
 		}	
 	}
 	
-    private void setSaveEnabled(boolean enabled) {
+    private void setOkEnabled(boolean enabled) {
     	okButton.setEnabled(enabled);
     }
 }
