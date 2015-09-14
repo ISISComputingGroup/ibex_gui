@@ -12,8 +12,6 @@ import javax.xml.bind.JAXBException;
 import org.junit.Before;
 import org.junit.Test;
 import org.xml.sax.SAXException;
-import org.eclipse.core.runtime.Path;
-
 import uk.ac.stfc.isis.ibex.opis.DescriptionsProvider;
 import uk.ac.stfc.isis.ibex.opis.desc.Descriptions;
 import uk.ac.stfc.isis.ibex.opis.desc.MacroInfo;
