@@ -42,6 +42,8 @@ import org.eclipse.swt.widgets.Text;
 import com.google.common.base.Strings;
 
 import uk.ac.stfc.isis.ibex.configserver.configuration.Macro;
+import uk.ac.stfc.isis.ibex.configserver.editing.MacroValueValidator;
+
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Image;

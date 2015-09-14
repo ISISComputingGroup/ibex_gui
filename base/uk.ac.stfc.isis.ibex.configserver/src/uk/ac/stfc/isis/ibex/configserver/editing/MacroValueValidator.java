@@ -17,7 +17,7 @@
 * http://opensource.org/licenses/eclipse-1.0.php
 */
 
-package uk.ac.stfc.isis.ibex.ui.configserver.editing.macros;
+package uk.ac.stfc.isis.ibex.configserver.editing;
 
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
@@ -43,10 +43,9 @@ public class MacroValueValidator extends ModelObject implements IValidator {
 	public static final String NAME_IS_VALID = "nameIsValid";
 	public static final String SHOW_WARNING_ICON = "showWarningIcon";
 	
-	private static final String NO_MESSAGE = "";
-	private static final String EMPTY_VALUE_MESSAGE = "Macro value must not be empty";
-	private static final String PATTERN_MISMATCH_MESSAGE = "Macro value must match regex pattern";
-	private static final String PATTERN_INVALID = "Macro regex pattern invalid";
+	public static final String NO_MESSAGE = "";
+	public static final String PATTERN_MISMATCH_MESSAGE = "Macro value must match the pattern shown";
+	public static final String PATTERN_INVALID = "Macro regex pattern invalid";
 	
 	private final Label messageDisplayer;
 	private Macro macro;
@@ -59,23 +58,25 @@ public class MacroValueValidator extends ModelObject implements IValidator {
 	}
 	
 	@Override
-	public IStatus validate(Object text) {		
-		if (macro == null) {
-			setShowWarningIcon(false);
-			return setError(NO_MESSAGE);	
-		} else {
-			setShowWarningIcon(true);
-		}
-	
-		if (text.equals("")) {
-			return setError(EMPTY_VALUE_MESSAGE);	
-		}
+	public IStatus validate(Object text) {
+		IStatus returnStatus;
 		
-		if (!matchesPattern((String) text)) {
-			return setError(PATTERN_MISMATCH_MESSAGE);
-		}
+		setShowWarningIcon(false);
 		
-		return setNoError();
+		try {
+			if (macro == null || text.equals("")) {
+				returnStatus = setError(NO_MESSAGE);
+			} else if (!matchesPattern((String) text)) {
+				setShowWarningIcon(true);
+				returnStatus = setError(PATTERN_MISMATCH_MESSAGE);
+			} else {
+				returnStatus = setNoError();
+			}
+		} catch (PatternSyntaxException e) {
+			returnStatus = setError(PATTERN_INVALID);
+		}			
+		
+		return returnStatus;
 	}
 
 	private IStatus setError(String message) {
@@ -91,19 +92,14 @@ public class MacroValueValidator extends ModelObject implements IValidator {
 		return ValidationStatus.ok();	
 	}
 	
-	private boolean matchesPattern(String text) {
+	private boolean matchesPattern(String text) throws PatternSyntaxException {
 		String pattern = macro.getPattern();
 		
 		if (pattern == null || pattern.isEmpty()) {
 			return true;
 		}
-		
-		try {
-			return Pattern.matches(pattern, text);
-		} catch (PatternSyntaxException e) {
-			setError(PATTERN_INVALID);
-			return true;
-		}
+
+		return Pattern.matches(pattern, text);
 	}
 	
 	public void setMacro(Macro macro) {
