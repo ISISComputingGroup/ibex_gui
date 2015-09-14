@@ -37,6 +37,7 @@ import uk.ac.stfc.isis.ibex.epics.conversion.VTypeFormat;
  * This class is responsible for ... 
  *
  */
+@SuppressWarnings({ "checkstyle:methodname", "checkstyle:magicnumber" })
 public class VTypeFormatMiscTest {
 
 	// Byte array values missing as unable to produce from ValueFactory

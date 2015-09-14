@@ -7,6 +7,7 @@ import uk.ac.stfc.isis.ibex.epics.conversion.DateTimeFormatter;
 import uk.ac.stfc.isis.ibex.epics.conversion.ElapsedTimeFormatter;
 import static org.junit.Assert.*;
 
+@SuppressWarnings({ "checkstyle:methodname", "checkstyle:magicnumber" })
 public class DateTimeFormatTest {
 
 	@Test

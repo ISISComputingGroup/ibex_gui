@@ -7,10 +7,12 @@ import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
 import uk.ac.stfc.isis.ibex.epics.conversion.Convert;
 import uk.ac.stfc.isis.ibex.epics.conversion.Converter;
 
+@SuppressWarnings({ "checkstyle:methodname", "checkstyle:magicnumber" })
 public class ConvertTest {
 
 	private static String test_hexed = "74657374";
-	private static byte [] test_zipped_hexed = {55, 56, 57, 99, 50, 98, 52, 57, 50, 100, 50, 101, 48, 49, 48, 48, 48, 52, 53, 100, 48, 49, 99, 49};
+	private static byte[] test_zipped_hexed = { 55, 56, 57, 99, 50, 98, 52, 57,
+			50, 100, 50, 101, 48, 49, 48, 48, 48, 52, 53, 100, 48, 49, 99, 49 };
 	
 	@Test
 	public void convert_from_zipped_hex() throws ConversionException {
