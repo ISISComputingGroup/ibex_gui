@@ -57,18 +57,14 @@ public class PreferencePage extends FieldEditorPreferencePage implements
 	addField(new StringFieldEditor(PreferenceConstants.P_JMS_TOPIC,
 		"JMS Message Topic:", getFieldEditorParent()));
 
-	addField(new StringFieldEditor(PreferenceConstants.P_SQL_ADDRESS,
-		"SQL Server Address:", getFieldEditorParent()));
-	addField(new IntegerFieldEditor(PreferenceConstants.P_SQL_PORT,
-		"SQL Server Port:", getFieldEditorParent()));
-	addField(new StringFieldEditor(PreferenceConstants.P_SQL_SCHEMA,
+	addField(new StringFieldEditor(PreferenceConstants.P_MESSAGE_SQL_SCHEMA,
 		"SQL Server Schema:", getFieldEditorParent()));
-	addField(new StringFieldEditor(PreferenceConstants.P_SQL_USERNAME,
+	addField(new StringFieldEditor(PreferenceConstants.P_MESSAGE_SQL_USERNAME,
 		"SQL Server Username:", getFieldEditorParent()));
 
 	// Star out password field
 	StringFieldEditor password = new StringFieldEditor(
-		PreferenceConstants.P_SQL_PASSWORD, "SQL Server Password:",
+		PreferenceConstants.P_MESSAGE_SQL_PASSWORD, "SQL Server Password:",
 		getFieldEditorParent()) {
 	    @Override
 	    protected void doFillIntoGrid(Composite parent, int numColumns) {

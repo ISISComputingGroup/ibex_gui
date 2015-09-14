@@ -23,6 +23,8 @@ import org.eclipse.jface.preference.IPreferenceStore;
 import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
 import uk.ac.stfc.isis.ibex.instrument.InstrumentInfoReceiver;
 import uk.ac.stfc.isis.ibex.log.preferences.PreferenceConstants;
+import uk.ac.stfc.isis.ibex.preferences.PreferenceSupplier;
+import uk.ac.stfc.isis.ibex.preferences.Preferences;
 
 public class LogSettings implements InstrumentInfoReceiver {
 
@@ -32,11 +34,12 @@ public class LogSettings implements InstrumentInfoReceiver {
 
     @Override
     public void setInstrument(InstrumentInfo instrument) {
-	PREFERENCES.setValue(PreferenceConstants.P_JMS_ADDRESS,
-		instrument.hostName());
-	PREFERENCES.setValue(PreferenceConstants.P_SQL_ADDRESS,
-		instrument.hostName());
-
-	LOG.clearMessages();
+    	Preferences.getDefault().getPreferenceStore()
+    		.setValue(PreferenceSupplier.SQL_ADDRESS, instrument.hostName());
+    	
+		PREFERENCES.setValue(PreferenceConstants.P_JMS_ADDRESS,
+			instrument.hostName());
+	
+		LOG.clearMessages();
     }
 }

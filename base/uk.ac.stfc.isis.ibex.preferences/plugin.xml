@@ -23,5 +23,11 @@
          	commandId="uk.ac.stfc.isis.ibex.preferences.commands.openPreferences"
          	name="Open Preferences"/>
    </extension>
+                <extension
+                      point="uk.ac.stfc.isis.ibex.instrument.info">
+                   <InstrumentInfoReceiver
+                         class="uk.ac.stfc.isis.ibex.preferences.LogSettings">
+                   </InstrumentInfoReceiver>
+                </extension>
 
 </plugin>

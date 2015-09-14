@@ -7,8 +7,13 @@ Bundle-Activator: uk.ac.stfc.isis.ibex.experimentdetails.ExperimentDetails
 Require-Bundle: org.eclipse.core.runtime,
  uk.ac.stfc.isis.ibex.instrument;bundle-version="1.0.0",
  uk.ac.stfc.isis.ibex.json;bundle-version="1.0.0",
- uk.ac.stfc.isis.ibex.model;bundle-version="1.0.0"
+ uk.ac.stfc.isis.ibex.model;bundle-version="1.0.0",
+ uk.ac.stfc.isis.ibex.preferences
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Export-Package: uk.ac.stfc.isis.ibex.experimentdetails
 Bundle-ActivationPolicy: lazy
-Import-Package: org.eclipse.core.databinding.conversion
+Import-Package: org.eclipse.core.databinding.conversion,
+ org.eclipse.jface.preference,
+ org.eclipse.ui.plugin,
+ uk.ac.stfc.isis.ibex.log,
+ uk.ac.stfc.isis.ibex.log.preferences

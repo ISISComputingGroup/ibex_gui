@@ -43,16 +43,21 @@ public class PreferenceInitializer extends AbstractPreferenceInitializer {
 		PreferenceConstants.DEFAULT_JMS_PORT);
 	store.setDefault(PreferenceConstants.P_JMS_TOPIC,
 		PreferenceConstants.DEFAULT_JMS_TOPIC);
-	store.setDefault(PreferenceConstants.P_SQL_ADDRESS,
-		PreferenceConstants.DEFAULT_SQL_ADDRESS);
-	store.setDefault(PreferenceConstants.P_SQL_PORT,
-		PreferenceConstants.DEFAULT_SQL_PORT);
-	store.setDefault(PreferenceConstants.P_SQL_USERNAME,
-		PreferenceConstants.DEFAULT_SQL_USERNAME);
-	store.setDefault(PreferenceConstants.P_SQL_PASSWORD,
-		PreferenceConstants.DEFAULT_SQL_PASSWORD);
-	store.setDefault(PreferenceConstants.P_SQL_SCHEMA,
-		PreferenceConstants.DEFAULT_SQL_SCHEMA);
+	
+	store.setDefault(PreferenceConstants.P_MESSAGE_SQL_USERNAME,
+		PreferenceConstants.DEFAULT_MESSAGE_SQL_USERNAME);
+	store.setDefault(PreferenceConstants.P_MESSAGE_SQL_PASSWORD,
+		PreferenceConstants.DEFAULT_MESSAGE_SQL_PASSWORD);
+	store.setDefault(PreferenceConstants.P_MESSAGE_SQL_SCHEMA,
+		PreferenceConstants.DEFAULT_MESSAGE_SQL_SCHEMA);
+	
+	store.setDefault(PreferenceConstants.P_EXP_DATA_SQL_USERNAME,
+			PreferenceConstants.DEFAULT_EXP_DATA_SQL_USERNAME);
+	store.setDefault(PreferenceConstants.P_EXP_DATA_SQL_PASSWORD,
+		PreferenceConstants.DEFAULT_EXP_DATA_SQL_PASSWORD);
+	store.setDefault(PreferenceConstants.P_EXP_DATA_SQL_SCHEMA,
+		PreferenceConstants.DEFAULT_EXP_DATA_SQL_SCHEMA);
+	
 	store.setDefault(PreferenceConstants.P_MINOR_MESSAGE,
 		PreferenceConstants.DEFAULT_MINOR_MESSAGE);
     }

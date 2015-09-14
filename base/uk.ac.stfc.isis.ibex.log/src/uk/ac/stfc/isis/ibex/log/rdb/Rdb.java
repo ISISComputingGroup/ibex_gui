@@ -27,6 +27,7 @@ import org.eclipse.jface.preference.IPreferenceStore;
 import uk.ac.stfc.isis.ibex.log.Log;
 import uk.ac.stfc.isis.ibex.log.preferences.PreferenceConstants;
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
+import uk.ac.stfc.isis.ibex.preferences.PreferenceSupplier;
 
 public class Rdb {
     private static final Logger LOG = IsisLog.getLogger(Rdb.class);
@@ -46,15 +47,15 @@ public class Rdb {
 	IPreferenceStore preferenceStore = Log.getDefault()
 		.getPreferenceStore();
 
-	String address = preferenceStore
-		.getString(PreferenceConstants.P_SQL_ADDRESS);
-	String port = preferenceStore.getString(PreferenceConstants.P_SQL_PORT);
+	String address = PreferenceSupplier.SQLAddress();
+	String port = PreferenceSupplier.SQLPort();
+	
 	String schema = preferenceStore
-		.getString(PreferenceConstants.P_SQL_SCHEMA);
+		.getString(PreferenceConstants.P_MESSAGE_SQL_SCHEMA);
 	String user = preferenceStore
-		.getString(PreferenceConstants.P_SQL_USERNAME);
+		.getString(PreferenceConstants.P_MESSAGE_SQL_USERNAME);
 	String password = preferenceStore
-		.getString(PreferenceConstants.P_SQL_PASSWORD);
+		.getString(PreferenceConstants.P_MESSAGE_SQL_PASSWORD);
 
 	if (address.indexOf("//") != 0) {
 	    address = "//" + address;
