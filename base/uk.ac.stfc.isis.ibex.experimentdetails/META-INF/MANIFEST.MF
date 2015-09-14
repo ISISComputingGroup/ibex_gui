@@ -15,3 +15,5 @@ Require-Bundle: uk.ac.stfc.isis.ibex.model;bundle-version="1.0.0",
  uk.ac.stfc.isis.ibex.json,
  org.eclipse.swt,
  org.eclipse.jface
+Import-Package: org.apache.logging.log4j,
+ uk.ac.stfc.isis.ibex.logger

@@ -4,37 +4,33 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import uk.ac.stfc.isis.ibex.experimentdetails.database.ExperimentDataFields;
-import uk.ac.stfc.isis.ibex.experimentdetails.database.ExperimentDataTags;
+import uk.ac.stfc.isis.ibex.experimentdetails.database.ExperimentDataField;
+import uk.ac.stfc.isis.ibex.experimentdetails.database.ExperimentDataFieldsCreator;
+import uk.ac.stfc.isis.ibex.experimentdetails.database.ExperimentDataFieldsTags;
+import uk.ac.stfc.isis.ibex.experimentdetails.database.ExperimentDataTablesTags;
 
 public class ExperimentDataFieldsTest {
 	@Test
 	public void user_table_contains_name() {
 		// Act
-		String result = ExperimentDataFields.getAsString(ExperimentDataTags.TAG_USER_TABLE, ExperimentDataTags.TAG_NAME);
+		ExperimentDataField result = ExperimentDataFieldsCreator.getField(ExperimentDataTablesTags.TAG_USER_TABLE, ExperimentDataFieldsTags.TAG_NAME);
 				
 		//Assert
-		assertEquals(result, "user.name");
+		assertEquals(result.toString(), "user.name");
 	}
 	
 	@Test
 	public void role_table_contains_priority() {
 		//Act
-		String  result = ExperimentDataFields.getAsString(ExperimentDataTags.TAG_ROLE_TABLE, ExperimentDataTags.TAG_PRIORITY);
+		ExperimentDataField  result = ExperimentDataFieldsCreator.getField(ExperimentDataTablesTags.TAG_ROLE_TABLE, ExperimentDataFieldsTags.TAG_PRIORITY);
 		
 		//Assert
-		assertEquals(result, "role.priority");		
+		assertEquals(result.toString(), "role.priority");		
 	}
 	
 	@Test(expected=IllegalArgumentException.class)
 	public void experiment_table_does_not_contain_name() {
 		//Act
-		String  result = ExperimentDataFields.getAsString(ExperimentDataTags.TAG_EXPERIMENT_TABLE, ExperimentDataTags.TAG_NAME);	
-	}
-	
-	@Test(expected=IllegalArgumentException.class)
-	public void name_is_not_a_table() {
-		//Act
-		String  result = ExperimentDataFields.getAsString(ExperimentDataTags.TAG_NAME, ExperimentDataTags.TAG_NAME);	
+		ExperimentDataField  result = ExperimentDataFieldsCreator.getField(ExperimentDataTablesTags.TAG_EXPERIMENT_TABLE, ExperimentDataFieldsTags.TAG_NAME);	
 	}
 }

@@ -21,14 +21,17 @@ package uk.ac.stfc.isis.ibex.experimentdetails.database;
 import java.sql.Connection;
 import java.sql.DriverManager;
 
+import org.apache.logging.log4j.Logger;
 import org.eclipse.jface.preference.IPreferenceStore;
 
 import uk.ac.stfc.isis.ibex.experimentdetails.ExperimentDetails;
 import uk.ac.stfc.isis.ibex.experimentdetails.preferences.PreferenceConstants;
+import uk.ac.stfc.isis.ibex.logger.IsisLog;
 import uk.ac.stfc.isis.ibex.preferences.PreferenceSupplier;
 
 public class Rdb {
     private static final String PROTOCOL = "jdbc:mysql:";
+    private static final Logger LOG = IsisLog.getLogger(Rdb.class);
 
     /** RDB connection */
     private final Connection connection;
@@ -39,7 +42,7 @@ public class Rdb {
 
     public Rdb() throws Exception {
 		Class.forName("com.mysql.jdbc.Driver").newInstance();
-		
+
 		IPreferenceStore preferenceStore = ExperimentDetails.getInstance().getPreferenceStore();
 	
 		String schema = preferenceStore
@@ -71,10 +74,8 @@ public class Rdb {
 		try {
 		    connection.close();
 		} catch (Exception ex) {
-			/*
 		    LOG.error("Error closing connection to Database: "
 			    + ex.getMessage());
-			    */
 		}
     }
 }

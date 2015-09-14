@@ -1,11 +1,6 @@
 package uk.ac.stfc.isis.ibex.experimentdetails.database;
 
-public enum ExperimentDataTags {
-	TAG_USER_TABLE("user"),
-	TAG_ROLE_TABLE("role"),
-	TAG_EXPERIMENT_TABLE("experiment"),
-	TAG_EXPERIMENT_TEAMS_TABLE("experimentteams"),
-	
+public enum ExperimentDataFieldsTags {
 	TAG_EXPERIMENT_ID("experimentID"),
 	TAG_USER_ID("userID"),
 	TAG_ROLE_ID("roleID"),
@@ -18,7 +13,7 @@ public enum ExperimentDataTags {
 
     private final String representation;
     
-    private ExperimentDataTags(String representation) {
+    private ExperimentDataFieldsTags(String representation) {
     	this.representation = representation;
     }
     
