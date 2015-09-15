@@ -73,6 +73,7 @@ public class MacroValueValidator extends ModelObject implements IValidator {
 				returnStatus = setNoError();
 			}
 		} catch (PatternSyntaxException e) {
+			setShowWarningIcon(true);
 			returnStatus = setError(PATTERN_INVALID);
 		}			
 		

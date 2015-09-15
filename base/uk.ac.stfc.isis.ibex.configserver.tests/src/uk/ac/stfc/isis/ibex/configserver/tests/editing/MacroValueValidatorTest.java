@@ -41,13 +41,15 @@ public class MacroValueValidatorTest {
 	private static final String VALID_VALUE = "123.123";
 	private static final String INVALID_VALUE = "123.123.123";
 	private static final String PATTERN = "^[0-9]+\\.[0-9]+$";
-	
-	MacroValueValidator nullMacroValidator;
-	MacroValueValidator macroValidator;
+	private static final String INVALID_PATTERN = "+++";
 	
 	Label messageDisplayer;
+	
 	PropertyChangeListener mockNameIsValidListener;
 	PropertyChangeListener showWarningIconListener;
+	
+	Macro macro;
+	Macro macroWithInvalidPattern;
 
 	@Captor
 	private ArgumentCaptor<PropertyChangeEvent> changeCaptor;
@@ -59,21 +61,25 @@ public class MacroValueValidatorTest {
 		messageDisplayer = mock(Label.class);
 		mockNameIsValidListener = mock(PropertyChangeListener.class);
 		showWarningIconListener = mock(PropertyChangeListener.class);
-
 		
-		nullMacroValidator = new MacroValueValidator(null, messageDisplayer);
-		nullMacroValidator.addPropertyChangeListener(MacroValueValidator.NAME_IS_VALID, mockNameIsValidListener);
-		nullMacroValidator.addPropertyChangeListener(MacroValueValidator.SHOW_WARNING_ICON, showWarningIconListener);
+		macro = new Macro("name", "value", "description", PATTERN);
+		macroWithInvalidPattern = new Macro("name", "value", "description", INVALID_PATTERN);
+	}
+	
+	public MacroValueValidator getValidator(Macro macro) {
+		MacroValueValidator validator = new MacroValueValidator(macro, messageDisplayer);
 		
-		Macro macro = new Macro("name", "value", "description", PATTERN);
+		validator.addPropertyChangeListener(MacroValueValidator.NAME_IS_VALID, mockNameIsValidListener);
+		validator.addPropertyChangeListener(MacroValueValidator.SHOW_WARNING_ICON, showWarningIconListener);
 		
-		macroValidator = new MacroValueValidator(macro, messageDisplayer);
-		macroValidator.addPropertyChangeListener(MacroValueValidator.NAME_IS_VALID, mockNameIsValidListener);
-		macroValidator.addPropertyChangeListener(MacroValueValidator.SHOW_WARNING_ICON, showWarningIconListener);
+		return validator ;
 	}
 	
 	@Test
 	public void if_macro_is_null_then_not_OK() {
+		// Arrange
+		MacroValueValidator nullMacroValidator = getValidator(null);
+		
 		// Act
 		IStatus status =  nullMacroValidator.validate("");
 		
@@ -83,6 +89,9 @@ public class MacroValueValidatorTest {
 	
 	@Test
 	public void if_macro_is_null_then_blank_warning_message() {
+		// Arrange
+		MacroValueValidator nullMacroValidator = getValidator(null);
+				
 		// Act
 		IStatus status =  nullMacroValidator.validate("");
 		
@@ -92,6 +101,9 @@ public class MacroValueValidatorTest {
 	
 	@Test
 	public void if_macro_is_null_then_nameIsValid_property_change_to_false() {
+		// Arrange
+		MacroValueValidator nullMacroValidator = getValidator(null);
+		
 		// Act
 		nullMacroValidator.validate("");
 		
@@ -102,6 +114,9 @@ public class MacroValueValidatorTest {
 	
 	@Test
 	public void if_macro_is_null_then_showWarningIcon_property_left_as_false() {
+		// Arrange
+		MacroValueValidator nullMacroValidator = getValidator(null);
+		
 		// Act
 		nullMacroValidator.validate("");
 		
@@ -111,6 +126,9 @@ public class MacroValueValidatorTest {
 	
 	@Test
 	public void if_validation_string_empty_then_not_OK() {
+		// Arrange
+		MacroValueValidator macroValidator = getValidator(macro);
+		
 		// Act
 		IStatus status =  macroValidator.validate("");
 		
@@ -120,6 +138,9 @@ public class MacroValueValidatorTest {
 	
 	@Test
 	public void if_validation_string_empty_then_blank_warning_message() {
+		// Arrange
+		MacroValueValidator macroValidator = getValidator(macro);
+		
 		// Act
 		IStatus status =  macroValidator.validate("");
 		
@@ -129,6 +150,9 @@ public class MacroValueValidatorTest {
 	
 	@Test
 	public void if_validation_string_empty_then_nameIsValid_property_change_to_false() {
+		// Arrange
+		MacroValueValidator macroValidator = getValidator(macro);
+		
 		// Act
 		macroValidator.validate("");
 		
@@ -139,6 +163,9 @@ public class MacroValueValidatorTest {
 	
 	@Test
 	public void if_validation_string_empty_then_showWarningIcon_property_left_as_false() {
+		// Arrange
+		MacroValueValidator macroValidator = getValidator(macro);
+		
 		// Act
 		macroValidator.validate("");
 		
@@ -148,6 +175,9 @@ public class MacroValueValidatorTest {
 	
 	@Test
 	public void if_validation_string_valid_then_OK() {
+		// Arrange
+		MacroValueValidator macroValidator = getValidator(macro);
+		
 		// Act
 		IStatus status =  macroValidator.validate(VALID_VALUE);
 		
@@ -157,6 +187,9 @@ public class MacroValueValidatorTest {
 	
 	@Test
 	public void if_validation_string_valid_then_blank_warning_message() {
+		// Arrange
+		MacroValueValidator macroValidator = getValidator(macro);
+		
 		// Act
 		IStatus status =  macroValidator.validate(VALID_VALUE);
 		
@@ -166,6 +199,9 @@ public class MacroValueValidatorTest {
 	
 	@Test
 	public void if_validation_string_valid_then_nameIsValid_property_stays_as_true() {
+		// Arrange
+		MacroValueValidator macroValidator = getValidator(macro);
+		
 		// Act
 		macroValidator.validate(VALID_VALUE);
 		
@@ -175,6 +211,9 @@ public class MacroValueValidatorTest {
 	
 	@Test
 	public void if_validation_string_valid_then_showWarningIcon_property_stays_as_false() {
+		// Arrange
+		MacroValueValidator macroValidator = getValidator(macro);
+		
 		// Act
 		macroValidator.validate(VALID_VALUE);
 		
@@ -184,6 +223,9 @@ public class MacroValueValidatorTest {
 	
 	@Test
 	public void if_validation_string_invalid_then_not_OK() {
+		// Arrange
+		MacroValueValidator macroValidator = getValidator(macro);
+		
 		// Act
 		IStatus status =  macroValidator.validate(INVALID_VALUE);
 		
@@ -193,6 +235,9 @@ public class MacroValueValidatorTest {
 	
 	@Test
 	public void if_validation_string_invalid_then_blank_warning_message() {
+		// Arrange
+		MacroValueValidator macroValidator = getValidator(macro);
+		
 		// Act
 		IStatus status =  macroValidator.validate(INVALID_VALUE);
 		
@@ -202,6 +247,9 @@ public class MacroValueValidatorTest {
 	
 	@Test
 	public void if_validation_string_invalid_then_nameIsValid_property_change_to_false() {
+		// Arrange
+		MacroValueValidator macroValidator = getValidator(macro);
+		
 		// Act
 		macroValidator.validate(INVALID_VALUE);
 		
@@ -212,6 +260,9 @@ public class MacroValueValidatorTest {
 	
 	@Test
 	public void if_validation_string_invalid_then_showWarningIcon_property_change_to_true() {
+		// Arrange
+		MacroValueValidator macroValidator = getValidator(macro);
+		
 		// Act
 		macroValidator.validate(INVALID_VALUE);
 		
@@ -219,5 +270,54 @@ public class MacroValueValidatorTest {
 		verify(showWarningIconListener, times(1)).propertyChange(changeCaptor.capture());
 		assertEquals(true, changeCaptor.getValue().getNewValue());
 	}
-
+	
+	@Test
+	public void if_pattern_invalid_invalid_then_not_OK() {
+		// Arrange
+		MacroValueValidator macroValidator = getValidator(macroWithInvalidPattern);
+		
+		// Act
+		IStatus status =  macroValidator.validate(INVALID_VALUE);
+		
+		// Assert
+		assertFalse(status.isOK());
+	}
+	
+	@Test
+	public void if_pattern_invalid_then_blank_warning_message() {
+		// Arrange
+		MacroValueValidator macroValidator = getValidator(macroWithInvalidPattern);
+		
+		// Act
+		IStatus status =  macroValidator.validate(INVALID_VALUE);
+		
+		// Assert
+		assertEquals(MacroValueValidator.PATTERN_INVALID, status.getMessage());
+	}
+	
+	@Test
+	public void if_pattern_invalid_then_nameIsValid_property_change_to_false() {
+		// Arrange
+		MacroValueValidator macroValidator = getValidator(macroWithInvalidPattern);
+		
+		// Act
+		macroValidator.validate(INVALID_VALUE);
+		
+		// Assert
+		verify(mockNameIsValidListener, times(1)).propertyChange(changeCaptor.capture());
+		assertEquals(false, changeCaptor.getValue().getNewValue());
+	}
+	
+	@Test
+	public void if_pattern_invalid_then_showWarningIcon_property_change_to_true() {
+		// Arrange
+		MacroValueValidator macroValidator = getValidator(macroWithInvalidPattern);
+		
+		// Act
+		macroValidator.validate(INVALID_VALUE);
+		
+		// Assert
+		verify(showWarningIconListener, times(1)).propertyChange(changeCaptor.capture());
+		assertEquals(true, changeCaptor.getValue().getNewValue());
+	}
 }
