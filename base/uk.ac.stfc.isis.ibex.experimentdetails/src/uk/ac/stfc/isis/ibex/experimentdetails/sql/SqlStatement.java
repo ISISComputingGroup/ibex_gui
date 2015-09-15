@@ -25,8 +25,8 @@ import java.util.List;
 import org.eclipse.jface.preference.IPreferenceStore;
 
 import uk.ac.stfc.isis.ibex.experimentdetails.ExperimentDetails;
-import uk.ac.stfc.isis.ibex.experimentdetails.database.ExperimentDataField;
-import uk.ac.stfc.isis.ibex.experimentdetails.database.ExperimentDataTablesTags;
+import uk.ac.stfc.isis.ibex.experimentdetails.database.ExpDataField;
+import uk.ac.stfc.isis.ibex.experimentdetails.database.ExpDataTablesEnum;
 import uk.ac.stfc.isis.ibex.experimentdetails.preferences.PreferenceConstants;
 
 /**
@@ -36,11 +36,11 @@ import uk.ac.stfc.isis.ibex.experimentdetails.preferences.PreferenceConstants;
  */
 public class SqlStatement {
     private String schemaName;
-	private List<ExperimentDataField> selectFields;
-    private List<ExperimentDataTablesTags> fromTables;
+	private List<ExpDataField> selectFields;
+    private List<ExpDataTablesEnum> fromTables;
     private List<SqlWhereClause> whereFields;
     
-    private ExperimentDataField groupBy;
+    private ExpDataField groupBy;
 
     public SqlStatement() {
     	try {
@@ -53,17 +53,17 @@ public class SqlStatement {
     	}
 
 	
-		this.selectFields = new ArrayList<ExperimentDataField>();
+		this.selectFields = new ArrayList<ExpDataField>();
 		this.whereFields = new ArrayList<SqlWhereClause>();
-		this.fromTables = new ArrayList<ExperimentDataTablesTags>();
+		this.fromTables = new ArrayList<ExpDataTablesEnum>();
     }
 
     /**
      * Set the (ordered) list of fields that will be retrieved by the select
      * statement
      */
-    public void setSelectFields(ExperimentDataField[] selectFields) {
-		this.selectFields = new ArrayList<ExperimentDataField>(
+    public void setSelectFields(ExpDataField[] selectFields) {
+		this.selectFields = new ArrayList<ExpDataField>(
 			Arrays.asList(selectFields));
     }
 
@@ -71,23 +71,21 @@ public class SqlStatement {
      * Set the ordered list of fields that will be featured in
      * WHERE clauses.
      */
-    public void setWhereClause(SqlWhereClause[] whereLikeFields) {
-		this.whereFields = new ArrayList<SqlWhereClause>(
-			Arrays.asList(whereLikeFields));
+    public void setWhereClause(List<SqlWhereClause> whereLikeFields) {
+		this.whereFields = whereLikeFields;
     }
     
     /**
      * Set the ordered list of tables that will be queried.
      */
-    public void setFromTables(ExperimentDataTablesTags[] fromTables) {   	
-		this.fromTables = new ArrayList<ExperimentDataTablesTags>(
-			Arrays.asList(fromTables));
+    public void setFromTables(List<ExpDataTablesEnum> fromTables) {   	
+		this.fromTables = fromTables;
     }
     
     /**
      * Set the field to Group By.
      */
-    public void setGroupBy(ExperimentDataField groupBy) {
+    public void setGroupBy(ExpDataField groupBy) {
 		this.groupBy = groupBy;
     }
 

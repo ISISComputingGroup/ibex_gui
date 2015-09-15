@@ -4,16 +4,16 @@ Bundle-Name: Experimentdetails
 Bundle-SymbolicName: uk.ac.stfc.isis.ibex.experimentdetails;singleton:=true
 Bundle-Version: 1.0.0.qualifier
 Bundle-Activator: uk.ac.stfc.isis.ibex.experimentdetails.ExperimentDetails
+Require-Bundle: org.eclipse.ui,
+ uk.ac.stfc.isis.ibex.model;bundle-version="1.0.0",
+ org.eclipse.core.runtime,
+ uk.ac.stfc.isis.ibex.instrument;bundle-version="1.0.0",
+ uk.ac.stfc.isis.ibex.json;bundle-version="1.0.0",
+ org.eclipse.jface,
+ uk.ac.stfc.isis.ibex.preferences
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Export-Package: uk.ac.stfc.isis.ibex.experimentdetails
 Bundle-ActivationPolicy: lazy
-Require-Bundle: uk.ac.stfc.isis.ibex.model;bundle-version="1.0.0",
- uk.ac.stfc.isis.ibex.instrument;bundle-version="1.0.0",
- uk.ac.stfc.isis.ibex.preferences,
- uk.ac.stfc.isis.ibex.ui;bundle-version="1.0.0",
- com.google.gson,
- uk.ac.stfc.isis.ibex.json,
- org.eclipse.swt,
- org.eclipse.jface
 Import-Package: org.apache.logging.log4j,
+ org.eclipse.core.databinding.conversion,
  uk.ac.stfc.isis.ibex.logger
