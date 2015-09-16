@@ -37,9 +37,10 @@ public class Macro extends ModelObject {
 	 * JSON.
 	 * 
 	 * If the default constructor is not present then GSON uses reflection to
-	 * create the object. This mean the parent class's constructor is NOT called
+	 * create the object. This mean the parent class's constructor is NOT called.
+	 * GSON does not care if this is private.
 	 */
-	public Macro() {
+	private Macro() {
 	}
 
 	public Macro(Macro other) {
