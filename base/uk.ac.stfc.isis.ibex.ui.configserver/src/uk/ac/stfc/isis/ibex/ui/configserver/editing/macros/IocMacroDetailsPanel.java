@@ -19,8 +19,6 @@
 
 package uk.ac.stfc.isis.ibex.ui.configserver.editing.macros;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.util.Collection;
 
 import org.eclipse.core.databinding.DataBindingContext;
@@ -34,49 +32,59 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 
+import com.google.common.base.Strings;
+
 import uk.ac.stfc.isis.ibex.configserver.configuration.Macro;
-import uk.ac.stfc.isis.ibex.ui.configserver.dialogs.MessageDisplayer;
+import uk.ac.stfc.isis.ibex.configserver.editing.MacroValueValidator;
+
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.graphics.Image;
 
 /**
  * This panel allows macro names and values to be set, and shows a list of available macros for an
  * IOC.
  * 
- * In the list of available macros a description and pattern is also shown. If the macro being set
- * is in this list, the macro value is also checked against the pattern. 
+ * In the list of available macros a description and pattern is also shown. The macro can only be 
+ * set if the pattern is matched by the new value.
  * 
  */
 public class IocMacroDetailsPanel extends Composite {
-	private final MessageDisplayer messageDisplayer;
 	private Text name;
 	private Text value;
 	private DataBindingContext bindingContext;
-	private AddMacroTable availableMacrosTable;
-	private UpdateValueStrategy nameStrategy = new UpdateValueStrategy();
+	private MacroTable displayMacrosTable;
 	private UpdateValueStrategy valueStrategy = new UpdateValueStrategy();
-	private AvailableMacroSearcher macroSearcher;
 	private MacroValueValidator valueValidator;
+	private Button setMacroButton;
+	private Label macroValueErrorLabel;
 	
-	public IocMacroDetailsPanel(Composite parent, int style, MessageDisplayer messageDisplayer) {
+	private Macro macro;
+	private Label errorIconLabel;
+	private Button clearMacro;
+	
+	public IocMacroDetailsPanel(Composite parent, int style) {
 		super(parent, style);
-		this.messageDisplayer = messageDisplayer;
 		setLayout(new FillLayout(SWT.HORIZONTAL));
 		
 		Group grpSelectedPv = new Group(this, SWT.NONE);
 		grpSelectedPv.setText("Selected Macro");
-		grpSelectedPv.setLayout(new GridLayout(2, false));
+		grpSelectedPv.setLayout(new GridLayout(4, false));
 		
 		Label lblName = new Label(grpSelectedPv, SWT.NONE);
 		lblName.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		lblName.setText("Name");
 		
 		name = new Text(grpSelectedPv, SWT.BORDER);
-		name.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		name.setEnabled(false);
+		name.setEditable(false);
+		name.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 3, 1));
 		
 		Label lblValue = new Label(grpSelectedPv, SWT.NONE);
 		lblValue.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
@@ -86,74 +94,138 @@ public class IocMacroDetailsPanel extends Composite {
 		value.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		value.setEnabled(false);
 		
-		availableMacrosTable = new AddMacroTable(grpSelectedPv, SWT.NONE, 0);
-		availableMacrosTable.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
+		setMacroButton = new Button(grpSelectedPv, SWT.NONE);
+		setMacroButton.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				macro.setValue(value.getText());
+				setClearButtonEnabled(true);
+			}
+		});
+		setMacroButton.setText("Set Macro");
+		
+		clearMacro = new Button(grpSelectedPv, SWT.NONE);
+		clearMacro.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				macro.setValue("");
+				value.setText("");
+				setClearButtonEnabled(false);
+			}
+		});
+		clearMacro.setText("Clear Macro");
+		
+		errorIconLabel = new Label(grpSelectedPv, SWT.NONE);
+		errorIconLabel.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
+		errorIconLabel.setText("");
+		
+		Display display = Display.getCurrent(); 
+		Image img = display.getSystemImage(SWT.ICON_WARNING);
+		Image scaled = new Image(display, img.getImageData().scaledTo(20, 20));
+		
+		errorIconLabel.setImage(scaled);
+		
+		macroValueErrorLabel = new Label(grpSelectedPv, SWT.NONE);
+		GridData gd_macroValueErrorLabel = new GridData(SWT.LEFT, SWT.CENTER, false, false, 3, 1);
+		gd_macroValueErrorLabel.widthHint = 300;
+		macroValueErrorLabel.setLayoutData(gd_macroValueErrorLabel);
+		macroValueErrorLabel.setText("placeholder placeholder placeholder placeholder");
+		
+		displayMacrosTable = new MacroTable(grpSelectedPv, SWT.NONE, SWT.FULL_SELECTION);
+		GridData gd_availableMacrosTable = new GridData(SWT.FILL, SWT.FILL, true, true, 4, 1);
+		gd_availableMacrosTable.widthHint = 428;
+		displayMacrosTable.setLayoutData(gd_availableMacrosTable);
 		new Label(grpSelectedPv, SWT.NONE);
 		new Label(grpSelectedPv, SWT.NONE);
-		availableMacrosTable.addSelectionChangedListener(new ISelectionChangedListener() {
+		new Label(grpSelectedPv, SWT.NONE);
+		new Label(grpSelectedPv, SWT.NONE);
+		displayMacrosTable.addSelectionChangedListener(new ISelectionChangedListener() {
 			public void selectionChanged(SelectionChangedEvent arg0) {
 				IStructuredSelection selection = (IStructuredSelection) arg0.getSelection();
 				if (selection.size() > 0) {
 					Macro macro = (Macro) selection.getFirstElement();
 					name.setText(macro.getName());
+					setMacro(macro, true);
 				}
 			}
 		});
 	}
 	
-	public void setMacro(Macro macro, Collection<Macro> macros, Collection<Macro> availableMacros, boolean canEdit) {
+	/**
+	 * Called when changing IOCs. Should reset everything such as name, selection etc.
+	 * @param macros The macros to display of the current IOC
+	 * @param canEdit If the IOC is editable
+	 */
+	public void setMacros(Collection<Macro> macros, boolean canEdit) {
+		this.macro = null;
+		
 		if (bindingContext != null) {
 			bindingContext.dispose();
 		}
 		
-		if (macro == null) {
-			setEnabled(false);
-			setTextEnabled(false);
-	
-			return;
-		}
-		
-		setEnabled(canEdit);
-		setTextEnabled(canEdit);
-		
-		macroSearcher = new AvailableMacroSearcher(availableMacros);
-		
 		bindingContext = new DataBindingContext();
-		nameStrategy.setBeforeSetValidator(new MacroNameValidator(macros, macro, messageDisplayer));
-		valueValidator = new MacroValueValidator(macro, messageDisplayer);
+		valueValidator = new MacroValueValidator(macro, macroValueErrorLabel);
 		valueStrategy.setBeforeSetValidator(valueValidator);
 		
-		bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(name), BeanProperties.value("name").observe(macroSearcher), 
-				nameStrategy, new UpdateValueStrategy(UpdateValueStrategy.POLICY_NEVER)); 
-		bindingContext.bindValue(BeanProperties.value("pattern").observe(macro), BeanProperties.value("pattern").observe(macroSearcher));	
+		setValueEditable(false);
+		setEnabled(canEdit);
 		
-		bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(name), BeanProperties.value("name").observe(macro), nameStrategy, null); 
-		bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(value), BeanProperties.value("value").observe(macro), valueStrategy, null);
-		bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(name), BeanProperties.value("filter").observe(availableMacrosTable), 
-				new UpdateValueStrategy(UpdateValueStrategy.POLICY_UPDATE), new UpdateValueStrategy(UpdateValueStrategy.POLICY_NEVER));
+		bindingContext.bindValue(
+				WidgetProperties.text(SWT.Modify).observe(value), 
+				BeanProperties.value("value").observe(macro), 
+				valueStrategy, null);
 		
-		macroSearcher.addPropertyChangeListener("pattern", new PropertyChangeListener() {
-			@Override
-			public void propertyChange(PropertyChangeEvent arg0) {
-				valueValidator.validate(value.getText());
-			}
-		});
+		bindingContext.bindValue(
+				WidgetProperties.enabled().observe(setMacroButton), 
+				BeanProperties.value(MacroValueValidator.NAME_IS_VALID).observe(valueValidator));
 		
-		availableMacrosTable.setRows(availableMacros);
+		bindingContext.bindValue(WidgetProperties.visible().observe(errorIconLabel), 
+				BeanProperties.value(MacroValueValidator.SHOW_WARNING_ICON).observe(valueValidator));
+		
+		displayMacrosTable.setRows(macros);
+		displayMacrosTable.deselectAll();
+		
+		name.setText("");
+	}
+	
+	/**
+	 * Set a new selected macro.
+	 * 
+	 * @param macro The macro to set
+	 * @param canEdit If the macro is editable
+	 */
+	public void setMacro(Macro macro, boolean canEdit) {		
+		this.macro = macro;
+		
+		valueValidator.setMacro(macro);
+		setValueEditable(canEdit);
+		
+		value.setText(Strings.nullToEmpty(macro.getValue()));
 	}
 	
 	@Override
 	public void setEnabled(boolean enabled) {
 		super.setEnabled(enabled);
-		availableMacrosTable.setEnabled(enabled);
+		displayMacrosTable.setEnabled(enabled);
 	}
 	
-	private void setTextEnabled(boolean enabled) {
-		name.setEnabled(enabled);
+	private void setValueEditable(boolean enabled) {
 		value.setEnabled(enabled);
 		if (!enabled) {
-			name.setText("");
 			value.setText("");
+		}
+		
+		// Force the validation to update, for example when selecting a macro
+		valueValidator.validate("");
+		
+		setClearButtonEnabled(enabled);
+	}
+	
+	private void setClearButtonEnabled(boolean enabled) {
+		if (macro == null || Strings.isNullOrEmpty(macro.getValue())) {
+			clearMacro.setEnabled(false);
+		} else {
+			clearMacro.setEnabled(enabled);
 		}
 	}
 }
