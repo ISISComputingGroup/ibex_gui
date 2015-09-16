@@ -30,6 +30,10 @@ import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
 
+/**
+ * Creates a map of IOC parameters for each IOC specified in the JSON.
+ *
+ */
 public class IocsParametersConverter extends Converter<String, Map<String, IocParameters>> {
 
 	private final Gson gson = new Gson();

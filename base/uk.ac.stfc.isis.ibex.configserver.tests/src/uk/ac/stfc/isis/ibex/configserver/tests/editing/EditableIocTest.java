@@ -17,33 +17,30 @@
 * http://opensource.org/licenses/eclipse-1.0.php
 */
 
-package uk.ac.stfc.isis.ibex.configserver.tests.displaying;
+package uk.ac.stfc.isis.ibex.configserver.tests.editing;
 
-import uk.ac.stfc.isis.ibex.epics.observing.CachingObservable;
-import uk.ac.stfc.isis.ibex.epics.observing.InitialiseOnSubscribeObservable;
+import static org.junit.Assert.*;
 
-/**
- * Observable to be used for testing, allows access to setValue, setError and setConnectionChanged methods.
- * 
- * This is final, so no mocking this, or using it outside testing!
- */
-final class TestableIOSObservable<T> extends InitialiseOnSubscribeObservable<T> {
-	public TestableIOSObservable(CachingObservable<T> source) {
-		super(source);
-	}
+import java.util.Collection;
 
-	@Override
-	public void setValue(T value) {
-		super.setValue(value);
-	}
+import org.junit.Test;
 
-	@Override
-	public void setError(Exception e) {
-		super.setError(e);
+import uk.ac.stfc.isis.ibex.configserver.configuration.Macro;
+import uk.ac.stfc.isis.ibex.configserver.editing.EditableIoc;
+
+
+public class EditableIocTest {
+
+	@Test
+	public void getting_available_macros_when_none_returns_empty_list() {
+		// Arrange
+		EditableIoc ioc = new EditableIoc("testioc");
+		
+		// Act
+		Collection<Macro> avail = ioc.getAvailableMacros();
+		
+		// Assert
+		assertEquals(avail.size(), 0);
+		
 	}
-	
-	@Override
-	public void setConnectionStatus(boolean isConnected) {
-		super.setConnectionStatus(isConnected);
-	}
-};
+}
