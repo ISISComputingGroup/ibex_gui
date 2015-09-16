@@ -121,7 +121,7 @@ public class MacroValueValidatorTest {
 		nullMacroValidator.validate("");
 		
 		// Assert
-		verify(showWarningIconListener, times(0)).propertyChange(any());
+		verify(showWarningIconListener, times(0)).propertyChange(any(PropertyChangeEvent.class));
 	}
 	
 	@Test
@@ -170,7 +170,7 @@ public class MacroValueValidatorTest {
 		macroValidator.validate("");
 		
 		// Assert
-		verify(showWarningIconListener, times(0)).propertyChange(any());
+		verify(showWarningIconListener, times(0)).propertyChange(any(PropertyChangeEvent.class));
 	}
 	
 	@Test
@@ -206,7 +206,7 @@ public class MacroValueValidatorTest {
 		macroValidator.validate(VALID_VALUE);
 		
 		// Assert
-		verify(mockNameIsValidListener, times(0)).propertyChange(any());
+		verify(mockNameIsValidListener, times(0)).propertyChange(any(PropertyChangeEvent.class));
 	}
 	
 	@Test
@@ -218,7 +218,7 @@ public class MacroValueValidatorTest {
 		macroValidator.validate(VALID_VALUE);
 		
 		// Assert
-		verify(showWarningIconListener, times(0)).propertyChange(any());
+		verify(showWarningIconListener, times(0)).propertyChange(any(PropertyChangeEvent.class));
 	}
 	
 	@Test
