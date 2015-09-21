@@ -26,15 +26,17 @@ public class UserDetails extends ModelObject {
 	private String name;
 	private String institute;
 	private Role role;
+	private String associatedExperiment;
 
-	public UserDetails(String name, String institute, Role role) {
+	public UserDetails(String name, String institute, Role role, String associatedExperiment) {
 		this.name = name;
 		this.institute = institute;
 		this.role = role;
+		this.associatedExperiment = associatedExperiment;
 	}
 	
 	public UserDetails(UserDetails other) {
-		this(other.name, other.institute, other.role);
+		this(other.name, other.institute, other.role, other.associatedExperiment);
 	}
 	
 	public String getName() {
@@ -59,6 +61,14 @@ public class UserDetails extends ModelObject {
 
 	public void setRole(Role role) {
 		firePropertyChange("role", this.role, this.role = role);
+	}
+	
+	public String getAssociatedExperiment() {
+		return associatedExperiment;
+	}
+
+	public void setAssociatedExperiments(String associatedExperiment) {
+		firePropertyChange("associatedExperiment", this.associatedExperiment, this.associatedExperiment = associatedExperiment);
 	}
 
 }

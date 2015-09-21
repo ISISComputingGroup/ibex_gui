@@ -40,7 +40,8 @@ public class SqlStatement {
     private List<ExpDataTablesEnum> fromTables;
     private List<SqlWhereClause> whereFields;
     
-    private ExpDataField groupBy;
+    private List<ExpDataField> groupBy;
+    private ExpDataField orderBy;
 
     public SqlStatement() {
     	try {
@@ -85,8 +86,15 @@ public class SqlStatement {
     /**
      * Set the field to Group By.
      */
-    public void setGroupBy(ExpDataField groupBy) {
+    public void setGroupBy(List<ExpDataField> groupBy) {
 		this.groupBy = groupBy;
+    }
+    
+    /**
+     * Set the field to Order By.
+     */
+    public void setOrderBy(ExpDataField orderBy) {
+		this.orderBy = orderBy;
     }
 
     /**
@@ -100,7 +108,11 @@ public class SqlStatement {
 			+ " WHERE " + whereList();
     	
     	if (groupBy != null) {
-    		sqlStatement += " GROUP BY " + groupBy;
+    		sqlStatement += " GROUP BY " + groupByList();
+    	}
+    	
+    	if (orderBy != null) {
+    		sqlStatement += " ORDER BY " + orderBy;
     	}
     	
 		return sqlStatement;
@@ -129,8 +141,12 @@ public class SqlStatement {
      * Get string representation of the SELECT list
      */
     private String selectList() {
-	
-		return joinString(this.selectFields, ", ");
+    	//add aliases
+    	ArrayList<String> aliasedSelects = new ArrayList<>();
+    	for (ExpDataField field : this.selectFields) {
+    		aliasedSelects.add(field.toString() + " AS \"" + field.toString() + "\"");
+    	}
+		return joinString(aliasedSelects, ", ");
     }
 
     /**
@@ -147,5 +163,9 @@ public class SqlStatement {
     private String whereList() {
 		
 		return joinString(this.whereFields, " AND ");
+    }
+    
+    private String groupByList() {
+    	return joinString(this.groupBy, ", ");
     }
 }

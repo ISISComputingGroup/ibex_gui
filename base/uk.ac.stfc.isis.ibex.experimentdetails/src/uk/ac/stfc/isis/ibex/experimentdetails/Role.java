@@ -35,4 +35,13 @@ public enum Role {
 	public String toString() {
 		return text;
 	}
+	
+	public static Role getByString(String search) {
+		for (Role r : values()) {
+			if (r.toString().equals(search)) {
+				return r;
+			}
+		}
+		return null;
+	}
 }

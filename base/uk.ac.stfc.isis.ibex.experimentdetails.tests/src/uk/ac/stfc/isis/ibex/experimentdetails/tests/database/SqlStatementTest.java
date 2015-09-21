@@ -171,7 +171,7 @@ public class SqlStatementTest {
 		//Arrange
 		SqlStatement sql = new SqlStatement();
 		ExpDataField userId = ExpDataFieldsCreator.getField(ExpDataTablesEnum.USER_TABLE, ExpDataFieldsEnum.USER_ID);
-		sql.setGroupBy(userId);
+		sql.setGroupBy(new ArrayList<ExpDataField>(Arrays.asList(userId)));
 		
 		//Act
 		String result = sql.getSelectStatement();

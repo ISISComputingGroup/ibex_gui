@@ -12,8 +12,11 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.jface,
  uk.ac.stfc.isis.ibex.preferences
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
-Export-Package: uk.ac.stfc.isis.ibex.experimentdetails
+Export-Package: uk.ac.stfc.isis.ibex.experimentdetails,
+ uk.ac.stfc.isis.ibex.experimentdetails.database
 Bundle-ActivationPolicy: lazy
 Import-Package: org.apache.logging.log4j,
  org.eclipse.core.databinding.conversion,
  uk.ac.stfc.isis.ibex.logger
+Bundle-ClassPath: lib/mysql-connector-java-5.1.31-bin.jar,
+ .

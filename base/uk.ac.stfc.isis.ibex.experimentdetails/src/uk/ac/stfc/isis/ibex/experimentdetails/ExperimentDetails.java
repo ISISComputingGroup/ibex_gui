@@ -22,6 +22,7 @@ package uk.ac.stfc.isis.ibex.experimentdetails;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
+import uk.ac.stfc.isis.ibex.experimentdetails.database.SearchModel;
 import uk.ac.stfc.isis.ibex.experimentdetails.internal.ExperimentDetailsVariables;
 import uk.ac.stfc.isis.ibex.experimentdetails.internal.ObservableModel;
 import uk.ac.stfc.isis.ibex.instrument.Instrument;
@@ -33,6 +34,7 @@ public class ExperimentDetails extends AbstractUIPlugin {
 	
 	private ExperimentDetailsVariables variables; 
 	private Model model;
+	private SearchModel searchModel;
 
 	static BundleContext getContext() {
 		return context;
@@ -42,6 +44,7 @@ public class ExperimentDetails extends AbstractUIPlugin {
 		instance = this;		
 		variables = new ExperimentDetailsVariables(Instrument.getInstance().channels()); //prefixes the PV
 		model = new ObservableModel(variables);
+		searchModel = new SearchModel();
 	}
 	
 	public static ExperimentDetails getInstance() {
@@ -52,6 +55,10 @@ public class ExperimentDetails extends AbstractUIPlugin {
 		return model;
 	}
 
+	public SearchModel searchModel() {
+		return searchModel;
+	}
+	
 	/*
 	 * (non-Javadoc)
 	 * @see org.osgi.framework.BundleActivator#start(org.osgi.framework.BundleContext)
