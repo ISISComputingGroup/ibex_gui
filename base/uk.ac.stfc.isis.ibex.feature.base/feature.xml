@@ -20,10 +20,6 @@
          id="uk.ac.stfc.isis.ibex.feature.css"
          version="0.0.0"/>
 
-   <includes
-         id="uk.ac.stfc.isis.ibex.feature.dawn"
-         version="0.0.0"/>
-
    <plugin
          id="uk.ac.stfc.isis.ibex.product"
          download-size="0"
@@ -220,19 +216,6 @@
          unpack="false"/>
 
    <plugin
-         id="com.google.gson"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"/>
-
-   <plugin
-         id="uk.ac.stfc.isis.ibex.ui.scripting"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
          id="uk.ac.stfc.isis.ibex.ui.databrowser"
          download-size="0"
          install-size="0"
@@ -248,13 +231,6 @@
 
    <plugin
          id="uk.ac.stfc.isis.ibex.instrument"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="uk.ac.stfc.isis.ibex.ui.instrument"
          download-size="0"
          install-size="0"
          version="0.0.0"
@@ -367,6 +343,19 @@
 
    <plugin
          id="uk.ac.stfc.isis.ibex.ui.statusbar"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="com.google.gson"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"/>
+
+   <plugin
+         id="uk.ac.stfc.isis.ibex.ui.instrument"
          download-size="0"
          install-size="0"
          version="0.0.0"

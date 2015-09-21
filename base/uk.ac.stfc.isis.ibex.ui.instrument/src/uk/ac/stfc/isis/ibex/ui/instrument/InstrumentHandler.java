@@ -28,7 +28,7 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.PlatformUI;
 
 import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
-import uk.ac.stfc.isis.ibex.ui.scripting.Consoles;
+//import uk.ac.stfc.isis.ibex.ui.scripting.Consoles;
 import uk.ac.stfc.isis.ibex.ui.synoptic.Activator;
 
 /**
@@ -37,7 +37,7 @@ import uk.ac.stfc.isis.ibex.ui.synoptic.Activator;
  */
 public class InstrumentHandler extends AbstractHandler {
 
-	private final Consoles consoles = Consoles.getDefault();
+    // private final Consoles consoles = Consoles.getDefault();
 	private final Activator synoptic = Activator.getDefault();
 	
 	@Override
@@ -53,17 +53,17 @@ public class InstrumentHandler extends AbstractHandler {
 		synoptic.closeAllOPIs();
 		
 		InstrumentInfo selected = dialog.selectedInstrument();
-		if (!consoles.anyActive()) {
-			setInstrument(selected);
-			return null;
-		}
-			
-		if (shouldCloseAllConsoles(dialog)) {
-			consoles.closeAll();
-		}
+        // if (!consoles.anyActive()) {
+        // setInstrument(selected);
+        // return null;
+        // }
+        //
+        // if (shouldCloseAllConsoles(dialog)) {
+        // consoles.closeAll();
+        // }
 		
 		setInstrument(selected);
-		consoles.createConsole();
+        // consoles.createConsole();
 		
 		return null;
 	}
