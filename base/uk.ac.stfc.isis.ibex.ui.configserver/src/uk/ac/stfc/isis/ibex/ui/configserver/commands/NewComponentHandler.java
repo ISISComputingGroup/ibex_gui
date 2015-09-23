@@ -32,7 +32,7 @@ import uk.ac.stfc.isis.ibex.ui.configserver.dialogs.EditConfigDialog;
 
 public class NewComponentHandler extends ConfigHandler<Configuration> {
 
-	private static final String TITLE = "New coponent";
+	private static final String TITLE = "New component";
 	private static final String SUB_TITLE = "Editing a new component";
 
 	public NewComponentHandler() {
