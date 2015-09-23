@@ -12,6 +12,7 @@
    </extension>
    <extension
          point="org.eclipse.ui.startup">
-      <startup>uk.ac.stfc.isis.ibex.ui.UI</startup>
+      <startup
+            class="uk.ac.stfc.isis.ibex.ui.Startup">uk.ac.stfc.isis.ibex.ui.UI</startup>
    </extension>
 </plugin>
