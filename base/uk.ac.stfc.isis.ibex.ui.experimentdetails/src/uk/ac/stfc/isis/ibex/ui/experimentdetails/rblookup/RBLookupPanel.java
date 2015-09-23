@@ -46,8 +46,8 @@ public class RBLookupPanel extends Composite{
 		@Override
 		public void propertyChange(PropertyChangeEvent arg0) {
 			Collection<UserDetails> results = SEARCH.getSearchResults();
-			experimentIDTable.setRows(results);	
-			dialog.setOKEnabled(!results.isEmpty());
+			experimentIDTable.setRows(results);
+			dialog.setOKEnabled(results.size() == 1);
 		}
 	};
 	
@@ -156,6 +156,13 @@ public class RBLookupPanel extends Composite{
 			@Override
 			public void mouseDoubleClick(MouseEvent arg0) {
 				dialog.okPressed();
+			}
+		});
+		
+		experimentIDTable.addSelectionChangedListener(new ISelectionChangedListener() {
+			@Override
+			public void selectionChanged(SelectionChangedEvent arg0) {
+				dialog.setOKEnabled(true);
 			}
 		});
 		
