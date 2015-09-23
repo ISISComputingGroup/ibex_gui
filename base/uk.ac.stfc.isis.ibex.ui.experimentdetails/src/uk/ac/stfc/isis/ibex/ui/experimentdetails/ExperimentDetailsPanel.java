@@ -22,6 +22,9 @@ package uk.ac.stfc.isis.ibex.ui.experimentdetails;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
+import org.eclipse.core.databinding.DataBindingContext;
+import org.eclipse.core.databinding.beans.BeanProperties;
+import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.window.Window;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.FillLayout;
@@ -76,7 +79,7 @@ public class ExperimentDetailsPanel extends Composite {
 		rbNumber.setLayoutData(gd_rbNumber);
 		
 		btnRBLookup = new Button(composite, SWT.NONE);
-		btnRBLookup.setText("Lookup");
+		btnRBLookup.setText("Search");
 		new Label(composite, SWT.NONE);
 		new Label(composite, SWT.NONE);
 		btnRBLookup.addSelectionListener(new SelectionAdapter() {
@@ -161,6 +164,7 @@ public class ExperimentDetailsPanel extends Composite {
 		gd_sampleParameters.minimumHeight = 150;
 		gd_sampleParameters.heightHint = 150;
 		sampleParameters.setLayoutData(gd_sampleParameters);
+		sampleParameters.enableEditing(viewModel.rbNumber.canSetText().getValue());
 		
 		updateSampleParameters();
 		viewModel.model.addPropertyChangeListener(new PropertyChangeListener() {		
@@ -188,12 +192,32 @@ public class ExperimentDetailsPanel extends Composite {
 		gd_beamParameters.minimumHeight = 200;
 		gd_beamParameters.heightHint = 200;
 		beamParameters.setLayoutData(gd_beamParameters);
+		beamParameters.enableEditing(viewModel.rbNumber.canSetText().getValue());
 		
 		updateBeamParameters();
 		viewModel.model.addPropertyChangeListener(new PropertyChangeListener() {		
 			@Override
 			public void propertyChange(PropertyChangeEvent arg0) {
 				updateBeamParameters();
+			}
+		});
+	
+		bind();
+	}
+	
+	private void bind() {
+		DataBindingContext bindingContext = new DataBindingContext();
+		bindingContext.bindValue(WidgetProperties.enabled().observe(btnRBLookup), BeanProperties.value("value").observe(viewModel.rbNumber.canSetText()));
+		bindingContext.bindValue(WidgetProperties.enabled().observe(btnAddUserDetails), BeanProperties.value("value").observe(viewModel.rbNumber.canSetText()));
+		bindingContext.bindValue(WidgetProperties.enabled().observe(btnClearUserDetails), BeanProperties.value("value").observe(viewModel.rbNumber.canSetText()));
+		bindingContext.bindValue(WidgetProperties.enabled().observe(btnUpdateUserDetails), BeanProperties.value("value").observe(viewModel.rbNumber.canSetText()));
+		
+		viewModel.rbNumber.canSetText().addPropertyChangeListener(new PropertyChangeListener() {
+			@Override
+			public void propertyChange(PropertyChangeEvent event) {
+				boolean canSet = (boolean)event.getNewValue();
+				beamParameters.enableEditing(canSet);
+				sampleParameters.enableEditing(canSet);
 			}
 		});
 	}
