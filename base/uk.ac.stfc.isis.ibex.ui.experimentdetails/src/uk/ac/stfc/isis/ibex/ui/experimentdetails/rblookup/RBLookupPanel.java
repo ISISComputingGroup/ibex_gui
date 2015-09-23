@@ -4,6 +4,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.GregorianCalendar;
 
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ComboViewer;
@@ -16,6 +17,7 @@ import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.SWT;
@@ -29,11 +31,14 @@ import uk.ac.stfc.isis.ibex.experimentdetails.UserDetails;
 import uk.ac.stfc.isis.ibex.experimentdetails.database.SearchModel;
 import uk.ac.stfc.isis.ibex.ui.experimentdetails.UserDetailsTable;
 
+import org.eclipse.swt.widgets.DateTime;
+
 public class RBLookupPanel extends Composite{
 	private Text txtName;
 	private ComboViewer cmboRole;
 	private UserDetailsTable experimentIDTable;
 	private final RBLookupDialog dialog;
+	private DateTime date;
 	
 	private SearchModel SEARCH = ExperimentDetails.getInstance().searchModel();
 	
@@ -54,14 +59,14 @@ public class RBLookupPanel extends Composite{
 		
 		Composite searchComposite = new Composite(this, SWT.NONE);
 		searchComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
-		searchComposite.setLayout(new GridLayout(3, false));
+		searchComposite.setLayout(new GridLayout(4, false));
 		
 		Label lblName = new Label(searchComposite, SWT.NONE);
 		lblName.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		lblName.setText("Name:");
 		
 		txtName = new Text(searchComposite, SWT.BORDER);
-		txtName.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
+		txtName.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 3, 1));
 		
 		txtName.addListener(SWT.DefaultSelection, new Listener() {
 			@Override
@@ -75,7 +80,9 @@ public class RBLookupPanel extends Composite{
 		lblRole.setText("Role:");
 		
 		cmboRole = new ComboViewer(searchComposite, SWT.READ_ONLY);
-		cmboRole.getCombo().setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
+		GridData gridData = new GridData(SWT.LEFT, SWT.CENTER, true, false, 1, 1);
+		gridData.widthHint = 144;
+		cmboRole.getCombo().setLayoutData(gridData);
 		cmboRole.setContentProvider(ArrayContentProvider.getInstance());
 		cmboRole.setInput(Role.values());
 		cmboRole.getCombo().select(0);
@@ -86,7 +93,39 @@ public class RBLookupPanel extends Composite{
 				searchForExperimentID();
 			}
 		});
-
+		
+		Button btnOnDate = new Button(searchComposite, SWT.CHECK);
+		btnOnDate.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
+		btnOnDate.setText("On Date:");
+		
+		date = new DateTime(searchComposite, SWT.BORDER | SWT.DROP_DOWN);
+		date.setEnabled(false);
+		
+		date.addSelectionListener(new SelectionListener() {
+			@Override
+			public void widgetSelected(SelectionEvent arg0) {
+				searchForExperimentID();
+			}
+			
+			@Override
+			public void widgetDefaultSelected(SelectionEvent arg0) {
+			}
+		});
+		
+		btnOnDate.addSelectionListener(new SelectionListener() {
+			
+			@Override
+			public void widgetSelected(SelectionEvent arg0) {
+				date.setEnabled(!date.getEnabled());
+				searchForExperimentID();
+			}
+			
+			@Override
+			public void widgetDefaultSelected(SelectionEvent arg0) {
+			}
+		});
+		
+		new Label(searchComposite, SWT.NONE);
 		new Label(searchComposite, SWT.NONE);
 		new Label(searchComposite, SWT.NONE);
 		
@@ -128,7 +167,13 @@ public class RBLookupPanel extends Composite{
 		int roleIndex = cmboRole.getCombo().getSelectionIndex();
 		Role role = Arrays.asList(Role.values()).get(roleIndex);
 		
-		SEARCH.searchExperiments(txtName.getText(), role);
+		GregorianCalendar calendar = null;
+		
+		if (date.getEnabled()) {
+			calendar = new GregorianCalendar(date.getYear(), date.getMonth(), date.getDay());
+		}
+		
+		SEARCH.searchExperiments(txtName.getText(), role, calendar);
 	}
 	
 	public void bindTable() {

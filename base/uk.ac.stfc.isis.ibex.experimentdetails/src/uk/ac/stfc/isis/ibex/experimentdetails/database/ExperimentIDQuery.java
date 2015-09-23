@@ -21,23 +21,26 @@ package uk.ac.stfc.isis.ibex.experimentdetails.database;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import uk.ac.stfc.isis.ibex.experimentdetails.Role;
 import uk.ac.stfc.isis.ibex.experimentdetails.UserDetails;
 import uk.ac.stfc.isis.ibex.experimentdetails.sql.SqlStatement;
 import uk.ac.stfc.isis.ibex.experimentdetails.sql.SqlWhereClause;
+import uk.ac.stfc.isis.ibex.experimentdetails.sql.SqlWhereDateBetweenClause;
 import uk.ac.stfc.isis.ibex.experimentdetails.sql.SqlWhereEqualClause;
 import uk.ac.stfc.isis.ibex.experimentdetails.sql.SqlWhereLikeClause;
 
 public class ExperimentIDQuery {
-	private static ExpDataField experimentID = ExpDataFieldsCreator.getField(ExpDataTablesEnum.EXPERIMENT_TEAMS_TABLE, ExpDataFieldsEnum.EXPERIMENT_ID);
+	private static ExpDataField experimentteamsExpID = ExpDataFieldsCreator.getField(ExpDataTablesEnum.EXPERIMENT_TEAMS_TABLE, ExpDataFieldsEnum.EXPERIMENT_ID);
 	private static ExpDataField userName = ExpDataFieldsCreator.getField(ExpDataTablesEnum.USER_TABLE, ExpDataFieldsEnum.NAME);
 	private static ExpDataField roleName = ExpDataFieldsCreator.getField(ExpDataTablesEnum.ROLE_TABLE, ExpDataFieldsEnum.NAME);
 	private static ExpDataField userOrganisation = ExpDataFieldsCreator.getField(ExpDataTablesEnum.USER_TABLE, ExpDataFieldsEnum.ORGANISATION);
 	
     private static final ExpDataField[] SQL_SELECT_FIELDS = {
-    	experimentID, userName,
+    	experimentteamsExpID, userName,
     	userOrganisation, roleName
     };
 
@@ -51,7 +54,7 @@ public class ExperimentIDQuery {
     	return "'%" + searchTerm + "%'";
     }
     
-    private SqlStatement buildSQL(String searchName, Role searchRole) {
+    private SqlStatement buildSQL(String searchName, Role searchRole, GregorianCalendar date) {
         SqlStatement sqlStatement = new SqlStatement();
     	
 		List<SqlWhereClause> whereClauses = new ArrayList<>();
@@ -65,26 +68,34 @@ public class ExperimentIDQuery {
 		
 		ExpDataField roleRoleID = ExpDataFieldsCreator.getField(ExpDataTablesEnum.ROLE_TABLE, ExpDataFieldsEnum.ROLE_ID);
 		
-		whereClauses.add(new SqlWhereEqualClause(userUserID, experimentteamsUserID));
-		whereClauses.add(new SqlWhereLikeClause(userName, addWildcards(searchName)));
-		whereClauses.add(new SqlWhereEqualClause(roleRoleID, experimentteamsRoleID));
-
-		fromTables.add(ExpDataTablesEnum.EXPERIMENT_TEAMS_TABLE);
-		fromTables.add(ExpDataTablesEnum.USER_TABLE);
-		fromTables.add(ExpDataTablesEnum.ROLE_TABLE);
+		ExpDataField experimentExpID = ExpDataFieldsCreator.getField(ExpDataTablesEnum.EXPERIMENT_TABLE, ExpDataFieldsEnum.EXPERIMENT_ID);
 		
-		groupBy.add(experimentID);
+		//Connect tables
+		whereClauses.add(new SqlWhereEqualClause(roleRoleID, experimentteamsRoleID));
+		whereClauses.add(new SqlWhereEqualClause(userUserID, experimentteamsUserID));
+		whereClauses.add(new SqlWhereEqualClause(experimentExpID, experimentteamsExpID));
+		
+		whereClauses.add(new SqlWhereLikeClause(userName, addWildcards(searchName)));
+		
+		//Use all the tables
+		fromTables.addAll(Arrays.asList(ExpDataTablesEnum.values()));
+		
+		groupBy.add(experimentteamsExpID);
 		groupBy.add(userName);
 		
 		if (searchRole != Role.BLANK) {
 			whereClauses.add(new SqlWhereEqualClause(roleName, searchRole));
 		}
 		
+		if (date != null) {
+			whereClauses.add(new SqlWhereDateBetweenClause(date));
+		}
+		
 		sqlStatement.setSelectFields(SQL_SELECT_FIELDS);
 		sqlStatement.setFromTables(fromTables);
 		sqlStatement.setWhereClause(whereClauses);
 		sqlStatement.setGroupBy(groupBy);
-		sqlStatement.setOrderBy(experimentID);
+		sqlStatement.setOrderBy(experimentteamsExpID);
 		
 		return sqlStatement;
     }
@@ -99,8 +110,8 @@ public class ExperimentIDQuery {
      * @param searchRole
      * 			  The user role to search by.
      */
-    public List<UserDetails> getExperiments(String searchName, Role searchRole) throws Exception {
-		String selectStatement = buildSQL(searchName, searchRole).getSelectStatement();
+    public List<UserDetails> getExperiments(String searchName, Role searchRole, GregorianCalendar date) throws Exception {
+		String selectStatement = buildSQL(searchName, searchRole, date).getSelectStatement();
 	
 		final PreparedStatement statement = rdb.getConnection()
 			.prepareStatement(selectStatement);
@@ -113,7 +124,7 @@ public class ExperimentIDQuery {
 		    while (result.next()) {
 		    	String name = result.getString(userName.toString());
 		    	String institute = result.getString(userOrganisation.toString());
-		    	String id = result.getString(experimentID.toString());
+		    	String id = result.getString(experimentteamsExpID.toString());
 		    	String role = result.getString(roleName.toString());
 		    	
 				userDetails.add(new UserDetails(name, institute, Role.getByString(role), id));

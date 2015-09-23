@@ -33,7 +33,8 @@ public class ExpDataFieldsCreator {
 		(Arrays.asList(ExpDataFieldsEnum.ROLE_ID, ExpDataFieldsEnum.NAME, ExpDataFieldsEnum.PRIORITY));
 	
 	private static List<ExpDataFieldsEnum> experiment_fields = new ArrayList<ExpDataFieldsEnum>
-		(Arrays.asList(ExpDataFieldsEnum.USER_ID, ExpDataFieldsEnum.EXPERIMENT_ID, ExpDataFieldsEnum.ROLE_ID));
+		(Arrays.asList(ExpDataFieldsEnum.USER_ID, ExpDataFieldsEnum.EXPERIMENT_ID, ExpDataFieldsEnum.ROLE_ID, 
+				ExpDataFieldsEnum.STARTDATE, ExpDataFieldsEnum.DURATION));
 
     private ExpDataFieldsCreator() {
     }
@@ -41,7 +42,7 @@ public class ExpDataFieldsCreator {
     public static ExpDataField getField(ExpDataTablesEnum table, ExpDataFieldsEnum field) throws IllegalArgumentException {
 
     	if (!getFieldList(table).contains(field)) {
-    		throw new IllegalArgumentException("Unknown experiment details field" + field);
+    		throw new IllegalArgumentException("Unknown experiment details field: " + field);
     	}
     	
 		return new ExpDataField(table, field);
