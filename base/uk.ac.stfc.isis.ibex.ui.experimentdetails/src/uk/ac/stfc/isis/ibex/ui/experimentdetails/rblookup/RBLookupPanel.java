@@ -2,7 +2,6 @@ package uk.ac.stfc.isis.ibex.ui.experimentdetails.rblookup;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.GregorianCalendar;
 
@@ -10,6 +9,7 @@ import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
+import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
@@ -26,7 +26,6 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Button;
 
 import uk.ac.stfc.isis.ibex.experimentdetails.ExperimentDetails;
-import uk.ac.stfc.isis.ibex.experimentdetails.Role;
 import uk.ac.stfc.isis.ibex.experimentdetails.UserDetails;
 import uk.ac.stfc.isis.ibex.experimentdetails.database.SearchModel;
 import uk.ac.stfc.isis.ibex.ui.experimentdetails.UserDetailsTable;
@@ -84,7 +83,7 @@ public class RBLookupPanel extends Composite{
 		gridData.widthHint = 144;
 		cmboRole.getCombo().setLayoutData(gridData);
 		cmboRole.setContentProvider(ArrayContentProvider.getInstance());
-		cmboRole.setInput(Role.values());
+		cmboRole.setInput(RoleViews.values());
 		cmboRole.getCombo().select(0);
 		
 		cmboRole.addSelectionChangedListener(new ISelectionChangedListener() {
@@ -171,8 +170,8 @@ public class RBLookupPanel extends Composite{
 	}
 	
 	private void searchForExperimentID() {
-		int roleIndex = cmboRole.getCombo().getSelectionIndex();
-		Role role = Arrays.asList(Role.values()).get(roleIndex);
+		StructuredSelection selection = (StructuredSelection) cmboRole.getSelection();
+		RoleViews role = (RoleViews)selection.getFirstElement();
 		
 		GregorianCalendar calendar = null;
 		
@@ -180,7 +179,7 @@ public class RBLookupPanel extends Composite{
 			calendar = new GregorianCalendar(date.getYear(), date.getMonth(), date.getDay());
 		}
 		
-		SEARCH.searchExperiments(txtName.getText(), role, calendar);
+		SEARCH.searchExperiments(txtName.getText(), role.getModelRole(), calendar);
 	}
 	
 	public void bindTable() {

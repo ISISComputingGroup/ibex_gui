@@ -21,7 +21,7 @@ public class UserDetailsWithExperimentsTable extends UserDetailsTable {
 	}
 	
 	private void experimentID() {
-		TableViewerColumn experimentID = createColumn("Experiment ID", 4);
+		TableViewerColumn experimentID = createColumn("Experiment ID", 3);
 		experimentID.setLabelProvider(new DataboundCellLabelProvider<UserDetails>(observeProperty("associatedExperiment")) {
 
 			@Override

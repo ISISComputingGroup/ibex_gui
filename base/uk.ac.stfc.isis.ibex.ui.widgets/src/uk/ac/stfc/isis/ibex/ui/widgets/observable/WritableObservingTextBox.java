@@ -60,7 +60,10 @@ public class WritableObservingTextBox extends Composite {
 		textbox.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));	
 				
 		setButton = new Button(this, SWT.NONE);
-		setButton.setText("Update");
+		GridData gd_setButton = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+		gd_setButton.widthHint = 50;
+		setButton.setLayoutData(gd_setButton);
+		setButton.setText("Set");
 		
 		if (adapter != null) {
 			bind(adapter);

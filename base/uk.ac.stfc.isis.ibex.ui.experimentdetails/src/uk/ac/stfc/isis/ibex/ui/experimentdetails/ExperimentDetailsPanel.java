@@ -119,6 +119,9 @@ public class ExperimentDetailsPanel extends Composite {
 		experimentTeamButtons = new Composite(composite, SWT.NONE);
 		experimentTeamButtons.setLayout(new GridLayout(1, false));
 		
+		GridData gd_detailsButtons = new GridData(SWT.LEFT, SWT.FILL, false, false, 1, 1);
+		gd_detailsButtons.widthHint = 50;
+		
 		btnAddUserDetails = new Button(experimentTeamButtons, SWT.NONE);
 		btnAddUserDetails.setSize(34, 25);
 		btnAddUserDetails.addSelectionListener(new SelectionAdapter() {
@@ -129,6 +132,7 @@ public class ExperimentDetailsPanel extends Composite {
 			}
 		});
 		btnAddUserDetails.setText("Add");
+		btnAddUserDetails.setLayoutData(gd_detailsButtons);
 		
 		btnClearUserDetails = new Button(experimentTeamButtons, SWT.NONE);
 		btnClearUserDetails.addSelectionListener(new SelectionAdapter() {
@@ -138,6 +142,7 @@ public class ExperimentDetailsPanel extends Composite {
 			}
 		});
 		btnClearUserDetails.setText("Clear");
+		btnClearUserDetails.setLayoutData(gd_detailsButtons);		
 		
 		btnUpdateUserDetails = new Button(experimentTeamButtons, SWT.NONE);
 		btnUpdateUserDetails.setSize(50, 25);
@@ -147,7 +152,9 @@ public class ExperimentDetailsPanel extends Composite {
 				viewModel.model.sendUserDetails();
 			}
 		});
-		btnUpdateUserDetails.setText("Update");
+		btnUpdateUserDetails.setText("Set");
+		btnUpdateUserDetails.setLayoutData(gd_detailsButtons);
+		
 		new Label(composite, SWT.NONE);
 		new Label(composite, SWT.NONE);
 		
