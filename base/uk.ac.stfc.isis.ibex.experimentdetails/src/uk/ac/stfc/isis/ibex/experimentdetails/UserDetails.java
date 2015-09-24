@@ -19,6 +19,10 @@
 
 package uk.ac.stfc.isis.ibex.experimentdetails;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 
 public class UserDetails extends ModelObject {
@@ -26,17 +30,28 @@ public class UserDetails extends ModelObject {
 	private String name;
 	private String institute;
 	private Role role;
-	private String associatedExperiment;
-
-	public UserDetails(String name, String institute, Role role, String associatedExperiment) {
+	private String associatedExperimentID;
+	private Date associatedExperimentStartDate;
+	
+	static private final DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+	
+	public UserDetails(String name, String institute, Role role, String associatedExperimentID, Date associatedExperimentStartDate) {
 		this.name = name;
 		this.institute = institute;
 		this.role = role;
-		this.associatedExperiment = associatedExperiment;
+		this.associatedExperimentID = associatedExperimentID;
+		this.associatedExperimentStartDate = associatedExperimentStartDate;
+	}
+	
+	public UserDetails(String name, String institute, Role role)
+	{
+		this.name = name;
+		this.institute = institute;
+		this.role = role;
 	}
 	
 	public UserDetails(UserDetails other) {
-		this(other.name, other.institute, other.role, other.associatedExperiment);
+		this(other.name, other.institute, other.role);
 	}
 	
 	public String getName() {
@@ -63,12 +78,12 @@ public class UserDetails extends ModelObject {
 		firePropertyChange("role", this.role, this.role = role);
 	}
 	
-	public String getAssociatedExperiment() {
-		return associatedExperiment;
+	public String getAssociatedExperimentID() {
+		return associatedExperimentID;
 	}
-
-	public void setAssociatedExperiments(String associatedExperiment) {
-		firePropertyChange("associatedExperiment", this.associatedExperiment, this.associatedExperiment = associatedExperiment);
+	
+	public String getAssociatedExperimentStartDate() {
+		return df.format(associatedExperimentStartDate);
 	}
 
 }

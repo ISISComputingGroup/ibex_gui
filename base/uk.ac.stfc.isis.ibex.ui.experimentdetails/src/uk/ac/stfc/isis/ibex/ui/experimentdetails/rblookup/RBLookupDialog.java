@@ -49,7 +49,7 @@ public class RBLookupDialog extends Dialog {
 	
 	@Override
 	protected Point getInitialSize() {
-		return new Point(550, 450);
+		return new Point(550, 475);
 	}
 	
 	@Override
@@ -71,7 +71,7 @@ public class RBLookupDialog extends Dialog {
 	}
 	
 	public String getSelectedExpID() {
-		return selectedResult.getAssociatedExperiment();
+		return selectedResult.getAssociatedExperimentID();
 	}
 	
 	public void setOKEnabled(boolean enabled) {

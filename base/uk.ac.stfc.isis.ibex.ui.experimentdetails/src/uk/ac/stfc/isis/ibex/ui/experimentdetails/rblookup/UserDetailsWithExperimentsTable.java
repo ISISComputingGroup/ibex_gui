@@ -18,15 +18,27 @@ public class UserDetailsWithExperimentsTable extends UserDetailsTable {
 	protected void addColumns() {
 		experimentID();
 		super.addColumns();
+		startDate();
 	}
 	
 	private void experimentID() {
 		TableViewerColumn experimentID = createColumn("Experiment ID", 3);
-		experimentID.setLabelProvider(new DataboundCellLabelProvider<UserDetails>(observeProperty("associatedExperiment")) {
+		experimentID.setLabelProvider(new DataboundCellLabelProvider<UserDetails>(observeProperty("associatedExperimentID")) {
 
 			@Override
 			protected String valueFromRow(UserDetails row) {
-				return row.getAssociatedExperiment();
+				return row.getAssociatedExperimentID();
+			}
+		});	
+	}
+	
+	private void startDate() {
+		TableViewerColumn experimentID = createColumn("Start Date", 3);
+		experimentID.setLabelProvider(new DataboundCellLabelProvider<UserDetails>(observeProperty("associatedExperimentStartDate")) {
+
+			@Override
+			protected String valueFromRow(UserDetails row) {
+				return row.getAssociatedExperimentStartDate();
 			}
 		});	
 	}

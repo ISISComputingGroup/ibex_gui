@@ -20,8 +20,10 @@ package uk.ac.stfc.isis.ibex.experimentdetails.database;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 
@@ -38,9 +40,10 @@ public class ExperimentIDQuery {
 	private static ExpDataField userName = ExpDataFieldsCreator.getField(ExpDataTablesEnum.USER_TABLE, ExpDataFieldsEnum.NAME);
 	private static ExpDataField roleName = ExpDataFieldsCreator.getField(ExpDataTablesEnum.ROLE_TABLE, ExpDataFieldsEnum.NAME);
 	private static ExpDataField userOrganisation = ExpDataFieldsCreator.getField(ExpDataTablesEnum.USER_TABLE, ExpDataFieldsEnum.ORGANISATION);
+	private static ExpDataField experimentStartDate = ExpDataFieldsCreator.getField(ExpDataTablesEnum.EXPERIMENT_TABLE, ExpDataFieldsEnum.STARTDATE);	
 	
     private static final ExpDataField[] SQL_SELECT_FIELDS = {
-    	experimentteamsExpID, userName,
+    	experimentteamsExpID, userName, experimentStartDate,
     	userOrganisation, roleName
     };
 
@@ -127,7 +130,11 @@ public class ExperimentIDQuery {
 		    	String id = result.getString(experimentteamsExpID.toString());
 		    	String role = result.getString(roleName.toString());
 		    	
-				userDetails.add(new UserDetails(name, institute, Role.getByString(role), id));
+		    	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		    	String startDateString = result.getString(experimentStartDate.toString());
+		    	Date startDate = sdf.parse(startDateString);
+		    	
+				userDetails.add(new UserDetails(name, institute, Role.getByString(role), id, startDate));
 		    }
 		} finally {
 		    statement.close();

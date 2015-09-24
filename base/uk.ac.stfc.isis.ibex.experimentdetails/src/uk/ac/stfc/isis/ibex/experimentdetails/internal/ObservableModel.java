@@ -39,7 +39,6 @@ public class ObservableModel extends Model {
 	
 	private final String DEFAULT_USER = "DEFAULT_USER";
 	private final String DEFAULT_ORG = "STFC";
-	private final String DEFAULT_EXP_ID = "0";
 		
 	private final BaseObserver<Collection<Parameter>> sampleParametersObserver = new CollectionObserver<Parameter>() {
 		@Override
@@ -120,7 +119,7 @@ public class ObservableModel extends Model {
 	public UserDetails addUser() {
 		Collection<UserDetails> originalUsers = getUserDetails();
 		
-		UserDetails user = new UserDetails(DEFAULT_USER, DEFAULT_ORG, Role.BLANK, DEFAULT_EXP_ID);
+		UserDetails user = new UserDetails(DEFAULT_USER, DEFAULT_ORG, Role.BLANK);
 		this.userDetails.add(user);
 		firePropertyChange("userDetails", originalUsers, getUserDetails());
 		return user;
