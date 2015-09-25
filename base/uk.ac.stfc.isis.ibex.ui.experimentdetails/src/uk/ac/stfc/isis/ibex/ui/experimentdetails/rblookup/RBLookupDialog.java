@@ -1,5 +1,8 @@
 package uk.ac.stfc.isis.ibex.ui.experimentdetails.rblookup;
 
+import org.eclipse.core.databinding.DataBindingContext;
+import org.eclipse.core.databinding.beans.BeanProperties;
+import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.swt.SWT;
@@ -18,9 +21,12 @@ public class RBLookupDialog extends Dialog {
 
 	private RBLookupPanel panel;
 	private UserDetails selectedResult;
+	private DataBindingContext bindingContext;
+	private RBLookupViewModel viewModel;
 	
-	public RBLookupDialog(Shell parentShell) {
+	public RBLookupDialog(Shell parentShell, RBLookupViewModel viewModel) {
 		super(parentShell);
+		this.viewModel = viewModel;
 	}
 	
 	@Override
@@ -35,7 +41,7 @@ public class RBLookupDialog extends Dialog {
 			}
 		});
 		
-		panel = new RBLookupPanel(parent, SWT.NONE, this);
+		panel = new RBLookupPanel(parent, SWT.NONE);
 		panel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 
 		return panel;
@@ -61,21 +67,19 @@ public class RBLookupDialog extends Dialog {
 	@Override
 	public void create() {
 		super.create();
-		setOKEnabled(false);
-	}
-	
-	@Override
-	public boolean close() {
-		panel.close();
-		return super.close();
+		setModel();
 	}
 	
 	public String getSelectedExpID() {
 		return selectedResult.getAssociatedExperimentID();
 	}
 	
-	public void setOKEnabled(boolean enabled) {
+	public void setModel() {
+		bindingContext = new DataBindingContext();
+
 		Button okButton = getButton(IDialogConstants.OK_ID);
-		okButton.setEnabled(enabled);
+		bindingContext.bindValue(WidgetProperties.enabled().observe(okButton), BeanProperties.value("okEnabled").observe(viewModel));
+		
+		panel.setModel(viewModel);
 	}
 }

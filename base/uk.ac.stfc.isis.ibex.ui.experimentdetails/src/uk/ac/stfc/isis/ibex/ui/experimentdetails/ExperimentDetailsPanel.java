@@ -40,6 +40,7 @@ import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.ui.PlatformUI;
 
 import uk.ac.stfc.isis.ibex.ui.experimentdetails.rblookup.RBLookupDialog;
+import uk.ac.stfc.isis.ibex.ui.experimentdetails.rblookup.RBLookupViewModel;
 import uk.ac.stfc.isis.ibex.ui.widgets.observable.WritableObservingTextBox;
 
 public class ExperimentDetailsPanel extends Composite {
@@ -85,7 +86,7 @@ public class ExperimentDetailsPanel extends Composite {
 		btnRBLookup.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				RBLookupDialog lookupDialog = new RBLookupDialog(shell);	
+				RBLookupDialog lookupDialog = new RBLookupDialog(shell, new RBLookupViewModel());
 				if (lookupDialog.open() == Window.OK) {
 					String newRB = lookupDialog.getSelectedExpID();
 					viewModel.rbNumber.setText(newRB);
