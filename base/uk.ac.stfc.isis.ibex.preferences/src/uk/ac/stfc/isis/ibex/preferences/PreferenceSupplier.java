@@ -54,12 +54,6 @@ public class PreferenceSupplier extends AbstractPreferenceInitializer {
     public static final String INITIAL_USER = "initial_user";
     public static final String Default_INITIAL_USER = "Default user";
     
-    public static final String SQL_ADDRESS = "sqlAddress";
-    public static final String Default_SQL_ADDRESS = "localhost";
-    
-    public static final String SQL_PORT = "sqlPort";
-    public static final String Default_SQL_PORT = "3306";
-    
 	public static final IScopeContext SCOPE_CONTEXT = InstanceScope.INSTANCE;
     public static final String PREFERENCE_NODE = "uk.ac.stfc.isis.ibex.preferences";
 	
@@ -102,14 +96,6 @@ public class PreferenceSupplier extends AbstractPreferenceInitializer {
 		return getPreferences().get(INITIAL_USER, Default_INITIAL_USER);
 	}
 	
-	public static String SQLAddress() {
-		return getPreferences().get(SQL_ADDRESS, Default_SQL_ADDRESS);
-	}
-	
-	public static String SQLPort() {
-		return getPreferences().get(SQL_PORT, Default_SQL_PORT);
-	}
-	
 	@Override
 	public void initializeDefaultPreferences() {
         IPreferenceStore store = Preferences.getDefault().getPreferenceStore();
@@ -128,8 +114,6 @@ public class PreferenceSupplier extends AbstractPreferenceInitializer {
         entries.put(PYEPICS_DIRECTORY, Default_PYEPICS_DIRECTORY);
         entries.put(ADMINISTRATOR_PASSWORD, Default_ADMINISTRATOR_PASSWORD);
         entries.put(INITIAL_USER, Default_INITIAL_USER);
-        entries.put(SQL_ADDRESS, Default_SQL_ADDRESS);
-        entries.put(SQL_PORT, Default_SQL_PORT);
     		
         return entries;
 	}

@@ -16,25 +16,18 @@
  * http://opensource.org/licenses/eclipse-1.0.php
  */
 
-package uk.ac.stfc.isis.ibex.log;
-
-import org.eclipse.jface.preference.IPreferenceStore;
+package uk.ac.stfc.isis.ibex.databases.preferences;
 
 import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
 import uk.ac.stfc.isis.ibex.instrument.InstrumentInfoReceiver;
-import uk.ac.stfc.isis.ibex.log.preferences.PreferenceConstants;
+import uk.ac.stfc.isis.ibex.databases.Databases;
+import uk.ac.stfc.isis.ibex.databases.preferences.PreferenceSupplier;
 
-public class LogSettings implements InstrumentInfoReceiver {
-
-    private static final Log LOG = Log.getDefault();
-    private static final IPreferenceStore PREFERENCES = Log.getDefault()
-	    .getPreferenceStore();
+public class SQLSettings implements InstrumentInfoReceiver {
 
     @Override
     public void setInstrument(InstrumentInfo instrument) {
-		PREFERENCES.setValue(PreferenceConstants.P_JMS_ADDRESS,
-			instrument.hostName());
-	
-		LOG.clearMessages();
+    	Databases.getDefault().getPreferenceStore()
+    		.setValue(PreferenceSupplier.SQL_ADDRESS, instrument.hostName());
     }
 }

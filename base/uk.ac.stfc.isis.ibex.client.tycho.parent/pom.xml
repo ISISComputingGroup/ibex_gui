@@ -205,5 +205,6 @@
 		<module>../uk.ac.stfc.isis.ibex.runcontrol.tests</module>
 		<module>../uk.ac.stfc.isis.ibex.runcontrol</module>
 		<module>../uk.ac.stfc.isis.ibex.ui.runcontrol</module>
+		<module>../uk.ac.stfc.isis.ibex.databases</module>
 	</modules>
 </project>

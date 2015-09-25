@@ -6,9 +6,13 @@ import java.util.GregorianCalendar;
 import java.util.List;
 
 import org.apache.logging.log4j.Logger;
+import org.eclipse.jface.preference.IPreferenceStore;
 
+import uk.ac.stfc.isis.ibex.databases.Rdb;
+import uk.ac.stfc.isis.ibex.experimentdetails.ExperimentDetails;
 import uk.ac.stfc.isis.ibex.experimentdetails.Role;
 import uk.ac.stfc.isis.ibex.experimentdetails.UserDetails;
+import uk.ac.stfc.isis.ibex.experimentdetails.preferences.PreferenceConstants;
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 
@@ -18,7 +22,18 @@ public class SearchModel extends ModelObject {
 	
 	public void searchExperiments(String searchName, Role searchRole, GregorianCalendar date) {
 		try {
-			Rdb rdb = Rdb.connectToDatabase();
+			
+			IPreferenceStore preferenceStore = ExperimentDetails.getInstance()
+					.getPreferenceStore();
+			
+			String schema = preferenceStore
+					.getString(PreferenceConstants.P_EXP_DATA_SQL_SCHEMA);
+			String user = preferenceStore
+				.getString(PreferenceConstants.P_EXP_DATA_SQL_USERNAME);
+			String password = preferenceStore
+				.getString(PreferenceConstants.P_EXP_DATA_SQL_PASSWORD);
+			
+			Rdb rdb = Rdb.connectToDatabase(schema, user, password);
 			ExperimentIDQuery query = new ExperimentIDQuery(rdb);
 			List<UserDetails> userDetails = query.getExperiments(searchName, searchRole, date);
 			

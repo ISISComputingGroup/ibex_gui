@@ -16,25 +16,37 @@
  * http://opensource.org/licenses/eclipse-1.0.php
  */
 
-package uk.ac.stfc.isis.ibex.log;
+package uk.ac.stfc.isis.ibex.databases;
 
-import org.eclipse.jface.preference.IPreferenceStore;
+import org.eclipse.ui.plugin.AbstractUIPlugin;
+import org.osgi.framework.BundleContext;
 
-import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
-import uk.ac.stfc.isis.ibex.instrument.InstrumentInfoReceiver;
-import uk.ac.stfc.isis.ibex.log.preferences.PreferenceConstants;
+public class Databases extends AbstractUIPlugin {
+    private static Databases instance;
+    private static BundleContext context;
 
-public class LogSettings implements InstrumentInfoReceiver {
+    public static Databases getInstance() {
+	return instance;
+    }
 
-    private static final Log LOG = Log.getDefault();
-    private static final IPreferenceStore PREFERENCES = Log.getDefault()
-	    .getPreferenceStore();
+    public static Databases getDefault() {
+	return instance;
+    }
 
-    @Override
-    public void setInstrument(InstrumentInfo instrument) {
-		PREFERENCES.setValue(PreferenceConstants.P_JMS_ADDRESS,
-			instrument.hostName());
-	
-		LOG.clearMessages();
+    public Databases() {
+	super();
+	instance = this;
+    }
+
+    static BundleContext getContext() {
+	return context;
+    }
+
+    public void start(BundleContext bundleContext) throws Exception {
+	Databases.context = bundleContext;
+    }
+
+    public void stop(BundleContext bundleContext) throws Exception {
+	Databases.context = null;
     }
 }
