@@ -12,6 +12,7 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.core.databinding,
  org.eclipse.jface.databinding,
  org.eclipse.ui;bundle-version="3.8.2",
- uk.ac.stfc.isis.ibex.ui.synoptic;bundle-version="1.0.0"
+ uk.ac.stfc.isis.ibex.ui.synoptic;bundle-version="1.0.0",
+ uk.ac.stfc.isis.ibex.ui.scripting;bundle-version="1.0.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Bundle-ActivationPolicy: lazy
