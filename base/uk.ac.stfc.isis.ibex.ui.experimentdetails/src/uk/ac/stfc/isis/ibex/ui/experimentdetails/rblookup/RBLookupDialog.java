@@ -15,12 +15,9 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Shell;
 
-import uk.ac.stfc.isis.ibex.experimentdetails.UserDetails;
-
 public class RBLookupDialog extends Dialog {
 
 	private RBLookupPanel panel;
-	private UserDetails selectedResult;
 	private DataBindingContext bindingContext;
 	private RBLookupViewModel viewModel;
 	
@@ -60,7 +57,6 @@ public class RBLookupDialog extends Dialog {
 	
 	@Override
 	public void okPressed() {
-		selectedResult = panel.getSelectedUser();
 		super.okPressed();
 	}
 	
@@ -68,10 +64,6 @@ public class RBLookupDialog extends Dialog {
 	public void create() {
 		super.create();
 		setModel();
-	}
-	
-	public String getSelectedExpID() {
-		return selectedResult.getAssociatedExperimentID();
 	}
 	
 	public void setModel() {

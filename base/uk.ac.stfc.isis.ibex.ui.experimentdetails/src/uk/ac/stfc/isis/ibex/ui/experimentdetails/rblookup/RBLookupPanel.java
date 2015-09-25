@@ -25,7 +25,6 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Button;
 
-import uk.ac.stfc.isis.ibex.experimentdetails.UserDetails;
 import uk.ac.stfc.isis.ibex.ui.experimentdetails.UserDetailsTable;
 
 import org.eclipse.swt.widgets.DateTime;
@@ -141,10 +140,6 @@ public class RBLookupPanel extends Composite{
 		});
 		
 		bindingContext.updateModels();
-	}
-	
-	public UserDetails getSelectedUser() {
-		return experimentIDTable.firstSelectedRow();
 	}
 
 }

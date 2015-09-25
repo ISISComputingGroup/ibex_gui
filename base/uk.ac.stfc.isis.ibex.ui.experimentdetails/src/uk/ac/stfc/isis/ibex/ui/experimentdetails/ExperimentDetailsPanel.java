@@ -86,10 +86,10 @@ public class ExperimentDetailsPanel extends Composite {
 		btnRBLookup.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				RBLookupDialog lookupDialog = new RBLookupDialog(shell, new RBLookupViewModel());
+				RBLookupViewModel lookupViewModel = new RBLookupViewModel();
+				RBLookupDialog lookupDialog = new RBLookupDialog(shell, lookupViewModel);
 				if (lookupDialog.open() == Window.OK) {
-					String newRB = lookupDialog.getSelectedExpID();
-					viewModel.rbNumber.setText(newRB);
+					viewModel.rbNumber.setText(lookupViewModel.getSelectedUser().getAssociatedExperimentID());
 				}
 			}
 		});
