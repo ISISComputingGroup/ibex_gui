@@ -31,7 +31,7 @@ import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
 
 public class InstrumentDialog extends Dialog {
 	
-	private final String TITLE = "Select an instrument";
+	private final String TITLE = "Select an Instrument";
 	
 	private InstrumentInfo selectedInstrument;
 	private InstrumentSelectionPanel selector;

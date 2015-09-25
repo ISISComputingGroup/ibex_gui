@@ -32,7 +32,7 @@ import uk.ac.stfc.isis.ibex.ui.configserver.dialogs.ConfigSelectionDialog;
 import uk.ac.stfc.isis.ibex.ui.configserver.dialogs.EditConfigDialog;
 
 public class EditComponentHandler extends ConfigHandler<Configuration> {
-	private static final String TITLE = "Edit component";
+	private static final String TITLE = "Edit Component";
 	
 	public EditComponentHandler() {
 		super(SERVER.saveAsComponent());
