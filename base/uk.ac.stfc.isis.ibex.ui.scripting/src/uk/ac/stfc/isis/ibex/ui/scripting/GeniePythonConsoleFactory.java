@@ -73,6 +73,6 @@ public class GeniePythonConsoleFactory extends PydevConsoleFactory {
 		PydevConsoleLaunchInfo launchAndProcess = 
 				iprocessFactory.createLaunch(manager, interpreterInfo, interpreterInfo.getPythonPath(), null, null);
 				
-		return createPydevInterpreter(launchAndProcess, null);
+		return createPydevInterpreter(launchAndProcess, null, null);
 	}
 }

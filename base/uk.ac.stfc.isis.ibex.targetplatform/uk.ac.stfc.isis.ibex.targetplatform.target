@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?pde version="3.8"?><target name="uk.ac.stfc.isis.ibex.targetplatform" sequenceNumber="113">
+<?pde version="3.8"?><target name="uk.ac.stfc.isis.ibex.targetplatform" sequenceNumber="114">
 <locations>
 <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
 <unit id="org.mockito.feature.feature.group" version="1.0.0.20150724-1352"/>
@@ -30,7 +30,7 @@
 <repository location="http://download.eclipse.org/technology/nebula/snapshot/"/>
 </location>
 <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
-<unit id="org.python.pydev.feature.feature.group" version="3.7.1.201409021729"/>
+<unit id="org.python.pydev.feature.feature.group" version="3.9.2.201502050007"/>
 <repository location="https://dl.bintray.com/fabioz/pydev/all/"/>
 </location>
 </locations>
