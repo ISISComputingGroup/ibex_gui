@@ -222,7 +222,6 @@ public class PvDetailView extends Composite {
 			
 			//Use the full address to avoid confusion
 			txtAddress.setText(selectedPv.fullAddress());
-//			txtAddress.setText(selectedPv.address());
 			
 			IO mode = selectedPv.recordType().io();
 			typeIndex = Arrays.asList(modeList).indexOf(mode);
@@ -249,9 +248,6 @@ public class PvDetailView extends Composite {
 			String address = txtAddress.getText();
 			typeIndex = cmboType.getCombo().getSelectionIndex();
 			PVType type = Arrays.asList(typeList).get(typeIndex);
-			
-			//Hard coded to local as there issues with displaying remote PVs
-//			instrument.updateSelectedPV(name, address, mode, PVType.LOCAL_PV);
 			instrument.updateSelectedPV(name, address, mode, type);
 		}
 	}

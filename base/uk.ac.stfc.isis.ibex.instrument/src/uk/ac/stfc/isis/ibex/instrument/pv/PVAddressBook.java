@@ -38,7 +38,23 @@ public class PVAddressBook {
 			return addresses.get(suffix);
 		}
 		
-		PVAddress address = new PVAddress(prefix, suffix);
+		PVAddress address = new PVAddress(prefix, suffix);		
+		addresses.put(suffix, address);
+		return address;
+	}
+	
+public BaseCachingObservable<String> resolvePV(String suffix, PVType type) {
+		if (addresses.containsKey(suffix)) {
+			return addresses.get(suffix);
+		}
+		
+		PVAddress address = null;
+		if (type == PVType.REMOTE_PV){
+			address = new PVAddress("", suffix);
+		}
+		else {
+			address = new PVAddress(prefix, suffix);
+		}
 		addresses.put(suffix, address);
 		return address;
 	}
