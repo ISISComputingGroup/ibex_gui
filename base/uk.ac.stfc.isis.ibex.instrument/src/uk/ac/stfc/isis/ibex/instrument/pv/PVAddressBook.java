@@ -24,6 +24,10 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import uk.ac.stfc.isis.ibex.epics.observing.BaseCachingObservable;
 
+/**
+ * This class is responsible for maintaining an address book of PVs being accessed 
+ *
+ */
 public class PVAddressBook {
 	
 	private String prefix;

@@ -24,7 +24,6 @@ import javax.xml.bind.annotation.XmlType;
 
 /**
  * ENUM of types and an associated display name for linking to PVs for the synoptic
- * BLOCK is commented as a block lookup is required, but am starting with the PVs
  *
  */
 @XmlType(name = "pvtype")
