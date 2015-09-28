@@ -38,12 +38,13 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 
+import uk.ac.stfc.isis.ibex.instrument.pv.PVType;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.IO;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.PV;
-import uk.ac.stfc.isis.ibex.synoptic.model.desc.PVType;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.blockselector.BlockSelector;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.IPVSelectionListener;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.SynopticViewModel;
+
 import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.layout.RowData;
 
@@ -182,21 +183,15 @@ public class PvDetailView extends Composite {
 			});
 			
 			//Hide whilst only local is selectable
-//			Label lblType = new Label(fieldsComposite, SWT.NONE);
-//			lblType.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-//			lblType.setText("Type");
+			Label lblType = new Label(fieldsComposite, SWT.NONE);
+			lblType.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
+			lblType.setText("Type");
 			
 			cmboType = new ComboViewer(fieldsComposite, SWT.READ_ONLY);
-			//Separate out the Grid Data so that the control can be hidden whilst defaulting to Local
 			GridData gd_cmboType = new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1);
-			gd_cmboType.exclude = true;
 			cmboType.getCombo().setLayoutData(gd_cmboType);
-			
-			//Hide so that only local is selectable initially
-//			cmboType.getCombo().setLayoutData(new GridData().exclude = true);
-//			GridData gd_btnUp = new GridData(SWT.LEFT, SWT.BOTTOM, false, true, 1, 1);
-//			gd_btnUp.widthHint = 80;
-//			gd_btnUp.exclude = !orderable;
+			GridData gd_btnUp = new GridData(SWT.LEFT, SWT.BOTTOM, false, true, 1, 1);
+			gd_btnUp.widthHint = 80;
 			
 			cmboType.setContentProvider(ArrayContentProvider.getInstance());
 			cmboType.setInput(typeList);
@@ -253,10 +248,11 @@ public class PvDetailView extends Composite {
 			String name = txtName.getText();
 			String address = txtAddress.getText();
 			typeIndex = cmboType.getCombo().getSelectionIndex();
-//			PVType type = Arrays.asList(typeList).get(typeIndex);
+			PVType type = Arrays.asList(typeList).get(typeIndex);
 			
 			//Hard coded to local as there issues with displaying remote PVs
-			instrument.updateSelectedPV(name, address, mode, PVType.LOCAL_PV);
+//			instrument.updateSelectedPV(name, address, mode, PVType.LOCAL_PV);
+			instrument.updateSelectedPV(name, address, mode, type);
 		}
 	}
 	
