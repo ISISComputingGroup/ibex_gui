@@ -274,6 +274,15 @@ public class EditableConfiguration extends ModelObject {
 		firePropertyChange("blocks", blocksBefore, getBlocks());
 	}
 	
+	public void removeBlocks(List<EditableBlock> blocks) {
+		Collection<Block> blocksBefore = getBlocks();
+		for (EditableBlock block : blocks) {
+			editableBlocks.remove(block);
+			makeBlockUnavailable(block);			
+		}
+		firePropertyChange("blocks", blocksBefore, getBlocks());
+	}
+	
 	public EditableGroup addNewGroup() {
 		Collection<EditableGroup> editableGroupsBefore = getEditableGroups();
 		Collection<Group> groupsBefore = getGroups();

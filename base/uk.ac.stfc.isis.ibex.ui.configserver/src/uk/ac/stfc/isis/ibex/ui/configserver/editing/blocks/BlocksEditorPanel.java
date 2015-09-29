@@ -19,6 +19,10 @@
 
 package uk.ac.stfc.isis.ibex.ui.configserver.editing.blocks;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.swt.SWT;
@@ -47,7 +51,7 @@ public class BlocksEditorPanel extends Composite {
 		super(parent, style);
 		setLayout(new GridLayout(1, false));
 		
-		table = new BlocksTable(this, SWT.NONE, SWT.V_SCROLL | SWT.NO_SCROLL | SWT.FULL_SELECTION, true);
+		table = new BlocksTable(this, SWT.NONE, SWT.V_SCROLL | SWT.MULTI | SWT.NO_SCROLL | SWT.FULL_SELECTION, true);
 		GridData gd_table = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
 		gd_table.heightHint = 90;
 		table.setLayoutData(gd_table);
@@ -73,7 +77,7 @@ public class BlocksEditorPanel extends Composite {
 				EditBlockDialog dialog = new EditBlockDialog(getShell(), added, config);
 				dialog.open();
 				setBlocks(config);
-				setSelectedBlock(added);
+				setSelectedBlocks(new ArrayList<EditableBlock>(Arrays.asList(added)));
 				table.setSelected(added);
 			}
 		});
@@ -102,31 +106,15 @@ public class BlocksEditorPanel extends Composite {
 		remove.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				EditableBlock toRemove = table.firstSelectedRow();
-				
-				MessageBox dialog = new MessageBox(getShell(), SWT.ICON_WARNING | SWT.OK| SWT.CANCEL);
-				dialog.setText("Delete Block");
-				dialog.setMessage("Do you really want to delete the block " + toRemove.getName() + "?");
-				int returnCode = dialog.open();
-				
-				if (returnCode == SWT.OK) {
-					int index = table.getSelectionIndex();
-					config.removeBlock(toRemove);
-					setBlocks(config);
-				
-					// Update new selection
-					int newIndex = index > 0 ? index - 1 : index;
-					table.setSelectionIndex(newIndex);
-					setSelectedBlock(table.firstSelectedRow());
-				}
+				deleteSelected();
 			}
 		});
 		
 		table.addSelectionChangedListener(new ISelectionChangedListener() {
 			@Override
 			public void selectionChanged(SelectionChangedEvent arg0) {
-				EditableBlock selected = table.firstSelectedRow();
-				setSelectedBlock(selected);
+				List<EditableBlock> selected = table.selectedRows();
+				setSelectedBlocks(selected);
 			}
 		});
 	}
@@ -143,12 +131,63 @@ public class BlocksEditorPanel extends Composite {
 		table.refresh();
 	}
 	
-	private void setSelectedBlock(EditableBlock selected) {
-		edit.setEnabled(editEnabled(selected));
+	private void setSelectedBlocks(List<EditableBlock> selected) {
+		if (selected.size() > 1) {
+			edit.setEnabled(false);
+		} else {
+			edit.setEnabled(editEnabled(selected));
+		}
 		remove.setEnabled(editEnabled(selected));
 	}
 	
-	private boolean editEnabled(EditableBlock block) {
-		return block != null && block.isEditable();
+	private boolean editEnabled(List<EditableBlock> blocks) {
+		boolean output = true;
+		for (EditableBlock block : blocks) {
+			output &= block != null && block.isEditable();
+		}
+		return output;
+	}
+	
+	private void deleteSelected() {
+		List<EditableBlock> toRemove = table.selectedRows();
+		String dialogTitle = "Delete Block";
+		String dialogText = "Do you really want to delete the block";
+		
+		if (toRemove.size() == 1) {
+			dialogText += " " + toRemove.get(0).getName() + "?";
+		} else {
+			dialogTitle = "Delete Blocks";
+			dialogText += "s " + blockNamesToString(toRemove) + "?";
+		}
+				
+		MessageBox dialog = new MessageBox(getShell(), SWT.ICON_WARNING | SWT.OK| SWT.CANCEL);
+		dialog.setText(dialogTitle);
+		dialog.setMessage(dialogText);
+		int returnCode = dialog.open();
+		
+		if (returnCode == SWT.OK) {
+			int index = table.getSelectionIndex();
+			config.removeBlocks(toRemove);
+			setBlocks(config);
+		
+			// Update new selection
+			int newIndex = index > 0 ? index - 1 : index;
+			table.setSelectionIndex(newIndex);
+			setSelectedBlocks(table.selectedRows());
+		}
+	}
+	
+	private String blockNamesToString(List<EditableBlock> blocks) {
+		StringBuilder sb = new StringBuilder();
+		for (int i=0; i<blocks.size(); i++) {
+			EditableBlock block = blocks.get(i);
+			sb.append(block.getName());
+			if (i == blocks.size() - 2) {
+				sb.append(" and ");
+			} else if (i != blocks.size() - 1) {
+				sb.append(", ");
+			}
+		}
+		return sb.toString();
 	}
 }
