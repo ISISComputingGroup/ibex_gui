@@ -23,6 +23,8 @@ import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.jface.window.Window;
 
+import com.google.common.base.Strings;
+
 import uk.ac.stfc.isis.ibex.configserver.configuration.Configuration;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
 import uk.ac.stfc.isis.ibex.epics.adapters.UpdatedObservableAdapter;
@@ -35,11 +37,18 @@ public class EditCurrentConfigHandler extends ConfigHandler<Configuration> {
 	private static final String TITLE = "Edit configuration";
 	private static final String SUB_TITLE = "Editing the current configuration";
 	
+    private String blockName = "";
+
 	private EditConfigDialog dialog;
 	
 	public EditCurrentConfigHandler() {
 		super(SERVER.setCurrentConfig());
 	}
+
+    public EditCurrentConfigHandler(String blockName) {
+        this();
+        this.blockName = blockName;
+    }
 
 	
 	@Override
@@ -54,7 +63,8 @@ public class EditCurrentConfigHandler extends ConfigHandler<Configuration> {
 	}
 	
 	private void openDialog(EditableConfiguration config) {
-		dialog = new EditConfigDialog(shell(), TITLE, SUB_TITLE, config, false, false);	
+        dialog = new EditConfigDialog(shell(), TITLE, SUB_TITLE, config, false, false,
+                !Strings.isNullOrEmpty(blockName));
 		if (dialog.open() == Window.OK) {
 			if (dialog.doAsComponent()) {
 				SERVER.saveAsComponent().write(dialog.getComponent());
@@ -64,4 +74,8 @@ public class EditCurrentConfigHandler extends ConfigHandler<Configuration> {
 			}
 		}
 	}
+
+    public EditConfigDialog getDialog() {
+        return dialog;
+    }
 }

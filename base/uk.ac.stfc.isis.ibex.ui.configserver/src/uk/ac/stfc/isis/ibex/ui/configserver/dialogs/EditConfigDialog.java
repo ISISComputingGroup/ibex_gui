@@ -57,6 +57,7 @@ public class EditConfigDialog extends TitleAreaDialog implements
 	private boolean doAsComponent = false;
 	private boolean isComponent;
 	private boolean isBlank;
+    private boolean openBlocksTab = false;
 	private Button saveAsBtn;
 
 	public EditConfigDialog(Shell parentShell, String title, String subTitle,
@@ -70,12 +71,22 @@ public class EditConfigDialog extends TitleAreaDialog implements
 		this.isBlank = isBlank;
 	}
 
+    public EditConfigDialog(Shell parentShell, String title, String subTitle, EditableConfiguration config,
+            boolean isComponent, boolean isBlank, boolean openBlockTab) {
+        this(parentShell, title, subTitle, config, isComponent, isBlank);
+        this.openBlocksTab = openBlockTab;
+    }
+
 	@Override
 	protected Control createDialogArea(Composite parent) {
 		editor = new ConfigEditorPanel(parent, SWT.NONE, this, isComponent);
 		editor.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		setTitle(subTitle);
 		editor.setConfigToEdit(config);
+		
+		if (openBlocksTab) {
+            openBlocksTab();
+		}
 
 		return editor;
 	}
@@ -176,4 +187,8 @@ public class EditConfigDialog extends TitleAreaDialog implements
 	public boolean doAsComponent() {
 		return doAsComponent;
 	}
+
+    public void openBlocksTab() {
+        editor.openTab(ConfigEditorPanel.BLOCK_TAB_NAME);
+    }
 }

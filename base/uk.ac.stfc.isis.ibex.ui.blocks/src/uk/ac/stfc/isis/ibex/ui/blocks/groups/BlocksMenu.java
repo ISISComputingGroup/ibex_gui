@@ -19,6 +19,8 @@
 
 package uk.ac.stfc.isis.ibex.ui.blocks.groups;
 
+import org.eclipse.core.commands.ExecutionEvent;
+import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.MenuManager;
@@ -28,19 +30,19 @@ import org.eclipse.swt.widgets.Menu;
 import uk.ac.stfc.isis.ibex.configserver.displaying.DisplayBlock;
 import uk.ac.stfc.isis.ibex.ui.blocks.presentation.PVHistoryPresenter;
 import uk.ac.stfc.isis.ibex.ui.blocks.presentation.Presenter;
+import uk.ac.stfc.isis.ibex.ui.configserver.commands.EditCurrentConfigHandler;
 
 public class BlocksMenu extends MenuManager {
 	
 	private final DisplayBlock block;
 	
-	private final IAction displayHistory;
 	private final PVHistoryPresenter pvHistoryPresenter = Presenter.getInstance().pvHistoryPresenter();
 	
 	public BlocksMenu(DisplayBlock displayBlock) {
 		
 		this.block = displayBlock;
 		
-		displayHistory = new Action("Display block history") {
+        IAction displayHistory = new Action("Display block history") {
 			@Override
 			public void run() {
 				pvHistoryPresenter.displayHistory(block.blockServerAlias());
@@ -48,6 +50,20 @@ public class BlocksMenu extends MenuManager {
 		};
 		
 		add(displayHistory);
+
+        IAction editBlock = new Action("Edit block") {
+            @Override
+            public void run() {
+                EditCurrentConfigHandler editBlockHandler = new EditCurrentConfigHandler("TODO: Set this!");
+                try {
+                    editBlockHandler.execute(new ExecutionEvent());
+                } catch (ExecutionException e) {
+                    // do nothing
+                }
+            }
+        };
+
+        add(editBlock);
 	}
 	
 	public Menu createContextMenu(Label label, GroupsMenu menu) {
