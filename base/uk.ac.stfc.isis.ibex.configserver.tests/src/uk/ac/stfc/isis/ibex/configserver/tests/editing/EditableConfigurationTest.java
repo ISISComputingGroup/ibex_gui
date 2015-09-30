@@ -51,6 +51,7 @@ public class EditableConfigurationTest implements IocDescriber {
 	
 	protected static final EditableIoc GALIL01 = new EditableIoc("GALIL_01");
 	protected static final Block GAPX = new Block("GAPX", "ADDRESS", true, true, null);
+	protected static final Block GAPY = new Block("GAPY", "ADDRESS", true, true, null);
 	protected static final Group JAWS = new Group("JAWS");
 	protected static final Group TEMPERATURE = new Group("TEMPERATURE");
 	protected static final Component MOTOR = new Component("MOTOR");

@@ -19,6 +19,9 @@
 
 package uk.ac.stfc.isis.ibex.configserver.tests.editing;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
 import org.junit.Test;
 
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableBlock;
@@ -56,6 +59,21 @@ public class BlocksTest extends EditableConfigurationTest {
 		// Act
 		EditableBlock gapx = getFirst(edited.getEditableBlocks());
 		edited.removeBlock(gapx);
+		
+		// Assert
+		assertEmpty(edited.asConfiguration().getBlocks());
+	}
+	
+	@Test
+	public void multiple_blocks_can_be_removed() {
+		// Arrange
+		blocks.add(GAPX);
+		blocks.add(GAPY);
+		EditableConfiguration edited = edit(config());
+		
+		// Act
+		Collection<EditableBlock> returnedBlocks = edited.getEditableBlocks();
+		edited.removeBlocks(new ArrayList<EditableBlock>(returnedBlocks));
 		
 		// Assert
 		assertEmpty(edited.asConfiguration().getBlocks());
