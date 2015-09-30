@@ -29,6 +29,9 @@ import org.eclipse.jface.window.Window;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.ShellAdapter;
+import org.eclipse.swt.events.ShellEvent;
+import org.eclipse.swt.events.ShellListener;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Button;
@@ -59,6 +62,7 @@ public class EditConfigDialog extends TitleAreaDialog implements
 	private boolean doAsComponent = false;
 	private boolean isComponent;
 	private boolean isBlank;
+	private boolean firstShowing = true;
     private String blockToEdit;
 	private Button saveAsBtn;
 
@@ -77,6 +81,7 @@ public class EditConfigDialog extends TitleAreaDialog implements
             boolean isComponent, boolean isBlank, String blockName) {
         this(parentShell, title, subTitle, config, isComponent, isBlank);
         this.blockToEdit = blockName;
+        
     }
 
 	@Override
@@ -87,10 +92,20 @@ public class EditConfigDialog extends TitleAreaDialog implements
 		editor.setConfigToEdit(config);
 		
         if (!Strings.isNullOrEmpty(blockToEdit)) {
-            openBlocksTab();
-            openEditBlockDialog();
-		}
-
+	        getShell().addShellListener(new ShellAdapter() {
+				@Override
+				public void shellActivated(ShellEvent e) {
+					if (firstShowing) {
+						Shell s = (Shell) e.getSource();
+	                    s.setVisible(true);
+			            openBlocksTab();
+			            openEditBlockDialog();
+			            firstShowing = false;
+					}
+				}
+			});
+        }
+		
 		return editor;
 	}
 
