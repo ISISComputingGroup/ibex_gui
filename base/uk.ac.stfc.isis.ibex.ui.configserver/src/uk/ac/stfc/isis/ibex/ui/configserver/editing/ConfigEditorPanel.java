@@ -170,4 +170,8 @@ public class ConfigEditorPanel extends Composite {
             }
         }
 	}
+
+    public void openEditBlockDialog(String blockName) {
+        blocks.openEditBlockDialog(blockName);
+    }
 }

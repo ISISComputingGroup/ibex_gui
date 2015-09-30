@@ -54,7 +54,7 @@ public class BlocksMenu extends MenuManager {
         IAction editBlock = new Action("Edit block") {
             @Override
             public void run() {
-                EditCurrentConfigHandler editBlockHandler = new EditCurrentConfigHandler("TODO: Set this!");
+                EditCurrentConfigHandler editBlockHandler = new EditCurrentConfigHandler(block.getName());
                 try {
                     editBlockHandler.execute(new ExecutionEvent());
                 } catch (ExecutionException e) {

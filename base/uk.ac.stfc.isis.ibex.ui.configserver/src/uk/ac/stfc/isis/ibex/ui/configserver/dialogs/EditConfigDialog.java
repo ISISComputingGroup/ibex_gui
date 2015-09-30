@@ -36,6 +36,8 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Shell;
 
+import com.google.common.base.Strings;
+
 import uk.ac.stfc.isis.ibex.configserver.Configurations;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Configuration;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
@@ -57,7 +59,7 @@ public class EditConfigDialog extends TitleAreaDialog implements
 	private boolean doAsComponent = false;
 	private boolean isComponent;
 	private boolean isBlank;
-    private boolean openBlocksTab = false;
+    private String blockToEdit;
 	private Button saveAsBtn;
 
 	public EditConfigDialog(Shell parentShell, String title, String subTitle,
@@ -72,9 +74,9 @@ public class EditConfigDialog extends TitleAreaDialog implements
 	}
 
     public EditConfigDialog(Shell parentShell, String title, String subTitle, EditableConfiguration config,
-            boolean isComponent, boolean isBlank, boolean openBlockTab) {
+            boolean isComponent, boolean isBlank, String blockName) {
         this(parentShell, title, subTitle, config, isComponent, isBlank);
-        this.openBlocksTab = openBlockTab;
+        this.blockToEdit = blockName;
     }
 
 	@Override
@@ -84,8 +86,9 @@ public class EditConfigDialog extends TitleAreaDialog implements
 		setTitle(subTitle);
 		editor.setConfigToEdit(config);
 		
-		if (openBlocksTab) {
+        if (!Strings.isNullOrEmpty(blockToEdit)) {
             openBlocksTab();
+            openEditBlockDialog();
 		}
 
 		return editor;
@@ -141,6 +144,7 @@ public class EditConfigDialog extends TitleAreaDialog implements
 	public void setErrorMessage(String source, String error) {
 		errorMessages.put(source, error);
 		showErrorMessage();
+        openEditBlockDialog();
 	}
 
 	// Show the current error messages
@@ -190,5 +194,9 @@ public class EditConfigDialog extends TitleAreaDialog implements
 
     public void openBlocksTab() {
         editor.openTab(ConfigEditorPanel.BLOCK_TAB_NAME);
+    }
+
+    public void openEditBlockDialog() {
+        editor.openEditBlockDialog(this.blockToEdit);
     }
 }
