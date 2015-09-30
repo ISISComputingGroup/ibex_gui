@@ -32,7 +32,7 @@ import uk.ac.stfc.isis.ibex.ui.configserver.dialogs.EditConfigDialog;
 
 public class EditCurrentConfigHandler extends ConfigHandler<Configuration> {
 	
-	private static final String TITLE = "Edit configuration";
+    private static final String TITLE = "Edit Configuration";
 	private static final String SUB_TITLE = "Editing the current configuration";
 	
 	private EditConfigDialog dialog;

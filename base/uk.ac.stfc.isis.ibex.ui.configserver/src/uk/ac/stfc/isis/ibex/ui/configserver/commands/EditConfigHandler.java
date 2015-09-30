@@ -33,7 +33,7 @@ import uk.ac.stfc.isis.ibex.ui.configserver.dialogs.EditConfigDialog;
 
 public class EditConfigHandler extends ConfigHandler<Configuration> {
 
-	private static final String TITLE = "Edit configuration";
+	private static final String TITLE = "Edit Configuration";
 
 	public EditConfigHandler() {
 		super(SERVER.saveAs());

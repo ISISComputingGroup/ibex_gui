@@ -27,7 +27,7 @@ import uk.ac.stfc.isis.ibex.ui.runcontrol.dialogs.EditRunControlDialog;
 
 public class EditRunControlHandler extends RunControlHandler {
 
-	private static final String TITLE = "Run-control Settings";
+	private static final String TITLE = "Run-Control Settings";
 	
 	public EditRunControlHandler() {
 		super();
