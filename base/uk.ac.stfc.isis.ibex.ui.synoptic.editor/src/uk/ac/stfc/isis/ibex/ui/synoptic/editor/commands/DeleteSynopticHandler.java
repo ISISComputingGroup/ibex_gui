@@ -37,7 +37,7 @@ public class DeleteSynopticHandler extends SynopticHandler<Collection<String>> {
 	
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {		
-		MultipleSynopticsSelectionDialog dialog = new MultipleSynopticsSelectionDialog(shell(), TITLE, SYNOPTIC.availableSynoptics());
+		MultipleSynopticsSelectionDialog dialog = new MultipleSynopticsSelectionDialog(shell(), TITLE, SYNOPTIC.availableEditableSynoptics());
 		if (dialog.open() == Window.OK) {
 			synopticService.write(dialog.selectedSynoptics());
 		}
