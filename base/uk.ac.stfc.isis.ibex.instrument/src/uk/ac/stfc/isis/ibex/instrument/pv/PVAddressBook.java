@@ -24,6 +24,10 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import uk.ac.stfc.isis.ibex.epics.observing.BaseCachingObservable;
 
+/**
+ * This class is responsible for maintaining an address book of PVs being accessed 
+ *
+ */
 public class PVAddressBook {
 	
 	private String prefix;
@@ -38,7 +42,23 @@ public class PVAddressBook {
 			return addresses.get(suffix);
 		}
 		
-		PVAddress address = new PVAddress(prefix, suffix);
+		PVAddress address = new PVAddress(prefix, suffix);		
+		addresses.put(suffix, address);
+		return address;
+	}
+	
+public BaseCachingObservable<String> resolvePV(String suffix, PVType type) {
+		if (addresses.containsKey(suffix)) {
+			return addresses.get(suffix);
+		}
+		
+		PVAddress address = null;
+		if (type == PVType.REMOTE_PV){
+			address = new PVAddress("", suffix);
+		}
+		else {
+			address = new PVAddress(prefix, suffix);
+		}
 		addresses.put(suffix, address);
 		return address;
 	}

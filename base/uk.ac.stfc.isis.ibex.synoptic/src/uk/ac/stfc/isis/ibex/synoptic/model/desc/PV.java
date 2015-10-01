@@ -25,6 +25,7 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import uk.ac.stfc.isis.ibex.instrument.Instrument;
+import uk.ac.stfc.isis.ibex.instrument.pv.PVType;
 
 @XmlRootElement(name = "pv")
 @XmlAccessorType(XmlAccessType.FIELD)
