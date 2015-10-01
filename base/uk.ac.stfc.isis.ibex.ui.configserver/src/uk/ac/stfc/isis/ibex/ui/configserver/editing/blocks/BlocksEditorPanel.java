@@ -26,13 +26,13 @@ import java.util.List;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.MessageBox;
 
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableBlock;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
@@ -190,4 +190,15 @@ public class BlocksEditorPanel extends Composite {
 		}
 		return sb.toString();
 	}
+
+    public void openEditBlockDialog(String blockName) {
+        for (EditableBlock block : config.getEditableBlocks()) {
+            if (block.getName().equals(blockName)) {
+                EditBlockDialog dialog = new EditBlockDialog(getShell(), block, config);
+                dialog.open();
+                return;
+            }
+        }
+
+    }
 }

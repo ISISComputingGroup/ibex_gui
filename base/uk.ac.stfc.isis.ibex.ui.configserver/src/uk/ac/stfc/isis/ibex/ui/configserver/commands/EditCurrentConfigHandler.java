@@ -35,11 +35,18 @@ public class EditCurrentConfigHandler extends ConfigHandler<Configuration> {
     private static final String TITLE = "Edit Configuration";
 	private static final String SUB_TITLE = "Editing the current configuration";
 	
+    private String blockName = "";
+
 	private EditConfigDialog dialog;
 	
 	public EditCurrentConfigHandler() {
 		super(SERVER.setCurrentConfig());
 	}
+
+    public EditCurrentConfigHandler(String blockName) {
+        this();
+        this.blockName = blockName;
+    }
 
 	
 	@Override
@@ -54,7 +61,7 @@ public class EditCurrentConfigHandler extends ConfigHandler<Configuration> {
 	}
 	
 	private void openDialog(EditableConfiguration config) {
-		dialog = new EditConfigDialog(shell(), TITLE, SUB_TITLE, config, false, false);	
+        dialog = new EditConfigDialog(shell(), TITLE, SUB_TITLE, config, false, false, blockName);
 		if (dialog.open() == Window.OK) {
 			if (dialog.doAsComponent()) {
 				SERVER.saveAsComponent().write(dialog.getComponent());
@@ -64,4 +71,8 @@ public class EditCurrentConfigHandler extends ConfigHandler<Configuration> {
 			}
 		}
 	}
+
+    public EditConfigDialog getDialog() {
+        return dialog;
+    }
 }
