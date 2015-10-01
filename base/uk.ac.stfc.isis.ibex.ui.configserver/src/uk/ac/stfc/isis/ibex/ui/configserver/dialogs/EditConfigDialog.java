@@ -31,7 +31,6 @@ import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.ShellAdapter;
 import org.eclipse.swt.events.ShellEvent;
-import org.eclipse.swt.events.ShellListener;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Button;
@@ -83,7 +82,24 @@ public class EditConfigDialog extends TitleAreaDialog implements
         this.blockToEdit = blockName;
         
     }
-
+    
+    private void showBlockDialog() {
+    	// Open the edit block dialog on shellActivated as must be done after the Config Editor dialog is shown.
+        getShell().addShellListener(new ShellAdapter() {
+			@Override
+			public void shellActivated(ShellEvent e) {
+				// Only open when the shell is activated for the first time
+				if (firstShowing) {
+					Shell s = (Shell) e.getSource();
+                    s.setVisible(true);
+		            openBlocksTab();
+		            openEditBlockDialog();
+		            firstShowing = false;
+				}
+			}
+		});    	
+    }
+    
 	@Override
 	protected Control createDialogArea(Composite parent) {
 		editor = new ConfigEditorPanel(parent, SWT.NONE, this, isComponent);
@@ -92,18 +108,7 @@ public class EditConfigDialog extends TitleAreaDialog implements
 		editor.setConfigToEdit(config);
 		
         if (!Strings.isNullOrEmpty(blockToEdit)) {
-	        getShell().addShellListener(new ShellAdapter() {
-				@Override
-				public void shellActivated(ShellEvent e) {
-					if (firstShowing) {
-						Shell s = (Shell) e.getSource();
-	                    s.setVisible(true);
-			            openBlocksTab();
-			            openEditBlockDialog();
-			            firstShowing = false;
-					}
-				}
-			});
+        	showBlockDialog();
         }
 		
 		return editor;
