@@ -54,6 +54,7 @@
 		    <activityPatternBinding activityId="uk.ac.stfc.isis.ibex.rcp.activity" pattern=".*/org.eclipse.ui.cheatsheets.*"/>         
 		    <activityPatternBinding activityId="uk.ac.stfc.isis.ibex.rcp.activity" pattern="org.eclipse.ui.window.showKeyAssist"/>	   
 		    <activityPatternBinding activityId="uk.ac.stfc.isis.ibex.rcp.activity" isEqualityPattern="false" pattern="org\.eclipse\..*[Pp]erspective.*"/>	   
+		    <activityPatternBinding activityId="uk.ac.stfc.isis.ibex.rcp.activity" pattern="org.csstudio.security.ui.*"/>  
    </extension>
 	<extension
 	 	point="org.eclipse.ui.perspectiveExtensions">

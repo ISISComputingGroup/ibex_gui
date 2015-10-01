@@ -36,18 +36,15 @@ import org.eclipse.swt.layout.GridData;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Ioc;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableIoc;
-import uk.ac.stfc.isis.ibex.ui.configserver.dialogs.MessageDisplayer;
 
 public class IocSelectorPanel extends Composite {
-	private MessageDisplayer msgDisp;
 	private EditableIoc ioc;
 	private ComboViewer iocCombo;
 	private Label lbDescTarget;
 	private IIocDependentPanel target;
 	
-	public IocSelectorPanel(Composite parent, int style, MessageDisplayer msgDisp, IIocPanelCreator panelFactory) {
+	public IocSelectorPanel(Composite parent, int style, IIocPanelCreator panelFactory) {
 		super(parent, style);
-		this.msgDisp = msgDisp;
 		setLayout(new GridLayout(2, false));
 		
 		Label lblIoc = new Label(this, SWT.NONE);

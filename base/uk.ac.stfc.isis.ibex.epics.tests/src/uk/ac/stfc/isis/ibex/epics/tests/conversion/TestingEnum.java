@@ -19,7 +19,6 @@
 package uk.ac.stfc.isis.ibex.epics.tests.conversion;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**

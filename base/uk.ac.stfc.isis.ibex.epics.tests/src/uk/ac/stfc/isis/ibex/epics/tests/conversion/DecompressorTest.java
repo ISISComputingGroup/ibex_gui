@@ -3,12 +3,19 @@ package uk.ac.stfc.isis.ibex.epics.tests.conversion;
 import static org.junit.Assert.assertEquals;
 
 import java.io.UnsupportedEncodingException;
+
 import org.junit.Test;
 
 import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
 import uk.ac.stfc.isis.ibex.epics.conversion.Decompressor;
 
+/**
+ * Tests for the Decompressor.
+ *
+ */
+@SuppressWarnings({ "checkstyle:methodname", "checkstyle:magicnumber" })
 public class DecompressorTest {
+	
     @Test
     public void decompress_to_string() throws ConversionException,
 	    UnsupportedEncodingException {

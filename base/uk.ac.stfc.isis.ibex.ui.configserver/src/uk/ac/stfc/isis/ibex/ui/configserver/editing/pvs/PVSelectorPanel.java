@@ -39,8 +39,10 @@ import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Text;
 
 import uk.ac.stfc.isis.ibex.configserver.configuration.PV;
@@ -50,6 +52,8 @@ import uk.ac.stfc.isis.ibex.ui.configserver.editing.blocks.filters.InterestFilte
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.blocks.filters.PVFilter;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.blocks.filters.PVFilterFactory;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.blocks.filters.SourceFilters;
+
+import org.eclipse.swt.widgets.Button;
 
 
 /**
@@ -75,8 +79,7 @@ public class PVSelectorPanel extends Composite {
 		Group grpPV = new Group(this, SWT.NONE);
 		grpPV.setText("PV Selector");
 		
-		GridLayout gdGrpPV = new GridLayout(2, false);
-		grpPV.setLayout(new GridLayout(2, false));
+		grpPV.setLayout(new GridLayout(3, false));
 		
 		Label lblViewPVs = new Label(grpPV, SWT.NONE);
 		lblViewPVs.setAlignment(SWT.RIGHT);
@@ -84,7 +87,7 @@ public class PVSelectorPanel extends Composite {
 		lblViewPVs.setText("PVs From:");		
 		
 		pvSource = new ComboViewer(grpPV, SWT.READ_ONLY);
-		GridData gd_pvSource = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+		GridData gd_pvSource = new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1);
 		gd_pvSource.widthHint = 100;
 		pvSource.getCombo().setLayoutData(gd_pvSource);
 		pvSource.setContentProvider(new ArrayContentProvider());
@@ -96,7 +99,7 @@ public class PVSelectorPanel extends Composite {
 		lblInterestLevel.setText("Interest Level:");
 		
 		interestLevel = new ComboViewer(grpPV, SWT.READ_ONLY);
-		GridData gd_interestLevel = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+		GridData gd_interestLevel = new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1);
 		gd_interestLevel.widthHint = 100;
 		interestLevel.getCombo().setLayoutData(gd_interestLevel);
 		interestLevel.setContentProvider(new ArrayContentProvider());
@@ -117,10 +120,25 @@ public class PVSelectorPanel extends Composite {
 			}
 		});
 		
+		final Button btnClear = new Button(grpPV, SWT.NONE);
+		btnClear.setText("Clear");
+		Listener clearListener = new Listener() {
+			@Override
+			public void handleEvent(Event event) {
+				if (event.widget == btnClear){
+					pvAddress.setText("");
+				}
+			}			
+		};
+		btnClear.addListener(SWT.Selection, clearListener);
+		
 		blockPVTable = new BlockPVTable(grpPV, SWT.NONE, SWT.V_SCROLL | SWT.NO_SCROLL | SWT.FULL_SELECTION);
-		GridData gdPvTable = new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1);
+		GridData gdPvTable = new GridData(SWT.FILL, SWT.FILL, true, true, 3, 1);
 		gdPvTable.heightHint = 300;
 		blockPVTable.setLayoutData(gdPvTable);
+		new Label(grpPV, SWT.NONE);
+		new Label(grpPV, SWT.NONE);
+		new Label(grpPV, SWT.NONE);
 		
 		blockPVTable.addSelectionChangedListener(new ISelectionChangedListener() {
 			public void selectionChanged(SelectionChangedEvent arg0) {

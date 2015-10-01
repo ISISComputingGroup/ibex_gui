@@ -21,9 +21,11 @@ package uk.ac.stfc.isis.ibex.epics.tests.conversion;
 
 import static org.junit.Assert.*;
 
+import org.epics.vtype.VByteArray;
 import org.epics.vtype.VEnum;
 import org.epics.vtype.VFloatArray;
 import org.epics.vtype.ValueFactory;
+import org.epics.util.array.ListByte;
 import org.epics.util.array.ListFloat;
 import org.junit.Test;
 
@@ -35,6 +37,7 @@ import uk.ac.stfc.isis.ibex.epics.conversion.VTypeFormat;
  * This class is responsible for ... 
  *
  */
+@SuppressWarnings({ "checkstyle:methodname", "checkstyle:magicnumber" })
 public class VTypeFormatMiscTest {
 
 	// Byte array values missing as unable to produce from ValueFactory
@@ -54,7 +57,7 @@ public class VTypeFormatMiscTest {
 	}
 
 	@Test
-	public void convert_extract_floats() throws ConversionException {
+	public void convert_extract_floats_empty() throws ConversionException {
 		// Arrange
 		Converter<VFloatArray, float[]> converter = VTypeFormat.extractFloats();
 		
@@ -76,6 +79,81 @@ public class VTypeFormatMiscTest {
 
 		// Assert
 		assertArrayEquals(result, test, 0);
+	}
+	
+	@Test
+	public void convert_extract_floats() throws ConversionException {
+		// Arrange
+		Converter<VFloatArray, float[]> converter = VTypeFormat.extractFloats();
+		
+		ListFloat data = new ListFloat() {
+			@Override
+			public int size() {
+				return 2;
+			}
+			@Override
+			public float getFloat(int index) {
+				return index * 1.0f;
+			}
+		};
+		VFloatArray value = ValueFactory.newVFloatArray(data, null, null, null);
+		float[] test = new float[] {0.0f, 1.0f};
+		
+		// Act
+		float[] result = converter.convert(value);
+
+		// Assert
+		assertArrayEquals(result, test, 0);
+	}	
+	
+	@Test
+	public void convert_extract_bytes_empty() throws ConversionException {
+		// Arrange
+		Converter<VByteArray, byte[]> converter = VTypeFormat.extractBytes();
+		
+		ListByte data = new ListByte() {
+			@Override
+			public int size() {
+				return 0;
+			}
+			@Override
+			public byte getByte(int index) {
+				return 0;
+			}
+		};
+		VByteArray value = (VByteArray)ValueFactory.newVNumberArray(data, null, null, null);
+		byte[] test = new byte[] {};
+		
+		// Act
+		byte[] result = converter.convert(value);
+
+		// Assert
+		assertArrayEquals(result, test);
+	}	
+	
+	@Test
+	public void convert_extract_bytes() throws ConversionException {
+		// Arrange
+		Converter<VByteArray, byte[]> converter = VTypeFormat.extractBytes();
+		
+		ListByte data = new ListByte() {
+			@Override
+			public int size() {
+				return 1;
+			}
+			@Override
+			public byte getByte(int index) {
+				return (byte) index;
+			}
+		};
+		VByteArray value = (VByteArray)ValueFactory.newVNumberArray(data, null, null, null);
+		byte[] test = new byte[] {0x00};
+		
+		// Act
+		byte[] result = converter.convert(value);
+
+		// Assert
+		assertArrayEquals(result, test);
 	}
 
 }

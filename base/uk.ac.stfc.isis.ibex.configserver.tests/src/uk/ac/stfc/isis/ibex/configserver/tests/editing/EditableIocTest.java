@@ -17,33 +17,30 @@
 * http://opensource.org/licenses/eclipse-1.0.php
 */
 
-package uk.ac.stfc.isis.ibex.ui.configserver.editing.macros;
+package uk.ac.stfc.isis.ibex.configserver.tests.editing;
 
-import org.eclipse.jface.viewers.Viewer;
-import org.eclipse.jface.viewers.ViewerFilter;
+import static org.junit.Assert.*;
+
+import java.util.Collection;
+
+import org.junit.Test;
 
 import uk.ac.stfc.isis.ibex.configserver.configuration.Macro;
+import uk.ac.stfc.isis.ibex.configserver.editing.EditableIoc;
 
-public class MacroAddressFilter extends ViewerFilter {
-	private String searchString = ".*";
-	
-	public void setSearchText(String s) {
-	    // ensure that the value can be used for matching 
-	    this.searchString = ".*" + s + ".*";
-	}
 
-	@Override
-	public boolean select(Viewer viewer, Object parentElement, Object element) {
-		if (searchString == null || searchString.length() == 0) {
-			return true;
-		}
-		Macro p = (Macro) element;
-		if (p.getName().matches(searchString)) {
-			return true;
-		}
-		if (p.getDescription().matches(searchString)) {
-			return true;
-		}
-		return false;
+public class EditableIocTest {
+
+	@Test
+	public void getting_available_macros_when_none_returns_empty_list() {
+		// Arrange
+		EditableIoc ioc = new EditableIoc("testioc");
+		
+		// Act
+		Collection<Macro> avail = ioc.getAvailableMacros();
+		
+		// Assert
+		assertEquals(avail.size(), 0);
+		
 	}
 }

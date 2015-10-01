@@ -7,7 +7,6 @@
             class="uk.ac.stfc.isis.ibex.preferences.PreferenceInitializer">
       </initializer>
    </extension>
-  
    <extension
          point="org.eclipse.ui.bindings">
          <key sequence="Ctrl+Alt+P"

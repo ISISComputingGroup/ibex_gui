@@ -45,7 +45,7 @@ public class SwitchUserDialog extends Dialog {
 	@Override
     protected void configureShell(Shell newShell) { 
         super.configureShell(newShell); 
-        newShell.setText("Switch user"); 
+        newShell.setText("Switch User"); 
         newShell.setSize(250, 170); 
     } 
 
