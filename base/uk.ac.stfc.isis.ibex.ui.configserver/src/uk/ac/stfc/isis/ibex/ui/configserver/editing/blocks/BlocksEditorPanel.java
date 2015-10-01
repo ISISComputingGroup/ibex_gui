@@ -181,6 +181,16 @@ public class BlocksEditorPanel extends Composite {
 			table.setSelectionIndex(newIndex);
 			setSelectedBlocks(table.selectedRows());
 		}
+
+        /*
+         * Make sure the run control does not keep a memory of a block that is
+         * deleted, then immediately added again
+         */
+        for (EditableBlock block : toRemove) {
+            runControl.blockRunControlLowLimitSetter(block.getName()).write("0");
+            runControl.blockRunControlHighLimitSetter(block.getName()).write("0");
+            runControl.blockRunControlEnabledSetter(block.getName()).write("NO");
+        }
 	}
 	
 	private String blockNamesToString(List<EditableBlock> blocks) {
