@@ -208,5 +208,6 @@
 		
 		<module>../uk.ac.stfc.isis.ibex.ui.statusbar</module>
 		<module>../uk.ac.stfc.isis.ibex.instrument.tests</module>
+		<module>../uk.ac.stfc.isis.ibex.synoptic.tests</module>
 	</modules>
 </project>
