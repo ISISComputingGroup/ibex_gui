@@ -20,6 +20,7 @@
 package uk.ac.stfc.isis.ibex.ui.configserver.editing.blocks;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -32,16 +33,22 @@ import org.eclipse.swt.widgets.Text;
 
 import uk.ac.stfc.isis.ibex.epics.observing.BaseObserver;
 import uk.ac.stfc.isis.ibex.epics.observing.InitialiseOnSubscribeObservable;
+import uk.ac.stfc.isis.ibex.epics.observing.Subscription;
 import uk.ac.stfc.isis.ibex.runcontrol.RunControlServer;
 
 public class BlockRunControlPanel extends Composite {
     private Text lowLimitText;
     private Text highLimitText;
     private Button btnEnabled;
+    private Label statusLabel;
 
-    private String lowLimit;
-    private String highLimit;
-    private String enabled;
+    private Subscription lowLimitSubscription;
+    private Subscription highLimitSubscription;
+    private Subscription enabledSubscription;
+    private Subscription inRangeSubscription;
+
+    private static final Color COLOR_RED = new Color(Display.getCurrent(), 192, 0, 0);
+    private static final Color COLOR_GREEN = new Color(Display.getCurrent(), 0, 192, 0);
 
     public BlockRunControlPanel(Composite parent, int style, String blockName, RunControlServer runControl) {
         super(parent, style);
@@ -50,7 +57,7 @@ public class BlockRunControlPanel extends Composite {
 
         Group grpRuncontrolSettings = new Group(this, SWT.NONE);
         grpRuncontrolSettings.setText("Run-Control Settings");
-        grpRuncontrolSettings.setLayout(new GridLayout(5, false));
+        grpRuncontrolSettings.setLayout(new GridLayout(6, false));
 
         Label lblLowLimit = new Label(grpRuncontrolSettings, SWT.NONE);
         lblLowLimit.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
@@ -58,6 +65,7 @@ public class BlockRunControlPanel extends Composite {
 
         lowLimitText = new Text(grpRuncontrolSettings, SWT.BORDER);
         lowLimitText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+        lowLimitText.setEnabled(false);
 
         setLowLimitRunControlValues(blockName, runControl);
 
@@ -67,13 +75,24 @@ public class BlockRunControlPanel extends Composite {
 
         highLimitText = new Text(grpRuncontrolSettings, SWT.BORDER);
         highLimitText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+        highLimitText.setEnabled(false);
 
         setHighLimitRunControlValues(blockName, runControl);
 
         btnEnabled = new Button(grpRuncontrolSettings, SWT.CHECK);
+        btnEnabled.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1));
         btnEnabled.setText("Enabled");
+        btnEnabled.setEnabled(false);
 
         setEnabledRunControlValues(blockName, runControl);
+
+        statusLabel = new Label(grpRuncontrolSettings, SWT.NONE);
+        statusLabel.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 4, 1));
+        statusLabel.setText("Configuration must be saved before editing run-control settings for new blocks");
+        new Label(grpRuncontrolSettings, SWT.NONE);
+        new Label(grpRuncontrolSettings, SWT.NONE);
+
+        setLabelText(blockName, runControl);
     }
 
     protected String getLowLimit() {
@@ -92,16 +111,25 @@ public class BlockRunControlPanel extends Composite {
         }
     }
 
+    public void removeObservers() {
+        lowLimitSubscription.removeObserver();
+        highLimitSubscription.removeObserver();
+        enabledSubscription.removeObserver();
+        inRangeSubscription.removeObserver();
+
+    }
+
     private void setLowLimitRunControlValues(String blockName, RunControlServer runControl) {
         final InitialiseOnSubscribeObservable<String> lowLimit = runControl.blockRunControlLowLimit(blockName);
 
-        lowLimit.addObserver(new BaseObserver<String>() {
+        lowLimitSubscription = lowLimit.addObserver(new BaseObserver<String>() {
             @Override
             public void onValue(String value) {
                 Display.getDefault().asyncExec(new Runnable() {
                     @Override
                     public void run() {
                         lowLimitText.setText(lowLimit.getValue());
+                        lowLimitText.setEnabled(true);
                     }
                 });
             }
@@ -119,13 +147,14 @@ public class BlockRunControlPanel extends Composite {
     private void setHighLimitRunControlValues(String blockName, RunControlServer runControl) {
         final InitialiseOnSubscribeObservable<String> highLimit = runControl.blockRunControlHighLimit(blockName);
 
-        highLimit.addObserver(new BaseObserver<String>() {
+        highLimitSubscription = highLimit.addObserver(new BaseObserver<String>() {
             @Override
             public void onValue(String value) {
                 Display.getDefault().asyncExec(new Runnable() {
                     @Override
                     public void run() {
                         highLimitText.setText(highLimit.getValue());
+                        highLimitText.setEnabled(true);
                     }
                 });
             }
@@ -143,13 +172,44 @@ public class BlockRunControlPanel extends Composite {
     private void setEnabledRunControlValues(String blockName, RunControlServer runControl) {
         final InitialiseOnSubscribeObservable<String> enabled = runControl.blockRunControlEnabled(blockName);
 
-        enabled.addObserver(new BaseObserver<String>() {
+        enabledSubscription = enabled.addObserver(new BaseObserver<String>() {
             @Override
             public void onValue(String value) {
                 Display.getDefault().asyncExec(new Runnable() {
                     @Override
                     public void run() {
                         btnEnabled.setSelection(enabled.getValue().equals("YES"));
+                        btnEnabled.setEnabled(true);
+                    }
+                });
+            }
+
+            @Override
+            public void onError(Exception e) {
+            }
+
+            @Override
+            public void onConnectionStatus(boolean isConnected) {
+            }
+        });
+    }
+
+    private void setLabelText(String blockName, RunControlServer runControl) {
+        final InitialiseOnSubscribeObservable<String> inRange = runControl.blockRunControlInRange(blockName);
+
+        inRangeSubscription = inRange.addObserver(new BaseObserver<String>() {
+            @Override
+            public void onValue(String value) {
+                Display.getDefault().asyncExec(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (inRange.getValue().equals("YES")) {
+                            statusLabel.setText("Block not preventing run continuing");
+                            statusLabel.setForeground(COLOR_GREEN);
+                        } else {
+                            statusLabel.setText("Block preventing run from continuing");
+                            statusLabel.setForeground(COLOR_RED);
+                        }
                     }
                 });
             }

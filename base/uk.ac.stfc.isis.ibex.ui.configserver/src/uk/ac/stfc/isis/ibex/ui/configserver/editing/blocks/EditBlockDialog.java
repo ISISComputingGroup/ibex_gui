@@ -78,12 +78,15 @@ public class EditBlockDialog extends TitleAreaDialog {
         runControl.blockRunControlHighLimitSetter(block.getName()).write(blockRunControlPanel.getHighLimit());
         runControl.blockRunControlEnabledSetter(block.getName()).write(blockRunControlPanel.getEnabledSetting());
 
+        blockRunControlPanel.removeObservers();
+
 		super.okPressed();
 	}
 	
 	@Override
 	protected void cancelPressed() {
 		config.removeBlock(block);		
+        blockRunControlPanel.removeObservers();
 		super.cancelPressed();
 	}
 	
