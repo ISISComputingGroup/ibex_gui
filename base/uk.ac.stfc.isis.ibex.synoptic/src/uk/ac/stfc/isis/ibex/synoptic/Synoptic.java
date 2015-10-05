@@ -21,7 +21,6 @@ package uk.ac.stfc.isis.ibex.synoptic;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.function.Predicate;
 
 import org.apache.logging.log4j.Logger;
 import org.osgi.framework.BundleActivator;
