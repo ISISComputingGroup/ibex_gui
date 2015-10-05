@@ -21,7 +21,6 @@ package uk.ac.stfc.isis.ibex.configserver.tests.json;
 
 import static org.junit.Assert.*;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
