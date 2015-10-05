@@ -96,12 +96,17 @@ public class Synoptic extends Closer implements BundleActivator {
 	
 	public Collection<SynopticInfo> availableEditableSynoptics() {
 		ArrayList<SynopticInfo> all = new ArrayList<>(variables.available.getValue());
-		all.removeIf(new Predicate<SynopticInfo>() {
-			@Override
-			public boolean test(SynopticInfo s) {
-				return s.name().equals(Variables.NONE_SYNOPTIC_NAME);
-			} 
-		});
+		SynopticInfo noneSynoptic = null;
+		for (SynopticInfo s : all) {
+			if (s.name().equals(Variables.NONE_SYNOPTIC_NAME)) {
+				noneSynoptic = s;
+			}
+		}
+		
+		if (noneSynoptic != null) {
+			all.remove(noneSynoptic);
+		}
+		
 		return all;
 	}
 	
