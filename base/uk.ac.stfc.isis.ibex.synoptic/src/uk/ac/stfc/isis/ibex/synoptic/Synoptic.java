@@ -93,16 +93,20 @@ public class Synoptic extends Closer implements BundleActivator {
 		return variables.available.getValue();
 	}
 	
-	public ArrayList<String> availableSynopticNames() {
-		Collection<SynopticInfo> availableSynoptics = availableSynoptics();
-		
-		ArrayList<String> synoptics = new ArrayList<>();
-		
-		for (SynopticInfo synoptic : availableSynoptics) {
-			synoptics.add(synoptic.name());
+	public Collection<SynopticInfo> availableEditableSynoptics() {
+		ArrayList<SynopticInfo> all = new ArrayList<>(variables.available.getValue());
+		SynopticInfo noneSynoptic = null;
+		for (SynopticInfo s : all) {
+			if (s.name().equals(Variables.NONE_SYNOPTIC_NAME)) {
+				noneSynoptic = s;
+			}
 		}
 		
-		return synoptics;
+		if (noneSynoptic != null) {
+			all.remove(noneSynoptic);
+		}
+		
+		return all;
 	}
 	
 	public int getSynopticNumber() {
@@ -113,7 +117,7 @@ public class Synoptic extends Closer implements BundleActivator {
 		
 		String currentSynopticName = getSynopticInfo().name();
 		
-		ArrayList<String> availableSynoptics = availableSynopticNames();
+		ArrayList<String> availableSynoptics = new ArrayList<String>(SynopticInfo.names(availableSynoptics()));
 		
 		return availableSynoptics.indexOf(currentSynopticName);
 	}
