@@ -119,7 +119,7 @@ public class ConfigServerVariables extends InstrumentVariables {
 	}
 
 	public InitialiseOnSubscribeObservable<Configuration> component(String componentName) {
-		return convert(readCompressed(blockServerAddresses.component(componentName)), converters.toConfig());
+		return convert(readCompressed(blockServerAddresses.component(getComponentPV(componentName))), converters.toConfig());
 	}
 
 	public InitialiseOnSubscribeObservable<String> iocDescription(String iocName) {
@@ -174,6 +174,19 @@ public class ConfigServerVariables extends InstrumentVariables {
 			}).pv();
 		} catch (NoSuchElementException e) {
 			return configName.toUpperCase(Locale.ENGLISH);
+		}
+	}
+	
+	private String getComponentPV(final String componentName) {
+		try {
+			return Iterables.find(componentsInfo.getValue(), new Predicate<ConfigInfo>() {
+				@Override
+				public boolean apply(ConfigInfo info) {
+					return info.name().equals(componentName);
+				}
+			}).pv();
+		} catch (NoSuchElementException e) {
+			return componentName.toUpperCase(Locale.ENGLISH);
 		}
 	}
 }
