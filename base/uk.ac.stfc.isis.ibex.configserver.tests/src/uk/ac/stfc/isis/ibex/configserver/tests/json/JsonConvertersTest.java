@@ -3,11 +3,14 @@ package uk.ac.stfc.isis.ibex.configserver.tests.json;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 
 import org.junit.Before;
 import org.junit.Test;
 
+import uk.ac.stfc.isis.ibex.configserver.IocState;
 import uk.ac.stfc.isis.ibex.configserver.ServerStatus;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Component;
 import uk.ac.stfc.isis.ibex.configserver.configuration.ConfigInfo;
@@ -161,5 +164,97 @@ public class JsonConvertersTest {
 		assertEquals(configPVName, pv.getAddress());
 		assertEquals(iocName, pv.iocName());
 		assertEquals(configDescription, pv.description());
+	}
+	
+	@Test
+	public void conversion_config_to_string_and_back() throws ConversionException {
+		/*
+		//Arrange
+		Converter<Configuration, String> convToString = new JsonConverters().configToString();
+		Converter<String, Configuration> convToConfig = new JsonConverters().toConfig();
+		
+		//Act
+		Configuration testConfig = convToConfig.convert(configJson);
+		String testString = convToString.convert(testConfig).replaceAll("\\s+", "");
+		
+		//Assert
+		//assertEquals(configJson.replaceAll("\\s+", ""), testString);
+		 */
+	}
+	
+	@Test
+	public void conversion_string_to_names() throws ConversionException {
+		//Arrange
+		String namesJson = "[\"TEST_CONFIG1\", \"TEST_CONFIG2\"]";
+		Converter<String, Collection<String>> conv = new JsonConverters().toNames();
+		
+		//Act
+		Collection<String> namesList = conv.convert(namesJson);
+		
+		//Assert
+		assertEquals(namesList.size(), 2);
+		assertTrue(namesList.contains("TEST_CONFIG1"));
+		assertTrue(namesList.contains("TEST_CONFIG2"));
+		
+	}
+	
+	@Test
+	public void conversion_names_to_string() throws ConversionException {
+		//Arrange
+		Converter<Collection<String>, String> conv = new JsonConverters().namesToString();
+		Collection<String> namesList = new ArrayList<>(Arrays.asList("TEST_CONFIG1", "TEST_CONFIG2"));
+		String namesJson = "[\"TEST_CONFIG1\",\"TEST_CONFIG2\"]";
+		
+		//Act
+		String test = conv.convert(namesList);
+		
+		//Assert
+		assertEquals(namesJson, test);
+		
+	}
+	
+	@Test
+	public void conversion_name_to_string() throws ConversionException {
+		//Arrange
+		Converter<String, String> conv = new JsonConverters().nameToString();
+		String nameJson = "TEST_CONFIG1";
+		String expected = "\"" + nameJson + "\"";
+		
+		//Act
+		String test = conv.convert(nameJson);
+		
+		//Assert
+		assertEquals(expected, test);
+		
+	}
+	
+	@Test
+	public void conversion_to_ioc_states() throws ConversionException {
+		//Arrange
+		Converter<String, Collection<IocState>> conv = new JsonConverters().toIocStates();
+		
+		//Act
+		Collection<IocState> iocList = conv.convert(editableIocJson);
+		
+		//Assert
+		assertEquals(1, iocList.size());
+		
+		IocState ioc = iocList.iterator().next();
+		assertEquals(iocName, ioc.getName());
+		assertTrue(!ioc.getIsRunning());
+	}
+	
+	@Test
+	public void conversion_config_to_string() throws ConversionException {
+		//Arrange
+		Converter<Configuration, String> conv = new JsonConverters().configToString();
+		Configuration testConfig = new Configuration(configName, configDescription);
+		String expected = "{\"name\":\""+configName+"\",\"description\":\""+configDescription+"\",\"iocs\":[],\"blocks\":[],\"groups\":[],\"components\":[],\"history\":[]}";
+		
+		//Act
+		String test = conv.convert(testConfig);
+		
+		//Assert
+		assertEquals(expected, test);
 	}
 }
