@@ -54,7 +54,7 @@ public class EditBlockDialog extends TitleAreaDialog {
         blockDetailsPanel = new BlockDetailsPanel(parent, SWT.NONE, block, config);
         blockDetailsPanel.setLayout(new GridLayout(1, false));
 
-        blockRunControlPanel = new BlockRunControlPanel(blockDetailsPanel, SWT.NONE, block.getName(), runControl);
+        blockRunControlPanel = new BlockRunControlPanel(blockDetailsPanel, SWT.NONE, block);
         blockRunControlPanel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 
         blockDetailsPanel.addNameModifyListener(new ModifyListener() {
@@ -74,19 +74,16 @@ public class EditBlockDialog extends TitleAreaDialog {
 		block.setIsLocal(blockDetailsPanel.getIsLocal());
 		block.setIsVisible(blockDetailsPanel.getIsVisible());
 		
-        runControl.blockRunControlLowLimitSetter(block.getName()).write(blockRunControlPanel.getLowLimit());
-        runControl.blockRunControlHighLimitSetter(block.getName()).write(blockRunControlPanel.getHighLimit());
-        runControl.blockRunControlEnabledSetter(block.getName()).write(blockRunControlPanel.getEnabledSetting());
-
-        blockRunControlPanel.removeObservers();
+        block.setRCLowLimit(blockRunControlPanel.getLowLimit());
+        block.setRCHighLimit(blockRunControlPanel.getHighLimit());
+        block.setRCEnabled(blockRunControlPanel.getEnabledSetting());
 
 		super.okPressed();
 	}
 	
 	@Override
 	protected void cancelPressed() {
-		config.removeBlock(block);		
-        blockRunControlPanel.removeObservers();
+        config.removeBlock(block);
 		super.cancelPressed();
 	}
 	

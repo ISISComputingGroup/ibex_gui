@@ -19,7 +19,9 @@
 
 package uk.ac.stfc.isis.ibex.configserver.tests.editing;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -28,6 +30,8 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.junit.Before;
+
+import com.google.common.collect.Iterables;
 
 import uk.ac.stfc.isis.ibex.configserver.configuration.Block;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Component;
@@ -41,8 +45,6 @@ import uk.ac.stfc.isis.ibex.configserver.internal.IocDescriber;
 import uk.ac.stfc.isis.ibex.model.SettableUpdatedValue;
 import uk.ac.stfc.isis.ibex.model.UpdatedValue;
 
-import com.google.common.collect.Iterables;
-
 public class EditableConfigurationTest implements IocDescriber {
 
 	private static final String NAME = "base";
@@ -50,8 +52,8 @@ public class EditableConfigurationTest implements IocDescriber {
 	private static final String SYNOPTIC = "";
 	
 	protected static final EditableIoc GALIL01 = new EditableIoc("GALIL_01");
-	protected static final Block GAPX = new Block("GAPX", "ADDRESS", true, true, null);
-	protected static final Block GAPY = new Block("GAPY", "ADDRESS", true, true, null);
+    protected static final Block GAPX = new Block("GAPX", "ADDRESS", true, true, null, null, null, false);
+    protected static final Block GAPY = new Block("GAPY", "ADDRESS", true, true, null, null, null, false);
 	protected static final Group JAWS = new Group("JAWS");
 	protected static final Group TEMPERATURE = new Group("TEMPERATURE");
 	protected static final Component MOTOR = new Component("MOTOR");
@@ -107,6 +109,9 @@ public class EditableConfigurationTest implements IocDescriber {
 	    	assertEquals(exp.getPV(), act.getPV());
 	    	assertEquals(exp.getIsLocal(), act.getIsLocal());
 	    	assertEquals(exp.getIsVisible(), act.getIsVisible());
+            assertEquals(exp.getRCLowLimit(), act.getRCLowLimit());
+            assertEquals(exp.getRCHighLimit(), act.getRCHighLimit());
+            assertEquals(exp.getRCEnabled(), act.getRCEnabled());
 		}
 	}
 	
