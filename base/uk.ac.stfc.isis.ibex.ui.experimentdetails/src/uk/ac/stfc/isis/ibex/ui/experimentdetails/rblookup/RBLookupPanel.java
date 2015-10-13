@@ -4,30 +4,29 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
 import org.eclipse.core.databinding.DataBindingContext;
-import org.eclipse.core.databinding.UpdateValueStrategy;
 import org.eclipse.core.databinding.beans.BeanProperties;
+import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.databinding.viewers.ViewersObservables;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Event;
-import org.eclipse.swt.widgets.Listener;
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
-import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Text;
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.DateTime;
+import org.eclipse.swt.widgets.Event;
+import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Listener;
+import org.eclipse.swt.widgets.Text;
 
 import uk.ac.stfc.isis.ibex.ui.experimentdetails.UserDetailsTable;
-
-import org.eclipse.swt.widgets.DateTime;
 
 public class RBLookupPanel extends Composite{
 	private Text txtName;
@@ -91,13 +90,10 @@ public class RBLookupPanel extends Composite{
 	public void setModel(final RBLookupViewModel viewModel) {
 		bindingContext = new DataBindingContext();
 		
-		UpdateValueStrategy updateNever = new UpdateValueStrategy(UpdateValueStrategy.POLICY_NEVER);
-		UpdateValueStrategy updateAlways = new UpdateValueStrategy(UpdateValueStrategy.POLICY_UPDATE);
-		
 		bindingContext.bindValue(WidgetProperties.enabled().observe(date), BeanProperties.value("dateEnabled").observe(viewModel));
 		bindingContext.bindValue(WidgetProperties.selection().observe(date), BeanProperties.value("dateSearch").observe(viewModel));
 		bindingContext.bindValue(ViewersObservables.observeSingleSelection(cmboRole), BeanProperties.value("roleSearch").observe(viewModel));
-		bindingContext.bindValue(WidgetProperties.text().observe(txtName), BeanProperties.value("nameSearch").observe(viewModel), updateAlways, updateNever);
+        bindingContext.bindValue(SWTObservables.observeText(txtName, SWT.Modify), BeanProperties.value("nameSearch").observe(viewModel));
 		
 		experimentIDTable.addSelectionChangedListener(new ISelectionChangedListener() {
 			@Override

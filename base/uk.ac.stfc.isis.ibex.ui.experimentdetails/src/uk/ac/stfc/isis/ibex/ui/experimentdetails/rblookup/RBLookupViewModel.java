@@ -14,7 +14,7 @@ import uk.ac.stfc.isis.ibex.model.ModelObject;
 public class RBLookupViewModel extends ModelObject{
 	private boolean okEnabled = false;
 	private boolean dateEnabled = false;
-	private String nameSearch;
+    private String nameSearch = "";
 	private RoleViews roleSearch = RoleViews.ANY;
 	private Date dateSearch = new Date();
 	private Collection<UserDetails> searchResults;
@@ -61,6 +61,7 @@ public class RBLookupViewModel extends ModelObject{
 	
 	public void setNameSearch(String name) {
 		firePropertyChange("nameSearch", nameSearch, nameSearch=name);
+        searchForExperimentID();
 	}
 	
 	public RoleViews getRoleSearch() {
