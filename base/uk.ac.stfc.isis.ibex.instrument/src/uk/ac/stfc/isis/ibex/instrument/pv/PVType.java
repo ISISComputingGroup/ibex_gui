@@ -17,14 +17,13 @@
 * http://opensource.org/licenses/eclipse-1.0.php
 */
 
-package uk.ac.stfc.isis.ibex.synoptic.model.desc;
+package uk.ac.stfc.isis.ibex.instrument.pv;
 
 import javax.xml.bind.annotation.XmlEnum;
 import javax.xml.bind.annotation.XmlType;
 
 /**
  * ENUM of types and an associated display name for linking to PVs for the synoptic
- * BLOCK is commented as a block lookup is required, but am starting with the PVs
  *
  */
 @XmlType(name = "pvtype")

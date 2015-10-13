@@ -23,4 +23,5 @@ Export-Package: uk.ac.stfc.isis.ibex.ui.blocks,
  uk.ac.stfc.isis.ibex.ui.blocks.views
 Bundle-ClassPath: .
 Import-Package: com.google.common.base,
- com.google.common.collect
+ com.google.common.collect,
+ uk.ac.stfc.isis.ibex.ui.configserver.commands

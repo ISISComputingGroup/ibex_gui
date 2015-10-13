@@ -32,6 +32,7 @@ import uk.ac.stfc.isis.ibex.instrument.channels.CompressedCharWaveformChannel;
 import uk.ac.stfc.isis.ibex.instrument.channels.DefaultChannel;
 import uk.ac.stfc.isis.ibex.instrument.channels.DefaultChannelWithoutUnits;
 import uk.ac.stfc.isis.ibex.instrument.channels.StringChannel;
+import uk.ac.stfc.isis.ibex.instrument.pv.PVType;
 import uk.ac.stfc.isis.ibex.json.JsonDeserialisingConverter;
 import uk.ac.stfc.isis.ibex.json.JsonSerialisingConverter;
 import uk.ac.stfc.isis.ibex.synoptic.SynopticInfo;
@@ -104,13 +105,25 @@ public class Variables extends InstrumentVariables {
 	public InitialiseOnSubscribeObservable<String> defaultReader(String address) {
 		return reader(new DefaultChannel(), address);
 	}
+	
+	public InitialiseOnSubscribeObservable<String> defaultReader(String address, PVType type) {
+		return reader(new DefaultChannel(), address, type);
+	}
 
 	public InitialiseOnSubscribeObservable<String> defaultReaderWithoutUnits(String address) {
 		return reader(new DefaultChannelWithoutUnits(), address);
 	}
 	
+	public InitialiseOnSubscribeObservable<String> defaultReaderWithoutUnits(String address, PVType type) {
+		return reader(new DefaultChannelWithoutUnits(), address, type);
+	}
+	
 	public Writable<String> defaultWritable(String address) {
 		return writable(new StringChannel(), address);
+	}
+	
+	public Writable<String> defaultWritable(String address, PVType type) {
+		return writable(new StringChannel(), address, type);
 	}
 	
 }

@@ -29,12 +29,16 @@ import org.eclipse.jface.window.Window;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.ShellAdapter;
+import org.eclipse.swt.events.ShellEvent;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Shell;
+
+import com.google.common.base.Strings;
 
 import uk.ac.stfc.isis.ibex.configserver.Configurations;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Configuration;
@@ -57,6 +61,8 @@ public class EditConfigDialog extends TitleAreaDialog implements
 	private boolean doAsComponent = false;
 	private boolean isComponent;
 	private boolean isBlank;
+	private boolean firstShowing = true;
+    private String blockToEdit;
 	private Button saveAsBtn;
 
 	public EditConfigDialog(Shell parentShell, String title, String subTitle,
@@ -70,13 +76,41 @@ public class EditConfigDialog extends TitleAreaDialog implements
 		this.isBlank = isBlank;
 	}
 
+    public EditConfigDialog(Shell parentShell, String title, String subTitle, EditableConfiguration config,
+            boolean isComponent, boolean isBlank, String blockName) {
+        this(parentShell, title, subTitle, config, isComponent, isBlank);
+        this.blockToEdit = blockName;
+        
+    }
+    
+    private void showBlockDialog() {
+    	// Open the edit block dialog on shellActivated as must be done after the Config Editor dialog is shown.
+        getShell().addShellListener(new ShellAdapter() {
+			@Override
+			public void shellActivated(ShellEvent e) {
+				// Only open when the shell is activated for the first time
+				if (firstShowing) {
+					Shell s = (Shell) e.getSource();
+                    s.setVisible(true);
+		            openBlocksTab();
+		            openEditBlockDialog();
+		            firstShowing = false;
+				}
+			}
+		});    	
+    }
+    
 	@Override
 	protected Control createDialogArea(Composite parent) {
 		editor = new ConfigEditorPanel(parent, SWT.NONE, this, isComponent);
 		editor.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		setTitle(subTitle);
 		editor.setConfigToEdit(config);
-
+		
+        if (!Strings.isNullOrEmpty(blockToEdit)) {
+        	showBlockDialog();
+        }
+		
 		return editor;
 	}
 
@@ -130,6 +164,7 @@ public class EditConfigDialog extends TitleAreaDialog implements
 	public void setErrorMessage(String source, String error) {
 		errorMessages.put(source, error);
 		showErrorMessage();
+        openEditBlockDialog();
 	}
 
 	// Show the current error messages
@@ -176,4 +211,12 @@ public class EditConfigDialog extends TitleAreaDialog implements
 	public boolean doAsComponent() {
 		return doAsComponent;
 	}
+
+    public void openBlocksTab() {
+        editor.openTab(ConfigEditorPanel.BLOCK_TAB_NAME);
+    }
+
+    public void openEditBlockDialog() {
+        editor.openEditBlockDialog(this.blockToEdit);
+    }
 }

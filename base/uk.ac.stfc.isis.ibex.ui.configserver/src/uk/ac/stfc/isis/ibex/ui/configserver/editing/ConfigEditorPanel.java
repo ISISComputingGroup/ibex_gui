@@ -19,11 +19,11 @@
 
 package uk.ac.stfc.isis.ibex.ui.configserver.editing;
 
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.TabFolder;
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.TabItem;
 
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
@@ -41,6 +41,8 @@ import uk.ac.stfc.isis.ibex.ui.configserver.editing.pvsets.IocPVSetsEditorPanel;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.summary.SummaryPanel;
 
 public class ConfigEditorPanel extends Composite {
+    
+    public static final String BLOCK_TAB_NAME = "Blocks";
 
 	private final IocsEditorPanel iocs;
 	private final BlocksEditorPanel blocks;
@@ -51,6 +53,8 @@ public class ConfigEditorPanel extends Composite {
 	private final IocSelectorPanel iocPVSets;
 	private final SummaryPanel summary;
 	
+    private TabFolder editorTabs;
+
 	public ConfigEditorPanel(Composite parent, int style, MessageDisplayer dialog, boolean isComponent) {
 		super(parent, style);
 		GridLayout gridLayout = new GridLayout(1, false);
@@ -60,7 +64,7 @@ public class ConfigEditorPanel extends Composite {
 		gridLayout.horizontalSpacing = 0;
 		setLayout(gridLayout);
 		
-		TabFolder editorTabs = new TabFolder(this, SWT.NONE);
+        editorTabs = new TabFolder(this, SWT.NONE);
 		editorTabs.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 
 		iocs = new IocsEditorPanel(editorTabs, SWT.NONE, dialog);
@@ -70,7 +74,7 @@ public class ConfigEditorPanel extends Composite {
 		iocsTab.setControl(iocs);
 		
 		TabItem blocksTab = new TabItem(editorTabs, SWT.NONE);
-		blocksTab.setText("Blocks");
+        blocksTab.setText(BLOCK_TAB_NAME);
 		
 		blocks = new BlocksEditorPanel(editorTabs, SWT.NONE);
 		blocksTab.setControl(blocks);
@@ -158,4 +162,16 @@ public class ConfigEditorPanel extends Composite {
 		iocPVs.setEnabled(enabled);
 		iocPVSets.setEnabled(enabled);
 	}
+
+    public void openTab(String tabName) {
+        for (TabItem tab : editorTabs.getItems()) {
+            if (tab.getText() == tabName) {
+                editorTabs.setSelection(tab);
+            }
+        }
+	}
+
+    public void openEditBlockDialog(String blockName) {
+        blocks.openEditBlockDialog(blockName);
+    }
 }
