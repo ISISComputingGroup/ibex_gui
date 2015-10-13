@@ -372,4 +372,9 @@
          version="0.0.0"
          unpack="false"/>
 
-</feature>
+   <plugin
+         id="uk.ac.stfc.isis.ibex.databases"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/></feature>

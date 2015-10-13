@@ -32,11 +32,9 @@ public class LogSettings implements InstrumentInfoReceiver {
 
     @Override
     public void setInstrument(InstrumentInfo instrument) {
-	PREFERENCES.setValue(PreferenceConstants.P_JMS_ADDRESS,
-		instrument.hostName());
-	PREFERENCES.setValue(PreferenceConstants.P_SQL_ADDRESS,
-		instrument.hostName());
-
-	LOG.clearMessages();
+		PREFERENCES.setValue(PreferenceConstants.P_JMS_ADDRESS,
+			instrument.hostName());
+	
+		LOG.clearMessages();
     }
 }

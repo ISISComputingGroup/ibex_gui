@@ -26,6 +26,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import uk.ac.stfc.isis.ibex.databases.Rdb;
 import uk.ac.stfc.isis.ibex.log.message.LogMessage;
 import uk.ac.stfc.isis.ibex.log.message.LogMessageFields;
 import uk.ac.stfc.isis.ibex.log.message.sql.LogMessageFieldsSql;
@@ -44,8 +45,8 @@ public class LogMessageQuery {
     private final SqlStatement sqlStatement;
 
     public LogMessageQuery(Rdb rdb) throws Exception {
-	this.rdb = rdb;
-	this.sqlStatement = new SqlStatement();
+		this.rdb = rdb;
+		this.sqlStatement = new SqlStatement();
     }
 
     /**

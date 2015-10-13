@@ -25,23 +25,30 @@ public final class PreferenceConstants {
     public static final String P_JMS_ADDRESS = "jmsAddress";
     public static final String P_JMS_PORT = "jmsPort";
     public static final String P_JMS_TOPIC = "jmsTopic";
-    public static final String P_SQL_ADDRESS = "sqlAddress";
-    public static final String P_SQL_PORT = "sqlPort";
-    public static final String P_SQL_USERNAME = "sqlUsername";
-    public static final String P_SQL_PASSWORD = "sqlPassword";
-    public static final String P_SQL_SCHEMA = "sqlSchema";
+    
+    public static final String P_MESSAGE_SQL_USERNAME = "sqlMessageUsername";
+    public static final String P_MESSAGE_SQL_PASSWORD = "sqlMessagePassword";
+    public static final String P_MESSAGE_SQL_SCHEMA = "sqlMessageSchema";
+    
+    public static final String P_EXP_DATA_SQL_USERNAME = "sqlExpDataUsername";
+    public static final String P_EXP_DATA_SQL_PASSWORD = "sqlExpDataPassword";
+    public static final String P_EXP_DATA_SQL_SCHEMA = "sqlExpDataSchema";    
+    
     public static final String P_MINOR_MESSAGE = "msgMinor";
 
     public static final String DEFAULT_JMS_ADDRESS = "localhost";
     public static final Integer DEFAULT_JMS_PORT = 61616;
     public static final String DEFAULT_JMS_TOPIC = "iocLogs";
-    public static final String DEFAULT_SQL_ADDRESS = "localhost";
-    public static final Integer DEFAULT_SQL_PORT = 3306;
-    public static final String DEFAULT_SQL_USERNAME = "msg_report";
-    public static final String DEFAULT_SQL_PASSWORD = "$msg_report";
-    public static final String DEFAULT_SQL_SCHEMA = "msg_log";
+    
+    public static final String DEFAULT_MESSAGE_SQL_USERNAME = "msg_report";
+    public static final String DEFAULT_MESSAGE_SQL_PASSWORD = "$msg_report";
+    public static final String DEFAULT_MESSAGE_SQL_SCHEMA = "msg_log";
     public static final Boolean DEFAULT_MINOR_MESSAGE = false;
 
+    public static final String DEFAULT_EXP_DATA_SQL_USERNAME = "report";
+    public static final String DEFAULT_EXP_DATA_SQL_PASSWORD = "$report";
+    public static final String DEFAULT_EXP_DATA_SQL_SCHEMA = "exp_data";
+    
     private PreferenceConstants() {
     }
 }
