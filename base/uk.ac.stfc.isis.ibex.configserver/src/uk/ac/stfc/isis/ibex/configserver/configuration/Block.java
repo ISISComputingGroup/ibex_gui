@@ -31,25 +31,25 @@ public class Block extends ModelObject {
 	private boolean local;
 	private String subconfig;
 
-    private boolean rcenabled;
-    private String rclow;
-    private String rchigh;
+    private boolean runcontrol;
+    private String lowlimit;
+    private String highlimit;
 		
-    public Block(String name, String pv, boolean visible, boolean local, String subconfig, String rclow, String rchigh,
-            Boolean rcenabled) {
+    public Block(String name, String pv, boolean visible, boolean local, String subconfig, String lowlimit, String highlimit,
+            Boolean runcontrol) {
 		this.name = name;
 		this.pv = pv;
 		this.visible = visible;
 		this.local = local;
 		this.subconfig = subconfig;
-        this.rclow = rclow;
-        this.rchigh = rchigh;
-        this.rcenabled = rcenabled;
+        this.lowlimit = lowlimit;
+        this.highlimit = highlimit;
+        this.runcontrol = runcontrol;
 	}
 	
 	public Block(Block other) {
-        this(other.name, other.pv, other.visible, other.local, other.subconfig, other.rclow, other.rchigh,
-                other.rcenabled);
+        this(other.name, other.pv, other.visible, other.local, other.subconfig, other.lowlimit, other.highlimit,
+                other.runcontrol);
 	}
 
 	public String getName() {
@@ -85,27 +85,27 @@ public class Block extends ModelObject {
     }
 
     public boolean getRCEnabled() {
-        return rcenabled;
+        return runcontrol;
 	}
 	
-    public void setRCEnabled(boolean rcenabled) {
-        firePropertyChange("RCEnabled", this.rcenabled, this.rcenabled = rcenabled);
+    public void setRCEnabled(boolean runcontrol) {
+        firePropertyChange("RCEnabled", this.runcontrol, this.runcontrol = runcontrol);
 	}
 	
     public String getRCLowLimit() {
-        return rclow;
+        return lowlimit;
     }
 
     public void setRCLowLimit(String rclow) {
-        firePropertyChange("RCLowLimit", this.rclow, this.rclow = rclow);
+        firePropertyChange("RCLowLimit", this.lowlimit, this.lowlimit = rclow);
     }
 
     public String getRCHighLimit() {
-        return rchigh;
+        return highlimit;
     }
 
     public void setRCHighLimit(String rchigh) {
-        firePropertyChange("RCHighLimit", this.rchigh, this.rchigh = rchigh);
+        firePropertyChange("RCHighLimit", this.highlimit, this.highlimit = rchigh);
     }
 
 	public String subconfig() {
