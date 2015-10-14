@@ -27,7 +27,6 @@ import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.swt.widgets.TabItem;
 
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
-import uk.ac.stfc.isis.ibex.runcontrol.RunControlServer;
 import uk.ac.stfc.isis.ibex.ui.configserver.dialogs.MessageDisplayer;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.blocks.BlocksEditorPanel;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.components.ComponentEditorPanel;
@@ -148,10 +147,6 @@ public class ConfigEditorPanel extends Composite {
 		summary.setConfig(config);
 	}
 	
-    public void setRunControlServer(RunControlServer runControl) {
-        blocks.setRunControlServer(runControl);
-    }
-
 	@Override
 	public void setEnabled(boolean enabled) {
 		super.setEnabled(enabled);

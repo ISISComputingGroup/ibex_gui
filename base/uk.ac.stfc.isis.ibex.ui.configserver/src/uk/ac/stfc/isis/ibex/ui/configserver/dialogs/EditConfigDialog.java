@@ -39,7 +39,6 @@ import org.eclipse.swt.widgets.Shell;
 import uk.ac.stfc.isis.ibex.configserver.Configurations;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Configuration;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
-import uk.ac.stfc.isis.ibex.runcontrol.RunControlActivator;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.ConfigEditorPanel;
 
 public class EditConfigDialog extends TitleAreaDialog implements
@@ -77,7 +76,6 @@ public class EditConfigDialog extends TitleAreaDialog implements
 		editor.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		setTitle(subTitle);
 		editor.setConfigToEdit(config);
-        editor.setRunControlServer(RunControlActivator.getInstance().getServer());
 
 		return editor;
 	}
