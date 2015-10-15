@@ -25,4 +25,5 @@ Export-Package: uk.ac.stfc.isis.ibex.ui.configserver.commands,
 Import-Package: org.eclipse.core.expressions,
  uk.ac.stfc.isis.ibex.model,
  uk.ac.stfc.isis.ibex.preferences,
+ uk.ac.stfc.isis.ibex.runcontrol,
  uk.ac.stfc.isis.ibex.synoptic
