@@ -26,6 +26,11 @@ import org.eclipse.jface.preference.IPreferenceStore;
 import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
 import uk.ac.stfc.isis.ibex.instrument.InstrumentInfoReceiver;
 
+/**
+ * This class is responsible for changing the settings for the DataBrowser when
+ * the instrument is changed, or first set.
+ *
+ */
 public class DataBrowserSettings implements InstrumentInfoReceiver {
 
 	private final static IPreferenceStore PREFERENCES = Activator.getDefault().getPreferenceStore();
@@ -44,10 +49,22 @@ public class DataBrowserSettings implements InstrumentInfoReceiver {
 	}
 	
 	private void setArchives(String hostName) {
-		PREFERENCES.setValue(Preferences.ARCHIVES, updateHostName(hostName, ARCHIVES));	
+        PREFERENCES.setValue(Preferences.ARCHIVES, updateHostName(hostName, ARCHIVES));
 	}
 	
+    /**
+     * This class assumes machine names begin with NDX, e.g. NDXLARMOR, or are
+     * localhost.
+     * 
+     * @param hostName
+     *            The host name of the new machine.
+     * @param preference
+     *            The preference string.
+     * @return The preference string with the host name replace.
+     */
 	private static String updateHostName(String hostName, String preference) {
-		return preference.replaceAll("localhost", hostName);
+        preference = preference.replaceAll("NDX[A-Z]+", hostName);
+        preference = preference.replaceAll("localhost", hostName);
+        return preference;
 	}
 }
