@@ -76,7 +76,7 @@ public class BlocksEditorPanel extends Composite {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				EditableBlock added = config.addNewBlock();
-                EditBlockDialog dialog = new EditBlockDialog(getShell(), added, config, runControl);
+                EditBlockDialog dialog = new EditBlockDialog(getShell(), added, config);
 				dialog.open();
 				setBlocks(config);
 				setSelectedBlocks(new ArrayList<EditableBlock>(Arrays.asList(added)));
@@ -92,7 +92,7 @@ public class BlocksEditorPanel extends Composite {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				EditableBlock toEdit = table.firstSelectedRow();
-                EditBlockDialog dialog = new EditBlockDialog(getShell(), toEdit, config, runControl);
+                EditBlockDialog dialog = new EditBlockDialog(getShell(), toEdit, config);
 				dialog.open();
 			}
 		});
