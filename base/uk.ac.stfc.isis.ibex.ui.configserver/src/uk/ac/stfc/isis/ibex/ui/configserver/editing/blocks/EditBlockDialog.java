@@ -28,12 +28,10 @@ public class EditBlockDialog extends TitleAreaDialog {
 	
 	Button okButton;
 
-    protected EditBlockDialog(Shell parentShell, EditableBlock block, EditableConfiguration config,
-            RunControlServer runControl) {
+    protected EditBlockDialog(Shell parentShell, EditableBlock block, EditableConfiguration config) {
 		super(parentShell);
 		this.config = config;
 		this.block = block;
-        this.runControl = runControl;
 
         setTitle("Configure Block");
         blockDetailsPanel = new BlockDetailsPanel(parentShell, SWT.NONE, block, config);
