@@ -34,9 +34,14 @@ public class Block extends ModelObject {
     private boolean runcontrol;
     private String lowlimit;
     private String highlimit;
+
+    // Logging configurations, default is no logging
+    private boolean log_periodic = true;
+    private float log_rate = 0;
+    private float log_deadband;
 		
     public Block(String name, String pv, boolean visible, boolean local, String subconfig, String lowlimit, String highlimit,
-            Boolean runcontrol) {
+            Boolean runcontrol, boolean logPeriodic, float logRate, float logDeadband) {
 		this.name = name;
 		this.pv = pv;
 		this.visible = visible;
@@ -45,11 +50,14 @@ public class Block extends ModelObject {
         this.lowlimit = lowlimit;
         this.highlimit = highlimit;
         this.runcontrol = runcontrol;
+        this.log_deadband = logDeadband;
+        this.log_periodic = logPeriodic;
+        this.log_rate = logRate;
 	}
 	
 	public Block(Block other) {
         this(other.name, other.pv, other.visible, other.local, other.subconfig, other.lowlimit, other.highlimit,
-                other.runcontrol);
+                other.runcontrol, other.log_periodic, other.log_rate, other.log_deadband);
 	}
 
 	public String getName() {

@@ -247,7 +247,7 @@ public class EditableConfiguration extends ModelObject {
 		Collection<Block> blocksBeforeAdd = getBlocks();
 		
 		String name = blockName.getUnique(blockNames());
-        EditableBlock block = new EditableBlock(new Block(name, "", true, true, null, "", "", false));
+        EditableBlock block = new EditableBlock(new Block(name, "", true, true, null, "", "", false, true, 0, 0));
 		editableBlocks.add(0, block);
 		makeBlockAvailable(block);
 		addRenameListener(block);

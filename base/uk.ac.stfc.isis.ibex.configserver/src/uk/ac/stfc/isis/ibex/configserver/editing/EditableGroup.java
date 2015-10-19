@@ -187,7 +187,7 @@ public class EditableGroup extends Group {
 	}
 
 	private EditableBlock lookupBlockByName(Collection<EditableBlock> blocks, final String name) {
-        EditableBlock block = new EditableBlock(new Block(name, "", true, true, null, "", "", false));
+        EditableBlock block = new EditableBlock(new Block(name, "", true, true, null, "", "", false, true, 0, 0));
 		List<String> allBlockNames = blockNames(blocks);
 		int blockIndex = allBlockNames.indexOf(name);
 		if (blockIndex >= 0) {
