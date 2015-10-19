@@ -19,8 +19,11 @@
 
 package uk.ac.stfc.isis.ibex.configserver.tests.editing;
 
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
 
@@ -49,7 +52,7 @@ public class BlockNameValidatorTest {
 	public void setUp() {
 		// Arrange
 		
-		testBlock = new Block(VALID_BLOCK_NAME, null, false, false, null);
+        testBlock = new Block(VALID_BLOCK_NAME, null, false, false, null, null, null, false);
 		
 		testEditableBlock = new EditableBlock(testBlock);
 

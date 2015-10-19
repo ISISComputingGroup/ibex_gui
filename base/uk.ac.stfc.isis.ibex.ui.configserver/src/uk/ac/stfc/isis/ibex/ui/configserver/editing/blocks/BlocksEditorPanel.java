@@ -36,6 +36,7 @@ import org.eclipse.swt.widgets.MessageBox;
 
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableBlock;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
+import uk.ac.stfc.isis.ibex.runcontrol.RunControlServer;
 
 @SuppressWarnings({"checkstyle:magicnumber", "checkstyle:localvariablename"})
 public class BlocksEditorPanel extends Composite {
@@ -46,6 +47,7 @@ public class BlocksEditorPanel extends Composite {
 	private final Button remove;
 	
 	private EditableConfiguration config;
+    private RunControlServer runControl;
 	
 	public BlocksEditorPanel(Composite parent, int style) {
 		super(parent, style);
@@ -74,7 +76,7 @@ public class BlocksEditorPanel extends Composite {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				EditableBlock added = config.addNewBlock();
-				EditBlockDialog dialog = new EditBlockDialog(getShell(), added, config);
+                EditBlockDialog dialog = new EditBlockDialog(getShell(), added, config);
 				dialog.open();
 				setBlocks(config);
 				setSelectedBlocks(new ArrayList<EditableBlock>(Arrays.asList(added)));
@@ -90,7 +92,7 @@ public class BlocksEditorPanel extends Composite {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				EditableBlock toEdit = table.firstSelectedRow();
-				EditBlockDialog dialog = new EditBlockDialog(getShell(), toEdit, config);
+                EditBlockDialog dialog = new EditBlockDialog(getShell(), toEdit, config);
 				dialog.open();
 			}
 		});
@@ -125,7 +127,7 @@ public class BlocksEditorPanel extends Composite {
 		add.setEnabled(true);
 		setBlocks(config);
 	}
-	
+
 	private void setBlocks(EditableConfiguration config) {
 		table.setRows(config.getEditableBlocks());
 		table.refresh();

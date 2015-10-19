@@ -19,6 +19,10 @@
 
 package uk.ac.stfc.isis.ibex.experimentdetails;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 
 public class UserDetails extends ModelObject {
@@ -26,8 +30,21 @@ public class UserDetails extends ModelObject {
 	private String name;
 	private String institute;
 	private Role role;
-
-	public UserDetails(String name, String institute, Role role) {
+	private String associatedExperimentID;
+	private Date associatedExperimentStartDate;
+	
+	static private final DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+	
+	public UserDetails(String name, String institute, Role role, String associatedExperimentID, Date associatedExperimentStartDate) {
+		this.name = name;
+		this.institute = institute;
+		this.role = role;
+		this.associatedExperimentID = associatedExperimentID;
+		this.associatedExperimentStartDate = associatedExperimentStartDate;
+	}
+	
+	public UserDetails(String name, String institute, Role role)
+	{
 		this.name = name;
 		this.institute = institute;
 		this.role = role;
@@ -59,6 +76,14 @@ public class UserDetails extends ModelObject {
 
 	public void setRole(Role role) {
 		firePropertyChange("role", this.role, this.role = role);
+	}
+	
+	public String getAssociatedExperimentID() {
+		return associatedExperimentID;
+	}
+	
+	public String getAssociatedExperimentStartDate() {
+		return df.format(associatedExperimentStartDate);
 	}
 
 }

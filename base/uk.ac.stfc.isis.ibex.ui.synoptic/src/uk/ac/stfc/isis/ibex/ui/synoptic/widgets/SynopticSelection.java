@@ -123,7 +123,7 @@ public class SynopticSelection extends Composite {
 	}
 	
 	public void setSynopticList() {
-		String[] synoptics = synoptic.availableSynopticNames().toArray(new String[0]);
+		String[] synoptics = SynopticInfo.names(synoptic.availableSynoptics()).toArray(new String[0]);
 		synopticCombo.setItems(synoptics);
 		
 		// Show selected synoptic correctly on startup
@@ -134,7 +134,7 @@ public class SynopticSelection extends Composite {
 	}
 	
 	public void updateSynopticList() {
-		String[] synoptics = synoptic.availableSynopticNames().toArray(new String[0]);
+		String[] synoptics = SynopticInfo.names(synoptic.availableSynoptics()).toArray(new String[0]);
 		ArrayList<String> synopticsArrayList = new ArrayList<String>(Arrays.asList(synoptics)); 
 		String[] synopticComboItems = synopticCombo.getItems();
 		ArrayList<String> synopticComboItemsArrayList = new ArrayList<String>(Arrays.asList(synopticComboItems)); 

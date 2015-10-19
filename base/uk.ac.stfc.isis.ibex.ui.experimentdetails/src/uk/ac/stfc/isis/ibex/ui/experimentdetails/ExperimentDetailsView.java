@@ -30,6 +30,7 @@ public class ExperimentDetailsView extends ViewPart {
 	public ExperimentDetailsView() {
 	}
 
+	@SuppressWarnings("unused")
 	@Override
 	public void createPartControl(Composite parent) {
 		parent.setLayout(new FillLayout(SWT.HORIZONTAL));

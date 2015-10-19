@@ -29,6 +29,18 @@ import uk.ac.stfc.isis.ibex.ui.widgets.StringEditingSupport;
 
 public class ParametersTable extends DataboundTable<Parameter> {
 
+	private final StringEditingSupport<Parameter> valueEditingSupport = new StringEditingSupport<Parameter>(viewer(), Parameter.class) {
+		@Override
+		protected String valueFromRow(Parameter row) {
+			return row.getValue();
+		}
+
+		@Override
+		protected void setValueForRow(Parameter row, String value) {
+			row.setValue(value);
+		}
+	};
+	
 	public ParametersTable(Composite parent, int style, int tableStyle) {
 		super(parent, style, Parameter.class, tableStyle);
 		initialise();
@@ -61,24 +73,18 @@ public class ParametersTable extends DataboundTable<Parameter> {
 		});		
 	}
 	
+	public void enableEditing(boolean enabled) {
+		valueEditingSupport.setEnabled(enabled);
+	}
+	
 	private void value() {
-		TableViewerColumn name = createColumn("Value", 2);
-		name.setLabelProvider(new DataboundCellLabelProvider<Parameter>(observeProperty("value")) {
+		TableViewerColumn valueColumn = createColumn("Value", 2);
+		valueColumn.setLabelProvider(new DataboundCellLabelProvider<Parameter>(observeProperty("value")) {
 			@Override
 			protected String valueFromRow(Parameter row) {
 				return row.getValue();
 			}
 		});	
-		name.setEditingSupport(new StringEditingSupport<Parameter>(viewer(), Parameter.class) {
-			@Override
-			protected String valueFromRow(Parameter row) {
-				return row.getValue();
-			}
-
-			@Override
-			protected void setValueForRow(Parameter row, String value) {
-				row.setValue(value);
-			}
-		});
+		valueColumn.setEditingSupport(valueEditingSupport);
 	}
 }

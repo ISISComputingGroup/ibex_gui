@@ -29,12 +29,14 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.jface.preference.IPreferenceStore;
 
+import uk.ac.stfc.isis.ibex.databases.Rdb;
 import uk.ac.stfc.isis.ibex.log.jms.JmsHandler;
 import uk.ac.stfc.isis.ibex.log.message.LogMessage;
 import uk.ac.stfc.isis.ibex.log.message.LogMessageFields;
+import uk.ac.stfc.isis.ibex.log.preferences.PreferenceConstants;
 import uk.ac.stfc.isis.ibex.log.rdb.LogMessageQuery;
-import uk.ac.stfc.isis.ibex.log.rdb.Rdb;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 
 import com.mysql.jdbc.exceptions.jdbc4.CommunicationsException;
@@ -153,7 +155,17 @@ public class LogModel extends ModelObject implements ILogMessageProducer,
     public List<LogMessage> search(LogMessageFields field, String value,
 	    Calendar from, Calendar to) throws Exception {
 	try {
-	    Rdb rdb = Rdb.connectToDatabase();
+		IPreferenceStore preferenceStore = Log.getDefault()
+				.getPreferenceStore();
+		
+		String schema = preferenceStore
+			.getString(PreferenceConstants.P_MESSAGE_SQL_SCHEMA);
+		String user = preferenceStore
+			.getString(PreferenceConstants.P_MESSAGE_SQL_USERNAME);
+		String password = preferenceStore
+			.getString(PreferenceConstants.P_MESSAGE_SQL_PASSWORD);
+		
+	    Rdb rdb = Rdb.connectToDatabase(schema, user, password);
 	    LogMessageQuery query = new LogMessageQuery(rdb);
 	    return query.getMessages(field, value, from, to);
 	} catch (SQLException ex) {

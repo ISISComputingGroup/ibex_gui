@@ -53,7 +53,6 @@ public class PreferenceSupplier extends AbstractPreferenceInitializer {
 
     public static final String INITIAL_USER = "initial_user";
     public static final String Default_INITIAL_USER = "Default user";
-        
     
 	public static final IScopeContext SCOPE_CONTEXT = InstanceScope.INSTANCE;
     public static final String PREFERENCE_NODE = "uk.ac.stfc.isis.ibex.preferences";
@@ -115,7 +114,7 @@ public class PreferenceSupplier extends AbstractPreferenceInitializer {
         entries.put(PYEPICS_DIRECTORY, Default_PYEPICS_DIRECTORY);
         entries.put(ADMINISTRATOR_PASSWORD, Default_ADMINISTRATOR_PASSWORD);
         entries.put(INITIAL_USER, Default_INITIAL_USER);
-        
+    		
         return entries;
 	}
 }

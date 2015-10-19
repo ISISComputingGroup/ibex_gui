@@ -19,9 +19,9 @@
 
 package uk.ac.stfc.isis.ibex.configserver.configuration;
 
-import uk.ac.stfc.isis.ibex.model.ModelObject;
-
 import com.google.common.base.Strings;
+
+import uk.ac.stfc.isis.ibex.model.ModelObject;
 
 public class Block extends ModelObject {
 
@@ -30,17 +30,26 @@ public class Block extends ModelObject {
 	private boolean visible;
 	private boolean local;
 	private String subconfig;
+
+    private boolean runcontrol;
+    private String lowlimit;
+    private String highlimit;
 		
-	public Block(String name, String pv, boolean visible, boolean local, String subconfig) {
+    public Block(String name, String pv, boolean visible, boolean local, String subconfig, String lowlimit, String highlimit,
+            Boolean runcontrol) {
 		this.name = name;
 		this.pv = pv;
 		this.visible = visible;
 		this.local = local;
 		this.subconfig = subconfig;
+        this.lowlimit = lowlimit;
+        this.highlimit = highlimit;
+        this.runcontrol = runcontrol;
 	}
 	
 	public Block(Block other) {
-		this(other.name, other.pv, other.visible, other.local, other.subconfig);
+        this(other.name, other.pv, other.visible, other.local, other.subconfig, other.lowlimit, other.highlimit,
+                other.runcontrol);
 	}
 
 	public String getName() {
@@ -67,14 +76,38 @@ public class Block extends ModelObject {
 		firePropertyChange("isVisible", this.visible, this.visible = isVisible);
 	}
 	
-	public boolean getIsLocal() {
-		return local;
+    public boolean getIsLocal() {
+        return local;
+    }
+
+    public void setIsLocal(boolean isLocal) {
+        firePropertyChange("isLocal", this.local, this.local = isLocal);
+    }
+
+    public boolean getRCEnabled() {
+        return runcontrol;
 	}
 	
-	public void setIsLocal(boolean isLocal) {
-		firePropertyChange("isLocal", this.local, this.local = isLocal);
+    public void setRCEnabled(boolean runcontrol) {
+        firePropertyChange("RCEnabled", this.runcontrol, this.runcontrol = runcontrol);
 	}
 	
+    public String getRCLowLimit() {
+        return lowlimit;
+    }
+
+    public void setRCLowLimit(String rclow) {
+        firePropertyChange("RCLowLimit", this.lowlimit, this.lowlimit = rclow);
+    }
+
+    public String getRCHighLimit() {
+        return highlimit;
+    }
+
+    public void setRCHighLimit(String rchigh) {
+        firePropertyChange("RCHighLimit", this.highlimit, this.highlimit = rchigh);
+    }
+
 	public String subconfig() {
 		return subconfig;
 	}

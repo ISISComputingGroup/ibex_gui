@@ -26,13 +26,13 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
-import uk.ac.stfc.isis.ibex.configserver.configuration.Block;
-import uk.ac.stfc.isis.ibex.configserver.configuration.Group;
-import uk.ac.stfc.isis.ibex.configserver.internal.DisplayUtils;
-
 import com.google.common.base.Function;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
+
+import uk.ac.stfc.isis.ibex.configserver.configuration.Block;
+import uk.ac.stfc.isis.ibex.configserver.configuration.Group;
+import uk.ac.stfc.isis.ibex.configserver.internal.DisplayUtils;
 
 /**
  * Extends Group to make it easier to edit.
@@ -187,7 +187,7 @@ public class EditableGroup extends Group {
 	}
 
 	private EditableBlock lookupBlockByName(Collection<EditableBlock> blocks, final String name) {
-		EditableBlock block = new EditableBlock(new Block(name, "", true, true, null));
+        EditableBlock block = new EditableBlock(new Block(name, "", true, true, null, "", "", false));
 		List<String> allBlockNames = blockNames(blocks);
 		int blockIndex = allBlockNames.indexOf(name);
 		if (blockIndex >= 0) {

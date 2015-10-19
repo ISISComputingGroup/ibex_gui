@@ -48,7 +48,7 @@ public class BlockSelectorDialog extends TitleAreaDialog {
 		super(parentShell);
 		setShellStyle(getShellStyle() | SWT.DIALOG_TRIM | SWT.RESIZE);
 		this.config = config;
-		block = new Block("", "", true, true, "");
+        block = new Block("", "", true, true, "", "", "", false);
 	}
 	
 	@Override

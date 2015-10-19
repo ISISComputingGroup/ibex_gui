@@ -53,7 +53,7 @@ public class SqlStatement {
 	IPreferenceStore preferenceStore = Log.getDefault()
 		.getPreferenceStore();
 	schemaName = preferenceStore
-		.getString(PreferenceConstants.P_SQL_SCHEMA);
+		.getString(PreferenceConstants.P_MESSAGE_SQL_SCHEMA);
 
 	this.selectFields = new ArrayList<LogMessageFieldsSql>();
 	this.whereLikeFields = new ArrayList<LogMessageFieldsWhereSql>();

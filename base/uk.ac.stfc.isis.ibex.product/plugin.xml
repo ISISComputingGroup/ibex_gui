@@ -32,10 +32,6 @@
                name="appName"
                value="IBEX">
          </property>
-		 <property
-				name="preferenceCustomization"
-				value="plugin_customization.ini">
-         </property>
    <property
          name="aboutImage"
          value="icons/IBEX-icon-web64.gif">

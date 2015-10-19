@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Tests for experiment details plug-in
+Bundle-SymbolicName: uk.ac.stfc.isis.ibex.experimentdetails.tests
+Bundle-Version: 1.0.0.qualifier
+Fragment-Host: uk.ac.stfc.isis.ibex.experimentdetails;bundle-version="1.0.0"
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Require-Bundle: org.junit4;bundle-version="4.8.1",
+ org.mockito;bundle-version="1.9.5"
+Import-Package: org.apache.logging.log4j

@@ -40,7 +40,7 @@ public class EditSynopticHandler extends SynopticHandler<String> {
 	
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {		
-		SynopticSelectionDialog dialog = new SynopticSelectionDialog(shell(), TITLE, SYNOPTIC.availableSynoptics());
+		SynopticSelectionDialog dialog = new SynopticSelectionDialog(shell(), TITLE, SYNOPTIC.availableEditableSynoptics());
 		if (dialog.open() == Window.OK) {
 			openDialog(load(dialog.selectedSynoptic()), TITLE, false);
 		}

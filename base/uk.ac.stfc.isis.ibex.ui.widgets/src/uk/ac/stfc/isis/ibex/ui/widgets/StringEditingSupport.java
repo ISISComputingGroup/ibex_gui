@@ -27,12 +27,22 @@ import org.eclipse.swt.widgets.Composite;
 public abstract class StringEditingSupport<TRow> extends GenericEditingSupport<TRow, String> {
 
 	private final TextCellEditor editor;
+	private boolean canEdit = true;
 
 	public StringEditingSupport(ColumnViewer viewer, Class<TRow> rowType) {
 		super(viewer, rowType, String.class);
 		editor = new TextCellEditor((Composite) viewer.getControl());
 	}
+	
+	public void setEnabled(boolean enabled) {
+		canEdit = enabled;
+	}
 
+	@Override
+	protected boolean canEdit(Object element) {
+		return canEdit;
+	};
+	
 	@Override
 	protected String valueFromString(String value) {
 		return value;

@@ -29,6 +29,7 @@ import uk.ac.stfc.isis.ibex.experimentdetails.Parameter;
 import uk.ac.stfc.isis.ibex.experimentdetails.UserDetails;
 import uk.ac.stfc.isis.ibex.instrument.Channels;
 import uk.ac.stfc.isis.ibex.instrument.InstrumentVariables;
+import uk.ac.stfc.isis.ibex.instrument.channels.CharWaveformChannel;
 import uk.ac.stfc.isis.ibex.instrument.channels.CompressedCharWaveformChannel;
 import uk.ac.stfc.isis.ibex.instrument.channels.DefaultChannelWithoutUnits;
 import uk.ac.stfc.isis.ibex.instrument.channels.StringChannel;
@@ -48,7 +49,7 @@ public class ExperimentDetailsVariables extends InstrumentVariables {
 		= autoInitialise(new ParametersObservable(this, availableBeamParameters));
 
 	public final InitialiseOnSubscribeObservable<String> rbNumber = reader(new StringChannel(), "ED:RBNUMBER");
-	public final Writable<String> rbNumberSetter = writable(new StringChannel(), "ED:RBNUMBER:SP");
+	public final Writable<String> rbNumberSetter = writable(new CharWaveformChannel(), "ED:RBNUMBER:SP");
 
 	public final InitialiseOnSubscribeObservable<Collection<UserDetails>> userDetails 
 		= convert(reader(new CompressedCharWaveformChannel(), "ED:USERNAME"), new UserDetailsConverter());
