@@ -40,11 +40,11 @@ public class JsonConvertersTest {
 	
 	private String pvsJson = "[[\"" + configPVName + "\", \"ai\", \"" + configDescription + "\", \"" + iocName + "\"]]";
 	
-	@Before
-	public void setUp() {
-		String blockJson = "{\"name\": \"" + configBlockName + "\", \"local\": true, \"pv\": \"NDWXXX:xxxx:SIMPLE:VALUE1\", \"subconfig\": null, \"visible\": true}";
+    private String blockJson = "{\"name\": \"" + configBlockName
+            + "\", \"local\": true, \"pv\": \"NDWXXX:xxxx:SIMPLE:VALUE1\", \"subconfig\": null, \"visible\": true}";
 
-		
+	@Before
+    public void setUp() {
 		configJson = "{"; 
 		configJson += "\"name\": \""+ configName + "\", \"description\": \"" + configDescription + "\", \"history\": [\"2015-02-16\"]," ;
 		configJson += "\"blocks\": [" + blockJson + "],";
@@ -167,22 +167,6 @@ public class JsonConvertersTest {
 	}
 	
 	@Test
-	public void conversion_config_to_string_and_back() throws ConversionException {
-		/*
-		//Arrange
-		Converter<Configuration, String> convToString = new JsonConverters().configToString();
-		Converter<String, Configuration> convToConfig = new JsonConverters().toConfig();
-		
-		//Act
-		Configuration testConfig = convToConfig.convert(configJson);
-		String testString = convToString.convert(testConfig).replaceAll("\\s+", "");
-		
-		//Assert
-		//assertEquals(configJson.replaceAll("\\s+", ""), testString);
-		 */
-	}
-	
-	@Test
 	public void conversion_string_to_names() throws ConversionException {
 		//Arrange
 		String namesJson = "[\"TEST_CONFIG1\", \"TEST_CONFIG2\"]";
@@ -257,4 +241,25 @@ public class JsonConvertersTest {
 		//Assert
 		assertEquals(expected, test);
 	}
+
+    @Test(expected = NullPointerException.class)
+    public void cannot_convert_invalid_config_empty_json() throws ConversionException {
+        // Arrange
+        Converter<String, Configuration> conv = new JsonConverters().toConfig();
+
+        // Assert
+        Configuration config = conv.convert("{}");
+
+    }
+
+    @Test(expected = ConversionException.class)
+    public void cannot_convert_invalid_config_invalid_json() throws ConversionException {
+        // Arrange
+        Converter<String, Configuration> conv = new JsonConverters().toConfig();
+
+        // Assert
+        Configuration config = conv.convert("{");
+
+    }
+
 }
