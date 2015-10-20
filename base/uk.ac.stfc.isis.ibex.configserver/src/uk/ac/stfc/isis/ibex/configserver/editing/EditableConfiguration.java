@@ -30,6 +30,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import com.google.common.base.Function;
+import com.google.common.base.Predicate;
+import com.google.common.collect.Iterables;
+import com.google.common.collect.Lists;
+
 import uk.ac.stfc.isis.ibex.configserver.configuration.Block;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Component;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Configuration;
@@ -41,11 +46,6 @@ import uk.ac.stfc.isis.ibex.configserver.internal.DisplayUtils;
 import uk.ac.stfc.isis.ibex.configserver.internal.IocDescriber;
 import uk.ac.stfc.isis.ibex.configserver.internal.IocFilteredConfiguration;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
-
-import com.google.common.base.Function;
-import com.google.common.base.Predicate;
-import com.google.common.collect.Iterables;
-import com.google.common.collect.Lists;
 
 /**
  * Holds an editable configuration, and notifies any listeners set to changes to this class.
@@ -247,7 +247,7 @@ public class EditableConfiguration extends ModelObject {
 		Collection<Block> blocksBeforeAdd = getBlocks();
 		
 		String name = blockName.getUnique(blockNames());
-		EditableBlock block = new EditableBlock(new Block(name, "", true, true, null));
+        EditableBlock block = new EditableBlock(new Block(name, "", true, true, null, "", "", false));
 		editableBlocks.add(0, block);
 		makeBlockAvailable(block);
 		addRenameListener(block);
