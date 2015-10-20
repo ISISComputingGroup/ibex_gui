@@ -25,6 +25,7 @@ public class EditBlockDialog extends TitleAreaDialog {
     RunControlServer runControl;
 	BlockDetailsPanel blockDetailsPanel;
     BlockRunControlPanel blockRunControlPanel;
+    BlockLogSettingsPanel blockLogSettingsPanel;
 	
 	Button okButton;
 
@@ -53,6 +54,10 @@ public class EditBlockDialog extends TitleAreaDialog {
         blockDetailsPanel.setLayout(new GridLayout(1, false));
 
         blockRunControlPanel = new BlockRunControlPanel(blockDetailsPanel, SWT.NONE, block);
+        blockRunControlPanel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+
+        blockLogSettingsPanel = new BlockLogSettingsPanel(blockDetailsPanel, SWT.NONE,
+                new BlockLogSettingsViewModel(block));
         blockRunControlPanel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 
         blockDetailsPanel.addNameModifyListener(new ModifyListener() {
