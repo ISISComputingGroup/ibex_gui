@@ -1,10 +1,10 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Validators
-Bundle-SymbolicName: uk.ac.stfc.isis.ibex.validators
+Bundle-SymbolicName: uk.ac.stfc.isis.ibex.validators;singleton:=true
 Bundle-Version: 1.0.0.qualifier
 Bundle-Activator: uk.ac.stfc.isis.ibex.validators.ValidatorsActivator
 Require-Bundle: org.eclipse.core.runtime
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Bundle-ActivationPolicy: lazy
-Export-Package: uk.ac.stfc.isis.ibex.validators
+Export-Package: uk.ac.stfc.isis.ibex.validators;uses:="org.osgi.framework"

@@ -46,7 +46,7 @@ import uk.ac.stfc.isis.ibex.synoptic.model.desc.PV;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.blockselector.BlockSelector;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.IPVSelectionListener;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.SynopticViewModel;
-import uk.ac.stfc.isis.ibex.validators.PVValidator;
+import uk.ac.stfc.isis.ibex.validators.PvValidator;
 
 /**
  * Composite that shows the options to set the PV details, and allows
@@ -245,21 +245,14 @@ public class PvDetailView extends Composite {
 	}
 	
     private void updateAddress() {
-        System.out.println(PVValidator.validatePvAddress("test"));
-        if (validatePvName(txtAddress.getText())) {
+        PvValidator addressValid = new PvValidator();
+        if (addressValid.validatePvAddress(txtAddress.getText())) {
             lblError.setText("");
             updateModel();
         } else {
-            lblError.setText("PV Address invalid, use only [A-Z], [0-9], : and _");
+            lblError.setText(addressValid.getErrorMessage());
         }
     }
-
-    private Boolean validatePvName(String pvName) {
-        // Can only contain alphanumeric, underscore and colon
-        // Case is not specified as PVs are not necessarily uppercase
-        return pvName.matches("^[a-zA-Z0-9_:]*$");
-    }
-
 	private void updateModel() {
 		if (!updateLock && selectedPv != null) {
 			int typeIndex = cmboMode.getCombo().getSelectionIndex();
