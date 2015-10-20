@@ -37,11 +37,15 @@ public class Block extends ModelObject {
 
     // Logging configurations, default is no logging
     private boolean log_periodic = true;
-    private float log_rate = 0;
+    private int log_rate = 0;
     private float log_deadband;
+
+    public Block(String name, String pv, boolean visible, boolean local) {
+        this(name, pv, visible, local, null, null, null, false, true, 0, 0);
+    }
 		
     public Block(String name, String pv, boolean visible, boolean local, String subconfig, String lowlimit, String highlimit,
-            Boolean runcontrol, boolean logPeriodic, float logRate, float logDeadband) {
+ Boolean runcontrol, boolean logPeriodic, int logRate, float logDeadband) {
 		this.name = name;
 		this.pv = pv;
 		this.visible = visible;
@@ -71,6 +75,30 @@ public class Block extends ModelObject {
 	public String getPV() {
 		return pv;
 	}
+
+    public void setLogPeriodic(boolean periodic) {
+        firePropertyChange("log_periodic", this.log_periodic, this.log_periodic = periodic);
+    }
+
+    public boolean getLogPeriodic() {
+        return log_periodic;
+    }
+
+    public void setLogRate(int rate) {
+        firePropertyChange("log_rate", this.log_rate, this.log_rate = rate);
+    }
+
+    public int getLogRate() {
+        return log_rate;
+    }
+
+    public void setLogDeadband(float deadband) {
+        firePropertyChange("log_deadband", this.log_deadband, this.log_deadband = deadband);
+    }
+
+    public float getLogDeadband() {
+        return log_deadband;
+    }
 
 	public void setPV(String pv) {
 		firePropertyChange("PV", this.pv, this.pv = pv);

@@ -52,7 +52,7 @@ public class BlockNameValidatorTest {
 	public void setUp() {
 		// Arrange
 		
-        testBlock = new Block(VALID_BLOCK_NAME, null, false, false, null, null, null, false);
+        testBlock = new Block(VALID_BLOCK_NAME, null, false, false);
 		
 		testEditableBlock = new EditableBlock(testBlock);
 
