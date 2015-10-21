@@ -26,11 +26,22 @@ import org.eclipse.jface.preference.IPreferenceStore;
 import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
 import uk.ac.stfc.isis.ibex.instrument.InstrumentInfoReceiver;
 
+/**
+ * This class is responsible for changing the settings for the DataBrowser when
+ * the instrument is changed, or first set. The archives and url settings get
+ * changed.
+ */
 public class DataBrowserSettings implements InstrumentInfoReceiver {
 
-	private final static IPreferenceStore PREFERENCES = Activator.getDefault().getPreferenceStore();
-	private final static String DATABASE_URLS = PREFERENCES.getString(Preferences.URLS);
-	private final static String ARCHIVES = PREFERENCES.getString(Preferences.ARCHIVES);	
+    private IPreferenceStore preferences;
+	
+	public DataBrowserSettings() {
+        this(Activator.getDefault().getPreferenceStore());
+	}
+	
+	public DataBrowserSettings(IPreferenceStore preferences) {
+	    this.preferences = preferences;
+	}
 	
 	// Connect the databrowser to the archive engine.
 	@Override
@@ -40,14 +51,35 @@ public class DataBrowserSettings implements InstrumentInfoReceiver {
 	}
 
 	private void setURLs(String hostName) {
-		PREFERENCES.setValue(Preferences.URLS, updateHostName(hostName, DATABASE_URLS));
+        preferences.setValue(Preferences.URLS, updateHostName(hostName, getDatabaseUrls()));
 	}
 	
 	private void setArchives(String hostName) {
-		PREFERENCES.setValue(Preferences.ARCHIVES, updateHostName(hostName, ARCHIVES));	
+        preferences.setValue(Preferences.ARCHIVES, updateHostName(hostName, getArchives()));
 	}
 	
+    /**
+     * This class assumes machine names begin with NDX, e.g. NDXLARMOR, or are
+     * localhost.
+     * 
+     * @param hostName
+     *            The host name of the new machine.
+     * @param preference
+     *            The preference string.
+     * @return The preference string with the host name replace.
+     */
 	private static String updateHostName(String hostName, String preference) {
-		return preference.replaceAll("localhost", hostName);
+
+        preference = preference.replaceAll("NDX[A-Z]+", hostName);
+        preference = preference.replaceAll("localhost", hostName);
+        return preference;
 	}
+
+    private String getDatabaseUrls() {
+        return preferences.getString(Preferences.URLS);
+    }
+
+    private String getArchives() {
+        return preferences.getString(Preferences.ARCHIVES);
+    }
 }

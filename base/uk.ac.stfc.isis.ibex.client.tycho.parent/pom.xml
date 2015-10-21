@@ -209,5 +209,7 @@
 		<module>../uk.ac.stfc.isis.ibex.synoptic.tests</module>
 		<module>../uk.ac.stfc.isis.ibex.ui.statusbar</module>
 		<module>../uk.ac.stfc.isis.ibex.databases</module>
+		
+		<module>../uk.ac.stfc.isis.ibex.ui.databrowser.tests</module>
 	</modules>
 </project>
