@@ -41,7 +41,7 @@ public class Block extends ModelObject {
     private float log_deadband;
 
     public Block(String name, String pv, boolean visible, boolean local) {
-        this(name, pv, visible, local, null, null, null, false, true, 0, 0);
+        this(name, pv, visible, local, null, null, null, false, false, 0, 0.0f);
     }
 		
     public Block(String name, String pv, boolean visible, boolean local, String subconfig, String lowlimit, String highlimit,
