@@ -210,5 +210,6 @@
 		<module>../uk.ac.stfc.isis.ibex.ui.statusbar</module>
 		<module>../uk.ac.stfc.isis.ibex.databases</module>
 		<module>../uk.ac.stfc.isis.ibex.validators</module>
+		<module>../uk.ac.stfc.isis.ibex.ui.databrowser.tests</module>
 	</modules>
 </project>
