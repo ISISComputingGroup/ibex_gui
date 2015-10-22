@@ -43,6 +43,12 @@ public class ApplicationWorkbenchAdvisor extends WorkbenchAdvisor {
 	}
 	
 	@Override
+	public void initialize(org.eclipse.ui.application.IWorkbenchConfigurer configurer) {
+	    super.initialize(configurer);
+	    configurer.setSaveAndRestore(true);
+	};
+	
+	@Override
 	public boolean preShutdown() {
 		Instrument.getInstance().setInitial();
 		
