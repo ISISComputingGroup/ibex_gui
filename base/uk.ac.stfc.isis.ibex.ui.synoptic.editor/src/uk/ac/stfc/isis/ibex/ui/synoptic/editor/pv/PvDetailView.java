@@ -33,6 +33,8 @@ import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.layout.RowData;
+import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
@@ -44,9 +46,7 @@ import uk.ac.stfc.isis.ibex.synoptic.model.desc.PV;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.blockselector.BlockSelector;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.IPVSelectionListener;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.SynopticViewModel;
-
-import org.eclipse.swt.layout.RowLayout;
-import org.eclipse.swt.layout.RowData;
+import uk.ac.stfc.isis.ibex.validators.PvValidator;
 
 /**
  * Composite that shows the options to set the PV details, and allows
@@ -75,6 +75,8 @@ public class PvDetailView extends Composite {
 	private static PVType[] typeList = PVType.values();
 	private Composite buttonsComposite;
 	private Button btnSelectBlock;
+
+    private Label lblError;
 
 	public PvDetailView(Composite parent, SynopticViewModel instrument) {
 		super(parent, SWT.NONE);
@@ -161,7 +163,7 @@ public class PvDetailView extends Composite {
 			txtAddress.addModifyListener(new ModifyListener() {
 				@Override
 				public void modifyText(ModifyEvent e) {
-					updateModel();
+                    updateAddress();
 				}
 			});
 			
@@ -182,7 +184,6 @@ public class PvDetailView extends Composite {
 				}
 			});
 			
-			//Hide whilst only local is selectable
 			Label lblType = new Label(fieldsComposite, SWT.NONE);
 			lblType.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 			lblType.setText("Type");
@@ -202,6 +203,9 @@ public class PvDetailView extends Composite {
 					updateModel();
 				}
 			});
+
+            lblError = new Label(fieldsComposite, SWT.NONE);
+            lblError.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1));
 		}
 	}
 
@@ -240,6 +244,15 @@ public class PvDetailView extends Composite {
 		updateLock = false;
 	}
 	
+    private void updateAddress() {
+        PvValidator addressValid = new PvValidator();
+        if (addressValid.validatePvAddress(txtAddress.getText())) {
+            lblError.setText("");
+            updateModel();
+        } else {
+            lblError.setText(addressValid.getErrorMessage());
+        }
+    }
 	private void updateModel() {
 		if (!updateLock && selectedPv != null) {
 			int typeIndex = cmboMode.getCombo().getSelectionIndex();

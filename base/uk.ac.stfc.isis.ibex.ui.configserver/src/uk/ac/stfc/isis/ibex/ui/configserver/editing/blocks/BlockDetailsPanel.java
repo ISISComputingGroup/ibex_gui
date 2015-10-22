@@ -153,4 +153,8 @@ public class BlockDetailsPanel extends Composite {
 	public void addNameModifyListener(ModifyListener modifyListener) {
 	    name.addModifyListener(modifyListener);
 	}
+
+    public void addAddressModifyListener(ModifyListener modifyListener) {
+        pvAddress.addModifyListener(modifyListener);
+    }
 }

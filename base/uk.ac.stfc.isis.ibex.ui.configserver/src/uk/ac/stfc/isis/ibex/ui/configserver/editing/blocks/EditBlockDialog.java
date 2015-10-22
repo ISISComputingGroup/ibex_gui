@@ -17,6 +17,7 @@ import uk.ac.stfc.isis.ibex.configserver.editing.BlockNameValidator;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableBlock;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
 import uk.ac.stfc.isis.ibex.runcontrol.RunControlServer;
+import uk.ac.stfc.isis.ibex.validators.PvValidator;
 
 public class EditBlockDialog extends TitleAreaDialog {
 	
@@ -59,6 +60,13 @@ public class EditBlockDialog extends TitleAreaDialog {
             @Override
             public void modifyText(ModifyEvent nameText) {
                 checkName(((Text) nameText.getSource()).getText());
+            }
+        });
+
+        blockDetailsPanel.addAddressModifyListener(new ModifyListener() {
+            @Override
+            public void modifyText(ModifyEvent addressText) {
+                checkAddress(((Text) addressText.getSource()).getText());
             }
         });
 
@@ -112,6 +120,21 @@ public class EditBlockDialog extends TitleAreaDialog {
 		}	
 	}
 	
+    private void checkAddress(String address) {
+        setErrorMessage(null);
+        setMessage(null);
+
+        PvValidator addressValid = new PvValidator();
+        Boolean addressIsValid = addressValid.validatePvAddress(address);
+
+        if (addressIsValid) {
+            setOkEnabled(true);
+        } else {
+            setErrorMessage(addressValid.getErrorMessage());
+            setOkEnabled(false);
+        }
+    }
+
     private void setOkEnabled(boolean enabled) {
     	okButton.setEnabled(enabled);
     }
