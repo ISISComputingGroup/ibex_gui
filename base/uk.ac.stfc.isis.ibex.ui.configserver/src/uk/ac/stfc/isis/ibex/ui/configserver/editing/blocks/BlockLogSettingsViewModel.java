@@ -26,11 +26,14 @@ import uk.ac.stfc.isis.ibex.configserver.configuration.Block;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 
 public class BlockLogSettingsViewModel extends ModelObject {
-    public static String PERIODIC_STRING = "Periodic";
+    public static String PERIODIC_STRING = "Periodic Scan for Change";
     public static String MONITOR_STRING = "Monitor With Deadband";
 
     public static String DEADBAND_LABEL = "Deadband:";
     public static String SCAN_LABEL = "Scan Rate:";
+
+    public static String COMBO_TOOLTIP = "Periodic: Log on change but no more often than the specified period.\n"
+            + "Monitor: Log when the value changes by the absolute amount specified, this amount is in the same units as the block.";
 
     private final Block editingBlock;
     private boolean enabled = true;

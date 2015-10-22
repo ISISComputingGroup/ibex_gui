@@ -53,18 +53,19 @@ public class BlockLogSettingsPanel extends Composite {
         lblType.setAlignment(SWT.RIGHT);
         lblType.setText("Mode:");
         GridData gd_lblType = new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1);
-        gd_lblType.widthHint = 55;
+        gd_lblType.widthHint = 50;
         lblType.setLayoutData(gd_lblType);
 
         cmboType = new Combo(grpLogSettings, SWT.READ_ONLY);
         cmboType.add(BlockLogSettingsViewModel.PERIODIC_STRING);
         cmboType.add(BlockLogSettingsViewModel.MONITOR_STRING);
         cmboType.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1));
+        cmboType.setToolTipText(BlockLogSettingsViewModel.COMBO_TOOLTIP);
 
         lblSettings = new Label(grpLogSettings, SWT.NONE);
         lblSettings.setAlignment(SWT.RIGHT);
         GridData gd_lblSettings = new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1);
-        gd_lblSettings.widthHint = 65;
+        gd_lblSettings.widthHint = 60;
         lblSettings.setLayoutData(gd_lblSettings);
         
         txtSettings = new Text(grpLogSettings, SWT.BORDER);
