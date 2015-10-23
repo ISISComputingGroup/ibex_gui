@@ -22,10 +22,11 @@ package uk.ac.stfc.isis.ibex.ui.synoptic.component;
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.beans.BeanProperties;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
-import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.layout.FillLayout;
-import org.eclipse.swt.SWT;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.wb.swt.SWTResourceManager;
 
@@ -46,13 +47,15 @@ public class ReadableComponentView extends Composite {
 		propertyName.setAlignment(SWT.CENTER);
 		propertyName.setBackground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
 		propertyName.setFont(SWTResourceManager.getFont("Arial", 10, SWT.BOLD));
-		value = new StyledText(this, SWT.READ_ONLY);
+        value = new StyledText(this, SWT.READ_ONLY | SWT.NO_FOCUS);
 		value.setDoubleClickEnabled(false);
 		value.setEditable(false);
 		value.setBackground(SWTResourceManager.getColor(240, 240, 240));
 		value.setFont(SWTResourceManager.getFont("Arial", 10, SWT.NORMAL));
 		value.setAlignment(SWT.RIGHT);
 		
+        this.setTabList(new Control[0]);
+
 		setProperty(property);
 	}
 
