@@ -47,14 +47,14 @@ public class ReadableComponentView extends Composite {
 		propertyName.setAlignment(SWT.CENTER);
 		propertyName.setBackground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
 		propertyName.setFont(SWTResourceManager.getFont("Arial", 10, SWT.BOLD));
-        value = new StyledText(this, SWT.READ_ONLY | SWT.NO_FOCUS);
+        value = new StyledText(this, SWT.READ_ONLY);
 		value.setDoubleClickEnabled(false);
 		value.setEditable(false);
 		value.setBackground(SWTResourceManager.getColor(240, 240, 240));
 		value.setFont(SWTResourceManager.getFont("Arial", 10, SWT.NORMAL));
 		value.setAlignment(SWT.RIGHT);
 		
-        this.setTabList(new Control[0]);
+        this.setTabList(new Control[0]); // Remove tabbing as read only
 
 		setProperty(property);
 	}
