@@ -100,8 +100,6 @@ public class DaeObservables extends InstrumentVariables {
 	}
 	
     public InitialiseOnSubscribeObservable<Integer> spectrumXDataLength(int number, int period) {
-        String pv = spectrumDataLength(number, period, "X");
-        System.out.println(pv);
         return reader(new IntegerChannel(), spectrumDataLength(number, period, "X"));
     }
 
