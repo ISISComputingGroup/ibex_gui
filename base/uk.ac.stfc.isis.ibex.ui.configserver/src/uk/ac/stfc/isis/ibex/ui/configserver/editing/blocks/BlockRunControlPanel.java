@@ -20,6 +20,8 @@
 package uk.ac.stfc.isis.ibex.ui.configserver.editing.blocks;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -28,8 +30,6 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
-
-import com.google.common.base.Strings;
 
 import uk.ac.stfc.isis.ibex.configserver.configuration.Block;
 
@@ -64,16 +64,23 @@ public class BlockRunControlPanel extends Composite {
         btnEnabled = new Button(grpRuncontrolSettings, SWT.CHECK);
         btnEnabled.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1));
         btnEnabled.setText("Enabled");
-
+        btnEnabled.addSelectionListener(new SelectionAdapter() {
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                setEditableState(btnEnabled.getSelection());
+            }
+        });
         setBlock(block);
+
+        setEditableState(btnEnabled.getSelection());
     }
 
-    protected String getLowLimit() {
-        return lowLimitText.getText();
+    protected float getLowLimit() {
+        return Float.parseFloat(lowLimitText.getText());
     }
 
-    protected String getHighLimit() {
-        return highLimitText.getText();
+    protected float getHighLimit() {
+        return Float.parseFloat(highLimitText.getText());
     }
 
     protected boolean getEnabledSetting() {
@@ -81,8 +88,13 @@ public class BlockRunControlPanel extends Composite {
     }
 
     public void setBlock(Block block) {
-        lowLimitText.setText(Strings.nullToEmpty(block.getRCLowLimit()));
-        highLimitText.setText(Strings.nullToEmpty(block.getRCHighLimit()));
+        lowLimitText.setText(Float.toString(block.getRCLowLimit()));
+        highLimitText.setText(Float.toString(block.getRCHighLimit()));
         btnEnabled.setSelection(block.getRCEnabled());
+    }
+
+    public void setEditableState(boolean editableState) {
+        lowLimitText.setEnabled(editableState);
+        highLimitText.setEnabled(editableState);
     }
 }

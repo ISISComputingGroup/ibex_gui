@@ -32,8 +32,8 @@ public class Block extends ModelObject {
 	private String subconfig;
 
     private boolean runcontrol;
-    private String lowlimit;
-    private String highlimit;
+    private float lowlimit;
+    private float highlimit;
 
     // Logging configurations, default is no logging
     private boolean log_periodic = true;
@@ -41,11 +41,11 @@ public class Block extends ModelObject {
     private float log_deadband;
 
     public Block(String name, String pv, boolean visible, boolean local) {
-        this(name, pv, visible, local, null, null, null, false, false, 0, 0.0f);
+        this(name, pv, visible, local, null, 0.0f, 0.0f, false, false, 0, 0.0f);
     }
 		
-    public Block(String name, String pv, boolean visible, boolean local, String subconfig, String lowlimit, String highlimit,
- Boolean runcontrol, boolean logPeriodic, int logRate, float logDeadband) {
+    public Block(String name, String pv, boolean visible, boolean local, String subconfig, float lowlimit,
+            float highlimit, Boolean runcontrol, boolean logPeriodic, int logRate, float logDeadband) {
 		this.name = name;
 		this.pv = pv;
 		this.visible = visible;
@@ -128,19 +128,19 @@ public class Block extends ModelObject {
         firePropertyChange("RCEnabled", this.runcontrol, this.runcontrol = runcontrol);
 	}
 	
-    public String getRCLowLimit() {
+    public float getRCLowLimit() {
         return lowlimit;
     }
 
-    public void setRCLowLimit(String rclow) {
+    public void setRCLowLimit(float rclow) {
         firePropertyChange("RCLowLimit", this.lowlimit, this.lowlimit = rclow);
     }
 
-    public String getRCHighLimit() {
+    public float getRCHighLimit() {
         return highlimit;
     }
 
-    public void setRCHighLimit(String rchigh) {
+    public void setRCHighLimit(float rchigh) {
         firePropertyChange("RCHighLimit", this.highlimit, this.highlimit = rchigh);
     }
 
