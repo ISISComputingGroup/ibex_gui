@@ -26,9 +26,9 @@ import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.events.ControlEvent;
 import org.eclipse.swt.events.ControlListener;
 import org.eclipse.swt.graphics.Rectangle;
+import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.layout.FillLayout;
 
 import uk.ac.stfc.isis.ibex.synoptic.model.Component;
 import uk.ac.stfc.isis.ibex.ui.synoptic.beamline.BeamlineCompositeContainer;
@@ -105,7 +105,7 @@ public class InstrumentSynoptic extends Composite {
 	}
 
 	private void addBeamline() {
-		beamline = new LineDecoration(instrumentComposite, new DotDashedLine(1), instrumentComposite.beamLineHeight());
+        beamline = new LineDecoration(instrumentComposite, new DotDashedLine(1), instrumentComposite.beamLineHeight());
 		beamline.addLineTo(instrumentComposite);
 	}
 	
