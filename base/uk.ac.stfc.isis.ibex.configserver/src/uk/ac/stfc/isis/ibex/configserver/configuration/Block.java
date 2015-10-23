@@ -32,11 +32,20 @@ public class Block extends ModelObject {
 	private String subconfig;
 
     private boolean runcontrol;
-    private String lowlimit;
-    private String highlimit;
+    private float lowlimit;
+    private float highlimit;
+
+    // Logging configurations, default is no logging
+    private boolean log_periodic = true;
+    private int log_rate = 0;
+    private float log_deadband;
+
+    public Block(String name, String pv, boolean visible, boolean local) {
+        this(name, pv, visible, local, null, 0.0f, 0.0f, false, false, 0, 0.0f);
+    }
 		
-    public Block(String name, String pv, boolean visible, boolean local, String subconfig, String lowlimit, String highlimit,
-            Boolean runcontrol) {
+    public Block(String name, String pv, boolean visible, boolean local, String subconfig, float lowlimit,
+            float highlimit, Boolean runcontrol, boolean logPeriodic, int logRate, float logDeadband) {
 		this.name = name;
 		this.pv = pv;
 		this.visible = visible;
@@ -45,11 +54,14 @@ public class Block extends ModelObject {
         this.lowlimit = lowlimit;
         this.highlimit = highlimit;
         this.runcontrol = runcontrol;
+        this.log_deadband = logDeadband;
+        this.log_periodic = logPeriodic;
+        this.log_rate = logRate;
 	}
 	
 	public Block(Block other) {
         this(other.name, other.pv, other.visible, other.local, other.subconfig, other.lowlimit, other.highlimit,
-                other.runcontrol);
+                other.runcontrol, other.log_periodic, other.log_rate, other.log_deadband);
 	}
 
 	public String getName() {
@@ -63,6 +75,30 @@ public class Block extends ModelObject {
 	public String getPV() {
 		return pv;
 	}
+
+    public void setLogPeriodic(boolean periodic) {
+        firePropertyChange("log_periodic", this.log_periodic, this.log_periodic = periodic);
+    }
+
+    public boolean getLogPeriodic() {
+        return log_periodic;
+    }
+
+    public void setLogRate(int rate) {
+        firePropertyChange("log_rate", this.log_rate, this.log_rate = rate);
+    }
+
+    public int getLogRate() {
+        return log_rate;
+    }
+
+    public void setLogDeadband(float deadband) {
+        firePropertyChange("log_deadband", this.log_deadband, this.log_deadband = deadband);
+    }
+
+    public float getLogDeadband() {
+        return log_deadband;
+    }
 
 	public void setPV(String pv) {
 		firePropertyChange("PV", this.pv, this.pv = pv);
@@ -92,19 +128,19 @@ public class Block extends ModelObject {
         firePropertyChange("RCEnabled", this.runcontrol, this.runcontrol = runcontrol);
 	}
 	
-    public String getRCLowLimit() {
+    public float getRCLowLimit() {
         return lowlimit;
     }
 
-    public void setRCLowLimit(String rclow) {
+    public void setRCLowLimit(float rclow) {
         firePropertyChange("RCLowLimit", this.lowlimit, this.lowlimit = rclow);
     }
 
-    public String getRCHighLimit() {
+    public float getRCHighLimit() {
         return highlimit;
     }
 
-    public void setRCHighLimit(String rchigh) {
+    public void setRCHighLimit(float rchigh) {
         firePropertyChange("RCHighLimit", this.highlimit, this.highlimit = rchigh);
     }
 

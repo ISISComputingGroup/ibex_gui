@@ -19,15 +19,15 @@
 
 package uk.ac.stfc.isis.ibex.configserver.displaying;
 
-import uk.ac.stfc.isis.ibex.configserver.configuration.Block;
-import uk.ac.stfc.isis.ibex.epics.observing.BaseObserver;
-import uk.ac.stfc.isis.ibex.epics.observing.InitialiseOnSubscribeObservable;
-import uk.ac.stfc.isis.ibex.instrument.Instrument;
-
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.wb.swt.SWTResourceManager;
 
 import com.google.common.base.Strings;
+
+import uk.ac.stfc.isis.ibex.configserver.configuration.Block;
+import uk.ac.stfc.isis.ibex.epics.observing.BaseObserver;
+import uk.ac.stfc.isis.ibex.epics.observing.InitialiseOnSubscribeObservable;
+import uk.ac.stfc.isis.ibex.instrument.Instrument;
 
 /**
  * Contains the functionality to display a blocks value and run-control settings in a GUI.
@@ -47,9 +47,9 @@ public class DisplayBlock extends Block {
 	private String value;
 	private String description;
 	private Boolean inRange;
-	private String lowLimit;
-	private String highLimit;
-	private Boolean enabled;
+    private String lowlimit;
+    private String highlimit;
+    private Boolean runcontrol;
 	
 	private Color textColor;
 	private Color backgroundColor;
@@ -215,15 +215,15 @@ public class DisplayBlock extends Block {
 	}
 	
 	public String getLowLimit() {
-		return lowLimit;
+		return lowlimit;
 	}
 	
 	public String getHighLimit() {
-		return highLimit;
+		return highlimit;
 	}
 	
 	public Boolean getEnabled() {
-		return enabled;
+		return runcontrol;
 	}
 	
 	public Color getTextColor() {
@@ -252,15 +252,15 @@ public class DisplayBlock extends Block {
 	}
 	
 	private synchronized void setLowLimit(String limit) {
-		firePropertyChange("lowLimit", this.lowLimit, this.lowLimit = limit);
+		firePropertyChange("lowLimit", this.lowlimit, this.lowlimit = limit);
 	}
 	
 	private synchronized void setHighLimit(String limit) {
-		firePropertyChange("highLimit", this.highLimit, this.highLimit = limit);
+		firePropertyChange("highLimit", this.highlimit, this.highlimit = limit);
 	}
 	
 	private synchronized void setEnabled(Boolean enabled) {
-		firePropertyChange("enabled", this.enabled, this.enabled = enabled);
+		firePropertyChange("enabled", this.runcontrol, this.runcontrol = enabled);
 	}
 	
 	private void setColors(boolean inRange) {
