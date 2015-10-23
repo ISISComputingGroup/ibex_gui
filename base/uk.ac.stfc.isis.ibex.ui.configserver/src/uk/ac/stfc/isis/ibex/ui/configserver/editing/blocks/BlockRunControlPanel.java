@@ -76,11 +76,19 @@ public class BlockRunControlPanel extends Composite {
     }
 
     protected float getLowLimit() {
-        return Float.parseFloat(lowLimitText.getText());
+        try {
+            return Float.parseFloat(lowLimitText.getText());
+        } catch (java.lang.NumberFormatException e) {
+            return 0.0f;
+        }
     }
 
     protected float getHighLimit() {
-        return Float.parseFloat(highLimitText.getText());
+        try {
+            return Float.parseFloat(highLimitText.getText());
+        } catch (java.lang.NumberFormatException e) {
+            return 0.0f;
+        }
     }
 
     protected boolean getEnabledSetting() {
