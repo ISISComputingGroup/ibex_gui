@@ -19,14 +19,14 @@
 
 package uk.ac.stfc.isis.ibex.ui.synoptic.component;
 
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.CLabel;
+import org.eclipse.swt.graphics.Cursor;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.custom.CLabel;
-import org.eclipse.swt.graphics.Cursor;
 import org.eclipse.wb.swt.SWTResourceManager;
 
 import uk.ac.stfc.isis.ibex.synoptic.model.Component;
@@ -117,7 +117,8 @@ public class GroupView extends BeamlineComposite {
 
 	@Override
 	public int beamLineHeight() {
-		return component.components().isEmpty() ? nameControlCentreLine() : componentsTargetLineHeight();
+        return component.components().isEmpty() ? nameControlCentreLine()
+                : componentsTargetLineHeight() + nameControlBottomLine();
 	}
 	
 	private void setName(Component component) {
@@ -132,6 +133,10 @@ public class GroupView extends BeamlineComposite {
 		return groupName.getBounds().y + groupName.getBounds().height / 2;
 	}
 	
+    private int nameControlBottomLine() {
+        return groupName.getBounds().y + groupName.getBounds().height;
+    }
+
 	private void setProperties(Component component) {		
 		if (component.properties().isEmpty()) {
 			hideProperties();
