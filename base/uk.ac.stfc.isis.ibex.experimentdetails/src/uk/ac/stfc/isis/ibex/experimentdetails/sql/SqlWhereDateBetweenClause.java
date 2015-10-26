@@ -10,7 +10,7 @@ import uk.ac.stfc.isis.ibex.experimentdetails.database.ExpDataTablesEnum;
 
 public class SqlWhereDateBetweenClause extends SqlWhereClause{
 
-	private static final SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd 08:00:00");
+    private static final SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd 23:59:59");
 	private static final ExpDataField experimentStart = ExpDataFieldsCreator.getField(ExpDataTablesEnum.EXPERIMENT_TABLE, ExpDataFieldsEnum.STARTDATE);
 	private static final ExpDataField experimentDuration = ExpDataFieldsCreator.getField(ExpDataTablesEnum.EXPERIMENT_TABLE, ExpDataFieldsEnum.DURATION);
 	private static final String betweenCase = experimentStart + " AND DATE_ADD(" + experimentStart + ", INTERVAL " + experimentDuration + " DAY)";
