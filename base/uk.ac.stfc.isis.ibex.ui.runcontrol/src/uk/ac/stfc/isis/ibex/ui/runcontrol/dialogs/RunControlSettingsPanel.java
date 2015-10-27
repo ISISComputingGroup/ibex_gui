@@ -28,6 +28,7 @@ import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 
@@ -47,7 +48,7 @@ public class RunControlSettingsPanel extends Composite {
 	private RunControlEditorPanel editor;
 	private final ConfigServer configServer;
 	private final RunControlServer runControlServer;
-	UpdatedValue<Configuration> config;
+    UpdatedValue<Configuration> config;
 
 	private PropertyChangeListener updateTable = new PropertyChangeListener() {
 		@Override
@@ -65,12 +66,12 @@ public class RunControlSettingsPanel extends Composite {
 		super(parent, style);
 		
 		this.configServer = configServer;
-		config = new UpdatedObservableAdapter<Configuration>(this.configServer.currentConfig());
-		config.addPropertyChangeListener(updateTable, true);
+        config = new UpdatedObservableAdapter<Configuration>(this.configServer.currentConfig());
+        config.addPropertyChangeListener(updateTable, true);
 		
 		this.runControlServer = runControlServer;
 		
-		setLayout(new GridLayout(1, false));
+        setLayout(new GridLayout(2, false));
 
 		table = new RunControlSettingsTable(this, SWT.NONE, SWT.V_SCROLL | SWT.NO_SCROLL | SWT.FULL_SELECTION
 				| SWT.BORDER);
@@ -83,10 +84,16 @@ public class RunControlSettingsPanel extends Composite {
 				editor.setBlock(table.firstSelectedRow());
 			}
 		});
+        table.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
 		
 		editor = new RunControlEditorPanel(this, SWT.NONE, this.configServer, this.runControlServer);
-		GridData gdEditor = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
-		table.setLayoutData(gdEditor);
+
+        Button btnNewButton = new Button(this, SWT.WRAP | SWT.PUSH);
+        GridData gd_btnNewButton = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+        gd_btnNewButton.widthHint = 128;
+        gd_btnNewButton.heightHint = 39;
+        btnNewButton.setLayoutData(gd_btnNewButton);
+        btnNewButton.setText("Restore All \n Configuration Values");
 	}
 
 	private void setBlocks() {

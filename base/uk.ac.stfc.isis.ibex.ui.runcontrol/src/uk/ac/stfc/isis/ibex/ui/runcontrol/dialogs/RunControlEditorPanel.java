@@ -48,7 +48,7 @@ import uk.ac.stfc.isis.ibex.runcontrol.RunControlServer;
 public class RunControlEditorPanel extends Composite {
 
 	private final RunControlServer runControlServer;
-	private final ConfigServer configServer;
+    private final ConfigServer configServer;
 	private final Label name;
 	private final Text txtLowLimit;
 	private final Text txtHighLimit;
@@ -82,6 +82,7 @@ public class RunControlEditorPanel extends Composite {
 			canSend = canWrite;
 		};	
 	};
+    private Button btnRestoreConfigurationValues;
 	
 	public RunControlEditorPanel(Composite parent, int style, ConfigServer configServer, RunControlServer runControlServer) {
 		super(parent, style);
@@ -91,7 +92,7 @@ public class RunControlEditorPanel extends Composite {
 		
 		// A bit of a work-around to see if we have write permissions
 		// by seeing if we are able to edit the config.
-		this.configServer.saveAs().subscribe(configService);
+        this.configServer.saveAs().subscribe(configService);
 		
 		setLayout(new FillLayout(SWT.HORIZONTAL));
 
@@ -155,10 +156,13 @@ public class RunControlEditorPanel extends Composite {
 			
 		});
 		
+        btnRestoreConfigurationValues = new Button(grpSelectedSetting, SWT.NONE);
+        btnRestoreConfigurationValues.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 3, 1));
+        btnRestoreConfigurationValues.setText("Restore Configuration Values");
+
 		btnSend = new Button(grpSelectedSetting, SWT.NONE);
 		btnSend.setText("Apply Changes");
-		GridData gdBtnSend = new GridData(SWT.RIGHT, SWT.CENTER, false, false, 5, 1);
-		btnSend.setLayoutData(gdBtnSend);
+        btnSend.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 2, 1));
 		btnSend.addSelectionListener(sendChanges);
 		
 		setBlock(null);
