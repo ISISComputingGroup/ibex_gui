@@ -23,6 +23,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.Collection;
 
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.swt.SWT;
@@ -45,6 +46,9 @@ import uk.ac.stfc.isis.ibex.ui.runcontrol.RunControlViewModel;
 
 @SuppressWarnings({"checkstyle:magicnumber"})
 public class RunControlSettingsPanel extends Composite {
+
+    private final static String RESET_ALL_DIALOG_TITLE = "Confirm run-control reset";
+    private final static String RESET_ALL_DIALOG_MESSAGE = "Are you sure you want to reset all run-control settings to their configuration values?";
 
 	private final Display display = Display.getDefault();
 	private RunControlSettingsTable table;
@@ -70,7 +74,9 @@ public class RunControlSettingsPanel extends Composite {
     private SelectionAdapter restoreAllConfigurationValues = new SelectionAdapter() {
         @Override
         public void widgetSelected(SelectionEvent e) {
-            runControlViewModel.resetRunControlSettings();
+            if (MessageDialog.openConfirm(getShell(), RESET_ALL_DIALOG_TITLE, RESET_ALL_DIALOG_MESSAGE)) {
+                runControlViewModel.resetRunControlSettings();
+            }
         }
     };
 
