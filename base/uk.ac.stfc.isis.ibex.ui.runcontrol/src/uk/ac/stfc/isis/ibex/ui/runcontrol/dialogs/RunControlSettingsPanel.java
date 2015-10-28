@@ -26,6 +26,8 @@ import java.util.Collection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -39,6 +41,7 @@ import uk.ac.stfc.isis.ibex.configserver.displaying.DisplayBlock;
 import uk.ac.stfc.isis.ibex.epics.adapters.UpdatedObservableAdapter;
 import uk.ac.stfc.isis.ibex.model.UpdatedValue;
 import uk.ac.stfc.isis.ibex.runcontrol.RunControlServer;
+import uk.ac.stfc.isis.ibex.ui.runcontrol.RunControlViewModel;
 
 @SuppressWarnings({"checkstyle:magicnumber"})
 public class RunControlSettingsPanel extends Composite {
@@ -49,6 +52,8 @@ public class RunControlSettingsPanel extends Composite {
 	private final ConfigServer configServer;
 	private final RunControlServer runControlServer;
     UpdatedValue<Configuration> config;
+
+    private final RunControlViewModel runControlViewModel;
 
 	private PropertyChangeListener updateTable = new PropertyChangeListener() {
 		@Override
@@ -62,6 +67,13 @@ public class RunControlSettingsPanel extends Composite {
 		}
 	};
 
+    private SelectionAdapter restoreAllConfigurationValues = new SelectionAdapter() {
+        @Override
+        public void widgetSelected(SelectionEvent e) {
+            runControlViewModel.resetRunControlSettings();
+        }
+    };
+
 	public RunControlSettingsPanel(Composite parent, int style, ConfigServer configServer, RunControlServer runControlServer) {
 		super(parent, style);
 		
@@ -70,6 +82,7 @@ public class RunControlSettingsPanel extends Composite {
         config.addPropertyChangeListener(updateTable, true);
 		
 		this.runControlServer = runControlServer;
+        this.runControlViewModel = new RunControlViewModel(configServer, runControlServer);
 		
         setLayout(new GridLayout(2, false));
 
@@ -94,6 +107,7 @@ public class RunControlSettingsPanel extends Composite {
         gd_btnNewButton.heightHint = 39;
         btnNewButton.setLayoutData(gd_btnNewButton);
         btnNewButton.setText("Restore All \n Configuration Values");
+        btnNewButton.addSelectionListener(restoreAllConfigurationValues);
 	}
 
 	private void setBlocks() {

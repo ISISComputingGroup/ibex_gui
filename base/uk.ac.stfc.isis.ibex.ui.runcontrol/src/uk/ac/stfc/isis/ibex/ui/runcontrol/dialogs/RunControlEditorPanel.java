@@ -38,11 +38,13 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 
 import uk.ac.stfc.isis.ibex.configserver.ConfigServer;
+import uk.ac.stfc.isis.ibex.configserver.configuration.Block;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Configuration;
 import uk.ac.stfc.isis.ibex.configserver.displaying.DisplayBlock;
 import uk.ac.stfc.isis.ibex.epics.writing.SameTypeWriter;
 import uk.ac.stfc.isis.ibex.runcontrol.EditableRunControlSetting;
 import uk.ac.stfc.isis.ibex.runcontrol.RunControlServer;
+import uk.ac.stfc.isis.ibex.ui.runcontrol.RunControlViewModel;
 
 @SuppressWarnings({"checkstyle:magicnumber"})
 public class RunControlEditorPanel extends Composite {
@@ -57,6 +59,8 @@ public class RunControlEditorPanel extends Composite {
 	private DisplayBlock block;
 	private boolean canSend;
 	
+    private final RunControlViewModel runControlViewModel;
+
 	private DataBindingContext bindingContext;
 	
 	private SelectionAdapter sendChanges = new SelectionAdapter() {
@@ -73,6 +77,20 @@ public class RunControlEditorPanel extends Composite {
 		}
 	};
 	
+    private SelectionAdapter restoreBlockValues = new SelectionAdapter() {
+        @Override
+        public void widgetSelected(SelectionEvent e) {
+            if (block != null) {
+                Block configBlock = runControlViewModel.getCurrentConfigBlock(block.getName());
+                txtLowLimit.setText(Float.toString(configBlock.getRCLowLimit()));
+                txtHighLimit.setText(Float.toString(configBlock.getRCHighLimit()));
+                chkEnabled.setSelection(configBlock.getRCEnabled());
+            }
+
+            btnSend.setEnabled(true);
+        }
+    };
+
 	/**
 	 * Disable the send button if does not have permission to edit configs.
 	 */
@@ -89,6 +107,7 @@ public class RunControlEditorPanel extends Composite {
 		
 		this.configServer = configServer;
 		this.runControlServer = runControlServer;
+        this.runControlViewModel = new RunControlViewModel(configServer, runControlServer);
 		
 		// A bit of a work-around to see if we have write permissions
 		// by seeing if we are able to edit the config.
@@ -159,6 +178,7 @@ public class RunControlEditorPanel extends Composite {
         btnRestoreConfigurationValues = new Button(grpSelectedSetting, SWT.NONE);
         btnRestoreConfigurationValues.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 3, 1));
         btnRestoreConfigurationValues.setText("Restore Configuration Values");
+        btnRestoreConfigurationValues.addSelectionListener(restoreBlockValues);
 
 		btnSend = new Button(grpSelectedSetting, SWT.NONE);
 		btnSend.setText("Apply Changes");
