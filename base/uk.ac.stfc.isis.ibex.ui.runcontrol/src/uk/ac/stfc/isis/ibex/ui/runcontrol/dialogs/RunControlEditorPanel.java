@@ -46,6 +46,9 @@ import uk.ac.stfc.isis.ibex.runcontrol.EditableRunControlSetting;
 import uk.ac.stfc.isis.ibex.runcontrol.RunControlServer;
 import uk.ac.stfc.isis.ibex.ui.runcontrol.RunControlViewModel;
 
+/**
+ * A panel to edit the run control settings for the selected block.
+ */
 @SuppressWarnings({"checkstyle:magicnumber"})
 public class RunControlEditorPanel extends Composite {
 

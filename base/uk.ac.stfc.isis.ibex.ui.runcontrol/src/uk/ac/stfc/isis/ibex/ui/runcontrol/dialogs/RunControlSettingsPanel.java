@@ -45,6 +45,11 @@ import uk.ac.stfc.isis.ibex.model.UpdatedValue;
 import uk.ac.stfc.isis.ibex.runcontrol.RunControlServer;
 import uk.ac.stfc.isis.ibex.ui.runcontrol.RunControlViewModel;
 
+/**
+ * UI elements for editing run control settings, as used by run control dialog.
+ * Contains a table of blocks, a RunControlEditorPanel and a reset all blocks
+ * button.
+ */
 @SuppressWarnings({"checkstyle:magicnumber"})
 public class RunControlSettingsPanel extends Composite {
 

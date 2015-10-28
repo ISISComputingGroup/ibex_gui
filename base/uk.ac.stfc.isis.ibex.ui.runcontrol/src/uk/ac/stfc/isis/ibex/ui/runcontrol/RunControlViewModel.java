@@ -29,6 +29,10 @@ import uk.ac.stfc.isis.ibex.epics.writing.Writer;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 import uk.ac.stfc.isis.ibex.runcontrol.RunControlServer;
 
+/**
+ * ViewModel for the run-control, allowing blocks to be obtained from the
+ * configuration and run control server to be reset to configuraiton values.
+ */
 public class RunControlViewModel extends ModelObject {
 
     private InitialiseOnSubscribeObservable<Configuration> currentConfigObserver;
@@ -39,6 +43,14 @@ public class RunControlViewModel extends ModelObject {
         this.runControlServer = runControlServer;
     }
 
+    /**
+     * Return a named block from the current configuration.
+     * 
+     * @param blockName
+     *            The name of the block
+     * @return The block from the configuration, or null if block name does not
+     *         exist
+     */
     public Block getCurrentConfigBlock(String blockName) {
         Collection<Block> blocks = currentConfigObserver.getValue().getBlocks();
 
@@ -50,6 +62,10 @@ public class RunControlViewModel extends ModelObject {
         return null;
     }
 
+    /**
+     * Resets the run control server settings to the configuration block run
+     * control settings.
+     */
     public void resetRunControlSettings() {
         Collection<Block> blocks = currentConfigObserver.getValue().getBlocks();
         
