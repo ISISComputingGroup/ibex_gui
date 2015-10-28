@@ -102,12 +102,13 @@ public class RunControlEditorPanel extends Composite {
 	};
     private Button btnRestoreConfigurationValues;
 	
-	public RunControlEditorPanel(Composite parent, int style, ConfigServer configServer, RunControlServer runControlServer) {
+    public RunControlEditorPanel(Composite parent, int style, ConfigServer configServer,
+            RunControlServer runControlServer, RunControlViewModel runControlViewModel) {
 		super(parent, style);
 		
 		this.configServer = configServer;
 		this.runControlServer = runControlServer;
-        this.runControlViewModel = new RunControlViewModel(configServer, runControlServer);
+        this.runControlViewModel = runControlViewModel;
 		
 		// A bit of a work-around to see if we have write permissions
 		// by seeing if we are able to edit the config.

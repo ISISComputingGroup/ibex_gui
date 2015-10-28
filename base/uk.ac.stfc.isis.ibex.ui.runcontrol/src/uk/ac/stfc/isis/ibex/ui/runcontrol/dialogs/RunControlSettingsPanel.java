@@ -99,7 +99,8 @@ public class RunControlSettingsPanel extends Composite {
 		});
         table.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
 		
-		editor = new RunControlEditorPanel(this, SWT.NONE, this.configServer, this.runControlServer);
+        editor = new RunControlEditorPanel(this, SWT.NONE, this.configServer, this.runControlServer,
+                this.runControlViewModel);
 
         Button btnNewButton = new Button(this, SWT.WRAP | SWT.PUSH);
         GridData gd_btnNewButton = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
