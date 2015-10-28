@@ -77,6 +77,8 @@ public class RunControlSettingsPanel extends Composite {
         public void widgetSelected(SelectionEvent e) {
             if (MessageDialog.openConfirm(getShell(), RESET_ALL_DIALOG_TITLE, RESET_ALL_DIALOG_MESSAGE)) {
                 runControlViewModel.resetRunControlSettings();
+                editor.setBlock(null);
+                table.setSelectionIndex(-1);
             }
         }
     };
