@@ -19,6 +19,10 @@
 
 package uk.ac.stfc.isis.ibex.synoptic.model;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 import uk.ac.stfc.isis.ibex.synoptic.model.targets.PerspectiveTarget;
 import uk.ac.stfc.isis.ibex.synoptic.model.targets.ViewTarget;
 
@@ -60,4 +64,33 @@ public enum ComponentType {
 	public Target target() {
 		return target;
 	}
+
+    /**
+     * @return a string list of the enum entries
+     */
+    public static List<String> componentTypeList() {
+        ComponentType[] types = values();
+        List<String> list = new ArrayList<>();
+
+        for (int i = 0; i < types.length; i++) {
+            list.add(types[i].name());
+        }
+
+        return list;
+    }
+
+    /**
+     * @return an alphabetised list of the enum entries
+     */
+    public static List<String> componentTypeAlphaList() {
+        List<String> list = componentTypeList();
+        // remove unknown
+        list.remove(ComponentType.UNKNOWN.toString());
+        Collections.sort(list);
+        // add unknown back at the beginning
+        Collections.reverse(list);
+        list.add(ComponentType.UNKNOWN.toString());
+        Collections.reverse(list);
+        return list;
+    }
 }
