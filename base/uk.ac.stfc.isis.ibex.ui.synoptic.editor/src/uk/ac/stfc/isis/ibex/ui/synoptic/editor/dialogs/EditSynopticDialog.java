@@ -40,8 +40,6 @@ import uk.ac.stfc.isis.ibex.synoptic.Synoptic;
 import uk.ac.stfc.isis.ibex.synoptic.SynopticInfo;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.SynopticDescription;
 import uk.ac.stfc.isis.ibex.synoptic.xml.XMLUtil;
-import uk.ac.stfc.isis.ibex.ui.synoptic.editor.instrument.SynopticPreview;
-import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.SynopticViewModel;
 
 /**
  * This class provides the dialog to edit the synoptic. While this class is responsible for
@@ -57,12 +55,9 @@ public class EditSynopticDialog extends Dialog {
 	
 	private EditorPanel editor;
 	private boolean isBlank;
-    private Button previewBtn;
 	private Button saveAsBtn;
 	private Button saveBtn;
 	
-    private SynopticViewModel synopticViewModel = new SynopticViewModel();
-
 	public EditSynopticDialog(
 			Shell parentShell, 
 			String title, 
@@ -77,7 +72,7 @@ public class EditSynopticDialog extends Dialog {
 	
 	@Override
 	protected Control createDialogArea(Composite parent) {
-        editor = new EditorPanel(parent, SWT.NONE, synopticViewModel);
+		editor = new EditorPanel(parent, SWT.NONE);
 		editor.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		editor.setSynopticToEdit(synoptic);
 		return editor;
@@ -86,17 +81,6 @@ public class EditSynopticDialog extends Dialog {
 	
 	@Override
 	protected void createButtonsForButtonBar(Composite parent) {
-        // createButton(parent, IDialogConstants.OK_ID, "Save", true);
-        previewBtn = createButton(parent, IDialogConstants.CLIENT_ID + 3, "Synoptic Preview", false);
-        previewBtn.addSelectionListener(new SelectionAdapter() {
-            @Override
-            public void widgetSelected(SelectionEvent e) {
-                SynopticPreview previewDialog = new SynopticPreview(getShell(), synopticViewModel.getInstrument());
-                previewDialog.open();
-            }
-
-        });
-
 		if (!isBlank) { 
 			// createButton(parent, IDialogConstants.OK_ID, "Save", true);
 			saveBtn = createButton(parent, IDialogConstants.CLIENT_ID + 2, "Save", false);
