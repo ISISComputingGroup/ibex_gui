@@ -73,7 +73,7 @@ public class ComponentDescription {
         this.parent = other.parent;
         this.name = other.name + " (copy)";
         this.type = other.type;
-        this.target = other.target;
+        this.target = new TargetDescription(other.target);
 
         this.pvs = new ArrayList<>();
         for (PV pv : other.pvs) {
