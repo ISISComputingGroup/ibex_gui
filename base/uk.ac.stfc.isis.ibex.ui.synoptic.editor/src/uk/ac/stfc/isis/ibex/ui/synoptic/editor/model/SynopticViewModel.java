@@ -93,7 +93,14 @@ public class SynopticViewModel {
 		component.setName("new component");
 		component.setType(ComponentType.UNKNOWN);
 
-        addComponentInCorrectLocation(component);
+        if (selectedComponent == null) {
+            instrument.addComponent(component);
+        } else {
+            addComponentInCorrectLocation(component);
+        }
+
+        broadcastInstrumentUpdate(UpdateTypes.NEW_COMPONENT);
+        setSelectedComponent(component);
 	}
 
     public void copySelected() {
@@ -103,6 +110,12 @@ public class SynopticViewModel {
 
         ComponentDescription componentCopy = new ComponentDescription(selectedComponent);
         addComponentInCorrectLocation(componentCopy);
+
+        // Set selected component here, so that it is auto-expanded.
+        setSelectedComponent(componentCopy);
+        broadcastInstrumentUpdate(UpdateTypes.COPY_COMPONENT);
+        // Set selected component again here, so it is highlighted.
+        setSelectedComponent(componentCopy);
     }
 
     private void addComponentInCorrectLocation(ComponentDescription component) {
@@ -117,12 +130,6 @@ public class SynopticViewModel {
             position = parent.components().indexOf(selectedComponent) + 1;
             parent.addComponent(component, position);
         }
-
-        // Set selected component here, so that it is auto-expanded.
-        setSelectedComponent(component);
-        broadcastInstrumentUpdate(UpdateTypes.NEW_COMPONENT);
-        // Set selected component again here, so it is highlighted.
-        setSelectedComponent(component);
     }
 
 	public void removeSelected() {

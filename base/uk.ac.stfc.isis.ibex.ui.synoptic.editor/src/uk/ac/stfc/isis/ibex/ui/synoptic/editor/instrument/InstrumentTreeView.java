@@ -76,7 +76,7 @@ public class InstrumentTreeView extends Composite {
             public void instrumentUpdated(UpdateTypes updateType) {
                 if (updateType == UpdateTypes.NEW_INSTRUMENT) {
                     setTreeInput();
-                } else if (updateType == UpdateTypes.NEW_COMPONENT) {
+                } else if (updateType == UpdateTypes.COPY_COMPONENT) {
                     treeViewer.setExpandedState(instrumentViewModel.getSelectedComponent(), true);
                 }
                 refresh();
