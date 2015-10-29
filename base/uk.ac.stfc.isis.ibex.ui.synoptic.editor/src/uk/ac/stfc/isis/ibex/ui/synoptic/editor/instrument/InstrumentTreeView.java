@@ -150,7 +150,7 @@ public class InstrumentTreeView extends Composite {
 		tree.setMenu(contextMenu);
 
 		mnuDeleteSelected = new MenuItem(contextMenu, SWT.NONE);
-		mnuDeleteSelected.setText("Remove Selected");
+        mnuDeleteSelected.setText("Delete Component");
 		mnuDeleteSelected.addListener(SWT.Selection, new Listener() {
 			@Override
 			public void handleEvent(Event event) {

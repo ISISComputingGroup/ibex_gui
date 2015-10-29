@@ -40,10 +40,10 @@ import uk.ac.stfc.isis.ibex.synoptic.SynopticModel;
 import uk.ac.stfc.isis.ibex.synoptic.model.ComponentType;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.ComponentDescription;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.IO;
-import uk.ac.stfc.isis.ibex.synoptic.model.desc.SynopticDescription;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.PV;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.Property;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.RecordType;
+import uk.ac.stfc.isis.ibex.synoptic.model.desc.SynopticDescription;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.TargetDescription;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.TargetType;
 
@@ -93,24 +93,34 @@ public class SynopticViewModel {
 		component.setName("new component");
 		component.setType(ComponentType.UNKNOWN);
 
-		int position = 0;
-		if (selectedComponent == null) {
-			instrument.addComponent(component);
-		} else {
-			ComponentDescription parent = selectedComponent.getParent();
-
-			if (parent == null) {
-				position = instrument.components().indexOf(selectedComponent) + 1;
-				instrument.addComponent(component, position);
-			} else {
-				position = parent.components().indexOf(selectedComponent) + 1;
-				parent.addComponent(component, position);
-			}
-		}
-
-		broadcastInstrumentUpdate(UpdateTypes.NEW_COMPONENT);
-		setSelectedComponent(component);
+        addComponentInCorrectLocation(component);
 	}
+
+    public void copySelected() {
+        if (selectedComponent == null) {
+            return;
+        }
+
+        ComponentDescription componentCopy = new ComponentDescription(selectedComponent);
+        addComponentInCorrectLocation(componentCopy);
+    }
+
+    private void addComponentInCorrectLocation(ComponentDescription component) {
+        ComponentDescription parent = selectedComponent.getParent();
+
+        int position = 0;
+
+        if (parent == null) {
+            position = instrument.components().indexOf(selectedComponent) + 1;
+            instrument.addComponent(component, position);
+        } else {
+            position = parent.components().indexOf(selectedComponent) + 1;
+            parent.addComponent(component, position);
+        }
+
+        broadcastInstrumentUpdate(UpdateTypes.NEW_COMPONENT);
+        setSelectedComponent(component);
+    }
 
 	public void removeSelected() {
 		if (selectedComponent != null) {

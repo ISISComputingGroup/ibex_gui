@@ -43,6 +43,24 @@ public class TargetDescription {
 	@XmlElement(name = "property", type = Property.class)
 	private ArrayList<Property> properties = new ArrayList<>();
 	
+    /**
+     * Default constructor, required due to existence of copy constructor.
+     */
+    public TargetDescription() {
+    }
+
+    /**
+     * Copy constructor.
+     * 
+     * @param other
+     *            TargetDescription to be copied.
+     */
+    public TargetDescription(TargetDescription other) {
+        this.name = other.name;
+        this.type = other.type;
+        this.properties = new ArrayList<>(other.properties);
+    }
+
 	public String name() {
 		return name;
 	}

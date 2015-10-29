@@ -56,7 +56,26 @@ public class ComponentDescription {
 	@XmlElement(name = "component", type = ComponentDescription.class)
 	private List<ComponentDescription> components = new ArrayList<>();
 	
-	public String name() {
+    /**
+     * Default constructor, required due to existence of copy constructor.
+     */
+    public ComponentDescription() {
+    }
+
+    /**
+     * Copy constructor. Name should be prepended with (copy) or (copy 2), (copy
+     * 3) etc.
+     */
+    public ComponentDescription(ComponentDescription other) {
+        this.parent = other.parent;
+        this.name = other.name + " (copy)";
+        this.type = other.type;
+        this.target = other.target;
+        this.pvs = new ArrayList<>(other.pvs);
+        this.components = new ArrayList<>(other.components);
+    }
+
+    public String name() {
 		return name;
 	}
 	
