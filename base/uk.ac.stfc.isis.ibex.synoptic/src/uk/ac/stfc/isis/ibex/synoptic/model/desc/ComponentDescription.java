@@ -65,14 +65,25 @@ public class ComponentDescription {
     /**
      * Copy constructor. Name should be prepended with (copy) or (copy 2), (copy
      * 3) etc.
+     * 
+     * @param other
+     *            The ComponentDescription to copy
      */
     public ComponentDescription(ComponentDescription other) {
         this.parent = other.parent;
         this.name = other.name + " (copy)";
         this.type = other.type;
         this.target = other.target;
-        this.pvs = new ArrayList<>(other.pvs);
-        this.components = new ArrayList<>(other.components);
+
+        this.pvs = new ArrayList<>();
+        for (PV pv : other.pvs) {
+            this.pvs.add(new PV(pv));
+        }
+
+        this.components = new ArrayList<>();
+        for (ComponentDescription cd : other.components) {
+            this.components.add(new ComponentDescription(cd));
+        }
     }
 
     public String name() {

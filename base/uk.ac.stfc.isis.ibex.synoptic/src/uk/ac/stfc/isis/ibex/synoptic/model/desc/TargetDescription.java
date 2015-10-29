@@ -53,7 +53,7 @@ public class TargetDescription {
      * Copy constructor.
      * 
      * @param other
-     *            TargetDescription to be copied.
+     *            TargetDescription to be copied
      */
     public TargetDescription(TargetDescription other) {
         this.name = other.name;
