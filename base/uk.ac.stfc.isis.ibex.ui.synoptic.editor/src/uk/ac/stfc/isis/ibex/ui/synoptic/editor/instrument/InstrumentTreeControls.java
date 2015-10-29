@@ -86,21 +86,22 @@ public class InstrumentTreeControls extends Composite {
 				instrumentViewModel.addNewComponent();
 			}
 		});
+
+		btnDelete = new Button(this, SWT.NONE);
+		btnDelete.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false,
+				1, 1));
+        btnDelete.setText("Remove Component");
+		btnDelete.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				instrumentViewModel.removeSelected();
+			}
+		});
 		
 		btnCopyComponent = new Button(this, SWT.NONE);
 		btnCopyComponent.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		btnCopyComponent.setText("Copy Component");
 		
-        btnDelete = new Button(this, SWT.NONE);
-        btnDelete.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
-        btnDelete.setText("Delete Component");
-        btnDelete.addSelectionListener(new SelectionAdapter() {
-            @Override
-            public void widgetSelected(SelectionEvent e) {
-                instrumentViewModel.removeSelected();
-            }
-        });
-
 		btnShowBeam = new Button(this, SWT.CHECK | SWT.CENTER);
         btnShowBeam.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, false, 1, 1));
 		btnShowBeam.setText("Show Beam");
@@ -120,7 +121,6 @@ public class InstrumentTreeControls extends Composite {
 	public void refresh() {
 		ComponentDescription selected = instrumentViewModel.getSelectedComponent();
 		btnShowBeam.setSelection(instrumentViewModel.getShowBeam());
-        btnCopyComponent.setEnabled(selected != null);
 		btnDelete.setEnabled(selected != null);
 	}
 }
