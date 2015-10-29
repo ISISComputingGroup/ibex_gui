@@ -44,8 +44,8 @@ public class InstrumentTreeControls extends Composite {
 
 	private Button btnDelete;
 	private Button btnAdd;
-	private Button btnPreview;
 	private Button btnShowBeam;
+	private Button btnCopyComponent;
 	
 	public InstrumentTreeControls(Composite parent,
 			SynopticViewModel instrument) {
@@ -69,7 +69,7 @@ public class InstrumentTreeControls extends Composite {
 			}
 		});
 
-		setLayout(new GridLayout(2, false));
+        setLayout(new GridLayout(2, true));
 		GridData gridData = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
 		this.setLayoutData(gridData);
 
@@ -90,21 +90,20 @@ public class InstrumentTreeControls extends Composite {
 		btnDelete = new Button(this, SWT.NONE);
 		btnDelete.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false,
 				1, 1));
-		btnDelete.setText("Remove Selected");
+        btnDelete.setText("Remove Component");
 		btnDelete.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				instrumentViewModel.removeSelected();
 			}
 		});
-
-		btnPreview = new Button(this, SWT.NONE);
-		btnPreview.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false,
-				1, 1));
-		btnPreview.setText("Synoptic Preview");
+		
+		btnCopyComponent = new Button(this, SWT.NONE);
+		btnCopyComponent.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		btnCopyComponent.setText("Copy Component");
 		
 		btnShowBeam = new Button(this, SWT.CHECK | SWT.CENTER);
-		btnShowBeam.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, false, 1, 1));
+        btnShowBeam.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, false, 1, 1));
 		btnShowBeam.setText("Show Beam");
 		btnShowBeam.setSelection(instrumentViewModel.getShowBeam());
 		
@@ -115,16 +114,7 @@ public class InstrumentTreeControls extends Composite {
 	            instrumentViewModel.setShowBeam(btn.getSelection());			
 			}
 		});
-		
-		btnPreview.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				SynopticPreview previewDialog = new SynopticPreview(getShell(),
-						instrumentViewModel.getInstrument());
-				previewDialog.open();
-			}
-		});
-		
+
 		refresh();
 	}
 
