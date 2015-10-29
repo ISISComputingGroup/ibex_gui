@@ -118,7 +118,10 @@ public class SynopticViewModel {
             parent.addComponent(component, position);
         }
 
+        // Set selected component here, so that it is auto-expanded.
+        setSelectedComponent(component);
         broadcastInstrumentUpdate(UpdateTypes.NEW_COMPONENT);
+        // Set selected component again here, so it is highlighted.
         setSelectedComponent(component);
     }
 

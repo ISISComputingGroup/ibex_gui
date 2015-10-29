@@ -67,20 +67,21 @@ public class InstrumentTreeView extends Composite {
 	private MenuItem mnuDeleteSelected;
 
 	public InstrumentTreeView(Composite parent,
-			SynopticViewModel instrumentViewModel) {
+ final SynopticViewModel instrumentViewModel) {
 		super(parent, SWT.NONE);
 
 		this.instrumentViewModel = instrumentViewModel;
-		this.instrumentViewModel
-				.addInstrumentUpdateListener(new IInstrumentUpdateListener() {
-					@Override
-					public void instrumentUpdated(UpdateTypes updateType) {
-						if (updateType == UpdateTypes.NEW_INSTRUMENT) {
-							setTreeInput();
-						}
-						refresh();
-					}
-				});
+        this.instrumentViewModel.addInstrumentUpdateListener(new IInstrumentUpdateListener() {
+            @Override
+            public void instrumentUpdated(UpdateTypes updateType) {
+                if (updateType == UpdateTypes.NEW_INSTRUMENT) {
+                    setTreeInput();
+                } else if (updateType == UpdateTypes.NEW_COMPONENT) {
+                    treeViewer.setExpandedState(instrumentViewModel.getSelectedComponent(), true);
+                }
+                refresh();
+            }
+        });
 				
 		this.instrumentViewModel
 			.addComponentSelectionListener(new IComponentSelectionListener() {
