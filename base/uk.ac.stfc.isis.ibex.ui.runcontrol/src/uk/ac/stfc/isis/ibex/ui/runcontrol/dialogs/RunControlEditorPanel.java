@@ -38,17 +38,22 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 
 import uk.ac.stfc.isis.ibex.configserver.ConfigServer;
+import uk.ac.stfc.isis.ibex.configserver.configuration.Block;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Configuration;
 import uk.ac.stfc.isis.ibex.configserver.displaying.DisplayBlock;
 import uk.ac.stfc.isis.ibex.epics.writing.SameTypeWriter;
 import uk.ac.stfc.isis.ibex.runcontrol.EditableRunControlSetting;
 import uk.ac.stfc.isis.ibex.runcontrol.RunControlServer;
+import uk.ac.stfc.isis.ibex.ui.runcontrol.RunControlViewModel;
 
+/**
+ * A panel to edit the run control settings for the selected block.
+ */
 @SuppressWarnings({"checkstyle:magicnumber"})
 public class RunControlEditorPanel extends Composite {
 
 	private final RunControlServer runControlServer;
-	private final ConfigServer configServer;
+    private final ConfigServer configServer;
 	private final Label name;
 	private final Text txtLowLimit;
 	private final Text txtHighLimit;
@@ -57,6 +62,8 @@ public class RunControlEditorPanel extends Composite {
 	private DisplayBlock block;
 	private boolean canSend;
 	
+    private final RunControlViewModel runControlViewModel;
+
 	private DataBindingContext bindingContext;
 	
 	private SelectionAdapter sendChanges = new SelectionAdapter() {
@@ -73,6 +80,20 @@ public class RunControlEditorPanel extends Composite {
 		}
 	};
 	
+    private SelectionAdapter restoreBlockValues = new SelectionAdapter() {
+        @Override
+        public void widgetSelected(SelectionEvent e) {
+            if (block != null) {
+                Block configBlock = runControlViewModel.getCurrentConfigBlock(block.getName());
+                txtLowLimit.setText(Float.toString(configBlock.getRCLowLimit()));
+                txtHighLimit.setText(Float.toString(configBlock.getRCHighLimit()));
+                chkEnabled.setSelection(configBlock.getRCEnabled());
+            }
+
+            btnSend.setEnabled(true);
+        }
+    };
+
 	/**
 	 * Disable the send button if does not have permission to edit configs.
 	 */
@@ -82,29 +103,34 @@ public class RunControlEditorPanel extends Composite {
 			canSend = canWrite;
 		};	
 	};
+    private Button btnRestoreConfigurationValues;
+    private Label spacerLabel;
+    private Label spacerLabel2;
 	
-	public RunControlEditorPanel(Composite parent, int style, ConfigServer configServer, RunControlServer runControlServer) {
+    public RunControlEditorPanel(Composite parent, int style, ConfigServer configServer,
+            RunControlServer runControlServer, RunControlViewModel runControlViewModel) {
 		super(parent, style);
 		
 		this.configServer = configServer;
 		this.runControlServer = runControlServer;
+        this.runControlViewModel = runControlViewModel;
 		
 		// A bit of a work-around to see if we have write permissions
 		// by seeing if we are able to edit the config.
-		this.configServer.saveAs().subscribe(configService);
+        this.configServer.saveAs().subscribe(configService);
 		
 		setLayout(new FillLayout(SWT.HORIZONTAL));
 
 		Group grpSelectedSetting = new Group(this, SWT.NONE);
-		grpSelectedSetting.setText("Edit Settings");
-		grpSelectedSetting.setLayout(new GridLayout(5, false));
+        grpSelectedSetting.setText("Block Settings");
+        grpSelectedSetting.setLayout(new GridLayout(7, false));
 		
 		Label lblName = new Label(grpSelectedSetting, SWT.NONE);
 		lblName.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		lblName.setText("Name:");
 		
 		name = new Label(grpSelectedSetting, SWT.NONE);
-		GridData gdLblName = new GridData(SWT.FILL, SWT.CENTER, false, false, 4, 1);
+        GridData gdLblName = new GridData(SWT.FILL, SWT.CENTER, false, false, 6, 1);
 		gdLblName.widthHint = 150;
 		name.setLayoutData(gdLblName);
 		
@@ -114,7 +140,7 @@ public class RunControlEditorPanel extends Composite {
 		
 		txtLowLimit = new Text(grpSelectedSetting, SWT.BORDER);
 		GridData gdTxtLow = new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1);
-		gdTxtLow.widthHint = 30;
+        gdTxtLow.widthHint = 50;
 		txtLowLimit.setLayoutData(gdTxtLow);
 		txtLowLimit.addModifyListener(new ModifyListener() {		
 			@Override
@@ -123,13 +149,17 @@ public class RunControlEditorPanel extends Composite {
 			}
 		});
 		
+        spacerLabel = new Label(grpSelectedSetting, SWT.NONE);
+        spacerLabel.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1));
+        spacerLabel.setText(" ");
+
 		Label lblHighLimit = new Label(grpSelectedSetting, SWT.NONE);
 		lblHighLimit.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		lblHighLimit.setText("High Limit:");
 		
 		txtHighLimit = new Text(grpSelectedSetting, SWT.BORDER);
 		GridData gdTxtHigh = new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1);
-		gdTxtHigh.widthHint = 30;
+        gdTxtHigh.widthHint = 50;
 		txtHighLimit.setLayoutData(gdTxtHigh);
 		txtHighLimit.addModifyListener(new ModifyListener() {		
 			@Override
@@ -138,6 +168,9 @@ public class RunControlEditorPanel extends Composite {
 			}
 		});
 		
+        spacerLabel2 = new Label(grpSelectedSetting, SWT.NONE);
+        spacerLabel2.setText(" ");
+
 		chkEnabled = new Button(grpSelectedSetting, SWT.CHECK);
 		chkEnabled.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1));
 		chkEnabled.setText("Enabled");
@@ -155,10 +188,14 @@ public class RunControlEditorPanel extends Composite {
 			
 		});
 		
+        btnRestoreConfigurationValues = new Button(grpSelectedSetting, SWT.NONE);
+        btnRestoreConfigurationValues.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 4, 1));
+        btnRestoreConfigurationValues.setText("Restore Configuration Values");
+        btnRestoreConfigurationValues.addSelectionListener(restoreBlockValues);
+
 		btnSend = new Button(grpSelectedSetting, SWT.NONE);
 		btnSend.setText("Apply Changes");
-		GridData gdBtnSend = new GridData(SWT.RIGHT, SWT.CENTER, false, false, 5, 1);
-		btnSend.setLayoutData(gdBtnSend);
+        btnSend.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 3, 1));
 		btnSend.addSelectionListener(sendChanges);
 		
 		setBlock(null);
