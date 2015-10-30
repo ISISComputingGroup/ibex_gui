@@ -62,18 +62,34 @@ public class ComponentDescription {
     public ComponentDescription() {
     }
 
+    public ComponentDescription(ComponentDescription other) {
+        this(other, true, null);
+    }
+
     /**
-     * Copy constructor. Name should be prepended with (copy) or (copy 2), (copy
-     * 3) etc.
+     * Copy constructor. Name should be prepended with (copy). The component
+     * description children need the new parent passed through as an argument,
+     * while the top level part of the copy will share a parent with what it is
+     * copied from.
      * 
      * @param other
      *            The ComponentDescription to copy
      */
-    public ComponentDescription(ComponentDescription other) {
-        this.parent = other.parent;
-        this.name = other.name + " (copy)";
+    public ComponentDescription(ComponentDescription other, boolean isTopLevelCopy, ComponentDescription parent) {
+        if (isTopLevelCopy) {
+            this.parent = other.parent;
+        } else {
+            this.parent = parent;
+        }
+
+        if (isTopLevelCopy) {
+            this.name = other.name + " (copy)";
+        } else {
+            this.name = other.name;
+        }
+
         this.type = other.type;
-        this.target = new TargetDescription(other.target);
+        this.target = other.target != null ? new TargetDescription(other.target) : null;
 
         this.pvs = new ArrayList<>();
         for (PV pv : other.pvs) {
@@ -82,7 +98,7 @@ public class ComponentDescription {
 
         this.components = new ArrayList<>();
         for (ComponentDescription cd : other.components) {
-            this.components.add(new ComponentDescription(cd));
+            this.components.add(new ComponentDescription(cd, false, this));
         }
     }
 
