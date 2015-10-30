@@ -21,6 +21,7 @@ package uk.ac.stfc.isis.ibex.dae.spectra;
 
 import uk.ac.stfc.isis.ibex.dae.DaeObservables;
 import uk.ac.stfc.isis.ibex.epics.observing.BaseObserver;
+import uk.ac.stfc.isis.ibex.epics.observing.InitialiseOnSubscribeObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.Subscription;
 import uk.ac.stfc.isis.ibex.epics.pv.Closable;
 
@@ -37,9 +38,9 @@ public class ObservedSpectrum extends UpdatableSpectrum implements Closable {
 		public void onConnectionStatus(boolean isConnected) {			
 		}
 		
-		protected double[] toDoubleArray(float[] value) {
-			double[] doubles = new double[value.length];
-			for (int i = 0; i < value.length; i++) {
+        protected double[] toDoubleArray(float[] value, int length) {
+            double[] doubles = new double[length];
+            for (int i = 0; i < length; i++) {
 				doubles[i] = value[i];
 			}
 			
@@ -48,22 +49,26 @@ public class ObservedSpectrum extends UpdatableSpectrum implements Closable {
 	}
 	
 	private final DataObserver xDataObserver = new DataObserver() {
+
 		@Override
 		public void onValue(float[] value) {
-			setXData(toDoubleArray(value));
+            setXData(toDoubleArray(value, xLengthObserver.getValue()));
 		}
 	};
 
 	private final DataObserver yDataObserver = new DataObserver() {
 		@Override
 		public void onValue(float[] value) {
-			setYData(toDoubleArray(value));
+            setYData(toDoubleArray(value, yLengthObserver.getValue()));
 		}
 	};
-	
+
 	private Subscription xSubscription;
 	private Subscription ySubscription;
-	
+
+    private InitialiseOnSubscribeObservable<Integer> xLengthObserver;
+    private InitialiseOnSubscribeObservable<Integer> yLengthObserver;
+
 	public ObservedSpectrum(DaeObservables observables) {
 		this.observables = observables;
 	}
@@ -86,6 +91,9 @@ public class ObservedSpectrum extends UpdatableSpectrum implements Closable {
 	
 	private void updateSubscriptions() {
 		cancelSubscriptions();
+        xLengthObserver = observables.spectrumXDataLength(getNumber(), getPeriod());
+        yLengthObserver = observables.spectrumYDataLength(getNumber(), getPeriod());
+
 		xSubscription = observables.spectrumXData(getNumber(), getPeriod()).addObserver(xDataObserver);
 		ySubscription = observables.spectrumYData(getNumber(), getPeriod()).addObserver(yDataObserver);
 	}
