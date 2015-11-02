@@ -100,7 +100,7 @@ public class TargetNameWidget extends Composite {
 			if (target != null) {
 				target.setName(targetName);
 				target.setType(type);
-				instrument.broadcastInstrumentUpdate(UpdateTypes.EDIT_COMPONENT);
+                instrument.broadcastInstrumentUpdate(UpdateTypes.EDIT_TARGET);
 			}
 		}
 	}

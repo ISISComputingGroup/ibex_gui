@@ -40,12 +40,12 @@ import uk.ac.stfc.isis.ibex.synoptic.SynopticModel;
 import uk.ac.stfc.isis.ibex.synoptic.model.ComponentType;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.ComponentDescription;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.IO;
-import uk.ac.stfc.isis.ibex.synoptic.model.desc.SynopticDescription;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.PV;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.Property;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.RecordType;
+import uk.ac.stfc.isis.ibex.synoptic.model.desc.SynopticDescription;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.TargetDescription;
-import uk.ac.stfc.isis.ibex.synoptic.model.desc.TargetType;
+import uk.ac.stfc.isis.ibex.ui.synoptic.editor.target.DefaultTargetForComponent;
 
 /**
  * Provides the model for the view of the synoptic. This is an observable
@@ -186,12 +186,11 @@ public class SynopticViewModel {
 
 	public void addTargetToSelectedComponent() {
 		ComponentDescription component = getSelectedComponent();
-		if (component != null && component.target() == null) {
-			TargetDescription target = new TargetDescription();
-			target.setName("NONE");
-			target.setType(TargetType.OPI);
-			component.setTarget(target);
-
+        ComponentType compType = component.type();
+        TargetDescription target = DefaultTargetForComponent.defaultTarget(compType);
+		
+        if (component != null && (component.target() == null || component.target().name() == "NONE")) {
+            component.setTarget(target);
 			broadcastInstrumentUpdate(UpdateTypes.ADD_TARGET);
 		}
 	}
