@@ -75,7 +75,7 @@ public class ComponentDescription {
      * @param other
      *            The ComponentDescription to copy
      */
-    public ComponentDescription(ComponentDescription other, boolean isTopLevelCopy, ComponentDescription parent) {
+    private ComponentDescription(ComponentDescription other, boolean isTopLevelCopy, ComponentDescription parent) {
         if (isTopLevelCopy) {
             this.parent = other.parent;
         } else {
