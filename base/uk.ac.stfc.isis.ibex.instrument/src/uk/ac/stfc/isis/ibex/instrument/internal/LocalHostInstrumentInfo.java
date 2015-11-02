@@ -36,4 +36,8 @@ public class LocalHostInstrumentInfo extends InstrumentInfo {
 	public String hostName() {
 		return "localhost";
 	}
+
+    public static String validLocalInstrumentRegex() {
+        return "localhost";
+    }
 }

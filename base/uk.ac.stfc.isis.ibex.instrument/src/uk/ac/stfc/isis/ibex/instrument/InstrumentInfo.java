@@ -38,7 +38,11 @@ public class InstrumentInfo {
 		return PVAddress.startWith("IN").append(name).toString() + PVAddress.COLON;
 	}
 	
-	public String hostName() {	
+    public String hostName() {
 		return PVPrefix.NDX + name;
 	}
+
+    public static String validInstrumentRegex() {
+        return "NDX[A-Z]+";
+    }
 }

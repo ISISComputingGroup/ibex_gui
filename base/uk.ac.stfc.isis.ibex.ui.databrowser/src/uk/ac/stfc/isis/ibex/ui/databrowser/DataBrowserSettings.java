@@ -25,6 +25,7 @@ import org.eclipse.jface.preference.IPreferenceStore;
 
 import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
 import uk.ac.stfc.isis.ibex.instrument.InstrumentInfoReceiver;
+import uk.ac.stfc.isis.ibex.instrument.internal.LocalHostInstrumentInfo;
 
 /**
  * This class is responsible for changing the settings for the DataBrowser when
@@ -67,11 +68,17 @@ public class DataBrowserSettings implements InstrumentInfoReceiver {
      * @param preference
      *            The preference string.
      * @return The preference string with the host name replace.
+     * @throws Exception
      */
-	private static String updateHostName(String hostName, String preference) {
+    private static String updateHostName(String hostName, String preference) {
+        if (preference.matches(InstrumentInfo.validInstrumentRegex())) {
+            preference = preference.replaceAll("NDX[A-Z]+", hostName);
+        } else if (preference.matches(LocalHostInstrumentInfo.validLocalInstrumentRegex())) {
+            preference = preference.replaceAll("localhost", hostName);
+        } else {
+            throw new RuntimeException("Invalid preference string, does not contain a matching host pattern");
+        }
 
-        preference = preference.replaceAll("NDX[A-Z]+", hostName);
-        preference = preference.replaceAll("localhost", hostName);
         return preference;
 	}
 
