@@ -84,13 +84,13 @@ public enum ComponentType {
      */
     public static List<String> componentTypeAlphaList() {
         List<String> list = componentTypeList();
+        
         // remove unknown
         list.remove(ComponentType.UNKNOWN.toString());
         Collections.sort(list);
+        
         // add unknown back at the beginning
-        Collections.reverse(list);
-        list.add(ComponentType.UNKNOWN.toString());
-        Collections.reverse(list);
+        list.add(0, ComponentType.UNKNOWN.toString());
         return list;
     }
 }

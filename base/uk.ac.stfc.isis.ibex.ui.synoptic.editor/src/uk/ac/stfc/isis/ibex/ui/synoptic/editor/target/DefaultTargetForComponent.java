@@ -108,15 +108,8 @@ public class DefaultTargetForComponent {
     }
 
     private static Boolean targetNameInOpiList(String targetName) {
-        Collection<String> availableOPIs;
-        availableOPIs = Opi.getDefault().descriptionsProvider().getOpiList();
-        boolean inList = false;
-        for (String s : availableOPIs) {
-            if (s.equals(targetName)) {
-                inList = true;
-            }
-        }
-        return inList;
+        Collection<String> availableOPIs = Opi.getDefault().descriptionsProvider().getOpiList();
+        return availableOPIs.contains(targetName);
     }
 
 }
