@@ -208,6 +208,4 @@ public class ComponentDescriptionTest {
             assertTrue(copied.components().get(i).name().equals(NEW_NAME));
         }
     }
-
-
 }

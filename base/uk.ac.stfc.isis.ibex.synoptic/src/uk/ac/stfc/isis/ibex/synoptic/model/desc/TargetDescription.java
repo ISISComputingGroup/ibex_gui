@@ -36,8 +36,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class TargetDescription {
 
-	private String name;
-	private TargetType type;
+    private String name;
+    private TargetType type;
 	
 	@XmlElementWrapper(name = "properties")
 	@XmlElement(name = "property", type = Property.class)
@@ -81,7 +81,7 @@ public class TargetDescription {
 		return Collections.unmodifiableList(properties);
 	}
 	
-	public boolean addProperty(Property property) {
+    public boolean addProperty(Property property) {
 		return properties.add(property);
 	}
 	
