@@ -19,7 +19,7 @@
 
 package uk.ac.stfc.isis.ibex.ui.synoptic.editor.component;
 
-import java.util.Arrays;
+import java.util.List;
 
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ComboViewer;
@@ -62,7 +62,7 @@ public class ComponentDetailView extends Composite {
 
 	private PVList pvList;
 
-	private static ComponentType[] typeList = ComponentType.values();
+    private static List<String> typeList = ComponentType.componentTypeAlphaList();
 
 	public ComponentDetailView(Composite parent,
 			final SynopticViewModel instrument) {
@@ -73,7 +73,11 @@ public class ComponentDetailView extends Composite {
 		instrument.addInstrumentUpdateListener(new IInstrumentUpdateListener() {
 			@Override
 			public void instrumentUpdated(UpdateTypes updateType) {
-				if (updateType != UpdateTypes.EDIT_COMPONENT) {
+                if (updateType == UpdateTypes.EDIT_COMPONENT) {
+                    instrument.addTargetToSelectedComponent();
+                }
+                if (updateType != UpdateTypes.EDIT_COMPONENT && updateType != UpdateTypes.EDIT_TARGET
+                        && updateType != UpdateTypes.ADD_TARGET) {
 					component = instrument.getSelectedComponent();
 					showComponent(component);
 				}
@@ -139,7 +143,7 @@ public class ComponentDetailView extends Composite {
 					new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 
 			cmboType.setContentProvider(ArrayContentProvider.getInstance());
-			cmboType.setInput(typeList);
+            cmboType.setInput(typeList);
 			cmboType.getCombo().select(0);
 			cmboType.addSelectionChangedListener(new ISelectionChangedListener() {
 				@Override
@@ -181,9 +185,8 @@ public class ComponentDetailView extends Composite {
 
 			txtName.setText(component.name());
 
-			ComponentType type = component.type();
-			int typeIndex = Arrays.asList(typeList).indexOf(type);
-			cmboType.getCombo().select(typeIndex);
+            int typeIndex = typeList.indexOf(component.type().name());
+            cmboType.getCombo().select(typeIndex);
 
 			updateTypeIcon();
 		} else {
@@ -205,7 +208,8 @@ public class ComponentDetailView extends Composite {
 	private void updateModelType() {
 		if (component != null) {
 			int typeIndex = cmboType.getCombo().getSelectionIndex();
-			ComponentType type = Arrays.asList(typeList).get(typeIndex);
+            String selection = typeList.get(typeIndex);
+            ComponentType type = ComponentType.valueOf(selection);
 			component.setType(type);
 
 			instrument.broadcastInstrumentUpdate(UpdateTypes.EDIT_COMPONENT);
@@ -219,8 +223,9 @@ public class ComponentDetailView extends Composite {
 		if (typeIndex < 0) {
 			icon = ComponentIcons.thumbnailForType(ComponentType.UNKNOWN);
 		} else {
-			ComponentType enteredType = Arrays.asList(typeList).get(typeIndex);
-			icon = ComponentIcons.thumbnailForType(enteredType);
+            String selection = typeList.get(typeIndex);
+            ComponentType enteredType = ComponentType.valueOf(selection);
+            icon = ComponentIcons.thumbnailForType(enteredType);
 		}
 
 		lblTypeIcon.setImage(icon);
