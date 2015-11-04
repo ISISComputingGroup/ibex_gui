@@ -31,6 +31,7 @@ import org.eclipse.wb.swt.SWTResourceManager;
 
 import uk.ac.stfc.isis.ibex.ui.synoptic.widgets.Navigator;
 import uk.ac.stfc.isis.ibex.ui.synoptic.widgets.SynopticSelection;
+import uk.ac.stfc.isis.ibex.ui.synoptic.widgets.SynopticSelectionViewModel;
 
 public class NavigationView extends ViewPart implements ISizeProvider {
 		
@@ -52,7 +53,7 @@ public class NavigationView extends ViewPart implements ISizeProvider {
 	    synopticGroup.setLayout(new GridLayout(1, false));
 	    synopticGroup.setText("Synoptic Selection");
 
-		SynopticSelection synopticSelection = new SynopticSelection(synopticGroup, SWT.NONE);
+		SynopticSelection synopticSelection = new SynopticSelection(synopticGroup, SWT.NONE, new SynopticSelectionViewModel());
 		synopticSelection.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1));
 		synopticSelection.setBackground(BACKGROUND);
 		

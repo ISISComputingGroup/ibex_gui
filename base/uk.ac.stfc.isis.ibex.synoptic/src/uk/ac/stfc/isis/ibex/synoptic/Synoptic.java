@@ -31,7 +31,6 @@ import uk.ac.stfc.isis.ibex.epics.pv.Closer;
 import uk.ac.stfc.isis.ibex.epics.writing.Writable;
 import uk.ac.stfc.isis.ibex.instrument.Instrument;
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
-import uk.ac.stfc.isis.ibex.synoptic.internal.ObservingSynopticModel;
 import uk.ac.stfc.isis.ibex.synoptic.internal.Variables;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.SynopticDescription;
 
@@ -89,6 +88,10 @@ public class Synoptic extends Closer implements BundleActivator {
 		return new SynopticModel(variables);
 	}
 	
+	public InitialiseOnSubscribeObservable<Collection<SynopticInfo>> availableSynopticsInfo() {
+		return variables.available;
+	}
+	
 	public Collection<SynopticInfo> availableSynoptics() {
 		return variables.available.getValue();
 	}
@@ -109,21 +112,12 @@ public class Synoptic extends Closer implements BundleActivator {
 		return all;
 	}
 	
-	public int getSynopticNumber() {
-		// No synoptic loaded
-		if (getSynopticInfo() == null) {
-			return -1;
-		}
-		
-		String currentSynopticName = getSynopticInfo().name();
-		
-		ArrayList<String> availableSynoptics = new ArrayList<String>(SynopticInfo.names(availableSynoptics()));
-		
-		return availableSynoptics.indexOf(currentSynopticName);
-	}
-	
 	public SynopticInfo getSynopticInfo() {
 		return viewerModelObserver.getSynopticInfo();
+	}
+	
+	public ObservingSynopticModel currentObservingViewerModel() {
+		return viewerModelObserver;
 	}
 	
 	public InitialiseOnSubscribeObservable<SynopticDescription> synoptic(SynopticInfo synoptic) {

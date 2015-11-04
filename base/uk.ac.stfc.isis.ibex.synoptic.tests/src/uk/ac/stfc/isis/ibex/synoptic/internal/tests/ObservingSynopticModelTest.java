@@ -31,7 +31,7 @@ import org.junit.Test;
 public class ObservingSynopticModelTest {
 
 	/**
-	 * Test method for {@link uk.ac.stfc.isis.ibex.synoptic.internal.ObservingSynopticModel#ObservingSynopticModel(uk.ac.stfc.isis.ibex.synoptic.internal.Variables, uk.ac.stfc.isis.ibex.synoptic.SynopticModel)}.
+	 * Test method for {@link uk.ac.stfc.isis.ibex.synoptic.ObservingSynopticModel#ObservingSynopticModel(uk.ac.stfc.isis.ibex.synoptic.internal.Variables, uk.ac.stfc.isis.ibex.synoptic.SynopticModel)}.
 	 */
 	@Test
 	public final void observing_synoptic_model_generation() {

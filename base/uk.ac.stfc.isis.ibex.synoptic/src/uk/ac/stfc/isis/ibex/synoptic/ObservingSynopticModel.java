@@ -16,7 +16,7 @@
  * http://opensource.org/licenses/eclipse-1.0.php
  */
 
-package uk.ac.stfc.isis.ibex.synoptic.internal;
+package uk.ac.stfc.isis.ibex.synoptic;
 
 import javax.xml.bind.JAXBException;
 
@@ -27,8 +27,8 @@ import uk.ac.stfc.isis.ibex.configserver.configuration.Configuration;
 import uk.ac.stfc.isis.ibex.epics.observing.BaseObserver;
 import uk.ac.stfc.isis.ibex.epics.observing.ClosingSwitchableObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.InitialisableObserver;
-import uk.ac.stfc.isis.ibex.synoptic.SynopticInfo;
-import uk.ac.stfc.isis.ibex.synoptic.SynopticModel;
+import uk.ac.stfc.isis.ibex.model.ModelObject;
+import uk.ac.stfc.isis.ibex.synoptic.internal.Variables;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.SynopticDescription;
 import uk.ac.stfc.isis.ibex.synoptic.xml.XMLUtil;
 
@@ -37,7 +37,7 @@ import uk.ac.stfc.isis.ibex.synoptic.xml.XMLUtil;
  * SynopticModel.
  * 
  */
-public class ObservingSynopticModel {
+public class ObservingSynopticModel extends ModelObject {
 
 	private SynopticInfo synopticInfo;
 
@@ -137,7 +137,7 @@ public class ObservingSynopticModel {
 	}
 
 	public void switchSynoptic(SynopticInfo newSynoptic) {
-		this.synopticInfo = newSynoptic;
+		firePropertyChange("synopticInfo", this.synopticInfo, this.synopticInfo = newSynoptic);
 		synopticObservable.switchTo(variables
 				.getSynopticDescription(newSynoptic.pv()));
 	}
