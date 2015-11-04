@@ -18,6 +18,9 @@ Require-Bundle: uk.ac.stfc.isis.ibex.preferences,
  org.eclipse.core.databinding,
  com.google.common,
  uk.ac.stfc.isis.ibex.opis;bundle-version="1.0.0",
- uk.ac.stfc.isis.ibex.instrument
+ uk.ac.stfc.isis.ibex.instrument,
+ org.eclipse.ui;bundle-version="3.8.2",
+ org.eclipse.core.runtime;bundle-version="3.8.0"
 Export-Package: uk.ac.stfc.isis.ibex.ui.motor.views
 Bundle-ClassPath: .
+Import-Package: org.csstudio.opibuilder.util

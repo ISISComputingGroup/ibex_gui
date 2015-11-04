@@ -3,9 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: Model
 Bundle-SymbolicName: uk.ac.stfc.isis.ibex.model;singleton:=true
 Bundle-Version: 1.0.0.qualifier
-Require-Bundle: com.google.common;bundle-version="10.0.1",
- org.epics.vtype;bundle-version="2.1.0",
- uk.ac.stfc.isis.ibex.preferences,
+Require-Bundle: uk.ac.stfc.isis.ibex.preferences,
  org.eclipse.core.runtime,
  uk.ac.stfc.isis.ibex.logger,
  org.eclipse.ui;bundle-version="3.8.2"

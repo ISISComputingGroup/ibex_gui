@@ -26,9 +26,9 @@ import org.eclipse.core.runtime.Path;
 
 import uk.ac.stfc.isis.ibex.instrument.Instrument;
 import uk.ac.stfc.isis.ibex.opis.Opi;
-import uk.ac.stfc.isis.ibex.ui.OPIView;
+import uk.ac.stfc.isis.ibex.opis.OpiView;
 
-public final class OpiTargetView extends OPIView {
+public final class OpiTargetView extends OpiView {
 
 	public static final String ID = "uk.ac.stfc.isis.ibex.ui.synoptic.views.OpiTargetView"; //$NON-NLS-1$
 
