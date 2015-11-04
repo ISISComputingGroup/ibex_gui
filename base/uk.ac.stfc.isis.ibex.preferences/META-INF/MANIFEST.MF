@@ -9,5 +9,3 @@ Bundle-ActivationPolicy: lazy
 Export-Package: uk.ac.stfc.isis.ibex.preferences
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime
-Import-Package: org.apache.logging.log4j,
- uk.ac.stfc.isis.ibex.logger

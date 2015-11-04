@@ -7,9 +7,9 @@ Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Require-Bundle: org.eclipse.osgi,
  org.eclipse.ui;bundle-version="3.8.2",
  uk.ac.stfc.isis.ibex.epics;visibility:=reexport,
- org.epics.vtype,
  org.eclipse.core.runtime,
- com.google.common
+ com.google.common,
+ uk.ac.stfc.isis.ibex.model;bundle-version="1.0.0"
 Bundle-ActivationPolicy: lazy
 Export-Package: uk.ac.stfc.isis.ibex.instrument,
  uk.ac.stfc.isis.ibex.instrument.baton,
@@ -17,6 +17,4 @@ Export-Package: uk.ac.stfc.isis.ibex.instrument,
  uk.ac.stfc.isis.ibex.instrument.internal,
  uk.ac.stfc.isis.ibex.instrument.pv
 Bundle-Activator: uk.ac.stfc.isis.ibex.instrument.Instrument
-Import-Package: org.apache.logging.log4j,
- uk.ac.stfc.isis.ibex.logger,
- uk.ac.stfc.isis.ibex.model
+
