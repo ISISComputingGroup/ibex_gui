@@ -20,9 +20,12 @@ public class SynopticSelectionViewModel extends ModelObject {
 	private static final InitialiseOnSubscribeObservable<DisplayConfiguration> CONFIG = 
 			Configurations.getInstance().display().displayCurrentConfig();
 	
+	private static String RECOMMENDED_STRING = " (recommended)";
+	
 	private Subscription configSubscription;
 	private Subscription synopticSubscription;
 	
+	private String recommendedSynoptic;
 	private ArrayList<String> synopticList;
 	
 	private String selected;
@@ -71,7 +74,11 @@ public class SynopticSelectionViewModel extends ModelObject {
 		public void propertyChange(PropertyChangeEvent evt) {
 			SynopticInfo synopticInfo = (SynopticInfo)evt.getNewValue();
 			if (synopticInfo != null) {
-				firePropertyChange("selected", selected, selected = synopticInfo.name());
+				String synopticName = synopticInfo.name();
+				if (synopticName.equals(recommendedSynoptic)) {
+					synopticName = recommendedSynoptic + RECOMMENDED_STRING;
+				}
+				firePropertyChange("selected", selected, selected = synopticName);
 			}
 		}
 	};
@@ -91,12 +98,25 @@ public class SynopticSelectionViewModel extends ModelObject {
 	}
 	
 	public void setSelected(String selected) {
+		if (selected.equals(recommendedSynoptic + RECOMMENDED_STRING)) {
+			selected = recommendedSynoptic;
+		}
 		synoptic.setViewerSynoptic(selected);
 		firePropertyChange("selected", this.selected, this.selected = selected);
 	}
 	
 	public void setSynopticList(Collection<SynopticInfo> synoptics, String defaultSynoptic) {
 		ArrayList<String> names = new ArrayList<String>(SynopticInfo.names(synoptics));
+		recommendedSynoptic = defaultSynoptic;
+		
+		if (defaultSynoptic != null) { 
+			for (int i = 0; i < names.size(); i++) {
+				String name = names.get(i);
+				if (name.equals(recommendedSynoptic)) {
+					names.set(i, name + RECOMMENDED_STRING);
+				}
+			}
+		}
 		
 		firePropertyChange("synopticList", synopticList, synopticList = names);
 	}
