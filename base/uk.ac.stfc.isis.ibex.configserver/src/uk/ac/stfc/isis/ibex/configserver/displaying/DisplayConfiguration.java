@@ -39,6 +39,7 @@ public class DisplayConfiguration extends TransformingObservable<Configuration, 
 
 	private String name;
 	private String description;
+	private String defaultSynoptic;
 	private final List<DisplayGroup> groups = new ArrayList<>();
 	private Configuration config;
 	private Collection<DisplayBlock> displayBlocks;
@@ -58,6 +59,7 @@ public class DisplayConfiguration extends TransformingObservable<Configuration, 
 		this.config = value;
 		name = value.name();
 		description = value.description();
+		defaultSynoptic = value.synoptic();
 		setDisplayBlocks(value.getBlocks());
 		setGroups(value.getGroups());
 		return this;
@@ -81,6 +83,10 @@ public class DisplayConfiguration extends TransformingObservable<Configuration, 
 		return Strings.nullToEmpty(description);
 	}
 
+	public String defaultSynoptic() {
+		return Strings.nullToEmpty(defaultSynoptic);
+	}
+	
 	public Collection<DisplayGroup> groups() {
 		return new ArrayList<>(groups);
 	}
