@@ -32,6 +32,7 @@ package uk.ac.stfc.isis.ibex.ui.synoptic.editor.model;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+import uk.ac.stfc.isis.ibex.configserver.editing.DefaultName;
 import uk.ac.stfc.isis.ibex.instrument.Instrument;
 import uk.ac.stfc.isis.ibex.instrument.pv.PVType;
 import uk.ac.stfc.isis.ibex.model.UpdatedValue;
@@ -109,6 +110,10 @@ public class SynopticViewModel {
         }
 
         ComponentDescription componentCopy = new ComponentDescription(selectedComponent);
+
+        DefaultName namer = new DefaultName(selectedComponent.name(), " ", true);
+        componentCopy.setName(namer.getUnique(instrument.getComponentNameList()));
+        
         addComponentInCorrectLocation(componentCopy);
 
         // Set selected component here, so that it is auto-expanded.
