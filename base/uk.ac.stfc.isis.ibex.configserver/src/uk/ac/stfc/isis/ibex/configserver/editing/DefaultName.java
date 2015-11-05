@@ -25,6 +25,12 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * Provides a default name, appended with a number if needed, for adding or
+ * copying items. Separator and whether or not to use brackets can be
+ * configured.
+ *
+ */
 public class DefaultName {
 
     private static final String NUMBER_REGEX = "(\\d+)";
@@ -39,10 +45,28 @@ public class DefaultName {
     private final String closingBracketRegex;
 	private final Pattern namePattern;
 	
+    /**
+     * Provides an object that gives default names such as NAME, NAME_1, NAME_2
+     * etc.
+     * 
+     * @param name
+     *            The base name, e.g. NAME
+     */
     public DefaultName(String name) {
         this(name, "_", false);
 	}
 
+    /**
+     * Separator can be chosen and brackets can be optionally used, e.g. NAME,
+     * NAME (1), NAME (2) if the separator is a space.
+     * 
+     * @param name
+     *            The base name, e.g. NAME
+     * @param separator
+     *            The separator between the name and any number
+     * @param brackets
+     *            True if brackets are desired
+     */
     public DefaultName(String name, String separator, boolean brackets) {
         this.name = name;
         this.separator = separator;
