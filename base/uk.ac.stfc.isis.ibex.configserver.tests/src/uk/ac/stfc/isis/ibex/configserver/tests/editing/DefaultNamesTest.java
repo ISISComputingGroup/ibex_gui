@@ -19,8 +19,9 @@
 
 package uk.ac.stfc.isis.ibex.configserver.tests.editing;
 
-import static org.junit.Assert.*;
-import static org.hamcrest.CoreMatchers.*;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThat;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,48 +33,90 @@ import uk.ac.stfc.isis.ibex.configserver.editing.DefaultName;
 
 public class DefaultNamesTest {
 	
-	private DefaultName name;
+    private DefaultName blockName;
+    private DefaultName componentName;
+
 	private static final String DEFAULT_NAME = "NAME";
-	private List<String> existing;
+
+	private List<String> existingBlock;
+    private List<String> existingComponent;
 	
 	@Before
 	public void setup() {
-		existing = new ArrayList<>();
-		name = new DefaultName(DEFAULT_NAME);
+		existingBlock = new ArrayList<>();
+        blockName = new DefaultName(DEFAULT_NAME);
+
+        existingComponent = new ArrayList<>();
+        componentName = new DefaultName(DEFAULT_NAME, " ", true);
+	}
+	
+    private String numberedDefaultBlock(Integer number) {
+        return DEFAULT_NAME + "_" + number.toString();
+    }
+
+    private String numberedDefaultComponent(Integer number) {
+        return DEFAULT_NAME + " (" + number.toString() + ")";
+    }
+
+	@Test
+    public void if_no_others_default_block_name() {
+        assertThat(blockName.getUnique(existingBlock), is(DEFAULT_NAME));
 	}
 	
 	@Test
-	public void default_name_if_no_others() {
-		assertThat(name.getUnique(existing), is(DEFAULT_NAME));
-	}
-	
-	@Test
-	public void number_is_appended_if_default_already_taken() {
-		existing.add(DEFAULT_NAME);
-		assertThat(name.getUnique(existing), is(numberedDefault(1)));
+    public void if_default_block_name_taken_number_is_appended() {
+		existingBlock.add(DEFAULT_NAME);
+        assertThat(blockName.getUnique(existingBlock), is(numberedDefaultBlock(1)));
 	}
 
 	@Test
-	public void next_available_number_is_appended() {
-		existing.add(DEFAULT_NAME);
-		existing.add(numberedDefault(1));
-		assertThat(name.getUnique(existing), is(numberedDefault(2)));
+    public void if_default_block_name_and_first_numbered_are_taken_2_is_appended() {
+		existingBlock.add(DEFAULT_NAME);
+        existingBlock.add(numberedDefaultBlock(1));
+        assertThat(blockName.getUnique(existingBlock), is(numberedDefaultBlock(2)));
 	}
 	
 	@Test
-	public void next_available_number_is_appended_when_nonsequential() {
-		existing.add(DEFAULT_NAME);
-		existing.add(numberedDefault(2));
-		assertEquals(numberedDefault(1), name.getUnique(existing));
+    public void if_nonsequential_block_names_next_available_is_used() {
+		existingBlock.add(DEFAULT_NAME);
+        existingBlock.add(numberedDefaultBlock(2));
+        assertEquals(numberedDefaultBlock(1), blockName.getUnique(existingBlock));
 	}
 	
 	@Test
-	public void default_still_chosen_if_available() {
-		existing.add(numberedDefault(1));
-		assertThat(name.getUnique(existing), is(DEFAULT_NAME));
+    public void if_default_block_name_is_not_taken_default_is_used() {
+        existingComponent.add(numberedDefaultComponent(1));
+        assertThat(componentName.getUnique(existingComponent), is(DEFAULT_NAME));
 	}
 	
-	private String numberedDefault(Integer number) {
-		return DEFAULT_NAME + "_" + number.toString();
-	}
+    @Test
+    public void if_no_others_default_component_name() {
+        assertThat(componentName.getUnique(existingComponent), is(DEFAULT_NAME));
+    }
+
+    @Test
+    public void if_default_component_name_taken_number_is_appended() {
+        existingComponent.add(DEFAULT_NAME);
+        assertThat(componentName.getUnique(existingComponent), is(numberedDefaultComponent(1)));
+    }
+
+    @Test
+    public void if_default_component_name_and_first_numbered_are_taken_2_is_appended() {
+        existingComponent.add(DEFAULT_NAME);
+        existingComponent.add(numberedDefaultComponent(1));
+        assertThat(componentName.getUnique(existingComponent), is(numberedDefaultComponent(2)));
+    }
+
+    @Test
+    public void if_nonsequential_component_names_next_available_is_used() {
+        existingComponent.add(DEFAULT_NAME);
+        existingComponent.add(numberedDefaultComponent(2));
+        assertEquals(numberedDefaultComponent(1), componentName.getUnique(existingComponent));
+    }
+
+    @Test
+    public void if_default_component_name_is_not_taken_default_is_used() {
+        existingComponent.add(numberedDefaultComponent(1));
+        assertThat(componentName.getUnique(existingBlock), is(DEFAULT_NAME));
+    }
 }
