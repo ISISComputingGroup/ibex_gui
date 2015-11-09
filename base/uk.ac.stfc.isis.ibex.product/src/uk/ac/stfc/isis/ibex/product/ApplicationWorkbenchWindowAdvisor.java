@@ -86,11 +86,14 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
         int windowY = 0;
         boolean windowMaximised = true;
 
+        IPath workbenchXml;
         IPath workspaceRoot = ResourcesPlugin.getWorkspace().getRoot().getLocation();
 
-        workspaceRoot = workspaceRoot.append(new Path(".metadata"));
-        workspaceRoot = workspaceRoot.append(new Path(".plugins"));
-        workspaceRoot = workspaceRoot.append(new Path("org.eclipse.ui.workbench"));
+        workbenchXml = workspaceRoot.append(new Path(".metadata"))
+                .append(new Path(".plugins"))
+                .append(new Path("org.eclipse.ui.workbench"))
+                .append("/workbench.xml");
+        
 
         // This pattern picks out from <window height="800" maximized="true"
         // width="1100" x="0" y="0">
@@ -103,7 +106,7 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
                 .compile("<window height=\"(\\d+)\" width=\"(\\d+)\" x=\"(-?\\d+)\" y=\"(-?\\d+)\">");
 
         try {
-            File file = new File(workspaceRoot + "/workbench.xml");
+            File file = new File(workbenchXml.toOSString());
             FileReader reader = new FileReader(file);
             BufferedReader bufferedReader = new BufferedReader(reader);
             
