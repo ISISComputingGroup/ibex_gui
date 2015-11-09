@@ -40,4 +40,9 @@ public class LocalHostInstrumentInfo extends InstrumentInfo {
     public static String validLocalInstrumentRegex() {
         return "localhost";
     }
+
+    @Override
+    public boolean hasValidHostName() {
+        return true;
+    }
 }
