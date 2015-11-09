@@ -29,6 +29,10 @@
  */
 package uk.ac.stfc.isis.ibex.ui.synoptic.editor.instrument;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
+
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
@@ -61,7 +65,7 @@ import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.UpdateTypes;
 
 public class InstrumentTreeView extends Composite {
 	private SynopticViewModel instrumentViewModel;
-	private ComponentDescription currentDragSource;
+	private Collection<ComponentDescription> currentDragSource;
 
 	private TreeViewer treeViewer;
 	private MenuItem mnuDeleteSelected;
@@ -102,7 +106,7 @@ public class InstrumentTreeView extends Composite {
 	}
 
 	public void createControls(Composite parent) {
-		treeViewer = new TreeViewer(parent, SWT.SINGLE | SWT.BORDER);
+		treeViewer = new TreeViewer(parent, SWT.MULTI | SWT.BORDER);
 		treeViewer.getTree().setLayoutData(
 				new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 
@@ -124,9 +128,9 @@ public class InstrumentTreeView extends Composite {
 		tree.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				ComponentDescription selected = getSelected();
-				instrumentViewModel.setSelectedComponent(selected);
-				mnuDeleteSelected.setEnabled(selected != null);
+				Collection<ComponentDescription> selected = getSelected();
+				//instrumentViewModel.setSelectedComponent(selected.iterator().next());
+				mnuDeleteSelected.setEnabled(selected != null && !selected.isEmpty());
 			}
 		});
 
@@ -160,18 +164,19 @@ public class InstrumentTreeView extends Composite {
 		});
 	}
 
-	public ComponentDescription getSelected() {
+	public Collection<ComponentDescription> getSelected() {
 		IStructuredSelection selection = (IStructuredSelection) treeViewer
 				.getSelection();
-		return (ComponentDescription) selection.getFirstElement();
+		ArrayList<ComponentDescription> selected = new ArrayList<ComponentDescription>();
+		Iterator it = selection.iterator();
+		while(it.hasNext()) {
+			selected.add((ComponentDescription)it.next());
+		}
+		return selected;
 	}
 
-	public ComponentDescription getCurrentDragSource() {
+	public Collection<ComponentDescription> getCurrentDragSource() {
 		return currentDragSource;
-	}
-
-	public void setCurrentDragSource(ComponentDescription currentDragSource) {
-		this.currentDragSource = currentDragSource;
 	}
 
 	public void refresh() {
@@ -185,5 +190,9 @@ public class InstrumentTreeView extends Composite {
 	private void setTreeInput() {
 		treeViewer.setInput(instrumentViewModel.getInstrument());
 		treeViewer.expandAll();
+	}
+
+	public void setCurrentDragSource(Collection<ComponentDescription> currentDragSource) {
+		this.currentDragSource = currentDragSource;
 	}
 }

@@ -29,6 +29,8 @@
  */
 package uk.ac.stfc.isis.ibex.ui.synoptic.editor.component;
 
+import java.util.Collection;
+
 import org.eclipse.swt.dnd.DragSourceEvent;
 import org.eclipse.swt.dnd.DragSourceListener;
 
@@ -49,7 +51,7 @@ public class ComponentDragListener implements DragSourceListener {
 
 	@Override
 	public void dragStart(DragSourceEvent event) {
-		ComponentDescription selection = viewer.getSelected();
+		Collection<ComponentDescription> selection = viewer.getSelected();
 		viewer.setCurrentDragSource(selection);
 	}
 

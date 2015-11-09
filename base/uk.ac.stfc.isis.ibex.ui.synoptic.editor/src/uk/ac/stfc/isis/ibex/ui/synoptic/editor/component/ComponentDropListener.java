@@ -29,6 +29,8 @@
  */
 package uk.ac.stfc.isis.ibex.ui.synoptic.editor.component;
 
+import java.util.Collection;
+
 import org.eclipse.jface.viewers.ViewerDropAdapter;
 import org.eclipse.swt.dnd.DropTargetEvent;
 import org.eclipse.swt.dnd.TransferData;
@@ -62,53 +64,56 @@ public class ComponentDropListener extends ViewerDropAdapter {
 			return;
 		}
 
-		ComponentDescription sourceComponent = viewer.getCurrentDragSource();
+		Collection<ComponentDescription> sourceComponents = viewer.getCurrentDragSource();
 		ComponentDescription targetComponent = (ComponentDescription) determineTarget(event);
-		ComponentDescription sourceParent = sourceComponent.getParent();
 		int location = this.determineLocation(event);
 		
-		// remove component from parent's list of components
-		if (location == LOCATION_BEFORE || location == LOCATION_AFTER
-				|| location == LOCATION_ON) {
-			if (sourceParent == null) {
-				// sourceParent is the instrument
-				SynopticDescription parent = instrument.getInstrument();
-				parent.removeComponent(sourceComponent);
-			} else {
-				sourceParent.removeComponent(sourceComponent);
+		for (ComponentDescription sourceComponent : sourceComponents) {
+			ComponentDescription sourceParent = sourceComponent.getParent();
+			
+			// remove component from parent's list of components
+			if (location == LOCATION_BEFORE || location == LOCATION_AFTER
+					|| location == LOCATION_ON) {
+				if (sourceParent == null) {
+					// sourceParent is the instrument
+					SynopticDescription parent = instrument.getInstrument();
+					parent.removeComponent(sourceComponent);
+				} else {
+					sourceParent.removeComponent(sourceComponent);
+				}
+			}
+	
+			if (location == LOCATION_BEFORE || location == LOCATION_AFTER) {
+				// Get the parent of the target component - fail if null
+				ComponentDescription targetParent = targetComponent.getParent();
+	
+				// parent == instrument
+				if (targetParent == null) {
+					SynopticDescription parent = instrument.getInstrument();
+					int position = parent.components().indexOf(targetComponent);
+					if (location == LOCATION_AFTER) {
+						++position;
+					}
+	
+					parent.addComponent(sourceComponent, position);
+				} else {
+					int position = targetParent.components().indexOf(
+							targetComponent);
+					if (location == LOCATION_AFTER) {
+						++position;
+					}
+	
+					targetParent.addComponent(sourceComponent, position);
+				}
+	
+				sourceComponent.setParent(targetParent);
+			} else if (location == LOCATION_ON) {
+				// Move the dragged component to its new parent
+				targetComponent.addComponent(sourceComponent);
+				sourceComponent.setParent(targetComponent);
 			}
 		}
-
-		if (location == LOCATION_BEFORE || location == LOCATION_AFTER) {
-			// Get the parent of the target component - fail if null
-			ComponentDescription targetParent = targetComponent.getParent();
-
-			// parent == instrument
-			if (targetParent == null) {
-				SynopticDescription parent = instrument.getInstrument();
-				int position = parent.components().indexOf(targetComponent);
-				if (location == LOCATION_AFTER) {
-					++position;
-				}
-
-				parent.addComponent(sourceComponent, position);
-			} else {
-				int position = targetParent.components().indexOf(
-						targetComponent);
-				if (location == LOCATION_AFTER) {
-					++position;
-				}
-
-				targetParent.addComponent(sourceComponent, position);
-			}
-
-			sourceComponent.setParent(targetParent);
-		} else if (location == LOCATION_ON) {
-			// Move the dragged component to its new parent
-			targetComponent.addComponent(sourceComponent);
-			sourceComponent.setParent(targetComponent);
-		}
-
+		
 		super.drop(event);
 	}
 
@@ -127,8 +132,8 @@ public class ComponentDropListener extends ViewerDropAdapter {
 	 */
 	public boolean validateDrop(DropTargetEvent event) {
 		// Fail if the component being dragged is null
-		ComponentDescription sourceComponent = viewer.getCurrentDragSource();
-		if (sourceComponent == null) {
+		Collection<ComponentDescription> sourceComponents = viewer.getCurrentDragSource();
+		if (sourceComponents == null) {
 			return false;
 		}
 
@@ -139,22 +144,23 @@ public class ComponentDropListener extends ViewerDropAdapter {
 			return false;
 		}
 
-		// Fail if trying to drop onto self
-		int location = this.determineLocation(event);
-		if (sourceComponent == targetObject) {
-			return false;
-		}
-
 		// Fail if no target
+		int location = this.determineLocation(event);
 		if (location == LOCATION_NONE) {
 			return false;
 		}
 		
-		//Fail if trying to drop a parent on to a child
-		if (sourceComponent.hasChild((ComponentDescription) targetObject)) {
-			return false;
+		for (ComponentDescription sourceComponent : sourceComponents) {
+			//Fail if trying to drop a parent on to a child
+			if (sourceComponent.hasChild((ComponentDescription) targetObject)) {
+				return false;
+			}
+			
+			// Fail if trying to drop onto self
+			if (sourceComponent == targetObject) {
+				return false;
+			}
 		}
-
 		return true;
 	}
 
