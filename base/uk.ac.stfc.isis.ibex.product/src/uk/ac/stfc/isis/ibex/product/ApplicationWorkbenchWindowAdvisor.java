@@ -19,6 +19,8 @@
 
 package uk.ac.stfc.isis.ibex.product;
 
+import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.application.ActionBarAdvisor;
 import org.eclipse.ui.application.IActionBarConfigurer;
@@ -39,6 +41,7 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
     @Override
     public void preWindowOpen() {
         IWorkbenchWindowConfigurer configurer = getWindowConfigurer();
+        configurer.setInitialSize(new Point(800, 600));
         
         configurer.setShowStatusLine(true);   
         configurer.setShowCoolBar(false);
@@ -50,5 +53,14 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
     	super.postWindowCreate();
         final Shell shell = getWindowConfigurer().getWindow().getShell();
         shell.setMinimumSize(1100, 800);   
+    }
+    
+    @Override
+    public void postWindowOpen() {
+    	Display display = Display.getCurrent();
+    	Shell shell = display.getActiveShell();
+    	
+    	shell.setMaximized(true);
+    	
     }
 }
