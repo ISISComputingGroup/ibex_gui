@@ -29,6 +29,7 @@
  */
 package uk.ac.stfc.isis.ibex.ui.synoptic.editor.model;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -58,7 +59,7 @@ public class SynopticViewModel {
 	
 	private SynopticDescription instrument;
 
-	private ComponentDescription selectedComponent;
+	private List<ComponentDescription> selectedComponents;
 	private PV selectedPV;
 	private Property selectedProperty;
 
@@ -94,91 +95,111 @@ public class SynopticViewModel {
 		component.setType(ComponentType.UNKNOWN);
 
 		int position = 0;
-		if (selectedComponent == null) {
+		if (selectedComponents == null || selectedComponents.size() != 1) {
 			instrument.addComponent(component);
 		} else {
-			ComponentDescription parent = selectedComponent.getParent();
+			ComponentDescription parent = selectedComponents.get(0).getParent();
 
 			if (parent == null) {
-				position = instrument.components().indexOf(selectedComponent) + 1;
+				position = instrument.components().indexOf(selectedComponents) + 1;
 				instrument.addComponent(component, position);
 			} else {
-				position = parent.components().indexOf(selectedComponent) + 1;
+				position = parent.components().indexOf(selectedComponents) + 1;
 				parent.addComponent(component, position);
 			}
 		}
 
 		broadcastInstrumentUpdate(UpdateTypes.NEW_COMPONENT);
-		setSelectedComponent(component);
+		setSelectedComponent(Arrays.asList(component));
 	}
 
 	public void removeSelected() {
-		if (selectedComponent != null) {
-			ComponentDescription parent = selectedComponent.getParent();
-			if (parent == null) {
-				instrument.removeComponent(selectedComponent);
-			} else {
-				parent.removeComponent(selectedComponent);
+		if (selectedComponents != null) {
+			for (ComponentDescription selected : selectedComponents) {
+				ComponentDescription parent = selected.getParent();
+				if (parent == null) {
+					instrument.removeComponent(selected);
+				} else {
+					parent.removeComponent(selected);
+				}
 			}
-
+			setSelectedComponent(null);
 			broadcastInstrumentUpdate(UpdateTypes.DELETE_COMPONENT);
 		}
 	}
 
 	public int addNewPV() {
-		PV pv = new PV();
-		pv.setDisplayName("New PV");
-		pv.setAddress("NONE");
-		RecordType rt = new RecordType();
-		rt.setIO(IO.READ);
-		pv.setRecordType(rt);
-		pv.setPvType(PVType.LOCAL_PV);
-
-		int index = 0;
-		
-		if (selectedPV == null) {
-			selectedComponent.addPV(pv);
-		} else {
-			index = selectedComponent.pvs().indexOf(selectedPV) + 1;
-			selectedComponent.addPV(pv, index);
+		if (selectedComponents != null && selectedComponents.size() == 1) {
+			PV pv = new PV();
+			pv.setDisplayName("New PV");
+			pv.setAddress("NONE");
+			RecordType rt = new RecordType();
+			rt.setIO(IO.READ);
+			pv.setRecordType(rt);
+			pv.setPvType(PVType.LOCAL_PV);
+	
+			int index = 0;
+			
+			ComponentDescription selected = selectedComponents.get(0);
+			
+			if (selectedPV == null) {
+				selected.addPV(pv);
+			} else {
+				index = selected.pvs().indexOf(selectedPV) + 1;
+				selected.addPV(pv, index);
+			}
+	
+			broadcastInstrumentUpdate(UpdateTypes.EDIT_PV);
+			
+			return index;
 		}
-
-		broadcastInstrumentUpdate(UpdateTypes.EDIT_PV);
 		
-		return index;
+		return 0;
 	}
 
 	public void promoteSelectedPV() {
-		selectedComponent.promotePV(selectedPV);
-		broadcastInstrumentUpdate(UpdateTypes.EDIT_PV);
+		if (selectedComponents != null && selectedComponents.size() == 1) {
+			selectedComponents.get(0).promotePV(selectedPV);
+			broadcastInstrumentUpdate(UpdateTypes.EDIT_PV);
+		}
 	}
 
 	public void demoteSelectedPV() {
-		selectedComponent.demotePV(selectedPV);
-		broadcastInstrumentUpdate(UpdateTypes.EDIT_PV);
+		if (selectedComponents != null && selectedComponents.size() == 1) {
+			selectedComponents.get(0).demotePV(selectedPV);
+			broadcastInstrumentUpdate(UpdateTypes.EDIT_PV);
+		}
 	}
 
 	public boolean canPromotePV() {
-		if (selectedPV == null) {
+		if (selectedComponents != null && selectedComponents.size() == 1) {
+			if (selectedPV == null) {
+				return false;
+			}
+	
+			int index = selectedComponents.get(0).pvs().indexOf(selectedPV);
+			return index > 0;
+		} else {
 			return false;
 		}
-
-		int index = selectedComponent.pvs().indexOf(selectedPV);
-		return index > 0;
 	}
 
 	public boolean canDemotePV() {
-		if (selectedPV == null) {
+		if (selectedComponents != null && selectedComponents.size() == 1) {
+			if (selectedPV == null) {
+				return false;
+			}
+	
+			int index = selectedComponents.get(0).pvs().indexOf(selectedPV);
+			return index < selectedComponents.get(0).pvs().size() - 1;
+		}else{
 			return false;
 		}
-
-		int index = selectedComponent.pvs().indexOf(selectedPV);
-		return index < selectedComponent.pvs().size() - 1;
 	}
 
 	public void removeSelectedPV() {
-		if (selectedComponent != null && selectedPV != null) {
-			selectedComponent.removePV(selectedPV);
+		if (selectedComponents != null && selectedComponents.size() == 1 && selectedPV != null) {
+			selectedComponents.get(0).removePV(selectedPV);
 			setSelectedPV(null);
 			broadcastInstrumentUpdate(UpdateTypes.EDIT_PV);
 		}
@@ -195,15 +216,19 @@ public class SynopticViewModel {
 		}
 	}
 
-	public void setSelectedComponent(ComponentDescription selected) {
-		broadcastComponentSelectionChanged(selectedComponent,
-				selectedComponent = selected);
+	public void setSelectedComponent(List<ComponentDescription> selected) {
+		broadcastComponentSelectionChanged(selectedComponents,
+				selectedComponents = selected);
 		setSelectedPV(null);
 		setSelectedProperty(null);
 	}
 	
 	public ComponentDescription getSelectedComponent() {
-		return selectedComponent;
+		if (selectedComponents != null && selectedComponents.size() == 1) {
+			return selectedComponents.get(0);
+		} else {
+			return null;
+		}
 	}
 
 	public void updateSelectedPV(String name, String address, IO mode, PVType type) {
@@ -338,7 +363,7 @@ public class SynopticViewModel {
 	}
 
 	private void broadcastComponentSelectionChanged(
-			ComponentDescription oldSelected, ComponentDescription newSelected) {
+			List<ComponentDescription> oldSelected, List<ComponentDescription> newSelected) {
 		for (IComponentSelectionListener listener : componentSelectionListeners) {
 			listener.selectionChanged(oldSelected, newSelected);
 		}

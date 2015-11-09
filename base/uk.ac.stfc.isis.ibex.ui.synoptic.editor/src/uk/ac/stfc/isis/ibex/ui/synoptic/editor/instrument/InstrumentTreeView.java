@@ -32,6 +32,7 @@ package uk.ac.stfc.isis.ibex.ui.synoptic.editor.instrument;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.List;
 
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.StructuredSelection;
@@ -90,8 +91,8 @@ public class InstrumentTreeView extends Composite {
 			.addComponentSelectionListener(new IComponentSelectionListener() {
 				@Override
 				public void selectionChanged(
-					ComponentDescription oldSelection,
-					ComponentDescription newSelection) {
+					List<ComponentDescription> oldSelection,
+					List<ComponentDescription> newSelection) {
 
 					if (newSelection != null) {
 						treeViewer.setSelection(new StructuredSelection(newSelection));
@@ -128,8 +129,8 @@ public class InstrumentTreeView extends Composite {
 		tree.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				Collection<ComponentDescription> selected = getSelected();
-				//instrumentViewModel.setSelectedComponent(selected.iterator().next());
+				List<ComponentDescription> selected = new ArrayList<ComponentDescription>(getSelected());
+				instrumentViewModel.setSelectedComponent(selected);
 				mnuDeleteSelected.setEnabled(selected != null && !selected.isEmpty());
 			}
 		});

@@ -19,6 +19,8 @@
 
 package uk.ac.stfc.isis.ibex.ui.synoptic.editor.instrument;
 
+import java.util.List;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -63,8 +65,8 @@ public class InstrumentTreeControls extends Composite {
 		instrument.addComponentSelectionListener(new IComponentSelectionListener() {
 			@Override
 			public void selectionChanged(
-					ComponentDescription oldSelection, 
-					ComponentDescription newSelection) {
+					List<ComponentDescription> oldSelection, 
+					List<ComponentDescription> newSelection) {
 				refresh();
 			}
 		});
@@ -95,6 +97,13 @@ public class InstrumentTreeControls extends Composite {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				instrumentViewModel.removeSelected();
+			}
+		});
+		
+		instrumentViewModel.addComponentSelectionListener(new IComponentSelectionListener() {
+			@Override
+			public void selectionChanged(List<ComponentDescription> oldSelection, List<ComponentDescription> newSelection) {
+				btnDelete.setEnabled(newSelection != null && !newSelection.isEmpty());
 			}
 		});
 
@@ -129,8 +138,6 @@ public class InstrumentTreeControls extends Composite {
 	}
 
 	public void refresh() {
-		ComponentDescription selected = instrumentViewModel.getSelectedComponent();
 		btnShowBeam.setSelection(instrumentViewModel.getShowBeam());
-		btnDelete.setEnabled(selected != null);
 	}
 }

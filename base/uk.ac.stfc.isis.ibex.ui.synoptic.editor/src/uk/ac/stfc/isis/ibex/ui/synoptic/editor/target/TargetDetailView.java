@@ -20,6 +20,7 @@
 package uk.ac.stfc.isis.ibex.ui.synoptic.editor.target;
 
 import java.util.Arrays;
+import java.util.List;
 
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ComboViewer;
@@ -72,8 +73,12 @@ public class TargetDetailView extends Composite {
 		
 		instrument.addComponentSelectionListener(new IComponentSelectionListener() {			
 			@Override
-			public void selectionChanged(ComponentDescription oldSelection, ComponentDescription newSelection) {
-				showTarget(newSelection);
+			public void selectionChanged(List<ComponentDescription> oldSelection, List<ComponentDescription> newSelection) {
+				if (newSelection != null && newSelection.size() == 1) {
+					showTarget(newSelection.iterator().next());
+				} else {
+					showTarget(null);
+				}
 			}
 		});
 		
