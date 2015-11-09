@@ -17,4 +17,6 @@ Export-Package: uk.ac.stfc.isis.ibex.instrument,
  uk.ac.stfc.isis.ibex.instrument.internal,
  uk.ac.stfc.isis.ibex.instrument.pv
 Bundle-Activator: uk.ac.stfc.isis.ibex.instrument.Instrument
-Import-Package: uk.ac.stfc.isis.ibex.model
+Import-Package: org.apache.logging.log4j,
+ uk.ac.stfc.isis.ibex.logger,
+ uk.ac.stfc.isis.ibex.model

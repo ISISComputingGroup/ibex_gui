@@ -22,12 +22,17 @@ package uk.ac.stfc.isis.ibex.instrument;
 import uk.ac.stfc.isis.ibex.epics.pv.PVAddress;
 import uk.ac.stfc.isis.ibex.instrument.internal.PVPrefix;
 
+/**
+ * Some basic info that defines an instrument. Instruments hostnames will always
+ * start with NDX and contain only alphanumeric characters or underscores.
+ */
 public class InstrumentInfo {
 
 	private final String name;
 	
 	public InstrumentInfo(String name) {
 		this.name = name;
+        assert(hostName().matches(validInstrumentRegex()));
 	}
 
 	public String name() {
@@ -39,10 +44,14 @@ public class InstrumentInfo {
 	}
 	
     public String hostName() {
-		return PVPrefix.NDX + name;
+        return PVPrefix.NDX + name;
 	}
 
     public static String validInstrumentRegex() {
-        return "NDX[A-Z]+";
+        return PVPrefix.NDX + "[_a-zA-Z0-9]+";
+    }
+
+    public boolean hasValidHostName() {
+        return hostName().matches(validInstrumentRegex());
     }
 }

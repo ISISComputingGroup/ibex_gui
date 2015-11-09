@@ -19,6 +19,8 @@
 
 package uk.ac.stfc.isis.ibex.ui.databrowser;
 
+import java.util.regex.Pattern;
+
 import org.csstudio.trends.databrowser2.Activator;
 import org.csstudio.trends.databrowser2.preferences.Preferences;
 import org.eclipse.jface.preference.IPreferenceStore;
@@ -71,16 +73,20 @@ public class DataBrowserSettings implements InstrumentInfoReceiver {
      * @throws Exception
      */
     private static String updateHostName(String hostName, String preference) {
-        if (preference.matches(InstrumentInfo.validInstrumentRegex())) {
-            preference = preference.replaceAll("NDX[A-Z]+", hostName);
-        } else if (preference.matches(LocalHostInstrumentInfo.validLocalInstrumentRegex())) {
-            preference = preference.replaceAll("localhost", hostName);
+        if (containsRegex(preference, InstrumentInfo.validInstrumentRegex())) {
+            preference = preference.replaceAll(InstrumentInfo.validInstrumentRegex(), hostName);
+        } else if (containsRegex(preference, LocalHostInstrumentInfo.validLocalInstrumentRegex())) {
+            preference = preference.replaceAll(LocalHostInstrumentInfo.validLocalInstrumentRegex(), hostName);
         } else {
-            throw new RuntimeException("Invalid preference string, does not contain a matching host pattern");
+            throw new RuntimeException("Invalid preference string, does not contain a matching host pattern:" + preference);
         }
 
         return preference;
 	}
+    
+    private static boolean containsRegex(String string, String regex) {
+    	return Pattern.compile(regex).matcher(string).find();
+    }
 
     private String getDatabaseUrls() {
         return preferences.getString(Preferences.URLS);
