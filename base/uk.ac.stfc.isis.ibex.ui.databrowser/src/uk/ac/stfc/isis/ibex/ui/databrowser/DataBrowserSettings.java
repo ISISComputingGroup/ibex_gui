@@ -61,17 +61,6 @@ public class DataBrowserSettings implements InstrumentInfoReceiver {
         preferences.setValue(Preferences.ARCHIVES, updateHostName(hostName, getArchives()));
 	}
 	
-    /**
-     * This class assumes machine names begin with NDX, e.g. NDXLARMOR, or are
-     * localhost.
-     * 
-     * @param hostName
-     *            The host name of the new machine.
-     * @param preference
-     *            The preference string.
-     * @return The preference string with the host name replace.
-     * @throws Exception
-     */
     private static String updateHostName(String hostName, String preference) {
         if (containsRegex(preference, InstrumentInfo.validInstrumentRegex())) {
             preference = preference.replaceAll(InstrumentInfo.validInstrumentRegex(), hostName);
