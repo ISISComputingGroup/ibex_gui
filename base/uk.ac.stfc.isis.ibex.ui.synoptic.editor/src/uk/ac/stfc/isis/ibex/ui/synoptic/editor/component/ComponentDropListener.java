@@ -36,7 +36,7 @@ import org.eclipse.swt.dnd.DropTargetEvent;
 import org.eclipse.swt.dnd.TransferData;
 
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.ComponentDescription;
-import uk.ac.stfc.isis.ibex.synoptic.model.desc.SynopticDescription;
+import uk.ac.stfc.isis.ibex.synoptic.model.desc.SynopticParentDescription;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.instrument.InstrumentTreeView;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.SynopticViewModel;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.UpdateTypes;
@@ -69,42 +69,24 @@ public class ComponentDropListener extends ViewerDropAdapter {
 		int location = this.determineLocation(event);
 		
 		for (ComponentDescription sourceComponent : sourceComponents) {
-			ComponentDescription sourceParent = sourceComponent.getParent();
+			SynopticParentDescription sourceParent = instrument.getParent(sourceComponent);
 			
 			// remove component from parent's list of components
 			if (location == LOCATION_BEFORE || location == LOCATION_AFTER
 					|| location == LOCATION_ON) {
-				if (sourceParent == null) {
-					// sourceParent is the instrument
-					SynopticDescription parent = instrument.getInstrument();
-					parent.removeComponent(sourceComponent);
-				} else {
-					sourceParent.removeComponent(sourceComponent);
-				}
+				sourceParent.removeComponent(sourceComponent);
 			}
 	
 			if (location == LOCATION_BEFORE || location == LOCATION_AFTER) {
 				// Get the parent of the target component - fail if null
-				ComponentDescription targetParent = targetComponent.getParent();
-	
-				// parent == instrument
-				if (targetParent == null) {
-					SynopticDescription parent = instrument.getInstrument();
-					int position = parent.components().indexOf(targetComponent);
-					if (location == LOCATION_AFTER) {
-						++position;
-					}
-	
-					parent.addComponent(sourceComponent, position);
-				} else {
-					int position = targetParent.components().indexOf(
-							targetComponent);
-					if (location == LOCATION_AFTER) {
-						++position;
-					}
-	
-					targetParent.addComponent(sourceComponent, position);
+				SynopticParentDescription targetParent = instrument.getParent(targetComponent);
+				int position = targetParent.components().indexOf(
+						targetComponent);
+				if (location == LOCATION_AFTER) {
+					++position;
 				}
+
+				targetParent.addComponent(sourceComponent, position);
 	
 				sourceComponent.setParent(targetParent);
 			} else if (location == LOCATION_ON) {

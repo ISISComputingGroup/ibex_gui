@@ -78,7 +78,7 @@ public class ComponentDetailView extends Composite {
                 }
                 if (updateType != UpdateTypes.EDIT_COMPONENT && updateType != UpdateTypes.EDIT_TARGET
                         && updateType != UpdateTypes.ADD_TARGET) {
-					component = instrument.getSelectedComponent();
+					component = instrument.getFirstSelectedComponent();
 					showComponent(component);
 				}
 			}

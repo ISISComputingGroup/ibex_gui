@@ -66,7 +66,7 @@ public class TargetDetailView extends Composite {
 			@Override
 			public void instrumentUpdated(UpdateTypes updateType) {
 				if (updateType != UpdateTypes.EDIT_COMPONENT) {
-					showTarget(instrument.getSelectedComponent());
+					showTarget(instrument.getFirstSelectedComponent());
 				}
 			}
 		});
@@ -144,7 +144,7 @@ public class TargetDetailView extends Composite {
 			
 			TargetPropertyList properties = new TargetPropertyList(fieldsComposite, instrument);
 			properties.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
-			properties.showPropertyList(instrument.getSelectedComponent());
+			properties.showPropertyList(instrument.getFirstSelectedComponent());
 		}
 		
 		addComposite = new Composite(parent, SWT.NONE);

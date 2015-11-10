@@ -85,7 +85,7 @@ public class TargetPropertyList extends Composite {
 							selected = -1;
 							break;
 					}
-					showPropertyList(instrument.getSelectedComponent());
+					showPropertyList(instrument.getFirstSelectedComponent());
 					list.refresh();
 					list.getList().setSelection(selected);
 					setButtonStates();

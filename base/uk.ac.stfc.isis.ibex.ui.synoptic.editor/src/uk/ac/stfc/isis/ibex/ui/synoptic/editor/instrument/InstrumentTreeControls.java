@@ -95,7 +95,7 @@ public class InstrumentTreeControls extends Composite {
         btnCopyComponent.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
-                synopticViewModel.copySelected();
+                synopticViewModel.copySelectedComponent();
             }
         });
         
@@ -105,7 +105,7 @@ public class InstrumentTreeControls extends Composite {
         btnDelete.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
-                synopticViewModel.removeSelected();
+                synopticViewModel.removeSelectedComponent();
             }
         });
 		

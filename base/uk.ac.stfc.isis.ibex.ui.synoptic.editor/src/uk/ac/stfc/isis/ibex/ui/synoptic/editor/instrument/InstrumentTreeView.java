@@ -150,7 +150,7 @@ public class InstrumentTreeView extends Composite {
 			@Override
 			public void keyPressed(KeyEvent e) {
 				if (e.keyCode == SWT.DEL) {
-					synopticViewModel.removeSelected();
+					synopticViewModel.removeSelectedComponent();
 					refresh();
 				}
 			}
@@ -165,7 +165,7 @@ public class InstrumentTreeView extends Composite {
         mnuCopySelected.addListener(SWT.Selection, new Listener() {
             @Override
             public void handleEvent(Event event) {
-                synopticViewModel.copySelected();
+                synopticViewModel.copySelectedComponent();
                 refresh();
             }
         });
@@ -175,7 +175,7 @@ public class InstrumentTreeView extends Composite {
 		mnuDeleteSelected.addListener(SWT.Selection, new Listener() {
 			@Override
 			public void handleEvent(Event event) {
-				synopticViewModel.removeSelected();
+				synopticViewModel.removeSelectedComponent();
 				refresh();
 			}
 		});

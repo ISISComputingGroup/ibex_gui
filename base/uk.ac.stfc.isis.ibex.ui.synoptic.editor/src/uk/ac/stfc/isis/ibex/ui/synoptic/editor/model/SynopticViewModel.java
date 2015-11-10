@@ -42,6 +42,7 @@ import uk.ac.stfc.isis.ibex.synoptic.Synoptic;
 import uk.ac.stfc.isis.ibex.synoptic.SynopticModel;
 import uk.ac.stfc.isis.ibex.synoptic.model.ComponentType;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.ComponentDescription;
+import uk.ac.stfc.isis.ibex.synoptic.model.desc.SynopticParentDescription;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.IO;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.PV;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.Property;
@@ -91,6 +92,14 @@ public class SynopticViewModel {
 		return instrument;
 	}
 
+	public SynopticParentDescription getParent(ComponentDescription component) {
+		SynopticParentDescription parent = component.getParent();
+		if (parent == null) {
+			return instrument;
+		}
+		return parent;
+	}
+	 
 	public void addNewComponent() {
 		ComponentDescription component = new ComponentDescription();
 		component.setName("new component");
@@ -100,15 +109,9 @@ public class SynopticViewModel {
 		if (selectedComponents == null || selectedComponents.size() != 1) {
 			instrument.addComponent(component);
 		} else {
-			ComponentDescription parent = selectedComponents.get(0).getParent();
-
-			if (parent == null) {
-				position = instrument.components().indexOf(selectedComponents) + 1;
-				instrument.addComponent(component, position);
-			} else {
-				position = parent.components().indexOf(selectedComponents) + 1;
-				parent.addComponent(component, position);
-			}
+			SynopticParentDescription parent = getParent(getFirstSelectedComponent());
+			position = parent.components().indexOf(getFirstSelectedComponent()) + 1;
+			parent.addComponent(component, position);
 		}
 
 		broadcastInstrumentUpdate(UpdateTypes.NEW_COMPONENT);
@@ -116,7 +119,7 @@ public class SynopticViewModel {
 
 	}
 
-    public void copySelected() {
+    public void copySelectedComponent() {
         if (selectedComponents == null || selectedComponents.isEmpty()) {
             return;
         }
@@ -144,32 +147,23 @@ public class SynopticViewModel {
     private void addComponentsInCorrectLocation(List<ComponentDescription> componentCopies) {
     	ComponentDescription lastSelectedComponent = selectedComponents.get(selectedComponents.size() - 1);
     	
-        ComponentDescription parent = lastSelectedComponent.getParent();
+        SynopticParentDescription parent = getParent(lastSelectedComponent);
 
         int position = 0;
     	int idx = 1;
         
         for (ComponentDescription componentCopy : componentCopies) {
-	        if (parent == null) {
-	            position = instrument.components().indexOf(lastSelectedComponent) + idx;
-	            instrument.addComponent(componentCopy, position);
-	        } else {
-	            position = parent.components().indexOf(lastSelectedComponent) + idx;
-	            parent.addComponent(componentCopy, position);
-	        }
+	        position = parent.components().indexOf(lastSelectedComponent) + idx;
+	        parent.addComponent(componentCopy, position);
 	        idx += 1;
     	}
     }
 
-	public void removeSelected() {
+	public void removeSelectedComponent() {
 		if (selectedComponents != null) {
 			for (ComponentDescription selected : selectedComponents) {
-				ComponentDescription parent = selected.getParent();
-				if (parent == null) {
-					instrument.removeComponent(selected);
-				} else {
-					parent.removeComponent(selected);
-				}
+				SynopticParentDescription parent = getParent(selected);
+				parent.removeComponent(selected);
 			}
 			setSelectedComponent(null);
 			broadcastInstrumentUpdate(UpdateTypes.DELETE_COMPONENT);
@@ -177,76 +171,60 @@ public class SynopticViewModel {
 	}
 
 	public int addNewPV() {
-		if (selectedComponents != null && selectedComponents.size() == 1) {
-			PV pv = new PV();
-			pv.setDisplayName("New PV");
-			pv.setAddress("NONE");
-			RecordType rt = new RecordType();
-			rt.setIO(IO.READ);
-			pv.setRecordType(rt);
-			pv.setPvType(PVType.LOCAL_PV);
-	
-			int index = 0;
-			
-			ComponentDescription selected = selectedComponents.get(0);
-			
-			if (selectedPV == null) {
-				selected.addPV(pv);
-			} else {
-				index = selected.pvs().indexOf(selectedPV) + 1;
-				selected.addPV(pv, index);
-			}
-	
-			broadcastInstrumentUpdate(UpdateTypes.EDIT_PV);
-			
-			return index;
-		}
+		PV pv = new PV();
+		pv.setDisplayName("New PV");
+		pv.setAddress("NONE");
+		RecordType rt = new RecordType();
+		rt.setIO(IO.READ);
+		pv.setRecordType(rt);
+		pv.setPvType(PVType.LOCAL_PV);
+
+		int index = 0;
 		
-		return 0;
+		ComponentDescription selected = getFirstSelectedComponent();
+		
+		if (selectedPV == null) {
+			selected.addPV(pv);
+		} else {
+			index = selected.pvs().indexOf(selectedPV) + 1;
+			selected.addPV(pv, index);
+		}
+
+		broadcastInstrumentUpdate(UpdateTypes.EDIT_PV);
+		
+		return index;
 	}
 
 	public void promoteSelectedPV() {
-		if (selectedComponents != null && selectedComponents.size() == 1) {
-			selectedComponents.get(0).promotePV(selectedPV);
-			broadcastInstrumentUpdate(UpdateTypes.EDIT_PV);
-		}
+		getFirstSelectedComponent().promotePV(selectedPV);
+		broadcastInstrumentUpdate(UpdateTypes.EDIT_PV);
 	}
 
 	public void demoteSelectedPV() {
-		if (selectedComponents != null && selectedComponents.size() == 1) {
-			selectedComponents.get(0).demotePV(selectedPV);
-			broadcastInstrumentUpdate(UpdateTypes.EDIT_PV);
-		}
+		getFirstSelectedComponent().demotePV(selectedPV);
+		broadcastInstrumentUpdate(UpdateTypes.EDIT_PV);
 	}
 
 	public boolean canPromotePV() {
-		if (selectedComponents != null && selectedComponents.size() == 1) {
-			if (selectedPV == null) {
-				return false;
-			}
-	
-			int index = selectedComponents.get(0).pvs().indexOf(selectedPV);
-			return index > 0;
-		} else {
+		if (selectedPV == null) {
 			return false;
 		}
+
+		int index = selectedComponents.get(0).pvs().indexOf(selectedPV);
+		return index > 0;
 	}
 
 	public boolean canDemotePV() {
-		if (selectedComponents != null && selectedComponents.size() == 1) {
-			if (selectedPV == null) {
-				return false;
-			}
-	
-			int index = selectedComponents.get(0).pvs().indexOf(selectedPV);
-			return index < selectedComponents.get(0).pvs().size() - 1;
-		}else{
+		if (selectedPV == null) {
 			return false;
 		}
+
+		int index = selectedComponents.get(0).pvs().indexOf(selectedPV);
+		return index < selectedComponents.get(0).pvs().size() - 1;
 	}
 
 	public void removeSelectedPV() {
-		if (selectedComponents != null && selectedComponents.size() == 1 && selectedPV != null) {
+		if (selectedPV != null) {
 			selectedComponents.get(0).removePV(selectedPV);
 			setSelectedPV(null);
 			broadcastInstrumentUpdate(UpdateTypes.EDIT_PV);
@@ -254,7 +232,7 @@ public class SynopticViewModel {
 	}
 
 	public void addTargetToSelectedComponent() {
-		ComponentDescription component = getSelectedComponent();
+		ComponentDescription component = getFirstSelectedComponent();
         ComponentType compType = component.type();
         TargetDescription target = DefaultTargetForComponent.defaultTarget(compType);
 		
@@ -271,7 +249,7 @@ public class SynopticViewModel {
 		setSelectedProperty(null);
 	}
 	
-	public ComponentDescription getSelectedComponent() {
+	public ComponentDescription getFirstSelectedComponent() {
 		if (selectedComponents != null && selectedComponents.size() == 1) {
 			return selectedComponents.get(0);
 		} else {
@@ -333,7 +311,7 @@ public class SynopticViewModel {
 
 	public void addNewProperty() {
 		Property property = new Property("?", "?");
-		ComponentDescription component = getSelectedComponent();
+		ComponentDescription component = getFirstSelectedComponent();
 		if (component != null && component.target() != null) {
 			component.target().addProperty(property);
 			broadcastInstrumentUpdate(UpdateTypes.NEW_PROPERTY);
@@ -342,7 +320,7 @@ public class SynopticViewModel {
 	}
 
 	public void removeSelectedProperty() {
-		ComponentDescription component = getSelectedComponent();
+		ComponentDescription component = getFirstSelectedComponent();
 		if (component != null && component.target() != null) {
 			if (component.target().removeProperty(getSelectedProperty())) {
 				setSelectedProperty(null);
@@ -374,7 +352,7 @@ public class SynopticViewModel {
 			return;
 		}
 
-		ComponentDescription component = getSelectedComponent();
+		ComponentDescription component = getFirstSelectedComponent();
 		if (component != null) {
 			TargetDescription target = component.target();
 			if (target != null) {
@@ -463,13 +441,12 @@ public class SynopticViewModel {
 	}
 	
 	public Boolean selectedHaveSameParent() {
-		ComponentDescription parent = selectedComponents.get(0).getParent();
+		SynopticParentDescription parent = selectedComponents.get(0).getParent();
 		for (ComponentDescription selected : selectedComponents) {
 			if (selected.getParent() != parent) {
 				return false;
 			}
 		}
-		
 		return true;
 	}
 }
