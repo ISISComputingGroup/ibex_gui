@@ -25,16 +25,66 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * Provides a default name, appended with a number if needed, for adding or
+ * copying items. Separator and whether or not to use brackets can be
+ * configured.
+ *
+ */
 public class DefaultName {
 
-	private static final String OPTIONAL_NUMBER_AFTER_UNDERSCORE = "_?(\\d+)?";
+    private static final String NUMBER_REGEX = "(\\d+)";
+    private static final String OPENING_GROUP_REGEX = "?(";
+    private static final String CLOSING_GROUP_REGEX = ")?";
 
 	private final String name;
+    private final String separator;
+    private final String openingBracket;
+    private final String closingBracket;
+    private final String openingBracketRegex;
+    private final String closingBracketRegex;
 	private final Pattern namePattern;
 	
-	public DefaultName(String name) {
-		this.name = name; 
-		namePattern = Pattern.compile(name + OPTIONAL_NUMBER_AFTER_UNDERSCORE);
+    /**
+     * Provides an object that gives default names such as NAME, NAME_1, NAME_2
+     * etc.
+     * 
+     * @param name
+     *            The base name, e.g. NAME
+     */
+    public DefaultName(String name) {
+        this(name, "_", false);
+	}
+
+    /**
+     * Separator can be chosen and brackets can be optionally used, e.g. NAME,
+     * NAME (1), NAME (2) if the separator is a space.
+     * 
+     * @param name
+     *            The base name, e.g. NAME
+     * @param separator
+     *            The separator between the name and any number
+     * @param brackets
+     *            True if brackets are desired
+     */
+    public DefaultName(String name, String separator, boolean brackets) {
+        this.name = name;
+        this.separator = separator;
+
+        if (brackets) {
+            openingBracket = "(";
+            closingBracket = ")";
+            openingBracketRegex = "\\" + openingBracket;
+            closingBracketRegex = "\\" + closingBracket;
+        } else {
+            openingBracket = "";
+            closingBracket = "";
+            openingBracketRegex = "";
+            closingBracketRegex = "";
+        }
+
+        namePattern = Pattern.compile(getNameRoot(name) + OPENING_GROUP_REGEX + separator + openingBracketRegex
+                + NUMBER_REGEX + closingBracketRegex + CLOSING_GROUP_REGEX);
 	}
 	
 	public String getUnique(Collection<String> existingNames) {
@@ -44,9 +94,9 @@ public class DefaultName {
 	private String uniqueName(Collection<String> names) {
 		Set<Integer> taken = new HashSet<>();
 		for (String name : names) {
-			Matcher match = namePattern.matcher(name);
+            Matcher match = namePattern.matcher(name);
 			if (match.matches()) {
-				String number = match.group(1);
+                String number = match.group(2);
 				Integer count = number != null ? Integer.parseInt(number) : 0;
 				taken.add(count);
 			}
@@ -55,8 +105,8 @@ public class DefaultName {
 		if (taken.isEmpty() || !taken.contains(0)) {
 			return name;
 		}
-		
-		return name + "_" + nextAvailable(taken);	
+
+        return getNameRoot(name) + separator + openingBracket + nextAvailable(taken) + closingBracket;
 	}
 
 	private String nextAvailable(Set<Integer> taken) {
@@ -67,4 +117,23 @@ public class DefaultName {
 		
 		return i.toString();
 	}
+
+    /**
+     * Returns the name minus any relevant suffix, e.g. _(1)
+     * 
+     * @param name
+     *            The original name
+     * @return The name without the suffix
+     */
+    private String getNameRoot(String name) {
+        Pattern pattern = Pattern
+                .compile("(" + separator + openingBracketRegex + NUMBER_REGEX + closingBracketRegex + ")");
+        Matcher match = pattern.matcher(name);
+        String nameRoot = name;
+        if (match.find()) {
+            nameRoot = name.replace(match.group(1), "");
+        }
+
+        return nameRoot;
+    }
 }

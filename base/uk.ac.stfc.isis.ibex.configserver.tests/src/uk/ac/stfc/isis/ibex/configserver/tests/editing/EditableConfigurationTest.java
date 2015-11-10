@@ -50,6 +50,8 @@ public class EditableConfigurationTest implements IocDescriber {
 	private static final String NAME = "base";
 	private static final String DESCRIPTION = "description";
 	private static final String SYNOPTIC = "";
+
+    private static final double FLOAT_ASSERT_DELTA = 1.0e-6;
 	
 	protected static final EditableIoc GALIL01 = new EditableIoc("GALIL_01");
     protected static final Block GAPX = new Block("GAPX", "ADDRESS", true, true);
@@ -109,9 +111,12 @@ public class EditableConfigurationTest implements IocDescriber {
 	    	assertEquals(exp.getPV(), act.getPV());
 	    	assertEquals(exp.getIsLocal(), act.getIsLocal());
 	    	assertEquals(exp.getIsVisible(), act.getIsVisible());
-            assertEquals(exp.getRCLowLimit(), act.getRCLowLimit());
-            assertEquals(exp.getRCHighLimit(), act.getRCHighLimit());
+            assertEquals(exp.getRCLowLimit(), act.getRCLowLimit(), FLOAT_ASSERT_DELTA);
+            assertEquals(exp.getRCHighLimit(), act.getRCHighLimit(), FLOAT_ASSERT_DELTA);
             assertEquals(exp.getRCEnabled(), act.getRCEnabled());
+            assertEquals(exp.getLogPeriodic(), act.getLogPeriodic());
+            assertEquals(exp.getLogDeadband(), act.getLogDeadband(), FLOAT_ASSERT_DELTA);
+            assertEquals(exp.getLogRate(), act.getLogRate());
 		}
 	}
 	

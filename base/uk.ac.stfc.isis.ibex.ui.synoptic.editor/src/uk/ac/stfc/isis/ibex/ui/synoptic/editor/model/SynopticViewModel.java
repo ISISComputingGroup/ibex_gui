@@ -32,6 +32,7 @@ package uk.ac.stfc.isis.ibex.ui.synoptic.editor.model;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+import uk.ac.stfc.isis.ibex.configserver.editing.DefaultName;
 import uk.ac.stfc.isis.ibex.instrument.Instrument;
 import uk.ac.stfc.isis.ibex.instrument.pv.PVType;
 import uk.ac.stfc.isis.ibex.model.UpdatedValue;
@@ -40,12 +41,12 @@ import uk.ac.stfc.isis.ibex.synoptic.SynopticModel;
 import uk.ac.stfc.isis.ibex.synoptic.model.ComponentType;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.ComponentDescription;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.IO;
-import uk.ac.stfc.isis.ibex.synoptic.model.desc.SynopticDescription;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.PV;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.Property;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.RecordType;
+import uk.ac.stfc.isis.ibex.synoptic.model.desc.SynopticDescription;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.TargetDescription;
-import uk.ac.stfc.isis.ibex.synoptic.model.desc.TargetType;
+import uk.ac.stfc.isis.ibex.ui.synoptic.editor.target.DefaultTargetForComponent;
 
 /**
  * Provides the model for the view of the synoptic. This is an observable
@@ -93,24 +94,48 @@ public class SynopticViewModel {
 		component.setName("new component");
 		component.setType(ComponentType.UNKNOWN);
 
-		int position = 0;
-		if (selectedComponent == null) {
-			instrument.addComponent(component);
-		} else {
-			ComponentDescription parent = selectedComponent.getParent();
+        if (selectedComponent == null) {
+            instrument.addComponent(component);
+        } else {
+            addComponentInCorrectLocation(component);
+        }
 
-			if (parent == null) {
-				position = instrument.components().indexOf(selectedComponent) + 1;
-				instrument.addComponent(component, position);
-			} else {
-				position = parent.components().indexOf(selectedComponent) + 1;
-				parent.addComponent(component, position);
-			}
-		}
-
-		broadcastInstrumentUpdate(UpdateTypes.NEW_COMPONENT);
-		setSelectedComponent(component);
+        broadcastInstrumentUpdate(UpdateTypes.NEW_COMPONENT);
+        setSelectedComponent(component);
 	}
+
+    public void copySelected() {
+        if (selectedComponent == null) {
+            return;
+        }
+
+        ComponentDescription componentCopy = new ComponentDescription(selectedComponent);
+
+        DefaultName namer = new DefaultName(selectedComponent.name(), " ", true);
+        componentCopy.setName(namer.getUnique(instrument.getComponentNameList()));
+        
+        addComponentInCorrectLocation(componentCopy);
+
+        // Set selected component here, so that it is auto-expanded.
+        setSelectedComponent(componentCopy);
+        broadcastInstrumentUpdate(UpdateTypes.COPY_COMPONENT);
+        // Set selected component again here, so it is highlighted.
+        setSelectedComponent(componentCopy);
+    }
+
+    private void addComponentInCorrectLocation(ComponentDescription component) {
+        ComponentDescription parent = selectedComponent.getParent();
+
+        int position = 0;
+
+        if (parent == null) {
+            position = instrument.components().indexOf(selectedComponent) + 1;
+            instrument.addComponent(component, position);
+        } else {
+            position = parent.components().indexOf(selectedComponent) + 1;
+            parent.addComponent(component, position);
+        }
+    }
 
 	public void removeSelected() {
 		if (selectedComponent != null) {
@@ -186,12 +211,11 @@ public class SynopticViewModel {
 
 	public void addTargetToSelectedComponent() {
 		ComponentDescription component = getSelectedComponent();
-		if (component != null && component.target() == null) {
-			TargetDescription target = new TargetDescription();
-			target.setName("NONE");
-			target.setType(TargetType.OPI);
-			component.setTarget(target);
-
+        ComponentType compType = component.type();
+        TargetDescription target = DefaultTargetForComponent.defaultTarget(compType);
+		
+        if (component != null && (component.target() == null || component.target().name() == "NONE")) {
+            component.setTarget(target);
 			broadcastInstrumentUpdate(UpdateTypes.ADD_TARGET);
 		}
 	}

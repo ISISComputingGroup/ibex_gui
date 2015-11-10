@@ -12,6 +12,7 @@ Require-Bundle: org.eclipse.ui,
  uk.ac.stfc.isis.ibex.instrument;bundle-version="1.0.0",
  org.eclipse.jface,
  org.csstudio.platform.libs.jms,
- uk.ac.stfc.isis.ibex.ui.statusbar
+ uk.ac.stfc.isis.ibex.ui.statusbar,
+ org.eclipse.core.resources
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Bundle-ActivationPolicy: lazy

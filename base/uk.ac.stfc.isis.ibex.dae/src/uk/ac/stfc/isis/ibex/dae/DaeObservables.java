@@ -95,15 +95,27 @@ public class DaeObservables extends InstrumentVariables {
 		super(channels);
 	}
 	
-	public InitialiseOnSubscribeObservable<float[]> spectrumXData(int number, int period) {
-		return reader(new FloatArrayChannel(), spectrumData(number, period, "X"));
+    public InitialiseOnSubscribeObservable<float[]> spectrumXData(int number, int period) {
+        return reader(new FloatArrayChannel(), spectrumData(number, period, "X"));
 	}
 	
-	public InitialiseOnSubscribeObservable<float[]> spectrumYData(int number, int period) {
-		return reader(new FloatArrayChannel(), spectrumData(number, period, "Y"));
+    public InitialiseOnSubscribeObservable<Integer> spectrumXDataLength(int number, int period) {
+        return reader(new IntegerChannel(), spectrumDataLength(number, period, "X"));
+    }
+
+    public InitialiseOnSubscribeObservable<float[]> spectrumYData(int number, int period) {
+        return reader(new FloatArrayChannel(), spectrumData(number, period, "Y"));
 	}
 	
+    public InitialiseOnSubscribeObservable<Integer> spectrumYDataLength(int number, int period) {
+        return reader(new IntegerChannel(), spectrumDataLength(number, period, "Y"));
+    }
+
 	private static String spectrumData(int spectrum, int period, String axis) {
 		return String.format("DAE:SPEC:%d:%d:%s", period, spectrum, axis);	
 	}
+
+    private static String spectrumDataLength(int spectrum, int period, String axis) {
+        return spectrumData(spectrum, period, axis) + ".NORD";
+    }
 }

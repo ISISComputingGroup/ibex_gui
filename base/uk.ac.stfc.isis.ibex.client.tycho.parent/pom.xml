@@ -211,5 +211,6 @@
 		<module>../uk.ac.stfc.isis.ibex.databases</module>
 		<module>../uk.ac.stfc.isis.ibex.validators</module>
 		<module>../uk.ac.stfc.isis.ibex.ui.databrowser.tests</module>
+		<module>../uk.ac.stfc.isis.ibex.ui.runcontrol.tests</module>
 	</modules>
 </project>

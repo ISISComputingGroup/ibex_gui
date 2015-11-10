@@ -41,6 +41,25 @@ public class PV {
 	
 	@XmlElement(name = "pvtype")
 	private PVType pvType;
+
+    /**
+     * Default constructor, required due to existence of copy constructor.
+     */
+    public PV() {
+    }
+
+    /**
+     * Copy constructor.
+     * 
+     * @param other
+     *            PV to be copied
+     */
+    public PV(PV other) {
+        this.displayName = other.displayName;
+        this.address = other.address;
+        this.recordType = other.recordType;
+        this.pvType = other.pvType;
+    }
 		
 	public PVType getPvType() {
 		return pvType;

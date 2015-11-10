@@ -33,7 +33,7 @@ import org.junit.Test;
 import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
 import uk.ac.stfc.isis.ibex.ui.databrowser.DataBrowserSettings;
 
-public class DataBrowserSettingsTests {
+public class DataBrowserSettingsTest {
 
     // These settings represent the defaults, as set in
     // uk.ac.stfc.isis.ibex.product/plugin_customization.ini
