@@ -19,12 +19,6 @@
 
 package uk.ac.stfc.isis.ibex.ui.synoptic.editor.target;
 
-import java.util.Arrays;
-
-import org.eclipse.jface.viewers.ArrayContentProvider;
-import org.eclipse.jface.viewers.ComboViewer;
-import org.eclipse.jface.viewers.ISelectionChangedListener;
-import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -50,8 +44,6 @@ public class TargetDetailView extends Composite {
 	private Composite fieldsComposite;
 	private Composite addComposite;
 	TargetNameWidget nameSelect;
-	
-	private ComboViewer cmboType;
 	
 	private static TargetType[] typeList = TargetType.values();
 	
@@ -97,26 +89,6 @@ public class TargetDetailView extends Composite {
 		fieldsComposite.setLayout(new GridLayout(2, false));
 		fieldsComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 		{
-			Label lblType = new Label(fieldsComposite, SWT.NONE);
-			lblType.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-			lblType.setText("Type");
-			
-			cmboType = new ComboViewer(fieldsComposite, SWT.READ_ONLY);
-			cmboType.getCombo().setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-			
-			cmboType.setContentProvider(new ArrayContentProvider());
-			cmboType.setInput(typeList);
-			cmboType.getCombo().select(0);
-			cmboType.addSelectionChangedListener(new ISelectionChangedListener() {
-				@Override
-				public void selectionChanged(SelectionChangedEvent event) {
-					int typeIndex = cmboType.getCombo().getSelectionIndex();
-					TargetType type = Arrays.asList(typeList).get(typeIndex);
-					
-					nameSelect.setTargetType(type);
-				}
-			});
-			
 			Label lblName = new Label(fieldsComposite, SWT.NONE);
 			lblName.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 			lblName.setText("Name");
@@ -169,7 +141,6 @@ public class TargetDetailView extends Composite {
 			addComposite.setVisible(false);
 			
 			nameSelect.setTarget(null);
-			cmboType.getCombo().select(0);
 		} else {
 			TargetDescription target = component.target();
 			
@@ -179,8 +150,6 @@ public class TargetDetailView extends Composite {
 				addComposite.setVisible(false);
 				
 				TargetType type = target.type();
-				int typeIndex = Arrays.asList(typeList).indexOf(type);
-				cmboType.getCombo().select(typeIndex);
 				
 				nameSelect.setTarget(target);
 			} else {
@@ -189,7 +158,6 @@ public class TargetDetailView extends Composite {
 				addComposite.setVisible(true);
 				
 				nameSelect.setTarget(null);
-				cmboType.getCombo().select(0);
 			}
 		}
 	}

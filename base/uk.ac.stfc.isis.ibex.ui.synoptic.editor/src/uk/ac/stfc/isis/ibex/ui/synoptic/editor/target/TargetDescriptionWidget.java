@@ -17,24 +17,20 @@ import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.UpdateTypes;
 
 public class TargetDescriptionWidget extends Composite {
 
-	private SynopticViewModel instrument;
 	private Text txtDescription;
 
 	public TargetDescriptionWidget(Composite parent, final SynopticViewModel instrument) {
 		super(parent, SWT.NONE);
 
-		this.instrument = instrument;
 		instrument.addInstrumentUpdateListener(new IInstrumentUpdateListener() {
 			@Override
 			public void instrumentUpdated(UpdateTypes updateType) {
 				ComponentDescription component = instrument.getSelectedComponent();
 
 				if (component != null) {
-					// For back-compatibility reasons the name actually might be
-					// the path
 					if (component.target() != null && component.target().name() != null) {
-						String name = Opi.getDefault().descriptionsProvider().guessOpiName(component.target().name());
-						OpiDescription opi = Opi.getDefault().descriptionsProvider().getDescription(name);
+                        OpiDescription opi = Opi.getDefault().descriptionsProvider()
+                                .getDescription(component.target().name());
 						if (opi != null) {
 							txtDescription.setText(generateDescription(opi));
 							return;

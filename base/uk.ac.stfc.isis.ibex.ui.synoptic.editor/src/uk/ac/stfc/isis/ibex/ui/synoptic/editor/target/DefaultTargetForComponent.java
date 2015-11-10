@@ -96,7 +96,7 @@ public class DefaultTargetForComponent {
                 break;
         }
 
-        if (targetType == TargetType.OPI && targetName != "NONE") {
+        if (targetName != "NONE") {
             if (!targetNameInOpiList(targetName)) {
                 targetName = "NONE";
             }
