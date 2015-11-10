@@ -33,6 +33,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+import uk.ac.stfc.isis.ibex.configserver.editing.DefaultName;
 import uk.ac.stfc.isis.ibex.instrument.Instrument;
 import uk.ac.stfc.isis.ibex.instrument.pv.PVType;
 import uk.ac.stfc.isis.ibex.model.UpdatedValue;
@@ -111,7 +112,45 @@ public class SynopticViewModel {
 
 		broadcastInstrumentUpdate(UpdateTypes.NEW_COMPONENT);
 		setSelectedComponent(Arrays.asList(component));
+
 	}
+
+    public void copySelected() {
+        if (selectedComponents == null || selectedComponents.size() != 1) {
+            return;
+        }
+
+        ComponentDescription selectedComponent = selectedComponents.get(0);
+        
+        ComponentDescription componentCopy = new ComponentDescription(selectedComponent);
+
+        DefaultName namer = new DefaultName(selectedComponent.name(), " ", true);
+        componentCopy.setName(namer.getUnique(instrument.getComponentNameList()));
+        
+        addComponentInCorrectLocation(componentCopy);
+
+        // Set selected component here, so that it is auto-expanded.
+        setSelectedComponent(Arrays.asList(componentCopy));
+        broadcastInstrumentUpdate(UpdateTypes.COPY_COMPONENT);
+        // Set selected component again here, so it is highlighted.
+        setSelectedComponent(Arrays.asList(componentCopy));
+    }
+
+    private void addComponentInCorrectLocation(ComponentDescription component) {
+    	ComponentDescription selectedComponent = selectedComponents.get(0);
+    	
+        ComponentDescription parent = selectedComponent.getParent();
+
+        int position = 0;
+
+        if (parent == null) {
+            position = instrument.components().indexOf(selectedComponent) + 1;
+            instrument.addComponent(component, position);
+        } else {
+            position = parent.components().indexOf(selectedComponent) + 1;
+            parent.addComponent(component, position);
+        }
+    }
 
 	public void removeSelected() {
 		if (selectedComponents != null) {

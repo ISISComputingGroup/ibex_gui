@@ -43,7 +43,7 @@ public class EditorPanel extends Composite {
 	
 	private static Font titleFont = SWTResourceManager.getFont("Segoe UI", 11, SWT.BOLD);
 	
-	private SynopticViewModel instrumentViewModel = new SynopticViewModel();
+    private SynopticViewModel synopticViewModel;
 	
 	private Composite treeComposite;
 	private Composite detailBarComposite;
@@ -53,8 +53,11 @@ public class EditorPanel extends Composite {
 	private Composite targetComposite;
 	private Composite propertyComposite;
 	
-	public EditorPanel(Composite parent, int style) {
+    public EditorPanel(Composite parent, int style, SynopticViewModel synopticViewModel) {
 		super(parent, style);
+
+        this.synopticViewModel = synopticViewModel;
+
 		setLayout(new GridLayout(3, false));
 		
 		GridData treeGridData = new GridData(SWT.FILL, SWT.FILL, false, true, 1, 1);
@@ -85,8 +88,8 @@ public class EditorPanel extends Composite {
 			lblInstrumentTree.setFont(titleFont);
 			lblInstrumentTree.setText("Instrument Tree");
 	
-			new InstrumentTreeView(treeComposite, instrumentViewModel);
-			new InstrumentTreeControls(treeComposite, instrumentViewModel);
+            new InstrumentTreeView(treeComposite, this.synopticViewModel);
+            new InstrumentTreeControls(treeComposite, this.synopticViewModel);
 		}
 		
 		detailBarComposite = new Composite(this, SWT.NONE);
@@ -101,7 +104,7 @@ public class EditorPanel extends Composite {
 				lblComponentTitle.setFont(titleFont);
 				lblComponentTitle.setText("Component Details");
 				
-				new ComponentDetailView(componentComposite, instrumentViewModel);
+                new ComponentDetailView(componentComposite, this.synopticViewModel);
 			}
 			
 			pvComposite = new Composite(detailBarComposite, SWT.BORDER);
@@ -112,7 +115,7 @@ public class EditorPanel extends Composite {
 				lblPvTitle.setFont(titleFont);
 				lblPvTitle.setText("PV Details");
 				
-				new PvDetailView(pvComposite, instrumentViewModel);
+                new PvDetailView(pvComposite, this.synopticViewModel);
 			}
 		}
 		
@@ -128,7 +131,7 @@ public class EditorPanel extends Composite {
 				lblTargetTitle.setFont(titleFont);
 				lblTargetTitle.setText("Component Target Details");
 				
-				new TargetDetailView(targetComposite, instrumentViewModel);
+                new TargetDetailView(targetComposite, this.synopticViewModel);
 			}
 			
 			propertyComposite = new Composite(targetBarComposite, SWT.BORDER);
@@ -140,7 +143,7 @@ public class EditorPanel extends Composite {
 				lblPropertyTitle.setText("Target Property Details");
 				
 				TargetPropertyDetailView propertyDetail = new TargetPropertyDetailView(propertyComposite, SWT.NONE);
-				propertyDetail.setModel(instrumentViewModel);
+                propertyDetail.setModel(this.synopticViewModel);
 				
 				propertyDetail.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 			}
@@ -148,6 +151,6 @@ public class EditorPanel extends Composite {
 	}
 	
 	public void setSynopticToEdit(SynopticDescription instrument) {
-		instrumentViewModel.loadInstrumentDescription(instrument);
+        synopticViewModel.loadInstrumentDescription(instrument);
 	}
 }
