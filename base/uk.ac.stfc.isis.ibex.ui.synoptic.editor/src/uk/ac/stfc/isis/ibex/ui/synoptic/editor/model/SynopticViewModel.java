@@ -29,6 +29,7 @@
  */
 package uk.ac.stfc.isis.ibex.ui.synoptic.editor.model;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -116,40 +117,48 @@ public class SynopticViewModel {
 	}
 
     public void copySelected() {
-        if (selectedComponents == null || selectedComponents.size() != 1) {
+        if (selectedComponents == null || selectedComponents.isEmpty()) {
             return;
         }
 
-        ComponentDescription selectedComponent = selectedComponents.get(0);
+    	List<ComponentDescription> componentCopies = new ArrayList<>();
         
-        ComponentDescription componentCopy = new ComponentDescription(selectedComponent);
-
-        DefaultName namer = new DefaultName(selectedComponent.name(), " ", true);
-        componentCopy.setName(namer.getUnique(instrument.getComponentNameList()));
+        for (ComponentDescription selectedComponent : selectedComponents) {
+	        ComponentDescription componentCopy = new ComponentDescription(selectedComponent);
+	
+	        DefaultName namer = new DefaultName(selectedComponent.name(), " ", true);
+	        componentCopy.setName(namer.getUnique(instrument.getComponentNameList()));
+	        
+	        componentCopies.add(componentCopy);
+        }
         
-        addComponentInCorrectLocation(componentCopy);
-
+        addComponentsInCorrectLocation(componentCopies);
+        
         // Set selected component here, so that it is auto-expanded.
-        setSelectedComponent(Arrays.asList(componentCopy));
+        setSelectedComponent(componentCopies);
         broadcastInstrumentUpdate(UpdateTypes.COPY_COMPONENT);
         // Set selected component again here, so it is highlighted.
-        setSelectedComponent(Arrays.asList(componentCopy));
+        setSelectedComponent(componentCopies);
     }
 
-    private void addComponentInCorrectLocation(ComponentDescription component) {
-    	ComponentDescription selectedComponent = selectedComponents.get(0);
+    private void addComponentsInCorrectLocation(List<ComponentDescription> componentCopies) {
+    	ComponentDescription lastSelectedComponent = selectedComponents.get(selectedComponents.size() - 1);
     	
-        ComponentDescription parent = selectedComponent.getParent();
+        ComponentDescription parent = lastSelectedComponent.getParent();
 
         int position = 0;
-
-        if (parent == null) {
-            position = instrument.components().indexOf(selectedComponent) + 1;
-            instrument.addComponent(component, position);
-        } else {
-            position = parent.components().indexOf(selectedComponent) + 1;
-            parent.addComponent(component, position);
-        }
+    	int idx = 1;
+        
+        for (ComponentDescription componentCopy : componentCopies) {
+	        if (parent == null) {
+	            position = instrument.components().indexOf(lastSelectedComponent) + idx;
+	            instrument.addComponent(componentCopy, position);
+	        } else {
+	            position = parent.components().indexOf(lastSelectedComponent) + idx;
+	            parent.addComponent(componentCopy, position);
+	        }
+	        idx += 1;
+    	}
     }
 
 	public void removeSelected() {
@@ -265,6 +274,14 @@ public class SynopticViewModel {
 	public ComponentDescription getSelectedComponent() {
 		if (selectedComponents != null && selectedComponents.size() == 1) {
 			return selectedComponents.get(0);
+		} else {
+			return null;
+		}
+	}
+	
+	public List<ComponentDescription> getSelectedComponents() {
+		if (selectedComponents != null) {
+			return selectedComponents;
 		} else {
 			return null;
 		}
@@ -443,5 +460,16 @@ public class SynopticViewModel {
 	
 	public Boolean getShowBeam() {
 		return instrument.showBeam();
+	}
+	
+	public Boolean selectedHaveSameParent() {
+		ComponentDescription parent = selectedComponents.get(0).getParent();
+		for (ComponentDescription selected : selectedComponents) {
+			if (selected.getParent() != parent) {
+				return false;
+			}
+		}
+		
+		return true;
 	}
 }

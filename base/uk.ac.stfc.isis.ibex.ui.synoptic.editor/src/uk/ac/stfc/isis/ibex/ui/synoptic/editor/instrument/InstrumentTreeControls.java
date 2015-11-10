@@ -98,7 +98,7 @@ public class InstrumentTreeControls extends Composite {
                 synopticViewModel.copySelected();
             }
         });
-		
+        
         btnDelete = new Button(this, SWT.NONE);
         btnDelete.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
         btnDelete.setText("Delete Component");
@@ -108,13 +108,6 @@ public class InstrumentTreeControls extends Composite {
                 synopticViewModel.removeSelected();
             }
         });
-		
-		synopticViewModel.addComponentSelectionListener(new IComponentSelectionListener() {
-			@Override
-			public void selectionChanged(List<ComponentDescription> oldSelection, List<ComponentDescription> newSelection) {
-				btnDelete.setEnabled(newSelection != null && !newSelection.isEmpty());
-			}
-		});
 		
 		btnShowBeam = new Button(this, SWT.CHECK | SWT.CENTER);
         btnShowBeam.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, false, 1, 1));
@@ -129,12 +122,16 @@ public class InstrumentTreeControls extends Composite {
 			}
 		});
 
-		refresh();
+		synopticViewModel.addComponentSelectionListener(new IComponentSelectionListener() {
+			@Override
+			public void selectionChanged(List<ComponentDescription> oldSelection, List<ComponentDescription> newSelection) {
+				btnDelete.setEnabled(newSelection != null && !newSelection.isEmpty());
+				btnCopyComponent.setEnabled(newSelection != null && !newSelection.isEmpty() && synopticViewModel.selectedHaveSameParent());
+			}
+		});
 	}
 
 	public void refresh() {
-		ComponentDescription selected = synopticViewModel.getSelectedComponent();
 		btnShowBeam.setSelection(synopticViewModel.getShowBeam());
-        btnCopyComponent.setEnabled(selected != null);
 	}
 }

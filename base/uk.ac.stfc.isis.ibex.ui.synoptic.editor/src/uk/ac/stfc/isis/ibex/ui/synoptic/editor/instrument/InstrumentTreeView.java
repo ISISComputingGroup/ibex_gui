@@ -84,7 +84,9 @@ public class InstrumentTreeView extends Composite {
                 if (updateType == UpdateTypes.NEW_INSTRUMENT) {
                     setTreeInput();
                 } else if (updateType == UpdateTypes.COPY_COMPONENT) {
-                    treeViewer.setExpandedState(synopticViewModel.getSelectedComponent(), true);
+                	for (ComponentDescription selectedComponent : synopticViewModel.getSelectedComponents()) {
+                		treeViewer.setExpandedState(selectedComponent, true);
+                	}
                 }
                 refresh();
             }
@@ -135,6 +137,7 @@ public class InstrumentTreeView extends Composite {
 				List<ComponentDescription> selected = new ArrayList<ComponentDescription>(getSelected());
 				synopticViewModel.setSelectedComponent(selected);
 				mnuDeleteSelected.setEnabled(selected != null && !selected.isEmpty());
+				mnuCopySelected.setEnabled(selected != null && !selected.isEmpty() && synopticViewModel.selectedHaveSameParent());
 			}
 		});
 
