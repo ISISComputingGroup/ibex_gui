@@ -60,29 +60,32 @@ import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.SynopticViewModel;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.UpdateTypes;
 
 public class InstrumentTreeView extends Composite {
-	private SynopticViewModel instrumentViewModel;
+	private SynopticViewModel synopticViewModel;
 	private ComponentDescription currentDragSource;
 
 	private TreeViewer treeViewer;
 	private MenuItem mnuDeleteSelected;
+    private MenuItem mnuCopySelected;
+
 
 	public InstrumentTreeView(Composite parent,
-			SynopticViewModel instrumentViewModel) {
+ final SynopticViewModel synopticViewModel) {
 		super(parent, SWT.NONE);
 
-		this.instrumentViewModel = instrumentViewModel;
-		this.instrumentViewModel
-				.addInstrumentUpdateListener(new IInstrumentUpdateListener() {
-					@Override
-					public void instrumentUpdated(UpdateTypes updateType) {
-						if (updateType == UpdateTypes.NEW_INSTRUMENT) {
-							setTreeInput();
-						}
-						refresh();
-					}
-				});
+		this.synopticViewModel = synopticViewModel;
+        this.synopticViewModel.addInstrumentUpdateListener(new IInstrumentUpdateListener() {
+            @Override
+            public void instrumentUpdated(UpdateTypes updateType) {
+                if (updateType == UpdateTypes.NEW_INSTRUMENT) {
+                    setTreeInput();
+                } else if (updateType == UpdateTypes.COPY_COMPONENT) {
+                    treeViewer.setExpandedState(synopticViewModel.getSelectedComponent(), true);
+                }
+                refresh();
+            }
+        });
 				
-		this.instrumentViewModel
+		this.synopticViewModel
 			.addComponentSelectionListener(new IComponentSelectionListener() {
 				@Override
 				public void selectionChanged(
@@ -112,7 +115,7 @@ public class InstrumentTreeView extends Composite {
 		treeViewer.addDragSupport(operations, transferTypes,
 				new ComponentDragListener(this));
 		treeViewer.addDropSupport(operations, transferTypes,
-				new ComponentDropListener(this, instrumentViewModel));
+				new ComponentDropListener(this, synopticViewModel));
 
 		treeViewer.setContentProvider(new ComponentContentProvider());
 		treeViewer.setLabelProvider(new ComponentLabelProvider());
@@ -125,7 +128,7 @@ public class InstrumentTreeView extends Composite {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				ComponentDescription selected = getSelected();
-				instrumentViewModel.setSelectedComponent(selected);
+				synopticViewModel.setSelectedComponent(selected);
 				mnuDeleteSelected.setEnabled(selected != null);
 			}
 		});
@@ -139,7 +142,7 @@ public class InstrumentTreeView extends Composite {
 			@Override
 			public void keyPressed(KeyEvent e) {
 				if (e.keyCode == SWT.DEL) {
-					instrumentViewModel.removeSelected();
+					synopticViewModel.removeSelected();
 					refresh();
 				}
 			}
@@ -149,12 +152,22 @@ public class InstrumentTreeView extends Composite {
 		Menu contextMenu = new Menu(this.getShell(), SWT.POP_UP);
 		tree.setMenu(contextMenu);
 
+        mnuCopySelected = new MenuItem(contextMenu, SWT.NONE);
+        mnuCopySelected.setText("Copy Component");
+        mnuCopySelected.addListener(SWT.Selection, new Listener() {
+            @Override
+            public void handleEvent(Event event) {
+                synopticViewModel.copySelected();
+                refresh();
+            }
+        });
+
 		mnuDeleteSelected = new MenuItem(contextMenu, SWT.NONE);
-		mnuDeleteSelected.setText("Remove Selected");
+        mnuDeleteSelected.setText("Delete Component");
 		mnuDeleteSelected.addListener(SWT.Selection, new Listener() {
 			@Override
 			public void handleEvent(Event event) {
-				instrumentViewModel.removeSelected();
+				synopticViewModel.removeSelected();
 				refresh();
 			}
 		});
@@ -183,7 +196,7 @@ public class InstrumentTreeView extends Composite {
 	}
 
 	private void setTreeInput() {
-		treeViewer.setInput(instrumentViewModel.getInstrument());
+		treeViewer.setInput(synopticViewModel.getInstrument());
 		treeViewer.expandAll();
 	}
 }
