@@ -100,8 +100,6 @@ public class DescriptionsProvider extends Provider {
 	@Override
 	public Collection<String> getOpiList() {
         List<String> availableOPIs = new ArrayList<String>(descriptions.getOpis().keySet());
-        availableOPIs.add("Goniometer");
-        java.util.Collections.sort(availableOPIs);
         return availableOPIs;
 	}
 

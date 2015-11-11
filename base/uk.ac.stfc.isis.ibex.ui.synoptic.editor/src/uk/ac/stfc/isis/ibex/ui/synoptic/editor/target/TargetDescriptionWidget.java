@@ -28,9 +28,11 @@ public class TargetDescriptionWidget extends Composite {
 				ComponentDescription component = instrument.getSelectedComponent();
 
 				if (component != null) {
+                    // For back-compatibility reasons the name actually might be
+                    // the path
 					if (component.target() != null && component.target().name() != null) {
-                        OpiDescription opi = Opi.getDefault().descriptionsProvider()
-                                .getDescription(component.target().name());
+                        String name = Opi.getDefault().descriptionsProvider().guessOpiName(component.target().name());
+                        OpiDescription opi = Opi.getDefault().descriptionsProvider().getDescription(name);
 						if (opi != null) {
 							txtDescription.setText(generateDescription(opi));
 							return;

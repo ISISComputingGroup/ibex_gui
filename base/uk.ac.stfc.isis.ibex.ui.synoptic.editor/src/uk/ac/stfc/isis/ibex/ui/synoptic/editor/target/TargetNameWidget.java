@@ -101,13 +101,14 @@ public class TargetNameWidget extends Composite {
 			cmboOpiName.getCombo().select(-1);
         } else {
             this.type = target.type();
-            String name = availableOPIs.contains(target.name()) ? target.name() : "";
+            String name = Opi.getDefault().descriptionsProvider().guessOpiName(target.name());
             if (name == "") {
                 // If no OPI found leave the selection blank
                 cmboOpiName.setSelection(null);
+            } else {
+                ISelection selection = new StructuredSelection(name);
+                cmboOpiName.setSelection(selection);
             }
-            ISelection selection = new StructuredSelection(name);
-            cmboOpiName.setSelection(selection);
 		}
 		
 		updateLock = false;
