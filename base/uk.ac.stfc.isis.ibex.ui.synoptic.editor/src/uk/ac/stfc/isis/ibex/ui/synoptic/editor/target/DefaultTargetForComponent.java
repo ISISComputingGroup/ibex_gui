@@ -42,9 +42,16 @@ public class DefaultTargetForComponent {
         
         switch (compType) {
             case UNKNOWN:
-            case DAE:
             case MOVINGBEAMSTOP:
                 // no sensible default(s) for the above at present
+                break;
+            case DAE:
+                targetName = "DAE";
+                targetType = TargetType.COMPONENT;
+                break;
+            case GONIOMETER:
+                targetName = "Goniometer";
+                targetType = TargetType.COMPONENT;
                 break;
             case JAWS:
                 targetName = "Slit 1";
@@ -87,17 +94,13 @@ public class DefaultTargetForComponent {
             case PINHOLESELECTOR:
                 targetName = "Pinhole Selector";
                 break;
-            case GONIOMETER:
-                targetName = "Goniometer";
-                targetType = TargetType.COMPONENT;
-                break;
             case SINGLESTAGE:
                 targetName = "Single Stage";
                 break;
         }
 
         if (targetName != "NONE") {
-            if (!targetNameInOpiList(targetName)) {
+            if (!targetNameInOpiList(targetName) && targetType == TargetType.OPI) {
                 targetName = "NONE";
             }
         }

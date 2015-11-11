@@ -30,7 +30,6 @@ import org.eclipse.swt.widgets.Label;
 
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.ComponentDescription;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.TargetDescription;
-import uk.ac.stfc.isis.ibex.synoptic.model.desc.TargetType;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.IComponentSelectionListener;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.IInstrumentUpdateListener;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.SynopticViewModel;
@@ -43,10 +42,10 @@ public class TargetDetailView extends Composite {
 	private Composite labelComposite;
 	private Composite fieldsComposite;
 	private Composite addComposite;
+    private Composite noAddComposite;
+
 	TargetNameWidget nameSelect;
-	
-	private static TargetType[] typeList = TargetType.values();
-	
+
 	public TargetDetailView(Composite parent, final SynopticViewModel instrument) 
 	{
 		super(parent, SWT.NONE);
@@ -56,9 +55,7 @@ public class TargetDetailView extends Composite {
 		instrument.addInstrumentUpdateListener(new IInstrumentUpdateListener() {
 			@Override
 			public void instrumentUpdated(UpdateTypes updateType) {
-				if (updateType != UpdateTypes.EDIT_COMPONENT) {
-					showTarget(instrument.getSelectedComponent());
-				}
+                showTarget(instrument.getSelectedComponent());
 			}
 		});
 		
@@ -132,9 +129,18 @@ public class TargetDetailView extends Composite {
 				}
 			});
 		}
+
+        noAddComposite = new Composite(parent, SWT.NONE);
+        noAddComposite.setLayoutData(new GridData(SWT.CENTER, SWT.FILL, true, false, 1, 1));
+        noAddComposite.setLayout(new GridLayout(1, false));
+        {
+            Label lblNoTarget = new Label(noAddComposite, SWT.NONE);
+            lblNoTarget.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1));
+            lblNoTarget.setText("OPI selection not needed for DAE or Goniometer.");
+        }
 	}
 	
-	private void showTarget(ComponentDescription component) {		
+    private void showTarget(ComponentDescription component) {
 		if (component == null) {
 			fieldsComposite.setVisible(false);
 			labelComposite.setVisible(true);
@@ -144,18 +150,26 @@ public class TargetDetailView extends Composite {
 		} else {
 			TargetDescription target = component.target();
 			
-			if (target != null) {
+            if (component.type().target() != null) {
+                // a target already exits, so should not be allowed to get set
+                fieldsComposite.setVisible(false);
+                labelComposite.setVisible(false);
+                addComposite.setVisible(false);
+                noAddComposite.setVisible(true);
+
+                nameSelect.setTarget(null);
+            } else if (target != null) {
 				fieldsComposite.setVisible(true);
 				labelComposite.setVisible(false);
 				addComposite.setVisible(false);
-				
-				TargetType type = target.type();
+                noAddComposite.setVisible(false);
 				
 				nameSelect.setTarget(target);
 			} else {
 				fieldsComposite.setVisible(false);
 				labelComposite.setVisible(false);
 				addComposite.setVisible(true);
+                noAddComposite.setVisible(false);
 				
 				nameSelect.setTarget(null);
 			}
