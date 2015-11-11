@@ -158,6 +158,7 @@ public class TargetDetailView extends Composite {
                 noAddComposite.setVisible(true);
 
                 nameSelect.setTarget(null);
+                instrument.setSelectedProperty(null);
             } else if (target != null) {
 				fieldsComposite.setVisible(true);
 				labelComposite.setVisible(false);
