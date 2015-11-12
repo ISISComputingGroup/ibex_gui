@@ -106,11 +106,12 @@ public class SynopticViewModel {
 		component.setType(ComponentType.UNKNOWN);
 
 		int position = 0;
-		if (selectedComponents == null || selectedComponents.size() != 1) {
+		if (selectedComponents == null) {
 			instrument.addComponent(component);
 		} else {
-			SynopticParentDescription parent = getParent(getFirstSelectedComponent());
-			position = parent.components().indexOf(getFirstSelectedComponent()) + 1;
+			ComponentDescription lastComponent = selectedComponents.get(selectedComponents.size()-1);
+			SynopticParentDescription parent = getParent(lastComponent);
+			position = parent.components().indexOf(lastComponent) + 1;
 			parent.addComponent(component, position);
 		}
 
