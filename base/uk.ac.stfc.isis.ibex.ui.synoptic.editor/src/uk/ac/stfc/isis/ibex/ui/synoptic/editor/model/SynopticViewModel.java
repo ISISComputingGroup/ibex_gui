@@ -34,6 +34,10 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.swt.widgets.Shell;
+import org.eclipse.ui.PlatformUI;
+
 import uk.ac.stfc.isis.ibex.configserver.editing.DefaultName;
 import uk.ac.stfc.isis.ibex.instrument.Instrument;
 import uk.ac.stfc.isis.ibex.instrument.pv.PVType;
@@ -160,14 +164,36 @@ public class SynopticViewModel {
     	}
     }
 
+    private String constructDeleteMessage() {
+		String message = "Are you sure you want to delete ";
+		if (selectedComponents.size() == 1) {
+			message += getFirstSelectedComponent().name() + "?";
+		} else {
+			int idx = 0;
+			for (ComponentDescription selected : selectedComponents) {
+				message += selected.name();
+				if (idx == selectedComponents.size() - 2) {
+					message += " and ";
+				} else if (idx != selectedComponents.size() - 1){
+					message += ", ";
+				}
+				idx++;
+			}
+		}
+		return message;
+    }
+    
 	public void removeSelectedComponent() {
 		if (selectedComponents != null) {
-			for (ComponentDescription selected : selectedComponents) {
-				SynopticParentDescription parent = getParent(selected);
-				parent.removeComponent(selected);
+			Shell shell = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
+			if (MessageDialog.openConfirm(shell, "Confirm Delete", constructDeleteMessage())) {
+				for (ComponentDescription selected : selectedComponents) {
+					SynopticParentDescription parent = getParent(selected);
+					parent.removeComponent(selected);
+				}
+				setSelectedComponent(null);
+				broadcastInstrumentUpdate(UpdateTypes.DELETE_COMPONENT);
 			}
-			setSelectedComponent(null);
-			broadcastInstrumentUpdate(UpdateTypes.DELETE_COMPONENT);
 		}
 	}
 
