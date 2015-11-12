@@ -20,6 +20,7 @@
 package uk.ac.stfc.isis.ibex.ui.synoptic.editor.target;
 
 import java.util.Arrays;
+import java.util.List;
 
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ComboViewer;
@@ -65,15 +66,19 @@ public class TargetDetailView extends Composite {
 			@Override
 			public void instrumentUpdated(UpdateTypes updateType) {
 				if (updateType != UpdateTypes.EDIT_COMPONENT) {
-					showTarget(instrument.getSelectedComponent());
+					showTarget(instrument.getFirstSelectedComponent());
 				}
 			}
 		});
 		
 		instrument.addComponentSelectionListener(new IComponentSelectionListener() {			
 			@Override
-			public void selectionChanged(ComponentDescription oldSelection, ComponentDescription newSelection) {
-				showTarget(newSelection);
+			public void selectionChanged(List<ComponentDescription> oldSelection, List<ComponentDescription> newSelection) {
+				if (newSelection != null && newSelection.size() == 1) {
+					showTarget(newSelection.iterator().next());
+				} else {
+					showTarget(null);
+				}
 			}
 		});
 		
@@ -139,7 +144,7 @@ public class TargetDetailView extends Composite {
 			
 			TargetPropertyList properties = new TargetPropertyList(fieldsComposite, instrument);
 			properties.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
-			properties.showPropertyList(instrument.getSelectedComponent());
+			properties.showPropertyList(instrument.getFirstSelectedComponent());
 		}
 		
 		addComposite = new Composite(parent, SWT.NONE);

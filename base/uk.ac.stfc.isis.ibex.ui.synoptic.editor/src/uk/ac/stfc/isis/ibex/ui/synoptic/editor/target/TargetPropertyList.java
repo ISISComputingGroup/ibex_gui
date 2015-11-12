@@ -19,6 +19,8 @@
 
 package uk.ac.stfc.isis.ibex.ui.synoptic.editor.target;
 
+import java.util.List;
+
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.ListViewer;
@@ -53,8 +55,12 @@ public class TargetPropertyList extends Composite {
 		
 		instrument.addComponentSelectionListener(new IComponentSelectionListener() {			
 			@Override
-			public void selectionChanged(ComponentDescription oldSelection, ComponentDescription newSelection) {
-				showPropertyList(newSelection);
+			public void selectionChanged(List<ComponentDescription> oldSelection, List<ComponentDescription> newSelection) {
+				if (newSelection != null && newSelection.size() == 1) {
+					showPropertyList(newSelection.iterator().next());
+				} else {
+					showPropertyList(null);
+				}
 			}
 		});
 		
@@ -79,7 +85,7 @@ public class TargetPropertyList extends Composite {
 							selected = -1;
 							break;
 					}
-					showPropertyList(instrument.getSelectedComponent());
+					showPropertyList(instrument.getFirstSelectedComponent());
 					list.refresh();
 					list.getList().setSelection(selected);
 					setButtonStates();

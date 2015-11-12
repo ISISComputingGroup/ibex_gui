@@ -36,10 +36,10 @@ import uk.ac.stfc.isis.ibex.synoptic.model.ComponentType;
  */
 @XmlRootElement(name = "component")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class ComponentDescription {
+public class ComponentDescription implements SynopticParentDescription {
 	
 	@XmlTransient
-	private ComponentDescription parent;
+	private SynopticParentDescription parent;
 
 	private String name;
 
@@ -190,11 +190,11 @@ public class ComponentDescription {
 		components.remove(component);
 	}
 	
-	public ComponentDescription getParent() {
+	public SynopticParentDescription getParent() {
 		return parent;
 	}
 
-	public void setParent(ComponentDescription parent) {
+	public void setParent(SynopticParentDescription parent) {
 		this.parent = parent;
 	}
 	

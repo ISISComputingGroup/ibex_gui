@@ -94,8 +94,8 @@ public class TargetNameWidget extends Composite {
 	
 	
 	private void updateModel(String targetName) 	{
-		if (!updateLock && instrument.getSelectedComponent() != null) {
-			TargetDescription target = instrument.getSelectedComponent().target();
+		if (!updateLock && instrument.getFirstSelectedComponent() != null) {
+			TargetDescription target = instrument.getFirstSelectedComponent().target();
 			
 			if (target != null) {
 				target.setName(targetName);

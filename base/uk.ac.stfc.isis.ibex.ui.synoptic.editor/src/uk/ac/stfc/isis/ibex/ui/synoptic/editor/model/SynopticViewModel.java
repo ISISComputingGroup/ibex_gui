@@ -29,6 +29,8 @@
  */
 package uk.ac.stfc.isis.ibex.ui.synoptic.editor.model;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -40,6 +42,7 @@ import uk.ac.stfc.isis.ibex.synoptic.Synoptic;
 import uk.ac.stfc.isis.ibex.synoptic.SynopticModel;
 import uk.ac.stfc.isis.ibex.synoptic.model.ComponentType;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.ComponentDescription;
+import uk.ac.stfc.isis.ibex.synoptic.model.desc.SynopticParentDescription;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.IO;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.PV;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.Property;
@@ -59,7 +62,7 @@ public class SynopticViewModel {
 	
 	private SynopticDescription instrument;
 
-	private ComponentDescription selectedComponent;
+	private List<ComponentDescription> selectedComponents;
 	private PV selectedPV;
 	private Property selectedProperty;
 
@@ -89,63 +92,81 @@ public class SynopticViewModel {
 		return instrument;
 	}
 
+	public SynopticParentDescription getParent(ComponentDescription component) {
+		SynopticParentDescription parent = component.getParent();
+		if (parent == null) {
+			return instrument;
+		}
+		return parent;
+	}
+	 
 	public void addNewComponent() {
 		ComponentDescription component = new ComponentDescription();
 		component.setName("new component");
 		component.setType(ComponentType.UNKNOWN);
 
-        if (selectedComponent == null) {
-            instrument.addComponent(component);
-        } else {
-            addComponentInCorrectLocation(component);
-        }
+		int position = 0;
+		if (selectedComponents == null) {
+			instrument.addComponent(component);
+		} else {
+			ComponentDescription lastComponent = selectedComponents.get(selectedComponents.size()-1);
+			SynopticParentDescription parent = getParent(lastComponent);
+			position = parent.components().indexOf(lastComponent) + 1;
+			parent.addComponent(component, position);
+		}
 
-        broadcastInstrumentUpdate(UpdateTypes.NEW_COMPONENT);
-        setSelectedComponent(component);
+		broadcastInstrumentUpdate(UpdateTypes.NEW_COMPONENT);
+		setSelectedComponent(Arrays.asList(component));
+
 	}
 
-    public void copySelected() {
-        if (selectedComponent == null) {
+    public void copySelectedComponent() {
+        if (selectedComponents == null || selectedComponents.isEmpty()) {
             return;
         }
 
-        ComponentDescription componentCopy = new ComponentDescription(selectedComponent);
-
-        DefaultName namer = new DefaultName(selectedComponent.name(), " ", true);
-        componentCopy.setName(namer.getUnique(instrument.getComponentNameList()));
+    	List<ComponentDescription> componentCopies = new ArrayList<>();
         
-        addComponentInCorrectLocation(componentCopy);
-
+        for (ComponentDescription selectedComponent : selectedComponents) {
+	        ComponentDescription componentCopy = new ComponentDescription(selectedComponent);
+	
+	        DefaultName namer = new DefaultName(selectedComponent.name(), " ", true);
+	        componentCopy.setName(namer.getUnique(instrument.getComponentNameList()));
+	        
+	        componentCopies.add(componentCopy);
+        }
+        
+        addComponentsInCorrectLocation(componentCopies);
+        
         // Set selected component here, so that it is auto-expanded.
-        setSelectedComponent(componentCopy);
+        setSelectedComponent(componentCopies);
         broadcastInstrumentUpdate(UpdateTypes.COPY_COMPONENT);
         // Set selected component again here, so it is highlighted.
-        setSelectedComponent(componentCopy);
+        setSelectedComponent(componentCopies);
     }
 
-    private void addComponentInCorrectLocation(ComponentDescription component) {
-        ComponentDescription parent = selectedComponent.getParent();
+    private void addComponentsInCorrectLocation(List<ComponentDescription> componentCopies) {
+    	ComponentDescription lastSelectedComponent = selectedComponents.get(selectedComponents.size() - 1);
+    	
+        SynopticParentDescription parent = getParent(lastSelectedComponent);
 
         int position = 0;
-
-        if (parent == null) {
-            position = instrument.components().indexOf(selectedComponent) + 1;
-            instrument.addComponent(component, position);
-        } else {
-            position = parent.components().indexOf(selectedComponent) + 1;
-            parent.addComponent(component, position);
-        }
+    	int idx = 1;
+        
+        for (ComponentDescription componentCopy : componentCopies) {
+	        position = parent.components().indexOf(lastSelectedComponent) + idx;
+	        parent.addComponent(componentCopy, position);
+	        idx += 1;
+    	}
     }
 
-	public void removeSelected() {
-		if (selectedComponent != null) {
-			ComponentDescription parent = selectedComponent.getParent();
-			if (parent == null) {
-				instrument.removeComponent(selectedComponent);
-			} else {
-				parent.removeComponent(selectedComponent);
+	public void removeSelectedComponent() {
+		if (selectedComponents != null) {
+			for (ComponentDescription selected : selectedComponents) {
+				SynopticParentDescription parent = getParent(selected);
+				parent.removeComponent(selected);
 			}
-
+			setSelectedComponent(null);
 			broadcastInstrumentUpdate(UpdateTypes.DELETE_COMPONENT);
 		}
 	}
@@ -161,11 +182,13 @@ public class SynopticViewModel {
 
 		int index = 0;
 		
+		ComponentDescription selected = getFirstSelectedComponent();
+		
 		if (selectedPV == null) {
-			selectedComponent.addPV(pv);
+			selected.addPV(pv);
 		} else {
-			index = selectedComponent.pvs().indexOf(selectedPV) + 1;
-			selectedComponent.addPV(pv, index);
+			index = selected.pvs().indexOf(selectedPV) + 1;
+			selected.addPV(pv, index);
 		}
 
 		broadcastInstrumentUpdate(UpdateTypes.EDIT_PV);
@@ -174,12 +197,12 @@ public class SynopticViewModel {
 	}
 
 	public void promoteSelectedPV() {
-		selectedComponent.promotePV(selectedPV);
+		getFirstSelectedComponent().promotePV(selectedPV);
 		broadcastInstrumentUpdate(UpdateTypes.EDIT_PV);
 	}
 
 	public void demoteSelectedPV() {
-		selectedComponent.demotePV(selectedPV);
+		getFirstSelectedComponent().demotePV(selectedPV);
 		broadcastInstrumentUpdate(UpdateTypes.EDIT_PV);
 	}
 
@@ -188,7 +211,7 @@ public class SynopticViewModel {
 			return false;
 		}
 
-		int index = selectedComponent.pvs().indexOf(selectedPV);
+		int index = selectedComponents.get(0).pvs().indexOf(selectedPV);
 		return index > 0;
 	}
 
@@ -197,20 +220,20 @@ public class SynopticViewModel {
 			return false;
 		}
 
-		int index = selectedComponent.pvs().indexOf(selectedPV);
-		return index < selectedComponent.pvs().size() - 1;
+		int index = selectedComponents.get(0).pvs().indexOf(selectedPV);
+		return index < selectedComponents.get(0).pvs().size() - 1;
 	}
 
 	public void removeSelectedPV() {
-		if (selectedComponent != null && selectedPV != null) {
-			selectedComponent.removePV(selectedPV);
+		if (selectedPV != null) {
+			selectedComponents.get(0).removePV(selectedPV);
 			setSelectedPV(null);
 			broadcastInstrumentUpdate(UpdateTypes.EDIT_PV);
 		}
 	}
 
 	public void addTargetToSelectedComponent() {
-		ComponentDescription component = getSelectedComponent();
+		ComponentDescription component = getFirstSelectedComponent();
         ComponentType compType = component.type();
         TargetDescription target = DefaultTargetForComponent.defaultTarget(compType);
 		
@@ -220,15 +243,27 @@ public class SynopticViewModel {
 		}
 	}
 
-	public void setSelectedComponent(ComponentDescription selected) {
-		broadcastComponentSelectionChanged(selectedComponent,
-				selectedComponent = selected);
+	public void setSelectedComponent(List<ComponentDescription> selected) {
+		broadcastComponentSelectionChanged(selectedComponents,
+				selectedComponents = selected);
 		setSelectedPV(null);
 		setSelectedProperty(null);
 	}
 	
-	public ComponentDescription getSelectedComponent() {
-		return selectedComponent;
+	public ComponentDescription getFirstSelectedComponent() {
+		if (selectedComponents != null && selectedComponents.size() == 1) {
+			return selectedComponents.get(0);
+		} else {
+			return null;
+		}
+	}
+	
+	public List<ComponentDescription> getSelectedComponents() {
+		if (selectedComponents != null) {
+			return selectedComponents;
+		} else {
+			return null;
+		}
 	}
 
 	public void updateSelectedPV(String name, String address, IO mode, PVType type) {
@@ -277,7 +312,7 @@ public class SynopticViewModel {
 
 	public void addNewProperty() {
 		Property property = new Property("?", "?");
-		ComponentDescription component = getSelectedComponent();
+		ComponentDescription component = getFirstSelectedComponent();
 		if (component != null && component.target() != null) {
 			component.target().addProperty(property);
 			broadcastInstrumentUpdate(UpdateTypes.NEW_PROPERTY);
@@ -286,7 +321,7 @@ public class SynopticViewModel {
 	}
 
 	public void removeSelectedProperty() {
-		ComponentDescription component = getSelectedComponent();
+		ComponentDescription component = getFirstSelectedComponent();
 		if (component != null && component.target() != null) {
 			if (component.target().removeProperty(getSelectedProperty())) {
 				setSelectedProperty(null);
@@ -318,7 +353,7 @@ public class SynopticViewModel {
 			return;
 		}
 
-		ComponentDescription component = getSelectedComponent();
+		ComponentDescription component = getFirstSelectedComponent();
 		if (component != null) {
 			TargetDescription target = component.target();
 			if (target != null) {
@@ -363,7 +398,7 @@ public class SynopticViewModel {
 	}
 
 	private void broadcastComponentSelectionChanged(
-			ComponentDescription oldSelected, ComponentDescription newSelected) {
+			List<ComponentDescription> oldSelected, List<ComponentDescription> newSelected) {
 		for (IComponentSelectionListener listener : componentSelectionListeners) {
 			listener.selectionChanged(oldSelected, newSelected);
 		}
@@ -404,5 +439,15 @@ public class SynopticViewModel {
 	
 	public Boolean getShowBeam() {
 		return instrument.showBeam();
+	}
+	
+	public Boolean selectedHaveSameParent() {
+		SynopticParentDescription parent = selectedComponents.get(0).getParent();
+		for (ComponentDescription selected : selectedComponents) {
+			if (selected.getParent() != parent) {
+				return false;
+			}
+		}
+		return true;
 	}
 }

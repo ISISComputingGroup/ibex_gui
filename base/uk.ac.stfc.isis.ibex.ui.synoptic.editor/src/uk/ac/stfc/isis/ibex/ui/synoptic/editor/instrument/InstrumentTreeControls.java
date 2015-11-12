@@ -19,6 +19,8 @@
 
 package uk.ac.stfc.isis.ibex.ui.synoptic.editor.instrument;
 
+import java.util.List;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -63,8 +65,8 @@ public class InstrumentTreeControls extends Composite {
 		instrument.addComponentSelectionListener(new IComponentSelectionListener() {
 			@Override
 			public void selectionChanged(
-					ComponentDescription oldSelection, 
-					ComponentDescription newSelection) {
+					List<ComponentDescription> oldSelection, 
+					List<ComponentDescription> newSelection) {
 				refresh();
 			}
 		});
@@ -93,20 +95,20 @@ public class InstrumentTreeControls extends Composite {
         btnCopyComponent.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
-                synopticViewModel.copySelected();
+                synopticViewModel.copySelectedComponent();
             }
         });
-		
+        
         btnDelete = new Button(this, SWT.NONE);
         btnDelete.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
         btnDelete.setText("Delete Component");
         btnDelete.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
-                synopticViewModel.removeSelected();
+                synopticViewModel.removeSelectedComponent();
             }
         });
-
+		
 		btnShowBeam = new Button(this, SWT.CHECK | SWT.CENTER);
         btnShowBeam.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, false, 1, 1));
 		btnShowBeam.setText("Show Beam");
@@ -120,13 +122,16 @@ public class InstrumentTreeControls extends Composite {
 			}
 		});
 
-		refresh();
+		synopticViewModel.addComponentSelectionListener(new IComponentSelectionListener() {
+			@Override
+			public void selectionChanged(List<ComponentDescription> oldSelection, List<ComponentDescription> newSelection) {
+				btnDelete.setEnabled(newSelection != null && !newSelection.isEmpty());
+				btnCopyComponent.setEnabled(newSelection != null && !newSelection.isEmpty() && synopticViewModel.selectedHaveSameParent());
+			}
+		});
 	}
 
 	public void refresh() {
-		ComponentDescription selected = synopticViewModel.getSelectedComponent();
 		btnShowBeam.setSelection(synopticViewModel.getShowBeam());
-        btnCopyComponent.setEnabled(selected != null);
-		btnDelete.setEnabled(selected != null);
 	}
 }

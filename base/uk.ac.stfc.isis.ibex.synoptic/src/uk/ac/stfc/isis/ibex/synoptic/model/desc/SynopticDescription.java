@@ -43,7 +43,7 @@ import uk.ac.stfc.isis.ibex.synoptic.xml.XMLUtil;
  */
 @XmlRootElement(name = "instrument")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class SynopticDescription {
+public class SynopticDescription implements SynopticParentDescription {
 	private String name;
 	
 	private String showbeam;
