@@ -1,4 +1,3 @@
-
 /*
 * This file is part of the ISIS IBEX application.
 * Copyright (C) 2012-2015 Science & Technology Facilities Council.
@@ -17,18 +16,17 @@
 * http://opensource.org/licenses/eclipse-1.0.php
 */
 
-/*
- * Copyright (C) 2013-2014 Research Councils UK (STFC)
- *
- * This file is part of the Instrument Control Project at ISIS.
- *
- * This code and information are provided "as is" without warranty of any 
- * kind, either expressed or implied, including but not limited to the
- * implied warranties of merchantability and/or fitness for a particular 
- * purpose.
- */
-package uk.ac.stfc.isis.ibex.ui.synoptic.editor.model;
+package uk.ac.stfc.isis.ibex.synoptic.model.desc;
 
-public enum UpdateTypes {
-    UNKNOWN, NEW_INSTRUMENT, NEW_COMPONENT, COPY_COMPONENT, DELETE_COMPONENT, MOVE_COMPONENT, EDIT_COMPONENT, EDIT_PV, EDIT_PROPERTY, NEW_PROPERTY, DELETE_PROPERTY, ADD_TARGET, EDIT_TARGET
+import java.util.List;
+
+/*
+ * Interface to allow for general access to component parents.
+ */
+
+public interface SynopticParentDescription {
+	public List<ComponentDescription> components();
+	public void addComponent(ComponentDescription component);
+	public void addComponent(ComponentDescription component, int index);
+	public void removeComponent(ComponentDescription component);
 }

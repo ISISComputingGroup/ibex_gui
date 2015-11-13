@@ -29,8 +29,10 @@
  */
 package uk.ac.stfc.isis.ibex.ui.synoptic.editor.model;
 
+import java.util.List;
+
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.ComponentDescription;
 
 public interface IComponentSelectionListener {
-	void selectionChanged(ComponentDescription oldSelection, ComponentDescription newSelection);
+	void selectionChanged(List<ComponentDescription> oldSelection, List<ComponentDescription> newSelection);
 }

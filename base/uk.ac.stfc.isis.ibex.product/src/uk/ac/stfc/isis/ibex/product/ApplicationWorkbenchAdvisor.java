@@ -19,9 +19,6 @@
 
 package uk.ac.stfc.isis.ibex.product;
 
-import uk.ac.stfc.isis.ibex.instrument.Instrument;
-import uk.ac.stfc.isis.ibex.ui.perspectives.Startup;
-
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.PlatformUI;
@@ -29,23 +26,44 @@ import org.eclipse.ui.application.IWorkbenchWindowConfigurer;
 import org.eclipse.ui.application.WorkbenchAdvisor;
 import org.eclipse.ui.application.WorkbenchWindowAdvisor;
 
+import uk.ac.stfc.isis.ibex.instrument.Instrument;
+import uk.ac.stfc.isis.ibex.ui.perspectives.Startup;
+
 public class ApplicationWorkbenchAdvisor extends WorkbenchAdvisor {
+
+    org.eclipse.ui.application.IWorkbenchConfigurer configurer;
 	
 	private static final String DIALOG_BOX_TITLE = "Close the application?";
 	private static final String DIALOG_QUESTION = "Are you sure you want to close this application?";
 	
+    @Override
     public WorkbenchWindowAdvisor createWorkbenchWindowAdvisor(IWorkbenchWindowConfigurer configurer) {
         return new ApplicationWorkbenchWindowAdvisor(configurer);
     }
 
-	public String getInitialWindowPerspectiveId() {
+	@Override
+    public String getInitialWindowPerspectiveId() {
 		return Startup.ID;
 	}
+	
+	@Override
+	public void initialize(org.eclipse.ui.application.IWorkbenchConfigurer configurer) {
+	    super.initialize(configurer);
+        this.configurer = configurer;
+
+        // set save and restore to false here to avoid restoring
+        // window layout restored in ApplicationWorkbenchWindowAdvisor
+        configurer.setSaveAndRestore(false);
+	};
 	
 	@Override
 	public boolean preShutdown() {
 		Instrument.getInstance().setInitial();
 		
+        // set save and restore true here to make sure we save settings
+        // these are actually restored in ApplicationWorkbenchWindowAdvisor
+        configurer.setSaveAndRestore(true);
+
 		Shell shell = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
 		return MessageDialog.openQuestion(shell, DIALOG_BOX_TITLE, DIALOG_QUESTION);
 	}

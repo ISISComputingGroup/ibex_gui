@@ -8,11 +8,6 @@
             id="uk.ac.stfc.isis.ibex.ui.instrument.InstrumentHandler"
             name="Select an instrument">
       </command>
-      <command
-            defaultHandler="uk.ac.stfc.isis.ibex.ui.instrument.baton.BatonHandler"
-            id="uk.ac.stfc.isis.ibex.ui.instrument.baton.BatonHandler"
-            name="Request baton">
-      </command>
    </extension>
    <extension
          point="org.eclipse.ui.menus">
@@ -28,13 +23,6 @@
                   label="Select an instrument..."
                   style="push"
                   tooltip="Select an instrument.">
-            </command>
-            <command
-                  commandId="uk.ac.stfc.isis.ibex.ui.instrument.baton.BatonHandler"
-                  id="uk.ac.stfc.isis.ibex.ui.instrument.baton.BatonHandler"
-                  label="Request baton"
-                  style="push"
-                  tooltip="Request the baton on the instrument.">
             </command>
          </menu>
      </menuContribution>

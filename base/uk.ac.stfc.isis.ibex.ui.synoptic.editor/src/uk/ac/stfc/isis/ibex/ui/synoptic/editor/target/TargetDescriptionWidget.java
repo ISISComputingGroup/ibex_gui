@@ -25,7 +25,7 @@ public class TargetDescriptionWidget extends Composite {
 		instrument.addInstrumentUpdateListener(new IInstrumentUpdateListener() {
 			@Override
 			public void instrumentUpdated(UpdateTypes updateType) {
-				ComponentDescription component = instrument.getSelectedComponent();
+				ComponentDescription component = instrument.getFirstSelectedComponent();
 
 				if (component != null) {
                     // For back-compatibility reasons the name actually might be

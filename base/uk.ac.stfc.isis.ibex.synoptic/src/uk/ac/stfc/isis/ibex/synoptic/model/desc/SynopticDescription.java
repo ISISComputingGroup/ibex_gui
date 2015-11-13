@@ -43,7 +43,7 @@ import uk.ac.stfc.isis.ibex.synoptic.xml.XMLUtil;
  */
 @XmlRootElement(name = "instrument")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class SynopticDescription {
+public class SynopticDescription implements SynopticParentDescription {
 	private String name;
 	
 	private String showbeam;
@@ -102,4 +102,19 @@ public class SynopticDescription {
 	public String getXmlDescription() throws JAXBException, SAXException {
 		return XMLUtil.toXml(this);
 	}
+
+    /**
+     * Provide a list of the component names, but not children.
+     * 
+     * @return A list of the component names
+     */
+    public List<String> getComponentNameList() {
+        ArrayList<String> nameList = new ArrayList<>();
+
+        for (ComponentDescription cd : components) {
+            nameList.add(cd.name());
+        }
+
+        return nameList;
+    }
 }

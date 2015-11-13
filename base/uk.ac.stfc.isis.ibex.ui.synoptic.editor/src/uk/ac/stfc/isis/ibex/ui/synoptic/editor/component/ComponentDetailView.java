@@ -78,7 +78,7 @@ public class ComponentDetailView extends Composite {
                 }
                 if (updateType != UpdateTypes.EDIT_COMPONENT && updateType != UpdateTypes.EDIT_TARGET
                         && updateType != UpdateTypes.ADD_TARGET) {
-					component = instrument.getSelectedComponent();
+					component = instrument.getFirstSelectedComponent();
 					showComponent(component);
 				}
 			}
@@ -88,9 +88,13 @@ public class ComponentDetailView extends Composite {
 				.addComponentSelectionListener(new IComponentSelectionListener() {
 					@Override
 					public void selectionChanged(
-							ComponentDescription oldSelection,
-							ComponentDescription newSelection) {
-						component = newSelection;
+							List<ComponentDescription> oldSelection,
+							List<ComponentDescription> newSelection) {
+						if (newSelection != null && newSelection.size() == 1) {
+							component = newSelection.iterator().next();
+						} else {
+							component = null;
+						}
 						showComponent(component);
 					}
 				});

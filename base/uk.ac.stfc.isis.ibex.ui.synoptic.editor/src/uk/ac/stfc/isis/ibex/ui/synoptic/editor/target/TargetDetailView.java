@@ -19,6 +19,8 @@
 
 package uk.ac.stfc.isis.ibex.ui.synoptic.editor.target;
 
+import java.util.List;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -61,14 +63,18 @@ public class TargetDetailView extends Composite {
 		instrument.addInstrumentUpdateListener(new IInstrumentUpdateListener() {
 			@Override
 			public void instrumentUpdated(UpdateTypes updateType) {
-                showTarget(instrument.getSelectedComponent());
+				showTarget(instrument.getFirstSelectedComponent());
 			}
 		});
 		
 		instrument.addComponentSelectionListener(new IComponentSelectionListener() {			
 			@Override
-			public void selectionChanged(ComponentDescription oldSelection, ComponentDescription newSelection) {
-				showTarget(newSelection);
+			public void selectionChanged(List<ComponentDescription> oldSelection, List<ComponentDescription> newSelection) {
+				if (newSelection != null && newSelection.size() == 1) {
+					showTarget(newSelection.iterator().next());
+				} else {
+					showTarget(null);
+				}
 			}
 		});
 		
@@ -114,7 +120,7 @@ public class TargetDetailView extends Composite {
 			
 			TargetPropertyList properties = new TargetPropertyList(fieldsComposite, instrument);
 			properties.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
-			properties.showPropertyList(instrument.getSelectedComponent());
+			properties.showPropertyList(instrument.getFirstSelectedComponent());
 		}
 		
 		addComposite = new Composite(parent, SWT.NONE);
@@ -152,7 +158,7 @@ public class TargetDetailView extends Composite {
                 // a target already exits, so should not be allowed to get set
                 fieldsComposite.setVisible(false);
                 labelComposite.setVisible(true);
-                addingAllowed(false, instrument.getSelectedComponent().type().name());
+                addingAllowed(false, instrument.getFirstSelectedComponent().type().name());
                 addComposite.setVisible(false);
                 nameSelect.setTarget(null);
                 instrument.setSelectedProperty(null);
