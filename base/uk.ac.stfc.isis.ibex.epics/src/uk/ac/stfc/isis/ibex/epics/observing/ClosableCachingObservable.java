@@ -19,10 +19,12 @@
 
 package uk.ac.stfc.isis.ibex.epics.observing;
 
+import uk.ac.stfc.isis.ibex.epics.pv.Closable;
+
 /**
  * The interface for a closable caching observable.
  *
  */
-public interface ClosableCachingObservable<T> extends ClosableObservable<T>, CachingObservable<T> {
+public interface ClosableCachingObservable<T> extends BaseCachingObservable<T>, Closable {
 
 }

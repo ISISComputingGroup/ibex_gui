@@ -24,7 +24,7 @@ package uk.ac.stfc.isis.ibex.epics.observing;
  * An observable whose source is another observable.
  *
  */
-public abstract class ForwardingObservable<T> extends BaseCachingObservable<T> implements ClosableCachingObservable<T> {
+public abstract class ForwardingObservable<T> extends AbstractClosableCachingObservable<T> {
 		
 	private final BaseObserver<T> sourceObserver = new BaseObserver<T>() {
 		@Override
@@ -45,7 +45,7 @@ public abstract class ForwardingObservable<T> extends BaseCachingObservable<T> i
 	
 	private Subscription sourceSubscription;
 
-	protected synchronized void setSource(CachingObservable<T> newSource) {
+	protected synchronized void setSource(BaseCachingObservable<T> newSource) {
 		cancelSubscription();	
 		sourceObserver.onConnectionStatus(false);
 		

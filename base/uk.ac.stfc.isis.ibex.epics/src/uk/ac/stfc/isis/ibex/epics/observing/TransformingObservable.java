@@ -25,7 +25,7 @@ package uk.ac.stfc.isis.ibex.epics.observing;
  * For example: changing an enum into a string
  *
  */
-public abstract class TransformingObservable<T1, T2> extends BaseCachingObservable<T2> implements ClosableCachingObservable<T2> {
+public abstract class TransformingObservable<T1, T2> extends AbstractClosableCachingObservable<T2> {
 
 	private ClosableCachingObservable<T1> source;
 	private Subscription sourceSubscription;

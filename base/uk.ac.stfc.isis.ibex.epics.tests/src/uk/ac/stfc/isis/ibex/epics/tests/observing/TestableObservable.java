@@ -1,13 +1,13 @@
 package uk.ac.stfc.isis.ibex.epics.tests.observing;
 
-import uk.ac.stfc.isis.ibex.epics.observing.BaseCachingObservable;
+import uk.ac.stfc.isis.ibex.epics.observing.AbstractClosableCachingObservable;
 
 /**
  * Observable to be used for testing, allows access to setValue, setError and setConnectionChanged methods.
  * 
  * This is final, so no mocking this, or using it outside testing!
  */
-final class TestableObservable<T> extends BaseCachingObservable<T> {
+final class TestableObservable<T> extends AbstractClosableCachingObservable<T> {
 	@Override
 	public void setValue(T value) {
 		super.setValue(value);

@@ -20,7 +20,7 @@
 package uk.ac.stfc.isis.ibex.instrument;
 
 import uk.ac.stfc.isis.ibex.epics.conversion.Converter;
-import uk.ac.stfc.isis.ibex.epics.observing.CachingObservable;
+import uk.ac.stfc.isis.ibex.epics.observing.BaseCachingObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.ClosableCachingObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.ConvertingObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.InitialiseOnSubscribeObservable;
@@ -57,7 +57,7 @@ public class InstrumentVariables extends Closer {
 		return autoInitialise(new ConvertingObservable<>(observable, converter));
 	}
 	
-	protected static <T> InitialiseOnSubscribeObservable<T> autoInitialise(CachingObservable<T> observable) {
+	protected static <T> InitialiseOnSubscribeObservable<T> autoInitialise(BaseCachingObservable<T> observable) {
 		return new InitialiseOnSubscribeObservable<>(observable);
 	}
 }

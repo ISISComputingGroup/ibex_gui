@@ -24,6 +24,6 @@ package uk.ac.stfc.isis.ibex.epics.pv;
  *
  * @param <T> the PV type
  */
-public interface PV<T> extends Closable {
+public interface PV<T> {
 	PVInfo<T> details();
 }

@@ -24,11 +24,11 @@ package uk.ac.stfc.isis.ibex.epics.observing;
  */
 public class SwitchableObservable<T> extends ForwardingObservable<T> {
 	
-	public SwitchableObservable(CachingObservable<T> source) {
+	public SwitchableObservable(BaseCachingObservable<T> source) {
 		switchTo(source);
 	}
 
-	public void switchTo(CachingObservable<T> newSource) {
+	public void switchTo(BaseCachingObservable<T> newSource) {
 		setSource(newSource);
 	}
 }
