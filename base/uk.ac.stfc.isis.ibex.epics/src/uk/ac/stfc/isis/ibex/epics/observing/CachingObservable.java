@@ -19,6 +19,12 @@
 
 package uk.ac.stfc.isis.ibex.epics.observing;
 
+/**
+ * Defines that implementors should keep a cached copy of its values.
+ * 
+ * @param <T>
+ *            The type of the value being observed.
+ */
 public interface CachingObservable<T> {
 	T getValue();
 	

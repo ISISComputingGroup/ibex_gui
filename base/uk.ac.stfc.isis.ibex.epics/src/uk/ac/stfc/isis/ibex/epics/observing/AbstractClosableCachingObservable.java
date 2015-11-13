@@ -21,6 +21,14 @@ package uk.ac.stfc.isis.ibex.epics.observing;
 import java.util.Collection;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+/**
+ * This class is the abstract skeletal implementation of the implemented
+ * interface. It contains a default implementation for the all the required
+ * methods.
+ *
+ * @param <T>
+ *            The type of the value being observed.
+ */
 public abstract class AbstractClosableCachingObservable<T> implements ClosableCachingObservable<T> {
 
 	private final Collection<Observer<T>> observers = new CopyOnWriteArrayList<>();
@@ -55,7 +63,7 @@ public abstract class AbstractClosableCachingObservable<T> implements ClosableCa
 	@Override
 	public void close()
 	{
-		// Do nothing
+        // Do nothing by default
 	}
 	
 	protected void setValue(T value) {

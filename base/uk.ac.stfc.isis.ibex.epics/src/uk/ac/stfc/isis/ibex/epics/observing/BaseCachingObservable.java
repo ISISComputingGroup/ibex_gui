@@ -20,11 +20,11 @@
 package uk.ac.stfc.isis.ibex.epics.observing;
 
 /**
- * This is a caching observable, so it will always have a value that can be obtained with getValue().
+ * The root interface in the Observable hierarchy. Defines that implementors can
+ * be subscribed to and should keep a cached copy of its values.
  * 
- * This class is abstract, as it has no useful public methods and the value can not be set.
- * 
- * @param <T> The type of the value being observed.
+ * @param <T>
+ *            The type of the value being observed.
  */
 public interface BaseCachingObservable<T> extends Observable<T>, CachingObservable<T> {
 	

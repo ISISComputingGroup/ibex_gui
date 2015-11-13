@@ -23,6 +23,8 @@ package uk.ac.stfc.isis.ibex.epics.observing;
 /**
  * The observable interface for creating a subscription.
  *
+ * @param <T>
+ *            The type of the value being observed.
  */
 public interface Observable<T> {
 	Subscription addObserver(Observer<T> observer);
