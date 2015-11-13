@@ -165,11 +165,12 @@ public class SynopticViewModel {
     }
 
     private String constructDeleteMessage() {
-		String message = "Are you sure you want to delete ";
+		String message = "Are you sure you want to delete the component";
 		if (selectedComponents.size() == 1) {
-			message += getFirstSelectedComponent().name() + "?";
+			message += " " + getFirstSelectedComponent().name() + "?";
 		} else {
 			int idx = 0;
+			message += "s; ";
 			for (ComponentDescription selected : selectedComponents) {
 				message += selected.name();
 				if (idx == selectedComponents.size() - 2) {
@@ -179,6 +180,7 @@ public class SynopticViewModel {
 				}
 				idx++;
 			}
+			message += "?";
 		}
 		return message;
     }
