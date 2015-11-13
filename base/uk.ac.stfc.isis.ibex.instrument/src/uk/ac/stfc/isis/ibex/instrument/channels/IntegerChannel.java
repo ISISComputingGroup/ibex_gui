@@ -21,7 +21,7 @@ package uk.ac.stfc.isis.ibex.instrument.channels;
 
 import uk.ac.stfc.isis.ibex.epics.observing.ClosableCachingObservable;
 import uk.ac.stfc.isis.ibex.epics.pv.Channels;
-import uk.ac.stfc.isis.ibex.epics.writing.ClosableWritable;
+import uk.ac.stfc.isis.ibex.epics.writing.BaseWritable;
 
 public class IntegerChannel implements ChannelType<Integer> {
 
@@ -31,7 +31,7 @@ public class IntegerChannel implements ChannelType<Integer> {
 	}
 
 	@Override
-	public ClosableWritable<Integer> writer(String address) {
+    public BaseWritable<Integer> writer(String address) {
 		throw new UnsupportedOperationException();
 	}
 }

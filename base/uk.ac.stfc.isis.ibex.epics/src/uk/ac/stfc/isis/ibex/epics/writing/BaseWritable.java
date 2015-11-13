@@ -24,8 +24,9 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 import uk.ac.stfc.isis.ibex.epics.observing.Subscription;
 import uk.ac.stfc.isis.ibex.epics.observing.Unsubscriber;
+import uk.ac.stfc.isis.ibex.epics.pv.Closable;
 
-public abstract class BaseWritable<T> implements Writable<T> {
+public abstract class BaseWritable<T> implements Writable<T>, Closable {
 
 	private final Collection<ConfigurableWriter<?, ?>> writers = new CopyOnWriteArrayList<>();
 
@@ -44,7 +45,8 @@ public abstract class BaseWritable<T> implements Writable<T> {
 		return new Unsubscriber<ConfigurableWriter<?, ?>>(writers, writer);
 	}
 	
-	public boolean canWrite() {
+	@Override
+    public boolean canWrite() {
 		return canWrite;
 	}
 	

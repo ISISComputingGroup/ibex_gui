@@ -21,7 +21,7 @@ package uk.ac.stfc.isis.ibex.instrument.channels;
 
 import uk.ac.stfc.isis.ibex.epics.observing.ClosableCachingObservable;
 import uk.ac.stfc.isis.ibex.epics.pv.Channels;
-import uk.ac.stfc.isis.ibex.epics.writing.ClosableWritable;
+import uk.ac.stfc.isis.ibex.epics.writing.BaseWritable;
 
 public class EnumChannel<E extends Enum<E>> implements ChannelType<E> {
 
@@ -37,7 +37,7 @@ public class EnumChannel<E extends Enum<E>> implements ChannelType<E> {
 	}
 
 	@Override
-	public ClosableWritable<E> writer(String address) {
+    public BaseWritable<E> writer(String address) {
 		throw new UnsupportedOperationException();
 	}
 

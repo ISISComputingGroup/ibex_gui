@@ -21,7 +21,7 @@ package uk.ac.stfc.isis.ibex.epics.writing;
 
 import uk.ac.stfc.isis.ibex.epics.observing.Subscription;
 
-public abstract class ForwardingWritable<TIn, TOut> extends BaseWritable<TIn> implements ClosableWritable<TIn> {
+public abstract class ForwardingWritable<TIn, TOut> extends BaseWritable<TIn> {
 
 	private ConfigurableWriter<TIn, TOut> forwardingWriter = new BaseWriter<TIn, TOut>() {
 		@Override
@@ -29,11 +29,13 @@ public abstract class ForwardingWritable<TIn, TOut> extends BaseWritable<TIn> im
 			writeToWritables(transform(value));
 		}
 		
-		public void onError(Exception e) {
+		@Override
+        public void onError(Exception e) {
 			error(e);
 		};
 		
-		public void onCanWriteChanged(boolean canWrite) {
+		@Override
+        public void onCanWriteChanged(boolean canWrite) {
 			canWriteChanged(canWrite);
 		};
 	};

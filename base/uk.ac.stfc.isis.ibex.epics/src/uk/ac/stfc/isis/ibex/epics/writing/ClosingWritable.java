@@ -21,15 +21,15 @@ package uk.ac.stfc.isis.ibex.epics.writing;
 
 import uk.ac.stfc.isis.ibex.epics.pv.Closable;
 
-public class ClosingWritable<T> extends ForwardingWritable<T, T> implements ClosableWritable<T> {
+public class ClosingWritable<T> extends ForwardingWritable<T, T> {
 
 	private Closable resource;
 	
-	public ClosingWritable(ClosableWritable<T> destination) {
+    public ClosingWritable(BaseWritable<T> destination) {
 		setWritable(destination);
 	}
 	
-	public void setWritable(ClosableWritable<T> destination) {
+    public void setWritable(BaseWritable<T> destination) {
 		super.setWritable(destination);
 		closeResource();
 		resource = destination;
