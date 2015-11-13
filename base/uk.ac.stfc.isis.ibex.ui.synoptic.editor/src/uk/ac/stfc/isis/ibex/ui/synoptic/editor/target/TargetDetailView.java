@@ -1,21 +1,21 @@
 
 /*
-* This file is part of the ISIS IBEX application.
-* Copyright (C) 2012-2015 Science & Technology Facilities Council.
-* All rights reserved.
-*
-* This program is distributed in the hope that it will be useful.
-* This program and the accompanying materials are made available under the
-* terms of the Eclipse Public License v1.0 which accompanies this distribution.
-* EXCEPT AS EXPRESSLY SET FORTH IN THE ECLIPSE PUBLIC LICENSE V1.0, THE PROGRAM 
-* AND ACCOMPANYING MATERIALS ARE PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES 
-* OR CONDITIONS OF ANY KIND.  See the Eclipse Public License v1.0 for more details.
-*
-* You should have received a copy of the Eclipse Public License v1.0
-* along with this program; if not, you can obtain a copy from
-* https://www.eclipse.org/org/documents/epl-v10.php or 
-* http://opensource.org/licenses/eclipse-1.0.php
-*/
+ * This file is part of the ISIS IBEX application.
+ * Copyright (C) 2012-2015 Science & Technology Facilities Council.
+ * All rights reserved.
+ *
+ * This program is distributed in the hope that it will be useful.
+ * This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v1.0 which accompanies this distribution.
+ * EXCEPT AS EXPRESSLY SET FORTH IN THE ECLIPSE PUBLIC LICENSE V1.0, THE PROGRAM 
+ * AND ACCOMPANYING MATERIALS ARE PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES 
+ * OR CONDITIONS OF ANY KIND.  See the Eclipse Public License v1.0 for more details.
+ *
+ * You should have received a copy of the Eclipse Public License v1.0
+ * along with this program; if not, you can obtain a copy from
+ * https://www.eclipse.org/org/documents/epl-v10.php or 
+ * http://opensource.org/licenses/eclipse-1.0.php
+ */
 
 package uk.ac.stfc.isis.ibex.ui.synoptic.editor.target;
 
@@ -35,6 +35,12 @@ import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.IInstrumentUpdateListener;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.SynopticViewModel;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.UpdateTypes;
 
+/**
+ * Shows the synoptic editor part that allows selection of a target, normally an
+ * OPI or a Java SWT screen for goniometers or DAEs. OPI can be chosen, but
+ * goniometers and DAEs have a fixed target.
+ *
+ */
 public class TargetDetailView extends Composite {
 
 	private SynopticViewModel instrument;
@@ -42,7 +48,7 @@ public class TargetDetailView extends Composite {
 	private Composite labelComposite;
 	private Composite fieldsComposite;
 	private Composite addComposite;
-    private Composite noAddComposite;
+    private Label lblNoSelection;
 
 	TargetNameWidget nameSelect;
 
@@ -78,7 +84,7 @@ public class TargetDetailView extends Composite {
 		labelComposite.setLayoutData(new GridData(SWT.CENTER, SWT.FILL, true, false, 1, 1));
 		labelComposite.setLayout(new GridLayout(1, false));
 		{
-			Label lblNoSelection = new Label(labelComposite, SWT.NONE);
+            lblNoSelection = new Label(labelComposite, SWT.NONE);
 			lblNoSelection.setText("Select a Component to view/edit details");
 		}
 		
@@ -129,21 +135,13 @@ public class TargetDetailView extends Composite {
 				}
 			});
 		}
-
-        noAddComposite = new Composite(parent, SWT.NONE);
-        noAddComposite.setLayoutData(new GridData(SWT.CENTER, SWT.FILL, true, false, 1, 1));
-        noAddComposite.setLayout(new GridLayout(1, false));
-        {
-            Label lblNoTarget = new Label(noAddComposite, SWT.NONE);
-            lblNoTarget.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1));
-            lblNoTarget.setText("OPI selection not needed for DAE or Goniometer.");
-        }
 	}
 	
     private void showTarget(ComponentDescription component) {
 		if (component == null) {
 			fieldsComposite.setVisible(false);
 			labelComposite.setVisible(true);
+            addingAllowed(true, "");
 			addComposite.setVisible(false);
 			
 			nameSelect.setTarget(null);
@@ -153,27 +151,32 @@ public class TargetDetailView extends Composite {
             if (component.type().target() != null) {
                 // a target already exits, so should not be allowed to get set
                 fieldsComposite.setVisible(false);
-                labelComposite.setVisible(false);
+                labelComposite.setVisible(true);
+                addingAllowed(false, instrument.getSelectedComponent().type().name());
                 addComposite.setVisible(false);
-                noAddComposite.setVisible(true);
-
                 nameSelect.setTarget(null);
                 instrument.setSelectedProperty(null);
             } else if (target != null) {
 				fieldsComposite.setVisible(true);
 				labelComposite.setVisible(false);
 				addComposite.setVisible(false);
-                noAddComposite.setVisible(false);
 				
 				nameSelect.setTarget(target);
 			} else {
 				fieldsComposite.setVisible(false);
 				labelComposite.setVisible(false);
 				addComposite.setVisible(true);
-                noAddComposite.setVisible(false);
 				
 				nameSelect.setTarget(null);
 			}
 		}
 	}
+
+    private void addingAllowed(boolean allowed, String component) {
+        if (allowed) {
+            lblNoSelection.setText("Select a Component to view/edit details");
+        } else {
+            lblNoSelection.setText("Target not selectable for " + component);
+        }
+    }
 }
