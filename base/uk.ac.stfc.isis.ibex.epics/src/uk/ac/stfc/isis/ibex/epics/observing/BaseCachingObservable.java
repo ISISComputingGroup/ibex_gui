@@ -23,8 +23,7 @@ package uk.ac.stfc.isis.ibex.epics.observing;
  * The root interface in the Observable hierarchy. Defines that implementors can
  * be subscribed to and should keep a cached copy of its values.
  * 
- * @param <T>
- *            The type of the value being observed.
+ * @param <T> The type of the value being observed.
  */
 public interface BaseCachingObservable<T> extends Observable<T>, CachingObservable<T> {
 	

@@ -45,7 +45,7 @@ public abstract class ForwardingObservable<T> extends AbstractClosableCachingObs
 	
 	private Subscription sourceSubscription;
 
-	protected synchronized void setSource(BaseCachingObservable<T> newSource) {
+    protected synchronized void setSource(BaseCachingObservable<T> newSource) {
 		cancelSubscription();	
 		sourceObserver.onConnectionStatus(false);
 		
