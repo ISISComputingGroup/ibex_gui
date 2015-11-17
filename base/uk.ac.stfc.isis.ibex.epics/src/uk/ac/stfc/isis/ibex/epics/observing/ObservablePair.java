@@ -24,8 +24,10 @@ import uk.ac.stfc.isis.ibex.epics.observing.InitialisableObserver;
 import uk.ac.stfc.isis.ibex.epics.observing.InitialiseOnSubscribeObservable;
 
 /**
- * Links together two related observables.
+ * Links together two related observables into a single observable.
  *
+ * @param <T1> The type of the first value being observed.
+ * @param <T2> The type of the second value being observed.
  */
 public class ObservablePair<T1, T2> extends AbstractClosableCachingObservable<Pair<T1, T2>> {
 
