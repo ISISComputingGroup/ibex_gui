@@ -27,7 +27,7 @@ import org.junit.Test;
 
 import uk.ac.stfc.isis.ibex.configserver.configuration.Block;
 import uk.ac.stfc.isis.ibex.configserver.displaying.DisplayBlock;
-import uk.ac.stfc.isis.ibex.epics.observing.CachingObservable;
+import uk.ac.stfc.isis.ibex.epics.observing.BaseCachingObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.InitialiseOnSubscribeObservable;
 
 @SuppressWarnings({ "unchecked", "checkstyle:methodname" })
@@ -41,7 +41,7 @@ public class DisplayBlockTest {
 	public void setUp() {
 		// Arrange
 		
-		inRangeObservable = new TestableIOSObservable<>(mock(CachingObservable.class));
+		inRangeObservable = new TestableIOSObservable<>(mock(BaseCachingObservable.class));
 		
 		displayBlock = new DisplayBlock(
 				mock(Block.class),                            // block

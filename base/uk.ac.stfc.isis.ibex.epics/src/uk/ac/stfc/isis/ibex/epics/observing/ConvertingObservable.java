@@ -25,6 +25,8 @@ import uk.ac.stfc.isis.ibex.epics.conversion.Converter;
 /**
  * Converts the source data to a specific type via a converter.
  *
+ * @param <R> The type of the first value being observed.
+ * @param <T> The required type to transform to.
  */
 public class ConvertingObservable<R ,T> extends TransformingObservable<R, T> {
 
@@ -36,8 +38,8 @@ public class ConvertingObservable<R ,T> extends TransformingObservable<R, T> {
 	}
 	
 	/**
-	 * value here is guaranteed not to be null by checks higher up
-	 */
+     * value here is guaranteed not to be null by checks higher up.
+     */
 	@Override
 	protected T transform(R value) {
 		try {

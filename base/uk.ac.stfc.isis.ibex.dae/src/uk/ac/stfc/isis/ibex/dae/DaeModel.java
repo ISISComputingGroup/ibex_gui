@@ -29,9 +29,6 @@ import uk.ac.stfc.isis.ibex.epics.writing.Writable;
 public class DaeModel extends Closer implements IDae {
 		
 	private final ExperimentSetup experimentSetup;
-	
-	
-	
 	private final DaeActions actions;
 	private final DaeObservables observables;
 	private final DaeWritables writables;
@@ -90,7 +87,8 @@ public class DaeModel extends Closer implements IDae {
 		return observables.vetos;
 	}
 	
-	public ExperimentSetup experimentSetup() {
+	@Override
+    public ExperimentSetup experimentSetup() {
 		return experimentSetup;
 	}
 		
@@ -99,7 +97,8 @@ public class DaeModel extends Closer implements IDae {
 		return actions;
 	}
 	
-	public Spectra spectra() {
+	@Override
+    public Spectra spectra() {
 		return spectra;
 	}
 }

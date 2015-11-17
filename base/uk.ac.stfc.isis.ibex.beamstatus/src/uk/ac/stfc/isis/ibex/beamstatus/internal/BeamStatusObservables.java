@@ -19,6 +19,7 @@
 
 package uk.ac.stfc.isis.ibex.beamstatus.internal;
 
+import uk.ac.stfc.isis.ibex.epics.observing.BaseCachingObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.CachingObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.InitialiseOnSubscribeObservable;
 import uk.ac.stfc.isis.ibex.epics.pv.Closer;
@@ -115,7 +116,7 @@ public class BeamStatusObservables extends Closer {
 		return autoInitialise(registerForClose(channelType.reader(address)));
 	}
 	
-	private static <T> InitialiseOnSubscribeObservable<T> autoInitialise(CachingObservable<T> observable) {
+	private static <T> InitialiseOnSubscribeObservable<T> autoInitialise(BaseCachingObservable<T> observable) {
 		return new InitialiseOnSubscribeObservable<>(observable);
 	}
 }

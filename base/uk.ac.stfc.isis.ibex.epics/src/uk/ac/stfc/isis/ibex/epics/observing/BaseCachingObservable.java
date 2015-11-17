@@ -20,48 +20,11 @@
 package uk.ac.stfc.isis.ibex.epics.observing;
 
 /**
- * This is a caching observable, so it will always have a value that can be obtained with getValue().
- * 
- * This class is abstract, as it has no useful public methods and the value can not be set.
+ * The root interface in the Observable hierarchy. Defines that implementors can
+ * be subscribed to and should keep a cached copy of its values.
  * 
  * @param <T> The type of the value being observed.
  */
-public abstract class BaseCachingObservable<T> extends BaseObservable<T> implements CachingObservable<T> {
+public interface BaseCachingObservable<T> extends Observable<T>, CachingObservable<T> {
 	
-	private T value;
-	private boolean isConnected;
-	private Exception lastError;
-		
-	public T getValue() {
-		return value;
-	}
-	
-	public boolean isConnected() {
-		return isConnected;
-	}
-	
-	public Exception lastError() {
-		return lastError;
-	}
-	
-	@Override
-	protected void setValue(T value) {
-		if (value != null) {
-			this.value = value;
-		}
-		
-		super.setValue(value);
-	}
-	
-	@Override
-	protected void setError(Exception e) {
-		lastError = e;
-		super.setError(e);
-	}
-	
-	@Override
-	protected void setConnectionStatus(boolean isConnected) {
-		this.isConnected = isConnected;
-		super.setConnectionStatus(isConnected);
-	}
 }

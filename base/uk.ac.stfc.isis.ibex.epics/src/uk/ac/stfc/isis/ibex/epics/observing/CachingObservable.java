@@ -19,10 +19,15 @@
 
 package uk.ac.stfc.isis.ibex.epics.observing;
 
-public interface CachingObservable<T> extends Observable<T> {
-	T getValue();
-	
-	boolean isConnected();
-	
-	Exception lastError();
+/**
+ * Defines that implementors should keep a cached copy of their values.
+ * 
+ * @param <T> The type of the value being observed.
+ */
+public interface CachingObservable<T> {
+    T getValue();
+
+    boolean isConnected();
+
+    Exception lastError();
 }
