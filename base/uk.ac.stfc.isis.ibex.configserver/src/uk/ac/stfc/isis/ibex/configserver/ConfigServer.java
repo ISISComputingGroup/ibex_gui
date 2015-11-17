@@ -36,7 +36,7 @@ import uk.ac.stfc.isis.ibex.epics.writing.LoggingForwardingWritable;
 import uk.ac.stfc.isis.ibex.epics.writing.LoggingForwardingWriter;
 import uk.ac.stfc.isis.ibex.epics.writing.Writable;
 import uk.ac.stfc.isis.ibex.epics.writing.Writer;
-import uk.ac.stfc.isis.ibex.epics.writing.Writers;
+import uk.ac.stfc.isis.ibex.epics.writing.ClosableSameTypeWriter;
 import uk.ac.stfc.isis.ibex.epics.writing.WritingSetCommand;
 import uk.ac.stfc.isis.ibex.model.SetCommand;
 
@@ -93,7 +93,7 @@ public class ConfigServer extends Closer {
 	}
 
 	public Writer<String> iocDescriptionSetter(String name) {
-		return registerForClose(Writers.forDestination(variables.iocDescriptionSetter(name)));
+		return registerForClose(ClosableSameTypeWriter.newInstance(variables.iocDescriptionSetter(name)));
 	}
 	
 	public InitialiseOnSubscribeObservable<Collection<PV>> pvs() {

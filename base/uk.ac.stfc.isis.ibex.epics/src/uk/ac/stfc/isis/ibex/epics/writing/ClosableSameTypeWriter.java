@@ -22,22 +22,31 @@ package uk.ac.stfc.isis.ibex.epics.writing;
 import uk.ac.stfc.isis.ibex.epics.observing.Subscription;
 import uk.ac.stfc.isis.ibex.epics.pv.Closable;
 
-public class Writers<T> extends BaseWriter<T, T> implements Closable {
-	
+/**
+ * Same as its parent class except it implements Closable and uses a static
+ * factory for constructor.
+ * 
+ * There is no reason for using the static factory other than it being slightly
+ * nicer syntactically.
+ *
+ * @param <T> the type of the Writable being written to
+ */
+public class ClosableSameTypeWriter<T> extends SameTypeWriter<T> implements Closable {
 	private Subscription destinationSubscription;
 	
-	private Writers(Writable<T> destination) {
+    public ClosableSameTypeWriter(Writable<T> destination) {
 		writeTo(destination);
 		destinationSubscription = destination.subscribe(this);
-	}
+    }
 	
-	public static <T> Writers<T> forDestination(Writable<T> destination) {
-		return new Writers<T>(destination);
-	}
-
-	@Override
-	public void write(T value) {
-		writeToWritables(value);
+	/**
+     * A static factory used for generating an instance of this class.
+     * 
+     * @param destination the Writable to write to
+     * @return the instance of this class that was created
+     */
+	public static <T> ClosableSameTypeWriter<T> newInstance(Writable<T> destination) {
+		return new ClosableSameTypeWriter<T>(destination);
 	}
 	
 	@Override
