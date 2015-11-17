@@ -20,7 +20,7 @@
 package uk.ac.stfc.isis.ibex.epics.observing;
 
 /**
- * Defines that implementors should keep a cached copy of its values.
+ * Defines that implementors should keep a cached copy of their values.
  * 
  * @param <T> The type of the value being observed.
  */
