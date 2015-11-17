@@ -29,31 +29,23 @@
  */
 package uk.ac.stfc.isis.ibex.ui.synoptic.editor.model;
 
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.*;
 import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.*;
 
-import org.eclipse.jface.dialogs.MessageDialog;
-import org.eclipse.swt.widgets.Shell;
-import org.eclipse.ui.PlatformUI;
+import org.eclipse.jface.dialogs.*;
+import org.eclipse.swt.widgets.*;
+import org.eclipse.ui.*;
 
-import uk.ac.stfc.isis.ibex.configserver.editing.DefaultName;
-import uk.ac.stfc.isis.ibex.instrument.Instrument;
-import uk.ac.stfc.isis.ibex.instrument.pv.PVType;
-import uk.ac.stfc.isis.ibex.model.UpdatedValue;
+import uk.ac.stfc.isis.ibex.configserver.editing.*;
+import uk.ac.stfc.isis.ibex.instrument.*;
+import uk.ac.stfc.isis.ibex.instrument.pv.*;
+import uk.ac.stfc.isis.ibex.model.*;
+import uk.ac.stfc.isis.ibex.synoptic.*;
 import uk.ac.stfc.isis.ibex.synoptic.Synoptic;
-import uk.ac.stfc.isis.ibex.synoptic.SynopticModel;
-import uk.ac.stfc.isis.ibex.synoptic.model.ComponentType;
-import uk.ac.stfc.isis.ibex.synoptic.model.desc.ComponentDescription;
-import uk.ac.stfc.isis.ibex.synoptic.model.desc.SynopticParentDescription;
-import uk.ac.stfc.isis.ibex.synoptic.model.desc.IO;
-import uk.ac.stfc.isis.ibex.synoptic.model.desc.PV;
-import uk.ac.stfc.isis.ibex.synoptic.model.desc.Property;
-import uk.ac.stfc.isis.ibex.synoptic.model.desc.RecordType;
-import uk.ac.stfc.isis.ibex.synoptic.model.desc.SynopticDescription;
-import uk.ac.stfc.isis.ibex.synoptic.model.desc.TargetDescription;
-import uk.ac.stfc.isis.ibex.ui.synoptic.editor.target.DefaultTargetForComponent;
+import uk.ac.stfc.isis.ibex.synoptic.model.*;
+import uk.ac.stfc.isis.ibex.synoptic.model.desc.*;
+import uk.ac.stfc.isis.ibex.ui.synoptic.editor.target.*;
 
 /**
  * Provides the model for the view of the synoptic. This is an observable
@@ -170,7 +162,7 @@ public class SynopticViewModel {
 			message += " " + getFirstSelectedComponent().name() + "?";
 		} else {
 			int idx = 0;
-			message += "s; ";
+            message += "s ";
 			for (ComponentDescription selected : selectedComponents) {
 				message += selected.name();
 				if (idx == selectedComponents.size() - 2) {
