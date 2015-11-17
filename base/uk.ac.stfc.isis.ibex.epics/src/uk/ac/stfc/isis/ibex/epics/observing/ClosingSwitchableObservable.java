@@ -24,7 +24,7 @@ import uk.ac.stfc.isis.ibex.epics.pv.Closable;
 /**
  * An observable which closes its current source when switching to another.
  */
-public class ClosingSwitchableObservable<T> extends SwitchableObservable<T> implements ClosableCachingObservable<T> {
+public class ClosingSwitchableObservable<T> extends SwitchableObservable<T> {
 	
 	private Closable source;
 	

@@ -20,7 +20,6 @@
 package uk.ac.stfc.isis.ibex.instrument.pv;
 
 import uk.ac.stfc.isis.ibex.epics.observing.BaseCachingObservable;
-import uk.ac.stfc.isis.ibex.epics.observing.CachingObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.ClosableCachingObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.ClosingSwitchableObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.ObserverAdapter;
@@ -39,7 +38,7 @@ public class PVChannels implements Channels {
 	
 	@Override
 	public <T> ClosableCachingObservable<T> getReader(final ChannelType<T> channelType, String addressSuffix) {		
-	    final CachingObservable<String> address = addresses.resolvePV(addressSuffix);
+	    final BaseCachingObservable<String> address = addresses.resolvePV(addressSuffix);
 		final ClosingSwitchableObservable<T> channel = 
 				new ClosingSwitchableObservable<>(channelType.reader(address.getValue()));
 		
@@ -56,7 +55,7 @@ public class PVChannels implements Channels {
 	
 	@Override
 	public <T> ClosableCachingObservable<T> getReader(final ChannelType<T> channelType, String addressSuffix, PVType pvType) {	
-	    final CachingObservable<String> address = addresses.resolvePV(addressSuffix, pvType);
+	    final BaseCachingObservable<String> address = addresses.resolvePV(addressSuffix, pvType);
 		final ClosingSwitchableObservable<T> channel = 
 				new ClosingSwitchableObservable<>(channelType.reader(address.getValue()));
 		

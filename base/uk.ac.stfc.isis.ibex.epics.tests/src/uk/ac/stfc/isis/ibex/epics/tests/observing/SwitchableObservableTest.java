@@ -25,7 +25,7 @@ import static org.mockito.Mockito.*;
 import org.junit.Before;
 import org.junit.Test;
 
-import uk.ac.stfc.isis.ibex.epics.observing.CachingObservable;
+import uk.ac.stfc.isis.ibex.epics.observing.BaseCachingObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.InitialisableObserver;
 import uk.ac.stfc.isis.ibex.epics.observing.SwitchableObservable;
 
@@ -39,9 +39,9 @@ public class SwitchableObservableTest {
 	
 	private InitialisableObserver<String> mockObserver;
 	
-	private CachingObservable<String> mockObservableOne;
-	private CachingObservable<String> mockObservableTwo;
-	private CachingObservable<String> mockObservableWithNullValue;
+	private BaseCachingObservable<String> mockObservableOne;
+	private BaseCachingObservable<String> mockObservableTwo;
+	private BaseCachingObservable<String> mockObservableWithNullValue;
 	
 	private SwitchableObservable<String> switchableObservable;
 	

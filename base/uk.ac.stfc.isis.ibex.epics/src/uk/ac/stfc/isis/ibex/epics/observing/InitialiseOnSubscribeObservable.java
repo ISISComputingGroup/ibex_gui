@@ -21,12 +21,13 @@ package uk.ac.stfc.isis.ibex.epics.observing;
 
 
 /**
- * An observable that performs a read when the subscription is created.
+ * An observable that gives the new observer the currently cached values when the subscription is created.
+ * In other words, the observer does not have to wait for the first value change before it has some values.
  *
  */
 public class InitialiseOnSubscribeObservable<T> extends ForwardingObservable<T> {
 	
-	public InitialiseOnSubscribeObservable(CachingObservable<T> source) {
+    public InitialiseOnSubscribeObservable(BaseCachingObservable<T> source) {
 		setSource(source);
 	}
 

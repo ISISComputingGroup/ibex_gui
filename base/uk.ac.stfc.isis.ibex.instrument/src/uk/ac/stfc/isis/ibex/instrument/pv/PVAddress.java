@@ -19,9 +19,9 @@
 
 package uk.ac.stfc.isis.ibex.instrument.pv;
 
-import uk.ac.stfc.isis.ibex.epics.observing.BaseCachingObservable;
+import uk.ac.stfc.isis.ibex.epics.observing.AbstractClosableCachingObservable;
 
-public class PVAddress extends BaseCachingObservable<String> {
+public class PVAddress extends AbstractClosableCachingObservable<String> {
 	private String prefix;
 	private String suffix;
 	

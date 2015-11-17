@@ -19,18 +19,17 @@
 
 package uk.ac.stfc.isis.ibex.epics.observing;
 
-import uk.ac.stfc.isis.ibex.epics.observing.BaseCachingObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.BaseObserver;
 import uk.ac.stfc.isis.ibex.epics.observing.InitialisableObserver;
 import uk.ac.stfc.isis.ibex.epics.observing.InitialiseOnSubscribeObservable;
 
 /**
- * Links together two related observables.
+ * Links together two related observables into a single observable.
  *
+ * @param <T1> The type of the first value being observed.
+ * @param <T2> The type of the second value being observed.
  */
-public class ObservablePair<T1, T2> 
-				extends BaseCachingObservable<Pair<T1, T2>> 
-				implements ClosableCachingObservable<Pair<T1, T2>> {
+public class ObservablePair<T1, T2> extends AbstractClosableCachingObservable<Pair<T1, T2>> {
 
 	private abstract class PairObserver<T> extends BaseObserver<T> {
 		@Override

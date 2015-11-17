@@ -19,6 +19,7 @@
 
 package uk.ac.stfc.isis.ibex.epics.adapters;
 
+import uk.ac.stfc.isis.ibex.epics.observing.BaseCachingObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.CachingObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.InitialiseOnSubscribeObservable;
 
@@ -29,7 +30,7 @@ public class TextUpdatedObservableAdapter extends UpdatedObservableAdapter<Strin
 	private static final String UNKNOWN = "Unknown";
 	private static final String EMPTY = "";
 	
-	public TextUpdatedObservableAdapter(CachingObservable<String> observable) {
+	public TextUpdatedObservableAdapter(BaseCachingObservable<String> observable) {
 		super(new InitialiseOnSubscribeObservable<>(observable));
 	}
 	
