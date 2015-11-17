@@ -26,7 +26,7 @@ public class ConvertingWritable<TIn, TOut> extends ForwardingWritable<TIn, TOut>
 
 	private final Converter<TIn, TOut> converter;
 
-	public ConvertingWritable(Writable<TOut> destination, Converter<TIn, TOut> converter) {
+    public ConvertingWritable(Writable<TOut> destination, Converter<TIn, TOut> converter) {
 		this.converter = converter;
 		setWritable(destination);
 	}

@@ -24,9 +24,8 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 import uk.ac.stfc.isis.ibex.epics.observing.Subscription;
 import uk.ac.stfc.isis.ibex.epics.observing.Unsubscriber;
-import uk.ac.stfc.isis.ibex.epics.pv.Closable;
 
-public abstract class BaseWritable<T> implements Writable<T>, Closable {
+public abstract class BaseWritable<T> implements Writable<T> {
 
 	private final Collection<ConfigurableWriter<?, ?>> writers = new CopyOnWriteArrayList<>();
 

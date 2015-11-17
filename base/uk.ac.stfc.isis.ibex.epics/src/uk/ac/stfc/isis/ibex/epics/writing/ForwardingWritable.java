@@ -20,8 +20,11 @@
 package uk.ac.stfc.isis.ibex.epics.writing;
 
 import uk.ac.stfc.isis.ibex.epics.observing.Subscription;
+import uk.ac.stfc.isis.ibex.epics.pv.Closable;
 
 public abstract class ForwardingWritable<TIn, TOut> extends BaseWritable<TIn> {
+
+    private Closable resource;
 
 	private ConfigurableWriter<TIn, TOut> forwardingWriter = new BaseWriter<TIn, TOut>() {
 		@Override
@@ -40,7 +43,7 @@ public abstract class ForwardingWritable<TIn, TOut> extends BaseWritable<TIn> {
 		};
 	};
 	
-	private Subscription readingSubscription;
+    private Subscription readingSubscription;
 	private Subscription writingSubsciption;
 	
 	@Override
@@ -53,26 +56,36 @@ public abstract class ForwardingWritable<TIn, TOut> extends BaseWritable<TIn> {
 	@Override
 	public void close() {
 		cancelSubscriptions();
+        closeResource();
 	}
 	
-	protected void setWritable(Writable<TOut> destination) {
+    public void setWritable(Writable<TOut> destination) {
 		cancelSubscriptions();
 		forwardingWriter.onCanWriteChanged(false);
 		forwardingWriter.onCanWriteChanged(destination.canWrite());
 		
-		readingSubscription = destination.subscribe(forwardingWriter);
+        readingSubscription = destination.subscribe(forwardingWriter);
 		writingSubsciption = forwardingWriter.writeTo(destination);
+
+        closeResource();
+        resource = destination;
 	}
 	
-	protected abstract TOut transform(TIn value);
+    protected abstract TOut transform(TIn value);
 
 	private void cancelSubscriptions() {
-		if (readingSubscription != null) {
-			readingSubscription.removeObserver();
-		}
-		
+        if (readingSubscription != null) {
+            readingSubscription.removeObserver();
+        }
+
 		if (writingSubsciption != null) {
 			writingSubsciption.removeObserver();
 		}
 	}
+
+    private void closeResource() {
+        if (resource != null) {
+            resource.close();
+        }
+    };
 }
