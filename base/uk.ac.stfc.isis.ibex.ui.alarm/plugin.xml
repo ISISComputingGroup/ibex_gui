@@ -13,7 +13,7 @@
    <extension
          point="org.eclipse.ui.perspectives">
       <perspective
-            class="uk.ac.stfc.isis.ibex.ui.alarm.Perspective"
+            class="uk.ac.stfc.isis.ibex.ui.alarm.AlarmPerspective"
             id="uk.ac.stfc.isis.ibex.ui.alarm.perspective"
             name="Log">
       </perspective>
@@ -21,7 +21,7 @@
    <extension
          point="uk.ac.stfc.isis.ibex.ui.perspectives">
       <contribution
-            class="uk.ac.stfc.isis.ibex.ui.alarm.Perspective">
+            class="uk.ac.stfc.isis.ibex.ui.alarm.AlarmPerspective">
       </contribution>
    </extension>
    <extension

@@ -24,7 +24,7 @@ import org.eclipse.wb.swt.ResourceManager;
 
 import uk.ac.stfc.isis.ibex.ui.perspectives.BasePerspective;
 
-public class Perspective extends BasePerspective {
+public class AlarmPerspective extends BasePerspective {
 
 	public static final String ID = "uk.ac.stfc.isis.ibex.ui.alarm.perspective"; //$NON-NLS-1$
 
