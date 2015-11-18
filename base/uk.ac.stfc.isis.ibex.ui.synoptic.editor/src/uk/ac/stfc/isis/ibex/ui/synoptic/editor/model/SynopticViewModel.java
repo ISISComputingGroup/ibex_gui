@@ -37,17 +37,16 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import uk.ac.stfc.isis.ibex.configserver.editing.DefaultName;
 import uk.ac.stfc.isis.ibex.instrument.Instrument;
 import uk.ac.stfc.isis.ibex.instrument.pv.PVType;
-import uk.ac.stfc.isis.ibex.model.UpdatedValue;
 import uk.ac.stfc.isis.ibex.synoptic.Synoptic;
 import uk.ac.stfc.isis.ibex.synoptic.SynopticModel;
 import uk.ac.stfc.isis.ibex.synoptic.model.ComponentType;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.ComponentDescription;
-import uk.ac.stfc.isis.ibex.synoptic.model.desc.SynopticParentDescription;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.IO;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.PV;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.Property;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.RecordType;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.SynopticDescription;
+import uk.ac.stfc.isis.ibex.synoptic.model.desc.SynopticParentDescription;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.TargetDescription;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.target.DefaultTargetForComponent;
 
@@ -71,10 +70,7 @@ public class SynopticViewModel {
 	private List<IPVSelectionListener> pvSelectionListeners = new CopyOnWriteArrayList<>();
 	private List<IPropertySelectionListener> propertySelectionListeners = new CopyOnWriteArrayList<>();
 
-	public final UpdatedValue<Boolean> canSaveCurrentSynoptic;
-
 	public SynopticViewModel() {
-		canSaveCurrentSynoptic = EDITING.saveSynoptic().canSave();
 		loadCurrentInstrument();
 	}
 	
