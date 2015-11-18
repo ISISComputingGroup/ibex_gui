@@ -44,6 +44,7 @@ public class AlarmSettings implements InstrumentInfoReceiver {
 
     private void setAlarmURL(String hostName) {
         PREFERENCES.setValue(Preferences.RDB_URL, updateHostName(hostName, getAlarmURL()));
+        PREFERENCES.setValue(Preferences.JMS_URL, updateHostName(hostName, getJMSURL()));
 	}
 
     private static String updateHostName(String hostName, String preference) {
@@ -65,5 +66,9 @@ public class AlarmSettings implements InstrumentInfoReceiver {
 
     private static String getAlarmURL() {
         return PREFERENCES.getString(Preferences.RDB_URL);
+    }
+
+    private static String getJMSURL() {
+        return PREFERENCES.getString(Preferences.JMS_URL);
     }
 }
