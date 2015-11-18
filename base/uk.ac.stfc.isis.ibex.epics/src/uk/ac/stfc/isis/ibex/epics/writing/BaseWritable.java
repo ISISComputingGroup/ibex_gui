@@ -44,7 +44,8 @@ public abstract class BaseWritable<T> implements Writable<T> {
 		return new Unsubscriber<ConfigurableWriter<?, ?>>(writers, writer);
 	}
 	
-	public boolean canWrite() {
+	@Override
+    public boolean canWrite() {
 		return canWrite;
 	}
 	

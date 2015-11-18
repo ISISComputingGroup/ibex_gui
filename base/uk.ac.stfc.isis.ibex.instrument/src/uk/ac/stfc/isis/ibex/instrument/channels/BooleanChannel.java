@@ -21,7 +21,7 @@ package uk.ac.stfc.isis.ibex.instrument.channels;
 
 import uk.ac.stfc.isis.ibex.epics.observing.ClosableCachingObservable;
 import uk.ac.stfc.isis.ibex.epics.pv.Channels;
-import uk.ac.stfc.isis.ibex.epics.writing.ClosableWritable;
+import uk.ac.stfc.isis.ibex.epics.writing.BaseWritable;
 
 public class BooleanChannel implements ChannelType<Boolean> {
 
@@ -31,7 +31,7 @@ public class BooleanChannel implements ChannelType<Boolean> {
 	}
 
 	@Override
-	public ClosableWritable<Boolean> writer(String address) {
+    public BaseWritable<Boolean> writer(String address) {
 		throw new UnsupportedOperationException();
 	}
 }
