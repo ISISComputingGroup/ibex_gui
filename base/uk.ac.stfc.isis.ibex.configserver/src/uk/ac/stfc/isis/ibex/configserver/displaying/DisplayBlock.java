@@ -46,10 +46,29 @@ public class DisplayBlock extends Block {
 
 	private String value;
 	private String description;
+
+    /**
+     * Indicates whether the block in currently within run-control range
+     */
 	private Boolean inRange;
-    private String lowlimit;
-    private String highlimit;
-    private Boolean runcontrol;
+
+    /**
+     * The current low limit run-control setting. This may be different from
+     * what is set in the configuration.
+     */
+    private String lowlimitSetting;
+
+    /**
+     * The current high limit run-control setting. This may be different from
+     * what is set in the configuration.
+     */
+    private String highlimitSetting;
+
+    /**
+     * Specifies whether the block is currently under run-control. This may be
+     * different from what is set in the configuration.
+     */
+    private Boolean runcontrolSetting;
 	
 	private Color textColor;
 	private Color backgroundColor;
@@ -111,10 +130,6 @@ public class DisplayBlock extends Block {
 
 		@Override
 		public void onConnectionStatus(boolean isConnected) {
-			if (!isConnected) {
-				// If in doubt set to true
-				setInRange(true);
-			}
 		}
 	};
 	
@@ -131,9 +146,6 @@ public class DisplayBlock extends Block {
 
 		@Override
 		public void onConnectionStatus(boolean isConnected) {
-			if (!isConnected) {
-				setLowLimit("disconnected");
-			}
 		}
 	};
 	
@@ -150,9 +162,6 @@ public class DisplayBlock extends Block {
 
 		@Override
 		public void onConnectionStatus(boolean isConnected) {
-			if (!isConnected) {
-				setLowLimit("disconnected");
-			}
 		}
 	};
 	
@@ -175,10 +184,6 @@ public class DisplayBlock extends Block {
 
 		@Override
 		public void onConnectionStatus(boolean isConnected) {
-			if (!isConnected) {
-				// If in doubt set to true
-				setEnabled(false);
-			}
 		}
 	};
 	
@@ -210,22 +215,55 @@ public class DisplayBlock extends Block {
 		return description;
 	}
 	
+    /**
+     * @return whether the block is within its run-control limits.
+     */
 	public Boolean getInRange() {
 		return inRange;
 	}
 	
+    /**
+     * @return the current low limit for run-control.
+     */
 	public String getLowLimit() {
-		return lowlimit;
+        return lowlimitSetting;
 	}
 	
+    /**
+     * @return the current high limit for run-control.
+     */
 	public String getHighLimit() {
-		return highlimit;
+        return highlimitSetting;
 	}
 	
+    /**
+     * @return whether run-control is currently enabled.
+     */
 	public Boolean getEnabled() {
-		return runcontrol;
+        return runcontrolSetting;
 	}
 	
+    /**
+     * @return the low limit set in the configuration.
+     */
+    public String getConfigurationLowLimit() {
+        return Float.toString(super.getRCLowLimit());
+    }
+
+    /**
+     * @return the high limit set in the configuration.
+     */
+    public String getConfigurationHighLimit() {
+        return Float.toString(super.getRCHighLimit());
+    }
+
+    /**
+     * @return whether run-control is enabled in the configuration.
+     */
+    public Boolean getConfigurationEnabled() {
+        return super.getRCEnabled();
+    }
+
 	public Color getTextColor() {
 		return textColor;
 	}
@@ -248,19 +286,19 @@ public class DisplayBlock extends Block {
 	
 	private synchronized void setInRange(Boolean inRange) {
 		setColors(inRange);
-		firePropertyChange("inRange", this.inRange, this.inRange = inRange);
+        firePropertyChange("inRange", this.inRange, this.inRange = inRange);
 	}
 	
 	private synchronized void setLowLimit(String limit) {
-		firePropertyChange("lowLimit", this.lowlimit, this.lowlimit = limit);
+        firePropertyChange("lowLimit", lowlimitSetting, lowlimitSetting = limit);
 	}
 	
 	private synchronized void setHighLimit(String limit) {
-		firePropertyChange("highLimit", this.highlimit, this.highlimit = limit);
+        firePropertyChange("highLimit", highlimitSetting, highlimitSetting = limit);
 	}
 	
 	private synchronized void setEnabled(Boolean enabled) {
-		firePropertyChange("enabled", this.runcontrol, this.runcontrol = enabled);
+        firePropertyChange("enabled", runcontrolSetting, runcontrolSetting = enabled);
 	}
 	
 	private void setColors(boolean inRange) {

@@ -29,97 +29,109 @@ import uk.ac.stfc.isis.ibex.ui.configserver.editing.CellDecorator;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.DecoratedCellLabelProvider;
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundTable;
 
-@SuppressWarnings({"checkstyle:magicnumber"})
+@SuppressWarnings({ "checkstyle:magicnumber" })
 public class RunControlSettingsTable extends DataboundTable<DisplayBlock> {
 
-	private final CellDecorator<DisplayBlock> rowDecorator = new RunControlSettingCellDecorator();
-	
-	public RunControlSettingsTable(Composite parent, int style, int tableStyle) {
-		super(parent, style, DisplayBlock.class, tableStyle);
-		
-		initialise();	
-	}
+    private final CellDecorator<DisplayBlock> rowDecorator = new RunControlSettingCellDecorator();
 
-	@Override
-	protected void addColumns() {
-		addName();
-		addValue();
-		addInRange();
-		addEnabled();
-		addLowLimit();
-		addHighLimit();
-	}
-	
-	private void addName() {
-		TableViewerColumn name = createColumn("Name", 4);
-		name.setLabelProvider(new DecoratedCellLabelProvider<DisplayBlock>(
-				observeProperty("name"), 
-				Arrays.asList(rowDecorator)) {
-			@Override
-			protected String valueFromRow(DisplayBlock setting) {
-				return setting.getName();
-			}
-		});
-	}
-	
-	private void addValue() {
-		TableViewerColumn name = createColumn("Value", 2);
-		name.setLabelProvider(new DecoratedCellLabelProvider<DisplayBlock>(
-				observeProperty("value"), 
-				Arrays.asList(rowDecorator)) {
-			@Override
-			protected String valueFromRow(DisplayBlock setting) {
-				return setting.getValue();
-			}
-		});
-	}
-	
-	private void addInRange() {
-		TableViewerColumn name = createColumn("In Range", 2);
-		name.setLabelProvider(new DecoratedCellLabelProvider<DisplayBlock>(
-				observeProperty("inRange"), 
-				Arrays.asList(rowDecorator)) {
-			@Override
-			protected String valueFromRow(DisplayBlock setting) {
-				return setting.getInRange().toString();
-			}
-		});
-	}
-	
-	private void addEnabled() {
-		TableViewerColumn enabled = createColumn("Enabled", 2);
-		enabled.setLabelProvider(new DecoratedCellLabelProvider<DisplayBlock>(
-				observeProperty("enabled"), 
-				Arrays.asList(rowDecorator)) {
-			@Override
-			protected String valueFromRow(DisplayBlock setting) {
-				return setting.getEnabled().toString();
-			}
-		});
-	}
-	
-	private void addLowLimit() {
-		TableViewerColumn name = createColumn("Low Limit", 2);
-		name.setLabelProvider(new DecoratedCellLabelProvider<DisplayBlock>(
-				observeProperty("lowLimit"), 
-				Arrays.asList(rowDecorator)) {
-			@Override
-			protected String valueFromRow(DisplayBlock setting) {
-				return setting.getLowLimit();
-			}
-		});
-	}
-	
-	private void addHighLimit() {
-		TableViewerColumn name = createColumn("High Limit", 2);
-		name.setLabelProvider(new DecoratedCellLabelProvider<DisplayBlock>(
-				observeProperty("highLimit"), 
-				Arrays.asList(rowDecorator)) {
-			@Override
-			protected String valueFromRow(DisplayBlock setting) {
-				return setting.getHighLimit();
-			}
-		});
-	}
+    public RunControlSettingsTable(Composite parent, int style, int tableStyle) {
+        super(parent, style, DisplayBlock.class, tableStyle);
+
+        initialise();
+    }
+
+    @Override
+    protected void addColumns() {
+        addName();
+        addValue();
+        addInRange();
+        addEnabled();
+        addLowLimit();
+        addHighLimit();
+    }
+
+    private void addName() {
+        TableViewerColumn name = createColumn("Name", 4);
+        name.setLabelProvider(
+                new DecoratedCellLabelProvider<DisplayBlock>(observeProperty("name"), Arrays.asList(rowDecorator)) {
+                    @Override
+                    protected String valueFromRow(DisplayBlock setting) {
+                        if (setting != null) {
+                            return setting.getName();
+                        }
+                        return "";
+                    }
+                });
+    }
+
+    private void addValue() {
+        TableViewerColumn name = createColumn("Value", 2);
+        name.setLabelProvider(
+                new DecoratedCellLabelProvider<DisplayBlock>(observeProperty("value"), Arrays.asList(rowDecorator)) {
+                    @Override
+                    protected String valueFromRow(DisplayBlock setting) {
+                        if (setting != null) {
+                            return setting.getValue();
+                        }
+                        return "";
+                    }
+                });
+    }
+
+    private void addInRange() {
+        TableViewerColumn name = createColumn("In Range", 2);
+        name.setLabelProvider(
+                new DecoratedCellLabelProvider<DisplayBlock>(observeProperty("inRange"), Arrays.asList(rowDecorator)) {
+                    @Override
+                    protected String valueFromRow(DisplayBlock setting) {
+                        if (setting != null) {
+                            return setting.getInRange().toString();
+                        }
+                        return "";
+                    }
+                });
+    }
+
+    private void addEnabled() {
+        TableViewerColumn enabled = createColumn("Enabled", 2);
+        enabled.setLabelProvider(
+                new DecoratedCellLabelProvider<DisplayBlock>(observeProperty("enabled"), Arrays.asList(rowDecorator)) {
+                    @Override
+                    protected String valueFromRow(DisplayBlock setting) {
+                        if (setting != null) {
+                            return setting.getEnabled().toString();
+                        }
+                        return "";
+                    }
+                });
+    }
+
+    private void addLowLimit() {
+        TableViewerColumn name = createColumn("Low Limit", 2);
+        name.setLabelProvider(
+                new DecoratedCellLabelProvider<DisplayBlock>(observeProperty("lowLimit"), Arrays.asList(rowDecorator)) {
+                    @Override
+                    protected String valueFromRow(DisplayBlock setting) {
+                        if (setting != null) {
+                            return setting.getLowLimit();
+                        }
+                        return "";
+                    }
+                });
+    }
+
+    private void addHighLimit() {
+        TableViewerColumn name = createColumn("High Limit", 2);
+        name.setLabelProvider(new DecoratedCellLabelProvider<DisplayBlock>(observeProperty("highLimit"),
+                Arrays.asList(rowDecorator)) {
+            @Override
+            protected String valueFromRow(DisplayBlock setting) {
+                if (setting != null) {
+                    return setting.getHighLimit();
+                }
+                return "";
+            }
+        });
+    }
 
 }

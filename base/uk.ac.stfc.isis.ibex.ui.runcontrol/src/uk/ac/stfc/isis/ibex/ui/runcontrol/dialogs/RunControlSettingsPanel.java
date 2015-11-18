@@ -23,18 +23,13 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.Collection;
 
-import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Group;
 
 import uk.ac.stfc.isis.ibex.configserver.ConfigServer;
 import uk.ac.stfc.isis.ibex.configserver.Configurations;
@@ -52,10 +47,6 @@ import uk.ac.stfc.isis.ibex.ui.runcontrol.RunControlViewModel;
  */
 @SuppressWarnings({"checkstyle:magicnumber"})
 public class RunControlSettingsPanel extends Composite {
-
-    private final static String RESET_ALL_DIALOG_TITLE = "Confirm run-control restore";
-    private final static String RESET_ALL_DIALOG_MESSAGE = "Are you sure you want to restore all run-control settings to their configuration values?";
-
 	private final Display display = Display.getDefault();
 	private RunControlSettingsTable table;
 	private RunControlEditorPanel editor;
@@ -76,18 +67,6 @@ public class RunControlSettingsPanel extends Composite {
 			});
 		}
 	};
-
-    private SelectionAdapter restoreAllConfigurationValues = new SelectionAdapter() {
-        @Override
-        public void widgetSelected(SelectionEvent e) {
-            if (MessageDialog.openConfirm(getShell(), RESET_ALL_DIALOG_TITLE, RESET_ALL_DIALOG_MESSAGE)) {
-                runControlViewModel.resetRunControlSettings();
-                editor.setBlock(null);
-                table.setSelectionIndex(-1);
-            }
-        }
-    };
-    private Group grpGlobalSettings;
 
 	public RunControlSettingsPanel(Composite parent, int style, ConfigServer configServer, RunControlServer runControlServer) {
 		super(parent, style);
@@ -116,19 +95,6 @@ public class RunControlSettingsPanel extends Composite {
 		
         editor = new RunControlEditorPanel(this, SWT.NONE, this.configServer, this.runControlServer,
                 this.runControlViewModel);
-
-        grpGlobalSettings = new Group(this, SWT.NONE);
-        grpGlobalSettings.setText("Global Settings");
-        grpGlobalSettings.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
-        grpGlobalSettings.setLayout(new GridLayout(1, false));
-
-        Button btnNewButton = new Button(grpGlobalSettings, SWT.WRAP | SWT.PUSH);
-        GridData gd_btnNewButton = new GridData(SWT.CENTER, SWT.CENTER, true, true, 1, 1);
-        gd_btnNewButton.widthHint = 133;
-        gd_btnNewButton.heightHint = 36;
-        btnNewButton.setLayoutData(gd_btnNewButton);
-        btnNewButton.setText("Restore All \n Configuration Values");
-        btnNewButton.addSelectionListener(restoreAllConfigurationValues);
 	}
 
 	private void setBlocks() {

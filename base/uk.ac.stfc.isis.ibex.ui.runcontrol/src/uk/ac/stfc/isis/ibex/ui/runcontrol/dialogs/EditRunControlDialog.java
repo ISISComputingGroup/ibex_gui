@@ -42,7 +42,7 @@ public class EditRunControlDialog extends Dialog{
 	
 	public EditRunControlDialog(Shell parentShell, String title, ConfigServer configServer, RunControlServer runControlServer) {
 		super(parentShell);
-		setShellStyle(SWT.DIALOG_TRIM | SWT.RESIZE);
+        setShellStyle(SWT.DIALOG_TRIM | SWT.RESIZE | SWT.APPLICATION_MODAL);
 		this.title = title;
 		this.configServer = configServer;
 		this.runControlServer = runControlServer;
