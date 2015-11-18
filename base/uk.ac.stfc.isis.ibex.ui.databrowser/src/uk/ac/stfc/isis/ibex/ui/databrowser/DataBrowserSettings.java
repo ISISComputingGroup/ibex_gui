@@ -19,12 +19,15 @@
 
 package uk.ac.stfc.isis.ibex.ui.databrowser;
 
+import java.util.regex.Pattern;
+
 import org.csstudio.trends.databrowser2.Activator;
 import org.csstudio.trends.databrowser2.preferences.Preferences;
 import org.eclipse.jface.preference.IPreferenceStore;
 
 import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
 import uk.ac.stfc.isis.ibex.instrument.InstrumentInfoReceiver;
+import uk.ac.stfc.isis.ibex.instrument.internal.LocalHostInstrumentInfo;
 
 /**
  * This class is responsible for changing the settings for the DataBrowser when
@@ -58,22 +61,21 @@ public class DataBrowserSettings implements InstrumentInfoReceiver {
         preferences.setValue(Preferences.ARCHIVES, updateHostName(hostName, getArchives()));
 	}
 	
-    /**
-     * This class assumes machine names begin with NDX, e.g. NDXLARMOR, or are
-     * localhost.
-     * 
-     * @param hostName
-     *            The host name of the new machine.
-     * @param preference
-     *            The preference string.
-     * @return The preference string with the host name replace.
-     */
-	private static String updateHostName(String hostName, String preference) {
+    private static String updateHostName(String hostName, String preference) {
+        if (containsRegex(preference, InstrumentInfo.validInstrumentRegex())) {
+            preference = preference.replaceAll(InstrumentInfo.validInstrumentRegex(), hostName);
+        } else if (containsRegex(preference, LocalHostInstrumentInfo.validLocalInstrumentRegex())) {
+            preference = preference.replaceAll(LocalHostInstrumentInfo.validLocalInstrumentRegex(), hostName);
+        } else {
+            throw new RuntimeException("Invalid preference string, does not contain a matching host pattern:" + preference);
+        }
 
-        preference = preference.replaceAll("NDX[A-Z]+", hostName);
-        preference = preference.replaceAll("localhost", hostName);
         return preference;
 	}
+    
+    private static boolean containsRegex(String string, String regex) {
+    	return Pattern.compile(regex).matcher(string).find();
+    }
 
     private String getDatabaseUrls() {
         return preferences.getString(Preferences.URLS);

@@ -47,7 +47,7 @@ public class DataBrowserSettingsTest {
     private final static String LOCALHOST = "localhost";
     private final static String NDXLARMOR = "NDXLARMOR";
     private final static String NDXDEMO = "NDXDEMO";
-    private final static String NDXLARMOR_LOWERCASE = "ndxlarmor";
+    private final static String NDXLARMOR_LOWERCASE = "NDXlarmor";
     private final static String NOT_A_HOST_NAME = "JDBC";
     private final static String IP_ADDRESS = "123.123.123.123";
 
@@ -157,7 +157,8 @@ public class DataBrowserSettingsTest {
         dataBrowserSettings.setInstrument(mockLocalHost);
 
         // Assert
-        assertFalse(DEFAULT_ARCHIVE_SETTINGS.equals(preferenceStore.getString(Preferences.ARCHIVES)));
+        assertEquals(DEFAULT_ARCHIVE_SETTINGS.replace(NDXLARMOR, NDXLARMOR_LOWERCASE),
+                preferenceStore.getString(Preferences.ARCHIVES));
     }
 
     @Test
@@ -167,11 +168,12 @@ public class DataBrowserSettingsTest {
         dataBrowserSettings.setInstrument(mockLocalHost);
 
         // Assert
-        assertFalse(DEFAULT_ARCHIVE_SETTINGS.equals(preferenceStore.getString(Preferences.ARCHIVES)));
+        assertEquals(DEFAULT_ARCHIVE_SETTINGS.replace(NDXLARMOR, NDXLARMOR_LOWERCASE),
+                preferenceStore.getString(Preferences.ARCHIVES));
     }
 
-    @Test
-    public void switching_from_invalid_host_name_to_local_host_does_not_update_archives_settings() {
+    @Test(expected = RuntimeException.class)
+    public void switching_from_invalid_host_name_to_local_host_throws_runtime_error() {
         // Act
         dataBrowserSettings.setInstrument(mockInstrument(NOT_A_HOST_NAME));
         dataBrowserSettings.setInstrument(mockLocalHost);
@@ -180,28 +182,8 @@ public class DataBrowserSettingsTest {
         assertFalse(DEFAULT_ARCHIVE_SETTINGS.equals(preferenceStore.getString(Preferences.ARCHIVES)));
     }
 
-    @Test
-    public void switching_from_invalid_host_name_to_local_host_does_not_update_urls_settings() {
-        // Act
-        dataBrowserSettings.setInstrument(mockInstrument(NOT_A_HOST_NAME));
-        dataBrowserSettings.setInstrument(mockLocalHost);
-
-        // Assert
-        assertFalse(DEFAULT_ARCHIVE_SETTINGS.equals(preferenceStore.getString(Preferences.ARCHIVES)));
-    }
-
-    @Test
-    public void switching_from_IP_host_name_to_local_host_does_not_update_archives_settings() {
-        // Act
-        dataBrowserSettings.setInstrument(mockInstrument(IP_ADDRESS));
-        dataBrowserSettings.setInstrument(mockLocalHost);
-
-        // Assert
-        assertFalse(DEFAULT_ARCHIVE_SETTINGS.equals(preferenceStore.getString(Preferences.ARCHIVES)));
-    }
-
-    @Test
-    public void switching_from_IP_host_name_to_local_host_does_not_update_urls_settings() {
+    @Test(expected = RuntimeException.class)
+    public void switching_from_IP_host_name_to_local_host_throws_runtime_error() {
         // Act
         dataBrowserSettings.setInstrument(mockInstrument(IP_ADDRESS));
         dataBrowserSettings.setInstrument(mockLocalHost);
