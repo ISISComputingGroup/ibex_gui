@@ -6,7 +6,36 @@
   </macros>
   <wuid>-69d7811d:14d7b00e209:-7f32</wuid>
   <boy_version>3.1.4.201301231545</boy_version>
-  <scripts />
+  <scripts>
+    <path pathString="EmbeddedJs" checkConnect="true" sfe="false" seoe="false">
+      <scriptName>Change button labels to position names (from lookup file)</scriptName>
+      <scriptText><![CDATA[importPackage(Packages.org.csstudio.opibuilder.scriptUtil);
+display.getWidget("Running_Button_0").setPropertyValue("text",  PVUtil.getString(pvs[0]));
+display.getWidget("Loading_Button_0").setPropertyValue("text",  PVUtil.getString(pvs[1]));
+display.getWidget("Running_Button_1").setPropertyValue("text",  PVUtil.getString(pvs[2]));
+display.getWidget("Loading_Button_1").setPropertyValue("text",  PVUtil.getString(pvs[3]));
+display.getWidget("Running_Button_2").setPropertyValue("text",  PVUtil.getString(pvs[4]));
+display.getWidget("Loading_Button_2").setPropertyValue("text",  PVUtil.getString(pvs[5]));
+display.getWidget("Running_Button_3").setPropertyValue("text",  PVUtil.getString(pvs[6]));
+display.getWidget("Loading_Button_3").setPropertyValue("text",  PVUtil.getString(pvs[7]));
+display.getWidget("Running_Button_4").setPropertyValue("text",  PVUtil.getString(pvs[8]));
+display.getWidget("Loading_Button_4").setPropertyValue("text",  PVUtil.getString(pvs[9]));
+display.getWidget("Running_Button_5").setPropertyValue("text",  PVUtil.getString(pvs[10]));
+display.getWidget("Loading_Button_5").setPropertyValue("text",  PVUtil.getString(pvs[11]));]]></scriptText>
+      <pv trig="true">$(P)LKUP:$(PH):_SPLITPOSNS.VALA</pv>
+      <pv trig="true">$(P)LKUP:$(PH):_SPLITPOSNS.VALB</pv>
+      <pv trig="true">$(P)LKUP:$(PH):_SPLITPOSNS.VALC</pv>
+      <pv trig="true">$(P)LKUP:$(PH):_SPLITPOSNS.VALD</pv>
+      <pv trig="true">$(P)LKUP:$(PH):_SPLITPOSNS.VALE</pv>
+      <pv trig="true">$(P)LKUP:$(PH):_SPLITPOSNS.VALF</pv>
+      <pv trig="true">$(P)LKUP:$(PH):_SPLITPOSNS.VALG</pv>
+      <pv trig="true">$(P)LKUP:$(PH):_SPLITPOSNS.VALH</pv>
+      <pv trig="true">$(P)LKUP:$(PH):_SPLITPOSNS.VALI</pv>
+      <pv trig="true">$(P)LKUP:$(PH):_SPLITPOSNS.VALJ</pv>
+      <pv trig="true">$(P)LKUP:$(PH):_SPLITPOSNS.VALK</pv>
+      <pv trig="true">$(P)LKUP:$(PH):_SPLITPOSNS.VALL</pv>
+    </path>
+  </scripts>
   <show_ruler>true</show_ruler>
   <height>480</height>
   <name>$(NAME)</name>
@@ -32,167 +61,1109 @@
   <actions hook="false" hook_all="false" />
   <y>-1</y>
   <x>-1</x>
-  <widget typeId="org.csstudio.opibuilder.widgets.Rectangle" version="1.0">
-    <border_alarm_sensitive>false</border_alarm_sensitive>
-    <visible>true</visible>
-    <fill_level>0.0</fill_level>
-    <line_color>
-      <color name="ISIS_Border" red="0" green="0" blue="0" />
-    </line_color>
-    <wuid>66b1b245:14e6e558093:-73e4</wuid>
-    <bg_gradient_color>
-      <color red="255" green="255" blue="255" />
-    </bg_gradient_color>
-    <scripts />
-    <height>372</height>
-    <anti_alias>true</anti_alias>
-    <name>Rectangle</name>
-    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
-    <alpha>255</alpha>
-    <scale_options>
-      <width_scalable>true</width_scalable>
-      <height_scalable>true</height_scalable>
-      <keep_wh_ratio>false</keep_wh_ratio>
-    </scale_options>
-    <transparent>true</transparent>
-    <pv_name></pv_name>
-    <background_color>
-      <color red="30" green="144" blue="255" />
-    </background_color>
-    <foreground_color>
-      <color red="255" green="0" blue="0" />
-    </foreground_color>
-    <widget_type>Rectangle</widget_type>
-    <enabled>true</enabled>
-    <fg_gradient_color>
-      <color red="255" green="255" blue="255" />
-    </fg_gradient_color>
-    <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
-    <font>
-      <opifont.name fontName="Tahoma" height="8" style="0">Default</opifont.name>
-    </font>
-    <width>522</width>
-    <line_style>0</line_style>
+  <widget typeId="org.csstudio.opibuilder.widgets.tab" version="1.0">
+    <macros>
+      <include_parent_macros>true</include_parent_macros>
+    </macros>
+    <minimum_tab_height>10</minimum_tab_height>
+    <active_tab>0</active_tab>
+    <tab_1_title>Loading</tab_1_title>
     <border_style>0</border_style>
-    <rules />
-    <pv_value />
-    <border_width>1</border_width>
-    <line_width>1</line_width>
-    <horizontal_fill>false</horizontal_fill>
+    <wuid>11b0920c:14fdfa5be12:-7f0e</wuid>
+    <tab_1_icon_path></tab_1_icon_path>
+    <tab_0_background_color>
+      <color red="255" green="255" blue="255" />
+    </tab_0_background_color>
+    <foreground_color>
+      <color red="192" green="192" blue="192" />
+    </foreground_color>
+    <tab_0_foreground_color>
+      <color red="0" green="0" blue="0" />
+    </tab_0_foreground_color>
+    <tab_0_enabled>true</tab_0_enabled>
     <border_color>
       <color red="0" green="128" blue="255" />
     </border_color>
     <actions hook="false" hook_all="false" />
     <y>0</y>
-    <tooltip>$(pv_name)
-$(pv_value)</tooltip>
     <x>0</x>
-    <gradient>false</gradient>
-  </widget>
-  <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="1.0">
-    <border_alarm_sensitive>false</border_alarm_sensitive>
     <visible>true</visible>
-    <wuid>-69d7811d:14d7b00e209:-7f28</wuid>
     <scripts />
-    <height>31</height>
-    <name>Action Button</name>
-    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
-    <scale_options>
-      <width_scalable>true</width_scalable>
-      <height_scalable>true</height_scalable>
-      <keep_wh_ratio>false</keep_wh_ratio>
-    </scale_options>
-    <pv_name></pv_name>
-    <background_color>
-      <color name="ISIS_Standard_Button" red="187" green="187" blue="187" />
-    </background_color>
-    <foreground_color>
-      <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
-    </foreground_color>
-    <widget_type>Action Button</widget_type>
-    <enabled>true</enabled>
-    <text>View Motor</text>
-    <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
-    <font>
-      <opifont.name fontName="Arial" height="14" style="1">ISIS_Button</opifont.name>
-    </font>
-    <width>122</width>
-    <border_style>0</border_style>
-    <push_action_index>0</push_action_index>
-    <image></image>
-    <rules />
-    <pv_value />
-    <toggle_button>false</toggle_button>
-    <border_width>1</border_width>
-    <border_color>
-      <color name="ISIS_Check_Border" red="0" green="128" blue="255" />
-    </border_color>
-    <y>323</y>
-    <actions hook="false" hook_all="false">
-      <action type="OPEN_DISPLAY">
-        <path>../Motor/mymotor.opi</path>
-        <macros>
-          <include_parent_macros>true</include_parent_macros>
-          <M>$(MM)</M>
-        </macros>
-        <replace>1</replace>
-        <description></description>
-      </action>
-    </actions>
-    <tooltip>$(pv_name)
-$(pv_value)</tooltip>
-    <x>384</x>
-  </widget>
-  <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="1.0">
-    <border_alarm_sensitive>false</border_alarm_sensitive>
-    <visible>true</visible>
-    <wuid>-69d7811d:14d7b00e209:-7e54</wuid>
-    <scripts />
-    <height>30</height>
-    <name>Action Button_1</name>
-    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
-    <scale_options>
-      <width_scalable>true</width_scalable>
-      <height_scalable>true</height_scalable>
-      <keep_wh_ratio>false</keep_wh_ratio>
-    </scale_options>
-    <pv_name></pv_name>
+    <tab_1_enabled>true</tab_1_enabled>
+    <height>440</height>
+    <horizontal_tabs>true</horizontal_tabs>
+    <tab_1_font>
+      <opifont.name fontName="Tahoma" height="8" style="0">Default</opifont.name>
+    </tab_1_font>
+    <tab_1_foreground_color>
+      <color red="0" green="0" blue="0" />
+    </tab_1_foreground_color>
+    <tab_0_title>Running</tab_0_title>
     <background_color>
       <color red="240" green="240" blue="240" />
     </background_color>
-    <foreground_color>
-      <color red="0" green="0" blue="0" />
-    </foreground_color>
-    <widget_type>Action Button</widget_type>
+    <widget_type>Tabbed Container</widget_type>
     <enabled>true</enabled>
-    <text>Position 0</text>
-    <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
-    <font>
-      <opifont.name fontName="Arial" height="12" style="1">ISIS_Header3</opifont.name>
-    </font>
-    <width>100</width>
-    <border_style>0</border_style>
-    <push_action_index>0</push_action_index>
-    <image></image>
-    <rules />
-    <pv_value />
-    <toggle_button>false</toggle_button>
+    <width>420</width>
+    <tab_1_background_color>
+      <color red="255" green="255" blue="255" />
+    </tab_1_background_color>
     <border_width>1</border_width>
-    <border_color>
-      <color red="0" green="128" blue="255" />
-    </border_color>
-    <y>276</y>
-    <actions hook="false" hook_all="true">
-      <action type="WRITE_PV">
-        <pv_name>$(P)LKUP:$(PH):POSN:SP</pv_name>
-        <value>Position_0</value>
-        <timeout>10</timeout>
-        <description></description>
-      </action>
-    </actions>
-    <tooltip>$(pv_name)
+    <name>Tabbed Container</name>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <tab_0_icon_path></tab_0_icon_path>
+    <tab_0_font>
+      <opifont.name fontName="Tahoma" height="8" style="0">Default</opifont.name>
+    </tab_0_font>
+    <rules />
+    <tab_count>2</tab_count>
+    <tooltip></tooltip>
+    <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0">
+      <macros>
+        <include_parent_macros>true</include_parent_macros>
+      </macros>
+      <visible>true</visible>
+      <wuid>11b0920c:14fdfa5be12:-7f0d</wuid>
+      <scripts />
+      <height>413</height>
+      <name>Running</name>
+      <scale_options>
+        <width_scalable>true</width_scalable>
+        <height_scalable>true</height_scalable>
+        <keep_wh_ratio>false</keep_wh_ratio>
+      </scale_options>
+      <transparent>true</transparent>
+      <show_scrollbar>true</show_scrollbar>
+      <foreground_color>
+        <color red="192" green="192" blue="192" />
+      </foreground_color>
+      <background_color>
+        <color red="240" green="240" blue="240" />
+      </background_color>
+      <enabled>true</enabled>
+      <widget_type>Grouping Container</widget_type>
+      <font>
+        <opifont.name fontName="Tahoma" height="8" style="0">Default</opifont.name>
+      </font>
+      <width>418</width>
+      <border_style>0</border_style>
+      <rules />
+      <lock_children>false</lock_children>
+      <border_width>1</border_width>
+      <border_color>
+        <color red="0" green="128" blue="255" />
+      </border_color>
+      <y>1</y>
+      <actions hook="false" hook_all="false" />
+      <x>1</x>
+      <tooltip></tooltip>
+      <widget typeId="org.csstudio.opibuilder.widgets.Rectangle" version="1.0">
+        <border_alarm_sensitive>false</border_alarm_sensitive>
+        <visible>true</visible>
+        <fill_level>0.0</fill_level>
+        <line_color>
+          <color name="ISIS_Border" red="0" green="0" blue="0" />
+        </line_color>
+        <wuid>66b1b245:14e6e558093:-73e4</wuid>
+        <bg_gradient_color>
+          <color red="255" green="255" blue="255" />
+        </bg_gradient_color>
+        <scripts />
+        <height>397</height>
+        <anti_alias>true</anti_alias>
+        <name>Rectangle</name>
+        <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+        <alpha>255</alpha>
+        <scale_options>
+          <width_scalable>true</width_scalable>
+          <height_scalable>true</height_scalable>
+          <keep_wh_ratio>false</keep_wh_ratio>
+        </scale_options>
+        <transparent>true</transparent>
+        <pv_name></pv_name>
+        <background_color>
+          <color red="30" green="144" blue="255" />
+        </background_color>
+        <foreground_color>
+          <color red="255" green="0" blue="0" />
+        </foreground_color>
+        <widget_type>Rectangle</widget_type>
+        <enabled>true</enabled>
+        <fg_gradient_color>
+          <color red="255" green="255" blue="255" />
+        </fg_gradient_color>
+        <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+        <font>
+          <opifont.name fontName="Tahoma" height="8" style="0">Default</opifont.name>
+        </font>
+        <width>395</width>
+        <line_style>0</line_style>
+        <border_style>0</border_style>
+        <rules />
+        <pv_value />
+        <border_width>1</border_width>
+        <line_width>1</line_width>
+        <horizontal_fill>false</horizontal_fill>
+        <border_color>
+          <color red="0" green="128" blue="255" />
+        </border_color>
+        <actions hook="false" hook_all="false" />
+        <y>6</y>
+        <tooltip>$(pv_name)
 $(pv_value)</tooltip>
-    <x>10</x>
+        <x>8</x>
+        <gradient>false</gradient>
+      </widget>
+      <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="1.0">
+        <border_alarm_sensitive>false</border_alarm_sensitive>
+        <visible>true</visible>
+        <wuid>-552780a2:14de1d345b9:-7fc6</wuid>
+        <scripts />
+        <height>30</height>
+        <name>Running_Button_1</name>
+        <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+        <scale_options>
+          <width_scalable>true</width_scalable>
+          <height_scalable>true</height_scalable>
+          <keep_wh_ratio>false</keep_wh_ratio>
+        </scale_options>
+        <pv_name></pv_name>
+        <background_color>
+          <color red="240" green="240" blue="240" />
+        </background_color>
+        <foreground_color>
+          <color red="0" green="0" blue="0" />
+        </foreground_color>
+        <widget_type>Action Button</widget_type>
+        <enabled>true</enabled>
+        <text>Position 1</text>
+        <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+        <font>
+          <opifont.name fontName="Arial" height="12" style="1">ISIS_Header3</opifont.name>
+        </font>
+        <width>100</width>
+        <border_style>0</border_style>
+        <push_action_index>0</push_action_index>
+        <image></image>
+        <rules />
+        <pv_value />
+        <toggle_button>false</toggle_button>
+        <border_width>1</border_width>
+        <border_color>
+          <color red="0" green="128" blue="255" />
+        </border_color>
+        <y>314</y>
+        <actions hook="false" hook_all="true">
+          <action type="WRITE_PV">
+            <pv_name>$(P)LKUP:$(PH):IPOSN:SP</pv_name>
+            <value>2</value>
+            <timeout>10</timeout>
+            <description></description>
+          </action>
+        </actions>
+        <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+        <x>148</x>
+      </widget>
+      <widget typeId="org.csstudio.opibuilder.widgets.Image" version="1.0">
+        <crop_right>0</crop_right>
+        <crop_left>0</crop_left>
+        <visible>true</visible>
+        <wuid>4e9517e9:14df687cb86:-62c2</wuid>
+        <auto_size>true</auto_size>
+        <scripts>
+          <path pathString="EmbeddedJs" checkConnect="true" sfe="false" seoe="false">
+            <scriptName>Select Pinhole Image (Running)</scriptName>
+            <scriptText><![CDATA[importPackage(Packages.org.csstudio.opibuilder.scriptUtil); 
+var pv0 = PVUtil.getDouble(pvs[0]);
+if(pv0==0)
+	widget.setPropertyValue("image_file","Pinhole Selector Schematic - Running Position 0.png");
+else if(pv0==2)
+	widget.setPropertyValue("image_file","Pinhole Selector Schematic - Running Position 1.png");
+else if(pv0==4)
+	widget.setPropertyValue("image_file","Pinhole Selector Schematic - Running Position 2.png");
+else if(pv0==6)
+	widget.setPropertyValue("image_file","Pinhole Selector Schematic - Running Position 3.png");
+else if(pv0==8)
+	widget.setPropertyValue("image_file","Pinhole Selector Schematic - Running Position 4.png");
+else if(pv0==10)
+	widget.setPropertyValue("image_file","Pinhole Selector Schematic - Running Position 5.png");
+else
+	widget.setPropertyValue("image_file","Pinhole Selector Schematic (Running).png");
+]]></scriptText>
+            <pv trig="true">$(P)LKUP:$(PH):IPOSN</pv>
+          </path>
+        </scripts>
+        <height>240</height>
+        <name>Pinhole Selector Display</name>
+        <stretch_to_fit>false</stretch_to_fit>
+        <scale_options>
+          <width_scalable>true</width_scalable>
+          <height_scalable>true</height_scalable>
+          <keep_wh_ratio>false</keep_wh_ratio>
+        </scale_options>
+        <background_color>
+          <color red="240" green="240" blue="240" />
+        </background_color>
+        <foreground_color>
+          <color red="192" green="192" blue="192" />
+        </foreground_color>
+        <widget_type>Image</widget_type>
+        <enabled>true</enabled>
+        <font>
+          <opifont.name fontName="Tahoma" height="8" style="0">Default</opifont.name>
+        </font>
+        <width>240</width>
+        <no_animation>false</no_animation>
+        <flip_horizontal>false</flip_horizontal>
+        <permutation_matrix>
+          <row>
+            <col>1.0</col>
+            <col>0.0</col>
+          </row>
+          <row>
+            <col>0.0</col>
+            <col>1.0</col>
+          </row>
+        </permutation_matrix>
+        <crop_top>0</crop_top>
+        <border_style>0</border_style>
+        <rules />
+        <flip_vertical>false</flip_vertical>
+        <crop_bottom>0</crop_bottom>
+        <degree>0</degree>
+        <border_width>1</border_width>
+        <image_file>Pinhole Selector Schematic.png</image_file>
+        <border_color>
+          <color red="0" green="128" blue="255" />
+        </border_color>
+        <actions hook="false" hook_all="false" />
+        <y>48</y>
+        <tooltip></tooltip>
+        <x>78</x>
+      </widget>
+      <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="1.0">
+        <border_alarm_sensitive>false</border_alarm_sensitive>
+        <visible>true</visible>
+        <wuid>-552780a2:14de1d345b9:-7fba</wuid>
+        <scripts />
+        <height>30</height>
+        <name>Running_Button_5</name>
+        <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+        <scale_options>
+          <width_scalable>true</width_scalable>
+          <height_scalable>true</height_scalable>
+          <keep_wh_ratio>false</keep_wh_ratio>
+        </scale_options>
+        <pv_name></pv_name>
+        <background_color>
+          <color red="240" green="240" blue="240" />
+        </background_color>
+        <foreground_color>
+          <color red="0" green="0" blue="0" />
+        </foreground_color>
+        <widget_type>Action Button</widget_type>
+        <enabled>true</enabled>
+        <text>Position 5</text>
+        <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+        <font>
+          <opifont.name fontName="Arial" height="12" style="1">ISIS_Header3</opifont.name>
+        </font>
+        <width>100</width>
+        <border_style>0</border_style>
+        <push_action_index>0</push_action_index>
+        <image></image>
+        <rules />
+        <pv_value />
+        <toggle_button>false</toggle_button>
+        <border_width>1</border_width>
+        <border_color>
+          <color red="0" green="128" blue="255" />
+        </border_color>
+        <y>362</y>
+        <actions hook="false" hook_all="true">
+          <action type="WRITE_PV">
+            <pv_name>$(P)LKUP:$(PH):IPOSN:SP</pv_name>
+            <value>10</value>
+            <timeout>10</timeout>
+            <description></description>
+          </action>
+        </actions>
+        <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+        <x>267</x>
+      </widget>
+      <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="1.0">
+        <border_alarm_sensitive>false</border_alarm_sensitive>
+        <visible>true</visible>
+        <wuid>-552780a2:14de1d345b9:-7fc1</wuid>
+        <scripts />
+        <height>30</height>
+        <name>Running_Button_2</name>
+        <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+        <scale_options>
+          <width_scalable>true</width_scalable>
+          <height_scalable>true</height_scalable>
+          <keep_wh_ratio>false</keep_wh_ratio>
+        </scale_options>
+        <pv_name></pv_name>
+        <background_color>
+          <color red="240" green="240" blue="240" />
+        </background_color>
+        <foreground_color>
+          <color red="0" green="0" blue="0" />
+        </foreground_color>
+        <widget_type>Action Button</widget_type>
+        <enabled>true</enabled>
+        <text>Position 2</text>
+        <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+        <font>
+          <opifont.name fontName="Arial" height="12" style="1">ISIS_Header3</opifont.name>
+        </font>
+        <width>100</width>
+        <border_style>0</border_style>
+        <push_action_index>0</push_action_index>
+        <image></image>
+        <rules />
+        <pv_value />
+        <toggle_button>false</toggle_button>
+        <border_width>1</border_width>
+        <border_color>
+          <color red="0" green="128" blue="255" />
+        </border_color>
+        <y>314</y>
+        <actions hook="false" hook_all="true">
+          <action type="WRITE_PV">
+            <pv_name>$(P)LKUP:$(PH):IPOSN:SP</pv_name>
+            <value>4</value>
+            <timeout>10</timeout>
+            <description></description>
+          </action>
+        </actions>
+        <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+        <x>268</x>
+      </widget>
+      <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="1.0">
+        <border_alarm_sensitive>false</border_alarm_sensitive>
+        <visible>true</visible>
+        <wuid>-552780a2:14de1d345b9:-7fbb</wuid>
+        <scripts />
+        <height>30</height>
+        <name>Running_Button_4</name>
+        <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+        <scale_options>
+          <width_scalable>true</width_scalable>
+          <height_scalable>true</height_scalable>
+          <keep_wh_ratio>false</keep_wh_ratio>
+        </scale_options>
+        <pv_name></pv_name>
+        <background_color>
+          <color red="240" green="240" blue="240" />
+        </background_color>
+        <foreground_color>
+          <color red="0" green="0" blue="0" />
+        </foreground_color>
+        <widget_type>Action Button</widget_type>
+        <enabled>true</enabled>
+        <text>Position 4</text>
+        <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+        <font>
+          <opifont.name fontName="Arial" height="12" style="1">ISIS_Header3</opifont.name>
+        </font>
+        <width>100</width>
+        <border_style>0</border_style>
+        <push_action_index>0</push_action_index>
+        <image></image>
+        <rules />
+        <pv_value />
+        <toggle_button>false</toggle_button>
+        <border_width>1</border_width>
+        <border_color>
+          <color red="0" green="128" blue="255" />
+        </border_color>
+        <y>362</y>
+        <actions hook="false" hook_all="true">
+          <action type="WRITE_PV">
+            <pv_name>$(P)LKUP:$(PH):IPOSN:SP</pv_name>
+            <value>8</value>
+            <timeout>10</timeout>
+            <description></description>
+          </action>
+        </actions>
+        <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+        <x>148</x>
+      </widget>
+      <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="1.0">
+        <border_alarm_sensitive>false</border_alarm_sensitive>
+        <visible>true</visible>
+        <wuid>-69d7811d:14d7b00e209:-7e54</wuid>
+        <scripts />
+        <height>30</height>
+        <name>Running_Button_0</name>
+        <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+        <scale_options>
+          <width_scalable>true</width_scalable>
+          <height_scalable>true</height_scalable>
+          <keep_wh_ratio>false</keep_wh_ratio>
+        </scale_options>
+        <pv_name></pv_name>
+        <background_color>
+          <color red="240" green="240" blue="240" />
+        </background_color>
+        <foreground_color>
+          <color red="0" green="0" blue="0" />
+        </foreground_color>
+        <widget_type>Action Button</widget_type>
+        <enabled>true</enabled>
+        <text>Position 0</text>
+        <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+        <font>
+          <opifont.name fontName="Arial" height="12" style="1">ISIS_Header3</opifont.name>
+        </font>
+        <width>100</width>
+        <border_style>0</border_style>
+        <push_action_index>0</push_action_index>
+        <image></image>
+        <rules />
+        <pv_value />
+        <toggle_button>false</toggle_button>
+        <border_width>1</border_width>
+        <border_color>
+          <color red="0" green="128" blue="255" />
+        </border_color>
+        <y>314</y>
+        <actions hook="false" hook_all="true">
+          <action type="WRITE_PV">
+            <pv_name>$(P)LKUP:$(PH):IPOSN:SP</pv_name>
+            <value>0</value>
+            <timeout>10</timeout>
+            <description></description>
+          </action>
+        </actions>
+        <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+        <x>32</x>
+      </widget>
+      <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="1.0">
+        <border_alarm_sensitive>false</border_alarm_sensitive>
+        <visible>true</visible>
+        <wuid>-552780a2:14de1d345b9:-7fc0</wuid>
+        <scripts />
+        <height>30</height>
+        <name>Running_Button_3</name>
+        <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+        <scale_options>
+          <width_scalable>true</width_scalable>
+          <height_scalable>true</height_scalable>
+          <keep_wh_ratio>false</keep_wh_ratio>
+        </scale_options>
+        <pv_name></pv_name>
+        <background_color>
+          <color red="240" green="240" blue="240" />
+        </background_color>
+        <foreground_color>
+          <color red="0" green="0" blue="0" />
+        </foreground_color>
+        <widget_type>Action Button</widget_type>
+        <enabled>true</enabled>
+        <text>Position 3</text>
+        <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+        <font>
+          <opifont.name fontName="Arial" height="12" style="1">ISIS_Header3</opifont.name>
+        </font>
+        <width>100</width>
+        <border_style>0</border_style>
+        <push_action_index>0</push_action_index>
+        <image></image>
+        <rules />
+        <pv_value />
+        <toggle_button>false</toggle_button>
+        <border_width>1</border_width>
+        <border_color>
+          <color red="0" green="128" blue="255" />
+        </border_color>
+        <y>362</y>
+        <actions hook="false" hook_all="true">
+          <action type="WRITE_PV">
+            <pv_name>$(P)LKUP:$(PH):IPOSN:SP</pv_name>
+            <value>6</value>
+            <timeout>10</timeout>
+            <description></description>
+          </action>
+        </actions>
+        <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+        <x>32</x>
+      </widget>
+      <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0">
+        <visible>true</visible>
+        <vertical_alignment>1</vertical_alignment>
+        <wuid>11b0920c:14fdfa5be12:-7e2a</wuid>
+        <auto_size>false</auto_size>
+        <scripts />
+        <height>25</height>
+        <name>Label_1</name>
+        <scale_options>
+          <width_scalable>true</width_scalable>
+          <height_scalable>true</height_scalable>
+          <keep_wh_ratio>false</keep_wh_ratio>
+        </scale_options>
+        <transparent>false</transparent>
+        <show_scrollbar>false</show_scrollbar>
+        <background_color>
+          <color red="255" green="255" blue="255" />
+        </background_color>
+        <foreground_color>
+          <color red="0" green="0" blue="0" />
+        </foreground_color>
+        <widget_type>Label</widget_type>
+        <enabled>true</enabled>
+        <text>Running</text>
+        <font>
+          <opifont.name fontName="Tahoma" height="14" style="1">Header 2</opifont.name>
+        </font>
+        <width>115</width>
+        <border_style>0</border_style>
+        <rules />
+        <border_width>1</border_width>
+        <border_color>
+          <color red="0" green="128" blue="255" />
+        </border_color>
+        <horizontal_alignment>1</horizontal_alignment>
+        <actions hook="false" hook_all="false" />
+        <y>12</y>
+        <wrap_words>true</wrap_words>
+        <tooltip></tooltip>
+        <x>12</x>
+      </widget>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0">
+      <macros>
+        <include_parent_macros>true</include_parent_macros>
+      </macros>
+      <visible>false</visible>
+      <wuid>11b0920c:14fdfa5be12:-7f0d</wuid>
+      <scripts />
+      <height>413</height>
+      <name>Loading</name>
+      <scale_options>
+        <width_scalable>true</width_scalable>
+        <height_scalable>true</height_scalable>
+        <keep_wh_ratio>false</keep_wh_ratio>
+      </scale_options>
+      <transparent>true</transparent>
+      <show_scrollbar>true</show_scrollbar>
+      <foreground_color>
+        <color red="192" green="192" blue="192" />
+      </foreground_color>
+      <background_color>
+        <color red="240" green="240" blue="240" />
+      </background_color>
+      <enabled>true</enabled>
+      <widget_type>Grouping Container</widget_type>
+      <font>
+        <opifont.name fontName="Tahoma" height="8" style="0">Default</opifont.name>
+      </font>
+      <width>418</width>
+      <border_style>0</border_style>
+      <rules />
+      <lock_children>false</lock_children>
+      <border_width>1</border_width>
+      <border_color>
+        <color red="0" green="128" blue="255" />
+      </border_color>
+      <y>1</y>
+      <actions hook="false" hook_all="false" />
+      <x>1</x>
+      <tooltip></tooltip>
+      <widget typeId="org.csstudio.opibuilder.widgets.Rectangle" version="1.0">
+        <border_alarm_sensitive>false</border_alarm_sensitive>
+        <visible>true</visible>
+        <fill_level>0.0</fill_level>
+        <line_color>
+          <color name="ISIS_Border" red="0" green="0" blue="0" />
+        </line_color>
+        <wuid>66b1b245:14e6e558093:-73e4</wuid>
+        <bg_gradient_color>
+          <color red="255" green="255" blue="255" />
+        </bg_gradient_color>
+        <scripts />
+        <height>397</height>
+        <anti_alias>true</anti_alias>
+        <name>Rectangle</name>
+        <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+        <alpha>255</alpha>
+        <scale_options>
+          <width_scalable>true</width_scalable>
+          <height_scalable>true</height_scalable>
+          <keep_wh_ratio>false</keep_wh_ratio>
+        </scale_options>
+        <transparent>true</transparent>
+        <pv_name></pv_name>
+        <background_color>
+          <color red="30" green="144" blue="255" />
+        </background_color>
+        <foreground_color>
+          <color red="255" green="0" blue="0" />
+        </foreground_color>
+        <widget_type>Rectangle</widget_type>
+        <enabled>true</enabled>
+        <fg_gradient_color>
+          <color red="255" green="255" blue="255" />
+        </fg_gradient_color>
+        <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+        <font>
+          <opifont.name fontName="Tahoma" height="8" style="0">Default</opifont.name>
+        </font>
+        <width>395</width>
+        <line_style>0</line_style>
+        <border_style>0</border_style>
+        <rules />
+        <pv_value />
+        <border_width>1</border_width>
+        <line_width>1</line_width>
+        <horizontal_fill>false</horizontal_fill>
+        <border_color>
+          <color red="0" green="128" blue="255" />
+        </border_color>
+        <actions hook="false" hook_all="false" />
+        <y>6</y>
+        <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+        <x>8</x>
+        <gradient>false</gradient>
+      </widget>
+      <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="1.0">
+        <border_alarm_sensitive>false</border_alarm_sensitive>
+        <visible>true</visible>
+        <wuid>-552780a2:14de1d345b9:-7fc6</wuid>
+        <scripts />
+        <height>30</height>
+        <name>Loading_Button_1</name>
+        <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+        <scale_options>
+          <width_scalable>true</width_scalable>
+          <height_scalable>true</height_scalable>
+          <keep_wh_ratio>false</keep_wh_ratio>
+        </scale_options>
+        <pv_name></pv_name>
+        <background_color>
+          <color red="240" green="240" blue="240" />
+        </background_color>
+        <foreground_color>
+          <color red="0" green="0" blue="0" />
+        </foreground_color>
+        <widget_type>Action Button</widget_type>
+        <enabled>true</enabled>
+        <text>Load 1</text>
+        <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+        <font>
+          <opifont.name fontName="Arial" height="12" style="1">ISIS_Header3</opifont.name>
+        </font>
+        <width>100</width>
+        <border_style>0</border_style>
+        <push_action_index>0</push_action_index>
+        <image></image>
+        <rules />
+        <pv_value />
+        <toggle_button>false</toggle_button>
+        <border_width>1</border_width>
+        <border_color>
+          <color red="0" green="128" blue="255" />
+        </border_color>
+        <y>314</y>
+        <actions hook="false" hook_all="true">
+          <action type="WRITE_PV">
+            <pv_name>$(P)LKUP:$(PH):IPOSN:SP</pv_name>
+            <value>3</value>
+            <timeout>10</timeout>
+            <description></description>
+          </action>
+        </actions>
+        <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+        <x>148</x>
+      </widget>
+      <widget typeId="org.csstudio.opibuilder.widgets.Image" version="1.0">
+        <crop_right>0</crop_right>
+        <crop_left>0</crop_left>
+        <visible>true</visible>
+        <wuid>4e9517e9:14df687cb86:-62c2</wuid>
+        <auto_size>true</auto_size>
+        <scripts>
+          <path pathString="EmbeddedJs" checkConnect="true" sfe="false" seoe="false">
+            <scriptName>Select Pinhole Image (Loading)</scriptName>
+            <scriptText><![CDATA[importPackage(Packages.org.csstudio.opibuilder.scriptUtil); 
+var pv0 = PVUtil.getDouble(pvs[0]);
+if(pv0==1)
+	widget.setPropertyValue("image_file","Pinhole Selector Schematic - Loading Position 0.png");
+else if(pv0==3)
+	widget.setPropertyValue("image_file","Pinhole Selector Schematic - Loading Position 1.png");
+else if(pv0==5)
+	widget.setPropertyValue("image_file","Pinhole Selector Schematic - Loading Position 2.png");
+else if(pv0==7)
+	widget.setPropertyValue("image_file","Pinhole Selector Schematic - Loading Position 3.png");
+else if(pv0==9)
+	widget.setPropertyValue("image_file","Pinhole Selector Schematic - Loading Position 4.png");
+else if(pv0==11)
+	widget.setPropertyValue("image_file","Pinhole Selector Schematic - Loading Position 5.png");
+else
+	widget.setPropertyValue("image_file","Pinhole Selector Schematic (Loading).png");
+]]></scriptText>
+            <pv trig="true">$(P)LKUP:$(PH):IPOSN</pv>
+          </path>
+        </scripts>
+        <height>240</height>
+        <name>Pinhole Selector Display</name>
+        <stretch_to_fit>false</stretch_to_fit>
+        <scale_options>
+          <width_scalable>true</width_scalable>
+          <height_scalable>true</height_scalable>
+          <keep_wh_ratio>false</keep_wh_ratio>
+        </scale_options>
+        <background_color>
+          <color red="240" green="240" blue="240" />
+        </background_color>
+        <foreground_color>
+          <color red="192" green="192" blue="192" />
+        </foreground_color>
+        <widget_type>Image</widget_type>
+        <enabled>true</enabled>
+        <font>
+          <opifont.name fontName="Tahoma" height="8" style="0">Default</opifont.name>
+        </font>
+        <width>240</width>
+        <no_animation>false</no_animation>
+        <flip_horizontal>false</flip_horizontal>
+        <permutation_matrix>
+          <row>
+            <col>1.0</col>
+            <col>0.0</col>
+          </row>
+          <row>
+            <col>0.0</col>
+            <col>1.0</col>
+          </row>
+        </permutation_matrix>
+        <crop_top>0</crop_top>
+        <border_style>0</border_style>
+        <rules />
+        <flip_vertical>false</flip_vertical>
+        <crop_bottom>0</crop_bottom>
+        <degree>0</degree>
+        <border_width>1</border_width>
+        <image_file>Pinhole Selector Schematic (Loading).png</image_file>
+        <border_color>
+          <color red="0" green="128" blue="255" />
+        </border_color>
+        <actions hook="false" hook_all="false" />
+        <y>48</y>
+        <tooltip></tooltip>
+        <x>78</x>
+      </widget>
+      <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="1.0">
+        <border_alarm_sensitive>false</border_alarm_sensitive>
+        <visible>true</visible>
+        <wuid>-552780a2:14de1d345b9:-7fba</wuid>
+        <scripts />
+        <height>30</height>
+        <name>Loading_Button_5</name>
+        <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+        <scale_options>
+          <width_scalable>true</width_scalable>
+          <height_scalable>true</height_scalable>
+          <keep_wh_ratio>false</keep_wh_ratio>
+        </scale_options>
+        <pv_name></pv_name>
+        <background_color>
+          <color red="240" green="240" blue="240" />
+        </background_color>
+        <foreground_color>
+          <color red="0" green="0" blue="0" />
+        </foreground_color>
+        <widget_type>Action Button</widget_type>
+        <enabled>true</enabled>
+        <text>Load 5</text>
+        <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+        <font>
+          <opifont.name fontName="Arial" height="12" style="1">ISIS_Header3</opifont.name>
+        </font>
+        <width>100</width>
+        <border_style>0</border_style>
+        <push_action_index>0</push_action_index>
+        <image></image>
+        <rules />
+        <pv_value />
+        <toggle_button>false</toggle_button>
+        <border_width>1</border_width>
+        <border_color>
+          <color red="0" green="128" blue="255" />
+        </border_color>
+        <y>362</y>
+        <actions hook="false" hook_all="true">
+          <action type="WRITE_PV">
+            <pv_name>$(P)LKUP:$(PH):IPOSN:SP</pv_name>
+            <value>11</value>
+            <timeout>10</timeout>
+            <description></description>
+          </action>
+        </actions>
+        <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+        <x>267</x>
+      </widget>
+      <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="1.0">
+        <border_alarm_sensitive>false</border_alarm_sensitive>
+        <visible>true</visible>
+        <wuid>-552780a2:14de1d345b9:-7fc1</wuid>
+        <scripts />
+        <height>30</height>
+        <name>Loading_Button_2</name>
+        <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+        <scale_options>
+          <width_scalable>true</width_scalable>
+          <height_scalable>true</height_scalable>
+          <keep_wh_ratio>false</keep_wh_ratio>
+        </scale_options>
+        <pv_name></pv_name>
+        <background_color>
+          <color red="240" green="240" blue="240" />
+        </background_color>
+        <foreground_color>
+          <color red="0" green="0" blue="0" />
+        </foreground_color>
+        <widget_type>Action Button</widget_type>
+        <enabled>true</enabled>
+        <text>Load 2</text>
+        <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+        <font>
+          <opifont.name fontName="Arial" height="12" style="1">ISIS_Header3</opifont.name>
+        </font>
+        <width>100</width>
+        <border_style>0</border_style>
+        <push_action_index>0</push_action_index>
+        <image></image>
+        <rules />
+        <pv_value />
+        <toggle_button>false</toggle_button>
+        <border_width>1</border_width>
+        <border_color>
+          <color red="0" green="128" blue="255" />
+        </border_color>
+        <y>314</y>
+        <actions hook="false" hook_all="true">
+          <action type="WRITE_PV">
+            <pv_name>$(P)LKUP:$(PH):IPOSN:SP</pv_name>
+            <value>5</value>
+            <timeout>10</timeout>
+            <description></description>
+          </action>
+        </actions>
+        <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+        <x>268</x>
+      </widget>
+      <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="1.0">
+        <border_alarm_sensitive>false</border_alarm_sensitive>
+        <visible>true</visible>
+        <wuid>-552780a2:14de1d345b9:-7fbb</wuid>
+        <scripts />
+        <height>30</height>
+        <name>Loading_Button_4</name>
+        <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+        <scale_options>
+          <width_scalable>true</width_scalable>
+          <height_scalable>true</height_scalable>
+          <keep_wh_ratio>false</keep_wh_ratio>
+        </scale_options>
+        <pv_name></pv_name>
+        <background_color>
+          <color red="240" green="240" blue="240" />
+        </background_color>
+        <foreground_color>
+          <color red="0" green="0" blue="0" />
+        </foreground_color>
+        <widget_type>Action Button</widget_type>
+        <enabled>true</enabled>
+        <text>Load 4</text>
+        <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+        <font>
+          <opifont.name fontName="Arial" height="12" style="1">ISIS_Header3</opifont.name>
+        </font>
+        <width>100</width>
+        <border_style>0</border_style>
+        <push_action_index>0</push_action_index>
+        <image></image>
+        <rules />
+        <pv_value />
+        <toggle_button>false</toggle_button>
+        <border_width>1</border_width>
+        <border_color>
+          <color red="0" green="128" blue="255" />
+        </border_color>
+        <y>362</y>
+        <actions hook="false" hook_all="true">
+          <action type="WRITE_PV">
+            <pv_name>$(P)LKUP:$(PH):IPOSN:SP</pv_name>
+            <value>9</value>
+            <timeout>10</timeout>
+            <description></description>
+          </action>
+        </actions>
+        <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+        <x>148</x>
+      </widget>
+      <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="1.0">
+        <border_alarm_sensitive>false</border_alarm_sensitive>
+        <visible>true</visible>
+        <wuid>-69d7811d:14d7b00e209:-7e54</wuid>
+        <scripts />
+        <height>30</height>
+        <name>Loading_Button_0</name>
+        <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+        <scale_options>
+          <width_scalable>true</width_scalable>
+          <height_scalable>true</height_scalable>
+          <keep_wh_ratio>false</keep_wh_ratio>
+        </scale_options>
+        <pv_name></pv_name>
+        <background_color>
+          <color red="240" green="240" blue="240" />
+        </background_color>
+        <foreground_color>
+          <color red="0" green="0" blue="0" />
+        </foreground_color>
+        <widget_type>Action Button</widget_type>
+        <enabled>true</enabled>
+        <text>Load 0</text>
+        <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+        <font>
+          <opifont.name fontName="Arial" height="12" style="1">ISIS_Header3</opifont.name>
+        </font>
+        <width>100</width>
+        <border_style>0</border_style>
+        <push_action_index>0</push_action_index>
+        <image></image>
+        <rules />
+        <pv_value />
+        <toggle_button>false</toggle_button>
+        <border_width>1</border_width>
+        <border_color>
+          <color red="0" green="128" blue="255" />
+        </border_color>
+        <y>314</y>
+        <actions hook="false" hook_all="true">
+          <action type="WRITE_PV">
+            <pv_name>$(P)LKUP:$(PH):IPOSN:SP</pv_name>
+            <value>1</value>
+            <timeout>10</timeout>
+            <description></description>
+          </action>
+        </actions>
+        <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+        <x>32</x>
+      </widget>
+      <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="1.0">
+        <border_alarm_sensitive>false</border_alarm_sensitive>
+        <visible>true</visible>
+        <wuid>-552780a2:14de1d345b9:-7fc0</wuid>
+        <scripts />
+        <height>30</height>
+        <name>Loading_Button_3</name>
+        <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+        <scale_options>
+          <width_scalable>true</width_scalable>
+          <height_scalable>true</height_scalable>
+          <keep_wh_ratio>false</keep_wh_ratio>
+        </scale_options>
+        <pv_name></pv_name>
+        <background_color>
+          <color red="240" green="240" blue="240" />
+        </background_color>
+        <foreground_color>
+          <color red="0" green="0" blue="0" />
+        </foreground_color>
+        <widget_type>Action Button</widget_type>
+        <enabled>true</enabled>
+        <text>Load 3</text>
+        <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+        <font>
+          <opifont.name fontName="Arial" height="12" style="1">ISIS_Header3</opifont.name>
+        </font>
+        <width>100</width>
+        <border_style>0</border_style>
+        <push_action_index>0</push_action_index>
+        <image></image>
+        <rules />
+        <pv_value />
+        <toggle_button>false</toggle_button>
+        <border_width>1</border_width>
+        <border_color>
+          <color red="0" green="128" blue="255" />
+        </border_color>
+        <y>362</y>
+        <actions hook="false" hook_all="true">
+          <action type="WRITE_PV">
+            <pv_name>$(P)LKUP:$(PH):IPOSN:SP</pv_name>
+            <value>7</value>
+            <timeout>10</timeout>
+            <description></description>
+          </action>
+        </actions>
+        <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+        <x>32</x>
+      </widget>
+      <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0">
+        <visible>true</visible>
+        <vertical_alignment>1</vertical_alignment>
+        <wuid>11b0920c:14fdfa5be12:-7e2a</wuid>
+        <auto_size>false</auto_size>
+        <scripts />
+        <height>25</height>
+        <name>Label_1</name>
+        <scale_options>
+          <width_scalable>true</width_scalable>
+          <height_scalable>true</height_scalable>
+          <keep_wh_ratio>false</keep_wh_ratio>
+        </scale_options>
+        <transparent>false</transparent>
+        <show_scrollbar>false</show_scrollbar>
+        <background_color>
+          <color red="255" green="255" blue="255" />
+        </background_color>
+        <foreground_color>
+          <color red="0" green="0" blue="0" />
+        </foreground_color>
+        <widget_type>Label</widget_type>
+        <enabled>true</enabled>
+        <text>Loading</text>
+        <font>
+          <opifont.name fontName="Tahoma" height="14" style="1">Header 2</opifont.name>
+        </font>
+        <width>115</width>
+        <border_style>0</border_style>
+        <rules />
+        <border_width>1</border_width>
+        <border_color>
+          <color red="0" green="128" blue="255" />
+        </border_color>
+        <horizontal_alignment>1</horizontal_alignment>
+        <actions hook="false" hook_all="false" />
+        <y>12</y>
+        <wrap_words>true</wrap_words>
+        <tooltip></tooltip>
+        <x>12</x>
+      </widget>
+    </widget>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0">
     <border_alarm_sensitive>true</border_alarm_sensitive>
@@ -237,69 +1208,13 @@ $(pv_value)</tooltip>
     <border_color>
       <color red="0" green="128" blue="255" />
     </border_color>
-    <horizontal_alignment>0</horizontal_alignment>
+    <horizontal_alignment>1</horizontal_alignment>
     <actions hook="false" hook_all="false" />
     <y>54</y>
     <wrap_words>false</wrap_words>
     <tooltip>$(pv_name)
 $(pv_value)</tooltip>
-    <x>330</x>
-  </widget>
-  <widget typeId="org.csstudio.opibuilder.widgets.NativeText" version="1.0">
-    <border_alarm_sensitive>false</border_alarm_sensitive>
-    <read_only>true</read_only>
-    <visible>true</visible>
-    <minimum>-1.7976931348623157E308</minimum>
-    <next_focus>0</next_focus>
-    <show_units>true</show_units>
-    <multiline_input>false</multiline_input>
-    <wuid>-69d7811d:14d7b00e209:-7b4a</wuid>
-    <show_native_border>false</show_native_border>
-    <auto_size>false</auto_size>
-    <scripts />
-    <height>25</height>
-    <password_input>false</password_input>
-    <name>Text</name>
-    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
-    <format_type>0</format_type>
-    <scale_options>
-      <width_scalable>true</width_scalable>
-      <height_scalable>true</height_scalable>
-      <keep_wh_ratio>false</keep_wh_ratio>
-    </scale_options>
-    <precision_from_pv>true</precision_from_pv>
-    <pv_name></pv_name>
-    <foreground_color>
-      <color red="0" green="0" blue="0" />
-    </foreground_color>
-    <background_color>
-      <color red="255" green="255" blue="255" />
-    </background_color>
-    <enabled>true</enabled>
-    <widget_type>Text</widget_type>
-    <text>Target Position</text>
-    <precision>0</precision>
-    <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
-    <font>
-      <opifont.name fontName="Arial" height="16" style="1">ISIS_Header2</opifont.name>
-    </font>
-    <width>175</width>
-    <border_style>0</border_style>
-    <confirm_message></confirm_message>
-    <rules />
-    <pv_value />
-    <maximum>1.7976931348623157E308</maximum>
-    <border_width>1</border_width>
-    <limits_from_pv>false</limits_from_pv>
-    <horizontal_alignment>0</horizontal_alignment>
-    <border_color>
-      <color red="0" green="128" blue="255" />
-    </border_color>
-    <y>24</y>
-    <actions hook="false" hook_all="false" />
-    <x>330</x>
-    <tooltip>$(pv_name)
-$(pv_value)</tooltip>
+    <x>444</x>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0">
     <border_alarm_sensitive>true</border_alarm_sensitive>
@@ -344,324 +1259,13 @@ $(pv_value)</tooltip>
     <border_color>
       <color red="0" green="128" blue="255" />
     </border_color>
-    <horizontal_alignment>0</horizontal_alignment>
+    <horizontal_alignment>1</horizontal_alignment>
     <actions hook="false" hook_all="false" />
     <y>156</y>
     <wrap_words>false</wrap_words>
     <tooltip>$(pv_name)
 $(pv_value)</tooltip>
-    <x>330</x>
-  </widget>
-  <widget typeId="org.csstudio.opibuilder.widgets.NativeText" version="1.0">
-    <border_alarm_sensitive>false</border_alarm_sensitive>
-    <read_only>true</read_only>
-    <visible>true</visible>
-    <minimum>-1.7976931348623157E308</minimum>
-    <next_focus>0</next_focus>
-    <show_units>true</show_units>
-    <multiline_input>false</multiline_input>
-    <wuid>-69d7811d:14d7b00e209:-7b44</wuid>
-    <show_native_border>false</show_native_border>
-    <auto_size>false</auto_size>
-    <scripts />
-    <height>25</height>
-    <password_input>false</password_input>
-    <name>Text_1</name>
-    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
-    <format_type>0</format_type>
-    <scale_options>
-      <width_scalable>true</width_scalable>
-      <height_scalable>true</height_scalable>
-      <keep_wh_ratio>false</keep_wh_ratio>
-    </scale_options>
-    <precision_from_pv>true</precision_from_pv>
-    <pv_name></pv_name>
-    <foreground_color>
-      <color red="0" green="0" blue="0" />
-    </foreground_color>
-    <background_color>
-      <color red="255" green="255" blue="255" />
-    </background_color>
-    <enabled>true</enabled>
-    <widget_type>Text</widget_type>
-    <text>Current Position</text>
-    <precision>0</precision>
-    <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
-    <font>
-      <opifont.name fontName="Arial" height="16" style="1">ISIS_Header2</opifont.name>
-    </font>
-    <width>175</width>
-    <border_style>0</border_style>
-    <confirm_message></confirm_message>
-    <rules />
-    <pv_value />
-    <maximum>1.7976931348623157E308</maximum>
-    <border_width>1</border_width>
-    <limits_from_pv>false</limits_from_pv>
-    <horizontal_alignment>0</horizontal_alignment>
-    <border_color>
-      <color red="0" green="128" blue="255" />
-    </border_color>
-    <y>120</y>
-    <actions hook="false" hook_all="false" />
-    <x>330</x>
-    <tooltip>$(pv_name)
-$(pv_value)</tooltip>
-  </widget>
-  <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="1.0">
-    <border_alarm_sensitive>false</border_alarm_sensitive>
-    <visible>true</visible>
-    <wuid>-552780a2:14de1d345b9:-7fc6</wuid>
-    <scripts />
-    <height>30</height>
-    <name>Action Button_2</name>
-    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
-    <scale_options>
-      <width_scalable>true</width_scalable>
-      <height_scalable>true</height_scalable>
-      <keep_wh_ratio>false</keep_wh_ratio>
-    </scale_options>
-    <pv_name></pv_name>
-    <background_color>
-      <color red="240" green="240" blue="240" />
-    </background_color>
-    <foreground_color>
-      <color red="0" green="0" blue="0" />
-    </foreground_color>
-    <widget_type>Action Button</widget_type>
-    <enabled>true</enabled>
-    <text>Position 1</text>
-    <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
-    <font>
-      <opifont.name fontName="Arial" height="12" style="1">ISIS_Header3</opifont.name>
-    </font>
-    <width>100</width>
-    <border_style>0</border_style>
-    <push_action_index>0</push_action_index>
-    <image></image>
-    <rules />
-    <pv_value />
-    <toggle_button>false</toggle_button>
-    <border_width>1</border_width>
-    <border_color>
-      <color red="0" green="128" blue="255" />
-    </border_color>
-    <y>276</y>
-    <actions hook="false" hook_all="true">
-      <action type="WRITE_PV">
-        <pv_name>$(P)LKUP:$(PH):POSN:SP</pv_name>
-        <value>Position_1</value>
-        <timeout>10</timeout>
-        <description></description>
-      </action>
-    </actions>
-    <tooltip>$(pv_name)
-$(pv_value)</tooltip>
-    <x>126</x>
-  </widget>
-  <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="1.0">
-    <border_alarm_sensitive>false</border_alarm_sensitive>
-    <visible>true</visible>
-    <wuid>-552780a2:14de1d345b9:-7fc1</wuid>
-    <scripts />
-    <height>30</height>
-    <name>Action Button_3</name>
-    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
-    <scale_options>
-      <width_scalable>true</width_scalable>
-      <height_scalable>true</height_scalable>
-      <keep_wh_ratio>false</keep_wh_ratio>
-    </scale_options>
-    <pv_name></pv_name>
-    <background_color>
-      <color red="240" green="240" blue="240" />
-    </background_color>
-    <foreground_color>
-      <color red="0" green="0" blue="0" />
-    </foreground_color>
-    <widget_type>Action Button</widget_type>
-    <enabled>true</enabled>
-    <text>Position 2</text>
-    <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
-    <font>
-      <opifont.name fontName="Arial" height="12" style="1">ISIS_Header3</opifont.name>
-    </font>
-    <width>100</width>
-    <border_style>0</border_style>
-    <push_action_index>0</push_action_index>
-    <image></image>
-    <rules />
-    <pv_value />
-    <toggle_button>false</toggle_button>
-    <border_width>1</border_width>
-    <border_color>
-      <color red="0" green="128" blue="255" />
-    </border_color>
-    <y>276</y>
-    <actions hook="false" hook_all="true">
-      <action type="WRITE_PV">
-        <pv_name>$(P)LKUP:$(PH):POSN:SP</pv_name>
-        <value>Position_2</value>
-        <timeout>10</timeout>
-        <description></description>
-      </action>
-    </actions>
-    <tooltip>$(pv_name)
-$(pv_value)</tooltip>
-    <x>246</x>
-  </widget>
-  <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="1.0">
-    <border_alarm_sensitive>false</border_alarm_sensitive>
-    <visible>true</visible>
-    <wuid>-552780a2:14de1d345b9:-7fc0</wuid>
-    <scripts />
-    <height>30</height>
-    <name>Action Button_4</name>
-    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
-    <scale_options>
-      <width_scalable>true</width_scalable>
-      <height_scalable>true</height_scalable>
-      <keep_wh_ratio>false</keep_wh_ratio>
-    </scale_options>
-    <pv_name></pv_name>
-    <background_color>
-      <color red="240" green="240" blue="240" />
-    </background_color>
-    <foreground_color>
-      <color red="0" green="0" blue="0" />
-    </foreground_color>
-    <widget_type>Action Button</widget_type>
-    <enabled>true</enabled>
-    <text>Position 3</text>
-    <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
-    <font>
-      <opifont.name fontName="Arial" height="12" style="1">ISIS_Header3</opifont.name>
-    </font>
-    <width>100</width>
-    <border_style>0</border_style>
-    <push_action_index>0</push_action_index>
-    <image></image>
-    <rules />
-    <pv_value />
-    <toggle_button>false</toggle_button>
-    <border_width>1</border_width>
-    <border_color>
-      <color red="0" green="128" blue="255" />
-    </border_color>
-    <y>324</y>
-    <actions hook="false" hook_all="true">
-      <action type="WRITE_PV">
-        <pv_name>$(P)LKUP:$(PH):POSN:SP</pv_name>
-        <value>Position_3</value>
-        <timeout>10</timeout>
-        <description></description>
-      </action>
-    </actions>
-    <tooltip>$(pv_name)
-$(pv_value)</tooltip>
-    <x>10</x>
-  </widget>
-  <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="1.0">
-    <border_alarm_sensitive>false</border_alarm_sensitive>
-    <visible>true</visible>
-    <wuid>-552780a2:14de1d345b9:-7fbb</wuid>
-    <scripts />
-    <height>30</height>
-    <name>Action Button_5</name>
-    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
-    <scale_options>
-      <width_scalable>true</width_scalable>
-      <height_scalable>true</height_scalable>
-      <keep_wh_ratio>false</keep_wh_ratio>
-    </scale_options>
-    <pv_name></pv_name>
-    <background_color>
-      <color red="240" green="240" blue="240" />
-    </background_color>
-    <foreground_color>
-      <color red="0" green="0" blue="0" />
-    </foreground_color>
-    <widget_type>Action Button</widget_type>
-    <enabled>true</enabled>
-    <text>Position 4</text>
-    <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
-    <font>
-      <opifont.name fontName="Arial" height="12" style="1">ISIS_Header3</opifont.name>
-    </font>
-    <width>100</width>
-    <border_style>0</border_style>
-    <push_action_index>0</push_action_index>
-    <image></image>
-    <rules />
-    <pv_value />
-    <toggle_button>false</toggle_button>
-    <border_width>1</border_width>
-    <border_color>
-      <color red="0" green="128" blue="255" />
-    </border_color>
-    <y>324</y>
-    <actions hook="false" hook_all="true">
-      <action type="WRITE_PV">
-        <pv_name>$(P)LKUP:$(PH):POSN:SP</pv_name>
-        <value>Position_4</value>
-        <timeout>10</timeout>
-        <description></description>
-      </action>
-    </actions>
-    <tooltip>$(pv_name)
-$(pv_value)</tooltip>
-    <x>126</x>
-  </widget>
-  <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="1.0">
-    <border_alarm_sensitive>false</border_alarm_sensitive>
-    <visible>true</visible>
-    <wuid>-552780a2:14de1d345b9:-7fba</wuid>
-    <scripts />
-    <height>30</height>
-    <name>Action Button_6</name>
-    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
-    <scale_options>
-      <width_scalable>true</width_scalable>
-      <height_scalable>true</height_scalable>
-      <keep_wh_ratio>false</keep_wh_ratio>
-    </scale_options>
-    <pv_name></pv_name>
-    <background_color>
-      <color red="240" green="240" blue="240" />
-    </background_color>
-    <foreground_color>
-      <color red="0" green="0" blue="0" />
-    </foreground_color>
-    <widget_type>Action Button</widget_type>
-    <enabled>true</enabled>
-    <text>Position 5</text>
-    <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
-    <font>
-      <opifont.name fontName="Arial" height="12" style="1">ISIS_Header3</opifont.name>
-    </font>
-    <width>100</width>
-    <border_style>0</border_style>
-    <push_action_index>0</push_action_index>
-    <image></image>
-    <rules />
-    <pv_value />
-    <toggle_button>false</toggle_button>
-    <border_width>1</border_width>
-    <border_color>
-      <color red="0" green="128" blue="255" />
-    </border_color>
-    <y>324</y>
-    <actions hook="false" hook_all="true">
-      <action type="WRITE_PV">
-        <pv_name>$(P)LKUP:$(PH):POSN:SP</pv_name>
-        <value>Position_5</value>
-        <timeout>10</timeout>
-        <description></description>
-      </action>
-    </actions>
-    <tooltip>$(pv_name)
-$(pv_value)</tooltip>
-    <x>245</x>
+    <x>444</x>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.LED" version="1.0">
     <border_alarm_sensitive>true</border_alarm_sensitive>
@@ -711,7 +1315,61 @@ $(pv_value)</tooltip>
       <color red="0" green="128" blue="255" />
     </border_color>
     <actions hook="false" hook_all="false" />
-    <y>278</y>
+    <y>246</y>
+    <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+    <x>558</x>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="1.0">
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <visible>true</visible>
+    <wuid>-69d7811d:14d7b00e209:-7f28</wuid>
+    <scripts />
+    <height>30</height>
+    <name>Action Button</name>
+    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <pv_name></pv_name>
+    <background_color>
+      <color name="ISIS_Standard_Button" red="187" green="187" blue="187" />
+    </background_color>
+    <foreground_color>
+      <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
+    </foreground_color>
+    <widget_type>Action Button</widget_type>
+    <enabled>true</enabled>
+    <text>View Motor</text>
+    <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+    <font>
+      <opifont.name fontName="Arial" height="14" style="1">ISIS_Button</opifont.name>
+    </font>
+    <width>120</width>
+    <border_style>0</border_style>
+    <push_action_index>0</push_action_index>
+    <image></image>
+    <rules />
+    <pv_value />
+    <toggle_button>false</toggle_button>
+    <border_width>1</border_width>
+    <border_color>
+      <color name="ISIS_Check_Border" red="0" green="128" blue="255" />
+    </border_color>
+    <y>342</y>
+    <actions hook="false" hook_all="false">
+      <action type="OPEN_DISPLAY">
+        <path>../Motor/mymotor.opi</path>
+        <macros>
+          <include_parent_macros>true</include_parent_macros>
+          <M>$(MM)</M>
+        </macros>
+        <replace>1</replace>
+        <description></description>
+      </action>
+    </actions>
     <tooltip>$(pv_name)
 $(pv_value)</tooltip>
     <x>471</x>
@@ -752,86 +1410,174 @@ $(pv_value)</tooltip>
     </border_color>
     <horizontal_alignment>1</horizontal_alignment>
     <actions hook="false" hook_all="false" />
-    <y>281</y>
+    <y>249</y>
     <wrap_words>true</wrap_words>
     <tooltip></tooltip>
-    <x>384</x>
+    <x>471</x>
   </widget>
-  <widget typeId="org.csstudio.opibuilder.widgets.Image" version="1.0">
-    <crop_right>0</crop_right>
-    <crop_left>0</crop_left>
+  <widget typeId="org.csstudio.opibuilder.widgets.NativeButton" version="1.0">
+    <border_alarm_sensitive>false</border_alarm_sensitive>
     <visible>true</visible>
-    <wuid>4e9517e9:14df687cb86:-62c2</wuid>
-    <auto_size>true</auto_size>
-    <scripts>
-      <path pathString="EmbeddedJs" checkConnect="true" sfe="false" seoe="false">
-        <scriptName>Select Pinhole Image</scriptName>
-        <scriptText><![CDATA[importPackage(Packages.org.csstudio.opibuilder.scriptUtil); 
-var pv0 = PVUtil.getString(pvs[0]);
-if(pv0=="Position_0")
-	widget.setPropertyValue("image_file","Pinhole Selector Schematic - Position 0.png");
-else if(pv0=="Position_1")
-	widget.setPropertyValue("image_file","Pinhole Selector Schematic - Position 1.png");
-else if(pv0=="Position_2")
-	widget.setPropertyValue("image_file","Pinhole Selector Schematic - Position 2.png");
-else if(pv0=="Position_3")
-	widget.setPropertyValue("image_file","Pinhole Selector Schematic - Position 3.png");
-else if(pv0=="Position_4")
-	widget.setPropertyValue("image_file","Pinhole Selector Schematic - Position 4.png");
-else if(pv0=="Position_5")
-	widget.setPropertyValue("image_file","Pinhole Selector Schematic - Position 5.png");
-else
-	widget.setPropertyValue("image_file","Pinhole Selector Schematic.png");
-]]></scriptText>
-        <pv trig="true">$(P)LKUP:$(PH):POSN</pv>
-      </path>
-    </scripts>
-    <height>240</height>
-    <name>Pinhole Selector Display</name>
-    <stretch_to_fit>false</stretch_to_fit>
+    <wuid>-4fb46c11:14ff514886e:-7e3d</wuid>
+    <scripts />
+    <height>30</height>
+    <name>Button</name>
+    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
     <scale_options>
       <width_scalable>true</width_scalable>
       <height_scalable>true</height_scalable>
       <keep_wh_ratio>false</keep_wh_ratio>
     </scale_options>
-    <background_color>
-      <color red="240" green="240" blue="240" />
-    </background_color>
+    <pv_name></pv_name>
     <foreground_color>
-      <color red="192" green="192" blue="192" />
+      <color red="0" green="0" blue="0" />
     </foreground_color>
-    <widget_type>Image</widget_type>
+    <widget_type>Button</widget_type>
     <enabled>true</enabled>
+    <text>Reload Positions File</text>
     <font>
       <opifont.name fontName="Tahoma" height="8" style="0">Default</opifont.name>
     </font>
-    <width>240</width>
-    <no_animation>false</no_animation>
-    <flip_horizontal>false</flip_horizontal>
-    <permutation_matrix>
-      <row>
-        <col>1.0</col>
-        <col>0.0</col>
-      </row>
-      <row>
-        <col>0.0</col>
-        <col>1.0</col>
-      </row>
-    </permutation_matrix>
-    <crop_top>0</crop_top>
+    <width>80</width>
     <border_style>0</border_style>
+    <push_action_index>0</push_action_index>
+    <image></image>
     <rules />
-    <flip_vertical>false</flip_vertical>
-    <crop_bottom>0</crop_bottom>
-    <degree>0</degree>
+    <pv_value />
+    <toggle_button>false</toggle_button>
     <border_width>1</border_width>
-    <image_file>Pinhole Selector Schematic.png</image_file>
     <border_color>
       <color red="0" green="128" blue="255" />
     </border_color>
+    <y>390</y>
+    <actions hook="false" hook_all="true">
+      <action type="WRITE_PV">
+        <pv_name>$(P)LKUP:$(PH):RESET</pv_name>
+        <value>1</value>
+        <timeout>10</timeout>
+        <description></description>
+      </action>
+      <action type="WRITE_PV">
+        <pv_name>$(P)LKUP:$(PH):RESET</pv_name>
+        <value>0</value>
+        <timeout>10</timeout>
+        <description></description>
+      </action>
+    </actions>
+    <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+    <x>490</x>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.NativeText" version="1.0">
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <read_only>true</read_only>
+    <visible>true</visible>
+    <minimum>-1.7976931348623157E308</minimum>
+    <next_focus>0</next_focus>
+    <show_units>true</show_units>
+    <multiline_input>false</multiline_input>
+    <wuid>-69d7811d:14d7b00e209:-7b4a</wuid>
+    <show_native_border>false</show_native_border>
+    <auto_size>false</auto_size>
+    <scripts />
+    <height>25</height>
+    <password_input>false</password_input>
+    <name>Text</name>
+    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+    <format_type>0</format_type>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <precision_from_pv>true</precision_from_pv>
+    <pv_name></pv_name>
+    <foreground_color>
+      <color red="0" green="0" blue="0" />
+    </foreground_color>
+    <background_color>
+      <color red="255" green="255" blue="255" />
+    </background_color>
+    <enabled>true</enabled>
+    <widget_type>Text</widget_type>
+    <text>Target Position</text>
+    <precision>0</precision>
+    <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+    <font>
+      <opifont.name fontName="Arial" height="16" style="1">ISIS_Header2</opifont.name>
+    </font>
+    <width>175</width>
+    <border_style>0</border_style>
+    <confirm_message></confirm_message>
+    <rules />
+    <pv_value />
+    <maximum>1.7976931348623157E308</maximum>
+    <border_width>1</border_width>
+    <limits_from_pv>false</limits_from_pv>
+    <horizontal_alignment>1</horizontal_alignment>
+    <border_color>
+      <color red="0" green="128" blue="255" />
+    </border_color>
+    <y>24</y>
     <actions hook="false" hook_all="false" />
-    <y>10</y>
-    <tooltip></tooltip>
-    <x>56</x>
+    <x>444</x>
+    <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.NativeText" version="1.0">
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <read_only>true</read_only>
+    <visible>true</visible>
+    <minimum>-1.7976931348623157E308</minimum>
+    <next_focus>0</next_focus>
+    <show_units>true</show_units>
+    <multiline_input>false</multiline_input>
+    <wuid>-69d7811d:14d7b00e209:-7b44</wuid>
+    <show_native_border>false</show_native_border>
+    <auto_size>false</auto_size>
+    <scripts />
+    <height>25</height>
+    <password_input>false</password_input>
+    <name>Text_1</name>
+    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+    <format_type>0</format_type>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <precision_from_pv>true</precision_from_pv>
+    <pv_name></pv_name>
+    <foreground_color>
+      <color red="0" green="0" blue="0" />
+    </foreground_color>
+    <background_color>
+      <color red="255" green="255" blue="255" />
+    </background_color>
+    <enabled>true</enabled>
+    <widget_type>Text</widget_type>
+    <text>Current Position</text>
+    <precision>0</precision>
+    <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+    <font>
+      <opifont.name fontName="Arial" height="16" style="1">ISIS_Header2</opifont.name>
+    </font>
+    <width>175</width>
+    <border_style>0</border_style>
+    <confirm_message></confirm_message>
+    <rules />
+    <pv_value />
+    <maximum>1.7976931348623157E308</maximum>
+    <border_width>1</border_width>
+    <limits_from_pv>false</limits_from_pv>
+    <horizontal_alignment>1</horizontal_alignment>
+    <border_color>
+      <color red="0" green="128" blue="255" />
+    </border_color>
+    <y>120</y>
+    <actions hook="false" hook_all="false" />
+    <x>444</x>
+    <tooltip>$(pv_name)
+$(pv_value)</tooltip>
   </widget>
 </display>
