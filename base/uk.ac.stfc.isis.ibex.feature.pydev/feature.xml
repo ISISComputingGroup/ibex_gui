@@ -17,7 +17,7 @@
    </license>
 
    <plugin
-         id="com.python.pydev"
+         id="org.python.pydev"
          download-size="0"
          install-size="0"
          version="0.0.0"/>
@@ -66,12 +66,6 @@
 
    <plugin
          id="org.python.pydev.shared_ui"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"/>
-
-   <plugin
-         id="org.python.pydev"
          download-size="0"
          install-size="0"
          version="0.0.0"/>
