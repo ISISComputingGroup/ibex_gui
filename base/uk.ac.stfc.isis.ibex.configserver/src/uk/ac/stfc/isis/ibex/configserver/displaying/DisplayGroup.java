@@ -34,40 +34,40 @@ import uk.ac.stfc.isis.ibex.configserver.internal.DisplayUtils;
  */
 public class DisplayGroup {
 
-	private final String name;
-	private final List<DisplayBlock> blocks = new ArrayList<>();
-	private final Collection<DisplayBlock> allBlocks;
+    private final String name;
+    private final List<DisplayBlock> blocks = new ArrayList<>();
+    private final Collection<DisplayBlock> allBlocks;
 
-	public DisplayGroup(Group group, Collection<DisplayBlock> blocks) {
-		this.allBlocks = blocks;
-		name = group.getName();
-		setBlocks(group.getBlocks());
-	}
+    public DisplayGroup(Group group, Collection<DisplayBlock> blocks) {
+        this.allBlocks = blocks;
+        name = group.getName();
+        setBlocks(group.getBlocks());
+    }
 
-	public String name() {
-		return DisplayUtils.renameGroup(name);
-	}
+    public String name() {
+        return DisplayUtils.renameGroup(name);
+    }
 
-	public Collection<DisplayBlock> blocks() {
-		return new ArrayList<>(blocks);
-	}
+    public Collection<DisplayBlock> blocks() {
+        return new ArrayList<>(blocks);
+    }
 
-	private void setBlocks(Collection<String> blockNames) {
-		for (final String name : blockNames) {
-			blocks.add(block(name));
-		}
-	}
+    private void setBlocks(Collection<String> blockNames) {
+        for (final String name : blockNames) {
+            blocks.add(block(name));
+        }
+    }
 
-	private DisplayBlock block(final String name) {
-		return Iterables.find(allBlocks, nameMatches(name));
-	}
+    private DisplayBlock block(final String name) {
+        return Iterables.find(allBlocks, nameMatches(name));
+    }
 
     private Predicate<DisplayBlock> nameMatches(final String name) {
         return new Predicate<DisplayBlock>() {
-			@Override
+            @Override
             public boolean apply(DisplayBlock block) {
-				return block.getName().equals(name);
-			}
-		};
-	}
+                return block.getName().equals(name);
+            }
+        };
+    }
 }
