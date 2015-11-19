@@ -19,6 +19,20 @@
 
 package uk.ac.stfc.isis.ibex.epics.observing;
 
-public interface InitialisableObserver<T> extends Observer<T> {
-	void update(T value, Exception error, boolean isConnected);
+public abstract class SimpleObserver<T> implements Observer<T>  {
+	@Override
+    public void onValue(T value) {
+	}
+    
+	@Override
+    public void onError(Exception e) {
+	}
+
+	@Override
+    public void onConnectionStatus(boolean isConnected) {
+    }
+
+    @Override
+    public void update(T value, Exception error, boolean isConnected) {
+	}
 }

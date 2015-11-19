@@ -36,8 +36,8 @@ import org.mockito.MockitoAnnotations;
 import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
 import uk.ac.stfc.isis.ibex.epics.conversion.Converter;
 import uk.ac.stfc.isis.ibex.epics.observing.ConvertingObservable;
-import uk.ac.stfc.isis.ibex.epics.observing.InitialisableObserver;
 import uk.ac.stfc.isis.ibex.epics.observing.InitialiseOnSubscribeObservable;
+import uk.ac.stfc.isis.ibex.epics.observing.Observer;
 
 // A lot of unchecked type conversions for mocking purposes
 @SuppressWarnings({ "unchecked", "checkstyle:methodname" })
@@ -48,7 +48,7 @@ public class ConvertingObservableTest {
 	private static final String NEW_CONVERTED_VALUE = "converted from 456";
 	private static final String EXCEPTION_MESSAGE = "converions exception!";
 	
-	private InitialisableObserver<String> mockObserver;
+    private Observer<String> mockObserver;
 	
 	private TestableObservable<Integer> testObservable;	
 	private InitialiseOnSubscribeObservable<Integer> initObservable;
@@ -65,7 +65,7 @@ public class ConvertingObservableTest {
 		MockitoAnnotations.initMocks(this);
 		
 		// Arrange		
-		mockObserver = mock(InitialisableObserver.class);
+        mockObserver = mock(Observer.class);
 		
 		testObservable = new TestableObservable<>();
 		

@@ -21,8 +21,8 @@ package uk.ac.stfc.isis.ibex.dae.actions;
 
 import uk.ac.stfc.isis.ibex.dae.DaeRunState;
 import uk.ac.stfc.isis.ibex.epics.observing.BaseObserver;
-import uk.ac.stfc.isis.ibex.epics.observing.InitialisableObserver;
 import uk.ac.stfc.isis.ibex.epics.observing.InitialiseOnSubscribeObservable;
+import uk.ac.stfc.isis.ibex.epics.observing.Observer;
 import uk.ac.stfc.isis.ibex.epics.observing.Subscription;
 import uk.ac.stfc.isis.ibex.epics.pv.Closable;
 import uk.ac.stfc.isis.ibex.epics.writing.BaseWriter;
@@ -45,7 +45,7 @@ public abstract class DaeAction extends Action implements Closable {
 		}
 	};
 			
-	private final InitialisableObserver<Boolean> transitionObserver = new BaseObserver<Boolean>() {
+    private final Observer<Boolean> transitionObserver = new BaseObserver<Boolean>() {
 		@Override
 		public void onConnectionStatus(boolean isConnected) {
 			if (!isConnected) {
@@ -64,7 +64,7 @@ public abstract class DaeAction extends Action implements Closable {
 		}
 	};
 
-	private InitialisableObserver<DaeRunState> runStateObserver = new BaseObserver<DaeRunState>() {
+    private Observer<DaeRunState> runStateObserver = new BaseObserver<DaeRunState>() {
 
 		@Override
 		public void onValue(DaeRunState value) {
