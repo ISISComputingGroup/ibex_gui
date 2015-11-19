@@ -22,11 +22,11 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import uk.ac.stfc.isis.ibex.configserver.configuration.Block;
-import uk.ac.stfc.isis.ibex.configserver.configuration.Group;
-import uk.ac.stfc.isis.ibex.configserver.internal.DisplayUtils;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
+
+import uk.ac.stfc.isis.ibex.configserver.configuration.Group;
+import uk.ac.stfc.isis.ibex.configserver.internal.DisplayUtils;
 
 /**
  * Contains the functionality to display a group and its blocks in a GUI.
@@ -62,10 +62,10 @@ public class DisplayGroup {
 		return Iterables.find(allBlocks, nameMatches(name));
 	}
 
-	private Predicate<Block> nameMatches(final String name) {
-		return new Predicate<Block>() {
+    private Predicate<DisplayBlock> nameMatches(final String name) {
+        return new Predicate<DisplayBlock>() {
 			@Override
-			public boolean apply(Block block) {
+            public boolean apply(DisplayBlock block) {
 				return block.getName().equals(name);
 			}
 		};

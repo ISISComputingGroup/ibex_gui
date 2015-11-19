@@ -28,12 +28,17 @@ import uk.ac.stfc.isis.ibex.configserver.configuration.Block;
 import uk.ac.stfc.isis.ibex.epics.observing.BaseObserver;
 import uk.ac.stfc.isis.ibex.epics.observing.InitialiseOnSubscribeObservable;
 import uk.ac.stfc.isis.ibex.instrument.Instrument;
+import uk.ac.stfc.isis.ibex.model.ModelObject;
 
 /**
- * Contains the functionality to display a blocks value and run-control settings in a GUI.
+ * Contains the functionality to display a Blocks value and run-control settings
+ * in a GUI.
+ * 
+ * Rather than inheriting from Block it holds a reference to the Block as this
+ * provides better encapsulation of Block's functionality.
  *
  */
-public class DisplayBlock extends Block {
+public class DisplayBlock extends ModelObject {
 	
 	public static final String TEXT_COLOR = "textColor";
 	public static final String BACKGROUND_COLOR = "backgroundColor";	
@@ -44,6 +49,8 @@ public class DisplayBlock extends Block {
 
 	private final String blockServerAlias;
 
+    private final Block block;
+
 	private String value;
 	private String description;
 
@@ -53,22 +60,22 @@ public class DisplayBlock extends Block {
 	private Boolean inRange;
 
     /**
-     * The current low limit run-control setting. This may be different from
+     * The current low limit run-control setting. This can be different from
      * what is set in the configuration.
      */
-    private String lowlimitSetting;
+    private String lowlimit;
 
     /**
-     * The current high limit run-control setting. This may be different from
+     * The current high limit run-control setting. This can be different from
      * what is set in the configuration.
      */
-    private String highlimitSetting;
+    private String highlimit;
 
     /**
-     * Specifies whether the block is currently under run-control. This may be
+     * Specifies whether the block is currently under run-control. This can be
      * different from what is set in the configuration.
      */
-    private Boolean runcontrolSetting;
+    private Boolean runcontrol;
 	
 	private Color textColor;
 	private Color backgroundColor;
@@ -196,7 +203,7 @@ public class DisplayBlock extends Block {
 			InitialiseOnSubscribeObservable<String> highLimitSource,
 			InitialiseOnSubscribeObservable<String> enabledSource,
 			String blockServerAlias) {
-		super(block);
+        this.block = block;
 		this.blockServerAlias = blockServerAlias;
 				
 		valueSource.addObserver(valueAdapter);
@@ -207,6 +214,10 @@ public class DisplayBlock extends Block {
 		enabledSource.addObserver(enabledAdapter);
 	}
 	
+    public String getName() {
+        return block.getName();
+    }
+
 	public String getValue() {
 		return value;
 	}
@@ -215,6 +226,10 @@ public class DisplayBlock extends Block {
 		return description;
 	}
 	
+    public Boolean getIsVisible() {
+        return block.getIsVisible();
+    }
+
     /**
      * @return whether the block is within its run-control limits.
      */
@@ -226,42 +241,42 @@ public class DisplayBlock extends Block {
      * @return the current low limit for run-control.
      */
 	public String getLowLimit() {
-        return lowlimitSetting;
+        return lowlimit;
 	}
 	
     /**
      * @return the current high limit for run-control.
      */
 	public String getHighLimit() {
-        return highlimitSetting;
+        return highlimit;
 	}
 	
     /**
      * @return whether run-control is currently enabled.
      */
 	public Boolean getEnabled() {
-        return runcontrolSetting;
+        return runcontrol;
 	}
 	
     /**
      * @return the low limit set in the configuration.
      */
     public String getConfigurationLowLimit() {
-        return Float.toString(super.getRCLowLimit());
+        return Float.toString(block.getRCLowLimit());
     }
 
     /**
      * @return the high limit set in the configuration.
      */
     public String getConfigurationHighLimit() {
-        return Float.toString(super.getRCHighLimit());
+        return Float.toString(block.getRCHighLimit());
     }
 
     /**
      * @return whether run-control is enabled in the configuration.
      */
     public Boolean getConfigurationEnabled() {
-        return super.getRCEnabled();
+        return block.getRCEnabled();
     }
 
 	public Color getTextColor() {
@@ -290,15 +305,15 @@ public class DisplayBlock extends Block {
 	}
 	
 	private synchronized void setLowLimit(String limit) {
-        firePropertyChange("lowLimit", lowlimitSetting, lowlimitSetting = limit);
+        firePropertyChange("lowLimit", this.lowlimit, this.lowlimit = limit);
 	}
 	
 	private synchronized void setHighLimit(String limit) {
-        firePropertyChange("highLimit", highlimitSetting, highlimitSetting = limit);
+        firePropertyChange("highLimit", this.highlimit, this.highlimit = limit);
 	}
 	
 	private synchronized void setEnabled(Boolean enabled) {
-        firePropertyChange("enabled", runcontrolSetting, runcontrolSetting = enabled);
+        firePropertyChange("enabled", this.runcontrol, this.runcontrol = enabled);
 	}
 	
 	private void setColors(boolean inRange) {
