@@ -180,7 +180,7 @@
 		<module>../uk.ac.stfc.isis.ibex.ui.perspectives</module>
 		<module>../uk.ac.stfc.isis.ibex.ui.logger</module>
 		<module>../uk.ac.stfc.isis.ibex.ui.dae</module>
-		<module>../uk.ac.stfc.isis.ibex.ui.databrowser</module>
+		<module>../uk.ac.stfc.isis.ibex.ui.logplotter</module>
 		<module>../uk.ac.stfc.isis.ibex.ui.instrument</module>
 		<module>../uk.ac.stfc.isis.ibex.ui.scripting</module>
 		<module>../uk.ac.stfc.isis.ibex.ui.synoptic</module>
@@ -210,7 +210,7 @@
 		<module>../uk.ac.stfc.isis.ibex.ui.statusbar</module>
 		<module>../uk.ac.stfc.isis.ibex.databases</module>
 		<module>../uk.ac.stfc.isis.ibex.validators</module>
-		<module>../uk.ac.stfc.isis.ibex.ui.databrowser.tests</module>
+		<module>../uk.ac.stfc.isis.ibex.ui.logplotter.tests</module>
 		<module>../uk.ac.stfc.isis.ibex.ui.runcontrol.tests</module>
 	</modules>
 </project>

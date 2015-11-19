@@ -233,7 +233,7 @@
          unpack="false"/>
 
    <plugin
-         id="uk.ac.stfc.isis.ibex.ui.databrowser"
+         id="uk.ac.stfc.isis.ibex.ui.logplotter"
          download-size="0"
          install-size="0"
          version="0.0.0"
