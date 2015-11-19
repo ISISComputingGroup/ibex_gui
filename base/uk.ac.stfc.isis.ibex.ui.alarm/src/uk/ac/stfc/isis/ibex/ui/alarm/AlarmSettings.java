@@ -19,6 +19,8 @@
 
 package uk.ac.stfc.isis.ibex.ui.alarm;
 
+import java.util.regex.Pattern;
+
 import org.csstudio.alarm.beast.Preferences;
 import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.jface.preference.IPreferenceStore;
@@ -26,6 +28,7 @@ import org.eclipse.ui.preferences.ScopedPreferenceStore;
 
 import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
 import uk.ac.stfc.isis.ibex.instrument.InstrumentInfoReceiver;
+import uk.ac.stfc.isis.ibex.instrument.internal.LocalHostInstrumentInfo;
 
 public class AlarmSettings implements InstrumentInfoReceiver {
 
@@ -34,14 +37,38 @@ public class AlarmSettings implements InstrumentInfoReceiver {
     private static final IPreferenceStore PREFERENCES =
             new ScopedPreferenceStore(InstanceScope.INSTANCE, PREF_QUALIFIER_ID);
 
-	private static final String RDB_URL =  PREFERENCES.getString(Preferences.RDB_URL);
-
 	@Override
 	public void setInstrument(InstrumentInfo instrument) {
-		setDatabaseURL(instrument.hostName());
+        setAlarmURL(instrument.hostName());
 	}
 
-	private void setDatabaseURL(String hostName) {
-		PREFERENCES.setValue(Preferences.RDB_URL, RDB_URL.replaceAll("localhost", hostName));
+    private void setAlarmURL(String hostName) {
+        PREFERENCES.setValue(Preferences.RDB_URL, updateHostName(hostName, getAlarmURL()));
+        PREFERENCES.setValue(Preferences.JMS_URL, updateHostName(hostName, getJMSURL()));
 	}
+
+    private static String updateHostName(String hostName, String preference) {
+        if (containsRegex(preference, InstrumentInfo.validInstrumentRegex())) {
+            preference = preference.replaceAll(InstrumentInfo.validInstrumentRegex(), hostName);
+        } else if (containsRegex(preference, LocalHostInstrumentInfo.validLocalInstrumentRegex())) {
+            preference = preference.replaceAll(LocalHostInstrumentInfo.validLocalInstrumentRegex(), hostName);
+        } else {
+            throw new RuntimeException(
+                    "Invalid preference string, does not contain a matching host pattern:" + preference);
+        }
+
+        return preference;
+    }
+
+    private static boolean containsRegex(String string, String regex) {
+        return Pattern.compile(regex).matcher(string).find();
+    }
+
+    private static String getAlarmURL() {
+        return PREFERENCES.getString(Preferences.RDB_URL);
+    }
+
+    private static String getJMSURL() {
+        return PREFERENCES.getString(Preferences.JMS_URL);
+    }
 }

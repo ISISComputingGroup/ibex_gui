@@ -30,10 +30,7 @@ import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StackLayout;
-import org.eclipse.swt.events.ModifyEvent;
-import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Text;
 
 import uk.ac.stfc.isis.ibex.opis.Opi;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.TargetDescription;
@@ -43,7 +40,6 @@ import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.UpdateTypes;
 
 public class TargetNameWidget extends Composite {
 
-	private Text txtName;
 	private ComboViewer cmboOpiName;
 	private boolean updateLock;
 	private SynopticViewModel instrument;
@@ -63,19 +59,12 @@ public class TargetNameWidget extends Composite {
 		
 		createControls(this);
 		
-		setTargetType(TargetType.OPI);
+        layout.topControl = cmboOpiName.getCombo();
+        IStructuredSelection selection = (IStructuredSelection) cmboOpiName.getSelection();
+        updateModel((String) selection.getFirstElement());
 	}
 	
 	private void createControls(Composite parent) {
-		txtName = new Text(parent, SWT.BORDER);
-		
-		txtName.addModifyListener(new ModifyListener() {
-			@Override
-			public void modifyText(ModifyEvent e) {
-				updateModel(txtName.getText());
-			}
-		});
-		
 		cmboOpiName = new ComboViewer(parent, SWT.READ_ONLY);
 		cmboOpiName.setContentProvider(new ArrayContentProvider());
 		cmboOpiName.setInput(availableOPIs);
@@ -105,47 +94,21 @@ public class TargetNameWidget extends Composite {
 		}
 	}
 	
-	public void setTargetType(TargetType type) {
-		this.type = type;
-		switch (type) {
-			case OPI:
-				layout.topControl = cmboOpiName.getCombo();
-				IStructuredSelection selection = (IStructuredSelection) cmboOpiName.getSelection();	
-				updateModel((String) selection.getFirstElement());
-				break;
-			case COMPONENT:
-				layout.topControl = txtName;
-				updateModel(txtName.getText());
-				break;
-		}
-		layout();
-	}
-	
 	public void setTarget(TargetDescription target) {
 		updateLock = true;
 		
 		if (target == null) {
-			txtName.setText("");
 			cmboOpiName.getCombo().select(-1);
-		} else {
-			setTargetType(target.type());
-			
-			switch (target.type()) {
-				case OPI:
-					// For back-compatibility reasons the name actually might be the path
-					String name = Opi.getDefault().descriptionsProvider().guessOpiName(target.name());
-					if (name == "") {
-						// If no OPI found leave the selection blank
-						cmboOpiName.setSelection(null);
-						break;
-					}
-					ISelection selection = new StructuredSelection(name);					
-					cmboOpiName.setSelection(selection);
-					break;
-				case COMPONENT:
-					txtName.setText(target.name());
-					break;
-			}
+        } else {
+            this.type = target.type();
+            String name = Opi.getDefault().descriptionsProvider().guessOpiName(target.name());
+            if (name == "") {
+                // If no OPI found leave the selection blank
+                cmboOpiName.setSelection(null);
+            } else {
+                ISelection selection = new StructuredSelection(name);
+                cmboOpiName.setSelection(selection);
+            }
 		}
 		
 		updateLock = false;

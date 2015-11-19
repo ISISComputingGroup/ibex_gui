@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import org.apache.logging.log4j.Logger;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtensionRegistry;
@@ -33,18 +34,21 @@ import org.osgi.framework.BundleContext;
 import org.osgi.service.prefs.BackingStoreException;
 import org.osgi.service.prefs.Preferences;
 
+import com.google.common.base.Predicate;
+import com.google.common.collect.Iterables;
+
 import uk.ac.stfc.isis.ibex.instrument.baton.BannerObservables;
 import uk.ac.stfc.isis.ibex.instrument.internal.DefaultSettings;
 import uk.ac.stfc.isis.ibex.instrument.internal.LocalHostInstrumentInfo;
 import uk.ac.stfc.isis.ibex.instrument.pv.PVAddressBook;
 import uk.ac.stfc.isis.ibex.instrument.pv.PVChannels;
+import uk.ac.stfc.isis.ibex.logger.IsisLog;
 import uk.ac.stfc.isis.ibex.model.SettableUpdatedValue;
 import uk.ac.stfc.isis.ibex.model.UpdatedValue;
 
-import com.google.common.base.Predicate;
-import com.google.common.collect.Iterables;
-
 public class Instrument implements BundleActivator {
+
+    private static final Logger LOG = IsisLog.getLogger("Instrument");
 
     private static Instrument instance;
 	private static BundleContext context;
@@ -113,7 +117,8 @@ public class Instrument implements BundleActivator {
 	 * (non-Javadoc)
 	 * @see org.osgi.framework.BundleActivator#start(org.osgi.framework.BundleContext)
 	 */
-	public void start(BundleContext bundleContext) throws Exception {
+	@Override
+    public void start(BundleContext bundleContext) throws Exception {
 		Instrument.context = bundleContext;
 	}
 
@@ -121,13 +126,20 @@ public class Instrument implements BundleActivator {
 	 * (non-Javadoc)
 	 * @see org.osgi.framework.BundleActivator#stop(org.osgi.framework.BundleContext)
 	 */
-	public void stop(BundleContext bundleContext) throws Exception {
+	@Override
+    public void stop(BundleContext bundleContext) throws Exception {
 		Instrument.context = null;
 	}
 
 	public void setInstrument(InstrumentInfo selectedInstrument) {
 		this.instrumentInfo = selectedInstrument;
-		instrumentName.setValue(selectedInstrument.name());
+
+        if (!instrumentInfo.hasValidHostName()) {
+            LOG.error("Invalid host name:" + instrumentInfo.hostName());
+            return;
+		}
+
+        instrumentName.setValue(selectedInstrument.name());
 
 		addresses.setPrefix(selectedInstrument.pvPrefix());
 		updateExtendingPlugins(selectedInstrument);

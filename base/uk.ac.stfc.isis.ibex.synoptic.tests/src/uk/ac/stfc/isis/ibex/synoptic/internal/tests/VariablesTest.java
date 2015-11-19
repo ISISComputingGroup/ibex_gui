@@ -20,25 +20,21 @@
 package uk.ac.stfc.isis.ibex.synoptic.internal.tests;
 
 import static org.junit.Assert.*;
+import static org.mockito.Matchers.*;
 import static org.mockito.Mockito.*;
 
-import java.util.Collection;
+import java.util.*;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
 
-import uk.ac.stfc.isis.ibex.epics.conversion.Convert;
-import uk.ac.stfc.isis.ibex.epics.conversion.Converter;
-import uk.ac.stfc.isis.ibex.epics.observing.ClosableCachingObservable;
-import uk.ac.stfc.isis.ibex.epics.observing.InitialiseOnSubscribeObservable;
-import uk.ac.stfc.isis.ibex.epics.writing.ClosableWritable;
-import uk.ac.stfc.isis.ibex.epics.writing.Writable;
-import uk.ac.stfc.isis.ibex.instrument.Channels;
-import uk.ac.stfc.isis.ibex.instrument.channels.ChannelType;
-import uk.ac.stfc.isis.ibex.instrument.pv.PVType;
-import uk.ac.stfc.isis.ibex.json.JsonDeserialisingConverter;
-import uk.ac.stfc.isis.ibex.synoptic.SynopticInfo;
-import uk.ac.stfc.isis.ibex.synoptic.internal.Variables;
+import uk.ac.stfc.isis.ibex.epics.conversion.*;
+import uk.ac.stfc.isis.ibex.epics.observing.*;
+import uk.ac.stfc.isis.ibex.epics.writing.*;
+import uk.ac.stfc.isis.ibex.instrument.*;
+import uk.ac.stfc.isis.ibex.instrument.channels.*;
+import uk.ac.stfc.isis.ibex.instrument.pv.*;
+import uk.ac.stfc.isis.ibex.synoptic.*;
+import uk.ac.stfc.isis.ibex.synoptic.internal.*;
 
 /**
  * This class is responsible for testing instrument.Variables 
@@ -61,7 +57,7 @@ public class VariablesTest {
 		// Arrange
 		ClosableCachingObservable mockCloseableCachingObservable = mock(ClosableCachingObservable.class);
 		
-		ClosableWritable mockClosableWritable = mock(ClosableWritable.class);
+        SameTypeWritable mockClosableWritable = mock(SameTypeWritable.class);
 		
 		Channels mockChannels = mock(Channels.class);
 		when(mockChannels.getReader(any(ChannelType.class), any(String.class))).thenReturn(mockCloseableCachingObservable);

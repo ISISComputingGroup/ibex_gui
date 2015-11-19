@@ -21,7 +21,7 @@ package uk.ac.stfc.isis.ibex.instrument.channels;
 
 import uk.ac.stfc.isis.ibex.epics.observing.ClosableCachingObservable;
 import uk.ac.stfc.isis.ibex.epics.pv.Channels;
-import uk.ac.stfc.isis.ibex.epics.writing.ClosableWritable;
+import uk.ac.stfc.isis.ibex.epics.writing.BaseWritable;
 
 /**
  * A channel for a number which will be formatted based on the PREC field of the underlying PV
@@ -35,7 +35,7 @@ public class NumberWithPrecisionChannel implements ChannelType<Number> {
 	}
 
 	@Override
-	public ClosableWritable<Number> writer(String address) {
+    public BaseWritable<Number> writer(String address) {
 		throw new UnsupportedOperationException();
 	}
 

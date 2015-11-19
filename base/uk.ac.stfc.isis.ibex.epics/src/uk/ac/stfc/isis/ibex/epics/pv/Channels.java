@@ -37,10 +37,9 @@ import uk.ac.stfc.isis.ibex.epics.conversion.ElapsedTimeFormatter;
 import uk.ac.stfc.isis.ibex.epics.conversion.VTypeFormat;
 import uk.ac.stfc.isis.ibex.epics.observing.ClosableCachingObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.ConvertingObservable;
-import uk.ac.stfc.isis.ibex.epics.pv.PVInfo;
 import uk.ac.stfc.isis.ibex.epics.pvmanager.PVManagerObservable;
 import uk.ac.stfc.isis.ibex.epics.pvmanager.PVManagerWritable;
-import uk.ac.stfc.isis.ibex.epics.writing.ClosableWritable;
+import uk.ac.stfc.isis.ibex.epics.writing.BaseWritable;
 import uk.ac.stfc.isis.ibex.epics.writing.ConvertingWritable;
 
 /**
@@ -58,11 +57,11 @@ public class Channels {
 			return convertObservablePV(pvAddress, VType.class, VTypeFormat.defaultFormatterNoUnits());
 		}
 		
-		public static ClosableWritable<String> bytesWriter(String pvAddress) {
+        public static BaseWritable<String> bytesWriter(String pvAddress) {
 			return convertWritablePV(pvAddress, byte[].class, Convert.asBytes());
 		}
 		
-		public static ClosableWritable<String> objectWriter(String pvAddress) {
+        public static BaseWritable<String> objectWriter(String pvAddress) {
 			return convertWritablePV(pvAddress, Object.class, new DefaultStringConverter());
 		}
 	}
@@ -84,15 +83,15 @@ public class Channels {
 			return convertObservablePV(pvAddress, VByteArray.class, VTypeFormat.fromZippedHexVByteArray());
 		}
 		
-		public static ClosableWritable<String> writer(String pvAddress) {
+        public static BaseWritable<String> writer(String pvAddress) {
 			return new PVManagerWritable<>(new PVInfo<>(pvAddress, String.class));
 		}
 		
-		public static ClosableWritable<String> charWaveformWriter(String pvAddress) {
+        public static BaseWritable<String> charWaveformWriter(String pvAddress) {
 			return convertWritablePV(pvAddress, byte[].class, Convert.asBytes());
 		}
 		
-		public static ClosableWritable<String> compressedCharWaveformWriter(String pvAddress) {
+        public static BaseWritable<String> compressedCharWaveformWriter(String pvAddress) {
 			return convertWritablePV(pvAddress, byte[].class, Convert.toZippedHex());
 		}
 	}
@@ -123,7 +122,7 @@ public class Channels {
 			return convertObservablePV(pvAddress, VDouble.class, VTypeFormat.fromDouble());
 		}
 		
-		public static ClosableWritable<Double> writer(String pvAddress) {
+        public static BaseWritable<Double> writer(String pvAddress) {
 			return new PVManagerWritable<>(new PVInfo<>(pvAddress, Double.class));
 		}
 	}
@@ -145,7 +144,7 @@ public class Channels {
 			return convertObservablePV(pvAddress, VLong.class, VTypeFormat.fromLong());
 		}
 		
-		public static ClosableWritable<Long> writer(String pvAddress) {
+        public static BaseWritable<Long> writer(String pvAddress) {
 			return new PVManagerWritable<>(new PVInfo<>(pvAddress, Long.class));
 		}
 	}
@@ -206,7 +205,8 @@ public class Channels {
 		return new ConvertingObservable<>(new PVManagerObservable<>(new PVInfo<>(pvAddress, pvType)), converter);		
 	}
 
-	private static <V, T> ClosableWritable<T> convertWritablePV(String pvAddress, Class<V> pvType, Converter<T, V> converter) {
+    private static <V, T> BaseWritable<T> convertWritablePV(String pvAddress, Class<V> pvType,
+            Converter<T, V> converter) {
 		return new ConvertingWritable<>(new PVManagerWritable<>(new PVInfo<>(pvAddress, pvType)), converter);
 		
 	}

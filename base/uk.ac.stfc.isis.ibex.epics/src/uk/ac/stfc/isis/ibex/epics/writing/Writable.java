@@ -20,8 +20,9 @@
 package uk.ac.stfc.isis.ibex.epics.writing;
 
 import uk.ac.stfc.isis.ibex.epics.observing.Subscription;
+import uk.ac.stfc.isis.ibex.epics.pv.Closable;
 
-public interface Writable<T> {
+public interface Writable<T> extends Closable {
 
 	boolean canWrite();
 

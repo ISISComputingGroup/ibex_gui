@@ -23,8 +23,8 @@ import uk.ac.stfc.isis.ibex.epics.observing.BaseCachingObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.ClosableCachingObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.ClosingSwitchableObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.ObserverAdapter;
-import uk.ac.stfc.isis.ibex.epics.writing.ClosableWritable;
-import uk.ac.stfc.isis.ibex.epics.writing.ClosingWritable;
+import uk.ac.stfc.isis.ibex.epics.writing.BaseWritable;
+import uk.ac.stfc.isis.ibex.epics.writing.SameTypeWritable;
 import uk.ac.stfc.isis.ibex.instrument.Channels;
 import uk.ac.stfc.isis.ibex.instrument.channels.ChannelType;
 
@@ -71,9 +71,9 @@ public class PVChannels implements Channels {
 	}
 
 	@Override
-	public <T> ClosableWritable<T> getWriter(final ChannelType<T> channelType, String addressSuffix) {
+    public <T> BaseWritable<T> getWriter(final ChannelType<T> channelType, String addressSuffix) {
 	    final BaseCachingObservable<String> address = addresses.resolvePV(addressSuffix);
-		final ClosingWritable<T> channel = new ClosingWritable<>(channelType.writer(address.getValue()));
+		final SameTypeWritable<T> channel = new SameTypeWritable<>(channelType.writer(address.getValue()));
 		
 		// Update the source pv when the prefix changes
 		address.addObserver(new ObserverAdapter<String>() {			
@@ -86,9 +86,9 @@ public class PVChannels implements Channels {
 		return channel;	}	
 	
 	@Override
-	public <T> ClosableWritable<T> getWriter(final ChannelType<T> channelType, String addressSuffix, PVType pvType) {
+    public <T> BaseWritable<T> getWriter(final ChannelType<T> channelType, String addressSuffix, PVType pvType) {
 	    final BaseCachingObservable<String> address = addresses.resolvePV(addressSuffix, pvType);
-		final ClosingWritable<T> channel = new ClosingWritable<>(channelType.writer(address.getValue()));
+		final SameTypeWritable<T> channel = new SameTypeWritable<>(channelType.writer(address.getValue()));
 		
 		// Update the source pv when the prefix changes
 		address.addObserver(new ObserverAdapter<String>() {			

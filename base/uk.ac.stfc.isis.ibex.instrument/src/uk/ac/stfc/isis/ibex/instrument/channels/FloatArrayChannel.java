@@ -21,7 +21,7 @@ package uk.ac.stfc.isis.ibex.instrument.channels;
 
 import uk.ac.stfc.isis.ibex.epics.observing.ClosableCachingObservable;
 import uk.ac.stfc.isis.ibex.epics.pv.Channels;
-import uk.ac.stfc.isis.ibex.epics.writing.ClosableWritable;
+import uk.ac.stfc.isis.ibex.epics.writing.BaseWritable;
 
 public class FloatArrayChannel implements ChannelType<float[]> {
 
@@ -31,7 +31,7 @@ public class FloatArrayChannel implements ChannelType<float[]> {
 	}
 
 	@Override
-	public ClosableWritable<float[]> writer(String address) {
+    public BaseWritable<float[]> writer(String address) {
 		throw new UnsupportedOperationException();
 	}
 }

@@ -21,7 +21,7 @@ package uk.ac.stfc.isis.ibex.instrument.channels;
 
 import uk.ac.stfc.isis.ibex.epics.observing.ClosableCachingObservable;
 import uk.ac.stfc.isis.ibex.epics.pv.Channels;
-import uk.ac.stfc.isis.ibex.epics.writing.ClosableWritable;
+import uk.ac.stfc.isis.ibex.epics.writing.BaseWritable;
 
 public class CompressedCharWaveformChannel implements ChannelType<String> {
 
@@ -31,7 +31,7 @@ public class CompressedCharWaveformChannel implements ChannelType<String> {
 	}
 
 	@Override
-	public ClosableWritable<String> writer(String address) {
+    public BaseWritable<String> writer(String address) {
 		return Channels.Strings.compressedCharWaveformWriter(address);
 	}
 }

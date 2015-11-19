@@ -20,6 +20,9 @@
 package uk.ac.stfc.isis.ibex.ui.alarm;
 
 import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.ui.IPerspectiveDescriptor;
+import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
@@ -38,7 +41,8 @@ public class Alarms extends AbstractUIPlugin {
 	 * (non-Javadoc)
 	 * @see org.eclipse.ui.plugin.AbstractUIPlugin#start(org.osgi.framework.BundleContext)
 	 */
-	public void start(BundleContext context) throws Exception {
+	@Override
+    public void start(BundleContext context) throws Exception {
 		super.start(context);
 		plugin = this;
 	}
@@ -47,7 +51,8 @@ public class Alarms extends AbstractUIPlugin {
 	 * (non-Javadoc)
 	 * @see org.eclipse.ui.plugin.AbstractUIPlugin#stop(org.osgi.framework.BundleContext)
 	 */
-	public void stop(BundleContext context) throws Exception {
+	@Override
+    public void stop(BundleContext context) throws Exception {
 		plugin = null;
 		super.stop(context);
 	}
@@ -61,6 +66,16 @@ public class Alarms extends AbstractUIPlugin {
 		return plugin;
 	}
 	
+    /**
+     * Close alarm views, these need to be restarted on instrument change.
+     */
+    public void closeAll() {
+        IPerspectiveDescriptor descriptor = PlatformUI.getWorkbench().getPerspectiveRegistry()
+                .findPerspectiveWithId(AlarmPerspective.ID);
+        IWorkbenchPage wp = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
+        wp.closePerspective(descriptor, true, true);
+    }
+
 	/**
 	 * Returns an image descriptor for the image file at the given
 	 * plug-in relative path

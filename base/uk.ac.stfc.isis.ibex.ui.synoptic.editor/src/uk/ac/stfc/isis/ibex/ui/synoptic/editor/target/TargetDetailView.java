@@ -1,31 +1,26 @@
 
 /*
-* This file is part of the ISIS IBEX application.
-* Copyright (C) 2012-2015 Science & Technology Facilities Council.
-* All rights reserved.
-*
-* This program is distributed in the hope that it will be useful.
-* This program and the accompanying materials are made available under the
-* terms of the Eclipse Public License v1.0 which accompanies this distribution.
-* EXCEPT AS EXPRESSLY SET FORTH IN THE ECLIPSE PUBLIC LICENSE V1.0, THE PROGRAM 
-* AND ACCOMPANYING MATERIALS ARE PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES 
-* OR CONDITIONS OF ANY KIND.  See the Eclipse Public License v1.0 for more details.
-*
-* You should have received a copy of the Eclipse Public License v1.0
-* along with this program; if not, you can obtain a copy from
-* https://www.eclipse.org/org/documents/epl-v10.php or 
-* http://opensource.org/licenses/eclipse-1.0.php
-*/
+ * This file is part of the ISIS IBEX application.
+ * Copyright (C) 2012-2015 Science & Technology Facilities Council.
+ * All rights reserved.
+ *
+ * This program is distributed in the hope that it will be useful.
+ * This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v1.0 which accompanies this distribution.
+ * EXCEPT AS EXPRESSLY SET FORTH IN THE ECLIPSE PUBLIC LICENSE V1.0, THE PROGRAM 
+ * AND ACCOMPANYING MATERIALS ARE PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES 
+ * OR CONDITIONS OF ANY KIND.  See the Eclipse Public License v1.0 for more details.
+ *
+ * You should have received a copy of the Eclipse Public License v1.0
+ * along with this program; if not, you can obtain a copy from
+ * https://www.eclipse.org/org/documents/epl-v10.php or 
+ * http://opensource.org/licenses/eclipse-1.0.php
+ */
 
 package uk.ac.stfc.isis.ibex.ui.synoptic.editor.target;
 
-import java.util.Arrays;
 import java.util.List;
 
-import org.eclipse.jface.viewers.ArrayContentProvider;
-import org.eclipse.jface.viewers.ComboViewer;
-import org.eclipse.jface.viewers.ISelectionChangedListener;
-import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -37,12 +32,17 @@ import org.eclipse.swt.widgets.Label;
 
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.ComponentDescription;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.TargetDescription;
-import uk.ac.stfc.isis.ibex.synoptic.model.desc.TargetType;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.IComponentSelectionListener;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.IInstrumentUpdateListener;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.SynopticViewModel;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.UpdateTypes;
 
+/**
+ * Shows the synoptic editor part that allows selection of a target, normally an
+ * OPI or a Java SWT screen for goniometers or DAEs. OPI can be chosen, but
+ * goniometers and DAEs have a fixed target.
+ *
+ */
 public class TargetDetailView extends Composite {
 
 	private SynopticViewModel instrument;
@@ -50,12 +50,10 @@ public class TargetDetailView extends Composite {
 	private Composite labelComposite;
 	private Composite fieldsComposite;
 	private Composite addComposite;
+    private Label lblNoSelection;
+
 	TargetNameWidget nameSelect;
-	
-	private ComboViewer cmboType;
-	
-	private static TargetType[] typeList = TargetType.values();
-	
+
 	public TargetDetailView(Composite parent, final SynopticViewModel instrument) 
 	{
 		super(parent, SWT.NONE);
@@ -65,9 +63,7 @@ public class TargetDetailView extends Composite {
 		instrument.addInstrumentUpdateListener(new IInstrumentUpdateListener() {
 			@Override
 			public void instrumentUpdated(UpdateTypes updateType) {
-				if (updateType != UpdateTypes.EDIT_COMPONENT) {
-					showTarget(instrument.getFirstSelectedComponent());
-				}
+				showTarget(instrument.getFirstSelectedComponent());
 			}
 		});
 		
@@ -94,7 +90,7 @@ public class TargetDetailView extends Composite {
 		labelComposite.setLayoutData(new GridData(SWT.CENTER, SWT.FILL, true, false, 1, 1));
 		labelComposite.setLayout(new GridLayout(1, false));
 		{
-			Label lblNoSelection = new Label(labelComposite, SWT.NONE);
+            lblNoSelection = new Label(labelComposite, SWT.NONE);
 			lblNoSelection.setText("Select a Component to view/edit details");
 		}
 		
@@ -102,26 +98,6 @@ public class TargetDetailView extends Composite {
 		fieldsComposite.setLayout(new GridLayout(2, false));
 		fieldsComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 		{
-			Label lblType = new Label(fieldsComposite, SWT.NONE);
-			lblType.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-			lblType.setText("Type");
-			
-			cmboType = new ComboViewer(fieldsComposite, SWT.READ_ONLY);
-			cmboType.getCombo().setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-			
-			cmboType.setContentProvider(new ArrayContentProvider());
-			cmboType.setInput(typeList);
-			cmboType.getCombo().select(0);
-			cmboType.addSelectionChangedListener(new ISelectionChangedListener() {
-				@Override
-				public void selectionChanged(SelectionChangedEvent event) {
-					int typeIndex = cmboType.getCombo().getSelectionIndex();
-					TargetType type = Arrays.asList(typeList).get(typeIndex);
-					
-					nameSelect.setTargetType(type);
-				}
-			});
-			
 			Label lblName = new Label(fieldsComposite, SWT.NONE);
 			lblName.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 			lblName.setText("Name");
@@ -167,25 +143,29 @@ public class TargetDetailView extends Composite {
 		}
 	}
 	
-	private void showTarget(ComponentDescription component) {		
+    private void showTarget(ComponentDescription component) {
 		if (component == null) {
 			fieldsComposite.setVisible(false);
 			labelComposite.setVisible(true);
+            addingAllowed(true, "");
 			addComposite.setVisible(false);
 			
 			nameSelect.setTarget(null);
-			cmboType.getCombo().select(0);
 		} else {
 			TargetDescription target = component.target();
 			
-			if (target != null) {
+            if (component.type().target() != null) {
+                // a target already exits, so should not be allowed to get set
+                fieldsComposite.setVisible(false);
+                labelComposite.setVisible(true);
+                addingAllowed(false, instrument.getFirstSelectedComponent().type().name());
+                addComposite.setVisible(false);
+                nameSelect.setTarget(null);
+                instrument.setSelectedProperty(null);
+            } else if (target != null) {
 				fieldsComposite.setVisible(true);
 				labelComposite.setVisible(false);
 				addComposite.setVisible(false);
-				
-				TargetType type = target.type();
-				int typeIndex = Arrays.asList(typeList).indexOf(type);
-				cmboType.getCombo().select(typeIndex);
 				
 				nameSelect.setTarget(target);
 			} else {
@@ -194,8 +174,15 @@ public class TargetDetailView extends Composite {
 				addComposite.setVisible(true);
 				
 				nameSelect.setTarget(null);
-				cmboType.getCombo().select(0);
 			}
 		}
 	}
+
+    private void addingAllowed(boolean allowed, String component) {
+        if (allowed) {
+            lblNoSelection.setText("Select a Component to view/edit details");
+        } else {
+            lblNoSelection.setText("Target not selectable for " + component);
+        }
+    }
 }

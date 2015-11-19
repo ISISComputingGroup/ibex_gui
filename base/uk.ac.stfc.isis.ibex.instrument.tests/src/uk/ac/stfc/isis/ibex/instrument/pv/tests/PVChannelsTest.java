@@ -20,19 +20,15 @@
 package uk.ac.stfc.isis.ibex.instrument.pv.tests;
 
 import static org.junit.Assert.*;
+import static org.mockito.Matchers.*;
 import static org.mockito.Mockito.*;
 
-import org.junit.Test;
+import org.junit.*;
 
-import uk.ac.stfc.isis.ibex.epics.observing.BaseCachingObservable;
-import uk.ac.stfc.isis.ibex.epics.observing.ClosableCachingObservable;
-import uk.ac.stfc.isis.ibex.epics.observing.Observer;
-import uk.ac.stfc.isis.ibex.epics.observing.Subscription;
-import uk.ac.stfc.isis.ibex.epics.writing.ClosableWritable;
-import uk.ac.stfc.isis.ibex.instrument.channels.ChannelType;
-import uk.ac.stfc.isis.ibex.instrument.pv.PVAddressBook;
-import uk.ac.stfc.isis.ibex.instrument.pv.PVChannels;
-import uk.ac.stfc.isis.ibex.instrument.pv.PVType;
+import uk.ac.stfc.isis.ibex.epics.observing.*;
+import uk.ac.stfc.isis.ibex.epics.writing.*;
+import uk.ac.stfc.isis.ibex.instrument.channels.*;
+import uk.ac.stfc.isis.ibex.instrument.pv.*;
 
 /**
  * This class is responsible for testing the PV Channels class 
@@ -154,7 +150,7 @@ public class PVChannelsTest {
 		PVAddressBook mockAddresses = mock(PVAddressBook.class);
 		when(mockAddresses.resolvePV(address)).thenReturn(mockPvValue);
 		// Mock an observable
-		ClosableWritable<String> mockChannelValue = mock(ClosableWritable.class);
+        SameTypeWritable<String> mockChannelValue = mock(SameTypeWritable.class);
 		when(mockChannelValue.canWrite()).thenReturn(returnWrite);
 		// Mock a channel
 		ChannelType<String> mockChannelType = mock(ChannelType.class);
@@ -162,7 +158,7 @@ public class PVChannelsTest {
 		// Generate the class under test		
 		PVChannels pvChannels = new PVChannels(mockAddresses);
 		// Act
-		ClosableWritable<String> writer = pvChannels.getWriter(mockChannelType, address);
+        BaseWritable<String> writer = pvChannels.getWriter(mockChannelType, address);
 		// Assert
 		assertEquals(returnWrite, writer.canWrite());
 	}
@@ -186,7 +182,7 @@ public class PVChannelsTest {
 		PVAddressBook mockAddresses = mock(PVAddressBook.class);
 		when(mockAddresses.resolvePV(address, pvType)).thenReturn(mockPvValue);
 		// Mock an observable
-		ClosableWritable<String> mockChannelValue = mock(ClosableWritable.class);
+        SameTypeWritable<String> mockChannelValue = mock(SameTypeWritable.class);
 		when(mockChannelValue.canWrite()).thenReturn(returnWrite);
 		// Mock a channel
 		ChannelType<String> mockChannelType = mock(ChannelType.class);
@@ -194,7 +190,7 @@ public class PVChannelsTest {
 		// Generate the class under test		
 		PVChannels pvChannels = new PVChannels(mockAddresses);
 		// Act
-		ClosableWritable<String> writer = pvChannels.getWriter(mockChannelType, address, pvType);
+        BaseWritable<String> writer = pvChannels.getWriter(mockChannelType, address, pvType);
 		// Assert
 		assertEquals(returnWrite, writer.canWrite());
 	}
@@ -218,7 +214,7 @@ public class PVChannelsTest {
 		PVAddressBook mockAddresses = mock(PVAddressBook.class);
 		when(mockAddresses.resolvePV(address, pvType)).thenReturn(mockPvValue);
 		// Mock an observable
-		ClosableWritable<String> mockChannelValue = mock(ClosableWritable.class);
+        SameTypeWritable<String> mockChannelValue = mock(SameTypeWritable.class);
 		when(mockChannelValue.canWrite()).thenReturn(returnWrite);
 		// Mock a channel
 		ChannelType<String> mockChannelType = mock(ChannelType.class);
@@ -226,7 +222,7 @@ public class PVChannelsTest {
 		// Generate the class under test		
 		PVChannels pvChannels = new PVChannels(mockAddresses);
 		// Act
-		ClosableWritable<String> writer = pvChannels.getWriter(mockChannelType, address, pvType);
+        BaseWritable<String> writer = pvChannels.getWriter(mockChannelType, address, pvType);
 		// Assert
 		assertEquals(returnWrite, writer.canWrite());
 	}

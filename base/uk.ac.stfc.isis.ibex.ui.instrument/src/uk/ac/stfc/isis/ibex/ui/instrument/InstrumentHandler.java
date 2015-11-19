@@ -28,6 +28,7 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.PlatformUI;
 
 import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
+import uk.ac.stfc.isis.ibex.ui.alarm.Alarms;
 import uk.ac.stfc.isis.ibex.ui.scripting.Consoles;
 import uk.ac.stfc.isis.ibex.ui.synoptic.Activator;
 
@@ -38,6 +39,7 @@ import uk.ac.stfc.isis.ibex.ui.synoptic.Activator;
 public class InstrumentHandler extends AbstractHandler {
 
 	private final Consoles consoles = Consoles.getDefault();
+    private final Alarms alarms = Alarms.getDefault();
 	private final Activator synoptic = Activator.getDefault();
 	
 	@Override
@@ -49,6 +51,8 @@ public class InstrumentHandler extends AbstractHandler {
 			return null;
 		}
 		
+        alarms.closeAll();
+
 		// Close any OPIs in the synoptic
 		synoptic.closeAllOPIs();
 		
