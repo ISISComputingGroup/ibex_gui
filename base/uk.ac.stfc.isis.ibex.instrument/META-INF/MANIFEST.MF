@@ -9,7 +9,8 @@ Require-Bundle: org.eclipse.osgi,
  uk.ac.stfc.isis.ibex.epics;visibility:=reexport,
  org.eclipse.core.runtime,
  com.google.common,
- uk.ac.stfc.isis.ibex.model;bundle-version="1.0.0"
+ uk.ac.stfc.isis.ibex.model;bundle-version="1.0.0",
+ uk.ac.stfc.isis.ibex.logger
 Bundle-ActivationPolicy: lazy
 Export-Package: uk.ac.stfc.isis.ibex.instrument,
  uk.ac.stfc.isis.ibex.instrument.baton,
