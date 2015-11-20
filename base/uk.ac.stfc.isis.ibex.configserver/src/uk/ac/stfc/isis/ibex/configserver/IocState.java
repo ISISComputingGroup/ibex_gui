@@ -32,8 +32,7 @@ package uk.ac.stfc.isis.ibex.configserver;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 
 /**
- * Class to hold information about an IOC
- * @author sjb99183
+ * Class to hold information about an IOC.
  *
  */
 public class IocState extends ModelObject implements Comparable<IocState> {

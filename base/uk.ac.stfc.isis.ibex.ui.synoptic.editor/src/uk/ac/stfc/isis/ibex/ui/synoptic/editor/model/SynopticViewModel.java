@@ -41,7 +41,6 @@ import org.eclipse.ui.PlatformUI;
 import uk.ac.stfc.isis.ibex.configserver.editing.DefaultName;
 import uk.ac.stfc.isis.ibex.instrument.Instrument;
 import uk.ac.stfc.isis.ibex.instrument.pv.PVType;
-import uk.ac.stfc.isis.ibex.model.UpdatedValue;
 import uk.ac.stfc.isis.ibex.synoptic.Synoptic;
 import uk.ac.stfc.isis.ibex.synoptic.SynopticModel;
 import uk.ac.stfc.isis.ibex.synoptic.model.ComponentType;
@@ -75,10 +74,7 @@ public class SynopticViewModel {
 	private List<IPVSelectionListener> pvSelectionListeners = new CopyOnWriteArrayList<>();
 	private List<IPropertySelectionListener> propertySelectionListeners = new CopyOnWriteArrayList<>();
 
-	public final UpdatedValue<Boolean> canSaveCurrentSynoptic;
-
 	public SynopticViewModel() {
-		canSaveCurrentSynoptic = EDITING.saveSynoptic().canSave();
 		loadCurrentInstrument();
 	}
 	

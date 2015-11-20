@@ -27,6 +27,9 @@ import uk.ac.stfc.isis.ibex.epics.observing.Unsubscriber;
 
 /**
  * An abstract class for defining basic writer classes.
+ * 
+ * Note: Can hold multiple Writables which will have the same value written to
+ * them. This is NOT currently used in IBEX.
  *
  * @param <TIn> the type of data coming in
  * @param <TOut> the type of data to output
@@ -47,7 +50,8 @@ public abstract class BaseWriter<TIn, TOut> implements ConfigurableWriter<TIn, T
 		return lastError;
 	}	
 	
-	public boolean canWrite() {
+	@Override
+    public boolean canWrite() {
 		return canWrite;
 	}
 

@@ -18,21 +18,26 @@
 
 package uk.ac.stfc.isis.ibex.epics.tests.observing;
 
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyBoolean;
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 import org.junit.Before;
 import org.junit.Test;
 
 import uk.ac.stfc.isis.ibex.epics.observing.ClosableCachingObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.ClosingSwitchableObservable;
-import uk.ac.stfc.isis.ibex.epics.observing.InitialisableObserver;
+import uk.ac.stfc.isis.ibex.epics.observing.Observer;
 
 // A lot of unchecked type conversions for mocking purposes
 @SuppressWarnings({ "unchecked", "checkstyle:methodname" })
 public class ClosingSwitchingObservableTest {
 
-	private InitialisableObserver<String> mockObserver;
+    private Observer<String> mockObserver;
 	
 	private ClosableCachingObservable<String> mockObservableReturnsValue;
 	private ClosableCachingObservable<String> mockObservableReturnsNewValue;
@@ -43,7 +48,7 @@ public class ClosingSwitchingObservableTest {
 	@Before
 	public void setUp() {
 		// Arrange
-		mockObserver = mock(InitialisableObserver.class);
+        mockObserver = mock(Observer.class);
 		
 		mockObservableReturnsValue = TestHelpers.getClosableCachingObservable(TestHelpers.STRING_VALUE);
 		mockObservableReturnsNewValue = TestHelpers.getClosableCachingObservable(TestHelpers.NEW_STRING_VALUE);

@@ -22,8 +22,8 @@ package uk.ac.stfc.isis.ibex.ui.banner.models;
 import org.eclipse.swt.graphics.Color;
 
 import uk.ac.stfc.isis.ibex.epics.observing.BaseObserver;
-import uk.ac.stfc.isis.ibex.epics.observing.InitialisableObserver;
 import uk.ac.stfc.isis.ibex.epics.observing.InitialiseOnSubscribeObservable;
+import uk.ac.stfc.isis.ibex.epics.observing.Observer;
 import uk.ac.stfc.isis.ibex.epics.observing.Subscription;
 import uk.ac.stfc.isis.ibex.epics.pv.Closable;
 import uk.ac.stfc.isis.ibex.model.SettableUpdatedValue;
@@ -33,7 +33,7 @@ import uk.ac.stfc.isis.ibex.ui.banner.indicators.IndicatorColours;
 public class BatonUserObserver implements Closable {
 	private Subscription subscription;
 	
-	private final InitialisableObserver<String> observer = new BaseObserver<String>() {
+    private final Observer<String> observer = new BaseObserver<String>() {
 		@Override
 		public void onValue(String value) {
 			checkSelf(value);

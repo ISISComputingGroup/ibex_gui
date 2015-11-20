@@ -19,8 +19,8 @@
 
 package uk.ac.stfc.isis.ibex.configserver.tests.displaying;
 
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.mock;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -59,7 +59,7 @@ public class DisplayBlockTest {
 		// Act - do nothing
 		
 		// Assert
-		assertEquals(displayBlock.getTextColor(), DisplayBlock.BLACK);
+        assertEquals(DisplayBlock.BLACK, displayBlock.getTextColor());
 	}
 	
 	@Test
@@ -67,7 +67,7 @@ public class DisplayBlockTest {
 		// Act - do nothing
 		
 		// Assert
-		assertEquals(displayBlock.getBackgroundColor(), DisplayBlock.WHITE);
+        assertEquals(DisplayBlock.WHITE, displayBlock.getBackgroundColor());
 	}
 	
 	@Test

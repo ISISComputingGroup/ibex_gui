@@ -19,10 +19,6 @@
 
 package uk.ac.stfc.isis.ibex.epics.observing;
 
-import uk.ac.stfc.isis.ibex.epics.observing.BaseObserver;
-import uk.ac.stfc.isis.ibex.epics.observing.InitialisableObserver;
-import uk.ac.stfc.isis.ibex.epics.observing.InitialiseOnSubscribeObservable;
-
 /**
  * Links together two related observables into a single observable.
  *
@@ -43,14 +39,14 @@ public class ObservablePair<T1, T2> extends AbstractClosableCachingObservable<Pa
 		}	
 	}
 	
-	private final InitialisableObserver<T1> firstObserver = new PairObserver<T1>() {
+    private final Observer<T1> firstObserver = new PairObserver<T1>() {
 		@Override
 		public void onValue(T1 value) {
 			setValue(new Pair<>(value, secondOrNull()));
 		}
 	};
 	
-	private final InitialisableObserver<T2> secondObserver = new PairObserver<T2>() {
+    private final Observer<T2> secondObserver = new PairObserver<T2>() {
 		@Override
 		public void onValue(T2 value) {
 			setValue(new Pair<>(firstOrNull(), value));

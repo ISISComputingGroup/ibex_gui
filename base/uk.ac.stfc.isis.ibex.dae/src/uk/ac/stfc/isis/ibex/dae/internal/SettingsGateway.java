@@ -20,8 +20,8 @@
 package uk.ac.stfc.isis.ibex.dae.internal;
 
 import uk.ac.stfc.isis.ibex.epics.observing.BaseObserver;
-import uk.ac.stfc.isis.ibex.epics.observing.InitialisableObserver;
 import uk.ac.stfc.isis.ibex.epics.observing.InitialiseOnSubscribeObservable;
+import uk.ac.stfc.isis.ibex.epics.observing.Observer;
 import uk.ac.stfc.isis.ibex.epics.observing.Subscription;
 import uk.ac.stfc.isis.ibex.epics.pv.Closable;
 import uk.ac.stfc.isis.ibex.epics.writing.BaseWriter;
@@ -29,7 +29,7 @@ import uk.ac.stfc.isis.ibex.epics.writing.ConfigurableWriter;
 import uk.ac.stfc.isis.ibex.epics.writing.Writable;
 
 public abstract class SettingsGateway implements Closable {
-	private InitialisableObserver<String> settingsObserver = new BaseObserver<String>() {
+    private Observer<String> settingsObserver = new BaseObserver<String>() {
 		@Override
 		public void onValue(String value) {
 			setFromText(value);

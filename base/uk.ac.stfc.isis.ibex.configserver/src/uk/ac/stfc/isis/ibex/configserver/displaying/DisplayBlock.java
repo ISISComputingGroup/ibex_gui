@@ -28,256 +28,309 @@ import uk.ac.stfc.isis.ibex.configserver.configuration.Block;
 import uk.ac.stfc.isis.ibex.epics.observing.BaseObserver;
 import uk.ac.stfc.isis.ibex.epics.observing.InitialiseOnSubscribeObservable;
 import uk.ac.stfc.isis.ibex.instrument.Instrument;
+import uk.ac.stfc.isis.ibex.model.ModelObject;
 
 /**
- * Contains the functionality to display a blocks value and run-control settings in a GUI.
+ * Contains the functionality to display a Blocks value and run-control settings
+ * in a GUI.
+ * 
+ * Rather than inheriting from Block it holds a reference to the Block as this
+ * provides better encapsulation of Block's functionality.
  *
  */
-public class DisplayBlock extends Block {
-	
-	public static final String TEXT_COLOR = "textColor";
-	public static final String BACKGROUND_COLOR = "backgroundColor";	
-	
-	public static final Color DARK_RED = SWTResourceManager.getColor(192, 0, 0);
-	public static final Color WHITE = SWTResourceManager.getColor(255, 255, 255);
-	public static final Color BLACK = SWTResourceManager.getColor(0, 0, 0);
+public class DisplayBlock extends ModelObject {
 
-	private final String blockServerAlias;
+    public static final String TEXT_COLOR = "textColor";
+    public static final String BACKGROUND_COLOR = "backgroundColor";
 
-	private String value;
-	private String description;
-	private Boolean inRange;
+    public static final Color DARK_RED = SWTResourceManager.getColor(192, 0, 0);
+    public static final Color WHITE = SWTResourceManager.getColor(255, 255, 255);
+    public static final Color BLACK = SWTResourceManager.getColor(0, 0, 0);
+
+    private final String blockServerAlias;
+
+    private final Block block;
+
+    private String value;
+    private String description;
+
+    /**
+     * Indicates whether the block in currently within run-control range
+     */
+    private Boolean inRange;
+
+    /**
+     * The current low limit run-control setting. This can be different from
+     * what is set in the configuration.
+     */
     private String lowlimit;
+
+    /**
+     * The current high limit run-control setting. This can be different from
+     * what is set in the configuration.
+     */
     private String highlimit;
+
+    /**
+     * Specifies whether the block is currently under run-control. This can be
+     * different from what is set in the configuration.
+     */
     private Boolean runcontrol;
-	
-	private Color textColor;
-	private Color backgroundColor;
-	
-	private final BaseObserver<String> valueAdapter = new BaseObserver<String>() {	
-		@Override
-		public void onValue(String value) {
-			setValue(value);
-		}
 
-		@Override
-		public void onError(Exception e) {
-			setValue("error");
-		}
+    private Color textColor;
+    private Color backgroundColor;
 
-		@Override
-		public void onConnectionStatus(boolean isConnected) {
-			if (!isConnected) {
-				setValue("disconnected");
-			}
-		}
-	};
-	
-	private final BaseObserver<String> descriptionAdapter = new BaseObserver<String>() {	
-		@Override
-		public void onValue(String value) {
-			setDescription(value);
-		}
+    private final BaseObserver<String> valueAdapter = new BaseObserver<String>() {
+        @Override
+        public void onValue(String value) {
+            setValue(value);
+        }
 
-		@Override
-		public void onError(Exception e) {
-			setDescription("No description available");
-		}
+        @Override
+        public void onError(Exception e) {
+            setValue("error");
+        }
 
-		@Override
-		public void onConnectionStatus(boolean isConnected) {
-			if (!isConnected) {
-				setDescription("No description available");
-			}
-		}
-	};
-	
-	private final BaseObserver<String> inRangeAdapter = new BaseObserver<String>() {	
-		@Override
-		public void onValue(String value) {
-			if (value.equals("NO")) {
-				setInRange(false);
-			} else {
-				// If in doubt set to true
-				setInRange(true);
-			}
-		}
+        @Override
+        public void onConnectionStatus(boolean isConnected) {
+            if (!isConnected) {
+                setValue("disconnected");
+            }
+        }
+    };
 
-		@Override
-		public void onError(Exception e) {
-			// If in doubt set to true
-			setInRange(true);
-		}
+    private final BaseObserver<String> descriptionAdapter = new BaseObserver<String>() {
+        @Override
+        public void onValue(String value) {
+            setDescription(value);
+        }
 
-		@Override
-		public void onConnectionStatus(boolean isConnected) {
-			if (!isConnected) {
-				// If in doubt set to true
-				setInRange(true);
-			}
-		}
-	};
-	
-	private final BaseObserver<String> lowLimitAdapter = new BaseObserver<String>() {	
-		@Override
-		public void onValue(String value) {
-			setLowLimit(value);
-		}
+        @Override
+        public void onError(Exception e) {
+            setDescription("No description available");
+        }
 
-		@Override
-		public void onError(Exception e) {
-			setLowLimit("error");
-		}
+        @Override
+        public void onConnectionStatus(boolean isConnected) {
+            if (!isConnected) {
+                setDescription("No description available");
+            }
+        }
+    };
 
-		@Override
-		public void onConnectionStatus(boolean isConnected) {
-			if (!isConnected) {
-				setLowLimit("disconnected");
-			}
-		}
-	};
-	
-	private final BaseObserver<String> highLimitAdapter = new BaseObserver<String>() {	
-		@Override
-		public void onValue(String value) {
-			setHighLimit(value);
-		}
+    private final BaseObserver<String> inRangeAdapter = new BaseObserver<String>() {
+        @Override
+        public void onValue(String value) {
+            if (value.equals("NO")) {
+                setInRange(false);
+            } else {
+                // If in doubt set to true
+                setInRange(true);
+            }
+        }
 
-		@Override
-		public void onError(Exception e) {
-			setHighLimit("error");
-		}
+        @Override
+        public void onError(Exception e) {
+            // If in doubt set to true
+            setInRange(true);
+        }
 
-		@Override
-		public void onConnectionStatus(boolean isConnected) {
-			if (!isConnected) {
-				setLowLimit("disconnected");
-			}
-		}
-	};
-	
-	private final BaseObserver<String> enabledAdapter = new BaseObserver<String>() {	
-		@Override
-		public void onValue(String value) {
-			if (value.equals("YES")) {
-				setEnabled(true);
-			} else {
-				// If in doubt set to false
-				setEnabled(false);
-			}
-		}
+        @Override
+        public void onConnectionStatus(boolean isConnected) {
+        }
+    };
 
-		@Override
-		public void onError(Exception e) {
-			// If in doubt set to false
-			setEnabled(false);
-		}
+    private final BaseObserver<String> lowLimitAdapter = new BaseObserver<String>() {
+        @Override
+        public void onValue(String value) {
+            setLowLimit(value);
+        }
 
-		@Override
-		public void onConnectionStatus(boolean isConnected) {
-			if (!isConnected) {
-				// If in doubt set to true
-				setEnabled(false);
-			}
-		}
-	};
-	
-	public DisplayBlock(
-			Block block,
-			InitialiseOnSubscribeObservable<String> valueSource,
-			InitialiseOnSubscribeObservable<String> descriptionSource,
-			InitialiseOnSubscribeObservable<String> inRangeSource,
-			InitialiseOnSubscribeObservable<String> lowLimitSource,
-			InitialiseOnSubscribeObservable<String> highLimitSource,
-			InitialiseOnSubscribeObservable<String> enabledSource,
-			String blockServerAlias) {
-		super(block);
-		this.blockServerAlias = blockServerAlias;
-				
-		valueSource.addObserver(valueAdapter);
-		descriptionSource.addObserver(descriptionAdapter);
-		inRangeSource.addObserver(inRangeAdapter);
-		lowLimitSource.addObserver(lowLimitAdapter);
-		highLimitSource.addObserver(highLimitAdapter);
-		enabledSource.addObserver(enabledAdapter);
-	}
-	
-	public String getValue() {
-		return value;
-	}
-	
-	public String getDescription() {
-		return description;
-	}
-	
-	public Boolean getInRange() {
-		return inRange;
-	}
-	
-	public String getLowLimit() {
-		return lowlimit;
-	}
-	
-	public String getHighLimit() {
-		return highlimit;
-	}
-	
-	public Boolean getEnabled() {
-		return runcontrol;
-	}
-	
-	public Color getTextColor() {
-		return textColor;
-	}
+        @Override
+        public void onError(Exception e) {
+            setLowLimit("error");
+        }
 
-	public Color getBackgroundColor() {
-		return backgroundColor;
-	}
-	
-	public String blockServerAlias() {
-		return Instrument.getInstance().currentInstrument().pvPrefix() + blockServerAlias;
-	}
-	
-	private synchronized void setValue(String value) {
-		firePropertyChange("value", this.value, this.value = Strings.nullToEmpty(value));
-	}
-	
-	private synchronized void setDescription(String description) {
-		firePropertyChange("description", this.description, this.description = Strings.nullToEmpty(description));
-	}
-	
-	private synchronized void setInRange(Boolean inRange) {
-		setColors(inRange);
-		firePropertyChange("inRange", this.inRange, this.inRange = inRange);
-	}
-	
-	private synchronized void setLowLimit(String limit) {
-		firePropertyChange("lowLimit", this.lowlimit, this.lowlimit = limit);
-	}
-	
-	private synchronized void setHighLimit(String limit) {
-		firePropertyChange("highLimit", this.highlimit, this.highlimit = limit);
-	}
-	
-	private synchronized void setEnabled(Boolean enabled) {
-		firePropertyChange("enabled", this.runcontrol, this.runcontrol = enabled);
-	}
-	
-	private void setColors(boolean inRange) {
-		if (inRange) {
-			setTextColor(BLACK);
-			setBackgroundColor(WHITE);
-		} else {
-			setTextColor(WHITE);
-			setBackgroundColor(DARK_RED);
-		}		
-	}
-	
-	private synchronized void setTextColor(Color color) {
-		firePropertyChange(TEXT_COLOR, this.textColor, this.textColor = color);
-	}
-	
-	private synchronized void setBackgroundColor(Color color) {
-		firePropertyChange(BACKGROUND_COLOR, this.backgroundColor, this.backgroundColor = color);
-	}
+        @Override
+        public void onConnectionStatus(boolean isConnected) {
+        }
+    };
+
+    private final BaseObserver<String> highLimitAdapter = new BaseObserver<String>() {
+        @Override
+        public void onValue(String value) {
+            setHighLimit(value);
+        }
+
+        @Override
+        public void onError(Exception e) {
+            setHighLimit("error");
+        }
+
+        @Override
+        public void onConnectionStatus(boolean isConnected) {
+        }
+    };
+
+    private final BaseObserver<String> enabledAdapter = new BaseObserver<String>() {
+        @Override
+        public void onValue(String value) {
+            if (value.equals("YES")) {
+                setEnabled(true);
+            } else {
+                // If in doubt set to false
+                setEnabled(false);
+            }
+        }
+
+        @Override
+        public void onError(Exception e) {
+            // If in doubt set to false
+            setEnabled(false);
+        }
+
+        @Override
+        public void onConnectionStatus(boolean isConnected) {
+        }
+    };
+
+    public DisplayBlock(Block block, InitialiseOnSubscribeObservable<String> valueSource,
+            InitialiseOnSubscribeObservable<String> descriptionSource,
+            InitialiseOnSubscribeObservable<String> inRangeSource,
+            InitialiseOnSubscribeObservable<String> lowLimitSource,
+            InitialiseOnSubscribeObservable<String> highLimitSource,
+            InitialiseOnSubscribeObservable<String> enabledSource, String blockServerAlias) {
+        this.block = block;
+        this.blockServerAlias = blockServerAlias;
+
+        valueSource.addObserver(valueAdapter);
+        descriptionSource.addObserver(descriptionAdapter);
+        inRangeSource.addObserver(inRangeAdapter);
+        lowLimitSource.addObserver(lowLimitAdapter);
+        highLimitSource.addObserver(highLimitAdapter);
+        enabledSource.addObserver(enabledAdapter);
+
+        // Initialise text and background colours
+        setColors(true);
+    }
+
+    public String getName() {
+        return block.getName();
+    }
+
+    public String getValue() {
+        return value;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public Boolean getIsVisible() {
+        return block.getIsVisible();
+    }
+
+    /**
+     * @return whether the block is within its run-control limits.
+     */
+    public Boolean getInRange() {
+        return inRange;
+    }
+
+    /**
+     * @return the current low limit for run-control.
+     */
+    public String getLowLimit() {
+        return lowlimit;
+    }
+
+    /**
+     * @return the current high limit for run-control.
+     */
+    public String getHighLimit() {
+        return highlimit;
+    }
+
+    /**
+     * @return whether run-control is currently enabled.
+     */
+    public Boolean getEnabled() {
+        return runcontrol;
+    }
+
+    /**
+     * @return the low limit set in the configuration.
+     */
+    public String getConfigurationLowLimit() {
+        return Float.toString(block.getRCLowLimit());
+    }
+
+    /**
+     * @return the high limit set in the configuration.
+     */
+    public String getConfigurationHighLimit() {
+        return Float.toString(block.getRCHighLimit());
+    }
+
+    /**
+     * @return whether run-control is enabled in the configuration.
+     */
+    public Boolean getConfigurationEnabled() {
+        return block.getRCEnabled();
+    }
+
+    public Color getTextColor() {
+        return textColor;
+    }
+
+    public Color getBackgroundColor() {
+        return backgroundColor;
+    }
+
+    public String blockServerAlias() {
+        return Instrument.getInstance().currentInstrument().pvPrefix() + blockServerAlias;
+    }
+
+    private synchronized void setValue(String value) {
+        firePropertyChange("value", this.value, this.value = Strings.nullToEmpty(value));
+    }
+
+    private synchronized void setDescription(String description) {
+        firePropertyChange("description", this.description, this.description = Strings.nullToEmpty(description));
+    }
+
+    private synchronized void setInRange(Boolean inRange) {
+        setColors(inRange);
+        firePropertyChange("inRange", this.inRange, this.inRange = inRange);
+    }
+
+    private synchronized void setLowLimit(String limit) {
+        firePropertyChange("lowLimit", this.lowlimit, this.lowlimit = limit);
+    }
+
+    private synchronized void setHighLimit(String limit) {
+        firePropertyChange("highLimit", this.highlimit, this.highlimit = limit);
+    }
+
+    private synchronized void setEnabled(Boolean enabled) {
+        firePropertyChange("enabled", this.runcontrol, this.runcontrol = enabled);
+    }
+
+    private void setColors(boolean inRange) {
+        if (inRange) {
+            setTextColor(BLACK);
+            setBackgroundColor(WHITE);
+        } else {
+            setTextColor(WHITE);
+            setBackgroundColor(DARK_RED);
+        }
+    }
+
+    private synchronized void setTextColor(Color color) {
+        firePropertyChange(TEXT_COLOR, this.textColor, this.textColor = color);
+    }
+
+    private synchronized void setBackgroundColor(Color color) {
+        firePropertyChange(BACKGROUND_COLOR, this.backgroundColor, this.backgroundColor = color);
+    }
 }
