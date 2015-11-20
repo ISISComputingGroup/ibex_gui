@@ -211,8 +211,7 @@ public class DisplayBlock extends ModelObject {
         enabledSource.addObserver(enabledAdapter);
 
         // Initialise text and background colours
-        setTextColor(BLACK);
-        setBackgroundColor(WHITE);
+        setColors(true);
     }
 
     public String getName() {
