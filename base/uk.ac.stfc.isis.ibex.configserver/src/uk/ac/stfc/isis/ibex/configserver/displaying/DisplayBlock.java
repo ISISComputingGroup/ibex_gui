@@ -209,6 +209,10 @@ public class DisplayBlock extends ModelObject {
         lowLimitSource.addObserver(lowLimitAdapter);
         highLimitSource.addObserver(highLimitAdapter);
         enabledSource.addObserver(enabledAdapter);
+
+        // Initialise text and background colours
+        setTextColor(BLACK);
+        setBackgroundColor(WHITE);
     }
 
     public String getName() {
