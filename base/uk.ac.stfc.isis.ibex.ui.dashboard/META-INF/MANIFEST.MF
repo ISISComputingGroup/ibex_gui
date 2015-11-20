@@ -21,7 +21,7 @@ Require-Bundle: org.eclipse.ui,
  com.google.common;bundle-version="10.0.1",
  uk.ac.stfc.isis.ibex.dae;bundle-version="1.0.0",
  uk.ac.stfc.isis.ibex.instrument,
- com.google.gson;bundle-version="2.2.4"
+ com.google.gson
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Export-Package: uk.ac.stfc.isis.ibex.ui.dashboard,

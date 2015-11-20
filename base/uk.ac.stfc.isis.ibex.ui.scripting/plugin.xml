@@ -57,5 +57,11 @@
             class="uk.ac.stfc.isis.ibex.ui.scripting.PythonInterpreterProviderFactory">
       </interpreter_provider_participant>
    </extension>
+   <extension
+         point="org.python.pydev.pydev_interpreter_info_builder">
+      <interpreter_info_builder_participant
+            class="uk.ac.stfc.isis.ibex.ui.scripting.InterpreterInfoBuilderParticipant">
+      </interpreter_info_builder_participant>
+   </extension>
 
 </plugin>

@@ -12,16 +12,16 @@
 
    <launcherArgs>
       <programArgs>--launcher.XXMaxPermSize
-256M</programArgs>
+256M
+      </programArgs>
       <vmArgs>-Xms40m
 -Xmx512m
-
--Dorg.dawnsci.passerelle.do.not.break.osgi=true</vmArgs>
-      <vmArgsMac>-XstartOnFirstThread -Dorg.eclipse.swt.internal.carbon.smallFonts</vmArgsMac>
+      </vmArgs>
+      <vmArgsMac>-XstartOnFirstThread -Dorg.eclipse.swt.internal.carbon.smallFonts
+      </vmArgsMac>
    </launcherArgs>
 
    <windowImages i16="/uk.ac.stfc.isis.ibex.product/icons/IBEX-icon-web16.gif" i32="/uk.ac.stfc.isis.ibex.product/icons/IBEX-icon-web32.gif" i48="/uk.ac.stfc.isis.ibex.product/icons/IBEX-icon-web48.gif" i64="/uk.ac.stfc.isis.ibex.product/icons/IBEX-icon-web64.gif"/>
-
 
    <launcher name="ibex-client">
       <solaris/>
@@ -38,7 +38,6 @@
       </win>
    </launcher>
 
-
    <vm>
    </vm>
 
@@ -54,23 +53,26 @@
    <features>
       <feature id="org.eclipse.rcp" version="3.8.2.v20130118-180157-96BuGOZFxwOAeG8Ofmqicz0tPK"/>
       <feature id="uk.ac.stfc.isis.ibex.feature.base" version="1.0.0.qualifier"/>
-      <feature id="uk.ac.stfc.isis.ibex.feature.dawn" version="1.0.0.qualifier"/>
       <feature id="uk.ac.stfc.isis.ibex.feature.css" version="1.0.0.qualifier"/>
+      <feature id="uk.ac.stfc.isis.ibex.feature.pydev" version="1.0.0.qualifier"/>
    </features>
 
    <configurations>
       <plugin id="org.csstudio.platform.libs.epics" autoStart="true" startLevel="6" />
-      <plugin id="org.dawnsci.persistence" autoStart="true" startLevel="2" />
       <plugin id="org.eclipse.core.runtime" autoStart="true" startLevel="4" />
       <plugin id="org.eclipse.equinox.common" autoStart="true" startLevel="2" />
       <plugin id="org.eclipse.equinox.ds" autoStart="true" startLevel="2" />
       <plugin id="org.eclipse.equinox.simpleconfigurator" autoStart="true" startLevel="1" />
       <plugin id="org.eclipse.osgi" autoStart="true" startLevel="0" />
       <plugin id="org.eclipse.update.configurator" autoStart="true" startLevel="4" />
-      <plugin id="uk.ac.diamond.scisoft" autoStart="true" startLevel="1" />
-      <plugin id="uk.ac.diamond.scisoft.analysis" autoStart="true" startLevel="2" />
-      <plugin id="uk.ac.diamond.scisoft.analysis.osgi" autoStart="true" startLevel="2" />
       <property name="osgi.splashPath" value="platform:/base/plugins/uk.ac.stfc.isis.ibex.product" />
    </configurations>
+
+   <preferencesInfo>
+      <targetfile overwrite="false"/>
+   </preferencesInfo>
+
+   <cssInfo>
+   </cssInfo>
 
 </product>
