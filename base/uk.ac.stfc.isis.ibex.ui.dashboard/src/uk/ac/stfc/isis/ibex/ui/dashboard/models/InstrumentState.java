@@ -23,8 +23,8 @@ import org.eclipse.swt.graphics.Color;
 
 import uk.ac.stfc.isis.ibex.dae.DaeRunState;
 import uk.ac.stfc.isis.ibex.epics.observing.BaseObserver;
-import uk.ac.stfc.isis.ibex.epics.observing.InitialisableObserver;
 import uk.ac.stfc.isis.ibex.epics.observing.InitialiseOnSubscribeObservable;
+import uk.ac.stfc.isis.ibex.epics.observing.Observer;
 import uk.ac.stfc.isis.ibex.epics.observing.Subscription;
 import uk.ac.stfc.isis.ibex.epics.pv.Closable;
 import uk.ac.stfc.isis.ibex.model.SettableUpdatedValue;
@@ -33,7 +33,7 @@ import uk.ac.stfc.isis.ibex.ui.dashboard.widgets.RunState;
 
 public class InstrumentState implements Closable {
 	
-	private final InitialisableObserver<DaeRunState> sourceObserver = new BaseObserver<DaeRunState>() {
+    private final Observer<DaeRunState> sourceObserver = new BaseObserver<DaeRunState>() {
 		@Override
 		public void onValue(DaeRunState value) {
 			setState(runState(value));

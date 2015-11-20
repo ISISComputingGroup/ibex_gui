@@ -19,15 +19,17 @@
 
 package uk.ac.stfc.isis.ibex.synoptic.internal.tests;
 
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
-import uk.ac.stfc.isis.ibex.epics.observing.InitialisableObserver;
+
 import uk.ac.stfc.isis.ibex.epics.observing.InitialiseOnSubscribeObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.Observer;
 import uk.ac.stfc.isis.ibex.epics.observing.Subscription;
@@ -108,7 +110,7 @@ public class ObservableComponentTest {
 		
 		Subscription mockSub = mock(Subscription.class);
 	
-		InitialisableObserver<String> mockObserver = mock(InitialisableObserver.class);
+        Observer<String> mockObserver = mock(Observer.class);
 		
 		InitialiseOnSubscribeObservable<String> mockObservable = mock(InitialiseOnSubscribeObservable.class);
 		when(mockObservable.addObserver(any(Observer.class))).thenReturn(mockSub);

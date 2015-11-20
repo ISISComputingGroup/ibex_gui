@@ -19,7 +19,8 @@
 
 package uk.ac.stfc.isis.ibex.epics.tests.observing;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.*;
 
 import org.junit.Before;
@@ -28,9 +29,9 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.MockitoAnnotations;
 
-import uk.ac.stfc.isis.ibex.epics.observing.InitialisableObserver;
 import uk.ac.stfc.isis.ibex.epics.observing.InitialiseOnSubscribeObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.ObservablePair;
+import uk.ac.stfc.isis.ibex.epics.observing.Observer;
 import uk.ac.stfc.isis.ibex.epics.observing.Pair;
 
 // A lot of unchecked type conversions for mocking purposes
@@ -41,7 +42,7 @@ import uk.ac.stfc.isis.ibex.epics.observing.Pair;
  */
 public class ObservablePairTest {
 	
-	private InitialisableObserver<Pair<String, Integer>> mockObserver;
+    private Observer<Pair<String, Integer>> mockObserver;
 	
 	private TestableObservable<String> testableStringObservable;
 	private TestableObservable<Integer> testableIntegerObservable;
@@ -59,7 +60,7 @@ public class ObservablePairTest {
 		// This is to initialise the captor
 		MockitoAnnotations.initMocks(this);
 		
-		mockObserver = mock(InitialisableObserver.class);
+        mockObserver = mock(Observer.class);
 		
 		testableStringObservable = new TestableObservable<>();
 		testableStringObservable.setValue(TestHelpers.STRING_VALUE);

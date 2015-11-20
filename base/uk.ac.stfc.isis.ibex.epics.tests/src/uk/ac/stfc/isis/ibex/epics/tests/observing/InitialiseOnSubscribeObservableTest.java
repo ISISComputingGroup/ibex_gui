@@ -19,23 +19,24 @@
 
 package uk.ac.stfc.isis.ibex.epics.tests.observing;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.*;
 
 import org.junit.Before;
 import org.junit.Test;
 
 import uk.ac.stfc.isis.ibex.epics.observing.BaseCachingObservable;
-import uk.ac.stfc.isis.ibex.epics.observing.InitialisableObserver;
 import uk.ac.stfc.isis.ibex.epics.observing.InitialiseOnSubscribeObservable;
+import uk.ac.stfc.isis.ibex.epics.observing.Observer;
 import uk.ac.stfc.isis.ibex.epics.observing.Unsubscriber;
 
 // A lot of unchecked type conversions for mocking purposes
 @SuppressWarnings({ "unchecked", "checkstyle:methodname" })
 public class InitialiseOnSubscribeObservableTest {
 	
-	InitialisableObserver<String> mockObserver;
-	InitialisableObserver<String> mockObserverTwo;
+    Observer<String> mockObserver;
+    Observer<String> mockObserverTwo;
 	
 	BaseCachingObservable<String> mockObservable;
 	TestableObservable<String> testableObservable;
@@ -48,8 +49,8 @@ public class InitialiseOnSubscribeObservableTest {
 	@Before
 	public void setUp() {
 		// Arrange
-		mockObserver = mock(InitialisableObserver.class);
-		mockObserverTwo = mock(InitialisableObserver.class);
+        mockObserver = mock(Observer.class);
+        mockObserverTwo = mock(Observer.class);
 		
 		mockObservable = TestHelpers.getCachingObservable(TestHelpers.STRING_VALUE);
 		testableObservable = new TestableObservable<>();

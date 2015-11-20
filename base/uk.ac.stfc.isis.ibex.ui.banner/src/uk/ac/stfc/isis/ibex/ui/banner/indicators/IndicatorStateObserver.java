@@ -22,8 +22,8 @@ package uk.ac.stfc.isis.ibex.ui.banner.indicators;
 import org.eclipse.swt.graphics.Color;
 
 import uk.ac.stfc.isis.ibex.epics.observing.BaseObserver;
-import uk.ac.stfc.isis.ibex.epics.observing.InitialisableObserver;
 import uk.ac.stfc.isis.ibex.epics.observing.InitialiseOnSubscribeObservable;
+import uk.ac.stfc.isis.ibex.epics.observing.Observer;
 import uk.ac.stfc.isis.ibex.epics.observing.Subscription;
 import uk.ac.stfc.isis.ibex.epics.pv.Closable;
 import uk.ac.stfc.isis.ibex.model.SettableUpdatedValue;
@@ -31,7 +31,7 @@ import uk.ac.stfc.isis.ibex.model.UpdatedValue;
 
 public class IndicatorStateObserver<T> implements Closable {
 
-	private final InitialisableObserver<T> sourceObserver = new BaseObserver<T>() {
+    private final Observer<T> sourceObserver = new BaseObserver<T>() {
 		@Override
 		public void onValue(T value) {
 			setState(value);

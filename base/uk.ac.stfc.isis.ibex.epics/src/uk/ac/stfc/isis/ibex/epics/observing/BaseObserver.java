@@ -19,7 +19,7 @@
 
 package uk.ac.stfc.isis.ibex.epics.observing;
 
-public abstract class BaseObserver<T> implements InitialisableObserver<T> {
+public abstract class BaseObserver<T> implements Observer<T> {
 	
 	@Override
 	public void update(T value, Exception error, boolean isConnected) {		
