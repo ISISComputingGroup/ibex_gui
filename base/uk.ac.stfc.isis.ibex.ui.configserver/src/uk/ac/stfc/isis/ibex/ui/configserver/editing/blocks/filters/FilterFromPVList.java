@@ -26,13 +26,13 @@ import org.eclipse.jface.viewers.ViewerFilter;
 
 import uk.ac.stfc.isis.ibex.configserver.configuration.PV;
 import uk.ac.stfc.isis.ibex.epics.observing.BaseObserver;
-import uk.ac.stfc.isis.ibex.epics.observing.InitialisableObserver;
 import uk.ac.stfc.isis.ibex.epics.observing.InitialiseOnSubscribeObservable;
+import uk.ac.stfc.isis.ibex.epics.observing.Observer;
 
 public class FilterFromPVList extends PVFilter {
 	private FilterViewerFromPVList filter = new FilterViewerFromPVList();
 	
-	private final InitialisableObserver<Collection<PV>> observer = new BaseObserver<Collection<PV>>() {
+    private final Observer<Collection<PV>> observer = new BaseObserver<Collection<PV>>() {
 		@Override
 		public void onValue(Collection<PV> value) {
 			if (value != null) {

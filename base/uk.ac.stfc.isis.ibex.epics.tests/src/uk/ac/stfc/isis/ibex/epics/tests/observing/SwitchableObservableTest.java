@@ -19,14 +19,15 @@
 
 package uk.ac.stfc.isis.ibex.epics.tests.observing;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.*;
 
 import org.junit.Before;
 import org.junit.Test;
 
 import uk.ac.stfc.isis.ibex.epics.observing.BaseCachingObservable;
-import uk.ac.stfc.isis.ibex.epics.observing.InitialisableObserver;
+import uk.ac.stfc.isis.ibex.epics.observing.Observer;
 import uk.ac.stfc.isis.ibex.epics.observing.SwitchableObservable;
 
 // A lot of unchecked type conversions for mocking purposes
@@ -37,7 +38,7 @@ import uk.ac.stfc.isis.ibex.epics.observing.SwitchableObservable;
  */
 public class SwitchableObservableTest {
 	
-	private InitialisableObserver<String> mockObserver;
+    private Observer<String> mockObserver;
 	
 	private BaseCachingObservable<String> mockObservableOne;
 	private BaseCachingObservable<String> mockObservableTwo;
@@ -48,7 +49,7 @@ public class SwitchableObservableTest {
 	@Before
 	public void setUp() {
 		// Arrange
-		mockObserver = mock(InitialisableObserver.class);
+        mockObserver = mock(Observer.class);
 		
 		mockObservableOne = TestHelpers.getCachingObservable(TestHelpers.STRING_VALUE);		
 		mockObservableTwo = TestHelpers.getCachingObservable(TestHelpers.NEW_STRING_VALUE);

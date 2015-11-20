@@ -42,7 +42,8 @@ public class GeniePythonConsoleFactory extends PydevConsoleFactory {
 			"# Configuring GENIE PYTHON, please wait\n" 
 			+ "import sys;sys.executable=''\n" 
 			+ "from genie_python.genie_startup import * \n" 
-			+ "load_script(None, globals()) \n";
+			+ "load_script(None, globals()) \n"
+			+ "%matplotlib qt4 \n";
 	
 	@Override
 	public void createConsole(String additionalInitialComands) {
@@ -73,6 +74,6 @@ public class GeniePythonConsoleFactory extends PydevConsoleFactory {
 		PydevConsoleLaunchInfo launchAndProcess = 
 				iprocessFactory.createLaunch(manager, interpreterInfo, interpreterInfo.getPythonPath(), null, null);
 				
-		return createPydevInterpreter(launchAndProcess, null);
+		return createPydevInterpreter(launchAndProcess, null, null);
 	}
 }

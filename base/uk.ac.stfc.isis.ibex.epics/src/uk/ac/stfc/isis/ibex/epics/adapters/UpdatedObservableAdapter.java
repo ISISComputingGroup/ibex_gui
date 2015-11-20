@@ -20,8 +20,8 @@
 package uk.ac.stfc.isis.ibex.epics.adapters;
 
 import uk.ac.stfc.isis.ibex.epics.observing.BaseObserver;
-import uk.ac.stfc.isis.ibex.epics.observing.InitialisableObserver;
 import uk.ac.stfc.isis.ibex.epics.observing.InitialiseOnSubscribeObservable;
+import uk.ac.stfc.isis.ibex.epics.observing.Observer;
 import uk.ac.stfc.isis.ibex.epics.observing.Subscription;
 import uk.ac.stfc.isis.ibex.epics.pv.Closable;
 import uk.ac.stfc.isis.ibex.model.SettableUpdatedValue;
@@ -30,7 +30,7 @@ public class UpdatedObservableAdapter<T> extends SettableUpdatedValue<T> impleme
 
 	private Subscription subscription;
 	
-	private final InitialisableObserver<T> observer = new BaseObserver<T>() {
+	private final Observer<T> observer = new BaseObserver<T>() {
 		@Override
 		public void onValue(T value) {
 			setValue(value);

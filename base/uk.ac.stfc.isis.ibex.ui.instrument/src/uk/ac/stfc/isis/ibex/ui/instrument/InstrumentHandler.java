@@ -38,48 +38,46 @@ import uk.ac.stfc.isis.ibex.ui.synoptic.Activator;
  */
 public class InstrumentHandler extends AbstractHandler {
 
-	private final Consoles consoles = Consoles.getDefault();
+    private final Consoles consoles = Consoles.getDefault();
     private final Alarms alarms = Alarms.getDefault();
-	private final Activator synoptic = Activator.getDefault();
-	
-	@Override
-	public Object execute(ExecutionEvent arg0) throws ExecutionException {
-		Shell shell = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
-		InstrumentDialog dialog = new InstrumentDialog(shell);
-		
-		if (dialog.open() == Window.CANCEL || dialog.selectedInstrument() == null) {
-			return null;
-		}
-		
+    private final Activator synoptic = Activator.getDefault();
+
+    @Override
+    public Object execute(ExecutionEvent arg0) throws ExecutionException {
+        Shell shell = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
+        InstrumentDialog dialog = new InstrumentDialog(shell);
+
+        if (dialog.open() == Window.CANCEL || dialog.selectedInstrument() == null) {
+            return null;
+        }
+
         alarms.closeAll();
 
-		// Close any OPIs in the synoptic
-		synoptic.closeAllOPIs();
-		
-		InstrumentInfo selected = dialog.selectedInstrument();
-		if (!consoles.anyActive()) {
-			setInstrument(selected);
-			return null;
-		}
-			
-		if (shouldCloseAllConsoles(dialog)) {
-			consoles.closeAll();
-		}
-		
-		setInstrument(selected);
-		consoles.createConsole();
-		
-		return null;
-	}
+        // Close any OPIs in the synoptic
+        synoptic.closeAllOPIs();
 
-	private boolean shouldCloseAllConsoles(InstrumentDialog dialog) {
-		return MessageDialog.openConfirm(
-				dialog.getShell(), 
-				"Confirm Instrument Switch", 
-				"All console scripting sessions for this instrument will be closed.\nWould you like to continue?");
-	}
+        InstrumentInfo selected = dialog.selectedInstrument();
+        if (!consoles.anyActive()) {
+            setInstrument(selected);
+            return null;
+        }
 
-	private void setInstrument(InstrumentInfo selected) {
-		InstrumentUI.INSTRUMENT.setInstrument(selected);
-	}
+        if (shouldCloseAllConsoles(dialog)) {
+            consoles.closeAll();
+        }
+
+        setInstrument(selected);
+        consoles.createConsole();
+
+        return null;
+    }
+
+    private boolean shouldCloseAllConsoles(InstrumentDialog dialog) {
+        return MessageDialog.openConfirm(dialog.getShell(), "Confirm Instrument Switch",
+                "All console scripting sessions for this instrument will be closed.\nWould you like to continue?");
+    }
+
+    private void setInstrument(InstrumentInfo selected) {
+        InstrumentUI.INSTRUMENT.setInstrument(selected);
+    }
 }

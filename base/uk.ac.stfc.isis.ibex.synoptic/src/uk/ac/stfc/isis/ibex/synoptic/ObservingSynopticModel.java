@@ -26,7 +26,7 @@ import uk.ac.stfc.isis.ibex.configserver.Configurations;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Configuration;
 import uk.ac.stfc.isis.ibex.epics.observing.BaseObserver;
 import uk.ac.stfc.isis.ibex.epics.observing.ClosingSwitchableObservable;
-import uk.ac.stfc.isis.ibex.epics.observing.InitialisableObserver;
+import uk.ac.stfc.isis.ibex.epics.observing.Observer;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 import uk.ac.stfc.isis.ibex.synoptic.internal.Variables;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.SynopticDescription;
@@ -41,7 +41,7 @@ public class ObservingSynopticModel extends ModelObject {
 
 	private SynopticInfo synopticInfo;
 
-	private final InitialisableObserver<SynopticDescription> descriptionObserver = new BaseObserver<SynopticDescription>() {
+    private final Observer<SynopticDescription> descriptionObserver = new BaseObserver<SynopticDescription>() {
 		@Override
 		public void onValue(SynopticDescription value) {
 			model.setInstrumentFromDescription(value);
@@ -56,7 +56,7 @@ public class ObservingSynopticModel extends ModelObject {
 		}
 	};
 
-	private final InitialisableObserver<Configuration> configSynopticObserver = new BaseObserver<Configuration>() {
+    private final Observer<Configuration> configSynopticObserver = new BaseObserver<Configuration>() {
 
 		@Override
 		public void onValue(Configuration value) {
@@ -95,7 +95,7 @@ public class ObservingSynopticModel extends ModelObject {
 		}
 	};
 
-	private final InitialisableObserver<String> synopticSchemaObserver = new BaseObserver<String>() {
+    private final Observer<String> synopticSchemaObserver = new BaseObserver<String>() {
 
 		@Override
 		public void onValue(String value) {

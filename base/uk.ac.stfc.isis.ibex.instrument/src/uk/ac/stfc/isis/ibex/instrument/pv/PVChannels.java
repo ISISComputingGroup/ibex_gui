@@ -22,7 +22,7 @@ package uk.ac.stfc.isis.ibex.instrument.pv;
 import uk.ac.stfc.isis.ibex.epics.observing.BaseCachingObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.ClosableCachingObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.ClosingSwitchableObservable;
-import uk.ac.stfc.isis.ibex.epics.observing.ObserverAdapter;
+import uk.ac.stfc.isis.ibex.epics.observing.SimpleObserver;
 import uk.ac.stfc.isis.ibex.epics.writing.BaseWritable;
 import uk.ac.stfc.isis.ibex.epics.writing.SameTypeWritable;
 import uk.ac.stfc.isis.ibex.instrument.Channels;
@@ -43,7 +43,7 @@ public class PVChannels implements Channels {
 				new ClosingSwitchableObservable<>(channelType.reader(address.getValue()));
 		
 		// Update the source pv when the prefix changes
-		address.addObserver(new ObserverAdapter<String>() {			
+		address.addObserver(new SimpleObserver<String>() {			
 			@Override
 			public void onValue(String address) {
 				channel.switchTo(channelType.reader(address));
@@ -60,7 +60,7 @@ public class PVChannels implements Channels {
 				new ClosingSwitchableObservable<>(channelType.reader(address.getValue()));
 		
 		// Update the source pv when the prefix changes
-		address.addObserver(new ObserverAdapter<String>() {			
+		address.addObserver(new SimpleObserver<String>() {			
 			@Override
 			public void onValue(String address) {
 				channel.switchTo(channelType.reader(address));
@@ -76,7 +76,7 @@ public class PVChannels implements Channels {
 		final SameTypeWritable<T> channel = new SameTypeWritable<>(channelType.writer(address.getValue()));
 		
 		// Update the source pv when the prefix changes
-		address.addObserver(new ObserverAdapter<String>() {			
+		address.addObserver(new SimpleObserver<String>() {			
 			@Override
 			public void onValue(String address) {
 				channel.setWritable(channelType.writer(address));
@@ -91,7 +91,7 @@ public class PVChannels implements Channels {
 		final SameTypeWritable<T> channel = new SameTypeWritable<>(channelType.writer(address.getValue()));
 		
 		// Update the source pv when the prefix changes
-		address.addObserver(new ObserverAdapter<String>() {			
+		address.addObserver(new SimpleObserver<String>() {			
 			@Override
 			public void onValue(String address) {
 				channel.setWritable(channelType.writer(address));
