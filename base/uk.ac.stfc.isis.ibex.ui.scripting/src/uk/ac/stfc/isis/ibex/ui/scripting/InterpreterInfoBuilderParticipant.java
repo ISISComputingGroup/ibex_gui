@@ -33,9 +33,9 @@ import org.python.pydev.ui.pythonpathconf.InterpreterInfo;
  *
  */
 public class InterpreterInfoBuilderParticipant implements IInterpreterInfoBuilder {
-
     @Override
-    public BuilderResult synchInfoToPythonPath(IProgressMonitor arg0, InterpreterInfo arg1) {
+    public BuilderResult syncInfoToPythonPath(IProgressMonitor arg0, InterpreterInfo arg1) {
+        // Do nothing
         return null;
     }
 
