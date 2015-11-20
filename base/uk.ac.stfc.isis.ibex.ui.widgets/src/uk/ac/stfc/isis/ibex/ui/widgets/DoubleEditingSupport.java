@@ -19,10 +19,10 @@
 
 package uk.ac.stfc.isis.ibex.ui.widgets;
 
-import org.csstudio.opibuilder.visualparts.DoubleCellEditor;
 import org.eclipse.jface.viewers.CellEditor;
 import org.eclipse.jface.viewers.ColumnViewer;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.jface.viewers.TextCellEditor;
 
 public abstract class DoubleEditingSupport<TRow> extends GenericEditingSupport<TRow, Double> {
 
@@ -30,7 +30,18 @@ public abstract class DoubleEditingSupport<TRow> extends GenericEditingSupport<T
 	
 	public DoubleEditingSupport(ColumnViewer viewer, Class<TRow> rowType) {
 		super(viewer, rowType, Double.class);
-		editor = new DoubleCellEditor((Composite) viewer.getControl());
+		// Override TextCellEditor to handle doubles better
+		editor = new TextCellEditor((Composite) viewer.getControl()) {
+			@Override
+			protected void doSetValue(final Object value) {
+				if (value == null) {
+					// If value is null set to zero instead
+					super.doSetValue(String.valueOf(new Double(0)));
+				} else {
+					super.doSetValue(String.valueOf(value.toString()));
+				}
+			}
+		};
 	}
 
 	@Override

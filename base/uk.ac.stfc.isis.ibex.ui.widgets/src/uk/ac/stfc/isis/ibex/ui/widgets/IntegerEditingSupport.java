@@ -19,7 +19,7 @@
 
 package uk.ac.stfc.isis.ibex.ui.widgets;
 
-import org.csstudio.opibuilder.visualparts.IntegerCellEditor;
+import org.eclipse.jface.viewers.TextCellEditor;
 import org.eclipse.jface.viewers.CellEditor;
 import org.eclipse.jface.viewers.ColumnViewer;
 import org.eclipse.swt.widgets.Composite;
@@ -27,17 +27,28 @@ import org.eclipse.swt.widgets.Composite;
 public abstract class IntegerEditingSupport<TRow> extends GenericEditingSupport<TRow, Integer> {
 
 	private CellEditor editor;
-	
+
 	public IntegerEditingSupport(ColumnViewer viewer, Class<TRow> rowType) {
 		super(viewer, rowType, Integer.class);
-		editor = new IntegerCellEditor((Composite) viewer.getControl());
+		// Override TextCellEditor to handle integers better
+		editor = new TextCellEditor((Composite) viewer.getControl()) {
+			@Override
+			protected void doSetValue(final Object value) {
+				if (value == null) {
+					// If value is null set to zero instead
+					super.doSetValue(String.valueOf(Integer.valueOf(0)));
+				} else {
+					super.doSetValue(String.valueOf(value.toString()));
+				}
+			}
+		};
 	}
 
 	@Override
-	protected CellEditor getCellEditor(Object element) {	
+	protected CellEditor getCellEditor(Object element) {
 		return editor;
 	}
-	
+
 	@Override
 	protected Integer valueFromString(String text) {
 		try {
@@ -45,6 +56,6 @@ public abstract class IntegerEditingSupport<TRow> extends GenericEditingSupport<
 		} catch (NumberFormatException e) {
 			return null;
 		}
-		
+
 	}
 }

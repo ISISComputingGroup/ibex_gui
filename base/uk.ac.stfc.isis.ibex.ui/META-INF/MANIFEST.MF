@@ -5,7 +5,6 @@ Bundle-SymbolicName: uk.ac.stfc.isis.ibex.ui;singleton:=true
 Bundle-Version: 1.0.0.qualifier
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
- org.csstudio.opibuilder;bundle-version="3.2.18";visibility:=reexport,
  org.eclipse.jface,
  uk.ac.stfc.isis.ibex.preferences;bundle-version="1.0.0",
  org.eclipse.core.databinding;bundle-version="1.4.1";visibility:=reexport,

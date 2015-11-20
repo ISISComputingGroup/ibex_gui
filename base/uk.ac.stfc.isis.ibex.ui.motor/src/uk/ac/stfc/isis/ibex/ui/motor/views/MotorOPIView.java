@@ -24,9 +24,9 @@ import org.eclipse.wb.swt.ResourceManager;
 
 import uk.ac.stfc.isis.ibex.instrument.Instrument;
 import uk.ac.stfc.isis.ibex.opis.Opi;
-import uk.ac.stfc.isis.ibex.ui.OPIView;
+import uk.ac.stfc.isis.ibex.opis.OpiView;
 
-public class MotorOPIView extends OPIView {
+public class MotorOPIView extends OpiView {
 		
 	private static final String MOTOR_OPI = "Motor/mymotor.opi";
 	private String partName = "Motor view";
