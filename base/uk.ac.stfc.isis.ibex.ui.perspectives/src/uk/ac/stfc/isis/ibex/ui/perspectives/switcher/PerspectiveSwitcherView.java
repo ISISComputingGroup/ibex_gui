@@ -84,9 +84,32 @@ public class PerspectiveSwitcherView extends ViewPart implements ISizeProvider {
 
 	private PerspectiveButton buttonForPerspective(Composite container,
 			IsisPerspective perspective) {
-		return isLogPerspective(perspective) 
-				? new LogButton(container, perspective.ID()) 
-				: new PerspectiveButton(container, perspective.ID());
+		
+		//kvlb
+		//Refactor to allow other escape values
+		PerspectiveButton buttonToAdd;
+		switch (perspective.ID()) {
+			case "uk.ac.stfc.isis.ibex.ui.log.perspective":
+				buttonToAdd = new LogButton(container, perspective.ID());
+				break;
+			case "uk.ac.stfc.isis.ibex.ui.alarm.perspective":
+				buttonToAdd = new AlarmButton(container, perspective.ID());
+				break;
+			default:
+				buttonToAdd = new PerspectiveButton(container, perspective.ID());
+				break;
+		}
+//		if (isLogPerspective(perspective)){
+//			buttonToAdd = new LogButton(container, perspective.ID());
+//		}
+//		else {
+//			buttonToAdd = new PerspectiveButton(container, perspective.ID());
+//		}
+
+		return buttonToAdd;
+//		return isLogPerspective(perspective) 
+//				? new LogButton(container, perspective.ID()) 
+//				: new PerspectiveButton(container, perspective.ID());
 	}
 
 	private boolean isLogPerspective(IsisPerspective perspective) {

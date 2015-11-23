@@ -25,14 +25,14 @@ import java.beans.PropertyChangeListener;
 import uk.ac.stfc.isis.ibex.log.LogCounter;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 
-public class CountViewModel extends ModelObject {
+public class AlarmCountViewModel extends ModelObject {
 	
-	private static final String IOC_LOG = "IOC Log"; 
+	private static final String ALARM = "Alarms"; 
 	
 	private String text;
 	private boolean hasMessages;
 	
-	public CountViewModel(final LogCounter counter) {
+	public AlarmCountViewModel(final LogCounter counter) {
 		counter.addPropertyChangeListener("count", new PropertyChangeListener() {			
 			@Override
 			public void propertyChange(PropertyChangeEvent event) {
@@ -65,7 +65,7 @@ public class CountViewModel extends ModelObject {
 	}
 	
 	private String textForCount(long count) {
-		return IOC_LOG + optionalCount(count);
+		return ALARM + optionalCount(count);
 	}
 
 	private String optionalCount(Long count) {
