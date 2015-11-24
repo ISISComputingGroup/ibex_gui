@@ -17,23 +17,16 @@
  * http://opensource.org/licenses/eclipse-1.0.php
  */
 
-package uk.ac.stfc.isis.ibex.epics.observing;
+package uk.ac.stfc.isis.ibex.instrument.switching;
 
-import uk.ac.stfc.isis.ibex.epics.switching.ClosingSwitcher;
-import uk.ac.stfc.isis.ibex.epics.switching.NothingSwitcher;
-import uk.ac.stfc.isis.ibex.epics.switching.ObservablePrefixChangingSwitcher;
-import uk.ac.stfc.isis.ibex.epics.switching.OnSwitchBehaviour;
-import uk.ac.stfc.isis.ibex.epics.switching.Switcher;
-import uk.ac.stfc.isis.ibex.instrument.channels.ChannelType;
+public class SwitcherFactory {
 
-public class ObservableFactory<T> {
+    public SwitcherFactory() {
+    }
 
-    private ChannelType<T> channelType;
-    private Switcher switcher;
+    public Switcher getObservableSwitcer(OnSwitchBehaviour onSwitch) {
 
-    public ObservableFactory(ChannelType<T> channelType, OnSwitchBehaviour onSwitch) {
-        
-        this.channelType = channelType;
+        Switcher switcher;
 
         if (onSwitch == OnSwitchBehaviour.NOTHING) {
             switcher = new NothingSwitcher();
@@ -44,16 +37,26 @@ public class ObservableFactory<T> {
         } else {
             switcher = null;
         }
+
+        return switcher;
     }
 
-    public NewInitialiseOnSubscribeObservable<T> getPVObserverable(String address) {
-        ClosableCachingObservable<T> channelReader = channelType.reader(address);
-        final ClosingSwitchableObservable<T> channel = new ClosingSwitchableObservable<>(channelReader);
+    public Switcher getWritableSwitcher(OnSwitchBehaviour onSwitch) {
 
-        NewInitialiseOnSubscribeObservable<T> createdObservable = new NewInitialiseOnSubscribeObservable<>(channel);
-        createdObservable.registerSwitcher(switcher);
-        
-        return createdObservable;
+        Switcher switcher;
+
+        if (onSwitch == OnSwitchBehaviour.NOTHING) {
+            switcher = new NothingSwitcher();
+        } else if (onSwitch == OnSwitchBehaviour.CLOSING) {
+            switcher = new ClosingSwitcher();
+        } else if (onSwitch == OnSwitchBehaviour.SWITCHING) {
+            switcher = new WritablePrefixChangingSwitcher();
+        } else {
+            switcher = null;
+        }
+
+        return switcher;
+
     }
 
 }

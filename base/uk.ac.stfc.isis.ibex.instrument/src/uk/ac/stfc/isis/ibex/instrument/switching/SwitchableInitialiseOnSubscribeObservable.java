@@ -17,15 +17,18 @@
  * http://opensource.org/licenses/eclipse-1.0.php
  */
 
-package uk.ac.stfc.isis.ibex.epics.switching;
+package uk.ac.stfc.isis.ibex.instrument.switching;
 
-import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
+import uk.ac.stfc.isis.ibex.epics.observing.BaseCachingObservable;
+import uk.ac.stfc.isis.ibex.epics.observing.InitialiseOnSubscribeObservable;
 
-public class ObservablePrefixChangingSwitcher extends Switcher {
+/**
+ * This is not a permanent new class, just a temporary one while refactoring!
+ */
+public class SwitchableInitialiseOnSubscribeObservable<T> extends InitialiseOnSubscribeObservable<T> implements Switchable {
 
-    @Override
-    public void setInstrument(InstrumentInfo instrumentInfo) {
-        // TODO Switch prefix
+    public SwitchableInitialiseOnSubscribeObservable(BaseCachingObservable<T> source) {
+        super(source);
+        // TODO Auto-generated constructor stub
     }
-
 }

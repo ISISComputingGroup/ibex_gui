@@ -17,12 +17,10 @@
  * http://opensource.org/licenses/eclipse-1.0.php
  */
 
-package uk.ac.stfc.isis.ibex.epics.switching;
+package uk.ac.stfc.isis.ibex.instrument.switching;
 
-import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
-
-public abstract class Switcher {
-
-    public abstract void setInstrument(InstrumentInfo instrumentInfo);
-
+public enum OnSwitchBehaviour {
+    NOTHING,
+    CLOSING,
+    SWITCHING
 }

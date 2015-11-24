@@ -17,10 +17,15 @@
  * http://opensource.org/licenses/eclipse-1.0.php
  */
 
-package uk.ac.stfc.isis.ibex.epics.switching;
+package uk.ac.stfc.isis.ibex.instrument.switching;
 
-public enum OnSwitchBehaviour {
-    NOTHING,
-    CLOSING,
-    SWITCHING
+import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
+
+public class NothingSwitcher extends Switcher {
+
+    @Override
+    public void setInstrument(InstrumentInfo instrumentInfo) {
+        // Do nothing on instrument switch
+    }
+
 }

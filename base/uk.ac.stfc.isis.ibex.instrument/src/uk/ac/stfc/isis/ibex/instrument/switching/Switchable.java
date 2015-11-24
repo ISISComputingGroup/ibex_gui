@@ -17,15 +17,8 @@
  * http://opensource.org/licenses/eclipse-1.0.php
  */
 
-package uk.ac.stfc.isis.ibex.epics.switching;
+package uk.ac.stfc.isis.ibex.instrument.switching;
 
-import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
-
-public class ClosingSwitcher extends Switcher {
-
-    @Override
-    public void setInstrument(InstrumentInfo instrumentInfo) {
-        // TODO Close PV connection
-    }
+public interface Switchable {
 
 }

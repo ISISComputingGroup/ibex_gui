@@ -17,10 +17,15 @@
  * http://opensource.org/licenses/eclipse-1.0.php
  */
 
-package uk.ac.stfc.isis.ibex.epics.switching;
+package uk.ac.stfc.isis.ibex.instrument.switching;
 
-public interface Switchable {
+import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
 
-    public void registerSwitcher(Switcher switcher);
+public class ClosingSwitcher extends Switcher {
+
+    @Override
+    public void setInstrument(InstrumentInfo instrumentInfo) {
+        // TODO Close PV connection
+    }
 
 }

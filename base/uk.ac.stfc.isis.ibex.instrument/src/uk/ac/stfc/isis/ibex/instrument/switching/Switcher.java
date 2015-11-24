@@ -17,15 +17,16 @@
  * http://opensource.org/licenses/eclipse-1.0.php
  */
 
-package uk.ac.stfc.isis.ibex.epics.switching;
+package uk.ac.stfc.isis.ibex.instrument.switching;
 
 import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
 
-public class NothingSwitcher extends Switcher {
+public abstract class Switcher {
 
-    @Override
-    public void setInstrument(InstrumentInfo instrumentInfo) {
-        // Do nothing on instrument switch
+    public abstract void setInstrument(InstrumentInfo instrumentInfo);
+
+    public void registerSwitchable(Switchable createdObservable) {
+        // TODO Auto-generated method stub
     }
 
 }
