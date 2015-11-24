@@ -42,7 +42,7 @@ public class AlarmButton extends PerspectiveButton {
 		flash = new FlashingButton(this, display);
 		flash.setDefaultColour(this.getBackground());
 	
-		model = new AlarmCountViewModel(counter);
+		model = new AlarmCountViewModel(logCounter);
 		bindingContext.bindValue(WidgetProperties.text().observe(this), BeanProperties.value("text").observe(model));
 		model.addPropertyChangeListener("hasMessages", new PropertyChangeListener() {			
 			@Override
@@ -66,8 +66,8 @@ public class AlarmButton extends PerspectiveButton {
 	
 	@Override
 	protected void mouseClickAction() {
-		counter.stop();
-		counter.resetCount();
+		logCounter.stop();
+		logCounter.resetCount();
 	}
 	
 	private void updateFlashing() {

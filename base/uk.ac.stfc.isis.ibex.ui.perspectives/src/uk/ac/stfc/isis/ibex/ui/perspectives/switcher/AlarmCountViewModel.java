@@ -36,6 +36,7 @@ public class AlarmCountViewModel extends ModelObject {
 		counter.addPropertyChangeListener("count", new PropertyChangeListener() {			
 			@Override
 			public void propertyChange(PropertyChangeEvent event) {
+				//System.out.println("Alarm Count View Model being called");
 				update(counter.getCount());
 			}
 		});

@@ -28,6 +28,9 @@ import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 
+import uk.ac.stfc.isis.ibex.log.Log;
+import uk.ac.stfc.isis.ibex.log.LogCounter;
+
 public class LogButton extends PerspectiveButton {
 
 	private FlashingButton flash;
@@ -35,6 +38,8 @@ public class LogButton extends PerspectiveButton {
 	private final DataBindingContext bindingContext = new DataBindingContext();
 	
 	private final LogCountViewModel model;
+	
+	protected static LogCounter counter = Log.getInstance().getCounter();
 	
 	public LogButton(Composite parent, final String perspective) {
 		super(parent, perspective);
