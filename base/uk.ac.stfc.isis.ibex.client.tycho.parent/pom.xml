@@ -212,5 +212,6 @@
 		<module>../uk.ac.stfc.isis.ibex.ui.logplotter.tests</module>
 		<module>../uk.ac.stfc.isis.ibex.ui.runcontrol.tests</module>
 		<module>../uk.ac.stfc.isis.ibex.feature.pydev</module>
+		<module>../uk.ac.stfc.isis.ibex.alarm</module>
 	</modules>
 </project>

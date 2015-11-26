@@ -28,6 +28,10 @@ import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 
+import uk.ac.stfc.isis.ibex.alarm.Alarm;
+import uk.ac.stfc.isis.ibex.log.Log;
+import uk.ac.stfc.isis.ibex.log.LogCounter;
+
 public class AlarmButton extends PerspectiveButton {
 
 	private FlashingButton flash;
@@ -42,7 +46,7 @@ public class AlarmButton extends PerspectiveButton {
 		flash = new FlashingButton(this, display);
 		flash.setDefaultColour(this.getBackground());
 	
-		model = new AlarmCountViewModel(logCounter);
+	model = new AlarmCountViewModel(new Alarm());
 		bindingContext.bindValue(WidgetProperties.text().observe(this), BeanProperties.value("text").observe(model));
 		model.addPropertyChangeListener("hasMessages", new PropertyChangeListener() {			
 			@Override

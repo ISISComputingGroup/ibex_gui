@@ -39,15 +39,13 @@ public class LogButton extends PerspectiveButton {
 	
 	private final LogCountViewModel model;
 	
-	protected static LogCounter counter = Log.getInstance().getCounter();
-	
 	public LogButton(Composite parent, final String perspective) {
 		super(parent, perspective);
 		
 		flash = new FlashingButton(this, display);
 		flash.setDefaultColour(this.getBackground());
 	
-		model = new LogCountViewModel(counter);
+		model = new LogCountViewModel(logCounter);
 		bindingContext.bindValue(WidgetProperties.text().observe(this), BeanProperties.value("text").observe(model));
 		model.addPropertyChangeListener("hasMessages", new PropertyChangeListener() {			
 			@Override
@@ -71,8 +69,8 @@ public class LogButton extends PerspectiveButton {
 	
 	@Override
 	protected void mouseClickAction() {
-		counter.stop();
-		counter.resetCount();
+		logCounter.stop();
+		logCounter.resetCount();
 	}
 	
 	private void updateFlashing() {
