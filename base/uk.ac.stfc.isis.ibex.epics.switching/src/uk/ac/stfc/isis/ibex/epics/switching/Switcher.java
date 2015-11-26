@@ -17,8 +17,25 @@
  * http://opensource.org/licenses/eclipse-1.0.php
  */
 
-package uk.ac.stfc.isis.ibex.instrument.switching;
+package uk.ac.stfc.isis.ibex.epics.switching;
 
-public interface Switchable {
+import java.util.ArrayList;
+import java.util.Collection;
+
+import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
+
+public abstract class Switcher {
+
+    Collection<Switchable> switchables;
+
+    public Switcher() {
+        switchables = new ArrayList<>();
+    }
+
+    public abstract void switchInstrument(InstrumentInfo instrumentInfo);
+
+    public void registerSwitchable(Switchable switchable) {
+        switchables.add(switchable);
+    }
 
 }

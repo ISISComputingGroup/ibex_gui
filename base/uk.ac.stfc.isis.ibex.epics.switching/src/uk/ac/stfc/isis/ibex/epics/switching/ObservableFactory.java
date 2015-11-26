@@ -17,7 +17,7 @@
  * http://opensource.org/licenses/eclipse-1.0.php
  */
 
-package uk.ac.stfc.isis.ibex.instrument.switching;
+package uk.ac.stfc.isis.ibex.epics.switching;
 
 import uk.ac.stfc.isis.ibex.epics.observing.ClosableCachingObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.ClosingSwitchableObservable;
@@ -33,7 +33,7 @@ public class ObservableFactory<T> {
         this.channelType = channelType;
 
         SwitcherFactory switcherFactory = new SwitcherFactory();
-        switcher = switcherFactory.getObservableSwitcer(onSwitch);
+        switcher = switcherFactory.getObservableSwitcher(onSwitch);
     }
 
     public SwitchableInitialiseOnSubscribeObservable<T> getPVObserverable(String address) {

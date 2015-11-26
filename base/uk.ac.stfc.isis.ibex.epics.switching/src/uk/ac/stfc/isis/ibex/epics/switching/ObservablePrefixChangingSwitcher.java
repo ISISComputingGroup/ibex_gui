@@ -17,10 +17,15 @@
  * http://opensource.org/licenses/eclipse-1.0.php
  */
 
-package uk.ac.stfc.isis.ibex.instrument.switching;
+package uk.ac.stfc.isis.ibex.epics.switching;
 
-public enum OnSwitchBehaviour {
-    NOTHING,
-    CLOSING,
-    SWITCHING
+import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
+
+public class ObservablePrefixChangingSwitcher extends Switcher {
+
+    @Override
+    public void switchInstrument(InstrumentInfo instrumentInfo) {
+        // TODO Switch prefix
+    }
+
 }

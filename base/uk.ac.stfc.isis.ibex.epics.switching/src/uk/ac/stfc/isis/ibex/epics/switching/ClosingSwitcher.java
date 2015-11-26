@@ -17,15 +17,20 @@
  * http://opensource.org/licenses/eclipse-1.0.php
  */
 
-package uk.ac.stfc.isis.ibex.instrument.switching;
+package uk.ac.stfc.isis.ibex.epics.switching;
 
 import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
 
-public class NothingSwitcher extends Switcher {
+public class ClosingSwitcher extends Switcher {
+
+    public ClosingSwitcher() {
+    }
 
     @Override
-    public void setInstrument(InstrumentInfo instrumentInfo) {
-        // Do nothing on instrument switch
+    public void switchInstrument(InstrumentInfo instrumentInfo) {
+        for (Switchable switchable : switchables) {
+            switchable.close();
+        }
     }
 
 }

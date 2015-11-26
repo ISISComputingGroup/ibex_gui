@@ -17,23 +17,23 @@
  * http://opensource.org/licenses/eclipse-1.0.php
  */
 
-package uk.ac.stfc.isis.ibex.instrument.switching;
+package uk.ac.stfc.isis.ibex.epics.switching;
 
 public class SwitcherFactory {
 
     public SwitcherFactory() {
     }
 
-    public Switcher getObservableSwitcer(OnSwitchBehaviour onSwitch) {
+    public Switcher getObservableSwitcher(OnSwitchBehaviour onSwitch) {
 
         Switcher switcher;
 
         if (onSwitch == OnSwitchBehaviour.NOTHING) {
-            switcher = new NothingSwitcher();
+            switcher = InstrumentSwitchers.getNothingSwitcher();
         } else if (onSwitch == OnSwitchBehaviour.CLOSING) {
-            switcher = new ClosingSwitcher();
+            switcher = InstrumentSwitchers.getClosingSwitcher();
         } else if (onSwitch == OnSwitchBehaviour.SWITCHING) {
-            switcher = new ObservablePrefixChangingSwitcher();
+            switcher = InstrumentSwitchers.getObservablePrefixChangingSwitcher();
         } else {
             switcher = null;
         }
@@ -46,11 +46,11 @@ public class SwitcherFactory {
         Switcher switcher;
 
         if (onSwitch == OnSwitchBehaviour.NOTHING) {
-            switcher = new NothingSwitcher();
+            switcher = InstrumentSwitchers.getNothingSwitcher();
         } else if (onSwitch == OnSwitchBehaviour.CLOSING) {
-            switcher = new ClosingSwitcher();
+            switcher = InstrumentSwitchers.getClosingSwitcher();
         } else if (onSwitch == OnSwitchBehaviour.SWITCHING) {
-            switcher = new WritablePrefixChangingSwitcher();
+            switcher = InstrumentSwitchers.getWritingPrefixChangingSwitcher();
         } else {
             switcher = null;
         }

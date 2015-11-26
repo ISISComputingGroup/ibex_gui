@@ -17,16 +17,10 @@
  * http://opensource.org/licenses/eclipse-1.0.php
  */
 
-package uk.ac.stfc.isis.ibex.instrument.switching;
+package uk.ac.stfc.isis.ibex.epics.switching;
 
-import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
-
-public class WritablePrefixChangingSwitcher extends Switcher {
-
-    @Override
-    public void setInstrument(InstrumentInfo instrumentInfo) {
-        // TODO Auto-generated method stub
-
-    }
-
+public enum OnSwitchBehaviour {
+    NOTHING,
+    CLOSING,
+    SWITCHING
 }

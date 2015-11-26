@@ -17,15 +17,16 @@
  * http://opensource.org/licenses/eclipse-1.0.php
  */
 
-package uk.ac.stfc.isis.ibex.instrument.switching;
+package uk.ac.stfc.isis.ibex.epics.switching;
 
 import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
+import uk.ac.stfc.isis.ibex.instrument.InstrumentInfoReceiver;
 
-public class ObservablePrefixChangingSwitcher extends Switcher {
+public class SwitchInstrument implements InstrumentInfoReceiver {
 
     @Override
-    public void setInstrument(InstrumentInfo instrumentInfo) {
-        // TODO Switch prefix
+    public void setInstrument(InstrumentInfo instrument) {
+        InstrumentSwitchers.getClosingSwitcher().switchInstrument(instrument);
     }
 
 }

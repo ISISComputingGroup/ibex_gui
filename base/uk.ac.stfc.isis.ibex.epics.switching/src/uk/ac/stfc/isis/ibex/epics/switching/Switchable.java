@@ -17,18 +17,10 @@
  * http://opensource.org/licenses/eclipse-1.0.php
  */
 
-package uk.ac.stfc.isis.ibex.instrument.switching;
+package uk.ac.stfc.isis.ibex.epics.switching;
 
-import uk.ac.stfc.isis.ibex.epics.observing.BaseCachingObservable;
-import uk.ac.stfc.isis.ibex.epics.observing.InitialiseOnSubscribeObservable;
+import uk.ac.stfc.isis.ibex.epics.pv.Closable;
 
-/**
- * This is not a permanent new class, just a temporary one while refactoring!
- */
-public class SwitchableInitialiseOnSubscribeObservable<T> extends InitialiseOnSubscribeObservable<T> implements Switchable {
+public interface Switchable extends Closable {
 
-    public SwitchableInitialiseOnSubscribeObservable(BaseCachingObservable<T> source) {
-        super(source);
-        // TODO Auto-generated constructor stub
-    }
 }
