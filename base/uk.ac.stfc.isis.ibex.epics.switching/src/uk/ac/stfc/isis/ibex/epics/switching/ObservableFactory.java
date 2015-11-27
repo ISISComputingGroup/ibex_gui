@@ -35,17 +35,16 @@ public class ObservableFactory<T> {
     private ChannelType<T> channelType;
     private Switcher switcher;
 
-    /**
-     * 
-     * @param channelType
-     * @param onSwitch
-     */
-    public ObservableFactory(ChannelType<T> channelType, OnSwitchBehaviour onSwitch) {
+    public ObservableFactory(ChannelType<T> channelType, OnSwitchBehaviour onSwitch,
+            SwitcherProvider switcherProvider) {
         
         this.channelType = channelType;
 
-        SwitcherProvider switcherFactory = new SwitcherProvider();
-        switcher = switcherFactory.getObservableSwitcher(onSwitch);
+        switcher = switcherProvider.getObservableSwitcher(onSwitch);
+    }
+
+    public ObservableFactory(ChannelType<T> channelType, OnSwitchBehaviour onSwitch) {
+        this(channelType, onSwitch, new SwitcherProvider());
     }
 
     /**
