@@ -24,6 +24,8 @@ import uk.ac.stfc.isis.ibex.epics.observing.InitialiseOnSubscribeObservable;
 
 /**
  * This is not a permanent new class, just a temporary one while refactoring!
+ * This should be merged with InitialiseOnSubscribeObservable once changes are
+ * made in the code base to use the new switching method.
  */
 public class SwitchableInitialiseOnSubscribeObservable<T> extends InitialiseOnSubscribeObservable<T> implements Switchable {
 
@@ -35,7 +37,7 @@ public class SwitchableInitialiseOnSubscribeObservable<T> extends InitialiseOnSu
     }
 
     @Override
-    public void registerSwitcher(Switcher switcher) {
+    public void setSwitcher(Switcher switcher) {
         this.switcher = switcher;
     }
 

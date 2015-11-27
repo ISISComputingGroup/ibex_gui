@@ -3,6 +3,10 @@ package uk.ac.stfc.isis.ibex.epics.switching;
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
 
+/**
+ * This is a singleton class. It provides singleton instances of the switchers,
+ * which have switchInstrument methods called by the SwitchInstrumentReciever.
+ */
 public class InstrumentSwitchers implements BundleActivator {
 
     private static InstrumentSwitchers instance;
@@ -11,7 +15,7 @@ public class InstrumentSwitchers implements BundleActivator {
     private static NothingSwitcher nothingSwitcher = new NothingSwitcher();
     private static ClosingSwitcher closingSwitcher = new ClosingSwitcher();
     private static ObservablePrefixChangingSwitcher observablePrefixChangingSwitcher = new ObservablePrefixChangingSwitcher();
-    private static WritablePrefixChangingSwitcher writingPrefixChangingSwitcher = new WritablePrefixChangingSwitcher();
+    private static WritablePrefixChangingSwitcher writablePrefixChangingSwitcher = new WritablePrefixChangingSwitcher();
 
 	static BundleContext getContext() {
 		return context;
@@ -55,7 +59,7 @@ public class InstrumentSwitchers implements BundleActivator {
         return observablePrefixChangingSwitcher;
     }
 
-    public static WritablePrefixChangingSwitcher getWritingPrefixChangingSwitcher() {
-        return writingPrefixChangingSwitcher;
+    public static WritablePrefixChangingSwitcher getWritablePrefixChangingSwitcher() {
+        return writablePrefixChangingSwitcher;
     }
 }

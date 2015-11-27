@@ -25,6 +25,10 @@ import java.util.Collection;
 import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
 import uk.ac.stfc.isis.ibex.instrument.channels.ChannelType;
 
+/**
+ * Abstract class for the switchers, which are responsible for performing the
+ * switching behaviour on any observables registered with them.
+ */
 public abstract class Switcher {
 
     Collection<Switchable> switchables;

@@ -22,11 +22,19 @@ package uk.ac.stfc.isis.ibex.epics.switching;
 import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
 import uk.ac.stfc.isis.ibex.instrument.InstrumentInfoReceiver;
 
+/**
+ * This class is instantiated through this package's plugin.xml, and is
+ * responsible for calling switchInstrument on the Switchers held by
+ * InstrumentSwitchers.
+ */
 public class SwitchInstrumentReceiver implements InstrumentInfoReceiver {
 
     @Override
     public void setInstrument(InstrumentInfo instrument) {
+        InstrumentSwitchers.getNothingSwitcher().switchInstrument(instrument);
         InstrumentSwitchers.getClosingSwitcher().switchInstrument(instrument);
+        InstrumentSwitchers.getObservablePrefixChangingSwitcher().switchInstrument(instrument);
+        InstrumentSwitchers.getWritablePrefixChangingSwitcher().switchInstrument(instrument);
     }
 
 }

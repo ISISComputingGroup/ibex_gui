@@ -20,7 +20,8 @@
 package uk.ac.stfc.isis.ibex.epics.switching;
 
 /**
- * This is not
+ * This class is responsible for returning the appropriate singleton Switcher
+ * instances.
  */
 public class SwitcherProvider {
 
@@ -53,7 +54,7 @@ public class SwitcherProvider {
         } else if (onSwitch == OnSwitchBehaviour.CLOSING) {
             switcher = InstrumentSwitchers.getClosingSwitcher();
         } else if (onSwitch == OnSwitchBehaviour.SWITCHING) {
-            switcher = InstrumentSwitchers.getWritingPrefixChangingSwitcher();
+            switcher = InstrumentSwitchers.getWritablePrefixChangingSwitcher();
         } else {
             switcher = null;
         }

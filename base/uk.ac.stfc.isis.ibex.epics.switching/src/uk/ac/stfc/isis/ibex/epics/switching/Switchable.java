@@ -21,8 +21,14 @@ package uk.ac.stfc.isis.ibex.epics.switching;
 
 import uk.ac.stfc.isis.ibex.epics.pv.Closable;
 
+/**
+ * An interface for all switchable objects, such as writables and observables.
+ * Contains a method to set the switcher that will be responsible for switching
+ * it. Switchables should make sure they remove themselves from their switcher
+ * when closing!
+ */
 public interface Switchable extends Closable {
 
-    public void registerSwitcher(Switcher switcher);
+    public void setSwitcher(Switcher switcher);
 
 }

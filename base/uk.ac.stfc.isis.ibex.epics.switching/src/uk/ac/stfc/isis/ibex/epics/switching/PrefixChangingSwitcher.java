@@ -21,6 +21,12 @@ package uk.ac.stfc.isis.ibex.epics.switching;
 
 import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
 
+/**
+ * This is an abstract class for all the prefix changing switchers. It holds the
+ * old pv prefix, which is updated when switchInstrument is called. This means
+ * subclasses should make sure they first make use of the old pv prefix, then
+ * call super.switchInstrument(...).
+ */
 public abstract class PrefixChangingSwitcher extends Switcher {
 
     String pvPrefix = "";

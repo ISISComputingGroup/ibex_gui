@@ -19,6 +19,11 @@
 
 package uk.ac.stfc.isis.ibex.epics.switching;
 
+/**
+ * Sets behaviour when instrument switches. Can either do nothing, e.g beam
+ * status PV observables, can close, e.g. for blocks or can switch, e.g. for
+ * synoptic.
+ */
 public enum OnSwitchBehaviour {
     NOTHING,
     CLOSING,

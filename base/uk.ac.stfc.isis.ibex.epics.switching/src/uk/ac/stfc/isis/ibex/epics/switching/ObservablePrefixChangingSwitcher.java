@@ -21,6 +21,12 @@ package uk.ac.stfc.isis.ibex.epics.switching;
 
 import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
 
+/**
+ * This class is responsible for creating and setting the new source for the
+ * observable. It takes the old PV address, replaces the old prefix with the new
+ * prefix, and then sets this as a source on the observable.
+ * 
+ */
 public class ObservablePrefixChangingSwitcher extends PrefixChangingSwitcher {
 
     @Override

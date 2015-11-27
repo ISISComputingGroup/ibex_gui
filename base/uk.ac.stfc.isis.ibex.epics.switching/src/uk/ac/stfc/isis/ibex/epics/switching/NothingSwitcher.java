@@ -21,6 +21,10 @@ package uk.ac.stfc.isis.ibex.epics.switching;
 
 import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
 
+/**
+ * A switcher that does nothing. This class can probably be removed, but is left
+ * in for clarity now.
+ */
 public class NothingSwitcher extends Switcher {
 
     @Override

@@ -21,6 +21,10 @@ package uk.ac.stfc.isis.ibex.epics.switching;
 
 import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
 
+/**
+ * This switcher closes the observable. The observable itself is responsible for
+ * removing itself from the switchables list.
+ */
 public class ClosingSwitcher extends Switcher {
 
     public ClosingSwitcher() {
