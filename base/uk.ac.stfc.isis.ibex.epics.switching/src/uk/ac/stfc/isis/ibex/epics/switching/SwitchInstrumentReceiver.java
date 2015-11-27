@@ -22,7 +22,7 @@ package uk.ac.stfc.isis.ibex.epics.switching;
 import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
 import uk.ac.stfc.isis.ibex.instrument.InstrumentInfoReceiver;
 
-public class SwitchInstrument implements InstrumentInfoReceiver {
+public class SwitchInstrumentReceiver implements InstrumentInfoReceiver {
 
     @Override
     public void setInstrument(InstrumentInfo instrument) {

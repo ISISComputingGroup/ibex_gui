@@ -19,9 +19,12 @@
 
 package uk.ac.stfc.isis.ibex.epics.switching;
 
-public class SwitcherFactory {
+/**
+ * This is not
+ */
+public class SwitcherProvider {
 
-    public SwitcherFactory() {
+    public SwitcherProvider() {
     }
 
     public Switcher getObservableSwitcher(OnSwitchBehaviour onSwitch) {

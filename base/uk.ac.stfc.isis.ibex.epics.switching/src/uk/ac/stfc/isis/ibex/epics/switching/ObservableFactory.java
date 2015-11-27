@@ -23,26 +23,46 @@ import uk.ac.stfc.isis.ibex.epics.observing.ClosableCachingObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.ClosingSwitchableObservable;
 import uk.ac.stfc.isis.ibex.instrument.channels.ChannelType;
 
+/**
+ * This class is responsible for creation of the observable, and registering the
+ * observable with a switcher.
+ *
+ * @param <T>
+ *            The observable value type
+ */
 public class ObservableFactory<T> {
 
     private ChannelType<T> channelType;
     private Switcher switcher;
 
+    /**
+     * 
+     * @param channelType
+     * @param onSwitch
+     */
     public ObservableFactory(ChannelType<T> channelType, OnSwitchBehaviour onSwitch) {
         
         this.channelType = channelType;
 
-        SwitcherFactory switcherFactory = new SwitcherFactory();
+        SwitcherProvider switcherFactory = new SwitcherProvider();
         switcher = switcherFactory.getObservableSwitcher(onSwitch);
     }
 
+    /**
+     * Create and return a PV observable of the correct type, registering it
+     * with the switcher.
+     * 
+     * @param address
+     *            The PV address
+     * @return The PV observable
+     */
     public SwitchableInitialiseOnSubscribeObservable<T> getPVObserverable(String address) {
         ClosableCachingObservable<T> channelReader = channelType.reader(address);
         final ClosingSwitchableObservable<T> channel = new ClosingSwitchableObservable<>(channelReader);
 
         SwitchableInitialiseOnSubscribeObservable<T> createdObservable = new SwitchableInitialiseOnSubscribeObservable<>(
                 channel);
-        switcher.registerSwitchable(createdObservable);
+        switcher.<T> registerSwitchable(createdObservable, address, channelType);
         
         return createdObservable;
     }

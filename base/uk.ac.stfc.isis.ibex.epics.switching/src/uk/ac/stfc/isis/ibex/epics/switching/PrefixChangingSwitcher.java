@@ -21,12 +21,13 @@ package uk.ac.stfc.isis.ibex.epics.switching;
 
 import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
 
-public class WritablePrefixChangingSwitcher extends PrefixChangingSwitcher {
+public abstract class PrefixChangingSwitcher extends Switcher {
+
+    String pvPrefix = "";
 
     @Override
     public void switchInstrument(InstrumentInfo instrumentInfo) {
-        // TODO Writable switch
-        super.switchInstrument(instrumentInfo);
+        pvPrefix = instrumentInfo.pvPrefix();
     }
 
 }

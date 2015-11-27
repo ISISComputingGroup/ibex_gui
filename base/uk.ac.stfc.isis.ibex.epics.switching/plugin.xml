@@ -4,7 +4,7 @@
    <extension
          point="uk.ac.stfc.isis.ibex.instrument.info">
       <InstrumentInfoReceiver
-            class="uk.ac.stfc.isis.ibex.epics.switching.InstrumentSwitcher">
+            class="uk.ac.stfc.isis.ibex.epics.switching.SwitchInstrumentReceiver">
       </InstrumentInfoReceiver>
    </extension>
 

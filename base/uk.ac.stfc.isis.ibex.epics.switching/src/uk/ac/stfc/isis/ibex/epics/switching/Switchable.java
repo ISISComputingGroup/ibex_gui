@@ -23,4 +23,6 @@ import uk.ac.stfc.isis.ibex.epics.pv.Closable;
 
 public interface Switchable extends Closable {
 
+    public void registerSwitcher(Switcher switcher);
+
 }

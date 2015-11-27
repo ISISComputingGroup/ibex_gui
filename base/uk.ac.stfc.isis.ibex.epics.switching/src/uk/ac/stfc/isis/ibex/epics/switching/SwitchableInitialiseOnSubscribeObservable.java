@@ -27,8 +27,23 @@ import uk.ac.stfc.isis.ibex.epics.observing.InitialiseOnSubscribeObservable;
  */
 public class SwitchableInitialiseOnSubscribeObservable<T> extends InitialiseOnSubscribeObservable<T> implements Switchable {
 
+    private Switcher switcher;
+
     public SwitchableInitialiseOnSubscribeObservable(BaseCachingObservable<T> source) {
         super(source);
         // TODO Auto-generated constructor stub
+    }
+
+    @Override
+    public void registerSwitcher(Switcher switcher) {
+        this.switcher = switcher;
+    }
+
+    @Override
+    public void close() {
+        if (switcher != null) {
+            switcher.unregsiterSwitchable(this);
+        }
+        super.close();
     }
 }

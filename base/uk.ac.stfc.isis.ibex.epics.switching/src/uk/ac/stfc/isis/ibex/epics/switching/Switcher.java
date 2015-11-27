@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
+import uk.ac.stfc.isis.ibex.instrument.channels.ChannelType;
 
 public abstract class Switcher {
 
@@ -34,8 +35,12 @@ public abstract class Switcher {
 
     public abstract void switchInstrument(InstrumentInfo instrumentInfo);
 
-    public void registerSwitchable(Switchable switchable) {
+    public <T> void registerSwitchable(Switchable switchable, String pvAddress, ChannelType<T> channelType) {
         switchables.add(switchable);
+    }
+
+    public void unregsiterSwitchable(Switchable switchableInitialiseOnSubscribeObservable) {
+        switchables.remove(switchableInitialiseOnSubscribeObservable);
     }
 
 }
