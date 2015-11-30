@@ -28,6 +28,9 @@ import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 
+/**
+ * A button which relates to the alarm model from BEAST
+ */
 public class AlarmButton extends PerspectiveButton {
 
 	private FlashingButton flash;

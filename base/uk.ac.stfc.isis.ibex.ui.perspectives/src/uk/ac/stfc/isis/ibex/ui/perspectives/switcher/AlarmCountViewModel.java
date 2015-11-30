@@ -22,7 +22,6 @@ package uk.ac.stfc.isis.ibex.ui.perspectives.switcher;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
-import uk.ac.stfc.isis.ibex.alarm.Alarm;
 import uk.ac.stfc.isis.ibex.alarm.AlarmCounter;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 
@@ -37,9 +36,7 @@ public class AlarmCountViewModel extends ModelObject {
 	private boolean hasMessages;
 	
 	public AlarmCountViewModel(final AlarmCounter alarmCounter) {
-//		final AlarmCounter alarmCounter = alarm.getCounter();
 		alarmCounter.addPropertyChangeListener("alarmCount", new PropertyChangeListener() {
-			
 			@Override
 			public void propertyChange(PropertyChangeEvent arg0) {
 				update(alarmCounter.getCount());

@@ -31,7 +31,7 @@ import org.eclipse.swt.widgets.Display;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 
 /**
- * 
+ * A model to provide listeners and events which interact with the alarm server
  */
 public class AlarmCounter extends ModelObject {
 	
@@ -40,35 +40,34 @@ public class AlarmCounter extends ModelObject {
 
 	public AlarmCounter(AlarmClientModel alarmModel){
 		this.alarmModel = alarmModel;
-		test();
-	}
-	
-	private void test() {
-			alarmModel.addListener(new AlarmClientModelListener() {
-			
+		alarmModel.addListener(new AlarmClientModelListener() {
 			@Override
 			public void newAlarmConfiguration(AlarmClientModel model) {
 			}
-			
 			@Override
 			public void serverTimeout(AlarmClientModel model) {
 			}
-			
 			@Override
 			public void serverModeUpdate(AlarmClientModel model, boolean maintenance_mode) {
 			}
-			
 			@Override
 			public void newAlarmState(AlarmClientModel model, AlarmTreePV pv, boolean parent_changed) {
 				fireCountChanged(count, count = alarmModel.getActiveAlarms().length);
 			}
 		});
 	}
+	
 
 	public void resetCount() {
 		count = 0;
 	}
 	
+	/**
+	 * Use of runnable to avoid error between SWT and BEAST
+	 * 
+	 * @param prevCount
+	 * @param count
+	 */
 	private void fireCountChanged(int prevCount, int count) {
 		Display.getDefault().asyncExec( new Runnable() {  
 			public void run() {firePropertyChange("alarmCount", prevCount, count); } 
@@ -77,7 +76,7 @@ public class AlarmCounter extends ModelObject {
 
 
 	/**
-	 * @return
+	 * @return count value
 	 */
 	public int getCount() {
 		return count;

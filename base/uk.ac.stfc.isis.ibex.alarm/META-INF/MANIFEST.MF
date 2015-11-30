@@ -8,7 +8,8 @@ Require-Bundle: org.eclipse.core.runtime,
  org.csstudio.alarm.beast;bundle-version="3.2.3",
  uk.ac.stfc.isis.ibex.model,
  org.eclipse.ui.workbench,
- org.eclipse.swt
+ org.eclipse.swt,
+ uk.ac.stfc.isis.ibex.logger
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Bundle-ActivationPolicy: lazy
 Export-Package: uk.ac.stfc.isis.ibex.alarm

@@ -18,16 +18,21 @@
 
 package uk.ac.stfc.isis.ibex.alarm;
 
+import org.apache.logging.log4j.Logger;
 import org.csstudio.alarm.beast.ui.clientmodel.AlarmClientModel;
 import org.csstudio.alarm.beast.ui.clientmodel.AlarmClientModelListener;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
+
+import uk.ac.stfc.isis.ibex.logger.IsisLog;
 
 /**
  * Class which provides an interaction between the perspective switcher and the alarm system
  */
 public class Alarm extends AbstractUIPlugin {
 
+	private static final Logger LOG = IsisLog.getLogger(Alarm.class);
+	
 	private static BundleContext context;
 	private static Alarm instance;
 	
@@ -49,7 +54,7 @@ public class Alarm extends AbstractUIPlugin {
 		try {
 			alarmModel = AlarmClientModel.getInstance();
 		} catch (Exception e) {
-			// Not sure what to do about this, so not doing anything at the moment
+			LOG.info("Alarm Client Model not found");
 		}
 		counter = new AlarmCounter(alarmModel);
 	}
@@ -58,15 +63,6 @@ public class Alarm extends AbstractUIPlugin {
 	static BundleContext getContext() {
 		return context;
 	}
-	
-	
-	public void start(BundleContext bundleContext) throws Exception {
-		Alarm.context = bundleContext;
-	    }
-
-	    public void stop(BundleContext bundleContext) throws Exception {
-		Alarm.context = null;
-	    }
 	
 	/**
 	 * @return the counter being used
