@@ -26,6 +26,9 @@ import uk.ac.stfc.isis.ibex.alarm.Alarm;
 import uk.ac.stfc.isis.ibex.alarm.AlarmCounter;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 
+/**
+ * A model to provide easy access to listeners for the interaction with the alarm system
+ */
 public class AlarmCountViewModel extends ModelObject {
 	
 	private static final String ALARM = "Alarms"; 
@@ -33,17 +36,17 @@ public class AlarmCountViewModel extends ModelObject {
 	private String text;
 	private boolean hasMessages;
 	
-	public AlarmCountViewModel(final Alarm test) {
-		final AlarmCounter a_counter = test.getCounter();
-		a_counter.addPropertyChangeListener("count", new PropertyChangeListener() {
+	public AlarmCountViewModel(final AlarmCounter alarmCounter) {
+//		final AlarmCounter alarmCounter = alarm.getCounter();
+		alarmCounter.addPropertyChangeListener("alarmCount", new PropertyChangeListener() {
 			
 			@Override
 			public void propertyChange(PropertyChangeEvent arg0) {
-				update(a_counter.getCount());
+				update(alarmCounter.getCount());
 			}
 		});
 		
-		update(a_counter.getCount());
+		update(alarmCounter.getCount());
 	}
 	
 	public String getText() {

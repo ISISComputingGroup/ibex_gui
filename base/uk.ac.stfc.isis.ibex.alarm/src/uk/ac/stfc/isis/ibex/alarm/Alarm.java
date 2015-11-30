@@ -18,21 +18,19 @@
 
 package uk.ac.stfc.isis.ibex.alarm;
 
-import java.beans.PropertyChangeListener;
-import java.util.ArrayList;
-
-import org.csstudio.alarm.beast.client.AlarmTreePV;
 import org.csstudio.alarm.beast.ui.clientmodel.AlarmClientModel;
 import org.csstudio.alarm.beast.ui.clientmodel.AlarmClientModelListener;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
+/**
+ * Class which provides an interaction between the perspective switcher and the alarm system
+ */
 public class Alarm extends AbstractUIPlugin {
 
 	private static BundleContext context;
 	private static Alarm instance;
 	
-
 	public static Alarm getInstance() {
 		return instance;
 	    }
@@ -42,12 +40,12 @@ public class Alarm extends AbstractUIPlugin {
 	}
 
 	private AlarmClientModel alarmModel;
-	private int count;
 	private AlarmCounter counter;
 	AlarmClientModelListener listener;
 	
 	public Alarm() {
 		super();
+		instance = this;
 		try {
 			alarmModel = AlarmClientModel.getInstance();
 		} catch (Exception e) {
@@ -70,18 +68,9 @@ public class Alarm extends AbstractUIPlugin {
 		Alarm.context = null;
 	    }
 	
-	
-	public int AlarmCount(){
-		return counter.getCount();
-	}
-
 	/**
-	 * @return
+	 * @return the counter being used
 	 */
-	public long getCount() {
-		return counter.getCount();
-	}
-
 	public AlarmCounter getCounter() {
 		return counter;
 	}

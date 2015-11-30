@@ -26,6 +26,7 @@ package uk.ac.stfc.isis.ibex.alarm;
 import org.csstudio.alarm.beast.client.AlarmTreePV;
 import org.csstudio.alarm.beast.ui.clientmodel.AlarmClientModel;
 import org.csstudio.alarm.beast.ui.clientmodel.AlarmClientModelListener;
+import org.eclipse.swt.widgets.Display;
 
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 
@@ -39,7 +40,11 @@ public class AlarmCounter extends ModelObject {
 
 	public AlarmCounter(AlarmClientModel alarmModel){
 		this.alarmModel = alarmModel;
-		this.alarmModel.addListener(new AlarmClientModelListener() {
+		test();
+	}
+	
+	private void test() {
+			alarmModel.addListener(new AlarmClientModelListener() {
 			
 			@Override
 			public void newAlarmConfiguration(AlarmClientModel model) {
@@ -55,19 +60,19 @@ public class AlarmCounter extends ModelObject {
 			
 			@Override
 			public void newAlarmState(AlarmClientModel model, AlarmTreePV pv, boolean parent_changed) {
-				int newCount = alarmModel.getActiveAlarms().length;
-				fireCountChanged(count, newCount);
+				fireCountChanged(count, count = alarmModel.getActiveAlarms().length);
 			}
 		});
 	}
-	
 
 	public void resetCount() {
 		count = 0;
 	}
 	
-	private void fireCountChanged(int previousCount, int newCount) {
-		firePropertyChange("count", previousCount, count = newCount);
+	private void fireCountChanged(int prevCount, int count) {
+		Display.getDefault().asyncExec( new Runnable() {  
+			public void run() {firePropertyChange("alarmCount", prevCount, count); } 
+		});
 	}
 
 
