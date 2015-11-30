@@ -35,11 +35,9 @@ import uk.ac.stfc.isis.ibex.model.ModelObject;
  */
 public class AlarmCounter extends ModelObject {
 	
-	private AlarmClientModel alarmModel;
 	private int count;
 
 	public AlarmCounter(AlarmClientModel alarmModel){
-		this.alarmModel = alarmModel;
 		alarmModel.addListener(new AlarmClientModelListener() {
 			@Override
 			public void newAlarmConfiguration(AlarmClientModel model) {
