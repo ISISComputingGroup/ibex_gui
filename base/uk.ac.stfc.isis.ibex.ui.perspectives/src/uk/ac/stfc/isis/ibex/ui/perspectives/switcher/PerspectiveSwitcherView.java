@@ -82,11 +82,14 @@ public class PerspectiveSwitcherView extends ViewPart implements ISizeProvider {
 		button.setLayoutData(gd);
 	}
 
+	/**
+	 * @param container
+	 * @param perspective
+	 * @return button to add to the perspective, default is perspective button
+	 */
 	private PerspectiveButton buttonForPerspective(Composite container,
 			IsisPerspective perspective) {
-		
-		//kvlb
-		//Refactor to allow other escape values
+
 		PerspectiveButton buttonToAdd;
 		switch (perspective.ID()) {
 			case "uk.ac.stfc.isis.ibex.ui.log.perspective":
@@ -99,21 +102,8 @@ public class PerspectiveSwitcherView extends ViewPart implements ISizeProvider {
 				buttonToAdd = new PerspectiveButton(container, perspective.ID());
 				break;
 		}
-//		if (isLogPerspective(perspective)){
-//			buttonToAdd = new LogButton(container, perspective.ID());
-//		}
-//		else {
-//			buttonToAdd = new PerspectiveButton(container, perspective.ID());
-//		}
 
 		return buttonToAdd;
-//		return isLogPerspective(perspective) 
-//				? new LogButton(container, perspective.ID()) 
-//				: new PerspectiveButton(container, perspective.ID());
-	}
-
-	private boolean isLogPerspective(IsisPerspective perspective) {
-		return perspective.ID() == "uk.ac.stfc.isis.ibex.ui.log.perspective";
 	}
 
 	/**
