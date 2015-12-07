@@ -19,7 +19,7 @@
 
 package uk.ac.stfc.isis.ibex.epics.switching;
 
-import uk.ac.stfc.isis.ibex.epics.observing.BaseCachingObservable;
+import uk.ac.stfc.isis.ibex.epics.observing.ClosableCachingObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.InitialiseOnSubscribeObservable;
 
 /**
@@ -30,10 +30,11 @@ import uk.ac.stfc.isis.ibex.epics.observing.InitialiseOnSubscribeObservable;
 public class SwitchableInitialiseOnSubscribeObservable<T> extends InitialiseOnSubscribeObservable<T> implements Switchable {
 
     private Switcher switcher;
+    private ClosableCachingObservable<T> source;
 
-    public SwitchableInitialiseOnSubscribeObservable(BaseCachingObservable<T> source) {
+    public SwitchableInitialiseOnSubscribeObservable(ClosableCachingObservable<T> source) {
         super(source);
-        // TODO Auto-generated constructor stub
+        this.source = source;
     }
 
     @Override
@@ -46,6 +47,7 @@ public class SwitchableInitialiseOnSubscribeObservable<T> extends InitialiseOnSu
         if (switcher != null) {
             switcher.unregsiterSwitchable(this);
         }
+        source.close();
         super.close();
     }
 }
