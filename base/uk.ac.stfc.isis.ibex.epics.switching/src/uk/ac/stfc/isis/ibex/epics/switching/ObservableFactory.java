@@ -63,6 +63,8 @@ public class ObservableFactory<T> {
                 channel);
         switcher.<T> registerSwitchable(createdObservable, address, channelType);
         
+        createdObservable.setSwitcher(switcher);
+
         return createdObservable;
     }
 

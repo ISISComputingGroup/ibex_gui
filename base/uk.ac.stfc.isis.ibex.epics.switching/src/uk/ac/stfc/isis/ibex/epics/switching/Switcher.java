@@ -19,8 +19,8 @@
 
 package uk.ac.stfc.isis.ibex.epics.switching;
 
-import java.util.ArrayList;
 import java.util.Collection;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
 import uk.ac.stfc.isis.ibex.instrument.channels.ChannelType;
@@ -31,10 +31,13 @@ import uk.ac.stfc.isis.ibex.instrument.channels.ChannelType;
  */
 public abstract class Switcher {
 
-    Collection<Switchable> switchables;
+    protected Collection<Switchable> switchables;
 
     public Switcher() {
-        switchables = new ArrayList<>();
+        /**
+         * CopyOnWriteArrayList avoids concurrent access problems.
+         */
+        switchables = new CopyOnWriteArrayList<>();
     }
 
     public abstract void switchInstrument(InstrumentInfo instrumentInfo);
@@ -45,6 +48,13 @@ public abstract class Switcher {
 
     public void unregsiterSwitchable(Switchable switchableInitialiseOnSubscribeObservable) {
         switchables.remove(switchableInitialiseOnSubscribeObservable);
+    }
+
+    /**
+     * Just used for testing so far.
+     */
+    public Collection<Switchable> getSwitchables() {
+        return switchables;
     }
 
 }

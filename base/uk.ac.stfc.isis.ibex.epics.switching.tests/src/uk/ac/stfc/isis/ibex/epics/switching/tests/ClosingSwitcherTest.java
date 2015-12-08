@@ -19,6 +19,9 @@
 
 package uk.ac.stfc.isis.ibex.epics.switching.tests;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -31,30 +34,37 @@ import uk.ac.stfc.isis.ibex.epics.observing.ClosableCachingObservable;
 import uk.ac.stfc.isis.ibex.epics.switching.ClosingSwitcher;
 import uk.ac.stfc.isis.ibex.epics.switching.ObservableFactory;
 import uk.ac.stfc.isis.ibex.epics.switching.OnSwitchBehaviour;
+import uk.ac.stfc.isis.ibex.epics.switching.SwitchableInitialiseOnSubscribeObservable;
 import uk.ac.stfc.isis.ibex.epics.switching.SwitcherProvider;
 import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
 import uk.ac.stfc.isis.ibex.instrument.channels.ChannelType;
 
 public class ClosingSwitcherTest {
     
-    private static final String PV_ADDRESS = "PREFIX:SUFFIX";
+    private static final String PV_PREFIX = "PREFIX:";
+    private static final String PV_ADDRESS = PV_PREFIX + "SUFFIX";
+    private static final String PV_ADDRESS_2 = PV_PREFIX + "SUFFIX_2";
 
     private ObservableFactory<String> obsFactory;
     private ClosingSwitcher closingSwitcher;
     private ClosableCachingObservable<String> closableCachingObservable;
+    private ClosableCachingObservable<String> closableCachingObservable2;
     private ChannelType<String> channelType;
     private InstrumentInfo instrumentInfo;
 
+    @SuppressWarnings("unchecked")
     @Before
     public void setUp() {
         // Arrange
         instrumentInfo = mock(InstrumentInfo.class);
-        when(instrumentInfo.pvPrefix()).thenReturn("PREFIX:");
+        when(instrumentInfo.pvPrefix()).thenReturn(PV_PREFIX);
 
         closableCachingObservable = mock(ClosableCachingObservable.class);
+        closableCachingObservable2 = mock(ClosableCachingObservable.class);
         
         channelType = mock(ChannelType.class);
         when(channelType.reader(PV_ADDRESS)).thenReturn(closableCachingObservable);
+        when(channelType.reader(PV_ADDRESS_2)).thenReturn(closableCachingObservable2);
 
         closingSwitcher = new ClosingSwitcher();
 
@@ -65,13 +75,100 @@ public class ClosingSwitcherTest {
     }
 
     @Test
-    public void calling_close_calls_close_on_source_observable() {
+    public void switcher_with_no_observables_does_nothing_when_switching() {
+        // Act
+        closingSwitcher.switchInstrument(instrumentInfo);
+    }
+
+    @Test
+    public void observable_factory_registers_pv_with_switcher() {
+        // Act
+        SwitchableInitialiseOnSubscribeObservable<String> switchable = obsFactory.getPVObserverable(PV_ADDRESS);
+
+        // Assert
+        assertTrue(closingSwitcher.getSwitchables().contains(switchable));
+    }
+
+    @Test
+    public void observable_factory_registers_multiple_pvs_with_switcher() {
+        // Act
+        SwitchableInitialiseOnSubscribeObservable<String> switchable = obsFactory.getPVObserverable(PV_ADDRESS);
+        SwitchableInitialiseOnSubscribeObservable<String> switchable2 = obsFactory.getPVObserverable(PV_ADDRESS_2);
+
+        // Assert
+        assertTrue(closingSwitcher.getSwitchables().contains(switchable));
+        assertTrue(closingSwitcher.getSwitchables().contains(switchable2));
+    }
+
+    @Test
+    public void switching_closing_observable_calls_close_on_observable() {
         // Act
         obsFactory.getPVObserverable(PV_ADDRESS);
         closingSwitcher.switchInstrument(instrumentInfo);
 
         // Assert
         verify(closableCachingObservable, times(1)).close();
+    }
+
+    @Test
+    public void switching_closing_observable_unregisters_observable_from_switcher() {
+        // Act
+        obsFactory.getPVObserverable(PV_ADDRESS);
+        closingSwitcher.switchInstrument(instrumentInfo);
+
+        // Assert
+        assertEquals(0, closingSwitcher.getSwitchables().size());
+    }
+
+    @Test
+    public void switching_closing_observable_unregisters_multiple_observables_from_switcher() {
+        // Act
+        obsFactory.getPVObserverable(PV_ADDRESS);
+        obsFactory.getPVObserverable(PV_ADDRESS_2);
+        closingSwitcher.switchInstrument(instrumentInfo);
+
+        // Assert
+        assertEquals(0, closingSwitcher.getSwitchables().size());
+    }
+
+    @Test
+    public void switching_twice_correctly_switches_observables_added_after_first_switch() {
+        // Act
+        obsFactory.getPVObserverable(PV_ADDRESS);
+        closingSwitcher.switchInstrument(instrumentInfo);
+
+        obsFactory.getPVObserverable(PV_ADDRESS_2);
+        closingSwitcher.switchInstrument(instrumentInfo);
+
+        // Assert
+        verify(closableCachingObservable2, times(1)).close();
+    }
+
+    @Test
+    public void closing_observable_manually_unregisters_observable_from_switcher() {
+        // Act
+        SwitchableInitialiseOnSubscribeObservable<String> switchable = obsFactory.getPVObserverable(PV_ADDRESS);
+        SwitchableInitialiseOnSubscribeObservable<String> switchable2 = obsFactory.getPVObserverable(PV_ADDRESS_2);
+
+        switchable.close();
+
+        // Assert
+        assertFalse(closingSwitcher.getSwitchables().contains(switchable));
+        assertTrue(closingSwitcher.getSwitchables().contains(switchable2));
+    }
+
+    @Test
+    public void closing_observable_manually_twice_does_nothing() {
+        // Act
+        SwitchableInitialiseOnSubscribeObservable<String> switchable = obsFactory.getPVObserverable(PV_ADDRESS);
+        SwitchableInitialiseOnSubscribeObservable<String> switchable2 = obsFactory.getPVObserverable(PV_ADDRESS_2);
+
+        switchable.close();
+        switchable.close();
+
+        // Assert
+        assertFalse(closingSwitcher.getSwitchables().contains(switchable));
+        assertTrue(closingSwitcher.getSwitchables().contains(switchable2));
     }
 
 }
