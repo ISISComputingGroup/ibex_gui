@@ -50,4 +50,13 @@ public class SwitchableInitialiseOnSubscribeObservable<T> extends InitialiseOnSu
         source.close();
         super.close();
     }
+
+    public void setSource(ClosableCachingObservable<T> newSource) {
+        source.close();
+        this.source = newSource;
+    }
+
+    public Switcher getSwitcher() {
+        return this.switcher;
+    }
 }
