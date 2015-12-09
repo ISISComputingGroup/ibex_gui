@@ -20,6 +20,7 @@
 package uk.ac.stfc.isis.ibex.epics.switching;
 
 import java.util.Collection;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
 import uk.ac.stfc.isis.ibex.instrument.channels.ChannelType;
@@ -30,17 +31,16 @@ import uk.ac.stfc.isis.ibex.instrument.channels.ChannelType;
  * prefix, and then sets this as a source on the observable.
  * 
  */
-@SuppressWarnings({ "rawtypes", "unchecked" })
 public class ObservablePrefixChangingSwitcher extends PrefixChangingSwitcher {
 
     private class SwitchableInformation {
 
-        public SwitchableInitialiseOnSubscribeObservable switchable;
+        public SwitchableInitialiseOnSubscribeObservable<?> switchable;
         public String pvAddress;
-        public ChannelType channelType;
+        public ChannelType<?> channelType;
 
-        public SwitchableInformation(SwitchableInitialiseOnSubscribeObservable switchable, String pvAddress,
-                ChannelType channelType) {
+        public SwitchableInformation(SwitchableInitialiseOnSubscribeObservable<?> switchable, String pvAddress,
+                ChannelType<?> channelType) {
             this.switchable = switchable;
             this.pvAddress = pvAddress;
             this.channelType = channelType;
@@ -62,6 +62,10 @@ public class ObservablePrefixChangingSwitcher extends PrefixChangingSwitcher {
     }
 
     protected Collection<SwitchableInformation> switchables;
+
+    public ObservablePrefixChangingSwitcher() {
+        switchables = new CopyOnWriteArrayList<>();
+    }
 
     /**
      * This effectively overrides the super class method in Switcher to register
@@ -87,13 +91,13 @@ public class ObservablePrefixChangingSwitcher extends PrefixChangingSwitcher {
             
             // Create a new observable factory, with the old channel type,
             // switching behaviour and switcher
-            ObservableFactory obsFactory = new ObservableFactory(switchableInformation.channelType,
+            ObservableFactory<?> obsFactory = new ObservableFactory<>(switchableInformation.channelType,
                     OnSwitchBehaviour.SWITCHING, switcherProvider);
             
             String switcherPvAddress = switchableInformation.pvAddress.replace(pvPrefix, instrumentInfo.pvPrefix());
 
             // Close the old switchable
-            switchableInformation.switchable.close();
+            switchableInformation.switchable.getSource().close();
             // Set the new source
             switchableInformation.switchable.setSource(obsFactory.getPVObserverable(switcherPvAddress));
 
