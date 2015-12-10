@@ -26,36 +26,29 @@ import uk.ac.stfc.isis.ibex.instrument.channels.ChannelType;
 /**
  * This class is responsible for creation of the observable, and registering the
  * observable with a switcher.
- *
- * @param <T>
- *            The observable value type
  */
-public class ObservableFactory<T> {
-
-    private ChannelType<T> channelType;
+public class ObservableFactory {
     private Switcher switcher;
 
-    public ObservableFactory(ChannelType<T> channelType, OnSwitchBehaviour onSwitch,
+    public ObservableFactory(OnSwitchBehaviour onSwitch,
             SwitcherProvider switcherProvider) {
-        
-        this.channelType = channelType;
-
         switcher = switcherProvider.getObservableSwitcher(onSwitch);
     }
 
-    public ObservableFactory(ChannelType<T> channelType, OnSwitchBehaviour onSwitch) {
-        this(channelType, onSwitch, new SwitcherProvider());
+    public ObservableFactory(OnSwitchBehaviour onSwitch) {
+        this(onSwitch, new SwitcherProvider());
     }
 
     /**
      * Create and return a PV observable of the correct type, registering it
      * with the switcher.
      * 
-     * @param address
-     *            The PV address
-     * @return The PV observable
+     * @param <T> the type of the channel
+     * @param address the PV address
+     * @return the PV observable
      */
-    public SwitchableInitialiseOnSubscribeObservable<T> getPVObserverable(String address) {
+    public <T> SwitchableInitialiseOnSubscribeObservable<T> getPVObserverable(ChannelType<T> channelType,
+            String address) {
         ClosableCachingObservable<T> channelReader = channelType.reader(address);
         final ClosingSwitchableObservable<T> channel = new ClosingSwitchableObservable<>(channelReader);
 

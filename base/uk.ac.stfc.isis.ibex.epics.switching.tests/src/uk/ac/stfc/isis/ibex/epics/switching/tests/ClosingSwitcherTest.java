@@ -45,7 +45,7 @@ public class ClosingSwitcherTest {
     private static final String PV_ADDRESS = PV_PREFIX + "SUFFIX";
     private static final String PV_ADDRESS_2 = PV_PREFIX + "SUFFIX_2";
 
-    private ObservableFactory<String> obsFactory;
+    private ObservableFactory obsFactory;
     private ClosingSwitcher closingSwitcher;
     private ClosableCachingObservable<String> closableCachingObservable;
     private ClosableCachingObservable<String> closableCachingObservable2;
@@ -71,7 +71,7 @@ public class ClosingSwitcherTest {
         SwitcherProvider switcherProvider = mock(SwitcherProvider.class);
         when(switcherProvider.getObservableSwitcher(OnSwitchBehaviour.CLOSING)).thenReturn(closingSwitcher);
 
-        obsFactory = new ObservableFactory<String>(channelType, OnSwitchBehaviour.CLOSING, switcherProvider);
+        obsFactory = new ObservableFactory(OnSwitchBehaviour.CLOSING, switcherProvider);
     }
 
     @Test
@@ -83,27 +83,17 @@ public class ClosingSwitcherTest {
     @Test
     public void observable_factory_registers_pv_with_switcher() {
         // Act
-        SwitchableInitialiseOnSubscribeObservable<String> switchable = obsFactory.getPVObserverable(PV_ADDRESS);
+        SwitchableInitialiseOnSubscribeObservable<String> switchable = obsFactory.getPVObserverable(channelType,
+                PV_ADDRESS);
 
         // Assert
         assertTrue(closingSwitcher.getSwitchables().contains(switchable));
-    }
-
-    @Test
-    public void observable_factory_registers_multiple_pvs_with_switcher() {
-        // Act
-        SwitchableInitialiseOnSubscribeObservable<String> switchable = obsFactory.getPVObserverable(PV_ADDRESS);
-        SwitchableInitialiseOnSubscribeObservable<String> switchable2 = obsFactory.getPVObserverable(PV_ADDRESS_2);
-
-        // Assert
-        assertTrue(closingSwitcher.getSwitchables().contains(switchable));
-        assertTrue(closingSwitcher.getSwitchables().contains(switchable2));
     }
 
     @Test
     public void switching_closing_observable_calls_close_on_observable() {
         // Act
-        obsFactory.getPVObserverable(PV_ADDRESS);
+        obsFactory.getPVObserverable(channelType, PV_ADDRESS);
         closingSwitcher.switchInstrument(instrumentInfo);
 
         // Assert
@@ -113,7 +103,7 @@ public class ClosingSwitcherTest {
     @Test
     public void switching_closing_observable_unregisters_observable_from_switcher() {
         // Act
-        obsFactory.getPVObserverable(PV_ADDRESS);
+        obsFactory.getPVObserverable(channelType, PV_ADDRESS);
         closingSwitcher.switchInstrument(instrumentInfo);
 
         // Assert
@@ -123,8 +113,8 @@ public class ClosingSwitcherTest {
     @Test
     public void switching_closing_observable_unregisters_multiple_observables_from_switcher() {
         // Act
-        obsFactory.getPVObserverable(PV_ADDRESS);
-        obsFactory.getPVObserverable(PV_ADDRESS_2);
+        obsFactory.getPVObserverable(channelType, PV_ADDRESS);
+        obsFactory.getPVObserverable(channelType, PV_ADDRESS_2);
         closingSwitcher.switchInstrument(instrumentInfo);
 
         // Assert
@@ -134,10 +124,10 @@ public class ClosingSwitcherTest {
     @Test
     public void switching_twice_correctly_switches_observables_added_after_first_switch() {
         // Act
-        obsFactory.getPVObserverable(PV_ADDRESS);
+        obsFactory.getPVObserverable(channelType, PV_ADDRESS);
         closingSwitcher.switchInstrument(instrumentInfo);
 
-        obsFactory.getPVObserverable(PV_ADDRESS_2);
+        obsFactory.getPVObserverable(channelType, PV_ADDRESS_2);
         closingSwitcher.switchInstrument(instrumentInfo);
 
         // Assert
@@ -147,8 +137,10 @@ public class ClosingSwitcherTest {
     @Test
     public void closing_observable_manually_unregisters_observable_from_switcher() {
         // Act
-        SwitchableInitialiseOnSubscribeObservable<String> switchable = obsFactory.getPVObserverable(PV_ADDRESS);
-        SwitchableInitialiseOnSubscribeObservable<String> switchable2 = obsFactory.getPVObserverable(PV_ADDRESS_2);
+        SwitchableInitialiseOnSubscribeObservable<String> switchable = obsFactory.getPVObserverable(channelType,
+                PV_ADDRESS);
+        SwitchableInitialiseOnSubscribeObservable<String> switchable2 = obsFactory.getPVObserverable(channelType,
+                PV_ADDRESS_2);
 
         switchable.close();
 
@@ -160,8 +152,10 @@ public class ClosingSwitcherTest {
     @Test
     public void closing_observable_manually_twice_does_nothing() {
         // Act
-        SwitchableInitialiseOnSubscribeObservable<String> switchable = obsFactory.getPVObserverable(PV_ADDRESS);
-        SwitchableInitialiseOnSubscribeObservable<String> switchable2 = obsFactory.getPVObserverable(PV_ADDRESS_2);
+        SwitchableInitialiseOnSubscribeObservable<String> switchable = obsFactory.getPVObserverable(channelType,
+                PV_ADDRESS);
+        SwitchableInitialiseOnSubscribeObservable<String> switchable2 = obsFactory.getPVObserverable(channelType,
+                PV_ADDRESS_2);
 
         switchable.close();
         switchable.close();

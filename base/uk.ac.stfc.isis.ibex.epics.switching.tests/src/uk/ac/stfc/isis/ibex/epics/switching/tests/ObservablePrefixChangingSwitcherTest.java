@@ -42,7 +42,7 @@ public class ObservablePrefixChangingSwitcherTest {
     private static final String PV_ADDRESS = PV_PREFIX + "SUFFIX";
     private static final String PV_ADDRESS_2 = PV_PREFIX + "SUFFIX_2";
 
-    private ObservableFactory<String> obsFactory;
+    private ObservableFactory obsFactory;
     private ObservablePrefixChangingSwitcher observablePrefixChangingSwitcher;
     private ClosableCachingObservable<String> closableCachingObservable;
     private ClosableCachingObservable<String> closableCachingObservable2;
@@ -69,13 +69,13 @@ public class ObservablePrefixChangingSwitcherTest {
         when(switcherProvider.getObservableSwitcher(OnSwitchBehaviour.SWITCHING))
                 .thenReturn(observablePrefixChangingSwitcher);
 
-        obsFactory = new ObservableFactory<String>(channelType, OnSwitchBehaviour.SWITCHING, switcherProvider);
+        obsFactory = new ObservableFactory(OnSwitchBehaviour.SWITCHING, switcherProvider);
     }
 
     @Test
     public void switching_instrument_creates_a_new_observable_with_the_correct_pv_address() {
         // Act
-        obsFactory.getPVObserverable(PV_ADDRESS);
+        obsFactory.getPVObserverable(channelType, PV_ADDRESS);
         observablePrefixChangingSwitcher.switchInstrument(instrumentInfo);
 
         // Assert

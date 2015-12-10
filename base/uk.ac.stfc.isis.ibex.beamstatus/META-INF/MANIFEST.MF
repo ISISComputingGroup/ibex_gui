@@ -9,7 +9,8 @@ Require-Bundle: uk.ac.stfc.isis.ibex.model;bundle-version="1.0.0",
  org.epics.vtype;bundle-version="2.5.0",
  uk.ac.stfc.isis.ibex.epics,
  uk.ac.stfc.isis.ibex.instrument;bundle-version="1.0.0",
- uk.ac.stfc.isis.ibex.instrument
+ uk.ac.stfc.isis.ibex.instrument,
+ uk.ac.stfc.isis.ibex.epics.switching
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Export-Package: uk.ac.stfc.isis.ibex.beamstatus
 Bundle-ActivationPolicy: lazy
