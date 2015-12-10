@@ -55,6 +55,9 @@ public class SwitchableInitialiseOnSubscribeObservable<T> extends InitialiseOnSu
         return source;
     }
 
+    // TODO: What can we do about the type conversion issue here?
+    @SuppressWarnings({ "rawtypes", "unchecked" })
+    @Override
     public void setSource(ClosableCachingObservable newSource) {
         super.setSource(newSource);
         source.close();

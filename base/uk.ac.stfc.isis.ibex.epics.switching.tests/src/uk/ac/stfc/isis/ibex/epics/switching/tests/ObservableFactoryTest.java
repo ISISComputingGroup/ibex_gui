@@ -76,7 +76,7 @@ public class ObservableFactoryTest {
         ObservableFactory obsFactory = new ObservableFactory(OnSwitchBehaviour.CLOSING, switcherProvider);
 
         // Act
-        SwitchableInitialiseOnSubscribeObservable<String> obs = obsFactory.getPVObserverable(channelType, PV_ADDRESS);
+        SwitchableInitialiseOnSubscribeObservable<String> obs = obsFactory.getSwitchableObservable(channelType, PV_ADDRESS);
 
         // Assert
         assertTrue(closingSwitcher.getSwitchables().contains(obs));
@@ -88,7 +88,7 @@ public class ObservableFactoryTest {
         ObservableFactory obsFactory = new ObservableFactory(OnSwitchBehaviour.CLOSING, switcherProvider);
 
         // Act
-        SwitchableInitialiseOnSubscribeObservable<String> obs = obsFactory.getPVObserverable(channelType, PV_ADDRESS);
+        SwitchableInitialiseOnSubscribeObservable<String> obs = obsFactory.getSwitchableObservable(channelType, PV_ADDRESS);
 
         // Assert
         assertFalse(switchingSwitcher.getSwitchables().contains(obs));
@@ -101,7 +101,7 @@ public class ObservableFactoryTest {
         ObservableFactory obsFactory = new ObservableFactory(OnSwitchBehaviour.NOTHING, switcherProvider);
 
         // Act
-        SwitchableInitialiseOnSubscribeObservable<String> obs = obsFactory.getPVObserverable(channelType, PV_ADDRESS);
+        SwitchableInitialiseOnSubscribeObservable<String> obs = obsFactory.getSwitchableObservable(channelType, PV_ADDRESS);
 
         // Assert
         assertTrue(nothingSwitcher.getSwitchables().contains(obs));
@@ -113,7 +113,7 @@ public class ObservableFactoryTest {
         ObservableFactory obsFactory = new ObservableFactory(OnSwitchBehaviour.SWITCHING, switcherProvider);
 
         // Act
-        SwitchableInitialiseOnSubscribeObservable<String> obs = obsFactory.getPVObserverable(channelType, PV_ADDRESS);
+        SwitchableInitialiseOnSubscribeObservable<String> obs = obsFactory.getSwitchableObservable(channelType, PV_ADDRESS);
 
         // Assert
         assertTrue(switchingSwitcher.getSwitchables().contains(obs));
@@ -125,9 +125,9 @@ public class ObservableFactoryTest {
         ObservableFactory obsFactory = new ObservableFactory(OnSwitchBehaviour.CLOSING, switcherProvider);
 
         // Act
-        SwitchableInitialiseOnSubscribeObservable<String> switchable = obsFactory.getPVObserverable(channelType,
+        SwitchableInitialiseOnSubscribeObservable<String> switchable = obsFactory.getSwitchableObservable(channelType,
                 PV_ADDRESS);
-        SwitchableInitialiseOnSubscribeObservable<String> switchable2 = obsFactory.getPVObserverable(channelType,
+        SwitchableInitialiseOnSubscribeObservable<String> switchable2 = obsFactory.getSwitchableObservable(channelType,
                 PV_ADDRESS_2);
 
         // Assert
@@ -141,9 +141,9 @@ public class ObservableFactoryTest {
         ObservableFactory obsFactory = new ObservableFactory(OnSwitchBehaviour.NOTHING, switcherProvider);
 
         // Act
-        SwitchableInitialiseOnSubscribeObservable<String> switchable = obsFactory.getPVObserverable(channelType,
+        SwitchableInitialiseOnSubscribeObservable<String> switchable = obsFactory.getSwitchableObservable(channelType,
                 PV_ADDRESS);
-        SwitchableInitialiseOnSubscribeObservable<String> switchable2 = obsFactory.getPVObserverable(channelType,
+        SwitchableInitialiseOnSubscribeObservable<String> switchable2 = obsFactory.getSwitchableObservable(channelType,
                 PV_ADDRESS_2);
 
         // Assert
@@ -157,9 +157,9 @@ public class ObservableFactoryTest {
         ObservableFactory obsFactory = new ObservableFactory(OnSwitchBehaviour.SWITCHING, switcherProvider);
 
         // Act
-        SwitchableInitialiseOnSubscribeObservable<String> switchable = obsFactory.getPVObserverable(channelType,
+        SwitchableInitialiseOnSubscribeObservable<String> switchable = obsFactory.getSwitchableObservable(channelType,
                 PV_ADDRESS);
-        SwitchableInitialiseOnSubscribeObservable<String> switchable2 = obsFactory.getPVObserverable(channelType,
+        SwitchableInitialiseOnSubscribeObservable<String> switchable2 = obsFactory.getSwitchableObservable(channelType,
                 PV_ADDRESS_2);
 
         // Assert

@@ -19,6 +19,7 @@
 
 package uk.ac.stfc.isis.ibex.epics.switching;
 
+import uk.ac.stfc.isis.ibex.epics.observing.ClosableCachingObservable;
 import uk.ac.stfc.isis.ibex.epics.pv.Closable;
 
 /**
@@ -32,4 +33,6 @@ public interface Switchable extends Closable {
     public void setSwitcher(Switcher switcher);
 
     public Switcher getSwitcher();
+
+    public void setSource(ClosableCachingObservable<?> pvObservable);
 }

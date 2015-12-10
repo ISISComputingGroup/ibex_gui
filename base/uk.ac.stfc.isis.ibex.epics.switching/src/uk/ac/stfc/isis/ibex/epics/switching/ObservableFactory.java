@@ -47,7 +47,7 @@ public class ObservableFactory {
      * @param address the PV address
      * @return the PV observable
      */
-    public <T> SwitchableInitialiseOnSubscribeObservable<T> getPVObserverable(ChannelType<T> channelType,
+    public <T> SwitchableInitialiseOnSubscribeObservable<T> getSwitchableObservable(ChannelType<T> channelType,
             String address) {
         ClosableCachingObservable<T> channelReader = channelType.reader(address);
         final ClosingSwitchableObservable<T> channel = new ClosingSwitchableObservable<>(channelReader);
@@ -61,4 +61,11 @@ public class ObservableFactory {
         return createdObservable;
     }
 
+    public <T> ClosableCachingObservable<T> getPVObservable(ChannelType<T> channelType, String address) {
+
+        ClosableCachingObservable<T> channelReader = channelType.reader(address);
+        ClosingSwitchableObservable<T> channel = new ClosingSwitchableObservable<>(channelReader);
+
+        return channel;
+    }
 }

@@ -53,9 +53,9 @@ public class BeamStatusObservables extends Closer {
 
 	public class Synchrotron {
         public final InitialiseOnSubscribeObservable<Number> beamCurrent = obsFactory
-                .getPVObserverable(new NumberWithPrecisionChannel(), SYNC.endWith(BEAM_CURRENT));
+                .getSwitchableObservable(new NumberWithPrecisionChannel(), SYNC.endWith(BEAM_CURRENT));
         public final InitialiseOnSubscribeObservable<Number> beamFrequency = obsFactory
-                .getPVObserverable(new NumberWithPrecisionChannel(), SYNC.endWith(FREQ));
+                .getSwitchableObservable(new NumberWithPrecisionChannel(), SYNC.endWith(FREQ));
 		
 		private Synchrotron() {
 		}
@@ -64,11 +64,11 @@ public class BeamStatusObservables extends Closer {
 	public class TargetStation1 extends EndStation {
 		
         public final InitialiseOnSubscribeObservable<Number> methaneTemperature = obsFactory
-                .getPVObserverable(new NumberWithPrecisionChannel(), "TG:TS1:MOD:METH:TEMP");
+                .getSwitchableObservable(new NumberWithPrecisionChannel(), "TG:TS1:MOD:METH:TEMP");
         public final InitialiseOnSubscribeObservable<Number> hydrogenTemperature = obsFactory
-                .getPVObserverable(new NumberWithPrecisionChannel(), "TG:TS1:MOD:HDGN:TEMP");
+                .getSwitchableObservable(new NumberWithPrecisionChannel(), "TG:TS1:MOD:HDGN:TEMP");
         public final InitialiseOnSubscribeObservable<OnOff> muonKicker = obsFactory
-                .getPVObserverable(new EnumChannel<OnOff>(OnOff.class), "AC:MUON:KICKR:STAT");
+                .getSwitchableObservable(new EnumChannel<OnOff>(OnOff.class), "AC:MUON:KICKR:STAT");
 
 		private TargetStation1() {
 			super(TS1);	
@@ -86,19 +86,19 @@ public class BeamStatusObservables extends Closer {
 
 		private TargetStation2() {
 			super(TS2);
-            coupledMethaneTemperature = obsFactory.getPVObserverable(new NumberWithPrecisionChannel(),
+            coupledMethaneTemperature = obsFactory.getSwitchableObservable(new NumberWithPrecisionChannel(),
                     TS2.endWith("CMOD:METH:TEMP"));
-            coupledHydrogenTemperature = obsFactory.getPVObserverable(new NumberWithPrecisionChannel(),
+            coupledHydrogenTemperature = obsFactory.getSwitchableObservable(new NumberWithPrecisionChannel(),
                     TS2.endWith("CMOD:HDGN:TEMP"));
-            decoupledMethaneTemperature = obsFactory.getPVObserverable(new NumberWithPrecisionChannel(),
+            decoupledMethaneTemperature = obsFactory.getSwitchableObservable(new NumberWithPrecisionChannel(),
                     "TG:TS2:DMOD:METH:TEMP");
-            decoupledModeratorRuntime = obsFactory.getPVObserverable(new NumberWithPrecisionChannel(),
+            decoupledModeratorRuntime = obsFactory.getSwitchableObservable(new NumberWithPrecisionChannel(),
                     "TG:TS2:DMOD:RTIME:DUR");
-            decoupledModeratorRuntimeLimit = obsFactory.getPVObserverable(new NumberWithPrecisionChannel(),
+            decoupledModeratorRuntimeLimit = obsFactory.getSwitchableObservable(new NumberWithPrecisionChannel(),
                     "TG:TS2:DMOD:RTLIM");
-            decoupledModeratorAnnealPressure = obsFactory.getPVObserverable(new EnumChannel<YesNo>(YesNo.class),
+            decoupledModeratorAnnealPressure = obsFactory.getSwitchableObservable(new EnumChannel<YesNo>(YesNo.class),
                     "TG:TS2:DMOD:ANNPLOW:STAT");
-            decoupledModeratorUAHBeam = obsFactory.getPVObserverable(new NumberWithPrecisionChannel(),
+            decoupledModeratorUAHBeam = obsFactory.getSwitchableObservable(new NumberWithPrecisionChannel(),
                     "TG:TS2:DMOD:BEAM");
 		}	
 	}
@@ -113,12 +113,12 @@ public class BeamStatusObservables extends Closer {
 		
 		protected EndStation(PVAddress suffix) {
 
-            beam = obsFactory.getPVObserverable(new EnumChannel<OnOff>(OnOff.class), suffix.endWith("BEAM:STAT"));
-            pps = obsFactory.getPVObserverable(new NumberChannel(), suffix.endWith("FREQ"));
-            beamCurrent = obsFactory.getPVObserverable(new NumberWithPrecisionChannel(), suffix.endWith("BEAM:CURR"));
-            uAHToday = obsFactory.getPVObserverable(new NumberWithPrecisionChannel(), suffix.endWith("BEAM:TOTAL"));
-            lastBeamOff = obsFactory.getPVObserverable(new DateTimeChannel(), suffix.endWith("BEAMOFF:TIME"));
-            lastBeamOn = obsFactory.getPVObserverable(new DateTimeChannel(), suffix.endWith("BEAMOFF:TIME"));
+            beam = obsFactory.getSwitchableObservable(new EnumChannel<OnOff>(OnOff.class), suffix.endWith("BEAM:STAT"));
+            pps = obsFactory.getSwitchableObservable(new NumberChannel(), suffix.endWith("FREQ"));
+            beamCurrent = obsFactory.getSwitchableObservable(new NumberWithPrecisionChannel(), suffix.endWith("BEAM:CURR"));
+            uAHToday = obsFactory.getSwitchableObservable(new NumberWithPrecisionChannel(), suffix.endWith("BEAM:TOTAL"));
+            lastBeamOff = obsFactory.getSwitchableObservable(new DateTimeChannel(), suffix.endWith("BEAMOFF:TIME"));
+            lastBeamOn = obsFactory.getSwitchableObservable(new DateTimeChannel(), suffix.endWith("BEAMOFF:TIME"));
 		}
 		
 		public InitialiseOnSubscribeObservable<OnOff> beam() { return beam; }

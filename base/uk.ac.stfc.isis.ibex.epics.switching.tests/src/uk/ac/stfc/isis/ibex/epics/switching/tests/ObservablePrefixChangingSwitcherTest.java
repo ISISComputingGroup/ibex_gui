@@ -31,7 +31,6 @@ import uk.ac.stfc.isis.ibex.epics.observing.ClosableCachingObservable;
 import uk.ac.stfc.isis.ibex.epics.switching.ObservableFactory;
 import uk.ac.stfc.isis.ibex.epics.switching.ObservablePrefixChangingSwitcher;
 import uk.ac.stfc.isis.ibex.epics.switching.OnSwitchBehaviour;
-import uk.ac.stfc.isis.ibex.epics.switching.SwitchableInitialiseOnSubscribeObservable;
 import uk.ac.stfc.isis.ibex.epics.switching.SwitcherProvider;
 import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
 import uk.ac.stfc.isis.ibex.instrument.channels.ChannelType;
@@ -74,9 +73,9 @@ public class ObservablePrefixChangingSwitcherTest {
     }
 
     @Test
-    public void switching_instrument_creates_a_new_observable_with_the_correct_pv_address() {
+    public void switching_instrument_closes_old_observable() {
         // Act
-        SwitchableInitialiseOnSubscribeObservable<String> obs = obsFactory.getPVObserverable(channelType, PV_ADDRESS);
+        obsFactory.getSwitchableObservable(channelType, PV_ADDRESS);
         observablePrefixChangingSwitcher.switchInstrument(instrumentInfo);
 
         // Assert

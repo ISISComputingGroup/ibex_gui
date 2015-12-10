@@ -97,13 +97,18 @@ public class ObservablePrefixChangingSwitcher extends PrefixChangingSwitcher {
             // switching behaviour and switcher
             ObservableFactory obsFactory = new ObservableFactory(OnSwitchBehaviour.SWITCHING, switcherProvider);
             
-            String switcherPvAddress = switchableInfo.pvAddress.replace(pvPrefix, instrumentInfo.pvPrefix());
+            String switchedPvAddress;
 
-            // Close the old switchable
-            switchableInfo.switchable.close();
-            // Set the new source
-            ((SwitchableInitialiseOnSubscribeObservable<?>) switchableInfo.switchable)
-                    .setSource(obsFactory.getPVObserverable(switchableInfo.channelType, "PREFIX:SUFFIX"));
+            if (!pvPrefix.isEmpty()) {
+                switchedPvAddress = switchableInfo.pvAddress.replaceFirst(pvPrefix, instrumentInfo.pvPrefix());
+            } else {
+                switchedPvAddress = switchableInfo.pvAddress;
+            }
+
+            // Set the new source - also takes care of closing the old
+            // observable
+            switchableInfo.switchable
+                    .setSource(obsFactory.getPVObservable(switchableInfo.channelType, switchedPvAddress));
 
             // The immediate super class sets the new pvPrefix
             super.switchInstrument(instrumentInfo);
