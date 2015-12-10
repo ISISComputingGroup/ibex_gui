@@ -31,4 +31,5 @@ public interface Switchable extends Closable {
 
     public void setSwitcher(Switcher switcher);
 
+    public Switcher getSwitcher();
 }

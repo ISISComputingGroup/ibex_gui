@@ -61,7 +61,9 @@ public class SwitchableInitialiseOnSubscribeObservable<T> extends InitialiseOnSu
         this.source = newSource;
     }
 
+    @Override
     public Switcher getSwitcher() {
         return this.switcher;
     }
+
 }

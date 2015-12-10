@@ -35,11 +35,11 @@ public class ObservablePrefixChangingSwitcher extends PrefixChangingSwitcher {
 
     private class SwitchableInformation {
 
-        public SwitchableInitialiseOnSubscribeObservable<?> switchable;
+        public Switchable switchable;
         public String pvAddress;
         public ChannelType<?> channelType;
 
-        public SwitchableInformation(SwitchableInitialiseOnSubscribeObservable<?> switchable, String pvAddress,
+        public SwitchableInformation(Switchable switchable, String pvAddress,
                 ChannelType<?> channelType) {
             this.switchable = switchable;
             this.pvAddress = pvAddress;
@@ -61,10 +61,11 @@ public class ObservablePrefixChangingSwitcher extends PrefixChangingSwitcher {
         };
     }
 
-    protected Collection<SwitchableInformation> switchables;
+    protected Collection<SwitchableInformation> switchableInfoList;
 
     public ObservablePrefixChangingSwitcher() {
         switchables = new CopyOnWriteArrayList<>();
+        switchableInfoList = new CopyOnWriteArrayList<>();
     }
 
     /**
@@ -77,29 +78,32 @@ public class ObservablePrefixChangingSwitcher extends PrefixChangingSwitcher {
      *            The PV Address
      * @param channelType
      */
-    public <T> void registerSwitchable(SwitchableInitialiseOnSubscribeObservable<T> switchable, String pvAddress,
-            ChannelType<T> channelType) {
-        switchables.add(new SwitchableInformation(switchable, pvAddress, channelType));
+    @Override
+    public <T> void registerSwitchable(Switchable switchable, String pvAddress, ChannelType<T> channelType) {
+        switchableInfoList.add(new SwitchableInformation(switchable, pvAddress, channelType));
+
+        // Is this needed?
+        super.registerSwitchable(switchable, pvAddress, channelType);
     }
 
     @Override
     public void switchInstrument(InstrumentInfo instrumentInfo) {
-        for (SwitchableInformation switchableInformation : switchables) {
+        for (SwitchableInformation switchableInfo : switchableInfoList) {
             // Create a dummy switcher provider that just recycles the switcher
             // we already have
-            SwitcherProvider switcherProvider = new DummySwitcherProvider(switchableInformation.switchable.getSwitcher());
+            SwitcherProvider switcherProvider = new DummySwitcherProvider(switchableInfo.switchable.getSwitcher());
             
             // Create a new observable factory, with the old channel type,
             // switching behaviour and switcher
-            ObservableFactory<?> obsFactory = new ObservableFactory<>(switchableInformation.channelType,
-                    OnSwitchBehaviour.SWITCHING, switcherProvider);
+            ObservableFactory obsFactory = new ObservableFactory(OnSwitchBehaviour.SWITCHING, switcherProvider);
             
-            String switcherPvAddress = switchableInformation.pvAddress.replace(pvPrefix, instrumentInfo.pvPrefix());
+            String switcherPvAddress = switchableInfo.pvAddress.replace(pvPrefix, instrumentInfo.pvPrefix());
 
             // Close the old switchable
-            switchableInformation.switchable.getSource().close();
+            switchableInfo.switchable.close();
             // Set the new source
-            switchableInformation.switchable.setSource(obsFactory.getPVObserverable(switcherPvAddress));
+            ((SwitchableInitialiseOnSubscribeObservable<?>) switchableInfo.switchable)
+                    .setSource(obsFactory.getPVObserverable(switchableInfo.channelType, "PREFIX:SUFFIX"));
 
             // The immediate super class sets the new pvPrefix
             super.switchInstrument(instrumentInfo);
