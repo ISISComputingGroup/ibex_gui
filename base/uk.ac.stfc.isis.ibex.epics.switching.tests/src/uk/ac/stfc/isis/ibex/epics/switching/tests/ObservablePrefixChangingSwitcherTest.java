@@ -20,6 +20,8 @@
 package uk.ac.stfc.isis.ibex.epics.switching.tests;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -80,13 +82,54 @@ public class ObservablePrefixChangingSwitcherTest {
     }
 
     @Test
-    public void switching_instrument_closes_old_observable() {
+    public void switcher_with_no_observables_does_nothing_when_switching() {
+        // Act
+        observablePrefixChangingSwitcher.switchInstrument(instrumentInfo);
+    }
+
+    @Test
+    public void observable_factory_registers_pv_with_switcher() {
+        // Act
+        SwitchableInitialiseOnSubscribeObservable<String> switchable = obsFactory.getSwitchableObservable(channelType,
+                PV_ADDRESS);
+
+        // Assert
+        assertTrue(observablePrefixChangingSwitcher.getSwitchables().contains(switchable));
+    }
+
+    @Test
+    public void switching_instrument_calls_close_on_old_observable() {
         // Act
         obsFactory.getSwitchableObservable(channelType, PV_ADDRESS);
         observablePrefixChangingSwitcher.switchInstrument(instrumentInfo);
 
         // Assert
         verify(closableCachingObservable, times(1)).close();
+    }
+
+    @Test
+    public void switching_does_not_unregister_observable_from_switcher() {
+        // Act
+        SwitchableInitialiseOnSubscribeObservable<String> observable = obsFactory.getSwitchableObservable(channelType,
+                PV_ADDRESS);
+        observablePrefixChangingSwitcher.switchInstrument(instrumentInfo);
+
+        // Assert
+        assertTrue(observablePrefixChangingSwitcher.getSwitchables().contains(observable));
+    }
+
+    @Test
+    public void switching_does_not_unregister_multiple_observables_from_switcher() {
+        // Act
+        SwitchableInitialiseOnSubscribeObservable<String> observable = obsFactory.getSwitchableObservable(channelType,
+                PV_ADDRESS);
+        SwitchableInitialiseOnSubscribeObservable<String> observable2 = obsFactory.getSwitchableObservable(channelType,
+                PV_ADDRESS_2);
+        observablePrefixChangingSwitcher.switchInstrument(instrumentInfo);
+
+        // Assert
+        assertTrue(observablePrefixChangingSwitcher.getSwitchables().contains(observable));
+        assertTrue(observablePrefixChangingSwitcher.getSwitchables().contains(observable2));
     }
 
     @Test
@@ -101,4 +144,60 @@ public class ObservablePrefixChangingSwitcherTest {
         assertEquals(closableCachingObservable2, observable.getSource());
     }
 
+    @Test
+    public void switching_twice_correctly_switches_observable_twice() {
+        // Act
+        SwitchableInitialiseOnSubscribeObservable<String> observable = obsFactory.getSwitchableObservable(channelType,
+                PV_ADDRESS);
+        observablePrefixChangingSwitcher.switchInstrument(instrumentInfo2);
+        observablePrefixChangingSwitcher.switchInstrument(instrumentInfo);
+
+        // Assert
+        assertEquals(closableCachingObservable, observable.getSource());
+    }
+
+    @Test
+    public void switching_twice_correctly_switches_observables_added_after_first_switch() {
+        // Act
+        obsFactory.getSwitchableObservable(channelType, PV_ADDRESS);
+        observablePrefixChangingSwitcher.switchInstrument(instrumentInfo2);
+
+        SwitchableInitialiseOnSubscribeObservable<String> observable = obsFactory.getSwitchableObservable(channelType,
+                PV_ADDRESS_2);
+        observablePrefixChangingSwitcher.switchInstrument(instrumentInfo);
+
+        // Assert
+        assertEquals(closableCachingObservable, observable.getSource());
+    }
+
+    @Test
+    public void closing_observable_manually_unregisters_observable_from_switcher() {
+        // Act
+        SwitchableInitialiseOnSubscribeObservable<String> switchable = obsFactory.getSwitchableObservable(channelType,
+                PV_ADDRESS);
+        SwitchableInitialiseOnSubscribeObservable<String> switchable2 = obsFactory.getSwitchableObservable(channelType,
+                PV_ADDRESS_2);
+
+        switchable.close();
+
+        // Assert
+        assertFalse(observablePrefixChangingSwitcher.getSwitchables().contains(switchable));
+        assertTrue(observablePrefixChangingSwitcher.getSwitchables().contains(switchable2));
+    }
+
+    @Test
+    public void closing_observable_manually_twice_does_nothing() {
+        // Act
+        SwitchableInitialiseOnSubscribeObservable<String> switchable = obsFactory.getSwitchableObservable(channelType,
+                PV_ADDRESS);
+        SwitchableInitialiseOnSubscribeObservable<String> switchable2 = obsFactory.getSwitchableObservable(channelType,
+                PV_ADDRESS_2);
+
+        switchable.close();
+        switchable.close();
+
+        // Assert
+        assertFalse(observablePrefixChangingSwitcher.getSwitchables().contains(switchable));
+        assertTrue(observablePrefixChangingSwitcher.getSwitchables().contains(switchable2));
+    }
 }

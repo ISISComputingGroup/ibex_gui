@@ -21,6 +21,7 @@ package uk.ac.stfc.isis.ibex.epics.switching;
 
 import uk.ac.stfc.isis.ibex.epics.observing.ClosableCachingObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.InitialiseOnSubscribeObservable;
+import uk.ac.stfc.isis.ibex.epics.pv.Closable;
 
 /**
  * This is not a permanent new class, just a temporary one while refactoring!
@@ -56,12 +57,22 @@ public class SwitchableInitialiseOnSubscribeObservable<T> extends InitialiseOnSu
     }
 
     // TODO: What can we do about the type conversion issue here?
-    @SuppressWarnings({ "rawtypes", "unchecked" })
+    @SuppressWarnings("unchecked")
     @Override
-    public void setSource(ClosableCachingObservable newSource) {
-        super.setSource(newSource);
+    public void setSource(Closable newSource) {
+        
+        ClosableCachingObservable<T> sourceySauce;
+
+        try {
+            sourceySauce = (ClosableCachingObservable<T>) newSource;
+        } catch (ClassCastException e) {
+            // Return - something has gone wrong!
+            return;
+        }
+        
+        super.setSource(sourceySauce);
         source.close();
-        this.source = newSource;
+        this.source = sourceySauce;
     }
 
     @Override

@@ -91,7 +91,7 @@ public class ClosingSwitcherTest {
     }
 
     @Test
-    public void switching_closing_observable_calls_close_on_observable() {
+    public void switching_calls_close_on_observable() {
         // Act
         obsFactory.getSwitchableObservable(channelType, PV_ADDRESS);
         closingSwitcher.switchInstrument(instrumentInfo);
@@ -101,7 +101,7 @@ public class ClosingSwitcherTest {
     }
 
     @Test
-    public void switching_closing_observable_unregisters_observable_from_switcher() {
+    public void switching_unregisters_observable_from_switcher() {
         // Act
         obsFactory.getSwitchableObservable(channelType, PV_ADDRESS);
         closingSwitcher.switchInstrument(instrumentInfo);
@@ -111,7 +111,7 @@ public class ClosingSwitcherTest {
     }
 
     @Test
-    public void switching_closing_observable_unregisters_multiple_observables_from_switcher() {
+    public void switching_unregisters_multiple_observables_from_switcher() {
         // Act
         obsFactory.getSwitchableObservable(channelType, PV_ADDRESS);
         obsFactory.getSwitchableObservable(channelType, PV_ADDRESS_2);
