@@ -24,8 +24,8 @@ package uk.ac.stfc.isis.ibex.epics.switching;
  * status PV observables, can close, e.g. for blocks or can switch, e.g. for
  * synoptic.
  */
-public enum OnSwitchBehaviour {
+public enum OnInstrumentSwitch {
     NOTHING,
-    CLOSING,
-    SWITCHING
+    CLOSE,
+    SWITCH
 }

@@ -56,9 +56,9 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <enumeration id="6" language="java" name="uk.ac.stfc.isis.ibex.epics.switching.OnSwitchBehaviour" 
+  <enumeration id="6" language="java" name="uk.ac.stfc.isis.ibex.epics.switching.OnInstrumentSwitch" 
     project="uk.ac.stfc.isis.ibex.epics.switching" 
-    file="/uk.ac.stfc.isis.ibex.epics.switching/src/uk/ac/stfc/isis/ibex/epics/switching/OnSwitchBehaviour.java" 
+    file="/uk.ac.stfc.isis.ibex.epics.switching/src/uk/ac/stfc/isis/ibex/epics/switching/OnInstrumentSwitch.java" 
     binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="219" y="687"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -178,92 +178,92 @@
   </class>  
   <association id="17">    
     <end type="SOURCE" refId="1" navigable="false">      
-      <attribute id="18" name="instance">        
+      <attribute id="18" name="observablePrefixChangingSwitcher">        
         <position height="0" width="0" x="0" y="0"/>      
       </attribute>      
       <multiplicity id="19" minimum="0" maximum="1">        
         <position height="0" width="0" x="0" y="0"/>      
       </multiplicity>    
     </end>    
-    <end type="TARGET" refId="1" navigable="true"/>    
+    <end type="TARGET" refId="12" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
   <generalization id="20">    
+    <end type="SOURCE" refId="14"/>    
+    <end type="TARGET" refId="4"/>  
+  </generalization>  
+  <generalization id="21">    
+    <end type="SOURCE" refId="15"/>    
+    <end type="TARGET" refId="4"/>  
+  </generalization>  
+  <generalization id="22">    
+    <end type="SOURCE" refId="9"/>    
+    <end type="TARGET" refId="11"/>  
+  </generalization>  
+  <generalization id="23">    
+    <end type="SOURCE" refId="2"/>    
+    <end type="TARGET" refId="4"/>  
+  </generalization>  
+  <generalization id="24">    
     <end type="SOURCE" refId="12"/>    
     <end type="TARGET" refId="14"/>  
   </generalization>  
-  <association id="21">    
+  <association id="25">    
     <end type="SOURCE" refId="3" navigable="false">      
-      <attribute id="22" name="switcher">        
+      <attribute id="26" name="switcher">        
         <position height="0" width="0" x="0" y="0"/>      
       </attribute>      
-      <multiplicity id="23" minimum="0" maximum="1">        
+      <multiplicity id="27" minimum="0" maximum="1">        
         <position height="0" width="0" x="0" y="0"/>      
       </multiplicity>    
     </end>    
     <end type="TARGET" refId="4" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <generalization id="24">    
-    <end type="SOURCE" refId="14"/>    
-    <end type="TARGET" refId="4"/>  
-  </generalization>  
-  <generalization id="25">    
-    <end type="SOURCE" refId="8"/>    
-    <end type="TARGET" refId="10"/>  
-  </generalization>  
-  <generalization id="26">    
-    <end type="SOURCE" refId="9"/>    
-    <end type="TARGET" refId="11"/>  
-  </generalization>  
-  <association id="27">    
+  <association id="28">    
     <end type="SOURCE" refId="1" navigable="false">      
-      <attribute id="28" name="writablePrefixChangingSwitcher">        
+      <attribute id="29" name="instance">        
         <position height="0" width="0" x="0" y="0"/>      
       </attribute>      
-      <multiplicity id="29" minimum="0" maximum="1">        
+      <multiplicity id="30" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="1" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="31">    
+    <end type="SOURCE" refId="13"/>    
+    <end type="TARGET" refId="14"/>  
+  </generalization>  
+  <association id="32">    
+    <end type="SOURCE" refId="1" navigable="false">      
+      <attribute id="33" name="writablePrefixChangingSwitcher">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="34" minimum="0" maximum="1">        
         <position height="0" width="0" x="0" y="0"/>      
       </multiplicity>    
     </end>    
     <end type="TARGET" refId="13" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="30">    
+  <realization id="35">    
+    <end type="SOURCE" refId="5"/>    
+    <end type="TARGET" refId="7"/>  
+  </realization>  
+  <association id="36">    
     <end type="SOURCE" refId="1" navigable="false">      
-      <attribute id="31" name="nothingSwitcher">        
+      <attribute id="37" name="nothingSwitcher">        
         <position height="0" width="0" x="0" y="0"/>      
       </attribute>      
-      <multiplicity id="32" minimum="0" maximum="1">        
+      <multiplicity id="38" minimum="0" maximum="1">        
         <position height="0" width="0" x="0" y="0"/>      
       </multiplicity>    
     </end>    
     <end type="TARGET" refId="2" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <generalization id="33">    
-    <end type="SOURCE" refId="15"/>    
-    <end type="TARGET" refId="4"/>  
-  </generalization>  
-  <association id="34">    
-    <end type="SOURCE" refId="1" navigable="false">      
-      <attribute id="35" name="observablePrefixChangingSwitcher">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </attribute>      
-      <multiplicity id="36" minimum="0" maximum="1">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </multiplicity>    
-    </end>    
-    <end type="TARGET" refId="12" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <generalization id="37">    
-    <end type="SOURCE" refId="2"/>    
-    <end type="TARGET" refId="4"/>  
-  </generalization>  
-  <realization id="38">    
-    <end type="SOURCE" refId="5"/>    
-    <end type="TARGET" refId="7"/>  
-  </realization>  
   <association id="39">    
     <end type="SOURCE" refId="1" navigable="false">      
       <attribute id="40" name="closingSwitcher">        
@@ -277,8 +277,8 @@
     <display labels="true" multiplicity="true"/>  
   </association>  
   <generalization id="42">    
-    <end type="SOURCE" refId="13"/>    
-    <end type="TARGET" refId="14"/>  
+    <end type="SOURCE" refId="8"/>    
+    <end type="TARGET" refId="10"/>  
   </generalization>  
   <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
     sort-features="false" accessors="true" visibility="true">    

@@ -33,7 +33,7 @@ import org.junit.Test;
 import uk.ac.stfc.isis.ibex.epics.observing.ClosableCachingObservable;
 import uk.ac.stfc.isis.ibex.epics.switching.ObservableFactory;
 import uk.ac.stfc.isis.ibex.epics.switching.ObservablePrefixChangingSwitcher;
-import uk.ac.stfc.isis.ibex.epics.switching.OnSwitchBehaviour;
+import uk.ac.stfc.isis.ibex.epics.switching.OnInstrumentSwitch;
 import uk.ac.stfc.isis.ibex.epics.switching.SwitchableInitialiseOnSubscribeObservable;
 import uk.ac.stfc.isis.ibex.epics.switching.SwitcherProvider;
 import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
@@ -75,10 +75,10 @@ public class ObservablePrefixChangingSwitcherTest {
         observablePrefixChangingSwitcher = new ObservablePrefixChangingSwitcher();
 
         SwitcherProvider switcherProvider = mock(SwitcherProvider.class);
-        when(switcherProvider.getObservableSwitcher(OnSwitchBehaviour.SWITCHING))
+        when(switcherProvider.getObservableSwitcher(OnInstrumentSwitch.SWITCH))
                 .thenReturn(observablePrefixChangingSwitcher);
 
-        obsFactory = new ObservableFactory(OnSwitchBehaviour.SWITCHING, switcherProvider);
+        obsFactory = new ObservableFactory(OnInstrumentSwitch.SWITCH, switcherProvider);
     }
 
     @Test

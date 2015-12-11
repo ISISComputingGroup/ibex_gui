@@ -28,15 +28,15 @@ public class SwitcherProvider {
     public SwitcherProvider() {
     }
 
-    public Switcher getObservableSwitcher(OnSwitchBehaviour onSwitch) {
+    public Switcher getObservableSwitcher(OnInstrumentSwitch onSwitch) {
 
         Switcher switcher;
 
-        if (onSwitch == OnSwitchBehaviour.NOTHING) {
+        if (onSwitch == OnInstrumentSwitch.NOTHING) {
             switcher = InstrumentSwitchers.getNothingSwitcher();
-        } else if (onSwitch == OnSwitchBehaviour.CLOSING) {
+        } else if (onSwitch == OnInstrumentSwitch.CLOSE) {
             switcher = InstrumentSwitchers.getClosingSwitcher();
-        } else if (onSwitch == OnSwitchBehaviour.SWITCHING) {
+        } else if (onSwitch == OnInstrumentSwitch.SWITCH) {
             switcher = InstrumentSwitchers.getObservablePrefixChangingSwitcher();
         } else {
             switcher = null;
@@ -45,15 +45,15 @@ public class SwitcherProvider {
         return switcher;
     }
 
-    public Switcher getWritableSwitcher(OnSwitchBehaviour onSwitch) {
+    public Switcher getWritableSwitcher(OnInstrumentSwitch onSwitch) {
 
         Switcher switcher;
 
-        if (onSwitch == OnSwitchBehaviour.NOTHING) {
+        if (onSwitch == OnInstrumentSwitch.NOTHING) {
             switcher = InstrumentSwitchers.getNothingSwitcher();
-        } else if (onSwitch == OnSwitchBehaviour.CLOSING) {
+        } else if (onSwitch == OnInstrumentSwitch.CLOSE) {
             switcher = InstrumentSwitchers.getClosingSwitcher();
-        } else if (onSwitch == OnSwitchBehaviour.SWITCHING) {
+        } else if (onSwitch == OnInstrumentSwitch.SWITCH) {
             switcher = InstrumentSwitchers.getWritablePrefixChangingSwitcher();
         } else {
             switcher = null;

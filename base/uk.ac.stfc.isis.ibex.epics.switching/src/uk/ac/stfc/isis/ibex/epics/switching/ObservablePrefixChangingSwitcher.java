@@ -56,7 +56,7 @@ public class ObservablePrefixChangingSwitcher extends PrefixChangingSwitcher {
         }
 
         @Override
-        public Switcher getObservableSwitcher(OnSwitchBehaviour behaviour) {
+        public Switcher getObservableSwitcher(OnInstrumentSwitch behaviour) {
             return switcher;
         };
     }
@@ -95,7 +95,7 @@ public class ObservablePrefixChangingSwitcher extends PrefixChangingSwitcher {
             
             // Create a new observable factory, with the old channel type,
             // switching behaviour and switcher
-            ObservableFactory obsFactory = new ObservableFactory(OnSwitchBehaviour.SWITCHING, switcherProvider);
+            ObservableFactory obsFactory = new ObservableFactory(OnInstrumentSwitch.SWITCH, switcherProvider);
             
             String switchedPvAddress;
 

@@ -23,7 +23,7 @@ import uk.ac.stfc.isis.ibex.epics.observing.InitialiseOnSubscribeObservable;
 import uk.ac.stfc.isis.ibex.epics.pv.Closer;
 import uk.ac.stfc.isis.ibex.epics.pv.PVAddress;
 import uk.ac.stfc.isis.ibex.epics.switching.ObservableFactory;
-import uk.ac.stfc.isis.ibex.epics.switching.OnSwitchBehaviour;
+import uk.ac.stfc.isis.ibex.epics.switching.OnInstrumentSwitch;
 import uk.ac.stfc.isis.ibex.instrument.channels.DateTimeChannel;
 import uk.ac.stfc.isis.ibex.instrument.channels.EnumChannel;
 import uk.ac.stfc.isis.ibex.instrument.channels.NumberChannel;
@@ -45,7 +45,7 @@ public class BeamStatusObservables extends Closer {
     /**
      * The beam status PVs are global so they do not need to be switched.
      */
-    private final ObservableFactory obsFactory = new ObservableFactory(OnSwitchBehaviour.NOTHING);
+    private final ObservableFactory obsFactory = new ObservableFactory(OnInstrumentSwitch.NOTHING);
 
 	public Synchrotron sync = new Synchrotron(); 
 	public TargetStation1 ts1 = new TargetStation1();

@@ -30,12 +30,12 @@ import uk.ac.stfc.isis.ibex.instrument.channels.ChannelType;
 public class ObservableFactory {
     private Switcher switcher;
 
-    public ObservableFactory(OnSwitchBehaviour onSwitch,
+    public ObservableFactory(OnInstrumentSwitch onSwitch,
             SwitcherProvider switcherProvider) {
         switcher = switcherProvider.getObservableSwitcher(onSwitch);
     }
 
-    public ObservableFactory(OnSwitchBehaviour onSwitch) {
+    public ObservableFactory(OnInstrumentSwitch onSwitch) {
         this(onSwitch, new SwitcherProvider());
     }
 
