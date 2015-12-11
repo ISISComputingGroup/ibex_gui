@@ -19,6 +19,7 @@
 
 package uk.ac.stfc.isis.ibex.epics.switching.tests;
 
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -31,6 +32,7 @@ import uk.ac.stfc.isis.ibex.epics.observing.ClosableCachingObservable;
 import uk.ac.stfc.isis.ibex.epics.switching.ObservableFactory;
 import uk.ac.stfc.isis.ibex.epics.switching.ObservablePrefixChangingSwitcher;
 import uk.ac.stfc.isis.ibex.epics.switching.OnSwitchBehaviour;
+import uk.ac.stfc.isis.ibex.epics.switching.SwitchableInitialiseOnSubscribeObservable;
 import uk.ac.stfc.isis.ibex.epics.switching.SwitcherProvider;
 import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
 import uk.ac.stfc.isis.ibex.instrument.channels.ChannelType;
@@ -38,9 +40,10 @@ import uk.ac.stfc.isis.ibex.instrument.channels.ChannelType;
 public class ObservablePrefixChangingSwitcherTest {
 
     private static final String PV_PREFIX = "PREFIX:";
-    private static final String PV_PREFIX_2 = "PREFIX2:";
-    private static final String PV_ADDRESS = PV_PREFIX + "SUFFIX";
-    private static final String PV_ADDRESS_2 = PV_PREFIX + "SUFFIX_2";
+    private static final String PV_PREFIX_2 = "PREFIX_2:";
+    private static final String SUFFIX = "SUFFIX";
+    private static final String PV_ADDRESS = PV_PREFIX + SUFFIX;
+    private static final String PV_ADDRESS_2 = PV_PREFIX_2 + SUFFIX;
 
     private ObservableFactory obsFactory;
     private ObservablePrefixChangingSwitcher observablePrefixChangingSwitcher;
@@ -48,6 +51,7 @@ public class ObservablePrefixChangingSwitcherTest {
     private ClosableCachingObservable<String> closableCachingObservable2;
     private ChannelType<String> channelType;
     private InstrumentInfo instrumentInfo;
+    private InstrumentInfo instrumentInfo2;
 
     @SuppressWarnings("unchecked")
     @Before
@@ -55,6 +59,9 @@ public class ObservablePrefixChangingSwitcherTest {
         // Arrange
         instrumentInfo = mock(InstrumentInfo.class);
         when(instrumentInfo.pvPrefix()).thenReturn(PV_PREFIX);
+        
+        instrumentInfo2 = mock(InstrumentInfo.class);
+        when(instrumentInfo2.pvPrefix()).thenReturn(PV_PREFIX_2);
 
         closableCachingObservable = mock(ClosableCachingObservable.class);
         closableCachingObservable2 = mock(ClosableCachingObservable.class);
@@ -80,6 +87,18 @@ public class ObservablePrefixChangingSwitcherTest {
 
         // Assert
         verify(closableCachingObservable, times(1)).close();
+    }
+
+    @Test
+    public void switching_instrument_creates_new_observable_for_new_pv() {
+        // Act
+        observablePrefixChangingSwitcher.switchInstrument(instrumentInfo);
+        SwitchableInitialiseOnSubscribeObservable<String> observable = obsFactory.getSwitchableObservable(channelType,
+                PV_ADDRESS);
+        observablePrefixChangingSwitcher.switchInstrument(instrumentInfo2);
+
+        // Assert
+        assertEquals(closableCachingObservable2, observable.getSource());
     }
 
 }

@@ -62,10 +62,6 @@ public class ObservableFactory {
     }
 
     public <T> ClosableCachingObservable<T> getPVObservable(ChannelType<T> channelType, String address) {
-
-        ClosableCachingObservable<T> channelReader = channelType.reader(address);
-        ClosingSwitchableObservable<T> channel = new ClosingSwitchableObservable<>(channelReader);
-
-        return channel;
+        return channelType.reader(address);
     }
 }
