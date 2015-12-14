@@ -111,11 +111,31 @@ public class Variables extends InstrumentVariables {
                 Instrument.getInstance().getPvPrefix() + address);
 	}
 
+    public InitialiseOnSubscribeObservable<String> defaultReader(String address, PVType type) {
+        // If it is local append the PV prefix, otherwise don't
+        if (type == PVType.LOCAL_PV) {
+            return obsFactory.getSwitchableObservable(new DefaultChannel(),
+                    Instrument.getInstance().getPvPrefix() + address);
+        } else {
+            return obsFactory.getSwitchableObservable(new DefaultChannel(), address);
+        }
+    }
+
 	public InitialiseOnSubscribeObservable<String> defaultReaderWithoutUnits(String address) {
         return obsFactory.getSwitchableObservable(new DefaultChannelWithoutUnits(),
                 Instrument.getInstance().getPvPrefix() + address);
 	}
 	
+    public InitialiseOnSubscribeObservable<String> defaultReaderWithoutUnits(String address, PVType type) {
+        // If it is local append the PV prefix, otherwise don't
+        if (type == PVType.LOCAL_PV) {
+            return obsFactory.getSwitchableObservable(new DefaultChannelWithoutUnits(),
+                    Instrument.getInstance().getPvPrefix() + address);
+        } else {
+            return obsFactory.getSwitchableObservable(new DefaultChannelWithoutUnits(), address);
+        }
+    }
+
 	public Writable<String> defaultWritable(String address) {
 		return writable(new StringChannel(), address);
 	}

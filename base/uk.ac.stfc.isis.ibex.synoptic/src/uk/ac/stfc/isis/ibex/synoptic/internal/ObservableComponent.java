@@ -87,7 +87,7 @@ public class ObservableComponent extends BaseComponent {
 
 	private ComponentProperty getProperty(PV pv) {
 		PVType pvType = pv.getPvType();
-        InitialiseOnSubscribeObservable<String> reader = variables.defaultReader(pv.address());
+        InitialiseOnSubscribeObservable<String> reader = variables.defaultReader(pv.address(), pvType);
 		switch(pv.recordType().io()) {
 			case WRITE:
 				Writable<String> destination = variables.defaultWritable(pv.address(), pvType);
