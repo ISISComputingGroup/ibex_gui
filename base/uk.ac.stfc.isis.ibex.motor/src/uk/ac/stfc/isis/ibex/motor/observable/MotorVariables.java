@@ -23,6 +23,8 @@ import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
 import uk.ac.stfc.isis.ibex.epics.conversion.Converter;
 import uk.ac.stfc.isis.ibex.epics.observing.InitialiseOnSubscribeObservable;
 import uk.ac.stfc.isis.ibex.epics.pv.PVAddress;
+import uk.ac.stfc.isis.ibex.epics.switching.ObservableFactory;
+import uk.ac.stfc.isis.ibex.epics.switching.OnInstrumentSwitch;
 import uk.ac.stfc.isis.ibex.instrument.Instrument;
 import uk.ac.stfc.isis.ibex.instrument.InstrumentVariables;
 import uk.ac.stfc.isis.ibex.instrument.channels.DoubleChannel;
@@ -67,7 +69,6 @@ public class MotorVariables extends InstrumentVariables {
 		}
 	};
 	
-	private final Instrument instrument;;
 	private final PVAddress motorAddress;
 
 	public final String motorName;
@@ -89,25 +90,33 @@ public class MotorVariables extends InstrumentVariables {
 	public MotorVariables(String motorName, Instrument instrument) {
 		super(instrument.channels());
 
-		this.instrument = instrument;
 		this.motorName = motorName;
-		this.motorAddress = PVAddress.startWith("MOT").append(motorName);
+        this.motorAddress = PVAddress.startWith("MOT").append(motorName);
+        PVAddress fullAddress = PVAddress.startWith(instrument.getPvPrefix() + motorAddress);
+
+        ObservableFactory obsFactory = new ObservableFactory(OnInstrumentSwitch.SWITCH);
 		
-		description = reader(new StringChannel(), motorAddress.endWithField("DESC"));
-		enable = reader(new EnumChannel<>(MotorEnable.class), motorAddress.toString() + "_able");
+        description = obsFactory.getSwitchableObservable(new StringChannel(), fullAddress.endWithField("DESC"));
+        enable = obsFactory.getSwitchableObservable(new EnumChannel<>(MotorEnable.class),
+                fullAddress.toString() + "_able");
 		
-		lowerLimit = reader(new DoubleChannel(), motorAddress.endWithField("DLLM"));
-		upperLimit = reader(new DoubleChannel(), motorAddress.endWithField("DHLM"));
+        lowerLimit = obsFactory.getSwitchableObservable(new DoubleChannel(), fullAddress.endWithField("DLLM"));
+        upperLimit = obsFactory.getSwitchableObservable(new DoubleChannel(), fullAddress.endWithField("DHLM"));
 		
-		direction = convert(reader(new ShortChannel(), motorAddress.endWithField("TDIR")), TO_MOTOR_DIRECTION);
+        direction = convert(obsFactory.getSwitchableObservable(new ShortChannel(), fullAddress.endWithField("TDIR")),
+                TO_MOTOR_DIRECTION);
 		
-		moving = convert(reader(new ShortChannel(), motorAddress.endWithField("MOVN")), TO_BOOLEAN);
-		atHome = convert(reader(new ShortChannel(), motorAddress.endWithField("ATHM")), TO_BOOLEAN);
-		atUpperLimitSwitch = convert(reader(new ShortChannel(), motorAddress.endWithField("LLS")), TO_BOOLEAN);
-		atLowerLimitSwitch = convert(reader(new ShortChannel(), motorAddress.endWithField("HLS")), TO_BOOLEAN);
-		setpoint = registerForClose(new MotorSetPointVariables(motorAddress, instrument.channels()));
+        moving = convert(obsFactory.getSwitchableObservable(new ShortChannel(), fullAddress.endWithField("MOVN")),
+                TO_BOOLEAN);
+        atHome = convert(obsFactory.getSwitchableObservable(new ShortChannel(), fullAddress.endWithField("ATHM")),
+                TO_BOOLEAN);
+        atUpperLimitSwitch = convert(
+                obsFactory.getSwitchableObservable(new ShortChannel(), fullAddress.endWithField("LLS")), TO_BOOLEAN);
+        atLowerLimitSwitch = convert(
+                obsFactory.getSwitchableObservable(new ShortChannel(), fullAddress.endWithField("HLS")), TO_BOOLEAN);
+        setpoint = registerForClose(new MotorSetPointVariables(fullAddress, instrument.channels(), obsFactory));
 		
-		status = convert(reader(new StringChannel(), motorAddress.toString() + "_STATUS"), CAPITALISE_FIRST_LETTER_ONLY);
+		status = convert(obsFactory.getSwitchableObservable(new StringChannel(), motorAddress.toString() + "_STATUS"), CAPITALISE_FIRST_LETTER_ONLY);
 	}
 	
 	public String motorAddress() {

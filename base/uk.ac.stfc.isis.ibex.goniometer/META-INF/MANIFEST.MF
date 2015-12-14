@@ -12,6 +12,7 @@ Require-Bundle: org.eclipse.core.runtime,
  uk.ac.stfc.isis.ibex.motor;bundle-version="1.0.0";visibility:=reexport
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Bundle-ActivationPolicy: lazy
-Import-Package: uk.ac.stfc.isis.ibex.model,
+Import-Package: uk.ac.stfc.isis.ibex.epics.switching,
+ uk.ac.stfc.isis.ibex.model,
  uk.ac.stfc.isis.ibex.preferences
 Export-Package: uk.ac.stfc.isis.ibex.goniometer
