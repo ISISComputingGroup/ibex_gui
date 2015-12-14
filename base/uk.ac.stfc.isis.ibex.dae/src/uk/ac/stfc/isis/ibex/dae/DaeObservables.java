@@ -37,116 +37,130 @@ import uk.ac.stfc.isis.ibex.instrument.channels.IntegerChannel;
 import uk.ac.stfc.isis.ibex.instrument.channels.NumberChannel;
 import uk.ac.stfc.isis.ibex.instrument.channels.StringChannel;
 
+/**
+ * Holds the Observables for the DAE.
+ */
 public class DaeObservables extends InstrumentVariables {
-	
-	private static final PVAddress DAE = PVAddress.startWith("DAE");
-    private ObservableFactory obsFactory = new ObservableFactory(OnInstrumentSwitch.SWITCH);
-	
-    public final InitialiseOnSubscribeObservable<String> instrumentName = obsFactory.getSwitchableObservable(
-new StringChannel(), addPrefix(DAE.endWith("INSTNAME")));
-    public final InitialiseOnSubscribeObservable<DaeRunState> runState = obsFactory
-            .getSwitchableObservable(new EnumChannel<>(DaeRunState.class), addPrefix(DAE.endWith("RUNSTATE_STR")));
-    public final InitialiseOnSubscribeObservable<String> runNumber = obsFactory
-            .getSwitchableObservable(new StringChannel(), addPrefix(DAE.endWith("RUNNUMBER")));
-    public final InitialiseOnSubscribeObservable<String> title = obsFactory
-            .getSwitchableObservable(new CharWaveformChannel(), addPrefix(DAE.endWith("TITLE")));
-    public final InitialiseOnSubscribeObservable<String> users = obsFactory
-            .getSwitchableObservable(new CharWaveformChannel(), addPrefix(DAE.endWith("USERNAME")));
-	
-    public final InitialiseOnSubscribeObservable<Integer> goodFrames = obsFactory
-            .getSwitchableObservable(new IntegerChannel(), addPrefix(DAE.endWith("GOODFRAMES")));
-    public final InitialiseOnSubscribeObservable<Integer> rawFrames = obsFactory
-            .getSwitchableObservable(new IntegerChannel(), addPrefix(DAE.endWith("RAWFRAMES")));
-    public final InitialiseOnSubscribeObservable<Integer> monitorCounts = obsFactory
-            .getSwitchableObservable(new IntegerChannel(), addPrefix(DAE.endWith("MONITORCOUNTS")));
-    public final InitialiseOnSubscribeObservable<Number> goodCurrent = obsFactory
-            .getSwitchableObservable(new NumberChannel(), addPrefix(DAE.endWith("GOODUAH")));
 
-    public final InitialiseOnSubscribeObservable<String> runTime = obsFactory
-            .getSwitchableObservable(new ElapsedTimeChannel(), addPrefix(DAE.endWith("RUNDURATION")));
-    public final InitialiseOnSubscribeObservable<Integer> currentPeriod = obsFactory
-            .getSwitchableObservable(new IntegerChannel(), addPrefix(DAE.endWith("PERIOD")));
-    public final InitialiseOnSubscribeObservable<Integer> totalPeriods = obsFactory
-            .getSwitchableObservable(new IntegerChannel(), addPrefix(DAE.endWith("NUMPERIODS")));
+    private static final PVAddress DAE = PVAddress.startWith("DAE");
+    private final ObservableFactory obsFactory = new ObservableFactory(OnInstrumentSwitch.SWITCH);
 
-    public final InitialiseOnSubscribeObservable<Boolean> inStateTransition = obsFactory
-            .getSwitchableObservable(new BooleanChannel(), addPrefix(DAE.endWith("STATETRANS")));
-		
-    public final InitialiseOnSubscribeObservable<String> daeSettings = obsFactory
-            .getSwitchableObservable(new CharWaveformChannel(), addPrefix(DAE.endWith("DAESETTINGS")));
-    public final InitialiseOnSubscribeObservable<String> hardwarePeriods = obsFactory
-            .getSwitchableObservable(new CharWaveformChannel(), addPrefix(DAE.endWith("HARDWAREPERIODS")));
-    public final InitialiseOnSubscribeObservable<String> updateSettings = obsFactory
-            .getSwitchableObservable(new CharWaveformChannel(), addPrefix(DAE.endWith("UPDATESETTINGS")));
-    public final InitialiseOnSubscribeObservable<String> timeChannelSettings = obsFactory
-            .getSwitchableObservable(new CompressedCharWaveformChannel(), addPrefix(DAE.endWith("TCBSETTINGS")));
+    public final InitialiseOnSubscribeObservable<String> instrumentName;
+    public final InitialiseOnSubscribeObservable<DaeRunState> runState;
+    public final InitialiseOnSubscribeObservable<String> runNumber;
+    public final InitialiseOnSubscribeObservable<String> title;
+    public final InitialiseOnSubscribeObservable<String> users;
+    public final InitialiseOnSubscribeObservable<Integer> goodFrames;
+    public final InitialiseOnSubscribeObservable<Integer> rawFrames;
+    public final InitialiseOnSubscribeObservable<Integer> monitorCounts;
+    public final InitialiseOnSubscribeObservable<Number> goodCurrent;
+    public final InitialiseOnSubscribeObservable<String> runTime;
+    public final InitialiseOnSubscribeObservable<Integer> currentPeriod;
+    public final InitialiseOnSubscribeObservable<Integer> totalPeriods;
+    public final InitialiseOnSubscribeObservable<Boolean> inStateTransition;
+    public final InitialiseOnSubscribeObservable<String> daeSettings;
+    public final InitialiseOnSubscribeObservable<String> hardwarePeriods;
+    public final InitialiseOnSubscribeObservable<String> updateSettings;
+    public final InitialiseOnSubscribeObservable<String> timeChannelSettings;
+    public final InitialiseOnSubscribeObservable<String> detectorTables;
+    public final InitialiseOnSubscribeObservable<String> spectraTables;
+    public final InitialiseOnSubscribeObservable<String> wiringTables;
+    public final InitialiseOnSubscribeObservable<String> periodFiles;
+    public final InitialiseOnSubscribeObservable<String> vetos;
+    public final InitialiseOnSubscribeObservable<Number> beamCurrent;
+    public final InitialiseOnSubscribeObservable<Double> totalDaeCounts;
+    public final InitialiseOnSubscribeObservable<Integer> daeMemoryUsed;
+    public final InitialiseOnSubscribeObservable<String> timingSource;
+    public final InitialiseOnSubscribeObservable<String> rbNumber;
+    public final InitialiseOnSubscribeObservable<Double> countRate;
+    public final InitialiseOnSubscribeObservable<Double> eventMode;
+    public final InitialiseOnSubscribeObservable<String> startTime;
+    public final InitialiseOnSubscribeObservable<Integer> runDuration;
+    public final InitialiseOnSubscribeObservable<Integer> timeChannels;
+    public final InitialiseOnSubscribeObservable<Integer> spectra;
+    public final InitialiseOnSubscribeObservable<String> isisCycle;
+    public final InitialiseOnSubscribeObservable<Integer> periodGoodFrames;
+    public final InitialiseOnSubscribeObservable<Integer> periodRawFrames;
+    public final InitialiseOnSubscribeObservable<Integer> periodDuration;
+    public final InitialiseOnSubscribeObservable<String> periodType;
+    public final InitialiseOnSubscribeObservable<Integer> periodSequence;
+    public final InitialiseOnSubscribeObservable<Integer> monitorSpectrum;
+    public final InitialiseOnSubscribeObservable<Double> monitorFrom;
+    public final InitialiseOnSubscribeObservable<Double> monitorTo;
+    public final InitialiseOnSubscribeObservable<Double> npRatio;
 
-    public final InitialiseOnSubscribeObservable<String> detectorTables = obsFactory
-            .getSwitchableObservable(new CompressedCharWaveformChannel(), addPrefix(DAE.endWith("DETECTORTABLES")));
-    public final InitialiseOnSubscribeObservable<String> spectraTables = obsFactory
-            .getSwitchableObservable(new CompressedCharWaveformChannel(), addPrefix(DAE.endWith("SPECTRATABLES")));
-    public final InitialiseOnSubscribeObservable<String> wiringTables = obsFactory
-            .getSwitchableObservable(new CompressedCharWaveformChannel(), addPrefix(DAE.endWith("WIRINGTABLES")));
-    public final InitialiseOnSubscribeObservable<String> periodFiles = obsFactory
-            .getSwitchableObservable(new CompressedCharWaveformChannel(), addPrefix(DAE.endWith("PERIODFILES")));
+    public DaeObservables(Channels channels) {
+        super(channels);
+        instrumentName = obsFactory.getSwitchableObservable(new StringChannel(), addPrefix(DAE.endWith("INSTNAME")));
+        runState = obsFactory.getSwitchableObservable(new EnumChannel<>(DaeRunState.class),
+                addPrefix(DAE.endWith("RUNSTATE_STR")));
+        runNumber = obsFactory.getSwitchableObservable(new StringChannel(), addPrefix(DAE.endWith("RUNNUMBER")));
+        title = obsFactory.getSwitchableObservable(new CharWaveformChannel(), addPrefix(DAE.endWith("TITLE")));
+        users = obsFactory.getSwitchableObservable(new CharWaveformChannel(), addPrefix(DAE.endWith("USERNAME")));
+        goodFrames = obsFactory.getSwitchableObservable(new IntegerChannel(), addPrefix(DAE.endWith("GOODFRAMES")));
+        rawFrames = obsFactory.getSwitchableObservable(new IntegerChannel(), addPrefix(DAE.endWith("RAWFRAMES")));
+        monitorCounts = obsFactory.getSwitchableObservable(new IntegerChannel(),
+                addPrefix(DAE.endWith("MONITORCOUNTS")));
+        goodCurrent = obsFactory.getSwitchableObservable(new NumberChannel(), addPrefix(DAE.endWith("GOODUAH")));
+        runTime = obsFactory.getSwitchableObservable(new ElapsedTimeChannel(), addPrefix(DAE.endWith("RUNDURATION")));
+        currentPeriod = obsFactory.getSwitchableObservable(new IntegerChannel(), addPrefix(DAE.endWith("PERIOD")));
+        totalPeriods = obsFactory.getSwitchableObservable(new IntegerChannel(), addPrefix(DAE.endWith("NUMPERIODS")));
+        inStateTransition = obsFactory.getSwitchableObservable(new BooleanChannel(),
+                addPrefix(DAE.endWith("STATETRANS")));
+        daeSettings = obsFactory.getSwitchableObservable(new CharWaveformChannel(),
+                addPrefix(DAE.endWith("DAESETTINGS")));
+        hardwarePeriods = obsFactory.getSwitchableObservable(new CharWaveformChannel(),
+                addPrefix(DAE.endWith("HARDWAREPERIODS")));
+        updateSettings = obsFactory.getSwitchableObservable(new CharWaveformChannel(),
+                addPrefix(DAE.endWith("UPDATESETTINGS")));
+        timeChannelSettings = obsFactory.getSwitchableObservable(new CompressedCharWaveformChannel(),
+                addPrefix(DAE.endWith("TCBSETTINGS")));
+        detectorTables = obsFactory.getSwitchableObservable(new CompressedCharWaveformChannel(),
+                addPrefix(DAE.endWith("DETECTORTABLES")));
+        spectraTables = obsFactory.getSwitchableObservable(new CompressedCharWaveformChannel(),
+                addPrefix(DAE.endWith("SPECTRATABLES")));
+        wiringTables = obsFactory.getSwitchableObservable(new CompressedCharWaveformChannel(),
+                addPrefix(DAE.endWith("WIRINGTABLES")));
+        periodFiles = obsFactory.getSwitchableObservable(new CompressedCharWaveformChannel(),
+                addPrefix(DAE.endWith("PERIODFILES")));
+        vetos = obsFactory.getSwitchableObservable(new CharWaveformChannel(), addPrefix(DAE.endWith("VETOSTATUS")));
+        beamCurrent = obsFactory.getSwitchableObservable(new NumberChannel(), addPrefix(DAE.endWith("BEAMCURRENT")));
+        totalDaeCounts = obsFactory.getSwitchableObservable(new DoubleChannel(),
+                addPrefix(DAE.endWith("TOTALDAECOUNTS")));
+        daeMemoryUsed = obsFactory.getSwitchableObservable(new IntegerChannel(),
+                addPrefix(DAE.endWith("DAEMEMORYUSED")));
+        timingSource = obsFactory.getSwitchableObservable(new StringChannel(),
+                addPrefix(DAE.endWith("DAETIMINGSOURCE")));
+        rbNumber = obsFactory.getSwitchableObservable(new StringChannel(), addPrefix(DAE.endWith("RBNUMBER")));
+        countRate = obsFactory.getSwitchableObservable(new DoubleChannel(), addPrefix(DAE.endWith("COUNTRATE")));
+        eventMode = obsFactory.getSwitchableObservable(new DoubleChannel(),
+                addPrefix(DAE.endWith("EVENTMODEFRACTION")));
+        startTime = obsFactory.getSwitchableObservable(new StringChannel(), addPrefix(DAE.endWith("STARTTIME")));
+        runDuration = obsFactory.getSwitchableObservable(new IntegerChannel(), addPrefix(DAE.endWith("RUNDURATION")));
+        timeChannels = obsFactory.getSwitchableObservable(new IntegerChannel(),
+                addPrefix(DAE.endWith("NUMTIMECHANNELS")));
+        spectra = obsFactory.getSwitchableObservable(new IntegerChannel(), addPrefix(DAE.endWith("NUMSPECTRA")));
+        isisCycle = obsFactory.getSwitchableObservable(new StringChannel(), addPrefix(DAE.endWith("ISISCYCLE")));
+        periodGoodFrames = obsFactory.getSwitchableObservable(new IntegerChannel(),
+                addPrefix(DAE.endWith("GOODFRAMES_PD")));
+        periodRawFrames = obsFactory.getSwitchableObservable(new IntegerChannel(),
+                addPrefix(DAE.endWith("RAWFRAMES_PD")));
+        periodDuration = obsFactory.getSwitchableObservable(new IntegerChannel(),
+                addPrefix(DAE.endWith("RUNDURATION_PD")));
+        periodType = obsFactory.getSwitchableObservable(new StringChannel(), addPrefix(DAE.endWith("PERIODTYPE")));
+        periodSequence = obsFactory.getSwitchableObservable(new IntegerChannel(), addPrefix(DAE.endWith("PERIODSEQ")));
+        monitorSpectrum = obsFactory.getSwitchableObservable(new IntegerChannel(),
+                addPrefix(DAE.endWith("MONITORSPECTRUM")));
+        monitorFrom = obsFactory.getSwitchableObservable(new DoubleChannel(), addPrefix(DAE.endWith("MONITORFROM")));
+        monitorTo = obsFactory.getSwitchableObservable(new DoubleChannel(), addPrefix(DAE.endWith("MONITORTO")));
+        npRatio = obsFactory.getSwitchableObservable(new DoubleChannel(), addPrefix(DAE.endWith("NPRATIO")));
+    }
 
-    public final InitialiseOnSubscribeObservable<String> vetos = obsFactory
-            .getSwitchableObservable(new CharWaveformChannel(), addPrefix(DAE.endWith("VETOSTATUS")));
-	
-    public final InitialiseOnSubscribeObservable<Number> beamCurrent = obsFactory
-            .getSwitchableObservable(new NumberChannel(), addPrefix(DAE.endWith("BEAMCURRENT")));
-    public final InitialiseOnSubscribeObservable<Double> totalDaeCounts = obsFactory
-            .getSwitchableObservable(new DoubleChannel(), addPrefix(DAE.endWith("TOTALDAECOUNTS")));
-    public final InitialiseOnSubscribeObservable<Integer> daeMemoryUsed = obsFactory
-            .getSwitchableObservable(new IntegerChannel(), addPrefix(DAE.endWith("DAEMEMORYUSED")));
-    public final InitialiseOnSubscribeObservable<String> timingSource = obsFactory
-            .getSwitchableObservable(new StringChannel(), addPrefix(DAE.endWith("DAETIMINGSOURCE")));
-    public final InitialiseOnSubscribeObservable<String> rbNumber = obsFactory
-            .getSwitchableObservable(new StringChannel(), addPrefix(DAE.endWith("RBNUMBER")));
-    public final InitialiseOnSubscribeObservable<Double> countRate = obsFactory
-            .getSwitchableObservable(new DoubleChannel(), addPrefix(DAE.endWith("COUNTRATE")));
-    public final InitialiseOnSubscribeObservable<Double> eventMode = obsFactory
-            .getSwitchableObservable(new DoubleChannel(), addPrefix(DAE.endWith("EVENTMODEFRACTION")));
-    public final InitialiseOnSubscribeObservable<String> startTime = obsFactory
-            .getSwitchableObservable(new StringChannel(), addPrefix(DAE.endWith("STARTTIME")));
-    public final InitialiseOnSubscribeObservable<Integer> runDuration = obsFactory
-            .getSwitchableObservable(new IntegerChannel(), addPrefix(DAE.endWith("RUNDURATION")));
-    public final InitialiseOnSubscribeObservable<Integer> timeChannels = obsFactory
-            .getSwitchableObservable(new IntegerChannel(), addPrefix(DAE.endWith("NUMTIMECHANNELS")));
-    public final InitialiseOnSubscribeObservable<Integer> spectra = obsFactory
-            .getSwitchableObservable(new IntegerChannel(), addPrefix(DAE.endWith("NUMSPECTRA")));
-    public final InitialiseOnSubscribeObservable<String> isisCycle = obsFactory
-            .getSwitchableObservable(new StringChannel(), addPrefix(DAE.endWith("ISISCYCLE")));
-	
-    public final InitialiseOnSubscribeObservable<Integer> periodGoodFrames = obsFactory
-            .getSwitchableObservable(new IntegerChannel(), addPrefix(DAE.endWith("GOODFRAMES_PD")));
-    public final InitialiseOnSubscribeObservable<Integer> periodRawFrames = obsFactory
-            .getSwitchableObservable(new IntegerChannel(), addPrefix(DAE.endWith("RAWFRAMES_PD")));
-    public final InitialiseOnSubscribeObservable<Integer> periodDuration = obsFactory
-            .getSwitchableObservable(new IntegerChannel(), addPrefix(DAE.endWith("RUNDURATION_PD")));
-    public final InitialiseOnSubscribeObservable<String> periodType = obsFactory
-            .getSwitchableObservable(new StringChannel(), addPrefix(DAE.endWith("PERIODTYPE")));
-    public final InitialiseOnSubscribeObservable<Integer> periodSequence = obsFactory
-            .getSwitchableObservable(new IntegerChannel(), addPrefix(DAE.endWith("PERIODSEQ")));
-
-    public final InitialiseOnSubscribeObservable<Integer> monitorSpectrum = obsFactory
-            .getSwitchableObservable(new IntegerChannel(), addPrefix(DAE.endWith("MONITORSPECTRUM")));
-    public final InitialiseOnSubscribeObservable<Double> monitorFrom = obsFactory
-            .getSwitchableObservable(new DoubleChannel(), addPrefix(DAE.endWith("MONITORFROM")));
-    public final InitialiseOnSubscribeObservable<Double> monitorTo = obsFactory
-            .getSwitchableObservable(new DoubleChannel(), addPrefix(DAE.endWith("MONITORTO")));
-    public final InitialiseOnSubscribeObservable<Double> npRatio = obsFactory
-            .getSwitchableObservable(new DoubleChannel(), addPrefix(DAE.endWith("NPRATIO")));
-
-	public DaeObservables(Channels channels) {
-		super(channels);
-	}
-	
     public InitialiseOnSubscribeObservable<float[]> spectrumXData(int number, int period) {
         return obsFactory.getSwitchableObservable(new FloatArrayChannel(),
                 addPrefix(spectrumData(number, period, "X")));
-	}
-	
+    }
+
     public InitialiseOnSubscribeObservable<Integer> spectrumXDataLength(int number, int period) {
         return obsFactory.getSwitchableObservable(new IntegerChannel(),
                 addPrefix(spectrumDataLength(number, period, "X")));
@@ -155,16 +169,16 @@ new StringChannel(), addPrefix(DAE.endWith("INSTNAME")));
     public InitialiseOnSubscribeObservable<float[]> spectrumYData(int number, int period) {
         return obsFactory.getSwitchableObservable(new FloatArrayChannel(),
                 addPrefix(spectrumData(number, period, "Y")));
-	}
-	
+    }
+
     public InitialiseOnSubscribeObservable<Integer> spectrumYDataLength(int number, int period) {
         return obsFactory.getSwitchableObservable(new IntegerChannel(),
                 addPrefix(spectrumDataLength(number, period, "Y")));
     }
 
-	private static String spectrumData(int spectrum, int period, String axis) {
-		return String.format("DAE:SPEC:%d:%d:%s", period, spectrum, axis);	
-	}
+    private static String spectrumData(int spectrum, int period, String axis) {
+        return String.format("DAE:SPEC:%d:%d:%s", period, spectrum, axis);
+    }
 
     private static String spectrumDataLength(int spectrum, int period, String axis) {
         return spectrumData(spectrum, period, axis) + ".NORD";

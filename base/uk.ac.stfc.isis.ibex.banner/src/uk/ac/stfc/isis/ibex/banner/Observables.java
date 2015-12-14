@@ -22,14 +22,22 @@ package uk.ac.stfc.isis.ibex.banner;
 import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
 import uk.ac.stfc.isis.ibex.epics.conversion.Converter;
 import uk.ac.stfc.isis.ibex.epics.observing.InitialiseOnSubscribeObservable;
+import uk.ac.stfc.isis.ibex.epics.switching.ObservableFactory;
+import uk.ac.stfc.isis.ibex.epics.switching.OnInstrumentSwitch;
 import uk.ac.stfc.isis.ibex.epics.writing.Writable;
 import uk.ac.stfc.isis.ibex.instrument.Channels;
+import uk.ac.stfc.isis.ibex.instrument.Instrument;
 import uk.ac.stfc.isis.ibex.instrument.InstrumentVariables;
 import uk.ac.stfc.isis.ibex.instrument.channels.DoubleChannel;
 import uk.ac.stfc.isis.ibex.instrument.channels.EnumChannel;
 import uk.ac.stfc.isis.ibex.instrument.channels.LongChannel;
 
+/**
+ * Holds the Observables for the Spangle Banner.
+ */
 public class Observables extends InstrumentVariables {
+    private final ObservableFactory obsFactory = new ObservableFactory(OnInstrumentSwitch.SWITCH);
+
 	private Converter<Double, InMotionState> doubleToMotionState = new Converter<Double, InMotionState>() {
 		@Override
 		public InMotionState convert(Double value) throws ConversionException {
@@ -41,12 +49,18 @@ public class Observables extends InstrumentVariables {
 		}
 	};
 
-	public final InitialiseOnSubscribeObservable<BumpStopState> bumpStop = reader(new EnumChannel<>(BumpStopState.class), "MOT:BUMP_STOP");
-	public final InitialiseOnSubscribeObservable<InMotionState> inMotion = convert(reader(new DoubleChannel(), "CS:MOT:MOVING"), doubleToMotionState);	
-	public final Writable<Long> stop = writable(new LongChannel(), "CS:MOT:STOP:ALL");
+    public final InitialiseOnSubscribeObservable<BumpStopState> bumpStop;
+    public final InitialiseOnSubscribeObservable<InMotionState> inMotion;
+    public final Writable<Long> stop;
 	
 	public Observables(Channels channels) {
 		super(channels);
+        bumpStop = obsFactory.getSwitchableObservable(new EnumChannel<>(BumpStopState.class),
+                Instrument.getInstance().getPvPrefix() + "MOT:BUMP_STOP");
+        inMotion = convert(obsFactory.getSwitchableObservable(new DoubleChannel(),
+                Instrument.getInstance().getPvPrefix() + "CS:MOT:MOVING"),
+                doubleToMotionState);
+        stop = writable(new LongChannel(), "CS:MOT:STOP:ALL");
 	}		
 
 }
