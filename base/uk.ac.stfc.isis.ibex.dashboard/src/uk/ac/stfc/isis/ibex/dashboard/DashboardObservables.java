@@ -21,26 +21,42 @@ package uk.ac.stfc.isis.ibex.dashboard;
 
 import uk.ac.stfc.isis.ibex.dae.DaeObservables;
 import uk.ac.stfc.isis.ibex.epics.observing.InitialiseOnSubscribeObservable;
+import uk.ac.stfc.isis.ibex.epics.switching.ObservableFactory;
+import uk.ac.stfc.isis.ibex.epics.switching.OnInstrumentSwitch;
 import uk.ac.stfc.isis.ibex.instrument.Channels;
+import uk.ac.stfc.isis.ibex.instrument.Instrument;
 import uk.ac.stfc.isis.ibex.instrument.InstrumentVariables;
 import uk.ac.stfc.isis.ibex.instrument.channels.CompressedCharWaveformChannel;
 import uk.ac.stfc.isis.ibex.instrument.channels.DateTimeChannel;
 import uk.ac.stfc.isis.ibex.instrument.channels.EnumChannel;
 
+/**
+ * Holds the Observables for the non-DAE part of the dashboard and holds a
+ * reference to the class containing the DAE Observables.
+ */
 public class DashboardObservables extends InstrumentVariables {
 
     private static final String SHUTTER_STATUS = "SHTR:STAT";    
     private static final String TIME = "CS:IOC:INSTETC_01:DEVIOS:TOD";
     private static final String USERS = "ED:SURNAME";
+    private final ObservableFactory obsFactory = new ObservableFactory(OnInstrumentSwitch.SWITCH);
     
-	public final InitialiseOnSubscribeObservable<ShutterStatus> shutter = reader(new EnumChannel<>(ShutterStatus.class), SHUTTER_STATUS);
-	public final InitialiseOnSubscribeObservable<String> instrumentTime = reader(new DateTimeChannel(), TIME);
-	public final InitialiseOnSubscribeObservable<String> users = reader(new CompressedCharWaveformChannel(), USERS);
+    public final InitialiseOnSubscribeObservable<ShutterStatus> shutter;
+    public final InitialiseOnSubscribeObservable<String> instrumentTime;
+    public final InitialiseOnSubscribeObservable<String> users;
 		
 	public final DaeObservables dae;
 
 	public DashboardObservables(Channels channels) {
 		super(channels);
+
+        shutter = obsFactory.getSwitchableObservable(new EnumChannel<>(ShutterStatus.class),
+                Instrument.getInstance().getPvPrefix() + SHUTTER_STATUS);
+        instrumentTime = obsFactory.getSwitchableObservable(new DateTimeChannel(),
+                Instrument.getInstance().getPvPrefix() + TIME);
+        users = obsFactory.getSwitchableObservable(new CompressedCharWaveformChannel(),
+                Instrument.getInstance().getPvPrefix() + USERS);
+
 		dae = registerForClose(new DaeObservables(channels));
 	}
 }
