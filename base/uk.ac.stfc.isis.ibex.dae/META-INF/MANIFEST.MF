@@ -11,7 +11,8 @@ Require-Bundle: org.eclipse.core.runtime,
  com.google.gson,
  uk.ac.stfc.isis.ibex.epics,
  uk.ac.stfc.isis.ibex.instrument,
- com.google.common;bundle-version="10.0.1"
+ com.google.common;bundle-version="10.0.1",
+ uk.ac.stfc.isis.ibex.epics.switching
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Bundle-ActivationPolicy: lazy
 Export-Package: uk.ac.stfc.isis.ibex.dae,
