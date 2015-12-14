@@ -27,13 +27,18 @@ import uk.ac.stfc.isis.ibex.instrument.channels.StringChannel;
 import uk.ac.stfc.isis.ibex.instrument.internal.MachineName;
 import uk.ac.stfc.isis.ibex.instrument.internal.UserName;
 
+/**
+ * Holds the Observables and Writables relating to the baton passing mechanism.
+ */
 public class BannerObservables extends InstrumentVariables {
-	public final Writable<String> requestPV = writable(new StringChannel(), "CS:CONTROL:REQUEST");
-	public final InitialiseOnSubscribeObservable<String> controlPV = reader(new StringChannel(), "CS:CONTROL");
+    public final Writable<String> requestPV;
+    public final InitialiseOnSubscribeObservable<String> controlPV;
 	public final String self = UserName.get() + "@" + MachineName.get();
 	
 	public BannerObservables(Channels channels) {
 		super(channels);
+        requestPV = writable(new StringChannel(), "CS:CONTROL:REQUEST");
+        controlPV = reader(new StringChannel(), "CS:CONTROL");
 	}
 	
 	public void sendRequest() {

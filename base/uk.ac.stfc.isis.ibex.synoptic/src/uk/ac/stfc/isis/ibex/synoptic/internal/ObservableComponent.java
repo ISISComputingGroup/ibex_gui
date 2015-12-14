@@ -87,11 +87,12 @@ public class ObservableComponent extends BaseComponent {
 
 	private ComponentProperty getProperty(PV pv) {
 		PVType pvType = pv.getPvType();
-		InitialiseOnSubscribeObservable<String> reader = variables.defaultReader(pv.address(), pvType);
+        InitialiseOnSubscribeObservable<String> reader = variables.defaultReader(pv.address());
 		switch(pv.recordType().io()) {
 			case WRITE:
 				Writable<String> destination = variables.defaultWritable(pv.address(), pvType);
-				InitialiseOnSubscribeObservable<String> readerWithoutUnits = variables.defaultReaderWithoutUnits(pv.address(), pvType);
+                InitialiseOnSubscribeObservable<String> readerWithoutUnits = variables
+                        .defaultReaderWithoutUnits(pv.address());
 				return new WritableComponentProperty(pv.displayName(), readerWithoutUnits, destination);
 			case READ:
 			default:

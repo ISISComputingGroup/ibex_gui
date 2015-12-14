@@ -47,7 +47,7 @@ public class PVAddressBook {
 		return address;
 	}
 	
-public BaseCachingObservable<String> resolvePV(String suffix, PVType type) {
+    public BaseCachingObservable<String> resolvePV(String suffix, PVType type) {
 		if (addresses.containsKey(suffix)) {
 			return addresses.get(suffix);
 		}

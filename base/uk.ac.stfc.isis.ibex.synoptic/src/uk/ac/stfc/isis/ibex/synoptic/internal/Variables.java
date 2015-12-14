@@ -24,9 +24,12 @@ import java.util.Collection;
 import uk.ac.stfc.isis.ibex.epics.conversion.Convert;
 import uk.ac.stfc.isis.ibex.epics.conversion.Converter;
 import uk.ac.stfc.isis.ibex.epics.observing.InitialiseOnSubscribeObservable;
+import uk.ac.stfc.isis.ibex.epics.switching.ObservableFactory;
+import uk.ac.stfc.isis.ibex.epics.switching.OnInstrumentSwitch;
 import uk.ac.stfc.isis.ibex.epics.writing.ConvertingWritable;
 import uk.ac.stfc.isis.ibex.epics.writing.Writable;
 import uk.ac.stfc.isis.ibex.instrument.Channels;
+import uk.ac.stfc.isis.ibex.instrument.Instrument;
 import uk.ac.stfc.isis.ibex.instrument.InstrumentVariables;
 import uk.ac.stfc.isis.ibex.instrument.channels.CompressedCharWaveformChannel;
 import uk.ac.stfc.isis.ibex.instrument.channels.DefaultChannel;
@@ -43,7 +46,7 @@ import uk.ac.stfc.isis.ibex.synoptic.model.desc.SynopticDescription;
  *
  */
 public class Variables extends InstrumentVariables {
-	
+    private final ObservableFactory obsFactory = new ObservableFactory(OnInstrumentSwitch.CLOSE);
 	private static final String SYNOPTIC_ADDRESS = "CS:BLOCKSERVER:SYNOPTICS:";
 	private static final String GET_SYNOPTIC = ":GET";
 	
@@ -97,25 +100,20 @@ public class Variables extends InstrumentVariables {
 	}	
 	
 	private InitialiseOnSubscribeObservable<String> readCompressed(String address) {
-		return reader(new CompressedCharWaveformChannel(), address);
+        return obsFactory.getSwitchableObservable(new CompressedCharWaveformChannel(),
+                Instrument.getInstance().getPvPrefix() + address);
 	}	
 	
 	// The following readers/writers are for PVs on the synoptic
 	
 	public InitialiseOnSubscribeObservable<String> defaultReader(String address) {
-		return reader(new DefaultChannel(), address);
-	}
-	
-	public InitialiseOnSubscribeObservable<String> defaultReader(String address, PVType type) {
-		return reader(new DefaultChannel(), address, type);
+        return obsFactory.getSwitchableObservable(new DefaultChannel(),
+                Instrument.getInstance().getPvPrefix() + address);
 	}
 
 	public InitialiseOnSubscribeObservable<String> defaultReaderWithoutUnits(String address) {
-		return reader(new DefaultChannelWithoutUnits(), address);
-	}
-	
-	public InitialiseOnSubscribeObservable<String> defaultReaderWithoutUnits(String address, PVType type) {
-		return reader(new DefaultChannelWithoutUnits(), address, type);
+        return obsFactory.getSwitchableObservable(new DefaultChannelWithoutUnits(),
+                Instrument.getInstance().getPvPrefix() + address);
 	}
 	
 	public Writable<String> defaultWritable(String address) {
