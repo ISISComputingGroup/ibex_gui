@@ -38,7 +38,6 @@ import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 
 import uk.ac.stfc.isis.ibex.instrument.baton.BannerObservables;
-import uk.ac.stfc.isis.ibex.instrument.internal.DefaultSettings;
 import uk.ac.stfc.isis.ibex.instrument.internal.LocalHostInstrumentInfo;
 import uk.ac.stfc.isis.ibex.instrument.pv.PVAddressBook;
 import uk.ac.stfc.isis.ibex.instrument.pv.PVChannels;
@@ -53,11 +52,10 @@ public class Instrument implements BundleActivator {
     private static Instrument instance;
 	private static BundleContext context;
 	
-    public static Instrument getInstance() { 
+    public static Instrument getInstance() {
     	return instance; 
     }
 	
-    private final Settings settings;
 	private final PVAddressBook addresses;
 	private final PVChannels channels;
 	private final BannerObservables baton;
@@ -73,7 +71,6 @@ public class Instrument implements BundleActivator {
 	
 	public Instrument() {
 		instance = this;
-		settings = new DefaultSettings();
 		
 		localhost = new LocalHostInstrumentInfo();
 		instruments.add(localhost);
@@ -82,7 +79,7 @@ public class Instrument implements BundleActivator {
 		instruments.add(new InstrumentInfo("DEMO"));
 		instruments.add(new InstrumentInfo("IMAT"));
 		
-		addresses = new PVAddressBook(settings.pvPrefix());
+        addresses = new PVAddressBook(getPvPrefix());
 		channels = new PVChannels(addresses);
 		baton = new BannerObservables(channels);
 		
@@ -93,9 +90,19 @@ public class Instrument implements BundleActivator {
 		return instrumentName;
 	}
 	
-	public Settings settings() {
-		return settings;
-	}
+    public String getPvPrefix() {
+        
+        String pvPrefix;
+        
+        // TODO: Remove this once the PV Address book is gone.
+        if (instrumentInfo == null) {
+            pvPrefix = localhost.pvPrefix();
+        } else {
+            pvPrefix = instrumentInfo.pvPrefix();
+        }
+        
+        return pvPrefix;
+    }
 	
 	public Channels channels() {
 		 return channels;
