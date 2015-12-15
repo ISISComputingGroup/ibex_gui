@@ -91,6 +91,7 @@ public class ObservablePrefixChangingSwitcher extends PrefixChangingSwitcher {
             switchableInfo.switchable
                     .setSource(obsFactory.getPVObservable(switchableInfo.channelType, switchedPvAddress));
             
+            switchableInfo.pvAddress = switchedPvAddress;
         }
         // The immediate super class sets the new pvPrefix
         super.switchInstrument(instrumentInfo);
