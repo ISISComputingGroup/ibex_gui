@@ -19,7 +19,6 @@
 
 package uk.ac.stfc.isis.ibex.epics.switching;
 
-import uk.ac.stfc.isis.ibex.epics.writing.BaseWritable;
 import uk.ac.stfc.isis.ibex.epics.writing.Writable;
 import uk.ac.stfc.isis.ibex.instrument.channels.ChannelType;
 
@@ -30,16 +29,16 @@ import uk.ac.stfc.isis.ibex.instrument.channels.ChannelType;
 public class WritableFactory {
     private Switcher switcher;
 
-    public WritableFactory(OnInstrumentSwitch onSwitch, SwitcherProvider switcherProvider) {
-        switcher = switcherProvider.getWritableSwitcher(onSwitch);
+    public WritableFactory(OnInstrumentSwitch onSwitch, InstrumentSwitchers instrumentSwitchers) {
+        switcher = instrumentSwitchers.getWritableSwitcher(onSwitch);
     }
 
     public WritableFactory(OnInstrumentSwitch onSwitch) {
-        this(onSwitch, new SwitcherProvider());
+        this(onSwitch, InstrumentSwitchers.getDefault());
     }
 
     public <T> Writable<T> getSwitchableWritable(ChannelType<T> channelType, String address) {
-        BaseWritable<T> channelWriter = channelType.writer(address);
+        Writable<T> channelWriter = getPVWritable(channelType, address);
 
         SwitchingWritable<T> createdWritable = new SwitchingWritable<>(channelWriter);
         switcher.<T> registerSwitchable(createdWritable, address, channelType);

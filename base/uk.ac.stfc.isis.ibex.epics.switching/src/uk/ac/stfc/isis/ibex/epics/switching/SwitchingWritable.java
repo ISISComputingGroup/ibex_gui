@@ -20,12 +20,12 @@
 package uk.ac.stfc.isis.ibex.epics.switching;
 
 import uk.ac.stfc.isis.ibex.epics.pv.Closable;
-import uk.ac.stfc.isis.ibex.epics.writing.BaseWritable;
 import uk.ac.stfc.isis.ibex.epics.writing.SameTypeWritable;
+import uk.ac.stfc.isis.ibex.epics.writing.Writable;
 
 public class SwitchingWritable<T> extends SameTypeWritable<T>implements Switchable {
 
-    public SwitchingWritable(BaseWritable<T> destination) {
+    public SwitchingWritable(Writable<T> destination) {
         super(destination);
     }
 

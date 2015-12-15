@@ -61,18 +61,18 @@ public class SwitchableInitialiseOnSubscribeObservable<T> extends InitialiseOnSu
     @Override
     public void setSource(Closable newSource) {
         
-        ClosableCachingObservable<T> sourceySauce;
+        ClosableCachingObservable<T> castNewSource;
 
         try {
-            sourceySauce = (ClosableCachingObservable<T>) newSource;
+            castNewSource = (ClosableCachingObservable<T>) newSource;
         } catch (ClassCastException e) {
             // Return - something has gone wrong!
             return;
         }
         
-        super.setSource(sourceySauce);
+        super.setSource(castNewSource);
         source.close();
-        this.source = sourceySauce;
+        this.source = castNewSource;
     }
 
     @Override
