@@ -42,8 +42,8 @@ public class Dae extends Plugin {
     public Dae() {
 		super();
 		instance = this;
-		writables = new DaeWritables(INSTRUMENT.channels());
-		observables = new DaeObservables(INSTRUMENT.channels());
+        writables = new DaeWritables();
+        observables = new DaeObservables();
 		model = new DaeModel(writables, observables);
 	}
     
@@ -63,7 +63,8 @@ public class Dae extends Plugin {
 	 * (non-Javadoc)
 	 * @see org.osgi.framework.BundleActivator#start(org.osgi.framework.BundleContext)
 	 */
-	public void start(BundleContext bundleContext) throws Exception {
+	@Override
+    public void start(BundleContext bundleContext) throws Exception {
 		Dae.context = bundleContext;
 	}
 
@@ -71,10 +72,9 @@ public class Dae extends Plugin {
 	 * (non-Javadoc)
 	 * @see org.osgi.framework.BundleActivator#stop(org.osgi.framework.BundleContext)
 	 */
-	public void stop(BundleContext bundleContext) throws Exception {
+	@Override
+    public void stop(BundleContext bundleContext) throws Exception {
 		Dae.context = null;
 		model.close();
-		
-		writables.close();
 	}
 }

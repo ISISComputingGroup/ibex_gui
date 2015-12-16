@@ -57,6 +57,6 @@ public class DashboardObservables extends InstrumentVariables {
         users = obsFactory.getSwitchableObservable(new CompressedCharWaveformChannel(),
                 Instrument.getInstance().getPvPrefix() + USERS);
 
-		dae = registerForClose(new DaeObservables(channels));
+        dae = new DaeObservables();
 	}
 }
