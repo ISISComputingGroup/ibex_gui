@@ -66,8 +66,16 @@ public class SwitchableWritable<T> extends SameTypeWritable<T>implements Switcha
         }
 
         super.setWritable(castNewSource);
-        source.close();
         this.source = castNewSource;
+    }
+
+    /**
+     * Just used for testing.
+     * 
+     * @return The source writable.
+     */
+    public Writable<T> getSource() {
+        return source;
     }
 
 }

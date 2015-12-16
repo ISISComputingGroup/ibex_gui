@@ -76,7 +76,7 @@ public class SwitchableInitialiseOnSubscribeObservable<T> extends InitialiseOnSu
         try {
             castNewSource = (ClosableCachingObservable<T>) newSource;
         } catch (ClassCastException e) {
-            // Return - something has gone wrong!
+            e.printStackTrace();
             return;
         }
         

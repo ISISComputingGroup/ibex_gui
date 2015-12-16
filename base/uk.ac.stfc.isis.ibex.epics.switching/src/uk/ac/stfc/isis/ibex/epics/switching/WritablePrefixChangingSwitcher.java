@@ -35,9 +35,7 @@ public class WritablePrefixChangingSwitcher extends PrefixChangingSwitcher {
 
     @Override
     public void switchInstrument(InstrumentInfo instrumentInfo) {
-        System.out.println("being called!!!!");
         for (SwitchableInformation switchableInfo : switchableInfoList) {
-            System.out.println("doing a switch!!!!");
             // Create a new observable factory, with the old switcher
             WritableFactory wrtFactory = new WritableFactory(switchableInfo.switchable.getSwitcher());
 
@@ -48,8 +46,6 @@ public class WritablePrefixChangingSwitcher extends PrefixChangingSwitcher {
             } else {
                 switchedPvAddress = switchableInfo.pvAddress;
             }
-
-            System.out.println("new pv address!!!!" + switchedPvAddress);
 
             // Set the new source - also takes care of closing the old
             // observable

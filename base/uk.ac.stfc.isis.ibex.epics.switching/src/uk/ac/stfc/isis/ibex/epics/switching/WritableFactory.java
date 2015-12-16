@@ -33,8 +33,8 @@ public class WritableFactory {
         this(onSwitch, InstrumentSwitchers.getDefault());
     }
 
-    public WritableFactory(OnInstrumentSwitch onSwitch, InstrumentSwitchers instrumentSwitcher) {
-        this(InstrumentSwitchers.getDefault().getWritableSwitcher(onSwitch));
+    public WritableFactory(OnInstrumentSwitch onSwitch, InstrumentSwitchers instrumentSwitchers) {
+        this(instrumentSwitchers.getWritableSwitcher(onSwitch));
     }
 
     public WritableFactory(Switcher switcher) {
