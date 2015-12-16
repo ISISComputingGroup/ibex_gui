@@ -32,10 +32,10 @@ import org.junit.Test;
 
 import uk.ac.stfc.isis.ibex.epics.observing.ClosableCachingObservable;
 import uk.ac.stfc.isis.ibex.epics.switching.ClosingSwitcher;
+import uk.ac.stfc.isis.ibex.epics.switching.InstrumentSwitchers;
 import uk.ac.stfc.isis.ibex.epics.switching.ObservableFactory;
 import uk.ac.stfc.isis.ibex.epics.switching.OnInstrumentSwitch;
 import uk.ac.stfc.isis.ibex.epics.switching.SwitchableInitialiseOnSubscribeObservable;
-import uk.ac.stfc.isis.ibex.epics.switching.SwitcherProvider;
 import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
 import uk.ac.stfc.isis.ibex.instrument.channels.ChannelType;
 
@@ -68,10 +68,10 @@ public class ClosingSwitcherTest {
 
         closingSwitcher = new ClosingSwitcher();
 
-        SwitcherProvider switcherProvider = mock(SwitcherProvider.class);
-        when(switcherProvider.getObservableSwitcher(OnInstrumentSwitch.CLOSE)).thenReturn(closingSwitcher);
+        InstrumentSwitchers instrumentSwitchers = mock(InstrumentSwitchers.class);
+        when(instrumentSwitchers.getObservableSwitcher(OnInstrumentSwitch.CLOSE)).thenReturn(closingSwitcher);
 
-        obsFactory = new ObservableFactory(OnInstrumentSwitch.CLOSE, switcherProvider);
+        obsFactory = new ObservableFactory(OnInstrumentSwitch.CLOSE, instrumentSwitchers);
     }
 
     @Test

@@ -19,11 +19,7 @@
 
 package uk.ac.stfc.isis.ibex.epics.switching;
 
-import java.util.Collection;
-import java.util.concurrent.CopyOnWriteArrayList;
-
 import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
-import uk.ac.stfc.isis.ibex.instrument.channels.ChannelType;
 
 /**
  * This class is responsible for creating and setting the new source for the
@@ -33,69 +29,15 @@ import uk.ac.stfc.isis.ibex.instrument.channels.ChannelType;
  */
 public class ObservablePrefixChangingSwitcher extends PrefixChangingSwitcher {
 
-    private class SwitchableInformation {
-
-        public Switchable switchable;
-        public String pvAddress;
-        public ChannelType<?> channelType;
-
-        public SwitchableInformation(Switchable switchable, String pvAddress,
-                ChannelType<?> channelType) {
-            this.switchable = switchable;
-            this.pvAddress = pvAddress;
-            this.channelType = channelType;
-        }
-    }
-
-    private class DummySwitcherProvider extends SwitcherProvider {
-
-        private Switcher switcher;
-
-        public DummySwitcherProvider(Switcher switcher) {
-            this.switcher = switcher;
-        }
-
-        @Override
-        public Switcher getObservableSwitcher(OnInstrumentSwitch behaviour) {
-            return switcher;
-        };
-    }
-
-    protected Collection<SwitchableInformation> switchableInfoList;
-
     public ObservablePrefixChangingSwitcher() {
-        switchables = new CopyOnWriteArrayList<>();
-        switchableInfoList = new CopyOnWriteArrayList<>();
-    }
-
-    /**
-     * This effectively overrides the super class method in Switcher to register
-     * switchables.
-     * 
-     * @param switchable
-     *            The switchable to register
-     * @param pvAddress
-     *            The PV Address
-     * @param channelType
-     */
-    @Override
-    public <T> void registerSwitchable(Switchable switchable, String pvAddress, ChannelType<T> channelType) {
-        switchableInfoList.add(new SwitchableInformation(switchable, pvAddress, channelType));
-
-        // Is this needed?
-        super.registerSwitchable(switchable, pvAddress, channelType);
+        super();
     }
 
     @Override
     public void switchInstrument(InstrumentInfo instrumentInfo) {
         for (SwitchableInformation switchableInfo : switchableInfoList) {
-            // Create a dummy switcher provider that just recycles the switcher
-            // we already have
-            SwitcherProvider switcherProvider = new DummySwitcherProvider(switchableInfo.switchable.getSwitcher());
-            
-            // Create a new observable factory, with the old channel type,
-            // switching behaviour and switcher
-            ObservableFactory obsFactory = new ObservableFactory(OnInstrumentSwitch.SWITCH, switcherProvider);
+            // Create a new observable factory, with the old switcher
+            ObservableFactory obsFactory = new ObservableFactory(switchableInfo.switchable.getSwitcher());
             
             String switchedPvAddress;
 
@@ -109,6 +51,8 @@ public class ObservablePrefixChangingSwitcher extends PrefixChangingSwitcher {
             // observable
             switchableInfo.switchable
                     .setSource(obsFactory.getPVObservable(switchableInfo.channelType, switchedPvAddress));
+            
+            switchableInfo.pvAddress = switchedPvAddress;
         }
         // The immediate super class sets the new pvPrefix
         super.switchInstrument(instrumentInfo);

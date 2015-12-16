@@ -31,11 +31,11 @@ import org.junit.Before;
 import org.junit.Test;
 
 import uk.ac.stfc.isis.ibex.epics.observing.ClosableCachingObservable;
+import uk.ac.stfc.isis.ibex.epics.switching.InstrumentSwitchers;
 import uk.ac.stfc.isis.ibex.epics.switching.ObservableFactory;
 import uk.ac.stfc.isis.ibex.epics.switching.ObservablePrefixChangingSwitcher;
 import uk.ac.stfc.isis.ibex.epics.switching.OnInstrumentSwitch;
 import uk.ac.stfc.isis.ibex.epics.switching.SwitchableInitialiseOnSubscribeObservable;
-import uk.ac.stfc.isis.ibex.epics.switching.SwitcherProvider;
 import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
 import uk.ac.stfc.isis.ibex.instrument.channels.ChannelType;
 
@@ -43,17 +43,21 @@ public class ObservablePrefixChangingSwitcherTest {
 
     private static final String PV_PREFIX = "PREFIX:";
     private static final String PV_PREFIX_2 = "PREFIX_2:";
+    private static final String PV_PREFIX_3 = "PREFIX_3:";
     private static final String SUFFIX = "SUFFIX";
     private static final String PV_ADDRESS = PV_PREFIX + SUFFIX;
     private static final String PV_ADDRESS_2 = PV_PREFIX_2 + SUFFIX;
+    private static final String PV_ADDRESS_3 = PV_PREFIX_3 + SUFFIX;
 
     private ObservableFactory obsFactory;
     private ObservablePrefixChangingSwitcher observablePrefixChangingSwitcher;
     private ClosableCachingObservable<String> closableCachingObservable;
     private ClosableCachingObservable<String> closableCachingObservable2;
+    private ClosableCachingObservable<String> closableCachingObservable3;
     private ChannelType<String> channelType;
     private InstrumentInfo instrumentInfo;
     private InstrumentInfo instrumentInfo2;
+    private InstrumentInfo instrumentInfo3;
 
     @SuppressWarnings("unchecked")
     @Before
@@ -65,20 +69,27 @@ public class ObservablePrefixChangingSwitcherTest {
         instrumentInfo2 = mock(InstrumentInfo.class);
         when(instrumentInfo2.pvPrefix()).thenReturn(PV_PREFIX_2);
 
+        instrumentInfo3 = mock(InstrumentInfo.class);
+        when(instrumentInfo3.pvPrefix()).thenReturn(PV_PREFIX_3);
+
         closableCachingObservable = mock(ClosableCachingObservable.class);
         closableCachingObservable2 = mock(ClosableCachingObservable.class);
+        closableCachingObservable3 = mock(ClosableCachingObservable.class);
 
         channelType = mock(ChannelType.class);
         when(channelType.reader(PV_ADDRESS)).thenReturn(closableCachingObservable);
         when(channelType.reader(PV_ADDRESS_2)).thenReturn(closableCachingObservable2);
+        when(channelType.reader(PV_ADDRESS_3)).thenReturn(closableCachingObservable3);
 
         observablePrefixChangingSwitcher = new ObservablePrefixChangingSwitcher();
+        // need to initalise to an instrument
+        observablePrefixChangingSwitcher.switchInstrument(instrumentInfo);
 
-        SwitcherProvider switcherProvider = mock(SwitcherProvider.class);
-        when(switcherProvider.getObservableSwitcher(OnInstrumentSwitch.SWITCH))
+        InstrumentSwitchers instrumentSwitchers = mock(InstrumentSwitchers.class);
+        when(instrumentSwitchers.getObservableSwitcher(OnInstrumentSwitch.SWITCH))
                 .thenReturn(observablePrefixChangingSwitcher);
 
-        obsFactory = new ObservableFactory(OnInstrumentSwitch.SWITCH, switcherProvider);
+        obsFactory = new ObservableFactory(OnInstrumentSwitch.SWITCH, instrumentSwitchers);
     }
 
     @Test
@@ -154,6 +165,19 @@ public class ObservablePrefixChangingSwitcherTest {
 
         // Assert
         assertEquals(closableCachingObservable, observable.getSource());
+    }
+
+    @Test
+    public void switching_twice_to_third_instrument_correctly_switches_observable_twice() {
+        // Act
+        SwitchableInitialiseOnSubscribeObservable<String> observable = obsFactory.getSwitchableObservable(channelType,
+                PV_ADDRESS);
+        observablePrefixChangingSwitcher.switchInstrument(instrumentInfo2);
+        assertEquals(closableCachingObservable2, observable.getSource());
+        observablePrefixChangingSwitcher.switchInstrument(instrumentInfo3);
+
+        // Assert
+        assertEquals(closableCachingObservable3, observable.getSource());
     }
 
     @Test

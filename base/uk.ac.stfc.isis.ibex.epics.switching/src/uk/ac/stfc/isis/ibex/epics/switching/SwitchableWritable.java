@@ -19,33 +19,28 @@
 
 package uk.ac.stfc.isis.ibex.epics.switching;
 
-import uk.ac.stfc.isis.ibex.epics.observing.ClosableCachingObservable;
-import uk.ac.stfc.isis.ibex.epics.observing.InitialiseOnSubscribeObservable;
 import uk.ac.stfc.isis.ibex.epics.pv.Closable;
+import uk.ac.stfc.isis.ibex.epics.writing.SameTypeWritable;
+import uk.ac.stfc.isis.ibex.epics.writing.Writable;
 
-/**
- * This is not a permanent new class, just a temporary one while refactoring!
- * This should be merged with InitialiseOnSubscribeObservable once changes are
- * made in the code base to use the new switching method.
- */
-public class SwitchableInitialiseOnSubscribeObservable<T> extends InitialiseOnSubscribeObservable<T> implements Switchable {
+public class SwitchableWritable<T> extends SameTypeWritable<T>implements Switchable {
 
     private Switcher switcher;
-    private ClosableCachingObservable<T> source;
+    private Writable<T> source;
 
-    public SwitchableInitialiseOnSubscribeObservable(ClosableCachingObservable<T> source) {
+    public SwitchableWritable(Writable<T> source) {
         super(source);
         this.source = source;
     }
 
     @Override
-    public Switcher getSwitcher() {
-        return this.switcher;
+    public void setSwitcher(Switcher switcher) {
+        this.switcher = switcher;
     }
 
     @Override
-    public void setSwitcher(Switcher switcher) {
-        this.switcher = switcher;
+    public Switcher getSwitcher() {
+        return switcher;
     }
 
     @Override
@@ -57,33 +52,22 @@ public class SwitchableInitialiseOnSubscribeObservable<T> extends InitialiseOnSu
         super.close();
     }
 
-    /**
-     * Currently only used for testing.
-     * 
-     * @return The source observable.
-     */
-    public ClosableCachingObservable<T> getSource() {
-        return source;
-    }
-
-    // TODO: What can we do about the type conversion issue here?
     @SuppressWarnings("unchecked")
     @Override
     public void setSource(Closable newSource) {
-        
-        ClosableCachingObservable<T> castNewSource;
+
+        Writable<T> castNewSource;
 
         try {
-            castNewSource = (ClosableCachingObservable<T>) newSource;
+            castNewSource = (Writable<T>) newSource;
         } catch (ClassCastException e) {
-            // Return - something has gone wrong!
+            e.printStackTrace();
             return;
         }
-        
-        super.setSource(castNewSource);
+
+        super.setWritable(castNewSource);
         source.close();
         this.source = castNewSource;
     }
-
 
 }

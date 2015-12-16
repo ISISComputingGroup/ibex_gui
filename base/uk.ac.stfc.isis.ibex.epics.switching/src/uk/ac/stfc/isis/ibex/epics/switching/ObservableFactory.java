@@ -30,13 +30,16 @@ import uk.ac.stfc.isis.ibex.instrument.channels.ChannelType;
 public class ObservableFactory {
     private Switcher switcher;
 
-    public ObservableFactory(OnInstrumentSwitch onSwitch,
-            SwitcherProvider switcherProvider) {
-        switcher = switcherProvider.getObservableSwitcher(onSwitch);
+    public ObservableFactory(OnInstrumentSwitch onSwitch) {
+        this(onSwitch, InstrumentSwitchers.getDefault());
     }
 
-    public ObservableFactory(OnInstrumentSwitch onSwitch) {
-        this(onSwitch, new SwitcherProvider());
+    public ObservableFactory(OnInstrumentSwitch onSwitch, InstrumentSwitchers instrumentSwitchers) {
+        this(instrumentSwitchers.getObservableSwitcher(onSwitch));
+    }
+
+    public ObservableFactory(Switcher switcher) {
+        this.switcher = switcher;
     }
 
     /**
@@ -49,12 +52,15 @@ public class ObservableFactory {
      */
     public <T> SwitchableInitialiseOnSubscribeObservable<T> getSwitchableObservable(ChannelType<T> channelType,
             String address) {
-        ClosableCachingObservable<T> channelReader = channelType.reader(address);
+        ClosableCachingObservable<T> channelReader = getPVObservable(channelType, address);
         final ClosingSwitchableObservable<T> channel = new ClosingSwitchableObservable<>(channelReader);
 
         SwitchableInitialiseOnSubscribeObservable<T> createdObservable = new SwitchableInitialiseOnSubscribeObservable<>(
                 channel);
-        switcher.<T> registerSwitchable(createdObservable, address, channelType);
+
+        if (switcher != null) {
+            switcher.<T> registerSwitchable(createdObservable, address, channelType);
+        }
         
         createdObservable.setSwitcher(switcher);
 

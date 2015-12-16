@@ -29,9 +29,36 @@ import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
  */
 public class WritablePrefixChangingSwitcher extends PrefixChangingSwitcher {
 
+    public WritablePrefixChangingSwitcher() {
+        super();
+    }
+
     @Override
     public void switchInstrument(InstrumentInfo instrumentInfo) {
-        // TODO Writable switch
+        System.out.println("being called!!!!");
+        for (SwitchableInformation switchableInfo : switchableInfoList) {
+            System.out.println("doing a switch!!!!");
+            // Create a new observable factory, with the old switcher
+            WritableFactory wrtFactory = new WritableFactory(switchableInfo.switchable.getSwitcher());
+
+            String switchedPvAddress;
+
+            if (!pvPrefix.isEmpty()) {
+                switchedPvAddress = switchableInfo.pvAddress.replaceFirst(pvPrefix, instrumentInfo.pvPrefix());
+            } else {
+                switchedPvAddress = switchableInfo.pvAddress;
+            }
+
+            System.out.println("new pv address!!!!" + switchedPvAddress);
+
+            // Set the new source - also takes care of closing the old
+            // observable
+            switchableInfo.switchable
+                    .setSource(wrtFactory.getPVWritable(switchableInfo.channelType, switchedPvAddress));
+
+            switchableInfo.pvAddress = switchedPvAddress;
+        }
+        // The immediate super class sets the new pvPrefix
         super.switchInstrument(instrumentInfo);
     }
 

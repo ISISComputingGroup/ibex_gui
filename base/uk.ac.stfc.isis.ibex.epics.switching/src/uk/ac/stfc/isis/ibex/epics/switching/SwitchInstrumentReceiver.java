@@ -31,10 +31,7 @@ public class SwitchInstrumentReceiver implements InstrumentInfoReceiver {
 
     @Override
     public void setInstrument(InstrumentInfo instrument) {
-        InstrumentSwitchers.getNothingSwitcher().switchInstrument(instrument);
-        InstrumentSwitchers.getClosingSwitcher().switchInstrument(instrument);
-        InstrumentSwitchers.getObservablePrefixChangingSwitcher().switchInstrument(instrument);
-        InstrumentSwitchers.getWritablePrefixChangingSwitcher().switchInstrument(instrument);
+        InstrumentSwitchers.getDefault().setInstrument(instrument);
     }
 
 }

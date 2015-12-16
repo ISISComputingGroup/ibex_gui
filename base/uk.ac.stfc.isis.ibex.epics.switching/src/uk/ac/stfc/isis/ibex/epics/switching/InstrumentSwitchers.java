@@ -3,6 +3,8 @@ package uk.ac.stfc.isis.ibex.epics.switching;
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
 
+import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
+
 /**
  * This is a singleton class. It provides singleton instances of the switchers,
  * which have switchInstrument methods called by the SwitchInstrumentReciever.
@@ -12,10 +14,10 @@ public class InstrumentSwitchers implements BundleActivator {
     private static InstrumentSwitchers instance;
 	private static BundleContext context;
 
-    private static NothingSwitcher nothingSwitcher = new NothingSwitcher();
-    private static ClosingSwitcher closingSwitcher = new ClosingSwitcher();
-    private static ObservablePrefixChangingSwitcher observablePrefixChangingSwitcher = new ObservablePrefixChangingSwitcher();
-    private static WritablePrefixChangingSwitcher writablePrefixChangingSwitcher = new WritablePrefixChangingSwitcher();
+    private NothingSwitcher nothingSwitcher = new NothingSwitcher();
+    private ClosingSwitcher closingSwitcher = new ClosingSwitcher();
+    private ObservablePrefixChangingSwitcher observablePrefixChangingSwitcher = new ObservablePrefixChangingSwitcher();
+    private WritablePrefixChangingSwitcher writablePrefixChangingSwitcher = new WritablePrefixChangingSwitcher();
 
 	static BundleContext getContext() {
 		return context;
@@ -47,19 +49,56 @@ public class InstrumentSwitchers implements BundleActivator {
         instance = this;
     }
 
-    public static NothingSwitcher getNothingSwitcher() {
-        return nothingSwitcher;
+    public NothingSwitcher getNothingSwitcher() {
+        return instance.nothingSwitcher;
     }
 
-    public static ClosingSwitcher getClosingSwitcher() {
-        return closingSwitcher;
+    public Switcher getWritableSwitcher(OnInstrumentSwitch switchType) {
+        Switcher switcher;
+        switch (switchType) {
+            case NOTHING:
+                switcher = instance.nothingSwitcher;
+                break;
+            case SWITCH:
+                switcher = instance.writablePrefixChangingSwitcher;
+                break;
+            case CLOSE:
+                switcher = instance.closingSwitcher;
+                break;
+            default:
+                switcher = null;
+                break;
+        }
+
+        return switcher;
+
     }
 
-    public static ObservablePrefixChangingSwitcher getObservablePrefixChangingSwitcher() {
-        return observablePrefixChangingSwitcher;
+    public Switcher getObservableSwitcher(OnInstrumentSwitch switchType) {
+        Switcher switcher;
+        switch (switchType) {
+            case NOTHING:
+                switcher = instance.nothingSwitcher;
+                break;
+            case SWITCH:
+                switcher = instance.observablePrefixChangingSwitcher;
+                break;
+            case CLOSE:
+                switcher = instance.closingSwitcher;
+                break;
+            default:
+                switcher = null;
+                break;
+        }
+        
+        return switcher;
+
     }
 
-    public static WritablePrefixChangingSwitcher getWritablePrefixChangingSwitcher() {
-        return writablePrefixChangingSwitcher;
+    public void setInstrument(InstrumentInfo instrument) {
+        instance.nothingSwitcher.switchInstrument(instrument);
+        instance.closingSwitcher.switchInstrument(instrument);
+        instance.observablePrefixChangingSwitcher.switchInstrument(instrument);
+        instance.writablePrefixChangingSwitcher.switchInstrument(instrument);
     }
 }
