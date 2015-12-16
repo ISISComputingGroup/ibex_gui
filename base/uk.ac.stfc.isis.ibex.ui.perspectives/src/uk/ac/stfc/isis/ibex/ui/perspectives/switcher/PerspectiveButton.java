@@ -28,6 +28,8 @@ import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.wb.swt.SWTResourceManager;
 
+import uk.ac.stfc.isis.ibex.alarm.Alarm;
+import uk.ac.stfc.isis.ibex.alarm.AlarmCounter;
 import uk.ac.stfc.isis.ibex.log.Log;
 import uk.ac.stfc.isis.ibex.log.LogCounter;
 import uk.ac.stfc.isis.ibex.ui.UI;
@@ -37,7 +39,8 @@ public class PerspectiveButton extends CLabel {
 	protected static final Color FOCUSSED = SWTResourceManager.getColor(220, 235, 245);
 	protected static final Color DEFOCUSSED = SWTResourceManager.getColor(247, 245, 245);
 	
-	protected static LogCounter counter = Log.getInstance().getCounter();
+	protected static LogCounter logCounter = Log.getInstance().getCounter();
+	protected static AlarmCounter alarmCounter = Alarm.getInstance().getCounter();
 	
 	public PerspectiveButton(Composite parent, final String perspective) {
 		super(parent, SWT.SHADOW_OUT);
@@ -73,7 +76,7 @@ public class PerspectiveButton extends CLabel {
 	protected void mouseClickAction() {
 		// Restart counting of log messages when not observing
 		// the log message viewer
-		counter.start();
+		logCounter.start();
 	}
 	
 	protected void mouseEnterAction() {

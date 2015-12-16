@@ -28,24 +28,24 @@ import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 
-import uk.ac.stfc.isis.ibex.log.Log;
-import uk.ac.stfc.isis.ibex.log.LogCounter;
-
-public class LogButton extends PerspectiveButton {
+/**
+ * A button which relates to the alarm model from BEAST
+ */
+public class AlarmButton extends PerspectiveButton {
 
 	private FlashingButton flash;
 	private final Display display = Display.getDefault();
 	private final DataBindingContext bindingContext = new DataBindingContext();
 	
-	private final LogCountViewModel model;
+	private final AlarmCountViewModel model;
 	
-	public LogButton(Composite parent, final String perspective) {
+	public AlarmButton(Composite parent, final String perspective) {
 		super(parent, perspective);
 		
 		flash = new FlashingButton(this, display);
 		flash.setDefaultColour(this.getBackground());
 	
-		model = new LogCountViewModel(logCounter);
+		model = new AlarmCountViewModel(alarmCounter);
 		bindingContext.bindValue(WidgetProperties.text().observe(this), BeanProperties.value("text").observe(model));
 		model.addPropertyChangeListener("hasMessages", new PropertyChangeListener() {			
 			@Override
@@ -69,8 +69,6 @@ public class LogButton extends PerspectiveButton {
 	
 	@Override
 	protected void mouseClickAction() {
-		logCounter.stop();
-		logCounter.resetCount();
 	}
 	
 	private void updateFlashing() {
