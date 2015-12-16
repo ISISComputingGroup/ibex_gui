@@ -25,6 +25,7 @@ import uk.ac.stfc.isis.ibex.epics.observing.InitialiseOnSubscribeObservable;
 import uk.ac.stfc.isis.ibex.epics.pv.PVAddress;
 import uk.ac.stfc.isis.ibex.epics.switching.ObservableFactory;
 import uk.ac.stfc.isis.ibex.epics.switching.OnInstrumentSwitch;
+import uk.ac.stfc.isis.ibex.epics.switching.WritableFactory;
 import uk.ac.stfc.isis.ibex.instrument.Instrument;
 import uk.ac.stfc.isis.ibex.instrument.InstrumentVariables;
 import uk.ac.stfc.isis.ibex.instrument.channels.DoubleChannel;
@@ -95,6 +96,7 @@ public class MotorVariables extends InstrumentVariables {
         PVAddress fullAddress = PVAddress.startWith(instrument.getPvPrefix() + motorAddress);
 
         ObservableFactory obsFactory = new ObservableFactory(OnInstrumentSwitch.SWITCH);
+        WritableFactory writeFactory = new WritableFactory(OnInstrumentSwitch.SWITCH);
 		
         description = obsFactory.getSwitchableObservable(new StringChannel(), fullAddress.endWithField("DESC"));
         enable = obsFactory.getSwitchableObservable(new EnumChannel<>(MotorEnable.class),
@@ -114,7 +116,8 @@ public class MotorVariables extends InstrumentVariables {
                 obsFactory.getSwitchableObservable(new ShortChannel(), fullAddress.endWithField("LLS")), TO_BOOLEAN);
         atLowerLimitSwitch = convert(
                 obsFactory.getSwitchableObservable(new ShortChannel(), fullAddress.endWithField("HLS")), TO_BOOLEAN);
-        setpoint = registerForClose(new MotorSetPointVariables(fullAddress, instrument.channels(), obsFactory));
+        setpoint = registerForClose(
+                new MotorSetPointVariables(fullAddress, instrument.channels(), obsFactory, writeFactory));
 		
 		status = convert(obsFactory.getSwitchableObservable(new StringChannel(), motorAddress.toString() + "_STATUS"), CAPITALISE_FIRST_LETTER_ONLY);
 	}

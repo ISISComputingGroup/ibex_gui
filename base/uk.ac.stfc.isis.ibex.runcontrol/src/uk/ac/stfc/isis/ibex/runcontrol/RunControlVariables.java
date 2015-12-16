@@ -22,6 +22,7 @@ package uk.ac.stfc.isis.ibex.runcontrol;
 import uk.ac.stfc.isis.ibex.epics.observing.InitialiseOnSubscribeObservable;
 import uk.ac.stfc.isis.ibex.epics.switching.ObservableFactory;
 import uk.ac.stfc.isis.ibex.epics.switching.OnInstrumentSwitch;
+import uk.ac.stfc.isis.ibex.epics.switching.WritableFactory;
 import uk.ac.stfc.isis.ibex.epics.writing.Writable;
 import uk.ac.stfc.isis.ibex.instrument.Channels;
 import uk.ac.stfc.isis.ibex.instrument.Instrument;
@@ -34,7 +35,7 @@ import uk.ac.stfc.isis.ibex.instrument.channels.StringChannel;
  *
  */
 public class RunControlVariables extends InstrumentVariables {
-
+    private final WritableFactory writeFactory = new WritableFactory(OnInstrumentSwitch.SWITCH);
     private final ObservableFactory obsFactory = new ObservableFactory(OnInstrumentSwitch.SWITCH);
 	private final RunControlAddresses runControlAddresses = new RunControlAddresses();
 	
@@ -63,15 +64,18 @@ public class RunControlVariables extends InstrumentVariables {
 	}
 	
 	public Writable<String> blockRunControlLowLimitSetter(String blockName) {
-		return writable(new StringChannel(), runControlAddresses.getLowLimitPv(blockName));
+        return writeFactory.getSwitchableWritable(new StringChannel(),
+                Instrument.getInstance().getPvPrefix() + runControlAddresses.getLowLimitPv(blockName));
 	}
 	
 	public Writable<String> blockRunControlHighLimitSetter(String blockName) {
-		return writable(new StringChannel(), runControlAddresses.getHighLimitPv(blockName));
+        return writeFactory.getSwitchableWritable(new StringChannel(),
+                Instrument.getInstance().getPvPrefix() + runControlAddresses.getHighLimitPv(blockName));
 	}
 	
 	public Writable<String> blockRunControlEnabledSetter(String blockName) {
-		return writable(new StringChannel(), runControlAddresses.getEnablePv(blockName));
+        return writeFactory.getSwitchableWritable(new StringChannel(),
+                Instrument.getInstance().getPvPrefix() + runControlAddresses.getEnablePv(blockName));
 	}
 
 }
