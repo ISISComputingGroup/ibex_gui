@@ -23,24 +23,28 @@ import uk.ac.stfc.isis.ibex.epics.writing.Writable;
 import uk.ac.stfc.isis.ibex.instrument.channels.ChannelType;
 
 /**
- * This class is responsible for creation of the observable, and registering the
- * observable with a switcher.
+ * This class is responsible for creation of the writable, and registering the
+ * writable with a switcher.
  */
 public class WritableFactory {
     private Switcher switcher;
-
-    public WritableFactory(OnInstrumentSwitch onSwitch, InstrumentSwitchers instrumentSwitchers) {
-        switcher = instrumentSwitchers.getWritableSwitcher(onSwitch);
-    }
 
     public WritableFactory(OnInstrumentSwitch onSwitch) {
         this(onSwitch, InstrumentSwitchers.getDefault());
     }
 
+    public WritableFactory(OnInstrumentSwitch onSwitch, InstrumentSwitchers instrumentSwitcher) {
+        this(InstrumentSwitchers.getDefault().getWritableSwitcher(onSwitch));
+    }
+
+    public WritableFactory(Switcher switcher) {
+        this.switcher = switcher;
+    }
+
     public <T> Writable<T> getSwitchableWritable(ChannelType<T> channelType, String address) {
         Writable<T> channelWriter = getPVWritable(channelType, address);
 
-        SwitchingWritable<T> createdWritable = new SwitchingWritable<>(channelWriter);
+        SwitchableWritable<T> createdWritable = new SwitchableWritable<>(channelWriter);
         switcher.<T> registerSwitchable(createdWritable, address, channelType);
 
         createdWritable.setSwitcher(switcher);

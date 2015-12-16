@@ -39,6 +39,11 @@ public class SwitchableInitialiseOnSubscribeObservable<T> extends InitialiseOnSu
     }
 
     @Override
+    public Switcher getSwitcher() {
+        return this.switcher;
+    }
+
+    @Override
     public void setSwitcher(Switcher switcher) {
         this.switcher = switcher;
     }
@@ -52,6 +57,11 @@ public class SwitchableInitialiseOnSubscribeObservable<T> extends InitialiseOnSu
         super.close();
     }
 
+    /**
+     * Currently only used for testing.
+     * 
+     * @return The source observable.
+     */
     public ClosableCachingObservable<T> getSource() {
         return source;
     }
@@ -75,9 +85,5 @@ public class SwitchableInitialiseOnSubscribeObservable<T> extends InitialiseOnSu
         this.source = castNewSource;
     }
 
-    @Override
-    public Switcher getSwitcher() {
-        return this.switcher;
-    }
 
 }

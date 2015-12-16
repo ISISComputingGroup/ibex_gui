@@ -19,11 +19,7 @@
 
 package uk.ac.stfc.isis.ibex.epics.switching;
 
-import java.util.Collection;
-import java.util.concurrent.CopyOnWriteArrayList;
-
 import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
-import uk.ac.stfc.isis.ibex.instrument.channels.ChannelType;
 
 /**
  * This class is responsible for creating and setting the new source for the
@@ -33,43 +29,8 @@ import uk.ac.stfc.isis.ibex.instrument.channels.ChannelType;
  */
 public class ObservablePrefixChangingSwitcher extends PrefixChangingSwitcher {
 
-    private class SwitchableInformation {
-
-        public final Switchable switchable;
-        public String pvAddress;
-        public final ChannelType<?> channelType;
-
-        public SwitchableInformation(Switchable switchable, String pvAddress,
-                ChannelType<?> channelType) {
-            this.switchable = switchable;
-            this.pvAddress = pvAddress;
-            this.channelType = channelType;
-        }
-    }
-
-    protected Collection<SwitchableInformation> switchableInfoList;
-
     public ObservablePrefixChangingSwitcher() {
-        switchables = new CopyOnWriteArrayList<>();
-        switchableInfoList = new CopyOnWriteArrayList<>();
-    }
-
-    /**
-     * This effectively overrides the super class method in Switcher to register
-     * switchables.
-     * 
-     * @param switchable
-     *            The switchable to register
-     * @param pvAddress
-     *            The PV Address
-     * @param channelType
-     */
-    @Override
-    public <T> void registerSwitchable(Switchable switchable, String pvAddress, ChannelType<T> channelType) {
-        switchableInfoList.add(new SwitchableInformation(switchable, pvAddress, channelType));
-
-        // Is this needed?
-        super.registerSwitchable(switchable, pvAddress, channelType);
+        super();
     }
 
     @Override

@@ -19,21 +19,61 @@
 
 package uk.ac.stfc.isis.ibex.epics.switching;
 
+import java.util.Collection;
+import java.util.concurrent.CopyOnWriteArrayList;
+
 import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
+import uk.ac.stfc.isis.ibex.instrument.channels.ChannelType;
 
 /**
  * This is an abstract class for all the prefix changing switchers. It holds the
  * old pv prefix, which is updated when switchInstrument is called. This means
  * subclasses should make sure they first make use of the old pv prefix, then
- * call super.switchInstrument(...).
+ * call super.switchInstrument(...) to set the new pv prefix.
  */
 public abstract class PrefixChangingSwitcher extends Switcher {
 
-    String pvPrefix = "";
+    protected Collection<SwitchableInformation> switchableInfoList;
+
+    protected String pvPrefix = "";
+
+    protected class SwitchableInformation {
+
+        public final Switchable switchable;
+        public String pvAddress;
+        public final ChannelType<?> channelType;
+
+        public SwitchableInformation(Switchable switchable, String pvAddress, ChannelType<?> channelType) {
+            this.switchable = switchable;
+            this.pvAddress = pvAddress;
+            this.channelType = channelType;
+        }
+    }
+
+    public PrefixChangingSwitcher() {
+        switchables = new CopyOnWriteArrayList<>();
+        switchableInfoList = new CopyOnWriteArrayList<>();
+    }
 
     @Override
     public void switchInstrument(InstrumentInfo instrumentInfo) {
         pvPrefix = instrumentInfo.pvPrefix();
+    }
+
+    /**
+     * This overrides the super class method in Switcher to register
+     * switchables.
+     * 
+     * @param switchable
+     *            The switchable to register
+     * @param pvAddress
+     *            The PV Address
+     * @param channelType
+     */
+    @Override
+    public <T> void registerSwitchable(Switchable switchable, String pvAddress, ChannelType<T> channelType) {
+        switchableInfoList.add(new SwitchableInformation(switchable, pvAddress, channelType));
+        super.registerSwitchable(switchable, pvAddress, channelType);
     }
 
 }

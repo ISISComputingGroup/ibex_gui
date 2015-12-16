@@ -23,28 +23,51 @@ import uk.ac.stfc.isis.ibex.epics.pv.Closable;
 import uk.ac.stfc.isis.ibex.epics.writing.SameTypeWritable;
 import uk.ac.stfc.isis.ibex.epics.writing.Writable;
 
-public class SwitchingWritable<T> extends SameTypeWritable<T>implements Switchable {
+public class SwitchableWritable<T> extends SameTypeWritable<T>implements Switchable {
 
-    public SwitchingWritable(Writable<T> destination) {
-        super(destination);
+    private Switcher switcher;
+    private Writable<T> source;
+
+    public SwitchableWritable(Writable<T> source) {
+        super(source);
+        this.source = source;
     }
 
     @Override
     public void setSwitcher(Switcher switcher) {
-        // TODO Auto-generated method stub
-
+        this.switcher = switcher;
     }
 
     @Override
     public Switcher getSwitcher() {
-        // TODO Auto-generated method stub
-        return null;
+        return switcher;
     }
 
     @Override
-    public void setSource(Closable pvObservable) {
-        // TODO Auto-generated method stub
+    public void close() {
+        if (switcher != null) {
+            switcher.unregsiterSwitchable(this);
+        }
+        source.close();
+        super.close();
+    }
 
+    @SuppressWarnings("unchecked")
+    @Override
+    public void setSource(Closable newSource) {
+
+        Writable<T> castNewSource;
+
+        try {
+            castNewSource = (Writable<T>) newSource;
+        } catch (ClassCastException e) {
+            e.printStackTrace();
+            return;
+        }
+
+        super.setWritable(castNewSource);
+        source.close();
+        this.source = castNewSource;
     }
 
 }

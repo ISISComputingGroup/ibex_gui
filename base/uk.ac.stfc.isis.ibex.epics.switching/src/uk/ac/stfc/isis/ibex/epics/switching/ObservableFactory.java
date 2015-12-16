@@ -34,8 +34,8 @@ public class ObservableFactory {
         this(onSwitch, InstrumentSwitchers.getDefault());
     }
 
-    public ObservableFactory(OnInstrumentSwitch onSwitch, InstrumentSwitchers instrumentSwitcher) {
-        this(instrumentSwitcher.getObservableSwitcher(onSwitch));
+    public ObservableFactory(OnInstrumentSwitch onSwitch, InstrumentSwitchers instrumentSwitchers) {
+        this(instrumentSwitchers.getObservableSwitcher(onSwitch));
     }
 
     public ObservableFactory(Switcher switcher) {
