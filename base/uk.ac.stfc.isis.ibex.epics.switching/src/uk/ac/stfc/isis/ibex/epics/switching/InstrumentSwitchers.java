@@ -49,24 +49,18 @@ public class InstrumentSwitchers implements BundleActivator {
         instance = this;
     }
 
-    public NothingSwitcher getNothingSwitcher() {
-        return instance.nothingSwitcher;
-    }
-
     public Switcher getWritableSwitcher(OnInstrumentSwitch switchType) {
         Switcher switcher;
         switch (switchType) {
-            case NOTHING:
-                switcher = instance.nothingSwitcher;
-                break;
             case SWITCH:
                 switcher = instance.writablePrefixChangingSwitcher;
                 break;
             case CLOSE:
                 switcher = instance.closingSwitcher;
                 break;
+            case NOTHING:
             default:
-                switcher = null;
+                switcher = instance.nothingSwitcher;
                 break;
         }
 
@@ -77,17 +71,15 @@ public class InstrumentSwitchers implements BundleActivator {
     public Switcher getObservableSwitcher(OnInstrumentSwitch switchType) {
         Switcher switcher;
         switch (switchType) {
-            case NOTHING:
-                switcher = instance.nothingSwitcher;
-                break;
             case SWITCH:
                 switcher = instance.observablePrefixChangingSwitcher;
                 break;
             case CLOSE:
                 switcher = instance.closingSwitcher;
                 break;
+            case NOTHING:
             default:
-                switcher = null;
+                switcher = instance.nothingSwitcher;
                 break;
         }
         
