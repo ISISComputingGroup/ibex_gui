@@ -5,8 +5,8 @@ Bundle-SymbolicName: uk.ac.stfc.isis.ibex.epics.switching;singleton:=true
 Bundle-Version: 1.0.0.qualifier
 Bundle-Activator: uk.ac.stfc.isis.ibex.epics.switching.InstrumentSwitchers
 Require-Bundle: org.eclipse.core.runtime,
- uk.ac.stfc.isis.ibex.instrument;bundle-version="1.0.0",
- org.eclipse.ui.workbench
+ org.eclipse.ui.workbench,
+ uk.ac.stfc.isis.ibex.instrument;bundle-version="1.0.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Export-Package: uk.ac.stfc.isis.ibex.epics.switching
 Bundle-ActivationPolicy: lazy
