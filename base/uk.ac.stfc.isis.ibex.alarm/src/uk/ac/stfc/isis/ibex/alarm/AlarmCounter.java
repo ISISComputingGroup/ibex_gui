@@ -36,11 +36,10 @@ import uk.ac.stfc.isis.ibex.model.ModelObject;
 public class AlarmCounter extends ModelObject {
 	private int count;
 
-    public AlarmCounter(AlarmClientModel alarmModel) {
+    public AlarmCounter(final AlarmClientModel alarmModel) {
         count = 0;
 
 		alarmModel.addListener(new AlarmClientModelListener() {
-            int alarmCount = 0;
 
 			@Override
 			public void newAlarmConfiguration(AlarmClientModel model) {
@@ -56,7 +55,7 @@ public class AlarmCounter extends ModelObject {
 
 			@Override
 			public void newAlarmState(AlarmClientModel model, AlarmTreePV pv, boolean parent_changed) {
-                fireCountChanged(alarmCount, alarmCount = model.getActiveAlarms().length);
+                fireCountChanged(count, count = alarmModel.getActiveAlarms().length);
 			}
 		});
     }
@@ -72,7 +71,6 @@ public class AlarmCounter extends ModelObject {
      * @param newCount the new count
      */
     private void fireCountChanged(final int prevCount, final int newCount) {
-        count = newCount;
 		Display.getDefault().asyncExec( new Runnable() {  
 			@Override
             public void run() {
