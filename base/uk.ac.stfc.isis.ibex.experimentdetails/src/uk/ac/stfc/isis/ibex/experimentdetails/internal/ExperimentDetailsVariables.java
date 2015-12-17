@@ -23,42 +23,58 @@ import java.util.Collection;
 
 import uk.ac.stfc.isis.ibex.epics.conversion.Converter;
 import uk.ac.stfc.isis.ibex.epics.observing.InitialiseOnSubscribeObservable;
+import uk.ac.stfc.isis.ibex.epics.switching.ObservableFactory;
+import uk.ac.stfc.isis.ibex.epics.switching.OnInstrumentSwitch;
+import uk.ac.stfc.isis.ibex.epics.switching.WritableFactory;
 import uk.ac.stfc.isis.ibex.epics.writing.ConvertingWritable;
 import uk.ac.stfc.isis.ibex.epics.writing.Writable;
 import uk.ac.stfc.isis.ibex.experimentdetails.Parameter;
 import uk.ac.stfc.isis.ibex.experimentdetails.UserDetails;
 import uk.ac.stfc.isis.ibex.instrument.Channels;
+import uk.ac.stfc.isis.ibex.instrument.Instrument;
 import uk.ac.stfc.isis.ibex.instrument.InstrumentVariables;
 import uk.ac.stfc.isis.ibex.instrument.channels.CharWaveformChannel;
 import uk.ac.stfc.isis.ibex.instrument.channels.CompressedCharWaveformChannel;
 import uk.ac.stfc.isis.ibex.instrument.channels.DefaultChannelWithoutUnits;
 import uk.ac.stfc.isis.ibex.instrument.channels.StringChannel;
 
+/**
+ * Holds the Observables and Writables relating to experiment details.
+ */
 public class ExperimentDetailsVariables extends InstrumentVariables {
+    private final ObservableFactory obsFactory = new ObservableFactory(OnInstrumentSwitch.SWITCH);
+    private final WritableFactory writeFactory = new WritableFactory(OnInstrumentSwitch.SWITCH);
 
-	public final InitialiseOnSubscribeObservable<Collection<String>> availableSampleParameters 
-		= convert(reader(new CompressedCharWaveformChannel(), "CS:BLOCKSERVER:SAMPLE_PARS"), new ParametersConverter());
+    public final InitialiseOnSubscribeObservable<Collection<String>> availableSampleParameters;
+    public final InitialiseOnSubscribeObservable<Collection<String>> availableBeamParameters;
+    public final InitialiseOnSubscribeObservable<Collection<Parameter>> sampleParameters;
+    public final InitialiseOnSubscribeObservable<Collection<Parameter>> beamParameters;
 
-	public final InitialiseOnSubscribeObservable<Collection<String>> availableBeamParameters 
-		= convert(reader(new CompressedCharWaveformChannel(), "CS:BLOCKSERVER:BEAMLINE_PARS"), new ParametersConverter());
+    public final InitialiseOnSubscribeObservable<String> rbNumber;
+    public final Writable<String> rbNumberSetter;
 
-	public final InitialiseOnSubscribeObservable<Collection<Parameter>> sampleParameters 
-		= autoInitialise(new ParametersObservable(this, availableSampleParameters));
-
-	public final InitialiseOnSubscribeObservable<Collection<Parameter>> beamParameters 
-		= autoInitialise(new ParametersObservable(this, availableBeamParameters));
-
-	public final InitialiseOnSubscribeObservable<String> rbNumber = reader(new StringChannel(), "ED:RBNUMBER");
-	public final Writable<String> rbNumberSetter = writable(new CharWaveformChannel(), "ED:RBNUMBER:SP");
-
-	public final InitialiseOnSubscribeObservable<Collection<UserDetails>> userDetails 
-		= convert(reader(new CompressedCharWaveformChannel(), "ED:USERNAME"), new UserDetailsConverter());
-	
-	public final Writable<UserDetails[]> userDetailsSetter
-		= convert(writable(new CompressedCharWaveformChannel(), "ED:USERNAME:SP"), new UserDetailsSerialiser());
+    public final InitialiseOnSubscribeObservable<Collection<UserDetails>> userDetails;
+    public final Writable<UserDetails[]> userDetailsSetter;
 
 	public ExperimentDetailsVariables(Channels channels) {
 		super(channels);
+
+        availableSampleParameters = convert(obsFactory.getSwitchableObservable(new CompressedCharWaveformChannel(),
+                addPrefix("CS:BLOCKSERVER:SAMPLE_PARS")),
+                new ParametersConverter());
+        availableBeamParameters = convert(obsFactory.getSwitchableObservable(new CompressedCharWaveformChannel(),
+                addPrefix("CS:BLOCKSERVER:BEAMLINE_PARS")),
+                new ParametersConverter());
+        sampleParameters = autoInitialise(new ParametersObservable(this, availableSampleParameters));
+        beamParameters = autoInitialise(new ParametersObservable(this, availableBeamParameters));
+        rbNumber = obsFactory.getSwitchableObservable(new StringChannel(), addPrefix("ED:RBNUMBER"));
+        rbNumberSetter = writeFactory.getSwitchableWritable(new CharWaveformChannel(), addPrefix("ED:RBNUMBER:SP"));
+        userDetails = convert(
+                obsFactory.getSwitchableObservable(new CompressedCharWaveformChannel(), addPrefix("ED:USERNAME")),
+                new UserDetailsConverter());
+        userDetailsSetter = convert(
+                writeFactory.getSwitchableWritable(new CompressedCharWaveformChannel(), addPrefix("ED:USERNAME:SP")),
+                new UserDetailsSerialiser());
 	}
 	
 	private <T> Writable<T> convert(Writable<String> destination, Converter<T, String> converter) {
@@ -66,18 +82,25 @@ public class ExperimentDetailsVariables extends InstrumentVariables {
 	}
 	
 	public InitialiseOnSubscribeObservable<String> parameterName(String address) {
-		return reader(new StringChannel(), address + ".DESC");
+        return obsFactory.getSwitchableObservable(new StringChannel(), addPrefix(address + ".DESC"));
 	}
 	
 	public InitialiseOnSubscribeObservable<String> parameterUnits(String address) {
-		return reader(new StringChannel(), address + ".EGU");
+        return obsFactory.getSwitchableObservable(new StringChannel(), addPrefix(address + ".EGU"));
 	}
 	
 	public InitialiseOnSubscribeObservable<String> parameterValue(String address) {
-		return reader(new DefaultChannelWithoutUnits(), address);
+        return obsFactory.getSwitchableObservable(new DefaultChannelWithoutUnits(), addPrefix(address));
 	}
 
 	public Writable<String> parameterValueSetter(String address) {
-		return writable(new DefaultChannelWithoutUnits(), address + ":SP");
+        return writeFactory.getSwitchableWritable(new DefaultChannelWithoutUnits(), addPrefix(address + ":SP"));
 	}
+
+    private String addPrefix(String address) {
+        StringBuilder sb = new StringBuilder(50);
+        sb.append(Instrument.getInstance().getPvPrefix());
+        sb.append(address);
+        return sb.toString();
+    }
 }

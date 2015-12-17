@@ -23,6 +23,9 @@ import java.util.Collection;
 import java.util.Locale;
 import java.util.NoSuchElementException;
 
+import com.google.common.base.Predicate;
+import com.google.common.collect.Iterables;
+
 import uk.ac.stfc.isis.ibex.configserver.configuration.Component;
 import uk.ac.stfc.isis.ibex.configserver.configuration.ConfigInfo;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Configuration;
@@ -34,21 +37,28 @@ import uk.ac.stfc.isis.ibex.epics.conversion.Converter;
 import uk.ac.stfc.isis.ibex.epics.observing.ConvertingObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.InitialiseOnSubscribeObservable;
 import uk.ac.stfc.isis.ibex.epics.pv.PVAddress;
+import uk.ac.stfc.isis.ibex.epics.switching.ObservableFactory;
+import uk.ac.stfc.isis.ibex.epics.switching.OnInstrumentSwitch;
+import uk.ac.stfc.isis.ibex.epics.switching.WritableFactory;
 import uk.ac.stfc.isis.ibex.epics.writing.ConvertingWritable;
 import uk.ac.stfc.isis.ibex.epics.writing.Writable;
 import uk.ac.stfc.isis.ibex.instrument.Channels;
+import uk.ac.stfc.isis.ibex.instrument.Instrument;
 import uk.ac.stfc.isis.ibex.instrument.InstrumentVariables;
 import uk.ac.stfc.isis.ibex.instrument.channels.CompressedCharWaveformChannel;
 import uk.ac.stfc.isis.ibex.instrument.channels.DefaultChannel;
 import uk.ac.stfc.isis.ibex.instrument.channels.StringChannel;
 
-import com.google.common.base.Predicate;
-import com.google.common.collect.Iterables;
-
+/**
+ * Holds all the Observables and Writables for the PVs associated with the
+ * BlockServer.
+ */
 public class ConfigServerVariables extends InstrumentVariables {
 
 	private final BlockServerAddresses blockServerAddresses = new BlockServerAddresses();
 	private final Converters converters;
+    private ObservableFactory obsFactory = new ObservableFactory(OnInstrumentSwitch.SWITCH);
+    private final WritableFactory writeFactory = new WritableFactory(OnInstrumentSwitch.SWITCH);
 	
 	public final InitialiseOnSubscribeObservable<ServerStatus> serverStatus;
 	public final InitialiseOnSubscribeObservable<Configuration> currentConfig;
@@ -123,19 +133,20 @@ public class ConfigServerVariables extends InstrumentVariables {
 	}
 
 	public InitialiseOnSubscribeObservable<String> iocDescription(String iocName) {
-		return reader(new StringChannel(), iocDescriptionAddress(iocName));
+        return obsFactory.getSwitchableObservable(new StringChannel(), addPrefix(iocDescriptionAddress(iocName)));
 	}
 
 	public Writable<String> iocDescriptionSetter(String iocName) {
-		return writable(new StringChannel(), iocDescriptionAddress(iocName));
+        return writeFactory.getSwitchableWritable(new StringChannel(), addPrefix(iocDescriptionAddress(iocName)));
 	}
 	
 	public InitialiseOnSubscribeObservable<String> blockValue(String blockName) {
-		return reader(new DefaultChannel(), blockServerAlias(blockName));
+        return obsFactory.getSwitchableObservable(new DefaultChannel(), addPrefix(blockServerAlias(blockName)));
 	}
 	
 	public InitialiseOnSubscribeObservable<String> blockDescription(String blockName) {
-		return reader(new StringChannel(), blockServerAddresses.blockDescription(blockServerAlias(blockName)));
+        return obsFactory.getSwitchableObservable(new StringChannel(),
+                addPrefix(blockServerAddresses.blockDescription(blockServerAlias(blockName))));
 	}
 	
 	public String blockServerAlias(String name) {
@@ -157,11 +168,11 @@ public class ConfigServerVariables extends InstrumentVariables {
 	}
 
 	private InitialiseOnSubscribeObservable<String> readCompressed(String address) {
-		return reader(new CompressedCharWaveformChannel(), address);
+        return obsFactory.getSwitchableObservable(new CompressedCharWaveformChannel(), addPrefix(address));
 	}
 	
 	private Writable<String> writeCompressed(String address) {
-		return writable(new CompressedCharWaveformChannel(), address);
+        return writeFactory.getSwitchableWritable(new CompressedCharWaveformChannel(), addPrefix(address));
 	}
 	
 	private String getConfigPV(final String configName) {
@@ -189,4 +200,11 @@ public class ConfigServerVariables extends InstrumentVariables {
 			return componentName.toUpperCase(Locale.ENGLISH);
 		}
 	}
+
+    private String addPrefix(String address) {
+        StringBuilder sb = new StringBuilder(50);
+        sb.append(Instrument.getInstance().getPvPrefix());
+        sb.append(address);
+        return sb.toString();
+    }
 }

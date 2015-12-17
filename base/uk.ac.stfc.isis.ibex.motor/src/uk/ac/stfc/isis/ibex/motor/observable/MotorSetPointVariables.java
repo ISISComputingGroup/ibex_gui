@@ -23,6 +23,8 @@ import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
 import uk.ac.stfc.isis.ibex.epics.conversion.Converter;
 import uk.ac.stfc.isis.ibex.epics.observing.InitialiseOnSubscribeObservable;
 import uk.ac.stfc.isis.ibex.epics.pv.PVAddress;
+import uk.ac.stfc.isis.ibex.epics.switching.ObservableFactory;
+import uk.ac.stfc.isis.ibex.epics.switching.WritableFactory;
 import uk.ac.stfc.isis.ibex.epics.writing.Writable;
 import uk.ac.stfc.isis.ibex.instrument.Channels;
 import uk.ac.stfc.isis.ibex.instrument.InstrumentVariables;
@@ -43,17 +45,20 @@ public class MotorSetPointVariables extends InstrumentVariables {
 	public final InitialiseOnSubscribeObservable<Boolean> canHome;
 	public final Writable<Double> homeSetter;
 	
-	public MotorSetPointVariables(PVAddress motorAddress, Channels channels) {
+    public MotorSetPointVariables(PVAddress motorAddress, Channels channels, ObservableFactory obsFactory,
+            WritableFactory writeFactory) {
 		super(channels);
 		
-		value = reader(new DoubleChannel(), motorAddress.endWithField("RBV"));
+        value = obsFactory.getSwitchableObservable(new DoubleChannel(), motorAddress.endWithField("RBV"));
 		
 		String setPointAddress = motorAddress.endWith("SP");
-		setPoint = reader(new DoubleChannel(), setPointAddress);
-		setPointSetter = writable(new DoubleChannel(), setPointAddress);
+        setPoint = obsFactory.getSwitchableObservable(new DoubleChannel(), setPointAddress);
+
+        setPointSetter = writeFactory.getSwitchableWritable(new DoubleChannel(), setPointAddress);
 		
 		String homeAddress = motorAddress.endWithField("HOMR");
-		canHome = convert(reader(new DoubleChannel(), homeAddress), TO_BOOLEAN);
-		homeSetter = writable(new DoubleChannel(), homeAddress);
+        canHome = convert(obsFactory.getSwitchableObservable(new DoubleChannel(), homeAddress), TO_BOOLEAN);
+
+        homeSetter = writeFactory.getSwitchableWritable(new DoubleChannel(), homeAddress);
 	}
 }

@@ -24,9 +24,13 @@ import java.util.Collection;
 import uk.ac.stfc.isis.ibex.epics.conversion.Convert;
 import uk.ac.stfc.isis.ibex.epics.conversion.Converter;
 import uk.ac.stfc.isis.ibex.epics.observing.InitialiseOnSubscribeObservable;
+import uk.ac.stfc.isis.ibex.epics.switching.ObservableFactory;
+import uk.ac.stfc.isis.ibex.epics.switching.OnInstrumentSwitch;
+import uk.ac.stfc.isis.ibex.epics.switching.WritableFactory;
 import uk.ac.stfc.isis.ibex.epics.writing.ConvertingWritable;
 import uk.ac.stfc.isis.ibex.epics.writing.Writable;
 import uk.ac.stfc.isis.ibex.instrument.Channels;
+import uk.ac.stfc.isis.ibex.instrument.Instrument;
 import uk.ac.stfc.isis.ibex.instrument.InstrumentVariables;
 import uk.ac.stfc.isis.ibex.instrument.channels.CompressedCharWaveformChannel;
 import uk.ac.stfc.isis.ibex.instrument.channels.DefaultChannel;
@@ -43,7 +47,8 @@ import uk.ac.stfc.isis.ibex.synoptic.model.desc.SynopticDescription;
  *
  */
 public class Variables extends InstrumentVariables {
-	
+    private final WritableFactory writeFactory = new WritableFactory(OnInstrumentSwitch.SWITCH);
+    private final ObservableFactory obsFactory = new ObservableFactory(OnInstrumentSwitch.CLOSE);
 	private static final String SYNOPTIC_ADDRESS = "CS:BLOCKSERVER:SYNOPTICS:";
 	private static final String GET_SYNOPTIC = ":GET";
 	
@@ -89,7 +94,8 @@ public class Variables extends InstrumentVariables {
 	}
 	
 	private Writable<String> writeCompressed(String address) {
-		return writable(new CompressedCharWaveformChannel(), address);
+        return writeFactory.getSwitchableWritable(new CompressedCharWaveformChannel(),
+                Instrument.getInstance().getPvPrefix() + address);
 	}
 	
 	private <T> Writable<T> convert(Writable<String> destination, Converter<T, String> converter) {
@@ -97,33 +103,55 @@ public class Variables extends InstrumentVariables {
 	}	
 	
 	private InitialiseOnSubscribeObservable<String> readCompressed(String address) {
-		return reader(new CompressedCharWaveformChannel(), address);
+        return obsFactory.getSwitchableObservable(new CompressedCharWaveformChannel(),
+                Instrument.getInstance().getPvPrefix() + address);
 	}	
 	
 	// The following readers/writers are for PVs on the synoptic
 	
 	public InitialiseOnSubscribeObservable<String> defaultReader(String address) {
-		return reader(new DefaultChannel(), address);
-	}
-	
-	public InitialiseOnSubscribeObservable<String> defaultReader(String address, PVType type) {
-		return reader(new DefaultChannel(), address, type);
+        return obsFactory.getSwitchableObservable(new DefaultChannel(),
+                Instrument.getInstance().getPvPrefix() + address);
 	}
 
+    public InitialiseOnSubscribeObservable<String> defaultReader(String address, PVType type) {
+        // If it is local append the PV prefix, otherwise don't
+        if (type == PVType.LOCAL_PV) {
+            return obsFactory.getSwitchableObservable(new DefaultChannel(),
+                    Instrument.getInstance().getPvPrefix() + address);
+        } else {
+            return obsFactory.getSwitchableObservable(new DefaultChannel(), address);
+        }
+    }
+
 	public InitialiseOnSubscribeObservable<String> defaultReaderWithoutUnits(String address) {
-		return reader(new DefaultChannelWithoutUnits(), address);
+        return obsFactory.getSwitchableObservable(new DefaultChannelWithoutUnits(),
+                Instrument.getInstance().getPvPrefix() + address);
 	}
 	
-	public InitialiseOnSubscribeObservable<String> defaultReaderWithoutUnits(String address, PVType type) {
-		return reader(new DefaultChannelWithoutUnits(), address, type);
-	}
-	
+    public InitialiseOnSubscribeObservable<String> defaultReaderWithoutUnits(String address, PVType type) {
+        // If it is local append the PV prefix, otherwise don't
+        if (type == PVType.LOCAL_PV) {
+            return obsFactory.getSwitchableObservable(new DefaultChannelWithoutUnits(),
+                    Instrument.getInstance().getPvPrefix() + address);
+        } else {
+            return obsFactory.getSwitchableObservable(new DefaultChannelWithoutUnits(), address);
+        }
+    }
+
 	public Writable<String> defaultWritable(String address) {
-		return writable(new StringChannel(), address);
+        return writeFactory.getSwitchableWritable(new StringChannel(),
+                Instrument.getInstance().getPvPrefix() + address);
 	}
 	
 	public Writable<String> defaultWritable(String address, PVType type) {
-		return writable(new StringChannel(), address, type);
+        // If it is local append the PV prefix, otherwise don't
+        if (type == PVType.LOCAL_PV) {
+            return writeFactory.getSwitchableWritable(new StringChannel(),
+                    Instrument.getInstance().getPvPrefix() + address);
+        } else {
+            return writeFactory.getSwitchableWritable(new StringChannel(), address);
+        }
 	}
 	
 }

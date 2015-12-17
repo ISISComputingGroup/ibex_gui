@@ -23,7 +23,6 @@ import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
 
 import uk.ac.stfc.isis.ibex.epics.pv.Closer;
-import uk.ac.stfc.isis.ibex.instrument.Instrument;
 import uk.ac.stfc.isis.ibex.runcontrol.internal.RunControlVariables;
 
 /**
@@ -40,7 +39,7 @@ public class RunControlActivator extends Closer implements BundleActivator {
 	
 	public RunControlActivator() {
 		instance = this;
-		variables = registerForClose(new RunControlVariables(Instrument.getInstance().channels()));
+        variables = new RunControlVariables();
 		server = registerForClose(new RunControlServer(variables));
 	}
 
@@ -64,7 +63,8 @@ public class RunControlActivator extends Closer implements BundleActivator {
 	 * (non-Javadoc)
 	 * @see org.osgi.framework.BundleActivator#start(org.osgi.framework.BundleContext)
 	 */
-	public void start(BundleContext bundleContext) throws Exception {
+	@Override
+    public void start(BundleContext bundleContext) throws Exception {
 		RunControlActivator.context = bundleContext;
 	}
 
@@ -72,7 +72,8 @@ public class RunControlActivator extends Closer implements BundleActivator {
 	 * (non-Javadoc)
 	 * @see org.osgi.framework.BundleActivator#stop(org.osgi.framework.BundleContext)
 	 */
-	public void stop(BundleContext bundleContext) throws Exception {
+	@Override
+    public void stop(BundleContext bundleContext) throws Exception {
 		RunControlActivator.context = null;
 		close();
 	}

@@ -21,7 +21,9 @@ package uk.ac.stfc.isis.ibex.instrument;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.logging.log4j.Logger;
 import org.eclipse.core.runtime.CoreException;
@@ -29,6 +31,8 @@ import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtensionRegistry;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.preferences.ConfigurationScope;
+import org.epics.pvmanager.ChannelHandler;
+import org.epics.pvmanager.PVManager;
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
 import org.osgi.service.prefs.BackingStoreException;
@@ -37,8 +41,7 @@ import org.osgi.service.prefs.Preferences;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 
-import uk.ac.stfc.isis.ibex.instrument.baton.BannerObservables;
-import uk.ac.stfc.isis.ibex.instrument.internal.DefaultSettings;
+import uk.ac.stfc.isis.ibex.instrument.baton.BatonObservables;
 import uk.ac.stfc.isis.ibex.instrument.internal.LocalHostInstrumentInfo;
 import uk.ac.stfc.isis.ibex.instrument.pv.PVAddressBook;
 import uk.ac.stfc.isis.ibex.instrument.pv.PVChannels;
@@ -53,14 +56,13 @@ public class Instrument implements BundleActivator {
     private static Instrument instance;
 	private static BundleContext context;
 	
-    public static Instrument getInstance() { 
+    public static Instrument getInstance() {
     	return instance; 
     }
 	
-    private final Settings settings;
 	private final PVAddressBook addresses;
 	private final PVChannels channels;
-	private final BannerObservables baton;
+	private final BatonObservables baton;
 
 	private List<InstrumentInfo> instruments = new ArrayList<>();
 	private SettableUpdatedValue<String> instrumentName = new SettableUpdatedValue<>();
@@ -73,7 +75,6 @@ public class Instrument implements BundleActivator {
 	
 	public Instrument() {
 		instance = this;
-		settings = new DefaultSettings();
 		
 		localhost = new LocalHostInstrumentInfo();
 		instruments.add(localhost);
@@ -82,9 +83,9 @@ public class Instrument implements BundleActivator {
 		instruments.add(new InstrumentInfo("DEMO"));
 		instruments.add(new InstrumentInfo("IMAT"));
 		
-		addresses = new PVAddressBook(settings.pvPrefix());
+        addresses = new PVAddressBook(getPvPrefix());
 		channels = new PVChannels(addresses);
-		baton = new BannerObservables(channels);
+		baton = new BatonObservables(channels);
 		
 		setInstrument(initialInstrument());	
 	}
@@ -93,15 +94,25 @@ public class Instrument implements BundleActivator {
 		return instrumentName;
 	}
 	
-	public Settings settings() {
-		return settings;
-	}
+    public String getPvPrefix() {
+        
+        String pvPrefix;
+        
+        // TODO: Remove this once the PV Address book is gone.
+        if (instrumentInfo == null) {
+            pvPrefix = localhost.pvPrefix();
+        } else {
+            pvPrefix = instrumentInfo.pvPrefix();
+        }
+        
+        return pvPrefix;
+    }
 	
 	public Channels channels() {
 		 return channels;
 	}
 	
-	public BannerObservables baton() {
+	public BatonObservables baton() {
 		return baton;
 	}
 	
@@ -143,7 +154,21 @@ public class Instrument implements BundleActivator {
 
 		addresses.setPrefix(selectedInstrument.pvPrefix());
 		updateExtendingPlugins(selectedInstrument);
+        printNumberOfChannels();
 	}
+
+    private void printNumberOfChannels() {
+        int count = 0;
+        Iterator<Map.Entry<String, ChannelHandler>> it = PVManager.getDefaultDataSource().getChannels().entrySet()
+                .iterator();
+        while (it.hasNext()) {
+            Map.Entry<String, ChannelHandler> pair = it.next();
+            ChannelHandler ch = pair.getValue();
+            if (ch.isConnected())
+                count++;
+        }
+        System.out.println("Number of connected channels = " + count);
+    }
 
 	public InstrumentInfo currentInstrument() {
 		return instrumentInfo;

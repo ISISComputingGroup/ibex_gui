@@ -26,6 +26,9 @@ import uk.ac.stfc.isis.ibex.epics.adapters.ModelAdapter;
 import uk.ac.stfc.isis.ibex.epics.observing.InitialiseOnSubscribeObservable;
 import uk.ac.stfc.isis.ibex.model.UpdatedValue;
 
+/**
+ * Holds the Observables for the beam status display.
+ */
 public class Observables extends ModelAdapter {
 	
 	public final Synchrotron sync;

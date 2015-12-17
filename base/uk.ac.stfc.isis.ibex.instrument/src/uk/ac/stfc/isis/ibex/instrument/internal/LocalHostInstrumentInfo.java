@@ -29,7 +29,8 @@ public class LocalHostInstrumentInfo extends InstrumentInfo {
 
 	@Override
 	public String pvPrefix() {
-		return new DefaultSettings().pvPrefix();
+	    PVPrefix pvPrefix = new PVPrefix(MachineName.get(), UserName.get());
+        return pvPrefix.get();
 	}
 	
 	@Override

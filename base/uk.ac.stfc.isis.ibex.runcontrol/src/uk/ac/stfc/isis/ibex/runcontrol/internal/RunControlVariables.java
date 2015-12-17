@@ -20,9 +20,11 @@
 package uk.ac.stfc.isis.ibex.runcontrol.internal;
 
 import uk.ac.stfc.isis.ibex.epics.observing.InitialiseOnSubscribeObservable;
+import uk.ac.stfc.isis.ibex.epics.switching.ObservableFactory;
+import uk.ac.stfc.isis.ibex.epics.switching.OnInstrumentSwitch;
+import uk.ac.stfc.isis.ibex.epics.switching.WritableFactory;
 import uk.ac.stfc.isis.ibex.epics.writing.Writable;
-import uk.ac.stfc.isis.ibex.instrument.Channels;
-import uk.ac.stfc.isis.ibex.instrument.InstrumentVariables;
+import uk.ac.stfc.isis.ibex.instrument.Instrument;
 import uk.ac.stfc.isis.ibex.instrument.channels.DefaultChannel;
 import uk.ac.stfc.isis.ibex.instrument.channels.StringChannel;
 
@@ -30,40 +32,47 @@ import uk.ac.stfc.isis.ibex.instrument.channels.StringChannel;
  * Creates the various run-control variables. 
  *
  */
-public class RunControlVariables extends InstrumentVariables {
-
+public class RunControlVariables {
+    private final WritableFactory writeFactory = new WritableFactory(OnInstrumentSwitch.SWITCH);
+    private final ObservableFactory obsFactory = new ObservableFactory(OnInstrumentSwitch.SWITCH);
 	private final RunControlAddresses runControlAddresses = new RunControlAddresses();
 	
-	public RunControlVariables(Channels channels) {
-		super(channels);
+    public RunControlVariables() {
 	}
 	
 	public InitialiseOnSubscribeObservable<String> blockRunControlLowLimit(String blockName) {
-		return reader(new DefaultChannel(), runControlAddresses.getLowLimitPv(blockName));
+        return obsFactory.getSwitchableObservable(new DefaultChannel(),
+                Instrument.getInstance().getPvPrefix() + runControlAddresses.getLowLimitPv(blockName));
 	}
 	
 	public InitialiseOnSubscribeObservable<String> blockRunControlHighLimit(String blockName) {
-		return reader(new DefaultChannel(), runControlAddresses.getHighLimitPv(blockName));
+        return obsFactory.getSwitchableObservable(new DefaultChannel(),
+                Instrument.getInstance().getPvPrefix() + runControlAddresses.getHighLimitPv(blockName));
 	}
 	
 	public InitialiseOnSubscribeObservable<String> blockRunControlInRange(String blockName) {
-		return reader(new DefaultChannel(), runControlAddresses.getInRangePv(blockName));
+        return obsFactory.getSwitchableObservable(new DefaultChannel(),
+                Instrument.getInstance().getPvPrefix() + runControlAddresses.getInRangePv(blockName));
 	}
 	
 	public InitialiseOnSubscribeObservable<String> blockRunControlEnabled(String blockName) {
-		return reader(new DefaultChannel(), runControlAddresses.getEnablePv(blockName));
+        return obsFactory.getSwitchableObservable(new DefaultChannel(),
+                Instrument.getInstance().getPvPrefix() + runControlAddresses.getEnablePv(blockName));
 	}
 	
 	public Writable<String> blockRunControlLowLimitSetter(String blockName) {
-		return writable(new StringChannel(), runControlAddresses.getLowLimitPv(blockName));
+        return writeFactory.getSwitchableWritable(new StringChannel(),
+                Instrument.getInstance().getPvPrefix() + runControlAddresses.getLowLimitPv(blockName));
 	}
 	
 	public Writable<String> blockRunControlHighLimitSetter(String blockName) {
-		return writable(new StringChannel(), runControlAddresses.getHighLimitPv(blockName));
+        return writeFactory.getSwitchableWritable(new StringChannel(),
+                Instrument.getInstance().getPvPrefix() + runControlAddresses.getHighLimitPv(blockName));
 	}
 	
 	public Writable<String> blockRunControlEnabledSetter(String blockName) {
-		return writable(new StringChannel(), runControlAddresses.getEnablePv(blockName));
+        return writeFactory.getSwitchableWritable(new StringChannel(),
+                Instrument.getInstance().getPvPrefix() + runControlAddresses.getEnablePv(blockName));
 	}
 
 }

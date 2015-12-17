@@ -44,8 +44,8 @@ public class ClosingSwitchableObservable<T> extends SwitchableObservable<T> {
 	@Override
 	public void close() {
 		// Close the source
-		source.close();
+        source.close();
 		// Cancel the source subscription
-		super.close();
+        super.close();
 	}
 }

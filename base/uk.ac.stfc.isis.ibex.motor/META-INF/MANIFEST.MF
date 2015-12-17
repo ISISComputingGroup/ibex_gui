@@ -16,3 +16,4 @@ Bundle-ActivationPolicy: lazy
 Export-Package: uk.ac.stfc.isis.ibex.motor,
  uk.ac.stfc.isis.ibex.motor.internal,
  uk.ac.stfc.isis.ibex.motor.observable
+Import-Package: uk.ac.stfc.isis.ibex.epics.switching

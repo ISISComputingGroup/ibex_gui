@@ -21,7 +21,7 @@ package uk.ac.stfc.isis.ibex.epics.writing;
 
 public class SameTypeWritable<T> extends ForwardingWritable<T, T> {
 
-    public SameTypeWritable(BaseWritable<T> destination) {
+    public SameTypeWritable(Writable<T> destination) {
 		setWritable(destination);
 	}
 
