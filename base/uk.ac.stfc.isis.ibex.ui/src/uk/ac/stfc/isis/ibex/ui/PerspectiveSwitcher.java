@@ -39,7 +39,7 @@ public class PerspectiveSwitcher {
 
 	private final Display display = Display.getDefault();
 
-	private static LogCounter counter = Log.getInstance().getCounter();	
+	private static LogCounter counter = Log.getInstance().getCounter();
 	
 	private static final Runnable DO_NOTHING = new Runnable() {	
 		@Override
