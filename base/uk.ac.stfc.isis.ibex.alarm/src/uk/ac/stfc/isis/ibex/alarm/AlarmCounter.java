@@ -1,5 +1,5 @@
 
-/**
+/*
 * This file is part of the ISIS IBEX application.
 * Copyright (C) 2012-2015 Science & Technology Facilities Council.
 * All rights reserved.
@@ -31,47 +31,55 @@ import org.eclipse.swt.widgets.Display;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 
 /**
- * A model to provide listeners and events which interact with the alarm server
+ * A model to provide listeners and events which interact with the alarm server.
  */
 public class AlarmCounter extends ModelObject {
-	
 	private int count;
 
-	public AlarmCounter(AlarmClientModel alarmModel){
+    public AlarmCounter(AlarmClientModel alarmModel) {
+        count = 0;
+
 		alarmModel.addListener(new AlarmClientModelListener() {
+            int alarmCount = 0;
+
 			@Override
 			public void newAlarmConfiguration(AlarmClientModel model) {
 			}
+
 			@Override
 			public void serverTimeout(AlarmClientModel model) {
 			}
+
 			@Override
 			public void serverModeUpdate(AlarmClientModel model, boolean maintenance_mode) {
 			}
+
 			@Override
 			public void newAlarmState(AlarmClientModel model, AlarmTreePV pv, boolean parent_changed) {
-				fireCountChanged(count, count = alarmModel.getActiveAlarms().length);
+                fireCountChanged(alarmCount, alarmCount = model.getActiveAlarms().length);
 			}
 		});
-	}
-	
+    }
 
 	public void resetCount() {
 		count = 0;
 	}
 	
 	/**
-	 * Use of runnable to avoid error between SWT and BEAST
-	 * 
-	 * @param prevCount
-	 * @param count
-	 */
-	private void fireCountChanged(int prevCount, int count) {
+     * Use of runnable to avoid error between SWT and BEAST
+     * 
+     * @param prevCount the previous count
+     * @param newCount the new count
+     */
+    private void fireCountChanged(final int prevCount, final int newCount) {
+        count = newCount;
 		Display.getDefault().asyncExec( new Runnable() {  
-			public void run() {firePropertyChange("alarmCount", prevCount, count); } 
+			@Override
+            public void run() {
+                firePropertyChange("alarmCount", prevCount, newCount);
+            }
 		});
 	}
-
 
 	/**
 	 * @return count value
