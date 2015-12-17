@@ -27,7 +27,6 @@ import uk.ac.stfc.isis.ibex.epics.observing.InitialiseOnSubscribeObservable;
 import uk.ac.stfc.isis.ibex.epics.pv.Closer;
 import uk.ac.stfc.isis.ibex.epics.writing.Writable;
 import uk.ac.stfc.isis.ibex.instrument.channels.ChannelType;
-import uk.ac.stfc.isis.ibex.instrument.pv.PVType;
 
 public class InstrumentVariables extends Closer {
 
@@ -41,16 +40,8 @@ public class InstrumentVariables extends Closer {
 		return autoInitialise(registerForClose(channels.getReader(type, address)));
 	}
 	
-	protected <T> InitialiseOnSubscribeObservable<T> reader(ChannelType<T> type, String address, PVType pvType) {
-		return autoInitialise(registerForClose(channels.getReader(type, address, pvType)));
-	}
-	
 	protected <T> Writable<T> writable(ChannelType<T> channelType, String address) {
 		return registerForClose(channels.getWriter(channelType, address));
-	}
-	
-	protected <T> Writable<T> writable(ChannelType<T> channelType, String address, PVType pvType) {
-		return registerForClose(channels.getWriter(channelType, address, pvType));
 	}
 	
 	protected static <S, T> InitialiseOnSubscribeObservable<T> convert(ClosableCachingObservable<S> observable, Converter<S, T> converter) {

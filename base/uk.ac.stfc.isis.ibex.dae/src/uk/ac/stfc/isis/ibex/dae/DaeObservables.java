@@ -23,9 +23,7 @@ import uk.ac.stfc.isis.ibex.epics.observing.InitialiseOnSubscribeObservable;
 import uk.ac.stfc.isis.ibex.epics.pv.PVAddress;
 import uk.ac.stfc.isis.ibex.epics.switching.ObservableFactory;
 import uk.ac.stfc.isis.ibex.epics.switching.OnInstrumentSwitch;
-import uk.ac.stfc.isis.ibex.instrument.Channels;
 import uk.ac.stfc.isis.ibex.instrument.Instrument;
-import uk.ac.stfc.isis.ibex.instrument.InstrumentVariables;
 import uk.ac.stfc.isis.ibex.instrument.channels.BooleanChannel;
 import uk.ac.stfc.isis.ibex.instrument.channels.CharWaveformChannel;
 import uk.ac.stfc.isis.ibex.instrument.channels.CompressedCharWaveformChannel;
@@ -40,7 +38,7 @@ import uk.ac.stfc.isis.ibex.instrument.channels.StringChannel;
 /**
  * Holds the Observables for the DAE.
  */
-public class DaeObservables extends InstrumentVariables {
+public class DaeObservables {
 
     private static final PVAddress DAE = PVAddress.startWith("DAE");
     private final ObservableFactory obsFactory = new ObservableFactory(OnInstrumentSwitch.SWITCH);
@@ -89,8 +87,7 @@ public class DaeObservables extends InstrumentVariables {
     public final InitialiseOnSubscribeObservable<Double> monitorTo;
     public final InitialiseOnSubscribeObservable<Double> npRatio;
 
-    public DaeObservables(Channels channels) {
-        super(channels);
+    public DaeObservables() {
         instrumentName = obsFactory.getSwitchableObservable(new StringChannel(), addPrefix(DAE.endWith("INSTNAME")));
         runState = obsFactory.getSwitchableObservable(new EnumChannel<>(DaeRunState.class),
                 addPrefix(DAE.endWith("RUNSTATE_STR")));

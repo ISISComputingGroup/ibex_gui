@@ -26,6 +26,7 @@ import uk.ac.stfc.isis.ibex.epics.conversion.Converter;
 import uk.ac.stfc.isis.ibex.epics.observing.InitialiseOnSubscribeObservable;
 import uk.ac.stfc.isis.ibex.epics.switching.ObservableFactory;
 import uk.ac.stfc.isis.ibex.epics.switching.OnInstrumentSwitch;
+import uk.ac.stfc.isis.ibex.epics.switching.WritableFactory;
 import uk.ac.stfc.isis.ibex.epics.writing.ConvertingWritable;
 import uk.ac.stfc.isis.ibex.epics.writing.Writable;
 import uk.ac.stfc.isis.ibex.instrument.Channels;
@@ -46,6 +47,7 @@ import uk.ac.stfc.isis.ibex.synoptic.model.desc.SynopticDescription;
  *
  */
 public class Variables extends InstrumentVariables {
+    private final WritableFactory writeFactory = new WritableFactory(OnInstrumentSwitch.SWITCH);
     private final ObservableFactory obsFactory = new ObservableFactory(OnInstrumentSwitch.CLOSE);
 	private static final String SYNOPTIC_ADDRESS = "CS:BLOCKSERVER:SYNOPTICS:";
 	private static final String GET_SYNOPTIC = ":GET";
@@ -92,7 +94,8 @@ public class Variables extends InstrumentVariables {
 	}
 	
 	private Writable<String> writeCompressed(String address) {
-		return writable(new CompressedCharWaveformChannel(), address);
+        return writeFactory.getSwitchableWritable(new CompressedCharWaveformChannel(),
+                Instrument.getInstance().getPvPrefix() + address);
 	}
 	
 	private <T> Writable<T> convert(Writable<String> destination, Converter<T, String> converter) {
@@ -137,11 +140,18 @@ public class Variables extends InstrumentVariables {
     }
 
 	public Writable<String> defaultWritable(String address) {
-		return writable(new StringChannel(), address);
+        return writeFactory.getSwitchableWritable(new StringChannel(),
+                Instrument.getInstance().getPvPrefix() + address);
 	}
 	
 	public Writable<String> defaultWritable(String address, PVType type) {
-		return writable(new StringChannel(), address, type);
+        // If it is local append the PV prefix, otherwise don't
+        if (type == PVType.LOCAL_PV) {
+            return writeFactory.getSwitchableWritable(new StringChannel(),
+                    Instrument.getInstance().getPvPrefix() + address);
+        } else {
+            return writeFactory.getSwitchableWritable(new StringChannel(), address);
+        }
 	}
 	
 }

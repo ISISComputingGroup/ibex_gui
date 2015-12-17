@@ -25,6 +25,7 @@ import uk.ac.stfc.isis.ibex.epics.conversion.Converter;
 import uk.ac.stfc.isis.ibex.epics.observing.InitialiseOnSubscribeObservable;
 import uk.ac.stfc.isis.ibex.epics.switching.ObservableFactory;
 import uk.ac.stfc.isis.ibex.epics.switching.OnInstrumentSwitch;
+import uk.ac.stfc.isis.ibex.epics.switching.WritableFactory;
 import uk.ac.stfc.isis.ibex.epics.writing.ConvertingWritable;
 import uk.ac.stfc.isis.ibex.epics.writing.Writable;
 import uk.ac.stfc.isis.ibex.experimentdetails.Parameter;
@@ -42,6 +43,7 @@ import uk.ac.stfc.isis.ibex.instrument.channels.StringChannel;
  */
 public class ExperimentDetailsVariables extends InstrumentVariables {
     private final ObservableFactory obsFactory = new ObservableFactory(OnInstrumentSwitch.SWITCH);
+    private final WritableFactory writeFactory = new WritableFactory(OnInstrumentSwitch.SWITCH);
 
     public final InitialiseOnSubscribeObservable<Collection<String>> availableSampleParameters;
     public final InitialiseOnSubscribeObservable<Collection<String>> availableBeamParameters;
@@ -66,11 +68,12 @@ public class ExperimentDetailsVariables extends InstrumentVariables {
         sampleParameters = autoInitialise(new ParametersObservable(this, availableSampleParameters));
         beamParameters = autoInitialise(new ParametersObservable(this, availableBeamParameters));
         rbNumber = obsFactory.getSwitchableObservable(new StringChannel(), addPrefix("ED:RBNUMBER"));
-        rbNumberSetter = writable(new CharWaveformChannel(), addPrefix("ED:RBNUMBER:SP"));
+        rbNumberSetter = writeFactory.getSwitchableWritable(new CharWaveformChannel(), addPrefix("ED:RBNUMBER:SP"));
         userDetails = convert(
                 obsFactory.getSwitchableObservable(new CompressedCharWaveformChannel(), addPrefix("ED:USERNAME")),
                 new UserDetailsConverter());
-        userDetailsSetter = convert(writable(new CompressedCharWaveformChannel(), addPrefix("ED:USERNAME:SP")),
+        userDetailsSetter = convert(
+                writeFactory.getSwitchableWritable(new CompressedCharWaveformChannel(), addPrefix("ED:USERNAME:SP")),
                 new UserDetailsSerialiser());
 	}
 	
@@ -91,7 +94,7 @@ public class ExperimentDetailsVariables extends InstrumentVariables {
 	}
 
 	public Writable<String> parameterValueSetter(String address) {
-		return writable(new DefaultChannelWithoutUnits(), address + ":SP");
+        return writeFactory.getSwitchableWritable(new DefaultChannelWithoutUnits(), addPrefix(address + ":SP"));
 	}
 
     private String addPrefix(String address) {

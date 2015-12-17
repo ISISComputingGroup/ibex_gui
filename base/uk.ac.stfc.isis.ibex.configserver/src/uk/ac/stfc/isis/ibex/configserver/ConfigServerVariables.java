@@ -39,6 +39,7 @@ import uk.ac.stfc.isis.ibex.epics.observing.InitialiseOnSubscribeObservable;
 import uk.ac.stfc.isis.ibex.epics.pv.PVAddress;
 import uk.ac.stfc.isis.ibex.epics.switching.ObservableFactory;
 import uk.ac.stfc.isis.ibex.epics.switching.OnInstrumentSwitch;
+import uk.ac.stfc.isis.ibex.epics.switching.WritableFactory;
 import uk.ac.stfc.isis.ibex.epics.writing.ConvertingWritable;
 import uk.ac.stfc.isis.ibex.epics.writing.Writable;
 import uk.ac.stfc.isis.ibex.instrument.Channels;
@@ -57,6 +58,7 @@ public class ConfigServerVariables extends InstrumentVariables {
 	private final BlockServerAddresses blockServerAddresses = new BlockServerAddresses();
 	private final Converters converters;
     private ObservableFactory obsFactory = new ObservableFactory(OnInstrumentSwitch.SWITCH);
+    private final WritableFactory writeFactory = new WritableFactory(OnInstrumentSwitch.SWITCH);
 	
 	public final InitialiseOnSubscribeObservable<ServerStatus> serverStatus;
 	public final InitialiseOnSubscribeObservable<Configuration> currentConfig;
@@ -135,7 +137,7 @@ public class ConfigServerVariables extends InstrumentVariables {
 	}
 
 	public Writable<String> iocDescriptionSetter(String iocName) {
-		return writable(new StringChannel(), iocDescriptionAddress(iocName));
+        return writeFactory.getSwitchableWritable(new StringChannel(), addPrefix(iocDescriptionAddress(iocName)));
 	}
 	
 	public InitialiseOnSubscribeObservable<String> blockValue(String blockName) {
@@ -170,7 +172,7 @@ public class ConfigServerVariables extends InstrumentVariables {
 	}
 	
 	private Writable<String> writeCompressed(String address) {
-		return writable(new CompressedCharWaveformChannel(), address);
+        return writeFactory.getSwitchableWritable(new CompressedCharWaveformChannel(), addPrefix(address));
 	}
 	
 	private String getConfigPV(final String configName) {

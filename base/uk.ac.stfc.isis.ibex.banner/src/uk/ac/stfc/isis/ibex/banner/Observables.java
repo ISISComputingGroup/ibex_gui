@@ -24,6 +24,7 @@ import uk.ac.stfc.isis.ibex.epics.conversion.Converter;
 import uk.ac.stfc.isis.ibex.epics.observing.InitialiseOnSubscribeObservable;
 import uk.ac.stfc.isis.ibex.epics.switching.ObservableFactory;
 import uk.ac.stfc.isis.ibex.epics.switching.OnInstrumentSwitch;
+import uk.ac.stfc.isis.ibex.epics.switching.WritableFactory;
 import uk.ac.stfc.isis.ibex.epics.writing.Writable;
 import uk.ac.stfc.isis.ibex.instrument.Channels;
 import uk.ac.stfc.isis.ibex.instrument.Instrument;
@@ -33,10 +34,11 @@ import uk.ac.stfc.isis.ibex.instrument.channels.EnumChannel;
 import uk.ac.stfc.isis.ibex.instrument.channels.LongChannel;
 
 /**
- * Holds the Observables for the Spangle Banner.
+ * Holds the Observables and Writables for the Spangle Banner.
  */
 public class Observables extends InstrumentVariables {
     private final ObservableFactory obsFactory = new ObservableFactory(OnInstrumentSwitch.SWITCH);
+    private final WritableFactory writeFactory = new WritableFactory(OnInstrumentSwitch.SWITCH);
 
 	private Converter<Double, InMotionState> doubleToMotionState = new Converter<Double, InMotionState>() {
 		@Override
@@ -60,7 +62,8 @@ public class Observables extends InstrumentVariables {
         inMotion = convert(obsFactory.getSwitchableObservable(new DoubleChannel(),
                 Instrument.getInstance().getPvPrefix() + "CS:MOT:MOVING"),
                 doubleToMotionState);
-        stop = writable(new LongChannel(), "CS:MOT:STOP:ALL");
+        stop = writeFactory.getSwitchableWritable(new LongChannel(),
+                Instrument.getInstance().getPvPrefix() + "CS:MOT:STOP:ALL");
 	}		
 
 }
