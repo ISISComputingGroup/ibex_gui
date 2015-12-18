@@ -28,11 +28,12 @@ import uk.ac.stfc.isis.ibex.epics.pv.Closer;
 
 public class InstrumentVariables extends Closer {
 
-	protected static <S, T> InitialiseOnSubscribeObservable<T> convert(ClosableCachingObservable<S> observable, Converter<S, T> converter) {
+    public static <S, T> InitialiseOnSubscribeObservable<T> convert(ClosableCachingObservable<S> observable,
+            Converter<S, T> converter) {
 		return autoInitialise(new ConvertingObservable<>(observable, converter));
 	}
 	
-	protected static <T> InitialiseOnSubscribeObservable<T> autoInitialise(BaseCachingObservable<T> observable) {
+    public static <T> InitialiseOnSubscribeObservable<T> autoInitialise(BaseCachingObservable<T> observable) {
 		return new InitialiseOnSubscribeObservable<>(observable);
 	}
 }

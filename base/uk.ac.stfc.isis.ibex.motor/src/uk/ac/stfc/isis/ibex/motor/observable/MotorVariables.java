@@ -89,8 +89,6 @@ public class MotorVariables extends InstrumentVariables {
 	public final InitialiseOnSubscribeObservable<String> status;
 
 	public MotorVariables(String motorName, Instrument instrument) {
-		super(instrument.channels());
-
 		this.motorName = motorName;
         this.motorAddress = PVAddress.startWith("MOT").append(motorName);
         PVAddress fullAddress = PVAddress.startWith(instrument.getPvPrefix() + motorAddress);
@@ -116,8 +114,7 @@ public class MotorVariables extends InstrumentVariables {
                 obsFactory.getSwitchableObservable(new ShortChannel(), fullAddress.endWithField("LLS")), TO_BOOLEAN);
         atLowerLimitSwitch = convert(
                 obsFactory.getSwitchableObservable(new ShortChannel(), fullAddress.endWithField("HLS")), TO_BOOLEAN);
-        setpoint = registerForClose(
-                new MotorSetPointVariables(fullAddress, instrument.channels(), obsFactory, writeFactory));
+        setpoint = registerForClose(new MotorSetPointVariables(fullAddress, obsFactory, writeFactory));
 		
 		status = convert(obsFactory.getSwitchableObservable(new StringChannel(), motorAddress.toString() + "_STATUS"), CAPITALISE_FIRST_LETTER_ONLY);
 	}

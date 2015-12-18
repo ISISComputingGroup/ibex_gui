@@ -30,7 +30,6 @@ import uk.ac.stfc.isis.ibex.epics.writing.ConvertingWritable;
 import uk.ac.stfc.isis.ibex.epics.writing.Writable;
 import uk.ac.stfc.isis.ibex.experimentdetails.Parameter;
 import uk.ac.stfc.isis.ibex.experimentdetails.UserDetails;
-import uk.ac.stfc.isis.ibex.instrument.Channels;
 import uk.ac.stfc.isis.ibex.instrument.Instrument;
 import uk.ac.stfc.isis.ibex.instrument.InstrumentVariables;
 import uk.ac.stfc.isis.ibex.instrument.channels.CharWaveformChannel;
@@ -56,9 +55,7 @@ public class ExperimentDetailsVariables extends InstrumentVariables {
     public final InitialiseOnSubscribeObservable<Collection<UserDetails>> userDetails;
     public final Writable<UserDetails[]> userDetailsSetter;
 
-	public ExperimentDetailsVariables(Channels channels) {
-		super(channels);
-
+    public ExperimentDetailsVariables() {
         availableSampleParameters = convert(obsFactory.getSwitchableObservable(new CompressedCharWaveformChannel(),
                 addPrefix("CS:BLOCKSERVER:SAMPLE_PARS")),
                 new ParametersConverter());

@@ -19,22 +19,26 @@
 
 package uk.ac.stfc.isis.ibex.synoptic.internal.tests;
 
-import static org.junit.Assert.*;
-import static org.mockito.Matchers.*;
-import static org.mockito.Mockito.*;
+import static org.junit.Assert.assertNotNull;
+import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
-import java.util.*;
+import java.util.Collection;
 
-import org.junit.*;
+import org.junit.Before;
+import org.junit.Test;
 
-import uk.ac.stfc.isis.ibex.epics.conversion.*;
-import uk.ac.stfc.isis.ibex.epics.observing.*;
-import uk.ac.stfc.isis.ibex.epics.writing.*;
-import uk.ac.stfc.isis.ibex.instrument.*;
-import uk.ac.stfc.isis.ibex.instrument.channels.*;
-import uk.ac.stfc.isis.ibex.instrument.pv.*;
-import uk.ac.stfc.isis.ibex.synoptic.*;
-import uk.ac.stfc.isis.ibex.synoptic.internal.*;
+import uk.ac.stfc.isis.ibex.epics.conversion.Converter;
+import uk.ac.stfc.isis.ibex.epics.observing.ClosableCachingObservable;
+import uk.ac.stfc.isis.ibex.epics.observing.InitialiseOnSubscribeObservable;
+import uk.ac.stfc.isis.ibex.epics.writing.SameTypeWritable;
+import uk.ac.stfc.isis.ibex.epics.writing.Writable;
+import uk.ac.stfc.isis.ibex.instrument.Channels;
+import uk.ac.stfc.isis.ibex.instrument.channels.ChannelType;
+import uk.ac.stfc.isis.ibex.instrument.pv.PVType;
+import uk.ac.stfc.isis.ibex.synoptic.SynopticInfo;
+import uk.ac.stfc.isis.ibex.synoptic.internal.Variables;
 
 /**
  * This class is responsible for testing instrument.Variables 
@@ -55,17 +59,20 @@ public class VariablesTest {
 	@Before
 	public void set_up(){
 		// Arrange
-		ClosableCachingObservable mockCloseableCachingObservable = mock(ClosableCachingObservable.class);
-		
+        ClosableCachingObservable mockCloseableCachingObservable = mock(ClosableCachingObservable.class);
+
         SameTypeWritable mockClosableWritable = mock(SameTypeWritable.class);
-		
-		Channels mockChannels = mock(Channels.class);
-		when(mockChannels.getReader(any(ChannelType.class), any(String.class))).thenReturn(mockCloseableCachingObservable);
-		when(mockChannels.getWriter(any(ChannelType.class), any(String.class))).thenReturn(mockClosableWritable);
-		when(mockChannels.getReader(any(ChannelType.class), any(String.class), any(PVType.class))).thenReturn(mockCloseableCachingObservable);
-		when(mockChannels.getWriter(any(ChannelType.class), any(String.class), any(PVType.class))).thenReturn(mockClosableWritable);
-		
-		variables = new Variables(mockChannels);
+
+        Channels mockChannels = mock(Channels.class);
+        when(mockChannels.getReader(any(ChannelType.class), any(String.class)))
+                .thenReturn(mockCloseableCachingObservable);
+        when(mockChannels.getWriter(any(ChannelType.class), any(String.class))).thenReturn(mockClosableWritable);
+        when(mockChannels.getReader(any(ChannelType.class), any(String.class), any(PVType.class)))
+                .thenReturn(mockCloseableCachingObservable);
+        when(mockChannels.getWriter(any(ChannelType.class), any(String.class), any(PVType.class)))
+                .thenReturn(mockClosableWritable);
+
+        variables = new Variables();
 	}
 
 	/**

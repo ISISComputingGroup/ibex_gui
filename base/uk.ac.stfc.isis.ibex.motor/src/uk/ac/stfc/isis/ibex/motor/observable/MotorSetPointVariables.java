@@ -26,7 +26,6 @@ import uk.ac.stfc.isis.ibex.epics.pv.PVAddress;
 import uk.ac.stfc.isis.ibex.epics.switching.ObservableFactory;
 import uk.ac.stfc.isis.ibex.epics.switching.WritableFactory;
 import uk.ac.stfc.isis.ibex.epics.writing.Writable;
-import uk.ac.stfc.isis.ibex.instrument.Channels;
 import uk.ac.stfc.isis.ibex.instrument.InstrumentVariables;
 import uk.ac.stfc.isis.ibex.instrument.channels.DoubleChannel;
 
@@ -45,10 +44,7 @@ public class MotorSetPointVariables extends InstrumentVariables {
 	public final InitialiseOnSubscribeObservable<Boolean> canHome;
 	public final Writable<Double> homeSetter;
 	
-    public MotorSetPointVariables(PVAddress motorAddress, Channels channels, ObservableFactory obsFactory,
-            WritableFactory writeFactory) {
-		super(channels);
-		
+    public MotorSetPointVariables(PVAddress motorAddress, ObservableFactory obsFactory, WritableFactory writeFactory) {
         value = obsFactory.getSwitchableObservable(new DoubleChannel(), motorAddress.endWithField("RBV"));
 		
 		String setPointAddress = motorAddress.endWith("SP");

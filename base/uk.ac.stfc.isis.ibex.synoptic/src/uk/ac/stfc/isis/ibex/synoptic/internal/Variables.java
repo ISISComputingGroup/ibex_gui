@@ -29,7 +29,6 @@ import uk.ac.stfc.isis.ibex.epics.switching.OnInstrumentSwitch;
 import uk.ac.stfc.isis.ibex.epics.switching.WritableFactory;
 import uk.ac.stfc.isis.ibex.epics.writing.ConvertingWritable;
 import uk.ac.stfc.isis.ibex.epics.writing.Writable;
-import uk.ac.stfc.isis.ibex.instrument.Channels;
 import uk.ac.stfc.isis.ibex.instrument.Instrument;
 import uk.ac.stfc.isis.ibex.instrument.InstrumentVariables;
 import uk.ac.stfc.isis.ibex.instrument.channels.CompressedCharWaveformChannel;
@@ -84,10 +83,6 @@ public class Variables extends InstrumentVariables {
 	private String getFullPV(String synopticPV) {
 		return SYNOPTIC_ADDRESS + synopticPV + GET_SYNOPTIC;
 	}	
-	
-	public Variables(Channels channels) {
-		super(channels);
-	}
 	
 	private Converter<Collection<String>, String> namesToString() {
 		return Convert.toArray(new String[0]).apply(new JsonSerialisingConverter<String[]>(String[].class));

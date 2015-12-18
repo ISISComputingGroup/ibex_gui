@@ -23,7 +23,6 @@ import uk.ac.stfc.isis.ibex.epics.pv.PVAddress;
 import uk.ac.stfc.isis.ibex.epics.switching.ObservableFactory;
 import uk.ac.stfc.isis.ibex.epics.switching.OnInstrumentSwitch;
 import uk.ac.stfc.isis.ibex.epics.switching.WritableFactory;
-import uk.ac.stfc.isis.ibex.instrument.Channels;
 import uk.ac.stfc.isis.ibex.instrument.InstrumentVariables;
 import uk.ac.stfc.isis.ibex.motor.observable.MotorSetPointVariables;
 
@@ -38,17 +37,15 @@ public class Variables extends InstrumentVariables {
 	public final MotorSetPointVariables z;
 	public final MotorSetPointVariables theta;
 	
-	public Variables(Channels channels) {
-		super(channels);
-
+    public Variables() {
         WritableFactory writeFactory = new WritableFactory(OnInstrumentSwitch.SWITCH);
         ObservableFactory obsFactory = new ObservableFactory(OnInstrumentSwitch.SWITCH);
 
-        rUpper = new MotorSetPointVariables(GONIO.append("RUPPER"), channels, obsFactory, writeFactory);
-        rLower = new MotorSetPointVariables(GONIO.append("RLOWER"), channels, obsFactory, writeFactory);
-        cx = new MotorSetPointVariables(GONIO.append("CX"), channels, obsFactory, writeFactory);
-        cy = new MotorSetPointVariables(GONIO.append("CY"), channels, obsFactory, writeFactory);
-        z = new MotorSetPointVariables(GONIO.append("Z"), channels, obsFactory, writeFactory);
-        theta = new MotorSetPointVariables(GONIO.append("THETA"), channels, obsFactory, writeFactory);
+        rUpper = new MotorSetPointVariables(GONIO.append("RUPPER"), obsFactory, writeFactory);
+        rLower = new MotorSetPointVariables(GONIO.append("RLOWER"), obsFactory, writeFactory);
+        cx = new MotorSetPointVariables(GONIO.append("CX"), obsFactory, writeFactory);
+        cy = new MotorSetPointVariables(GONIO.append("CY"), obsFactory, writeFactory);
+        z = new MotorSetPointVariables(GONIO.append("Z"), obsFactory, writeFactory);
+        theta = new MotorSetPointVariables(GONIO.append("THETA"), obsFactory, writeFactory);
 	}
 }
