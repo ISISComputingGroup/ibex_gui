@@ -30,7 +30,7 @@ import org.eclipse.ui.part.ViewPart;
 import org.eclipse.wb.swt.SWTResourceManager;
 
 import uk.ac.stfc.isis.ibex.banner.Banner;
-import uk.ac.stfc.isis.ibex.instrument.Instrument;
+import uk.ac.stfc.isis.ibex.instrument.baton.Baton;
 import uk.ac.stfc.isis.ibex.ui.banner.controls.ControlModel;
 import uk.ac.stfc.isis.ibex.ui.banner.indicators.IndicatorModel;
 import uk.ac.stfc.isis.ibex.ui.banner.models.BatonUserModel;
@@ -50,9 +50,9 @@ public class BannerView extends ViewPart implements ISizeProvider {
 	public static final int FIXED_HEIGHT = 35;
 
 	private final Banner banner = Banner.getInstance();
-	private final Instrument instrument = Instrument.getInstance();
+    private final Baton baton = Baton.getInstance();
 	
-	private final IndicatorModel batonUserModel = new BatonUserModel(instrument.baton());
+    private final IndicatorModel batonUserModel = new BatonUserModel(Baton.getInstance().baton());
 	private final IndicatorModel bumpStopModel = new BumpStopModel(banner.observables());
 	private final IndicatorModel inMotionModel = new InMotionModel(banner.observables());
 	private final ControlModel motionModel = new MotionControlModel(banner.observables());
@@ -63,7 +63,8 @@ public class BannerView extends ViewPart implements ISizeProvider {
 	private Control motionControl;
 	private Label spacer;
 	
-	public void createPartControl(Composite parent) {
+	@Override
+    public void createPartControl(Composite parent) {
 		GridLayout gl_parent = new GridLayout(5, false);
 		gl_parent.marginRight = 2;
 		gl_parent.horizontalSpacing = 8;

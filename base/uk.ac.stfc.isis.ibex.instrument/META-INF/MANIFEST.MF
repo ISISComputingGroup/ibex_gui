@@ -14,7 +14,6 @@ Require-Bundle: org.eclipse.osgi,
  org.csstudio.utility.pvmanager
 Bundle-ActivationPolicy: lazy
 Export-Package: uk.ac.stfc.isis.ibex.instrument,
- uk.ac.stfc.isis.ibex.instrument.baton,
  uk.ac.stfc.isis.ibex.instrument.channels,
  uk.ac.stfc.isis.ibex.instrument.internal,
  uk.ac.stfc.isis.ibex.instrument.pv

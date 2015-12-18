@@ -15,7 +15,7 @@
    <license url="http://www.example.com/license">
       [Enter License Description here.]
    </license>
-
+   
    <plugin
          id="org.python.pydev"
          download-size="0"
@@ -47,12 +47,6 @@
          version="0.0.0"/>
 
    <plugin
-         id="org.python.pydev.jython"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"/>
-
-   <plugin
          id="org.python.pydev.parser"
          download-size="0"
          install-size="0"
@@ -79,6 +73,25 @@
 
    <plugin
          id="org.eclipse.ui.views.properties.tabbed"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.python.pydev.refactoring"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"/>
+
+   <plugin
+         id="org.python.pydev.jython"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"/>
+
+   <plugin
+         id="org.python.jython"
          download-size="0"
          install-size="0"
          version="0.0.0"
