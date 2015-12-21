@@ -409,7 +409,7 @@
          unpack="false"/>
 
    <plugin
-         id="uk.ac.stfc.isis.ibex.ui.instrument"
+         id="uk.ac.stfc.isis.ibex.ui.mainmenu"
          download-size="0"
          install-size="0"
          version="0.0.0"

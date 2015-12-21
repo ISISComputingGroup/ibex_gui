@@ -12,10 +12,10 @@
    <extension
          point="org.eclipse.ui.menus">
       <menuContribution
-            locationURI="menu:org.eclipse.ui.main.menu">
+            locationURI="menu:org.eclipse.ui.main.menu?after=runcontrolMenu">
          <menu
-               id="helpConsole"
-               label="Console">
+               id="helpMenu"
+               label="Help">
             <command
                   commandId="uk.ac.stfc.isis.ibex.ui.rcp.logger.logger"
                   id="uk.ac.stfc.isis.ibex.ui.rcp.logger"

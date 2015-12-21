@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.commands">
+      <command
+            defaultHandler="uk.ac.stfc.isis.ibex.ui.mainmenu.instrument.InstrumentHandler"
+            id="uk.ac.stfc.isis.ibex.ui.mainmenu.instrument.InstrumentHandler"
+            name="Select an instrument">
+      </command>
+      <command
+            defaultHandler="uk.ac.stfc.isis.ibex.ui.mainmenu.PerspectiveHandler"
+            id="uk.ac.stfc.isis.ibex.ui.mainmenu.PerspectiveHandler"
+            name="Restore default perspective">
+      </command>
+      <command
+            defaultHandler="uk.ac.stfc.isis.ibex.ui.mainmenu.ExitHandler"
+            id="uk.ac.stfc.isis.ibex.ui.mainmenu.ExitHandler"
+            name="Exit IBEX Client">
+      </command>
+   </extension>
+   <extension
+         point="org.eclipse.ui.menus">
+     <menuContribution
+        allPopups="false"
+        locationURI="menu:org.eclipse.ui.main.menu?after=additions">
+         <menu
+               id="instrumentMenu"
+               label="IBEX">
+            <command
+                  commandId="uk.ac.stfc.isis.ibex.ui.mainmenu.instrument.InstrumentHandler"
+                  id="uk.ac.stfc.isis.ibex.ui.mainmenu.instrument.instrumentHandler"
+                  label="Switch Instrument"
+                  style="push"
+                  tooltip="Switch the view to a different instrument.">
+            </command>
+            <command
+                  commandId="uk.ac.stfc.isis.ibex.ui.mainmenu.PerspectiveHandler"
+                  id="uk.ac.stfc.isis.ibex.ui.mainmenu.perspective.PerspectiveHandler"
+                  label="Restore Default View"
+                  style="push"
+                  tooltip="Swith the view back to the default.">
+            </command>
+            <command
+                  commandId="uk.ac.stfc.isis.ibex.ui.mainmenu.ExitHandler"
+                  id="uk.ac.stfc.isis.ibex.ui.mainmenu.ExitHandler"
+                  label="Exit IBEX Client"
+                  style="push"
+                  tooltip="Close the IBEX Client">
+            </command>
+         </menu>
+     </menuContribution>
+   </extension>    
+</plugin>

@@ -17,7 +17,7 @@
 * http://opensource.org/licenses/eclipse-1.0.php
 */
 
-package uk.ac.stfc.isis.ibex.ui.instrument;
+package uk.ac.stfc.isis.ibex.ui.mainmenu.instrument;
 
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
@@ -29,6 +29,7 @@ import org.eclipse.ui.PlatformUI;
 
 import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
 import uk.ac.stfc.isis.ibex.ui.alarm.Alarms;
+import uk.ac.stfc.isis.ibex.ui.mainmenu.MainMenuUI;
 import uk.ac.stfc.isis.ibex.ui.scripting.Consoles;
 import uk.ac.stfc.isis.ibex.ui.synoptic.Activator;
 
@@ -78,6 +79,6 @@ public class InstrumentHandler extends AbstractHandler {
     }
 
     private void setInstrument(InstrumentInfo selected) {
-        InstrumentUI.INSTRUMENT.setInstrument(selected);
+        MainMenuUI.INSTRUMENT.setInstrument(selected);
     }
 }

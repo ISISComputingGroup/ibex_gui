@@ -180,7 +180,7 @@
 		<module>../uk.ac.stfc.isis.ibex.ui.logger</module>
 		<module>../uk.ac.stfc.isis.ibex.ui.dae</module>
 		<module>../uk.ac.stfc.isis.ibex.ui.logplotter</module>
-		<module>../uk.ac.stfc.isis.ibex.ui.instrument</module>
+		<module>../uk.ac.stfc.isis.ibex.ui.mainmenu</module>
 		<module>../uk.ac.stfc.isis.ibex.ui.synoptic</module>
 		<module>../uk.ac.stfc.isis.ibex.ui.synoptic.editor</module>
 		<module>../uk.ac.stfc.isis.ibex.ui.motor</module>
