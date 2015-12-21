@@ -6,21 +6,8 @@
   <show_grid>true</show_grid>
   <auto_zoom_to_fit_all>false</auto_zoom_to_fit_all>
   <scripts>
-    <path pathString="EmbeddedJs" checkConnect="true" sfe="false" seoe="false">
-      <scriptName>Change button labels to position names (from lookup file)</scriptName>
-      <scriptText><![CDATA[importPackage(Packages.org.csstudio.opibuilder.scriptUtil);
-display.getWidget("Running_Button_0").setPropertyValue("text",  PVUtil.getString(pvs[0]));
-display.getWidget("Loading_Button_0").setPropertyValue("text",  PVUtil.getString(pvs[1]));
-display.getWidget("Running_Button_1").setPropertyValue("text",  PVUtil.getString(pvs[2]));
-display.getWidget("Loading_Button_1").setPropertyValue("text",  PVUtil.getString(pvs[3]));
-display.getWidget("Running_Button_2").setPropertyValue("text",  PVUtil.getString(pvs[4]));
-display.getWidget("Loading_Button_2").setPropertyValue("text",  PVUtil.getString(pvs[5]));
-display.getWidget("Running_Button_3").setPropertyValue("text",  PVUtil.getString(pvs[6]));
-display.getWidget("Loading_Button_3").setPropertyValue("text",  PVUtil.getString(pvs[7]));
-display.getWidget("Running_Button_4").setPropertyValue("text",  PVUtil.getString(pvs[8]));
-display.getWidget("Loading_Button_4").setPropertyValue("text",  PVUtil.getString(pvs[9]));
-display.getWidget("Running_Button_5").setPropertyValue("text",  PVUtil.getString(pvs[10]));
-display.getWidget("Loading_Button_5").setPropertyValue("text",  PVUtil.getString(pvs[11]));]]></scriptText>
+    <path pathString="Scripts/ButtonDisplayLabel.js" checkConnect="false" sfe="false" seoe="false">
+      <pv trig="true">loc://useToInit</pv>
       <pv trig="true">$(P)LKUP:$(PH):_SPLITPOSNS.VALA</pv>
       <pv trig="true">$(P)LKUP:$(PH):_SPLITPOSNS.VALB</pv>
       <pv trig="true">$(P)LKUP:$(PH):_SPLITPOSNS.VALC</pv>
@@ -542,7 +529,17 @@ $(pv_value)</tooltip>
     <enabled>true</enabled>
     <wuid>194106b1:151a16241f2:-7c98</wuid>
     <pv_value />
-    <scripts />
+    <scripts>
+      <path pathString="EmbeddedJs" checkConnect="true" sfe="false" seoe="false">
+        <scriptName>InitialiseToRunningMode</scriptName>
+        <scriptText><![CDATA[importPackage(Packages.org.csstudio.opibuilder.scriptUtil);
+importPackage(Packages.org.csstudio.platform.data);
+display.getWidget("Mode Selector").setValue("Running");
+pvs[1].setValue("Running");]]></scriptText>
+        <pv trig="true">loc://useToInit</pv>
+        <pv trig="false">loc://Mode</pv>
+      </path>
+    </scripts>
     <border_alarm_sensitive>true</border_alarm_sensitive>
     <height>27</height>
     <border_width>1</border_width>
@@ -564,7 +561,7 @@ $(pv_value)</tooltip>
     </background_color>
     <width>163</width>
     <x>24</x>
-    <name>Combo</name>
+    <name>Mode Selector</name>
     <y>22</y>
     <foreground_color>
       <color red="0" green="0" blue="0" />

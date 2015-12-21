@@ -1,5 +1,9 @@
 importPackage(Packages.org.csstudio.opibuilder.scriptUtil);
 
+// PVs
+// pv[0] = loc://Mode, triggered
+// pv[1] = $(P)LKUP:$(PH):IPOSN, triggered
+
 var mode = PVUtil.getString(pvs[0]);
 var loc = PVUtil.getDouble(pvs[1]);
 
