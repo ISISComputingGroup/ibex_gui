@@ -9,9 +9,14 @@
             name="Select an instrument">
       </command>
       <command
-            defaultHandler="uk.ac.stfc.isis.ibex.ui.mainmenu.perspective.PerspectiveHandler"
-            id="uk.ac.stfc.isis.ibex.ui.mainmenu.perspective.PerspectiveHandler"
+            defaultHandler="uk.ac.stfc.isis.ibex.ui.mainmenu.PerspectiveHandler"
+            id="uk.ac.stfc.isis.ibex.ui.mainmenu.PerspectiveHandler"
             name="Restore default perspective">
+      </command>
+      <command
+            defaultHandler="uk.ac.stfc.isis.ibex.ui.mainmenu.ExitHandler"
+            id="uk.ac.stfc.isis.ibex.ui.mainmenu.ExitHandler"
+            name="Exit IBEX Client">
       </command>
    </extension>
    <extension
@@ -30,11 +35,18 @@
                   tooltip="Switch the view to a different instrument.">
             </command>
             <command
-                  commandId="uk.ac.stfc.isis.ibex.ui.mainmenu.perspective.PerspectiveHandler"
+                  commandId="uk.ac.stfc.isis.ibex.ui.mainmenu.PerspectiveHandler"
                   id="uk.ac.stfc.isis.ibex.ui.mainmenu.perspective.PerspectiveHandler"
                   label="Restore Default View"
                   style="push"
                   tooltip="Swith the view back to the default.">
+            </command>
+            <command
+                  commandId="uk.ac.stfc.isis.ibex.ui.mainmenu.ExitHandler"
+                  id="uk.ac.stfc.isis.ibex.ui.mainmenu.ExitHandler"
+                  label="Exit IBEX Client"
+                  style="push"
+                  tooltip="Close the IBEX Client">
             </command>
          </menu>
      </menuContribution>
