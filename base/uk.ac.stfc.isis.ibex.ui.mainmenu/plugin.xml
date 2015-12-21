@@ -4,8 +4,8 @@
    <extension
          point="org.eclipse.ui.commands">
       <command
-            defaultHandler="uk.ac.stfc.isis.ibex.ui.mainmenu.InstrumentHandler"
-            id="uk.ac.stfc.isis.ibex.ui.mainmenu.InstrumentHandler"
+            defaultHandler="uk.ac.stfc.isis.ibex.ui.mainmenu.instrument.InstrumentHandler"
+            id="uk.ac.stfc.isis.ibex.ui.mainmenu.instrument.InstrumentHandler"
             name="Select an instrument">
       </command>
       <command
@@ -23,8 +23,8 @@
                id="instrumentMenu"
                label="IBEX">
             <command
-                  commandId="uk.ac.stfc.isis.ibex.ui.mainmenu.InstrumentHandler"
-                  id="uk.ac.stfc.isis.ibex.ui.mainmenu.instrumentHandler"
+                  commandId="uk.ac.stfc.isis.ibex.ui.mainmenu.instrument.InstrumentHandler"
+                  id="uk.ac.stfc.isis.ibex.ui.mainmenu.instrument.instrumentHandler"
                   label="Switch Instrument"
                   style="push"
                   tooltip="Switch the view to a different instrument.">
