@@ -17,7 +17,7 @@
 * http://opensource.org/licenses/eclipse-1.0.php
 */
 
-package uk.ac.stfc.isis.ibex.ui.instrument;
+package uk.ac.stfc.isis.ibex.ui.mainmenu;
 
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.swt.SWT;
@@ -59,7 +59,7 @@ public class InstrumentDialog extends Dialog {
 	@Override
 	protected Control createDialogArea(Composite parent) {
 		Composite container = (Composite) super.createDialogArea(parent);
-		selector = new InstrumentSelectionPanel(parent, SWT.NONE, InstrumentUI.INSTRUMENT.instruments());
+		selector = new InstrumentSelectionPanel(parent, SWT.NONE, MainMenuUI.INSTRUMENT.instruments());
 		selector.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		
 		return container;

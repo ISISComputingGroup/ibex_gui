@@ -1,9 +1,9 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: InstrumentUI
-Bundle-SymbolicName: uk.ac.stfc.isis.ibex.ui.instrument;singleton:=true
+Bundle-SymbolicName: uk.ac.stfc.isis.ibex.ui.mainmenu;singleton:=true
 Bundle-Version: 1.0.0.qualifier
-Bundle-Activator: uk.ac.stfc.isis.ibex.ui.instrument.InstrumentUI
+Bundle-Activator: uk.ac.stfc.isis.ibex.ui.mainmenu.MainMenuUI
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.jface,
  org.eclipse.ui.ide,

@@ -17,23 +17,23 @@
 * http://opensource.org/licenses/eclipse-1.0.php
 */
 
-package uk.ac.stfc.isis.ibex.ui.instrument;
+package uk.ac.stfc.isis.ibex.ui.mainmenu;
 
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
 import uk.ac.stfc.isis.ibex.instrument.Instrument;
 
-public class InstrumentUI extends AbstractUIPlugin {
+public class MainMenuUI extends AbstractUIPlugin {
 
-	public static final String PLUGIN_ID = "uk.ac.stfc.isis.ibex.ui.instrument"; //$NON-NLS-1$
+    public static final String PLUGIN_ID = "uk.ac.stfc.isis.ibex.ui.mainmenu"; //$NON-NLS-1$
 
 	// The shared instance
-	private static InstrumentUI plugin;
+	private static MainMenuUI plugin;
 	
 	public static Instrument INSTRUMENT = Instrument.getInstance();
 	
-	public InstrumentUI() {
+	public MainMenuUI() {
 		
 	}
 	
@@ -41,7 +41,8 @@ public class InstrumentUI extends AbstractUIPlugin {
 	 * (non-Javadoc)
 	 * @see org.eclipse.ui.plugin.AbstractUIPlugin#start(org.osgi.framework.BundleContext)
 	 */
-	public void start(BundleContext context) throws Exception {
+	@Override
+    public void start(BundleContext context) throws Exception {
 		super.start(context);
 		plugin = this;
 	}
@@ -50,12 +51,13 @@ public class InstrumentUI extends AbstractUIPlugin {
 	 * (non-Javadoc)
 	 * @see org.eclipse.ui.plugin.AbstractUIPlugin#stop(org.osgi.framework.BundleContext)
 	 */
-	public void stop(BundleContext context) throws Exception {
+	@Override
+    public void stop(BundleContext context) throws Exception {
 		plugin = null;
 		super.stop(context);
 	}
 
-	public static InstrumentUI getDefault() {
+	public static MainMenuUI getDefault() {
 		return plugin;
 	}
 
