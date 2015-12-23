@@ -58,13 +58,13 @@ public class InstrumentHandler extends AbstractHandler {
         synoptic.closeAllOPIs();
 
         InstrumentInfo selected = dialog.selectedInstrument();
-        if (!consoles.anyActive()) {
-            setInstrument(selected);
-            return null;
-        }
 
-        if (shouldCloseAllConsoles(dialog)) {
-            consoles.closeAll();
+        if (consoles.anyActive()) {
+            if (shouldCloseAllConsoles(dialog)) {
+                consoles.closeAll();
+            } else {
+                return null;
+            }
         }
 
         setInstrument(selected);
