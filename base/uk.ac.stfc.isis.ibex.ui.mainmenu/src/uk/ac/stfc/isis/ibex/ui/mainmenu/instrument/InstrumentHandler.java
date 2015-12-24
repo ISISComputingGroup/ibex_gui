@@ -25,6 +25,7 @@ import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.window.Window;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.ui.IPerspectiveDescriptor;
 import org.eclipse.ui.PlatformUI;
 
 import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
@@ -52,13 +53,6 @@ public class InstrumentHandler extends AbstractHandler {
             return null;
         }
 
-        alarms.closeAll();
-
-        // Close any OPIs in the synoptic
-        synoptic.closeAllOPIs();
-
-        InstrumentInfo selected = dialog.selectedInstrument();
-
         if (consoles.anyActive()) {
             if (shouldCloseAllConsoles(dialog)) {
                 consoles.closeAll();
@@ -67,8 +61,30 @@ public class InstrumentHandler extends AbstractHandler {
             }
         }
 
+        alarms.closeAll();
+
+        // Close any OPIs in the synoptic
+        synoptic.closeAllOPIs();
+
+        InstrumentInfo selected = dialog.selectedInstrument();
         setInstrument(selected);
-        consoles.createConsole();
+        
+        IPerspectiveDescriptor activePerspective = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage()
+                .getPerspective();
+        
+        IPerspectiveDescriptor scriptingPerspective = PlatformUI.getWorkbench().getPerspectiveRegistry()
+                .findPerspectiveWithId(uk.ac.stfc.isis.ibex.ui.scripting.Perspective.ID);
+
+        // If the scripting perspective is currently open just create the
+        // console as the scripting perspective does when it is first created.
+        // Else close the perspective and let the scripting perspective sort
+        // itself out when it gets opened again.
+        if (activePerspective == scriptingPerspective) {
+            consoles.createConsole();
+        } else {
+            PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().closePerspective(scriptingPerspective,
+                    false, false);
+        }
 
         return null;
     }
