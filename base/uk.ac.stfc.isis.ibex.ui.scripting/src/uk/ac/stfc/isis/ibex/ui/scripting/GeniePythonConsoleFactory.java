@@ -39,7 +39,7 @@ public class GeniePythonConsoleFactory extends PydevConsoleFactory {
 	private final NullProgressMonitor monitor = new NullProgressMonitor();
 	
 	private final static String GENIE_INITIALISATION = 
-			"# Configuring GENIE PYTHON, please wait\n" 
+ "# Configuring genie_python, please wait\n"
 			+ "import sys;sys.executable=''\n" 
 			+ "from genie_python.genie_startup import * \n" 
 			+ "load_script(None, globals()) \n"
