@@ -24,7 +24,6 @@ import org.osgi.framework.BundleContext;
 
 import uk.ac.stfc.isis.ibex.goniometer.internal.ObservableGoniometerModel;
 import uk.ac.stfc.isis.ibex.goniometer.internal.Variables;
-import uk.ac.stfc.isis.ibex.instrument.Instrument;
 
 public class Goniometer extends Plugin {
 	private static Goniometer instance;
@@ -41,7 +40,7 @@ public class Goniometer extends Plugin {
 		super();
 		instance = this;
 		
-		variables = new Variables(Instrument.getInstance().channels());
+        variables = new Variables();
 		model = new ObservableGoniometerModel(variables);
 	}
     
@@ -57,7 +56,8 @@ public class Goniometer extends Plugin {
 	 * (non-Javadoc)
 	 * @see org.osgi.framework.BundleActivator#start(org.osgi.framework.BundleContext)
 	 */
-	public void start(BundleContext bundleContext) throws Exception {
+	@Override
+    public void start(BundleContext bundleContext) throws Exception {
 		Goniometer.context = bundleContext;
 	}
 
@@ -65,7 +65,8 @@ public class Goniometer extends Plugin {
 	 * (non-Javadoc)
 	 * @see org.osgi.framework.BundleActivator#stop(org.osgi.framework.BundleContext)
 	 */
-	public void stop(BundleContext bundleContext) throws Exception {
+	@Override
+    public void stop(BundleContext bundleContext) throws Exception {
 		Goniometer.context = null;
 		variables.close();
 	}

@@ -41,7 +41,6 @@ import org.osgi.service.prefs.Preferences;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 
-import uk.ac.stfc.isis.ibex.instrument.baton.BatonObservables;
 import uk.ac.stfc.isis.ibex.instrument.internal.LocalHostInstrumentInfo;
 import uk.ac.stfc.isis.ibex.instrument.pv.PVAddressBook;
 import uk.ac.stfc.isis.ibex.instrument.pv.PVChannels;
@@ -62,7 +61,7 @@ public class Instrument implements BundleActivator {
 	
 	private final PVAddressBook addresses;
 	private final PVChannels channels;
-	private final BatonObservables baton;
+
 
 	private List<InstrumentInfo> instruments = new ArrayList<>();
 	private SettableUpdatedValue<String> instrumentName = new SettableUpdatedValue<>();
@@ -84,9 +83,7 @@ public class Instrument implements BundleActivator {
 		instruments.add(new InstrumentInfo("IMAT"));
 		
         addresses = new PVAddressBook(getPvPrefix());
-		channels = new PVChannels(addresses);
-		baton = new BatonObservables(channels);
-		
+        channels = new PVChannels(addresses);
 		setInstrument(initialInstrument());	
 	}
     
@@ -110,10 +107,6 @@ public class Instrument implements BundleActivator {
 	
 	public Channels channels() {
 		 return channels;
-	}
-	
-	public BatonObservables baton() {
-		return baton;
 	}
 	
 	public Collection<InstrumentInfo> instruments() {

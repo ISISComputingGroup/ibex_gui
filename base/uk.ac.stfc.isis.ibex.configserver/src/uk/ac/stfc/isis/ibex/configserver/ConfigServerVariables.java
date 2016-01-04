@@ -42,7 +42,6 @@ import uk.ac.stfc.isis.ibex.epics.switching.OnInstrumentSwitch;
 import uk.ac.stfc.isis.ibex.epics.switching.WritableFactory;
 import uk.ac.stfc.isis.ibex.epics.writing.ConvertingWritable;
 import uk.ac.stfc.isis.ibex.epics.writing.Writable;
-import uk.ac.stfc.isis.ibex.instrument.Channels;
 import uk.ac.stfc.isis.ibex.instrument.Instrument;
 import uk.ac.stfc.isis.ibex.instrument.InstrumentVariables;
 import uk.ac.stfc.isis.ibex.instrument.channels.CompressedCharWaveformChannel;
@@ -89,8 +88,7 @@ public class ConfigServerVariables extends InstrumentVariables {
 	public final InitialiseOnSubscribeObservable<Collection<IocState>> iocStates;
 	public final InitialiseOnSubscribeObservable<Collection<String>> protectedIocs;
 	
-	public ConfigServerVariables(Channels channels, Converters converters) {
-		super(channels);
+    public ConfigServerVariables(Converters converters) {
 		this.converters = converters;
 		
 		serverStatus = convert(readCompressed(blockServerAddresses.serverStatus()), converters.toServerStatus());
