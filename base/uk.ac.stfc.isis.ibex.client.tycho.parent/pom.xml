@@ -217,5 +217,6 @@
 		<module>../uk.ac.stfc.isis.ibex.instrument.baton</module>
 		<module>../uk.ac.stfc.isis.ibex.feature.pydev</module>
 		<module>../uk.ac.stfc.isis.ibex.log.tests</module>
+		<module>../uk.ac.stfc.isis.ibex.experimentdetails.tests</module>
 	</modules>
 </project>
