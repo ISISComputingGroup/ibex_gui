@@ -17,13 +17,17 @@
 * http://opensource.org/licenses/eclipse-1.0.php
 */
 
-package uk.ac.stfc.isis.ibex.dae.periods.tests;
+package uk.ac.stfc.isis.ibex.dae.tests.periods;
 
-import static org.junit.Assert.*;
+import static org.hamcrest.CoreMatchers.*;
+import static org.junit.Assert.assertThat;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+
+import org.junit.Before;
+import org.junit.Test;
 
 import uk.ac.stfc.isis.ibex.dae.experimentsetup.periods.Period;
 import uk.ac.stfc.isis.ibex.dae.experimentsetup.periods.PeriodControlType;
@@ -32,19 +36,14 @@ import uk.ac.stfc.isis.ibex.dae.experimentsetup.periods.PeriodType;
 import uk.ac.stfc.isis.ibex.dae.experimentsetup.periods.XMLBackedPeriodSettings;
 import uk.ac.stfc.isis.ibex.dae.tests.FileReadingTest;
 
-import static org.hamcrest.CoreMatchers.*;
 
-import org.junit.Before;
-import org.junit.Test;
-
-
-public class Writing_xml_from_period_settings extends FileReadingTest {
+public class WritingXmlFromPeriodSettingsTest extends FileReadingTest {
 
 	private XMLBackedPeriodSettings periodSettings;
 	
 	@Override
 	protected URL fileLocation() throws MalformedURLException {
-		return getClass().getResource("/uk/ac/stfc/isis/ibex/dae/periods/tests/period_settings.xml");
+        return getClass().getResource("/uk/ac/stfc/isis/ibex/dae/tests/periods/period_settings.xml");
 	}
 	
 	@Before

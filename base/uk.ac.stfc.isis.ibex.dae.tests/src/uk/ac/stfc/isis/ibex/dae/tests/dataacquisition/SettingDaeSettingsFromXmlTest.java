@@ -17,28 +17,29 @@
 * http://opensource.org/licenses/eclipse-1.0.php
 */
 
-package uk.ac.stfc.isis.ibex.dae.dataacquisition.tests;
+package uk.ac.stfc.isis.ibex.dae.tests.dataacquisition;
 
 import static org.junit.Assert.*;
 
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import org.junit.Before;
+import org.junit.Test;
+
 import uk.ac.stfc.isis.ibex.dae.dataacquisition.BinaryChoice;
 import uk.ac.stfc.isis.ibex.dae.dataacquisition.DaeTimingSource;
 import uk.ac.stfc.isis.ibex.dae.dataacquisition.MuonCerenkovPulse;
 import uk.ac.stfc.isis.ibex.dae.dataacquisition.XmlBackedDaeSettings;
 import uk.ac.stfc.isis.ibex.dae.tests.FileReadingTest;
-import org.junit.Before;
-import org.junit.Test;
 
-public class Setting_dae_settings_from_xml extends FileReadingTest {
+public class SettingDaeSettingsFromXmlTest extends FileReadingTest {
 	
 	private XmlBackedDaeSettings daeSettings;
 	
 	@Override
 	protected URL fileLocation() throws MalformedURLException {
-		return getClass().getResource("/uk/ac/stfc/isis/ibex/dae/dataacquisition/tests/dae_settings.xml");
+        return getClass().getResource("/uk/ac/stfc/isis/ibex/dae/tests/dataacquisition/dae_settings.xml");
 	}
 	
 	@Before
