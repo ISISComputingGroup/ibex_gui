@@ -25,28 +25,28 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.google.common.base.Strings;
+
 import uk.ac.stfc.isis.ibex.synoptic.model.Component;
 import uk.ac.stfc.isis.ibex.synoptic.model.Synoptic;
 import uk.ac.stfc.isis.ibex.synoptic.model.Target;
 import uk.ac.stfc.isis.ibex.synoptic.model.targets.GroupedComponentTarget;
-
-import com.google.common.base.Strings;
 
 public class InstrumentNavigationGraph {
 
 	private final Map<Component, TargetNode> targetNodes = new HashMap<>();
 	private final Map<String, TargetNode> targets = new LinkedHashMap<>();
 	
-	private final TargetNode graph;
+    private TargetNode head;
 	
 	public InstrumentNavigationGraph(Synoptic instrument) {
 		createTargetNodes(instrument.components());
-		graph = buildGraph(instrument);
+        buildGraph(instrument);
 	}
 	
 	private TargetNode buildGraph(Synoptic instrument) {
 		Target top = topNode(instrument);
-		TargetNode head = addTargetNode(top);
+        head = addTargetNode(top);
 		
 		if (instrument.components().isEmpty()) {
 			return head;
@@ -61,7 +61,7 @@ public class InstrumentNavigationGraph {
 	}
 
 	public TargetNode head() {
-		return new TargetNode(graph);
+        return head;
 	}
 	
 	public Map<String, TargetNode> targets() {

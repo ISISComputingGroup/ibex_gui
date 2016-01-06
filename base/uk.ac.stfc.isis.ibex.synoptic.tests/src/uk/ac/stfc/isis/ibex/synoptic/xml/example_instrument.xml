@@ -37,6 +37,7 @@
 							</recordtype>
 						</pv>
 					</pvs>
+					<components/>
 				</component>
 			</components>
 		</component>
@@ -57,6 +58,7 @@
 					</recordtype>
 				</pv>
 			</pvs>
+			<components/>
 		</component>
 	</components>	
 </instrument>
