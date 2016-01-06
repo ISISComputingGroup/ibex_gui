@@ -17,7 +17,7 @@
  * http://opensource.org/licenses/eclipse-1.0.php
  */
 
-package uk.ac.stfc.isis.ibex.synoptic.model.desc.tests;
+package uk.ac.stfc.isis.ibex.synoptic.tests.model.desc;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;

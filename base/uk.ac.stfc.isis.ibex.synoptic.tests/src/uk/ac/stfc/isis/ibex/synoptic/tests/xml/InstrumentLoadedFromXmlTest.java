@@ -48,7 +48,7 @@ public class InstrumentLoadedFromXmlTest extends FileReadingTest {
 
 	@Override
 	protected URL fileLocation() throws MalformedURLException {
-        return getClass().getResource("/uk/ac/stfc/isis/ibex/synoptic/xml/example_instrument.xml");
+        return getClass().getResource("/uk/ac/stfc/isis/ibex/synoptic/tests/xml/example_instrument.xml");
 	}
 	
 	@Test
