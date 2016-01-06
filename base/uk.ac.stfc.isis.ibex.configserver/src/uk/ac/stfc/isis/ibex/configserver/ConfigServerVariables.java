@@ -34,6 +34,7 @@ import uk.ac.stfc.isis.ibex.configserver.editing.EditableIoc;
 import uk.ac.stfc.isis.ibex.configserver.internal.Converters;
 import uk.ac.stfc.isis.ibex.configserver.pv.BlockServerAddresses;
 import uk.ac.stfc.isis.ibex.epics.conversion.Converter;
+import uk.ac.stfc.isis.ibex.epics.observing.BaseObserver;
 import uk.ac.stfc.isis.ibex.epics.observing.ConvertingObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.InitialiseOnSubscribeObservable;
 import uk.ac.stfc.isis.ibex.epics.pv.PVAddress;
@@ -65,6 +66,8 @@ public class ConfigServerVariables extends InstrumentVariables {
 	
 	public final InitialiseOnSubscribeObservable<Collection<ConfigInfo>> configsInfo;
 	public final InitialiseOnSubscribeObservable<Collection<ConfigInfo>> componentsInfo;
+
+	public final InitialiseOnSubscribeObservable<BlockRules> blockRules;
 	
 	public final InitialiseOnSubscribeObservable<Collection<Component>> components;
 	public final InitialiseOnSubscribeObservable<Collection<EditableIoc>> iocs;
@@ -97,6 +100,27 @@ public class ConfigServerVariables extends InstrumentVariables {
 
 		configsInfo = convert(readCompressed(blockServerAddresses.configs()), converters.toConfigsInfo());
 		componentsInfo = convert(readCompressed(blockServerAddresses.components()), converters.toConfigsInfo());
+		
+		blockRules = convert(readCompressed(blockServerAddresses.blockRules()), converters.toBlockRules());
+		
+		
+		final BaseObserver<BlockRules> rulesObserver = new BaseObserver<BlockRules>() {
+			@Override
+			public void onValue(BlockRules value) {
+				System.out.println(value.toString());
+			}
+
+			@Override
+			public void onError(Exception e) {
+			}
+
+			@Override
+			public void onConnectionStatus(boolean isConnected) {
+				
+			}	
+		};	
+		
+		blockRules.addObserver(rulesObserver);
 		
 		components = convert(readCompressed(blockServerAddresses.components()), converters.toComponents());
 		iocs = convert(readCompressed(blockServerAddresses.iocs()), converters.toIocs());
