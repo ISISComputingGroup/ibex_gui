@@ -17,41 +17,38 @@
 * http://opensource.org/licenses/eclipse-1.0.php
 */
 
-package uk.ac.stfc.isis.ibex.synoptic.navigation;
+package uk.ac.stfc.isis.ibex.synoptic.tests.navigation;
 
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
+import static org.hamcrest.core.IsNot.not;
+import static org.hamcrest.core.IsNull.nullValue;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import uk.ac.stfc.isis.ibex.synoptic.model.Component;
 import uk.ac.stfc.isis.ibex.synoptic.model.Synoptic;
+import uk.ac.stfc.isis.ibex.synoptic.navigation.InstrumentNavigationGraph;
 
-public class InstrumentWithMultipleComponentsTest {
+public class InstrumentWithSingleComponentTest {
 	
 	private InstrumentNavigationGraph graph;
-	private Component firstComponent = new ChildlessComponent("first");
-	private Component secondComponent = new ChildlessComponent("second");	
 	
 	@Before
 	public void setup() {
-        Synoptic instrument = new InstrumentWithComponents(firstComponent, secondComponent);
+        Synoptic instrument = new InstrumentWithComponents(new ChildlessComponent("comonent"));
 		graph = new InstrumentNavigationGraph(instrument);
-	}	
-	
-	@Test
-	public void first_is_connected_to_second() {
-		TargetNode first = graph.head().next();
-		assertThat(first.next().item(), is(secondComponent.target()));
-	}
-
-	@Test
-	public void second_is_connected_to_first() {
-		TargetNode second = graph.head().next().next();
-		assertThat(second.previous().item(), is(firstComponent.target()));
 	}
 	
+	@Test
+	public void head_node_has_next() {
+		assertThat(graph.head().next(), not(nullValue()));
+	}
+	
+    @Test
+    public void next_node_parent_is_head() {
+        assertThat(graph.head().next().up(), is(graph.head()));
+    }
 	
 }

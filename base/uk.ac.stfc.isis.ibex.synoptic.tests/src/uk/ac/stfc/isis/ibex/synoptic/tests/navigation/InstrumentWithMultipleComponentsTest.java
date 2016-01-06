@@ -17,7 +17,8 @@
 * http://opensource.org/licenses/eclipse-1.0.php
 */
 
-package uk.ac.stfc.isis.ibex.synoptic.navigation;
+package uk.ac.stfc.isis.ibex.synoptic.tests.navigation;
+
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
@@ -27,30 +28,32 @@ import org.junit.Test;
 
 import uk.ac.stfc.isis.ibex.synoptic.model.Component;
 import uk.ac.stfc.isis.ibex.synoptic.model.Synoptic;
+import uk.ac.stfc.isis.ibex.synoptic.navigation.InstrumentNavigationGraph;
+import uk.ac.stfc.isis.ibex.synoptic.navigation.TargetNode;
 
-public class GroupedComponentsTest {
+public class InstrumentWithMultipleComponentsTest {
 	
 	private InstrumentNavigationGraph graph;
-
-	private Component secondSubComponent = new ChildlessComponent("secondSub");	
-	private Component firstSubComponent = new ChildlessComponent("firstSub");	
-	private Component firstComponent = new ParentComponent("first", firstSubComponent, secondSubComponent);
+	private Component firstComponent = new ChildlessComponent("first");
+	private Component secondComponent = new ChildlessComponent("second");	
 	
 	@Before
 	public void setup() {
-        Synoptic instrument = new InstrumentWithComponents(firstComponent);
+        Synoptic instrument = new InstrumentWithComponents(firstComponent, secondComponent);
 		graph = new InstrumentNavigationGraph(instrument);
 	}	
 	
 	@Test
-	public void group_subcomponents_can_drill_down() {
-		TargetNode sub = graph.head().next().down();
-		assertThat(sub.item(), is(firstSubComponent.target()));
+	public void first_is_connected_to_second() {
+		TargetNode first = graph.head().next();
+		assertThat(first.next().item(), is(secondComponent.target()));
+	}
+
+	@Test
+	public void second_is_connected_to_first() {
+		TargetNode second = graph.head().next().next();
+		assertThat(second.previous().item(), is(firstComponent.target()));
 	}
 	
-	@Test
-	public void subcomponents_are_connected() {
-		TargetNode first = graph.head().next().down();
-		assertThat(first.next().item(), is(secondSubComponent.target()));
-	}
+	
 }

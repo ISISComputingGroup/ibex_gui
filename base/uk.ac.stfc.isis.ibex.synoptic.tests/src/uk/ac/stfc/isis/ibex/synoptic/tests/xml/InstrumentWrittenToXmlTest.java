@@ -17,7 +17,7 @@
 * http://opensource.org/licenses/eclipse-1.0.php
 */
 
-package uk.ac.stfc.isis.ibex.synoptic.xml;
+package uk.ac.stfc.isis.ibex.synoptic.tests.xml;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
@@ -32,6 +32,7 @@ import org.junit.Test;
 import org.xml.sax.SAXException;
 
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.SynopticDescription;
+import uk.ac.stfc.isis.ibex.synoptic.xml.XMLUtil;
 
 public class InstrumentWrittenToXmlTest extends FileReadingTest {
 

@@ -17,7 +17,7 @@
 * http://opensource.org/licenses/eclipse-1.0.php
 */
 
-package uk.ac.stfc.isis.ibex.synoptic.xml;
+package uk.ac.stfc.isis.ibex.synoptic.tests.xml;
 
 import java.io.BufferedReader;
 import java.io.IOException;

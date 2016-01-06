@@ -17,45 +17,27 @@
 * http://opensource.org/licenses/eclipse-1.0.php
 */
 
-package uk.ac.stfc.isis.ibex.synoptic.navigation;
+package uk.ac.stfc.isis.ibex.synoptic.tests.navigation;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Set;
 
 import uk.ac.stfc.isis.ibex.synoptic.model.Component;
-import uk.ac.stfc.isis.ibex.synoptic.model.ComponentProperty;
-import uk.ac.stfc.isis.ibex.synoptic.model.ComponentType;
-import uk.ac.stfc.isis.ibex.synoptic.model.Target;
-import uk.ac.stfc.isis.ibex.synoptic.model.targets.GroupedComponentTarget;
+import uk.ac.stfc.isis.ibex.synoptic.model.Synoptic;
+import uk.ac.stfc.isis.ibex.synoptic.model.desc.SynopticDescription;
 
-public class ParentComponent implements Component {
+public class InstrumentWithComponents implements Synoptic {
 
-	private final String name;
-	private final List<Component> components = new ArrayList<>();
-	private final GroupedComponentTarget target;
+	private List<Component> components = new ArrayList<>();
 	
-	public ParentComponent(String name, Component...components) {
-		this.name = name;
+	public InstrumentWithComponents(Component component, Component... components) {
+		this.components.add(component);
 		this.components.addAll(Arrays.asList(components));
-		target = new GroupedComponentTarget(name, this.components);
 	}
 
 	@Override
 	public String name() {
-		return name;
-	}
-
-	@Override
-	public ComponentType type() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Set<ComponentProperty> properties() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -63,21 +45,15 @@ public class ParentComponent implements Component {
 	public List<? extends Component> components() {
 		return components;
 	}
-
+	
 	@Override
-	public Target target() {
-		return target;
-	}
-
-	@Override
-	public void setTarget(Target target) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public Component copy() {
+    public SynopticDescription getDescription() {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+    @Override
+    public Boolean showBeam() {
+        return null;
+    }
 }

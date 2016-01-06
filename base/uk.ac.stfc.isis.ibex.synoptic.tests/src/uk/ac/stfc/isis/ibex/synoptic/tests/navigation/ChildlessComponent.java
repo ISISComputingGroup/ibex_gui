@@ -17,43 +17,63 @@
 * http://opensource.org/licenses/eclipse-1.0.php
 */
 
-package uk.ac.stfc.isis.ibex.synoptic.navigation;
+package uk.ac.stfc.isis.ibex.synoptic.tests.navigation;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 
 import uk.ac.stfc.isis.ibex.synoptic.model.Component;
-import uk.ac.stfc.isis.ibex.synoptic.model.Synoptic;
-import uk.ac.stfc.isis.ibex.synoptic.model.desc.SynopticDescription;
+import uk.ac.stfc.isis.ibex.synoptic.model.ComponentProperty;
+import uk.ac.stfc.isis.ibex.synoptic.model.ComponentType;
+import uk.ac.stfc.isis.ibex.synoptic.model.Target;
+import uk.ac.stfc.isis.ibex.synoptic.model.targets.GroupedComponentTarget;
 
-public class InstrumentWithComponents implements Synoptic {
+public class ChildlessComponent implements Component {
 
-	private List<Component> components = new ArrayList<>();
+	private String name;
+	private GroupedComponentTarget target;
 	
-	public InstrumentWithComponents(Component component, Component... components) {
-		this.components.add(component);
-		this.components.addAll(Arrays.asList(components));
+	public ChildlessComponent(String name) {
+		this.name = name;
+		target = new GroupedComponentTarget(name, new ArrayList<Component>());
 	}
 
 	@Override
 	public String name() {
+		return name;
+	}
+
+	@Override
+	public ComponentType type() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Set<ComponentProperty> properties() {
+		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public List<? extends Component> components() {
-		return components;
+		return new ArrayList<Component>();
 	}
-	
+
 	@Override
-    public SynopticDescription getDescription() {
+	public Target target() {
+		return target;
+	}
+
+	@Override
+	public void setTarget(Target target) {
+		// TODO Auto-generated method stub	
+	}
+
+	@Override
+	public Component copy() {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
-    @Override
-    public Boolean showBeam() {
-        return null;
-    }
 }

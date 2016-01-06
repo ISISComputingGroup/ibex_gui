@@ -17,37 +17,35 @@
 * http://opensource.org/licenses/eclipse-1.0.php
 */
 
-package uk.ac.stfc.isis.ibex.synoptic.navigation;
+package uk.ac.stfc.isis.ibex.synoptic.tests.navigation;
 
+import java.util.ArrayList;
+import java.util.List;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.core.Is.is;
-import static org.hamcrest.core.IsNot.not;
-import static org.hamcrest.core.IsNull.nullValue;
-
-import org.junit.Before;
-import org.junit.Test;
-
+import uk.ac.stfc.isis.ibex.synoptic.model.Component;
 import uk.ac.stfc.isis.ibex.synoptic.model.Synoptic;
+import uk.ac.stfc.isis.ibex.synoptic.model.desc.SynopticDescription;
 
-public class InstrumentWithSingleComponentTest {
-	
-	private InstrumentNavigationGraph graph;
-	
-	@Before
-	public void setup() {
-        Synoptic instrument = new InstrumentWithComponents(new ChildlessComponent("comonent"));
-		graph = new InstrumentNavigationGraph(instrument);
+public class ComponentlessInstrument implements Synoptic {
+
+	@Override
+	public String name() {
+		return "Empty";
 	}
-	
-	@Test
-	public void head_node_has_next() {
-		assertThat(graph.head().next(), not(nullValue()));
+
+	@Override
+	public List<? extends Component> components() {
+		return new ArrayList<>();
 	}
-	
-    @Test
-    public void next_node_parent_is_head() {
-        assertThat(graph.head().next().up(), is(graph.head()));
+
+	@Override
+    public SynopticDescription getDescription() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+    @Override
+    public Boolean showBeam() {
+        return null;
     }
-	
 }
