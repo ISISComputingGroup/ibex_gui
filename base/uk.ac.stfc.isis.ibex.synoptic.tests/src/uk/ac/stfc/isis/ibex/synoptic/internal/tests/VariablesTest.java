@@ -21,8 +21,7 @@ package uk.ac.stfc.isis.ibex.synoptic.internal.tests;
 
 import static org.junit.Assert.assertNotNull;
 import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 import java.util.Collection;
 
@@ -30,11 +29,12 @@ import org.junit.Before;
 import org.junit.Test;
 
 import uk.ac.stfc.isis.ibex.epics.conversion.Converter;
-import uk.ac.stfc.isis.ibex.epics.observing.ClosableCachingObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.InitialiseOnSubscribeObservable;
+import uk.ac.stfc.isis.ibex.epics.switching.ObservableFactory;
+import uk.ac.stfc.isis.ibex.epics.switching.SwitchableInitialiseOnSubscribeObservable;
+import uk.ac.stfc.isis.ibex.epics.switching.WritableFactory;
 import uk.ac.stfc.isis.ibex.epics.writing.SameTypeWritable;
 import uk.ac.stfc.isis.ibex.epics.writing.Writable;
-import uk.ac.stfc.isis.ibex.instrument.Channels;
 import uk.ac.stfc.isis.ibex.instrument.channels.ChannelType;
 import uk.ac.stfc.isis.ibex.instrument.pv.PVType;
 import uk.ac.stfc.isis.ibex.synoptic.SynopticInfo;
@@ -59,20 +59,20 @@ public class VariablesTest {
 	@Before
 	public void set_up(){
 		// Arrange
-        ClosableCachingObservable mockCloseableCachingObservable = mock(ClosableCachingObservable.class);
+        SwitchableInitialiseOnSubscribeObservable switchableObservable = mock(
+                SwitchableInitialiseOnSubscribeObservable.class);
 
         SameTypeWritable mockClosableWritable = mock(SameTypeWritable.class);
 
-        Channels mockChannels = mock(Channels.class);
-        when(mockChannels.getReader(any(ChannelType.class), any(String.class)))
-                .thenReturn(mockCloseableCachingObservable);
-        when(mockChannels.getWriter(any(ChannelType.class), any(String.class))).thenReturn(mockClosableWritable);
-        when(mockChannels.getReader(any(ChannelType.class), any(String.class), any(PVType.class)))
-                .thenReturn(mockCloseableCachingObservable);
-        when(mockChannels.getWriter(any(ChannelType.class), any(String.class), any(PVType.class)))
+        WritableFactory writableFactory = mock(WritableFactory.class);
+        when(writableFactory.getSwitchableWritable(any(ChannelType.class), any(String.class)))
                 .thenReturn(mockClosableWritable);
 
-        variables = new Variables();
+        ObservableFactory obsFactory = mock(ObservableFactory.class);
+        when(obsFactory.getSwitchableObservable(any(ChannelType.class), any(String.class)))
+                .thenReturn(switchableObservable);
+
+        variables = new Variables(writableFactory, obsFactory, "PVPrefix");
 	}
 
 	/**
