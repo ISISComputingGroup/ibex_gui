@@ -18,6 +18,7 @@
 */
 
 package uk.ac.stfc.isis.ibex.model.tests;
+
 import static org.junit.Assert.*;
 
 import org.junit.Before;
@@ -26,7 +27,7 @@ import org.junit.Test;
 import uk.ac.stfc.isis.ibex.model.SettableUpdatedValue;
 import uk.ac.stfc.isis.ibex.model.UpdatedValues;
 
-public class Updated_values {
+public class UpdatedValuesTest {
 
 	private SettableUpdatedValue<String> first;
 	private SettableUpdatedValue<String> second;
