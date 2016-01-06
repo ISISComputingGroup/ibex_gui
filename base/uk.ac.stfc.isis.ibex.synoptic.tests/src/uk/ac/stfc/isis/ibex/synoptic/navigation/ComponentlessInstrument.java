@@ -17,16 +17,16 @@
 * http://opensource.org/licenses/eclipse-1.0.php
 */
 
-package uk.ac.stfc.isis.ibex.synoptic.test.navigation;
+package uk.ac.stfc.isis.ibex.synoptic.navigation;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import uk.ac.stfc.isis.ibex.synoptic.model.Component;
-import uk.ac.stfc.isis.ibex.synoptic.model.Instrument;
-import uk.ac.stfc.isis.ibex.synoptic.model.desc.InstrumentDescription;
+import uk.ac.stfc.isis.ibex.synoptic.model.Synoptic;
+import uk.ac.stfc.isis.ibex.synoptic.model.desc.SynopticDescription;
 
-public class ComponentlessInstrument implements Instrument {
+public class ComponentlessInstrument implements Synoptic {
 
 	@Override
 	public String name() {
@@ -39,14 +39,13 @@ public class ComponentlessInstrument implements Instrument {
 	}
 
 	@Override
-	public void close() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public InstrumentDescription getDescription() {
+    public SynopticDescription getDescription() {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+    @Override
+    public Boolean showBeam() {
+        return null;
+    }
 }

@@ -17,42 +17,40 @@
 * http://opensource.org/licenses/eclipse-1.0.php
 */
 
-package uk.ac.stfc.isis.ibex.synoptic.test.navigation;
+package uk.ac.stfc.isis.ibex.synoptic.navigation;
 
-
-import static org.hamcrest.core.Is.*;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.core.Is.is;
 
-import uk.ac.stfc.isis.ibex.synoptic.model.Component;
-import uk.ac.stfc.isis.ibex.synoptic.model.Instrument;
-import uk.ac.stfc.isis.ibex.synoptic.navigation.InstrumentNavigationGraph;
-import uk.ac.stfc.isis.ibex.synoptic.navigation.TargetNode;
 import org.junit.Before;
 import org.junit.Test;
 
-public class Instrument_with_multiple_components {
+import uk.ac.stfc.isis.ibex.synoptic.model.Component;
+import uk.ac.stfc.isis.ibex.synoptic.model.Synoptic;
+
+public class GroupedComponentsTest {
 	
 	private InstrumentNavigationGraph graph;
-	private Component firstComponent = new ChildlessComponent("first");
-	private Component secondComponent = new ChildlessComponent("second");	
+
+	private Component secondSubComponent = new ChildlessComponent("secondSub");	
+	private Component firstSubComponent = new ChildlessComponent("firstSub");	
+	private Component firstComponent = new ParentComponent("first", firstSubComponent, secondSubComponent);
 	
 	@Before
 	public void setup() {
-		Instrument instrument = new InstrumentWithComponents(firstComponent, secondComponent);
+        Synoptic instrument = new InstrumentWithComponents(firstComponent);
 		graph = new InstrumentNavigationGraph(instrument);
 	}	
 	
 	@Test
-	public void first_is_connected_to_second() {
-		TargetNode first = graph.head().next();
-		assertThat(first.next().item(), is(secondComponent.target()));
+	public void group_subcomponents_can_drill_down() {
+		TargetNode sub = graph.head().next().down();
+		assertThat(sub.item(), is(firstSubComponent.target()));
 	}
-
+	
 	@Test
-	public void second_is_connected_to_first() {
-		TargetNode second = graph.head().next().next();
-		assertThat(second.previous().item(), is(firstComponent.target()));
+	public void subcomponents_are_connected() {
+		TargetNode first = graph.head().next().down();
+		assertThat(first.next().item(), is(secondSubComponent.target()));
 	}
-	
-	
 }

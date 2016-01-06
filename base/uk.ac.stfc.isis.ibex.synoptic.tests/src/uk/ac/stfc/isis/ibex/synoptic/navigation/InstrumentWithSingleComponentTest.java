@@ -17,41 +17,37 @@
 * http://opensource.org/licenses/eclipse-1.0.php
 */
 
-package uk.ac.stfc.isis.ibex.synoptic.test.navigation;
+package uk.ac.stfc.isis.ibex.synoptic.navigation;
 
-import static org.hamcrest.core.Is.*;
+
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.core.Is.is;
+import static org.hamcrest.core.IsNot.not;
+import static org.hamcrest.core.IsNull.nullValue;
 
-import uk.ac.stfc.isis.ibex.synoptic.model.Component;
-import uk.ac.stfc.isis.ibex.synoptic.model.Instrument;
-import uk.ac.stfc.isis.ibex.synoptic.navigation.InstrumentNavigationGraph;
-import uk.ac.stfc.isis.ibex.synoptic.navigation.TargetNode;
 import org.junit.Before;
 import org.junit.Test;
 
-public class Grouped_components {
+import uk.ac.stfc.isis.ibex.synoptic.model.Synoptic;
+
+public class InstrumentWithSingleComponentTest {
 	
 	private InstrumentNavigationGraph graph;
-
-	private Component secondSubComponent = new ChildlessComponent("secondSub");	
-	private Component firstSubComponent = new ChildlessComponent("firstSub");	
-	private Component firstComponent = new ParentComponent("first", firstSubComponent, secondSubComponent);
 	
 	@Before
 	public void setup() {
-		Instrument instrument = new InstrumentWithComponents(firstComponent);
+        Synoptic instrument = new InstrumentWithComponents(new ChildlessComponent("comonent"));
 		graph = new InstrumentNavigationGraph(instrument);
-	}	
-	
-	@Test
-	public void group_subcomponents_can_drill_down() {
-		TargetNode sub = graph.head().next().down();
-		assertThat(sub.item(), is(firstSubComponent.target()));
 	}
 	
 	@Test
-	public void subcomponents_are_connected() {
-		TargetNode first = graph.head().next().down();
-		assertThat(first.next().item(), is(secondSubComponent.target()));
+	public void head_node_has_next() {
+		assertThat(graph.head().next(), not(nullValue()));
 	}
+	
+    @Test
+    public void next_node_parent_is_head() {
+        assertThat(graph.head().next().up(), is(graph.head()));
+    }
+	
 }

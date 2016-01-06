@@ -17,29 +17,28 @@
 * http://opensource.org/licenses/eclipse-1.0.php
 */
 
-package uk.ac.stfc.isis.ibex.synoptic.test.xml;
+package uk.ac.stfc.isis.ibex.synoptic.xml;
 
-import static org.hamcrest.core.Is.*;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.hamcrest.core.Is.is;
+import static org.junit.Assert.*;
 
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import uk.ac.stfc.isis.ibex.synoptic.model.ComponentType;
-import uk.ac.stfc.isis.ibex.synoptic.model.desc.ComponentDescription;
-import uk.ac.stfc.isis.ibex.synoptic.model.desc.IO;
-import uk.ac.stfc.isis.ibex.synoptic.model.desc.InstrumentDescription;
-import uk.ac.stfc.isis.ibex.synoptic.model.desc.Property;
-import uk.ac.stfc.isis.ibex.synoptic.model.desc.TargetType;
-import uk.ac.stfc.isis.ibex.synoptic.model.desc.XMLUtil;
 import org.junit.Before;
 import org.junit.Test;
 
-public class Instrument_loaded_from_xml extends FileReadingTest {
+import uk.ac.stfc.isis.ibex.synoptic.model.ComponentType;
+import uk.ac.stfc.isis.ibex.synoptic.model.desc.ComponentDescription;
+import uk.ac.stfc.isis.ibex.synoptic.model.desc.IO;
+import uk.ac.stfc.isis.ibex.synoptic.model.desc.Property;
+import uk.ac.stfc.isis.ibex.synoptic.model.desc.SynopticDescription;
+import uk.ac.stfc.isis.ibex.synoptic.model.desc.TargetType;
 
-	private InstrumentDescription instrument; 
+public class InstrumentLoadedFromXmlTest extends FileReadingTest {
+
+    private SynopticDescription instrument;
 	
 	@Before
 	public void setUp() throws Exception {
@@ -48,7 +47,7 @@ public class Instrument_loaded_from_xml extends FileReadingTest {
 
 	@Override
 	protected URL fileLocation() throws MalformedURLException {
-		return getClass().getResource("/uk/ac/stfc/isis/ibex/synoptic/test/xml/example_instrument.xml");
+        return getClass().getResource("/uk/ac/stfc/isis/ibex/synoptic/xml/example_instrument.xml");
 	}
 	
 	@Test

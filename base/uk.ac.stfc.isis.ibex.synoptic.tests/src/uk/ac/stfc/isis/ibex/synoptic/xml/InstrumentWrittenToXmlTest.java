@@ -17,25 +17,25 @@
 * http://opensource.org/licenses/eclipse-1.0.php
 */
 
-package uk.ac.stfc.isis.ibex.synoptic.test.xml;
+package uk.ac.stfc.isis.ibex.synoptic.xml;
 
-import static org.hamcrest.core.Is.*;
-import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.core.Is.is;
+import static org.junit.Assert.assertThat;
 
 import java.net.MalformedURLException;
 import java.net.URL;
 
 import javax.xml.bind.JAXBException;
 
-import uk.ac.stfc.isis.ibex.synoptic.model.desc.InstrumentDescription;
-import uk.ac.stfc.isis.ibex.synoptic.model.desc.XMLUtil;
 import org.junit.Before;
 import org.junit.Test;
 import org.xml.sax.SAXException;
 
-public class Instrument_written_to_xml extends FileReadingTest {
+import uk.ac.stfc.isis.ibex.synoptic.model.desc.SynopticDescription;
 
-	private InstrumentDescription instrument; 
+public class InstrumentWrittenToXmlTest extends FileReadingTest {
+
+    private SynopticDescription instrument;
 	
 	@Before
 	public void setUp() throws Exception {
@@ -44,16 +44,16 @@ public class Instrument_written_to_xml extends FileReadingTest {
 
 	@Override
 	protected URL fileLocation() throws MalformedURLException {
-		return getClass().getResource("/uk/ac/stfc/isis/ibex/synoptic/test/xml/example_instrument.xml");
+        return getClass().getResource("/uk/ac/stfc/isis/ibex/synoptic/xml/example_instrument.xml");
 	}
 	
-	@Test
-	public void has_the_same_xml_content_when_unchanged() throws JAXBException, SAXException {
-		
-		String input = fileContent();
-		input = input.replace("\n", "").replace("\t", "");
-		
-		String output = XMLUtil.toXml(instrument);
-		assertThat(output, is(input));
-	}
+    @Test
+    public void has_the_same_xml_content_when_unchanged() throws JAXBException, SAXException {
+
+        String input = fileContent();
+        input = input.replace("\n", "").replace("\t", "");
+
+        String output = XMLUtil.toXml(instrument);
+        assertThat(output, is(input));
+    }
 }

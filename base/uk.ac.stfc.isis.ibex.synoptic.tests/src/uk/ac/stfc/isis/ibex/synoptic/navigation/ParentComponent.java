@@ -17,9 +17,10 @@
 * http://opensource.org/licenses/eclipse-1.0.php
 */
 
-package uk.ac.stfc.isis.ibex.synoptic.test.navigation;
+package uk.ac.stfc.isis.ibex.synoptic.navigation;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 
@@ -29,14 +30,16 @@ import uk.ac.stfc.isis.ibex.synoptic.model.ComponentType;
 import uk.ac.stfc.isis.ibex.synoptic.model.Target;
 import uk.ac.stfc.isis.ibex.synoptic.model.targets.GroupedComponentTarget;
 
-public class ChildlessComponent implements Component {
+public class ParentComponent implements Component {
 
-	private String name;
-	private GroupedComponentTarget target;
+	private final String name;
+	private final List<Component> components = new ArrayList<>();
+	private final GroupedComponentTarget target;
 	
-	public ChildlessComponent(String name) {
+	public ParentComponent(String name, Component...components) {
 		this.name = name;
-		target = new GroupedComponentTarget(name, new ArrayList<Component>());
+		this.components.addAll(Arrays.asList(components));
+		target = new GroupedComponentTarget(name, this.components);
 	}
 
 	@Override
@@ -58,7 +61,7 @@ public class ChildlessComponent implements Component {
 
 	@Override
 	public List<? extends Component> components() {
-		return new ArrayList<Component>();
+		return components;
 	}
 
 	@Override
@@ -68,7 +71,8 @@ public class ChildlessComponent implements Component {
 
 	@Override
 	public void setTarget(Target target) {
-		// TODO Auto-generated method stub	
+		// TODO Auto-generated method stub
+		
 	}
 
 	@Override
