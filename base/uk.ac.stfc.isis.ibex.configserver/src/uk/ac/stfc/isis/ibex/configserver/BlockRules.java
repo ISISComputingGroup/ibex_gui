@@ -25,10 +25,13 @@ import java.util.List;
 public class BlockRules {
 	
 	private String regex;
-	private List<String> forbiddenNames = new ArrayList<>();
+	private List<String> disallowed = new ArrayList<>();
 	
-	@Override
-	public String toString() {
-		return regex + forbiddenNames.get(0);
+	public List<String> getDisallowed() {
+		return disallowed;
+	}
+	
+	public String getRegex() {
+		return regex;
 	}
 }

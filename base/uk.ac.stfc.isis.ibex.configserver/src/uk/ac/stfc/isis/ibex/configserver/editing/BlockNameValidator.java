@@ -19,6 +19,10 @@
 
 package uk.ac.stfc.isis.ibex.configserver.editing;
 
+import java.util.List;
+
+import uk.ac.stfc.isis.ibex.configserver.BlockRules;
+import uk.ac.stfc.isis.ibex.configserver.Configurations;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Block;
 
 /**
@@ -33,6 +37,8 @@ public class BlockNameValidator {
 	public static final String EMPTY_NAME_MESSAGE = "Block name must not be empty";
 	public static final String INVALID_START_CHAR = "Name should start with a letter";
 	public static final String INVALID_CHARS_MESSAGE = "Block name should only contain letters, numbers and underscores";
+	public static final String FORBIDDEN_NAME_MESSAGE = "Block name cannot be ";
+	public static final String REGEX_FORBIDDEN_MESSAGE = "Block name must match the regex";
 	private static final String NO_ERROR = "";
 	
 	private final EditableConfiguration config;
@@ -62,6 +68,7 @@ public class BlockNameValidator {
 	public Boolean isValidName(String name) {
 		
 		boolean is_valid = false;
+		BlockRules block_rules = Configurations.getInstance().variables().blockRules.getValue();
 
 		if (name.equals("")) {
 			setErrorMessage(EMPTY_NAME_MESSAGE);	
@@ -71,6 +78,10 @@ public class BlockNameValidator {
 			setErrorMessage(INVALID_START_CHAR);
 		} else if (containsSpecialCharacters(name)) {
 			setErrorMessage(INVALID_CHARS_MESSAGE);
+		} else if ((block_rules != null) && (nameIsForbidden(name, block_rules))) {
+			setErrorMessage(FORBIDDEN_NAME_MESSAGE + getListAsString(block_rules.getDisallowed()));
+		} else if ((block_rules != null) && !(name.matches(block_rules.getRegex()))) {
+			setErrorMessage(REGEX_FORBIDDEN_MESSAGE + ": " + block_rules.getRegex());
 		} else {
 			is_valid = true;
 			setErrorMessage(NO_ERROR);
@@ -84,6 +95,26 @@ public class BlockNameValidator {
 	
 	public String getErrorMessage() {
 		return errorMessage;
+	}
+	
+	private boolean nameIsForbidden(String text, BlockRules blockRules) {
+		boolean is_valid = false;
+		for (String forbidden : blockRules.getDisallowed())
+			is_valid |= text.toLowerCase().equals(forbidden.toLowerCase());
+		return is_valid;
+	}
+	
+	private String getListAsString(List<String> list){
+		StringBuilder sb = new StringBuilder();		
+		for(int i = 0; i < list.size(); i++)
+		{
+			sb.append(list.get(i));
+			if(i < list.size() - 2)
+				sb.append(", ");
+			else if (i == list.size() - 2)
+				sb.append(" or ");
+		}
+		return sb.toString();
 	}
 	
 	private boolean nameIsDuplicated(String text) {
