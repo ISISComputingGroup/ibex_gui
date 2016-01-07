@@ -20,6 +20,7 @@
 package uk.ac.stfc.isis.ibex.ui.configserver.editing.blocks;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.FillLayout;
@@ -105,4 +106,9 @@ public class BlockRunControlPanel extends Composite {
         lowLimitText.setEnabled(editableState);
         highLimitText.setEnabled(editableState);
     }
+    
+	public void addRunControlModifyListener(ModifyListener modifyListener) {
+		lowLimitText.addModifyListener(modifyListener);
+		highLimitText.addModifyListener(modifyListener);
+	}
 }

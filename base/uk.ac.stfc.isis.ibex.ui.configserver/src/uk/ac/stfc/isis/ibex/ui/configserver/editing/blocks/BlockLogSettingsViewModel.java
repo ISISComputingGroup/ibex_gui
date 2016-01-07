@@ -19,9 +19,6 @@
 
 package uk.ac.stfc.isis.ibex.ui.configserver.editing.blocks;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-
 import uk.ac.stfc.isis.ibex.configserver.configuration.Block;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 
@@ -36,54 +33,48 @@ public class BlockLogSettingsViewModel extends ModelObject {
             + "Monitor: Log when the value changes by the absolute amount specified, this amount is in the same units as the block.";
 
     private final Block editingBlock;
+    
     private boolean enabled = true;
-    private String periodic;
+    private String comboText;
     private String labelText;
     private String textBoxText;
 
-    PropertyChangeListener textBoxListener = new PropertyChangeListener() {
-        @Override
-        public void propertyChange(PropertyChangeEvent evt) {
-            setTextBoxText(String.valueOf(evt.getNewValue()));
-        }
-    };
+    private boolean periodic;
+    private int rate;
+    private float deadband;
 
-    private void updatePeriodic(boolean periodic) {
-        editingBlock.removePropertyChangeListener(textBoxListener);
-        if (periodic) {
+    private void updatePeriodic(boolean periodic, boolean updateComboText) {
+    	this.periodic = periodic;
+    	if (periodic) {
             setLabelText(SCAN_LABEL);
-            setPeriodic(PERIODIC_STRING);
-            setTextBoxText(Integer.toString(editingBlock.getLogRate()));
-            editingBlock.addPropertyChangeListener("log_rate", textBoxListener);
+            setTextBoxText(Integer.toString(rate));
+            if (updateComboText)
+            	setComboText(PERIODIC_STRING);
         } else {
             setLabelText(DEADBAND_LABEL);
-            setPeriodic(MONITOR_STRING);
-            setTextBoxText(Float.toString(editingBlock.getLogDeadband()));
-            editingBlock.addPropertyChangeListener("log_deadband", textBoxListener);
+            setTextBoxText(Float.toString(deadband));
+            if (updateComboText)
+            	setComboText(MONITOR_STRING);
         }
     }
 
     public BlockLogSettingsViewModel(final Block editingBlock) {
-        this.editingBlock = editingBlock;
-
-        editingBlock.addPropertyChangeListener("log_periodic", new PropertyChangeListener() {
-            @Override
-            public void propertyChange(PropertyChangeEvent evt) {
-                updatePeriodic((boolean) evt.getNewValue());
-            }
-        });
-
-        if (editingBlock.getLogPeriodic() && editingBlock.getLogRate() == 0) {
+    	this.editingBlock = editingBlock;
+    	
+    	rate = editingBlock.getLogRate();
+    	deadband = editingBlock.getLogDeadband();
+    	
+        updatePeriodic(editingBlock.getLogPeriodic(), true);
+    	
+        if (periodic && rate == 0) {
             setEnabled(false);
         }
-
-        updatePeriodic(editingBlock.getLogPeriodic());
     }
 
     public void setEnabled(boolean enabled) {
         if (!enabled) {
-            updatePeriodic(true);
-            editingBlock.setLogRate(0);
+            rate = 0;
+            updatePeriodic(true, true);
         }
 
         firePropertyChange("enabled", this.enabled, this.enabled = enabled);
@@ -102,29 +93,38 @@ public class BlockLogSettingsViewModel extends ModelObject {
         return labelText;
     }
 
-    public void setPeriodic(String selection) {
+    public void setComboText(String selection) {
         if (selection.equals(PERIODIC_STRING)) {
-            editingBlock.setLogPeriodic(true);
+        	updatePeriodic(true, false);
         } else if (selection.equals(MONITOR_STRING)) {
-            editingBlock.setLogPeriodic(false);
+        	updatePeriodic(false, false);
         }
-        firePropertyChange("periodic", this.periodic, this.periodic = selection);
+        firePropertyChange("comboText", this.comboText, this.comboText = selection);
     }
-
-    public String getPeriodic() {
-        return periodic;
+    
+    public String getComboText() {
+    	return comboText;
     }
 
     public void setTextBoxText(String text) {
-        if (editingBlock.getLogPeriodic()) {
-            editingBlock.setLogRate(Integer.parseInt(text));
+        if (periodic) {
+            rate = Integer.parseInt(text);
         } else {
-            editingBlock.setLogDeadband(Float.parseFloat(text));
+            deadband = Float.parseFloat(text);
         }
         firePropertyChange("textBoxText", this.textBoxText, this.textBoxText = text);
     }
 
     public String getTextBoxText() {
         return textBoxText;
+    }
+    
+    public void updateBlock() {
+    	editingBlock.setLogPeriodic(periodic);
+    	if (periodic) {
+    		editingBlock.setLogRate(rate);
+    	} else {
+    		editingBlock.setLogDeadband(deadband);
+    	}
     }
 }
