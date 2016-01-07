@@ -46,7 +46,7 @@ import uk.ac.stfc.isis.ibex.synoptic.model.desc.SynopticDescription;
  *
  */
 public class Variables extends InstrumentVariables {
-    private final WritableFactory writeFactory = new WritableFactory(OnInstrumentSwitch.SWITCH);
+    private final WritableFactory writeFactory = new WritableFactory(OnInstrumentSwitch.CLOSE);
     private final ObservableFactory obsFactory = new ObservableFactory(OnInstrumentSwitch.CLOSE);
 	private static final String SYNOPTIC_ADDRESS = "CS:BLOCKSERVER:SYNOPTICS:";
 	private static final String GET_SYNOPTIC = ":GET";
@@ -71,7 +71,7 @@ public class Variables extends InstrumentVariables {
 	}	
 	
 	public InitialiseOnSubscribeObservable<SynopticDescription> getSynopticDescription(String synopticPV) {		
-		return convert(readCompressed(getFullPV(synopticPV)), new InstrumentDescriptionParser());
+		return convert(readCompressedClosing(getFullPV(synopticPV)), new InstrumentDescriptionParser());
 	}
 	
 	/**
@@ -89,7 +89,8 @@ public class Variables extends InstrumentVariables {
 	}
 	
 	private Writable<String> writeCompressed(String address) {
-        return writeFactory.getSwitchableWritable(new CompressedCharWaveformChannel(),
+		WritableFactory factory = new WritableFactory(OnInstrumentSwitch.SWITCH);
+        return factory.getSwitchableWritable(new CompressedCharWaveformChannel(),
                 Instrument.getInstance().getPvPrefix() + address);
 	}
 	
@@ -97,7 +98,14 @@ public class Variables extends InstrumentVariables {
 		return new ConvertingWritable<>(destination, converter);
 	}	
 	
+	// Some of the synoptic PVs are common to all instruments so should be switched
 	private InitialiseOnSubscribeObservable<String> readCompressed(String address) {
+		ObservableFactory factory = new ObservableFactory(OnInstrumentSwitch.SWITCH);
+        return factory.getSwitchableObservable(new CompressedCharWaveformChannel(),
+                Instrument.getInstance().getPvPrefix() + address);
+	}
+	
+	private InitialiseOnSubscribeObservable<String> readCompressedClosing(String address) {
         return obsFactory.getSwitchableObservable(new CompressedCharWaveformChannel(),
                 Instrument.getInstance().getPvPrefix() + address);
 	}	

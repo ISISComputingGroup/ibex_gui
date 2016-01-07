@@ -56,8 +56,11 @@ public class ConfigServerVariables extends InstrumentVariables {
 
 	private final BlockServerAddresses blockServerAddresses = new BlockServerAddresses();
 	private final Converters converters;
-    private ObservableFactory obsFactory = new ObservableFactory(OnInstrumentSwitch.SWITCH);
-    private final WritableFactory writeFactory = new WritableFactory(OnInstrumentSwitch.SWITCH);
+    
+	private ObservableFactory switchingObsFactory = new ObservableFactory(OnInstrumentSwitch.SWITCH);
+    private final WritableFactory switchingWriteFactory = new WritableFactory(OnInstrumentSwitch.SWITCH);
+    private ObservableFactory closingObsFactory = new ObservableFactory(OnInstrumentSwitch.CLOSE);
+    private final WritableFactory closingWriteFactory = new WritableFactory(OnInstrumentSwitch.CLOSE);    
 	
 	public final InitialiseOnSubscribeObservable<ServerStatus> serverStatus;
 	public final InitialiseOnSubscribeObservable<Configuration> currentConfig;
@@ -123,27 +126,27 @@ public class ConfigServerVariables extends InstrumentVariables {
 	}
 
 	public InitialiseOnSubscribeObservable<Configuration> config(String configName) {		
-		return convert(readCompressed(blockServerAddresses.config(getConfigPV(configName))), converters.toConfig());
+		return convert(readCompressedClosing(blockServerAddresses.config(getConfigPV(configName))), converters.toConfig());
 	}
 
 	public InitialiseOnSubscribeObservable<Configuration> component(String componentName) {
-		return convert(readCompressed(blockServerAddresses.component(getComponentPV(componentName))), converters.toConfig());
+		return convert(readCompressedClosing(blockServerAddresses.component(getComponentPV(componentName))), converters.toConfig());
 	}
 
 	public InitialiseOnSubscribeObservable<String> iocDescription(String iocName) {
-        return obsFactory.getSwitchableObservable(new StringChannel(), addPrefix(iocDescriptionAddress(iocName)));
+        return closingObsFactory.getSwitchableObservable(new StringChannel(), addPrefix(iocDescriptionAddress(iocName)));
 	}
 
 	public Writable<String> iocDescriptionSetter(String iocName) {
-        return writeFactory.getSwitchableWritable(new StringChannel(), addPrefix(iocDescriptionAddress(iocName)));
+        return closingWriteFactory.getSwitchableWritable(new StringChannel(), addPrefix(iocDescriptionAddress(iocName)));
 	}
 	
 	public InitialiseOnSubscribeObservable<String> blockValue(String blockName) {
-        return obsFactory.getSwitchableObservable(new DefaultChannel(), addPrefix(blockServerAlias(blockName)));
+        return closingObsFactory.getSwitchableObservable(new DefaultChannel(), addPrefix(blockServerAlias(blockName)));
 	}
 	
 	public InitialiseOnSubscribeObservable<String> blockDescription(String blockName) {
-        return obsFactory.getSwitchableObservable(new StringChannel(),
+        return closingObsFactory.getSwitchableObservable(new StringChannel(),
                 addPrefix(blockServerAddresses.blockDescription(blockServerAlias(blockName))));
 	}
 	
@@ -166,11 +169,15 @@ public class ConfigServerVariables extends InstrumentVariables {
 	}
 
 	private InitialiseOnSubscribeObservable<String> readCompressed(String address) {
-        return obsFactory.getSwitchableObservable(new CompressedCharWaveformChannel(), addPrefix(address));
+        return switchingObsFactory.getSwitchableObservable(new CompressedCharWaveformChannel(), addPrefix(address));
+	}
+	
+	private InitialiseOnSubscribeObservable<String> readCompressedClosing(String address) {
+        return closingObsFactory.getSwitchableObservable(new CompressedCharWaveformChannel(), addPrefix(address));
 	}
 	
 	private Writable<String> writeCompressed(String address) {
-        return writeFactory.getSwitchableWritable(new CompressedCharWaveformChannel(), addPrefix(address));
+        return switchingWriteFactory.getSwitchableWritable(new CompressedCharWaveformChannel(), addPrefix(address));
 	}
 	
 	private String getConfigPV(final String configName) {
