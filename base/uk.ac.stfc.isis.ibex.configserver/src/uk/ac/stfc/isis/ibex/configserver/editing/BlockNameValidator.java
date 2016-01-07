@@ -35,10 +35,7 @@ public class BlockNameValidator {
 	
 	public static final String DUPLICATE_GROUP_MESSAGE = "Duplicate block name";
 	public static final String EMPTY_NAME_MESSAGE = "Block name must not be empty";
-	public static final String INVALID_START_CHAR = "Name should start with a letter";
-	public static final String INVALID_CHARS_MESSAGE = "Block name should only contain letters, numbers and underscores";
 	public static final String FORBIDDEN_NAME_MESSAGE = "Block name cannot be ";
-	public static final String REGEX_FORBIDDEN_MESSAGE = "Block name must match the regex";
 	private static final String NO_ERROR = "";
 	
 	private final EditableConfiguration config;
@@ -74,14 +71,10 @@ public class BlockNameValidator {
 			setErrorMessage(EMPTY_NAME_MESSAGE);	
 		} else if (nameIsDuplicated(name)) {
 			setErrorMessage(DUPLICATE_GROUP_MESSAGE + ": " + name);
-		} else if (!startsWithLetter(name)) {
-			setErrorMessage(INVALID_START_CHAR);
-		} else if (containsSpecialCharacters(name)) {
-			setErrorMessage(INVALID_CHARS_MESSAGE);
 		} else if ((block_rules != null) && (nameIsForbidden(name, block_rules))) {
 			setErrorMessage(FORBIDDEN_NAME_MESSAGE + getListAsString(block_rules.getDisallowed()));
 		} else if ((block_rules != null) && !(name.matches(block_rules.getRegex()))) {
-			setErrorMessage(REGEX_FORBIDDEN_MESSAGE + ": " + block_rules.getRegex());
+			setErrorMessage(block_rules.getRegexErrorMessage());
 		} else {
 			is_valid = true;
 			setErrorMessage(NO_ERROR);
@@ -129,12 +122,4 @@ public class BlockNameValidator {
 	private boolean isNotSelectedBlock(Block block) {
 		return !block.equals(selectedBlock);
 	}
-	
-	private Boolean startsWithLetter(String name) {
-		return name.substring(0, 1).matches("[a-zA-Z]");
-	}
-	
-    private Boolean containsSpecialCharacters(String name) {
-		return !name.matches("^[a-zA-Z0-9_]*$");
-    }
 }

@@ -25,6 +25,7 @@ import java.util.List;
 public class BlockRules {
 	
 	private String regex;
+	private String regex_message;
 	private List<String> disallowed = new ArrayList<>();
 	
 	public List<String> getDisallowed() {
@@ -34,4 +35,9 @@ public class BlockRules {
 	public String getRegex() {
 		return regex;
 	}
+	
+	public String getRegexErrorMessage() {
+		return regex_message;
+	}
+	
 }
