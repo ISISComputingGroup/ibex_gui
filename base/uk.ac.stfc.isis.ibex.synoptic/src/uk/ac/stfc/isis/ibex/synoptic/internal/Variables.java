@@ -46,8 +46,10 @@ import uk.ac.stfc.isis.ibex.synoptic.model.desc.SynopticDescription;
  *
  */
 public class Variables extends InstrumentVariables {
-    private final WritableFactory writeFactory;
-    private final ObservableFactory obsFactory;
+    private final WritableFactory closingWritableFactory;
+    private final WritableFactory switchingWritableFactory;
+    private final ObservableFactory closingObservableFactory;
+    private final ObservableFactory switchingObservableFactory;
 
     private final String pvPrefix;
 
@@ -76,7 +78,9 @@ public class Variables extends InstrumentVariables {
      * Default constructor.
      */
     public Variables() {
-        this(new WritableFactory(OnInstrumentSwitch.SWITCH), new ObservableFactory(OnInstrumentSwitch.CLOSE), null);
+        this(new WritableFactory(OnInstrumentSwitch.CLOSE), new WritableFactory(OnInstrumentSwitch.SWITCH),
+                new ObservableFactory(OnInstrumentSwitch.CLOSE), new ObservableFactory(OnInstrumentSwitch.SWITCH),
+                null);
     }
 
     /**
@@ -85,7 +89,7 @@ public class Variables extends InstrumentVariables {
      * 
      * @param writableFactory
      *            A writable factory to be used, could be a mock.
-     * @param obsFactory
+     * @param closingObservableFactory
      *            An observable factory to be used, could be a mock.
      * @param instrumentSwitchers
      *            An instrument switcher instance to use. Could be a mock for
@@ -94,9 +98,12 @@ public class Variables extends InstrumentVariables {
      *            A PV Prefix to be used in place of
      *            Instrument.getInstance().getPvPrefix().
      */
-    public Variables(WritableFactory writeFactory, ObservableFactory obsFactory, String pvPrefix) {
-        this.writeFactory = writeFactory;
-        this.obsFactory = obsFactory;
+    public Variables(WritableFactory closingWritableFactory, WritableFactory switchingWritableFactory,
+            ObservableFactory closingObservableFactory, ObservableFactory switchingObservableFactory, String pvPrefix) {
+        this.closingWritableFactory = closingWritableFactory;
+        this.switchingWritableFactory = switchingWritableFactory;
+        this.closingObservableFactory = closingObservableFactory;
+        this.switchingObservableFactory = switchingObservableFactory;
         
         this.pvPrefix = pvPrefix;
 
@@ -112,7 +119,7 @@ public class Variables extends InstrumentVariables {
 	}	
 	
 	public InitialiseOnSubscribeObservable<SynopticDescription> getSynopticDescription(String synopticPV) {		
-		return convert(readCompressed(getFullPV(synopticPV)), new InstrumentDescriptionParser());
+		return convert(readCompressedClosing(getFullPV(synopticPV)), new InstrumentDescriptionParser());
 	}
 	
 	private String getFullPV(String synopticPV) {
@@ -124,55 +131,65 @@ public class Variables extends InstrumentVariables {
 	}
 	
 	private Writable<String> writeCompressed(String address) {
-        return writeFactory.getSwitchableWritable(new CompressedCharWaveformChannel(), getPvPrefix() + address);
+        return switchingWritableFactory.getSwitchableWritable(new CompressedCharWaveformChannel(),
+                getPvPrefix() + address);
 	}
 	
 	private <T> Writable<T> convert(Writable<String> destination, Converter<T, String> converter) {
 		return new ConvertingWritable<>(destination, converter);
 	}	
 	
+	// Some of the synoptic PVs are common to all instruments so should be switched
 	private InitialiseOnSubscribeObservable<String> readCompressed(String address) {
-        return obsFactory.getSwitchableObservable(new CompressedCharWaveformChannel(), getPvPrefix() + address);
+        return switchingObservableFactory.getSwitchableObservable(new CompressedCharWaveformChannel(),
+                getPvPrefix() + address);
+	}
+	
+	private InitialiseOnSubscribeObservable<String> readCompressedClosing(String address) {
+        return closingObservableFactory.getSwitchableObservable(new CompressedCharWaveformChannel(),
+                getPvPrefix() + address);
 	}	
 	
 	// The following readers/writers are for PVs on the synoptic
 	
 	public InitialiseOnSubscribeObservable<String> defaultReader(String address) {
-        return obsFactory.getSwitchableObservable(new DefaultChannel(), getPvPrefix() + address);
+        return closingObservableFactory.getSwitchableObservable(new DefaultChannel(), getPvPrefix() + address);
 	}
 
     public InitialiseOnSubscribeObservable<String> defaultReader(String address, PVType type) {
         // If it is local append the PV prefix, otherwise don't
         if (type == PVType.LOCAL_PV) {
-            return obsFactory.getSwitchableObservable(new DefaultChannel(), getPvPrefix() + address);
+            return closingObservableFactory.getSwitchableObservable(new DefaultChannel(), getPvPrefix() + address);
         } else {
-            return obsFactory.getSwitchableObservable(new DefaultChannel(), address);
+            return closingObservableFactory.getSwitchableObservable(new DefaultChannel(), address);
         }
     }
 
 	public InitialiseOnSubscribeObservable<String> defaultReaderWithoutUnits(String address) {
-        return obsFactory.getSwitchableObservable(new DefaultChannelWithoutUnits(), getPvPrefix() + address);
+        return closingObservableFactory.getSwitchableObservable(new DefaultChannelWithoutUnits(),
+                getPvPrefix() + address);
 	}
 	
     public InitialiseOnSubscribeObservable<String> defaultReaderWithoutUnits(String address, PVType type) {
         // If it is local append the PV prefix, otherwise don't
         if (type == PVType.LOCAL_PV) {
-            return obsFactory.getSwitchableObservable(new DefaultChannelWithoutUnits(), getPvPrefix() + address);
+            return closingObservableFactory.getSwitchableObservable(new DefaultChannelWithoutUnits(),
+                    getPvPrefix() + address);
         } else {
-            return obsFactory.getSwitchableObservable(new DefaultChannelWithoutUnits(), address);
+            return closingObservableFactory.getSwitchableObservable(new DefaultChannelWithoutUnits(), address);
         }
     }
 
 	public Writable<String> defaultWritable(String address) {
-        return writeFactory.getSwitchableWritable(new StringChannel(), getPvPrefix() + address);
+        return closingWritableFactory.getSwitchableWritable(new StringChannel(), getPvPrefix() + address);
 	}
 	
 	public Writable<String> defaultWritable(String address, PVType type) {
         // If it is local append the PV prefix, otherwise don't
         if (type == PVType.LOCAL_PV) {
-            return writeFactory.getSwitchableWritable(new StringChannel(), getPvPrefix() + address);
+            return closingWritableFactory.getSwitchableWritable(new StringChannel(), getPvPrefix() + address);
         } else {
-            return writeFactory.getSwitchableWritable(new StringChannel(), address);
+            return closingWritableFactory.getSwitchableWritable(new StringChannel(), address);
         }
 	}
 	

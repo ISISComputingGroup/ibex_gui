@@ -64,15 +64,24 @@ public class VariablesTest {
 
         SameTypeWritable mockClosableWritable = mock(SameTypeWritable.class);
 
-        WritableFactory writableFactory = mock(WritableFactory.class);
-        when(writableFactory.getSwitchableWritable(any(ChannelType.class), any(String.class)))
+        WritableFactory closingWritableFactory = mock(WritableFactory.class);
+        when(closingWritableFactory.getSwitchableWritable(any(ChannelType.class), any(String.class)))
+                .thenReturn(mockClosableWritable);
+        
+        WritableFactory switchingWritableFactory = mock(WritableFactory.class);
+        when(switchingWritableFactory.getSwitchableWritable(any(ChannelType.class), any(String.class)))
                 .thenReturn(mockClosableWritable);
 
-        ObservableFactory obsFactory = mock(ObservableFactory.class);
-        when(obsFactory.getSwitchableObservable(any(ChannelType.class), any(String.class)))
+        ObservableFactory closingObservableFactory = mock(ObservableFactory.class);
+        when(closingObservableFactory.getSwitchableObservable(any(ChannelType.class), any(String.class)))
+                .thenReturn(switchableObservable);
+        
+        ObservableFactory switchingObservableFactory = mock(ObservableFactory.class);
+        when(switchingObservableFactory.getSwitchableObservable(any(ChannelType.class), any(String.class)))
                 .thenReturn(switchableObservable);
 
-        variables = new Variables(writableFactory, obsFactory, "PVPrefix");
+        variables = new Variables(closingWritableFactory, switchingWritableFactory, closingObservableFactory,
+                switchingObservableFactory, "PVPrefix");
 	}
 
 	/**

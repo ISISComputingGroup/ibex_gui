@@ -41,7 +41,7 @@ public class PVPrefix {
 	}
 
 	private String userPrefix(String machineName, String userName) {
-		return String.format(USER_FORMAT, machineName, userName);
+		return String.format(USER_FORMAT, machineName, userName.toUpperCase());
 	}
 
 	private String instrumentPrefix(String machineName) {
