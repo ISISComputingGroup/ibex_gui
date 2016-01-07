@@ -77,59 +77,6 @@ public class BlockNameValidatorTest {
 	}
 	
 	@Test
-	public void block_name_starting_with_lower_case_is_valid() {
-		// Assert
-		assertTrue(validator.isValidName("aBlock"));
-	}
-	
-	@Test
-	public void block_name_starting_with_a_capital_is_valid() {
-		// Assert
-		assertTrue(validator.isValidName("BlockName"));
-	}
-	
-	@Test
-	public void block_name_with_an_underscore_is_valid() {
-		// Assert
-		assertTrue(validator.isValidName("a_new_Block"));
-	}
-	
-	@Test
-	public void block_name_starting_with_a_number_is_invalid() {
-		// Assert
-		assertFalse(validator.isValidName("10_new_Blocks"));
-		assertEquals(validator.getErrorMessage(), BlockNameValidator.INVALID_START_CHAR);
-	}
-	
-	@Test
-	public void block_name_starting_with_an_underscore_is_invalid() {
-		// Assert
-		assertFalse(validator.isValidName("_new_Block"));
-		assertEquals(validator.getErrorMessage(), BlockNameValidator.INVALID_START_CHAR);
-	}
-	
-	@Test
-	public void block_name_with_explanation_mark_is_invalid() {
-		// Assert
-		assertFalse(validator.isValidName("new_Block!"));
-		assertEquals(validator.getErrorMessage(), BlockNameValidator.INVALID_CHARS_MESSAGE);
-	}
-	
-	@Test
-	public void block_name_with_hyphen_is_invalid() {
-		// Assert
-		assertFalse(validator.isValidName("new-Block"));
-		assertEquals(validator.getErrorMessage(), BlockNameValidator.INVALID_CHARS_MESSAGE);
-	}
-	
-	@Test
-	public void block_name_with_at_symbol_is_invalid() {
-		// Assert
-		assertFalse(validator.isValidName("new@Block"));
-		assertEquals(validator.getErrorMessage(), BlockNameValidator.INVALID_CHARS_MESSAGE);
-	}
-	
-	@Test
 	public void duplicated_block_name_is_invalid() {
 		// Arrange
 		addBlock(testEditableBlock);

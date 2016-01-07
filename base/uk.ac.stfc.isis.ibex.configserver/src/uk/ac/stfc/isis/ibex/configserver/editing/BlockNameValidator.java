@@ -63,10 +63,15 @@ public class BlockNameValidator {
 	 * @return True if the name is valid, else false with the error message set
 	 */
 	public Boolean isValidName(String name) {
-		
+		BlockRules block_rules;
 		boolean is_valid = false;
-		BlockRules block_rules = Configurations.getInstance().variables().blockRules.getValue();
-
+		
+		try {
+			block_rules = Configurations.getInstance().variables().blockRules.getValue();
+		} catch (Exception e) {
+			block_rules = null;
+		}
+		
 		if (name.equals("")) {
 			setErrorMessage(EMPTY_NAME_MESSAGE);	
 		} else if (nameIsDuplicated(name)) {
