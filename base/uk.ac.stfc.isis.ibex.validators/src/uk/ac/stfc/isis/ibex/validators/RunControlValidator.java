@@ -28,15 +28,15 @@ package uk.ac.stfc.isis.ibex.validators;
  */
 public class RunControlValidator {
 
-    private static String HIGH_LIMIT_FLOAT = "The high run control limit must be a decimal";
-    private static String HIGH_LIMIT_EMPTY = "The high run control limit must not be empty";
+    public static String HIGH_LIMIT_FLOAT = "The high run control limit must be a decimal";
+    public static String HIGH_LIMIT_EMPTY = "The high run control limit must not be empty";
     
-    private static String LOW_LIMIT_FLOAT = "The low run control limit must be a decimal";
-    private static String LOW_LIMIT_EMPTY = "The low run control limit must not be empty";
+    public static String LOW_LIMIT_FLOAT = "The low run control limit must be a decimal";
+    public static String LOW_LIMIT_EMPTY = "The low run control limit must not be empty";
     
-    private static String LOW_LIMIT_LESS = "The high run control limit must be greater than the low limit";
+    public static String LOW_LIMIT_LESS = "The high run control limit must be greater than the low limit";
 
-    private static String NO_ERROR = "";
+    public static String NO_ERROR = "";
     
     private String errorMessage;
 
@@ -48,6 +48,11 @@ public class RunControlValidator {
 		boolean is_valid = false;
 		float tmpLowLimit;
 		float tmpHighLimit;
+		
+		if (lowLimitText == null || highLimitText == null) {
+			setErrorMessage(NO_ERROR);
+			return false;
+		}
 		
 		try {
 			tmpLowLimit = Float.parseFloat(lowLimitText);
