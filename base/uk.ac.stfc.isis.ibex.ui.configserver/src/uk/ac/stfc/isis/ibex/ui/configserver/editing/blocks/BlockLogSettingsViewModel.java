@@ -20,9 +20,8 @@
 package uk.ac.stfc.isis.ibex.ui.configserver.editing.blocks;
 
 import uk.ac.stfc.isis.ibex.configserver.configuration.Block;
-import uk.ac.stfc.isis.ibex.model.ModelObject;
 
-public class BlockLogSettingsViewModel extends ModelObject {
+public class BlockLogSettingsViewModel extends ErrorMessageProvider {
     public static String PERIODIC_STRING = "Periodic Scan for Change";
     public static String MONITOR_STRING = "Monitor With Deadband";
 
@@ -32,17 +31,34 @@ public class BlockLogSettingsViewModel extends ModelObject {
     public static String COMBO_TOOLTIP = "Periodic: Log on change but no more often than the specified period.\n"
             + "Monitor: Log when the value changes by the absolute amount specified, this amount is in the same units as the block.";
 
+    private static String INT_ERROR = "Scan rate must be an integer number of seconds";
+    private static String FLOAT_ERROR = "Deadband must be a decimal number";
+    
     private final Block editingBlock;
     
     private boolean enabled = true;
     private String comboText;
     private String labelText;
+    
     private String textBoxText;
 
     private boolean periodic;
     private int rate;
     private float deadband;
 
+    public BlockLogSettingsViewModel(final Block editingBlock) {
+    	this.editingBlock = editingBlock;
+    	
+    	rate = editingBlock.getLogRate();
+    	deadband = editingBlock.getLogDeadband();
+    	
+        updatePeriodic(editingBlock.getLogPeriodic(), true);
+    	
+        if (periodic && rate == 0) {
+            setEnabled(false);
+        }
+    }
+    
     private void updatePeriodic(boolean periodic, boolean updateComboText) {
     	this.periodic = periodic;
     	if (periodic) {
@@ -55,19 +71,6 @@ public class BlockLogSettingsViewModel extends ModelObject {
             setTextBoxText(Float.toString(deadband));
             if (updateComboText)
             	setComboText(MONITOR_STRING);
-        }
-    }
-
-    public BlockLogSettingsViewModel(final Block editingBlock) {
-    	this.editingBlock = editingBlock;
-    	
-    	rate = editingBlock.getLogRate();
-    	deadband = editingBlock.getLogDeadband();
-    	
-        updatePeriodic(editingBlock.getLogPeriodic(), true);
-    	
-        if (periodic && rate == 0) {
-            setEnabled(false);
         }
     }
 
@@ -107,11 +110,24 @@ public class BlockLogSettingsViewModel extends ModelObject {
     }
 
     public void setTextBoxText(String text) {
-        if (periodic) {
-            rate = Integer.parseInt(text);
+    	if (text.isEmpty())
+    		text = "0";
+    	if (periodic) {
+    		try {
+    			rate = Integer.parseInt(text);
+    			setError(false, null);
+    		} catch (NumberFormatException e) {
+    			setError(true, INT_ERROR);
+    		}
         } else {
-            deadband = Float.parseFloat(text);
+        	try {
+		        deadband = Float.parseFloat(text);
+		        setError(false, null);
+			} catch (NumberFormatException e) {
+				setError(true, FLOAT_ERROR);
+			}
         }
+        
         firePropertyChange("textBoxText", this.textBoxText, this.textBoxText = text);
     }
 

@@ -1,5 +1,8 @@
 package uk.ac.stfc.isis.ibex.ui.configserver.editing.blocks;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.TitleAreaDialog;
 import org.eclipse.swt.SWT;
@@ -25,12 +28,26 @@ public class EditBlockDialog extends TitleAreaDialog {
 	EditableBlock block;
     RunControlServer runControl;
 	BlockDetailsPanel blockDetailsPanel;
+	
     BlockRunControlPanel blockRunControlPanel;
+    BlockRunControlViewModel blockRunControlViewModel;
     
     BlockLogSettingsPanel blockLogSettingsPanel;
     BlockLogSettingsViewModel blockLogSettingsViewModel;
 	
 	Button okButton;
+	
+	private PropertyChangeListener errorListener = new PropertyChangeListener() {
+			@Override
+			public void propertyChange(PropertyChangeEvent evt) {
+				ErrorMessage error = (ErrorMessage)evt.getNewValue();
+				if (error.isError())
+					setOkEnabled(false);
+				else
+					setOkEnabled(true);
+				setErrorMessage(error.getMessage());
+			}
+		};
 
     protected EditBlockDialog(Shell parentShell, EditableBlock block, EditableConfiguration config) {
 		super(parentShell);
@@ -38,7 +55,10 @@ public class EditBlockDialog extends TitleAreaDialog {
 		this.block = block;
 
 		blockLogSettingsViewModel = new BlockLogSettingsViewModel(block);
-
+		blockLogSettingsViewModel.addPropertyChangeListener("error", errorListener);
+		
+		blockRunControlViewModel = new BlockRunControlViewModel(block);
+		blockRunControlViewModel.addPropertyChangeListener("error", errorListener);
 	}
 	
     @Override
@@ -48,17 +68,9 @@ public class EditBlockDialog extends TitleAreaDialog {
         blockDetailsPanel = new BlockDetailsPanel(parent, SWT.NONE, block, config);
         blockDetailsPanel.setLayout(new GridLayout(1, false));
 
-        blockRunControlPanel = new BlockRunControlPanel(blockDetailsPanel, SWT.NONE, block);
+        blockRunControlPanel = new BlockRunControlPanel(blockDetailsPanel, SWT.NONE,
+        		blockRunControlViewModel);
         blockRunControlPanel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
-
-        blockRunControlPanel.addRunControlModifyListener(new ModifyListener() {
-            @Override
-            public void modifyText(ModifyEvent text) {
-            	float lowLimit = blockRunControlPanel.getLowLimit();
-            	float highLimit = blockRunControlPanel.getHighLimit();
-                checkRunControl(lowLimit, highLimit);
-            }
-        });
         
         blockLogSettingsPanel = new BlockLogSettingsPanel(blockDetailsPanel, SWT.NONE,
         		blockLogSettingsViewModel);
@@ -87,11 +99,8 @@ public class EditBlockDialog extends TitleAreaDialog {
 		block.setPV(blockDetailsPanel.getPV());
 		block.setIsLocal(blockDetailsPanel.getIsLocal());
 		block.setIsVisible(blockDetailsPanel.getIsVisible());
-		
-        block.setRCLowLimit(blockRunControlPanel.getLowLimit());
-        block.setRCHighLimit(blockRunControlPanel.getHighLimit());
-        block.setRCEnabled(blockRunControlPanel.getEnabledSetting());
 
+		blockRunControlViewModel.updateBlock();
         blockLogSettingsViewModel.updateBlock();
         
 		super.okPressed();
@@ -141,20 +150,6 @@ public class EditBlockDialog extends TitleAreaDialog {
             setOkEnabled(true);
         } else {
             setErrorMessage(addressValid.getErrorMessage());
-            setOkEnabled(false);
-        }
-    }
-    
-    private void checkRunControl(float lowLimit, float highLimit) {
-        setErrorMessage(null);
-        setMessage(null);
-
-        Boolean runControlIsValid = (lowLimit <= highLimit);
-
-        if (runControlIsValid) {
-            setOkEnabled(true);
-        } else {
-            setErrorMessage("Run Control low limit must be less than high limit");
             setOkEnabled(false);
         }
     }
