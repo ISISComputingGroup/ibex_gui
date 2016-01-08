@@ -22,7 +22,6 @@ package uk.ac.stfc.isis.ibex.configserver.editing;
 import java.util.List;
 
 import uk.ac.stfc.isis.ibex.configserver.BlockRules;
-import uk.ac.stfc.isis.ibex.configserver.Configurations;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Block;
 
 /**
@@ -62,15 +61,8 @@ public class BlockNameValidator {
 	 * @param name The proposed name
 	 * @return True if the name is valid, else false with the error message set
 	 */
-	public Boolean isValidName(String name) {
-		BlockRules block_rules;
+	public Boolean isValidName(String name, BlockRules block_rules) {
 		boolean is_valid = false;
-		
-		try {
-			block_rules = Configurations.getInstance().variables().blockRules.getValue();
-		} catch (Exception e) {
-			block_rules = null;
-		}
 		
 		if (name.equals("")) {
 			setErrorMessage(EMPTY_NAME_MESSAGE);	

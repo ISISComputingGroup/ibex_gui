@@ -13,6 +13,7 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
+import uk.ac.stfc.isis.ibex.configserver.Configurations;
 import uk.ac.stfc.isis.ibex.configserver.editing.BlockNameValidator;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableBlock;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
@@ -115,7 +116,7 @@ public class EditBlockDialog extends TitleAreaDialog {
 		setMessage(null);
 		
 		BlockNameValidator nameVal = new BlockNameValidator(config, block);
-		Boolean nameIsValid = nameVal.isValidName(name);
+		Boolean nameIsValid = nameVal.isValidName(name, Configurations.getInstance().variables().blockRules.getValue());
 				
 		if (nameIsValid) {
 			setOkEnabled(true);

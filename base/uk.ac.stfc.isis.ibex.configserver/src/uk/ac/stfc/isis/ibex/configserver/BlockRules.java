@@ -28,6 +28,12 @@ public class BlockRules {
 	private String regex_message;
 	private List<String> disallowed = new ArrayList<>();
 	
+	public BlockRules(String regex, String regex_message, List<String> disallowed) {
+		this.regex = regex;
+		this.regex_message = regex_message;
+		this.disallowed = disallowed;
+	}
+	
 	public List<String> getDisallowed() {
 		return disallowed;
 	}

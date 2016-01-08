@@ -26,10 +26,12 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import org.junit.Before;
 import org.junit.Test;
 
+import uk.ac.stfc.isis.ibex.configserver.BlockRules;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Block;
 import uk.ac.stfc.isis.ibex.configserver.editing.BlockNameValidator;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableBlock;
@@ -39,8 +41,14 @@ public class BlockNameValidatorTest {
 	
 	private static final String VALID_BLOCK_NAME = "valid_block_name";
 	
-	private Block testBlock;
 	
+	private static final String REGEX = "\\w*";
+	private static final String REGEX_MESSAGE = "REGEX FAILED";
+	private static final String DISALLOWED_NAME = "bad";
+	private BlockRules mockBlockRules = new BlockRules(REGEX, REGEX_MESSAGE, Arrays.asList(DISALLOWED_NAME));
+	
+	private Block testBlock;
+
 	private EditableBlock testEditableBlock;
 	
 	private ArrayList<EditableBlock> blockList;
@@ -72,8 +80,35 @@ public class BlockNameValidatorTest {
 	@Test
 	public void empty_block_name_is_invalid() {
 		// Assert
-		assertFalse(validator.isValidName(""));
+		assertFalse(validator.isValidName("", mockBlockRules));
 		assertEquals(validator.getErrorMessage(), BlockNameValidator.EMPTY_NAME_MESSAGE);
+	}
+	
+	@Test
+	public void forbidden_block_name_is_invalid() {
+		// Assert
+		assertFalse(validator.isValidName(DISALLOWED_NAME, mockBlockRules));
+		assertEquals(validator.getErrorMessage(), BlockNameValidator.FORBIDDEN_NAME_MESSAGE + DISALLOWED_NAME);
+	}
+	
+	@Test
+	public void forbidden_block_name_is_invalid_case_insensitive() {
+		// Assert
+		assertFalse(validator.isValidName(DISALLOWED_NAME.toUpperCase(), mockBlockRules));
+		assertEquals(validator.getErrorMessage(), BlockNameValidator.FORBIDDEN_NAME_MESSAGE + DISALLOWED_NAME);
+	}
+	
+	@Test
+	public void containing_forbidden_block_name_is_valid() {
+		// Assert
+		assertTrue(validator.isValidName("abad", mockBlockRules));
+	}
+	
+	@Test
+	public void forbidden_regex_is_invalid() {
+		// Assert
+		assertFalse(validator.isValidName("^&", mockBlockRules));
+		assertEquals(validator.getErrorMessage(), REGEX_MESSAGE);
 	}
 	
 	@Test
@@ -82,7 +117,7 @@ public class BlockNameValidatorTest {
 		addBlock(testEditableBlock);
 		
 		// Assert
-		assertFalse(validator.isValidName(VALID_BLOCK_NAME));
+		assertFalse(validator.isValidName(VALID_BLOCK_NAME, mockBlockRules));
 		assertEquals(validator.getErrorMessage(), BlockNameValidator.DUPLICATE_GROUP_MESSAGE + ": " + VALID_BLOCK_NAME);
 	}
 	
@@ -92,7 +127,7 @@ public class BlockNameValidatorTest {
 		addBlock(testEditableBlock);
 		
 		// Assert
-		assertTrue(validator.isValidName("other_name"));
+		assertTrue(validator.isValidName("other_name", mockBlockRules));
 	}
 	
 	@Test
@@ -104,17 +139,17 @@ public class BlockNameValidatorTest {
 	@Test
 	public void error_message_is_empty_on_success() {
 		// Act
-		assertTrue(validator.isValidName("aBlock"));
+		assertTrue(validator.isValidName("aBlock", mockBlockRules));
 		
 		// Assert
 		assertEquals(validator.getErrorMessage(), "");
 	}
 	
 	@Test
-	public void error_message_is_empty_on_success_after_previous_failutre() {	
+	public void error_message_is_empty_on_success_after_previous_failure() {	
 		// Act
-		validator.isValidName("_!");
-		validator.isValidName("aBlock");
+		validator.isValidName("", mockBlockRules);
+		validator.isValidName("aBlock", mockBlockRules);
 		
 		// Assert
 		assertEquals(validator.getErrorMessage(), "");
