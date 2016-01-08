@@ -20,6 +20,7 @@
 package uk.ac.stfc.isis.ibex.ui.configserver.editing.blocks;
 
 import uk.ac.stfc.isis.ibex.configserver.configuration.Block;
+import uk.ac.stfc.isis.ibex.validators.ErrorMessageProvider;
 
 public class BlockRunControlViewModel extends ErrorMessageProvider {
     private static String HIGH_LIMIT_FLOAT = "The high run control limit must be a decimal";

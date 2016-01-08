@@ -16,7 +16,7 @@
 * http://opensource.org/licenses/eclipse-1.0.php
 */
 
-package uk.ac.stfc.isis.ibex.ui.configserver.editing.blocks;
+package uk.ac.stfc.isis.ibex.validators;
 
 public class ErrorMessage {
 	private String message;

@@ -16,7 +16,7 @@
 * http://opensource.org/licenses/eclipse-1.0.php
 */
 
-package uk.ac.stfc.isis.ibex.ui.configserver.editing.blocks;
+package uk.ac.stfc.isis.ibex.validators;
 
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 
@@ -25,5 +25,9 @@ public abstract class ErrorMessageProvider extends ModelObject{
     
     protected void setError(boolean inError, String message) {
     	firePropertyChange("error", this.error, this.error = new ErrorMessage(inError, message));
+    }
+    
+    public ErrorMessage getError() {
+    	return error;
     }
 }

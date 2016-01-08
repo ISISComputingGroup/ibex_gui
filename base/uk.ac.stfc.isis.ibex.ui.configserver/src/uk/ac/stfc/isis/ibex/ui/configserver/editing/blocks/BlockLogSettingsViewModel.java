@@ -20,6 +20,7 @@
 package uk.ac.stfc.isis.ibex.ui.configserver.editing.blocks;
 
 import uk.ac.stfc.isis.ibex.configserver.configuration.Block;
+import uk.ac.stfc.isis.ibex.validators.ErrorMessageProvider;
 
 public class BlockLogSettingsViewModel extends ErrorMessageProvider {
     public static String PERIODIC_STRING = "Periodic Scan for Change";

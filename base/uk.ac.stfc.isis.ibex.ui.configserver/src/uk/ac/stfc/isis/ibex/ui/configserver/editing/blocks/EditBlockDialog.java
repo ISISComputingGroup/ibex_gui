@@ -2,6 +2,8 @@ package uk.ac.stfc.isis.ibex.ui.configserver.editing.blocks;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.TitleAreaDialog;
@@ -16,6 +18,8 @@ import org.eclipse.swt.widgets.Shell;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableBlock;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
 import uk.ac.stfc.isis.ibex.runcontrol.RunControlServer;
+import uk.ac.stfc.isis.ibex.validators.ErrorMessage;
+import uk.ac.stfc.isis.ibex.validators.ErrorMessageProvider;
 
 public class EditBlockDialog extends TitleAreaDialog {
 	
@@ -34,15 +38,22 @@ public class EditBlockDialog extends TitleAreaDialog {
 	
 	Button okButton;
 	
+	List<ErrorMessageProvider> viewModels = new ArrayList<>();
+	
 	private PropertyChangeListener errorListener = new PropertyChangeListener() {
 			@Override
 			public void propertyChange(PropertyChangeEvent evt) {
-				ErrorMessage error = (ErrorMessage)evt.getNewValue();
-				if (error.isError())
-					setOkEnabled(false);
-				else
-					setOkEnabled(true);
-				setErrorMessage(error.getMessage());
+				for (ErrorMessageProvider model : viewModels) {
+					ErrorMessage error = model.getError();
+					if (error.isError()) {
+						setErrorMessage(error.getMessage());
+						setOkEnabled(false);
+						return;
+					}
+				}
+				
+				setOkEnabled(true);
+				setErrorMessage("");
 			}
 		};
 
@@ -52,13 +63,18 @@ public class EditBlockDialog extends TitleAreaDialog {
 		this.block = block;
 
 		blockLogSettingsViewModel = new BlockLogSettingsViewModel(block);
-		blockLogSettingsViewModel.addPropertyChangeListener("error", errorListener);
+		viewModels.add(blockLogSettingsViewModel);
 		
 		blockRunControlViewModel = new BlockRunControlViewModel(block);
-		blockRunControlViewModel.addPropertyChangeListener("error", errorListener);
+		viewModels.add(blockRunControlViewModel);
 		
 		blockDetailsViewModel = new BlockDetailsViewModel(block, config);
-		blockDetailsViewModel.addPropertyChangeListener("error", errorListener);
+		viewModels.add(blockDetailsViewModel);
+		
+		for(ErrorMessageProvider provider : viewModels) {
+			provider.addPropertyChangeListener("error", errorListener);
+		}
+			
 	}
 	
     @Override

@@ -26,6 +26,7 @@ import uk.ac.stfc.isis.ibex.configserver.editing.BlockNameValidator;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableBlock;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
 import uk.ac.stfc.isis.ibex.ui.configserver.dialogs.PvSelectorDialog;
+import uk.ac.stfc.isis.ibex.validators.ErrorMessageProvider;
 import uk.ac.stfc.isis.ibex.validators.PvValidator;
 
 public class BlockDetailsViewModel extends ErrorMessageProvider {
@@ -66,8 +67,8 @@ public class BlockDetailsViewModel extends ErrorMessageProvider {
 	}
 
 	public void setName(String name) {
-		if (validate(name, pvAddress))
-				firePropertyChange("name", this.name, this.name = name);
+		validate(name, pvAddress);
+		firePropertyChange("name", this.name, this.name = name);
 	}
 
 	public String getPvAddress() {
@@ -75,8 +76,8 @@ public class BlockDetailsViewModel extends ErrorMessageProvider {
 	}
 
 	public void setPvAddress(String pvAddress) {
-		if (validate(name, pvAddress))
-			firePropertyChange("pvAddress", this.pvAddress, this.pvAddress = pvAddress);
+		validate(name, pvAddress);
+		firePropertyChange("pvAddress", this.pvAddress, this.pvAddress = pvAddress);
 	}
 
 	public boolean isVisible() {
@@ -109,19 +110,16 @@ public class BlockDetailsViewModel extends ErrorMessageProvider {
     	editingBlock.setIsVisible(visible);
     }
     
-    private boolean validate(String name, String pvAddress) {
+    private void validate(String name, String pvAddress) {
     	BlockNameValidator nameVal = new BlockNameValidator(config, editingBlock);
         PvValidator addressValid = new PvValidator();
-    	boolean is_valid = false;
     	
     	if (!(nameVal.isValidName(name))) {
     		setError(true, nameVal.getErrorMessage());
     	} else if (!(addressValid.validatePvAddress(pvAddress))) {
     		setError(true, addressValid.getErrorMessage());
     	} else {
-    		is_valid = true;
     		setError(false, null);
     	}
-    	return is_valid;
     }
 }
