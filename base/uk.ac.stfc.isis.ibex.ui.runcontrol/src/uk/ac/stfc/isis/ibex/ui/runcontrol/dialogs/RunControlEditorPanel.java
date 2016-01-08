@@ -112,7 +112,7 @@ public class RunControlEditorPanel extends Composite {
 	};
 
     public RunControlEditorPanel(Composite parent, int style, ConfigServer configServer,
-            RunControlServer runControlServer, RunControlViewModel viewModel) {
+            RunControlServer runControlServer, final RunControlViewModel viewModel) {
 		super(parent, style);
 		
 		this.configServer = configServer;

@@ -33,8 +33,8 @@ import uk.ac.stfc.isis.ibex.instrument.channels.StringChannel;
  *
  */
 public class RunControlVariables {
-    private final WritableFactory writeFactory = new WritableFactory(OnInstrumentSwitch.SWITCH);
-    private final ObservableFactory obsFactory = new ObservableFactory(OnInstrumentSwitch.SWITCH);
+    private final WritableFactory writeFactory = new WritableFactory(OnInstrumentSwitch.CLOSE);
+    private final ObservableFactory obsFactory = new ObservableFactory(OnInstrumentSwitch.CLOSE);
 	private final RunControlAddresses runControlAddresses = new RunControlAddresses();
 	
     public RunControlVariables() {
