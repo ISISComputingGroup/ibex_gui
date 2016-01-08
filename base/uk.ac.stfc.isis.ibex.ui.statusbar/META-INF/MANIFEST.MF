@@ -11,3 +11,4 @@ Bundle-ActivationPolicy: lazy
 Import-Package: org.eclipse.wb.swt,
  uk.ac.stfc.isis.ibex.epics.observing
 Export-Package: uk.ac.stfc.isis.ibex.ui.statusbar
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
