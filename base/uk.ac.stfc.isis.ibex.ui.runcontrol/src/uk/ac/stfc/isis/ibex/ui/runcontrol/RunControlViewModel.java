@@ -26,18 +26,25 @@ import uk.ac.stfc.isis.ibex.configserver.configuration.Block;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Configuration;
 import uk.ac.stfc.isis.ibex.epics.observing.InitialiseOnSubscribeObservable;
 import uk.ac.stfc.isis.ibex.epics.writing.Writer;
-import uk.ac.stfc.isis.ibex.model.ModelObject;
 import uk.ac.stfc.isis.ibex.runcontrol.RunControlServer;
+import uk.ac.stfc.isis.ibex.validators.ErrorMessageProvider;
+import uk.ac.stfc.isis.ibex.validators.RunControlValidator;
 
 /**
  * ViewModel for the run-control, allowing blocks to be obtained from the
  * configuration and run control server to be reset to configuraiton values.
  */
-public class RunControlViewModel extends ModelObject {
+public class RunControlViewModel extends ErrorMessageProvider {
 
     private InitialiseOnSubscribeObservable<Configuration> currentConfigObserver;
     private RunControlServer runControlServer;
 
+    private RunControlValidator runControlValidator = new RunControlValidator();
+    
+    private String txtHighLimit = "";
+    private String txtLowLimit = "";
+    private boolean sendEnabled;
+    
     public RunControlViewModel(final ConfigServer configServer, final RunControlServer runControlServer) {
         this.currentConfigObserver = configServer.currentConfig();
         this.runControlServer = runControlServer;
@@ -90,4 +97,40 @@ public class RunControlViewModel extends ModelObject {
         Writer<String> writer = runControlServer.blockRunControlEnabledSetter(configBlock.getName());
         writer.write(configBlock.getRCEnabled() ? "YES" : "NO");
     }
+    
+    public String getTxtLowLimit() {
+		return txtLowLimit;
+	}
+    
+	public void setTxtLowLimit(String txtLowLimit) {
+		boolean isValid = runControlValidator.isValid(txtLowLimit, txtHighLimit);
+		setSendEnabled(isValid);
+		setError(!(isValid), runControlValidator.getErrorMessage());
+		
+		firePropertyChange("txtLowLimit", this.txtLowLimit, this.txtLowLimit = txtLowLimit);
+	}
+	
+	public String getTxtHighLimit() {
+		return txtHighLimit;
+	}
+
+	public void setTxtHighLimit(String txtHighLimit) {
+		boolean isValid = runControlValidator.isValid(txtLowLimit, txtHighLimit);
+		setSendEnabled(isValid);
+		setError(!(isValid), runControlValidator.getErrorMessage());
+		
+		firePropertyChange("txtHighLimit", this.txtHighLimit, this.txtHighLimit = txtHighLimit);
+	}
+
+	public boolean isValid() {
+		return runControlValidator.isValid(txtLowLimit, txtHighLimit);
+	}
+	
+	public boolean getSendEnabled() {
+		return sendEnabled;
+	}
+
+	public void setSendEnabled(boolean sendEnabled) {
+		firePropertyChange("sendEnabled", this.sendEnabled, this.sendEnabled = sendEnabled);
+	}	
 }

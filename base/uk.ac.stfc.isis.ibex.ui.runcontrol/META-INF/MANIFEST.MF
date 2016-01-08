@@ -13,3 +13,4 @@ Require-Bundle: org.eclipse.ui,
  uk.ac.stfc.isis.ibex.epics,
  uk.ac.stfc.isis.ibex.model
 Bundle-ActivationPolicy: lazy
+Import-Package: uk.ac.stfc.isis.ibex.validators

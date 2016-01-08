@@ -35,6 +35,9 @@ public class BlockLogSettingsViewModel extends ErrorMessageProvider {
     private static String INT_ERROR = "Scan rate must be an integer number of seconds";
     private static String FLOAT_ERROR = "Deadband must be a decimal number";
     
+    private static String SCAN_EMPTY = "Scan rate cannot be empty";
+    private static String DEADBAND_EMPTY = "Deadband cannot be empty";
+    
     private final Block editingBlock;
     
     private boolean enabled = true;
@@ -111,21 +114,25 @@ public class BlockLogSettingsViewModel extends ErrorMessageProvider {
     }
 
     public void setTextBoxText(String text) {
-    	if (text.isEmpty())
-    		text = "0";
     	if (periodic) {
     		try {
     			rate = Integer.parseInt(text);
     			setError(false, null);
     		} catch (NumberFormatException e) {
-    			setError(true, INT_ERROR);
+    	    	if (text.isEmpty())
+    	    		setError(true, SCAN_EMPTY);
+    	    	else
+        			setError(true, INT_ERROR);
     		}
         } else {
         	try {
 		        deadband = Float.parseFloat(text);
 		        setError(false, null);
 			} catch (NumberFormatException e) {
-				setError(true, FLOAT_ERROR);
+    	    	if (text.isEmpty())
+    	    		setError(true, DEADBAND_EMPTY);
+    	    	else
+        			setError(true, FLOAT_ERROR);
 			}
         }
         

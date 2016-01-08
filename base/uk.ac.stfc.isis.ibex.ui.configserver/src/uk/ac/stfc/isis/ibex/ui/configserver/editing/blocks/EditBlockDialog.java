@@ -53,7 +53,7 @@ public class EditBlockDialog extends TitleAreaDialog {
 				}
 				
 				setOkEnabled(true);
-				setErrorMessage("");
+				setErrorMessage(null);
 			}
 		};
 
