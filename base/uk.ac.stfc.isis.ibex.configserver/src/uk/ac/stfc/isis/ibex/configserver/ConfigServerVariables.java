@@ -68,6 +68,8 @@ public class ConfigServerVariables extends InstrumentVariables {
 	
 	public final InitialiseOnSubscribeObservable<Collection<ConfigInfo>> configsInfo;
 	public final InitialiseOnSubscribeObservable<Collection<ConfigInfo>> componentsInfo;
+
+	public final InitialiseOnSubscribeObservable<BlockRules> blockRules;
 	
 	public final InitialiseOnSubscribeObservable<Collection<Component>> components;
 	public final InitialiseOnSubscribeObservable<Collection<EditableIoc>> iocs;
@@ -100,6 +102,8 @@ public class ConfigServerVariables extends InstrumentVariables {
 
 		configsInfo = convert(readCompressed(blockServerAddresses.configs()), converters.toConfigsInfo());
 		componentsInfo = convert(readCompressed(blockServerAddresses.components()), converters.toConfigsInfo());
+		
+		blockRules = convert(readCompressed(blockServerAddresses.blockRules()), converters.toBlockRules());	
 		
 		components = convert(readCompressed(blockServerAddresses.components()), converters.toComponents());
 		iocs = convert(readCompressed(blockServerAddresses.iocs()), converters.toIocs());
