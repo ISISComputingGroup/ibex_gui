@@ -38,10 +38,6 @@ public enum PVType {
 		this.displayName = displayName;
 	}
 	
-	public String display() {
-		return displayName;
-	}
-	
 	@Override
 	public String toString () {
 		return displayName;
