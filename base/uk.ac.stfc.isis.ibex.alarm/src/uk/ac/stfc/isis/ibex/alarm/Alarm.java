@@ -71,4 +71,12 @@ public class Alarm extends AbstractUIPlugin {
 		return counter;
 	}
 	
+    /**
+     * This should be called after closing the alarm view, else the instance of
+     * the alarm model will be held on to by BEAST.
+     */
+    public void releaseAlarm() {
+        alarmModel.release();
+    }
+
 }

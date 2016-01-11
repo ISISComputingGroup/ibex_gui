@@ -26,6 +26,8 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
+import uk.ac.stfc.isis.ibex.alarm.Alarm;
+
 /**
  * The activator class controls the plug-in life cycle
  */
@@ -74,6 +76,9 @@ public class Alarms extends AbstractUIPlugin {
                 .findPerspectiveWithId(AlarmPerspective.ID);
         IWorkbenchPage wp = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
         wp.closePerspective(descriptor, true, true);
+
+        // Must release alarm, else it will be held on to and will not switch!
+        Alarm.getDefault().releaseAlarm();
     }
 
 	/**
