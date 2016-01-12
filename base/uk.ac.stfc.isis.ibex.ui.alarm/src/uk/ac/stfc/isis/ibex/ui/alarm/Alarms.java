@@ -81,6 +81,10 @@ public class Alarms extends AbstractUIPlugin {
         Alarm.getDefault().releaseAlarm();
     }
 
+    public void updateAlarmModel() {
+        Alarm.getDefault().updateAlarmModel();
+    }
+
 	/**
 	 * Returns an image descriptor for the image file at the given
 	 * plug-in relative path

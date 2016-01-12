@@ -101,6 +101,8 @@ public class InstrumentHandler extends AbstractHandler {
                     false, false);
         }
 
+        alarms.updateAlarmModel();
+
         return null;
     }
 

@@ -19,6 +19,7 @@
 package uk.ac.stfc.isis.ibex.alarm;
 
 import org.apache.logging.log4j.Logger;
+import org.csstudio.alarm.beast.Messages;
 import org.csstudio.alarm.beast.ui.clientmodel.AlarmClientModel;
 import org.csstudio.alarm.beast.ui.clientmodel.AlarmClientModelListener;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
@@ -30,6 +31,8 @@ import uk.ac.stfc.isis.ibex.logger.IsisLog;
  * Class which provides an interaction between the perspective switcher and the alarm system
  */
 public class Alarm extends AbstractUIPlugin {
+
+    private static final int MAX_RETRIES = 100;
 
 	private static final Logger LOG = IsisLog.getLogger(Alarm.class);
 	
@@ -44,7 +47,7 @@ public class Alarm extends AbstractUIPlugin {
 		return instance;
 	}
 
-	private AlarmClientModel alarmModel;
+    private AlarmClientModel alarmModel;
 	private AlarmCounter counter;
 	AlarmClientModelListener listener;
 	
@@ -59,7 +62,10 @@ public class Alarm extends AbstractUIPlugin {
 		counter = new AlarmCounter(alarmModel);
 	}
 
-	
+    public AlarmClientModel getAlarmModel() {
+        return alarmModel;
+    }
+
 	static BundleContext getContext() {
 		return context;
 	}
@@ -79,4 +85,40 @@ public class Alarm extends AbstractUIPlugin {
         alarmModel.release();
     }
 
+    /**
+     * Run the alarm model update in the background, to ensure the button is
+     * showing the correct number of alarms. This is made difficult by the fact
+     * AlarmClientModel.getInstance() will return something that may not yet be
+     * initialised.
+     */
+    public void updateAlarmModel() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                counter.resetCount();
+
+                try {
+                    alarmModel = AlarmClientModel.getInstance();
+                } catch (Exception e) {
+                    LOG.info("Alarm Client Model not found");
+                    return;
+                }
+                
+                // The alarm model counter runs on a separate thread so may not
+                // be initialised immediately. Wait for a bit (up to 10 s) here
+                // to see if it gets initialised.
+                int i = 0;
+                while (alarmModel.toString().contains(Messages.AlarmClientModel_NotInitialized) && i < MAX_RETRIES) {
+                    try {
+                        Thread.sleep(100);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    i++;
+                }
+
+                counter.forceRefresh();
+            }
+        }).start();
+    }
 }
