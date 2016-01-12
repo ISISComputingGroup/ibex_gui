@@ -17,19 +17,33 @@
 * http://opensource.org/licenses/eclipse-1.0.php
 */
 
-package uk.ac.stfc.isis.ibex.instrument;
+package uk.ac.stfc.isis.ibex.configserver;
 
-import uk.ac.stfc.isis.ibex.epics.observing.ClosableCachingObservable;
-import uk.ac.stfc.isis.ibex.epics.writing.BaseWritable;
-import uk.ac.stfc.isis.ibex.instrument.channels.ChannelType;
-import uk.ac.stfc.isis.ibex.instrument.pv.PVType;
+import java.util.ArrayList;
+import java.util.List;
 
-public interface Channels {
-	<T> ClosableCachingObservable<T> getReader(ChannelType<T> channelType, String addressSuffix);
+public class BlockRules {
 	
-	<T> ClosableCachingObservable<T> getReader(ChannelType<T> channelType, String addressSuffix, PVType pvType);
+	private String regex;
+	private String regex_message;
+	private List<String> disallowed = new ArrayList<>();
 	
-    <T> BaseWritable<T> getWriter(ChannelType<T> channelType, String addressSuffix);
+	public BlockRules(String regex, String regex_message, List<String> disallowed) {
+		this.regex = regex;
+		this.regex_message = regex_message;
+		this.disallowed = disallowed;
+	}
 	
-    <T> BaseWritable<T> getWriter(ChannelType<T> channelType, String addressSuffix, PVType pvType);
+	public List<String> getDisallowed() {
+		return disallowed;
+	}
+	
+	public String getRegex() {
+		return regex;
+	}
+	
+	public String getRegexErrorMessage() {
+		return regex_message;
+	}
+	
 }

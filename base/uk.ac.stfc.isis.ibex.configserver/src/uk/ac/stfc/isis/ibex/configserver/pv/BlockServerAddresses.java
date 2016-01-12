@@ -43,6 +43,7 @@ public class BlockServerAddresses {
 	private static final String DELETE_CONFIGS = "DELETE_CONFIGS";
 	private static final String DELETE_COMPONENTS = "DELETE_COMPONENTS";
 	private static final String BLANK_CONFIG = "BLANK_CONFIG";
+	private static final String BLOCK_RULES = "BLOCK_RULES";	
 	
 	private static final String START_IOCS = "START_IOCS";
 	private static final String STOP_IOCS = "STOP_IOCS";
@@ -160,5 +161,9 @@ public class BlockServerAddresses {
 	
 	public String restartIocs() {
 		return blockServerAddress.endWith(RESTART_IOCS);
+	}
+	
+	public String blockRules() {
+		return blockServerAddress.endWith(BLOCK_RULES);
 	}
 }

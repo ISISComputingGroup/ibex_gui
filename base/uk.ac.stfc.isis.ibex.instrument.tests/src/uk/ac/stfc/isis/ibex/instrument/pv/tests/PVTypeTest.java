@@ -19,7 +19,7 @@
 
 package uk.ac.stfc.isis.ibex.instrument.pv.tests;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
@@ -49,22 +49,6 @@ public class PVTypeTest {
 	}
 	
 	@Test
-	public final void local_pv_display() {
-		// Arrange
-		String expected = "Local PV";
-		// Assert
-		assertEquals(expected, PVType.LOCAL_PV.display());
-	}
-	
-	@Test
-	public final void remote_pv_display() {
-		// Arrange
-		String expected = "Remote PV";
-		// Assert
-		assertEquals(expected, PVType.REMOTE_PV.display());
-	}
-	
-	@Test
 	public final void variable_local_pv_type_to_string() {
 		// Arrange
 		PVType pvType = PVType.LOCAL_PV;
@@ -73,12 +57,4 @@ public class PVTypeTest {
 		assertEquals(expected, pvType.toString());
 	}
 
-	@Test
-	public final void variable_local_pv_type_display() {
-		// Arrange
-		PVType pvType = PVType.LOCAL_PV;
-		String expected = "Local PV";
-		// Assert
-		assertEquals(expected, pvType.display());
-	}
 }
