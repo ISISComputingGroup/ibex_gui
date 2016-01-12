@@ -21,13 +21,12 @@ package uk.ac.stfc.isis.ibex.ui.runcontrol.dialogs;
 
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.beans.BeanProperties;
+import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
-import org.eclipse.swt.events.ModifyEvent;
-import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
@@ -70,9 +69,7 @@ public class RunControlEditorPanel extends Composite {
 	private DisplayBlock block;
     private boolean canSend;
 
-    private final RunControlViewModel runControlViewModel;
-
-	private DataBindingContext bindingContext;
+    private final RunControlViewModel viewModel;
 	
     Subscription saveAsSubscription;
 
@@ -86,7 +83,7 @@ public class RunControlEditorPanel extends Composite {
 				setting.setEnabled(chkEnabled.getSelection());
 			}
 			
-			btnSend.setEnabled(false);
+            viewModel.setSendEnabled(false);
 		}
 	};
 	
@@ -99,7 +96,7 @@ public class RunControlEditorPanel extends Composite {
                 chkEnabled.setSelection(block.getConfigurationEnabled());
             }
 
-            btnSend.setEnabled(true);
+            viewModel.setSendEnabled(true);
         }
     };
 
@@ -115,12 +112,12 @@ public class RunControlEditorPanel extends Composite {
 	};
 
     public RunControlEditorPanel(Composite parent, int style, ConfigServer configServer,
-            RunControlServer runControlServer, RunControlViewModel runControlViewModel) {
+            RunControlServer runControlServer, final RunControlViewModel viewModel) {
 		super(parent, style);
 		
 		this.configServer = configServer;
 		this.runControlServer = runControlServer;
-        this.runControlViewModel = runControlViewModel;
+        this.viewModel = viewModel;
 
         setLayout(new GridLayout(2, false));
 
@@ -145,12 +142,6 @@ public class RunControlEditorPanel extends Composite {
 		GridData gdTxtLow = new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1);
         gdTxtLow.widthHint = 50;
 		txtLowLimit.setLayoutData(gdTxtLow);
-		txtLowLimit.addModifyListener(new ModifyListener() {		
-			@Override
-			public void modifyText(ModifyEvent arg0) {
-				btnSend.setEnabled(true);
-			}
-		});
 		
         spacerLabel = new Label(grpSelectedSetting, SWT.NONE);
         spacerLabel.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1));
@@ -164,12 +155,6 @@ public class RunControlEditorPanel extends Composite {
 		GridData gdTxtHigh = new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1);
         gdTxtHigh.widthHint = 50;
 		txtHighLimit.setLayoutData(gdTxtHigh);
-		txtHighLimit.addModifyListener(new ModifyListener() {		
-			@Override
-			public void modifyText(ModifyEvent arg0) {
-				btnSend.setEnabled(true);
-			}
-		});
 		
         spacerLabel2 = new Label(grpSelectedSetting, SWT.NONE);
         spacerLabel2.setText(" ");
@@ -185,7 +170,8 @@ public class RunControlEditorPanel extends Composite {
 
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
-				btnSend.setEnabled(true);
+				if (viewModel.isValid())
+					viewModel.setSendEnabled(true);
 			}
 			
 		});
@@ -227,8 +213,21 @@ public class RunControlEditorPanel extends Composite {
             }
         });
 
+        setModel(viewModel);
         setBlock(null);
 	}
+    
+    private void setModel(RunControlViewModel viewModel) {
+    	DataBindingContext bindingContext = new DataBindingContext();
+    	
+        bindingContext.bindValue(WidgetProperties.enabled().observe(btnSend),
+                BeanProperties.value("sendEnabled").observe(viewModel));
+    	
+        bindingContext.bindValue(SWTObservables.observeText(txtLowLimit, SWT.Modify),
+                BeanProperties.value("txtLowLimit").observe(viewModel));
+        bindingContext.bindValue(SWTObservables.observeText(txtHighLimit, SWT.Modify),
+                BeanProperties.value("txtHighLimit").observe(viewModel)); 
+    }
 	
 	public void setBlock(DisplayBlock block) {
 		this.block = block;
@@ -240,8 +239,7 @@ public class RunControlEditorPanel extends Composite {
 			txtHighLimit.setText("");
 			txtHighLimit.setEnabled(false);	
 			chkEnabled.setEnabled(false);
-			btnSend.setEnabled(false);
-			bindingContext = null;
+			viewModel.setSendEnabled(false);
 			return;
 		}
 
@@ -261,33 +259,25 @@ public class RunControlEditorPanel extends Composite {
         if (block.getLowLimit() != null) {
             // If channel access is a bit slow the value may not have been
             // retrieved yet
-            txtLowLimit.setText(block.getLowLimit().trim());
+            viewModel.setTxtLowLimit(block.getLowLimit().trim());
         }
 
-        if (block.getLowLimit() != null) {
+        if (block.getHighLimit() != null) {
             // If channel access is a bit slow the value may not have been
             // retrieved yet
-            txtHighLimit.setText(block.getHighLimit().trim());
+        	viewModel.setTxtHighLimit(block.getHighLimit().trim());
         }
 
 		chkEnabled.setSelection(block.getEnabled());
 
-		// Bind the name as that in non-editable
-		if (bindingContext != null) {
-			bindingContext.dispose();
-		}
-		
-		bindingContext = new DataBindingContext();
-		bindingContext.bindValue(WidgetProperties.text().observe(name), BeanProperties.value("name").observe(block));
-		
-		btnSend.setEnabled(false);
+		name.setText(block.getName());
 	}
 
     private SelectionAdapter restoreAllConfigurationValues = new SelectionAdapter() {
         @Override
         public void widgetSelected(SelectionEvent e) {
             if (MessageDialog.openConfirm(getShell(), RESET_ALL_DIALOG_TITLE, RESET_ALL_DIALOG_MESSAGE)) {
-                runControlViewModel.resetRunControlSettings();
+                viewModel.resetRunControlSettings();
                 setBlock(null);
             }
         }

@@ -19,9 +19,11 @@
 
 package uk.ac.stfc.isis.ibex.ui.configserver.editing.blocks;
 
-import org.eclipse.jface.window.Window;
+import org.eclipse.core.databinding.DataBindingContext;
+import org.eclipse.core.databinding.beans.BeanProperties;
+import org.eclipse.jface.databinding.swt.SWTObservables;
+import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.FillLayout;
@@ -33,10 +35,6 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 
-import uk.ac.stfc.isis.ibex.configserver.editing.EditableBlock;
-import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
-import uk.ac.stfc.isis.ibex.ui.configserver.dialogs.PvSelectorDialog;
-
 public class BlockDetailsPanel extends Composite {
 	
 	private final Text name;
@@ -44,13 +42,9 @@ public class BlockDetailsPanel extends Composite {
 	private final Button visible;
 	private final Button local;
 	private final Button btnPickPV;
-		
-	private EditableConfiguration config;
 
-	public BlockDetailsPanel(Composite parent, int style, EditableBlock block, EditableConfiguration config) {
+	public BlockDetailsPanel(Composite parent, int style, final BlockDetailsViewModel viewModel) {
 		super(parent, style);
-		
-		this.config = config;
 		
 		setLayout(new FillLayout(SWT.HORIZONTAL));
 		
@@ -89,72 +83,35 @@ public class BlockDetailsPanel extends Composite {
 		btnPickPV.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				openPvDialog();
+				viewModel.openPvDialog();
 			}
 		});
 		
-		setEnabled(false);
+		setModel(viewModel);
+	}
+	
+	private void setModel(BlockDetailsViewModel viewModel) {
+		DataBindingContext bindingContext = new DataBindingContext();
 		
-		setBlock(block);
-	}
-	
-	public void setBlock(EditableBlock block) {	
-		if (block == null) {
-			setEnabled(false);
-			name.setText("");
-			pvAddress.setText("");
-			visible.setSelection(false);
-			local.setSelection(false);
-	
-			return;
-		}
-		
-		name.setText(block.getName());
-		pvAddress.setText(block.getPV());
-		local.setSelection(block.getIsLocal());
-		visible.setSelection(block.getIsVisible());
-			
-		setEnabled(block.isEditable());
-	}
-	
-	@Override
-	public void setEnabled(boolean enabled) {
-		super.setEnabled(enabled);
-		name.setEnabled(enabled);
-		pvAddress.setEnabled(enabled);
-		visible.setEnabled(enabled);
-		local.setEnabled(enabled);
-		btnPickPV.setEnabled(enabled);
-	}
-	
-	private void openPvDialog() {
-		PvSelectorDialog pvDialog = new PvSelectorDialog(null, config, pvAddress.getText());	
-		if (pvDialog.open() == Window.OK) {
-			pvAddress.setText(pvDialog.getPVAddress());
-		}
-	}
-	
-	public String getBlockName() {
-		return name.getText();
-	}
-	
-	public String getPV() {
-		return pvAddress.getText();
-	}
-	
-	public boolean getIsLocal() {
-		return local.getSelection();
-	}
-	
-	public boolean getIsVisible() {
-		return visible.getSelection();
-	}
-	
-	public void addNameModifyListener(ModifyListener modifyListener) {
-	    name.addModifyListener(modifyListener);
-	}
+        bindingContext.bindValue(WidgetProperties.enabled().observe(name),
+                BeanProperties.value("enabled").observe(viewModel));
+        bindingContext.bindValue(WidgetProperties.enabled().observe(pvAddress),
+                BeanProperties.value("enabled").observe(viewModel));
+        bindingContext.bindValue(WidgetProperties.enabled().observe(visible),
+                BeanProperties.value("enabled").observe(viewModel));
+        bindingContext.bindValue(WidgetProperties.enabled().observe(local),
+                BeanProperties.value("enabled").observe(viewModel));
+        bindingContext.bindValue(WidgetProperties.enabled().observe(btnPickPV),
+                BeanProperties.value("enabled").observe(viewModel));
 
-    public void addAddressModifyListener(ModifyListener modifyListener) {
-        pvAddress.addModifyListener(modifyListener);
-    }
+        bindingContext.bindValue(SWTObservables.observeText(name, SWT.Modify),
+                BeanProperties.value("name").observe(viewModel)); 
+        bindingContext.bindValue(SWTObservables.observeText(pvAddress, SWT.Modify),
+                BeanProperties.value("pvAddress").observe(viewModel));
+        bindingContext.bindValue(WidgetProperties.selection().observe(local),
+                BeanProperties.value("local").observe(viewModel));
+        bindingContext.bindValue(WidgetProperties.selection().observe(visible),
+                BeanProperties.value("visible").observe(viewModel));
+        
+	}
 }

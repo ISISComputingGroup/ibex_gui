@@ -28,7 +28,8 @@ package uk.ac.stfc.isis.ibex.validators;
  */
 public class PvValidator {
 
-    public static final String ADDRESS_FORMAT = "PV Address invalid, use only [A-Z], [0-9], : and _";
+    public static final String ADDRESS_FORMAT = "PV Address invalid, use only [a-z], [A-Z], [0-9], : and _";
+    public static final String ADDRESS_EMPTY = "PV Address invalid, must not be empty";    
     private static final String NO_ERROR = "";
 
     private String errorMessage;
@@ -52,11 +53,13 @@ public class PvValidator {
     public Boolean validatePvAddress(String pvAddress) {
         boolean is_valid = false;
 
-        if (pvAddress.matches("^[a-zA-Z0-9_:]*$")) {
+        if (!(pvAddress.matches("^[a-zA-Z0-9_:]*$"))) {
+            setErrorMessage(ADDRESS_FORMAT);
+        } else if (pvAddress.isEmpty()) {
+        	setErrorMessage(ADDRESS_EMPTY);
+        } else {
             is_valid = true;
             setErrorMessage(NO_ERROR);
-        } else {
-            setErrorMessage(ADDRESS_FORMAT);
         }
 
         return is_valid;
