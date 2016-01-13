@@ -26,7 +26,7 @@
 <repository location="http://download.eclipse.org/tools/orbit/downloads/drops/R20140114142710/repository/"/>
 </location>
 <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
-<unit id="org.eclipse.nebula.visualization.feature.feature.group" version="0.9.9.201511041902"/>
+<unit id="org.eclipse.nebula.visualization.feature.feature.group" version="0.9.9.201601121737"/>
 <repository location="http://download.eclipse.org/technology/nebula/snapshot/"/>
 </location>
 <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
