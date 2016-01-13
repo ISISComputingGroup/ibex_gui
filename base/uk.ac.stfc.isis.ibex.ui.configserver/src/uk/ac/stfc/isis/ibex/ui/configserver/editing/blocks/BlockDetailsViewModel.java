@@ -21,6 +21,8 @@ package uk.ac.stfc.isis.ibex.ui.configserver.editing.blocks;
 
 import org.eclipse.jface.window.Window;
 
+import uk.ac.stfc.isis.ibex.configserver.BlockRules;
+import uk.ac.stfc.isis.ibex.configserver.Configurations;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Block;
 import uk.ac.stfc.isis.ibex.configserver.editing.BlockNameValidator;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableBlock;
@@ -113,8 +115,9 @@ public class BlockDetailsViewModel extends ErrorMessageProvider {
     private void validate(String name, String pvAddress) {
     	BlockNameValidator nameVal = new BlockNameValidator(config, editingBlock);
         PvValidator addressValid = new PvValidator();
-    	
-    	if (!(nameVal.isValidName(name))) {
+    	BlockRules currentRules = Configurations.getInstance().variables().blockRules.getValue();
+        
+    	if (!(nameVal.isValidName(name, currentRules))) {
     		setError(true, nameVal.getErrorMessage());
     	} else if (!(addressValid.validatePvAddress(pvAddress))) {
     		setError(true, addressValid.getErrorMessage());
