@@ -35,7 +35,7 @@ import uk.ac.stfc.isis.ibex.epics.switching.ClosingSwitcher;
 import uk.ac.stfc.isis.ibex.epics.switching.InstrumentSwitchers;
 import uk.ac.stfc.isis.ibex.epics.switching.ObservableFactory;
 import uk.ac.stfc.isis.ibex.epics.switching.OnInstrumentSwitch;
-import uk.ac.stfc.isis.ibex.epics.switching.SwitchableInitialiseOnSubscribeObservable;
+import uk.ac.stfc.isis.ibex.epics.switching.SwitchableObservable;
 import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
 import uk.ac.stfc.isis.ibex.instrument.channels.ChannelType;
 
@@ -83,7 +83,7 @@ public class ClosingSwitcherTest {
     @Test
     public void observable_factory_registers_pv_with_switcher() {
         // Act
-        SwitchableInitialiseOnSubscribeObservable<String> switchable = obsFactory.getSwitchableObservable(channelType,
+        SwitchableObservable<String> switchable = obsFactory.getSwitchableObservable(channelType,
                 PV_ADDRESS);
 
         // Assert
@@ -137,9 +137,9 @@ public class ClosingSwitcherTest {
     @Test
     public void closing_observable_manually_unregisters_observable_from_switcher() {
         // Act
-        SwitchableInitialiseOnSubscribeObservable<String> switchable = obsFactory.getSwitchableObservable(channelType,
+        SwitchableObservable<String> switchable = obsFactory.getSwitchableObservable(channelType,
                 PV_ADDRESS);
-        SwitchableInitialiseOnSubscribeObservable<String> switchable2 = obsFactory.getSwitchableObservable(channelType,
+        SwitchableObservable<String> switchable2 = obsFactory.getSwitchableObservable(channelType,
                 PV_ADDRESS_2);
 
         switchable.close();
@@ -152,9 +152,9 @@ public class ClosingSwitcherTest {
     @Test
     public void closing_observable_manually_twice_does_nothing() {
         // Act
-        SwitchableInitialiseOnSubscribeObservable<String> switchable = obsFactory.getSwitchableObservable(channelType,
+        SwitchableObservable<String> switchable = obsFactory.getSwitchableObservable(channelType,
                 PV_ADDRESS);
-        SwitchableInitialiseOnSubscribeObservable<String> switchable2 = obsFactory.getSwitchableObservable(channelType,
+        SwitchableObservable<String> switchable2 = obsFactory.getSwitchableObservable(channelType,
                 PV_ADDRESS_2);
 
         switchable.close();

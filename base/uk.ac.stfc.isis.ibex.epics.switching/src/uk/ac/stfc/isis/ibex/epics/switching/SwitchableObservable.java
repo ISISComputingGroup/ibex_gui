@@ -24,16 +24,15 @@ import uk.ac.stfc.isis.ibex.epics.observing.InitialiseOnSubscribeObservable;
 import uk.ac.stfc.isis.ibex.epics.pv.Closable;
 
 /**
- * This is not a permanent new class, just a temporary one while refactoring!
- * This should be merged with InitialiseOnSubscribeObservable once changes are
- * made in the code base to use the new switching method.
+ * This is class allows the source observable in ForwardingObservable to be
+ * switched.
  */
-public class SwitchableInitialiseOnSubscribeObservable<T> extends InitialiseOnSubscribeObservable<T> implements Switchable {
+public class SwitchableObservable<T> extends InitialiseOnSubscribeObservable<T> implements Switchable {
 
     private Switcher switcher;
     private ClosableCachingObservable<T> source;
 
-    public SwitchableInitialiseOnSubscribeObservable(ClosableCachingObservable<T> source) {
+    public SwitchableObservable(ClosableCachingObservable<T> source) {
         super(source);
         this.source = source;
     }

@@ -31,7 +31,7 @@ import org.junit.Test;
 import uk.ac.stfc.isis.ibex.epics.conversion.Converter;
 import uk.ac.stfc.isis.ibex.epics.observing.InitialiseOnSubscribeObservable;
 import uk.ac.stfc.isis.ibex.epics.switching.ObservableFactory;
-import uk.ac.stfc.isis.ibex.epics.switching.SwitchableInitialiseOnSubscribeObservable;
+import uk.ac.stfc.isis.ibex.epics.switching.SwitchableObservable;
 import uk.ac.stfc.isis.ibex.epics.switching.WritableFactory;
 import uk.ac.stfc.isis.ibex.epics.writing.SameTypeWritable;
 import uk.ac.stfc.isis.ibex.epics.writing.Writable;
@@ -59,8 +59,8 @@ public class VariablesTest {
 	@Before
 	public void set_up(){
 		// Arrange
-        SwitchableInitialiseOnSubscribeObservable switchableObservable = mock(
-                SwitchableInitialiseOnSubscribeObservable.class);
+        SwitchableObservable switchableObservable = mock(
+                SwitchableObservable.class);
 
         SameTypeWritable mockClosableWritable = mock(SameTypeWritable.class);
 

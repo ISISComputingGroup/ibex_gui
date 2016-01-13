@@ -32,7 +32,7 @@ import uk.ac.stfc.isis.ibex.epics.switching.InstrumentSwitchers;
 import uk.ac.stfc.isis.ibex.epics.switching.NothingSwitcher;
 import uk.ac.stfc.isis.ibex.epics.switching.ObservableFactory;
 import uk.ac.stfc.isis.ibex.epics.switching.OnInstrumentSwitch;
-import uk.ac.stfc.isis.ibex.epics.switching.SwitchableInitialiseOnSubscribeObservable;
+import uk.ac.stfc.isis.ibex.epics.switching.SwitchableObservable;
 import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
 import uk.ac.stfc.isis.ibex.instrument.channels.ChannelType;
 
@@ -80,7 +80,7 @@ public class NothingSwitcherTest {
     @Test
     public void observable_factory_registers_pv_with_switcher() {
         // Act
-        SwitchableInitialiseOnSubscribeObservable<String> switchable = obsFactory.getSwitchableObservable(channelType,
+        SwitchableObservable<String> switchable = obsFactory.getSwitchableObservable(channelType,
                 PV_ADDRESS);
 
         // Assert
