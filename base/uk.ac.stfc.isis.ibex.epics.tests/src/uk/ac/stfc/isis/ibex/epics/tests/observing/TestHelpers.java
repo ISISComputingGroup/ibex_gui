@@ -1,9 +1,7 @@
 package uk.ac.stfc.isis.ibex.epics.tests.observing;
 
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
-import uk.ac.stfc.isis.ibex.epics.observing.BaseCachingObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.ClosableCachingObservable;
 
 @SuppressWarnings({ "unchecked" })
