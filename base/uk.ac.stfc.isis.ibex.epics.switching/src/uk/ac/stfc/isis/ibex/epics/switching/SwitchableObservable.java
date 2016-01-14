@@ -25,7 +25,7 @@ import uk.ac.stfc.isis.ibex.epics.pv.Closable;
 
 /**
  * This is class allows the source observable in ForwardingObservable to be
- * switched.
+ * switched. The old observable is closed when it does so.
  */
 public class SwitchableObservable<T> extends InitialiseOnSubscribeObservable<T> implements Switchable {
 
