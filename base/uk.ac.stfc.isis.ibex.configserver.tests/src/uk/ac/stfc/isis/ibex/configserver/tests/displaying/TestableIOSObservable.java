@@ -19,7 +19,7 @@
 
 package uk.ac.stfc.isis.ibex.configserver.tests.displaying;
 
-import uk.ac.stfc.isis.ibex.epics.observing.BaseCachingObservable;
+import uk.ac.stfc.isis.ibex.epics.observing.Observable;
 import uk.ac.stfc.isis.ibex.epics.observing.InitialiseOnSubscribeObservable;
 
 /**
@@ -28,7 +28,7 @@ import uk.ac.stfc.isis.ibex.epics.observing.InitialiseOnSubscribeObservable;
  * This is final, so no mocking this, or using it outside testing!
  */
 final class TestableIOSObservable<T> extends InitialiseOnSubscribeObservable<T> {
-	public TestableIOSObservable(BaseCachingObservable<T> source) {
+	public TestableIOSObservable(Observable<T> source) {
 		super(source);
 	}
 

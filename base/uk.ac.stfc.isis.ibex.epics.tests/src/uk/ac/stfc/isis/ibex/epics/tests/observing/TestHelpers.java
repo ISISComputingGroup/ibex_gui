@@ -2,7 +2,7 @@ package uk.ac.stfc.isis.ibex.epics.tests.observing;
 
 import static org.mockito.Mockito.*;
 
-import uk.ac.stfc.isis.ibex.epics.observing.ClosableCachingObservable;
+import uk.ac.stfc.isis.ibex.epics.observing.ClosableObservable;
 
 @SuppressWarnings({ "unchecked" })
 public class TestHelpers {
@@ -22,8 +22,8 @@ public class TestHelpers {
 	 * @param value The value to return from the getValue method
 	 * @return A CachingObservable mock object with a stub method for getValue
 	 */
-	public static <T> ClosableCachingObservable<T> getClosableCachingObservable(T value) {
-		ClosableCachingObservable<T> mockObservableReturnsValue = mock(ClosableCachingObservable.class);
+	public static <T> ClosableObservable<T> getClosableCachingObservable(T value) {
+		ClosableObservable<T> mockObservableReturnsValue = mock(ClosableObservable.class);
 		when(mockObservableReturnsValue.getValue()).thenReturn(value);
 		
 		return mockObservableReturnsValue;
@@ -37,8 +37,8 @@ public class TestHelpers {
 	 * @param value The value to return from the getValue method
 	 * @return A ClosableCachingObservable mock object with a stub method for getValue
 	 */
-	public static <T> ClosableCachingObservable<T> getCachingObservable(T value) {
-		ClosableCachingObservable<T> mockObservableReturnsValue = mock(ClosableCachingObservable.class);
+	public static <T> ClosableObservable<T> getCachingObservable(T value) {
+		ClosableObservable<T> mockObservableReturnsValue = mock(ClosableObservable.class);
 		when(mockObservableReturnsValue.getValue()).thenReturn(value);
 		
 		return mockObservableReturnsValue;

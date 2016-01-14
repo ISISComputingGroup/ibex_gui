@@ -23,7 +23,7 @@ import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.Locale;
 
-import uk.ac.stfc.isis.ibex.epics.observing.ClosableCachingObservable;
+import uk.ac.stfc.isis.ibex.epics.observing.ClosableObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.Pair;
 import uk.ac.stfc.isis.ibex.epics.observing.TransformingObservable;
 
@@ -35,7 +35,7 @@ public class ObservableDecimalRatio extends TransformingObservable<Pair<Number, 
 		FORMAT.setMaximumFractionDigits(3);
 	}
 	
-	public ObservableDecimalRatio(ClosableCachingObservable<Pair<Number, Number>> source) {
+	public ObservableDecimalRatio(ClosableObservable<Pair<Number, Number>> source) {
 		setSource(source);
 	}
 	

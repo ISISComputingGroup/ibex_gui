@@ -32,7 +32,7 @@ public class ConvertingObservable<R ,T> extends TransformingObservable<R, T> {
 
 	private final Converter<R, T> formatter;
 	
-	public ConvertingObservable(ClosableCachingObservable<R> source, Converter<R, T> formatter) {
+	public ConvertingObservable(ClosableObservable<R> source, Converter<R, T> formatter) {
 		this.formatter = formatter;
 		setSource(source);
 	}

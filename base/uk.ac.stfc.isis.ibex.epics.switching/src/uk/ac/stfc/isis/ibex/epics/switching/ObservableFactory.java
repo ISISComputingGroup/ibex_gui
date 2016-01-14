@@ -19,7 +19,7 @@
 
 package uk.ac.stfc.isis.ibex.epics.switching;
 
-import uk.ac.stfc.isis.ibex.epics.observing.ClosableCachingObservable;
+import uk.ac.stfc.isis.ibex.epics.observing.ClosableObservable;
 import uk.ac.stfc.isis.ibex.instrument.channels.ChannelType;
 
 /**
@@ -51,7 +51,7 @@ public class ObservableFactory {
      */
     public <T> SwitchableObservable<T> getSwitchableObservable(ChannelType<T> channelType,
             String address) {
-        ClosableCachingObservable<T> channelReader = getPVObservable(channelType, address);
+        ClosableObservable<T> channelReader = getPVObservable(channelType, address);
         final SwitchableObservable<T> channel = new SwitchableObservable<>(
                 channelReader);
 
@@ -67,7 +67,7 @@ public class ObservableFactory {
         return createdObservable;
     }
 
-    public <T> ClosableCachingObservable<T> getPVObservable(ChannelType<T> channelType, String address) {
+    public <T> ClosableObservable<T> getPVObservable(ChannelType<T> channelType, String address) {
         return channelType.reader(address);
     }
 }

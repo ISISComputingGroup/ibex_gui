@@ -25,7 +25,7 @@ package uk.ac.stfc.isis.ibex.epics.observing;
  * @param <T1> The type of the first value being observed.
  * @param <T2> The type of the second value being observed.
  */
-public class ObservablePair<T1, T2> extends AbstractClosableCachingObservable<Pair<T1, T2>> {
+public class ObservablePair<T1, T2> extends ClosableObservable<Pair<T1, T2>> {
 
 	private abstract class PairObserver<T> extends BaseObserver<T> {
 		@Override

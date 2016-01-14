@@ -27,7 +27,7 @@ import static org.mockito.Mockito.when;
 import org.junit.Before;
 import org.junit.Test;
 
-import uk.ac.stfc.isis.ibex.epics.observing.ClosableCachingObservable;
+import uk.ac.stfc.isis.ibex.epics.observing.ClosableObservable;
 import uk.ac.stfc.isis.ibex.epics.switching.ClosingSwitcher;
 import uk.ac.stfc.isis.ibex.epics.switching.InstrumentSwitchers;
 import uk.ac.stfc.isis.ibex.epics.switching.NothingSwitcher;
@@ -47,15 +47,15 @@ public class ObservableFactoryTest {
     private ClosingSwitcher closingSwitcher;
     private NothingSwitcher nothingSwitcher;
     private ObservablePrefixChangingSwitcher switchingSwitcher;
-    private ClosableCachingObservable<String> closableCachingObservable;
-    private ClosableCachingObservable<Integer> closableCachingObservable2;
+    private ClosableObservable<String> closableCachingObservable;
+    private ClosableObservable<Integer> closableCachingObservable2;
     private InstrumentSwitchers instrumentSwitchers;
 
     @SuppressWarnings("unchecked")
     @Before
     public void setUp() {
-        closableCachingObservable = mock(ClosableCachingObservable.class);
-        closableCachingObservable2 = mock(ClosableCachingObservable.class);
+        closableCachingObservable = mock(ClosableObservable.class);
+        closableCachingObservable2 = mock(ClosableObservable.class);
 
         channelType = mock(ChannelType.class);
         when(channelType.reader(PV_ADDRESS)).thenReturn(closableCachingObservable);

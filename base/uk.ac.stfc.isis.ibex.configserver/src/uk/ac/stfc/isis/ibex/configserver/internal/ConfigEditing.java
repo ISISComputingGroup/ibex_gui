@@ -24,7 +24,7 @@ import uk.ac.stfc.isis.ibex.configserver.Editing;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Configuration;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
 import uk.ac.stfc.isis.ibex.configserver.editing.ObservableEditableConfiguration;
-import uk.ac.stfc.isis.ibex.epics.observing.ClosableCachingObservable;
+import uk.ac.stfc.isis.ibex.epics.observing.ClosableObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.InitialiseOnSubscribeObservable;
 import uk.ac.stfc.isis.ibex.epics.pv.Closer;
 
@@ -56,7 +56,7 @@ public class ConfigEditing extends Closer implements Editing {
 		return edit(configServer.component(componentName));
 	}
 	
-	private InitialiseOnSubscribeObservable<EditableConfiguration> edit(ClosableCachingObservable<Configuration> config) {
+	private InitialiseOnSubscribeObservable<EditableConfiguration> edit(ClosableObservable<Configuration> config) {
 		return registerForClose(new InitialiseOnSubscribeObservable<>(new ObservableEditableConfiguration(config, configServer)));
 	}
 }

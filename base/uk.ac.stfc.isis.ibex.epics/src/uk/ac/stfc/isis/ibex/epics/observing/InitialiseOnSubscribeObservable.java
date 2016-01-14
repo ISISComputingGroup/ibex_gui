@@ -27,7 +27,7 @@ package uk.ac.stfc.isis.ibex.epics.observing;
  */
 public class InitialiseOnSubscribeObservable<T> extends ForwardingObservable<T> {
 	
-    public InitialiseOnSubscribeObservable(BaseCachingObservable<T> source) {
+    public InitialiseOnSubscribeObservable(Observable<T> source) {
 		setSource(source);
 	}
 

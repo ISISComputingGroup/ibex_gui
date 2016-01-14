@@ -30,7 +30,7 @@ import static org.mockito.Mockito.when;
 import org.junit.Before;
 import org.junit.Test;
 
-import uk.ac.stfc.isis.ibex.epics.observing.ClosableCachingObservable;
+import uk.ac.stfc.isis.ibex.epics.observing.ClosableObservable;
 import uk.ac.stfc.isis.ibex.epics.switching.ClosingSwitcher;
 import uk.ac.stfc.isis.ibex.epics.switching.InstrumentSwitchers;
 import uk.ac.stfc.isis.ibex.epics.switching.ObservableFactory;
@@ -47,8 +47,8 @@ public class ClosingSwitcherTest {
 
     private ObservableFactory obsFactory;
     private ClosingSwitcher closingSwitcher;
-    private ClosableCachingObservable<String> closableCachingObservable;
-    private ClosableCachingObservable<String> closableCachingObservable2;
+    private ClosableObservable<String> closableCachingObservable;
+    private ClosableObservable<String> closableCachingObservable2;
     private ChannelType<String> channelType;
     private InstrumentInfo instrumentInfo;
 
@@ -59,8 +59,8 @@ public class ClosingSwitcherTest {
         instrumentInfo = mock(InstrumentInfo.class);
         when(instrumentInfo.pvPrefix()).thenReturn(PV_PREFIX);
 
-        closableCachingObservable = mock(ClosableCachingObservable.class);
-        closableCachingObservable2 = mock(ClosableCachingObservable.class);
+        closableCachingObservable = mock(ClosableObservable.class);
+        closableCachingObservable2 = mock(ClosableObservable.class);
         
         channelType = mock(ChannelType.class);
         when(channelType.reader(PV_ADDRESS)).thenReturn(closableCachingObservable);

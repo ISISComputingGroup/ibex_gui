@@ -19,12 +19,12 @@
 
 package uk.ac.stfc.isis.ibex.dae;
 
-import uk.ac.stfc.isis.ibex.epics.observing.ClosableCachingObservable;
+import uk.ac.stfc.isis.ibex.epics.observing.ClosableObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.TransformingObservable;
 
 public class DaeIsRunning extends TransformingObservable<DaeRunState, Boolean> {
 
-	public DaeIsRunning(ClosableCachingObservable<DaeRunState> source) {
+	public DaeIsRunning(ClosableObservable<DaeRunState> source) {
 		setSource(source);
 	}
 

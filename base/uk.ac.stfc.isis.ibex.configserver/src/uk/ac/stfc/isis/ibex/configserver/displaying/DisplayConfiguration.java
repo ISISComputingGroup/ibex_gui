@@ -27,7 +27,7 @@ import uk.ac.stfc.isis.ibex.configserver.Displaying;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Block;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Configuration;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Group;
-import uk.ac.stfc.isis.ibex.epics.observing.ClosableCachingObservable;
+import uk.ac.stfc.isis.ibex.epics.observing.ClosableObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.InitialiseOnSubscribeObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.TransformingObservable;
 import uk.ac.stfc.isis.ibex.runcontrol.RunControlServer;
@@ -47,7 +47,7 @@ public class DisplayConfiguration extends TransformingObservable<Configuration, 
 	private final ConfigServer configServer;
 	private final RunControlServer runControlServer;
 
-	public DisplayConfiguration(ClosableCachingObservable<Configuration> config, ConfigServer configServer,
+	public DisplayConfiguration(ClosableObservable<Configuration> config, ConfigServer configServer,
 			RunControlServer runControlServer) {
 		this.configServer = configServer;
 		this.runControlServer = runControlServer;

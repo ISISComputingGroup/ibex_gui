@@ -20,7 +20,7 @@
 package uk.ac.stfc.isis.ibex.ui.widgets.observable;
 
 import uk.ac.stfc.isis.ibex.epics.adapters.TextUpdatedObservableAdapter;
-import uk.ac.stfc.isis.ibex.epics.observing.BaseCachingObservable;
+import uk.ac.stfc.isis.ibex.epics.observing.Observable;
 import uk.ac.stfc.isis.ibex.epics.observing.Subscription;
 import uk.ac.stfc.isis.ibex.epics.pv.Closable;
 import uk.ac.stfc.isis.ibex.epics.writing.BaseWriter;
@@ -55,7 +55,7 @@ public class WritableObservableAdapter implements Closable {
 	 * @param writable The object for writing to a PV
 	 * @param observable The object for observing a PV
 	 */
-	public WritableObservableAdapter(Writable<String> writable, BaseCachingObservable<String> observable) {
+	public WritableObservableAdapter(Writable<String> writable, Observable<String> observable) {
 		text = new TextUpdatedObservableAdapter(observable);
 		canSetText = new SettableUpdatedValue<>();
 		canSetText.setValue(writable.canWrite());

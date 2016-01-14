@@ -23,7 +23,7 @@ import uk.ac.stfc.isis.ibex.dashboard.DashboardObservables;
 import uk.ac.stfc.isis.ibex.epics.adapters.TextUpdatedObservableAdapter;
 import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
 import uk.ac.stfc.isis.ibex.epics.conversion.Converter;
-import uk.ac.stfc.isis.ibex.epics.observing.ClosableCachingObservable;
+import uk.ac.stfc.isis.ibex.epics.observing.ClosableObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.ConvertingObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.InitialiseOnSubscribeObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.ObservablePair;
@@ -56,7 +56,7 @@ public class MonitorPanelModel extends Closer {
     }
 
     private UpdatedValue<String> createGoodOverRawFrames(DashboardObservables observables) {
-        ClosableCachingObservable<Pair<Integer, Integer>> pair = registerForClose(
+        ClosableObservable<Pair<Integer, Integer>> pair = registerForClose(
                 new ObservablePair<>(observables.dae.goodFrames, observables.dae.rawFrames));
         InitialiseOnSubscribeObservable<String> ratio = new InitialiseOnSubscribeObservable<String>(
                 new ObservableSimpleRatio<>(pair));
@@ -65,7 +65,7 @@ public class MonitorPanelModel extends Closer {
     }
 
     private UpdatedValue<String> createCurrentOverTotal(DashboardObservables observables) {
-        ClosableCachingObservable<Pair<Number, Number>> pair = registerForClose(
+        ClosableObservable<Pair<Number, Number>> pair = registerForClose(
                 new ObservablePair<>(observables.dae.beamCurrent, observables.dae.goodCurrent));
         InitialiseOnSubscribeObservable<String> ratio = new InitialiseOnSubscribeObservable<String>(
                 new ObservableDecimalRatio(pair));

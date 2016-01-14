@@ -26,7 +26,7 @@ import static org.mockito.Mockito.*;
 import org.junit.Before;
 import org.junit.Test;
 
-import uk.ac.stfc.isis.ibex.epics.observing.BaseCachingObservable;
+import uk.ac.stfc.isis.ibex.epics.observing.Observable;
 import uk.ac.stfc.isis.ibex.epics.observing.InitialiseOnSubscribeObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.Observer;
 import uk.ac.stfc.isis.ibex.epics.observing.Unsubscriber;
@@ -38,7 +38,7 @@ public class InitialiseOnSubscribeObservableTest {
     Observer<String> mockObserver;
     Observer<String> mockObserverTwo;
 	
-	BaseCachingObservable<String> mockObservable;
+	Observable<String> mockObservable;
 	TestableObservable<String> testableObservable;
 	
 	Object addObserverReturnedObject;

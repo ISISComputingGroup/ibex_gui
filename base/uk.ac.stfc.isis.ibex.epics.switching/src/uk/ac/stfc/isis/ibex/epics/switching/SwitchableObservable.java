@@ -19,7 +19,7 @@
 
 package uk.ac.stfc.isis.ibex.epics.switching;
 
-import uk.ac.stfc.isis.ibex.epics.observing.ClosableCachingObservable;
+import uk.ac.stfc.isis.ibex.epics.observing.ClosableObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.InitialiseOnSubscribeObservable;
 import uk.ac.stfc.isis.ibex.epics.pv.Closable;
 
@@ -30,9 +30,9 @@ import uk.ac.stfc.isis.ibex.epics.pv.Closable;
 public class SwitchableObservable<T> extends InitialiseOnSubscribeObservable<T> implements Switchable {
 
     private Switcher switcher;
-    private ClosableCachingObservable<T> source;
+    private ClosableObservable<T> source;
 
-    public SwitchableObservable(ClosableCachingObservable<T> source) {
+    public SwitchableObservable(ClosableObservable<T> source) {
         super(source);
         this.source = source;
     }
@@ -61,7 +61,7 @@ public class SwitchableObservable<T> extends InitialiseOnSubscribeObservable<T> 
      * 
      * @return The source observable.
      */
-    public ClosableCachingObservable<T> getSource() {
+    public ClosableObservable<T> getSource() {
         return source;
     }
 
@@ -70,10 +70,10 @@ public class SwitchableObservable<T> extends InitialiseOnSubscribeObservable<T> 
     @Override
     public void setSource(Closable newSource) {
         
-        ClosableCachingObservable<T> castNewSource;
+        ClosableObservable<T> castNewSource;
 
         try {
-            castNewSource = (ClosableCachingObservable<T>) newSource;
+            castNewSource = (ClosableObservable<T>) newSource;
         } catch (ClassCastException e) {
             e.printStackTrace();
             return;
