@@ -21,14 +21,14 @@ package uk.ac.stfc.isis.ibex.epics.pv;
 
 import org.epics.vtype.VType;
 
-import uk.ac.stfc.isis.ibex.epics.observing.AbstractClosableCachingObservable;
+import uk.ac.stfc.isis.ibex.epics.observing.ClosableObservable;
 
 /**
  * A class for observing an EPICS process variable.
  *
  * @param <T> the PV type (must be a VType)
  */
-public abstract class ObservablePV<T extends VType> extends AbstractClosableCachingObservable<T> implements PV<T> {
+public abstract class ObservablePV<T extends VType> extends ClosableObservable<T> implements PV<T> {
 
 	private final PVInfo<T> info;
 

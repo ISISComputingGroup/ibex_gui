@@ -33,7 +33,7 @@ import org.junit.Test;
 import uk.ac.stfc.isis.ibex.configserver.ConfigServer;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Block;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Configuration;
-import uk.ac.stfc.isis.ibex.epics.observing.InitialiseOnSubscribeObservable;
+import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.runcontrol.RunControlServer;
 import uk.ac.stfc.isis.ibex.ui.runcontrol.RunControlViewModel;
 
@@ -43,7 +43,7 @@ public class RunControlViewModelTest {
     private RunControlServer runControlServer;
     private ConfigServer configServer;
     private Configuration config;
-    private InitialiseOnSubscribeObservable<Configuration> configObservable;
+    private ForwardingObservable<Configuration> configObservable;
 
     private Collection<Block> blocks;
 
@@ -58,7 +58,7 @@ public class RunControlViewModelTest {
         config = mock(Configuration.class);
         when(config.getBlocks()).thenReturn(blocks);
 
-        configObservable = mock(InitialiseOnSubscribeObservable.class);
+        configObservable = mock(ForwardingObservable.class);
         when(configObservable.getValue()).thenReturn(config);
         
         configServer = mock(ConfigServer.class);

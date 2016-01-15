@@ -36,7 +36,7 @@ import org.mockito.MockitoAnnotations;
 import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
 import uk.ac.stfc.isis.ibex.epics.conversion.Converter;
 import uk.ac.stfc.isis.ibex.epics.observing.ConvertingObservable;
-import uk.ac.stfc.isis.ibex.epics.observing.InitialiseOnSubscribeObservable;
+import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.Observer;
 
 // A lot of unchecked type conversions for mocking purposes
@@ -51,7 +51,7 @@ public class ConvertingObservableTest {
     private Observer<String> mockObserver;
 	
 	private TestableObservable<Integer> testObservable;	
-	private InitialiseOnSubscribeObservable<Integer> initObservable;
+	private ForwardingObservable<Integer> initObservable;
 	private ConvertingObservable<Integer, String> convertObservable;
 	
 	private Converter<Integer, String> mockConverter;
@@ -69,7 +69,7 @@ public class ConvertingObservableTest {
 		
 		testObservable = new TestableObservable<>();
 		
-		initObservable = new InitialiseOnSubscribeObservable<Integer>(testObservable);
+		initObservable = new ForwardingObservable<Integer>(testObservable);
 		
 		mockConverter = mock(Converter.class);
 		when(mockConverter.convert(TestHelpers.INT_VALUE)).thenReturn(CONVERTED_VALUE);

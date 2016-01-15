@@ -20,7 +20,7 @@
 package uk.ac.stfc.isis.ibex.dae.internal;
 
 import uk.ac.stfc.isis.ibex.epics.observing.BaseObserver;
-import uk.ac.stfc.isis.ibex.epics.observing.InitialiseOnSubscribeObservable;
+import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.Observer;
 import uk.ac.stfc.isis.ibex.epics.observing.Subscription;
 import uk.ac.stfc.isis.ibex.epics.pv.Closable;
@@ -57,7 +57,7 @@ public abstract class SettingsGateway implements Closable {
 		}
 	};
 
-	public SettingsGateway(InitialiseOnSubscribeObservable<String> settingsSource, Writable<String> settingsDestination) {
+	public SettingsGateway(ForwardingObservable<String> settingsSource, Writable<String> settingsDestination) {
 		sourceSubscription = settingsSource.addObserver(settingsObserver);
 		destinationSubscription = settingsDestination.subscribe(updateWriter);
 		writerSubscription = updateWriter.writeTo(settingsDestination);

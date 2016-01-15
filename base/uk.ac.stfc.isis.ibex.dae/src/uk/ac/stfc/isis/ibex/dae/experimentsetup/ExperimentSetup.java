@@ -33,7 +33,7 @@ import uk.ac.stfc.isis.ibex.dae.internal.FileList;
 import uk.ac.stfc.isis.ibex.dae.updatesettings.ObservingUpdateSettings;
 import uk.ac.stfc.isis.ibex.dae.updatesettings.UpdateSettings;
 import uk.ac.stfc.isis.ibex.epics.adapters.UpdatedObservableAdapter;
-import uk.ac.stfc.isis.ibex.epics.observing.InitialiseOnSubscribeObservable;
+import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.epics.pv.Closer;
 import uk.ac.stfc.isis.ibex.model.UpdatedValue;
 
@@ -101,8 +101,8 @@ public class ExperimentSetup extends Closer  {
 	}
 	
 	private UpdatedObservableAdapter<Collection<String>> createAdapter(
-			InitialiseOnSubscribeObservable<String> tables) {
+			ForwardingObservable<String> tables) {
 		FileList files = registerForClose(new FileList(tables));
-		return registerForClose(new UpdatedObservableAdapter<>(new InitialiseOnSubscribeObservable<>(files)));
+		return registerForClose(new UpdatedObservableAdapter<>(new ForwardingObservable<>(files)));
 	}
 }

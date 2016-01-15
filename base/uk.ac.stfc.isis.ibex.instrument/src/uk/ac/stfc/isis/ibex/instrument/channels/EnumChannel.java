@@ -19,7 +19,7 @@
 
 package uk.ac.stfc.isis.ibex.instrument.channels;
 
-import uk.ac.stfc.isis.ibex.epics.observing.ClosableCachingObservable;
+import uk.ac.stfc.isis.ibex.epics.observing.ClosableObservable;
 import uk.ac.stfc.isis.ibex.epics.pv.Channels;
 import uk.ac.stfc.isis.ibex.epics.writing.BaseWritable;
 
@@ -32,7 +32,7 @@ public class EnumChannel<E extends Enum<E>> implements ChannelType<E> {
 	}
 	
 	@Override
-	public ClosableCachingObservable<E> reader(String address) {
+	public ClosableObservable<E> reader(String address) {
 		return Channels.Enums.reader(address, enumType);
 	}
 

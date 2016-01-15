@@ -20,12 +20,12 @@
 package uk.ac.stfc.isis.ibex.ui.dae.run;
 
 import uk.ac.stfc.isis.ibex.dae.DaeRunState;
-import uk.ac.stfc.isis.ibex.epics.observing.InitialiseOnSubscribeObservable;
+import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.TransformingObservable;
 
 public class InstrumentState extends TransformingObservable<DaeRunState, String> {
 	
-	public InstrumentState(InitialiseOnSubscribeObservable<DaeRunState> runStatus) {
+	public InstrumentState(ForwardingObservable<DaeRunState> runStatus) {
 		setSource(runStatus);
 	}
 

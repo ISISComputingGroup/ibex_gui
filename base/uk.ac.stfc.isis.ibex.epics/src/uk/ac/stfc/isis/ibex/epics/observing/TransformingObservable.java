@@ -26,9 +26,9 @@ package uk.ac.stfc.isis.ibex.epics.observing;
  * @param <T1> The type of the first value being observed.
  * @param <T2> The required type to transform to.
  */
-public abstract class TransformingObservable<T1, T2> extends AbstractClosableCachingObservable<T2> {
+public abstract class TransformingObservable<T1, T2> extends ClosableObservable<T2> {
 
-    private ClosableCachingObservable<T1> source;
+    private ClosableObservable<T1> source;
 	private Subscription sourceSubscription;
 
 	private final BaseObserver<T1> sourceObserver = new BaseObserver<T1>() {
@@ -48,7 +48,7 @@ public abstract class TransformingObservable<T1, T2> extends AbstractClosableCac
 		}
 	};
 
-    protected final void setSource(ClosableCachingObservable<T1> source) {
+    protected final void setSource(ClosableObservable<T1> source) {
 		cancelSubscription();
 		this.source = source;
 		sourceObserver.update(source.getValue(), source.lastError(), source.isConnected());

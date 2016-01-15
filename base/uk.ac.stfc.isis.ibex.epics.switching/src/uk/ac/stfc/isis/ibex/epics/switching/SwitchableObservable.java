@@ -19,21 +19,20 @@
 
 package uk.ac.stfc.isis.ibex.epics.switching;
 
-import uk.ac.stfc.isis.ibex.epics.observing.ClosableCachingObservable;
-import uk.ac.stfc.isis.ibex.epics.observing.InitialiseOnSubscribeObservable;
+import uk.ac.stfc.isis.ibex.epics.observing.ClosableObservable;
+import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.epics.pv.Closable;
 
 /**
- * This is not a permanent new class, just a temporary one while refactoring!
- * This should be merged with InitialiseOnSubscribeObservable once changes are
- * made in the code base to use the new switching method.
+ * This is class allows the source observable in ForwardingObservable to be
+ * switched. The old observable is closed when it does so.
  */
-public class SwitchableInitialiseOnSubscribeObservable<T> extends InitialiseOnSubscribeObservable<T> implements Switchable {
+public class SwitchableObservable<T> extends ForwardingObservable<T> implements Switchable {
 
     private Switcher switcher;
-    private ClosableCachingObservable<T> source;
+    private ClosableObservable<T> source;
 
-    public SwitchableInitialiseOnSubscribeObservable(ClosableCachingObservable<T> source) {
+    public SwitchableObservable(ClosableObservable<T> source) {
         super(source);
         this.source = source;
     }
@@ -62,7 +61,7 @@ public class SwitchableInitialiseOnSubscribeObservable<T> extends InitialiseOnSu
      * 
      * @return The source observable.
      */
-    public ClosableCachingObservable<T> getSource() {
+    public ClosableObservable<T> getSource() {
         return source;
     }
 
@@ -71,10 +70,10 @@ public class SwitchableInitialiseOnSubscribeObservable<T> extends InitialiseOnSu
     @Override
     public void setSource(Closable newSource) {
         
-        ClosableCachingObservable<T> castNewSource;
+        ClosableObservable<T> castNewSource;
 
         try {
-            castNewSource = (ClosableCachingObservable<T>) newSource;
+            castNewSource = (ClosableObservable<T>) newSource;
         } catch (ClassCastException e) {
             e.printStackTrace();
             return;

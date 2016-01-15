@@ -26,8 +26,8 @@ import uk.ac.stfc.isis.ibex.configserver.ConfigServer;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Configuration;
 import uk.ac.stfc.isis.ibex.configserver.internal.IocDescriber;
 import uk.ac.stfc.isis.ibex.epics.adapters.TextUpdatedObservableAdapter;
-import uk.ac.stfc.isis.ibex.epics.observing.CachingObservable;
-import uk.ac.stfc.isis.ibex.epics.observing.ClosableCachingObservable;
+import uk.ac.stfc.isis.ibex.epics.observing.Observable;
+import uk.ac.stfc.isis.ibex.epics.observing.ClosableObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.TransformingObservable;
 import uk.ac.stfc.isis.ibex.model.UpdatedValue;
 
@@ -40,7 +40,7 @@ public class ObservableEditableConfiguration
 	private final ConfigServer configServer;
 
 	public ObservableEditableConfiguration(
-			ClosableCachingObservable<Configuration> config,
+			ClosableObservable<Configuration> config,
 			ConfigServer configServer) {
 		this.configServer = configServer;
 		setSource(config);
@@ -61,7 +61,7 @@ public class ObservableEditableConfiguration
 		return new TextUpdatedObservableAdapter(configServer.iocDescription(iocName));
 	}
 	
-	private static <T> Collection<T> valueOrEmptyCollection(CachingObservable<Collection<T>> collection) {
+    private static <T> Collection<T> valueOrEmptyCollection(Observable<Collection<T>> collection) {
 		return collection.getValue() != null ? collection.getValue() : Collections.<T>emptyList();
 	}
 }

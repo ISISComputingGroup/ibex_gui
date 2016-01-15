@@ -19,16 +19,16 @@
 
 package uk.ac.stfc.isis.ibex.configserver.tests.displaying;
 
-import uk.ac.stfc.isis.ibex.epics.observing.BaseCachingObservable;
-import uk.ac.stfc.isis.ibex.epics.observing.InitialiseOnSubscribeObservable;
+import uk.ac.stfc.isis.ibex.epics.observing.Observable;
+import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 
 /**
  * Observable to be used for testing, allows access to setValue, setError and setConnectionChanged methods.
  * 
  * This is final, so no mocking this, or using it outside testing!
  */
-final class TestableIOSObservable<T> extends InitialiseOnSubscribeObservable<T> {
-	public TestableIOSObservable(BaseCachingObservable<T> source) {
+final class TestableIOSObservable<T> extends ForwardingObservable<T> {
+	public TestableIOSObservable(Observable<T> source) {
 		super(source);
 	}
 

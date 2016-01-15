@@ -23,7 +23,7 @@ import java.util.Collection;
 
 import uk.ac.stfc.isis.ibex.epics.conversion.Convert;
 import uk.ac.stfc.isis.ibex.epics.conversion.Converter;
-import uk.ac.stfc.isis.ibex.epics.observing.InitialiseOnSubscribeObservable;
+import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.epics.switching.ObservableFactory;
 import uk.ac.stfc.isis.ibex.epics.switching.OnInstrumentSwitch;
 import uk.ac.stfc.isis.ibex.epics.switching.WritableFactory;
@@ -61,18 +61,18 @@ public class Variables extends InstrumentVariables {
      */
     public static final String NONE_SYNOPTIC_NAME = "-- NONE --";
 
-    public final InitialiseOnSubscribeObservable<SynopticDescription> default_synoptic;
+    public final ForwardingObservable<SynopticDescription> default_synoptic;
 
     public final Writable<String> setSynoptic;
 
     public final Writable<Collection<String>> deleteSynoptics;
 
-    public final InitialiseOnSubscribeObservable<Collection<SynopticInfo>> available;
+    public final ForwardingObservable<Collection<SynopticInfo>> available;
 
     /**
      * An observable for the schema for the synoptics.
      */
-    public InitialiseOnSubscribeObservable<String> synopticSchema;
+    public ForwardingObservable<String> synopticSchema;
 
     /**
      * Default constructor.
@@ -118,7 +118,7 @@ public class Variables extends InstrumentVariables {
 		return new JsonDeserialisingConverter<>(SynopticInfo[].class).apply(Convert.<SynopticInfo>toCollection());
 	}	
 	
-	public InitialiseOnSubscribeObservable<SynopticDescription> getSynopticDescription(String synopticPV) {		
+	public ForwardingObservable<SynopticDescription> getSynopticDescription(String synopticPV) {		
 		return convert(readCompressedClosing(getFullPV(synopticPV)), new InstrumentDescriptionParser());
 	}
 	
@@ -140,23 +140,23 @@ public class Variables extends InstrumentVariables {
 	}	
 	
 	// Some of the synoptic PVs are common to all instruments so should be switched
-	private InitialiseOnSubscribeObservable<String> readCompressed(String address) {
+	private ForwardingObservable<String> readCompressed(String address) {
         return switchingObservableFactory.getSwitchableObservable(new CompressedCharWaveformChannel(),
                 getPvPrefix() + address);
 	}
 	
-	private InitialiseOnSubscribeObservable<String> readCompressedClosing(String address) {
+	private ForwardingObservable<String> readCompressedClosing(String address) {
         return closingObservableFactory.getSwitchableObservable(new CompressedCharWaveformChannel(),
                 getPvPrefix() + address);
 	}	
 	
 	// The following readers/writers are for PVs on the synoptic
 	
-	public InitialiseOnSubscribeObservable<String> defaultReader(String address) {
+	public ForwardingObservable<String> defaultReader(String address) {
         return closingObservableFactory.getSwitchableObservable(new DefaultChannel(), getPvPrefix() + address);
 	}
 
-    public InitialiseOnSubscribeObservable<String> defaultReader(String address, PVType type) {
+    public ForwardingObservable<String> defaultReader(String address, PVType type) {
         // If it is local append the PV prefix, otherwise don't
         if (type == PVType.LOCAL_PV) {
             return closingObservableFactory.getSwitchableObservable(new DefaultChannel(), getPvPrefix() + address);
@@ -165,12 +165,12 @@ public class Variables extends InstrumentVariables {
         }
     }
 
-	public InitialiseOnSubscribeObservable<String> defaultReaderWithoutUnits(String address) {
+	public ForwardingObservable<String> defaultReaderWithoutUnits(String address) {
         return closingObservableFactory.getSwitchableObservable(new DefaultChannelWithoutUnits(),
                 getPvPrefix() + address);
 	}
 	
-    public InitialiseOnSubscribeObservable<String> defaultReaderWithoutUnits(String address, PVType type) {
+    public ForwardingObservable<String> defaultReaderWithoutUnits(String address, PVType type) {
         // If it is local append the PV prefix, otherwise don't
         if (type == PVType.LOCAL_PV) {
             return closingObservableFactory.getSwitchableObservable(new DefaultChannelWithoutUnits(),

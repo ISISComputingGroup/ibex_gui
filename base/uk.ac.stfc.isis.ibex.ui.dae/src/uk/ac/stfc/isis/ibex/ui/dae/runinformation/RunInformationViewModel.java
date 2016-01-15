@@ -22,7 +22,7 @@ package uk.ac.stfc.isis.ibex.ui.dae.runinformation;
 import uk.ac.stfc.isis.ibex.dae.DaeObservables;
 import uk.ac.stfc.isis.ibex.epics.adapters.TextUpdatedObservableAdapter;
 import uk.ac.stfc.isis.ibex.epics.adapters.UpdatedObservableAdapter;
-import uk.ac.stfc.isis.ibex.epics.observing.InitialiseOnSubscribeObservable;
+import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.epics.pv.Closer;
 import uk.ac.stfc.isis.ibex.model.UpdatedValue;
 import uk.ac.stfc.isis.ibex.ui.dae.run.InstrumentState;
@@ -106,7 +106,7 @@ public class RunInformationViewModel extends Closer {
 		npRatio = adapt(observables.npRatio);
 	}
 
-	private <T> UpdatedObservableAdapter<T> adapt(InitialiseOnSubscribeObservable<T> observable) {
+	private <T> UpdatedObservableAdapter<T> adapt(ForwardingObservable<T> observable) {
 		return registerForClose(new UpdatedObservableAdapter<>(observable));
 	}
 }

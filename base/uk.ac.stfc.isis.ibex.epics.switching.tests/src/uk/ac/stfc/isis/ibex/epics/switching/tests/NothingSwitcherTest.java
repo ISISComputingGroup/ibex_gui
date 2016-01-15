@@ -27,12 +27,12 @@ import static org.mockito.Mockito.when;
 import org.junit.Before;
 import org.junit.Test;
 
-import uk.ac.stfc.isis.ibex.epics.observing.ClosableCachingObservable;
+import uk.ac.stfc.isis.ibex.epics.observing.ClosableObservable;
 import uk.ac.stfc.isis.ibex.epics.switching.InstrumentSwitchers;
 import uk.ac.stfc.isis.ibex.epics.switching.NothingSwitcher;
 import uk.ac.stfc.isis.ibex.epics.switching.ObservableFactory;
 import uk.ac.stfc.isis.ibex.epics.switching.OnInstrumentSwitch;
-import uk.ac.stfc.isis.ibex.epics.switching.SwitchableInitialiseOnSubscribeObservable;
+import uk.ac.stfc.isis.ibex.epics.switching.SwitchableObservable;
 import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
 import uk.ac.stfc.isis.ibex.instrument.channels.ChannelType;
 
@@ -44,8 +44,8 @@ public class NothingSwitcherTest {
 
     private ObservableFactory obsFactory;
     private NothingSwitcher nothingSwitcher;
-    private ClosableCachingObservable<String> closableCachingObservable;
-    private ClosableCachingObservable<String> closableCachingObservable2;
+    private ClosableObservable<String> closableCachingObservable;
+    private ClosableObservable<String> closableCachingObservable2;
     private ChannelType<String> channelType;
     private InstrumentInfo instrumentInfo;
 
@@ -56,8 +56,8 @@ public class NothingSwitcherTest {
         instrumentInfo = mock(InstrumentInfo.class);
         when(instrumentInfo.pvPrefix()).thenReturn(PV_PREFIX);
 
-        closableCachingObservable = mock(ClosableCachingObservable.class);
-        closableCachingObservable2 = mock(ClosableCachingObservable.class);
+        closableCachingObservable = mock(ClosableObservable.class);
+        closableCachingObservable2 = mock(ClosableObservable.class);
         
         channelType = mock(ChannelType.class);
         when(channelType.reader(PV_ADDRESS)).thenReturn(closableCachingObservable);
@@ -80,7 +80,7 @@ public class NothingSwitcherTest {
     @Test
     public void observable_factory_registers_pv_with_switcher() {
         // Act
-        SwitchableInitialiseOnSubscribeObservable<String> switchable = obsFactory.getSwitchableObservable(channelType,
+        SwitchableObservable<String> switchable = obsFactory.getSwitchableObservable(channelType,
                 PV_ADDRESS);
 
         // Assert

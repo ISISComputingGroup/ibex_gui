@@ -19,23 +19,22 @@
 
 package uk.ac.stfc.isis.ibex.epics.adapters;
 
-import uk.ac.stfc.isis.ibex.epics.observing.BaseCachingObservable;
-import uk.ac.stfc.isis.ibex.epics.observing.CachingObservable;
-import uk.ac.stfc.isis.ibex.epics.observing.InitialiseOnSubscribeObservable;
-
 import com.google.common.base.Strings;
+
+import uk.ac.stfc.isis.ibex.epics.observing.Observable;
+import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 
 public class TextUpdatedObservableAdapter extends UpdatedObservableAdapter<String> {
 
 	private static final String UNKNOWN = "Unknown";
 	private static final String EMPTY = "";
 	
-	public TextUpdatedObservableAdapter(BaseCachingObservable<String> observable) {
-		super(new InitialiseOnSubscribeObservable<>(observable));
+	public TextUpdatedObservableAdapter(Observable<String> observable) {
+		super(new ForwardingObservable<>(observable));
 	}
 	
 	public TextUpdatedObservableAdapter(
-			InitialiseOnSubscribeObservable<String> observable) {
+			ForwardingObservable<String> observable) {
 		super(observable);
 	}
 	

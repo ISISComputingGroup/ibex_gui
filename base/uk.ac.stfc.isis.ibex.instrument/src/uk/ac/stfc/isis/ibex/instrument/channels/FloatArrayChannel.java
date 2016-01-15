@@ -19,14 +19,14 @@
 
 package uk.ac.stfc.isis.ibex.instrument.channels;
 
-import uk.ac.stfc.isis.ibex.epics.observing.ClosableCachingObservable;
+import uk.ac.stfc.isis.ibex.epics.observing.ClosableObservable;
 import uk.ac.stfc.isis.ibex.epics.pv.Channels;
 import uk.ac.stfc.isis.ibex.epics.writing.BaseWritable;
 
 public class FloatArrayChannel implements ChannelType<float[]> {
 
 	@Override
-	public ClosableCachingObservable<float[]> reader(String address) {
+	public ClosableObservable<float[]> reader(String address) {
 		return Channels.Floats.reader(address);
 	}
 

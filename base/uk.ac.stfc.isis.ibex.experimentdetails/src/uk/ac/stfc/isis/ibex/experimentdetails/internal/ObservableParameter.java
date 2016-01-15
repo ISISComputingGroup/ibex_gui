@@ -20,7 +20,7 @@
 package uk.ac.stfc.isis.ibex.experimentdetails.internal;
 
 import uk.ac.stfc.isis.ibex.epics.observing.BaseObserver;
-import uk.ac.stfc.isis.ibex.epics.observing.InitialiseOnSubscribeObservable;
+import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.epics.writing.Writable;
 import uk.ac.stfc.isis.ibex.experimentdetails.Parameter;
 
@@ -54,9 +54,9 @@ public class ObservableParameter extends Parameter {
 	private final Writable<String> valueSetter;
 	
 	public ObservableParameter(
-			InitialiseOnSubscribeObservable<String> name,
-			InitialiseOnSubscribeObservable<String> units,
-			InitialiseOnSubscribeObservable<String> value,
+			ForwardingObservable<String> name,
+			ForwardingObservable<String> units,
+			ForwardingObservable<String> value,
 			Writable<String> valueSetter) {
 
 		this.valueSetter = valueSetter;

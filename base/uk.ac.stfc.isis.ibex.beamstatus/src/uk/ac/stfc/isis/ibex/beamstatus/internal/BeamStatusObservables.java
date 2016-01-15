@@ -19,7 +19,7 @@
 
 package uk.ac.stfc.isis.ibex.beamstatus.internal;
 
-import uk.ac.stfc.isis.ibex.epics.observing.InitialiseOnSubscribeObservable;
+import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.epics.pv.Closer;
 import uk.ac.stfc.isis.ibex.epics.pv.PVAddress;
 import uk.ac.stfc.isis.ibex.epics.switching.ObservableFactory;
@@ -52,9 +52,9 @@ public class BeamStatusObservables extends Closer {
 	public TargetStation2 ts2 = new TargetStation2();
 
 	public class Synchrotron {
-        public final InitialiseOnSubscribeObservable<Number> beamCurrent = obsFactory
+        public final ForwardingObservable<Number> beamCurrent = obsFactory
                 .getSwitchableObservable(new NumberWithPrecisionChannel(), SYNC.endWith(BEAM_CURRENT));
-        public final InitialiseOnSubscribeObservable<Number> beamFrequency = obsFactory
+        public final ForwardingObservable<Number> beamFrequency = obsFactory
                 .getSwitchableObservable(new NumberWithPrecisionChannel(), SYNC.endWith(FREQ));
 		
 		private Synchrotron() {
@@ -63,11 +63,11 @@ public class BeamStatusObservables extends Closer {
 	
 	public class TargetStation1 extends EndStation {
 		
-        public final InitialiseOnSubscribeObservable<Number> methaneTemperature = obsFactory
+        public final ForwardingObservable<Number> methaneTemperature = obsFactory
                 .getSwitchableObservable(new NumberWithPrecisionChannel(), "TG:TS1:MOD:METH:TEMP");
-        public final InitialiseOnSubscribeObservable<Number> hydrogenTemperature = obsFactory
+        public final ForwardingObservable<Number> hydrogenTemperature = obsFactory
                 .getSwitchableObservable(new NumberWithPrecisionChannel(), "TG:TS1:MOD:HDGN:TEMP");
-        public final InitialiseOnSubscribeObservable<OnOff> muonKicker = obsFactory
+        public final ForwardingObservable<OnOff> muonKicker = obsFactory
                 .getSwitchableObservable(new EnumChannel<OnOff>(OnOff.class), "AC:MUON:KICKR:STAT");
 
 		private TargetStation1() {
@@ -76,13 +76,13 @@ public class BeamStatusObservables extends Closer {
 	}
 	
 	public class TargetStation2 extends EndStation {		
-        public final InitialiseOnSubscribeObservable<Number> coupledMethaneTemperature;
-		public final InitialiseOnSubscribeObservable<Number> coupledHydrogenTemperature;
-		public final InitialiseOnSubscribeObservable<Number> decoupledMethaneTemperature;
-		public final InitialiseOnSubscribeObservable<Number> decoupledModeratorRuntime;
-		public final InitialiseOnSubscribeObservable<Number> decoupledModeratorRuntimeLimit;
-		public final InitialiseOnSubscribeObservable<YesNo> decoupledModeratorAnnealPressure;
-		public final InitialiseOnSubscribeObservable<Number> decoupledModeratorUAHBeam;
+        public final ForwardingObservable<Number> coupledMethaneTemperature;
+		public final ForwardingObservable<Number> coupledHydrogenTemperature;
+		public final ForwardingObservable<Number> decoupledMethaneTemperature;
+		public final ForwardingObservable<Number> decoupledModeratorRuntime;
+		public final ForwardingObservable<Number> decoupledModeratorRuntimeLimit;
+		public final ForwardingObservable<YesNo> decoupledModeratorAnnealPressure;
+		public final ForwardingObservable<Number> decoupledModeratorUAHBeam;
 
 		private TargetStation2() {
 			super(TS2);
@@ -104,12 +104,12 @@ public class BeamStatusObservables extends Closer {
 	}
 	
 	public class EndStation {
-		private final InitialiseOnSubscribeObservable<OnOff> beam;
-		private final InitialiseOnSubscribeObservable<Number> pps;
-		private final InitialiseOnSubscribeObservable<Number> beamCurrent;
-		private final InitialiseOnSubscribeObservable<Number> uAHToday;
-		private final InitialiseOnSubscribeObservable<String> lastBeamOff;
-		private final InitialiseOnSubscribeObservable<String> lastBeamOn;
+		private final ForwardingObservable<OnOff> beam;
+		private final ForwardingObservable<Number> pps;
+		private final ForwardingObservable<Number> beamCurrent;
+		private final ForwardingObservable<Number> uAHToday;
+		private final ForwardingObservable<String> lastBeamOff;
+		private final ForwardingObservable<String> lastBeamOn;
 		
 		protected EndStation(PVAddress suffix) {
 
@@ -121,11 +121,11 @@ public class BeamStatusObservables extends Closer {
             lastBeamOn = obsFactory.getSwitchableObservable(new DateTimeChannel(), suffix.endWith("BEAMOFF:TIME"));
 		}
 		
-		public InitialiseOnSubscribeObservable<OnOff> beam() { return beam; }
-		public InitialiseOnSubscribeObservable<Number> pps() { return pps; }
-		public InitialiseOnSubscribeObservable<Number> beamCurrent() { return beamCurrent; }
-		public InitialiseOnSubscribeObservable<Number> uAHToday() { return uAHToday; }
-		public InitialiseOnSubscribeObservable<String> lastBeamOff() { return lastBeamOff; }
-		public InitialiseOnSubscribeObservable<String> lastBeamOn() { return lastBeamOn; }
+		public ForwardingObservable<OnOff> beam() { return beam; }
+		public ForwardingObservable<Number> pps() { return pps; }
+		public ForwardingObservable<Number> beamCurrent() { return beamCurrent; }
+		public ForwardingObservable<Number> uAHToday() { return uAHToday; }
+		public ForwardingObservable<String> lastBeamOff() { return lastBeamOff; }
+		public ForwardingObservable<String> lastBeamOn() { return lastBeamOn; }
 	}
 }

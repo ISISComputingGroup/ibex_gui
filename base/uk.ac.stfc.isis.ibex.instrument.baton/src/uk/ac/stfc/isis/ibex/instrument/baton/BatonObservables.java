@@ -19,7 +19,7 @@
 
 package uk.ac.stfc.isis.ibex.instrument.baton;
 
-import uk.ac.stfc.isis.ibex.epics.observing.InitialiseOnSubscribeObservable;
+import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.epics.switching.ObservableFactory;
 import uk.ac.stfc.isis.ibex.epics.switching.OnInstrumentSwitch;
 import uk.ac.stfc.isis.ibex.epics.switching.WritableFactory;
@@ -37,7 +37,7 @@ public class BatonObservables {
     private final WritableFactory writeFactory = new WritableFactory(OnInstrumentSwitch.SWITCH);
 
     public final Writable<String> requestPV;
-    public final InitialiseOnSubscribeObservable<String> controlPV;
+    public final ForwardingObservable<String> controlPV;
     public final String self = UserName.get() + "@" + MachineName.get();
 
     public BatonObservables() {

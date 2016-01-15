@@ -25,7 +25,7 @@ import java.util.Map;
 
 import uk.ac.stfc.isis.ibex.configserver.configuration.PV;
 import uk.ac.stfc.isis.ibex.configserver.pv.ChannelTypeLookup;
-import uk.ac.stfc.isis.ibex.epics.observing.ClosableCachingObservable;
+import uk.ac.stfc.isis.ibex.epics.observing.ClosableObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.TransformingObservable;
 import uk.ac.stfc.isis.ibex.instrument.channels.ChannelType;
 
@@ -33,7 +33,7 @@ public class ChannelResolver extends TransformingObservable<Collection<PV>, Chan
 	
 	private Map<String, PV> lookup = new HashMap<>();
 	
-	public ChannelResolver(ClosableCachingObservable<Collection<PV>> source) {
+	public ChannelResolver(ClosableObservable<Collection<PV>> source) {
 		setSource(source);
 	}
 

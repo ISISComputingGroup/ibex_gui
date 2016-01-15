@@ -26,8 +26,8 @@ import static org.mockito.Mockito.*;
 import org.junit.Before;
 import org.junit.Test;
 
-import uk.ac.stfc.isis.ibex.epics.observing.BaseCachingObservable;
-import uk.ac.stfc.isis.ibex.epics.observing.InitialiseOnSubscribeObservable;
+import uk.ac.stfc.isis.ibex.epics.observing.Observable;
+import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.Observer;
 import uk.ac.stfc.isis.ibex.epics.observing.Unsubscriber;
 
@@ -38,13 +38,13 @@ public class InitialiseOnSubscribeObservableTest {
     Observer<String> mockObserver;
     Observer<String> mockObserverTwo;
 	
-	BaseCachingObservable<String> mockObservable;
+	Observable<String> mockObservable;
 	TestableObservable<String> testableObservable;
 	
 	Object addObserverReturnedObject;
 	
-	InitialiseOnSubscribeObservable<String> initObservableCachingSource;
-	InitialiseOnSubscribeObservable<String> initObservableTestableSource;
+	ForwardingObservable<String> initObservableCachingSource;
+	ForwardingObservable<String> initObservableTestableSource;
 	
 	@Before
 	public void setUp() {
@@ -58,11 +58,11 @@ public class InitialiseOnSubscribeObservableTest {
 		testableObservable.setError(TestHelpers.exception);		
 
 		// The real observables to test
-		initObservableCachingSource = new InitialiseOnSubscribeObservable<>(mockObservable);
+		initObservableCachingSource = new ForwardingObservable<>(mockObservable);
 		initObservableCachingSource.addObserver(mockObserver);
 		initObservableCachingSource.addObserver(mockObserverTwo);
 		
-		initObservableTestableSource = new InitialiseOnSubscribeObservable<>(testableObservable);
+		initObservableTestableSource = new ForwardingObservable<>(testableObservable);
 		addObserverReturnedObject = initObservableTestableSource.addObserver(mockObserver);
 		initObservableTestableSource.addObserver(mockObserverTwo);
 	}

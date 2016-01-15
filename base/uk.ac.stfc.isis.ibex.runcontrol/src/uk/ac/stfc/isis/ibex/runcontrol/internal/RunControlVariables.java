@@ -19,7 +19,7 @@
 
 package uk.ac.stfc.isis.ibex.runcontrol.internal;
 
-import uk.ac.stfc.isis.ibex.epics.observing.InitialiseOnSubscribeObservable;
+import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.epics.switching.ObservableFactory;
 import uk.ac.stfc.isis.ibex.epics.switching.OnInstrumentSwitch;
 import uk.ac.stfc.isis.ibex.epics.switching.WritableFactory;
@@ -40,22 +40,22 @@ public class RunControlVariables {
     public RunControlVariables() {
 	}
 	
-	public InitialiseOnSubscribeObservable<String> blockRunControlLowLimit(String blockName) {
+	public ForwardingObservable<String> blockRunControlLowLimit(String blockName) {
         return obsFactory.getSwitchableObservable(new DefaultChannel(),
                 Instrument.getInstance().getPvPrefix() + runControlAddresses.getLowLimitPv(blockName));
 	}
 	
-	public InitialiseOnSubscribeObservable<String> blockRunControlHighLimit(String blockName) {
+	public ForwardingObservable<String> blockRunControlHighLimit(String blockName) {
         return obsFactory.getSwitchableObservable(new DefaultChannel(),
                 Instrument.getInstance().getPvPrefix() + runControlAddresses.getHighLimitPv(blockName));
 	}
 	
-	public InitialiseOnSubscribeObservable<String> blockRunControlInRange(String blockName) {
+	public ForwardingObservable<String> blockRunControlInRange(String blockName) {
         return obsFactory.getSwitchableObservable(new DefaultChannel(),
                 Instrument.getInstance().getPvPrefix() + runControlAddresses.getInRangePv(blockName));
 	}
 	
-	public InitialiseOnSubscribeObservable<String> blockRunControlEnabled(String blockName) {
+	public ForwardingObservable<String> blockRunControlEnabled(String blockName) {
         return obsFactory.getSwitchableObservable(new DefaultChannel(),
                 Instrument.getInstance().getPvPrefix() + runControlAddresses.getEnablePv(blockName));
 	}

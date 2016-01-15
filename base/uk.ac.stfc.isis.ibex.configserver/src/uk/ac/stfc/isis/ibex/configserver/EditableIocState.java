@@ -20,7 +20,7 @@
 package uk.ac.stfc.isis.ibex.configserver;
 
 import uk.ac.stfc.isis.ibex.epics.observing.BaseObserver;
-import uk.ac.stfc.isis.ibex.epics.observing.InitialiseOnSubscribeObservable;
+import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.Observer;
 import uk.ac.stfc.isis.ibex.epics.writing.Writer;
 
@@ -45,7 +45,7 @@ public class EditableIocState extends IocState {
 
 	public EditableIocState(
 			IocState iocState, 
-			InitialiseOnSubscribeObservable<String> description,
+			ForwardingObservable<String> description,
 			Writer<String> setDescription) {
 		super(iocState);
 		description.addObserver(descriptionObserver);

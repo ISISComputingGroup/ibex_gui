@@ -21,7 +21,7 @@ package uk.ac.stfc.isis.ibex.banner;
 
 import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
 import uk.ac.stfc.isis.ibex.epics.conversion.Converter;
-import uk.ac.stfc.isis.ibex.epics.observing.InitialiseOnSubscribeObservable;
+import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.epics.switching.ObservableFactory;
 import uk.ac.stfc.isis.ibex.epics.switching.OnInstrumentSwitch;
 import uk.ac.stfc.isis.ibex.epics.switching.WritableFactory;
@@ -50,8 +50,8 @@ public class Observables {
 		}
 	};
 
-    public final InitialiseOnSubscribeObservable<BumpStopState> bumpStop;
-    public final InitialiseOnSubscribeObservable<InMotionState> inMotion;
+    public final ForwardingObservable<BumpStopState> bumpStop;
+    public final ForwardingObservable<InMotionState> inMotion;
     public final Writable<Long> stop;
 	
     public Observables() {

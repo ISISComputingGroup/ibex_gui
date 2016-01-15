@@ -19,14 +19,14 @@
 
 package uk.ac.stfc.isis.ibex.instrument.channels;
 
-import uk.ac.stfc.isis.ibex.epics.observing.ClosableCachingObservable;
+import uk.ac.stfc.isis.ibex.epics.observing.ClosableObservable;
 import uk.ac.stfc.isis.ibex.epics.pv.Channels;
 import uk.ac.stfc.isis.ibex.epics.writing.BaseWritable;
 
 public class IntegerChannel implements ChannelType<Integer> {
 
 	@Override
-	public ClosableCachingObservable<Integer> reader(String address) {
+	public ClosableObservable<Integer> reader(String address) {
 		return Channels.Integers.reader(address);
 	}
 

@@ -24,7 +24,7 @@ import java.util.Collections;
 
 import uk.ac.stfc.isis.ibex.configserver.EditableIocState;
 import uk.ac.stfc.isis.ibex.configserver.IocState;
-import uk.ac.stfc.isis.ibex.epics.observing.InitialiseOnSubscribeObservable;
+import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.ObservablePair;
 import uk.ac.stfc.isis.ibex.epics.observing.Pair;
 import uk.ac.stfc.isis.ibex.epics.observing.TransformingObservable;
@@ -39,8 +39,8 @@ import com.google.common.collect.Lists;
 public class FilteredIocs extends 
 	TransformingObservable<Pair<Collection<EditableIocState>, Collection<String>>, Collection<EditableIocState>> {
 	
-	public FilteredIocs(InitialiseOnSubscribeObservable<Collection<EditableIocState>> iocs,
-			InitialiseOnSubscribeObservable<Collection<String>> iocsToFilter) {
+	public FilteredIocs(ForwardingObservable<Collection<EditableIocState>> iocs,
+			ForwardingObservable<Collection<String>> iocsToFilter) {
 		setSource(new ObservablePair<>(iocs, iocsToFilter));
 	}
 

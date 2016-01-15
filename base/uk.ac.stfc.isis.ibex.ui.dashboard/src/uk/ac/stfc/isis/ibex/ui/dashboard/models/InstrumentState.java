@@ -23,7 +23,7 @@ import org.eclipse.swt.graphics.Color;
 
 import uk.ac.stfc.isis.ibex.dae.DaeRunState;
 import uk.ac.stfc.isis.ibex.epics.observing.BaseObserver;
-import uk.ac.stfc.isis.ibex.epics.observing.InitialiseOnSubscribeObservable;
+import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.Observer;
 import uk.ac.stfc.isis.ibex.epics.observing.Subscription;
 import uk.ac.stfc.isis.ibex.epics.pv.Closable;
@@ -56,7 +56,7 @@ public class InstrumentState implements Closable {
 	private final SettableUpdatedValue<String> text;
 	private final SettableUpdatedValue<Color> color;
 	
-	public InstrumentState(InitialiseOnSubscribeObservable<DaeRunState> source) {
+	public InstrumentState(ForwardingObservable<DaeRunState> source) {
 		text = new SettableUpdatedValue<>();
 		color = new SettableUpdatedValue<>();
 		sourceSubscription = source.addObserver(sourceObserver);

@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import uk.ac.stfc.isis.ibex.dae.DaeRunState;
-import uk.ac.stfc.isis.ibex.epics.observing.InitialiseOnSubscribeObservable;
+import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.epics.writing.Writable;
 
 public final class Pause extends DaeAction {
@@ -36,8 +36,8 @@ public final class Pause extends DaeAction {
 	}
 	
 	public Pause(Writable<String> target,
-			InitialiseOnSubscribeObservable<Boolean> inStateTransition,
-			InitialiseOnSubscribeObservable<DaeRunState> runState) {
+			ForwardingObservable<Boolean> inStateTransition,
+			ForwardingObservable<DaeRunState> runState) {
 		super(target, inStateTransition, runState);
 	}
 

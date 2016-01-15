@@ -23,7 +23,13 @@ import uk.ac.stfc.isis.ibex.epics.pv.Closable;
 import uk.ac.stfc.isis.ibex.epics.writing.SameTypeWritable;
 import uk.ac.stfc.isis.ibex.epics.writing.Writable;
 
-public class SwitchableWritable<T> extends SameTypeWritable<T>implements Switchable {
+/**
+ * This class provides a writable with a source that can be change. Primarily
+ * this would be used for writing to a PV that changes on instrument switch.
+ * 
+ * @param <T>
+ */
+public class SwitchableWritable<T> extends SameTypeWritable<T> implements Switchable {
 
     private Switcher switcher;
     private Writable<T> source;

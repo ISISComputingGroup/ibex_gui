@@ -29,9 +29,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 import uk.ac.stfc.isis.ibex.epics.conversion.Converter;
-import uk.ac.stfc.isis.ibex.epics.observing.InitialiseOnSubscribeObservable;
+import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.epics.switching.ObservableFactory;
-import uk.ac.stfc.isis.ibex.epics.switching.SwitchableInitialiseOnSubscribeObservable;
+import uk.ac.stfc.isis.ibex.epics.switching.SwitchableObservable;
 import uk.ac.stfc.isis.ibex.epics.switching.WritableFactory;
 import uk.ac.stfc.isis.ibex.epics.writing.SameTypeWritable;
 import uk.ac.stfc.isis.ibex.epics.writing.Writable;
@@ -59,8 +59,8 @@ public class VariablesTest {
 	@Before
 	public void set_up(){
 		// Arrange
-        SwitchableInitialiseOnSubscribeObservable switchableObservable = mock(
-                SwitchableInitialiseOnSubscribeObservable.class);
+        SwitchableObservable switchableObservable = mock(
+                SwitchableObservable.class);
 
         SameTypeWritable mockClosableWritable = mock(SameTypeWritable.class);
 
@@ -114,7 +114,7 @@ public class VariablesTest {
 	@Test
 	public final void get_default_reader_address() {
 		// Act
-		InitialiseOnSubscribeObservable<String> actual = variables.defaultReader(synopticPV);
+		ForwardingObservable<String> actual = variables.defaultReader(synopticPV);
 		
 		// Assert
 		assertNotNull(actual);
@@ -126,7 +126,7 @@ public class VariablesTest {
 	@Test
 	public final void get_default_reader_address_and_local() {
 		// Act
-		InitialiseOnSubscribeObservable<String> actual = variables.defaultReader(synopticPV, PVType.LOCAL_PV);
+		ForwardingObservable<String> actual = variables.defaultReader(synopticPV, PVType.LOCAL_PV);
 		
 		// Assert
 		assertNotNull(actual);
@@ -138,7 +138,7 @@ public class VariablesTest {
 	@Test
 	public final void get_default_reader_address_and_remote() {
 		// Act
-		InitialiseOnSubscribeObservable<String> actual = variables.defaultReader(synopticPV, PVType.REMOTE_PV);
+		ForwardingObservable<String> actual = variables.defaultReader(synopticPV, PVType.REMOTE_PV);
 		
 		// Assert
 		assertNotNull(actual);
@@ -150,7 +150,7 @@ public class VariablesTest {
 	@Test
 	public final void get_default_reader_without_units_address() {
 		// Act
-		InitialiseOnSubscribeObservable<String> actual = variables.defaultReaderWithoutUnits(synopticPV);
+		ForwardingObservable<String> actual = variables.defaultReaderWithoutUnits(synopticPV);
 		
 		// Assert
 		assertNotNull(actual);
@@ -162,7 +162,7 @@ public class VariablesTest {
 	@Test
 	public final void get_default_reader_without_units_address_and_local() {
 		// Act
-		InitialiseOnSubscribeObservable<String> actual = variables.defaultReaderWithoutUnits(synopticPV, PVType.LOCAL_PV);
+		ForwardingObservable<String> actual = variables.defaultReaderWithoutUnits(synopticPV, PVType.LOCAL_PV);
 		
 		// Assert
 		assertNotNull(actual);
@@ -174,7 +174,7 @@ public class VariablesTest {
 	@Test
 	public final void get_default_reader_without_units_address_and_remote() {
 		// Act
-		InitialiseOnSubscribeObservable<String> actual = variables.defaultReaderWithoutUnits(synopticPV, PVType.REMOTE_PV);
+		ForwardingObservable<String> actual = variables.defaultReaderWithoutUnits(synopticPV, PVType.REMOTE_PV);
 		
 		// Assert
 		assertNotNull(actual);
