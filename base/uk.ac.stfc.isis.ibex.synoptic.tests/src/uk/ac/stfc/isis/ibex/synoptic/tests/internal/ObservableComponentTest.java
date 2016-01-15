@@ -30,7 +30,7 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
-import uk.ac.stfc.isis.ibex.epics.observing.InitialiseOnSubscribeObservable;
+import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.Observer;
 import uk.ac.stfc.isis.ibex.epics.observing.Subscription;
 import uk.ac.stfc.isis.ibex.instrument.pv.PVType;
@@ -112,7 +112,7 @@ public class ObservableComponentTest {
 	
         Observer<String> mockObserver = mock(Observer.class);
 		
-		InitialiseOnSubscribeObservable<String> mockObservable = mock(InitialiseOnSubscribeObservable.class);
+		ForwardingObservable<String> mockObservable = mock(ForwardingObservable.class);
 		when(mockObservable.addObserver(any(Observer.class))).thenReturn(mockSub);
 		when(mockObservable.addObserver(mockObserver)).thenReturn(mockSub);
 		when(mockObservable.getValue()).thenReturn(synopticDescription);

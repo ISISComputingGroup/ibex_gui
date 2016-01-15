@@ -21,7 +21,7 @@ package uk.ac.stfc.isis.ibex.motor.observable;
 
 import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
 import uk.ac.stfc.isis.ibex.epics.conversion.Converter;
-import uk.ac.stfc.isis.ibex.epics.observing.InitialiseOnSubscribeObservable;
+import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.epics.pv.PVAddress;
 import uk.ac.stfc.isis.ibex.epics.switching.ObservableFactory;
 import uk.ac.stfc.isis.ibex.epics.switching.WritableFactory;
@@ -38,10 +38,10 @@ public class MotorSetPointVariables extends InstrumentVariables {
 		}
 	};
 	
-	public final InitialiseOnSubscribeObservable<Double> value;
-	public final InitialiseOnSubscribeObservable<Double> setPoint;
+	public final ForwardingObservable<Double> value;
+	public final ForwardingObservable<Double> setPoint;
 	public final Writable<Double> setPointSetter;
-	public final InitialiseOnSubscribeObservable<Boolean> canHome;
+	public final ForwardingObservable<Boolean> canHome;
 	public final Writable<Double> homeSetter;
 	
     public MotorSetPointVariables(PVAddress motorAddress, ObservableFactory obsFactory, WritableFactory writeFactory) {

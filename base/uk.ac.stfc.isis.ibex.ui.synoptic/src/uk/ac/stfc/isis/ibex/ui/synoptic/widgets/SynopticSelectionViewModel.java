@@ -26,7 +26,7 @@ import java.util.Collection;
 import uk.ac.stfc.isis.ibex.configserver.Configurations;
 import uk.ac.stfc.isis.ibex.configserver.displaying.DisplayConfiguration;
 import uk.ac.stfc.isis.ibex.epics.observing.BaseObserver;
-import uk.ac.stfc.isis.ibex.epics.observing.InitialiseOnSubscribeObservable;
+import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.Subscription;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 import uk.ac.stfc.isis.ibex.synoptic.Synoptic;
@@ -38,7 +38,7 @@ import uk.ac.stfc.isis.ibex.synoptic.SynopticInfo;
 public class SynopticSelectionViewModel extends ModelObject {
 
 	private static Synoptic synoptic = Synoptic.getInstance();
-	private static final InitialiseOnSubscribeObservable<DisplayConfiguration> CONFIG = 
+	private static final ForwardingObservable<DisplayConfiguration> CONFIG = 
 			Configurations.getInstance().display().displayCurrentConfig();
 	
 	private static String RECOMMENDED_STRING = " (recommended)";

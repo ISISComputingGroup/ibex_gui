@@ -5,7 +5,7 @@ import static org.mockito.Mockito.*;
 import org.junit.Before;
 import org.junit.Test;
 
-import uk.ac.stfc.isis.ibex.epics.observing.InitialiseOnSubscribeObservable;
+import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.Observer;
 import uk.ac.stfc.isis.ibex.epics.observing.Unsubscriber;
 
@@ -15,7 +15,7 @@ public class UnsubscriberTest {
 	private Observer<String> mockObserver;
 	
 	private TestableObservable<String> testableObservable;
-	private InitialiseOnSubscribeObservable<String> observable;
+	private ForwardingObservable<String> observable;
 	
 	private Unsubscriber<String> subscription;
 
@@ -25,7 +25,7 @@ public class UnsubscriberTest {
 		mockObserver = mock(Observer.class);
 		
 		testableObservable = new TestableObservable<>();
-		observable = new InitialiseOnSubscribeObservable<String>(testableObservable);
+		observable = new ForwardingObservable<String>(testableObservable);
 		
 		subscription = (Unsubscriber<String>) observable.addObserver(mockObserver);
 	}

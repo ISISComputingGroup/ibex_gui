@@ -20,7 +20,7 @@
 package uk.ac.stfc.isis.ibex.dashboard;
 
 import uk.ac.stfc.isis.ibex.dae.DaeObservables;
-import uk.ac.stfc.isis.ibex.epics.observing.InitialiseOnSubscribeObservable;
+import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.epics.switching.ObservableFactory;
 import uk.ac.stfc.isis.ibex.epics.switching.OnInstrumentSwitch;
 import uk.ac.stfc.isis.ibex.instrument.Instrument;
@@ -40,9 +40,9 @@ public class DashboardObservables extends InstrumentVariables {
     private static final String USERS = "ED:SURNAME";
     private final ObservableFactory obsFactory = new ObservableFactory(OnInstrumentSwitch.SWITCH);
     
-    public final InitialiseOnSubscribeObservable<ShutterStatus> shutter;
-    public final InitialiseOnSubscribeObservable<String> instrumentTime;
-    public final InitialiseOnSubscribeObservable<String> users;
+    public final ForwardingObservable<ShutterStatus> shutter;
+    public final ForwardingObservable<String> instrumentTime;
+    public final ForwardingObservable<String> users;
 		
 	public final DaeObservables dae;
 

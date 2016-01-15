@@ -29,7 +29,7 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.MockitoAnnotations;
 
-import uk.ac.stfc.isis.ibex.epics.observing.InitialiseOnSubscribeObservable;
+import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.ObservablePair;
 import uk.ac.stfc.isis.ibex.epics.observing.Observer;
 import uk.ac.stfc.isis.ibex.epics.observing.Pair;
@@ -47,8 +47,8 @@ public class ObservablePairTest {
 	private TestableObservable<String> testableStringObservable;
 	private TestableObservable<Integer> testableIntegerObservable;
 	
-	private InitialiseOnSubscribeObservable<String> initStringObservable;
-	private InitialiseOnSubscribeObservable<Integer> initIntegerObservable;
+	private ForwardingObservable<String> initStringObservable;
+	private ForwardingObservable<Integer> initIntegerObservable;
 	
 	private ObservablePair<String, Integer> observablePair;
 	
@@ -64,11 +64,11 @@ public class ObservablePairTest {
 		
 		testableStringObservable = new TestableObservable<>();
 		testableStringObservable.setValue(TestHelpers.STRING_VALUE);
-		initStringObservable = new InitialiseOnSubscribeObservable<>(testableStringObservable);
+		initStringObservable = new ForwardingObservable<>(testableStringObservable);
 		
 		testableIntegerObservable = new TestableObservable<Integer>();
 		testableIntegerObservable.setValue(TestHelpers.INT_VALUE);
-		initIntegerObservable = new InitialiseOnSubscribeObservable<>(testableIntegerObservable);
+		initIntegerObservable = new ForwardingObservable<>(testableIntegerObservable);
 		
 		observablePair = new ObservablePair<String, Integer>(initStringObservable, initIntegerObservable);
 		observablePair.addObserver(mockObserver);

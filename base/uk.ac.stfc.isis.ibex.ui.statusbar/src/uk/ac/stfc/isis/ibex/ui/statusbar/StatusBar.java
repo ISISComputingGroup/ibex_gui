@@ -30,7 +30,7 @@ import org.osgi.framework.BundleContext;
 import uk.ac.stfc.isis.ibex.configserver.Configurations;
 import uk.ac.stfc.isis.ibex.configserver.displaying.DisplayConfiguration;
 import uk.ac.stfc.isis.ibex.epics.observing.BaseObserver;
-import uk.ac.stfc.isis.ibex.epics.observing.InitialiseOnSubscribeObservable;
+import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.Subscription;
 
 
@@ -74,7 +74,7 @@ public class StatusBar extends AbstractUIPlugin{
 	}
 	
 	public void subscribeToConfig() {
-		InitialiseOnSubscribeObservable<DisplayConfiguration> CONFIG = 
+		ForwardingObservable<DisplayConfiguration> CONFIG = 
 				Configurations.getInstance().display().displayCurrentConfig();
 		
 		configSubscription = CONFIG.addObserver(configObserver);

@@ -20,7 +20,7 @@
 package uk.ac.stfc.isis.ibex.motor.observable;
 
 import uk.ac.stfc.isis.ibex.epics.adapters.UpdatedObservableAdapter;
-import uk.ac.stfc.isis.ibex.epics.observing.InitialiseOnSubscribeObservable;
+import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.epics.writing.SameTypeWriter;
 import uk.ac.stfc.isis.ibex.motor.MotorSetpoint;
 
@@ -57,7 +57,7 @@ public class ObservableMotorSetpoint extends MotorSetpoint {
 		return canHome.getValue();
 	}
 
-	private <T> UpdatedObservableAdapter<T> adapt(InitialiseOnSubscribeObservable<T> variable, String field) {
+	private <T> UpdatedObservableAdapter<T> adapt(ForwardingObservable<T> variable, String field) {
 		UpdatedObservableAdapter<T> adapted = new UpdatedObservableAdapter<>(variable);
 		adapted.addPropertyChangeListener(raiseEventsFor(field));
 		

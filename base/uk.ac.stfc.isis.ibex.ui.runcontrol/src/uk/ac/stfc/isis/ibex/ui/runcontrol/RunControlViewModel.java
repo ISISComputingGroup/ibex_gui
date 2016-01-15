@@ -24,7 +24,7 @@ import java.util.Collection;
 import uk.ac.stfc.isis.ibex.configserver.ConfigServer;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Block;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Configuration;
-import uk.ac.stfc.isis.ibex.epics.observing.InitialiseOnSubscribeObservable;
+import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.epics.writing.Writer;
 import uk.ac.stfc.isis.ibex.runcontrol.RunControlServer;
 import uk.ac.stfc.isis.ibex.validators.ErrorMessageProvider;
@@ -36,7 +36,7 @@ import uk.ac.stfc.isis.ibex.validators.RunControlValidator;
  */
 public class RunControlViewModel extends ErrorMessageProvider {
 
-    private InitialiseOnSubscribeObservable<Configuration> currentConfigObserver;
+    private ForwardingObservable<Configuration> currentConfigObserver;
     private RunControlServer runControlServer;
 
     private RunControlValidator runControlValidator = new RunControlValidator();

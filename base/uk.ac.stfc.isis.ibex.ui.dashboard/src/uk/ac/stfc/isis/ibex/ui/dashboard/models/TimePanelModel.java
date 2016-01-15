@@ -21,7 +21,7 @@ package uk.ac.stfc.isis.ibex.ui.dashboard.models;
 
 import uk.ac.stfc.isis.ibex.dashboard.DashboardObservables;
 import uk.ac.stfc.isis.ibex.epics.adapters.TextUpdatedObservableAdapter;
-import uk.ac.stfc.isis.ibex.epics.observing.InitialiseOnSubscribeObservable;
+import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.ObservablePair;
 import uk.ac.stfc.isis.ibex.epics.pv.Closer;
 import uk.ac.stfc.isis.ibex.model.UpdatedValue;
@@ -53,7 +53,7 @@ public class TimePanelModel extends Closer {
 	private UpdatedValue<String> createPeriod(DashboardObservables observables) {
 		return registerForClose(
 				new TextUpdatedObservableAdapter(
-						new InitialiseOnSubscribeObservable<String>(
+						new ForwardingObservable<String>(
 								new ObservableSimpleRatio<>(
 										new ObservablePair<>(observables.dae.currentPeriod, observables.dae.totalPeriods)))));
 	}

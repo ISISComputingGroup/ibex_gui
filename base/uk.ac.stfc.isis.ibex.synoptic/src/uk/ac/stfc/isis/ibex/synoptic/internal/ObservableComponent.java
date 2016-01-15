@@ -21,7 +21,7 @@ package uk.ac.stfc.isis.ibex.synoptic.internal;
 
 import java.util.List;
 
-import uk.ac.stfc.isis.ibex.epics.observing.InitialiseOnSubscribeObservable;
+import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.epics.writing.Writable;
 import uk.ac.stfc.isis.ibex.instrument.pv.PVType;
 import uk.ac.stfc.isis.ibex.synoptic.Synoptic;
@@ -87,11 +87,11 @@ public class ObservableComponent extends BaseComponent {
 
 	private ComponentProperty getProperty(PV pv) {
 		PVType pvType = pv.getPvType();
-        InitialiseOnSubscribeObservable<String> reader = variables.defaultReader(pv.address(), pvType);
+        ForwardingObservable<String> reader = variables.defaultReader(pv.address(), pvType);
 		switch(pv.recordType().io()) {
 			case WRITE:
 				Writable<String> destination = variables.defaultWritable(pv.address(), pvType);
-                InitialiseOnSubscribeObservable<String> readerWithoutUnits = variables
+                ForwardingObservable<String> readerWithoutUnits = variables
                         .defaultReaderWithoutUnits(pv.address());
 				return new WritableComponentProperty(pv.displayName(), readerWithoutUnits, destination);
 			case READ:

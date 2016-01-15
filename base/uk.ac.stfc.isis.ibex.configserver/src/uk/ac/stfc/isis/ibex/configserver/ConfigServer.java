@@ -29,7 +29,7 @@ import uk.ac.stfc.isis.ibex.configserver.editing.EditableIoc;
 import uk.ac.stfc.isis.ibex.configserver.internal.FilteredIocs;
 import uk.ac.stfc.isis.ibex.configserver.internal.IocStateEditingConverter;
 import uk.ac.stfc.isis.ibex.epics.observing.ConvertingObservable;
-import uk.ac.stfc.isis.ibex.epics.observing.InitialiseOnSubscribeObservable;
+import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.epics.pv.Closer;
 import uk.ac.stfc.isis.ibex.epics.writing.ConfigurableWriter;
 import uk.ac.stfc.isis.ibex.epics.writing.LoggingForwardingWritable;
@@ -48,11 +48,11 @@ public class ConfigServer extends Closer {
 		this.variables = variables;
 	}
 
-	public InitialiseOnSubscribeObservable<String> blockValue(String blockName) {
+	public ForwardingObservable<String> blockValue(String blockName) {
 		return variables.blockValue(blockName);
 	}
 	
-	public InitialiseOnSubscribeObservable<String> blockDescription(String blockName) {
+	public ForwardingObservable<String> blockDescription(String blockName) {
 		return variables.blockDescription(blockName);
 	}
 	
@@ -60,35 +60,35 @@ public class ConfigServer extends Closer {
 		return variables.blockServerAlias(blockName);
 	}
 	
-	public InitialiseOnSubscribeObservable<ServerStatus> serverStatus() {
+	public ForwardingObservable<ServerStatus> serverStatus() {
 		return variables.serverStatus;
 	}
 
-	public InitialiseOnSubscribeObservable<Configuration> currentConfig() {
+	public ForwardingObservable<Configuration> currentConfig() {
 		return variables.currentConfig;
 	}
 
-	public InitialiseOnSubscribeObservable<Configuration> blankConfig() {
+	public ForwardingObservable<Configuration> blankConfig() {
 		return variables.blankConfig;
 	}
 
-	public InitialiseOnSubscribeObservable<Configuration> config(String configName) {
+	public ForwardingObservable<Configuration> config(String configName) {
 		return variables.config(configName);
 	}
 
-	public InitialiseOnSubscribeObservable<Collection<ConfigInfo>> configsInfo() {
+	public ForwardingObservable<Collection<ConfigInfo>> configsInfo() {
 		return variables.configsInfo;
 	}
 
-	public InitialiseOnSubscribeObservable<Collection<ConfigInfo>> componentsInfo() {
+	public ForwardingObservable<Collection<ConfigInfo>> componentsInfo() {
 		return variables.componentsInfo;
 	}
 
-	public InitialiseOnSubscribeObservable<Collection<EditableIoc>> iocs() {
+	public ForwardingObservable<Collection<EditableIoc>> iocs() {
 		return variables.iocs;
 	}
 
-	public InitialiseOnSubscribeObservable<String> iocDescription(String iocName) {
+	public ForwardingObservable<String> iocDescription(String iocName) {
 		return variables.iocDescription(iocName);
 	}
 
@@ -96,19 +96,19 @@ public class ConfigServer extends Closer {
 		return registerForClose(ClosableSameTypeWriter.newInstance(variables.iocDescriptionSetter(name)));
 	}
 	
-	public InitialiseOnSubscribeObservable<Collection<PV>> pvs() {
+	public ForwardingObservable<Collection<PV>> pvs() {
 		return variables.pvs;
 	}
 	
-	public InitialiseOnSubscribeObservable<Collection<PV>> active_pvs() {
+	public ForwardingObservable<Collection<PV>> active_pvs() {
 		return variables.active_pvs;
 	}
 
-	public InitialiseOnSubscribeObservable<Collection<Component>> components() {
+	public ForwardingObservable<Collection<Component>> components() {
 		return variables.components;
 	}
 
-	public InitialiseOnSubscribeObservable<Configuration> component(String componentName) {
+	public ForwardingObservable<Configuration> component(String componentName) {
 		return variables.component(componentName);
 	}
 	
@@ -148,12 +148,12 @@ public class ConfigServer extends Closer {
 		return ConfigInfo.names(componentsInfo().getValue());
 	}
 	
-	public InitialiseOnSubscribeObservable<Collection<EditableIocState>> iocStates() {
-		InitialiseOnSubscribeObservable<Collection<EditableIocState>> iocs = 
-				new InitialiseOnSubscribeObservable<>(
+	public ForwardingObservable<Collection<EditableIocState>> iocStates() {
+		ForwardingObservable<Collection<EditableIocState>> iocs = 
+				new ForwardingObservable<>(
 						new ConvertingObservable<>(variables.iocStates, new IocStateEditingConverter(this)));
 		
-		return new InitialiseOnSubscribeObservable<>(new FilteredIocs(iocs, variables.protectedIocs));
+		return new ForwardingObservable<>(new FilteredIocs(iocs, variables.protectedIocs));
 	}
 	
 	public SetCommand<Collection<String>> startIoc() {

@@ -33,7 +33,7 @@ import uk.ac.stfc.isis.ibex.configserver.Configurations;
 import uk.ac.stfc.isis.ibex.configserver.displaying.DisplayConfiguration;
 import uk.ac.stfc.isis.ibex.configserver.displaying.DisplayGroup;
 import uk.ac.stfc.isis.ibex.epics.observing.BaseObserver;
-import uk.ac.stfc.isis.ibex.epics.observing.InitialiseOnSubscribeObservable;
+import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.Subscription;
 import uk.ac.stfc.isis.ibex.ui.blocks.groups.GroupsPanel;
 
@@ -44,7 +44,7 @@ public class BlocksView extends ViewPart implements ISizeProvider {
 	public static final String ID = "uk.ac.stfc.isis.ibex.ui.blocks.views.BlocksView"; //$NON-NLS-1$
 	public static final int FIXED_HEIGHT = 250;	
 
-	private static final InitialiseOnSubscribeObservable<DisplayConfiguration> CONFIG = 
+	private static final ForwardingObservable<DisplayConfiguration> CONFIG = 
 			Configurations.getInstance().display().displayCurrentConfig();
 
 	private GroupsPanel groups;

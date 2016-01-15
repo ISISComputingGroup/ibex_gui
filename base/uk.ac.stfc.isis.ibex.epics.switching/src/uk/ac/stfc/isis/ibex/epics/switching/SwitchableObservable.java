@@ -20,14 +20,14 @@
 package uk.ac.stfc.isis.ibex.epics.switching;
 
 import uk.ac.stfc.isis.ibex.epics.observing.ClosableObservable;
-import uk.ac.stfc.isis.ibex.epics.observing.InitialiseOnSubscribeObservable;
+import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.epics.pv.Closable;
 
 /**
  * This is class allows the source observable in ForwardingObservable to be
  * switched. The old observable is closed when it does so.
  */
-public class SwitchableObservable<T> extends InitialiseOnSubscribeObservable<T> implements Switchable {
+public class SwitchableObservable<T> extends ForwardingObservable<T> implements Switchable {
 
     private Switcher switcher;
     private ClosableObservable<T> source;

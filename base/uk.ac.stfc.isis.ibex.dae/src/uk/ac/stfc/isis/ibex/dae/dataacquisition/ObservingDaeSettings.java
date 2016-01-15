@@ -20,7 +20,7 @@
 package uk.ac.stfc.isis.ibex.dae.dataacquisition;
 
 import uk.ac.stfc.isis.ibex.dae.internal.SettingsGateway;
-import uk.ac.stfc.isis.ibex.epics.observing.InitialiseOnSubscribeObservable;
+import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.epics.pv.Closable;
 import uk.ac.stfc.isis.ibex.epics.writing.Writable;
 
@@ -28,7 +28,7 @@ public class ObservingDaeSettings extends XmlBackedDaeSettings implements Closab
 
 	private final SettingsGateway gateway;
 
-	public ObservingDaeSettings(InitialiseOnSubscribeObservable<String> settingsSource, Writable<String> settingsDestination) {
+	public ObservingDaeSettings(ForwardingObservable<String> settingsSource, Writable<String> settingsDestination) {
 
 		gateway = new SettingsGateway(settingsSource, settingsDestination) {	
 			@Override

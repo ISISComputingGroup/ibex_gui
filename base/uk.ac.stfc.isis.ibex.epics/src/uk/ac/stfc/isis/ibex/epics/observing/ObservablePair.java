@@ -56,7 +56,7 @@ public class ObservablePair<T1, T2> extends ClosableObservable<Pair<T1, T2>> {
 	private final Subscription firstSubscription;
 	private final Subscription secondSubscription;
 	
-	public ObservablePair(InitialiseOnSubscribeObservable<T1> firstSource, InitialiseOnSubscribeObservable<T2> secondSource) {
+	public ObservablePair(ForwardingObservable<T1> firstSource, ForwardingObservable<T2> secondSource) {
 		firstSubscription = firstSource.addObserver(firstObserver);
 		secondSubscription = secondSource.addObserver(secondObserver);
 	}

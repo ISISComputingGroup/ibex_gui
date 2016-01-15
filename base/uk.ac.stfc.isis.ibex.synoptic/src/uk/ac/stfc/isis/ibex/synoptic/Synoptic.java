@@ -26,7 +26,7 @@ import org.apache.logging.log4j.Logger;
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
 
-import uk.ac.stfc.isis.ibex.epics.observing.InitialiseOnSubscribeObservable;
+import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.epics.pv.Closer;
 import uk.ac.stfc.isis.ibex.epics.writing.Writable;
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
@@ -87,7 +87,7 @@ public class Synoptic extends Closer implements BundleActivator {
 		return new SynopticModel(variables);
 	}
 	
-	public InitialiseOnSubscribeObservable<Collection<SynopticInfo>> availableSynopticsInfo() {
+	public ForwardingObservable<Collection<SynopticInfo>> availableSynopticsInfo() {
 		return variables.available;
 	}
 	
@@ -119,7 +119,7 @@ public class Synoptic extends Closer implements BundleActivator {
 		return viewerModelObserver;
 	}
 	
-	public InitialiseOnSubscribeObservable<SynopticDescription> synoptic(SynopticInfo synoptic) {
+	public ForwardingObservable<SynopticDescription> synoptic(SynopticInfo synoptic) {
 		return variables.getSynopticDescription(synoptic.pv());
 	}
 	

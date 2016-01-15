@@ -18,7 +18,7 @@ package uk.ac.stfc.isis.ibex.runcontrol;
 * http://opensource.org/licenses/eclipse-1.0.php
 */
 
-import uk.ac.stfc.isis.ibex.epics.observing.InitialiseOnSubscribeObservable;
+import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.epics.pv.Closer;
 import uk.ac.stfc.isis.ibex.epics.writing.ClosableSameTypeWriter;
 import uk.ac.stfc.isis.ibex.epics.writing.Writer;
@@ -35,19 +35,19 @@ public class RunControlServer extends Closer {
 		this.variables = variables;
 	}
 	
-	public InitialiseOnSubscribeObservable<String> blockRunControlLowLimit(String blockName) {
+	public ForwardingObservable<String> blockRunControlLowLimit(String blockName) {
 		return variables.blockRunControlLowLimit(blockName);
 	}
 	
-	public InitialiseOnSubscribeObservable<String> blockRunControlHighLimit(String blockName) {
+	public ForwardingObservable<String> blockRunControlHighLimit(String blockName) {
 		return variables.blockRunControlHighLimit(blockName);
 	}
 	
-	public InitialiseOnSubscribeObservable<String> blockRunControlInRange(String blockName) {
+	public ForwardingObservable<String> blockRunControlInRange(String blockName) {
 		return variables.blockRunControlInRange(blockName);
 	}
 	
-	public InitialiseOnSubscribeObservable<String> blockRunControlEnabled(String blockName) {
+	public ForwardingObservable<String> blockRunControlEnabled(String blockName) {
 		return variables.blockRunControlEnabled(blockName);
 	}
 

@@ -21,7 +21,7 @@ package uk.ac.stfc.isis.ibex.ui.dashboard.models;
 
 import uk.ac.stfc.isis.ibex.dashboard.ShutterStatus;
 import uk.ac.stfc.isis.ibex.epics.observing.BaseObserver;
-import uk.ac.stfc.isis.ibex.epics.observing.InitialiseOnSubscribeObservable;
+import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.Observer;
 import uk.ac.stfc.isis.ibex.epics.observing.Subscription;
 import uk.ac.stfc.isis.ibex.epics.pv.Closable;
@@ -52,7 +52,7 @@ public class ShutterState implements Closable {
 	private final Subscription sourceSubscription;
 	private final SettableUpdatedValue<String> text;
 	
-	public ShutterState(InitialiseOnSubscribeObservable<ShutterStatus> source) {
+	public ShutterState(ForwardingObservable<ShutterStatus> source) {
 		text = new SettableUpdatedValue<>();
 		sourceSubscription = source.addObserver(sourceObserver);
 	}

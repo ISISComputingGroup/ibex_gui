@@ -22,7 +22,7 @@ package uk.ac.stfc.isis.ibex.experimentdetails.internal;
 import java.util.Collection;
 
 import uk.ac.stfc.isis.ibex.epics.conversion.Converter;
-import uk.ac.stfc.isis.ibex.epics.observing.InitialiseOnSubscribeObservable;
+import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.epics.switching.ObservableFactory;
 import uk.ac.stfc.isis.ibex.epics.switching.OnInstrumentSwitch;
 import uk.ac.stfc.isis.ibex.epics.switching.WritableFactory;
@@ -44,15 +44,15 @@ public class ExperimentDetailsVariables extends InstrumentVariables {
     private final ObservableFactory obsFactory = new ObservableFactory(OnInstrumentSwitch.SWITCH);
     private final WritableFactory writeFactory = new WritableFactory(OnInstrumentSwitch.SWITCH);
 
-    public final InitialiseOnSubscribeObservable<Collection<String>> availableSampleParameters;
-    public final InitialiseOnSubscribeObservable<Collection<String>> availableBeamParameters;
-    public final InitialiseOnSubscribeObservable<Collection<Parameter>> sampleParameters;
-    public final InitialiseOnSubscribeObservable<Collection<Parameter>> beamParameters;
+    public final ForwardingObservable<Collection<String>> availableSampleParameters;
+    public final ForwardingObservable<Collection<String>> availableBeamParameters;
+    public final ForwardingObservable<Collection<Parameter>> sampleParameters;
+    public final ForwardingObservable<Collection<Parameter>> beamParameters;
 
-    public final InitialiseOnSubscribeObservable<String> rbNumber;
+    public final ForwardingObservable<String> rbNumber;
     public final Writable<String> rbNumberSetter;
 
-    public final InitialiseOnSubscribeObservable<Collection<UserDetails>> userDetails;
+    public final ForwardingObservable<Collection<UserDetails>> userDetails;
     public final Writable<UserDetails[]> userDetailsSetter;
 
     public ExperimentDetailsVariables() {
@@ -78,15 +78,15 @@ public class ExperimentDetailsVariables extends InstrumentVariables {
 		return new ConvertingWritable<>(destination, converter);
 	}
 	
-	public InitialiseOnSubscribeObservable<String> parameterName(String address) {
+	public ForwardingObservable<String> parameterName(String address) {
         return obsFactory.getSwitchableObservable(new StringChannel(), addPrefix(address + ".DESC"));
 	}
 	
-	public InitialiseOnSubscribeObservable<String> parameterUnits(String address) {
+	public ForwardingObservable<String> parameterUnits(String address) {
         return obsFactory.getSwitchableObservable(new StringChannel(), addPrefix(address + ".EGU"));
 	}
 	
-	public InitialiseOnSubscribeObservable<String> parameterValue(String address) {
+	public ForwardingObservable<String> parameterValue(String address) {
         return obsFactory.getSwitchableObservable(new DefaultChannelWithoutUnits(), addPrefix(address));
 	}
 

@@ -24,7 +24,7 @@ package uk.ac.stfc.isis.ibex.epics.observing;
  * An observable whose source is another observable.
  *
  */
-public abstract class ForwardingObservable<T> extends ClosableObservable<T> {
+public class ForwardingObservable<T> extends ClosableObservable<T> {
 		
 	private final BaseObserver<T> sourceObserver = new BaseObserver<T>() {
 		@Override
@@ -44,6 +44,10 @@ public abstract class ForwardingObservable<T> extends ClosableObservable<T> {
 	};
 	
 	private Subscription sourceSubscription;
+
+    public ForwardingObservable(Observable<T> source) {
+        setSource(source);
+    }
 
     protected synchronized void setSource(Observable<T> newSource) {
 		cancelSubscription();	
@@ -74,4 +78,10 @@ public abstract class ForwardingObservable<T> extends ClosableObservable<T> {
 			sourceSubscription.removeObserver();
 		}
 	}
+
+    @Override
+    public Subscription addObserver(Observer<T> observer) {
+        observer.update(getValue(), lastError(), isConnected());
+        return super.addObserver(observer);
+    }
 }

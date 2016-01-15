@@ -23,7 +23,7 @@ import uk.ac.stfc.isis.ibex.beamstatus.internal.BeamStatusObservables;
 import uk.ac.stfc.isis.ibex.beamstatus.internal.EnumConverter;
 import uk.ac.stfc.isis.ibex.beamstatus.internal.NumberConverter;
 import uk.ac.stfc.isis.ibex.epics.adapters.ModelAdapter;
-import uk.ac.stfc.isis.ibex.epics.observing.InitialiseOnSubscribeObservable;
+import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.model.UpdatedValue;
 
 /**
@@ -112,11 +112,11 @@ public class Observables extends ModelAdapter {
 		public UpdatedValue<String> lastBeamOn() { return lastBeamOn; }
 	}
 
-	private UpdatedValue<String> adaptNumber(InitialiseOnSubscribeObservable<Number> observable) {
+	private UpdatedValue<String> adaptNumber(ForwardingObservable<Number> observable) {
 		return adapt(convert(observable, new NumberConverter()));
 	}
 
-	private <E extends Enum<E>> UpdatedValue<String> adaptEnum(InitialiseOnSubscribeObservable<E> observable) {
+	private <E extends Enum<E>> UpdatedValue<String> adaptEnum(ForwardingObservable<E> observable) {
 		return adapt(convert(observable, new EnumConverter<E>()));
 	}
 }

@@ -21,7 +21,7 @@ package uk.ac.stfc.isis.ibex.motor.observable;
 
 import uk.ac.stfc.isis.ibex.epics.adapters.TextUpdatedObservableAdapter;
 import uk.ac.stfc.isis.ibex.epics.adapters.UpdatedObservableAdapter;
-import uk.ac.stfc.isis.ibex.epics.observing.InitialiseOnSubscribeObservable;
+import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.epics.switching.SwitchableObservable;
 import uk.ac.stfc.isis.ibex.motor.Motor;
 import uk.ac.stfc.isis.ibex.motor.MotorDirection;
@@ -126,14 +126,14 @@ public class ObservableMotor extends Motor {
 		return status.getValue();
 	}
 	
-	private <T> UpdatedObservableAdapter<T> adapt(InitialiseOnSubscribeObservable<T> variable, String field) {
+	private <T> UpdatedObservableAdapter<T> adapt(ForwardingObservable<T> variable, String field) {
 		UpdatedObservableAdapter<T> adapted = new UpdatedObservableAdapter<>(variable);
 		adapted.addPropertyChangeListener(raiseEventsFor(field));
 		
 		return adapted;
 	}
 	
-	private TextUpdatedObservableAdapter textAdapt(InitialiseOnSubscribeObservable<String> variable, String field) {
+	private TextUpdatedObservableAdapter textAdapt(ForwardingObservable<String> variable, String field) {
 		TextUpdatedObservableAdapter adapted = new TextUpdatedObservableAdapter(variable);
 		adapted.addPropertyChangeListener(raiseEventsFor(field));
 		

@@ -28,7 +28,7 @@ import uk.ac.stfc.isis.ibex.configserver.configuration.Block;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Configuration;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Group;
 import uk.ac.stfc.isis.ibex.epics.observing.ClosableObservable;
-import uk.ac.stfc.isis.ibex.epics.observing.InitialiseOnSubscribeObservable;
+import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.TransformingObservable;
 import uk.ac.stfc.isis.ibex.runcontrol.RunControlServer;
 
@@ -66,8 +66,8 @@ public class DisplayConfiguration extends TransformingObservable<Configuration, 
 	}
 
 	@Override
-	public InitialiseOnSubscribeObservable<DisplayConfiguration> displayCurrentConfig() {
-		return new InitialiseOnSubscribeObservable<>(this);
+	public ForwardingObservable<DisplayConfiguration> displayCurrentConfig() {
+		return new ForwardingObservable<>(this);
 	}
 
 	@Override
