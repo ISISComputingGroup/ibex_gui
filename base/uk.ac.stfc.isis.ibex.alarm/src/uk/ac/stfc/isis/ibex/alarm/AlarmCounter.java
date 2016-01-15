@@ -61,9 +61,13 @@ public class AlarmCounter extends ModelObject {
     }
 
 	public void resetCount() {
-		count = 0;
+        fireCountChanged(count, count = 0);
 	}
 	
+    public void forceRefresh() {
+        fireCountChanged(count, count = Alarm.getDefault().getAlarmModel().getActiveAlarms().length);
+	}
+
 	/**
      * Use of runnable to avoid error between SWT and BEAST
      * 
