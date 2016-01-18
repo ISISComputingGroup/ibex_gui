@@ -91,7 +91,7 @@ $(pv_value)</tooltip>
     </background_color>
     <width>289</width>
     <x>66</x>
-    <name>Rectangle</name>
+    <name>Background</name>
     <y>54</y>
     <fill_level>0.0</fill_level>
     <foreground_color>
@@ -197,7 +197,7 @@ $(pv_value)</tooltip>
     </background_color>
     <width>175</width>
     <x>444</x>
-    <name>Text Update_1</name>
+    <name>CurrentPosition</name>
     <y>156</y>
     <foreground_color>
       <color red="0" green="0" blue="0" />
@@ -294,7 +294,7 @@ $(pv_value)</tooltip>
     </background_color>
     <width>120</width>
     <x>471</x>
-    <name>Action Button</name>
+    <name>ViewMotor</name>
     <y>342</y>
     <foreground_color>
       <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
@@ -344,7 +344,7 @@ $(pv_value)</tooltip>
     </background_color>
     <width>88</width>
     <x>471</x>
-    <name>Label</name>
+    <name>MoveCompleteLabel</name>
     <y>249</y>
     <foreground_color>
       <color red="0" green="0" blue="0" />
@@ -385,7 +385,7 @@ $(pv_value)</tooltip>
     <widget_type>Button</widget_type>
     <width>80</width>
     <x>490</x>
-    <name>Button</name>
+    <name>ReloadPositions</name>
     <y>390</y>
     <foreground_color>
       <color red="0" green="0" blue="0" />
@@ -450,7 +450,7 @@ $(pv_value)</tooltip>
       <color red="255" green="255" blue="255" />
     </background_color>
     <password_input>false</password_input>
-    <name>Text</name>
+    <name>TargetPositionLabel</name>
     <width>175</width>
     <x>444</x>
     <y>24</y>
@@ -506,7 +506,7 @@ $(pv_value)</tooltip>
       <color red="255" green="255" blue="255" />
     </background_color>
     <password_input>false</password_input>
-    <name>Text_1</name>
+    <name>CurrentPositionLabel</name>
     <width>175</width>
     <x>444</x>
     <y>120</y>
@@ -530,12 +530,7 @@ $(pv_value)</tooltip>
     <wuid>194106b1:151a16241f2:-7c98</wuid>
     <pv_value />
     <scripts>
-      <path pathString="EmbeddedJs" checkConnect="true" sfe="false" seoe="false">
-        <scriptName>InitialiseToRunningMode</scriptName>
-        <scriptText><![CDATA[importPackage(Packages.org.csstudio.opibuilder.scriptUtil);
-importPackage(Packages.org.csstudio.platform.data);
-display.getWidget("Mode Selector").setValue("Running");
-pvs[1].setValue("Running");]]></scriptText>
+      <path pathString="Scripts/Initialise.js" checkConnect="true" sfe="false" seoe="false">
         <pv trig="true">loc://useToInit</pv>
         <pv trig="false">loc://Mode</pv>
       </path>
