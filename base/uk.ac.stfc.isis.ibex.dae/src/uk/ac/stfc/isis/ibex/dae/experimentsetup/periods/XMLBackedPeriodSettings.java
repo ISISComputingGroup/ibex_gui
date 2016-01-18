@@ -23,14 +23,19 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.apache.logging.log4j.Logger;
+
 import uk.ac.stfc.isis.ibex.dae.xml.DoubleNode;
 import uk.ac.stfc.isis.ibex.dae.xml.EnumNode;
 import uk.ac.stfc.isis.ibex.dae.xml.IntegerNode;
 import uk.ac.stfc.isis.ibex.dae.xml.StringNode;
 import uk.ac.stfc.isis.ibex.dae.xml.XmlFile;
 import uk.ac.stfc.isis.ibex.dae.xml.XmlNode;
+import uk.ac.stfc.isis.ibex.logger.IsisLog;
 
 public class XMLBackedPeriodSettings extends PeriodSettings {
+
+    private static final Logger LOG = IsisLog.getLogger(XMLBackedPeriodSettings.class);
 		
 	private static final int NUMBER_OF_PERIODS = 8;
 	
@@ -109,6 +114,12 @@ public class XMLBackedPeriodSettings extends PeriodSettings {
 	}
 	
 	private void initialiseFromXml() {
+        if (setupSource == null || periodFile == null || periodType == null || softwarePeriods == null
+                || hardwarePeriods == null || outputDelay == null) {
+            LOG.info("Error, Period Settings were not initialised correctly from the XML.");
+            return;
+        }
+
 		super.setSetupSource(setupSource.value());
 		super.setPeriodFile(periodFile.value());
 		super.setPeriodType(periodType.value());
