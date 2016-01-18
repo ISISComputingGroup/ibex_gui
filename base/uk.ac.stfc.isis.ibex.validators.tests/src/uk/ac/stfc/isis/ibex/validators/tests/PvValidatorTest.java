@@ -30,10 +30,6 @@ import org.junit.Test;
 
 import uk.ac.stfc.isis.ibex.validators.PvValidator;
 
-/**
- * @author kvlb23
- *
- */
 public class PvValidatorTest {
 
     /**

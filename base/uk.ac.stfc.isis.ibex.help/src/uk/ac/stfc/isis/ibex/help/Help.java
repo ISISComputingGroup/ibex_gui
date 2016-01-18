@@ -25,7 +25,6 @@ import org.osgi.framework.BundleContext;
 import uk.ac.stfc.isis.ibex.epics.adapters.TextUpdatedObservableAdapter;
 import uk.ac.stfc.isis.ibex.epics.pv.Closer;
 import uk.ac.stfc.isis.ibex.help.internal.Observables;
-import uk.ac.stfc.isis.ibex.instrument.Instrument;
 import uk.ac.stfc.isis.ibex.model.UpdatedValue;
 
 public class Help extends Closer implements BundleActivator {
@@ -43,7 +42,7 @@ public class Help extends Closer implements BundleActivator {
 	
 	public Help() {
 		instance = this;
-		observables = registerForClose(new Observables(Instrument.getInstance().channels()));
+        observables = registerForClose(new Observables());
 		revision = registerForClose(new TextUpdatedObservableAdapter(observables.revision));
 		date = registerForClose(new TextUpdatedObservableAdapter(observables.date));
 	}
@@ -52,7 +51,8 @@ public class Help extends Closer implements BundleActivator {
 	 * (non-Javadoc)
 	 * @see org.osgi.framework.BundleActivator#start(org.osgi.framework.BundleContext)
 	 */
-	public void start(BundleContext bundleContext) throws Exception {
+	@Override
+    public void start(BundleContext bundleContext) throws Exception {
 		Help.context = bundleContext;
 	}
 
@@ -64,7 +64,8 @@ public class Help extends Closer implements BundleActivator {
 	 * (non-Javadoc)
 	 * @see org.osgi.framework.BundleActivator#stop(org.osgi.framework.BundleContext)
 	 */
-	public void stop(BundleContext bundleContext) throws Exception {
+	@Override
+    public void stop(BundleContext bundleContext) throws Exception {
 		Help.context = null;
 		close();
 	}

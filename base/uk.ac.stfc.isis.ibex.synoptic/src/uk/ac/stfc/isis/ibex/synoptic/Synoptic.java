@@ -26,10 +26,9 @@ import org.apache.logging.log4j.Logger;
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
 
-import uk.ac.stfc.isis.ibex.epics.observing.InitialiseOnSubscribeObservable;
+import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.epics.pv.Closer;
 import uk.ac.stfc.isis.ibex.epics.writing.Writable;
-import uk.ac.stfc.isis.ibex.instrument.Instrument;
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
 import uk.ac.stfc.isis.ibex.synoptic.internal.Variables;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.SynopticDescription;
@@ -52,7 +51,7 @@ public class Synoptic extends Closer implements BundleActivator {
 	public Synoptic() {
 		instance = this;
 		
-		variables = registerForClose(new Variables(Instrument.getInstance().channels()));	
+        variables = registerForClose(new Variables());
 		
 		viewerModel = new SynopticModel(variables);
 		viewerModelObserver = new ObservingSynopticModel(variables, viewerModel);
@@ -88,7 +87,7 @@ public class Synoptic extends Closer implements BundleActivator {
 		return new SynopticModel(variables);
 	}
 	
-	public InitialiseOnSubscribeObservable<Collection<SynopticInfo>> availableSynopticsInfo() {
+	public ForwardingObservable<Collection<SynopticInfo>> availableSynopticsInfo() {
 		return variables.available;
 	}
 	
@@ -120,7 +119,7 @@ public class Synoptic extends Closer implements BundleActivator {
 		return viewerModelObserver;
 	}
 	
-	public InitialiseOnSubscribeObservable<SynopticDescription> synoptic(SynopticInfo synoptic) {
+	public ForwardingObservable<SynopticDescription> synoptic(SynopticInfo synoptic) {
 		return variables.getSynopticDescription(synoptic.pv());
 	}
 	
@@ -132,7 +131,8 @@ public class Synoptic extends Closer implements BundleActivator {
 	 * (non-Javadoc)
 	 * @see org.osgi.framework.BundleActivator#start(org.osgi.framework.BundleContext)
 	 */
-	public void start(BundleContext bundleContext) throws Exception {
+	@Override
+    public void start(BundleContext bundleContext) throws Exception {
 		Synoptic.context = bundleContext;
 	}
 
@@ -140,7 +140,8 @@ public class Synoptic extends Closer implements BundleActivator {
 	 * (non-Javadoc)
 	 * @see org.osgi.framework.BundleActivator#stop(org.osgi.framework.BundleContext)
 	 */
-	public void stop(BundleContext bundleContext) throws Exception {
+	@Override
+    public void stop(BundleContext bundleContext) throws Exception {
 		Synoptic.context = null;
 		close();
 	}

@@ -20,15 +20,15 @@
 package uk.ac.stfc.isis.ibex.configserver;
 
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
-import uk.ac.stfc.isis.ibex.epics.observing.InitialiseOnSubscribeObservable;
+import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 
 public interface Editing {
 
-	InitialiseOnSubscribeObservable<EditableConfiguration> currentConfig();
+	ForwardingObservable<EditableConfiguration> currentConfig();
 	
-	InitialiseOnSubscribeObservable<EditableConfiguration> blankConfig();
+	ForwardingObservable<EditableConfiguration> blankConfig();
 	
-	InitialiseOnSubscribeObservable<EditableConfiguration> config(String configName);
+	ForwardingObservable<EditableConfiguration> config(String configName);
 	
-	InitialiseOnSubscribeObservable<EditableConfiguration> component(String componentName);
+	ForwardingObservable<EditableConfiguration> component(String componentName);
 }

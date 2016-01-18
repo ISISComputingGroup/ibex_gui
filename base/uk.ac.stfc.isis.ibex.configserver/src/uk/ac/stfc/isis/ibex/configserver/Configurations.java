@@ -35,7 +35,6 @@ import uk.ac.stfc.isis.ibex.configserver.recent.RecentConfigList;
 import uk.ac.stfc.isis.ibex.epics.observing.LoggingObserver;
 import uk.ac.stfc.isis.ibex.epics.observing.Subscription;
 import uk.ac.stfc.isis.ibex.epics.pv.Closer;
-import uk.ac.stfc.isis.ibex.instrument.Instrument;
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
 import uk.ac.stfc.isis.ibex.runcontrol.RunControlActivator;
 import uk.ac.stfc.isis.ibex.runcontrol.RunControlServer;
@@ -61,7 +60,7 @@ public class Configurations extends Closer implements BundleActivator {
 		instance = this;
 		
 		recent = new RecentConfigList();		
-		variables = registerForClose(new ConfigServerVariables(Instrument.getInstance().channels(), new JsonConverters()));
+        variables = registerForClose(new ConfigServerVariables(new JsonConverters()));
 		server = registerForClose(new ConfigServer(variables));
 		runcontrol = RunControlActivator.getInstance().getServer();
 		
@@ -112,7 +111,8 @@ public class Configurations extends Closer implements BundleActivator {
 	 * (non-Javadoc)
 	 * @see org.osgi.framework.BundleActivator#start(org.osgi.framework.BundleContext)
 	 */
-	public void start(BundleContext bundleContext) throws Exception {
+	@Override
+    public void start(BundleContext bundleContext) throws Exception {
 		Configurations.context = bundleContext;
 	}
 
@@ -120,7 +120,8 @@ public class Configurations extends Closer implements BundleActivator {
 	 * (non-Javadoc)
 	 * @see org.osgi.framework.BundleActivator#stop(org.osgi.framework.BundleContext)
 	 */
-	public void stop(BundleContext bundleContext) throws Exception {
+	@Override
+    public void stop(BundleContext bundleContext) throws Exception {
 		Configurations.context = null;
 
 		for (Subscription subscription : loggingSubscriptions) {

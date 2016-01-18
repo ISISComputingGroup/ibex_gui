@@ -91,7 +91,7 @@ public class BlockLogSettingsPanel extends Composite {
                 BeanProperties.value("enabled").observe(viewModel));
 
         bindingContext.bindValue(WidgetProperties.selection().observe(cmboType),
-                BeanProperties.value("periodic").observe(viewModel));
+                BeanProperties.value("comboText").observe(viewModel));
 
         bindingContext.bindValue(WidgetProperties.text().observe(lblSettings),
                 BeanProperties.value("labelText").observe(viewModel));

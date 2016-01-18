@@ -25,7 +25,6 @@ import org.osgi.framework.BundleContext;
 import uk.ac.stfc.isis.ibex.experimentdetails.database.SearchModel;
 import uk.ac.stfc.isis.ibex.experimentdetails.internal.ExperimentDetailsVariables;
 import uk.ac.stfc.isis.ibex.experimentdetails.internal.ObservableModel;
-import uk.ac.stfc.isis.ibex.instrument.Instrument;
 
 public class ExperimentDetails extends AbstractUIPlugin {
 
@@ -42,7 +41,7 @@ public class ExperimentDetails extends AbstractUIPlugin {
 	
 	public ExperimentDetails() {
 		instance = this;		
-		variables = new ExperimentDetailsVariables(Instrument.getInstance().channels()); //prefixes the PV
+        variables = new ExperimentDetailsVariables();
 		model = new ObservableModel(variables);
 		searchModel = new SearchModel();
 	}
@@ -63,7 +62,8 @@ public class ExperimentDetails extends AbstractUIPlugin {
 	 * (non-Javadoc)
 	 * @see org.osgi.framework.BundleActivator#start(org.osgi.framework.BundleContext)
 	 */
-	public void start(BundleContext bundleContext) throws Exception {
+	@Override
+    public void start(BundleContext bundleContext) throws Exception {
 		ExperimentDetails.context = bundleContext;
 		
 	}
@@ -72,7 +72,8 @@ public class ExperimentDetails extends AbstractUIPlugin {
 	 * (non-Javadoc)
 	 * @see org.osgi.framework.BundleActivator#stop(org.osgi.framework.BundleContext)
 	 */
-	public void stop(BundleContext bundleContext) throws Exception {
+	@Override
+    public void stop(BundleContext bundleContext) throws Exception {
 		ExperimentDetails.context = null;
 		
 		variables.close();

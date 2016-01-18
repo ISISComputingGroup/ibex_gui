@@ -22,7 +22,7 @@ package uk.ac.stfc.isis.ibex.ui.banner.models;
 import org.eclipse.swt.graphics.Color;
 
 import uk.ac.stfc.isis.ibex.epics.observing.BaseObserver;
-import uk.ac.stfc.isis.ibex.epics.observing.InitialiseOnSubscribeObservable;
+import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.Observer;
 import uk.ac.stfc.isis.ibex.epics.observing.Subscription;
 import uk.ac.stfc.isis.ibex.epics.pv.Closable;
@@ -61,7 +61,7 @@ public class BatonUserObserver implements Closable {
 	protected final SettableUpdatedValue<Boolean> availability;
 	
 	public BatonUserObserver(
-			InitialiseOnSubscribeObservable<String> observable, String self) {
+			ForwardingObservable<String> observable, String self) {
 		text = new SettableUpdatedValue<>();
 		color = new SettableUpdatedValue<>();
 		availability = new SettableUpdatedValue<>();

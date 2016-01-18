@@ -21,6 +21,7 @@ package uk.ac.stfc.isis.ibex.configserver.json;
 
 import java.util.Collection;
 
+import uk.ac.stfc.isis.ibex.configserver.BlockRules;
 import uk.ac.stfc.isis.ibex.configserver.IocState;
 import uk.ac.stfc.isis.ibex.configserver.ServerStatus;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Component;
@@ -53,6 +54,11 @@ public class JsonConverters implements Converters {
 	@Override
 	public Converter<String, ServerStatus> toServerStatus() {
 		return new JsonDeserialisingConverter<>(ServerStatus.class);
+	}
+	
+	@Override
+	public Converter<String, BlockRules> toBlockRules() {
+		return new JsonDeserialisingConverter<>(BlockRules.class);
 	}
 
 	@Override

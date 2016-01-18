@@ -21,6 +21,7 @@ package uk.ac.stfc.isis.ibex.configserver.internal;
 
 import java.util.Collection;
 
+import uk.ac.stfc.isis.ibex.configserver.BlockRules;
 import uk.ac.stfc.isis.ibex.configserver.IocState;
 import uk.ac.stfc.isis.ibex.configserver.ServerStatus;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Component;
@@ -35,6 +36,8 @@ public interface Converters {
 	Converter<String, Configuration> toConfig();
 
 	Converter<String, ServerStatus> toServerStatus();
+	
+	Converter<String, BlockRules> toBlockRules();
 
 	Converter<String, Collection<ConfigInfo>> toConfigsInfo();
 

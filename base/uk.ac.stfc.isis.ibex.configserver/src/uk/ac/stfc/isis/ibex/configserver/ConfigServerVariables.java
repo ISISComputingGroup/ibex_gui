@@ -35,14 +35,13 @@ import uk.ac.stfc.isis.ibex.configserver.internal.Converters;
 import uk.ac.stfc.isis.ibex.configserver.pv.BlockServerAddresses;
 import uk.ac.stfc.isis.ibex.epics.conversion.Converter;
 import uk.ac.stfc.isis.ibex.epics.observing.ConvertingObservable;
-import uk.ac.stfc.isis.ibex.epics.observing.InitialiseOnSubscribeObservable;
+import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.epics.pv.PVAddress;
 import uk.ac.stfc.isis.ibex.epics.switching.ObservableFactory;
 import uk.ac.stfc.isis.ibex.epics.switching.OnInstrumentSwitch;
 import uk.ac.stfc.isis.ibex.epics.switching.WritableFactory;
 import uk.ac.stfc.isis.ibex.epics.writing.ConvertingWritable;
 import uk.ac.stfc.isis.ibex.epics.writing.Writable;
-import uk.ac.stfc.isis.ibex.instrument.Channels;
 import uk.ac.stfc.isis.ibex.instrument.Instrument;
 import uk.ac.stfc.isis.ibex.instrument.InstrumentVariables;
 import uk.ac.stfc.isis.ibex.instrument.channels.CompressedCharWaveformChannel;
@@ -57,22 +56,27 @@ public class ConfigServerVariables extends InstrumentVariables {
 
 	private final BlockServerAddresses blockServerAddresses = new BlockServerAddresses();
 	private final Converters converters;
-    private ObservableFactory obsFactory = new ObservableFactory(OnInstrumentSwitch.SWITCH);
-    private final WritableFactory writeFactory = new WritableFactory(OnInstrumentSwitch.SWITCH);
+    
+	private ObservableFactory switchingObsFactory = new ObservableFactory(OnInstrumentSwitch.SWITCH);
+    private final WritableFactory switchingWriteFactory = new WritableFactory(OnInstrumentSwitch.SWITCH);
+    private ObservableFactory closingObsFactory = new ObservableFactory(OnInstrumentSwitch.CLOSE);
+    private final WritableFactory closingWriteFactory = new WritableFactory(OnInstrumentSwitch.CLOSE);    
 	
-	public final InitialiseOnSubscribeObservable<ServerStatus> serverStatus;
-	public final InitialiseOnSubscribeObservable<Configuration> currentConfig;
-	public final InitialiseOnSubscribeObservable<Configuration> blankConfig;
+	public final ForwardingObservable<ServerStatus> serverStatus;
+	public final ForwardingObservable<Configuration> currentConfig;
+	public final ForwardingObservable<Configuration> blankConfig;
 	
-	public final InitialiseOnSubscribeObservable<Collection<ConfigInfo>> configsInfo;
-	public final InitialiseOnSubscribeObservable<Collection<ConfigInfo>> componentsInfo;
+	public final ForwardingObservable<Collection<ConfigInfo>> configsInfo;
+	public final ForwardingObservable<Collection<ConfigInfo>> componentsInfo;
+
+	public final ForwardingObservable<BlockRules> blockRules;
 	
-	public final InitialiseOnSubscribeObservable<Collection<Component>> components;
-	public final InitialiseOnSubscribeObservable<Collection<EditableIoc>> iocs;
-	public final InitialiseOnSubscribeObservable<Collection<PV>> pvs;
-	public final InitialiseOnSubscribeObservable<Collection<PV>> highInterestPVs;
-	public final InitialiseOnSubscribeObservable<Collection<PV>> mediumInterestPVs;
-	public final InitialiseOnSubscribeObservable<Collection<PV>> active_pvs;
+	public final ForwardingObservable<Collection<Component>> components;
+	public final ForwardingObservable<Collection<EditableIoc>> iocs;
+	public final ForwardingObservable<Collection<PV>> pvs;
+	public final ForwardingObservable<Collection<PV>> highInterestPVs;
+	public final ForwardingObservable<Collection<PV>> mediumInterestPVs;
+	public final ForwardingObservable<Collection<PV>> active_pvs;
 	
 	public final Writable<Configuration> setCurrentConfiguration;
 	public final Writable<String> loadConfiguration;
@@ -86,11 +90,10 @@ public class ConfigServerVariables extends InstrumentVariables {
 	public final Writable<Collection<String>> stopIoc;
 	public final Writable<Collection<String>> restartIoc;
 	
-	public final InitialiseOnSubscribeObservable<Collection<IocState>> iocStates;
-	public final InitialiseOnSubscribeObservable<Collection<String>> protectedIocs;
+	public final ForwardingObservable<Collection<IocState>> iocStates;
+	public final ForwardingObservable<Collection<String>> protectedIocs;
 	
-	public ConfigServerVariables(Channels channels, Converters converters) {
-		super(channels);
+    public ConfigServerVariables(Converters converters) {
 		this.converters = converters;
 		
 		serverStatus = convert(readCompressed(blockServerAddresses.serverStatus()), converters.toServerStatus());
@@ -99,6 +102,8 @@ public class ConfigServerVariables extends InstrumentVariables {
 
 		configsInfo = convert(readCompressed(blockServerAddresses.configs()), converters.toConfigsInfo());
 		componentsInfo = convert(readCompressed(blockServerAddresses.components()), converters.toConfigsInfo());
+		
+		blockRules = convert(readCompressed(blockServerAddresses.blockRules()), converters.toBlockRules());	
 		
 		components = convert(readCompressed(blockServerAddresses.components()), converters.toComponents());
 		iocs = convert(readCompressed(blockServerAddresses.iocs()), converters.toIocs());
@@ -124,28 +129,28 @@ public class ConfigServerVariables extends InstrumentVariables {
 		protectedIocs = convert(readCompressed(blockServerAddresses.iocsNotToStop()), converters.toNames());		
 	}
 
-	public InitialiseOnSubscribeObservable<Configuration> config(String configName) {		
-		return convert(readCompressed(blockServerAddresses.config(getConfigPV(configName))), converters.toConfig());
+	public ForwardingObservable<Configuration> config(String configName) {		
+		return convert(readCompressedClosing(blockServerAddresses.config(getConfigPV(configName))), converters.toConfig());
 	}
 
-	public InitialiseOnSubscribeObservable<Configuration> component(String componentName) {
-		return convert(readCompressed(blockServerAddresses.component(getComponentPV(componentName))), converters.toConfig());
+	public ForwardingObservable<Configuration> component(String componentName) {
+		return convert(readCompressedClosing(blockServerAddresses.component(getComponentPV(componentName))), converters.toConfig());
 	}
 
-	public InitialiseOnSubscribeObservable<String> iocDescription(String iocName) {
-        return obsFactory.getSwitchableObservable(new StringChannel(), addPrefix(iocDescriptionAddress(iocName)));
+	public ForwardingObservable<String> iocDescription(String iocName) {
+        return closingObsFactory.getSwitchableObservable(new StringChannel(), addPrefix(iocDescriptionAddress(iocName)));
 	}
 
 	public Writable<String> iocDescriptionSetter(String iocName) {
-        return writeFactory.getSwitchableWritable(new StringChannel(), addPrefix(iocDescriptionAddress(iocName)));
+        return closingWriteFactory.getSwitchableWritable(new StringChannel(), addPrefix(iocDescriptionAddress(iocName)));
 	}
 	
-	public InitialiseOnSubscribeObservable<String> blockValue(String blockName) {
-        return obsFactory.getSwitchableObservable(new DefaultChannel(), addPrefix(blockServerAlias(blockName)));
+	public ForwardingObservable<String> blockValue(String blockName) {
+        return closingObsFactory.getSwitchableObservable(new DefaultChannel(), addPrefix(blockServerAlias(blockName)));
 	}
 	
-	public InitialiseOnSubscribeObservable<String> blockDescription(String blockName) {
-        return obsFactory.getSwitchableObservable(new StringChannel(),
+	public ForwardingObservable<String> blockDescription(String blockName) {
+        return closingObsFactory.getSwitchableObservable(new StringChannel(),
                 addPrefix(blockServerAddresses.blockDescription(blockServerAlias(blockName))));
 	}
 	
@@ -157,22 +162,26 @@ public class ConfigServerVariables extends InstrumentVariables {
 		return PVAddress.startWith("CS").append("PS").append(iocName).endWith("IOCDESC");
 	}
 	
-	private <T> InitialiseOnSubscribeObservable<T> convert(
-			InitialiseOnSubscribeObservable<String> source,
+	private <T> ForwardingObservable<T> convert(
+			ForwardingObservable<String> source,
 			Converter<String, T> converter) {
-		return new InitialiseOnSubscribeObservable<>(new ConvertingObservable<>(source, converter));
+		return new ForwardingObservable<>(new ConvertingObservable<>(source, converter));
 	}
 	
 	private <T> Writable<T> convert(Writable<String> destination, Converter<T, String> converter) {
 		return new ConvertingWritable<>(destination, converter);
 	}
 
-	private InitialiseOnSubscribeObservable<String> readCompressed(String address) {
-        return obsFactory.getSwitchableObservable(new CompressedCharWaveformChannel(), addPrefix(address));
+	private ForwardingObservable<String> readCompressed(String address) {
+        return switchingObsFactory.getSwitchableObservable(new CompressedCharWaveformChannel(), addPrefix(address));
+	}
+	
+	private ForwardingObservable<String> readCompressedClosing(String address) {
+        return closingObsFactory.getSwitchableObservable(new CompressedCharWaveformChannel(), addPrefix(address));
 	}
 	
 	private Writable<String> writeCompressed(String address) {
-        return writeFactory.getSwitchableWritable(new CompressedCharWaveformChannel(), addPrefix(address));
+        return switchingWriteFactory.getSwitchableWritable(new CompressedCharWaveformChannel(), addPrefix(address));
 	}
 	
 	private String getConfigPV(final String configName) {

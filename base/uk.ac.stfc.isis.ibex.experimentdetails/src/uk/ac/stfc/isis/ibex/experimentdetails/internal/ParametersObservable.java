@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import uk.ac.stfc.isis.ibex.epics.observing.ClosableCachingObservable;
+import uk.ac.stfc.isis.ibex.epics.observing.ClosableObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.TransformingObservable;
 import uk.ac.stfc.isis.ibex.experimentdetails.Parameter;
 
@@ -33,7 +33,7 @@ public class ParametersObservable extends TransformingObservable<Collection<Stri
 
 	public ParametersObservable(
 			ExperimentDetailsVariables variables, 
-			ClosableCachingObservable<Collection<String>> availableParameters) {
+			ClosableObservable<Collection<String>> availableParameters) {
 		this.variables = variables;
 		setSource(availableParameters);
 	}

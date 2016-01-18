@@ -25,8 +25,8 @@ import org.xml.sax.SAXException;
 import uk.ac.stfc.isis.ibex.configserver.Configurations;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Configuration;
 import uk.ac.stfc.isis.ibex.epics.observing.BaseObserver;
-import uk.ac.stfc.isis.ibex.epics.observing.ClosingSwitchableObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.Observer;
+import uk.ac.stfc.isis.ibex.epics.switching.SwitchableObservable;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 import uk.ac.stfc.isis.ibex.synoptic.internal.Variables;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.SynopticDescription;
@@ -120,13 +120,13 @@ public class ObservingSynopticModel extends ModelObject {
 
 	private final SynopticModel model;
 	private final Variables variables;
-	private final ClosingSwitchableObservable<SynopticDescription> synopticObservable;
+    private final SwitchableObservable<SynopticDescription> synopticObservable;
 
 	public ObservingSynopticModel(Variables variables, SynopticModel model) {
 		this.model = model;
 		this.variables = variables;
 
-		this.synopticObservable = new ClosingSwitchableObservable<SynopticDescription>(
+        this.synopticObservable = new SwitchableObservable<SynopticDescription>(
 				variables.getSynopticDescription(""));
 		this.synopticObservable.addObserver(descriptionObserver);
 
@@ -138,7 +138,7 @@ public class ObservingSynopticModel extends ModelObject {
 
 	public void switchSynoptic(SynopticInfo newSynoptic) {
 		firePropertyChange("synopticInfo", this.synopticInfo, this.synopticInfo = newSynoptic);
-		synopticObservable.switchTo(variables
+        synopticObservable.setSource(variables
 				.getSynopticDescription(newSynoptic.pv()));
 	}
 

@@ -22,7 +22,7 @@ package uk.ac.stfc.isis.ibex.dae;
 import uk.ac.stfc.isis.ibex.dae.actions.DaeActions;
 import uk.ac.stfc.isis.ibex.dae.experimentsetup.ExperimentSetup;
 import uk.ac.stfc.isis.ibex.dae.spectra.Spectra;
-import uk.ac.stfc.isis.ibex.epics.observing.InitialiseOnSubscribeObservable;
+import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.epics.pv.Closer;
 import uk.ac.stfc.isis.ibex.epics.writing.Writable;
 
@@ -34,7 +34,7 @@ public class DaeModel extends Closer implements IDae {
 	private final DaeWritables writables;
 	private final Spectra spectra;
 	
-	private final InitialiseOnSubscribeObservable<Boolean> isRunning;
+	private final ForwardingObservable<Boolean> isRunning;
 	
 	public DaeModel(DaeWritables writables, DaeObservables observables) {		
 		this.observables = observables;
@@ -44,36 +44,36 @@ public class DaeModel extends Closer implements IDae {
 		actions = registerForClose(new DaeActions(writables, observables));
 		spectra = new Spectra(observables);
 
-		isRunning = registerForClose(new InitialiseOnSubscribeObservable<>(new DaeIsRunning(observables.runState)));
+		isRunning = registerForClose(new ForwardingObservable<>(new DaeIsRunning(observables.runState)));
 	}
 
 	@Override
-	public InitialiseOnSubscribeObservable<String> instrument() {
+	public ForwardingObservable<String> instrument() {
 		return observables.instrumentName;
 	}
 	
 	@Override
-	public InitialiseOnSubscribeObservable<String> runNumber() {
+	public ForwardingObservable<String> runNumber() {
 		return observables.runNumber;
 	}
 
 	@Override
-	public InitialiseOnSubscribeObservable<DaeRunState> runState() {
+	public ForwardingObservable<DaeRunState> runState() {
 		return observables.runState;
 	}
 
 	@Override
-	public InitialiseOnSubscribeObservable<Boolean> isRunning() {
+	public ForwardingObservable<Boolean> isRunning() {
 		return isRunning;
 	}
 	
 	@Override
-	public InitialiseOnSubscribeObservable<String> isisCycle() {
+	public ForwardingObservable<String> isisCycle() {
 		return observables.isisCycle;
 	}
 
 	@Override
-	public InitialiseOnSubscribeObservable<String> title() {
+	public ForwardingObservable<String> title() {
 		return observables.title;
 	}
 	
@@ -83,7 +83,7 @@ public class DaeModel extends Closer implements IDae {
 	}
 	
 	@Override
-	public InitialiseOnSubscribeObservable<String> vetos() {
+	public ForwardingObservable<String> vetos() {
 		return observables.vetos;
 	}
 	

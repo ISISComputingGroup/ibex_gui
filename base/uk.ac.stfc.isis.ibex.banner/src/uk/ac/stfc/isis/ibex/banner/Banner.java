@@ -22,8 +22,6 @@ package uk.ac.stfc.isis.ibex.banner;
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
 
-import uk.ac.stfc.isis.ibex.instrument.Instrument;
-
 public class Banner implements BundleActivator {
 
 	private static Banner instance;
@@ -38,7 +36,7 @@ public class Banner implements BundleActivator {
 	public Banner() {
 		super();
 		instance = this;
-		observables = new Observables(Instrument.getInstance().channels());
+        observables = new Observables();
 	}
 	
 	public Observables observables() {

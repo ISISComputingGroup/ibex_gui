@@ -26,7 +26,7 @@ import com.google.common.base.Strings;
 
 import uk.ac.stfc.isis.ibex.configserver.configuration.Block;
 import uk.ac.stfc.isis.ibex.epics.observing.BaseObserver;
-import uk.ac.stfc.isis.ibex.epics.observing.InitialiseOnSubscribeObservable;
+import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.instrument.Instrument;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 
@@ -194,12 +194,12 @@ public class DisplayBlock extends ModelObject {
         }
     };
 
-    public DisplayBlock(Block block, InitialiseOnSubscribeObservable<String> valueSource,
-            InitialiseOnSubscribeObservable<String> descriptionSource,
-            InitialiseOnSubscribeObservable<String> inRangeSource,
-            InitialiseOnSubscribeObservable<String> lowLimitSource,
-            InitialiseOnSubscribeObservable<String> highLimitSource,
-            InitialiseOnSubscribeObservable<String> enabledSource, String blockServerAlias) {
+    public DisplayBlock(Block block, ForwardingObservable<String> valueSource,
+            ForwardingObservable<String> descriptionSource,
+            ForwardingObservable<String> inRangeSource,
+            ForwardingObservable<String> lowLimitSource,
+            ForwardingObservable<String> highLimitSource,
+            ForwardingObservable<String> enabledSource, String blockServerAlias) {
         this.block = block;
         this.blockServerAlias = blockServerAlias;
 

@@ -22,13 +22,13 @@ package uk.ac.stfc.isis.ibex.configserver;
 import java.util.Collection;
 
 import uk.ac.stfc.isis.ibex.configserver.displaying.DisplayConfiguration;
-import uk.ac.stfc.isis.ibex.epics.observing.InitialiseOnSubscribeObservable;
+import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.configserver.displaying.DisplayBlock;
 
 public interface Displaying {
 	/*
 	 * Configuration details for presentation to the user.
 	 */
-	InitialiseOnSubscribeObservable<DisplayConfiguration> displayCurrentConfig();
+	ForwardingObservable<DisplayConfiguration> displayCurrentConfig();
 	Collection<DisplayBlock> getDisplayBlocks();
 }

@@ -27,14 +27,14 @@ import static org.mockito.Mockito.when;
 import org.junit.Before;
 import org.junit.Test;
 
-import uk.ac.stfc.isis.ibex.epics.observing.ClosableCachingObservable;
+import uk.ac.stfc.isis.ibex.epics.observing.ClosableObservable;
 import uk.ac.stfc.isis.ibex.epics.switching.ClosingSwitcher;
 import uk.ac.stfc.isis.ibex.epics.switching.InstrumentSwitchers;
 import uk.ac.stfc.isis.ibex.epics.switching.NothingSwitcher;
 import uk.ac.stfc.isis.ibex.epics.switching.ObservableFactory;
 import uk.ac.stfc.isis.ibex.epics.switching.ObservablePrefixChangingSwitcher;
 import uk.ac.stfc.isis.ibex.epics.switching.OnInstrumentSwitch;
-import uk.ac.stfc.isis.ibex.epics.switching.SwitchableInitialiseOnSubscribeObservable;
+import uk.ac.stfc.isis.ibex.epics.switching.SwitchableObservable;
 import uk.ac.stfc.isis.ibex.instrument.channels.ChannelType;
 
 public class ObservableFactoryTest {
@@ -47,15 +47,15 @@ public class ObservableFactoryTest {
     private ClosingSwitcher closingSwitcher;
     private NothingSwitcher nothingSwitcher;
     private ObservablePrefixChangingSwitcher switchingSwitcher;
-    private ClosableCachingObservable<String> closableCachingObservable;
-    private ClosableCachingObservable<Integer> closableCachingObservable2;
+    private ClosableObservable<String> closableCachingObservable;
+    private ClosableObservable<Integer> closableCachingObservable2;
     private InstrumentSwitchers instrumentSwitchers;
 
     @SuppressWarnings("unchecked")
     @Before
     public void setUp() {
-        closableCachingObservable = mock(ClosableCachingObservable.class);
-        closableCachingObservable2 = mock(ClosableCachingObservable.class);
+        closableCachingObservable = mock(ClosableObservable.class);
+        closableCachingObservable2 = mock(ClosableObservable.class);
 
         channelType = mock(ChannelType.class);
         when(channelType.reader(PV_ADDRESS)).thenReturn(closableCachingObservable);
@@ -78,7 +78,7 @@ public class ObservableFactoryTest {
         ObservableFactory obsFactory = new ObservableFactory(OnInstrumentSwitch.CLOSE, instrumentSwitchers);
 
         // Act
-        SwitchableInitialiseOnSubscribeObservable<String> obs = obsFactory.getSwitchableObservable(channelType, PV_ADDRESS);
+        SwitchableObservable<String> obs = obsFactory.getSwitchableObservable(channelType, PV_ADDRESS);
 
         // Assert
         assertTrue(closingSwitcher.getSwitchables().contains(obs));
@@ -90,7 +90,7 @@ public class ObservableFactoryTest {
         ObservableFactory obsFactory = new ObservableFactory(OnInstrumentSwitch.CLOSE, instrumentSwitchers);
 
         // Act
-        SwitchableInitialiseOnSubscribeObservable<String> obs = obsFactory.getSwitchableObservable(channelType, PV_ADDRESS);
+        SwitchableObservable<String> obs = obsFactory.getSwitchableObservable(channelType, PV_ADDRESS);
 
         // Assert
         assertFalse(switchingSwitcher.getSwitchables().contains(obs));
@@ -103,7 +103,7 @@ public class ObservableFactoryTest {
         ObservableFactory obsFactory = new ObservableFactory(OnInstrumentSwitch.NOTHING, instrumentSwitchers);
 
         // Act
-        SwitchableInitialiseOnSubscribeObservable<String> obs = obsFactory.getSwitchableObservable(channelType, PV_ADDRESS);
+        SwitchableObservable<String> obs = obsFactory.getSwitchableObservable(channelType, PV_ADDRESS);
 
         // Assert
         assertTrue(nothingSwitcher.getSwitchables().contains(obs));
@@ -115,7 +115,7 @@ public class ObservableFactoryTest {
         ObservableFactory obsFactory = new ObservableFactory(OnInstrumentSwitch.SWITCH, instrumentSwitchers);
 
         // Act
-        SwitchableInitialiseOnSubscribeObservable<String> obs = obsFactory.getSwitchableObservable(channelType, PV_ADDRESS);
+        SwitchableObservable<String> obs = obsFactory.getSwitchableObservable(channelType, PV_ADDRESS);
 
         // Assert
         assertTrue(switchingSwitcher.getSwitchables().contains(obs));
@@ -127,9 +127,9 @@ public class ObservableFactoryTest {
         ObservableFactory obsFactory = new ObservableFactory(OnInstrumentSwitch.CLOSE, instrumentSwitchers);
 
         // Act
-        SwitchableInitialiseOnSubscribeObservable<String> switchable = obsFactory.getSwitchableObservable(channelType,
+        SwitchableObservable<String> switchable = obsFactory.getSwitchableObservable(channelType,
                 PV_ADDRESS);
-        SwitchableInitialiseOnSubscribeObservable<Integer> switchable2 = obsFactory
+        SwitchableObservable<Integer> switchable2 = obsFactory
                 .getSwitchableObservable(channelType2,
                 PV_ADDRESS_2);
 
@@ -144,9 +144,9 @@ public class ObservableFactoryTest {
         ObservableFactory obsFactory = new ObservableFactory(OnInstrumentSwitch.NOTHING, instrumentSwitchers);
 
         // Act
-        SwitchableInitialiseOnSubscribeObservable<String> switchable = obsFactory.getSwitchableObservable(channelType,
+        SwitchableObservable<String> switchable = obsFactory.getSwitchableObservable(channelType,
                 PV_ADDRESS);
-        SwitchableInitialiseOnSubscribeObservable<Integer> switchable2 = obsFactory
+        SwitchableObservable<Integer> switchable2 = obsFactory
                 .getSwitchableObservable(channelType2,
                 PV_ADDRESS_2);
 
@@ -161,9 +161,9 @@ public class ObservableFactoryTest {
         ObservableFactory obsFactory = new ObservableFactory(OnInstrumentSwitch.SWITCH, instrumentSwitchers);
 
         // Act
-        SwitchableInitialiseOnSubscribeObservable<String> switchable = obsFactory.getSwitchableObservable(channelType,
+        SwitchableObservable<String> switchable = obsFactory.getSwitchableObservable(channelType,
                 PV_ADDRESS);
-        SwitchableInitialiseOnSubscribeObservable<Integer> switchable2 = obsFactory
+        SwitchableObservable<Integer> switchable2 = obsFactory
                 .getSwitchableObservable(channelType2, PV_ADDRESS_2);
 
         // Assert

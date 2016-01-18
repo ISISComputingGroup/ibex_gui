@@ -22,8 +22,6 @@ package uk.ac.stfc.isis.ibex.dashboard;
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
 
-import uk.ac.stfc.isis.ibex.instrument.Instrument;
-
 public class Dashboard implements BundleActivator {
 
     private static Dashboard instance;
@@ -37,7 +35,7 @@ public class Dashboard implements BundleActivator {
 	
 	public Dashboard() {
 		instance = this;
-		observables = new DashboardObservables(Instrument.getInstance().channels());
+        observables = new DashboardObservables();
 	}
  
 	public DashboardObservables observables() {
@@ -52,7 +50,8 @@ public class Dashboard implements BundleActivator {
 	 * (non-Javadoc)
 	 * @see org.osgi.framework.BundleActivator#start(org.osgi.framework.BundleContext)
 	 */
-	public void start(BundleContext bundleContext) throws Exception {
+	@Override
+    public void start(BundleContext bundleContext) throws Exception {
 		Dashboard.context = bundleContext;
 	}
 
@@ -60,7 +59,8 @@ public class Dashboard implements BundleActivator {
 	 * (non-Javadoc)
 	 * @see org.osgi.framework.BundleActivator#stop(org.osgi.framework.BundleContext)
 	 */
-	public void stop(BundleContext bundleContext) throws Exception {
+	@Override
+    public void stop(BundleContext bundleContext) throws Exception {
 		Dashboard.context = null;
 		observables.close();
 	}

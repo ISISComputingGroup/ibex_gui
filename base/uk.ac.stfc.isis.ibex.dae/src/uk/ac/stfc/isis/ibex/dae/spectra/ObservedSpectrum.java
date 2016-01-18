@@ -21,7 +21,7 @@ package uk.ac.stfc.isis.ibex.dae.spectra;
 
 import uk.ac.stfc.isis.ibex.dae.DaeObservables;
 import uk.ac.stfc.isis.ibex.epics.observing.BaseObserver;
-import uk.ac.stfc.isis.ibex.epics.observing.InitialiseOnSubscribeObservable;
+import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.Subscription;
 import uk.ac.stfc.isis.ibex.epics.pv.Closable;
 
@@ -66,8 +66,8 @@ public class ObservedSpectrum extends UpdatableSpectrum implements Closable {
 	private Subscription xSubscription;
 	private Subscription ySubscription;
 
-    private InitialiseOnSubscribeObservable<Integer> xLengthObserver;
-    private InitialiseOnSubscribeObservable<Integer> yLengthObserver;
+    private ForwardingObservable<Integer> xLengthObserver;
+    private ForwardingObservable<Integer> yLengthObserver;
 
 	public ObservedSpectrum(DaeObservables observables) {
 		this.observables = observables;

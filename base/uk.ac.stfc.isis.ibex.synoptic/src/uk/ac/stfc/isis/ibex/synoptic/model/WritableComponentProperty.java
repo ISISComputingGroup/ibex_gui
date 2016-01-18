@@ -19,7 +19,7 @@
 
 package uk.ac.stfc.isis.ibex.synoptic.model;
 
-import uk.ac.stfc.isis.ibex.epics.observing.InitialiseOnSubscribeObservable;
+import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.epics.writing.SameTypeWriter;
 import uk.ac.stfc.isis.ibex.epics.writing.Writable;
 import uk.ac.stfc.isis.ibex.epics.writing.Writer;
@@ -33,7 +33,7 @@ public class WritableComponentProperty extends ComponentProperty {
 	
 	public WritableComponentProperty(
 			String displayName, 
-			InitialiseOnSubscribeObservable<String> source,
+			ForwardingObservable<String> source,
 			Writable<String> destination) {
 		super(displayName);
 		valueSource = new ReadableComponentProperty(displayName, source);

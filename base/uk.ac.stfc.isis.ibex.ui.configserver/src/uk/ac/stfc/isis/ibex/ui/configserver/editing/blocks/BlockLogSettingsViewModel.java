@@ -19,13 +19,10 @@
 
 package uk.ac.stfc.isis.ibex.ui.configserver.editing.blocks;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-
 import uk.ac.stfc.isis.ibex.configserver.configuration.Block;
-import uk.ac.stfc.isis.ibex.model.ModelObject;
+import uk.ac.stfc.isis.ibex.validators.ErrorMessageProvider;
 
-public class BlockLogSettingsViewModel extends ModelObject {
+public class BlockLogSettingsViewModel extends ErrorMessageProvider {
     public static String PERIODIC_STRING = "Periodic Scan for Change";
     public static String MONITOR_STRING = "Monitor With Deadband";
 
@@ -35,55 +32,56 @@ public class BlockLogSettingsViewModel extends ModelObject {
     public static String COMBO_TOOLTIP = "Periodic: Log on change but no more often than the specified period.\n"
             + "Monitor: Log when the value changes by the absolute amount specified, this amount is in the same units as the block.";
 
+    private static String INT_ERROR = "Scan rate must be an integer number of seconds";
+    private static String FLOAT_ERROR = "Deadband must be a decimal number";
+    
+    private static String SCAN_EMPTY = "Scan rate cannot be empty";
+    private static String DEADBAND_EMPTY = "Deadband cannot be empty";
+    
     private final Block editingBlock;
+    
     private boolean enabled = true;
-    private String periodic;
+    private String comboText;
     private String labelText;
+    
     private String textBoxText;
 
-    PropertyChangeListener textBoxListener = new PropertyChangeListener() {
-        @Override
-        public void propertyChange(PropertyChangeEvent evt) {
-            setTextBoxText(String.valueOf(evt.getNewValue()));
-        }
-    };
-
-    private void updatePeriodic(boolean periodic) {
-        editingBlock.removePropertyChangeListener(textBoxListener);
-        if (periodic) {
-            setLabelText(SCAN_LABEL);
-            setPeriodic(PERIODIC_STRING);
-            setTextBoxText(Integer.toString(editingBlock.getLogRate()));
-            editingBlock.addPropertyChangeListener("log_rate", textBoxListener);
-        } else {
-            setLabelText(DEADBAND_LABEL);
-            setPeriodic(MONITOR_STRING);
-            setTextBoxText(Float.toString(editingBlock.getLogDeadband()));
-            editingBlock.addPropertyChangeListener("log_deadband", textBoxListener);
-        }
-    }
+    private boolean periodic;
+    private int rate;
+    private float deadband;
 
     public BlockLogSettingsViewModel(final Block editingBlock) {
-        this.editingBlock = editingBlock;
-
-        editingBlock.addPropertyChangeListener("log_periodic", new PropertyChangeListener() {
-            @Override
-            public void propertyChange(PropertyChangeEvent evt) {
-                updatePeriodic((boolean) evt.getNewValue());
-            }
-        });
-
-        if (editingBlock.getLogPeriodic() && editingBlock.getLogRate() == 0) {
+    	this.editingBlock = editingBlock;
+    	
+    	rate = editingBlock.getLogRate();
+    	deadband = editingBlock.getLogDeadband();
+    	
+        updatePeriodic(editingBlock.getLogPeriodic(), true);
+    	
+        if (periodic && rate == 0) {
             setEnabled(false);
         }
-
-        updatePeriodic(editingBlock.getLogPeriodic());
+    }
+    
+    private void updatePeriodic(boolean periodic, boolean updateComboText) {
+    	this.periodic = periodic;
+    	if (periodic) {
+            setLabelText(SCAN_LABEL);
+            setTextBoxText(Integer.toString(rate));
+            if (updateComboText)
+            	setComboText(PERIODIC_STRING);
+        } else {
+            setLabelText(DEADBAND_LABEL);
+            setTextBoxText(Float.toString(deadband));
+            if (updateComboText)
+            	setComboText(MONITOR_STRING);
+        }
     }
 
     public void setEnabled(boolean enabled) {
         if (!enabled) {
-            updatePeriodic(true);
-            editingBlock.setLogRate(0);
+            rate = 0;
+            updatePeriodic(true, true);
         }
 
         firePropertyChange("enabled", this.enabled, this.enabled = enabled);
@@ -102,29 +100,55 @@ public class BlockLogSettingsViewModel extends ModelObject {
         return labelText;
     }
 
-    public void setPeriodic(String selection) {
+    public void setComboText(String selection) {
         if (selection.equals(PERIODIC_STRING)) {
-            editingBlock.setLogPeriodic(true);
+        	updatePeriodic(true, false);
         } else if (selection.equals(MONITOR_STRING)) {
-            editingBlock.setLogPeriodic(false);
+        	updatePeriodic(false, false);
         }
-        firePropertyChange("periodic", this.periodic, this.periodic = selection);
+        firePropertyChange("comboText", this.comboText, this.comboText = selection);
     }
-
-    public String getPeriodic() {
-        return periodic;
+    
+    public String getComboText() {
+    	return comboText;
     }
 
     public void setTextBoxText(String text) {
-        if (editingBlock.getLogPeriodic()) {
-            editingBlock.setLogRate(Integer.parseInt(text));
+    	if (periodic) {
+    		try {
+    			rate = Integer.parseInt(text);
+    			setError(false, null);
+    		} catch (NumberFormatException e) {
+    	    	if (text.isEmpty())
+    	    		setError(true, SCAN_EMPTY);
+    	    	else
+        			setError(true, INT_ERROR);
+    		}
         } else {
-            editingBlock.setLogDeadband(Float.parseFloat(text));
+        	try {
+		        deadband = Float.parseFloat(text);
+		        setError(false, null);
+			} catch (NumberFormatException e) {
+    	    	if (text.isEmpty())
+    	    		setError(true, DEADBAND_EMPTY);
+    	    	else
+        			setError(true, FLOAT_ERROR);
+			}
         }
+        
         firePropertyChange("textBoxText", this.textBoxText, this.textBoxText = text);
     }
 
     public String getTextBoxText() {
         return textBoxText;
+    }
+    
+    public void updateBlock() {
+    	editingBlock.setLogPeriodic(periodic);
+    	if (periodic) {
+    		editingBlock.setLogRate(rate);
+    	} else {
+    		editingBlock.setLogDeadband(deadband);
+    	}
     }
 }

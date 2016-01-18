@@ -19,9 +19,11 @@
 
 package uk.ac.stfc.isis.ibex.ui.configserver.editing.blocks;
 
+import org.eclipse.core.databinding.DataBindingContext;
+import org.eclipse.core.databinding.beans.BeanProperties;
+import org.eclipse.jface.databinding.swt.SWTObservables;
+import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -31,14 +33,12 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 
-import uk.ac.stfc.isis.ibex.configserver.configuration.Block;
-
 public class BlockRunControlPanel extends Composite {
     private Text lowLimitText;
     private Text highLimitText;
     private Button btnEnabled;
 
-    public BlockRunControlPanel(Composite parent, int style, Block block) {
+    public BlockRunControlPanel(Composite parent, int style, BlockRunControlViewModel viewModel) {
         super(parent, style);
 
         setLayout(new FillLayout(SWT.HORIZONTAL));
@@ -64,45 +64,24 @@ public class BlockRunControlPanel extends Composite {
         btnEnabled = new Button(grpRuncontrolSettings, SWT.CHECK);
         btnEnabled.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1));
         btnEnabled.setText("Enabled");
-        btnEnabled.addSelectionListener(new SelectionAdapter() {
-            @Override
-            public void widgetSelected(SelectionEvent e) {
-                setEditableState(btnEnabled.getSelection());
-            }
-        });
-        setBlock(block);
-
-        setEditableState(btnEnabled.getSelection());
+        
+        setModel(viewModel);
     }
-
-    protected float getLowLimit() {
-        try {
-            return Float.parseFloat(lowLimitText.getText());
-        } catch (java.lang.NumberFormatException e) {
-            return 0.0f;
-        }
-    }
-
-    protected float getHighLimit() {
-        try {
-            return Float.parseFloat(highLimitText.getText());
-        } catch (java.lang.NumberFormatException e) {
-            return 0.0f;
-        }
-    }
-
-    protected boolean getEnabledSetting() {
-        return btnEnabled.getSelection();
-    }
-
-    public void setBlock(Block block) {
-        lowLimitText.setText(Float.toString(block.getRCLowLimit()));
-        highLimitText.setText(Float.toString(block.getRCHighLimit()));
-        btnEnabled.setSelection(block.getRCEnabled());
-    }
-
-    public void setEditableState(boolean editableState) {
-        lowLimitText.setEnabled(editableState);
-        highLimitText.setEnabled(editableState);
-    }
+	
+	private void setModel(BlockRunControlViewModel viewModel) {
+		DataBindingContext bindingContext = new DataBindingContext();
+		
+        bindingContext.bindValue(WidgetProperties.selection().observe(btnEnabled),
+                BeanProperties.value("enabled").observe(viewModel));
+        bindingContext.bindValue(WidgetProperties.enabled().observe(lowLimitText),
+                BeanProperties.value("enabled").observe(viewModel));
+        bindingContext.bindValue(WidgetProperties.enabled().observe(highLimitText),
+                BeanProperties.value("enabled").observe(viewModel));
+        
+        bindingContext.bindValue(SWTObservables.observeText(lowLimitText, SWT.Modify),
+                BeanProperties.value("lowLimitText").observe(viewModel));
+        bindingContext.bindValue(SWTObservables.observeText(highLimitText, SWT.Modify),
+                BeanProperties.value("highLimitText").observe(viewModel)); 
+        
+	}
 }

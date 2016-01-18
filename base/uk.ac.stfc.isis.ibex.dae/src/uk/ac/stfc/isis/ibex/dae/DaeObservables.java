@@ -19,7 +19,7 @@
 
 package uk.ac.stfc.isis.ibex.dae;
 
-import uk.ac.stfc.isis.ibex.epics.observing.InitialiseOnSubscribeObservable;
+import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.epics.pv.PVAddress;
 import uk.ac.stfc.isis.ibex.epics.switching.ObservableFactory;
 import uk.ac.stfc.isis.ibex.epics.switching.OnInstrumentSwitch;
@@ -43,49 +43,49 @@ public class DaeObservables {
     private static final PVAddress DAE = PVAddress.startWith("DAE");
     private final ObservableFactory obsFactory = new ObservableFactory(OnInstrumentSwitch.SWITCH);
 
-    public final InitialiseOnSubscribeObservable<String> instrumentName;
-    public final InitialiseOnSubscribeObservable<DaeRunState> runState;
-    public final InitialiseOnSubscribeObservable<String> runNumber;
-    public final InitialiseOnSubscribeObservable<String> title;
-    public final InitialiseOnSubscribeObservable<String> users;
-    public final InitialiseOnSubscribeObservable<Integer> goodFrames;
-    public final InitialiseOnSubscribeObservable<Integer> rawFrames;
-    public final InitialiseOnSubscribeObservable<Integer> monitorCounts;
-    public final InitialiseOnSubscribeObservable<Number> goodCurrent;
-    public final InitialiseOnSubscribeObservable<String> runTime;
-    public final InitialiseOnSubscribeObservable<Integer> currentPeriod;
-    public final InitialiseOnSubscribeObservable<Integer> totalPeriods;
-    public final InitialiseOnSubscribeObservable<Boolean> inStateTransition;
-    public final InitialiseOnSubscribeObservable<String> daeSettings;
-    public final InitialiseOnSubscribeObservable<String> hardwarePeriods;
-    public final InitialiseOnSubscribeObservable<String> updateSettings;
-    public final InitialiseOnSubscribeObservable<String> timeChannelSettings;
-    public final InitialiseOnSubscribeObservable<String> detectorTables;
-    public final InitialiseOnSubscribeObservable<String> spectraTables;
-    public final InitialiseOnSubscribeObservable<String> wiringTables;
-    public final InitialiseOnSubscribeObservable<String> periodFiles;
-    public final InitialiseOnSubscribeObservable<String> vetos;
-    public final InitialiseOnSubscribeObservable<Number> beamCurrent;
-    public final InitialiseOnSubscribeObservable<Double> totalDaeCounts;
-    public final InitialiseOnSubscribeObservable<Integer> daeMemoryUsed;
-    public final InitialiseOnSubscribeObservable<String> timingSource;
-    public final InitialiseOnSubscribeObservable<String> rbNumber;
-    public final InitialiseOnSubscribeObservable<Double> countRate;
-    public final InitialiseOnSubscribeObservable<Double> eventMode;
-    public final InitialiseOnSubscribeObservable<String> startTime;
-    public final InitialiseOnSubscribeObservable<Integer> runDuration;
-    public final InitialiseOnSubscribeObservable<Integer> timeChannels;
-    public final InitialiseOnSubscribeObservable<Integer> spectra;
-    public final InitialiseOnSubscribeObservable<String> isisCycle;
-    public final InitialiseOnSubscribeObservable<Integer> periodGoodFrames;
-    public final InitialiseOnSubscribeObservable<Integer> periodRawFrames;
-    public final InitialiseOnSubscribeObservable<Integer> periodDuration;
-    public final InitialiseOnSubscribeObservable<String> periodType;
-    public final InitialiseOnSubscribeObservable<Integer> periodSequence;
-    public final InitialiseOnSubscribeObservable<Integer> monitorSpectrum;
-    public final InitialiseOnSubscribeObservable<Double> monitorFrom;
-    public final InitialiseOnSubscribeObservable<Double> monitorTo;
-    public final InitialiseOnSubscribeObservable<Double> npRatio;
+    public final ForwardingObservable<String> instrumentName;
+    public final ForwardingObservable<DaeRunState> runState;
+    public final ForwardingObservable<String> runNumber;
+    public final ForwardingObservable<String> title;
+    public final ForwardingObservable<String> users;
+    public final ForwardingObservable<Integer> goodFrames;
+    public final ForwardingObservable<Integer> rawFrames;
+    public final ForwardingObservable<Integer> monitorCounts;
+    public final ForwardingObservable<Number> goodCurrent;
+    public final ForwardingObservable<String> runTime;
+    public final ForwardingObservable<Integer> currentPeriod;
+    public final ForwardingObservable<Integer> totalPeriods;
+    public final ForwardingObservable<Boolean> inStateTransition;
+    public final ForwardingObservable<String> daeSettings;
+    public final ForwardingObservable<String> hardwarePeriods;
+    public final ForwardingObservable<String> updateSettings;
+    public final ForwardingObservable<String> timeChannelSettings;
+    public final ForwardingObservable<String> detectorTables;
+    public final ForwardingObservable<String> spectraTables;
+    public final ForwardingObservable<String> wiringTables;
+    public final ForwardingObservable<String> periodFiles;
+    public final ForwardingObservable<String> vetos;
+    public final ForwardingObservable<Number> beamCurrent;
+    public final ForwardingObservable<Double> totalDaeCounts;
+    public final ForwardingObservable<Integer> daeMemoryUsed;
+    public final ForwardingObservable<String> timingSource;
+    public final ForwardingObservable<String> rbNumber;
+    public final ForwardingObservable<Double> countRate;
+    public final ForwardingObservable<Double> eventMode;
+    public final ForwardingObservable<String> startTime;
+    public final ForwardingObservable<Integer> runDuration;
+    public final ForwardingObservable<Integer> timeChannels;
+    public final ForwardingObservable<Integer> spectra;
+    public final ForwardingObservable<String> isisCycle;
+    public final ForwardingObservable<Integer> periodGoodFrames;
+    public final ForwardingObservable<Integer> periodRawFrames;
+    public final ForwardingObservable<Integer> periodDuration;
+    public final ForwardingObservable<String> periodType;
+    public final ForwardingObservable<Integer> periodSequence;
+    public final ForwardingObservable<Integer> monitorSpectrum;
+    public final ForwardingObservable<Double> monitorFrom;
+    public final ForwardingObservable<Double> monitorTo;
+    public final ForwardingObservable<Double> npRatio;
 
     public DaeObservables() {
         instrumentName = obsFactory.getSwitchableObservable(new StringChannel(), addPrefix(DAE.endWith("INSTNAME")));
@@ -153,22 +153,22 @@ public class DaeObservables {
         npRatio = obsFactory.getSwitchableObservable(new DoubleChannel(), addPrefix(DAE.endWith("NPRATIO")));
     }
 
-    public InitialiseOnSubscribeObservable<float[]> spectrumXData(int number, int period) {
+    public ForwardingObservable<float[]> spectrumXData(int number, int period) {
         return obsFactory.getSwitchableObservable(new FloatArrayChannel(),
                 addPrefix(spectrumData(number, period, "X")));
     }
 
-    public InitialiseOnSubscribeObservable<Integer> spectrumXDataLength(int number, int period) {
+    public ForwardingObservable<Integer> spectrumXDataLength(int number, int period) {
         return obsFactory.getSwitchableObservable(new IntegerChannel(),
                 addPrefix(spectrumDataLength(number, period, "X")));
     }
 
-    public InitialiseOnSubscribeObservable<float[]> spectrumYData(int number, int period) {
+    public ForwardingObservable<float[]> spectrumYData(int number, int period) {
         return obsFactory.getSwitchableObservable(new FloatArrayChannel(),
                 addPrefix(spectrumData(number, period, "Y")));
     }
 
-    public InitialiseOnSubscribeObservable<Integer> spectrumYDataLength(int number, int period) {
+    public ForwardingObservable<Integer> spectrumYDataLength(int number, int period) {
         return obsFactory.getSwitchableObservable(new IntegerChannel(),
                 addPrefix(spectrumDataLength(number, period, "Y")));
     }

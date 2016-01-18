@@ -19,12 +19,12 @@
 
 package uk.ac.stfc.isis.ibex.instrument.channels;
 
-import uk.ac.stfc.isis.ibex.epics.observing.ClosableCachingObservable;
+import uk.ac.stfc.isis.ibex.epics.observing.ClosableObservable;
 import uk.ac.stfc.isis.ibex.epics.writing.BaseWritable;
 
 public interface ChannelType<T> {
 	
-	ClosableCachingObservable<T> reader(String address);
+	ClosableObservable<T> reader(String address);
 	
     BaseWritable<T> writer(String address);
 }

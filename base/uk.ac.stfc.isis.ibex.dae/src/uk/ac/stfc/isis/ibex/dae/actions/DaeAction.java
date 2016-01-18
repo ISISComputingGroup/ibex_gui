@@ -21,7 +21,7 @@ package uk.ac.stfc.isis.ibex.dae.actions;
 
 import uk.ac.stfc.isis.ibex.dae.DaeRunState;
 import uk.ac.stfc.isis.ibex.epics.observing.BaseObserver;
-import uk.ac.stfc.isis.ibex.epics.observing.InitialiseOnSubscribeObservable;
+import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.Observer;
 import uk.ac.stfc.isis.ibex.epics.observing.Subscription;
 import uk.ac.stfc.isis.ibex.epics.pv.Closable;
@@ -93,8 +93,8 @@ public abstract class DaeAction extends Action implements Closable {
 	
 	public DaeAction(
 			Writable<String> target, 
-			InitialiseOnSubscribeObservable<Boolean> inStateTransition,
-			InitialiseOnSubscribeObservable<DaeRunState> runState) {
+			ForwardingObservable<Boolean> inStateTransition,
+			ForwardingObservable<DaeRunState> runState) {
 		
 		targetSubscribtion = target.subscribe(actionWriter);
 		writerSubscription = actionWriter.writeTo(target);

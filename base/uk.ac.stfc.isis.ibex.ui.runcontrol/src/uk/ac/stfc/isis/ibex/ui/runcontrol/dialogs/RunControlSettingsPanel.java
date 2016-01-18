@@ -54,8 +54,6 @@ public class RunControlSettingsPanel extends Composite {
 	private final RunControlServer runControlServer;
     UpdatedValue<Configuration> config;
 
-    private final RunControlViewModel runControlViewModel;
-
 	private PropertyChangeListener updateTable = new PropertyChangeListener() {
 		@Override
 		public void propertyChange(final PropertyChangeEvent arg0) {
@@ -68,7 +66,8 @@ public class RunControlSettingsPanel extends Composite {
 		}
 	};
 
-	public RunControlSettingsPanel(Composite parent, int style, ConfigServer configServer, RunControlServer runControlServer) {
+	public RunControlSettingsPanel(Composite parent, int style, ConfigServer configServer, RunControlServer runControlServer,
+			RunControlViewModel viewModel) {
 		super(parent, style);
 		
 		this.configServer = configServer;
@@ -76,8 +75,6 @@ public class RunControlSettingsPanel extends Composite {
         config.addPropertyChangeListener(updateTable, true);
 		
 		this.runControlServer = runControlServer;
-        this.runControlViewModel = new RunControlViewModel(configServer, runControlServer);
-		
         setLayout(new GridLayout(2, false));
 
         table = new RunControlSettingsTable(this, SWT.NONE,
@@ -93,8 +90,7 @@ public class RunControlSettingsPanel extends Composite {
         });
         table.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
 		
-        editor = new RunControlEditorPanel(this, SWT.NONE, this.configServer, this.runControlServer,
-                this.runControlViewModel);
+        editor = new RunControlEditorPanel(this, SWT.NONE, this.configServer, this.runControlServer, viewModel);
 	}
 
 	private void setBlocks() {

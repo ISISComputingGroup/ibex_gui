@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import uk.ac.stfc.isis.ibex.epics.observing.BaseCachingObservable;
+import uk.ac.stfc.isis.ibex.epics.observing.Observable;
 import uk.ac.stfc.isis.ibex.epics.observing.BaseObserver;
 import uk.ac.stfc.isis.ibex.epics.writing.Writable;
 import uk.ac.stfc.isis.ibex.experimentdetails.Model;
@@ -93,7 +93,7 @@ public class ObservableModel extends Model {
 	}
 
 	@Override
-	public BaseCachingObservable<String> rbNumber() {
+	public Observable<String> rbNumber() {
 		return variables.rbNumber;
 	}
 

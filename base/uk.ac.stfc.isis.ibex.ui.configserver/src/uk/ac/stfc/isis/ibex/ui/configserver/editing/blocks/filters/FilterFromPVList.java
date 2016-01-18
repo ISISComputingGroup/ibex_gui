@@ -26,7 +26,7 @@ import org.eclipse.jface.viewers.ViewerFilter;
 
 import uk.ac.stfc.isis.ibex.configserver.configuration.PV;
 import uk.ac.stfc.isis.ibex.epics.observing.BaseObserver;
-import uk.ac.stfc.isis.ibex.epics.observing.InitialiseOnSubscribeObservable;
+import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.Observer;
 
 public class FilterFromPVList extends PVFilter {
@@ -48,7 +48,7 @@ public class FilterFromPVList extends PVFilter {
 		public void onConnectionStatus(boolean isConnected) { }
 	};	
 	
-	public FilterFromPVList(InitialiseOnSubscribeObservable<Collection<PV>> pvList) {
+	public FilterFromPVList(ForwardingObservable<Collection<PV>> pvList) {
 		pvList.addObserver(observer);
 	}
 

@@ -43,7 +43,7 @@ public class AlarmCountViewModel extends ModelObject {
 			}
 		});
 		
-		update(alarmCounter.getCount());
+        update(alarmCounter.getCount());
 	}
 	
 	public String getText() {

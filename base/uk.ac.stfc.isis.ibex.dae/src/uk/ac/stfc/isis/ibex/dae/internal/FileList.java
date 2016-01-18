@@ -23,7 +23,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 
-import uk.ac.stfc.isis.ibex.epics.observing.InitialiseOnSubscribeObservable;
+import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.TransformingObservable;
 
 import com.google.common.base.Strings;
@@ -33,7 +33,7 @@ public class FileList extends TransformingObservable<String, Collection<String>>
 
 	private final Gson gson = new Gson();
 	
-	public FileList(InitialiseOnSubscribeObservable<String> files) {
+	public FileList(ForwardingObservable<String> files) {
 		setSource(files);
 	}
 

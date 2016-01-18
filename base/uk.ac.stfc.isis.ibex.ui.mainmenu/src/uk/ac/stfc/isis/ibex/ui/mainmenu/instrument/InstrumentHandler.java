@@ -25,7 +25,9 @@ import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.window.Window;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.ui.IPerspectiveDescriptor;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.WorkbenchException;
 
 import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
 import uk.ac.stfc.isis.ibex.ui.alarm.Alarms;
@@ -52,23 +54,54 @@ public class InstrumentHandler extends AbstractHandler {
             return null;
         }
 
+        if (consoles.anyActive()) {
+            if (shouldCloseAllConsoles(dialog)) {
+                consoles.closeAll();
+            } else {
+                return null;
+            }
+        }
+
+        IPerspectiveDescriptor activePerspective = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage()
+                .getPerspective();
+
         alarms.closeAll();
 
         // Close any OPIs in the synoptic
         synoptic.closeAllOPIs();
 
         InstrumentInfo selected = dialog.selectedInstrument();
-        if (!consoles.anyActive()) {
-            setInstrument(selected);
-            return null;
-        }
-
-        if (shouldCloseAllConsoles(dialog)) {
-            consoles.closeAll();
-        }
-
         setInstrument(selected);
-        consoles.createConsole();
+        
+        IPerspectiveDescriptor scriptingPerspective = PlatformUI.getWorkbench().getPerspectiveRegistry()
+                .findPerspectiveWithId(uk.ac.stfc.isis.ibex.ui.scripting.Perspective.ID);
+
+        IPerspectiveDescriptor alarmPerspective = PlatformUI.getWorkbench().getPerspectiveRegistry()
+                .findPerspectiveWithId(uk.ac.stfc.isis.ibex.ui.alarm.AlarmPerspective.ID);
+
+        // If the scripting perspective is currently open just create the
+        // console as the scripting perspective does when it is first created.
+        //
+        // Similarly if the alarm perspective is open it is closed, then reopend
+        // here.
+        //
+        // Else close the perspective and let the scripting perspective sort
+        // itself out when it gets opened again.
+        if (activePerspective == scriptingPerspective) {
+            consoles.createConsole();
+        } else if (activePerspective == alarmPerspective) {
+            try {
+                PlatformUI.getWorkbench().showPerspective(uk.ac.stfc.isis.ibex.ui.alarm.AlarmPerspective.ID,
+                        PlatformUI.getWorkbench().getActiveWorkbenchWindow());
+            } catch (WorkbenchException e) {
+                e.printStackTrace();
+            }
+        } else {
+            PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().closePerspective(scriptingPerspective,
+                    false, false);
+        }
+
+        alarms.updateAlarmModel();
 
         return null;
     }

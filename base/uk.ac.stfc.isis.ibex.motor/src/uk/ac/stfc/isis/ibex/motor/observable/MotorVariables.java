@@ -21,7 +21,7 @@ package uk.ac.stfc.isis.ibex.motor.observable;
 
 import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
 import uk.ac.stfc.isis.ibex.epics.conversion.Converter;
-import uk.ac.stfc.isis.ibex.epics.observing.InitialiseOnSubscribeObservable;
+import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.epics.pv.PVAddress;
 import uk.ac.stfc.isis.ibex.epics.switching.ObservableFactory;
 import uk.ac.stfc.isis.ibex.epics.switching.OnInstrumentSwitch;
@@ -74,23 +74,21 @@ public class MotorVariables extends InstrumentVariables {
 
 	public final String motorName;
 	public final MotorSetPointVariables setpoint; 
-	public final InitialiseOnSubscribeObservable<String> description;
-	public final InitialiseOnSubscribeObservable<MotorEnable> enable;
+	public final ForwardingObservable<String> description;
+	public final ForwardingObservable<MotorEnable> enable;
 	
-	public final InitialiseOnSubscribeObservable<Double> lowerLimit;
-	public final InitialiseOnSubscribeObservable<Double> upperLimit;
+	public final ForwardingObservable<Double> lowerLimit;
+	public final ForwardingObservable<Double> upperLimit;
 	
-	public final InitialiseOnSubscribeObservable<MotorDirection> direction;
-	public final InitialiseOnSubscribeObservable<Boolean> moving;
-	public final InitialiseOnSubscribeObservable<Boolean> atHome;
-	public final InitialiseOnSubscribeObservable<Boolean> atUpperLimitSwitch;
-	public final InitialiseOnSubscribeObservable<Boolean> atLowerLimitSwitch;
+	public final ForwardingObservable<MotorDirection> direction;
+	public final ForwardingObservable<Boolean> moving;
+	public final ForwardingObservable<Boolean> atHome;
+	public final ForwardingObservable<Boolean> atUpperLimitSwitch;
+	public final ForwardingObservable<Boolean> atLowerLimitSwitch;
 	
-	public final InitialiseOnSubscribeObservable<String> status;
+	public final ForwardingObservable<String> status;
 
 	public MotorVariables(String motorName, Instrument instrument) {
-		super(instrument.channels());
-
 		this.motorName = motorName;
         this.motorAddress = PVAddress.startWith("MOT").append(motorName);
         PVAddress fullAddress = PVAddress.startWith(instrument.getPvPrefix() + motorAddress);
@@ -116,8 +114,7 @@ public class MotorVariables extends InstrumentVariables {
                 obsFactory.getSwitchableObservable(new ShortChannel(), fullAddress.endWithField("LLS")), TO_BOOLEAN);
         atLowerLimitSwitch = convert(
                 obsFactory.getSwitchableObservable(new ShortChannel(), fullAddress.endWithField("HLS")), TO_BOOLEAN);
-        setpoint = registerForClose(
-                new MotorSetPointVariables(fullAddress, instrument.channels(), obsFactory, writeFactory));
+        setpoint = registerForClose(new MotorSetPointVariables(fullAddress, obsFactory, writeFactory));
 		
 		status = convert(obsFactory.getSwitchableObservable(new StringChannel(), motorAddress.toString() + "_STATUS"), CAPITALISE_FIRST_LETTER_ONLY);
 	}
