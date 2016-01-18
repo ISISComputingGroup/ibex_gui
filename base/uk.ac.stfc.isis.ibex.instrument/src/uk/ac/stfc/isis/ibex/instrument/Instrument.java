@@ -21,9 +21,7 @@ package uk.ac.stfc.isis.ibex.instrument;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.logging.log4j.Logger;
 import org.eclipse.core.runtime.CoreException;
@@ -31,8 +29,6 @@ import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtensionRegistry;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.preferences.ConfigurationScope;
-import org.epics.pvmanager.ChannelHandler;
-import org.epics.pvmanager.PVManager;
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
 import org.osgi.service.prefs.BackingStoreException;
@@ -84,17 +80,7 @@ public class Instrument implements BundleActivator {
 	}
 	
     public String getPvPrefix() {
-        
-        String pvPrefix;
-        
-        // TODO: Remove this once the PV Address book is gone.
-        if (instrumentInfo == null) {
-            pvPrefix = localhost.pvPrefix();
-        } else {
-            pvPrefix = instrumentInfo.pvPrefix();
-        }
-        
-        return pvPrefix;
+        return instrumentInfo.pvPrefix();
     }
 
 	public Collection<InstrumentInfo> instruments() {
@@ -134,21 +120,7 @@ public class Instrument implements BundleActivator {
         instrumentName.setValue(selectedInstrument.name());
 
 		updateExtendingPlugins(selectedInstrument);
-        printNumberOfChannels();
 	}
-
-    private void printNumberOfChannels() {
-        int count = 0;
-        Iterator<Map.Entry<String, ChannelHandler>> it = PVManager.getDefaultDataSource().getChannels().entrySet()
-                .iterator();
-        while (it.hasNext()) {
-            Map.Entry<String, ChannelHandler> pair = it.next();
-            ChannelHandler ch = pair.getValue();
-            if (ch.isConnected())
-                count++;
-        }
-        System.out.println("Number of connected channels = " + count);
-    }
 
 	public InstrumentInfo currentInstrument() {
 		return instrumentInfo;
