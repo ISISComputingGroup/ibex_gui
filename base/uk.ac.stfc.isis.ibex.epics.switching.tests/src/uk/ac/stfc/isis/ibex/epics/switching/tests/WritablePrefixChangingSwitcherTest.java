@@ -40,6 +40,7 @@ import uk.ac.stfc.isis.ibex.epics.writing.Writable;
 import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
 import uk.ac.stfc.isis.ibex.instrument.channels.ChannelType;
 
+@SuppressWarnings("checkstyle:methodname")
 public class WritablePrefixChangingSwitcherTest {
 
     private static final String PV_PREFIX = "PREFIX:";

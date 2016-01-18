@@ -21,7 +21,6 @@ package uk.ac.stfc.isis.ibex.synoptic.xml;
 
 import java.io.StringReader;
 import java.io.StringWriter;
-import java.net.URL;
 
 import javax.xml.XMLConstants;
 import javax.xml.bind.JAXBContext;

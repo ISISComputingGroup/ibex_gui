@@ -87,8 +87,7 @@ public class ConfigEditorPanel extends Composite {
 		
 		if (isComponent) {
 			components = null;
-		}
-		else {
+		} else {
 			TabItem componentsTab = new TabItem(editorTabs, SWT.NONE);
 			componentsTab.setText("Components");
 			
@@ -144,7 +143,9 @@ public class ConfigEditorPanel extends Composite {
 		iocs.setConfig(config);
 		blocks.setConfig(config);
 		groups.setConfig(config);
-		if (components != null) components.setConfig(config);
+		if (components != null) {
+			components.setConfig(config);
+		}
 		iocMacros.setConfig(config);
 		iocPVs.setConfig(config);
 		iocPVSets.setConfig(config);
@@ -157,7 +158,9 @@ public class ConfigEditorPanel extends Composite {
 		iocs.setEnabled(enabled);
 		blocks.setEnabled(enabled);
 		groups.setEnabled(enabled);
-		if (components != null) components.setEnabled(enabled);
+		if (components != null) {
+			components.setEnabled(enabled);
+		}
 		iocMacros.setEnabled(enabled);
 		iocPVs.setEnabled(enabled);
 		iocPVSets.setEnabled(enabled);

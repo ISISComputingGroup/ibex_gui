@@ -43,6 +43,7 @@ import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.UpdateTypes;
  * goniometers and DAEs have a fixed target.
  *
  */
+@SuppressWarnings("checkstyle:magicnumber")
 public class TargetDetailView extends Composite {
 
 	private SynopticViewModel instrument;
@@ -54,8 +55,7 @@ public class TargetDetailView extends Composite {
 
 	TargetNameWidget nameSelect;
 
-	public TargetDetailView(Composite parent, final SynopticViewModel instrument) 
-	{
+	public TargetDetailView(Composite parent, final SynopticViewModel instrument) {
 		super(parent, SWT.NONE);
 		
 		this.instrument = instrument;

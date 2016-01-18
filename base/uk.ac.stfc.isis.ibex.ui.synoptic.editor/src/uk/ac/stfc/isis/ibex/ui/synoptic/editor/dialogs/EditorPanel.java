@@ -37,6 +37,7 @@ import uk.ac.stfc.isis.ibex.ui.synoptic.editor.pv.PvDetailView;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.target.TargetDetailView;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.target.TargetPropertyDetailView;
 
+@SuppressWarnings("checkstyle:magicnumber")
 public class EditorPanel extends Composite {
 
 	public static final String ID = "uk.ac.stfc.isis.ibex.ui.synoptic.views.EditorView";

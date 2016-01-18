@@ -44,6 +44,7 @@ import org.eclipse.wb.swt.SWTResourceManager;
 import uk.ac.stfc.isis.ibex.motor.Motor;
 import uk.ac.stfc.isis.ibex.motor.MotorEnable;
 
+@SuppressWarnings("checkstyle:magicnumber")
 public class MinimalMotorView extends Composite {
 
 	private DataBindingContext bindingContext = new DataBindingContext();
@@ -73,18 +74,18 @@ public class MinimalMotorView extends Composite {
 		
 		motorComposite = new Composite(this, SWT.BORDER);
 		motorComposite.setFont(ENABLEDFONT);
-		GridLayout gl_motorComposite = new GridLayout(1, false);
-		gl_motorComposite.verticalSpacing = 2;
-		gl_motorComposite.marginWidth = 2;
-		gl_motorComposite.marginHeight = 1;
-		motorComposite.setLayout(gl_motorComposite);
+		GridLayout glMotorComposite = new GridLayout(1, false);
+		glMotorComposite.verticalSpacing = 2;
+		glMotorComposite.marginWidth = 2;
+		glMotorComposite.marginHeight = 1;
+		motorComposite.setLayout(glMotorComposite);
 		
 		motorName = new Label(motorComposite, SWT.NONE);
 		motorName.setAlignment(SWT.CENTER);
-		GridData gd_motorName = new GridData(SWT.TOP, SWT.TOP, false, false, 1, 1);
-		gd_motorName.minimumWidth = 80;
-		gd_motorName.widthHint = 80;
-		motorName.setLayoutData(gd_motorName);
+		GridData gdMotorName = new GridData(SWT.TOP, SWT.TOP, false, false, 1, 1);
+		gdMotorName.minimumWidth = 80;
+		gdMotorName.widthHint = 80;
+		motorName.setLayoutData(gdMotorName);
 		motorName.setText("Motor name");
 				
 		value = new Label(motorComposite, SWT.NONE);

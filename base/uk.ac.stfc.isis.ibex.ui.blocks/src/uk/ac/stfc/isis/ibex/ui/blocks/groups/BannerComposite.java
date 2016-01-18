@@ -25,6 +25,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CLabel;
 import org.eclipse.wb.swt.SWTResourceManager;
 
+@SuppressWarnings("checkstyle:magicnumber")
 public class BannerComposite extends Composite {
 
 	public BannerComposite(Composite parent, int style) {

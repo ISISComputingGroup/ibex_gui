@@ -36,12 +36,13 @@ import org.eclipse.wb.swt.SWTResourceManager;
 import uk.ac.stfc.isis.ibex.ui.perspectives.Activator;
 import uk.ac.stfc.isis.ibex.ui.perspectives.IsisPerspective;
 
+@SuppressWarnings("checkstyle:magicnumber")
 public class PerspectiveSwitcherView extends ViewPart implements ISizeProvider {
 	public PerspectiveSwitcherView() {
 	}
 
-	private static Font BUTTON_FONT = SWTResourceManager.getFont("Arial", 12, SWT.NORMAL);
-	private static Color BACKGROUND = SWTResourceManager.getColor(250, 250, 252);
+	private static final Font BUTTON_FONT = SWTResourceManager.getFont("Arial", 12, SWT.NORMAL);
+	private static final Color BACKGROUND = SWTResourceManager.getColor(250, 250, 252);
 	
 	public static final String ID = "uk.ac.stfc.isis.ibex.ui.perspectives.PerspectiveSwitcher"; //$NON-NLS-1$
 
@@ -91,15 +92,15 @@ public class PerspectiveSwitcherView extends ViewPart implements ISizeProvider {
 			IsisPerspective perspective) {
 
 		PerspectiveButton buttonToAdd;
-		switch (perspective.ID()) {
+		switch (perspective.id()) {
 			case "uk.ac.stfc.isis.ibex.ui.log.perspective":
-				buttonToAdd = new LogButton(container, perspective.ID());
+				buttonToAdd = new LogButton(container, perspective.id());
 				break;
 			case "uk.ac.stfc.isis.ibex.ui.alarm.perspective":
-				buttonToAdd = new AlarmButton(container, perspective.ID());
+				buttonToAdd = new AlarmButton(container, perspective.id());
 				break;
 			default:
-				buttonToAdd = new PerspectiveButton(container, perspective.ID());
+				buttonToAdd = new PerspectiveButton(container, perspective.id());
 				break;
 		}
 

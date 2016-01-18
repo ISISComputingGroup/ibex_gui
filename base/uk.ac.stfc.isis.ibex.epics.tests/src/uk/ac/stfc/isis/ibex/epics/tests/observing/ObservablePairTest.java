@@ -110,10 +110,10 @@ public class ObservablePairTest {
 	
 	@Test
 	public void setting_an_error_on_one_observable_triggers_onError_method_on_observer() {
-		testableStringObservable.setError(TestHelpers.exception);
+		testableStringObservable.setError(TestHelpers.EXCEPTION);
 		
 		// Assert - The on error call is passed through
-		verify(mockObserver, times(1)).onError(TestHelpers.exception);
+		verify(mockObserver, times(1)).onError(TestHelpers.EXCEPTION);
 	}
 	
 	@Test

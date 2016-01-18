@@ -30,6 +30,7 @@ import org.eclipse.wb.swt.ResourceManager;
 import uk.ac.stfc.isis.ibex.dae.actions.DaeActions;
 import uk.ac.stfc.isis.ibex.model.Action;
 
+@SuppressWarnings("checkstyle:magicnumber")
 public class DaeActionButtonPanel extends Composite {
 
 	public DaeActionButtonPanel(Composite parent, int style, DaeActions actions) {

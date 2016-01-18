@@ -40,6 +40,7 @@ import org.eclipse.swt.widgets.Label;
 import uk.ac.stfc.isis.ibex.log.message.LogMessageFields;
 import uk.ac.stfc.isis.ibex.ui.log.filter.LogMessageFilter;
 
+@SuppressWarnings("checkstyle:magicnumber")
 public class SearchControl extends Canvas {
 	private static final LogMessageFields[] FIELDS = {
 			LogMessageFields.CONTENTS, LogMessageFields.CLIENT_NAME,

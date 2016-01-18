@@ -47,7 +47,7 @@ public enum LogMessageFieldsSql {
 
     private String displayName;
 
-    private LogMessageFieldsSql(String displayName, String tagName,
+    LogMessageFieldsSql(String displayName, String tagName,
 	    int defaultColumnWidth) {
 	this.displayName = displayName;
     }

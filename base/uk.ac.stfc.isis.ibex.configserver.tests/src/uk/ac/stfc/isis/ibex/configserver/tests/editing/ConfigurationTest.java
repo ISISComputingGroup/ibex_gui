@@ -23,6 +23,7 @@ import org.junit.Test;
 
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
 
+@SuppressWarnings("checkstyle:methodname")
 public class ConfigurationTest extends EditableConfigurationTest {
 	
 	@Test

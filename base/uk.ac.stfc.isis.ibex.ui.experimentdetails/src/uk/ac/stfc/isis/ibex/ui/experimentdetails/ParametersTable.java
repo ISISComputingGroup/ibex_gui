@@ -27,6 +27,7 @@ import uk.ac.stfc.isis.ibex.ui.tables.DataboundCellLabelProvider;
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundTable;
 import uk.ac.stfc.isis.ibex.ui.widgets.StringEditingSupport;
 
+@SuppressWarnings("checkstyle:magicnumber")
 public class ParametersTable extends DataboundTable<Parameter> {
 
 	private final StringEditingSupport<Parameter> valueEditingSupport = new StringEditingSupport<Parameter>(viewer(), Parameter.class) {

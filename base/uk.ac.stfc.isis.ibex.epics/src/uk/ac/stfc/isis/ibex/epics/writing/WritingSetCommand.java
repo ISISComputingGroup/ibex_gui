@@ -52,7 +52,7 @@ public class WritingSetCommand<T> extends SetCommand<T> implements Closable {
 	
 	@Override
 	public void send(T value) {
-		destinationWriter.write(value);;
+		destinationWriter.write(value);
 	}
 	
 	@Override

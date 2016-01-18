@@ -23,20 +23,20 @@ import uk.ac.stfc.isis.ibex.configserver.configuration.Block;
 import uk.ac.stfc.isis.ibex.validators.ErrorMessageProvider;
 
 public class BlockLogSettingsViewModel extends ErrorMessageProvider {
-    public static String PERIODIC_STRING = "Periodic Scan for Change";
-    public static String MONITOR_STRING = "Monitor With Deadband";
+    public static final String PERIODIC_STRING = "Periodic Scan for Change";
+    public static final String MONITOR_STRING = "Monitor With Deadband";
 
-    public static String DEADBAND_LABEL = "Deadband:";
-    public static String SCAN_LABEL = "Scan Rate:";
+    public static final String DEADBAND_LABEL = "Deadband:";
+    public static final String SCAN_LABEL = "Scan Rate:";
 
-    public static String COMBO_TOOLTIP = "Periodic: Log on change but no more often than the specified period.\n"
+    public static final String COMBO_TOOLTIP = "Periodic: Log on change but no more often than the specified period.\n"
             + "Monitor: Log when the value changes by the absolute amount specified, this amount is in the same units as the block.";
 
-    private static String INT_ERROR = "Scan rate must be an integer number of seconds";
-    private static String FLOAT_ERROR = "Deadband must be a decimal number";
+    private static final String INT_ERROR = "Scan rate must be an integer number of seconds";
+    private static final String FLOAT_ERROR = "Deadband must be a decimal number";
     
-    private static String SCAN_EMPTY = "Scan rate cannot be empty";
-    private static String DEADBAND_EMPTY = "Deadband cannot be empty";
+    private static final String SCAN_EMPTY = "Scan rate cannot be empty";
+    private static final String DEADBAND_EMPTY = "Deadband cannot be empty";
     
     private final Block editingBlock;
     
@@ -68,13 +68,15 @@ public class BlockLogSettingsViewModel extends ErrorMessageProvider {
     	if (periodic) {
             setLabelText(SCAN_LABEL);
             setTextBoxText(Integer.toString(rate));
-            if (updateComboText)
+            if (updateComboText) {
             	setComboText(PERIODIC_STRING);
+            }
         } else {
             setLabelText(DEADBAND_LABEL);
             setTextBoxText(Float.toString(deadband));
-            if (updateComboText)
+            if (updateComboText) {
             	setComboText(MONITOR_STRING);
+            }
         }
     }
 
@@ -119,20 +121,22 @@ public class BlockLogSettingsViewModel extends ErrorMessageProvider {
     			rate = Integer.parseInt(text);
     			setError(false, null);
     		} catch (NumberFormatException e) {
-    	    	if (text.isEmpty())
+    	    	if (text.isEmpty()) {
     	    		setError(true, SCAN_EMPTY);
-    	    	else
+    	    	} else {
         			setError(true, INT_ERROR);
+    	    	}
     		}
         } else {
         	try {
 		        deadband = Float.parseFloat(text);
 		        setError(false, null);
 			} catch (NumberFormatException e) {
-    	    	if (text.isEmpty())
+    	    	if (text.isEmpty()) {
     	    		setError(true, DEADBAND_EMPTY);
-    	    	else
+    	    	} else {
         			setError(true, FLOAT_ERROR);
+    	    	}
 			}
         }
         

@@ -27,6 +27,7 @@ import org.eclipse.swt.widgets.Composite;
 
 import uk.ac.stfc.isis.ibex.ui.goniometer.views.SetpointsTableView;
 
+@SuppressWarnings("checkstyle:magicnumber")
 public class GoniometerPanel extends ScrolledComposite {
 	private SetpointsTableView goniometerSettings;
 	
@@ -39,16 +40,16 @@ public class GoniometerPanel extends ScrolledComposite {
 		setExpandHorizontal(true);
 		setExpandVertical(true);
 		
-		GridLayout gl_parent = new GridLayout(1, false);
-		gl_parent.horizontalSpacing = 20;
-		parent.setLayout(gl_parent);
+		GridLayout glParent = new GridLayout(1, false);
+		glParent.horizontalSpacing = 20;
+		parent.setLayout(glParent);
 		
 		goniometerSettings = new SetpointsTableView(parent, SWT.NONE);
 		//goniometerSettings.setLayout(new FillLayout(SWT.HORIZONTAL));
-		GridData gd_goniometerSettings = new GridData(SWT.FILL, SWT.TOP, false, false, 1, 1);
-		gd_goniometerSettings.heightHint = 210;
-		gd_goniometerSettings.widthHint = 500;
-		goniometerSettings.setLayoutData(gd_goniometerSettings);
+		GridData gdGoniometerSettings = new GridData(SWT.FILL, SWT.TOP, false, false, 1, 1);
+		gdGoniometerSettings.heightHint = 210;
+		gdGoniometerSettings.widthHint = 500;
+		goniometerSettings.setLayoutData(gdGoniometerSettings);
 		
 		setModel(Activator.getDefault().viewModel());
 	}

@@ -61,22 +61,22 @@ public class BlockNameValidator {
 	 * @param name The proposed name
 	 * @return True if the name is valid, else false with the error message set
 	 */
-	public Boolean isValidName(String name, BlockRules block_rules) {
-		boolean is_valid = false;
+	public Boolean isValidName(String name, BlockRules blockRules) {
+		boolean isValid = false;
 		
 		if (name.equals("")) {
 			setErrorMessage(EMPTY_NAME_MESSAGE);	
 		} else if (nameIsDuplicated(name)) {
 			setErrorMessage(DUPLICATE_GROUP_MESSAGE + ": " + name);
-		} else if ((block_rules != null) && (nameIsForbidden(name, block_rules))) {
-			setErrorMessage(FORBIDDEN_NAME_MESSAGE + getListAsString(block_rules.getDisallowed()));
-		} else if ((block_rules != null) && !(name.matches(block_rules.getRegex()))) {
-			setErrorMessage(block_rules.getRegexErrorMessage());
+		} else if ((blockRules != null) && (nameIsForbidden(name, blockRules))) {
+			setErrorMessage(FORBIDDEN_NAME_MESSAGE + getListAsString(blockRules.getDisallowed()));
+		} else if ((blockRules != null) && !(name.matches(blockRules.getRegex()))) {
+			setErrorMessage(blockRules.getRegexErrorMessage());
 		} else {
-			is_valid = true;
+			isValid = true;
 			setErrorMessage(NO_ERROR);
 		}
-		return is_valid;
+		return isValid;
 	}
 
 	private void setErrorMessage(String errorMessage) {
@@ -88,21 +88,22 @@ public class BlockNameValidator {
 	}
 	
 	private boolean nameIsForbidden(String text, BlockRules blockRules) {
-		boolean is_valid = false;
-		for (String forbidden : blockRules.getDisallowed())
-			is_valid |= text.toLowerCase().equals(forbidden.toLowerCase());
-		return is_valid;
+		boolean isValid = false;
+		for (String forbidden : blockRules.getDisallowed()) {
+			isValid |= text.toLowerCase().equals(forbidden.toLowerCase());
+		}
+		return isValid;
 	}
 	
-	private String getListAsString(List<String> list){
+	private String getListAsString(List<String> list) {
 		StringBuilder sb = new StringBuilder();		
-		for(int i = 0; i < list.size(); i++)
-		{
+		for (int i = 0; i < list.size(); i++) {
 			sb.append(list.get(i));
-			if(i < list.size() - 2)
+			if (i < list.size() - 2) {
 				sb.append(", ");
-			else if (i == list.size() - 2)
+			} else if (i == list.size() - 2) {
 				sb.append(" or ");
+			}
 		}
 		return sb.toString();
 	}

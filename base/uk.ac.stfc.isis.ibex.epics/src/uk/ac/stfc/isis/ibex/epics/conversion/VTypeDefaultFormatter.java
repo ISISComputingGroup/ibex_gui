@@ -44,7 +44,7 @@ public class VTypeDefaultFormatter<T extends VType> {
 		}
 	}
 
-	private class NoUnits <R extends VType> extends Converter<R, String> {
+	private class NoUnits<R extends VType> extends Converter<R, String> {
 		@Override
 		public String convert(VType value) throws ConversionException {	
 
@@ -73,7 +73,7 @@ public class VTypeDefaultFormatter<T extends VType> {
 		}
 		
 		if (value instanceof VByteArray) {
-			return VTypeFormat.fromVByteArray().convert((VByteArray)value);
+			return VTypeFormat.fromVByteArray().convert((VByteArray) value);
 		}
 		
 		return defaultValueFormat(value);

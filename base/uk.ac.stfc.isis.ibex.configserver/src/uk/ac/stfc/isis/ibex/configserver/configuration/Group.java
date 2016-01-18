@@ -81,9 +81,9 @@ public class Group extends ModelObject {
 		}
 		
 		Group other = (Group) obj;
-		return name.equals(other.name) &&
-				blocks.equals(other.blocks) &&
-				(subconfig == null ? other.subconfig == null : subconfig.equals(other.subconfig)); 
+		return name.equals(other.name) 
+				&& blocks.equals(other.blocks) 
+				&& (subconfig == null ? other.subconfig == null : subconfig.equals(other.subconfig)); 
 	}
 	
 	@Override

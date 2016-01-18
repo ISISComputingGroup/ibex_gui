@@ -33,6 +33,7 @@ import uk.ac.stfc.isis.ibex.ui.ioccontrol.StateLabelProvider;
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundCellLabelProvider;
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundTable;
 
+@SuppressWarnings("checkstyle:magicnumber")
 public class IocTable extends DataboundTable<EditableIocState> {
 
 	public IocTable(Composite parent, int style, int tableStyle) {
@@ -78,7 +79,7 @@ public class IocTable extends DataboundTable<EditableIocState> {
 	
 	private void state() {
 		TableViewerColumn name = createColumn("Status", 2);
-		IObservableMap[] stateProperties = { observeProperty("isRunning") };
+		IObservableMap[] stateProperties = {observeProperty("isRunning")};
 		name.setLabelProvider(new StateLabelProvider(stateProperties));		
 	}
 }

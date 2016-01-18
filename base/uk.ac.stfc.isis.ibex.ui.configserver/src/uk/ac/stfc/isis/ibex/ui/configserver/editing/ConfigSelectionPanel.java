@@ -26,6 +26,7 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.layout.GridData;
 
+@SuppressWarnings("checkstyle:magicnumber")
 public class ConfigSelectionPanel extends Composite {
 
 	public ConfigSelectionPanel(Composite parent, int style, ConfigSelection selection) {
@@ -37,8 +38,8 @@ public class ConfigSelectionPanel extends Composite {
 		lblEditingConfiguration.setText("Configuration to edit:");
 		
 		Combo configurationSelector = new Combo(this, SWT.NONE);
-		GridData gd_configurationSelector = new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1);
-		gd_configurationSelector.widthHint = 150;
-		configurationSelector.setLayoutData(gd_configurationSelector);
+		GridData gdConfigurationSelector = new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1);
+		gdConfigurationSelector.widthHint = 150;
+		configurationSelector.setLayoutData(gdConfigurationSelector);
 	}
 }

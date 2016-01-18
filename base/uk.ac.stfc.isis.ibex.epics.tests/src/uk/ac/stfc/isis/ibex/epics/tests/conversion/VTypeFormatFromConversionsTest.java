@@ -90,7 +90,7 @@ public class VTypeFormatFromConversionsTest {
 			return 0x30;
 		}
 	};
-	VByteArray value = (VByteArray)ValueFactory.newVNumberArray(data, null, null, null);
+	VByteArray value = (VByteArray) ValueFactory.newVNumberArray(data, null, null, null);
 
 	// Act
 	String result = converter.convert(value);

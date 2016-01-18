@@ -42,6 +42,7 @@ import uk.ac.stfc.isis.ibex.configserver.IocControl;
 import uk.ac.stfc.isis.ibex.ui.ioccontrol.table.StatusColorConverter;
 import uk.ac.stfc.isis.ibex.ui.ioccontrol.table.StatusTextConverter;
 
+@SuppressWarnings("checkstyle:magicnumber")
 public class IocEditorPanel extends Composite {
 	
 	private final Label name;
@@ -87,18 +88,18 @@ public class IocEditorPanel extends Composite {
 		lblName.setText("Name:");
 		
 		name = new Label(grpSelectedIoc, SWT.NONE);
-		GridData gd_name = new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1);
-		gd_name.widthHint = 150;
-		name.setLayoutData(gd_name);
+		GridData gdName = new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1);
+		gdName.widthHint = 150;
+		name.setLayoutData(gdName);
 		
 		Label lblStatus = new Label(grpSelectedIoc, SWT.NONE);
 		lblStatus.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		lblStatus.setText("Status:");
 		
 		status = new Label(grpSelectedIoc, SWT.NONE);
-		GridData gd_status = new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1);
-		gd_status.widthHint = 50;
-		status.setLayoutData(gd_status);
+		GridData gdStatus = new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1);
+		gdStatus.widthHint = 50;
+		status.setLayoutData(gdStatus);
 		new Label(grpSelectedIoc, SWT.NONE);
 		
 		Label lblDescription = new Label(grpSelectedIoc, SWT.NONE);
@@ -107,9 +108,9 @@ public class IocEditorPanel extends Composite {
 		lblDescription.setText("Description:");
 		
 		description = new Text(grpSelectedIoc, SWT.BORDER);
-		GridData gd_text = new GridData(SWT.FILL, SWT.FILL, false, false, 3, 1);
-		gd_text.widthHint = 120;
-		description.setLayoutData(gd_text);
+		GridData gdText = new GridData(SWT.FILL, SWT.FILL, false, false, 3, 1);
+		gdText.widthHint = 120;
+		description.setLayoutData(gdText);
 		description.addModifyListener(new ModifyListener() {		
 			@Override
 			public void modifyText(ModifyEvent arg0) {
@@ -131,9 +132,9 @@ public class IocEditorPanel extends Composite {
 		new Label(grpSelectedIoc, SWT.NONE);
 		
 		buttons = new IocButtonPanel(grpSelectedIoc, SWT.NONE, control);
-		GridData gd_buttons = new GridData(SWT.LEFT, SWT.FILL, false, false, 3, 1);
-		gd_buttons.widthHint = 220;
-		buttons.setLayoutData(gd_buttons);
+		GridData gdButtons = new GridData(SWT.LEFT, SWT.FILL, false, false, 3, 1);
+		gdButtons.widthHint = 220;
+		buttons.setLayoutData(gdButtons);
 		
 		setIoc(null);
 	}

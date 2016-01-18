@@ -41,7 +41,6 @@ public class DisplayConfiguration extends TransformingObservable<Configuration, 
 	private String description;
 	private String defaultSynoptic;
 	private final List<DisplayGroup> groups = new ArrayList<>();
-	private Configuration config;
 	private Collection<DisplayBlock> displayBlocks;
 
 	private final ConfigServer configServer;
@@ -56,7 +55,6 @@ public class DisplayConfiguration extends TransformingObservable<Configuration, 
 
 	@Override
 	protected DisplayConfiguration transform(Configuration value) {
-		this.config = value;
 		name = value.name();
 		description = value.description();
 		defaultSynoptic = value.synoptic();

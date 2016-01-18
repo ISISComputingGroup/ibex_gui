@@ -27,6 +27,7 @@ import org.eclipse.ui.part.ViewPart;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.layout.GridData;
 
+@SuppressWarnings("checkstyle:magicnumber")
 public class BeamStatusView extends ViewPart {
 
 	public static final String ID = "uk.ac.stfc.isis.ibex.ui.beamstatus.views.BeamStatusView"; //$NON-NLS-1$
@@ -41,17 +42,17 @@ public class BeamStatusView extends ViewPart {
 	 */
 	@Override
 	public void createPartControl(Composite parent) {
-		GridLayout gl_parent = new GridLayout(2, false);
-		gl_parent.verticalSpacing = 0;
-		gl_parent.marginHeight = 0;
-		parent.setLayout(gl_parent);
+		GridLayout glParent = new GridLayout(2, false);
+		glParent.verticalSpacing = 0;
+		glParent.marginHeight = 0;
+		parent.setLayout(glParent);
 		
 		StatusPanel status = new StatusPanel(parent, SWT.NONE);
-		GridData gd_status = new GridData(SWT.FILL, SWT.FILL, false, true, 1, 1);
-		gd_status.minimumHeight = 600;
-		gd_status.widthHint = 420;
-		gd_status.minimumWidth = 420;
-		status.setLayoutData(gd_status);
+		GridData gdStatus = new GridData(SWT.FILL, SWT.FILL, false, true, 1, 1);
+		gdStatus.minimumHeight = 600;
+		gdStatus.widthHint = 420;
+		gdStatus.minimumWidth = 420;
+		status.setLayoutData(gdStatus);
 		StatusPages pages = new StatusPages(parent, SWT.NONE);
 		pages.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 

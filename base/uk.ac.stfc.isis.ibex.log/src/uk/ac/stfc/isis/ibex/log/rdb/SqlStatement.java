@@ -40,7 +40,7 @@ public class SqlStatement {
     private static final String TABLENAME = "message";
 
     private String schemaName;
-    private static int LIMIT = 1000;
+    private static int limit = 1000;
 
     @SuppressWarnings("unused")
     private List<LogMessageFieldsSql> selectFields;
@@ -93,7 +93,7 @@ public class SqlStatement {
      */
     public String getSelectStatement() {
 	return "SELECT " + selectList() + " FROM " + selectTableList()
-		+ " WHERE " + whereList() + " LIMIT " + Integer.toString(LIMIT);
+		+ " WHERE " + whereList() + " LIMIT " + Integer.toString(limit);
     }
 
     /**

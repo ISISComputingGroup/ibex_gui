@@ -37,7 +37,7 @@ public enum BinaryChoice {
 		}
 	}
 	
-	private BinaryChoice(String text) {
+	BinaryChoice(String text) {
 		this.text = text;
 	}
 	 

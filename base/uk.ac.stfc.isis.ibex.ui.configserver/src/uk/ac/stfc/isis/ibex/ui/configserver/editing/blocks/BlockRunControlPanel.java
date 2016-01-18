@@ -33,6 +33,7 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 
+@SuppressWarnings("checkstyle:magicnumber")
 public class BlockRunControlPanel extends Composite {
     private Text lowLimitText;
     private Text highLimitText;

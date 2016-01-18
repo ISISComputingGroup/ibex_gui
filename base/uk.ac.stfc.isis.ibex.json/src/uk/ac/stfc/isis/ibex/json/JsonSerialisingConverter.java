@@ -30,7 +30,7 @@ import com.google.gson.GsonBuilder;
 
 public class JsonSerialisingConverter<T> extends Converter<T, String> {
 
-	private final static ExclusionStrategy EXCLUDE_PROPERTY_CHANGE_SUPPORT = 
+	private static final ExclusionStrategy EXCLUDE_PROPERTY_CHANGE_SUPPORT = 
 			new SpecificClassExclusionStrategy(PropertyChangeSupport.class);
 	
 	private final Gson gson = new GsonBuilder()

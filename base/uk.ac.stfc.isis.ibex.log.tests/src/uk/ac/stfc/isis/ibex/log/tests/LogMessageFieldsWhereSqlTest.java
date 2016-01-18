@@ -22,7 +22,6 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import uk.ac.stfc.isis.ibex.log.message.LogMessageFields;
 import uk.ac.stfc.isis.ibex.log.message.sql.LogMessageFieldsWhereSql;
 
 /**

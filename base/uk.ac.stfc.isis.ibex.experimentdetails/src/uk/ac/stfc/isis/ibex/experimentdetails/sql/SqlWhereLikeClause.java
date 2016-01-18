@@ -26,12 +26,12 @@ import uk.ac.stfc.isis.ibex.experimentdetails.database.ExpDataField;
  */
 public class SqlWhereLikeClause extends SqlWhereClause {
 	
-	public SqlWhereLikeClause(ExpDataField LHS, String RHS) {
-		super(LHS.toString(), RHS);
+	public SqlWhereLikeClause(ExpDataField lhs, String rhs) {
+		super(lhs.toString(), rhs);
 	}
 	
 	@Override
 	public String toString() {
-		return this.LHS + " LIKE " + this.RHS;
+		return this.lhs + " LIKE " + this.rhs;
 	}
 }

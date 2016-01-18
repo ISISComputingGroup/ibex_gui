@@ -40,6 +40,7 @@ import uk.ac.stfc.isis.ibex.ui.synoptic.component.ComponentView;
  * The synoptic's components with an optionally overlaid beamline.
  * 
  */
+@SuppressWarnings("checkstyle:magicnumber")
 public class InstrumentSynoptic extends Composite {
 
 	private BeamlineCompositeContainer instrumentComposite;

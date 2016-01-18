@@ -77,18 +77,19 @@ import uk.ac.stfc.isis.ibex.log.message.LogMessageFields;
 import uk.ac.stfc.isis.ibex.ui.log.comparator.LogMessageComparator;
 import uk.ac.stfc.isis.ibex.ui.log.filter.LogMessageFilter;
 
+@SuppressWarnings("checkstyle:magicnumber")
 public class LogDisplay extends Canvas {
-	private static Color COLOR_CONNECTION_OK = Display.getDefault()
+	private static final Color COLOR_CONNECTION_OK = Display.getDefault()
 			.getSystemColor(SWT.COLOR_BLACK);
-	private static Color COLOR_CONNECTION_DOWN = Display.getDefault()
+	private static final Color COLOR_CONNECTION_DOWN = Display.getDefault()
 			.getSystemColor(SWT.COLOR_RED);
 
-	private static String MSG_CONNECTION_OK = "Connection to log message routing server (JMS) functioning normally.";
+	private static final String MSG_CONNECTION_OK = "Connection to log message routing server (JMS) functioning normally.";
 
-	private static String MSG_CONNECTION_DOWN = "Unable to connect to log message routing server (JMS); "
+	private static final String MSG_CONNECTION_DOWN = "Unable to connect to log message routing server (JMS); "
 			+ "Connection to log message database may still be available.";
 
-	private static String MSG_CLEAR_CONFIRM = "This will clear all recent log message history (messages "
+	private static final String MSG_CLEAR_CONFIRM = "This will clear all recent log message history (messages "
 			+ "will still be retrievable by searching). Proceed?";
 
 	private static final LogMessageFields[] COLUMNS = {
@@ -200,7 +201,7 @@ public class LogDisplay extends Canvas {
 		Display.getDefault().asyncExec(new Runnable() {
 			@Override
 			public void run() {
-				tableViewer.setFilters(filters.toArray(new ViewerFilter [] {}));
+				tableViewer.setFilters(filters.toArray(new ViewerFilter[] {}));
 				tableViewer.refresh();
 			}
 		});		
@@ -563,9 +564,9 @@ public class LogDisplay extends Canvas {
 
 		FileDialog dialog = new FileDialog(getShell(), SWT.SAVE);
 
-		dialog.setFilterNames(new String[] { "Log Files (*.log)", 
+		dialog.setFilterNames(new String[] {"Log Files (*.log)", 
 				"All Files (*.*)" });
-		dialog.setFilterExtensions(new String[] { "*.log" });
+		dialog.setFilterExtensions(new String[] {"*.log"});
 		dialog.setFilterPath("c:\\");
 		dialog.setFileName(defaultFileName);
 

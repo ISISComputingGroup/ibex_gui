@@ -36,9 +36,9 @@ public class Block extends ModelObject {
     private float highlimit;
 
     // Logging configurations, default is no logging
-    private boolean log_periodic = true;
-    private int log_rate = 0;
-    private float log_deadband;
+    private boolean logPeriodic = true;
+    private int logRate = 0;
+    private float logDeadband;
 
     public Block(String name, String pv, boolean visible, boolean local) {
         this(name, pv, visible, local, null, 0.0f, 0.0f, false, false, 0, 0.0f);
@@ -54,14 +54,14 @@ public class Block extends ModelObject {
         this.lowlimit = lowlimit;
         this.highlimit = highlimit;
         this.runcontrol = runcontrol;
-        this.log_deadband = logDeadband;
-        this.log_periodic = logPeriodic;
-        this.log_rate = logRate;
+        this.logDeadband = logDeadband;
+        this.logPeriodic = logPeriodic;
+        this.logRate = logRate;
 	}
 	
 	public Block(Block other) {
         this(other.name, other.pv, other.visible, other.local, other.subconfig, other.lowlimit, other.highlimit,
-                other.runcontrol, other.log_periodic, other.log_rate, other.log_deadband);
+                other.runcontrol, other.logPeriodic, other.logRate, other.logDeadband);
 	}
 
 	public String getName() {
@@ -77,27 +77,27 @@ public class Block extends ModelObject {
 	}
 
     public void setLogPeriodic(boolean periodic) {
-        firePropertyChange("log_periodic", this.log_periodic, this.log_periodic = periodic);
+        firePropertyChange("log_periodic", this.logPeriodic, this.logPeriodic = periodic);
     }
 
     public boolean getLogPeriodic() {
-        return log_periodic;
+        return logPeriodic;
     }
 
     public void setLogRate(int rate) {
-        firePropertyChange("log_rate", this.log_rate, this.log_rate = rate);
+        firePropertyChange("log_rate", this.logRate, this.logRate = rate);
     }
 
     public int getLogRate() {
-        return log_rate;
+        return logRate;
     }
 
     public void setLogDeadband(float deadband) {
-        firePropertyChange("log_deadband", this.log_deadband, this.log_deadband = deadband);
+        firePropertyChange("log_deadband", this.logDeadband, this.logDeadband = deadband);
     }
 
     public float getLogDeadband() {
-        return log_deadband;
+        return logDeadband;
     }
 
 	public void setPV(String pv) {

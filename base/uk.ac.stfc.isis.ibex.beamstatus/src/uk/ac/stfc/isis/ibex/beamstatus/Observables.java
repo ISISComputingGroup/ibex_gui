@@ -41,7 +41,7 @@ public class Observables extends ModelAdapter {
 		ts2 = new TargetStation2(status.ts2);
 	}
 
-	public class Synchrotron {
+	public final class Synchrotron {
 		public final UpdatedValue<String> beamCurrent;
 		public final UpdatedValue<String> beamFrequency;
 		
@@ -51,7 +51,7 @@ public class Observables extends ModelAdapter {
 		}
 	}
 	
-	public class TargetStation1 extends EndStation {
+	public final class TargetStation1 extends EndStation {
 		
 		public final UpdatedValue<String> methaneTemperature;
 		public final UpdatedValue<String> hydrogenTemperature;
@@ -65,7 +65,7 @@ public class Observables extends ModelAdapter {
 		}
 	}
 
-	public class TargetStation2 extends EndStation {
+	public final class TargetStation2 extends EndStation {
 		
 		public final UpdatedValue<String> coupledMethaneTemperature;
 		public final UpdatedValue<String> coupledHydrogenTemperature;
@@ -104,12 +104,18 @@ public class Observables extends ModelAdapter {
 			lastBeamOn = adapt(endStation.lastBeamOn());
 		}
 		
-		public UpdatedValue<String> beam() { return beam; }
-		public UpdatedValue<String> pps() { return pps; }
-		public UpdatedValue<String> beamCurrent() { return beamCurrent; }
-		public UpdatedValue<String> uAHToday() { return uAHToday; }
-		public UpdatedValue<String> lastBeamOff() { return lastBeamOff; }
-		public UpdatedValue<String> lastBeamOn() { return lastBeamOn; }
+		public UpdatedValue<String> beam() { 
+			return beam; }
+		public UpdatedValue<String> pps() { 
+			return pps; }
+		public UpdatedValue<String> beamCurrent() { 
+			return beamCurrent; }
+		public UpdatedValue<String> uAHToday() { 
+			return uAHToday; }
+		public UpdatedValue<String> lastBeamOff() { 
+			return lastBeamOff; }
+		public UpdatedValue<String> lastBeamOn() { 
+			return lastBeamOn; }
 	}
 
 	private UpdatedValue<String> adaptNumber(ForwardingObservable<Number> observable) {

@@ -11,7 +11,7 @@ import uk.ac.stfc.isis.ibex.experimentdetails.UserDetails;
 import uk.ac.stfc.isis.ibex.experimentdetails.database.SearchModel;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 
-public class RBLookupViewModel extends ModelObject{
+public class RBLookupViewModel extends ModelObject {
 	private boolean okEnabled = false;
 	private boolean dateEnabled = false;
     private String nameSearch = "";
@@ -20,21 +20,21 @@ public class RBLookupViewModel extends ModelObject{
 	private Collection<UserDetails> searchResults;
 	private UserDetails selectedUser;
 	
-	private SearchModel SEARCH = ExperimentDetails.getInstance().searchModel();		
+	private SearchModel search = ExperimentDetails.getInstance().searchModel();		
 	
 	private final PropertyChangeListener resultsListener = new PropertyChangeListener() {
 		@Override
 		public void propertyChange(PropertyChangeEvent arg0) {
-			firePropertyChange("searchResults", searchResults, searchResults=SEARCH.getSearchResults());
+			firePropertyChange("searchResults", searchResults, searchResults = search.getSearchResults());
 		}
 	};
 	
 	public RBLookupViewModel() {
-		SEARCH.addPropertyChangeListener("searchResults", resultsListener);
+		search.addPropertyChangeListener("searchResults", resultsListener);
 	}
 	
 	public void setOkEnabled(boolean enabled) {
-		firePropertyChange("okEnabled", okEnabled, okEnabled=enabled);
+		firePropertyChange("okEnabled", okEnabled, okEnabled = enabled);
 	}
 	
 	public boolean getOkEnabled() {
@@ -42,7 +42,7 @@ public class RBLookupViewModel extends ModelObject{
 	}
 	
 	public void setDateEnabled(boolean enabled) {
-		firePropertyChange("dateEnabled", dateEnabled, dateEnabled=enabled);
+		firePropertyChange("dateEnabled", dateEnabled, dateEnabled = enabled);
 		searchForExperimentID();
 	}
 	
@@ -51,7 +51,7 @@ public class RBLookupViewModel extends ModelObject{
 	}
 	
 	public void setDateSearch(Date date) {
-		firePropertyChange("dateSearch", dateSearch, dateSearch=date);
+		firePropertyChange("dateSearch", dateSearch, dateSearch = date);
 		searchForExperimentID();
 	}
 	
@@ -60,7 +60,7 @@ public class RBLookupViewModel extends ModelObject{
 	}
 	
 	public void setNameSearch(String name) {
-		firePropertyChange("nameSearch", nameSearch, nameSearch=name);
+		firePropertyChange("nameSearch", nameSearch, nameSearch = name);
         searchForExperimentID();
 	}
 	
@@ -69,13 +69,13 @@ public class RBLookupViewModel extends ModelObject{
 	}
 	
 	public void setRoleSearch(RoleViews roleSelection) {
-		firePropertyChange("roleSearch", roleSearch, roleSearch=roleSelection);
+		firePropertyChange("roleSearch", roleSearch, roleSearch = roleSelection);
 		searchForExperimentID();
 	}
 	
 	public void setSelectedUser(UserDetails newUser) {
 		setOkEnabled(newUser == null ? false : true);
-		firePropertyChange("selectedUser", selectedUser, selectedUser=newUser);
+		firePropertyChange("selectedUser", selectedUser, selectedUser = newUser);
 	}
 	
 	public UserDetails getSelectedUser() {
@@ -90,7 +90,7 @@ public class RBLookupViewModel extends ModelObject{
 			calendar.setTime(dateSearch);
 		}
 		
-		SEARCH.searchExperiments(nameSearch, roleSearch.getModelRole(), calendar);
+		search.searchExperiments(nameSearch, roleSearch.getModelRole(), calendar);
 	}
 	
 	public Collection<UserDetails> searchResults() {
@@ -98,7 +98,7 @@ public class RBLookupViewModel extends ModelObject{
 	}
 	
 	public void close() {
-		SEARCH.removePropertyChangeListener("searchResults", resultsListener);
-		SEARCH.clearResults();
+		search.removePropertyChangeListener("searchResults", resultsListener);
+		search.clearResults();
 	}
 }

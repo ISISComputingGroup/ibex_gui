@@ -61,7 +61,7 @@ import uk.ac.stfc.isis.ibex.ui.synoptic.editor.target.DefaultTargetForComponent;
  */
 public class SynopticViewModel {
 	
-	private SynopticModel EDITING = Synoptic.getInstance().edit();
+	private SynopticModel editing = Synoptic.getInstance().edit();
 	
 	private SynopticDescription instrument;
 
@@ -81,7 +81,7 @@ public class SynopticViewModel {
 	public void loadInstrumentDescription(SynopticDescription description) {		
 		instrument = description;
 		instrument.processChildComponents();
-		EDITING.setInstrumentFromDescription(description);
+		editing.setInstrumentFromDescription(description);
 		
 		setSelectedComponent(null);
 
@@ -109,7 +109,7 @@ public class SynopticViewModel {
 		if (selectedComponents == null) {
 			instrument.addComponent(component);
 		} else {
-			ComponentDescription lastComponent = selectedComponents.get(selectedComponents.size()-1);
+			ComponentDescription lastComponent = selectedComponents.get(selectedComponents.size() - 1);
 			SynopticParentDescription parent = getParent(lastComponent);
 			position = parent.components().indexOf(lastComponent) + 1;
 			parent.addComponent(component, position);
@@ -171,7 +171,7 @@ public class SynopticViewModel {
 				message += selected.name();
 				if (idx == selectedComponents.size() - 2) {
 					message += " and ";
-				} else if (idx != selectedComponents.size() - 1){
+				} else if (idx != selectedComponents.size() - 1) {
 					message += ", ";
 				}
 				idx++;
@@ -302,7 +302,7 @@ public class SynopticViewModel {
 		selectedPV.setPvType(type);
 
 		String addressToUse = address;
-		switch (type){
+		switch (type) {
 			case LOCAL_PV:
 				String pvprefix = Instrument.getInstance().currentInstrument().pvPrefix();
 				addressToUse = addressToUse.replace(pvprefix, "");
@@ -441,7 +441,7 @@ public class SynopticViewModel {
 	}
 	
 	private void loadCurrentInstrument() {
-		loadInstrumentDescription(EDITING.instrument().getDescription());
+		loadInstrumentDescription(editing.instrument().getDescription());
 	}
 
 	private void broadcastPVSelectionChanged(PV oldSelected, PV newSelected) {

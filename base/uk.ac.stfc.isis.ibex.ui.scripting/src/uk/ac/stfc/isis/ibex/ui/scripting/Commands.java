@@ -26,7 +26,7 @@ public class Commands {
 
 	private static final String SET_INSTRUMENT = "set_instrument('%s')\n";
 	
-	public final static String GENIE_INITIALISATION = 
+	public static final String GENIE_INITIALISATION = 
 			"# Configuring GENIE PYTHON, please wait\n" 
 			+ "import sys;sys.executable=''\n" 
 			+ "from genie_python.genie_startup import * \n" 

@@ -31,7 +31,7 @@ public enum RecordLabelState {
 	private final Color color;
 	private final Image image;
 	
-	private RecordLabelState(int r, int g, int b, Image image) {
+	RecordLabelState(int r, int g, int b, Image image) {
 		this.color = SWTResourceManager.getColor(r, g, b);
 		this.image = image;
 	}

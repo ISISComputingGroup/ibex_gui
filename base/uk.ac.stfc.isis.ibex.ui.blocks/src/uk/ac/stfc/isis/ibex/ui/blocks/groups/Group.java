@@ -44,6 +44,7 @@ import uk.ac.stfc.isis.ibex.configserver.displaying.DisplayGroup;
  * Provides the display of the groups, which contain the selected blocks. Allows showing and hiding of selected blocks. 
  * 
  */
+@SuppressWarnings("checkstyle:magicnumber")
 public class Group extends Composite {
 
 	private static final Color WHITE = SWTResourceManager.getColor(SWT.COLOR_WHITE);

@@ -43,6 +43,7 @@ import uk.ac.stfc.isis.ibex.ui.synoptic.Activator;
 import uk.ac.stfc.isis.ibex.ui.synoptic.NavigationPresenter;
 import uk.ac.stfc.isis.ibex.ui.synoptic.SynopticPresenter;
 
+@SuppressWarnings("checkstyle:magicnumber")
 public class Navigator extends Composite {
 
 	private final SynopticPresenter presenter;
@@ -65,9 +66,9 @@ public class Navigator extends Composite {
 		setLayout(gridLayout);
 		
 		gotoCombo = new Combo(this, SWT.READ_ONLY);
-		GridData gd_gotoCombo = new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1);
-		gd_gotoCombo.widthHint = 120;
-		gotoCombo.setLayoutData(gd_gotoCombo);
+		GridData gdGotoCombo = new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1);
+		gdGotoCombo.widthHint = 120;
+		gotoCombo.setLayoutData(gdGotoCombo);
 		new Label(this, SWT.NONE);
 		
 		previous = new Button(this, SWT.NONE);

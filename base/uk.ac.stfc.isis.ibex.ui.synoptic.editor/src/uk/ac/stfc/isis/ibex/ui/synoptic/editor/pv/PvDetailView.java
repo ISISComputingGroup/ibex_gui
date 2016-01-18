@@ -54,6 +54,7 @@ import uk.ac.stfc.isis.ibex.validators.PvValidator;
  * also automatically set the name.
  *
  */
+@SuppressWarnings("checkstyle:magicnumber")
 public class PvDetailView extends Composite {
 	private Composite labelComposite;
 	private Composite fieldsComposite;
@@ -95,11 +96,11 @@ public class PvDetailView extends Composite {
 		createControls(this);
 		
 		buttonsComposite = new Composite(this, SWT.NONE);
-		GridData gd_composite = new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1);
-		gd_composite.widthHint = 210;
-		buttonsComposite.setLayoutData(gd_composite);
-		RowLayout rl_buttonsComposite = new RowLayout(SWT.HORIZONTAL);
-		buttonsComposite.setLayout(rl_buttonsComposite);
+		GridData gdComposite = new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1);
+		gdComposite.widthHint = 210;
+		buttonsComposite.setLayoutData(gdComposite);
+		RowLayout rlButtonsComposite = new RowLayout(SWT.HORIZONTAL);
+		buttonsComposite.setLayout(rlButtonsComposite);
 		
 		btnSelectBlock = new Button(buttonsComposite, SWT.NONE);
 		btnSelectBlock.setLayoutData(new RowData(100, SWT.DEFAULT));
@@ -189,10 +190,10 @@ public class PvDetailView extends Composite {
 			lblType.setText("Type");
 			
 			cmboType = new ComboViewer(fieldsComposite, SWT.READ_ONLY);
-			GridData gd_cmboType = new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1);
-			cmboType.getCombo().setLayoutData(gd_cmboType);
-			GridData gd_btnUp = new GridData(SWT.LEFT, SWT.BOTTOM, false, true, 1, 1);
-			gd_btnUp.widthHint = 80;
+			GridData gdCmboType = new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1);
+			cmboType.getCombo().setLayoutData(gdCmboType);
+			GridData gdBtnUp = new GridData(SWT.LEFT, SWT.BOTTOM, false, true, 1, 1);
+			gdBtnUp.widthHint = 80;
 			
 			cmboType.setContentProvider(ArrayContentProvider.getInstance());
 			cmboType.setInput(typeList);

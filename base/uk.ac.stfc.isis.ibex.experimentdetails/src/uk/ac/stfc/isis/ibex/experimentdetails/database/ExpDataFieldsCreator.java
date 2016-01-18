@@ -23,17 +23,17 @@ import java.util.Arrays;
 import java.util.List;
 
 public class ExpDataFieldsCreator {
-	private static List<ExpDataFieldsEnum> experimentteams_fields = new ArrayList<ExpDataFieldsEnum>
-			(Arrays.asList(ExpDataFieldsEnum.USER_ID, ExpDataFieldsEnum.EXPERIMENT_ID, ExpDataFieldsEnum.ROLE_ID));
+	private static List<ExpDataFieldsEnum> experimentteamsFields = new ArrayList<ExpDataFieldsEnum>(
+			Arrays.asList(ExpDataFieldsEnum.USER_ID, ExpDataFieldsEnum.EXPERIMENT_ID, ExpDataFieldsEnum.ROLE_ID));
 
-	private static List<ExpDataFieldsEnum> user_fields = new ArrayList<ExpDataFieldsEnum>
-		(Arrays.asList(ExpDataFieldsEnum.USER_ID, ExpDataFieldsEnum.NAME, ExpDataFieldsEnum.ORGANISATION));
+	private static List<ExpDataFieldsEnum> userFields = new ArrayList<ExpDataFieldsEnum>(
+			Arrays.asList(ExpDataFieldsEnum.USER_ID, ExpDataFieldsEnum.NAME, ExpDataFieldsEnum.ORGANISATION));
 	
-	private static List<ExpDataFieldsEnum> role_fields = new ArrayList<ExpDataFieldsEnum>
-		(Arrays.asList(ExpDataFieldsEnum.ROLE_ID, ExpDataFieldsEnum.NAME, ExpDataFieldsEnum.PRIORITY));
+	private static List<ExpDataFieldsEnum> roleFields = new ArrayList<ExpDataFieldsEnum>(
+			Arrays.asList(ExpDataFieldsEnum.ROLE_ID, ExpDataFieldsEnum.NAME, ExpDataFieldsEnum.PRIORITY));
 	
-	private static List<ExpDataFieldsEnum> experiment_fields = new ArrayList<ExpDataFieldsEnum>
-		(Arrays.asList(ExpDataFieldsEnum.USER_ID, ExpDataFieldsEnum.EXPERIMENT_ID, ExpDataFieldsEnum.ROLE_ID, 
+	private static List<ExpDataFieldsEnum> experimentFields = new ArrayList<ExpDataFieldsEnum>(
+			Arrays.asList(ExpDataFieldsEnum.USER_ID, ExpDataFieldsEnum.EXPERIMENT_ID, ExpDataFieldsEnum.ROLE_ID, 
 				ExpDataFieldsEnum.STARTDATE, ExpDataFieldsEnum.DURATION));
 
     private ExpDataFieldsCreator() {
@@ -52,13 +52,13 @@ public class ExpDataFieldsCreator {
     private static List<ExpDataFieldsEnum> getFieldList(ExpDataTablesEnum table) {
 	switch (table) {
 		case USER_TABLE:
-		    return user_fields;
+		    return userFields;
 		case ROLE_TABLE:
-		    return role_fields;
+		    return roleFields;
 		case EXPERIMENT_TABLE:
-		    return experiment_fields;
+		    return experimentFields;
 		case EXPERIMENT_TEAMS_TABLE:
-		    return experimentteams_fields;
+		    return experimentteamsFields;
 		default:
 			return new ArrayList<>();
 		}

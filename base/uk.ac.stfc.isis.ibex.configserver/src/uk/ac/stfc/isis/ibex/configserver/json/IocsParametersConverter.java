@@ -39,7 +39,7 @@ public class IocsParametersConverter extends Converter<String, Map<String, IocPa
 	private final Gson gson = new Gson();
 
 	// e.g. {"MOTORSIM": {"running": false}, "TPG300_01": {"running": false} }
-	private static final Type SERVER_IOC_DATA_FORMAT = new TypeToken<Map<String, IocParameters>>(){}.getType();
+	private static final Type SERVER_IOC_DATA_FORMAT = new TypeToken<Map<String, IocParameters>>() { }.getType();
 
 	@Override
 	public Map<String, IocParameters> convert(String json) throws ConversionException {

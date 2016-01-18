@@ -26,7 +26,7 @@ public enum InterestFilters {
 	
 	private String displayName;
 	
-	private InterestFilters(String displayName) {
+	InterestFilters(String displayName) {
 		this.displayName = displayName;
 	}
 	
@@ -35,7 +35,7 @@ public enum InterestFilters {
 	}
 	
 	@Override
-	public String toString () {
+	public String toString() {
 		return displayName;
 	}
 }

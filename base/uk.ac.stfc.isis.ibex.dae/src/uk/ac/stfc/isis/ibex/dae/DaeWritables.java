@@ -79,7 +79,7 @@ public class DaeWritables {
 	}
 	
     private static String daeAddress(String suffix) {
-        StringBuilder sb = new StringBuilder(50);
+        StringBuilder sb = new StringBuilder();
         sb.append(Instrument.getInstance().getPvPrefix());
         sb.append("DAE:");
         sb.append(suffix);

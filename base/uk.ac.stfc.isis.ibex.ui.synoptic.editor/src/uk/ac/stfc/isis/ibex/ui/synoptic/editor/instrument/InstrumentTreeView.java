@@ -118,7 +118,7 @@ public class InstrumentTreeView extends Composite {
 
 		// support drag and drop
 		int operations = DND.DROP_MOVE;
-		Transfer[] transferTypes = new Transfer[] { TextTransfer.getInstance() };
+		Transfer[] transferTypes = new Transfer[] {TextTransfer.getInstance()};
 		treeViewer.addDragSupport(operations, transferTypes,
 				new ComponentDragListener(this));
 		treeViewer.addDropSupport(operations, transferTypes,
@@ -186,8 +186,8 @@ public class InstrumentTreeView extends Composite {
 				.getSelection();
 		ArrayList<ComponentDescription> selected = new ArrayList<ComponentDescription>();
 		Iterator it = selection.iterator();
-		while(it.hasNext()) {
-			selected.add((ComponentDescription)it.next());
+		while (it.hasNext()) {
+			selected.add((ComponentDescription) it.next());
 		}
 		return selected;
 	}

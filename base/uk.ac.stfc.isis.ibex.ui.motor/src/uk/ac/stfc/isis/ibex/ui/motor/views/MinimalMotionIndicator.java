@@ -38,6 +38,7 @@ import org.eclipse.swt.layout.GridData;
 import uk.ac.stfc.isis.ibex.motor.Motor;
 import uk.ac.stfc.isis.ibex.motor.MotorDirection;
 
+@SuppressWarnings("checkstyle:magicnumber")
 public class MinimalMotionIndicator extends Composite {
 
 	private final Display display = Display.getDefault();
@@ -58,12 +59,12 @@ public class MinimalMotionIndicator extends Composite {
 	
 	public MinimalMotionIndicator(Composite parent, int style) {
 		super(parent, style);
-		GridLayout gridLayout_1 = new GridLayout(1, false);
-		gridLayout_1.verticalSpacing = 0;
-		gridLayout_1.marginWidth = 0;
-		gridLayout_1.marginHeight = 0;
-		gridLayout_1.horizontalSpacing = 0;
-		setLayout(gridLayout_1);
+		GridLayout gridLayout1 = new GridLayout(1, false);
+		gridLayout1.verticalSpacing = 0;
+		gridLayout1.marginWidth = 0;
+		gridLayout1.marginHeight = 0;
+		gridLayout1.horizontalSpacing = 0;
+		setLayout(gridLayout1);
 		
 		composite = new Composite(this, SWT.NONE);
 		composite.setLayoutData(new GridData(SWT.CENTER, SWT.BOTTOM, true, true, 1, 1));
@@ -129,14 +130,14 @@ public class MinimalMotionIndicator extends Composite {
 			@Override
 			public void propertyChange(PropertyChangeEvent evt) {
 				setLowerLimit(motor.getAtLowerLimitSwtich());
-			}});
+			} });
 		
 		setUpperLimit(motor.getAtUpperLimitSwitch());
 		motor.addPropertyChangeListener("atUpperLimitSwitch", new PropertyChangeListener() {
 			@Override
 			public void propertyChange(PropertyChangeEvent evt) {
 				setUpperLimit(motor.getAtUpperLimitSwitch());
-			}});
+			} });
 	}
 
 	@Override

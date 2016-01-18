@@ -30,7 +30,7 @@ public enum Status {
 	private final Color color;
 	private final String text;
 	
-	private Status(int r, int g, int b, String text) {
+	Status(int r, int g, int b, String text) {
 		this.color = SWTResourceManager.getColor(r, g, b);
 		this.text = text;
 	}

@@ -67,7 +67,7 @@ public class LogMessageQuery {
      */
     public List<LogMessage> getMessages(LogMessageFieldsWhereSql searchField,
 	    String searchValue, Calendar from, Calendar to) throws Exception {
-	LogMessageFieldsWhereSql[] whereLikeClauses = { searchField };
+	LogMessageFieldsWhereSql[] whereLikeClauses = {searchField};
 
 	sqlStatement.setSelectFields(SQL_SELECT_FIELDS);
 	sqlStatement.setWhereLikeClause(whereLikeClauses);

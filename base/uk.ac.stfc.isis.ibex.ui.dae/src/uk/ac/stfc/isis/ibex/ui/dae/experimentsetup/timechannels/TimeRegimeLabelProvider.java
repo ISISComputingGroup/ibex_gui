@@ -25,6 +25,7 @@ import org.eclipse.swt.graphics.Image;
 
 import uk.ac.stfc.isis.ibex.dae.experimentsetup.timechannels.TimeRegimeRow;
 
+@SuppressWarnings("checkstyle:magicnumber")
 public class TimeRegimeLabelProvider extends LabelProvider implements ITableLabelProvider {
 
 	@Override

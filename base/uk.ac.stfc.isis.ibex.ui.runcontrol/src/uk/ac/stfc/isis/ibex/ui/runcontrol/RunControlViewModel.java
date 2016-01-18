@@ -76,7 +76,7 @@ public class RunControlViewModel extends ErrorMessageProvider {
     public void resetRunControlSettings() {
         Collection<Block> blocks = currentConfigObserver.getValue().getBlocks();
         
-        for(Block block : blocks) {
+        for (Block block : blocks) {
             resetLowLimit(block);
             resetHighLimit(block);
             resetEnabled(block);

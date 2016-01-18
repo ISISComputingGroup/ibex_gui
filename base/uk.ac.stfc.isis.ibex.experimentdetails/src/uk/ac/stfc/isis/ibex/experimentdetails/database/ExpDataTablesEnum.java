@@ -30,7 +30,7 @@ public enum ExpDataTablesEnum {
 
     private final String representation;
     
-    private ExpDataTablesEnum(String representation) {
+    ExpDataTablesEnum(String representation) {
     	this.representation = representation;
     }
     

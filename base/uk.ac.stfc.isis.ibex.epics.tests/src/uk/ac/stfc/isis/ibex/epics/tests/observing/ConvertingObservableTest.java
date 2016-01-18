@@ -106,10 +106,10 @@ public class ConvertingObservableTest {
 	@Test
 	public void when_watched_observable_has_error_observer_has_onError_method_called_with_the_exception() {
 		//Act
-		testObservable.setError(TestHelpers.exception);
+		testObservable.setError(TestHelpers.EXCEPTION);
 		
 		//Assert - The initialisable observer has its onError method called
-		verify(mockObserver, times(1)).onError(TestHelpers.exception);
+		verify(mockObserver, times(1)).onError(TestHelpers.EXCEPTION);
 	}
 	
 	@Test

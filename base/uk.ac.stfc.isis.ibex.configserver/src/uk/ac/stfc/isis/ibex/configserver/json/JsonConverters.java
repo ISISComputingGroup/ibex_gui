@@ -48,7 +48,7 @@ public class JsonConverters implements Converters {
 	@Override
 	public Converter<String, Configuration> toConfig() {
 		Gson gson = new GsonBuilder().registerTypeAdapterFactory(new LowercaseEnumTypeAdapterFactory()).create();
-		return new JsonDeserialisingConverter<>(Configuration.class, gson).apply(withFunction(initialiseConfig));
+		return new JsonDeserialisingConverter<>(Configuration.class, gson).apply(withFunction(INIT_CONFIG));
 	}
 
 	@Override
@@ -70,7 +70,7 @@ public class JsonConverters implements Converters {
 	public Converter<String, Collection<Component>> toComponents() {
 		return new JsonDeserialisingConverter<>(Component[].class)
 				.apply(Convert.<Component>toCollection())
-				.apply(forEach(initialiseComponent));
+				.apply(forEach(INIT_COMP));
 	}
 
 	@Override
@@ -108,7 +108,7 @@ public class JsonConverters implements Converters {
 		return new IocsParametersConverter().apply(new IocStateConverter());
 	}
 	
-	private static <A,B> Converter<A, B> withFunction(final Function<A, B> function) {
+	private static <A, B> Converter<A, B> withFunction(final Function<A, B> function) {
 		return new Converter<A, B>() {
 			@Override
 			public B convert(A value) throws ConversionException {
@@ -126,14 +126,14 @@ public class JsonConverters implements Converters {
 		};
 	}
 	
-	private static final Function<Configuration, Configuration> initialiseConfig = new Function<Configuration, Configuration>() {
+	private static final Function<Configuration, Configuration> INIT_CONFIG = new Function<Configuration, Configuration>() {
 		@Override
 		public Configuration apply(Configuration uninitialised) {
 			return new Configuration(uninitialised);
 		}
 	};
 
-	private static final Function<Component, Component> initialiseComponent = new Function<Component, Component>() {
+	private static final Function<Component, Component> INIT_COMP = new Function<Component, Component>() {
 		@Override
 		public Component apply(Component uninitialised) {
 			return new Component(uninitialised);

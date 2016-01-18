@@ -31,6 +31,7 @@ import uk.ac.stfc.isis.ibex.synoptic.model.Synoptic;
 import uk.ac.stfc.isis.ibex.synoptic.navigation.InstrumentNavigationGraph;
 import uk.ac.stfc.isis.ibex.synoptic.navigation.TargetNode;
 
+@SuppressWarnings("checkstyle:methodname")
 public class InstrumentWithMultipleComponentsTest {
 	
 	private InstrumentNavigationGraph graph;

@@ -43,7 +43,7 @@ public class Perspectives {
 				final Object obj = element.createExecutableExtension("class");
 				IsisPerspective perspective = (IsisPerspective) obj;
 				perspectives.add(perspective);
-				ids.put(perspective.name(), perspective.ID());
+				ids.put(perspective.name(), perspective.id());
 				
 				Collections.sort(perspectives);
 			} catch (CoreException e) {

@@ -35,15 +35,15 @@ public class UsedIocFilter {
 			@Override
 			public boolean apply(EditableIoc ioc) {
 				return !isDefault(ioc);
-		}}));
+		} }));
 	}
 
 	private static boolean isDefault(EditableIoc ioc) {		
-		return ioc.getAutostart() == false &&
-				ioc.getRestart() == false &&
-				ioc.getSimLevel() == SimLevel.NONE &&
-				ioc.getPvs().isEmpty() &&
-				ioc.getMacros().isEmpty() &&
-				ioc.getPvSets().isEmpty();		
+		return !ioc.getAutostart()
+				&& !ioc.getRestart()
+				&& ioc.getSimLevel() == SimLevel.NONE
+				&& ioc.getPvs().isEmpty()
+				&& ioc.getMacros().isEmpty()
+				&& ioc.getPvSets().isEmpty();		
 	}
 }

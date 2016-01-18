@@ -21,8 +21,6 @@ package uk.ac.stfc.isis.ibex.configserver;
 
 import java.util.Collection;
 
-import uk.ac.stfc.isis.ibex.configserver.ConfigServer;
-import uk.ac.stfc.isis.ibex.configserver.EditableIocState;
 import uk.ac.stfc.isis.ibex.epics.adapters.UpdatedObservableAdapter;
 import uk.ac.stfc.isis.ibex.model.SetCommand;
 import uk.ac.stfc.isis.ibex.model.UpdatedValue;

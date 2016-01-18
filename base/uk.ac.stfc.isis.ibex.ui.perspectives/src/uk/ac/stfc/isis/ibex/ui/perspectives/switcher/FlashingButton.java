@@ -27,7 +27,8 @@ import org.eclipse.swt.widgets.Display;
 public class FlashingButton implements Runnable {
 
 	private static final Color RED = SWTResourceManager.getColor(255, 0, 0);
-
+	private static final int SLEEP_TIME = 800;
+	
 	private final CLabel button;
 	private boolean flashOn;
 	private final Display display;
@@ -77,7 +78,7 @@ public class FlashingButton implements Runnable {
 				changeColour(off);
 			}
 			try {
-				Thread.sleep(800);
+				Thread.sleep(SLEEP_TIME);
 			} catch (InterruptedException e) {
 				flashThread = null;
 			}

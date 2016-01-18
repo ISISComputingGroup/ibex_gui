@@ -37,6 +37,7 @@ import uk.ac.stfc.isis.ibex.configserver.editing.BlockNameValidator;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableBlock;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
 
+@SuppressWarnings("checkstyle:methodname")
 public class BlockNameValidatorTest {
 	
 	private static final String VALID_BLOCK_NAME = "valid_block_name";
