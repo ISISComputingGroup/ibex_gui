@@ -1,7 +1,7 @@
 importPackage(Packages.org.csstudio.opibuilder.scriptUtil);
 
 // PVs
-// PV[0] = loc://useToInit, triggered
+// PV[0] = $(P)LKUP:$(PH):_SPLITPOSNS, triggered
 // pv[1] = $(P)LKUP:$(PH):_SPLITPOSNS.VALA, triggered
 // pv[2] = $(P)LKUP:$(PH):_SPLITPOSNS.VALB, triggered
 // pv[3] = $(P)LKUP:$(PH):_SPLITPOSNS.VALC, triggered

@@ -7,7 +7,7 @@
   <auto_zoom_to_fit_all>false</auto_zoom_to_fit_all>
   <scripts>
     <path pathString="Scripts/ButtonDisplayLabel.js" checkConnect="false" sfe="false" seoe="false">
-      <pv trig="true">loc://useToInit</pv>
+      <pv trig="true">$(P)LKUP:$(PH):_SPLITPOSNS</pv>
       <pv trig="true">$(P)LKUP:$(PH):_SPLITPOSNS.VALA</pv>
       <pv trig="true">$(P)LKUP:$(PH):_SPLITPOSNS.VALB</pv>
       <pv trig="true">$(P)LKUP:$(PH):_SPLITPOSNS.VALC</pv>
@@ -146,7 +146,7 @@ $(pv_value)</tooltip>
     </background_color>
     <width>175</width>
     <x>444</x>
-    <name>Text Update</name>
+    <name>TargetPosition</name>
     <y>54</y>
     <foreground_color>
       <color red="0" green="0" blue="0" />
@@ -531,8 +531,7 @@ $(pv_value)</tooltip>
     <pv_value />
     <scripts>
       <path pathString="Scripts/Initialise.js" checkConnect="true" sfe="false" seoe="false">
-        <pv trig="true">loc://useToInit</pv>
-        <pv trig="false">loc://Mode</pv>
+        <pv trig="true">loc://useToInit(1)</pv>
       </path>
     </scripts>
     <border_alarm_sensitive>true</border_alarm_sensitive>
@@ -545,7 +544,7 @@ $(pv_value)</tooltip>
     </scale_options>
     <items_from_pv>false</items_from_pv>
     <visible>true</visible>
-    <pv_name>loc://Mode</pv_name>
+    <pv_name>loc://Mode("Running")</pv_name>
     <border_color>
       <color red="0" green="128" blue="255" />
     </border_color>
@@ -576,73 +575,13 @@ $(pv_value)</tooltip>
     <rules />
     <crop_left>0</crop_left>
     <enabled>true</enabled>
-    <wuid>194106b1:151a16241f2:-7090</wuid>
-    <auto_size>true</auto_size>
-    <image_file>label_A.png</image_file>
-    <scripts>
-      <path pathString="Scripts/SelectDisplayLabel.js" checkConnect="true" sfe="false" seoe="false">
-        <pv trig="true">loc://Mode</pv>
-        <pv trig="true">$(P)LKUP:$(PH):IPOSN</pv>
-      </path>
-    </scripts>
-    <height>74</height>
-    <border_width>1</border_width>
-    <scale_options>
-      <width_scalable>true</width_scalable>
-      <height_scalable>true</height_scalable>
-      <keep_wh_ratio>false</keep_wh_ratio>
-    </scale_options>
-    <visible>true</visible>
-    <crop_bottom>0</crop_bottom>
-    <degree>0</degree>
-    <border_color>
-      <color red="0" green="128" blue="255" />
-    </border_color>
-    <no_animation>false</no_animation>
-    <widget_type>Image</widget_type>
-    <flip_horizontal>false</flip_horizontal>
-    <background_color>
-      <color red="240" green="240" blue="240" />
-    </background_color>
-    <permutation_matrix>
-      <row>
-        <col>1.0</col>
-        <col>0.0</col>
-      </row>
-      <row>
-        <col>0.0</col>
-        <col>1.0</col>
-      </row>
-    </permutation_matrix>
-    <width>74</width>
-    <x>101</x>
-    <name>RAct-5</name>
-    <y>109</y>
-    <foreground_color>
-      <color red="192" green="192" blue="192" />
-    </foreground_color>
-    <actions hook="false" hook_all="false" />
-    <crop_top>0</crop_top>
-    <crop_right>0</crop_right>
-    <stretch_to_fit>false</stretch_to_fit>
-    <flip_vertical>false</flip_vertical>
-    <font>
-      <opifont.name fontName="Segoe UI" height="9" style="0">Default</opifont.name>
-    </font>
-  </widget>
-  <widget typeId="org.csstudio.opibuilder.widgets.Image" version="1.0">
-    <border_style>0</border_style>
-    <tooltip></tooltip>
-    <rules />
-    <crop_left>0</crop_left>
-    <enabled>true</enabled>
     <wuid>194106b1:151a16241f2:-710f</wuid>
     <auto_size>true</auto_size>
     <image_file>label_A.png</image_file>
     <scripts>
       <path pathString="Scripts/SelectDisplayLabel.js" checkConnect="true" sfe="false" seoe="false">
-        <pv trig="true">loc://Mode</pv>
         <pv trig="true">$(P)LKUP:$(PH):IPOSN</pv>
+        <pv trig="true">loc://Mode("Running")</pv>
       </path>
     </scripts>
     <height>74</height>
@@ -701,8 +640,8 @@ $(pv_value)</tooltip>
     <image_file>label_A.png</image_file>
     <scripts>
       <path pathString="Scripts/SelectDisplayLabel.js" checkConnect="true" sfe="false" seoe="false">
-        <pv trig="true">loc://Mode</pv>
         <pv trig="true">$(P)LKUP:$(PH):IPOSN</pv>
+        <pv trig="true">loc://Mode("Running")</pv>
       </path>
     </scripts>
     <height>74</height>
@@ -761,8 +700,8 @@ $(pv_value)</tooltip>
     <image_file>label_A.png</image_file>
     <scripts>
       <path pathString="Scripts/SelectDisplayLabel.js" checkConnect="true" sfe="false" seoe="false">
-        <pv trig="true">loc://Mode</pv>
         <pv trig="true">$(P)LKUP:$(PH):IPOSN</pv>
+        <pv trig="true">loc://Mode("Running")</pv>
       </path>
     </scripts>
     <height>74</height>
@@ -821,8 +760,8 @@ $(pv_value)</tooltip>
     <image_file>label_A.png</image_file>
     <scripts>
       <path pathString="Scripts/SelectDisplayLabel.js" checkConnect="true" sfe="false" seoe="false">
-        <pv trig="true">loc://Mode</pv>
         <pv trig="true">$(P)LKUP:$(PH):IPOSN</pv>
+        <pv trig="true">loc://Mode("Running")</pv>
       </path>
     </scripts>
     <height>74</height>
@@ -881,8 +820,8 @@ $(pv_value)</tooltip>
     <image_file>label_A.png</image_file>
     <scripts>
       <path pathString="Scripts/SelectDisplayLabel.js" checkConnect="true" sfe="false" seoe="false">
-        <pv trig="true">loc://Mode</pv>
         <pv trig="true">$(P)LKUP:$(PH):IPOSN</pv>
+        <pv trig="true">loc://Mode("Running")</pv>
       </path>
     </scripts>
     <height>74</height>
@@ -936,13 +875,73 @@ $(pv_value)</tooltip>
     <rules />
     <crop_left>0</crop_left>
     <enabled>true</enabled>
+    <wuid>194106b1:151a16241f2:-7090</wuid>
+    <auto_size>true</auto_size>
+    <image_file>label_A.png</image_file>
+    <scripts>
+      <path pathString="Scripts/SelectDisplayLabel.js" checkConnect="true" sfe="false" seoe="false">
+        <pv trig="true">$(P)LKUP:$(PH):IPOSN</pv>
+        <pv trig="true">loc://Mode("Running")</pv>
+      </path>
+    </scripts>
+    <height>74</height>
+    <border_width>1</border_width>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <visible>true</visible>
+    <crop_bottom>0</crop_bottom>
+    <degree>0</degree>
+    <border_color>
+      <color red="0" green="128" blue="255" />
+    </border_color>
+    <no_animation>false</no_animation>
+    <widget_type>Image</widget_type>
+    <flip_horizontal>false</flip_horizontal>
+    <background_color>
+      <color red="240" green="240" blue="240" />
+    </background_color>
+    <permutation_matrix>
+      <row>
+        <col>1.0</col>
+        <col>0.0</col>
+      </row>
+      <row>
+        <col>0.0</col>
+        <col>1.0</col>
+      </row>
+    </permutation_matrix>
+    <width>74</width>
+    <x>101</x>
+    <name>RAct-5</name>
+    <y>109</y>
+    <foreground_color>
+      <color red="192" green="192" blue="192" />
+    </foreground_color>
+    <actions hook="false" hook_all="false" />
+    <crop_top>0</crop_top>
+    <crop_right>0</crop_right>
+    <stretch_to_fit>false</stretch_to_fit>
+    <flip_vertical>false</flip_vertical>
+    <font>
+      <opifont.name fontName="Segoe UI" height="9" style="0">Default</opifont.name>
+    </font>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.Image" version="1.0">
+    <border_style>0</border_style>
+    <tooltip></tooltip>
+    <rules />
+    <crop_left>0</crop_left>
+    <enabled>true</enabled>
     <wuid>194106b1:151a16241f2:-7074</wuid>
     <auto_size>true</auto_size>
     <image_file>label_A.png</image_file>
     <scripts>
       <path pathString="Scripts/SelectDisplayLabel.js" checkConnect="true" sfe="false" seoe="false">
-        <pv trig="true">loc://Mode</pv>
         <pv trig="true">$(P)LKUP:$(PH):IPOSN</pv>
+        <pv trig="true">loc://Mode("Running")</pv>
       </path>
     </scripts>
     <height>74</height>
@@ -1001,8 +1000,8 @@ $(pv_value)</tooltip>
     <image_file>label_A.png</image_file>
     <scripts>
       <path pathString="Scripts/SelectDisplayLabel.js" checkConnect="true" sfe="false" seoe="false">
-        <pv trig="true">loc://Mode</pv>
         <pv trig="true">$(P)LKUP:$(PH):IPOSN</pv>
+        <pv trig="true">loc://Mode("Running")</pv>
       </path>
     </scripts>
     <height>74</height>
@@ -1061,8 +1060,8 @@ $(pv_value)</tooltip>
     <image_file>label_A.png</image_file>
     <scripts>
       <path pathString="Scripts/SelectDisplayLabel.js" checkConnect="true" sfe="false" seoe="false">
-        <pv trig="true">loc://Mode</pv>
         <pv trig="true">$(P)LKUP:$(PH):IPOSN</pv>
+        <pv trig="true">loc://Mode("Running")</pv>
       </path>
     </scripts>
     <height>74</height>
@@ -1121,8 +1120,8 @@ $(pv_value)</tooltip>
     <image_file>label_A.png</image_file>
     <scripts>
       <path pathString="Scripts/SelectDisplayLabel.js" checkConnect="true" sfe="false" seoe="false">
-        <pv trig="true">loc://Mode</pv>
         <pv trig="true">$(P)LKUP:$(PH):IPOSN</pv>
+        <pv trig="true">loc://Mode("Running")</pv>
       </path>
     </scripts>
     <height>74</height>
@@ -1181,8 +1180,8 @@ $(pv_value)</tooltip>
     <image_file>label_A.png</image_file>
     <scripts>
       <path pathString="Scripts/SelectDisplayLabel.js" checkConnect="true" sfe="false" seoe="false">
-        <pv trig="true">loc://Mode</pv>
         <pv trig="true">$(P)LKUP:$(PH):IPOSN</pv>
+        <pv trig="true">loc://Mode("Running")</pv>
       </path>
     </scripts>
     <height>74</height>
@@ -1241,8 +1240,8 @@ $(pv_value)</tooltip>
     <image_file>label_A.png</image_file>
     <scripts>
       <path pathString="Scripts/SelectDisplayLabel.js" checkConnect="true" sfe="false" seoe="false">
-        <pv trig="true">loc://Mode</pv>
         <pv trig="true">$(P)LKUP:$(PH):IPOSN</pv>
+        <pv trig="true">loc://Mode("Running")</pv>
       </path>
     </scripts>
     <height>74</height>
@@ -1301,7 +1300,7 @@ $(pv_value)</tooltip>
     <image_file>active.png</image_file>
     <scripts>
       <path pathString="Scripts/ViewForLoading.js" checkConnect="true" sfe="false" seoe="false">
-        <pv trig="true">loc://Mode</pv>
+        <pv trig="true">loc://Mode("Running")</pv>
       </path>
     </scripts>
     <height>74</height>
@@ -1360,7 +1359,7 @@ $(pv_value)</tooltip>
     <image_file>active.png</image_file>
     <scripts>
       <path pathString="Scripts/ViewForRunning.js" checkConnect="true" sfe="false" seoe="false">
-        <pv trig="true">loc://Mode</pv>
+        <pv trig="true">loc://Mode("Running")</pv>
       </path>
     </scripts>
     <height>74</height>
@@ -1477,7 +1476,7 @@ $(pv_value)</tooltip>
     <text>Position 0</text>
     <scripts>
       <path pathString="Scripts/ViewForRunning.js" checkConnect="true" sfe="false" seoe="false">
-        <pv trig="true">loc://Mode</pv>
+        <pv trig="true">loc://Mode("Running")</pv>
       </path>
     </scripts>
     <border_alarm_sensitive>false</border_alarm_sensitive>
@@ -1527,67 +1526,12 @@ $(pv_value)</tooltip>
     <push_action_index>0</push_action_index>
     <rules />
     <enabled>true</enabled>
-    <wuid>-552780a2:14de1d345b9:-7fc0</wuid>
-    <pv_value />
-    <text>Position 3</text>
-    <scripts>
-      <path pathString="Scripts/ViewForRunning.js" checkConnect="true" sfe="false" seoe="false">
-        <pv trig="true">loc://Mode</pv>
-      </path>
-    </scripts>
-    <border_alarm_sensitive>false</border_alarm_sensitive>
-    <height>30</height>
-    <border_width>1</border_width>
-    <scale_options>
-      <width_scalable>true</width_scalable>
-      <height_scalable>true</height_scalable>
-      <keep_wh_ratio>false</keep_wh_ratio>
-    </scale_options>
-    <image></image>
-    <visible>true</visible>
-    <pv_name></pv_name>
-    <border_color>
-      <color red="0" green="128" blue="255" />
-    </border_color>
-    <widget_type>Action Button</widget_type>
-    <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
-    <background_color>
-      <color red="240" green="240" blue="240" />
-    </background_color>
-    <width>100</width>
-    <x>46</x>
-    <name>Running_Button_3</name>
-    <y>402</y>
-    <foreground_color>
-      <color red="0" green="0" blue="0" />
-    </foreground_color>
-    <actions hook="false" hook_all="true">
-      <action type="WRITE_PV">
-        <pv_name>$(P)LKUP:$(PH):IPOSN:SP</pv_name>
-        <value>6</value>
-        <timeout>10</timeout>
-        <description></description>
-      </action>
-    </actions>
-    <font>
-      <opifont.name fontName="Arial" height="12" style="1">ISIS_Header3</opifont.name>
-    </font>
-  </widget>
-  <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="1.0">
-    <toggle_button>false</toggle_button>
-    <border_style>0</border_style>
-    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
-    <tooltip>$(pv_name)
-$(pv_value)</tooltip>
-    <push_action_index>0</push_action_index>
-    <rules />
-    <enabled>true</enabled>
     <wuid>-552780a2:14de1d345b9:-7fc6</wuid>
     <pv_value />
     <text>Position 1</text>
     <scripts>
       <path pathString="Scripts/ViewForRunning.js" checkConnect="true" sfe="false" seoe="false">
-        <pv trig="true">loc://Mode</pv>
+        <pv trig="true">loc://Mode("Running")</pv>
       </path>
     </scripts>
     <border_alarm_sensitive>false</border_alarm_sensitive>
@@ -1637,67 +1581,12 @@ $(pv_value)</tooltip>
     <push_action_index>0</push_action_index>
     <rules />
     <enabled>true</enabled>
-    <wuid>-552780a2:14de1d345b9:-7fbb</wuid>
-    <pv_value />
-    <text>Position 4</text>
-    <scripts>
-      <path pathString="Scripts/ViewForRunning.js" checkConnect="true" sfe="false" seoe="false">
-        <pv trig="true">loc://Mode</pv>
-      </path>
-    </scripts>
-    <border_alarm_sensitive>false</border_alarm_sensitive>
-    <height>30</height>
-    <border_width>1</border_width>
-    <scale_options>
-      <width_scalable>true</width_scalable>
-      <height_scalable>true</height_scalable>
-      <keep_wh_ratio>false</keep_wh_ratio>
-    </scale_options>
-    <image></image>
-    <visible>true</visible>
-    <pv_name></pv_name>
-    <border_color>
-      <color red="0" green="128" blue="255" />
-    </border_color>
-    <widget_type>Action Button</widget_type>
-    <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
-    <background_color>
-      <color red="240" green="240" blue="240" />
-    </background_color>
-    <width>100</width>
-    <x>162</x>
-    <name>Running_Button_4</name>
-    <y>402</y>
-    <foreground_color>
-      <color red="0" green="0" blue="0" />
-    </foreground_color>
-    <actions hook="false" hook_all="true">
-      <action type="WRITE_PV">
-        <pv_name>$(P)LKUP:$(PH):IPOSN:SP</pv_name>
-        <value>8</value>
-        <timeout>10</timeout>
-        <description></description>
-      </action>
-    </actions>
-    <font>
-      <opifont.name fontName="Arial" height="12" style="1">ISIS_Header3</opifont.name>
-    </font>
-  </widget>
-  <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="1.0">
-    <toggle_button>false</toggle_button>
-    <border_style>0</border_style>
-    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
-    <tooltip>$(pv_name)
-$(pv_value)</tooltip>
-    <push_action_index>0</push_action_index>
-    <rules />
-    <enabled>true</enabled>
     <wuid>-552780a2:14de1d345b9:-7fc1</wuid>
     <pv_value />
     <text>Position 2</text>
     <scripts>
       <path pathString="Scripts/ViewForRunning.js" checkConnect="true" sfe="false" seoe="false">
-        <pv trig="true">loc://Mode</pv>
+        <pv trig="true">loc://Mode("Running")</pv>
       </path>
     </scripts>
     <border_alarm_sensitive>false</border_alarm_sensitive>
@@ -1747,12 +1636,122 @@ $(pv_value)</tooltip>
     <push_action_index>0</push_action_index>
     <rules />
     <enabled>true</enabled>
+    <wuid>-552780a2:14de1d345b9:-7fc0</wuid>
+    <pv_value />
+    <text>Position 3</text>
+    <scripts>
+      <path pathString="Scripts/ViewForRunning.js" checkConnect="true" sfe="false" seoe="false">
+        <pv trig="true">loc://Mode("Running")</pv>
+      </path>
+    </scripts>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <height>30</height>
+    <border_width>1</border_width>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <image></image>
+    <visible>true</visible>
+    <pv_name></pv_name>
+    <border_color>
+      <color red="0" green="128" blue="255" />
+    </border_color>
+    <widget_type>Action Button</widget_type>
+    <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+    <background_color>
+      <color red="240" green="240" blue="240" />
+    </background_color>
+    <width>100</width>
+    <x>46</x>
+    <name>Running_Button_3</name>
+    <y>402</y>
+    <foreground_color>
+      <color red="0" green="0" blue="0" />
+    </foreground_color>
+    <actions hook="false" hook_all="true">
+      <action type="WRITE_PV">
+        <pv_name>$(P)LKUP:$(PH):IPOSN:SP</pv_name>
+        <value>6</value>
+        <timeout>10</timeout>
+        <description></description>
+      </action>
+    </actions>
+    <font>
+      <opifont.name fontName="Arial" height="12" style="1">ISIS_Header3</opifont.name>
+    </font>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="1.0">
+    <toggle_button>false</toggle_button>
+    <border_style>0</border_style>
+    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+    <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+    <push_action_index>0</push_action_index>
+    <rules />
+    <enabled>true</enabled>
+    <wuid>-552780a2:14de1d345b9:-7fbb</wuid>
+    <pv_value />
+    <text>Position 4</text>
+    <scripts>
+      <path pathString="Scripts/ViewForRunning.js" checkConnect="true" sfe="false" seoe="false">
+        <pv trig="true">loc://Mode("Running")</pv>
+      </path>
+    </scripts>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <height>30</height>
+    <border_width>1</border_width>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <image></image>
+    <visible>true</visible>
+    <pv_name></pv_name>
+    <border_color>
+      <color red="0" green="128" blue="255" />
+    </border_color>
+    <widget_type>Action Button</widget_type>
+    <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+    <background_color>
+      <color red="240" green="240" blue="240" />
+    </background_color>
+    <width>100</width>
+    <x>162</x>
+    <name>Running_Button_4</name>
+    <y>402</y>
+    <foreground_color>
+      <color red="0" green="0" blue="0" />
+    </foreground_color>
+    <actions hook="false" hook_all="true">
+      <action type="WRITE_PV">
+        <pv_name>$(P)LKUP:$(PH):IPOSN:SP</pv_name>
+        <value>8</value>
+        <timeout>10</timeout>
+        <description></description>
+      </action>
+    </actions>
+    <font>
+      <opifont.name fontName="Arial" height="12" style="1">ISIS_Header3</opifont.name>
+    </font>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="1.0">
+    <toggle_button>false</toggle_button>
+    <border_style>0</border_style>
+    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+    <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+    <push_action_index>0</push_action_index>
+    <rules />
+    <enabled>true</enabled>
     <wuid>-552780a2:14de1d345b9:-7fba</wuid>
     <pv_value />
     <text>Position 5</text>
     <scripts>
       <path pathString="Scripts/ViewForRunning.js" checkConnect="true" sfe="false" seoe="false">
-        <pv trig="true">loc://Mode</pv>
+        <pv trig="true">loc://Mode("Running")</pv>
       </path>
     </scripts>
     <border_alarm_sensitive>false</border_alarm_sensitive>
@@ -1807,7 +1806,7 @@ $(pv_value)</tooltip>
     <text>Load 0</text>
     <scripts>
       <path pathString="Scripts/ViewForLoading.js" checkConnect="true" sfe="false" seoe="false">
-        <pv trig="true">loc://Mode</pv>
+        <pv trig="true">loc://Mode("Running")</pv>
       </path>
     </scripts>
     <border_alarm_sensitive>false</border_alarm_sensitive>
@@ -1857,67 +1856,12 @@ $(pv_value)</tooltip>
     <push_action_index>0</push_action_index>
     <rules />
     <enabled>true</enabled>
-    <wuid>-552780a2:14de1d345b9:-7fc0</wuid>
-    <pv_value />
-    <text>Load 3</text>
-    <scripts>
-      <path pathString="Scripts/ViewForLoading.js" checkConnect="true" sfe="false" seoe="false">
-        <pv trig="true">loc://Mode</pv>
-      </path>
-    </scripts>
-    <border_alarm_sensitive>false</border_alarm_sensitive>
-    <height>30</height>
-    <border_width>1</border_width>
-    <scale_options>
-      <width_scalable>true</width_scalable>
-      <height_scalable>true</height_scalable>
-      <keep_wh_ratio>false</keep_wh_ratio>
-    </scale_options>
-    <image></image>
-    <visible>true</visible>
-    <pv_name></pv_name>
-    <border_color>
-      <color red="0" green="128" blue="255" />
-    </border_color>
-    <widget_type>Action Button</widget_type>
-    <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
-    <background_color>
-      <color red="240" green="240" blue="240" />
-    </background_color>
-    <width>100</width>
-    <x>46</x>
-    <name>Loading_Button_3</name>
-    <y>431</y>
-    <foreground_color>
-      <color red="0" green="0" blue="0" />
-    </foreground_color>
-    <actions hook="false" hook_all="true">
-      <action type="WRITE_PV">
-        <pv_name>$(P)LKUP:$(PH):IPOSN:SP</pv_name>
-        <value>7</value>
-        <timeout>10</timeout>
-        <description></description>
-      </action>
-    </actions>
-    <font>
-      <opifont.name fontName="Arial" height="12" style="1">ISIS_Header3</opifont.name>
-    </font>
-  </widget>
-  <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="1.0">
-    <toggle_button>false</toggle_button>
-    <border_style>0</border_style>
-    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
-    <tooltip>$(pv_name)
-$(pv_value)</tooltip>
-    <push_action_index>0</push_action_index>
-    <rules />
-    <enabled>true</enabled>
     <wuid>-552780a2:14de1d345b9:-7fc6</wuid>
     <pv_value />
     <text>Load 1</text>
     <scripts>
       <path pathString="Scripts/ViewForLoading.js" checkConnect="true" sfe="false" seoe="false">
-        <pv trig="true">loc://Mode</pv>
+        <pv trig="true">loc://Mode("Running")</pv>
       </path>
     </scripts>
     <border_alarm_sensitive>false</border_alarm_sensitive>
@@ -1967,67 +1911,12 @@ $(pv_value)</tooltip>
     <push_action_index>0</push_action_index>
     <rules />
     <enabled>true</enabled>
-    <wuid>-552780a2:14de1d345b9:-7fbb</wuid>
-    <pv_value />
-    <text>Load 4</text>
-    <scripts>
-      <path pathString="Scripts/ViewForLoading.js" checkConnect="true" sfe="false" seoe="false">
-        <pv trig="true">loc://Mode</pv>
-      </path>
-    </scripts>
-    <border_alarm_sensitive>false</border_alarm_sensitive>
-    <height>30</height>
-    <border_width>1</border_width>
-    <scale_options>
-      <width_scalable>true</width_scalable>
-      <height_scalable>true</height_scalable>
-      <keep_wh_ratio>false</keep_wh_ratio>
-    </scale_options>
-    <image></image>
-    <visible>true</visible>
-    <pv_name></pv_name>
-    <border_color>
-      <color red="0" green="128" blue="255" />
-    </border_color>
-    <widget_type>Action Button</widget_type>
-    <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
-    <background_color>
-      <color red="240" green="240" blue="240" />
-    </background_color>
-    <width>100</width>
-    <x>162</x>
-    <name>Loading_Button_4</name>
-    <y>431</y>
-    <foreground_color>
-      <color red="0" green="0" blue="0" />
-    </foreground_color>
-    <actions hook="false" hook_all="true">
-      <action type="WRITE_PV">
-        <pv_name>$(P)LKUP:$(PH):IPOSN:SP</pv_name>
-        <value>9</value>
-        <timeout>10</timeout>
-        <description></description>
-      </action>
-    </actions>
-    <font>
-      <opifont.name fontName="Arial" height="12" style="1">ISIS_Header3</opifont.name>
-    </font>
-  </widget>
-  <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="1.0">
-    <toggle_button>false</toggle_button>
-    <border_style>0</border_style>
-    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
-    <tooltip>$(pv_name)
-$(pv_value)</tooltip>
-    <push_action_index>0</push_action_index>
-    <rules />
-    <enabled>true</enabled>
     <wuid>-552780a2:14de1d345b9:-7fc1</wuid>
     <pv_value />
     <text>Load 2</text>
     <scripts>
       <path pathString="Scripts/ViewForLoading.js" checkConnect="true" sfe="false" seoe="false">
-        <pv trig="true">loc://Mode</pv>
+        <pv trig="true">loc://Mode("Running")</pv>
       </path>
     </scripts>
     <border_alarm_sensitive>false</border_alarm_sensitive>
@@ -2077,12 +1966,122 @@ $(pv_value)</tooltip>
     <push_action_index>0</push_action_index>
     <rules />
     <enabled>true</enabled>
+    <wuid>-552780a2:14de1d345b9:-7fc0</wuid>
+    <pv_value />
+    <text>Load 3</text>
+    <scripts>
+      <path pathString="Scripts/ViewForLoading.js" checkConnect="true" sfe="false" seoe="false">
+        <pv trig="true">loc://Mode("Running")</pv>
+      </path>
+    </scripts>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <height>30</height>
+    <border_width>1</border_width>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <image></image>
+    <visible>true</visible>
+    <pv_name></pv_name>
+    <border_color>
+      <color red="0" green="128" blue="255" />
+    </border_color>
+    <widget_type>Action Button</widget_type>
+    <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+    <background_color>
+      <color red="240" green="240" blue="240" />
+    </background_color>
+    <width>100</width>
+    <x>46</x>
+    <name>Loading_Button_3</name>
+    <y>431</y>
+    <foreground_color>
+      <color red="0" green="0" blue="0" />
+    </foreground_color>
+    <actions hook="false" hook_all="true">
+      <action type="WRITE_PV">
+        <pv_name>$(P)LKUP:$(PH):IPOSN:SP</pv_name>
+        <value>7</value>
+        <timeout>10</timeout>
+        <description></description>
+      </action>
+    </actions>
+    <font>
+      <opifont.name fontName="Arial" height="12" style="1">ISIS_Header3</opifont.name>
+    </font>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="1.0">
+    <toggle_button>false</toggle_button>
+    <border_style>0</border_style>
+    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+    <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+    <push_action_index>0</push_action_index>
+    <rules />
+    <enabled>true</enabled>
+    <wuid>-552780a2:14de1d345b9:-7fbb</wuid>
+    <pv_value />
+    <text>Load 4</text>
+    <scripts>
+      <path pathString="Scripts/ViewForLoading.js" checkConnect="true" sfe="false" seoe="false">
+        <pv trig="true">loc://Mode("Running")</pv>
+      </path>
+    </scripts>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <height>30</height>
+    <border_width>1</border_width>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <image></image>
+    <visible>true</visible>
+    <pv_name></pv_name>
+    <border_color>
+      <color red="0" green="128" blue="255" />
+    </border_color>
+    <widget_type>Action Button</widget_type>
+    <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+    <background_color>
+      <color red="240" green="240" blue="240" />
+    </background_color>
+    <width>100</width>
+    <x>162</x>
+    <name>Loading_Button_4</name>
+    <y>431</y>
+    <foreground_color>
+      <color red="0" green="0" blue="0" />
+    </foreground_color>
+    <actions hook="false" hook_all="true">
+      <action type="WRITE_PV">
+        <pv_name>$(P)LKUP:$(PH):IPOSN:SP</pv_name>
+        <value>9</value>
+        <timeout>10</timeout>
+        <description></description>
+      </action>
+    </actions>
+    <font>
+      <opifont.name fontName="Arial" height="12" style="1">ISIS_Header3</opifont.name>
+    </font>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="1.0">
+    <toggle_button>false</toggle_button>
+    <border_style>0</border_style>
+    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+    <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+    <push_action_index>0</push_action_index>
+    <rules />
+    <enabled>true</enabled>
     <wuid>-552780a2:14de1d345b9:-7fba</wuid>
     <pv_value />
     <text>Load 5</text>
     <scripts>
       <path pathString="Scripts/ViewForLoading.js" checkConnect="true" sfe="false" seoe="false">
-        <pv trig="true">loc://Mode</pv>
+        <pv trig="true">loc://Mode("Running")</pv>
       </path>
     </scripts>
     <border_alarm_sensitive>false</border_alarm_sensitive>

@@ -1,11 +1,11 @@
 importPackage(Packages.org.csstudio.opibuilder.scriptUtil);
 
 // PVs
-// pv[0] = loc://Mode, triggered
-// pv[1] = $(P)LKUP:$(PH):IPOSN, triggered
+// pv[0] = $(P)LKUP:$(PH):IPOSN, triggered
+// pv[1] = loc://Mode, triggered
 
-var mode = PVUtil.getString(pvs[0]);
-var loc = PVUtil.getDouble(pvs[1]);
+var loc = PVUtil.getDouble(pvs[0]);
+var mode = PVUtil.getString(pvs[1]);
 
 var name = widget.getPropertyValue("name");
 var runnDispVerifier = "RAct";
