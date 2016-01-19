@@ -19,28 +19,6 @@
 
 package uk.ac.stfc.isis.ibex.instrument;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-
-import org.apache.logging.log4j.Logger;
-import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.IConfigurationElement;
-import org.eclipse.core.runtime.IExtensionRegistry;
-import org.eclipse.core.runtime.Platform;
-import org.eclipse.core.runtime.preferences.ConfigurationScope;
-import org.osgi.framework.BundleActivator;
-import org.osgi.framework.BundleContext;
-import org.osgi.service.prefs.BackingStoreException;
-import org.osgi.service.prefs.Preferences;
-
-import com.google.common.base.Predicate;
-import com.google.common.collect.Iterables;
-
-import uk.ac.stfc.isis.ibex.instrument.internal.LocalHostInstrumentInfo;
-import uk.ac.stfc.isis.ibex.logger.IsisLog;
-import uk.ac.stfc.isis.ibex.model.SettableUpdatedValue;
-import uk.ac.stfc.isis.ibex.model.UpdatedValue;
 
 public class Instrument implements BundleActivator {
 
