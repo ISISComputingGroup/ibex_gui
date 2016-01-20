@@ -293,12 +293,11 @@ public class SWTResourceManager {
 	 */
 	public static void disposeImages() {
 		// dispose loaded images
-		{
-			for (Image image : mImageMap.values()) {
-				image.dispose();
-			}
-			mImageMap.clear();
+        for (Image image : mImageMap.values()) {
+            image.dispose();
 		}
+        mImageMap.clear();
+
 		// dispose decorated images
 		for (int i = 0; i < mDecoratedImageMap.length; i++) {
 			Map<Image, Map<Image, Image>> cornerDecoratedImageMap = mDecoratedImageMap[i];

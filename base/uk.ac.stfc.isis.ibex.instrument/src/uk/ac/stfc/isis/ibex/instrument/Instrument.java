@@ -134,8 +134,9 @@ public class Instrument implements BundleActivator {
         while (it.hasNext()) {
             Map.Entry<String, ChannelHandler> pair = it.next();
             ChannelHandler ch = pair.getValue();
-            if (ch.isConnected())
+            if (ch.isConnected()) {
                 count++;
+            }
         }
         LOG.debug("Changing to instrument " + instrumentInfo.hostName()
         		+ ", Number of connected channels = " + Integer.toString(count));
