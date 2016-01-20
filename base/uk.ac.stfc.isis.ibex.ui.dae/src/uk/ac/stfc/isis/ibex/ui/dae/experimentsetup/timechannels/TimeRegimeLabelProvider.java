@@ -45,8 +45,8 @@ public class TimeRegimeLabelProvider extends LabelProvider implements ITableLabe
 				return Double.toString(row.getStep());
 			case 3:
 				return row.getMode().toString();
+            default:
+                return "";
 		}
-		
-		return "";
 	}
 }

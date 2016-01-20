@@ -27,7 +27,7 @@ import java.util.Map;
 /*
  * Performs an action once all updated values have a value
  */
-public class UpdatedValues {
+public final class UpdatedValues {
 
 	private final Map<UpdatedValue<?>, Boolean> status = new HashMap<>();
 	private SettableUpdatedValue<Boolean> allSet = new SettableUpdatedValue<>(false);

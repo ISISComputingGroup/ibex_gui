@@ -47,8 +47,8 @@ public class PeriodLabelProvider extends LabelProvider implements ITableLabelPro
 				return Integer.toString(period.getBinaryOutput());
 			case 4:
 				return period.getLabel();
+            default:
+                return "";
 		}
-		
-		return "";
 	}
 }
