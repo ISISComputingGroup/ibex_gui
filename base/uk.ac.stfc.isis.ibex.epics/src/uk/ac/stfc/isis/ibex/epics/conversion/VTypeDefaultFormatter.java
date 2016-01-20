@@ -28,7 +28,9 @@ import org.epics.vtype.ValueFormat;
 
 public class VTypeDefaultFormatter<T extends VType> {
 
-	public final Converter<T, String> withUnits = new WithUnits<T>();
+    private static final int ARRAY_ELEMENTS_TO_DISPLAY = 10;
+
+    public final Converter<T, String> withUnits = new WithUnits<T>();
 	public final Converter<T, String> noUnits = new NoUnits<T>();
 	
 	private class WithUnits<R extends VType> extends Converter<R, String> {
@@ -63,7 +65,7 @@ public class VTypeDefaultFormatter<T extends VType> {
 
 	private static String defaultValueFormat(Object value) {
 		//Note for arrays this will only display items [0...10]
-		ValueFormat valueFormat = new SimpleValueFormat(10);	
+        ValueFormat valueFormat = new SimpleValueFormat(ARRAY_ELEMENTS_TO_DISPLAY);
 		return valueFormat.format(value);	
 	}
 

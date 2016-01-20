@@ -84,8 +84,7 @@ public final class XMLUtil {
 	 * @throws SAXException
 	 * @throws JAXBException 
 	 */
-	public static void setSchema(String rawSchema) throws SAXException, JAXBException
-	{
+    public static void setSchema(String rawSchema) throws SAXException, JAXBException {
 		if (context == null) {
 			initialise();
 		}

@@ -47,8 +47,7 @@ public class TargetPropertyList extends Composite {
 	
 	private SynopticViewModel instrument;
 	
-	public TargetPropertyList(Composite parent, final SynopticViewModel instrument) 
-	{
+    public TargetPropertyList(Composite parent, final SynopticViewModel instrument) {
 		super(parent, SWT.NONE);
 		
 		this.instrument = instrument;

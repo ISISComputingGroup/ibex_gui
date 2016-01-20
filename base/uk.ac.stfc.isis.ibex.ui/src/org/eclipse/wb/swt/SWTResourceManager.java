@@ -392,7 +392,7 @@ public class SWTResourceManager {
 	public static Font getBoldFont(Font baseFont) {
 		Font font = mFontToBoldFontMap.get(baseFont);
 		if (font == null) {
-			FontData fontDatas[] = baseFont.getFontData();
+            FontData[] fontDatas = baseFont.getFontData();
 			FontData data = fontDatas[0];
 			font = new Font(Display.getCurrent(), data.getName(), data.getHeight(), SWT.BOLD);
 			mFontToBoldFontMap.put(baseFont, font);
