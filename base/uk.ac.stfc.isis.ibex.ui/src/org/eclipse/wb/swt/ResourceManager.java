@@ -402,12 +402,12 @@ public class ResourceManager extends SWTResourceManager {
         if (pluginClass.isAssignableFrom(plugin.getClass())) {
             //
             Class<?> pathClass = Class.forName("org.eclipse.core.runtime.Path"); //$NON-NLS-1$
-            Constructor<?> pathConstructor = pathClass.getConstructor(new Class[] { String.class });
-            Object path = pathConstructor.newInstance(new Object[] { name });
+            Constructor<?> pathConstructor = pathClass.getConstructor(new Class[] {String.class});
+            Object path = pathConstructor.newInstance(new Object[] {name});
             //
             Class<?> iPathClass = Class.forName("org.eclipse.core.runtime.IPath"); //$NON-NLS-1$
-            Method findMethod = pluginClass.getMethod("find", new Class[] { iPathClass }); //$NON-NLS-1$
-            return (URL) findMethod.invoke(plugin, new Object[] { path });
+            Method findMethod = pluginClass.getMethod("find", new Class[] {iPathClass}); //$NON-NLS-1$
+            return (URL) findMethod.invoke(plugin, new Object[] {path});
 		}
 		return null;
 	}
