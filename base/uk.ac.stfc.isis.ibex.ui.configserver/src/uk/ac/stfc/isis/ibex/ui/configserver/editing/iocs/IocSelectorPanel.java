@@ -37,6 +37,7 @@ import uk.ac.stfc.isis.ibex.configserver.configuration.Ioc;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableIoc;
 
+@SuppressWarnings("checkstyle:magicnumber")
 public class IocSelectorPanel extends Composite {
 	private EditableIoc ioc;
 	private ComboViewer iocCombo;
@@ -64,7 +65,7 @@ public class IocSelectorPanel extends Composite {
 		lbDescTarget.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
 		target = panelFactory.factory(this);
-		Composite targetPanel = (Composite)target;
+		Composite targetPanel = (Composite) target;
 		targetPanel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
 		new Label(this, SWT.NONE);
 		new Label(this, SWT.NONE);
@@ -83,8 +84,8 @@ public class IocSelectorPanel extends Composite {
 		iocCombo.addSelectionChangedListener(new ISelectionChangedListener() {
 			@Override
 			public void selectionChanged(SelectionChangedEvent arg0) {
-				StructuredSelection selection = (StructuredSelection)arg0.getSelection();
-				ioc = (EditableIoc)selection.getFirstElement();
+				StructuredSelection selection = (StructuredSelection) arg0.getSelection();
+				ioc = (EditableIoc) selection.getFirstElement();
 				lbDescTarget.setText(ioc.getDescription());
 				target.setIoc(ioc);
 			}

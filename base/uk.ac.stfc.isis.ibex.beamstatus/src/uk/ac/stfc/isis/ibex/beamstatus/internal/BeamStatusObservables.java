@@ -51,7 +51,7 @@ public class BeamStatusObservables extends Closer {
 	public TargetStation1 ts1 = new TargetStation1();
 	public TargetStation2 ts2 = new TargetStation2();
 
-	public class Synchrotron {
+	public final class Synchrotron {
         public final ForwardingObservable<Number> beamCurrent = obsFactory
                 .getSwitchableObservable(new NumberWithPrecisionChannel(), SYNC.endWith(BEAM_CURRENT));
         public final ForwardingObservable<Number> beamFrequency = obsFactory
@@ -61,7 +61,7 @@ public class BeamStatusObservables extends Closer {
 		}
 	}
 	
-	public class TargetStation1 extends EndStation {
+	public final class TargetStation1 extends EndStation {
 		
         public final ForwardingObservable<Number> methaneTemperature = obsFactory
                 .getSwitchableObservable(new NumberWithPrecisionChannel(), "TG:TS1:MOD:METH:TEMP");
@@ -75,7 +75,7 @@ public class BeamStatusObservables extends Closer {
 		}	
 	}
 	
-	public class TargetStation2 extends EndStation {		
+	public final class TargetStation2 extends EndStation {		
         public final ForwardingObservable<Number> coupledMethaneTemperature;
 		public final ForwardingObservable<Number> coupledHydrogenTemperature;
 		public final ForwardingObservable<Number> decoupledMethaneTemperature;
@@ -121,11 +121,17 @@ public class BeamStatusObservables extends Closer {
             lastBeamOn = obsFactory.getSwitchableObservable(new DateTimeChannel(), suffix.endWith("BEAMOFF:TIME"));
 		}
 		
-		public ForwardingObservable<OnOff> beam() { return beam; }
-		public ForwardingObservable<Number> pps() { return pps; }
-		public ForwardingObservable<Number> beamCurrent() { return beamCurrent; }
-		public ForwardingObservable<Number> uAHToday() { return uAHToday; }
-		public ForwardingObservable<String> lastBeamOff() { return lastBeamOff; }
-		public ForwardingObservable<String> lastBeamOn() { return lastBeamOn; }
+		public ForwardingObservable<OnOff> beam() { 
+			return beam; }
+		public ForwardingObservable<Number> pps() { 
+			return pps; }
+		public ForwardingObservable<Number> beamCurrent() { 
+			return beamCurrent; }
+		public ForwardingObservable<Number> uAHToday() { 
+			return uAHToday; }
+		public ForwardingObservable<String> lastBeamOff() { 
+			return lastBeamOff; }
+		public ForwardingObservable<String> lastBeamOn() { 
+			return lastBeamOn; }
 	}
 }

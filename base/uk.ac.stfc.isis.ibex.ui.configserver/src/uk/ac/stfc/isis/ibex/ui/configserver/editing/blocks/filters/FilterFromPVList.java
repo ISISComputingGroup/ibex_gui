@@ -53,12 +53,12 @@ public class FilterFromPVList extends PVFilter {
 	}
 
 	private void updatePVList(Collection<PV> pvs) {
-		Collection<String> PVaddresses = new ArrayList<String>();
+		Collection<String> pvAddresses = new ArrayList<String>();
 		
 		for (PV p : pvs) {
-			PVaddresses.add(p.getAddress());
+			pvAddresses.add(p.getAddress());
 		}
-		filter.setAllowedPVs(PVaddresses);			
+		filter.setAllowedPVs(pvAddresses);			
 	}
 	
 	@Override

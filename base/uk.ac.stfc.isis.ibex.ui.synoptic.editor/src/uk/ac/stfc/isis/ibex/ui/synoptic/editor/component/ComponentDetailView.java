@@ -48,6 +48,7 @@ import uk.ac.stfc.isis.ibex.ui.synoptic.editor.pv.PVList;
  * name, type, and PVs
  * 
  */
+@SuppressWarnings("checkstyle:magicnumber")
 public class ComponentDetailView extends Composite {
 	private SynopticViewModel instrument;
 

@@ -20,7 +20,7 @@ package uk.ac.stfc.isis.ibex.validators;
 
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 
-public abstract class ErrorMessageProvider extends ModelObject{
+public abstract class ErrorMessageProvider extends ModelObject {
     protected ErrorMessage error = new ErrorMessage();
     
     protected void setError(boolean inError, String message) {

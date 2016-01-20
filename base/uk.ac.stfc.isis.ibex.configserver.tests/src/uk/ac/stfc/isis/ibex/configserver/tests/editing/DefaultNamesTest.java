@@ -31,6 +31,7 @@ import org.junit.Test;
 
 import uk.ac.stfc.isis.ibex.configserver.editing.DefaultName;
 
+@SuppressWarnings("checkstyle:methodname")
 public class DefaultNamesTest {
 	
     private DefaultName blockName;

@@ -112,7 +112,7 @@ public class RecentConfigList {
 		IEclipsePreferences prefs = ConfigurationScope.INSTANCE.getNode(PLUGIN_ID);
 		Preferences mruPrefs = prefs.node(MRU_PREFS);
 		try {
-			String [] names = mruPrefs.keys();
+			String[] names = mruPrefs.keys();
 			for (int i = 0; i < names.length && i < MRU_LENGTH; i++) {
 				recent.add(mruPrefs.get(names[i], ""));
 			}

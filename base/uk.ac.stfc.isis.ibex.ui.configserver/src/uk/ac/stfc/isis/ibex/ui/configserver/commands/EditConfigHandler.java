@@ -65,8 +65,7 @@ public class EditConfigHandler extends ConfigHandler<Configuration> {
 		if (editDialog.open() == Window.OK) {
 			if (editDialog.doAsComponent()) {
 				SERVER.saveAsComponent().write(editDialog.getComponent());
-			}
-			else {
+			} else {
 				SERVER.saveAs().write(editDialog.getConfig());
 			}
 		}

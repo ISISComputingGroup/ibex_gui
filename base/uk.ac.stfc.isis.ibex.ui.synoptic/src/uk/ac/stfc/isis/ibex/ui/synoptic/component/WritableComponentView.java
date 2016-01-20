@@ -43,6 +43,7 @@ import org.eclipse.swt.widgets.Button;
 
 import uk.ac.stfc.isis.ibex.synoptic.model.WritableComponentProperty;
 
+@SuppressWarnings("checkstyle:magicnumber")
 public class WritableComponentView extends Composite {
 	
 	private DataBindingContext bindingContext = new DataBindingContext();
@@ -87,14 +88,14 @@ public class WritableComponentView extends Composite {
 		}
 		
 		composite = new Composite(this, SWT.NONE);
-		GridLayout gl_composite = new GridLayout(2, false);
-		gl_composite.horizontalSpacing = 1;
-		gl_composite.marginWidth = 1;
-		gl_composite.marginRight = 1;
-		gl_composite.marginLeft = 1;
-		gl_composite.verticalSpacing = 0;
-		gl_composite.marginHeight = 0;
-		composite.setLayout(gl_composite);
+		GridLayout glComposite = new GridLayout(2, false);
+		glComposite.horizontalSpacing = 1;
+		glComposite.marginWidth = 1;
+		glComposite.marginRight = 1;
+		glComposite.marginLeft = 1;
+		glComposite.verticalSpacing = 0;
+		glComposite.marginHeight = 0;
+		composite.setLayout(glComposite);
 		
 		text = new Text(composite, SWT.BORDER | SWT.RIGHT);
 		text.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));

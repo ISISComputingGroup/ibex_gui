@@ -49,7 +49,7 @@ public enum LogMessageFields {
     private String tagName;
     private int defaultColumnWidth;
 
-    private LogMessageFields(String displayName, String tagName,
+    LogMessageFields(String displayName, String tagName,
 	    int defaultColumnWidth) {
 	this.displayName = displayName;
 	this.tagName = tagName;

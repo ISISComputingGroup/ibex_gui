@@ -39,7 +39,7 @@ public enum AutosaveUnit {
 		}
 	}
 	
-	private AutosaveUnit(String text) {
+	AutosaveUnit(String text) {
 		this.text = text;
 	}
 	 

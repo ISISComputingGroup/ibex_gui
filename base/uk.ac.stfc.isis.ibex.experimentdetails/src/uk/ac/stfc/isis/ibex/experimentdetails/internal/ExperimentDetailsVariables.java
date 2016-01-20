@@ -41,6 +41,9 @@ import uk.ac.stfc.isis.ibex.instrument.channels.StringChannel;
  * Holds the Observables and Writables relating to experiment details.
  */
 public class ExperimentDetailsVariables extends InstrumentVariables {
+
+    private static final int INITIAL_STRING_CAPACITY = 50;
+
     private final ObservableFactory obsFactory = new ObservableFactory(OnInstrumentSwitch.SWITCH);
     private final WritableFactory writeFactory = new WritableFactory(OnInstrumentSwitch.SWITCH);
 
@@ -95,7 +98,7 @@ public class ExperimentDetailsVariables extends InstrumentVariables {
 	}
 
     private String addPrefix(String address) {
-        StringBuilder sb = new StringBuilder(50);
+        StringBuilder sb = new StringBuilder(INITIAL_STRING_CAPACITY);
         sb.append(Instrument.getInstance().getPvPrefix());
         sb.append(address);
         return sb.toString();

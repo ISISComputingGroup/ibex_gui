@@ -65,7 +65,15 @@ public class SwitchableObservable<T> extends ForwardingObservable<T> implements 
         return source;
     }
 
-    // TODO: What can we do about the type conversion issue here?
+    /**
+     * Set a new source to observe.
+     * 
+     * There is a type conversion issue here. If the type is wrong then the new
+     * source will not be set.
+     * 
+     * @param newSource
+     *            The source to observe
+     */
     @SuppressWarnings("unchecked")
     @Override
     public void setSource(Closable newSource) {

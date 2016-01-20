@@ -33,6 +33,7 @@ import org.eclipse.wb.swt.SWTResourceManager;
 
 import uk.ac.stfc.isis.ibex.ui.banner.controls.ControlModel;
 
+@SuppressWarnings("checkstyle:magicnumber")
 public class Control extends Composite {
 
 	private final DataBindingContext bindingContext = new DataBindingContext();

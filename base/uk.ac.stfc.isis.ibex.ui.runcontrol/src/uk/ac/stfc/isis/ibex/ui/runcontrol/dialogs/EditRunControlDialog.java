@@ -36,7 +36,7 @@ import uk.ac.stfc.isis.ibex.runcontrol.RunControlServer;
 import uk.ac.stfc.isis.ibex.ui.runcontrol.RunControlViewModel;
 import uk.ac.stfc.isis.ibex.validators.ErrorMessage;
 
-public class EditRunControlDialog extends TitleAreaDialog{
+public class EditRunControlDialog extends TitleAreaDialog {
 
 	private static final Point INITIAL_SIZE = new Point(650, 500);
 	private final String title;
@@ -55,7 +55,7 @@ public class EditRunControlDialog extends TitleAreaDialog{
 		viewModel.addPropertyChangeListener("error", new PropertyChangeListener() {
 			@Override
 			public void propertyChange(PropertyChangeEvent evt) {
-				ErrorMessage newError = (ErrorMessage)evt.getNewValue();
+				ErrorMessage newError = (ErrorMessage) evt.getNewValue();
 				if (newError.isError()) {
 					setErrorMessage(newError.getMessage());
 				} else {

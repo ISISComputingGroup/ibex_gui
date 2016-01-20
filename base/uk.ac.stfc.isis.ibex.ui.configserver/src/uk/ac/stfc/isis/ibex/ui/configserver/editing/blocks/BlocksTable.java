@@ -38,10 +38,11 @@ import uk.ac.stfc.isis.ibex.ui.tables.DataboundTable;
  * visibility. Also allows filtering/searching by block name.
  * 
  */
+@SuppressWarnings("checkstyle:magicnumber")
 public class BlocksTable extends DataboundTable<EditableBlock> {
 	
 	private TableViewerColumn enabled;
-	private IObservableMap[] stateProperties = { observeProperty("isVisible") };
+	private IObservableMap[] stateProperties = {observeProperty("isVisible")};
 	private BlockVisibilityLabelProvider visibilityLabelProvider;
 	private boolean isBlockVisibilityShown;
 	

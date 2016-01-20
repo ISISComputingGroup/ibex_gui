@@ -20,6 +20,7 @@
 package uk.ac.stfc.isis.ibex.ui.banner.views;
 
 import org.eclipse.swt.SWT;
+
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -40,6 +41,7 @@ import uk.ac.stfc.isis.ibex.ui.banner.models.MotionControlModel;
 import uk.ac.stfc.isis.ibex.ui.banner.widgets.Control;
 import uk.ac.stfc.isis.ibex.ui.banner.widgets.Indicator;
 
+@SuppressWarnings("checkstyle:magicnumber")
 public class BannerView extends ViewPart implements ISizeProvider {
 	public BannerView() {
 	}
@@ -50,7 +52,6 @@ public class BannerView extends ViewPart implements ISizeProvider {
 	public static final int FIXED_HEIGHT = 35;
 
 	private final Banner banner = Banner.getInstance();
-    private final Baton baton = Baton.getInstance();
 	
     private final IndicatorModel batonUserModel = new BatonUserModel(Baton.getInstance().baton());
 	private final IndicatorModel bumpStopModel = new BumpStopModel(banner.observables());
@@ -65,35 +66,35 @@ public class BannerView extends ViewPart implements ISizeProvider {
 	
 	@Override
     public void createPartControl(Composite parent) {
-		GridLayout gl_parent = new GridLayout(5, false);
-		gl_parent.marginRight = 2;
-		gl_parent.horizontalSpacing = 8;
-		gl_parent.verticalSpacing = 0;
-		gl_parent.marginWidth = 0;
-		parent.setLayout(gl_parent);
+		GridLayout glParent = new GridLayout(5, false);
+		glParent.marginRight = 2;
+		glParent.horizontalSpacing = 8;
+		glParent.verticalSpacing = 0;
+		glParent.marginWidth = 0;
+		parent.setLayout(glParent);
 		
 		spacer = new Label(parent, SWT.NONE);
 		spacer.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 1, 1));
 		
 		bumpStop = new Indicator(parent, SWT.NONE, bumpStopModel, ALARM_FONT);
-		GridData gd_bumpStop = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
-		gd_bumpStop.widthHint = 180;
-		bumpStop.setLayoutData(gd_bumpStop);
+		GridData gdBumpStop = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+		gdBumpStop.widthHint = 180;
+		bumpStop.setLayoutData(gdBumpStop);
 		
 		batonUser = new Indicator(parent, SWT.NONE, batonUserModel, ALARM_FONT);
-		GridData gd_batonUser = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
-		gd_batonUser.widthHint = 210;
-		batonUser.setLayoutData(gd_batonUser);		
+		GridData gdBatonUser = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+		gdBatonUser.widthHint = 210;
+		batonUser.setLayoutData(gdBatonUser);		
 		
 		inMotion = new Indicator(parent, SWT.NONE, inMotionModel, ALARM_FONT);
-		GridData gd_inMotion = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
-		gd_inMotion.widthHint = 170;
-		inMotion.setLayoutData(gd_inMotion);
+		GridData gdInMotion = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+		gdInMotion.widthHint = 170;
+		inMotion.setLayoutData(gdInMotion);
 		
 		motionControl = new Control(parent, SWT.NONE, motionModel, ALARM_FONT);
-		GridData gd_motionControl = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
-		gd_motionControl.widthHint = 100;
-		motionControl.setLayoutData(gd_motionControl);
+		GridData gdMotionControl = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+		gdMotionControl.widthHint = 100;
+		motionControl.setLayoutData(gdMotionControl);
 	}
 	
 	@Override

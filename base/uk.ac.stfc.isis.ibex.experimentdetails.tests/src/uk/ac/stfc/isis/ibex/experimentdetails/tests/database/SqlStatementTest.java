@@ -35,6 +35,7 @@ import uk.ac.stfc.isis.ibex.experimentdetails.sql.SqlWhereClause;
 import uk.ac.stfc.isis.ibex.experimentdetails.sql.SqlWhereEqualClause;
 import uk.ac.stfc.isis.ibex.experimentdetails.sql.SqlWhereLikeClause;
 
+@SuppressWarnings("checkstyle:methodname")
 public class SqlStatementTest {
 	
 	@Test
@@ -71,7 +72,7 @@ public class SqlStatementTest {
 		//Arrange
 		SqlStatement sql = new SqlStatement();
 		ExpDataField experimentId = ExpDataFieldsCreator.getField(ExpDataTablesEnum.EXPERIMENT_TABLE, ExpDataFieldsEnum.EXPERIMENT_ID);
-		SqlWhereLikeClause whereClause= new SqlWhereLikeClause(experimentId, "1234");
+		SqlWhereLikeClause whereClause = new SqlWhereLikeClause(experimentId, "1234");
 		sql.setWhereClause(new ArrayList<SqlWhereClause>(Arrays.asList(whereClause)));
 		
 		//Act
@@ -87,10 +88,10 @@ public class SqlStatementTest {
 		SqlStatement sql = new SqlStatement();
 		
 		ExpDataField experimentId = ExpDataFieldsCreator.getField(ExpDataTablesEnum.EXPERIMENT_TABLE, ExpDataFieldsEnum.EXPERIMENT_ID);
-		SqlWhereLikeClause whereClause= new SqlWhereLikeClause(experimentId, "1234");
+		SqlWhereLikeClause whereClause = new SqlWhereLikeClause(experimentId, "1234");
 		
 		ExpDataField userName = ExpDataFieldsCreator.getField(ExpDataTablesEnum.USER_TABLE, ExpDataFieldsEnum.NAME);
-		SqlWhereLikeClause whereClause2= new SqlWhereLikeClause(userName, "Dave");
+		SqlWhereLikeClause whereClause2 = new SqlWhereLikeClause(userName, "Dave");
 		
 		sql.setWhereClause(new ArrayList<SqlWhereClause>(Arrays.asList(whereClause, whereClause2)));
 		
@@ -107,7 +108,7 @@ public class SqlStatementTest {
 		SqlStatement sql = new SqlStatement();
 		ExpDataField experimentId = ExpDataFieldsCreator.getField(ExpDataTablesEnum.EXPERIMENT_TABLE, ExpDataFieldsEnum.EXPERIMENT_ID);
 		ExpDataField experimentTeamsExperimentId = ExpDataFieldsCreator.getField(ExpDataTablesEnum.EXPERIMENT_TEAMS_TABLE, ExpDataFieldsEnum.EXPERIMENT_ID);
-		SqlWhereEqualClause whereClause= new SqlWhereEqualClause(experimentId, experimentTeamsExperimentId);
+		SqlWhereEqualClause whereClause = new SqlWhereEqualClause(experimentId, experimentTeamsExperimentId);
 		sql.setWhereClause(new ArrayList<SqlWhereClause>(Arrays.asList(whereClause)));
 		
 		//Act
@@ -123,11 +124,11 @@ public class SqlStatementTest {
 		SqlStatement sql = new SqlStatement();
 		ExpDataField experimentId = ExpDataFieldsCreator.getField(ExpDataTablesEnum.EXPERIMENT_TABLE, ExpDataFieldsEnum.EXPERIMENT_ID);
 		ExpDataField experimentTeamsExperimentId = ExpDataFieldsCreator.getField(ExpDataTablesEnum.EXPERIMENT_TEAMS_TABLE, ExpDataFieldsEnum.EXPERIMENT_ID);
-		SqlWhereEqualClause whereClause= new SqlWhereEqualClause(experimentId, experimentTeamsExperimentId);
+		SqlWhereEqualClause whereClause = new SqlWhereEqualClause(experimentId, experimentTeamsExperimentId);
 		
 		ExpDataField userId = ExpDataFieldsCreator.getField(ExpDataTablesEnum.USER_TABLE, ExpDataFieldsEnum.USER_ID);
 		ExpDataField experimentTeamsUserId = ExpDataFieldsCreator.getField(ExpDataTablesEnum.EXPERIMENT_TEAMS_TABLE, ExpDataFieldsEnum.USER_ID);
-		SqlWhereEqualClause whereClause2= new SqlWhereEqualClause(userId, experimentTeamsUserId);
+		SqlWhereEqualClause whereClause2 = new SqlWhereEqualClause(userId, experimentTeamsUserId);
 		
 		sql.setWhereClause(new ArrayList<SqlWhereClause>(Arrays.asList(whereClause, whereClause2)));
 		
@@ -145,10 +146,10 @@ public class SqlStatementTest {
 		
 		ExpDataField userId = ExpDataFieldsCreator.getField(ExpDataTablesEnum.USER_TABLE, ExpDataFieldsEnum.USER_ID);
 		ExpDataField experimentTeamsUserId = ExpDataFieldsCreator.getField(ExpDataTablesEnum.EXPERIMENT_TEAMS_TABLE, ExpDataFieldsEnum.USER_ID);
-		SqlWhereEqualClause whereClause= new SqlWhereEqualClause(userId, experimentTeamsUserId);
+		SqlWhereEqualClause whereClause = new SqlWhereEqualClause(userId, experimentTeamsUserId);
 		
 		ExpDataField experimentId = ExpDataFieldsCreator.getField(ExpDataTablesEnum.EXPERIMENT_TABLE, ExpDataFieldsEnum.EXPERIMENT_ID);
-		SqlWhereLikeClause whereClause2= new SqlWhereLikeClause(experimentId, "1234");
+		SqlWhereLikeClause whereClause2 = new SqlWhereLikeClause(experimentId, "1234");
 		
 		sql.setWhereClause(new ArrayList<SqlWhereClause>(Arrays.asList(whereClause, whereClause2)));
 		

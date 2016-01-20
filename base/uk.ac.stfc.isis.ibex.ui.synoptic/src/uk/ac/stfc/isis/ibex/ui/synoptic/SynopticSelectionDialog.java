@@ -42,6 +42,7 @@ import org.eclipse.core.databinding.beans.PojoProperties;
 
 import uk.ac.stfc.isis.ibex.synoptic.SynopticInfo;
 
+@SuppressWarnings("checkstyle:magicnumber")
 public class SynopticSelectionDialog extends Dialog {
 	
 	private final String title;
@@ -97,16 +98,16 @@ public class SynopticSelectionDialog extends Dialog {
 		
 		items = new List(container, SWT.BORDER | SWT.V_SCROLL);
 		items.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		String [] names = SynopticInfo.names(available).toArray(new String[0]);
+		String[] names = SynopticInfo.names(available).toArray(new String[0]);
 		Arrays.sort(names, String.CASE_INSENSITIVE_ORDER);
 		items.setItems(names);
 		
 		Composite selected = new Composite(container, SWT.NONE);
 		selected.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		GridLayout gl_selected = new GridLayout(2, false);
-		gl_selected.marginWidth = 0;
-		gl_selected.marginHeight = 0;
-		selected.setLayout(gl_selected);
+		GridLayout glSelected = new GridLayout(2, false);
+		glSelected.marginWidth = 0;
+		glSelected.marginHeight = 0;
+		selected.setLayout(glSelected);
 		
 		Label lblType = new Label(selected, SWT.NONE);
 		lblType.setText("Synoptic:");

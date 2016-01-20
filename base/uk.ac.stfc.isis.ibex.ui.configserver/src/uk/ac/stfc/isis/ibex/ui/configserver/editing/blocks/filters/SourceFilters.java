@@ -26,7 +26,7 @@ public enum SourceFilters {
 	
 	private String displayName;
 	
-	private SourceFilters(String displayName) {
+	SourceFilters(String displayName) {
 		this.displayName = displayName;
 	}
 	
@@ -35,7 +35,7 @@ public enum SourceFilters {
 	}
 	
 	@Override
-	public String toString () {
+	public String toString() {
 		return displayName;
 	}
 }

@@ -49,7 +49,7 @@ public class SqlStatement {
     				.getPreferenceStore();
     			schemaName = preferenceStore
     				.getString(PreferenceConstants.P_EXP_DATA_SQL_SCHEMA);    		
-    	} catch (Exception e){
+    	} catch (Exception e) {
     		schemaName = PreferenceConstants.DEFAULT_EXP_DATA_SQL_SCHEMA;
     	}
 
@@ -126,7 +126,7 @@ public class SqlStatement {
     	StringBuilder result = new StringBuilder();
     	int listSize = list.size();
     	
-    	for (int i=0; i<listSize; i++) {
+    	for (int i = 0; i < listSize; i++) {
     		result.append(prefix);
     		result.append(list.get(i));
 			if (i != listSize - 1) {

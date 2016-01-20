@@ -31,6 +31,7 @@ import org.eclipse.swt.layout.GridData;
 
 import uk.ac.stfc.isis.ibex.ui.dashboard.models.BannerModel;
 
+@SuppressWarnings("checkstyle:magicnumber")
 public class Banner extends Composite {
 
 	private final Label bannerText;
@@ -74,10 +75,10 @@ public class Banner extends Composite {
 		lblShutter.setText("Shutter:");
 		
 		shutter = new Label(details, SWT.NONE);
-		GridData gd_shutter = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
-		gd_shutter.widthHint = 100;
-		gd_shutter.minimumWidth = 100;
-		shutter.setLayoutData(gd_shutter);
+		GridData gdShutter = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+		gdShutter.widthHint = 100;
+		gdShutter.minimumWidth = 100;
+		shutter.setLayoutData(gdShutter);
 		shutter.setFont(textFont);
 		shutter.setText("UNKNOWN");
 		

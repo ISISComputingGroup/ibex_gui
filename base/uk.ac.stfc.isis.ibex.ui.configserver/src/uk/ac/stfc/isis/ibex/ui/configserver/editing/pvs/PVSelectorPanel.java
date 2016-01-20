@@ -60,6 +60,7 @@ import org.eclipse.swt.widgets.Button;
  * A composite for selecting a PV.
  *
  */
+@SuppressWarnings("checkstyle:magicnumber")
 public class PVSelectorPanel extends Composite {
 
 	private final Text pvAddress;
@@ -87,9 +88,9 @@ public class PVSelectorPanel extends Composite {
 		lblViewPVs.setText("PVs From:");		
 		
 		pvSource = new ComboViewer(grpPV, SWT.READ_ONLY);
-		GridData gd_pvSource = new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1);
-		gd_pvSource.widthHint = 100;
-		pvSource.getCombo().setLayoutData(gd_pvSource);
+		GridData gdPvSource = new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1);
+		gdPvSource.widthHint = 100;
+		pvSource.getCombo().setLayoutData(gdPvSource);
 		pvSource.setContentProvider(new ArrayContentProvider());
 		pvSource.setInput(SourceFilters.values());	
 
@@ -99,9 +100,9 @@ public class PVSelectorPanel extends Composite {
 		lblInterestLevel.setText("Interest Level:");
 		
 		interestLevel = new ComboViewer(grpPV, SWT.READ_ONLY);
-		GridData gd_interestLevel = new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1);
-		gd_interestLevel.widthHint = 100;
-		interestLevel.getCombo().setLayoutData(gd_interestLevel);
+		GridData gdInterestLevel = new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1);
+		gdInterestLevel.widthHint = 100;
+		interestLevel.getCombo().setLayoutData(gdInterestLevel);
 		interestLevel.setContentProvider(new ArrayContentProvider());
 		interestLevel.setInput(InterestFilters.values());	
 		
@@ -110,9 +111,9 @@ public class PVSelectorPanel extends Composite {
 		lblPvAddress.setText("PV address:");
 		
 		pvAddress = new Text(grpPV, SWT.BORDER);
-		GridData gd_pvAddress = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
-		gd_pvAddress.widthHint = 250;
-		pvAddress.setLayoutData(gd_pvAddress);
+		GridData gdPvAddress = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+		gdPvAddress.widthHint = 250;
+		pvAddress.setLayoutData(gdPvAddress);
 		
 		pvAddress.addModifyListener(new ModifyListener() {
 			public void modifyText(ModifyEvent arg0) {
@@ -125,7 +126,7 @@ public class PVSelectorPanel extends Composite {
 		Listener clearListener = new Listener() {
 			@Override
 			public void handleEvent(Event event) {
-				if (event.widget == btnClear){
+				if (event.widget == btnClear) {
 					pvAddress.setText("");
 				}
 			}			
@@ -161,8 +162,8 @@ public class PVSelectorPanel extends Composite {
 			@Override
 			public void selectionChanged(SelectionChangedEvent arg0) {
 				StructuredSelection selection = (StructuredSelection) arg0.getSelection();
-				SourceFilters PVfilter = (SourceFilters) selection.getFirstElement();
-				changeSourceFilter(PVfilter);
+				SourceFilters pvFilter = (SourceFilters) selection.getFirstElement();
+				changeSourceFilter(pvFilter);
 			}
 		});
 		

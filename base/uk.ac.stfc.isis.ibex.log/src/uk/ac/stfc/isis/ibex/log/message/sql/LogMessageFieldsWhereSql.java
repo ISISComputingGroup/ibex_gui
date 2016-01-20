@@ -48,7 +48,7 @@ public enum LogMessageFieldsWhereSql {
     private String displayName;
     private String tagName;
 
-    private LogMessageFieldsWhereSql(String displayName, String tagName,
+    LogMessageFieldsWhereSql(String displayName, String tagName,
 	    int defaultColumnWidth) {
 	this.displayName = displayName;
 	this.tagName = tagName;

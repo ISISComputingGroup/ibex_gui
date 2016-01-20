@@ -57,7 +57,7 @@ public class VariablesTest {
 	 * Code to generate the required components
 	 */
 	@Before
-	public void set_up(){
+	public void set_up() {
 		// Arrange
         SwitchableObservable switchableObservable = mock(
                 SwitchableObservable.class);
@@ -102,7 +102,7 @@ public class VariablesTest {
 	@Test
 	public final void get_synoptic_description() {
 		// Act
-		Object actual = variables.getSynopticDescription(synopticPV );
+		Object actual = variables.getSynopticDescription(synopticPV);
 		
 		// Assert
 		assertNotNull(actual);

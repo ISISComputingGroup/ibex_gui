@@ -64,7 +64,7 @@ public class Instrument implements BundleActivator {
 	
 	private final Preferences initalPreference = ConfigurationScope.INSTANCE.getNode("uk.ac.stfc.isis.ibex.instrument").node("preferences");
 	
-	private static String INITIAL_INSTRUMENT = "initial";
+	private static String initialInstrument = "initial";
 	
 	public Instrument() {
 		instance = this;
@@ -159,7 +159,7 @@ public class Instrument implements BundleActivator {
 	}
 	
 	private InstrumentInfo initialInstrument() {
-		final String initalName = initalPreference.get(INITIAL_INSTRUMENT, localhost.name());
+		final String initalName = initalPreference.get(initialInstrument, localhost.name());
 		
 		return Iterables.find(instruments, new Predicate<InstrumentInfo>() {
 			@Override
@@ -170,7 +170,7 @@ public class Instrument implements BundleActivator {
 	}
 	
 	public void setInitial() {
-		initalPreference.put(INITIAL_INSTRUMENT, currentInstrument().name());
+		initalPreference.put(initialInstrument, currentInstrument().name());
 		
         try {
             // forces the application to save the preferences

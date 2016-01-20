@@ -37,6 +37,7 @@ import uk.ac.stfc.isis.ibex.synoptic.model.desc.SynopticDescription;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.TargetType;
 import uk.ac.stfc.isis.ibex.synoptic.xml.XMLUtil;
 
+@SuppressWarnings("checkstyle:methodname")
 public class InstrumentLoadedFromXmlTest extends FileReadingTest {
 
     private SynopticDescription instrument;

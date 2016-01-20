@@ -29,22 +29,23 @@ import org.junit.Test;
 
 import uk.ac.stfc.isis.ibex.validators.RunControlValidator;
 
+@SuppressWarnings("checkstyle:methodname")
 public class RunControlValidatorTest {
 
-	private void checkPassedWithMessage(String low_limit, String high_limit, String expected) {
+	private void checkPassedWithMessage(String lowLimit, String highLimit, String expected) {
         // Act
         RunControlValidator limitsValid = new RunControlValidator();
-        boolean isValid = limitsValid.isValid(low_limit, high_limit);
+        boolean isValid = limitsValid.isValid(lowLimit, highLimit);
         
         // Assert
         assertTrue(isValid);
         assertTrue(limitsValid.getErrorMessage().equals(expected));
 	}
 	
-	private void checkFailedWithMessage(String low_limit, String high_limit, String expected) {
+	private void checkFailedWithMessage(String lowLimit, String highLimit, String expected) {
         // Act
         RunControlValidator limitsValid = new RunControlValidator();
-        boolean isValid = limitsValid.isValid(low_limit, high_limit);
+        boolean isValid = limitsValid.isValid(lowLimit, highLimit);
         
         // Assert
         assertFalse(isValid);

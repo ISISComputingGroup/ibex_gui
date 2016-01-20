@@ -38,7 +38,7 @@ public enum PeriodSetupSource {
 		}
 	}
 	
-	private PeriodSetupSource(String text) {
+	PeriodSetupSource(String text) {
 		this.text = text;
 	}
 	 

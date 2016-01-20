@@ -36,6 +36,7 @@ import org.eclipse.wb.swt.SWTResourceManager;
 /**
  * Contains the widget showing the synoptic drop down menu for switching, refresh button, and bread crumb trail.
  */
+@SuppressWarnings("checkstyle:magicnumber")
 public class SynopticSelection extends Composite {
 	
 	private static final Color BACKGROUND = SWTResourceManager.getColor(240, 240, 240);
@@ -53,13 +54,13 @@ public class SynopticSelection extends Composite {
 
 		setLayout(gridLayout);
 		
-		GridData gd_gotoLabel = new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1);
-		gd_gotoLabel.verticalAlignment = SWT.CENTER;
+		GridData gdGotoLabel = new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1);
+		gdGotoLabel.verticalAlignment = SWT.CENTER;
 		
-		GridData gd_synopticCombo = new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1);
-		gd_synopticCombo.widthHint = 120;
+		GridData gdSynopticCombo = new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1);
+		gdSynopticCombo.widthHint = 120;
 		synopticCombo = new Combo(this, SWT.READ_ONLY);
-		synopticCombo.setLayoutData(gd_synopticCombo);
+		synopticCombo.setLayoutData(gdSynopticCombo);
 		
 		Button refreshButton = new Button(this, SWT.NONE);
 		refreshButton.setText("Refresh Synoptic");

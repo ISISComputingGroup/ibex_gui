@@ -67,7 +67,7 @@ public class HomingLabelProvider extends ColumnLabelProvider {
 		TableEditor editor = new TableEditor(item.getParent());
         editor.grabHorizontal  = true;
         editor.grabVertical = true;
-        editor.setEditor(button , item, cell.getColumnIndex());
+        editor.setEditor(button, item, cell.getColumnIndex());
         editor.layout();
         
         editors.put(cell, editor);

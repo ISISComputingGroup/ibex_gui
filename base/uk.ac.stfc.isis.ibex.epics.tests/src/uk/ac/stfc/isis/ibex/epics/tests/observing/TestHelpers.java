@@ -12,7 +12,7 @@ public class TestHelpers {
 	public static final Integer INT_VALUE = 123;
 	public static final Integer NEW_INT_VALUE = 789;
 	
-	public static final Exception exception = new Exception();
+	public static final Exception EXCEPTION = new Exception();
 	
 	/**
 	 * Creates a mock ClosableCachingObservable that returns the object value when the getValue method is called.

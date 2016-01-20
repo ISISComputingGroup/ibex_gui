@@ -32,6 +32,7 @@ import uk.ac.stfc.isis.ibex.configserver.internal.IocParameters;
 import uk.ac.stfc.isis.ibex.configserver.json.IocsParametersConverter;
 import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
 
+@SuppressWarnings("checkstyle:methodname")
 public class IocsParameterConverterTest {
 	private String exampleJson = "";
 

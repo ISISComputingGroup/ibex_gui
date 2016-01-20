@@ -26,6 +26,7 @@ import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.ExpandItem;
 
+@SuppressWarnings("checkstyle:magicnumber")
 public class StatusPanel extends Composite {
 
 	public StatusPanel(Composite parent, int style) {

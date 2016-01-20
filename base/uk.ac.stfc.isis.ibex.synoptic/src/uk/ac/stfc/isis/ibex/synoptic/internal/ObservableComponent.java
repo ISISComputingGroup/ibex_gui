@@ -88,7 +88,7 @@ public class ObservableComponent extends BaseComponent {
 	private ComponentProperty getProperty(PV pv) {
 		PVType pvType = pv.getPvType();
         ForwardingObservable<String> reader = variables.defaultReader(pv.address(), pvType);
-		switch(pv.recordType().io()) {
+		switch (pv.recordType().io()) {
 			case WRITE:
 				Writable<String> destination = variables.defaultWritable(pv.address(), pvType);
                 ForwardingObservable<String> readerWithoutUnits = variables

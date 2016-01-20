@@ -36,6 +36,7 @@ import uk.ac.stfc.isis.ibex.epics.switching.SwitchableObservable;
 import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
 import uk.ac.stfc.isis.ibex.instrument.channels.ChannelType;
 
+@SuppressWarnings("checkstyle:methodname")
 public class NothingSwitcherTest {
     
     private static final String PV_PREFIX = "PREFIX:";

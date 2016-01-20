@@ -35,6 +35,7 @@ import org.eclipse.swt.layout.FillLayout;
 
 import uk.ac.stfc.isis.ibex.configserver.displaying.DisplayGroup;
 
+@SuppressWarnings("checkstyle:magicnumber")
 public class GroupsPanel extends Composite {
 	
 	private final Display display = Display.getCurrent();

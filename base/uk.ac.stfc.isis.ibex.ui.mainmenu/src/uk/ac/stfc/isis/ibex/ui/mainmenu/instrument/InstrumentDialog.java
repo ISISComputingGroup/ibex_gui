@@ -30,9 +30,10 @@ import org.eclipse.swt.widgets.Shell;
 import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
 import uk.ac.stfc.isis.ibex.ui.mainmenu.MainMenuUI;
 
+@SuppressWarnings("checkstyle:magicnumber")
 public class InstrumentDialog extends Dialog {
 	
-	private final String TITLE = "Select an Instrument";
+	private static final String TITLE = "Select an Instrument";
 	
 	private InstrumentInfo selectedInstrument;
 	private InstrumentSelectionPanel selector;

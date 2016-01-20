@@ -46,6 +46,7 @@ import uk.ac.stfc.isis.ibex.ui.configserver.editing.blocks.BlocksTable;
  * A composite for selecting a block.
  *
  */
+@SuppressWarnings("checkstyle:magicnumber")
 public class BlockSelectorPanel extends Composite {
 
 	private final Text blockName;
@@ -69,18 +70,18 @@ public class BlockSelectorPanel extends Composite {
 		lblBlockName.setText("Block Name:");
 		
 		blockName = new Text(grpPV, SWT.BORDER);
-		GridData gd_blockName = new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1);
-		gd_blockName.widthHint = 250;
-		blockName.setLayoutData(gd_blockName);
+		GridData gdBlockName = new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1);
+		gdBlockName.widthHint = 250;
+		blockName.setLayoutData(gdBlockName);
 		
 		Label lblPvAddress = new Label(grpPV, SWT.NONE);
 		lblPvAddress.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		lblPvAddress.setText("Block PV address:");
 		
 		pvAddress = new Text(grpPV, SWT.BORDER);
-		GridData gd_pvAddress = new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1);
-		gd_pvAddress.widthHint = 250;
-		pvAddress.setLayoutData(gd_pvAddress);
+		GridData gdPvAddress = new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1);
+		gdPvAddress.widthHint = 250;
+		pvAddress.setLayoutData(gdPvAddress);
 		pvAddress.setEditable(false);
 		
 		blockName.addModifyListener(new ModifyListener() {

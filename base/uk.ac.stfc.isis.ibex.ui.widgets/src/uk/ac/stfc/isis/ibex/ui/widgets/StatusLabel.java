@@ -29,6 +29,7 @@ import org.eclipse.wb.swt.SWTResourceManager;
 
 import uk.ac.stfc.isis.ibex.ui.widgets.models.LabelModel;
 
+@SuppressWarnings("checkstyle:magicnumber")
 public class StatusLabel extends CLabel {
 	
 	private DataBindingContext bindingContext;

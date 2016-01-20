@@ -36,6 +36,7 @@ import org.mockito.MockitoAnnotations;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Macro;
 import uk.ac.stfc.isis.ibex.configserver.editing.MacroValueValidator;
 
+@SuppressWarnings("checkstyle:methodname")
 public class MacroValueValidatorTest {
 	
 	private static final String VALID_VALUE = "123.123";
@@ -72,7 +73,7 @@ public class MacroValueValidatorTest {
 		validator.addPropertyChangeListener(MacroValueValidator.NAME_IS_VALID, mockNameIsValidListener);
 		validator.addPropertyChangeListener(MacroValueValidator.SHOW_WARNING_ICON, showWarningIconListener);
 		
-		return validator ;
+		return validator;
 	}
 	
 	@Test
@@ -182,7 +183,7 @@ public class MacroValueValidatorTest {
 		IStatus status =  macroValidator.validate(VALID_VALUE);
 		
 		// Assert
-		assert(status.isOK());
+		assert (status.isOK());
 	}
 	
 	@Test

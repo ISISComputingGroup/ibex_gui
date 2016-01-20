@@ -31,7 +31,7 @@ import uk.ac.stfc.isis.ibex.ui.configserver.editing.CellDecorator;
 
 public class IocSimulationCellDecorator extends CellDecorator<EditableIoc> {
 
-	private static final Display display = Display.getCurrent();
+	private static final Display DISPLAY = Display.getCurrent();
 
 	@Override
 	public void applyDecoration(ViewerCell cell) {
@@ -64,7 +64,7 @@ public class IocSimulationCellDecorator extends CellDecorator<EditableIoc> {
 	private static void modifyFont(ViewerCell cell, int modifier, boolean enable) {
 		FontData fontData = cell.getFont().getFontData()[0];
 		int newStyle = enable ? fontData.getStyle() | modifier : fontData.getStyle() & ~modifier;
-		Font font = new Font(display, new FontData(fontData.getName(), fontData.getHeight(), newStyle));
+		Font font = new Font(DISPLAY, new FontData(fontData.getName(), fontData.getHeight(), newStyle));
 		cell.setFont(font);
 	}
 }

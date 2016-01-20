@@ -29,6 +29,7 @@ import uk.ac.stfc.isis.ibex.configserver.configuration.PVDefaultValue;
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundCellLabelProvider;
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundTable;
 
+@SuppressWarnings("checkstyle:magicnumber")
 public class IocPVsTable extends DataboundTable<PVDefaultValue> {
 	public IocPVsTable(Composite parent, int style, int tableStyle) {
 		super(parent, style, PVDefaultValue.class, tableStyle | SWT.BORDER);

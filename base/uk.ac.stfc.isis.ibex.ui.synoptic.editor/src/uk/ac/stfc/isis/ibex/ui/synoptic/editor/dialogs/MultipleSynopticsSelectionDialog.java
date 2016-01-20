@@ -37,6 +37,7 @@ import org.eclipse.swt.layout.GridData;
 
 import uk.ac.stfc.isis.ibex.synoptic.SynopticInfo;
 
+@SuppressWarnings("checkstyle:magicnumber")
 public class MultipleSynopticsSelectionDialog extends Dialog {
 	
 	private final String title;

@@ -43,6 +43,10 @@ import uk.ac.stfc.isis.ibex.model.ModelObject;
  * attempts to reestablish connection if it is dropped.
  */
 public class JmsHandler extends ModelObject implements Runnable {
+
+    private static final int TIMEOUT_50_MS = 50;
+    private static final int ONE_SECOND = 1000;
+
     private static final Logger LOG = IsisLog.getLogger(JmsHandler.class);
 
     private static final String PROTOCOL = "tcp:";
@@ -105,6 +109,7 @@ public class JmsHandler extends ModelObject implements Runnable {
      * Establish connection with JMS server and listen for messages to forward
      * on to consumer
      */
+    @Override
     public void run() {
 	while (run) {
 	    // Check connection settings - if they've changed, disconnect, and
@@ -121,7 +126,7 @@ public class JmsHandler extends ModelObject implements Runnable {
 
 	    if (isConnected()) {
 		try {
-		    TextMessage message = (TextMessage) jmsConsumer.receive(50);
+                    TextMessage message = (TextMessage) jmsConsumer.receive(TIMEOUT_50_MS);
 		    if (message != null) {
 			messageLogConsumer.newMessage(parseLogMessage(message));
 		    }
@@ -146,7 +151,7 @@ public class JmsHandler extends ModelObject implements Runnable {
 			setJmsConnectionStatus(false);
 		    }
 
-		    sleep(1000);
+		    sleep(ONE_SECOND);
 		}
 	    }
 	}

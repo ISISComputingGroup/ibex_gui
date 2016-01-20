@@ -54,20 +54,20 @@ public class BatonUserObserver implements Closable {
 	
 	private static final String UNKNOWN = "UNKNOWN";
 	private static final String NONE = "NONE";
-	private final String SELF;
+	private final String selfID;
 	
 	protected final SettableUpdatedValue<String> text;
 	protected final SettableUpdatedValue<Color> color;
 	protected final SettableUpdatedValue<Boolean> availability;
 	
 	public BatonUserObserver(
-			ForwardingObservable<String> observable, String self) {
+			ForwardingObservable<String> observable, String selfID) {
 		text = new SettableUpdatedValue<>();
 		color = new SettableUpdatedValue<>();
 		availability = new SettableUpdatedValue<>();
 		
 		subscription = observable.addObserver(observer);
-		SELF = self;
+		this.selfID = selfID;
 	}
 	
 	@Override
@@ -80,7 +80,7 @@ public class BatonUserObserver implements Closable {
 		
 		text.setValue("Current user: " +  user);
 		
-		if (value.equals(SELF)) {
+		if (value.equals(selfID)) {
 			color.setValue(IndicatorColours.GREEN);
 		} else {
 			color.setValue(IndicatorColours.BLACK);

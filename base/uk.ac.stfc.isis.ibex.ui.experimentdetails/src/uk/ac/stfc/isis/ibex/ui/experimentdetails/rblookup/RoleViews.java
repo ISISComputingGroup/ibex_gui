@@ -30,7 +30,7 @@ public enum RoleViews {
 	private final String text;
 	private final Role modelRole;
 	
-	private RoleViews(final String text, final Role modelRole) {
+	RoleViews(final String text, final Role modelRole) {
 		this.text = text;
 		this.modelRole = modelRole;
 	}

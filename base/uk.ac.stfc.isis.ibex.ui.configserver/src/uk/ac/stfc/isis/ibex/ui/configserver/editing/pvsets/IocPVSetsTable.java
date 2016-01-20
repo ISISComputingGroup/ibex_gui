@@ -30,6 +30,7 @@ import uk.ac.stfc.isis.ibex.ui.configserver.editing.iocs.IocCheckboxLabelProvide
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundCellLabelProvider;
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundTable;
 
+@SuppressWarnings("checkstyle:magicnumber")
 public class IocPVSetsTable extends DataboundTable<EditablePVSet> {
 	private boolean isEditable = true;
 	
@@ -68,7 +69,7 @@ public class IocPVSetsTable extends DataboundTable<EditablePVSet> {
 	
 	private void enable() {
 		TableViewerColumn enabled = createColumn("Enabled?", 2);
-		IObservableMap[] stateProperties = { observeProperty("enabled") };
+		IObservableMap[] stateProperties = {observeProperty("enabled")};
 		enabled.setLabelProvider(new IocCheckboxLabelProvider<EditablePVSet>(stateProperties) {	
 			@Override
 			protected boolean checked(EditablePVSet pvset) {

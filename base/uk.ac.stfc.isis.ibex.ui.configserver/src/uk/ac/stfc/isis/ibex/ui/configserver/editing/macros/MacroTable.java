@@ -29,6 +29,7 @@ import uk.ac.stfc.isis.ibex.configserver.configuration.Macro;
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundCellLabelProvider;
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundTable;
 
+@SuppressWarnings("checkstyle:magicnumber")
 public class MacroTable extends DataboundTable<Macro> {
 	
 	public MacroTable(Composite parent, int style, int tableStyle) {

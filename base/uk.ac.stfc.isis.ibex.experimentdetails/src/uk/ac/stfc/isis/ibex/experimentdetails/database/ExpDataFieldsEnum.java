@@ -35,7 +35,7 @@ public enum ExpDataFieldsEnum {
 
     private final String representation;
     
-    private ExpDataFieldsEnum(String representation) {
+    ExpDataFieldsEnum(String representation) {
     	this.representation = representation;
     }
     

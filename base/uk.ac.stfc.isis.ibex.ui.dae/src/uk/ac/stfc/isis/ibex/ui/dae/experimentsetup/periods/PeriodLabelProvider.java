@@ -25,6 +25,7 @@ import org.eclipse.swt.graphics.Image;
 
 import uk.ac.stfc.isis.ibex.dae.experimentsetup.periods.Period;
 
+@SuppressWarnings("checkstyle:magicnumber")
 public class PeriodLabelProvider extends LabelProvider implements ITableLabelProvider {
 	
 	@Override

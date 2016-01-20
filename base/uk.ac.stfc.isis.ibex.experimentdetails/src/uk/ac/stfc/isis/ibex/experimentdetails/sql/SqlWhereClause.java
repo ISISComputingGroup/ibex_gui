@@ -23,12 +23,12 @@ package uk.ac.stfc.isis.ibex.experimentdetails.sql;
  * Build up a where clause to search the SQL database
  */
 public abstract class SqlWhereClause {
-	protected final String LHS;
-	protected final String RHS;
+	protected final String lhs;
+	protected final String rhs;
 	
-	public SqlWhereClause(String LHS, String RHS) {
-		this.LHS = LHS;
-		this.RHS = RHS;
+	public SqlWhereClause(String lhs, String rhs) {
+		this.lhs = lhs;
+		this.rhs = rhs;
 	}
 	
 	@Override

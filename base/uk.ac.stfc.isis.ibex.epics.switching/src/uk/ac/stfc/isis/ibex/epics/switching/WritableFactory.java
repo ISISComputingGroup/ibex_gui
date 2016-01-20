@@ -45,7 +45,7 @@ public class WritableFactory {
         Writable<T> channelWriter = getPVWritable(channelType, address);
 
         SwitchableWritable<T> createdWritable = new SwitchableWritable<>(channelWriter);
-        switcher.<T> registerSwitchable(createdWritable, address, channelType);
+        switcher.<T>registerSwitchable(createdWritable, address, channelType);
 
         createdWritable.setSwitcher(switcher);
 

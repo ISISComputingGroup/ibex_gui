@@ -71,7 +71,7 @@ public class EditBlockDialog extends TitleAreaDialog {
 		blockDetailsViewModel = new BlockDetailsViewModel(block, config);
 		viewModels.add(blockDetailsViewModel);
 		
-		for(ErrorMessageProvider provider : viewModels) {
+		for (ErrorMessageProvider provider : viewModels) {
 			provider.addPropertyChangeListener("error", errorListener);
 		}
 			

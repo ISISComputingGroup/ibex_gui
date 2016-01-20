@@ -42,6 +42,7 @@ import org.eclipse.swt.widgets.Text;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 
+@SuppressWarnings("checkstyle:magicnumber")
 public class SaveSynopticDialog extends TitleAreaDialog {
 
     private Text txtName;
@@ -70,15 +71,15 @@ public class SaveSynopticDialog extends TitleAreaDialog {
     protected Control createDialogArea(Composite parent) {
 	setTitle("Save Synoptic");
 	Composite container = (Composite) super.createDialogArea(parent);
-	GridLayout gl_container = new GridLayout(1, false);
-	container.setLayout(gl_container);
+	GridLayout glContainer = new GridLayout(1, false);
+	container.setLayout(glContainer);
 
 	Composite composite = new Composite(container, SWT.NONE);
 	composite.setLayout(new GridLayout(2, false));
-	GridData gd_composite = new GridData(SWT.FILL, SWT.CENTER, true, false,
+	GridData gdComposite = new GridData(SWT.FILL, SWT.CENTER, true, false,
 		1, 1);
-	gd_composite.widthHint = 95;
-	composite.setLayoutData(gd_composite);
+	gdComposite.widthHint = 95;
+	composite.setLayoutData(gdComposite);
 
 	Label lblConfigurationName = new Label(composite, SWT.NONE);
 	lblConfigurationName.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER,
@@ -86,10 +87,10 @@ public class SaveSynopticDialog extends TitleAreaDialog {
 	lblConfigurationName.setText("Name:");
 
 	txtName = new Text(composite, SWT.BORDER);
-	GridData gd_txtName = new GridData(SWT.FILL, SWT.CENTER, true, false,
+	GridData gdTxtName = new GridData(SWT.FILL, SWT.CENTER, true, false,
 		1, 1);
-	gd_txtName.widthHint = 383;
-	txtName.setLayoutData(gd_txtName);
+	gdTxtName.widthHint = 383;
+	txtName.setLayoutData(gdTxtName);
 	txtName.setBounds(0, 0, 76, 21);
 	new Label(composite, SWT.NONE);
 

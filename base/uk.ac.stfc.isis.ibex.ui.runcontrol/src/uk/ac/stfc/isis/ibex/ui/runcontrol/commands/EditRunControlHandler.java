@@ -21,8 +21,6 @@ package uk.ac.stfc.isis.ibex.ui.runcontrol.commands;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
-import org.eclipse.jface.window.Window;
-
 import uk.ac.stfc.isis.ibex.ui.runcontrol.dialogs.EditRunControlDialog;
 
 public class EditRunControlHandler extends RunControlHandler {
@@ -35,9 +33,7 @@ public class EditRunControlHandler extends RunControlHandler {
 	
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		EditRunControlDialog dialog = new EditRunControlDialog(shell(), TITLE, CONFIGSERVER, RUNCONTROLSERVER);
-		if (dialog.open() == Window.OK) {
-		
-		}
+		dialog.open();
 		return null;
 	}
 }

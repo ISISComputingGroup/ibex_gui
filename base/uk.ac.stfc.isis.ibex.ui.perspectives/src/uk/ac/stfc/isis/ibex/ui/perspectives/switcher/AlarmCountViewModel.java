@@ -31,6 +31,7 @@ import uk.ac.stfc.isis.ibex.model.ModelObject;
 public class AlarmCountViewModel extends ModelObject {
 	
 	private static final String ALARM = "Alarms"; 
+	private static final int MAX_ALARMS = 100;
 	
 	private String text;
 	private boolean hasMessages;
@@ -76,7 +77,7 @@ public class AlarmCountViewModel extends ModelObject {
 			return "";
 		}
 		
-		String displayedCount = count > 100 ? "100+" : count.toString();
+		String displayedCount = count > MAX_ALARMS ? Integer.toString(MAX_ALARMS) + "+" : count.toString();
 		return " (" + displayedCount + ")";
 	}
 }
