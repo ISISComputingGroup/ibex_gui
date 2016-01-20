@@ -12,6 +12,10 @@
   <property name="severity" value="warning"/>
   <module name="TreeWalker">
     <module name="FileContentsHolder"/>
+    <module name="JavadocMethod"/>
+    <module name="JavadocType"/>
+    <module name="JavadocVariable"/>
+    <module name="JavadocStyle"/>
     <module name="ConstantName"/>
     <module name="LocalFinalVariableName"/>
     <module name="LocalVariableName"/>
@@ -74,10 +78,7 @@
   </module>
   <module name="SuppressWarningsFilter"/>
   <module name="SuppressionCommentFilter"/>
-  <module name="JavadocPackage">
-    <property name="severity" value="ignore"/>
-    <metadata name="net.sf.eclipsecs.core.lastEnabledSeverity" value="inherit"/>
-  </module>
+  <module name="JavadocPackage"/>
   <module name="Translation"/>
   <module name="FileLength">
     <property name="severity" value="ignore"/>
