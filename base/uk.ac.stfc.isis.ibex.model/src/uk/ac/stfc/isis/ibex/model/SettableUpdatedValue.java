@@ -19,8 +19,6 @@
 
 package uk.ac.stfc.isis.ibex.model;
 
-import uk.ac.stfc.isis.ibex.model.UpdatedValue;
-
 public class SettableUpdatedValue<T> extends UpdatedValue<T> {
 	
 	public SettableUpdatedValue() {
@@ -30,7 +28,8 @@ public class SettableUpdatedValue<T> extends UpdatedValue<T> {
 		setValue(value);
 	}
 	
-	public void setValue(T value) {
+	@Override
+    public void setValue(T value) {
 		super.setValue(value);
 	}
 }

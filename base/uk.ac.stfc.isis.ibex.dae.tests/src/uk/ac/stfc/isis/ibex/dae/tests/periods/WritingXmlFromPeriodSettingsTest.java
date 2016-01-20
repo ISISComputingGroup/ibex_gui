@@ -36,7 +36,7 @@ import uk.ac.stfc.isis.ibex.dae.experimentsetup.periods.PeriodType;
 import uk.ac.stfc.isis.ibex.dae.experimentsetup.periods.XMLBackedPeriodSettings;
 import uk.ac.stfc.isis.ibex.dae.tests.FileReadingTest;
 
-@SuppressWarnings({"checkstyle:methodname", "checkstyle:magicnumber"})
+@SuppressWarnings({ "checkstyle:methodname", "checkstyle:magicnumber" })
 public class WritingXmlFromPeriodSettingsTest extends FileReadingTest {
 
 	private XMLBackedPeriodSettings periodSettings;

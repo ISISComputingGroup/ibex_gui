@@ -29,9 +29,12 @@
  */
 package uk.ac.stfc.isis.ibex.logger.preferences;
 
-import org.eclipse.jface.preference.*;
-import org.eclipse.ui.IWorkbenchPreferencePage;
+import org.eclipse.jface.preference.ComboFieldEditor;
+import org.eclipse.jface.preference.FieldEditorPreferencePage;
+import org.eclipse.jface.preference.IntegerFieldEditor;
+import org.eclipse.jface.preference.StringFieldEditor;
 import org.eclipse.ui.IWorkbench;
+import org.eclipse.ui.IWorkbenchPreferencePage;
 
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
 
@@ -82,7 +85,8 @@ public class PreferencePage extends FieldEditorPreferencePage implements
 				PreferenceConstants.LOGGING_LEVELS, getFieldEditorParent()));
 	}
 
-	public void init(IWorkbench workbench) {
+	@Override
+    public void init(IWorkbench workbench) {
 	}
 
 }

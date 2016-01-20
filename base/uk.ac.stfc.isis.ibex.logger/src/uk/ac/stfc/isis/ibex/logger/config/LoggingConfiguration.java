@@ -86,7 +86,7 @@ public final class LoggingConfiguration {
         private static final int MIN_FILE_SIZE_KB = 32;
         private static final int BYTES_PER_KB = 1024;
 
-        public Log4j2Configuration() {
+        Log4j2Configuration() {
 			setName("isis-log4j2");
 			getRootLogger().setLevel(Level.INFO);
 
