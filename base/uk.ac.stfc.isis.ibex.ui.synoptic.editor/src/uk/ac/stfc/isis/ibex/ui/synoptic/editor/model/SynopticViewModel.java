@@ -113,6 +113,7 @@ public class SynopticViewModel {
 			SynopticParentDescription parent = getParent(lastComponent);
 			position = parent.components().indexOf(lastComponent) + 1;
 			parent.addComponent(component, position);
+            component.setParent(parent);
 		}
 
 		broadcastInstrumentUpdate(UpdateTypes.NEW_COMPONENT);
