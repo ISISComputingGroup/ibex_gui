@@ -29,6 +29,7 @@ import uk.ac.stfc.isis.ibex.configserver.configuration.AvailablePV;
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundCellLabelProvider;
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundTable;
 
+@SuppressWarnings("checkstyle:magicnumber")
 public class IocAvailablePVsTable extends DataboundTable<AvailablePV> {
 	private IocPVNameFilter filter;
 	

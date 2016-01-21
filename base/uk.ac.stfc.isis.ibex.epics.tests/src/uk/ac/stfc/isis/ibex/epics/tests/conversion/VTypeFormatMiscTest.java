@@ -121,7 +121,7 @@ public class VTypeFormatMiscTest {
 				return 0;
 			}
 		};
-		VByteArray value = (VByteArray)ValueFactory.newVNumberArray(data, null, null, null);
+		VByteArray value = (VByteArray) ValueFactory.newVNumberArray(data, null, null, null);
 		byte[] test = new byte[] {};
 		
 		// Act
@@ -146,7 +146,7 @@ public class VTypeFormatMiscTest {
 				return (byte) index;
 			}
 		};
-		VByteArray value = (VByteArray)ValueFactory.newVNumberArray(data, null, null, null);
+		VByteArray value = (VByteArray) ValueFactory.newVNumberArray(data, null, null, null);
 		byte[] test = new byte[] {0x00};
 		
 		// Act

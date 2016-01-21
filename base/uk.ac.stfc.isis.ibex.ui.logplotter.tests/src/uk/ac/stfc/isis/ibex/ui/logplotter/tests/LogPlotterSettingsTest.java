@@ -33,23 +33,24 @@ import org.junit.Test;
 import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
 import uk.ac.stfc.isis.ibex.ui.logplotter.LogPlotterSettings;
 
+@SuppressWarnings("checkstyle:methodname")
 public class LogPlotterSettingsTest {
 
     // These settings represent the defaults, as set in
     // uk.ac.stfc.isis.ibex.product/plugin_customization.ini
-    private final static String DEFAULT_ARCHIVE_SETTINGS = "RDB|1|jdbc\\:mysql\\://localhost/archive*RDB|2|jdbc\\:mysql\\://130.246.39.152/archive";
-    private final static String DEFAULT_URLS_SETTINGS = "jdbc\\:mysql\\://localhost/archive*jdbc\\:mysql\\://130.246.39.152/archive";
-    private final static String LARMOR_ARCHIVE_SETTINGS = "RDB|1|jdbc\\:mysql\\://NDXLARMOR/archive*RDB|2|jdbc\\:mysql\\://130.246.39.152/archive";
-    private final static String LARMOR_URLS_SETTINGS = "jdbc\\:mysql\\://NDXLARMOR/archive*jdbc\\:mysql\\://130.246.39.152/archive";
-    private final static String DEMO_ARCHIVE_SETTINGS = "RDB|1|jdbc\\:mysql\\://NDXDEMO/archive*RDB|2|jdbc\\:mysql\\://130.246.39.152/archive";
-    private final static String DEMO_URLS_SETTINGS = "jdbc\\:mysql\\://NDXDEMO/archive*jdbc\\:mysql\\://130.246.39.152/archive";
+    private static final String DEFAULT_ARCHIVE_SETTINGS = "RDB|1|jdbc\\:mysql\\://localhost/archive*RDB|2|jdbc\\:mysql\\://130.246.39.152/archive";
+    private static final String DEFAULT_URLS_SETTINGS = "jdbc\\:mysql\\://localhost/archive*jdbc\\:mysql\\://130.246.39.152/archive";
+    private static final String LARMOR_ARCHIVE_SETTINGS = "RDB|1|jdbc\\:mysql\\://NDXLARMOR/archive*RDB|2|jdbc\\:mysql\\://130.246.39.152/archive";
+    private static final String LARMOR_URLS_SETTINGS = "jdbc\\:mysql\\://NDXLARMOR/archive*jdbc\\:mysql\\://130.246.39.152/archive";
+    private static final String DEMO_ARCHIVE_SETTINGS = "RDB|1|jdbc\\:mysql\\://NDXDEMO/archive*RDB|2|jdbc\\:mysql\\://130.246.39.152/archive";
+    private static final String DEMO_URLS_SETTINGS = "jdbc\\:mysql\\://NDXDEMO/archive*jdbc\\:mysql\\://130.246.39.152/archive";
 
-    private final static String LOCALHOST = "localhost";
-    private final static String NDXLARMOR = "NDXLARMOR";
-    private final static String NDXDEMO = "NDXDEMO";
-    private final static String NDXLARMOR_LOWERCASE = "NDXlarmor";
-    private final static String NOT_A_HOST_NAME = "JDBC";
-    private final static String IP_ADDRESS = "123.123.123.123";
+    private static final String LOCALHOST = "localhost";
+    private static final String NDXLARMOR = "NDXLARMOR";
+    private static final String NDXDEMO = "NDXDEMO";
+    private static final String NDXLARMOR_LOWERCASE = "NDXlarmor";
+    private static final String NOT_A_HOST_NAME = "JDBC";
+    private static final String IP_ADDRESS = "123.123.123.123";
 
     private IPreferenceStore preferenceStore;
     

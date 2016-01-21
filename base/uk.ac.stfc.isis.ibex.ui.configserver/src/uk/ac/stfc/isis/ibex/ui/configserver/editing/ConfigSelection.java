@@ -77,7 +77,7 @@ public class ConfigSelection extends ModelObject {
 		firePropertyChange("available", availableBeforeUpdate, availableConfigs());
 	}
 	
-	private static <T> Collection<T> safe(Collection<T> other ) {
+	private static <T> Collection<T> safe(Collection<T> other) {
 	    return other == null ? Collections.<T>emptyList() : other;
 	} 
 }

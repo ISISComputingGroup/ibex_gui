@@ -30,6 +30,7 @@ import uk.ac.stfc.isis.ibex.synoptic.model.desc.Property;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.TargetDescription;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.TargetType;
 
+@SuppressWarnings("checkstyle:methodname")
 public class TargetDescriptionTest {
     
     private static final String NAME = "name";

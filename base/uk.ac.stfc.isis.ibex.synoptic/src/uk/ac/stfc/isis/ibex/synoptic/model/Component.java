@@ -33,7 +33,7 @@ public interface Component {
 	
 	Target target();
 	
-	public void setTarget(Target target);
+	void setTarget(Target target);
 	
-	public Component copy();
+	Component copy();
 }

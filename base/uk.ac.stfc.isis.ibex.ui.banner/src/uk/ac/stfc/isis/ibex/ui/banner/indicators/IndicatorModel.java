@@ -24,7 +24,7 @@ import org.eclipse.swt.graphics.Color;
 import uk.ac.stfc.isis.ibex.model.UpdatedValue;
 
 public interface IndicatorModel {
-	public UpdatedValue<String> text();
-	public UpdatedValue<Color> color();
-	public UpdatedValue<Boolean> availability();
+	UpdatedValue<String> text();
+	UpdatedValue<Color> color();
+	UpdatedValue<Boolean> availability();
 }

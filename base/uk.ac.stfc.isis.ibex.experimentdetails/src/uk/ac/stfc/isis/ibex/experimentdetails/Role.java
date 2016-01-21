@@ -27,7 +27,7 @@ public enum Role {
 	
 	private final String text;
 	
-	private Role(final String text) {
+	Role(final String text) {
 		this.text = text;
 	}
 	

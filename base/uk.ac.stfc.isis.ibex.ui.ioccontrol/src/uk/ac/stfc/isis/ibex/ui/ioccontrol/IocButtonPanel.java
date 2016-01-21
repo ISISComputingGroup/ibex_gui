@@ -39,6 +39,7 @@ import uk.ac.stfc.isis.ibex.configserver.EditableIocState;
 import uk.ac.stfc.isis.ibex.configserver.IocControl;
 import uk.ac.stfc.isis.ibex.ui.ioccontrol.table.NegatingConverter;
 
+@SuppressWarnings("checkstyle:magicnumber")
 public class IocButtonPanel extends Composite {
 
 	private final Button start;

@@ -34,7 +34,7 @@ public class PVFilterFactory {
 	public PVFilter getFilter(SourceFilters type) {
 		switch (type) {
 			case ACTIVE:
-				return new FilterFromPVList(Configurations.getInstance().variables().active_pvs);
+				return new FilterFromPVList(Configurations.getInstance().variables().activePVs);
 			case ASSOCIATED:
 				return new AssociatedPvFilter(availableIOCs);
 			default:

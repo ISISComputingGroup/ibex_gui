@@ -32,6 +32,7 @@ import uk.ac.stfc.isis.ibex.epics.switching.Switcher;
 import uk.ac.stfc.isis.ibex.epics.switching.WritablePrefixChangingSwitcher;
 import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
 
+@SuppressWarnings("checkstyle:methodname")
 public class InstrumentSwitchersTest {
 
     InstrumentSwitchers instrumentSwitchers = new InstrumentSwitchers();

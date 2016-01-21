@@ -42,8 +42,8 @@ public abstract class ButtonCellLabelProvider extends ObservableMapCellLabelProv
 	}
 
 	protected Button getButton(ViewerCell cell, int style) {		
-		return cellButtons.containsKey(cell) ? 
-				cellButtons.get(cell) : createButton(cell, style);
+		return cellButtons.containsKey(cell)
+				? cellButtons.get(cell) : createButton(cell, style);
 	}
 		
 	@Override
@@ -53,7 +53,7 @@ public abstract class ButtonCellLabelProvider extends ObservableMapCellLabelProv
 			button.dispose();
 		}
 		
-		for(TableEditor editor : cellEditors.values()) {
+		for (TableEditor editor : cellEditors.values()) {
 			editor.dispose();
 		}
 		

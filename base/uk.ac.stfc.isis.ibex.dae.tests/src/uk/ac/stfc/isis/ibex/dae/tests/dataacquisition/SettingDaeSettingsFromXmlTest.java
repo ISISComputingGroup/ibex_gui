@@ -33,6 +33,7 @@ import uk.ac.stfc.isis.ibex.dae.dataacquisition.MuonCerenkovPulse;
 import uk.ac.stfc.isis.ibex.dae.dataacquisition.XmlBackedDaeSettings;
 import uk.ac.stfc.isis.ibex.dae.tests.FileReadingTest;
 
+@SuppressWarnings({"checkstyle:methodname", "checkstyle:magicnumber"})
 public class SettingDaeSettingsFromXmlTest extends FileReadingTest {
 	
 	private XmlBackedDaeSettings daeSettings;

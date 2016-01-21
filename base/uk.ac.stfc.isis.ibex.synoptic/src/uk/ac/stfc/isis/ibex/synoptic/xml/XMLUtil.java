@@ -21,7 +21,6 @@ package uk.ac.stfc.isis.ibex.synoptic.xml;
 
 import java.io.StringReader;
 import java.io.StringWriter;
-import java.net.URL;
 
 import javax.xml.XMLConstants;
 import javax.xml.bind.JAXBContext;
@@ -85,8 +84,7 @@ public final class XMLUtil {
 	 * @throws SAXException
 	 * @throws JAXBException 
 	 */
-	public static void setSchema(String rawSchema) throws SAXException, JAXBException
-	{
+    public static void setSchema(String rawSchema) throws SAXException, JAXBException {
 		if (context == null) {
 			initialise();
 		}

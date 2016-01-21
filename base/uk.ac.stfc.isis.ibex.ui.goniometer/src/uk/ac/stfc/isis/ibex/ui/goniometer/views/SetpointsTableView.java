@@ -31,6 +31,7 @@ import uk.ac.stfc.isis.ibex.motor.MotorSetpoint;
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundCellLabelProvider;
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundTable;
 
+@SuppressWarnings("checkstyle:magicnumber")
 public final class SetpointsTableView extends DataboundTable<MotorSetpoint> {
 
 	public SetpointsTableView(Composite parent, int style) {

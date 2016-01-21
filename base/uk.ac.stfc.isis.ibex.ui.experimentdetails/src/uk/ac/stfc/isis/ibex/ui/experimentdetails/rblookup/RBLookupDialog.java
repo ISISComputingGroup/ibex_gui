@@ -15,6 +15,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Shell;
 
+@SuppressWarnings("checkstyle:magicnumber")
 public class RBLookupDialog extends Dialog {
 
 	private RBLookupPanel panel;
@@ -32,7 +33,7 @@ public class RBLookupDialog extends Dialog {
 		getShell().addTraverseListener(new TraverseListener() {
 			@Override
 			public void keyTraversed(TraverseEvent e) {
-				if(e.detail == SWT.TRAVERSE_RETURN) {
+				if (e.detail == SWT.TRAVERSE_RETURN) {
 					e.doit = false;
 				}
 			}

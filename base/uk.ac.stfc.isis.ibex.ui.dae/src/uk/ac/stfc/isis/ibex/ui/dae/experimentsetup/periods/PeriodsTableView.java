@@ -35,6 +35,7 @@ import org.eclipse.swt.layout.FillLayout;
 import uk.ac.stfc.isis.ibex.dae.experimentsetup.periods.Period;
 import uk.ac.stfc.isis.ibex.dae.experimentsetup.periods.PeriodType;
 
+@SuppressWarnings("checkstyle:magicnumber")
 public class PeriodsTableView extends Composite {
 	
 	private Table table;	

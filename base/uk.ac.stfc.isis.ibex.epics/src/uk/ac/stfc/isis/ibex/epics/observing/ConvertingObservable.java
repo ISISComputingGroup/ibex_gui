@@ -28,7 +28,7 @@ import uk.ac.stfc.isis.ibex.epics.conversion.Converter;
  * @param <R> The type of the first value being observed.
  * @param <T> The required type to transform to.
  */
-public class ConvertingObservable<R ,T> extends TransformingObservable<R, T> {
+public class ConvertingObservable<R, T> extends TransformingObservable<R, T> {
 
 	private final Converter<R, T> formatter;
 	

@@ -27,9 +27,10 @@ import uk.ac.stfc.isis.ibex.epics.observing.ClosableObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.Pair;
 import uk.ac.stfc.isis.ibex.epics.observing.TransformingObservable;
 
+@SuppressWarnings("checkstyle:magicnumber")
 public class ObservableDecimalRatio extends TransformingObservable<Pair<Number, Number>, String> {
 
-	private static NumberFormat FORMAT = DecimalFormat.getInstance(Locale.ENGLISH);
+	private static final NumberFormat FORMAT = DecimalFormat.getInstance(Locale.ENGLISH);
 	static {
 		FORMAT.setMaximumIntegerDigits(3);
 		FORMAT.setMaximumFractionDigits(3);

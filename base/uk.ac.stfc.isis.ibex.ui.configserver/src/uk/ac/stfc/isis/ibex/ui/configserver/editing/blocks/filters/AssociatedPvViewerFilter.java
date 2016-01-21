@@ -28,26 +28,26 @@ import uk.ac.stfc.isis.ibex.configserver.configuration.PV;
 
 public class AssociatedPvViewerFilter extends ViewerFilter {
 	
-	private Collection<String> AllowedIocNames;
+	private Collection<String> allowedIocNames;
 	
-	public void setAllowedIocs(Collection<String> IocNames) {
-		this.AllowedIocNames = IocNames;
+	public void setAllowedIocs(Collection<String> iocNames) {
+		this.allowedIocNames = iocNames;
 	}
 	
 	@Override
 	public boolean select(Viewer viewer, Object parentElement, Object element) {
-		if (AllowedIocNames == null) {
+		if (allowedIocNames == null) {
 			return true;
 		}
 		
-		if (AllowedIocNames.isEmpty()) {
+		if (allowedIocNames.isEmpty()) {
 			return false;
 		}
 		
 		PV p = (PV) element;
-		String PVIoc = p.iocName();
+		String pvIoc = p.iocName();
 		
-		if (AllowedIocNames.contains(PVIoc)) {
+		if (allowedIocNames.contains(pvIoc)) {
 			return true;
 		}
 		

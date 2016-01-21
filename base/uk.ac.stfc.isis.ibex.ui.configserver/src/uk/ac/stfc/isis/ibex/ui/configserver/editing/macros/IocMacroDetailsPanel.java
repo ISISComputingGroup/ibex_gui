@@ -56,6 +56,7 @@ import org.eclipse.swt.graphics.Image;
  * set if the pattern is matched by the new value.
  * 
  */
+@SuppressWarnings("checkstyle:magicnumber")
 public class IocMacroDetailsPanel extends Composite {
 	private Text name;
 	private Text value;
@@ -126,15 +127,15 @@ public class IocMacroDetailsPanel extends Composite {
 		errorIconLabel.setImage(scaled);
 		
 		macroValueErrorLabel = new Label(grpSelectedPv, SWT.NONE);
-		GridData gd_macroValueErrorLabel = new GridData(SWT.LEFT, SWT.CENTER, false, false, 3, 1);
-		gd_macroValueErrorLabel.widthHint = 300;
-		macroValueErrorLabel.setLayoutData(gd_macroValueErrorLabel);
+		GridData gdMacroValueErrorLabel = new GridData(SWT.LEFT, SWT.CENTER, false, false, 3, 1);
+		gdMacroValueErrorLabel.widthHint = 300;
+		macroValueErrorLabel.setLayoutData(gdMacroValueErrorLabel);
 		macroValueErrorLabel.setText("placeholder placeholder placeholder placeholder");
 		
 		displayMacrosTable = new MacroTable(grpSelectedPv, SWT.NONE, SWT.FULL_SELECTION);
-		GridData gd_availableMacrosTable = new GridData(SWT.FILL, SWT.FILL, true, true, 4, 1);
-		gd_availableMacrosTable.widthHint = 428;
-		displayMacrosTable.setLayoutData(gd_availableMacrosTable);
+		GridData gdAvailableMacrosTable = new GridData(SWT.FILL, SWT.FILL, true, true, 4, 1);
+		gdAvailableMacrosTable.widthHint = 428;
+		displayMacrosTable.setLayoutData(gdAvailableMacrosTable);
 		new Label(grpSelectedPv, SWT.NONE);
 		new Label(grpSelectedPv, SWT.NONE);
 		new Label(grpSelectedPv, SWT.NONE);

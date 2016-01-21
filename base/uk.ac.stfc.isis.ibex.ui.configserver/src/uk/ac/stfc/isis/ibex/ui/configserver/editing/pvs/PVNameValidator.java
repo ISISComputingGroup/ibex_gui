@@ -67,7 +67,7 @@ public class PVNameValidator implements IValidator {
 	
 	private boolean nameIsDuplicated(Object text) {
 		for (PVDefaultValue pv : ioc.getPvs()) {
-			if(isNotPVBeingEdited(pv)) {
+			if (isNotPVBeingEdited(pv)) {
 				if (pv.getName().equals(text)) {
 					return true;
 				}

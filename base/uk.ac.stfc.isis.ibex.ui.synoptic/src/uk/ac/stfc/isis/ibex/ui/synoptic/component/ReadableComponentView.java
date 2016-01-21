@@ -32,6 +32,7 @@ import org.eclipse.wb.swt.SWTResourceManager;
 
 import uk.ac.stfc.isis.ibex.synoptic.model.ReadableComponentProperty;
 
+@SuppressWarnings("checkstyle:magicnumber")
 public class ReadableComponentView extends Composite {
 	
 	private Label propertyName;

@@ -77,7 +77,7 @@ public class ConfigServerVariables extends InstrumentVariables {
 	public final ForwardingObservable<Collection<PV>> highInterestPVs;
 	public final ForwardingObservable<Collection<PV>> mediumInterestPVs;
     public final ForwardingObservable<Collection<PV>> facilityInterestPVs;
-	public final ForwardingObservable<Collection<PV>> active_pvs;
+	public final ForwardingObservable<Collection<PV>> activePVs;
 	
 	public final Writable<Configuration> setCurrentConfiguration;
 	public final Writable<String> loadConfiguration;
@@ -112,7 +112,7 @@ public class ConfigServerVariables extends InstrumentVariables {
 		highInterestPVs = convert(readCompressed(blockServerAddresses.highInterestPVs()), converters.toPVs());
 		mediumInterestPVs = convert(readCompressed(blockServerAddresses.mediumInterestPVs()), converters.toPVs());
         facilityInterestPVs = convert(readCompressed(blockServerAddresses.facilityInterestPVs()), converters.toPVs());
-		active_pvs = convert(readCompressed(blockServerAddresses.activePVs()), converters.toPVs());
+		activePVs = convert(readCompressed(blockServerAddresses.activePVs()), converters.toPVs());
 		
 		setCurrentConfiguration = convert(writeCompressed(blockServerAddresses.setCurrentConfig()), converters.configToString());
 		loadConfiguration = convert(writeCompressed(blockServerAddresses.loadConfig()), converters.nameToString());
@@ -213,7 +213,7 @@ public class ConfigServerVariables extends InstrumentVariables {
 	}
 
     private String addPrefix(String address) {
-        StringBuilder sb = new StringBuilder(50);
+        StringBuilder sb = new StringBuilder();
         sb.append(Instrument.getInstance().getPvPrefix());
         sb.append(address);
         return sb.toString();

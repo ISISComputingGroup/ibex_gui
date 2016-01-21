@@ -38,7 +38,9 @@ import uk.ac.stfc.isis.ibex.epics.pv.PVInfo;
  */
 public class PVManagerObservable<R extends VType> extends ObservablePV<R> {
 
-	private PVReader<R> pv;	
+    private static final int UPDATE_FREQUENCY = 10;
+
+    private PVReader<R> pv;	
 	
 	/**
 	 * An instance of an inner anonymous class for handling PV changes.
@@ -68,7 +70,7 @@ public class PVManagerObservable<R extends VType> extends ObservablePV<R> {
 				.read(channel(info.address(), info.type(), Object.class))
 				.readListener(observingListener)
 				.notifyOn(new CurrentThreadExecutor())
-				.maxRate(ofHertz(10));
+.maxRate(ofHertz(UPDATE_FREQUENCY));
 	}	
 	
 	@Override

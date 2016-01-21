@@ -27,6 +27,7 @@ import org.junit.Test;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableBlock;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
 
+@SuppressWarnings("checkstyle:methodname")
 public class BlocksTest extends EditableConfigurationTest {
 	
 	@Test

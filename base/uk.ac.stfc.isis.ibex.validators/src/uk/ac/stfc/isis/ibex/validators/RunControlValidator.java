@@ -28,15 +28,15 @@ package uk.ac.stfc.isis.ibex.validators;
  */
 public class RunControlValidator {
 
-    public static String HIGH_LIMIT_FLOAT = "The high run control limit must be a decimal";
-    public static String HIGH_LIMIT_EMPTY = "The high run control limit must not be empty";
+    public static final String HIGH_LIMIT_FLOAT = "The high run control limit must be a decimal";
+    public static final String HIGH_LIMIT_EMPTY = "The high run control limit must not be empty";
     
-    public static String LOW_LIMIT_FLOAT = "The low run control limit must be a decimal";
-    public static String LOW_LIMIT_EMPTY = "The low run control limit must not be empty";
+    public static final String LOW_LIMIT_FLOAT = "The low run control limit must be a decimal";
+    public static final String LOW_LIMIT_EMPTY = "The low run control limit must not be empty";
     
-    public static String LOW_LIMIT_LESS = "The high run control limit must be greater than the low limit";
+    public static final String LOW_LIMIT_LESS = "The high run control limit must be greater than the low limit";
 
-    public static String NO_ERROR = "";
+    public static final String NO_ERROR = "";
     
     private String errorMessage;
 
@@ -45,7 +45,7 @@ public class RunControlValidator {
     }
 
 	public boolean isValid(String lowLimitText, String highLimitText) {
-		boolean is_valid = false;
+		boolean isValid = false;
 		float tmpLowLimit;
 		float tmpHighLimit;
 		
@@ -57,30 +57,32 @@ public class RunControlValidator {
 		try {
 			tmpLowLimit = Float.parseFloat(lowLimitText);
 		} catch (NumberFormatException e) {
-	    	if (lowLimitText.isEmpty())
+	    	if (lowLimitText.isEmpty()) {
 	    		setErrorMessage(LOW_LIMIT_EMPTY);
-	    	else
+	    	} else {
 	    		setErrorMessage(LOW_LIMIT_FLOAT);
+	    	}
 	    	return false;
 		}
 		
 		try {
 			tmpHighLimit = Float.parseFloat(highLimitText);
 		} catch (NumberFormatException e) {
-	    	if (highLimitText.isEmpty())
+	    	if (highLimitText.isEmpty()) {
 	    		setErrorMessage(HIGH_LIMIT_EMPTY);
-	    	else
+	    	} else {
 	    		setErrorMessage(HIGH_LIMIT_FLOAT);
+	    	}
 	    	return false;
 		}
 		
     	if (tmpLowLimit > tmpHighLimit) {
     		setErrorMessage(LOW_LIMIT_LESS);
         } else {
-            is_valid = true;
+            isValid = true;
             setErrorMessage(NO_ERROR);
         }
-    	return is_valid;
+    	return isValid;
     	
 	}
 

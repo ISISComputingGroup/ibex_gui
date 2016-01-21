@@ -37,12 +37,12 @@ import uk.ac.stfc.isis.ibex.ui.log.filter.LogMessageFilter;
 import uk.ac.stfc.isis.ibex.ui.log.save.LogMessageFileWriter;
 
 /**
- * Model to be used by the LogDisplay class. Connects to a message producer to receive
- * 	new log messages, and passes update notifications on to the display. Stores a cache
- * 	of recently received messages and provides access to a message searching service.
+ * Model to be used by the LogDisplay class. Connects to a message producer to
+ * receive new log messages, and passes update notifications on to the display.
+ * Stores a cache of recently received messages and provides access to a message
+ * searching service.
  */
-public class LogDisplayModel extends ModelObject  implements ILogMessageConsumer, ISearchModel
-{
+public class LogDisplayModel extends ModelObject implements ILogMessageConsumer, ISearchModel {
 	/** The maximum number of recent messages to display; older messages are dropped */
 	private static final int MAX_LIVE_MESSAGES = 10000;
 	
@@ -118,7 +118,8 @@ public class LogDisplayModel extends ModelObject  implements ILogMessageConsumer
 	 * Clear search results and return to the 'live message' view (i.e. display
 	 * messages in the cache).
 	 */
-	public void clearSearch() {
+	@Override
+    public void clearSearch() {
 		usingSearch = false;
 		latestSearchResults = new ArrayList<LogMessage>();
 		firePropertyChange("message", null, liveMessageCache);

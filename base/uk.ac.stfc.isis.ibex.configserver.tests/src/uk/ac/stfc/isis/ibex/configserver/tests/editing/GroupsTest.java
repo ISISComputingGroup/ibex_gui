@@ -28,6 +28,7 @@ import org.junit.Test;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableGroup;
 
+@SuppressWarnings("checkstyle:methodname")
 public class GroupsTest extends EditableConfigurationTest {
 		
 	@Test

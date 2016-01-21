@@ -37,7 +37,7 @@ public enum CalculationMethod {
 		}
 	}
 	
-	private CalculationMethod(String text) {
+	CalculationMethod(String text) {
 		this.text = text;
 	}
 	 

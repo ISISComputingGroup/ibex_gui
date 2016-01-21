@@ -39,7 +39,7 @@ public class InstrumentPerspective extends BasePerspective {
 	}
 	
 	@Override
-	public String ID() {
+	public String id() {
 		return ID;
 	}
 

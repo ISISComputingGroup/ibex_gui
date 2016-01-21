@@ -32,6 +32,7 @@ import org.eclipse.swt.layout.GridData;
 import uk.ac.stfc.isis.ibex.model.UpdatedValue;
 import uk.ac.stfc.isis.ibex.ui.dae.DaeViewModel;
 
+@SuppressWarnings("checkstyle:magicnumber")
 public class RunInformationPanel extends Composite {
 
 	private Label instrument;
@@ -79,225 +80,224 @@ public class RunInformationPanel extends Composite {
 		Group grpSetup = new Group(this, SWT.NONE);
 		grpSetup.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		grpSetup.setText("Setup");
-		GridLayout gl_grpSetup = new GridLayout(6, false);
-		gl_grpSetup.horizontalSpacing = 20;
-		grpSetup.setLayout(gl_grpSetup);
+		GridLayout glGrpSetup = new GridLayout(6, false);
+		glGrpSetup.horizontalSpacing = 20;
+		grpSetup.setLayout(glGrpSetup);
 		
 		Label lblInstrument = new Label(grpSetup, SWT.RIGHT);
-		GridData gd_lblInstrument = new GridData(SWT.RIGHT, SWT.FILL, false, false, 1, 1);
-		gd_lblInstrument.widthHint = 110;
-		lblInstrument.setLayoutData(gd_lblInstrument);
+		GridData gdLblInstrument = new GridData(SWT.RIGHT, SWT.FILL, false, false, 1, 1);
+		gdLblInstrument.widthHint = 110;
+		lblInstrument.setLayoutData(gdLblInstrument);
 		lblInstrument.setText("Instrument:");
 		
 		instrument = new Label(grpSetup, SWT.NONE);
-		GridData gd_instrument = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
-		gd_instrument.widthHint = 65;
-		instrument.setLayoutData(gd_instrument);
+		GridData gdInstrument = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+		gdInstrument.widthHint = 65;
+		instrument.setLayoutData(gdInstrument);
 		instrument.setText("UNKNOWN");
 		
 		Label lblRunstatus = new Label(grpSetup, SWT.RIGHT);
-		GridData gd_lblRunstatus = new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1);
-		gd_lblRunstatus.widthHint = 110;
-		lblRunstatus.setLayoutData(gd_lblRunstatus);
+		GridData gdLblRunstatus = new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1);
+		gdLblRunstatus.widthHint = 110;
+		lblRunstatus.setLayoutData(gdLblRunstatus);
 		lblRunstatus.setText("Run Status:");
 		
 		runStatus = new Label(grpSetup, SWT.NONE);
-		GridData gd_runStatus = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
-		gd_runStatus.widthHint = 65;
-		runStatus.setLayoutData(gd_runStatus);
+		GridData gdRunStatus = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+		gdRunStatus.widthHint = 65;
+		runStatus.setLayoutData(gdRunStatus);
 		runStatus.setText("UNKNOWN");
 		
-		
 		Label lblRunNumber = new Label(grpSetup, SWT.RIGHT);
-		GridData gd_lblRunNumber = new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1);
-		gd_lblRunNumber.widthHint = 110;
-		lblRunNumber.setLayoutData(gd_lblRunNumber);
+		GridData gdLblRunNumber = new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1);
+		gdLblRunNumber.widthHint = 110;
+		lblRunNumber.setLayoutData(gdLblRunNumber);
 		lblRunNumber.setText("Run Number:");
 		
 		runNumber = new Label(grpSetup, SWT.NONE);
 		runNumber.setText("UNKNOWN");
-		GridData gd_runNumber = new GridData(SWT.LEFT, SWT.BOTTOM, false, false, 1, 1);
-		gd_runNumber.widthHint = 65;
-		runNumber.setLayoutData(gd_runNumber);
+		GridData gdRunNumber = new GridData(SWT.LEFT, SWT.BOTTOM, false, false, 1, 1);
+		gdRunNumber.widthHint = 65;
+		runNumber.setLayoutData(gdRunNumber);
 		
 		Label lblBeamCurrent = new Label(grpSetup, SWT.RIGHT);
-		GridData gd_lblBeamCurrent = new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1);
-		gd_lblBeamCurrent.widthHint = 110;
-		lblBeamCurrent.setLayoutData(gd_lblBeamCurrent);
+		GridData gdLblBeamCurrent = new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1);
+		gdLblBeamCurrent.widthHint = 110;
+		lblBeamCurrent.setLayoutData(gdLblBeamCurrent);
 		lblBeamCurrent.setText("Beam Current:");
 		
 		beamCurrent = new Label(grpSetup, SWT.NONE);
-		GridData gd_beamCurrent = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
-		gd_beamCurrent.widthHint = 65;
-		beamCurrent.setLayoutData(gd_beamCurrent);
+		GridData gdBeamCurrent = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+		gdBeamCurrent.widthHint = 65;
+		beamCurrent.setLayoutData(gdBeamCurrent);
 		beamCurrent.setText("UNKNOWN");
 		
 		Label lblRbNumber = new Label(grpSetup, SWT.RIGHT);
-		GridData gd_lblRbNumber = new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1);
-		gd_lblRbNumber.widthHint = 110;
-		lblRbNumber.setLayoutData(gd_lblRbNumber);
+		GridData gdLblRbNumber = new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1);
+		gdLblRbNumber.widthHint = 110;
+		lblRbNumber.setLayoutData(gdLblRbNumber);
 		lblRbNumber.setText("RB Number:");
 		
 		rbNumber = new Label(grpSetup, SWT.NONE);
-		GridData gd_rbNumber = new GridData(SWT.LEFT, SWT.BOTTOM, false, false, 1, 1);
-		gd_rbNumber.widthHint = 65;
-		rbNumber.setLayoutData(gd_rbNumber);
+		GridData gdRbNumber = new GridData(SWT.LEFT, SWT.BOTTOM, false, false, 1, 1);
+		gdRbNumber.widthHint = 65;
+		rbNumber.setLayoutData(gdRbNumber);
 		rbNumber.setText("UNKNOWN");
 		
 		Label lblStartTime = new Label(grpSetup, SWT.RIGHT);
-		GridData gd_lblStartTime = new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1);
-		gd_lblStartTime.widthHint = 110;
-		lblStartTime.setLayoutData(gd_lblStartTime);
+		GridData gdLblStartTime = new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1);
+		gdLblStartTime.widthHint = 110;
+		lblStartTime.setLayoutData(gdLblStartTime);
 		lblStartTime.setText("Start Time:");
 		
 		startTime = new Label(grpSetup, SWT.NONE);
-		GridData gd_startTime = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
-		gd_startTime.widthHint = 150;
-		startTime.setLayoutData(gd_startTime);
+		GridData gdStartTime = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+		gdStartTime.widthHint = 150;
+		startTime.setLayoutData(gdStartTime);
 		startTime.setText("UNKNOWN");
 		
 		Label lblGoodFrames = new Label(grpSetup, SWT.RIGHT);
-		GridData gd_lblGoodFrames = new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1);
-		gd_lblGoodFrames.widthHint = 110;
-		lblGoodFrames.setLayoutData(gd_lblGoodFrames);
+		GridData gdLblGoodFrames = new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1);
+		gdLblGoodFrames.widthHint = 110;
+		lblGoodFrames.setLayoutData(gdLblGoodFrames);
 		lblGoodFrames.setText("Good Frames:");
 		
 		goodFrames = new Label(grpSetup, SWT.NONE);
-		GridData gd_goodFrames = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
-		gd_goodFrames.widthHint = 65;
-		goodFrames.setLayoutData(gd_goodFrames);
+		GridData gdGoodFrames = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+		gdGoodFrames.widthHint = 65;
+		goodFrames.setLayoutData(gdGoodFrames);
 		goodFrames.setText("UNKNOWN");
 		
 		Label lblRawFrames = new Label(grpSetup, SWT.RIGHT);
-		GridData gd_lblRawFrames = new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1);
-		gd_lblRawFrames.widthHint = 110;
-		lblRawFrames.setLayoutData(gd_lblRawFrames);
+		GridData gdLblRawFrames = new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1);
+		gdLblRawFrames.widthHint = 110;
+		lblRawFrames.setLayoutData(gdLblRawFrames);
 		lblRawFrames.setText("Raw Frames:");
 		
 		rawFrames = new Label(grpSetup, SWT.NONE);
-		GridData gd_rawFrames = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
-		gd_rawFrames.widthHint = 65;
-		rawFrames.setLayoutData(gd_rawFrames);
+		GridData gdRawFrames = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+		gdRawFrames.widthHint = 65;
+		rawFrames.setLayoutData(gdRawFrames);
 		rawFrames.setText("UNKNOWN");
 		
 		Label lblRunDuration = new Label(grpSetup, SWT.RIGHT);
-		GridData gd_lblRunDuration = new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1);
-		gd_lblRunDuration.widthHint = 110;
-		lblRunDuration.setLayoutData(gd_lblRunDuration);
+		GridData gdLblRunDuration = new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1);
+		gdLblRunDuration.widthHint = 110;
+		lblRunDuration.setLayoutData(gdLblRunDuration);
 		lblRunDuration.setText("Run Duration:");
 		
 		runDuration = new Label(grpSetup, SWT.NONE);
-		GridData gd_runDuration = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
-		gd_runDuration.widthHint = 65;
-		runDuration.setLayoutData(gd_runDuration);
+		GridData gdRunDuration = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+		gdRunDuration.widthHint = 65;
+		runDuration.setLayoutData(gdRunDuration);
 		runDuration.setText("UNKNOWN");
 		
 		Label lblCountsmev = new Label(grpSetup, SWT.RIGHT);
-		GridData gd_lblCountsmev = new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1);
-		gd_lblCountsmev.widthHint = 110;
-		lblCountsmev.setLayoutData(gd_lblCountsmev);
+		GridData gdLblCountsmev = new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1);
+		gdLblCountsmev.widthHint = 110;
+		lblCountsmev.setLayoutData(gdLblCountsmev);
 		lblCountsmev.setText("Counts (MEV):");
 		
 		counts = new Label(grpSetup, SWT.NONE);
-		GridData gd_counts = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
-		gd_counts.widthHint = 65;
-		counts.setLayoutData(gd_counts);
+		GridData gdCounts = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+		gdCounts.widthHint = 65;
+		counts.setLayoutData(gdCounts);
 		counts.setText("UNKNOWN");
 		
 		Label lblTotalah = new Label(grpSetup, SWT.RIGHT);
-		GridData gd_lblTotalah = new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1);
-		gd_lblTotalah.widthHint = 110;
-		lblTotalah.setLayoutData(gd_lblTotalah);
+		GridData gdLblTotalah = new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1);
+		gdLblTotalah.widthHint = 110;
+		lblTotalah.setLayoutData(gdLblTotalah);
 		lblTotalah.setText("Total μAh:");
 		
 		totalCurrent = new Label(grpSetup, SWT.NONE);
-		GridData gd_totalCurrent = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
-		gd_totalCurrent.widthHint = 65;
-		totalCurrent.setLayoutData(gd_totalCurrent);
+		GridData gdTotalCurrent = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+		gdTotalCurrent.widthHint = 65;
+		totalCurrent.setLayoutData(gdTotalCurrent);
 		totalCurrent.setText("UNKNOWN");
 		
 		Label lblTimeChannels = new Label(grpSetup, SWT.RIGHT);
-		GridData gd_lblTimeChannels = new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1);
-		gd_lblTimeChannels.widthHint = 110;
-		lblTimeChannels.setLayoutData(gd_lblTimeChannels);
+		GridData gdLblTimeChannels = new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1);
+		gdLblTimeChannels.widthHint = 110;
+		lblTimeChannels.setLayoutData(gdLblTimeChannels);
 		lblTimeChannels.setText("Time Channels:");
 		
 		timeChannels = new Label(grpSetup, SWT.NONE);
-		GridData gd_timeChannels = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
-		gd_timeChannels.widthHint = 65;
-		timeChannels.setLayoutData(gd_timeChannels);
+		GridData gdTimeChannels = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+		gdTimeChannels.widthHint = 65;
+		timeChannels.setLayoutData(gdTimeChannels);
 		timeChannels.setText("UNKNOWN");
 		
 		Label lblDaeMemoryUsed = new Label(grpSetup, SWT.RIGHT);
-		GridData gd_lblDaeMemoryUsed = new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1);
-		gd_lblDaeMemoryUsed.widthHint = 110;
-		lblDaeMemoryUsed.setLayoutData(gd_lblDaeMemoryUsed);
+		GridData gdLblDaeMemoryUsed = new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1);
+		gdLblDaeMemoryUsed.widthHint = 110;
+		lblDaeMemoryUsed.setLayoutData(gdLblDaeMemoryUsed);
 		lblDaeMemoryUsed.setText("DAE Memory Used:");
 		
 		memoryUsed = new Label(grpSetup, SWT.NONE);
-		GridData gd_memoryUsed = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
-		gd_memoryUsed.widthHint = 65;
-		memoryUsed.setLayoutData(gd_memoryUsed);
+		GridData gdMemoryUsed = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+		gdMemoryUsed.widthHint = 65;
+		memoryUsed.setLayoutData(gdMemoryUsed);
 		memoryUsed.setText("UNKNOWN");
 		
 		Label lblCountRatemevh = new Label(grpSetup, SWT.RIGHT);
-		GridData gd_lblCountRatemevh = new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1);
-		gd_lblCountRatemevh.widthHint = 110;
-		lblCountRatemevh.setLayoutData(gd_lblCountRatemevh);
+		GridData gdLblCountRatemevh = new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1);
+		gdLblCountRatemevh.widthHint = 110;
+		lblCountRatemevh.setLayoutData(gdLblCountRatemevh);
 		lblCountRatemevh.setText("Count Rate (MEV/h):");
 		
 		countRate = new Label(grpSetup, SWT.NONE);
-		GridData gd_countRate = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
-		gd_countRate.widthHint = 65;
-		countRate.setLayoutData(gd_countRate);
+		GridData gdCountRate = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+		gdCountRate.widthHint = 65;
+		countRate.setLayoutData(gdCountRate);
 		countRate.setText("UNKNOWN");
 		
 		Label lblSpectra = new Label(grpSetup, SWT.RIGHT);
-		GridData gd_lblSpectra = new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1);
-		gd_lblSpectra.widthHint = 110;
-		lblSpectra.setLayoutData(gd_lblSpectra);
+		GridData gdLblSpectra = new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1);
+		gdLblSpectra.widthHint = 110;
+		lblSpectra.setLayoutData(gdLblSpectra);
 		lblSpectra.setText("Spectra:");
 		
 		spectra = new Label(grpSetup, SWT.NONE);
-		GridData gd_spectra = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
-		gd_spectra.widthHint = 65;
-		spectra.setLayoutData(gd_spectra);
+		GridData gdSpectra = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+		gdSpectra.widthHint = 65;
+		spectra.setLayoutData(gdSpectra);
 		spectra.setText("UNKNOWN");
 		
 		Label lblDaeTiming = new Label(grpSetup, SWT.RIGHT);
-		GridData gd_lblDaeTiming = new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1);
-		gd_lblDaeTiming.widthHint = 110;
-		lblDaeTiming.setLayoutData(gd_lblDaeTiming);
+		GridData gdLblDaeTiming = new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1);
+		gdLblDaeTiming.widthHint = 110;
+		lblDaeTiming.setLayoutData(gdLblDaeTiming);
 		lblDaeTiming.setText("DAE Timing:");
 		
 		timing = new Label(grpSetup, SWT.NONE);
-		GridData gd_timing = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
-		gd_timing.widthHint = 65;
-		timing.setLayoutData(gd_timing);
+		GridData gdTiming = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+		gdTiming.widthHint = 65;
+		timing.setLayoutData(gdTiming);
 		timing.setText("UNKNOWN");
 		
 		Label lblEventMode = new Label(grpSetup, SWT.RIGHT);
-		GridData gd_lblEventMode = new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1);
-		gd_lblEventMode.widthHint = 110;
-		lblEventMode.setLayoutData(gd_lblEventMode);
+		GridData gdLblEventMode = new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1);
+		gdLblEventMode.widthHint = 110;
+		lblEventMode.setLayoutData(gdLblEventMode);
 		lblEventMode.setText("Event Mode:");
 		
 		eventMode = new Label(grpSetup, SWT.NONE);
-		GridData gd_eventMode = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
-		gd_eventMode.widthHint = 65;
-		eventMode.setLayoutData(gd_eventMode);
+		GridData gdEventMode = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+		gdEventMode.widthHint = 65;
+		eventMode.setLayoutData(gdEventMode);
 		eventMode.setText("UNKNOWN");
 		
 		Label lblIsisCycle = new Label(grpSetup, SWT.RIGHT);
-		GridData gd_lblIsisCycle = new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1);
-		gd_lblIsisCycle.widthHint = 110;
-		lblIsisCycle.setLayoutData(gd_lblIsisCycle);
+		GridData gdLblIsisCycle = new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1);
+		gdLblIsisCycle.widthHint = 110;
+		lblIsisCycle.setLayoutData(gdLblIsisCycle);
 		lblIsisCycle.setText("ISIS Cycle:");
 		
 		isisCycle = new Label(grpSetup, SWT.NONE);
-		GridData gd_isisCycle = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
-		gd_isisCycle.widthHint = 65;
-		isisCycle.setLayoutData(gd_isisCycle);
+		GridData gdIsisCycle = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+		gdIsisCycle.widthHint = 65;
+		isisCycle.setLayoutData(gdIsisCycle);
 		isisCycle.setText("UNKNOWN");
 		
 		Group titleGroup = new Group(this, SWT.NONE);
@@ -309,9 +309,9 @@ public class RunInformationPanel extends Composite {
 		lblTitle.setText("Title:");
 		
 		title = new Label(titleGroup, SWT.NONE);
-		GridData gd_title = new GridData(SWT.LEFT, SWT.CENTER, true, false, 1, 1);
-		gd_title.widthHint = 500;
-		title.setLayoutData(gd_title);
+		GridData gdTitle = new GridData(SWT.LEFT, SWT.CENTER, true, false, 1, 1);
+		gdTitle.widthHint = 500;
+		title.setLayoutData(gdTitle);
 		title.setText("UNKNOWN");
 		
 		Label lblUsers = new Label(titleGroup, SWT.NONE);
@@ -319,40 +319,40 @@ public class RunInformationPanel extends Composite {
 		lblUsers.setText("User(s):");
 		
 		users = new Label(titleGroup, SWT.NONE);
-		GridData gd_users = new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1);
-		gd_users.widthHint = 500;
-		users.setLayoutData(gd_users);
+		GridData gdUsers = new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1);
+		gdUsers.widthHint = 500;
+		users.setLayoutData(gdUsers);
 		users.setText("UNKNOWN");
 		
 		Group grpPeriods = new Group(this, SWT.NONE);
-		GridLayout gl_grpPeriods = new GridLayout(6, false);
-		gl_grpPeriods.horizontalSpacing = 20;
-		grpPeriods.setLayout(gl_grpPeriods);
+		GridLayout glGrpPeriods = new GridLayout(6, false);
+		glGrpPeriods.horizontalSpacing = 20;
+		grpPeriods.setLayout(glGrpPeriods);
 		grpPeriods.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 		grpPeriods.setText("Periods");
 		
 		Label lblPeriod = new Label(grpPeriods, SWT.RIGHT);
-		GridData gd_lblPeriod = new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1);
-		gd_lblPeriod.widthHint = 110;
-		lblPeriod.setLayoutData(gd_lblPeriod);
+		GridData gdLblPeriod = new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1);
+		gdLblPeriod.widthHint = 110;
+		lblPeriod.setLayoutData(gdLblPeriod);
 		lblPeriod.setText("Period:");
 		
 		period = new Label(grpPeriods, SWT.NONE);
-		GridData gd_period = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
-		gd_period.widthHint = 65;
-		period.setLayoutData(gd_period);
+		GridData gdPeriod = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+		gdPeriod.widthHint = 65;
+		period.setLayoutData(gdPeriod);
 		period.setText("UNKNOWN");
 		
 		Label lblNumberOfPeriods = new Label(grpPeriods, SWT.RIGHT);
-		GridData gd_lblNumberOfPeriods = new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1);
-		gd_lblNumberOfPeriods.widthHint = 110;
-		lblNumberOfPeriods.setLayoutData(gd_lblNumberOfPeriods);
+		GridData gdLblNumberOfPeriods = new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1);
+		gdLblNumberOfPeriods.widthHint = 110;
+		lblNumberOfPeriods.setLayoutData(gdLblNumberOfPeriods);
 		lblNumberOfPeriods.setText("Number of Periods:");
 		
 		numberOfPeriods = new Label(grpPeriods, SWT.NONE);
-		GridData gd_numberOfPeriods = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
-		gd_numberOfPeriods.widthHint = 65;
-		numberOfPeriods.setLayoutData(gd_numberOfPeriods);
+		GridData gdNumberOfPeriods = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+		gdNumberOfPeriods.widthHint = 65;
+		numberOfPeriods.setLayoutData(gdNumberOfPeriods);
 		numberOfPeriods.setText("UNKNOWN");
 		
 		Label lblPeriodType = new Label(grpPeriods, SWT.RIGHT);
@@ -360,57 +360,57 @@ public class RunInformationPanel extends Composite {
 		lblPeriodType.setText("Period Type:");
 		
 		periodType = new Label(grpPeriods, SWT.NONE);
-		GridData gd_periodType = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
-		gd_periodType.widthHint = 65;
-		periodType.setLayoutData(gd_periodType);
+		GridData gdPeriodType = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+		gdPeriodType.widthHint = 65;
+		periodType.setLayoutData(gdPeriodType);
 		periodType.setText("UNKNOWN");
 		
 		Label lblPeriodGoodFrames = new Label(grpPeriods, SWT.RIGHT);
-		GridData gd_lblPeriodGoodFrames = new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1);
-		gd_lblPeriodGoodFrames.widthHint = 110;
-		lblPeriodGoodFrames.setLayoutData(gd_lblPeriodGoodFrames);
+		GridData gdLblPeriodGoodFrames = new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1);
+		gdLblPeriodGoodFrames.widthHint = 110;
+		lblPeriodGoodFrames.setLayoutData(gdLblPeriodGoodFrames);
 		lblPeriodGoodFrames.setText("Period Good Frames:");
 		
 		periodGoodFrames = new Label(grpPeriods, SWT.NONE);
-		GridData gd_periodGoodFrames = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
-		gd_periodGoodFrames.widthHint = 65;
-		periodGoodFrames.setLayoutData(gd_periodGoodFrames);
+		GridData gdPeriodGoodFrames = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+		gdPeriodGoodFrames.widthHint = 65;
+		periodGoodFrames.setLayoutData(gdPeriodGoodFrames);
 		periodGoodFrames.setText("UNKNOWN");
 		
 		Label lblPeriodRawFrames = new Label(grpPeriods, SWT.RIGHT);
-		GridData gd_lblPeriodRawFrames = new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1);
-		gd_lblPeriodRawFrames.widthHint = 110;
-		lblPeriodRawFrames.setLayoutData(gd_lblPeriodRawFrames);
+		GridData gdLblPeriodRawFrames = new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1);
+		gdLblPeriodRawFrames.widthHint = 110;
+		lblPeriodRawFrames.setLayoutData(gdLblPeriodRawFrames);
 		lblPeriodRawFrames.setText("Period Raw Frames:");
 		
 		periodRawFrames = new Label(grpPeriods, SWT.NONE);
-		GridData gd_periodRawFrames = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
-		gd_periodRawFrames.widthHint = 65;
-		periodRawFrames.setLayoutData(gd_periodRawFrames);
+		GridData gdPeriodRawFrames = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+		gdPeriodRawFrames.widthHint = 65;
+		periodRawFrames.setLayoutData(gdPeriodRawFrames);
 		periodRawFrames.setText("UNKNOWN");
 		
 		Label lblPeriodSequence = new Label(grpPeriods, SWT.RIGHT);
-		GridData gd_lblPeriodSequence = new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1);
-		gd_lblPeriodSequence.widthHint = 110;
-		lblPeriodSequence.setLayoutData(gd_lblPeriodSequence);
+		GridData gdLblPeriodSequence = new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1);
+		gdLblPeriodSequence.widthHint = 110;
+		lblPeriodSequence.setLayoutData(gdLblPeriodSequence);
 		lblPeriodSequence.setText("Period Sequence:");
 		
 		periodSequence = new Label(grpPeriods, SWT.NONE);
-		GridData gd_periodSequence = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
-		gd_periodSequence.widthHint = 65;
-		periodSequence.setLayoutData(gd_periodSequence);
+		GridData gdPeriodSequence = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+		gdPeriodSequence.widthHint = 65;
+		periodSequence.setLayoutData(gdPeriodSequence);
 		periodSequence.setText("UNKNOWN");
 		
 		Label lblPeriodDuration = new Label(grpPeriods, SWT.RIGHT);
-		GridData gd_lblPeriodDuration = new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1);
-		gd_lblPeriodDuration.widthHint = 110;
-		lblPeriodDuration.setLayoutData(gd_lblPeriodDuration);
+		GridData gdLblPeriodDuration = new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1);
+		gdLblPeriodDuration.widthHint = 110;
+		lblPeriodDuration.setLayoutData(gdLblPeriodDuration);
 		lblPeriodDuration.setText("Period Duration:");
 		
 		periodDuration = new Label(grpPeriods, SWT.NONE);
-		GridData gd_periodDuration = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
-		gd_periodDuration.widthHint = 65;
-		periodDuration.setLayoutData(gd_periodDuration);
+		GridData gdPeriodDuration = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+		gdPeriodDuration.widthHint = 65;
+		periodDuration.setLayoutData(gdPeriodDuration);
 		periodDuration.setText("UNKNOWN");
 		new Label(grpPeriods, SWT.NONE);
 		new Label(grpPeriods, SWT.NONE);
@@ -418,70 +418,70 @@ public class RunInformationPanel extends Composite {
 		new Label(grpPeriods, SWT.NONE);
 		
 		Group grpMonitor = new Group(this, SWT.NONE);
-		GridLayout gl_grpMonitor = new GridLayout(6, false);
-		gl_grpMonitor.horizontalSpacing = 20;
-		grpMonitor.setLayout(gl_grpMonitor);
+		GridLayout glGrpMonitor = new GridLayout(6, false);
+		glGrpMonitor.horizontalSpacing = 20;
+		grpMonitor.setLayout(glGrpMonitor);
 		grpMonitor.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 		grpMonitor.setText("Monitor");
 		
 		Label lblMonitorSpectrum = new Label(grpMonitor, SWT.RIGHT);
-		GridData gd_lblMonitorSpectrum = new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1);
-		gd_lblMonitorSpectrum.widthHint = 110;
-		lblMonitorSpectrum.setLayoutData(gd_lblMonitorSpectrum);
+		GridData gdLblMonitorSpectrum = new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1);
+		gdLblMonitorSpectrum.widthHint = 110;
+		lblMonitorSpectrum.setLayoutData(gdLblMonitorSpectrum);
 		lblMonitorSpectrum.setText("Monitor Spectrum:");
 		
 		monitorSpectrum = new Label(grpMonitor, SWT.NONE);
-		GridData gd_monitorSpectrum = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
-		gd_monitorSpectrum.widthHint = 65;
-		monitorSpectrum.setLayoutData(gd_monitorSpectrum);
+		GridData gdMonitorSpectrum = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+		gdMonitorSpectrum.widthHint = 65;
+		monitorSpectrum.setLayoutData(gdMonitorSpectrum);
 		monitorSpectrum.setText("UNKNOWN");
 		
 		Label lblMonitorCounts = new Label(grpMonitor, SWT.RIGHT);
-		GridData gd_lblMonitorCounts = new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1);
-		gd_lblMonitorCounts.widthHint = 110;
-		lblMonitorCounts.setLayoutData(gd_lblMonitorCounts);
+		GridData gdLblMonitorCounts = new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1);
+		gdLblMonitorCounts.widthHint = 110;
+		lblMonitorCounts.setLayoutData(gdLblMonitorCounts);
 		lblMonitorCounts.setText("Monitor Counts:");
 		
 		monitorCounts = new Label(grpMonitor, SWT.NONE);
-		GridData gd_monitorCounts = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
-		gd_monitorCounts.widthHint = 65;
-		monitorCounts.setLayoutData(gd_monitorCounts);
+		GridData gdMonitorCounts = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+		gdMonitorCounts.widthHint = 65;
+		monitorCounts.setLayoutData(gdMonitorCounts);
 		monitorCounts.setText("UNKNOWN");
 		
 		Label lblNpRatio = new Label(grpMonitor, SWT.RIGHT);
-		GridData gd_lblNpRatio = new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1);
-		gd_lblNpRatio.widthHint = 110;
-		lblNpRatio.setLayoutData(gd_lblNpRatio);
+		GridData gdLblNpRatio = new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1);
+		gdLblNpRatio.widthHint = 110;
+		lblNpRatio.setLayoutData(gdLblNpRatio);
 		lblNpRatio.setText("N/P Ratio:");
 		
 		npRatio = new Label(grpMonitor, SWT.NONE);
-		GridData gd_npRatio = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
-		gd_npRatio.widthHint = 65;
-		npRatio.setLayoutData(gd_npRatio);
+		GridData gdNpRatio = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+		gdNpRatio.widthHint = 65;
+		npRatio.setLayoutData(gdNpRatio);
 		npRatio.setText("UNKNOWN");
 		
 		Label lblFrom = new Label(grpMonitor, SWT.RIGHT);
-		GridData gd_lblFrom = new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1);
-		gd_lblFrom.widthHint = 110;
-		lblFrom.setLayoutData(gd_lblFrom);
+		GridData gdLblFrom = new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1);
+		gdLblFrom.widthHint = 110;
+		lblFrom.setLayoutData(gdLblFrom);
 		lblFrom.setText("From:");
 		
 		monitorFrom = new Label(grpMonitor, SWT.NONE);
-		GridData gd_monitorFrom = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
-		gd_monitorFrom.widthHint = 65;
-		monitorFrom.setLayoutData(gd_monitorFrom);
+		GridData gdMonitorFrom = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+		gdMonitorFrom.widthHint = 65;
+		monitorFrom.setLayoutData(gdMonitorFrom);
 		monitorFrom.setText("UNKNOWN");
 		
 		Label lblTo = new Label(grpMonitor, SWT.RIGHT);
-		GridData gd_lblTo = new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1);
-		gd_lblTo.widthHint = 110;
-		lblTo.setLayoutData(gd_lblTo);
+		GridData gdLblTo = new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1);
+		gdLblTo.widthHint = 110;
+		lblTo.setLayoutData(gdLblTo);
 		lblTo.setText("To:");
 		
 		monitorTo = new Label(grpMonitor, SWT.NONE);
-		GridData gd_monitorTo = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
-		gd_monitorTo.widthHint = 65;
-		monitorTo.setLayoutData(gd_monitorTo);
+		GridData gdMonitorTo = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+		gdMonitorTo.widthHint = 65;
+		monitorTo.setLayoutData(gdMonitorTo);
 		monitorTo.setText("UNKNOWN");
 		new Label(grpMonitor, SWT.NONE);
 		new Label(grpMonitor, SWT.NONE);

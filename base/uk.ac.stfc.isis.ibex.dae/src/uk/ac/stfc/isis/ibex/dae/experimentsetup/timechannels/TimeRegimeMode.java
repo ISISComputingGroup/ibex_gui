@@ -42,7 +42,7 @@ public enum TimeRegimeMode {
 		return lookup.containsKey(text) ? lookup.get(text) : TCBFILE;
 	}
 	
-	private TimeRegimeMode(String mode) {
+	TimeRegimeMode(String mode) {
 		this.mode = mode;
 	}
 	

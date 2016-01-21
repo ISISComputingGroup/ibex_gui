@@ -33,6 +33,7 @@ import uk.ac.stfc.isis.ibex.synoptic.model.ComponentProperty;
 import uk.ac.stfc.isis.ibex.synoptic.model.ReadableComponentProperty;
 import uk.ac.stfc.isis.ibex.synoptic.model.WritableComponentProperty;
 
+@SuppressWarnings("checkstyle:magicnumber")
 public class ComponentPropertiesView extends Composite {
 		
 	public ComponentPropertiesView(Composite parent, Component component) {

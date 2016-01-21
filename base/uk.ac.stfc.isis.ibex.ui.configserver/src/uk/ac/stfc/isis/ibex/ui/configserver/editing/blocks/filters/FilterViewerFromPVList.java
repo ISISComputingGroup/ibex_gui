@@ -28,26 +28,26 @@ import uk.ac.stfc.isis.ibex.configserver.configuration.PV;
 
 public class FilterViewerFromPVList extends ViewerFilter {
 	
-	private Collection<String> AllowedPVAddresses;
+	private Collection<String> allowedPVAddresses;
 	
-	public void setAllowedPVs(Collection<String> PVNames) {
-		this.AllowedPVAddresses = PVNames;
+	public void setAllowedPVs(Collection<String> pvNames) {
+		this.allowedPVAddresses = pvNames;
 	}
 	
 	@Override
 	public boolean select(Viewer viewer, Object parentElement, Object element) {
-		if (AllowedPVAddresses == null) {
+		if (allowedPVAddresses == null) {
 			return true;
 		}
 		
-		if (AllowedPVAddresses.isEmpty()) {
+		if (allowedPVAddresses.isEmpty()) {
 			return false;
 		}
 		
 		PV p = (PV) element;
-		String PVname = p.getAddress();
+		String pvName = p.getAddress();
 		
-		if (AllowedPVAddresses.contains(PVname)) {
+		if (allowedPVAddresses.contains(pvName)) {
 			return true;
 		}
 		

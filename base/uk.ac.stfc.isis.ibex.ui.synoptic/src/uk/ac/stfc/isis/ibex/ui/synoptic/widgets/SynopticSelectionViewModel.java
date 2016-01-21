@@ -41,7 +41,7 @@ public class SynopticSelectionViewModel extends ModelObject {
 	private static final ForwardingObservable<DisplayConfiguration> CONFIG = 
 			Configurations.getInstance().display().displayCurrentConfig();
 	
-	private static String RECOMMENDED_STRING = " (recommended)";
+	private static final String RECOMMENDED_STRING = " (recommended)";
 	
 	private Subscription configSubscription;
 	private Subscription synopticSubscription;
@@ -93,7 +93,7 @@ public class SynopticSelectionViewModel extends ModelObject {
 
 		@Override
 		public void propertyChange(PropertyChangeEvent evt) {
-			SynopticInfo synopticInfo = (SynopticInfo)evt.getNewValue();
+			SynopticInfo synopticInfo = (SynopticInfo) evt.getNewValue();
 			if (synopticInfo != null) {
 				String synopticName = synopticInfo.name();
 				if (synopticName.equals(recommendedSynoptic)) {
@@ -104,7 +104,7 @@ public class SynopticSelectionViewModel extends ModelObject {
 		}
 	};
 	
-	public SynopticSelectionViewModel () {
+	public SynopticSelectionViewModel() {
 		if (configSubscription != null) {
 			configSubscription.removeObserver();
 		}

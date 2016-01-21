@@ -28,9 +28,6 @@ import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 
-import uk.ac.stfc.isis.ibex.log.Log;
-import uk.ac.stfc.isis.ibex.log.LogCounter;
-
 public class LogButton extends PerspectiveButton {
 
 	private FlashingButton flash;

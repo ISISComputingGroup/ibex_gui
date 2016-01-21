@@ -25,12 +25,12 @@ import java.util.List;
 public class BlockRules {
 	
 	private String regex;
-	private String regex_message;
+	private String regexMessage;
 	private List<String> disallowed = new ArrayList<>();
 	
-	public BlockRules(String regex, String regex_message, List<String> disallowed) {
+	public BlockRules(String regex, String regexMessage, List<String> disallowed) {
 		this.regex = regex;
-		this.regex_message = regex_message;
+		this.regexMessage = regexMessage;
 		this.disallowed = disallowed;
 	}
 	
@@ -43,7 +43,7 @@ public class BlockRules {
 	}
 	
 	public String getRegexErrorMessage() {
-		return regex_message;
+		return regexMessage;
 	}
 	
 }

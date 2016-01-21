@@ -36,6 +36,7 @@ import uk.ac.stfc.isis.ibex.ui.synoptic.widgets.InstrumentSynoptic;
  * Provides a preview of the final synoptic.
  * 
  */
+@SuppressWarnings("checkstyle:magicnumber")
 public class SynopticPreview extends Dialog {
 	private final SynopticModel model;
 

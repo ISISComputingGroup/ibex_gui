@@ -61,11 +61,11 @@ public class IocPanel extends Composite {
 		setLayout(new FillLayout(SWT.HORIZONTAL));
 				
 		Composite container = new Composite(this, SWT.NONE);
-		GridLayout gl_container = new GridLayout(1, false);
-		gl_container.marginHeight = 0;
-		gl_container.horizontalSpacing = 0;
-		gl_container.marginWidth = 0;
-		container.setLayout(gl_container);
+		GridLayout glContainer = new GridLayout(1, false);
+		glContainer.marginHeight = 0;
+		glContainer.horizontalSpacing = 0;
+		glContainer.marginWidth = 0;
+		container.setLayout(glContainer);
 		
 		table = new IocTable(container, SWT.BORDER, SWT.V_SCROLL | SWT.NO_SCROLL | SWT.FULL_SELECTION);
 		table.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));

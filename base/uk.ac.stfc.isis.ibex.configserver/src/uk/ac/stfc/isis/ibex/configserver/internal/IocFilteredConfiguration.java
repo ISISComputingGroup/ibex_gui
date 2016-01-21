@@ -40,15 +40,15 @@ public class IocFilteredConfiguration extends Configuration {
 			@Override
 			public boolean apply(Ioc ioc) {
 				return !isDefault(ioc);
-		}}));
+		} }));
 	}
 
 	private static boolean isDefault(Ioc ioc) {		
-		return ioc.getAutostart() == false &&
-				ioc.getRestart() == false &&
-				ioc.getSimLevel() == SimLevel.NONE &&
-				ioc.getPvs().isEmpty() &&
-				ioc.getMacros().isEmpty() &&
-				ioc.getPvSets().isEmpty();		
+		return !ioc.getAutostart()
+				&& !ioc.getRestart()
+				&& ioc.getSimLevel() == SimLevel.NONE 
+				&& ioc.getPvs().isEmpty() 
+				&& ioc.getMacros().isEmpty() 
+				&& ioc.getPvSets().isEmpty();		
 	}
 }

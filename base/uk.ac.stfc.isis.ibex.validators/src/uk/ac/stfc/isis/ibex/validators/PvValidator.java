@@ -51,18 +51,18 @@ public class PvValidator {
      * @return Boolean addressValid
      */
     public Boolean validatePvAddress(String pvAddress) {
-        boolean is_valid = false;
+        boolean isValid = false;
 
         if (!(pvAddress.matches("^[a-zA-Z0-9_:]*$"))) {
             setErrorMessage(ADDRESS_FORMAT);
         } else if (pvAddress.isEmpty()) {
         	setErrorMessage(ADDRESS_EMPTY);
         } else {
-            is_valid = true;
+            isValid = true;
             setErrorMessage(NO_ERROR);
         }
 
-        return is_valid;
+        return isValid;
     }
 
     private void setErrorMessage(String errorMessage) {

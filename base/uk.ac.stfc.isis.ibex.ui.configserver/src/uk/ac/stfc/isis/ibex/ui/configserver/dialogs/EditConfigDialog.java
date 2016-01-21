@@ -116,7 +116,7 @@ public class EditConfigDialog extends TitleAreaDialog implements
 
 	@Override
 	protected void createButtonsForButtonBar(Composite parent) {
-		if (isBlank == false && !this.config.getName().isEmpty()){ 
+		if (!isBlank && !this.config.getName().isEmpty()) { 
 			createButton(parent, IDialogConstants.OK_ID, "Save", true);
 		}
         

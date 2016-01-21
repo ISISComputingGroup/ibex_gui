@@ -83,7 +83,10 @@ public final class LoggingConfiguration {
 	 */
 	private static class Log4j2Configuration extends DefaultConfiguration {
 
-		public Log4j2Configuration() {
+        private static final int MIN_FILE_SIZE_KB = 32;
+        private static final int BYTES_PER_KB = 1024;
+
+        Log4j2Configuration() {
 			setName("isis-log4j2");
 			getRootLogger().setLevel(Level.INFO);
 
@@ -98,7 +101,7 @@ public final class LoggingConfiguration {
 					.getString(PreferenceConstants.P_ARCHIVE_PATTERN);
 			int maxFiles = prefs
 					.getInt(PreferenceConstants.P_MAX_ARCHIVE_PER_DAY);
-			int fileSize = prefs.getInt(PreferenceConstants.P_MAX_FILE_SIZE);
+			int fileSizeMB = prefs.getInt(PreferenceConstants.P_MAX_FILE_SIZE);
 			String level = prefs.getString(PreferenceConstants.P_LOGGING_LEVEL);
 
 			// Apply minimums to int values
@@ -106,8 +109,8 @@ public final class LoggingConfiguration {
 				maxFiles = 1;
 			}
 
-			if (fileSize < 32) {
-				fileSize = 32;
+            if (fileSizeMB < MIN_FILE_SIZE_KB) {
+                fileSizeMB = MIN_FILE_SIZE_KB;
 			}
 
 			Level loggingLevel = Level.getLevel(level);
@@ -115,7 +118,7 @@ public final class LoggingConfiguration {
 			patternLayout = "*" + patternLayout;
 			filename = directory + "/" + filename;
 			String pattern = directory + "/" + archivePattern;
-			String fileSizeInBytes = fileSize * 1024 + "";
+			String fileSizeInBytes = fileSizeMB * BYTES_PER_KB + "";
 			String numLogFiles = maxFiles + "";
 
 			// Make pattern layout

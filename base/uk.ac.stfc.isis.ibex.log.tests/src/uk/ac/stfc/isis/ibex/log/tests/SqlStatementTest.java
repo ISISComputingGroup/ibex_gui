@@ -45,7 +45,7 @@ public class SqlStatementTest {
 	// Mock
 	SqlStatement mockedSqlStatement = mock(SqlStatement.class);
 	// Arrange
-	LogMessageFieldsSql[] selectFields = { LogMessageFieldsSql.SEVERITY };
+	LogMessageFieldsSql[] selectFields = {LogMessageFieldsSql.SEVERITY};
 	// Act
 	mockedSqlStatement.setSelectFields(selectFields);
 	// Assert
@@ -62,7 +62,7 @@ public class SqlStatementTest {
 	// Mock
 	SqlStatement mockedSqlStatement = mock(SqlStatement.class);
 	// Arrange
-	LogMessageFieldsWhereSql[] whereLikeFields = { LogMessageFieldsWhereSql.CONTENTS };
+	LogMessageFieldsWhereSql[] whereLikeFields = {LogMessageFieldsWhereSql.CONTENTS};
 	// Act
 	mockedSqlStatement.setWhereLikeClause(whereLikeFields);
 	// Assert

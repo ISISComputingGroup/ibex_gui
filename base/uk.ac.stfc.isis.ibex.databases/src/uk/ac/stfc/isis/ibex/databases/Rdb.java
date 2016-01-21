@@ -45,8 +45,8 @@ public class Rdb {
 	
 		this.schema = schema;
 		
-		String address = PreferenceSupplier.SQLAddress();
-		String port = PreferenceSupplier.SQLPort();
+		String address = PreferenceSupplier.sqlAddress();
+		String port = PreferenceSupplier.sqlPort();
 	
 		if (address.indexOf("//") != 0) {
 		    address = "//" + address;

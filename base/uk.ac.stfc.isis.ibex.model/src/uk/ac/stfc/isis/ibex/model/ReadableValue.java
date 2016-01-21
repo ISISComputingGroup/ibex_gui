@@ -23,5 +23,5 @@ public interface ReadableValue<T> extends IModelObject {
 	/*
 	 * The value, may be null
 	 */
-	public T getValue();
+	T getValue();
 }

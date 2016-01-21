@@ -74,7 +74,7 @@ public class ObservingSynopticModel extends ModelObject {
 				// for the configuration
 				newSynoptic = SynopticInfo.search(
 						variables.available.getValue(),
-						variables.default_synoptic.getValue().name());
+						variables.defaultSynoptic.getValue().name());
 
 				// If still null do nothing
 				if (newSynoptic == null) {

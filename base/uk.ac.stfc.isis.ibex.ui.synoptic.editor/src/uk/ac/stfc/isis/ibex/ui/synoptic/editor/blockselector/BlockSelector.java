@@ -64,11 +64,11 @@ public class BlockSelector extends ConfigHandler<Configuration> {
 		}
 	}
 	
-	public String getBlockName(){
+	public String getBlockName() {
 		return blockName;
 	}
 	
-	public String getPvAddress(){
+	public String getPvAddress() {
 		return pvAddress;
 	}
 

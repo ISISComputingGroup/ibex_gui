@@ -58,9 +58,8 @@ public abstract class FileReadingTest {
 		    }
 		    
 		    fileContent = builder.toString();
-	    }
-	    finally {
-		    if (in !=null ) {
+	    } finally {
+		    if (in != null) {
 		    	in.close(); 
 		    }
 

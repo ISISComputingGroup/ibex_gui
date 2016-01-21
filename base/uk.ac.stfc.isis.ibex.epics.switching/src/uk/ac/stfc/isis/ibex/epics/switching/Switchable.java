@@ -29,9 +29,9 @@ import uk.ac.stfc.isis.ibex.epics.pv.Closable;
  */
 public interface Switchable extends Closable {
 
-    public void setSwitcher(Switcher switcher);
+    void setSwitcher(Switcher switcher);
 
-    public Switcher getSwitcher();
+    Switcher getSwitcher();
 
-    public void setSource(Closable pvObservable);
+    void setSource(Closable pvObservable);
 }

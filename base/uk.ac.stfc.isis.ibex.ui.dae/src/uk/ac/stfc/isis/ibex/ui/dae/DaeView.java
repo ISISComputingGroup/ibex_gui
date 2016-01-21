@@ -45,6 +45,7 @@ import uk.ac.stfc.isis.ibex.ui.dae.runinformation.RunInformationPanel;
 import uk.ac.stfc.isis.ibex.ui.dae.spectra.SpectraPlotsPanel;
 import uk.ac.stfc.isis.ibex.ui.dae.vetos.VetosPanel;
 
+@SuppressWarnings("checkstyle:magicnumber")
 public class DaeView extends ViewPart {
 	
 	public static final String ID = "uk.ac.stfc.isis.ibex.ui.dae.views.DaeView"; //$NON-NLS-1$
@@ -110,14 +111,14 @@ public class DaeView extends ViewPart {
 		Composite container = new Composite(scrolledComposite, SWT.NONE);
 		scrolledComposite.setContent(container);
 		
-		GridData gd_container = new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1);
-		container.setLayoutData(gd_container);
-		GridLayout gl_container = new GridLayout(2, false);
-		gl_container.horizontalSpacing = 0;
-		gl_container.verticalSpacing = 0;
-		gl_container.marginWidth = 0;
-		gl_container.marginHeight = 0;
-		container.setLayout(gl_container);
+		GridData gdContainer = new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1);
+		container.setLayoutData(gdContainer);
+		GridLayout glContainer = new GridLayout(2, false);
+		glContainer.horizontalSpacing = 0;
+		glContainer.verticalSpacing = 0;
+		glContainer.marginWidth = 0;
+		glContainer.marginHeight = 0;
+		container.setLayout(glContainer);
 		
 		Composite titleComposite = new Composite(container, SWT.NONE);
 		titleComposite.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1));
@@ -198,9 +199,9 @@ public class DaeView extends ViewPart {
 		
 		Composite composite = new Composite(container, SWT.NONE);
 		composite.setLayout(new GridLayout(1, false));
-		GridData gd_composite = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
-		gd_composite.widthHint = 600;
-		composite.setLayoutData(gd_composite);
+		GridData gdComposite = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
+		gdComposite.widthHint = 600;
+		composite.setLayoutData(gdComposite);
 		
 		Label label = new Label(composite, SWT.NONE);
 		label.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));

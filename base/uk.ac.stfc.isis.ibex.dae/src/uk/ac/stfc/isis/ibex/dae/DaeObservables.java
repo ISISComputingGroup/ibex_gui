@@ -182,7 +182,7 @@ public class DaeObservables {
     }
 
     private String addPrefix(String address) {
-        StringBuilder sb = new StringBuilder(50);
+        StringBuilder sb = new StringBuilder();
         sb.append(Instrument.getInstance().getPvPrefix());
         sb.append(address);
         return sb.toString();

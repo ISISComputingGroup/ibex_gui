@@ -40,16 +40,19 @@ import org.eclipse.swt.events.FocusListener;
 import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.wb.swt.SWTResourceManager;
-import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.layout.GridData;
 
 public abstract class DataboundTable<TRow> extends Composite {
 
-	private int tableStyle;
+    private static final int DEFAULT_FONT_HEIGHT = 10;
+    private static final int MIN_TABLE_COLUMN_WIDTH = 50;
+
+    private int tableStyle;
 	private Table table;
 	private TableViewer viewer;
 	private TableColumnLayout tableColumnLayout = new TableColumnLayout();
@@ -237,7 +240,7 @@ public abstract class DataboundTable<TRow> extends Composite {
 	protected void configureTable() {
 		table.setLinesVisible(true);
 		table.setHeaderVisible(true);
-		table.setFont(SWTResourceManager.getFont("Arial", 10, SWT.NORMAL));		
+        table.setFont(SWTResourceManager.getFont("Arial", DEFAULT_FONT_HEIGHT, SWT.NORMAL));
 	}
 	
 	protected TableViewerColumn createColumn(String title) {
@@ -251,7 +254,8 @@ public abstract class DataboundTable<TRow> extends Composite {
 	
 	protected TableViewerColumn createColumn(String title, int widthWeighting) {
 		TableViewerColumn tableColumn = createColumn(title);
-		tableColumnLayout().setColumnData(tableColumn.getColumn(), new ColumnWeightData(widthWeighting, 50, false));	
+        tableColumnLayout().setColumnData(tableColumn.getColumn(),
+                new ColumnWeightData(widthWeighting, MIN_TABLE_COLUMN_WIDTH, false));
 
 		return tableColumn;
 	}

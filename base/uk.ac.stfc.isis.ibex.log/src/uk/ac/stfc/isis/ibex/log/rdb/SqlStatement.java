@@ -40,7 +40,7 @@ public class SqlStatement {
     private static final String TABLENAME = "message";
 
     private String schemaName;
-    private static int LIMIT = 1000;
+    private static final int LIMIT = 1000;
 
     @SuppressWarnings("unused")
     private List<LogMessageFieldsSql> selectFields;

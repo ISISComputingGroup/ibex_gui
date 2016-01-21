@@ -38,8 +38,7 @@ import org.eclipse.swt.SWT;
 import uk.ac.stfc.isis.ibex.log.message.LogMessage;
 import uk.ac.stfc.isis.ibex.log.message.LogMessageFields;
 
-public class LogMessageComparator extends ViewerComparator implements Comparator<LogMessage>
-{
+public class LogMessageComparator extends ViewerComparator implements Comparator<LogMessage> {
 	private LogMessageFields messageField;
 	
 	private static final int DESCENDING = 1;

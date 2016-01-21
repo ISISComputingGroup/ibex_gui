@@ -6,7 +6,8 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.wb.swt.SWTResourceManager;
 
-public class StatusLineConfigLabel extends ContributionItem{
+@SuppressWarnings("checkstyle:magicnumber")
+public class StatusLineConfigLabel extends ContributionItem {
 
 	private Label lbl;
 	private String lblText;

@@ -39,7 +39,7 @@ public enum PeriodControlType {
 		}
 	}
 	
-	private PeriodControlType(String text) {
+	PeriodControlType(String text) {
 		this.text = text;
 	}
 	 

@@ -31,6 +31,7 @@ import uk.ac.stfc.isis.ibex.ui.configserver.editing.CellDecorator;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.DecoratedCellLabelProvider;
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundTable;
 
+@SuppressWarnings("checkstyle:magicnumber")
 public class IocsTable extends DataboundTable<EditableIoc> {
 
 	private final CellDecorator<EditableIoc> rowDecorator = new IocRowCellDecorator();
@@ -77,7 +78,7 @@ public class IocsTable extends DataboundTable<EditableIoc> {
 	
 	private void autostart() {
 		TableViewerColumn enabled = createColumn("Auto-start?", 2);
-		IObservableMap[] stateProperties = { observeProperty("autostart") };
+		IObservableMap[] stateProperties = {observeProperty("autostart")};
 		enabled.setLabelProvider(new IocCheckboxLabelProvider<Ioc>(stateProperties) {	
 			@Override
 			protected boolean checked(Ioc ioc) {
@@ -98,7 +99,7 @@ public class IocsTable extends DataboundTable<EditableIoc> {
 	
 	private void restart() {
 		TableViewerColumn enabled = createColumn("Auto-restart?", 2);
-		IObservableMap[] stateProperties = { observeProperty("restart") };
+		IObservableMap[] stateProperties = {observeProperty("restart")};
 		enabled.setLabelProvider(new IocCheckboxLabelProvider<Ioc>(stateProperties) {	
 			@Override
 			protected boolean checked(Ioc ioc) {
