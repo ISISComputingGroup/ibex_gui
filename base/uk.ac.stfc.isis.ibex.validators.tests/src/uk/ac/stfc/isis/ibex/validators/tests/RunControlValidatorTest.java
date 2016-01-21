@@ -22,8 +22,8 @@
  */
 package uk.ac.stfc.isis.ibex.validators.tests;
 
-import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
@@ -112,5 +112,15 @@ public class RunControlValidatorTest {
     @Test
     public void valid_limits_equal() {
         checkPassedWithMessage("5.0", "5.0", RunControlValidator.NO_ERROR);
+    }
+
+    @Test
+    public void null_limits_set_no_error() {
+        checkFailedWithMessage(null, null, RunControlValidator.NO_ERROR);
+    }
+
+    @Test
+    public void null_highlimit_set_no_error() {
+        checkFailedWithMessage("2.0", null, RunControlValidator.NO_ERROR);
     }
 }
