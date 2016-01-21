@@ -24,27 +24,29 @@ import org.eclipse.core.databinding.beans.BeanProperties;
 import org.eclipse.core.databinding.observable.list.IObservableList;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.databinding.viewers.ObservableListContentProvider;
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.widgets.Group;
-import org.eclipse.swt.widgets.Button;
-import org.eclipse.swt.widgets.Text;
-import org.eclipse.wb.swt.ResourceManager;
-import org.eclipse.wb.swt.SWTResourceManager;
-import org.eclipse.swt.widgets.List;
+import org.eclipse.jface.databinding.viewers.ViewerProperties;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.ListViewer;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
-import org.eclipse.jface.databinding.viewers.ViewerProperties;
-import org.eclipse.swt.events.ModifyListener;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.KeyEvent;
+import org.eclipse.swt.events.KeyListener;
 import org.eclipse.swt.events.ModifyEvent;
+import org.eclipse.swt.events.ModifyListener;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Group;
+import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.List;
+import org.eclipse.swt.widgets.Text;
+import org.eclipse.wb.swt.ResourceManager;
+import org.eclipse.wb.swt.SWTResourceManager;
 
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableGroup;
@@ -62,6 +64,8 @@ public class GroupsEditorPanel extends Composite {
 	private ListViewer groupsViewer;
 	private List groupList;
 	
+    private boolean canEditSelected;
+
 	private DataBindingContext bindingContext = new DataBindingContext();
 	
 	public GroupsEditorPanel(Composite parent, int style, final MessageDisplayer messageDisplayer) {
@@ -79,6 +83,18 @@ public class GroupsEditorPanel extends Composite {
 		GridData gd_viewer = new GridData(SWT.FILL, SWT.FILL, true, true, 2, 6);
 		gd_viewer.widthHint = 125;
 		groupList.setLayoutData(gd_viewer);
+        groupList.addKeyListener(new KeyListener() {
+            @Override
+            public void keyReleased(KeyEvent e) {
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.keyCode == SWT.DEL) {
+                    removeSelectedGroup();
+                }
+            }
+        });
 		new Label(grpGroups, SWT.NONE);
 		new Label(grpGroups, SWT.NONE);
 		new Label(grpGroups, SWT.NONE);
@@ -165,7 +181,8 @@ public class GroupsEditorPanel extends Composite {
         );
 		
 		name.addModifyListener(new ModifyListener() {
-			public void modifyText(ModifyEvent arg0) {
+			@Override
+            public void modifyText(ModifyEvent arg0) {
 				groupsViewer.refresh();
 			}
 		});
@@ -235,14 +252,7 @@ public class GroupsEditorPanel extends Composite {
 		btnRemove.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				if (config != null) {
-					if (groupList.getSelectionIndex() != -1) {					
-						EditableGroup group = getSelectedGroup();
-						if (group != null) {
-					        config.removeGroup((EditableGroup) group);
-						}
-					}
-				}
+                removeSelectedGroup();
 			}
 		});
 		new Label(grpGroups, SWT.NONE);
@@ -253,18 +263,18 @@ public class GroupsEditorPanel extends Composite {
 				EditableGroup group = getSelectedGroup();
 				if (group != null) {
 			        boolean groupIsSelected = group != null;
-					boolean canEdit = groupIsSelected && group.isEditable();
+                    canEditSelected = groupIsSelected && group.isEditable();
+
+                    btnRemove.setEnabled(canEditSelected);
+                    name.setEnabled(canEditSelected);
+                    blocksEditor.setEnabled(canEditSelected);
 					
-					btnRemove.setEnabled(canEdit);
-					name.setEnabled(canEdit);
-					blocksEditor.setEnabled(canEdit);
-					
-					componentDetails.setText(componentDetail(group, canEdit));
+                    componentDetails.setText(componentDetail(group));
 				}
 			}	
 			
-			private String componentDetail(EditableGroup group, boolean canEdit) {
-				if (canEdit) {
+            private String componentDetail(EditableGroup group) {
+                if (canEditSelected) {
 					return "";
 				}
 				
@@ -313,4 +323,15 @@ public class GroupsEditorPanel extends Composite {
 	    groupsViewer.setContentProvider(contentProvider);
 	    groupsViewer.setInput(BeanProperties.list("editableGroups").observe(config));
 	}
+
+    private void removeSelectedGroup() {
+        if (config != null && canEditSelected) {
+            if (groupList.getSelectionIndex() != -1) {
+                EditableGroup group = getSelectedGroup();
+                if (group != null) {
+                    config.removeGroup(group);
+                }
+            }
+        }
+    }
 }

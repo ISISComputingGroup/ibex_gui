@@ -25,6 +25,7 @@ import java.util.Collection;
 import org.eclipse.core.databinding.observable.map.IObservableMap;
 import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.KeyListener;
 import org.eclipse.swt.widgets.Composite;
 
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableBlock;
@@ -117,4 +118,9 @@ public class BlocksTable extends DataboundTable<EditableBlock> {
 		search.setSearchText(searchText);
 		this.viewer().refresh();
 	}
+
+    @Override
+    public void addKeyListener(KeyListener listener) {
+        this.viewer().getTable().addKeyListener(listener);
+    }
 }
