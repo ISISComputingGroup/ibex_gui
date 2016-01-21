@@ -89,58 +89,55 @@ public class TargetDetailView extends Composite {
 		labelComposite = new Composite(parent, SWT.NONE);
 		labelComposite.setLayoutData(new GridData(SWT.CENTER, SWT.FILL, true, false, 1, 1));
 		labelComposite.setLayout(new GridLayout(1, false));
-		{
-            lblNoSelection = new Label(labelComposite, SWT.NONE);
-			lblNoSelection.setText("Select a Component to view/edit details");
-		}
+
+        lblNoSelection = new Label(labelComposite, SWT.NONE);
+        lblNoSelection.setText("Select a Component to view/edit details");
 		
 		fieldsComposite = new Composite(parent, SWT.NONE);
 		fieldsComposite.setLayout(new GridLayout(2, false));
 		fieldsComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
-		{
-			Label lblName = new Label(fieldsComposite, SWT.NONE);
-			lblName.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-			lblName.setText("Name");
-			
-			nameSelect = new TargetNameWidget(fieldsComposite, instrument);
-			nameSelect.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-			
-			Label lblDescription = new Label(fieldsComposite, SWT.NONE);
-			lblDescription.setLayoutData(new GridData(SWT.RIGHT, SWT.TOP, false, false, 1, 1));
-			lblDescription.setText("Description");
-			
-			TargetDescriptionWidget desc = new TargetDescriptionWidget(fieldsComposite, instrument);
-			GridData gdDescription = new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1);
-			gdDescription.heightHint = 100;
-			desc.setLayoutData(gdDescription);
-			
-			Label lblProperties = new Label(fieldsComposite, SWT.NONE);
-			lblProperties.setLayoutData(new GridData(SWT.RIGHT, SWT.TOP, false, false, 1, 1));
-			lblProperties.setText("Properties");
-			
-			TargetPropertyList properties = new TargetPropertyList(fieldsComposite, instrument);
-			properties.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
-			properties.showPropertyList(instrument.getFirstSelectedComponent());
-		}
 		
+        Label lblName = new Label(fieldsComposite, SWT.NONE);
+        lblName.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
+        lblName.setText("Name");
+
+        nameSelect = new TargetNameWidget(fieldsComposite, instrument);
+        nameSelect.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+
+        Label lblDescription = new Label(fieldsComposite, SWT.NONE);
+        lblDescription.setLayoutData(new GridData(SWT.RIGHT, SWT.TOP, false, false, 1, 1));
+        lblDescription.setText("Description");
+
+        TargetDescriptionWidget desc = new TargetDescriptionWidget(fieldsComposite, instrument);
+        GridData gdDescription = new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1);
+        gdDescription.heightHint = 100;
+        desc.setLayoutData(gdDescription);
+
+        Label lblProperties = new Label(fieldsComposite, SWT.NONE);
+        lblProperties.setLayoutData(new GridData(SWT.RIGHT, SWT.TOP, false, false, 1, 1));
+        lblProperties.setText("Properties");
+
+        TargetPropertyList properties = new TargetPropertyList(fieldsComposite, instrument);
+        properties.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+        properties.showPropertyList(instrument.getFirstSelectedComponent());
+
 		addComposite = new Composite(parent, SWT.NONE);
 		addComposite.setLayoutData(new GridData(SWT.CENTER, SWT.FILL, true, false, 1, 1));
 		addComposite.setLayout(new GridLayout(1, false));
-		{
-			Label lblNoTarget = new Label(addComposite, SWT.NONE);
-			lblNoTarget.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1));
-			lblNoTarget.setText("Component currently has no target.");
-			
-			Button btnAdd = new Button(addComposite, SWT.NONE);
-		    btnAdd.setLayoutData(new GridData(SWT.CENTER, SWT.FILL, false, false, 1, 1));
-		    btnAdd.setText("Add Target");
-			btnAdd.addSelectionListener(new SelectionAdapter() {
-				@Override
-				public void widgetSelected(SelectionEvent e) {
-					instrument.addTargetToSelectedComponent();
-				}
-			});
-		}
+
+        Label lblNoTarget = new Label(addComposite, SWT.NONE);
+        lblNoTarget.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1));
+        lblNoTarget.setText("Component currently has no target.");
+
+        Button btnAdd = new Button(addComposite, SWT.NONE);
+        btnAdd.setLayoutData(new GridData(SWT.CENTER, SWT.FILL, false, false, 1, 1));
+        btnAdd.setText("Add Target");
+        btnAdd.addSelectionListener(new SelectionAdapter() {
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                instrument.addTargetToSelectedComponent();
+            }
+        });
 	}
 	
     private void showTarget(ComponentDescription component) {

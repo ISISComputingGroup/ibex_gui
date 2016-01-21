@@ -23,7 +23,7 @@ import uk.ac.stfc.isis.ibex.epics.observing.Subscription;
 import uk.ac.stfc.isis.ibex.epics.pv.Closable;
 import uk.ac.stfc.isis.ibex.model.SetCommand;
 
-public class WritingSetCommand<T> extends SetCommand<T> implements Closable {
+public final class WritingSetCommand<T> extends SetCommand<T> implements Closable {
 		
 	private final Subscription destinationSubscription;
 	private final Subscription writerSubscription;	

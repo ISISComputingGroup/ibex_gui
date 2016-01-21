@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class ExpDataFieldsCreator {
+public final class ExpDataFieldsCreator {
 	private static List<ExpDataFieldsEnum> experimentteamsFields = new ArrayList<ExpDataFieldsEnum>(
 			Arrays.asList(ExpDataFieldsEnum.USER_ID, ExpDataFieldsEnum.EXPERIMENT_ID, ExpDataFieldsEnum.ROLE_ID));
 

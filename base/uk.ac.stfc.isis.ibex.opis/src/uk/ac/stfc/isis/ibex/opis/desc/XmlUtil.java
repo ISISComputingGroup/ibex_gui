@@ -21,10 +21,12 @@ package uk.ac.stfc.isis.ibex.opis.desc;
 
 import java.io.StringReader;
 import java.io.StringWriter;
+
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
+
 import org.xml.sax.SAXException;
 
 
@@ -32,7 +34,7 @@ import org.xml.sax.SAXException;
  * Utilities for converting descriptions from and to XML.
  *
  */
-public class XmlUtil {
+public final class XmlUtil {
 	private static JAXBContext context;
 	private static Unmarshaller unmarshaller;
     private static Marshaller marshaller;

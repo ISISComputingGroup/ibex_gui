@@ -33,8 +33,11 @@ import uk.ac.stfc.isis.ibex.synoptic.model.desc.TargetType;
  * @author kvlb23
  *
  */
-public class DefaultTargetForComponent {
+public final class DefaultTargetForComponent {
     
+    private DefaultTargetForComponent() {
+    }
+
     public static TargetDescription defaultTarget(ComponentType compType) {
         TargetDescription target = new TargetDescription();
         String targetName = "NONE";
@@ -97,6 +100,10 @@ public class DefaultTargetForComponent {
             case SINGLESTAGE:
                 targetName = "Single Stage";
                 break;
+            default:
+                // no sensible default(s) at present
+                break;
+
         }
 
         if (targetName != "NONE") {

@@ -18,10 +18,9 @@
 
 package uk.ac.stfc.isis.ibex.databases.preferences;
 
+import uk.ac.stfc.isis.ibex.databases.Databases;
 import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
 import uk.ac.stfc.isis.ibex.instrument.InstrumentInfoReceiver;
-import uk.ac.stfc.isis.ibex.databases.Databases;
-import uk.ac.stfc.isis.ibex.databases.preferences.PreferenceSupplier;
 
 public class SQLSettings implements InstrumentInfoReceiver {
 

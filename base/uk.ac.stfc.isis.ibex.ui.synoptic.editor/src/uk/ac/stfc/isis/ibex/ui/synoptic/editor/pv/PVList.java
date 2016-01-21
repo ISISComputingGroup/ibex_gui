@@ -103,57 +103,55 @@ public class PVList extends Composite {
 	    Composite moveComposite = new Composite(parent, SWT.NONE);
 	    moveComposite.setLayout(new GridLayout(1, false));
 	    moveComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
-	    {
-	    	btnUp = new Button(moveComposite, SWT.NONE);
-	    	btnUp.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
-	    	btnUp.setImage(ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui", "icons/move_up.png"));
-	    	btnUp.setEnabled(false);
-	    	btnUp.addSelectionListener(new SelectionAdapter() {
-				@Override
-				public void widgetSelected(SelectionEvent e) {
-					instrument.promoteSelectedPV();
-				}
-			});
-	    	
-	    	btnDown = new Button(moveComposite, SWT.NONE);
-	    	btnDown.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
-	    	btnDown.setImage(ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui", "icons/move_down.png"));
-	    	btnDown.setEnabled(false);
-	    	btnDown.addSelectionListener(new SelectionAdapter() {
-				@Override
-				public void widgetSelected(SelectionEvent e) {
-					instrument.demoteSelectedPV();
-				}
-			});
-	    }
+
+        btnUp = new Button(moveComposite, SWT.NONE);
+        btnUp.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
+        btnUp.setImage(ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui", "icons/move_up.png"));
+        btnUp.setEnabled(false);
+        btnUp.addSelectionListener(new SelectionAdapter() {
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                instrument.promoteSelectedPV();
+            }
+        });
+
+        btnDown = new Button(moveComposite, SWT.NONE);
+        btnDown.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
+        btnDown.setImage(ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui", "icons/move_down.png"));
+        btnDown.setEnabled(false);
+        btnDown.addSelectionListener(new SelectionAdapter() {
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                instrument.demoteSelectedPV();
+            }
+        });
 	    
 	    Composite controlComposite = new Composite(parent, SWT.NONE);
 	    controlComposite.setLayout(new GridLayout(1, false));
 	    controlComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-	    {
-		    btnAdd = new Button(controlComposite, SWT.NONE);
-		    btnAdd.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
-		    btnAdd.setText("Add New PV");
-			btnAdd.addSelectionListener(new SelectionAdapter() {
-				@Override
-				public void widgetSelected(SelectionEvent e) {
-					int index = instrument.addNewPV();
-					list.getList().select(index);
-					updateSelection();
-				}
-			});
-		    
-		    btnDelete = new Button(controlComposite, SWT.NONE);
-			btnDelete.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
-			btnDelete.setText("Remove PV");
-			btnDelete.setEnabled(false);
-			btnDelete.addSelectionListener(new SelectionAdapter() {
-				@Override
-				public void widgetSelected(SelectionEvent e) {
-					instrument.removeSelectedPV();
-				}
-			});
-	    }
+
+        btnAdd = new Button(controlComposite, SWT.NONE);
+        btnAdd.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+        btnAdd.setText("Add New PV");
+        btnAdd.addSelectionListener(new SelectionAdapter() {
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                int index = instrument.addNewPV();
+                list.getList().select(index);
+                updateSelection();
+            }
+        });
+
+        btnDelete = new Button(controlComposite, SWT.NONE);
+        btnDelete.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+        btnDelete.setText("Remove PV");
+        btnDelete.setEnabled(false);
+        btnDelete.addSelectionListener(new SelectionAdapter() {
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                instrument.removeSelectedPV();
+            }
+        });
 	}
 	
 	public void showPvList(ComponentDescription component) {

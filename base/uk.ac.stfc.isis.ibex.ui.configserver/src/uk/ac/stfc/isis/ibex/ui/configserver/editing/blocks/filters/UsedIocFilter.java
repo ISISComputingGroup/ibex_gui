@@ -21,15 +21,18 @@ package uk.ac.stfc.isis.ibex.ui.configserver.editing.blocks.filters;
 
 import java.util.Collection;
 
-import uk.ac.stfc.isis.ibex.configserver.configuration.SimLevel;
-import uk.ac.stfc.isis.ibex.configserver.editing.EditableIoc;
-
 import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 
-public class UsedIocFilter {
+import uk.ac.stfc.isis.ibex.configserver.configuration.SimLevel;
+import uk.ac.stfc.isis.ibex.configserver.editing.EditableIoc;
+
+public final class UsedIocFilter {
 	
+    private UsedIocFilter() {
+    }
+
 	public static Collection<EditableIoc> filterIocs(Collection<EditableIoc> unfiltered) {
 		return Lists.newArrayList(Iterables.filter(unfiltered, new Predicate<EditableIoc>() {
 			@Override

@@ -154,7 +154,7 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
         public int windowY;
         public boolean windowMaximised;
 
-        public WindowLayout(int height, int width, int x, int y, boolean maximised) {
+        WindowLayout(int height, int width, int x, int y, boolean maximised) {
             windowHeight = height;
             windowWidth = width;
             windowX = x;

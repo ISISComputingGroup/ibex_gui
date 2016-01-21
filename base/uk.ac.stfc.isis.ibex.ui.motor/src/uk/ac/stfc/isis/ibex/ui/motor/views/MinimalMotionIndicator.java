@@ -27,13 +27,13 @@ import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.wb.swt.ResourceManager;
-import org.eclipse.swt.layout.GridData;
 
 import uk.ac.stfc.isis.ibex.motor.Motor;
 import uk.ac.stfc.isis.ibex.motor.MotorDirection;
@@ -222,6 +222,7 @@ public class MinimalMotionIndicator extends Composite {
 				leftDirection.setImage(leftArrow.enabled());
 				rightDirection.setImage(rightArrow.disabled());
 				return;
+            default:
 			case UNKNOWN:
 				leftDirection.setImage(leftArrow.disabled());
 				rightDirection.setImage(rightArrow.disabled());

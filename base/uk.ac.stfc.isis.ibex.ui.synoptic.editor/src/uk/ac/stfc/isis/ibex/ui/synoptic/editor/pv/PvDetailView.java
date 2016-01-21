@@ -131,83 +131,81 @@ public class PvDetailView extends Composite {
 		labelComposite = new Composite(parent, SWT.NONE);
 		labelComposite.setLayoutData(new GridData(SWT.CENTER, SWT.FILL, true, false, 1, 1));
 		labelComposite.setLayout(new FillLayout());
-		{
-			Label lblNoSelection = new Label(labelComposite, SWT.NONE);
-			lblNoSelection.setText("Select a PV to view/edit details");
-		}
+
+        Label lblNoSelection = new Label(labelComposite, SWT.NONE);
+        lblNoSelection.setText("Select a PV to view/edit details");
 		
 		fieldsComposite = new Composite(parent, SWT.NONE);
 		fieldsComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 		fieldsComposite.setLayout(new GridLayout(2, false));
-		{
-			Label lblName = new Label(fieldsComposite, SWT.NONE);
-			lblName.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-			lblName.setText("Name");
-			
-			txtName = new Text(fieldsComposite, SWT.BORDER);
-			txtName.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-			
-			txtName.addModifyListener(new ModifyListener() {
-				@Override
-				public void modifyText(ModifyEvent e) {
-					updateModel();
-				}
-			});
-			
-			Label lblAddress = new Label(fieldsComposite, SWT.NONE);
-			lblAddress.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-			lblAddress.setText("Address");
-			
-			txtAddress = new Text(fieldsComposite, SWT.BORDER);
-			txtAddress.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-			
-			txtAddress.addModifyListener(new ModifyListener() {
-				@Override
-				public void modifyText(ModifyEvent e) {
-                    updateAddress();
-				}
-			});
-			
-			Label lblMode = new Label(fieldsComposite, SWT.NONE);
-			lblMode.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-			lblMode.setText("Mode");
-			
-			cmboMode = new ComboViewer(fieldsComposite, SWT.READ_ONLY);
-			cmboMode.getCombo().setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-			
-			cmboMode.setContentProvider(ArrayContentProvider.getInstance());
-			cmboMode.setInput(modeList);
-			cmboMode.getCombo().select(0);
-			cmboMode.addSelectionChangedListener(new ISelectionChangedListener() {
-				@Override
-				public void selectionChanged(SelectionChangedEvent event) {
-					updateModel();
-				}
-			});
-			
-			Label lblType = new Label(fieldsComposite, SWT.NONE);
-			lblType.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-			lblType.setText("Type");
-			
-			cmboType = new ComboViewer(fieldsComposite, SWT.READ_ONLY);
-			GridData gdCmboType = new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1);
-			cmboType.getCombo().setLayoutData(gdCmboType);
-			GridData gdBtnUp = new GridData(SWT.LEFT, SWT.BOTTOM, false, true, 1, 1);
-			gdBtnUp.widthHint = 80;
-			
-			cmboType.setContentProvider(ArrayContentProvider.getInstance());
-			cmboType.setInput(typeList);
-			cmboType.getCombo().select(0);
-			cmboType.addSelectionChangedListener(new ISelectionChangedListener() {
-				@Override
-				public void selectionChanged(SelectionChangedEvent event) {
-					updateModel();
-				}
-			});
 
-            lblError = new Label(fieldsComposite, SWT.NONE);
-            lblError.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1));
-		}
+        Label lblName = new Label(fieldsComposite, SWT.NONE);
+        lblName.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
+        lblName.setText("Name");
+
+        txtName = new Text(fieldsComposite, SWT.BORDER);
+        txtName.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+
+        txtName.addModifyListener(new ModifyListener() {
+            @Override
+            public void modifyText(ModifyEvent e) {
+                updateModel();
+            }
+        });
+
+        Label lblAddress = new Label(fieldsComposite, SWT.NONE);
+        lblAddress.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
+        lblAddress.setText("Address");
+
+        txtAddress = new Text(fieldsComposite, SWT.BORDER);
+        txtAddress.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+
+        txtAddress.addModifyListener(new ModifyListener() {
+            @Override
+            public void modifyText(ModifyEvent e) {
+                updateAddress();
+            }
+        });
+
+        Label lblMode = new Label(fieldsComposite, SWT.NONE);
+        lblMode.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
+        lblMode.setText("Mode");
+
+        cmboMode = new ComboViewer(fieldsComposite, SWT.READ_ONLY);
+        cmboMode.getCombo().setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+
+        cmboMode.setContentProvider(ArrayContentProvider.getInstance());
+        cmboMode.setInput(modeList);
+        cmboMode.getCombo().select(0);
+        cmboMode.addSelectionChangedListener(new ISelectionChangedListener() {
+            @Override
+            public void selectionChanged(SelectionChangedEvent event) {
+                updateModel();
+            }
+        });
+
+        Label lblType = new Label(fieldsComposite, SWT.NONE);
+        lblType.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
+        lblType.setText("Type");
+
+        cmboType = new ComboViewer(fieldsComposite, SWT.READ_ONLY);
+        GridData gdCmboType = new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1);
+        cmboType.getCombo().setLayoutData(gdCmboType);
+        GridData gdBtnUp = new GridData(SWT.LEFT, SWT.BOTTOM, false, true, 1, 1);
+        gdBtnUp.widthHint = 80;
+
+        cmboType.setContentProvider(ArrayContentProvider.getInstance());
+        cmboType.setInput(typeList);
+        cmboType.getCombo().select(0);
+        cmboType.addSelectionChangedListener(new ISelectionChangedListener() {
+            @Override
+            public void selectionChanged(SelectionChangedEvent event) {
+                updateModel();
+            }
+        });
+
+        lblError = new Label(fieldsComposite, SWT.NONE);
+        lblError.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1));
 	}
 
 	private void showPV(PV componentPv) {

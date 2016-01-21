@@ -19,7 +19,10 @@
 
 package uk.ac.stfc.isis.ibex.instrument.internal;
 
-public class UserName {
+public final class UserName {
+
+    private UserName() {
+    }
 
 	public static String get() {
 		return userName();

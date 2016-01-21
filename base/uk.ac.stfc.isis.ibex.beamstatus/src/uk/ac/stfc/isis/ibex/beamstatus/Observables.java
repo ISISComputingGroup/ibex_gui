@@ -87,7 +87,7 @@ public class Observables extends ModelAdapter {
 		}
 	}
 	
-	public class EndStation {
+    public class EndStation {
 		private final UpdatedValue<String> beam;
 		private final UpdatedValue<String> pps;
 		private final UpdatedValue<String> beamCurrent;
@@ -95,7 +95,7 @@ public class Observables extends ModelAdapter {
 		private final UpdatedValue<String> lastBeamOff;
 		private final UpdatedValue<String> lastBeamOn;
 		
-		private EndStation(BeamStatusObservables.EndStation endStation) {
+        public EndStation(BeamStatusObservables.EndStation endStation) {
 			beam = adaptEnum(endStation.beam());
 			pps = adaptNumber(endStation.pps());
 			beamCurrent = adaptNumber(endStation.beamCurrent());

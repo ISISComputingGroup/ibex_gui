@@ -5,7 +5,7 @@ import static org.mockito.Mockito.*;
 import uk.ac.stfc.isis.ibex.epics.observing.ClosableObservable;
 
 @SuppressWarnings({ "unchecked" })
-public class TestHelpers {
+public final class TestHelpers {
 	
 	public static final String STRING_VALUE = "value";
 	public static final String NEW_STRING_VALUE = "new_value";
@@ -14,6 +14,9 @@ public class TestHelpers {
 	
 	public static final Exception EXCEPTION = new Exception();
 	
+    private TestHelpers() {
+    }
+
 	/**
 	 * Creates a mock ClosableCachingObservable that returns the object value when the getValue method is called.
 	 *  

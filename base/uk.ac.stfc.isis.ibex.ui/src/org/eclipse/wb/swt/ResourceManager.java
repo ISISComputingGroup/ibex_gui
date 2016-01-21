@@ -192,12 +192,11 @@ public class ResourceManager extends SWTResourceManager {
 	public static void disposeImages() {
 		SWTResourceManager.disposeImages();
 		// dispose ImageDescriptor images
-		{
-			for (Iterator<Image> i = mDescriptorImageMap.values().iterator(); i.hasNext();) {
-				i.next().dispose();
-			}
-			mDescriptorImageMap.clear();
+        for (Iterator<Image> i = mDescriptorImageMap.values().iterator(); i.hasNext();) {
+            i.next().dispose();
 		}
+        mDescriptorImageMap.clear();
+
 		// dispose decorated images
 		for (int i = 0; i < mDecoratedImageMap.length; i++) {
 			Map<Image, Map<Image, Image>> cornerDecoratedImageMap = mDecoratedImageMap[i];
@@ -212,12 +211,10 @@ public class ResourceManager extends SWTResourceManager {
 			}
 		}
 		// dispose plugin images
-		{
-			for (Iterator<Image> i = mURLImageMap.values().iterator(); i.hasNext();) {
-				i.next().dispose();
-			}
-			mURLImageMap.clear();
+        for (Iterator<Image> i = mURLImageMap.values().iterator(); i.hasNext();) {
+            i.next().dispose();
 		}
+        mURLImageMap.clear();
 	}
 	////////////////////////////////////////////////////////////////////////////
 	//
@@ -356,13 +353,12 @@ public class ResourceManager extends SWTResourceManager {
 	 * Returns an {@link URL} based on a {@link Bundle} and resource entry path.
 	 */
 	private static URL getPluginImageURL(String symbolicName, String path) {
-		// try runtime plugins
-		{
-			Bundle bundle = Platform.getBundle(symbolicName);
-			if (bundle != null) {
-				return bundle.getEntry(path);
-			}
+        // try runtime plugins
+        Bundle bundle = Platform.getBundle(symbolicName);
+        if (bundle != null) {
+            return bundle.getEntry(path);
 		}
+
 		// try design time provider
 		if (mDesignTimePluginResourceProvider != null) {
 			return mDesignTimePluginResourceProvider.getEntry(symbolicName, path);
@@ -402,18 +398,16 @@ public class ResourceManager extends SWTResourceManager {
 			// Ignore any exceptions
 		}
 		// else work with 'plugin' as with usual Eclipse plugin
-		{
-			Class<?> pluginClass = Class.forName("org.eclipse.core.runtime.Plugin"); //$NON-NLS-1$
-			if (pluginClass.isAssignableFrom(plugin.getClass())) {
-				//
-				Class<?> pathClass = Class.forName("org.eclipse.core.runtime.Path"); //$NON-NLS-1$
-				Constructor<?> pathConstructor = pathClass.getConstructor(new Class[]{String.class});
-				Object path = pathConstructor.newInstance(new Object[]{name});
-				//
-				Class<?> iPathClass = Class.forName("org.eclipse.core.runtime.IPath"); //$NON-NLS-1$
-				Method findMethod = pluginClass.getMethod("find", new Class[]{iPathClass}); //$NON-NLS-1$
-				return (URL) findMethod.invoke(plugin, new Object[]{path});
-			}
+        Class<?> pluginClass = Class.forName("org.eclipse.core.runtime.Plugin"); //$NON-NLS-1$
+        if (pluginClass.isAssignableFrom(plugin.getClass())) {
+            //
+            Class<?> pathClass = Class.forName("org.eclipse.core.runtime.Path"); //$NON-NLS-1$
+            Constructor<?> pathConstructor = pathClass.getConstructor(new Class[] {String.class});
+            Object path = pathConstructor.newInstance(new Object[] {name});
+            //
+            Class<?> iPathClass = Class.forName("org.eclipse.core.runtime.IPath"); //$NON-NLS-1$
+            Method findMethod = pluginClass.getMethod("find", new Class[] {iPathClass}); //$NON-NLS-1$
+            return (URL) findMethod.invoke(plugin, new Object[] {path});
 		}
 		return null;
 	}
