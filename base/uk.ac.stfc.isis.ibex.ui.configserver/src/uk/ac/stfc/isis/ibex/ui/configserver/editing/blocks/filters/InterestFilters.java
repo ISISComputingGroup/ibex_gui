@@ -22,6 +22,7 @@ package uk.ac.stfc.isis.ibex.ui.configserver.editing.blocks.filters;
 public enum InterestFilters {
 	HIGH ("High"),
 	MEDIUM ("Medium"),
+    FACILITY("Facility"),
 	ALL ("All");
 	
 	private String displayName;
