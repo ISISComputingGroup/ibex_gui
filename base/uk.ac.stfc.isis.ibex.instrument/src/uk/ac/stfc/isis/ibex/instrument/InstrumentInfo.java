@@ -18,6 +18,10 @@
 */
 
 package uk.ac.stfc.isis.ibex.instrument;
+
+import uk.ac.stfc.isis.ibex.epics.pv.PVAddress;
+import uk.ac.stfc.isis.ibex.instrument.internal.PVPrefix;
+
 /**
  * Some basic info that defines an instrument. Instruments hostnames will always
  * start with NDX and contain only alphanumeric characters or underscores.

@@ -104,9 +104,10 @@
 					<sourceDirectory>src</sourceDirectory>
 					<!-- <consoleOutput>true</consoleOutput> -->
 					<configLocation>checkstyle.xml</configLocation>
-					<failOnViolation>false</failOnViolation>
+					<failOnViolation>true</failOnViolation>
 					<failsOnError>false</failsOnError>
 					<linkXRef>true</linkXRef>
+					<maxAllowedViolations>40</maxAllowedViolations>
 				</configuration>
 			</plugin>
 

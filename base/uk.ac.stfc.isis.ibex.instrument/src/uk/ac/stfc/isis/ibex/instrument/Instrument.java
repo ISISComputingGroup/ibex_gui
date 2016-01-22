@@ -19,20 +19,42 @@
 
 package uk.ac.stfc.isis.ibex.instrument;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
+import org.apache.logging.log4j.Logger;
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IConfigurationElement;
+import org.eclipse.core.runtime.IExtensionRegistry;
+import org.eclipse.core.runtime.Platform;
+import org.eclipse.core.runtime.preferences.ConfigurationScope;
+import org.osgi.framework.BundleActivator;
+import org.osgi.framework.BundleContext;
+import org.osgi.service.prefs.BackingStoreException;
+import org.osgi.service.prefs.Preferences;
+
+import com.google.common.base.Predicate;
+import com.google.common.collect.Iterables;
+
+import uk.ac.stfc.isis.ibex.instrument.internal.LocalHostInstrumentInfo;
+import uk.ac.stfc.isis.ibex.logger.IsisLog;
+import uk.ac.stfc.isis.ibex.model.SettableUpdatedValue;
+import uk.ac.stfc.isis.ibex.model.UpdatedValue;
 
 public class Instrument implements BundleActivator {
 
     private static final Logger LOG = IsisLog.getLogger("Instrument");
 
-    private static Instrument instance;
-	private static BundleContext context;
+    private static Instrument instan_ce;
+	private static BundleContext cont_ext;
 	
     public static Instrument getInstance() {
-    	return instance; 
+    	return instan_ce; 
     }
 	
-	private List<InstrumentInfo> instruments = new ArrayList<>();
-	private SettableUpdatedValue<String> instrumentName = new SettableUpdatedValue<>();
+	private List<InstrumentInfo> inst_ruments = new ArrayList<>();
+	private SettableUpdatedValue<String> inst_rumentName = new SettableUpdatedValue<>();
 	private InstrumentInfo instrumentInfo;
 	private final InstrumentInfo localhost;
 	
@@ -41,20 +63,20 @@ public class Instrument implements BundleActivator {
 	private static String INITIAL_INSTRUMENT = "initial";
 	
 	public Instrument() {
-		instance = this;
+		instan_ce = this;
 		
 		localhost = new LocalHostInstrumentInfo();
-		instruments.add(localhost);
-		instruments.add(new InstrumentInfo("LARMOR"));
-		instruments.add(new InstrumentInfo("ALF"));
-		instruments.add(new InstrumentInfo("DEMO"));
-		instruments.add(new InstrumentInfo("IMAT"));
+		inst_ruments.add(localhost);
+		inst_ruments.add(new InstrumentInfo("LARMOR"));
+		inst_ruments.add(new InstrumentInfo("ALF"));
+		inst_ruments.add(new InstrumentInfo("DEMO"));
+		inst_ruments.add(new InstrumentInfo("IMAT"));
 		
 		setInstrument(initialInstrument());	
 	}
     
 	public UpdatedValue<String> name() {
-		return instrumentName;
+		return inst_rumentName;
 	}
 	
     public String getPvPrefix() {
@@ -62,11 +84,11 @@ public class Instrument implements BundleActivator {
     }
 
 	public Collection<InstrumentInfo> instruments() {
-		return instruments;
+		return inst_ruments;
 	}
 	
 	static BundleContext getContext() {
-		return context;
+		return cont_ext;
 	}
 
 	/*
@@ -75,7 +97,7 @@ public class Instrument implements BundleActivator {
 	 */
 	@Override
     public void start(BundleContext bundleContext) throws Exception {
-		Instrument.context = bundleContext;
+		Instrument.cont_ext = bundleContext;
 	}
 
 	/*
@@ -84,7 +106,7 @@ public class Instrument implements BundleActivator {
 	 */
 	@Override
     public void stop(BundleContext bundleContext) throws Exception {
-		Instrument.context = null;
+		Instrument.cont_ext = null;
 	}
 
 	public void setInstrument(InstrumentInfo selectedInstrument) {
@@ -95,7 +117,7 @@ public class Instrument implements BundleActivator {
             return;
 		}
 
-        instrumentName.setValue(selectedInstrument.name());
+        inst_rumentName.setValue(selectedInstrument.name());
 
 		updateExtendingPlugins(selectedInstrument);
 	}
@@ -120,7 +142,7 @@ public class Instrument implements BundleActivator {
 	private InstrumentInfo initialInstrument() {
 		final String initalName = initalPreference.get(INITIAL_INSTRUMENT, localhost.name());
 		
-		return Iterables.find(instruments, new Predicate<InstrumentInfo>() {
+		return Iterables.find(inst_ruments, new Predicate<InstrumentInfo>() {
 			@Override
 			public boolean apply(InstrumentInfo info) {
 				return initalName.endsWith(info.name());
