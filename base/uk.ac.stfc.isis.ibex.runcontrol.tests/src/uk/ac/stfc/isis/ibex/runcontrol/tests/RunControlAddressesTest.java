@@ -37,7 +37,7 @@ public class RunControlAddressesTest {
 		String ans = addresses.getLowLimitPv(blockName);
 
 		// Assert
-		assertEquals("CS:SB:blockname:RC:LOW", ans);
+        assertEquals("CS:SB:blockname:RC:", ans);
 	}
 	
 	@Test
@@ -50,7 +50,7 @@ public class RunControlAddressesTest {
 		String ans = addresses.getHighLimitPv(blockName);
 
 		// Assert
-		assertEquals("CS:SB:blockname:RC:HIGH", ans);
+        assertEquals("CS:SB:blockname:RC:", ans);
 	}
 	
 	@Test
@@ -63,7 +63,7 @@ public class RunControlAddressesTest {
 		String ans = addresses.getEnablePv(blockName);
 
 		// Assert
-		assertEquals("CS:SB:blockname:RC:ENABLE", ans);
+        assertEquals("CS:SB:blockname:RC:EN", ans);
 	}
 	
 	@Test
