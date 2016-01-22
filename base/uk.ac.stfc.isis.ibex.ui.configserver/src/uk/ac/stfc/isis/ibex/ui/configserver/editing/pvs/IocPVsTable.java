@@ -23,7 +23,6 @@ import java.util.Collection;
 
 import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.KeyListener;
 import org.eclipse.swt.widgets.Composite;
 
 import uk.ac.stfc.isis.ibex.configserver.configuration.PVDefaultValue;
@@ -71,9 +70,4 @@ public class IocPVsTable extends DataboundTable<PVDefaultValue> {
 	public void setSelection(int i) {
 		table().setSelection(i);
 	}
-
-    @Override
-    public void addKeyListener(KeyListener listener) {
-        this.viewer().getTable().addKeyListener(listener);
-    }
 }

@@ -37,15 +37,18 @@ import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.FocusListener;
+import org.eclipse.swt.events.KeyListener;
 import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
+import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
+import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.wb.swt.SWTResourceManager;
-import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.layout.GridData;
 
 public abstract class DataboundTable<TRow> extends Composite {
 
@@ -259,4 +262,18 @@ public abstract class DataboundTable<TRow> extends Composite {
 	protected IObservableMap observeProperty(String propertyName) {
 		return BeanProperties.value(rowType, propertyName).observeDetail(contentProvider.getKnownElements());
 	}	
+
+    @Override
+    public void addKeyListener(KeyListener listener) {
+        viewer.getTable().addKeyListener(listener);
+    }
+
+    public TRow getItemAtPoint(Point pt) {
+        TableItem item = table.getItem(pt);
+        if (item == null) {
+            return null;
+        }
+        return firstSelectedRow();
+    }
 }
+

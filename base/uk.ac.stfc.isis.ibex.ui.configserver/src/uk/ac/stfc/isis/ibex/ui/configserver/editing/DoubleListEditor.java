@@ -26,18 +26,18 @@ import org.eclipse.core.databinding.observable.list.ListChangeEvent;
 import org.eclipse.jface.databinding.viewers.ObservableListContentProvider;
 import org.eclipse.jface.databinding.viewers.ObservableMapLabelProvider;
 import org.eclipse.jface.databinding.viewers.ViewerProperties;
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.List;
-import org.eclipse.wb.swt.ResourceManager;
+import org.eclipse.jface.viewers.ListViewer;
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
-import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
-import org.eclipse.jface.viewers.ListViewer;
+import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.List;
+import org.eclipse.wb.swt.ResourceManager;
 
 @SuppressWarnings({"checkstyle:magicnumber", "checkstyle:localvariablename"})
 public class DoubleListEditor extends Composite {
