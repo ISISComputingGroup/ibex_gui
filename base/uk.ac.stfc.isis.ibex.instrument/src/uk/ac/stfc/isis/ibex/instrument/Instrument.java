@@ -31,11 +31,6 @@ public class Instrument implements BundleActivator {
     	return instance; 
     }
 	
-	private List<InstrumentInfo> instruments = new ArrayList<>();
-	private SettableUpdatedValue<String> instrumentName = new SettableUpdatedValue<>();
-	private InstrumentInfo instrumentInfo;
-	private final InstrumentInfo localhost;
-	
 	private final Preferences initalPreference = ConfigurationScope.INSTANCE.getNode("uk.ac.stfc.isis.ibex.instrument").node("preferences");
 	
 	private static String INITIAL_INSTRUMENT = "initial";
