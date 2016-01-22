@@ -25,8 +25,8 @@ import java.util.List;
  */
 
 public interface SynopticParentDescription {
-	public List<ComponentDescription> components();
-	public void addComponent(ComponentDescription component);
-	public void addComponent(ComponentDescription component, int index);
-	public void removeComponent(ComponentDescription component);
+	List<ComponentDescription> components();
+	void addComponent(ComponentDescription component);
+	void addComponent(ComponentDescription component, int index);
+	void removeComponent(ComponentDescription component);
 }

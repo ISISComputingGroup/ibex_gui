@@ -41,6 +41,7 @@ import uk.ac.stfc.isis.ibex.configserver.editing.EditableIoc;
 import uk.ac.stfc.isis.ibex.ui.configserver.dialogs.MessageDisplayer;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.iocs.IIocDependentPanel;
 
+@SuppressWarnings("checkstyle:magicnumber")
 public class IocPVsEditorPanel extends Composite implements IIocDependentPanel {
 	private IocPVsTable iocPVsTable;
 	private IocPVDetailsPanel details;
@@ -54,9 +55,9 @@ public class IocPVsEditorPanel extends Composite implements IIocDependentPanel {
 		setLayout(new GridLayout(1, false));
 		
 		iocPVsTable = new IocPVsTable(this, SWT.NONE, 0);
-		GridData gd_iocPVsTable = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
-		gd_iocPVsTable.heightHint = 200;
-		iocPVsTable.setLayoutData(gd_iocPVsTable);
+		GridData gdIocPVsTable = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
+		gdIocPVsTable.heightHint = 200;
+		iocPVsTable.setLayoutData(gdIocPVsTable);
         iocPVsTable.addKeyListener(new KeyListener() {
             @Override
             public void keyReleased(KeyEvent e) {
@@ -75,16 +76,16 @@ public class IocPVsEditorPanel extends Composite implements IIocDependentPanel {
 		composite.setLayout(new GridLayout(2, false));
 		
 		btnAdd = new Button(composite, SWT.NONE);
-		GridData gd_btnAdd = new GridData(SWT.RIGHT, SWT.CENTER, true, false, 1, 1);
-		gd_btnAdd.widthHint = 70;
-		btnAdd.setLayoutData(gd_btnAdd);
+		GridData gdBtnAdd = new GridData(SWT.RIGHT, SWT.CENTER, true, false, 1, 1);
+		gdBtnAdd.widthHint = 70;
+		btnAdd.setLayoutData(gdBtnAdd);
 		btnAdd.setText("Add");
 		btnAdd.setEnabled(false);
 		
         btnRemove = new Button(composite, SWT.NONE);
-		GridData gd_btnRemove = new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1);
-		gd_btnRemove.widthHint = 70;
-		btnRemove.setLayoutData(gd_btnRemove);
+		GridData gdBtnRemove = new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1);
+		gdBtnRemove.widthHint = 70;
+		btnRemove.setLayoutData(gdBtnRemove);
 		btnRemove.setText("Remove");
 		btnRemove.addSelectionListener(new SelectionAdapter() {
 			@Override
@@ -109,7 +110,7 @@ public class IocPVsEditorPanel extends Composite implements IIocDependentPanel {
 		});
 
 		details = new IocPVDetailsPanel(this, SWT.NONE, messageDisplayer);
-        Composite detailsComposite = details;
+		Composite detailsComposite = details;
 		detailsComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		
 		iocPVsTable.addSelectionChangedListener(new ISelectionChangedListener() {
@@ -122,6 +123,7 @@ public class IocPVsEditorPanel extends Composite implements IIocDependentPanel {
 		});
 		details.setEnabled(false);
 	}
+
 
     private String generateNewName() {
         HashSet<String> names = new HashSet<String>();
@@ -137,29 +139,27 @@ public class IocPVsEditorPanel extends Composite implements IIocDependentPanel {
             }
             i++;
         } while (names.contains(name));
-
         return name;
     }
 
-    @Override
-    public CompositeContext createContext(ColorModel arg0, ColorModel arg1, RenderingHints arg2) {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    @Override
-    public void setIoc(EditableIoc ioc) {
-        this.ioc = ioc;
-        iocPVsTable.setRows(ioc != null ? ioc.getPvs() : null);
-        boolean enabled = ioc != null && ioc.isEditable();
-        setEnabled(enabled);
-        btnAdd.setEnabled(enabled);
-        details.setEnabled(enabled);
-        details.setPVs(ioc.getAvailablePVs());
-    }
+	@Override
+	public void setIoc(EditableIoc ioc) {
+		this.ioc = ioc;
+		iocPVsTable.setRows(ioc != null ? ioc.getPvs() : null);
+		boolean enabled = ioc != null && ioc.isEditable();
+		setEnabled(enabled);
+		btnAdd.setEnabled(enabled);
+		details.setEnabled(enabled);
+		details.setPVs(ioc.getAvailablePVs());
+	}
 
     private void removeSelectedPV() {
         ioc.getPvs().remove(iocPVsTable.firstSelectedRow());
         iocPVsTable.setRows(ioc.getPvs());
+    }
+
+    @Override
+    public CompositeContext createContext(ColorModel arg0, ColorModel arg1, RenderingHints arg2) {
+        return null;
     }
 }

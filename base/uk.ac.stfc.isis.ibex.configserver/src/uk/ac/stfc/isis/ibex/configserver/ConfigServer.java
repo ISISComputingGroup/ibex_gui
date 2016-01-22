@@ -100,8 +100,8 @@ public class ConfigServer extends Closer {
 		return variables.pvs;
 	}
 	
-	public ForwardingObservable<Collection<PV>> active_pvs() {
-		return variables.active_pvs;
+	public ForwardingObservable<Collection<PV>> activePVs() {
+		return variables.activePVs;
 	}
 
 	public ForwardingObservable<Collection<Component>> components() {

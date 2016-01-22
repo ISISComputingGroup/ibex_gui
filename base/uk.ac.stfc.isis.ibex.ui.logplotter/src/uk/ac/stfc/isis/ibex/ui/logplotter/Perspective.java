@@ -30,7 +30,7 @@ public class Perspective extends BasePerspective {
     public static final String ID = "uk.ac.stfc.isis.ibex.ui.logplotter.perspective"; //$NON-NLS-1$
 	
 	@Override
-	public String ID() {
+	public String id() {
 		return ID;
 	}
 

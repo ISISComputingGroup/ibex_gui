@@ -26,7 +26,9 @@ import java.util.zip.Inflater;
 
 public class Decompressor extends Converter<byte[], byte[]> {
 	
-	@Override
+    private static final int KB_IN_BYTES = 1024;
+
+    @Override
 	public byte[] convert(byte[] value) throws ConversionException {
 		final Inflater decompressor = new Inflater();
 		try {
@@ -41,7 +43,7 @@ public class Decompressor extends Converter<byte[], byte[]> {
 	private byte[] decompress(byte[] value, Inflater decompressor) throws DataFormatException, IOException {
 		decompressor.setInput(value);
 
-		byte[] buffer = new byte[1024];  
+        byte[] buffer = new byte[KB_IN_BYTES];
 		ByteArrayOutputStream outputStream = new ByteArrayOutputStream(value.length); 
 		while (notFinishedOrStarvedOfInput(decompressor)) {
 			int count = decompressor.inflate(buffer);  

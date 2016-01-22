@@ -192,7 +192,7 @@ public class BlocksEditorPanel extends Composite {
 			dialogText += "s " + blockNamesToString(toRemove) + "?";
 		}
 				
-		MessageBox dialog = new MessageBox(getShell(), SWT.ICON_WARNING | SWT.OK| SWT.CANCEL);
+		MessageBox dialog = new MessageBox(getShell(), SWT.ICON_WARNING | SWT.OK | SWT.CANCEL);
 		dialog.setText(dialogTitle);
 		dialog.setMessage(dialogText);
 		int returnCode = dialog.open();
@@ -211,7 +211,7 @@ public class BlocksEditorPanel extends Composite {
 	
 	private String blockNamesToString(List<EditableBlock> blocks) {
 		StringBuilder sb = new StringBuilder();
-		for (int i=0; i<blocks.size(); i++) {
+		for (int i = 0; i < blocks.size(); i++) {
 			EditableBlock block = blocks.get(i);
 			sb.append(block.getName());
 			if (i == blocks.size() - 2) {

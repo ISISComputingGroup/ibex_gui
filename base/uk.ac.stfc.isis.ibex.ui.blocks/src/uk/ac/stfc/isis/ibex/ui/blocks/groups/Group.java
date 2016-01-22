@@ -19,14 +19,6 @@
 
 package uk.ac.stfc.isis.ibex.ui.blocks.groups;
 
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Menu;
-import org.eclipse.swt.graphics.Color;
-import org.eclipse.swt.graphics.Font;
-import org.eclipse.swt.graphics.FontData;
-import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.layout.GridLayout;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,8 +26,16 @@ import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.beans.BeanProperties;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.graphics.Font;
+import org.eclipse.swt.graphics.FontData;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Menu;
 import org.eclipse.wb.swt.SWTResourceManager;
+
 import uk.ac.stfc.isis.ibex.configserver.displaying.DisplayBlock;
 import uk.ac.stfc.isis.ibex.configserver.displaying.DisplayGroup;
 
@@ -44,6 +44,7 @@ import uk.ac.stfc.isis.ibex.configserver.displaying.DisplayGroup;
  * Provides the display of the groups, which contain the selected blocks. Allows showing and hiding of selected blocks. 
  * 
  */
+@SuppressWarnings("checkstyle:magicnumber")
 public class Group extends Composite {
 
 	private static final Color WHITE = SWTResourceManager.getColor(SWT.COLOR_WHITE);
@@ -160,6 +161,5 @@ public class Group extends Composite {
 	@Override
 	public void setMenu(Menu menu) {
 		super.setMenu(menu);
-//		TODO: Implement this if needed
 	}
 }

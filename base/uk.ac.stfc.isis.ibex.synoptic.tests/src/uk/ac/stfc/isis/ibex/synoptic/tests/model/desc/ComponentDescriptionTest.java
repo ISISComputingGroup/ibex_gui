@@ -33,6 +33,7 @@ import uk.ac.stfc.isis.ibex.synoptic.model.desc.ComponentDescription;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.PV;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.TargetDescription;
 
+@SuppressWarnings("checkstyle:methodname")
 public class ComponentDescriptionTest {
 
     private static final String COMPONENT_NAME = "name";

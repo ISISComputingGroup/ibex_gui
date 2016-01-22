@@ -41,12 +41,13 @@ import org.eclipse.swt.widgets.Text;
 import uk.ac.stfc.isis.ibex.log.message.LogMessage;
 import uk.ac.stfc.isis.ibex.log.message.LogMessageFields;
 
+@SuppressWarnings("checkstyle:magicnumber")
 public class SingleLogMessageDialog extends Dialog {
 	/**
 	 * Ordered list of fields to display in the dialog. Doesn't include contents
 	 * as that is treated differently.
 	 */
-	private static LogMessageFields[] FIELDS = { LogMessageFields.CLIENT_NAME, 
+	private static final LogMessageFields[] FIELDS = {LogMessageFields.CLIENT_NAME, 
 			LogMessageFields.CLIENT_HOST, LogMessageFields.APPLICATION_ID,
 			LogMessageFields.SEVERITY, LogMessageFields.TYPE,
 			LogMessageFields.EVENT_TIME, LogMessageFields.CREATE_TIME, };

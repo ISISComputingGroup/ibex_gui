@@ -41,7 +41,7 @@ public enum DaeTimingSource {
 		}
 	}
 	
-	private DaeTimingSource(String text) {
+	DaeTimingSource(String text) {
 		this.text = text;
 	}
 	 

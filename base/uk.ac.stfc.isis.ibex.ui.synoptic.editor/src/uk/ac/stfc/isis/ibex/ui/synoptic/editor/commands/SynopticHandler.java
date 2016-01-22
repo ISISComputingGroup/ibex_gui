@@ -36,7 +36,7 @@ import uk.ac.stfc.isis.ibex.ui.synoptic.editor.dialogs.EditSynopticDialog;
  */
 public abstract class SynopticHandler<T> extends AbstractHandler {
 
-	protected final static Synoptic SYNOPTIC = Synoptic.getInstance();
+	protected static final Synoptic SYNOPTIC = Synoptic.getInstance();
 	
 	/**
 	 * This is an inner anonymous class inherited from SameTypeWriter with added functionality

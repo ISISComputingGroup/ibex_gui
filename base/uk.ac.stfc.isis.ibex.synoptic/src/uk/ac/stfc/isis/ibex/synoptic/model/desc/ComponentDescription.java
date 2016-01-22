@@ -174,19 +174,23 @@ public class ComponentDescription implements SynopticParentDescription {
 		}
 	}
 	
-	public List<ComponentDescription> components() {
+	@Override
+    public List<ComponentDescription> components() {
 		return components;
 	}
 	
-	public void addComponent(ComponentDescription component) {
+	@Override
+    public void addComponent(ComponentDescription component) {
 		components.add(component);
 	}
 	
-	public void addComponent(ComponentDescription component, int index) {
+	@Override
+    public void addComponent(ComponentDescription component, int index) {
 		components.add(index, component);
 	}
 	
-	public void removeComponent(ComponentDescription component) {
+	@Override
+    public void removeComponent(ComponentDescription component) {
 		components.remove(component);
 	}
 	

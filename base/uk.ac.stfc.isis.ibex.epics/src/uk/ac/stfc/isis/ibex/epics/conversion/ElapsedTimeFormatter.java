@@ -25,9 +25,11 @@ import org.joda.time.format.PeriodFormatterBuilder;
 
 public class ElapsedTimeFormatter extends Converter<Long, String> {
 		
-	@Override
+    private static final int ONE_SECOND_IN_MS = 1000;
+
+    @Override
 	public String convert(Long elapsedSeconds) throws ConversionException {
-		Period period = new Period(1000 * elapsedSeconds);
+        Period period = new Period(ONE_SECOND_IN_MS * elapsedSeconds);
 		PeriodFormatter formatter = new PeriodFormatterBuilder()
 			.appendHours().appendSuffix(" hours ")
 			.appendMinutes().appendSuffix(" min ")

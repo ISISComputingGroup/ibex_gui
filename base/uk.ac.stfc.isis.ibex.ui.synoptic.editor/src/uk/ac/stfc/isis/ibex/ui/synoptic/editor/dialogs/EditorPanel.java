@@ -37,6 +37,7 @@ import uk.ac.stfc.isis.ibex.ui.synoptic.editor.pv.PvDetailView;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.target.TargetDetailView;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.target.TargetPropertyDetailView;
 
+@SuppressWarnings("checkstyle:magicnumber")
 public class EditorPanel extends Composite {
 
 	public static final String ID = "uk.ac.stfc.isis.ibex.ui.synoptic.views.EditorView";
@@ -82,73 +83,66 @@ public class EditorPanel extends Composite {
 
 		treeComposite = new Composite(this, SWT.BORDER);
 		treeComposite.setLayout(new GridLayout(1, false));
-		treeComposite.setLayoutData(treeGridData);
-		{			
-			Label lblInstrumentTree = new Label(treeComposite, SWT.NONE);
-			lblInstrumentTree.setFont(titleFont);
-			lblInstrumentTree.setText("Instrument Tree");
-	
-            new InstrumentTreeView(treeComposite, this.synopticViewModel);
-            new InstrumentTreeControls(treeComposite, this.synopticViewModel);
-		}
+        treeComposite.setLayoutData(treeGridData);
+
+        Label lblInstrumentTree = new Label(treeComposite, SWT.NONE);
+        lblInstrumentTree.setFont(titleFont);
+        lblInstrumentTree.setText("Instrument Tree");
+
+        new InstrumentTreeView(treeComposite, this.synopticViewModel);
+        new InstrumentTreeControls(treeComposite, this.synopticViewModel);
 		
 		detailBarComposite = new Composite(this, SWT.NONE);
 		detailBarComposite.setLayout(detailBarLayout);
 		detailBarComposite.setLayoutData(detailBarData);
-		{
-			componentComposite = new Composite(detailBarComposite, SWT.BORDER);
-			componentComposite.setLayout(new GridLayout(1, false));
-			componentComposite.setLayoutData(componentGridData);
-			{
-				Label lblComponentTitle = new Label(componentComposite, SWT.NONE);
-				lblComponentTitle.setFont(titleFont);
-				lblComponentTitle.setText("Component Details");
-				
-                new ComponentDetailView(componentComposite, this.synopticViewModel);
-			}
 			
-			pvComposite = new Composite(detailBarComposite, SWT.BORDER);
-			pvComposite.setLayout(new GridLayout(1, false));
-			pvComposite.setLayoutData(pvGridData);
-			{
-				Label lblPvTitle = new Label(pvComposite, SWT.NONE);
-				lblPvTitle.setFont(titleFont);
-				lblPvTitle.setText("PV Details");
-				
-                new PvDetailView(pvComposite, this.synopticViewModel);
-			}
-		}
+        componentComposite = new Composite(detailBarComposite, SWT.BORDER);
+        componentComposite.setLayout(new GridLayout(1, false));
+        componentComposite.setLayoutData(componentGridData);
+
+        Label lblComponentTitle = new Label(componentComposite, SWT.NONE);
+        lblComponentTitle.setFont(titleFont);
+        lblComponentTitle.setText("Component Details");
+
+        new ComponentDetailView(componentComposite, this.synopticViewModel);
+
+        pvComposite = new Composite(detailBarComposite, SWT.BORDER);
+        pvComposite.setLayout(new GridLayout(1, false));
+        pvComposite.setLayoutData(pvGridData);
+
+        Label lblPvTitle = new Label(pvComposite, SWT.NONE);
+        lblPvTitle.setFont(titleFont);
+        lblPvTitle.setText("PV Details");
+
+        new PvDetailView(pvComposite, this.synopticViewModel);
 		
 		targetBarComposite = new Composite(this, SWT.NONE);
 		targetBarComposite.setLayout(targetBarLayout);
 		targetBarComposite.setLayoutData(targetBarData);
-		{
-			targetComposite = new Composite(targetBarComposite, SWT.BORDER);
-			targetComposite.setLayout(new GridLayout(1, false));
-			targetComposite.setLayoutData(targetGridData);
-			{
-				Label lblTargetTitle = new Label(targetComposite, SWT.NONE);
-				lblTargetTitle.setFont(titleFont);
-				lblTargetTitle.setText("Component Target Details");
-				
-                new TargetDetailView(targetComposite, this.synopticViewModel);
-			}
+
+        targetComposite = new Composite(targetBarComposite, SWT.BORDER);
+        targetComposite.setLayout(new GridLayout(1, false));
+        targetComposite.setLayoutData(targetGridData);
+
+        Label lblTargetTitle = new Label(targetComposite, SWT.NONE);
+        lblTargetTitle.setFont(titleFont);
+        lblTargetTitle.setText("Component Target Details");
+
+        new TargetDetailView(targetComposite, this.synopticViewModel);
 			
-			propertyComposite = new Composite(targetBarComposite, SWT.BORDER);
-			propertyComposite.setLayout(new GridLayout(1, false));
-			propertyComposite.setLayoutData(propertyGridData);
-			{
-				Label lblPropertyTitle = new Label(propertyComposite, SWT.NONE);
-				lblPropertyTitle.setFont(titleFont);
-				lblPropertyTitle.setText("Target Property Details");
-				
-				TargetPropertyDetailView propertyDetail = new TargetPropertyDetailView(propertyComposite, SWT.NONE);
-                propertyDetail.setModel(this.synopticViewModel);
-				
-				propertyDetail.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-			}
-		}
-	}
+        propertyComposite = new Composite(targetBarComposite, SWT.BORDER);
+        propertyComposite.setLayout(new GridLayout(1, false));
+        propertyComposite.setLayoutData(propertyGridData);
+
+        Label lblPropertyTitle = new Label(propertyComposite, SWT.NONE);
+        lblPropertyTitle.setFont(titleFont);
+        lblPropertyTitle.setText("Target Property Details");
+
+        TargetPropertyDetailView propertyDetail = new TargetPropertyDetailView(propertyComposite, SWT.NONE);
+        propertyDetail.setModel(this.synopticViewModel);
+
+        propertyDetail.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+    }
 	
 	public void setSynopticToEdit(SynopticDescription instrument) {
         synopticViewModel.loadInstrumentDescription(instrument);

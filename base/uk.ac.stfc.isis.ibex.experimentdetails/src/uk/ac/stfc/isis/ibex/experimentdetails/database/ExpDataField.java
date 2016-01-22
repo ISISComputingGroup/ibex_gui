@@ -23,7 +23,7 @@ public class ExpDataField {
 	private ExpDataTablesEnum table;
 	private ExpDataFieldsEnum field;
 	
-	public ExpDataField (ExpDataTablesEnum table, ExpDataFieldsEnum field) {
+	public ExpDataField(ExpDataTablesEnum table, ExpDataFieldsEnum field) {
 		this.table = table;
 		this.field = field;
 	}

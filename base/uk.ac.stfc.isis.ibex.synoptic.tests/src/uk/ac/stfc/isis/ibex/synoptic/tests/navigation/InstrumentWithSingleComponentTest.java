@@ -31,6 +31,7 @@ import org.junit.Test;
 import uk.ac.stfc.isis.ibex.synoptic.model.Synoptic;
 import uk.ac.stfc.isis.ibex.synoptic.navigation.InstrumentNavigationGraph;
 
+@SuppressWarnings("checkstyle:methodname")
 public class InstrumentWithSingleComponentTest {
 	
 	private InstrumentNavigationGraph graph;

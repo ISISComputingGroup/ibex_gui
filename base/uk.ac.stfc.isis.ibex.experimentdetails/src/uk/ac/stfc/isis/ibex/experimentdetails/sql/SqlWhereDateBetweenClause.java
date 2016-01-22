@@ -30,21 +30,21 @@ import uk.ac.stfc.isis.ibex.experimentdetails.database.ExpDataTablesEnum;
 /**
  * Provide a start and end date for the SQL statement
  */
-public class SqlWhereDateBetweenClause extends SqlWhereClause{
+public class SqlWhereDateBetweenClause extends SqlWhereClause {
 
-    private static final SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd 23:59:59");
-	private static final ExpDataField experimentStart = ExpDataFieldsCreator.getField(ExpDataTablesEnum.EXPERIMENT_TABLE, ExpDataFieldsEnum.STARTDATE);
-	private static final ExpDataField experimentDuration = ExpDataFieldsCreator.getField(ExpDataTablesEnum.EXPERIMENT_TABLE, ExpDataFieldsEnum.DURATION);
-	private static final String betweenCase = experimentStart + " AND DATE_ADD(" + experimentStart + ", INTERVAL " + experimentDuration + " DAY)";
+    private static final SimpleDateFormat FORMATTER = new SimpleDateFormat("yyyy-MM-dd 23:59:59");
+	private static final ExpDataField EXP_START = ExpDataFieldsCreator.getField(ExpDataTablesEnum.EXPERIMENT_TABLE, ExpDataFieldsEnum.STARTDATE);
+	private static final ExpDataField EXP_DURATION = ExpDataFieldsCreator.getField(ExpDataTablesEnum.EXPERIMENT_TABLE, ExpDataFieldsEnum.DURATION);
+	private static final String BETWEEN_CASE = EXP_START + " AND DATE_ADD(" + EXP_START + ", INTERVAL " + EXP_DURATION + " DAY)";
 	
 	
-	public SqlWhereDateBetweenClause(GregorianCalendar LHS) {
-		super("'" + formatter.format(LHS.getTime()) + "'", betweenCase);
+	public SqlWhereDateBetweenClause(GregorianCalendar lhs) {
+		super("'" + FORMATTER.format(lhs.getTime()) + "'", BETWEEN_CASE);
 	}
 
 	@Override
 	public String toString() {
-		return LHS + " BETWEEN " + RHS;
+		return lhs + " BETWEEN " + rhs;
 	}
 
 }

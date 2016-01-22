@@ -33,6 +33,7 @@ import org.eclipse.swt.widgets.Shell;
 import uk.ac.stfc.isis.ibex.users.Director;
 import uk.ac.stfc.isis.ibex.users.Users;
 
+@SuppressWarnings("checkstyle:magicnumber")
 public class SwitchUserDialog extends Dialog {
 	
 	private final Director director = Users.getInstance().director();

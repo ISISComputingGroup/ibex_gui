@@ -52,7 +52,10 @@ import org.eclipse.wb.swt.SWTResourceManager;
 
 public abstract class DataboundTable<TRow> extends Composite {
 
-	private int tableStyle;
+    private static final int DEFAULT_FONT_HEIGHT = 10;
+    private static final int MIN_TABLE_COLUMN_WIDTH = 50;
+
+    private int tableStyle;
 	private Table table;
 	private TableViewer viewer;
 	private TableColumnLayout tableColumnLayout = new TableColumnLayout();
@@ -240,7 +243,7 @@ public abstract class DataboundTable<TRow> extends Composite {
 	protected void configureTable() {
 		table.setLinesVisible(true);
 		table.setHeaderVisible(true);
-		table.setFont(SWTResourceManager.getFont("Arial", 10, SWT.NORMAL));		
+        table.setFont(SWTResourceManager.getFont("Arial", DEFAULT_FONT_HEIGHT, SWT.NORMAL));
 	}
 	
 	protected TableViewerColumn createColumn(String title) {
@@ -254,7 +257,8 @@ public abstract class DataboundTable<TRow> extends Composite {
 	
 	protected TableViewerColumn createColumn(String title, int widthWeighting) {
 		TableViewerColumn tableColumn = createColumn(title);
-		tableColumnLayout().setColumnData(tableColumn.getColumn(), new ColumnWeightData(widthWeighting, 50, false));	
+        tableColumnLayout().setColumnData(tableColumn.getColumn(),
+                new ColumnWeightData(widthWeighting, MIN_TABLE_COLUMN_WIDTH, false));
 
 		return tableColumn;
 	}

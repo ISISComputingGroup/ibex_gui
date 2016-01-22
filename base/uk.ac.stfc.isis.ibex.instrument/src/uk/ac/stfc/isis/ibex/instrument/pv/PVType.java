@@ -34,12 +34,12 @@ public enum PVType {
 	
 	private String displayName;
 	
-	private PVType(String displayName) {
+	PVType(String displayName) {
 		this.displayName = displayName;
 	}
 	
 	@Override
-	public String toString () {
+	public String toString() {
 		return displayName;
 	}
 }

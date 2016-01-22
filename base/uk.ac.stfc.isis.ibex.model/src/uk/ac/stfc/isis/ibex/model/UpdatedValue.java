@@ -34,7 +34,7 @@ public class UpdatedValue<T> extends ModelObject {
 	 * (non-Javadoc)
 	 * @see uk.ac.stfc.isis.ibex.model.ReadableValue#getValue()
 	 */
-	public synchronized final T getValue() {
+	public final synchronized T getValue() {
 		return value;
 	}
 	

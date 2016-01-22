@@ -25,7 +25,9 @@ import java.util.zip.Deflater;;
 
 public class Compressor extends Converter<byte[], byte[]> {
 		
-	@Override
+    private static final int KB_IN_BYTES = 1024;
+
+    @Override
 	public byte[] convert(byte[] value) throws ConversionException {
 		final Deflater compressor = new Deflater();
 		compressor.setInput(value);
@@ -33,7 +35,7 @@ public class Compressor extends Converter<byte[], byte[]> {
 
 		ByteArrayOutputStream outputStream = new ByteArrayOutputStream(value.length); 
 		
-		byte[] buffer = new byte[1024];  
+        byte[] buffer = new byte[KB_IN_BYTES];
 		while (!compressor.finished()) {  
 			int count = compressor.deflate(buffer);  
 			outputStream.write(buffer, 0, count);  

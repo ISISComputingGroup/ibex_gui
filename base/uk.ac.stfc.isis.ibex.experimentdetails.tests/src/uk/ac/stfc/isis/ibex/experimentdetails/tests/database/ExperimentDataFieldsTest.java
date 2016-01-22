@@ -28,6 +28,7 @@ import uk.ac.stfc.isis.ibex.experimentdetails.database.ExpDataFieldsCreator;
 import uk.ac.stfc.isis.ibex.experimentdetails.database.ExpDataFieldsEnum;
 import uk.ac.stfc.isis.ibex.experimentdetails.database.ExpDataTablesEnum;
 
+@SuppressWarnings("checkstyle:methodname")
 public class ExperimentDataFieldsTest {
 	@Test
 	public void user_table_contains_name() {
@@ -41,15 +42,15 @@ public class ExperimentDataFieldsTest {
 	@Test
 	public void role_table_contains_priority() {
 		//Act
-		ExpDataField  result = ExpDataFieldsCreator.getField(ExpDataTablesEnum.ROLE_TABLE, ExpDataFieldsEnum.PRIORITY);
+		ExpDataField result = ExpDataFieldsCreator.getField(ExpDataTablesEnum.ROLE_TABLE, ExpDataFieldsEnum.PRIORITY);
 		
 		//Assert
 		assertEquals(result.toString(), "role.priority");		
 	}
 	
-	@Test(expected=IllegalArgumentException.class)
+	@Test(expected = IllegalArgumentException.class)
 	public void experiment_table_does_not_contain_name() {
 		//Act
-		ExpDataField  result = ExpDataFieldsCreator.getField(ExpDataTablesEnum.EXPERIMENT_TABLE, ExpDataFieldsEnum.NAME);	
+		ExpDataField result = ExpDataFieldsCreator.getField(ExpDataTablesEnum.EXPERIMENT_TABLE, ExpDataFieldsEnum.NAME);	
 	}
 }

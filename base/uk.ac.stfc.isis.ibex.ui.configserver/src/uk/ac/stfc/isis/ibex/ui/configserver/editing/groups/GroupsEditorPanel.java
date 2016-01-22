@@ -257,7 +257,7 @@ public class GroupsEditorPanel extends Composite {
 		});
 		new Label(grpGroups, SWT.NONE);
 		
-		groupsViewer.addSelectionChangedListener(new ISelectionChangedListener(){
+		groupsViewer.addSelectionChangedListener(new ISelectionChangedListener() {
 			@Override
 			public void selectionChanged(SelectionChangedEvent arg0) {
 				EditableGroup group = getSelectedGroup();

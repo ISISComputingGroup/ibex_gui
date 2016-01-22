@@ -37,6 +37,7 @@ import uk.ac.stfc.isis.ibex.epics.writing.BaseWritable;
 import uk.ac.stfc.isis.ibex.epics.writing.Writable;
 import uk.ac.stfc.isis.ibex.instrument.channels.ChannelType;
 
+@SuppressWarnings("checkstyle:methodname")
 public class WritableFactoryTest {
 
     private static final String PV_PREFIX = "PREFIX:";

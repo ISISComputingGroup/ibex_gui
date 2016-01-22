@@ -37,7 +37,7 @@ public class CompressorTest {
 	// Arrange
 	Compressor cmprssr = new Compressor();
 	String text = "Hello, World";
-	byte[] answer = new byte[] { 120, -100, -13, 72, -51, -55, -55, -41,
+	byte[] answer = new byte[] {120, -100, -13, 72, -51, -55, -55, -41,
 		81, 8, -49, 47, -54, 73, 1, 0, 27, 52, 4, 73 };
 
 	// Act

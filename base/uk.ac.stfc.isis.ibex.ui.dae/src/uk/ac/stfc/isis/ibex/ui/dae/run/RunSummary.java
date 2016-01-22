@@ -32,6 +32,7 @@ import org.eclipse.wb.swt.SWTResourceManager;
 import uk.ac.stfc.isis.ibex.ui.dae.widgets.LogMessageBox;
 import uk.ac.stfc.isis.ibex.ui.widgets.observable.WritableObservingTextBox;
 
+@SuppressWarnings("checkstyle:magicnumber")
 public class RunSummary extends Composite {
 
 	private Label instrument;
@@ -65,20 +66,20 @@ public class RunSummary extends Composite {
 		lblInstrument.setText("Instrument:");
 		
 		instrument = new Label(infoComposite, SWT.NONE);
-		GridData gd_instrument = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
-		gd_instrument.minimumWidth = 100;
-		gd_instrument.widthHint = 100;
-		instrument.setLayoutData(gd_instrument);
+		GridData gdInstrument = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+		gdInstrument.minimumWidth = 100;
+		gdInstrument.widthHint = 100;
+		instrument.setLayoutData(gdInstrument);
 		instrument.setText("UNKNOWN");
 		Label lblRunStatus = new Label(infoComposite, SWT.NONE);
 		lblRunStatus.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		lblRunStatus.setText("Run Status:");
 		
 		runStatus = new Label(infoComposite, SWT.NONE);
-		GridData gd_runStatus = new GridData(SWT.LEFT, SWT.FILL, true, false, 1, 1);
-		gd_runStatus.widthHint = 100;
-		gd_runStatus.minimumWidth = 100;
-		runStatus.setLayoutData(gd_runStatus);
+		GridData gdRunStatus = new GridData(SWT.LEFT, SWT.FILL, true, false, 1, 1);
+		gdRunStatus.widthHint = 100;
+		gdRunStatus.minimumWidth = 100;
+		runStatus.setLayoutData(gdRunStatus);
 		runStatus.setText("UNKNOWN");
 		
 		Label spacer = new Label(infoComposite, SWT.NONE);
@@ -89,10 +90,10 @@ public class RunSummary extends Composite {
 		lblRunNumber.setText("Run Number:");
 		
 		runNumber = new Label(infoComposite, SWT.NONE);
-		GridData gd_runNumber = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
-		gd_runNumber.minimumWidth = 100;
-		gd_runNumber.widthHint = 100;
-		runNumber.setLayoutData(gd_runNumber);
+		GridData gdRunNumber = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+		gdRunNumber.minimumWidth = 100;
+		gdRunNumber.widthHint = 100;
+		runNumber.setLayoutData(gdRunNumber);
 		runNumber.setText("UNKNOWN");
 		
 		Label lblIsisCycle = new Label(infoComposite, SWT.NONE);
@@ -100,10 +101,10 @@ public class RunSummary extends Composite {
 		lblIsisCycle.setText("ISIS Cycle:");
 		
 		isisCycle = new Label(infoComposite, SWT.NONE);
-		GridData gd_isisCycle = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
-		gd_isisCycle.minimumWidth = 100;
-		gd_isisCycle.widthHint = 100;
-		isisCycle.setLayoutData(gd_isisCycle);
+		GridData gdIsisCycle = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+		gdIsisCycle.minimumWidth = 100;
+		gdIsisCycle.widthHint = 100;
+		isisCycle.setLayoutData(gdIsisCycle);
 		isisCycle.setText("UNKNOWN");
 		
 		Label spacer2 = new Label(infoComposite, SWT.NONE);
@@ -115,9 +116,9 @@ public class RunSummary extends Composite {
 		
 		title = new WritableObservingTextBox(infoComposite, SWT.NONE, model.title());
 		title.setFont(SWTResourceManager.getFont("Arial", 14, SWT.NORMAL));
-		GridData gd_title = new GridData(SWT.FILL, SWT.CENTER, false, false, 3, 1);
-		gd_title.widthHint = 180;
-		title.setLayoutData(gd_title);
+		GridData gdTitle = new GridData(SWT.FILL, SWT.CENTER, false, false, 3, 1);
+		gdTitle.widthHint = 180;
+		title.setLayoutData(gdTitle);
 		new Label(infoComposite, SWT.NONE);
 
 		messageBox = new LogMessageBox(lhsComposite, SWT.NONE);

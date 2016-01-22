@@ -26,6 +26,7 @@ import uk.ac.stfc.isis.ibex.configserver.configuration.Group;
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundCellLabelProvider;
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundTable;
 
+@SuppressWarnings("checkstyle:magicnumber")
 public class GroupsTable extends DataboundTable<Group> {
 
 	public GroupsTable(Composite parent, int style,	int tableStyle) {

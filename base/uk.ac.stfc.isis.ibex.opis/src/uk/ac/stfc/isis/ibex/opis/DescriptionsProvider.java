@@ -76,8 +76,7 @@ public class DescriptionsProvider extends Provider {
 		Path path = pathToFileResource("/resources/" + FILENAME);
 		StringBuilder sb = new StringBuilder();
 		
-		try (BufferedReader br = new BufferedReader(new FileReader(path.toOSString())))
-		{
+        try (BufferedReader br = new BufferedReader(new FileReader(path.toOSString()))) {
 			String sCurrentLine;
  
 			while ((sCurrentLine = br.readLine()) != null) {

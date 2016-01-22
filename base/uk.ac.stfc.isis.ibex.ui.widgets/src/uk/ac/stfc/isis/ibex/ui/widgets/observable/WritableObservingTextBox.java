@@ -38,6 +38,7 @@ import org.eclipse.wb.swt.SWTResourceManager;
  * A text box for displaying and editing a record
  *
  */
+@SuppressWarnings("checkstyle:magicnumber")
 public class WritableObservingTextBox extends Composite {
 	
 	private DataBindingContext bindingContext;
@@ -60,9 +61,9 @@ public class WritableObservingTextBox extends Composite {
 		textbox.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));	
 				
 		setButton = new Button(this, SWT.NONE);
-		GridData gd_setButton = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
-		gd_setButton.widthHint = 50;
-		setButton.setLayoutData(gd_setButton);
+		GridData gdSetButton = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+		gdSetButton.widthHint = 50;
+		setButton.setLayoutData(gdSetButton);
 		setButton.setText("Set");
 		
 		if (adapter != null) {

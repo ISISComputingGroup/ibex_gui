@@ -27,7 +27,7 @@ import com.google.common.base.Joiner;
 /**
  * Represents a PV name
  */
-public class PVAddress {
+public final class PVAddress {
 	
 	public static final String COLON = ":";
 	public static final String DOT = ".";

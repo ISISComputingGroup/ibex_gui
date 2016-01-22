@@ -265,7 +265,7 @@ public class DoubleListEditor extends Composite {
 		ObservableListContentProvider contentProvider = new ObservableListContentProvider();
 		viewer.setContentProvider(contentProvider);
 		viewer.setLabelProvider(
-				new ObservableMapLabelProvider(BeansObservables.observeMaps(contentProvider.getKnownElements(), new String[] { observedProperty })));
+				new ObservableMapLabelProvider(BeansObservables.observeMaps(contentProvider.getKnownElements(), new String[] {observedProperty})));
 	}
 	
 	public void refreshViewer() {

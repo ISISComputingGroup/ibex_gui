@@ -37,7 +37,7 @@ public enum TimeUnit {
 		}
 	}
 	
-	private TimeUnit(String text) {
+	TimeUnit(String text) {
 		this.text = text;
 	}
 	

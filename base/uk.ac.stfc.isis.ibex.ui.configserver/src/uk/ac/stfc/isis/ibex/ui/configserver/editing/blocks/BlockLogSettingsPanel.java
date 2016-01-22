@@ -34,6 +34,7 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 
+@SuppressWarnings("checkstyle:magicnumber")
 public class BlockLogSettingsPanel extends Composite {
     private Button btnEnabled;
     private Combo cmboType;
@@ -52,9 +53,9 @@ public class BlockLogSettingsPanel extends Composite {
         Label lblType = new Label(grpLogSettings, SWT.NONE);
         lblType.setAlignment(SWT.RIGHT);
         lblType.setText("Mode:");
-        GridData gd_lblType = new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1);
-        gd_lblType.widthHint = 50;
-        lblType.setLayoutData(gd_lblType);
+        GridData gdLblType = new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1);
+        gdLblType.widthHint = 50;
+        lblType.setLayoutData(gdLblType);
 
         cmboType = new Combo(grpLogSettings, SWT.READ_ONLY);
         cmboType.add(BlockLogSettingsViewModel.PERIODIC_STRING);
@@ -64,14 +65,14 @@ public class BlockLogSettingsPanel extends Composite {
 
         lblSettings = new Label(grpLogSettings, SWT.NONE);
         lblSettings.setAlignment(SWT.RIGHT);
-        GridData gd_lblSettings = new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1);
-        gd_lblSettings.widthHint = 60;
-        lblSettings.setLayoutData(gd_lblSettings);
+        GridData gdLblSettings = new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1);
+        gdLblSettings.widthHint = 60;
+        lblSettings.setLayoutData(gdLblSettings);
         
         txtSettings = new Text(grpLogSettings, SWT.BORDER);
-        GridData gd_txtSettings = new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1);
-        gd_txtSettings.widthHint = 145;
-        txtSettings.setLayoutData(gd_txtSettings);
+        GridData gdTxtSettings = new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1);
+        gdTxtSettings.widthHint = 145;
+        txtSettings.setLayoutData(gdTxtSettings);
 
         btnEnabled = new Button(grpLogSettings, SWT.CHECK);
         btnEnabled.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1));

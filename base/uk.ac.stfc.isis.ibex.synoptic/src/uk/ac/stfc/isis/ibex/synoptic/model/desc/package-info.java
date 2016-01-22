@@ -17,7 +17,7 @@
 * http://opensource.org/licenses/eclipse-1.0.php
 */
 
-@XmlSchema( 
+@XmlSchema(
     namespace = "http://www.isis.stfc.ac.uk//instrument", 
     elementFormDefault = XmlNsForm.QUALIFIED) 
 package uk.ac.stfc.isis.ibex.synoptic.model.desc;

@@ -615,7 +615,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 	// Arrange
 	Converter<VImage, String> converter = VTypeFormat.defaultFormatter();
 
-	byte[] data = new byte[] { (byte) 0 };
+	byte[] data = new byte[] {(byte) 0 };
 
 	VImage value = ValueFactory.newVImage(1, 1, data);
 
@@ -1602,7 +1602,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 	Converter<VImage, String> converter = VTypeFormat
 		.defaultFormatterNoUnits();
 
-	byte[] data = new byte[] { (byte) 0 };
+	byte[] data = new byte[] {(byte) 0 };
 
 	VImage value = ValueFactory.newVImage(1, 1, data);
 

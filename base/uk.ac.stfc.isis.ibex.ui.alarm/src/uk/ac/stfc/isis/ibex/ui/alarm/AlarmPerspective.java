@@ -29,7 +29,7 @@ public class AlarmPerspective extends BasePerspective {
 	public static final String ID = "uk.ac.stfc.isis.ibex.ui.alarm.perspective"; //$NON-NLS-1$
 
 	@Override
-	public String ID() {
+	public String id() {
 		return ID;
 	}
 

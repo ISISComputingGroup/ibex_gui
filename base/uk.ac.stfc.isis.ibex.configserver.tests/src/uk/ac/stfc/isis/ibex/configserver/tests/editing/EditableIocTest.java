@@ -28,7 +28,7 @@ import org.junit.Test;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Macro;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableIoc;
 
-
+@SuppressWarnings("checkstyle:methodname")
 public class EditableIocTest {
 
 	@Test

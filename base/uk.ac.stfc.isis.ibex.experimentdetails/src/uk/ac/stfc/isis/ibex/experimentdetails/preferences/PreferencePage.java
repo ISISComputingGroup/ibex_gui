@@ -18,10 +18,11 @@
 
 package uk.ac.stfc.isis.ibex.experimentdetails.preferences;
 
-import org.eclipse.jface.preference.*;
+import org.eclipse.jface.preference.FieldEditorPreferencePage;
+import org.eclipse.jface.preference.StringFieldEditor;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.ui.IWorkbenchPreferencePage;
 import org.eclipse.ui.IWorkbench;
+import org.eclipse.ui.IWorkbenchPreferencePage;
 
 import uk.ac.stfc.isis.ibex.experimentdetails.ExperimentDetails;
 
@@ -77,6 +78,7 @@ public class PreferencePage extends FieldEditorPreferencePage implements
      * @see
      * org.eclipse.ui.IWorkbenchPreferencePage#init(org.eclipse.ui.IWorkbench)
      */
+    @Override
     public void init(IWorkbench workbench) {
     }
 

@@ -36,6 +36,7 @@ import org.eclipse.wb.swt.SWTResourceManager;
 import uk.ac.stfc.isis.ibex.motor.Motor;
 import uk.ac.stfc.isis.ibex.motor.internal.MotorsTable;
 
+@SuppressWarnings("checkstyle:magicnumber")
 public class MotorsOverview extends Composite {
 	private Composite motorComposite;
 	

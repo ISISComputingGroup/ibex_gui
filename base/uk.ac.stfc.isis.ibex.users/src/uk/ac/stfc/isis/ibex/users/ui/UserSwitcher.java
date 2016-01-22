@@ -34,6 +34,7 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Text;
 
+@SuppressWarnings("checkstyle:magicnumber")
 public class UserSwitcher extends Composite {
 	private Combo switchToCombo;
 	private Text password;

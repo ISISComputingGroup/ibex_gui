@@ -46,17 +46,17 @@ public enum RunState {
 	private final String name;
 	private final Color color;
 
-	private RunState(String name, Color color) {
+	RunState(String name, Color color) {
 		this.name = name;
 		this.color = color;
 	}
 	
-	private RunState(Color color) {
+	RunState(Color color) {
 		this.name = this.toString();
 		this.color = color;
 	}
 	
-	private RunState(int r, int g, int b) {
+	RunState(int r, int g, int b) {
 		this(SWTResourceManager.getColor(r, g, b));
 	}
 	

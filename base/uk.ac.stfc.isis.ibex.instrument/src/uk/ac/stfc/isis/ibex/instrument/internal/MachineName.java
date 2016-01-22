@@ -21,8 +21,11 @@ package uk.ac.stfc.isis.ibex.instrument.internal;
 
 import java.net.UnknownHostException;
 
-public class MachineName {
+public final class MachineName {
 	
+    private MachineName() {
+    }
+
 	public static String get() {
 		return machineName();
 	}

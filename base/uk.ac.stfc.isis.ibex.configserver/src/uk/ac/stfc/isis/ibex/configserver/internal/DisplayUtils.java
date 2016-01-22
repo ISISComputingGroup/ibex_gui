@@ -21,17 +21,20 @@ package uk.ac.stfc.isis.ibex.configserver.internal;
 
 import java.util.Collection;
 
-import uk.ac.stfc.isis.ibex.configserver.configuration.Group;
-
 import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 
-public class DisplayUtils {
+import uk.ac.stfc.isis.ibex.configserver.configuration.Group;
+
+public final class DisplayUtils {
 	
 	private static final String NONE = "none"; 
 	private static final String OTHER = "Other";
 	
+    private DisplayUtils() {
+    }
+
 	public static String renameGroup(String name) {
 		return name.toLowerCase().equals(NONE) ? OTHER : name;
 	}

@@ -33,7 +33,7 @@ public class UserDetails extends ModelObject {
 	private String associatedExperimentID;
 	private Date associatedExperimentStartDate;
 	
-	static private final DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+	private static final DateFormat DF = new SimpleDateFormat("dd/MM/yyyy");
 	
 	public UserDetails(String name, String institute, Role role, String associatedExperimentID, Date associatedExperimentStartDate) {
 		this.name = name;
@@ -43,8 +43,7 @@ public class UserDetails extends ModelObject {
 		this.associatedExperimentStartDate = associatedExperimentStartDate;
 	}
 	
-	public UserDetails(String name, String institute, Role role)
-	{
+	public UserDetails(String name, String institute, Role role) {
 		this.name = name;
 		this.institute = institute;
 		this.role = role;
@@ -83,7 +82,7 @@ public class UserDetails extends ModelObject {
 	}
 	
 	public String getAssociatedExperimentStartDate() {
-		return df.format(associatedExperimentStartDate);
+		return DF.format(associatedExperimentStartDate);
 	}
 
 }

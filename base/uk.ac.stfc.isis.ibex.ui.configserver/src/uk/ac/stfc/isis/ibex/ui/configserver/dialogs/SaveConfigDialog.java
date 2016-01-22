@@ -43,7 +43,7 @@ import org.eclipse.swt.widgets.Text;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 
-
+@SuppressWarnings("checkstyle:magicnumber")
 public class SaveConfigDialog extends TitleAreaDialog {
 
 	private static final String COMPONENT = "Component";
@@ -104,23 +104,23 @@ public class SaveConfigDialog extends TitleAreaDialog {
 	protected Control createDialogArea(Composite parent) {		
 		setTitle(String.format("Save %s", getTypeName()));
 		Composite container = (Composite) super.createDialogArea(parent);
-		GridLayout gl_container = new GridLayout(1, false);
-		container.setLayout(gl_container);
+		GridLayout glContainer = new GridLayout(1, false);
+		container.setLayout(glContainer);
 		
 		Composite composite = new Composite(container, SWT.NONE);
 		composite.setLayout(new GridLayout(2, false));
-		GridData gd_composite = new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1);
-		gd_composite.widthHint = 95;
-		composite.setLayoutData(gd_composite);
+		GridData gdComposite = new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1);
+		gdComposite.widthHint = 95;
+		composite.setLayoutData(gdComposite);
 		
 		Label lblConfigurationName = new Label(composite, SWT.NONE);
 		lblConfigurationName.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		lblConfigurationName.setText("Name:");
 		
 		txtName = new Text(composite, SWT.BORDER);
-		GridData gd_txtName = new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1);
-		gd_txtName.widthHint = 383;
-		txtName.setLayoutData(gd_txtName);
+		GridData gdTxtName = new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1);
+		gdTxtName.widthHint = 383;
+		txtName.setLayoutData(gdTxtName);
 		txtName.setBounds(0, 0, 76, 21);
 		new Label(composite, SWT.NONE);
 		
@@ -135,9 +135,9 @@ public class SaveConfigDialog extends TitleAreaDialog {
 		lblConfigurationDesc.setText("Description:");
 		
 		txtDesc = new Text(composite, SWT.BORDER);
-		GridData gd_txtDesc = new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1);
-		gd_txtDesc.widthHint = 383;
-		txtDesc.setLayoutData(gd_txtDesc);
+		GridData gdTxtDesc = new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1);
+		gdTxtDesc.widthHint = 383;
+		txtDesc.setLayoutData(gdTxtDesc);
 		txtDesc.setBounds(0, 0, 76, 21);
 		new Label(composite, SWT.NONE);		
 		new Label(composite, SWT.NONE);

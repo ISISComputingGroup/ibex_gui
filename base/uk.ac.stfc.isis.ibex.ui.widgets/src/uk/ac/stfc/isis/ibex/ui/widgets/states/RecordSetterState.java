@@ -63,7 +63,7 @@ public enum RecordSetterState {
 	private final Image image;
 	private final String message;
 	
-	private RecordSetterState(int r, int g, int b, Image image, String message) {
+	RecordSetterState(int r, int g, int b, Image image, String message) {
 		this.color = SWTResourceManager.getColor(r, g, b);
 		this.image = image;
 		this.message = message;

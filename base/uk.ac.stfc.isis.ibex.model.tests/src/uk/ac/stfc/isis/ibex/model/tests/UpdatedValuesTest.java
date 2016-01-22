@@ -27,6 +27,7 @@ import org.junit.Test;
 import uk.ac.stfc.isis.ibex.model.SettableUpdatedValue;
 import uk.ac.stfc.isis.ibex.model.UpdatedValues;
 
+@SuppressWarnings("checkstyle:methodname")
 public class UpdatedValuesTest {
 
 	private SettableUpdatedValue<String> first;

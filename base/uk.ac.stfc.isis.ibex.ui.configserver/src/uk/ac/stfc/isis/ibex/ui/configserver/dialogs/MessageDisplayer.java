@@ -21,5 +21,5 @@
 package uk.ac.stfc.isis.ibex.ui.configserver.dialogs;
 
 public interface MessageDisplayer {
-	public void setErrorMessage(String source, String message);
+	void setErrorMessage(String source, String message);
 }

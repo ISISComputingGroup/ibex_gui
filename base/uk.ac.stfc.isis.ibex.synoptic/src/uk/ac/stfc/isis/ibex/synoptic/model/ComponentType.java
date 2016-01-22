@@ -54,10 +54,10 @@ public enum ComponentType {
 	
 	private Target target;
 
-	private ComponentType() {
+	ComponentType() {
 	}
 	
-	private ComponentType(Target target) {
+	ComponentType(Target target) {
 		this.target = target;
 	}
 	

@@ -30,6 +30,7 @@ import org.junit.Test;
 
 import uk.ac.stfc.isis.ibex.validators.PvValidator;
 
+@SuppressWarnings("checkstyle:methodname")
 public class PvValidatorTest {
 
     /**

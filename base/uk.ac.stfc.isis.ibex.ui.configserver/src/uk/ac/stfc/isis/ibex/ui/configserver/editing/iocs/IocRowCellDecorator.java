@@ -34,7 +34,7 @@ public class IocRowCellDecorator extends CellDecorator<EditableIoc> {
 	
 	private static final Color READONLY_COLOR = ResourceManager.getColor(SWT.COLOR_DARK_GRAY);
 
-	private static final Display display = Display.getCurrent();
+	private static final Display DISPLAY = Display.getCurrent();
 	
 	@Override
 	public void applyDecoration(ViewerCell cell) {
@@ -54,7 +54,7 @@ public class IocRowCellDecorator extends CellDecorator<EditableIoc> {
 	
 	private static void modifyFont(ViewerCell cell, int modifier) {
 		FontData fontData = cell.getFont().getFontData()[0];
-		Font font = new Font(display, new FontData(fontData.getName(), fontData.getHeight(), fontData.getStyle() | modifier));
+		Font font = new Font(DISPLAY, new FontData(fontData.getName(), fontData.getHeight(), fontData.getStyle() | modifier));
 		cell.setFont(font);
 	}
 	

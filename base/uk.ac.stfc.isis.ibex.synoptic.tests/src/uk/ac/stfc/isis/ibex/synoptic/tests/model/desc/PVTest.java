@@ -29,12 +29,13 @@ import uk.ac.stfc.isis.ibex.synoptic.model.desc.IO;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.PV;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.RecordType;
 
+@SuppressWarnings("checkstyle:methodname")
 public class PVTest {
     
-    private final static String DISPLAY_NAME = "display name";
-    private final static String NEW_NAME = "new name";
-    private final static String ADDRESS = "address";
-    private final static String NEW_ADDRESS = "new address";
+    private static final String DISPLAY_NAME = "display name";
+    private static final String NEW_NAME = "new name";
+    private static final String ADDRESS = "address";
+    private static final String NEW_ADDRESS = "new address";
     private RecordType recordType;
     private PVType pvType;
 

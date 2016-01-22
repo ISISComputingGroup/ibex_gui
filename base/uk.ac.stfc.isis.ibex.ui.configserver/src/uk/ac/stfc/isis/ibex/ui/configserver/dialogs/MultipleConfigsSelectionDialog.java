@@ -38,6 +38,7 @@ import org.eclipse.core.databinding.DataBindingContext;
 
 import uk.ac.stfc.isis.ibex.configserver.configuration.ConfigInfo;
 
+@SuppressWarnings("checkstyle:magicnumber")
 public class MultipleConfigsSelectionDialog extends Dialog {
 	
 	private final String title;
@@ -92,7 +93,7 @@ public class MultipleConfigsSelectionDialog extends Dialog {
 
 		items = new List(container, SWT.BORDER | SWT.V_SCROLL);
 		items.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		String [] names = ConfigInfo.names(available).toArray(new String[0]);
+		String[] names = ConfigInfo.names(available).toArray(new String[0]);
 		Arrays.sort(names);
 		items.setItems(names);
 		initDataBindings();

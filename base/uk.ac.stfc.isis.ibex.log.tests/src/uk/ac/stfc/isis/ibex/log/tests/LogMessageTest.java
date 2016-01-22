@@ -81,7 +81,7 @@ public class LogMessageTest {
 	LogMessageFields property2 = LogMessageFields.CONTENTS;
 	String value = "TEST";
 	testLogMessage.setProperty(property1, value);
-	LogMessageFields[] properties = { property1, property2 };
+	LogMessageFields[] properties = {property1, property2};
 	// Act
 	Object[] reply = testLogMessage.getProperties(properties);
 	String result = reply[0].toString();

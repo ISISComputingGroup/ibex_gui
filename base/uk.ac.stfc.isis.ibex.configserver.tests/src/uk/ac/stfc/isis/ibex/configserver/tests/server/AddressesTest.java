@@ -19,13 +19,14 @@
 
 package uk.ac.stfc.isis.ibex.configserver.tests.server;
 
-import static org.junit.Assert.*;
-import static org.hamcrest.CoreMatchers.*;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
 
 import org.junit.Test;
 
 import uk.ac.stfc.isis.ibex.epics.pv.PVAddress;
 
+@SuppressWarnings("checkstyle:methodname")
 public class AddressesTest {
 
 	@Test
@@ -34,7 +35,7 @@ public class AddressesTest {
 	}
 	
 	@Test
-	public void allow_fields_to_be_added(){
+	public void allow_fields_to_be_added() {
 		assertThat(PVAddress.startWith("IN").append("LARMOR").field("VAL").toString(), is("IN:LARMOR.VAL"));
 	}
 	

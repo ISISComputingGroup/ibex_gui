@@ -33,6 +33,7 @@ import uk.ac.stfc.isis.ibex.logger.IsisLog;
 public class Alarm extends AbstractUIPlugin {
 
     private static final int MAX_RETRIES = 100;
+    private static final int WAIT_FOR_MODEL = 100;
 
 	private static final Logger LOG = IsisLog.getLogger(Alarm.class);
 	
@@ -110,7 +111,7 @@ public class Alarm extends AbstractUIPlugin {
                 int i = 0;
                 while (alarmModel.toString().contains(Messages.AlarmClientModel_NotInitialized) && i < MAX_RETRIES) {
                     try {
-                        Thread.sleep(100);
+                        Thread.sleep(WAIT_FOR_MODEL);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }

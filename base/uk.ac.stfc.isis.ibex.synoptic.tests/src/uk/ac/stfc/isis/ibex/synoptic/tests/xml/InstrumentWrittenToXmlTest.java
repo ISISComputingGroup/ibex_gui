@@ -34,6 +34,7 @@ import org.xml.sax.SAXException;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.SynopticDescription;
 import uk.ac.stfc.isis.ibex.synoptic.xml.XMLUtil;
 
+@SuppressWarnings("checkstyle:methodname")
 public class InstrumentWrittenToXmlTest extends FileReadingTest {
 
     private SynopticDescription instrument;
