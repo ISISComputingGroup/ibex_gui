@@ -92,4 +92,16 @@ public class PvValidatorTest {
         assertEquals(expected, addressValid.getErrorMessage());
     }
 
+    @Test
+    public void get_message_for_empty_address_string() {
+        // Arrange
+        String expected = PvValidator.ADDRESS_EMPTY;
+        String testAddress = "";
+        // Act
+        PvValidator addressValid = new PvValidator();
+        addressValid.validatePvAddress(testAddress);
+        // Assert
+        assertEquals(expected, addressValid.getErrorMessage());
+    }
+
 }

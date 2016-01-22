@@ -50,9 +50,12 @@ public class Awaited<T> extends UpdatedValue<T> {
 		return new Awaited<>(value).until(secondsToWait);
 	}
 	
-	/*
-	 * Return true if the value was set; otherwise false.
-	 */
+    /**
+     * Waits for a value to be set
+     * 
+     * @param secondsToWait how many seconds to wait for
+     * @return true if the value was set
+     */
 	public boolean until(int secondsToWait) {
 		startCountdown(secondsToWait);
 		return isSet();

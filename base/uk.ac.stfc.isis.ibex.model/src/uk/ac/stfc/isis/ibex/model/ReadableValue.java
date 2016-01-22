@@ -20,8 +20,11 @@
 package uk.ac.stfc.isis.ibex.model;
 
 public interface ReadableValue<T> extends IModelObject {
-	/*
-	 * The value, may be null
-	 */
+
+    /**
+     * Gets the value.
+     * 
+     * @return the value, may be null
+     */
 	T getValue();
 }
