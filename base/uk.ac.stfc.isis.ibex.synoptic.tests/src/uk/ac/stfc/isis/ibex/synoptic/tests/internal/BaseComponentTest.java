@@ -26,7 +26,6 @@ import java.util.LinkedHashSet;
 import java.util.List;
 
 import org.junit.Test;
-import org.mockito.Mockito;
 
 import uk.ac.stfc.isis.ibex.synoptic.internal.BaseComponent;
 import uk.ac.stfc.isis.ibex.synoptic.model.Component;

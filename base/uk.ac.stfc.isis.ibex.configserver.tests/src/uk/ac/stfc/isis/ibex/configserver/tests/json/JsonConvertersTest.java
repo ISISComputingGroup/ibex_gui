@@ -21,6 +21,7 @@ import uk.ac.stfc.isis.ibex.configserver.json.JsonConverters;
 import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
 import uk.ac.stfc.isis.ibex.epics.conversion.Converter;
 
+@SuppressWarnings("checkstyle:methodname")
 public class JsonConvertersTest {
 	
 	private String configJson = "";
@@ -46,7 +47,7 @@ public class JsonConvertersTest {
 	@Before
     public void setUp() {
 		configJson = "{"; 
-		configJson += "\"name\": \""+ configName + "\", \"description\": \"" + configDescription + "\", \"history\": [\"2015-02-16\"]," ;
+		configJson += "\"name\": \"" + configName + "\", \"description\": \"" + configDescription + "\", \"history\": [\"2015-02-16\"],";
 		configJson += "\"blocks\": [" + blockJson + "],";
 		configJson += "\"iocs\": [" + iocJson + "],";
 		configJson += "\"components\": [{\"name\": \"sub1\"}], \"groups\": [{\"blocks\": [\"testblock1\"], \"name\": \"Group1\", \"subconfig\": null}]";
@@ -233,7 +234,7 @@ public class JsonConvertersTest {
 		//Arrange
 		Converter<Configuration, String> conv = new JsonConverters().configToString();
 		Configuration testConfig = new Configuration(configName, configDescription);
-		String expected = "{\"name\":\""+configName+"\",\"description\":\""+configDescription+"\",\"iocs\":[],\"blocks\":[],\"groups\":[],\"components\":[],\"history\":[]}";
+		String expected = "{\"name\":\"" + configName + "\",\"description\":\"" + configDescription + "\",\"iocs\":[],\"blocks\":[],\"groups\":[],\"components\":[],\"history\":[]}";
 		
 		//Act
 		String test = conv.convert(testConfig);
@@ -248,7 +249,7 @@ public class JsonConvertersTest {
         Converter<String, Configuration> conv = new JsonConverters().toConfig();
 
         // Assert
-        Configuration config = conv.convert("{}");
+        conv.convert("{}");
 
     }
 
@@ -258,7 +259,7 @@ public class JsonConvertersTest {
         Converter<String, Configuration> conv = new JsonConverters().toConfig();
 
         // Assert
-        Configuration config = conv.convert("{");
+        conv.convert("{");
 
     }
 

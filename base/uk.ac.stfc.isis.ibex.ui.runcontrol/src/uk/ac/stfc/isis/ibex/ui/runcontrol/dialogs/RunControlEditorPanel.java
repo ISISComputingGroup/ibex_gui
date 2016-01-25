@@ -52,8 +52,8 @@ import uk.ac.stfc.isis.ibex.ui.runcontrol.RunControlViewModel;
  */
 @SuppressWarnings({"checkstyle:magicnumber"})
 public class RunControlEditorPanel extends Composite {
-    private final static String RESET_ALL_DIALOG_TITLE = "Confirm Run-Control Restore";
-    private final static String RESET_ALL_DIALOG_MESSAGE = "Are you sure you want to restore all run-control settings to their configuration values?";
+    private static final String RESET_ALL_DIALOG_TITLE = "Confirm Run-Control Restore";
+    private static final String RESET_ALL_DIALOG_MESSAGE = "Are you sure you want to restore all run-control settings to their configuration values?";
 	private final RunControlServer runControlServer;
     private final ConfigServer configServer;
 	private final Label name;
@@ -170,8 +170,9 @@ public class RunControlEditorPanel extends Composite {
 
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
-				if (viewModel.isValid())
+				if (viewModel.isValid()) {
 					viewModel.setSendEnabled(true);
+				}
 			}
 			
 		});

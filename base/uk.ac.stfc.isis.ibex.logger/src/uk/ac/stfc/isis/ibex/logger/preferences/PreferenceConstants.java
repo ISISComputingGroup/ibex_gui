@@ -63,16 +63,16 @@ public final class PreferenceConstants {
 	private PreferenceConstants() { }
 
 	static final String[][] LOGGING_LEVELS = new String[][] {
-			{ Level.ALL.name(), Level.ALL.name() },
-			{ Level.TRACE.name(), Level.TRACE.name() },
-			{ Level.DEBUG.name(), Level.DEBUG.name() },
-			{ Level.INFO.name(), Level.INFO.name() },
-			{ Level.WARN.name(), Level.WARN.name() },
-			{ Level.ERROR.name(), Level.ERROR.name() },
-			{ Level.FATAL.name(), Level.FATAL.name() },
-			{ Level.OFF.name(), Level.OFF.name() }, };
+			{Level.ALL.name(), Level.ALL.name()},
+			{Level.TRACE.name(), Level.TRACE.name()},
+			{Level.DEBUG.name(), Level.DEBUG.name()},
+			{Level.INFO.name(), Level.INFO.name()},
+			{Level.WARN.name(), Level.WARN.name()},
+			{Level.ERROR.name(), Level.ERROR.name()},
+			{Level.FATAL.name(), Level.FATAL.name()},
+			{Level.OFF.name(), Level.OFF.name()}, };
 	
-	private static final String getLogDir() {
+	private static String getLogDir() {
 		return Platform.getInstanceLocation().getURL().getPath() + "logs/";
 	}
 }

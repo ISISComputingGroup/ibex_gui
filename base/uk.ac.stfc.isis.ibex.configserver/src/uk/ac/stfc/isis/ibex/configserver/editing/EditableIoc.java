@@ -57,7 +57,7 @@ public class EditableIoc extends Ioc {
 	}
 	
 	public EditableIoc(EditableIoc other) {
-		this((Ioc)other);
+		this((Ioc) other);
 		
 		for (Macro macro : other.getAvailableMacros()) {
 			availableMacros.add(new Macro(macro));

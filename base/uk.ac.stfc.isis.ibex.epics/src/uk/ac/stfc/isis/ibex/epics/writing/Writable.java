@@ -34,5 +34,5 @@ public interface Writable<T> extends Closable {
 	 * @param writer
 	 * @return a subscription on which to listen
 	 */
-	Subscription subscribe(ConfigurableWriter<?,?> writer);
+	Subscription subscribe(ConfigurableWriter<?, ?> writer);
 }

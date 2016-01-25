@@ -81,12 +81,12 @@ public class BlocksView extends ViewPart implements ISizeProvider {
 
 	public void createPartControl(final Composite parent) {
 		
-		GridLayout gl_parent = new GridLayout(1, false);
-		gl_parent.verticalSpacing = 2;
-		gl_parent.marginWidth = 0;
-		gl_parent.marginHeight = 0;
-		gl_parent.horizontalSpacing = 0;
-		parent.setLayout(gl_parent);
+		GridLayout glParent = new GridLayout(1, false);
+		glParent.verticalSpacing = 2;
+		glParent.marginWidth = 0;
+		glParent.marginHeight = 0;
+		glParent.horizontalSpacing = 0;
+		parent.setLayout(glParent);
 		
 		if (configSubscription != null) {
 			configSubscription.removeObserver();

@@ -10,8 +10,8 @@ import uk.ac.stfc.isis.ibex.epics.conversion.Converter;
 @SuppressWarnings({ "checkstyle:methodname", "checkstyle:magicnumber" })
 public class ConvertTest {
 
-	private static String test_hexed = "74657374";
-	private static byte[] test_zipped_hexed = { 55, 56, 57, 99, 50, 98, 52, 57,
+	private static String testHexed = "74657374";
+	private static byte[] testZippedHexed = {55, 56, 57, 99, 50, 98, 52, 57,
 			50, 100, 50, 101, 48, 49, 48, 48, 48, 52, 53, 100, 48, 49, 99, 49 };
 	
 	@Test
@@ -22,7 +22,7 @@ public class ConvertTest {
 		String expected = "test";
 		
 		//Act
-		String result = converter.convert(test_zipped_hexed);
+		String result = converter.convert(testZippedHexed);
 		
 		//Assert
 		assertEquals(expected, result);
@@ -36,10 +36,10 @@ public class ConvertTest {
 		String test = "test";
 				
 		//Act
-		byte [] result = converter.convert(test);
+		byte[] result = converter.convert(test);
 		
 		//Assert
-		assertArrayEquals(test_zipped_hexed, result);
+		assertArrayEquals(testZippedHexed, result);
 	}	
 	
 	@Test
@@ -50,7 +50,7 @@ public class ConvertTest {
 		String expected = "test";
 		
 		//Act
-		String result = converter.convert(test_hexed);
+		String result = converter.convert(testHexed);
 		
 		//Assert
 		assertEquals(expected, result);
@@ -68,7 +68,7 @@ public class ConvertTest {
 		String result = converter.convert(test);
 		
 		//Assert
-		assertEquals(test_hexed, result);
+		assertEquals(testHexed, result);
 	}
 	
 	@Test

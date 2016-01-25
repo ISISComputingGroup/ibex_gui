@@ -45,6 +45,7 @@ import uk.ac.stfc.isis.ibex.configserver.internal.IocDescriber;
 import uk.ac.stfc.isis.ibex.model.SettableUpdatedValue;
 import uk.ac.stfc.isis.ibex.model.UpdatedValue;
 
+@SuppressWarnings("checkstyle:methodname")
 public class EditableConfigurationTest implements IocDescriber {
 
 	private static final String NAME = "base";
@@ -103,7 +104,7 @@ public class EditableConfigurationTest implements IocDescriber {
 		Iterator<Block> itrExp = expected.iterator();
 		Iterator<Block> itrAct = actual.iterator();
 		
-	    while(itrExp.hasNext()) {
+	    while (itrExp.hasNext()) {
 	    	Block exp = itrExp.next();
 	    	Block act = itrAct.next();
 	    	

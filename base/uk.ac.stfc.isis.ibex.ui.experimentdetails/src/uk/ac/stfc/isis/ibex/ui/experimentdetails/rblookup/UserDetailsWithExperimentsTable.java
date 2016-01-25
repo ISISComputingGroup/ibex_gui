@@ -7,6 +7,7 @@ import uk.ac.stfc.isis.ibex.experimentdetails.UserDetails;
 import uk.ac.stfc.isis.ibex.ui.experimentdetails.UserDetailsTable;
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundCellLabelProvider;
 
+@SuppressWarnings("checkstyle:magicnumber")
 public class UserDetailsWithExperimentsTable extends UserDetailsTable {
 
 	public UserDetailsWithExperimentsTable(Composite parent, int style,

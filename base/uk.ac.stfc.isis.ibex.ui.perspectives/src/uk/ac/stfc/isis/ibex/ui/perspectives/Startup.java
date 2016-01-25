@@ -28,6 +28,7 @@ import uk.ac.stfc.isis.ibex.ui.dashboard.views.DashboardView;
 import uk.ac.stfc.isis.ibex.ui.perspectives.switcher.PerspectiveSwitcherView;
 import uk.ac.stfc.isis.ibex.ui.perspectives.views.StartupView;
 
+@SuppressWarnings("checkstyle:magicnumber")
 public class Startup implements IPerspectiveFactory {
 
 	public static final String ID = "uk.ac.stfc.isis.ibex.ui.perspectives.startup"; //$NON-NLS-1$

@@ -48,7 +48,7 @@ public class IocNameFilterPredicate implements FilterPredicate<EditableIoc> {
 			@Override
 			public String apply(EditableIoc ioc) {
 				return normalise(ioc.getName());
-		}});
+		} });
 	}
 
 	private String normalise(String text) {

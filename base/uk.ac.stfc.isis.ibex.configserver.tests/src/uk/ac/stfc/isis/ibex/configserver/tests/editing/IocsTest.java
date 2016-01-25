@@ -24,6 +24,7 @@ import org.junit.Test;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableIoc;
 
+@SuppressWarnings("checkstyle:methodname")
 public class IocsTest extends EditableConfigurationTest {
 	@Test
 	public void an_editable_config_has_all_available_iocs_to_edit() {

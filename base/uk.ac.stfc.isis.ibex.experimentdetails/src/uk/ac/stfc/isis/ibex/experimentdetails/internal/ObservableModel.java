@@ -37,8 +37,8 @@ public class ObservableModel extends Model {
 	private List<Parameter> beamParameters = new ArrayList<>();
 	private List<UserDetails> userDetails = new ArrayList<>();
 	
-	private final String DEFAULT_USER = "DEFAULT_USER";
-	private final String DEFAULT_ORG = "STFC";
+	private final String defaultUser = "DEFAULT_USER";
+	private final String defaultOrg = "STFC";
 		
 	private final BaseObserver<Collection<Parameter>> sampleParametersObserver = new CollectionObserver<Parameter>() {
 		@Override
@@ -119,7 +119,7 @@ public class ObservableModel extends Model {
 	public UserDetails addUser() {
 		Collection<UserDetails> originalUsers = getUserDetails();
 		
-		UserDetails user = new UserDetails(DEFAULT_USER, DEFAULT_ORG, Role.BLANK);
+		UserDetails user = new UserDetails(defaultUser, defaultOrg, Role.BLANK);
 		this.userDetails.add(user);
 		firePropertyChange("userDetails", originalUsers, getUserDetails());
 		return user;

@@ -32,6 +32,7 @@ import uk.ac.stfc.isis.ibex.ui.configserver.editing.blocks.filters.PVAddressSear
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundCellLabelProvider;
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundTable;
 
+@SuppressWarnings("checkstyle:magicnumber")
 public class BlockPVTable extends DataboundTable<PV> {
 	private PVAddressSearch search;
 	

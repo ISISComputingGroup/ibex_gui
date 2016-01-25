@@ -35,6 +35,7 @@ import uk.ac.stfc.isis.ibex.ui.synoptic.SynopticPresenter;
 import uk.ac.stfc.isis.ibex.ui.synoptic.beamline.BeamlineComposite;
 import uk.ac.stfc.isis.ibex.ui.synoptic.beamline.BeamlineCompositeContainer;
 
+@SuppressWarnings("checkstyle:magicnumber")
 public class GroupView extends BeamlineComposite {
 
 	private final Cursor handCursor = new Cursor(getDisplay(), SWT.CURSOR_HAND);
@@ -69,10 +70,10 @@ public class GroupView extends BeamlineComposite {
 		groupName = new CLabel(this, SWT.BORDER | SWT.CENTER);
 		groupName.setForeground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
 		groupName.setFont(SWTResourceManager.getFont("Arial", 12, SWT.BOLD));
-		GridData gd_groupName = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
-		gd_groupName.heightHint = 30;
-		gd_groupName.minimumHeight = 30;
-		groupName.setLayoutData(gd_groupName);
+		GridData gdGroupName = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
+		gdGroupName.heightHint = 30;
+		gdGroupName.minimumHeight = 30;
+		groupName.setLayoutData(gdGroupName);
 		groupName.setAlignment(SWT.CENTER);
 		groupName.setBackground(SWTResourceManager.getColor(111, 94, 230));
 		

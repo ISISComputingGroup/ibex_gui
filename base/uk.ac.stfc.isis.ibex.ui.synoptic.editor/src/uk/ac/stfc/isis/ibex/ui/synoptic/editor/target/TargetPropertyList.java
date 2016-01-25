@@ -47,8 +47,7 @@ public class TargetPropertyList extends Composite {
 	
 	private SynopticViewModel instrument;
 	
-	public TargetPropertyList(Composite parent, final SynopticViewModel instrument) 
-	{
+    public TargetPropertyList(Composite parent, final SynopticViewModel instrument) {
 		super(parent, SWT.NONE);
 		
 		this.instrument = instrument;
@@ -120,28 +119,27 @@ public class TargetPropertyList extends Composite {
 	    Composite controlComposite = new Composite(parent, SWT.NONE);
 	    controlComposite.setLayout(new GridLayout(1, false));
 	    controlComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-	    {
-		    btnAdd = new Button(controlComposite, SWT.NONE);
-		    btnAdd.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
-		    btnAdd.setText("Add New Property");
-			btnAdd.addSelectionListener(new SelectionAdapter() {
-				@Override
-				public void widgetSelected(SelectionEvent e) {
-					instrument.addNewProperty();
-				}
-			});
-		    
-		    btnDelete = new Button(controlComposite, SWT.NONE);
-			btnDelete.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
-			btnDelete.setText("Remove Property");
-			btnDelete.setEnabled(false);
-			btnDelete.addSelectionListener(new SelectionAdapter() {
-				@Override
-				public void widgetSelected(SelectionEvent e) {
-					instrument.removeSelectedProperty();
-				}
-			});
-	    } 
+
+        btnAdd = new Button(controlComposite, SWT.NONE);
+        btnAdd.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+        btnAdd.setText("Add New Property");
+        btnAdd.addSelectionListener(new SelectionAdapter() {
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                instrument.addNewProperty();
+            }
+        });
+
+        btnDelete = new Button(controlComposite, SWT.NONE);
+        btnDelete.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+        btnDelete.setText("Remove Property");
+        btnDelete.setEnabled(false);
+        btnDelete.addSelectionListener(new SelectionAdapter() {
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                instrument.removeSelectedProperty();
+            }
+        });
 	}
 	
 	public void showPropertyList(ComponentDescription component) {

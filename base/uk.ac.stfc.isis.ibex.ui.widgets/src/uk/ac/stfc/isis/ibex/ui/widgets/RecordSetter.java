@@ -62,18 +62,18 @@ import uk.ac.stfc.isis.ibex.ui.widgets.styles.RecordSetterStyle;
  */
 public class RecordSetter extends Composite {
 	/** The fixed width (in pixels) of the 'Set' button */
-	private static int SET_BUTTON_WIDTH = 80; 
+	private static final int SET_BUTTON_WIDTH = 80; 
 	
 	/** The fixed width (in pixels) of the status label that shows an icon */
-	private static int ICON_WIDTH = 30;
+	private static final int ICON_WIDTH = 30;
 	
 	/** The font to be used in the text box */
-	private static Font TEXT_FONT = SWTResourceManager.getFont("Arial", 12, SWT.NORMAL);
+	private static final Font TEXT_FONT = SWTResourceManager.getFont("Arial", 12, SWT.NORMAL);
 	
 	/** The background colour of the widget */
-	private static Color BACKGROUND_COLOR = SWTResourceManager.getColor(SWT.COLOR_WHITE);
+	private static final Color BACKGROUND_COLOR = SWTResourceManager.getColor(SWT.COLOR_WHITE);
 	
-	private static RecordSetterStyle[] DEFAULT_STYLES = { 
+	private static final RecordSetterStyle[] DEFAULT_STYLES = { 
 		RecordSetterStyle.BUTTON,  
 		RecordSetterStyle.ICON };
 	

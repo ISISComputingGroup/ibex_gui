@@ -38,7 +38,7 @@ public class DataboundCombo<T> extends ComboViewer {
 		ObservableListContentProvider contentProvider = new ObservableListContentProvider();
 		setContentProvider(contentProvider);
 		setLabelProvider(
-				new ObservableMapLabelProvider(BeansObservables.observeMaps(contentProvider.getKnownElements(), new String[] { observedProperty } )));	
+				new ObservableMapLabelProvider(BeansObservables.observeMaps(contentProvider.getKnownElements(), new String[] {observedProperty})));	
 		
 		selected = ViewerProperties.singleSelection().observe(this);
 	}

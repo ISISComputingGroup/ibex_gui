@@ -22,29 +22,30 @@
  */
 package uk.ac.stfc.isis.ibex.validators.tests;
 
-import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
 import uk.ac.stfc.isis.ibex.validators.RunControlValidator;
 
+@SuppressWarnings("checkstyle:methodname")
 public class RunControlValidatorTest {
 
-	private void checkPassedWithMessage(String low_limit, String high_limit, String expected) {
+	private void checkPassedWithMessage(String lowLimit, String highLimit, String expected) {
         // Act
         RunControlValidator limitsValid = new RunControlValidator();
-        boolean isValid = limitsValid.isValid(low_limit, high_limit);
+        boolean isValid = limitsValid.isValid(lowLimit, highLimit);
         
         // Assert
         assertTrue(isValid);
         assertTrue(limitsValid.getErrorMessage().equals(expected));
 	}
 	
-	private void checkFailedWithMessage(String low_limit, String high_limit, String expected) {
+	private void checkFailedWithMessage(String lowLimit, String highLimit, String expected) {
         // Act
         RunControlValidator limitsValid = new RunControlValidator();
-        boolean isValid = limitsValid.isValid(low_limit, high_limit);
+        boolean isValid = limitsValid.isValid(lowLimit, highLimit);
         
         // Assert
         assertFalse(isValid);
@@ -111,5 +112,15 @@ public class RunControlValidatorTest {
     @Test
     public void valid_limits_equal() {
         checkPassedWithMessage("5.0", "5.0", RunControlValidator.NO_ERROR);
+    }
+
+    @Test
+    public void null_limits_set_no_error() {
+        checkFailedWithMessage(null, null, RunControlValidator.NO_ERROR);
+    }
+
+    @Test
+    public void null_highlimit_set_no_error() {
+        checkFailedWithMessage("2.0", null, RunControlValidator.NO_ERROR);
     }
 }

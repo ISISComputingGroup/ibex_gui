@@ -30,6 +30,7 @@ import org.junit.Test;
 
 import uk.ac.stfc.isis.ibex.validators.PvValidator;
 
+@SuppressWarnings("checkstyle:methodname")
 public class PvValidatorTest {
 
     /**
@@ -84,6 +85,18 @@ public class PvValidatorTest {
         // Arrange
         String expected = PvValidator.ADDRESS_FORMAT;
         String testAddress = "invalid@";
+        // Act
+        PvValidator addressValid = new PvValidator();
+        addressValid.validatePvAddress(testAddress);
+        // Assert
+        assertEquals(expected, addressValid.getErrorMessage());
+    }
+
+    @Test
+    public void get_message_for_empty_address_string() {
+        // Arrange
+        String expected = PvValidator.ADDRESS_EMPTY;
+        String testAddress = "";
         // Act
         PvValidator addressValid = new PvValidator();
         addressValid.validatePvAddress(testAddress);

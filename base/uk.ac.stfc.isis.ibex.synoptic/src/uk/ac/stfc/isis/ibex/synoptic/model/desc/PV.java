@@ -80,7 +80,7 @@ public class PV {
 	public String fullAddress() {
 		String addressToUse = address;
 		if (this.pvType != null) {
-			switch (this.pvType){
+			switch (this.pvType) {
 			case LOCAL_PV:
 				String pvprefix = Instrument.getInstance().currentInstrument().pvPrefix();
 				addressToUse = pvprefix + addressToUse;

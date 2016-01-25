@@ -28,7 +28,8 @@ import org.eclipse.swt.widgets.Text;
 
 import uk.ac.stfc.isis.ibex.ui.experimentdetails.UserDetailsTable;
 
-public class RBLookupPanel extends Composite{
+@SuppressWarnings("checkstyle:magicnumber")
+public class RBLookupPanel extends Composite {
 	private Text txtName;
 	private ComboViewer cmboRole;
 	private UserDetailsTable experimentIDTable;
@@ -76,9 +77,9 @@ public class RBLookupPanel extends Composite{
 		new Label(searchComposite, SWT.NONE);
 		
 		btnSearch = new Button(searchComposite, SWT.NONE);
-		GridData gd_btnSearch = new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1);
-		gd_btnSearch.widthHint = 100;
-		btnSearch.setLayoutData(gd_btnSearch);
+		GridData gdBtnSearch = new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1);
+		gdBtnSearch.widthHint = 100;
+		btnSearch.setLayoutData(gdBtnSearch);
 		btnSearch.setText("Search");
 		btnSearch.setFocus();
 		

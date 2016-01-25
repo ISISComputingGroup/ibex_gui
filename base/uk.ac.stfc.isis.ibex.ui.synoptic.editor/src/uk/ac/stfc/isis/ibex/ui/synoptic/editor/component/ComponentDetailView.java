@@ -48,6 +48,7 @@ import uk.ac.stfc.isis.ibex.ui.synoptic.editor.pv.PVList;
  * name, type, and PVs
  * 
  */
+@SuppressWarnings("checkstyle:magicnumber")
 public class ComponentDetailView extends Composite {
 	private SynopticViewModel instrument;
 
@@ -111,75 +112,65 @@ public class ComponentDetailView extends Composite {
 		labelComposite.setLayoutData(new GridData(SWT.CENTER, SWT.FILL, true,
 				false, 1, 1));
 		labelComposite.setLayout(new GridLayout());
-		{
-			Label lblNoSelection = new Label(labelComposite, SWT.NONE);
-			lblNoSelection.setText("Select a component to view/edit details");
-		}
+
+        Label lblNoSelection = new Label(labelComposite, SWT.NONE);
+        lblNoSelection.setText("Select a component to view/edit details");
 
 		fieldsComposite = new Composite(parent, SWT.NONE);
 		fieldsComposite.setLayout(new GridLayout(2, false));
 		fieldsComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true,
 				false, 1, 1));
-		{
-			Label lblName = new Label(fieldsComposite, SWT.NONE);
-			lblName.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false,
-					false, 1, 1));
-			lblName.setText("Name");
 
-			txtName = new Text(fieldsComposite, SWT.BORDER);
-			txtName.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true,
-					false, 1, 1));
+        Label lblName = new Label(fieldsComposite, SWT.NONE);
+        lblName.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
+        lblName.setText("Name");
 
-			txtName.addModifyListener(new ModifyListener() {
-				@Override
-				public void modifyText(ModifyEvent e) {
-					updateModelName();
-				}
-			});
+        txtName = new Text(fieldsComposite, SWT.BORDER);
+        txtName.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 
-			Label lblType = new Label(fieldsComposite, SWT.NONE);
-			lblType.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false,
-					false, 1, 1));
-			lblType.setText("Type");
+        txtName.addModifyListener(new ModifyListener() {
+            @Override
+            public void modifyText(ModifyEvent e) {
+                updateModelName();
+            }
+        });
 
-			cmboType = new ComboViewer(fieldsComposite, SWT.READ_ONLY);
-			cmboType.getCombo().setLayoutData(
-					new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+        Label lblType = new Label(fieldsComposite, SWT.NONE);
+        lblType.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
+        lblType.setText("Type");
 
-			cmboType.setContentProvider(ArrayContentProvider.getInstance());
-            cmboType.setInput(typeList);
-			cmboType.getCombo().select(0);
-			cmboType.addSelectionChangedListener(new ISelectionChangedListener() {
-				@Override
-				public void selectionChanged(SelectionChangedEvent event) {
-					updateModelType();
-					updateTypeIcon();
-				}
-			});
+        cmboType = new ComboViewer(fieldsComposite, SWT.READ_ONLY);
+        cmboType.getCombo().setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 
-			Label lblIcon = new Label(fieldsComposite, SWT.NONE);
-			lblIcon.setLayoutData(new GridData(SWT.RIGHT, SWT.TOP, false,
-					false, 1, 1));
-			lblIcon.setText("Icon");
+        cmboType.setContentProvider(ArrayContentProvider.getInstance());
+        cmboType.setInput(typeList);
+        cmboType.getCombo().select(0);
+        cmboType.addSelectionChangedListener(new ISelectionChangedListener() {
+            @Override
+            public void selectionChanged(SelectionChangedEvent event) {
+                updateModelType();
+                updateTypeIcon();
+            }
+        });
 
-			lblTypeIcon = new Label(fieldsComposite, SWT.BORDER);
-			GridData iconGridData = new GridData(SWT.LEFT, SWT.CENTER, false,
-					false, 1, 1);
-			iconGridData.widthHint = 32;
-			iconGridData.heightHint = 32;
-			lblTypeIcon.setLayoutData(iconGridData);
+        Label lblIcon = new Label(fieldsComposite, SWT.NONE);
+        lblIcon.setLayoutData(new GridData(SWT.RIGHT, SWT.TOP, false, false, 1, 1));
+        lblIcon.setText("Icon");
 
-			Label lblPvs = new Label(fieldsComposite, SWT.NONE);
-			lblPvs.setLayoutData(new GridData(SWT.RIGHT, SWT.TOP, false, false,
-					1, 1));
-			lblPvs.setText("PVs");
+        lblTypeIcon = new Label(fieldsComposite, SWT.BORDER);
+        GridData iconGridData = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+        iconGridData.widthHint = 32;
+        iconGridData.heightHint = 32;
+        lblTypeIcon.setLayoutData(iconGridData);
 
-			pvList = new PVList(fieldsComposite, instrument);
-			GridData pvGridData = new GridData(SWT.FILL, SWT.CENTER, true,
-					false, 1, 1);
-			pvGridData.heightHint = 150;
-			pvList.setLayoutData(pvGridData);
-		}
+        Label lblPvs = new Label(fieldsComposite, SWT.NONE);
+        lblPvs.setLayoutData(new GridData(SWT.RIGHT, SWT.TOP, false, false, 1, 1));
+        lblPvs.setText("PVs");
+
+        pvList = new PVList(fieldsComposite, instrument);
+        GridData pvGridData = new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1);
+        pvGridData.heightHint = 150;
+        pvList.setLayoutData(pvGridData);
 	}
 
 	public void showComponent(ComponentDescription component) {

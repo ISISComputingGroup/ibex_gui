@@ -31,7 +31,7 @@ public class MainMenuUI extends AbstractUIPlugin {
 	// The shared instance
 	private static MainMenuUI plugin;
 	
-	public static Instrument INSTRUMENT = Instrument.getInstance();
+	public static final Instrument INSTRUMENT = Instrument.getInstance();
 	
 	public MainMenuUI() {
 		

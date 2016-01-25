@@ -62,10 +62,10 @@ public class LoggingObserverTest {
 	@Test
 	public void setting_error_on_observable_creates_apporpriate_log_message_at_error_level() {
 		// Act
-		testableObservable.setError(TestHelpers.exception);
+		testableObservable.setError(TestHelpers.EXCEPTION);
 		
 		// Assert - The log message is as expected
-		verify(mockLogger, times(1)).error(ID + ON_ERROR_MESSAGE + TestHelpers.exception);
+		verify(mockLogger, times(1)).error(ID + ON_ERROR_MESSAGE + TestHelpers.EXCEPTION);
 	}
 	
 	@Test

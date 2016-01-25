@@ -82,7 +82,7 @@ public class MacroPanel extends Composite implements IIocDependentPanel {
 	}
 	
 	public static List<Macro> sortMacroCollectionByName(Collection<Macro> collection) {
-		Comparator<Macro> comparator = new Comparator<Macro>(){
+		Comparator<Macro> comparator = new Comparator<Macro>() {
 			public int compare(Macro macro1, Macro macro2) {
 				return macro1.getName().compareTo(macro2.getName());
 			}
@@ -127,7 +127,7 @@ public class MacroPanel extends Composite implements IIocDependentPanel {
 	}
 	
 	private PropertyChangeListener updateValueListener(final Macro setMacro, final Collection<Macro> setMacros) {
-		return new PropertyChangeListener(){
+		return new PropertyChangeListener() {
 			@Override
 			public void propertyChange(PropertyChangeEvent newValue) {
 				String updatedValue = (String) newValue.getNewValue();
@@ -142,7 +142,7 @@ public class MacroPanel extends Composite implements IIocDependentPanel {
 	}
 	
 	private PropertyChangeListener addSetMacroListener(final Macro displayMacro, final Collection<Macro> setMacros) {
-		return new PropertyChangeListener(){
+		return new PropertyChangeListener() {
 			@Override
 			public void propertyChange(PropertyChangeEvent newValue) {
 				Macro newMacro = new Macro(displayMacro);

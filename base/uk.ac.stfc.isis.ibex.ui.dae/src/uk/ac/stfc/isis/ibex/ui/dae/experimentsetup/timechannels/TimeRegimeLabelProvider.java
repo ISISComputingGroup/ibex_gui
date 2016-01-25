@@ -25,6 +25,7 @@ import org.eclipse.swt.graphics.Image;
 
 import uk.ac.stfc.isis.ibex.dae.experimentsetup.timechannels.TimeRegimeRow;
 
+@SuppressWarnings("checkstyle:magicnumber")
 public class TimeRegimeLabelProvider extends LabelProvider implements ITableLabelProvider {
 
 	@Override
@@ -44,8 +45,8 @@ public class TimeRegimeLabelProvider extends LabelProvider implements ITableLabe
 				return Double.toString(row.getStep());
 			case 3:
 				return row.getMode().toString();
+            default:
+                return "";
 		}
-		
-		return "";
 	}
 }

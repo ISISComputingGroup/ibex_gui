@@ -26,7 +26,7 @@ import uk.ac.stfc.isis.ibex.epics.writing.BaseWritable;
  *
  * @param <T> the PV type
  */
-public abstract class WritablePV<T> extends BaseWritable<T>implements PV<T> {
+public abstract class WritablePV<T> extends BaseWritable<T> implements PV<T> {
 
 	private final PVInfo<T> info;
 

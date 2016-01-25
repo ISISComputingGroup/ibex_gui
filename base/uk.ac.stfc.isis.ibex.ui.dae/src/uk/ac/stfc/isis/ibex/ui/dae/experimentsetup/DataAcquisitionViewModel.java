@@ -140,7 +140,7 @@ public class DataAcquisitionViewModel extends ModelObject {
 		settings.setWiringTable(value);
 	}
 	
-	public String [] getDetectorTableList() {
+	public String[] getDetectorTableList() {
 		return valueOrEmpty(detectorTables);
 	}
 	
@@ -152,7 +152,7 @@ public class DataAcquisitionViewModel extends ModelObject {
 		settings.setDetectorTable(value);
 	}
 	
-	public String [] getSpectraTableList() {
+	public String[] getSpectraTableList() {
 		return valueOrEmpty(spectraTables);
 	}
 	

@@ -28,6 +28,7 @@ import uk.ac.stfc.isis.ibex.model.ModelObject;
 public class LogCountViewModel extends ModelObject {
 	
 	private static final String IOC_LOG = "IOC Log"; 
+	private static final int MAX_ALARMS = 100;
 	
 	private String text;
 	private boolean hasMessages;
@@ -73,7 +74,7 @@ public class LogCountViewModel extends ModelObject {
 			return "";
 		}
 		
-		String displayedCount = count > 100 ? "100+" : count.toString();
+		String displayedCount = count > MAX_ALARMS ? Integer.toString(MAX_ALARMS) + "+" : count.toString();
 		return " (" + displayedCount + ")";
 	}
 }

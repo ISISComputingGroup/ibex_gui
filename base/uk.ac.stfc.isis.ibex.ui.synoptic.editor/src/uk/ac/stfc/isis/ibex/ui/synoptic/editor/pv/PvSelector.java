@@ -63,7 +63,7 @@ public class PvSelector extends ConfigHandler<Configuration> {
 		}
 	}
 	
-	public String getPvAddress(){
+	public String getPvAddress() {
 		return pvAddress;
 	}
 

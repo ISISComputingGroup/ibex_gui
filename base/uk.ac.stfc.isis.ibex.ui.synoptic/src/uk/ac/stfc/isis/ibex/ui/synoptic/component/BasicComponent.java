@@ -37,6 +37,7 @@ import uk.ac.stfc.isis.ibex.ui.synoptic.Activator;
 import uk.ac.stfc.isis.ibex.ui.synoptic.SynopticPresenter;
 import uk.ac.stfc.isis.ibex.ui.synoptic.beamline.BeamlineComposite;
 
+@SuppressWarnings("checkstyle:magicnumber")
 public class BasicComponent extends BeamlineComposite {
 
 	private Label image;

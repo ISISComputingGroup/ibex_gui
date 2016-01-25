@@ -43,6 +43,7 @@ import uk.ac.stfc.isis.ibex.ui.experimentdetails.rblookup.RBLookupDialog;
 import uk.ac.stfc.isis.ibex.ui.experimentdetails.rblookup.RBLookupViewModel;
 import uk.ac.stfc.isis.ibex.ui.widgets.observable.WritableObservingTextBox;
 
+@SuppressWarnings("checkstyle:magicnumber")
 public class ExperimentDetailsPanel extends Composite {
 	
 	private final ViewModel viewModel = new ViewModel();
@@ -74,10 +75,10 @@ public class ExperimentDetailsPanel extends Composite {
 		lblRbNumber.setText("RB Number");
 		
 		rbNumber = new WritableObservingTextBox(composite, SWT.NONE, viewModel.rbNumber);
-		GridData gd_rbNumber = new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1);
-		gd_rbNumber.minimumWidth = 100;
-		gd_rbNumber.widthHint = 100;
-		rbNumber.setLayoutData(gd_rbNumber);
+		GridData gdRbNumber = new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1);
+		gdRbNumber.minimumWidth = 100;
+		gdRbNumber.widthHint = 100;
+		rbNumber.setLayoutData(gdRbNumber);
 		
 		btnRBLookup = new Button(composite, SWT.NONE);
 		btnRBLookup.setText("Search");
@@ -102,12 +103,12 @@ public class ExperimentDetailsPanel extends Composite {
 		new Label(composite, SWT.NONE);
 		
 		userDetails = new EditableUserDetailsTable(composite, SWT.NONE, SWT.MULTI | SWT.NO_SCROLL | SWT.V_SCROLL | SWT.FULL_SELECTION | SWT.BORDER);
-		GridData gd_userDetails = new GridData(SWT.LEFT, SWT.FILL, false, true, 2, 1);
-		gd_userDetails.heightHint = 110;
-		gd_userDetails.minimumHeight = 110;
-		gd_userDetails.widthHint = 400;
-		gd_userDetails.minimumWidth = 400;
-		userDetails.setLayoutData(gd_userDetails);
+		GridData gdUserDetails = new GridData(SWT.LEFT, SWT.FILL, false, true, 2, 1);
+		gdUserDetails.heightHint = 110;
+		gdUserDetails.minimumHeight = 110;
+		gdUserDetails.widthHint = 400;
+		gdUserDetails.minimumWidth = 400;
+		userDetails.setLayoutData(gdUserDetails);
 		
 		updateUserDetails();
 		viewModel.model.addPropertyChangeListener(new PropertyChangeListener() {		
@@ -120,8 +121,8 @@ public class ExperimentDetailsPanel extends Composite {
 		experimentTeamButtons = new Composite(composite, SWT.NONE);
 		experimentTeamButtons.setLayout(new GridLayout(1, false));
 		
-		GridData gd_detailsButtons = new GridData(SWT.LEFT, SWT.FILL, false, false, 1, 1);
-		gd_detailsButtons.widthHint = 50;
+		GridData gdDetailsButtons = new GridData(SWT.LEFT, SWT.FILL, false, false, 1, 1);
+		gdDetailsButtons.widthHint = 50;
 		
 		btnAddUserDetails = new Button(experimentTeamButtons, SWT.NONE);
 		btnAddUserDetails.setSize(34, 25);
@@ -133,7 +134,7 @@ public class ExperimentDetailsPanel extends Composite {
 			}
 		});
 		btnAddUserDetails.setText("Add");
-		btnAddUserDetails.setLayoutData(gd_detailsButtons);
+		btnAddUserDetails.setLayoutData(gdDetailsButtons);
 		
 		btnClearUserDetails = new Button(experimentTeamButtons, SWT.NONE);
 		btnClearUserDetails.addSelectionListener(new SelectionAdapter() {
@@ -143,7 +144,7 @@ public class ExperimentDetailsPanel extends Composite {
 			}
 		});
 		btnClearUserDetails.setText("Clear");
-		btnClearUserDetails.setLayoutData(gd_detailsButtons);		
+		btnClearUserDetails.setLayoutData(gdDetailsButtons);		
 		
 		btnUpdateUserDetails = new Button(experimentTeamButtons, SWT.NONE);
 		btnUpdateUserDetails.setSize(50, 25);
@@ -154,7 +155,7 @@ public class ExperimentDetailsPanel extends Composite {
 			}
 		});
 		btnUpdateUserDetails.setText("Set");
-		btnUpdateUserDetails.setLayoutData(gd_detailsButtons);
+		btnUpdateUserDetails.setLayoutData(gdDetailsButtons);
 		
 		new Label(composite, SWT.NONE);
 		new Label(composite, SWT.NONE);
@@ -166,12 +167,12 @@ public class ExperimentDetailsPanel extends Composite {
 		new Label(composite, SWT.NONE);
 		
 		sampleParameters = new ParametersTable(composite, SWT.NONE, SWT.MULTI | SWT.NO_SCROLL | SWT.V_SCROLL | SWT.FULL_SELECTION | SWT.BORDER);
-		GridData gd_sampleParameters = new GridData(SWT.LEFT, SWT.FILL, false, true, 4, 1);
-		gd_sampleParameters.widthHint = 400;
-		gd_sampleParameters.minimumWidth = 400;
-		gd_sampleParameters.minimumHeight = 150;
-		gd_sampleParameters.heightHint = 150;
-		sampleParameters.setLayoutData(gd_sampleParameters);
+		GridData gdSampleParameters = new GridData(SWT.LEFT, SWT.FILL, false, true, 4, 1);
+		gdSampleParameters.widthHint = 400;
+		gdSampleParameters.minimumWidth = 400;
+		gdSampleParameters.minimumHeight = 150;
+		gdSampleParameters.heightHint = 150;
+		sampleParameters.setLayoutData(gdSampleParameters);
 		sampleParameters.enableEditing(viewModel.rbNumber.canSetText().getValue());
 		
 		updateSampleParameters();
@@ -194,12 +195,12 @@ public class ExperimentDetailsPanel extends Composite {
 		new Label(composite, SWT.NONE);
 		new Label(composite, SWT.NONE);
 		new Label(composite, SWT.NONE);
-		GridData gd_beamParameters = new GridData(SWT.LEFT, SWT.FILL, true, true, 4, 1);
-		gd_beamParameters.widthHint = 400;
-		gd_beamParameters.minimumWidth = 400;
-		gd_beamParameters.minimumHeight = 200;
-		gd_beamParameters.heightHint = 200;
-		beamParameters.setLayoutData(gd_beamParameters);
+		GridData gdBeamParameters = new GridData(SWT.LEFT, SWT.FILL, true, true, 4, 1);
+		gdBeamParameters.widthHint = 400;
+		gdBeamParameters.minimumWidth = 400;
+		gdBeamParameters.minimumHeight = 200;
+		gdBeamParameters.heightHint = 200;
+		beamParameters.setLayoutData(gdBeamParameters);
 		beamParameters.enableEditing(viewModel.rbNumber.canSetText().getValue());
 		
 		updateBeamParameters();
@@ -223,7 +224,7 @@ public class ExperimentDetailsPanel extends Composite {
 		viewModel.rbNumber.canSetText().addPropertyChangeListener(new PropertyChangeListener() {
 			@Override
 			public void propertyChange(PropertyChangeEvent event) {
-				boolean canSet = (boolean)event.getNewValue();
+				boolean canSet = (boolean) event.getNewValue();
 				beamParameters.enableEditing(canSet);
 				sampleParameters.enableEditing(canSet);
 			}

@@ -51,7 +51,7 @@ public class VTypeFormatToConversionsTest {
 	/**
 	 * An Enum class to test with.
 	 */
-	private static final Class<TestingEnum> enumType = TestingEnum.class;
+	private static final Class<TestingEnum> ENUM_TYPE = TestingEnum.class;
 	
 	@Test
 	public void convert_to_number() throws ConversionException {
@@ -182,7 +182,7 @@ public class VTypeFormatToConversionsTest {
 				return 0;
 			}
 		};
-		VByteArray test = (VByteArray)ValueFactory.newVNumberArray(data, null, null, null);
+		VByteArray test = (VByteArray) ValueFactory.newVNumberArray(data, null, null, null);
 		
 		// Act
 		VByteArray result = converter.convert(test);
@@ -224,7 +224,7 @@ public class VTypeFormatToConversionsTest {
 	public void convert_to_enum() throws ConversionException {
 		
 		// Arrange
-		Converter<VEnum, TestingEnum> converter = VTypeFormat.toEnum(enumType);			
+		Converter<VEnum, TestingEnum> converter = VTypeFormat.toEnum(ENUM_TYPE);			
 		VEnum value = ValueFactory.newVEnum(0, TestingEnum.TEST1.getNames(), null, null);
 		
 		// Act

@@ -25,9 +25,11 @@ import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
-/*
- * Stores unique items in one of two sets. All items are
- * initially added to the first set.
+/**
+ * Stores unique items in one of two sets. All items are initially added to the
+ * first set.
+ *
+ * @param <T> the type
  */
 public class ExclusiveSetPair<T> {
 
@@ -113,30 +115,36 @@ public class ExclusiveSetPair<T> {
 		selected.add(item);
 	}
 
-	/*
-	 * Adds the items to the unselected set if they are not
-	 * already present in either set.
-	 */
+    /**
+     * Adds the items to the unselected set if they are not already present in
+     * either set.
+     * 
+     * @param items the items to add
+     */
 	public void addAllAsUnselected(Collection<T> items) {
 		for (T item : items) {
 			addUnselected(item);
 		}
 	}
-	
-	/*
-	 * Adds the items to the selected set if they are not
-	 * already present in either set.
-	 */
+
+    /**
+     * Adds the items to the selected set if they are not already present in
+     * either set.
+     * 
+     * @param items the items to add
+     */
 	public void addAllAsSelected(Collection<T> items) {
 		for (T item : items) {
 			addSelected(item);
 		}
 	}
-	
-	/*
-	 * Adds any items that are not already present to the unselected set
-	 * and removes any items that are not part of the new collection.
-	 */
+
+    /**
+     * Adds any items that are not already present to the unselected set and
+     * removes any items that are not part of the new collection.
+     * 
+     * @param items the items
+     */
 	public void synchronise(Collection<T> items) {	
 		addAllAsUnselected(items);		
 		removeAll(missing(items));

@@ -42,6 +42,7 @@ import uk.ac.stfc.isis.ibex.synoptic.Synoptic;
 import uk.ac.stfc.isis.ibex.synoptic.SynopticInfo;
 import uk.ac.stfc.isis.ibex.ui.configserver.dialogs.MessageDisplayer;
 
+@SuppressWarnings("checkstyle:magicnumber")
 public class SummaryPanel extends Composite {
 	private Text txtName;
 	private Text txtDescription;
@@ -93,10 +94,10 @@ public class SummaryPanel extends Composite {
 		lblDateCreated.setText("Date Created:");
 				
 		txtDateCreated = new Text(grpSummary, SWT.BORDER);
-		GridData gd_txtDateCreated = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
-		gd_txtDateCreated.widthHint = 120;
-		gd_txtDateCreated.minimumWidth = 120;
-		txtDateCreated.setLayoutData(gd_txtDateCreated);
+		GridData gdTxtDateCreated = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+		gdTxtDateCreated.widthHint = 120;
+		gdTxtDateCreated.minimumWidth = 120;
+		txtDateCreated.setLayoutData(gdTxtDateCreated);
 		txtDateCreated.setEditable(false);
 				
 		Label lblDateModified = new Label(grpSummary, SWT.NONE);
@@ -104,10 +105,10 @@ public class SummaryPanel extends Composite {
 		lblDateModified.setText("Date Modified:");
 		
 		txtDateModified = new Text(grpSummary, SWT.BORDER);
-		GridData gd_txtDateModified = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
-		gd_txtDateModified.minimumWidth = 120;
-		gd_txtDateModified.widthHint = 120;
-		txtDateModified.setLayoutData(gd_txtDateModified);
+		GridData gdTxtDateModified = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+		gdTxtDateModified.minimumWidth = 120;
+		gdTxtDateModified.widthHint = 120;
+		txtDateModified.setLayoutData(gdTxtDateModified);
 		txtDateModified.setEditable(false);
 	}
 	
@@ -130,7 +131,7 @@ public class SummaryPanel extends Composite {
 	
 	private void updateSynopticList() {
 		Collection<SynopticInfo> available = Synoptic.getInstance().availableSynoptics();
-		String [] names = SynopticInfo.names(available).toArray(new String[0]);
+		String[] names = SynopticInfo.names(available).toArray(new String[0]);
 		Arrays.sort(names);
 		cmboSynoptic.setInput(names);
 	}

@@ -24,8 +24,9 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Macro;
 
+@SuppressWarnings("checkstyle:methodname")
 public class MacroTest {
-
+	
 	@Test
 	public void create_macro_using_string_parameters_constructor_works() {
 		// Arrange

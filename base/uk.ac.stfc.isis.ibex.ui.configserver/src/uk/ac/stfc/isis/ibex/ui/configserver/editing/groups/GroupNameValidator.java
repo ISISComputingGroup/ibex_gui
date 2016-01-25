@@ -69,7 +69,7 @@ public class GroupNameValidator implements IValidator {
 	
 	private boolean nameIsDuplicated(Object text) {
 		for (EditableGroup group : config.getEditableGroups()) {
-			if(isNotGroupBeingEdited(group)) {
+			if (isNotGroupBeingEdited(group)) {
 				if (group.getName().equals(text)) {
 					return true;
 				}

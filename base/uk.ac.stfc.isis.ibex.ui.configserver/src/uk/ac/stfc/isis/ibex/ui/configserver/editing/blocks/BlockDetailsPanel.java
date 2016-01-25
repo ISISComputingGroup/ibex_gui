@@ -35,6 +35,7 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 
+@SuppressWarnings("checkstyle:magicnumber")
 public class BlockDetailsPanel extends Composite {
 	
 	private final Text name;
@@ -57,9 +58,9 @@ public class BlockDetailsPanel extends Composite {
 		lblName.setText("Name:");
 		
 		name = new Text(grpBlock, SWT.BORDER);
-		GridData gd_name = new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1);
-		gd_name.widthHint = 280;
-		name.setLayoutData(gd_name);
+		GridData gdName = new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1);
+		gdName.widthHint = 280;
+		name.setLayoutData(gdName);
 		
 		visible = new Button(grpBlock, SWT.CHECK);
 		visible.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, false, 1, 1));
@@ -73,9 +74,9 @@ public class BlockDetailsPanel extends Composite {
 		lblPvAddress.setText("PV address:");
 		
 		pvAddress = new Text(grpBlock, SWT.BORDER);
-		GridData gd_pvAddress = new GridData(SWT.CENTER, SWT.CENTER, true, false, 2, 1);
-		gd_pvAddress.minimumWidth = 380;
-		pvAddress.setLayoutData(gd_pvAddress);
+		GridData gdPvAddress = new GridData(SWT.CENTER, SWT.CENTER, true, false, 2, 1);
+		gdPvAddress.minimumWidth = 380;
+		pvAddress.setLayoutData(gdPvAddress);
 		
 		btnPickPV = new Button(grpBlock, SWT.NONE);
 		btnPickPV.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 1, 1));

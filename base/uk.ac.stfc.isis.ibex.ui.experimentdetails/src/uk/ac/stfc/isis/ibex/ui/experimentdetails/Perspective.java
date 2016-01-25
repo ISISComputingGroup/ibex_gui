@@ -36,7 +36,7 @@ public class Perspective extends BasePerspective {
 	}
 	
 	@Override
-	public String ID() {
+	public String id() {
 		return ID;
 	}
 

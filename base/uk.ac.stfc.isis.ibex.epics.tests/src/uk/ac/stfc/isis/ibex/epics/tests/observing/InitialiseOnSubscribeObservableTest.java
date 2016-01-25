@@ -55,7 +55,7 @@ public class InitialiseOnSubscribeObservableTest {
 		mockObservable = TestHelpers.getCachingObservable(TestHelpers.STRING_VALUE);
 		testableObservable = new TestableObservable<>();
 		testableObservable.setValue(TestHelpers.STRING_VALUE);
-		testableObservable.setError(TestHelpers.exception);		
+		testableObservable.setError(TestHelpers.EXCEPTION);		
 
 		// The real observables to test
 		initObservableCachingSource = new ForwardingObservable<>(mockObservable);
@@ -76,7 +76,7 @@ public class InitialiseOnSubscribeObservableTest {
 	@Test
 	public void an_observer_is_added_and_the_observer_has_its_update_method_called() {
 		// Assert - The initialisable observer has its update method called twice, once for each observable subscribed to
-		verify(mockObserver, times(1)).update(TestHelpers.STRING_VALUE, TestHelpers.exception, false);
+		verify(mockObserver, times(1)).update(TestHelpers.STRING_VALUE, TestHelpers.EXCEPTION, false);
 	}
 	
 	@Test
@@ -115,17 +115,17 @@ public class InitialiseOnSubscribeObservableTest {
 	@Test
 	public void setting_watched_observable_error_status_calls_observer_onError_method() {
 		// Act
-		testableObservable.setError(TestHelpers.exception);
+		testableObservable.setError(TestHelpers.EXCEPTION);
 				
 		// Assert - The initialisable observer has its error method called once
-		verify(mockObserver, times(1)).onError(TestHelpers.exception);
+		verify(mockObserver, times(1)).onError(TestHelpers.EXCEPTION);
 	}
 	
 	@Test
 	public void with_multiple_observers_subscribed_all_observers_get_update_method_called() {
 		// Assert - Both observables are initialised with the update method
-		verify(mockObserver, times(1)).update(TestHelpers.STRING_VALUE, TestHelpers.exception, false);
-		verify(mockObserverTwo, times(1)).update(TestHelpers.STRING_VALUE, TestHelpers.exception, false);
+		verify(mockObserver, times(1)).update(TestHelpers.STRING_VALUE, TestHelpers.EXCEPTION, false);
+		verify(mockObserverTwo, times(1)).update(TestHelpers.STRING_VALUE, TestHelpers.EXCEPTION, false);
 	}
 	
 	@Test

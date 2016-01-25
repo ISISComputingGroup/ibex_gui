@@ -27,16 +27,16 @@ import uk.ac.stfc.isis.ibex.experimentdetails.database.ExpDataField;
  */
 public class SqlWhereEqualClause extends SqlWhereClause {
 	
-	public SqlWhereEqualClause(ExpDataField LHS, ExpDataField RHS) {
-		super(LHS.toString(), RHS.toString());
+	public SqlWhereEqualClause(ExpDataField lhs, ExpDataField rhs) {
+		super(lhs.toString(), rhs.toString());
 	}
 
-	public SqlWhereEqualClause(ExpDataField LHS, Role RHS) {
-		super(LHS.toString(), "'" + RHS.name() + "'");
+	public SqlWhereEqualClause(ExpDataField lhs, Role rhs) {
+		super(lhs.toString(), "'" + rhs.name() + "'");
 	}	
 	
 	@Override
 	public String toString() {
-		return this.LHS + " = " + this.RHS;
+		return this.lhs + " = " + this.rhs;
 	}
 }

@@ -28,6 +28,7 @@ import org.eclipse.swt.layout.GridData;
 
 import uk.ac.stfc.isis.ibex.dae.spectra.UpdatableSpectrum;
 
+@SuppressWarnings("checkstyle:magicnumber")
 public class SpectraPlotsPanel extends Composite {
 
 	private SpectrumView plot1;

@@ -50,11 +50,11 @@ public class AlarmCounter extends ModelObject {
 			}
 
 			@Override
-			public void serverModeUpdate(AlarmClientModel model, boolean maintenance_mode) {
+			public void serverModeUpdate(AlarmClientModel model, boolean maintenanceMode) {
 			}
 
 			@Override
-			public void newAlarmState(AlarmClientModel model, AlarmTreePV pv, boolean parent_changed) {
+			public void newAlarmState(AlarmClientModel model, AlarmTreePV pv, boolean parentChanged) {
                 fireCountChanged(count, count = alarmModel.getActiveAlarms().length);
 			}
 		});
@@ -75,7 +75,7 @@ public class AlarmCounter extends ModelObject {
      * @param newCount the new count
      */
     private void fireCountChanged(final int prevCount, final int newCount) {
-		Display.getDefault().asyncExec( new Runnable() {  
+		Display.getDefault().asyncExec(new Runnable() {  
 			@Override
             public void run() {
                 firePropertyChange("alarmCount", prevCount, newCount);

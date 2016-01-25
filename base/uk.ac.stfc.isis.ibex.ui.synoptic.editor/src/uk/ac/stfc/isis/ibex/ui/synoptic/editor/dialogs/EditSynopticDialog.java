@@ -48,6 +48,7 @@ import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.SynopticViewModel;
  * saving, most of the layout for this dialogue is provided in the EditorPanel class.
  * 
  */
+@SuppressWarnings("checkstyle:magicnumber")
 public class EditSynopticDialog extends Dialog {
 	
 	private static final Point INITIAL_SIZE = new Point(950, 800);

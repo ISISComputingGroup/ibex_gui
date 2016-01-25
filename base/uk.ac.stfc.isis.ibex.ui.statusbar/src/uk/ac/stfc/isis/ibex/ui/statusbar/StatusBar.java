@@ -34,7 +34,7 @@ import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.Subscription;
 
 
-public class StatusBar extends AbstractUIPlugin{
+public class StatusBar extends AbstractUIPlugin {
 	
 	private static StatusBar instance;
 	
@@ -74,10 +74,10 @@ public class StatusBar extends AbstractUIPlugin{
 	}
 	
 	public void subscribeToConfig() {
-		ForwardingObservable<DisplayConfiguration> CONFIG = 
+		ForwardingObservable<DisplayConfiguration> config = 
 				Configurations.getInstance().display().displayCurrentConfig();
 		
-		configSubscription = CONFIG.addObserver(configObserver);
+		configSubscription = config.addObserver(configObserver);
 	}
 	
 	@Override
@@ -96,7 +96,7 @@ public class StatusBar extends AbstractUIPlugin{
 				IViewSite vSite = (IViewSite) site;
 				IStatusLineManager statusLineManager = vSite.getActionBars().getStatusLineManager();
 				
-		    	StatusLineConfigLabel statusItem = (StatusLineConfigLabel)statusLineManager.find("CurrentConfigTitle");
+		    	StatusLineConfigLabel statusItem = (StatusLineConfigLabel) statusLineManager.find("CurrentConfigTitle");
 		    	statusItem.setConfig(title);
 		    	statusItem.setToolTip(description);
 		    	statusLineManager.update(true);

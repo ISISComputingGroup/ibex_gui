@@ -27,6 +27,7 @@ import uk.ac.stfc.isis.ibex.experimentdetails.UserDetails;
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundCellLabelProvider;
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundTable;
 
+@SuppressWarnings("checkstyle:magicnumber")
 public abstract class UserDetailsTable extends DataboundTable<UserDetails> {
 
 	protected TableViewerColumn name;

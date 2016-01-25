@@ -36,10 +36,11 @@ import org.eclipse.ui.application.IActionBarConfigurer;
 import org.eclipse.ui.application.IWorkbenchWindowConfigurer;
 import org.eclipse.ui.application.WorkbenchWindowAdvisor;
 
+@SuppressWarnings("checkstyle:magicnumber")
 public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
 
-    private final static int MIN_WINDOW_HEIGHT = 800;
-    private final static int MIN_WINDOW_WIDTH = 1100;
+    private static final int MIN_WINDOW_HEIGHT = 800;
+    private static final int MIN_WINDOW_WIDTH = 1100;
 	
 	public ApplicationWorkbenchWindowAdvisor(IWorkbenchWindowConfigurer configurer) {
 		super(configurer);
@@ -153,7 +154,7 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
         public int windowY;
         public boolean windowMaximised;
 
-        public WindowLayout(int height, int width, int x, int y, boolean maximised) {
+        WindowLayout(int height, int width, int x, int y, boolean maximised) {
             windowHeight = height;
             windowWidth = width;
             windowX = x;

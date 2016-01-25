@@ -68,8 +68,7 @@ public class IocPVSetsEditorPanel extends Composite implements	IIocDependentPane
 			PVSet existingSet = ioc.findPVSet(pvset.getName());
 			if (existingSet != null) {
 				editableSet = new EditablePVSet(existingSet, pvset.getDescription());
-			}
-			else {
+			} else {
 				editableSet = new EditablePVSet(pvset.getName(), false, pvset.getDescription());
 			}
 			rows.add(editableSet);
@@ -86,12 +85,10 @@ public class IocPVSetsEditorPanel extends Composite implements	IIocDependentPane
 							if ((boolean) arg0.getNewValue()) {
 								if (existingSet != null) {
 									existingSet.setEnabled(true);
-								}
-								else {
+								} else {
 									ioc.getPvSets().add(new PVSet(pvset.getName(), true));
 								}
-							}
-							else if (existingSet != null) {
+							} else if (existingSet != null) {
 								ioc.getPvSets().remove(existingSet);
 							}
 						}

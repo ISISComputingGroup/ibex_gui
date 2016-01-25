@@ -61,7 +61,7 @@ public class Variables extends InstrumentVariables {
      */
     public static final String NONE_SYNOPTIC_NAME = "-- NONE --";
 
-    public final ForwardingObservable<SynopticDescription> default_synoptic;
+    public final ForwardingObservable<SynopticDescription> defaultSynoptic;
 
     public final Writable<String> setSynoptic;
 
@@ -107,7 +107,7 @@ public class Variables extends InstrumentVariables {
         
         this.pvPrefix = pvPrefix;
 
-        default_synoptic = convert(readCompressed(SYNOPTIC_ADDRESS + "GET_DEFAULT"), new InstrumentDescriptionParser());
+        defaultSynoptic = convert(readCompressed(SYNOPTIC_ADDRESS + "GET_DEFAULT"), new InstrumentDescriptionParser());
         setSynoptic = writeCompressed(SYNOPTIC_ADDRESS + "SET_DETAILS");
         deleteSynoptics = convert(writeCompressed(SYNOPTIC_ADDRESS + "DELETE"), namesToString());
         available = convert(readCompressed(SYNOPTIC_ADDRESS + "NAMES"), toSynopticInfo());
