@@ -21,9 +21,7 @@ package uk.ac.stfc.isis.ibex.instrument;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.logging.log4j.Logger;
 import org.eclipse.core.runtime.CoreException;
@@ -31,8 +29,6 @@ import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtensionRegistry;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.preferences.ConfigurationScope;
-import org.epics.pvmanager.ChannelHandler;
-import org.epics.pvmanager.PVManager;
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
 import org.osgi.service.prefs.BackingStoreException;
@@ -59,18 +55,18 @@ public class Instrument implements BundleActivator {
 	
 	private List<InstrumentInfo> inst_ruments = new ArrayList<>();
 	private SettableUpdatedValue<String> inst_rumentName = new SettableUpdatedValue<>();
-	private InstrumentInfo instrumentInfo;
-	private final InstrumentInfo localhost;
+	private InstrumentInfo in_strumentInfo;
+    private final InstrumentInfo loc_alhost;
 	
 	private final Preferences initalPreference = ConfigurationScope.INSTANCE.getNode("uk.ac.stfc.isis.ibex.instrument").node("preferences");
 	
-	private static String initialInstrument = "initial";
+    private static String INITIAL_INSTRUMENT = "initial";
 	
 	public Instrument() {
 		instan_ce = this;
 		
-		localhost = new LocalHostInstrumentInfo();
-		inst_ruments.add(localhost);
+        loc_alhost = new LocalHostInstrumentInfo();
+        inst_ruments.add(loc_alhost);
 		inst_ruments.add(new InstrumentInfo("LARMOR"));
 		inst_ruments.add(new InstrumentInfo("ALF"));
 		inst_ruments.add(new InstrumentInfo("DEMO"));
@@ -79,12 +75,12 @@ public class Instrument implements BundleActivator {
 		setInstrument(initialInstrument());	
 	}
     
-    public UpdatedValue<String> n_ame() {
+    public UpdatedValue<String> name() {
 		return inst_rumentName;
 	}
 	
     public String getPvPrefix() {
-        return instrumentInfo.pvPrefix();
+        return in_strumentInfo.pvPrefix();
     }
 
 	public Collection<InstrumentInfo> instruments() {
@@ -114,36 +110,20 @@ public class Instrument implements BundleActivator {
 	}
 
 	public void setInstrument(InstrumentInfo selectedInstrument) {
-		this.instrumentInfo = selectedInstrument;
+		this.in_strumentInfo = selectedInstrument;
 
-        if (!instrumentInfo.hasValidHostName()) {
-            LOG.error("Invalid host name:" + instrumentInfo.hostName());
+        if (!in_strumentInfo.hasValidHostName()) {
+            LOG.error("Invalid host name:" + in_strumentInfo.hostName());
             return;
 		}
 
         inst_rumentName.setValue(selectedInstrument.name());
 
 		updateExtendingPlugins(selectedInstrument);
-        logNumberOfChannels();
 	}
 
-    private void logNumberOfChannels() {
-        int count = 0;
-        Iterator<Map.Entry<String, ChannelHandler>> it = PVManager.getDefaultDataSource().getChannels().entrySet()
-                .iterator();
-        while (it.hasNext()) {
-            Map.Entry<String, ChannelHandler> pair = it.next();
-            ChannelHandler ch = pair.getValue();
-            if (ch.isConnected()) {
-                count++;
-            }
-        }
-        LOG.debug("Changing to instrument " + instrumentInfo.hostName()
-        		+ ", Number of connected channels = " + Integer.toString(count));
-    }
-
 	public InstrumentInfo currentInstrument() {
-		return instrumentInfo;
+		return in_strumentInfo;
 	}
 	
 	private static void updateExtendingPlugins(InstrumentInfo selectedInstrument) {
@@ -160,18 +140,18 @@ public class Instrument implements BundleActivator {
 	}
 	
 	private InstrumentInfo initialInstrument() {
-		final String initalName = initalPreference.get(initialInstrument, localhost.name());
+        final String initalName = initalPreference.get(INITIAL_INSTRUMENT, loc_alhost.name());
 		
 		return Iterables.find(inst_ruments, new Predicate<InstrumentInfo>() {
 			@Override
 			public boolean apply(InstrumentInfo info) {
 				return initalName.endsWith(info.name());
 			}
-		}, localhost);
+        }, loc_alhost);
 	}
 	
 	public void setInitial() {
-		initalPreference.put(initialInstrument, currentInstrument().name());
+        initalPreference.put(INITIAL_INSTRUMENT, currentInstrument().name());
 		
         try {
             // forces the application to save the preferences
