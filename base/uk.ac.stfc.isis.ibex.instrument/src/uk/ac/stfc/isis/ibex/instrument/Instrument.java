@@ -75,7 +75,7 @@ public class Instrument implements BundleActivator {
 		setInstrument(initialInstrument());	
 	}
     
-	public UpdatedValue<String> name() {
+    public UpdatedValue<String> n_ame() {
 		return inst_rumentName;
 	}
 	
