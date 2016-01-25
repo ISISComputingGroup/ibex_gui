@@ -32,7 +32,7 @@ package uk.ac.stfc.isis.ibex.ui;
 import org.eclipse.ui.IStartup;
 
 /**
- * Causes this plug-in to be instantiated on program startup
+ * Causes this plug-in to be instantiated on program startup.
  */
 public class Startup implements IStartup {
 	@Override
