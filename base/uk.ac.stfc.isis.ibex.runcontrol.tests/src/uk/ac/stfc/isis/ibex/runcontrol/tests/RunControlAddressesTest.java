@@ -49,6 +49,7 @@ public class RunControlAddressesTest {
 		// Act
 		String ans = addresses.getHighLimitPv(blockName);
 
+
 		// Assert
         assertEquals("CS:SB:blockname:RC:HIGH", ans);
 	}
