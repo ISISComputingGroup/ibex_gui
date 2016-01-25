@@ -62,11 +62,6 @@ public class ObservingSynopticModel extends ModelObject {
 		public void onValue(Configuration value) {
 			String synopticName = value.synoptic();
 
-			if (synopticName.isEmpty()) {
-				// Use the "blank" synoptic
-				synopticName = Variables.NONE_SYNOPTIC_NAME;
-			}
-
 			SynopticInfo newSynoptic = SynopticInfo.search(
 					variables.available.getValue(), synopticName);
 			if (newSynoptic == null) {
@@ -120,15 +115,11 @@ public class ObservingSynopticModel extends ModelObject {
 
 	private final SynopticModel model;
 	private final Variables variables;
-    private final SwitchableObservable<SynopticDescription> synopticObservable;
+    private SwitchableObservable<SynopticDescription> synopticObservable;
 
 	public ObservingSynopticModel(Variables variables, SynopticModel model) {
 		this.model = model;
 		this.variables = variables;
-
-        this.synopticObservable = new SwitchableObservable<SynopticDescription>(
-				variables.getSynopticDescription(""));
-		this.synopticObservable.addObserver(descriptionObserver);
 
 		this.variables.synopticSchema.addObserver(synopticSchemaObserver);
 
@@ -137,9 +128,14 @@ public class ObservingSynopticModel extends ModelObject {
 	}
 
 	public void switchSynoptic(SynopticInfo newSynoptic) {
+        if (synopticObservable == null) {
+            synopticObservable = new SwitchableObservable<SynopticDescription>(
+                    variables.getSynopticDescription(newSynoptic.pv()));
+            synopticObservable.addObserver(descriptionObserver);
+        } else {
+            synopticObservable.setSource(variables.getSynopticDescription(newSynoptic.pv()));
+        }
 		firePropertyChange("synopticInfo", this.synopticInfo, this.synopticInfo = newSynoptic);
-        synopticObservable.setSource(variables
-				.getSynopticDescription(newSynoptic.pv()));
 	}
 
 	public SynopticInfo getSynopticInfo() {
