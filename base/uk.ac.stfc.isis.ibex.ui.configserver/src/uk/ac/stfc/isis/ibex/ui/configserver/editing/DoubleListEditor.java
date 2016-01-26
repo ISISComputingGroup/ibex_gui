@@ -26,18 +26,21 @@ import org.eclipse.core.databinding.observable.list.ListChangeEvent;
 import org.eclipse.jface.databinding.viewers.ObservableListContentProvider;
 import org.eclipse.jface.databinding.viewers.ObservableMapLabelProvider;
 import org.eclipse.jface.databinding.viewers.ViewerProperties;
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.List;
-import org.eclipse.wb.swt.ResourceManager;
+import org.eclipse.jface.viewers.ListViewer;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.MouseEvent;
+import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
-import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
-import org.eclipse.jface.viewers.ListViewer;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.List;
+import org.eclipse.wb.swt.ResourceManager;
 
 @SuppressWarnings({"checkstyle:magicnumber", "checkstyle:localvariablename"})
 public class DoubleListEditor extends Composite {
@@ -113,6 +116,44 @@ public class DoubleListEditor extends Composite {
 		
 		selectedItems = ViewerProperties.multipleSelection().observe(selectedViewer);
 		unselectedItems = ViewerProperties.multipleSelection().observe(unselectedViewer);
+
+        selectedList.addMouseListener(new MouseListener() {
+
+            @Override
+            public void mouseUp(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseDown(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseDoubleClick(MouseEvent e) {
+                // TODO: Bit of a hack as actual selecting behaviour is done on
+                // listener, to improve use a DoubleListEditorViewModel
+                unselect.setSelection(true);
+                unselect.notifyListeners(SWT.Selection, new Event());
+            }
+        });
+
+        unselectedList.addMouseListener(new MouseListener() {
+
+            @Override
+            public void mouseUp(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseDown(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseDoubleClick(MouseEvent e) {
+                // TODO: Bit of a hack as actual selecting behaviour is done on
+                // listener, to improve use a DoubleListEditorViewModel
+                select.setSelection(true);
+                select.notifyListeners(SWT.Selection, new Event());
+            }
+        });
 
 		// Allow only one list to have a selection
 		clearSelectedItems = new IListChangeListener() {	

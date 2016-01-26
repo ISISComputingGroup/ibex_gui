@@ -72,6 +72,7 @@ public class InstrumentTreeView extends Composite {
 	private MenuItem mnuDeleteSelected;
     private MenuItem mnuCopySelected;
 
+    private static final int C_CODE = 99;
 
 	public InstrumentTreeView(Composite parent,
  final SynopticViewModel synopticViewModel) {
@@ -152,6 +153,9 @@ public class InstrumentTreeView extends Composite {
 				if (e.keyCode == SWT.DEL) {
 					synopticViewModel.removeSelectedComponent();
 					refresh();
+                } else if ((e.keyCode == C_CODE) && (e.stateMask == SWT.CTRL)) {
+                    synopticViewModel.copySelectedComponent();
+                    refresh();
 				}
 			}
 		});

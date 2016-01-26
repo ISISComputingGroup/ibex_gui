@@ -26,13 +26,15 @@ import java.util.HashSet;
 
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
-import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.KeyEvent;
+import org.eclipse.swt.events.KeyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Composite;
 
 import uk.ac.stfc.isis.ibex.configserver.configuration.PVDefaultValue;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableIoc;
@@ -43,11 +45,12 @@ import uk.ac.stfc.isis.ibex.ui.configserver.editing.iocs.IIocDependentPanel;
 public class IocPVsEditorPanel extends Composite implements IIocDependentPanel {
 	private IocPVsTable iocPVsTable;
 	private IocPVDetailsPanel details;
-	private EditableIoc ioc;
+    private EditableIoc ioc;
 	private Button btnAdd;
-	private final String newPVName = "NEW_PV";
+    private Button btnRemove;
+    private final String newPVName = "NEW_PV";
 	
-	public IocPVsEditorPanel(Composite parent, int style, final MessageDisplayer messageDisplayer) {
+    public IocPVsEditorPanel(Composite parent, int style, final MessageDisplayer messageDisplayer) {
 		super(parent, style);
 		setLayout(new GridLayout(1, false));
 		
@@ -55,6 +58,18 @@ public class IocPVsEditorPanel extends Composite implements IIocDependentPanel {
 		GridData gdIocPVsTable = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
 		gdIocPVsTable.heightHint = 200;
 		iocPVsTable.setLayoutData(gdIocPVsTable);
+        iocPVsTable.addKeyListener(new KeyListener() {
+            @Override
+            public void keyReleased(KeyEvent e) {
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (btnRemove.isEnabled()) {
+                    removeSelectedPV();
+                }
+            }
+        });
 		
 		Composite composite = new Composite(this, SWT.NONE);
 		composite.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, true, false, 1, 1));
@@ -67,7 +82,7 @@ public class IocPVsEditorPanel extends Composite implements IIocDependentPanel {
 		btnAdd.setText("Add");
 		btnAdd.setEnabled(false);
 		
-		final Button btnRemove = new Button(composite, SWT.NONE);
+        btnRemove = new Button(composite, SWT.NONE);
 		GridData gdBtnRemove = new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1);
 		gdBtnRemove.widthHint = 70;
 		btnRemove.setLayoutData(gdBtnRemove);
@@ -75,8 +90,7 @@ public class IocPVsEditorPanel extends Composite implements IIocDependentPanel {
 		btnRemove.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
-				ioc.getPvs().remove(iocPVsTable.firstSelectedRow());
-				iocPVsTable.setRows(ioc.getPvs());
+                removeSelectedPV();
 			}
 		});
 		btnRemove.setEnabled(false);
@@ -84,19 +98,19 @@ public class IocPVsEditorPanel extends Composite implements IIocDependentPanel {
 		btnAdd.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
-				PVDefaultValue selected = new PVDefaultValue(generateNewName(), "NEW_VALUE");
-				ioc.getPvs().add(selected);
-				iocPVsTable.setRows(ioc.getPvs());
-				iocPVsTable.setSelection(ioc.getPvs().size() - 1);
-				
-				// Why is this not happening automatically
-				btnRemove.setEnabled(true);
-				details.setPV(selected, ioc);
+                PVDefaultValue selected = new PVDefaultValue(generateNewName(), "NEW_VALUE");
+                ioc.getPvs().add(selected);
+                iocPVsTable.setRows(ioc.getPvs());
+                iocPVsTable.setSelection(ioc.getPvs().size() - 1);
+
+                // Why is this not happening automatically
+                btnRemove.setEnabled(true);
+                details.setPV(selected, ioc);
 			}
 		});
 
 		details = new IocPVDetailsPanel(this, SWT.NONE, messageDisplayer);
-		Composite detailsComposite = (Composite) details;
+		Composite detailsComposite = details;
 		detailsComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		
 		iocPVsTable.addSelectionChangedListener(new ISelectionChangedListener() {
@@ -109,32 +123,24 @@ public class IocPVsEditorPanel extends Composite implements IIocDependentPanel {
 		});
 		details.setEnabled(false);
 	}
-	
-	private String generateNewName() {
-		HashSet<String> names = new HashSet<String>();
-		for (PVDefaultValue pv : ioc.getPvs()) {
-			names.add(pv.getName());
-		}
-		String name;
-		int i = 0;
-		do {
-			name = newPVName;
-			if (i > 0) {
-				name = name + Integer.toString(i);
-			}
-			i++;
-		}
-		while (names.contains(name));
-		
-		return name;
-	}
 
-	@Override
-	public CompositeContext createContext(ColorModel arg0, ColorModel arg1,
-			RenderingHints arg2) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+
+    private String generateNewName() {
+        HashSet<String> names = new HashSet<String>();
+        for (PVDefaultValue pv : ioc.getPvs()) {
+            names.add(pv.getName());
+        }
+        String name;
+        int i = 0;
+        do {
+            name = newPVName;
+            if (i > 0) {
+                name = name + Integer.toString(i);
+            }
+            i++;
+        } while (names.contains(name));
+        return name;
+    }
 
 	@Override
 	public void setIoc(EditableIoc ioc) {
@@ -146,4 +152,14 @@ public class IocPVsEditorPanel extends Composite implements IIocDependentPanel {
 		details.setEnabled(enabled);
 		details.setPVs(ioc.getAvailablePVs());
 	}
+
+    private void removeSelectedPV() {
+        ioc.getPvs().remove(iocPVsTable.firstSelectedRow());
+        iocPVsTable.setRows(ioc.getPvs());
+    }
+
+    @Override
+    public CompositeContext createContext(ColorModel arg0, ColorModel arg1, RenderingHints arg2) {
+        return null;
+    }
 }

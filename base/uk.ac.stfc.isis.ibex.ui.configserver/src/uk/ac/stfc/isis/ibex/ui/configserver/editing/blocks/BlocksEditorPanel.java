@@ -26,8 +26,13 @@ import java.util.List;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.KeyEvent;
+import org.eclipse.swt.events.KeyListener;
+import org.eclipse.swt.events.MouseEvent;
+import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -36,7 +41,6 @@ import org.eclipse.swt.widgets.MessageBox;
 
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableBlock;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
-import uk.ac.stfc.isis.ibex.runcontrol.RunControlServer;
 
 @SuppressWarnings({"checkstyle:magicnumber", "checkstyle:localvariablename"})
 public class BlocksEditorPanel extends Composite {
@@ -47,7 +51,6 @@ public class BlocksEditorPanel extends Composite {
 	private final Button remove;
 	
 	private EditableConfiguration config;
-    private RunControlServer runControl;
 	
 	public BlocksEditorPanel(Composite parent, int style) {
 		super(parent, style);
@@ -57,6 +60,18 @@ public class BlocksEditorPanel extends Composite {
 		GridData gd_table = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
 		gd_table.heightHint = 90;
 		table.setLayoutData(gd_table);
+        table.addKeyListener(new KeyListener() {
+            @Override
+            public void keyReleased(KeyEvent e) {
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.keyCode == SWT.DEL) {
+                    deleteSelected();
+                }
+            }
+        });
 		
 		Composite composite = new Composite(this, SWT.NONE);
 		composite.setLayoutData(new GridData(SWT.RIGHT, SWT.FILL, true, false, 1, 1));
@@ -91,9 +106,7 @@ public class BlocksEditorPanel extends Composite {
 		edit.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				EditableBlock toEdit = table.firstSelectedRow();
-                EditBlockDialog dialog = new EditBlockDialog(getShell(), toEdit, config);
-				dialog.open();
+                openEditBlockDialog(table.firstSelectedRow());
 			}
 		});
 		edit.setText("Edit Block");
@@ -119,6 +132,23 @@ public class BlocksEditorPanel extends Composite {
 				setSelectedBlocks(selected);
 			}
 		});
+
+        table.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseUp(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseDown(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseDoubleClick(MouseEvent e) {
+                if (table.getItemAtPoint(new Point(e.x, e.y)) != null) {
+                    openEditBlockDialog(table.firstSelectedRow());
+                }
+            }
+        });
 	}
 
 	public void setConfig(EditableConfiguration config) {	
@@ -193,11 +223,15 @@ public class BlocksEditorPanel extends Composite {
 		return sb.toString();
 	}
 
+    private void openEditBlockDialog(EditableBlock toEdit) {
+        EditBlockDialog dialog = new EditBlockDialog(getShell(), toEdit, config);
+        dialog.open();
+    }
+
     public void openEditBlockDialog(String blockName) {
         for (EditableBlock block : config.getEditableBlocks()) {
             if (block.getName().equals(blockName)) {
-                EditBlockDialog dialog = new EditBlockDialog(getShell(), block, config);
-                dialog.open();
+                openEditBlockDialog(block);
                 return;
             }
         }
