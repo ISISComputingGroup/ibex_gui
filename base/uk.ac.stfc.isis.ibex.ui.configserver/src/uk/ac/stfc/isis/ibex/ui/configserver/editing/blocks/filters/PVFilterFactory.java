@@ -48,6 +48,8 @@ public class PVFilterFactory {
 				return new FilterFromPVList(Configurations.getInstance().variables().highInterestPVs);
 			case MEDIUM:
 				return new FilterFromPVList(Configurations.getInstance().variables().mediumInterestPVs);
+			case FACILITY:
+                return new FilterFromPVList(Configurations.getInstance().variables().facilityInterestPVs);
 			default:
 				return new PVFilter();
 		}

@@ -76,6 +76,7 @@ public class ConfigServerVariables extends InstrumentVariables {
 	public final ForwardingObservable<Collection<PV>> pvs;
 	public final ForwardingObservable<Collection<PV>> highInterestPVs;
 	public final ForwardingObservable<Collection<PV>> mediumInterestPVs;
+    public final ForwardingObservable<Collection<PV>> facilityInterestPVs;
 	public final ForwardingObservable<Collection<PV>> activePVs;
 	
 	public final Writable<Configuration> setCurrentConfiguration;
@@ -110,6 +111,7 @@ public class ConfigServerVariables extends InstrumentVariables {
 		pvs = convert(readCompressed(blockServerAddresses.pvs()), converters.toPVs());
 		highInterestPVs = convert(readCompressed(blockServerAddresses.highInterestPVs()), converters.toPVs());
 		mediumInterestPVs = convert(readCompressed(blockServerAddresses.mediumInterestPVs()), converters.toPVs());
+        facilityInterestPVs = convert(readCompressed(blockServerAddresses.facilityInterestPVs()), converters.toPVs());
 		activePVs = convert(readCompressed(blockServerAddresses.activePVs()), converters.toPVs());
 		
 		setCurrentConfiguration = convert(writeCompressed(blockServerAddresses.setCurrentConfig()), converters.configToString());

@@ -36,6 +36,7 @@ public class BlockServerAddresses {
 	private static final String ALL_PVS = "PVS:ALL";	
 	private static final String HIGH_INTEREST_PVS = "PVS:INTEREST:HIGH";
 	private static final String MEDIUM_INTEREST_PVS = "PVS:INTEREST:MEDIUM";
+    private static final String FACILITY_INTEREST_PVS = "PVS:INTEREST:FACILITY";
 	private static final String ACTIVE_PVS = "PVS:ACTIVE";
 	private static final String COMPONENTS = "COMPS";
 	private static final String SAVE_COMPONENT = "SAVE_NEW_COMPONENT";
@@ -119,10 +120,14 @@ public class BlockServerAddresses {
 		return blockServerAddress.endWith(HIGH_INTEREST_PVS);
 	}
 	
-	public String mediumInterestPVs() {
+    public String mediumInterestPVs() {
 		return blockServerAddress.endWith(MEDIUM_INTEREST_PVS);
 	}
 	
+    public String facilityInterestPVs() {
+        return blockServerAddress.endWith(FACILITY_INTEREST_PVS);
+    }
+
 	public String activePVs() {
 		return blockServerAddress.endWith(ACTIVE_PVS);
 	}
