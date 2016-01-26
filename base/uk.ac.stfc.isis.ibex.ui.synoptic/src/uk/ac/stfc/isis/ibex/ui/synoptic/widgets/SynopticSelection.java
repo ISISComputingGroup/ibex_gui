@@ -44,6 +44,8 @@ public class SynopticSelection extends Composite {
 	// The synoptic drop down menu selector
 	private Combo synopticCombo;
 	
+    private Button refreshButton;
+
 	public SynopticSelection(Composite parent, int style, final SynopticSelectionViewModel model) {
 		super(parent, style);
 		GridLayout gridLayout = new GridLayout(3, false);
@@ -62,7 +64,7 @@ public class SynopticSelection extends Composite {
 		synopticCombo = new Combo(this, SWT.READ_ONLY);
 		synopticCombo.setLayoutData(gdSynopticCombo);
 		
-		Button refreshButton = new Button(this, SWT.NONE);
+        refreshButton = new Button(this, SWT.NONE);
 		refreshButton.setText("Refresh Synoptic");
 		refreshButton.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1));
 		refreshButton.setBackground(BACKGROUND);
@@ -80,8 +82,15 @@ public class SynopticSelection extends Composite {
 	private void bind(SynopticSelectionViewModel model) {
 		DataBindingContext bindingContext = new DataBindingContext();
 		
-		bindingContext.bindList(SWTObservables.observeItems(synopticCombo), BeanProperties.list("synopticList").observe(model));
-		bindingContext.bindValue(WidgetProperties.selection().observe(synopticCombo), BeanProperties.value("selected").observe(model));
+        bindingContext.bindList(SWTObservables.observeItems(synopticCombo),
+                BeanProperties.list("synopticList").observe(model));
+        bindingContext.bindValue(WidgetProperties.selection().observe(synopticCombo),
+                BeanProperties.value("selected").observe(model));
+        bindingContext.bindValue(WidgetProperties.enabled().observe(synopticCombo),
+                BeanProperties.value("enabled").observe(model));
+        bindingContext.bindValue(WidgetProperties.enabled().observe(refreshButton),
+                BeanProperties.value("enabled").observe(model));
+
 	}
 
 }

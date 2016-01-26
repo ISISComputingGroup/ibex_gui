@@ -27,13 +27,15 @@ import uk.ac.stfc.isis.ibex.configserver.Configurations;
 import uk.ac.stfc.isis.ibex.configserver.displaying.DisplayConfiguration;
 import uk.ac.stfc.isis.ibex.epics.observing.BaseObserver;
 import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
-import uk.ac.stfc.isis.ibex.epics.observing.Subscription;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 import uk.ac.stfc.isis.ibex.synoptic.Synoptic;
 import uk.ac.stfc.isis.ibex.synoptic.SynopticInfo;
 
 /**
  * Contains the display logic for the SynopticSelection widget.
+ */
+/**
+ * 
  */
 public class SynopticSelectionViewModel extends ModelObject {
 
@@ -43,111 +45,135 @@ public class SynopticSelectionViewModel extends ModelObject {
 	
 	private static final String RECOMMENDED_STRING = " (recommended)";
 	
-	private Subscription configSubscription;
-	private Subscription synopticSubscription;
-	
 	private String recommendedSynoptic;
-	private ArrayList<String> synopticList;
+    private Collection<SynopticInfo> synopticList;
+    private ArrayList<String> synopticListWithRecommended;
+
+    private boolean enabled;
 	
 	private String selected;
 	
 	private final BaseObserver<DisplayConfiguration> configObserver = new BaseObserver<DisplayConfiguration>() {
 		@Override
 		public void onValue(DisplayConfiguration value) {
-			setSynopticList(synoptic.availableSynoptics(), value.defaultSynoptic());
+		    recommendedSynoptic = value.defaultSynoptic();
+            updateSynopticList();
 		}
 
 		@Override
 		public void onError(Exception e) {
-			setSynopticList(synoptic.availableSynoptics(), null);
+		    clearRecommended();
 		}
 
 		@Override
 		public void onConnectionStatus(boolean isConnected) {
 			if (!isConnected) {
-				setSynopticList(synoptic.availableSynoptics(), null);
+			    clearRecommended();
 			}
-		}	
+		}
+		
+		private void clearRecommended() {
+		    recommendedSynoptic = null;
+            updateSynopticList();
+		}
 	};	
 	
 	private final BaseObserver<Collection<SynopticInfo>> availableSynopticsObserver = new BaseObserver<Collection<SynopticInfo>>() {
 		@Override
 		public void onValue(Collection<SynopticInfo> value) {
-			setSynopticList(value, CONFIG.getValue().defaultSynoptic());
+            synopticList = value;
+            updateSynopticList();
+            if (synopticList != null) {
+                setEnabled(true);
+            }
 		}
 
 		@Override
 		public void onError(Exception e) {
-			setSynopticList(new ArrayList<SynopticInfo>(), null);
+            setEmptySynopticList();
 		}
 
 		@Override
 		public void onConnectionStatus(boolean isConnected) {
 			if (!isConnected) {
-				setSynopticList(new ArrayList<SynopticInfo>(), null);
+                setEmptySynopticList();
 			}
-		}	
+        }
+
+        private void setEmptySynopticList() {
+            synopticList = new ArrayList<SynopticInfo>();
+            updateSynopticList();
+            setEnabled(false);
+        }
 	};
 	
 	private final PropertyChangeListener currentSynopticObserver = new PropertyChangeListener() {
 
 		@Override
 		public void propertyChange(PropertyChangeEvent evt) {
-			SynopticInfo synopticInfo = (SynopticInfo) evt.getNewValue();
-			if (synopticInfo != null) {
-				String synopticName = synopticInfo.name();
-				if (synopticName.equals(recommendedSynoptic)) {
-					synopticName = recommendedSynoptic + RECOMMENDED_STRING;
-				}
-				firePropertyChange("selected", selected, selected = synopticName);
-			}
+            setSelected((SynopticInfo) evt.getNewValue());
 		}
 	};
 	
 	public SynopticSelectionViewModel() {
-		if (configSubscription != null) {
-			configSubscription.removeObserver();
-		}
-
-		if (synopticSubscription != null) {
-			synopticSubscription.removeObserver();
-		}
-		
-		configSubscription = CONFIG.addObserver(configObserver);
-		synopticSubscription = synoptic.availableSynopticsInfo().addObserver(availableSynopticsObserver);
+        CONFIG.addObserver(configObserver);
+        synoptic.availableSynopticsInfo().addObserver(availableSynopticsObserver);
 		synoptic.currentObservingViewerModel().addPropertyChangeListener("synopticInfo", currentSynopticObserver);
+
+        setSelected(synoptic.currentObservingViewerModel().getSynopticInfo());
 	}
 	
+    /**
+     * Sets the selected synoptic, adding the recommended tag
+     * 
+     * @param synoptic
+     */
+    private void setSelected(SynopticInfo synoptic) {
+        if (synoptic != null) {
+            String synopticName = synoptic.name();
+            if (synopticName.equals(recommendedSynoptic)) {
+                synopticName = recommendedSynoptic + RECOMMENDED_STRING;
+            }
+            firePropertyChange("selected", selected, selected = synopticName);
+        }
+    }
+
+    /**
+     * Sets the selected synoptic from the UI, removing the recommended tag
+     * 
+     * @param synoptic
+     */
 	public void setSelected(String selected) {
 		if (selected.equals(recommendedSynoptic + RECOMMENDED_STRING)) {
-			selected = recommendedSynoptic;
+            synoptic.setViewerSynoptic(recommendedSynoptic);
+        } else {
+            synoptic.setViewerSynoptic(selected);
 		}
-		synoptic.setViewerSynoptic(selected);
 		firePropertyChange("selected", this.selected, this.selected = selected);
 	}
-	
-	public void setSynopticList(Collection<SynopticInfo> synoptics, String defaultSynoptic) {
-		ArrayList<String> names = new ArrayList<String>(SynopticInfo.names(synoptics));
-		recommendedSynoptic = defaultSynoptic;
-		
-		if (defaultSynoptic != null) { 
-			for (int i = 0; i < names.size(); i++) {
-				String name = names.get(i);
-				if (name.equals(recommendedSynoptic)) {
-					names.set(i, name + RECOMMENDED_STRING);
-				}
-			}
-		}
-		
-		firePropertyChange("synopticList", synopticList, synopticList = names);
-	}
-	
+
+    private void updateSynopticList() {
+        ArrayList<String> names = new ArrayList<String>(SynopticInfo.names(synopticList));
+
+        if (recommendedSynoptic != null) {
+            for (int i = 0; i < names.size(); i++) {
+                String name = names.get(i);
+                if (name.equals(recommendedSynoptic)) {
+                    names.set(i, name + RECOMMENDED_STRING);
+                    break;
+                }
+            }
+        }
+
+        firePropertyChange("synopticList", synopticListWithRecommended, synopticListWithRecommended = names);
+    }
+
 	public String getSelected() {
 		return selected;
 	}
 	
 	public ArrayList<String> getSynopticList() {
-		return synopticList;
+        return synopticListWithRecommended;
 	}
 	
 	public int getSynopticNumber() {
@@ -158,7 +184,7 @@ public class SynopticSelectionViewModel extends ModelObject {
 		
 		String currentSynopticName = synoptic.getSynopticInfo().name();
 		
-		ArrayList<String> availableSynoptics = new ArrayList<String>(SynopticInfo.names(synoptic.availableSynoptics()));
+        ArrayList<String> availableSynoptics = new ArrayList<String>(SynopticInfo.names(synoptic.availableSynoptics()));
 		
 		return availableSynoptics.indexOf(currentSynopticName);
 	}
@@ -167,5 +193,20 @@ public class SynopticSelectionViewModel extends ModelObject {
 		SynopticInfo synopticToRefresh = synoptic.getSynopticInfo();
 		synoptic.setViewerSynoptic(synopticToRefresh);
 	}
+
+    /**
+     * @return whether the display items should be enabled or not
+     */
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    /**
+     * @param enabled
+     *            set whether the display items should be enabled or not
+     */
+    public void setEnabled(boolean enabled) {
+        firePropertyChange("enabled", this.enabled, this.enabled = enabled);
+    }
 	
 }

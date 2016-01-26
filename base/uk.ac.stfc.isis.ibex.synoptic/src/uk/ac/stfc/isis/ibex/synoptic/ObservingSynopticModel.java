@@ -62,6 +62,10 @@ public class ObservingSynopticModel extends ModelObject {
 		public void onValue(Configuration value) {
 			String synopticName = value.synoptic();
 
+            if (value.synoptic().equals("")) {
+                synopticName = Variables.NONE_SYNOPTIC_NAME;
+            }
+
 			SynopticInfo newSynoptic = SynopticInfo.search(
 					variables.available.getValue(), synopticName);
 			if (newSynoptic == null) {
