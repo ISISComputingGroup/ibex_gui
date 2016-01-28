@@ -245,7 +245,7 @@ public class SynopticPresenter extends ModelObject {
 				@Override
 				public void run() {
 					IPerspectiveDescriptor descriptor = PlatformUI.getWorkbench().getPerspectiveRegistry()
-							.findPerspectiveWithId(InstrumentPerspective.ID);
+							.findPerspectiveWithId(SynopticPerspective.ID);
 					PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().setPerspective(descriptor);
 					IWorkbenchPage wp = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
 					wp.hideView(vp);

@@ -101,16 +101,6 @@ public class NavigationPresenter extends ModelObject {
 		return displayName(returnString);
 	}
 	
-	public void down() {
-		if (getHasDown()) {
-			setCurrent(current.down());
-		}
-	}
-	
-	public String nameOfDown() {
-		return getHasDown() ? displayName(current.down().item().name()) : "";
-	}
-	
 	private String displayName(String name) {
 		return name.trim();
 	}

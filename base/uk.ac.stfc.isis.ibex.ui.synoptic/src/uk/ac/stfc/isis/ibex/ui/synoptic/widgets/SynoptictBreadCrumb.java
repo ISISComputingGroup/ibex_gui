@@ -39,7 +39,7 @@ import org.mihalis.opal.breadcrumb.BreadcrumbItem;
 import uk.ac.stfc.isis.ibex.ui.synoptic.Activator;
 import uk.ac.stfc.isis.ibex.ui.synoptic.SynopticPresenter;
 
-public class InstrumentBreadCrumb extends Composite {
+public class SynoptictBreadCrumb extends Composite {
 	
 	private static final String TWO_SPACES = "  ";
 	private static final String THREE_SPACES = "   ";
@@ -50,7 +50,7 @@ public class InstrumentBreadCrumb extends Composite {
 	
 	private final SynopticPresenter presenter;
 	
-	public InstrumentBreadCrumb(Composite parent, int style) {
+	public SynoptictBreadCrumb(Composite parent, int style) {
 		super(parent, style);
 		GridLayout gridLayout = new GridLayout(2, false);
 		gridLayout.verticalSpacing = 0;
