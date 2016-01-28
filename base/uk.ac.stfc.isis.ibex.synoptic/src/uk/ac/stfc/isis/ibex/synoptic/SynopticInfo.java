@@ -26,11 +26,18 @@ import com.google.common.base.Function;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 
+import uk.ac.stfc.isis.ibex.synoptic.internal.Variables;
+
 public class SynopticInfo {
 
 	private final String name;
 	private final String pv;
 	
+    public SynopticInfo() {
+        this.name = Variables.NONE_SYNOPTIC_NAME;
+        this.pv = Variables.NONE_SYNOPTIC_PV;
+    }
+
 	public SynopticInfo(String name, String pv) {
 		this.name = name;
 		this.pv = pv;

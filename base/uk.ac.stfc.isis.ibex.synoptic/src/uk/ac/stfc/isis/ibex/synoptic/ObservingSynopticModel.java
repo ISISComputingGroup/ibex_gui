@@ -119,7 +119,7 @@ public class ObservingSynopticModel extends ModelObject {
 
 	private final SynopticModel model;
 	private final Variables variables;
-    private SwitchableObservable<SynopticDescription> synopticObservable;
+    private final SwitchableObservable<SynopticDescription> synopticObservable;
 
 	public ObservingSynopticModel(Variables variables, SynopticModel model) {
 		this.model = model;
@@ -129,16 +129,14 @@ public class ObservingSynopticModel extends ModelObject {
 
 		Configurations.getInstance().server().currentConfig()
 				.addObserver(configSynopticObserver);
+
+        synopticObservable = new SwitchableObservable<SynopticDescription>(
+                variables.getSynopticDescription(Variables.NONE_SYNOPTIC_PV));
+        synopticObservable.addObserver(descriptionObserver);
 	}
 
 	public void switchSynoptic(SynopticInfo newSynoptic) {
-        if (synopticObservable == null) {
-            synopticObservable = new SwitchableObservable<SynopticDescription>(
-                    variables.getSynopticDescription(newSynoptic.pv()));
-            synopticObservable.addObserver(descriptionObserver);
-        } else {
-            synopticObservable.setSource(variables.getSynopticDescription(newSynoptic.pv()));
-        }
+        synopticObservable.setSource(variables.getSynopticDescription(newSynoptic.pv()));
 		firePropertyChange("synopticInfo", this.synopticInfo, this.synopticInfo = newSynoptic);
 	}
 

@@ -60,6 +60,7 @@ public class Variables extends InstrumentVariables {
      * The name associated with the "blank" synoptic from the BlockServer.
      */
     public static final String NONE_SYNOPTIC_NAME = "-- NONE --";
+    public static final String NONE_SYNOPTIC_PV = "__BLANK__";
 
     public final ForwardingObservable<SynopticDescription> defaultSynoptic;
 
