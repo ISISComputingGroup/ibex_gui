@@ -22,6 +22,13 @@ package uk.ac.stfc.isis.ibex.configserver.configuration;
 
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 
+/**
+ * Represents a component inside a configuration.
+ * 
+ * Note: The values from this class are populated from the BlockServer JSON via
+ * reflection. Therefore variable names must reflect those expected from the
+ * JSON.
+ */
 public class Component extends ModelObject implements Comparable<Component> {
 	
 	private final String name;

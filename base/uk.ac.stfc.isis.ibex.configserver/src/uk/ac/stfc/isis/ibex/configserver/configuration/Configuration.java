@@ -26,6 +26,14 @@ import java.util.List;
 
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 
+/**
+ * This is the base class that holds all information relating to a BlockServer
+ * configuration.
+ * 
+ * Note: The values from this class are populated from the BlockServer JSON via
+ * reflection. Therefore variable names must reflect those expected from the
+ * JSON.
+ */
 public class Configuration extends ModelObject {
 	
 	private String name;

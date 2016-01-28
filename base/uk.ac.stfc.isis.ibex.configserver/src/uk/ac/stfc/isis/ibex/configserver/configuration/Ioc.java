@@ -22,16 +22,19 @@ package uk.ac.stfc.isis.ibex.configserver.configuration;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import uk.ac.stfc.isis.ibex.model.ModelObject;
-
 import com.google.common.base.Strings;
+
+import uk.ac.stfc.isis.ibex.model.ModelObject;
 
 /**
  * Holds an IOC, and notifies any listeners set to changes to this class.
  * 
- * Contains the IOC name, if it autostarts, auto-restarts and the simulation level. Contains lists
- * of PVsets, PVDefaultValues and set Macros.
+ * Contains the IOC name, if it autostarts, auto-restarts and the simulation
+ * level. Contains lists of PVsets, PVDefaultValues and set Macros.
  * 
+ * Note: The values from this class are populated from the BlockServer JSON via
+ * reflection. Therefore variable names must reflect those expected from the
+ * JSON.
  */
 public class Ioc extends ModelObject implements Comparable<Ioc> {
 
