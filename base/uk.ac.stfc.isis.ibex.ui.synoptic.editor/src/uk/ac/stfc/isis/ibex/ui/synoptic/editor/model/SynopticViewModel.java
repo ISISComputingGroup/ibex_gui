@@ -63,7 +63,7 @@ public class SynopticViewModel {
 	
 	private SynopticModel editing = Synoptic.getInstance().edit();
 	
-	private SynopticDescription instrument;
+	private SynopticDescription synoptic;
 
 	private List<ComponentDescription> selectedComponents;
 	private PV selectedPV;
@@ -89,13 +89,13 @@ public class SynopticViewModel {
 	}
 
 	public SynopticDescription getInstrument() {
-		return instrument;
+		return synoptic;
 	}
 
 	public SynopticParentDescription getParent(ComponentDescription component) {
 		SynopticParentDescription parent = component.getParent();
 		if (parent == null) {
-			return instrument;
+			return synoptic;
 		}
 		return parent;
 	}
@@ -107,7 +107,7 @@ public class SynopticViewModel {
 
 		int position = 0;
 		if (selectedComponents == null) {
-			instrument.addComponent(component);
+			synoptic.addComponent(component);
 		} else {
 			ComponentDescription lastComponent = selectedComponents.get(selectedComponents.size() - 1);
 			SynopticParentDescription parent = getParent(lastComponent);
@@ -132,7 +132,7 @@ public class SynopticViewModel {
 	        ComponentDescription componentCopy = new ComponentDescription(selectedComponent);
 	
 	        DefaultName namer = new DefaultName(selectedComponent.name(), " ", true);
-	        componentCopy.setName(namer.getUnique(instrument.getComponentNameList()));
+	        componentCopy.setName(namer.getUnique(synoptic.getComponentNameList()));
 	        
 	        componentCopies.add(componentCopy);
         }
@@ -442,7 +442,7 @@ public class SynopticViewModel {
 	}
 	
 	private void loadCurrentInstrument() {
-		loadInstrumentDescription(editing.instrument().getDescription());
+		loadSynopticDescription(editing.instrument().getDescription());
 	}
 
 	private void broadcastPVSelectionChanged(PV oldSelected, PV newSelected) {
@@ -459,11 +459,11 @@ public class SynopticViewModel {
 	}
 	
 	public void setShowBeam(Boolean showBeam) {
-		instrument.setShowBeam(showBeam);
+		synoptic.setShowBeam(showBeam);
 	}
 	
 	public Boolean getShowBeam() {
-		return instrument.showBeam();
+		return synoptic.showBeam();
 	}
 	
 	public Boolean selectedHaveSameParent() {
