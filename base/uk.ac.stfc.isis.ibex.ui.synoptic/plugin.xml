@@ -39,7 +39,7 @@
    <extension
          point="uk.ac.stfc.isis.ibex.ui.perspectives">
       <contribution
-            class="uk.ac.stfc.isis.ibex.ui.synoptic.InstrumentPerspective">
+            class="uk.ac.stfc.isis.ibex.ui.synoptic.SynopticPerspective">
       </contribution>
    </extension>
    <extension
