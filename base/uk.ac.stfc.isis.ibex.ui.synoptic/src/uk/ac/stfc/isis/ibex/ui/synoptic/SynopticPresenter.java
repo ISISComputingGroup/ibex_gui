@@ -50,6 +50,7 @@ import uk.ac.stfc.isis.ibex.synoptic.navigation.TargetNode;
 import uk.ac.stfc.isis.ibex.ui.UI;
 import uk.ac.stfc.isis.ibex.ui.synoptic.views.LinkedViews;
 import uk.ac.stfc.isis.ibex.ui.synoptic.views.OpiTargetView;
+import uk.ac.stfc.isis.ibex.ui.synoptic.views.SynopticView;
 
 /**
  * Responsible for the presentation logic of the synoptic.
@@ -227,7 +228,7 @@ public class SynopticPresenter extends ModelObject {
 
 	private void setComponents(List<? extends Component> components) {
 		this.components = new ArrayList<>(components);
-		firePropertyChange("components", null, components());
+        firePropertyChange(SynopticView.COMPONENTS_CHANGE, null, components());
 	}
 	
 	public boolean showBeam() {

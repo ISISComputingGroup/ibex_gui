@@ -38,6 +38,7 @@ import uk.ac.stfc.isis.ibex.ui.synoptic.widgets.SynopticPanel;
 public class SynopticView extends ViewPart {
 	
     public static final String ID = "uk.ac.stfc.isis.ibex.ui.synoptic.views.SynopticView"; //$NON-NLS-1$
+    public static final String COMPONENTS_CHANGE = "components";
 
     private SynopticPanel instrument;
 	private final SynopticPresenter presenter = Activator.getDefault().presenter();
@@ -52,7 +53,7 @@ public class SynopticView extends ViewPart {
         instrument = new SynopticPanel(parent, SWT.NONE);
         instrument.setComponents(presenter.components(), presenter.showBeam());
 
-		presenter.addPropertyChangeListener("components", new PropertyChangeListener() {	
+        presenter.addPropertyChangeListener(COMPONENTS_CHANGE, new PropertyChangeListener() {
 		@Override
 		public void propertyChange(PropertyChangeEvent evt) {
 				display.asyncExec(new Runnable() {		
