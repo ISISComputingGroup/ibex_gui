@@ -21,8 +21,8 @@ package uk.ac.stfc.isis.ibex.ui.perspectives.switcher;
 
 import org.eclipse.swt.custom.CLabel;
 import org.eclipse.swt.graphics.Color;
-import org.eclipse.wb.swt.SWTResourceManager;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.wb.swt.SWTResourceManager;
 
 public class FlashingButton implements Runnable {
 
@@ -69,7 +69,8 @@ public class FlashingButton implements Runnable {
 		return flashOn;
 	}
 	
-	public void run() {
+	@Override
+    public void run() {
 		Thread thisThread = Thread.currentThread();
 		while (flashThread == thisThread) {
 			if (flashOn) {
@@ -89,9 +90,18 @@ public class FlashingButton implements Runnable {
 
 	private void changeColour(final Color c) {
 		display.asyncExec(new Runnable() {
-			public void run() {
+			@Override
+            public void run() {
 				button.setBackground(c);
 			}
 		});
 	}
+
+    public void setToOffColour() {
+        changeColour(off);
+    }
+
+    public void setToOnColour() {
+        changeColour(on);
+    }
 }

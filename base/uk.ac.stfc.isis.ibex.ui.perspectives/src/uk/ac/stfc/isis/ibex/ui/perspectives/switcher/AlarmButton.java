@@ -58,13 +58,22 @@ public class AlarmButton extends PerspectiveButton {
 	@Override
 	protected void mouseEnterAction() {
 		flash.stop();
+        setButtonColour();
 		super.mouseEnterAction();
 	}
 	
 	@Override
 	protected void mouseExitAction() {
 		super.mouseExitAction();
-		updateFlashing();
+        setButtonColour();
+    }
+
+    private void setButtonColour() {
+        if (model.hasMessages()) {
+            flash.setToOnColour();
+        } else {
+            flash.setToOffColour();
+        }
 	}
 	
 	@Override
