@@ -25,23 +25,39 @@ import java.beans.PropertyChangeListener;
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.beans.BeanProperties;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.wb.swt.SWTResourceManager;
 
 /**
- * A button which relates to the alarm model from BEAST
+ * A button which relates to the alarm model from BEAST.
  */
 public class AlarmButton extends PerspectiveButton {
+
+    protected static final Color ALARM = SWTResourceManager.getColor(250, 150, 150);
 
 	private FlashingButton flash;
 	private final Display display = Display.getDefault();
 	private final DataBindingContext bindingContext = new DataBindingContext();
 	
+    private static final Font BUTTON_FONT = SWTResourceManager.getFont("Arial", 12, SWT.NORMAL);
+    private static final Font ACTIVE_FONT = SWTResourceManager.getFont("Arial", 12, SWT.BOLD);
+
 	private final AlarmCountViewModel model;
+    private String buttonPerspective;
 	
+    /**
+     * @param parent where the button is stored
+     * @param perspective the perspective to be used by this button
+     */
 	public AlarmButton(Composite parent, final String perspective) {
 		super(parent, perspective);
 		
+        this.buttonPerspective = perspective;
+
 		flash = new FlashingButton(this, display);
 		flash.setDefaultColour(this.getBackground());
 	
@@ -58,33 +74,44 @@ public class AlarmButton extends PerspectiveButton {
 	@Override
 	protected void mouseEnterAction() {
 		flash.stop();
-        setButtonColour();
 		super.mouseEnterAction();
 	}
 	
 	@Override
 	protected void mouseExitAction() {
 		super.mouseExitAction();
-        setButtonColour();
     }
 
-    private void setButtonColour() {
-        if (model.hasMessages()) {
-            flash.setToOnColour();
-        } else {
-            flash.setToOffColour();
-        }
-	}
-	
 	@Override
 	protected void mouseClickAction() {
 	}
 	
+    @Override
+    protected Color setColourToUse() {
+        String currentPerspective = new PerspectiveModel().getCurrentPerspective();
+        Color toUse = DEFOCUSSED;
+        setFont(BUTTON_FONT);
+        if (buttonPerspective.equals(currentPerspective)) {
+            toUse = ACTIVE;
+            setFont(ACTIVE_FONT);
+        }
+        if (model.hasMessages()) {
+            toUse = ALARM;
+        }
+        return toUse;
+    }
+
+    /**
+     * make sure that the button is flashing when required.
+     */
 	private void updateFlashing() {
-		if (model.hasMessages()) {
-			flash.start();
-		} else {
-			flash.stop();
-		}
+        String currentPerspective = new PerspectiveModel().getCurrentPerspective();
+        if (!buttonPerspective.equals(currentPerspective)) {
+            if (model.hasMessages()) {
+                flash.start();
+            } else {
+                flash.stop();
+            }
+        }
 	}
 }
