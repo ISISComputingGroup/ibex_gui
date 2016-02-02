@@ -29,10 +29,11 @@ import uk.ac.stfc.isis.ibex.synoptic.SynopticInfo;
 /**
  * Contains the display logic for the SynopticSelection widget.
  */
-/**
- * 
- */
 public class SynopticSelectionViewModel extends ModelObject {
+    
+    public final static String SYNOPTIC_LIST = "synopticList";
+    public final static String SELECTED = "selected";
+    public final static String ENABLED = "enabled";
 
 	private static Synoptic synoptic = Synoptic.getInstance();
 	
@@ -70,22 +71,21 @@ public class SynopticSelectionViewModel extends ModelObject {
         synoptic.availableSynopticsInfo().addObserver(availableSynopticsObserver);
     }
 
-    private synchronized void setEmptySynopticList() {
+    private void setEmptySynopticList() {
         updateSynopticList(new ArrayList<SynopticInfo>());
     }
 
-    private synchronized void updateSynopticList(Collection<SynopticInfo> value) {
+    private void updateSynopticList(Collection<SynopticInfo> value) {
         synopticList = value;
         ArrayList<String> names = new ArrayList<String>(SynopticInfo.names(synopticList));
 
-        firePropertyChange("synopticList", synopticNamesList, synopticNamesList = names);
+        firePropertyChange(SYNOPTIC_LIST, synopticNamesList, synopticNamesList = names);
 
         setDefaultSynoptic();
     }
 
     private void setDefaultSynoptic() {
         for (SynopticInfo synoptic : synopticList) {
-            System.out.println("synoptic:" + synoptic.name());
             if (synoptic.isDefault()) {
                 setSelected(synoptic.name());
                 break;
@@ -103,9 +103,9 @@ public class SynopticSelectionViewModel extends ModelObject {
      * @param synoptic
      *            The string name of the synoptic to set
      */
-    public synchronized void setSelected(String selected) {
+    public void setSelected(String selected) {
         synoptic.setViewerSynoptic(selected);
-        firePropertyChange("selected", this.selected, this.selected = selected);
+        firePropertyChange(SELECTED, this.selected, this.selected = selected);
     }
 	
 	public ArrayList<String> getSynopticList() {
@@ -129,7 +129,7 @@ public class SynopticSelectionViewModel extends ModelObject {
      *            set whether the display items should be enabled or not
      */
     public void setEnabled(boolean enabled) {
-        firePropertyChange("enabled", this.enabled, this.enabled = enabled);
+        firePropertyChange(ENABLED, this.enabled, this.enabled = enabled);
     }
 	
 }

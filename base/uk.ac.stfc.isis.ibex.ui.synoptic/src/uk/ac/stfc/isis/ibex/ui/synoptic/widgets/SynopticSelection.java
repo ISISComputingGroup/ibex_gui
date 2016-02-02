@@ -83,13 +83,13 @@ public class SynopticSelection extends Composite {
 		DataBindingContext bindingContext = new DataBindingContext();
 		
         bindingContext.bindList(SWTObservables.observeItems(synopticCombo),
-                BeanProperties.list("synopticList").observe(model));
+                BeanProperties.list(SynopticSelectionViewModel.SYNOPTIC_LIST).observe(model));
         bindingContext.bindValue(WidgetProperties.selection().observe(synopticCombo),
-                BeanProperties.value("selected").observe(model));
+                BeanProperties.value(SynopticSelectionViewModel.SELECTED).observe(model));
         bindingContext.bindValue(WidgetProperties.enabled().observe(synopticCombo),
-                BeanProperties.value("enabled").observe(model));
+                BeanProperties.value(SynopticSelectionViewModel.ENABLED).observe(model));
         bindingContext.bindValue(WidgetProperties.enabled().observe(refreshButton),
-                BeanProperties.value("enabled").observe(model));
+                BeanProperties.value(SynopticSelectionViewModel.ENABLED).observe(model));
 
 	}
 

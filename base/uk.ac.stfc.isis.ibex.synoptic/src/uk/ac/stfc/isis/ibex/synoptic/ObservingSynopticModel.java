@@ -137,7 +137,6 @@ public class ObservingSynopticModel extends ModelObject {
 
 	public void switchSynoptic(SynopticInfo newSynoptic) {
         synopticObservable.setSource(variables.getSynopticDescription(newSynoptic.pv()));
-		firePropertyChange("synopticInfo", this.synopticInfo, this.synopticInfo = newSynoptic);
 	}
 
 	public SynopticInfo getSynopticInfo() {
