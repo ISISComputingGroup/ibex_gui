@@ -44,7 +44,7 @@ public class ObservingSynopticModel extends ModelObject {
     private final Observer<SynopticDescription> descriptionObserver = new BaseObserver<SynopticDescription>() {
 		@Override
 		public void onValue(SynopticDescription value) {
-			model.setInstrumentFromDescription(value);
+			model.setSynopticFromDescription(value);
 		}
 
 		@Override
@@ -58,32 +58,30 @@ public class ObservingSynopticModel extends ModelObject {
 
     private final Observer<Configuration> configSynopticObserver = new BaseObserver<Configuration>() {
 
-		@Override
-		public void onValue(Configuration value) {
-			String synopticName = value.synoptic();
+        @Override
+        public void onValue(Configuration value) {
+            String synopticName = value.synoptic();
 
             if (value.synoptic().equals("")) {
                 synopticName = Variables.NONE_SYNOPTIC_NAME;
             }
 
-			SynopticInfo newSynoptic = SynopticInfo.search(
-					variables.available.getValue(), synopticName);
-			if (newSynoptic == null) {
-				// If cannot find synoptic use the default even if it is wrong
-				// for the configuration
-				newSynoptic = SynopticInfo.search(
-						variables.available.getValue(),
-						variables.defaultSynoptic.getValue().name());
+            SynopticInfo newSynoptic = SynopticInfo.search(variables.available.getValue(), synopticName);
+            if (newSynoptic == null) {
+                // If cannot find synoptic use the default even if it is wrong
+                // for the configuration
+                newSynoptic = SynopticInfo.search(variables.available.getValue(),
+                        variables.defaultSynoptic.getValue().name());
 
-				// If still null do nothing
-				if (newSynoptic == null) {
-					return;
-				}
+                // If still null do nothing
+                if (newSynoptic == null) {
+                    return;
+                }
 
-			}
+            }
 
-			switchSynoptic(newSynoptic);
-		}
+            switchSynoptic(newSynoptic);
+        }
 
 		@Override
 		public void onError(Exception e) {

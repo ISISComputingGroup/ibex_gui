@@ -81,7 +81,7 @@ public class SynopticViewModel {
     public void loadSynopticDescription(SynopticDescription description) {
         synoptic = description;
         synoptic.processChildComponents();
-		editing.setInstrumentFromDescription(description);
+		editing.setSynopticFromDescription(description);
 		
 		setSelectedComponent(null);
 

@@ -44,7 +44,7 @@ public class SynopticPreview extends Dialog {
 			SynopticDescription instrumentDescription) {
 		super(parent);
 		model = Synoptic.getInstance().getBlankModel();
-		model.setInstrumentFromDescription(instrumentDescription);
+		model.setSynopticFromDescription(instrumentDescription);
 	}
 
 	@Override
