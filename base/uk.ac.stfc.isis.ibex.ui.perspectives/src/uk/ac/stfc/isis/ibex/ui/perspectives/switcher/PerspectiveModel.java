@@ -22,9 +22,13 @@
  */
 package uk.ac.stfc.isis.ibex.ui.perspectives.switcher;
 
+import org.apache.logging.log4j.Logger;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
+
+import uk.ac.stfc.isis.ibex.logger.IsisLog;
+import uk.ac.stfc.isis.ibex.ui.PerspectiveSwitcher;
 
 /**
  * A way to keep track of which Perspective is active.
@@ -33,6 +37,8 @@ public class PerspectiveModel {
 
     private final IWorkbench workbench = PlatformUI.getWorkbench();
     private final IWorkbenchWindow workbenchWindow = workbench.getActiveWorkbenchWindow();
+
+    private static final Logger LOG = IsisLog.getLogger(PerspectiveSwitcher.class);
 
     public String previousPerspective;
 
@@ -61,7 +67,7 @@ public class PerspectiveModel {
         try {
             id = workbenchWindow.getActivePage().getPerspective().getId();
         } catch (Exception e) {
-            // Do nothing
+            LOG.info("No Perspective active");
         }
         return id;
     }
