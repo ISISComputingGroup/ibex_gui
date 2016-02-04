@@ -31,9 +31,9 @@ import uk.ac.stfc.isis.ibex.synoptic.SynopticInfo;
  */
 public class SynopticSelectionViewModel extends ModelObject {
     
-    public final static String SYNOPTIC_LIST = "synopticList";
-    public final static String SELECTED = "selected";
-    public final static String ENABLED = "enabled";
+    public static final String SYNOPTIC_LIST = "synopticList";
+    public static final String SELECTED = "selected";
+    public static final String ENABLED = "enabled";
 
 	private static Synoptic synoptic = Synoptic.getInstance();
 	

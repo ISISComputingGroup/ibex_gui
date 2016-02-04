@@ -28,6 +28,7 @@ import com.google.common.collect.Lists;
 
 import uk.ac.stfc.isis.ibex.synoptic.internal.Variables;
 
+@SuppressWarnings({ "checkstyle:membername" })
 public class SynopticInfo {
 
 	private final String name;
@@ -38,13 +39,12 @@ public class SynopticInfo {
         this.name = Variables.NONE_SYNOPTIC_NAME;
         this.pv = Variables.NONE_SYNOPTIC_PV;
         this.is_default = false;
-
     }
 
-    public SynopticInfo(String name, String pv, boolean is_default) {
+    public SynopticInfo(String name, String pv, boolean isDefault) {
 		this.name = name;
 		this.pv = pv;
-        this.is_default = is_default;
+        this.is_default = isDefault;
 	}
 	
 	public String name() {
