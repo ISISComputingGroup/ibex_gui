@@ -35,6 +35,8 @@ public class SynopticSelectionViewModel extends ModelObject {
     public static final String SELECTED = "selected";
     public static final String ENABLED = "enabled";
 
+    public static final int DATABINDING_WAIT_TIME_MS = 100;
+
 	private static Synoptic synoptic = Synoptic.getInstance();
 	
     private SynopticInfo lastSetDefaultSynoptic = new SynopticInfo("", "", false);;
@@ -90,8 +92,9 @@ public class SynopticSelectionViewModel extends ModelObject {
         // here we can avoid it overwriting our setting of the default synoptic.
         // But there must be a better way to do this...
         try {
-            Thread.sleep(100);
+            Thread.sleep(DATABINDING_WAIT_TIME_MS);
         } catch (InterruptedException e) {
+            e.printStackTrace();
         }
 
         setDefaultSynoptic();
