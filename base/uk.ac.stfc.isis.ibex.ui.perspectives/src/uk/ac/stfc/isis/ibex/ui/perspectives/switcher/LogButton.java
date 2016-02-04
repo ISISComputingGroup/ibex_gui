@@ -28,17 +28,28 @@ import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 
+/**
+ * A button with behaviours specific to the log messages.
+ */
 public class LogButton extends PerspectiveButton {
 
 	private FlashingButton flash;
 	private final Display display = Display.getDefault();
 	private final DataBindingContext bindingContext = new DataBindingContext();
 	
+    private String buttonPerspective;
+
 	private final LogCountViewModel model;
 	
+    /**
+     * @param parent where the button is stored
+     * @param perspective the perspective to be used by this button
+     */
 	public LogButton(Composite parent, final String perspective) {
 		super(parent, perspective);
 		
+        this.buttonPerspective = perspective;
+
 		flash = new FlashingButton(this, display);
 		flash.setDefaultColour(this.getBackground());
 	
@@ -69,12 +80,18 @@ public class LogButton extends PerspectiveButton {
 		logCounter.stop();
 		logCounter.resetCount();
 	}
-	
+
+    /**
+     * make sure that the button is flashing when required.
+     */
 	private void updateFlashing() {
-		if (model.hasMessages()) {
-			flash.start();
-		} else {
-			flash.stop();
-		}
+        String currentPerspective = new PerspectiveModel().getCurrentPerspective();
+        if (!buttonPerspective.equals(currentPerspective)) {
+            if (model.hasMessages()) {
+                flash.start();
+            } else {
+                flash.stop();
+            }
+        }
 	}
 }

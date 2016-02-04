@@ -21,12 +21,15 @@ package uk.ac.stfc.isis.ibex.ui.perspectives.switcher;
 
 import org.eclipse.swt.custom.CLabel;
 import org.eclipse.swt.graphics.Color;
-import org.eclipse.wb.swt.SWTResourceManager;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.wb.swt.SWTResourceManager;
 
+/**
+ * Where attention is needed, a flashing button should help to draw attention.
+ */
 public class FlashingButton implements Runnable {
 
-	private static final Color RED = SWTResourceManager.getColor(255, 0, 0);
+    private static final Color ALARM = SWTResourceManager.getColor(250, 150, 150);
 	private static final int SLEEP_TIME = 800;
 	
 	private final CLabel button;
@@ -37,14 +40,23 @@ public class FlashingButton implements Runnable {
 	private Color off;
 	private Color on;
 	
+    /**
+     * Set up the flashing button.
+     * 
+     * @param button the button that will flash (a Perspective button generally)
+     * @param display the display to be updated
+     */
 	public FlashingButton(final CLabel button, Display display) {
 		this.button = button;
 		this.display = display;
 		flashOn = true;
 		
-		on = RED;
+        on = ALARM;
 	}
 
+    /**
+     * Start the button flashing.
+     */
 	public void start() {
 		if (null == flashThread) {
 			flashThread = new Thread(this);
@@ -52,24 +64,41 @@ public class FlashingButton implements Runnable {
 		}
 	}
 
+    /**
+     * Stop the button flashing.
+     */
 	public void stop() {
 		flashThread = null;
 		button.setBackground(off);
 	}
 
+    /**
+     * Set the background colour.
+     * 
+     * @param background the colour to use by default.
+     */
 	public void setDefaultColour(Color background) {
 		this.off = background;
 	}
 
+    /**
+     * Overwrite the on colour.
+     * 
+     * @param foreground the alternate 'on' colour
+     */
 	public void setFlashedColour(Color foreground) {
 		this.on = foreground;
 	}
 	
+    /**
+     * @return if the flash is on
+     */
 	public boolean isFlashOn() {
 		return flashOn;
 	}
 	
-	public void run() {
+	@Override
+    public void run() {
 		Thread thisThread = Thread.currentThread();
 		while (flashThread == thisThread) {
 			if (flashOn) {
@@ -87,9 +116,13 @@ public class FlashingButton implements Runnable {
 		}
 	}
 
+    /**
+     * @param c the colour to set
+     */
 	private void changeColour(final Color c) {
 		display.asyncExec(new Runnable() {
-			public void run() {
+			@Override
+            public void run() {
 				button.setBackground(c);
 			}
 		});

@@ -24,20 +24,26 @@ import java.util.List;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.graphics.Font;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.ISizeProvider;
 import org.eclipse.ui.part.ViewPart;
-import org.eclipse.swt.graphics.Color;
-import org.eclipse.swt.graphics.Font;
-import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.layout.GridData;
 import org.eclipse.wb.swt.SWTResourceManager;
 
 import uk.ac.stfc.isis.ibex.ui.perspectives.Activator;
 import uk.ac.stfc.isis.ibex.ui.perspectives.IsisPerspective;
 
+/**
+ * Suppress Warnings for the colour and font values.
+ */
 @SuppressWarnings("checkstyle:magicnumber")
 public class PerspectiveSwitcherView extends ViewPart implements ISizeProvider {
+    /**
+     * Empty constructor for the Perspective Switcher.
+     */
 	public PerspectiveSwitcherView() {
 	}
 
@@ -70,6 +76,12 @@ public class PerspectiveSwitcherView extends ViewPart implements ISizeProvider {
 		initializeMenu();
 	}
 
+    /**
+     * Configure the button for display.
+     * 
+     * @param perspective contains the display information for the perspective
+     * @param button is the button to add
+     */
 	private void configureButton(IsisPerspective perspective, PerspectiveButton button) {
 		button.setText(perspective.name());
 		button.setImage(perspective.image());
@@ -84,10 +96,12 @@ public class PerspectiveSwitcherView extends ViewPart implements ISizeProvider {
 	}
 
 	/**
-	 * @param container
-	 * @param perspective
-	 * @return button to add to the perspective, default is perspective button
-	 */
+     * Generate a button for the perspective.
+     * 
+     * @param container the container the button will be in
+     * @param perspective the perspective the button will load
+     * @return button to add to the perspective, default is perspective button
+     */
 	private PerspectiveButton buttonForPerspective(Composite container,
 			IsisPerspective perspective) {
 
