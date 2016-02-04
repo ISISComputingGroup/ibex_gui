@@ -51,9 +51,9 @@ public class ForwardingObservable<T> extends ClosableObservable<T> {
 
     protected synchronized void setSource(Observable<T> newSource) {
 		cancelSubscription();	
-		sourceObserver.onConnectionStatus(false);
+        sourceObserver.onConnectionStatus(false);
 		
-		sourceObserver.onConnectionStatus(newSource.isConnected());
+        sourceObserver.onConnectionStatus(newSource.isConnected());
 		
 		Exception error = newSource.lastError();
 		if (error != null) {
@@ -71,6 +71,7 @@ public class ForwardingObservable<T> extends ClosableObservable<T> {
 	@Override
 	public void close() {
 		cancelSubscription();
+        sourceObserver.onConnectionStatus(false);
 	}
 	
 	private void cancelSubscription() {

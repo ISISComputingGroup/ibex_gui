@@ -65,7 +65,7 @@ public class SynopticModel extends ModelObject {
 	}
 	
 	public void setSynopticFromDescription(SynopticDescription description) {
-		firePropertyChange("instrument", instrument, instrument = getInstrument(description));
+        instrument = getInstrument(description);
 	}
 	
 	public InstrumentNavigationGraph instrumentGraph() {

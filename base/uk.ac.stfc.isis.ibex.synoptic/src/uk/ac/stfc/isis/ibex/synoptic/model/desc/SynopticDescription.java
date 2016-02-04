@@ -52,6 +52,11 @@ public class SynopticDescription implements SynopticParentDescription {
 	@XmlElement(name = "component", type = ComponentDescription.class)
 	private ArrayList<ComponentDescription> components = new ArrayList<>();
 	
+    public SynopticDescription() {
+        this.name = "";
+        showbeam = "false";
+    }
+
 	public String name() {
 		return name;
 	}

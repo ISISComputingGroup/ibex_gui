@@ -36,12 +36,16 @@ import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 
+import uk.ac.stfc.isis.ibex.epics.observing.BaseObserver;
+import uk.ac.stfc.isis.ibex.epics.observing.Observer;
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
+import uk.ac.stfc.isis.ibex.synoptic.ObservingSynopticModel;
 import uk.ac.stfc.isis.ibex.synoptic.Synoptic;
 import uk.ac.stfc.isis.ibex.synoptic.SynopticModel;
 import uk.ac.stfc.isis.ibex.synoptic.model.Component;
 import uk.ac.stfc.isis.ibex.synoptic.model.Target;
+import uk.ac.stfc.isis.ibex.synoptic.model.desc.SynopticDescription;
 import uk.ac.stfc.isis.ibex.synoptic.model.targets.GroupedComponentTarget;
 import uk.ac.stfc.isis.ibex.synoptic.model.targets.OpiTarget;
 import uk.ac.stfc.isis.ibex.synoptic.model.targets.PerspectiveTarget;
@@ -79,16 +83,30 @@ public class SynopticPresenter extends ModelObject {
 		}
 	};
 
-	private final PropertyChangeListener modelListener = new PropertyChangeListener() {
-		@Override
-		public void propertyChange(PropertyChangeEvent evt) {
-			updateModel();
-		}
-	};
+    private final Observer<SynopticDescription> descriptionObserver = new BaseObserver<SynopticDescription>() {
+        @Override
+        public void onValue(SynopticDescription value) {
+            updateModel();
+        }
+
+        @Override
+        public void onError(Exception e) {
+            e.printStackTrace();
+            clearComponents();
+        }
+
+        @Override
+        public void onConnectionStatus(boolean isConnected) {
+            if (!isConnected) {
+                clearComponents();
+            }
+        }
+    };
 
 	public SynopticPresenter() {
 		model = Synoptic.getInstance().currentViewerModel();
-		model.addPropertyChangeListener("instrument", modelListener);
+        ObservingSynopticModel observingSynopticModel = Synoptic.getInstance().currentObservingViewerModel();
+        observingSynopticModel.getSynopticObservable().addObserver(descriptionObserver);
 
 		navigator = new NavigationPresenter(model.instrumentGraph().head());
 		navigator.addPropertyChangeListener("currentTarget", navigationListener);
@@ -97,8 +115,8 @@ public class SynopticPresenter extends ModelObject {
 		navigateTo(navigator.currentTarget().name());
 	}
 
-	private void updateModel() {
-		setTargets(model.instrumentGraph().targets());
+    private void updateModel() {
+        setTargets(model.instrumentGraph().targets());
 		navigator.setCurrentTarget(model.instrumentGraph().head());
 	}
 
@@ -126,9 +144,9 @@ public class SynopticPresenter extends ModelObject {
 	}
 
 	private void setTargets(Map<String, TargetNode> targets) {
-		List<String> oldTargets = getTargets();
-		this.targets = targets;
-		firePropertyChange("targets", oldTargets, getTargets());
+        List<String> oldTargets = getTargets();
+        this.targets = targets;
+        firePropertyChange("targets", oldTargets, getTargets());
 	}
 
 	public void navigateTo(final String targetName) {
@@ -225,6 +243,11 @@ public class SynopticPresenter extends ModelObject {
 		Collections.reverse(trail);
 		return trail;
 	}
+
+    private void clearComponents() {
+        this.components = new ArrayList<>();
+        firePropertyChange(SynopticView.COMPONENTS_CHANGE, null, components());
+    }
 
 	private void setComponents(List<? extends Component> components) {
 		this.components = new ArrayList<>(components);
