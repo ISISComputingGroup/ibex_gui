@@ -37,6 +37,8 @@ public class SynopticSelectionViewModel extends ModelObject {
 
 	private static Synoptic synoptic = Synoptic.getInstance();
 	
+    private SynopticInfo lastSetDefaultSynoptic = new SynopticInfo("", "", false);;
+
     private Collection<SynopticInfo> synopticList = new ArrayList<>();
     private ArrayList<String> synopticNamesList;
 
@@ -56,6 +58,7 @@ public class SynopticSelectionViewModel extends ModelObject {
 		public void onError(Exception e) {
             setEmptySynopticList();
             setEnabled(false);
+            lastSetDefaultSynoptic = new SynopticInfo("", "", false);
 		}
 
 		@Override
@@ -63,6 +66,7 @@ public class SynopticSelectionViewModel extends ModelObject {
 			if (!isConnected) {
                 setEmptySynopticList();
                 setEnabled(false);
+                lastSetDefaultSynoptic = new SynopticInfo("", "", false);
 			}
         }
 	};
@@ -87,9 +91,16 @@ public class SynopticSelectionViewModel extends ModelObject {
     private void setDefaultSynoptic() {
         for (SynopticInfo synoptic : synopticList) {
             if (synoptic.isDefault()) {
-                setSelected(synoptic.name());
+                setDefaultIfChanged(synoptic);
                 break;
             }
+        }
+    }
+
+    private void setDefaultIfChanged(SynopticInfo newDefaultSynoptic) {
+        if (!newDefaultSynoptic.name().equals(lastSetDefaultSynoptic.name())) {
+            setSelected(newDefaultSynoptic.name());
+            lastSetDefaultSynoptic = newDefaultSynoptic;
         }
     }
 

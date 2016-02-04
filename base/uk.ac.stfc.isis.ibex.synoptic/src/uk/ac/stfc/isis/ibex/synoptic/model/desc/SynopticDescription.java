@@ -52,9 +52,10 @@ public class SynopticDescription implements SynopticParentDescription {
 	@XmlElement(name = "component", type = ComponentDescription.class)
 	private ArrayList<ComponentDescription> components = new ArrayList<>();
 	
-    public SynopticDescription() {
-        this.name = "";
-        showbeam = "false";
+    public static SynopticDescription getEmptySynopticDescription() {
+        SynopticDescription toReturn = new SynopticDescription();
+        toReturn.setShowBeam(false);
+        return toReturn;
     }
 
 	public String name() {

@@ -93,12 +93,12 @@ public class SwitchableObservableTest {
 	}
 	
 	@Test
-	public void calling_close_does_not_call_onConnectionStatus_method_on_observer() {
+    public void calling_close_calls_onConnectionStatus_method_on_observer_with_isConnected_false() {
 		// Act
 		switchableObservable.close();
 		
 		// Assert - Observer never did anything
-		verify(mockObserver, times(0)).onConnectionStatus(anyBoolean());
+        verify(mockObserver, times(1)).onConnectionStatus(false);
 	}
 	
 	@Test

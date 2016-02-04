@@ -48,13 +48,13 @@ public class ObservingSynopticModel extends ModelObject {
         @Override
         public void onError(Exception e) {
             e.printStackTrace();
-            model.setSynopticFromDescription(new SynopticDescription());
+            model.setSynopticFromDescription(SynopticDescription.getEmptySynopticDescription());
         }
 
         @Override
         public void onConnectionStatus(boolean isConnected) {
             if (!isConnected) {
-                model.setSynopticFromDescription(new SynopticDescription());
+                model.setSynopticFromDescription(SynopticDescription.getEmptySynopticDescription());
             }
         }
     };
