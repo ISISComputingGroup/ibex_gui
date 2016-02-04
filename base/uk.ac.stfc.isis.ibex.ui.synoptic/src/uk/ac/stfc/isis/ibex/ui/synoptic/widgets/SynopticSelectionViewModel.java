@@ -85,6 +85,15 @@ public class SynopticSelectionViewModel extends ModelObject {
 
         firePropertyChange(SYNOPTIC_LIST, synopticNamesList, synopticNamesList = names);
 
+        // Updating the list above causes the selection to change, and
+        // databinding to update the selected synoptic. If we just wait a moment
+        // here we can avoid it overwriting our setting of the default synoptic.
+        // But there must be a better way to do this...
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException e) {
+        }
+
         setDefaultSynoptic();
     }
 
