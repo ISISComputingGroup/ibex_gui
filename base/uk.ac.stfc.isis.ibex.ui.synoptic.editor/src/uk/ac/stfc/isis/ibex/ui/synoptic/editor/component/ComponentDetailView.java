@@ -26,6 +26,7 @@ import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.FocusListener;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.graphics.Image;
@@ -75,8 +76,11 @@ public class ComponentDetailView extends Composite {
 			@Override
 			public void instrumentUpdated(UpdateTypes updateType) {
                 if (updateType == UpdateTypes.EDIT_COMPONENT) {
-                    instrument.addTargetToSelectedComponent();
+                    instrument.addTargetToSelectedComponent(false);
+                } else if (updateType == UpdateTypes.EDIT_COMPONENT_FINAL) {
+                    instrument.addTargetToSelectedComponent(true);
                 }
+
                 if (updateType != UpdateTypes.EDIT_COMPONENT && updateType != UpdateTypes.EDIT_TARGET
                         && updateType != UpdateTypes.ADD_TARGET) {
 					component = instrument.getFirstSelectedComponent();
@@ -145,10 +149,22 @@ public class ComponentDetailView extends Composite {
         cmboType.setContentProvider(ArrayContentProvider.getInstance());
         cmboType.setInput(typeList);
         cmboType.getCombo().select(0);
+        cmboType.getCombo().addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(org.eclipse.swt.events.FocusEvent e) {
+            }
+
+            @Override
+            public void focusLost(org.eclipse.swt.events.FocusEvent e) {
+                updateModelType(true);
+                updateTypeIcon();
+            }
+        });
+
         cmboType.addSelectionChangedListener(new ISelectionChangedListener() {
             @Override
             public void selectionChanged(SelectionChangedEvent event) {
-                updateModelType();
+                updateModelType(false);
                 updateTypeIcon();
             }
         });
@@ -200,14 +216,18 @@ public class ComponentDetailView extends Composite {
 		}
 	}
 
-	private void updateModelType() {
+    private void updateModelType(boolean isFinalUpdate) {
 		if (component != null) {
 			int typeIndex = cmboType.getCombo().getSelectionIndex();
             String selection = typeList.get(typeIndex);
             ComponentType type = ComponentType.valueOf(selection);
 			component.setType(type);
 
-			instrument.broadcastInstrumentUpdate(UpdateTypes.EDIT_COMPONENT);
+            if (isFinalUpdate) {
+                instrument.broadcastInstrumentUpdate(UpdateTypes.EDIT_COMPONENT_FINAL);
+            } else {
+                instrument.broadcastInstrumentUpdate(UpdateTypes.EDIT_COMPONENT);
+            }
 		}
 	}
 

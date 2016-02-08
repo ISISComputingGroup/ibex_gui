@@ -29,7 +29,12 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.custom.StackLayout;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 
 import uk.ac.stfc.isis.ibex.opis.Opi;
@@ -44,7 +49,6 @@ public class TargetNameWidget extends Composite {
 	private boolean updateLock;
 	private SynopticViewModel instrument;
 	private TargetType type;
-	private StackLayout layout;
 	private Collection<String> availableOPIs;
 	
 	public TargetNameWidget(Composite parent, final SynopticViewModel instrument) {
@@ -54,18 +58,29 @@ public class TargetNameWidget extends Composite {
 		
 		availableOPIs = Opi.getDefault().descriptionsProvider().getOpiList();
 		
-		layout = new StackLayout();
-		setLayout(layout);
-		
 		createControls(this);
 		
-        layout.topControl = cmboOpiName.getCombo();
+        Button btnSetDefault = new Button(this, SWT.NONE);
+        btnSetDefault.addSelectionListener(new SelectionAdapter() {
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                updateModel(
+                        DefaultTargetForComponent.defaultTarget(instrument.getFirstSelectedComponent().type()).name());
+            }
+        });
+        btnSetDefault.setText("Default");
+        
         IStructuredSelection selection = (IStructuredSelection) cmboOpiName.getSelection();
         updateModel((String) selection.getFirstElement());
 	}
 	
 	private void createControls(Composite parent) {
+        GridLayout gridLayout = new GridLayout(2, false);
+        gridLayout.marginWidth = 0;
+        setLayout(gridLayout);
 		cmboOpiName = new ComboViewer(parent, SWT.READ_ONLY);
+        Combo combo = cmboOpiName.getCombo();
+        combo.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		cmboOpiName.setContentProvider(new ArrayContentProvider());
 		cmboOpiName.setInput(availableOPIs);
 		cmboOpiName.getCombo().select(-1);
@@ -89,6 +104,7 @@ public class TargetNameWidget extends Composite {
 			if (target != null) {
 				target.setName(targetName);
 				target.setType(type);
+                target.setUserSelected(true);
                 instrument.broadcastInstrumentUpdate(UpdateTypes.EDIT_TARGET);
 			}
 		}

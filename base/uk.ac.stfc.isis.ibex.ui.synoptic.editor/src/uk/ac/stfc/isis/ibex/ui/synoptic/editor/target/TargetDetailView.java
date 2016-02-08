@@ -135,7 +135,7 @@ public class TargetDetailView extends Composite {
         btnAdd.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
-                instrument.addTargetToSelectedComponent();
+                instrument.addTargetToSelectedComponent(true);
             }
         });
 	}

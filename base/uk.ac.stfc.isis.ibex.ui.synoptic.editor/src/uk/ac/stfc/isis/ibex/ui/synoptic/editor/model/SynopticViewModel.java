@@ -257,15 +257,18 @@ public class SynopticViewModel {
 		}
 	}
 
-	public void addTargetToSelectedComponent() {
+    public void addTargetToSelectedComponent(boolean isFinalEdit) {
 		ComponentDescription component = getFirstSelectedComponent();
         ComponentType compType = component.type();
         TargetDescription target = DefaultTargetForComponent.defaultTarget(compType);
 		
-        if (component != null && (component.target() == null || component.target().name() == "NONE")) {
+        if (component != null && (component.target() == null || component.target().name() == "NONE"
+                || !component.target().getUserSelected())) {
+            target.setUserSelected(isFinalEdit);
             component.setTarget(target);
 			broadcastInstrumentUpdate(UpdateTypes.ADD_TARGET);
 		}
+
 	}
 
 	public void setSelectedComponent(List<ComponentDescription> selected) {
