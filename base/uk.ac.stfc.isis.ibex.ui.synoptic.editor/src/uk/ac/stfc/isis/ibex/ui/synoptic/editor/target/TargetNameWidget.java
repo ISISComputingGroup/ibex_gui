@@ -104,6 +104,7 @@ public class TargetNameWidget extends Composite {
 			if (target != null) {
 				target.setName(targetName);
 				target.setType(type);
+                target.setUserSelected(true);
                 instrument.broadcastInstrumentUpdate(UpdateTypes.EDIT_TARGET);
 			}
 		}
