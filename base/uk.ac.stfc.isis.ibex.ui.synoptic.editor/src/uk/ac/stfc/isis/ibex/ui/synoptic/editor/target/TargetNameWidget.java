@@ -68,7 +68,7 @@ public class TargetNameWidget extends Composite {
                         DefaultTargetForComponent.defaultTarget(instrument.getFirstSelectedComponent().type()).name());
             }
         });
-        btnSetDefault.setText("Set Default");
+        btnSetDefault.setText("Default");
         
         IStructuredSelection selection = (IStructuredSelection) cmboOpiName.getSelection();
         updateModel((String) selection.getFirstElement());
