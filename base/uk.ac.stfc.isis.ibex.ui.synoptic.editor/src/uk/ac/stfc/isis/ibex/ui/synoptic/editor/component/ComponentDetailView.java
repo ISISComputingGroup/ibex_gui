@@ -23,9 +23,8 @@ import java.util.List;
 
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ComboViewer;
-import org.eclipse.jface.viewers.ISelectionChangedListener;
-import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.FocusListener;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.graphics.Image;
@@ -145,9 +144,13 @@ public class ComponentDetailView extends Composite {
         cmboType.setContentProvider(ArrayContentProvider.getInstance());
         cmboType.setInput(typeList);
         cmboType.getCombo().select(0);
-        cmboType.addSelectionChangedListener(new ISelectionChangedListener() {
+        cmboType.getCombo().addFocusListener(new FocusListener() {
             @Override
-            public void selectionChanged(SelectionChangedEvent event) {
+            public void focusGained(org.eclipse.swt.events.FocusEvent e) {
+            }
+
+            @Override
+            public void focusLost(org.eclipse.swt.events.FocusEvent e) {
                 updateModelType();
                 updateTypeIcon();
             }

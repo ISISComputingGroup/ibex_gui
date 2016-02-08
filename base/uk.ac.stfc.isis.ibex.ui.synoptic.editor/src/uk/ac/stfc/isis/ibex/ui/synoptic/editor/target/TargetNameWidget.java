@@ -75,7 +75,9 @@ public class TargetNameWidget extends Composite {
 	}
 	
 	private void createControls(Composite parent) {
-        setLayout(new GridLayout(2, false));
+        GridLayout gridLayout = new GridLayout(2, false);
+        gridLayout.marginWidth = 0;
+        setLayout(gridLayout);
 		cmboOpiName = new ComboViewer(parent, SWT.READ_ONLY);
         Combo combo = cmboOpiName.getCombo();
         combo.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
