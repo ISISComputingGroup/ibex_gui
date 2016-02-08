@@ -24,10 +24,17 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-import uk.ac.stfc.isis.ibex.model.ModelObject;
-
 import com.google.common.base.Strings;
 
+import uk.ac.stfc.isis.ibex.model.ModelObject;
+
+/**
+ * Represents a group of blocks within a configuration.
+ * 
+ * Note: The values from this class are populated from the BlockServer JSON via
+ * reflection. Therefore variable names must reflect those expected from the
+ * JSON.
+ */
 public class Group extends ModelObject {
 	
 	private String name;
