@@ -114,6 +114,7 @@ public final class DefaultTargetForComponent {
         
         target.setName(targetName);
         target.setType(targetType);
+        target.setUserSelected(false);
         return target;
     }
 

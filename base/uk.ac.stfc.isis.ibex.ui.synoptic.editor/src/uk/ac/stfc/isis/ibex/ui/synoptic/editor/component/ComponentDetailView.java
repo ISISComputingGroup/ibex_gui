@@ -23,6 +23,8 @@ import java.util.List;
 
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ComboViewer;
+import org.eclipse.jface.viewers.ISelectionChangedListener;
+import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.FocusListener;
 import org.eclipse.swt.events.ModifyEvent;
@@ -74,8 +76,11 @@ public class ComponentDetailView extends Composite {
 			@Override
 			public void instrumentUpdated(UpdateTypes updateType) {
                 if (updateType == UpdateTypes.EDIT_COMPONENT) {
-                    instrument.addTargetToSelectedComponent();
+                    instrument.addTargetToSelectedComponent(false);
+                } else if (updateType == UpdateTypes.EDIT_COMPONENT_FINAL) {
+                    instrument.addTargetToSelectedComponent(true);
                 }
+
                 if (updateType != UpdateTypes.EDIT_COMPONENT && updateType != UpdateTypes.EDIT_TARGET
                         && updateType != UpdateTypes.ADD_TARGET) {
 					component = instrument.getFirstSelectedComponent();
@@ -151,7 +156,15 @@ public class ComponentDetailView extends Composite {
 
             @Override
             public void focusLost(org.eclipse.swt.events.FocusEvent e) {
-                updateModelType();
+                updateModelType(true);
+                updateTypeIcon();
+            }
+        });
+
+        cmboType.addSelectionChangedListener(new ISelectionChangedListener() {
+            @Override
+            public void selectionChanged(SelectionChangedEvent event) {
+                updateModelType(false);
                 updateTypeIcon();
             }
         });
@@ -203,14 +216,18 @@ public class ComponentDetailView extends Composite {
 		}
 	}
 
-	private void updateModelType() {
+    private void updateModelType(boolean isFinalUpdate) {
 		if (component != null) {
 			int typeIndex = cmboType.getCombo().getSelectionIndex();
             String selection = typeList.get(typeIndex);
             ComponentType type = ComponentType.valueOf(selection);
 			component.setType(type);
 
-			instrument.broadcastInstrumentUpdate(UpdateTypes.EDIT_COMPONENT);
+            if (isFinalUpdate) {
+                instrument.broadcastInstrumentUpdate(UpdateTypes.EDIT_COMPONENT_FINAL);
+            } else {
+                instrument.broadcastInstrumentUpdate(UpdateTypes.EDIT_COMPONENT);
+            }
 		}
 	}
 

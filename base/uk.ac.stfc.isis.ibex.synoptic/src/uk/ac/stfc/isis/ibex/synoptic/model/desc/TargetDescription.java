@@ -28,6 +28,7 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /*
  * Describes the target for navigation around the synoptic.
@@ -38,6 +39,9 @@ public class TargetDescription {
 
     private String name;
     private TargetType type;
+
+    @XmlTransient
+    private boolean userSelected = true;
 	
 	@XmlElementWrapper(name = "properties")
 	@XmlElement(name = "property", type = Property.class)
@@ -58,6 +62,7 @@ public class TargetDescription {
     public TargetDescription(TargetDescription other) {
         this.name = other.name;
         this.type = other.type;
+        this.userSelected = other.userSelected;
         this.properties = new ArrayList<>(other.properties);
     }
 
@@ -77,6 +82,14 @@ public class TargetDescription {
 		this.type = type;
 	}
 	
+    public boolean getUserSelected() {
+        return this.userSelected;
+    }
+
+    public void setUserSelected(boolean userSelected) {
+        this.userSelected = userSelected;
+    }
+
 	public List<Property> properties() {
 		return Collections.unmodifiableList(properties);
 	}
