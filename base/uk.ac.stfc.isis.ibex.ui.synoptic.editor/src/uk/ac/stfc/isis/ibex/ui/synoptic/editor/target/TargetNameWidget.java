@@ -52,7 +52,7 @@ public class TargetNameWidget extends Composite {
 	private SynopticViewModel instrument;
 	private TargetType type;
 	private Collection<String> availableOPIs;
-	
+
 	public TargetNameWidget(Composite parent, final SynopticViewModel instrument) {
 		super(parent, SWT.NONE);
 		
@@ -68,11 +68,13 @@ public class TargetNameWidget extends Composite {
             public void widgetSelected(SelectionEvent e) {
                 Collection<TargetDescription> potentialTargets = DefaultTargetForComponent
                         .defaultTarget(instrument.getFirstSelectedComponent().type());
+
                 if (potentialTargets.size() == 1) {
                     updateModel(potentialTargets.iterator().next().name());
                 } else if (potentialTargets.size() > 1) {
-                    SuggestedTargetsDialog dialog = new SuggestedTargetsDialog(getShell());
+                    SuggestedTargetsDialog dialog = new SuggestedTargetsDialog(getShell(), potentialTargets);
                     if (dialog.open() == Window.OK) {
+                        updateModel(dialog.selectedTargetName());
                     }
                 }
                 
