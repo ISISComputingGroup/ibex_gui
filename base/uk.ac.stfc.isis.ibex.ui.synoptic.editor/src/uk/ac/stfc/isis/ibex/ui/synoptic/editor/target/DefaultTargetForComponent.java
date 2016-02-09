@@ -22,7 +22,10 @@
  */
 package uk.ac.stfc.isis.ibex.ui.synoptic.editor.target;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 import uk.ac.stfc.isis.ibex.opis.Opi;
 import uk.ac.stfc.isis.ibex.synoptic.model.ComponentType;
@@ -38,84 +41,86 @@ public final class DefaultTargetForComponent {
     private DefaultTargetForComponent() {
     }
 
-    public static TargetDescription defaultTarget(ComponentType compType) {
-        TargetDescription target = new TargetDescription();
-        String targetName = "NONE";
-        TargetType targetType = TargetType.OPI;
-        
+    public static Collection<TargetDescription> defaultTarget(ComponentType compType) {
+        Map<String, TargetType> targetNameList = new HashMap<>();
+
         switch (compType) {
             case UNKNOWN:
             case MOVINGBEAMSTOP:
                 // no sensible default(s) for the above at present
                 break;
             case DAE:
-                targetName = "DAE";
-                targetType = TargetType.COMPONENT;
+                targetNameList.put("DAE", TargetType.COMPONENT);
                 break;
             case GONIOMETER:
-                targetName = "Goniometer";
-                targetType = TargetType.COMPONENT;
+                targetNameList.put("Goniometer", TargetType.COMPONENT);
                 break;
             case JAWS:
-                targetName = "Slit 1";
+                targetNameList.put("Slit 1", TargetType.OPI);
                 break;
             case CHOPPER:
+                targetNameList.put("Mk3 Chopper", TargetType.OPI);
+                targetNameList.put("SKF G5 Chopper", TargetType.OPI);
+                break;
             case MONITOR:
             case JULABO:
                 // multiple options for the above, no default specified
                 break;
             case SAMPLESTACK:
-                targetName = "Sample stage";
+                targetNameList.put("Sample stage", TargetType.OPI);
                 break;
             case CAEN:
-                targetName = "Caen HV";
+                targetNameList.put("Caen HV", TargetType.OPI);
                 break;
             case KEPCO:
-                targetName = "Kepco";
+                targetNameList.put("Kepco", TargetType.OPI);
                 break;
             case BEAMSTOP:
-                targetName = "Beam-stop";
+                targetNameList.put("Beam-stop", TargetType.OPI);
                 break;
             case MOVINGMONITOR:
-                targetName = "In Out Monitor";
+                targetNameList.put("In Out Monitor", TargetType.OPI);
                 break;
             case ROTATINGBENCH:
-                targetName = "Rotating Bench";
+                targetNameList.put("Rotating Bench", TargetType.OPI);
                 break;
             case SAMPLECHANGER:
-                targetName = "Sample changer";
+                targetNameList.put("Sample changer", TargetType.OPI);
                 break;
             case ANALYSER:
-                targetName = "Analyser";
+                targetNameList.put("Analyser", TargetType.OPI);
                 break;
             case POLARISER:
-                targetName = "Polariser";
+                targetNameList.put("Polariser", TargetType.OPI);
                 break;
             case EUROTHERM:
-                targetName = "Eurotherm";
+                targetNameList.put("Eurotherm", TargetType.OPI);
                 break;
             case PINHOLESELECTOR:
-                targetName = "Pinhole Selector";
+                targetNameList.put("Pinhole Selector", TargetType.OPI);
                 break;
             case SINGLESTAGE:
-                targetName = "Single Stage";
+                targetNameList.put("Single Stage", TargetType.OPI);
                 break;
             default:
                 // no sensible default(s) at present
                 break;
 
         }
+        
+        Collection<TargetDescription> targetDescriptions = new ArrayList<>();
 
-        if (targetName != "NONE") {
-            if (!targetNameInOpiList(targetName) && targetType == TargetType.OPI) {
-                targetName = "NONE";
+        for (String targetName : targetNameList.keySet()) {
+            if (targetNameInOpiList(targetName) && targetNameList.get(targetName) == TargetType.OPI) {
+                targetDescriptions.add(new TargetDescription(targetName, targetNameList.get(targetName)));
             }
         }
         
-        target.setName(targetName);
-        target.setType(targetType);
-        target.setUserSelected(false);
-        return target;
+        if (targetDescriptions.size() == 0) {
+            targetDescriptions.add(new TargetDescription("NONE", TargetType.OPI));
+        }
+
+        return targetDescriptions;
     }
 
     private static Boolean targetNameInOpiList(String targetName) {

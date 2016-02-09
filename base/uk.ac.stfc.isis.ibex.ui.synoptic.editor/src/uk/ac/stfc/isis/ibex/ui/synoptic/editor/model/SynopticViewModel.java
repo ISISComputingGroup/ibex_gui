@@ -260,7 +260,7 @@ public class SynopticViewModel {
     public void addTargetToSelectedComponent(boolean isFinalEdit) {
 		ComponentDescription component = getFirstSelectedComponent();
         ComponentType compType = component.type();
-        TargetDescription target = DefaultTargetForComponent.defaultTarget(compType);
+        TargetDescription target = DefaultTargetForComponent.defaultTarget(compType).iterator().next();
 		
         if (component != null && (component.target() == null || component.target().name() == "NONE"
                 || !component.target().getUserSelected())) {

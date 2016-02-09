@@ -28,6 +28,7 @@ import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
+import org.eclipse.jface.window.Window;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -40,6 +41,7 @@ import org.eclipse.swt.widgets.Composite;
 import uk.ac.stfc.isis.ibex.opis.Opi;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.TargetDescription;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.TargetType;
+import uk.ac.stfc.isis.ibex.ui.synoptic.editor.dialogs.SuggestedTargetsDialog;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.SynopticViewModel;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.UpdateTypes;
 
@@ -64,8 +66,16 @@ public class TargetNameWidget extends Composite {
         btnSetDefault.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
-                updateModel(
-                        DefaultTargetForComponent.defaultTarget(instrument.getFirstSelectedComponent().type()).name());
+                Collection<TargetDescription> potentialTargets = DefaultTargetForComponent
+                        .defaultTarget(instrument.getFirstSelectedComponent().type());
+                if (potentialTargets.size() == 1) {
+                    updateModel(potentialTargets.iterator().next().name());
+                } else if (potentialTargets.size() > 1) {
+                    SuggestedTargetsDialog dialog = new SuggestedTargetsDialog(getShell());
+                    if (dialog.open() == Window.OK) {
+                    }
+                }
+                
             }
         });
         btnSetDefault.setText("Default");

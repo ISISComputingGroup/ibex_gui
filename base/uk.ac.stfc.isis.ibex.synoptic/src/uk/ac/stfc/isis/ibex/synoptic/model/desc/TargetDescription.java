@@ -53,6 +53,12 @@ public class TargetDescription {
     public TargetDescription() {
     }
 
+    public TargetDescription(String name, TargetType type) {
+        this.name = name;
+        this.type = type;
+        this.userSelected = false;
+    }
+
     /**
      * Copy constructor.
      * 
