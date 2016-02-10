@@ -36,7 +36,6 @@ import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import org.eclipse.jface.dialogs.MessageDialog;
-import org.eclipse.jface.window.Window;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.PlatformUI;
 
@@ -270,16 +269,14 @@ public class SynopticViewModel {
 
         if (potentialTargets.size() == 1) {
             target = potentialTargets.iterator().next();
-        } else if (potentialTargets.size() > 1 && isFinalEdit) {
+        } else if (potentialTargets.size() > 1 && isFinalEdit && !component.target().getUserSelected()) {
             Shell shell = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
             SuggestedTargetsDialog dialog = new SuggestedTargetsDialog(shell, potentialTargets);
-            if (dialog.open() == Window.OK) {
-                target = dialog.selectedTarget();
-            }
+            dialog.open();
+            target = dialog.selectedTarget();
         }
 		
-        if (component != null && (component.target() == null || component.target().name() == "NONE"
-                || !component.target().getUserSelected())) {
+        if (component != null && (component.target() == null || !component.target().getUserSelected())) {
             target.setUserSelected(isFinalEdit);
             component.setTarget(target);
 			broadcastInstrumentUpdate(UpdateTypes.ADD_TARGET);

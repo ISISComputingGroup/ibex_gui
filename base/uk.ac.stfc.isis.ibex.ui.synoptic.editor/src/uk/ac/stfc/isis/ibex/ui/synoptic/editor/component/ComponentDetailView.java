@@ -29,6 +29,8 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.FocusListener;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
+import org.eclipse.swt.events.MouseEvent;
+import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -61,6 +63,8 @@ public class ComponentDetailView extends Composite {
 	private Text txtName;
 	private ComboViewer cmboType;
 	private Label lblTypeIcon;
+
+    private boolean selectionCausedByMouseClick = false;
 
 	private PVList pvList;
 
@@ -156,16 +160,36 @@ public class ComponentDetailView extends Composite {
 
             @Override
             public void focusLost(org.eclipse.swt.events.FocusEvent e) {
-                updateModelType(true);
-                updateTypeIcon();
+                if (!selectionCausedByMouseClick) {
+                    updateModelType(true);
+                    updateTypeIcon();
+                }
+            }
+        });
+
+        cmboType.getCombo().addMouseListener(new MouseListener() {
+
+            @Override
+            public void mouseDoubleClick(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseDown(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseUp(MouseEvent e) {
+                selectionCausedByMouseClick = true;
             }
         });
 
         cmboType.addSelectionChangedListener(new ISelectionChangedListener() {
             @Override
             public void selectionChanged(SelectionChangedEvent event) {
-                updateModelType(false);
+                boolean isFinalUpdate = selectionCausedByMouseClick;
+                updateModelType(isFinalUpdate);
                 updateTypeIcon();
+                selectionCausedByMouseClick = false;
             }
         });
 
