@@ -63,8 +63,11 @@ public final class DefaultTargetForComponent {
                 targetNameList.put("SKF G5 Chopper", TargetType.OPI);
                 break;
             case MONITOR:
+                targetNameList.put("Monitor", TargetType.OPI);
+                break;
             case JULABO:
-                // multiple options for the above, no default specified
+                targetNameList.put("Julabo FL300", TargetType.OPI);
+                targetNameList.put("Julabo FP50", TargetType.OPI);
                 break;
             case SAMPLESTACK:
                 targetNameList.put("Sample stage", TargetType.OPI);
