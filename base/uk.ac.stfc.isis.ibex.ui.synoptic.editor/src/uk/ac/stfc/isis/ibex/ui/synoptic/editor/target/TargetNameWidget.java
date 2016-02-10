@@ -61,8 +61,18 @@ public class TargetNameWidget extends Composite {
 		availableOPIs = Opi.getDefault().descriptionsProvider().getOpiList();
 		
 		createControls(this);
+
+        IStructuredSelection selection = (IStructuredSelection) cmboOpiName.getSelection();
+        updateModel((String) selection.getFirstElement());
+    }
+
+    private void createControls(Composite parent) {
+        GridLayout gridLayout = new GridLayout(2, false);
+        gridLayout.marginWidth = 0;
+        setLayout(gridLayout);
 		
         Button btnSetDefault = new Button(this, SWT.NONE);
+        btnSetDefault.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false, 1, 1));
         btnSetDefault.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
@@ -80,19 +90,21 @@ public class TargetNameWidget extends Composite {
                 
             }
         });
-        btnSetDefault.setText("Default");
-        
-        IStructuredSelection selection = (IStructuredSelection) cmboOpiName.getSelection();
-        updateModel((String) selection.getFirstElement());
-	}
-	
-	private void createControls(Composite parent) {
-        GridLayout gridLayout = new GridLayout(2, false);
-        gridLayout.marginWidth = 0;
-        setLayout(gridLayout);
+        btnSetDefault.setText("Default Target");
+
+        Button btnClearSelection = new Button(this, SWT.NONE);
+        btnClearSelection.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+        btnClearSelection.addSelectionListener(new SelectionAdapter() {
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                updateModel("NONE");
+            }
+        });
+        btnClearSelection.setText("Clear Target");
+
 		cmboOpiName = new ComboViewer(parent, SWT.READ_ONLY);
         Combo combo = cmboOpiName.getCombo();
-        combo.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+        combo.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
 		cmboOpiName.setContentProvider(new ArrayContentProvider());
 		cmboOpiName.setInput(availableOPIs);
 		cmboOpiName.getCombo().select(-1);
