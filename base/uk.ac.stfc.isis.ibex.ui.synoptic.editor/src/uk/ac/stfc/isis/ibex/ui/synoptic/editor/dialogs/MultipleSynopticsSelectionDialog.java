@@ -37,7 +37,6 @@ import org.eclipse.swt.widgets.Shell;
 
 import uk.ac.stfc.isis.ibex.synoptic.SynopticInfo;
 
-@SuppressWarnings("checkstyle:magicnumber")
 public class MultipleSynopticsSelectionDialog extends Dialog {
     
     private static final int DIALOG_WIDTH = 450;

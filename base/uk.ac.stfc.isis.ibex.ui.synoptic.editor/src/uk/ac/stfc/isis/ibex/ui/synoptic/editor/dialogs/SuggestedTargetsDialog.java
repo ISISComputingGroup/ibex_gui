@@ -45,6 +45,9 @@ import uk.ac.stfc.isis.ibex.synoptic.model.desc.TargetType;
  * targets exist.
  */
 public class SuggestedTargetsDialog extends Dialog {
+    
+    private static final int DIALOG_WIDTH = 300;
+    private static final int DIALOG_HEIGHT = 200;
 
     private List items;
     private Collection<TargetDescription> targetDescriptions;
@@ -61,7 +64,7 @@ public class SuggestedTargetsDialog extends Dialog {
 
     @Override
     protected Point getInitialSize() {
-        return new Point(300, 200);
+        return new Point(DIALOG_WIDTH, DIALOG_HEIGHT);
     }
 
     @Override
