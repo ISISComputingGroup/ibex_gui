@@ -19,6 +19,9 @@
 
 package uk.ac.stfc.isis.ibex.ui.configserver.editing.blocks;
 
+import java.util.Arrays;
+import java.util.List;
+
 import org.eclipse.jface.window.Window;
 
 import uk.ac.stfc.isis.ibex.configserver.BlockRules;
@@ -31,6 +34,9 @@ import uk.ac.stfc.isis.ibex.ui.configserver.dialogs.PvSelectorDialog;
 import uk.ac.stfc.isis.ibex.validators.ErrorMessageProvider;
 import uk.ac.stfc.isis.ibex.validators.PvValidator;
 
+/**
+ * Provides information relating to a block.
+ */
 public class BlockDetailsViewModel extends ErrorMessageProvider {
 
 	private String name = "";
@@ -42,9 +48,12 @@ public class BlockDetailsViewModel extends ErrorMessageProvider {
     private final Block editingBlock;
     private final EditableConfiguration config;
     
+    private final List<String> facilityPvList;
+
     public BlockDetailsViewModel(final EditableBlock editingBlock, EditableConfiguration config) {
     	this.editingBlock = editingBlock;
     	this.config = config;
+        this.facilityPvList = getFacilityPVs();
     	
     	if (editingBlock != null) {
 	    	name = editingBlock.getName();
@@ -79,6 +88,7 @@ public class BlockDetailsViewModel extends ErrorMessageProvider {
 
 	public void setPvAddress(String pvAddress) {
 		validate(name, pvAddress);
+        checkFacilityPv(pvAddress);
 		firePropertyChange("pvAddress", this.pvAddress, this.pvAddress = pvAddress);
 	}
 
@@ -108,6 +118,7 @@ public class BlockDetailsViewModel extends ErrorMessageProvider {
     public void updateBlock() {
     	editingBlock.setName(name);
     	editingBlock.setPV(pvAddress);
+
     	editingBlock.setIsLocal(local);
     	editingBlock.setIsVisible(visible);
     }
@@ -124,5 +135,27 @@ public class BlockDetailsViewModel extends ErrorMessageProvider {
     	} else {
     		setError(false, null);
     	}
+    }
+
+    /**
+     * Checks if the block address entered is in the list of facility PVs, and
+     * sets local to false if it is.
+     * 
+     * @param pvAddress the PV address being entered for the block
+     */
+    private void checkFacilityPv(String pvAddress) {
+        if (facilityPvList.contains(pvAddress)) {
+            setLocal(false);
+        }
+    }
+
+    /**
+     * @return a list of the facility PVs for easy searching.
+     */
+    private List<String> getFacilityPVs() {
+        String facilityPVsString = Configurations.getInstance().variables().facilityInterestPVs.getValue().toString();
+        facilityPVsString = facilityPVsString.substring(1, facilityPVsString.length() - 1);
+        String[] facilityPVsArray = facilityPVsString.split(", ");
+        return Arrays.asList(facilityPVsArray);
     }
 }
