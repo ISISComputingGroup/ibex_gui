@@ -1,7 +1,7 @@
 REM %~dp0 expands to directory where this file lives
 set BASEDIR=%~dp0
 
-set M2=C:\Program Files\Apache Software Foundation\apache-maven-3.2.2\bin\
+set M2=%MAVEN%bin
 set PYTHON=C:\Python27
 set PYTHON_HOME=C:\Python27
 set LOCINSTALLDIR=c:\Installers\CSStudio_ISIS\
