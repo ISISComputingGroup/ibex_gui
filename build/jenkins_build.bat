@@ -9,7 +9,7 @@ set GENIEPYTHONDIR=c:\Installers\genie_python
 set ZIPLOCATION=c:\Installers\client_zip
 
 REM Find latest Java 7 version
-for /F %%f in ('dir "C:\Program Files\Java\jdk1.7*" /b') do set JAVA_HOME=C:\Program Files\Java\%%f
+for /F %%f in ('dir "C:\Program Files\Java\jdk1.*" /b') do set JAVA_HOME=C:\Program Files\Java\%%f
 	
 set PATH=%M2%;%JAVA_HOME%;%PYTHON%;%PATH%
 
