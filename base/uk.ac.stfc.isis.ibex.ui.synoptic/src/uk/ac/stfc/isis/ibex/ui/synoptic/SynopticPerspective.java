@@ -26,9 +26,9 @@ import org.eclipse.wb.swt.ResourceManager;
 import uk.ac.stfc.isis.ibex.ui.perspectives.BasePerspective;
 import uk.ac.stfc.isis.ibex.ui.synoptic.views.OpiTargetView;
 
-public class InstrumentPerspective extends BasePerspective {
+public class SynopticPerspective extends BasePerspective {
 
-	public static final String ID = "uk.ac.stfc.isis.ibex.ui.synoptic.instrument.perspective"; //$NON-NLS-1$
+    public static final String ID = "uk.ac.stfc.isis.ibex.ui.synoptic.perspective"; //$NON-NLS-1$
 
 	@Override
 	public void createInitialLayout(IPageLayout layout) {

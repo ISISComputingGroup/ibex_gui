@@ -22,43 +22,44 @@ package uk.ac.stfc.isis.ibex.ui.synoptic.views;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.part.ViewPart;
-import org.eclipse.swt.SWT;
 
 import uk.ac.stfc.isis.ibex.ui.synoptic.Activator;
 import uk.ac.stfc.isis.ibex.ui.synoptic.SynopticPresenter;
-import uk.ac.stfc.isis.ibex.ui.synoptic.widgets.InstrumentSynoptic;
+import uk.ac.stfc.isis.ibex.ui.synoptic.widgets.SynopticPanel;
 
 /**
  * Provides the containing view for they synopitc.
  * 
  */
-public class InstrumentView extends ViewPart {
+public class SynopticView extends ViewPart {
 	
-	public static final String ID = "uk.ac.stfc.isis.ibex.ui.synoptic.views.InstrumentView"; //$NON-NLS-1$
+    public static final String ID = "uk.ac.stfc.isis.ibex.ui.synoptic.views.SynopticView"; //$NON-NLS-1$
+    public static final String COMPONENTS_CHANGE = "components";
 
-	private InstrumentSynoptic instrument;
+    private SynopticPanel instrument;
 	private final SynopticPresenter presenter = Activator.getDefault().presenter();
 	
 	private final Display display = Display.getCurrent();
 	
-	public InstrumentView() {
+	public SynopticView() {
 	}
 
 	@Override
 	public void createPartControl(Composite parent) {		
-		instrument = new InstrumentSynoptic(parent, SWT.NONE);
-		instrument.setComponents(presenter.components(), presenter.showBeam());
+        instrument = new SynopticPanel(parent, SWT.NONE);
+        instrument.setComponents(presenter.components(), presenter.showBeam());
 
-		presenter.addPropertyChangeListener("components", new PropertyChangeListener() {	
+        presenter.addPropertyChangeListener(COMPONENTS_CHANGE, new PropertyChangeListener() {
 		@Override
 		public void propertyChange(PropertyChangeEvent evt) {
 				display.asyncExec(new Runnable() {		
 					@Override
 					public void run() {
-						instrument.setComponents(presenter.components(), presenter.showBeam());
+                        instrument.setComponents(presenter.components(), presenter.showBeam());
 					}
 				});
 			}

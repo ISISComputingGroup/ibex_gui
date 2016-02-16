@@ -52,7 +52,7 @@ public final class XMLUtil {
 	 * @throws JAXBException
 	 * @throws SAXException
 	 */
-	public static SynopticDescription fromXml(String xml) throws JAXBException, SAXException {
+    public static synchronized SynopticDescription fromXml(String xml) throws JAXBException, SAXException {
 		if (context == null) {
 			initialise();
 		}

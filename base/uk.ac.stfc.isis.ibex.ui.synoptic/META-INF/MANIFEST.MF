@@ -29,6 +29,7 @@ Export-Package: uk.ac.stfc.isis.ibex.ui.synoptic,
 Import-Package: org.apache.logging.log4j,
  org.csstudio.opibuilder.runmode,
  org.csstudio.opibuilder.util,
+ uk.ac.stfc.isis.ibex.epics.switching,
  uk.ac.stfc.isis.ibex.epics.writing,
  uk.ac.stfc.isis.ibex.logger,
  uk.ac.stfc.isis.ibex.opis

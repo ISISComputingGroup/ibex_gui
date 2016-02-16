@@ -30,7 +30,7 @@ import org.eclipse.swt.widgets.Shell;
 import uk.ac.stfc.isis.ibex.synoptic.Synoptic;
 import uk.ac.stfc.isis.ibex.synoptic.SynopticModel;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.SynopticDescription;
-import uk.ac.stfc.isis.ibex.ui.synoptic.widgets.InstrumentSynoptic;
+import uk.ac.stfc.isis.ibex.ui.synoptic.widgets.SynopticPanel;
 
 /**
  * Provides a preview of the final synoptic.
@@ -44,7 +44,7 @@ public class SynopticPreview extends Dialog {
 			SynopticDescription instrumentDescription) {
 		super(parent);
 		model = Synoptic.getInstance().getBlankModel();
-		model.setInstrumentFromDescription(instrumentDescription);
+		model.setSynopticFromDescription(instrumentDescription);
 	}
 
 	@Override
@@ -56,7 +56,7 @@ public class SynopticPreview extends Dialog {
 	protected Control createDialogArea(Composite parent) {
 		Composite container = (Composite) super.createDialogArea(parent);
 		container.setLayout(new FillLayout());
-		InstrumentSynoptic instrument = new InstrumentSynoptic(container,
+		SynopticPanel instrument = new SynopticPanel(container,
 				SWT.NONE);
 		instrument.setComponents(model.instrument().components(), model.instrument().showBeam());
 

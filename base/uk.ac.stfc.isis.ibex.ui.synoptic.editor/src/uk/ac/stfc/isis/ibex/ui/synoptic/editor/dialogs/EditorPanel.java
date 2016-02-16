@@ -145,6 +145,6 @@ public class EditorPanel extends Composite {
     }
 	
 	public void setSynopticToEdit(SynopticDescription instrument) {
-        synopticViewModel.loadInstrumentDescription(instrument);
+        synopticViewModel.loadSynopticDescription(instrument);
 	}
 }

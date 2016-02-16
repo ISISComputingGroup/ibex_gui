@@ -9,8 +9,8 @@
             id="uk.ac.stfc.isis.ibex.ui.synoptic">
       </category>
       <view
-            class="uk.ac.stfc.isis.ibex.ui.synoptic.views.InstrumentView"
-            id="uk.ac.stfc.isis.ibex.ui.synoptic.views.InstrumentView"
+            class="uk.ac.stfc.isis.ibex.ui.synoptic.views.SynopticView"
+            id="uk.ac.stfc.isis.ibex.ui.synoptic.views.SynopticView"
             name="New synoptic">
       </view>
       <view
@@ -31,21 +31,21 @@
    <extension
          point="org.eclipse.ui.perspectives">
       <perspective
-            class="uk.ac.stfc.isis.ibex.ui.synoptic.InstrumentPerspective"
-            id="uk.ac.stfc.isis.ibex.ui.synoptic.instrument.perspective"
+            class="uk.ac.stfc.isis.ibex.ui.synoptic.SynopticPerspective"
+            id="uk.ac.stfc.isis.ibex.ui.synoptic.perspective"
             name="Synoptic">
       </perspective>
    </extension>
    <extension
          point="uk.ac.stfc.isis.ibex.ui.perspectives">
       <contribution
-            class="uk.ac.stfc.isis.ibex.ui.synoptic.InstrumentPerspective">
+            class="uk.ac.stfc.isis.ibex.ui.synoptic.SynopticPerspective">
       </contribution>
    </extension>
    <extension
          point="org.eclipse.ui.perspectiveExtensions">
       <perspectiveExtension
-            targetID="uk.ac.stfc.isis.ibex.ui.synoptic.instrument.perspective">
+            targetID="uk.ac.stfc.isis.ibex.ui.synoptic.perspective">
          <view
                closeable="false"
                id="uk.ac.stfc.isis.ibex.ui.synoptic.NavigationView"
@@ -60,7 +60,7 @@
          </view>
          <view
                closeable="false"
-               id="uk.ac.stfc.isis.ibex.ui.synoptic.views.InstrumentView"
+               id="uk.ac.stfc.isis.ibex.ui.synoptic.views.SynopticView"
                minimized="false"
                moveable="false"
                ratio="0.1f"
@@ -77,7 +77,7 @@
                moveable="false"
                ratio="0.6f"
                relationship="right"
-               relative="uk.ac.stfc.isis.ibex.ui.synoptic.views.InstrumentView"
+               relative="uk.ac.stfc.isis.ibex.ui.synoptic.views.SynopticView"
                showTitle="true"
                standalone="true"
                visible="false">

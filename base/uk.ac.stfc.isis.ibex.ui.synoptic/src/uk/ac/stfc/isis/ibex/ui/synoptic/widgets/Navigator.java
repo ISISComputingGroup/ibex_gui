@@ -89,7 +89,7 @@ public class Navigator extends Composite {
 		
 		setModel(presenter.navigator());
 		
-		InstrumentBreadCrumb instrumentTrail = new InstrumentBreadCrumb(this, SWT.PUSH);
+		SynoptictBreadCrumb instrumentTrail = new SynoptictBreadCrumb(this, SWT.PUSH);
 		instrumentTrail.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1));
 		instrumentTrail.setBackground(BACKGROUND);
 	}

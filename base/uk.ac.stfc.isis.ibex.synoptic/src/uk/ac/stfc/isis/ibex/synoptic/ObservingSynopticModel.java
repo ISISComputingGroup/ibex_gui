@@ -22,8 +22,6 @@ import javax.xml.bind.JAXBException;
 
 import org.xml.sax.SAXException;
 
-import uk.ac.stfc.isis.ibex.configserver.Configurations;
-import uk.ac.stfc.isis.ibex.configserver.configuration.Configuration;
 import uk.ac.stfc.isis.ibex.epics.observing.BaseObserver;
 import uk.ac.stfc.isis.ibex.epics.observing.Observer;
 import uk.ac.stfc.isis.ibex.epics.switching.SwitchableObservable;
@@ -39,61 +37,27 @@ import uk.ac.stfc.isis.ibex.synoptic.xml.XMLUtil;
  */
 public class ObservingSynopticModel extends ModelObject {
 
-	private SynopticInfo synopticInfo;
+    SynopticInfo synopticInfo;
 
     private final Observer<SynopticDescription> descriptionObserver = new BaseObserver<SynopticDescription>() {
-		@Override
-		public void onValue(SynopticDescription value) {
-			model.setInstrumentFromDescription(value);
-		}
+        @Override
+        public void onValue(SynopticDescription value) {
+            model.setSynopticFromDescription(value);
+        }
 
-		@Override
-		public void onError(Exception e) {
-		}
+        @Override
+        public void onError(Exception e) {
+            e.printStackTrace();
+            model.setSynopticFromDescription(SynopticDescription.getEmptySynopticDescription());
+        }
 
-		@Override
-		public void onConnectionStatus(boolean isConnected) {
-		}
-	};
-
-    private final Observer<Configuration> configSynopticObserver = new BaseObserver<Configuration>() {
-
-		@Override
-		public void onValue(Configuration value) {
-			String synopticName = value.synoptic();
-
-			if (synopticName.isEmpty()) {
-				// Use the "blank" synoptic
-				synopticName = Variables.NONE_SYNOPTIC_NAME;
-			}
-
-			SynopticInfo newSynoptic = SynopticInfo.search(
-					variables.available.getValue(), synopticName);
-			if (newSynoptic == null) {
-				// If cannot find synoptic use the default even if it is wrong
-				// for the configuration
-				newSynoptic = SynopticInfo.search(
-						variables.available.getValue(),
-						variables.defaultSynoptic.getValue().name());
-
-				// If still null do nothing
-				if (newSynoptic == null) {
-					return;
-				}
-
-			}
-
-			switchSynoptic(newSynoptic);
-		}
-
-		@Override
-		public void onError(Exception e) {
-		}
-
-		@Override
-		public void onConnectionStatus(boolean isConnected) {
-		}
-	};
+        @Override
+        public void onConnectionStatus(boolean isConnected) {
+            if (!isConnected) {
+                model.setSynopticFromDescription(SynopticDescription.getEmptySynopticDescription());
+            }
+        }
+    };
 
     private final Observer<String> synopticSchemaObserver = new BaseObserver<String>() {
 
@@ -126,23 +90,23 @@ public class ObservingSynopticModel extends ModelObject {
 		this.model = model;
 		this.variables = variables;
 
-        this.synopticObservable = new SwitchableObservable<SynopticDescription>(
-				variables.getSynopticDescription(""));
-		this.synopticObservable.addObserver(descriptionObserver);
-
 		this.variables.synopticSchema.addObserver(synopticSchemaObserver);
 
-		Configurations.getInstance().server().currentConfig()
-				.addObserver(configSynopticObserver);
+        synopticObservable = new SwitchableObservable<SynopticDescription>(
+                variables.getSynopticDescription(Variables.NONE_SYNOPTIC_PV));
+        synopticObservable.addObserver(descriptionObserver);
 	}
 
 	public void switchSynoptic(SynopticInfo newSynoptic) {
-		firePropertyChange("synopticInfo", this.synopticInfo, this.synopticInfo = newSynoptic);
-        synopticObservable.setSource(variables
-				.getSynopticDescription(newSynoptic.pv()));
+        synopticInfo = newSynoptic;
+        synopticObservable.setSource(variables.getSynopticDescription(newSynoptic.pv()));
 	}
 
-	public SynopticInfo getSynopticInfo() {
-		return this.synopticInfo;
+    public SwitchableObservable<SynopticDescription> getSynopticObservable() {
+        return synopticObservable;
+    }
+
+    public SynopticInfo getSynopticInfo() {
+        return synopticInfo;
     }
 }

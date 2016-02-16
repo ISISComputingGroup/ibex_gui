@@ -41,13 +41,13 @@ import uk.ac.stfc.isis.ibex.ui.synoptic.component.ComponentView;
  * 
  */
 @SuppressWarnings("checkstyle:magicnumber")
-public class InstrumentSynoptic extends Composite {
+public class SynopticPanel extends Composite {
 
 	private BeamlineCompositeContainer instrumentComposite;
 	private LineDecoration beamline;
 	private ScrolledComposite scrolledComposite;
 	
-	public InstrumentSynoptic(Composite parent, int style) {
+    public SynopticPanel(Composite parent, int style) {
 		super(parent, style);
 		setLayout(new FillLayout(SWT.VERTICAL));
 
