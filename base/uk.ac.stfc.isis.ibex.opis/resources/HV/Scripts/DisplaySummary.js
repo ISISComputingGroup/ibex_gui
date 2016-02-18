@@ -1,18 +1,22 @@
 importPackage(Packages.org.csstudio.opibuilder.scriptUtil);
 
-var testval = "Testing";
+// PVs
+// pv[] = $(P)CAEN:CHANLIST
 
+// Get and clear the group container prior to display
 var group = display.getWidget('group');
 group.removeAllChildren();
+
+// Get the list of entries in the channel list
 try{
 	var chanlist = PVUtil.getString(pvs[0]);	
 }
 catch(err){
 	var chanlist = "";
 }
-testval = chanlist;
 chanlist = chanlist.split(' ');
 
+// Loop through the chan list and display channel information as appropriate
 for (i = 0; i < chanlist.length; i++){
 	var chan = chanlist[i];
 	if (chan.slice(-1)==','){
@@ -28,6 +32,3 @@ for (i = 0; i < chanlist.length; i++){
 		group.addChildToBottom(target)
 	}
 }
-
-var test = display.getWidget('test');
-test.setValue(testval);
