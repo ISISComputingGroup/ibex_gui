@@ -21,8 +21,7 @@ package uk.ac.stfc.isis.ibex.synoptic.tests.internal;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,7 +32,6 @@ import org.junit.Test;
 import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.Observer;
 import uk.ac.stfc.isis.ibex.epics.observing.Subscription;
-import uk.ac.stfc.isis.ibex.instrument.pv.PVType;
 import uk.ac.stfc.isis.ibex.synoptic.internal.ObservableComponent;
 import uk.ac.stfc.isis.ibex.synoptic.internal.Variables;
 import uk.ac.stfc.isis.ibex.synoptic.model.Component;
@@ -70,13 +68,11 @@ public class ObservableComponentTest {
 		String targetValue = "Target Value";
 		String compName = "Component Name";
 		String targetName = "Target Name";
-		PVType pvType = PVType.LOCAL_PV;
 		ComponentType compType = ComponentType.UNKNOWN;
 		RecordType recordType = new RecordType();
 		recordType.setIO(IO.READ);
 		
 		PV mockPV = mock(PV.class);
-		when(mockPV.getPvType()).thenReturn(pvType);
 		when(mockPV.recordType()).thenReturn(recordType);
 		when(mockPV.displayName()).thenReturn(pvDisplayName);
 		when(mockPV.address()).thenReturn(addressSuffix);
@@ -118,7 +114,7 @@ public class ObservableComponentTest {
 		when(mockObservable.getValue()).thenReturn(synopticDescription);
 		
 		Variables mockVariables = mock(Variables.class);
-		when(mockVariables.defaultReader(addressSuffix, pvType)).thenReturn(mockObservable);
+        when(mockVariables.defaultReaderRemote(addressSuffix)).thenReturn(mockObservable);
 		
 		obsComp = new ObservableComponent(mockCompDesc, mockVariables);
 	}

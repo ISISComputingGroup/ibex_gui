@@ -126,7 +126,7 @@ public class VariablesTest {
 	@Test
 	public final void get_default_reader_address_and_local() {
 		// Act
-		ForwardingObservable<String> actual = variables.defaultReader(synopticPV, PVType.LOCAL_PV);
+        ForwardingObservable<String> actual = variables.defaultReaderRemote(synopticPV);
 		
 		// Assert
 		assertNotNull(actual);
@@ -138,7 +138,7 @@ public class VariablesTest {
 	@Test
 	public final void get_default_reader_address_and_remote() {
 		// Act
-		ForwardingObservable<String> actual = variables.defaultReader(synopticPV, PVType.REMOTE_PV);
+        ForwardingObservable<String> actual = variables.defaultReaderRemote(synopticPV);
 		
 		// Assert
 		assertNotNull(actual);
@@ -198,7 +198,7 @@ public class VariablesTest {
 	@Test
 	public final void get_default_writable_address_and_local() {
 		// Act
-		Writable<String> actual = variables.defaultWritable(synopticPV, PVType.LOCAL_PV);
+        Writable<String> actual = variables.defaultWritableRemote(synopticPV);
 		
 		// Assert
 		assertNotNull(actual);
@@ -210,7 +210,7 @@ public class VariablesTest {
 	@Test
 	public final void get_default_writable_address_and_remote() {
 		// Act
-		Writable<String> actual = variables.defaultWritable(synopticPV, PVType.REMOTE_PV);
+        Writable<String> actual = variables.defaultWritableRemote(synopticPV);
 		
 		// Assert
 		assertNotNull(actual);

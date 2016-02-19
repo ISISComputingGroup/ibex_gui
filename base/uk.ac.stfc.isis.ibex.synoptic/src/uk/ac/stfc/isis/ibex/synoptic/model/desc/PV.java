@@ -24,9 +24,6 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import uk.ac.stfc.isis.ibex.instrument.Instrument;
-import uk.ac.stfc.isis.ibex.instrument.pv.PVType;
-
 @XmlRootElement(name = "pv")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class PV {
@@ -38,9 +35,6 @@ public class PV {
 	
 	@XmlElement(name = "recordtype")
 	private RecordType recordType;
-	
-	@XmlElement(name = "pvtype")
-	private PVType pvType;
 
     /**
      * Default constructor, required due to existence of copy constructor.
@@ -58,16 +52,7 @@ public class PV {
         this.displayName = other.displayName;
         this.address = other.address;
         this.recordType = other.recordType;
-        this.pvType = other.pvType;
     }
-		
-	public PVType getPvType() {
-		return pvType;
-	}
-
-	public void setPvType(PVType pvType) {
-		this.pvType = pvType;
-	}
 
 	public String displayName() {
 		return displayName;
@@ -78,19 +63,7 @@ public class PV {
 	}
 	
 	public String fullAddress() {
-		String addressToUse = address;
-		if (this.pvType != null) {
-			switch (this.pvType) {
-			case LOCAL_PV:
-				String pvprefix = Instrument.getInstance().currentInstrument().pvPrefix();
-				addressToUse = pvprefix + addressToUse;
-				break;
-			default:
-				//Leave the address as that entered - could be remote
-				break;
-			}
-		}
-		return addressToUse;
+        return address;
 	}
 	
 	public RecordType recordType() {
@@ -122,17 +95,16 @@ public class PV {
 		PV other = (PV) obj;
 		return displayName.equals(other.displayName()) 
 				&& address.equals(other.address)
-				&& recordType.equals(other.recordType)
-				&& pvType.equals(other.pvType);		
+                && recordType.equals(other.recordType);
 	}
 	
 	@Override
 	public int hashCode() {
-		return displayName.hashCode() ^ address.hashCode() ^ recordType.hashCode() ^ pvType.hashCode();
+        return displayName.hashCode() ^ address.hashCode() ^ recordType.hashCode();
 	}
 	
 	@Override
 	public String toString() {
-		return String.format("%s: %s @ %s %s", displayName, recordType.toString(), address, pvType);
+        return String.format("%s: %s @ %s %s", displayName, recordType.toString(), address);
 	}
 }

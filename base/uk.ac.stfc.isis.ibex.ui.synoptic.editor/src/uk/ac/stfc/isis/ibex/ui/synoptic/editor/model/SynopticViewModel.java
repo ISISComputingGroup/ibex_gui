@@ -39,8 +39,6 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.PlatformUI;
 
 import uk.ac.stfc.isis.ibex.configserver.editing.DefaultName;
-import uk.ac.stfc.isis.ibex.instrument.Instrument;
-import uk.ac.stfc.isis.ibex.instrument.pv.PVType;
 import uk.ac.stfc.isis.ibex.synoptic.Synoptic;
 import uk.ac.stfc.isis.ibex.synoptic.SynopticModel;
 import uk.ac.stfc.isis.ibex.synoptic.model.ComponentType;
@@ -203,7 +201,6 @@ public class SynopticViewModel {
 		RecordType rt = new RecordType();
 		rt.setIO(IO.READ);
 		pv.setRecordType(rt);
-		pv.setPvType(PVType.LOCAL_PV);
 
 		int index = 0;
 		
@@ -294,7 +291,7 @@ public class SynopticViewModel {
 		}
 	}
 
-	public void updateSelectedPV(String name, String address, IO mode, PVType type) {
+    public void updateSelectedPV(String name, String address, IO mode) {
 		if (selectedPV == null) {
 			return;
 		}
@@ -303,18 +300,8 @@ public class SynopticViewModel {
 		RecordType recordType = new RecordType();
 		recordType.setIO(mode);
 		selectedPV.setRecordType(recordType);
-		selectedPV.setPvType(type);
 
 		String addressToUse = address;
-		switch (type) {
-			case LOCAL_PV:
-				String pvprefix = Instrument.getInstance().currentInstrument().pvPrefix();
-				addressToUse = addressToUse.replace(pvprefix, "");
-				break;
-			default:
-				//Leave the address as that entered - could be remote or a block
-				break;
-		}
 		
 		selectedPV.setAddress(addressToUse);
 		

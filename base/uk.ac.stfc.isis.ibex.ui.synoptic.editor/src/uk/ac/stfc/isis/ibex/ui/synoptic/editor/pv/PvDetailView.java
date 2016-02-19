@@ -40,7 +40,6 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 
-import uk.ac.stfc.isis.ibex.instrument.pv.PVType;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.IO;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.PV;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.blockselector.BlockSelector;
@@ -68,12 +67,10 @@ public class PvDetailView extends Composite {
 	private Text txtName;
 	private Text txtAddress;
 	private ComboViewer cmboMode;
-	private ComboViewer cmboType;
 	
 	private Button btnPickPV;
 	
 	private static IO[] modeList = IO.values();
-	private static PVType[] typeList = PVType.values();
 	private Composite buttonsComposite;
 	private Button btnSelectBlock;
 
@@ -184,26 +181,6 @@ public class PvDetailView extends Composite {
             }
         });
 
-        Label lblType = new Label(fieldsComposite, SWT.NONE);
-        lblType.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-        lblType.setText("Type");
-
-        cmboType = new ComboViewer(fieldsComposite, SWT.READ_ONLY);
-        GridData gdCmboType = new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1);
-        cmboType.getCombo().setLayoutData(gdCmboType);
-        GridData gdBtnUp = new GridData(SWT.LEFT, SWT.BOTTOM, false, true, 1, 1);
-        gdBtnUp.widthHint = 80;
-
-        cmboType.setContentProvider(ArrayContentProvider.getInstance());
-        cmboType.setInput(typeList);
-        cmboType.getCombo().select(0);
-        cmboType.addSelectionChangedListener(new ISelectionChangedListener() {
-            @Override
-            public void selectionChanged(SelectionChangedEvent event) {
-                updateModel();
-            }
-        });
-
         lblError = new Label(fieldsComposite, SWT.NONE);
         lblError.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1));
 	}
@@ -219,16 +196,9 @@ public class PvDetailView extends Composite {
 			labelComposite.setVisible(false);
 			
 			txtName.setText(selectedPv.displayName());
-			PVType type = selectedPv.getPvType();
-			int typeIndex = Arrays.asList(typeList).indexOf(type);
-			cmboType.getCombo().select(typeIndex);
 			
 			//Use the full address to avoid confusion
 			txtAddress.setText(selectedPv.fullAddress());
-			
-			IO mode = selectedPv.recordType().io();
-			typeIndex = Arrays.asList(modeList).indexOf(mode);
-			cmboMode.getCombo().select(typeIndex);
 		} else {
 			fieldsComposite.setVisible(false);
 			buttonsComposite.setVisible(false);
@@ -237,7 +207,6 @@ public class PvDetailView extends Composite {
 			txtName.setText("");
 			txtAddress.setText("");
 			cmboMode.getCombo().select(0);
-			cmboType.getCombo().select(0);
 		}
 		
 		updateLock = false;
@@ -258,9 +227,7 @@ public class PvDetailView extends Composite {
 			IO mode = Arrays.asList(modeList).get(typeIndex);
 			String name = txtName.getText();
 			String address = txtAddress.getText();
-			typeIndex = cmboType.getCombo().getSelectionIndex();
-			PVType type = Arrays.asList(typeList).get(typeIndex);
-			instrument.updateSelectedPV(name, address, mode, type);
+            instrument.updateSelectedPV(name, address, mode);
 		}
 	}
 	

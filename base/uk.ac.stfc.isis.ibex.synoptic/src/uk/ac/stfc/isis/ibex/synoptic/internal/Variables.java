@@ -157,13 +157,9 @@ public class Variables extends InstrumentVariables {
         return closingObservableFactory.getSwitchableObservable(new DefaultChannel(), getPvPrefix() + address);
 	}
 
-    public ForwardingObservable<String> defaultReader(String address, PVType type) {
-        // If it is local append the PV prefix, otherwise don't
-        if (type == PVType.LOCAL_PV) {
-            return closingObservableFactory.getSwitchableObservable(new DefaultChannel(), getPvPrefix() + address);
-        } else {
-            return closingObservableFactory.getSwitchableObservable(new DefaultChannel(), address);
-        }
+    public ForwardingObservable<String> defaultReaderRemote(String address) {
+        // Synoptic variables are always remote
+        return closingObservableFactory.getSwitchableObservable(new DefaultChannel(), address);
     }
 
 	public ForwardingObservable<String> defaultReaderWithoutUnits(String address) {
@@ -185,13 +181,9 @@ public class Variables extends InstrumentVariables {
         return closingWritableFactory.getSwitchableWritable(new StringChannel(), getPvPrefix() + address);
 	}
 	
-	public Writable<String> defaultWritable(String address, PVType type) {
+    public Writable<String> defaultWritableRemote(String address) {
         // If it is local append the PV prefix, otherwise don't
-        if (type == PVType.LOCAL_PV) {
-            return closingWritableFactory.getSwitchableWritable(new StringChannel(), getPvPrefix() + address);
-        } else {
-            return closingWritableFactory.getSwitchableWritable(new StringChannel(), address);
-        }
+        return closingWritableFactory.getSwitchableWritable(new StringChannel(), address);
 	}
 	
     private String getPvPrefix() {
