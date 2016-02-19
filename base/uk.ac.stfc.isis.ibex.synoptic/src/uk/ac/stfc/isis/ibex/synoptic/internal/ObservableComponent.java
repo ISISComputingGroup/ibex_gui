@@ -33,6 +33,10 @@ import uk.ac.stfc.isis.ibex.synoptic.model.desc.ComponentDescription;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.PV;
 import uk.ac.stfc.isis.ibex.synoptic.model.targets.TargetBuilder;
 
+/**
+ * Holds all the information relating to a synoptic in the component, such as
+ * the PVs, the targets and the target properties.
+ */
 public class ObservableComponent extends BaseComponent {
 
 	private final Variables variables;

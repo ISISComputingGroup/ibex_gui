@@ -387,11 +387,6 @@ public class SynopticViewModel {
 		instrumentUpdateListeners.add(listener);
 	}
 
-	public void removeInstrumentUpdateListener(
-			IInstrumentUpdateListener listener) {
-		instrumentUpdateListeners.remove(listener);
-	}
-
 	public void broadcastInstrumentUpdate(UpdateTypes updateType) {
 		for (IInstrumentUpdateListener listener : instrumentUpdateListeners) {
 			listener.instrumentUpdated(updateType);
@@ -405,11 +400,6 @@ public class SynopticViewModel {
 		}
 
 		componentSelectionListeners.add(listener);
-	}
-	
-	public void removeComponentSelectionListener(
-			IComponentSelectionListener listener) {
-		componentSelectionListeners.remove(listener);
 	}
 
 	private void broadcastComponentSelectionChanged(
@@ -425,10 +415,6 @@ public class SynopticViewModel {
 		}
 
 		pvSelectionListeners.add(listener);
-	}
-
-	public void removePVSelectionListener(IPVSelectionListener listener) {
-		pvSelectionListeners.remove(listener);
 	}
 	
 	private void loadCurrentInstrument() {

@@ -24,6 +24,10 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
+/**
+ * Holds the information relating to a synoptic PV, which covers its name,
+ * address and whether it is read or write (recordType).
+ */
 @XmlRootElement(name = "pv")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class PV {
