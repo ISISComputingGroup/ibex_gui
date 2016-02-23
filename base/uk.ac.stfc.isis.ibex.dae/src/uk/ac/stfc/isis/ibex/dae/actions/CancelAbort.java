@@ -30,7 +30,8 @@ public final class CancelAbort extends DaeAction {
 
 	private static final Collection<DaeRunState> ALLOWED = new ArrayList<>();
 	static {
-		ALLOWED.add(DaeRunState.ABORTING);
+        ALLOWED.add(DaeRunState.ABORTING);
+        ALLOWED.add(DaeRunState.SETUP);
 	}
 	
 	public CancelAbort(Writable<String> target,
