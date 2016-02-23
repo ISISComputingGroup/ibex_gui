@@ -25,20 +25,22 @@ import java.util.Collection;
 
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.MouseAdapter;
+import org.eclipse.swt.events.MouseEvent;
+import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.swt.events.MouseAdapter;
-import org.eclipse.swt.events.MouseEvent;
-import org.eclipse.swt.graphics.Point;
-import org.eclipse.swt.layout.GridData;
 
 import uk.ac.stfc.isis.ibex.synoptic.SynopticInfo;
 
-@SuppressWarnings("checkstyle:magicnumber")
 public class MultipleSynopticsSelectionDialog extends Dialog {
+    
+    private static final int DIALOG_WIDTH = 450;
+    private static final int DIALOG_HEIGHT = 300;
 	
 	private final String title;
 	private final Collection<SynopticInfo> available;
@@ -67,7 +69,7 @@ public class MultipleSynopticsSelectionDialog extends Dialog {
 
 	@Override
 	protected Point getInitialSize() {
-		return new Point(450, 300);
+		return new Point(DIALOG_WIDTH, DIALOG_HEIGHT);
 	}
 	
 	@Override
