@@ -59,7 +59,8 @@ public class PyDevAdditionalInterpreterSettings extends InterpreterNewCustomEntr
 	}
 	
 	private String epicsBasePath() {
-		return "PATH=" + toOSPath(PreferenceSupplier.epicsBase())  + ";" + toOSPath(PreferenceSupplier.epicsUtilsPath()) + ";${PATH}";
+        return "PATH=" + toOSPath(PreferenceSupplier.epicsBase()) + ";" + toOSPath(PreferenceSupplier.epicsUtilsPath())
+                + ";" + System.getenv("PATH");
 	}
 	
 	private String pyEpicsPath() {
