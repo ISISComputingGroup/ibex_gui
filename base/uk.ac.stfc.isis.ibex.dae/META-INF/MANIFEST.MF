@@ -24,3 +24,6 @@ Export-Package: uk.ac.stfc.isis.ibex.dae,
  uk.ac.stfc.isis.ibex.dae.spectra,
  uk.ac.stfc.isis.ibex.dae.updatesettings
 Bundle-ClassPath: .
+Import-Package: org.apache.logging.log4j,
+ uk.ac.stfc.isis.ibex.log,
+ uk.ac.stfc.isis.ibex.logger

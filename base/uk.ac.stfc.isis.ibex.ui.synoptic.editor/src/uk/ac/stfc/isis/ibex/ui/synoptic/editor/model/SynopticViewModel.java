@@ -31,6 +31,7 @@ package uk.ac.stfc.isis.ibex.ui.synoptic.editor.model;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -50,6 +51,8 @@ import uk.ac.stfc.isis.ibex.synoptic.model.desc.RecordType;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.SynopticDescription;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.SynopticParentDescription;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.TargetDescription;
+import uk.ac.stfc.isis.ibex.synoptic.model.desc.TargetType;
+import uk.ac.stfc.isis.ibex.ui.synoptic.editor.dialogs.SuggestedTargetsDialog;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.target.DefaultTargetForComponent;
 
 /**
@@ -257,10 +260,20 @@ public class SynopticViewModel {
     public void addTargetToSelectedComponent(boolean isFinalEdit) {
 		ComponentDescription component = getFirstSelectedComponent();
         ComponentType compType = component.type();
-        TargetDescription target = DefaultTargetForComponent.defaultTarget(compType);
+
+        Collection<TargetDescription> potentialTargets = DefaultTargetForComponent.defaultTarget(compType);
+        TargetDescription target = new TargetDescription("NONE", TargetType.OPI);
+
+        if (potentialTargets.size() == 1) {
+            target = potentialTargets.iterator().next();
+        } else if (potentialTargets.size() > 1 && isFinalEdit && !component.target().getUserSelected()) {
+            Shell shell = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
+            SuggestedTargetsDialog dialog = new SuggestedTargetsDialog(shell, potentialTargets);
+            dialog.open();
+            target = dialog.selectedTarget();
+        }
 		
-        if (component != null && (component.target() == null || component.target().name() == "NONE"
-                || !component.target().getUserSelected())) {
+        if (component != null && (component.target() == null || !component.target().getUserSelected())) {
             target.setUserSelected(isFinalEdit);
             component.setTarget(target);
 			broadcastInstrumentUpdate(UpdateTypes.ADD_TARGET);

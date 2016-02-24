@@ -31,7 +31,7 @@ import org.eclipse.jface.preference.IPreferenceStore;
 public class PreferenceSupplier extends AbstractPreferenceInitializer {
 	
     public static final String EPICS_BASE_DIRECTORY = "epics_base_directory";
-    public static final String DEFAULT_EPICS_BASE_DIRECTORY = "c:\\Instrument\\Apps\\EPICS\\base\\3-14-12-2\\bin\\windows-x64";
+    public static final String DEFAULT_EPICS_BASE_DIRECTORY = "c:\\Instrument\\Apps\\EPICS\\base\\master\\bin\\windows-x64";
 
     public static final String PYTHON_INTERPRETER_PATH = "python_interpreter_path";
     public static final String DEFAULT_PYTHON_INTERPRETER_PATH = "C:\\Instrument\\Apps\\Python\\python.exe";

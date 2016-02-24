@@ -28,6 +28,7 @@ import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
+import org.eclipse.jface.window.Window;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -40,6 +41,7 @@ import org.eclipse.swt.widgets.Composite;
 import uk.ac.stfc.isis.ibex.opis.Opi;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.TargetDescription;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.TargetType;
+import uk.ac.stfc.isis.ibex.ui.synoptic.editor.dialogs.SuggestedTargetsDialog;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.SynopticViewModel;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.UpdateTypes;
 
@@ -50,7 +52,7 @@ public class TargetNameWidget extends Composite {
 	private SynopticViewModel instrument;
 	private TargetType type;
 	private Collection<String> availableOPIs;
-	
+
 	public TargetNameWidget(Composite parent, final SynopticViewModel instrument) {
 		super(parent, SWT.NONE);
 		
@@ -59,28 +61,50 @@ public class TargetNameWidget extends Composite {
 		availableOPIs = Opi.getDefault().descriptionsProvider().getOpiList();
 		
 		createControls(this);
-		
-        Button btnSetDefault = new Button(this, SWT.NONE);
-        btnSetDefault.addSelectionListener(new SelectionAdapter() {
-            @Override
-            public void widgetSelected(SelectionEvent e) {
-                updateModel(
-                        DefaultTargetForComponent.defaultTarget(instrument.getFirstSelectedComponent().type()).name());
-            }
-        });
-        btnSetDefault.setText("Default");
-        
+
         IStructuredSelection selection = (IStructuredSelection) cmboOpiName.getSelection();
         updateModel((String) selection.getFirstElement());
-	}
-	
-	private void createControls(Composite parent) {
+    }
+
+    private void createControls(Composite parent) {
         GridLayout gridLayout = new GridLayout(2, false);
         gridLayout.marginWidth = 0;
         setLayout(gridLayout);
+		
+        Button btnSetDefault = new Button(this, SWT.NONE);
+        btnSetDefault.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false, 1, 1));
+        btnSetDefault.addSelectionListener(new SelectionAdapter() {
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                Collection<TargetDescription> potentialTargets = DefaultTargetForComponent
+                        .defaultTarget(instrument.getFirstSelectedComponent().type());
+
+                if (potentialTargets.size() == 1) {
+                    updateModel(potentialTargets.iterator().next().name());
+                } else if (potentialTargets.size() > 1) {
+                    SuggestedTargetsDialog dialog = new SuggestedTargetsDialog(getShell(), potentialTargets);
+                    if (dialog.open() == Window.OK) {
+                        updateModel(dialog.selectedTargetName());
+                    }
+                }
+                
+            }
+        });
+        btnSetDefault.setText("Default Target");
+
+        Button btnClearSelection = new Button(this, SWT.NONE);
+        btnClearSelection.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+        btnClearSelection.addSelectionListener(new SelectionAdapter() {
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                updateModel("NONE");
+            }
+        });
+        btnClearSelection.setText("Clear Target");
+
 		cmboOpiName = new ComboViewer(parent, SWT.READ_ONLY);
         Combo combo = cmboOpiName.getCombo();
-        combo.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+        combo.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
 		cmboOpiName.setContentProvider(new ArrayContentProvider());
 		cmboOpiName.setInput(availableOPIs);
 		cmboOpiName.getCombo().select(-1);
