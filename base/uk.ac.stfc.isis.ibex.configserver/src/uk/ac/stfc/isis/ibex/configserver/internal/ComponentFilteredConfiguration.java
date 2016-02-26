@@ -45,7 +45,7 @@ public class ComponentFilteredConfiguration extends Configuration {
 		return Lists.newArrayList(Iterables.filter(super.getIocs(), new Predicate<Ioc>() {
 			@Override
 			public boolean apply(Ioc ioc) {
-				return !ioc.hasSubConfig();
+				return !ioc.hasComponent();
 			}
 		}));
 	}
@@ -55,7 +55,7 @@ public class ComponentFilteredConfiguration extends Configuration {
 		return Lists.newArrayList(Iterables.filter(super.getBlocks(), new Predicate<Block>() {
 			@Override
 			public boolean apply(Block block) {
-				return !block.hasSubConfig();
+				return !block.hasComponent();
 			}
 		}));
 	}
@@ -65,7 +65,7 @@ public class ComponentFilteredConfiguration extends Configuration {
 		return Lists.newArrayList(Iterables.filter(super.getGroups(), new Predicate<Group>() {
 			@Override
 			public boolean apply(Group group) {
-				return !group.hasSubConfig();
+				return !group.hasComponent();
 			}
 		}));
 	}
