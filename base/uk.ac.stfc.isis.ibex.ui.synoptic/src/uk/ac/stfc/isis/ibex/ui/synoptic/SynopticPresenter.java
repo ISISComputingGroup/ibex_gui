@@ -159,6 +159,7 @@ public class SynopticPresenter extends ModelObject {
 			if (target instanceof OpiTarget) {
 				// Opi targets don't update the navigator.
                 displayOpi(target);
+                return;
 			}
 
 			if (target instanceof PerspectiveTarget) {
