@@ -36,7 +36,6 @@ import uk.ac.stfc.isis.ibex.epics.switching.WritableFactory;
 import uk.ac.stfc.isis.ibex.epics.writing.SameTypeWritable;
 import uk.ac.stfc.isis.ibex.epics.writing.Writable;
 import uk.ac.stfc.isis.ibex.instrument.channels.ChannelType;
-import uk.ac.stfc.isis.ibex.instrument.pv.PVType;
 import uk.ac.stfc.isis.ibex.synoptic.SynopticInfo;
 import uk.ac.stfc.isis.ibex.synoptic.internal.Variables;
 
@@ -114,7 +113,7 @@ public class VariablesTest {
 	@Test
 	public final void get_default_reader_address() {
 		// Act
-		ForwardingObservable<String> actual = variables.defaultReader(synopticPV);
+        ForwardingObservable<String> actual = variables.defaultReaderRemote(synopticPV);
 		
 		// Assert
 		assertNotNull(actual);
@@ -157,36 +156,12 @@ public class VariablesTest {
 	}
 
 	/**
-	 * Test method for {@link uk.ac.stfc.isis.ibex.synoptic.internal.Variables#defaultReaderWithoutUnits(java.lang.String, uk.ac.stfc.isis.ibex.instrument.pv.PVType)}.
-	 */
-	@Test
-	public final void get_default_reader_without_units_address_and_local() {
-		// Act
-		ForwardingObservable<String> actual = variables.defaultReaderWithoutUnits(synopticPV, PVType.LOCAL_PV);
-		
-		// Assert
-		assertNotNull(actual);
-	}
-	
-	/**
-	 * Test method for {@link uk.ac.stfc.isis.ibex.synoptic.internal.Variables#defaultReaderWithoutUnits(java.lang.String, uk.ac.stfc.isis.ibex.instrument.pv.PVType)}.
-	 */
-	@Test
-	public final void get_default_reader_without_units_address_and_remote() {
-		// Act
-		ForwardingObservable<String> actual = variables.defaultReaderWithoutUnits(synopticPV, PVType.REMOTE_PV);
-		
-		// Assert
-		assertNotNull(actual);
-	}
-
-	/**
 	 * Test method for {@link uk.ac.stfc.isis.ibex.synoptic.internal.Variables#defaultWritable(java.lang.String)}.
 	 */
 	@Test
 	public final void get_default_writable_address() {
 		// Act
-		Writable<String> actual = variables.defaultWritable(synopticPV);
+        Writable<String> actual = variables.defaultWritableRemote(synopticPV);
 		
 		// Assert
 		assertNotNull(actual);
