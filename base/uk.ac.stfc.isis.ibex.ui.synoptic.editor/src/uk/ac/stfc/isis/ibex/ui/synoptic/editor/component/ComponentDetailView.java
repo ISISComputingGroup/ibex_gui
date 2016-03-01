@@ -56,12 +56,12 @@ import uk.ac.stfc.isis.ibex.ui.synoptic.editor.pv.PVList;
 public class ComponentDetailView extends Composite {
     
     private static final String SELECT_COMPONENT = "Select a component to view/edit details";
-    private static final String UNIQUE_COMPONENT_NAME = "Component name must be unique";
+    private static final String UNIQUE_COMPONENT_NAME = "Component names must be unique";
 
     private final Color colorBlack = new Color(getDisplay(), 0, 0, 0);
     private final Color colorRed = new Color(getDisplay(), 255, 0, 0);
     
-	private SynopticViewModel instrument;
+	private SynopticViewModel synopticViewModel;
 
 	private ComponentDescription component;
 
@@ -81,29 +81,29 @@ public class ComponentDetailView extends Composite {
     private static List<String> typeList = ComponentType.componentTypeAlphaList();
 
 	public ComponentDetailView(Composite parent,
-			final SynopticViewModel instrument) {
+			final SynopticViewModel synopticViewModel) {
 		super(parent, SWT.NONE);
 
-		this.instrument = instrument;
+		this.synopticViewModel = synopticViewModel;
 
-		instrument.addInstrumentUpdateListener(new IInstrumentUpdateListener() {
+		synopticViewModel.addInstrumentUpdateListener(new IInstrumentUpdateListener() {
 			@Override
 			public void instrumentUpdated(UpdateTypes updateType) {
                 if (updateType == UpdateTypes.EDIT_COMPONENT) {
-                    instrument.addTargetToSelectedComponent(false);
+                    synopticViewModel.addTargetToSelectedComponent(false);
                 } else if (updateType == UpdateTypes.EDIT_COMPONENT_FINAL) {
-                    instrument.addTargetToSelectedComponent(true);
+                    synopticViewModel.addTargetToSelectedComponent(true);
                 }
 
                 if (updateType != UpdateTypes.EDIT_COMPONENT && updateType != UpdateTypes.EDIT_TARGET
                         && updateType != UpdateTypes.ADD_TARGET) {
-					component = instrument.getFirstSelectedComponent();
+					component = synopticViewModel.getFirstSelectedComponent();
 					showComponent(component);
 				}
 			}
 		});
 
-		instrument
+		synopticViewModel
 				.addComponentSelectionListener(new IComponentSelectionListener() {
 					@Override
 					public void selectionChanged(
@@ -117,7 +117,22 @@ public class ComponentDetailView extends Composite {
 						showComponent(component);
 					}
 				});
-
+		
+        synopticViewModel.addInstrumentUpdateListener(new IInstrumentUpdateListener() {
+            @Override
+            public void instrumentUpdated(UpdateTypes updateType) {
+                if (updateType == UpdateTypes.EDIT_COMPONENT) {
+                    if (synopticViewModel.getHasDuplicatedName()) {
+                        labelComposite.setVisible(true);
+                        lblNoSelection.setText(UNIQUE_COMPONENT_NAME);
+                        lblNoSelection.setForeground(colorRed);
+                    } else {
+                        labelComposite.setVisible(false);
+                    }
+                }
+            }
+        });
+		
 		setLayout(new GridLayout(1, false));
 		setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 
@@ -149,16 +164,7 @@ public class ComponentDetailView extends Composite {
         txtName.addModifyListener(new ModifyListener() {
             @Override
             public void modifyText(ModifyEvent e) {
-                if (txtName.isFocusControl()) {
-                    if (!isNameUnique(txtName.getText())) {
-                        labelComposite.setVisible(true);
-                        lblNoSelection.setText(UNIQUE_COMPONENT_NAME);
-                        lblNoSelection.setForeground(colorRed);
-                    } else {
-                        updateModelName();
-                        labelComposite.setVisible(false);
-                    }
-                }
+                updateModelName();
             }
         });
 
@@ -226,7 +232,7 @@ public class ComponentDetailView extends Composite {
         lblPvs.setLayoutData(new GridData(SWT.RIGHT, SWT.TOP, false, false, 1, 1));
         lblPvs.setText("PVs");
 
-        pvList = new PVList(fieldsComposite, instrument);
+        pvList = new PVList(fieldsComposite, synopticViewModel);
         GridData pvGridData = new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1);
         pvGridData.heightHint = 150;
         pvList.setLayoutData(pvGridData);
@@ -258,19 +264,9 @@ public class ComponentDetailView extends Composite {
 	private void updateModelName() {
 		if (component != null) {
 			component.setName(txtName.getText());
-			instrument.broadcastInstrumentUpdate(UpdateTypes.EDIT_COMPONENT);
+			synopticViewModel.broadcastInstrumentUpdate(UpdateTypes.EDIT_COMPONENT);
 		}
 	}
-
-    private boolean isNameUnique(String name) {
-        List<ComponentDescription> comps = instrument.getInstrument().components();
-        for (ComponentDescription cd : comps) {
-            if (name.equals(cd.name())) {
-                return false;
-            }
-        }
-        return true;
-    }
 
     private void updateModelType(boolean isFinalUpdate) {
 		if (component != null) {
@@ -280,9 +276,9 @@ public class ComponentDetailView extends Composite {
 			component.setType(type);
 
             if (isFinalUpdate) {
-                instrument.broadcastInstrumentUpdate(UpdateTypes.EDIT_COMPONENT_FINAL);
+                synopticViewModel.broadcastInstrumentUpdate(UpdateTypes.EDIT_COMPONENT_FINAL);
             } else {
-                instrument.broadcastInstrumentUpdate(UpdateTypes.EDIT_COMPONENT);
+                synopticViewModel.broadcastInstrumentUpdate(UpdateTypes.EDIT_COMPONENT);
             }
 		}
 	}

@@ -32,7 +32,9 @@ package uk.ac.stfc.isis.ibex.ui.synoptic.editor.model;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -91,7 +93,7 @@ public class SynopticViewModel {
 		broadcastInstrumentUpdate(UpdateTypes.NEW_INSTRUMENT);
 	}
 
-	public SynopticDescription getInstrument() {
+	public SynopticDescription getSynoptic() {
 		return synoptic;
 	}
 
@@ -107,7 +109,7 @@ public class SynopticViewModel {
 		ComponentDescription component = new ComponentDescription();
 
         DefaultName namer = new DefaultName("New Component", " ", true);
-        component.setName(namer.getUnique(synoptic.getComponentNameList()));
+        component.setName(namer.getUnique(synoptic.getComponentNameListWithChildren()));
 		component.setType(ComponentType.UNKNOWN);
 
 		int position = 0;
@@ -493,4 +495,14 @@ public class SynopticViewModel {
 		}
 		return true;
 	}
+
+    public boolean getHasDuplicatedName() {
+        List<String> comps = getSynoptic().getComponentNameListWithChildren();
+        return listHasDuplicates(comps);
+    }
+
+    private boolean listHasDuplicates(List<String> list) {
+        Set<String> set = new HashSet<String>(list);
+        return (set.size() < list.size());
+    }
 }
