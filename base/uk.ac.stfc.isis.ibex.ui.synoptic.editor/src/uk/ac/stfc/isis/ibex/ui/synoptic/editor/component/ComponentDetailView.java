@@ -31,6 +31,7 @@ import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseListener;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -53,6 +54,13 @@ import uk.ac.stfc.isis.ibex.ui.synoptic.editor.pv.PVList;
  */
 @SuppressWarnings("checkstyle:magicnumber")
 public class ComponentDetailView extends Composite {
+    
+    private static final String SELECT_COMPONENT = "Select a component to view/edit details";
+    private static final String UNIQUE_COMPONENT_NAME = "Component name must be unique";
+
+    private final Color colorBlack = new Color(getDisplay(), 0, 0, 0);
+    private final Color colorRed = new Color(getDisplay(), 255, 0, 0);
+    
 	private SynopticViewModel instrument;
 
 	private ComponentDescription component;
@@ -63,6 +71,8 @@ public class ComponentDetailView extends Composite {
 	private Text txtName;
 	private ComboViewer cmboType;
 	private Label lblTypeIcon;
+
+    private Label lblNoSelection;
 
     private boolean selectionCausedByMouseClick = false;
 
@@ -121,8 +131,8 @@ public class ComponentDetailView extends Composite {
 				false, 1, 1));
 		labelComposite.setLayout(new GridLayout());
 
-        Label lblNoSelection = new Label(labelComposite, SWT.NONE);
-        lblNoSelection.setText("Select a component to view/edit details");
+        lblNoSelection = new Label(labelComposite, SWT.NONE);
+        lblNoSelection.setText(SELECT_COMPONENT);
 
 		fieldsComposite = new Composite(parent, SWT.NONE);
 		fieldsComposite.setLayout(new GridLayout(2, false));
@@ -139,7 +149,16 @@ public class ComponentDetailView extends Composite {
         txtName.addModifyListener(new ModifyListener() {
             @Override
             public void modifyText(ModifyEvent e) {
-                updateModelName();
+                if (txtName.isFocusControl()) {
+                    if (!isNameUnique(txtName.getText())) {
+                        labelComposite.setVisible(true);
+                        lblNoSelection.setText(UNIQUE_COMPONENT_NAME);
+                        lblNoSelection.setForeground(colorRed);
+                    } else {
+                        updateModelName();
+                        labelComposite.setVisible(false);
+                    }
+                }
             }
         });
 
@@ -228,6 +247,9 @@ public class ComponentDetailView extends Composite {
 			fieldsComposite.setVisible(false);
 			labelComposite.setVisible(true);
 
+            lblNoSelection.setText(SELECT_COMPONENT);
+            lblNoSelection.setForeground(colorBlack);
+
 			txtName.setText("None");
 			cmboType.getCombo().select(0);
 		}
@@ -239,6 +261,16 @@ public class ComponentDetailView extends Composite {
 			instrument.broadcastInstrumentUpdate(UpdateTypes.EDIT_COMPONENT);
 		}
 	}
+
+    private boolean isNameUnique(String name) {
+        List<ComponentDescription> comps = instrument.getInstrument().components();
+        for (ComponentDescription cd : comps) {
+            if (name.equals(cd.name())) {
+                return false;
+            }
+        }
+        return true;
+    }
 
     private void updateModelType(boolean isFinalUpdate) {
 		if (component != null) {
