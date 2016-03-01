@@ -134,13 +134,20 @@ public class SynopticViewModel {
         }
 
     	List<ComponentDescription> componentCopies = new ArrayList<>();
+
+        List<String> allComponentNames = synoptic.getComponentNameListWithChildren();
         
         for (ComponentDescription selectedComponent : selectedComponents) {
 	        ComponentDescription componentCopy = new ComponentDescription(selectedComponent);
-	
+
 	        DefaultName namer = new DefaultName(selectedComponent.name(), " ", true);
-	        componentCopy.setName(namer.getUnique(synoptic.getComponentNameList()));
+            String uniqueName = namer.getUnique(allComponentNames);
+            allComponentNames.add(uniqueName);
+
+            componentCopy.setName(uniqueName);
 	        
+            setUniqueChildNames(componentCopy, allComponentNames);
+
 	        componentCopies.add(componentCopy);
         }
         
@@ -151,6 +158,17 @@ public class SynopticViewModel {
         broadcastInstrumentUpdate(UpdateTypes.COPY_COMPONENT);
         // Set selected component again here, so it is highlighted.
         setSelectedComponent(componentCopies);
+    }
+
+    private void setUniqueChildNames(ComponentDescription component, List<String> allComponentNames) {
+        for (ComponentDescription cd : component.components()) {
+            DefaultName namer = new DefaultName(cd.name(), " ", true);
+            String uniqueName = namer.getUnique(allComponentNames);
+            allComponentNames.add(uniqueName);
+            
+            cd.setName(uniqueName);
+            setUniqueChildNames(cd, allComponentNames);
+        }
     }
 
     private void addComponentsInCorrectLocation(List<ComponentDescription> componentCopies) {
