@@ -11,3 +11,4 @@ mvn --settings="$TOPPATH/mvn_user_settings.xml" \
     clean verify
 
 echo "Client built in $TOPPATH/base/uk.ac.stfc.isis.ibex.client.product/target/products/ibex.product/"
+
