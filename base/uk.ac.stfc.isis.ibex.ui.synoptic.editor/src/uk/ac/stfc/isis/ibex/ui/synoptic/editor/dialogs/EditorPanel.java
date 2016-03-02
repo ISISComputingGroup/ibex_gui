@@ -20,6 +20,8 @@
 package uk.ac.stfc.isis.ibex.ui.synoptic.editor.dialogs;
 
 
+import java.util.Collection;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.layout.GridData;
@@ -54,7 +56,8 @@ public class EditorPanel extends Composite {
 	private Composite targetComposite;
 	private Composite propertyComposite;
 	
-    public EditorPanel(Composite parent, int style, SynopticViewModel synopticViewModel) {
+    public EditorPanel(Composite parent, int style, SynopticViewModel synopticViewModel,
+            Collection<String> availableOPIs) {
 		super(parent, style);
 
         this.synopticViewModel = synopticViewModel;
@@ -128,7 +131,7 @@ public class EditorPanel extends Composite {
         lblTargetTitle.setFont(titleFont);
         lblTargetTitle.setText("Component Target Details");
 
-        new TargetDetailView(targetComposite, this.synopticViewModel);
+        new TargetDetailView(targetComposite, this.synopticViewModel, availableOPIs);
 			
         propertyComposite = new Composite(targetBarComposite, SWT.BORDER);
         propertyComposite.setLayout(new GridLayout(1, false));

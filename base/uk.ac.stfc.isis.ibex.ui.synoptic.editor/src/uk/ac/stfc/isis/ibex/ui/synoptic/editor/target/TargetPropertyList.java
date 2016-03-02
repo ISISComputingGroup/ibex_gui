@@ -45,12 +45,12 @@ public class TargetPropertyList extends Composite {
 	private Button btnDelete;
 	private Button btnAdd;
 	
-	private SynopticViewModel instrument;
+	private SynopticViewModel synopticViewModel;
 	
     public TargetPropertyList(Composite parent, final SynopticViewModel instrument) {
 		super(parent, SWT.NONE);
 		
-		this.instrument = instrument;
+		this.synopticViewModel = instrument;
 		
 		instrument.addComponentSelectionListener(new IComponentSelectionListener() {			
 			@Override
@@ -111,7 +111,7 @@ public class TargetPropertyList extends Composite {
 	    list.addSelectionChangedListener(new ISelectionChangedListener() {
 			@Override
 			public void selectionChanged(SelectionChangedEvent event) {
-				instrument.setSelectedProperty(getSelectedProperty());
+				synopticViewModel.setSelectedProperty(getSelectedProperty());
 				setButtonStates();
 			}
 		});
@@ -126,7 +126,7 @@ public class TargetPropertyList extends Composite {
         btnAdd.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
-                instrument.addNewProperty();
+                synopticViewModel.addNewProperty();
             }
         });
 
@@ -137,7 +137,7 @@ public class TargetPropertyList extends Composite {
         btnDelete.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
-                instrument.removeSelectedProperty();
+                synopticViewModel.removeSelectedProperty();
             }
         });
 	}

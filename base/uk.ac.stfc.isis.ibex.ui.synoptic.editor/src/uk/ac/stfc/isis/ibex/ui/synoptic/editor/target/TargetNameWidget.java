@@ -49,16 +49,16 @@ public class TargetNameWidget extends Composite {
 
 	private ComboViewer cmboOpiName;
 	private boolean updateLock;
-	private SynopticViewModel instrument;
+	private SynopticViewModel synopticViewModel;
 	private TargetType type;
 	private Collection<String> availableOPIs;
 
-	public TargetNameWidget(Composite parent, final SynopticViewModel instrument) {
+    public TargetNameWidget(Composite parent, final SynopticViewModel synopticViewModel, Collection<String> availableOPIs) {
 		super(parent, SWT.NONE);
 		
-		this.instrument = instrument;
+		this.synopticViewModel = synopticViewModel;
 		
-		availableOPIs = Opi.getDefault().descriptionsProvider().getOpiList();
+		this.availableOPIs = availableOPIs;
 		
 		createControls(this);
 
@@ -77,7 +77,7 @@ public class TargetNameWidget extends Composite {
             @Override
             public void widgetSelected(SelectionEvent e) {
                 Collection<TargetDescription> potentialTargets = DefaultTargetForComponent
-                        .defaultTarget(instrument.getFirstSelectedComponent().type());
+                        .defaultTarget(synopticViewModel.getFirstSelectedComponent().type());
 
                 if (potentialTargets.size() == 1) {
                     updateModel(potentialTargets.iterator().next().name());
@@ -122,16 +122,16 @@ public class TargetNameWidget extends Composite {
 	
 	
 	private void updateModel(String targetName) 	{
-		if (!updateLock && instrument.getFirstSelectedComponent() != null) {
-			TargetDescription target = instrument.getFirstSelectedComponent().target();
-			
-			if (target != null) {
-				target.setName(targetName);
-				target.setType(type);
+        if (!updateLock && synopticViewModel.getFirstSelectedComponent() != null) {
+            TargetDescription target = synopticViewModel.getFirstSelectedComponent().target();
+
+            if (target != null) {
+                target.setName(targetName);
+                target.setType(type);
                 target.setUserSelected(true);
-                instrument.broadcastInstrumentUpdate(UpdateTypes.EDIT_TARGET);
-			}
-		}
+                synopticViewModel.broadcastInstrumentUpdate(UpdateTypes.EDIT_TARGET);
+            }
+        }
 	}
 	
 	public void setTarget(TargetDescription target) {

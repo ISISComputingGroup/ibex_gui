@@ -38,7 +38,7 @@ public class TargetPropertyDetailView extends Composite {
 	private Composite propertyComposite;
 	private Text key;
 	private Text value;
-	private SynopticViewModel model;
+	private SynopticViewModel synopticViewModel;
 
 	private boolean updateLock;
 	
@@ -52,8 +52,8 @@ public class TargetPropertyDetailView extends Composite {
 	private final Listener propertyUpdateListener = new Listener() {
 		@Override
 		public void handleEvent(Event event) {
-			if (!updateLock && model != null) {
-				model.updateSelectedProperty(new Property(key.getText(), value.getText()));
+			if (!updateLock && synopticViewModel != null) {
+				synopticViewModel.updateSelectedProperty(new Property(key.getText(), value.getText()));
 			}			
 		}
 	};
@@ -92,7 +92,7 @@ public class TargetPropertyDetailView extends Composite {
 	}
 	
 	public void setModel(SynopticViewModel model) {
-		if (this.model != null) {
+		if (this.synopticViewModel != null) {
 			model.removePropertySelectionListener(propertyListener);
 		}
 		
@@ -103,7 +103,7 @@ public class TargetPropertyDetailView extends Composite {
 			setProperty(null);
 		}
 		
-		this.model = model;
+		this.synopticViewModel = model;
 	}
 	
 	private void setProperty(Property property) {	

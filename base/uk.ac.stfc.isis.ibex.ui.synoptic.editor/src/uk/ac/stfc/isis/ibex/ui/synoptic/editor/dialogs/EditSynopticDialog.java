@@ -19,6 +19,8 @@
 
 package uk.ac.stfc.isis.ibex.ui.synoptic.editor.dialogs;
 
+import java.util.Collection;
+
 import javax.xml.bind.JAXBException;
 
 import org.eclipse.jface.dialogs.Dialog;
@@ -62,23 +64,23 @@ public class EditSynopticDialog extends Dialog {
 	private Button saveAsBtn;
 	private Button saveBtn;
 	
-    private SynopticViewModel synopticViewModel = new SynopticViewModel();
+    private SynopticViewModel synopticViewModel;
+    private Collection<String> availableOPIs;
 
-	public EditSynopticDialog(
-			Shell parentShell, 
-			String title, 
-			SynopticDescription synoptic,
-			boolean isBlank) {
+    public EditSynopticDialog(Shell parentShell, String title, SynopticDescription synoptic, boolean isBlank,
+            Collection<String> availableOPIs, SynopticViewModel synopticViewModel) {
 		super(parentShell);
 		setShellStyle(SWT.DIALOG_TRIM | SWT.RESIZE);
 		this.title = title;
 		this.synoptic = synoptic;
 		this.isBlank = isBlank;
+        this.availableOPIs = availableOPIs;
+        this.synopticViewModel = synopticViewModel;
 	}
 	
 	@Override
 	protected Control createDialogArea(Composite parent) {
-        editor = new EditorPanel(parent, SWT.NONE, synopticViewModel);
+        editor = new EditorPanel(parent, SWT.NONE, synopticViewModel, availableOPIs);
 		editor.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		editor.setSynopticToEdit(synoptic);
 		return editor;

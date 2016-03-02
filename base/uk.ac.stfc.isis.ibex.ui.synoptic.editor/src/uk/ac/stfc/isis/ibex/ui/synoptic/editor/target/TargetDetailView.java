@@ -19,6 +19,7 @@
 
 package uk.ac.stfc.isis.ibex.ui.synoptic.editor.target;
 
+import java.util.Collection;
 import java.util.List;
 
 import org.eclipse.swt.SWT;
@@ -46,7 +47,8 @@ import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.UpdateTypes;
 @SuppressWarnings("checkstyle:magicnumber")
 public class TargetDetailView extends Composite {
 
-	private SynopticViewModel instrument;
+	private SynopticViewModel synopticViewModel;
+    private Collection<String> availableOPIs;
 	
 	private Composite labelComposite;
 	private Composite fieldsComposite;
@@ -55,19 +57,19 @@ public class TargetDetailView extends Composite {
 
 	TargetNameWidget nameSelect;
 
-	public TargetDetailView(Composite parent, final SynopticViewModel instrument) {
+    public TargetDetailView(Composite parent, final SynopticViewModel synopticViewModel, Collection<String> availableOPIs) {
 		super(parent, SWT.NONE);
 		
-		this.instrument = instrument;
+		this.synopticViewModel = synopticViewModel;
 		
-		instrument.addInstrumentUpdateListener(new IInstrumentUpdateListener() {
+		synopticViewModel.addInstrumentUpdateListener(new IInstrumentUpdateListener() {
 			@Override
 			public void instrumentUpdated(UpdateTypes updateType) {
-				showTarget(instrument.getFirstSelectedComponent());
+				showTarget(synopticViewModel.getFirstSelectedComponent());
 			}
 		});
 		
-		instrument.addComponentSelectionListener(new IComponentSelectionListener() {			
+		synopticViewModel.addComponentSelectionListener(new IComponentSelectionListener() {			
 			@Override
 			public void selectionChanged(List<ComponentDescription> oldSelection, List<ComponentDescription> newSelection) {
 				if (newSelection != null && newSelection.size() == 1) {
@@ -78,6 +80,8 @@ public class TargetDetailView extends Composite {
 			}
 		});
 		
+        this.availableOPIs = availableOPIs;
+
 		setLayout(new GridLayout(1, false));
 		setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		
@@ -101,14 +105,14 @@ public class TargetDetailView extends Composite {
         lblName.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
         lblName.setText("Name");
 
-        nameSelect = new TargetNameWidget(fieldsComposite, instrument);
+        nameSelect = new TargetNameWidget(fieldsComposite, synopticViewModel, availableOPIs);
         nameSelect.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 
         Label lblDescription = new Label(fieldsComposite, SWT.NONE);
         lblDescription.setLayoutData(new GridData(SWT.RIGHT, SWT.TOP, false, false, 1, 1));
         lblDescription.setText("Description");
 
-        TargetDescriptionWidget desc = new TargetDescriptionWidget(fieldsComposite, instrument);
+        TargetDescriptionWidget desc = new TargetDescriptionWidget(fieldsComposite, synopticViewModel);
         GridData gdDescription = new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1);
         gdDescription.heightHint = 100;
         desc.setLayoutData(gdDescription);
@@ -117,9 +121,9 @@ public class TargetDetailView extends Composite {
         lblProperties.setLayoutData(new GridData(SWT.RIGHT, SWT.TOP, false, false, 1, 1));
         lblProperties.setText("Properties");
 
-        TargetPropertyList properties = new TargetPropertyList(fieldsComposite, instrument);
+        TargetPropertyList properties = new TargetPropertyList(fieldsComposite, synopticViewModel);
         properties.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
-        properties.showPropertyList(instrument.getFirstSelectedComponent());
+        properties.showPropertyList(synopticViewModel.getFirstSelectedComponent());
 
 		addComposite = new Composite(parent, SWT.NONE);
 		addComposite.setLayoutData(new GridData(SWT.CENTER, SWT.FILL, true, false, 1, 1));
@@ -135,7 +139,7 @@ public class TargetDetailView extends Composite {
         btnAdd.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
-                instrument.addTargetToSelectedComponent(true);
+                synopticViewModel.addTargetToSelectedComponent(true);
             }
         });
 	}
@@ -155,10 +159,10 @@ public class TargetDetailView extends Composite {
                 // a target already exits, so should not be allowed to get set
                 fieldsComposite.setVisible(false);
                 labelComposite.setVisible(true);
-                addingAllowed(false, instrument.getFirstSelectedComponent().type().name());
+                addingAllowed(false, synopticViewModel.getFirstSelectedComponent().type().name());
                 addComposite.setVisible(false);
                 nameSelect.setTarget(null);
-                instrument.setSelectedProperty(null);
+                synopticViewModel.setSelectedProperty(null);
             } else if (target != null) {
 				fieldsComposite.setVisible(true);
 				labelComposite.setVisible(false);
