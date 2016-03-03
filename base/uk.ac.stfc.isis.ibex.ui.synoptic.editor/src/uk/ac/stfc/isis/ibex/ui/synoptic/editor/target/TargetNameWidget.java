@@ -68,8 +68,26 @@ public class TargetNameWidget extends Composite {
 
     private void createControls(Composite parent) {
         GridLayout gridLayout = new GridLayout(2, false);
+        gridLayout.marginHeight = 0;
         gridLayout.marginWidth = 0;
         setLayout(gridLayout);
+
+        cmboOpiName = new ComboViewer(parent, SWT.READ_ONLY);
+        Combo combo = cmboOpiName.getCombo();
+        combo.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
+        cmboOpiName.setContentProvider(new ArrayContentProvider());
+        cmboOpiName.setInput(availableOPIs);
+        cmboOpiName.getCombo().select(-1);
+
+        cmboOpiName.addSelectionChangedListener(new ISelectionChangedListener() {
+            @Override
+            public void selectionChanged(SelectionChangedEvent e) {
+                IStructuredSelection selection = (IStructuredSelection) e.getSelection();
+                String target = (String) selection.getFirstElement();
+
+                updateModel(target);
+            }
+        });
 		
         Button btnSetDefault = new Button(this, SWT.NONE);
         btnSetDefault.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false, 1, 1));
@@ -101,23 +119,6 @@ public class TargetNameWidget extends Composite {
             }
         });
         btnClearSelection.setText("Clear Target");
-
-		cmboOpiName = new ComboViewer(parent, SWT.READ_ONLY);
-        Combo combo = cmboOpiName.getCombo();
-        combo.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
-		cmboOpiName.setContentProvider(new ArrayContentProvider());
-		cmboOpiName.setInput(availableOPIs);
-		cmboOpiName.getCombo().select(-1);
-		
-		cmboOpiName.addSelectionChangedListener(new ISelectionChangedListener() {
-			@Override
-			public void selectionChanged(SelectionChangedEvent e) {
-				IStructuredSelection selection = (IStructuredSelection) e.getSelection();	
-				String target = (String) selection.getFirstElement();
-				
-				updateModel(target);
-			}
-		});
 	}
 	
 	

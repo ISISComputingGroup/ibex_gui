@@ -98,7 +98,7 @@ public class TargetDetailView extends Composite {
 		fieldsComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 		
         Label lblName = new Label(fieldsComposite, SWT.NONE);
-        lblName.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
+        lblName.setLayoutData(new GridData(SWT.RIGHT, SWT.TOP, false, false, 1, 1));
         lblName.setText("Name");
 
         nameSelect = new TargetNameWidget(fieldsComposite, synopticViewModel, availableOPIs);
@@ -127,6 +127,16 @@ public class TargetDetailView extends Composite {
 
         TargetPropertyValue value = new TargetPropertyValue(fieldsComposite, synopticViewModel);
         value.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+
+        Label lblPropertyDescription = new Label(fieldsComposite, SWT.NONE);
+        lblPropertyDescription.setLayoutData(new GridData(SWT.RIGHT, SWT.TOP, false, false, 1, 1));
+        lblPropertyDescription.setText("Description");
+
+        TargetPropertiesDescription propertyDescription = new TargetPropertiesDescription(fieldsComposite,
+                synopticViewModel);
+        GridData gdPropertyDescription = new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1);
+        gdPropertyDescription.heightHint = 55;
+        propertyDescription.setLayoutData(gdPropertyDescription);
 	}
 	
     private void showTarget(ComponentDescription component) {
