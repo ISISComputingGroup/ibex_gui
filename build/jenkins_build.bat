@@ -16,9 +16,8 @@ set PATH=%M2%;%JAVA_HOME%;%PYTHON%;%PATH%
 call build.bat
 if %errorlevel% neq 0 exit /b %errorlevel%
 
-REM Even if the build is successful this does not mean the executable works!
-REM python.exe check_jenkins_build.py
-REM if %errorlevel% neq 0 exit /b %errorlevel%
+REM Whether to deploy
+if not "%DEPLOY%" == "YES" exit
 
 REM Copy zip to installs area
 REM Delete older versions?
