@@ -21,17 +21,13 @@ package uk.ac.stfc.isis.ibex.ui.synoptic.editor.target;
 
 import java.util.List;
 
-import org.eclipse.jface.viewers.ISelectionChangedListener;
-import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.jface.viewers.ListViewer;
-import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Table;
+import org.eclipse.swt.widgets.TableColumn;
+import org.eclipse.swt.widgets.TableItem;
 
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.ComponentDescription;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.Property;
@@ -41,11 +37,9 @@ import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.SynopticViewModel;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.UpdateTypes;
 
 public class TargetPropertyList extends Composite {
-	private ListViewer list;
-	private Button btnDelete;
-	private Button btnAdd;
 	
 	private SynopticViewModel synopticViewModel;
+    private Table table;
 	
     public TargetPropertyList(Composite parent, final SynopticViewModel instrument) {
 		super(parent, SWT.NONE);
@@ -74,10 +68,10 @@ public class TargetPropertyList extends Composite {
 					
 					switch (updateType) {
 						case EDIT_PROPERTY:
-							selected = list.getList().getSelectionIndex();
+//							selected = list.getList().getSelectionIndex();
 							break;
 						case NEW_PROPERTY: 
-							selected = list.getList().getItemCount();
+//							selected = list.getList().getItemCount();
 							break;
 						case DELETE_PROPERTY:
 						default:
@@ -85,9 +79,8 @@ public class TargetPropertyList extends Composite {
 							break;
 					}
 					showPropertyList(instrument.getFirstSelectedComponent());
-					list.refresh();
-					list.getList().setSelection(selected);
-					setButtonStates();
+//					list.refresh();
+//					list.getList().setSelection(selected);
 				}
 			}
 		});
@@ -103,59 +96,45 @@ public class TargetPropertyList extends Composite {
 	}
 	
 	public void createControls(Composite parent) {
-		list = new ListViewer(parent, SWT.BORDER | SWT.V_SCROLL);
-		list.getList().setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-	    list.setContentProvider(new PropertyContentProvider());
-	    list.setLabelProvider(new PropertyLabelProvider());
-	    
-	    list.addSelectionChangedListener(new ISelectionChangedListener() {
-			@Override
-			public void selectionChanged(SelectionChangedEvent event) {
-				synopticViewModel.setSelectedProperty(getSelectedProperty());
-				setButtonStates();
-			}
-		});
 	    
 	    Composite controlComposite = new Composite(parent, SWT.NONE);
-	    controlComposite.setLayout(new GridLayout(1, false));
+        GridLayout gl_controlComposite = new GridLayout(2, false);
+        gl_controlComposite.marginHeight = 0;
+        gl_controlComposite.marginWidth = 0;
+        controlComposite.setLayout(gl_controlComposite);
 	    controlComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 
-        btnAdd = new Button(controlComposite, SWT.NONE);
-        btnAdd.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
-        btnAdd.setText("Add New Property");
-        btnAdd.addSelectionListener(new SelectionAdapter() {
-            @Override
-            public void widgetSelected(SelectionEvent e) {
-                synopticViewModel.addNewProperty();
-            }
-        });
+        table = new Table(controlComposite, SWT.BORDER | SWT.FULL_SELECTION);
+        GridData gd_table = new GridData(SWT.FILL, SWT.FILL, true, true, 3, 1);
+        gd_table.minimumHeight = 150;
+        table.setLayoutData(gd_table);
+        table.setHeaderVisible(true);
+        table.setLinesVisible(true);
 
-        btnDelete = new Button(controlComposite, SWT.NONE);
-        btnDelete.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
-        btnDelete.setText("Remove Property");
-        btnDelete.setEnabled(false);
-        btnDelete.addSelectionListener(new SelectionAdapter() {
-            @Override
-            public void widgetSelected(SelectionEvent e) {
-                synopticViewModel.removeSelectedProperty();
-            }
-        });
+        TableColumn keyColumn = new TableColumn(table, SWT.NULL);
+        keyColumn.setText("Key");
+        TableColumn valueColumn = new TableColumn(table, SWT.NULL);
+        valueColumn.setText("Value");
 	}
 	
 	public void showPropertyList(ComponentDescription component) {
-		if (component != null && component.target() != null) {
-			list.setInput(component.target().properties());
-		} else {
-			list.setInput(null);
-		}
+        table.removeAll();
+
+        if (synopticViewModel.getFirstSelectedComponent() != null) {
+            for (Property property : component.target().properties()) {
+                TableItem item = new TableItem(table, SWT.NULL);
+                item.setText(0, property.key());
+                item.setText(1, property.value());
+            }
+        }
+
+        table.getColumn(0).pack();
+        table.getColumn(1).pack();
 	}
 	
 	public Property getSelectedProperty() {
-		IStructuredSelection selection = (IStructuredSelection) list.getSelection();
-		return (Property) selection.getFirstElement();
-	}
-	
-	private void setButtonStates() {
-		btnDelete.setEnabled(getSelectedProperty() != null);
+//		IStructuredSelection selection = (IStructuredSelection) list.getSelection();
+//		return (Property) selection.getFirstElement();
+        return null;
 	}
 }
