@@ -31,7 +31,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 import uk.ac.stfc.isis.ibex.synoptic.model.ComponentType;
 
-/*
+/**
  * Describes a component of the synoptic.
  */
 @XmlRootElement(name = "component")

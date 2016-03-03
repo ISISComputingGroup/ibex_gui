@@ -20,10 +20,9 @@ package uk.ac.stfc.isis.ibex.synoptic.model.desc;
 
 import java.util.List;
 
-/*
+/**
  * Interface to allow for general access to component parents.
  */
-
 public interface SynopticParentDescription {
 	List<ComponentDescription> components();
 	void addComponent(ComponentDescription component);
