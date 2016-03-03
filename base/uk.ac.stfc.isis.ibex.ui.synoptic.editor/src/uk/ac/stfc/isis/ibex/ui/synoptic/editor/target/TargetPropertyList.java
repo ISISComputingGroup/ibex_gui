@@ -112,7 +112,7 @@ public class TargetPropertyList extends Composite {
         table.setLinesVisible(true);
 
         TableColumn keyColumn = new TableColumn(table, SWT.NULL);
-        keyColumn.setText("Key");
+        keyColumn.setText("Name");
         TableColumn valueColumn = new TableColumn(table, SWT.NULL);
         valueColumn.setText("Value");
 	}

@@ -49,7 +49,7 @@ public class TargetDescriptionWidget extends Composite {
 	private void createControls(Composite parent) {
 		setLayout(new FillLayout());
 
-		txtDescription = new Text(parent, SWT.BORDER | SWT.MULTI | SWT.READ_ONLY | SWT.WRAP | SWT.V_SCROLL);
+        txtDescription = new Text(parent, SWT.BORDER | SWT.READ_ONLY | SWT.WRAP | SWT.MULTI);
 	}
 
 	private String generateDescription(OpiDescription opi) {

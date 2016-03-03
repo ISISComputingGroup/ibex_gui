@@ -110,7 +110,7 @@ public class TargetDetailView extends Composite {
 
         TargetDescriptionWidget desc = new TargetDescriptionWidget(fieldsComposite, synopticViewModel);
         GridData gdDescription = new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1);
-        gdDescription.heightHint = 100;
+        gdDescription.heightHint = 55;
         desc.setLayoutData(gdDescription);
 
         Label lblProperties = new Label(fieldsComposite, SWT.NONE);

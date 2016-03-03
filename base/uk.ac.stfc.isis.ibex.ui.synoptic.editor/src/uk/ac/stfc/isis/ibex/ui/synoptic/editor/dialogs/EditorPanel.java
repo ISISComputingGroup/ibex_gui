@@ -37,7 +37,6 @@ import uk.ac.stfc.isis.ibex.ui.synoptic.editor.instrument.InstrumentTreeView;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.SynopticViewModel;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.pv.PvDetailView;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.target.TargetDetailView;
-import uk.ac.stfc.isis.ibex.ui.synoptic.editor.target.TargetPropertyDetailView;
 
 @SuppressWarnings("checkstyle:magicnumber")
 public class EditorPanel extends Composite {
@@ -54,7 +53,6 @@ public class EditorPanel extends Composite {
 	private Composite componentComposite;
 	private Composite pvComposite;	
 	private Composite targetComposite;
-	private Composite propertyComposite;
 	
     public EditorPanel(Composite parent, int style, SynopticViewModel synopticViewModel,
             Collection<String> availableOPIs) {
@@ -69,7 +67,6 @@ public class EditorPanel extends Composite {
 		GridData targetBarData = new GridData(SWT.FILL, SWT.FILL, false, true, 1, 1);
 		GridData componentGridData = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
 		GridData targetGridData = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
-		GridData propertyGridData = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
 		GridData pvGridData = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
 		treeGridData.widthHint = 300;
 		detailBarData.widthHint = 300;
@@ -132,19 +129,6 @@ public class EditorPanel extends Composite {
         lblTargetTitle.setText("Component Target Details");
 
         new TargetDetailView(targetComposite, this.synopticViewModel, availableOPIs);
-			
-        propertyComposite = new Composite(targetBarComposite, SWT.BORDER);
-        propertyComposite.setLayout(new GridLayout(1, false));
-        propertyComposite.setLayoutData(propertyGridData);
-
-        Label lblPropertyTitle = new Label(propertyComposite, SWT.NONE);
-        lblPropertyTitle.setFont(titleFont);
-        lblPropertyTitle.setText("Target Property Details");
-
-        TargetPropertyDetailView propertyDetail = new TargetPropertyDetailView(propertyComposite, SWT.NONE);
-        propertyDetail.setModel(this.synopticViewModel);
-
-        propertyDetail.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
     }
 	
 	public void setSynopticToEdit(SynopticDescription instrument) {
