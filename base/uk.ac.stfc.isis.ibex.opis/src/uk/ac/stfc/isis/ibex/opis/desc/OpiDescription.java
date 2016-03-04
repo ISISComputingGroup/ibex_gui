@@ -54,6 +54,16 @@ public class OpiDescription {
 		return macros;
 	}
 	
+    public List<String> getKeys() {
+	    List<String> keys = new ArrayList<>();
+	    
+	    for (MacroInfo macro : macros) {
+	        keys.add(macro.getName());
+	    }
+	    
+        return keys;
+	}
+
 	/**
 	 * The XML serialisation requires a default constructor.
 	 */

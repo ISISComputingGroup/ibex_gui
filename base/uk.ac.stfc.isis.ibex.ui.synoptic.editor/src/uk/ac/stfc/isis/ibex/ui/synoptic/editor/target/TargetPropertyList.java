@@ -62,7 +62,8 @@ public class TargetPropertyList extends Composite {
 		instrument.addInstrumentUpdateListener(new IInstrumentUpdateListener() {	
 			@Override
 			public void instrumentUpdated(UpdateTypes updateType) {
-                if (updateType == UpdateTypes.EDIT_PROPERTY) {
+                if (updateType == UpdateTypes.EDIT_PROPERTY || updateType == UpdateTypes.ADD_TARGET
+                        || updateType == UpdateTypes.EDIT_TARGET) {
 					
 					int selected;
 					
@@ -115,7 +116,7 @@ public class TargetPropertyList extends Composite {
             @Override
             public void widgetSelected(SelectionEvent e) {
                 synopticViewModel
-                        .setSelectedProperty(getSelectedProperty(synopticViewModel.getFirstSelectedComponent()));
+.setSelectedProperty(getSelectedProperty());
             }
 
             @Override
@@ -129,10 +130,10 @@ public class TargetPropertyList extends Composite {
         table.removeAll();
 
         if (synopticViewModel.getFirstSelectedComponent() != null) {
-            for (Property property : component.target().properties()) {
+            for (String property : synopticViewModel.getPropertyKeys(component.target().name())) {
                 TableItem item = new TableItem(table, SWT.NULL);
-                item.setText(0, property.key());
-                item.setText(1, property.value());
+                item.setText(0, property);
+                item.setText(1, getPropertyFromKey(property).value());
             }
         }
 
@@ -140,15 +141,22 @@ public class TargetPropertyList extends Composite {
         table.getColumn(1).pack();
 	}
 	
-    public Property getSelectedProperty(ComponentDescription component) {
+    public Property getSelectedProperty() {
         String selectedProperty = table.getItem(table.getSelectionIndex()).getText(0);
 
+        return getPropertyFromKey(selectedProperty);
+
+    }
+
+    public Property getPropertyFromKey(String key) {
+        ComponentDescription component = synopticViewModel.getFirstSelectedComponent();
+
         for (Property property : component.target().properties()) {
-            if (selectedProperty.equals(property.key())) {
+            if (key.equals(property.key())) {
                 return property;
             }
         }
 
-        return null;
-	}
+        return new Property("", "");
+    }
 }

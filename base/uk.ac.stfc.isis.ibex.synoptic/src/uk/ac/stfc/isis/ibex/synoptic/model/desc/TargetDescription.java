@@ -96,16 +96,30 @@ public class TargetDescription {
         this.userSelected = userSelected;
     }
 
+    public void clearProperties() {
+        this.properties = new ArrayList<>();
+    }
+
+    public void addProperties(List<String> propertyKeys) {
+        for (String key : propertyKeys) {
+            if (!this.containsProperty(key)) {
+                properties.add(new Property(key, ""));
+            }
+        }
+    }
+
+    public boolean containsProperty(String key) {
+        for (Property property : this.properties) {
+            if (key.equals(property.key())) {
+                return true;
+            }
+        }
+        
+        return false;
+    }
+
 	public List<Property> properties() {
 		return Collections.unmodifiableList(properties);
-	}
-	
-    public boolean addProperty(Property property) {
-		return properties.add(property);
-	}
-	
-	public boolean removeProperty(Object property) {
-		return properties.remove(property);
 	}
 
 	public void replaceProperty(Property current, Property newProperty) {

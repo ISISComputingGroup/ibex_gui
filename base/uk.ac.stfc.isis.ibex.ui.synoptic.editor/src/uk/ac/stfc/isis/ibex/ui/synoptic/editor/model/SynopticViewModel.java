@@ -42,6 +42,9 @@ import org.eclipse.ui.PlatformUI;
 import uk.ac.stfc.isis.ibex.configserver.editing.DefaultName;
 import uk.ac.stfc.isis.ibex.instrument.Instrument;
 import uk.ac.stfc.isis.ibex.instrument.pv.PVType;
+import uk.ac.stfc.isis.ibex.opis.Opi;
+import uk.ac.stfc.isis.ibex.opis.desc.MacroInfo;
+import uk.ac.stfc.isis.ibex.opis.desc.OpiDescription;
 import uk.ac.stfc.isis.ibex.synoptic.Synoptic;
 import uk.ac.stfc.isis.ibex.synoptic.SynopticModel;
 import uk.ac.stfc.isis.ibex.synoptic.model.ComponentType;
@@ -279,6 +282,7 @@ public class SynopticViewModel {
         if (component != null && (component.target() == null || !component.target().getUserSelected())) {
             target.setUserSelected(isFinalEdit);
             component.setTarget(target);
+            target.addProperties(getPropertyKeys(target.name()));
 			broadcastInstrumentUpdate(UpdateTypes.ADD_TARGET);
 		}
 
@@ -471,4 +475,24 @@ public class SynopticViewModel {
 		}
 		return true;
 	}
+
+    public OpiDescription getOpi(String targetName) {
+        String name = Opi.getDefault().descriptionsProvider().guessOpiName(targetName);
+        OpiDescription opi = Opi.getDefault().descriptionsProvider().getDescription(name);
+        return opi;
+	}
+    
+    public List<String> getPropertyKeys(String targetName) {
+        List<String> macros = new ArrayList<>();
+
+        for (MacroInfo macro : getOpi(targetName).getMacros()) {
+            macros.add(macro.getName());
+        }
+        
+        return macros;
+    }
+
+    public List<String> getSelectedPropertyKeys() {
+        return getPropertyKeys(getFirstSelectedComponent().target().name());
+    }
 }

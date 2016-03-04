@@ -34,6 +34,7 @@ import org.eclipse.core.runtime.Path;
 import org.xml.sax.SAXException;
 
 import uk.ac.stfc.isis.ibex.opis.desc.Descriptions;
+import uk.ac.stfc.isis.ibex.opis.desc.MacroInfo;
 import uk.ac.stfc.isis.ibex.opis.desc.OpiDescription;
 import uk.ac.stfc.isis.ibex.opis.desc.XmlUtil;
 
@@ -66,7 +67,7 @@ public class DescriptionsProvider extends Provider {
 	
 	public OpiDescription getDescription(String name) {
 		if (!descriptions.getOpis().containsKey(name)) {
-			return null;
+            return new OpiDescription("", "", new ArrayList<MacroInfo>());
 		}
 		
 		return descriptions.getOpis().get(name);

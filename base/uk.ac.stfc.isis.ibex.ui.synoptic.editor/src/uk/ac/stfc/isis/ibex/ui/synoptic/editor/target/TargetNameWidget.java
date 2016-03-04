@@ -20,6 +20,7 @@
 package uk.ac.stfc.isis.ibex.ui.synoptic.editor.target;
 
 import java.util.Collection;
+import java.util.List;
 
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ComboViewer;
@@ -130,6 +131,11 @@ public class TargetNameWidget extends Composite {
                 target.setName(targetName);
                 target.setType(type);
                 target.setUserSelected(true);
+                target.clearProperties();
+                
+                List<String> keys = synopticViewModel.getPropertyKeys(target.name());
+                target.addProperties(keys);
+
                 synopticViewModel.broadcastInstrumentUpdate(UpdateTypes.EDIT_TARGET);
             }
         }

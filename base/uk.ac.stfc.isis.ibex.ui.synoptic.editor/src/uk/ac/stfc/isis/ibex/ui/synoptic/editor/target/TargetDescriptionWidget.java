@@ -26,7 +26,6 @@ import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Text;
 
-import uk.ac.stfc.isis.ibex.opis.Opi;
 import uk.ac.stfc.isis.ibex.opis.desc.MacroInfo;
 import uk.ac.stfc.isis.ibex.opis.desc.OpiDescription;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.ComponentDescription;
@@ -38,20 +37,17 @@ public class TargetDescriptionWidget extends Composite {
 
 	private Text txtDescription;
 
-	public TargetDescriptionWidget(Composite parent, final SynopticViewModel instrument) {
+	public TargetDescriptionWidget(Composite parent, final SynopticViewModel synopticViewModel) {
 		super(parent, SWT.NONE);
 
-		instrument.addInstrumentUpdateListener(new IInstrumentUpdateListener() {
+		synopticViewModel.addInstrumentUpdateListener(new IInstrumentUpdateListener() {
 			@Override
 			public void instrumentUpdated(UpdateTypes updateType) {
-				ComponentDescription component = instrument.getFirstSelectedComponent();
+				ComponentDescription component = synopticViewModel.getFirstSelectedComponent();
 
 				if (component != null) {
-                    // For back-compatibility reasons the name actually might be
-                    // the path
 					if (component.target() != null && component.target().name() != null) {
-                        String name = Opi.getDefault().descriptionsProvider().guessOpiName(component.target().name());
-                        OpiDescription opi = Opi.getDefault().descriptionsProvider().getDescription(name);
+                        OpiDescription opi = synopticViewModel.getOpi(component.target().name());
 						if (opi != null) {
 							txtDescription.setText(generateDescription(opi));
 							return;
