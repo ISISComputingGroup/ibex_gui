@@ -25,6 +25,8 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Text;
 
+import uk.ac.stfc.isis.ibex.synoptic.model.desc.Property;
+import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.IPropertySelectionListener;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.SynopticViewModel;
 
 /**
@@ -32,9 +34,34 @@ import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.SynopticViewModel;
  */
 public class TargetPropertyValue extends Composite {
     private Text text;
+    private SynopticViewModel synopticViewModel;
 
-    public TargetPropertyValue(Composite parent, final SynopticViewModel synoptic) {
+    private final IPropertySelectionListener propertyListener = new IPropertySelectionListener() {
+        @Override
+        public void selectionChanged(Property oldProperty, Property newProperty) {
+            System.out.println("Setting!");
+            if (newProperty != null) {
+                System.out.println(newProperty.value());
+                text.setText(newProperty.value());
+            }
+        }
+    };
+
+//    private final Listener propertyUpdateListener = new Listener() {
+//        @Override
+//        public void handleEvent(Event event) {
+//            if (!updateLock && model != null) {
+//                model.updateSelectedProperty(new Property(key.getText(), value.getText()));
+//            }
+//        }
+//    };
+
+    public TargetPropertyValue(Composite parent, final SynopticViewModel synopticViewModel) {
         super(parent, SWT.NONE);
+
+        this.synopticViewModel = synopticViewModel;
+        this.synopticViewModel.addPropertySelectionListener(propertyListener);
+
         GridLayout gridLayout = new GridLayout(1, false);
         gridLayout.marginWidth = 0;
         gridLayout.marginHeight = 0;

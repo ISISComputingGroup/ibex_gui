@@ -22,6 +22,8 @@ package uk.ac.stfc.isis.ibex.ui.synoptic.editor.target;
 import java.util.List;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
@@ -115,6 +117,19 @@ public class TargetPropertyList extends Composite {
         keyColumn.setText("Name");
         TableColumn valueColumn = new TableColumn(table, SWT.NULL);
         valueColumn.setText("Value");
+
+        table.addSelectionListener(new SelectionListener() {
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                synopticViewModel
+                        .setSelectedProperty(getSelectedProperty(synopticViewModel.getFirstSelectedComponent()));
+            }
+
+            @Override
+            public void widgetDefaultSelected(SelectionEvent e) {
+                //
+            }
+        });
 	}
 	
 	public void showPropertyList(ComponentDescription component) {
@@ -132,9 +147,15 @@ public class TargetPropertyList extends Composite {
         table.getColumn(1).pack();
 	}
 	
-	public Property getSelectedProperty() {
-//		IStructuredSelection selection = (IStructuredSelection) list.getSelection();
-//		return (Property) selection.getFirstElement();
+    public Property getSelectedProperty(ComponentDescription component) {
+        String selectedProperty = table.getItem(table.getSelectionIndex()).getText(0);
+
+        for (Property property : component.target().properties()) {
+            if (selectedProperty.equals(property.key())) {
+                return property;
+            }
+        }
+
         return null;
 	}
 }
