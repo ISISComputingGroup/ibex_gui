@@ -20,6 +20,8 @@
 package uk.ac.stfc.isis.ibex.ui.synoptic.editor.target;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.ModifyEvent;
+import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
@@ -33,28 +35,19 @@ import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.SynopticViewModel;
  * 
  */
 public class TargetPropertyValue extends Composite {
-    private Text text;
+    private Text valueText;
     private SynopticViewModel synopticViewModel;
+
+    private boolean updateLock;
 
     private final IPropertySelectionListener propertyListener = new IPropertySelectionListener() {
         @Override
         public void selectionChanged(Property oldProperty, Property newProperty) {
-            System.out.println("Setting!");
-            if (newProperty != null) {
-                System.out.println(newProperty.value());
-                text.setText(newProperty.value());
+            if (newProperty != null && !updateLock) {
+                valueText.setText(newProperty.value());
             }
         }
     };
-
-//    private final Listener propertyUpdateListener = new Listener() {
-//        @Override
-//        public void handleEvent(Event event) {
-//            if (!updateLock && model != null) {
-//                model.updateSelectedProperty(new Property(key.getText(), value.getText()));
-//            }
-//        }
-//    };
 
     public TargetPropertyValue(Composite parent, final SynopticViewModel synopticViewModel) {
         super(parent, SWT.NONE);
@@ -67,7 +60,18 @@ public class TargetPropertyValue extends Composite {
         gridLayout.marginHeight = 0;
         setLayout(gridLayout);
 
-        text = new Text(this, SWT.BORDER);
-        text.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+        valueText = new Text(this, SWT.BORDER);
+        valueText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+        valueText.addModifyListener(new ModifyListener() {
+            @Override
+            public void modifyText(ModifyEvent e) {
+                if (valueText.isFocusControl()) {
+                    updateLock = true;
+                    String key = synopticViewModel.getSelectedProperty().key();
+                    synopticViewModel.updateSelectedProperty(new Property(key, valueText.getText()));
+                    updateLock = false;
+                }
+            }
+        });
     }
 }

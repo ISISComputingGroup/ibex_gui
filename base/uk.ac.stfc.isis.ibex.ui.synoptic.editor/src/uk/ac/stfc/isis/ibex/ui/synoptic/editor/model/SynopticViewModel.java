@@ -351,26 +351,6 @@ public class SynopticViewModel {
 		return selectedProperty;
 	}
 
-	public void addNewProperty() {
-		Property property = new Property("?", "?");
-		ComponentDescription component = getFirstSelectedComponent();
-		if (component != null && component.target() != null) {
-			component.target().addProperty(property);
-			broadcastInstrumentUpdate(UpdateTypes.NEW_PROPERTY);
-		}
-		setSelectedProperty(property);
-	}
-
-	public void removeSelectedProperty() {
-		ComponentDescription component = getFirstSelectedComponent();
-		if (component != null && component.target() != null) {
-			if (component.target().removeProperty(getSelectedProperty())) {
-				setSelectedProperty(null);
-				broadcastInstrumentUpdate(UpdateTypes.DELETE_PROPERTY);
-			}
-		}
-	}
-
 	public void addPropertySelectionListener(IPropertySelectionListener listener) {
 		if (listener == null) {
 			return;

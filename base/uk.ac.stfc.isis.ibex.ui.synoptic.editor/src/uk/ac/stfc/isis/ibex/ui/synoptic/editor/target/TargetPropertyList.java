@@ -62,27 +62,20 @@ public class TargetPropertyList extends Composite {
 		instrument.addInstrumentUpdateListener(new IInstrumentUpdateListener() {	
 			@Override
 			public void instrumentUpdated(UpdateTypes updateType) {
-				if (updateType == UpdateTypes.EDIT_PROPERTY 
-					|| updateType == UpdateTypes.NEW_PROPERTY 
-					|| updateType == UpdateTypes.DELETE_PROPERTY) {
+                if (updateType == UpdateTypes.EDIT_PROPERTY) {
 					
 					int selected;
 					
 					switch (updateType) {
 						case EDIT_PROPERTY:
-//							selected = list.getList().getSelectionIndex();
+                            selected = table.getSelectionIndex();
 							break;
-						case NEW_PROPERTY: 
-//							selected = list.getList().getItemCount();
-							break;
-						case DELETE_PROPERTY:
 						default:
 							selected = -1;
 							break;
 					}
-					showPropertyList(instrument.getFirstSelectedComponent());
-//					list.refresh();
-//					list.getList().setSelection(selected);
+                    showPropertyList(instrument.getFirstSelectedComponent());
+                    table.setSelection(selected);
 				}
 			}
 		});
@@ -127,7 +120,7 @@ public class TargetPropertyList extends Composite {
 
             @Override
             public void widgetDefaultSelected(SelectionEvent e) {
-                //
+                // Can add double click behaviour here...
             }
         });
 	}
