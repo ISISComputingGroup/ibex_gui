@@ -209,7 +209,7 @@ public class InstrumentTreeView extends Composite {
 	}
 
 	private void setTreeInput() {
-		treeViewer.setInput(synopticViewModel.getInstrument());
+		treeViewer.setInput(synopticViewModel.getSynoptic());
 		treeViewer.expandAll();
 	}
 

@@ -127,4 +127,30 @@ public class SynopticDescription implements SynopticParentDescription {
 
         return nameList;
     }
+
+    /**
+     * Provide a list of the component names, including children.
+     * 
+     * @return A list of the component names
+     */
+    public List<String> getComponentNameListWithChildren() {
+        ArrayList<String> nameList = new ArrayList<>();
+
+        for (ComponentDescription cd : components) {
+            nameList.add(cd.name());
+            getChildNames(cd, nameList);
+        }
+
+        return nameList;
+    }
+
+    private List<String> getChildNames(ComponentDescription component, List<String> nameList) {
+
+        for (ComponentDescription cd : component.components()) {
+            nameList.add(cd.name());
+            getChildNames(cd, nameList);
+        }
+
+        return nameList;
+    }
 }

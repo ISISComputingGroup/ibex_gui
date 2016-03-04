@@ -32,7 +32,9 @@ package uk.ac.stfc.isis.ibex.ui.synoptic.editor.model;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -91,7 +93,7 @@ public class SynopticViewModel {
 		broadcastInstrumentUpdate(UpdateTypes.NEW_INSTRUMENT);
 	}
 
-	public SynopticDescription getInstrument() {
+	public SynopticDescription getSynoptic() {
 		return synoptic;
 	}
 
@@ -105,7 +107,9 @@ public class SynopticViewModel {
 	 
 	public void addNewComponent() {
 		ComponentDescription component = new ComponentDescription();
-		component.setName("new component");
+
+        DefaultName namer = new DefaultName("New Component", " ", true);
+        component.setName(namer.getUnique(synoptic.getComponentNameListWithChildren()));
 		component.setType(ComponentType.UNKNOWN);
 
 		int position = 0;
@@ -130,13 +134,20 @@ public class SynopticViewModel {
         }
 
     	List<ComponentDescription> componentCopies = new ArrayList<>();
+
+        List<String> allComponentNames = synoptic.getComponentNameListWithChildren();
         
         for (ComponentDescription selectedComponent : selectedComponents) {
 	        ComponentDescription componentCopy = new ComponentDescription(selectedComponent);
-	
+
 	        DefaultName namer = new DefaultName(selectedComponent.name(), " ", true);
-	        componentCopy.setName(namer.getUnique(synoptic.getComponentNameList()));
+            String uniqueName = namer.getUnique(allComponentNames);
+            allComponentNames.add(uniqueName);
+
+            componentCopy.setName(uniqueName);
 	        
+            setUniqueChildNames(componentCopy, allComponentNames);
+
 	        componentCopies.add(componentCopy);
         }
         
@@ -147,6 +158,17 @@ public class SynopticViewModel {
         broadcastInstrumentUpdate(UpdateTypes.COPY_COMPONENT);
         // Set selected component again here, so it is highlighted.
         setSelectedComponent(componentCopies);
+    }
+
+    private void setUniqueChildNames(ComponentDescription component, List<String> allComponentNames) {
+        for (ComponentDescription cd : component.components()) {
+            DefaultName namer = new DefaultName(cd.name(), " ", true);
+            String uniqueName = namer.getUnique(allComponentNames);
+            allComponentNames.add(uniqueName);
+            
+            cd.setName(uniqueName);
+            setUniqueChildNames(cd, allComponentNames);
+        }
     }
 
     private void addComponentsInCorrectLocation(List<ComponentDescription> componentCopies) {
@@ -491,4 +513,14 @@ public class SynopticViewModel {
 		}
 		return true;
 	}
+
+    public boolean getHasDuplicatedName() {
+        List<String> comps = getSynoptic().getComponentNameListWithChildren();
+        return listHasDuplicates(comps);
+    }
+
+    private boolean listHasDuplicates(List<String> list) {
+        Set<String> set = new HashSet<String>(list);
+        return (set.size() < list.size());
+    }
 }
