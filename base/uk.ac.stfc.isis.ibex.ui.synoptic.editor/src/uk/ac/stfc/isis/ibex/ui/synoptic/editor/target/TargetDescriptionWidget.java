@@ -19,14 +19,11 @@
 
 package uk.ac.stfc.isis.ibex.ui.synoptic.editor.target;
 
-import java.util.Iterator;
-
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Text;
 
-import uk.ac.stfc.isis.ibex.opis.desc.MacroInfo;
 import uk.ac.stfc.isis.ibex.opis.desc.OpiDescription;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.ComponentDescription;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.IInstrumentUpdateListener;
@@ -49,7 +46,7 @@ public class TargetDescriptionWidget extends Composite {
 					if (component.target() != null && component.target().name() != null) {
                         OpiDescription opi = synopticViewModel.getOpi(component.target().name());
 						if (opi != null) {
-							txtDescription.setText(generateDescription(opi));
+                            txtDescription.setText(opi.getDescription());
 							return;
 						}
 					}
@@ -63,31 +60,6 @@ public class TargetDescriptionWidget extends Composite {
 
 	private void createControls(Composite parent) {
 		setLayout(new FillLayout());
-
         txtDescription = new Text(parent, SWT.BORDER | SWT.READ_ONLY | SWT.WRAP | SWT.MULTI);
 	}
-
-	private String generateDescription(OpiDescription opi) {
-		StringBuilder sb = new StringBuilder();
-		sb.append(opi.getDescription());
-
-		if (opi.getMacros().size() > 0) {
-
-			sb.append(System.lineSeparator());
-			sb.append(System.lineSeparator());
-			sb.append("Macros:");
-			sb.append(System.lineSeparator());
-			
-			for (Iterator<MacroInfo> iter = opi.getMacros().iterator(); iter.hasNext();) {
-				MacroInfo element = iter.next();
-				sb.append("* " + element.getName());
-				sb.append(" - ");
-				sb.append(element.getDescription());
-				sb.append(System.lineSeparator());
-			}
-		}
-
-		return sb.toString();
-	}
-
 }
