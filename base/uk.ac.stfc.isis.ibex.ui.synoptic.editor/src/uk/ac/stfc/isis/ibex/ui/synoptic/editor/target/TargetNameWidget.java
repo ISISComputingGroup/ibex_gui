@@ -136,6 +136,7 @@ public class TargetNameWidget extends Composite {
                 List<String> keys = synopticViewModel.getPropertyKeys(target.name());
                 target.addProperties(keys);
 
+                synopticViewModel.setSelectedProperty(null);
                 synopticViewModel.broadcastInstrumentUpdate(UpdateTypes.EDIT_TARGET);
             }
         }

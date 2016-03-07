@@ -37,8 +37,6 @@ public class TargetPropertiesDescription extends Composite {
 
     private Text txtDescription;
 
-
-
     public TargetPropertiesDescription(Composite parent, final SynopticViewModel synopticViewModel) {
 		super(parent, SWT.NONE);
 		

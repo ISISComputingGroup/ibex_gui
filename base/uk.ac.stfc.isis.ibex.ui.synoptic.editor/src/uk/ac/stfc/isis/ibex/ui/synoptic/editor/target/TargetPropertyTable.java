@@ -38,12 +38,12 @@ import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.IInstrumentUpdateListener;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.SynopticViewModel;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.UpdateTypes;
 
-public class TargetPropertyList extends Composite {
+public class TargetPropertyTable extends Composite {
 	
 	private SynopticViewModel synopticViewModel;
     private Table table;
 	
-    public TargetPropertyList(Composite parent, final SynopticViewModel instrument) {
+    public TargetPropertyTable(Composite parent, final SynopticViewModel instrument) {
 		super(parent, SWT.NONE);
 		
 		this.synopticViewModel = instrument;
@@ -115,8 +115,7 @@ public class TargetPropertyList extends Composite {
         table.addSelectionListener(new SelectionListener() {
             @Override
             public void widgetSelected(SelectionEvent e) {
-                synopticViewModel
-.setSelectedProperty(getSelectedProperty());
+                synopticViewModel.setSelectedProperty(getSelectedProperty());
             }
 
             @Override
@@ -130,11 +129,15 @@ public class TargetPropertyList extends Composite {
         table.removeAll();
 
         if (synopticViewModel.getFirstSelectedComponent() != null) {
-            for (String property : synopticViewModel.getPropertyKeys(component.target().name())) {
+            List<String> propertyKeys = synopticViewModel.getPropertyKeys(component.target().name());
+            
+            for (String property : propertyKeys) {
                 TableItem item = new TableItem(table, SWT.NULL);
                 item.setText(0, property);
                 item.setText(1, getPropertyFromKey(property).value());
             }
+
+            table.setEnabled(propertyKeys.size() > 0);
         }
 
         table.getColumn(0).pack();

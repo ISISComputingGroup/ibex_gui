@@ -28,8 +28,10 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Text;
 
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.Property;
+import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.IInstrumentUpdateListener;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.IPropertySelectionListener;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.SynopticViewModel;
+import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.UpdateTypes;
 
 /**
  * 
@@ -40,12 +42,20 @@ public class TargetPropertyValue extends Composite {
 
     private boolean updateLock;
 
+    private final IInstrumentUpdateListener instrumentListener = new IInstrumentUpdateListener() {
+        @Override
+        public void instrumentUpdated(UpdateTypes updateType) {
+            if (updateType == UpdateTypes.ADD_TARGET || updateType == UpdateTypes.EDIT_TARGET) {
+                Property selected = synopticViewModel.getSelectedProperty();
+                setProperty(selected);
+            }
+        }
+    };
+
     private final IPropertySelectionListener propertyListener = new IPropertySelectionListener() {
         @Override
         public void selectionChanged(Property oldProperty, Property newProperty) {
-            if (newProperty != null && !updateLock) {
-                valueText.setText(newProperty.value());
-            }
+            setProperty(newProperty);
         }
     };
 
@@ -54,6 +64,7 @@ public class TargetPropertyValue extends Composite {
 
         this.synopticViewModel = synopticViewModel;
         this.synopticViewModel.addPropertySelectionListener(propertyListener);
+        this.synopticViewModel.addInstrumentUpdateListener(instrumentListener);
 
         GridLayout gridLayout = new GridLayout(1, false);
         gridLayout.marginWidth = 0;
@@ -73,5 +84,15 @@ public class TargetPropertyValue extends Composite {
                 }
             }
         });
+    }
+
+    private void setProperty(Property newProperty) {
+        if (newProperty != null && !updateLock) {
+            valueText.setEnabled(true);
+            valueText.setText(newProperty.value());
+        } else if (newProperty == null) {
+            valueText.setEnabled(false);
+            valueText.setText("");
+        }
     }
 }
