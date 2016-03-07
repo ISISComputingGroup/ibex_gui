@@ -2,36 +2,10 @@
 <descriptions>
 	<opis>
 		<entry>
-			<key>Eurotherm</key>
-			<value>
-				<path>Eurotherm.opi</path>
-				<description>The OPI for the standard Eurotherm controller.</description>
-				<macros>
-				</macros>
-			</value>
-		</entry>
-		<entry>
-			<key>Pinhole Selector</key>
-			<value>
-				<path>pinhole_selector\pinhole_selector.opi</path>
-				<description>The OPI for the pinhole selector</description>
-				<macros>
-					<macro>
-						<name>PH</name>
-						<description>The name of the device (as defined in the positions look-up file (e.g. PINHOLE))</description>
-					</macro>
-					<macro>
-						<name>MM</name>
-						<description>The motor PV to point at (as defined in the motionsetpoints file (e.g. MTR0605))</description>
-					</macro>
-				</macros>
-			</value>
-		</entry>
-		<entry>
 			<key>Analyser</key>
 			<value>
 				<path>analyser.opi</path>
-				<description>The OPI for the analyser.</description>
+				<description>The OPI for the analyser. No properties required.</description>
 				<macros>
 				</macros>
 			</value>
@@ -45,6 +19,26 @@
 				</macros>
 			</value>
 		</entry>
+		<entry>
+			<key>Caen HV</key>
+			<value>
+				<path>HV/HVMonitorSummaryDisplay.opi</path>
+				<description>Summary Display for Caens (Maintenance of list via the button on this OPI). No properties required.</description>
+				<macros>
+				</macros>
+			</value>
+		</entry>        
+		<entry>
+			<key>Eurotherm</key>
+			<value>
+				<path>Eurotherm.opi</path>
+				<description>The OPI for the standard Eurotherm controller.</description>
+					<macro>
+						<name>EURO</name>
+						<description>??? The name?</description>
+					</macro>
+			</value>
+		</entry>        
 		<entry>
 			<key>In Out Monitor</key>
 			<value>
@@ -118,6 +112,23 @@
 			</value>
 		</entry>
 		<entry>
+			<key>Pinhole Selector</key>
+			<value>
+				<path>pinhole_selector\pinhole_selector.opi</path>
+				<description>The OPI for the pinhole selector.</description>
+				<macros>
+					<macro>
+						<name>PH</name>
+						<description>The name of the device (as defined in the positions look-up file (e.g. PINHOLE))</description>
+					</macro>
+					<macro>
+						<name>MM</name>
+						<description>The motor PV to point at (as defined in the motionsetpoints file (e.g. MTR0605))</description>
+					</macro>
+				</macros>
+			</value>
+		</entry>        
+		<entry>
 			<key>Pixelman</key>
 			<value>
 				<path>pixelman.opi</path>
@@ -136,36 +147,22 @@
 			</value>
 		</entry>
 		<entry>
-			<key>SD Test</key>
+			<key>Rotating Bench</key>
 			<value>
-				<path>SDTEST.opi</path>
-				<description>Description required.</description>
+				<path>rotating_bench.opi</path>
+				<description>The OPI for the LARMOR rotating bench.</description>
 				<macros>
+					<macro>
+						<name>MM</name>
+						<description>The MOT:MTRnnnn value relating to the motor controlling the bench rotation</description>
+					</macro>
 				</macros>
 			</value>
-		</entry>
+		</entry>        
 		<entry>
-			<key>Slit motors</key>
+			<key>Sample changer</key>
 			<value>
-				<path>slit_motors.opi</path>
-				<description>Description required.</description>
-				<macros>
-				</macros>
-			</value>
-		</entry>
-		<entry>
-			<key>TPG300</key>
-			<value>
-				<path>TPG300.opi</path>
-				<description>Description required.</description>
-				<macros>
-				</macros>
-			</value>
-		</entry>
-		<entry>
-			<key>Slit 1</key>
-			<value>
-				<path>slit1.opi</path>
+				<path>stage/sample_changer.opi</path>
 				<description>Description required.</description>
 				<macros>
 				</macros>
@@ -179,21 +176,12 @@
 				<macros>
 				</macros>
 			</value>
-		</entry>
+		</entry>        
 		<entry>
-			<key>Sample changer</key>
+			<key>SD Test</key>
 			<value>
-				<path>stage/sample_changer.opi</path>
+				<path>SDTEST.opi</path>
 				<description>Description required.</description>
-				<macros>
-				</macros>
-			</value>
-		</entry>
-		<entry>
-			<key>Caen HV</key>
-			<value>
-				<path>HV/HVMonitorSummaryDisplay.opi</path>
-				<description>Summary Display for Caens (Maintenance of list via the button on this OPI). No Macros required.</description>
 				<macros>
 				</macros>
 			</value>
@@ -214,19 +202,33 @@
 					</macro>
 				</macros>
 			</value>
-		</entry>
+		</entry>        
 		<entry>
-			<key>Rotating Bench</key>
+			<key>Slit 1</key>
 			<value>
-				<path>rotating_bench.opi</path>
-				<description>The OPI for the LARMOR rotating bench.</description>
+				<path>slit1.opi</path>
+				<description>Description required.</description>
 				<macros>
-					<macro>
-						<name>MM</name>
-						<description>The MOT:MTRnnnn value relating to the motor controlling the bench rotation</description>
-					</macro>
 				</macros>
 			</value>
-		</entry>	
+		</entry>        
+		<entry>
+			<key>Slit motors</key>
+			<value>
+				<path>slit_motors.opi</path>
+				<description>Description required.</description>
+				<macros>
+				</macros>
+			</value>
+		</entry>
+		<entry>
+			<key>TPG300</key>
+			<value>
+				<path>TPG300.opi</path>
+				<description>Description required.</description>
+				<macros>
+				</macros>
+			</value>
+		</entry>
 	</opis>
 </descriptions>
