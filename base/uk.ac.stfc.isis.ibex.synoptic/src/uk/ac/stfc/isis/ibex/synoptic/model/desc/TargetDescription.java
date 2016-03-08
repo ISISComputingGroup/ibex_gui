@@ -96,10 +96,6 @@ public class TargetDescription {
         this.userSelected = userSelected;
     }
 
-    public void clearProperties() {
-        this.properties = new ArrayList<>();
-    }
-
     public void addProperties(List<String> propertyKeys) {
         for (String key : propertyKeys) {
             if (!this.containsProperty(key)) {
@@ -118,14 +114,19 @@ public class TargetDescription {
         return false;
     }
 
-	public List<Property> properties() {
+    public void replaceProperty(Property current, Property newProperty) {
+        int index = properties.indexOf(current);
+        if (index != -1) {
+            properties.set(index, newProperty);
+        }
+    }
+
+    public void clearProperties() {
+        this.properties = new ArrayList<>();
+    }
+
+	public List<Property> getProperties() {
 		return Collections.unmodifiableList(properties);
 	}
 
-	public void replaceProperty(Property current, Property newProperty) {
-		int index = properties.indexOf(current);
-		if (index != -1) {
-			properties.set(index, newProperty);
-		}
-	}
 }

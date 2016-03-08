@@ -154,7 +154,7 @@ public class TargetPropertyTable extends Composite {
     public Property getPropertyFromKey(String key) {
         ComponentDescription component = synopticViewModel.getFirstSelectedComponent();
 
-        for (Property property : component.target().properties()) {
+        for (Property property : component.target().getProperties()) {
             if (key.equals(property.key())) {
                 return property;
             }
