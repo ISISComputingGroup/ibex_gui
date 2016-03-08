@@ -151,7 +151,9 @@ public class EditSynopticDialog extends Dialog {
             public void instrumentUpdated(UpdateTypes updateType) {
                 if (updateType == UpdateTypes.EDIT_COMPONENT) {
                     saveAsBtn.setEnabled(!synopticViewModel.getHasDuplicatedName());
-                    saveBtn.setEnabled(!synopticViewModel.getHasDuplicatedName());
+                    if (saveBtn != null) {
+                        saveBtn.setEnabled(!synopticViewModel.getHasDuplicatedName());
+                    }
                 }
             }
         });

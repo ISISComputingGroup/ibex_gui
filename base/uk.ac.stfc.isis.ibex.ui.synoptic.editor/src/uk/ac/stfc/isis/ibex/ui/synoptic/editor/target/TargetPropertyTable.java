@@ -39,6 +39,8 @@ import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.SynopticViewModel;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.UpdateTypes;
 
 public class TargetPropertyTable extends Composite {
+
+    private static final int TABLE_HEIGHT = 150;
 	
 	private SynopticViewModel synopticViewModel;
     private Table table;
@@ -94,16 +96,16 @@ public class TargetPropertyTable extends Composite {
 	public void createControls(Composite parent) {
 	    
 	    Composite controlComposite = new Composite(parent, SWT.NONE);
-        GridLayout gl_controlComposite = new GridLayout(2, false);
-        gl_controlComposite.marginHeight = 0;
-        gl_controlComposite.marginWidth = 0;
-        controlComposite.setLayout(gl_controlComposite);
+        GridLayout glControlComposite = new GridLayout(1, false);
+        glControlComposite.marginHeight = 0;
+        glControlComposite.marginWidth = 0;
+        controlComposite.setLayout(glControlComposite);
 	    controlComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 
         table = new Table(controlComposite, SWT.BORDER | SWT.FULL_SELECTION);
-        GridData gd_table = new GridData(SWT.FILL, SWT.FILL, true, true, 3, 1);
-        gd_table.minimumHeight = 150;
-        table.setLayoutData(gd_table);
+        GridData gdTable = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
+        gdTable.minimumHeight = TABLE_HEIGHT;
+        table.setLayoutData(gdTable);
         table.setHeaderVisible(true);
         table.setLinesVisible(true);
 
