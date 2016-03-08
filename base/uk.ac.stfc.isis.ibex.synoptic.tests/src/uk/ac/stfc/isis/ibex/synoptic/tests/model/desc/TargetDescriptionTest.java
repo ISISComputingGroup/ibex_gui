@@ -19,9 +19,10 @@
 
 package uk.ac.stfc.isis.ibex.synoptic.tests.model.desc;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -51,9 +52,11 @@ public class TargetDescriptionTest {
         source.setType(TargetType.OPI);
 
         Property prop1 = new Property(KEY1, VALUE1);
-        source.addProperty(prop1);
         Property prop2 = new Property(KEY2, VALUE2);
-        source.addProperty(prop2);
+        List<String> propertyKeys = new ArrayList<>();
+        propertyKeys.add(prop1.key());
+        propertyKeys.add(prop2.key());
+        source.addProperties(propertyKeys);
     }
 
     @Test
@@ -103,10 +106,10 @@ public class TargetDescriptionTest {
 
         // Assert
         for (int i = 1; i < source.properties().size(); i++) {
-            copied.removeProperty(copied.properties().get(i));
-            copied.addProperty(new Property(NEW_KEY, NEW_VALUE));
-            assertTrue(copied.properties().get(i).value().equals(NEW_VALUE));
-            assertFalse(source.properties().get(i).equals(NEW_VALUE));
+            String sourceKey = source.properties().get(i).key();
+            String sourceValue = source.properties().get(i).value();
+            assertTrue(copied.properties().get(i).key().equals(sourceKey));
+            assertTrue(copied.properties().get(i).value().equals(sourceValue));
         }
     }
 }
