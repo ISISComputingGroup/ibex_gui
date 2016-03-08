@@ -24,6 +24,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -100,6 +101,7 @@ public class DescriptionsProvider extends Provider {
 	@Override
 	public Collection<String> getOpiList() {
         List<String> availableOPIs = new ArrayList<String>(descriptions.getOpis().keySet());
+        Collections.sort(availableOPIs);
         return availableOPIs;
 	}
 

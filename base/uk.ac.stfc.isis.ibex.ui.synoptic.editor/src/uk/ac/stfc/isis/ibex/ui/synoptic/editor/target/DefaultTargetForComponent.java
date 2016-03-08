@@ -57,9 +57,9 @@ public final class DefaultTargetForComponent {
                 break;
             case CHOPPER:
                 targetNameList.put("Mk3 Chopper", TargetType.OPI);
-                targetNameList.put("SKF G5 Chopper", TargetType.OPI);
                 break;
             case MONITOR:
+                targetNameList.put("Double Monitor", TargetType.OPI);
                 targetNameList.put("Monitor", TargetType.OPI);
                 break;
             case JULABO:
