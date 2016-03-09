@@ -28,6 +28,6 @@ public class EditableBlock extends Block {
 	}
 
 	public boolean isEditable() {
-		return !hasSubConfig();
+		return !hasComponent();
 	}
 }

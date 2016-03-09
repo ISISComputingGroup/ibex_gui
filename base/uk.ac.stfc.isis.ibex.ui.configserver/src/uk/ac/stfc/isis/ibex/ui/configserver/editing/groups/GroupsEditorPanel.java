@@ -278,7 +278,7 @@ public class GroupsEditorPanel extends Composite {
 					return "";
 				}
 				
-				String componentName = group.subconfig() != null ? group.subconfig() : "unknown";
+				String componentName = group.getComponent() != null ? group.getComponent() : "unknown";
 				return "contributed by " + componentName;
 			}
 		});
