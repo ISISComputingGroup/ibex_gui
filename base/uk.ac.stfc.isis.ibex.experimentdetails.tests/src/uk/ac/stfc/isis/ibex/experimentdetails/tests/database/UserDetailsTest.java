@@ -30,8 +30,9 @@ import uk.ac.stfc.isis.ibex.experimentdetails.Role;
 import uk.ac.stfc.isis.ibex.experimentdetails.UserDetails;
 
 /**
- * 
+ * Unit tests for UserDetails
  */
+@SuppressWarnings("checkstyle:methodname")
 public class UserDetailsTest {
     @Test
     public void set_pi_from_contact() {
@@ -76,7 +77,7 @@ public class UserDetailsTest {
     }
 
     @Test
-    public void fail_overwrite_PI_primary_role() {
+    public void fail_overwrite_pi_primary_role() {
         // Arrange
         Role pi = Role.getByString("PI");
         Role user = Role.getByString("User");
