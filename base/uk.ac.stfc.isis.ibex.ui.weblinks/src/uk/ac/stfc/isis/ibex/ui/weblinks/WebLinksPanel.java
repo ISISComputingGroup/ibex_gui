@@ -48,6 +48,10 @@ import uk.ac.stfc.isis.ibex.instrument.Instrument;
  */
 public class WebLinksPanel extends Composite {
 
+    private static final int LINKS_DISPLAY_SPACING = 15;
+    private static final int TITLE_FONT_SIZE = 24;
+    private static final int LINK_FONT_SIZE = 16;
+
     private static final String URL_REPLACEMENT_STRING = "INSTNAME";
 
     private final Font defaultFont;
@@ -64,8 +68,8 @@ public class WebLinksPanel extends Composite {
         super(parent, style);
 
         GridLayout gridLayout = new GridLayout(1, false);
-        gridLayout.marginWidth = 15;
-        gridLayout.verticalSpacing = 15;
+        gridLayout.marginWidth = LINKS_DISPLAY_SPACING;
+        gridLayout.verticalSpacing = LINKS_DISPLAY_SPACING;
         setLayout(gridLayout);
         
         Label titleLabel = new Label(this, SWT.NONE);
@@ -73,7 +77,7 @@ public class WebLinksPanel extends Composite {
         
         titleLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
         titleLabel.setText("Web Links");
-        titleLabel.setFont(getResizedFont(defaultFont, 24, SWT.BOLD));
+        titleLabel.setFont(getResizedFont(defaultFont, TITLE_FONT_SIZE, SWT.BOLD));
         
         List<String> links = GetWeblinksPage.getWebLinks();
 
@@ -96,7 +100,7 @@ public class WebLinksPanel extends Composite {
     private Link linkCreator(String linkHtml, Composite parent) {
         Link link = new Link(this, SWT.NONE);
         link.setText(linkHtml);
-        link.setFont(getResizedFont(defaultFont, 16, SWT.NORMAL));
+        link.setFont(getResizedFont(defaultFont, LINK_FONT_SIZE, SWT.NORMAL));
 
         link.addSelectionListener(new SelectionAdapter() {
             @Override

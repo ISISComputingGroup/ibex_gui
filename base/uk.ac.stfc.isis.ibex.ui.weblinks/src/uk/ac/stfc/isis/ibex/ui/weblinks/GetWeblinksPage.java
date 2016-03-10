@@ -34,10 +34,16 @@ import java.util.regex.Pattern;
  * This class has some static methods to retrive the SECI Links webpage, find
  * the hyperlinks and return them.
  */
-public class GetWeblinksPage {
+public final class GetWeblinksPage {
 
     private static final String SECI_LINKS_URL = "http://dataweb.isis.rl.ac.uk/SeciLinks/default.htm";
     private static final String REGEX_FOR_HTML_LINKS = "<a href=(.*?)</a>";
+
+    /**
+     * Utility class, now allowed to instantiate.
+     */
+    private GetWeblinksPage() {
+    }
 
     /**
      * Gets the web links from the SECI Links URL.
