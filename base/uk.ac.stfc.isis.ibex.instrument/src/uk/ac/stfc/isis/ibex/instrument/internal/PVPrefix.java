@@ -29,7 +29,7 @@ public class PVPrefix {
 	
 	public PVPrefix(String machineName, String userName) {
 		prefix = isInstrument(machineName) 
-				? instrumentPrefix(machineName) : userPrefix(machineName, userName);
+ ? instrumentPrefix(machineName) : userPrefix(machineName, userName);
 	}
 	
 	public String get() {
@@ -41,11 +41,11 @@ public class PVPrefix {
 	}
 
 	private String userPrefix(String machineName, String userName) {
-		return String.format(USER_FORMAT, machineName, userName.toUpperCase());
+        return String.format(USER_FORMAT, machineName, userName).toUpperCase();
 	}
 
 	private String instrumentPrefix(String machineName) {
-		return String.format(INSTRUMENT_FORMAT, instrumentName(machineName));
+        return String.format(INSTRUMENT_FORMAT, instrumentName(machineName)).toUpperCase();
 	}
 
 	// Strip off the NDX prefix
