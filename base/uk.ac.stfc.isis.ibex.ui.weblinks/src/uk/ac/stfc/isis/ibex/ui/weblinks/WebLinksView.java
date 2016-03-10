@@ -24,6 +24,9 @@ import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.part.ViewPart;
 
+/**
+ * Provides the view for the Web Links perspective.
+ */
 public class WebLinksView extends ViewPart {
 
     public static final String ID = "uk.ac.stfc.isis.ibex.ui.weblinks.WebLinksView";

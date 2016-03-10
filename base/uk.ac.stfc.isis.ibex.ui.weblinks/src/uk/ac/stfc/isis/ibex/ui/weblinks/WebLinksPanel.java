@@ -44,15 +44,21 @@ import org.eclipse.ui.browser.IWebBrowser;
 import uk.ac.stfc.isis.ibex.instrument.Instrument;
 
 /**
- * 
+ * Provides a UI panel showing a title and a list of links.
  */
 public class WebLinksPanel extends Composite {
+
+    private static final String URL_REPLACEMENT_STRING = "INSTNAME";
 
     private final Font defaultFont;
 
     /**
+     * The UI panel showing a list of links.
+     * 
      * @param parent
+     *            The parent composite
      * @param style
+     *            An SWT style type
      */
     public WebLinksPanel(Composite parent, int style) {
         super(parent, style);
@@ -69,8 +75,7 @@ public class WebLinksPanel extends Composite {
         titleLabel.setText("Web Links");
         titleLabel.setFont(getResizedFont(defaultFont, 24, SWT.BOLD));
         
-        GetWeblinksPage webLinks = new GetWeblinksPage();
-        List<String> links = webLinks.getWebLinks();
+        List<String> links = GetWeblinksPage.getWebLinks();
 
         for (String link : links) {
             linkCreator(link, parent);
@@ -78,16 +83,26 @@ public class WebLinksPanel extends Composite {
 
     }
 
-    public Link linkCreator(String message, Composite parent) {
+    /**
+     * Creates a new Link object based on the string passed in. The string
+     * should be a HTML element, e.g. <a href="http://www.stfc.ac.uk/">STFC</a>.
+     * 
+     * @param linkHtml
+     *            A string with the HTML for the link
+     * @param parent
+     *            The parent composite
+     * @return
+     */
+    private Link linkCreator(String linkHtml, Composite parent) {
         Link link = new Link(this, SWT.NONE);
-        link.setText(message);
+        link.setText(linkHtml);
         link.setFont(getResizedFont(defaultFont, 16, SWT.NORMAL));
 
         link.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
                 URL url = null;
-                String instrumentSpecificUrl = e.text.replaceAll("INSTNAME",
+                String instrumentSpecificUrl = e.text.replaceAll(URL_REPLACEMENT_STRING,
                         Instrument.getInstance().currentInstrument().name());
 
                 try {
@@ -110,8 +125,19 @@ public class WebLinksPanel extends Composite {
         return link;
     }
 
-    private Font getResizedFont(Font defaultLabelFont, int size, int style) {
-        FontData fontData = defaultLabelFont.getFontData()[0];
+    /**
+     * Returns a resized version of a font.
+     * 
+     * @param font
+     *            The font to start with
+     * @param size
+     *            The new font size
+     * @param style
+     *            The new font style (e.g. SWT.BOLD)
+     * @return A resized and restyled font
+     */
+    private static Font getResizedFont(Font font, int size, int style) {
+        FontData fontData = font.getFontData()[0];
         fontData.setHeight(size);
         fontData.setStyle(style);
         return new Font(Display.getCurrent(), fontData);
