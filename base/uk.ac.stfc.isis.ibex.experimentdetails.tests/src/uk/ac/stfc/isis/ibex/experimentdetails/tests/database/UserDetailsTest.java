@@ -34,28 +34,28 @@ import uk.ac.stfc.isis.ibex.experimentdetails.UserDetails;
  */
 public class UserDetailsTest {
     @Test
-    public void set_PI_from_Contact() {
+    public void set_pi_from_contact() {
         // Arrange
-        Role PI = Role.getByString("PI");
-        Role Contact = Role.getByString("Contact");
-        UserDetails userTest = new UserDetails("John Smith", "STFC", Contact);
+        Role pi = Role.getByString("PI");
+        Role contact = Role.getByString("Contact");
+        UserDetails userTest = new UserDetails("John Smith", "STFC", contact);
 
         // Act
-        userTest.setRole(PI);
+        userTest.setRole(pi);
 
         // Assert
         assertEquals("PI", userTest.getRole().toString());
     }
 
     @Test
-    public void set_Contact_from_PI() {
+    public void set_contact_from_pi() {
         // Arrange 
-        Role PI = Role.getByString("PI");
-        Role Contact = Role.getByString("Contact");
-        UserDetails userTest = new UserDetails("John Smith", "STFC", PI);
+        Role pi = Role.getByString("PI");
+        Role contact = Role.getByString("Contact");
+        UserDetails userTest = new UserDetails("John Smith", "STFC", pi);
         
         // Act
-        userTest.setRole(Contact);
+        userTest.setRole(contact);
         
         // Assert 
         assertEquals("Contact", userTest.getRole().toString());
@@ -64,12 +64,12 @@ public class UserDetailsTest {
     @Test
     public void overwrite_primary_role() {
         // Arrange
-        Role PI = Role.getByString("PI");
-        Role User = Role.getByString("User");
-        UserDetails userTest = new UserDetails("John Smith", "STFC", User);
+        Role pi = Role.getByString("PI");
+        Role user = Role.getByString("User");
+        UserDetails userTest = new UserDetails("John Smith", "STFC", user);
 
         // Act
-        userTest.setPrimaryRole(PI);
+        userTest.setPrimaryRole(pi);
 
         // Assert
         assertEquals("PI", userTest.getRole().toString());
@@ -78,12 +78,12 @@ public class UserDetailsTest {
     @Test
     public void fail_overwrite_PI_primary_role() {
         // Arrange
-        Role PI = Role.getByString("PI");
-        Role User = Role.getByString("User");
-        UserDetails userTest = new UserDetails("John Smith", "STFC", PI);
+        Role pi = Role.getByString("PI");
+        Role user = Role.getByString("User");
+        UserDetails userTest = new UserDetails("John Smith", "STFC", pi);
 
         // Act
-        userTest.setPrimaryRole(User);
+        userTest.setPrimaryRole(user);
 
         // Assert
         assertEquals("PI", userTest.getRole().toString());
@@ -92,12 +92,12 @@ public class UserDetailsTest {
     @Test
     public void fail_overwrite_contact_primary_role() {
         // Arrange
-        Role PI = Role.getByString("PI");
-        Role Contact = Role.getByString("Contact");
-        UserDetails userTest = new UserDetails("John Smith", "STFC", PI);
+        Role pi = Role.getByString("PI");
+        Role contact = Role.getByString("Contact");
+        UserDetails userTest = new UserDetails("John Smith", "STFC", pi);
 
         // Act
-        userTest.setPrimaryRole(Contact);
+        userTest.setPrimaryRole(contact);
 
         // Assert
         assertEquals("PI", userTest.getRole().toString());
@@ -106,12 +106,12 @@ public class UserDetailsTest {
     @Test
     public void set_blank_role() {
         // Arrange
-        Role PI = Role.getByString("PI");
-        Role BLANK = Role.getByString("");
-        UserDetails userTest = new UserDetails("John Smith", "STFC", PI);
+        Role pi = Role.getByString("PI");
+        Role blank = Role.getByString("");
+        UserDetails userTest = new UserDetails("John Smith", "STFC", pi);
 
         // Act
-        userTest.setRole(BLANK);
+        userTest.setRole(blank);
 
         // Assert
         assertEquals("", userTest.getRole().toString());
@@ -120,12 +120,12 @@ public class UserDetailsTest {
     @Test
     public void set_primary_role_blank() {
         // Arrange
-        Role User = Role.getByString("User");
-        Role BLANK = Role.getByString("");
-        UserDetails userTest = new UserDetails("John Smith", "STFC", User);
+        Role user = Role.getByString("User");
+        Role blank = Role.getByString("");
+        UserDetails userTest = new UserDetails("John Smith", "STFC", user);
 
         // Act
-        userTest.setPrimaryRole(BLANK);
+        userTest.setPrimaryRole(blank);
 
         // Assert
         assertEquals("User", userTest.getRole().toString());
@@ -134,12 +134,12 @@ public class UserDetailsTest {
     @Test
     public void set_primary_role_from_blank() {
         // Arrange
-        Role Contact = Role.getByString("Contact");
-        Role BLANK = Role.getByString("");
-        UserDetails userTest = new UserDetails("John Smith", "STFC", BLANK);
+        Role contact = Role.getByString("Contact");
+        Role blank = Role.getByString("");
+        UserDetails userTest = new UserDetails("John Smith", "STFC", blank);
 
         // Act
-        userTest.setPrimaryRole(Contact);
+        userTest.setPrimaryRole(contact);
 
         // Assert
         assertEquals("Contact", userTest.getRole().toString());
