@@ -29,30 +29,27 @@ public class UserDetails extends ModelObject {
 	
 	private String name;
 	private String institute;
-	private Role role;
+    private Role role;
 	private String associatedExperimentID;
 	private Date associatedExperimentStartDate;
 	
 	private static final DateFormat DF = new SimpleDateFormat("dd/MM/yyyy");
 	
-	public UserDetails(String name, String institute, Role role, String associatedExperimentID, Date associatedExperimentStartDate) {
+    public UserDetails(String name, String institute, Role role, String associatedExperimentID,
+            Date associatedExperimentStartDate) {
 		this.name = name;
 		this.institute = institute;
-		this.role = role;
+        this.role = role;
 		this.associatedExperimentID = associatedExperimentID;
 		this.associatedExperimentStartDate = associatedExperimentStartDate;
 	}
 	
-	public UserDetails(String name, String institute, Role role) {
+    public UserDetails(String name, String institute, Role role) {
 		this.name = name;
 		this.institute = institute;
-		this.role = role;
+        this.role = role;
 	}
-	
-	public UserDetails(UserDetails other) {
-		this(other.name, other.institute, other.role);
-	}
-	
+
 	public String getName() {
 		return name;
 	}
@@ -69,12 +66,12 @@ public class UserDetails extends ModelObject {
 		firePropertyChange("institute", this.institute, this.institute = institute);
 	}
 
-	public Role getRole() {
-		return role;
+    public Role getRole() {
+        return role;
 	}
 
-	public void setRole(Role role) {
-		firePropertyChange("role", this.role, this.role = role);
+    public void setRole(Role role) {
+        firePropertyChange("role", this.role, this.role = role);
 	}
 	
 	public String getAssociatedExperimentID() {
@@ -85,4 +82,19 @@ public class UserDetails extends ModelObject {
 		return DF.format(associatedExperimentStartDate);
 	}
 
+    /**
+     * Finds the highest role and sets it.
+     * 
+     * @param roleToPrimary
+     *            the role to try to set as primary
+     */
+    public void setPrimaryRole(Role roleToPrimary) {
+        if (roleToPrimary.toString() == "PI") {
+            role = roleToPrimary;
+        } else if (role.toString() != "PI" && roleToPrimary.toString() == "Contact") {
+            role = roleToPrimary;
+        } else if (role.toString() != "Contact" && role.toString() != "PI" && roleToPrimary.toString() == "User") {
+            role = roleToPrimary;
+        }
+	}
 }

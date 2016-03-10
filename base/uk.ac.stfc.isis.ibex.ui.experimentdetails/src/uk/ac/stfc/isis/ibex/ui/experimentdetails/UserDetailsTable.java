@@ -71,7 +71,7 @@ public abstract class UserDetailsTable extends DataboundTable<UserDetails> {
 		role.setLabelProvider(new DataboundCellLabelProvider<UserDetails>(observeProperty("role")) {
 			@Override
 			protected String valueFromRow(UserDetails row) {
-				Role role = row.getRole();
+                Role role = row.getRole();
 				return role == null ? "" : role.toString();
 			}
 		});	

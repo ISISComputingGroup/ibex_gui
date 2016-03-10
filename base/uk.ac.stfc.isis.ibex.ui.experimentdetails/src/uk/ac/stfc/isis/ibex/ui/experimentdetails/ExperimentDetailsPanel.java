@@ -27,16 +27,16 @@ import org.eclipse.core.databinding.beans.BeanProperties;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.window.Window;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.ui.PlatformUI;
 
 import uk.ac.stfc.isis.ibex.ui.experimentdetails.rblookup.RBLookupDialog;
@@ -106,8 +106,8 @@ public class ExperimentDetailsPanel extends Composite {
 		GridData gdUserDetails = new GridData(SWT.LEFT, SWT.FILL, false, true, 2, 1);
 		gdUserDetails.heightHint = 110;
 		gdUserDetails.minimumHeight = 110;
-		gdUserDetails.widthHint = 400;
-		gdUserDetails.minimumWidth = 400;
+        gdUserDetails.widthHint = 600;
+        gdUserDetails.minimumWidth = 600;
 		userDetails.setLayoutData(gdUserDetails);
 		
 		updateUserDetails();
@@ -154,7 +154,7 @@ public class ExperimentDetailsPanel extends Composite {
 				viewModel.model.sendUserDetails();
 			}
 		});
-		btnUpdateUserDetails.setText("Set");
+        btnUpdateUserDetails.setText("Set");
 		btnUpdateUserDetails.setLayoutData(gdDetailsButtons);
 		
 		new Label(composite, SWT.NONE);
@@ -168,8 +168,8 @@ public class ExperimentDetailsPanel extends Composite {
 		
 		sampleParameters = new ParametersTable(composite, SWT.NONE, SWT.MULTI | SWT.NO_SCROLL | SWT.V_SCROLL | SWT.FULL_SELECTION | SWT.BORDER);
 		GridData gdSampleParameters = new GridData(SWT.LEFT, SWT.FILL, false, true, 4, 1);
-		gdSampleParameters.widthHint = 400;
-		gdSampleParameters.minimumWidth = 400;
+        gdSampleParameters.widthHint = 600;
+        gdSampleParameters.minimumWidth = 600;
 		gdSampleParameters.minimumHeight = 150;
 		gdSampleParameters.heightHint = 150;
 		sampleParameters.setLayoutData(gdSampleParameters);
@@ -196,8 +196,8 @@ public class ExperimentDetailsPanel extends Composite {
 		new Label(composite, SWT.NONE);
 		new Label(composite, SWT.NONE);
 		GridData gdBeamParameters = new GridData(SWT.LEFT, SWT.FILL, true, true, 4, 1);
-		gdBeamParameters.widthHint = 400;
-		gdBeamParameters.minimumWidth = 400;
+        gdBeamParameters.widthHint = 600;
+        gdBeamParameters.minimumWidth = 600;
 		gdBeamParameters.minimumHeight = 200;
 		gdBeamParameters.heightHint = 200;
 		beamParameters.setLayoutData(gdBeamParameters);
