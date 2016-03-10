@@ -39,6 +39,9 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Link;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.browser.IWebBrowser;
+
+import uk.ac.stfc.isis.ibex.instrument.Instrument;
 
 /**
  * 
@@ -83,15 +86,22 @@ public class WebLinksPanel extends Composite {
         link.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
-                System.out.println("You have selected: " + e.text);
+                URL url = null;
+                String instrumentSpecificUrl = e.text.replaceAll("INSTNAME",
+                        Instrument.getInstance().currentInstrument().name());
+
+                try {
+                    url = new URL(instrumentSpecificUrl);
+                } catch (MalformedURLException ex) {
+                    ex.printStackTrace();
+                    return;
+                }
+
                 try {
                     // Open default external browser
-                    PlatformUI.getWorkbench().getBrowserSupport().getExternalBrowser().openURL(new URL(e.text));
+                    IWebBrowser browser = PlatformUI.getWorkbench().getBrowserSupport().getExternalBrowser();
+                    browser.openURL(url);
                 } catch (PartInitException ex) {
-                    // TODO Auto-generated catch block
-                    ex.printStackTrace();
-                } catch (MalformedURLException ex) {
-                    // TODO Auto-generated catch block
                     ex.printStackTrace();
                 }
             }

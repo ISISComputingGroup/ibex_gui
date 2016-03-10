@@ -35,12 +35,15 @@ import java.util.regex.Pattern;
  */
 public class GetWeblinksPage {
 
+    private static final String SECI_LINKS_URL = "http://dataweb.isis.rl.ac.uk/SeciLinks/default.htm";
+    private static final String REGEX_FOR_HTML_LINKS = "<a href=(.*?)</a>";
+
     public List<String> getWebLinks() {
         String html = getWebLinkHtml();
 
         List<String> webLinksList = new ArrayList<>();
 
-        Pattern pattern = Pattern.compile("<a href=(.*?)</a>");
+        Pattern pattern = Pattern.compile(REGEX_FOR_HTML_LINKS);
         Matcher matcher = pattern.matcher(html);
         while (matcher.find()) {
             webLinksList.add(matcher.group(0));
@@ -49,12 +52,11 @@ public class GetWeblinksPage {
         return webLinksList;
     }
 
-    public String getWebLinkHtml() {
+    private String getWebLinkHtml() {
         String content = null;
         URLConnection connection = null;
         try {
-            connection = new URL("http://dataweb.isis.rl.ac.uk/SeciLinks/default.htm?Instrument=LARMOR")
-                    .openConnection();
+            connection = new URL(SECI_LINKS_URL).openConnection();
             Scanner scanner = new Scanner(connection.getInputStream());
             scanner.useDelimiter("\\Z");
             content = scanner.next();

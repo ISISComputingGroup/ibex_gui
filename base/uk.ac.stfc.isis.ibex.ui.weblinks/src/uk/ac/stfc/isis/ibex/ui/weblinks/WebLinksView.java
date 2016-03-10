@@ -25,9 +25,11 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.part.ViewPart;
 
 public class WebLinksView extends ViewPart {
-	public WebLinksView() {
+
+    public static final String ID = "uk.ac.stfc.isis.ibex.ui.weblinks.WebLinksView";
+
+    public WebLinksView() {
 	}
-	public static final String ID = "uk.ac.stfc.isis.ibex.ui.weblinks.WebLinksView";
 	
 	@Override
 	public void createPartControl(Composite parent) {
@@ -37,8 +39,6 @@ public class WebLinksView extends ViewPart {
 
 	@Override
 	public void setFocus() {
-		// TODO Auto-generated method stub
-		
+        // TODO Auto-generated method stub
 	}
-
 }
