@@ -21,35 +21,60 @@ package uk.ac.stfc.isis.ibex.experimentdetails.internal;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
-
-import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
-import uk.ac.stfc.isis.ibex.epics.conversion.Converter;
-import uk.ac.stfc.isis.ibex.experimentdetails.UserDetails;
-import uk.ac.stfc.isis.ibex.json.JsonDeserialisingConverter;
-import uk.ac.stfc.isis.ibex.json.LowercaseEnumTypeAdapterFactory;
+import java.util.HashMap;
+import java.util.Map;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
+import uk.ac.stfc.isis.ibex.epics.conversion.Converter;
+import uk.ac.stfc.isis.ibex.experimentdetails.Role;
+import uk.ac.stfc.isis.ibex.experimentdetails.UserDetails;
+import uk.ac.stfc.isis.ibex.json.JsonDeserialisingConverter;
+import uk.ac.stfc.isis.ibex.json.LowercaseEnumTypeAdapterFactory;
+
+/**
+ * Converts JSON to UserDetails object.
+ */
 public class UserDetailsConverter extends
 		Converter<String, Collection<UserDetails>> {
 	
 	private final Gson gson = new GsonBuilder().registerTypeAdapterFactory(new LowercaseEnumTypeAdapterFactory()).create();
 
+    /**
+     * An intermediate class for Gson to use when converting from JSON.
+     * 
+     * Gson doesn't call the constructor of UserDetails so we need to use an
+     * intermediate class.
+     */
+    class IntermediateUserDetails {
+        public String name;
+        public String institute;
+        public Role role;
+    }
+
 	@Override
 	public Collection<UserDetails> convert(String value)
 			throws ConversionException {
-		Converter<String, UserDetails[]> jsonConverter = new JsonDeserialisingConverter<>(UserDetails[].class, gson);
-		UserDetails[] parsed = jsonConverter.convert(value);
+        Converter<String, IntermediateUserDetails[]> jsonConverter = new JsonDeserialisingConverter<>(
+                IntermediateUserDetails[].class, gson);
+        // Convert to intermediate
+        IntermediateUserDetails[] parsed = jsonConverter.convert(value);
 		
-		List<UserDetails> userDetails = new ArrayList<>();
+        Map<String, UserDetails> userDetails = new HashMap<String, UserDetails>();
 		
-		for (UserDetails user : parsed) {
-			userDetails.add(new UserDetails(user));
+        // Creates UserDetails and assigns primary role if name appears multiple
+        // times
+        for (IntermediateUserDetails user : parsed) {
+            if (userDetails.containsKey(user.name)) {
+                userDetails.get(user.name).setPrimaryRole(user.role);
+            } else {
+                userDetails.put(user.name, new UserDetails(user.name, user.institute, user.role));
+            }
 		}
-		
-		return userDetails;
+
+        return new ArrayList<UserDetails>(userDetails.values());
 	}
 
 }
