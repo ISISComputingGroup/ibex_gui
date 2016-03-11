@@ -89,11 +89,11 @@ public class UserDetails extends ModelObject {
      *            the role to try to set as primary
      */
     public void setPrimaryRole(Role roleToPrimary) {
-        if (roleToPrimary.toString() == "PI") {
+        if (roleToPrimary == Role.PI) {
             role = roleToPrimary;
-        } else if (role.toString() != "PI" && roleToPrimary.toString() == "Contact") {
+        } else if (role != Role.PI && roleToPrimary == Role.CONTACT) {
             role = roleToPrimary;
-        } else if (role.toString() != "Contact" && role.toString() != "PI" && roleToPrimary.toString() == "User") {
+        } else if (role != Role.CONTACT && role != Role.PI && roleToPrimary == Role.USER) {
             role = roleToPrimary;
         }
 	}
