@@ -22,43 +22,28 @@ package uk.ac.stfc.isis.ibex.ui.configserver;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
-import uk.ac.stfc.isis.ibex.configserver.Configurations;
-import uk.ac.stfc.isis.ibex.ui.configserver.editing.groups.GroupEditorViewModel;
-
 /**
  * The activator class controls the plug-in life cycle
  */
-public class ConfigurationServerUI extends AbstractUIPlugin {
+public class Activator extends AbstractUIPlugin {
 
 	// The plug-in ID
 	public static final String PLUGIN_ID = "uk.ac.stfc.isis.ibex.ui.configserver"; //$NON-NLS-1$
 
 	// The shared instance
-	private static ConfigurationServerUI plugin;
-	
-    private GroupEditorViewModel groupEditorViewModel;
+	private static Activator plugin;
 	
 	/**
 	 * The constructor
 	 */
-	public ConfigurationServerUI() {
+	public Activator() {
 	}
-
-    public GroupEditorViewModel groupEditorViewModel() {
-        if (groupEditorViewModel == null) {
-            groupEditorViewModel = new GroupEditorViewModel();
-            groupEditorViewModel.bind(Configurations.getInstance().edit());
-        }
-
-        return groupEditorViewModel;
-    }
 
 	/*
 	 * (non-Javadoc)
 	 * @see org.eclipse.ui.plugin.AbstractUIPlugin#start(org.osgi.framework.BundleContext)
 	 */
-	@Override
-    public void start(BundleContext context) throws Exception {
+	public void start(BundleContext context) throws Exception {
 		super.start(context);
 		plugin = this;
 	}
@@ -67,8 +52,7 @@ public class ConfigurationServerUI extends AbstractUIPlugin {
 	 * (non-Javadoc)
 	 * @see org.eclipse.ui.plugin.AbstractUIPlugin#stop(org.osgi.framework.BundleContext)
 	 */
-	@Override
-    public void stop(BundleContext context) throws Exception {
+	public void stop(BundleContext context) throws Exception {
 		plugin = null;
 		super.stop(context);
 	}
@@ -78,7 +62,7 @@ public class ConfigurationServerUI extends AbstractUIPlugin {
 	 * 
 	 * @return the shared instance
 	 */
-	public static ConfigurationServerUI getDefault() {
+	public static Activator getDefault() {
 		return plugin;
 	}
 

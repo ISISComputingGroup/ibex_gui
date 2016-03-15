@@ -50,7 +50,6 @@ import org.eclipse.wb.swt.SWTResourceManager;
 
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableGroup;
-import uk.ac.stfc.isis.ibex.ui.configserver.ConfigurationServerUI;
 import uk.ac.stfc.isis.ibex.ui.configserver.dialogs.MessageDisplayer;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.DoubleListEditor;
 
@@ -59,8 +58,6 @@ public class GroupsEditorPanel extends Composite {
 
 	private final DoubleListEditor blocksEditor;
 	
-    private GroupEditorViewModel groupEditorViewModel;
-
 	private EditableConfiguration config;
 	private Text name;
 	private Label componentDetails;
@@ -73,8 +70,6 @@ public class GroupsEditorPanel extends Composite {
 	
 	public GroupsEditorPanel(Composite parent, int style, final MessageDisplayer messageDisplayer) {
 		super(parent, style);
-		
-        groupEditorViewModel = ConfigurationServerUI.getDefault().groupEditorViewModel();
 		
 		setLayout(new GridLayout(2, false));
 		
@@ -291,7 +286,19 @@ public class GroupsEditorPanel extends Composite {
 		btnDown.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-                groupEditorViewModel.moveGroupDown(groupList.getSelectionIndex());
+				if (config != null) {
+					
+					if (groupList.getSelectionIndex() < groupList.getItemCount() - 1) {
+						// Move down
+						EditableGroup group1 = getSelectedGroup();
+						EditableGroup group2 = (EditableGroup) groupsViewer.getElementAt(groupList.getSelectionIndex() + 1);
+						
+						if (group1 != null && group2 != null) {
+							config.swapGroups(group1, group2);
+						}
+					}
+
+				}
 			}
 		});
 		
