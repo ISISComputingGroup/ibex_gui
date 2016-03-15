@@ -142,7 +142,6 @@ public class ConfigEditorPanel extends Composite {
 	public void setConfigToEdit(EditableConfiguration config) {		
 		iocs.setConfig(config);
 		blocks.setConfig(config);
-		groups.setConfig(config);
 		if (components != null) {
 			components.setConfig(config);
 		}

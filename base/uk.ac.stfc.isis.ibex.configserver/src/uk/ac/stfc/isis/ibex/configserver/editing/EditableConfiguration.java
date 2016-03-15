@@ -57,6 +57,8 @@ import uk.ac.stfc.isis.ibex.model.ModelObject;
  */
 public class EditableConfiguration extends ModelObject {
 
+    public static final String EDITABLE_GROUPS = "editableGroups";
+
 	private static final String DEFAULT_BLOCK_NAME = "NEW_BLOCK";
 	private static final String DEFAULT_GROUP_NAME = "NEW_GROUP";
 	
@@ -291,7 +293,7 @@ public class EditableConfiguration extends ModelObject {
 		EditableGroup newGroup = new EditableGroup(this, new Group(name));
 		editableGroups.add(newGroup);
 		
-		firePropertyChange("editableGroups", editableGroupsBefore, getEditableGroups());
+        firePropertyChange(EDITABLE_GROUPS, editableGroupsBefore, getEditableGroups());
 		firePropertyChange("groups", groupsBefore, getGroups());
 		
 		return newGroup;
@@ -303,7 +305,7 @@ public class EditableConfiguration extends ModelObject {
 		
 		editableGroups.remove(group);
 		
-		firePropertyChange("editableGroups", editableGroupsBefore, getEditableGroups());
+        firePropertyChange(EDITABLE_GROUPS, editableGroupsBefore, getEditableGroups());
 		firePropertyChange("groups", groupsBefore, getGroups());
 	}
 	

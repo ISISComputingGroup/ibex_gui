@@ -19,7 +19,6 @@
 package uk.ac.stfc.isis.ibex.ui.configserver.editing.groups;
 
 import java.util.ArrayList;
-import java.util.Collection;
 
 import uk.ac.stfc.isis.ibex.configserver.Editing;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
@@ -35,6 +34,8 @@ public class GroupEditorViewModel {
 
     private Editing editingModel;
     private UpdatedObservableAdapter<EditableConfiguration> observableConfigModel;
+
+    boolean canEditSelected = true;
 
     public GroupEditorViewModel() {
 
@@ -54,19 +55,41 @@ public class GroupEditorViewModel {
         return observableConfigModel;
     }
 
+    public void addNewGroup() {
+        observableConfigModel.getValue().addNewGroup();
+    }
+
+    public void removeGroup(int selectedGroup) {
+        if (canEditSelected && selectedGroup != -1) {
+            ArrayList<EditableGroup> groups = new ArrayList<>(observableConfigModel.getValue().getEditableGroups());
+
+            EditableGroup group = groups.get(selectedGroup);
+            observableConfigModel.getValue().removeGroup(group);
+        }
+    }
+
+    public void moveGroupUp(int selectedGroup) {
+        ArrayList<EditableGroup> groups = new ArrayList<>(observableConfigModel.getValue().getEditableGroups());
+
+        if (selectedGroup > 0) {
+            swapGroups(groups, selectedGroup, selectedGroup - 1);
+        }
+    }
+
     public void moveGroupDown(int selectedGroup) {
-        Collection<EditableGroup> groups = observableConfigModel.getValue().getEditableGroups();
-        ArrayList<EditableGroup> groupsList = new ArrayList<>(groups);
+        ArrayList<EditableGroup> groups = new ArrayList<>(observableConfigModel.getValue().getEditableGroups());
 
-        if (selectedGroup < groupsList.size() - 1) {
-            EditableGroup group1 = groupsList.get(selectedGroup);
-            EditableGroup group2 = groupsList.get(selectedGroup + 1);
+        if (selectedGroup < groups.size() - 1) {
+            swapGroups(groups, selectedGroup, selectedGroup + 1);
+        }
+    }
 
-            System.out.println("switching: " + group1.getName() + " ::: " + group2.getName());
+    private void swapGroups(ArrayList<EditableGroup> groups, int selectedGroup, int groupToSwapWith) {
+        EditableGroup group1 = groups.get(selectedGroup);
+        EditableGroup group2 = groups.get(groupToSwapWith);
 
-            if (group1 != null && group2 != null) {
-                observableConfigModel.getValue().swapGroups(group1, group2);
-            }
+        if (group1 != null && group2 != null) {
+            observableConfigModel.getValue().swapGroups(group1, group2);
         }
     }
 
