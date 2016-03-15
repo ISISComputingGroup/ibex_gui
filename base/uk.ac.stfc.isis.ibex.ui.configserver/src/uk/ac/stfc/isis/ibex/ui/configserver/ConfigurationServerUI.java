@@ -22,28 +22,43 @@ package uk.ac.stfc.isis.ibex.ui.configserver;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
+import uk.ac.stfc.isis.ibex.configserver.Configurations;
+import uk.ac.stfc.isis.ibex.ui.configserver.editing.groups.GroupEditorViewModel;
+
 /**
  * The activator class controls the plug-in life cycle
  */
-public class Activator extends AbstractUIPlugin {
+public class ConfigurationServerUI extends AbstractUIPlugin {
 
 	// The plug-in ID
 	public static final String PLUGIN_ID = "uk.ac.stfc.isis.ibex.ui.configserver"; //$NON-NLS-1$
 
 	// The shared instance
-	private static Activator plugin;
+	private static ConfigurationServerUI plugin;
+	
+    private GroupEditorViewModel groupEditorViewModel;
 	
 	/**
 	 * The constructor
 	 */
-	public Activator() {
+	public ConfigurationServerUI() {
 	}
+
+    public GroupEditorViewModel groupEditorViewModel() {
+        if (groupEditorViewModel == null) {
+            groupEditorViewModel = new GroupEditorViewModel();
+            groupEditorViewModel.bind(Configurations.getInstance().edit());
+        }
+
+        return groupEditorViewModel;
+    }
 
 	/*
 	 * (non-Javadoc)
 	 * @see org.eclipse.ui.plugin.AbstractUIPlugin#start(org.osgi.framework.BundleContext)
 	 */
-	public void start(BundleContext context) throws Exception {
+	@Override
+    public void start(BundleContext context) throws Exception {
 		super.start(context);
 		plugin = this;
 	}
@@ -52,7 +67,8 @@ public class Activator extends AbstractUIPlugin {
 	 * (non-Javadoc)
 	 * @see org.eclipse.ui.plugin.AbstractUIPlugin#stop(org.osgi.framework.BundleContext)
 	 */
-	public void stop(BundleContext context) throws Exception {
+	@Override
+    public void stop(BundleContext context) throws Exception {
 		plugin = null;
 		super.stop(context);
 	}
@@ -62,7 +78,7 @@ public class Activator extends AbstractUIPlugin {
 	 * 
 	 * @return the shared instance
 	 */
-	public static Activator getDefault() {
+	public static ConfigurationServerUI getDefault() {
 		return plugin;
 	}
 
