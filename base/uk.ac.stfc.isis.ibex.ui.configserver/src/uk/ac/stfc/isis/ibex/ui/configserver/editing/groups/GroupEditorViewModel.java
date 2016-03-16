@@ -20,65 +20,24 @@ package uk.ac.stfc.isis.ibex.ui.configserver.editing.groups;
 
 import java.util.ArrayList;
 
-import uk.ac.stfc.isis.ibex.configserver.Editing;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableGroup;
 import uk.ac.stfc.isis.ibex.epics.adapters.UpdatedObservableAdapter;
-import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 
 /**
  * 
  */
 public class GroupEditorViewModel {
 
-    private Editing editingModel;
     private UpdatedObservableAdapter<EditableConfiguration> observableConfigModel;
 
     boolean canEditSelected = true;
 
     public GroupEditorViewModel() {
-
     }
 
-    public void bind(Editing editingModel) {
-        this.editingModel = editingModel;
-        setModelAsCurrentConfig();
-    }
-
-    public void setModelAsCurrentConfig() {
-        observableConfigModel = new UpdatedObservableAdapter<>(getCurrentConfig());
-    }
-
-    public void setModelAsConfig(String configName) {
-        observableConfigModel = new UpdatedObservableAdapter<>(getConfig(configName));
-    }
-
-    public void setModelAsComponent(String componentName) {
-        observableConfigModel = new UpdatedObservableAdapter<>(getComponent(componentName));
-    }
-
-    public void setModelAsBlankConfig() {
-        observableConfigModel = new UpdatedObservableAdapter<>(getBlankConfig());
-    }
-
-    private ForwardingObservable<EditableConfiguration> getCurrentConfig() {
-        return editingModel.currentConfig();
-    }
-
-    private ForwardingObservable<EditableConfiguration> getConfig(String configName) {
-        return editingModel.config(configName);
-    }
-
-    private ForwardingObservable<EditableConfiguration> getComponent(String componentName) {
-        return editingModel.component(componentName);
-    }
-
-    private ForwardingObservable<EditableConfiguration> getBlankConfig() {
-        return editingModel.blankConfig();
-    }
-
-    public UpdatedObservableAdapter<EditableConfiguration> getConfigModel() {
-        return observableConfigModel;
+    public void updateModel(UpdatedObservableAdapter<EditableConfiguration> observableConfigModel) {
+        this.observableConfigModel = observableConfigModel;
     }
 
     public void addNewGroup() {

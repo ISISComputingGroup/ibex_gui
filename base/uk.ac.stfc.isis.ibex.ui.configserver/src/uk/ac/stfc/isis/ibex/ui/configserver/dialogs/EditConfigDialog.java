@@ -43,8 +43,8 @@ import com.google.common.base.Strings;
 import uk.ac.stfc.isis.ibex.configserver.Configurations;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Configuration;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
+import uk.ac.stfc.isis.ibex.ui.configserver.ConfigurationViewModels;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.ConfigEditorPanel;
-import uk.ac.stfc.isis.ibex.ui.configserver.editing.groups.GroupEditorViewModel;
 
 public class EditConfigDialog extends TitleAreaDialog implements
 		MessageDisplayer {
@@ -66,10 +66,10 @@ public class EditConfigDialog extends TitleAreaDialog implements
     private String blockToEdit;
 	private Button saveAsBtn;
 
-    private GroupEditorViewModel groupEditorViewModel;
+    private ConfigurationViewModels configurationViewModels;
 
     public EditConfigDialog(Shell parentShell, String title, String subTitle, EditableConfiguration config,
-            boolean isComponent, boolean isBlank, GroupEditorViewModel groupEditorViewModel) {
+            boolean isComponent, boolean isBlank, ConfigurationViewModels configurationViewModels) {
 		super(parentShell);
 		setShellStyle(getShellStyle() | SWT.DIALOG_TRIM | SWT.RESIZE);
 		this.title = title;
@@ -77,12 +77,12 @@ public class EditConfigDialog extends TitleAreaDialog implements
 		this.config = config;
 		this.isComponent = isComponent;
 		this.isBlank = isBlank;
-        this.groupEditorViewModel = groupEditorViewModel;
+        this.configurationViewModels = configurationViewModels;
 	}
 
     public EditConfigDialog(Shell parentShell, String title, String subTitle, EditableConfiguration config,
-            boolean isComponent, boolean isBlank, String blockName, GroupEditorViewModel groupEditorViewModel) {
-        this(parentShell, title, subTitle, config, isComponent, isBlank, groupEditorViewModel);
+            boolean isComponent, boolean isBlank, String blockName, ConfigurationViewModels configurationViewModels) {
+        this(parentShell, title, subTitle, config, isComponent, isBlank, configurationViewModels);
         this.blockToEdit = blockName;
         
     }
@@ -106,7 +106,7 @@ public class EditConfigDialog extends TitleAreaDialog implements
     
 	@Override
 	protected Control createDialogArea(Composite parent) {
-        editor = new ConfigEditorPanel(parent, SWT.NONE, this, isComponent, groupEditorViewModel);
+        editor = new ConfigEditorPanel(parent, SWT.NONE, this, isComponent, configurationViewModels);
 		editor.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		setTitle(subTitle);
 		editor.setConfigToEdit(config);

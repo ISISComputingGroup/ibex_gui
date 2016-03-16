@@ -28,9 +28,9 @@ import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
 import uk.ac.stfc.isis.ibex.model.Awaited;
 import uk.ac.stfc.isis.ibex.model.UpdatedValue;
 import uk.ac.stfc.isis.ibex.ui.configserver.ConfigurationServerUI;
+import uk.ac.stfc.isis.ibex.ui.configserver.ConfigurationViewModels;
 import uk.ac.stfc.isis.ibex.ui.configserver.dialogs.ConfigSelectionDialog;
 import uk.ac.stfc.isis.ibex.ui.configserver.dialogs.EditConfigDialog;
-import uk.ac.stfc.isis.ibex.ui.configserver.editing.groups.GroupEditorViewModel;
 
 public class EditConfigHandler extends ConfigHandler<Configuration> {
 
@@ -55,18 +55,19 @@ public class EditConfigHandler extends ConfigHandler<Configuration> {
 	private void edit(String configName) {
 		String subTitle = "Editing " + configName;
 		
-        GroupEditorViewModel groupEditorViewModel = ConfigurationServerUI.getDefault().groupEditorViewModel();
-        groupEditorViewModel.setModelAsConfig(configName);
-        UpdatedValue<EditableConfiguration> config = groupEditorViewModel.getConfigModel();
+        ConfigurationViewModels configurationViewModels = ConfigurationServerUI.getDefault().configurationViewModels();
+        configurationViewModels.setModelAsConfig(configName);
+        UpdatedValue<EditableConfiguration> config = configurationViewModels.getConfigModel();
 		
 		if (Awaited.returnedValue(config, 1)) {
-            openDialog(subTitle, config.getValue(), groupEditorViewModel);
+            openDialog(subTitle, config.getValue(), configurationViewModels);
 		}
 	}
 	
-    private void openDialog(String subTitle, EditableConfiguration config, GroupEditorViewModel groupEditorViewModel) {
+    private void openDialog(String subTitle, EditableConfiguration config,
+            ConfigurationViewModels configurationViewModels) {
         EditConfigDialog editDialog = new EditConfigDialog(shell(), TITLE, subTitle, config, false, false,
-                groupEditorViewModel);
+                configurationViewModels);
         if (editDialog.open() == Window.OK) {
             if (editDialog.doAsComponent()) {
                 SERVER.saveAsComponent().write(editDialog.getComponent());

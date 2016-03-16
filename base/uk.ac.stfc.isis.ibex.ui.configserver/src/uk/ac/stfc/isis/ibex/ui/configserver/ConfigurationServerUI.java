@@ -23,7 +23,6 @@ import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
 import uk.ac.stfc.isis.ibex.configserver.Configurations;
-import uk.ac.stfc.isis.ibex.ui.configserver.editing.groups.GroupEditorViewModel;
 
 /**
  * The activator class controls the plug-in life cycle
@@ -36,7 +35,7 @@ public class ConfigurationServerUI extends AbstractUIPlugin {
 	// The shared instance
 	private static ConfigurationServerUI plugin;
 	
-    private GroupEditorViewModel groupEditorViewModel;
+    private ConfigurationViewModels configurationViewModels;
 	
 	/**
 	 * The constructor
@@ -44,13 +43,13 @@ public class ConfigurationServerUI extends AbstractUIPlugin {
 	public ConfigurationServerUI() {
 	}
 
-    public GroupEditorViewModel groupEditorViewModel() {
-        if (groupEditorViewModel == null) {
-            groupEditorViewModel = new GroupEditorViewModel();
-            groupEditorViewModel.bind(Configurations.getInstance().edit());
+    public ConfigurationViewModels configurationViewModels() {
+        if (configurationViewModels == null) {
+            configurationViewModels = new ConfigurationViewModels();
+            configurationViewModels.bind(Configurations.getInstance().edit());
         }
 
-        return groupEditorViewModel;
+        return configurationViewModels;
     }
 
 	/*

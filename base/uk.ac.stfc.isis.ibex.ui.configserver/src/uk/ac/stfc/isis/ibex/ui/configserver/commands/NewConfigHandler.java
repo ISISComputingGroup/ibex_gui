@@ -28,8 +28,8 @@ import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
 import uk.ac.stfc.isis.ibex.model.Awaited;
 import uk.ac.stfc.isis.ibex.model.UpdatedValue;
 import uk.ac.stfc.isis.ibex.ui.configserver.ConfigurationServerUI;
+import uk.ac.stfc.isis.ibex.ui.configserver.ConfigurationViewModels;
 import uk.ac.stfc.isis.ibex.ui.configserver.dialogs.EditConfigDialog;
-import uk.ac.stfc.isis.ibex.ui.configserver.editing.groups.GroupEditorViewModel;
 
 public class NewConfigHandler extends ConfigHandler<Configuration> {
 
@@ -43,20 +43,20 @@ public class NewConfigHandler extends ConfigHandler<Configuration> {
 	
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
-        GroupEditorViewModel groupEditorViewModel = ConfigurationServerUI.getDefault().groupEditorViewModel();
-        groupEditorViewModel.setModelAsBlankConfig();
-        UpdatedValue<EditableConfiguration> config = groupEditorViewModel.getConfigModel();
+        ConfigurationViewModels configurationViewModels = ConfigurationServerUI.getDefault().configurationViewModels();
+        configurationViewModels.setModelAsBlankConfig();
+        UpdatedValue<EditableConfiguration> config = configurationViewModels.getConfigModel();
 
 		if (Awaited.returnedValue(config, 1)) {
-            openDialog(config.getValue(), groupEditorViewModel);
+            openDialog(config.getValue(), configurationViewModels);
 		}
 		
 		return null;
 	}
 	
-    private void openDialog(EditableConfiguration config, GroupEditorViewModel groupEditorViewModel) {
+    private void openDialog(EditableConfiguration config, ConfigurationViewModels configurationViewModels) {
         EditConfigDialog editDialog = new EditConfigDialog(shell(), TITLE, SUB_TITLE, config, false, true,
-                groupEditorViewModel);
+                configurationViewModels);
         if (editDialog.open() == Window.OK) {
             if (editDialog.doAsComponent()) {
                 SERVER.saveAsComponent().write(editDialog.getComponent());

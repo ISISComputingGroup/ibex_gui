@@ -28,8 +28,8 @@ import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
 import uk.ac.stfc.isis.ibex.model.Awaited;
 import uk.ac.stfc.isis.ibex.model.UpdatedValue;
 import uk.ac.stfc.isis.ibex.ui.configserver.ConfigurationServerUI;
+import uk.ac.stfc.isis.ibex.ui.configserver.ConfigurationViewModels;
 import uk.ac.stfc.isis.ibex.ui.configserver.dialogs.EditConfigDialog;
-import uk.ac.stfc.isis.ibex.ui.configserver.editing.groups.GroupEditorViewModel;
 
 public class EditCurrentConfigHandler extends ConfigHandler<Configuration> {
 	
@@ -52,19 +52,20 @@ public class EditCurrentConfigHandler extends ConfigHandler<Configuration> {
 	
 	@Override
     public Object execute(ExecutionEvent event) throws ExecutionException {
-        GroupEditorViewModel groupEditorViewModel = ConfigurationServerUI.getDefault().groupEditorViewModel();
-        groupEditorViewModel.setModelAsCurrentConfig();
-        UpdatedValue<EditableConfiguration> config = groupEditorViewModel.getConfigModel();
+        ConfigurationViewModels configurationViewModels = ConfigurationServerUI.getDefault().configurationViewModels();
+        configurationViewModels.setModelAsCurrentConfig();
+        UpdatedValue<EditableConfiguration> config = configurationViewModels.getConfigModel();
 		
 		if (Awaited.returnedValue(config, 1)) {
-            openDialog(config.getValue(), groupEditorViewModel);
+            openDialog(config.getValue(), configurationViewModels);
 		}
 				
 		return null;
 	}
 	
-    private void openDialog(EditableConfiguration config, GroupEditorViewModel groupEditorViewModel) {
-        dialog = new EditConfigDialog(shell(), TITLE, SUB_TITLE, config, false, false, blockName, groupEditorViewModel);
+    private void openDialog(EditableConfiguration config, ConfigurationViewModels configurationViewModels) {
+        dialog = new EditConfigDialog(shell(), TITLE, SUB_TITLE, config, false, false, blockName,
+                configurationViewModels);
 		if (dialog.open() == Window.OK) {
 			if (dialog.doAsComponent()) {
 				SERVER.saveAsComponent().write(dialog.getComponent());
