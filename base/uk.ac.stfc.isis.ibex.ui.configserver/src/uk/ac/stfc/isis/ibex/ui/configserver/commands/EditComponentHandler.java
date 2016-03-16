@@ -25,10 +25,12 @@ import org.eclipse.jface.window.Window;
 
 import uk.ac.stfc.isis.ibex.configserver.configuration.Configuration;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
-import uk.ac.stfc.isis.ibex.epics.adapters.UpdatedObservableAdapter;
 import uk.ac.stfc.isis.ibex.model.Awaited;
 import uk.ac.stfc.isis.ibex.model.UpdatedValue;
+import uk.ac.stfc.isis.ibex.ui.configserver.ConfigurationServerUI;
 import uk.ac.stfc.isis.ibex.ui.configserver.dialogs.ConfigSelectionDialog;
+import uk.ac.stfc.isis.ibex.ui.configserver.dialogs.EditConfigDialog;
+import uk.ac.stfc.isis.ibex.ui.configserver.editing.groups.GroupEditorViewModel;
 
 public class EditComponentHandler extends ConfigHandler<Configuration> {
 	private static final String TITLE = "Edit Component";
@@ -49,19 +51,22 @@ public class EditComponentHandler extends ConfigHandler<Configuration> {
 	}
 		
 	private void edit(String componentName) {
-		// TODO
 		String subTitle = "Editing " + componentName; 
 		
-		UpdatedValue<EditableConfiguration> config = new UpdatedObservableAdapter<>(EDITING.component(componentName));
+        GroupEditorViewModel groupEditorViewModel = ConfigurationServerUI.getDefault().groupEditorViewModel();
+        groupEditorViewModel.setModelAsComponent(componentName);
+        UpdatedValue<EditableConfiguration> config = groupEditorViewModel.getConfigModel();
+
 		if (Awaited.<EditableConfiguration>returnedValue(config, 1)) {
-			openDialog(subTitle, config.getValue());
+            openDialog(subTitle, config.getValue(), groupEditorViewModel);
 		}
 	}
 
-	private void openDialog(String subTitle, EditableConfiguration config) {
-//		EditConfigDialog editDialog = new EditConfigDialog(shell(), TITLE, subTitle, config, true, false);	
-//		if (editDialog.open() == Window.OK) {
-//			configService.write(editDialog.getComponent());
-//		}
+    private void openDialog(String subTitle, EditableConfiguration config, GroupEditorViewModel groupEditorViewModel) {
+        EditConfigDialog editDialog = new EditConfigDialog(shell(), TITLE, subTitle, config, true, false,
+                groupEditorViewModel);
+        if (editDialog.open() == Window.OK) {
+            configService.write(editDialog.getComponent());
+        }
 	}
 }

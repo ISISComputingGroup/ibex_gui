@@ -82,7 +82,7 @@ public class GroupsEditorPanel extends Composite {
         ObservableListContentProvider contentProvider = new ObservableListContentProvider();
         groupsViewer.setContentProvider(contentProvider);
         groupsViewer.setInput(BeanProperties.list(EditableConfiguration.EDITABLE_GROUPS)
-                .observe(groupEditorViewModel.getObservableConfig().getValue()));
+                .observe(groupEditorViewModel.getConfigModel().getValue()));
 		
 		groupList = groupsViewer.getList();
 		GridData gd_viewer = new GridData(SWT.FILL, SWT.FILL, true, true, 2, 6);

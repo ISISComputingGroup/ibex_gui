@@ -25,7 +25,6 @@ import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableGroup;
 import uk.ac.stfc.isis.ibex.epics.adapters.UpdatedObservableAdapter;
 import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
-import uk.ac.stfc.isis.ibex.ui.configserver.ConfigurationServerUI;
 
 /**
  * 
@@ -43,19 +42,42 @@ public class GroupEditorViewModel {
 
     public void bind(Editing editingModel) {
         this.editingModel = editingModel;
-        setNewModel();
+        setModelAsCurrentConfig();
     }
 
-    public void setNewModel() {
-        observableConfigModel = new UpdatedObservableAdapter<>(
-                ConfigurationServerUI.getDefault().groupEditorViewModel().getCurrentConfigModel());
+    public void setModelAsCurrentConfig() {
+        observableConfigModel = new UpdatedObservableAdapter<>(getCurrentConfig());
     }
 
-    public ForwardingObservable<EditableConfiguration> getCurrentConfigModel() {
+    public void setModelAsConfig(String configName) {
+        observableConfigModel = new UpdatedObservableAdapter<>(getConfig(configName));
+    }
+
+    public void setModelAsComponent(String componentName) {
+        observableConfigModel = new UpdatedObservableAdapter<>(getComponent(componentName));
+    }
+
+    public void setModelAsBlankConfig() {
+        observableConfigModel = new UpdatedObservableAdapter<>(getBlankConfig());
+    }
+
+    private ForwardingObservable<EditableConfiguration> getCurrentConfig() {
         return editingModel.currentConfig();
     }
 
-    public UpdatedObservableAdapter<EditableConfiguration> getObservableConfig() {
+    private ForwardingObservable<EditableConfiguration> getConfig(String configName) {
+        return editingModel.config(configName);
+    }
+
+    private ForwardingObservable<EditableConfiguration> getComponent(String componentName) {
+        return editingModel.component(componentName);
+    }
+
+    private ForwardingObservable<EditableConfiguration> getBlankConfig() {
+        return editingModel.blankConfig();
+    }
+
+    public UpdatedObservableAdapter<EditableConfiguration> getConfigModel() {
         return observableConfigModel;
     }
 

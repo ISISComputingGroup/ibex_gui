@@ -53,7 +53,8 @@ public class EditCurrentConfigHandler extends ConfigHandler<Configuration> {
 	@Override
     public Object execute(ExecutionEvent event) throws ExecutionException {
         GroupEditorViewModel groupEditorViewModel = ConfigurationServerUI.getDefault().groupEditorViewModel();
-        UpdatedValue<EditableConfiguration> config = groupEditorViewModel.getObservableConfig();
+        groupEditorViewModel.setModelAsCurrentConfig();
+        UpdatedValue<EditableConfiguration> config = groupEditorViewModel.getConfigModel();
 		
 		if (Awaited.returnedValue(config, 1)) {
             openDialog(config.getValue(), groupEditorViewModel);
@@ -71,8 +72,6 @@ public class EditCurrentConfigHandler extends ConfigHandler<Configuration> {
 				SERVER.setCurrentConfig().write(dialog.getConfig());
 				SERVER.save().write(dialog.getConfig().name());
 			}
-        } else {
-            ConfigurationServerUI.getDefault().groupEditorViewModel().setNewModel();
         }
 
 	}
