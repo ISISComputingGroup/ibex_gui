@@ -21,14 +21,12 @@ package uk.ac.stfc.isis.ibex.ui.configserver.commands;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
-import org.eclipse.jface.window.Window;
 
 import uk.ac.stfc.isis.ibex.configserver.configuration.Configuration;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
 import uk.ac.stfc.isis.ibex.epics.adapters.UpdatedObservableAdapter;
 import uk.ac.stfc.isis.ibex.model.Awaited;
 import uk.ac.stfc.isis.ibex.model.UpdatedValue;
-import uk.ac.stfc.isis.ibex.ui.configserver.dialogs.EditConfigDialog;
 
 public class NewComponentHandler extends ConfigHandler<Configuration> {
 
@@ -51,13 +49,13 @@ public class NewComponentHandler extends ConfigHandler<Configuration> {
 	}
 	
 	private void openDialog(EditableConfiguration config) {
-		EditConfigDialog editDialog = new EditConfigDialog(shell(), TITLE, SUB_TITLE, config, true, true);	
-		if (editDialog.open() == Window.OK) {
-			if (editDialog.doAsComponent()) {
-				SERVER.saveAsComponent().write(editDialog.getComponent());
-			} else {
-				SERVER.saveAs().write(editDialog.getConfig());
-			}
-		}
+//		EditConfigDialog editDialog = new EditConfigDialog(shell(), TITLE, SUB_TITLE, config, true, true);	
+//		if (editDialog.open() == Window.OK) {
+//			if (editDialog.doAsComponent()) {
+//				SERVER.saveAsComponent().write(editDialog.getComponent());
+//			} else {
+//				SERVER.saveAs().write(editDialog.getConfig());
+//			}
+//		}
 	}
 }

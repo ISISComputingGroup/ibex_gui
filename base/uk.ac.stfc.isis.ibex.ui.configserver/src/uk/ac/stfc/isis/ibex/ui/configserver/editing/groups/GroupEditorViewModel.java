@@ -43,6 +43,10 @@ public class GroupEditorViewModel {
 
     public void bind(Editing editingModel) {
         this.editingModel = editingModel;
+        setNewModel();
+    }
+
+    public void setNewModel() {
         observableConfigModel = new UpdatedObservableAdapter<>(
                 ConfigurationServerUI.getDefault().groupEditorViewModel().getCurrentConfigModel());
     }

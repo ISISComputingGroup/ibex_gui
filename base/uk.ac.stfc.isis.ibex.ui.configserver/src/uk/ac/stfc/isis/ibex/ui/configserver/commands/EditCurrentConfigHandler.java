@@ -29,6 +29,7 @@ import uk.ac.stfc.isis.ibex.model.Awaited;
 import uk.ac.stfc.isis.ibex.model.UpdatedValue;
 import uk.ac.stfc.isis.ibex.ui.configserver.ConfigurationServerUI;
 import uk.ac.stfc.isis.ibex.ui.configserver.dialogs.EditConfigDialog;
+import uk.ac.stfc.isis.ibex.ui.configserver.editing.groups.GroupEditorViewModel;
 
 public class EditCurrentConfigHandler extends ConfigHandler<Configuration> {
 	
@@ -50,19 +51,19 @@ public class EditCurrentConfigHandler extends ConfigHandler<Configuration> {
 
 	
 	@Override
-	public Object execute(ExecutionEvent event) throws ExecutionException {		
-        UpdatedValue<EditableConfiguration> config = ConfigurationServerUI.getDefault().groupEditorViewModel()
-                .getObservableConfig();
+    public Object execute(ExecutionEvent event) throws ExecutionException {
+        GroupEditorViewModel groupEditorViewModel = ConfigurationServerUI.getDefault().groupEditorViewModel();
+        UpdatedValue<EditableConfiguration> config = groupEditorViewModel.getObservableConfig();
 		
 		if (Awaited.returnedValue(config, 1)) {
-			openDialog(config.getValue());			
+            openDialog(config.getValue(), groupEditorViewModel);
 		}
 				
 		return null;
 	}
 	
-	private void openDialog(EditableConfiguration config) {
-        dialog = new EditConfigDialog(shell(), TITLE, SUB_TITLE, config, false, false, blockName);
+    private void openDialog(EditableConfiguration config, GroupEditorViewModel groupEditorViewModel) {
+        dialog = new EditConfigDialog(shell(), TITLE, SUB_TITLE, config, false, false, blockName, groupEditorViewModel);
 		if (dialog.open() == Window.OK) {
 			if (dialog.doAsComponent()) {
 				SERVER.saveAsComponent().write(dialog.getComponent());
@@ -70,7 +71,10 @@ public class EditCurrentConfigHandler extends ConfigHandler<Configuration> {
 				SERVER.setCurrentConfig().write(dialog.getConfig());
 				SERVER.save().write(dialog.getConfig().name());
 			}
-		}
+        } else {
+            ConfigurationServerUI.getDefault().groupEditorViewModel().setNewModel();
+        }
+
 	}
 
     public EditConfigDialog getDialog() {

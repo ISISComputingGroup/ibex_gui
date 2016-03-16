@@ -29,7 +29,6 @@ import uk.ac.stfc.isis.ibex.epics.adapters.UpdatedObservableAdapter;
 import uk.ac.stfc.isis.ibex.model.Awaited;
 import uk.ac.stfc.isis.ibex.model.UpdatedValue;
 import uk.ac.stfc.isis.ibex.ui.configserver.dialogs.ConfigSelectionDialog;
-import uk.ac.stfc.isis.ibex.ui.configserver.dialogs.EditConfigDialog;
 
 public class EditConfigHandler extends ConfigHandler<Configuration> {
 
@@ -61,13 +60,13 @@ public class EditConfigHandler extends ConfigHandler<Configuration> {
 	}
 	
 	private void openDialog(String subTitle, EditableConfiguration config) {
-		EditConfigDialog editDialog = new EditConfigDialog(shell(), TITLE, subTitle, config, false, false);	
-		if (editDialog.open() == Window.OK) {
-			if (editDialog.doAsComponent()) {
-				SERVER.saveAsComponent().write(editDialog.getComponent());
-			} else {
-				SERVER.saveAs().write(editDialog.getConfig());
-			}
-		}
+//        EditConfigDialog editDialog = new EditConfigDialog(shell(), TITLE, subTitle, config, false, false);
+//        if (editDialog.open() == Window.OK) {
+//            if (editDialog.doAsComponent()) {
+//                SERVER.saveAsComponent().write(editDialog.getComponent());
+//            } else {
+//                SERVER.saveAs().write(editDialog.getConfig());
+//            }
+//        }
 	}
 }

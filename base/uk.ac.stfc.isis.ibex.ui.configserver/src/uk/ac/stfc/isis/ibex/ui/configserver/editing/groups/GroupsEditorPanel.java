@@ -50,7 +50,6 @@ import org.eclipse.wb.swt.SWTResourceManager;
 
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableGroup;
-import uk.ac.stfc.isis.ibex.ui.configserver.ConfigurationServerUI;
 import uk.ac.stfc.isis.ibex.ui.configserver.dialogs.MessageDisplayer;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.DoubleListEditor;
 
@@ -59,8 +58,6 @@ public class GroupsEditorPanel extends Composite {
 
 	private final DoubleListEditor blocksEditor;
 	
-    private GroupEditorViewModel groupEditorViewModel;
-
 	private Text name;
 	private Label componentDetails;
 	private ListViewer groupsViewer;
@@ -70,11 +67,10 @@ public class GroupsEditorPanel extends Composite {
 
 	private DataBindingContext bindingContext = new DataBindingContext();
 	
-	public GroupsEditorPanel(Composite parent, int style, final MessageDisplayer messageDisplayer) {
+    public GroupsEditorPanel(Composite parent, int style, final MessageDisplayer messageDisplayer,
+            final GroupEditorViewModel groupEditorViewModel) {
 		super(parent, style);
 		
-        groupEditorViewModel = ConfigurationServerUI.getDefault().groupEditorViewModel();
-
         setLayout(new GridLayout(2, false));
 		
 		Group grpGroups = new Group(this, SWT.NONE);
