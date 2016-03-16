@@ -254,7 +254,7 @@ $(pv_value)</tooltip>
       <auto_size>false</auto_size>
       <text>0.0</text>
       <rotation_angle>0.0</rotation_angle>
-      <show_units>true</show_units>
+      <show_units>false</show_units>
       <height>31</height>
       <multiline_input>false</multiline_input>
       <border_width>1</border_width>
@@ -631,7 +631,7 @@ $(pv_value)</tooltip>
       <auto_size>false</auto_size>
       <text>0.0</text>
       <rotation_angle>0.0</rotation_angle>
-      <show_units>true</show_units>
+      <show_units>false</show_units>
       <height>31</height>
       <multiline_input>false</multiline_input>
       <border_width>1</border_width>
@@ -727,7 +727,7 @@ $(pv_value)</tooltip>
       <auto_size>false</auto_size>
       <text>0.0</text>
       <rotation_angle>0.0</rotation_angle>
-      <show_units>true</show_units>
+      <show_units>false</show_units>
       <height>31</height>
       <multiline_input>false</multiline_input>
       <border_width>1</border_width>
@@ -993,7 +993,7 @@ $(pv_value)</tooltip>
       <tooltip>$(pv_name)
 $(pv_value)</tooltip>
       <rules />
-      <enabled>false</enabled>
+      <enabled>true</enabled>
       <wuid>43d91ad1:1537f10870e:-7f4c</wuid>
       <pv_value />
       <scripts />
@@ -1054,7 +1054,7 @@ $(pv_value)</tooltip>
         <keep_wh_ratio>false</keep_wh_ratio>
       </scale_options>
       <visible>true</visible>
-      <pv_name>$(PV_ROOT):FLIPCURR:SP:RB</pv_name>
+      <pv_name>$(PV_ROOT):FLIPCURR:SP:RBV</pv_name>
       <vertical_alignment>1</vertical_alignment>
       <border_color>
         <color name="ISIS_Border" red="0" green="0" blue="0" />
@@ -1455,6 +1455,53 @@ $(pv_value)</tooltip>
     <actions hook="false" hook_all="false" />
     <font>
       <opifont.name fontName="Arial" height="14" style="1">ISIS_Label</opifont.name>
+    </font>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.NativeButton" version="1.0">
+    <toggle_button>true</toggle_button>
+    <border_style>0</border_style>
+    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+    <tooltip>Resets the alarm status</tooltip>
+    <push_action_index>0</push_action_index>
+    <rules />
+    <enabled>true</enabled>
+    <wuid>43d91ad1:1537f10870e:-7d5f</wuid>
+    <release_action_index>0</release_action_index>
+    <pv_value />
+    <text>RESET</text>
+    <scripts />
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <height>40</height>
+    <border_width>1</border_width>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <image></image>
+    <visible>true</visible>
+    <pv_name>$(PV_ROOT):RESET:SP</pv_name>
+    <border_color>
+      <color red="0" green="128" blue="255" />
+    </border_color>
+    <widget_type>Button</widget_type>
+    <width>80</width>
+    <x>605</x>
+    <name>btnReset</name>
+    <y>378</y>
+    <foreground_color>
+      <color red="0" green="0" blue="0" />
+    </foreground_color>
+    <actions hook="false" hook_all="true">
+      <action type="WRITE_PV">
+        <pv_name>$(PV_ROOT):RESET:SP</pv_name>
+        <value>1</value>
+        <timeout>10</timeout>
+        <description></description>
+      </action>
+    </actions>
+    <font>
+      <opifont.name fontName="Segoe UI" height="9" style="0">Default</opifont.name>
     </font>
   </widget>
 </display>
