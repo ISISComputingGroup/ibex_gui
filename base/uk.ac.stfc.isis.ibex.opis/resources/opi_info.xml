@@ -227,6 +227,15 @@
 					</macro>
 				</macros>
 			</value>
-		</entry>	
+		</entry>
+		<entry>
+			<key>LARMOR Spin Flipper</key>
+			<value>
+				<path>SpinFlipper306015.opi</path>
+				<description>The OPI for the LARMOR Spin Flipper.</description>
+				<macros>
+				</macros>
+			</value>
+		</entry>
 	</opis>
 </descriptions>
