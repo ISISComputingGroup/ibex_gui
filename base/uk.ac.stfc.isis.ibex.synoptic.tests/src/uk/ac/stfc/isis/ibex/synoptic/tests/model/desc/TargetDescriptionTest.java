@@ -19,9 +19,10 @@
 
 package uk.ac.stfc.isis.ibex.synoptic.tests.model.desc;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -35,13 +36,14 @@ public class TargetDescriptionTest {
     
     private static final String NAME = "name";
     private static final String NEW_NAME = "new name";
-    private static final String KEY1 = "key1";
-    private static final String KEY2 = "key2";
-    private static final String NEW_KEY = "new value";
-    private static final String VALUE1 = "value1";
-    private static final String VALUE2 = "value2";
-    private static final String NEW_VALUE = "new value";
+    private static final String KEY_0 = "key1";
+    private static final String KEY_1 = "key2";
+    private static final String VALUE_0 = "value1";
+    private static final String VALUE_1 = "value2";
     
+    private static final Property PROPERTY_0 = new Property(KEY_0, VALUE_0);
+    private static final Property PROPERTY_1 = new Property(KEY_1, VALUE_1);
+
     private TargetDescription source;
     
     @Before
@@ -50,10 +52,71 @@ public class TargetDescriptionTest {
         source.setName(NAME);
         source.setType(TargetType.OPI);
 
-        Property prop1 = new Property(KEY1, VALUE1);
-        source.addProperty(prop1);
-        Property prop2 = new Property(KEY2, VALUE2);
-        source.addProperty(prop2);
+        List<String> propertyKeys = new ArrayList<>();
+        propertyKeys.add(KEY_0);
+        propertyKeys.add(KEY_1);
+        source.addProperties(propertyKeys);
+
+        source.replaceProperty(source.getProperties().get(0), PROPERTY_0);
+        source.replaceProperty(source.getProperties().get(1), PROPERTY_1);
+    }
+
+    @Test
+    public void can_get_list_of_properties() {
+        // Act
+        List<Property> properties = source.getProperties();
+        
+        // Assert
+        assertTrue(properties.size() == 2);
+    }
+
+    @Test
+    public void list_of_properties_contains_set_key() {
+        // Act
+        List<Property> properties = source.getProperties();
+
+        // Assert
+        assertTrue(KEY_0.equals(properties.get(0).key()));
+    }
+
+    @Test
+    public void list_of_properties_contains_set_values() {
+        // Act
+        List<Property> properties = source.getProperties();
+
+        // Assert
+        assertTrue(VALUE_0.equals(properties.get(0).value()));
+    }
+
+    @Test
+    public void if_key_is_in_property_list_contains_return_true() {
+        // Assert
+        assertTrue(source.containsProperty(KEY_0));
+    }
+
+    @Test
+    public void if_key_is_not_in_property_list_contains_return_false() {
+        // Assert
+        assertFalse(source.containsProperty("not a key"));
+    }
+
+    @Test
+    public void clear_properties_clears_the_list_of_properties() {
+        // Act
+        source.clearProperties();
+
+        // Assert
+        assertTrue(source.getProperties().size() == 0);
+    }
+
+    @Test
+    public void clear_properties_on_an_empty_list_still_returns_empty_list() {
+        // Act
+        source.clearProperties();
+        source.clearProperties();
+
+        // Assert
+        assertTrue(source.getProperties().size() == 0);
     }
 
     @Test
@@ -102,11 +165,11 @@ public class TargetDescriptionTest {
         TargetDescription copied = new TargetDescription(source);
 
         // Assert
-        for (int i = 1; i < source.properties().size(); i++) {
-            copied.removeProperty(copied.properties().get(i));
-            copied.addProperty(new Property(NEW_KEY, NEW_VALUE));
-            assertTrue(copied.properties().get(i).value().equals(NEW_VALUE));
-            assertFalse(source.properties().get(i).equals(NEW_VALUE));
+        for (int i = 1; i < source.getProperties().size(); i++) {
+            String sourceKey = source.getProperties().get(i).key();
+            String sourceValue = source.getProperties().get(i).value();
+            assertTrue(copied.getProperties().get(i).key().equals(sourceKey));
+            assertTrue(copied.getProperties().get(i).value().equals(sourceValue));
         }
     }
 }

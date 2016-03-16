@@ -20,6 +20,7 @@
 package uk.ac.stfc.isis.ibex.ui.synoptic.editor.target;
 
 import java.util.Collection;
+import java.util.List;
 
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ComboViewer;
@@ -49,16 +50,16 @@ public class TargetNameWidget extends Composite {
 
 	private ComboViewer cmboOpiName;
 	private boolean updateLock;
-	private SynopticViewModel instrument;
+	private SynopticViewModel synopticViewModel;
 	private TargetType type;
 	private Collection<String> availableOPIs;
 
-	public TargetNameWidget(Composite parent, final SynopticViewModel instrument) {
+    public TargetNameWidget(Composite parent, final SynopticViewModel synopticViewModel, Collection<String> availableOPIs) {
 		super(parent, SWT.NONE);
 		
-		this.instrument = instrument;
+		this.synopticViewModel = synopticViewModel;
 		
-		availableOPIs = Opi.getDefault().descriptionsProvider().getOpiList();
+		this.availableOPIs = availableOPIs;
 		
 		createControls(this);
 
@@ -68,8 +69,26 @@ public class TargetNameWidget extends Composite {
 
     private void createControls(Composite parent) {
         GridLayout gridLayout = new GridLayout(2, false);
+        gridLayout.marginHeight = 0;
         gridLayout.marginWidth = 0;
         setLayout(gridLayout);
+
+        cmboOpiName = new ComboViewer(parent, SWT.READ_ONLY);
+        Combo combo = cmboOpiName.getCombo();
+        combo.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
+        cmboOpiName.setContentProvider(new ArrayContentProvider());
+        cmboOpiName.setInput(availableOPIs);
+        cmboOpiName.getCombo().select(-1);
+
+        cmboOpiName.addSelectionChangedListener(new ISelectionChangedListener() {
+            @Override
+            public void selectionChanged(SelectionChangedEvent e) {
+                IStructuredSelection selection = (IStructuredSelection) e.getSelection();
+                String target = (String) selection.getFirstElement();
+
+                updateModel(target);
+            }
+        });
 		
         Button btnSetDefault = new Button(this, SWT.NONE);
         btnSetDefault.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false, 1, 1));
@@ -77,7 +96,7 @@ public class TargetNameWidget extends Composite {
             @Override
             public void widgetSelected(SelectionEvent e) {
                 Collection<TargetDescription> potentialTargets = DefaultTargetForComponent
-                        .defaultTarget(instrument.getFirstSelectedComponent().type());
+                        .defaultTarget(synopticViewModel.getFirstSelectedComponent().type());
 
                 if (potentialTargets.size() == 1) {
                     updateModel(potentialTargets.iterator().next().name());
@@ -101,37 +120,26 @@ public class TargetNameWidget extends Composite {
             }
         });
         btnClearSelection.setText("Clear Target");
-
-		cmboOpiName = new ComboViewer(parent, SWT.READ_ONLY);
-        Combo combo = cmboOpiName.getCombo();
-        combo.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
-		cmboOpiName.setContentProvider(new ArrayContentProvider());
-		cmboOpiName.setInput(availableOPIs);
-		cmboOpiName.getCombo().select(-1);
-		
-		cmboOpiName.addSelectionChangedListener(new ISelectionChangedListener() {
-			@Override
-			public void selectionChanged(SelectionChangedEvent e) {
-				IStructuredSelection selection = (IStructuredSelection) e.getSelection();	
-				String target = (String) selection.getFirstElement();
-				
-				updateModel(target);
-			}
-		});
 	}
 	
 	
 	private void updateModel(String targetName) 	{
-		if (!updateLock && instrument.getFirstSelectedComponent() != null) {
-			TargetDescription target = instrument.getFirstSelectedComponent().target();
-			
-			if (target != null) {
-				target.setName(targetName);
-				target.setType(type);
+        if (!updateLock && synopticViewModel.getFirstSelectedComponent() != null) {
+            TargetDescription target = synopticViewModel.getFirstSelectedComponent().target();
+
+            if (target != null) {
+                target.setName(targetName);
+                target.setType(type);
                 target.setUserSelected(true);
-                instrument.broadcastInstrumentUpdate(UpdateTypes.EDIT_TARGET);
-			}
-		}
+                target.clearProperties();
+                
+                List<String> keys = synopticViewModel.getPropertyKeys(target.name());
+                target.addProperties(keys);
+
+                synopticViewModel.setSelectedProperty(null);
+                synopticViewModel.broadcastInstrumentUpdate(UpdateTypes.EDIT_TARGET);
+            }
+        }
 	}
 	
 	public void setTarget(TargetDescription target) {
