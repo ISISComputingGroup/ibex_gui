@@ -29,7 +29,8 @@ import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.groups.GroupEditorViewModel;
 
 /**
- * 
+ * This class can hold a number of different view models, all with the same
+ * observable configuration.
  */
 public class ConfigurationViewModels {
 

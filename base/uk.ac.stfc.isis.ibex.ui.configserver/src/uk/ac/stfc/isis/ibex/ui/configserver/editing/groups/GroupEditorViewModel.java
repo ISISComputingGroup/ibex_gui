@@ -25,13 +25,12 @@ import uk.ac.stfc.isis.ibex.configserver.editing.EditableGroup;
 import uk.ac.stfc.isis.ibex.epics.adapters.UpdatedObservableAdapter;
 
 /**
- * 
+ * This class contains a view model for the groups editor, responsible for the
+ * display logic of the list of groups with their associated blocks.
  */
 public class GroupEditorViewModel {
 
     private UpdatedObservableAdapter<EditableConfiguration> observableConfigModel;
-
-    boolean canEditSelected = true;
 
     public GroupEditorViewModel() {
     }
@@ -40,41 +39,71 @@ public class GroupEditorViewModel {
         this.observableConfigModel = observableConfigModel;
     }
 
+    public EditableGroup getSelectedGroup(int selectedGroup) {
+        ArrayList<EditableGroup> groups = new ArrayList<>(observableConfigModel.getValue().getEditableGroups());
+        
+        if (selectedGroup < 0) {
+            return null;
+        } else {
+            return groups.get(selectedGroup);
+        }
+    }
+
+    public int getNumberOfGroups() {
+        return observableConfigModel.getValue().getEditableGroups().size();
+    }
+
     public void addNewGroup() {
         observableConfigModel.getValue().addNewGroup();
     }
 
     public void removeGroup(int selectedGroup) {
-        if (canEditSelected && selectedGroup != -1) {
-            ArrayList<EditableGroup> groups = new ArrayList<>(observableConfigModel.getValue().getEditableGroups());
+        EditableGroup group = getSelectedGroup(selectedGroup);
 
-            EditableGroup group = groups.get(selectedGroup);
+        if (group != null) {
             observableConfigModel.getValue().removeGroup(group);
         }
     }
 
     public void moveGroupUp(int selectedGroup) {
-        ArrayList<EditableGroup> groups = new ArrayList<>(observableConfigModel.getValue().getEditableGroups());
-
         if (selectedGroup > 0) {
-            swapGroups(groups, selectedGroup, selectedGroup - 1);
+            swapGroups(selectedGroup, selectedGroup - 1);
         }
     }
 
     public void moveGroupDown(int selectedGroup) {
-        ArrayList<EditableGroup> groups = new ArrayList<>(observableConfigModel.getValue().getEditableGroups());
-
-        if (selectedGroup < groups.size() - 1) {
-            swapGroups(groups, selectedGroup, selectedGroup + 1);
+        if (selectedGroup < getNumberOfGroups() - 1) {
+            swapGroups(selectedGroup, selectedGroup + 1);
         }
     }
 
-    private void swapGroups(ArrayList<EditableGroup> groups, int selectedGroup, int groupToSwapWith) {
-        EditableGroup group1 = groups.get(selectedGroup);
-        EditableGroup group2 = groups.get(groupToSwapWith);
+    private void swapGroups(int selectedGroup, int groupToSwapWith) {
+        EditableGroup group1 = getSelectedGroup(selectedGroup);
+        EditableGroup group2 = getSelectedGroup(groupToSwapWith);
 
         if (group1 != null && group2 != null) {
             observableConfigModel.getValue().swapGroups(group1, group2);
+        }
+    }
+
+    public boolean canEditSelected(int selectionIndex) {
+        EditableGroup group = getSelectedGroup(selectionIndex);
+
+        if (group == null) {
+            return false;
+        } else {
+            return group.isEditable();
+        }
+    }
+
+    public String componentDetail(int selectionIndex) {
+        EditableGroup group = getSelectedGroup(selectionIndex);
+        
+        if (group == null || group.isEditable()) {
+            return "";
+        } else {        
+            String componentName = group.getComponent() != null ? group.getComponent() : "unknown";
+            return "contributed by " + componentName;
         }
     }
 
