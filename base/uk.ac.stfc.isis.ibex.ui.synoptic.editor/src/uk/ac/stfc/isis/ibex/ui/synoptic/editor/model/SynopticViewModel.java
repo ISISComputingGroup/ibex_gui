@@ -44,6 +44,9 @@ import org.eclipse.ui.PlatformUI;
 import uk.ac.stfc.isis.ibex.configserver.editing.DefaultName;
 import uk.ac.stfc.isis.ibex.instrument.Instrument;
 import uk.ac.stfc.isis.ibex.instrument.pv.PVType;
+import uk.ac.stfc.isis.ibex.opis.Opi;
+import uk.ac.stfc.isis.ibex.opis.desc.MacroInfo;
+import uk.ac.stfc.isis.ibex.opis.desc.OpiDescription;
 import uk.ac.stfc.isis.ibex.synoptic.Synoptic;
 import uk.ac.stfc.isis.ibex.synoptic.SynopticModel;
 import uk.ac.stfc.isis.ibex.synoptic.model.ComponentType;
@@ -301,6 +304,7 @@ public class SynopticViewModel {
         if (component != null && (component.target() == null || !component.target().getUserSelected())) {
             target.setUserSelected(isFinalEdit);
             component.setTarget(target);
+            target.addProperties(getPropertyKeys(target.name()));
 			broadcastInstrumentUpdate(UpdateTypes.ADD_TARGET);
 		}
 
@@ -371,26 +375,6 @@ public class SynopticViewModel {
 
 	public Property getSelectedProperty() {
 		return selectedProperty;
-	}
-
-	public void addNewProperty() {
-		Property property = new Property("?", "?");
-		ComponentDescription component = getFirstSelectedComponent();
-		if (component != null && component.target() != null) {
-			component.target().addProperty(property);
-			broadcastInstrumentUpdate(UpdateTypes.NEW_PROPERTY);
-		}
-		setSelectedProperty(property);
-	}
-
-	public void removeSelectedProperty() {
-		ComponentDescription component = getFirstSelectedComponent();
-		if (component != null && component.target() != null) {
-			if (component.target().removeProperty(getSelectedProperty())) {
-				setSelectedProperty(null);
-				broadcastInstrumentUpdate(UpdateTypes.DELETE_PROPERTY);
-			}
-		}
 	}
 
 	public void addPropertySelectionListener(IPropertySelectionListener listener) {
@@ -522,5 +506,25 @@ public class SynopticViewModel {
     private boolean listHasDuplicates(List<String> list) {
         Set<String> set = new HashSet<String>(list);
         return (set.size() < list.size());
+    }
+
+    public OpiDescription getOpi(String targetName) {
+        String name = Opi.getDefault().descriptionsProvider().guessOpiName(targetName);
+        OpiDescription opi = Opi.getDefault().descriptionsProvider().getDescription(name);
+        return opi;
+	}
+    
+    public List<String> getPropertyKeys(String targetName) {
+        List<String> macros = new ArrayList<>();
+
+        for (MacroInfo macro : getOpi(targetName).getMacros()) {
+            macros.add(macro.getName());
+        }
+        
+        return macros;
+    }
+
+    public List<String> getSelectedPropertyKeys() {
+        return getPropertyKeys(getFirstSelectedComponent().target().name());
     }
 }

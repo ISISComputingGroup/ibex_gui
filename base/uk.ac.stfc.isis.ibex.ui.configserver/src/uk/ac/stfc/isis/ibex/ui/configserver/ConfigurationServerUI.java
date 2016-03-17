@@ -40,7 +40,7 @@ public class ConfigurationServerUI extends AbstractUIPlugin {
 	/**
 	 * The constructor
 	 */
-	public ConfigurationServerUI() {
+    public ConfigurationServerUI() {
 	}
 
     public ConfigurationViewModels configurationViewModels() {
@@ -77,7 +77,7 @@ public class ConfigurationServerUI extends AbstractUIPlugin {
 	 * 
 	 * @return the shared instance
 	 */
-	public static ConfigurationServerUI getDefault() {
+    public static ConfigurationServerUI getDefault() {
 		return plugin;
 	}
 

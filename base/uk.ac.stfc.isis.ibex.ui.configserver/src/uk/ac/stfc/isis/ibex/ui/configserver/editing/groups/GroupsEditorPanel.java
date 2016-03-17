@@ -57,6 +57,7 @@ public class GroupsEditorPanel extends Composite {
 
 	private final DoubleListEditor blocksEditor;
 	
+	private EditableConfiguration config;
 	private Text name;
 	private Label componentDetails;
 	private ListViewer groupsViewer;

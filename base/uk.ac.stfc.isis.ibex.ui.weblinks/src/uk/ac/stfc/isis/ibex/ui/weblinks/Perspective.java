@@ -26,6 +26,10 @@ import org.eclipse.wb.swt.ResourceManager;
 
 import uk.ac.stfc.isis.ibex.ui.perspectives.BasePerspective;
 
+/**
+ * Registers the perspective to be displayed in the list (see plugin.xml file
+ * for this package).
+ */
 public class Perspective extends BasePerspective {
 
 	public static final String ID = "uk.ac.stfc.isis.ibex.ui.weblinks.perspective"; //$NON-NLS-1$

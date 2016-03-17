@@ -80,7 +80,7 @@ public class TargetBuilder {
 	private Target opiTarget(TargetDescription description) {		
 		String name = component.name();
 		OpiTarget opiTarget = new OpiTarget(name, description.name());
-		for (Property property : description.properties()) {
+		for (Property property : description.getProperties()) {
 			opiTarget.addProperty(property.key(), property.value());
 		}
 		

@@ -18,14 +18,11 @@
 
 package uk.ac.stfc.isis.ibex.opis;
 
-import java.io.IOException;
-import java.net.URL;
 import java.util.LinkedHashMap;
 
 import org.apache.logging.log4j.Logger;
 import org.csstudio.opibuilder.runmode.RunnerInput;
 import org.csstudio.opibuilder.util.MacrosInput;
-import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.ui.PartInitException;
 
@@ -51,17 +48,4 @@ public abstract class OpiView extends org.csstudio.opibuilder.runmode.OPIView {
     }
 
     protected abstract Path opi();
-
-    protected final Path pathToFileResource(String relativePath) {
-        Path path = null;
-        try {
-            URL url = getClass().getResource(relativePath);
-            String filePath = FileLocator.resolve(url).getPath();
-            path = new Path(filePath);
-        } catch (IOException e) {
-            LOG.catching(e);
-        }
-
-        return path;
-    }
 }

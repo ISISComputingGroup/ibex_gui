@@ -25,6 +25,7 @@ import org.eclipse.jface.window.Window;
 
 import uk.ac.stfc.isis.ibex.configserver.configuration.Configuration;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
+import uk.ac.stfc.isis.ibex.epics.adapters.UpdatedObservableAdapter;
 import uk.ac.stfc.isis.ibex.model.Awaited;
 import uk.ac.stfc.isis.ibex.model.UpdatedValue;
 import uk.ac.stfc.isis.ibex.ui.configserver.ConfigurationServerUI;
@@ -55,7 +56,7 @@ public class EditCurrentConfigHandler extends ConfigHandler<Configuration> {
         ConfigurationViewModels configurationViewModels = ConfigurationServerUI.getDefault().configurationViewModels();
         configurationViewModels.setModelAsCurrentConfig();
         UpdatedValue<EditableConfiguration> config = configurationViewModels.getConfigModel();
-		
+
 		if (Awaited.returnedValue(config, 1)) {
             openDialog(config.getValue(), configurationViewModels);
 		}
