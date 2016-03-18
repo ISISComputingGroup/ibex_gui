@@ -39,6 +39,7 @@ public class BlockSelector extends ConfigHandler<Configuration> {
 	
 	private String blockName = "";
 	private String pvAddress = "";
+    private boolean confirmed = false;
 
 	public BlockSelector() {
 		super(SERVER.setCurrentConfig());
@@ -61,6 +62,7 @@ public class BlockSelector extends ConfigHandler<Configuration> {
 		if (dialog.open() == Window.OK) {
 			blockName = dialog.getBlockName();
 			pvAddress = dialog.getPVAddress();
+            confirmed = true;
 		}
 	}
 	
@@ -72,4 +74,7 @@ public class BlockSelector extends ConfigHandler<Configuration> {
 		return pvAddress;
 	}
 
+    public boolean isConfirmed() {
+        return confirmed;
+    }
 }
