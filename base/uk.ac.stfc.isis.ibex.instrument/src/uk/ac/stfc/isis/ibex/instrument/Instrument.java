@@ -75,6 +75,7 @@ public class Instrument implements BundleActivator {
 		instruments.add(new InstrumentInfo("ALF"));
 		instruments.add(new InstrumentInfo("DEMO"));
 		instruments.add(new InstrumentInfo("IMAT"));
+        instruments.add(new InstrumentInfo("MUONFE"));
 		
 		setInstrument(initialInstrument());	
 	}
