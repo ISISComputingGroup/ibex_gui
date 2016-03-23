@@ -33,7 +33,7 @@ import uk.ac.stfc.isis.ibex.synoptic.model.desc.TargetDescription;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.TargetType;
 
 /**
- * @author kvlb23
+ * Identifies the default targets for the specified component type.
  *
  */
 public final class DefaultTargetForComponent {
