@@ -370,6 +370,7 @@
 		<entry>
 			<key>LARMOR Spin Flipper</key>
 			<value>
+				<type>UNCONFIRMED</type>
 				<path>SpinFlipper306015.opi</path>
 				<description>The OPI for the LARMOR Spin Flipper.</description>
 				<macros>
