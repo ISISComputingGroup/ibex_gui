@@ -35,6 +35,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "opi")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class OpiDescription {
+    private String type;
 	private String path;
 	private String description;
 	
@@ -42,6 +43,10 @@ public class OpiDescription {
 	@XmlElement(name = "macro", type = MacroInfo.class)
 	private List<MacroInfo> macros = new ArrayList<>();
 	
+    public String getType() {
+        return type;
+    }
+
 	public String getPath() {
 		return path;
 	}
@@ -76,7 +81,8 @@ public class OpiDescription {
 	 * @param description the description of the OPI
 	 * @param macros the macros for the OPI
 	 */
-	public OpiDescription(String path, String description, List<MacroInfo> macros) {
+    public OpiDescription(String type, String path, String description, List<MacroInfo> macros) {
+        this.type = type;
 		this.path = path;
 		this.description = description;
 		this.macros = macros;
