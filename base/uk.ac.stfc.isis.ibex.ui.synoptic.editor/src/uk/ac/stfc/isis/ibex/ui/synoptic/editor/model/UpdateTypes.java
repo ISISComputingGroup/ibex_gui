@@ -40,8 +40,6 @@ public enum UpdateTypes {
     EDIT_COMPONENT_FINAL,
     EDIT_PV,
     EDIT_PROPERTY,
-    NEW_PROPERTY,
-    DELETE_PROPERTY,
     ADD_TARGET,
     EDIT_TARGET
 }

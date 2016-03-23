@@ -38,7 +38,7 @@ import uk.ac.stfc.isis.ibex.synoptic.model.desc.TargetType;
 import uk.ac.stfc.isis.ibex.synoptic.xml.XMLUtil;
 
 @SuppressWarnings("checkstyle:methodname")
-public class InstrumentLoadedFromXmlTest extends FileReadingTest {
+public class SynopticLoadedFromXmlTest extends FileReadingTest {
 
     private SynopticDescription instrument;
 	
@@ -49,7 +49,7 @@ public class InstrumentLoadedFromXmlTest extends FileReadingTest {
 
 	@Override
 	protected URL fileLocation() throws MalformedURLException {
-        return getClass().getResource("/uk/ac/stfc/isis/ibex/synoptic/tests/xml/example_instrument.xml");
+        return getClass().getResource("/uk/ac/stfc/isis/ibex/synoptic/tests/xml/example_synoptic.xml");
 	}
 	
 	@Test
@@ -119,12 +119,12 @@ public class InstrumentLoadedFromXmlTest extends FileReadingTest {
 	
 	@Test
 	public void component_target_can_have_properties() {
-		assertFalse(firstComponent().target().properties().isEmpty());
+		assertFalse(firstComponent().target().getProperties().isEmpty());
 	}
 	
 	@Test
 	public void component_target_propety_is_a_key_value_pair() {
-		Property property = firstComponent().target().properties().get(0);
+		Property property = firstComponent().target().getProperties().get(0);
 		assertThat(property.key(), is("M"));
 		assertThat(property.value(), is("1"));
 	}

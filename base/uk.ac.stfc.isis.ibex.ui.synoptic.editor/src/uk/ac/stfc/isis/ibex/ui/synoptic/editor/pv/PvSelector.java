@@ -39,6 +39,7 @@ import uk.ac.stfc.isis.ibex.ui.configserver.dialogs.PvSelectorDialog;
 public class PvSelector extends ConfigHandler<Configuration> {
 	
 	private String pvAddress = "";
+    private boolean confirmed = false;
 
 	public PvSelector() {
 		super(SERVER.setCurrentConfig());
@@ -60,6 +61,7 @@ public class PvSelector extends ConfigHandler<Configuration> {
 		PvSelectorDialog dialog = new PvSelectorDialog(null, config, "");	
 		if (dialog.open() == Window.OK) {
 			pvAddress = dialog.getPVAddress();
+            confirmed = true;
 		}
 	}
 	
@@ -67,4 +69,7 @@ public class PvSelector extends ConfigHandler<Configuration> {
 		return pvAddress;
 	}
 
+    public boolean isConfirmed() {
+        return confirmed;
+    }
 }
