@@ -70,18 +70,10 @@
          point="org.eclipse.core.runtime.products">
       <product
             application="uk.ac.stfc.isis.ibex.product.application"
-            name="IBEX">
+            name="CSS_ISIS">
          <property
                name="appName"
-               value="IBEX">
-         </property>
-         <property
-               name="aboutImage"
-               value="platform:/plugin/uk.ac.stfc.isis.ibex.product/icons/IBEX-icon-web64.gif">
-         </property>
-         <property
-               name="windowImages"
-               value="platform:/plugin/uk.ac.stfc.isis.ibex.product/icons/IBEX-icon-web16.gif,platform:/plugin/uk.ac.stfc.isis.ibex.product/icons/IBEX-icon-web32.gif,platform:/plugin/uk.ac.stfc.isis.ibex.product/icons/IBEX-icon-web48.gif,platform:/plugin/uk.ac.stfc.isis.ibex.product/icons/IBEX-icon-web64.gif">
+               value="CSS_ISIS">
          </property>
       </product>
    </extension>
