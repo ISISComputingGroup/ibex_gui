@@ -55,13 +55,13 @@ public class InstrumentDialog extends Dialog {
 
 	@Override
 	protected Point getInitialSize() {
-		return new Point(300, 150);
+        return new Point(300, 400);
 	}
 	
 	@Override
 	protected Control createDialogArea(Composite parent) {
 		Composite container = (Composite) super.createDialogArea(parent);
-		selector = new InstrumentSelectionPanel(parent, SWT.NONE, MainMenuUI.INSTRUMENT.instruments());
+        selector = new InstrumentSelectionPanel(container, SWT.NONE, MainMenuUI.INSTRUMENT.instruments());
 		selector.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		
 		return container;
