@@ -44,14 +44,11 @@ import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
  * 
  */
 public class InstrumentTable extends Composite {
-    private Collection<InstrumentInfo> instruments;
     private TableViewer viewer;
     private TableColumnLayout tableColumnLayout;
 
     public InstrumentTable(Composite parent, int style, int tableStyle, Collection<InstrumentInfo> instruments) {
         super(parent, SWT.NONE);
-
-        this.instruments = instruments;
 
         GridLayout compositeLayout = new GridLayout(1, false);
         compositeLayout.marginHeight = 0;
@@ -59,7 +56,7 @@ public class InstrumentTable extends Composite {
         setLayout(compositeLayout);
         setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 
-        createTable(this, tableStyle);
+        createTable(this, tableStyle, instruments);
     }
 
     public void addSelectionChangedListener(ISelectionChangedListener listener) {
@@ -70,13 +67,7 @@ public class InstrumentTable extends Composite {
         viewer.removeSelectionChangedListener(listener);
     }
 
-    public InstrumentInfo getSelectedInstrument() {
-        Table table = viewer.getTable();
-        String selectedInstrumentName = table.getItem(table.getSelectionIndex()).getText(0);
-        return getInstrumentFromName(selectedInstrumentName);
-    }
-
-    private void createTable(Composite parent, int tableStyle) {
+    private void createTable(Composite parent, int tableStyle, Collection<InstrumentInfo> instruments) {
         Composite tableComposite = new Composite(parent, SWT.NONE);
         tableComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 
@@ -109,15 +100,5 @@ public class InstrumentTable extends Composite {
         });
 
         tableColumnLayout.setColumnData(nameColumn, new ColumnWeightData(100, false));
-    }
-
-    private InstrumentInfo getInstrumentFromName(String name) {
-        for (InstrumentInfo instrument : instruments) {
-            if (name.equals(instrument.name())) {
-                return instrument;
-            }
-        }
-
-        return new InstrumentInfo("");
     }
 }
