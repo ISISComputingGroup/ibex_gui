@@ -21,9 +21,10 @@ package uk.ac.stfc.isis.ibex.ui.mainmenu.instrument;
 
 import java.util.Collection;
 
+import org.eclipse.jface.viewers.ISelectionChangedListener;
+import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -87,16 +88,14 @@ public class InstrumentSelectionPanel extends Composite {
         GridData gdInstrumentTable = new GridData(SWT.FILL, SWT.FILL, true, true, 3, 1);
         gdInstrumentTable.heightHint = 300;
         instrumentTable.setLayoutData(gdInstrumentTable);
-        instrumentTable.addSelectionListener(new SelectionListener() {
+        instrumentTable.addSelectionChangedListener(new ISelectionChangedListener() {
             @Override
-            public void widgetSelected(SelectionEvent e) {
-                InstrumentInfo selectedInstrument = instrumentTable.getSelectedInstrument();
-                txtInstrument.setText(selectedInstrument.name());
-            }
-
-            @Override
-            public void widgetDefaultSelected(SelectionEvent e) {
-                // Can add double click behaviour here...
+            public void selectionChanged(SelectionChangedEvent event) {
+                IStructuredSelection selection = (IStructuredSelection) event.getSelection();
+                if (selection.size() > 0) {
+                    InstrumentInfo instrument = (InstrumentInfo) selection.getFirstElement();
+                    txtInstrument.setText(instrument.name());
+                }
             }
         });
     }
