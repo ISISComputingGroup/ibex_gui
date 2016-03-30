@@ -25,6 +25,8 @@ import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.ModifyEvent;
+import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -63,13 +65,12 @@ public class InstrumentSelectionPanel extends Composite {
         GridData gdInstrument = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
         gdInstrument.widthHint = 130;
         txtInstrument.setLayoutData(gdInstrument);
-
-//        txtInstrument.addModifyListener(new ModifyListener() {
-//            @Override
-//            public void modifyText(ModifyEvent arg0) {
-//                blockPVTable.setSearch(txtInstrument.getText());
-//            }
-//        });
+        txtInstrument.addModifyListener(new ModifyListener() {
+            @Override
+            public void modifyText(ModifyEvent arg0) {
+                instrumentTable.setSearch(txtInstrument.getText());
+            }
+        });
 
         final Button btnClear = new Button(grpInstrument, SWT.NONE);
         btnClear.setText("Clear");

@@ -46,6 +46,7 @@ import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
 public class InstrumentTable extends Composite {
     private TableViewer viewer;
     private TableColumnLayout tableColumnLayout;
+    private InstrumentNameSearch search;
 
     public InstrumentTable(Composite parent, int style, int tableStyle, Collection<InstrumentInfo> instruments) {
         super(parent, SWT.NONE);
@@ -57,6 +58,9 @@ public class InstrumentTable extends Composite {
         setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 
         createTable(this, tableStyle, instruments);
+
+        search = new InstrumentNameSearch();
+        viewer.addFilter(search);
     }
 
     public void addSelectionChangedListener(ISelectionChangedListener listener) {
@@ -65,6 +69,11 @@ public class InstrumentTable extends Composite {
 
     public void removeSelectionChangedListener(ISelectionChangedListener listener) {
         viewer.removeSelectionChangedListener(listener);
+    }
+
+    public void setSearch(String searchText) {
+        search.setSearchText(searchText);
+        viewer.refresh();
     }
 
     private void createTable(Composite parent, int tableStyle, Collection<InstrumentInfo> instruments) {
