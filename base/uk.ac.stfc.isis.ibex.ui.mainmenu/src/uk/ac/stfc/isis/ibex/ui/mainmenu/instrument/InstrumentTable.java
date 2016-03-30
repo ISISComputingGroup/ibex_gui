@@ -24,6 +24,12 @@ package uk.ac.stfc.isis.ibex.ui.mainmenu.instrument;
 
 import java.util.Collection;
 
+import org.eclipse.jface.layout.TableColumnLayout;
+import org.eclipse.jface.viewers.ArrayContentProvider;
+import org.eclipse.jface.viewers.ColumnLabelProvider;
+import org.eclipse.jface.viewers.ColumnWeightData;
+import org.eclipse.jface.viewers.TableViewer;
+import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.GridData;
@@ -31,7 +37,6 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
-import org.eclipse.swt.widgets.TableItem;
 
 import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
 
@@ -39,10 +44,9 @@ import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
  * 
  */
 public class InstrumentTable extends Composite {
-    private static final int TABLE_HEIGHT = 100;
-
-    private Table table;
     private Collection<InstrumentInfo> instruments;
+    private TableViewer viewer;
+    private TableColumnLayout tableColumnLayout;
 
     public InstrumentTable(Composite parent, int style, int tableStyle, Collection<InstrumentInfo> instruments) {
         super(parent, SWT.NONE);
@@ -55,53 +59,56 @@ public class InstrumentTable extends Composite {
         setLayout(compositeLayout);
         setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 
-        createControls(this, tableStyle);
-        setRows(this.instruments);
+        createTable(this, tableStyle);
     }
 
     public void addSelectionListener(SelectionListener listener) {
-        table.addSelectionListener(listener);
+        viewer.getTable().addSelectionListener(listener);
     }
 
     public void removeSelectionListener(SelectionListener listener) {
-        table.removeSelectionListener(listener);
+        viewer.getTable().removeSelectionListener(listener);
     }
 
     public InstrumentInfo getSelectedInstrument() {
+        Table table = viewer.getTable();
         String selectedInstrumentName = table.getItem(table.getSelectionIndex()).getText(0);
         return getInstrumentFromName(selectedInstrumentName);
     }
 
-    private void createControls(Composite parent, int tableStyle) {
-        Composite controlComposite = new Composite(parent, SWT.NONE);
-        GridLayout glControlComposite = new GridLayout(1, false);
-        glControlComposite.marginHeight = 0;
-        glControlComposite.marginWidth = 0;
-        controlComposite.setLayout(glControlComposite);
-        controlComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+    private void createTable(Composite parent, int tableStyle) {
+        Composite tableComposite = new Composite(parent, SWT.NONE);
+        tableComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 
-        table = new Table(controlComposite, tableStyle);// , SWT.BORDER |
-                                                   // SWT.FULL_SELECTION);
-        GridData gdTable = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
-        gdTable.minimumHeight = TABLE_HEIGHT;
-        table.setLayoutData(gdTable);
+        viewer = new TableViewer(tableComposite, tableStyle);
+        viewer.setContentProvider(ArrayContentProvider.getInstance());
+        viewer.setInput(instruments);
+
+        Table table = viewer.getTable();
         table.setHeaderVisible(true);
         table.setLinesVisible(true);
 
-        TableColumn nameColumn = new TableColumn(table, SWT.NULL);
-        nameColumn.setText("Name");
+        tableColumnLayout = new TableColumnLayout();
+        tableComposite.setLayout(tableColumnLayout);
+
+        createColumn();
+        viewer.refresh();
     }
 
-    private void setRows(Collection<InstrumentInfo> instruments) {
-        table.removeAll();
+    private void createColumn() {
+        TableViewerColumn nameColViewer = new TableViewerColumn(viewer, SWT.LEFT);
+        TableColumn nameColumn = nameColViewer.getColumn();
+        nameColumn.setText("Name");
+        nameColumn.setResizable(false);
+        nameColViewer.setLabelProvider(new ColumnLabelProvider() {
+            @Override
+            public String getText(Object element) {
+                InstrumentInfo instrument = (InstrumentInfo) element;
+                return instrument.name();
+            }
+        });
 
-        for (InstrumentInfo instrument : instruments) {
-            TableItem item = new TableItem(table, SWT.NULL);
-            item.setText(0, instrument.name());
-        }
-
-        table.setEnabled(instruments.size() > 0);
-        table.getColumn(0).pack();
+        tableColumnLayout.setColumnData(nameColumn, new ColumnWeightData(100, false));
     }
 
     private InstrumentInfo getInstrumentFromName(String name) {
