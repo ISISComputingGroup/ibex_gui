@@ -36,7 +36,8 @@ public class InstrumentDialog extends Dialog {
 	private static final String TITLE = "Select an Instrument";
 	
 	private InstrumentInfo selectedInstrument;
-	private InstrumentSelectionPanel selector;
+    private InstrumentSelectionPanel selectorPanel;
+    private InstrumentSelectionViewModel selectorViewModel;
 	
 	public InstrumentInfo selectedInstrument() {
 		return selectedInstrument;
@@ -44,7 +45,8 @@ public class InstrumentDialog extends Dialog {
 	
 	protected InstrumentDialog(Shell parentShell) {
 		super(parentShell);
-		// TODO Auto-generated constructor stub
+
+        selectorViewModel = new InstrumentSelectionViewModel(MainMenuUI.INSTRUMENT.instruments());
 	}
 	
 	@Override
@@ -61,15 +63,21 @@ public class InstrumentDialog extends Dialog {
 	@Override
 	protected Control createDialogArea(Composite parent) {
 		Composite container = (Composite) super.createDialogArea(parent);
-        selector = new InstrumentSelectionPanel(container, SWT.NONE, MainMenuUI.INSTRUMENT.instruments());
-		selector.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+        selectorPanel = new InstrumentSelectionPanel(container, SWT.NONE, selectorViewModel);
+        selectorPanel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		
 		return container;
 	}
 	
 	@Override
 	protected void okPressed() {
-		selectedInstrument = selector.getSelected();
-		super.okPressed();
+        selectedInstrument = null;
+        if (selectorViewModel.selectedInstrumentExists()) {
+            selectedInstrument = selectorViewModel.getSelectedInstrument();
+        } else if (!selectorViewModel.getSelectedName().isEmpty()) {
+            selectedInstrument = new InstrumentInfo(selectorViewModel.getSelectedName());
+        }
+
+        super.okPressed();
 	}
 }

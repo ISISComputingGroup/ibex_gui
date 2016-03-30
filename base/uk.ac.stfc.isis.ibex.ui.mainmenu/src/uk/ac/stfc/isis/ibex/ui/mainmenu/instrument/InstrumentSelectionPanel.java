@@ -21,6 +21,9 @@ package uk.ac.stfc.isis.ibex.ui.mainmenu.instrument;
 
 import java.util.Collection;
 
+import org.eclipse.core.databinding.DataBindingContext;
+import org.eclipse.core.databinding.beans.BeanProperties;
+import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
@@ -42,14 +45,11 @@ import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
 
 public class InstrumentSelectionPanel extends Composite {
 
-    private Text txtInstrument;
+    private Text txtSelectedName;
     private InstrumentTable instrumentTable;
-    private Collection<InstrumentInfo> instruments;
 
-    public InstrumentSelectionPanel(Composite parent, int style, Collection<InstrumentInfo> instruments) {
+    public InstrumentSelectionPanel(Composite parent, int style, InstrumentSelectionViewModel viewModel) {
         super(parent, style);
-
-        this.instruments = instruments;
 
         setLayout(new FillLayout(SWT.HORIZONTAL));
 
@@ -60,24 +60,26 @@ public class InstrumentSelectionPanel extends Composite {
         createInstrumentLabel(grpInstrument);
         createInstrumentTextBox(grpInstrument);
         createClearButton(grpInstrument);
-        createTable(grpInstrument);
+        createTable(grpInstrument, viewModel.getInstruments());
+
+        bindModel(viewModel);
     }
 
-    public InstrumentInfo getSelected() {
-        String selectedInstrumentName = txtInstrument.getText();
-
-        if (selectedInstrumentName.isEmpty()) {
-            return null;
-        }
-
-        for (InstrumentInfo instrument : instruments) {
-            if (selectedInstrumentName.toUpperCase().equals(instrument.name().toUpperCase())) {
-                return instrument;
-            }
-        }
-            
-        return new InstrumentInfo(selectedInstrumentName);
-    }
+//    public InstrumentInfo getSelected() {
+//        String selectedInstrumentName = txtSelectedName.getText();
+//
+//        if (selectedInstrumentName.isEmpty()) {
+//            return null;
+//        }
+//
+//        for (InstrumentInfo instrument : instruments) {
+//            if (selectedInstrumentName.toUpperCase().equals(instrument.name().toUpperCase())) {
+//                return instrument;
+//            }
+//        }
+//            
+//        return new InstrumentInfo(selectedInstrumentName);
+//    }
 
     private void createInstrumentLabel(Composite parent) {
         Label lblInstrument = new Label(parent, SWT.NONE);
@@ -86,14 +88,14 @@ public class InstrumentSelectionPanel extends Composite {
     }
 
     private void createInstrumentTextBox(Composite parent) {
-        txtInstrument = new Text(parent, SWT.BORDER);
+        txtSelectedName = new Text(parent, SWT.BORDER);
         GridData gdInstrument = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
         gdInstrument.widthHint = 130;
-        txtInstrument.setLayoutData(gdInstrument);
-        txtInstrument.addModifyListener(new ModifyListener() {
+        txtSelectedName.setLayoutData(gdInstrument);
+        txtSelectedName.addModifyListener(new ModifyListener() {
             @Override
             public void modifyText(ModifyEvent arg0) {
-                instrumentTable.setSearch(txtInstrument.getText());
+                instrumentTable.setSearch(txtSelectedName.getText());
             }
         });
     }
@@ -105,7 +107,7 @@ public class InstrumentSelectionPanel extends Composite {
             @Override
             public void handleEvent(Event event) {
                 if (event.widget == btnClear) {
-                    txtInstrument.setText("");
+                    txtSelectedName.setText("");
                 }
             }
         };
@@ -113,9 +115,8 @@ public class InstrumentSelectionPanel extends Composite {
         btnClear.addListener(SWT.Selection, clearListener);
     }
 
-    private void createTable(Composite parent) {
-        instrumentTable = new InstrumentTable(parent, SWT.NONE, SWT.V_SCROLL | SWT.NO_SCROLL | SWT.FULL_SELECTION,
-                this.instruments);
+    private void createTable(Composite parent, Collection<InstrumentInfo> instruments) {
+        instrumentTable = new InstrumentTable(parent, SWT.NONE, SWT.V_SCROLL | SWT.NO_SCROLL | SWT.FULL_SELECTION, instruments);
         GridData gdInstrumentTable = new GridData(SWT.FILL, SWT.FILL, true, true, 3, 1);
         gdInstrumentTable.heightHint = 300;
         instrumentTable.setLayoutData(gdInstrumentTable);
@@ -125,9 +126,16 @@ public class InstrumentSelectionPanel extends Composite {
                 IStructuredSelection selection = (IStructuredSelection) event.getSelection();
                 if (selection.size() > 0) {
                     InstrumentInfo instrument = (InstrumentInfo) selection.getFirstElement();
-                    txtInstrument.setText(instrument.name());
+                    txtSelectedName.setText(instrument.name());
                 }
             }
         });
+    }
+
+    private void bindModel(InstrumentSelectionViewModel viewModel) {
+        DataBindingContext bindingContext = new DataBindingContext();
+        
+        bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(txtSelectedName),
+                BeanProperties.value("selectedName").observe(viewModel));
     }
 }
