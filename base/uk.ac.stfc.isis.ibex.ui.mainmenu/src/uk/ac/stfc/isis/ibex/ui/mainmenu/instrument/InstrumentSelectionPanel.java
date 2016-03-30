@@ -109,7 +109,7 @@ public class InstrumentSelectionPanel extends Composite {
         }
 
         for (InstrumentInfo instrument : instruments) {
-            if (selectedInstrumentName.equals(instrument.name())) {
+            if (selectedInstrumentName.toUpperCase().equals(instrument.name().toUpperCase())) {
                 return instrument;
             }
         }
