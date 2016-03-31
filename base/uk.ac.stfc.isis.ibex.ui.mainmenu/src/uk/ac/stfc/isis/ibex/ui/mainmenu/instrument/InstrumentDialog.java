@@ -20,6 +20,7 @@
 package uk.ac.stfc.isis.ibex.ui.mainmenu.instrument;
 
 import org.eclipse.jface.dialogs.Dialog;
+import org.eclipse.jface.window.Window;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
@@ -75,7 +76,14 @@ public class InstrumentDialog extends Dialog {
         if (selectorViewModel.selectedInstrumentExists()) {
             selectedInstrument = selectorViewModel.getSelectedInstrument();
         } else if (!selectorViewModel.getSelectedName().isEmpty()) {
-            selectedInstrument = new InstrumentInfo(selectorViewModel.getSelectedName());
+//            selectedInstrument = new InstrumentInfo(selectorViewModel.getSelectedName());
+            CustomInstrumentConfigDialog customConfigDialog = new CustomInstrumentConfigDialog(null,
+                    selectorViewModel.getSelectedName());
+            if (customConfigDialog.open() == Window.OK) {
+                selectedInstrument = customConfigDialog.getSelectedCustomInstrument();
+            } else {
+                return;
+            }
         }
 
         super.okPressed();
