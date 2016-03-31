@@ -4,6 +4,7 @@
 		<entry>
 			<key>Analyser</key>
 			<value>
+				<type>ANALYSER</type>
 				<path>analyser.opi</path>
 				<description>The OPI for the analyser. No properties required.</description>
 				<macros>
@@ -13,6 +14,7 @@
 		<entry>
 			<key>Beam-stop</key>
 			<value>
+				<type>BEAMSTOP</type>
 				<path>beamstop.opi</path>
 				<description>Description required. No properties required.</description>
 				<macros>
@@ -22,6 +24,7 @@
 		<entry>
 			<key>Caen HV</key>
 			<value>
+				<type>CAEN</type>
 				<path>HV/HVMonitorSummaryDisplay.opi</path>
 				<description>Summary Display for Caens (Maintenance of list via the button on this OPI). No properties required.</description>
 				<macros>
@@ -30,7 +33,8 @@
 		</entry>
         <entry>
             <key>Double Monitor</key>		
-            <value>		
+            <value>	
+                <type>MONITOR</type>
                 <path>double_monitor.opi</path>		
                 <description>The OPI for a double fixed monitor.</description>		
                 <macros>		
@@ -60,6 +64,7 @@
  		<entry>
 			<key>Eurotherm</key>
 			<value>
+				<type>EUROTHERM</type>
 				<path>Eurotherm.opi</path>
 				<description>The OPI for the standard Eurotherm controller.</description>
                 <macros>
@@ -73,6 +78,7 @@
 		<entry>
 			<key>In Out Monitor</key>
 			<value>
+				<type>MOVINGMONITOR</type>
 				<path>inout_monitor.opi</path>
 				<description>Description required.</description>
 				<macros>
@@ -94,6 +100,7 @@
 		<entry>
 			<key>Jaws</key>
 			<value>
+				<type>UNCONFIRMED</type>
 				<path>Jaws.opi</path>
 				<description>Description required.</description>
 				<macros>
@@ -107,6 +114,7 @@
 		<entry>
 			<key>Julabo FL300</key>
 			<value>
+				<type>JULABO</type>
 				<path>JulaboFL300.opi</path>
 				<description>Description required. No properties required.</description>
 				<macros>
@@ -116,6 +124,7 @@
 		<entry>
 			<key>Julabo FP50</key>
 			<value>
+				<type>JULABO</type>
 				<path>JulaboFP50.opi</path>
 				<description>Description required.</description>
 				<macros>
@@ -129,6 +138,7 @@
 		<entry>
 			<key>Kepco</key>
 			<value>
+				<type>KEPCO</type>
 				<path>kepco.opi</path>
 				<description>Description required. No properties required.</description>
 				<macros>
@@ -138,6 +148,7 @@
 		<entry>
 			<key>Mk3 Chopper</key>
 			<value>
+				<type>CHOPPER</type>
 				<path>Mk3Chopper.opi</path>
 				<description>Description required. No properties required.</description>
 				<macros>
@@ -147,6 +158,7 @@
 		<entry>
 			<key>Monitor</key>
 			<value>
+				<type>MONITOR</type>
 				<path>monitor.opi</path>
 				<description>Description required.</description>
 				<macros>
@@ -172,6 +184,7 @@
 		<entry>
 			<key>Pinhole Selector</key>
 			<value>
+				<type>PINHOLESELECTOR</type>
 				<path>pinhole_selector\pinhole_selector.opi</path>
 				<description>The OPI for the pinhole selector.</description>
 				<macros>
@@ -189,6 +202,7 @@
 		<entry>
 			<key>Pixelman</key>
 			<value>
+				<type>UNCONFIRMED</type>
 				<path>pixelman.opi</path>
 				<description>Description required.</description>
 				<macros>
@@ -202,6 +216,7 @@
 		<entry>
 			<key>Polariser</key>
 			<value>
+				<type>POLARISER</type>
 				<path>polariser.opi</path>
 				<description>Description required.  No properties required.</description>
 				<macros>
@@ -211,6 +226,7 @@
 		<entry>
 			<key>Rotating Bench</key>
 			<value>
+				<type>ROTATINGBENCH</type>
 				<path>rotating_bench.opi</path>
 				<description>The OPI for the LARMOR rotating bench.</description>
 				<macros>
@@ -224,6 +240,7 @@
 		<entry>
 			<key>Sample changer</key>
 			<value>
+				<type>SAMPLECHANGER</type>
 				<path>stage/sample_changer.opi</path>
 				<description>Description required. No properties required.</description>
 				<macros>
@@ -233,6 +250,7 @@
 		<entry>
 			<key>Sample stage</key>
 			<value>
+				<type>SAMPLESTACK</type>
 				<path>stage/sample.opi</path>
 				<description>Description required. No properties required.</description>
 				<macros>
@@ -242,6 +260,7 @@
 		<entry>
 			<key>SD Test</key>
 			<value>
+				<type>UNCONFIRMED</type>
 				<path>SDTEST.opi</path>
 				<description>Description required.</description>
 				<macros>
@@ -251,6 +270,7 @@
 		<entry>
 			<key>Single Stage</key>
 			<value>
+				<type>SINGLESTAGE</type>
 				<path>single_stage.opi</path>
 				<description>Displays a single Motor along with a designated ID</description>
 				<macros>
@@ -268,6 +288,7 @@
 		<entry>
 			<key>Slit 1</key>
 			<value>
+				<type>JAWS</type>
 				<path>slit1.opi</path>
 				<description>Description required.</description>
 				<macros>
@@ -309,6 +330,7 @@
 		<entry>
 			<key>Slit motors</key>
 			<value>
+				<type>UNCONFIRMED</type>
 				<path>slit_motors.opi</path>
 				<description>Description required.</description>
 				<macros>
@@ -334,6 +356,7 @@
 		<entry>
 			<key>TPG300</key>
 			<value>
+				<type>UNCONFIRMED</type>
 				<path>TPG300.opi</path>
 				<description>Description required.</description>
 				<macros>
@@ -341,6 +364,16 @@
 						<name>N</name>
 						<description>Description required.</description>
 					</macro>                  
+				</macros>
+			</value>
+		</entry>
+		<entry>
+			<key>LARMOR Spin Flipper</key>
+			<value>
+				<type>UNCONFIRMED</type>
+				<path>SpinFlipper306015.opi</path>
+				<description>The OPI for the LARMOR Spin Flipper.</description>
+				<macros>
 				</macros>
 			</value>
 		</entry>

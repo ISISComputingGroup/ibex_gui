@@ -68,7 +68,7 @@ public class DescriptionsProvider extends Provider {
 	
 	public OpiDescription getDescription(String name) {
 		if (!descriptions.getOpis().containsKey(name)) {
-            return new OpiDescription("", "", new ArrayList<MacroInfo>());
+            return new OpiDescription("", "", "", new ArrayList<MacroInfo>());
 		}
 		
 		return descriptions.getOpis().get(name);
