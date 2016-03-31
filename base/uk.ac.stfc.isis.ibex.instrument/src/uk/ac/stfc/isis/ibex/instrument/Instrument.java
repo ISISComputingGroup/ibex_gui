@@ -21,6 +21,8 @@ package uk.ac.stfc.isis.ibex.instrument;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -71,12 +73,17 @@ public class Instrument implements BundleActivator {
 		
 		localhost = new LocalHostInstrumentInfo();
 		instruments.add(localhost);
-		instruments.add(new InstrumentInfo("LARMOR"));
-		instruments.add(new InstrumentInfo("ALF"));
-		instruments.add(new InstrumentInfo("DEMO"));
-		instruments.add(new InstrumentInfo("IMAT"));
-        instruments.add(new InstrumentInfo("MUONFE"));
 		
+        List<InstrumentInfo> instrumentsAlphabetical = new ArrayList<>();
+        instrumentsAlphabetical.add(new InstrumentInfo("LARMOR"));
+        instrumentsAlphabetical.add(new InstrumentInfo("ALF"));
+        instrumentsAlphabetical.add(new InstrumentInfo("DEMO"));
+        instrumentsAlphabetical.add(new InstrumentInfo("IMAT"));
+        instrumentsAlphabetical.add(new InstrumentInfo("MUONFE"));
+        Collections.sort(instrumentsAlphabetical, alphabeticalNameComparator());
+
+        instruments.addAll(instrumentsAlphabetical);
+
 		setInstrument(initialInstrument());	
 	}
     
@@ -181,4 +188,13 @@ public class Instrument implements BundleActivator {
             e2.printStackTrace();
         }
 	}
+
+    private Comparator<InstrumentInfo> alphabeticalNameComparator() {
+        return new Comparator<InstrumentInfo>() {
+            @Override
+            public int compare(InstrumentInfo info1, InstrumentInfo info2) {
+                return info1.name().compareTo(info2.name());
+            }
+        };
+    }
 }
