@@ -100,7 +100,6 @@ public class CustomInstrumentConfigViewModelTest {
     public void pv_prefix_can_be_validated_at_initialisation() {
         // Arrange
         String expectedName = "instrument_name";
-        String pvPrefix = "valid";
         CustomIntrumentConfigViewModel viewModel = new CustomIntrumentConfigViewModel(expectedName);
         assertFalse(viewModel.getError().isError());
 

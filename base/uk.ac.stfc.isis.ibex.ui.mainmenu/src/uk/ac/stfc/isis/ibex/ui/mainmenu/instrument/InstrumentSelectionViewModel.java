@@ -32,6 +32,7 @@ public class InstrumentSelectionViewModel extends ErrorMessageProvider {
     private String selectedName = "";
 
     public InstrumentSelectionViewModel(Collection<InstrumentInfo> instruments) {
+        checkPreconditions(instruments);
         this.instruments = instruments;
     }
 
@@ -98,5 +99,11 @@ public class InstrumentSelectionViewModel extends ErrorMessageProvider {
         }
 
         return names;
+    }
+
+    private void checkPreconditions(Collection<InstrumentInfo> instruments) {
+        if (instruments == null) {
+            throw new IllegalArgumentException("Input instruments cannot be null");
+        }
     }
 }
