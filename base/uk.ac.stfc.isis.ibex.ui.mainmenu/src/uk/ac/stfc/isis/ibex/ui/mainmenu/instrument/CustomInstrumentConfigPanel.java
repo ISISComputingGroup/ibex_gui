@@ -19,6 +19,9 @@
 
 package uk.ac.stfc.isis.ibex.ui.mainmenu.instrument;
 
+import org.eclipse.core.databinding.DataBindingContext;
+import org.eclipse.core.databinding.beans.BeanProperties;
+import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
@@ -28,18 +31,12 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 
-import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
-import uk.ac.stfc.isis.ibex.instrument.custom.CustomInstrumentInfo;
-
 public class CustomInstrumentConfigPanel extends Composite {
 
-    private String instrumentName;
     private Text txtPVPrefix;
 
-    public CustomInstrumentConfigPanel(Composite parent, int style, String instrumentName) {
+    public CustomInstrumentConfigPanel(Composite parent, int style, CustomIntrumentConfigViewModel viewModel) {
         super(parent, style);
-
-        this.instrumentName = instrumentName;
 
         setLayout(new FillLayout(SWT.HORIZONTAL));
 
@@ -47,8 +44,8 @@ public class CustomInstrumentConfigPanel extends Composite {
         grpPVPrefix.setText("Instrument PV Prefix");
         grpPVPrefix.setLayout(new GridLayout(2, false));
 
-        String warningMsg = "The instrument \"" + instrumentName
-                + "\" is unknown.\nTo use this instrument please configure the correct PV prefix below.";
+        String warningMsg = "Please configure a PV prefix for the unknown instrument \"" + viewModel.getInstrumentName()
+                + "\"";
         Label lblWarning = new Label(grpPVPrefix, SWT.NONE);
         lblWarning.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1));
         lblWarning.setText(warningMsg);
@@ -59,12 +56,16 @@ public class CustomInstrumentConfigPanel extends Composite {
 
         txtPVPrefix = new Text(grpPVPrefix, SWT.BORDER);
         GridData gdTxtPVPrefix = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
-        gdTxtPVPrefix.widthHint = 150;
+        gdTxtPVPrefix.widthHint = 250;
         txtPVPrefix.setLayoutData(gdTxtPVPrefix);
+
+        bindModel(viewModel);
     }
 
-    public InstrumentInfo getSelected() {
-        String t = txtPVPrefix.getText();
-        return new CustomInstrumentInfo(instrumentName, txtPVPrefix.getText());
+    private void bindModel(CustomIntrumentConfigViewModel viewModel) {
+        DataBindingContext bindingContext = new DataBindingContext();
+
+        bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(txtPVPrefix),
+                BeanProperties.value("pvPrefix").observe(viewModel));
     }
 }

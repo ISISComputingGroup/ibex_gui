@@ -19,24 +19,39 @@
 
 package uk.ac.stfc.isis.ibex.ui.mainmenu.instrument;
 
-import org.eclipse.jface.dialogs.Dialog;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+
+import org.eclipse.jface.dialogs.IDialogConstants;
+import org.eclipse.jface.dialogs.TitleAreaDialog;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Shell;
 
 import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
+import uk.ac.stfc.isis.ibex.validators.ErrorMessage;
 
-public class CustomInstrumentConfigDialog extends Dialog {
-    private String instrumentName;
+public class CustomInstrumentConfigDialog extends TitleAreaDialog {
+
+    private static final String WINDOW_TITLE = "Instrument Setup";
+    private static final String AREA_TITLE = "Setup Custom Instrument";
+
     private CustomInstrumentConfigPanel configPanel;
     private InstrumentInfo selectedCustomInstrument;
+    private CustomIntrumentConfigViewModel configViewModel;
+    private PropertyChangeListener errorListener;
+    private Button okButton;
 
     public CustomInstrumentConfigDialog(Shell parentShell, String instrumentName) {
         super(parentShell);
 
-        this.instrumentName = instrumentName;
+        configViewModel = new CustomIntrumentConfigViewModel(instrumentName);
+        configureErrorListener();
+        configViewModel.addPropertyChangeListener("error", errorListener);
     }
 
     public InstrumentInfo getSelectedCustomInstrument() {
@@ -44,16 +59,64 @@ public class CustomInstrumentConfigDialog extends Dialog {
     }
 
     @Override
+    protected void configureShell(Shell shell) {
+        super.configureShell(shell);
+        shell.setText(WINDOW_TITLE);
+    }
+
+    @Override
+    protected Point getInitialSize() {
+        return new Point(400, 250);
+    }
+
+    @Override
     protected Control createDialogArea(Composite parent) {
+        setTitle(AREA_TITLE);
+
         Composite container = (Composite) super.createDialogArea(parent);
-        configPanel = new CustomInstrumentConfigPanel(container, SWT.NONE, instrumentName);
+        configPanel = new CustomInstrumentConfigPanel(container, SWT.NONE, configViewModel);
         configPanel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
         return container;
     }
 
     @Override
     protected void okPressed() {
-        selectedCustomInstrument = configPanel.getSelected();
+        selectedCustomInstrument = configViewModel.getSelectedInstrument();
         super.okPressed();
+    }
+
+    @Override
+    protected void createButtonsForButtonBar(Composite parent) {
+        okButton = createButton(parent, IDialogConstants.OK_ID, "OK", true);
+        createButton(parent, IDialogConstants.CANCEL_ID, "Cancel", false);
+    }
+
+    @Override
+    public void create() {
+        super.create();
+        configViewModel.validate();
+    }
+
+    private void setOkEnabled(boolean enabled) {
+        if (okButton != null) {
+            okButton.setEnabled(enabled);
+        }
+    }
+
+    private void configureErrorListener() {
+        errorListener = new PropertyChangeListener() {
+            @Override
+            public void propertyChange(PropertyChangeEvent evt) {
+                ErrorMessage errorMessage = configViewModel.getError();
+                if (errorMessage.isError()) {
+                    setErrorMessage(errorMessage.getMessage());
+                    setOkEnabled(false);
+                    return;
+                }
+
+                setOkEnabled(true);
+                setErrorMessage(null);
+            }
+        };
     }
 }

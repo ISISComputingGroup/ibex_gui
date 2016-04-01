@@ -56,9 +56,9 @@ public class CustomInstrumentInfoTest {
     }
 
     @Test
-    public final void alphanumeric_host_name_with_underscores_is_valid() {
+    public final void host_name_starting_with_NDW_is_valid() {
         // Arrange
-        String name = "a_name_123_not_starting_with_NDX";
+        String name = "NDW_a_valid_name_123";
         String pvPrefix = "myPrefix";
         CustomInstrumentInfo instrument = new CustomInstrumentInfo(name, pvPrefix);
 
@@ -67,5 +67,29 @@ public class CustomInstrumentInfoTest {
 
         // Assert
         assertTrue(valid);
+    }
+
+    @Test
+    public final void host_name_not_starting_with_NDW_is_invalid() {
+        // Arrange
+        String name = "invalid_name";
+        String pvPrefix = "prefix";
+        CustomInstrumentInfo instrument = new CustomInstrumentInfo(name, pvPrefix);
+        
+        // Act
+        boolean valid = instrument.hasValidHostName();
+
+        // Assert
+        assertFalse(valid);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public final void empty_pv_prefix_throws() {
+        // Arrange
+        String name = "aName";
+        String emptyPVPrefix = "";
+
+        // Act
+        CustomInstrumentInfo instrument = new CustomInstrumentInfo(name, emptyPVPrefix);
     }
 }

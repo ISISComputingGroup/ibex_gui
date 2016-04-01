@@ -28,6 +28,7 @@ import org.eclipse.ui.preferences.ScopedPreferenceStore;
 
 import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
 import uk.ac.stfc.isis.ibex.instrument.InstrumentInfoReceiver;
+import uk.ac.stfc.isis.ibex.instrument.custom.CustomInstrumentInfo;
 import uk.ac.stfc.isis.ibex.instrument.internal.LocalHostInstrumentInfo;
 
 public class AlarmSettings implements InstrumentInfoReceiver {
@@ -52,6 +53,8 @@ public class AlarmSettings implements InstrumentInfoReceiver {
             preference = preference.replaceAll(InstrumentInfo.validInstrumentRegex(), hostName);
         } else if (containsRegex(preference, LocalHostInstrumentInfo.validLocalInstrumentRegex())) {
             preference = preference.replaceAll(LocalHostInstrumentInfo.validLocalInstrumentRegex(), hostName);
+        } else if (containsRegex(preference, CustomInstrumentInfo.validCustomInstrumentRegex())) {
+            preference = preference.replaceAll(CustomInstrumentInfo.validCustomInstrumentRegex(), hostName);
         } else {
             throw new RuntimeException(
                     "Invalid preference string, does not contain a matching host pattern:" + preference);

@@ -76,7 +76,6 @@ public class InstrumentDialog extends Dialog {
         if (selectorViewModel.selectedInstrumentExists()) {
             selectedInstrument = selectorViewModel.getSelectedInstrument();
         } else if (!selectorViewModel.getSelectedName().isEmpty()) {
-//            selectedInstrument = new InstrumentInfo(selectorViewModel.getSelectedName());
             CustomInstrumentConfigDialog customConfigDialog = new CustomInstrumentConfigDialog(null,
                     selectorViewModel.getSelectedName());
             if (customConfigDialog.open() == Window.OK) {

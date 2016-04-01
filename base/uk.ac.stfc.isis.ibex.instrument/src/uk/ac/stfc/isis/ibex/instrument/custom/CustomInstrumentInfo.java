@@ -23,6 +23,7 @@
 package uk.ac.stfc.isis.ibex.instrument.custom;
 
 import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
+import uk.ac.stfc.isis.ibex.instrument.internal.PVPrefix;
 
 public class CustomInstrumentInfo extends InstrumentInfo {
 
@@ -30,6 +31,8 @@ public class CustomInstrumentInfo extends InstrumentInfo {
 
     public CustomInstrumentInfo(String name, String pvPrefix) {
         super(name);
+
+        checkPreconditions(pvPrefix);
         this.pvPrefix = pvPrefix;
     }
 
@@ -44,11 +47,18 @@ public class CustomInstrumentInfo extends InstrumentInfo {
     }
 
     public static String validCustomInstrumentRegex() {
-        return "[_a-zA-Z0-9]+";
+        return PVPrefix.NDW + "[_a-zA-Z0-9]+";
     }
 
     @Override
     public boolean hasValidHostName() {
         return hostName().matches(validCustomInstrumentRegex());
+    }
+
+    private void checkPreconditions(String pvPrefix) {
+        if (pvPrefix.isEmpty()) {
+            String msg = "The PV prefix must not be empty";
+            throw new IllegalArgumentException(msg);
+        }
     }
 }
