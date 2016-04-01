@@ -40,9 +40,7 @@ import org.eclipse.swt.widgets.TableColumn;
 
 import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
 
-/**
- * 
- */
+@SuppressWarnings("checkstyle:magicnumber")
 public class InstrumentTable extends Composite {
     private TableViewer viewer;
     private TableColumnLayout tableColumnLayout;

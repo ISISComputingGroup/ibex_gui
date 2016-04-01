@@ -43,6 +43,7 @@ import org.eclipse.swt.widgets.Text;
 
 import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
 
+@SuppressWarnings("checkstyle:magicnumber")
 public class InstrumentSelectionPanel extends Composite {
 
     private Text txtSelectedName;

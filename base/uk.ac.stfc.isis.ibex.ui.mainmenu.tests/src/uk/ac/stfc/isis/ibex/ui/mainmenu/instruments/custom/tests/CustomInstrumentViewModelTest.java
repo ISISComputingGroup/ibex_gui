@@ -26,6 +26,7 @@ import org.junit.Test;
 import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
 import uk.ac.stfc.isis.ibex.ui.mainmenu.instrument.custom.CustomIntrumentViewModel;
 
+@SuppressWarnings("checkstyle:methodname")
 public class CustomInstrumentViewModelTest {
     @Test
     public void instrument_name_is_initialised_correctly() {

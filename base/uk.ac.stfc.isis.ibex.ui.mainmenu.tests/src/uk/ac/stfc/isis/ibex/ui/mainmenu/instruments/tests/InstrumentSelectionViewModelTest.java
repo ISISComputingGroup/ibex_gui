@@ -29,6 +29,7 @@ import org.junit.Test;
 import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
 import uk.ac.stfc.isis.ibex.ui.mainmenu.instrument.InstrumentSelectionViewModel;
 
+@SuppressWarnings("checkstyle:methodname")
 public class InstrumentSelectionViewModelTest {
 
     @Test(expected = IllegalArgumentException.class)

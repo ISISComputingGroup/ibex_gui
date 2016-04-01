@@ -28,6 +28,7 @@ import org.junit.Test;
 
 import uk.ac.stfc.isis.ibex.validators.InstrumentNameValidator;
 
+@SuppressWarnings("checkstyle:methodname")
 public class InstrumentNameValidatorTest {
 
     private static final String PREFIX = "NDW";
