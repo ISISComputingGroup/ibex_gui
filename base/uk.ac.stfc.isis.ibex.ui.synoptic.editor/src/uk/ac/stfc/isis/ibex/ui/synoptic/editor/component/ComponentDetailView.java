@@ -227,6 +227,7 @@ public class ComponentDetailView extends Composite {
         iconGridData.widthHint = 32;
         iconGridData.heightHint = 32;
         lblTypeIcon.setLayoutData(iconGridData);
+        lblTypeIcon.setAlignment(SWT.CENTER);
 
         Label lblPvs = new Label(fieldsComposite, SWT.NONE);
         lblPvs.setLayoutData(new GridData(SWT.RIGHT, SWT.TOP, false, false, 1, 1));
