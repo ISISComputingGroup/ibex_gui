@@ -24,11 +24,11 @@ import uk.ac.stfc.isis.ibex.instrument.custom.CustomInstrumentInfo;
 import uk.ac.stfc.isis.ibex.validators.ErrorMessageProvider;
 import uk.ac.stfc.isis.ibex.validators.PvValidator;
 
-public class CustomIntrumentConfigViewModel extends ErrorMessageProvider {
+public class CustomIntrumentViewModel extends ErrorMessageProvider {
     private String pvPrefix = "";
     private String instrumentName;
 
-    public CustomIntrumentConfigViewModel(String instrumentName) {
+    public CustomIntrumentViewModel(String instrumentName) {
         this.instrumentName = instrumentName;
     }
 

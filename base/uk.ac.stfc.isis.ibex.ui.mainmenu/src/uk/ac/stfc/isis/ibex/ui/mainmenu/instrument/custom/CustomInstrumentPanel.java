@@ -31,11 +31,11 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 
-public class CustomInstrumentConfigPanel extends Composite {
+public class CustomInstrumentPanel extends Composite {
 
     private Text txtPVPrefix;
 
-    public CustomInstrumentConfigPanel(Composite parent, int style, CustomIntrumentConfigViewModel viewModel) {
+    public CustomInstrumentPanel(Composite parent, int style, CustomIntrumentViewModel viewModel) {
         super(parent, style);
 
         setLayout(new FillLayout(SWT.HORIZONTAL));
@@ -62,7 +62,7 @@ public class CustomInstrumentConfigPanel extends Composite {
         bindModel(viewModel);
     }
 
-    private void bindModel(CustomIntrumentConfigViewModel viewModel) {
+    private void bindModel(CustomIntrumentViewModel viewModel) {
         DataBindingContext bindingContext = new DataBindingContext();
 
         bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(txtPVPrefix),

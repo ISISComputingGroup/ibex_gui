@@ -35,7 +35,7 @@ import org.eclipse.swt.widgets.Shell;
 
 import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
 import uk.ac.stfc.isis.ibex.ui.mainmenu.MainMenuUI;
-import uk.ac.stfc.isis.ibex.ui.mainmenu.instrument.custom.CustomInstrumentConfigDialog;
+import uk.ac.stfc.isis.ibex.ui.mainmenu.instrument.custom.CustomInstrumentDialog;
 import uk.ac.stfc.isis.ibex.validators.ErrorMessage;
 
 @SuppressWarnings("checkstyle:magicnumber")
@@ -98,7 +98,7 @@ public class InstrumentDialog extends TitleAreaDialog {
             return;
         }
 
-        CustomInstrumentConfigDialog customConfigDialog = new CustomInstrumentConfigDialog(null,
+        CustomInstrumentDialog customConfigDialog = new CustomInstrumentDialog(null,
                 selectorViewModel.getSelectedName());
         if (customConfigDialog.open() == Window.OK) {
             selectedInstrument = customConfigDialog.getSelectedCustomInstrument();

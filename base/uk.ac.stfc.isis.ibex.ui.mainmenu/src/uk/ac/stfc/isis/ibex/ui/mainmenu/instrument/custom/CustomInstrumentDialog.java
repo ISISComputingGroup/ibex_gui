@@ -35,21 +35,21 @@ import org.eclipse.swt.widgets.Shell;
 import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
 import uk.ac.stfc.isis.ibex.validators.ErrorMessage;
 
-public class CustomInstrumentConfigDialog extends TitleAreaDialog {
+public class CustomInstrumentDialog extends TitleAreaDialog {
 
     private static final String WINDOW_TITLE = "Instrument Setup";
     private static final String AREA_TITLE = "Setup Custom Instrument";
 
-    private CustomInstrumentConfigPanel configPanel;
+    private CustomInstrumentPanel configPanel;
     private InstrumentInfo selectedCustomInstrument;
-    private CustomIntrumentConfigViewModel configViewModel;
+    private CustomIntrumentViewModel configViewModel;
     private PropertyChangeListener errorListener;
     private Button okButton;
 
-    public CustomInstrumentConfigDialog(Shell parentShell, String instrumentName) {
+    public CustomInstrumentDialog(Shell parentShell, String instrumentName) {
         super(parentShell);
 
-        configViewModel = new CustomIntrumentConfigViewModel(instrumentName);
+        configViewModel = new CustomIntrumentViewModel(instrumentName);
         configureErrorListener();
         configViewModel.addPropertyChangeListener("error", errorListener);
     }
@@ -74,7 +74,7 @@ public class CustomInstrumentConfigDialog extends TitleAreaDialog {
         setTitle(AREA_TITLE);
 
         Composite container = (Composite) super.createDialogArea(parent);
-        configPanel = new CustomInstrumentConfigPanel(container, SWT.NONE, configViewModel);
+        configPanel = new CustomInstrumentPanel(container, SWT.NONE, configViewModel);
         configPanel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
         return container;
     }

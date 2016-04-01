@@ -24,16 +24,16 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
-import uk.ac.stfc.isis.ibex.ui.mainmenu.instrument.custom.CustomIntrumentConfigViewModel;
+import uk.ac.stfc.isis.ibex.ui.mainmenu.instrument.custom.CustomIntrumentViewModel;
 
-public class CustomInstrumentConfigViewModelTest {
+public class CustomInstrumentViewModelTest {
     @Test
     public void instrument_name_is_initialised_correctly() {
         // Arrange
         String name = "a_name";
 
         // Act
-        CustomIntrumentConfigViewModel viewModel = new CustomIntrumentConfigViewModel(name);
+        CustomIntrumentViewModel viewModel = new CustomIntrumentViewModel(name);
 
         // Assert
         assertEquals(name, viewModel.getInstrumentName());
@@ -46,7 +46,7 @@ public class CustomInstrumentConfigViewModelTest {
         String emptyString = "";
 
         // Act
-        CustomIntrumentConfigViewModel viewModel = new CustomIntrumentConfigViewModel(name);
+        CustomIntrumentViewModel viewModel = new CustomIntrumentViewModel(name);
 
         // Assert
         assertEquals(emptyString, viewModel.getPvPrefix());
@@ -57,7 +57,7 @@ public class CustomInstrumentConfigViewModelTest {
         // Arrange
         String expectedName = "instrument_name";
         String exptectedPVPrefix = "pv_prefix";
-        CustomIntrumentConfigViewModel viewModel = new CustomIntrumentConfigViewModel(expectedName);
+        CustomIntrumentViewModel viewModel = new CustomIntrumentViewModel(expectedName);
         viewModel.setPvPrefix(exptectedPVPrefix);
 
         // Act
@@ -73,7 +73,7 @@ public class CustomInstrumentConfigViewModelTest {
         // Arrange
         String expectedName = "instrument_name";
         String pvPrefix = "invalid@";
-        CustomIntrumentConfigViewModel viewModel = new CustomIntrumentConfigViewModel(expectedName);
+        CustomIntrumentViewModel viewModel = new CustomIntrumentViewModel(expectedName);
 
         // Act
         viewModel.setPvPrefix(pvPrefix);
@@ -87,7 +87,7 @@ public class CustomInstrumentConfigViewModelTest {
         // Arrange
         String expectedName = "instrument_name";
         String pvPrefix = "valid";
-        CustomIntrumentConfigViewModel viewModel = new CustomIntrumentConfigViewModel(expectedName);
+        CustomIntrumentViewModel viewModel = new CustomIntrumentViewModel(expectedName);
 
         // Act
         viewModel.setPvPrefix(pvPrefix);
@@ -100,7 +100,7 @@ public class CustomInstrumentConfigViewModelTest {
     public void pv_prefix_can_be_validated_at_initialisation() {
         // Arrange
         String expectedName = "instrument_name";
-        CustomIntrumentConfigViewModel viewModel = new CustomIntrumentConfigViewModel(expectedName);
+        CustomIntrumentViewModel viewModel = new CustomIntrumentViewModel(expectedName);
         assertFalse(viewModel.getError().isError());
 
         // Act
