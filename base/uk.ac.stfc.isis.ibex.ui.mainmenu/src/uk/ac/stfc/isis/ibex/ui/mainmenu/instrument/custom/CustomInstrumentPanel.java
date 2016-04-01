@@ -31,6 +31,7 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 
+@SuppressWarnings("checkstyle:magicnumber")
 public class CustomInstrumentPanel extends Composite {
 
     private Text txtPVPrefix;
