@@ -25,6 +25,7 @@ package uk.ac.stfc.isis.ibex.ui.beamstatus.views;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.FontData;
+import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
@@ -56,7 +57,13 @@ public class McrNewsPanel extends Composite {
     }
 
     public void setText(String text) {
+        int topIndex = txtTheMcrNews.getTopIndex();
+        Point selection = txtTheMcrNews.getSelection();
+
         txtTheMcrNews.setText(text);
+
+        txtTheMcrNews.setTopIndex(topIndex);
+        txtTheMcrNews.setSelection(selection);
     }
 
     private Font modifyDefaultFont(Font font) {
