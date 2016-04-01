@@ -19,12 +19,14 @@
 
 package uk.ac.stfc.isis.ibex.ui.mainmenu.instrument;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
-import uk.ac.stfc.isis.ibex.model.ModelObject;
+import uk.ac.stfc.isis.ibex.validators.ErrorMessageProvider;
+import uk.ac.stfc.isis.ibex.validators.InstrumentNameValidator;
 
-public class InstrumentSelectionViewModel extends ModelObject {
+public class InstrumentSelectionViewModel extends ErrorMessageProvider {
 
     private Collection<InstrumentInfo> instruments;
     private String selectedName = "";
@@ -38,6 +40,7 @@ public class InstrumentSelectionViewModel extends ModelObject {
     }
 
     public void setSelectedName(String name) {
+        validate(name);
         firePropertyChange("selectedName", this.selectedName, this.selectedName = name);
     }
 
@@ -69,7 +72,31 @@ public class InstrumentSelectionViewModel extends ModelObject {
         return false;
     }
 
+    public void validate() {
+        validate(selectedName);
+    }
+
     private boolean nameMatches(String name1, String name2) {
         return name1.equalsIgnoreCase(name2);
+    }
+
+    private void validate(String instrumentName) {
+        Collection<String> knownInstrumentNames = extractInstrumentNames();
+
+        InstrumentNameValidator nameValidator = new InstrumentNameValidator(knownInstrumentNames);
+        if (!nameValidator.validateInstrumentName(instrumentName)) {
+            setError(true, nameValidator.getErrorMessage());
+        } else {
+            setError(false, null);
+        }
+    }
+
+    private Collection<String> extractInstrumentNames() {
+        ArrayList<String> names = new ArrayList<>();
+        for (InstrumentInfo instrument : instruments) {
+            names.add(instrument.name());
+        }
+
+        return names;
     }
 }

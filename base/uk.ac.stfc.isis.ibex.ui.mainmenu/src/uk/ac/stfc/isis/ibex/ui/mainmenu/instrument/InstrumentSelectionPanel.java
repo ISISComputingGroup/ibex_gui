@@ -54,7 +54,7 @@ public class InstrumentSelectionPanel extends Composite {
         setLayout(new FillLayout(SWT.HORIZONTAL));
 
         Group grpInstrument = new Group(this, SWT.NONE);
-        grpInstrument.setText("Instrument Selector");
+        grpInstrument.setText("Instrument");
         grpInstrument.setLayout(new GridLayout(3, false));
 
         createInstrumentLabel(grpInstrument);
