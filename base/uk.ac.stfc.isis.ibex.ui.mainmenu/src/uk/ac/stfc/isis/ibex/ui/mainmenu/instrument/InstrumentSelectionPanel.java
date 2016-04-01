@@ -65,22 +65,6 @@ public class InstrumentSelectionPanel extends Composite {
         bindModel(viewModel);
     }
 
-//    public InstrumentInfo getSelected() {
-//        String selectedInstrumentName = txtSelectedName.getText();
-//
-//        if (selectedInstrumentName.isEmpty()) {
-//            return null;
-//        }
-//
-//        for (InstrumentInfo instrument : instruments) {
-//            if (selectedInstrumentName.toUpperCase().equals(instrument.name().toUpperCase())) {
-//                return instrument;
-//            }
-//        }
-//            
-//        return new InstrumentInfo(selectedInstrumentName);
-//    }
-
     private void createInstrumentLabel(Composite parent) {
         Label lblInstrument = new Label(parent, SWT.NONE);
         lblInstrument.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
