@@ -17,14 +17,14 @@
  * http://opensource.org/licenses/eclipse-1.0.php
  */
 
-package uk.ac.stfc.isis.ibex.ui.mainmenu.instruments.tests;
+package uk.ac.stfc.isis.ibex.ui.mainmenu.instruments.custom.tests;
 
 import static org.junit.Assert.*;
 
 import org.junit.Test;
 
 import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
-import uk.ac.stfc.isis.ibex.ui.mainmenu.instrument.CustomIntrumentConfigViewModel;
+import uk.ac.stfc.isis.ibex.ui.mainmenu.instrument.custom.CustomIntrumentConfigViewModel;
 
 public class CustomInstrumentConfigViewModelTest {
     @Test

@@ -35,6 +35,7 @@ import org.eclipse.swt.widgets.Shell;
 
 import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
 import uk.ac.stfc.isis.ibex.ui.mainmenu.MainMenuUI;
+import uk.ac.stfc.isis.ibex.ui.mainmenu.instrument.custom.CustomInstrumentConfigDialog;
 import uk.ac.stfc.isis.ibex.validators.ErrorMessage;
 
 @SuppressWarnings("checkstyle:magicnumber")
