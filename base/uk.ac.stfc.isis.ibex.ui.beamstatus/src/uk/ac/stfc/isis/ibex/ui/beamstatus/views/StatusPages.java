@@ -19,6 +19,9 @@
 
 package uk.ac.stfc.isis.ibex.ui.beamstatus.views;
 
+import java.net.URL;
+import java.net.URLConnection;
+import java.util.Scanner;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -26,9 +29,9 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.browser.Browser;
 import org.eclipse.swt.custom.CTabFolder;
 import org.eclipse.swt.custom.CTabItem;
+import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.layout.FillLayout;
 
 public class StatusPages extends Composite {
 
@@ -37,7 +40,7 @@ public class StatusPages extends Composite {
 	
 	public static final String ID = "uk.ac.stfc.isis.ibex.ui.beamstatus.views.BeamStatusView"; //$NON-NLS-1$
 	
-	private static final long WEB_PAGE_REFRESH_PERIOD = 30000;	// milliseconds
+    private static final long WEB_PAGE_REFRESH_PERIOD = 30000; // milliseconds
 
 	
 	@SuppressWarnings("unused")
@@ -47,7 +50,7 @@ public class StatusPages extends Composite {
 	private Composite statusSpacer;
 	
 	private Browser statusGraphBrowser;
-	private Browser newsBrowser;
+    private McrNewsPanel newsPanel;
 	
 	public StatusPages(Composite parent, int style) {
 		super(parent, style);
@@ -65,34 +68,54 @@ public class StatusPages extends Composite {
 		
 		CTabItem tbtmMCRNews = new CTabItem(tabFolder, SWT.NONE);
 		tbtmMCRNews.setText("MCR News");
+
+        newsPanel = new McrNewsPanel(tabFolder, SWT.NONE);
+		tbtmMCRNews.setControl(newsPanel);
+        newsPanel.setText(getMCRNewsText());
 		
-		newsBrowser = new Browser(tabFolder, SWT.NONE);
-		newsBrowser.setJavascriptEnabled(false);
-		tbtmMCRNews.setControl(newsBrowser);
-		newsBrowser.setUrl(MCR_NEWS_PAGE_URL);
-		
-		startTimer();
+        startTimer();
 		tabFolder.setSelection(0);
 	}
 	
-	private void startTimer() {
-		Timer timer = new Timer();	
-		long delay = WEB_PAGE_REFRESH_PERIOD;	
-		timer.scheduleAtFixedRate(updateBrowser(newsBrowser), delay, WEB_PAGE_REFRESH_PERIOD);
-	}
-	
+    private void startTimer() {
+        Timer timer = new Timer();
+        long delay = WEB_PAGE_REFRESH_PERIOD;
+        timer.scheduleAtFixedRate(updateBrowser(newsPanel), delay, WEB_PAGE_REFRESH_PERIOD);
+    }
 
-	private TimerTask updateBrowser(final Browser browser) {
-		return new TimerTask() {
-			public void run() {
-				Display.getDefault().asyncExec(new Runnable() {			
-					@Override
-					public void run() {
-						browser.refresh();					
-					}
-				});
-			}
-		};	
-	}
+    private TimerTask updateBrowser(final McrNewsPanel browser) {
+        return new TimerTask() {
+            @Override
+            public void run() {
+                Display.getDefault().asyncExec(new Runnable() {
+                    @Override
+                    public void run() {
+                        browser.setText(getMCRNewsText());
+                    }
+                });
+            }
+        };
+    }
+
+    /**
+     * Gets the raw text from the MCR News Page
+     * 
+     * @return A string containing the MCR news.
+     */
+    private static String getMCRNewsText() {
+        String content = null;
+        URLConnection connection = null;
+        try {
+            connection = new URL(MCR_NEWS_PAGE_URL).openConnection();
+            Scanner scanner = new Scanner(connection.getInputStream());
+            scanner.useDelimiter("\\Z");
+            content = scanner.next();
+            scanner.close();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+        return content;
+    }
 
 }
