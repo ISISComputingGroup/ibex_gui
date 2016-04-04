@@ -36,7 +36,7 @@ import org.eclipse.swt.widgets.Text;
  * This page displays the MCR news text. The setText method is used to refresh
  * the MCR news content.
  */
-public class MCRNewsPanel extends Composite {
+public class McrNewsPanel extends Composite {
     private static final int FONT_SIZE = 12;
     
     private Text txtTheMcrNews;
@@ -49,7 +49,7 @@ public class MCRNewsPanel extends Composite {
      * @param style
      *            SWT Style
      */
-    public MCRNewsPanel(Composite parent, int style) {
+    public McrNewsPanel(Composite parent, int style) {
         super(parent, style);
         setLayout(new GridLayout(1, false));
 

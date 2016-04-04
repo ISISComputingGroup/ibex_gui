@@ -47,7 +47,7 @@ public class StatusPages extends Composite {
     private static final long TEXT_REFRESH_PERIOD_MS = 30000; // milliseconds
 	
 	private Browser statusGraphBrowser;
-    private MCRNewsPanel newsPanel;
+    private McrNewsPanel newsPanel;
 	
 	public StatusPages(Composite parent, int style) {
 		super(parent, style);
@@ -66,7 +66,7 @@ public class StatusPages extends Composite {
 		CTabItem tbtmMCRNews = new CTabItem(tabFolder, SWT.NONE);
 		tbtmMCRNews.setText("MCR News");
 
-        newsPanel = new MCRNewsPanel(tabFolder, SWT.NONE);
+        newsPanel = new McrNewsPanel(tabFolder, SWT.NONE);
 		tbtmMCRNews.setControl(newsPanel);
         newsPanel.setText(getMCRNewsText());
 		
@@ -80,7 +80,7 @@ public class StatusPages extends Composite {
         timer.scheduleAtFixedRate(updateBrowser(newsPanel), delay, TEXT_REFRESH_PERIOD_MS);
     }
 
-    private TimerTask updateBrowser(final MCRNewsPanel browser) {
+    private TimerTask updateBrowser(final McrNewsPanel browser) {
         return new TimerTask() {
             @Override
             public void run() {
