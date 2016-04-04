@@ -33,24 +33,21 @@ import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 
+/**
+ * This class contains the pages for the Beam Status and the MCR News. These two
+ * pages are shown within tabs on the panel.
+ */
 public class StatusPages extends Composite {
 
-	private static final String MCR_NEWS_PAGE_URL 
-		= "http://www.isis.stfc.ac.uk/files/mcr-news/mcrnews.txt";
-	
+    private static final String BEAM_STATUS_PAGE_URL = "http://www.isis.stfc.ac.uk/beam-status/";
+    private static final String MCR_NEWS_PAGE_URL = "http://www.isis.stfc.ac.uk/files/mcr-news/mcrnews.txt";
+
 	public static final String ID = "uk.ac.stfc.isis.ibex.ui.beamstatus.views.BeamStatusView"; //$NON-NLS-1$
 	
     private static final long TEXT_REFRESH_PERIOD_MS = 30000; // milliseconds
-
-	
-	@SuppressWarnings("unused")
-	private StatusPanel statusPanel;
-	
-	@SuppressWarnings("unused")
-	private Composite statusSpacer;
 	
 	private Browser statusGraphBrowser;
-    private McrNewsPanel newsPanel;
+    private MCRNewsPanel newsPanel;
 	
 	public StatusPages(Composite parent, int style) {
 		super(parent, style);
@@ -63,13 +60,13 @@ public class StatusPages extends Composite {
 		
 		statusGraphBrowser = new Browser(tabFolder, SWT.NONE);
 		statusGraphBrowser.setJavascriptEnabled(false);
-		statusGraphBrowser.setUrl("http://www.isis.stfc.ac.uk/beam-status/");
+        statusGraphBrowser.setUrl(BEAM_STATUS_PAGE_URL);
 		tbtmWebPage.setControl(statusGraphBrowser);
 		
 		CTabItem tbtmMCRNews = new CTabItem(tabFolder, SWT.NONE);
 		tbtmMCRNews.setText("MCR News");
 
-        newsPanel = new McrNewsPanel(tabFolder, SWT.NONE);
+        newsPanel = new MCRNewsPanel(tabFolder, SWT.NONE);
 		tbtmMCRNews.setControl(newsPanel);
         newsPanel.setText(getMCRNewsText());
 		
@@ -83,7 +80,7 @@ public class StatusPages extends Composite {
         timer.scheduleAtFixedRate(updateBrowser(newsPanel), delay, TEXT_REFRESH_PERIOD_MS);
     }
 
-    private TimerTask updateBrowser(final McrNewsPanel browser) {
+    private TimerTask updateBrowser(final MCRNewsPanel browser) {
         return new TimerTask() {
             @Override
             public void run() {
@@ -98,7 +95,7 @@ public class StatusPages extends Composite {
     }
 
     /**
-     * Gets the raw text from the MCR News Page
+     * Gets the raw text from the MCR News Page.
      * 
      * @return A string containing the MCR news.
      */

@@ -33,18 +33,23 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Text;
 
 /**
- * 
+ * This page displays the MCR news text. The setText method is used to refresh
+ * the MCR news content.
  */
-public class McrNewsPanel extends Composite {
+public class MCRNewsPanel extends Composite {
     private static final int FONT_SIZE = 12;
     
     private Text txtTheMcrNews;
     
     /**
+     * Constructor for the MCR news panel.
+     * 
      * @param parent
+     *            Parent composite
      * @param style
+     *            SWT Style
      */
-    public McrNewsPanel(Composite parent, int style) {
+    public MCRNewsPanel(Composite parent, int style) {
         super(parent, style);
         setLayout(new GridLayout(1, false));
 
@@ -56,6 +61,12 @@ public class McrNewsPanel extends Composite {
         txtTheMcrNews.setFont(font);
     }
 
+    /**
+     * Sets the MCR news text.
+     * 
+     * @param text
+     *            A String containing the MCR news.
+     */
     public void setText(String text) {
         int topIndex = txtTheMcrNews.getTopIndex();
         Point selection = txtTheMcrNews.getSelection();
