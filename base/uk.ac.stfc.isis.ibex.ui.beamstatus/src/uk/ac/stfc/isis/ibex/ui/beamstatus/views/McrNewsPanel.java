@@ -62,8 +62,8 @@ public class McrNewsPanel extends Composite {
 
         txtTheMcrNews.setText(text);
 
-        txtTheMcrNews.setTopIndex(topIndex);
         txtTheMcrNews.setSelection(selection);
+        txtTheMcrNews.setTopIndex(topIndex);
     }
 
     private Font modifyDefaultFont(Font font) {

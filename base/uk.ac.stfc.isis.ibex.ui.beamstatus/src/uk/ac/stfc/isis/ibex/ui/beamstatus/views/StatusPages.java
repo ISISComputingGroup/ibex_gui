@@ -40,7 +40,7 @@ public class StatusPages extends Composite {
 	
 	public static final String ID = "uk.ac.stfc.isis.ibex.ui.beamstatus.views.BeamStatusView"; //$NON-NLS-1$
 	
-    private static final long WEB_PAGE_REFRESH_PERIOD = 30000; // milliseconds
+    private static final long TEXT_REFRESH_PERIOD_MS = 30000; // milliseconds
 
 	
 	@SuppressWarnings("unused")
@@ -79,8 +79,8 @@ public class StatusPages extends Composite {
 	
     private void startTimer() {
         Timer timer = new Timer();
-        long delay = WEB_PAGE_REFRESH_PERIOD;
-        timer.scheduleAtFixedRate(updateBrowser(newsPanel), delay, WEB_PAGE_REFRESH_PERIOD);
+        long delay = TEXT_REFRESH_PERIOD_MS;
+        timer.scheduleAtFixedRate(updateBrowser(newsPanel), delay, TEXT_REFRESH_PERIOD_MS);
     }
 
     private TimerTask updateBrowser(final McrNewsPanel browser) {
