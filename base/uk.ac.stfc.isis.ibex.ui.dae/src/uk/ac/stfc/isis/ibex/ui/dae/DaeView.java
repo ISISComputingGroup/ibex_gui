@@ -86,7 +86,7 @@ public class DaeView extends ViewPart {
 		model.close();
 	}
 	
-	private void configureExperimentSetupForRunState(final Boolean isRunning) {
+	private void configureExperimentSetupForRunState(final boolean isRunning) {
 		DISPLAY.asyncExec(new Runnable() {	
 			@Override
 			public void run() {
