@@ -42,9 +42,6 @@ public class PreferenceSupplier extends AbstractPreferenceInitializer {
     public static final String EPICS_UTILS_DIRECTORY = "epics_utils_directory";
     public static final String DEFAULT_EPICS_UTILS_DIRECTORY = "C:\\Instrument\\Apps\\EPICS_UTILS";
 
-    public static final String PYEPICS_DIRECTORY = "pyepics_directory";
-    public static final String DEFAULT_PYEPICS_DIRECTORY = "C:\\Instrument\\Apps\\Python\\Lib\\site-packages\\epics";
-
     public static final String INSTRUMENT_SCIENTIST_PASSWORD = "instrument_scientist_password";
     public static final String DEFAULT_INSTRUMENT_SCIENTIST_PASSWORD = "reliablebeam";
     
@@ -80,10 +77,6 @@ public class PreferenceSupplier extends AbstractPreferenceInitializer {
 		return getPreferences().get(EPICS_UTILS_DIRECTORY, DEFAULT_EPICS_UTILS_DIRECTORY);
 	}
 
-	public static String pyEpicsPath() {
-		return getPreferences().get(PYEPICS_DIRECTORY, DEFAULT_PYEPICS_DIRECTORY);
-	}
-
 	public static String administratorPassword() {
 		return getPreferences().get(ADMINISTRATOR_PASSWORD, DEFAULT_ADMINISTRATOR_PASSWORD);
 	}
@@ -111,7 +104,7 @@ public class PreferenceSupplier extends AbstractPreferenceInitializer {
         entries.put(EPICS_UTILS_DIRECTORY, DEFAULT_EPICS_UTILS_DIRECTORY);
         entries.put(PYTHON_INTERPRETER_PATH, DEFAULT_PYTHON_INTERPRETER_PATH);
         entries.put(GENIE_PYTHON_DIRECTORY,  DEFAULT_GENIE_PYTHON_DIRECTORY);
-        entries.put(PYEPICS_DIRECTORY, DEFAULT_PYEPICS_DIRECTORY);
+//        entries.put(PYEPICS_DIRECTORY, DEFAULT_PYEPICS_DIRECTORY);
         entries.put(ADMINISTRATOR_PASSWORD, DEFAULT_ADMINISTRATOR_PASSWORD);
         entries.put(INITIAL_USER, DEFAULT_INITIAL_USER);
     		
