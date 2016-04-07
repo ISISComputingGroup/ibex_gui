@@ -51,7 +51,7 @@ public class NavigationView extends ViewPart implements ISizeProvider {
 		Group synopticGroup = new Group(parent, SWT.NONE);		
 	    synopticGroup.setLayoutData(new GridData(SWT.CENTER, SWT.FILL, false, true, 1, 1));
 	    synopticGroup.setLayout(new GridLayout(1, false));
-	    synopticGroup.setText("Synoptic Selection");
+        synopticGroup.setText("Synoptic Selection");
 
 		SynopticSelection synopticSelection = new SynopticSelection(synopticGroup, SWT.NONE, new SynopticSelectionViewModel());
 		synopticSelection.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1));

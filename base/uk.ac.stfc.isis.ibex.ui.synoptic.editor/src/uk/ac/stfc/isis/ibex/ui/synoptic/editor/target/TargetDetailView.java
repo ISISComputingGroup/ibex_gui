@@ -34,6 +34,7 @@ import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.IComponentSelectionListener
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.IInstrumentUpdateListener;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.SynopticViewModel;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.UpdateTypes;
+import uk.ac.stfc.isis.ibex.ui.synoptic.editor.target.properties.TargetPropertiesView;
 
 /**
  * Shows the synoptic editor part that allows selection of a target, normally an
@@ -113,30 +114,8 @@ public class TargetDetailView extends Composite {
         gdDescription.heightHint = 70;
         desc.setLayoutData(gdDescription);
 
-        Label lblProperties = new Label(fieldsComposite, SWT.NONE);
-        lblProperties.setLayoutData(new GridData(SWT.RIGHT, SWT.TOP, false, false, 1, 1));
-        lblProperties.setText("Properties");
-
-        TargetPropertyTable properties = new TargetPropertyTable(fieldsComposite, synopticViewModel);
-        properties.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
-        properties.showPropertyList(synopticViewModel.getFirstSelectedComponent());
-
-        Label lblValue = new Label(fieldsComposite, SWT.NONE);
-        lblValue.setLayoutData(new GridData(SWT.RIGHT, SWT.TOP, false, false, 1, 1));
-        lblValue.setText("Value");
-
-        TargetPropertyValue value = new TargetPropertyValue(fieldsComposite, synopticViewModel);
-        value.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
-
-        Label lblPropertyDescription = new Label(fieldsComposite, SWT.NONE);
-        lblPropertyDescription.setLayoutData(new GridData(SWT.RIGHT, SWT.TOP, false, false, 1, 1));
-        lblPropertyDescription.setText("Description");
-
-        TargetPropertiesDescription propertyDescription = new TargetPropertiesDescription(fieldsComposite,
-                synopticViewModel);
-        GridData gdPropertyDescription = new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1);
-        gdPropertyDescription.heightHint = 70;
-        propertyDescription.setLayoutData(gdPropertyDescription);
+        TargetPropertiesView propertiesView = new TargetPropertiesView(fieldsComposite, synopticViewModel);
+        propertiesView.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
 	}
 	
     private void showTarget(ComponentDescription component) {
