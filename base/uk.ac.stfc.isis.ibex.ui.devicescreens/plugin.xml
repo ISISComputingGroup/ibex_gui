@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="uk.ac.stfc.isis.ibex.ui.perspectives">
+         <contribution
+            class="uk.ac.stfc.isis.ibex.ui.devicescreens.Perspective">
+      </contribution>
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectives">
+         <perspective
+            class="uk.ac.stfc.isis.ibex.ui.devicescreens.Perspective"
+            id="uk.ac.stfc.isis.ibex.ui.devicescreens.perspective"
+            name="Device Screens">
+      </perspective>
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectiveExtensions">
+      <perspectiveExtension
+            targetID="uk.ac.stfc.isis.ibex.ui.devicescreens.perspective">
+         <view
+               closeable="false"
+               id="uk.ac.stfc.isis.ibex.ui.devicescreens.devicescreensview"
+               minimized="false"
+               moveable="false"
+               ratio="0.1f"
+               relationship="stack"
+               relative="uk.ac.stfc.isis.ibex.ui.perspectives.PerspectiveSwitcher"
+               showTitle="false"
+               standalone="true"
+               visible="true">
+         </view>
+      </perspectiveExtension>
+   </extension>
+   <extension
+         point="org.eclipse.ui.views">
+      <view
+            allowMultiple="false"
+            class="uk.ac.stfc.isis.ibex.ui.devicescreens.DeviceScreensView"
+            id="uk.ac.stfc.isis.ibex.ui.devicescreens.devicescreensview"
+            name="Device Screens"
+            restorable="true">
+      </view>
+   </extension>
+</plugin>
+
+
