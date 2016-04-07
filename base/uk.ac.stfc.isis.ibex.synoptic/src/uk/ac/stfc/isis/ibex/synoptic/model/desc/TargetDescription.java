@@ -33,7 +33,7 @@ import javax.xml.bind.annotation.XmlTransient;
 /*
  * Describes the target for navigation around the synoptic.
  */
-@XmlRootElement(name = "target")
+@XmlRootElement(name = "pv")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class TargetDescription {
 
