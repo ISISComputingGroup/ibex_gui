@@ -52,12 +52,12 @@ public final class XMLUtil {
 	 * @throws JAXBException
 	 * @throws SAXException
 	 */
-    public static synchronized SynopticDescription fromXml(String xml) throws JAXBException, SAXException {
+    public static synchronized <T> T fromXml(String xml) throws JAXBException, SAXException {
 		if (context == null) {
 			initialise();
 		}
 	         
-		return (SynopticDescription) unmarshaller.unmarshal(new StringReader(xml));
+        return (T) unmarshaller.unmarshal(new StringReader(xml));
 	}
 	
 	/**
@@ -68,7 +68,7 @@ public final class XMLUtil {
 	 * @throws JAXBException
 	 * @throws SAXException
 	 */
-	public static String toXml(SynopticDescription instrument) throws JAXBException, SAXException {
+    public static <T> String toXml(T instrument) throws JAXBException, SAXException {
 		if (context == null) {
 			initialise();
 		}

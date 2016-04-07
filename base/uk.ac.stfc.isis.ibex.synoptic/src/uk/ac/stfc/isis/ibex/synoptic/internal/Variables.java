@@ -119,8 +119,8 @@ public class Variables extends InstrumentVariables {
 		return new JsonDeserialisingConverter<>(SynopticInfo[].class).apply(Convert.<SynopticInfo>toCollection());
 	}	
 	
-	public ForwardingObservable<SynopticDescription> getSynopticDescription(String synopticPV) {		
-		return convert(readCompressedClosing(getFullPV(synopticPV)), new InstrumentDescriptionParser());
+    public <T> ForwardingObservable<T> getSynopticDescription(String synopticPV) {
+        return convert(readCompressedClosing(getFullPV(synopticPV)), new InstrumentDescriptionParser<T>());
 	}
 	
 	private String getFullPV(String synopticPV) {

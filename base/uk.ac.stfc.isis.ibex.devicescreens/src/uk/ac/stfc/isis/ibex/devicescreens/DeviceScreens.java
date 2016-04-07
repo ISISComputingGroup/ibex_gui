@@ -40,4 +40,11 @@ public class DeviceScreens {
     @XmlElement(name = "device", type = Device.class)
     private ArrayList<Device> devices = new ArrayList<>();
 
+    /**
+     * @return the devices
+     */
+    public ArrayList<Device> getDevices() {
+        return devices;
+    }
+
 }

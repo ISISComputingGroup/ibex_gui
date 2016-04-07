@@ -41,7 +41,7 @@ public class InstrumentDescriptionParserTest {
 	@Test
 	public final void convert_string_valid() {
 		// Arrange
-		InstrumentDescriptionParser parser = new InstrumentDescriptionParser();
+        InstrumentDescriptionParser<SynopticDescription> parser = new InstrumentDescriptionParser<>();
 		String expected = "Test";
 		String value = "<?xml version=\"1.0\" ?>\n"
 				+ "<instrument xmlns=\"http://www.isis.stfc.ac.uk//instrument\">"
@@ -59,7 +59,7 @@ public class InstrumentDescriptionParserTest {
 	@Test
 	public final void convert_string_invalid() {
 		// Arrange
-		InstrumentDescriptionParser parser = new InstrumentDescriptionParser();
+        InstrumentDescriptionParser<SynopticDescription> parser = new InstrumentDescriptionParser<>();
 		String expected = "Test";
 		String value = expected;
 		// Act
