@@ -47,7 +47,7 @@ public class Perspective extends BasePerspective {
 	
 	@Override
     public Image image() {
-		return ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui.scripting", "icons/script_32x24.png");
+        return ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui.devicescreens", "icons/screen_32x24.png");
 		// Icon made by Freepik http://www.flaticon.com/authors/freepik
 		// from Flaticon http://www.flaticon.com
 		// is licensed by Creative Commons BY 3.0 http://creativecommons.org/licenses/by/3.0/
