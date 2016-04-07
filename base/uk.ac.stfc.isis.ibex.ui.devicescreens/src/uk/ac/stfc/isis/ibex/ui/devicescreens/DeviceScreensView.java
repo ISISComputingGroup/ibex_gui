@@ -25,7 +25,6 @@ package uk.ac.stfc.isis.ibex.ui.devicescreens;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Label;
 import org.eclipse.ui.part.ViewPart;
 
 /**
@@ -41,11 +40,8 @@ public class DeviceScreensView extends ViewPart {
     @Override
     public void createPartControl(Composite parent) {
         parent.setLayout(new FillLayout(SWT.HORIZONTAL));
-
-        Label lblNewLabel = new Label(parent, SWT.NONE);
-        lblNewLabel.setText("This is the perpective for the Device Screens");
-
-//        Browser browser = new Browser(parent, SWT.NONE);
+//        ExperimentDetailsPanel experimentDetails = new ExperimentDetailsPanel(parent, SWT.NONE);
+        Panel panel = new Panel(parent, SWT.NONE);
     }
 
     @Override

@@ -25,7 +25,7 @@
                minimized="false"
                moveable="false"
                ratio="0.1f"
-               relationship="stack"
+               relationship="right"
                relative="uk.ac.stfc.isis.ibex.ui.perspectives.PerspectiveSwitcher"
                showTitle="false"
                standalone="true"
