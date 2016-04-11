@@ -29,6 +29,11 @@ import com.google.common.collect.Lists;
 import uk.ac.stfc.isis.ibex.epics.observing.Observable;
 import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
 
+/**
+ * Given an observable containing a list of instruments, filters out invalid
+ * instruments, e.g. due to parsing error.
+ * 
+ */
 public class InstrumentListUtils {
     public static Collection<InstrumentInfo> filterValidInstruments(
             Observable<Collection<InstrumentInfo>> instrumentsRBV) {
