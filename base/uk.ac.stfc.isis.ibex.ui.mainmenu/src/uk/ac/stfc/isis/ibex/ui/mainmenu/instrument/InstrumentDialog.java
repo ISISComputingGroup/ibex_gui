@@ -19,57 +19,133 @@
 
 package uk.ac.stfc.isis.ibex.ui.mainmenu.instrument;
 
-import org.eclipse.jface.dialogs.Dialog;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+
+import org.eclipse.jface.dialogs.IDialogConstants;
+import org.eclipse.jface.dialogs.TitleAreaDialog;
+import org.eclipse.jface.window.Window;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Shell;
 
 import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
 import uk.ac.stfc.isis.ibex.ui.mainmenu.MainMenuUI;
+import uk.ac.stfc.isis.ibex.ui.mainmenu.instrument.custom.CustomInstrumentDialog;
+import uk.ac.stfc.isis.ibex.validators.ErrorMessage;
 
+/**
+ * A dialog to switch the current instrument by selecting from a list of
+ * available instruments.
+ * 
+ */
 @SuppressWarnings("checkstyle:magicnumber")
-public class InstrumentDialog extends Dialog {
+public class InstrumentDialog extends TitleAreaDialog {
 	
-	private static final String TITLE = "Select an Instrument";
+    private static final String WINDOW_TITLE = "Instrument Selector";
+    private static final String AREA_TITLE = "Select an Instrument";
 	
 	private InstrumentInfo selectedInstrument;
-	private InstrumentSelectionPanel selector;
-	
-	public InstrumentInfo selectedInstrument() {
-		return selectedInstrument;
-	}
-	
+    private InstrumentSelectionPanel selectorPanel;
+    private InstrumentSelectionViewModel selectorViewModel;
+    private PropertyChangeListener errorListener;
+    private Button okButton;
+
 	protected InstrumentDialog(Shell parentShell) {
 		super(parentShell);
-		// TODO Auto-generated constructor stub
+
+        selectorViewModel = new InstrumentSelectionViewModel(MainMenuUI.INSTRUMENT.instruments());
+        configureErrorListener();
+        selectorViewModel.addPropertyChangeListener("error", errorListener);
 	}
 	
+    public InstrumentInfo selectedInstrument() {
+        return selectedInstrument;
+    }
+
 	@Override
 	protected void configureShell(Shell shell) {
 		super.configureShell(shell);
-		shell.setText(TITLE);
+		shell.setText(WINDOW_TITLE);
 	}
 
 	@Override
 	protected Point getInitialSize() {
-		return new Point(300, 150);
+        return new Point(300, 400);
 	}
 	
 	@Override
 	protected Control createDialogArea(Composite parent) {
+        setTitle(AREA_TITLE);
+
 		Composite container = (Composite) super.createDialogArea(parent);
-		selector = new InstrumentSelectionPanel(parent, SWT.NONE, MainMenuUI.INSTRUMENT.instruments());
-		selector.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+        selectorPanel = new InstrumentSelectionPanel(container, SWT.NONE, selectorViewModel);
+        selectorPanel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		
 		return container;
 	}
 	
 	@Override
 	protected void okPressed() {
-		selectedInstrument = selector.getSelected();
-		super.okPressed();
+        selectedInstrument = null;
+        if (selectorViewModel.selectedInstrumentExists()) {
+            selectedInstrument = selectorViewModel.getSelectedInstrument();
+            super.okPressed();
+            return;
+        }
+
+        if (selectorViewModel.getSelectedName().isEmpty()) {
+            super.okPressed();
+            return;
+        }
+
+        CustomInstrumentDialog customConfigDialog = new CustomInstrumentDialog(null,
+                selectorViewModel.getSelectedName());
+        if (customConfigDialog.open() == Window.OK) {
+            selectedInstrument = customConfigDialog.getSelectedCustomInstrument();
+        } else {
+            return;
+        }
+
+        super.okPressed();
 	}
+
+    @Override
+    public void create() {
+        super.create();
+        selectorViewModel.validate();
+    }
+
+    @Override
+    protected void createButtonsForButtonBar(Composite parent) {
+        okButton = createButton(parent, IDialogConstants.OK_ID, "OK", true);
+        createButton(parent, IDialogConstants.CANCEL_ID, "Cancel", false);
+    }
+
+    private void setOkEnabled(boolean enabled) {
+        if (okButton != null) {
+            okButton.setEnabled(enabled);
+        }
+    }
+
+    private void configureErrorListener() {
+        errorListener = new PropertyChangeListener() {
+            @Override
+            public void propertyChange(PropertyChangeEvent evt) {
+                ErrorMessage errorMessage = selectorViewModel.getError();
+                if (errorMessage.isError()) {
+                    setErrorMessage(errorMessage.getMessage());
+                    setOkEnabled(false);
+                    return;
+                }
+
+                setOkEnabled(true);
+                setErrorMessage(null);
+            }
+        };
+    }
 }
