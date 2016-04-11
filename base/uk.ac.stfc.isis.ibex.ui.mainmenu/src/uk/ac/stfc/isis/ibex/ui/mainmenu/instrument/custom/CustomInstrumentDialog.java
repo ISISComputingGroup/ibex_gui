@@ -35,6 +35,10 @@ import org.eclipse.swt.widgets.Shell;
 import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
 import uk.ac.stfc.isis.ibex.validators.ErrorMessage;
 
+/**
+ * A dialog for the definition of a new custom instrument.
+ * 
+ */
 @SuppressWarnings("checkstyle:magicnumber")
 public class CustomInstrumentDialog extends TitleAreaDialog {
 

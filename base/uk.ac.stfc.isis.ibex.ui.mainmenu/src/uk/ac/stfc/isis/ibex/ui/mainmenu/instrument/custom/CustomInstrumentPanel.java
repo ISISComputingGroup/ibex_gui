@@ -31,6 +31,10 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 
+/**
+ * A view for the definition of a new custom instrument info.
+ * 
+ */
 @SuppressWarnings("checkstyle:magicnumber")
 public class CustomInstrumentPanel extends Composite {
 

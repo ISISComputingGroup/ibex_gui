@@ -26,6 +26,11 @@ import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
 import uk.ac.stfc.isis.ibex.validators.ErrorMessageProvider;
 import uk.ac.stfc.isis.ibex.validators.InstrumentNameValidator;
 
+/**
+ * A view model allowing selection of an instrument from a list of instruments,
+ * given the instrument name.
+ * 
+ */
 public class InstrumentSelectionViewModel extends ErrorMessageProvider {
 
     private Collection<InstrumentInfo> instruments;

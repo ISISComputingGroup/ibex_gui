@@ -27,6 +27,12 @@ import org.eclipse.jface.viewers.ViewerFilter;
 
 import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
 
+/**
+ * A filter for filtering/searching by instrument name. This should be case
+ * insensitive, and the search text should match to any part of the instrument
+ * name.
+ * 
+ */
 public class InstrumentNameSearch extends ViewerFilter {
     private String searchString = ".*";
 

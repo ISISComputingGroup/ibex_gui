@@ -21,6 +21,10 @@ package uk.ac.stfc.isis.ibex.validators;
 
 import java.util.Collection;
 
+/**
+ * Provides validation for custom instrument names.
+ * 
+ */
 public class InstrumentNameValidator {
     public static final String NAME_FORMAT = "Instrument Name invalid, must either be a known name or start with \"NDW\" and use only [a-z], [A-Z], [0-9], and _";
     public static final String NAME_EMPTY = "Instrument Name invalid, must not be empty";

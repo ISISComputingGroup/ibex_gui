@@ -24,6 +24,10 @@ import uk.ac.stfc.isis.ibex.instrument.custom.CustomInstrumentInfo;
 import uk.ac.stfc.isis.ibex.validators.ErrorMessageProvider;
 import uk.ac.stfc.isis.ibex.validators.PvValidator;
 
+/**
+ * A view model for the definition of a new custom instrument info object.
+ * 
+ */
 public class CustomIntrumentViewModel extends ErrorMessageProvider {
     private String pvPrefix = "";
     private String instrumentName;

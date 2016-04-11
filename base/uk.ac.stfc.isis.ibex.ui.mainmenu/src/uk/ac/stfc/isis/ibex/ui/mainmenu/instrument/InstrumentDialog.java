@@ -38,6 +38,11 @@ import uk.ac.stfc.isis.ibex.ui.mainmenu.MainMenuUI;
 import uk.ac.stfc.isis.ibex.ui.mainmenu.instrument.custom.CustomInstrumentDialog;
 import uk.ac.stfc.isis.ibex.validators.ErrorMessage;
 
+/**
+ * A dialog to switch the current instrument by selecting from a list of
+ * available instruments.
+ * 
+ */
 @SuppressWarnings("checkstyle:magicnumber")
 public class InstrumentDialog extends TitleAreaDialog {
 	

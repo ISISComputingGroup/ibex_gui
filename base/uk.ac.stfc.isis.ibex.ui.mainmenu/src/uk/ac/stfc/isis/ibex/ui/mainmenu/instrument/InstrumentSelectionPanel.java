@@ -43,6 +43,10 @@ import org.eclipse.swt.widgets.Text;
 
 import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
 
+/**
+ * A view allowing selection of an instrument from a list of instruments.
+ * 
+ */
 @SuppressWarnings("checkstyle:magicnumber")
 public class InstrumentSelectionPanel extends Composite {
 

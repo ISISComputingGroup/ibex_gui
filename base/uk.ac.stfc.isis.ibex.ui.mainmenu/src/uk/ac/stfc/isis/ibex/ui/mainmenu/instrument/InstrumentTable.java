@@ -40,6 +40,10 @@ import org.eclipse.swt.widgets.TableColumn;
 
 import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
 
+/**
+ * A table of instrument info. Can be filtered by instrument name.
+ * 
+ */
 @SuppressWarnings("checkstyle:magicnumber")
 public class InstrumentTable extends Composite {
     private TableViewer viewer;

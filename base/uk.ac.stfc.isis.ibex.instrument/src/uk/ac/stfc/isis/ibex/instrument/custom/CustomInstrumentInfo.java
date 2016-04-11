@@ -25,6 +25,10 @@ package uk.ac.stfc.isis.ibex.instrument.custom;
 import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
 import uk.ac.stfc.isis.ibex.instrument.internal.PVPrefix;
 
+/**
+ * Some basic info that defines a custom instrument. Instrument hostname is the
+ * same as the instrument name. User must specify a pvPrefix.
+ */
 public class CustomInstrumentInfo extends InstrumentInfo {
 
     private String pvPrefix;
