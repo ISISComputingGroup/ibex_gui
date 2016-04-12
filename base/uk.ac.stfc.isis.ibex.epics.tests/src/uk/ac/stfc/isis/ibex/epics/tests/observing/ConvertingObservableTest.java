@@ -105,7 +105,7 @@ public class ConvertingObservableTest {
 	}
 	
 	@Test
-	public void when_watched_observable_has_connection_status_chaned_observer_has_onConnectionStatus_method_called() {
+    public void when_watched_observable_has_connection_status_changed_observer_has_onConnectionStatus_method_called() {
 		//Act
 		testObservable.setConnectionStatus(true);
 		
