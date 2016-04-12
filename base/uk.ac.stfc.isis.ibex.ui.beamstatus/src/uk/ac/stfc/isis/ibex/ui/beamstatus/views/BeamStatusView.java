@@ -22,10 +22,10 @@ package uk.ac.stfc.isis.ibex.ui.beamstatus.views;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.part.ViewPart;
-import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.layout.GridData;
 
 @SuppressWarnings("checkstyle:magicnumber")
 public class BeamStatusView extends ViewPart {
@@ -42,7 +42,7 @@ public class BeamStatusView extends ViewPart {
 	 */
 	@Override
 	public void createPartControl(Composite parent) {
-		GridLayout glParent = new GridLayout(2, false);
+        GridLayout glParent = new GridLayout(2, false);
 		glParent.verticalSpacing = 0;
 		glParent.marginHeight = 0;
 		parent.setLayout(glParent);

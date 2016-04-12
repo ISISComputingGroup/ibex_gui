@@ -26,9 +26,9 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.browser.Browser;
 import org.eclipse.swt.custom.CTabFolder;
 import org.eclipse.swt.custom.CTabItem;
+import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.layout.FillLayout;
 
 public class StatusPages extends Composite {
 
@@ -84,7 +84,8 @@ public class StatusPages extends Composite {
 
 	private TimerTask updateBrowser(final Browser browser) {
 		return new TimerTask() {
-			public void run() {
+			@Override
+            public void run() {
 				Display.getDefault().asyncExec(new Runnable() {			
 					@Override
 					public void run() {

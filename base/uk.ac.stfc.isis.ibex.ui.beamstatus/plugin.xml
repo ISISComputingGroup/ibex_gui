@@ -16,9 +16,11 @@
             id="uk.ac.stfc.isis.ibex.ui.beamstatus.views.BeamStatusView">
       </view>
       <view
-            class="uk.ac.stfc.isis.ibex.ui.beamstatus.views.BeamStatusView"
-            id="uk.ac.stfc.isis.ibex.ui.beamstatus.views.BeamStatusView"
-            name="Beam Status">
+            name="Beam Status Graph"
+            icon="icons/sample.gif"
+            category="uk.ac.stfc.isis.ibex.ui.beamstatus"
+            class="uk.ac.stfc.isis.ibex.ui.beamstatus.views.BeamStatusGraphView"
+            id="uk.ac.stfc.isis.ibex.ui.beamstatus.views.BeamStatusGraphView">
       </view>
    </extension>
    <extension
@@ -45,7 +47,19 @@
                id="uk.ac.stfc.isis.ibex.ui.beamstatus.views.BeamStatusView"
                minimized="false"
                moveable="true"
-               ratio="0.1f"
+               ratio="0.5f"
+               relationship="right"
+               relative="uk.ac.stfc.isis.ibex.ui.perspectives.PerspectiveSwitcher"
+               showTitle="true"
+               standalone="false"
+               visible="true">
+         </view>
+         <view
+               closeable="false"
+               id="uk.ac.stfc.isis.ibex.ui.beamstatus.views.BeamStatusGraphView"
+               minimized="false"
+               moveable="true"
+               ratio="0.5f"
                relationship="right"
                relative="uk.ac.stfc.isis.ibex.ui.perspectives.PerspectiveSwitcher"
                showTitle="true"
@@ -59,6 +73,12 @@
       <contexts
             file="contexts.xml">
       </contexts>
+   </extension>
+   <extension
+         point="uk.ac.stfc.isis.ibex.instrument.info">
+      <InstrumentInfoReceiver
+            class="uk.ac.stfc.isis.ibex.ui.beamstatus.BeamStatusGraphSettings">
+      </InstrumentInfoReceiver>
    </extension>
 
 </plugin>
