@@ -20,12 +20,8 @@
 package uk.ac.stfc.isis.ibex.epics.tests.observing;
 
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyString;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Matchers.*;
+import static org.mockito.Mockito.*;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -36,7 +32,6 @@ import org.mockito.MockitoAnnotations;
 import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
 import uk.ac.stfc.isis.ibex.epics.conversion.Converter;
 import uk.ac.stfc.isis.ibex.epics.observing.ConvertingObservable;
-import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.Observer;
 
 // A lot of unchecked type conversions for mocking purposes
@@ -51,7 +46,6 @@ public class ConvertingObservableTest {
     private Observer<String> mockObserver;
 	
 	private TestableObservable<Integer> testObservable;	
-	private ForwardingObservable<Integer> initObservable;
 	private ConvertingObservable<Integer, String> convertObservable;
 	
 	private Converter<Integer, String> mockConverter;
@@ -68,15 +62,13 @@ public class ConvertingObservableTest {
         mockObserver = mock(Observer.class);
 		
 		testObservable = new TestableObservable<>();
-		
-		initObservable = new ForwardingObservable<Integer>(testObservable);
-		
+
 		mockConverter = mock(Converter.class);
 		when(mockConverter.convert(TestHelpers.INT_VALUE)).thenReturn(CONVERTED_VALUE);
 		when(mockConverter.convert(INT_THROWS_EXCEPTION_VALUE)).thenThrow(new ConversionException(EXCEPTION_MESSAGE));
 		when(mockConverter.convert(TestHelpers.NEW_INT_VALUE)).thenReturn(NEW_CONVERTED_VALUE);
 		
-		convertObservable = new ConvertingObservable<>(initObservable, mockConverter);
+        convertObservable = new ConvertingObservable<>(testObservable, mockConverter);
 		convertObservable.addObserver(mockObserver);
 		
 		Converter<Integer, String> mockConverterWithException = mock(Converter.class);
