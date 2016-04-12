@@ -37,11 +37,11 @@ if not exist "%INSTALLDIR%\Client" (
 REM Set a symlink for folder BUILD_LATEST to point to most recent build
 set INSTALLLINKDIR=%INSTALLBASEDIR%\BUILD_LATEST
 
-if exist "INSTALLLINKDIR" (
-    rmdir INSTALLLINKDIR
+if exist %INSTALLLINKDIR% (
+    rmdir %INSTALLLINKDIR%
 )
 
-mklink /D "INSTALLLINKDIR" %INSTALLDIR%
+mklink /D %INSTALLLINKDIR% %INSTALLDIR%
 
 robocopy %CD%\..\base\uk.ac.stfc.isis.ibex.client.product\target\products\ibex.product\win32\win32\x86_64 %INSTALLDIR%\Client /MIR /R:1 /NFL /NDL /NP
 if %errorlevel% geq 4 (
