@@ -1,5 +1,27 @@
+
+/*
+ * This file is part of the ISIS IBEX application. Copyright (C) 2012-2015
+ * Science & Technology Facilities Council. All rights reserved.
+ *
+ * This program is distributed in the hope that it will be useful. This program
+ * and the accompanying materials are made available under the terms of the
+ * Eclipse Public License v1.0 which accompanies this distribution. EXCEPT AS
+ * EXPRESSLY SET FORTH IN THE ECLIPSE PUBLIC LICENSE V1.0, THE PROGRAM AND
+ * ACCOMPANYING MATERIALS ARE PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES
+ * OR CONDITIONS OF ANY KIND. See the Eclipse Public License v1.0 for more
+ * details.
+ *
+ * You should have received a copy of the Eclipse Public License v1.0 along with
+ * this program; if not, you can obtain a copy from
+ * https://www.eclipse.org/org/documents/epl-v10.php or
+ * http://opensource.org/licenses/eclipse-1.0.php
+ */
+
 package uk.ac.stfc.isis.ibex.ui.beamstatus.views;
 
+import org.csstudio.swt.xygraph.figures.Trace;
+import org.csstudio.swt.xygraph.figures.Trace.PointStyle;
+import org.csstudio.swt.xygraph.figures.XYGraph;
 import org.csstudio.trends.databrowser2.Messages;
 import org.csstudio.trends.databrowser2.editor.DataBrowserAwareView;
 import org.csstudio.trends.databrowser2.model.AxisConfig;
@@ -10,13 +32,9 @@ import org.csstudio.trends.databrowser2.model.PVItem;
 import org.csstudio.trends.databrowser2.model.PlotSample;
 import org.csstudio.trends.databrowser2.model.PlotSamples;
 import org.csstudio.trends.databrowser2.preferences.Preferences;
-import org.eclipse.draw2d.LightweightSystem;
+import org.csstudio.trends.databrowser2.ui.Controller;
+import org.csstudio.trends.databrowser2.ui.Plot;
 import org.eclipse.jface.dialogs.MessageDialog;
-import org.eclipse.nebula.visualization.xygraph.figures.ToolbarArmedXYGraph;
-import org.eclipse.nebula.visualization.xygraph.figures.Trace;
-import org.eclipse.nebula.visualization.xygraph.figures.Trace.PointStyle;
-import org.eclipse.nebula.visualization.xygraph.figures.XYGraph;
-import org.eclipse.nebula.visualization.xygraph.figures.XYGraphFlags;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.DisposeEvent;
@@ -32,8 +50,8 @@ public class BeamStatusGraphView extends DataBrowserAwareView implements ModelLi
     /** View ID registered in plugin.xml */
     final public static String ID = "uk.ac.stfc.isis.ibex.ui.beamstatus.views.BeamStatusGraphView"; //$NON-NLS-1$
 
-    /** XY Graph */
-    private XYGraph xygraph;
+    /** Plot */
+    private Plot plot;
 
     /** Model of the currently active Data Browser plot or <code>null</code> */
     private Model model;
@@ -46,6 +64,9 @@ public class BeamStatusGraphView extends DataBrowserAwareView implements ModelLi
 
     /** Waveform for the currently selected sample */
     private BeamStatusGraphDataProvider samples = null;
+
+    /** Controller that links model and plot */
+    private Controller controller = null;
 
     /** {@inheritDoc} */
     @Override
@@ -84,14 +105,22 @@ public class BeamStatusGraphView extends DataBrowserAwareView implements ModelLi
         // render it in web browser.
         final Canvas canvas = new Canvas(composite, SWT.DOUBLE_BUFFERED);
         // Create plot with basic configuration
-        final LightweightSystem lws = new LightweightSystem(canvas);
-        final ToolbarArmedXYGraph plot = new ToolbarArmedXYGraph(new XYGraph(), XYGraphFlags.COMBINED_ZOOM);
-        xygraph = plot.getXYGraph();
-        // Configure axes
+
+        plot = Plot.forCanvas(canvas);
+        XYGraph xygraph = plot.getXYGraph();
         xygraph.primaryXAxis.setTitle("Time");
         xygraph.primaryYAxis.setTitle("Current");
-        lws.setContents(plot);
+
         selectPV("IN:DEMO:CS:SB:NEW_BLOCK_6");
+
+        // Create and start controller
+        try {
+            controller = new Controller(parent.getShell(), model, plot);
+            controller.start();
+        } catch (Exception ex) {
+            MessageDialog.openError(parent.getShell(), Messages.Error,
+                    NLS.bind(Messages.ControllerStartErrorFmt, ex.getMessage()));
+        }
     }
 
     /** {@inheritDoc} */
@@ -108,10 +137,14 @@ public class BeamStatusGraphView extends DataBrowserAwareView implements ModelLi
         this.model = model;
         if (old_model != model) {
             if (old_model != null)
+            {
                 old_model.removeListener(this);
+            }
 
             if (model != null)
+            {
                 model.addListener(this);
+            }
         }
         update(old_model != model);
     }
@@ -144,7 +177,6 @@ public class BeamStatusGraphView extends DataBrowserAwareView implements ModelLi
         final double period = Preferences.getScanPeriod();
         try {
             final PVItem item = new PVItem(pvAddress, period);
-            item.useDefaultArchiveDataSources();
             selectPV(item);
         } catch (Exception ex) {
             MessageDialog.openError(getSite().getShell(), Messages.Error,
@@ -153,13 +185,13 @@ public class BeamStatusGraphView extends DataBrowserAwareView implements ModelLi
     }
 
     /** Select given PV item (or <code>null</code>). */
-    private void selectPV(final ModelItem new_item) {
-        if (new_item == null)
-            model_item = null;
-        else
-            model_item = new_item;
+    private void selectPV(final PVItem new_item) {
+        model_item = new_item;
 
         // Delete all existing traces
+        if (plot == null)
+            return;
+        XYGraph xygraph = plot.getXYGraph();
         int N = xygraph.getPlotArea().getTraceList().size();
         while (N > 0)
             xygraph.removeTrace(xygraph.getPlotArea().getTraceList().get(--N));
@@ -174,6 +206,7 @@ public class BeamStatusGraphView extends DataBrowserAwareView implements ModelLi
             try {
                 new_model.start();
                 new_model.addItem(new_item);
+                new_item.useDefaultArchiveDataSources();
             } catch (Exception e1) {
                 return;
             }
@@ -196,10 +229,11 @@ public class BeamStatusGraphView extends DataBrowserAwareView implements ModelLi
             samples = new BeamStatusGraphDataProvider();
         }
         PlotSamples plotSamples = model_item.getSamples();
-        for (int i = 0; i < plotSamples.getSize(); i++)
-        {
-            PlotSample sample = plotSamples.getSample(i);
-            samples.addPlotSample(sample);
+        synchronized (plotSamples) {
+            for (int i = 0; i < plotSamples.getSize(); i++) {
+                PlotSample sample = plotSamples.getSample(i);
+                samples.addPlotSample(sample);
+            }
         }
     }
 

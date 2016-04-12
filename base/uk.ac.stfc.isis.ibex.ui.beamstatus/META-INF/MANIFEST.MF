@@ -11,7 +11,8 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.core.databinding,
  org.eclipse.jface.databinding,
  org.eclipse.core.databinding.beans;bundle-version="1.2.200",
- org.eclipse.core.databinding.property;bundle-version="1.4.100"
+ org.eclipse.core.databinding.property;bundle-version="1.4.100",
+ org.csstudio.swt.xygraph;bundle-version="2.0.3"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Export-Package: uk.ac.stfc.isis.ibex.ui.beamstatus,
  uk.ac.stfc.isis.ibex.ui.beamstatus.views
@@ -21,6 +22,7 @@ Import-Package: org.csstudio.alarm.beast,
  org.csstudio.trends.databrowser2.editor,
  org.csstudio.trends.databrowser2.model,
  org.csstudio.trends.databrowser2.preferences,
+ org.csstudio.trends.databrowser2.ui,
  org.csstudio.trends.databrowser2.waveformview,
  org.eclipse.draw2d,
  org.eclipse.nebula.visualization.xygraph.dataprovider,
