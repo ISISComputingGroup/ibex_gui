@@ -63,7 +63,7 @@ public abstract class BeamStatusGraphView extends DataBrowserAwareView implement
     public static final String ID = "uk.ac.stfc.isis.ibex.ui.beamstatus.views.BeamStatusGraphView"; //$NON-NLS-1$
 
     /** Title for the Y-axis. */
-    private static final String Y_AXIS_TITLE = "Current";
+    private static final String Y_AXIS_TITLE = "Beam current (μA)";
 
     /** TS1 beam current PV name */
     private static final String TS1_BEAM_CURRENT_PV = "AC:TS1:BEAM:CURR";
