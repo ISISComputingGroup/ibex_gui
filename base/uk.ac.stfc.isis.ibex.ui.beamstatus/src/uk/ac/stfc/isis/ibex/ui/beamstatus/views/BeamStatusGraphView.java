@@ -114,7 +114,8 @@ abstract public class BeamStatusGraphView extends DataBrowserAwareView implement
         xygraph.primaryYAxis.setTitle("Current");
 
         // selectPV("IN:DEMO:CS:SB:NEW_BLOCK_6");
-        selectPV("AC:SYNCH:BEAM:CURR");
+        // selectPV("AC:SYNCH:BEAM:CURR");
+        selectPV("AC:TS1:BEAM:CURR");
 
         // Create and start controller
         try {

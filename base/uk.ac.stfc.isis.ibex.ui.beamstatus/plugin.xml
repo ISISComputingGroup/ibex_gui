@@ -93,11 +93,5 @@
             file="contexts.xml">
       </contexts>
    </extension>
-   <extension
-         point="uk.ac.stfc.isis.ibex.instrument.info">
-      <InstrumentInfoReceiver
-            class="uk.ac.stfc.isis.ibex.ui.beamstatus.BeamStatusGraphSettings">
-      </InstrumentInfoReceiver>
-   </extension>
 
 </plugin>
