@@ -40,6 +40,7 @@ import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
+import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -129,6 +130,7 @@ public abstract class BeamStatusGraphView extends DataBrowserAwareView implement
         selectPV(SYNCH_BEAM_CURRENT_PV);
 
         setYAxisName();
+        setYAxisColor();
 
         // Create and start controller
         try {
@@ -140,12 +142,26 @@ public abstract class BeamStatusGraphView extends DataBrowserAwareView implement
         }
     }
 
+    /**
+     * Sets the title for the y-axis.
+     */
     private void setYAxisName() {
         if (model.getAxisCount() == 0) {
             return;
         }
         AxisConfig axis = model.getAxis(model.getAxisCount() - 1);
         axis.setName(Y_AXIS_TITLE);
+    }
+
+    /**
+     * Sets the color for the y-axis.
+     */
+    private void setYAxisColor() {
+        if (model.getAxisCount() == 0) {
+            return;
+        }
+        AxisConfig axis = model.getAxis(model.getAxisCount() - 1);
+        axis.setColor(new RGB(0, 0, 0));
     }
 
     @Override
