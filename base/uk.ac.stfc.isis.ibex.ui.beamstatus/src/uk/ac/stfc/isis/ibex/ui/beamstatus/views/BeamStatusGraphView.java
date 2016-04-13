@@ -19,6 +19,9 @@
 
 package uk.ac.stfc.isis.ibex.ui.beamstatus.views;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.csstudio.swt.xygraph.figures.Trace;
 import org.csstudio.swt.xygraph.figures.Trace.PointStyle;
 import org.csstudio.swt.xygraph.figures.XYGraph;
@@ -37,7 +40,6 @@ import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
-import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -56,11 +58,8 @@ abstract public class BeamStatusGraphView extends DataBrowserAwareView implement
     /** Model of the currently active Data Browser plot or <code>null</code> */
     private Model model;
 
-    /** Selected model item in model, or <code>null</code> */
-    private ModelItem model_item = null;
-
-    /** Color for trace of model_item's current sample */
-    private Color color = null;
+    /** Selected model items in model, or <code>null</code> */
+    private List<ModelItem> model_items = new ArrayList<ModelItem>();
 
     /** Controller that links model and plot */
     private Controller controller = null;
@@ -72,8 +71,6 @@ abstract public class BeamStatusGraphView extends DataBrowserAwareView implement
         parent.addDisposeListener(new DisposeListener() {
             @Override
             public void widgetDisposed(DisposeEvent e) {
-                if (color != null)
-                    color.dispose();
 
                 // Be ignorant of any change of the current model after
                 // this view is disposed.
@@ -111,6 +108,7 @@ abstract public class BeamStatusGraphView extends DataBrowserAwareView implement
         // selectPV("IN:DEMO:CS:SB:NEW_BLOCK_6");
         // selectPV("AC:SYNCH:BEAM:CURR");
         selectPV("AC:TS1:BEAM:CURR");
+        selectPV("AC:TS2:BEAM:CURR");
 
         // Create and start controller
         try {
@@ -165,7 +163,7 @@ abstract public class BeamStatusGraphView extends DataBrowserAwareView implement
             names[i] = model.getItem(i - 1).getName();
         if (!model_changed) {
             // Is the previously selected item still valid?
-            if (model.indexOf(model_item) != -1) {
+            if (model_items.size() > 0 && model.indexOf(model_items.get(model_items.size() - 1)) != -1) {
                 return;
             }
         }
@@ -185,35 +183,37 @@ abstract public class BeamStatusGraphView extends DataBrowserAwareView implement
 
     /** Select given PV item (or <code>null</code>). */
     private void selectPV(final PVItem new_item) {
-        model_item = new_item;
+
+        // No or unknown PV name?
+        if (new_item == null) {
+            return;
+        }
+        
+        model_items.add(new_item);
 
         // Delete all existing traces
         if (plot == null)
             return;
         XYGraph xygraph = plot.getXYGraph();
-        int N = xygraph.getPlotArea().getTraceList().size();
-        while (N > 0)
-            xygraph.removeTrace(xygraph.getPlotArea().getTraceList().get(--N));
 
-        // No or unknown PV name?
-        if (model_item == null) {
-            return;
+        Model new_model;
+        if (model == null) {
+            new_model = new Model();
+        } else {
+            new_model = model;
         }
-        else {
-            Model new_model = new Model();
-            updateModel(new_model, new_model);
-            try {
-                new_model.addItem(new_item);
-                new_item.useDefaultArchiveDataSources();
-            } catch (Exception e1) {
+        updateModel(new_model, new_model);
+        try {
+            new_model.addItem(new_item);
+            new_item.useDefaultArchiveDataSources();
+        } catch (Exception e1) {
                 return;
-            }
         }
 
         // Create trace for waveform
-        final Trace trace = new Trace(model_item.getDisplayName(), xygraph.primaryXAxis, xygraph.primaryYAxis,
+        final Trace trace = new Trace(new_item.getDisplayName(), xygraph.primaryXAxis, xygraph.primaryYAxis,
                 new BeamStatusGraphDataProvider());
-        trace.setLineWidth(model_item.getLineWidth());
+        trace.setLineWidth(new_item.getLineWidth());
         trace.setPointStyle(PointStyle.POINT);
         trace.setPointSize(5);
         // Add to graph

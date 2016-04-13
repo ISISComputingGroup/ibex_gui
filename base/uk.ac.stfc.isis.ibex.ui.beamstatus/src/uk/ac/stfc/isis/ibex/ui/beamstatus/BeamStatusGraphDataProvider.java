@@ -41,33 +41,20 @@ public class BeamStatusGraphDataProvider implements IDataProvider {
         return true;
     }
 
-    /**
-     * @param value
-     */
     public void addPlotSample(PlotSample sample) {
         return;
     }
 
-    /**
-     * @param index
-     * @return
-     */
     @Override
     public ISample getSample(int index) {
         return null;
     }
 
-    /**
-     * @return
-     */
     @Override
     public Range getXDataMinMax() {
         return null;
     }
 
-    /**
-     * @return
-     */
     @Override
     public Range getYDataMinMax() {
         return null;
