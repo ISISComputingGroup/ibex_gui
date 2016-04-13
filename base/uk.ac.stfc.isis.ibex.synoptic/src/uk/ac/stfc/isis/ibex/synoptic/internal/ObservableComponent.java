@@ -94,7 +94,7 @@ public class ObservableComponent extends BaseComponent {
 			case WRITE:
                 Writable<String> destination = variables.defaultWritableRemote(pv.address());
                 ForwardingObservable<String> readerWithoutUnits = variables
-                        .defaultReaderWithoutUnits(pv.address());
+                        .defaultReaderRemoteWithoutUnits(pv.address());
 				return new WritableComponentProperty(pv.displayName(), readerWithoutUnits, destination);
 			case READ:
 			default:

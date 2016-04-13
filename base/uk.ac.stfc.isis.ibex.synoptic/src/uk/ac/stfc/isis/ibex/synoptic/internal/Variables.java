@@ -154,9 +154,8 @@ public class Variables extends InstrumentVariables {
         return closingObservableFactory.getSwitchableObservable(new DefaultChannel(), address);
     }
 
-	public ForwardingObservable<String> defaultReaderWithoutUnits(String address) {
-        return closingObservableFactory.getSwitchableObservable(new DefaultChannelWithoutUnits(),
-                getPvPrefix() + address);
+    public ForwardingObservable<String> defaultReaderRemoteWithoutUnits(String address) {
+        return closingObservableFactory.getSwitchableObservable(new DefaultChannelWithoutUnits(), address);
 	}
 	
     public Writable<String> defaultWritableRemote(String address) {

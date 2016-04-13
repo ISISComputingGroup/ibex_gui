@@ -149,7 +149,7 @@ public class VariablesTest {
 	@Test
 	public final void get_default_reader_without_units_address() {
 		// Act
-		ForwardingObservable<String> actual = variables.defaultReaderWithoutUnits(synopticPV);
+        ForwardingObservable<String> actual = variables.defaultReaderRemoteWithoutUnits(synopticPV);
 		
 		// Assert
 		assertNotNull(actual);
