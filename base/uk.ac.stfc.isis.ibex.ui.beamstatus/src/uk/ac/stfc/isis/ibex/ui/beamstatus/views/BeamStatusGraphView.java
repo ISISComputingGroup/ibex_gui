@@ -193,7 +193,23 @@ public abstract class BeamStatusGraphView extends DataBrowserAwareView implement
      */
     private void selectPV(final String pvAddress) {
         try {
-            selectPV(new PVItem(pvAddress, Preferences.getScanPeriod()));
+            PVItem newItem = new PVItem(pvAddress, Preferences.getScanPeriod());
+            String displayName;
+            switch (pvAddress) {
+                case TS1_BEAM_CURRENT_PV:
+                    displayName = "TS1";
+                    break;
+                case TS2_BEAM_CURRENT_PV:
+                    displayName = "TS2";
+                    break;
+                case SYNCH_BEAM_CURRENT_PV:
+                    displayName = "Synchotron";
+                    break;
+                default:
+                    displayName = newItem.getDisplayName();
+            }
+            newItem.setDisplayName(displayName);
+            selectPV(newItem);
         } catch (Exception ex) {
             MessageDialog.openError(getSite().getShell(), Messages.Error, NLS.bind(Messages.ErrorFmt, ex.getMessage()));
         }
