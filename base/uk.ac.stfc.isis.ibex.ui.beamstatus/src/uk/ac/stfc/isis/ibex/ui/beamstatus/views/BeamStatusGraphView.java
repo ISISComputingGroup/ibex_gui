@@ -206,7 +206,6 @@ public class BeamStatusGraphView extends DataBrowserAwareView implements ModelLi
             Model new_model = new Model();
             updateModel(new_model, new_model);
             try {
-                new_model.start();
                 new_model.addItem(new_item);
                 new_item.useDefaultArchiveDataSources();
             } catch (Exception e1) {

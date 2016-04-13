@@ -16,11 +16,18 @@
             id="uk.ac.stfc.isis.ibex.ui.beamstatus.views.BeamStatusView">
       </view>
       <view
-            name="Beam Status Graph"
+            name="Beam Status Hour Graph"
             icon="icons/sample.gif"
             category="uk.ac.stfc.isis.ibex.ui.beamstatus"
             class="uk.ac.stfc.isis.ibex.ui.beamstatus.views.BeamStatusGraphView"
             id="uk.ac.stfc.isis.ibex.ui.beamstatus.views.BeamStatusGraphView">
+      </view>
+      <view
+            name="Beam Status Day Graph"
+            icon="icons/sample.gif"
+            category="uk.ac.stfc.isis.ibex.ui.beamstatus"
+            class="uk.ac.stfc.isis.ibex.ui.beamstatus.views.BeamStatusGraphView"
+            id="uk.ac.stfc.isis.ibex.ui.beamstatus.views.BeamStatusGraphView2">
       </view>
    </extension>
    <extension
@@ -61,7 +68,19 @@
                moveable="true"
                ratio="0.5f"
                relationship="right"
-               relative="uk.ac.stfc.isis.ibex.ui.perspectives.PerspectiveSwitcher"
+               relative="uk.ac.stfc.isis.ibex.ui.beamstatus.views.BeamStatusView"
+               showTitle="true"
+               standalone="false"
+               visible="true">
+         </view>
+         <view
+               closeable="false"
+               id="uk.ac.stfc.isis.ibex.ui.beamstatus.views.BeamStatusGraphView2"
+               minimized="false"
+               moveable="true"
+               ratio="0.5f"
+               relationship="right"
+               relative="uk.ac.stfc.isis.ibex.ui.beamstatus.views.BeamStatusGraphView"
                showTitle="true"
                standalone="false"
                visible="true">
