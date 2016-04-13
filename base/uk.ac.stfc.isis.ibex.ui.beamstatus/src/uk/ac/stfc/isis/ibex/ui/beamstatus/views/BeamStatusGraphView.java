@@ -132,13 +132,11 @@ abstract public class BeamStatusGraphView extends DataBrowserAwareView implement
     protected void updateModel(final Model old_model, final Model model) {
         this.model = model;
         if (old_model != model) {
-            if (old_model != null)
-            {
+            if (old_model != null) {
                 old_model.removeListener(this);
             }
 
-            if (model != null)
-            {
+            if (model != null) {
                 model.addListener(this);
             }
         }
@@ -198,8 +196,7 @@ abstract public class BeamStatusGraphView extends DataBrowserAwareView implement
             final PVItem item = new PVItem(pvAddress, period);
             selectPV(item);
         } catch (Exception ex) {
-            MessageDialog.openError(getSite().getShell(), Messages.Error,
-                    NLS.bind(Messages.ErrorFmt, ex.getMessage()));
+            MessageDialog.openError(getSite().getShell(), Messages.Error, NLS.bind(Messages.ErrorFmt, ex.getMessage()));
         }
     }
 
@@ -210,7 +207,7 @@ abstract public class BeamStatusGraphView extends DataBrowserAwareView implement
         if (new_item == null) {
             return;
         }
-        
+
         model_items.add(new_item);
 
         // Delete all existing traces
@@ -230,7 +227,7 @@ abstract public class BeamStatusGraphView extends DataBrowserAwareView implement
             new_item.useDefaultArchiveDataSources();
             new_model.setTimerange(getStartSpec(), getEndSpec());
         } catch (Exception e1) {
-                return;
+            return;
         }
 
         // Create trace for waveform

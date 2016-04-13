@@ -39,13 +39,13 @@ public class NewsPanel extends Composite {
     private Browser newsBrowser;
 
     public NewsPanel(Composite parent, int style) {
-		super(parent, style);
+        super(parent, style);
         newsBrowser = new Browser(this, SWT.NONE);
-		setLayout(new FillLayout(SWT.HORIZONTAL));
+        setLayout(new FillLayout(SWT.HORIZONTAL));
         newsBrowser.setJavascriptEnabled(false);
         newsBrowser.setUrl(MCR_NEWS_PAGE_URL);
-		startTimer();
-	}
+        startTimer();
+    }
 
     private void startTimer() {
         Timer timer = new Timer();
