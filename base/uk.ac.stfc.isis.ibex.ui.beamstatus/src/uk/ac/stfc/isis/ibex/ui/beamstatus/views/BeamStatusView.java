@@ -53,8 +53,9 @@ public class BeamStatusView extends ViewPart {
 		gdStatus.widthHint = 420;
 		gdStatus.minimumWidth = 420;
 		status.setLayoutData(gdStatus);
-		StatusPages pages = new StatusPages(parent, SWT.NONE);
-		pages.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+
+        NewsPanel news = new NewsPanel(parent, SWT.NONE);
+        news.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 
 		createActions();
 		initializeToolBar();
