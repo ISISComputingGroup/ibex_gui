@@ -27,6 +27,7 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.part.ViewPart;
 
+
 @SuppressWarnings("checkstyle:magicnumber")
 public class BeamStatusStatsAndNewsView extends ViewPart {
 

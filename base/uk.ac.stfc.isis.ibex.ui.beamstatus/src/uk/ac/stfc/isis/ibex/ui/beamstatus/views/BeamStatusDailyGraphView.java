@@ -32,8 +32,16 @@ public class BeamStatusDailyGraphView extends BeamStatusGraphView {
     /** Number of milliseconds in a day. */
     private static final long MILLISECONDS_IN_DAY = 3600 * 1000 * 24;
 
+    /** Title for the plot. */
+    private static final String PLOT_TITLE = "Beam current, past day";
+
     @Override
     protected long getTimeRangeInMilliseconds() {
         return MILLISECONDS_IN_DAY;
+    }
+
+    @Override
+    protected String getPlotTitle() {
+        return PLOT_TITLE;
     }
 }

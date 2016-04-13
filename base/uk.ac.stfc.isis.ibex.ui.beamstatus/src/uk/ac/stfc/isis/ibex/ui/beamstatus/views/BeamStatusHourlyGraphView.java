@@ -33,8 +33,16 @@ public class BeamStatusHourlyGraphView extends BeamStatusGraphView {
     /** Number of milliseconds in an hour. */
     private static final long MILLISECONDS_IN_HOUR = 3600 * 1000;
 
+    /** Title for the plot. */
+    private static final String PLOT_TITLE = "Beam current, past hour";
+
     @Override
     protected long getTimeRangeInMilliseconds() {
         return MILLISECONDS_IN_HOUR;
+    }
+
+    @Override
+    protected String getPlotTitle() {
+        return PLOT_TITLE;
     }
 }

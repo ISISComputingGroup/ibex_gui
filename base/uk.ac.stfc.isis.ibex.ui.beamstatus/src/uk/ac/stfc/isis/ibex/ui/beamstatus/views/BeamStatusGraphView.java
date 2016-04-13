@@ -60,6 +60,7 @@ import uk.ac.stfc.isis.ibex.ui.beamstatus.BeamStatusGraphDataProvider;
  * @author Adrian Potter
  */
 public abstract class BeamStatusGraphView extends DataBrowserAwareView implements ModelListener {
+
     /** View ID registered in plugin.xml. */
     public static final String ID = "uk.ac.stfc.isis.ibex.ui.beamstatus.views.BeamStatusGraphView"; //$NON-NLS-1$
 
@@ -110,12 +111,12 @@ public abstract class BeamStatusGraphView extends DataBrowserAwareView implement
         // By default, it uses BufferedGraphicsSource which has problem to
         // render it in web browser.
         final Canvas canvas = new Canvas(composite, SWT.DOUBLE_BUFFERED);
+
         // Create plot with basic configuration
 
         plot = Plot.forCanvas(canvas);
+        plot.getXYGraph().setTitle(getPlotTitle());
 
-        // selectPV("IN:DEMO:CS:SB:NEW_BLOCK_6");
-        // selectPV("AC:SYNCH:BEAM:CURR");
         selectPV("AC:TS1:BEAM:CURR");
         selectPV("AC:TS2:BEAM:CURR");
 
@@ -129,15 +130,11 @@ public abstract class BeamStatusGraphView extends DataBrowserAwareView implement
         }
     }
 
-    /** {@inheritDoc} */
-    // Remove Override annotation for RAP
-    // @Override
     @Override
     public void setFocus() {
         return;
     }
 
-    /** {@inheritDoc} */
     @Override
     protected void updateModel(final Model oldModel, final Model model) {
         this.model = model;
@@ -230,6 +227,13 @@ public abstract class BeamStatusGraphView extends DataBrowserAwareView implement
         // Add to graph
         xygraph.addTrace(trace);
     }
+
+    /**
+     * Get the title for the plot
+     * 
+     * @return Plot title
+     */
+    protected abstract String getPlotTitle();
 
     /**
      * Used by the specific implementation to define the time range in
