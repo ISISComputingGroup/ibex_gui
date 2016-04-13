@@ -19,9 +19,7 @@
 
 package uk.ac.stfc.isis.ibex.ui.beamstatus.views;
 
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 
 import org.csstudio.apputil.time.AbsoluteTimeParser;
 import org.csstudio.swt.xygraph.figures.Trace;
@@ -69,9 +67,6 @@ public abstract class BeamStatusGraphView extends DataBrowserAwareView implement
 
     /** Model of the currently active Data Browser plot or <code>null</code>. */
     private Model model;
-
-    /** Selected model items in model, or <code>null</code>. */
-    private List<ModelItem> modelItems = new ArrayList<ModelItem>();
 
     /** Controller that links model and plot. */
     private Controller controller = null;
@@ -193,8 +188,6 @@ public abstract class BeamStatusGraphView extends DataBrowserAwareView implement
         if (newItem == null) {
             return;
         }
-
-        modelItems.add(newItem);
 
         // Delete all existing traces
         if (plot == null) {
