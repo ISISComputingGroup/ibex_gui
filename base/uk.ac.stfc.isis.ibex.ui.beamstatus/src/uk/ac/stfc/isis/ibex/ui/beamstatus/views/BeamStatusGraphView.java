@@ -48,7 +48,7 @@ import org.eclipse.swt.widgets.Composite;
 
 import uk.ac.stfc.isis.ibex.ui.beamstatus.BeamStatusGraphDataProvider;
 
-public class BeamStatusGraphView extends DataBrowserAwareView implements ModelListener {
+abstract public class BeamStatusGraphView extends DataBrowserAwareView implements ModelListener {
     /** View ID registered in plugin.xml */
     final public static String ID = "uk.ac.stfc.isis.ibex.ui.beamstatus.views.BeamStatusGraphView"; //$NON-NLS-1$
 
@@ -113,7 +113,8 @@ public class BeamStatusGraphView extends DataBrowserAwareView implements ModelLi
         xygraph.primaryXAxis.setTitle("Time");
         xygraph.primaryYAxis.setTitle("Current");
 
-        selectPV("IN:DEMO:CS:SB:NEW_BLOCK_6");
+        // selectPV("IN:DEMO:CS:SB:NEW_BLOCK_6");
+        selectPV("AC:SYNCH:BEAM:CURR");
 
         // Create and start controller
         try {
