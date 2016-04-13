@@ -17,6 +17,7 @@ Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Export-Package: uk.ac.stfc.isis.ibex.ui.beamstatus,
  uk.ac.stfc.isis.ibex.ui.beamstatus.views
 Import-Package: org.csstudio.alarm.beast,
+ org.csstudio.apputil.time,
  org.csstudio.archive.vtype,
  org.csstudio.trends.databrowser2,
  org.csstudio.trends.databrowser2.editor,

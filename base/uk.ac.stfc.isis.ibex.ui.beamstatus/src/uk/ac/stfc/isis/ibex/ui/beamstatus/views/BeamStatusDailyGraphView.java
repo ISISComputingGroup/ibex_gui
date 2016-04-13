@@ -22,9 +22,11 @@
  */
 package uk.ac.stfc.isis.ibex.ui.beamstatus.views;
 
-/**
- * 
- */
 public class BeamStatusDailyGraphView extends BeamStatusGraphView {
+    private static final long millisecondsInDay = 3600 * 1000 * 24;
 
+    @Override
+    protected long getTimeRangeInMilliseconds() {
+        return millisecondsInDay;
+    }
 }

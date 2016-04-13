@@ -20,8 +20,10 @@
 package uk.ac.stfc.isis.ibex.ui.beamstatus.views;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
+import org.csstudio.apputil.time.AbsoluteTimeParser;
 import org.csstudio.swt.xygraph.figures.Trace;
 import org.csstudio.swt.xygraph.figures.Trace.PointStyle;
 import org.csstudio.swt.xygraph.figures.XYGraph;
@@ -101,9 +103,6 @@ abstract public class BeamStatusGraphView extends DataBrowserAwareView implement
         // Create plot with basic configuration
 
         plot = Plot.forCanvas(canvas);
-        XYGraph xygraph = plot.getXYGraph();
-        xygraph.primaryXAxis.setTitle("Time");
-        xygraph.primaryYAxis.setTitle("Current");
 
         // selectPV("IN:DEMO:CS:SB:NEW_BLOCK_6");
         // selectPV("AC:SYNCH:BEAM:CURR");
@@ -158,7 +157,7 @@ abstract public class BeamStatusGraphView extends DataBrowserAwareView implement
 
         // Show PV names
         final String names[] = new String[model.getItemCount() + 1];
-        names[0] = "TEXT 8";
+        names[0] = "";
         for (int i = 1; i < names.length; ++i)
             names[i] = model.getItem(i - 1).getName();
         if (!model_changed) {
@@ -167,7 +166,30 @@ abstract public class BeamStatusGraphView extends DataBrowserAwareView implement
                 return;
             }
         }
+        // updateBounds();
     }
+
+    /*
+     * protected void updateBounds() { int minx = Integer.MAX_VALUE; int miny =
+     * Integer.MAX_VALUE; int maxx = Integer.MIN_VALUE; int maxy =
+     * Integer.MIN_VALUE; for (ModelItem item : model_items) { PlotSamples
+     * itemSamples = item.getSamples();
+     * 
+     * if (itemSamples.getSize() <= 0) continue;
+     * 
+     * Range xMinMax = itemSamples.getXDataMinMax(); Range yMinMax =
+     * itemSamples.getYDataMinMax();
+     * 
+     * minx = Math.min(minx, (int) Math.floor(xMinMax.getLower())); miny =
+     * Math.min(minx, (int) Math.floor(yMinMax.getLower()));
+     * 
+     * maxx = Math.max(minx, (int) Math.ceil(xMinMax.getUpper())); maxy =
+     * Math.max(minx, (int) Math.ceil(yMinMax.getUpper())); }
+     * plot.getXYGraph().setBounds(new Rectangle(minx, miny, maxx - minx, maxy -
+     * miny));
+     * 
+     * }
+     */
 
     private void selectPV(final String pvAddress) {
 
@@ -182,7 +204,7 @@ abstract public class BeamStatusGraphView extends DataBrowserAwareView implement
     }
 
     /** Select given PV item (or <code>null</code>). */
-    private void selectPV(final PVItem new_item) {
+    protected void selectPV(final PVItem new_item) {
 
         // No or unknown PV name?
         if (new_item == null) {
@@ -206,6 +228,7 @@ abstract public class BeamStatusGraphView extends DataBrowserAwareView implement
         try {
             new_model.addItem(new_item);
             new_item.useDefaultArchiveDataSources();
+            new_model.setTimerange(getStartSpec(), getEndSpec());
         } catch (Exception e1) {
                 return;
         }
@@ -215,37 +238,47 @@ abstract public class BeamStatusGraphView extends DataBrowserAwareView implement
                 new BeamStatusGraphDataProvider());
         trace.setLineWidth(new_item.getLineWidth());
         trace.setPointStyle(PointStyle.POINT);
-        trace.setPointSize(5);
+        trace.setPointSize(1);
         // Add to graph
         xygraph.addTrace(trace);
+    }
+
+    private String getStartSpec() {
+        // Use absolute start/end time
+        final Calendar cal = Calendar.getInstance();
+        cal.setTimeInMillis(0);
+        return AbsoluteTimeParser.format(cal);
+    }
+
+    abstract protected long getTimeRangeInMilliseconds();
+
+    private String getEndSpec() {
+        final Calendar cal = Calendar.getInstance();
+        cal.setTimeInMillis(getTimeRangeInMilliseconds());
+        return AbsoluteTimeParser.format(cal);
     }
 
     /** {@inheritDoc} */
     @Override
     public void itemAdded(ModelItem item) {
-        // Be aware of the addition of a new item to update combo box.
         update(false);
     }
 
     /** {@inheritDoc} */
     @Override
     public void itemRemoved(ModelItem item) {
-        // Be aware of the addition of a new item to update combo box.
         update(false);
     }
 
     /** {@inheritDoc} */
     @Override
     public void changedItemLook(ModelItem item) {
-        // Be aware of the change of the item name.
         update(false);
     }
 
     /** {@inheritDoc} */
     @Override
     public void changedColors() {
-        // Be aware of the change of the item color.
-        // TODO: this update does not trigger color change. Fix it.
         update(false);
     }
 
