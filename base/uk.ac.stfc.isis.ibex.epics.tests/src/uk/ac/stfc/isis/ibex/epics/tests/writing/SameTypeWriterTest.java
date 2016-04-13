@@ -28,6 +28,7 @@ import static org.mockito.Mockito.*;
 import org.junit.Before;
 import org.junit.Test;
 
+import uk.ac.stfc.isis.ibex.epics.observing.Subscription;
 import uk.ac.stfc.isis.ibex.epics.writing.SameTypeWriter;
 import uk.ac.stfc.isis.ibex.epics.writing.Writable;
 
@@ -35,7 +36,7 @@ import uk.ac.stfc.isis.ibex.epics.writing.Writable;
 public class SameTypeWriterTest {
 
     private SameTypeWriter<String> writer;
-    private static final String FIRST_VALUE = "first value";
+    private static final String A_VALUE = "a value";
 
     @Before
     public void setUp() {
@@ -84,13 +85,13 @@ public class SameTypeWriterTest {
     @Test
     public void last_written_contains_last_written_value() {
         // Arrange
-        assertNotEquals(writer.lastWritten(), FIRST_VALUE);
+        assertNotEquals(writer.lastWritten(), A_VALUE);
 
         // Act
-        writer.write(FIRST_VALUE);
+        writer.write(A_VALUE);
 
         // Assert
-        assertEquals(FIRST_VALUE, writer.lastWritten());
+        assertEquals(A_VALUE, writer.lastWritten());
     }
 
     @Test
@@ -103,11 +104,11 @@ public class SameTypeWriterTest {
         writer.writeTo(mockWritable2);
 
         // Act
-        writer.write(FIRST_VALUE);
+        writer.write(A_VALUE);
 
         // Assert
-        verify(mockWritable1, times(1)).write(FIRST_VALUE);
-        verify(mockWritable2, times(1)).write(FIRST_VALUE);
+        verify(mockWritable1, times(1)).write(A_VALUE);
+        verify(mockWritable2, times(1)).write(A_VALUE);
     }
 
     @Test
@@ -118,10 +119,24 @@ public class SameTypeWriterTest {
         // Act
         writer.writeTo(mockWritable);
         writer.writeTo(mockWritable);
-        writer.write(FIRST_VALUE);
+        writer.write(A_VALUE);
 
         // Assert
-        verify(mockWritable, times(1)).write(FIRST_VALUE);
+        verify(mockWritable, times(1)).write(A_VALUE);
+    }
+
+    @Test
+    public void write_to_returns_an_unsubscriber_that_removes_the_input_writable_from_the_list_of_writables() {
+        // Arrange
+        Writable<String> mockWritable = mock(Writable.class);
+        Subscription returnedSubscription = writer.writeTo(mockWritable);
+
+        // Act
+        returnedSubscription.removeObserver();
+
+        // Assert
+        writer.write(A_VALUE);
+        verify(mockWritable, never()).write(A_VALUE);
     }
 
     @Test
