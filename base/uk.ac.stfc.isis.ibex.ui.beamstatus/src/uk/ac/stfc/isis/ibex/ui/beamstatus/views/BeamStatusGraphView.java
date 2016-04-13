@@ -62,6 +62,18 @@ public abstract class BeamStatusGraphView extends DataBrowserAwareView implement
     /** View ID registered in plugin.xml. */
     public static final String ID = "uk.ac.stfc.isis.ibex.ui.beamstatus.views.BeamStatusGraphView"; //$NON-NLS-1$
 
+    /** Title for the Y-axis. */
+    private static final String Y_AXIS_TITLE = "Current";
+
+    /** TS1 beam current PV name */
+    private static final String TS1_BEAM_CURRENT_PV = "AC:TS1:BEAM:CURR";
+
+    /** TS2 beam current PV name */
+    private static final String TS2_BEAM_CURRENT_PV = "AC:TS2:BEAM:CURR";
+
+    /** Synchotron beam current PV name */
+    private static final String SYNCH_BEAM_CURRENT_PV = "AC:SYNCH:BEAM:CURR";
+
     /** Plot. */
     private Plot plot;
 
@@ -112,8 +124,11 @@ public abstract class BeamStatusGraphView extends DataBrowserAwareView implement
         plot = Plot.forCanvas(canvas);
         plot.getXYGraph().setTitle(getPlotTitle());
 
-        selectPV("AC:TS1:BEAM:CURR");
-        selectPV("AC:TS2:BEAM:CURR");
+        selectPV(TS1_BEAM_CURRENT_PV);
+        selectPV(TS2_BEAM_CURRENT_PV);
+        selectPV(SYNCH_BEAM_CURRENT_PV);
+
+        setYAxisName();
 
         // Create and start controller
         try {
@@ -123,6 +138,14 @@ public abstract class BeamStatusGraphView extends DataBrowserAwareView implement
             MessageDialog.openError(parent.getShell(), Messages.Error,
                     NLS.bind(Messages.ControllerStartErrorFmt, ex.getMessage()));
         }
+    }
+
+    private void setYAxisName() {
+        if (model.getAxisCount() == 0) {
+            return;
+        }
+        AxisConfig axis = model.getAxis(model.getAxisCount() - 1);
+        axis.setName(Y_AXIS_TITLE);
     }
 
     @Override
