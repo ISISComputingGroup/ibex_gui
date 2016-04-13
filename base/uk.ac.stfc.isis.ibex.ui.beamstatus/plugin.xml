@@ -19,15 +19,15 @@
             name="Beam Status Hour Graph"
             icon="icons/sample.gif"
             category="uk.ac.stfc.isis.ibex.ui.beamstatus"
-            class="uk.ac.stfc.isis.ibex.ui.beamstatus.views.BeamStatusGraphView"
-            id="uk.ac.stfc.isis.ibex.ui.beamstatus.views.BeamStatusGraphView">
+            class="uk.ac.stfc.isis.ibex.ui.beamstatus.views.BeamStatusHourlyGraphView"
+            id="uk.ac.stfc.isis.ibex.ui.beamstatus.views.BeamStatusHourlyGraphView">
       </view>
       <view
             name="Beam Status Day Graph"
             icon="icons/sample.gif"
             category="uk.ac.stfc.isis.ibex.ui.beamstatus"
-            class="uk.ac.stfc.isis.ibex.ui.beamstatus.views.BeamStatusGraphView"
-            id="uk.ac.stfc.isis.ibex.ui.beamstatus.views.BeamStatusGraphView2">
+            class="uk.ac.stfc.isis.ibex.ui.beamstatus.views.BeamStatusDailyGraphView"
+            id="uk.ac.stfc.isis.ibex.ui.beamstatus.views.BeamStatusDailyGraphView">
       </view>
    </extension>
    <extension
@@ -54,7 +54,7 @@
                id="uk.ac.stfc.isis.ibex.ui.beamstatus.views.BeamStatusView"
                minimized="false"
                moveable="true"
-               ratio="0.5f"
+               ratio="0.7f"
                relationship="right"
                relative="uk.ac.stfc.isis.ibex.ui.perspectives.PerspectiveSwitcher"
                showTitle="true"
@@ -63,7 +63,7 @@
          </view>
          <view
                closeable="false"
-               id="uk.ac.stfc.isis.ibex.ui.beamstatus.views.BeamStatusGraphView"
+               id="uk.ac.stfc.isis.ibex.ui.beamstatus.views.BeamStatusHourlyGraphView"
                minimized="false"
                moveable="true"
                ratio="0.5f"
@@ -75,12 +75,12 @@
          </view>
          <view
                closeable="false"
-               id="uk.ac.stfc.isis.ibex.ui.beamstatus.views.BeamStatusGraphView2"
+               id="uk.ac.stfc.isis.ibex.ui.beamstatus.views.BeamStatusDailyGraphView"
                minimized="false"
                moveable="true"
                ratio="0.5f"
-               relationship="right"
-               relative="uk.ac.stfc.isis.ibex.ui.beamstatus.views.BeamStatusGraphView"
+               relationship="bottom"
+               relative="uk.ac.stfc.isis.ibex.ui.beamstatus.views.BeamStatusHourlyGraphView"
                showTitle="true"
                standalone="false"
                visible="true">
