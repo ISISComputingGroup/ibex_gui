@@ -35,22 +35,22 @@ public class ExperimentDataFieldsTest {
 		// Act
 		ExpDataField result = ExpDataFieldsCreator.getField(ExpDataTablesEnum.USER_TABLE, ExpDataFieldsEnum.NAME);
 				
-		//Assert
-		assertEquals(result.toString(), "user.name");
+        // Assert
+        assertEquals(result.toString(), "user.name");
 	}
 	
 	@Test
 	public void role_table_contains_priority() {
-		//Act
+        // Act
 		ExpDataField result = ExpDataFieldsCreator.getField(ExpDataTablesEnum.ROLE_TABLE, ExpDataFieldsEnum.PRIORITY);
 		
-		//Assert
+        // Assert
 		assertEquals(result.toString(), "role.priority");		
 	}
 	
 	@Test(expected = IllegalArgumentException.class)
 	public void experiment_table_does_not_contain_name() {
-		//Act
+        // Act
 		ExpDataField result = ExpDataFieldsCreator.getField(ExpDataTablesEnum.EXPERIMENT_TABLE, ExpDataFieldsEnum.NAME);	
 	}
 }

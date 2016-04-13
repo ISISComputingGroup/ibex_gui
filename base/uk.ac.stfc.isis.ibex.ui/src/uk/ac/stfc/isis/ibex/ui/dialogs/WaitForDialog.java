@@ -53,7 +53,6 @@ public class WaitForDialog extends Dialog {
 	
 	@Override
 	public int open() {
-		setCursor(SWT.CURSOR_WAIT);
 		getParentShell().setEnabled(false);        
 		return super.open();
 	}
@@ -61,7 +60,6 @@ public class WaitForDialog extends Dialog {
 	@Override
 	public boolean close() {
 		getParentShell().setEnabled(true);	
-		setCursor(SWT.CURSOR_ARROW);
 
 		return super.close();
 	}

@@ -134,8 +134,7 @@ public class ExperimentIDQuery {
 		    	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		    	String startDateString = result.getString(experimentStartDate.toString());
 		    	Date startDate = sdf.parse(startDateString);
-		    	
-				userDetails.add(new UserDetails(name, institute, Role.getByString(role), id, startDate));
+                userDetails.add(new UserDetails(name, institute, Role.getByString(role), id, startDate));
 		    }
 		} finally {
 		    statement.close();

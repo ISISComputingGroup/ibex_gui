@@ -47,7 +47,7 @@ public class Ioc extends ModelObject implements Comparable<Ioc> {
 	private Collection<PVSet> pvsets = new ArrayList<PVSet>();
 	private Collection<PVDefaultValue> pvs = new ArrayList<PVDefaultValue>();
 	private Collection<Macro> macros = new ArrayList<Macro>();
-	private String subConfig;
+	private String component;
 	
 	public Ioc(String name) {
 		this.name = name;
@@ -140,12 +140,12 @@ public class Ioc extends ModelObject implements Comparable<Ioc> {
 		firePropertyChange("pvSets", this.pvsets, this.pvsets = pvsets);
 	}
 
-	public String getSubConfig() {
-		return subConfig;
+	public String getComponent() {
+		return component;
 	}
 	
-	public boolean hasSubConfig() {
-		return !Strings.isNullOrEmpty(subConfig);
+	public boolean hasComponent() {
+		return !Strings.isNullOrEmpty(component);
 	}
 	
 	@Override

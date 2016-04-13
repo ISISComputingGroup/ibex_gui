@@ -1,6 +1,6 @@
 package uk.ac.stfc.isis.ibex.opis.tests.desc;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -27,9 +27,11 @@ public class XmlTest {
 	private String macroName2 = "M2";
 	private String macroDescription2 = "This is test macro 2";
 
+    private String opiType1 = "Type1";
 	private String opiPath1 = "TestOpi1.opi";
 	private String opiDescription1 = "This is test OPI 1";
 
+    private String opiType2 = "Type2";
 	private String opiPath2 = "TestOpi.opi";
 	private String opiDescription2 = "This is test OPI 2";
 
@@ -43,8 +45,8 @@ public class XmlTest {
 		macros.add(new MacroInfo(macroName1, macroDescription1));
 		macros.add(new MacroInfo(macroName2, macroDescription2));
 		
-		OpiDescription opi1 = new OpiDescription(opiPath1, opiDescription1, macros);
-		OpiDescription opi2 = new OpiDescription(opiPath2, opiDescription2, macros);
+        OpiDescription opi1 = new OpiDescription(opiType1, opiPath1, opiDescription1, macros);
+        OpiDescription opi2 = new OpiDescription(opiType2, opiPath2, opiDescription2, macros);
 
 		Map<String, OpiDescription> opis = new HashMap<String, OpiDescription>();
 		opis.put(opi1.getPath(), opi1);
@@ -62,6 +64,7 @@ public class XmlTest {
 		Descriptions desc = XmlUtil.fromXml(fullDescriptionsXml);
 
 		Map<String, OpiDescription> opis = desc.getOpis();
+        assertEquals(opis.get(opiPath1).getType(), opiType1);
 		assertEquals(opis.get(opiPath1).getPath(), opiPath1);
 		assertEquals(opis.get(opiPath1).getDescription(), opiDescription1);
 
@@ -71,6 +74,7 @@ public class XmlTest {
 		assertEquals(macros.get(1).getName(), macroName2);
 		assertEquals(macros.get(1).getDescription(), macroDescription2);
 
+        assertEquals(opis.get(opiPath2).getType(), opiType2);
 		assertEquals(opis.get(opiPath2).getPath(), opiPath2);
 		assertEquals(opis.get(opiPath2).getDescription(), opiDescription2);
 		macros = opis.get(opiPath2).getMacros();

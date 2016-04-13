@@ -19,6 +19,8 @@
 
 package uk.ac.stfc.isis.ibex.ui.synoptic.editor.commands;
 
+import java.util.Collection;
+
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.jface.window.Window;
 import org.eclipse.swt.widgets.Shell;
@@ -26,9 +28,11 @@ import org.eclipse.ui.PlatformUI;
 
 import uk.ac.stfc.isis.ibex.epics.writing.SameTypeWriter;
 import uk.ac.stfc.isis.ibex.epics.writing.Writable;
+import uk.ac.stfc.isis.ibex.opis.Opi;
 import uk.ac.stfc.isis.ibex.synoptic.Synoptic;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.SynopticDescription;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.dialogs.EditSynopticDialog;
+import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.SynopticViewModel;
 
 /**
  * Handles opening the Synoptic Editor and saving the synoptic when updated. 
@@ -61,7 +65,9 @@ public abstract class SynopticHandler<T> extends AbstractHandler {
 	}		
 	
 	protected void openDialog(SynopticDescription synoptic, String title, boolean isBlank) {
-		EditSynopticDialog editDialog = new EditSynopticDialog(shell(), title, synoptic, isBlank);	
+        Collection<String> opis = Opi.getDefault().descriptionsProvider().getOpiList();
+        EditSynopticDialog editDialog = new EditSynopticDialog(shell(), title, synoptic, isBlank, opis,
+                new SynopticViewModel());
 		if (editDialog.open() == Window.OK) {
 			SYNOPTIC.edit().saveSynoptic().write(editDialog.getSynoptic());
 			

@@ -35,7 +35,7 @@ import uk.ac.stfc.isis.ibex.synoptic.model.desc.SynopticDescription;
 import uk.ac.stfc.isis.ibex.synoptic.xml.XMLUtil;
 
 @SuppressWarnings("checkstyle:methodname")
-public class InstrumentWrittenToXmlTest extends FileReadingTest {
+public class SynopticWrittenToXmlTest extends FileReadingTest {
 
     private SynopticDescription instrument;
 	
@@ -46,7 +46,7 @@ public class InstrumentWrittenToXmlTest extends FileReadingTest {
 
 	@Override
 	protected URL fileLocation() throws MalformedURLException {
-        return getClass().getResource("/uk/ac/stfc/isis/ibex/synoptic/tests/xml/example_instrument.xml");
+        return getClass().getResource("/uk/ac/stfc/isis/ibex/synoptic/tests/xml/example_synoptic.xml");
 	}
 	
     @Test

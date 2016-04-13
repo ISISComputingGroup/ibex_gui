@@ -108,7 +108,7 @@ public class EditableIoc extends Ioc {
 	}
 	
 	public boolean isEditable() {
-		return !hasSubConfig();
+		return !hasComponent();
 	}
 	
 	// Find a actual (rather than available) PVSet and return it, or null

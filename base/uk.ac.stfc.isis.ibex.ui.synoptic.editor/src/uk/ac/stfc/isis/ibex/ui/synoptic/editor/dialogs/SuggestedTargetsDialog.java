@@ -68,6 +68,12 @@ public class SuggestedTargetsDialog extends Dialog {
     }
 
     @Override
+    protected void configureShell(Shell shell) {
+        super.configureShell(shell);
+        shell.setText("Select Target");
+    }
+
+    @Override
     public Control createDialogArea(Composite parent) {
         Composite container = (Composite) super.createDialogArea(parent);
 

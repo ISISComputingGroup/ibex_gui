@@ -19,18 +19,18 @@
 
 package uk.ac.stfc.isis.ibex.ui.synoptic.component;
 
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Event;
-import org.eclipse.swt.widgets.Listener;
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Cursor;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Rectangle;
+import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.SWT;
+import org.eclipse.swt.widgets.Listener;
 import org.eclipse.wb.swt.ResourceManager;
 import org.eclipse.wb.swt.SWTResourceManager;
-import org.eclipse.swt.layout.GridData;
 
 import uk.ac.stfc.isis.ibex.synoptic.model.Component;
 import uk.ac.stfc.isis.ibex.ui.synoptic.Activator;
@@ -67,7 +67,9 @@ public class BasicComponent extends BeamlineComposite {
 		image.addListener(SWT.MouseEnter, new Listener() {	
 			@Override
 			public void handleEvent(Event event) {
-				setCursor(targetName == null ? null : handCursor);
+                if (presenter.hasTarget(targetName)) {
+			        setCursor(targetName == null ? null : handCursor);
+			    }
 			}
 		});
 
@@ -82,7 +84,9 @@ public class BasicComponent extends BeamlineComposite {
 			@Override
 			public void handleEvent(Event event) {
 				if (targetName != null) {
-					presenter.navigateTo(targetName);
+                    if (presenter.hasTarget(targetName)) {
+                        presenter.navigateTo(targetName);
+                    }
 				}
 			}
 		});

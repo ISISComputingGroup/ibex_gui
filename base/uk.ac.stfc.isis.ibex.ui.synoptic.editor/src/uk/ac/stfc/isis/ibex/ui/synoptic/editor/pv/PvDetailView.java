@@ -238,7 +238,10 @@ public class PvDetailView extends Composite {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		txtAddress.setText(selectPV.getPvAddress());
+
+        if (selectPV.isConfirmed()) {
+            txtAddress.setText(selectPV.getPvAddress());
+        }
 	}
 	
 	private void openBlockDialog() {
@@ -248,7 +251,10 @@ public class PvDetailView extends Composite {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		txtName.setText(selectPV.getBlockName());
-		txtAddress.setText(selectPV.getPvAddress());
+
+        if (selectPV.isConfirmed()) {
+            txtName.setText(selectPV.getBlockName());
+            txtAddress.setText(selectPV.getPvAddress());
+        }
 	}
 }

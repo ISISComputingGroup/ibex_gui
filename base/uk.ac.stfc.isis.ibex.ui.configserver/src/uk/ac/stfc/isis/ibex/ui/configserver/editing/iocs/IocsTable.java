@@ -92,7 +92,7 @@ public class IocsTable extends DataboundTable<EditableIoc> {
 			
 			@Override
 			protected boolean isEditable(Ioc ioc) {
-				return !ioc.hasSubConfig();
+				return !ioc.hasComponent();
 			}
 		});	
 	}
@@ -113,7 +113,7 @@ public class IocsTable extends DataboundTable<EditableIoc> {
 			
 			@Override
 			protected boolean isEditable(Ioc ioc) {
-				return !ioc.hasSubConfig();
+				return !ioc.hasComponent();
 			}
 		});	
 	}

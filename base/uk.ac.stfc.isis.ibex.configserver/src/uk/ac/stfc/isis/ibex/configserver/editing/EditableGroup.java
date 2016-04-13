@@ -134,7 +134,7 @@ public class EditableGroup extends Group {
 	}
 
 	public boolean isEditable() {
-		return !hasSubConfig();
+		return !hasComponent();
 	}
 
 	private synchronized void updateBlocksFromConfig(EditableConfiguration config) {

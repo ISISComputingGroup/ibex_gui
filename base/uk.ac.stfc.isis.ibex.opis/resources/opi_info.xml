@@ -2,19 +2,191 @@
 <descriptions>
 	<opis>
 		<entry>
+			<key>Analyser</key>
+			<value>
+				<type>ANALYSER</type>
+				<path>analyser.opi</path>
+				<description>The OPI for the analyser. No properties required.</description>
+				<macros>
+				</macros>
+			</value>
+		</entry>
+		<entry>
+			<key>Beam-stop</key>
+			<value>
+				<type>BEAMSTOP</type>
+				<path>beamstop.opi</path>
+				<description>Description required. No properties required.</description>
+				<macros>
+				</macros>
+			</value>
+		</entry>
+		<entry>
+			<key>Caen HV</key>
+			<value>
+				<type>CAEN</type>
+				<path>HV/HVMonitorSummaryDisplay.opi</path>
+				<description>Summary Display for Caens (Maintenance of list via the button on this OPI). No properties required.</description>
+				<macros>
+				</macros>
+			</value>
+		</entry>
+        <entry>
+            <key>Double Monitor</key>		
+            <value>	
+                <type>MONITOR</type>
+                <path>double_monitor.opi</path>		
+                <description>The OPI for a double fixed monitor.</description>		
+                <macros>		
+                    <macro>		
+                        <name>M</name>		
+                        <description>The monitor number.</description>		
+                    </macro>						
+                    <macro>		
+                        <name>MA</name>		
+                        <description>The internal number for the first channel.</description>		
+                    </macro>		
+                    <macro>		
+                        <name>MB</name>		
+                        <description>The internal number for the second channel.</description>		
+                    </macro>		
+                    <macro>		
+                        <name>MAHVCHAN</name>		
+                        <description>CAEN HV channel for A.</description>		
+                    </macro>		
+                    <macro>		
+                        <name>MBHVCHAN</name>		
+                        <description>CAEN HV channel for B.</description>		
+                    </macro>		
+                </macros>
+            </value>		
+ 		</entry>		
+ 		<entry>
 			<key>Eurotherm</key>
 			<value>
+				<type>EUROTHERM</type>
 				<path>Eurotherm.opi</path>
 				<description>The OPI for the standard Eurotherm controller.</description>
+                <macros>
+					<macro>
+						<name>EURO</name>
+						<description>The Eurotherm PV name (e.g. EUROTHERM1).</description>
+					</macro>
+                </macros>
+			</value>
+		</entry>        
+		<entry>
+			<key>In Out Monitor</key>
+			<value>
+				<type>MOVINGMONITOR</type>
+				<path>inout_monitor.opi</path>
+				<description>Description required.</description>
 				<macros>
+					<macro>
+						<name>M</name>
+						<description>The monitor number (e.g. 1).</description>
+					</macro>
+                    <macro>
+						<name>CHANNUM</name>
+						<description>The channel number (e.g. 2).</description>
+					</macro>
+					<macro>
+						<name>MM</name>
+						<description>The motor PV to point at (e.g. MOT:MTR0605).</description>
+					</macro>                    
+				</macros>
+			</value>
+		</entry>
+		<entry>
+			<key>Jaws</key>
+			<value>
+				<type>UNCONFIRMED</type>
+				<path>Jaws.opi</path>
+				<description>Description required.</description>
+				<macros>
+                    <macro>
+						<name>J</name>
+						<description>The Jaws PV (e.g. MOT:JAWS1).</description>
+					</macro>     
+				</macros>
+			</value>
+		</entry>
+		<entry>
+			<key>Julabo FL300</key>
+			<value>
+				<type>JULABO</type>
+				<path>JulaboFL300.opi</path>
+				<description>Description required. No properties required.</description>
+				<macros>
+				</macros>
+			</value>
+		</entry>
+		<entry>
+			<key>Julabo FP50</key>
+			<value>
+				<type>JULABO</type>
+				<path>JulaboFP50.opi</path>
+				<description>Description required.</description>
+				<macros>
+                    <macro>
+						<name>JULABO</name>
+						<description>The Julabo PV name (e.g. JULABO_01).</description>
+					</macro>                     
+				</macros>
+			</value>
+		</entry>
+		<entry>
+			<key>Kepco</key>
+			<value>
+				<type>KEPCO</type>
+				<path>kepco.opi</path>
+				<description>Description required. No properties required.</description>
+				<macros>
+				</macros>
+			</value>
+		</entry>
+		<entry>
+			<key>Mk3 Chopper</key>
+			<value>
+				<type>CHOPPER</type>
+				<path>Mk3Chopper.opi</path>
+				<description>Description required. No properties required.</description>
+				<macros>
+				</macros>
+			</value>
+		</entry>
+		<entry>
+			<key>Monitor</key>
+			<value>
+				<type>MONITOR</type>
+				<path>monitor.opi</path>
+				<description>Description required.</description>
+				<macros>
+                    <macro>
+						<name>M</name>
+						<description>Description required.</description>
+					</macro> 
+                    <macro>
+						<name>CHANNUM</name>
+						<description>Description required.</description>
+					</macro>
+                    <macro>
+						<name>N</name>
+						<description>Description required.</description>
+					</macro> 
+                    <macro>
+						<name>MM</name>
+						<description>Description required.</description>
+					</macro>                      
 				</macros>
 			</value>
 		</entry>
 		<entry>
 			<key>Pinhole Selector</key>
 			<value>
+				<type>PINHOLESELECTOR</type>
 				<path>pinhole_selector\pinhole_selector.opi</path>
-				<description>The OPI for the pinhole selector</description>
+				<description>The OPI for the pinhole selector.</description>
 				<macros>
 					<macro>
 						<name>PH</name>
@@ -26,147 +198,51 @@
 					</macro>
 				</macros>
 			</value>
-		</entry>
-		<entry>
-			<key>Analyser</key>
-			<value>
-				<path>analyser.opi</path>
-				<description>The OPI for the analyser.</description>
-				<macros>
-				</macros>
-			</value>
-		</entry>
-		<entry>
-			<key>Beam-stop</key>
-			<value>
-				<path>beamstop.opi</path>
-				<description>Description required.</description>
-				<macros>
-				</macros>
-			</value>
-		</entry>
-		<entry>
-			<key>In Out Monitor</key>
-			<value>
-				<path>inout_monitor.opi</path>
-				<description>Description required.</description>
-				<macros>
-				</macros>
-			</value>
-		</entry>
-		<entry>
-			<key>Jaws</key>
-			<value>
-				<path>Jaws.opi</path>
-				<description>Description required.</description>
-				<macros>
-				</macros>
-			</value>
-		</entry>
-		<entry>
-			<key>Julabo FL300</key>
-			<value>
-				<path>JulaboFL300.opi</path>
-				<description>Description required.</description>
-				<macros>
-				</macros>
-			</value>
-		</entry>
-		<entry>
-			<key>Julabo FP50</key>
-			<value>
-				<path>JulaboFP50.opi</path>
-				<description>Description required.</description>
-				<macros>
-				</macros>
-			</value>
-		</entry>
-		<entry>
-			<key>Kepco</key>
-			<value>
-				<path>kepco.opi</path>
-				<description>Description required.</description>
-				<macros>
-				</macros>
-			</value>
-		</entry>
-		<entry>
-			<key>Mk3 Chopper</key>
-			<value>
-				<path>Mk3Chopper.opi</path>
-				<description>Description required.</description>
-				<macros>
-				</macros>
-			</value>
-		</entry>
-        <entry>
-			<key>SKF G5 Chopper</key>
-			<value>
-				<path>SKFChopper.opi</path>
-				<description>OPI for the SKF G5 chopper controller</description>
-				<macros>
-				</macros>
-			</value>
-		</entry>
-		<entry>
-			<key>Monitor</key>
-			<value>
-				<path>monitor.opi</path>
-				<description>Description required.</description>
-				<macros>
-				</macros>
-			</value>
-		</entry>
+		</entry>        
 		<entry>
 			<key>Pixelman</key>
 			<value>
+				<type>UNCONFIRMED</type>
 				<path>pixelman.opi</path>
 				<description>Description required.</description>
 				<macros>
+					<macro>
+						<name>Q</name>
+						<description>Description required.</description>
+					</macro>                
 				</macros>
 			</value>
 		</entry>
 		<entry>
 			<key>Polariser</key>
 			<value>
+				<type>POLARISER</type>
 				<path>polariser.opi</path>
-				<description>Description required.</description>
+				<description>Description required.  No properties required.</description>
 				<macros>
 				</macros>
 			</value>
 		</entry>
 		<entry>
-			<key>SD Test</key>
+			<key>Rotating Bench</key>
 			<value>
-				<path>SDTEST.opi</path>
-				<description>Description required.</description>
+				<type>ROTATINGBENCH</type>
+				<path>rotating_bench.opi</path>
+				<description>The OPI for the LARMOR rotating bench.</description>
 				<macros>
+					<macro>
+						<name>MM</name>
+						<description>The motor PV relating to the motor controlling the bench rotation (e.g. MOT:MTR0605).</description>
+					</macro>
 				</macros>
 			</value>
-		</entry>
+		</entry>        
 		<entry>
-			<key>Slit motors</key>
+			<key>Sample changer</key>
 			<value>
-				<path>slit_motors.opi</path>
-				<description>Description required.</description>
-				<macros>
-				</macros>
-			</value>
-		</entry>
-		<entry>
-			<key>TPG300</key>
-			<value>
-				<path>TPG300.opi</path>
-				<description>Description required.</description>
-				<macros>
-				</macros>
-			</value>
-		</entry>
-		<entry>
-			<key>Slit 1</key>
-			<value>
-				<path>slit1.opi</path>
-				<description>Description required.</description>
+				<type>SAMPLECHANGER</type>
+				<path>stage/sample_changer.opi</path>
+				<description>Description required. No properties required.</description>
 				<macros>
 				</macros>
 			</value>
@@ -174,26 +250,19 @@
 		<entry>
 			<key>Sample stage</key>
 			<value>
+				<type>SAMPLESTACK</type>
 				<path>stage/sample.opi</path>
-				<description>Description required.</description>
+				<description>Description required. No properties required.</description>
 				<macros>
 				</macros>
 			</value>
-		</entry>
+		</entry>        
 		<entry>
-			<key>Sample changer</key>
+			<key>SD Test</key>
 			<value>
-				<path>stage/sample_changer.opi</path>
+				<type>UNCONFIRMED</type>
+				<path>SDTEST.opi</path>
 				<description>Description required.</description>
-				<macros>
-				</macros>
-			</value>
-		</entry>
-		<entry>
-			<key>Caen HV</key>
-			<value>
-				<path>HV/HVMonitorSummaryDisplay.opi</path>
-				<description>Summary Display for Caens (Maintenance of list via the button on this OPI). No Macros required.</description>
 				<macros>
 				</macros>
 			</value>
@@ -201,6 +270,7 @@
 		<entry>
 			<key>Single Stage</key>
 			<value>
+				<type>SINGLESTAGE</type>
 				<path>single_stage.opi</path>
 				<description>Displays a single Motor along with a designated ID</description>
 				<macros>
@@ -210,23 +280,102 @@
 					</macro>
 					<macro>
 						<name>MM</name>
-						<description>The MOT:MTRnnnn value relating to the motor controlling the stage</description>
+						<description>The motor PV relating to the motor controlling the stage  (e.g. MOT:MTR0605).</description>
 					</macro>
+				</macros>
+			</value>
+		</entry>        
+		<entry>
+			<key>Slit 1</key>
+			<value>
+				<type>JAWS</type>
+				<path>slit1.opi</path>
+				<description>Description required.</description>
+				<macros>
+					<macro>
+						<name>MM</name>
+						<description>The motor PV (e.g. MOT:MTR0605).</description>
+					</macro>
+					<macro>
+						<name>JAWS</name>
+						<description>Description required.</description>
+					</macro>
+					<macro>
+						<name>M</name>
+						<description>Description required.</description>
+					</macro>
+                    <macro>
+						<name>J</name>
+						<description>The Jaws PV (e.g. MOT:JAWS1).</description>
+					</macro>                    
+					<macro>
+						<name>M1</name>
+						<description>The motor PV relating to motor 1 (e.g. MOT:MTR0601).</description>
+					</macro>
+					<macro>
+						<name>M2</name>
+						<description>The motor PV relating to motor 2 (e.g. MOT:MTR0602).</description>
+					</macro>
+					<macro>
+						<name>M3</name>
+						<description>The motor PV relating to motor 3 (e.g. MOT:MTR0603).</description>
+					</macro>
+                    <macro>
+						<name>M4</name>
+						<description>The motor PV relating to motor 4 (e.g. MOT:MTR0604).</description>
+					</macro>
+				</macros>
+			</value>
+		</entry>        
+		<entry>
+			<key>Slit motors</key>
+			<value>
+				<type>UNCONFIRMED</type>
+				<path>slit_motors.opi</path>
+				<description>Description required.</description>
+				<macros>
+					<macro>
+						<name>M1</name>
+						<description>The motor PV relating to motor 1 (e.g. MOT:MTR0601).</description>
+					</macro>
+					<macro>
+						<name>M2</name>
+						<description>The motor PV relating to motor 2 (e.g. MOT:MTR0602).</description>
+					</macro>
+					<macro>
+						<name>M3</name>
+						<description>The motor PV relating to motor 3 (e.g. MOT:MTR0603).</description>
+					</macro>
+                    <macro>
+						<name>M4</name>
+						<description>The motor PV relating to motor 4 (e.g. MOT:MTR0604).</description>
+					</macro>                
 				</macros>
 			</value>
 		</entry>
 		<entry>
-			<key>Rotating Bench</key>
+			<key>TPG300</key>
 			<value>
-				<path>rotating_bench.opi</path>
-				<description>The OPI for the LARMOR rotating bench.</description>
+				<type>UNCONFIRMED</type>
+				<path>TPG300.opi</path>
+				<description>Description required.</description>
 				<macros>
-					<macro>
-						<name>MM</name>
-						<description>The MOT:MTRnnnn value relating to the motor controlling the bench rotation</description>
-					</macro>
+                    <macro>
+						<name>N</name>
+						<description>Description required.</description>
+					</macro>                  
 				</macros>
 			</value>
-		</entry>	
+		</entry>
+		<entry>
+			<key>LARMOR Spin Flipper</key>
+			<value>
+				<type>UNCONFIRMED</type>
+				<path>SpinFlipper306015.opi</path>
+				<description>The OPI for the LARMOR Spin Flipper.</description>
+				<macros>
+				</macros>
+			</value>
+		</entry>
 	</opis>
 </descriptions>

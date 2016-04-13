@@ -29,7 +29,8 @@ public class JsonConvertersTest {
 	private String configName = "TESTCONFIG1";
 	private String configBlockName = "testblock1";
 	private String iocName = "SIMPLE1";
-	private String iocJson = "{\"simlevel\": \"None\", \"autostart\": true, \"restart\": false, \"pvsets\": [], \"pvs\": [], \"macros\": [], \"name\": \"" + iocName + "\", \"subconfig\": null}";
+    private String iocJson = "{\"simlevel\": \"None\", \"autostart\": true, \"restart\": false, \"pvsets\": [], \"pvs\": [], \"macros\": [], \"name\": \""
+            + iocName + "\", \"component\": null}";
 	
 	private String serverStatusBusy = "{\"status\": \"INITIALISING\"}";
 	private String serverStatusNotBusy = "{\"status\": \"\"}";
@@ -42,7 +43,7 @@ public class JsonConvertersTest {
 	private String pvsJson = "[[\"" + configPVName + "\", \"ai\", \"" + configDescription + "\", \"" + iocName + "\"]]";
 	
     private String blockJson = "{\"name\": \"" + configBlockName
-            + "\", \"local\": true, \"pv\": \"NDWXXX:xxxx:SIMPLE:VALUE1\", \"subconfig\": null, \"visible\": true}";
+            + "\", \"local\": true, \"pv\": \"NDWXXX:xxxx:SIMPLE:VALUE1\", \"component\": null, \"visible\": true}";
 
 	@Before
     public void setUp() {
@@ -50,7 +51,7 @@ public class JsonConvertersTest {
 		configJson += "\"name\": \"" + configName + "\", \"description\": \"" + configDescription + "\", \"history\": [\"2015-02-16\"],";
 		configJson += "\"blocks\": [" + blockJson + "],";
 		configJson += "\"iocs\": [" + iocJson + "],";
-		configJson += "\"components\": [{\"name\": \"sub1\"}], \"groups\": [{\"blocks\": [\"testblock1\"], \"name\": \"Group1\", \"subconfig\": null}]";
+        configJson += "\"components\": [{\"name\": \"sub1\"}], \"groups\": [{\"blocks\": [\"testblock1\"], \"name\": \"Group1\", \"component\": null}]";
 		configJson += "}"; 
 	}
 	

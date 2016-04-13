@@ -31,6 +31,7 @@ import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseListener;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -53,7 +54,14 @@ import uk.ac.stfc.isis.ibex.ui.synoptic.editor.pv.PVList;
  */
 @SuppressWarnings("checkstyle:magicnumber")
 public class ComponentDetailView extends Composite {
-	private SynopticViewModel instrument;
+    
+    private static final String SELECT_COMPONENT = "Select a component to view/edit details";
+    private static final String UNIQUE_COMPONENT_NAME = "Component names must be unique";
+
+    private final Color colorBlack = new Color(getDisplay(), 0, 0, 0);
+    private final Color colorRed = new Color(getDisplay(), 255, 0, 0);
+    
+	private SynopticViewModel synopticViewModel;
 
 	private ComponentDescription component;
 
@@ -64,6 +72,8 @@ public class ComponentDetailView extends Composite {
 	private ComboViewer cmboType;
 	private Label lblTypeIcon;
 
+    private Label lblNoSelection;
+
     private boolean selectionCausedByMouseClick = false;
 
 	private PVList pvList;
@@ -71,29 +81,29 @@ public class ComponentDetailView extends Composite {
     private static List<String> typeList = ComponentType.componentTypeAlphaList();
 
 	public ComponentDetailView(Composite parent,
-			final SynopticViewModel instrument) {
+			final SynopticViewModel synopticViewModel) {
 		super(parent, SWT.NONE);
 
-		this.instrument = instrument;
+		this.synopticViewModel = synopticViewModel;
 
-		instrument.addInstrumentUpdateListener(new IInstrumentUpdateListener() {
+		synopticViewModel.addInstrumentUpdateListener(new IInstrumentUpdateListener() {
 			@Override
 			public void instrumentUpdated(UpdateTypes updateType) {
                 if (updateType == UpdateTypes.EDIT_COMPONENT) {
-                    instrument.addTargetToSelectedComponent(false);
+                    synopticViewModel.addTargetToSelectedComponent(false);
                 } else if (updateType == UpdateTypes.EDIT_COMPONENT_FINAL) {
-                    instrument.addTargetToSelectedComponent(true);
+                    synopticViewModel.addTargetToSelectedComponent(true);
                 }
 
                 if (updateType != UpdateTypes.EDIT_COMPONENT && updateType != UpdateTypes.EDIT_TARGET
                         && updateType != UpdateTypes.ADD_TARGET) {
-					component = instrument.getFirstSelectedComponent();
+					component = synopticViewModel.getFirstSelectedComponent();
 					showComponent(component);
 				}
 			}
 		});
 
-		instrument
+		synopticViewModel
 				.addComponentSelectionListener(new IComponentSelectionListener() {
 					@Override
 					public void selectionChanged(
@@ -107,7 +117,22 @@ public class ComponentDetailView extends Composite {
 						showComponent(component);
 					}
 				});
-
+		
+        synopticViewModel.addInstrumentUpdateListener(new IInstrumentUpdateListener() {
+            @Override
+            public void instrumentUpdated(UpdateTypes updateType) {
+                if (updateType == UpdateTypes.EDIT_COMPONENT) {
+                    if (synopticViewModel.getHasDuplicatedName()) {
+                        labelComposite.setVisible(true);
+                        lblNoSelection.setText(UNIQUE_COMPONENT_NAME);
+                        lblNoSelection.setForeground(colorRed);
+                    } else {
+                        labelComposite.setVisible(false);
+                    }
+                }
+            }
+        });
+		
 		setLayout(new GridLayout(1, false));
 		setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 
@@ -121,8 +146,8 @@ public class ComponentDetailView extends Composite {
 				false, 1, 1));
 		labelComposite.setLayout(new GridLayout());
 
-        Label lblNoSelection = new Label(labelComposite, SWT.NONE);
-        lblNoSelection.setText("Select a component to view/edit details");
+        lblNoSelection = new Label(labelComposite, SWT.NONE);
+        lblNoSelection.setText(SELECT_COMPONENT);
 
 		fieldsComposite = new Composite(parent, SWT.NONE);
 		fieldsComposite.setLayout(new GridLayout(2, false));
@@ -202,12 +227,13 @@ public class ComponentDetailView extends Composite {
         iconGridData.widthHint = 32;
         iconGridData.heightHint = 32;
         lblTypeIcon.setLayoutData(iconGridData);
+        lblTypeIcon.setAlignment(SWT.CENTER);
 
         Label lblPvs = new Label(fieldsComposite, SWT.NONE);
         lblPvs.setLayoutData(new GridData(SWT.RIGHT, SWT.TOP, false, false, 1, 1));
         lblPvs.setText("PVs");
 
-        pvList = new PVList(fieldsComposite, instrument);
+        pvList = new PVList(fieldsComposite, synopticViewModel);
         GridData pvGridData = new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1);
         pvGridData.heightHint = 150;
         pvList.setLayoutData(pvGridData);
@@ -228,6 +254,9 @@ public class ComponentDetailView extends Composite {
 			fieldsComposite.setVisible(false);
 			labelComposite.setVisible(true);
 
+            lblNoSelection.setText(SELECT_COMPONENT);
+            lblNoSelection.setForeground(colorBlack);
+
 			txtName.setText("None");
 			cmboType.getCombo().select(0);
 		}
@@ -236,7 +265,7 @@ public class ComponentDetailView extends Composite {
 	private void updateModelName() {
 		if (component != null) {
 			component.setName(txtName.getText());
-			instrument.broadcastInstrumentUpdate(UpdateTypes.EDIT_COMPONENT);
+			synopticViewModel.broadcastInstrumentUpdate(UpdateTypes.EDIT_COMPONENT);
 		}
 	}
 
@@ -248,9 +277,9 @@ public class ComponentDetailView extends Composite {
 			component.setType(type);
 
             if (isFinalUpdate) {
-                instrument.broadcastInstrumentUpdate(UpdateTypes.EDIT_COMPONENT_FINAL);
+                synopticViewModel.broadcastInstrumentUpdate(UpdateTypes.EDIT_COMPONENT_FINAL);
             } else {
-                instrument.broadcastInstrumentUpdate(UpdateTypes.EDIT_COMPONENT);
+                synopticViewModel.broadcastInstrumentUpdate(UpdateTypes.EDIT_COMPONENT);
             }
 		}
 	}

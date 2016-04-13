@@ -39,22 +39,22 @@ public class Group extends ModelObject {
 	
 	private String name;
 	private List<String> blocks = new ArrayList<>();
-	private String subconfig;
+	private String component;
 	
 	public Group(String name) {
 		this(name, Collections.<String>emptyList(), null);
 	}
 	
-	public Group(String name, Collection<String> blocks, String subconfig) {
+	public Group(String name, Collection<String> blocks, String component) {
 		this.name = name;
 		for (String block : blocks) {
 			this.blocks.add(block);
 		}
-		this.subconfig = subconfig;
+		this.component = component;
 	}
 	
 	public Group(Group other) {
-		this(other.getName(), other.getBlocks(), other.subconfig);
+		this(other.getName(), other.getBlocks(), other.component);
 	}
 
 	public String getName() {
@@ -69,12 +69,12 @@ public class Group extends ModelObject {
 		return blocks;
 	}
 	
-	public String subconfig() {
-		return subconfig;
+	public String getComponent() {
+		return component;
 	}
 	
-	public boolean hasSubConfig() {
-		return !Strings.isNullOrEmpty(subconfig);
+	public boolean hasComponent() {
+		return !Strings.isNullOrEmpty(component);
 	}
 	
 	@Override
@@ -90,14 +90,14 @@ public class Group extends ModelObject {
 		Group other = (Group) obj;
 		return name.equals(other.name) 
 				&& blocks.equals(other.blocks) 
-				&& (subconfig == null ? other.subconfig == null : subconfig.equals(other.subconfig)); 
+				&& (component == null ? other.component == null : component.equals(other.component)); 
 	}
 	
 	@Override
 	public int hashCode() {
 		return name.hashCode() 
 				^ blocks.hashCode() 
-				^ (subconfig == null ? 0 : subconfig.hashCode());
+				^ (component == null ? 0 : component.hashCode());
 	}
 	
 	@Override

@@ -19,6 +19,8 @@
 
 package uk.ac.stfc.isis.ibex.ui.synoptic.editor.dialogs;
 
+import java.util.Collection;
+
 import javax.xml.bind.JAXBException;
 
 import org.eclipse.jface.dialogs.Dialog;
@@ -41,7 +43,9 @@ import uk.ac.stfc.isis.ibex.synoptic.SynopticInfo;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.SynopticDescription;
 import uk.ac.stfc.isis.ibex.synoptic.xml.XMLUtil;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.instrument.SynopticPreview;
+import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.IInstrumentUpdateListener;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.SynopticViewModel;
+import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.UpdateTypes;
 
 /**
  * This class provides the dialog to edit the synoptic. While this class is responsible for
@@ -62,23 +66,23 @@ public class EditSynopticDialog extends Dialog {
 	private Button saveAsBtn;
 	private Button saveBtn;
 	
-    private SynopticViewModel synopticViewModel = new SynopticViewModel();
+    private SynopticViewModel synopticViewModel;
+    private Collection<String> availableOPIs;
 
-	public EditSynopticDialog(
-			Shell parentShell, 
-			String title, 
-			SynopticDescription synoptic,
-			boolean isBlank) {
+    public EditSynopticDialog(Shell parentShell, String title, SynopticDescription synoptic, boolean isBlank,
+            Collection<String> availableOPIs, SynopticViewModel synopticViewModel) {
 		super(parentShell);
 		setShellStyle(SWT.DIALOG_TRIM | SWT.RESIZE);
 		this.title = title;
 		this.synoptic = synoptic;
 		this.isBlank = isBlank;
+        this.availableOPIs = availableOPIs;
+        this.synopticViewModel = synopticViewModel;
 	}
 	
 	@Override
 	protected Control createDialogArea(Composite parent) {
-        editor = new EditorPanel(parent, SWT.NONE, synopticViewModel);
+        editor = new EditorPanel(parent, SWT.NONE, synopticViewModel, availableOPIs);
 		editor.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		editor.setSynopticToEdit(synoptic);
 		return editor;
@@ -92,7 +96,7 @@ public class EditSynopticDialog extends Dialog {
         previewBtn.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
-                SynopticPreview previewDialog = new SynopticPreview(getShell(), synopticViewModel.getInstrument());
+                SynopticPreview previewDialog = new SynopticPreview(getShell(), synopticViewModel.getSynoptic());
                 previewDialog.open();
             }
 
@@ -141,6 +145,18 @@ public class EditSynopticDialog extends Dialog {
 				}
 			}
 		});
+		
+		synopticViewModel.addInstrumentUpdateListener(new IInstrumentUpdateListener() {
+            @Override
+            public void instrumentUpdated(UpdateTypes updateType) {
+                if (updateType == UpdateTypes.EDIT_COMPONENT) {
+                    saveAsBtn.setEnabled(!synopticViewModel.getHasDuplicatedName());
+                    if (saveBtn != null) {
+                        saveBtn.setEnabled(!synopticViewModel.getHasDuplicatedName());
+                    }
+                }
+            }
+        });
 		
 		createButton(parent, IDialogConstants.CANCEL_ID, "Cancel", false);
 	}	

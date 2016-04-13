@@ -12,6 +12,7 @@ import javax.xml.bind.JAXBException;
 import org.junit.Before;
 import org.junit.Test;
 import org.xml.sax.SAXException;
+
 import uk.ac.stfc.isis.ibex.opis.DescriptionsProvider;
 import uk.ac.stfc.isis.ibex.opis.desc.Descriptions;
 import uk.ac.stfc.isis.ibex.opis.desc.MacroInfo;
@@ -20,6 +21,7 @@ import uk.ac.stfc.isis.ibex.opis.desc.OpiDescription;
 @SuppressWarnings({ "checkstyle:magicnumber", "checkstyle:localvariablename", "checkstyle:methodname" })
 public class DescriptionsProviderTest {
 	
+    private String opiType1 = "Type1";
 	private String opiName1 = "Test Opi 1";
 	private String opiPath1 = "TestOpi1\\TestOpi1.opi";
 	private String opiDescription1 = "This is test OPI 1";
@@ -29,7 +31,7 @@ public class DescriptionsProviderTest {
 	public void setUp() throws JAXBException, SAXException {
 		List<MacroInfo> macros = new ArrayList<MacroInfo>();
 		
-		OpiDescription opi1 = new OpiDescription(opiPath1, opiDescription1, macros);
+        OpiDescription opi1 = new OpiDescription(opiType1, opiPath1, opiDescription1, macros);
 		//OpiDescription opi2 = new OpiDescription(opiPath2, opiDescription2, macros);
 
 		Map<String, OpiDescription> opis = new HashMap<String, OpiDescription>();

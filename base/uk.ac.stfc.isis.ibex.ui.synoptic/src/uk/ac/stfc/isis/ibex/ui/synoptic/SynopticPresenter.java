@@ -154,10 +154,12 @@ public class SynopticPresenter extends ModelObject {
 		if (targets.containsKey(targetName)) {
 			Target target = targets.get(targetName).item();
 
+            LOG.info(target.name());
+
 			if (target instanceof OpiTarget) {
 				// Opi targets don't update the navigator.
-				displayOpi(target);
-				return;
+                displayOpi(target);
+                return;
 			}
 
 			if (target instanceof PerspectiveTarget) {
@@ -174,6 +176,28 @@ public class SynopticPresenter extends ModelObject {
 			navigator.setCurrentTarget(targets.get(targetName));
 		}
 	}
+
+    public boolean hasTarget(String targetName) {
+        boolean hasTarget = false;
+
+        if (targets.containsKey(targetName)) {
+            Target target = targets.get(targetName).item();
+
+            if (target instanceof OpiTarget) {
+                // Empty targets are saved as "NONE" with an OpiTarget type.
+                // This is to keep track of if a target has been previously set,
+                // for the default selection.
+                String opiName = ((OpiTarget) target).opiName();
+                if (!opiName.equals("NONE")) {
+                    hasTarget = true;
+                }
+            } else if (target instanceof Target) {
+                hasTarget = true;
+            }
+        }
+
+        return hasTarget;
+    }
 
 	/*
 	 * The components for the instrument view to render

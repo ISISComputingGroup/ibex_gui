@@ -19,10 +19,8 @@
 
 package uk.ac.stfc.isis.ibex.ui.logplotter.tests;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.junit.Assert.*;
+import static org.mockito.Mockito.*;
 
 import org.csstudio.trends.databrowser2.preferences.Preferences;
 import org.eclipse.jface.preference.IPreferenceStore;
@@ -44,12 +42,15 @@ public class LogPlotterSettingsTest {
     private static final String LARMOR_URLS_SETTINGS = "jdbc\\:mysql\\://NDXLARMOR/archive*jdbc\\:mysql\\://130.246.39.152/archive";
     private static final String DEMO_ARCHIVE_SETTINGS = "RDB|1|jdbc\\:mysql\\://NDXDEMO/archive*RDB|2|jdbc\\:mysql\\://130.246.39.152/archive";
     private static final String DEMO_URLS_SETTINGS = "jdbc\\:mysql\\://NDXDEMO/archive*jdbc\\:mysql\\://130.246.39.152/archive";
+    private static final String CUSTOM_ARCHIVE_SETTINGS = "RDB|1|jdbc\\:mysql\\://NDWCUSTOM/archive*RDB|2|jdbc\\:mysql\\://130.246.39.152/archive";
+    private static final String CUSTOM_URLS_SETTINGS = "jdbc\\:mysql\\://NDWCUSTOM/archive*jdbc\\:mysql\\://130.246.39.152/archive";
 
     private static final String LOCALHOST = "localhost";
     private static final String NDXLARMOR = "NDXLARMOR";
     private static final String NDXDEMO = "NDXDEMO";
     private static final String NDXLARMOR_LOWERCASE = "NDXlarmor";
     private static final String NOT_A_HOST_NAME = "JDBC";
+    private static final String NDWCUSTOM = "NDWCUSTOM";
     private static final String IP_ADDRESS = "123.123.123.123";
 
     private IPreferenceStore preferenceStore;
@@ -59,6 +60,7 @@ public class LogPlotterSettingsTest {
     private InstrumentInfo mockLocalHost;
     private InstrumentInfo mockLarmor;
     private InstrumentInfo mockDemo;
+    private InstrumentInfo mockCustom;
 
     @Before
     public void setUp() {
@@ -73,6 +75,7 @@ public class LogPlotterSettingsTest {
         mockLocalHost = mockInstrument(LOCALHOST);
         mockLarmor = mockInstrument(NDXLARMOR);
         mockDemo = mockInstrument(NDXDEMO);
+        mockCustom = mockInstrument(NDWCUSTOM);
     }
 
     private InstrumentInfo mockInstrument(String hostName) {
@@ -94,7 +97,7 @@ public class LogPlotterSettingsTest {
     }
 
     @Test
-    public void swtiching_from_local_host_to_NDXLARMOR_updates_archives_settings() {
+    public void switching_from_local_host_to_NDXLARMOR_updates_archives_settings() {
         // Act
         logPlotterSettings.setInstrument(mockLarmor);
 
@@ -103,7 +106,7 @@ public class LogPlotterSettingsTest {
     }
 
     @Test
-    public void swtiching_from_local_host_to_NDXLARMOR_updates_urls_settings() {
+    public void switching_from_local_host_to_NDXLARMOR_updates_urls_settings() {
         // Act
         logPlotterSettings.setInstrument(mockLarmor);
 
@@ -111,8 +114,9 @@ public class LogPlotterSettingsTest {
         assertEquals(LARMOR_URLS_SETTINGS, preferenceStore.getString(Preferences.URLS));
     }
 
+
     @Test
-    public void swtiching_from_NDXLARMOR_to_NDXDEMO_updates_archives_settings() {
+    public void switching_from_NDXLARMOR_to_NDXDEMO_updates_archives_settings() {
         // Act
         logPlotterSettings.setInstrument(mockLarmor);
         logPlotterSettings.setInstrument(mockDemo);
@@ -122,7 +126,7 @@ public class LogPlotterSettingsTest {
     }
 
     @Test
-    public void swtiching_from_NDXLARMOR_to_NDXDEMO_updates_urls_settings() {
+    public void switching_from_NDXLARMOR_to_NDXDEMO_updates_urls_settings() {
         // Act
         logPlotterSettings.setInstrument(mockLarmor);
         logPlotterSettings.setInstrument(mockDemo);
@@ -132,7 +136,7 @@ public class LogPlotterSettingsTest {
     }
 
     @Test
-    public void swtiching_from_NDXLARMOR_to_local_host_updates_archives_settings() {
+    public void switching_from_NDXLARMOR_to_local_host_updates_archives_settings() {
         // Act
         logPlotterSettings.setInstrument(mockLarmor);
         logPlotterSettings.setInstrument(mockLocalHost);
@@ -142,13 +146,51 @@ public class LogPlotterSettingsTest {
     }
 
     @Test
-    public void swtiching_from_NDXLARMOR_to_local_host_updates_urls_settings() {
+    public void switching_from_NDXLARMOR_to_local_host_updates_urls_settings() {
         // Act
         logPlotterSettings.setInstrument(mockLarmor);
         logPlotterSettings.setInstrument(mockLocalHost);
 
         // Assert
         assertEquals(DEFAULT_URLS_SETTINGS, preferenceStore.getString(Preferences.URLS));
+    }
+
+    @Test
+    public void switching_from_local_host_to_NDWCUSTOM_updates_archives_settings() {
+        // Act
+        logPlotterSettings.setInstrument(mockCustom);
+
+        // Assert
+        assertEquals(CUSTOM_ARCHIVE_SETTINGS, preferenceStore.getString(Preferences.ARCHIVES));
+    }
+
+    @Test
+    public void switching_from_local_host_to_NDWCUSTOM_updates_urls_settings() {
+        // Act
+        logPlotterSettings.setInstrument(mockCustom);
+
+        // Assert
+        assertEquals(CUSTOM_URLS_SETTINGS, preferenceStore.getString(Preferences.URLS));
+    }
+
+    @Test
+    public void switching_from_NDWCUSTOM_to_NDXLARMOR_updates_archives_settings() {
+        // Act
+        logPlotterSettings.setInstrument(mockCustom);
+        logPlotterSettings.setInstrument(mockLarmor);
+
+        // Assert
+        assertEquals(LARMOR_ARCHIVE_SETTINGS, preferenceStore.getString(Preferences.ARCHIVES));
+    }
+
+    @Test
+    public void switching_from_NDWCUSTOM_to_NDXLARMOR_updates_urls_settings() {
+        // Act
+        logPlotterSettings.setInstrument(mockCustom);
+        logPlotterSettings.setInstrument(mockLarmor);
+
+        // Assert
+        assertEquals(LARMOR_URLS_SETTINGS, preferenceStore.getString(Preferences.URLS));
     }
 
     @Test
