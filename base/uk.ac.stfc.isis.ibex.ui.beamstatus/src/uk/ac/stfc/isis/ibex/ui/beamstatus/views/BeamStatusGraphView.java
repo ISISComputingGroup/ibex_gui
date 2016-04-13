@@ -46,6 +46,8 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Composite;
 
+import uk.ac.stfc.isis.ibex.ui.beamstatus.BeamStatusGraphDataProvider;
+
 public class BeamStatusGraphView extends DataBrowserAwareView implements ModelListener {
     /** View ID registered in plugin.xml */
     final public static String ID = "uk.ac.stfc.isis.ibex.ui.beamstatus.views.BeamStatusGraphView"; //$NON-NLS-1$

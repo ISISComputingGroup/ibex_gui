@@ -17,7 +17,7 @@
  * http://opensource.org/licenses/eclipse-1.0.php
  */
 
-package uk.ac.stfc.isis.ibex.ui.beamstatus.views;
+package uk.ac.stfc.isis.ibex.ui.beamstatus;
 
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
