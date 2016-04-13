@@ -29,8 +29,6 @@ import org.csstudio.trends.databrowser2.model.Model;
 import org.csstudio.trends.databrowser2.model.ModelItem;
 import org.csstudio.trends.databrowser2.model.ModelListener;
 import org.csstudio.trends.databrowser2.model.PVItem;
-import org.csstudio.trends.databrowser2.model.PlotSample;
-import org.csstudio.trends.databrowser2.model.PlotSamples;
 import org.csstudio.trends.databrowser2.preferences.Preferences;
 import org.csstudio.trends.databrowser2.ui.Controller;
 import org.csstudio.trends.databrowser2.ui.Plot;
@@ -63,9 +61,6 @@ abstract public class BeamStatusGraphView extends DataBrowserAwareView implement
 
     /** Color for trace of model_item's current sample */
     private Color color = null;
-
-    /** Waveform for the currently selected sample */
-    private BeamStatusGraphDataProvider samples = null;
 
     /** Controller that links model and plot */
     private Controller controller = null;
@@ -215,29 +210,14 @@ abstract public class BeamStatusGraphView extends DataBrowserAwareView implement
             }
         }
 
-        // Prepare to show waveforms of model item in plot
-        addSampleData();
-
         // Create trace for waveform
-        final Trace trace = new Trace(model_item.getDisplayName(), xygraph.primaryXAxis, xygraph.primaryYAxis, samples);
+        final Trace trace = new Trace(model_item.getDisplayName(), xygraph.primaryXAxis, xygraph.primaryYAxis,
+                new BeamStatusGraphDataProvider());
         trace.setLineWidth(model_item.getLineWidth());
         trace.setPointStyle(PointStyle.POINT);
         trace.setPointSize(5);
         // Add to graph
         xygraph.addTrace(trace);
-    }
-
-    private void addSampleData() {
-        if (samples == null) {
-            samples = new BeamStatusGraphDataProvider();
-        }
-        PlotSamples plotSamples = model_item.getSamples();
-        synchronized (plotSamples) {
-            for (int i = 0; i < plotSamples.getSize(); i++) {
-                PlotSample sample = plotSamples.getSample(i);
-                samples.addPlotSample(sample);
-            }
-        }
     }
 
     /** {@inheritDoc} */
