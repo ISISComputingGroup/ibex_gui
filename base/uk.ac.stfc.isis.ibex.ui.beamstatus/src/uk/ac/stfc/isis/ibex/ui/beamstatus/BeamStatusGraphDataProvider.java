@@ -25,11 +25,18 @@ import org.csstudio.swt.xygraph.dataprovider.IDataProvider;
 import org.csstudio.swt.xygraph.dataprovider.IDataProviderListener;
 import org.csstudio.swt.xygraph.dataprovider.ISample;
 import org.csstudio.swt.xygraph.linearscale.Range;
-import org.csstudio.trends.databrowser2.model.PlotSample;
 
+/**
+ * Data provider for the XYGraph that shows the beam current from TS1 and TS2.
+ * Most functionality is implemented to fit the interface. Main function is to
+ * provide listeners for data changes in the model
+ * 
+ * @author Adrian Potter
+ */
 public class BeamStatusGraphDataProvider implements IDataProvider {
 
-    final private ArrayList<IDataProviderListener> listeners = new ArrayList<IDataProviderListener>();
+    /** List of listeners associated with the data. */
+    private final ArrayList<IDataProviderListener> listeners = new ArrayList<IDataProviderListener>();
 
     @Override
     public int getSize() {
@@ -37,12 +44,8 @@ public class BeamStatusGraphDataProvider implements IDataProvider {
     }
 
     @Override
-    public boolean isChronological() { // x range is [0..waveform size]
+    public boolean isChronological() {
         return true;
-    }
-
-    public void addPlotSample(PlotSample sample) {
-        return;
     }
 
     @Override

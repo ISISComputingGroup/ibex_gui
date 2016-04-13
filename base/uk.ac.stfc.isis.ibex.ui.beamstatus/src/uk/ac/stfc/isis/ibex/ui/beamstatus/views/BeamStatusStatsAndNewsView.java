@@ -28,11 +28,11 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.part.ViewPart;
 
 @SuppressWarnings("checkstyle:magicnumber")
-public class BeamStatusView extends ViewPart {
+public class BeamStatusStatsAndNewsView extends ViewPart {
 
     public static final String ID = "uk.ac.stfc.isis.ibex.ui.beamstatus.views.BeamStatusView"; //$NON-NLS-1$
 
-    public BeamStatusView() {
+    public BeamStatusStatsAndNewsView() {
         setPartName("BeamStatusView");
     }
 

@@ -28,31 +28,57 @@ import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 
+/**
+ * Container for the news about the beam status.
+ * 
+ * @author Ian Bush
+ */
 public class NewsPanel extends Composite {
 
+    /** URL for retrieving the news page text. */
     private static final String MCR_NEWS_PAGE_URL = "http://www.isis.stfc.ac.uk/files/mcr-news/mcrnews.txt";
 
+    /** Class identifier. */
     public static final String ID = "uk.ac.stfc.isis.ibex.ui.beamstatus.views.newsPanel"; //$NON-NLS-1$
 
+    /** Frequency for refreshing the news page. */
     private static final long WEB_PAGE_REFRESH_PERIOD = 30000; // milliseconds
 
-    private Browser newsBrowser;
-
+    /**
+     * @param parent
+     *            Parent control
+     * @param style
+     *            Style to apply to this control
+     */
     public NewsPanel(Composite parent, int style) {
         super(parent, style);
-        newsBrowser = new Browser(this, SWT.NONE);
+        Browser newsBrowser = new Browser(this, SWT.NONE);
         setLayout(new FillLayout(SWT.HORIZONTAL));
         newsBrowser.setJavascriptEnabled(false);
         newsBrowser.setUrl(MCR_NEWS_PAGE_URL);
-        startTimer();
+        startTimer(newsBrowser);
     }
 
-    private void startTimer() {
+    /**
+     * Start a timer on the current browser to track when to update it.
+     * 
+     * @param newsBrowser
+     *            Current browser being used to display news text
+     */
+    private void startTimer(Browser newsBrowser) {
         Timer timer = new Timer();
         long delay = WEB_PAGE_REFRESH_PERIOD;
         timer.scheduleAtFixedRate(updateBrowser(newsBrowser), delay, WEB_PAGE_REFRESH_PERIOD);
     }
 
+    /**
+     * Create task to update the browser periodically.
+     * 
+     * @param browser
+     *            Current browser being used to display news text
+     * 
+     * @return Task to update browser periodically
+     */
     private TimerTask updateBrowser(final Browser browser) {
         return new TimerTask() {
             @Override

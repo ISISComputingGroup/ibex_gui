@@ -50,20 +50,29 @@ import org.eclipse.swt.widgets.Composite;
 
 import uk.ac.stfc.isis.ibex.ui.beamstatus.BeamStatusGraphDataProvider;
 
-abstract public class BeamStatusGraphView extends DataBrowserAwareView implements ModelListener {
-    /** View ID registered in plugin.xml */
-    final public static String ID = "uk.ac.stfc.isis.ibex.ui.beamstatus.views.BeamStatusGraphView"; //$NON-NLS-1$
+/**
+ * Provides access to the data browser to show data from TS1/TS2 beam currents
+ * as a plot within a view
+ * 
+ * Always used as derived classes that specify the time duration of the plot
+ * (e.g. hourly, daily)
+ * 
+ * @author Adrian Potter
+ */
+public abstract class BeamStatusGraphView extends DataBrowserAwareView implements ModelListener {
+    /** View ID registered in plugin.xml. */
+    public static final String ID = "uk.ac.stfc.isis.ibex.ui.beamstatus.views.BeamStatusGraphView"; //$NON-NLS-1$
 
-    /** Plot */
+    /** Plot. */
     private Plot plot;
 
-    /** Model of the currently active Data Browser plot or <code>null</code> */
+    /** Model of the currently active Data Browser plot or <code>null</code>. */
     private Model model;
 
-    /** Selected model items in model, or <code>null</code> */
-    private List<ModelItem> model_items = new ArrayList<ModelItem>();
+    /** Selected model items in model, or <code>null</code>. */
+    private List<ModelItem> modelItems = new ArrayList<ModelItem>();
 
-    /** Controller that links model and plot */
+    /** Controller that links model and plot. */
     private Controller controller = null;
 
     /** {@inheritDoc} */
@@ -76,8 +85,9 @@ abstract public class BeamStatusGraphView extends DataBrowserAwareView implement
 
                 // Be ignorant of any change of the current model after
                 // this view is disposed.
-                if (model != null)
+                if (model != null) {
                     model.removeListener(BeamStatusGraphView.this);
+                }
             }
         });
 
@@ -129,159 +139,168 @@ abstract public class BeamStatusGraphView extends DataBrowserAwareView implement
 
     /** {@inheritDoc} */
     @Override
-    protected void updateModel(final Model old_model, final Model model) {
+    protected void updateModel(final Model oldModel, final Model model) {
         this.model = model;
-        if (old_model != model) {
-            if (old_model != null) {
-                old_model.removeListener(this);
+        if (oldModel != model) {
+            if (oldModel != null) {
+                oldModel.removeListener(this);
             }
 
             if (model != null) {
                 model.addListener(this);
             }
         }
-        update(old_model != model);
+        update();
     }
 
     /**
      * Update combo box of this view.
-     * 
-     * @param model_changed
-     *            set true if the model was changed
      */
-    private void update(final boolean model_changed) {
-        if (model == null)
+    private void update() {
+        if (model == null) {
             return;
+        }
 
         // Show PV names
-        final String names[] = new String[model.getItemCount() + 1];
+        final String[] names = new String[model.getItemCount() + 1];
         names[0] = "";
-        for (int i = 1; i < names.length; ++i)
+        for (int i = 1; i < names.length; ++i) {
             names[i] = model.getItem(i - 1).getName();
-        if (!model_changed) {
-            // Is the previously selected item still valid?
-            if (model_items.size() > 0 && model.indexOf(model_items.get(model_items.size() - 1)) != -1) {
-                return;
-            }
         }
-        // updateBounds();
     }
 
-    /*
-     * protected void updateBounds() { int minx = Integer.MAX_VALUE; int miny =
-     * Integer.MAX_VALUE; int maxx = Integer.MIN_VALUE; int maxy =
-     * Integer.MIN_VALUE; for (ModelItem item : model_items) { PlotSamples
-     * itemSamples = item.getSamples();
+    /**
+     * Add the PV by the specified address to the model for inclusion in the
+     * plot.
      * 
-     * if (itemSamples.getSize() <= 0) continue;
-     * 
-     * Range xMinMax = itemSamples.getXDataMinMax(); Range yMinMax =
-     * itemSamples.getYDataMinMax();
-     * 
-     * minx = Math.min(minx, (int) Math.floor(xMinMax.getLower())); miny =
-     * Math.min(minx, (int) Math.floor(yMinMax.getLower()));
-     * 
-     * maxx = Math.max(minx, (int) Math.ceil(xMinMax.getUpper())); maxy =
-     * Math.max(minx, (int) Math.ceil(yMinMax.getUpper())); }
-     * plot.getXYGraph().setBounds(new Rectangle(minx, miny, maxx - minx, maxy -
-     * miny));
-     * 
-     * }
+     * @param pvAddress
+     *            Name of the PV to add to the plot
      */
-
     private void selectPV(final String pvAddress) {
-
-        final double period = Preferences.getScanPeriod();
         try {
-            final PVItem item = new PVItem(pvAddress, period);
-            selectPV(item);
+            selectPV(new PVItem(pvAddress, Preferences.getScanPeriod()));
         } catch (Exception ex) {
             MessageDialog.openError(getSite().getShell(), Messages.Error, NLS.bind(Messages.ErrorFmt, ex.getMessage()));
         }
     }
 
-    /** Select given PV item (or <code>null</code>). */
-    protected void selectPV(final PVItem new_item) {
+    /**
+     * Add this PV to the model for inclusion in the plot.
+     * 
+     * @param newItem
+     *            PV to add to the plot
+     */
+    protected void selectPV(final PVItem newItem) {
 
         // No or unknown PV name?
-        if (new_item == null) {
+        if (newItem == null) {
             return;
         }
 
-        model_items.add(new_item);
+        modelItems.add(newItem);
 
         // Delete all existing traces
-        if (plot == null)
+        if (plot == null) {
             return;
+        }
+
         XYGraph xygraph = plot.getXYGraph();
 
-        Model new_model;
+        Model newModel;
         if (model == null) {
-            new_model = new Model();
+            newModel = new Model();
         } else {
-            new_model = model;
+            newModel = model;
         }
-        updateModel(new_model, new_model);
+        updateModel(newModel, newModel);
         try {
-            new_model.addItem(new_item);
-            new_item.useDefaultArchiveDataSources();
-            new_model.setTimerange(getStartSpec(), getEndSpec());
+            newModel.addItem(newItem);
+            newItem.useDefaultArchiveDataSources();
+            newModel.setTimerange(getStartSpec(), getEndSpec());
         } catch (Exception e1) {
             return;
         }
 
         // Create trace for waveform
-        final Trace trace = new Trace(new_item.getDisplayName(), xygraph.primaryXAxis, xygraph.primaryYAxis,
+        final Trace trace = new Trace(newItem.getDisplayName(), xygraph.primaryXAxis, xygraph.primaryYAxis,
                 new BeamStatusGraphDataProvider());
-        trace.setLineWidth(new_item.getLineWidth());
+        trace.setLineWidth(newItem.getLineWidth());
         trace.setPointStyle(PointStyle.POINT);
         trace.setPointSize(1);
         // Add to graph
         xygraph.addTrace(trace);
     }
 
-    private String getStartSpec() {
+    /**
+     * Used by the specific implementation to define the time range in
+     * milliseconds for the plot.
+     * 
+     * @return time range of the plot in milliseconds
+     */
+    protected abstract long getTimeRangeInMilliseconds();
+
+    /**
+     * Gets a calendar formatted time specification defined as the number of
+     * milliseconds from 0 internal base time.
+     * 
+     * @param milliseconds
+     *            The number of milliseconds after 0 base time for the time
+     *            specification
+     * 
+     * @return calendar formatted start time specification for the plot
+     */
+    private String getCalendarSpec(Long milliseconds) {
         // Use absolute start/end time
         final Calendar cal = Calendar.getInstance();
-        cal.setTimeInMillis(0);
+        cal.setTimeInMillis(milliseconds);
         return AbsoluteTimeParser.format(cal);
     }
 
-    abstract protected long getTimeRangeInMilliseconds();
+    /**
+     * Gets the start time specification for the plot. The start time is set to
+     * 0 calendar time so that the duration can be easily defined via the
+     * endspec
+     * 
+     * @return calendar formatted start time specification for the plot
+     */
+    private String getStartSpec() {
+        return getCalendarSpec(0L);
+    }
 
+
+    /**
+     * Gets the end time specification for the plot. This is used to define a
+     * time range for the plot relative to 0 calendar time
+     * 
+     * @return calendar formatted end time specification for the plot
+     */
     private String getEndSpec() {
-        final Calendar cal = Calendar.getInstance();
-        cal.setTimeInMillis(getTimeRangeInMilliseconds());
-        return AbsoluteTimeParser.format(cal);
+        return getCalendarSpec(getTimeRangeInMilliseconds());
     }
 
-    /** {@inheritDoc} */
-    @Override
-    public void itemAdded(ModelItem item) {
-        update(false);
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public void itemRemoved(ModelItem item) {
-        update(false);
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public void changedItemLook(ModelItem item) {
-        update(false);
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public void changedColors() {
-        update(false);
-    }
-
-    // Following methods are defined as they are mandatory to fulfill
+    // Following methods are defined as they are mandatory to fulfil
     // ModelListener interface, but they are not used at all to update
     // this sample view.
+    @Override
+    public void itemAdded(ModelItem item) {
+        update();
+    }
+
+    @Override
+    public void itemRemoved(ModelItem item) {
+        update();
+    }
+
+    @Override
+    public void changedItemLook(ModelItem item) {
+        update();
+    }
+
+    @Override
+    public void changedColors() {
+        update();
+    }
+
     @Override
     public void changedUpdatePeriod() {
     }
@@ -307,7 +326,7 @@ abstract public class BeamStatusGraphView extends DataBrowserAwareView implement
     }
 
     @Override
-    public void scrollEnabled(boolean scroll_enabled) {
+    public void scrollEnabled(boolean scrollEnabled) {
     }
 
     @Override

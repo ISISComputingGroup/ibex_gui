@@ -22,11 +22,19 @@
  */
 package uk.ac.stfc.isis.ibex.ui.beamstatus.views;
 
+/**
+ * Beam status graph for TS1 and TS2 beam current with a time range of one hour.
+ * 
+ * @author Adrian Potter
+ */
+
 public class BeamStatusHourlyGraphView extends BeamStatusGraphView {
-    private static final long millisecondsInHour = 3600 * 1000;
+
+    /** Number of milliseconds in an hour. */
+    private static final long MILLISECONDS_IN_HOUR = 3600 * 1000;
 
     @Override
     protected long getTimeRangeInMilliseconds() {
-        return millisecondsInHour;
+        return MILLISECONDS_IN_HOUR;
     }
 }

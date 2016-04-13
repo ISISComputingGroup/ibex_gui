@@ -22,11 +22,18 @@
  */
 package uk.ac.stfc.isis.ibex.ui.beamstatus.views;
 
+/**
+ * Beam status graph for TS1 and TS2 beam current with a time range of one day.
+ * 
+ * @author Adrian Potter
+ */
 public class BeamStatusDailyGraphView extends BeamStatusGraphView {
-    private static final long millisecondsInDay = 3600 * 1000 * 24;
+
+    /** Number of milliseconds in a day. */
+    private static final long MILLISECONDS_IN_DAY = 3600 * 1000 * 24;
 
     @Override
     protected long getTimeRangeInMilliseconds() {
-        return millisecondsInDay;
+        return MILLISECONDS_IN_DAY;
     }
 }
