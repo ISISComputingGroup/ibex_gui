@@ -23,7 +23,6 @@ import java.util.List;
 
 import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.epics.writing.Writable;
-import uk.ac.stfc.isis.ibex.instrument.pv.PVType;
 import uk.ac.stfc.isis.ibex.synoptic.Synoptic;
 import uk.ac.stfc.isis.ibex.synoptic.model.Component;
 import uk.ac.stfc.isis.ibex.synoptic.model.ComponentProperty;
@@ -34,6 +33,10 @@ import uk.ac.stfc.isis.ibex.synoptic.model.desc.ComponentDescription;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.PV;
 import uk.ac.stfc.isis.ibex.synoptic.model.targets.TargetBuilder;
 
+/**
+ * Holds all the information relating to a synoptic in the component, such as
+ * the PVs, the targets and the target properties.
+ */
 public class ObservableComponent extends BaseComponent {
 
 	private final Variables variables;
@@ -86,13 +89,12 @@ public class ObservableComponent extends BaseComponent {
 	}
 
 	private ComponentProperty getProperty(PV pv) {
-		PVType pvType = pv.getPvType();
-        ForwardingObservable<String> reader = variables.defaultReader(pv.address(), pvType);
+        ForwardingObservable<String> reader = variables.defaultReaderRemote(pv.address());
 		switch (pv.recordType().io()) {
 			case WRITE:
-				Writable<String> destination = variables.defaultWritable(pv.address(), pvType);
+                Writable<String> destination = variables.defaultWritableRemote(pv.address());
                 ForwardingObservable<String> readerWithoutUnits = variables
-                        .defaultReaderWithoutUnits(pv.address());
+                        .defaultReaderRemoteWithoutUnits(pv.address());
 				return new WritableComponentProperty(pv.displayName(), readerWithoutUnits, destination);
 			case READ:
 			default:

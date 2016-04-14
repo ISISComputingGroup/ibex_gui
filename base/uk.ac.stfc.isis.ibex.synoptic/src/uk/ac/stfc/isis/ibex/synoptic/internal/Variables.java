@@ -35,7 +35,6 @@ import uk.ac.stfc.isis.ibex.instrument.channels.CompressedCharWaveformChannel;
 import uk.ac.stfc.isis.ibex.instrument.channels.DefaultChannel;
 import uk.ac.stfc.isis.ibex.instrument.channels.DefaultChannelWithoutUnits;
 import uk.ac.stfc.isis.ibex.instrument.channels.StringChannel;
-import uk.ac.stfc.isis.ibex.instrument.pv.PVType;
 import uk.ac.stfc.isis.ibex.json.JsonDeserialisingConverter;
 import uk.ac.stfc.isis.ibex.json.JsonSerialisingConverter;
 import uk.ac.stfc.isis.ibex.synoptic.SynopticInfo;
@@ -61,8 +60,6 @@ public class Variables extends InstrumentVariables {
      */
     public static final String NONE_SYNOPTIC_NAME = "-- NONE --";
     public static final String NONE_SYNOPTIC_PV = "__BLANK__";
-
-    public final ForwardingObservable<SynopticDescription> defaultSynoptic;
 
     public final Writable<String> setSynoptic;
 
@@ -108,7 +105,6 @@ public class Variables extends InstrumentVariables {
         
         this.pvPrefix = pvPrefix;
 
-        defaultSynoptic = convert(readCompressed(SYNOPTIC_ADDRESS + "GET_DEFAULT"), new InstrumentDescriptionParser());
         setSynoptic = writeCompressed(SYNOPTIC_ADDRESS + "SET_DETAILS");
         deleteSynoptics = convert(writeCompressed(SYNOPTIC_ADDRESS + "DELETE"), namesToString());
         available = convert(readCompressed(SYNOPTIC_ADDRESS + "NAMES"), toSynopticInfo());
@@ -152,46 +148,19 @@ public class Variables extends InstrumentVariables {
 	}	
 	
 	// The following readers/writers are for PVs on the synoptic
-	
-	public ForwardingObservable<String> defaultReader(String address) {
-        return closingObservableFactory.getSwitchableObservable(new DefaultChannel(), getPvPrefix() + address);
-	}
 
-    public ForwardingObservable<String> defaultReader(String address, PVType type) {
-        // If it is local append the PV prefix, otherwise don't
-        if (type == PVType.LOCAL_PV) {
-            return closingObservableFactory.getSwitchableObservable(new DefaultChannel(), getPvPrefix() + address);
-        } else {
-            return closingObservableFactory.getSwitchableObservable(new DefaultChannel(), address);
-        }
+    public ForwardingObservable<String> defaultReaderRemote(String address) {
+        // Synoptic variables are always remote
+        return closingObservableFactory.getSwitchableObservable(new DefaultChannel(), address);
     }
 
-	public ForwardingObservable<String> defaultReaderWithoutUnits(String address) {
-        return closingObservableFactory.getSwitchableObservable(new DefaultChannelWithoutUnits(),
-                getPvPrefix() + address);
+    public ForwardingObservable<String> defaultReaderRemoteWithoutUnits(String address) {
+        return closingObservableFactory.getSwitchableObservable(new DefaultChannelWithoutUnits(), address);
 	}
 	
-    public ForwardingObservable<String> defaultReaderWithoutUnits(String address, PVType type) {
+    public Writable<String> defaultWritableRemote(String address) {
         // If it is local append the PV prefix, otherwise don't
-        if (type == PVType.LOCAL_PV) {
-            return closingObservableFactory.getSwitchableObservable(new DefaultChannelWithoutUnits(),
-                    getPvPrefix() + address);
-        } else {
-            return closingObservableFactory.getSwitchableObservable(new DefaultChannelWithoutUnits(), address);
-        }
-    }
-
-	public Writable<String> defaultWritable(String address) {
-        return closingWritableFactory.getSwitchableWritable(new StringChannel(), getPvPrefix() + address);
-	}
-	
-	public Writable<String> defaultWritable(String address, PVType type) {
-        // If it is local append the PV prefix, otherwise don't
-        if (type == PVType.LOCAL_PV) {
-            return closingWritableFactory.getSwitchableWritable(new StringChannel(), getPvPrefix() + address);
-        } else {
-            return closingWritableFactory.getSwitchableWritable(new StringChannel(), address);
-        }
+        return closingWritableFactory.getSwitchableWritable(new StringChannel(), address);
 	}
 	
     private String getPvPrefix() {
