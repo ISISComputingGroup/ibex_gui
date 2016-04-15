@@ -19,6 +19,7 @@
 
 package uk.ac.stfc.isis.ibex.ui.beamstatus.views;
 
+import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.Scanner;
@@ -104,14 +105,15 @@ public class StatusPages extends Composite {
         URLConnection connection = null;
         try {
             connection = new URL(MCR_NEWS_PAGE_URL).openConnection();
-            Scanner scanner = new Scanner(connection.getInputStream());
+            InputStreamReader connectionWithEncoding = new InputStreamReader(connection.getInputStream(), "UTF-8");
+            Scanner scanner = new Scanner(connectionWithEncoding);
             scanner.useDelimiter("\\Z");
             content = scanner.next();
             scanner.close();
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-
+        
         return content;
     }
 
