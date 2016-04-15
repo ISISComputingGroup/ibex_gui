@@ -23,6 +23,7 @@
 package uk.ac.stfc.isis.ibex.ui.beamstatus.views;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.graphics.Point;
@@ -54,6 +55,9 @@ public class McrNewsPanel extends Composite {
         setLayout(new GridLayout(1, false));
 
         txtTheMcrNews = new Text(this, SWT.BORDER | SWT.WRAP | SWT.V_SCROLL | SWT.MULTI);
+        Color backgroundColor = txtTheMcrNews.getBackground();
+        txtTheMcrNews.setEditable(false);
+        txtTheMcrNews.setBackground(backgroundColor);
         txtTheMcrNews.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
         txtTheMcrNews.setText("The MCR news should be shown here.");
 
