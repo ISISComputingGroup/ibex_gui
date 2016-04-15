@@ -19,6 +19,10 @@
 
 package uk.ac.stfc.isis.ibex.ui.beamstatus.views;
 
+import java.io.InputStreamReader;
+import java.net.URL;
+import java.net.URLConnection;
+import java.util.Scanner;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -26,28 +30,25 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.browser.Browser;
 import org.eclipse.swt.custom.CTabFolder;
 import org.eclipse.swt.custom.CTabItem;
+import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.layout.FillLayout;
 
+/**
+ * This class contains the pages for the Beam Status and the MCR News. These two
+ * pages are shown within tabs on the panel.
+ */
 public class StatusPages extends Composite {
 
-	private static final String MCR_NEWS_PAGE_URL 
-		= "http://www.isis.stfc.ac.uk/files/mcr-news/mcrnews.txt";
-	
+    private static final String BEAM_STATUS_PAGE_URL = "http://www.isis.stfc.ac.uk/beam-status/";
+    private static final String MCR_NEWS_PAGE_URL = "http://www.isis.stfc.ac.uk/files/mcr-news/mcrnews.txt";
+
 	public static final String ID = "uk.ac.stfc.isis.ibex.ui.beamstatus.views.BeamStatusView"; //$NON-NLS-1$
 	
-	private static final long WEB_PAGE_REFRESH_PERIOD = 30000;	// milliseconds
-
-	
-	@SuppressWarnings("unused")
-	private StatusPanel statusPanel;
-	
-	@SuppressWarnings("unused")
-	private Composite statusSpacer;
+    private static final long TEXT_REFRESH_PERIOD_MS = 30000; // milliseconds
 	
 	private Browser statusGraphBrowser;
-	private Browser newsBrowser;
+    private McrNewsPanel newsPanel;
 	
 	public StatusPages(Composite parent, int style) {
 		super(parent, style);
@@ -60,39 +61,60 @@ public class StatusPages extends Composite {
 		
 		statusGraphBrowser = new Browser(tabFolder, SWT.NONE);
 		statusGraphBrowser.setJavascriptEnabled(false);
-		statusGraphBrowser.setUrl("http://www.isis.stfc.ac.uk/beam-status/");
+        statusGraphBrowser.setUrl(BEAM_STATUS_PAGE_URL);
 		tbtmWebPage.setControl(statusGraphBrowser);
 		
 		CTabItem tbtmMCRNews = new CTabItem(tabFolder, SWT.NONE);
 		tbtmMCRNews.setText("MCR News");
+
+        newsPanel = new McrNewsPanel(tabFolder, SWT.NONE);
+		tbtmMCRNews.setControl(newsPanel);
+        newsPanel.setText(getMCRNewsText());
 		
-		newsBrowser = new Browser(tabFolder, SWT.NONE);
-		newsBrowser.setJavascriptEnabled(false);
-		tbtmMCRNews.setControl(newsBrowser);
-		newsBrowser.setUrl(MCR_NEWS_PAGE_URL);
-		
-		startTimer();
+        startTimer();
 		tabFolder.setSelection(0);
 	}
 	
-	private void startTimer() {
-		Timer timer = new Timer();	
-		long delay = WEB_PAGE_REFRESH_PERIOD;	
-		timer.scheduleAtFixedRate(updateBrowser(newsBrowser), delay, WEB_PAGE_REFRESH_PERIOD);
-	}
-	
+    private void startTimer() {
+        Timer timer = new Timer();
+        long delay = TEXT_REFRESH_PERIOD_MS;
+        timer.scheduleAtFixedRate(updateBrowser(newsPanel), delay, TEXT_REFRESH_PERIOD_MS);
+    }
 
-	private TimerTask updateBrowser(final Browser browser) {
-		return new TimerTask() {
-			public void run() {
-				Display.getDefault().asyncExec(new Runnable() {			
-					@Override
-					public void run() {
-						browser.refresh();					
-					}
-				});
-			}
-		};	
-	}
+    private TimerTask updateBrowser(final McrNewsPanel browser) {
+        return new TimerTask() {
+            @Override
+            public void run() {
+                Display.getDefault().asyncExec(new Runnable() {
+                    @Override
+                    public void run() {
+                        browser.setText(getMCRNewsText());
+                    }
+                });
+            }
+        };
+    }
+
+    /**
+     * Gets the raw text from the MCR News Page.
+     * 
+     * @return A string containing the MCR news.
+     */
+    private static String getMCRNewsText() {
+        String content = null;
+        URLConnection connection = null;
+        try {
+            connection = new URL(MCR_NEWS_PAGE_URL).openConnection();
+            InputStreamReader connectionWithEncoding = new InputStreamReader(connection.getInputStream(), "UTF-8");
+            Scanner scanner = new Scanner(connectionWithEncoding);
+            scanner.useDelimiter("\\Z");
+            content = scanner.next();
+            scanner.close();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        
+        return content;
+    }
 
 }
