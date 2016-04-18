@@ -1,4 +1,3 @@
-
 /*
  * This file is part of the ISIS IBEX application. Copyright (C) 2012-2015
  * Science & Technology Facilities Council. All rights reserved.

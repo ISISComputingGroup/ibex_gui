@@ -19,78 +19,124 @@
 
 package uk.ac.stfc.isis.ibex.ui.beamstatus.views;
 
+import java.io.InputStreamReader;
+import java.net.URL;
+import java.net.URLConnection;
+import java.util.Scanner;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.browser.Browser;
-import org.eclipse.swt.layout.FillLayout;
+import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.graphics.Font;
+import org.eclipse.swt.graphics.FontData;
+import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Text;
 
 /**
- * Container for the news about the beam status.
- * 
- * @author Ian Bush
+ * This page displays the MCR news text. The setText method is used to refresh
+ * the MCR news content.
  */
 public class NewsPanel extends Composite {
+    private static final int FONT_SIZE = 12;
 
-    /** URL for retrieving the news page text. */
     private static final String MCR_NEWS_PAGE_URL = "http://www.isis.stfc.ac.uk/files/mcr-news/mcrnews.txt";
 
-    /** Class identifier. */
-    public static final String ID = "uk.ac.stfc.isis.ibex.ui.beamstatus.views.newsPanel"; //$NON-NLS-1$
+    private static final long TEXT_REFRESH_PERIOD_MS = 30000; // milliseconds
 
-    /** Frequency for refreshing the news page. */
-    private static final long WEB_PAGE_REFRESH_PERIOD = 30000; // milliseconds
+    private Text txtTheMcrNews;
 
     /**
+     * Constructor for the MCR news panel.
+     * 
      * @param parent
-     *            Parent control
+     *            Parent composite
      * @param style
-     *            Style to apply to this control
+     *            SWT Style
      */
     public NewsPanel(Composite parent, int style) {
         super(parent, style);
-        Browser newsBrowser = new Browser(this, SWT.NONE);
-        setLayout(new FillLayout(SWT.HORIZONTAL));
-        newsBrowser.setJavascriptEnabled(false);
-        newsBrowser.setUrl(MCR_NEWS_PAGE_URL);
-        startTimer(newsBrowser);
+        setLayout(new GridLayout(1, false));
+
+        txtTheMcrNews = new Text(this, SWT.BORDER | SWT.WRAP | SWT.V_SCROLL | SWT.MULTI);
+        Color backgroundColor = txtTheMcrNews.getBackground();
+        txtTheMcrNews.setEditable(false);
+        txtTheMcrNews.setBackground(backgroundColor);
+        txtTheMcrNews.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+        txtTheMcrNews.setText("The MCR news should be shown here.");
+
+        Font font = modifyDefaultFont(txtTheMcrNews.getFont());
+        txtTheMcrNews.setFont(font);
+
+        updateBrowser().run();
+        startTimer();
     }
 
     /**
-     * Start a timer on the current browser to track when to update it.
+     * Sets the MCR news text.
      * 
-     * @param newsBrowser
-     *            Current browser being used to display news text
+     * @param text
+     *            A String containing the MCR news.
      */
-    private void startTimer(Browser newsBrowser) {
+    public void setText(String text) {
+        int topIndex = txtTheMcrNews.getTopIndex();
+        Point selection = txtTheMcrNews.getSelection();
+
+        txtTheMcrNews.setText(text);
+
+        txtTheMcrNews.setSelection(selection);
+        txtTheMcrNews.setTopIndex(topIndex);
+    }
+
+    private Font modifyDefaultFont(Font font) {
+        FontData fontData = font.getFontData()[0];
+        fontData.setHeight(FONT_SIZE);
+        return new Font(Display.getCurrent(), fontData);
+    }
+
+    private void startTimer() {
         Timer timer = new Timer();
-        long delay = WEB_PAGE_REFRESH_PERIOD;
-        timer.scheduleAtFixedRate(updateBrowser(newsBrowser), delay, WEB_PAGE_REFRESH_PERIOD);
+        long delay = TEXT_REFRESH_PERIOD_MS;
+        timer.scheduleAtFixedRate(updateBrowser(), delay, TEXT_REFRESH_PERIOD_MS);
     }
 
-    /**
-     * Create task to update the browser periodically.
-     * 
-     * @param browser
-     *            Current browser being used to display news text
-     * 
-     * @return Task to update browser periodically
-     */
-    private TimerTask updateBrowser(final Browser browser) {
+    private TimerTask updateBrowser() {
         return new TimerTask() {
             @Override
             public void run() {
                 Display.getDefault().asyncExec(new Runnable() {
                     @Override
                     public void run() {
-                        browser.refresh();
+                        setText(getMCRNewsText());
                     }
                 });
             }
         };
     }
 
+    /**
+     * Gets the raw text from the MCR News Page.
+     * 
+     * @return A string containing the MCR news.
+     */
+    private static String getMCRNewsText() {
+        String content = null;
+        URLConnection connection = null;
+        try {
+            connection = new URL(MCR_NEWS_PAGE_URL).openConnection();
+            InputStreamReader connectionWithEncoding = new InputStreamReader(connection.getInputStream(), "UTF-8");
+            Scanner scanner = new Scanner(connectionWithEncoding);
+            scanner.useDelimiter("\\Z");
+            content = scanner.next();
+            scanner.close();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+        return content;
+    }
 }
