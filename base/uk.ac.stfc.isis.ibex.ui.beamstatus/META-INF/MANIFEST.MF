@@ -15,9 +15,6 @@ Require-Bundle: org.eclipse.ui,
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Export-Package: uk.ac.stfc.isis.ibex.ui.beamstatus,
  uk.ac.stfc.isis.ibex.ui.beamstatus.views
-<<<<<<< ed5a7732d4eecae74fafa38bbc74b7fd42d9cb79
-Import-Package: org.eclipse.wb.swt,
-=======
 Import-Package: org.csstudio.apputil.time,
  org.csstudio.swt.xygraph.dataprovider,
  org.csstudio.swt.xygraph.figures,
@@ -29,7 +26,6 @@ Import-Package: org.csstudio.apputil.time,
  org.csstudio.trends.databrowser2.ui,
  org.eclipse.draw2d,
  org.eclipse.wb.swt,
->>>>>>> Need draw2d package on import list for underlying xygraph manipulation
  uk.ac.stfc.isis.ibex.model,
  uk.ac.stfc.isis.ibex.ui.widgets,
  uk.ac.stfc.isis.ibex.ui.widgets.models
