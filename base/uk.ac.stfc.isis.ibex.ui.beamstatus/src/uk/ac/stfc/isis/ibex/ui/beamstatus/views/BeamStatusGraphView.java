@@ -27,6 +27,7 @@ import org.csstudio.swt.xygraph.figures.Trace.PointStyle;
 import org.csstudio.swt.xygraph.figures.XYGraph;
 import org.csstudio.trends.databrowser2.Messages;
 import org.csstudio.trends.databrowser2.editor.DataBrowserAwareView;
+import org.csstudio.trends.databrowser2.model.ArchiveRescale;
 import org.csstudio.trends.databrowser2.model.AxisConfig;
 import org.csstudio.trends.databrowser2.model.Model;
 import org.csstudio.trends.databrowser2.model.ModelItem;
@@ -165,17 +166,13 @@ public abstract class BeamStatusGraphView extends DataBrowserAwareView implement
      * Sets the range for the y-axis.
      */
     private void setYAxisRange() {
-        if (model.getAxisCount() == 0) {
+        if (model == null || model.getAxisCount() == 0) {
             return;
         }
         AxisConfig axis = model.getAxis(model.getAxisCount() - 1);
-        axis.setAutoScale(false);
-        axis.setAutoFormat(false);
         axis.setRange(CURRENT_LOWER, CURRENT_UPPER);
-        for (int i = 0; i < model.getItemCount(); i++) {
-            model.getItem(i).getAxis().setAutoScale(false);
-        }
-        plot.getXYGraph().primaryYAxis.setAutoScale(false);
+        axis.setAutoScale(false);
+        model.setArchiveRescale(ArchiveRescale.NONE);
     }
 
     /**
@@ -183,16 +180,16 @@ public abstract class BeamStatusGraphView extends DataBrowserAwareView implement
      */
     private void setYAxisColor() {
         if (model.getAxisCount() == 0) {
-            return;
-        }
-        AxisConfig axis = model.getAxis(model.getAxisCount() - 1);
+                return;
+            }
+            AxisConfig axis = model.getAxis(model.getAxisCount() - 1);
         axis.setColor(new RGB(0, 0, 0));
     }
 
     @Override
     public void setFocus() {
-        return;
-    }
+            return;
+        }
 
     @Override
     protected void updateModel(final Model oldModel, final Model newModel) {
@@ -205,7 +202,7 @@ public abstract class BeamStatusGraphView extends DataBrowserAwareView implement
             if (newModel != null) {
                 newModel.addListener(this);
             }
-        }
+            }
     }
 
     /**
@@ -236,8 +233,8 @@ public abstract class BeamStatusGraphView extends DataBrowserAwareView implement
             selectPV(newItem);
         } catch (Exception ex) {
             MessageDialog.openError(getSite().getShell(), Messages.Error, NLS.bind(Messages.ErrorFmt, ex.getMessage()));
+            }
         }
-    }
 
     /**
      * Add this PV to the model for inclusion in the plot.
@@ -250,7 +247,7 @@ public abstract class BeamStatusGraphView extends DataBrowserAwareView implement
         // No or unknown PV name?
         if (newItem == null) {
             return;
-        }
+            }
 
         // Delete all existing traces
         if (plot == null) {
@@ -282,7 +279,7 @@ public abstract class BeamStatusGraphView extends DataBrowserAwareView implement
         trace.setPointSize(1);
         // Add to graph
         xygraph.addTrace(trace);
-    }
+        }
 
     /**
      * Get the title for the plot
@@ -326,7 +323,6 @@ public abstract class BeamStatusGraphView extends DataBrowserAwareView implement
     private String getStartSpec() {
         return getCalendarSpec(0L);
     }
-
 
     /**
      * Gets the end time specification for the plot. This is used to define a
@@ -400,4 +396,4 @@ public abstract class BeamStatusGraphView extends DataBrowserAwareView implement
     @Override
     public void cursorDataChanged() {
     }
-}
+    }
