@@ -27,6 +27,7 @@ import org.csstudio.swt.xygraph.figures.Trace.PointStyle;
 import org.csstudio.swt.xygraph.figures.XYGraph;
 import org.csstudio.trends.databrowser2.Messages;
 import org.csstudio.trends.databrowser2.editor.DataBrowserAwareView;
+import org.csstudio.trends.databrowser2.model.ArchiveRescale;
 import org.csstudio.trends.databrowser2.model.AxisConfig;
 import org.csstudio.trends.databrowser2.model.Model;
 import org.csstudio.trends.databrowser2.model.ModelItem;
@@ -65,6 +66,12 @@ public abstract class BeamStatusGraphView extends DataBrowserAwareView implement
 
     /** Title for the Y-axis. */
     private static final String Y_AXIS_TITLE = "Beam current (μA)";
+
+    /** Upper limit for the beam current. */
+    private static final double CURRENT_UPPER = 250.0;
+
+    /** Lower limit for the beam current. */
+    private static final double CURRENT_LOWER = 0.0;
 
     /** TS1 beam current PV name */
     private static final String TS1_BEAM_CURRENT_PV = "AC:TS1:BEAM:CURR";
@@ -120,6 +127,15 @@ public abstract class BeamStatusGraphView extends DataBrowserAwareView implement
         // render it in web browser.
         final Canvas canvas = new Canvas(composite, SWT.DOUBLE_BUFFERED);
 
+        // Set up model
+        Model newModel;
+        if (model == null) {
+            newModel = new Model();
+        } else {
+            newModel = model;
+        }
+        updateModel(newModel, newModel);
+
         // Create plot with basic configuration
 
         plot = Plot.forCanvas(canvas);
@@ -131,6 +147,7 @@ public abstract class BeamStatusGraphView extends DataBrowserAwareView implement
 
         setYAxisName();
         setYAxisColor();
+        setYAxisRange();
 
         // Create and start controller
         try {
@@ -140,6 +157,7 @@ public abstract class BeamStatusGraphView extends DataBrowserAwareView implement
             MessageDialog.openError(parent.getShell(), Messages.Error,
                     NLS.bind(Messages.ControllerStartErrorFmt, ex.getMessage()));
         }
+
     }
 
     /**
@@ -151,6 +169,19 @@ public abstract class BeamStatusGraphView extends DataBrowserAwareView implement
         }
         AxisConfig axis = model.getAxis(model.getAxisCount() - 1);
         axis.setName(Y_AXIS_TITLE);
+    }
+
+    /**
+     * Sets the range for the y-axis.
+     */
+    private void setYAxisRange() {
+        if (model == null || model.getAxisCount() == 0) {
+            return;
+        }
+        AxisConfig axis = model.getAxis(model.getAxisCount() - 1);
+        axis.setRange(CURRENT_LOWER, CURRENT_UPPER);
+        axis.setAutoScale(false);
+        model.setArchiveRescale(ArchiveRescale.NONE);
     }
 
     /**
@@ -250,18 +281,10 @@ public abstract class BeamStatusGraphView extends DataBrowserAwareView implement
         }
 
         XYGraph xygraph = plot.getXYGraph();
-
-        Model newModel;
-        if (model == null) {
-            newModel = new Model();
-        } else {
-            newModel = model;
-        }
-        updateModel(newModel, newModel);
         try {
-            newModel.addItem(newItem);
+            model.addItem(newItem);
             newItem.useDefaultArchiveDataSources();
-            newModel.setTimerange(getStartSpec(), getEndSpec());
+            model.setTimerange(getStartSpec(), getEndSpec());
         } catch (Exception e1) {
             return;
         }
