@@ -72,7 +72,7 @@ public class NewsPanel extends Composite {
         Font font = modifyDefaultFont(txtTheMcrNews.getFont());
         txtTheMcrNews.setFont(font);
 
-        updateBrowser().run();
+        updateNews().run();
         startTimer();
     }
 
@@ -101,10 +101,10 @@ public class NewsPanel extends Composite {
     private void startTimer() {
         Timer timer = new Timer();
         long delay = TEXT_REFRESH_PERIOD_MS;
-        timer.scheduleAtFixedRate(updateBrowser(), delay, TEXT_REFRESH_PERIOD_MS);
+        timer.scheduleAtFixedRate(updateNews(), delay, TEXT_REFRESH_PERIOD_MS);
     }
 
-    private TimerTask updateBrowser() {
+    private TimerTask updateNews() {
         return new TimerTask() {
             @Override
             public void run() {
