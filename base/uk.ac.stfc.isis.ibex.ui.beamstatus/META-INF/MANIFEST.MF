@@ -16,6 +16,9 @@ Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Export-Package: uk.ac.stfc.isis.ibex.ui.beamstatus,
  uk.ac.stfc.isis.ibex.ui.beamstatus.views
 Import-Package: org.csstudio.apputil.time,
+ org.csstudio.swt.xygraph.dataprovider,
+ org.csstudio.swt.xygraph.figures,
+ org.csstudio.swt.xygraph.linearscale,
  org.csstudio.trends.databrowser2,
  org.csstudio.trends.databrowser2.editor,
  org.csstudio.trends.databrowser2.model,
