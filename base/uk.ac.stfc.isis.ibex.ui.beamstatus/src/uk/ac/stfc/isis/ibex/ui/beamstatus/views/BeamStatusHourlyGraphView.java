@@ -1,6 +1,6 @@
 
 /*
- * This file is part of the ISIS IBEX application. Copyright (C) 2012-2015
+ * This file is part of the ISIS IBEX application. Copyright (C) 2012-2016
  * Science & Technology Facilities Council. All rights reserved.
  *
  * This program is distributed in the hope that it will be useful. This program
@@ -17,29 +17,32 @@
  * http://opensource.org/licenses/eclipse-1.0.php
  */
 
-package uk.ac.stfc.isis.ibex.ui.beamstatus;
+/**
+ * 
+ */
+package uk.ac.stfc.isis.ibex.ui.beamstatus.views;
 
-import org.eclipse.swt.graphics.Image;
-import org.eclipse.wb.swt.ResourceManager;
+/**
+ * Beam status graph for TS1 and TS2 beam current with a time range of one hour.
+ * 
+ * @author Adrian Potter
+ */
 
-import uk.ac.stfc.isis.ibex.ui.perspectives.BasePerspective;
+public class BeamStatusHourlyGraphView extends BeamStatusGraphView {
 
-public class Perspective extends BasePerspective {
+    /** Number of milliseconds in an hour. */
+    private static final long MILLISECONDS_IN_HOUR = 3600 * 1000;
 
-    public static final String ID = "uk.ac.stfc.isis.ibex.ui.beamstatus.perspective"; //$NON-NLS-1$
+    /** Title for the plot. */
+    private static final String PLOT_TITLE = "Beam current, past hour";
 
     @Override
-    public String id() {
-        return ID;
+    protected long getTimeRangeInMilliseconds() {
+        return MILLISECONDS_IN_HOUR;
     }
 
     @Override
-    public String name() {
-        return "Beam Status";
-    }
-
-    @Override
-    public Image image() {
-        return ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui.beamstatus", "icons/status_32x24.png");
+    protected String getPlotTitle() {
+        return PLOT_TITLE;
     }
 }
