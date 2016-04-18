@@ -180,9 +180,15 @@ public class LoggingForwardingWriterTest {
         verify(mockSubscription2, times(1)).removeObserver();
     }
 
+    @Test(expected = IllegalArgumentException.class)
+    public void initialisation_with_null_log_throws() {
+        // Arrange
+        new LoggingForwardingWriter<String>(null, ID, mockInputWriter);
+    }
 
-    // check null log
-    // check null id?
-    // check null writer
-
+    @Test(expected = IllegalArgumentException.class)
+    public void initialisation_with_null_writer_throws() {
+        // Arrange
+        new LoggingForwardingWriter<String>(mockLogger, ID, null);
+    }
 }

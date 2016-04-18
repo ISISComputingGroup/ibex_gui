@@ -27,12 +27,15 @@ public class LoggingForwardingWriter<T> extends ForwardingWriter<T, T> {
 	protected final String id;
 	
 	public LoggingForwardingWriter(Logger log, String id, ConfigurableWriter<T, T> writer) {
+
+        checkPreconditions(log, writer);
+
 		this.log = log;
 		this.id = id;
 		setWriter(writer);
 	}
 
-	@Override
+    @Override
 	public void write(T value) {
 		logValue(value);
 		super.write(value);
@@ -55,4 +58,14 @@ public class LoggingForwardingWriter<T> extends ForwardingWriter<T, T> {
 	private void log(String text) {
 		log.info(id + " " + text);
 	}
+
+    private void checkPreconditions(Logger inputLogger, ConfigurableWriter<T, T> inputWriter) {
+        if (inputLogger == null) {
+            throw new IllegalArgumentException("Logger can not be null.");
+        }
+
+        if (inputWriter == null) {
+            throw new IllegalArgumentException("Writer can not be null.");
+        }
+    }
 }
