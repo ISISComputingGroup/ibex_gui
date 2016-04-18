@@ -73,13 +73,13 @@ public abstract class BeamStatusGraphView extends DataBrowserAwareView implement
     /** Lower limit for the beam current. */
     private static final double CURRENT_LOWER = 0.0;
 
-    /** TS1 beam current PV name */
+    /** TS1 beam current PV name. */
     private static final String TS1_BEAM_CURRENT_PV = "AC:TS1:BEAM:CURR";
 
-    /** TS2 beam current PV name */
+    /** TS2 beam current PV name. */
     private static final String TS2_BEAM_CURRENT_PV = "AC:TS2:BEAM:CURR";
 
-    /** Synchotron beam current PV name */
+    /** Synchotron beam current PV name. */
     private static final String SYNCH_BEAM_CURRENT_PV = "AC:SYNCH:BEAM:CURR";
 
     /** Plot. */

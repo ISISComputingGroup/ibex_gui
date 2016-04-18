@@ -31,7 +31,7 @@ import org.eclipse.ui.part.ViewPart;
 @SuppressWarnings("checkstyle:magicnumber")
 public class BeamStatusStatsAndNewsView extends ViewPart {
 
-    public static final String ID = "uk.ac.stfc.isis.ibex.ui.beamstatus.views.BeamStatusView"; //$NON-NLS-1$
+    public static final String ID = "uk.ac.stfc.isis.ibex.ui.beamstatus.views.BeamStatusStatsAndNewsView"; //$NON-NLS-1$
 
     public BeamStatusStatsAndNewsView() {
         setPartName("BeamStatusView");
