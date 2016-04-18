@@ -66,7 +66,7 @@
                id="uk.ac.stfc.isis.ibex.ui.beamstatus.views.BeamStatusHourlyGraphView"
                minimized="false"
                moveable="false"
-               ratio="0.6f"
+               ratio="0.667f"
                relationship="right"
                relative="uk.ac.stfc.isis.ibex.ui.beamstatus.views.BeamStatusView"
                showTitle="false"
