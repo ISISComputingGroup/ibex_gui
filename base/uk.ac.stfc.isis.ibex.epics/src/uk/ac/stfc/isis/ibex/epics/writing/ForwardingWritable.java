@@ -19,10 +19,12 @@
 
 package uk.ac.stfc.isis.ibex.epics.writing;
 
+import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
+import uk.ac.stfc.isis.ibex.epics.conversion.Converter;
 import uk.ac.stfc.isis.ibex.epics.observing.Subscription;
 import uk.ac.stfc.isis.ibex.epics.pv.Closable;
 
-public abstract class ForwardingWritable<TIn, TOut> extends BaseWritable<TIn> {
+public class ForwardingWritable<TIn, TOut> extends BaseWritable<TIn> {
 
     private Closable resource;
 
@@ -46,6 +48,13 @@ public abstract class ForwardingWritable<TIn, TOut> extends BaseWritable<TIn> {
     private Subscription readingSubscription;
 	private Subscription writingSubsciption;
 	
+    private final Converter<TIn, TOut> converter;
+
+    public ForwardingWritable(Writable<TOut> destination, Converter<TIn, TOut> converter) {
+        this.converter = converter;
+        setWritable(destination);
+    }
+
 	@Override
 	public void write(TIn value) {
 		if (value != null) {
@@ -73,7 +82,15 @@ public abstract class ForwardingWritable<TIn, TOut> extends BaseWritable<TIn> {
         resource = destination;
 	}
 
-    protected abstract TOut transform(TIn value);
+    private TOut transform(TIn value) {
+        try {
+            return converter.convert(value);
+        } catch (ConversionException e) {
+            error(e);
+        }
+
+        return null;
+    }
 
 	private void cancelSubscriptions() {
         if (readingSubscription != null) {

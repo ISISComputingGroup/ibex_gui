@@ -21,20 +21,17 @@ package uk.ac.stfc.isis.ibex.epics.writing;
 
 import org.apache.logging.log4j.Logger;
 
+import uk.ac.stfc.isis.ibex.epics.conversion.DoNothingConverter;
+
 public class LoggingForwardingWritable<T> extends ForwardingWritable<T, T> {
 
 	private final Logger log;
 	private final String id;
 
 	public LoggingForwardingWritable(Logger log, String id, Writable<T> destination) {
-		this.log = log;
+        super(destination, new DoNothingConverter<T>());
+        this.log = log;
 		this.id = id;
-		setWritable(destination);
-	}
-	
-	@Override
-	protected T transform(T value) {
-		return value;
 	}
 	
 	@Override
