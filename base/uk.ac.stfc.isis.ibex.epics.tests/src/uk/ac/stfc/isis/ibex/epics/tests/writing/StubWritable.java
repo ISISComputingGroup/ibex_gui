@@ -37,4 +37,8 @@ public class StubWritable<T> extends BaseWritable<T> {
     public void simulateError(Exception e) {
         super.error(e);
     }
+
+    public void simulateCanWriteChanged(boolean canWrite) {
+        super.canWriteChanged(canWrite);
+    }
 }
