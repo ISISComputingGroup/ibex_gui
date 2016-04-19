@@ -51,7 +51,7 @@ if exist "%INSTALLLINKDIR%" (
     rmdir "%INSTALLLINKDIR%"
 )
 
-mklink /D "%INSTALLLINKDIR%" "%INSTALLDIR%"
+mklink /J "%INSTALLLINKDIR%" "%INSTALLDIR%"
 
 REM Copy the install script across
 cd %BASEDIR%
