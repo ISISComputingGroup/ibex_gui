@@ -31,7 +31,10 @@ public class ForwardingWritable<TIn, TOut> extends BaseWritable<TIn> {
 	private ConfigurableWriter<TIn, TOut> forwardingWriter = new BaseWriter<TIn, TOut>() {
 		@Override
 		public void write(TIn value) {
-			writeToWritables(transform(value));
+            TOut tranformedValue = transform(value);
+            if (tranformedValue != null) {
+                writeToWritables(transform(value));
+            }
 		}
 		
 		@Override

@@ -274,7 +274,7 @@ public class ForwardingWritableTest {
     }
 
     @Test
-    public void when_converter_throws_conversion_error_then_writable_writes_null_to_destination()
+    public void when_converter_throws_conversion_error_then_writable_does_not_write_to_destination()
             throws ConversionException {
         // Arrange
         ConversionException exception = new ConversionException("conversion error");
@@ -282,14 +282,11 @@ public class ForwardingWritableTest {
 
         ForwardingWritable<String, String> forwardingWritable = createWritable();
 
-        verify(mockDestination, never()).write(anyString());
-
         // Act
         forwardingWritable.write(VALUE);
 
         // Assert
-        verify(mockDestination, times(1)).write(anyString());
-        verify(mockDestination, times(1)).write(null);
+        verify(mockDestination, never()).write(anyString());
     }
 
     @Test
