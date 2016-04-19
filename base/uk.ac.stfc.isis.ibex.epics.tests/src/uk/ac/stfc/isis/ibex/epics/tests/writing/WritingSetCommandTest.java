@@ -44,6 +44,12 @@ public class WritingSetCommandTest {
         mockDestination = mock(Writable.class);
     }
 
+    @Test(expected = IllegalArgumentException.class)
+    public void Test() {
+        // Act
+        WritingSetCommand.forDestination(null);
+    }
+
     @Test
     public void a_new_command_subscribes_to_destination_writable() {
         // Arrange
