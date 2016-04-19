@@ -17,28 +17,30 @@
  * http://opensource.org/licenses/eclipse-1.0.php
  */
 
-/**
- * 
- */
 package uk.ac.stfc.isis.ibex.epics.tests.writing;
 
 import uk.ac.stfc.isis.ibex.epics.writing.BaseWritable;
 
-public class TestWritable<T> extends BaseWritable<T> {
+public class TestableBaseWritable<T> extends BaseWritable<T> {
 
     @Override
     public void write(T value) {
+        // Do nothing
     }
 
     @Override
     public void close() {
+        // Do nothing
     }
 
-    public void simulateError(Exception e) {
+    @Override
+    public void error(Exception e) {
         super.error(e);
     }
 
-    public void simulateCanWriteChanged(boolean canWrite) {
+    @Override
+    public void canWriteChanged(boolean canWrite) {
         super.canWriteChanged(canWrite);
     }
+
 }
