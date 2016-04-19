@@ -60,6 +60,8 @@ public abstract class ForwardingWritable<TIn, TOut> extends BaseWritable<TIn> {
 	}
 	
     public void setWritable(Writable<TOut> destination) {
+        checkPreconditions(destination);
+
 		cancelSubscriptions();
 		forwardingWriter.onCanWriteChanged(false);
 		forwardingWriter.onCanWriteChanged(destination.canWrite());
@@ -70,7 +72,7 @@ public abstract class ForwardingWritable<TIn, TOut> extends BaseWritable<TIn> {
         closeResource();
         resource = destination;
 	}
-	
+
     protected abstract TOut transform(TIn value);
 
 	private void cancelSubscriptions() {
@@ -88,4 +90,10 @@ public abstract class ForwardingWritable<TIn, TOut> extends BaseWritable<TIn> {
             resource.close();
         }
     };
+
+    private void checkPreconditions(Writable<TOut> destination) {
+        if (destination == null) {
+            throw new IllegalArgumentException("The destination writable cannot be null.");
+        }
+    }
 }
