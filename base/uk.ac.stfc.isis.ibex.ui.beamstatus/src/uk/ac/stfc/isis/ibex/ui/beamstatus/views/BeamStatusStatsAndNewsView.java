@@ -55,7 +55,7 @@ public class BeamStatusStatsAndNewsView extends ViewPart {
         gdStatus.minimumWidth = 420;
         status.setLayoutData(gdStatus);
 
-        NewsPanel news = new NewsPanel(parent, SWT.NONE);
+        McrNewsPanel news = new McrNewsPanel(parent, SWT.NONE);
         news.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 
         createActions();
