@@ -46,6 +46,7 @@ public class DisplayBlock extends ModelObject {
     public static final Color DARK_RED = SWTResourceManager.getColor(192, 0, 0);
     public static final Color WHITE = SWTResourceManager.getColor(255, 255, 255);
     public static final Color BLACK = SWTResourceManager.getColor(0, 0, 0);
+    public static final Color GREEN = SWTResourceManager.getColor(51, 255, 153);
 
     private final String blockServerAlias;
 
@@ -75,7 +76,7 @@ public class DisplayBlock extends ModelObject {
      * Specifies whether the block is currently under run-control. This can be
      * different from what is set in the configuration.
      */
-    private Boolean runcontrol;
+    private boolean runcontrol;
 
     private Color textColor;
     private Color backgroundColor;
@@ -314,19 +315,32 @@ public class DisplayBlock extends ModelObject {
 
     private synchronized void setEnabled(Boolean enabled) {
         firePropertyChange("enabled", this.runcontrol, this.runcontrol = enabled);
+        setColors(inRange);
     }
 
     private void setColors(boolean inRange) {
-        if (inRange) {
+
+        if (getEnabled() == null) {
             setTextColor(BLACK);
             setBackgroundColor(WHITE);
+            return;
+        }
+
+        if (getEnabled()) {
+            if (inRange) {
+                setTextColor(BLACK);
+                setBackgroundColor(GREEN);
+            } else {
+                setTextColor(WHITE);
+                setBackgroundColor(DARK_RED);
+            }
         } else {
-            setTextColor(WHITE);
-            setBackgroundColor(DARK_RED);
+            setTextColor(BLACK);
+            setBackgroundColor(WHITE);
         }
     }
 
-    private synchronized void setTextColor(Color color) {
+    private void setTextColor(Color color) {
         firePropertyChange(TEXT_COLOR, this.textColor, this.textColor = color);
     }
 
