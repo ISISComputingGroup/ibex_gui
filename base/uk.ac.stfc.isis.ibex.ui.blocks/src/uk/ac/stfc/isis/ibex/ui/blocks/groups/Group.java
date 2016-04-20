@@ -47,7 +47,7 @@ import uk.ac.stfc.isis.ibex.configserver.displaying.DisplayGroup;
 @SuppressWarnings("checkstyle:magicnumber")
 public class Group extends Composite {
 
-	private static final Color WHITE = SWTResourceManager.getColor(SWT.COLOR_WHITE);
+    private static final Color WHITE = SWTResourceManager.getColor(SWT.COLOR_WHITE);
 	
 	private static final int NUMBER_OF_ROWS = 9;
 	

@@ -340,7 +340,7 @@ public class DisplayBlock extends ModelObject {
         }
     }
 
-    private void setTextColor(Color color) {
+    private synchronized void setTextColor(Color color) {
         firePropertyChange(TEXT_COLOR, this.textColor, this.textColor = color);
     }
 
