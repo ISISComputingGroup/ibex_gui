@@ -22,9 +22,33 @@
  */
 package uk.ac.stfc.isis.ibex.epics.tests.writing;
 
-import uk.ac.stfc.isis.ibex.epics.writing.BaseWritable;
+import java.util.Collection;
+import java.util.concurrent.CopyOnWriteArrayList;
 
-public class StubWritable<T> extends BaseWritable<T> {
+import uk.ac.stfc.isis.ibex.epics.observing.Subscription;
+import uk.ac.stfc.isis.ibex.epics.observing.Unsubscriber;
+import uk.ac.stfc.isis.ibex.epics.writing.ConfigurableWriter;
+import uk.ac.stfc.isis.ibex.epics.writing.Writable;
+
+/**
+ * Helper class for testing, similar to the BaseWritable.
+ * 
+ * @param <T> the type of data being written
+ */
+public class StubWritable<T> implements Writable<T> {
+
+    private final Collection<ConfigurableWriter<?, ?>> writers = new CopyOnWriteArrayList<>();
+
+    private boolean canWrite;
+    private Exception lastError;
+
+    public void simulateError(Exception e) {
+        error(e);
+    }
+
+    public void simulateCanWriteChanged(boolean canWrite) {
+        canWriteChanged(canWrite);
+    }
 
     @Override
     public void write(T value) {
@@ -34,11 +58,35 @@ public class StubWritable<T> extends BaseWritable<T> {
     public void close() {
     }
 
-    public void simulateError(Exception e) {
-        super.error(e);
+    @Override
+    public Subscription subscribe(ConfigurableWriter<?, ?> writer) {
+        if (!writers.contains(writer)) {
+            writers.add(writer);
+        }
+
+        return new Unsubscriber<ConfigurableWriter<?, ?>>(writers, writer);
     }
 
-    public void simulateCanWriteChanged(boolean canWrite) {
-        super.canWriteChanged(canWrite);
+    @Override
+    public boolean canWrite() {
+        return canWrite;
+    }
+
+    public Exception lastError() {
+        return lastError;
+    }
+
+    private void error(Exception e) {
+        lastError = e;
+        for (ConfigurableWriter<?, ?> writer : writers) {
+            writer.onError(e);
+        }
+    }
+
+    private void canWriteChanged(boolean canWrite) {
+        this.canWrite = canWrite;
+        for (ConfigurableWriter<?, ?> writer : writers) {
+            writer.onCanWriteChanged(canWrite);
+        }
     }
 }
