@@ -112,7 +112,7 @@ public class SameTypeWriterTest {
     }
 
     @Test
-    public void writeTo_only_adds_a_writable_once() {
+    public void a_writable_is_added_only_once() {
         // Arrange
         Writable<String> mockWritable = mock(Writable.class);
 
@@ -126,7 +126,7 @@ public class SameTypeWriterTest {
     }
 
     @Test
-    public void write_to_returns_an_unsubscriber_that_removes_the_input_writable_from_the_list_of_writables() {
+    public void adding_a_writable_returns_an_unsubscriber_that_removes_the_writable_from_the_list_of_writables() {
         // Arrange
         Writable<String> mockWritable = mock(Writable.class);
         Subscription returnedSubscription = writer.writeTo(mockWritable);
