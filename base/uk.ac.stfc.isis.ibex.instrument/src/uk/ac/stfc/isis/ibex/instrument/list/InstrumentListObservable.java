@@ -42,7 +42,11 @@ public class InstrumentListObservable {
     private static final int MAX_RETRIES = 200;
     private static final int WAIT_FOR_OBSERVABLE = 100; // milliseconds
 
-    private static final String ADDRESS = "NDW1298:IEW83206:CS:BLOCKSERVER:INSTRUMENT_NAMES";
+    /**
+     * This is the PV that holds the list of instruments that can be selected.
+     */
+    private static final String ADDRESS = "CS:INSTLIST";
+
     private final ForwardingObservable<Collection<InstrumentInfo>> instrumentsRBV;
 
     public InstrumentListObservable() {
