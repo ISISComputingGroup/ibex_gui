@@ -35,6 +35,10 @@ import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
  * 
  */
 public class InstrumentListUtils {
+
+    private InstrumentListUtils() {
+    }
+
     public static Collection<InstrumentInfo> filterValidInstruments(
             Observable<Collection<InstrumentInfo>> instrumentsRBV) {
         if (!instrumentsRBV.isConnected()) {
