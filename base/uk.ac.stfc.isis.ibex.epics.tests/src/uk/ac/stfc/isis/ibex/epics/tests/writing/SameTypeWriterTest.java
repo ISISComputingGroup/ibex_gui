@@ -157,4 +157,37 @@ public class SameTypeWriterTest {
         assertEquals(exception, writer.lastError());
     }
 
+    @Test
+    public void checking_can_write() {
+        // Arrange
+        StubWritable<String> stubWritable1 = new StubWritable<>();
+        StubWritable<String> stubWritable2 = new StubWritable<>();
+
+        assertFalse(stubWritable1.canWrite());
+        assertFalse(stubWritable2.canWrite());
+        assertFalse(writer.canWrite());
+
+        writer.writeTo(stubWritable1);
+        writer.writeTo(stubWritable2);
+
+        assertFalse(writer.canWrite());
+
+        // Act
+        stubWritable1.simulateCanWriteChanged(true);
+        assertFalse(writer.canWrite());
+
+        stubWritable1.subscribe(writer);
+        stubWritable2.subscribe(writer);
+
+        stubWritable1.simulateCanWriteChanged(true);
+        assertTrue(stubWritable1.canWrite());
+        assertFalse(stubWritable2.canWrite());
+        assertTrue(writer.canWrite());
+
+        stubWritable2.simulateCanWriteChanged(false);
+        assertTrue(stubWritable1.canWrite());
+        assertFalse(stubWritable2.canWrite());
+        assertFalse(writer.canWrite());
+    }
+
 }
