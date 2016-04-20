@@ -34,7 +34,7 @@ import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
  * instruments, e.g. due to parsing error.
  * 
  */
-public class InstrumentListUtils {
+public final class InstrumentListUtils {
 
     private InstrumentListUtils() {
     }
