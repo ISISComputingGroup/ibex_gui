@@ -25,24 +25,30 @@ import org.osgi.framework.BundleContext;
 import uk.ac.stfc.isis.ibex.configserver.Configurations;
 
 /**
- * The activator class controls the plug-in life cycle
+ * Controls the life cycle of the configuration server UI plug-in.
  */
 public class ConfigurationServerUI extends AbstractUIPlugin {
 
-	// The plug-in ID
+    /** The plug-in ID. */
 	public static final String PLUGIN_ID = "uk.ac.stfc.isis.ibex.ui.configserver"; //$NON-NLS-1$
 
-	// The shared instance
+    /** shared instance of the plug in. */
 	private static ConfigurationServerUI plugin;
 	
+    /** shared configuration view models. */
     private ConfigurationViewModels configurationViewModels;
 	
 	/**
-	 * The constructor
-	 */
+     * Constructor.
+     */
     public ConfigurationServerUI() {
 	}
 
+    /**
+     * Get the configuration view models.
+     * 
+     * @return the configuration view models instance
+     */
     public ConfigurationViewModels configurationViewModels() {
         if (configurationViewModels == null) {
             configurationViewModels = new ConfigurationViewModels();
@@ -73,10 +79,10 @@ public class ConfigurationServerUI extends AbstractUIPlugin {
 	}
 
 	/**
-	 * Returns the shared instance
-	 * 
-	 * @return the shared instance
-	 */
+     * Returns the shared plug-in instance.
+     * 
+     * @return the shared plug-in instance
+     */
     public static ConfigurationServerUI getDefault() {
 		return plugin;
 	}

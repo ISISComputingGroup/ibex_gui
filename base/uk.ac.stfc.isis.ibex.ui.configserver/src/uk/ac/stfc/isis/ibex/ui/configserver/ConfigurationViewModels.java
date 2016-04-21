@@ -25,75 +25,100 @@ package uk.ac.stfc.isis.ibex.ui.configserver;
 import uk.ac.stfc.isis.ibex.configserver.Editing;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
 import uk.ac.stfc.isis.ibex.epics.adapters.UpdatedObservableAdapter;
-import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.groups.GroupEditorViewModel;
 
 /**
- * This class can hold a number of different view models, all with the same
- * observable configuration.
+ * Models related to viewing the configuration with the same observable
+ * configuration.
  */
 public class ConfigurationViewModels {
 
+    /** model that is being edited. */
     private Editing editingModel;
+
+    /** common observables from the model for configuration. */
     private UpdatedObservableAdapter<EditableConfiguration> observableConfigModel;
 
+    /** view model for the group. */
     private GroupEditorViewModel groupEditorViewModel;
 
+    /**
+     * Constructor.
+     */
     public ConfigurationViewModels() {
         groupEditorViewModel = new GroupEditorViewModel();
     }
 
+    /**
+     * Bind the editing model to this model. 
+     * Note: this must be done before changing the item being edited.
+     * 
+     * @param editingModel the editing model
+     */
     public void bind(Editing editingModel) {
         this.editingModel = editingModel;
         setModelAsCurrentConfig();
     }
 
+    /**
+     * Get the model for group being edited.
+     * 
+     * @return the group editor view model
+     */
     public GroupEditorViewModel groupEditorViewModel() {
         return groupEditorViewModel;
     }
 
-    public void setModelAsCurrentConfig() {
-        observableConfigModel = new UpdatedObservableAdapter<>(getCurrentConfig());
-        updateViewModels();
-    }
-
-    public void setModelAsConfig(String configName) {
-        observableConfigModel = new UpdatedObservableAdapter<>(getConfig(configName));
-        updateViewModels();
-    }
-
-    public void setModelAsComponent(String componentName) {
-        observableConfigModel = new UpdatedObservableAdapter<>(getComponent(componentName));
-        updateViewModels();
-    }
-
-    public void setModelAsBlankConfig() {
-        observableConfigModel = new UpdatedObservableAdapter<>(getBlankConfig());
-        updateViewModels();
-    }
-
-    private void updateViewModels() {
-        groupEditorViewModel.updateModel(this.observableConfigModel);
-    }
-
-    private ForwardingObservable<EditableConfiguration> getCurrentConfig() {
-        return editingModel.currentConfig();
-    }
-
-    private ForwardingObservable<EditableConfiguration> getConfig(String configName) {
-        return editingModel.config(configName);
-    }
-
-    private ForwardingObservable<EditableConfiguration> getComponent(String componentName) {
-        return editingModel.component(componentName);
-    }
-
-    private ForwardingObservable<EditableConfiguration> getBlankConfig() {
-        return editingModel.blankConfig();
-    }
-
+    /**
+     * Get the configuration model.
+     * 
+     * @return configuration model
+     */
     public UpdatedObservableAdapter<EditableConfiguration> getConfigModel() {
         return observableConfigModel;
+    }
+
+    /**
+     * Set the model to point at the current configuration.
+     */
+    public void setModelAsCurrentConfig() {
+        observableConfigModel = new UpdatedObservableAdapter<>(editingModel.currentConfig());
+        updateViewModels();
+    }
+
+    /**
+     * Set the model to point at the named configuration.
+     * 
+     * @param configName name of the configuration
+     */
+    public void setModelAsConfig(String configName) {
+        observableConfigModel = new UpdatedObservableAdapter<>(editingModel.config(configName));
+        updateViewModels();
+    }
+
+    /**
+     * Set the model to point at the named component.
+     * 
+     * @param componentName name of the component
+     */
+    public void setModelAsComponent(String componentName) {
+        observableConfigModel = new UpdatedObservableAdapter<>(editingModel.component(componentName));
+        updateViewModels();
+    }
+
+    /**
+     * Set the model to point at a blank configuration.
+     */
+    public void setModelAsBlankConfig() {
+        observableConfigModel = new UpdatedObservableAdapter<>(editingModel.blankConfig());
+        updateViewModels();
+    }
+
+    /**
+     * update the group editor model.
+     */
+    private void updateViewModels() {
+        groupEditorViewModel.updateModel(this.observableConfigModel);
     }
 
 }
