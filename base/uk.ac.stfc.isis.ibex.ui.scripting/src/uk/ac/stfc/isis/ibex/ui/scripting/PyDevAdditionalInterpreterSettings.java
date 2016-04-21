@@ -49,7 +49,6 @@ public class PyDevAdditionalInterpreterSettings extends InterpreterNewCustomEntr
 		List<String> entriesToAdd = new ArrayList<String>();
 				
 		entriesToAdd.add(geniePythonPath());
-		entriesToAdd.add(pyEpicsPath());
 		
 		return entriesToAdd;
 	}
@@ -61,10 +60,6 @@ public class PyDevAdditionalInterpreterSettings extends InterpreterNewCustomEntr
 	private String epicsBasePath() {
         return "PATH=" + toOSPath(PreferenceSupplier.epicsBase()) + ";" + toOSPath(PreferenceSupplier.epicsUtilsPath())
                 + ";" + System.getenv("PATH");
-	}
-	
-	private String pyEpicsPath() {
-		return toOSPath(PreferenceSupplier.pyEpicsPath());
 	}
 
 	private String geniePythonPath() {
