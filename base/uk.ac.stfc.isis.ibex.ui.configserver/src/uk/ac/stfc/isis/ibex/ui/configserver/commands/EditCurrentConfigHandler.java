@@ -25,9 +25,10 @@ import org.eclipse.jface.window.Window;
 
 import uk.ac.stfc.isis.ibex.configserver.configuration.Configuration;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
-import uk.ac.stfc.isis.ibex.epics.adapters.UpdatedObservableAdapter;
 import uk.ac.stfc.isis.ibex.model.Awaited;
 import uk.ac.stfc.isis.ibex.model.UpdatedValue;
+import uk.ac.stfc.isis.ibex.ui.configserver.ConfigurationServerUI;
+import uk.ac.stfc.isis.ibex.ui.configserver.ConfigurationViewModels;
 import uk.ac.stfc.isis.ibex.ui.configserver.dialogs.EditConfigDialog;
 
 public class EditCurrentConfigHandler extends ConfigHandler<Configuration> {
@@ -50,18 +51,21 @@ public class EditCurrentConfigHandler extends ConfigHandler<Configuration> {
 
 	
 	@Override
-	public Object execute(ExecutionEvent event) throws ExecutionException {		
-		UpdatedValue<EditableConfiguration> config = new UpdatedObservableAdapter<>(EDITING.currentConfig());
-		
+    public Object execute(ExecutionEvent event) throws ExecutionException {
+        ConfigurationViewModels configurationViewModels = ConfigurationServerUI.getDefault().configurationViewModels();
+        configurationViewModels.setModelAsCurrentConfig();
+        UpdatedValue<EditableConfiguration> config = configurationViewModels.getConfigModel();
+
 		if (Awaited.returnedValue(config, 1)) {
-			openDialog(config.getValue());			
+            openDialog(config.getValue(), configurationViewModels);
 		}
 				
 		return null;
 	}
 	
-	private void openDialog(EditableConfiguration config) {
-        dialog = new EditConfigDialog(shell(), TITLE, SUB_TITLE, config, false, false, blockName);
+    private void openDialog(EditableConfiguration config, ConfigurationViewModels configurationViewModels) {
+        dialog = new EditConfigDialog(shell(), TITLE, SUB_TITLE, config, false, false, blockName,
+                configurationViewModels);
 		if (dialog.open() == Window.OK) {
 			if (dialog.doAsComponent()) {
 				SERVER.saveAsComponent().write(dialog.getComponent());
@@ -69,7 +73,8 @@ public class EditCurrentConfigHandler extends ConfigHandler<Configuration> {
 				SERVER.setCurrentConfig().write(dialog.getConfig());
 				SERVER.save().write(dialog.getConfig().name());
 			}
-		}
+        }
+
 	}
 
     public EditConfigDialog getDialog() {

@@ -25,9 +25,7 @@ import org.eclipse.core.databinding.observable.list.IObservableList;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.databinding.viewers.ObservableListContentProvider;
 import org.eclipse.jface.databinding.viewers.ViewerProperties;
-import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
-import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.ListViewer;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.swt.SWT;
@@ -50,6 +48,7 @@ import org.eclipse.wb.swt.SWTResourceManager;
 
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableGroup;
+import uk.ac.stfc.isis.ibex.ui.configserver.ConfigurationViewModels;
 import uk.ac.stfc.isis.ibex.ui.configserver.dialogs.MessageDisplayer;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.DoubleListEditor;
 
@@ -68,17 +67,25 @@ public class GroupsEditorPanel extends Composite {
 
 	private DataBindingContext bindingContext = new DataBindingContext();
 	
-	public GroupsEditorPanel(Composite parent, int style, final MessageDisplayer messageDisplayer) {
+    public GroupsEditorPanel(Composite parent, int style, final MessageDisplayer messageDisplayer,
+            final ConfigurationViewModels configurationViewModels) {
 		super(parent, style);
 		
-		setLayout(new GridLayout(2, false));
+        final GroupEditorViewModel groupEditorViewModel = configurationViewModels.groupEditorViewModel();
+
+        setLayout(new GridLayout(2, false));
 		
 		Group grpGroups = new Group(this, SWT.NONE);
-		grpGroups.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
-		grpGroups.setText("Groups");
-		grpGroups.setLayout(new GridLayout(3, false));
-	
-		groupsViewer = new ListViewer(grpGroups, SWT.BORDER | SWT.V_SCROLL | SWT.SINGLE);
+        grpGroups.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
+        grpGroups.setText("Groups");
+        grpGroups.setLayout(new GridLayout(3, false));
+
+        groupsViewer = new ListViewer(grpGroups, SWT.BORDER | SWT.V_SCROLL | SWT.SINGLE);
+        ObservableListContentProvider contentProvider = new ObservableListContentProvider();
+        groupsViewer.setContentProvider(contentProvider);
+        groupsViewer.setInput(BeanProperties.list(EditableConfiguration.EDITABLE_GROUPS)
+                .observe(configurationViewModels.getConfigModel().getValue()));
+		
 		groupList = groupsViewer.getList();
 		GridData gd_viewer = new GridData(SWT.FILL, SWT.FILL, true, true, 2, 6);
 		gd_viewer.widthHint = 125;
@@ -91,7 +98,7 @@ public class GroupsEditorPanel extends Composite {
             @Override
             public void keyPressed(KeyEvent e) {
                 if (e.keyCode == SWT.DEL) {
-                    removeSelectedGroup();
+                    groupEditorViewModel.removeGroup(groupList.getSelectionIndex());
                 }
             }
         });
@@ -126,14 +133,13 @@ public class GroupsEditorPanel extends Composite {
 		grpBlocks.setText("Blocks");
 		
 		blocksEditor = new DoubleListEditor(grpBlocks, SWT.NONE, "name", true);
-//		gd_blocksEditor.widthHint = 388;
 		blocksEditor.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		
 		blocksEditor.addSelectionListenerForSelecting(new SelectionAdapter() {
 			@SuppressWarnings("unchecked")
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				EditableGroup group = getSelectedGroup();
+                EditableGroup group = groupEditorViewModel.getSelectedGroup(groupList.getSelectionIndex());
 				if (group != null) {
 			        group.toggleSelection(blocksEditor.unselectedItems());
 				}
@@ -144,7 +150,7 @@ public class GroupsEditorPanel extends Composite {
 			@SuppressWarnings("unchecked")
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				EditableGroup group = getSelectedGroup();
+                EditableGroup group = groupEditorViewModel.getSelectedGroup(groupList.getSelectionIndex());
 				if (group != null) {
 			        group.toggleSelection(blocksEditor.selectedItems());
 				}
@@ -152,10 +158,9 @@ public class GroupsEditorPanel extends Composite {
 		});
 		
 		blocksEditor.addSelectionListenerForMovingUp(new SelectionAdapter() {
-			@SuppressWarnings("unchecked")
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				EditableGroup group = getSelectedGroup();
+                EditableGroup group = groupEditorViewModel.getSelectedGroup(groupList.getSelectionIndex());
 				if (group != null) {
 					group.moveBlockUp(blocksEditor.selectedItem());
 					blocksEditor.refreshViewer();
@@ -164,10 +169,9 @@ public class GroupsEditorPanel extends Composite {
 		});
 		
 		blocksEditor.addSelectionListenerForMovingDown(new SelectionAdapter() {
-			@SuppressWarnings("unchecked")
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				EditableGroup group = getSelectedGroup();
+                EditableGroup group = groupEditorViewModel.getSelectedGroup(groupList.getSelectionIndex());
 				if (group != null) {
 					group.moveBlockDown(blocksEditor.selectedItem());
 					blocksEditor.refreshViewer();
@@ -201,23 +205,10 @@ public class GroupsEditorPanel extends Composite {
 		gd_btnUp.widthHint = 25;
 		btnUp.setLayoutData(gd_btnUp);
 		btnUp.setImage(ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui", "icons/move_up.png"));
-		
 		btnUp.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				if (config != null) {
-					
-					if (groupList.getSelectionIndex() > 0) {
-						// Move up
-						EditableGroup group1 = getSelectedGroup();
-						EditableGroup group2 = (EditableGroup) groupsViewer.getElementAt(groupList.getSelectionIndex() - 1);
-						
-						if (group1 != null && group2 != null) {
-							config.swapGroups(group1, group2);
-						}
-					}
-
-				}
+                groupEditorViewModel.moveGroupUp(groupList.getSelectionIndex());
 			}
 		});
 		
@@ -226,6 +217,12 @@ public class GroupsEditorPanel extends Composite {
 		gd_btnDown.widthHint = 25;
 		btnDown.setLayoutData(gd_btnDown);
 		btnDown.setImage(ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui", "icons/move_down.png"));
+        btnDown.addSelectionListener(new SelectionAdapter() {
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                groupEditorViewModel.moveGroupDown(groupList.getSelectionIndex());
+            }
+        });
 		
 		Button btnAdd = new Button(grpGroups, SWT.NONE);
 		GridData gd_btnAdd = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
@@ -236,9 +233,7 @@ public class GroupsEditorPanel extends Composite {
 		btnAdd.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				if (config != null) {
-					config.addNewGroup();
-				}
+                groupEditorViewModel.addNewGroup();
 			}
 		});
 		
@@ -252,7 +247,7 @@ public class GroupsEditorPanel extends Composite {
 		btnRemove.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-                removeSelectedGroup();
+                groupEditorViewModel.removeGroup(groupList.getSelectionIndex());
 			}
 		});
 		new Label(grpGroups, SWT.NONE);
@@ -260,78 +255,16 @@ public class GroupsEditorPanel extends Composite {
 		groupsViewer.addSelectionChangedListener(new ISelectionChangedListener() {
 			@Override
 			public void selectionChanged(SelectionChangedEvent arg0) {
-				EditableGroup group = getSelectedGroup();
-				if (group != null) {
-			        boolean groupIsSelected = group != null;
-                    canEditSelected = groupIsSelected && group.isEditable();
+                boolean canEditSelected = groupEditorViewModel.canEditSelected(groupList.getSelectionIndex());
 
-                    btnRemove.setEnabled(canEditSelected);
-                    name.setEnabled(canEditSelected);
-                    blocksEditor.setEnabled(canEditSelected);
-					
-                    componentDetails.setText(componentDetail(group));
-				}
-			}	
-			
-            private String componentDetail(EditableGroup group) {
-                if (canEditSelected) {
-					return "";
-				}
-				
-				String componentName = group.getComponent() != null ? group.getComponent() : "unknown";
-				return "contributed by " + componentName;
-			}
-		});
-		
-		btnDown.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				if (config != null) {
-					
-					if (groupList.getSelectionIndex() < groupList.getItemCount() - 1) {
-						// Move down
-						EditableGroup group1 = getSelectedGroup();
-						EditableGroup group2 = (EditableGroup) groupsViewer.getElementAt(groupList.getSelectionIndex() + 1);
-						
-						if (group1 != null && group2 != null) {
-							config.swapGroups(group1, group2);
-						}
-					}
+                btnRemove.setEnabled(canEditSelected);
+                name.setEnabled(canEditSelected);
+                blocksEditor.setEnabled(canEditSelected);
 
-				}
+                componentDetails.setText(groupEditorViewModel.componentDetail(groupList.getSelectionIndex()));
 			}
 		});
 		
 		blocksEditor.bind(unselectedBlocks, selectedBlocks);
 	}
-	
-	private EditableGroup getSelectedGroup() {
-		ISelection selection = groupsViewer.getSelection();
-		if (selection != null && (selection instanceof IStructuredSelection)) {
-			IStructuredSelection ss = (IStructuredSelection) groupsViewer.getSelection();
-	        EditableGroup group = (EditableGroup) ss.getFirstElement();
-	        return group;
-		}
-		
-		return null;
-	}
-
-	public void setConfig(EditableConfiguration config) {
-		this.config = config;
-		
-		ObservableListContentProvider contentProvider = new ObservableListContentProvider();
-	    groupsViewer.setContentProvider(contentProvider);
-	    groupsViewer.setInput(BeanProperties.list("editableGroups").observe(config));
-	}
-
-    private void removeSelectedGroup() {
-        if (config != null && canEditSelected) {
-            if (groupList.getSelectionIndex() != -1) {
-                EditableGroup group = getSelectedGroup();
-                if (group != null) {
-                    config.removeGroup(group);
-                }
-            }
-        }
-    }
 }
