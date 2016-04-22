@@ -189,5 +189,4 @@ public class SameTypeWriterTest {
         assertFalse(stubWritable2.canWrite());
         assertFalse(writer.canWrite());
     }
-
 }
