@@ -158,7 +158,7 @@ public class SameTypeWriterTest {
     }
 
     @Test
-    public void checking_can_write() {
+    public void canWrite_contains_the_latest_can_write_from_all_writables_subscriptions() {
         // Arrange
         StubWritable<String> stubWritable1 = new StubWritable<>();
         StubWritable<String> stubWritable2 = new StubWritable<>();
