@@ -26,6 +26,7 @@ import org.junit.Test;
 import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
 import uk.ac.stfc.isis.ibex.epics.conversion.DoNothingConverter;
 
+@SuppressWarnings({ "checkstyle:methodname" })
 public class DoNothingConverterTest {
 
     private static final String VALUE = "value";

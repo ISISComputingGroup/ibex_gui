@@ -34,7 +34,7 @@ import uk.ac.stfc.isis.ibex.epics.writing.WritingSetCommand;
 @SuppressWarnings({ "unchecked", "checkstyle:methodname" })
 public class WritingSetCommandTest {
 
-    private final static String VALUE = "value";
+    private static final String VALUE = "value";
 
     private Writable<String> mockDestination;
 

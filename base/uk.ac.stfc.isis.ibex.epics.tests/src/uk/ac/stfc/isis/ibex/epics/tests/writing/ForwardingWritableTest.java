@@ -36,8 +36,8 @@ import uk.ac.stfc.isis.ibex.epics.writing.Writable;
 @SuppressWarnings({ "unchecked", "checkstyle:methodname" })
 public class ForwardingWritableTest {
 
-    private static String VALUE = "123";
-    private static String CONVERTED_VALUE = "456";
+    private static final String VALUE = "123";
+    private static final String CONVERTED_VALUE = "456";
 
     private Writable<String> mockDestination;
     private Converter<String, String> mockConverter;
