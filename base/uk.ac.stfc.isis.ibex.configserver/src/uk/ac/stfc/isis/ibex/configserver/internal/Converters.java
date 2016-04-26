@@ -33,7 +33,7 @@ import uk.ac.stfc.isis.ibex.epics.conversion.Converter;
 import uk.ac.stfc.isis.ibex.validators.BlockServerNameValidation;
 
 /**
- * Interface for converters from block server to internal objects
+ * Interface for converters from block server to internal objects.
  */
 public interface Converters {
 

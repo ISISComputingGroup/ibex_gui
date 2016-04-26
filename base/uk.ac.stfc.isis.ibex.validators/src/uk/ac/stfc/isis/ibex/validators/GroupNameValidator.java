@@ -33,9 +33,15 @@ import org.eclipse.core.runtime.IStatus;
  */
 public class GroupNameValidator implements IValidator {
     
+    /** Source to use in the Message displayer. */
+    private static final String ERROR_MESSAGE_SOURCE = "GroupNameValidator";
+
     /** logger. */
     private static final Logger LOG = LogManager.getLogger(GroupNameValidator.class);
 	
+    /** What is being validated. */
+    private static final String WHAT_IS_BEING_VALIDATED = "Group";
+
     /** Message to issue on duplicate group name. */
     private static final String DUPLICATE_GROUP_MESSAGE = "Group names must all be unique";
 	
@@ -74,36 +80,47 @@ public class GroupNameValidator implements IValidator {
 	public IStatus validate(Object text) {
         
         if (groupRules == null) {
-	        messageDisplayer.setErrorMessage("GroupNameValidator", null);
             LOG.error("Group rules are null and should not be");
-            return ValidationStatus.ok();
+            return setErrorAndReturnStatus(ValidationStatus.ok());
 		}
 	    
-        String what = "Current group";
-        IStatus status = groupRules.validate((String) text, what);
+        IStatus status = groupRules.validate((String) text, WHAT_IS_BEING_VALIDATED);
         if (!status.isOK()) {
-            messageDisplayer.setErrorMessage("GroupNameValidator", status.getMessage());
-            return status;
+
+            return setErrorAndReturnStatus(status);
         }
 
         if (groupNameProvider != null) {
             for (String name : groupNameProvider.getGroupNames()) {
-                status = groupRules.validate(name, "Group");
+                status = groupRules.validate(name, WHAT_IS_BEING_VALIDATED);
                 if (!status.isOK()) {
-                    messageDisplayer.setErrorMessage("GroupNameValidator", status.getMessage());
-                    return status;
+                    return setErrorAndReturnStatus(status);
                 }
             }
 
             if (groupNameProvider != null && listContainsDuplicates()) {
-                messageDisplayer.setErrorMessage("GroupNameValidator", DUPLICATE_GROUP_MESSAGE);
-                return ValidationStatus.error(DUPLICATE_GROUP_MESSAGE);
+                status = ValidationStatus.error(DUPLICATE_GROUP_MESSAGE);
+                return setErrorAndReturnStatus(status);
             }
         }
 
-        messageDisplayer.setErrorMessage("GroupNameValidator", null);
-        return ValidationStatus.ok();
+        return setErrorAndReturnStatus(ValidationStatus.ok());
 	}
+
+    /**
+     * Set the error message.
+     * 
+     * @param status the status of the error
+     * @return the status
+     */
+    private IStatus setErrorAndReturnStatus(IStatus status) {
+        if (status.isOK()) {
+            messageDisplayer.setErrorMessage(ERROR_MESSAGE_SOURCE, null);
+        } else {
+            messageDisplayer.setErrorMessage(ERROR_MESSAGE_SOURCE, status.getMessage());
+        }
+        return status;
+    }
 	
     /**
      * @return true, if list contains duplicates; false otherwise

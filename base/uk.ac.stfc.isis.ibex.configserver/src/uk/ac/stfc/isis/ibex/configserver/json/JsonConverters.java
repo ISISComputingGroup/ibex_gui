@@ -45,7 +45,7 @@ import uk.ac.stfc.isis.ibex.json.LowercaseEnumTypeAdapterFactory;
 import uk.ac.stfc.isis.ibex.validators.BlockServerNameValidation;
 
 /**
- * Converters for Json to internal objects
+ * Converters for Json to internal objects.
  */
 public class JsonConverters implements Converters {
 
