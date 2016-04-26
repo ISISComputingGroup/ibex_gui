@@ -31,16 +31,17 @@ import org.eclipse.core.databinding.validation.ValidationStatus;
 import org.eclipse.core.runtime.IStatus;
 
 /**
- * Validate a name based on rules from the block server
+ * Validate a name based on rules from the block server.
  */
 public class BlockServerNameValidation {
 
-    /** Logger */
+    /** Logger. */
     private static final Logger LOG = LogManager.getLogger(BlockServerNameValidation.class);
 
-    /** Error message for empty value */
+    /** Error message for empty value. */
     private static final String EMPTY_NAME_MESSAGE = " name must not be empty";
 
+    /** Error message when a name appears in the disallowed names list. */
     public static final String FORBIDDEN_NAME_MESSAGE = " name cannot be ";
 
     /** The regex which the block name must obey. */
@@ -81,8 +82,8 @@ public class BlockServerNameValidation {
         if (disallowed == null) {
             LOG.error("Disallowed names are null but they should be a list, did the block server not server them");
         } else {
-            for (String disallow_name : disallowed) {
-                if (name.equalsIgnoreCase(disallow_name)) {
+            for (String disallowName : disallowed) {
+                if (name.equalsIgnoreCase(disallowName)) {
                     return ValidationStatus.error(what + FORBIDDEN_NAME_MESSAGE + getListAsString(disallowed));
                 }
             }
@@ -98,7 +99,7 @@ public class BlockServerNameValidation {
     }
 
     /**
-     * get a list of strings as a single string
+     * get a list of strings as a single string.
      * 
      * @param list to be made into a string
      * @return string of items separated by commas

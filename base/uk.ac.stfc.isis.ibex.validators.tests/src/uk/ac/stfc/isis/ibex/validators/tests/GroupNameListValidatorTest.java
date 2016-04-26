@@ -92,8 +92,8 @@ public class GroupNameListValidatorTest {
     @Test
     public void GIVEN_invalid_group_name_THEN_invalid() {
         // Arrange
-        String expected_error_message = "Error message";
-        groupRules = new BlockServerNameValidation("^[a-zA-Z]\\w*$", expected_error_message, new ArrayList<String>());
+        String expectedErrorMessage = "Error message";
+        groupRules = new BlockServerNameValidation("^[a-zA-Z]\\w*$", expectedErrorMessage, new ArrayList<String>());
         String name = "invalid&";
 
         // Act
@@ -101,7 +101,7 @@ public class GroupNameListValidatorTest {
 
         // Assert
         assertFalse(result.isOK());
-        assertTrue("Error message", result.getMessage().contains(expected_error_message));
+        assertTrue("Error message", result.getMessage().contains(expectedErrorMessage));
         assertEquals("Displayed error message", result.getMessage(), messageDisplayer.message);
     }
 
@@ -199,21 +199,21 @@ public class GroupNameListValidatorTest {
     @Test
     public void GIVEN_invlaid_name_in_list_but_not_being_edited_THEN_invalid() {
         // Arrange
-        String expected_error_message = "Error message";
-        groupRules = new BlockServerNameValidation("^[a-zA-Z]\\w*$", expected_error_message, new ArrayList<String>());
-        String valid_name = "valid123";
-        String invalid_name = "&%*&\"^*()";
+        String expectedErrorMessage = "Error message";
+        groupRules = new BlockServerNameValidation("^[a-zA-Z]\\w*$", expectedErrorMessage, new ArrayList<String>());
+        String validName = "valid123";
+        String invalidName = "&%*&\"^*()";
 
-        namesToValidate.add(valid_name);
-        namesToValidate.add(invalid_name);
+        namesToValidate.add(validName);
+        namesToValidate.add(invalidName);
 
         // Act
-        IStatus result = validator.validate(valid_name);
+        IStatus result = validator.validate(validName);
 
         // Assert
         assertFalse(result.isOK());
         String message = result.getMessage();
-        assertTrue("Error message", message.contains(expected_error_message));
+        assertTrue("Error message", message.contains(expectedErrorMessage));
         assertEquals("Displayed error message", result.getMessage(), messageDisplayer.message);
     }
 
