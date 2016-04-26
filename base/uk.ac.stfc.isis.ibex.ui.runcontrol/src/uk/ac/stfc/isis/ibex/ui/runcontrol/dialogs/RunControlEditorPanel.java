@@ -171,7 +171,7 @@ public class RunControlEditorPanel extends Composite {
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
 				if (viewModel.isValid()) {
-					viewModel.setSendEnabled(true);
+					viewModel.setSendEnabled(true);		
 				}
 			}
 			

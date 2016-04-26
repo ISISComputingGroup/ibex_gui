@@ -78,8 +78,10 @@ public class DisplayBlock extends ModelObject {
      */
     private boolean runcontrol;
 
+    private String runControlSymbol;
     private Color textColor;
     private Color backgroundColor;
+    private String symbol;
 
     private final BaseObserver<String> valueAdapter = new BaseObserver<String>() {
         @Override
@@ -222,6 +224,10 @@ public class DisplayBlock extends ModelObject {
     public String getValue() {
         return value;
     }
+    
+    public String getRunControlSymbol(){
+    	return runControlSymbol;
+    }
 
     public String getDescription() {
         return description;
@@ -287,6 +293,10 @@ public class DisplayBlock extends ModelObject {
     public Color getBackgroundColor() {
         return backgroundColor;
     }
+    
+    public String getSymbol(){
+    	return symbol;
+    }
 
     public String blockServerAlias() {
         return Instrument.getInstance().currentInstrument().pvPrefix() + blockServerAlias;
@@ -302,6 +312,7 @@ public class DisplayBlock extends ModelObject {
 
     private synchronized void setInRange(Boolean inRange) {
         setColors(inRange);
+        setSymbol(inRange);
         firePropertyChange("inRange", this.inRange, this.inRange = inRange);
     }
 
@@ -316,10 +327,28 @@ public class DisplayBlock extends ModelObject {
     private synchronized void setEnabled(Boolean enabled) {
         firePropertyChange("enabled", this.runcontrol, this.runcontrol = enabled);
         setColors(inRange);
+        setSymbol(inRange);
+    }
+    
+    private void setSymbol(boolean inRange){
+    	String s = "1";
+        if (getEnabled() == null) {
+            s = "2";
+            return;
+        }
+        if (getEnabled()) {
+            if (inRange) {
+                s = " \u2713 ";
+            } else {
+                s = " X ";
+            }
+        } else {
+            s = "3";
+        }
+        firePropertyChange("symbol", this.symbol, this.symbol = s);
     }
 
     private void setColors(boolean inRange) {
-
         if (getEnabled() == null) {
             setTextColor(BLACK);
             setBackgroundColor(WHITE);

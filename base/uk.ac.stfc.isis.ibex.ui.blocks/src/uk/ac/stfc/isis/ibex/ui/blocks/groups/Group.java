@@ -51,6 +51,9 @@ public class Group extends Composite {
 	
 	private static final int NUMBER_OF_ROWS = 9;
 	
+	private static final int NUMBER_OF_FIELDS = 3;
+
+	
 	Composite parent;
 			
 	public Group(Composite parent, int style, DisplayGroup group, boolean showHiddenBlocks) {
@@ -68,9 +71,9 @@ public class Group extends Composite {
 		// Calculate number of columns we need, each column holding one block with a name and value
 		int numberOfColumns = (blocksList.size() - 1) / NUMBER_OF_ROWS + 1;
 
-		// For each block we need two columns in the grid layout, one for name, one for value, and for
-		// every column but the last we need a divider label column
-		GridLayout layout = new GridLayout(2 * numberOfColumns + (numberOfColumns - 1), false);
+		// For each block we need three columns in the grid layout, one for name, one for value, one for
+		// run control status, and for every column but the last we need a divider label column
+		GridLayout layout = new GridLayout(3 * numberOfColumns + (numberOfColumns - 1), false);
 		layout.verticalSpacing = 7;
 		this.setLayout(layout);
         this.setBackground(WHITE);
@@ -81,7 +84,7 @@ public class Group extends Composite {
 		title.setFont(titleFont);
 		
 		// For the title row, fill with blanks
-		for (int i = 0; i < 1 + (numberOfColumns - 1) * 2 + (numberOfColumns - 1); i++) {
+		for (int i = 0; i < (NUMBER_OF_FIELDS + 1) * numberOfColumns - 2; i++) {
 			labelMaker(this, SWT.NONE, "", "", titleFont);
 		}
 		
@@ -95,8 +98,9 @@ public class Group extends Composite {
 				
 				if (position >= blocksList.size()) {
 					// put blank labels in these name and value columns
-					labelMaker(this, SWT.NONE, "", "", null);
-					labelMaker(this, SWT.NONE, "", "", null);					
+					for(int k = 0; k < NUMBER_OF_FIELDS; k++){
+						labelMaker(this, SWT.NONE, "", "", null);	
+					}			
 					break;
 				}
 								
@@ -111,7 +115,8 @@ public class Group extends Composite {
 				GridData gridData = new GridData(SWT.RIGHT, SWT.NONE, false, false, 1, 1);
 				gridData.widthHint = 70;
 				blockValue.setLayoutData(gridData);
-
+				
+				Label blockStatus = labelMaker(this, SWT.RIGHT, currentBlock.getRunControlSymbol(), "Run Control Status", null);;
 				if (j <  numberOfColumns - 1) {
 					// insert divider label
 					labelMaker(this, SWT.NONE, "   |   ", "", null);
@@ -120,13 +125,17 @@ public class Group extends Composite {
 				bindingContext.bindValue(
 						WidgetProperties.text().observe(blockValue), 
 						BeanProperties.value("value").observe(currentBlock));
+
+				bindingContext.bindValue(
+						WidgetProperties.text().observe(blockStatus), 
+						BeanProperties.value("symbol").observe(currentBlock));
 				
 				bindingContext.bindValue(
-						WidgetProperties.foreground().observe(blockValue), 
+						WidgetProperties.foreground().observe(blockStatus), 
 						BeanProperties.value(DisplayBlock.TEXT_COLOR).observe(currentBlock));
 				
 				bindingContext.bindValue(
-						WidgetProperties.background().observe(blockValue), 
+						WidgetProperties.background().observe(blockStatus), 
 						BeanProperties.value(DisplayBlock.BACKGROUND_COLOR).observe(currentBlock));
 			}
 		}

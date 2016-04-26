@@ -42,7 +42,7 @@ public class BlocksView extends ViewPart implements ISizeProvider {
 	}
 
 	public static final String ID = "uk.ac.stfc.isis.ibex.ui.blocks.views.BlocksView"; //$NON-NLS-1$
-	public static final int FIXED_HEIGHT = 250;	
+	public static final int FIXED_HEIGHT = 310;	
 
 	private static final ForwardingObservable<DisplayConfiguration> CONFIG = 
 			Configurations.getInstance().display().displayCurrentConfig();
