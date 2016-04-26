@@ -56,24 +56,42 @@ import uk.ac.stfc.isis.ibex.validators.BlockServerNameValidation;
 import uk.ac.stfc.isis.ibex.validators.GroupNameValidator;
 import uk.ac.stfc.isis.ibex.validators.MessageDisplayer;
 
-@SuppressWarnings({"checkstyle:magicnumber", "checkstyle:localvariablename"})
+/**
+ * Group Editor Panel editing of groups for a component or configuration. Allows
+ * groups to be added, removed, names edited block added and removed
+ */
+@SuppressWarnings({ "checkstyle:magicnumber", "checkstyle:localvariablename" })
 public class GroupsEditorPanel extends Composite {
 
+    /** Editor for blocks, those available and those unavailable. */
 	private final DoubleListEditor blocksEditor;
-	
-	private EditableConfiguration config;
+
+    /** Current group name. */
 	private Text name;
+
+    /** The component details. */
 	private Label componentDetails;
+
+    /** The groups viewer. */
 	private ListViewer groupsViewer;
+
+    /** The group list. */
 	private List groupList;
 	
-    private boolean canEditSelected;
-
+    /** binding context. */
 	private DataBindingContext bindingContext = new DataBindingContext();
 	
     /** Strategy for updating values. */
     private UpdateValueStrategy strategy = new UpdateValueStrategy();
 
+    /**
+     * Instantiates a new groups editor panel.
+     *
+     * @param parent the parent
+     * @param style the style
+     * @param messageDisplayer a way of displaying messages to the user
+     * @param configurationViewModels the configuration view models
+     */
     public GroupsEditorPanel(Composite parent, int style, final MessageDisplayer messageDisplayer,
             final ConfigurationViewModels configurationViewModels) {
 		super(parent, style);
