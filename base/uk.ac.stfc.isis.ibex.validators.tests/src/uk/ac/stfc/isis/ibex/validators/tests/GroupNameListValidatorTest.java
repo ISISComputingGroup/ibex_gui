@@ -119,7 +119,7 @@ public class GroupNameListValidatorTest {
         String message = result.getMessage();
         assertTrue("Error message", message.contains(name));
         assertTrue("Error message \'" + message + "\' is not corrent",
-                message.contains("Current group name cannot be"));
+                message.contains("Group name cannot be"));
         assertEquals("Displayed error message", result.getMessage(), messageDisplayer.message);
     }
 
