@@ -45,6 +45,7 @@ import uk.ac.stfc.isis.ibex.configserver.configuration.Configuration;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
 import uk.ac.stfc.isis.ibex.ui.configserver.ConfigurationViewModels;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.ConfigEditorPanel;
+import uk.ac.stfc.isis.ibex.validators.MessageDisplayer;
 
 public class EditConfigDialog extends TitleAreaDialog implements
 		MessageDisplayer {

@@ -20,6 +20,7 @@
 package uk.ac.stfc.isis.ibex.ui.configserver.editing.groups;
 
 import org.eclipse.core.databinding.DataBindingContext;
+import org.eclipse.core.databinding.UpdateValueStrategy;
 import org.eclipse.core.databinding.beans.BeanProperties;
 import org.eclipse.core.databinding.observable.list.IObservableList;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
@@ -46,11 +47,14 @@ import org.eclipse.swt.widgets.Text;
 import org.eclipse.wb.swt.ResourceManager;
 import org.eclipse.wb.swt.SWTResourceManager;
 
+import uk.ac.stfc.isis.ibex.configserver.Configurations;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableGroup;
 import uk.ac.stfc.isis.ibex.ui.configserver.ConfigurationViewModels;
-import uk.ac.stfc.isis.ibex.ui.configserver.dialogs.MessageDisplayer;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.DoubleListEditor;
+import uk.ac.stfc.isis.ibex.validators.BlockServerNameValidation;
+import uk.ac.stfc.isis.ibex.validators.GroupNameValidator;
+import uk.ac.stfc.isis.ibex.validators.MessageDisplayer;
 
 @SuppressWarnings({"checkstyle:magicnumber", "checkstyle:localvariablename"})
 public class GroupsEditorPanel extends Composite {
@@ -67,6 +71,9 @@ public class GroupsEditorPanel extends Composite {
 
 	private DataBindingContext bindingContext = new DataBindingContext();
 	
+    /** Strategy for updating values. */
+    private UpdateValueStrategy strategy = new UpdateValueStrategy();
+
     public GroupsEditorPanel(Composite parent, int style, final MessageDisplayer messageDisplayer,
             final ConfigurationViewModels configurationViewModels) {
 		super(parent, style);
@@ -191,6 +198,12 @@ public class GroupsEditorPanel extends Composite {
 			}
 		});
 		
+        BlockServerNameValidation groupRules = Configurations.getInstance().variables().groupRules.getValue();
+        strategy.setBeforeSetValidator(new GroupNameValidator(configurationViewModels.getConfigModel().getValue(),
+                messageDisplayer, groupRules));
+        bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(name),
+                BeanProperties.value("name").observe(configurationViewModels.getConfigModel().getValue()), strategy, null);
+
 		IObservableList selectedBlocks = ViewerProperties.singleSelection().list(BeanProperties.list("selectedBlocks", EditableGroup.class)).observe(groupsViewer);
 		IObservableList unselectedBlocks = ViewerProperties.singleSelection().list(BeanProperties.list("unselectedBlocks", EditableGroup.class)).observe(groupsViewer);
 		

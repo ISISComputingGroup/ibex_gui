@@ -31,7 +31,7 @@ import org.eclipse.swt.layout.GridData;
 
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableIoc;
-import uk.ac.stfc.isis.ibex.ui.configserver.dialogs.MessageDisplayer;
+import uk.ac.stfc.isis.ibex.validators.MessageDisplayer;
 
 @SuppressWarnings("checkstyle:magicnumber")
 public class IocsEditorPanel extends Composite {

@@ -31,8 +31,8 @@ import org.eclipse.swt.layout.GridData;
 
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableComponents;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
-import uk.ac.stfc.isis.ibex.ui.configserver.dialogs.MessageDisplayer;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.DoubleListEditor;
+import uk.ac.stfc.isis.ibex.validators.MessageDisplayer;
 
 public class ComponentEditorPanel extends Composite {
 	private MessageDisplayer messageDisplayer;
