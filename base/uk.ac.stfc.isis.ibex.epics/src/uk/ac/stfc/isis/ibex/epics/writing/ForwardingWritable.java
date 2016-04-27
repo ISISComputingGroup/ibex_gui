@@ -19,17 +19,22 @@
 
 package uk.ac.stfc.isis.ibex.epics.writing;
 
+import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
+import uk.ac.stfc.isis.ibex.epics.conversion.Converter;
 import uk.ac.stfc.isis.ibex.epics.observing.Subscription;
 import uk.ac.stfc.isis.ibex.epics.pv.Closable;
 
-public abstract class ForwardingWritable<TIn, TOut> extends BaseWritable<TIn> {
+public class ForwardingWritable<TIn, TOut> extends BaseWritable<TIn> {
 
     private Closable resource;
 
 	private ConfigurableWriter<TIn, TOut> forwardingWriter = new BaseWriter<TIn, TOut>() {
 		@Override
 		public void write(TIn value) {
-			writeToWritables(transform(value));
+            TOut tranformedValue = transform(value);
+            if (tranformedValue != null) {
+                writeToWritables(transform(value));
+            }
 		}
 		
 		@Override
@@ -46,6 +51,13 @@ public abstract class ForwardingWritable<TIn, TOut> extends BaseWritable<TIn> {
     private Subscription readingSubscription;
 	private Subscription writingSubsciption;
 	
+    private final Converter<TIn, TOut> converter;
+
+    public ForwardingWritable(Writable<TOut> destination, Converter<TIn, TOut> converter) {
+        this.converter = converter;
+        setWritable(destination);
+    }
+
 	@Override
 	public void write(TIn value) {
 		if (value != null) {
@@ -60,6 +72,8 @@ public abstract class ForwardingWritable<TIn, TOut> extends BaseWritable<TIn> {
 	}
 	
     public void setWritable(Writable<TOut> destination) {
+        checkPreconditions(destination);
+
 		cancelSubscriptions();
 		forwardingWriter.onCanWriteChanged(false);
 		forwardingWriter.onCanWriteChanged(destination.canWrite());
@@ -70,8 +84,16 @@ public abstract class ForwardingWritable<TIn, TOut> extends BaseWritable<TIn> {
         closeResource();
         resource = destination;
 	}
-	
-    protected abstract TOut transform(TIn value);
+
+    private TOut transform(TIn value) {
+        try {
+            return converter.convert(value);
+        } catch (ConversionException e) {
+            error(e);
+        }
+
+        return null;
+    }
 
 	private void cancelSubscriptions() {
         if (readingSubscription != null) {
@@ -88,4 +110,10 @@ public abstract class ForwardingWritable<TIn, TOut> extends BaseWritable<TIn> {
             resource.close();
         }
     };
+
+    private void checkPreconditions(Writable<TOut> destination) {
+        if (destination == null) {
+            throw new IllegalArgumentException("The destination writable cannot be null.");
+        }
+    }
 }

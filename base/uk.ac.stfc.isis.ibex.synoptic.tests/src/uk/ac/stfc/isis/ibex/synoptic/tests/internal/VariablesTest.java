@@ -33,7 +33,7 @@ import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.epics.switching.ObservableFactory;
 import uk.ac.stfc.isis.ibex.epics.switching.SwitchableObservable;
 import uk.ac.stfc.isis.ibex.epics.switching.WritableFactory;
-import uk.ac.stfc.isis.ibex.epics.writing.SameTypeWritable;
+import uk.ac.stfc.isis.ibex.epics.writing.ForwardingWritable;
 import uk.ac.stfc.isis.ibex.epics.writing.Writable;
 import uk.ac.stfc.isis.ibex.instrument.channels.ChannelType;
 import uk.ac.stfc.isis.ibex.synoptic.SynopticInfo;
@@ -61,7 +61,7 @@ public class VariablesTest {
         SwitchableObservable switchableObservable = mock(
                 SwitchableObservable.class);
 
-        SameTypeWritable mockClosableWritable = mock(SameTypeWritable.class);
+        ForwardingWritable mockClosableWritable = mock(ForwardingWritable.class);
 
         WritableFactory closingWritableFactory = mock(WritableFactory.class);
         when(closingWritableFactory.getSwitchableWritable(any(ChannelType.class), any(String.class)))

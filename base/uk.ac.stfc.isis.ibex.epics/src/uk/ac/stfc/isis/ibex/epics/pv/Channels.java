@@ -40,7 +40,7 @@ import uk.ac.stfc.isis.ibex.epics.observing.ConvertingObservable;
 import uk.ac.stfc.isis.ibex.epics.pvmanager.PVManagerObservable;
 import uk.ac.stfc.isis.ibex.epics.pvmanager.PVManagerWritable;
 import uk.ac.stfc.isis.ibex.epics.writing.BaseWritable;
-import uk.ac.stfc.isis.ibex.epics.writing.ConvertingWritable;
+import uk.ac.stfc.isis.ibex.epics.writing.ForwardingWritable;
 
 /**
  * Contains all the different channel types used for communicating with PVs.
@@ -207,7 +207,7 @@ public class Channels {
 
     private static <V, T> BaseWritable<T> convertWritablePV(String pvAddress, Class<V> pvType,
             Converter<T, V> converter) {
-		return new ConvertingWritable<>(new PVManagerWritable<>(new PVInfo<>(pvAddress, pvType)), converter);
+        return new ForwardingWritable<>(new PVManagerWritable<>(new PVInfo<>(pvAddress, pvType)), converter);
 		
 	}
 }
