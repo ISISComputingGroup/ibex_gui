@@ -24,6 +24,7 @@ import java.util.Arrays;
 import org.eclipse.core.databinding.observable.map.IObservableMap;
 import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.ui.services.IDisposable;
 
 import uk.ac.stfc.isis.ibex.configserver.configuration.Ioc;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableIoc;
@@ -51,6 +52,12 @@ public class IocsTable extends DataboundTable<EditableIoc> {
 		autostart();
 		restart();
 	}
+
+    @Override
+    public void dispose() {
+        super.dispose();
+        ((IDisposable) simulationDecorator).dispose();
+    }
 
 	private void name() {
 		TableViewerColumn name = createColumn("Name", 4);
