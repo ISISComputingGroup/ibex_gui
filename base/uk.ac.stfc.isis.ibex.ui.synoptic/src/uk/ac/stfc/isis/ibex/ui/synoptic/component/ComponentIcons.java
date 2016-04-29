@@ -40,7 +40,9 @@ public final class ComponentIcons {
 				return icon("sample_stack.png");
 			case DAE:
 				return icon("dae.png");
+            case DANFSYIK:
 			case KEPCO:
+            case TDK_LAMBDA_GENESYS:
 			case CAEN:
 				return icon("caen.png");
 			case BEAMSTOP:

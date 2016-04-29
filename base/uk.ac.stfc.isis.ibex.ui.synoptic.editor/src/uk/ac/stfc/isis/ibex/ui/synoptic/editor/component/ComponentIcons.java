@@ -45,7 +45,9 @@ public final class ComponentIcons {
 			return icon("thumb/sample_stack_tb.png");
 		case DAE:
 			return icon("thumb/dae_tb.png");
+        case DANFSYIK:
 		case KEPCO:
+        case TDK_LAMBDA_GENESYS:
 		case CAEN:
 			return icon("thumb/caen_tb.png");
 		case BEAMSTOP:
