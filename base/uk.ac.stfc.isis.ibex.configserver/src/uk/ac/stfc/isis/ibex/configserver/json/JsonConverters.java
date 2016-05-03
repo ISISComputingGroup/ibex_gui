@@ -42,7 +42,7 @@ import uk.ac.stfc.isis.ibex.epics.conversion.Converter;
 import uk.ac.stfc.isis.ibex.json.JsonDeserialisingConverter;
 import uk.ac.stfc.isis.ibex.json.JsonSerialisingConverter;
 import uk.ac.stfc.isis.ibex.json.LowercaseEnumTypeAdapterFactory;
-import uk.ac.stfc.isis.ibex.validators.BlockServerNameValidation;
+import uk.ac.stfc.isis.ibex.validators.BlockServerNameValidor;
 
 /**
  * Converters for Json to internal objects.
@@ -66,8 +66,8 @@ public class JsonConverters implements Converters {
 	}
 
     @Override
-    public Converter<String, BlockServerNameValidation> toGroupRules() {
-        return new JsonDeserialisingConverter<>(BlockServerNameValidation.class);
+    public Converter<String, BlockServerNameValidor> toBlockServerTextValidor() {
+        return new JsonDeserialisingConverter<>(BlockServerNameValidor.class);
     }
 
 	@Override

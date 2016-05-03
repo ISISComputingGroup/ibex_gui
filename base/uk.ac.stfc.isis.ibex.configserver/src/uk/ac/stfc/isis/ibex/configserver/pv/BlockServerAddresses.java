@@ -51,6 +51,8 @@ public class BlockServerAddresses {
     private static final String BLOCK_RULES = "BLOCK_RULES";
     /** PV ending for group rules. */
     private static final String GROUP_RULES = "GROUP_RULES";
+    /** PV ending for configuration description rules. */
+    private static final String CONFIG_DESCRIPTION_RULES = "CONF_DESC_RULES";
 	
 	private static final String START_IOCS = "START_IOCS";
 	private static final String STOP_IOCS = "STOP_IOCS";
@@ -186,6 +188,13 @@ public class BlockServerAddresses {
      */
     public String groupRules() {
         return blockServerAddress.endWith(GROUP_RULES);
+    }
+
+    /**
+     * @return address for configuration description rules on the block server
+     */
+    public String configDescritpionRules() {
+        return blockServerAddress.endWith(CONFIG_DESCRIPTION_RULES);
     }
 
 }

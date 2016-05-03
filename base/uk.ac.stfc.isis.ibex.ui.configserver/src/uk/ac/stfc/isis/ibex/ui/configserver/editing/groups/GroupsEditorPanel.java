@@ -52,7 +52,7 @@ import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableGroup;
 import uk.ac.stfc.isis.ibex.ui.configserver.ConfigurationViewModels;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.DoubleListEditor;
-import uk.ac.stfc.isis.ibex.validators.BlockServerNameValidation;
+import uk.ac.stfc.isis.ibex.validators.BlockServerNameValidor;
 import uk.ac.stfc.isis.ibex.validators.GroupNameValidator;
 import uk.ac.stfc.isis.ibex.validators.MessageDisplayer;
 
@@ -216,7 +216,7 @@ public class GroupsEditorPanel extends Composite {
 			}
 		});
 		
-        BlockServerNameValidation groupRules = Configurations.getInstance().variables().groupRules.getValue();
+        BlockServerNameValidor groupRules = Configurations.getInstance().variables().groupRules.getValue();
         strategy.setBeforeSetValidator(new GroupNameValidator(configurationViewModels.getConfigModel().getValue(),
                 messageDisplayer, groupRules));
         bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(name),

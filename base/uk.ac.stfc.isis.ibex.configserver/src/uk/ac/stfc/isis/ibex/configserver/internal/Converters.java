@@ -30,7 +30,7 @@ import uk.ac.stfc.isis.ibex.configserver.configuration.Configuration;
 import uk.ac.stfc.isis.ibex.configserver.configuration.PV;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableIoc;
 import uk.ac.stfc.isis.ibex.epics.conversion.Converter;
-import uk.ac.stfc.isis.ibex.validators.BlockServerNameValidation;
+import uk.ac.stfc.isis.ibex.validators.BlockServerNameValidor;
 
 /**
  * Interface for converters from block server to internal objects.
@@ -47,9 +47,9 @@ public interface Converters {
 	Converter<String, BlockRules> toBlockRules();
 
     /**
-     * @return converter for the group rules.
+     * @return converter for block server text validator rules.
      */
-    Converter<String, BlockServerNameValidation> toGroupRules();
+    Converter<String, BlockServerNameValidor> toBlockServerTextValidor();
 
 	Converter<String, Collection<ConfigInfo>> toConfigsInfo();
 
@@ -68,4 +68,5 @@ public interface Converters {
 	Converter<String, Collection<IocState>> toIocStates();
 
 	Converter<String, Collection<String>> toNames();
+
 }

@@ -69,6 +69,9 @@ public class EditConfigDialog extends TitleAreaDialog implements
 
     private ConfigurationViewModels configurationViewModels;
 
+    /**
+     * @wbp.parser.constructor
+     */
     public EditConfigDialog(Shell parentShell, String title, String subTitle, EditableConfiguration config,
             boolean isComponent, boolean isBlank, ConfigurationViewModels configurationViewModels) {
 		super(parentShell);

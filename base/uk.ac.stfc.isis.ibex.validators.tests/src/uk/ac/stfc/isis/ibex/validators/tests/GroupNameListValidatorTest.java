@@ -28,7 +28,7 @@ import org.eclipse.core.runtime.IStatus;
 import org.junit.Before;
 import org.junit.Test;
 
-import uk.ac.stfc.isis.ibex.validators.BlockServerNameValidation;
+import uk.ac.stfc.isis.ibex.validators.BlockServerNameValidor;
 import uk.ac.stfc.isis.ibex.validators.GroupNameValidator;
 import uk.ac.stfc.isis.ibex.validators.GroupNamesProvider;
 
@@ -39,7 +39,7 @@ public class GroupNameListValidatorTest {
     List<String> namesToValidate;
     GroupNameValidator validator;
     MessageDisplayerStub messageDisplayer;
-    private BlockServerNameValidation groupRules;
+    private BlockServerNameValidor groupRules;
     private ArrayList<String> disallowed = new ArrayList<String>();
 
     @Before
@@ -56,7 +56,7 @@ public class GroupNameListValidatorTest {
 
         messageDisplayer = new MessageDisplayerStub();
 
-        groupRules = new BlockServerNameValidation("^[a-zA-Z]\\w*$", "Error message", disallowed);
+        groupRules = new BlockServerNameValidor("^[a-zA-Z]\\w*$", "Error message", disallowed);
 
         validator = new GroupNameValidator(groupNamesProvider, messageDisplayer, groupRules);
 
@@ -93,7 +93,7 @@ public class GroupNameListValidatorTest {
     public void GIVEN_invalid_group_name_THEN_invalid() {
         // Arrange
         String expectedErrorMessage = "Error message";
-        groupRules = new BlockServerNameValidation("^[a-zA-Z]\\w*$", expectedErrorMessage, new ArrayList<String>());
+        groupRules = new BlockServerNameValidor("^[a-zA-Z]\\w*$", expectedErrorMessage, new ArrayList<String>());
         String name = "invalid&";
 
         // Act
@@ -158,7 +158,7 @@ public class GroupNameListValidatorTest {
     public void GIVEN_no_disallowed_THEN_valid() {
         // Arrange
         String name = "valid123";
-        groupRules = new BlockServerNameValidation("^[a-zA-Z]\\w*$", "Error message", null);
+        groupRules = new BlockServerNameValidor("^[a-zA-Z]\\w*$", "Error message", null);
         validator = new GroupNameValidator(groupNamesProvider, messageDisplayer, groupRules);
 
         // Act
@@ -173,7 +173,7 @@ public class GroupNameListValidatorTest {
     public void GIVEN_no_reg_ex_THEN_valid() {
         // Arrange
         String name = "valid123";
-        groupRules = new BlockServerNameValidation(null, "Error message", null);
+        groupRules = new BlockServerNameValidor(null, "Error message", null);
         validator = new GroupNameValidator(groupNamesProvider, messageDisplayer, groupRules);
 
         // Act
@@ -200,7 +200,7 @@ public class GroupNameListValidatorTest {
     public void GIVEN_invlaid_name_in_list_but_not_being_edited_THEN_invalid() {
         // Arrange
         String expectedErrorMessage = "Error message";
-        groupRules = new BlockServerNameValidation("^[a-zA-Z]\\w*$", expectedErrorMessage, new ArrayList<String>());
+        groupRules = new BlockServerNameValidor("^[a-zA-Z]\\w*$", expectedErrorMessage, new ArrayList<String>());
         String validName = "valid123";
         String invalidName = "&%*&\"^*()";
 

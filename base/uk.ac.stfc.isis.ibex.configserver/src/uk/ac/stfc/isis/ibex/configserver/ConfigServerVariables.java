@@ -47,7 +47,7 @@ import uk.ac.stfc.isis.ibex.instrument.InstrumentVariables;
 import uk.ac.stfc.isis.ibex.instrument.channels.CompressedCharWaveformChannel;
 import uk.ac.stfc.isis.ibex.instrument.channels.DefaultChannel;
 import uk.ac.stfc.isis.ibex.instrument.channels.StringChannel;
-import uk.ac.stfc.isis.ibex.validators.BlockServerNameValidation;
+import uk.ac.stfc.isis.ibex.validators.BlockServerNameValidor;
 
 /**
  * Holds all the Observables and Writables for the PVs associated with the
@@ -73,7 +73,9 @@ public class ConfigServerVariables extends InstrumentVariables {
     /** Rules from the block server for how the block should be named. */
 	public final ForwardingObservable<BlockRules> blockRules;
     /** Rules from the block server for how the group should be named. */
-    public final ForwardingObservable<BlockServerNameValidation> groupRules;
+    public final ForwardingObservable<BlockServerNameValidor> groupRules;
+    /** Rules from the description should be formed . */
+    public final ForwardingObservable<BlockServerNameValidor> configDescritpionRules;
 	
 	public final ForwardingObservable<Collection<Component>> components;
 	public final ForwardingObservable<Collection<EditableIoc>> iocs;
@@ -98,6 +100,13 @@ public class ConfigServerVariables extends InstrumentVariables {
 	public final ForwardingObservable<Collection<IocState>> iocStates;
 	public final ForwardingObservable<Collection<String>> protectedIocs;
 	
+    /**
+     * Set the configuration server variables from the block server using the
+     * converters.
+     * 
+     * @param converters converters to use to convert values from block server
+     *            to class instances for variables
+     */
     public ConfigServerVariables(Converters converters) {
 		this.converters = converters;
 		
@@ -109,7 +118,9 @@ public class ConfigServerVariables extends InstrumentVariables {
 		componentsInfo = convert(readCompressed(blockServerAddresses.components()), converters.toConfigsInfo());
 		
         blockRules = convert(readCompressed(blockServerAddresses.blockRules()), converters.toBlockRules());
-        groupRules = convert(readCompressed(blockServerAddresses.groupRules()), converters.toGroupRules());
+        groupRules = convert(readCompressed(blockServerAddresses.groupRules()), converters.toBlockServerTextValidor());
+        configDescritpionRules = convert(readCompressed(blockServerAddresses.configDescritpionRules()),
+                converters.toBlockServerTextValidor());
 		
 		components = convert(readCompressed(blockServerAddresses.components()), converters.toComponents());
 		iocs = convert(readCompressed(blockServerAddresses.iocs()), converters.toIocs());

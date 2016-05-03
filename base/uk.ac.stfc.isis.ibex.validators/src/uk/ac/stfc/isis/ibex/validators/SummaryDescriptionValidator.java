@@ -19,33 +19,72 @@
 
 package uk.ac.stfc.isis.ibex.validators;
 
+import org.apache.logging.log4j.Logger;
 import org.eclipse.core.databinding.validation.IValidator;
-import org.eclipse.core.databinding.validation.ValidationStatus;
 import org.eclipse.core.runtime.IStatus;
 
+import uk.ac.stfc.isis.ibex.logger.IsisLog;
+
+/**
+ * Validator for the description on a summary of a configuration.
+ */
 public class SummaryDescriptionValidator implements IValidator {
 
-	private final MessageDisplayer messageDisplayer;
+    /** The logger. */
+    private static final Logger LOG = IsisLog.getLogger(SummaryDescriptionValidator.class);
+
+    /** Error message source. */
+    private static final String ERROR_MESSAGE_SOURCE = "SummaryDescriptionValidator";
+
+    /** Error message displayer. */
+    private final MessageDisplayer messageDisplayer;
+
+    /** Validator of a description from the block server. */
+    private BlockServerNameValidor descriptionValidator;
 	
-	public SummaryDescriptionValidator(MessageDisplayer messageDisplayer) {
+    /**
+     * Instantiates a class which can validate the description of a
+     * configuration summary.
+     *
+     * @param messageDisplayer the message displayer
+     * @param descriptionValidator the description validator
+     */
+    public SummaryDescriptionValidator(MessageDisplayer messageDisplayer, BlockServerNameValidor descriptionValidator) {
 		this.messageDisplayer = messageDisplayer;
+        this.descriptionValidator = descriptionValidator;
+
+        if (this.descriptionValidator == null) {
+            LOG.error("Configuration description rules are null and should not be");
+            this.descriptionValidator = BlockServerNameValidor.getDefaultInstance();
+        }
+
 	}
 	
 	@Override
-	public IStatus validate(Object text) {		
-		String str = text.toString().trim();
-		
-		if (str.isEmpty()) {
-			setError("Description cannot be empty");
-		}
+    public IStatus validate(Object text) {
 
-		messageDisplayer.setErrorMessage("SummaryDescriptionValidator", null);
-		return ValidationStatus.ok();
-	}
-	
-	private IStatus setError(String message) {
-		messageDisplayer.setErrorMessage("SummaryDescriptionValidator", message);
-		return ValidationStatus.error(message);	
-	}
+        String descriptionToValidate = text.toString().trim();
+        IStatus status = this.descriptionValidator.validate(descriptionToValidate, "Description");
+        
+        return setErrorAndReturnStatus(status);
+    }
+
+    /**
+     * Set the error message.
+     * 
+     * @param status the status of the error
+     * @return the status
+     */
+    private IStatus setErrorAndReturnStatus(IStatus status) {
+        if (messageDisplayer == null) {
+            return status;
+        }
+        if (status.isOK()) {
+            messageDisplayer.setErrorMessage(ERROR_MESSAGE_SOURCE, null);
+        } else {
+            messageDisplayer.setErrorMessage(ERROR_MESSAGE_SOURCE, status.getMessage());
+        }
+        return status;
+    }
 
 }

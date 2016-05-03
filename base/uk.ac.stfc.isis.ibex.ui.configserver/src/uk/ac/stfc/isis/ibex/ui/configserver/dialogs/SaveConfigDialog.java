@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.TitleAreaDialog;
 import org.eclipse.swt.SWT;
@@ -30,18 +31,22 @@ import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Text;
 
 import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
+
+import uk.ac.stfc.isis.ibex.configserver.Configurations;
+import uk.ac.stfc.isis.ibex.validators.BlockServerNameValidor;
+import uk.ac.stfc.isis.ibex.validators.SummaryDescriptionValidator;
 
 @SuppressWarnings("checkstyle:magicnumber")
 public class SaveConfigDialog extends TitleAreaDialog {
@@ -311,8 +316,13 @@ public class SaveConfigDialog extends TitleAreaDialog {
 			return "Name contains invalid characters";
 		}
 		
-		if (description.length() == 0) {
-			return "Description cannot be blank";
+        BlockServerNameValidor configDescritpionRules =
+                Configurations.getInstance().variables().configDescritpionRules.getValue();
+        SummaryDescriptionValidator descriptionValidator =
+                new SummaryDescriptionValidator(null, configDescritpionRules);
+		IStatus status = descriptionValidator.validate(description);
+		if (!status.isOK()) {
+		    return status.getMessage();
 		}
 		
 		return "";

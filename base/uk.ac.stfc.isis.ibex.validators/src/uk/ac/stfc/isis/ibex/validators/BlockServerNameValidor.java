@@ -23,26 +23,28 @@
 package uk.ac.stfc.isis.ibex.validators;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
-import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.eclipse.core.databinding.validation.ValidationStatus;
 import org.eclipse.core.runtime.IStatus;
 
+import uk.ac.stfc.isis.ibex.logger.IsisLog;
+
 /**
  * Validate a name based on rules from the block server.
  */
-public class BlockServerNameValidation {
+public class BlockServerNameValidor {
 
     /** Logger. */
-    private static final Logger LOG = LogManager.getLogger(BlockServerNameValidation.class);
+    private static final Logger LOG = IsisLog.getLogger(BlockServerNameValidor.class);
 
     /** Error message for empty value. */
-    private static final String EMPTY_NAME_MESSAGE = " name must not be empty";
+    private static final String EMPTY_NAME_MESSAGE = " must not be empty";
 
     /** Error message when a name appears in the disallowed names list. */
-    public static final String FORBIDDEN_NAME_MESSAGE = " name cannot be ";
+    public static final String FORBIDDEN_NAME_MESSAGE = " cannot be ";
 
     /** The regex which the block name must obey. */
     private String regex;
@@ -60,7 +62,7 @@ public class BlockServerNameValidation {
      * @param regexMessage the regex message if the regex fails.
      * @param disallowed the list of disallowed names
      */
-    public BlockServerNameValidation(String regex, String regexMessage, List<String> disallowed) {
+    public BlockServerNameValidor(String regex, String regexMessage, List<String> disallowed) {
         this.regex = regex;
         this.regexMessage = regexMessage;
         this.disallowed = disallowed;
@@ -115,5 +117,12 @@ public class BlockServerNameValidation {
             }
         }
         return sb.toString();
+    }
+
+    /**
+     * @return a default validator which checks that the item is not blank
+     */
+    public static BlockServerNameValidor getDefaultInstance() {
+        return new BlockServerNameValidor(".*", "", Collections.<String> emptyList());
     }
 }

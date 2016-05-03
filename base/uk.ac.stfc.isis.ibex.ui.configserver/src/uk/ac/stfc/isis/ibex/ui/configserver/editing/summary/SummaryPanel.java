@@ -37,9 +37,11 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 
+import uk.ac.stfc.isis.ibex.configserver.Configurations;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
 import uk.ac.stfc.isis.ibex.synoptic.Synoptic;
 import uk.ac.stfc.isis.ibex.synoptic.SynopticInfo;
+import uk.ac.stfc.isis.ibex.validators.BlockServerNameValidor;
 import uk.ac.stfc.isis.ibex.validators.MessageDisplayer;
 import uk.ac.stfc.isis.ibex.validators.SummaryDescriptionValidator;
 
@@ -121,7 +123,9 @@ public class SummaryPanel extends Composite {
 	private void setBindings() {
 		bindingContext = new DataBindingContext();
 		
-		strategy.setBeforeSetValidator(new SummaryDescriptionValidator(messageDisplayer));
+        BlockServerNameValidor configDescritpionRules =
+                Configurations.getInstance().variables().configDescritpionRules.getValue();
+        strategy.setBeforeSetValidator(new SummaryDescriptionValidator(messageDisplayer, configDescritpionRules));
 		
 		bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(txtName), BeanProperties.value("name").observe(config));
 		bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(txtDescription), BeanProperties.value("description").observe(config), strategy, null);

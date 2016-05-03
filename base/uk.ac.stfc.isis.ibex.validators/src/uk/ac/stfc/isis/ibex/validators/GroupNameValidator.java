@@ -22,11 +22,12 @@ package uk.ac.stfc.isis.ibex.validators;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.eclipse.core.databinding.validation.IValidator;
 import org.eclipse.core.databinding.validation.ValidationStatus;
 import org.eclipse.core.runtime.IStatus;
+
+import uk.ac.stfc.isis.ibex.logger.IsisLog;
 
 /**
  * Validator to ensure that group names are correct.
@@ -37,10 +38,10 @@ public class GroupNameValidator implements IValidator {
     private static final String ERROR_MESSAGE_SOURCE = "GroupNameValidator";
 
     /** logger. */
-    private static final Logger LOG = LogManager.getLogger(GroupNameValidator.class);
+    private static final Logger LOG = IsisLog.getLogger(GroupNameValidator.class);
 	
     /** What is being validated. */
-    private static final String WHAT_IS_BEING_VALIDATED = "Group";
+    private static final String WHAT_IS_BEING_VALIDATED = "Group name";
 
     /** Message to issue on duplicate group name. */
     private static final String DUPLICATE_GROUP_MESSAGE = "Group names must all be unique";
@@ -52,7 +53,7 @@ public class GroupNameValidator implements IValidator {
 	private final MessageDisplayer messageDisplayer;
 
     /** group rules. */
-    private final BlockServerNameValidation groupRules;
+    private final BlockServerNameValidor groupRules;
 	
     /**
      * Instantiates a new group name validator.
@@ -63,7 +64,7 @@ public class GroupNameValidator implements IValidator {
      * @param groupRules the group validation rules
      */
     public GroupNameValidator(GroupNamesProvider groupNameProvider, MessageDisplayer messageDisplayer,
-            BlockServerNameValidation groupRules) {
+            BlockServerNameValidor groupRules) {
         this.groupNameProvider = groupNameProvider;
 		this.messageDisplayer = messageDisplayer;
         this.groupRules = groupRules;
