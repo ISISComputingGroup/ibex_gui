@@ -17,13 +17,11 @@
 * http://opensource.org/licenses/eclipse-1.0.php
 */
 
-package uk.ac.stfc.isis.ibex.ui.configserver.editing.summary;
+package uk.ac.stfc.isis.ibex.validators;
 
 import org.eclipse.core.databinding.validation.IValidator;
 import org.eclipse.core.databinding.validation.ValidationStatus;
 import org.eclipse.core.runtime.IStatus;
-
-import uk.ac.stfc.isis.ibex.validators.MessageDisplayer;
 
 public class SummaryDescriptionValidator implements IValidator {
 

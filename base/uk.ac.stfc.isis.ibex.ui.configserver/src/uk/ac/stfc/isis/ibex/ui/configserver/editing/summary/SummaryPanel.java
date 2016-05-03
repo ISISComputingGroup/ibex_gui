@@ -41,6 +41,7 @@ import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
 import uk.ac.stfc.isis.ibex.synoptic.Synoptic;
 import uk.ac.stfc.isis.ibex.synoptic.SynopticInfo;
 import uk.ac.stfc.isis.ibex.validators.MessageDisplayer;
+import uk.ac.stfc.isis.ibex.validators.SummaryDescriptionValidator;
 
 @SuppressWarnings("checkstyle:magicnumber")
 public class SummaryPanel extends Composite {
