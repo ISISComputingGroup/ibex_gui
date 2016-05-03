@@ -136,9 +136,10 @@ public abstract class BeamStatusGraphView extends DataBrowserAwareView implement
         selectPV(TS2_BEAM_CURRENT_PV);
         selectPV(SYNCH_BEAM_CURRENT_PV);
 
-        setYAxisName();
-        setYAxisColor();
-        setYAxisRange();
+        if (model != null && model.getAxisCount() > 0)
+        {
+            setAxisProperties(model.getAxis(model.getAxisCount() - 1));
+        }
 
         // Create and start controller
         try {
@@ -152,37 +153,34 @@ public abstract class BeamStatusGraphView extends DataBrowserAwareView implement
     }
 
     /**
-     * Sets the title for the y-axis.
+     * Sets various properties for the given axis.
      */
-    private void setYAxisName() {
-        if (model.getAxisCount() == 0) {
-            return;
-        }
-        AxisConfig axis = model.getAxis(model.getAxisCount() - 1);
+    private void setAxisProperties(AxisConfig axisConfig) {
+        setYAxisName(axisConfig);
+        setYAxisColor(axisConfig);
+        setYAxisRange(axisConfig);
+    }
+
+    /**
+     * Sets the title for the given axis.
+     */
+    private void setYAxisName(AxisConfig axis) {
         axis.setName(Y_AXIS_TITLE);
     }
 
     /**
-     * Sets the range for the y-axis.
+     * Sets the range for the given axis.
      */
-    private void setYAxisRange() {
-        if (model == null || model.getAxisCount() == 0) {
-            return;
-        }
-        AxisConfig axis = model.getAxis(model.getAxisCount() - 1);
+    private void setYAxisRange(AxisConfig axis) {
         axis.setRange(CURRENT_LOWER, CURRENT_UPPER);
         axis.setAutoScale(false);
         model.setArchiveRescale(ArchiveRescale.NONE);
     }
 
     /**
-     * Sets the color for the y-axis.
+     * Sets the color for the given axis.
      */
-    private void setYAxisColor() {
-        if (model.getAxisCount() == 0) {
-                return;
-            }
-            AxisConfig axis = model.getAxis(model.getAxisCount() - 1);
+    private void setYAxisColor(AxisConfig axis) {
         axis.setColor(new RGB(0, 0, 0));
     }
 
