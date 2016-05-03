@@ -113,15 +113,17 @@ public class Group extends Composite {
 				
 				Label blockValue = labelMaker(this, SWT.RIGHT, currentBlock.getValue(), currentBlock.getDescription(), null);
 				blockValue.setMenu(new BlocksMenu(currentBlock).createContextMenu(blockName));
-				GridData gridData = new GridData(SWT.CENTER, SWT.NONE, false, false, 1, 1);
-				gridData.widthHint = 70;
-				blockValue.setLayoutData(gridData);
+				GridData gdValue = new GridData(SWT.CENTER, SWT.NONE, false, false, 1, 1);
+				gdValue.widthHint = 70;
+				blockValue.setLayoutData(gdValue);
 				
-				Label blockStatus = labelMaker(this, SWT.NONE, currentBlock.getSymbol(), "Run Control Status", null);;
+				Label blockStatus = labelMaker(this, SWT.CENTER, currentBlock.getSymbol(), "Run Control Status", null);;
 				FontDescriptor boldDescriptor = FontDescriptor.createFrom(blockStatus.getFont()).setStyle(SWT.BOLD);
 				Font boldFont = boldDescriptor.createFont(blockStatus.getDisplay());
 				blockStatus.setFont( boldFont );
-				blockStatus.setLayoutData(new GridData(SWT.RIGHT, SWT.NONE, false, false, 1, 1));
+				GridData gdStatus = new GridData(SWT.RIGHT, SWT.NONE, false, false, 1, 1);
+				gdStatus.widthHint = 17;
+				blockStatus.setLayoutData(gdStatus);
 				
 				if (j <  numberOfColumns - 1) {
 					// insert divider label
@@ -141,10 +143,6 @@ public class Group extends Composite {
 						WidgetProperties.foreground().observe(blockStatus), 
 						BeanProperties.value(DisplayBlock.TEXT_COLOR).observe(currentBlock));
 
-				bindingContext.bindValue(
-						WidgetProperties.background().observe(blockValue), 
-						BeanProperties.value(DisplayBlock.BACKGROUND_COLOR).observe(currentBlock));
-				
 				bindingContext.bindValue(
 						WidgetProperties.background().observe(blockStatus), 
 						BeanProperties.value(DisplayBlock.BACKGROUND_COLOR).observe(currentBlock));

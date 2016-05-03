@@ -329,17 +329,17 @@ public class DisplayBlock extends ModelObject {
     private synchronized void setSymbol(boolean inRange){
     	String s;
         if (getEnabled() == null) {
-            s = "";
+            s = " ";
             return;
         }
         if (getEnabled()) {
             if (inRange) {
-                s = " \u2713 ";
+                s = "\u2713";
             } else {
-                s = " X ";
+                s = "X";
             }
         } else {
-            s = "";
+            s = " ";
         }
         firePropertyChange("symbol", this.symbol, this.symbol = s);
     }
