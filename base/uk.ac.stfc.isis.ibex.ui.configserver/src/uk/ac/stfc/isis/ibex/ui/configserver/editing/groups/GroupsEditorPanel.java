@@ -20,6 +20,7 @@
 package uk.ac.stfc.isis.ibex.ui.configserver.editing.groups;
 
 import org.eclipse.core.databinding.DataBindingContext;
+import org.eclipse.core.databinding.UpdateValueStrategy;
 import org.eclipse.core.databinding.beans.BeanProperties;
 import org.eclipse.core.databinding.observable.list.IObservableList;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
@@ -46,27 +47,51 @@ import org.eclipse.swt.widgets.Text;
 import org.eclipse.wb.swt.ResourceManager;
 import org.eclipse.wb.swt.SWTResourceManager;
 
+import uk.ac.stfc.isis.ibex.configserver.Configurations;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableGroup;
 import uk.ac.stfc.isis.ibex.ui.configserver.ConfigurationViewModels;
-import uk.ac.stfc.isis.ibex.ui.configserver.dialogs.MessageDisplayer;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.DoubleListEditor;
+import uk.ac.stfc.isis.ibex.validators.BlockServerNameValidation;
+import uk.ac.stfc.isis.ibex.validators.GroupNameValidator;
+import uk.ac.stfc.isis.ibex.validators.MessageDisplayer;
 
-@SuppressWarnings({"checkstyle:magicnumber", "checkstyle:localvariablename"})
+/**
+ * Group Editor Panel editing of groups for a component or configuration. Allows
+ * groups to be added, removed, names edited block added and removed
+ */
+@SuppressWarnings({ "checkstyle:magicnumber", "checkstyle:localvariablename" })
 public class GroupsEditorPanel extends Composite {
 
+    /** Editor for blocks, those available and those unavailable. */
 	private final DoubleListEditor blocksEditor;
-	
-	private EditableConfiguration config;
+
+    /** Current group name. */
 	private Text name;
+
+    /** The component details. */
 	private Label componentDetails;
+
+    /** The groups viewer. */
 	private ListViewer groupsViewer;
+
+    /** The group list. */
 	private List groupList;
 	
-    private boolean canEditSelected;
-
+    /** binding context. */
 	private DataBindingContext bindingContext = new DataBindingContext();
 	
+    /** Strategy for updating values. */
+    private UpdateValueStrategy strategy = new UpdateValueStrategy();
+
+    /**
+     * Instantiates a new groups editor panel.
+     *
+     * @param parent the parent
+     * @param style the style
+     * @param messageDisplayer a way of displaying messages to the user
+     * @param configurationViewModels the configuration view models
+     */
     public GroupsEditorPanel(Composite parent, int style, final MessageDisplayer messageDisplayer,
             final ConfigurationViewModels configurationViewModels) {
 		super(parent, style);
@@ -191,6 +216,12 @@ public class GroupsEditorPanel extends Composite {
 			}
 		});
 		
+        BlockServerNameValidation groupRules = Configurations.getInstance().variables().groupRules.getValue();
+        strategy.setBeforeSetValidator(new GroupNameValidator(configurationViewModels.getConfigModel().getValue(),
+                messageDisplayer, groupRules));
+        bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(name),
+                BeanProperties.value("name").observe(configurationViewModels.getConfigModel().getValue()), strategy, null);
+
 		IObservableList selectedBlocks = ViewerProperties.singleSelection().list(BeanProperties.list("selectedBlocks", EditableGroup.class)).observe(groupsViewer);
 		IObservableList unselectedBlocks = ViewerProperties.singleSelection().list(BeanProperties.list("unselectedBlocks", EditableGroup.class)).observe(groupsViewer);
 		

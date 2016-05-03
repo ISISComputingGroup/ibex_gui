@@ -47,6 +47,7 @@ import uk.ac.stfc.isis.ibex.instrument.InstrumentVariables;
 import uk.ac.stfc.isis.ibex.instrument.channels.CompressedCharWaveformChannel;
 import uk.ac.stfc.isis.ibex.instrument.channels.DefaultChannel;
 import uk.ac.stfc.isis.ibex.instrument.channels.StringChannel;
+import uk.ac.stfc.isis.ibex.validators.BlockServerNameValidation;
 
 /**
  * Holds all the Observables and Writables for the PVs associated with the
@@ -69,7 +70,10 @@ public class ConfigServerVariables extends InstrumentVariables {
 	public final ForwardingObservable<Collection<ConfigInfo>> configsInfo;
 	public final ForwardingObservable<Collection<ConfigInfo>> componentsInfo;
 
+    /** Rules from the block server for how the block should be named. */
 	public final ForwardingObservable<BlockRules> blockRules;
+    /** Rules from the block server for how the group should be named. */
+    public final ForwardingObservable<BlockServerNameValidation> groupRules;
 	
 	public final ForwardingObservable<Collection<Component>> components;
 	public final ForwardingObservable<Collection<EditableIoc>> iocs;
@@ -104,7 +108,8 @@ public class ConfigServerVariables extends InstrumentVariables {
 		configsInfo = convert(readCompressed(blockServerAddresses.configs()), converters.toConfigsInfo());
 		componentsInfo = convert(readCompressed(blockServerAddresses.components()), converters.toConfigsInfo());
 		
-		blockRules = convert(readCompressed(blockServerAddresses.blockRules()), converters.toBlockRules());	
+        blockRules = convert(readCompressed(blockServerAddresses.blockRules()), converters.toBlockRules());
+        groupRules = convert(readCompressed(blockServerAddresses.groupRules()), converters.toGroupRules());
 		
 		components = convert(readCompressed(blockServerAddresses.components()), converters.toComponents());
 		iocs = convert(readCompressed(blockServerAddresses.iocs()), converters.toIocs());

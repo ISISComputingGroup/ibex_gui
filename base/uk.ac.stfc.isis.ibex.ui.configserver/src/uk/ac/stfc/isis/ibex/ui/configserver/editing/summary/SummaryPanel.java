@@ -28,19 +28,19 @@ import org.eclipse.core.databinding.beans.BeanProperties;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ComboViewer;
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.Text;
-import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.layout.FillLayout;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Group;
+import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Text;
 
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
 import uk.ac.stfc.isis.ibex.synoptic.Synoptic;
 import uk.ac.stfc.isis.ibex.synoptic.SynopticInfo;
-import uk.ac.stfc.isis.ibex.ui.configserver.dialogs.MessageDisplayer;
+import uk.ac.stfc.isis.ibex.validators.MessageDisplayer;
 
 @SuppressWarnings("checkstyle:magicnumber")
 public class SummaryPanel extends Composite {

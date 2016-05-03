@@ -21,6 +21,12 @@ package uk.ac.stfc.isis.ibex.configserver.json;
 
 import java.util.Collection;
 
+import com.google.common.base.Function;
+import com.google.common.collect.Iterables;
+import com.google.common.collect.Lists;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import uk.ac.stfc.isis.ibex.configserver.BlockRules;
 import uk.ac.stfc.isis.ibex.configserver.IocState;
 import uk.ac.stfc.isis.ibex.configserver.ServerStatus;
@@ -36,13 +42,11 @@ import uk.ac.stfc.isis.ibex.epics.conversion.Converter;
 import uk.ac.stfc.isis.ibex.json.JsonDeserialisingConverter;
 import uk.ac.stfc.isis.ibex.json.JsonSerialisingConverter;
 import uk.ac.stfc.isis.ibex.json.LowercaseEnumTypeAdapterFactory;
+import uk.ac.stfc.isis.ibex.validators.BlockServerNameValidation;
 
-import com.google.common.base.Function;
-import com.google.common.collect.Iterables;
-import com.google.common.collect.Lists;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-
+/**
+ * Converters for Json to internal objects.
+ */
 public class JsonConverters implements Converters {
 
 	@Override
@@ -60,6 +64,11 @@ public class JsonConverters implements Converters {
 	public Converter<String, BlockRules> toBlockRules() {
 		return new JsonDeserialisingConverter<>(BlockRules.class);
 	}
+
+    @Override
+    public Converter<String, BlockServerNameValidation> toGroupRules() {
+        return new JsonDeserialisingConverter<>(BlockServerNameValidation.class);
+    }
 
 	@Override
 	public Converter<String, Collection<ConfigInfo>> toConfigsInfo() {

@@ -9,3 +9,6 @@ Require-Bundle: org.eclipse.core.runtime,
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Bundle-ActivationPolicy: lazy
 Export-Package: uk.ac.stfc.isis.ibex.validators;uses:="org.osgi.framework"
+Import-Package: org.apache.logging.log4j,
+ org.eclipse.core.databinding.validation,
+ uk.ac.stfc.isis.ibex.logger

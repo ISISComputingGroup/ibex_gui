@@ -23,7 +23,7 @@ import org.eclipse.core.databinding.validation.IValidator;
 import org.eclipse.core.databinding.validation.ValidationStatus;
 import org.eclipse.core.runtime.IStatus;
 
-import uk.ac.stfc.isis.ibex.ui.configserver.dialogs.MessageDisplayer;
+import uk.ac.stfc.isis.ibex.validators.MessageDisplayer;
 
 public class SummaryDescriptionValidator implements IValidator {
 
