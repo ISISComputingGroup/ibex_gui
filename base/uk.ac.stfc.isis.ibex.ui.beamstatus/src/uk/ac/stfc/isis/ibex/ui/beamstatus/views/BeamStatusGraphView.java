@@ -73,13 +73,13 @@ public abstract class BeamStatusGraphView extends DataBrowserAwareView implement
     /** Lower limit for the beam current. */
     private static final double CURRENT_LOWER = 0.0;
 
-    /** TS1 beam current PV name */
+    /** TS1 beam current PV name. */
     private static final String TS1_BEAM_CURRENT_PV = "AC:TS1:BEAM:CURR";
 
-    /** TS2 beam current PV name */
+    /** TS2 beam current PV name. */
     private static final String TS2_BEAM_CURRENT_PV = "AC:TS2:BEAM:CURR";
 
-    /** Synchotron beam current PV name */
+    /** Synchotron beam current PV name. */
     private static final String SYNCH_BEAM_CURRENT_PV = "AC:SYNCH:BEAM:CURR";
 
     /** Plot. */
@@ -136,8 +136,7 @@ public abstract class BeamStatusGraphView extends DataBrowserAwareView implement
         selectPV(TS2_BEAM_CURRENT_PV);
         selectPV(SYNCH_BEAM_CURRENT_PV);
 
-        if (model != null && model.getAxisCount() > 0)
-        {
+        if (model != null && model.getAxisCount() > 0) {
             setAxisProperties(model.getAxis(model.getAxisCount() - 1));
         }
 
@@ -154,6 +153,9 @@ public abstract class BeamStatusGraphView extends DataBrowserAwareView implement
 
     /**
      * Sets various properties for the given axis.
+     * 
+     * @param axisConfig
+     *            The axis configuration whose properties will be updated.
      */
     private void setAxisProperties(AxisConfig axisConfig) {
         setYAxisName(axisConfig);
@@ -163,6 +165,9 @@ public abstract class BeamStatusGraphView extends DataBrowserAwareView implement
 
     /**
      * Sets the title for the given axis.
+     * 
+     * @param axis
+     *            The axis configuration whose properties will be updated.
      */
     private void setYAxisName(AxisConfig axis) {
         axis.setName(Y_AXIS_TITLE);
@@ -170,6 +175,9 @@ public abstract class BeamStatusGraphView extends DataBrowserAwareView implement
 
     /**
      * Sets the range for the given axis.
+     * 
+     * @param axis
+     *            The axis configuration whose properties will be updated.
      */
     private void setYAxisRange(AxisConfig axis) {
         axis.setRange(CURRENT_LOWER, CURRENT_UPPER);
@@ -179,6 +187,9 @@ public abstract class BeamStatusGraphView extends DataBrowserAwareView implement
 
     /**
      * Sets the color for the given axis.
+     * 
+     * @param axis
+     *            The axis configuration whose properties will be updated.
      */
     private void setYAxisColor(AxisConfig axis) {
         axis.setColor(new RGB(0, 0, 0));
@@ -280,7 +291,7 @@ public abstract class BeamStatusGraphView extends DataBrowserAwareView implement
         }
 
     /**
-     * Get the title for the plot
+     * Get the title for the plot.
      * 
      * @return Plot title
      */
