@@ -78,7 +78,6 @@ public class DisplayBlock extends ModelObject {
      */
     private boolean runcontrol;
 
-    private String runControlSymbol;
     private Color textColor;
     private Color backgroundColor;
     private String symbol;
@@ -215,6 +214,7 @@ public class DisplayBlock extends ModelObject {
 
         // Initialise text and background colours
         setColors(true);
+        setSymbol(true);
     }
 
     public String getName() {
@@ -225,10 +225,6 @@ public class DisplayBlock extends ModelObject {
         return value;
     }
     
-    public String getRunControlSymbol(){
-    	return runControlSymbol;
-    }
-
     public String getDescription() {
         return description;
     }
@@ -330,10 +326,10 @@ public class DisplayBlock extends ModelObject {
         setSymbol(inRange);
     }
     
-    private void setSymbol(boolean inRange){
-    	String s = "1";
+    private synchronized void setSymbol(boolean inRange){
+    	String s;
         if (getEnabled() == null) {
-            s = "2";
+            s = "";
             return;
         }
         if (getEnabled()) {
@@ -343,12 +339,12 @@ public class DisplayBlock extends ModelObject {
                 s = " X ";
             }
         } else {
-            s = "3";
+            s = "";
         }
         firePropertyChange("symbol", this.symbol, this.symbol = s);
     }
 
-    private void setColors(boolean inRange) {
+    private synchronized void setColors(boolean inRange) {
         if (getEnabled() == null) {
             setTextColor(BLACK);
             setBackgroundColor(WHITE);

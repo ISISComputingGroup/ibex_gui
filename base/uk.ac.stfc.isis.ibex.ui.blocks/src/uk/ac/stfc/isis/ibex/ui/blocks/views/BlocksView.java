@@ -42,17 +42,18 @@ public class BlocksView extends ViewPart implements ISizeProvider {
 	}
 
 	public static final String ID = "uk.ac.stfc.isis.ibex.ui.blocks.views.BlocksView"; //$NON-NLS-1$
-	public static final int FIXED_HEIGHT = 310;	
+	public static final int FIXED_HEIGHT = 250;	
 
 	private static final ForwardingObservable<DisplayConfiguration> CONFIG = 
 			Configurations.getInstance().display().displayCurrentConfig();
 
 	private GroupsPanel groups;
 	private Subscription configSubscription;
-	
+	// #TODO something isnt right here
 	private final BaseObserver<DisplayConfiguration> configObserver = new BaseObserver<DisplayConfiguration>() {
 		@Override
 		public void onValue(DisplayConfiguration value) {
+			System.out.println("TRACE ONVALUE");
 			setGroups(value.groups());
 		}
 
@@ -75,6 +76,7 @@ public class BlocksView extends ViewPart implements ISizeProvider {
 		}
 		
 		private void setUnknownConfiguration() {
+			System.out.println("TRACE SETUNKONW");
 			setGroups(Collections.<DisplayGroup>emptyList());
 		}		
 	};	

@@ -25,6 +25,7 @@ import java.util.List;
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.beans.BeanProperties;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
+import org.eclipse.jface.resource.FontDescriptor;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
@@ -99,7 +100,7 @@ public class Group extends Composite {
 				if (position >= blocksList.size()) {
 					// put blank labels in these name and value columns
 					for(int k = 0; k < NUMBER_OF_FIELDS; k++){
-						labelMaker(this, SWT.NONE, "", "", null);	
+						labelMaker(this, SWT.NONE, "" , "", null);	
 					}			
 					break;
 				}
@@ -112,16 +113,22 @@ public class Group extends Composite {
 				
 				Label blockValue = labelMaker(this, SWT.RIGHT, currentBlock.getValue(), currentBlock.getDescription(), null);
 				blockValue.setMenu(new BlocksMenu(currentBlock).createContextMenu(blockName));
-				GridData gridData = new GridData(SWT.RIGHT, SWT.NONE, false, false, 1, 1);
+				GridData gridData = new GridData(SWT.CENTER, SWT.NONE, false, false, 1, 1);
 				gridData.widthHint = 70;
 				blockValue.setLayoutData(gridData);
 				
-				Label blockStatus = labelMaker(this, SWT.RIGHT, currentBlock.getRunControlSymbol(), "Run Control Status", null);;
+				Label blockStatus = labelMaker(this, SWT.NONE, currentBlock.getSymbol(), "Run Control Status", null);;
+				FontDescriptor boldDescriptor = FontDescriptor.createFrom(blockStatus.getFont()).setStyle(SWT.BOLD);
+				Font boldFont = boldDescriptor.createFont(blockStatus.getDisplay());
+				blockStatus.setFont( boldFont );
+				blockStatus.setLayoutData(new GridData(SWT.RIGHT, SWT.NONE, false, false, 1, 1));
+				
 				if (j <  numberOfColumns - 1) {
 					// insert divider label
 					labelMaker(this, SWT.NONE, "   |   ", "", null);
 				}
-				
+
+				System.out.println(position + " " + currentBlock.getName() + " " + currentBlock.getValue() + " " + currentBlock.getSymbol());
 				bindingContext.bindValue(
 						WidgetProperties.text().observe(blockValue), 
 						BeanProperties.value("value").observe(currentBlock));
@@ -133,6 +140,10 @@ public class Group extends Composite {
 				bindingContext.bindValue(
 						WidgetProperties.foreground().observe(blockStatus), 
 						BeanProperties.value(DisplayBlock.TEXT_COLOR).observe(currentBlock));
+
+				bindingContext.bindValue(
+						WidgetProperties.background().observe(blockValue), 
+						BeanProperties.value(DisplayBlock.BACKGROUND_COLOR).observe(currentBlock));
 				
 				bindingContext.bindValue(
 						WidgetProperties.background().observe(blockStatus), 

@@ -49,7 +49,7 @@ public class GroupsPanel extends Composite {
 	
 	private Collection<DisplayGroup> displayGroups;
 
-	private static final int GROUP_HEIGHT = 280;
+	private static final int GROUP_HEIGHT = 235;
 	
 	public GroupsPanel(Composite parent, int style) {
 		super(parent, SWT.NONE);
@@ -90,6 +90,7 @@ public class GroupsPanel extends Composite {
 		layoutGroups();
 	}
 		
+	// #TODO this is where. second time around, gets initialised blank
 	public synchronized void updateGroups(final Collection<DisplayGroup> groups) {
 		this.displayGroups = groups;
 		display.syncExec(new Runnable() {
