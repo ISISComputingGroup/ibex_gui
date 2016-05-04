@@ -19,9 +19,6 @@
 
 package uk.ac.stfc.isis.ibex.validators;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import org.apache.logging.log4j.Logger;
 import org.eclipse.core.databinding.validation.IValidator;
 import org.eclipse.core.databinding.validation.ValidationStatus;
@@ -54,6 +51,9 @@ public class GroupNameValidator implements IValidator {
 
     /** group rules. */
     private final BlockServerNameValidor groupRules;
+
+    /** index of the select group. */
+    private int selectedIndex;
 	
     /**
      * Instantiates a new group name validator.
@@ -68,6 +68,7 @@ public class GroupNameValidator implements IValidator {
         this.groupNameProvider = groupNameProvider;
 		this.messageDisplayer = messageDisplayer;
         this.groupRules = groupRules;
+        this.selectedIndex = -1;
 	}
 	
     /**
@@ -84,6 +85,11 @@ public class GroupNameValidator implements IValidator {
             LOG.error("Group rules are null and should not be");
             return setErrorAndReturnStatus(ValidationStatus.ok());
 		}
+
+        // not editing a group so the group name can not be invalid
+        if (selectedIndex == -1) {
+            return setErrorAndReturnStatus(ValidationStatus.ok());
+        }
 	    
         IStatus status = groupRules.validate((String) text, WHAT_IS_BEING_VALIDATED);
         if (!status.isOK()) {
@@ -99,7 +105,7 @@ public class GroupNameValidator implements IValidator {
                 }
             }
 
-            if (groupNameProvider != null && listContainsDuplicates()) {
+            if (groupNameProvider != null && isDuplicateName((String) text)) {
                 status = ValidationStatus.error(DUPLICATE_GROUP_MESSAGE);
                 return setErrorAndReturnStatus(status);
             }
@@ -107,6 +113,32 @@ public class GroupNameValidator implements IValidator {
 
         return setErrorAndReturnStatus(ValidationStatus.ok());
 	}
+
+    /**
+     * Set the index of the selected group.
+     * 
+     * @param index new index of selected group; -1 for group not selected
+     */
+    public void setSelectedIndex(int index) {
+        this.selectedIndex = index;
+    }
+
+    /**
+     * Dose this name match one on the list of names.
+     * 
+     * @param newGroupName to set
+     * @return true is group name is a duplicate; false otherwise
+     */
+    private boolean isDuplicateName(String newGroupName) {
+        int i = 0;
+        for (String name : groupNameProvider.getGroupNames()) {
+            if (i != selectedIndex && name.equalsIgnoreCase(newGroupName)) {
+                return true;
+            }
+            i++;
+        }
+        return false;
+    }
 
     /**
      * Set the error message.
@@ -122,19 +154,5 @@ public class GroupNameValidator implements IValidator {
         }
         return status;
     }
-	
-    /**
-     * @return true, if list contains duplicates; false otherwise
-     */
-    private boolean listContainsDuplicates() {
-        Set<String> uniques = new HashSet<>();
-
-        for (String name : groupNameProvider.getGroupNames()) {
-            if (!uniques.add(name.toLowerCase())) {
-                return true;
-            }
-        }
-        return false;
-	}
 
 }

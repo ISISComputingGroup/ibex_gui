@@ -204,10 +204,15 @@ public class GroupsEditorPanel extends Composite {
 			}
 		});
 		
-		bindingContext.bindValue(
-				WidgetProperties.text(SWT.Modify).observe(name), 
-				ViewerProperties.singleSelection().value(BeanProperties.value("name", EditableGroup.class)).observe(groupsViewer)
-        );
+		// bind group name change box to selected group name with validation
+        BlockServerNameValidor groupRules = Configurations.getInstance().variables().groupRules.getValue();
+        final GroupNameValidator groupNamesValidator = new GroupNameValidator(
+                configurationViewModels.getConfigModel().getValue(), messageDisplayer, groupRules);
+        strategy.setBeforeSetValidator(groupNamesValidator);
+        bindingContext.bindValue(
+                WidgetProperties.text(SWT.Modify).observe(name), ViewerProperties.singleSelection()
+                        .value(BeanProperties.value("name", EditableGroup.class)).observe(groupsViewer),
+                strategy, null);
 		
 		name.addModifyListener(new ModifyListener() {
 			@Override
@@ -215,12 +220,6 @@ public class GroupsEditorPanel extends Composite {
 				groupsViewer.refresh();
 			}
 		});
-		
-        BlockServerNameValidor groupRules = Configurations.getInstance().variables().groupRules.getValue();
-        strategy.setBeforeSetValidator(new GroupNameValidator(configurationViewModels.getConfigModel().getValue(),
-                messageDisplayer, groupRules));
-        bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(name),
-                BeanProperties.value("name").observe(configurationViewModels.getConfigModel().getValue()), strategy, null);
 
 		IObservableList selectedBlocks = ViewerProperties.singleSelection().list(BeanProperties.list("selectedBlocks", EditableGroup.class)).observe(groupsViewer);
 		IObservableList unselectedBlocks = ViewerProperties.singleSelection().list(BeanProperties.list("unselectedBlocks", EditableGroup.class)).observe(groupsViewer);
@@ -284,15 +283,22 @@ public class GroupsEditorPanel extends Composite {
 		new Label(grpGroups, SWT.NONE);
 		
 		groupsViewer.addSelectionChangedListener(new ISelectionChangedListener() {
-			@Override
+
+            @Override
 			public void selectionChanged(SelectionChangedEvent arg0) {
-                boolean canEditSelected = groupEditorViewModel.canEditSelected(groupList.getSelectionIndex());
+                int selectionIndex = groupList.getSelectionIndex();
+                groupNamesValidator.setSelectedIndex(selectionIndex);
+                if (selectionIndex == -1) {
+                    groupNamesValidator.validate("");
+                } else {
+                    groupNamesValidator.validate(groupList.getSelection()[0]);
+                }
+                boolean canEditSelected = groupEditorViewModel.canEditSelected(selectionIndex);
 
                 btnRemove.setEnabled(canEditSelected);
                 name.setEnabled(canEditSelected);
                 blocksEditor.setEnabled(canEditSelected);
 
-                componentDetails.setText(groupEditorViewModel.componentDetail(groupList.getSelectionIndex()));
 			}
 		});
 		

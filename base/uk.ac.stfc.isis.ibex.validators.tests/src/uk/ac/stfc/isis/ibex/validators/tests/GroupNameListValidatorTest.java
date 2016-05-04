@@ -70,15 +70,14 @@ public class GroupNameListValidatorTest {
         // Act
         IStatus result = validator.validate(name);
 
-        // Assert
-        assertTrue(result.isOK());
-        assertNull("Displayed error message", messageDisplayer.message);
+        assertNoError(result);
     }
 
     @Test
-    public void GIVEN_empty_group_name_THEN_invalid() {
+    public void GIVEN_empty_group_name_for_selected_item_THEN_invalid() {
         // Arrange
         String name = "";
+        validator.setSelectedIndex(0);
 
         // Act
         IStatus result = validator.validate(name);
@@ -90,11 +89,25 @@ public class GroupNameListValidatorTest {
     }
 
     @Test
+    public void GIVEN_empty_group_name_for_unselected_item_THEN_valid() {
+        // Arrange
+        String name = "";
+        validator.setSelectedIndex(-1);
+
+        // Act
+        IStatus result = validator.validate(name);
+
+        assertNoError(result);
+    }
+
+
+    @Test
     public void GIVEN_invalid_group_name_THEN_invalid() {
         // Arrange
         String expectedErrorMessage = "Error message";
         groupRules = new BlockServerNameValidor("^[a-zA-Z]\\w*$", expectedErrorMessage, new ArrayList<String>());
         String name = "invalid&";
+        validator.setSelectedIndex(0);
 
         // Act
         IStatus result = validator.validate(name);
@@ -110,6 +123,7 @@ public class GroupNameListValidatorTest {
         // Arrange
         String name = "name";
         disallowed.add(name);
+        validator.setSelectedIndex(0);
 
         // Act
         IStatus result = validator.validate(name);
@@ -126,12 +140,14 @@ public class GroupNameListValidatorTest {
     @Test
     public void GIVEN_duplicate_name_THEN_invalid() {
         // Arrange
-        String name = "valid123";
-        namesToValidate.add(name);
-        namesToValidate.add(name);
+        String duplicate_name = "valid123";
+        String original_name = "valid12";
+        namesToValidate.add(original_name);
+        namesToValidate.add(duplicate_name);
+        validator.setSelectedIndex(0);
 
         // Act
-        IStatus result = validator.validate(name);
+        IStatus result = validator.validate(duplicate_name);
 
         // Assert
         assertFalse(result.isOK());
@@ -141,38 +157,66 @@ public class GroupNameListValidatorTest {
     }
 
     @Test
+    public void GIVEN_duplicate_name_is_selected_name_THEN_valid() {
+        /**
+         * Here we are testing the scenario where group name entered is: 1)
+         * groupname 2) groupname& (this is invalid so will not set the group
+         * name in the list) 3) groupname (revert to original name but this is
+         * the same as the original name it is not a duplicate)
+         */
+        // Arrange
+        String duplicate_name = "valid123";
+        namesToValidate.add(duplicate_name);
+        validator.setSelectedIndex(0);
+
+        // Act
+        IStatus result = validator.validate(duplicate_name);
+
+        // Assert
+        assertNoError(result);
+    }
+
+    /**
+     * @param result
+     */
+    private void assertNoError(IStatus result) {
+        assertTrue(result.isOK());
+        assertNull("Displayed error message", messageDisplayer.message);
+    }
+
+    @Test
     public void GIVEN_no_group_rules_THEN_valid() {
         // Arrange
         String name = "valid123";
+        validator.setSelectedIndex(0);
         validator = new GroupNameValidator(groupNamesProvider, messageDisplayer, null);
 
         // Act
         IStatus result = validator.validate(name);
 
-        // Assert
-        assertTrue(result.isOK());
-        assertNull("Displayed error message", messageDisplayer.message);
+        assertNoError(result);
     }
 
     @Test
     public void GIVEN_no_disallowed_THEN_valid() {
         // Arrange
         String name = "valid123";
+        validator.setSelectedIndex(0);
         groupRules = new BlockServerNameValidor("^[a-zA-Z]\\w*$", "Error message", null);
         validator = new GroupNameValidator(groupNamesProvider, messageDisplayer, groupRules);
 
         // Act
         IStatus result = validator.validate(name);
 
-        // Assert
-        assertTrue(result.isOK());
-        assertNull("Displayed error message", messageDisplayer.message);
+        assertNoError(result);
     }
 
     @Test
     public void GIVEN_no_reg_ex_THEN_valid() {
         // Arrange
         String name = "valid123";
+
+        validator.setSelectedIndex(0);
         groupRules = new BlockServerNameValidor(null, "Error message", null);
         validator = new GroupNameValidator(groupNamesProvider, messageDisplayer, groupRules);
 
@@ -187,6 +231,7 @@ public class GroupNameListValidatorTest {
     public void GIVEN_null_name_THEN_invalid() {
         // Arrange
         String name = null;
+        validator.setSelectedIndex(0);
 
         // Act
         IStatus result = validator.validate(name);
@@ -202,6 +247,7 @@ public class GroupNameListValidatorTest {
         String expectedErrorMessage = "Error message";
         groupRules = new BlockServerNameValidor("^[a-zA-Z]\\w*$", expectedErrorMessage, new ArrayList<String>());
         String validName = "valid123";
+        validator.setSelectedIndex(0);
         String invalidName = "&%*&\"^*()";
 
         namesToValidate.add(validName);
