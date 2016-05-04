@@ -45,7 +45,7 @@ import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 
 import uk.ac.stfc.isis.ibex.configserver.Configurations;
-import uk.ac.stfc.isis.ibex.validators.BlockServerNameValidor;
+import uk.ac.stfc.isis.ibex.validators.BlockServerNameValidator;
 import uk.ac.stfc.isis.ibex.validators.SummaryDescriptionValidator;
 
 @SuppressWarnings("checkstyle:magicnumber")
@@ -316,7 +316,7 @@ public class SaveConfigDialog extends TitleAreaDialog {
 			return "Name contains invalid characters";
 		}
 		
-        BlockServerNameValidor configDescritpionRules =
+        BlockServerNameValidator configDescritpionRules =
                 Configurations.getInstance().variables().configDescritpionRules.getValue();
         SummaryDescriptionValidator descriptionValidator =
                 new SummaryDescriptionValidator(null, configDescritpionRules);

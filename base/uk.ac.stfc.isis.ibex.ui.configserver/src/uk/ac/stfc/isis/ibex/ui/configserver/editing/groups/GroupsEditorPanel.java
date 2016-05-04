@@ -52,7 +52,7 @@ import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableGroup;
 import uk.ac.stfc.isis.ibex.ui.configserver.ConfigurationViewModels;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.DoubleListEditor;
-import uk.ac.stfc.isis.ibex.validators.BlockServerNameValidor;
+import uk.ac.stfc.isis.ibex.validators.BlockServerNameValidator;
 import uk.ac.stfc.isis.ibex.validators.GroupNameValidator;
 import uk.ac.stfc.isis.ibex.validators.MessageDisplayer;
 
@@ -205,7 +205,7 @@ public class GroupsEditorPanel extends Composite {
 		});
 		
 		// bind group name change box to selected group name with validation
-        BlockServerNameValidor groupRules = Configurations.getInstance().variables().groupRules.getValue();
+        BlockServerNameValidator groupRules = Configurations.getInstance().variables().groupRules.getValue();
         final GroupNameValidator groupNamesValidator = new GroupNameValidator(
                 configurationViewModels.getConfigModel().getValue(), messageDisplayer, groupRules);
         strategy.setBeforeSetValidator(groupNamesValidator);

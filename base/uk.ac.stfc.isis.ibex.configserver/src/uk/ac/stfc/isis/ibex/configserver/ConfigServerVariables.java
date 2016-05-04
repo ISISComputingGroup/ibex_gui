@@ -47,7 +47,7 @@ import uk.ac.stfc.isis.ibex.instrument.InstrumentVariables;
 import uk.ac.stfc.isis.ibex.instrument.channels.CompressedCharWaveformChannel;
 import uk.ac.stfc.isis.ibex.instrument.channels.DefaultChannel;
 import uk.ac.stfc.isis.ibex.instrument.channels.StringChannel;
-import uk.ac.stfc.isis.ibex.validators.BlockServerNameValidor;
+import uk.ac.stfc.isis.ibex.validators.BlockServerNameValidator;
 
 /**
  * Holds all the Observables and Writables for the PVs associated with the
@@ -73,9 +73,9 @@ public class ConfigServerVariables extends InstrumentVariables {
     /** Rules from the block server for how the block should be named. */
 	public final ForwardingObservable<BlockRules> blockRules;
     /** Rules from the block server for how the group should be named. */
-    public final ForwardingObservable<BlockServerNameValidor> groupRules;
+    public final ForwardingObservable<BlockServerNameValidator> groupRules;
     /** Rules from the description should be formed . */
-    public final ForwardingObservable<BlockServerNameValidor> configDescritpionRules;
+    public final ForwardingObservable<BlockServerNameValidator> configDescritpionRules;
 	
 	public final ForwardingObservable<Collection<Component>> components;
 	public final ForwardingObservable<Collection<EditableIoc>> iocs;

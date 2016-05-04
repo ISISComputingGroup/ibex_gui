@@ -27,7 +27,7 @@ import org.eclipse.core.runtime.IStatus;
 import org.junit.Before;
 import org.junit.Test;
 
-import uk.ac.stfc.isis.ibex.validators.BlockServerNameValidor;
+import uk.ac.stfc.isis.ibex.validators.BlockServerNameValidator;
 import uk.ac.stfc.isis.ibex.validators.SummaryDescriptionValidator;
 
 @SuppressWarnings("checkstyle:methodname")
@@ -35,7 +35,7 @@ public class SummaryDescriptionValidatorTest {
 
     SummaryDescriptionValidator validator;
     MessageDisplayerStub messageDisplayer;
-    private BlockServerNameValidor decriptionRules;
+    private BlockServerNameValidator decriptionRules;
     private ArrayList<String> disallowed = new ArrayList<String>();
 
     @Before
@@ -43,7 +43,7 @@ public class SummaryDescriptionValidatorTest {
 
         messageDisplayer = new MessageDisplayerStub();
 
-        decriptionRules = new BlockServerNameValidor("^[a-zA-Z][\\w ]*$", "Error message", disallowed);
+        decriptionRules = new BlockServerNameValidator("^[a-zA-Z][\\w ]*$", "Error message", disallowed);
 
         validator = new SummaryDescriptionValidator(messageDisplayer, decriptionRules);
     }
@@ -79,7 +79,7 @@ public class SummaryDescriptionValidatorTest {
         // Arrange
         String expectedErrorMessage = "Error message";
         decriptionRules =
-                new BlockServerNameValidor("^[a-zA-Z]\\w*$", expectedErrorMessage, new ArrayList<String>());
+                new BlockServerNameValidator("^[a-zA-Z]\\w*$", expectedErrorMessage, new ArrayList<String>());
         String name = "invalid&";
 
         // Act

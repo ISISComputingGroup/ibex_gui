@@ -40,7 +40,7 @@ public class SummaryDescriptionValidator implements IValidator {
     private final MessageDisplayer messageDisplayer;
 
     /** Validator of a description from the block server. */
-    private BlockServerNameValidor descriptionValidator;
+    private BlockServerNameValidator descriptionValidator;
 	
     /**
      * Instantiates a class which can validate the description of a
@@ -49,13 +49,13 @@ public class SummaryDescriptionValidator implements IValidator {
      * @param messageDisplayer the message displayer
      * @param descriptionValidator the description validator
      */
-    public SummaryDescriptionValidator(MessageDisplayer messageDisplayer, BlockServerNameValidor descriptionValidator) {
+    public SummaryDescriptionValidator(MessageDisplayer messageDisplayer, BlockServerNameValidator descriptionValidator) {
 		this.messageDisplayer = messageDisplayer;
         this.descriptionValidator = descriptionValidator;
 
         if (this.descriptionValidator == null) {
             LOG.error("Configuration description rules are null and should not be");
-            this.descriptionValidator = BlockServerNameValidor.getDefaultInstance();
+            this.descriptionValidator = BlockServerNameValidator.getDefaultInstance();
         }
 
 	}

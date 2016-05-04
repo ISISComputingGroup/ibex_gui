@@ -35,10 +35,10 @@ import uk.ac.stfc.isis.ibex.logger.IsisLog;
 /**
  * Validate a name based on rules from the block server.
  */
-public class BlockServerNameValidor {
+public class BlockServerNameValidator {
 
     /** Logger. */
-    private static final Logger LOG = IsisLog.getLogger(BlockServerNameValidor.class);
+    private static final Logger LOG = IsisLog.getLogger(BlockServerNameValidator.class);
 
     /** Error message for empty value. */
     private static final String EMPTY_NAME_MESSAGE = " must not be empty";
@@ -62,7 +62,7 @@ public class BlockServerNameValidor {
      * @param regexMessage the regex message if the regex fails.
      * @param disallowed the list of disallowed names
      */
-    public BlockServerNameValidor(String regex, String regexMessage, List<String> disallowed) {
+    public BlockServerNameValidator(String regex, String regexMessage, List<String> disallowed) {
         this.regex = regex;
         this.regexMessage = regexMessage;
         this.disallowed = disallowed;
@@ -122,7 +122,7 @@ public class BlockServerNameValidor {
     /**
      * @return a default validator which checks that the item is not blank
      */
-    public static BlockServerNameValidor getDefaultInstance() {
-        return new BlockServerNameValidor(".*", "", Collections.<String> emptyList());
+    public static BlockServerNameValidator getDefaultInstance() {
+        return new BlockServerNameValidator(".*", "", Collections.<String> emptyList());
     }
 }

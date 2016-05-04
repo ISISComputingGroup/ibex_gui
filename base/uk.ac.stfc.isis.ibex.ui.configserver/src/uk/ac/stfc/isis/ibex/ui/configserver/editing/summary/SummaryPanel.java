@@ -41,7 +41,7 @@ import uk.ac.stfc.isis.ibex.configserver.Configurations;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
 import uk.ac.stfc.isis.ibex.synoptic.Synoptic;
 import uk.ac.stfc.isis.ibex.synoptic.SynopticInfo;
-import uk.ac.stfc.isis.ibex.validators.BlockServerNameValidor;
+import uk.ac.stfc.isis.ibex.validators.BlockServerNameValidator;
 import uk.ac.stfc.isis.ibex.validators.MessageDisplayer;
 import uk.ac.stfc.isis.ibex.validators.SummaryDescriptionValidator;
 
@@ -123,7 +123,7 @@ public class SummaryPanel extends Composite {
 	private void setBindings() {
 		bindingContext = new DataBindingContext();
 		
-        BlockServerNameValidor configDescritpionRules =
+        BlockServerNameValidator configDescritpionRules =
                 Configurations.getInstance().variables().configDescritpionRules.getValue();
         strategy.setBeforeSetValidator(new SummaryDescriptionValidator(messageDisplayer, configDescritpionRules));
 		

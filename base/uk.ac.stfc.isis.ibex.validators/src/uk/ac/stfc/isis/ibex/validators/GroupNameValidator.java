@@ -50,7 +50,7 @@ public class GroupNameValidator implements IValidator {
 	private final MessageDisplayer messageDisplayer;
 
     /** group rules. */
-    private final BlockServerNameValidor groupRules;
+    private final BlockServerNameValidator groupRules;
 
     /** index of the select group. */
     private int selectedIndex;
@@ -64,7 +64,7 @@ public class GroupNameValidator implements IValidator {
      * @param groupRules the group validation rules
      */
     public GroupNameValidator(GroupNamesProvider groupNameProvider, MessageDisplayer messageDisplayer,
-            BlockServerNameValidor groupRules) {
+            BlockServerNameValidator groupRules) {
         this.groupNameProvider = groupNameProvider;
 		this.messageDisplayer = messageDisplayer;
         this.groupRules = groupRules;
