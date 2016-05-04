@@ -49,11 +49,10 @@ public class BlocksView extends ViewPart implements ISizeProvider {
 
 	private GroupsPanel groups;
 	private Subscription configSubscription;
-	// #TODO something isnt right here
+	
 	private final BaseObserver<DisplayConfiguration> configObserver = new BaseObserver<DisplayConfiguration>() {
 		@Override
 		public void onValue(DisplayConfiguration value) {
-			System.out.println("TRACE ONVALUE");
 			setGroups(value.groups());
 		}
 
@@ -76,7 +75,6 @@ public class BlocksView extends ViewPart implements ISizeProvider {
 		}
 		
 		private void setUnknownConfiguration() {
-			System.out.println("TRACE SETUNKONW");
 			setGroups(Collections.<DisplayGroup>emptyList());
 		}		
 	};	

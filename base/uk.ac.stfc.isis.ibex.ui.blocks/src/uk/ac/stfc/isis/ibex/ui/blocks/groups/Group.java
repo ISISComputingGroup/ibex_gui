@@ -130,7 +130,6 @@ public class Group extends Composite {
 					labelMaker(this, SWT.NONE, "   |   ", "", null);
 				}
 
-				System.out.println(position + " " + currentBlock.getName() + " " + currentBlock.getValue() + " " + currentBlock.getSymbol());
 				bindingContext.bindValue(
 						WidgetProperties.text().observe(blockValue), 
 						BeanProperties.value("value").observe(currentBlock));

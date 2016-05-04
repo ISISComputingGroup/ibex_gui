@@ -180,7 +180,7 @@ public class DisplayBlock extends ModelObject {
             if (value.equals("YES")) {
                 setEnabled(true);
             } else {
-                // If in doubt set to false
+            	// If in doubt set to false
                 setEnabled(false);
             }
         }

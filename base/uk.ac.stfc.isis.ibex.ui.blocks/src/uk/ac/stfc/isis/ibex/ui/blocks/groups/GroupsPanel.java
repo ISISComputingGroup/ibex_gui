@@ -90,7 +90,6 @@ public class GroupsPanel extends Composite {
 		layoutGroups();
 	}
 		
-	// #TODO this is where. second time around, gets initialised blank
 	public synchronized void updateGroups(final Collection<DisplayGroup> groups) {
 		this.displayGroups = groups;
 		display.syncExec(new Runnable() {

@@ -72,7 +72,6 @@ public class RunControlEditorPanel extends Composite {
     private final RunControlViewModel viewModel;
 	
     Subscription saveAsSubscription;
-    
 	private SelectionAdapter sendChanges = new SelectionAdapter() {
 		@Override
 		public void widgetSelected(SelectionEvent e) {
@@ -186,6 +185,7 @@ public class RunControlEditorPanel extends Composite {
 		btnSend.setText("Apply Changes");
         btnSend.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 3, 1));
 		btnSend.addSelectionListener(sendChanges);
+		parent.getShell().setDefaultButton(btnSend);
 
         grpGlobalSettings = new Group(this, SWT.NONE);
         grpGlobalSettings.setText("Global Settings");
