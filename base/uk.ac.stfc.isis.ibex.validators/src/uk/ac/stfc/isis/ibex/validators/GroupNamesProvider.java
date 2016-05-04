@@ -25,5 +25,9 @@ import java.util.List;
  * Interface which provides a list of the current group names.
  */
 public interface GroupNamesProvider {
+    /**
+     * 
+     * @return a list of group names
+     */
     List<String> getGroupNames();
 }
