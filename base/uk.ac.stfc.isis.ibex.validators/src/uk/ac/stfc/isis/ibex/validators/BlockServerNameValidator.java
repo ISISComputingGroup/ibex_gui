@@ -123,6 +123,6 @@ public class BlockServerNameValidator {
      * @return a default validator which checks that the item is not blank
      */
     public static BlockServerNameValidator getDefaultInstance() {
-        return new BlockServerNameValidator(".*", "", Collections.<String> emptyList());
+        return new BlockServerNameValidator(".*", "", Collections.<String>emptyList());
     }
 }

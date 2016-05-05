@@ -140,14 +140,14 @@ public class GroupNameListValidatorTest {
     @Test
     public void GIVEN_duplicate_name_THEN_invalid() {
         // Arrange
-        String duplicate_name = "valid123";
-        String original_name = "valid12";
-        namesToValidate.add(original_name);
-        namesToValidate.add(duplicate_name);
+        String duplicateName = "valid123";
+        String originalName = "valid12";
+        namesToValidate.add(originalName);
+        namesToValidate.add(duplicateName);
         validator.setSelectedIndex(0);
 
         // Act
-        IStatus result = validator.validate(duplicate_name);
+        IStatus result = validator.validate(duplicateName);
 
         // Assert
         assertFalse(result.isOK());
@@ -165,12 +165,12 @@ public class GroupNameListValidatorTest {
          * the same as the original name it is not a duplicate)
          */
         // Arrange
-        String duplicate_name = "valid123";
-        namesToValidate.add(duplicate_name);
+        String duplicateName = "valid123";
+        namesToValidate.add(duplicateName);
         validator.setSelectedIndex(0);
 
         // Act
-        IStatus result = validator.validate(duplicate_name);
+        IStatus result = validator.validate(duplicateName);
 
         // Assert
         assertNoError(result);
