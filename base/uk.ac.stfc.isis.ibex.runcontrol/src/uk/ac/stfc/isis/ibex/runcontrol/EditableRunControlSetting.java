@@ -42,6 +42,7 @@ public class EditableRunControlSetting extends RunControlSetting {
 	}
 	
 	public void setEnabled(boolean enabled) {
+		
 		if (enabled) {
 			runControlServer.blockRunControlEnabledSetter(blockName).write("YES");
 		} else {
