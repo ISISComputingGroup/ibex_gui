@@ -22,29 +22,19 @@ package uk.ac.stfc.isis.ibex.ui.configserver.editing.iocs;
 import org.eclipse.jface.viewers.ViewerCell;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Font;
-import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.ui.services.IDisposable;
+import org.eclipse.wb.swt.SWTResourceManager;
 
 import uk.ac.stfc.isis.ibex.configserver.configuration.SimLevel;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableIoc;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.CellDecorator;
 
-public class IocSimulationCellDecorator extends CellDecorator<EditableIoc> implements IDisposable {
+public class IocSimulationCellDecorator extends CellDecorator<EditableIoc> {
 
 	private static final Display DISPLAY = Display.getCurrent();
 
-    private Font defaultFont;
-    private Font boldFont;
-
-    /**
-     * Dispose of fonts
-     */
-    @Override
-    public void dispose() {
-        disposeFont(defaultFont);
-        disposeFont(boldFont);
-    }
+    private static final Font NORMAL_FONT = SWTResourceManager.getFont("Arial", 10, SWT.NORMAL);
+    private static final Font BOLD_FONT = SWTResourceManager.getFont("Arial", 10, SWT.BOLD);
 
 	@Override
 	public void applyDecoration(ViewerCell cell) {
@@ -62,43 +52,15 @@ public class IocSimulationCellDecorator extends CellDecorator<EditableIoc> imple
 	}
 	
     private void bold(ViewerCell cell) {
-        applyBold(cell, true);
+        cell.setFont(BOLD_FONT);
 	}
 	
 	private void unbold(ViewerCell cell) {
-        applyBold(cell, false);
+        cell.setFont(NORMAL_FONT);
 	}
 	
 	private static void addSimulationLabel(ViewerCell cell) {
 		String text = cell.getText();
 		cell.setText(text + " (SIM)");
 	}
-	
-    private void applyBold(ViewerCell cell, boolean enable) {
-        int modifier = SWT.BOLD;
-        if (defaultFont == null) {
-            FontData fontData = cell.getFont().getFontData()[0];
-            createFonts(fontData, modifier);
-        }
-
-        if (enable) {
-            cell.setFont(boldFont);
-        } else {
-            cell.setFont(defaultFont);
-        }
-    }
-
-    private void createFonts(FontData fontData, int modifier) {
-        int defaultStyle = fontData.getStyle() & ~modifier;
-        defaultFont = new Font(DISPLAY, new FontData(fontData.getName(), fontData.getHeight(), defaultStyle));
-
-        int boldStyle = fontData.getStyle() | modifier;
-        boldFont = new Font(DISPLAY, new FontData(fontData.getName(), fontData.getHeight(), boldStyle));
-    }
-
-    private static void disposeFont(Font font) {
-        if (font != null && !font.isDisposed()) {
-            font.dispose();
-        }
-    }
 }
