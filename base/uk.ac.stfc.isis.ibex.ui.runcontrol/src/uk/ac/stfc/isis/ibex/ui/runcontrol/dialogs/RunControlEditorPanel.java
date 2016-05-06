@@ -72,6 +72,7 @@ public class RunControlEditorPanel extends Composite {
     private final RunControlViewModel viewModel;
 	
     Subscription saveAsSubscription;
+
 	private SelectionAdapter sendChanges = new SelectionAdapter() {
 		@Override
 		public void widgetSelected(SelectionEvent e) {
@@ -81,6 +82,7 @@ public class RunControlEditorPanel extends Composite {
 				setting.setHighLimit(txtHighLimit.getText());
 				setting.setEnabled(chkEnabled.getSelection());
 			}
+			
             viewModel.setSendEnabled(false);
 		}
 	};
@@ -169,7 +171,7 @@ public class RunControlEditorPanel extends Composite {
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
 				if (viewModel.isValid()) {
-					viewModel.setSendEnabled(true);		
+					viewModel.setSendEnabled(true);
 				}
 			}
 			
@@ -185,7 +187,6 @@ public class RunControlEditorPanel extends Composite {
 		btnSend.setText("Apply Changes");
         btnSend.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 3, 1));
 		btnSend.addSelectionListener(sendChanges);
-		parent.getShell().setDefaultButton(btnSend);
 
         grpGlobalSettings = new Group(this, SWT.NONE);
         grpGlobalSettings.setText("Global Settings");
@@ -195,6 +196,7 @@ public class RunControlEditorPanel extends Composite {
         btnRestoreAll = new Button(grpGlobalSettings, SWT.WRAP | SWT.PUSH);
         GridData gdBtnRestoreAll = new GridData(SWT.CENTER, SWT.CENTER, true, true, 1, 1);
         gdBtnRestoreAll.widthHint = 133;
+        gdBtnRestoreAll.heightHint = 36;
         btnRestoreAll.setLayoutData(gdBtnRestoreAll);
         btnRestoreAll.setText("Restore All \n Configuration Values");
         btnRestoreAll.addSelectionListener(restoreAllConfigurationValues);
@@ -266,7 +268,7 @@ public class RunControlEditorPanel extends Composite {
             // retrieved yet
         	viewModel.setTxtHighLimit(block.getHighLimit().trim());
         }
-        
+
 		chkEnabled.setSelection(block.getEnabled());
 
 		name.setText(block.getName());

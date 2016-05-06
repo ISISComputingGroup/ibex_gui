@@ -25,7 +25,6 @@ import java.util.List;
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.beans.BeanProperties;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
-import org.eclipse.jface.resource.FontDescriptor;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
@@ -48,12 +47,9 @@ import uk.ac.stfc.isis.ibex.configserver.displaying.DisplayGroup;
 @SuppressWarnings("checkstyle:magicnumber")
 public class Group extends Composite {
 
-    private static final Color WHITE = SWTResourceManager.getColor(SWT.COLOR_WHITE);
+	private static final Color WHITE = SWTResourceManager.getColor(SWT.COLOR_WHITE);
 	
 	private static final int NUMBER_OF_ROWS = 9;
-	
-	private static final int NUMBER_OF_FIELDS = 3;
-
 	
 	Composite parent;
 			
@@ -72,9 +68,9 @@ public class Group extends Composite {
 		// Calculate number of columns we need, each column holding one block with a name and value
 		int numberOfColumns = (blocksList.size() - 1) / NUMBER_OF_ROWS + 1;
 
-		// For each block we need three columns in the grid layout, one for name, one for value, one for
-		// run control status, and for every column but the last we need a divider label column
-		GridLayout layout = new GridLayout(3 * numberOfColumns + (numberOfColumns - 1), false);
+		// For each block we need two columns in the grid layout, one for name, one for value, and for
+		// every column but the last we need a divider label column
+		GridLayout layout = new GridLayout(2 * numberOfColumns + (numberOfColumns - 1), false);
 		layout.verticalSpacing = 7;
 		this.setLayout(layout);
         this.setBackground(WHITE);
@@ -85,7 +81,7 @@ public class Group extends Composite {
 		title.setFont(titleFont);
 		
 		// For the title row, fill with blanks
-		for (int i = 0; i < (NUMBER_OF_FIELDS + 1) * numberOfColumns - 2; i++) {
+		for (int i = 0; i < 1 + (numberOfColumns - 1) * 2 + (numberOfColumns - 1); i++) {
 			labelMaker(this, SWT.NONE, "", "", titleFont);
 		}
 		
@@ -99,9 +95,8 @@ public class Group extends Composite {
 				
 				if (position >= blocksList.size()) {
 					// put blank labels in these name and value columns
-					for(int k = 0; k < NUMBER_OF_FIELDS; k++){
-						labelMaker(this, SWT.NONE, "" , "", null);	
-					}			
+					labelMaker(this, SWT.NONE, "", "", null);
+					labelMaker(this, SWT.NONE, "", "", null);					
 					break;
 				}
 								
@@ -113,41 +108,25 @@ public class Group extends Composite {
 				
 				Label blockValue = labelMaker(this, SWT.RIGHT, currentBlock.getValue(), currentBlock.getDescription(), null);
 				blockValue.setMenu(new BlocksMenu(currentBlock).createContextMenu(blockName));
-				GridData gdValue = new GridData(SWT.CENTER, SWT.NONE, false, false, 1, 1);
-				gdValue.widthHint = 70;
-				blockValue.setLayoutData(gdValue);
-				
-				Label blockStatus = labelMaker(this, SWT.CENTER, currentBlock.getSymbol(), "Run Control Status", null);;
-				FontDescriptor boldDescriptor = FontDescriptor.createFrom(blockStatus.getFont()).setStyle(SWT.BOLD);
-				Font boldFont = boldDescriptor.createFont(blockStatus.getDisplay());
-				blockStatus.setFont( boldFont );
-				GridData gdStatus = new GridData(SWT.RIGHT, SWT.NONE, false, false, 1, 1);
-				gdStatus.widthHint = 17;
-				blockStatus.setLayoutData(gdStatus);
-				
+				GridData gridData = new GridData(SWT.RIGHT, SWT.NONE, false, false, 1, 1);
+				gridData.widthHint = 70;
+				blockValue.setLayoutData(gridData);
+
 				if (j <  numberOfColumns - 1) {
 					// insert divider label
 					labelMaker(this, SWT.NONE, "   |   ", "", null);
 				}
-
+				
 				bindingContext.bindValue(
 						WidgetProperties.text().observe(blockValue), 
 						BeanProperties.value("value").observe(currentBlock));
-
-				bindingContext.bindValue(
-						WidgetProperties.visible().observe(blockStatus), 
-						BeanProperties.value("enabled").observe(currentBlock));
 				
 				bindingContext.bindValue(
-						WidgetProperties.text().observe(blockStatus), 
-						BeanProperties.value("symbol").observe(currentBlock));
-				
-				bindingContext.bindValue(
-						WidgetProperties.foreground().observe(blockStatus), 
+						WidgetProperties.foreground().observe(blockValue), 
 						BeanProperties.value(DisplayBlock.TEXT_COLOR).observe(currentBlock));
-
+				
 				bindingContext.bindValue(
-						WidgetProperties.background().observe(blockStatus), 
+						WidgetProperties.background().observe(blockValue), 
 						BeanProperties.value(DisplayBlock.BACKGROUND_COLOR).observe(currentBlock));
 			}
 		}

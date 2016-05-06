@@ -95,6 +95,7 @@ public class RunControlSettingsPanel extends Composite {
 
 	private void setBlocks() {
 		Collection<DisplayBlock> settings = Configurations.getInstance().display().getDisplayBlocks();
+
 		if (settings != null) {
 			table.setRows(settings);
 		}
