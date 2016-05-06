@@ -322,48 +322,27 @@ public class DisplayBlock extends ModelObject {
 
     private synchronized void setEnabled(Boolean enabled) {
         firePropertyChange("enabled", this.runcontrol, this.runcontrol = enabled);
-        setColors(inRange);
-        setSymbol(inRange);
-    }
-    
-    private synchronized void setSymbol(boolean inRange){
-    	String s;
-        if (getEnabled() == null) {
-            s = " ";
-            return;
-        }
-        if (getEnabled()) {
-            if (inRange) {
-                s = "\u2713";
-            } else {
-                s = "X";
-            }
-        } else {
-            s = " ";
-        }
-        firePropertyChange("symbol", this.symbol, this.symbol = s);
     }
 
-    private synchronized void setColors(boolean inRange) {
-        if (getEnabled() == null) {
-            setTextColor(BLACK);
-            setBackgroundColor(WHITE);
-            return;
-        }
+	private synchronized void setSymbol(boolean inRange) {
+		String s;
+		if (inRange) {
+			s = "\u2713";
+		} else {
+			s = "X";
+		}
+		firePropertyChange("symbol", this.symbol, this.symbol = s);
+	}
 
-        if (getEnabled()) {
-            if (inRange) {
-                setTextColor(BLACK);
-                setBackgroundColor(GREEN);
-            } else {
-                setTextColor(WHITE);
-                setBackgroundColor(DARK_RED);
-            }
-        } else {
-            setTextColor(BLACK);
-            setBackgroundColor(WHITE);
-        }
-    }
+	private synchronized void setColors(boolean inRange) {
+		if (inRange) {
+			setTextColor(BLACK);
+			setBackgroundColor(GREEN);
+		} else {
+			setTextColor(WHITE);
+			setBackgroundColor(DARK_RED);
+		}
+	}
 
     private synchronized void setTextColor(Color color) {
         firePropertyChange(TEXT_COLOR, this.textColor, this.textColor = color);

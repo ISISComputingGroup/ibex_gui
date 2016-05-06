@@ -135,6 +135,10 @@ public class Group extends Composite {
 						BeanProperties.value("value").observe(currentBlock));
 
 				bindingContext.bindValue(
+						WidgetProperties.visible().observe(blockStatus), 
+						BeanProperties.value("enabled").observe(currentBlock));
+				
+				bindingContext.bindValue(
 						WidgetProperties.text().observe(blockStatus), 
 						BeanProperties.value("symbol").observe(currentBlock));
 				

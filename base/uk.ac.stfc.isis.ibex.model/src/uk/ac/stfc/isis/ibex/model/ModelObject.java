@@ -43,7 +43,7 @@ public abstract class ModelObject implements IModelObject {
     	changeSupport.removePropertyChangeListener(propertyName, listener);
     }
     
-    protected void firePropertyChange(String propertyName, Object oldValue, Object newValue) {    	
+    protected void firePropertyChange(String propertyName, Object oldValue, Object newValue) {    
     	changeSupport.firePropertyChange(propertyName, oldValue, newValue);
     }     	    
     
