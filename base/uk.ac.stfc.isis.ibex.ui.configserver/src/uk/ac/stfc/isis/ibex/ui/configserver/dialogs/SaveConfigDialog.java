@@ -203,6 +203,9 @@ public class SaveConfigDialog extends TitleAreaDialog {
 		});
 		createButton(parent, IDialogConstants.CANCEL_ID,
 				IDialogConstants.CANCEL_LABEL, false);
+
+        // after creating buttons update their state
+        update();
 	}
 	
 	@Override
