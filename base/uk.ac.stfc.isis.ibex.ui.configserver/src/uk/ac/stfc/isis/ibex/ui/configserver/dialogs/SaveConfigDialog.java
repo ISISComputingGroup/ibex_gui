@@ -48,6 +48,9 @@ import uk.ac.stfc.isis.ibex.configserver.Configurations;
 import uk.ac.stfc.isis.ibex.validators.BlockServerNameValidator;
 import uk.ac.stfc.isis.ibex.validators.SummaryDescriptionValidator;
 
+/**
+ * Dialogue for saving a configuration.
+ */
 @SuppressWarnings("checkstyle:magicnumber")
 public class SaveConfigDialog extends TitleAreaDialog {
 
@@ -69,6 +72,20 @@ public class SaveConfigDialog extends TitleAreaDialog {
 	private boolean hasComponents;
 	private boolean asComponent = false;
 	
+    /**
+     * Instantiates a new save configuration dialog.
+     *
+     * @param parent the parent
+     * @param currentName the current name
+     * @param currentDesc the current description
+     * @param existingConfigs the existing configuration names (so not to
+     *            duplicate)
+     * @param existingComponents the existing component names (so not to
+     *            duplicate)
+     * @param isConfig current configuration
+     * @param hasComponents true if this configuration has components; false
+     *            otherwise
+     */
 	public SaveConfigDialog(
 			Shell parent, 
 			String currentName, 
@@ -87,14 +104,23 @@ public class SaveConfigDialog extends TitleAreaDialog {
 		this.hasComponents = hasComponents;
 	}
 	
+    /**
+     * @return the new name set in this dialogue
+     */
 	public String getNewName() {
 		return newName;
 	}
 	
+    /**
+     * @return the new description set
+     */
 	public String getNewDescription() {
 		return newDesc;
 	}
 	
+    /**
+     * @return true, if when saved this will be a component; false otherwise
+     */
 	public boolean willBeComponent() {
 		return !isConfig || asComponent;
 	}
