@@ -29,14 +29,14 @@ import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Text;
 
 import com.google.common.base.Predicate;
@@ -44,6 +44,8 @@ import com.google.common.collect.Iterables;
 
 @SuppressWarnings("checkstyle:magicnumber")
 public class SaveSynopticDialog extends TitleAreaDialog {
+
+    private static final int MAX_SYNOPTIC_NAME_LENGTH = 30;
 
     private Text txtName;
 
@@ -217,6 +219,10 @@ public class SaveSynopticDialog extends TitleAreaDialog {
 	if (name.length() == 0) {
 	    return "Name cannot be blank";
 	}
+
+        if (name.length() > MAX_SYNOPTIC_NAME_LENGTH) {
+            return "Name cannot be more than " + MAX_SYNOPTIC_NAME_LENGTH + " characters long";
+        }
 
 	if (!validate(name)) {
 	    return "Name contains invalid characters";
