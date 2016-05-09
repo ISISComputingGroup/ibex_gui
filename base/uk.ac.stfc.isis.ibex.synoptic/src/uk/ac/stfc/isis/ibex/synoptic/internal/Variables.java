@@ -52,7 +52,7 @@ public class Variables extends InstrumentVariables {
 
     private final String pvPrefix;
 
-	private static final String SYNOPTIC_ADDRESS = "CS:BLOCKSERVER:SYNOPTICS:";
+    private static final String SYNOPTIC_ADDRESS = "CS:SYNOPTICS:";
 	private static final String GET_SYNOPTIC = ":GET";
 	
     /**
