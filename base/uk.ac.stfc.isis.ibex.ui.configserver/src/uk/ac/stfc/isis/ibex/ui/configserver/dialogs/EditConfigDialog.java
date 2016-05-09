@@ -125,9 +125,9 @@ public class EditConfigDialog extends TitleAreaDialog implements
 	@Override
 	protected void createButtonsForButtonBar(Composite parent) {
 		if (!isBlank && !this.config.getName().isEmpty()) { 
-			createButton(parent, IDialogConstants.OK_ID, "Save", true);
+            createButton(parent, IDialogConstants.OK_ID, "Save", true);
 		}
-        
+
 		saveAsBtn = createButton(parent, IDialogConstants.CLIENT_ID + 1, "Save as ...", false);
 		saveAsBtn.addSelectionListener(new SelectionAdapter() {
 			@Override
@@ -155,6 +155,9 @@ public class EditConfigDialog extends TitleAreaDialog implements
 		});
 
 		createButton(parent, IDialogConstants.CANCEL_ID, "Cancel", false);
+
+        // Show any error message and set buttons after creating those buttons
+        this.showErrorMessage();
 	}
 
 	@Override
