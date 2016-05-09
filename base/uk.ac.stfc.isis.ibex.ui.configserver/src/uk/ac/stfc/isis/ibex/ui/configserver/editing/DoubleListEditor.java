@@ -129,7 +129,7 @@ public class DoubleListEditor extends Composite {
 
             @Override
             public void mouseDoubleClick(MouseEvent e) {
-                // TODO: Bit of a hack as actual selecting behaviour is done on
+                // Bit of a hack as actual selecting behaviour is done on
                 // listener, to improve use a DoubleListEditorViewModel
                 unselect.setSelection(true);
                 unselect.notifyListeners(SWT.Selection, new Event());
@@ -148,7 +148,7 @@ public class DoubleListEditor extends Composite {
 
             @Override
             public void mouseDoubleClick(MouseEvent e) {
-                // TODO: Bit of a hack as actual selecting behaviour is done on
+                // Bit of a hack as actual selecting behaviour is done on
                 // listener, to improve use a DoubleListEditorViewModel
                 select.setSelection(true);
                 select.notifyListeners(SWT.Selection, new Event());

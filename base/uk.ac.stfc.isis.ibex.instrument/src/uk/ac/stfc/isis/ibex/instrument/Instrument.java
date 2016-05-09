@@ -161,6 +161,7 @@ public class Instrument implements BundleActivator {
 				InstrumentInfoReceiver receiver = (InstrumentInfoReceiver) obj;
 				receiver.setInstrument(selectedInstrument);
 			} catch (CoreException e) {
+                e.printStackTrace();
 			}
 		}
 	}

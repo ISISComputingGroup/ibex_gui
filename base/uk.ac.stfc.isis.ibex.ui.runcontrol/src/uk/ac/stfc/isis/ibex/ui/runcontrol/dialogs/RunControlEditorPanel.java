@@ -71,7 +71,8 @@ public class RunControlEditorPanel extends Composite {
 
     private final RunControlViewModel viewModel;
 	
-    Subscription saveAsSubscription;
+    private Subscription saveAsSubscription;
+
 	private SelectionAdapter sendChanges = new SelectionAdapter() {
 		@Override
 		public void widgetSelected(SelectionEvent e) {

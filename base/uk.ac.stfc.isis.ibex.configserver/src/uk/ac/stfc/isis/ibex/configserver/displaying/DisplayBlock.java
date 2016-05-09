@@ -290,7 +290,7 @@ public class DisplayBlock extends ModelObject {
         return backgroundColor;
     }
     
-    public String getSymbol(){
+    public String getSymbol() {
     	return symbol;
     }
 
