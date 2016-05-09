@@ -21,6 +21,9 @@ package uk.ac.stfc.isis.ibex.instrument.internal;
 
 import java.net.UnknownHostException;
 
+/**
+ * Handles retrieving the name of the machine the GUI is being run on.
+ */
 public final class MachineName {
 	
     private MachineName() {
@@ -35,6 +38,7 @@ public final class MachineName {
 		try {
 			localMachine = java.net.InetAddress.getLocalHost();
 		} catch (UnknownHostException e) {
+            e.printStackTrace();
 		}
 		
 		return localMachine == null ? "" : localMachine.getHostName().toUpperCase();

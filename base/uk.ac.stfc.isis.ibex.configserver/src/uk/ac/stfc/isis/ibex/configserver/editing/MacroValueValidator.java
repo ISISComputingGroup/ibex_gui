@@ -35,8 +35,6 @@ import uk.ac.stfc.isis.ibex.model.ModelObject;
  * an error message, and extends model object to allow property changes on name is valid
  * and show warning icon. The warning icon is not shown if no macro is selected, even 
  * though the status will return error (but with no message displayed).
- * 
- * @author whb43145
  *
  */
 public class MacroValueValidator extends ModelObject implements IValidator {
