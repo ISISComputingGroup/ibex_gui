@@ -27,6 +27,7 @@ import org.junit.Test;
 
 import uk.ac.stfc.isis.ibex.configserver.configuration.Block;
 import uk.ac.stfc.isis.ibex.configserver.displaying.DisplayBlock;
+import uk.ac.stfc.isis.ibex.configserver.displaying.RunControlState;
 import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.Observable;
 
@@ -34,14 +35,15 @@ import uk.ac.stfc.isis.ibex.epics.observing.Observable;
 public class DisplayBlockTest {
 	
 	TestableIOSObservable<String> inRangeObservable;
+    TestableIOSObservable<String> enabledObservable;
 	
 	DisplayBlock displayBlock;
 	
 	@Before
 	public void setUp() {
 		// Arrange
-		
 		inRangeObservable = new TestableIOSObservable<>(mock(Observable.class));
+        enabledObservable = new TestableIOSObservable<>(mock(Observable.class));
 		
 		displayBlock = new DisplayBlock(
 mock(Block.class), // block
@@ -50,120 +52,78 @@ mock(Block.class), // block
                 inRangeObservable, // inRange
 				mock(ForwardingObservable.class),  // lowLimit
 				mock(ForwardingObservable.class),  // highLimit
-				mock(ForwardingObservable.class),  // enabled
+                enabledObservable, // enabled
 				"");		
 	}
 	
 	@Test
-	public void if_in_range_unset_then_text_color_is_black() {
-		// Act - do nothing
+    public void if_in_range_and_disabled_unset_then_state_is_disabled() {
+        // Act
+        enabledObservable.setValue("NO");
+        inRangeObservable.setValue("YES");
 		
 		// Assert
-        assertEquals(DisplayBlock.BLACK, displayBlock.getTextColor());
+        assertEquals(RunControlState.DISABLED, displayBlock.getRunControlState());
 	}
 	
 	@Test
-    public void if_in_range_unset_while_enabled_then_background_color_is_green() {
-		// Act - do nothing
+    public void if_in_range_while_enabled_then_state_is_in_range() {
+        // Act
+        enabledObservable.setValue("YES");
+        inRangeObservable.setValue("YES");
 		
 		// Assert
-        assertEquals(DisplayBlock.GREEN, displayBlock.getBackgroundColor());
+        assertEquals(RunControlState.ENABLED_IN_RANGE, displayBlock.getRunControlState());
 	}
 	
 	@Test
-	public void setting_in_range_to_true_sets_text_color_to_black() {
+    public void if_not_in_range_while_enabled_then_out_range() {
 		// Act
-		inRangeObservable.setValue("YES");
-		
-		// Assert
-        assertEquals(DisplayBlock.BLACK, displayBlock.getTextColor());
-	}
-	
-	@Test
-    public void setting_in_range_to_true_while_enabled_sets_background_color_to_green() {
-		// Act
-		inRangeObservable.setValue("YES");
-		
-		// Assert
-        assertEquals(DisplayBlock.GREEN, displayBlock.getBackgroundColor());
-	}
-	
-	@Test
-	public void setting_in_range_to_false_sets_text_color_to_white() {
-		// Act
+        enabledObservable.setValue("YES");
 		inRangeObservable.setValue("NO");
 		
 		// Assert
-        assertEquals(DisplayBlock.WHITE, displayBlock.getTextColor());
+        assertEquals(RunControlState.ENABLED_OUT_RANGE, displayBlock.getRunControlState());
 	}
 	
 	@Test
-	public void setting_in_range_to_false_sets_background_color_to_dark_red() {
-		// Act
-		inRangeObservable.setValue("NO");
-		
-		// Assert
-        assertEquals(DisplayBlock.DARK_RED, displayBlock.getBackgroundColor());
-	}
-	
-	@Test
-	public void setting_in_range_to_false_then_true_sets_text_color_to_black() {
-		// Act
-		inRangeObservable.setValue("NO");
+    public void if_in_range_to_false_then_true_sets_in_range() {
+        // Arrange
+        enabledObservable.setValue("YES");
+        inRangeObservable.setValue("NO");
+
+        // Act
 		inRangeObservable.setValue("YES");
 		
 		// Assert
-        assertEquals(DisplayBlock.BLACK, displayBlock.getTextColor());
-	}
-	
-	@Test
-    public void setting_in_range_to_false_then_true_sets_background_color_to_green() {
-		// Act
-		inRangeObservable.setValue("NO");
-		inRangeObservable.setValue("YES");
-		
-		// Assert
-        assertEquals(DisplayBlock.GREEN, displayBlock.getBackgroundColor());
+        assertEquals(RunControlState.ENABLED_IN_RANGE, displayBlock.getRunControlState());
 	}
 
 	@Test
-	public void setting_in_range_to_true_then_false_sets_text_color_to_white() {
+    public void setting_in_range_to_true_then_false_sets_out_range() {
+        // Arrange
+        enabledObservable.setValue("YES");
+        inRangeObservable.setValue("YES");
+
 		// Act
-		inRangeObservable.setValue("YES");
 		inRangeObservable.setValue("NO");
 		
 		// Assert
-        assertEquals(DisplayBlock.WHITE, displayBlock.getTextColor());
+        assertEquals(RunControlState.ENABLED_OUT_RANGE, displayBlock.getRunControlState());
 	}
-	
+
 	@Test
-	public void setting_in_range_to_true_then_false_sets_background_color_to_black() {
-		// Act
-		inRangeObservable.setValue("YES");
-		inRangeObservable.setValue("NO");
-		
-		// Assert
-        assertEquals(DisplayBlock.DARK_RED, displayBlock.getBackgroundColor());
-	}
-	
-	@Test
-	public void setting_in_range_to_false_then_nonsense_sets_text_color_to_black() {
-		// Act
-		inRangeObservable.setValue("NO");
-		inRangeObservable.setValue("maybe");
-		
-		// Assert
-        assertEquals(DisplayBlock.BLACK, displayBlock.getTextColor());
-	}
-	
-	@Test
-    public void setting_in_range_to_false_while_enabled_then_nonsense_sets_background_color_to_greeb() {
+    public void setting_in_range_to_false_then_nonsense_sets_in_range() {
         // Setting InRange to a nonsense value should default to true.
-		// Act		
-		inRangeObservable.setValue("NO");
+
+        // Arrange
+        enabledObservable.setValue("YES");
+        inRangeObservable.setValue("NO");
+
+		// Act
 		inRangeObservable.setValue("maybe");
 		
 		// Assert
-        assertEquals(DisplayBlock.GREEN, displayBlock.getBackgroundColor());
+        assertEquals(RunControlState.ENABLED_IN_RANGE, displayBlock.getRunControlState());
 	}
 }
