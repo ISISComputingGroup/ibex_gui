@@ -21,9 +21,19 @@ package uk.ac.stfc.isis.ibex.epics.tests.conversion;
 
 import static org.junit.Assert.assertEquals;
 
-import org.eclipse.swt.widgets.Display;
+import org.epics.util.array.ListByte;
+import org.epics.util.array.ListFloat;
+import org.epics.util.text.NumberFormats;
+import org.epics.vtype.Display;
+import org.epics.vtype.VByteArray;
+import org.epics.vtype.VDouble;
+import org.epics.vtype.VEnum;
+import org.epics.vtype.VFloatArray;
+import org.epics.vtype.VInt;
+import org.epics.vtype.VNumber;
+import org.epics.vtype.VType;
+import org.epics.vtype.ValueFactory;
 import org.junit.Test;
-import org.omg.CORBA.portable.ValueFactory;
 
 import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
 import uk.ac.stfc.isis.ibex.epics.conversion.Converter;
