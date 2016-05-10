@@ -41,10 +41,14 @@ import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.layout.RowLayout;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Composite;
 
@@ -124,16 +128,28 @@ public class BeamStatusGraphView extends DataBrowserAwareView implements ModelLi
         // ===== Controls ======
         // =====================
 
-        // Composite controlsComposite = new Composite(parent, SWT.NONE);
-        // controlsComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL,
-        // true, true, 2, 1));
-        // controlsComposite.setLayout(new RowLayout());
+        Composite controlsComposite = new Composite(parent, SWT.NONE);
+        controlsComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
+        controlsComposite.setLayout(new RowLayout());
 
-        // Button dailyButton = new Button(controlsComposite, SWT.RADIO);
-        // dailyButton.setText("Daily");
+        Button dailyButton = new Button(controlsComposite, SWT.RADIO);
+        dailyButton.setText("Daily");
+        dailyButton.setSelection(true);
+        dailyButton.addSelectionListener(new SelectionAdapter() {
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                setTimeRangeDaily();
+            }
+        });
 
-        // Button hourlyButton = new Button(controlsComposite, SWT.RADIO);
-        // hourlyButton.setText("Hourly");
+        Button hourlyButton = new Button(controlsComposite, SWT.RADIO);
+        hourlyButton.setText("Hourly");
+        hourlyButton.addSelectionListener(new SelectionAdapter() {
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                setTimeRangeHourly();
+            }
+        });
 
         // =====================
         // ======= Plot ========
@@ -228,6 +244,8 @@ public class BeamStatusGraphView extends DataBrowserAwareView implements ModelLi
 
     @Override
     protected void updateModel(final Model oldModel, final Model newModel) {
+        if (newModel==null )
+            return;
         model = newModel;
         if (oldModel != newModel) {
             if (oldModel != null) {
@@ -318,10 +336,26 @@ public class BeamStatusGraphView extends DataBrowserAwareView implements ModelLi
 
     private void setTimeRangeDaily() {
         currentPlotTimespanMilliseconds = MILLISECONDS_IN_DAY;
+        updateModelTimeRange();
     }
 
     private void setTimeRangeHourly() {
         currentPlotTimespanMilliseconds = MILLISECONDS_IN_HOUR;
+        updateModelTimeRange();
+    }
+
+    private void updateModelTimeRange() {
+        if (model == null) {
+            System.out.println("Unable to set model time range. Model is null");
+        }
+        else {
+            try {
+                model.setTimerange(getStartSpec(), getEndSpec());
+            } catch (Exception ex) {
+                MessageDialog.openError(getSite().getShell(), Messages.Error,
+                        NLS.bind(Messages.ErrorFmt, ex.getMessage()));
+            }
+        }
     }
 
     /**
