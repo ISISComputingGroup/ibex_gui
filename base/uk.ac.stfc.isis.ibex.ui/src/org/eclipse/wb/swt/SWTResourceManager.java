@@ -1,4 +1,4 @@
-// CHECKSTYLE:OFF
+//CHECKSTYLE:OFF
 
 /*******************************************************************************
  * Copyright (c) 2011 Google, Inc.
@@ -448,4 +448,4 @@ public class SWTResourceManager {
 	}
 }
 
-// CHECKSTYLE:ON
+//CHECKSTYLE:ON
