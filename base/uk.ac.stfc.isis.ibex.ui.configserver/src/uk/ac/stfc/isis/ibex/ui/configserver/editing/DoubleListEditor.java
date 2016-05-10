@@ -42,7 +42,7 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.List;
 import org.eclipse.wb.swt.ResourceManager;
 
-@SuppressWarnings({"checkstyle:magicnumber", "checkstyle:localvariablename"})
+@SuppressWarnings({ "checkstyle:magicnumber", "checkstyle:localvariablename" })
 public class DoubleListEditor extends Composite {
 	
 	private final Button select;

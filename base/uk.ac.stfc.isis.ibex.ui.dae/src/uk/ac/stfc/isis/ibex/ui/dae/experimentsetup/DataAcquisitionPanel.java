@@ -22,16 +22,16 @@ package uk.ac.stfc.isis.ibex.ui.dae.experimentsetup;
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.beans.BeanProperties;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
-import org.eclipse.swt.widgets.Group;
-import org.eclipse.swt.widgets.Spinner;
 import org.eclipse.swt.widgets.Combo;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Group;
+import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Spinner;
+import org.eclipse.swt.widgets.Text;
 
 import uk.ac.stfc.isis.ibex.dae.dataacquisition.DaeTimingSource;
 import uk.ac.stfc.isis.ibex.dae.updatesettings.AutosaveUnit;
@@ -63,7 +63,7 @@ public class DataAcquisitionPanel extends Composite {
 	
 	private DataBindingContext bindingContext;
 	
-	@SuppressWarnings({"checkstyle:magicnumber", "checkstyle:localvariablename"})
+    @SuppressWarnings({ "checkstyle:magicnumber", "checkstyle:localvariablename" })
 	public DataAcquisitionPanel(Composite parent, int style) {
 		super(parent, style);
 		setLayout(new GridLayout(1, false));
@@ -153,14 +153,14 @@ public class DataAcquisitionPanel extends Composite {
 		
 		Label lblFcDelay = new Label(grpVetos, SWT.NONE);
 		lblFcDelay.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-		lblFcDelay.setText("Delay (μs):");
+        lblFcDelay.setText("Delay (μs):");
 		
 		fcDelay = new Label(grpVetos, SWT.NONE);
 		fcDelay.setText("UNKNOWN");
 		
 		Label lblNewLabel_3 = new Label(grpVetos, SWT.NONE);
 		lblNewLabel_3.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-		lblNewLabel_3.setText("Width (μs):");
+        lblNewLabel_3.setText("Width (μs):");
 		
 		fcWidth = new Label(grpVetos, SWT.NONE);
 		fcWidth.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, true, false, 1, 1));

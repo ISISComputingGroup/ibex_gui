@@ -26,15 +26,15 @@ import java.util.List;
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.beans.BeanProperties;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Combo;
+import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.Group;
+import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Text;
 
 import uk.ac.stfc.isis.ibex.dae.experimentsetup.periods.Period;
 import uk.ac.stfc.isis.ibex.dae.experimentsetup.periods.PeriodControlType;
@@ -54,7 +54,7 @@ public class PeriodsPanel extends Composite {
 	
 	private static final Display DISPLAY = Display.getCurrent();
 	
-	@SuppressWarnings({"checkstyle:magicnumber", "checkstyle:localvariablename"})
+    @SuppressWarnings({ "checkstyle:magicnumber", "checkstyle:localvariablename" })
 	public PeriodsPanel(Composite parent, int style) {
 		super(parent, style);
 		setLayout(new GridLayout(1, false));
@@ -128,7 +128,7 @@ public class PeriodsPanel extends Composite {
 		
 		Label lblOutputDelayus = new Label(composite_2, SWT.NONE);
 		lblOutputDelayus.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-		lblOutputDelayus.setText("Output delay (μs):");
+        lblOutputDelayus.setText("Output delay (μs):");
 		
 		outputDelay = new Text(composite_2, SWT.BORDER | SWT.RIGHT);
 		GridData gd_outputDelay = new GridData(SWT.LEFT, SWT.FILL, true, false, 1, 1);

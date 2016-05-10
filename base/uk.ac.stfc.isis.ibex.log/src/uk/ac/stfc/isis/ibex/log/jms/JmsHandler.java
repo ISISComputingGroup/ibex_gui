@@ -109,6 +109,7 @@ public class JmsHandler extends ModelObject implements Runnable {
      * Establish connection with JMS server and listen for messages to forward
      * on to consumer
      */
+    @SuppressWarnings("checkstyle:emptyblock")
     @Override
     public void run() {
 	while (run) {
@@ -125,34 +126,34 @@ public class JmsHandler extends ModelObject implements Runnable {
 	    }
 
 	    if (isConnected()) {
-		try {
+                try {
                     TextMessage message = (TextMessage) jmsConsumer.receive(TIMEOUT_50_MS);
-		    if (message != null) {
-			messageLogConsumer.newMessage(parseLogMessage(message));
-		    }
-		} catch (JMSException e) {
-		    // Do nothing; exception will be caught be exception
-		    // listener (see connect())
-		}
+                    if (message != null) {
+                        messageLogConsumer.newMessage(parseLogMessage(message));
+                    }
+                } catch (JMSException e) {
+                    // Do nothing; exception will be caught be exception
+                    // listener (see connect())
+                }
 	    } else {
-		// If not connected or if connection is dropped, establish
-		// connection with JMS
-		try {
-		    connect();
-
-		    LOG.info("Connected to JMS server: " + jmsUrl);
-		    // Use URL as server name.
-		    jmsServer = jmsUrl;
-		    setJmsConnectionStatus(true);
-		} catch (Exception ex) {
-		    if (!connectionWarnFlag) {
-			LOG.warn("Problem connecting to JMS server. Will auto-attempt reconnection.");
-			connectionWarnFlag = true;
-			setJmsConnectionStatus(false);
-		    }
-
-		    sleep(ONE_SECOND);
-		}
+    		// If not connected or if connection is dropped, establish
+    		// connection with JMS
+    		try {
+    		    connect();
+    
+    		    LOG.info("Connected to JMS server: " + jmsUrl);
+    		    // Use URL as server name.
+    		    jmsServer = jmsUrl;
+    		    setJmsConnectionStatus(true);
+    		} catch (Exception ex) {
+    		    if (!connectionWarnFlag) {
+    			LOG.warn("Problem connecting to JMS server. Will auto-attempt reconnection.");
+    			connectionWarnFlag = true;
+    			setJmsConnectionStatus(false);
+    		    }
+    
+    		    sleep(ONE_SECOND);
+    		}
 	    }
 	}
 

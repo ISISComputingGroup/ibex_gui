@@ -62,7 +62,7 @@ public class LoggerDialog extends TitleAreaDialog {
 	}
 
 	@Override
-	@SuppressWarnings({"checkstyle:magicnumber", "checkstyle:localvariablename"})
+    @SuppressWarnings({ "checkstyle:magicnumber", "checkstyle:localvariablename" })
 	protected Control createDialogArea(Composite parent) {
 		setTitle("Console Log");
 		Composite container = (Composite) super.createDialogArea(parent);
