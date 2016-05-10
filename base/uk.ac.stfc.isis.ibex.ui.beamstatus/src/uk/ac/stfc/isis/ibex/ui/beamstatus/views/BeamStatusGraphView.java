@@ -57,7 +57,7 @@ import uk.ac.stfc.isis.ibex.ui.beamstatus.BeamStatusGraphDataProvider;
  * Always used as derived classes that specify the time duration of the plot
  * (e.g. hourly, daily)
  */
-public abstract class BeamStatusGraphView extends DataBrowserAwareView implements ModelListener {
+public class BeamStatusGraphView extends DataBrowserAwareView implements ModelListener {
 
     /** View ID registered in plugin.xml. */
     public static final String ID = "uk.ac.stfc.isis.ibex.ui.beamstatus.views.BeamStatusGraphView"; //$NON-NLS-1$
@@ -89,6 +89,18 @@ public abstract class BeamStatusGraphView extends DataBrowserAwareView implement
     /** Controller that links model and plot. */
     private Controller controller = null;
 
+    /** Number of milliseconds in a day. */
+    private static final long MILLISECONDS_IN_DAY = 3600 * 1000 * 24;
+
+    /** Number of milliseconds in an hour. */
+    private static final long MILLISECONDS_IN_HOUR = 3600 * 1000;
+    
+    /** Current plot time span in milliseconds. */
+    private long currentPlotTimespanMilliseconds = MILLISECONDS_IN_DAY;
+
+    /** Title for the plot. */
+    private static final String PLOT_TITLE = "Beam current";
+
     /** {@inheritDoc} */
     @Override
     protected void doCreatePartControl(final Composite parent) {
@@ -107,6 +119,21 @@ public abstract class BeamStatusGraphView extends DataBrowserAwareView implement
 
         final GridLayout layout = new GridLayout(2, false);
         parent.setLayout(layout);
+
+        // =====================
+        // ===== Controls ======
+        // =====================
+
+        // Composite controlsComposite = new Composite(parent, SWT.NONE);
+        // controlsComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL,
+        // true, true, 2, 1));
+        // controlsComposite.setLayout(new RowLayout());
+
+        // Button dailyButton = new Button(controlsComposite, SWT.RADIO);
+        // dailyButton.setText("Daily");
+
+        // Button hourlyButton = new Button(controlsComposite, SWT.RADIO);
+        // hourlyButton.setText("Hourly");
 
         // =====================
         // ======= Plot ========
@@ -289,12 +316,22 @@ public abstract class BeamStatusGraphView extends DataBrowserAwareView implement
         xygraph.addTrace(trace);
         }
 
+    private void setTimeRangeDaily() {
+        currentPlotTimespanMilliseconds = MILLISECONDS_IN_DAY;
+    }
+
+    private void setTimeRangeHourly() {
+        currentPlotTimespanMilliseconds = MILLISECONDS_IN_HOUR;
+    }
+
     /**
      * Get the title for the plot.
      * 
      * @return Plot title
      */
-    protected abstract String getPlotTitle();
+    private long getTimeRangeInMilliseconds() {
+        return currentPlotTimespanMilliseconds;
+    }
 
     /**
      * Used by the specific implementation to define the time range in
@@ -302,7 +339,9 @@ public abstract class BeamStatusGraphView extends DataBrowserAwareView implement
      * 
      * @return time range of the plot in milliseconds
      */
-    protected abstract long getTimeRangeInMilliseconds();
+    private String getPlotTitle() {
+        return PLOT_TITLE;
+    }
 
     /**
      * Gets a calendar formatted time specification defined as the number of
