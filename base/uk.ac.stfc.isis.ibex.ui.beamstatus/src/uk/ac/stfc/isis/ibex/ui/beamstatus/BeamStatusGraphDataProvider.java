@@ -30,8 +30,6 @@ import org.csstudio.swt.xygraph.linearscale.Range;
  * Data provider for the XYGraph that shows the beam current from TS1 and TS2.
  * Most functionality is implemented to fit the interface. Main function is to
  * provide listeners for data changes in the model
- * 
- * @author Adrian Potter
  */
 public class BeamStatusGraphDataProvider implements IDataProvider {
 
