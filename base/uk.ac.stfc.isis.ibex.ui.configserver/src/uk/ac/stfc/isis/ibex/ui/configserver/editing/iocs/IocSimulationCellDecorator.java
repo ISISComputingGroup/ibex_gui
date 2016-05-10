@@ -22,16 +22,23 @@ package uk.ac.stfc.isis.ibex.ui.configserver.editing.iocs;
 import org.eclipse.jface.viewers.ViewerCell;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Font;
-import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.wb.swt.SWTResourceManager;
 
 import uk.ac.stfc.isis.ibex.configserver.configuration.SimLevel;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableIoc;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.CellDecorator;
 
+/**
+ * Decorator for the IOC name cells of items in the configuration IOC table.
+ * Controls the text formatting.
+ */
 public class IocSimulationCellDecorator extends CellDecorator<EditableIoc> {
 
 	private static final Display DISPLAY = Display.getCurrent();
+
+    private static final Font NORMAL_FONT = SWTResourceManager.getFont("Arial", 10, SWT.NORMAL);
+    private static final Font BOLD_FONT = SWTResourceManager.getFont("Arial", 10, SWT.BOLD);
 
 	@Override
 	public void applyDecoration(ViewerCell cell) {
@@ -48,23 +55,16 @@ public class IocSimulationCellDecorator extends CellDecorator<EditableIoc> {
 		return getRow(cell).getSimLevel() != SimLevel.NONE;
 	}
 	
-	private static void bold(ViewerCell cell) {
-		modifyFont(cell, SWT.BOLD, true);
+    private void bold(ViewerCell cell) {
+        cell.setFont(BOLD_FONT);
 	}
 	
 	private void unbold(ViewerCell cell) {
-		modifyFont(cell, SWT.BOLD, false);
+        cell.setFont(NORMAL_FONT);
 	}
 	
 	private static void addSimulationLabel(ViewerCell cell) {
 		String text = cell.getText();
 		cell.setText(text + " (SIM)");
-	}
-	
-	private static void modifyFont(ViewerCell cell, int modifier, boolean enable) {
-		FontData fontData = cell.getFont().getFontData()[0];
-		int newStyle = enable ? fontData.getStyle() | modifier : fontData.getStyle() & ~modifier;
-		Font font = new Font(DISPLAY, new FontData(fontData.getName(), fontData.getHeight(), newStyle));
-		cell.setFont(font);
 	}
 }
