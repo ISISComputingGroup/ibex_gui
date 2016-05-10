@@ -56,8 +56,6 @@ import uk.ac.stfc.isis.ibex.ui.beamstatus.BeamStatusGraphDataProvider;
  * 
  * Always used as derived classes that specify the time duration of the plot
  * (e.g. hourly, daily)
- * 
- * @author Adrian Potter
  */
 public abstract class BeamStatusGraphView extends DataBrowserAwareView implements ModelListener {
 

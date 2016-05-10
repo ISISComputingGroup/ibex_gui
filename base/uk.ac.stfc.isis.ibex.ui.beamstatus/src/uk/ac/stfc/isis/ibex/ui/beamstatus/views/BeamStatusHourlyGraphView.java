@@ -24,8 +24,6 @@ package uk.ac.stfc.isis.ibex.ui.beamstatus.views;
 
 /**
  * Beam status graph for TS1 and TS2 beam current with a time range of one hour.
- * 
- * @author Adrian Potter
  */
 
 public class BeamStatusHourlyGraphView extends BeamStatusGraphView {
