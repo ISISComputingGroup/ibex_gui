@@ -26,14 +26,15 @@ import org.eclipse.draw2d.LightweightSystem;
 import org.eclipse.nebula.visualization.xygraph.dataprovider.CircularBufferDataProvider;
 import org.eclipse.nebula.visualization.xygraph.figures.Trace;
 import org.eclipse.nebula.visualization.xygraph.figures.XYGraph;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.layout.FillLayout;
 
 import uk.ac.stfc.isis.ibex.dae.spectra.Spectrum;
 
+@SuppressWarnings("checkstyle:magicnumber")
 public class SpectrumPlot extends Canvas {
 
 	private XYGraph plot;
@@ -57,7 +58,6 @@ public class SpectrumPlot extends Canvas {
 		}
 	};
 	
-	@SuppressWarnings({"checkstyle:magicnumber", "checkstyle:localvariablename"})
 	public SpectrumPlot(Composite parent, int style) {
 		super(parent, SWT.BORDER);
 		setLayout(new FillLayout(SWT.HORIZONTAL));

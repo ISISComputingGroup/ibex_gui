@@ -27,14 +27,14 @@ import java.util.List;
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.beans.BeanProperties;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
-import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Combo;
+import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Group;
+import org.eclipse.swt.widgets.Label;
 
 import uk.ac.stfc.isis.ibex.dae.experimentsetup.timechannels.TimeRegime;
 import uk.ac.stfc.isis.ibex.dae.experimentsetup.timechannels.TimeUnit;
@@ -49,7 +49,7 @@ public class TimeChannelsPanel extends Composite {
 	
 	private static final Display DISPLAY = Display.getCurrent();
 	
-	@SuppressWarnings({"checkstyle:magicnumber", "checkstyle:localvariablename"})
+    @SuppressWarnings({ "checkstyle:magicnumber", "checkstyle:localvariablename" })
 	public TimeChannelsPanel(Composite parent, int style) {
 		super(parent, style);
 		setLayout(new GridLayout(1, false));
