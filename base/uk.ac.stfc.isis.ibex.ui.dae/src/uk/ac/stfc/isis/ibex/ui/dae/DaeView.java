@@ -46,6 +46,9 @@ import uk.ac.stfc.isis.ibex.ui.dae.runinformation.RunInformationPanel;
 import uk.ac.stfc.isis.ibex.ui.dae.spectra.SpectraPlotsPanel;
 import uk.ac.stfc.isis.ibex.ui.dae.vetos.VetosPanel;
 
+/**
+ * Main DAE panel.
+ */
 @SuppressWarnings("checkstyle:magicnumber")
 public class DaeView extends ViewPart {
 	
@@ -68,9 +71,17 @@ public class DaeView extends ViewPart {
     /** Listener for changes in experimental change. **/
     private PropertyChangeListener experimentalChangeListener;
 	
+    /**
+     * Instantiates a new DAE view.
+     */
 	public DaeView() {
 	}
 	
+    /**
+     * Sets a new DAE model for the panel.
+     *
+     * @param viewModel the new model
+     */
 	public void setModel(final DaeViewModel viewModel) {
 		runSummary.setModel(viewModel.runSummary());		
 		
