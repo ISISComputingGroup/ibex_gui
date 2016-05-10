@@ -129,6 +129,7 @@ public abstract class BeamStatusGraphView extends DataBrowserAwareView implement
 
         plot = Plot.forCanvas(canvas);
         plot.getXYGraph().setTitle(getPlotTitle());
+        plot.setToolbarVisible(false);
 
         selectPV(TS1_BEAM_CURRENT_PV);
         selectPV(TS2_BEAM_CURRENT_PV);
