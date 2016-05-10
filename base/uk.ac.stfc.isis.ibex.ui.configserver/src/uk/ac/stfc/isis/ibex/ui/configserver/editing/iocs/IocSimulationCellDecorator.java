@@ -29,6 +29,10 @@ import uk.ac.stfc.isis.ibex.configserver.configuration.SimLevel;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableIoc;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.CellDecorator;
 
+/**
+ * Decorator for the IOC name cells of items in the configuration IOC table.
+ * Controls the text formatting.
+ */
 public class IocSimulationCellDecorator extends CellDecorator<EditableIoc> {
 
 	private static final Display DISPLAY = Display.getCurrent();
