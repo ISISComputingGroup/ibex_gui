@@ -21,6 +21,9 @@ package uk.ac.stfc.isis.ibex.configserver.pv;
 
 import uk.ac.stfc.isis.ibex.epics.pv.PVAddress;
 
+/**
+ * Addresses for PVs within the block server
+ */
 public class BlockServerAddresses {
 
 	private static final String SERVER_STATUS = "SERVER_STATUS"; 
@@ -44,7 +47,12 @@ public class BlockServerAddresses {
 	private static final String DELETE_CONFIGS = "DELETE_CONFIGS";
 	private static final String DELETE_COMPONENTS = "DELETE_COMPONENTS";
 	private static final String BLANK_CONFIG = "BLANK_CONFIG";
-	private static final String BLOCK_RULES = "BLOCK_RULES";	
+    /** PV ending for block rules. */
+    private static final String BLOCK_RULES = "BLOCK_RULES";
+    /** PV ending for group rules. */
+    private static final String GROUP_RULES = "GROUP_RULES";
+    /** PV ending for configuration description rules. */
+    private static final String CONFIG_DESCRIPTION_RULES = "CONF_DESC_RULES";
 	
 	private static final String START_IOCS = "START_IOCS";
 	private static final String STOP_IOCS = "STOP_IOCS";
@@ -168,7 +176,25 @@ public class BlockServerAddresses {
 		return blockServerAddress.endWith(RESTART_IOCS);
 	}
 	
+    /**
+     * @return address for block rules on the block server
+     */
 	public String blockRules() {
 		return blockServerAddress.endWith(BLOCK_RULES);
 	}
+
+    /**
+     * @return address for group rules on the block server
+     */
+    public String groupRules() {
+        return blockServerAddress.endWith(GROUP_RULES);
+    }
+
+    /**
+     * @return address for configuration description rules on the block server
+     */
+    public String configDescritpionRules() {
+        return blockServerAddress.endWith(CONFIG_DESCRIPTION_RULES);
+    }
+
 }

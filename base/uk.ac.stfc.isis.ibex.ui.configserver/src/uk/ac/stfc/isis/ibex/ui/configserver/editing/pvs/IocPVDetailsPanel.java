@@ -40,7 +40,7 @@ import org.eclipse.swt.layout.GridData;
 import uk.ac.stfc.isis.ibex.configserver.configuration.AvailablePV;
 import uk.ac.stfc.isis.ibex.configserver.configuration.PVDefaultValue;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableIoc;
-import uk.ac.stfc.isis.ibex.ui.configserver.dialogs.MessageDisplayer;
+import uk.ac.stfc.isis.ibex.validators.MessageDisplayer;
 
 public class IocPVDetailsPanel extends Composite {
 	private final MessageDisplayer messageDisplayer;

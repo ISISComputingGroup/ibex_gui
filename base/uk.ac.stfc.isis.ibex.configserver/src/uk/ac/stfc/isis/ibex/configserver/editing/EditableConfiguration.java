@@ -46,6 +46,7 @@ import uk.ac.stfc.isis.ibex.configserver.internal.DisplayUtils;
 import uk.ac.stfc.isis.ibex.configserver.internal.IocDescriber;
 import uk.ac.stfc.isis.ibex.configserver.internal.IocFilteredConfiguration;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
+import uk.ac.stfc.isis.ibex.validators.GroupNamesProvider;
 
 /**
  * Holds an editable configuration, and notifies any listeners set to changes to this class.
@@ -55,7 +56,7 @@ import uk.ac.stfc.isis.ibex.model.ModelObject;
  *  from the current instrument).
  * 
  */
-public class EditableConfiguration extends ModelObject {
+public class EditableConfiguration extends ModelObject implements GroupNamesProvider {
 
     public static final String EDITABLE_GROUPS = "editableGroups";
 
@@ -289,7 +290,7 @@ public class EditableConfiguration extends ModelObject {
 		Collection<EditableGroup> editableGroupsBefore = getEditableGroups();
 		Collection<Group> groupsBefore = getGroups();
 		
-		String name = groupName.getUnique(groupNames());
+        String name = groupName.getUnique(getGroupNames());
 		EditableGroup newGroup = new EditableGroup(this, new Group(name));
 		editableGroups.add(newGroup);
 		
@@ -402,16 +403,22 @@ public class EditableConfiguration extends ModelObject {
 		});
 	}
 
-	private Collection<String> groupNames() {
-		List<String> names = new ArrayList<>();
-		for (Group group : getGroups()) {
-			names.add(group.getName());
-		}
-		
-		return names;
-	}
-	
 	private void addRenameListener(EditableBlock block) {
 		block.addPropertyChangeListener("name", blockRenameListener);
 	}
+
+    /**
+     * Get the current list of groups in the configuration.
+     * 
+     * @return the list of group names
+     */
+    @Override
+    public List<String> getGroupNames() {
+        List<String> names = new ArrayList<>();
+        for (Group group : getGroups()) {
+            names.add(group.getName());
+        }
+
+        return names;
+    }
 }

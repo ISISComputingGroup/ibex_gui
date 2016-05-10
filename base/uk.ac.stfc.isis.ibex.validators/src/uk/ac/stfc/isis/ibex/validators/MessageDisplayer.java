@@ -18,8 +18,18 @@
 */
 
 // Interface to allow error messages to be set on a dialog, without passing the dialog around
-package uk.ac.stfc.isis.ibex.ui.configserver.dialogs;
+package uk.ac.stfc.isis.ibex.validators;
 
+/**
+ * The Interface to allow an error to be displayed.
+ */
 public interface MessageDisplayer {
+
+    /**
+     * Sets the error message for a given source.
+     *
+     * @param source the source of the message
+     * @param message the message to set
+     */
 	void setErrorMessage(String source, String message);
 }
