@@ -72,6 +72,12 @@ public class AlarmButton extends PerspectiveButton {
 	}
 	
 	@Override
+    public void dispose() {
+        flash.stop();
+        super.dispose();
+    };
+
+    @Override
 	protected void mouseEnterAction() {
 		flash.stop();
 		super.mouseEnterAction();

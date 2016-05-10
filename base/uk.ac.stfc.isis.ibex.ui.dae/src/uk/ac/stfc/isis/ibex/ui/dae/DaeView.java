@@ -25,20 +25,21 @@ import java.beans.PropertyChangeListener;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.ui.part.ViewPart;
 import org.eclipse.swt.custom.CTabFolder;
-import org.eclipse.swt.custom.ScrolledComposite;
-import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.custom.CTabItem;
-import org.eclipse.wb.swt.ResourceManager;
-import org.eclipse.swt.widgets.Label;
-import org.eclipse.wb.swt.SWTResourceManager;
-import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.layout.FillLayout;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Label;
+import org.eclipse.ui.part.ViewPart;
+import org.eclipse.wb.swt.ResourceManager;
+import org.eclipse.wb.swt.SWTResourceManager;
 
+import uk.ac.stfc.isis.ibex.model.UpdatedValue;
 import uk.ac.stfc.isis.ibex.ui.dae.experimentsetup.ExperimentSetup;
 import uk.ac.stfc.isis.ibex.ui.dae.run.RunSummary;
 import uk.ac.stfc.isis.ibex.ui.dae.runinformation.RunInformationPanel;
@@ -60,6 +61,12 @@ public class DaeView extends ViewPart {
 
 	
 	private static final Display DISPLAY = Display.getCurrent();
+
+    /** property that the model is running, for deregitering the listener. */
+    private UpdatedValue<Boolean> modelIsRunningProperty;
+
+    /** Listener for changes in experimental change. **/
+    private PropertyChangeListener experimentalChangeListener;
 	
 	public DaeView() {
 	}
@@ -67,12 +74,14 @@ public class DaeView extends ViewPart {
 	public void setModel(final DaeViewModel viewModel) {
 		runSummary.setModel(viewModel.runSummary());		
 		
-		viewModel.isRunning().addPropertyChangeListener(new PropertyChangeListener() {		
+        experimentalChangeListener = new PropertyChangeListener() {
 			@Override
 			public void propertyChange(PropertyChangeEvent e) {
 				configureExperimentSetupForRunState(viewModel.isRunning().getValue());
 			}
-		}, true);
+        };
+        modelIsRunningProperty = viewModel.isRunning();
+        modelIsRunningProperty.addPropertyChangeListener(experimentalChangeListener, true);
 		
 		experimentSetup.bind(viewModel.experimentSetup());	
 		vetosPanel.setModel(viewModel);
@@ -82,15 +91,16 @@ public class DaeView extends ViewPart {
 	
 	@Override
 	public void dispose() {
+        modelIsRunningProperty.removePropertyChangeListener(experimentalChangeListener);
 		super.dispose();
 		model.close();
 	}
 	
-	private void configureExperimentSetupForRunState(final boolean isRunning) {
+    private void configureExperimentSetupForRunState(final Boolean isRunning) {
 		DISPLAY.asyncExec(new Runnable() {	
 			@Override
 			public void run() {
-				experimentSetup.setEnabled(!isRunning);				
+                experimentSetup.setEnabled(isRunning != null && isRunning);
 			}
 		});
 	}
