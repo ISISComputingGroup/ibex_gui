@@ -81,12 +81,6 @@ public class LogButton extends PerspectiveButton {
 		logCounter.resetCount();
 	}
 
-    @Override
-    public void dispose() {
-        flash.stop();
-        super.dispose();
-    };
-
     /**
      * make sure that the button is flashing when required.
      */
