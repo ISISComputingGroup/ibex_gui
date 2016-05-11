@@ -52,6 +52,12 @@ public class InstrumentListObservable {
     private final ForwardingObservable<Collection<InstrumentInfo>> instrumentsRBV;
     private Logger logger;
 
+    /**
+     * Instantiate a new observable for the instrument list PV
+     * 
+     * @param logger a logger to log information about reading and parsing the
+     *            PV
+     */
     public InstrumentListObservable(Logger logger) {
         this.logger = logger;
         instrumentsRBV = convert(readCompressed(ADDRESS));

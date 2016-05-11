@@ -38,9 +38,22 @@ import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
  */
 public final class InstrumentListUtils {
 
+    /**
+     * An empty constructor required for checkstyle
+     */
     private InstrumentListUtils() {
     }
 
+    /**
+     * Given an observable for a list of instruments, filter out invalid
+     * instruments
+     * 
+     * @param instrumentsRBV the input observable to be checked
+     * @param logger a logger to log information and warnings about invalid
+     *            instruments
+     * 
+     * @return the valid instruments extracted from the input observable
+     */
     public static Collection<InstrumentInfo> filterValidInstruments(
             Observable<Collection<InstrumentInfo>> instrumentsRBV, Logger logger) {
         if (!instrumentsRBV.isConnected()) {
