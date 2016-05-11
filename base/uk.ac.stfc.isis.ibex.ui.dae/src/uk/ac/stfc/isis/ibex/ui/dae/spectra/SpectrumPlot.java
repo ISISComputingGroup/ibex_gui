@@ -34,6 +34,9 @@ import org.eclipse.swt.widgets.Display;
 
 import uk.ac.stfc.isis.ibex.dae.spectra.Spectrum;
 
+/**
+ * A single spectrum plot UI component.
+ */
 @SuppressWarnings("checkstyle:magicnumber")
 public class SpectrumPlot extends Canvas {
 
@@ -58,6 +61,12 @@ public class SpectrumPlot extends Canvas {
 		}
 	};
 	
+    /**
+     * Instantiates a new spectrum plot.
+     *
+     * @param parent the parent
+     * @param style the style
+     */
 	public SpectrumPlot(Composite parent, int style) {
 		super(parent, SWT.BORDER);
 		setLayout(new FillLayout(SWT.HORIZONTAL));
@@ -90,6 +99,11 @@ public class SpectrumPlot extends Canvas {
 		plot.addTrace(trace);
 	}
 
+    /**
+     * Sets the model for the plot.
+     *
+     * @param newSpectrum the new spectrum model
+     */
 	public void setModel(final Spectrum newSpectrum) {
 		if (spectrum != null) {
 			spectrum.removePropertyChangeListener(xDataListener);
@@ -102,6 +116,7 @@ public class SpectrumPlot extends Canvas {
 		spectrum.addPropertyChangeListener("yData", yDataListener);
 		
 		traceDataProvider.clearTrace();
+        traceDataProvider.setConcatenate_data(false);
 		setXData();
 		setYData();
 	}
@@ -110,7 +125,6 @@ public class SpectrumPlot extends Canvas {
 		DISPLAY.asyncExec(new Runnable() {	
 			@Override
 			public void run() {
-				traceDataProvider.clearTrace();
 				traceDataProvider.setCurrentXDataArray(spectrum.xData());
 			}
 		});
@@ -120,7 +134,6 @@ public class SpectrumPlot extends Canvas {
 		DISPLAY.asyncExec(new Runnable() {	
 			@Override
 			public void run() {
-				traceDataProvider.clearTrace();
 				traceDataProvider.setCurrentYDataArray(spectrum.yData());
 			}
 		});

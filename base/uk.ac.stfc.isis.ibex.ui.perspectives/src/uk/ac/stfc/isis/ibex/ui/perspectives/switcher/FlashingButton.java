@@ -20,6 +20,8 @@
 package uk.ac.stfc.isis.ibex.ui.perspectives.switcher;
 
 import org.eclipse.swt.custom.CLabel;
+import org.eclipse.swt.events.DisposeEvent;
+import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.wb.swt.SWTResourceManager;
@@ -27,7 +29,7 @@ import org.eclipse.wb.swt.SWTResourceManager;
 /**
  * Where attention is needed, a flashing button should help to draw attention.
  */
-public class FlashingButton implements Runnable {
+public class FlashingButton implements Runnable, DisposeListener {
 
     private static final Color ALARM = SWTResourceManager.getColor(250, 150, 150);
 	private static final int SLEEP_TIME = 800;
@@ -48,6 +50,7 @@ public class FlashingButton implements Runnable {
      */
 	public FlashingButton(final CLabel button, Display display) {
 		this.button = button;
+        this.button.addDisposeListener(this);
 		this.display = display;
 		flashOn = true;
 		
@@ -123,8 +126,20 @@ public class FlashingButton implements Runnable {
 		display.asyncExec(new Runnable() {
 			@Override
             public void run() {
-				button.setBackground(c);
+                if (!button.isDisposed()) {
+                    button.setBackground(c);
+                }
 			}
 		});
 	}
+
+    /**
+     * Widget disposal listener so button can stop flashing.
+     * 
+     * @param event
+     */
+    @Override
+    public void widgetDisposed(DisposeEvent event) {
+        stop();
+    }
 }
