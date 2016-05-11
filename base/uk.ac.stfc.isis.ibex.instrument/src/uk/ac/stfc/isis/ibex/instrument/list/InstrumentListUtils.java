@@ -39,7 +39,7 @@ import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
 public final class InstrumentListUtils {
 
     /**
-     * An empty constructor required for checkstyle.
+     * An empty constructor required for check style.
      */
     private InstrumentListUtils() {
     }

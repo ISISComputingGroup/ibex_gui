@@ -25,19 +25,19 @@ import java.beans.PropertyChangeListener;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.ui.part.ViewPart;
 import org.eclipse.swt.custom.CTabFolder;
-import org.eclipse.swt.custom.ScrolledComposite;
-import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.custom.CTabItem;
-import org.eclipse.wb.swt.ResourceManager;
-import org.eclipse.swt.widgets.Label;
-import org.eclipse.wb.swt.SWTResourceManager;
-import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.layout.FillLayout;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Label;
+import org.eclipse.ui.part.ViewPart;
+import org.eclipse.wb.swt.ResourceManager;
+import org.eclipse.wb.swt.SWTResourceManager;
 
 import uk.ac.stfc.isis.ibex.ui.dae.experimentsetup.ExperimentSetup;
 import uk.ac.stfc.isis.ibex.ui.dae.run.RunSummary;
@@ -60,9 +60,6 @@ public class DaeView extends ViewPart {
 
 	
 	private static final Display DISPLAY = Display.getCurrent();
-	
-	public DaeView() {
-	}
 	
 	public void setModel(final DaeViewModel viewModel) {
 		runSummary.setModel(viewModel.runSummary());		
