@@ -22,6 +22,8 @@ package uk.ac.stfc.isis.ibex.instrument.list;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import org.apache.logging.log4j.Logger;
+
 import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
@@ -40,8 +42,9 @@ public final class InstrumentListUtils {
     }
 
     public static Collection<InstrumentInfo> filterValidInstruments(
-            Observable<Collection<InstrumentInfo>> instrumentsRBV) {
+            Observable<Collection<InstrumentInfo>> instrumentsRBV, Logger logger) {
         if (!instrumentsRBV.isConnected()) {
+            logger.warn("Could not connect to instrument list PV - no instrument could be read");
             return new ArrayList<>();
         }
 
@@ -49,6 +52,7 @@ public final class InstrumentListUtils {
         // null
         Collection<InstrumentInfo> instruments = instrumentsRBV.getValue();
         if (instruments == null) {
+            logger.warn("Error while parsing instrument list PV - no instrument could be read");
             return new ArrayList<>();
         }
 
@@ -59,7 +63,14 @@ public final class InstrumentListUtils {
             }
         });
 
-        return Lists.newArrayList(validInstruments);
+        Collection<InstrumentInfo> returnValue = Lists.newArrayList(validInstruments);
+        if (returnValue.size() < instruments.size()) {
+            logger.warn("Error while parsing instrument list PV - one or more instruments could not be read");
+        } else {
+            logger.info("Instrument list PV was read successfully");
+        }
+
+        return returnValue;
     }
 }
 

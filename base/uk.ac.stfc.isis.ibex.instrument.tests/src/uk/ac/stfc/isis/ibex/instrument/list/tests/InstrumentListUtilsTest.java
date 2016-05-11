@@ -20,11 +20,13 @@
 package uk.ac.stfc.isis.ibex.instrument.list.tests;
 
 import static org.junit.Assert.*;
+import static org.mockito.Matchers.*;
 import static org.mockito.Mockito.*;
 
 import java.util.ArrayList;
 import java.util.Collection;
 
+import org.apache.logging.log4j.Logger;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -39,6 +41,7 @@ public class InstrumentListUtilsTest {
     private InstrumentInfo instrument1;
     private InstrumentInfo instrument2;
     private InstrumentInfo nullNameInstrument;
+    private Logger mockLogger;
 
     @SuppressWarnings("unchecked")
     @Before
@@ -53,6 +56,8 @@ public class InstrumentListUtilsTest {
 
         nullNameInstrument = mock(InstrumentInfo.class);
         when(nullNameInstrument.name()).thenReturn(null);
+
+        mockLogger = mock(Logger.class);
     }
     
     @Test
@@ -61,11 +66,25 @@ public class InstrumentListUtilsTest {
         when(mockObservable.isConnected()).thenReturn(false);
 
         // Act
-        Collection<InstrumentInfo> instruments = InstrumentListUtils.filterValidInstruments(mockObservable);
+        Collection<InstrumentInfo> instruments = doFiltering();
 
         // Assert
         assertNotNull(instruments);
         assertTrue(instruments.isEmpty());
+    }
+
+    @Test
+    public void filter_valid_instruments_logs_warning_message_when_pv_not_connected() {
+        // Arrange
+        when(mockObservable.isConnected()).thenReturn(false);
+        verify(mockLogger, never()).warn(anyString());
+
+        // Act
+        doFiltering();
+
+        // Assert
+        verify(mockLogger, times(1)).warn(contains("Could not connect"));
+        verify(mockLogger, times(1)).warn(contains("no instrument"));
     }
 
     @Test
@@ -75,11 +94,26 @@ public class InstrumentListUtilsTest {
         when(mockObservable.getValue()).thenReturn(null);
 
         // Act
-        Collection<InstrumentInfo> instruments = InstrumentListUtils.filterValidInstruments(mockObservable);
+        Collection<InstrumentInfo> instruments = doFiltering();
 
         // Assert
         assertNotNull(instruments);
         assertTrue(instruments.isEmpty());
+    }
+
+    @Test
+    public void filter_valid_instruments_logs_warning_message_if_pv_value_null() {
+        // Arrange
+        when(mockObservable.isConnected()).thenReturn(true);
+        when(mockObservable.getValue()).thenReturn(null);
+        verify(mockLogger, never()).warn(anyString());
+
+        // Act
+        doFiltering();
+
+        // Assert
+        verify(mockLogger, times(1)).warn(contains("Error while parsing"));
+        verify(mockLogger, times(1)).warn(contains("no instrument"));
     }
 
     @Test
@@ -94,12 +128,30 @@ public class InstrumentListUtilsTest {
         when(mockObservable.getValue()).thenReturn(expected);
 
         // Act
-        Collection<InstrumentInfo> instruments = InstrumentListUtils.filterValidInstruments(mockObservable);
+        Collection<InstrumentInfo> instruments = doFiltering();
 
         // Assert
         assertNotNull(instruments);
         assertEquals(expectedSize, instruments.size());
         assertEquals(expected, instruments);
+    }
+
+    @Test
+    public void filter_valid_instruments_logs_info_message_when_all_valid() {
+        // Arrange
+        Collection<InstrumentInfo> expected = new ArrayList<>();
+        expected.add(instrument1);
+        expected.add(instrument2);
+
+        when(mockObservable.isConnected()).thenReturn(true);
+        when(mockObservable.getValue()).thenReturn(expected);
+        verify(mockLogger, never()).info(anyString());
+
+        // Act
+        doFiltering();
+
+        // Assert
+        verify(mockLogger, times(1)).info(contains("read successfully"));
     }
 
     @Test
@@ -119,12 +171,40 @@ public class InstrumentListUtilsTest {
         when(mockObservable.getValue()).thenReturn(input);
 
         // Act
-        Collection<InstrumentInfo> instruments = InstrumentListUtils.filterValidInstruments(mockObservable);
+        Collection<InstrumentInfo> instruments = doFiltering();
 
         // Assert
         assertNotNull(instruments);
         assertEquals(expectedSize, instruments.size());
         assertEquals(expected, instruments);
+    }
+
+    @Test
+    public void filter_valid_instruments_logs_warning_when_invalid_items() {
+        // Arrange
+        Collection<InstrumentInfo> input = new ArrayList<>();
+        input.add(instrument1);
+        input.add(nullNameInstrument);
+        input.add(instrument2);
+
+        Collection<InstrumentInfo> expected = new ArrayList<>();
+        expected.add(instrument1);
+        expected.add(instrument2);
+
+        when(mockObservable.isConnected()).thenReturn(true);
+        when(mockObservable.getValue()).thenReturn(input);
+        verify(mockLogger, never()).warn(anyString());
+
+        // Act
+        doFiltering();
+
+        // Assert
+        verify(mockLogger, times(1)).warn(contains("Error while parsing"));
+        verify(mockLogger, times(1)).warn(contains("one or more instruments"));
+    }
+
+    private Collection<InstrumentInfo> doFiltering() {
+        return InstrumentListUtils.filterValidInstruments(mockObservable, mockLogger);
     }
 }
 

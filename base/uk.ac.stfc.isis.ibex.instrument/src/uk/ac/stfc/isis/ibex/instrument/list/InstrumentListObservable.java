@@ -24,6 +24,8 @@ package uk.ac.stfc.isis.ibex.instrument.list;
 
 import java.util.Collection;
 
+import org.apache.logging.log4j.Logger;
+
 import uk.ac.stfc.isis.ibex.epics.conversion.Convert;
 import uk.ac.stfc.isis.ibex.epics.conversion.Converter;
 import uk.ac.stfc.isis.ibex.epics.observing.ClosableObservable;
@@ -48,8 +50,10 @@ public class InstrumentListObservable {
     private static final String ADDRESS = "CS:INSTLIST";
 
     private final ForwardingObservable<Collection<InstrumentInfo>> instrumentsRBV;
+    private Logger logger;
 
-    public InstrumentListObservable() {
+    public InstrumentListObservable(Logger logger) {
+        this.logger = logger;
         instrumentsRBV = convert(readCompressed(ADDRESS));
     }
 
@@ -84,6 +88,6 @@ public class InstrumentListObservable {
             i++;
         }
         
-        return InstrumentListUtils.filterValidInstruments(instrumentsRBV);
+        return InstrumentListUtils.filterValidInstruments(instrumentsRBV, logger);
     }
 }
