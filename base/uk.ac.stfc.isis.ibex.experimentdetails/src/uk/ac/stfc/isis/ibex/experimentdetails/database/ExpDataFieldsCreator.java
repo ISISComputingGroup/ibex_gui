@@ -39,8 +39,7 @@ public final class ExpDataFieldsCreator {
     private ExpDataFieldsCreator() {
     }
 
-    public static ExpDataField getField(ExpDataTablesEnum table, ExpDataFieldsEnum field) throws IllegalArgumentException {
-
+    public static ExpDataField getField(ExpDataTablesEnum table, ExpDataFieldsEnum field) {
     	if (!getFieldList(table).contains(field)) {
     		throw new IllegalArgumentException("Unknown experiment details field: " + field);
     	}

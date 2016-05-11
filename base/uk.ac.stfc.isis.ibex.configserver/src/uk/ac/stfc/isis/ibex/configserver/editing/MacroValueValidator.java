@@ -91,7 +91,7 @@ public class MacroValueValidator extends ModelObject implements IValidator {
 		return ValidationStatus.ok();	
 	}
 	
-	private boolean matchesPattern(String text) throws PatternSyntaxException {
+    private boolean matchesPattern(String text) {
 		String pattern = macro.getPattern();
 		
 		if (pattern == null || pattern.isEmpty()) {

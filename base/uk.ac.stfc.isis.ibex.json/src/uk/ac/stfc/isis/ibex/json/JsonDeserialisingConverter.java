@@ -19,12 +19,15 @@
 
 package uk.ac.stfc.isis.ibex.json;
 
-import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
-import uk.ac.stfc.isis.ibex.epics.conversion.Converter;
-
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 
+import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
+import uk.ac.stfc.isis.ibex.epics.conversion.Converter;
+
+/**
+ * Converter for deserialising JSON into an object of type T.
+ */
 public class JsonDeserialisingConverter<T> extends Converter<String, T> {
 
 	protected final Gson gson;
@@ -51,7 +54,7 @@ public class JsonDeserialisingConverter<T> extends Converter<String, T> {
 		}
 	}
 	
-	protected T parseJson(String json) throws JsonSyntaxException {
+    protected T parseJson(String json) {
 		return gson.fromJson(json, classOfT);
 	}
 }
