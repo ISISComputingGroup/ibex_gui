@@ -22,15 +22,15 @@ package uk.ac.stfc.isis.ibex.ui.dashboard.widgets;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.core.databinding.conversion.Converter;
+
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
-import org.eclipse.core.databinding.conversion.Converter;
-
 
 /**
- * Takes the JSON list string and converts it into a nicely formatted list of names
- *
+ * Takes the JSON list string and converts it into a nicely formatted list of
+ * names.
  */
 public class UsersConverter extends Converter {
 	
@@ -45,9 +45,13 @@ public class UsersConverter extends Converter {
 		List<String> names = new ArrayList<String>();
 		
 		try {
+            // CHECKSTYLE:OFF The declaration format for GSON's TypeToken upsets
+            // CheckStyle.
 			names = new Gson().fromJson(arg0.toString(), new TypeToken<List<String>>() { }.getType());
+            // CHECKSTYLE:ON
 		} catch (Exception err) {
 			//It was not valid json, so just set users to nothing
+            return "";
 		}
 		
 		if (names != null && names.size() > 0) {

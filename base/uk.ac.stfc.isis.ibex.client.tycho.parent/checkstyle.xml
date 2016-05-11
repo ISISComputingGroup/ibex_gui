@@ -32,7 +32,7 @@
     
     <!-- Checks for Size Violations.                    -->
     <!-- See http://checkstyle.sf.net/config_sizes.html -->
-    <module name="FileLength"/>
+    <!-- <module name="FileLength"/> -->
     
     <!-- Checks for whitespace                               -->
     <!-- See http://checkstyle.sf.net/config_whitespace.html -->
@@ -49,6 +49,11 @@
     
     <module name="SuppressWarningsFilter"/>
     <module name="SuppressionCommentFilter"/>
+    
+    <module name="SuppressionFilter">
+        <property name="file" value="suppressions.xml"/>
+        <property name="optional" value="false"/>
+    </module>
 
     <!-- Checks for Headers                                -->
     <!-- See http://checkstyle.sf.net/config_header.html   -->
@@ -61,10 +66,10 @@
 
         <!-- Checks for Javadoc comments.                     -->
         <!-- See http://checkstyle.sf.net/config_javadoc.html -->
-        <!-- <module name="JavadocMethod"/>
+        <module name="JavadocMethod"/>
         <module name="JavadocType"/>
-        <module name="JavadocVariable"/>
-        <module name="JavadocStyle"/> -->
+        <!-- <module name="JavadocVariable"/> -->
+        <module name="JavadocStyle"/> 
 
 
         <!-- Checks for Naming Conventions.                  -->
@@ -81,13 +86,14 @@
         
         <module name="SuppressWarningsHolder"/>
         <module name="SuppressWarnings"/>
+        <module name="FileContentsHolder"/>
 
 
         <!-- Checks for imports                              -->
         <!-- See http://checkstyle.sf.net/config_import.html -->
-		<module name="AvoidStarImport">
-		  <property name="excludes" value="org.junit.Assert,org.mockito.Mockito,org.mockito.Matchers,org.hamcrest.CoreMatchers"/>
-		</module>
+        <module name="AvoidStarImport">
+            <property name="excludes" value="org.junit.Assert,org.mockito.Mockito,org.mockito.Matchers,org.hamcrest.CoreMatchers"/>
+        </module>
         <module name="IllegalImport"/> <!-- defaults to sun.* packages -->
         <module name="RedundantImport"/>
         <module name="UnusedImports"/>

@@ -28,7 +28,6 @@ import org.eclipse.swt.widgets.TabItem;
 
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
 import uk.ac.stfc.isis.ibex.ui.configserver.ConfigurationViewModels;
-import uk.ac.stfc.isis.ibex.ui.configserver.dialogs.MessageDisplayer;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.blocks.BlocksEditorPanel;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.components.ComponentEditorPanel;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.groups.GroupsEditorPanel;
@@ -40,6 +39,7 @@ import uk.ac.stfc.isis.ibex.ui.configserver.editing.macros.MacroPanel;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.pvs.IocPVsEditorPanel;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.pvsets.IocPVSetsEditorPanel;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.summary.SummaryPanel;
+import uk.ac.stfc.isis.ibex.validators.MessageDisplayer;
 
 public class ConfigEditorPanel extends Composite {
     

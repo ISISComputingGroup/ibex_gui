@@ -44,6 +44,7 @@ import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 
 import uk.ac.stfc.isis.ibex.instrument.internal.LocalHostInstrumentInfo;
+import uk.ac.stfc.isis.ibex.instrument.list.InstrumentListObservable;
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
 import uk.ac.stfc.isis.ibex.model.SettableUpdatedValue;
 import uk.ac.stfc.isis.ibex.model.UpdatedValue;
@@ -59,7 +60,6 @@ public class Instrument implements BundleActivator {
     	return instance; 
     }
 	
-	private List<InstrumentInfo> instruments = new ArrayList<>();
 	private SettableUpdatedValue<String> instrumentName = new SettableUpdatedValue<>();
 	private InstrumentInfo instrumentInfo;
 	private final InstrumentInfo localhost;
@@ -70,22 +70,10 @@ public class Instrument implements BundleActivator {
 	
 	public Instrument() {
 		instance = this;
+        localhost = new LocalHostInstrumentInfo();
 		
-		localhost = new LocalHostInstrumentInfo();
-		instruments.add(localhost);
-		
-        List<InstrumentInfo> instrumentsAlphabetical = new ArrayList<>();
-        instrumentsAlphabetical.add(new InstrumentInfo("LARMOR"));
-        instrumentsAlphabetical.add(new InstrumentInfo("ALF"));
-        instrumentsAlphabetical.add(new InstrumentInfo("DEMO"));
-        instrumentsAlphabetical.add(new InstrumentInfo("IMAT"));
-        instrumentsAlphabetical.add(new InstrumentInfo("MUONFE"));
-        Collections.sort(instrumentsAlphabetical, alphabeticalNameComparator());
-
-        instruments.addAll(instrumentsAlphabetical);
-
-		setInstrument(initialInstrument());	
-	}
+        setInstrument(initialInstrument());
+    }
     
 	public UpdatedValue<String> name() {
 		return instrumentName;
@@ -96,7 +84,17 @@ public class Instrument implements BundleActivator {
     }
 
 	public Collection<InstrumentInfo> instruments() {
-		return instruments;
+        List<InstrumentInfo> instruments = new ArrayList<>();
+        instruments.add(localhost);
+
+        InstrumentListObservable instrumentsObservable = new InstrumentListObservable();
+        Collection<InstrumentInfo> unorderedInstruments = instrumentsObservable.getInstruments();
+        List<InstrumentInfo> instrumentsAlphabetical = new ArrayList<>(unorderedInstruments);
+        Collections.sort(instrumentsAlphabetical, alphabeticalNameComparator());
+        instruments.addAll(instrumentsAlphabetical);
+
+        instrumentsObservable.close();
+        return instruments;
 	}
 	
 	static BundleContext getContext() {
@@ -163,6 +161,7 @@ public class Instrument implements BundleActivator {
 				InstrumentInfoReceiver receiver = (InstrumentInfoReceiver) obj;
 				receiver.setInstrument(selectedInstrument);
 			} catch (CoreException e) {
+                e.printStackTrace();
 			}
 		}
 	}
@@ -170,7 +169,7 @@ public class Instrument implements BundleActivator {
 	private InstrumentInfo initialInstrument() {
 		final String initalName = initalPreference.get(initialInstrument, localhost.name());
 		
-		return Iterables.find(instruments, new Predicate<InstrumentInfo>() {
+        return Iterables.find(instruments(), new Predicate<InstrumentInfo>() {
 			@Override
 			public boolean apply(InstrumentInfo info) {
 				return initalName.endsWith(info.name());

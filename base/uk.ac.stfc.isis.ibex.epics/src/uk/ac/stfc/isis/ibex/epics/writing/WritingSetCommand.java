@@ -42,11 +42,13 @@ public final class WritingSetCommand<T> extends SetCommand<T> implements Closabl
 	};
 	
 	private WritingSetCommand(Writable<T> destination) {
+        checkPreconditions(destination);
+
 		writerSubscription = destinationWriter.writeTo(destination);
 		destinationSubscription = destination.subscribe(destinationWriter);
 	}
-	
-	public static <T> WritingSetCommand<T> forDestination(Writable<T> destination) {
+
+    public static <T> WritingSetCommand<T> forDestination(Writable<T> destination) {
 		return new WritingSetCommand<T>(destination);
 	}
 	
@@ -60,4 +62,10 @@ public final class WritingSetCommand<T> extends SetCommand<T> implements Closabl
 		writerSubscription.removeObserver();
 		destinationSubscription.removeObserver();
 	}
+
+    private void checkPreconditions(Writable<T> destination) {
+        if (destination == null) {
+            throw new IllegalArgumentException("Destination writable cannot be null.");
+        }
+    }
 }

@@ -26,6 +26,9 @@ import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.swt.widgets.Menu;
 
+/**
+ * Holds all the actions for the context menu for the Groups.
+ */
 public class GroupsMenu {
 
 	private final MenuManager manager = new MenuManager();

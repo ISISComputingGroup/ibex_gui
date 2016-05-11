@@ -17,29 +17,19 @@
 * http://opensource.org/licenses/eclipse-1.0.php
 */
 
-package uk.ac.stfc.isis.ibex.epics.writing;
+// Interface to allow error messages to be set on a dialog, without passing the dialog around
+package uk.ac.stfc.isis.ibex.validators;
 
-import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
-import uk.ac.stfc.isis.ibex.epics.conversion.Converter;
+/**
+ * The Interface to allow an error to be displayed.
+ */
+public interface MessageDisplayer {
 
-public class ConvertingWritable<TIn, TOut> extends ForwardingWritable<TIn, TOut> {
-
-	private final Converter<TIn, TOut> converter;
-
-    public ConvertingWritable(Writable<TOut> destination, Converter<TIn, TOut> converter) {
-		this.converter = converter;
-		setWritable(destination);
-	}
-	
-	@Override
-	protected TOut transform(TIn value) {
-		try {
-			return converter.convert(value);
-		} catch (ConversionException e) {
-			error(e);
-		}
-		
-		return null;
-	}
-
+    /**
+     * Sets the error message for a given source.
+     *
+     * @param source the source of the message
+     * @param message the message to set
+     */
+	void setErrorMessage(String source, String message);
 }

@@ -49,7 +49,8 @@ public class HomingLabelProvider extends ColumnLabelProvider {
         addButton(cell);               
         addEditor(cell);
         
-//		TODO: Intention is to enable button if not homing, however, changes to HOMR seems not to be picked up currently
+        // Intention is to enable button if not homing, however, changes to HOMR
+        // seems not to be picked up currently
 //
 //        button.setEnabled(row.canHome());
 //        row.addPropertyChangeListener(new PropertyChangeListener() {		

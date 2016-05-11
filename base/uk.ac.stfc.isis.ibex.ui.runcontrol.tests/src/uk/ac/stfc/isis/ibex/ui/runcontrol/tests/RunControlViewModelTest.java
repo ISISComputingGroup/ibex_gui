@@ -19,10 +19,8 @@
 
 package uk.ac.stfc.isis.ibex.ui.runcontrol.tests;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.junit.Assert.*;
+import static org.mockito.Mockito.*;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -37,7 +35,7 @@ import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.runcontrol.RunControlServer;
 import uk.ac.stfc.isis.ibex.ui.runcontrol.RunControlViewModel;
 
-@SuppressWarnings({"checkstyle:magicnumber", "checkstyle:methodname"})
+@SuppressWarnings({ "checkstyle:magicnumber", "checkstyle:methodname" })
 public class RunControlViewModelTest {
 
     private RunControlViewModel runControlViewModel;

@@ -38,8 +38,7 @@ import org.osgi.service.prefs.BackingStoreException;
 import org.osgi.service.prefs.Preferences;
 
 /**
- * Class to manage the list of recently used configurations
- * @author sjb99183
+ * Class to manage the list of recently used configurations.
  *
  */
 public class RecentConfigList {
@@ -56,9 +55,10 @@ public class RecentConfigList {
 	}
 	
 	/**
-	 *  Add an item
-	 * @param item the configuration item to add to the list
-	 */
+     * Add an item.
+     * 
+     * @param item the configuration item to add to the list
+     */
 	public void add(String item) {
 		// Is it already in the list?
 		boolean first = true;
@@ -92,7 +92,9 @@ public class RecentConfigList {
 		return recent;
 	}
 
-	// Save the list
+    /**
+     * Save the list.
+     */
 	private void save() {
 		IEclipsePreferences prefs = ConfigurationScope.INSTANCE.getNode(PLUGIN_ID);
 		Preferences mruPrefs = prefs.node(MRU_PREFS);
@@ -106,7 +108,9 @@ public class RecentConfigList {
 		}
 	}
 	
-	// Load the list
+    /**
+     * Load the list.
+     */
 	private void load() {
 		recent = new ArrayList<String>();
 		IEclipsePreferences prefs = ConfigurationScope.INSTANCE.getNode(PLUGIN_ID);
@@ -117,7 +121,6 @@ public class RecentConfigList {
 				recent.add(mruPrefs.get(names[i], ""));
 			}
 		} catch (BackingStoreException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
