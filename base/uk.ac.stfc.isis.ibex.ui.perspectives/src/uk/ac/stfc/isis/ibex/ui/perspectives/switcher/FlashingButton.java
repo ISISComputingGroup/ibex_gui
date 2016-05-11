@@ -126,7 +126,9 @@ public class FlashingButton implements Runnable, DisposeListener {
 		display.asyncExec(new Runnable() {
 			@Override
             public void run() {
-				button.setBackground(c);
+                if (!button.isDisposed()) {
+                    button.setBackground(c);
+                }
 			}
 		});
 	}
