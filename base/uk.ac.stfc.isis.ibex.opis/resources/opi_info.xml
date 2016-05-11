@@ -146,6 +146,16 @@
 			</value>
 		</entry>
 		<entry>
+			<key>Lakeshore 218</key>
+			<value>
+				<type>TEMPERATURE</type>
+				<path>Lakeshore218.opi</path>
+				<description>The OPI for the Lakeshore 218 temperature controller.</description>
+				<macros>
+				</macros>
+			</value>
+		</entry>
+		<entry>
 			<key>Mk3 Chopper</key>
 			<value>
 				<type>CHOPPER</type>
