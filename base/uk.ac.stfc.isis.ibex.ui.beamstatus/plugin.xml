@@ -59,7 +59,7 @@
                id="uk.ac.stfc.isis.ibex.ui.beamstatus.views.BeamStatusGraphView"
                minimized="false"
                moveable="false"
-               ratio="0.667f"
+               ratio="0.6f"
                relationship="right"
                relative="uk.ac.stfc.isis.ibex.ui.beamstatus.views.BeamStatusView"
                showTitle="false"

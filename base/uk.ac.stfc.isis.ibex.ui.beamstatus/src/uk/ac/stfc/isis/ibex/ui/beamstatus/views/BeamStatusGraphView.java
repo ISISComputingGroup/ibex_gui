@@ -121,15 +121,38 @@ public class BeamStatusGraphView extends DataBrowserAwareView implements ModelLi
             }
         });
 
-        final GridLayout layout = new GridLayout(2, false);
-        parent.setLayout(layout);
+        parent.setLayout(new GridLayout(1, false));
+        createTimeRangeRadioButtons(parent);
+        createBeamStatusPlot(parent);
 
-        // =====================
-        // ===== Controls ======
-        // =====================
+        selectPV(TS1_BEAM_CURRENT_PV);
+        selectPV(TS2_BEAM_CURRENT_PV);
+        selectPV(SYNCH_BEAM_CURRENT_PV);
+
+        if (model != null && model.getAxisCount() > 0) {
+            setAxisProperties(model.getAxis(model.getAxisCount() - 1));
+        }
+
+        // Create and start controller
+        try {
+            controller = new Controller(parent.getShell(), model, plot);
+            controller.start();
+        } catch (Exception ex) {
+            MessageDialog.openError(parent.getShell(), Messages.Error,
+                    NLS.bind(Messages.ControllerStartErrorFmt, ex.getMessage()));
+        }
+
+    }
+
+    private void createTimeRangeRadioButtons(final Composite parent) {
 
         Composite controlsComposite = new Composite(parent, SWT.NONE);
-        controlsComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
+
+        GridData layoutData = new GridData();
+        layoutData.grabExcessHorizontalSpace = false;
+        layoutData.horizontalAlignment = SWT.CENTER;
+        controlsComposite.setLayoutData(layoutData);
+
         controlsComposite.setLayout(new RowLayout());
 
         Button dailyButton = new Button(controlsComposite, SWT.RADIO);
@@ -151,46 +174,35 @@ public class BeamStatusGraphView extends DataBrowserAwareView implements ModelLi
             }
         });
 
-        // =====================
-        // ======= Plot ========
-        // =====================
+    }
+
+    private void createBeamStatusPlot(final Composite parent) {
 
         // The canvas has to be wrapped in a composite so that the canvas has
         // (0,0) coordinate.
         // This is a work around for the inconsistency between
         // figure.getBounds() and gc.getclipping().
-        Composite composite = new Composite(parent, SWT.NONE);
-        composite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, layout.numColumns, 1));
-        composite.setLayout(new FillLayout());
+        Composite plotComposite = new Composite(parent, SWT.NONE);
+
+        GridData layoutData = new GridData();
+        layoutData.grabExcessHorizontalSpace = true;
+        layoutData.grabExcessVerticalSpace = true;
+        layoutData.horizontalAlignment = SWT.FILL;
+        layoutData.verticalAlignment = SWT.FILL;
+        plotComposite.setLayoutData(layoutData);
+
+        plotComposite.setLayout(new FillLayout());
 
         // Double_BUFFERED is required to force RAP to use NativeGraphicsSource.
         // By default, it uses BufferedGraphicsSource which has problem to
         // render it in web browser.
-        final Canvas canvas = new Canvas(composite, SWT.DOUBLE_BUFFERED);
+        final Canvas canvas = new Canvas(plotComposite, SWT.DOUBLE_BUFFERED);
 
         // Create plot with basic configuration
 
         plot = Plot.forCanvas(canvas);
         plot.getXYGraph().setTitle(getPlotTitle());
         plot.setToolbarVisible(false);
-
-        selectPV(TS1_BEAM_CURRENT_PV);
-        selectPV(TS2_BEAM_CURRENT_PV);
-        selectPV(SYNCH_BEAM_CURRENT_PV);
-
-        if (model != null && model.getAxisCount() > 0) {
-            setAxisProperties(model.getAxis(model.getAxisCount() - 1));
-        }
-
-        // Create and start controller
-        try {
-            controller = new Controller(parent.getShell(), model, plot);
-            controller.start();
-        } catch (Exception ex) {
-            MessageDialog.openError(parent.getShell(), Messages.Error,
-                    NLS.bind(Messages.ControllerStartErrorFmt, ex.getMessage()));
-        }
-
     }
 
     /**
@@ -255,7 +267,7 @@ public class BeamStatusGraphView extends DataBrowserAwareView implements ModelLi
             if (newModel != null) {
                 newModel.addListener(this);
             }
-            }
+        }
     }
 
     /**
