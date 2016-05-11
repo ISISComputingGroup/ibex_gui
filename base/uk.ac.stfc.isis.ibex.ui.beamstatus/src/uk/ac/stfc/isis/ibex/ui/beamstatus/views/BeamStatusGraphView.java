@@ -56,7 +56,7 @@ import uk.ac.stfc.isis.ibex.ui.beamstatus.BeamStatusGraphDataProvider;
 
 /**
  * Provides access to the data browser to show data from TS1/TS2 beam currents
- * as a plot within a view
+ * as a plot within a view.
  * 
  * Always used as derived classes that specify the time duration of the plot
  * (e.g. hourly, daily)
