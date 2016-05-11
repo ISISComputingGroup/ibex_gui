@@ -49,6 +49,11 @@
     
     <module name="SuppressWarningsFilter"/>
     <module name="SuppressionCommentFilter"/>
+    
+    <module name="SuppressionFilter">
+        <property name="file" value="suppressions.xml"/>
+        <property name="optional" value="false"/>
+    </module>
 
     <!-- Checks for Headers                                -->
     <!-- See http://checkstyle.sf.net/config_header.html   -->
