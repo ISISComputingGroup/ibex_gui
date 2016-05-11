@@ -39,14 +39,14 @@ import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
 public final class InstrumentListUtils {
 
     /**
-     * An empty constructor required for checkstyle
+     * An empty constructor required for checkstyle.
      */
     private InstrumentListUtils() {
     }
 
     /**
      * Given an observable for a list of instruments, filter out invalid
-     * instruments
+     * instruments.
      * 
      * @param instrumentsRBV the input observable to be checked
      * @param logger a logger to log information and warnings about invalid

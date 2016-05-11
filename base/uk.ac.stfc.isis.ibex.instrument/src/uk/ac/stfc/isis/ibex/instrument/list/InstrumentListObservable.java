@@ -53,7 +53,7 @@ public class InstrumentListObservable {
     private Logger logger;
 
     /**
-     * Instantiate a new observable for the instrument list PV
+     * Instantiate a new observable for the instrument list PV.
      * 
      * @param logger a logger to log information about reading and parsing the
      *            PV
