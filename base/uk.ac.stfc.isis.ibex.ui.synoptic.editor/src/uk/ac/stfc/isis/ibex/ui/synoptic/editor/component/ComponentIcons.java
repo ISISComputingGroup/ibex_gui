@@ -71,6 +71,7 @@ public final class ComponentIcons {
 			return icon("thumb/pinhole_selector_tb.png");
 		case SINGLESTAGE:
 			return icon("thumb/single_stage_tb.png");
+		case LAKESHORE: // TODO
 		default:
 			return icon("thumb/cog_tb.png");
 		}
