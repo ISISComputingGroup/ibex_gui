@@ -65,7 +65,7 @@ public class DaeView extends ViewPart {
 	
 	private static final Display DISPLAY = Display.getCurrent();
 
-    /** property that the model is running, for deregitering the listener. */
+    /** property that the model is running, for deregistering the listener. */
     private UpdatedValue<Boolean> modelIsRunningProperty;
 
     /** Listener for changes in experimental change. **/
