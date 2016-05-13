@@ -145,7 +145,6 @@ public class BeamStatusGraphView extends DataBrowserAwareView implements ModelLi
     }
 
     private void createTimeRangeRadioButtons(final Composite parent) {
-
         Composite controlsComposite = new Composite(parent, SWT.NONE);
 
         GridData layoutData = new GridData();
@@ -156,7 +155,7 @@ public class BeamStatusGraphView extends DataBrowserAwareView implements ModelLi
         controlsComposite.setLayout(new RowLayout());
 
         Button dailyButton = new Button(controlsComposite, SWT.RADIO);
-        dailyButton.setText("Daily");
+        dailyButton.setText("Last 24 Hours");
         dailyButton.setSelection(true);
         dailyButton.addSelectionListener(new SelectionAdapter() {
             @Override
@@ -166,7 +165,7 @@ public class BeamStatusGraphView extends DataBrowserAwareView implements ModelLi
         });
 
         Button hourlyButton = new Button(controlsComposite, SWT.RADIO);
-        hourlyButton.setText("Hourly");
+        hourlyButton.setText("Last Hour");
         hourlyButton.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
@@ -177,7 +176,6 @@ public class BeamStatusGraphView extends DataBrowserAwareView implements ModelLi
     }
 
     private void createBeamStatusPlot(final Composite parent) {
-
         // The canvas has to be wrapped in a composite so that the canvas has
         // (0,0) coordinate.
         // This is a work around for the inconsistency between
@@ -199,7 +197,6 @@ public class BeamStatusGraphView extends DataBrowserAwareView implements ModelLi
         final Canvas canvas = new Canvas(plotComposite, SWT.DOUBLE_BUFFERED);
 
         // Create plot with basic configuration
-
         plot = Plot.forCanvas(canvas);
         plot.getXYGraph().setTitle(getPlotTitle());
         plot.setToolbarVisible(false);
@@ -240,10 +237,9 @@ public class BeamStatusGraphView extends DataBrowserAwareView implements ModelLi
     }
 
     /**
-     * Sets the color for the given axis.
+     * Sets the colour for the given axis.
      * 
-     * @param axis
-     *            The axis configuration whose properties will be updated.
+     * @param axis The axis configuration whose properties will be updated.
      */
     private void setYAxisColor(AxisConfig axis) {
         axis.setColor(new RGB(0, 0, 0));
@@ -256,8 +252,10 @@ public class BeamStatusGraphView extends DataBrowserAwareView implements ModelLi
 
     @Override
     protected void updateModel(final Model oldModel, final Model newModel) {
-        if (newModel==null )
+        if (newModel == null) {
             return;
+        }
+
         model = newModel;
         if (oldModel != newModel) {
             if (oldModel != null) {
@@ -359,8 +357,7 @@ public class BeamStatusGraphView extends DataBrowserAwareView implements ModelLi
     private void updateModelTimeRange() {
         if (model == null) {
             System.out.println("Unable to set model time range. Model is null");
-        }
-        else {
+        } else {
             try {
                 model.setTimerange(getStartSpec(), getEndSpec());
             } catch (Exception ex) {

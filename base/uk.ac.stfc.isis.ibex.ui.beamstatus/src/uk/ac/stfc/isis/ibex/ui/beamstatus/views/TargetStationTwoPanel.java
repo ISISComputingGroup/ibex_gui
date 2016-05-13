@@ -22,17 +22,19 @@ package uk.ac.stfc.isis.ibex.ui.beamstatus.views;
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.beans.BeanProperties;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.layout.GridData;
 
 import uk.ac.stfc.isis.ibex.beamstatus.BeamStatus;
 import uk.ac.stfc.isis.ibex.beamstatus.Observables.TargetStation2;
 
+/**
+ * The GUI panel for displaying information from target station 2.
+ */
 public class TargetStationTwoPanel extends Composite {
-
     private final Label beam;
     private final Label pps;
     private final Label current;
@@ -47,6 +49,12 @@ public class TargetStationTwoPanel extends Composite {
     private final Label decoupledModeratorAnnealPressure;
     private final Label decoupledModeratoruAhBeam;
 
+    /**
+     * The constructor.
+     * 
+     * @param parent the parent
+     * @param style the SWT style
+     */
     public TargetStationTwoPanel(Composite parent, int style) {
         super(parent, style);
         setLayout(new GridLayout(2, false));

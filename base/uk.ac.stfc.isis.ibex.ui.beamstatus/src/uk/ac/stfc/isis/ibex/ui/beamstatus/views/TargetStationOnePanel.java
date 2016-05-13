@@ -22,17 +22,19 @@ package uk.ac.stfc.isis.ibex.ui.beamstatus.views;
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.beans.BeanProperties;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.layout.GridData;
 
 import uk.ac.stfc.isis.ibex.beamstatus.BeamStatus;
 import uk.ac.stfc.isis.ibex.beamstatus.Observables.TargetStation1;
 
+/**
+ * The GUI panel for displaying information from target station 1.
+ */
 public class TargetStationOnePanel extends Composite {
-
     private final Label beam;
     private final Label pps;
     private final Label current;
@@ -43,6 +45,12 @@ public class TargetStationOnePanel extends Composite {
     private final Label hydrogenTemperature;
     private final Label muonKicker;
 
+    /**
+     * The constructor.
+     * 
+     * @param parent the parent
+     * @param style the SWT style
+     */
     public TargetStationOnePanel(Composite parent, int style) {
         super(parent, style);
         setLayout(new GridLayout(2, false));

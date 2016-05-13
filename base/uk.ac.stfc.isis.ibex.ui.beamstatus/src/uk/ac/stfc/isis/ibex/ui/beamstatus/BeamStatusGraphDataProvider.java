@@ -20,6 +20,7 @@
 package uk.ac.stfc.isis.ibex.ui.beamstatus;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.csstudio.swt.xygraph.dataprovider.IDataProvider;
 import org.csstudio.swt.xygraph.dataprovider.IDataProviderListener;
@@ -29,12 +30,12 @@ import org.csstudio.swt.xygraph.linearscale.Range;
 /**
  * Data provider for the XYGraph that shows the beam current from TS1 and TS2.
  * Most functionality is implemented to fit the interface. Main function is to
- * provide listeners for data changes in the model
+ * provide listeners for data changes in the model.
  */
 public class BeamStatusGraphDataProvider implements IDataProvider {
 
     /** List of listeners associated with the data. */
-    private final ArrayList<IDataProviderListener> listeners = new ArrayList<IDataProviderListener>();
+    private final List<IDataProviderListener> listeners = new ArrayList<IDataProviderListener>();
 
     @Override
     public int getSize() {

@@ -27,11 +27,17 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.part.ViewPart;
 
 
+/**
+ * The parent view for holding the various beam and news widgets.
+ */
 @SuppressWarnings("checkstyle:magicnumber")
 public class BeamStatusStatsAndNewsView extends ViewPart {
-
+    /** The view ID. */
     public static final String ID = "uk.ac.stfc.isis.ibex.ui.beamstatus.views.BeamStatusStatsAndNewsView"; //$NON-NLS-1$
 
+    /**
+     * The constructor.
+     */
     public BeamStatusStatsAndNewsView() {
         setPartName("BeamStatusView");
     }
@@ -71,7 +77,7 @@ public class BeamStatusStatsAndNewsView extends ViewPart {
     }
 
     /**
-     * Initialize the toolbar.
+     * Initialise the toolbar.
      */
     private void initializeToolBar() {
         @SuppressWarnings("unused")
@@ -79,7 +85,7 @@ public class BeamStatusStatsAndNewsView extends ViewPart {
     }
 
     /**
-     * Initialize the menu.
+     * Initialise the menu.
      */
     private void initializeMenu() {
         @SuppressWarnings("unused")

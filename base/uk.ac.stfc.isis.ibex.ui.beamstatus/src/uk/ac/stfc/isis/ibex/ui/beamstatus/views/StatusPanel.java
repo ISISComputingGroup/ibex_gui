@@ -19,16 +19,26 @@
 
 package uk.ac.stfc.isis.ibex.ui.beamstatus.views;
 
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.ExpandBar;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.layout.FillLayout;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.ExpandBar;
 import org.eclipse.swt.widgets.ExpandItem;
 
+/**
+ * The parent composite for the beam status widgets.
+ * 
+ */
 @SuppressWarnings("checkstyle:magicnumber")
 public class StatusPanel extends Composite {
 
+    /**
+     * The constructor.
+     * 
+     * @param parent the parent
+     * @param style the SWT style
+     */
     public StatusPanel(Composite parent, int style) {
         super(parent, style);
         setLayout(new FillLayout(SWT.HORIZONTAL));
