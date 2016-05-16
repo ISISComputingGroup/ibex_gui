@@ -49,6 +49,10 @@
     
     <module name="SuppressWarningsFilter"/>
     <module name="SuppressionCommentFilter"/>
+    
+    <module name="SuppressionFilter">
+        
+    </module>
 
     <!-- Checks for Headers                                -->
     <!-- See http://checkstyle.sf.net/config_header.html   -->
@@ -61,10 +65,12 @@
 
         <!-- Checks for Javadoc comments.                     -->
         <!-- See http://checkstyle.sf.net/config_javadoc.html -->
-        <!-- <module name="JavadocMethod"/>
+        <module name="JavadocMethod">
+            <property name="scope" value="public"/>
+        </module>
         <module name="JavadocType"/>
-        <module name="JavadocVariable"/>
-        <module name="JavadocStyle"/> -->
+        <!-- <module name="JavadocVariable"/> -->
+        <module name="JavadocStyle"/> 
 
 
         <!-- Checks for Naming Conventions.                  -->
