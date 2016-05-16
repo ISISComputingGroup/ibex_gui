@@ -34,6 +34,9 @@ import org.eclipse.swt.widgets.Text;
 
 import uk.ac.stfc.isis.ibex.dae.spectra.UpdatableSpectrum;
 
+/**
+ * Spectrum View - single graph with associated text controls.
+ */
 public class SpectrumView extends Composite {
 	
 	private Text number;
@@ -44,6 +47,12 @@ public class SpectrumView extends Composite {
 	private DataBindingContext bindingContext;
 	private UpdatableSpectrum spectrum;
 	
+    /**
+     * Instantiates a new spectrum view.
+     *
+     * @param parent the parent
+     * @param style the style
+     */
     @SuppressWarnings({ "checkstyle:magicnumber", "checkstyle:localvariablename" })
 	public SpectrumView(Composite parent, int style) {
 		super(parent, style);
@@ -79,6 +88,7 @@ public class SpectrumView extends Composite {
 			public void widgetSelected(SelectionEvent e) {
 				if (spectrum != null) {
 					spectrum.update();
+                    spectrumFigure.updateData();
 				}
 			}
 		});
@@ -87,6 +97,11 @@ public class SpectrumView extends Composite {
 		spectrumFigure.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 7, 1));
 	}
 
+    /**
+     * Sets the model for the spectrum.
+     *
+     * @param updatableSpectrum the new model
+     */
 	public void setModel(UpdatableSpectrum updatableSpectrum) {	
 		spectrum = updatableSpectrum;
 		
