@@ -36,8 +36,8 @@ import uk.ac.stfc.isis.ibex.configserver.configuration.AvailablePVSet;
 import uk.ac.stfc.isis.ibex.configserver.configuration.PVSet;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableIoc;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditablePVSet;
-import uk.ac.stfc.isis.ibex.ui.configserver.dialogs.MessageDisplayer;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.iocs.IIocDependentPanel;
+import uk.ac.stfc.isis.ibex.validators.MessageDisplayer;
 
 public class IocPVSetsEditorPanel extends Composite implements	IIocDependentPanel {
 	private MessageDisplayer messageDisplayer;

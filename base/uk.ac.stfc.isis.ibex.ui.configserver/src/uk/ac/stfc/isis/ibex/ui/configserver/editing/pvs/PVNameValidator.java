@@ -25,7 +25,7 @@ import org.eclipse.core.runtime.IStatus;
 
 import uk.ac.stfc.isis.ibex.configserver.configuration.PVDefaultValue;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableIoc;
-import uk.ac.stfc.isis.ibex.ui.configserver.dialogs.MessageDisplayer;
+import uk.ac.stfc.isis.ibex.validators.MessageDisplayer;
 
 public class PVNameValidator implements IValidator {
 	private static final String DUPLICATE_GROUP_MESSAGE = "Duplicate PV name";

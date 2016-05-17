@@ -19,21 +19,24 @@
 
 package uk.ac.stfc.isis.ibex.ui.dae.spectra;
 
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.Text;
-import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.widgets.Button;
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.beans.BeanProperties;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Text;
 
 import uk.ac.stfc.isis.ibex.dae.spectra.UpdatableSpectrum;
 
+/**
+ * Spectrum View - single graph with associated text controls.
+ */
 public class SpectrumView extends Composite {
 	
 	private Text number;
@@ -44,7 +47,13 @@ public class SpectrumView extends Composite {
 	private DataBindingContext bindingContext;
 	private UpdatableSpectrum spectrum;
 	
-	@SuppressWarnings({"checkstyle:magicnumber", "checkstyle:localvariablename"})
+    /**
+     * Instantiates a new spectrum view.
+     *
+     * @param parent the parent
+     * @param style the style
+     */
+    @SuppressWarnings({ "checkstyle:magicnumber", "checkstyle:localvariablename" })
 	public SpectrumView(Composite parent, int style) {
 		super(parent, style);
 		setLayout(new GridLayout(7, false));
@@ -79,6 +88,7 @@ public class SpectrumView extends Composite {
 			public void widgetSelected(SelectionEvent e) {
 				if (spectrum != null) {
 					spectrum.update();
+                    spectrumFigure.updateData();
 				}
 			}
 		});
@@ -87,6 +97,11 @@ public class SpectrumView extends Composite {
 		spectrumFigure.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 7, 1));
 	}
 
+    /**
+     * Sets the model for the spectrum.
+     *
+     * @param updatableSpectrum the new model
+     */
 	public void setModel(UpdatableSpectrum updatableSpectrum) {	
 		spectrum = updatableSpectrum;
 		

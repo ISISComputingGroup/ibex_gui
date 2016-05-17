@@ -24,18 +24,19 @@ import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ColumnWeightData;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TableViewerColumn;
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Table;
+import org.eclipse.swt.widgets.TableColumn;
 
 import uk.ac.stfc.isis.ibex.dae.experimentsetup.timechannels.TimeRegime;
 import uk.ac.stfc.isis.ibex.dae.experimentsetup.timechannels.TimeRegimeMode;
 import uk.ac.stfc.isis.ibex.dae.experimentsetup.timechannels.TimeRegimeRow;
 
+@SuppressWarnings({ "checkstyle:magicnumber", "checkstyle:localvariablename" })
 public class TimeRegimeView extends Composite {
 	
 	private Table table;	
@@ -64,7 +65,6 @@ public class TimeRegimeView extends Composite {
 		viewer.setInput(model.rows());
 	}
 	
-	@SuppressWarnings({"checkstyle:magicnumber", "checkstyle:localvariablename"})
 	private void createTableViewer() {
 		createTableLayout();
 
@@ -86,7 +86,6 @@ public class TimeRegimeView extends Composite {
 		viewer.setContentProvider(ArrayContentProvider.getInstance());		
 	}
 		
-	@SuppressWarnings({"checkstyle:magicnumber", "checkstyle:localvariablename"})
 	private void createTableLayout() {
 		// TableColumn layout needs it's own composite to work
 		tableComposite = new Composite(this, SWT.NONE);
@@ -99,7 +98,6 @@ public class TimeRegimeView extends Composite {
 		tableComposite.setLayout(tableLayout);
 	}
 	
-	@SuppressWarnings({"checkstyle:magicnumber", "checkstyle:localvariablename"})
 	private TableViewerColumn addColumn(String name, int weight) {
 		TableViewerColumn viewerColumn = new TableViewerColumn(viewer, SWT.NONE);
 		TableColumn column = viewerColumn.getColumn();

@@ -55,7 +55,6 @@ public class Group extends Composite {
 
 	public Group(Composite parent, int style, DisplayGroup group, boolean showHiddenBlocks) {
 		super(parent, style | SWT.BORDER);
-		this.parent = parent;
 		
 		// Add the blocks to the list if they are visible, or if showHiddenBlocks is true
 		List<DisplayBlock> blocksList = new ArrayList<>();
@@ -95,7 +94,7 @@ public class Group extends Composite {
 				
 				if (position >= blocksList.size()) {
 					// put blank labels in these name and value columns
-					for(int k = 0; k < NUMBER_OF_FIELDS; k++){
+                    for (int k = 0; k < NUMBER_OF_FIELDS; k++) {
 						labelMaker(this, SWT.NONE, "" , "", null);	
 					}			
 					break;
@@ -116,7 +115,7 @@ public class Group extends Composite {
                 Label blockStatus = labelMaker(this, SWT.CENTER, "", "Run Control Status", null);
 				FontDescriptor boldDescriptor = FontDescriptor.createFrom(blockStatus.getFont()).setStyle(SWT.BOLD);
 				Font boldFont = boldDescriptor.createFont(blockStatus.getDisplay());
-				blockStatus.setFont( boldFont );
+                blockStatus.setFont(boldFont);
 				GridData gdStatus = new GridData(SWT.RIGHT, SWT.NONE, false, false, 1, 1);
 				gdStatus.widthHint = 17;
 				blockStatus.setLayoutData(gdStatus);

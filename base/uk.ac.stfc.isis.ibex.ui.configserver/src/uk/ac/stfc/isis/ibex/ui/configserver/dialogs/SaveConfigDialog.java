@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.TitleAreaDialog;
 import org.eclipse.swt.SWT;
@@ -30,19 +31,26 @@ import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Text;
 
 import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 
+import uk.ac.stfc.isis.ibex.configserver.Configurations;
+import uk.ac.stfc.isis.ibex.validators.BlockServerNameValidator;
+import uk.ac.stfc.isis.ibex.validators.SummaryDescriptionValidator;
+
+/**
+ * Dialogue for saving a configuration.
+ */
 @SuppressWarnings("checkstyle:magicnumber")
 public class SaveConfigDialog extends TitleAreaDialog {
 
@@ -64,6 +72,20 @@ public class SaveConfigDialog extends TitleAreaDialog {
 	private boolean hasComponents;
 	private boolean asComponent = false;
 	
+    /**
+     * Instantiates a new save configuration dialog.
+     *
+     * @param parent the parent
+     * @param currentName the current name
+     * @param currentDesc the current description
+     * @param existingConfigs the existing configuration names (so not to
+     *            duplicate)
+     * @param existingComponents the existing component names (so not to
+     *            duplicate)
+     * @param isConfig current configuration
+     * @param hasComponents true if this configuration has components; false
+     *            otherwise
+     */
 	public SaveConfigDialog(
 			Shell parent, 
 			String currentName, 
@@ -82,14 +104,23 @@ public class SaveConfigDialog extends TitleAreaDialog {
 		this.hasComponents = hasComponents;
 	}
 	
+    /**
+     * @return the new name set in this dialogue
+     */
 	public String getNewName() {
 		return newName;
 	}
 	
+    /**
+     * @return the new description set
+     */
 	public String getNewDescription() {
 		return newDesc;
 	}
 	
+    /**
+     * @return true, if when saved this will be a component; false otherwise
+     */
 	public boolean willBeComponent() {
 		return !isConfig || asComponent;
 	}
@@ -198,6 +229,9 @@ public class SaveConfigDialog extends TitleAreaDialog {
 		});
 		createButton(parent, IDialogConstants.CANCEL_ID,
 				IDialogConstants.CANCEL_LABEL, false);
+
+        // after creating buttons update their state
+        update();
 	}
 	
 	@Override
@@ -311,8 +345,13 @@ public class SaveConfigDialog extends TitleAreaDialog {
 			return "Name contains invalid characters";
 		}
 		
-		if (description.length() == 0) {
-			return "Description cannot be blank";
+        BlockServerNameValidator configDescritpionRules =
+                Configurations.getInstance().variables().configDescritpionRules.getValue();
+        SummaryDescriptionValidator descriptionValidator =
+                new SummaryDescriptionValidator(null, configDescritpionRules);
+		IStatus status = descriptionValidator.validate(description);
+		if (!status.isOK()) {
+		    return status.getMessage();
 		}
 		
 		return "";

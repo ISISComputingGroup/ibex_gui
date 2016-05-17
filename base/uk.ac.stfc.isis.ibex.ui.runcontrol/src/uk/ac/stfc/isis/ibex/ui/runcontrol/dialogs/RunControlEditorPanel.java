@@ -50,7 +50,7 @@ import uk.ac.stfc.isis.ibex.ui.runcontrol.RunControlViewModel;
 /**
  * A panel to edit the run control settings for the selected block.
  */
-@SuppressWarnings({"checkstyle:magicnumber"})
+@SuppressWarnings("checkstyle:magicnumber")
 public class RunControlEditorPanel extends Composite {
     private static final String RESET_ALL_DIALOG_TITLE = "Confirm Run-Control Restore";
     private static final String RESET_ALL_DIALOG_MESSAGE = "Are you sure you want to restore all run-control settings to their configuration values?";
@@ -71,7 +71,8 @@ public class RunControlEditorPanel extends Composite {
 
     private final RunControlViewModel viewModel;
 	
-    Subscription saveAsSubscription;
+    private Subscription saveAsSubscription;
+
 	private SelectionAdapter sendChanges = new SelectionAdapter() {
 		@Override
 		public void widgetSelected(SelectionEvent e) {

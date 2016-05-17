@@ -45,7 +45,7 @@ import uk.ac.stfc.isis.ibex.ui.runcontrol.RunControlViewModel;
  * Contains a table of blocks, a RunControlEditorPanel and a reset all blocks
  * button.
  */
-@SuppressWarnings({"checkstyle:magicnumber"})
+@SuppressWarnings("checkstyle:magicnumber")
 public class RunControlSettingsPanel extends Composite {
 	private final Display display = Display.getDefault();
 	private RunControlSettingsTable table;

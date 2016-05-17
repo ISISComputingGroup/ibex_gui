@@ -42,7 +42,7 @@ import org.eclipse.swt.widgets.MessageBox;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableBlock;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
 
-@SuppressWarnings({"checkstyle:magicnumber", "checkstyle:localvariablename"})
+@SuppressWarnings({ "checkstyle:magicnumber", "checkstyle:localvariablename" })
 public class BlocksEditorPanel extends Composite {
 
 	private final BlocksTable table;

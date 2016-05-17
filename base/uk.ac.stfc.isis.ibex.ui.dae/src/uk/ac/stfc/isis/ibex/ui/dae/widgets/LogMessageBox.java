@@ -45,7 +45,6 @@ public class LogMessageBox extends Composite {
 		logDisplay = new LogDisplay(this, null);
 		logDisplay.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		
-		// TODO: get the name of the DAE IOC so that only messages coming from it are shown
 		String daeName = "ISISDAE_01";
 		
 		LogMessageFilter filter = new LogMessageFilter(LogMessageFields.CLIENT_NAME, daeName, false);

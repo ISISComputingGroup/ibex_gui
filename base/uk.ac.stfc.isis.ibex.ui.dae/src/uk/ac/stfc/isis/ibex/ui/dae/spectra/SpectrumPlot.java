@@ -22,21 +22,38 @@ package uk.ac.stfc.isis.ibex.ui.dae.spectra;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
+import org.apache.logging.log4j.Logger;
 import org.eclipse.draw2d.LightweightSystem;
 import org.eclipse.nebula.visualization.xygraph.dataprovider.CircularBufferDataProvider;
+import org.eclipse.nebula.visualization.xygraph.dataprovider.CircularBufferDataProvider.UpdateMode;
 import org.eclipse.nebula.visualization.xygraph.figures.Trace;
 import org.eclipse.nebula.visualization.xygraph.figures.XYGraph;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.layout.FillLayout;
 
 import uk.ac.stfc.isis.ibex.dae.spectra.Spectrum;
+import uk.ac.stfc.isis.ibex.logger.IsisLog;
+import uk.ac.stfc.isis.ibex.ui.Utils;
 
+/**
+ * A single spectrum plot UI component.
+ */
+@SuppressWarnings("checkstyle:magicnumber")
 public class SpectrumPlot extends Canvas {
 
-	private XYGraph plot;
+    /** Logger. */
+    private static final Logger LOG = IsisLog.getLogger(SpectrumPlot.class);
+
+    /**
+     * Buffer size for spectrum data, should be the same size as
+     * IN:INSTRUMENT:DAE:SPEC:1:2:Y.
+     */
+    private static final int DAE_SPECTRUM_BUFFER_SIZE = 8000;
+
+    private XYGraph plot;
 	private Trace trace;
 	private CircularBufferDataProvider traceDataProvider;	
 	private Spectrum spectrum;
@@ -57,7 +74,12 @@ public class SpectrumPlot extends Canvas {
 		}
 	};
 	
-	@SuppressWarnings({"checkstyle:magicnumber", "checkstyle:localvariablename"})
+    /**
+     * Instantiates a new spectrum plot.
+     *
+     * @param parent the parent
+     * @param style the style
+     */
 	public SpectrumPlot(Composite parent, int style) {
 		super(parent, SWT.BORDER);
 		setLayout(new FillLayout(SWT.HORIZONTAL));
@@ -71,25 +93,33 @@ public class SpectrumPlot extends Canvas {
 		lws.setContents(plot);
 		
 		traceDataProvider = new CircularBufferDataProvider(false);
-		traceDataProvider.setBufferSize(5000);
+        traceDataProvider.setBufferSize(DAE_SPECTRUM_BUFFER_SIZE);
 		traceDataProvider.setUpdateDelay(1000);
-		
+        traceDataProvider.setConcatenate_data(false);
+        traceDataProvider.setUpdateMode(UpdateMode.X_OR_Y);
+
 		trace = new Trace("Spectrum", plot.primaryXAxis, plot.primaryYAxis, traceDataProvider);
 		trace.setAntiAliasing(true);
 		
-		plot.primaryXAxis.setTitle("Time");
+        plot.primaryXAxis.setTitle("Count (/" + Utils.MU + "s)");
 		plot.primaryXAxis.setDashGridLine(true);
 		plot.primaryXAxis.setAutoScale(true);
-		plot.primaryXAxis.setAutoScaleThreshold(0);
+        plot.primaryXAxis.setAutoScaleThreshold(0);
+        plot.primaryXAxis.setFormatPattern("0");
 				
-		plot.primaryYAxis.setTitle("Amplitude");
+        plot.primaryYAxis.setTitle("Time-of-flight (" + Utils.MU + "s)");
 		plot.primaryYAxis.setDashGridLine(true);
 		plot.primaryYAxis.setAutoScale(true);
-		plot.primaryYAxis.setAutoScaleThreshold(0);
-
+        plot.primaryYAxis.setAutoScaleThreshold(0);
+        plot.primaryYAxis.setFormatPattern("0");
 		plot.addTrace(trace);
 	}
 
+    /**
+     * Sets the model for the plot.
+     *
+     * @param newSpectrum the new spectrum model
+     */
 	public void setModel(final Spectrum newSpectrum) {
 		if (spectrum != null) {
 			spectrum.removePropertyChangeListener(xDataListener);
@@ -97,20 +127,30 @@ public class SpectrumPlot extends Canvas {
 		}
 		
 		spectrum = newSpectrum;
-
 		spectrum.addPropertyChangeListener("xData", xDataListener);
 		spectrum.addPropertyChangeListener("yData", yDataListener);
+
+		if (spectrum.xData().length > DAE_SPECTRUM_BUFFER_SIZE || spectrum.yData().length > DAE_SPECTRUM_BUFFER_SIZE) {
+            LOG.warn("DAE graph is clipped because DAE_SPECTRUM_BUFFER_SIZE is not large enough.");
+		}
 		
 		traceDataProvider.clearTrace();
-		setXData();
-		setYData();
+        
+		updateData();
 	}
+
+    /**
+     * Update both the x and y data.
+     */
+    public void updateData() {
+        setXData();
+		setYData();
+    }
 
 	private void setXData() {
 		DISPLAY.asyncExec(new Runnable() {	
 			@Override
 			public void run() {
-				traceDataProvider.clearTrace();
 				traceDataProvider.setCurrentXDataArray(spectrum.xData());
 			}
 		});
@@ -120,7 +160,6 @@ public class SpectrumPlot extends Canvas {
 		DISPLAY.asyncExec(new Runnable() {	
 			@Override
 			public void run() {
-				traceDataProvider.clearTrace();
 				traceDataProvider.setCurrentYDataArray(spectrum.yData());
 			}
 		});

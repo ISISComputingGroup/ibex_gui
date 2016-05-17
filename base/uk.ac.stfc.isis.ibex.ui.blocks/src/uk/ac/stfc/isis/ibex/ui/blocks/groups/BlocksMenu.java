@@ -58,7 +58,7 @@ public class BlocksMenu extends MenuManager {
                 try {
                     editBlockHandler.execute(new ExecutionEvent());
                 } catch (ExecutionException e) {
-                    // do nothing
+                    e.printStackTrace();
                 }
             }
         };

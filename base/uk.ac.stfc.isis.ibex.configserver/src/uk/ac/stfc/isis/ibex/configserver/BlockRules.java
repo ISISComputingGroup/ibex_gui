@@ -22,28 +22,59 @@ package uk.ac.stfc.isis.ibex.configserver;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Rules for creating and editing blocks in the configuration. These are
+ * typically set from the block server
+ */
 public class BlockRules {
 	
+    /** The regex which the block name must obey. */
 	private String regex;
-	private String regexMessage;
+
+    /** The regex_message. */
+    private String regexMessage;
+
+    /** The disallowed. */
 	private List<String> disallowed = new ArrayList<>();
 	
+    /**
+     * Instantiates new block rules.
+     *
+     * @param regex the regex to use for the name
+     * @param regexMessage the regex message to display if the name fails the
+     *            regex
+     * @param disallowed a list of disallowed names
+     */
 	public BlockRules(String regex, String regexMessage, List<String> disallowed) {
 		this.regex = regex;
-		this.regexMessage = regexMessage;
+        this.regexMessage = regexMessage;
 		this.disallowed = disallowed;
 	}
 	
+    /**
+     * Gets disallowed names.
+     *
+     * @return the disallowed names
+     */
 	public List<String> getDisallowed() {
 		return disallowed;
 	}
 	
+    /**
+     * Gets the regex which the name should conform to.
+     *
+     * @return the regex for the name
+     */
 	public String getRegex() {
 		return regex;
 	}
 	
+    /**
+     * @return the regex error message to be displayed if the name does not
+     *         conform to the regex
+     */
 	public String getRegexErrorMessage() {
-		return regexMessage;
+        return regexMessage;
 	}
 	
 }

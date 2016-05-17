@@ -87,7 +87,7 @@ public class Instrument implements BundleActivator {
         List<InstrumentInfo> instruments = new ArrayList<>();
         instruments.add(localhost);
 
-        InstrumentListObservable instrumentsObservable = new InstrumentListObservable();
+        InstrumentListObservable instrumentsObservable = new InstrumentListObservable(LOG);
         Collection<InstrumentInfo> unorderedInstruments = instrumentsObservable.getInstruments();
         List<InstrumentInfo> instrumentsAlphabetical = new ArrayList<>(unorderedInstruments);
         Collections.sort(instrumentsAlphabetical, alphabeticalNameComparator());
@@ -161,6 +161,7 @@ public class Instrument implements BundleActivator {
 				InstrumentInfoReceiver receiver = (InstrumentInfoReceiver) obj;
 				receiver.setInstrument(selectedInstrument);
 			} catch (CoreException e) {
+                e.printStackTrace();
 			}
 		}
 	}
