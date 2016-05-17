@@ -19,9 +19,6 @@
 
 package uk.ac.stfc.isis.ibex.configserver.displaying;
 
-import org.eclipse.swt.graphics.Color;
-import org.eclipse.wb.swt.SWTResourceManager;
-
 import com.google.common.base.Strings;
 
 import uk.ac.stfc.isis.ibex.configserver.configuration.Block;
@@ -39,26 +36,15 @@ import uk.ac.stfc.isis.ibex.model.ModelObject;
  *
  */
 public class DisplayBlock extends ModelObject {
-
-    public static final String TEXT_COLOR = "textColor";
-    public static final String BACKGROUND_COLOR = "backgroundColor";
-
-    public static final Color DARK_RED = SWTResourceManager.getColor(192, 0, 0);
-    public static final Color WHITE = SWTResourceManager.getColor(255, 255, 255);
-    public static final Color BLACK = SWTResourceManager.getColor(0, 0, 0);
-    public static final Color GREEN = SWTResourceManager.getColor(51, 255, 153);
-
     private final String blockServerAlias;
-
     private final Block block;
-
     private String value;
     private String description;
 
     /**
      * Indicates whether the block in currently within run-control range
      */
-    private Boolean inRange;
+    private boolean inRange;
 
     /**
      * The current low limit run-control setting. This can be different from
@@ -78,9 +64,11 @@ public class DisplayBlock extends ModelObject {
      */
     private boolean runcontrol;
 
-    private Color textColor;
-    private Color backgroundColor;
-    private String symbol;
+    /**
+     * Specifies the overall run-control state, for example: enabled and in
+     * range.
+     */
+    private RunControlState runControlState = RunControlState.DISABLED;
 
     private final BaseObserver<String> valueAdapter = new BaseObserver<String>() {
         @Override
@@ -129,6 +117,8 @@ public class DisplayBlock extends ModelObject {
                 // If in doubt set to true
                 setInRange(true);
             }
+
+            setState();
         }
 
         @Override
@@ -183,6 +173,8 @@ public class DisplayBlock extends ModelObject {
             	// If in doubt set to false
                 setEnabled(false);
             }
+
+            setState();
         }
 
         @Override
@@ -211,10 +203,6 @@ public class DisplayBlock extends ModelObject {
         lowLimitSource.addObserver(lowLimitAdapter);
         highLimitSource.addObserver(highLimitAdapter);
         enabledSource.addObserver(enabledAdapter);
-
-        // Initialise text and background colours
-        setColors(true);
-        setSymbol(true);
     }
 
     public String getName() {
@@ -282,16 +270,11 @@ public class DisplayBlock extends ModelObject {
         return block.getRCEnabled();
     }
 
-    public Color getTextColor() {
-        return textColor;
-    }
-
-    public Color getBackgroundColor() {
-        return backgroundColor;
-    }
-    
-    public String getSymbol() {
-    	return symbol;
+    /**
+     * @return the overall run-control status.
+     */
+    public RunControlState getRunControlState() {
+        return runControlState;
     }
 
     public String blockServerAlias() {
@@ -307,8 +290,6 @@ public class DisplayBlock extends ModelObject {
     }
 
     private synchronized void setInRange(Boolean inRange) {
-        setColors(inRange);
-        setSymbol(inRange);
         firePropertyChange("inRange", this.inRange, this.inRange = inRange);
     }
 
@@ -324,31 +305,19 @@ public class DisplayBlock extends ModelObject {
         firePropertyChange("enabled", this.runcontrol, this.runcontrol = enabled);
     }
 
-	private synchronized void setSymbol(boolean inRange) {
-		String s;
-		if (inRange) {
-			s = "\u2713";
-		} else {
-			s = "X";
-		}
-		firePropertyChange("symbol", this.symbol, this.symbol = s);
-	}
-
-	private synchronized void setColors(boolean inRange) {
-		if (inRange) {
-			setTextColor(BLACK);
-			setBackgroundColor(GREEN);
-		} else {
-			setTextColor(WHITE);
-			setBackgroundColor(DARK_RED);
-		}
-	}
-
-    private synchronized void setTextColor(Color color) {
-        firePropertyChange(TEXT_COLOR, this.textColor, this.textColor = color);
+    private synchronized void setState() {
+        if (runcontrol) {
+            if (inRange) {
+                firePropertyChange("runControlState", this.runControlState,
+                        this.runControlState = RunControlState.ENABLED_IN_RANGE);
+            } else {
+                firePropertyChange("runControlState", this.runControlState,
+                        this.runControlState = RunControlState.ENABLED_OUT_RANGE);
+            }
+        } else {
+            firePropertyChange("runControlState", this.runControlState,
+                    this.runControlState = RunControlState.DISABLED);
+        }
     }
 
-    private synchronized void setBackgroundColor(Color color) {
-        firePropertyChange(BACKGROUND_COLOR, this.backgroundColor, this.backgroundColor = color);
-    }
 }

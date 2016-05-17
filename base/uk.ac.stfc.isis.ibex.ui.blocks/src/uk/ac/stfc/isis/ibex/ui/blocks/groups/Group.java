@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.core.databinding.DataBindingContext;
+import org.eclipse.core.databinding.UpdateValueStrategy;
 import org.eclipse.core.databinding.beans.BeanProperties;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.resource.FontDescriptor;
@@ -50,7 +51,8 @@ public class Group extends Composite {
     private static final Color WHITE = SWTResourceManager.getColor(SWT.COLOR_WHITE);
 	private static final int NUMBER_OF_ROWS = 9;
 	private static final int NUMBER_OF_FIELDS = 3;
-			
+    private Composite parent;
+
 	public Group(Composite parent, int style, DisplayGroup group, boolean showHiddenBlocks) {
 		super(parent, style | SWT.BORDER);
 		
@@ -110,7 +112,7 @@ public class Group extends Composite {
 				gdValue.widthHint = 70;
 				blockValue.setLayoutData(gdValue);
 				
-                Label blockStatus = labelMaker(this, SWT.CENTER, currentBlock.getSymbol(), "Run Control Status", null);
+                Label blockStatus = labelMaker(this, SWT.CENTER, "", "Run Control Status", null);
 				FontDescriptor boldDescriptor = FontDescriptor.createFrom(blockStatus.getFont()).setStyle(SWT.BOLD);
 				Font boldFont = boldDescriptor.createFont(blockStatus.getDisplay());
                 blockStatus.setFont(boldFont);
@@ -131,17 +133,26 @@ public class Group extends Composite {
 						WidgetProperties.visible().observe(blockStatus), 
 						BeanProperties.value("enabled").observe(currentBlock));
 				
+                UpdateValueStrategy symbolStrategy = new UpdateValueStrategy();
+                symbolStrategy.setConverter(new RunControlSymbolConverter());
+
 				bindingContext.bindValue(
 						WidgetProperties.text().observe(blockStatus), 
-						BeanProperties.value("symbol").observe(currentBlock));
+                        BeanProperties.value("runControlState").observe(currentBlock), null, symbolStrategy);
 				
+                UpdateValueStrategy fgColourStrategy = new UpdateValueStrategy();
+                fgColourStrategy.setConverter(new RunControlForegroundColourConverter());
+
 				bindingContext.bindValue(
 						WidgetProperties.foreground().observe(blockStatus), 
-						BeanProperties.value(DisplayBlock.TEXT_COLOR).observe(currentBlock));
+                        BeanProperties.value("runControlState").observe(currentBlock), null, fgColourStrategy);
+
+                UpdateValueStrategy bgColourStrategy = new UpdateValueStrategy();
+                bgColourStrategy.setConverter(new RunControlBackgroundColourConverter());
 
 				bindingContext.bindValue(
 						WidgetProperties.background().observe(blockStatus), 
-						BeanProperties.value(DisplayBlock.BACKGROUND_COLOR).observe(currentBlock));
+                        BeanProperties.value("runControlState").observe(currentBlock), null, bgColourStrategy);
 			}
 		}
 	}
