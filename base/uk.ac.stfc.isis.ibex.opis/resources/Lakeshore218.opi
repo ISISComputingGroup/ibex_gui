@@ -308,7 +308,49 @@ $(trace_0_y_pv_value)</tooltip>
           <exp bool_exp="pv0==0">
             <value>false</value>
           </exp>
-          <pv trig="true">loc://t1vis("1")</pv>
+          <pv trig="true">loc://$(DID):LAKESHORE218_01:TEMP1:VISIBLE(1)</pv>
+        </rule>
+        <rule name="Trace1_visibility" prop_id="trace_1_visible" out_exp="false">
+          <exp bool_exp="pv0==0">
+            <value>false</value>
+          </exp>
+          <pv trig="true">loc://$(DID):LAKESHORE218_01:TEMP2:VISIBLE(1)</pv>
+        </rule>
+        <rule name="Trace2_visibility" prop_id="trace_2_visible" out_exp="false">
+          <exp bool_exp="pv0==0">
+            <value>false</value>
+          </exp>
+          <pv trig="true">loc://$(DID):LAKESHORE218_01:TEMP3:VISIBLE(1)</pv>
+        </rule>
+        <rule name="Trace3_visibility" prop_id="trace_3_visible" out_exp="false">
+          <exp bool_exp="pv0==0">
+            <value>false</value>
+          </exp>
+          <pv trig="true">loc://$(DID):LAKESHORE218_01:TEMP4:VISIBLE(1)</pv>
+        </rule>
+        <rule name="Trace4_visibility" prop_id="trace_4_visible" out_exp="false">
+          <exp bool_exp="pv0==0">
+            <value>false</value>
+          </exp>
+          <pv trig="true">loc://$(DID):LAKESHORE218_01:TEMP5:VISIBLE(1)</pv>
+        </rule>
+        <rule name="Trace5_visibility" prop_id="trace_5_visible" out_exp="false">
+          <exp bool_exp="pv0==0">
+            <value>false</value>
+          </exp>
+          <pv trig="true">loc://$(DID):LAKESHORE218_01:TEMP6:VISIBLE(1)</pv>
+        </rule>
+        <rule name="Trace6_visibility" prop_id="trace_6_visible" out_exp="false">
+          <exp bool_exp="pv0==0">
+            <value>false</value>
+          </exp>
+          <pv trig="true">loc://$(DID):LAKESHORE218_01:TEMP7:VISIBLE(1)</pv>
+        </rule>
+        <rule name="Trace7_visibility" prop_id="trace_7_visible" out_exp="false">
+          <exp bool_exp="pv0==0">
+            <value>false</value>
+          </exp>
+          <pv trig="true">loc://$(DID):LAKESHORE218_01:TEMP8:VISIBLE(1)</pv>
         </rule>
       </rules>
       <trace_5_plot_mode>0</trace_5_plot_mode>
@@ -741,7 +783,7 @@ $(pv_value)</tooltip>
         <keep_wh_ratio>false</keep_wh_ratio>
       </scale_options>
       <visible>true</visible>
-      <pv_name>loc://$(DID):LAKESHORE218:TEMP1:VISIBLE(1)</pv_name>
+      <pv_name>loc://$(DID):LAKESHORE218_01:TEMP1:VISIBLE(1)</pv_name>
       <border_color>
         <color red="0" green="128" blue="255" />
       </border_color>
@@ -784,7 +826,7 @@ $(pv_value)</tooltip>
         <keep_wh_ratio>false</keep_wh_ratio>
       </scale_options>
       <visible>true</visible>
-      <pv_name>loc://$(DID):LAKESHORE218:TEMP3:VISIBLE(1)</pv_name>
+      <pv_name>loc://$(DID):LAKESHORE218_01:TEMP3:VISIBLE(1)</pv_name>
       <border_color>
         <color red="0" green="128" blue="255" />
       </border_color>
@@ -929,7 +971,7 @@ $(pv_value)</tooltip>
         <keep_wh_ratio>false</keep_wh_ratio>
       </scale_options>
       <visible>true</visible>
-      <pv_name>loc://$(DID):LAKESHORE218:TEMP4:VISIBLE(1)</pv_name>
+      <pv_name>loc://$(DID):LAKESHORE218_01:TEMP4:VISIBLE(1)</pv_name>
       <border_color>
         <color red="0" green="128" blue="255" />
       </border_color>
@@ -972,7 +1014,7 @@ $(pv_value)</tooltip>
         <keep_wh_ratio>false</keep_wh_ratio>
       </scale_options>
       <visible>true</visible>
-      <pv_name>loc://$(DID):LAKESHORE218:TEMP6:VISIBLE(1)</pv_name>
+      <pv_name>loc://$(DID):LAKESHORE218_01:TEMP6:VISIBLE(1)</pv_name>
       <border_color>
         <color red="0" green="128" blue="255" />
       </border_color>
@@ -1015,7 +1057,7 @@ $(pv_value)</tooltip>
         <keep_wh_ratio>false</keep_wh_ratio>
       </scale_options>
       <visible>true</visible>
-      <pv_name>loc://$(DID):LAKESHORE218:TEMP2:VISIBLE(1)</pv_name>
+      <pv_name>loc://$(DID):LAKESHORE218_01:TEMP2:VISIBLE(1)</pv_name>
       <border_color>
         <color red="0" green="128" blue="255" />
       </border_color>
@@ -1109,7 +1151,7 @@ $(pv_value)</tooltip>
         <keep_wh_ratio>false</keep_wh_ratio>
       </scale_options>
       <visible>true</visible>
-      <pv_name>loc://$(DID):LAKESHORE218:TEMP5:VISIBLE(1)</pv_name>
+      <pv_name>loc://$(DID):LAKESHORE218_01:TEMP5:VISIBLE(1)</pv_name>
       <border_color>
         <color red="0" green="128" blue="255" />
       </border_color>
@@ -1152,7 +1194,7 @@ $(pv_value)</tooltip>
         <keep_wh_ratio>false</keep_wh_ratio>
       </scale_options>
       <visible>true</visible>
-      <pv_name>loc://$(DID):LAKESHORE218:TEMP7:VISIBLE(1)</pv_name>
+      <pv_name>loc://$(DID):LAKESHORE218_01:TEMP7:VISIBLE(1)</pv_name>
       <border_color>
         <color red="0" green="128" blue="255" />
       </border_color>
@@ -1195,7 +1237,7 @@ $(pv_value)</tooltip>
         <keep_wh_ratio>false</keep_wh_ratio>
       </scale_options>
       <visible>true</visible>
-      <pv_name>loc://$(DID):LAKESHORE218:TEMP8:VISIBLE(1)</pv_name>
+      <pv_name>loc://$(DID):LAKESHORE218_01:TEMP8:VISIBLE(1)</pv_name>
       <border_color>
         <color red="0" green="128" blue="255" />
       </border_color>
