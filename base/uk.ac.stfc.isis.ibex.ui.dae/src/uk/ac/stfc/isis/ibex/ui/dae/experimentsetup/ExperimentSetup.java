@@ -113,4 +113,10 @@ public class ExperimentSetup extends Composite {
 		periods.setModel(viewModel.periodSettings());
 	}
 
+    public void setChildrenEnabled(boolean isEnabled) {
+        timeChannels.setEnabled(isEnabled);
+        dataAcquisition.setEnabled(isEnabled);
+        periods.setEnabled(isEnabled);
+    }
+
 }
