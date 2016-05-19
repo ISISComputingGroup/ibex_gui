@@ -22,40 +22,26 @@
  */
 package uk.ac.stfc.isis.ibex.devicescreens;
 
-import java.util.ArrayList;
-
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlElementWrapper;
-import javax.xml.bind.annotation.XmlRootElement;
-
 import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
+import uk.ac.stfc.isis.ibex.epics.pv.Closer;
 
 /**
  * Some Comment Here
  */
-@XmlRootElement(name = "devicescreens")
-@XmlAccessorType(XmlAccessType.FIELD)
-public class DeviceScreens {
-    @XmlElementWrapper(name = "devices")
-    @XmlElement(name = "device", type = Device.class)
-    private ArrayList<Device> devices;
+public class DeviceScreens extends Closer {
     private DeviceScreenVariables variables;
-    private String valueString;
 
     public DeviceScreens() {
-        devices = new ArrayList<Device>();
-        variables = new DeviceScreenVariables();
+        variables = registerForClose(new DeviceScreenVariables());
     }
 
     /**
-     * @return the devices
+     * @return A forwarding observable for the contents of the device screens
+     *         PV.
      */
     // public ArrayList<Device> getDevices() {
     public ForwardingObservable<String> getDevices() {
-        ForwardingObservable<String> observable = variables.getDeviceScreens("CS:INSTLIST");
-        return observable;
+        return variables.getDeviceScreens();
     }
 
 }

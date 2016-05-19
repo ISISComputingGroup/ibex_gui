@@ -26,6 +26,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 
 import uk.ac.stfc.isis.ibex.devicescreens.DeviceScreens;
@@ -39,11 +40,17 @@ import uk.ac.stfc.isis.ibex.epics.observing.Observer;
 public class Panel extends Composite {
 
     private Label lblRbNumber;
-
+    private final Display display = Display.getCurrent();
     private final Observer<String> pvObserver = new BaseObserver<String>() {
         @Override
         public void onValue(String value) {
-            lblRbNumber.setText(value);
+            display.asyncExec(new Runnable() {
+                @Override
+                public void run() {
+                    setLabelValue(value);
+                    System.out.println(value);
+                }
+            });
         }
 
         @Override
@@ -55,6 +62,10 @@ public class Panel extends Composite {
         public void onConnectionStatus(boolean isConnected) {
         }
     };
+
+    private void setLabelValue(String value) {
+        lblRbNumber.setText(value);
+    }
 
     /**
      * @param parent
