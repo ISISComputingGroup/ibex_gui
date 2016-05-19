@@ -31,7 +31,6 @@ import org.eclipse.swt.widgets.Label;
 
 import uk.ac.stfc.isis.ibex.devicescreens.DeviceScreens;
 import uk.ac.stfc.isis.ibex.epics.observing.BaseObserver;
-import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.Observer;
 
 /**
@@ -83,9 +82,7 @@ public class Panel extends Composite {
         composite.setLayout(new GridLayout(5, false));
 
         lblRbNumber = new Label(composite, SWT.NONE);
-        DeviceScreens screens = new DeviceScreens();
-        ForwardingObservable<String> screensObservable = screens.getDevices();
-        screensObservable.addObserver(pvObserver);
+        (new DeviceScreens()).getDevices().addObserver(pvObserver);
     }
 
 }
