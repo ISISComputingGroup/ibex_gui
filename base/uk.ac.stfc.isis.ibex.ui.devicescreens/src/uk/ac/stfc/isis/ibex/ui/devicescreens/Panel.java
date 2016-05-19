@@ -48,7 +48,6 @@ public class Panel extends Composite {
                 @Override
                 public void run() {
                     setLabelValue(value);
-                    System.out.println(value);
                 }
             });
         }
@@ -65,6 +64,10 @@ public class Panel extends Composite {
 
     private void setLabelValue(String value) {
         lblRbNumber.setText(value);
+
+        // Need to call this, otherwise the label text will be set, but the view
+        // won't be updated
+        lblRbNumber.getParent().layout();
     }
 
     /**
