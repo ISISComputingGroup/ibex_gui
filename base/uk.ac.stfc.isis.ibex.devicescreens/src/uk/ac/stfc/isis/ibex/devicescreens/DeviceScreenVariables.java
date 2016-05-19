@@ -25,9 +25,7 @@ package uk.ac.stfc.isis.ibex.devicescreens;
 import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.epics.switching.ObservableFactory;
 import uk.ac.stfc.isis.ibex.epics.switching.OnInstrumentSwitch;
-import uk.ac.stfc.isis.ibex.instrument.InstrumentVariables;
 import uk.ac.stfc.isis.ibex.instrument.channels.CompressedCharWaveformChannel;
-import uk.ac.stfc.isis.ibex.synoptic.internal.InstrumentDescriptionParser;
 
 /**
  * 
@@ -36,9 +34,8 @@ public class DeviceScreenVariables {
 
     private ObservableFactory switchingObservableFactory = new ObservableFactory(OnInstrumentSwitch.SWITCH);
 
-    public <T> ForwardingObservable<T> getDeviceScreens(String synopticPV) {
-        return InstrumentVariables.convert(readCompressedClosing("POINT:BUSI:CS:BLOCKSERVER:GET_SCREENS"),
-                new InstrumentDescriptionParser<T>());
+    public ForwardingObservable<String> getDeviceScreens(String synopticPV) {
+        return readCompressedClosing(synopticPV);
     }
 
     private ForwardingObservable<String> readCompressedClosing(String address) {

@@ -28,10 +28,33 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 
+import uk.ac.stfc.isis.ibex.devicescreens.DeviceScreens;
+import uk.ac.stfc.isis.ibex.epics.observing.BaseObserver;
+import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
+import uk.ac.stfc.isis.ibex.epics.observing.Observer;
+
 /**
  * 
  */
 public class Panel extends Composite {
+
+    private Label lblRbNumber;
+
+    private final Observer<String> pvObserver = new BaseObserver<String>() {
+        @Override
+        public void onValue(String value) {
+            lblRbNumber.setText(value);
+        }
+
+        @Override
+        public void onError(Exception e) {
+            e.printStackTrace();
+        }
+
+        @Override
+        public void onConnectionStatus(boolean isConnected) {
+        }
+    };
 
     /**
      * @param parent
@@ -45,8 +68,10 @@ public class Panel extends Composite {
         Composite composite = new Composite(this, SWT.NONE);
         composite.setLayout(new GridLayout(5, false));
 
-        Label lblRbNumber = new Label(composite, SWT.NONE);
-        lblRbNumber.setText("This is a Test Label");
+        lblRbNumber = new Label(composite, SWT.NONE);
+        DeviceScreens screens = new DeviceScreens();
+        ForwardingObservable<String> screensObservable = screens.getDevices();
+        screensObservable.addObserver(pvObserver);
     }
 
 }

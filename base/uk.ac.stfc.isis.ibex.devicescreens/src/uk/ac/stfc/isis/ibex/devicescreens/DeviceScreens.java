@@ -30,6 +30,8 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
+
 /**
  * Some Comment Here
  */
@@ -38,13 +40,22 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class DeviceScreens {
     @XmlElementWrapper(name = "devices")
     @XmlElement(name = "device", type = Device.class)
-    private ArrayList<Device> devices = new ArrayList<>();
+    private ArrayList<Device> devices;
+    private DeviceScreenVariables variables;
+    private String valueString;
+
+    public DeviceScreens() {
+        devices = new ArrayList<Device>();
+        variables = new DeviceScreenVariables();
+    }
 
     /**
      * @return the devices
      */
-    public ArrayList<Device> getDevices() {
-        return devices;
+    // public ArrayList<Device> getDevices() {
+    public ForwardingObservable<String> getDevices() {
+        ForwardingObservable<String> observable = variables.getDeviceScreens("CS:INSTLIST");
+        return observable;
     }
 
 }

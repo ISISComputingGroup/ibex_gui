@@ -12,4 +12,6 @@ Require-Bundle: uk.ac.stfc.isis.ibex.ui.perspectives,
  org.eclipse.ui;bundle-version="3.8.2"
 Bundle-Activator: uk.ac.stfc.isis.ibex.ui.devicescreens.Activator
 Bundle-ActivationPolicy: lazy
-Import-Package: uk.ac.stfc.isis.ibex.ui.beamstatus.views
+Import-Package: uk.ac.stfc.isis.ibex.devicescreens,
+ uk.ac.stfc.isis.ibex.epics.observing,
+ uk.ac.stfc.isis.ibex.ui.beamstatus.views
