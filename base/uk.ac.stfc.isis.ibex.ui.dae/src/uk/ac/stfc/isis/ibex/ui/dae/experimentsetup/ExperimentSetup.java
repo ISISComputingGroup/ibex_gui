@@ -19,16 +19,16 @@
 
 package uk.ac.stfc.isis.ibex.ui.dae.experimentsetup;
 
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.custom.CTabFolder;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.layout.FillLayout;
+import org.eclipse.swt.custom.CTabFolder;
 import org.eclipse.swt.custom.CTabItem;
-import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.layout.FillLayout;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
 
 import uk.ac.stfc.isis.ibex.ui.dae.DaeUI;
 import uk.ac.stfc.isis.ibex.ui.dae.experimentsetup.periods.PeriodsPanel;
@@ -74,7 +74,6 @@ public class ExperimentSetup extends Composite {
 		Composite dataAcquisitionComposite = new Composite(tabFolder, SWT.NONE);
 		tbtmDataAcquisition.setControl(dataAcquisitionComposite);
 		dataAcquisitionComposite.setLayout(new FillLayout(SWT.HORIZONTAL));
-		
 		dataAcquisition = new DataAcquisitionPanel(dataAcquisitionComposite, SWT.NONE);
 		
 		CTabItem tbtmPeriods = new CTabItem(tabFolder, SWT.NONE);
