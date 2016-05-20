@@ -19,12 +19,9 @@
 
 package uk.ac.stfc.isis.ibex.ui.beamstatus.views;
 
-import java.io.IOException;
 import java.io.InputStreamReader;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
-import java.net.UnknownHostException;
 import java.util.Scanner;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -47,8 +44,6 @@ public class McrNewsPanel extends Composite {
     private static final int FONT_SIZE = 12;
 
     private static final String MCR_NEWS_PAGE_URL = "http://www.isis.stfc.ac.uk/files/mcr-news/mcrnews.txt";
-    private static final String GET_NEWS_FAILED_MESSAGE =
-            "Unable to load MCR news. \nTarget URL: " + MCR_NEWS_PAGE_URL + "\nError: ";
 
     private static final long TEXT_REFRESH_PERIOD_MS = 30000; // milliseconds
 
@@ -71,7 +66,7 @@ public class McrNewsPanel extends Composite {
         txtTheMcrNews.setEditable(false);
         txtTheMcrNews.setBackground(backgroundColor);
         txtTheMcrNews.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-        txtTheMcrNews.setText("The MCR news will load shortly. If this message persists, please contact support.");
+        txtTheMcrNews.setText("The MCR news should be shown here.");
 
         final String currentFontName = txtTheMcrNews.getFont().getFontData()[0].getName();
         txtTheMcrNews.setFont(SWTResourceManager.getFont(currentFontName, FONT_SIZE, SWT.NORMAL));
@@ -131,17 +126,10 @@ public class McrNewsPanel extends Composite {
             scanner.useDelimiter("\\Z");
             content = scanner.next();
             scanner.close();
-        } catch (UnknownHostException ex) {
-            content += getNewsFailedMessage("Unknown host", ex);
-        } catch (MalformedURLException ex) {
-            content += getNewsFailedMessage("URL not valid", ex);
-        } catch (IOException ex) {
-            content += getNewsFailedMessage("Unable to read file", ex);
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
-        return content;
-    }
 
-    private static String getNewsFailedMessage(String localMessage, Exception ex) {
-        return GET_NEWS_FAILED_MESSAGE + localMessage + ", " + ex.getMessage();
+        return content;
     }
 }
