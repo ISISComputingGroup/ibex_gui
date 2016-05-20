@@ -19,9 +19,12 @@
 
 package uk.ac.stfc.isis.ibex.ui.beamstatus.views;
 
+import java.io.IOException;
 import java.io.InputStreamReader;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.net.UnknownHostException;
 import java.util.Scanner;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -44,7 +47,9 @@ import org.eclipse.swt.widgets.Text;
 public class McrNewsPanel extends Composite {
     private static final int FONT_SIZE = 12;
 
-    private static final String MCR_NEWS_PAGE_URL = "http://www.isis.stfc.ac.uk/files/mcr-news/mcrnews2.txt";
+    private static final String MCR_NEWS_PAGE_URL = "http://www.isis.stfc.ac.uk/files/mcr-news/mcrnews.txt";
+    private static final String GET_NEWS_FAILED_MESSAGE =
+            "Unable to load MCR news. \nTarget URL: " + MCR_NEWS_PAGE_URL + "\nError: ";
 
     private static final long TEXT_REFRESH_PERIOD_MS = 30000; // milliseconds
 
@@ -67,7 +72,7 @@ public class McrNewsPanel extends Composite {
         txtTheMcrNews.setEditable(false);
         txtTheMcrNews.setBackground(backgroundColor);
         txtTheMcrNews.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-        txtTheMcrNews.setText("Unable to access news from: " + MCR_NEWS_PAGE_URL);
+        txtTheMcrNews.setText("The MCR news will load shortly. If this message persists, please contact support.");
 
         Font font = modifyDefaultFont(txtTheMcrNews.getFont());
         txtTheMcrNews.setFont(font);
@@ -124,7 +129,7 @@ public class McrNewsPanel extends Composite {
      * @return A string containing the MCR news.
      */
     private static String getMCRNewsText() {
-        String content = null;
+        String content = GET_NEWS_FAILED_MESSAGE;
         URLConnection connection = null;
         try {
             connection = new URL(MCR_NEWS_PAGE_URL).openConnection();
@@ -133,10 +138,13 @@ public class McrNewsPanel extends Composite {
             scanner.useDelimiter("\\Z");
             content = scanner.next();
             scanner.close();
-        } catch (Exception ex) {
-            ex.printStackTrace();
+        } catch (UnknownHostException ex) {
+            content += "Unknown host, " + ex.getMessage();
+        } catch (MalformedURLException ex) {
+            content += "URL not valid, " + ex.getMessage();
+        } catch (IOException ex) {
+            content += "Unable to read file, " + ex.getMessage();
         }
-
         return content;
     }
 }
