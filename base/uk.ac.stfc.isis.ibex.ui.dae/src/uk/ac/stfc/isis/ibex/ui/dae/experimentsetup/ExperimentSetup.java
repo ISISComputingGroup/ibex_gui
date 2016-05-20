@@ -113,6 +113,11 @@ public class ExperimentSetup extends Composite {
 		periods.setModel(viewModel.periodSettings());
 	}
 
+    /**
+     * Enable or disable the content / children panels of this composite.
+     * 
+     * @param isEnabled whether the contents should be enabled or not
+     */
     public void setChildrenEnabled(boolean isEnabled) {
         timeChannels.setEnabled(isEnabled);
         dataAcquisition.setEnabled(isEnabled);
