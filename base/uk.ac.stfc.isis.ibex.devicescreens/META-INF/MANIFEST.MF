@@ -12,5 +12,7 @@ Import-Package: uk.ac.stfc.isis.ibex.epics.conversion,
  uk.ac.stfc.isis.ibex.epics.observing,
  uk.ac.stfc.isis.ibex.epics.switching,
  uk.ac.stfc.isis.ibex.synoptic.internal,
- uk.ac.stfc.isis.ibex.synoptic.model.desc
-Export-Package: uk.ac.stfc.isis.ibex.devicescreens
+ uk.ac.stfc.isis.ibex.synoptic.model.desc,
+ uk.ac.stfc.isis.ibex.synoptic.xml
+Export-Package: uk.ac.stfc.isis.ibex.devicescreens,
+ uk.ac.stfc.isis.ibex.devicescreens.desc

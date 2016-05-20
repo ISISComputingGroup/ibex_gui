@@ -30,6 +30,7 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 
 import uk.ac.stfc.isis.ibex.devicescreens.DeviceScreens;
+import uk.ac.stfc.isis.ibex.devicescreens.desc.DeviceScreensDescription;
 import uk.ac.stfc.isis.ibex.epics.observing.BaseObserver;
 import uk.ac.stfc.isis.ibex.epics.observing.Observer;
 
@@ -40,13 +41,13 @@ public class Panel extends Composite {
 
     private Label lblRbNumber;
     private final Display display = Display.getCurrent();
-    private final Observer<String> pvObserver = new BaseObserver<String>() {
+    private final Observer<DeviceScreensDescription> pvObserver = new BaseObserver<DeviceScreensDescription>() {
         @Override
-        public void onValue(String value) {
+        public void onValue(DeviceScreensDescription value) {
             display.asyncExec(new Runnable() {
                 @Override
                 public void run() {
-                    setLabelValue(value);
+                    setLabelValue(value.toString());
                 }
             });
         }

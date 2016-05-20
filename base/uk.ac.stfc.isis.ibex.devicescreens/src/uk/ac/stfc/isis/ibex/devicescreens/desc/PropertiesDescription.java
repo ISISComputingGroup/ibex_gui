@@ -20,28 +20,30 @@
 /**
  * 
  */
-package uk.ac.stfc.isis.ibex.devicescreens;
+package uk.ac.stfc.isis.ibex.devicescreens.desc;
 
-import uk.ac.stfc.isis.ibex.devicescreens.desc.DeviceScreensDescription;
-import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
-import uk.ac.stfc.isis.ibex.epics.pv.Closer;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
- * Describes a set of screens associated with the device screens perspective.
+ * This class describes the properties element of the device screens xml format.
+ * 
+ * Note that it may be possible to eliminate this class by using an
+ * @XmlElementWrapper but it's not working for me right now.
+ * 
+ * Note any changes here will require corresponding changes to
+ * EPICS/schema/configurations/screens.xsd. 
  */
-public class DeviceScreens extends Closer {
-    private DeviceScreenVariables variables;
+@XmlRootElement(name = "properties")
+public class PropertiesDescription {
 
-    public DeviceScreens() {
-        variables = registerForClose(new DeviceScreenVariables());
+    @XmlElement(name = "property", type = PropertyDescription.class)
+    private List<PropertyDescription> properties = new ArrayList<>();
+
+    public List<PropertyDescription> getProperties() {
+        return properties;
     }
-
-    /**
-     * @return A forwarding observable for the contents of the device screens
-     *         PV.
-     */
-    public ForwardingObservable<DeviceScreensDescription> getDevices() {
-        return variables.getDeviceScreens();
-    }
-
 }

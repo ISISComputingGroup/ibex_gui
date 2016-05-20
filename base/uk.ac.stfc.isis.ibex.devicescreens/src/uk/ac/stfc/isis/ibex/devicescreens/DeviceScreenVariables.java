@@ -22,26 +22,33 @@
  */
 package uk.ac.stfc.isis.ibex.devicescreens;
 
+import uk.ac.stfc.isis.ibex.devicescreens.desc.DeviceScreensDescription;
+import uk.ac.stfc.isis.ibex.devicescreens.desc.DeviceScreensDescriptionParser;
 import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.epics.pv.Closable;
 import uk.ac.stfc.isis.ibex.epics.switching.ObservableFactory;
 import uk.ac.stfc.isis.ibex.epics.switching.OnInstrumentSwitch;
 import uk.ac.stfc.isis.ibex.instrument.Instrument;
+import uk.ac.stfc.isis.ibex.instrument.InstrumentVariables;
 import uk.ac.stfc.isis.ibex.instrument.channels.CompressedCharWaveformChannel;
 
 /**
- * 
+ * Contains key variables for the device screens class.
  */
 public class DeviceScreenVariables implements Closable {
     
     private static final String GET_SCREENS_SUFFIX = "CS:BLOCKSERVER:GET_SCREENS";
 
     private ObservableFactory switchingObservableFactory = new ObservableFactory(OnInstrumentSwitch.SWITCH);
-    private ForwardingObservable<String> deviceScreensObservable;
+    private ForwardingObservable<DeviceScreensDescription> deviceScreensObservable;
 
-    public ForwardingObservable<String> getDeviceScreens() {
+    public ForwardingObservable<DeviceScreensDescription> getDeviceScreens() {
         close();
-        deviceScreensObservable = readCompressedClosing(Instrument.getInstance().getPvPrefix() + GET_SCREENS_SUFFIX);
+
+        deviceScreensObservable = InstrumentVariables.convert(
+                readCompressedClosing(Instrument.getInstance().getPvPrefix() + GET_SCREENS_SUFFIX),
+                new DeviceScreensDescriptionParser());
+
         return deviceScreensObservable;
     }
 
@@ -49,9 +56,6 @@ public class DeviceScreenVariables implements Closable {
         return switchingObservableFactory.getSwitchableObservable(new CompressedCharWaveformChannel(), address);
     }
 
-    /**
-     * 
-     */
     @Override
     public void close() {
         if (deviceScreensObservable != null) {

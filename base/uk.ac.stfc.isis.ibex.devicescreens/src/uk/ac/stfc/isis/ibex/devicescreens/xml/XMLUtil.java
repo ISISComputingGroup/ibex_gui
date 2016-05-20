@@ -1,0 +1,87 @@
+
+/*
+ * This file is part of the ISIS IBEX application. Copyright (C) 2012-2015
+ * Science & Technology Facilities Council. All rights reserved.
+ *
+ * This program is distributed in the hope that it will be useful. This program
+ * and the accompanying materials are made available under the terms of the
+ * Eclipse Public License v1.0 which accompanies this distribution. EXCEPT AS
+ * EXPRESSLY SET FORTH IN THE ECLIPSE PUBLIC LICENSE V1.0, THE PROGRAM AND
+ * ACCOMPANYING MATERIALS ARE PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES
+ * OR CONDITIONS OF ANY KIND. See the Eclipse Public License v1.0 for more
+ * details.
+ *
+ * You should have received a copy of the Eclipse Public License v1.0 along with
+ * this program; if not, you can obtain a copy from
+ * https://www.eclipse.org/org/documents/epl-v10.php or
+ * http://opensource.org/licenses/eclipse-1.0.php
+ */
+
+package uk.ac.stfc.isis.ibex.devicescreens.xml;
+
+import java.io.StringReader;
+import java.io.StringWriter;
+
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
+import javax.xml.bind.Unmarshaller;
+
+import org.xml.sax.SAXException;
+
+import uk.ac.stfc.isis.ibex.devicescreens.desc.DeviceScreensDescription;
+
+public final class XMLUtil {
+
+    private static JAXBContext context;
+    private static Unmarshaller unmarshaller;
+    private static Marshaller marshaller;
+
+    private XMLUtil() {
+    }
+
+    /**
+     * @param xml the device screens XML received from the BlockServer
+     * @return the data converted into a device screens description
+     * @throws JAXBException
+     * @throws SAXException
+     */
+    @SuppressWarnings("unchecked")
+    public static synchronized <T> T fromXml(String xml) throws JAXBException, SAXException {
+        if (context == null) {
+            initialise();
+        }
+        return (T) unmarshaller.unmarshal(new StringReader(xml));
+    }
+
+    /**
+     * Converts the device screens description into the XML expected by the
+     * BlockServer.
+     * 
+     * @param instrument the device screens description
+     * @return the XML for the device screens
+     * @throws JAXBException
+     * @throws SAXException
+     */
+    public static <T> String toXml(T deviceScreens) throws JAXBException, SAXException {
+        if (context == null) {
+            initialise();
+        }
+
+        StringWriter writer = new StringWriter();
+        marshaller.marshal(deviceScreens, writer);
+
+        return writer.toString();
+    }
+
+    private static void initialise() throws JAXBException, SAXException {
+        try {
+            context = JAXBContext.newInstance(DeviceScreensDescription.class);
+            marshaller = context.createMarshaller();
+            unmarshaller = context.createUnmarshaller();
+        } catch (Exception e) {
+            context = null;
+            throw e;
+        }
+    }
+}
