@@ -21,10 +21,15 @@ package uk.ac.stfc.isis.ibex.devicescreens.desc;
 
 import java.util.ArrayList;
 
+import javax.xml.bind.JAXBException;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+
+import org.xml.sax.SAXException;
+
+import uk.ac.stfc.isis.ibex.devicescreens.xml.XMLUtil;
 
 /**
  * This class describes the devices element of the device screens xml format.
@@ -38,4 +43,17 @@ public class DeviceScreensDescription {
 
     @XmlElement(name = "device", type = DeviceDescription.class)
     private ArrayList<DeviceDescription> devices = new ArrayList<>();
+
+    @Override
+    public String toString() {
+        try {
+            return XMLUtil.toXml(this).replaceAll("><", ">\n<");
+        } catch (JAXBException e) {
+            e.printStackTrace();
+            return e.toString();
+        } catch (SAXException e) {
+            e.printStackTrace();
+            return e.toString();
+        }
+    }
 }

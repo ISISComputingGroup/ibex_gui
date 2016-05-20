@@ -63,13 +63,13 @@ public final class XMLUtil {
      * @throws JAXBException
      * @throws SAXException
      */
-    public static <T> String toXml(T deviceScreens) throws JAXBException, SAXException {
+    public static <T> String toXml(T deviceScreensDescription) throws JAXBException, SAXException {
         if (context == null) {
             initialise();
         }
 
         StringWriter writer = new StringWriter();
-        marshaller.marshal(deviceScreens, writer);
+        marshaller.marshal(deviceScreensDescription, writer);
 
         return writer.toString();
     }
