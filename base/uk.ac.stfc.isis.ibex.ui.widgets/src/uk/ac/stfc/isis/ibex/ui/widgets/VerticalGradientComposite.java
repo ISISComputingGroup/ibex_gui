@@ -28,6 +28,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
+import org.eclipse.wb.swt.SWTResourceManager;
 
 /*
  * A composite with a vertical gradient as a background
@@ -37,7 +38,7 @@ public class VerticalGradientComposite extends Composite {
 
 	private static final Display DISPLAY = Display.getCurrent();
 
-	private Color top = new Color(DISPLAY, 220, 220, 220);
+    private Color top = SWTResourceManager.getColor(220, 220, 220);
 	private Color bottom = DISPLAY.getSystemColor(SWT.COLOR_WHITE);
 	
 	public VerticalGradientComposite(Composite parent, int style) {
