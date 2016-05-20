@@ -129,7 +129,7 @@ public class McrNewsPanel extends Composite {
      * @return A string containing the MCR news.
      */
     private static String getMCRNewsText() {
-        String content = GET_NEWS_FAILED_MESSAGE;
+        String content = null;
         URLConnection connection = null;
         try {
             connection = new URL(MCR_NEWS_PAGE_URL).openConnection();
@@ -139,12 +139,16 @@ public class McrNewsPanel extends Composite {
             content = scanner.next();
             scanner.close();
         } catch (UnknownHostException ex) {
-            content += "Unknown host, " + ex.getMessage();
+            content += getNewsFailedMessage("Unknown host", ex);
         } catch (MalformedURLException ex) {
-            content += "URL not valid, " + ex.getMessage();
+            content += getNewsFailedMessage("URL not valid", ex);
         } catch (IOException ex) {
-            content += "Unable to read file, " + ex.getMessage();
+            content += getNewsFailedMessage("Unable to read file", ex);
         }
         return content;
+    }
+
+    private static String getNewsFailedMessage(String localMessage, Exception ex) {
+        return GET_NEWS_FAILED_MESSAGE + localMessage + ", " + ex.getMessage();
     }
 }
