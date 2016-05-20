@@ -60,7 +60,22 @@ public class InstrumentListObservable {
      */
     public InstrumentListObservable(Logger logger) {
         this.logger = logger;
-        instrumentsRBV = convert(readCompressed(ADDRESS));
+
+        ForwardingObservable<String> instrumentsPV = readCompressed(ADDRESS);
+
+        // Wait for the PV to be connected
+        int i = 0;
+        while (!instrumentsPV.isConnected() && instrumentsPV.getValue() == null && i < MAX_RETRIES) {
+            try {
+                Thread.sleep(WAIT_FOR_OBSERVABLE);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            i++;
+        }
+
+        logger.info("Instrument List PV content: " + instrumentsPV.getValue());
+        instrumentsRBV = convert(instrumentsPV);
     }
 
     public Collection<InstrumentInfo> getInstruments() {
@@ -83,17 +98,6 @@ public class InstrumentListObservable {
     }
 
     private Collection<InstrumentInfo> getValidInstruments() {
-        // Wait for the PV to be connected
-        int i = 0;
-        while (!instrumentsRBV.isConnected() && i < MAX_RETRIES) {
-            try {
-                Thread.sleep(WAIT_FOR_OBSERVABLE);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            i++;
-        }
-        
         return InstrumentListUtils.filterValidInstruments(instrumentsRBV, logger);
     }
 }
