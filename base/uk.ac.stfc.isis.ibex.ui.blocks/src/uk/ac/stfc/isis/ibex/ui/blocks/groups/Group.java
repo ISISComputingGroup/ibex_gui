@@ -74,7 +74,7 @@ public class Group extends Composite {
         
         // In the first column put the title in
 		Label title = labelMaker(this, SWT.NONE, group.name(), "", null);
-		Font titleFont = getEditedLabelFont(parent, title, 10, SWT.BOLD);
+        Font titleFont = getEditedLabelFont(title, 10, SWT.BOLD);
 		title.setFont(titleFont);
 		
 		// For the title row, fill with blanks
@@ -155,9 +155,9 @@ public class Group extends Composite {
 		}
 	}
 	
-	private Font getEditedLabelFont(Composite parent, Label label, int size, int style) {
-	    return SWTResourceManager.getFont(
-	            label.getFont().getFontData()[0].getName(),size,style);
+    private Font getEditedLabelFont(Label label, int size, int style) {
+        final String currentFontName = label.getFont().getFontData()[0].getName();
+        return SWTResourceManager.getFont(currentFontName, size, style);
 	}
 	
 	private Label labelMaker(Composite composite, int style, String text, String toolTip, Font font) {
