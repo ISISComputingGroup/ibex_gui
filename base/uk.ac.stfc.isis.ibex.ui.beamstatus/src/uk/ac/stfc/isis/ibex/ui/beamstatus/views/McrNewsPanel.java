@@ -73,7 +73,8 @@ public class McrNewsPanel extends Composite {
         txtTheMcrNews.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
         txtTheMcrNews.setText("The MCR news will load shortly. If this message persists, please contact support.");
 
-        txtTheMcrNews.setFont(SWTResourceManager.getFont("Arial", FONT_SIZE, SWT.NORMAL));
+        final String currentFontName = txtTheMcrNews.getFont().getFontData()[0].getName();
+        txtTheMcrNews.setFont(SWTResourceManager.getFont(currentFontName, FONT_SIZE, SWT.NORMAL));
 
         updateNews().run();
         startTimer();
