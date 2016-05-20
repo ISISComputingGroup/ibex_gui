@@ -35,12 +35,40 @@ public class PropertyDescription {
 
     private String key;
     private String value;
+    
+    /**
+     * Set the identifying key associated with the property.
+     * 
+     * @param The new key
+     */
+    public void setKey(String newKey) {
+        key = newKey;
+    }
 
-    @Override
-    public String toString() {
-        String toReturn = "Property:\n";
-        toReturn += "Key: " + key + "\n";
-        toReturn += "Value: " + value + "\n";
-        return toReturn;
+    /**
+     * Set the value associated with the property.
+     * 
+     * @param The new value
+     */
+    public void setValue(String newValue) {
+        value = newValue;
+    }
+
+    /**
+     * Get the identifying key associated with the property.
+     * 
+     * @return The key
+     */
+    public String getKey() {
+        return key;
+    }
+
+    /**
+     * Get the value associated with the property.
+     * 
+     * @return The value
+     */
+    public String getValue() {
+        return value;
     }
 }

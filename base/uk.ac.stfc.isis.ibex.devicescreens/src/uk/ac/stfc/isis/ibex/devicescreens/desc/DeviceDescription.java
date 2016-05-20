@@ -42,17 +42,44 @@ public class DeviceDescription {
     @XmlElement(name = "properties", type = PropertiesDescription.class)
     private PropertiesDescription properties = new PropertiesDescription();
 
-    @Override
-    public String toString() {
-        String toReturn = "Device:\n";
-        toReturn += "Name: " + name + "\n";
-        toReturn += "Key: " + key + "\n";
-        toReturn += "Type: " + type + "\n";
-        toReturn += "Properties [\n";
-        for (PropertyDescription property : properties.getProperties()) {
-            toReturn += property.toString();
-        }
-        toReturn += "]\n";
-        return toReturn;
+    /**
+     * @return the type
+     */
+    public String getType() {
+        return type;
+    }
+    /**
+     * @param type the type to set
+     */
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    /**
+     * @return the key
+     */
+    public String getKey() {
+        return key;
+    }
+
+    /**
+     * @param key the key to set
+     */
+    public void setKey(String key) {
+        this.key = key;
+    }
+
+    /**
+     * @return the name
+     */
+    public String getName() {
+        return name;
+    }
+
+    /**
+     * @param name the name to set
+     */
+    public void setName(String name) {
+        this.name = name;
     }
 }

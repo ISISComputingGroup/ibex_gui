@@ -38,15 +38,4 @@ public class DeviceScreensDescription {
 
     @XmlElement(name = "device", type = DeviceDescription.class)
     private ArrayList<DeviceDescription> devices = new ArrayList<>();
-
-    @Override
-    public String toString() {
-        String toReturn = "Devices [\n";
-        for (DeviceDescription device : devices)
-        {
-            toReturn += device.toString();
-        }
-        toReturn += "]\n";
-        return toReturn;
-    }
 }
