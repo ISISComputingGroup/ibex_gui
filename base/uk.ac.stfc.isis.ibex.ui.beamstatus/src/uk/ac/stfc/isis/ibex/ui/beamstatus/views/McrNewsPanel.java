@@ -19,23 +19,25 @@
 
 package uk.ac.stfc.isis.ibex.ui.beamstatus.views;
 
+import java.io.IOException;
 import java.io.InputStreamReader;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.net.UnknownHostException;
 import java.util.Scanner;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
-import org.eclipse.swt.graphics.Font;
-import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.wb.swt.SWTResourceManager;
 
 /**
  * This page displays the MCR news text. The setText method is used to refresh
@@ -45,6 +47,8 @@ public class McrNewsPanel extends Composite {
     private static final int FONT_SIZE = 12;
 
     private static final String MCR_NEWS_PAGE_URL = "http://www.isis.stfc.ac.uk/files/mcr-news/mcrnews.txt";
+    private static final String GET_NEWS_FAILED_MESSAGE =
+            "Unable to load MCR news. \nTarget URL: " + MCR_NEWS_PAGE_URL + "\nError: ";
 
     private static final long TEXT_REFRESH_PERIOD_MS = 30000; // milliseconds
 
@@ -67,10 +71,9 @@ public class McrNewsPanel extends Composite {
         txtTheMcrNews.setEditable(false);
         txtTheMcrNews.setBackground(backgroundColor);
         txtTheMcrNews.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-        txtTheMcrNews.setText("The MCR news should be shown here.");
+        txtTheMcrNews.setText("The MCR news will load shortly. If this message persists, please contact support.");
 
-        Font font = modifyDefaultFont(txtTheMcrNews.getFont());
-        txtTheMcrNews.setFont(font);
+        txtTheMcrNews.setFont(SWTResourceManager.getFont("Arial", FONT_SIZE, SWT.NORMAL));
 
         updateNews().run();
         startTimer();
@@ -90,12 +93,6 @@ public class McrNewsPanel extends Composite {
 
         txtTheMcrNews.setSelection(selection);
         txtTheMcrNews.setTopIndex(topIndex);
-    }
-
-    private Font modifyDefaultFont(Font font) {
-        FontData fontData = font.getFontData()[0];
-        fontData.setHeight(FONT_SIZE);
-        return new Font(Display.getCurrent(), fontData);
     }
 
     private void startTimer() {
@@ -133,10 +130,17 @@ public class McrNewsPanel extends Composite {
             scanner.useDelimiter("\\Z");
             content = scanner.next();
             scanner.close();
-        } catch (Exception ex) {
-            ex.printStackTrace();
+        } catch (UnknownHostException ex) {
+            content += getNewsFailedMessage("Unknown host", ex);
+        } catch (MalformedURLException ex) {
+            content += getNewsFailedMessage("URL not valid", ex);
+        } catch (IOException ex) {
+            content += getNewsFailedMessage("Unable to read file", ex);
         }
-
         return content;
+    }
+
+    private static String getNewsFailedMessage(String localMessage, Exception ex) {
+        return GET_NEWS_FAILED_MESSAGE + localMessage + ", " + ex.getMessage();
     }
 }
