@@ -44,7 +44,7 @@ import org.eclipse.swt.widgets.Text;
 public class McrNewsPanel extends Composite {
     private static final int FONT_SIZE = 12;
 
-    private static final String MCR_NEWS_PAGE_URL = "http://www.isis.stfc.ac.uk/files/mcr-news/mcrnews.txt";
+    private static final String MCR_NEWS_PAGE_URL = "http://www.isis.stfc.ac.uk/files/mcr-news/mcrnews2.txt";
 
     private static final long TEXT_REFRESH_PERIOD_MS = 30000; // milliseconds
 
@@ -67,7 +67,7 @@ public class McrNewsPanel extends Composite {
         txtTheMcrNews.setEditable(false);
         txtTheMcrNews.setBackground(backgroundColor);
         txtTheMcrNews.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-        txtTheMcrNews.setText("The MCR news should be shown here.");
+        txtTheMcrNews.setText("Unable to access news from: " + MCR_NEWS_PAGE_URL);
 
         Font font = modifyDefaultFont(txtTheMcrNews.getFont());
         txtTheMcrNews.setFont(font);
