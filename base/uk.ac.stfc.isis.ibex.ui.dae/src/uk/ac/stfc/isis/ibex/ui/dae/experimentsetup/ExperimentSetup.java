@@ -28,6 +28,7 @@ import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 
 import uk.ac.stfc.isis.ibex.ui.dae.DaeUI;
@@ -116,12 +117,22 @@ public class ExperimentSetup extends Composite {
     /**
      * Enable or disable the content / children panels of this composite.
      * 
-     * @param isEnabled whether the contents should be enabled or not
+     * @param enabled whether the contents should be enabled or not
      */
-    public void setChildrenEnabled(boolean isEnabled) {
-        timeChannels.setEnabled(isEnabled);
-        dataAcquisition.setEnabled(isEnabled);
-        periods.setEnabled(isEnabled);
+    public void setChildrenEnabled(boolean enabled) {
+        recursiveSetEnabled(timeChannels, enabled);
+        recursiveSetEnabled(dataAcquisition, enabled);
+        recursiveSetEnabled(periods, enabled);
     }
 
+    private void recursiveSetEnabled(Control control, boolean enabled) {
+        if (control instanceof Composite) {
+            Composite composite = (Composite) control;
+            for (Control child : composite.getChildren()) {
+                recursiveSetEnabled(child, enabled);
+            }
+        }
+
+        control.setEnabled(enabled);
+    }
 }
