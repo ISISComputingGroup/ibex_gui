@@ -30,16 +30,15 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Font;
-import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Link;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.browser.IWebBrowser;
+import org.eclipse.wb.swt.SWTResourceManager;
 
 import uk.ac.stfc.isis.ibex.instrument.Instrument;
 
@@ -132,19 +131,14 @@ public class WebLinksPanel extends Composite {
     /**
      * Returns a resized version of a font.
      * 
-     * @param font
-     *            The font to start with
-     * @param size
-     *            The new font size
-     * @param style
-     *            The new font style (e.g. SWT.BOLD)
-     * @return A resized and restyled font
+     * @param font The font to start with
+     * @param size The new font size
+     * @param style The new font style (e.g. SWT.BOLD)
+     * @return A resized and re-styled font
      */
     private static Font getResizedFont(Font font, int size, int style) {
-        FontData fontData = font.getFontData()[0];
-        fontData.setHeight(size);
-        fontData.setStyle(style);
-        return new Font(Display.getCurrent(), fontData);
+        final String currentFontName = font.getFontData()[0].getName();
+        return SWTResourceManager.getFont(currentFontName, size, style);
     }
 
 }
