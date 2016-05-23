@@ -24,15 +24,33 @@ import org.eclipse.wb.swt.ResourceManager;
 
 import uk.ac.stfc.isis.ibex.synoptic.model.ComponentType;
 
+/**
+ * Given a component type, returns an icon appropriate for that type.
+ */
 public final class ComponentIcons {
 	
+    /**
+     * An empty constructor required for check style.
+     */
 	private ComponentIcons() { }
 	
+    /**
+     * Gets the appropriate icon for a given component type.
+     * 
+     * @param componentType the input component type
+     * @return the icon corresponding to the component type
+     */
     public static Image iconForType(ComponentType componentType) {
         String iconName = componentType == ComponentType.GONIOMETER ? "ALF Gonio" : getIconNameForType(componentType);
         return icon(iconName + ".png");
     }
 
+    /**
+     * Gets the appropriate thumbnail icon for a given component type.
+     * 
+     * @param componentType the input component type
+     * @return the thumbnail icon corresponding to the component type
+     */
     public static Image thumbnailForType(ComponentType componentType) {
         String iconName = getIconNameForType(componentType);
         return icon("thumbs/" + iconName + "_tb.png");
