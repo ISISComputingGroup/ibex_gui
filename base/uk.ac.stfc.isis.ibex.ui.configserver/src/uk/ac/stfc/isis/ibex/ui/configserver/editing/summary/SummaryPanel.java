@@ -140,17 +140,10 @@ public class SummaryPanel extends Composite {
 		String[] names = SynopticInfo.names(available).toArray(new String[0]);
 		Arrays.sort(names);
 		cmboSynoptic.setInput(names);
-        selectDefaultSynoptic(cmboSynoptic, names);
+        selectDefaultSynoptic();
 	}
 
-    private void selectDefaultSynoptic(ComboViewer comboViewer, String[] items) {
-        for (String item : items)
-        {
-            if (item.contains("recommended"))
-            {
-                comboViewer.setSelection(new StructuredSelection(item));
-            }
-        }
-
-	}
+    private void selectDefaultSynoptic() {
+        cmboSynoptic.setSelection(new StructuredSelection(Synoptic.getInstance().getDefaultSynoptic().name()));
+    }
 }
