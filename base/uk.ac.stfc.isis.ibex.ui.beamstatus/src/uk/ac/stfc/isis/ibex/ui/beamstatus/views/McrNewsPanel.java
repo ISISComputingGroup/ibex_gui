@@ -129,7 +129,7 @@ public class McrNewsPanel extends Composite {
      * @return A string containing the MCR news.
      */
     private static String getMCRNewsText() {
-        String content = null;
+        String content = "";
         URLConnection connection = null;
         try {
             connection = new URL(MCR_NEWS_PAGE_URL).openConnection();
