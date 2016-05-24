@@ -86,11 +86,22 @@ public class Synoptic extends Closer implements BundleActivator {
 	public SynopticModel getBlankModel() {
 		return new SynopticModel(variables);
 	}
-	
+
+    /**
+     * Provides the information about available synoptics.
+     * 
+     * @return The collection of information objects for the available
+     *         synoptics.
+     */
 	public ForwardingObservable<Collection<SynopticInfo>> availableSynopticsInfo() {
 		return variables.available;
 	}
-	
+
+    /**
+     * Provides a collection of available synoptics.
+     * 
+     * @return The available synoptics.
+     */
 	public Collection<SynopticInfo> availableSynoptics() {
 		return variables.available.getValue();
 	}
@@ -109,6 +120,11 @@ public class Synoptic extends Closer implements BundleActivator {
         return defaultSynoptic;
     }
 
+    /**
+     * Provides a collection of synoptics that can be edited.
+     * 
+     * @return The collection of editable synoptics.
+     */
 	public Collection<SynopticInfo> availableEditableSynoptics() {
 		ArrayList<SynopticInfo> all = new ArrayList<>(variables.available.getValue());
 		SynopticInfo noneSynoptic = null;
