@@ -32,7 +32,6 @@ public final class ComponentIcons {
 	private ComponentIcons() { }
 	
     /**
-     * 
      * @param component - The component we want the icon for
      * @return The image of the icon for the component
      */
