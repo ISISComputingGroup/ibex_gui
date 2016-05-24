@@ -29,8 +29,8 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
 
-/*
- * A composite with a vertical gradient as a background
+/**
+ * A composite with a vertical gradient as a background.
  */
 @SuppressWarnings("checkstyle:magicnumber")
 public class VerticalGradientComposite extends Composite {

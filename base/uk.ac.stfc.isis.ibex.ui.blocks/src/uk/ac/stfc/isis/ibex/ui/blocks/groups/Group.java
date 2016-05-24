@@ -53,6 +53,14 @@ public class Group extends Composite {
 	private static final int NUMBER_OF_FIELDS = 3;
     private Composite parent;
 
+    /**
+     * Provides the display of groups.
+     * 
+     * @param parent a widget which will be the parent of the new instance
+     * @param style the style of widget to construct
+     * @param group the group to be displayed
+     * @param showHiddenBlocks whether hidden blocks should be shown
+     */
 	public Group(Composite parent, int style, DisplayGroup group, boolean showHiddenBlocks) {
 		super(parent, style | SWT.BORDER);
 		
