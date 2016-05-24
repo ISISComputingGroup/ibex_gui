@@ -25,14 +25,27 @@ import org.eclipse.wb.swt.ResourceManager;
 import uk.ac.stfc.isis.ibex.synoptic.model.ComponentType;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.ComponentDescription;
 
+/**
+ * The set of icons that can be associated with a particular synoptic component.
+ */
 public final class ComponentIcons {
 	
 	private ComponentIcons() { }
 	
+    /**
+     * 
+     * @param The component we want the icon for
+     * @return The image of the icon for the component
+     */
 	public static Image thumbnailForComponent(ComponentDescription component) {
 		return thumbnailForType(component.type());
 	}
 
+    /**
+     * 
+     * @param The component type we want the icon for
+     * @return The image of the icon for the component type
+     */
 	public static Image thumbnailForType(ComponentType type) {
 		switch (type) {
 		case JAWS:

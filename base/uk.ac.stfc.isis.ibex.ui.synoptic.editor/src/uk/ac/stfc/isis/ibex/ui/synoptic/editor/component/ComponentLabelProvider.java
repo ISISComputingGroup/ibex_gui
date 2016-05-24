@@ -35,6 +35,9 @@ import org.eclipse.swt.graphics.Image;
 
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.ComponentDescription;
 
+/**
+ * Provides labels for components within the synoptic editor.
+ */
 public class ComponentLabelProvider implements ILabelProvider {
 	@Override
 	public Image getImage(Object element) {
