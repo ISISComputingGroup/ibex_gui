@@ -24,8 +24,8 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.FontData;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.wb.swt.ResourceManager;
+import org.eclipse.wb.swt.SWTResourceManager;
 
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableIoc;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.CellDecorator;
@@ -33,8 +33,6 @@ import uk.ac.stfc.isis.ibex.ui.configserver.editing.CellDecorator;
 public class IocRowCellDecorator extends CellDecorator<EditableIoc> {
 	
 	private static final Color READONLY_COLOR = ResourceManager.getColor(SWT.COLOR_DARK_GRAY);
-
-	private static final Display DISPLAY = Display.getCurrent();
 	
 	@Override
 	public void applyDecoration(ViewerCell cell) {
@@ -54,7 +52,8 @@ public class IocRowCellDecorator extends CellDecorator<EditableIoc> {
 	
 	private static void modifyFont(ViewerCell cell, int modifier) {
 		FontData fontData = cell.getFont().getFontData()[0];
-		Font font = new Font(DISPLAY, new FontData(fontData.getName(), fontData.getHeight(), fontData.getStyle() | modifier));
+        Font font =
+                SWTResourceManager.getFont(fontData.getName(), fontData.getHeight(), fontData.getStyle() | modifier);
 		cell.setFont(font);
 	}
 	

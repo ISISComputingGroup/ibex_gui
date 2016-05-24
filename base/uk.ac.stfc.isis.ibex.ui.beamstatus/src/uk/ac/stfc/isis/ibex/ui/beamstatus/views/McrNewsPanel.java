@@ -28,14 +28,13 @@ import java.util.TimerTask;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
-import org.eclipse.swt.graphics.Font;
-import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.wb.swt.SWTResourceManager;
 
 /**
  * This page displays the MCR news text. The setText method is used to refresh
@@ -51,12 +50,10 @@ public class McrNewsPanel extends Composite {
     private Text txtTheMcrNews;
 
     /**
-     * Constructor for the MCR news panel.
+     * Constructor for the MCR News Panel.
      * 
-     * @param parent
-     *            Parent composite
-     * @param style
-     *            SWT Style
+     * @param parent Parent composite
+     * @param style SWT Style
      */
     public McrNewsPanel(Composite parent, int style) {
         super(parent, style);
@@ -69,8 +66,8 @@ public class McrNewsPanel extends Composite {
         txtTheMcrNews.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
         txtTheMcrNews.setText("The MCR news should be shown here.");
 
-        Font font = modifyDefaultFont(txtTheMcrNews.getFont());
-        txtTheMcrNews.setFont(font);
+        final String currentFontName = txtTheMcrNews.getFont().getFontData()[0].getName();
+        txtTheMcrNews.setFont(SWTResourceManager.getFont(currentFontName, FONT_SIZE, SWT.NORMAL));
 
         updateNews().run();
         startTimer();
@@ -90,12 +87,6 @@ public class McrNewsPanel extends Composite {
 
         txtTheMcrNews.setSelection(selection);
         txtTheMcrNews.setTopIndex(topIndex);
-    }
-
-    private Font modifyDefaultFont(Font font) {
-        FontData fontData = font.getFontData()[0];
-        fontData.setHeight(FONT_SIZE);
-        return new Font(Display.getCurrent(), fontData);
     }
 
     private void startTimer() {

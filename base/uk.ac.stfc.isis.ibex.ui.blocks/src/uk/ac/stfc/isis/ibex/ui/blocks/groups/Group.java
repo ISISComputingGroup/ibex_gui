@@ -30,7 +30,6 @@ import org.eclipse.jface.resource.FontDescriptor;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
-import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
@@ -51,7 +50,6 @@ public class Group extends Composite {
     private static final Color WHITE = SWTResourceManager.getColor(SWT.COLOR_WHITE);
 	private static final int NUMBER_OF_ROWS = 9;
 	private static final int NUMBER_OF_FIELDS = 3;
-    private Composite parent;
 
     /**
      * Provides the display of groups.
@@ -84,7 +82,7 @@ public class Group extends Composite {
         
         // In the first column put the title in
 		Label title = labelMaker(this, SWT.NONE, group.name(), "", null);
-		Font titleFont = getEditedLabelFont(parent, title, 10, SWT.BOLD);
+        Font titleFont = getEditedLabelFont(title, 10, SWT.BOLD);
 		title.setFont(titleFont);
 		
 		// For the title row, fill with blanks
@@ -165,11 +163,9 @@ public class Group extends Composite {
 		}
 	}
 	
-	private Font getEditedLabelFont(Composite parent, Label label, int size, int style) {
-		FontData[] fD = label.getFont().getFontData();
-		fD[0].setHeight(size);
-		fD[0].setStyle(style);
-		return new Font(parent.getDisplay(), fD[0]);
+    private Font getEditedLabelFont(Label label, int size, int style) {
+        final String currentFontName = label.getFont().getFontData()[0].getName();
+        return SWTResourceManager.getFont(currentFontName, size, style);
 	}
 	
 	private Label labelMaker(Composite composite, int style, String text, String toolTip, Font font) {
