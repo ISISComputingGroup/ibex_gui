@@ -50,12 +50,10 @@ public class McrNewsPanel extends Composite {
     private Text txtTheMcrNews;
 
     /**
-     * Constructor for the MCR news panel.
+     * Constructor for the MCR News Panel.
      * 
-     * @param parent
-     *            Parent composite
-     * @param style
-     *            SWT Style
+     * @param parent Parent composite
+     * @param style SWT Style
      */
     public McrNewsPanel(Composite parent, int style) {
         super(parent, style);
