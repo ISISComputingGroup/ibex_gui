@@ -33,7 +33,7 @@ public final class ComponentIcons {
 	
     /**
      * 
-     * @param The component we want the icon for
+     * @param component - The component we want the icon for
      * @return The image of the icon for the component
      */
 	public static Image iconForComponent(Component component) {

@@ -33,7 +33,7 @@ public final class ComponentIcons {
 	private ComponentIcons() { }
 	
     /**
-     * @param The component we want the icon for
+     * @param component - The component we want the icon for
      * @return The image of the icon for the component
      */
 	public static Image thumbnailForComponent(ComponentDescription component) {
@@ -41,7 +41,7 @@ public final class ComponentIcons {
 	}
 
     /**
-     * @param The component type we want the icon for
+     * @param type - The component type we want the icon for
      * @return The image of the icon for the component type
      */
 	public static Image thumbnailForType(ComponentType type) {
