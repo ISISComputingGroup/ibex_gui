@@ -37,7 +37,7 @@ public final class ComponentIcons {
     /**
      * Gets the appropriate icon for a given component type.
      * 
-     * @param componentType the input component type
+     * @param componentType the component type
      * @return the icon corresponding to the component type
      */
     public static Image iconForType(ComponentType componentType) {
