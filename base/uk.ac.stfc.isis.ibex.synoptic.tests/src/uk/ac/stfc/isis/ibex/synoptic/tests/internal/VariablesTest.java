@@ -54,6 +54,7 @@ public class VariablesTest {
     private static final String SET_DETAILS = "SET_DETAILS";
     private static final String DELETE = "DELETE";
     private static final String NAMES = "NAMES";
+    private static final String SCHEMA = "SCHEMA";
 
     private Variables variables;
     private WritableFactory closingWritableFactory;
@@ -62,6 +63,7 @@ public class VariablesTest {
     private ObservableFactory switchingObservableFactory;
 
     private Writable mockWritable = mock(Writable.class);
+    private SwitchableObservable mockSwitchableObservable = mock(SwitchableObservable.class);
 
     /**
      * Code to generate the required components
@@ -69,7 +71,6 @@ public class VariablesTest {
     @Before
     public void set_up() {
         // Arrange
-        SwitchableObservable mockSwitchableObservable = mock(SwitchableObservable.class);
 //
 //        ForwardingWritable mockClosableWritable = mock(ForwardingWritable.class);
 
@@ -161,6 +162,21 @@ public class VariablesTest {
         assertEquals(2, resultAsList.size());
         assertEquals(expectedName1, resultAsList.get(0).name());
         assertEquals(expectedName2, resultAsList.get(1).name());
+    }
+
+    @Test
+    public void synopticsSchema_is_initialised_pointing_at_correct_pv() {
+        // Arrange
+        SwitchableObservable expectedResult = mock(SwitchableObservable.class);
+        when(switchingObservableFactory.getSwitchableObservable(any(ChannelType.class),
+                eq(pvPrefix + SYNOPTIC_ADDRESS + SCHEMA))).thenReturn(expectedResult);
+
+        // Act
+        variables = createVariables();
+
+        // Assert
+        assertSame(expectedResult, variables.synopticSchema);
+        assertNotEquals(mockSwitchableObservable, variables.synopticSchema);
     }
 
 //	/**
