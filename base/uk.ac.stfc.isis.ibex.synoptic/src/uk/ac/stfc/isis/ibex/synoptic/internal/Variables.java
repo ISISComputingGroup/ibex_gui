@@ -111,7 +111,7 @@ public class Variables extends InstrumentVariables {
         synopticSchema = readCompressed(SYNOPTIC_ADDRESS + "SCHEMA");
     }
 
-	public Converter<String, Collection<SynopticInfo>> toSynopticInfo() {
+    private Converter<String, Collection<SynopticInfo>> toSynopticInfo() {
 		return new JsonDeserialisingConverter<>(SynopticInfo[].class).apply(Convert.<SynopticInfo>toCollection());
 	}	
 	

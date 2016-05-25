@@ -145,6 +145,8 @@ public class VariablesTest {
         SwitchableObservable expectedSource = mock(SwitchableObservable.class);
         String expectedName1 = "-- NONE --";
         String expectedName2 = "chopper";
+        String expectedPV1 = "__BLANK__";
+        String expectedPV2 = "CHOPPER";
         when(expectedSource.getValue()).thenReturn(input);
         when(expectedSource.lastError()).thenReturn(null);
         when(expectedSource.isConnected()).thenReturn(true);
@@ -162,6 +164,10 @@ public class VariablesTest {
         assertEquals(2, resultAsList.size());
         assertEquals(expectedName1, resultAsList.get(0).name());
         assertEquals(expectedName2, resultAsList.get(1).name());
+        assertEquals(expectedPV1, resultAsList.get(0).pv());
+        assertEquals(expectedPV2, resultAsList.get(1).pv());
+        assertTrue(resultAsList.get(0).isDefault());
+        assertFalse(resultAsList.get(1).isDefault());
     }
 
     @Test
@@ -179,18 +185,6 @@ public class VariablesTest {
         assertNotEquals(mockSwitchableObservable, variables.synopticSchema);
     }
 
-//	/**
-//	 * Test method for {@link uk.ac.stfc.isis.ibex.synoptic.internal.Variables#toSynopticInfo()}.
-//	 */
-//	@Test
-//	public final void variables_to_synoptic_info() {
-//		// Act
-//		Converter<String, Collection<SynopticInfo>> actual = variables.toSynopticInfo();
-//
-//		// Assert
-//		assertNotNull(actual);
-//	}
-//
 //	/**
 //	 * Test method for {@link uk.ac.stfc.isis.ibex.synoptic.internal.Variables#getSynopticDescription(java.lang.String)}.
 //	 */
