@@ -37,6 +37,7 @@ import uk.ac.stfc.isis.ibex.epics.writing.Writable;
 import uk.ac.stfc.isis.ibex.instrument.channels.ChannelType;
 import uk.ac.stfc.isis.ibex.instrument.channels.DefaultChannel;
 import uk.ac.stfc.isis.ibex.instrument.channels.DefaultChannelWithoutUnits;
+import uk.ac.stfc.isis.ibex.instrument.channels.StringChannel;
 import uk.ac.stfc.isis.ibex.synoptic.SynopticInfo;
 import uk.ac.stfc.isis.ibex.synoptic.internal.Variables;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.SynopticDescription;
@@ -67,6 +68,7 @@ public class VariablesTest {
     private ObservableFactory switchingObservableFactory;
 
     private Writable defaultWritable = mock(Writable.class);
+    private Writable mockWritable;
     private SwitchableObservable defaultSwitchableObservable = mock(SwitchableObservable.class);
     private SwitchableObservable mockSwitchableObservable;
 
@@ -79,12 +81,13 @@ public class VariablesTest {
 //
 //        ForwardingWritable mockClosableWritable = mock(ForwardingWritable.class);
 
+        mockWritable = mock(Writable.class);
         mockSwitchableObservable = mock(SwitchableObservable.class);
 //
         closingWritableFactory = mock(WritableFactory.class);
-//        when(closingWritableFactory.getSwitchableWritable(any(ChannelType.class), any(String.class)))
-//                .thenReturn(mockClosableWritable);
-//        
+        when(closingWritableFactory.getSwitchableWritable(any(ChannelType.class), any(String.class)))
+                .thenReturn(defaultWritable);
+
         switchingWritableFactory = mock(WritableFactory.class);
         when(switchingWritableFactory.getSwitchableWritable(any(ChannelType.class), any(String.class)))
                 .thenReturn(defaultWritable);
@@ -92,8 +95,8 @@ public class VariablesTest {
 //                .thenReturn(mockClosableWritable);
 //
         closingObservableFactory = mock(ObservableFactory.class);
-//        when(closingObservableFactory.getSwitchableObservable(any(ChannelType.class), any(String.class)))
-//                .thenReturn(switchableObservable);
+        when(closingObservableFactory.getSwitchableObservable(any(ChannelType.class), anyString()))
+                .thenReturn(defaultSwitchableObservable);
 //        
         switchingObservableFactory = mock(ObservableFactory.class);
         when(switchingObservableFactory.getSwitchableObservable(any(ChannelType.class), any(String.class)))
@@ -216,8 +219,6 @@ public class VariablesTest {
     public void defaultReaderRemote_returns_default_observable_from_specified_pv() {
         // Arrange
         String address = "Test";
-        when(closingObservableFactory.getSwitchableObservable(any(ChannelType.class), anyString()))
-                .thenReturn(defaultSwitchableObservable);
         when(closingObservableFactory.getSwitchableObservable(any(DefaultChannel.class), eq(address)))
                 .thenReturn(mockSwitchableObservable);
         variables = createVariables();
@@ -234,8 +235,6 @@ public class VariablesTest {
     public void defaultReaderRemoteWithoutUnits_returns_default_observable_without_units_from_specified_pv() {
         // Arrange
         String address = "Test";
-        when(closingObservableFactory.getSwitchableObservable(any(ChannelType.class), anyString()))
-                .thenReturn(defaultSwitchableObservable);
         when(closingObservableFactory.getSwitchableObservable(any(DefaultChannelWithoutUnits.class), eq(address)))
                 .thenReturn(mockSwitchableObservable);
         variables = createVariables();
@@ -248,88 +247,19 @@ public class VariablesTest {
         assertNotEquals(defaultSwitchableObservable, result);
     }
 
-//	/**
-//	 * Test method for {@link uk.ac.stfc.isis.ibex.synoptic.internal.Variables#defaultReader(java.lang.String)}.
-//	 */
-//	@Test
-//	public final void get_default_reader_address() {
-//		// Act
-//        ForwardingObservable<String> actual = variables.defaultReaderRemote(synopticPV);
-//		
-//		// Assert
-//		assertNotNull(actual);
-//	}
-//
-//	/**
-//	 * Test method for {@link uk.ac.stfc.isis.ibex.synoptic.internal.Variables#defaultReader(java.lang.String, uk.ac.stfc.isis.ibex.instrument.pv.PVType)}.
-//	 */
-//	@Test
-//	public final void get_default_reader_address_and_local() {
-//		// Act
-//        ForwardingObservable<String> actual = variables.defaultReaderRemote(synopticPV);
-//		
-//		// Assert
-//		assertNotNull(actual);
-//	}
-//	
-//	/**
-//	 * Test method for {@link uk.ac.stfc.isis.ibex.synoptic.internal.Variables#defaultReader(java.lang.String, uk.ac.stfc.isis.ibex.instrument.pv.PVType)}.
-//	 */
-//	@Test
-//	public final void get_default_reader_address_and_remote() {
-//		// Act
-//        ForwardingObservable<String> actual = variables.defaultReaderRemote(synopticPV);
-//		
-//		// Assert
-//		assertNotNull(actual);
-//	}
-//
-//	/**
-//	 * Test method for {@link uk.ac.stfc.isis.ibex.synoptic.internal.Variables#defaultReaderWithoutUnits(java.lang.String)}.
-//	 */
-//	@Test
-//	public final void get_default_reader_without_units_address() {
-//		// Act
-//        ForwardingObservable<String> actual = variables.defaultReaderRemoteWithoutUnits(synopticPV);
-//		
-//		// Assert
-//		assertNotNull(actual);
-//	}
-//
-//	/**
-//	 * Test method for {@link uk.ac.stfc.isis.ibex.synoptic.internal.Variables#defaultWritable(java.lang.String)}.
-//	 */
-//	@Test
-//	public final void get_default_writable_address() {
-//		// Act
-//        Writable<String> actual = variables.defaultWritableRemote(synopticPV);
-//		
-//		// Assert
-//		assertNotNull(actual);
-//	}
-//
-//	/**
-//	 * Test method for {@link uk.ac.stfc.isis.ibex.synoptic.internal.Variables#defaultWritable(java.lang.String, uk.ac.stfc.isis.ibex.instrument.pv.PVType)}.
-//	 */
-//	@Test
-//	public final void get_default_writable_address_and_local() {
-//		// Act
-//        Writable<String> actual = variables.defaultWritableRemote(synopticPV);
-//		
-//		// Assert
-//		assertNotNull(actual);
-//	}
-//	
-//	/**
-//	 * Test method for {@link uk.ac.stfc.isis.ibex.synoptic.internal.Variables#defaultWritable(java.lang.String, uk.ac.stfc.isis.ibex.instrument.pv.PVType)}.
-//	 */
-//	@Test
-//	public final void get_default_writable_address_and_remote() {
-//		// Act
-//        Writable<String> actual = variables.defaultWritableRemote(synopticPV);
-//		
-//		// Assert
-//		assertNotNull(actual);
-//	}
+    @Test
+    public void defaultWritableRemote_returns_default_writable_from_specified_pv() {
+        // Arrange
+        String address = "Test";
+        when(closingWritableFactory.getSwitchableWritable(any(StringChannel.class), eq(address)))
+                .thenReturn(mockWritable);
+        variables = createVariables();
 
+        // Act
+        Writable result = variables.defaultWritableRemote(address);
+
+        // Assert
+        assertSame(mockWritable, result);
+        assertNotEquals(defaultWritable, result);
+    }
 }
