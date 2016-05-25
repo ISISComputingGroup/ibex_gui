@@ -1,21 +1,21 @@
 
 /*
-* This file is part of the ISIS IBEX application.
-* Copyright (C) 2012-2015 Science & Technology Facilities Council.
-* All rights reserved.
-*
-* This program is distributed in the hope that it will be useful.
-* This program and the accompanying materials are made available under the
-* terms of the Eclipse Public License v1.0 which accompanies this distribution.
-* EXCEPT AS EXPRESSLY SET FORTH IN THE ECLIPSE PUBLIC LICENSE V1.0, THE PROGRAM 
-* AND ACCOMPANYING MATERIALS ARE PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES 
-* OR CONDITIONS OF ANY KIND.  See the Eclipse Public License v1.0 for more details.
-*
-* You should have received a copy of the Eclipse Public License v1.0
-* along with this program; if not, you can obtain a copy from
-* https://www.eclipse.org/org/documents/epl-v10.php or 
-* http://opensource.org/licenses/eclipse-1.0.php
-*/
+ * This file is part of the ISIS IBEX application. Copyright (C) 2012-2015
+ * Science & Technology Facilities Council. All rights reserved.
+ *
+ * This program is distributed in the hope that it will be useful. This program
+ * and the accompanying materials are made available under the terms of the
+ * Eclipse Public License v1.0 which accompanies this distribution. EXCEPT AS
+ * EXPRESSLY SET FORTH IN THE ECLIPSE PUBLIC LICENSE V1.0, THE PROGRAM AND
+ * ACCOMPANYING MATERIALS ARE PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES
+ * OR CONDITIONS OF ANY KIND. See the Eclipse Public License v1.0 for more
+ * details.
+ *
+ * You should have received a copy of the Eclipse Public License v1.0 along with
+ * this program; if not, you can obtain a copy from
+ * https://www.eclipse.org/org/documents/epl-v10.php or
+ * http://opensource.org/licenses/eclipse-1.0.php
+ */
 
 package uk.ac.stfc.isis.ibex.synoptic.tests.internal;
 
@@ -29,28 +29,31 @@ import java.util.Collection;
 import org.junit.Before;
 import org.junit.Test;
 
+import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.epics.switching.ObservableFactory;
 import uk.ac.stfc.isis.ibex.epics.switching.SwitchableObservable;
 import uk.ac.stfc.isis.ibex.epics.switching.WritableFactory;
 import uk.ac.stfc.isis.ibex.epics.writing.Writable;
 import uk.ac.stfc.isis.ibex.instrument.channels.ChannelType;
+import uk.ac.stfc.isis.ibex.synoptic.SynopticInfo;
 import uk.ac.stfc.isis.ibex.synoptic.internal.Variables;
 
 /**
- * This class is responsible for testing instrument.Variables 
+ * This class is responsible for testing instrument.Variables
  *
  */
 @SuppressWarnings({ "checkstyle:magicnumber", "checkstyle:methodname", "unchecked" })
 public class VariablesTest {
-	
-	/**
-	 * Items used throughout
-	 */
+
+    /**
+     * Items used throughout
+     */
     private final String pvPrefix = "PVPrefix";
     private final String synopticPV = "Synoptic PV";
     private static final String SYNOPTIC_ADDRESS = "CS:BLOCKSERVER:SYNOPTICS:";
     private static final String SET_DETAILS = "SET_DETAILS";
     private static final String DELETE = "DELETE";
+    private static final String NAMES = "NAMES";
 
     private Variables variables;
     private WritableFactory closingWritableFactory;
@@ -59,17 +62,16 @@ public class VariablesTest {
     private ObservableFactory switchingObservableFactory;
 
     private Writable mockWritable = mock(Writable.class);
-	
-	/**
-	 * Code to generate the required components
-	 */
-	@Before
-	public void set_up() {
-		// Arrange
+
+    /**
+     * Code to generate the required components
+     */
+    @Before
+    public void set_up() {
+        // Arrange
         SwitchableObservable mockSwitchableObservable = mock(SwitchableObservable.class);
 //
 //        ForwardingWritable mockClosableWritable = mock(ForwardingWritable.class);
-
 
 //
         closingWritableFactory = mock(WritableFactory.class);
@@ -89,14 +91,14 @@ public class VariablesTest {
         switchingObservableFactory = mock(ObservableFactory.class);
         when(switchingObservableFactory.getSwitchableObservable(any(ChannelType.class), any(String.class)))
                 .thenReturn(mockSwitchableObservable);
-	}
+    }
 
     private Variables createVariables() {
         return new Variables(closingWritableFactory, switchingWritableFactory, closingObservableFactory,
                 switchingObservableFactory, pvPrefix);
-	}
-	
-	@Test
+    }
+
+    @Test
     public void synopticSetter_is_initialised_pointing_at_correct_pv() {
         // Arrange
         Writable expectedResult = mock(Writable.class);
@@ -107,9 +109,9 @@ public class VariablesTest {
         variables = createVariables();
 
         // Assert
-        assertEquals(expectedResult, variables.synopticSetter);
+        assertSame(expectedResult, variables.synopticSetter);
         assertNotEquals(mockWritable, variables.synopticSetter);
-	}
+    }
 
     @Test
     public void
@@ -132,6 +134,33 @@ public class VariablesTest {
         verify(expectedDestination, never()).write(any());
         deleter.write(inputValue);
         verify(expectedDestination, times(1)).write(convertedValue);
+    }
+
+    @Test
+    public void available_is_initialised_as_collection_of_synoptic_info_for_available_synoptics() {
+        // Arrange
+        String input =
+                "[{\"is_default\": true, \"pv\": \"__BLANK__\", \"name\": \"-- NONE --\"}, {\"is_default\": false, \"pv\": \"CHOPPER\", \"name\": \"chopper\"}]";
+        SwitchableObservable expectedSource = mock(SwitchableObservable.class);
+        String expectedName1 = "-- NONE --";
+        String expectedName2 = "chopper";
+        when(expectedSource.getValue()).thenReturn(input);
+        when(expectedSource.lastError()).thenReturn(null);
+        when(expectedSource.isConnected()).thenReturn(true);
+
+        when(switchingObservableFactory.getSwitchableObservable(any(ChannelType.class),
+                eq(pvPrefix + SYNOPTIC_ADDRESS + NAMES))).thenReturn(expectedSource);
+
+        // Act
+        variables = createVariables();
+        
+        // Assert
+        ForwardingObservable<Collection<SynopticInfo>> available = variables.available;
+        Collection<SynopticInfo> result = available.getValue();
+        ArrayList<SynopticInfo> resultAsList = new ArrayList<>(result);
+        assertEquals(2, resultAsList.size());
+        assertEquals(expectedName1, resultAsList.get(0).name());
+        assertEquals(expectedName2, resultAsList.get(1).name());
     }
 
 //	/**
