@@ -78,12 +78,9 @@ public class VariablesTest {
     @Before
     public void set_up() {
         // Arrange
-//
-//        ForwardingWritable mockClosableWritable = mock(ForwardingWritable.class);
-
         mockWritable = mock(Writable.class);
         mockSwitchableObservable = mock(SwitchableObservable.class);
-//
+
         closingWritableFactory = mock(WritableFactory.class);
         when(closingWritableFactory.getSwitchableWritable(any(ChannelType.class), any(String.class)))
                 .thenReturn(defaultWritable);
@@ -91,13 +88,11 @@ public class VariablesTest {
         switchingWritableFactory = mock(WritableFactory.class);
         when(switchingWritableFactory.getSwitchableWritable(any(ChannelType.class), any(String.class)))
                 .thenReturn(defaultWritable);
-//        when(switchingWritableFactory.getSwitchableWritable(any(ChannelType.class), any(String.class)))
-//                .thenReturn(mockClosableWritable);
-//
+
         closingObservableFactory = mock(ObservableFactory.class);
         when(closingObservableFactory.getSwitchableObservable(any(ChannelType.class), anyString()))
                 .thenReturn(defaultSwitchableObservable);
-//        
+
         switchingObservableFactory = mock(ObservableFactory.class);
         when(switchingObservableFactory.getSwitchableObservable(any(ChannelType.class), any(String.class)))
                 .thenReturn(defaultSwitchableObservable);
