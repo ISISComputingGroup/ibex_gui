@@ -35,8 +35,11 @@ import uk.ac.stfc.isis.ibex.epics.switching.SwitchableObservable;
 import uk.ac.stfc.isis.ibex.epics.switching.WritableFactory;
 import uk.ac.stfc.isis.ibex.epics.writing.Writable;
 import uk.ac.stfc.isis.ibex.instrument.channels.ChannelType;
+import uk.ac.stfc.isis.ibex.instrument.channels.DefaultChannel;
+import uk.ac.stfc.isis.ibex.instrument.channels.DefaultChannelWithoutUnits;
 import uk.ac.stfc.isis.ibex.synoptic.SynopticInfo;
 import uk.ac.stfc.isis.ibex.synoptic.internal.Variables;
+import uk.ac.stfc.isis.ibex.synoptic.model.desc.SynopticDescription;
 
 /**
  * This class is responsible for testing instrument.Variables
@@ -55,6 +58,7 @@ public class VariablesTest {
     private static final String DELETE = "DELETE";
     private static final String NAMES = "NAMES";
     private static final String SCHEMA = "SCHEMA";
+    private static final String GET_SYNOPTIC = ":GET";
 
     private Variables variables;
     private WritableFactory closingWritableFactory;
@@ -62,8 +66,9 @@ public class VariablesTest {
     private ObservableFactory closingObservableFactory;
     private ObservableFactory switchingObservableFactory;
 
-    private Writable mockWritable = mock(Writable.class);
-    private SwitchableObservable mockSwitchableObservable = mock(SwitchableObservable.class);
+    private Writable defaultWritable = mock(Writable.class);
+    private SwitchableObservable defaultSwitchableObservable = mock(SwitchableObservable.class);
+    private SwitchableObservable mockSwitchableObservable;
 
     /**
      * Code to generate the required components
@@ -74,6 +79,7 @@ public class VariablesTest {
 //
 //        ForwardingWritable mockClosableWritable = mock(ForwardingWritable.class);
 
+        mockSwitchableObservable = mock(SwitchableObservable.class);
 //
         closingWritableFactory = mock(WritableFactory.class);
 //        when(closingWritableFactory.getSwitchableWritable(any(ChannelType.class), any(String.class)))
@@ -81,7 +87,7 @@ public class VariablesTest {
 //        
         switchingWritableFactory = mock(WritableFactory.class);
         when(switchingWritableFactory.getSwitchableWritable(any(ChannelType.class), any(String.class)))
-                .thenReturn(mockWritable);
+                .thenReturn(defaultWritable);
 //        when(switchingWritableFactory.getSwitchableWritable(any(ChannelType.class), any(String.class)))
 //                .thenReturn(mockClosableWritable);
 //
@@ -91,7 +97,7 @@ public class VariablesTest {
 //        
         switchingObservableFactory = mock(ObservableFactory.class);
         when(switchingObservableFactory.getSwitchableObservable(any(ChannelType.class), any(String.class)))
-                .thenReturn(mockSwitchableObservable);
+                .thenReturn(defaultSwitchableObservable);
     }
 
     private Variables createVariables() {
@@ -111,7 +117,7 @@ public class VariablesTest {
 
         // Assert
         assertSame(expectedResult, variables.synopticSetter);
-        assertNotEquals(mockWritable, variables.synopticSetter);
+        assertNotEquals(defaultWritable, variables.synopticSetter);
     }
 
     @Test
@@ -142,17 +148,16 @@ public class VariablesTest {
         // Arrange
         String input =
                 "[{\"is_default\": true, \"pv\": \"__BLANK__\", \"name\": \"-- NONE --\"}, {\"is_default\": false, \"pv\": \"CHOPPER\", \"name\": \"chopper\"}]";
-        SwitchableObservable expectedSource = mock(SwitchableObservable.class);
         String expectedName1 = "-- NONE --";
         String expectedName2 = "chopper";
         String expectedPV1 = "__BLANK__";
         String expectedPV2 = "CHOPPER";
-        when(expectedSource.getValue()).thenReturn(input);
-        when(expectedSource.lastError()).thenReturn(null);
-        when(expectedSource.isConnected()).thenReturn(true);
+        when(mockSwitchableObservable.getValue()).thenReturn(input);
+        when(mockSwitchableObservable.lastError()).thenReturn(null);
+        when(mockSwitchableObservable.isConnected()).thenReturn(true);
 
         when(switchingObservableFactory.getSwitchableObservable(any(ChannelType.class),
-                eq(pvPrefix + SYNOPTIC_ADDRESS + NAMES))).thenReturn(expectedSource);
+                eq(pvPrefix + SYNOPTIC_ADDRESS + NAMES))).thenReturn(mockSwitchableObservable);
 
         // Act
         variables = createVariables();
@@ -173,30 +178,76 @@ public class VariablesTest {
     @Test
     public void synopticsSchema_is_initialised_pointing_at_correct_pv() {
         // Arrange
-        SwitchableObservable expectedResult = mock(SwitchableObservable.class);
         when(switchingObservableFactory.getSwitchableObservable(any(ChannelType.class),
-                eq(pvPrefix + SYNOPTIC_ADDRESS + SCHEMA))).thenReturn(expectedResult);
+                eq(pvPrefix + SYNOPTIC_ADDRESS + SCHEMA))).thenReturn(mockSwitchableObservable);
 
         // Act
         variables = createVariables();
 
         // Assert
-        assertSame(expectedResult, variables.synopticSchema);
-        assertNotEquals(mockSwitchableObservable, variables.synopticSchema);
+        assertSame(mockSwitchableObservable, variables.synopticSchema);
+        assertNotEquals(defaultSwitchableObservable, variables.synopticSchema);
     }
 
-//	/**
-//	 * Test method for {@link uk.ac.stfc.isis.ibex.synoptic.internal.Variables#getSynopticDescription(java.lang.String)}.
-//	 */
-//	@Test
-//	public final void get_synoptic_description() {
-//		// Act
-//		Object actual = variables.getSynopticDescription(synopticPV);
-//		
-//		// Assert
-//		assertNotNull(actual);
-//	}
-//
+    @Test
+    public void getSynopticDescription_reads_from_specified_pv() {
+        // Arrange
+        String expectedName = "Test";
+        String value = "<?xml version=\"1.0\" ?>\n" + "<instrument xmlns=\"http://www.isis.stfc.ac.uk//instrument\">"
+                + " <name>" + expectedName + "</name>" + "</instrument>";
+        when(mockSwitchableObservable.getValue()).thenReturn(value);
+        when(mockSwitchableObservable.lastError()).thenReturn(null);
+        when(mockSwitchableObservable.isConnected()).thenReturn(true);
+
+        String synopticPV = "TEST";
+        when(closingObservableFactory.getSwitchableObservable(any(ChannelType.class),
+                eq(pvPrefix + SYNOPTIC_ADDRESS + synopticPV + GET_SYNOPTIC))).thenReturn(mockSwitchableObservable);
+        variables = createVariables();
+
+        // Act
+        ForwardingObservable<SynopticDescription> result = variables.getSynopticDescription(synopticPV);
+
+        // Assert
+        verify(mockSwitchableObservable, atLeast(1)).getValue();
+        assertEquals(expectedName, result.getValue().name());
+    }
+
+    @Test
+    public void defaultReaderRemote_returns_default_observable_from_specified_pv() {
+        // Arrange
+        String address = "Test";
+        when(closingObservableFactory.getSwitchableObservable(any(ChannelType.class), anyString()))
+                .thenReturn(defaultSwitchableObservable);
+        when(closingObservableFactory.getSwitchableObservable(any(DefaultChannel.class), eq(address)))
+                .thenReturn(mockSwitchableObservable);
+        variables = createVariables();
+
+        // Act
+        ForwardingObservable result = variables.defaultReaderRemote(address);
+        
+        // Assert
+        assertSame(mockSwitchableObservable, result);
+        assertNotEquals(defaultSwitchableObservable, result);
+    }
+
+    @Test
+    public void defaultReaderRemoteWithoutUnits_returns_default_observable_without_units_from_specified_pv() {
+        // Arrange
+        String address = "Test";
+        when(closingObservableFactory.getSwitchableObservable(any(ChannelType.class), anyString()))
+                .thenReturn(defaultSwitchableObservable);
+        when(closingObservableFactory.getSwitchableObservable(any(DefaultChannelWithoutUnits.class), eq(address)))
+                .thenReturn(mockSwitchableObservable);
+        variables = createVariables();
+
+        // Act
+        ForwardingObservable result = variables.defaultReaderRemoteWithoutUnits(address);
+
+        // Assert
+        assertSame(mockSwitchableObservable, result);
+        assertNotEquals(defaultSwitchableObservable, result);
+    }
+
 //	/**
 //	 * Test method for {@link uk.ac.stfc.isis.ibex.synoptic.internal.Variables#defaultReader(java.lang.String)}.
 //	 */
