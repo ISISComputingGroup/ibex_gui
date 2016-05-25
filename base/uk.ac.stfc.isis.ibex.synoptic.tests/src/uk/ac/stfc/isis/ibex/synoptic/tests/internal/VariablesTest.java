@@ -19,7 +19,7 @@
 
 package uk.ac.stfc.isis.ibex.synoptic.tests.internal;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 import static org.mockito.Matchers.*;
 import static org.mockito.Mockito.*;
 
@@ -53,6 +53,8 @@ public class VariablesTest {
     private WritableFactory switchingWritableFactory;
     private ObservableFactory closingObservableFactory;
     private ObservableFactory switchingObservableFactory;
+
+    private Writable mockWritable = mock(Writable.class);
 	
 	/**
 	 * Code to generate the required components
@@ -64,7 +66,7 @@ public class VariablesTest {
 //
 //        ForwardingWritable mockClosableWritable = mock(ForwardingWritable.class);
 
-        Writable mockWritable = mock(Writable.class);
+
 //
         closingWritableFactory = mock(WritableFactory.class);
 //        when(closingWritableFactory.getSwitchableWritable(any(ChannelType.class), any(String.class)))
@@ -91,7 +93,7 @@ public class VariablesTest {
 	}
 	
 	@Test
-    public void renameMe() {
+    public void synopticSetter_is_initialised_pointing_at_correct_pv() {
         // Arrange
         Writable expectedResult = mock(Writable.class);
         when(switchingWritableFactory.getSwitchableWritable(any(ChannelType.class),
@@ -101,7 +103,8 @@ public class VariablesTest {
         variables = createVariables();
 
         // Assert
-        assertEquals(expectedResult, variables.setSynoptic);
+        assertEquals(expectedResult, variables.synopticSetter);
+        assertNotEquals(mockWritable, variables.synopticSetter);
 	}
 
 //	/**

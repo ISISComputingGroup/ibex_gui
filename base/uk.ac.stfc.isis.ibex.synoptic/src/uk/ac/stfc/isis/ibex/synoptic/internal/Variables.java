@@ -61,9 +61,9 @@ public class Variables extends InstrumentVariables {
     public static final String NONE_SYNOPTIC_NAME = "-- NONE --";
     public static final String NONE_SYNOPTIC_PV = "__BLANK__";
 
-    public final Writable<String> setSynoptic;
+    public final Writable<String> synopticSetter;
 
-    public final Writable<Collection<String>> deleteSynoptics;
+    public final Writable<Collection<String>> synopticsDeleter;
 
     public final ForwardingObservable<Collection<SynopticInfo>> available;
 
@@ -105,8 +105,8 @@ public class Variables extends InstrumentVariables {
         
         this.pvPrefix = pvPrefix;
 
-        setSynoptic = writeCompressed(SYNOPTIC_ADDRESS + "SET_DETAILS");
-        deleteSynoptics = convert(writeCompressed(SYNOPTIC_ADDRESS + "DELETE"), namesToString());
+        synopticSetter = writeCompressed(SYNOPTIC_ADDRESS + "SET_DETAILS");
+        synopticsDeleter = convert(writeCompressed(SYNOPTIC_ADDRESS + "DELETE"), namesToString());
         available = convert(readCompressed(SYNOPTIC_ADDRESS + "NAMES"), toSynopticInfo());
         synopticSchema = readCompressed(SYNOPTIC_ADDRESS + "SCHEMA");
     }

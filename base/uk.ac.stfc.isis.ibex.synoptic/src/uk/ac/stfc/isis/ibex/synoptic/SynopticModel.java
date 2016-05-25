@@ -45,7 +45,7 @@ public class SynopticModel extends ModelObject {
 		this.variables = variables;
 		instrument = getInstrument(new SynopticDescription());
 		
-		setCurrentSynoptic = new SynopticWriter(variables.setSynoptic);
+		setCurrentSynoptic = new SynopticWriter(variables.synopticSetter);
 	}
 
 	public Synoptic instrument() {
@@ -53,11 +53,11 @@ public class SynopticModel extends ModelObject {
 	}
 	
 	public Writable<Collection<String>> deleteSynoptics() {
-		return variables.deleteSynoptics;
+		return variables.synopticsDeleter;
 	}
 	
 	public Writable<String> setSynoptic() {
-		return variables.setSynoptic;
+		return variables.synopticSetter;
 	}
 	
 	public SynopticWriter saveSynoptic() {
