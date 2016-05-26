@@ -21,7 +21,7 @@ package uk.ac.stfc.isis.ibex.ui.blocks.groups;
 
 import org.eclipse.core.databinding.conversion.Converter;
 
-import uk.ac.stfc.isis.ibex.configserver.displaying.RunControlState;
+import uk.ac.stfc.isis.ibex.configserver.displaying.BlockState;
 
 /**
  * This is a converter for converting the value for the current run-control
@@ -32,17 +32,17 @@ import uk.ac.stfc.isis.ibex.configserver.displaying.RunControlState;
  */
 public class RunControlSymbolConverter extends Converter {
     public RunControlSymbolConverter() {
-        super(RunControlState.class, String.class);
+        super(BlockState.class, String.class);
     }
 
     @Override
     public Object convert(Object fromObject) {
-        RunControlState state = (RunControlState) fromObject;
+        BlockState state = (BlockState) fromObject;
         
-        if (state == RunControlState.ENABLED_IN_RANGE) {
+        if (state == BlockState.RUNCONTROL_ENABLED_IN_RANGE) {
             return "\u2713";
         }
-        else if (state == RunControlState.ENABLED_OUT_RANGE) {
+        else if (state == BlockState.RUNCONTROL_ENABLED_OUT_RANGE) {
             return "X";
         }
 
