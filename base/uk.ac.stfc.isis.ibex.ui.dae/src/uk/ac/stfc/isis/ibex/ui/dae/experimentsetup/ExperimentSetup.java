@@ -19,16 +19,17 @@
 
 package uk.ac.stfc.isis.ibex.ui.dae.experimentsetup;
 
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.custom.CTabFolder;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.layout.FillLayout;
+import org.eclipse.swt.custom.CTabFolder;
 import org.eclipse.swt.custom.CTabItem;
-import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.layout.FillLayout;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Display;
 
 import uk.ac.stfc.isis.ibex.ui.dae.DaeUI;
 import uk.ac.stfc.isis.ibex.ui.dae.experimentsetup.periods.PeriodsPanel;
@@ -74,7 +75,6 @@ public class ExperimentSetup extends Composite {
 		Composite dataAcquisitionComposite = new Composite(tabFolder, SWT.NONE);
 		tbtmDataAcquisition.setControl(dataAcquisitionComposite);
 		dataAcquisitionComposite.setLayout(new FillLayout(SWT.HORIZONTAL));
-		
 		dataAcquisition = new DataAcquisitionPanel(dataAcquisitionComposite, SWT.NONE);
 		
 		CTabItem tbtmPeriods = new CTabItem(tabFolder, SWT.NONE);
@@ -114,4 +114,25 @@ public class ExperimentSetup extends Composite {
 		periods.setModel(viewModel.periodSettings());
 	}
 
+    /**
+     * Enable or disable the content / children panels of this composite.
+     * 
+     * @param enabled whether the contents should be enabled or not
+     */
+    public void setChildrenEnabled(boolean enabled) {
+        recursiveSetEnabled(timeChannels, enabled);
+        recursiveSetEnabled(dataAcquisition, enabled);
+        recursiveSetEnabled(periods, enabled);
+    }
+
+    private void recursiveSetEnabled(Control control, boolean enabled) {
+        if (control instanceof Composite) {
+            Composite composite = (Composite) control;
+            for (Control child : composite.getChildren()) {
+                recursiveSetEnabled(child, enabled);
+            }
+        }
+
+        control.setEnabled(enabled);
+    }
 }

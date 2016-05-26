@@ -105,7 +105,7 @@ public class DaeView extends ViewPart {
 		DISPLAY.asyncExec(new Runnable() {	
 			@Override
 			public void run() {
-                experimentSetup.setEnabled(isRunning != null && isRunning);
+                experimentSetup.setChildrenEnabled(isRunning != null && !isRunning);
 			}
 		});
 	}

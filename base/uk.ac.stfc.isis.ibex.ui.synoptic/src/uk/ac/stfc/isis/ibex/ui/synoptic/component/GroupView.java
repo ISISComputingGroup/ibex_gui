@@ -38,7 +38,7 @@ import uk.ac.stfc.isis.ibex.ui.synoptic.beamline.BeamlineCompositeContainer;
 @SuppressWarnings("checkstyle:magicnumber")
 public class GroupView extends BeamlineComposite {
 
-	private final Cursor handCursor = new Cursor(getDisplay(), SWT.CURSOR_HAND);
+    private final Cursor handCursor = SWTResourceManager.getCursor(SWT.CURSOR_HAND);
 
 	private SynopticPresenter presenter = Activator.getDefault().presenter();
 	private String targetName;
