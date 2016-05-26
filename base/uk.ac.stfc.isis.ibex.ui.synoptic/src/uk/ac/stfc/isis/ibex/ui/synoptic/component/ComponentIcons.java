@@ -24,10 +24,17 @@ import org.eclipse.wb.swt.ResourceManager;
 
 import uk.ac.stfc.isis.ibex.synoptic.model.Component;
 
+/**
+ * The set of icons that can be associated with a particular synoptic component.
+ */
 public final class ComponentIcons {
 	
 	private ComponentIcons() { }
 	
+    /**
+     * @param component - The component we want the icon for
+     * @return The image of the icon for the component
+     */
 	public static Image iconForComponent(Component component) {
 		switch (component.type()) {
 			case JAWS:

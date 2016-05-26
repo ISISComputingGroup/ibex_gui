@@ -25,6 +25,9 @@ import uk.ac.stfc.isis.ibex.synoptic.model.Component;
 import uk.ac.stfc.isis.ibex.ui.synoptic.beamline.BeamlineComposite;
 import uk.ac.stfc.isis.ibex.ui.synoptic.beamline.BeamlineCompositeContainer;
 
+/**
+ * The view in the synoptic perspective of the associated components.
+ */
 public final class ComponentView {
 	
 	private ComponentView() { }
