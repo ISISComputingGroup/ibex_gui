@@ -34,6 +34,7 @@ import org.eclipse.jface.viewers.ILabelProviderListener;
 import org.eclipse.swt.graphics.Image;
 
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.ComponentDescription;
+import uk.ac.stfc.isis.ibex.ui.synoptic.component.icons.ComponentIcons;
 
 /**
  * Provides labels for components within the synoptic editor.
@@ -43,7 +44,7 @@ public class ComponentLabelProvider implements ILabelProvider {
 	public Image getImage(Object element) {
 		if (element instanceof ComponentDescription) {
 			return ComponentIcons
-					.thumbnailForComponent((ComponentDescription) element);
+                    .thumbnailForType(((ComponentDescription) element).type());
 		} else {
 			return null;
 		}
