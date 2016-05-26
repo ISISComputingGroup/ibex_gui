@@ -45,6 +45,7 @@ public class DisplayBlockTest {
 		// Arrange
 		inRangeObservable = new TestableIOSObservable<>(mock(Observable.class));
         enabledObservable = new TestableIOSObservable<>(mock(Observable.class));
+        disconnectedObservable = new TestableIOSObservable<>(mock(Observable.class));
 		
 		displayBlock = new DisplayBlock(
                 mock(Block.class), // block
@@ -127,5 +128,16 @@ public class DisplayBlockTest {
 		// Assert
         assertEquals(BlockState.RUNCONTROL_ENABLED_IN_RANGE, displayBlock.getBlockState());
 	}
+
+//    @Test
+//    public void setting_disconnected_to_true_sets_blockstate_disconnected() {
+//        // Setting InRange to a nonsense value should default to true.
+//
+//        // Act
+//        disconnectedObservable.isConnected()
+//
+//        // Assert
+//                assertEquals(BlockState.DISCONNECTED, displayBlock.getBlockState());
+//    }
 
 }

@@ -46,6 +46,9 @@ public class DisplayBlock extends ModelObject {
      */
     private boolean inRange;
 
+    /**
+     * Indicates whether the block in currently disconnected
+     */
     private boolean disconnected;
 
     /**
@@ -85,6 +88,7 @@ public class DisplayBlock extends ModelObject {
 
         @Override
         public void onConnectionStatus(boolean isConnected) {
+            setDisconnected(!isConnected);
             if (!isConnected) {
                 setValue("disconnected");
             }
@@ -224,6 +228,13 @@ public class DisplayBlock extends ModelObject {
     }
 
     /**
+     * @return whether the block is disconnected.
+     */
+    public Boolean getDisconnected() {
+        return disconnected;
+    }
+
+    /**
      * @return whether the block is within its run-control limits.
      */
     public Boolean getInRange() {
@@ -291,6 +302,10 @@ public class DisplayBlock extends ModelObject {
         firePropertyChange("description", this.description, this.description = Strings.nullToEmpty(description));
     }
 
+    private synchronized void setDisconnected(Boolean disconnected) {
+        firePropertyChange("disconnected", this.disconnected, this.disconnected = disconnected);
+    }
+
     private synchronized void setInRange(Boolean inRange) {
         firePropertyChange("inRange", this.inRange, this.inRange = inRange);
     }
@@ -308,17 +323,21 @@ public class DisplayBlock extends ModelObject {
     }
 
     private synchronized void setState() {
-        if (runcontrol_enabled) {
-            if (inRange) {
-                firePropertyChange("blockState", this.blockState,
-                        this.blockState = BlockState.RUNCONTROL_ENABLED_IN_RANGE);
-            } else {
-                firePropertyChange("blockState", this.blockState,
-                        this.blockState = BlockState.RUNCONTROL_ENABLED_OUT_RANGE);
-            }
+        System.out.println(getName() + " " + disconnected);
+        if (disconnected) {
+            firePropertyChange("blockState", this.blockState, this.blockState = BlockState.DISCONNECTED);
         } else {
-            firePropertyChange("blockState", this.blockState,
-                    this.blockState = BlockState.RUNCONTROL_DISABLED);
+            if (runcontrol_enabled) {
+                if (inRange) {
+                    firePropertyChange("blockState", this.blockState,
+                            this.blockState = BlockState.RUNCONTROL_ENABLED_IN_RANGE);
+                } else {
+                    firePropertyChange("blockState", this.blockState,
+                            this.blockState = BlockState.RUNCONTROL_ENABLED_OUT_RANGE);
+                }
+            } else {
+                firePropertyChange("blockState", this.blockState, this.blockState = BlockState.RUNCONTROL_DISABLED);
+            }
         }
     }
 

@@ -159,6 +159,15 @@ public class Group extends Composite {
 				bindingContext.bindValue(
 						WidgetProperties.background().observe(blockStatus), 
                         BeanProperties.value("blockState").observe(currentBlock), null, bgColourStrategy);
+
+                UpdateValueStrategy textColourStrategy = new UpdateValueStrategy();
+                textColourStrategy.setConverter(new DisconnectedForegroundColourConverter());
+
+                bindingContext.bindValue(WidgetProperties.foreground().observe(blockName),
+                        BeanProperties.value("blockState").observe(currentBlock), null, textColourStrategy);
+
+                bindingContext.bindValue(WidgetProperties.foreground().observe(blockValue),
+                        BeanProperties.value("blockState").observe(currentBlock), null, textColourStrategy);
 			}
 		}
 	}
