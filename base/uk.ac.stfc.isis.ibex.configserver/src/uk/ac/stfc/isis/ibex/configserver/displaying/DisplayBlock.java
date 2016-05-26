@@ -88,10 +88,13 @@ public class DisplayBlock extends ModelObject {
 
         @Override
         public void onConnectionStatus(boolean isConnected) {
-            setDisconnected(!isConnected);
             if (!isConnected) {
+                setDisconnected(true);
                 setValue("disconnected");
+            } else {
+                setDisconnected(false);
             }
+            setState();
         }
     };
 
@@ -323,7 +326,6 @@ public class DisplayBlock extends ModelObject {
     }
 
     private synchronized void setState() {
-        System.out.println(getName() + " " + disconnected);
         if (disconnected) {
             firePropertyChange("blockState", this.blockState, this.blockState = BlockState.DISCONNECTED);
         } else {

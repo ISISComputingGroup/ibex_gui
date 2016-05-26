@@ -36,7 +36,8 @@ public class DisplayBlockTest {
 	
 	TestableIOSObservable<String> inRangeObservable;
     TestableIOSObservable<String> enabledObservable;
-    TestableIOSObservable<String> disconnectedObservable;
+    TestableIOSObservable<String> valueObservable;
+    TestableIOSObservable<String> descriptionObservable;
 	
 	DisplayBlock displayBlock;
 	
@@ -45,21 +46,35 @@ public class DisplayBlockTest {
 		// Arrange
 		inRangeObservable = new TestableIOSObservable<>(mock(Observable.class));
         enabledObservable = new TestableIOSObservable<>(mock(Observable.class));
-        disconnectedObservable = new TestableIOSObservable<>(mock(Observable.class));
+        valueObservable = new TestableIOSObservable<>(mock(Observable.class));
+        descriptionObservable = new TestableIOSObservable<>(mock(Observable.class));
 		
 		displayBlock = new DisplayBlock(
                 mock(Block.class), // block
-				mock(ForwardingObservable.class),  // value
-				mock(ForwardingObservable.class),  // description
+                valueObservable, // value
+				descriptionObservable,  // description
                 inRangeObservable, // inRange
 				mock(ForwardingObservable.class),  // lowLimit
 				mock(ForwardingObservable.class),  // highLimit
                 enabledObservable, // enabled
-				"");		
+                "");
 	}
-	
+
+    @Test
+    public void setting_connection_status_to_false_sets_blockstate_disconnected() {
+
+        // Act
+        valueObservable.setConnectionStatus(false);
+
+        // Assert
+        assertEquals(BlockState.DISCONNECTED, displayBlock.getBlockState());
+    }
+
 	@Test
     public void if_in_range_and_disabled_unset_then_state_is_disabled() {
+        // Arrange
+        valueObservable.setConnectionStatus(true);
+
         // Act
         enabledObservable.setValue("NO");
         inRangeObservable.setValue("YES");
@@ -70,6 +85,9 @@ public class DisplayBlockTest {
 	
 	@Test
     public void if_in_range_while_enabled_then_state_is_in_range() {
+        // Arrange
+        valueObservable.setConnectionStatus(true);
+
         // Act
         enabledObservable.setValue("YES");
         inRangeObservable.setValue("YES");
@@ -80,6 +98,9 @@ public class DisplayBlockTest {
 	
 	@Test
     public void if_not_in_range_while_enabled_then_out_range() {
+        // Arrange
+        valueObservable.setConnectionStatus(true);
+
 		// Act
         enabledObservable.setValue("YES");
 		inRangeObservable.setValue("NO");
@@ -91,6 +112,7 @@ public class DisplayBlockTest {
 	@Test
     public void if_in_range_to_false_then_true_sets_in_range() {
         // Arrange
+        valueObservable.setConnectionStatus(true);
         enabledObservable.setValue("YES");
         inRangeObservable.setValue("NO");
 
@@ -104,6 +126,7 @@ public class DisplayBlockTest {
 	@Test
     public void setting_in_range_to_true_then_false_sets_out_range() {
         // Arrange
+        valueObservable.setConnectionStatus(true);
         enabledObservable.setValue("YES");
         inRangeObservable.setValue("YES");
 
@@ -116,9 +139,8 @@ public class DisplayBlockTest {
 
 	@Test
     public void setting_in_range_to_false_then_nonsense_sets_in_range() {
-        // Setting InRange to a nonsense value should default to true.
-
         // Arrange
+        valueObservable.setConnectionStatus(true);
         enabledObservable.setValue("YES");
         inRangeObservable.setValue("NO");
 
@@ -128,16 +150,5 @@ public class DisplayBlockTest {
 		// Assert
         assertEquals(BlockState.RUNCONTROL_ENABLED_IN_RANGE, displayBlock.getBlockState());
 	}
-
-//    @Test
-//    public void setting_disconnected_to_true_sets_blockstate_disconnected() {
-//        // Setting InRange to a nonsense value should default to true.
-//
-//        // Act
-//        disconnectedObservable.isConnected()
-//
-//        // Assert
-//                assertEquals(BlockState.DISCONNECTED, displayBlock.getBlockState());
-//    }
 
 }
