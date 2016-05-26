@@ -275,7 +275,7 @@ public class DisplayBlock extends ModelObject {
     /**
      * @return the overall run-control status.
      */
-    public BlockState blockState() {
+    public BlockState getBlockState() {
         return blockState;
     }
 

@@ -64,7 +64,7 @@ public class DisplayBlockTest {
         inRangeObservable.setValue("YES");
 		
 		// Assert
-        assertEquals(BlockState.RUNCONTROL_DISABLED, displayBlock.blockState());
+        assertEquals(BlockState.RUNCONTROL_DISABLED, displayBlock.getBlockState());
 	}
 	
 	@Test
@@ -74,7 +74,7 @@ public class DisplayBlockTest {
         inRangeObservable.setValue("YES");
 		
 		// Assert
-        assertEquals(BlockState.RUNCONTROL_ENABLED_IN_RANGE, displayBlock.blockState());
+        assertEquals(BlockState.RUNCONTROL_ENABLED_IN_RANGE, displayBlock.getBlockState());
 	}
 	
 	@Test
@@ -84,7 +84,7 @@ public class DisplayBlockTest {
 		inRangeObservable.setValue("NO");
 		
 		// Assert
-        assertEquals(BlockState.RUNCONTROL_ENABLED_OUT_RANGE, displayBlock.blockState());
+        assertEquals(BlockState.RUNCONTROL_ENABLED_OUT_RANGE, displayBlock.getBlockState());
 	}
 	
 	@Test
@@ -97,7 +97,7 @@ public class DisplayBlockTest {
 		inRangeObservable.setValue("YES");
 		
 		// Assert
-        assertEquals(BlockState.RUNCONTROL_ENABLED_IN_RANGE, displayBlock.blockState());
+        assertEquals(BlockState.RUNCONTROL_ENABLED_IN_RANGE, displayBlock.getBlockState());
 	}
 
 	@Test
@@ -110,7 +110,7 @@ public class DisplayBlockTest {
 		inRangeObservable.setValue("NO");
 		
 		// Assert
-        assertEquals(BlockState.RUNCONTROL_ENABLED_OUT_RANGE, displayBlock.blockState());
+        assertEquals(BlockState.RUNCONTROL_ENABLED_OUT_RANGE, displayBlock.getBlockState());
 	}
 
 	@Test
@@ -125,7 +125,7 @@ public class DisplayBlockTest {
 		inRangeObservable.setValue("maybe");
 		
 		// Assert
-        assertEquals(BlockState.RUNCONTROL_ENABLED_IN_RANGE, displayBlock.blockState());
+        assertEquals(BlockState.RUNCONTROL_ENABLED_IN_RANGE, displayBlock.getBlockState());
 	}
 
 }
