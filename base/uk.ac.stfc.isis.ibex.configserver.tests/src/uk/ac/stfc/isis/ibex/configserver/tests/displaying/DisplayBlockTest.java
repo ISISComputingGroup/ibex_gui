@@ -61,9 +61,31 @@ public class DisplayBlockTest {
 	}
 
     @Test
-    public void setting_connection_status_to_false_sets_blockstate_disconnected() {
+    public void if_disconnected_then_blockstate_disconnected() {
 
         // Act
+        valueObservable.setConnectionStatus(false);
+
+        // Assert
+        assertEquals(BlockState.DISCONNECTED, displayBlock.getBlockState());
+    }
+
+    @Test
+    public void if_disconnected_connected_then_blockstate_runcontrol_disabled() {
+
+        // Act
+        valueObservable.setConnectionStatus(false);
+        valueObservable.setConnectionStatus(true);
+
+        // Assert
+        assertEquals(BlockState.RUNCONTROL_DISABLED, displayBlock.getBlockState());
+    }
+
+    @Test
+    public void if_connected_disconnected_then_blockstate_disconnected() {
+
+        // Act
+        valueObservable.setConnectionStatus(true);
         valueObservable.setConnectionStatus(false);
 
         // Assert
@@ -151,4 +173,59 @@ public class DisplayBlockTest {
         assertEquals(BlockState.RUNCONTROL_ENABLED_IN_RANGE, displayBlock.getBlockState());
 	}
 
+    @Test
+    public void if_enabled_and_in_range_while_disconnected_then_blockstate_disconnected() {
+
+        // Arrange
+        valueObservable.setConnectionStatus(false);
+
+        // Act
+        enabledObservable.setValue("YES");
+        inRangeObservable.setValue("YES");
+
+        // Assert
+        assertEquals(BlockState.DISCONNECTED, displayBlock.getBlockState());
+    }
+
+    @Test
+    public void if_enabled_and_not_in_range_while_disconnected_then_blockstate_disconnected() {
+
+        // Arrange
+        valueObservable.setConnectionStatus(false);
+
+        // Act
+        enabledObservable.setValue("YES");
+        inRangeObservable.setValue("NO");
+
+        // Assert
+        assertEquals(BlockState.DISCONNECTED, displayBlock.getBlockState());
+    }
+
+    @Test
+    public void if_not_enabled_and_in_range_while_disconnected_then_blockstate_disconnected() {
+
+        // Arrange
+        valueObservable.setConnectionStatus(false);
+
+        // Act
+        enabledObservable.setValue("NO");
+        inRangeObservable.setValue("YES");
+
+        // Assert
+        assertEquals(BlockState.DISCONNECTED, displayBlock.getBlockState());
+    }
+
+    @Test
+    public void if_not_enabled_and_not_in_range_while_disconnected_then_blockstate_disconnected() {
+
+        // Arrange
+        valueObservable.setConnectionStatus(false);
+
+        // Act
+        enabledObservable.setValue("NO");
+        inRangeObservable.setValue("NO");
+
+        // Assert
+        assertEquals(BlockState.DISCONNECTED, displayBlock.getBlockState());
+    }
 }
