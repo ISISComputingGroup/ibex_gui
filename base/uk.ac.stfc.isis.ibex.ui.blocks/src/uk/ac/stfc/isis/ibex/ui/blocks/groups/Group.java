@@ -144,21 +144,30 @@ public class Group extends Composite {
 
 				bindingContext.bindValue(
 						WidgetProperties.text().observe(blockStatus), 
-                        BeanProperties.value("runControlState").observe(currentBlock), null, symbolStrategy);
+                        BeanProperties.value("blockState").observe(currentBlock), null, symbolStrategy);
 				
                 UpdateValueStrategy fgColourStrategy = new UpdateValueStrategy();
                 fgColourStrategy.setConverter(new RunControlForegroundColourConverter());
 
 				bindingContext.bindValue(
 						WidgetProperties.foreground().observe(blockStatus), 
-                        BeanProperties.value("runControlState").observe(currentBlock), null, fgColourStrategy);
+                        BeanProperties.value("blockState").observe(currentBlock), null, fgColourStrategy);
 
                 UpdateValueStrategy bgColourStrategy = new UpdateValueStrategy();
                 bgColourStrategy.setConverter(new RunControlBackgroundColourConverter());
 
 				bindingContext.bindValue(
 						WidgetProperties.background().observe(blockStatus), 
-                        BeanProperties.value("runControlState").observe(currentBlock), null, bgColourStrategy);
+                        BeanProperties.value("blockState").observe(currentBlock), null, bgColourStrategy);
+
+                UpdateValueStrategy textColourStrategy = new UpdateValueStrategy();
+                textColourStrategy.setConverter(new DisconnectedForegroundColourConverter());
+
+                bindingContext.bindValue(WidgetProperties.foreground().observe(blockName),
+                        BeanProperties.value("blockState").observe(currentBlock), null, textColourStrategy);
+
+                bindingContext.bindValue(WidgetProperties.foreground().observe(blockValue),
+                        BeanProperties.value("blockState").observe(currentBlock), null, textColourStrategy);
 			}
 		}
 	}
