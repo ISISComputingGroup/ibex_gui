@@ -19,6 +19,9 @@
 
 package uk.ac.stfc.isis.ibex.ui.blocks.groups;
 
+import java.util.Arrays;
+import java.util.List;
+
 import org.eclipse.core.databinding.conversion.Converter;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
@@ -37,6 +40,8 @@ import uk.ac.stfc.isis.ibex.configserver.displaying.BlockState;
 public class RunControlForegroundColourConverter extends Converter {
     private static final Color WHITE = SWTResourceManager.getColor(SWT.COLOR_WHITE);
     private static final Color BLACK = SWTResourceManager.getColor(SWT.COLOR_BLACK);
+    private static final List<BlockState> ENABLED_INRANGE_STATES = Arrays.asList(BlockState.RUNCONTROL_ENABLED_IN_RANGE,
+            BlockState.RUNCONTROL_ENABLED_IN_RANGE_HIALARM, BlockState.RUNCONTROL_ENABLED_IN_RANGE_LOALARM);
 
     public RunControlForegroundColourConverter() {
         super(BlockState.class, Color.class);
@@ -46,7 +51,7 @@ public class RunControlForegroundColourConverter extends Converter {
     public Object convert(Object fromObject) {
         BlockState state = (BlockState) fromObject;
 
-        if (state == BlockState.RUNCONTROL_ENABLED_IN_RANGE) {
+        if (ENABLED_INRANGE_STATES.contains(state)) {
             return BLACK;
         }
 
