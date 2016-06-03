@@ -1,32 +1,22 @@
 
 /*
-* This file is part of the ISIS IBEX application.
-* Copyright (C) 2012-2015 Science & Technology Facilities Council.
-* All rights reserved.
-*
-* This program is distributed in the hope that it will be useful.
-* This program and the accompanying materials are made available under the
-* terms of the Eclipse Public License v1.0 which accompanies this distribution.
-* EXCEPT AS EXPRESSLY SET FORTH IN THE ECLIPSE PUBLIC LICENSE V1.0, THE PROGRAM 
-* AND ACCOMPANYING MATERIALS ARE PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES 
-* OR CONDITIONS OF ANY KIND.  See the Eclipse Public License v1.0 for more details.
-*
-* You should have received a copy of the Eclipse Public License v1.0
-* along with this program; if not, you can obtain a copy from
-* https://www.eclipse.org/org/documents/epl-v10.php or 
-* http://opensource.org/licenses/eclipse-1.0.php
-*/
-
-/*
- * Copyright (C) 2013-2014 Research Councils UK (STFC)
+ * This file is part of the ISIS IBEX application. Copyright (C) 2012-2016
+ * Science & Technology Facilities Council. All rights reserved.
  *
- * This file is part of the Instrument Control Project at ISIS.
+ * This program is distributed in the hope that it will be useful. This program
+ * and the accompanying materials are made available under the terms of the
+ * Eclipse Public License v1.0 which accompanies this distribution. EXCEPT AS
+ * EXPRESSLY SET FORTH IN THE ECLIPSE PUBLIC LICENSE V1.0, THE PROGRAM AND
+ * ACCOMPANYING MATERIALS ARE PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES
+ * OR CONDITIONS OF ANY KIND. See the Eclipse Public License v1.0 for more
+ * details.
  *
- * This code and information are provided "as is" without warranty of any 
- * kind, either expressed or implied, including but not limited to the
- * implied warranties of merchantability and/or fitness for a particular 
- * purpose.
+ * You should have received a copy of the Eclipse Public License v1.0 along with
+ * this program; if not, you can obtain a copy from
+ * https://www.eclipse.org/org/documents/epl-v10.php or
+ * http://opensource.org/licenses/eclipse-1.0.php
  */
+
 package uk.ac.stfc.isis.ibex.ui.synoptic.editor.component;
 
 import java.util.Collection;
@@ -43,6 +33,7 @@ import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.SynopticViewModel;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.UpdateTypes;
 
 /**
+ * Allow the component to receive a drop event.
  * 
  * User click drag - startDrag User release drag - setDragData drop - drop drop
  * - performDrop drag - finishedDrag
@@ -51,6 +42,12 @@ public class ComponentDropListener extends ViewerDropAdapter {
 	private final InstrumentTreeView viewer;
 	private final SynopticViewModel instrument;
 
+    /**
+     * Instantiates a new component drop listener.
+     *
+     * @param viewer the viewer that has this listener
+     * @param instrument the instrument synoptic
+     */
 	public ComponentDropListener(InstrumentTreeView viewer,
 			SynopticViewModel instrument) {
 		super(viewer.getTreeViewer());
@@ -108,8 +105,13 @@ public class ComponentDropListener extends ViewerDropAdapter {
 	}
 
 	/**
-	 * Called from super.drop()
-	 */
+     * Allows component to be dropped.
+     * 
+     * Called from super.drop().
+     *
+     * @param data the data
+     * @return true, if component can be moved successful; false otherwise
+     */
 	@Override
 	public boolean performDrop(Object data) {
 		instrument.broadcastInstrumentUpdate(UpdateTypes.MOVE_COMPONENT);
@@ -117,9 +119,11 @@ public class ComponentDropListener extends ViewerDropAdapter {
 	}
 
 	/**
-	 * Returns a value indicating whether a drop at the current position is
-	 * allowed.
-	 */
+     * Validate whether a component can be dropped.
+     * 
+     * @param event the drop event
+     * @return true if it can be dropped; false otherwise
+     */
 	public boolean validateDrop(DropTargetEvent event) {
 		// Fail if the component being dragged is null
 		Collection<ComponentDescription> sourceComponents = viewer.getCurrentDragSource();
@@ -127,8 +131,9 @@ public class ComponentDropListener extends ViewerDropAdapter {
 			return false;
 		}
 
-        // If target in null then target is parent drop items at the end if it
-        // is not already at the end
+        // If target is null then target is parent and dropped item can appear
+        // at the end if it is
+        // not already at the end
 		Object targetObject = determineTarget(event);
         if (targetObject == null) {
             List<ComponentDescription> components = instrument.getSynoptic().components();
@@ -162,9 +167,14 @@ public class ComponentDropListener extends ViewerDropAdapter {
 	}
 
 	/**
-	 * Called whenever the user moves the mouse over a new element while
-	 * dragging
-	 */
+     * Validate that an item can be dropped. Called whenever the user moves the
+     * mouse over a new element while dragging.
+     *
+     * @param target the target of the drop
+     * @param operation the operation being performed by the drop
+     * @param transferType the transfer type
+     * @return true, if drop is valid; false otherwise
+     */
 	@Override
 	public boolean validateDrop(Object target, int operation,
 			TransferData transferType) {
