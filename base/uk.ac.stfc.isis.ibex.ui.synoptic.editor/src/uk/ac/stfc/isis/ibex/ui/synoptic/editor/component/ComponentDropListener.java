@@ -30,6 +30,7 @@
 package uk.ac.stfc.isis.ibex.ui.synoptic.editor.component;
 
 import java.util.Collection;
+import java.util.List;
 
 import org.eclipse.jface.viewers.ViewerDropAdapter;
 import org.eclipse.swt.dnd.DropTargetEvent;
@@ -68,6 +69,13 @@ public class ComponentDropListener extends ViewerDropAdapter {
 		ComponentDescription targetComponent = (ComponentDescription) determineTarget(event);
 		int location = this.determineLocation(event);
 		
+        // Drop on to viewer makes items appears at the end of the list
+        if (targetComponent == null) {
+            List<ComponentDescription> components = instrument.getSynoptic().components();
+            targetComponent = components.get(components.size() - 1);
+            location = LOCATION_AFTER;
+        }
+
 		for (ComponentDescription sourceComponent : sourceComponents) {
 			SynopticParentDescription sourceParent = instrument.getParent(sourceComponent);
 			
@@ -119,10 +127,17 @@ public class ComponentDropListener extends ViewerDropAdapter {
 			return false;
 		}
 
-		// Fail if the target is null or not a component
+        // If target in null then target is parent drop items at the end if it
+        // is not already at the end
 		Object targetObject = determineTarget(event);
-		if (targetObject == null
-				|| !(targetObject instanceof ComponentDescription)) {
+        if (targetObject == null) {
+            List<ComponentDescription> components = instrument.getSynoptic().components();
+            ComponentDescription lastComponent = components.get(components.size() - 1);
+            return !sourceComponents.contains(lastComponent);
+        }
+
+        // only drop onto component if there is a target
+        if (!(targetObject instanceof ComponentDescription)) {
 			return false;
 		}
 
