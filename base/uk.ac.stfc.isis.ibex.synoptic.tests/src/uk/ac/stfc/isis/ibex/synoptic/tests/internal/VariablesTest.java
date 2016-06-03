@@ -104,7 +104,7 @@ public class VariablesTest {
     }
 
     @Test
-    public void synopticSetter_is_initialised_pointing_at_correct_pv() {
+    public void WHEN_variables_is_initalised_THEN_synopticSetter_points_at_correct_pv() {
         // Arrange
         Writable expectedResult = mock(Writable.class);
         when(switchingWritableFactory.getSwitchableWritable(any(ChannelType.class),
@@ -120,7 +120,7 @@ public class VariablesTest {
 
     @Test
     public void
-            synopticsDeleter_is_initialised_as_writable_converting_string_collection_to_json_string_to_correct_pv() {
+            WHEN_variables_is_initialised_THEN_synopticsDeleter_is_a_writable_converting_string_collection_to_json_string_on_correct_pv() {
         // Arrange
         Writable expectedDestination = mock(Writable.class);
         when(switchingWritableFactory.getSwitchableWritable(any(ChannelType.class),
@@ -142,14 +142,21 @@ public class VariablesTest {
     }
 
     @Test
-    public void available_is_initialised_as_collection_of_synoptic_info_for_available_synoptics() {
+    public void WHEN_variables_is_initalised_THEN_available_is_a_collection_of_synoptic_info_for_available_synoptics() {
         // Arrange
-        String input =
-                "[{\"is_default\": true, \"pv\": \"__BLANK__\", \"name\": \"-- NONE --\"}, {\"is_default\": false, \"pv\": \"CHOPPER\", \"name\": \"chopper\"}]";
-        String expectedName1 = "-- NONE --";
-        String expectedName2 = "chopper";
-        String expectedPV1 = "__BLANK__";
-        String expectedPV2 = "CHOPPER";
+        String expectedName0 = "-- NONE --";
+        String expectedName1 = "chopper";
+        String expectedPV0 = "__BLANK__";
+        String expectedPV1 = "CHOPPER";
+        boolean expectedIsDefault0 = true;
+        boolean expectedIsDefault1 = false;
+
+        String input = "[{\"is_default\": " + expectedIsDefault0
+                + ", \"pv\": \"" + expectedPV0
+                + "\", \"name\": \"" + expectedName0
+                + "\"}, {\"is_default\": " + expectedIsDefault1 + ", \"pv\": \"" + expectedPV1
+                + "\", \"name\": \"" + expectedName1 + "\"}]";
+
         when(mockSwitchableObservable.getValue()).thenReturn(input);
         when(mockSwitchableObservable.lastError()).thenReturn(null);
         when(mockSwitchableObservable.isConnected()).thenReturn(true);
@@ -165,16 +172,16 @@ public class VariablesTest {
         Collection<SynopticInfo> result = available.getValue();
         ArrayList<SynopticInfo> resultAsList = new ArrayList<>(result);
         assertEquals(2, resultAsList.size());
-        assertEquals(expectedName1, resultAsList.get(0).name());
-        assertEquals(expectedName2, resultAsList.get(1).name());
-        assertEquals(expectedPV1, resultAsList.get(0).pv());
-        assertEquals(expectedPV2, resultAsList.get(1).pv());
+        assertEquals(expectedName0, resultAsList.get(0).name());
+        assertEquals(expectedName1, resultAsList.get(1).name());
+        assertEquals(expectedPV0, resultAsList.get(0).pv());
+        assertEquals(expectedPV1, resultAsList.get(1).pv());
         assertTrue(resultAsList.get(0).isDefault());
         assertFalse(resultAsList.get(1).isDefault());
     }
 
     @Test
-    public void synopticsSchema_is_initialised_pointing_at_correct_pv() {
+    public void WHEN_variables_is_initialised_THEN_synopticsSchema_points_at_correct_pv() {
         // Arrange
         when(switchingObservableFactory.getSwitchableObservable(any(ChannelType.class),
                 eq(pvPrefix + SYNOPTIC_ADDRESS + SCHEMA))).thenReturn(mockSwitchableObservable);
@@ -188,7 +195,7 @@ public class VariablesTest {
     }
 
     @Test
-    public void getSynopticDescription_reads_from_specified_pv() {
+    public void GIVEN_new_variables_WHEN_getting_synoptic_description_THEN_description_is_read_from_specified_pv() {
         // Arrange
         String expectedName = "Test";
         String value = "<?xml version=\"1.0\" ?>\n" + "<instrument xmlns=\"http://www.isis.stfc.ac.uk//instrument\">"
@@ -211,7 +218,8 @@ public class VariablesTest {
     }
 
     @Test
-    public void defaultReaderRemote_returns_default_observable_from_specified_pv() {
+    public void
+            GIVEN_new_variables_WHEN_getting_defaultReaderRemote_THEN_returns_default_observable_from_specified_pv() {
         // Arrange
         String address = "Test";
         when(closingObservableFactory.getSwitchableObservable(any(DefaultChannel.class), eq(address)))
@@ -227,7 +235,8 @@ public class VariablesTest {
     }
 
     @Test
-    public void defaultReaderRemoteWithoutUnits_returns_default_observable_without_units_from_specified_pv() {
+    public void
+            GIVEN_new_variables_WHEN_getting_defaultReaderRemoteWithoutUnits_THEN_returns_default_observable_without_units_from_specified_pv() {
         // Arrange
         String address = "Test";
         when(closingObservableFactory.getSwitchableObservable(any(DefaultChannelWithoutUnits.class), eq(address)))
@@ -243,7 +252,8 @@ public class VariablesTest {
     }
 
     @Test
-    public void defaultWritableRemote_returns_default_writable_from_specified_pv() {
+    public void
+            GIVEN_new_variables_WHEN_getting_defaultWritableRemote_THEN_returns_default_writable_from_specified_pv() {
         // Arrange
         String address = "Test";
         when(closingWritableFactory.getSwitchableWritable(any(StringChannel.class), eq(address)))
