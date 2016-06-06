@@ -41,7 +41,8 @@ public class EditComponentHandler extends ConfigHandler<Configuration> {
 	
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
-		ConfigSelectionDialog selectionDialog = new ConfigSelectionDialog(shell(), TITLE, SERVER.componentsInfo().getValue(), true);
+        ConfigSelectionDialog selectionDialog =
+                new ConfigSelectionDialog(shell(), TITLE, SERVER.componentsInfo().getValue(), true, true);
 		if (selectionDialog.open() == Window.OK) {
 			String componentName = selectionDialog.selectedConfig();
 			edit(componentName);
