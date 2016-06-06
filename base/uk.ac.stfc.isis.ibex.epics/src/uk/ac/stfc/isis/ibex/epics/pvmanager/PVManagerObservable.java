@@ -26,7 +26,9 @@ import org.epics.pvmanager.PVManager;
 import org.epics.pvmanager.PVReader;
 import org.epics.pvmanager.PVReaderEvent;
 import org.epics.pvmanager.PVReaderListener;
+import org.epics.vtype.AlarmSeverity;
 import org.epics.vtype.VType;
+import org.epics.vtype.ValueUtil;
 
 import uk.ac.stfc.isis.ibex.epics.pv.ObservablePV;
 import uk.ac.stfc.isis.ibex.epics.pv.PVInfo;
@@ -50,7 +52,8 @@ public class PVManagerObservable<R extends VType> extends ObservablePV<R> {
 		public void pvChanged(PVReaderEvent<R> evt) {
 			boolean isConnected = pv.isConnected();
 			if (evt.isConnectionChanged()) {
-				setConnectionStatus(isConnected);
+                setConnectionStatus(isConnected);
+                
 			}
 			
 			if (evt.isExceptionChanged()) {
@@ -59,6 +62,12 @@ public class PVManagerObservable<R extends VType> extends ObservablePV<R> {
 			
 			if (evt.isValueChanged() && isConnected) {
 				setValue(pv.getValue());
+                // ;
+            }
+
+            if (!ValueUtil.alarmOf(pv.getValue()).equals(getAlarm())) {
+                AlarmSeverity severity = ValueUtil.alarmOf(pv.getValue()).getAlarmSeverity();
+                setAlarm(severity.toString());
 			}
 		}
 	};

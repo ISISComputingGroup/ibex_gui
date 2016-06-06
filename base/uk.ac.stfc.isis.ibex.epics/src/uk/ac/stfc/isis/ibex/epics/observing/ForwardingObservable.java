@@ -41,6 +41,11 @@ public class ForwardingObservable<T> extends ClosableObservable<T> {
 		public void onConnectionStatus(boolean isConnected) {
 			setConnectionStatus(isConnected);
 		}
+
+        @Override
+        public void onAlarm(String alarm) {
+            setAlarm(alarm);
+        }
 	};
 	
 	private Subscription sourceSubscription;
