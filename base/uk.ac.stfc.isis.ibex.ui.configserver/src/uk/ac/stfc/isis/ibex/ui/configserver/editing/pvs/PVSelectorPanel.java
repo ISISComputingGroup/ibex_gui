@@ -1,7 +1,7 @@
 
 /*
 * This file is part of the ISIS IBEX application.
-* Copyright (C) 2012-2015 Science & Technology Facilities Council.
+* Copyright (C) 2012-2016 Science & Technology Facilities Council.
 * All rights reserved.
 *
 * This program is distributed in the hope that it will be useful.
@@ -38,6 +38,7 @@ import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Group;
@@ -52,8 +53,6 @@ import uk.ac.stfc.isis.ibex.ui.configserver.editing.blocks.filters.InterestFilte
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.blocks.filters.PVFilter;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.blocks.filters.PVFilterFactory;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.blocks.filters.SourceFilters;
-
-import org.eclipse.swt.widgets.Button;
 
 
 /**
@@ -72,6 +71,12 @@ public class PVSelectorPanel extends Composite {
 	private PVFilter interestFilter;
 	private DataBindingContext bindingContext;
 	
+    /**
+     * Builds the selector panel for display.
+     * 
+     * @param parent - the composite the panel is being added to
+     * @param style - the style to use specified by the caller
+     */
 	public PVSelectorPanel(Composite parent, int style) {
 		super(parent, style);
 		
@@ -116,7 +121,8 @@ public class PVSelectorPanel extends Composite {
 		pvAddress.setLayoutData(gdPvAddress);
 		
 		pvAddress.addModifyListener(new ModifyListener() {
-			public void modifyText(ModifyEvent arg0) {
+            @Override
+            public void modifyText(ModifyEvent arg0) {
 				blockPVTable.setSearch(pvAddress.getText());
 			}
 		});
@@ -142,7 +148,8 @@ public class PVSelectorPanel extends Composite {
 		new Label(grpPV, SWT.NONE);
 		
 		blockPVTable.addSelectionChangedListener(new ISelectionChangedListener() {
-			public void selectionChanged(SelectionChangedEvent arg0) {
+            @Override
+            public void selectionChanged(SelectionChangedEvent arg0) {
 				IStructuredSelection selection = (IStructuredSelection) arg0.getSelection();
 				if (selection.size() > 0) {
 					PV pv = (PV) selection.getFirstElement();
@@ -152,6 +159,12 @@ public class PVSelectorPanel extends Composite {
 		});
 	}
 	
+    /**
+     * Make sure that the appropriate config is associated with any changes.
+     * 
+     * @param config - the configuration being edited, or which is loaded
+     * @param pv - a pv associated with the config
+     */
 	public void setConfig(EditableConfiguration config, PV pv) {
 		setPVs(config.pvs());
 		
@@ -163,6 +176,7 @@ public class PVSelectorPanel extends Composite {
 			public void selectionChanged(SelectionChangedEvent arg0) {
 				StructuredSelection selection = (StructuredSelection) arg0.getSelection();
 				SourceFilters pvFilter = (SourceFilters) selection.getFirstElement();
+                SourceFilters.setSelectedValue(pvFilter);
 				changeSourceFilter(pvFilter);
 			}
 		});
@@ -172,31 +186,49 @@ public class PVSelectorPanel extends Composite {
 			public void selectionChanged(SelectionChangedEvent arg0) {
 				StructuredSelection selection = (StructuredSelection) arg0.getSelection();
 				InterestFilters interestFilter = (InterestFilters) selection.getFirstElement();
+                InterestFilters.setSelectedValue(interestFilter);
 				changeInterestFilter(interestFilter);
 			}
 		});
 		
-		//Provide a default selection
-		pvSource.setSelection(new StructuredSelection(SourceFilters.ACTIVE));
-		interestLevel.setSelection(new StructuredSelection(InterestFilters.HIGH));
+        // Get the filter values to use on loading the dialog
+        pvSource.setSelection(new StructuredSelection(SourceFilters.lastValue()));
+        interestLevel.setSelection(new StructuredSelection(InterestFilters.lastValue()));
 		
 		//Set up the binding here
 		bindingContext = new DataBindingContext();		
 		bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(pvAddress), BeanProperties.value("address").observe(pv), null, null);
 	}
 	
+    /**
+     * Update the pv list based on any changes to the selected source filter
+     * value.
+     * 
+     * @param pvFilter - the filter to apply to the pvs
+     */
 	private void changeSourceFilter(SourceFilters pvFilter) {
 		sourceFilter = filterFactory.getFilter(pvFilter);
 		blockPVTable.setSourceFilter(sourceFilter.getFilter());
 		addFilterListener(sourceFilter);
 	}
 	
+    /**
+     * Update the pv list based on any changes to the selected interest filter
+     * value.
+     * 
+     * @param pvFilter - the filter to apply to the pvs
+     */
 	private void changeInterestFilter(InterestFilters pvFilter) {
 		interestFilter = filterFactory.getFilter(pvFilter);
 		blockPVTable.setInterestFilter(interestFilter.getFilter());
 		addFilterListener(interestFilter);
 	}	
 	
+    /**
+     * Update the contents of the block there are changes to the filter.
+     * 
+     * @param filter - the filter to apply
+     */
 	private void addFilterListener(PVFilter filter) {
 		sourceFilter.addPropertyChangeListener("refresh", new PropertyChangeListener() {
 			@Override
@@ -206,6 +238,11 @@ public class PVSelectorPanel extends Composite {
 		});		
 	}
 	
+    /**
+     * Display the appropriate pvs.
+     * 
+     * @param allPVs - the pvs to display
+     */
 	private void setPVs(Collection<PV> allPVs) {    
 	   	blockPVTable.setRows(allPVs);
 	}
