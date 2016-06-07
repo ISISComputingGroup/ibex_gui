@@ -60,7 +60,7 @@
     <background_color>
       <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
     </background_color>
-    <width>349</width>
+    <width>487</width>
     <x>30</x>
     <name>Grouping Container_4</name>
     <y>378</y>
@@ -116,8 +116,8 @@ $(pv_value)</tooltip>
       <background_color>
         <color name="ISIS_Textbox_Background" red="255" green="255" blue="255" />
       </background_color>
-      <width>55</width>
-      <x>276</x>
+      <width>133</width>
+      <x>342</x>
       <y>61</y>
       <maximum>1.7976931348623157E308</maximum>
       <foreground_color>
@@ -223,7 +223,7 @@ $(pv_value)</tooltip>
       <background_color>
         <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
       </background_color>
-      <width>73</width>
+      <width>133</width>
       <x>186</x>
       <name>North</name>
       <y>61</y>
@@ -386,8 +386,8 @@ $(pv_value)</tooltip>
       <background_color>
         <color name="ISIS_Textbox_Background" red="255" green="255" blue="255" />
       </background_color>
-      <width>55</width>
-      <x>276</x>
+      <width>133</width>
+      <x>342</x>
       <y>110</y>
       <maximum>1.7976931348623157E308</maximum>
       <foreground_color>
@@ -437,7 +437,7 @@ $(pv_value)</tooltip>
       <background_color>
         <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
       </background_color>
-      <width>73</width>
+      <width>133</width>
       <x>186</x>
       <name>North</name>
       <y>110</y>
@@ -641,7 +641,7 @@ $(pv_value)</tooltip>
       <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
     </background_color>
     <width>265</width>
-    <x>384</x>
+    <x>528</x>
     <name>Grouping Container_1</name>
     <y>378</y>
     <foreground_color>
@@ -759,49 +759,106 @@ $(pv_value)</tooltip>
         <opifont.name fontName="Arial" height="14" style="1">ISIS_Label</opifont.name>
       </font>
     </widget>
-    <widget typeId="org.csstudio.opibuilder.widgets.choiceButton" version="1.0">
+    <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="1.0">
+      <toggle_button>false</toggle_button>
       <border_style>0</border_style>
       <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
       <tooltip>$(pv_name)
 $(pv_value)</tooltip>
+      <push_action_index>0</push_action_index>
       <rules />
       <enabled>true</enabled>
-      <wuid>-24fcfafc:1552a54e5ce:-6ef0</wuid>
-      <selected_color>
-        <color name="ISIS_Standard_Button" red="187" green="187" blue="187" />
-      </selected_color>
-      <horizontal>false</horizontal>
+      <wuid>-dc60b3d:1552a100ea7:-7c90</wuid>
       <pv_value />
+      <text>Start</text>
       <scripts />
-      <border_alarm_sensitive>true</border_alarm_sensitive>
-      <height>100</height>
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+      <height>40</height>
       <border_width>1</border_width>
       <scale_options>
         <width_scalable>true</width_scalable>
         <height_scalable>true</height_scalable>
         <keep_wh_ratio>false</keep_wh_ratio>
       </scale_options>
-      <items_from_pv>true</items_from_pv>
+      <image></image>
       <visible>true</visible>
       <pv_name>$(PV_ROOT):RAMP:ACTIVE:CMD</pv_name>
       <border_color>
         <color red="0" green="128" blue="255" />
       </border_color>
-      <widget_type>Choice Button</widget_type>
+      <widget_type>Action Button</widget_type>
       <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
       <background_color>
-        <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
+        <color red="240" green="240" blue="240" />
       </background_color>
-      <width>235</width>
+      <width>110</width>
       <x>12</x>
-      <name>Choice Button</name>
-      <y>47</y>
+      <name>Action Button</name>
+      <y>54</y>
       <foreground_color>
-        <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
+        <color red="0" green="0" blue="0" />
       </foreground_color>
-      <actions hook="false" hook_all="false" />
+      <actions hook="false" hook_all="false">
+        <action type="WRITE_PV">
+          <pv_name>$(pv_name)</pv_name>
+          <value>1</value>
+          <timeout>10</timeout>
+          <description>Start</description>
+        </action>
+      </actions>
       <font>
-        <opifont.name fontName="Arial" height="9" style="0">ISIS_Button_Small</opifont.name>
+        <opifont.name fontName="Arial" height="14" style="1">ISIS_Button</opifont.name>
+      </font>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="1.0">
+      <toggle_button>false</toggle_button>
+      <border_style>0</border_style>
+      <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+      <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+      <push_action_index>0</push_action_index>
+      <rules />
+      <enabled>true</enabled>
+      <wuid>-dc60b3d:1552a100ea7:-7c7c</wuid>
+      <pv_value />
+      <text>Stop</text>
+      <scripts />
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+      <height>40</height>
+      <border_width>1</border_width>
+      <scale_options>
+        <width_scalable>true</width_scalable>
+        <height_scalable>true</height_scalable>
+        <keep_wh_ratio>false</keep_wh_ratio>
+      </scale_options>
+      <image></image>
+      <visible>true</visible>
+      <pv_name>$(PV_ROOT):RAMP:ACTIVE:CMD</pv_name>
+      <border_color>
+        <color red="0" green="128" blue="255" />
+      </border_color>
+      <widget_type>Action Button</widget_type>
+      <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+      <background_color>
+        <color red="240" green="240" blue="240" />
+      </background_color>
+      <width>110</width>
+      <x>140</x>
+      <name>Action Button</name>
+      <y>54</y>
+      <foreground_color>
+        <color red="0" green="0" blue="0" />
+      </foreground_color>
+      <actions hook="false" hook_all="false">
+        <action type="WRITE_PV">
+          <pv_name>$(pv_name)</pv_name>
+          <value>0</value>
+          <timeout>10</timeout>
+          <description>Stop</description>
+        </action>
+      </actions>
+      <font>
+        <opifont.name fontName="Arial" height="14" style="1">ISIS_Button</opifont.name>
       </font>
     </widget>
   </widget>
