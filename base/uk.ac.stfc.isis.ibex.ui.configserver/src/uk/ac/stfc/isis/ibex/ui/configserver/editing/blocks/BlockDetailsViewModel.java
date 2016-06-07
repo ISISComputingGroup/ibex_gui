@@ -123,6 +123,10 @@ public class BlockDetailsViewModel extends ErrorMessageProvider {
     	editingBlock.setIsVisible(visible);
     }
     
+    /**
+     * Validates the current name and pvAddress and fires an error property
+     * change if required
+     */
     public void validate() {
         validate(name, pvAddress);
     }
