@@ -21,6 +21,7 @@ package uk.ac.stfc.isis.ibex.configserver.displaying;
 
 import com.google.common.base.Strings;
 
+import uk.ac.stfc.isis.ibex.configserver.AlarmState;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Block;
 import uk.ac.stfc.isis.ibex.epics.observing.BaseObserver;
 import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
@@ -40,6 +41,7 @@ public class DisplayBlock extends ModelObject {
     private final Block block;
     private String value;
     private String description;
+    private String alarm;
 
     /**
      * Indicates whether the block in currently within run-control range
@@ -99,6 +101,7 @@ public class DisplayBlock extends ModelObject {
     };
 
     private final BaseObserver<String> descriptionAdapter = new BaseObserver<String>() {
+
         @Override
         public void onValue(String value) {
             setDescription(value);
@@ -114,6 +117,24 @@ public class DisplayBlock extends ModelObject {
             if (!isConnected) {
                 setDescription("No description available");
             }
+        }
+    };
+
+    private final BaseObserver<AlarmState> alarmAdapter = new BaseObserver<AlarmState>() {
+
+        @Override
+        public void onValue(AlarmState value) {
+            setAlarm(value.name());
+            setState();
+        }
+
+        @Override
+        public void onError(Exception e) {
+            setValue("error");
+        }
+
+        @Override
+        public void onConnectionStatus(boolean isConnected) {
         }
     };
 
@@ -199,6 +220,7 @@ public class DisplayBlock extends ModelObject {
 
     public DisplayBlock(Block block, ForwardingObservable<String> valueSource,
             ForwardingObservable<String> descriptionSource,
+            ForwardingObservable<AlarmState> alarmSource,
             ForwardingObservable<String> inRangeSource,
             ForwardingObservable<String> lowLimitSource,
             ForwardingObservable<String> highLimitSource,
@@ -208,6 +230,7 @@ public class DisplayBlock extends ModelObject {
 
         valueSource.addObserver(valueAdapter);
         descriptionSource.addObserver(descriptionAdapter);
+        alarmSource.addObserver(alarmAdapter);
         inRangeSource.addObserver(inRangeAdapter);
         lowLimitSource.addObserver(lowLimitAdapter);
         highLimitSource.addObserver(highLimitAdapter);
@@ -224,6 +247,10 @@ public class DisplayBlock extends ModelObject {
     
     public String getDescription() {
         return description;
+    }
+
+    public String getAlarm() {
+        return alarm;
     }
 
     public Boolean getIsVisible() {
@@ -303,6 +330,10 @@ public class DisplayBlock extends ModelObject {
 
     private synchronized void setDescription(String description) {
         firePropertyChange("description", this.description, this.description = Strings.nullToEmpty(description));
+    }
+
+    private synchronized void setAlarm(String alarm) {
+        firePropertyChange("alarm", this.alarm, this.alarm = Strings.nullToEmpty(alarm));
     }
 
     private synchronized void setDisconnected(Boolean disconnected) {

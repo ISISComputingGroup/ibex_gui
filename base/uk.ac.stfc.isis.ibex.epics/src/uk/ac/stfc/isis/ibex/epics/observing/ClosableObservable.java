@@ -34,7 +34,6 @@ public abstract class ClosableObservable<T> implements Observable<T>, Closable {
 
     private final Collection<Observer<T>> observers = new CopyOnWriteArrayList<>();
     private T value;
-    private String alarm;
     private boolean isConnected;
     private Exception lastError;
 
@@ -50,11 +49,6 @@ public abstract class ClosableObservable<T> implements Observable<T>, Closable {
     @Override
     public T getValue() {
         return value;
-    }
-
-    @Override
-    public String getAlarm() {
-        return alarm;
     }
 
     @Override
@@ -81,14 +75,6 @@ public abstract class ClosableObservable<T> implements Observable<T>, Closable {
 
         for (Observer<T> observer : observers) {
             observer.onValue(value);
-        }
-    }
-
-    protected void setAlarm(String alarm) {
-        this.alarm = alarm;
-
-        for (Observer<T> observer : observers) {
-            observer.onAlarm(alarm);
         }
     }
 

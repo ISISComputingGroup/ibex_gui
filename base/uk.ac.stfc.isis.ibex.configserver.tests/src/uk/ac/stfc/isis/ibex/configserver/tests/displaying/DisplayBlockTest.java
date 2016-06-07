@@ -48,11 +48,11 @@ public class DisplayBlockTest {
         enabledObservable = new TestableIOSObservable<>(mock(Observable.class));
         valueObservable = new TestableIOSObservable<>(mock(Observable.class));
         descriptionObservable = new TestableIOSObservable<>(mock(Observable.class));
-		
 		displayBlock = new DisplayBlock(
                 mock(Block.class), // block
                 valueObservable, // value
-				descriptionObservable,  // description
+                descriptionObservable, // description
+                mock(ForwardingObservable.class), // alarm
                 inRangeObservable, // inRange
 				mock(ForwardingObservable.class),  // lowLimit
 				mock(ForwardingObservable.class),  // highLimit

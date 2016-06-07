@@ -47,10 +47,6 @@ public abstract class TransformingObservable<T1, T2> extends ClosableObservable<
 			setConnectionStatus(isConnected);
 		}
 
-        @Override
-        public void onAlarm(String alarm) {
-            setAlarm(alarm);
-        }
 	};
 
     protected final void setSource(ClosableObservable<T1> source) {

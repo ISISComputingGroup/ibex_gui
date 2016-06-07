@@ -56,7 +56,11 @@ public class ConfigServer extends Closer {
 	public ForwardingObservable<String> blockDescription(String blockName) {
 		return variables.blockDescription(blockName);
 	}
-	
+
+    public ForwardingObservable<AlarmState> alarm(String blockName) {
+        return variables.alarm(blockName);
+    }
+
 	public String blockServerAlias(String blockName) {
 		return variables.blockServerAlias(blockName);
 	}

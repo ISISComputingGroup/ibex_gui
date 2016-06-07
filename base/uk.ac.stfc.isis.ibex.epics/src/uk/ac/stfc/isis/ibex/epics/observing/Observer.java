@@ -27,8 +27,6 @@ public interface Observer<T> {
 	
     void onValue(T value);
     
-    void onAlarm(String alarm);
-
     void onError(Exception e);
     
     void onConnectionStatus(boolean isConnected);

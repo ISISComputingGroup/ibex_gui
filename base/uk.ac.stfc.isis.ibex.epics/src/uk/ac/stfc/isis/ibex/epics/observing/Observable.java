@@ -30,8 +30,6 @@ public interface Observable<T> {
 
     T getValue();
 
-    String getAlarm();
-
     boolean isConnected();
 
     Exception lastError();

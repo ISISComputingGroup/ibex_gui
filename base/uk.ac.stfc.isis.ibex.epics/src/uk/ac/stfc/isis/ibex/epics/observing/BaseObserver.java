@@ -21,10 +21,6 @@ package uk.ac.stfc.isis.ibex.epics.observing;
 
 public abstract class BaseObserver<T> implements Observer<T> {
 
-    @Override
-    public void onAlarm(String alarm) {
-    }
-
 	@Override
 	public void update(T value, Exception error, boolean isConnected) {		
 		onConnectionStatus(isConnected);
@@ -33,7 +29,7 @@ public abstract class BaseObserver<T> implements Observer<T> {
 			onError(error);
 			return;
 		}
-		
+
 		if (isConnected && value != null) {
 			onValue(value);			
 		}	
