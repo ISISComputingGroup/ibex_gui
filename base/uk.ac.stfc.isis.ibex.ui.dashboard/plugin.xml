@@ -16,5 +16,11 @@
             name="Dashboard">
       </view>
    </extension>
+   <extension
+         point="org.eclipse.ui.startup">
+      <startup
+            class="uk.ac.stfc.isis.ibex.ui.dashboard.views.DashboardView">
+      </startup>
+   </extension>
 
 </plugin>

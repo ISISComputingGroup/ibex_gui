@@ -51,7 +51,7 @@
    </plugins>
 
    <features>
-      <feature id="org.eclipse.rcp" version="3.8.2.v20130118-180157-96BuGOZFxwOAeG8Ofmqicz0tPK"/>
+      <feature id="org.eclipse.rcp"/>
       <feature id="uk.ac.stfc.isis.ibex.feature.base" version="1.0.0.qualifier"/>
       <feature id="uk.ac.stfc.isis.ibex.feature.css" version="1.0.0.qualifier"/>
       <feature id="uk.ac.stfc.isis.ibex.feature.pydev" version="1.0.0.qualifier"/>

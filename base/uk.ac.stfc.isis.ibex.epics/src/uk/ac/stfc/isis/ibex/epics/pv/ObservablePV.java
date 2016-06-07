@@ -19,7 +19,7 @@
 
 package uk.ac.stfc.isis.ibex.epics.pv;
 
-import org.epics.vtype.VType;
+import org.diirt.vtype.VType;
 
 import uk.ac.stfc.isis.ibex.epics.observing.ClosableObservable;
 

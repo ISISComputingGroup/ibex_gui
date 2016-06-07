@@ -19,6 +19,8 @@
 
 package uk.ac.stfc.isis.ibex.ui.dashboard.views;
 
+import javax.annotation.PostConstruct;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.ISizeProvider;
@@ -63,6 +65,7 @@ public class DashboardView extends ViewPart implements ISizeProvider {
 	private final MonitorPanelModel monitorsModel = new MonitorPanelModel(dashboard.observables());
 	private final TimePanelModel timesModel = new TimePanelModel(dashboard.observables());
 	
+	@PostConstruct
 	public void createPartControl(Composite parent) {
 		GridLayout glParent = new GridLayout(3, false);
 		glParent.marginHeight = 0;
