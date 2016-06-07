@@ -123,6 +123,10 @@ public class BlockDetailsViewModel extends ErrorMessageProvider {
     	editingBlock.setIsVisible(visible);
     }
     
+    public void validate() {
+        validate(name, pvAddress);
+    }
+
     private void validate(String name, String pvAddress) {
     	BlockNameValidator nameVal = new BlockNameValidator(config, editingBlock);
         PvValidator addressValid = new PvValidator();
