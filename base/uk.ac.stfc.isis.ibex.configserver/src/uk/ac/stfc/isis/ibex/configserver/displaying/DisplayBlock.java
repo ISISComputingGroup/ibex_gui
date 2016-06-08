@@ -41,7 +41,6 @@ public class DisplayBlock extends ModelObject {
     private final Block block;
     private String value;
     private String description;
-    private String alarm;
 
     /**
      * Indicates whether the block in currently within run-control range
@@ -98,7 +97,7 @@ public class DisplayBlock extends ModelObject {
             } else {
                 setDisconnected(false);
             }
-            setRunControlState();
+            updateRuncontrolState();
             setBlockState();
         }
     };
@@ -127,8 +126,10 @@ public class DisplayBlock extends ModelObject {
 
         @Override
         public void onValue(AlarmState value) {
-            setAlarm(value.name());
-            setRunControlState();
+            BlockState state = BlockState.DEFAULT;
+            if 
+            setBlockState();
+            updateRuncontrolState();
             setBlockState();
         }
 
@@ -152,7 +153,7 @@ public class DisplayBlock extends ModelObject {
                 setInRange(true);
             }
 
-            setRunControlState();
+            updateRuncontrolState();
         }
 
         @Override
@@ -208,7 +209,7 @@ public class DisplayBlock extends ModelObject {
                 setEnabled(false);
             }
 
-            setRunControlState();
+            updateRuncontrolState();
         }
 
         @Override
@@ -251,10 +252,6 @@ public class DisplayBlock extends ModelObject {
     
     public String getDescription() {
         return description;
-    }
-
-    public String getAlarm() {
-        return alarm;
     }
 
     public Boolean getIsVisible() {
@@ -340,10 +337,6 @@ public class DisplayBlock extends ModelObject {
         firePropertyChange("description", this.description, this.description = Strings.nullToEmpty(description));
     }
 
-    private synchronized void setAlarm(String alarm) {
-        firePropertyChange("alarm", this.alarm, this.alarm = Strings.nullToEmpty(alarm));
-    }
-
     private synchronized void setDisconnected(Boolean disconnected) {
         firePropertyChange("disconnected", this.disconnected, this.disconnected = disconnected);
     }
@@ -364,11 +357,10 @@ public class DisplayBlock extends ModelObject {
         firePropertyChange("enabled", this.runcontrol_enabled, this.runcontrol_enabled = enabled);
     }
 
-    private synchronized void setRunControlState() {
+    private synchronized void updateRuncontrolState() {
         if (disconnected) {
             firePropertyChange("runcontrolState", this.runcontrolState, this.runcontrolState = RuncontrolState.DISCONNECTED);
         } else {
-            firePropertyChange("blockState", this.blockState, this.blockState = BlockState.DEFAULT);
             if (runcontrol_enabled) {
                 if (inRange) {
                     firePropertyChange("runcontrolState", this.runcontrolState,
@@ -388,6 +380,8 @@ public class DisplayBlock extends ModelObject {
             firePropertyChange("blockState", this.blockState,
                     this.blockState = BlockState.DISCONNECTED);
         } else {
+//            if () 
+
             firePropertyChange("blockState", this.blockState, this.blockState = BlockState.DEFAULT);
         }
     }

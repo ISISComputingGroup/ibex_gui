@@ -23,7 +23,7 @@
 package uk.ac.stfc.isis.ibex.configserver.displaying;
 
 /**
- * 
+ * Used to reflect alarm & connection status of a block in the GUI
  */
 public enum BlockState {
     DEFAULT,
