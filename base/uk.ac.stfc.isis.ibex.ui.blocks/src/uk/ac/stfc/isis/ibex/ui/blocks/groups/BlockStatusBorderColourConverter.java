@@ -51,11 +51,11 @@ public class BlockStatusBorderColourConverter extends Converter {
         if (state == BlockState.DISCONNECTED) {
             return MAGENTA;
         } else {
-//            if (HI_ALARM_STATES.contains(state)) {
-//                return RED;
-//            } else if (LO_ALARM_STATES.contains(state)) {
-//                return ORANGE;
-//            }
+            if (state == BlockState.MAJOR_ALARM) {
+                return RED;
+            } else if (state == BlockState.MINOR_ALARM) {
+                return ORANGE;
+            }
         }
         return WHITE;
 

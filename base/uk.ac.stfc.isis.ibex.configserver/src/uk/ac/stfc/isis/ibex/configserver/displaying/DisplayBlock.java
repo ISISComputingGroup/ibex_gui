@@ -94,11 +94,12 @@ public class DisplayBlock extends ModelObject {
             if (!isConnected) {
                 setDisconnected(true);
                 setValue("disconnected");
+                setBlockState(BlockState.DISCONNECTED);
             } else {
                 setDisconnected(false);
+                setBlockState(BlockState.DEFAULT);
             }
             updateRuncontrolState();
-            setBlockState();
         }
     };
 
@@ -126,11 +127,13 @@ public class DisplayBlock extends ModelObject {
 
         @Override
         public void onValue(AlarmState value) {
-            BlockState state = BlockState.DEFAULT;
-            if 
-            setBlockState();
-            updateRuncontrolState();
-            setBlockState();
+            if (value.name().equals("MINOR")) {
+                setBlockState(BlockState.MINOR_ALARM);
+            } else if (value.name().equals("MAJOR")) {
+                setBlockState(BlockState.MAJOR_ALARM);
+            } else {
+                setBlockState(BlockState.DEFAULT);
+            }
         }
 
         @Override
@@ -357,6 +360,10 @@ public class DisplayBlock extends ModelObject {
         firePropertyChange("enabled", this.runcontrol_enabled, this.runcontrol_enabled = enabled);
     }
 
+    private synchronized void setBlockState(BlockState blockState) {
+        firePropertyChange("blockState", this.blockState, this.blockState = blockState);
+    }
+
     private synchronized void updateRuncontrolState() {
         if (disconnected) {
             firePropertyChange("runcontrolState", this.runcontrolState, this.runcontrolState = RuncontrolState.DISCONNECTED);
@@ -374,16 +381,4 @@ public class DisplayBlock extends ModelObject {
             }
         }
     }
-
-    private synchronized void setBlockState() {
-        if (disconnected) {
-            firePropertyChange("blockState", this.blockState,
-                    this.blockState = BlockState.DISCONNECTED);
-        } else {
-//            if () 
-
-            firePropertyChange("blockState", this.blockState, this.blockState = BlockState.DEFAULT);
-        }
-    }
-
 }
