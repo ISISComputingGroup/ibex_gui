@@ -26,7 +26,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import uk.ac.stfc.isis.ibex.configserver.configuration.Block;
-import uk.ac.stfc.isis.ibex.configserver.displaying.BlockState;
+import uk.ac.stfc.isis.ibex.configserver.displaying.RuncontrolState;
 import uk.ac.stfc.isis.ibex.configserver.displaying.DisplayBlock;
 import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.Observable;
@@ -67,7 +67,7 @@ public class DisplayBlockTest {
         valueObservable.setConnectionStatus(false);
 
         // Assert
-        assertEquals(BlockState.DISCONNECTED, displayBlock.getBlockState());
+        assertEquals(RuncontrolState.DISCONNECTED, displayBlock.getRuncontrolState());
     }
 
     @Test
@@ -78,7 +78,7 @@ public class DisplayBlockTest {
         valueObservable.setConnectionStatus(true);
 
         // Assert
-        assertEquals(BlockState.RUNCONTROL_DISABLED, displayBlock.getBlockState());
+        assertEquals(RuncontrolState.RUNCONTROL_DISABLED, displayBlock.getRuncontrolState());
     }
 
     @Test
@@ -89,7 +89,7 @@ public class DisplayBlockTest {
         valueObservable.setConnectionStatus(false);
 
         // Assert
-        assertEquals(BlockState.DISCONNECTED, displayBlock.getBlockState());
+        assertEquals(RuncontrolState.DISCONNECTED, displayBlock.getRuncontrolState());
     }
 
 	@Test
@@ -102,7 +102,7 @@ public class DisplayBlockTest {
         inRangeObservable.setValue("YES");
 		
 		// Assert
-        assertEquals(BlockState.RUNCONTROL_DISABLED, displayBlock.getBlockState());
+        assertEquals(RuncontrolState.RUNCONTROL_DISABLED, displayBlock.getRuncontrolState());
 	}
 	
 	@Test
@@ -115,7 +115,7 @@ public class DisplayBlockTest {
         inRangeObservable.setValue("YES");
 		
 		// Assert
-        assertEquals(BlockState.RUNCONTROL_ENABLED_IN_RANGE, displayBlock.getBlockState());
+        assertEquals(RuncontrolState.RUNCONTROL_ENABLED_IN_RANGE, displayBlock.getRuncontrolState());
 	}
 	
 	@Test
@@ -128,7 +128,7 @@ public class DisplayBlockTest {
 		inRangeObservable.setValue("NO");
 		
 		// Assert
-        assertEquals(BlockState.RUNCONTROL_ENABLED_OUT_RANGE, displayBlock.getBlockState());
+        assertEquals(RuncontrolState.RUNCONTROL_ENABLED_OUT_RANGE, displayBlock.getRuncontrolState());
 	}
 	
 	@Test
@@ -142,7 +142,7 @@ public class DisplayBlockTest {
 		inRangeObservable.setValue("YES");
 		
 		// Assert
-        assertEquals(BlockState.RUNCONTROL_ENABLED_IN_RANGE, displayBlock.getBlockState());
+        assertEquals(RuncontrolState.RUNCONTROL_ENABLED_IN_RANGE, displayBlock.getRuncontrolState());
 	}
 
 	@Test
@@ -156,7 +156,7 @@ public class DisplayBlockTest {
 		inRangeObservable.setValue("NO");
 		
 		// Assert
-        assertEquals(BlockState.RUNCONTROL_ENABLED_OUT_RANGE, displayBlock.getBlockState());
+        assertEquals(RuncontrolState.RUNCONTROL_ENABLED_OUT_RANGE, displayBlock.getRuncontrolState());
 	}
 
 	@Test
@@ -170,7 +170,7 @@ public class DisplayBlockTest {
 		inRangeObservable.setValue("maybe");
 		
 		// Assert
-        assertEquals(BlockState.RUNCONTROL_ENABLED_IN_RANGE, displayBlock.getBlockState());
+        assertEquals(RuncontrolState.RUNCONTROL_ENABLED_IN_RANGE, displayBlock.getRuncontrolState());
 	}
 
     @Test
@@ -184,7 +184,7 @@ public class DisplayBlockTest {
         inRangeObservable.setValue("YES");
 
         // Assert
-        assertEquals(BlockState.DISCONNECTED, displayBlock.getBlockState());
+        assertEquals(RuncontrolState.DISCONNECTED, displayBlock.getRuncontrolState());
     }
 
     @Test
@@ -198,7 +198,7 @@ public class DisplayBlockTest {
         inRangeObservable.setValue("NO");
 
         // Assert
-        assertEquals(BlockState.DISCONNECTED, displayBlock.getBlockState());
+        assertEquals(RuncontrolState.DISCONNECTED, displayBlock.getRuncontrolState());
     }
 
     @Test
@@ -212,7 +212,7 @@ public class DisplayBlockTest {
         inRangeObservable.setValue("YES");
 
         // Assert
-        assertEquals(BlockState.DISCONNECTED, displayBlock.getBlockState());
+        assertEquals(RuncontrolState.DISCONNECTED, displayBlock.getRuncontrolState());
     }
 
     @Test
@@ -226,6 +226,6 @@ public class DisplayBlockTest {
         inRangeObservable.setValue("NO");
 
         // Assert
-        assertEquals(BlockState.DISCONNECTED, displayBlock.getBlockState());
+        assertEquals(RuncontrolState.DISCONNECTED, displayBlock.getRuncontrolState());
     }
 }

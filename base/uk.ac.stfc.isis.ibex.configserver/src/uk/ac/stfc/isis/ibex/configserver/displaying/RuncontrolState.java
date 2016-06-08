@@ -1,7 +1,7 @@
 
-/*
+/**
  * This file is part of the ISIS IBEX application.
- * Copyright (C) 2012-2016 Science & Technology Facilities Council.
+ * Copyright (C) 2012-2015 Science & Technology Facilities Council.
  * All rights reserved.
  *
  * This program is distributed in the hope that it will be useful.
@@ -17,17 +17,14 @@
  * http://opensource.org/licenses/eclipse-1.0.php
  */
 
-/**
- * 
- */
 package uk.ac.stfc.isis.ibex.configserver.displaying;
 
 /**
- * 
+ * Enum for the overall state of run-control.
  */
-public enum BlockState {
-    DEFAULT,
-    MINOR_ALARM,
-    MAJOR_ALARM,
+public enum RuncontrolState {
+    DISABLED,
+    ENABLED_IN_RANGE,
+    ENABLED_OUT_RANGE,
     DISCONNECTED
 }

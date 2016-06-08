@@ -153,19 +153,19 @@ public class Group extends Composite {
                 symbolStrategy.setConverter(new RunControlSymbolConverter());
 
                 bindingContext.bindValue(WidgetProperties.text().observe(blockStatus),
-                        BeanProperties.value("blockState").observe(currentBlock), null, symbolStrategy);
+                        BeanProperties.value("runcontrolState").observe(currentBlock), null, symbolStrategy);
 
                 UpdateValueStrategy fgColourStrategy = new UpdateValueStrategy();
                 fgColourStrategy.setConverter(new RunControlForegroundColourConverter());
 
                 bindingContext.bindValue(WidgetProperties.foreground().observe(blockStatus),
-                        BeanProperties.value("blockState").observe(currentBlock), null, fgColourStrategy);
+                        BeanProperties.value("runcontrolState").observe(currentBlock), null, fgColourStrategy);
 
                 UpdateValueStrategy bgColourStrategy = new UpdateValueStrategy();
                 bgColourStrategy.setConverter(new RunControlBackgroundColourConverter());
 
                 bindingContext.bindValue(WidgetProperties.background().observe(blockStatus),
-                        BeanProperties.value("blockState").observe(currentBlock), null, bgColourStrategy);
+                        BeanProperties.value("runcontrolState").observe(currentBlock), null, bgColourStrategy);
 
 //                UpdateValueStrategy textColourStrategy = new UpdateValueStrategy();
 //                textColourStrategy.setConverter(new DisconnectedForegroundColourConverter());

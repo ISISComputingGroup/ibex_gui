@@ -24,7 +24,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.wb.swt.SWTResourceManager;
 
-import uk.ac.stfc.isis.ibex.configserver.displaying.BlockState;
+import uk.ac.stfc.isis.ibex.configserver.displaying.RuncontrolState;
 
 /**
  * This is a converter for converting the text colour value of a block in the
@@ -38,14 +38,14 @@ public class DisconnectedForegroundColourConverter extends Converter {
     private static final Color BLACK = SWTResourceManager.getColor(SWT.COLOR_BLACK);
 
     public DisconnectedForegroundColourConverter() {
-        super(BlockState.class, Color.class);
+        super(RuncontrolState.class, Color.class);
     }
 
     @Override
     public Object convert(Object fromObject) {
-        BlockState state = (BlockState) fromObject;
+        RuncontrolState state = (RuncontrolState) fromObject;
 
-        if (state == BlockState.DISCONNECTED) {
+        if (state == RuncontrolState.DISCONNECTED) {
             return GRAY;
         }
 

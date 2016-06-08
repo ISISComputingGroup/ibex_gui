@@ -75,7 +75,9 @@ public class DisplayBlock extends ModelObject {
      * Specifies the overall run-control state, for example: enabled and in
      * range.
      */
-    private BlockState blockState = BlockState.RUNCONTROL_DISABLED;
+    private RuncontrolState runcontrolState = RuncontrolState.DISABLED;
+
+    private BlockState blockState = BlockState.DEFAULT;
 
     private final BaseObserver<String> valueAdapter = new BaseObserver<String>() {
         @Override
@@ -96,7 +98,8 @@ public class DisplayBlock extends ModelObject {
             } else {
                 setDisconnected(false);
             }
-            setState();
+            setRunControlState();
+            setBlockState();
         }
     };
 
@@ -125,7 +128,8 @@ public class DisplayBlock extends ModelObject {
         @Override
         public void onValue(AlarmState value) {
             setAlarm(value.name());
-            setState();
+            setRunControlState();
+            setBlockState();
         }
 
         @Override
@@ -148,7 +152,7 @@ public class DisplayBlock extends ModelObject {
                 setInRange(true);
             }
 
-            setState();
+            setRunControlState();
         }
 
         @Override
@@ -204,7 +208,7 @@ public class DisplayBlock extends ModelObject {
                 setEnabled(false);
             }
 
-            setState();
+            setRunControlState();
         }
 
         @Override
@@ -316,6 +320,10 @@ public class DisplayBlock extends ModelObject {
     /**
      * @return the overall run-control status.
      */
+    public RuncontrolState getRuncontrolState() {
+        return runcontrolState;
+    }
+
     public BlockState getBlockState() {
         return blockState;
     }
@@ -356,21 +364,31 @@ public class DisplayBlock extends ModelObject {
         firePropertyChange("enabled", this.runcontrol_enabled, this.runcontrol_enabled = enabled);
     }
 
-    private synchronized void setState() {
+    private synchronized void setRunControlState() {
         if (disconnected) {
-            firePropertyChange("blockState", this.blockState, this.blockState = BlockState.DISCONNECTED);
+            firePropertyChange("runcontrolState", this.runcontrolState, this.runcontrolState = RuncontrolState.DISCONNECTED);
         } else {
+            firePropertyChange("blockState", this.blockState, this.blockState = BlockState.DEFAULT);
             if (runcontrol_enabled) {
                 if (inRange) {
-                    firePropertyChange("blockState", this.blockState,
-                            this.blockState = BlockState.RUNCONTROL_ENABLED_IN_RANGE);
+                    firePropertyChange("runcontrolState", this.runcontrolState,
+                            this.runcontrolState = RuncontrolState.ENABLED_IN_RANGE);
                 } else {
-                    firePropertyChange("blockState", this.blockState,
-                            this.blockState = BlockState.RUNCONTROL_ENABLED_OUT_RANGE);
+                    firePropertyChange("runcontrolState", this.runcontrolState,
+                            this.runcontrolState = RuncontrolState.ENABLED_OUT_RANGE);
                 }
             } else {
-                firePropertyChange("blockState", this.blockState, this.blockState = BlockState.RUNCONTROL_DISABLED);
+                firePropertyChange("runcontrolState", this.runcontrolState, this.runcontrolState = RuncontrolState.DISABLED);
             }
+        }
+    }
+
+    private synchronized void setBlockState() {
+        if (disconnected) {
+            firePropertyChange("blockState", this.blockState,
+                    this.blockState = BlockState.DISCONNECTED);
+        } else {
+            firePropertyChange("blockState", this.blockState, this.blockState = BlockState.DEFAULT);
         }
     }
 

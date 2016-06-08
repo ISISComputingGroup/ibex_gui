@@ -19,15 +19,12 @@
 
 package uk.ac.stfc.isis.ibex.ui.blocks.groups;
 
-import java.util.Arrays;
-import java.util.List;
-
 import org.eclipse.core.databinding.conversion.Converter;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.wb.swt.SWTResourceManager;
 
-import uk.ac.stfc.isis.ibex.configserver.displaying.BlockState;
+import uk.ac.stfc.isis.ibex.configserver.displaying.RuncontrolState;
 
 /**
  * This is a converter for converting the value for the current run-control
@@ -41,23 +38,18 @@ public class RunControlBackgroundColourConverter extends Converter {
     private static final Color WHITE = SWTResourceManager.getColor(SWT.COLOR_WHITE);
     private static final Color DARK_RED = SWTResourceManager.getColor(192, 0, 0);
     private static final Color GREEN = SWTResourceManager.getColor(51, 255, 153);
-    private static final List<BlockState> ENABLED_INRANGE_STATES = Arrays.asList(BlockState.RUNCONTROL_ENABLED_IN_RANGE,
-            BlockState.RUNCONTROL_ENABLED_IN_RANGE_HIALARM, BlockState.RUNCONTROL_ENABLED_IN_RANGE_LOALARM);
-    private static final List<BlockState> ENABLED_OUTRANGE_STATES = Arrays.asList(BlockState.RUNCONTROL_ENABLED_OUT_RANGE,
-            BlockState.RUNCONTROL_ENABLED_OUT_RANGE_HIALARM, BlockState.RUNCONTROL_ENABLED_OUT_RANGE_LOALARM);
-
     public RunControlBackgroundColourConverter() {
-        super(BlockState.class, Color.class);
+        super(RuncontrolState.class, Color.class);
     }
 
     @Override
     public Object convert(Object fromObject) {
-        BlockState state = (BlockState) fromObject;
+        RuncontrolState state = (RuncontrolState) fromObject;
 
-        if (ENABLED_INRANGE_STATES.contains(state)) {
+        if (state == RuncontrolState.ENABLED_IN_RANGE) {
             return GREEN;
         }
-        else if (ENABLED_OUTRANGE_STATES.contains(state)) {
+        else if (state == RuncontrolState.ENABLED_OUT_RANGE) {
             return DARK_RED;
         }
 

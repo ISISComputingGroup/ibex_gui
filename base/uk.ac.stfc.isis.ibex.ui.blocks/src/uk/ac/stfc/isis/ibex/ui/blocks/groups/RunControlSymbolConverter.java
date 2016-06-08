@@ -19,12 +19,9 @@
 
 package uk.ac.stfc.isis.ibex.ui.blocks.groups;
 
-import java.util.Arrays;
-import java.util.List;
-
 import org.eclipse.core.databinding.conversion.Converter;
 
-import uk.ac.stfc.isis.ibex.configserver.displaying.BlockState;
+import uk.ac.stfc.isis.ibex.configserver.displaying.RuncontrolState;
 
 /**
  * This is a converter for converting the value for the current run-control
@@ -34,23 +31,19 @@ import uk.ac.stfc.isis.ibex.configserver.displaying.BlockState;
  * 
  */
 public class RunControlSymbolConverter extends Converter {
-    private static final List<BlockState> ENABLED_INRANGE_STATES = Arrays.asList(BlockState.RUNCONTROL_ENABLED_IN_RANGE,
-            BlockState.RUNCONTROL_ENABLED_IN_RANGE_HIALARM, BlockState.RUNCONTROL_ENABLED_IN_RANGE_LOALARM);
-    private static final List<BlockState> ENABLED_OUTRANGE_STATES = Arrays.asList(BlockState.RUNCONTROL_ENABLED_OUT_RANGE,
-            BlockState.RUNCONTROL_ENABLED_OUT_RANGE_HIALARM, BlockState.RUNCONTROL_ENABLED_OUT_RANGE_LOALARM);
     public RunControlSymbolConverter() {
-        super(BlockState.class, String.class);
+        super(RuncontrolState.class, String.class);
     }
 
     @Override
     public Object convert(Object fromObject) {
-        BlockState state = (BlockState) fromObject;
-        
-        if (ENABLED_INRANGE_STATES.contains(state)) {
+        RuncontrolState state = (RuncontrolState) fromObject;
+
+        if (state == RuncontrolState.ENABLED_IN_RANGE) {
             // Checkmark
             return "\u2713";
         }
-        else if (ENABLED_OUTRANGE_STATES.contains(state)) {
+        else if (state == RuncontrolState.ENABLED_OUT_RANGE) {
             return "X";
         }
 

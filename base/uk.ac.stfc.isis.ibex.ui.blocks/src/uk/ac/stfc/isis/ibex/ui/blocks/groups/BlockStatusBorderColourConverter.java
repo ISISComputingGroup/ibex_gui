@@ -19,9 +19,6 @@
 
 package uk.ac.stfc.isis.ibex.ui.blocks.groups;
 
-import java.util.Arrays;
-import java.util.List;
-
 import org.eclipse.core.databinding.conversion.Converter;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
@@ -42,10 +39,6 @@ public class BlockStatusBorderColourConverter extends Converter {
     private static final Color MAGENTA = SWTResourceManager.getColor(SWT.COLOR_MAGENTA);
     private static final Color RED = SWTResourceManager.getColor(SWT.COLOR_RED);
     private static final Color ORANGE = new Color(Display.getCurrent(), 255, 128, 0);
-    private static final List<BlockState> HI_ALARM_STATES = Arrays.asList(BlockState.RUNCONTROL_DISABLED_HIALARM,
-            BlockState.RUNCONTROL_ENABLED_IN_RANGE_HIALARM, BlockState.RUNCONTROL_ENABLED_OUT_RANGE_HIALARM);
-    private static final List<BlockState> LO_ALARM_STATES = Arrays.asList(BlockState.RUNCONTROL_DISABLED_LOALARM,
-            BlockState.RUNCONTROL_ENABLED_IN_RANGE_LOALARM, BlockState.RUNCONTROL_ENABLED_OUT_RANGE_LOALARM);
 
     public BlockStatusBorderColourConverter() {
         super(BlockState.class, Color.class);
@@ -54,15 +47,15 @@ public class BlockStatusBorderColourConverter extends Converter {
     @Override
     public Object convert(Object fromObject) {
         BlockState state = (BlockState) fromObject;
-
+        System.out.println("blockstate " + state.name());
         if (state == BlockState.DISCONNECTED) {
             return MAGENTA;
         } else {
-            if (HI_ALARM_STATES.contains(state)) {
-                return RED;
-            } else if (LO_ALARM_STATES.contains(state)) {
-                return ORANGE;
-            }
+//            if (HI_ALARM_STATES.contains(state)) {
+//                return RED;
+//            } else if (LO_ALARM_STATES.contains(state)) {
+//                return ORANGE;
+//            }
         }
         return WHITE;
 
