@@ -60,7 +60,7 @@
     <background_color>
       <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
     </background_color>
-    <width>487</width>
+    <width>757</width>
     <x>30</x>
     <name>Grouping Container_4</name>
     <y>378</y>
@@ -87,7 +87,7 @@ $(pv_value)</tooltip>
       <multiline_input>false</multiline_input>
       <border_width>1</border_width>
       <visible>true</visible>
-      <pv_name>$(PV_ROOT):LIMIT:SP</pv_name>
+      <pv_name>$(PV_ROOT):TEMP:SP</pv_name>
       <selector_type>0</selector_type>
       <border_color>
         <color name="ISIS_Check_Border" red="0" green="128" blue="255" />
@@ -197,7 +197,7 @@ $(pv_value)</tooltip>
       <transparent>false</transparent>
       <pv_value />
       <auto_size>false</auto_size>
-      <text>######</text>
+      <text>###########</text>
       <rotation_angle>0.0</rotation_angle>
       <scripts />
       <border_alarm_sensitive>true</border_alarm_sensitive>
@@ -210,7 +210,7 @@ $(pv_value)</tooltip>
         <keep_wh_ratio>false</keep_wh_ratio>
       </scale_options>
       <visible>true</visible>
-      <pv_name>$(PV_ROOT):LIMIT:SP</pv_name>
+      <pv_name>$(PV_ROOT):TEMP:SP:APPLY</pv_name>
       <vertical_alignment>1</vertical_alignment>
       <border_color>
         <color name="ISIS_Border" red="0" green="0" blue="0" />
@@ -411,7 +411,7 @@ $(pv_value)</tooltip>
       <transparent>false</transparent>
       <pv_value />
       <auto_size>false</auto_size>
-      <text>######</text>
+      <text>###########</text>
       <rotation_angle>0.0</rotation_angle>
       <scripts />
       <border_alarm_sensitive>true</border_alarm_sensitive>
@@ -424,7 +424,7 @@ $(pv_value)</tooltip>
         <keep_wh_ratio>false</keep_wh_ratio>
       </scale_options>
       <visible>true</visible>
-      <pv_name>$(PV_ROOT):RATE:SP</pv_name>
+      <pv_name>$(PV_ROOT):RATE:SP:APPLY</pv_name>
       <vertical_alignment>1</vertical_alignment>
       <border_color>
         <color name="ISIS_Border" red="0" green="0" blue="0" />
@@ -612,6 +612,159 @@ $(pv_value)</tooltip>
         <opifont.name fontName="Arial" height="14" style="1">ISIS_Label</opifont.name>
       </font>
     </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="1.0">
+      <toggle_button>false</toggle_button>
+      <border_style>0</border_style>
+      <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+      <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+      <push_action_index>0</push_action_index>
+      <rules />
+      <enabled>true</enabled>
+      <wuid>-7361948e:15530481b18:-7bdd</wuid>
+      <pv_value />
+      <text>Set temperature</text>
+      <scripts />
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+      <height>40</height>
+      <border_width>1</border_width>
+      <scale_options>
+        <width_scalable>true</width_scalable>
+        <height_scalable>true</height_scalable>
+        <keep_wh_ratio>false</keep_wh_ratio>
+      </scale_options>
+      <image></image>
+      <visible>true</visible>
+      <pv_name>$(PV_ROOT):TEMP:SP:APPLY</pv_name>
+      <border_color>
+        <color red="0" green="128" blue="255" />
+      </border_color>
+      <widget_type>Action Button</widget_type>
+      <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+      <background_color>
+        <color name="ISIS_Standard_Button" red="187" green="187" blue="187" />
+      </background_color>
+      <width>241</width>
+      <x>504</x>
+      <name>Set temp button</name>
+      <y>57</y>
+      <foreground_color>
+        <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
+      </foreground_color>
+      <actions hook="false" hook_all="false">
+        <action type="WRITE_PV">
+          <pv_name>$(pv_name).PROC</pv_name>
+          <value>1</value>
+          <timeout>10</timeout>
+          <description></description>
+        </action>
+      </actions>
+      <font>
+        <opifont.name fontName="Arial" height="14" style="1">ISIS_Button</opifont.name>
+      </font>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="1.0">
+      <toggle_button>false</toggle_button>
+      <border_style>0</border_style>
+      <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+      <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+      <push_action_index>0</push_action_index>
+      <rules />
+      <enabled>true</enabled>
+      <wuid>-7361948e:15530481b18:-7bda</wuid>
+      <pv_value />
+      <text>Set ramp rate</text>
+      <scripts />
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+      <height>40</height>
+      <border_width>1</border_width>
+      <scale_options>
+        <width_scalable>true</width_scalable>
+        <height_scalable>true</height_scalable>
+        <keep_wh_ratio>false</keep_wh_ratio>
+      </scale_options>
+      <image></image>
+      <visible>true</visible>
+      <pv_name>$(PV_ROOT):RATE:SP:APPLY</pv_name>
+      <border_color>
+        <color red="0" green="128" blue="255" />
+      </border_color>
+      <widget_type>Action Button</widget_type>
+      <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+      <background_color>
+        <color name="ISIS_Standard_Button" red="187" green="187" blue="187" />
+      </background_color>
+      <width>241</width>
+      <x>504</x>
+      <name>Action Button_1</name>
+      <y>106</y>
+      <foreground_color>
+        <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
+      </foreground_color>
+      <actions hook="false" hook_all="false">
+        <action type="WRITE_PV">
+          <pv_name>$(pv_name).PROC</pv_name>
+          <value>1</value>
+          <timeout>10</timeout>
+          <description></description>
+        </action>
+      </actions>
+      <font>
+        <opifont.name fontName="Arial" height="14" style="1">ISIS_Button</opifont.name>
+      </font>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="1.0">
+      <toggle_button>false</toggle_button>
+      <border_style>0</border_style>
+      <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+      <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+      <push_action_index>0</push_action_index>
+      <rules />
+      <enabled>true</enabled>
+      <wuid>-7361948e:15530481b18:-7bd0</wuid>
+      <pv_value />
+      <text>Set pump control AUTO</text>
+      <scripts />
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+      <height>40</height>
+      <border_width>1</border_width>
+      <scale_options>
+        <width_scalable>true</width_scalable>
+        <height_scalable>true</height_scalable>
+        <keep_wh_ratio>false</keep_wh_ratio>
+      </scale_options>
+      <image></image>
+      <visible>true</visible>
+      <pv_name>$(PV_ROOT):PUMP:MODE:SP</pv_name>
+      <border_color>
+        <color red="0" green="128" blue="255" />
+      </border_color>
+      <widget_type>Action Button</widget_type>
+      <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+      <background_color>
+        <color name="ISIS_Standard_Button" red="187" green="187" blue="187" />
+      </background_color>
+      <width>241</width>
+      <x>504</x>
+      <name>Action Button_1</name>
+      <y>155</y>
+      <foreground_color>
+        <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
+      </foreground_color>
+      <actions hook="false" hook_all="false">
+        <action type="WRITE_PV">
+          <pv_name>$(pv_name)</pv_name>
+          <value>1</value>
+          <timeout>10</timeout>
+          <description></description>
+        </action>
+      </actions>
+      <font>
+        <opifont.name fontName="Arial" height="14" style="1">ISIS_Button</opifont.name>
+      </font>
+    </widget>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0">
     <border_style>1</border_style>
@@ -622,7 +775,7 @@ $(pv_value)</tooltip>
     <transparent>false</transparent>
     <lock_children>false</lock_children>
     <scripts />
-    <height>205</height>
+    <height>295</height>
     <border_width>1</border_width>
     <scale_options>
       <width_scalable>true</width_scalable>
@@ -641,9 +794,9 @@ $(pv_value)</tooltip>
       <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
     </background_color>
     <width>265</width>
-    <x>528</x>
+    <x>522</x>
     <name>Grouping Container_1</name>
-    <y>378</y>
+    <y>78</y>
     <foreground_color>
       <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
     </foreground_color>
@@ -694,7 +847,7 @@ $(pv_value)</tooltip>
       <width>235</width>
       <x>12</x>
       <name>Text Update</name>
-      <y>156</y>
+      <y>216</y>
       <foreground_color>
         <color red="0" green="0" blue="0" />
       </foreground_color>
@@ -733,14 +886,14 @@ $(pv_value)</tooltip>
       <widget_type>Action Button</widget_type>
       <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
       <background_color>
-        <color red="240" green="240" blue="240" />
+        <color name="ISIS_Standard_Button" red="187" green="187" blue="187" />
       </background_color>
-      <width>110</width>
+      <width>235</width>
       <x>12</x>
       <name>Action Button</name>
       <y>54</y>
       <foreground_color>
-        <color red="0" green="0" blue="0" />
+        <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </foreground_color>
       <actions hook="false" hook_all="false">
         <action type="WRITE_PV">
@@ -784,14 +937,14 @@ $(pv_value)</tooltip>
       <widget_type>Action Button</widget_type>
       <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
       <background_color>
-        <color red="240" green="240" blue="240" />
+        <color name="ISIS_Standard_Button" red="187" green="187" blue="187" />
       </background_color>
-      <width>110</width>
-      <x>140</x>
+      <width>235</width>
+      <x>12</x>
       <name>Action Button</name>
-      <y>54</y>
+      <y>102</y>
       <foreground_color>
-        <color red="0" green="0" blue="0" />
+        <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </foreground_color>
       <actions hook="false" hook_all="false">
         <action type="WRITE_PV">
@@ -906,7 +1059,7 @@ $(pv_value)</tooltip>
       <name>Text_1</name>
       <width>176</width>
       <x>12</x>
-      <y>120</y>
+      <y>186</y>
       <maximum>1.7976931348623157E308</maximum>
       <actions hook="false" hook_all="false" />
       <foreground_color>
@@ -925,17 +1078,14 @@ $(trace_0_y_pv_value)</tooltip>
     <trace_0_concatenate_data>true</trace_0_concatenate_data>
     <trace_0_trace_type>0</trace_0_trace_type>
     <border_width>1</border_width>
-    <trace_1_x_axis_index>0</trace_1_x_axis_index>
     <border_style>1</border_style>
     <axis_0_grid_color>
       <color name="ISIS_Textbox_Readonly_Background" red="200" green="200" blue="200" />
     </axis_0_grid_color>
     <trace_0_name>TEMPERATURE</trace_0_name>
     <trace_0_update_mode>0</trace_0_update_mode>
-    <trace_1_x_pv></trace_1_x_pv>
     <wuid>-24fcfafc:1552a54e5ce:-6eb9</wuid>
     <transparent>false</transparent>
-    <trace_1_update_mode>0</trace_1_update_mode>
     <axis_0_title_font>
       <opifont.name fontName="Arial" height="9" style="1">ISIS_Header4</opifont.name>
     </axis_0_title_font>
@@ -946,8 +1096,6 @@ $(trace_0_y_pv_value)</tooltip>
     <y>78</y>
     <trace_0_x_axis_index>0</trace_0_x_axis_index>
     <axis_count>2</axis_count>
-    <trace_1_point_size>4</trace_1_point_size>
-    <trace_1_anti_alias>true</trace_1_anti_alias>
     <pv_value />
     <trace_0_buffer_size>100</trace_0_buffer_size>
     <axis_1_maximum>50.0</axis_1_maximum>
@@ -963,19 +1111,16 @@ $(trace_0_y_pv_value)</tooltip>
     <axis_1_log_scale>false</axis_1_log_scale>
     <title></title>
     <trace_0_visible>true</trace_0_visible>
-    <trace_1_name>TEMPERATURE SETPOINT</trace_1_name>
-    <trace_1_y_pv_value />
-    <show_legend>true</show_legend>
+    <show_legend>false</show_legend>
     <axis_0_axis_title>Time</axis_0_axis_title>
     <axis_0_axis_color>
       <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
     </axis_0_axis_color>
     <axis_0_dash_grid_line>true</axis_0_dash_grid_line>
     <trace_0_point_style>0</trace_0_point_style>
-    <trace_1_point_style>0</trace_1_point_style>
     <trace_0_line_width>1</trace_0_line_width>
     <axis_0_time_format>3</axis_0_time_format>
-    <trace_count>2</trace_count>
+    <trace_count>1</trace_count>
     <axis_1_show_grid>true</axis_1_show_grid>
     <axis_1_dash_grid_line>true</axis_1_dash_grid_line>
     <show_toolbar>false</show_toolbar>
@@ -987,10 +1132,8 @@ $(trace_0_y_pv_value)</tooltip>
       <height_scalable>true</height_scalable>
       <keep_wh_ratio>false</keep_wh_ratio>
     </scale_options>
-    <trace_1_y_pv>$(PV_ROOT):LIMIT:SP</trace_1_y_pv>
     <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
     <axis_0_maximum>120.0</axis_0_maximum>
-    <trace_1_y_axis_index>1</trace_1_y_axis_index>
     <height>295</height>
     <trigger_pv_value />
     <axis_1_grid_color>
@@ -1003,20 +1146,12 @@ $(trace_0_y_pv_value)</tooltip>
     <rules />
     <axis_1_visible>true</axis_1_visible>
     <trace_0_update_delay>100</trace_0_update_delay>
-    <trace_1_concatenate_data>true</trace_1_concatenate_data>
-    <trace_1_trace_color>
-      <color name="ISIS_Trace" red="242" green="26" blue="26" />
-    </trace_1_trace_color>
     <pv_name></pv_name>
     <name></name>
-    <trace_1_trace_type>0</trace_1_trace_type>
     <axis_0_auto_scale>true</axis_0_auto_scale>
     <axis_0_minimum>0.0</axis_0_minimum>
-    <trace_1_update_delay>100</trace_1_update_delay>
     <axis_1_axis_title>Temperature</axis_1_axis_title>
     <axis_1_auto_scale>true</axis_1_auto_scale>
-    <trace_1_line_width>1</trace_1_line_width>
-    <trace_1_plot_mode>0</trace_1_plot_mode>
     <border_color>
       <color name="ISIS_Border" red="0" green="0" blue="0" />
     </border_color>
@@ -1030,14 +1165,12 @@ $(trace_0_y_pv_value)</tooltip>
     <axis_1_time_format>0</axis_1_time_format>
     <border_alarm_sensitive>false</border_alarm_sensitive>
     <show_plot_area_border>false</show_plot_area_border>
-    <width>619</width>
-    <trace_1_x_pv_value />
+    <width>487</width>
     <axis_1_minimum>0.0</axis_1_minimum>
     <title_font>
       <opifont.name fontName="Arial" height="9" style="1">ISIS_Header4</opifont.name>
     </title_font>
     <trace_0_y_pv_value />
-    <trace_1_visible>true</trace_1_visible>
     <plot_area_background_color>
       <color name="ISIS_Textbox_Background" red="255" green="255" blue="255" />
     </plot_area_background_color>
@@ -1045,7 +1178,6 @@ $(trace_0_y_pv_value)</tooltip>
       <opifont.name fontName="Arial" height="9" style="1">ISIS_Header4</opifont.name>
     </axis_1_title_font>
     <visible>true</visible>
-    <trace_1_buffer_size>100</trace_1_buffer_size>
     <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
     <scripts />
     <trace_0_point_size>4</trace_0_point_size>
