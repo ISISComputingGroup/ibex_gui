@@ -24,14 +24,25 @@ import org.eclipse.core.commands.ExecutionException;
 
 import uk.ac.stfc.isis.ibex.configserver.configuration.Configuration;
 
+/**
+ * The handler class for editing the current config.
+ */
 public class EditCurrentConfigHandler extends ConfigHandler<Configuration> {
 	
     private String blockName = "";
 	
+    /**
+     * Create the handler for opening the editor via the menu.
+     */
 	public EditCurrentConfigHandler() {
 		super(SERVER.setCurrentConfig());
 	}
 
+    /**
+     * Create the handler for opening the editor on one block.
+     * 
+     * @param blockName The block to edit
+     */
     public EditCurrentConfigHandler(String blockName) {
         this();
         this.blockName = blockName;
