@@ -47,7 +47,6 @@ public class BlockStatusBorderColourConverter extends Converter {
     @Override
     public Object convert(Object fromObject) {
         BlockState state = (BlockState) fromObject;
-        System.out.println("blockstate " + state.name());
         if (state == BlockState.DISCONNECTED) {
             return MAGENTA;
         } else {

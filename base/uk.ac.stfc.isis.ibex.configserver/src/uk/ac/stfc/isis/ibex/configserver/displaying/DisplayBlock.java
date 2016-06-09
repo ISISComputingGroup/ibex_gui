@@ -76,6 +76,9 @@ public class DisplayBlock extends ModelObject {
      */
     private RuncontrolState runcontrolState = RuncontrolState.DISABLED;
 
+    /**
+     * Specifies the block state, such as disconnected or under major alarm.
+     */
     private BlockState blockState = BlockState.DEFAULT;
 
     private final BaseObserver<String> valueAdapter = new BaseObserver<String>() {

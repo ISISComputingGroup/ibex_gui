@@ -136,8 +136,6 @@ public class Group extends Composite {
 
                 addPaintListener(new LabelBorderListener(blockValue, currentBlock));
 
-//				Graphics2D borderProperties
-
                 if (j < numberOfColumns - 1) {
                     // insert divider label
                     labelMaker(this, SWT.NONE, "   |   ", "", null);
