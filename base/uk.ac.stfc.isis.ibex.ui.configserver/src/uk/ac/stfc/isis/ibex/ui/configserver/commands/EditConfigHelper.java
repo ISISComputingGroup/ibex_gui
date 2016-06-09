@@ -34,22 +34,34 @@ import uk.ac.stfc.isis.ibex.ui.configserver.ConfigurationViewModels;
 import uk.ac.stfc.isis.ibex.ui.configserver.dialogs.EditConfigDialog;
 
 /**
- * A Helper class to open config editing dialog boxes
+ * A helper class to open config editing dialog boxes.
  */
 public class EditConfigHelper {
     private static final String TITLE = "Edit Configuration";
     private static final String SUB_TITLE_CURRENT = "Editing the current configuration";
 
     private Shell shell;
-    private ConfigServer SERVER;
+    private ConfigServer server;
     private ConfigurationViewModels configurationViewModels;
 
+    /**
+     * Constructor for the helper class.
+     * 
+     * @param shell The shell in which to display dialog boxes
+     * @param server The ConfigServer to save configurations to
+     */
     public EditConfigHelper(Shell shell, ConfigServer server) {
         this.shell = shell;
-        this.SERVER = server;
+        this.server = server;
         this.configurationViewModels = ConfigurationServerUI.getDefault().configurationViewModels();
     }
 
+    /**
+     * Create a dialog box for editing the current config.
+     * 
+     * @param blockname The blockname we wish to edit, if null or empty we will
+     *            edit the whole config.
+     */
     public void createDialogCurrent(String blockname) {
         configurationViewModels.setModelAsCurrentConfig();
         UpdatedValue<EditableConfiguration> config = configurationViewModels.getConfigModel();
@@ -59,6 +71,11 @@ public class EditConfigHelper {
         }
     }
 
+    /**
+     * Create a dialog box for editing a config other than the current one.
+     * 
+     * @param configName The name of the config we wish to edit
+     */
     public void createDialog(String configName) {
         String subTitle = "Editing " + configName;
 
@@ -77,13 +94,13 @@ public class EditConfigHelper {
                 configurationViewModels);
         if (dialog.open() == Window.OK) {
             if (dialog.doAsComponent()) {
-                SERVER.saveAsComponent().write(dialog.getComponent());
+                server.saveAsComponent().write(dialog.getComponent());
             } else {
                 if (isCurrent) {
-                    SERVER.setCurrentConfig().write(dialog.getConfig());
-                    SERVER.save().write(dialog.getConfig().name());
+                    server.setCurrentConfig().write(dialog.getConfig());
+                    server.save().write(dialog.getConfig().name());
                 } else {
-                    SERVER.saveAs().write(dialog.getConfig());
+                    server.saveAs().write(dialog.getConfig());
                 }
             }
         }

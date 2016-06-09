@@ -125,7 +125,7 @@ public class BlockDetailsViewModel extends ErrorMessageProvider {
     
     /**
      * Validates the current name and pvAddress and fires an error property
-     * change if required
+     * change if required.
      */
     public void validate() {
         validate(name, pvAddress);
