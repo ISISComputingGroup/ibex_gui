@@ -22,10 +22,6 @@
  */
 package uk.ac.stfc.isis.ibex.ui.blocks.groups;
 
-import org.eclipse.core.databinding.DataBindingContext;
-import org.eclipse.core.databinding.UpdateValueStrategy;
-import org.eclipse.core.databinding.beans.BeanProperties;
-import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
@@ -33,35 +29,27 @@ import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Label;
 
-import uk.ac.stfc.isis.ibex.configserver.displaying.DisplayBlock;
-
 /**
  * 
  */
 public class LabelBorderListener implements PaintListener {
     Label source;
-    DataBindingContext bindingContext;
-    UpdateValueStrategy borderStrategy;
-    DisplayBlock block;
     Rectangle rText;
     Canvas border;
 
-    public LabelBorderListener(Label label, DisplayBlock block) {
+    public LabelBorderListener(Label label) {
         this.source = label;
-        this.block = block;
-        this.bindingContext = new DataBindingContext();
-        borderStrategy = new UpdateValueStrategy();
-        borderStrategy.setConverter(new BlockStatusBorderColourConverter());
+        this.border = new Canvas(source.getParent(), SWT.NONE);
+    }
+
+    public Canvas getBorder() {
+        return this.border;
     }
 
     @Override
     public void paintControl(PaintEvent e) {
         this.rText = this.source.getBounds();
-        this.border = new Canvas(source.getParent(), SWT.NONE);
         this.border.setBounds(rText.x - 2, rText.y - 2, rText.width + 4, rText.height + 4);
         this.border.setVisible(true);
-
-        bindingContext.bindValue(WidgetProperties.background().observe(border),
-                BeanProperties.value("blockState").observe(block), null, borderStrategy);
     }
 }

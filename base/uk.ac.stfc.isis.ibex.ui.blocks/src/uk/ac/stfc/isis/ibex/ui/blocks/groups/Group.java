@@ -79,8 +79,8 @@ public class Group extends Composite {
         // name, one for value, one for
         // run control status, and for every column but the last we need a
         // divider label column
-        GridLayout layout = new GridLayout(3 * numberOfColumns + (numberOfColumns - 1), false);
-        layout.verticalSpacing = 7;
+        GridLayout layout = new GridLayout(NUMBER_OF_FIELDS * numberOfColumns + (numberOfColumns - 1), false);
+        layout.verticalSpacing = 5;
         this.setLayout(layout);
         this.setBackground(WHITE);
 
@@ -117,24 +117,43 @@ public class Group extends Composite {
                 Label blockName =
                         labelMaker(this, SWT.NONE, currentBlock.getName() + ": ", currentBlock.getDescription(), null);
                 blockName.setMenu(new BlocksMenu(currentBlock).createContextMenu(blockName));
-                blockName.setLayoutData(new GridData(SWT.LEFT, SWT.NONE, false, false, 1, 1));
+                blockName.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1));
+
+                // additional container to hold value label to draw a border around it
+                Composite valueContainer = new Composite(this, SWT.CENTER);
+                GridLayout valueContainerLayout = new GridLayout(1, false);
+                valueContainerLayout.marginWidth = 2;
+                valueContainerLayout.marginHeight = 2;
+                valueContainerLayout.verticalSpacing = 0;
+                valueContainerLayout.horizontalSpacing = 0;
+                valueContainer.setLayout(valueContainerLayout);
+
+                GridData gdValueContainer = new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1);
+                gdValueContainer.widthHint = 74;
+                gdValueContainer.heightHint = 19;
+                valueContainer.setLayoutData(gdValueContainer);
 
                 Label blockValue =
-                        labelMaker(this, SWT.RIGHT, currentBlock.getValue(), currentBlock.getDescription(), null);
+                        labelMaker(valueContainer, SWT.RIGHT, currentBlock.getValue(), currentBlock.getDescription(),
+                                null);
                 blockValue.setMenu(new BlocksMenu(currentBlock).createContextMenu(blockName));
                 GridData gdValue = new GridData(SWT.CENTER, SWT.NONE, false, false, 1, 1);
                 gdValue.widthHint = 70;
                 blockValue.setLayoutData(gdValue);
+                blockValue.setVisible(true);
+                valueContainer.pack();
+
+                LabelBorderListener borderListener = new LabelBorderListener(blockValue);
+                addPaintListener(borderListener);
 
                 Label blockStatus = labelMaker(this, SWT.CENTER, "", "Run Control Status", null);
                 FontDescriptor boldDescriptor = FontDescriptor.createFrom(blockStatus.getFont()).setStyle(SWT.BOLD);
                 Font boldFont = boldDescriptor.createFont(blockStatus.getDisplay());
                 blockStatus.setFont(boldFont);
-                GridData gdStatus = new GridData(SWT.RIGHT, SWT.NONE, false, false, 1, 1);
+                GridData gdStatus = new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1);
                 gdStatus.widthHint = 17;
                 blockStatus.setLayoutData(gdStatus);
 
-                addPaintListener(new LabelBorderListener(blockValue, currentBlock));
 
                 if (j < numberOfColumns - 1) {
                     // insert divider label
@@ -164,6 +183,12 @@ public class Group extends Composite {
 
                 bindingContext.bindValue(WidgetProperties.background().observe(blockStatus),
                         BeanProperties.value("runcontrolState").observe(currentBlock), null, bgColourStrategy);
+
+                UpdateValueStrategy borderStrategy = new UpdateValueStrategy();
+                borderStrategy.setConverter(new BlockStatusBorderColourConverter());
+
+                bindingContext.bindValue(WidgetProperties.background().observe(borderListener.getBorder()),
+                        BeanProperties.value("blockState").observe(currentBlock), null, borderStrategy);
             }
         }
     }
