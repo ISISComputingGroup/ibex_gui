@@ -129,7 +129,7 @@ public class Group extends Composite {
                 valueContainer.setLayout(valueContainerLayout);
 
                 GridData gdValueContainer = new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1);
-                gdValueContainer.widthHint = 74;
+                gdValueContainer.widthHint = 79;
                 gdValueContainer.heightHint = 19;
                 valueContainer.setLayoutData(gdValueContainer);
 
@@ -138,7 +138,7 @@ public class Group extends Composite {
                                 null);
                 blockValue.setMenu(new BlocksMenu(currentBlock).createContextMenu(blockName));
                 GridData gdValue = new GridData(SWT.CENTER, SWT.NONE, false, false, 1, 1);
-                gdValue.widthHint = 70;
+                gdValue.widthHint = 75;
                 blockValue.setLayoutData(gdValue);
                 blockValue.setVisible(true);
                 valueContainer.pack();

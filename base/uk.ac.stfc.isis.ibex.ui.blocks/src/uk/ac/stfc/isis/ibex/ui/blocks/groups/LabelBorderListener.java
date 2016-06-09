@@ -30,14 +30,21 @@ import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Label;
 
 /**
- * 
+ * Draws a border around a given label by creating a canvas drawing a rectangle
+ * behind it. Label should be in its own separate composite to avoid formatting
+ * issues.
  */
 public class LabelBorderListener implements PaintListener {
     Label source;
     Rectangle rText;
     Canvas border;
+    int borderWidth;
 
+    /**
+     * @param label the label around which the border should be drawn.
+     */
     public LabelBorderListener(Label label) {
+        this.borderWidth = 2;
         this.source = label;
         this.border = new Canvas(source.getParent(), SWT.NONE);
     }
@@ -46,10 +53,21 @@ public class LabelBorderListener implements PaintListener {
         return this.border;
     }
 
+    /**
+     * Sets the width of the border (can not exceed the label's parent's
+     * dimensions)
+     * 
+     * @param width the new border width
+     */
+    public void setBorderWidth(int width) {
+        this.borderWidth = width;
+    }
+
     @Override
     public void paintControl(PaintEvent e) {
         this.rText = this.source.getBounds();
-        this.border.setBounds(rText.x - 2, rText.y - 2, rText.width + 4, rText.height + 4);
+        this.border.setBounds(rText.x - borderWidth, rText.y - borderWidth, rText.width + 2 * borderWidth,
+                rText.height + 2 * borderWidth);
         this.border.setVisible(true);
     }
 }
