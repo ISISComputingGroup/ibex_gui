@@ -32,7 +32,7 @@ import uk.ac.stfc.isis.ibex.model.ModelObject;
  * Contains the functionality to display a Block's value and run-control
  * settings in a GUI.
  * 
- * Rather than inheriting from Block it holds a reference to the Block as this
+ * Rather than inheriting from Block, it holds a reference to the Block as this
  * provides better encapsulation of Block's functionality.
  *
  */
