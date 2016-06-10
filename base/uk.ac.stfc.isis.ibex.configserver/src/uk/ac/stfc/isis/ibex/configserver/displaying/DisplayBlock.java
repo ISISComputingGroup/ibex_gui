@@ -43,12 +43,12 @@ public class DisplayBlock extends ModelObject {
     private String description;
 
     /**
-     * Indicates whether the block is currently within run-control range
+     * Indicates whether the block is currently within run-control range.
      */
     private boolean inRange;
 
     /**
-     * Indicates whether the block is currently disconnected
+     * Indicates whether the block is currently disconnected.
      */
     private boolean disconnected;
 
