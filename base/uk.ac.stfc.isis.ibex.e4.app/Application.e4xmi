@@ -5,7 +5,7 @@
       <children xsi:type="advanced:Perspective" xmi:id="_2ks5oC13Eeaj15_huK2zOw" elementId="uk.ac.stfc.isis.ibex.e4.app.perspective1">
         <children xsi:type="basic:PartSashContainer" xmi:id="_3tLkoC13Eeaj15_huK2zOw" elementId="uk.ac.stfc.isis.ibex.e4.app.partsashcontainer.0">
           <children xsi:type="basic:PartSashContainer" xmi:id="_ElfT0C14Eeaj15_huK2zOw" elementId="uk.ac.stfc.isis.ibex.e4.app.partsashcontainer.1" horizontal="true">
-            <children xsi:type="basic:Part" xmi:id="_F106UC14Eeaj15_huK2zOw" elementId="uk.ac.stfc.isis.ibex.e4.app.part.0" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.e4.app/uk.ac.stfc.isis.ibex.e4.app.parts.DashboardPart"/>
+            <children xsi:type="basic:Part" xmi:id="_F106UC14Eeaj15_huK2zOw" elementId="uk.ac.stfc.isis.ibex.e4.app.part.0" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.dashboard/uk.ac.stfc.isis.ibex.ui.dashboard.views.DashboardView"/>
             <children xsi:type="basic:Part" xmi:id="_HLCZwC14Eeaj15_huK2zOw" elementId="uk.ac.stfc.isis.ibex.e4.app.part.1" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.e4.app/uk.ac.stfc.isis.ibex.e4.app.parts.BlocksPart"/>
           </children>
           <children xsi:type="basic:PartSashContainer" xmi:id="_KlsiwC14Eeaj15_huK2zOw" elementId="uk.ac.stfc.isis.ibex.e4.app.partsashcontainer.2" horizontal="true">
@@ -16,7 +16,7 @@
       <children xsi:type="advanced:Perspective" xmi:id="_wWt-UC2AEeaj15_huK2zOw" elementId="uk.ac.stfc.isis.ibex.e4.app.perspective2">
         <children xsi:type="basic:PartSashContainer" xmi:id="_f8AWwC4tEeaj15_huK2zOw" elementId="uk.ac.stfc.isis.ibex.e4.app.partsashcontainer.5">
           <children xsi:type="basic:PartSashContainer" xmi:id="_x8Rm4C2AEeaj15_huK2zOw" elementId="uk.ac.stfc.isis.ibex.e4.app.partsashcontainer.3" horizontal="true">
-            <children xsi:type="basic:Part" xmi:id="_jiCpUC4tEeaj15_huK2zOw" elementId="uk.ac.stfc.isis.ibex.e4.app.part.5" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.e4.app/uk.ac.stfc.isis.ibex.e4.app.parts.DashboardPart"/>
+            <children xsi:type="basic:Part" xmi:id="_jiCpUC4tEeaj15_huK2zOw" elementId="uk.ac.stfc.isis.ibex.e4.app.part.5" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.dashboard/uk.ac.stfc.isis.ibex.ui.dashboard.views.DashboardView"/>
             <children xsi:type="basic:Part" xmi:id="_j_R-8C4tEeaj15_huK2zOw" elementId="uk.ac.stfc.isis.ibex.e4.app.part.6" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.e4.app/uk.ac.stfc.isis.ibex.e4.app.parts.BlocksPart"/>
           </children>
           <children xsi:type="basic:PartSashContainer" xmi:id="_fRRyAC4dEeaj15_huK2zOw" elementId="uk.ac.stfc.isis.ibex.e4.app.partsashcontainer.4" horizontal="true">
