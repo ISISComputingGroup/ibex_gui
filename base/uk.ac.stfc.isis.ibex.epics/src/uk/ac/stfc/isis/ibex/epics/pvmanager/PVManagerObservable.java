@@ -60,7 +60,6 @@ public class PVManagerObservable<R extends VType> extends ObservablePV<R> {
 			
 			if (evt.isValueChanged() && isConnected) {
 				setValue(pv.getValue());
-                // ;
             }
 		}
 	};
