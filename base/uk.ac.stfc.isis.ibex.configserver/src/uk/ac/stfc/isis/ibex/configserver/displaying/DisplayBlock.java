@@ -29,8 +29,8 @@ import uk.ac.stfc.isis.ibex.instrument.Instrument;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 
 /**
- * Contains the functionality to display a Blocks value and run-control settings
- * in a GUI.
+ * Contains the functionality to display a Block's value and run-control
+ * settings in a GUI.
  * 
  * Rather than inheriting from Block it holds a reference to the Block as this
  * provides better encapsulation of Block's functionality.
@@ -43,12 +43,12 @@ public class DisplayBlock extends ModelObject {
     private String description;
 
     /**
-     * Indicates whether the block in currently within run-control range
+     * Indicates whether the block is currently within run-control range
      */
     private boolean inRange;
 
     /**
-     * Indicates whether the block in currently disconnected
+     * Indicates whether the block is currently disconnected
      */
     private boolean disconnected;
 
