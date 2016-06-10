@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<application:Application xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:advanced="http://www.eclipse.org/ui/2010/UIModel/application/ui/advanced" xmlns:application="http://www.eclipse.org/ui/2010/UIModel/application" xmlns:basic="http://www.eclipse.org/ui/2010/UIModel/application/ui/basic" xmlns:menu="http://www.eclipse.org/ui/2010/UIModel/application/ui/menu" xmi:id="_6wlLcMgZEeSyMNYR5xypkQ" elementId="uk.ac.stfc.isis.ibex.e4.app.application" bindingContexts="_6wlLecgZEeSyMNYR5xypkQ">
+  <children xsi:type="basic:Window" xmi:id="_j9fWcC1BEeaj15_huK2zOw" elementId="uk.ac.stfc.isis.ibex.e4.app.window.0">
+    <children xsi:type="advanced:PerspectiveStack" xmi:id="_fycCwC13Eeaj15_huK2zOw" elementId="uk.ac.stfc.isis.ibex.e4.app.perspectivestack.0">
+      <children xsi:type="advanced:Perspective" xmi:id="_2ks5oC13Eeaj15_huK2zOw" elementId="uk.ac.stfc.isis.ibex.e4.app.perspective1">
+        <children xsi:type="basic:PartSashContainer" xmi:id="_3tLkoC13Eeaj15_huK2zOw" elementId="uk.ac.stfc.isis.ibex.e4.app.partsashcontainer.0">
+          <children xsi:type="basic:PartSashContainer" xmi:id="_ElfT0C14Eeaj15_huK2zOw" elementId="uk.ac.stfc.isis.ibex.e4.app.partsashcontainer.1" horizontal="true">
+            <children xsi:type="basic:Part" xmi:id="_F106UC14Eeaj15_huK2zOw" elementId="uk.ac.stfc.isis.ibex.e4.app.part.0" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.e4.app/uk.ac.stfc.isis.ibex.e4.app.parts.DashboardPart"/>
+            <children xsi:type="basic:Part" xmi:id="_HLCZwC14Eeaj15_huK2zOw" elementId="uk.ac.stfc.isis.ibex.e4.app.part.1" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.e4.app/uk.ac.stfc.isis.ibex.e4.app.parts.BlocksPart"/>
+          </children>
+          <children xsi:type="basic:PartSashContainer" xmi:id="_KlsiwC14Eeaj15_huK2zOw" elementId="uk.ac.stfc.isis.ibex.e4.app.partsashcontainer.2" horizontal="true">
+            <children xsi:type="basic:Part" xmi:id="_LfcOMC14Eeaj15_huK2zOw" elementId="uk.ac.stfc.isis.ibex.e4.app.part.2" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.e4.app/uk.ac.stfc.isis.ibex.e4.app.parts.SelectorPart"/>
+          </children>
+        </children>
+      </children>
+      <children xsi:type="advanced:Perspective" xmi:id="_wWt-UC2AEeaj15_huK2zOw" elementId="uk.ac.stfc.isis.ibex.e4.app.perspective2">
+        <children xsi:type="basic:PartSashContainer" xmi:id="_f8AWwC4tEeaj15_huK2zOw" elementId="uk.ac.stfc.isis.ibex.e4.app.partsashcontainer.5">
+          <children xsi:type="basic:PartSashContainer" xmi:id="_x8Rm4C2AEeaj15_huK2zOw" elementId="uk.ac.stfc.isis.ibex.e4.app.partsashcontainer.3" horizontal="true">
+            <children xsi:type="basic:Part" xmi:id="_jiCpUC4tEeaj15_huK2zOw" elementId="uk.ac.stfc.isis.ibex.e4.app.part.5" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.e4.app/uk.ac.stfc.isis.ibex.e4.app.parts.DashboardPart"/>
+            <children xsi:type="basic:Part" xmi:id="_j_R-8C4tEeaj15_huK2zOw" elementId="uk.ac.stfc.isis.ibex.e4.app.part.6" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.e4.app/uk.ac.stfc.isis.ibex.e4.app.parts.BlocksPart"/>
+          </children>
+          <children xsi:type="basic:PartSashContainer" xmi:id="_fRRyAC4dEeaj15_huK2zOw" elementId="uk.ac.stfc.isis.ibex.e4.app.partsashcontainer.4" horizontal="true">
+            <children xsi:type="basic:Part" xmi:id="_HqhI0C4tEeaj15_huK2zOw" elementId="uk.ac.stfc.isis.ibex.e4.app.part.4" containerData="" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.e4.app/uk.ac.stfc.isis.ibex.e4.app.parts.SelectorPart"/>
+          </children>
+        </children>
+      </children>
+    </children>
+    <mainMenu xmi:id="_Rv3rIC7QEeaj15_huK2zOw" elementId="uk.ac.stfc.isis.ibex.e4.app.menu.0">
+      <children xsi:type="menu:Menu" xmi:id="_jBNQEC7QEeaj15_huK2zOw" elementId="uk.ac.stfc.isis.ibex.e4.app.menu.ibex" label="IBEX">
+        <children xsi:type="menu:HandledMenuItem" xmi:id="_j08aIC7QEeaj15_huK2zOw" elementId="uk.ac.stfc.isis.ibex.e4.app.handledmenuitem.selectinstrument" label="Select Instrument"/>
+      </children>
+    </mainMenu>
+  </children>
+  <handlers xmi:id="_6wlLfcgZEeSyMNYR5xypkQ" elementId="uk.ac.stfc.isis.ibex.e4.app.handler.quitCommand" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.e4.app/uk.ac.stfc.isis.ibex.e4.app.handlers.QuitHandler" command="_6wlLfMgZEeSyMNYR5xypkQ"/>
+  <handlers xmi:id="_6wlLgcgZEeSyMNYR5xypkQ" elementId="uk.ac.stfc.isis.ibex.e4.app.handler.openCommand" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.e4.app/uk.ac.stfc.isis.ibex.e4.app.handlers.OpenHandler" command="_6wlLgMgZEeSyMNYR5xypkQ"/>
+  <handlers xmi:id="_6wlLhMgZEeSyMNYR5xypkQ" elementId="uk.ac.stfc.isis.ibex.e4.app.handler.saveCommand" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.e4.app/uk.ac.stfc.isis.ibex.e4.app.handlers.SaveHandler" command="_6wlLg8gZEeSyMNYR5xypkQ"/>
+  <handlers xmi:id="_6wlLh8gZEeSyMNYR5xypkQ" elementId="uk.ac.stfc.isis.ibex.e4.app.handler.aboutCommand" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.e4.app/uk.ac.stfc.isis.ibex.e4.app.handlers.AboutHandler" command="_6wlLhsgZEeSyMNYR5xypkQ"/>
+  <bindingTables xmi:id="_6wlLfsgZEeSyMNYR5xypkQ" elementId="uk.ac.stfc.isis.ibex.e4.app.bindingtable" bindingContext="_6wlLecgZEeSyMNYR5xypkQ">
+    <bindings xmi:id="_6wlLf8gZEeSyMNYR5xypkQ" elementId="uk.ac.stfc.isis.ibex.e4.app.keybinding.m1q" keySequence="M1+Q" command="_6wlLfMgZEeSyMNYR5xypkQ"/>
+    <bindings xmi:id="_6wlLgsgZEeSyMNYR5xypkQ" elementId="uk.ac.stfc.isis.ibex.e4.app.keybinding.m1o" keySequence="M1+O" command="_6wlLgMgZEeSyMNYR5xypkQ"/>
+    <bindings xmi:id="_6wlLhcgZEeSyMNYR5xypkQ" elementId="uk.ac.stfc.isis.ibex.e4.app.keybinding.m1s" keySequence="M1+S" command="_6wlLg8gZEeSyMNYR5xypkQ"/>
+    <bindings xmi:id="_6wlLiMgZEeSyMNYR5xypkQ" elementId="uk.ac.stfc.isis.ibex.e4.app.keybinding.m1a" keySequence="M1+A" command="_6wlLhsgZEeSyMNYR5xypkQ"/>
+  </bindingTables>
+  <rootContext xmi:id="_6wlLecgZEeSyMNYR5xypkQ" elementId="org.eclipse.ui.contexts.dialogAndWindow" name="In Dialog and Windows">
+    <children xmi:id="_6wlLesgZEeSyMNYR5xypkQ" elementId="org.eclipse.ui.contexts.window" name="In Windows"/>
+    <children xmi:id="_6wlLe8gZEeSyMNYR5xypkQ" elementId="org.eclipse.ui.contexts.dialog" name="In Dialogs"/>
+  </rootContext>
+  <commands xmi:id="_6wlLfMgZEeSyMNYR5xypkQ" elementId="org.eclipse.ui.file.exit" commandName="quitCommand"/>
+  <commands xmi:id="_6wlLgMgZEeSyMNYR5xypkQ" elementId="org.eclipse.ui.file.open" commandName="openCommand"/>
+  <commands xmi:id="_6wlLg8gZEeSyMNYR5xypkQ" elementId="org.eclipse.ui.file.save" commandName="saveCommand"/>
+  <commands xmi:id="_6wlLhsgZEeSyMNYR5xypkQ" elementId="org.eclipse.ui.help.aboutAction" commandName="aboutCommand"/>
+  <addons xmi:id="_6wlLcsgZEeSyMNYR5xypkQ" elementId="org.eclipse.e4.core.commands.service" contributionURI="bundleclass://org.eclipse.e4.core.commands/org.eclipse.e4.core.commands.CommandServiceAddon"/>
+  <addons xmi:id="_6wlLc8gZEeSyMNYR5xypkQ" elementId="org.eclipse.e4.ui.contexts.service" contributionURI="bundleclass://org.eclipse.e4.ui.services/org.eclipse.e4.ui.services.ContextServiceAddon"/>
+  <addons xmi:id="_6wlLdMgZEeSyMNYR5xypkQ" elementId="org.eclipse.e4.ui.bindings.service" contributionURI="bundleclass://org.eclipse.e4.ui.bindings/org.eclipse.e4.ui.bindings.BindingServiceAddon"/>
+  <addons xmi:id="_6wlLdcgZEeSyMNYR5xypkQ" elementId="org.eclipse.e4.ui.workbench.commands.model" contributionURI="bundleclass://org.eclipse.e4.ui.workbench/org.eclipse.e4.ui.internal.workbench.addons.CommandProcessingAddon"/>
+  <addons xmi:id="_6wlLdsgZEeSyMNYR5xypkQ" elementId="org.eclipse.e4.ui.workbench.handler.model" contributionURI="bundleclass://org.eclipse.e4.ui.workbench/org.eclipse.e4.ui.internal.workbench.addons.HandlerProcessingAddon"/>
+  <addons xmi:id="_6wlLd8gZEeSyMNYR5xypkQ" elementId="org.eclipse.e4.ui.workbench.contexts.model" contributionURI="bundleclass://org.eclipse.e4.ui.workbench/org.eclipse.e4.ui.internal.workbench.addons.ContextProcessingAddon"/>
+  <addons xmi:id="_6wlLeMgZEeSyMNYR5xypkQ" elementId="org.eclipse.e4.ui.workbench.bindings.model" contributionURI="bundleclass://org.eclipse.e4.ui.workbench.swt/org.eclipse.e4.ui.workbench.swt.util.BindingProcessingAddon"/>
+</application:Application>

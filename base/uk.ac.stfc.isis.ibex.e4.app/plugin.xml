@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+
+   <extension
+         id="product"
+         point="org.eclipse.core.runtime.products">
+      <product
+            name="uk.ac.stfc.isis.ibex.e4.app"
+            application="org.eclipse.e4.ui.workbench.swt.E4Application">
+         <property
+               name="applicationCSS"
+               value="platform:/plugin/uk.ac.stfc.isis.ibex.e4.app/css/default.css">
+         </property>
+         <property
+               name="appName"
+               value="uk.ac.stfc.isis.ibex.e4.app">
+         </property>
+      </product>
+   </extension>
+
+</plugin>
