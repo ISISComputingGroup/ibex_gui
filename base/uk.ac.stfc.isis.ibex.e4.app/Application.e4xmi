@@ -27,7 +27,7 @@
     </children>
     <mainMenu xmi:id="_Rv3rIC7QEeaj15_huK2zOw" elementId="uk.ac.stfc.isis.ibex.e4.app.menu.0">
       <children xsi:type="menu:Menu" xmi:id="_jBNQEC7QEeaj15_huK2zOw" elementId="uk.ac.stfc.isis.ibex.e4.app.menu.ibex" label="IBEX">
-        <children xsi:type="menu:HandledMenuItem" xmi:id="_j08aIC7QEeaj15_huK2zOw" elementId="uk.ac.stfc.isis.ibex.e4.app.handledmenuitem.selectinstrument" label="Select Instrument"/>
+        <children xsi:type="menu:HandledMenuItem" xmi:id="_j08aIC7QEeaj15_huK2zOw" elementId="uk.ac.stfc.isis.ibex.e4.app.handledmenuitem.selectinstrument" label="Select Instrument" command="_yJqgIC7UEea3pZpTQ0Nb6g"/>
       </children>
     </mainMenu>
   </children>
@@ -35,6 +35,7 @@
   <handlers xmi:id="_6wlLgcgZEeSyMNYR5xypkQ" elementId="uk.ac.stfc.isis.ibex.e4.app.handler.openCommand" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.e4.app/uk.ac.stfc.isis.ibex.e4.app.handlers.OpenHandler" command="_6wlLgMgZEeSyMNYR5xypkQ"/>
   <handlers xmi:id="_6wlLhMgZEeSyMNYR5xypkQ" elementId="uk.ac.stfc.isis.ibex.e4.app.handler.saveCommand" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.e4.app/uk.ac.stfc.isis.ibex.e4.app.handlers.SaveHandler" command="_6wlLg8gZEeSyMNYR5xypkQ"/>
   <handlers xmi:id="_6wlLh8gZEeSyMNYR5xypkQ" elementId="uk.ac.stfc.isis.ibex.e4.app.handler.aboutCommand" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.e4.app/uk.ac.stfc.isis.ibex.e4.app.handlers.AboutHandler" command="_6wlLhsgZEeSyMNYR5xypkQ"/>
+  <handlers xmi:id="_ch3b0C7VEea3pZpTQ0Nb6g" elementId="uk.ac.stfc.isis.ibex.e4.app.handler.selectInstrument" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.e4.app/uk.ac.stfc.isis.ibex.e4.app.handlers.SelectInstrumentHandler" command="_yJqgIC7UEea3pZpTQ0Nb6g"/>
   <bindingTables xmi:id="_6wlLfsgZEeSyMNYR5xypkQ" elementId="uk.ac.stfc.isis.ibex.e4.app.bindingtable" bindingContext="_6wlLecgZEeSyMNYR5xypkQ">
     <bindings xmi:id="_6wlLf8gZEeSyMNYR5xypkQ" elementId="uk.ac.stfc.isis.ibex.e4.app.keybinding.m1q" keySequence="M1+Q" command="_6wlLfMgZEeSyMNYR5xypkQ"/>
     <bindings xmi:id="_6wlLgsgZEeSyMNYR5xypkQ" elementId="uk.ac.stfc.isis.ibex.e4.app.keybinding.m1o" keySequence="M1+O" command="_6wlLgMgZEeSyMNYR5xypkQ"/>
@@ -49,6 +50,7 @@
   <commands xmi:id="_6wlLgMgZEeSyMNYR5xypkQ" elementId="org.eclipse.ui.file.open" commandName="openCommand"/>
   <commands xmi:id="_6wlLg8gZEeSyMNYR5xypkQ" elementId="org.eclipse.ui.file.save" commandName="saveCommand"/>
   <commands xmi:id="_6wlLhsgZEeSyMNYR5xypkQ" elementId="org.eclipse.ui.help.aboutAction" commandName="aboutCommand"/>
+  <commands xmi:id="_yJqgIC7UEea3pZpTQ0Nb6g" elementId="uk.ac.stfc.isis.ibex.e4.app.selectInstrument" commandName="selectInstrumentCommand"/>
   <addons xmi:id="_6wlLcsgZEeSyMNYR5xypkQ" elementId="org.eclipse.e4.core.commands.service" contributionURI="bundleclass://org.eclipse.e4.core.commands/org.eclipse.e4.core.commands.CommandServiceAddon"/>
   <addons xmi:id="_6wlLc8gZEeSyMNYR5xypkQ" elementId="org.eclipse.e4.ui.contexts.service" contributionURI="bundleclass://org.eclipse.e4.ui.services/org.eclipse.e4.ui.services.ContextServiceAddon"/>
   <addons xmi:id="_6wlLdMgZEeSyMNYR5xypkQ" elementId="org.eclipse.e4.ui.bindings.service" contributionURI="bundleclass://org.eclipse.e4.ui.bindings/org.eclipse.e4.ui.bindings.BindingServiceAddon"/>
