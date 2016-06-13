@@ -28,9 +28,9 @@ import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 
+import uk.ac.stfc.isis.ibex.ui.Utils;
 import uk.ac.stfc.isis.ibex.ui.dae.DaeUI;
 import uk.ac.stfc.isis.ibex.ui.dae.experimentsetup.periods.PeriodsPanel;
 import uk.ac.stfc.isis.ibex.ui.dae.experimentsetup.timechannels.TimeChannelsPanel;
@@ -120,19 +120,8 @@ public class ExperimentSetup extends Composite {
      * @param enabled whether the contents should be enabled or not
      */
     public void setChildrenEnabled(boolean enabled) {
-        recursiveSetEnabled(timeChannels, enabled);
-        recursiveSetEnabled(dataAcquisition, enabled);
-        recursiveSetEnabled(periods, enabled);
-    }
-
-    private void recursiveSetEnabled(Control control, boolean enabled) {
-        if (control instanceof Composite) {
-            Composite composite = (Composite) control;
-            for (Control child : composite.getChildren()) {
-                recursiveSetEnabled(child, enabled);
-            }
-        }
-
-        control.setEnabled(enabled);
+        Utils.recursiveSetEnabled(timeChannels, enabled);
+        Utils.recursiveSetEnabled(dataAcquisition, enabled);
+        Utils.recursiveSetEnabled(periods, enabled);
     }
 }

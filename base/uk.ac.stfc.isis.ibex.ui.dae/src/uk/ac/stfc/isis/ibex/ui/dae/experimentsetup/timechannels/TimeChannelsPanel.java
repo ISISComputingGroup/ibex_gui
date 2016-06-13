@@ -38,6 +38,7 @@ import org.eclipse.swt.widgets.Label;
 
 import uk.ac.stfc.isis.ibex.dae.experimentsetup.timechannels.TimeRegime;
 import uk.ac.stfc.isis.ibex.dae.experimentsetup.timechannels.TimeUnit;
+import uk.ac.stfc.isis.ibex.ui.Utils;
 
 public class TimeChannelsPanel extends Composite {
 	private Group timeRegimesGroup;
@@ -108,6 +109,7 @@ public class TimeChannelsPanel extends Composite {
 				}
 				
 				timeRegimesGroup.layout();
+                Utils.recursiveSetEnabled(timeRegimesGroup, timeRegimesGroup.getEnabled());
 			}
 		});
 
