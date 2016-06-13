@@ -26,6 +26,7 @@ import org.diirt.datasource.PVManager;
 import org.diirt.datasource.PVReader;
 import org.diirt.datasource.PVReaderEvent;
 import org.diirt.datasource.PVReaderListener;
+import org.diirt.support.ca.JCADataSourceConfiguration;
 import org.diirt.vtype.VType;
 
 import uk.ac.stfc.isis.ibex.epics.pv.ObservablePV;
@@ -65,6 +66,8 @@ public class PVManagerObservable<R extends VType> extends ObservablePV<R> {
 	
 	public PVManagerObservable(PVInfo<R> info) {
 		super(info);
+		
+		PVManager.setDefaultDataSource(new JCADataSourceConfiguration().create());
 		
 		pv = PVManager
 				.read(channel(info.address(), info.type(), Object.class))

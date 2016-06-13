@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?pde version="3.8"?><target name="target" sequenceNumber="46">
+<?pde version="3.8"?><target name="target" sequenceNumber="47">
 <locations>
 <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
 <unit id="com.google.gson" version="2.1.0.v201303041604"/>
@@ -40,10 +40,10 @@
 <unit id="org.diirt.datasource-sys" version="3.0.1.20151009125624"/>
 <unit id="org.diirt.datasource-graphene.source" version="3.0.1.20151009125629"/>
 <unit id="org.diirt.vtype" version="3.0.1.20151009125656"/>
-<unit id="org.diirt.vtype-json.source" version="3.0.1.20151009125625"/>
 <unit id="org.diirt.datasource-sim.source" version="3.0.1.20151009125622"/>
-<unit id="org.diirt.service-exec" version="3.0.1.20151009125633"/>
+<unit id="org.diirt.vtype-json.source" version="3.0.1.20151009125625"/>
 <unit id="org.diirt.datasource-graphene" version="3.0.1.20151009125629"/>
+<unit id="org.diirt.service-exec" version="3.0.1.20151009125633"/>
 <unit id="org.diirt.web-pods-common.source" version="3.0.1.20151009125629"/>
 <unit id="org.diirt.datasource.source" version="3.0.1.20151009125656"/>
 <unit id="org.diirt.datasource-sample" version="3.0.1.20151009125630"/>
@@ -51,9 +51,9 @@
 <unit id="org.epics.channelfinder.cf-client-api" version="2.2.0"/>
 <unit id="com.google.guava.collections.source" version="0.0.0.r03"/>
 <unit id="javax.ws.rs.jsr311-api" version="1.1.1"/>
-<unit id="org.diirt.vtype.source" version="3.0.1.20151009125656"/>
-<unit id="org.diirt.web-pods-common" version="3.0.1.20151009125629"/>
 <unit id="org.diirt.javafx" version="3.0.1.20151009125630"/>
+<unit id="org.diirt.web-pods-common" version="3.0.1.20151009125629"/>
+<unit id="org.diirt.vtype.source" version="3.0.1.20151009125656"/>
 <unit id="org.diirt.datasource-file.source" version="3.0.1.20151009125625"/>
 <unit id="org.diirt.service-exec.source" version="3.0.1.20151009125633"/>
 <unit id="org.glassfish.tyrus.bundles.tyrus-standalone-client-jdk" version="1.8.3"/>
@@ -65,18 +65,18 @@
 <unit id="org.diirt.datasource" version="3.0.1.20151009125656"/>
 <unit id="org.diirt.datasource-formula" version="3.0.1.20151009125658"/>
 <unit id="org.diirt.support.diirt-cf.source" version="3.0.1.20151009125634"/>
-<unit id="org.diirt.datasource-file-json" version="3.0.1.20151009125625"/>
 <unit id="com.sun.jersey.core" version="1.1.5.1"/>
+<unit id="org.diirt.datasource-file-json" version="3.0.1.20151009125625"/>
 <unit id="org.diirt.javafx.source" version="3.0.1.20151009125630"/>
 <unit id="com.sun.jersey.client" version="1.1.5.1"/>
 <unit id="org.diirt.javafx.tools.source" version="3.0.1.20151009125616"/>
-<unit id="org.diirt.support.diirt-ca" version="3.0.1.20151009125648"/>
 <unit id="com.google.guava.base" version="0.0.0.r03"/>
+<unit id="org.diirt.support.diirt-ca" version="3.0.1.20151009125648"/>
 <unit id="com.google.guava.base.source" version="0.0.0.r03"/>
 <unit id="com.google.guava.annotations.source" version="0.0.0.r03"/>
-<unit id="org.glassfish.javax.json.source" version="1.0.4"/>
-<unit id="org.antlr.runtime.source" version="3.4.0"/>
 <unit id="javax.websocket-api.source" version="1.1.0"/>
+<unit id="org.antlr.runtime.source" version="3.4.0"/>
+<unit id="org.glassfish.javax.json.source" version="1.0.4"/>
 <unit id="org.antlr.stringtemplate" version="3.2.1"/>
 <unit id="org.diirt.support.diirt-cf" version="3.0.1.20151009125634"/>
 <unit id="org.diirt.datasource-file-json.source" version="3.0.1.20151009125625"/>
@@ -85,12 +85,12 @@
 <unit id="com.google.guava.primitives" version="0.0.0.r03"/>
 <unit id="org.glassfish.tyrus.bundles.tyrus-standalone-client-jdk.source" version="1.8.3"/>
 <unit id="org.epics.caj" version="1.1.14"/>
-<unit id="org.diirt.service-jdbc.source" version="3.0.1.20151009125634"/>
 <unit id="org.glassfish.javax.json" version="1.0.4"/>
-<unit id="org.diirt.support.diirt-pva.source" version="3.0.1.20151009125652"/>
+<unit id="org.diirt.service-jdbc.source" version="3.0.1.20151009125634"/>
 <unit id="org.diirt.support.diirt-ca.source" version="3.0.1.20151009125648"/>
-<unit id="org.epics.pvaccess" version="4.0.4"/>
+<unit id="org.diirt.support.diirt-pva.source" version="3.0.1.20151009125652"/>
 <unit id="org.antlr.stringtemplate.source" version="3.2.1"/>
+<unit id="org.epics.pvaccess" version="4.0.4"/>
 <unit id="com.sun.jersey.core.source" version="1.1.5.1"/>
 <unit id="org.diirt.datasource-vtype" version="3.0.1.20151009125656"/>
 <unit id="org.diirt.graphene" version="3.0.1.20151009125630"/>
@@ -103,17 +103,17 @@
 <unit id="org.diirt.graphene.source" version="3.0.1.20151009125630"/>
 <unit id="org.diirt.service" version="3.0.1.20151009125701"/>
 <unit id="com.google.guava.collections" version="0.0.0.r03"/>
-<unit id="org.diirt.datasource-extra.source" version="3.0.1.20151009125631"/>
 <unit id="antlr" version="2.7.7"/>
+<unit id="org.diirt.datasource-extra.source" version="3.0.1.20151009125631"/>
 <unit id="org.diirt.service.source" version="3.0.1.20151009125701"/>
 <unit id="org.diirt.web-pods-datasource.source" version="3.0.1.20151009125625"/>
 <unit id="javax.ws.rs.jsr311-api.source" version="1.1.1"/>
 <unit id="org.diirt.datasource-loc.source" version="3.0.1.20151009125625"/>
 <unit id="org.epics.caj.source" version="1.1.14"/>
 <unit id="org.diirt.service-jdbc" version="3.0.1.20151009125634"/>
-<unit id="org.epics.pvdata" version="4.0.3"/>
 <unit id="org.diirt.javafx.tools" version="3.0.1.20151009125616"/>
 <unit id="org.epics.jca.source" version="2.3.6"/>
+<unit id="org.epics.pvdata" version="4.0.3"/>
 <unit id="org.antlr.runtime" version="3.4.0"/>
 <unit id="org.diirt.web-pods-datasource" version="3.0.1.20151009125625"/>
 <unit id="org.diirt.vtype-json" version="3.0.1.20151009125625"/>

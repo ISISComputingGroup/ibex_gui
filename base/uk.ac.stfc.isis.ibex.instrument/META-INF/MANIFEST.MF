@@ -12,7 +12,8 @@ Require-Bundle: org.eclipse.osgi,
  uk.ac.stfc.isis.ibex.logger,
  uk.ac.stfc.isis.ibex.json;bundle-version="1.0.0",
  com.google.guava;bundle-version="18.0.0",
- org.diirt.datasource;bundle-version="3.0.2"
+ org.diirt.datasource;bundle-version="3.0.2",
+ org.diirt.support.diirt-ca;bundle-version="3.0.2"
 Bundle-ActivationPolicy: lazy
 Export-Package: uk.ac.stfc.isis.ibex.instrument,
  uk.ac.stfc.isis.ibex.instrument.channels,

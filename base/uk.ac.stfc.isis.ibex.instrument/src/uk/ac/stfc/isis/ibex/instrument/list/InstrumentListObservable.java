@@ -65,7 +65,7 @@ public class InstrumentListObservable {
 
         // Wait for the PV to be connected
         int i = 0;
-        while (!instrumentsPV.isConnected() && instrumentsPV.getValue() == null && i < MAX_RETRIES) {
+        while ((!instrumentsPV.isConnected() || instrumentsPV.getValue() == null) && i < MAX_RETRIES) {
             try {
                 Thread.sleep(WAIT_FOR_OBSERVABLE);
             } catch (InterruptedException e) {
