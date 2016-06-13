@@ -22,6 +22,9 @@
  */
 package uk.ac.stfc.isis.ibex.ui;
 
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
+
 /**
  * Set of utility methods and constants for working with SWT.
  */
@@ -32,5 +35,23 @@ public final class Utils {
 
     private Utils() {
 
+    }
+
+    /**
+     * Sets the enabled flag on the input control and recursively on all its
+     * children.
+     * 
+     * @param control the top-level control
+     * @param enabled whether the control and all its children should be enabled
+     */
+    public static void recursiveSetEnabled(Control control, boolean enabled) {
+        if (control instanceof Composite) {
+            Composite composite = (Composite) control;
+            for (Control child : composite.getChildren()) {
+                recursiveSetEnabled(child, enabled);
+            }
+        }
+
+        control.setEnabled(enabled);
     }
 }
