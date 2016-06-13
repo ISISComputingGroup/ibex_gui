@@ -149,6 +149,10 @@ public class BlockServerAddresses {
 		return pvAddress + DESCRIPTION_FIELD;
 	}
 
+    /**
+     * @param pvAddress the PV address of a block
+     * @return the alarm severity field of a given PV address.
+     */
     public String blockAlarm(String pvAddress) {
         return pvAddress + ALARM_FIELD;
     }

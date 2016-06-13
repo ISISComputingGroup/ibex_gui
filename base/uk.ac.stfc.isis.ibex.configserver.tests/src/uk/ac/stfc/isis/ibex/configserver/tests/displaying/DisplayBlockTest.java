@@ -61,7 +61,7 @@ public class DisplayBlockTest {
 	}
 
     @Test
-    public void if_disconnected_then_blockstate_disconnected() {
+    public void GIVEN_pv_disconnected_THEN_blockstate_disconnected() {
 
         // Act
         valueObservable.setConnectionStatus(false);
@@ -71,10 +71,12 @@ public class DisplayBlockTest {
     }
 
     @Test
-    public void if_disconnected_connected_then_blockstate_runcontrol_disabled() {
+    public void GIVEN_pv_was_disconnected_WHEN_pv_connected_THEN_blockstate_runcontrol_disabled() {
+
+        // Arrange
+        valueObservable.setConnectionStatus(false);
 
         // Act
-        valueObservable.setConnectionStatus(false);
         valueObservable.setConnectionStatus(true);
 
         // Assert
@@ -82,10 +84,12 @@ public class DisplayBlockTest {
     }
 
     @Test
-    public void if_connected_disconnected_then_blockstate_disconnected() {
+    public void GIVEN_pv_was_connected_WHEN_pv_disconnected_THEN_blockstate_disconnected() {
+
+        // Arrange
+        valueObservable.setConnectionStatus(true);
 
         // Act
-        valueObservable.setConnectionStatus(true);
         valueObservable.setConnectionStatus(false);
 
         // Assert
@@ -93,7 +97,7 @@ public class DisplayBlockTest {
     }
 
 	@Test
-    public void if_in_range_and_disabled_unset_then_state_is_disabled() {
+    public void GIVEN_in_range_and_disabled_THEN__runcontrol_state_is_disabled() {
         // Arrange
         valueObservable.setConnectionStatus(true);
 
@@ -106,7 +110,7 @@ public class DisplayBlockTest {
 	}
 	
 	@Test
-    public void if_in_range_while_enabled_then_state_is_in_range() {
+    public void GIVEN_in_range_and_enabled_THEN_runcontrol_state_is_enabled_in_range() {
         // Arrange
         valueObservable.setConnectionStatus(true);
 
@@ -119,7 +123,7 @@ public class DisplayBlockTest {
 	}
 	
 	@Test
-    public void if_not_in_range_while_enabled_then_out_range() {
+    public void GIVEN_not_in_range_and_enabled_THEN_runcontrol_state_is_enabled_out_range() {
         // Arrange
         valueObservable.setConnectionStatus(true);
 
@@ -132,7 +136,7 @@ public class DisplayBlockTest {
 	}
 	
 	@Test
-    public void if_in_range_to_false_then_true_sets_in_range() {
+    public void GIVEN_not_in_range_and_enabled_WHEN_set_to_in_range_THEN_runcontrol_state_is_enabled_in_range() {
         // Arrange
         valueObservable.setConnectionStatus(true);
         enabledObservable.setValue("YES");
@@ -146,7 +150,7 @@ public class DisplayBlockTest {
 	}
 
 	@Test
-    public void setting_in_range_to_true_then_false_sets_out_range() {
+    public void GIVEN_in_range_and_enabled_WHEN_set_to_not_in_range_THEN_runcontrol_state_is_enabled_out_range() {
         // Arrange
         valueObservable.setConnectionStatus(true);
         enabledObservable.setValue("YES");
@@ -160,7 +164,8 @@ public class DisplayBlockTest {
 	}
 
 	@Test
-    public void setting_in_range_to_false_then_nonsense_sets_in_range() {
+    public void
+            GIVEN_not_in_range_and_enabled_WHEN_in_range_set_to_nonsense_THEN_runcontrol_state_is_enabled_in_range() {
         // Arrange
         valueObservable.setConnectionStatus(true);
         enabledObservable.setValue("YES");
@@ -174,7 +179,7 @@ public class DisplayBlockTest {
 	}
 
     @Test
-    public void if_enabled_and_in_range_while_disconnected_then_blockstate_disconnected() {
+    public void GIVEN_pv_disconnected_WHEN_set_to_in_range_and_enabled_THEN_runcontrol_state_is_disconnected() {
 
         // Arrange
         valueObservable.setConnectionStatus(false);
@@ -188,7 +193,7 @@ public class DisplayBlockTest {
     }
 
     @Test
-    public void if_enabled_and_not_in_range_while_disconnected_then_blockstate_disconnected() {
+    public void GIVEN_pv_disconnected_WHEN_set_to_not_in_range_and_enabled_THEN_runcontrol_state_is_disconnected() {
 
         // Arrange
         valueObservable.setConnectionStatus(false);
@@ -202,7 +207,7 @@ public class DisplayBlockTest {
     }
 
     @Test
-    public void if_not_enabled_and_in_range_while_disconnected_then_blockstate_disconnected() {
+    public void GIVEN_pv_disconnected_WHEN_set_to_in_range_and_not_enabled_THEN_runcontrol_state_is_disconnected() {
 
         // Arrange
         valueObservable.setConnectionStatus(false);
@@ -216,7 +221,7 @@ public class DisplayBlockTest {
     }
 
     @Test
-    public void if_not_enabled_and_not_in_range_while_disconnected_then_blockstate_disconnected() {
+    public void GIVEN_pv_disconnected_WHEN_set_to_not_in_range_and_not_enabled_THEN_runcontrol_state_is_disconnected() {
 
         // Arrange
         valueObservable.setConnectionStatus(false);

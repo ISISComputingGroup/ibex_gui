@@ -22,14 +22,13 @@ package uk.ac.stfc.isis.ibex.ui.blocks.groups;
 import org.eclipse.core.databinding.conversion.Converter;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.wb.swt.SWTResourceManager;
 
 import uk.ac.stfc.isis.ibex.configserver.displaying.BlockState;
 
 /**
- * This is a converter for converting the text colour value of a block in the
- * GUI into the appropriate colour to reflect its disconnected state
+ * This is a converter for converting the colour of a border around a label
+ * based on the state of the associated block.
  * 
  * Used for data-binding.
  * 
@@ -38,26 +37,31 @@ public class BlockStatusBorderColourConverter extends Converter {
     private static final Color WHITE = SWTResourceManager.getColor(SWT.COLOR_WHITE);
     private static final Color MAGENTA = SWTResourceManager.getColor(SWT.COLOR_MAGENTA);
     private static final Color RED = SWTResourceManager.getColor(SWT.COLOR_RED);
-    private static final Color ORANGE = new Color(Display.getCurrent(), 255, 128, 0);
+    private static final Color ORANGE = SWTResourceManager.getColor(255, 128, 0);
 
+    /**
+     * Instantiates the converter
+     */
     public BlockStatusBorderColourConverter() {
         super(BlockState.class, Color.class);
     }
 
+    /**
+     * Specifies how the converter should react to possible block states.
+     */
     @Override
     public Object convert(Object fromObject) {
         BlockState state = (BlockState) fromObject;
-        if (state == BlockState.DISCONNECTED) {
-            return MAGENTA;
-        } else {
-            if (state == BlockState.MAJOR_ALARM) {
+        switch (state) {
+            case DISCONNECTED:
+                return MAGENTA;
+            case MAJOR_ALARM:
                 return RED;
-            } else if (state == BlockState.MINOR_ALARM) {
+            case MINOR_ALARM:
                 return ORANGE;
-            }
+            default:
+                return WHITE;
         }
-        return WHITE;
-
     }
 
 }

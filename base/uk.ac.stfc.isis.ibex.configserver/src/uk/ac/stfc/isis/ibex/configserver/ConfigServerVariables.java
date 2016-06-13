@@ -173,6 +173,12 @@ public class ConfigServerVariables extends InstrumentVariables {
                 addPrefix(blockServerAddresses.blockDescription(blockServerAlias(blockName))));
 	}
 
+    /**
+     * Returns an observable conveying the alarm state of a given block.
+     * 
+     * @param blockName the name of the block
+     * @return the observable object
+     */
     public ForwardingObservable<AlarmState> alarm(String blockName) {
         return closingObsFactory.getSwitchableObservable(new EnumChannel<>(AlarmState.class),
                 addPrefix(blockServerAddresses.blockAlarm(blockServerAlias(blockName))));

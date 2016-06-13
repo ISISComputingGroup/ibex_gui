@@ -57,6 +57,12 @@ public class ConfigServer extends Closer {
 		return variables.blockDescription(blockName);
 	}
 
+    /**
+     * Returns an observable conveying the alarm state of a given block.
+     * 
+     * @param blockName the name of the block
+     * @return the observable object
+     */
     public ForwardingObservable<AlarmState> alarm(String blockName) {
         return variables.alarm(blockName);
     }
