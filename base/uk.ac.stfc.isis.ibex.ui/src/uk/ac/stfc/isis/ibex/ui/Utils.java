@@ -37,6 +37,13 @@ public final class Utils {
 
     }
 
+    /**
+     * Sets the enabled flag on the input control and recursively on all its
+     * children.
+     * 
+     * @param control the top-level control
+     * @param enabled whether the control and all its children should be enabled
+     */
     public static void recursiveSetEnabled(Control control, boolean enabled) {
         if (control instanceof Composite) {
             Composite composite = (Composite) control;
