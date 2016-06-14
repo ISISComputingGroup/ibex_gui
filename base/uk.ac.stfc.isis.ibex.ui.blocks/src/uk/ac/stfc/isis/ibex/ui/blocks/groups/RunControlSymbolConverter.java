@@ -42,8 +42,7 @@ public class RunControlSymbolConverter extends Converter {
         if (state == RuncontrolState.ENABLED_IN_RANGE) {
             // Checkmark
             return "\u2713";
-        }
-        else if (state == RuncontrolState.ENABLED_OUT_RANGE) {
+        } else if (state == RuncontrolState.ENABLED_OUT_RANGE) {
             return "X";
         }
 

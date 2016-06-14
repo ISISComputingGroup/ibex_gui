@@ -150,6 +150,8 @@ public class BlockServerAddresses {
 	}
 
     /**
+     * Given a block's address, gets the address of its alarm field.
+     * 
      * @param pvAddress the PV address of a block
      * @return the alarm severity field of a given PV address.
      */
