@@ -262,7 +262,7 @@ $(trace_0_y_pv_value)</tooltip>
       </trace_6_trace_color>
       <trace_6_y_pv_value />
       <trace_3_line_width>1</trace_3_line_width>
-      <show_toolbar>true</show_toolbar>
+      <show_toolbar>false</show_toolbar>
       <axis_0_visible>true</axis_0_visible>
       <trace_7_plot_mode>0</trace_7_plot_mode>
       <axis_0_show_grid>true</axis_0_show_grid>
