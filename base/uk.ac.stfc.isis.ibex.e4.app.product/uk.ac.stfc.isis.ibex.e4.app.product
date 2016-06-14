@@ -3,17 +3,21 @@
 
 <product name="uk.ac.stfc.isis.ibex.e4.app" id="uk.ac.stfc.isis.ibex.e4.app.product" application="org.eclipse.e4.ui.workbench.swt.E4Application" version="1.0.0.qualifier" useFeatures="false" includeLaunchers="true">
 
+
    <configIni use="default">
    </configIni>
 
    <launcherArgs>
       <programArgs>-clearPersistedState
       </programArgs>
+      <vmArgs>-Declipse.pluginCustomization=C:\Instrument\Dev\ibex_gui\base\uk.ac.stfc.isis.ibex.product\plugin_customization.ini
+      </vmArgs>
       <vmArgsMac>-XstartOnFirstThread -Dorg.eclipse.swt.internal.carbon.smallFonts
       </vmArgsMac>
    </launcherArgs>
 
    <windowImages/>
+
 
    <launcher>
       <solaris/>
@@ -22,8 +26,10 @@
       </win>
    </launcher>
 
+
    <vm>
    </vm>
+
 
    <plugins>
       <plugin id="com.google.gson"/>
@@ -161,5 +167,12 @@
       <plugin id="uk.ac.stfc.isis.ibex.ui.widgets"/>
    </plugins>
 
+
+   <preferencesInfo>
+      <targetfile overwrite="false"/>
+   </preferencesInfo>
+
+   <cssInfo>
+   </cssInfo>
 
 </product>
