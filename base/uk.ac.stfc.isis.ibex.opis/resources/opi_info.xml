@@ -156,6 +156,10 @@
 				<path>Lakeshore218.opi</path>
 				<description>The OPI for the Lakeshore 218 temperature controller.</description>
 				<macros>
+					<macro>
+						<name>LAKESHORE218</name>
+ 						<description>The Lakeshore PV name (e.g. LAKESHORE218_01).</description>  
+					</macro>
 				</macros>
 			</value>
 		</entry>
