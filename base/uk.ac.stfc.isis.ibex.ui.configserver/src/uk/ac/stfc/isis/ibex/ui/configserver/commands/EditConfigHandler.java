@@ -19,8 +19,7 @@
 
 package uk.ac.stfc.isis.ibex.ui.configserver.commands;
 
-import org.eclipse.core.commands.ExecutionEvent;
-import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.e4.ui.workbench.modeling.EPartService;
 import org.eclipse.jface.window.Window;
 
 import uk.ac.stfc.isis.ibex.configserver.configuration.Configuration;
@@ -32,6 +31,10 @@ import uk.ac.stfc.isis.ibex.ui.configserver.ConfigurationViewModels;
 import uk.ac.stfc.isis.ibex.ui.configserver.dialogs.ConfigSelectionDialog;
 import uk.ac.stfc.isis.ibex.ui.configserver.dialogs.EditConfigDialog;
 
+import javax.inject.Inject;
+
+import org.eclipse.e4.core.di.annotations.Execute;
+
 public class EditConfigHandler extends ConfigHandler<Configuration> {
 
 	private static final String TITLE = "Edit Configuration";
@@ -41,9 +44,9 @@ public class EditConfigHandler extends ConfigHandler<Configuration> {
 	}
 
 		
-	@Override
-	public Object execute(ExecutionEvent event) throws ExecutionException {		
-		ConfigSelectionDialog selectionDialog = new ConfigSelectionDialog(shell(), TITLE, SERVER.configsInfo().getValue(), false);
+	@Execute
+	public Object execute(EPartService partService) {		
+		ConfigSelectionDialog selectionDialog = new ConfigSelectionDialog(activeShell, TITLE, SERVER.configsInfo().getValue(), false);
 		if (selectionDialog.open() == Window.OK) {
 			String configName = selectionDialog.selectedConfig();
 			edit(configName);
@@ -66,7 +69,7 @@ public class EditConfigHandler extends ConfigHandler<Configuration> {
 	
     private void openDialog(String subTitle, EditableConfiguration config,
             ConfigurationViewModels configurationViewModels) {
-        EditConfigDialog editDialog = new EditConfigDialog(shell(), TITLE, subTitle, config, false, false,
+        EditConfigDialog editDialog = new EditConfigDialog(activeShell, TITLE, subTitle, config, false, false,
                 configurationViewModels);
         if (editDialog.open() == Window.OK) {
             if (editDialog.doAsComponent()) {

@@ -136,14 +136,14 @@ public class SummaryPanel extends Composite {
 	}
 	
 	private void updateSynopticList() {
-		Collection<SynopticInfo> available = Synoptic.getInstance().availableSynoptics();
-		String[] names = SynopticInfo.names(available).toArray(new String[0]);
-		Arrays.sort(names);
-		cmboSynoptic.setInput(names);
-        selectDefaultSynoptic();
+		//Collection<SynopticInfo> available = Synoptic.getInstance().availableSynoptics();
+		//String[] names = SynopticInfo.names(available).toArray(new String[0]);
+		//Arrays.sort(names);
+		//cmboSynoptic.setInput(names);
+        //selectDefaultSynoptic();
 	}
 
     private void selectDefaultSynoptic() {
-        cmboSynoptic.setSelection(new StructuredSelection(Synoptic.getInstance().getDefaultSynoptic().name()));
+        //cmboSynoptic.setSelection(new StructuredSelection(Synoptic.getInstance().getDefaultSynoptic().name()));
     }
 }

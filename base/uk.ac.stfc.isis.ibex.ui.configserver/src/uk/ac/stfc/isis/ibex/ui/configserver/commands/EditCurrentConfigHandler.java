@@ -19,8 +19,6 @@
 
 package uk.ac.stfc.isis.ibex.ui.configserver.commands;
 
-import org.eclipse.core.commands.ExecutionEvent;
-import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.jface.window.Window;
 
 import uk.ac.stfc.isis.ibex.configserver.configuration.Configuration;
@@ -30,6 +28,8 @@ import uk.ac.stfc.isis.ibex.model.UpdatedValue;
 import uk.ac.stfc.isis.ibex.ui.configserver.ConfigurationServerUI;
 import uk.ac.stfc.isis.ibex.ui.configserver.ConfigurationViewModels;
 import uk.ac.stfc.isis.ibex.ui.configserver.dialogs.EditConfigDialog;
+
+import org.eclipse.e4.core.di.annotations.Execute;
 
 public class EditCurrentConfigHandler extends ConfigHandler<Configuration> {
 	
@@ -48,10 +48,9 @@ public class EditCurrentConfigHandler extends ConfigHandler<Configuration> {
         this();
         this.blockName = blockName;
     }
-
-	
-	@Override
-    public Object execute(ExecutionEvent event) throws ExecutionException {
+    
+	@Execute
+    public Object execute() {
         ConfigurationViewModels configurationViewModels = ConfigurationServerUI.getDefault().configurationViewModels();
         configurationViewModels.setModelAsCurrentConfig();
         UpdatedValue<EditableConfiguration> config = configurationViewModels.getConfigModel();
@@ -64,7 +63,7 @@ public class EditCurrentConfigHandler extends ConfigHandler<Configuration> {
 	}
 	
     private void openDialog(EditableConfiguration config, ConfigurationViewModels configurationViewModels) {
-        dialog = new EditConfigDialog(shell(), TITLE, SUB_TITLE, config, false, false, blockName,
+        dialog = new EditConfigDialog(activeShell, TITLE, SUB_TITLE, config, false, false, blockName,
                 configurationViewModels);
 		if (dialog.open() == Window.OK) {
 			if (dialog.doAsComponent()) {

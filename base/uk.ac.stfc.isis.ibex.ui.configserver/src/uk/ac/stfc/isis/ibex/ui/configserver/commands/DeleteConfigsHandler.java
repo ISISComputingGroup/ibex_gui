@@ -21,9 +21,9 @@ package uk.ac.stfc.isis.ibex.ui.configserver.commands;
 
 import java.util.Collection;
 
-import org.eclipse.core.commands.ExecutionEvent;
-import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.jface.window.Window;
+import org.eclipse.e4.core.di.annotations.Execute;
+import org.eclipse.e4.ui.workbench.modeling.EPartService;
 
 import uk.ac.stfc.isis.ibex.ui.configserver.dialogs.MultipleConfigsSelectionDialog;
 
@@ -33,9 +33,9 @@ public class DeleteConfigsHandler extends ConfigHandler<Collection<String>> {
 		super(SERVER.deleteConfigs());
 	}
 	
-	@Override
-	public Object execute(ExecutionEvent event) throws ExecutionException {		
-		MultipleConfigsSelectionDialog dialog = new MultipleConfigsSelectionDialog(shell(), "Delete Configurations", SERVER.configsInfo().getValue(), false);
+	@Execute
+	public Object execute(EPartService event) {		
+		MultipleConfigsSelectionDialog dialog = new MultipleConfigsSelectionDialog(activeShell, "Delete Configurations", SERVER.configsInfo().getValue(), false);
 		if (dialog.open() == Window.OK) {
 			configService.write((dialog.selectedConfigs()));
 		}

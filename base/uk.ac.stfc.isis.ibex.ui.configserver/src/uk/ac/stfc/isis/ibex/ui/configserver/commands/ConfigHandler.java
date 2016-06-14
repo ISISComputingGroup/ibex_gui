@@ -19,7 +19,12 @@
 
 package uk.ac.stfc.isis.ibex.ui.configserver.commands;
 
+import javax.inject.Inject;
+import javax.inject.Named;
+
 import org.eclipse.core.commands.AbstractHandler;
+import org.eclipse.e4.core.contexts.IEclipseContext;
+import org.eclipse.e4.ui.services.IServiceConstants;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.PlatformUI;
 
@@ -38,10 +43,14 @@ import uk.ac.stfc.isis.ibex.epics.writing.Writable;
  *
  * @param <T>
  */
-public abstract class ConfigHandler<T> extends AbstractHandler {
+public abstract class ConfigHandler<T> {
 
 	protected static final ConfigServer SERVER = Configurations.getInstance().server();
 	protected static final Editing EDITING = Configurations.getInstance().edit();
+	
+    @Inject
+    @Named(IServiceConstants.ACTIVE_SHELL) 
+    protected Shell activeShell;
 	
 	/**
 	 * This is an inner anonymous class inherited from SameTypeWriter with added functionality
@@ -50,7 +59,7 @@ public abstract class ConfigHandler<T> extends AbstractHandler {
 	protected final SameTypeWriter<T> configService = new SameTypeWriter<T>() {	
 		@Override
 		public void onCanWriteChanged(boolean canWrite) {
-			setBaseEnabled(canWrite);
+			//setBaseEnabled(canWrite);
 		};	
 	};
 	
@@ -62,9 +71,5 @@ public abstract class ConfigHandler<T> extends AbstractHandler {
 	public ConfigHandler(Writable<T> destination) {
 		configService.writeTo(destination);
 		destination.subscribe(configService);
-	}
-	
-	protected Shell shell() {
-		return PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
 	}
 }

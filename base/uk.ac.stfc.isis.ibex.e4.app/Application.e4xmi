@@ -29,6 +29,9 @@
       <children xsi:type="menu:Menu" xmi:id="_jBNQEC7QEeaj15_huK2zOw" elementId="uk.ac.stfc.isis.ibex.e4.app.menu.ibex" label="IBEX">
         <children xsi:type="menu:HandledMenuItem" xmi:id="_j08aIC7QEeaj15_huK2zOw" elementId="uk.ac.stfc.isis.ibex.e4.app.handledmenuitem.selectinstrument" label="Select Instrument" command="_yJqgIC7UEea3pZpTQ0Nb6g"/>
       </children>
+      <children xsi:type="menu:Menu" xmi:id="_5ZCewDIzEea8afgfAIJ2Nw" elementId="uk.ac.stfc.isis.ibex.e4.app.menu.configuration" label="Configuration">
+        <children xsi:type="menu:HandledMenuItem" xmi:id="_9Q3r8DIzEea8afgfAIJ2Nw" elementId="uk.ac.stfc.isis.ibex.e4.app.handledmenuitem.editcurrentconfig" label="Edit Current Configuration..." command="_J8FaUDI0Eea8afgfAIJ2Nw"/>
+      </children>
     </mainMenu>
   </children>
   <handlers xmi:id="_6wlLfcgZEeSyMNYR5xypkQ" elementId="uk.ac.stfc.isis.ibex.e4.app.handler.quitCommand" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.e4.app/uk.ac.stfc.isis.ibex.e4.app.handlers.QuitHandler" command="_6wlLfMgZEeSyMNYR5xypkQ"/>
@@ -36,6 +39,7 @@
   <handlers xmi:id="_6wlLhMgZEeSyMNYR5xypkQ" elementId="uk.ac.stfc.isis.ibex.e4.app.handler.saveCommand" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.e4.app/uk.ac.stfc.isis.ibex.e4.app.handlers.SaveHandler" command="_6wlLg8gZEeSyMNYR5xypkQ"/>
   <handlers xmi:id="_6wlLh8gZEeSyMNYR5xypkQ" elementId="uk.ac.stfc.isis.ibex.e4.app.handler.aboutCommand" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.e4.app/uk.ac.stfc.isis.ibex.e4.app.handlers.AboutHandler" command="_6wlLhsgZEeSyMNYR5xypkQ"/>
   <handlers xmi:id="_ch3b0C7VEea3pZpTQ0Nb6g" elementId="uk.ac.stfc.isis.ibex.e4.app.handler.selectInstrument" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.e4.app/uk.ac.stfc.isis.ibex.e4.app.handlers.SelectInstrumentHandler" command="_yJqgIC7UEea3pZpTQ0Nb6g"/>
+  <handlers xmi:id="_QqE8UDI0Eea8afgfAIJ2Nw" elementId="uk.ac.stfc.isis.ibex.e4.app.handler.editCurrentConfig" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.configserver/uk.ac.stfc.isis.ibex.ui.configserver.commands.EditCurrentConfigHandler" command="_J8FaUDI0Eea8afgfAIJ2Nw"/>
   <bindingTables xmi:id="_6wlLfsgZEeSyMNYR5xypkQ" elementId="uk.ac.stfc.isis.ibex.e4.app.bindingtable" bindingContext="_6wlLecgZEeSyMNYR5xypkQ">
     <bindings xmi:id="_6wlLf8gZEeSyMNYR5xypkQ" elementId="uk.ac.stfc.isis.ibex.e4.app.keybinding.m1q" keySequence="M1+Q" command="_6wlLfMgZEeSyMNYR5xypkQ"/>
     <bindings xmi:id="_6wlLgsgZEeSyMNYR5xypkQ" elementId="uk.ac.stfc.isis.ibex.e4.app.keybinding.m1o" keySequence="M1+O" command="_6wlLgMgZEeSyMNYR5xypkQ"/>
@@ -51,6 +55,7 @@
   <commands xmi:id="_6wlLg8gZEeSyMNYR5xypkQ" elementId="org.eclipse.ui.file.save" commandName="saveCommand"/>
   <commands xmi:id="_6wlLhsgZEeSyMNYR5xypkQ" elementId="org.eclipse.ui.help.aboutAction" commandName="aboutCommand"/>
   <commands xmi:id="_yJqgIC7UEea3pZpTQ0Nb6g" elementId="uk.ac.stfc.isis.ibex.e4.app.selectInstrument" commandName="selectInstrumentCommand"/>
+  <commands xmi:id="_J8FaUDI0Eea8afgfAIJ2Nw" elementId="uk.ac.stfc.isis.ibex.e4.app.editCurrentConfig" commandName="editCurrentConfig"/>
   <addons xmi:id="_6wlLcsgZEeSyMNYR5xypkQ" elementId="org.eclipse.e4.core.commands.service" contributionURI="bundleclass://org.eclipse.e4.core.commands/org.eclipse.e4.core.commands.CommandServiceAddon"/>
   <addons xmi:id="_6wlLc8gZEeSyMNYR5xypkQ" elementId="org.eclipse.e4.ui.contexts.service" contributionURI="bundleclass://org.eclipse.e4.ui.services/org.eclipse.e4.ui.services.ContextServiceAddon"/>
   <addons xmi:id="_6wlLdMgZEeSyMNYR5xypkQ" elementId="org.eclipse.e4.ui.bindings.service" contributionURI="bundleclass://org.eclipse.e4.ui.bindings/org.eclipse.e4.ui.bindings.BindingServiceAddon"/>

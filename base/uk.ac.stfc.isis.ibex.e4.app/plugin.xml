@@ -9,10 +9,6 @@
             name="uk.ac.stfc.isis.ibex.e4.app"
             application="org.eclipse.e4.ui.workbench.swt.E4Application">
          <property
-               name="applicationCSS"
-               value="platform:/plugin/uk.ac.stfc.isis.ibex.e4.app/css/default.css">
-         </property>
-         <property
                name="appName"
                value="uk.ac.stfc.isis.ibex.e4.app">
          </property>

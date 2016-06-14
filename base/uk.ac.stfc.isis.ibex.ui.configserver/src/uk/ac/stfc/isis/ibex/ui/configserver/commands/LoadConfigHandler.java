@@ -19,10 +19,9 @@
 
 package uk.ac.stfc.isis.ibex.ui.configserver.commands;
 
-import org.eclipse.core.commands.ExecutionEvent;
-import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.jface.window.Window;
-
+import org.eclipse.e4.core.di.annotations.Execute;
+import org.eclipse.e4.ui.workbench.modeling.EPartService;
 import uk.ac.stfc.isis.ibex.ui.configserver.dialogs.ConfigSelectionDialog;
 
 public class LoadConfigHandler extends ConfigHandler<String> {
@@ -31,9 +30,9 @@ public class LoadConfigHandler extends ConfigHandler<String> {
 		super(SERVER.load());
 	}	
 	
-	@Override
-	public Object execute(ExecutionEvent event) throws ExecutionException {		
-		ConfigSelectionDialog dialog = new ConfigSelectionDialog(shell(), "Load Configuration", SERVER.configsInfo().getValue(), false);
+	@Execute
+	public Object execute(EPartService event) {		
+		ConfigSelectionDialog dialog = new ConfigSelectionDialog(activeShell, "Load Configuration", SERVER.configsInfo().getValue(), false);
 		if (dialog.open() == Window.OK) {
 			configService.write(dialog.selectedConfig());
 		}

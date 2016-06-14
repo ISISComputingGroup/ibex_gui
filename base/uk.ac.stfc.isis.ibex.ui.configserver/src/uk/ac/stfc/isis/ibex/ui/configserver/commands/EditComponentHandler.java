@@ -19,8 +19,6 @@
 
 package uk.ac.stfc.isis.ibex.ui.configserver.commands;
 
-import org.eclipse.core.commands.ExecutionEvent;
-import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.jface.window.Window;
 
 import uk.ac.stfc.isis.ibex.configserver.configuration.Configuration;
@@ -31,6 +29,8 @@ import uk.ac.stfc.isis.ibex.ui.configserver.ConfigurationServerUI;
 import uk.ac.stfc.isis.ibex.ui.configserver.ConfigurationViewModels;
 import uk.ac.stfc.isis.ibex.ui.configserver.dialogs.ConfigSelectionDialog;
 import uk.ac.stfc.isis.ibex.ui.configserver.dialogs.EditConfigDialog;
+import org.eclipse.e4.core.di.annotations.Execute;
+import org.eclipse.e4.ui.workbench.modeling.EPartService;
 
 public class EditComponentHandler extends ConfigHandler<Configuration> {
 	private static final String TITLE = "Edit Component";
@@ -39,9 +39,9 @@ public class EditComponentHandler extends ConfigHandler<Configuration> {
 		super(SERVER.saveAsComponent());
 	}
 	
-	@Override
-	public Object execute(ExecutionEvent event) throws ExecutionException {
-		ConfigSelectionDialog selectionDialog = new ConfigSelectionDialog(shell(), TITLE, SERVER.componentsInfo().getValue(), true);
+	@Execute
+	public Object execute(EPartService event) {
+		ConfigSelectionDialog selectionDialog = new ConfigSelectionDialog(activeShell, TITLE, SERVER.componentsInfo().getValue(), true);
 		if (selectionDialog.open() == Window.OK) {
 			String componentName = selectionDialog.selectedConfig();
 			edit(componentName);
@@ -64,7 +64,7 @@ public class EditComponentHandler extends ConfigHandler<Configuration> {
 
     private void openDialog(String subTitle, EditableConfiguration config,
             ConfigurationViewModels configurationViewModels) {
-        EditConfigDialog editDialog = new EditConfigDialog(shell(), TITLE, subTitle, config, true, false,
+        EditConfigDialog editDialog = new EditConfigDialog(activeShell, TITLE, subTitle, config, true, false,
                 configurationViewModels);
         if (editDialog.open() == Window.OK) {
             configService.write(editDialog.getComponent());
