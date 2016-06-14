@@ -69,6 +69,7 @@ public final class ComponentIcons {
 			case SINGLESTAGE:
 				return icon("single_stage.png");
 			case LAKESHORE:
+                return icon("lakeshore.png");
 			default:
 				return icon("cog.png");
 		}
