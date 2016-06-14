@@ -402,14 +402,15 @@ public class DisplayBlock extends ModelObject {
         if (disconnected) {
             return RuncontrolState.DISCONNECTED;
         }
+
         if (!runcontrolEnabled) {
             return RuncontrolState.DISABLED;
+        }
+
+        if (inRange) {
+            return RuncontrolState.ENABLED_IN_RANGE;
         } else {
-            if (inRange) {
-                return RuncontrolState.ENABLED_IN_RANGE;
-            } else {
-                return RuncontrolState.ENABLED_OUT_RANGE;
-            }
+            return RuncontrolState.ENABLED_OUT_RANGE;
         }
     }
 }
