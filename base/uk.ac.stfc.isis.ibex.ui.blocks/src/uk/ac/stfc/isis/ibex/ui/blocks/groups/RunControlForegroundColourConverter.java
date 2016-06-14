@@ -24,7 +24,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.wb.swt.SWTResourceManager;
 
-import uk.ac.stfc.isis.ibex.configserver.displaying.RunControlState;
+import uk.ac.stfc.isis.ibex.configserver.displaying.RuncontrolState;
 
 /**
  * This is a converter for converting the value for the current run-control
@@ -39,14 +39,14 @@ public class RunControlForegroundColourConverter extends Converter {
     private static final Color BLACK = SWTResourceManager.getColor(SWT.COLOR_BLACK);
 
     public RunControlForegroundColourConverter() {
-        super(RunControlState.class, Color.class);
+        super(RuncontrolState.class, Color.class);
     }
 
     @Override
     public Object convert(Object fromObject) {
-        RunControlState state = (RunControlState) fromObject;
+        RuncontrolState state = (RuncontrolState) fromObject;
 
-        if (state == RunControlState.ENABLED_IN_RANGE) {
+        if (state == RuncontrolState.ENABLED_IN_RANGE) {
             return BLACK;
         }
 

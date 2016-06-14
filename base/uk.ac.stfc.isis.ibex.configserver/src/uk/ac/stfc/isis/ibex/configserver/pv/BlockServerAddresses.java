@@ -59,6 +59,7 @@ public class BlockServerAddresses {
 	private static final String RESTART_IOCS = "RESTART_IOCS";
 	
 	private static final String DESCRIPTION_FIELD = ".DESC";
+    private static final String ALARM_FIELD = ".SEVR";
 	
 	private final PVAddress blockServerAddress;
 	private final PVAddress blockAlias;
@@ -147,7 +148,15 @@ public class BlockServerAddresses {
 	public String blockDescription(String pvAddress) {
 		return pvAddress + DESCRIPTION_FIELD;
 	}
-	
+
+    /**
+     * @param pvAddress the PV address of a block
+     * @return the alarm severity field of a given PV address.
+     */
+    public String blockAlarm(String pvAddress) {
+        return pvAddress + ALARM_FIELD;
+    }
+
 	public String components() {
 		return blockServerAddress.endWith(COMPONENTS);
 	}

@@ -46,6 +46,7 @@ public abstract class TransformingObservable<T1, T2> extends ClosableObservable<
 		public void onConnectionStatus(boolean isConnected) {
 			setConnectionStatus(isConnected);
 		}
+
 	};
 
     protected final void setSource(ClosableObservable<T1> source) {

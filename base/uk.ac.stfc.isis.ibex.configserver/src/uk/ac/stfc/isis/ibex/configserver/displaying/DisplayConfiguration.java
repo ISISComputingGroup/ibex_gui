@@ -22,6 +22,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import com.google.common.base.Strings;
+
 import uk.ac.stfc.isis.ibex.configserver.ConfigServer;
 import uk.ac.stfc.isis.ibex.configserver.Displaying;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Block;
@@ -31,8 +33,6 @@ import uk.ac.stfc.isis.ibex.epics.observing.ClosableObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.TransformingObservable;
 import uk.ac.stfc.isis.ibex.runcontrol.RunControlServer;
-
-import com.google.common.base.Strings;
 
 public class DisplayConfiguration extends TransformingObservable<Configuration, DisplayConfiguration> implements
 		Displaying {
@@ -100,7 +100,8 @@ public class DisplayConfiguration extends TransformingObservable<Configuration, 
 		displayBlocks = new ArrayList<>();
 		for (Block blk : blocks) {
 			String name = blk.getName();
-			displayBlocks.add(new DisplayBlock(blk, configServer.blockValue(name), configServer.blockDescription(name),
+            displayBlocks.add(new DisplayBlock(blk, configServer.blockValue(name), configServer.blockDescription(name),
+                    configServer.alarm(name),
 					runControlServer.blockRunControlInRange(name), runControlServer.blockRunControlLowLimit(name),
 					runControlServer.blockRunControlHighLimit(name), runControlServer.blockRunControlEnabled(name),
 					configServer.blockServerAlias(name)));
