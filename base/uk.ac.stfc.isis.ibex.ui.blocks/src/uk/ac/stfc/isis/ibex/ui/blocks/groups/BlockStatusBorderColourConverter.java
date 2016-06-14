@@ -40,7 +40,7 @@ public class BlockStatusBorderColourConverter extends Converter {
     private static final Color ORANGE = SWTResourceManager.getColor(255, 128, 0);
 
     /**
-     * Instantiates the converter
+     * Instantiates the converter.
      */
     public BlockStatusBorderColourConverter() {
         super(BlockState.class, Color.class);
@@ -48,6 +48,9 @@ public class BlockStatusBorderColourConverter extends Converter {
 
     /**
      * Specifies how the converter should react to possible block states.
+     * 
+     * @param fromObject the block state to convert
+     * @return the converted border colour
      */
     @Override
     public Object convert(Object fromObject) {

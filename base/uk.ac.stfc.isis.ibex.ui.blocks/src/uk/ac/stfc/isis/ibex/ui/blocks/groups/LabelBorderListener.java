@@ -49,8 +49,11 @@ public class LabelBorderListener implements PaintListener {
         this.border = new Canvas(source.getParent(), SWT.NONE);
     }
 
+
     /**
-     * @param returns the drawn border object
+     * Gets the drawn border object.
+     * 
+     * @return the drawn border object
      */
     public Canvas getBorder() {
         return this.border;
@@ -58,7 +61,7 @@ public class LabelBorderListener implements PaintListener {
 
     /**
      * Sets the width of the border (can not exceed the label's parent's
-     * dimensions)
+     * dimensions).
      * 
      * @param width the new border width
      */
@@ -66,11 +69,12 @@ public class LabelBorderListener implements PaintListener {
         this.borderWidth = width;
     }
 
+
     /**
      * Defines how the object should behave on event that requires repainting
      * the frame.
      * 
-     * @param width the new border width
+     * @param e the paint event
      */
     @Override
     public void paintControl(PaintEvent e) {
