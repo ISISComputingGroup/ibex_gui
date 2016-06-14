@@ -158,7 +158,7 @@ public class VariablesTest {
                 + "\", \"name\": \"" + expectedName1 + "\"}]";
 
         when(mockSwitchableObservable.getValue()).thenReturn(input);
-        when(mockSwitchableObservable.lastError()).thenReturn(null);
+        when(mockSwitchableObservable.currentError()).thenReturn(null);
         when(mockSwitchableObservable.isConnected()).thenReturn(true);
 
         when(switchingObservableFactory.getSwitchableObservable(any(ChannelType.class),
@@ -201,7 +201,7 @@ public class VariablesTest {
         String value = "<?xml version=\"1.0\" ?>\n" + "<instrument xmlns=\"http://www.isis.stfc.ac.uk//instrument\">"
                 + " <name>" + expectedName + "</name>" + "</instrument>";
         when(mockSwitchableObservable.getValue()).thenReturn(value);
-        when(mockSwitchableObservable.lastError()).thenReturn(null);
+        when(mockSwitchableObservable.currentError()).thenReturn(null);
         when(mockSwitchableObservable.isConnected()).thenReturn(true);
 
         String synopticPV = "TEST";

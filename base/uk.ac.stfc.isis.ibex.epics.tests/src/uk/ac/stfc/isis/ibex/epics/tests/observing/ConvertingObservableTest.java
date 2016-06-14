@@ -31,6 +31,7 @@ import org.mockito.MockitoAnnotations;
 
 import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
 import uk.ac.stfc.isis.ibex.epics.conversion.Converter;
+import uk.ac.stfc.isis.ibex.epics.conversion.DoNothingConverter;
 import uk.ac.stfc.isis.ibex.epics.observing.ConvertingObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.Observer;
 
@@ -132,4 +133,20 @@ public class ConvertingObservableTest {
 		verify(mockObserver, times(0)).onValue(anyString());
 		verify(mockObserver, times(0)).onError(any(Exception.class));
 	}
+
+    @Test
+    public void GIVEN_observable_has_a_value_but_did_have_an_error_WHEN_observe_THEN_new_value_is_set_on_observable() {
+        // Arrange
+        testObservable.setError(TestHelpers.EXCEPTION);
+        testObservable.setValue(TestHelpers.NEW_INT_VALUE);
+        testObservable.setConnectionStatus(true);
+
+        // Act
+        ConvertingObservable<Integer, Integer> noConversionObservable =
+                new ConvertingObservable<>(testObservable, new DoNothingConverter<Integer>());
+        Integer result = noConversionObservable.getValue();
+
+        // Assert
+        assertEquals(TestHelpers.NEW_INT_VALUE, result);
+    }
 }

@@ -19,12 +19,17 @@
 
 package uk.ac.stfc.isis.ibex.epics.observing;
 
+/**
+ * Base for an observer.
+ * 
+ * @param <T> the generic type that the observer is observing
+ */
 public abstract class BaseObserver<T> implements Observer<T> {
 	
 	@Override
 	public void update(T value, Exception error, boolean isConnected) {		
 		onConnectionStatus(isConnected);
-		
+
 		if (error != null) {
 			onError(error);
 			return;

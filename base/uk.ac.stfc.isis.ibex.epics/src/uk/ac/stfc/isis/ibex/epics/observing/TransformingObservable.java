@@ -34,7 +34,8 @@ public abstract class TransformingObservable<T1, T2> extends ClosableObservable<
 	private final BaseObserver<T1> sourceObserver = new BaseObserver<T1>() {
 		@Override
 		public void onValue(T1 value) {
-			setValue(transform(value));
+			T2 transform = transform(value);
+            setValue(transform);
 		}
 
 		@Override
@@ -51,7 +52,7 @@ public abstract class TransformingObservable<T1, T2> extends ClosableObservable<
     protected final void setSource(ClosableObservable<T1> source) {
 		cancelSubscription();
 		this.source = source;
-		sourceObserver.update(source.getValue(), source.lastError(), source.isConnected());
+		sourceObserver.update(source.getValue(), source.currentError(), source.isConnected());
 		sourceSubscription = source.addObserver(sourceObserver);
 	}
 	

@@ -20,16 +20,43 @@
 package uk.ac.stfc.isis.ibex.epics.observing;
 
 /**
- * The observer interface.
+ * The observer interface. This allows an object to observe another object
+ * (usually an observable). The observed object will call the events when a
+ * value associated with the even changes, e.g. when the connection status is
+ * set on the observed object it will call onConnectionStatus.
  *
  */
 public interface Observer<T> {
 	
+    /**
+     * Called when the value is set on the observable.
+     *
+     * @param value the value
+     */
     void onValue(T value);
     
+    /**
+     * Called when the error is set on the observable.
+     *
+     * @param e the e
+     */
     void onError(Exception e);
     
+    /**
+     * Called when the connection status is set on the observable.
+     *
+     * @param isConnected the is connected
+     */
     void onConnectionStatus(boolean isConnected);
 
+    /**
+     * Update the observer to this state, by calling the onEvent handlers. Often
+     * called when initialising the observer.
+     *
+     * @param value the value to set, if there is no error and observer is
+     *            connected
+     * @param error the error; null if there is no current error
+     * @param isConnected True to set the state to connected; False otherwise
+     */
     void update(T value, Exception error, boolean isConnected);
 }
