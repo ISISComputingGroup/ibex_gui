@@ -82,7 +82,7 @@ public class DisplayBlock extends ModelObject {
     private BlockState blockState = BlockState.DEFAULT;
 
     /**
-     * Saves the last alarm state (to restore after disconnect)
+     * Saves the last alarm state (to restore after disconnect).
      */
     private BlockState lastAlarmState = BlockState.DEFAULT;
 

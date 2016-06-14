@@ -38,6 +38,10 @@ public class RunControlBackgroundColourConverter extends Converter {
     private static final Color WHITE = SWTResourceManager.getColor(SWT.COLOR_WHITE);
     private static final Color DARK_RED = SWTResourceManager.getColor(192, 0, 0);
     private static final Color GREEN = SWTResourceManager.getColor(51, 255, 153);
+
+    /**
+     * Instantiates a new RunControlBackgroundColourConverter.
+     */
     public RunControlBackgroundColourConverter() {
         super(RuncontrolState.class, Color.class);
     }
@@ -48,8 +52,7 @@ public class RunControlBackgroundColourConverter extends Converter {
 
         if (state == RuncontrolState.ENABLED_IN_RANGE) {
             return GREEN;
-        }
-        else if (state == RuncontrolState.ENABLED_OUT_RANGE) {
+        } else if (state == RuncontrolState.ENABLED_OUT_RANGE) {
             return DARK_RED;
         }
 
