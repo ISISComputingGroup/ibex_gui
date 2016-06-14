@@ -81,6 +81,11 @@ public class DisplayBlock extends ModelObject {
      */
     private BlockState blockState = BlockState.DEFAULT;
 
+    /**
+     * Saves the last alarm state (to restore after disconnect)
+     */
+    private BlockState lastAlarmState = BlockState.DEFAULT;
+
     private final BaseObserver<String> valueAdapter = new BaseObserver<String>() {
         @Override
         public void onValue(String value) {
@@ -99,7 +104,7 @@ public class DisplayBlock extends ModelObject {
                 setValue("disconnected");
                 setBlockState(BlockState.DISCONNECTED);
             } else {
-                setBlockState(BlockState.DEFAULT);
+                setBlockState(lastAlarmState);
             }
             setRuncontrolState(checkRuncontrolState());
         }
@@ -129,13 +134,14 @@ public class DisplayBlock extends ModelObject {
 
         @Override
         public void onValue(AlarmState value) {
+            BlockState alarm = BlockState.DEFAULT;
             if (value.name().equals("MINOR")) {
-                setBlockState(BlockState.MINOR_ALARM);
+                alarm = BlockState.MINOR_ALARM;
             } else if (value.name().equals("MAJOR")) {
-                setBlockState(BlockState.MAJOR_ALARM);
-            } else {
-                setBlockState(BlockState.DEFAULT);
+                alarm = BlockState.MAJOR_ALARM;
             }
+            lastAlarmState = alarm;
+            setBlockState(alarm);
         }
 
         @Override
