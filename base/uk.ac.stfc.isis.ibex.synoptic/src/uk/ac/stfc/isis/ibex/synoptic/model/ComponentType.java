@@ -52,7 +52,8 @@ public enum ComponentType {
 	EUROTHERM,
 	PINHOLESELECTOR,
 	GONIOMETER (new ViewTarget("Goniometer")), 
-	SINGLESTAGE;
+	SINGLESTAGE,
+	LAKESHORE;
 	
 	private Target target;
 
