@@ -97,7 +97,7 @@ public class DisplayBlockTest {
     }
 
 	@Test
-    public void GIVEN_in_range_and_disabled_THEN__runcontrol_state_is_disabled() {
+    public void GIVEN_in_range_and_disabled_THEN_runcontrol_state_is_disabled() {
         // Arrange
         valueObservable.setConnectionStatus(true);
 
