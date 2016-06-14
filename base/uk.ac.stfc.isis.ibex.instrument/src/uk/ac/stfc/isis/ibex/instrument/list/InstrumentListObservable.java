@@ -24,6 +24,8 @@ package uk.ac.stfc.isis.ibex.instrument.list;
 
 import java.util.Collection;
 
+import org.apache.logging.log4j.Logger;
+
 import uk.ac.stfc.isis.ibex.epics.conversion.Convert;
 import uk.ac.stfc.isis.ibex.epics.conversion.Converter;
 import uk.ac.stfc.isis.ibex.epics.observing.ClosableObservable;
@@ -48,9 +50,32 @@ public class InstrumentListObservable {
     private static final String ADDRESS = "CS:INSTLIST";
 
     private final ForwardingObservable<Collection<InstrumentInfo>> instrumentsRBV;
+    private Logger logger;
 
-    public InstrumentListObservable() {
-        instrumentsRBV = convert(readCompressed(ADDRESS));
+    /**
+     * Instantiate a new observable for the instrument list PV.
+     * 
+     * @param logger a logger to log information about reading and parsing the
+     *            PV
+     */
+    public InstrumentListObservable(Logger logger) {
+        this.logger = logger;
+
+        ForwardingObservable<String> instrumentsPV = readCompressed(ADDRESS);
+
+        // Wait for the PV to be connected
+        int i = 0;
+        while (!instrumentsPV.isConnected() && instrumentsPV.getValue() == null && i < MAX_RETRIES) {
+            try {
+                Thread.sleep(WAIT_FOR_OBSERVABLE);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            i++;
+        }
+
+        logger.info("Instrument List PV content: " + instrumentsPV.getValue());
+        instrumentsRBV = convert(instrumentsPV);
     }
 
     public Collection<InstrumentInfo> getInstruments() {
@@ -73,17 +98,6 @@ public class InstrumentListObservable {
     }
 
     private Collection<InstrumentInfo> getValidInstruments() {
-        // Wait for the PV to be connected
-        int i = 0;
-        while (!instrumentsRBV.isConnected() && i < MAX_RETRIES) {
-            try {
-                Thread.sleep(WAIT_FOR_OBSERVABLE);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            i++;
-        }
-        
-        return InstrumentListUtils.filterValidInstruments(instrumentsRBV);
+        return InstrumentListUtils.filterValidInstruments(instrumentsRBV, logger);
     }
 }

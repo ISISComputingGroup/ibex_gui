@@ -21,29 +21,28 @@ package uk.ac.stfc.isis.ibex.ui.configserver.commands;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
-import org.eclipse.jface.window.Window;
 
 import uk.ac.stfc.isis.ibex.configserver.configuration.Configuration;
-import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
-import uk.ac.stfc.isis.ibex.model.Awaited;
-import uk.ac.stfc.isis.ibex.model.UpdatedValue;
-import uk.ac.stfc.isis.ibex.ui.configserver.ConfigurationServerUI;
-import uk.ac.stfc.isis.ibex.ui.configserver.ConfigurationViewModels;
-import uk.ac.stfc.isis.ibex.ui.configserver.dialogs.EditConfigDialog;
 
+/**
+ * The handler class for editing the current config.
+ */
 public class EditCurrentConfigHandler extends ConfigHandler<Configuration> {
 	
-    private static final String TITLE = "Edit Configuration";
-	private static final String SUB_TITLE = "Editing the current configuration";
-	
     private String blockName = "";
-
-	private EditConfigDialog dialog;
 	
+    /**
+     * Create the handler for opening the editor via the menu.
+     */
 	public EditCurrentConfigHandler() {
 		super(SERVER.setCurrentConfig());
 	}
 
+    /**
+     * Create the handler for opening the editor on one block.
+     * 
+     * @param blockName The block to edit
+     */
     public EditCurrentConfigHandler(String blockName) {
         this();
         this.blockName = blockName;
@@ -52,32 +51,9 @@ public class EditCurrentConfigHandler extends ConfigHandler<Configuration> {
 	
 	@Override
     public Object execute(ExecutionEvent event) throws ExecutionException {
-        ConfigurationViewModels configurationViewModels = ConfigurationServerUI.getDefault().configurationViewModels();
-        configurationViewModels.setModelAsCurrentConfig();
-        UpdatedValue<EditableConfiguration> config = configurationViewModels.getConfigModel();
-
-		if (Awaited.returnedValue(config, 1)) {
-            openDialog(config.getValue(), configurationViewModels);
-		}
+        EditConfigHelper helper = new EditConfigHelper(shell(), SERVER);
+        helper.createDialogCurrent(blockName);
 				
 		return null;
 	}
-	
-    private void openDialog(EditableConfiguration config, ConfigurationViewModels configurationViewModels) {
-        dialog = new EditConfigDialog(shell(), TITLE, SUB_TITLE, config, false, false, blockName,
-                configurationViewModels);
-		if (dialog.open() == Window.OK) {
-			if (dialog.doAsComponent()) {
-				SERVER.saveAsComponent().write(dialog.getComponent());
-			} else {
-				SERVER.setCurrentConfig().write(dialog.getConfig());
-				SERVER.save().write(dialog.getConfig().name());
-			}
-        }
-
-	}
-
-    public EditConfigDialog getDialog() {
-        return dialog;
-    }
 }

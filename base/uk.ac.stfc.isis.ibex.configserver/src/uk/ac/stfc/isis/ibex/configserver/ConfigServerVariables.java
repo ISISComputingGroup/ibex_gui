@@ -46,6 +46,7 @@ import uk.ac.stfc.isis.ibex.instrument.Instrument;
 import uk.ac.stfc.isis.ibex.instrument.InstrumentVariables;
 import uk.ac.stfc.isis.ibex.instrument.channels.CompressedCharWaveformChannel;
 import uk.ac.stfc.isis.ibex.instrument.channels.DefaultChannel;
+import uk.ac.stfc.isis.ibex.instrument.channels.EnumChannel;
 import uk.ac.stfc.isis.ibex.instrument.channels.StringChannel;
 import uk.ac.stfc.isis.ibex.validators.BlockServerNameValidator;
 
@@ -171,7 +172,18 @@ public class ConfigServerVariables extends InstrumentVariables {
         return closingObsFactory.getSwitchableObservable(new StringChannel(),
                 addPrefix(blockServerAddresses.blockDescription(blockServerAlias(blockName))));
 	}
-	
+
+    /**
+     * Returns an observable conveying the alarm state of a given block.
+     * 
+     * @param blockName the name of the block
+     * @return the observable object
+     */
+    public ForwardingObservable<AlarmState> alarm(String blockName) {
+        return closingObsFactory.getSwitchableObservable(new EnumChannel<>(AlarmState.class),
+                addPrefix(blockServerAddresses.blockAlarm(blockServerAlias(blockName))));
+    }
+
 	public String blockServerAlias(String name) {
 		return blockServerAddresses.blockAlias(name);
 	}

@@ -38,9 +38,11 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.wb.swt.SWTResourceManager;
 
 import uk.ac.stfc.isis.ibex.synoptic.model.ComponentType;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.ComponentDescription;
+import uk.ac.stfc.isis.ibex.ui.synoptic.component.icons.ComponentIcons;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.IComponentSelectionListener;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.IInstrumentUpdateListener;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.SynopticViewModel;
@@ -58,8 +60,8 @@ public class ComponentDetailView extends Composite {
     private static final String SELECT_COMPONENT = "Select a component to view/edit details";
     private static final String UNIQUE_COMPONENT_NAME = "Component names must be unique";
 
-    private final Color colorBlack = new Color(getDisplay(), 0, 0, 0);
-    private final Color colorRed = new Color(getDisplay(), 255, 0, 0);
+    private final Color colorBlack = SWTResourceManager.getColor(0, 0, 0);
+    private final Color colorRed = SWTResourceManager.getColor(255, 0, 0);
     
 	private SynopticViewModel synopticViewModel;
 

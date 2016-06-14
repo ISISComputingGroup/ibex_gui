@@ -22,23 +22,23 @@ package uk.ac.stfc.isis.ibex.ui.configserver.dialogs;
 import java.util.Arrays;
 import java.util.Collection;
 
+import org.eclipse.core.databinding.DataBindingContext;
+import org.eclipse.core.databinding.beans.PojoProperties;
+import org.eclipse.core.databinding.observable.value.IObservableValue;
+import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.MouseAdapter;
+import org.eclipse.swt.events.MouseEvent;
+import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
-import org.eclipse.swt.events.MouseAdapter;
-import org.eclipse.swt.events.MouseEvent;
-import org.eclipse.swt.graphics.Point;
-import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.core.databinding.DataBindingContext;
-import org.eclipse.core.databinding.observable.value.IObservableValue;
-import org.eclipse.jface.databinding.swt.WidgetProperties;
-import org.eclipse.core.databinding.beans.PojoProperties;
 
 import uk.ac.stfc.isis.ibex.configserver.configuration.ConfigInfo;
 
@@ -49,19 +49,21 @@ public class ConfigSelectionDialog extends Dialog {
 	private final Collection<ConfigInfo> available;
 	
 	private Text selectedText;
-	private List items;
+    protected List items;
 	private boolean isComponent;
+    private boolean includeCurrent;
 
 	private String selectedName;
 	
 	public ConfigSelectionDialog(
 			Shell parentShell, 
 			String title,
-			Collection<ConfigInfo> available, boolean isComponent) {
+            Collection<ConfigInfo> available, boolean isComponent, boolean includeCurrent) {
 		super(parentShell);
 		this.title = title;
 		this.available = available;
 		this.isComponent = isComponent;
+        this.includeCurrent = includeCurrent;
 	}
 	
 	public String selectedConfig() {
@@ -99,7 +101,12 @@ public class ConfigSelectionDialog extends Dialog {
 		
 		items = new List(container, SWT.BORDER | SWT.V_SCROLL);
 		items.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		String[] names = ConfigInfo.namesWithoutCurrent(available).toArray(new String[0]);
+        String[] names;
+        if (includeCurrent) {
+            names = ConfigInfo.names(available).toArray(new String[0]);
+        } else {
+            names = ConfigInfo.namesWithoutCurrent(available).toArray(new String[0]);
+        }
 		Arrays.sort(names, String.CASE_INSENSITIVE_ORDER);
 		items.setItems(names);
 		

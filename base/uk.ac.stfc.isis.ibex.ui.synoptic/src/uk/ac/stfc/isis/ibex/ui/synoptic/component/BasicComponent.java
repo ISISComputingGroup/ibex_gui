@@ -48,7 +48,7 @@ public class BasicComponent extends BeamlineComposite {
 	
 	private String targetName;
 	
-	private final Cursor handCursor = new Cursor(getDisplay(), SWT.CURSOR_HAND);
+    private final Cursor handCursor = SWTResourceManager.getCursor(SWT.CURSOR_HAND);
 	
 	public BasicComponent(Composite parent) {
 		super(parent, SWT.NONE);

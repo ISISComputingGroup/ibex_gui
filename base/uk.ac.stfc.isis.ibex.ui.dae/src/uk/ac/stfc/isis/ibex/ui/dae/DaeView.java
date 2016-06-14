@@ -65,20 +65,14 @@ public class DaeView extends ViewPart {
 	
 	private static final Display DISPLAY = Display.getCurrent();
 
-    /** property that the model is running, for deregitering the listener. */
+    /** property that the model is running, for deregistering the listener. */
     private UpdatedValue<Boolean> modelIsRunningProperty;
 
     /** Listener for changes in experimental change. **/
     private PropertyChangeListener experimentalChangeListener;
 	
     /**
-     * Instantiates a new DAE view.
-     */
-	public DaeView() {
-	}
-	
-    /**
-     * Sets a new DAE model for the panel.
+     * Sets the model for the DAE view.
      *
      * @param viewModel the new model
      */
@@ -111,7 +105,7 @@ public class DaeView extends ViewPart {
 		DISPLAY.asyncExec(new Runnable() {	
 			@Override
 			public void run() {
-                experimentSetup.setEnabled(isRunning != null && isRunning);
+                experimentSetup.setChildrenEnabled(isRunning != null && !isRunning);
 			}
 		});
 	}

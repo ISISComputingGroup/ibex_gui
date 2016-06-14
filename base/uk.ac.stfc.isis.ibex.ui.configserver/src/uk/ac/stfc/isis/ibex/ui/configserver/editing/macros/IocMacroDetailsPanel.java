@@ -29,6 +29,9 @@ import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -43,10 +46,6 @@ import com.google.common.base.Strings;
 
 import uk.ac.stfc.isis.ibex.configserver.configuration.Macro;
 import uk.ac.stfc.isis.ibex.configserver.editing.MacroValueValidator;
-
-import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.graphics.Image;
 
 /**
  * This panel allows macro names and values to be set, and shows a list of available macros for an
@@ -70,6 +69,7 @@ public class IocMacroDetailsPanel extends Composite {
 	private Macro macro;
 	private Label errorIconLabel;
 	private Button clearMacro;
+    private Image scaled;
 	
 	public IocMacroDetailsPanel(Composite parent, int style) {
 		super(parent, style);
@@ -122,7 +122,7 @@ public class IocMacroDetailsPanel extends Composite {
 		
 		Display display = Display.getCurrent(); 
 		Image img = display.getSystemImage(SWT.ICON_WARNING);
-		Image scaled = new Image(display, img.getImageData().scaledTo(20, 20));
+        scaled = new Image(display, img.getImageData().scaledTo(20, 20));
 		
 		errorIconLabel.setImage(scaled);
 		
@@ -141,7 +141,8 @@ public class IocMacroDetailsPanel extends Composite {
 		new Label(grpSelectedPv, SWT.NONE);
 		new Label(grpSelectedPv, SWT.NONE);
 		displayMacrosTable.addSelectionChangedListener(new ISelectionChangedListener() {
-			public void selectionChanged(SelectionChangedEvent arg0) {
+			@Override
+            public void selectionChanged(SelectionChangedEvent arg0) {
 				IStructuredSelection selection = (IStructuredSelection) arg0.getSelection();
 				if (selection.size() > 0) {
 					Macro macro = (Macro) selection.getFirstElement();
@@ -229,4 +230,10 @@ public class IocMacroDetailsPanel extends Composite {
 			clearMacro.setEnabled(enabled);
 		}
 	}
+
+    @Override
+    public void dispose() {
+        super.dispose();
+        scaled.dispose();
+    }
 }

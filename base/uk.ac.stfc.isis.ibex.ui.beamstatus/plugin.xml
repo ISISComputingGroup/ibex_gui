@@ -12,13 +12,15 @@
             name="Beam Status"
             icon="icons/sample.gif"
             category="uk.ac.stfc.isis.ibex.ui.beamstatus"
-            class="uk.ac.stfc.isis.ibex.ui.beamstatus.views.BeamStatusView"
+            class="uk.ac.stfc.isis.ibex.ui.beamstatus.views.BeamStatusStatsAndNewsView"
             id="uk.ac.stfc.isis.ibex.ui.beamstatus.views.BeamStatusView">
       </view>
       <view
-            class="uk.ac.stfc.isis.ibex.ui.beamstatus.views.BeamStatusView"
-            id="uk.ac.stfc.isis.ibex.ui.beamstatus.views.BeamStatusView"
-            name="Beam Status">
+            name="Beam Status Graph"
+            icon="icons/sample.gif"
+            category="uk.ac.stfc.isis.ibex.ui.beamstatus"
+            class="uk.ac.stfc.isis.ibex.ui.beamstatus.views.BeamStatusGraphView"
+            id="uk.ac.stfc.isis.ibex.ui.beamstatus.views.BeamStatusGraphView">
       </view>
    </extension>
    <extension
@@ -44,12 +46,24 @@
                closeable="false"
                id="uk.ac.stfc.isis.ibex.ui.beamstatus.views.BeamStatusView"
                minimized="false"
-               moveable="true"
-               ratio="0.1f"
+               moveable="false"
+               ratio="1.0f"
                relationship="right"
                relative="uk.ac.stfc.isis.ibex.ui.perspectives.PerspectiveSwitcher"
-               showTitle="true"
-               standalone="false"
+               showTitle="false"
+               standalone="true"
+               visible="true">
+         </view>
+         <view
+               closeable="false"
+               id="uk.ac.stfc.isis.ibex.ui.beamstatus.views.BeamStatusGraphView"
+               minimized="false"
+               moveable="false"
+               ratio="0.6f"
+               relationship="right"
+               relative="uk.ac.stfc.isis.ibex.ui.beamstatus.views.BeamStatusView"
+               showTitle="false"
+               standalone="true"
                visible="true">
          </view>
       </perspectiveExtension>
