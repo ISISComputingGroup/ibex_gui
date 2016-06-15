@@ -22,6 +22,8 @@ package uk.ac.stfc.isis.ibex.ui.dae;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
+import javax.annotation.PostConstruct;
+
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.swt.SWT;
@@ -115,6 +117,7 @@ public class DaeView extends ViewPart {
 	 * @param parent
 	 */
 	@Override
+	@PostConstruct
 	public void createPartControl(Composite parent) {
 		parent.setLayout(new FillLayout(SWT.VERTICAL));
 		
@@ -203,11 +206,6 @@ public class DaeView extends ViewPart {
 		vetosPanel = new VetosPanel(vetosComposite, SWT.NONE);
 		vetosPanel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		
-		
-		createActions();
-		initializeToolBar();
-		initializeMenu();
-		
 		setModel(DaeUI.getDefault().viewModel());
 		tabFolder.setSelection(0);
 		scrolledComposite.setMinSize(new Point(600, 500));
@@ -224,32 +222,9 @@ public class DaeView extends ViewPart {
 		new Label(container, SWT.NONE);
 	}
 
-	/**
-	 * Create the actions.
-	 */
-	private void createActions() {
-		// Create the actions
-	}
-
-	/**
-	 * Initialize the toolbar.
-	 */
-	@SuppressWarnings("unused")
-	private void initializeToolBar() {
-		IToolBarManager toolbarManager = getViewSite().getActionBars()
-				.getToolBarManager();
-	}
-
-	/**
-	 * Initialize the menu.
-	 */
-	@SuppressWarnings("unused")
-	private void initializeMenu() {
-		IMenuManager menuManager = getViewSite().getActionBars()
-				.getMenuManager();
-	}
-
 	@Override
-	public void setFocus() {		
+	public void setFocus() {	
+		// Set to run summary tab
+		runSummary.setFocus();
 	}
 }
