@@ -164,8 +164,10 @@
       <plugin id="uk.ac.stfc.isis.ibex.synoptic"/>
       <plugin id="uk.ac.stfc.isis.ibex.synopticlike"/>
       <plugin id="uk.ac.stfc.isis.ibex.ui"/>
+      <plugin id="uk.ac.stfc.isis.ibex.ui.blocks"/>
       <plugin id="uk.ac.stfc.isis.ibex.ui.blocks.presentation"/>
       <plugin id="uk.ac.stfc.isis.ibex.ui.configserver"/>
+      <plugin id="uk.ac.stfc.isis.ibex.ui.dae"/>
       <plugin id="uk.ac.stfc.isis.ibex.ui.dashboard"/>
       <plugin id="uk.ac.stfc.isis.ibex.ui.widgets"/>
       <plugin id="uk.ac.stfc.isis.ibex.validators"/>

@@ -36,7 +36,7 @@ public class SelectorPart {
 		parent.setLayout(new GridLayout(1, false));
 
 		btnPerspective1 = new Button(parent, SWT.NONE);
-		btnPerspective1.setText("Perspective 1");
+		btnPerspective1.setText("DAE");
 		btnPerspective1.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 		
 		btnPerspective1.addSelectionListener(new SelectionAdapter() {

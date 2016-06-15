@@ -10,6 +10,7 @@
           </children>
           <children xsi:type="basic:PartSashContainer" xmi:id="_KlsiwC14Eeaj15_huK2zOw" elementId="uk.ac.stfc.isis.ibex.e4.app.partsashcontainer.2" horizontal="true">
             <children xsi:type="basic:Part" xmi:id="_LfcOMC14Eeaj15_huK2zOw" elementId="uk.ac.stfc.isis.ibex.e4.app.part.2" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.e4.app/uk.ac.stfc.isis.ibex.e4.app.parts.SelectorPart"/>
+            <children xsi:type="basic:Part" xmi:id="_ZRmvkDL0EeaiPZ4itxBMUw" elementId="uk.ac.stfc.isis.ibex.e4.app.part.3" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.dae/uk.ac.stfc.isis.ibex.ui.dae.DaeView"/>
           </children>
         </children>
       </children>
