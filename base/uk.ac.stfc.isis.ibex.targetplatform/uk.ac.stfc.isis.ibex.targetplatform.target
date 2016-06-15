@@ -1,28 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?pde version="3.8"?><target name="target" sequenceNumber="47">
+<?pde version="3.8"?><target name="target" sequenceNumber="49">
 <locations>
 <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
 <unit id="com.google.gson" version="2.1.0.v201303041604"/>
 <repository location="http://download.eclipse.org/tools/orbit/downloads/drops/R20140114142710/repository/"/>
-</location>
-<location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
-<unit id="org.csstudio.core.platform.feature.feature.group" version="0.0.1.201603231532"/>
-<unit id="org.csstudio.core.utility.feature.source.feature.group" version="4.1.0.201512221512"/>
-<unit id="org.csstudio.dal.feature.source.feature.group" version="4.1.0.201601081558"/>
-<unit id="org.csstudio.core.diirt.feature.feature.group" version="0.0.1.201601251952"/>
-<unit id="org.csstudio.core.utility.feature.feature.group" version="4.1.0.201512221512"/>
-<unit id="org.csstudio.dal.feature.feature.group" version="4.1.0.201601081558"/>
-<unit id="org.csstudio.core.base.feature.source.feature.group" version="0.0.1.201601071447"/>
-<unit id="org.csstudio.pvmanager.autocomplete.feature.feature.group" version="1.0.1.201601081558"/>
-<unit id="org.csstudio.core.platform.feature.source.feature.group" version="0.0.1.201603231532"/>
-<unit id="org.csstudio.pvmanager.autocomplete.feature.source.feature.group" version="1.0.1.201601081558"/>
-<unit id="org.csstudio.alarm.beast.ui.feature.feature.group" version="4.1.0.201512221525"/>
-<unit id="org.csstudio.auth.feature.feature.group" version="0.0.1.201601071447"/>
-<unit id="org.csstudio.core.ui.feature.source.feature.group" version="4.1.0.201512221512"/>
-<unit id="org.csstudio.core.base.feature.feature.group" version="0.0.1.201601071447"/>
-<unit id="org.csstudio.core.ui.feature.feature.group" version="4.1.0.201512221512"/>
-<unit id="org.csstudio.auth.feature.source.feature.group" version="0.0.1.201601071447"/>
-<repository location="http://download.controlsystemstudio.org/updates/4.2"/>
 </location>
 <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
 <unit id="org.eclipse.rcp.sdk.id" version="4.5.2.M20160212-1500"/>
@@ -123,6 +104,30 @@
 <unit id="org.epics.jca" version="2.3.6"/>
 <unit id="javax.json-api" version="1.0.0"/>
 <repository location="http://diirt.download.controlsystemstudio.org/diirt/3.0.1"/>
+</location>
+<location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
+<unit id="org.csstudio.core.platform.feature.feature.group" version="0.0.1.201603231532"/>
+<unit id="org.csstudio.core.utility.feature.source.feature.group" version="4.1.0.201512221512"/>
+<unit id="org.csstudio.dal.feature.source.feature.group" version="4.1.0.201601081558"/>
+<unit id="org.csstudio.core.diirt.feature.feature.group" version="0.0.1.201601251952"/>
+<unit id="org.csstudio.core.utility.feature.feature.group" version="4.1.0.201512221512"/>
+<unit id="org.csstudio.dal.feature.feature.group" version="4.1.0.201601081558"/>
+<unit id="org.csstudio.core.base.feature.source.feature.group" version="0.0.1.201601071447"/>
+<unit id="org.csstudio.applications.opibuilder.feature.feature.group" version="5.0.0.201603191611"/>
+<unit id="org.csstudio.pvmanager.autocomplete.feature.feature.group" version="1.0.1.201601081558"/>
+<unit id="org.csstudio.core.platform.feature.source.feature.group" version="0.0.1.201603231532"/>
+<unit id="org.csstudio.alarm.beast.ui.feature.feature.group" version="4.1.0.201512221525"/>
+<unit id="org.csstudio.pvmanager.autocomplete.feature.source.feature.group" version="1.0.1.201601081558"/>
+<unit id="org.csstudio.auth.feature.feature.group" version="0.0.1.201601071447"/>
+<unit id="org.csstudio.core.ui.feature.source.feature.group" version="4.1.0.201512221512"/>
+<unit id="org.csstudio.core.base.feature.feature.group" version="0.0.1.201601071447"/>
+<unit id="org.csstudio.core.ui.feature.feature.group" version="4.1.0.201512221512"/>
+<unit id="org.csstudio.auth.feature.source.feature.group" version="0.0.1.201601071447"/>
+<repository location="http://download.controlsystemstudio.org/updates/4.2"/>
+</location>
+<location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
+<unit id="org.eclipse.nebula.visualization.feature.feature.group" version="0.9.9.201601121647"/>
+<repository location="http://archive.eclipse.org/nebula/Q42015/release/"/>
 </location>
 </locations>
 </target>
