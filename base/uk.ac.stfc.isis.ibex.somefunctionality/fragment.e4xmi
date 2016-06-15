@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="ASCII"?>
-<fragment:ModelFragments xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:basic="http://www.eclipse.org/ui/2010/UIModel/application/ui/basic" xmlns:fragment="http://www.eclipse.org/ui/2010/UIModel/fragment" xmi:id="_IfaOoC4bEeaj15_huK2zOw">
-  <fragments xsi:type="fragment:StringModelFragment" xmi:id="_IfaOoS4bEeaj15_huK2zOw" featurename="children" parentElementId="uk.ac.stfc.isis.ibex.e4.app.partsashcontainer.2">
-    <elements xsi:type="basic:Part" xmi:id="_IfaOoi4bEeaj15_huK2zOw" elementId="uk.ac.stfc.isis.ibex.e4.app.part.3" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.somefunctionality/uk.ac.stfc.isis.ibex.somefunctionality.SamplePart"/>
-  </fragments>
-</fragment:ModelFragments>
