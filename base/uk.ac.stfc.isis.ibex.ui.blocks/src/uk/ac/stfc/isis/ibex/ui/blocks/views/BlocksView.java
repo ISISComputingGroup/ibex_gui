@@ -22,6 +22,8 @@ package uk.ac.stfc.isis.ibex.ui.blocks.views;
 import java.util.Collection;
 import java.util.Collections;
 
+import javax.annotation.PostConstruct;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.ISizeProvider;
@@ -38,6 +40,7 @@ import uk.ac.stfc.isis.ibex.epics.observing.Subscription;
 import uk.ac.stfc.isis.ibex.ui.blocks.groups.GroupsPanel;
 
 public class BlocksView extends ViewPart implements ISizeProvider {
+	
 	public BlocksView() {
 	}
 
@@ -79,6 +82,7 @@ public class BlocksView extends ViewPart implements ISizeProvider {
 		}		
 	};	
 
+	@PostConstruct
 	public void createPartControl(final Composite parent) {
 		
 		GridLayout glParent = new GridLayout(1, false);
