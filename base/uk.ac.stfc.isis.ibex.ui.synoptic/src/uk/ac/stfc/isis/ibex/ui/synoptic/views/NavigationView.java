@@ -19,6 +19,8 @@
 
 package uk.ac.stfc.isis.ibex.ui.synoptic.views;
 
+import javax.annotation.PostConstruct;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.layout.GridData;
@@ -44,6 +46,7 @@ public class NavigationView extends ViewPart implements ISizeProvider {
 	}
 
 	@Override
+	@PostConstruct
 	public void createPartControl(Composite parent) {
 		parent.setBackground(BACKGROUND);
 		parent.setLayout(new GridLayout(2, false));

@@ -22,6 +22,8 @@ package uk.ac.stfc.isis.ibex.ui.synoptic.views;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
+import javax.annotation.PostConstruct;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
@@ -32,7 +34,7 @@ import uk.ac.stfc.isis.ibex.ui.synoptic.SynopticPresenter;
 import uk.ac.stfc.isis.ibex.ui.synoptic.widgets.SynopticPanel;
 
 /**
- * Provides the containing view for they synopitc.
+ * Provides the containing view for the synoptic.
  * 
  */
 public class SynopticView extends ViewPart {
@@ -49,6 +51,7 @@ public class SynopticView extends ViewPart {
 	}
 
 	@Override
+	@PostConstruct
 	public void createPartControl(Composite parent) {		
         instrument = new SynopticPanel(parent, SWT.NONE);
         instrument.setComponents(presenter.components(), presenter.showBeam());
