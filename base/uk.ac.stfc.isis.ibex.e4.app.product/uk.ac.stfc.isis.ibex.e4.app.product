@@ -3,7 +3,6 @@
 
 <product name="uk.ac.stfc.isis.ibex.e4.app" id="uk.ac.stfc.isis.ibex.e4.app.product" application="org.eclipse.e4.ui.workbench.swt.E4Application" version="1.0.0.qualifier" useFeatures="false" includeLaunchers="true">
 
-
    <configIni use="default">
    </configIni>
 
@@ -18,7 +17,6 @@
 
    <windowImages/>
 
-
    <launcher>
       <solaris/>
       <win useIco="false">
@@ -26,10 +24,8 @@
       </win>
    </launcher>
 
-
    <vm>
    </vm>
-
 
    <plugins>
       <plugin id="com.google.gson"/>
@@ -50,6 +46,7 @@
       <plugin id="org.csstudio.csdata"/>
       <plugin id="org.csstudio.java"/>
       <plugin id="org.csstudio.logging"/>
+      <plugin id="org.csstudio.platform.libs.epics"/>
       <plugin id="org.csstudio.platform.libs.jdbc"/>
       <plugin id="org.csstudio.platform.libs.jms"/>
       <plugin id="org.csstudio.platform.utility.jms"/>
@@ -57,6 +54,8 @@
       <plugin id="org.csstudio.security"/>
       <plugin id="org.csstudio.ui.util"/>
       <plugin id="org.diirt.datasource"/>
+      <plugin id="org.diirt.datasource-vtype"/>
+      <plugin id="org.diirt.support.diirt-ca"/>
       <plugin id="org.diirt.util"/>
       <plugin id="org.diirt.vtype"/>
       <plugin id="org.eclipse.core.commands"/>
@@ -147,10 +146,10 @@
       <plugin id="org.w3c.dom.smil"/>
       <plugin id="org.w3c.dom.svg"/>
       <plugin id="uk.ac.stfc.isis.ibex.alarm"/>
+      <plugin id="uk.ac.stfc.isis.ibex.configserver"/>
       <plugin id="uk.ac.stfc.isis.ibex.dae"/>
       <plugin id="uk.ac.stfc.isis.ibex.dashboard"/>
       <plugin id="uk.ac.stfc.isis.ibex.databases"/>
-      <plugin id="uk.ac.stfc.isis.ibex.e4"/>
       <plugin id="uk.ac.stfc.isis.ibex.e4.app"/>
       <plugin id="uk.ac.stfc.isis.ibex.epics"/>
       <plugin id="uk.ac.stfc.isis.ibex.epics.switching"/>
@@ -160,11 +159,16 @@
       <plugin id="uk.ac.stfc.isis.ibex.logger"/>
       <plugin id="uk.ac.stfc.isis.ibex.model"/>
       <plugin id="uk.ac.stfc.isis.ibex.preferences"/>
+      <plugin id="uk.ac.stfc.isis.ibex.runcontrol"/>
       <plugin id="uk.ac.stfc.isis.ibex.somefunctionality"/>
+      <plugin id="uk.ac.stfc.isis.ibex.synoptic"/>
       <plugin id="uk.ac.stfc.isis.ibex.synopticlike"/>
       <plugin id="uk.ac.stfc.isis.ibex.ui"/>
+      <plugin id="uk.ac.stfc.isis.ibex.ui.blocks.presentation"/>
+      <plugin id="uk.ac.stfc.isis.ibex.ui.configserver"/>
       <plugin id="uk.ac.stfc.isis.ibex.ui.dashboard"/>
       <plugin id="uk.ac.stfc.isis.ibex.ui.widgets"/>
+      <plugin id="uk.ac.stfc.isis.ibex.validators"/>
    </plugins>
 
 
