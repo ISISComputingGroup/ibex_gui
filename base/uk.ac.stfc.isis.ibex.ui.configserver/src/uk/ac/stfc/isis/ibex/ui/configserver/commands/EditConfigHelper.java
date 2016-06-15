@@ -22,6 +22,7 @@
  */
 package uk.ac.stfc.isis.ibex.ui.configserver.commands;
 
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.window.Window;
 import org.eclipse.swt.widgets.Shell;
 
@@ -68,6 +69,8 @@ public class EditConfigHelper {
 
         if (Awaited.returnedValue(config, 1)) {
             openDialog(SUB_TITLE_CURRENT, config.getValue(), configurationViewModels, blockname, true);
+        } else {
+            MessageDialog.openError(shell, "Error", "There is no current configuration, so it can not be edited.");
         }
     }
 
