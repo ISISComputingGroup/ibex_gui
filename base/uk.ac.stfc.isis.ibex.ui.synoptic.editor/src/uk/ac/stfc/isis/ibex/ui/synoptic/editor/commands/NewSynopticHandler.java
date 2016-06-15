@@ -19,8 +19,8 @@
 
 package uk.ac.stfc.isis.ibex.ui.synoptic.editor.commands;
 
-import org.eclipse.core.commands.ExecutionEvent;
-import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.e4.core.di.annotations.Execute;
+
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.SynopticDescription;
 
 public class NewSynopticHandler extends SynopticHandler<String> {
@@ -31,8 +31,8 @@ public class NewSynopticHandler extends SynopticHandler<String> {
 		super(SYNOPTIC.editSynoptic());
 	}
 	
-	@Override
-	public Object execute(ExecutionEvent event) throws ExecutionException {	
+	@Execute
+	public Object execute() {	
 		openDialog(new SynopticDescription(), TITLE, true);
 		return null;
 	}

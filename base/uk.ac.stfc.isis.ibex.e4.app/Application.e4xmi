@@ -44,6 +44,11 @@
         </children>
         <children xsi:type="menu:HandledMenuItem" xmi:id="_EXzQYDJKEea8afgfAIJ2Nw" elementId="uk.ac.stfc.isis.ibex.e4.app.handledmenuitem.recentconfigs" label="Recent Configurations" command="_K3bmQDJKEea8afgfAIJ2Nw"/>
       </children>
+      <children xsi:type="menu:Menu" xmi:id="_9xiFwDLzEeaWIot0VETDag" elementId="uk.ac.stfc.isis.ibex.e4.app.menu.synoptic" label="Synoptic">
+        <children xsi:type="menu:HandledMenuItem" xmi:id="_JRL_8DL0EeaWIot0VETDag" elementId="uk.ac.stfc.isis.ibex.e4.app.handledmenuitem.synoptics.new" label="New" command="_q5IrIDLtEeaWIot0VETDag"/>
+        <children xsi:type="menu:HandledMenuItem" xmi:id="_N5KQoDL0EeaWIot0VETDag" elementId="uk.ac.stfc.isis.ibex.e4.app.handledmenuitem.synoptics.edit" label="Edit" command="_wu6LsDLtEeaWIot0VETDag"/>
+        <children xsi:type="menu:HandledMenuItem" xmi:id="_PfswoDL0EeaWIot0VETDag" elementId="uk.ac.stfc.isis.ibex.e4.app.handledmenuitem.synoptics.delete" label="Delete" command="_x_tFMDLtEeaWIot0VETDag"/>
+      </children>
     </mainMenu>
   </children>
   <handlers xmi:id="_6wlLfcgZEeSyMNYR5xypkQ" elementId="uk.ac.stfc.isis.ibex.e4.app.handler.quitCommand" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.e4.app/uk.ac.stfc.isis.ibex.e4.app.handlers.QuitHandler" command="_6wlLfMgZEeSyMNYR5xypkQ"/>
@@ -58,6 +63,9 @@
   <handlers xmi:id="_MqyS4DJNEea8afgfAIJ2Nw" elementId="uk.ac.stfc.isis.ibex.e4.app.handler.newComp" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.configserver/uk.ac.stfc.isis.ibex.ui.configserver.commands.NewComponentHandler" command="_Fc5awDJLEea8afgfAIJ2Nw"/>
   <handlers xmi:id="_PocW0DJNEea8afgfAIJ2Nw" elementId="uk.ac.stfc.isis.ibex.e4.app.handler.editComp" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.configserver/uk.ac.stfc.isis.ibex.ui.configserver.commands.EditComponentHandler" command="_HLN9wDJLEea8afgfAIJ2Nw"/>
   <handlers xmi:id="_TmjyMDJNEea8afgfAIJ2Nw" elementId="uk.ac.stfc.isis.ibex.e4.app.handler.deleteComp" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.configserver/uk.ac.stfc.isis.ibex.ui.configserver.commands.DeleteComponentsHandler" command="_IMWDkDJLEea8afgfAIJ2Nw"/>
+  <handlers xmi:id="_MNSMYDLuEeaWIot0VETDag" elementId="uk.ac.stfc.isis.ibex.e4.app.handler.newSynoptic" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.synoptic.editor/uk.ac.stfc.isis.ibex.ui.synoptic.editor.commands.NewSynopticHandler" command="_q5IrIDLtEeaWIot0VETDag"/>
+  <handlers xmi:id="_t7lgwDLzEeaWIot0VETDag" elementId="uk.ac.stfc.isis.ibex.e4.app.handler.editSynoptic" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.synoptic.editor/uk.ac.stfc.isis.ibex.ui.synoptic.editor.commands.EditSynopticHandler" command="_wu6LsDLtEeaWIot0VETDag"/>
+  <handlers xmi:id="_3ZzHoDLzEeaWIot0VETDag" elementId="uk.ac.stfc.isis.ibex.e4.app.handler.deleteSynoptic" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.synoptic.editor/uk.ac.stfc.isis.ibex.ui.synoptic.editor.commands.DeleteSynopticHandler" command="_x_tFMDLtEeaWIot0VETDag"/>
   <bindingTables xmi:id="_6wlLfsgZEeSyMNYR5xypkQ" elementId="uk.ac.stfc.isis.ibex.e4.app.bindingtable" bindingContext="_6wlLecgZEeSyMNYR5xypkQ">
     <bindings xmi:id="_6wlLf8gZEeSyMNYR5xypkQ" elementId="uk.ac.stfc.isis.ibex.e4.app.keybinding.m1q" keySequence="M1+Q" command="_6wlLfMgZEeSyMNYR5xypkQ"/>
     <bindings xmi:id="_6wlLiMgZEeSyMNYR5xypkQ" elementId="uk.ac.stfc.isis.ibex.e4.app.keybinding.m1a" keySequence="M1+A" command="_6wlLhsgZEeSyMNYR5xypkQ"/>
@@ -78,6 +86,9 @@
   <commands xmi:id="_Fc5awDJLEea8afgfAIJ2Nw" elementId="uk.ac.stfc.isis.ibex.e4.app.command.newcomp" commandName="newComp"/>
   <commands xmi:id="_HLN9wDJLEea8afgfAIJ2Nw" elementId="uk.ac.stfc.isis.ibex.e4.app.command.editcomp" commandName="editComp"/>
   <commands xmi:id="_IMWDkDJLEea8afgfAIJ2Nw" elementId="uk.ac.stfc.isis.ibex.e4.app.command.deletecomp" commandName="deleteComp"/>
+  <commands xmi:id="_q5IrIDLtEeaWIot0VETDag" elementId="uk.ac.stfc.isis.ibex.e4.app.command.newsynoptic" commandName="newSynoptic"/>
+  <commands xmi:id="_wu6LsDLtEeaWIot0VETDag" elementId="uk.ac.stfc.isis.ibex.e4.app.command.editsynoptic" commandName="editSynoptic"/>
+  <commands xmi:id="_x_tFMDLtEeaWIot0VETDag" elementId="uk.ac.stfc.isis.ibex.e4.app.command.deletesynoptic" commandName="deleteSynoptic"/>
   <addons xmi:id="_6wlLcsgZEeSyMNYR5xypkQ" elementId="org.eclipse.e4.core.commands.service" contributionURI="bundleclass://org.eclipse.e4.core.commands/org.eclipse.e4.core.commands.CommandServiceAddon"/>
   <addons xmi:id="_6wlLc8gZEeSyMNYR5xypkQ" elementId="org.eclipse.e4.ui.contexts.service" contributionURI="bundleclass://org.eclipse.e4.ui.services/org.eclipse.e4.ui.services.ContextServiceAddon"/>
   <addons xmi:id="_6wlLdMgZEeSyMNYR5xypkQ" elementId="org.eclipse.e4.ui.bindings.service" contributionURI="bundleclass://org.eclipse.e4.ui.bindings/org.eclipse.e4.ui.bindings.BindingServiceAddon"/>

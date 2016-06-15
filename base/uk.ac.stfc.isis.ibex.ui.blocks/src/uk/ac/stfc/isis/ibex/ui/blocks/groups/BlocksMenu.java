@@ -19,8 +19,6 @@
 
 package uk.ac.stfc.isis.ibex.ui.blocks.groups;
 
-import org.eclipse.core.commands.ExecutionEvent;
-import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.MenuManager;
@@ -55,11 +53,7 @@ public class BlocksMenu extends MenuManager {
             @Override
             public void run() {
                 EditCurrentConfigHandler editBlockHandler = new EditCurrentConfigHandler(block.getName());
-                try {
-                    editBlockHandler.execute(new ExecutionEvent());
-                } catch (ExecutionException e) {
-                    e.printStackTrace();
-                }
+                editBlockHandler.execute();
             }
         };
 
