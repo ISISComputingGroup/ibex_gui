@@ -18,6 +18,7 @@ Require-Bundle: javax.inject;bundle-version="0.0.0",
  uk.ac.stfc.isis.ibex.synopticlike;bundle-version="1.0.0",
  uk.ac.stfc.isis.ibex.ui.dashboard;bundle-version="1.0.0",
  uk.ac.stfc.isis.ibex.instrument,
- uk.ac.stfc.isis.ibex.ui.configserver;bundle-version="1.0.0"
+ uk.ac.stfc.isis.ibex.ui.configserver;bundle-version="1.0.0",
+ uk.ac.stfc.isis.ibex.ui.blocks;bundle-version="1.0.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
