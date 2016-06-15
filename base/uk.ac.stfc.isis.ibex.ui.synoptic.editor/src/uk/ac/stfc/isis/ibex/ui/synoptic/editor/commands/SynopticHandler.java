@@ -21,10 +21,12 @@ package uk.ac.stfc.isis.ibex.ui.synoptic.editor.commands;
 
 import java.util.Collection;
 
-import org.eclipse.core.commands.AbstractHandler;
+import javax.inject.Inject;
+import javax.inject.Named;
+
+import org.eclipse.e4.ui.services.IServiceConstants;
 import org.eclipse.jface.window.Window;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.ui.PlatformUI;
 
 import uk.ac.stfc.isis.ibex.epics.writing.SameTypeWriter;
 import uk.ac.stfc.isis.ibex.epics.writing.Writable;
@@ -38,9 +40,13 @@ import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.SynopticViewModel;
  * Handles opening the Synoptic Editor and saving the synoptic when updated. 
  * 
  */
-public abstract class SynopticHandler<T> extends AbstractHandler {
+public abstract class SynopticHandler<T> {
 
 	protected static final Synoptic SYNOPTIC = Synoptic.getInstance();
+	
+    @Inject
+    @Named(IServiceConstants.ACTIVE_SHELL) 
+    protected Shell activeShell;
 	
 	/**
 	 * This is an inner anonymous class inherited from SameTypeWriter with added functionality
@@ -49,7 +55,7 @@ public abstract class SynopticHandler<T> extends AbstractHandler {
 	protected final SameTypeWriter<T> synopticService = new SameTypeWriter<T>() {	
 		@Override
 		public void onCanWriteChanged(boolean canWrite) {
-			setBaseEnabled(canWrite);
+			//setBaseEnabled(canWrite);
 		};	
 	};
 	
@@ -66,7 +72,7 @@ public abstract class SynopticHandler<T> extends AbstractHandler {
 	
 	protected void openDialog(SynopticDescription synoptic, String title, boolean isBlank) {
         Collection<String> opis = Opi.getDefault().descriptionsProvider().getOpiList();
-        EditSynopticDialog editDialog = new EditSynopticDialog(shell(), title, synoptic, isBlank, opis,
+        EditSynopticDialog editDialog = new EditSynopticDialog(activeShell, title, synoptic, isBlank, opis,
                 new SynopticViewModel());
 		if (editDialog.open() == Window.OK) {
 			SYNOPTIC.edit().saveSynoptic().write(editDialog.getSynoptic());
@@ -77,9 +83,5 @@ public abstract class SynopticHandler<T> extends AbstractHandler {
 			}
 		}
 	}
-	
-	protected Shell shell() {
-		return PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
-	}	
 	
 }

@@ -40,8 +40,6 @@ import org.eclipse.swt.widgets.Text;
 
 import uk.ac.stfc.isis.ibex.configserver.Configurations;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
-import uk.ac.stfc.isis.ibex.synoptic.Synoptic;
-import uk.ac.stfc.isis.ibex.synoptic.SynopticInfo;
 import uk.ac.stfc.isis.ibex.validators.BlockServerNameValidator;
 import uk.ac.stfc.isis.ibex.validators.MessageDisplayer;
 import uk.ac.stfc.isis.ibex.validators.SummaryDescriptionValidator;

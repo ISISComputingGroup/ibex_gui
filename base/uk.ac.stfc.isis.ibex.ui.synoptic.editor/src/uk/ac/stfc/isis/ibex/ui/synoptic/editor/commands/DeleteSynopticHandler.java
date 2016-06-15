@@ -21,9 +21,12 @@ package uk.ac.stfc.isis.ibex.ui.synoptic.editor.commands;
 
 import java.util.Collection;
 
-import org.eclipse.core.commands.ExecutionEvent;
-import org.eclipse.core.commands.ExecutionException;
+import javax.inject.Named;
+
+import org.eclipse.e4.core.di.annotations.Execute;
+import org.eclipse.e4.ui.services.IServiceConstants;
 import org.eclipse.jface.window.Window;
+import org.eclipse.swt.widgets.Shell;
 
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.dialogs.MultipleSynopticsSelectionDialog;
 
@@ -35,9 +38,9 @@ public class DeleteSynopticHandler extends SynopticHandler<Collection<String>> {
 		super(SYNOPTIC.delete());
 	}	
 	
-	@Override
-	public Object execute(ExecutionEvent event) throws ExecutionException {		
-		MultipleSynopticsSelectionDialog dialog = new MultipleSynopticsSelectionDialog(shell(), TITLE, SYNOPTIC.availableEditableSynoptics());
+	@Execute
+	public Object execute(@Named(IServiceConstants.ACTIVE_SHELL) Shell shell) {		
+		MultipleSynopticsSelectionDialog dialog = new MultipleSynopticsSelectionDialog(shell, TITLE, SYNOPTIC.availableEditableSynoptics());
 		if (dialog.open() == Window.OK) {
 			synopticService.write(dialog.selectedSynoptics());
 		}

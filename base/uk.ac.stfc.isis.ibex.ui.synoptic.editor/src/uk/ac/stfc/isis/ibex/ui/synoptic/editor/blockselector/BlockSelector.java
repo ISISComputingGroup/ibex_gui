@@ -19,8 +19,7 @@
 
 package uk.ac.stfc.isis.ibex.ui.synoptic.editor.blockselector;
 
-import org.eclipse.core.commands.ExecutionEvent;
-import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.e4.core.di.annotations.Execute;
 import org.eclipse.jface.window.Window;
 
 import uk.ac.stfc.isis.ibex.configserver.configuration.Configuration;
@@ -46,8 +45,8 @@ public class BlockSelector extends ConfigHandler<Configuration> {
 	}
 
 	
-	@Override
-	public Object execute(ExecutionEvent event) throws ExecutionException {		
+	@Execute
+	public Object execute() {		
 		UpdatedValue<EditableConfiguration> config = new UpdatedObservableAdapter<>(EDITING.currentConfig());
 		
 		if (Awaited.returnedValue(config, 1)) {
@@ -58,7 +57,7 @@ public class BlockSelector extends ConfigHandler<Configuration> {
 	}
 	
 	private void openDialog(EditableConfiguration config) {
-		BlockSelectorDialog dialog = new BlockSelectorDialog(null, config, "");	
+		BlockSelectorDialog dialog = new BlockSelectorDialog(activeShell, config, "");	
 		if (dialog.open() == Window.OK) {
 			blockName = dialog.getBlockName();
 			pvAddress = dialog.getPVAddress();
