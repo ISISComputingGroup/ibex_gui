@@ -22,6 +22,10 @@
           </children>
           <children xsi:type="basic:PartSashContainer" xmi:id="_fRRyAC4dEeaj15_huK2zOw" elementId="uk.ac.stfc.isis.ibex.e4.app.partsashcontainer.4" horizontal="true">
             <children xsi:type="basic:Part" xmi:id="_HqhI0C4tEeaj15_huK2zOw" elementId="uk.ac.stfc.isis.ibex.e4.app.part.4" containerData="" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.e4.app/uk.ac.stfc.isis.ibex.e4.app.parts.SelectorPart"/>
+            <children xsi:type="basic:PartSashContainer" xmi:id="_DGRjkDL5EeaiPZ4itxBMUw" elementId="uk.ac.stfc.isis.ibex.e4.app.partsashcontainer.6">
+              <children xsi:type="basic:Part" xmi:id="_D9OZsDL5EeaiPZ4itxBMUw" elementId="uk.ac.stfc.isis.ibex.e4.app.part.8" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.synoptic/uk.ac.stfc.isis.ibex.ui.synoptic.views.NavigationView"/>
+              <children xsi:type="basic:Part" xmi:id="_PVinsDL3EeaiPZ4itxBMUw" elementId="uk.ac.stfc.isis.ibex.e4.app.part.7" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.synoptic/uk.ac.stfc.isis.ibex.ui.synoptic.views.SynopticView"/>
+            </children>
           </children>
         </children>
       </children>

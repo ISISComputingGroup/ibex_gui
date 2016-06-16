@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="ASCII"?>
-<fragment:ModelFragments xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:basic="http://www.eclipse.org/ui/2010/UIModel/application/ui/basic" xmlns:fragment="http://www.eclipse.org/ui/2010/UIModel/fragment" xmi:id="_733dEC7PEeaj15_huK2zOw">
-  <fragments xsi:type="fragment:StringModelFragment" xmi:id="_733dES7PEeaj15_huK2zOw" featurename="children" parentElementId="uk.ac.stfc.isis.ibex.e4.app.partsashcontainer.4">
-    <elements xsi:type="basic:Part" xmi:id="_733dEi7PEeaj15_huK2zOw" elementId="uk.ac.stfc.isis.ibex.e4.app.part.3" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.synopticlike/uk.ac.stfc.isis.ibex.synopticlike.SynopticPart"/>
-  </fragments>
-  <fragments xsi:type="fragment:StringModelFragment" xmi:id="_733dEy7PEeaj15_huK2zOw" featurename="children" parentElementId="uk.ac.stfc.isis.ibex.e4.app.partsashcontainer.4">
-    <elements xsi:type="basic:PartStack" xmi:id="_733dFC7PEeaj15_huK2zOw" elementId="uk.ac.stfc.isis.ibex.e4.app.partstack.opi" visible="false"/>
-  </fragments>
-</fragment:ModelFragments>
