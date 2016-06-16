@@ -17,15 +17,18 @@
 * http://opensource.org/licenses/eclipse-1.0.php
 */
 
-package uk.ac.stfc.isis.ibex.ui.statusbar;
+package uk.ac.stfc.isis.ibex.e4.app.statusbar;
 
-import org.eclipse.jface.action.IStatusLineManager;
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
+
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.ui.IViewSite;
-import org.eclipse.ui.IWorkbenchPartSite;
-import org.eclipse.ui.PlatformUI;
-import org.eclipse.ui.plugin.AbstractUIPlugin;
-import org.osgi.framework.BundleContext;
+import org.eclipse.swt.widgets.Label;
+import org.eclipse.wb.swt.SWTResourceManager;
 
 import uk.ac.stfc.isis.ibex.configserver.Configurations;
 import uk.ac.stfc.isis.ibex.configserver.displaying.DisplayConfiguration;
@@ -34,17 +37,9 @@ import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.Subscription;
 
 
-public class StatusBar extends AbstractUIPlugin {
+public class StatusBar {
 	
-	private static StatusBar instance;
-	
-	private final Display display = Display.getCurrent();
-
 	private Subscription configSubscription;
-
-	public StatusBar() {
-		instance = this;
-	}
 	
 	private final BaseObserver<DisplayConfiguration> configObserver = new BaseObserver<DisplayConfiguration>() {
 		@Override
@@ -69,8 +64,30 @@ public class StatusBar extends AbstractUIPlugin {
 		}		
 	};	
 	
-	public static StatusBar getInstance() {
-		return instance;
+	private Label lbl;
+	
+	@PostConstruct
+	public void createControls(Composite parent) {		
+		final Composite comp = new Composite(parent, SWT.NONE);
+		comp.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+		comp.setLayout(new GridLayout(1,false));
+		
+		lbl = new Label(comp, SWT.LEFT);
+		GridData gd_lbl = new GridData(SWT.FILL, SWT.CENTER, true, false);
+		gd_lbl.widthHint = 400;
+		lbl.setLayoutData(gd_lbl);
+		lbl.setFont(SWTResourceManager.getFont("Arial", 10, SWT.BOLD));
+		subscribeToConfig();
+	}
+
+	private void setTitle(final String title, final String description) {
+		Display.getDefault().asyncExec(new Runnable() {
+			@Override
+			public void run() {				
+		    	lbl.setText("Current configuration: " + title);
+		    	lbl.setToolTipText(description);
+			}
+		});
 	}
 	
 	public void subscribeToConfig() {
@@ -79,28 +96,12 @@ public class StatusBar extends AbstractUIPlugin {
 		
 		configSubscription = config.addObserver(configObserver);
 	}
-	
-	@Override
-	public void stop(BundleContext context) throws Exception {
+
+	@PreDestroy
+	public void stop() {
 		if (configSubscription != null) {
 			configSubscription.removeObserver();
 		}
-		super.stop(context);
+		
 	};
-	
-	private void setTitle(final String title, final String description) {
-		display.asyncExec(new Runnable() {
-			@Override
-			public void run() {
-				IWorkbenchPartSite site = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getActivePart().getSite();
-				IViewSite vSite = (IViewSite) site;
-				IStatusLineManager statusLineManager = vSite.getActionBars().getStatusLineManager();
-				
-		    	StatusLineConfigLabel statusItem = (StatusLineConfigLabel) statusLineManager.find("CurrentConfigTitle");
-		    	statusItem.setConfig(title);
-		    	statusItem.setToolTip(description);
-		    	statusLineManager.update(true);
-			}
-		});
-	}
 }

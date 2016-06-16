@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <application:Application xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:advanced="http://www.eclipse.org/ui/2010/UIModel/application/ui/advanced" xmlns:application="http://www.eclipse.org/ui/2010/UIModel/application" xmlns:basic="http://www.eclipse.org/ui/2010/UIModel/application/ui/basic" xmlns:menu="http://www.eclipse.org/ui/2010/UIModel/application/ui/menu" xmi:id="_6wlLcMgZEeSyMNYR5xypkQ" elementId="uk.ac.stfc.isis.ibex.e4.app.application" bindingContexts="_6wlLecgZEeSyMNYR5xypkQ">
-  <children xsi:type="basic:Window" xmi:id="_j9fWcC1BEeaj15_huK2zOw" elementId="uk.ac.stfc.isis.ibex.e4.app.window.0">
+  <children xsi:type="basic:TrimmedWindow" xmi:id="_CHrkoDMKEeaWIot0VETDag" elementId="uk.ac.stfc.isis.ibex.e4.app.trimmedwindow.ibex" label="IBEX">
     <children xsi:type="advanced:PerspectiveStack" xmi:id="_fycCwC13Eeaj15_huK2zOw" elementId="uk.ac.stfc.isis.ibex.e4.app.perspectivestack.0">
       <children xsi:type="advanced:Perspective" xmi:id="_2ks5oC13Eeaj15_huK2zOw" elementId="uk.ac.stfc.isis.ibex.e4.app.perspective1">
         <children xsi:type="basic:PartSashContainer" xmi:id="_3tLkoC13Eeaj15_huK2zOw" elementId="uk.ac.stfc.isis.ibex.e4.app.partsashcontainer.0">
@@ -26,7 +26,7 @@
         </children>
       </children>
     </children>
-    <mainMenu xmi:id="_Rv3rIC7QEeaj15_huK2zOw" elementId="uk.ac.stfc.isis.ibex.e4.app.menu.0">
+    <mainMenu xmi:id="_F6yC0DMKEeaWIot0VETDag" elementId="uk.ac.stfc.isis.ibex.e4.app.menu.1">
       <children xsi:type="menu:Menu" xmi:id="_jBNQEC7QEeaj15_huK2zOw" elementId="uk.ac.stfc.isis.ibex.e4.app.menu.ibex" label="IBEX">
         <children xsi:type="menu:HandledMenuItem" xmi:id="_j08aIC7QEeaj15_huK2zOw" elementId="uk.ac.stfc.isis.ibex.e4.app.handledmenuitem.selectinstrument" label="Select Instrument" command="_yJqgIC7UEea3pZpTQ0Nb6g"/>
       </children>
@@ -51,6 +51,9 @@
         <children xsi:type="menu:HandledMenuItem" xmi:id="_PfswoDL0EeaWIot0VETDag" elementId="uk.ac.stfc.isis.ibex.e4.app.handledmenuitem.synoptics.delete" label="Delete" command="_x_tFMDLtEeaWIot0VETDag"/>
       </children>
     </mainMenu>
+    <trimBars xmi:id="_IzDQcDMKEeaWIot0VETDag" elementId="uk.ac.stfc.isis.ibex.e4.app.trimbar.0" side="Bottom">
+      <children xsi:type="menu:ToolControl" xmi:id="_9f8nsDMNEeaWIot0VETDag" elementId="uk.ac.stfc.isis.ibex.e4.app.toolcontrol.1" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.e4.app/uk.ac.stfc.isis.ibex.e4.app.statusbar.StatusBar"/>
+    </trimBars>
   </children>
   <handlers xmi:id="_6wlLfcgZEeSyMNYR5xypkQ" elementId="uk.ac.stfc.isis.ibex.e4.app.handler.quitCommand" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.e4.app/uk.ac.stfc.isis.ibex.e4.app.handlers.QuitHandler" command="_6wlLfMgZEeSyMNYR5xypkQ"/>
   <handlers xmi:id="_6wlLh8gZEeSyMNYR5xypkQ" elementId="uk.ac.stfc.isis.ibex.e4.app.handler.aboutCommand" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.e4.app/uk.ac.stfc.isis.ibex.e4.app.handlers.AboutHandler" command="_6wlLhsgZEeSyMNYR5xypkQ"/>
