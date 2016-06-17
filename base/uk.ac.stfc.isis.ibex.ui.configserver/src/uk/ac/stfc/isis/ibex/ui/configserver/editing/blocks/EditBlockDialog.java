@@ -59,16 +59,16 @@ public class EditBlockDialog extends TitleAreaDialog {
 
     protected EditBlockDialog(Shell parentShell, EditableBlock block, EditableConfiguration config) {
 		super(parentShell);
-		this.config = config;
-		this.block = block;
+        this.config = config;
+        this.block = block;
 
-		blockLogSettingsViewModel = new BlockLogSettingsViewModel(block);
+        blockLogSettingsViewModel = new BlockLogSettingsViewModel(this.block);
 		viewModels.add(blockLogSettingsViewModel);
 		
-		blockRunControlViewModel = new BlockRunControlViewModel(block);
+        blockRunControlViewModel = new BlockRunControlViewModel(this.block);
 		viewModels.add(blockRunControlViewModel);
 		
-		blockDetailsViewModel = new BlockDetailsViewModel(block, config);
+        blockDetailsViewModel = new BlockDetailsViewModel(this.block, this.config);
 		viewModels.add(blockDetailsViewModel);
 		
 		for (ErrorMessageProvider provider : viewModels) {
@@ -100,7 +100,7 @@ public class EditBlockDialog extends TitleAreaDialog {
 		blockDetailsViewModel.updateBlock();
 		blockRunControlViewModel.updateBlock();
         blockLogSettingsViewModel.updateBlock();
-        
+        config.addNewBlock(this.block);
 		super.okPressed();
 	}
 	

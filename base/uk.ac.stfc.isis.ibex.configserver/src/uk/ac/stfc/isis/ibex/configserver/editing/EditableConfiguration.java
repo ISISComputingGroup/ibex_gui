@@ -137,6 +137,14 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
 		editableComponents.addPropertyChangeListener(passThrough());
 	}
 
+     * Create EditableConfiguration as copy of another EditableConfiguration
+     * 
+     * @param other the EditableConfiguration to be copied
+     */
+    public EditableConfiguration(EditableConfiguration other) {
+        this(other.asConfiguration(), other.getEditableIocs(), other.getComponents(), other.pvs(), other.descriptions);
+    }
+
 	public String getName() {
 		return name;
 	}
@@ -246,18 +254,18 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
 		return editableIocs;
 	}
 	
-	public EditableBlock addNewBlock() {
-		Collection<Block> blocksBeforeAdd = getBlocks();
-		
-		String name = blockName.getUnique(blockNames());
+    public EditableBlock createNewBlock() {
+        String name = blockName.getUnique(blockNames());
         EditableBlock block = new EditableBlock(new Block(name, "", true, true));
+        return block;
+    }
+
+    public void addNewBlock(EditableBlock block) {
+		Collection<Block> blocksBeforeAdd = getBlocks();
 		editableBlocks.add(0, block);
 		makeBlockAvailable(block);
 		addRenameListener(block);
-		
 		firePropertyChange("blocks", blocksBeforeAdd, getBlocks());
-		
-		return block;
 	}
 	
 	public void makeBlockUnavailable(EditableBlock block) {
@@ -272,7 +280,7 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
 	
 	public void removeBlock(EditableBlock block) {
 		Collection<Block> blocksBefore = getBlocks();
-		editableBlocks.remove(block);
+		editableBlocks.remove(block); // TODO does not work
 		makeBlockUnavailable(block);
 		firePropertyChange("blocks", blocksBefore, getBlocks());
 	}
