@@ -19,10 +19,14 @@
 
 package uk.ac.stfc.isis.ibex.ui.synoptic.editor.pv;
 
+import javax.inject.Named;
+
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.e4.core.di.annotations.Execute;
+import org.eclipse.e4.ui.services.IServiceConstants;
 import org.eclipse.jface.window.Window;
+import org.eclipse.swt.widgets.Shell;
 
 import uk.ac.stfc.isis.ibex.configserver.configuration.Configuration;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
@@ -48,17 +52,17 @@ public class PvSelector extends ConfigHandler<Configuration> {
 
 	
 	@Execute
-	public Object execute() {		
+	public Object execute(@Named(IServiceConstants.ACTIVE_SHELL) Shell activeShell) {	
 		UpdatedValue<EditableConfiguration> config = new UpdatedObservableAdapter<>(EDITING.currentConfig());
 		
 		if (Awaited.returnedValue(config, 1)) {
-			openDialog(config.getValue());
+			openDialog(config.getValue(), activeShell);
 		}
 				
 		return null;
 	}
 	
-	private void openDialog(EditableConfiguration config) {
+	private void openDialog(EditableConfiguration config, Shell activeShell) {
 		PvSelectorDialog dialog = new PvSelectorDialog(activeShell, config, "");	
 		if (dialog.open() == Window.OK) {
 			pvAddress = dialog.getPVAddress();

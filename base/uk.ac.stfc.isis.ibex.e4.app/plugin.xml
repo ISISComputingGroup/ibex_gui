@@ -1,18 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?eclipse version="3.4"?>
 <plugin>
-
    <extension
          id="product"
          point="org.eclipse.core.runtime.products">
       <product
             name="uk.ac.stfc.isis.ibex.e4.app"
-            application="org.eclipse.e4.ui.workbench.swt.E4Application">
+            application="uk.ac.stfc.isis.ibex.e4.app">
          <property
                name="appName"
                value="uk.ac.stfc.isis.ibex.e4.app">
          </property>
+         <property name="applicationXMI" value="uk.ac.stfc.isis.ibex.e4.app/Application.e4xmi"> </property>
       </product>
+   </extension>
+   
+      <extension
+         id="uk.ac.stfc.isis.ibex.e4.app"
+         point="org.eclipse.core.runtime.applications">
+      <application>
+         <run
+               class="uk.ac.stfc.isis.ibex.e4.app.Application">
+         </run>
+      </application>
    </extension>
 
 </plugin>

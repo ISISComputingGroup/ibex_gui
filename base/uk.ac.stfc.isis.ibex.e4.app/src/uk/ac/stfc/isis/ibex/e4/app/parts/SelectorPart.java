@@ -21,6 +21,7 @@ import org.eclipse.swt.widgets.Composite;
 public class SelectorPart {
 	private Button btnPerspective1;
 	private Button btnPerspective2;
+	private Button btnPerspective3;
 	
 	@Inject 
 	private MApplication application;
@@ -59,6 +60,21 @@ public class SelectorPart {
 				System.out.println("Perspective 2 selected");
 				
 				List<MPerspective> perspectives = modelService.findElements(application, "uk.ac.stfc.isis.ibex.e4.app.perspective2", MPerspective.class, null);
+				partService.switchPerspective(perspectives.get(0));
+				
+			}
+		});
+		
+		btnPerspective3 = new Button(parent, SWT.NONE);
+		btnPerspective3.setText("Perspective 3");
+		btnPerspective3.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+		
+		btnPerspective3.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				System.out.println("Perspective 3 selected");
+				
+				List<MPerspective> perspectives = modelService.findElements(application, "uk.ac.stfc.isis.ibex.e4.app.perspective3", MPerspective.class, null);
 				partService.switchPerspective(perspectives.get(0));
 				
 			}

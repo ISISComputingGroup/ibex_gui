@@ -19,15 +19,6 @@
 
 package uk.ac.stfc.isis.ibex.ui.configserver.commands;
 
-import javax.inject.Inject;
-import javax.inject.Named;
-
-import org.eclipse.core.commands.AbstractHandler;
-import org.eclipse.e4.core.contexts.IEclipseContext;
-import org.eclipse.e4.ui.services.IServiceConstants;
-import org.eclipse.swt.widgets.Shell;
-import org.eclipse.ui.PlatformUI;
-
 import uk.ac.stfc.isis.ibex.configserver.ConfigServer;
 import uk.ac.stfc.isis.ibex.configserver.Configurations;
 import uk.ac.stfc.isis.ibex.configserver.Editing;
@@ -47,10 +38,6 @@ public abstract class ConfigHandler<T> {
 
 	protected static final ConfigServer SERVER = Configurations.getInstance().server();
 	protected static final Editing EDITING = Configurations.getInstance().edit();
-	
-    @Inject
-    @Named(IServiceConstants.ACTIVE_SHELL) 
-    protected Shell activeShell;
 	
 	/**
 	 * This is an inner anonymous class inherited from SameTypeWriter with added functionality

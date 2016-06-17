@@ -20,6 +20,7 @@
 package uk.ac.stfc.isis.ibex.ui.configserver.commands;
 
 import org.eclipse.jface.window.Window;
+import org.eclipse.swt.widgets.Shell;
 
 import uk.ac.stfc.isis.ibex.configserver.configuration.Configuration;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
@@ -29,7 +30,11 @@ import uk.ac.stfc.isis.ibex.ui.configserver.ConfigurationServerUI;
 import uk.ac.stfc.isis.ibex.ui.configserver.ConfigurationViewModels;
 import uk.ac.stfc.isis.ibex.ui.configserver.dialogs.ConfigSelectionDialog;
 import uk.ac.stfc.isis.ibex.ui.configserver.dialogs.EditConfigDialog;
+
+import javax.inject.Named;
+
 import org.eclipse.e4.core.di.annotations.Execute;
+import org.eclipse.e4.ui.services.IServiceConstants;
 import org.eclipse.e4.ui.workbench.modeling.EPartService;
 
 public class EditComponentHandler extends ConfigHandler<Configuration> {
@@ -40,17 +45,17 @@ public class EditComponentHandler extends ConfigHandler<Configuration> {
 	}
 	
 	@Execute
-	public Object execute(EPartService event) {
+	public Object execute(@Named(IServiceConstants.ACTIVE_SHELL) Shell activeShell) {		
 		ConfigSelectionDialog selectionDialog = new ConfigSelectionDialog(activeShell, TITLE, SERVER.componentsInfo().getValue(), true);
 		if (selectionDialog.open() == Window.OK) {
 			String componentName = selectionDialog.selectedConfig();
-			edit(componentName);
+			edit(componentName, activeShell);
 		}
 		
 		return null;
 	}
 		
-	private void edit(String componentName) {
+	private void edit(String componentName, Shell activeShell) {
 		String subTitle = "Editing " + componentName; 
 		
         ConfigurationViewModels configurationViewModels = ConfigurationServerUI.getDefault().configurationViewModels();
@@ -58,12 +63,12 @@ public class EditComponentHandler extends ConfigHandler<Configuration> {
         UpdatedValue<EditableConfiguration> config = configurationViewModels.getConfigModel();
 
 		if (Awaited.<EditableConfiguration>returnedValue(config, 1)) {
-            openDialog(subTitle, config.getValue(), configurationViewModels);
+            openDialog(subTitle, config.getValue(), configurationViewModels, activeShell);
 		}
 	}
 
     private void openDialog(String subTitle, EditableConfiguration config,
-            ConfigurationViewModels configurationViewModels) {
+            ConfigurationViewModels configurationViewModels, Shell activeShell) {
         EditConfigDialog editDialog = new EditConfigDialog(activeShell, TITLE, subTitle, config, true, false,
                 configurationViewModels);
         if (editDialog.open() == Window.OK) {

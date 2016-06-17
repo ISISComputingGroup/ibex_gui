@@ -53,7 +53,7 @@ public class BlocksMenu extends MenuManager {
             @Override
             public void run() {
                 EditCurrentConfigHandler editBlockHandler = new EditCurrentConfigHandler(block.getName());
-                editBlockHandler.execute();
+                //editBlockHandler.execute();
             }
         };
 

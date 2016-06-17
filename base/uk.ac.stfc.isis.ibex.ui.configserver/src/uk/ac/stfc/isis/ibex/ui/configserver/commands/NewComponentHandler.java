@@ -20,6 +20,7 @@
 package uk.ac.stfc.isis.ibex.ui.configserver.commands;
 
 import org.eclipse.jface.window.Window;
+import org.eclipse.swt.widgets.Shell;
 
 import uk.ac.stfc.isis.ibex.configserver.configuration.Configuration;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
@@ -28,7 +29,11 @@ import uk.ac.stfc.isis.ibex.model.UpdatedValue;
 import uk.ac.stfc.isis.ibex.ui.configserver.ConfigurationServerUI;
 import uk.ac.stfc.isis.ibex.ui.configserver.ConfigurationViewModels;
 import uk.ac.stfc.isis.ibex.ui.configserver.dialogs.EditConfigDialog;
+
+import javax.inject.Named;
+
 import org.eclipse.e4.core.di.annotations.Execute;
+import org.eclipse.e4.ui.services.IServiceConstants;
 import org.eclipse.e4.ui.workbench.modeling.EPartService;
 
 public class NewComponentHandler extends ConfigHandler<Configuration> {
@@ -41,19 +46,19 @@ public class NewComponentHandler extends ConfigHandler<Configuration> {
 	}
 	
 	@Execute
-	public Object execute(EPartService event) {		
+	public Object execute(@Named(IServiceConstants.ACTIVE_SHELL) Shell activeShell) {		
         ConfigurationViewModels configurationViewModels = ConfigurationServerUI.getDefault().configurationViewModels();
         configurationViewModels.setModelAsBlankConfig();
         UpdatedValue<EditableConfiguration> config = configurationViewModels.getConfigModel();
 
 		if (Awaited.returnedValue(config, 1)) {
-            openDialog(config.getValue(), configurationViewModels);
+            openDialog(config.getValue(), configurationViewModels, activeShell);
 		}
 		
 		return null;
 	}
 	
-    private void openDialog(EditableConfiguration config, ConfigurationViewModels configurationViewModels) {
+    private void openDialog(EditableConfiguration config, ConfigurationViewModels configurationViewModels, Shell activeShell) {
         EditConfigDialog editDialog = new EditConfigDialog(activeShell, TITLE, SUB_TITLE, config, true, true,
                 configurationViewModels);
         if (editDialog.open() == Window.OK) {

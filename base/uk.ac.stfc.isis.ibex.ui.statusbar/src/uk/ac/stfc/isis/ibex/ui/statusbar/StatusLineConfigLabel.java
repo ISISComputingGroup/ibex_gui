@@ -7,24 +7,22 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.wb.swt.SWTResourceManager;
 
 @SuppressWarnings("checkstyle:magicnumber")
-public class StatusLineConfigLabel extends ContributionItem {
+public class StatusLineConfigLabel extends Composite {
 
 	private Label lbl;
 	private String lblText;
 	private String lblTooltip;
 	
-	public StatusLineConfigLabel(String id) {
-		super(id);
-		
-    	setConfig("Unknown");
-    	setToolTip("Unknown");
-	}
+	public StatusLineConfigLabel(Composite parent, int style) {
+		super(parent, style);
 
-	public void fill(Composite parent) {
 		lbl = new Label(parent, SWT.FLAT | SWT.CENTER);
 		lbl.setText(lblText);
 		lbl.setToolTipText(lblTooltip);
 		lbl.setFont(SWTResourceManager.getFont("Arial", 10, SWT.BOLD));
+		
+    	setConfig("Unknown");
+    	setToolTip("Unknown");
 	}
 	
 	public void setConfig(String text) {

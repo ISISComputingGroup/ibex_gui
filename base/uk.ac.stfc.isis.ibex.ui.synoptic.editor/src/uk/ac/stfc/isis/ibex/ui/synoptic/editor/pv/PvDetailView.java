@@ -234,7 +234,7 @@ public class PvDetailView extends Composite {
 	private void openPvDialog() {
 		PvSelector selectPV = new PvSelector();
 		try {
-			selectPV.execute();
+			selectPV.execute(getShell());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -247,7 +247,7 @@ public class PvDetailView extends Composite {
 	private void openBlockDialog() {
 		BlockSelector selectPV = new BlockSelector();
 		try {
-			selectPV.execute();
+			selectPV.execute(getShell());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

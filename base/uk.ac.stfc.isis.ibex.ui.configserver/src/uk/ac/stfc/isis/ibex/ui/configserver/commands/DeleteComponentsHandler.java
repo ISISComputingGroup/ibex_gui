@@ -21,9 +21,12 @@ package uk.ac.stfc.isis.ibex.ui.configserver.commands;
 
 import java.util.Collection;
 
+import javax.inject.Named;
+
 import org.eclipse.jface.window.Window;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.e4.core.di.annotations.Execute;
-import org.eclipse.e4.ui.workbench.modeling.EPartService;
+import org.eclipse.e4.ui.services.IServiceConstants;
 import uk.ac.stfc.isis.ibex.ui.configserver.dialogs.MultipleConfigsSelectionDialog;
 
 public class DeleteComponentsHandler extends ConfigHandler<Collection<String>> {
@@ -33,7 +36,7 @@ public class DeleteComponentsHandler extends ConfigHandler<Collection<String>> {
 	}
 	
 	@Execute
-	public Object execute(EPartService event) {		
+	public Object execute(@Named(IServiceConstants.ACTIVE_SHELL) Shell activeShell) {		
 		MultipleConfigsSelectionDialog dialog = new MultipleConfigsSelectionDialog(activeShell, "Delete Components", SERVER.componentsInfo().getValue(), true);
 		if (dialog.open() == Window.OK) {
 			configService.write(dialog.selectedConfigs());
