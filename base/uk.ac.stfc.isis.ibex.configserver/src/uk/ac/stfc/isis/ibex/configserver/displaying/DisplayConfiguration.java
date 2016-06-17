@@ -92,7 +92,18 @@ public class DisplayConfiguration extends TransformingObservable<Configuration, 
 	protected void setGroups(Collection<Group> configGroups) {
 		groups.clear();
 		for (Group group : configGroups) {
-			groups.add(new DisplayGroup(group, displayBlocks));
+			if (!isGroupEmpty(group)) {
+				groups.add(new DisplayGroup(group, displayBlocks));
+			}
+		}
+	}
+	
+	private boolean isGroupEmpty(Group configGroup) {
+		Collection<String> blocks = configGroup.getBlocks();
+		if (blocks.isEmpty()) {
+			return true;
+		} else {
+			return false;
 		}
 	}
 
