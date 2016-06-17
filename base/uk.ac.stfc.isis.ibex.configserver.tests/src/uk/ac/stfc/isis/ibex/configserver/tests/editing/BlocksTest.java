@@ -19,6 +19,8 @@
 
 package uk.ac.stfc.isis.ibex.configserver.tests.editing;
 
+import static org.junit.Assert.*;
+
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -38,19 +40,46 @@ public class BlocksTest extends EditableConfigurationTest {
 		// Assert
 		assertEmpty(edited.asConfiguration().getBlocks());
 	}	
-	
+
+    @Test
+    public void a_new_block_can_be_created() {
+        // Arrange
+        EditableConfiguration edited = edit(emptyConfig());
+
+        // Act
+        EditableBlock block = edited.createNewBlock();
+
+        // Assert
+        assertEquals(EditableBlock.class, block.getClass());
+    }
+
 	@Test
-	public void a_new_block_can_be_added() {
+    public void a_new_block_can_be_added_to_the_configuration() {
 		// Arrange
 		EditableConfiguration edited = edit(emptyConfig());
+        EditableBlock block = edited.createNewBlock();
 	
 		// Act
-		edited.addNewBlock();
+		edited.addNewBlock(block);
 		
 		// Assert
 		assertNotEmpty(edited.asConfiguration().getBlocks());
 	}
-	
+
+    @Test
+    public void a_new_block_gets_a_unique_name() {
+        // Arrange
+        EditableConfiguration edited = edit(emptyConfig());
+        EditableBlock block1 = edited.createNewBlock();
+        edited.addNewBlock(block1);
+
+        // Act
+        EditableBlock block2 = edited.createNewBlock();
+
+        // Assert
+        assertNotEquals(block1.getName(), block2.getName());
+    }
+
 	@Test
 	public void a_block_can_be_removed() {
 		// Arrange
