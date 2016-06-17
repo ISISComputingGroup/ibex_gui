@@ -100,14 +100,10 @@ public class EditBlockDialog extends TitleAreaDialog {
 		blockDetailsViewModel.updateBlock();
 		blockRunControlViewModel.updateBlock();
         blockLogSettingsViewModel.updateBlock();
-        config.addNewBlock(this.block);
+        if (!config.getEditableBlocks().contains(this.block)) {
+            config.addNewBlock(this.block);
+        }
 		super.okPressed();
-	}
-	
-	@Override
-	protected void cancelPressed() {
-        config.removeBlock(block);
-		super.cancelPressed();
 	}
 	
 	@Override

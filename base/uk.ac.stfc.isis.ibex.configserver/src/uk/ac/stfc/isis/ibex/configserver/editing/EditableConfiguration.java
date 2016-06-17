@@ -137,14 +137,6 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
 		editableComponents.addPropertyChangeListener(passThrough());
 	}
 
-     * Create EditableConfiguration as copy of another EditableConfiguration
-     * 
-     * @param other the EditableConfiguration to be copied
-     */
-    public EditableConfiguration(EditableConfiguration other) {
-        this(other.asConfiguration(), other.getEditableIocs(), other.getComponents(), other.pvs(), other.descriptions);
-    }
-
 	public String getName() {
 		return name;
 	}
@@ -253,13 +245,23 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
 	public Collection<EditableIoc> getEditableIocs() {
 		return editableIocs;
 	}
-	
+
+    /**
+     * Create a new block.
+     * 
+     * @return the new EditableBlock object
+     */
     public EditableBlock createNewBlock() {
         String name = blockName.getUnique(blockNames());
         EditableBlock block = new EditableBlock(new Block(name, "", true, true));
         return block;
     }
 
+    /**
+     * Add a new block to the configuration.
+     * 
+     * @param block the EditableBlock to be added
+     */
     public void addNewBlock(EditableBlock block) {
 		Collection<Block> blocksBeforeAdd = getBlocks();
 		editableBlocks.add(0, block);
