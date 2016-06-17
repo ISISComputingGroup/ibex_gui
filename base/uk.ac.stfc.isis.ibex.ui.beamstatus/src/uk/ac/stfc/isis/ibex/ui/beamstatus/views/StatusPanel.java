@@ -67,9 +67,8 @@ public class StatusPanel extends Composite {
         xpndtmTargetStation2.setText("Target Station 2");
         TargetStationTwoPanel ts2 = new TargetStationTwoPanel(expandBar, SWT.NONE);
         xpndtmTargetStation2.setControl(ts2);
-        xpndtmTargetStation2.setHeight(400);
-
+        xpndtmTargetStation2.setHeight(300);
         expandBar.layout();
-        expandBar.setSize(400, 660);
+        expandBar.setSize(370, 670);
     }
 }
