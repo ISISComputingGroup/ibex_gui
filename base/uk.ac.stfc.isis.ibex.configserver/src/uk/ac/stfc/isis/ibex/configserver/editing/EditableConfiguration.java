@@ -282,7 +282,7 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
 	
 	public void removeBlock(EditableBlock block) {
 		Collection<Block> blocksBefore = getBlocks();
-		editableBlocks.remove(block); // TODO does not work
+        editableBlocks.remove(block);
 		makeBlockUnavailable(block);
 		firePropertyChange("blocks", blocksBefore, getBlocks());
 	}

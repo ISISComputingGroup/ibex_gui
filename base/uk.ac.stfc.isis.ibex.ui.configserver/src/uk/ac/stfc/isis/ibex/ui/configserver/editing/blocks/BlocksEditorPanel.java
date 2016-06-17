@@ -88,7 +88,6 @@ public class BlocksEditorPanel extends Composite {
 		add.setLayoutData(gd_add);
 		add.setText("Add Block");	
 		add.addSelectionListener(new SelectionAdapter() {
-            // TODO
 			@Override
 			public void widgetSelected(SelectionEvent e) {
                 EditableBlock added = config.createNewBlock();
