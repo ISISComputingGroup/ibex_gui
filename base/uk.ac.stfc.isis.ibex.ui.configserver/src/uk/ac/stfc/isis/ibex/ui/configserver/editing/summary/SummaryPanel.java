@@ -28,19 +28,23 @@ import org.eclipse.core.databinding.beans.BeanProperties;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ComboViewer;
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Label;
+import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.Text;
-import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.layout.FillLayout;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Group;
+import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Text;
 
+import uk.ac.stfc.isis.ibex.configserver.Configurations;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
 import uk.ac.stfc.isis.ibex.synoptic.Synoptic;
 import uk.ac.stfc.isis.ibex.synoptic.SynopticInfo;
-import uk.ac.stfc.isis.ibex.ui.configserver.dialogs.MessageDisplayer;
+import uk.ac.stfc.isis.ibex.validators.BlockServerNameValidator;
+import uk.ac.stfc.isis.ibex.validators.MessageDisplayer;
+import uk.ac.stfc.isis.ibex.validators.SummaryDescriptionValidator;
 
 @SuppressWarnings("checkstyle:magicnumber")
 public class SummaryPanel extends Composite {
@@ -120,7 +124,9 @@ public class SummaryPanel extends Composite {
 	private void setBindings() {
 		bindingContext = new DataBindingContext();
 		
-		strategy.setBeforeSetValidator(new SummaryDescriptionValidator(messageDisplayer));
+        BlockServerNameValidator configDescritpionRules =
+                Configurations.getInstance().variables().configDescritpionRules.getValue();
+        strategy.setBeforeSetValidator(new SummaryDescriptionValidator(messageDisplayer, configDescritpionRules));
 		
 		bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(txtName), BeanProperties.value("name").observe(config));
 		bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(txtDescription), BeanProperties.value("description").observe(config), strategy, null);
@@ -134,5 +140,10 @@ public class SummaryPanel extends Composite {
 		String[] names = SynopticInfo.names(available).toArray(new String[0]);
 		Arrays.sort(names);
 		cmboSynoptic.setInput(names);
+        selectDefaultSynoptic();
 	}
+
+    private void selectDefaultSynoptic() {
+        cmboSynoptic.setSelection(new StructuredSelection(Synoptic.getInstance().getDefaultSynoptic().name()));
+    }
 }

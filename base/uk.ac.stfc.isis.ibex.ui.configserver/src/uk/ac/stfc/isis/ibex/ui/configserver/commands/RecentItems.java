@@ -41,8 +41,7 @@ import org.eclipse.swt.widgets.MenuItem;
 import uk.ac.stfc.isis.ibex.configserver.Configurations;
 
 /**
- * Class to add a recently used configurations menu item
- * @author sjb99183
+ * Class to add a recently used configurations menu item.
  *
  */
 public class RecentItems extends ContributionItem {
@@ -75,7 +74,8 @@ public class RecentItems extends ContributionItem {
 				item.setText(config);
 				final String target = config;
 				item.addSelectionListener(new SelectionAdapter() {
-					public void widgetSelected(SelectionEvent e) {
+					@Override
+                    public void widgetSelected(SelectionEvent e) {
 						//what to do when menu is subsequently selected.
 						configs.server().load().write(target);
 					}	

@@ -19,8 +19,9 @@
 
 package uk.ac.stfc.isis.ibex.epics.switching;
 
+import uk.ac.stfc.isis.ibex.epics.conversion.DoNothingConverter;
 import uk.ac.stfc.isis.ibex.epics.pv.Closable;
-import uk.ac.stfc.isis.ibex.epics.writing.SameTypeWritable;
+import uk.ac.stfc.isis.ibex.epics.writing.ForwardingWritable;
 import uk.ac.stfc.isis.ibex.epics.writing.Writable;
 
 /**
@@ -29,13 +30,13 @@ import uk.ac.stfc.isis.ibex.epics.writing.Writable;
  * 
  * @param <T>
  */
-public class SwitchableWritable<T> extends SameTypeWritable<T> implements Switchable {
+public class SwitchableWritable<T> extends ForwardingWritable<T, T> implements Switchable {
 
     private Switcher switcher;
     private Writable<T> source;
 
     public SwitchableWritable(Writable<T> source) {
-        super(source);
+        super(source, new DoNothingConverter<T>());
         this.source = source;
     }
 

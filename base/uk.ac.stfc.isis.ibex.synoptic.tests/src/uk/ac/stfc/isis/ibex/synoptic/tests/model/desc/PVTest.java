@@ -24,7 +24,6 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.Test;
 
-import uk.ac.stfc.isis.ibex.instrument.pv.PVType;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.IO;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.PV;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.RecordType;
@@ -37,7 +36,6 @@ public class PVTest {
     private static final String ADDRESS = "address";
     private static final String NEW_ADDRESS = "new address";
     private RecordType recordType;
-    private PVType pvType;
 
     private PV source;
 
@@ -51,9 +49,6 @@ public class PVTest {
         recordType = new RecordType();
         recordType.setIO(IO.READ);
         source.setRecordType(recordType);
-
-        pvType = PVType.LOCAL_PV;
-        source.setPvType(pvType);
     }
 
     @Test
@@ -116,25 +111,5 @@ public class PVTest {
         // Assert
         assertEquals(IO.READ, source.recordType().io());
         assertEquals(IO.WRITE, copied.recordType().io());
-    }
-
-    @Test
-    public void copied_object_has_same_pv_type_as_source_object() {
-        // Act
-        PV copied = new PV(source);
-
-        // Assert
-        assertEquals(source.getPvType(), copied.getPvType());
-    }
-
-    @Test
-    public void copied_object_has_pv_type_that_is_not_linked_to_source_object() {
-        // Act
-        PV copied = new PV(source);
-        copied.setPvType(PVType.REMOTE_PV);
-
-        // Assert
-        assertEquals(PVType.LOCAL_PV, source.getPvType());
-        assertEquals(PVType.REMOTE_PV, copied.getPvType());
     }
 }

@@ -43,8 +43,14 @@ import com.google.common.base.Strings;
 import uk.ac.stfc.isis.ibex.configserver.Configurations;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Configuration;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
+import uk.ac.stfc.isis.ibex.ui.configserver.ConfigurationViewModels;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.ConfigEditorPanel;
+import uk.ac.stfc.isis.ibex.validators.MessageDisplayer;
 
+/**
+ * Dialog for editing a configuration (top dialogue that contains save and save
+ * as buttons).
+ */
 public class EditConfigDialog extends TitleAreaDialog implements
 		MessageDisplayer {
 
@@ -52,12 +58,12 @@ public class EditConfigDialog extends TitleAreaDialog implements
 	private final String title;
 	private final String subTitle;
 
+    /** Error messages that are displayed. <Source, message> */
 	private Map<String, String> errorMessages = new HashMap<String, String>();
 
 	private EditableConfiguration config;
 
 	private ConfigEditorPanel editor;
-	private boolean doSaveAs = false;
 	private boolean doAsComponent = false;
 	private boolean isComponent;
 	private boolean isBlank;
@@ -65,8 +71,21 @@ public class EditConfigDialog extends TitleAreaDialog implements
     private String blockToEdit;
 	private Button saveAsBtn;
 
-	public EditConfigDialog(Shell parentShell, String title, String subTitle,
-			EditableConfiguration config, boolean isComponent, boolean isBlank) {
+    private ConfigurationViewModels configurationViewModels;
+
+    /**
+     * @wbp.parser.constructor Constructor
+     * 
+     * @param parentShell parent shell to run dialogue
+     * @param title title of dialogue
+     * @param subTitle action being taken, e.g. editing current configuration
+     * @param config configuration being edited
+     * @param isComponent is component (as opposed to configuration)
+     * @param isBlank is blank
+     * @param configurationViewModels view model for the configuration
+     */
+    public EditConfigDialog(Shell parentShell, String title, String subTitle, EditableConfiguration config,
+            boolean isComponent, boolean isBlank, ConfigurationViewModels configurationViewModels) {
 		super(parentShell);
 		setShellStyle(getShellStyle() | SWT.DIALOG_TRIM | SWT.RESIZE);
 		this.title = title;
@@ -74,11 +93,24 @@ public class EditConfigDialog extends TitleAreaDialog implements
 		this.config = config;
 		this.isComponent = isComponent;
 		this.isBlank = isBlank;
+        this.configurationViewModels = configurationViewModels;
 	}
 
+    /**
+     * Constructor with Block name to edit set.
+     * 
+     * @param parentShell parent shell to run dialogue
+     * @param title title of dialogue
+     * @param subTitle action being taken, e.g. editing current configuration
+     * @param config configuration being edited
+     * @param isComponent is component (as opposed to configuration)
+     * @param isBlank is blank
+     * @param blockName black name to edit
+     * @param configurationViewModels view model for the configuration
+     */
     public EditConfigDialog(Shell parentShell, String title, String subTitle, EditableConfiguration config,
-            boolean isComponent, boolean isBlank, String blockName) {
-        this(parentShell, title, subTitle, config, isComponent, isBlank);
+            boolean isComponent, boolean isBlank, String blockName, ConfigurationViewModels configurationViewModels) {
+        this(parentShell, title, subTitle, config, isComponent, isBlank, configurationViewModels);
         this.blockToEdit = blockName;
         
     }
@@ -102,7 +134,7 @@ public class EditConfigDialog extends TitleAreaDialog implements
     
 	@Override
 	protected Control createDialogArea(Composite parent) {
-		editor = new ConfigEditorPanel(parent, SWT.NONE, this, isComponent);
+        editor = new ConfigEditorPanel(parent, SWT.NONE, this, isComponent, configurationViewModels);
 		editor.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		setTitle(subTitle);
 		editor.setConfigToEdit(config);
@@ -117,9 +149,9 @@ public class EditConfigDialog extends TitleAreaDialog implements
 	@Override
 	protected void createButtonsForButtonBar(Composite parent) {
 		if (!isBlank && !this.config.getName().isEmpty()) { 
-			createButton(parent, IDialogConstants.OK_ID, "Save", true);
+            createButton(parent, IDialogConstants.OK_ID, "Save", true);
 		}
-        
+
 		saveAsBtn = createButton(parent, IDialogConstants.CLIENT_ID + 1, "Save as ...", false);
 		saveAsBtn.addSelectionListener(new SelectionAdapter() {
 			@Override
@@ -147,6 +179,9 @@ public class EditConfigDialog extends TitleAreaDialog implements
 		});
 
 		createButton(parent, IDialogConstants.CANCEL_ID, "Cancel", false);
+
+        // Show any error message and set buttons after creating those buttons
+        this.showErrorMessage();
 	}
 
 	@Override
@@ -167,7 +202,9 @@ public class EditConfigDialog extends TitleAreaDialog implements
         openEditBlockDialog();
 	}
 
-	// Show the current error messages
+    /**
+     * Show the current error messages.
+     */
 	private void showErrorMessage() {
 		StringBuilder sb = new StringBuilder();
 		for (String key : errorMessages.keySet()) {
@@ -196,26 +233,40 @@ public class EditConfigDialog extends TitleAreaDialog implements
 		}
 	}
 
+    /**
+     * 
+     * @return the configuration
+     */
 	public Configuration getConfig() {
 		return config.asConfiguration();
 	}
 
+    /**
+     * 
+     * @return the component being edited
+     */
 	public Configuration getComponent() {
 		return config.asComponent();
 	}
 
-	public boolean doSaveAs() {
-		return doSaveAs;
-	}
-
+    /**
+     * 
+     * @return whether dialogue is for editing a component
+     */
 	public boolean doAsComponent() {
 		return doAsComponent;
 	}
 
+    /**
+     * Open tab for blocks.
+     */
     public void openBlocksTab() {
         editor.openTab(ConfigEditorPanel.BLOCK_TAB_NAME);
     }
 
+    /**
+     * Open edit block dialogue.
+     */
     public void openEditBlockDialog() {
         editor.openEditBlockDialog(this.blockToEdit);
     }

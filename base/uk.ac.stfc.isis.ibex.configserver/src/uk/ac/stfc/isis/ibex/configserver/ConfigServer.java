@@ -28,15 +28,16 @@ import uk.ac.stfc.isis.ibex.configserver.configuration.PV;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableIoc;
 import uk.ac.stfc.isis.ibex.configserver.internal.FilteredIocs;
 import uk.ac.stfc.isis.ibex.configserver.internal.IocStateEditingConverter;
+import uk.ac.stfc.isis.ibex.epics.conversion.DoNothingConverter;
 import uk.ac.stfc.isis.ibex.epics.observing.ConvertingObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.epics.pv.Closer;
+import uk.ac.stfc.isis.ibex.epics.writing.ClosableSameTypeWriter;
 import uk.ac.stfc.isis.ibex.epics.writing.ConfigurableWriter;
 import uk.ac.stfc.isis.ibex.epics.writing.LoggingForwardingWritable;
 import uk.ac.stfc.isis.ibex.epics.writing.LoggingForwardingWriter;
 import uk.ac.stfc.isis.ibex.epics.writing.Writable;
 import uk.ac.stfc.isis.ibex.epics.writing.Writer;
-import uk.ac.stfc.isis.ibex.epics.writing.ClosableSameTypeWriter;
 import uk.ac.stfc.isis.ibex.epics.writing.WritingSetCommand;
 import uk.ac.stfc.isis.ibex.model.SetCommand;
 
@@ -55,7 +56,17 @@ public class ConfigServer extends Closer {
 	public ForwardingObservable<String> blockDescription(String blockName) {
 		return variables.blockDescription(blockName);
 	}
-	
+
+    /**
+     * Returns an observable conveying the alarm state of a given block.
+     * 
+     * @param blockName the name of the block
+     * @return the observable object
+     */
+    public ForwardingObservable<AlarmState> alarm(String blockName) {
+        return variables.alarm(blockName);
+    }
+
 	public String blockServerAlias(String blockName) {
 		return variables.blockServerAlias(blockName);
 	}
@@ -169,7 +180,7 @@ public class ConfigServer extends Closer {
 	}
 
 	public <T> Writable<T> log(String id, Writable<T> destination) {
-		return new LoggingForwardingWritable<>(Configurations.LOG, id, destination);
+        return new LoggingForwardingWritable<>(Configurations.LOG, id, destination, new DoNothingConverter<T>());
 	}
 	
 	public <T> Writer<T> log(String id, ConfigurableWriter<T, T> writer) {

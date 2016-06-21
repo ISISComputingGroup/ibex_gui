@@ -1,31 +1,27 @@
 
 /*
-* This file is part of the ISIS IBEX application.
-* Copyright (C) 2012-2015 Science & Technology Facilities Council.
-* All rights reserved.
-*
-* This program is distributed in the hope that it will be useful.
-* This program and the accompanying materials are made available under the
-* terms of the Eclipse Public License v1.0 which accompanies this distribution.
-* EXCEPT AS EXPRESSLY SET FORTH IN THE ECLIPSE PUBLIC LICENSE V1.0, THE PROGRAM 
-* AND ACCOMPANYING MATERIALS ARE PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES 
-* OR CONDITIONS OF ANY KIND.  See the Eclipse Public License v1.0 for more details.
-*
-* You should have received a copy of the Eclipse Public License v1.0
-* along with this program; if not, you can obtain a copy from
-* https://www.eclipse.org/org/documents/epl-v10.php or 
-* http://opensource.org/licenses/eclipse-1.0.php
-*/
+ * This file is part of the ISIS IBEX application. Copyright (C) 2012-2016
+ * Science & Technology Facilities Council. All rights reserved.
+ *
+ * This program is distributed in the hope that it will be useful. This program
+ * and the accompanying materials are made available under the terms of the
+ * Eclipse Public License v1.0 which accompanies this distribution. EXCEPT AS
+ * EXPRESSLY SET FORTH IN THE ECLIPSE PUBLIC LICENSE V1.0, THE PROGRAM AND
+ * ACCOMPANYING MATERIALS ARE PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES
+ * OR CONDITIONS OF ANY KIND. See the Eclipse Public License v1.0 for more
+ * details.
+ *
+ * You should have received a copy of the Eclipse Public License v1.0 along with
+ * this program; if not, you can obtain a copy from
+ * https://www.eclipse.org/org/documents/epl-v10.php or
+ * http://opensource.org/licenses/eclipse-1.0.php
+ */
 
 package uk.ac.stfc.isis.ibex.epics.tests.observing;
 
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyString;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Matchers.*;
+import static org.mockito.Mockito.*;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -35,8 +31,8 @@ import org.mockito.MockitoAnnotations;
 
 import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
 import uk.ac.stfc.isis.ibex.epics.conversion.Converter;
+import uk.ac.stfc.isis.ibex.epics.conversion.DoNothingConverter;
 import uk.ac.stfc.isis.ibex.epics.observing.ConvertingObservable;
-import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.Observer;
 
 // A lot of unchecked type conversions for mocking purposes
@@ -51,7 +47,6 @@ public class ConvertingObservableTest {
     private Observer<String> mockObserver;
 	
 	private TestableObservable<Integer> testObservable;	
-	private ForwardingObservable<Integer> initObservable;
 	private ConvertingObservable<Integer, String> convertObservable;
 	
 	private Converter<Integer, String> mockConverter;
@@ -68,15 +63,13 @@ public class ConvertingObservableTest {
         mockObserver = mock(Observer.class);
 		
 		testObservable = new TestableObservable<>();
-		
-		initObservable = new ForwardingObservable<Integer>(testObservable);
-		
+
 		mockConverter = mock(Converter.class);
 		when(mockConverter.convert(TestHelpers.INT_VALUE)).thenReturn(CONVERTED_VALUE);
 		when(mockConverter.convert(INT_THROWS_EXCEPTION_VALUE)).thenThrow(new ConversionException(EXCEPTION_MESSAGE));
 		when(mockConverter.convert(TestHelpers.NEW_INT_VALUE)).thenReturn(NEW_CONVERTED_VALUE);
 		
-		convertObservable = new ConvertingObservable<>(initObservable, mockConverter);
+        convertObservable = new ConvertingObservable<>(testObservable, mockConverter);
 		convertObservable.addObserver(mockObserver);
 		
 		Converter<Integer, String> mockConverterWithException = mock(Converter.class);
@@ -113,7 +106,7 @@ public class ConvertingObservableTest {
 	}
 	
 	@Test
-	public void when_watched_observable_has_connection_status_chaned_observer_has_onConnectionStatus_method_called() {
+    public void when_watched_observable_has_connection_status_changed_observer_has_onConnectionStatus_method_called() {
 		//Act
 		testObservable.setConnectionStatus(true);
 		
@@ -140,4 +133,20 @@ public class ConvertingObservableTest {
 		verify(mockObserver, times(0)).onValue(anyString());
 		verify(mockObserver, times(0)).onError(any(Exception.class));
 	}
+
+    @Test
+    public void GIVEN_observable_has_a_value_but_did_have_an_error_WHEN_observe_THEN_new_value_is_set_on_observable() {
+        // Arrange
+        testObservable.setError(TestHelpers.EXCEPTION);
+        testObservable.setValue(TestHelpers.NEW_INT_VALUE);
+        testObservable.setConnectionStatus(true);
+
+        // Act
+        ConvertingObservable<Integer, Integer> noConversionObservable =
+                new ConvertingObservable<>(testObservable, new DoNothingConverter<Integer>());
+        Integer result = noConversionObservable.getValue();
+
+        // Assert
+        assertEquals(TestHelpers.NEW_INT_VALUE, result);
+    }
 }

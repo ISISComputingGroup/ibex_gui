@@ -27,7 +27,7 @@ import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.epics.switching.ObservableFactory;
 import uk.ac.stfc.isis.ibex.epics.switching.OnInstrumentSwitch;
 import uk.ac.stfc.isis.ibex.epics.switching.WritableFactory;
-import uk.ac.stfc.isis.ibex.epics.writing.ConvertingWritable;
+import uk.ac.stfc.isis.ibex.epics.writing.ForwardingWritable;
 import uk.ac.stfc.isis.ibex.epics.writing.Writable;
 import uk.ac.stfc.isis.ibex.instrument.Instrument;
 import uk.ac.stfc.isis.ibex.instrument.InstrumentVariables;
@@ -35,7 +35,6 @@ import uk.ac.stfc.isis.ibex.instrument.channels.CompressedCharWaveformChannel;
 import uk.ac.stfc.isis.ibex.instrument.channels.DefaultChannel;
 import uk.ac.stfc.isis.ibex.instrument.channels.DefaultChannelWithoutUnits;
 import uk.ac.stfc.isis.ibex.instrument.channels.StringChannel;
-import uk.ac.stfc.isis.ibex.instrument.pv.PVType;
 import uk.ac.stfc.isis.ibex.json.JsonDeserialisingConverter;
 import uk.ac.stfc.isis.ibex.json.JsonSerialisingConverter;
 import uk.ac.stfc.isis.ibex.synoptic.SynopticInfo;
@@ -62,11 +61,9 @@ public class Variables extends InstrumentVariables {
     public static final String NONE_SYNOPTIC_NAME = "-- NONE --";
     public static final String NONE_SYNOPTIC_PV = "__BLANK__";
 
-    public final ForwardingObservable<SynopticDescription> defaultSynoptic;
+    public final Writable<String> synopticSetter;
 
-    public final Writable<String> setSynoptic;
-
-    public final Writable<Collection<String>> deleteSynoptics;
+    public final Writable<Collection<String>> synopticsDeleter;
 
     public final ForwardingObservable<Collection<SynopticInfo>> available;
 
@@ -108,92 +105,89 @@ public class Variables extends InstrumentVariables {
         
         this.pvPrefix = pvPrefix;
 
-        defaultSynoptic = convert(readCompressed(SYNOPTIC_ADDRESS + "GET_DEFAULT"), new InstrumentDescriptionParser());
-        setSynoptic = writeCompressed(SYNOPTIC_ADDRESS + "SET_DETAILS");
-        deleteSynoptics = convert(writeCompressed(SYNOPTIC_ADDRESS + "DELETE"), namesToString());
+        synopticSetter = writeCompressed(SYNOPTIC_ADDRESS + "SET_DETAILS");
+        synopticsDeleter = convert(writeCompressed(SYNOPTIC_ADDRESS + "DELETE"), namesToString());
         available = convert(readCompressed(SYNOPTIC_ADDRESS + "NAMES"), toSynopticInfo());
         synopticSchema = readCompressed(SYNOPTIC_ADDRESS + "SCHEMA");
     }
 
-	public Converter<String, Collection<SynopticInfo>> toSynopticInfo() {
+    private Converter<String, Collection<SynopticInfo>> toSynopticInfo() {
 		return new JsonDeserialisingConverter<>(SynopticInfo[].class).apply(Convert.<SynopticInfo>toCollection());
 	}	
 	
+    /**
+     * Parses all the information about a synoptic from its PV.
+     * 
+     * @param synopticPV the PV for the synoptic
+     * @return an object containing all the information about the synoptic
+     */
     public <T> ForwardingObservable<T> getSynopticDescription(String synopticPV) {
         return convert(readCompressedClosing(getFullPV(synopticPV)), new InstrumentDescriptionParser<T>());
 	}
 	
-	private String getFullPV(String synopticPV) {
-		return SYNOPTIC_ADDRESS + synopticPV + GET_SYNOPTIC;
-	}	
-	
-	private Converter<Collection<String>, String> namesToString() {
-		return Convert.toArray(new String[0]).apply(new JsonSerialisingConverter<String[]>(String[].class));
-	}
-	
-	private Writable<String> writeCompressed(String address) {
+    // The following readers/writers are for PVs on the synoptic
+
+    /**
+     * Provides an observable for the PV corresponding to the input address.
+     * 
+     * @param address the PV address
+     * @return an observable to the input PV
+     */
+    public ForwardingObservable<String> defaultReaderRemote(String address) {
+        // Synoptic variables are always remote
+        return closingObservableFactory.getSwitchableObservable(new DefaultChannel(), address);
+    }
+
+    /**
+     * Provides an observable for the PV corresponding to the input address,
+     * using a unitless channel.
+     * 
+     * @param address the PV address
+     * @return an observable to the input PV, using a unitless channel
+     */
+    public ForwardingObservable<String> defaultReaderRemoteWithoutUnits(String address) {
+        return closingObservableFactory.getSwitchableObservable(new DefaultChannelWithoutUnits(), address);
+    }
+
+    /**
+     * Provides a writable for the PV corresponding to the input address.
+     * 
+     * @param address the PV address
+     * @return a writable for the specified PV
+     */
+    public Writable<String> defaultWritableRemote(String address) {
+        return closingWritableFactory.getSwitchableWritable(new StringChannel(), address);
+    }
+
+    private String getFullPV(String synopticPV) {
+        return SYNOPTIC_ADDRESS + synopticPV + GET_SYNOPTIC;
+    }
+
+    private Converter<Collection<String>, String> namesToString() {
+        return Convert.toArray(new String[0]).apply(new JsonSerialisingConverter<String[]>(String[].class));
+    }
+
+    private Writable<String> writeCompressed(String address) {
         return switchingWritableFactory.getSwitchableWritable(new CompressedCharWaveformChannel(),
                 getPvPrefix() + address);
 	}
 	
-	private <T> Writable<T> convert(Writable<String> destination, Converter<T, String> converter) {
-		return new ConvertingWritable<>(destination, converter);
-	}	
-	
-	// Some of the synoptic PVs are common to all instruments so should be switched
-	private ForwardingObservable<String> readCompressed(String address) {
+    private <T> Writable<T> convert(Writable<String> destination, Converter<T, String> converter) {
+        return new ForwardingWritable<>(destination, converter);
+    }
+
+    // Some of the synoptic PVs are common to all instruments so should be
+    // switched
+    private ForwardingObservable<String> readCompressed(String address) {
         return switchingObservableFactory.getSwitchableObservable(new CompressedCharWaveformChannel(),
                 getPvPrefix() + address);
-	}
-	
-	private ForwardingObservable<String> readCompressedClosing(String address) {
+    }
+
+    private ForwardingObservable<String> readCompressedClosing(String address) {
         return closingObservableFactory.getSwitchableObservable(new CompressedCharWaveformChannel(),
                 getPvPrefix() + address);
-	}	
-	
-	// The following readers/writers are for PVs on the synoptic
-	
-	public ForwardingObservable<String> defaultReader(String address) {
-        return closingObservableFactory.getSwitchableObservable(new DefaultChannel(), getPvPrefix() + address);
-	}
-
-    public ForwardingObservable<String> defaultReader(String address, PVType type) {
-        // If it is local append the PV prefix, otherwise don't
-        if (type == PVType.LOCAL_PV) {
-            return closingObservableFactory.getSwitchableObservable(new DefaultChannel(), getPvPrefix() + address);
-        } else {
-            return closingObservableFactory.getSwitchableObservable(new DefaultChannel(), address);
-        }
     }
 
-	public ForwardingObservable<String> defaultReaderWithoutUnits(String address) {
-        return closingObservableFactory.getSwitchableObservable(new DefaultChannelWithoutUnits(),
-                getPvPrefix() + address);
-	}
-	
-    public ForwardingObservable<String> defaultReaderWithoutUnits(String address, PVType type) {
-        // If it is local append the PV prefix, otherwise don't
-        if (type == PVType.LOCAL_PV) {
-            return closingObservableFactory.getSwitchableObservable(new DefaultChannelWithoutUnits(),
-                    getPvPrefix() + address);
-        } else {
-            return closingObservableFactory.getSwitchableObservable(new DefaultChannelWithoutUnits(), address);
-        }
-    }
-
-	public Writable<String> defaultWritable(String address) {
-        return closingWritableFactory.getSwitchableWritable(new StringChannel(), getPvPrefix() + address);
-	}
-	
-	public Writable<String> defaultWritable(String address, PVType type) {
-        // If it is local append the PV prefix, otherwise don't
-        if (type == PVType.LOCAL_PV) {
-            return closingWritableFactory.getSwitchableWritable(new StringChannel(), getPvPrefix() + address);
-        } else {
-            return closingWritableFactory.getSwitchableWritable(new StringChannel(), address);
-        }
-	}
-	
     private String getPvPrefix() {
         if (pvPrefix == null) {
             return Instrument.getInstance().getPvPrefix();
@@ -201,5 +195,4 @@ public class Variables extends InstrumentVariables {
             return pvPrefix;
         }
     }
-
 }

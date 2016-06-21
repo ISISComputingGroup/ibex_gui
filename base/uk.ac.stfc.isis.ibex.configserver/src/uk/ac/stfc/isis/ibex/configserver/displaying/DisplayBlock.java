@@ -19,11 +19,9 @@
 
 package uk.ac.stfc.isis.ibex.configserver.displaying;
 
-import org.eclipse.swt.graphics.Color;
-import org.eclipse.wb.swt.SWTResourceManager;
-
 import com.google.common.base.Strings;
 
+import uk.ac.stfc.isis.ibex.configserver.AlarmState;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Block;
 import uk.ac.stfc.isis.ibex.epics.observing.BaseObserver;
 import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
@@ -31,33 +29,28 @@ import uk.ac.stfc.isis.ibex.instrument.Instrument;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 
 /**
- * Contains the functionality to display a Blocks value and run-control settings
- * in a GUI.
+ * Contains the functionality to display a Block's value and run-control
+ * settings in a GUI.
  * 
- * Rather than inheriting from Block it holds a reference to the Block as this
+ * Rather than inheriting from Block, it holds a reference to the Block as this
  * provides better encapsulation of Block's functionality.
  *
  */
 public class DisplayBlock extends ModelObject {
-
-    public static final String TEXT_COLOR = "textColor";
-    public static final String BACKGROUND_COLOR = "backgroundColor";
-
-    public static final Color DARK_RED = SWTResourceManager.getColor(192, 0, 0);
-    public static final Color WHITE = SWTResourceManager.getColor(255, 255, 255);
-    public static final Color BLACK = SWTResourceManager.getColor(0, 0, 0);
-
     private final String blockServerAlias;
-
     private final Block block;
-
     private String value;
     private String description;
 
     /**
-     * Indicates whether the block in currently within run-control range
+     * Indicates whether the block is currently within run-control range.
      */
-    private Boolean inRange;
+    private boolean inRange;
+
+    /**
+     * Indicates whether the block is currently disconnected.
+     */
+    private boolean disconnected;
 
     /**
      * The current low limit run-control setting. This can be different from
@@ -75,10 +68,23 @@ public class DisplayBlock extends ModelObject {
      * Specifies whether the block is currently under run-control. This can be
      * different from what is set in the configuration.
      */
-    private Boolean runcontrol;
+    private boolean runcontrolEnabled;
 
-    private Color textColor;
-    private Color backgroundColor;
+    /**
+     * Specifies the overall run-control state, for example: enabled and in
+     * range.
+     */
+    private RuncontrolState runcontrolState = RuncontrolState.DISABLED;
+
+    /**
+     * Specifies the block state, such as disconnected or under major alarm.
+     */
+    private BlockState blockState = BlockState.DEFAULT;
+
+    /**
+     * Saves the last alarm state (to restore after disconnect).
+     */
+    private BlockState lastAlarmState = BlockState.DEFAULT;
 
     private final BaseObserver<String> valueAdapter = new BaseObserver<String>() {
         @Override
@@ -93,13 +99,19 @@ public class DisplayBlock extends ModelObject {
 
         @Override
         public void onConnectionStatus(boolean isConnected) {
+            setDisconnected(!isConnected);
             if (!isConnected) {
                 setValue("disconnected");
+                setBlockState(BlockState.DISCONNECTED);
+            } else {
+                setBlockState(lastAlarmState);
             }
+            setRuncontrolState(checkRuncontrolState());
         }
     };
 
     private final BaseObserver<String> descriptionAdapter = new BaseObserver<String>() {
+
         @Override
         public void onValue(String value) {
             setDescription(value);
@@ -118,6 +130,30 @@ public class DisplayBlock extends ModelObject {
         }
     };
 
+    private final BaseObserver<AlarmState> alarmAdapter = new BaseObserver<AlarmState>() {
+
+        @Override
+        public void onValue(AlarmState value) {
+            BlockState alarm = BlockState.DEFAULT;
+            if (value.name().equals("MINOR")) {
+                alarm = BlockState.MINOR_ALARM;
+            } else if (value.name().equals("MAJOR")) {
+                alarm = BlockState.MAJOR_ALARM;
+            }
+            lastAlarmState = alarm;
+            setBlockState(alarm);
+        }
+
+        @Override
+        public void onError(Exception e) {
+            setValue("error");
+        }
+
+        @Override
+        public void onConnectionStatus(boolean isConnected) {
+        }
+    };
+
     private final BaseObserver<String> inRangeAdapter = new BaseObserver<String>() {
         @Override
         public void onValue(String value) {
@@ -127,6 +163,7 @@ public class DisplayBlock extends ModelObject {
                 // If in doubt set to true
                 setInRange(true);
             }
+            setRuncontrolState(checkRuncontrolState());
         }
 
         @Override
@@ -178,9 +215,10 @@ public class DisplayBlock extends ModelObject {
             if (value.equals("YES")) {
                 setEnabled(true);
             } else {
-                // If in doubt set to false
+            	// If in doubt set to false
                 setEnabled(false);
             }
+            setRuncontrolState(checkRuncontrolState());
         }
 
         @Override
@@ -194,8 +232,24 @@ public class DisplayBlock extends ModelObject {
         }
     };
 
+    /**
+     * Instantiates a new Displayblock.
+     * 
+     * @param block the block
+     * @param valueSource the observable holding the block's value
+     * @param descriptionSource the observable holding the block's description
+     * @param alarmSource the observable holding the block's alarm state
+     * @param inRangeSource the observable holding the block's inRange status
+     * @param lowLimitSource the observable holding the block's low limit
+     *            variable
+     * @param highLimitSource the observable holding the block's high limit
+     *            variable
+     * @param enabledSource the observable holding the block's enabled status
+     * @param blockServerAlias the PVs alias on the block server
+     */
     public DisplayBlock(Block block, ForwardingObservable<String> valueSource,
             ForwardingObservable<String> descriptionSource,
+            ForwardingObservable<AlarmState> alarmSource,
             ForwardingObservable<String> inRangeSource,
             ForwardingObservable<String> lowLimitSource,
             ForwardingObservable<String> highLimitSource,
@@ -205,27 +259,37 @@ public class DisplayBlock extends ModelObject {
 
         valueSource.addObserver(valueAdapter);
         descriptionSource.addObserver(descriptionAdapter);
+        alarmSource.addObserver(alarmAdapter);
         inRangeSource.addObserver(inRangeAdapter);
         lowLimitSource.addObserver(lowLimitAdapter);
         highLimitSource.addObserver(highLimitAdapter);
         enabledSource.addObserver(enabledAdapter);
-
-        // Initialise text and background colours
-        setColors(true);
     }
 
+    /**
+     * @return the block's name
+     */
     public String getName() {
         return block.getName();
     }
 
+    /**
+     * @return the block's current value
+     */
     public String getValue() {
         return value;
     }
 
+    /**
+     * @return the block's description
+     */
     public String getDescription() {
         return description;
     }
 
+    /**
+     * @return whether the block is visible
+     */
     public Boolean getIsVisible() {
         return block.getIsVisible();
     }
@@ -255,7 +319,7 @@ public class DisplayBlock extends ModelObject {
      * @return whether run-control is currently enabled.
      */
     public Boolean getEnabled() {
-        return runcontrol;
+        return runcontrolEnabled;
     }
 
     /**
@@ -279,12 +343,18 @@ public class DisplayBlock extends ModelObject {
         return block.getRCEnabled();
     }
 
-    public Color getTextColor() {
-        return textColor;
+    /**
+     * @return the overall run-control status.
+     */
+    public RuncontrolState getRuncontrolState() {
+        return runcontrolState;
     }
 
-    public Color getBackgroundColor() {
-        return backgroundColor;
+    /**
+     * @return the overall block status.
+     */
+    public BlockState getBlockState() {
+        return blockState;
     }
 
     public String blockServerAlias() {
@@ -299,8 +369,11 @@ public class DisplayBlock extends ModelObject {
         firePropertyChange("description", this.description, this.description = Strings.nullToEmpty(description));
     }
 
+    private synchronized void setDisconnected(Boolean disconnected) {
+        this.disconnected = disconnected;
+    }
+
     private synchronized void setInRange(Boolean inRange) {
-        setColors(inRange);
         firePropertyChange("inRange", this.inRange, this.inRange = inRange);
     }
 
@@ -313,24 +386,31 @@ public class DisplayBlock extends ModelObject {
     }
 
     private synchronized void setEnabled(Boolean enabled) {
-        firePropertyChange("enabled", this.runcontrol, this.runcontrol = enabled);
+        firePropertyChange("enabled", this.runcontrolEnabled, this.runcontrolEnabled = enabled);
     }
 
-    private void setColors(boolean inRange) {
-        if (inRange) {
-            setTextColor(BLACK);
-            setBackgroundColor(WHITE);
-        } else {
-            setTextColor(WHITE);
-            setBackgroundColor(DARK_RED);
+    private void setBlockState(BlockState blockState) {
+        firePropertyChange("blockState", this.blockState, this.blockState = blockState);
+    }
+
+    private void setRuncontrolState(RuncontrolState state) {
+        firePropertyChange("runcontrolState", this.runcontrolState,
+                this.runcontrolState = state);
+    }
+
+    private RuncontrolState checkRuncontrolState() {
+        if (disconnected) {
+            return RuncontrolState.DISCONNECTED;
         }
-    }
 
-    private synchronized void setTextColor(Color color) {
-        firePropertyChange(TEXT_COLOR, this.textColor, this.textColor = color);
-    }
+        if (!runcontrolEnabled) {
+            return RuncontrolState.DISABLED;
+        }
 
-    private synchronized void setBackgroundColor(Color color) {
-        firePropertyChange(BACKGROUND_COLOR, this.backgroundColor, this.backgroundColor = color);
+        if (inRange) {
+            return RuncontrolState.ENABLED_IN_RANGE;
+        } else {
+            return RuncontrolState.ENABLED_OUT_RANGE;
+        }
     }
 }

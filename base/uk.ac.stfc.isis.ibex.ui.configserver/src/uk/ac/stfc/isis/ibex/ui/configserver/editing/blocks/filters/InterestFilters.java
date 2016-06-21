@@ -1,7 +1,7 @@
 
 /*
 * This file is part of the ISIS IBEX application.
-* Copyright (C) 2012-2015 Science & Technology Facilities Council.
+* Copyright (C) 2012-2016 Science & Technology Facilities Council.
 * All rights reserved.
 *
 * This program is distributed in the hope that it will be useful.
@@ -19,6 +19,9 @@
 
 package uk.ac.stfc.isis.ibex.ui.configserver.editing.blocks.filters;
 
+/**
+ * The filter values allowed based on the interest of PVs.
+ */
 public enum InterestFilters {
 	HIGH ("High"),
 	MEDIUM ("Medium"),
@@ -26,17 +29,41 @@ public enum InterestFilters {
 	ALL ("All");
 	
 	private String displayName;
+    private static InterestFilters lastSelection;
 	
+    /**
+     * Associate the strings to display.
+     * 
+     * @param displayName - the string to display
+     */
 	InterestFilters(String displayName) {
 		this.displayName = displayName;
-	}
-	
-	public String display() {
-		return displayName;
 	}
 	
 	@Override
 	public String toString() {
 		return displayName;
 	}
+
+    /**
+     * Return either the default or the last value that was selected.
+     * 
+     * @return - the filter selection to use
+     */
+    public static InterestFilters lastValue() {
+        if (lastSelection == null) {
+            // Provide a default value
+            return InterestFilters.HIGH;
+        }
+        return lastSelection;
+    }
+
+    /**
+     * Allow for the filter selection value to be updated.
+     * 
+     * @param interestFilter - the filter that was selected most recently
+     */
+    public static void setSelectedValue(InterestFilters interestFilter) {
+        lastSelection = interestFilter;
+    }
 }

@@ -32,7 +32,7 @@ public class InstrumentInfo {
 	
 	public InstrumentInfo(String name) {
 		this.name = name;
-        assert (hostName().matches(validInstrumentRegex()));
+        assert (hasValidHostName());
 	}
 
 	public String name() {

@@ -40,13 +40,15 @@ import uk.ac.stfc.isis.ibex.epics.pv.PVAddress;
 import uk.ac.stfc.isis.ibex.epics.switching.ObservableFactory;
 import uk.ac.stfc.isis.ibex.epics.switching.OnInstrumentSwitch;
 import uk.ac.stfc.isis.ibex.epics.switching.WritableFactory;
-import uk.ac.stfc.isis.ibex.epics.writing.ConvertingWritable;
+import uk.ac.stfc.isis.ibex.epics.writing.ForwardingWritable;
 import uk.ac.stfc.isis.ibex.epics.writing.Writable;
 import uk.ac.stfc.isis.ibex.instrument.Instrument;
 import uk.ac.stfc.isis.ibex.instrument.InstrumentVariables;
 import uk.ac.stfc.isis.ibex.instrument.channels.CompressedCharWaveformChannel;
 import uk.ac.stfc.isis.ibex.instrument.channels.DefaultChannel;
+import uk.ac.stfc.isis.ibex.instrument.channels.EnumChannel;
 import uk.ac.stfc.isis.ibex.instrument.channels.StringChannel;
+import uk.ac.stfc.isis.ibex.validators.BlockServerNameValidator;
 
 /**
  * Holds all the Observables and Writables for the PVs associated with the
@@ -69,7 +71,12 @@ public class ConfigServerVariables extends InstrumentVariables {
 	public final ForwardingObservable<Collection<ConfigInfo>> configsInfo;
 	public final ForwardingObservable<Collection<ConfigInfo>> componentsInfo;
 
+    /** Rules from the block server for how the block should be named. */
 	public final ForwardingObservable<BlockRules> blockRules;
+    /** Rules from the block server for how the group should be named. */
+    public final ForwardingObservable<BlockServerNameValidator> groupRules;
+    /** Rules from the description should be formed . */
+    public final ForwardingObservable<BlockServerNameValidator> configDescritpionRules;
 	
 	public final ForwardingObservable<Collection<Component>> components;
 	public final ForwardingObservable<Collection<EditableIoc>> iocs;
@@ -94,6 +101,13 @@ public class ConfigServerVariables extends InstrumentVariables {
 	public final ForwardingObservable<Collection<IocState>> iocStates;
 	public final ForwardingObservable<Collection<String>> protectedIocs;
 	
+    /**
+     * Set the configuration server variables from the block server using the
+     * converters.
+     * 
+     * @param converters converters to use to convert values from block server
+     *            to class instances for variables
+     */
     public ConfigServerVariables(Converters converters) {
 		this.converters = converters;
 		
@@ -104,7 +118,10 @@ public class ConfigServerVariables extends InstrumentVariables {
 		configsInfo = convert(readCompressed(blockServerAddresses.configs()), converters.toConfigsInfo());
 		componentsInfo = convert(readCompressed(blockServerAddresses.components()), converters.toConfigsInfo());
 		
-		blockRules = convert(readCompressed(blockServerAddresses.blockRules()), converters.toBlockRules());	
+        blockRules = convert(readCompressed(blockServerAddresses.blockRules()), converters.toBlockRules());
+        groupRules = convert(readCompressed(blockServerAddresses.groupRules()), converters.toBlockServerTextValidor());
+        configDescritpionRules = convert(readCompressed(blockServerAddresses.configDescritpionRules()),
+                converters.toBlockServerTextValidor());
 		
 		components = convert(readCompressed(blockServerAddresses.components()), converters.toComponents());
 		iocs = convert(readCompressed(blockServerAddresses.iocs()), converters.toIocs());
@@ -155,7 +172,18 @@ public class ConfigServerVariables extends InstrumentVariables {
         return closingObsFactory.getSwitchableObservable(new StringChannel(),
                 addPrefix(blockServerAddresses.blockDescription(blockServerAlias(blockName))));
 	}
-	
+
+    /**
+     * Returns an observable conveying the alarm state of a given block.
+     * 
+     * @param blockName the name of the block
+     * @return the observable object
+     */
+    public ForwardingObservable<AlarmState> alarm(String blockName) {
+        return closingObsFactory.getSwitchableObservable(new EnumChannel<>(AlarmState.class),
+                addPrefix(blockServerAddresses.blockAlarm(blockServerAlias(blockName))));
+    }
+
 	public String blockServerAlias(String name) {
 		return blockServerAddresses.blockAlias(name);
 	}
@@ -171,7 +199,7 @@ public class ConfigServerVariables extends InstrumentVariables {
 	}
 	
 	private <T> Writable<T> convert(Writable<String> destination, Converter<T, String> converter) {
-		return new ConvertingWritable<>(destination, converter);
+        return new ForwardingWritable<>(destination, converter);
 	}
 
 	private ForwardingObservable<String> readCompressed(String address) {

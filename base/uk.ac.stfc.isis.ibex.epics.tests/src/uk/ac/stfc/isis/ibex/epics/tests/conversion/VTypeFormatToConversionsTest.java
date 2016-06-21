@@ -19,8 +19,11 @@
 
 package uk.ac.stfc.isis.ibex.epics.tests.conversion;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
+import org.epics.util.array.ListByte;
+import org.epics.util.array.ListFloat;
+import org.epics.util.text.NumberFormats;
 import org.epics.vtype.Display;
 import org.epics.vtype.VByteArray;
 import org.epics.vtype.VDouble;
@@ -30,9 +33,6 @@ import org.epics.vtype.VInt;
 import org.epics.vtype.VNumber;
 import org.epics.vtype.VType;
 import org.epics.vtype.ValueFactory;
-import org.epics.util.array.ListByte;
-import org.epics.util.array.ListFloat;
-import org.epics.util.text.NumberFormats;
 import org.junit.Test;
 
 import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
@@ -43,7 +43,7 @@ import uk.ac.stfc.isis.ibex.epics.conversion.VTypeFormat;
  * This class is responsible for testing the various to conversions 
  *
  */
-@SuppressWarnings({"checkstyle:magicnumber", "checkstyle:localvariablename", "checkstyle:methodname"})
+@SuppressWarnings({ "checkstyle:magicnumber", "checkstyle:localvariablename", "checkstyle:methodname" })
 public class VTypeFormatToConversionsTest {
 
 	// Byte array values missing as unable to produce from ValueFactory

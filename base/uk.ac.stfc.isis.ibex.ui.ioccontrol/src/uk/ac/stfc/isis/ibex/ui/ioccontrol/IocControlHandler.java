@@ -40,8 +40,7 @@ import uk.ac.stfc.isis.ibex.configserver.Configurations;
 import uk.ac.stfc.isis.ibex.configserver.IocControl;
 
 /**
- * Command to display the IOC control dialog
- * @author sjb99183
+ * Command to display the IOC control dialog.
  *
  */
 public class IocControlHandler implements IHandler {

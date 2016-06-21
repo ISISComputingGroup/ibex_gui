@@ -34,6 +34,9 @@ if not exist "%INSTALLDIR%\Client" (
     mkdir %INSTALLDIR%\Client
 )
 
+REM Set a symlink for folder BUILD_LATEST to point to most recent build
+set INSTALLLINKDIR=%INSTALLBASEDIR%\BUILD_LATEST
+
 robocopy %CD%\..\base\uk.ac.stfc.isis.ibex.client.product\target\products\ibex.product\win32\win32\x86_64 %INSTALLDIR%\Client /MIR /R:1 /NFL /NDL /NP
 if %errorlevel% geq 4 (
     if not "%INSTALLDIR%" == "" (
@@ -43,6 +46,12 @@ if %errorlevel% geq 4 (
     @echo Client copy failed
     exit /b 1
 )
+
+if exist "%INSTALLLINKDIR%" (
+    rmdir "%INSTALLLINKDIR%"
+)
+
+mklink /J "%INSTALLLINKDIR%" "%INSTALLDIR%"
 
 REM Copy the install script across
 cd %BASEDIR%

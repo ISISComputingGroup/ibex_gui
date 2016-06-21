@@ -1,7 +1,7 @@
 
 /*
 * This file is part of the ISIS IBEX application.
-* Copyright (C) 2012-2015 Science & Technology Facilities Council.
+* Copyright (C) 2012-2016 Science & Technology Facilities Council.
 * All rights reserved.
 *
 * This program is distributed in the hope that it will be useful.
@@ -19,23 +19,50 @@
 
 package uk.ac.stfc.isis.ibex.ui.configserver.editing.blocks.filters;
 
+/**
+ * The filter values allowed based on the source of PVs.
+ */
 public enum SourceFilters {
 	ALL ("All IOCs"),
 	ACTIVE ("Active IOCs"),
 	ASSOCIATED ("Config IOCs");
 	
 	private String displayName;
+    private static SourceFilters lastSelection;
 	
+    /**
+     * Associate the strings to display.
+     * 
+     * @param displayName - the string to display
+     */
 	SourceFilters(String displayName) {
 		this.displayName = displayName;
-	}
-	
-	public String display() {
-		return displayName;
 	}
 	
 	@Override
 	public String toString() {
 		return displayName;
 	}
+
+    /**
+     * Return either the default or the last value that was selected.
+     * 
+     * @return - the filter selection to use
+     */
+    public static SourceFilters lastValue() {
+        if (lastSelection == null) {
+            // Provide a default value
+            return SourceFilters.ACTIVE;
+        }
+        return lastSelection;
+    }
+
+    /**
+     * Allow for the filter selection value to be updated.
+     * 
+     * @param pvFilter - the filter that was selected most recently
+     */
+    public static void setSelectedValue(SourceFilters pvFilter) {
+        lastSelection = pvFilter;
+    }
 }

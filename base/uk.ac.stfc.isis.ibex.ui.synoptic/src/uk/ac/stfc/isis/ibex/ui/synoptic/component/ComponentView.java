@@ -24,7 +24,11 @@ import org.eclipse.swt.widgets.Composite;
 import uk.ac.stfc.isis.ibex.synoptic.model.Component;
 import uk.ac.stfc.isis.ibex.ui.synoptic.beamline.BeamlineComposite;
 import uk.ac.stfc.isis.ibex.ui.synoptic.beamline.BeamlineCompositeContainer;
+import uk.ac.stfc.isis.ibex.ui.synoptic.component.icons.ComponentIcons;
 
+/**
+ * The view in the synoptic perspective of the associated components.
+ */
 public final class ComponentView {
 	
 	private ComponentView() { }
@@ -46,7 +50,7 @@ public final class ComponentView {
 	private static BasicComponent createBasicComponent(Composite parent, Component component) {
 		BasicComponent componentView = new BasicComponent(parent);
 		componentView.setName(component.name());
-		componentView.setImage(ComponentIcons.iconForComponent(component));
+        componentView.setImage(ComponentIcons.iconForType(component.type()));
 		componentView.setProperties(component);
 		if (component.target() != null) {
 			componentView.setTargetName(component.target().name());

@@ -116,6 +116,7 @@
 					<sourceDirectory>src</sourceDirectory>
 					<!-- <consoleOutput>true</consoleOutput> -->
 					<configLocation>checkstyle.xml</configLocation>
+                    <suppressionsLocation>suppressions.xml</suppressionsLocation>
 					<failOnViolation>false</failOnViolation>
 					<failsOnError>false</failsOnError>
 					<linkXRef>true</linkXRef>
@@ -231,7 +232,8 @@
 		<module>../uk.ac.stfc.isis.ibex.log.tests</module>
 		<module>../uk.ac.stfc.isis.ibex.experimentdetails.tests</module>
 		<module>../uk.ac.stfc.isis.ibex.validators.tests</module>
-		<module>../uk.ac.stfc.isis.ibex.devicescreens</module>
+		<module>../uk.ac.stfc.isis.ibex.devicescreens</module>	
+		<module>../uk.ac.stfc.isis.ibex.ui.mainmenu.tests</module>
 	</modules>
 </project>
 

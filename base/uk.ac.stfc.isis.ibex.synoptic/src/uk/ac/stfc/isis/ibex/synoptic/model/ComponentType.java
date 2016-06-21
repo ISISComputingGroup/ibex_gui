@@ -37,8 +37,10 @@ public enum ComponentType {
 	MONITOR,
 	SAMPLESTACK,
 	DAE (new PerspectiveTarget("DAE")),
+    DANFSYIK,
 	CAEN,
 	KEPCO,
+    TDK_LAMBDA_GENESYS,
 	BEAMSTOP, 
 	MOVINGMONITOR,
 	ROTATINGBENCH,
@@ -50,7 +52,8 @@ public enum ComponentType {
 	EUROTHERM,
 	PINHOLESELECTOR,
 	GONIOMETER (new ViewTarget("Goniometer")), 
-	SINGLESTAGE;
+	SINGLESTAGE,
+	LAKESHORE;
 	
 	private Target target;
 

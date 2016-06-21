@@ -39,10 +39,7 @@ import org.eclipse.ui.PlatformUI;
 import uk.ac.stfc.isis.ibex.logger.IRecentLog;
 
 /**
- * Command to display the IOC control dialog
- * 
- * @author sjb99183
- * 
+ * Command to display the IOC control dialog.
  */
 public class LoggerHandler implements IHandler {
 	private static IRecentLog model;

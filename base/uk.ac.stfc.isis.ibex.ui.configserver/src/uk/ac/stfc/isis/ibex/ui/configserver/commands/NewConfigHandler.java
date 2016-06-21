@@ -25,9 +25,10 @@ import org.eclipse.jface.window.Window;
 
 import uk.ac.stfc.isis.ibex.configserver.configuration.Configuration;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
-import uk.ac.stfc.isis.ibex.epics.adapters.UpdatedObservableAdapter;
 import uk.ac.stfc.isis.ibex.model.Awaited;
 import uk.ac.stfc.isis.ibex.model.UpdatedValue;
+import uk.ac.stfc.isis.ibex.ui.configserver.ConfigurationServerUI;
+import uk.ac.stfc.isis.ibex.ui.configserver.ConfigurationViewModels;
 import uk.ac.stfc.isis.ibex.ui.configserver.dialogs.EditConfigDialog;
 
 public class NewConfigHandler extends ConfigHandler<Configuration> {
@@ -41,24 +42,27 @@ public class NewConfigHandler extends ConfigHandler<Configuration> {
 
 	
 	@Override
-	public Object execute(ExecutionEvent event) throws ExecutionException {		
-		UpdatedValue<EditableConfiguration> config = new UpdatedObservableAdapter<>(EDITING.blankConfig());
+	public Object execute(ExecutionEvent event) throws ExecutionException {
+        ConfigurationViewModels configurationViewModels = ConfigurationServerUI.getDefault().configurationViewModels();
+        configurationViewModels.setModelAsBlankConfig();
+        UpdatedValue<EditableConfiguration> config = configurationViewModels.getConfigModel();
 
 		if (Awaited.returnedValue(config, 1)) {
-			openDialog(config.getValue());			
+            openDialog(config.getValue(), configurationViewModels);
 		}
 		
 		return null;
 	}
 	
-	private void openDialog(EditableConfiguration config) {
-		EditConfigDialog editDialog = new EditConfigDialog(shell(), TITLE, SUB_TITLE, config, false, true);	
-		if (editDialog.open() == Window.OK) {
-			if (editDialog.doAsComponent()) {
-				SERVER.saveAsComponent().write(editDialog.getComponent());
-			} else {
-				SERVER.saveAs().write(editDialog.getConfig());
-			}
-		}
+    private void openDialog(EditableConfiguration config, ConfigurationViewModels configurationViewModels) {
+        EditConfigDialog editDialog = new EditConfigDialog(shell(), TITLE, SUB_TITLE, config, false, true,
+                configurationViewModels);
+        if (editDialog.open() == Window.OK) {
+            if (editDialog.doAsComponent()) {
+                SERVER.saveAsComponent().write(editDialog.getComponent());
+            } else {
+                SERVER.saveAs().write(editDialog.getConfig());
+            }
+        }
 	}
 }

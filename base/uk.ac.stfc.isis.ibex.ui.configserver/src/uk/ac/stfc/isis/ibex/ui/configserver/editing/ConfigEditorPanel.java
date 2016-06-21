@@ -27,7 +27,7 @@ import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.swt.widgets.TabItem;
 
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
-import uk.ac.stfc.isis.ibex.ui.configserver.dialogs.MessageDisplayer;
+import uk.ac.stfc.isis.ibex.ui.configserver.ConfigurationViewModels;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.blocks.BlocksEditorPanel;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.components.ComponentEditorPanel;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.groups.GroupsEditorPanel;
@@ -39,6 +39,7 @@ import uk.ac.stfc.isis.ibex.ui.configserver.editing.macros.MacroPanel;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.pvs.IocPVsEditorPanel;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.pvsets.IocPVSetsEditorPanel;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.summary.SummaryPanel;
+import uk.ac.stfc.isis.ibex.validators.MessageDisplayer;
 
 public class ConfigEditorPanel extends Composite {
     
@@ -55,7 +56,8 @@ public class ConfigEditorPanel extends Composite {
 	
     private TabFolder editorTabs;
 
-	public ConfigEditorPanel(Composite parent, int style, MessageDisplayer dialog, boolean isComponent) {
+    public ConfigEditorPanel(Composite parent, int style, MessageDisplayer dialog, boolean isComponent,
+            ConfigurationViewModels configurationViewModels) {
 		super(parent, style);
 		GridLayout gridLayout = new GridLayout(1, false);
 		gridLayout.verticalSpacing = 0;
@@ -82,7 +84,7 @@ public class ConfigEditorPanel extends Composite {
 		TabItem groupsTab = new TabItem(editorTabs, SWT.NONE);
 		groupsTab.setText("Groups");
 		
-		groups = new GroupsEditorPanel(editorTabs, SWT.NONE, dialog);
+        groups = new GroupsEditorPanel(editorTabs, SWT.NONE, dialog, configurationViewModels);
 		groupsTab.setControl(groups);
 		
 		if (isComponent) {
@@ -142,7 +144,6 @@ public class ConfigEditorPanel extends Composite {
 	public void setConfigToEdit(EditableConfiguration config) {		
 		iocs.setConfig(config);
 		blocks.setConfig(config);
-		groups.setConfig(config);
 		if (components != null) {
 			components.setConfig(config);
 		}

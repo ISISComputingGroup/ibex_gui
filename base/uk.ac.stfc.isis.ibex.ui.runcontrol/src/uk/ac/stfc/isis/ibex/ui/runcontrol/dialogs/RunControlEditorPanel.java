@@ -50,7 +50,7 @@ import uk.ac.stfc.isis.ibex.ui.runcontrol.RunControlViewModel;
 /**
  * A panel to edit the run control settings for the selected block.
  */
-@SuppressWarnings({"checkstyle:magicnumber"})
+@SuppressWarnings("checkstyle:magicnumber")
 public class RunControlEditorPanel extends Composite {
     private static final String RESET_ALL_DIALOG_TITLE = "Confirm Run-Control Restore";
     private static final String RESET_ALL_DIALOG_MESSAGE = "Are you sure you want to restore all run-control settings to their configuration values?";
@@ -71,7 +71,7 @@ public class RunControlEditorPanel extends Composite {
 
     private final RunControlViewModel viewModel;
 	
-    Subscription saveAsSubscription;
+    private Subscription saveAsSubscription;
 
 	private SelectionAdapter sendChanges = new SelectionAdapter() {
 		@Override
@@ -82,7 +82,6 @@ public class RunControlEditorPanel extends Composite {
 				setting.setHighLimit(txtHighLimit.getText());
 				setting.setEnabled(chkEnabled.getSelection());
 			}
-			
             viewModel.setSendEnabled(false);
 		}
 	};
@@ -171,7 +170,7 @@ public class RunControlEditorPanel extends Composite {
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
 				if (viewModel.isValid()) {
-					viewModel.setSendEnabled(true);
+					viewModel.setSendEnabled(true);		
 				}
 			}
 			
@@ -187,6 +186,7 @@ public class RunControlEditorPanel extends Composite {
 		btnSend.setText("Apply Changes");
         btnSend.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 3, 1));
 		btnSend.addSelectionListener(sendChanges);
+		parent.getShell().setDefaultButton(btnSend);
 
         grpGlobalSettings = new Group(this, SWT.NONE);
         grpGlobalSettings.setText("Global Settings");
@@ -196,7 +196,6 @@ public class RunControlEditorPanel extends Composite {
         btnRestoreAll = new Button(grpGlobalSettings, SWT.WRAP | SWT.PUSH);
         GridData gdBtnRestoreAll = new GridData(SWT.CENTER, SWT.CENTER, true, true, 1, 1);
         gdBtnRestoreAll.widthHint = 133;
-        gdBtnRestoreAll.heightHint = 36;
         btnRestoreAll.setLayoutData(gdBtnRestoreAll);
         btnRestoreAll.setText("Restore All \n Configuration Values");
         btnRestoreAll.addSelectionListener(restoreAllConfigurationValues);
@@ -268,7 +267,7 @@ public class RunControlEditorPanel extends Composite {
             // retrieved yet
         	viewModel.setTxtHighLimit(block.getHighLimit().trim());
         }
-
+        
 		chkEnabled.setSelection(block.getEnabled());
 
 		name.setText(block.getName());
