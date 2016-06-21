@@ -26,6 +26,7 @@ public class Banner implements BundleActivator {
 
 	private static Banner instance;
 	private static BundleContext context;
+	private static BannerModel model;
 	
     public static Banner getInstance() { 
     	return instance; 
@@ -37,6 +38,7 @@ public class Banner implements BundleActivator {
 		super();
 		instance = this;
         observables = new Observables();
+        model = new BannerModel();
 	}
 	
 	public Observables observables() {

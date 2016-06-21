@@ -60,6 +60,8 @@ public class BlockServerAddresses {
 	
 	private static final String DESCRIPTION_FIELD = ".DESC";
     private static final String ALARM_FIELD = ".SEVR";
+    
+    private static final String BANNER_DESCRIPTION = "BANNER_DESCRIPTION";
 	
 	private final PVAddress blockServerAddress;
 	private final PVAddress blockAlias;
@@ -147,6 +149,10 @@ public class BlockServerAddresses {
 	
 	public String blockDescription(String pvAddress) {
 		return pvAddress + DESCRIPTION_FIELD;
+	}
+
+	public String bannerDescription() {
+		return blockServerAddress.endWith(BANNER_DESCRIPTION);
 	}
 
     /**
