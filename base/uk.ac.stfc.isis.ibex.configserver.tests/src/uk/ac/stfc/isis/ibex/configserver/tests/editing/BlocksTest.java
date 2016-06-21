@@ -33,7 +33,7 @@ import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
 public class BlocksTest extends EditableConfigurationTest {
 	
 	@Test
-	public void a_new_config_has_no_blocks() {
+    public void GIVEN_new_config_THEN_list_of_blocks_is_empty() {
 		// Arrange
 		EditableConfiguration edited = edit(emptyConfig());
 		
@@ -54,7 +54,8 @@ public class BlocksTest extends EditableConfigurationTest {
     }
 
 	@Test
-    public void a_new_block_can_be_added_to_the_configuration() {
+    public void
+            GIVEN_a_new_block_and_config_WHEN_block_is_added_to_config_THEN_list_of_blocks_in_config_contains_new_block() {
 		// Arrange
 		EditableConfiguration edited = edit(emptyConfig());
         EditableBlock block = edited.createNewBlock();
@@ -67,7 +68,7 @@ public class BlocksTest extends EditableConfigurationTest {
 	}
 
     @Test
-    public void a_new_block_gets_a_unique_name() {
+    public void GIVEN_a_block_in_the_config_WHEN_another_block_is_created_THEN_those_blocks_have_unique_names() {
         // Arrange
         EditableConfiguration edited = edit(emptyConfig());
         EditableBlock block1 = edited.createNewBlock();
@@ -80,8 +81,22 @@ public class BlocksTest extends EditableConfigurationTest {
         assertNotEquals(block1.getName(), block2.getName());
     }
 
+    @Test
+    public void GIVEN_a_block_in_the_config_WHEN_trying_to_add_block_of_same_name_THEN_block_is_not_added() {
+        // Arrange
+        EditableConfiguration edited = edit(emptyConfig());
+        EditableBlock block1 = edited.createNewBlock();
+        edited.addNewBlock(block1);
+
+        // Act
+        EditableBlock block2 = edited.createNewBlock();
+        block2.setName(block1.getName());
+
+        // Assert
+        assertTrue(!edited.getEditableBlocks().contains(block2));
+    }
 	@Test
-	public void a_block_can_be_removed() {
+    public void GIVEN_a_block_is_stored_in_config_WHEN_block_is_removed_THEN_block_is_no_longer_stored_in_config() {
 		// Arrange
 		blocks.add(GAPX);
 		EditableConfiguration edited = edit(config());
@@ -95,7 +110,7 @@ public class BlocksTest extends EditableConfigurationTest {
 	}
 	
 	@Test
-	public void multiple_blocks_can_be_removed() {
+    public void WHEN_multiple_blocks_removed_from_config_THEN_all_those_blocks_no_longer_stored_in_config() {
 		// Arrange
 		blocks.add(GAPX);
 		blocks.add(GAPY);

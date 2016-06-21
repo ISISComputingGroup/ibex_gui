@@ -263,12 +263,32 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
      * @param block the EditableBlock to be added
      */
     public void addNewBlock(EditableBlock block) {
-		Collection<Block> blocksBeforeAdd = getBlocks();
-		editableBlocks.add(0, block);
-		makeBlockAvailable(block);
-		addRenameListener(block);
-		firePropertyChange("blocks", blocksBeforeAdd, getBlocks());
+        if (blockNameIsUnique(block.getName())) {
+            Collection<Block> blocksBeforeAdd = getBlocks();
+            editableBlocks.add(0, block);
+            makeBlockAvailable(block);
+            addRenameListener(block);
+            firePropertyChange("blocks", blocksBeforeAdd, getBlocks());
+        } else {
+            // raise something
+        }
 	}
+
+    /**
+     * Checks whether a given block name is unique or whether a block of that
+     * name already exists
+     * 
+     * @param name the name whose uniqueness is checked
+     * @return whether the name is unique as boolean
+     */
+    public boolean blockNameIsUnique(String name) {
+        for (EditableBlock existingBlock : editableBlocks) {
+            if (existingBlock.getName().equals(name)) {
+                return false;
+            }
+        }
+        return true;
+    }
 	
 	public void makeBlockUnavailable(EditableBlock block) {
 		availableBlocks.remove(block);
