@@ -21,13 +21,13 @@ package uk.ac.stfc.isis.ibex.ui.help;
 
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.beans.BeanProperties;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
-import org.osgi.framework.FrameworkUtil;
+import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Label;
 
 import uk.ac.stfc.isis.ibex.help.Help;
 
@@ -35,6 +35,7 @@ public class VersionPanel extends Composite {
 
 	private Label clientVersion;
 	private Label serverVersion;
+    private final String versionBundleId = "uk.ac.stfc.isis.ibex.product";
 
 	public VersionPanel(Composite parent, int style) {
 		super(parent, style);
@@ -46,7 +47,8 @@ public class VersionPanel extends Composite {
 		
 		clientVersion = new Label(this, SWT.NONE);
 		clientVersion.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		clientVersion.setText(FrameworkUtil.getBundle(getClass()).getVersion().toString());
+        final String versionText = Platform.getBundle(versionBundleId).getVersion().toString();
+        clientVersion.setText(versionText);
 		
 		Label lblServerVersion = new Label(this, SWT.NONE);
 		lblServerVersion.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
