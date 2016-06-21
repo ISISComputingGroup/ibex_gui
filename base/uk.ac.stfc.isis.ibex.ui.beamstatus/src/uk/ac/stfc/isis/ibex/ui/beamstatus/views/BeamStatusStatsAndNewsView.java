@@ -20,8 +20,6 @@ package uk.ac.stfc.isis.ibex.ui.beamstatus.views;
 
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.IToolBarManager;
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.part.ViewPart;
@@ -49,24 +47,34 @@ public class BeamStatusStatsAndNewsView extends ViewPart {
      */
     @Override
     public void createPartControl(Composite parent) {
-        GridLayout glParent = new GridLayout(2, false);
-        glParent.verticalSpacing = 0;
-        glParent.marginHeight = 0;
-        parent.setLayout(glParent);
+//        GridLayout glParent = new GridLayout(1, false);
+//        glParent.marginWidth = 0;
+//        parent.setLayout(glParent);
+//
+//        Composite content = new Composite(parent, SWT.NONE);
+//        content.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+//        GridLayout glContent = new GridLayout(1, false);
+//        glContent.verticalSpacing = 0;
+//        glContent.marginHeight = 0;
+//        content.setLayout(glContent);
+//        
+//        GridData gdContent = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
+//        gdContent.widthHint = 200;
+//        content.setLayoutData(gdContent);
+//
 
-        StatusPanel status = new StatusPanel(parent, SWT.NONE);
-        GridData gdStatus = new GridData(SWT.FILL, SWT.FILL, false, true, 1, 1);
-        gdStatus.minimumHeight = 600;
-        gdStatus.widthHint = 390;
-        gdStatus.minimumWidth = 390;
-        status.setLayoutData(gdStatus);
-
-        McrNewsPanel news = new McrNewsPanel(parent, SWT.NONE);
-        news.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-
-        createActions();
-        initializeToolBar();
-        initializeMenu();
+//        parent.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, true, 1, 1));
+//
+//        McrNewsPanel news = new McrNewsPanel(content, SWT.NONE);
+//        news.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+//        
+//        StatusPanel status = new StatusPanel(content, SWT.NONE);
+//        GridData gdStatus = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
+//        status.setLayoutData(gdStatus);
+//
+//        createActions();
+//        initializeToolBar();
+//        initializeMenu();
     }
 
     /**

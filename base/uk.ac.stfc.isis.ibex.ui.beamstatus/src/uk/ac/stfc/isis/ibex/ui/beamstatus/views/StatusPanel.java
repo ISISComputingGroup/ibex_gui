@@ -20,8 +20,8 @@
 package uk.ac.stfc.isis.ibex.ui.beamstatus.views;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.custom.ScrolledComposite;
-import org.eclipse.swt.layout.FillLayout;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.ExpandBar;
 import org.eclipse.swt.widgets.ExpandItem;
@@ -41,12 +41,12 @@ public class StatusPanel extends Composite {
      */
     public StatusPanel(Composite parent, int style) {
         super(parent, style);
-        setLayout(new FillLayout(SWT.HORIZONTAL));
+        setLayout(new GridLayout(1, false));
 
-        ScrolledComposite scrolled = new ScrolledComposite(this, SWT.V_SCROLL);
-
-        ExpandBar expandBar = new ExpandBar(scrolled, SWT.NONE);
-        scrolled.setContent(expandBar);
+        ExpandBar expandBar = new ExpandBar(this, SWT.FILL);
+        GridData gd_expandBar = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+        gd_expandBar.widthHint = 380;
+        expandBar.setLayoutData(gd_expandBar);
 
         ExpandItem xpndtmSynchrotron = new ExpandItem(expandBar, SWT.NONE);
         xpndtmSynchrotron.setExpanded(true);
@@ -69,6 +69,6 @@ public class StatusPanel extends Composite {
         xpndtmTargetStation2.setControl(ts2);
         xpndtmTargetStation2.setHeight(300);
         expandBar.layout();
-        expandBar.setSize(370, 670);
+//        expandBar.setSize(370, 670);
     }
 }
