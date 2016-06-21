@@ -1,18 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?pde version="3.8"?><target name="target" sequenceNumber="58">
+<?pde version="3.8"?><target name="target" sequenceNumber="65">
 <locations>
-<location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
-<unit id="com.google.gson" version="2.1.0.v201303041604"/>
-<repository location="http://download.eclipse.org/tools/orbit/downloads/drops/R20140114142710/repository/"/>
-</location>
-<location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
-<unit id="org.eclipse.nebula.visualization.feature.feature.group" version="0.9.9.201601121647"/>
-<repository location="http://archive.eclipse.org/nebula/Q42015/release/"/>
-</location>
-<location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
-<unit id="org.eclipse.rcp.sdk.id" version="4.5.2.M20160212-1500"/>
-<repository location="http://download.eclipse.org/eclipse/updates/4.5"/>
-</location>
 <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
 <unit id="org.csstudio.core.platform.feature.feature.group" version="0.0.1.201603231532"/>
 <unit id="org.epics.caj" version="1.1.14"/>
@@ -30,6 +18,33 @@
 <unit id="org.csstudio.core.ui.feature.feature.group" version="4.1.0.201512221512"/>
 <unit id="org.epics.jca" version="2.3.6"/>
 <repository location="file:/C:/P2_Sites/CSStudio_42/"/>
+</location>
+<location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
+<unit id="com.google.gson" version="2.1.0.v201303041604"/>
+<repository location="http://download.eclipse.org/tools/orbit/downloads/drops/R20140114142710/repository/"/>
+</location>
+<location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
+<unit id="org.eclipse.nebula.visualization.feature.feature.group" version="0.9.9.201601121647"/>
+<repository location="http://archive.eclipse.org/nebula/Q42015/release/"/>
+</location>
+<location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
+<unit id="org.eclipse.rcp.sdk.id" version="4.5.2.M20160212-1500"/>
+<repository location="http://download.eclipse.org/eclipse/updates/4.5"/>
+</location>
+<location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
+<unit id="org.eclipse.gef.all.feature.group" version="3.10.1.201508170204"/>
+<unit id="org.eclipse.gef.examples.source.feature.group" version="3.10.1.201508170204"/>
+<unit id="org.eclipse.draw2d.sdk.feature.group" version="3.10.1.201508170204"/>
+<unit id="org.eclipse.draw2d.feature.group" version="3.10.1.201508170204"/>
+<unit id="org.eclipse.gef.source.feature.group" version="3.10.1.201508170204"/>
+<unit id="org.eclipse.gef.feature.group" version="3.10.1.201508170204"/>
+<unit id="org.eclipse.zest.source.feature.group" version="1.6.1.201508170204"/>
+<unit id="org.eclipse.zest.sdk.feature.group" version="1.6.1.201508170204"/>
+<unit id="org.eclipse.draw2d.source.feature.group" version="3.10.1.201508170204"/>
+<unit id="org.eclipse.gef.examples.feature.group" version="3.10.1.201508170204"/>
+<unit id="org.eclipse.zest.feature.group" version="1.6.1.201508170204"/>
+<unit id="org.eclipse.gef.sdk.feature.group" version="3.10.1.201508170204"/>
+<repository location="http://download.eclipse.org/tools/gef/updates/legacy/releases/"/>
 </location>
 </locations>
 </target>

@@ -19,7 +19,10 @@
 
 package uk.ac.stfc.isis.ibex.ui.synoptic.views;
 
+import java.util.HashMap;
 import java.util.Map;
+
+import javax.annotation.PostConstruct;
 
 import org.csstudio.opibuilder.util.MacrosInput;
 import org.eclipse.core.runtime.Path;
@@ -35,6 +38,10 @@ public final class OpiTargetView extends OpiView {
 	private final String pvPrefix = Instrument.getInstance().currentInstrument().pvPrefix();
 	
 	private String opiName;
+	
+	public OpiTargetView() {
+		setOpi("TEST", "Eurotherm.opi", new HashMap<String, String>());
+	}
 	
 	public void setOpi(String title, String opiName, Map<String, String> macros) {
 		this.opiName = opiName;

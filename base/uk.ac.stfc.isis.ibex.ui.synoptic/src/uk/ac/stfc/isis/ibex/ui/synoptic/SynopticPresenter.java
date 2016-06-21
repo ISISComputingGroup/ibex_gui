@@ -106,7 +106,7 @@ public class SynopticPresenter extends ModelObject {
 	public SynopticPresenter() {
 		model = Synoptic.getInstance().currentViewerModel();
         ObservingSynopticModel observingSynopticModel = Synoptic.getInstance().currentObservingViewerModel();
-        observingSynopticModel.getSynopticObservable().addObserver(descriptionObserver);
+        //observingSynopticModel.getSynopticObservable().addObserver(descriptionObserver);
 
 		navigator = new NavigationPresenter(model.instrumentGraph().head());
 		navigator.addPropertyChangeListener("currentTarget", navigationListener);
@@ -153,7 +153,7 @@ public class SynopticPresenter extends ModelObject {
 		LOG.info(targetName + " requested");
 		if (targets.containsKey(targetName)) {
 			Target target = targets.get(targetName).item();
-
+		
             LOG.info(target.name());
 
 			if (target instanceof OpiTarget) {

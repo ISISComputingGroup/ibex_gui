@@ -2,6 +2,18 @@
 <application:Application xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:advanced="http://www.eclipse.org/ui/2010/UIModel/application/ui/advanced" xmlns:application="http://www.eclipse.org/ui/2010/UIModel/application" xmlns:basic="http://www.eclipse.org/ui/2010/UIModel/application/ui/basic" xmlns:menu="http://www.eclipse.org/ui/2010/UIModel/application/ui/menu" xmi:id="_6wlLcMgZEeSyMNYR5xypkQ" elementId="uk.ac.stfc.isis.ibex.e4.app.application" bindingContexts="_6wlLecgZEeSyMNYR5xypkQ">
   <children xsi:type="basic:TrimmedWindow" xmi:id="_CHrkoDMKEeaWIot0VETDag" elementId="uk.ac.stfc.isis.ibex.e4.app.trimmedwindow.ibex" label="IBEX">
     <children xsi:type="advanced:PerspectiveStack" xmi:id="_fycCwC13Eeaj15_huK2zOw" elementId="uk.ac.stfc.isis.ibex.e4.app.perspectivestack.0">
+      <children xsi:type="advanced:Perspective" xmi:id="_HtQJEDSWEeaj6KtoSA3Zsw" elementId="uk.ac.stfc.isis.ibex.e4.app.perspective3" accessibilityPhrase="" label="Test Compatibility">
+        <children xsi:type="basic:PartSashContainer" xmi:id="_HtQJETSWEeaj6KtoSA3Zsw" elementId="uk.ac.stfc.isis.ibex.e4.app.partsashcontainer.0">
+          <children xsi:type="basic:PartSashContainer" xmi:id="_HtQJEjSWEeaj6KtoSA3Zsw" elementId="uk.ac.stfc.isis.ibex.e4.app.partsashcontainer.1" horizontal="true">
+            <children xsi:type="basic:Part" xmi:id="_HtQJEzSWEeaj6KtoSA3Zsw" elementId="uk.ac.stfc.isis.ibex.e4.app.part.dashboard" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.dashboard/uk.ac.stfc.isis.ibex.ui.dashboard.views.DashboardView" label="Dashboard"/>
+            <children xsi:type="basic:Part" xmi:id="_HtQJFDSWEeaj6KtoSA3Zsw" elementId="uk.ac.stfc.isis.ibex.e4.app.part.blocks" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.blocks/uk.ac.stfc.isis.ibex.ui.blocks.views.BlocksView" label="Blocks View"/>
+          </children>
+          <children xsi:type="basic:PartSashContainer" xmi:id="_HtQJFTSWEeaj6KtoSA3Zsw" elementId="uk.ac.stfc.isis.ibex.e4.app.partsashcontainer.2" horizontal="true">
+            <children xsi:type="basic:Part" xmi:id="_HtQJFjSWEeaj6KtoSA3Zsw" elementId="uk.ac.stfc.isis.ibex.e4.app.part.switcher" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.e4.app/uk.ac.stfc.isis.ibex.e4.app.parts.SelectorPart" label="Perspective Switcher"/>
+            <children xsi:type="advanced:Placeholder" xmi:id="_ZPlXYDSWEeaj6KtoSA3Zsw" elementId="uk.ac.stfc.isis.ibex.e4.app.placeholder.log" ref="_sVLeUDSNEeaj6KtoSA3Zsw"/>
+          </children>
+        </children>
+      </children>
       <children xsi:type="advanced:Perspective" xmi:id="_2ks5oC13Eeaj15_huK2zOw" elementId="uk.ac.stfc.isis.ibex.e4.app.perspective1" accessibilityPhrase="" label="DAE Perspective">
         <children xsi:type="basic:PartSashContainer" xmi:id="_3tLkoC13Eeaj15_huK2zOw" elementId="uk.ac.stfc.isis.ibex.e4.app.partsashcontainer.0">
           <children xsi:type="basic:PartSashContainer" xmi:id="_ElfT0C14Eeaj15_huK2zOw" elementId="uk.ac.stfc.isis.ibex.e4.app.partsashcontainer.1" horizontal="true">
@@ -26,18 +38,6 @@
               <children xsi:type="basic:Part" xmi:id="_D9OZsDL5EeaiPZ4itxBMUw" elementId="uk.ac.stfc.isis.ibex.e4.app.part.8" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.synoptic/uk.ac.stfc.isis.ibex.ui.synoptic.views.NavigationView"/>
               <children xsi:type="basic:Part" xmi:id="_PVinsDL3EeaiPZ4itxBMUw" elementId="uk.ac.stfc.isis.ibex.e4.app.part.7" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.synoptic/uk.ac.stfc.isis.ibex.ui.synoptic.views.SynopticView"/>
             </children>
-          </children>
-        </children>
-      </children>
-      <children xsi:type="advanced:Perspective" xmi:id="_HtQJEDSWEeaj6KtoSA3Zsw" elementId="uk.ac.stfc.isis.ibex.e4.app.perspective3" accessibilityPhrase="" label="Test Compatibility">
-        <children xsi:type="basic:PartSashContainer" xmi:id="_HtQJETSWEeaj6KtoSA3Zsw" elementId="uk.ac.stfc.isis.ibex.e4.app.partsashcontainer.0">
-          <children xsi:type="basic:PartSashContainer" xmi:id="_HtQJEjSWEeaj6KtoSA3Zsw" elementId="uk.ac.stfc.isis.ibex.e4.app.partsashcontainer.1" horizontal="true">
-            <children xsi:type="basic:Part" xmi:id="_HtQJEzSWEeaj6KtoSA3Zsw" elementId="uk.ac.stfc.isis.ibex.e4.app.part.dashboard" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.dashboard/uk.ac.stfc.isis.ibex.ui.dashboard.views.DashboardView" label="Dashboard"/>
-            <children xsi:type="basic:Part" xmi:id="_HtQJFDSWEeaj6KtoSA3Zsw" elementId="uk.ac.stfc.isis.ibex.e4.app.part.blocks" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.blocks/uk.ac.stfc.isis.ibex.ui.blocks.views.BlocksView" label="Blocks View"/>
-          </children>
-          <children xsi:type="basic:PartSashContainer" xmi:id="_HtQJFTSWEeaj6KtoSA3Zsw" elementId="uk.ac.stfc.isis.ibex.e4.app.partsashcontainer.2" horizontal="true">
-            <children xsi:type="basic:Part" xmi:id="_HtQJFjSWEeaj6KtoSA3Zsw" elementId="uk.ac.stfc.isis.ibex.e4.app.part.switcher" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.e4.app/uk.ac.stfc.isis.ibex.e4.app.parts.SelectorPart" label="Perspective Switcher"/>
-            <children xsi:type="advanced:Placeholder" xmi:id="_ZPlXYDSWEeaj6KtoSA3Zsw" elementId="uk.ac.stfc.isis.ibex.e4.app.placeholder.log" ref="_sVLeUDSNEeaj6KtoSA3Zsw"/>
           </children>
         </children>
       </children>
@@ -67,7 +67,7 @@
         <children xsi:type="menu:HandledMenuItem" xmi:id="_PfswoDL0EeaWIot0VETDag" elementId="uk.ac.stfc.isis.ibex.e4.app.handledmenuitem.synoptics.delete" label="Delete" command="_x_tFMDLtEeaWIot0VETDag"/>
       </children>
     </mainMenu>
-    <sharedElements xsi:type="basic:Part" xmi:id="_sVLeUDSNEeaj6KtoSA3Zsw" elementId="uk.ac.stfc.isis.ibex.ui.log.views.LogView" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView" label="LogView"/>
+    <sharedElements xsi:type="basic:Part" xmi:id="_sVLeUDSNEeaj6KtoSA3Zsw" elementId="uk.ac.stfc.isis.ibex.ui.synoptic.views.OpiTargetView" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView" label="LogView"/>
     <trimBars xmi:id="_IzDQcDMKEeaWIot0VETDag" elementId="uk.ac.stfc.isis.ibex.e4.app.trimbar.0" side="Bottom">
       <children xsi:type="menu:ToolControl" xmi:id="_9f8nsDMNEeaWIot0VETDag" elementId="uk.ac.stfc.isis.ibex.e4.app.toolcontrol.1" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.e4.app/uk.ac.stfc.isis.ibex.e4.app.statusbar.StatusBar"/>
     </trimBars>

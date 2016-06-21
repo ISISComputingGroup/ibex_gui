@@ -72,7 +72,7 @@ public class Instrument implements BundleActivator {
 		instance = this;
         localhost = new LocalHostInstrumentInfo();
 		
-        setInstrument(initialInstrument());
+        setInstrument(new InstrumentInfo("DEMO"));
     }
     
 	public UpdatedValue<String> name() {
