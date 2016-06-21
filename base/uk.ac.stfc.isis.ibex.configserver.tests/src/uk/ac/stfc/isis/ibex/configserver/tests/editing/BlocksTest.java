@@ -27,6 +27,7 @@ import java.util.Collection;
 import org.junit.Test;
 
 import uk.ac.stfc.isis.ibex.configserver.editing.BlockFactory;
+import uk.ac.stfc.isis.ibex.configserver.editing.DuplicateBlockNameException;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableBlock;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
 
@@ -57,7 +58,8 @@ public class BlocksTest extends EditableConfigurationTest {
 
 	@Test
     public void
-            GIVEN_a_new_block_and_config_WHEN_block_is_added_to_config_THEN_list_of_blocks_in_config_contains_new_block() {
+            GIVEN_a_new_block_and_config_WHEN_block_is_added_to_config_THEN_list_of_blocks_in_config_contains_new_block()
+                    throws DuplicateBlockNameException {
 		// Arrange
 		EditableConfiguration edited = edit(emptyConfig());
         BlockFactory blockFactory = new BlockFactory(edited);
@@ -71,7 +73,8 @@ public class BlocksTest extends EditableConfigurationTest {
 	}
 
     @Test
-    public void GIVEN_a_block_in_the_config_WHEN_another_block_is_created_THEN_those_blocks_have_unique_names() {
+    public void GIVEN_a_block_in_the_config_WHEN_another_block_is_created_THEN_those_blocks_have_unique_names()
+            throws DuplicateBlockNameException {
         // Arrange
         EditableConfiguration edited = edit(emptyConfig());
         BlockFactory blockFactory = new BlockFactory(edited);
@@ -86,7 +89,8 @@ public class BlocksTest extends EditableConfigurationTest {
     }
 
     @Test
-    public void GIVEN_a_block_in_the_config_WHEN_trying_to_add_block_of_same_name_THEN_block_is_not_added() {
+    public void GIVEN_a_block_in_the_config_WHEN_trying_to_add_block_of_same_name_THEN_block_is_not_added()
+            throws DuplicateBlockNameException {
         // Arrange
         EditableConfiguration edited = edit(emptyConfig());
         BlockFactory blockFactory = new BlockFactory(edited);
@@ -99,6 +103,7 @@ public class BlocksTest extends EditableConfigurationTest {
 
         // Assert
         assertTrue(!edited.getEditableBlocks().contains(block2));
+        
     }
 	@Test
     public void GIVEN_a_block_is_stored_in_config_WHEN_block_is_removed_THEN_block_is_no_longer_stored_in_config() {

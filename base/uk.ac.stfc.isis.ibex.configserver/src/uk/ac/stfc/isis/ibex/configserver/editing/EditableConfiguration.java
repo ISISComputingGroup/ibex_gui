@@ -247,7 +247,7 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
      * 
      * @param block the EditableBlock to be added
      */
-    public void addNewBlock(EditableBlock block) {
+    public void addNewBlock(EditableBlock block) throws DuplicateBlockNameException {
         if (blockNameIsUnique(block.getName())) {
             Collection<Block> blocksBeforeAdd = getBlocks();
             editableBlocks.add(0, block);
@@ -255,8 +255,7 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
             addRenameListener(block);
             firePropertyChange("blocks", blocksBeforeAdd, getBlocks());
         } else {
-            System.out.println("Unable to add block " + block.getName() + " - block of same name already exists.");
-            // raise something
+            throw new DuplicateBlockNameException();
         }
 	}
 
