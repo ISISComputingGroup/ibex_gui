@@ -26,28 +26,30 @@ import java.util.Collection;
 
 import org.junit.Test;
 
+import uk.ac.stfc.isis.ibex.configserver.editing.BlockFactory;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableBlock;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
 
 @SuppressWarnings("checkstyle:methodname")
 public class BlocksTest extends EditableConfigurationTest {
-	
+
 	@Test
     public void GIVEN_new_config_THEN_list_of_blocks_is_empty() {
 		// Arrange
-		EditableConfiguration edited = edit(emptyConfig());
+        EditableConfiguration edited = edit(emptyConfig());
 		
 		// Assert
 		assertEmpty(edited.asConfiguration().getBlocks());
 	}	
 
     @Test
-    public void a_new_block_can_be_created() {
+    public void WHEN_new_block_is_created_THEN_new_object_is_not_null_and_of_type_EditableBlock() {
         // Arrange
         EditableConfiguration edited = edit(emptyConfig());
+        BlockFactory blockFactory = new BlockFactory(edited);
 
         // Act
-        EditableBlock block = edited.createNewBlock();
+        EditableBlock block = blockFactory.createNewBlock();
 
         // Assert
         assertEquals(EditableBlock.class, block.getClass());
@@ -58,7 +60,8 @@ public class BlocksTest extends EditableConfigurationTest {
             GIVEN_a_new_block_and_config_WHEN_block_is_added_to_config_THEN_list_of_blocks_in_config_contains_new_block() {
 		// Arrange
 		EditableConfiguration edited = edit(emptyConfig());
-        EditableBlock block = edited.createNewBlock();
+        BlockFactory blockFactory = new BlockFactory(edited);
+        EditableBlock block = blockFactory.createNewBlock();
 	
 		// Act
 		edited.addNewBlock(block);
@@ -71,11 +74,12 @@ public class BlocksTest extends EditableConfigurationTest {
     public void GIVEN_a_block_in_the_config_WHEN_another_block_is_created_THEN_those_blocks_have_unique_names() {
         // Arrange
         EditableConfiguration edited = edit(emptyConfig());
-        EditableBlock block1 = edited.createNewBlock();
+        BlockFactory blockFactory = new BlockFactory(edited);
+        EditableBlock block1 = blockFactory.createNewBlock();
         edited.addNewBlock(block1);
 
         // Act
-        EditableBlock block2 = edited.createNewBlock();
+        EditableBlock block2 = blockFactory.createNewBlock();
 
         // Assert
         assertNotEquals(block1.getName(), block2.getName());
@@ -85,11 +89,12 @@ public class BlocksTest extends EditableConfigurationTest {
     public void GIVEN_a_block_in_the_config_WHEN_trying_to_add_block_of_same_name_THEN_block_is_not_added() {
         // Arrange
         EditableConfiguration edited = edit(emptyConfig());
-        EditableBlock block1 = edited.createNewBlock();
+        BlockFactory blockFactory = new BlockFactory(edited);
+        EditableBlock block1 = blockFactory.createNewBlock();
         edited.addNewBlock(block1);
 
         // Act
-        EditableBlock block2 = edited.createNewBlock();
+        EditableBlock block2 = blockFactory.createNewBlock();
         block2.setName(block1.getName());
 
         // Assert

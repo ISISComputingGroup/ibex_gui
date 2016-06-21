@@ -59,11 +59,7 @@ import uk.ac.stfc.isis.ibex.validators.GroupNamesProvider;
 public class EditableConfiguration extends ModelObject implements GroupNamesProvider {
 
     public static final String EDITABLE_GROUPS = "editableGroups";
-
-	private static final String DEFAULT_BLOCK_NAME = "NEW_BLOCK";
 	private static final String DEFAULT_GROUP_NAME = "NEW_GROUP";
-	
-	private final DefaultName blockName = new DefaultName(DEFAULT_BLOCK_NAME);
 	private final DefaultName groupName = new DefaultName(DEFAULT_GROUP_NAME);
 
 	private String name;
@@ -185,7 +181,7 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
 		firePropertyChange("dateModified", this.dateModified, this.dateModified = dateModified);
 	}
 	
-	private Collection<Block> getBlocks() {
+    Collection<Block> getBlocks() {
 		return Lists.newArrayList(Iterables.transform(editableBlocks, new Function<EditableBlock, Block>() {
 			@Override
 			public Block apply(EditableBlock block) {
@@ -247,17 +243,6 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
 	}
 
     /**
-     * Create a new block.
-     * 
-     * @return the new EditableBlock object
-     */
-    public EditableBlock createNewBlock() {
-        String name = blockName.getUnique(blockNames());
-        EditableBlock block = new EditableBlock(new Block(name, "", true, true));
-        return block;
-    }
-
-    /**
      * Add a new block to the configuration.
      * 
      * @param block the EditableBlock to be added
@@ -270,6 +255,7 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
             addRenameListener(block);
             firePropertyChange("blocks", blocksBeforeAdd, getBlocks());
         } else {
+            System.out.println("Unable to add block " + block.getName() + " - block of same name already exists.");
             // raise something
         }
 	}
@@ -417,15 +403,7 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
 			ioc.getValue().setIocDescriber(descriptions.getDescription(ioc.getKey()));
 		}
 	}
-	
-	private Collection<String> blockNames() {
-		List<String> names = new ArrayList<>();
-		for (Block block : getBlocks()) {
-			names.add(block.getName());
-		}
-		
-		return names;
-	}
+
 	
 	private static Block getBlockByName(Iterable<Block> blocks, final String name) {
 		return Iterables.find(blocks, new Predicate<Block>() {
@@ -454,4 +432,5 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
 
         return names;
     }
+
 }
