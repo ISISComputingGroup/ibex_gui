@@ -53,7 +53,8 @@ public enum ComponentType {
 	PINHOLESELECTOR,
 	GONIOMETER (new ViewTarget("Goniometer")), 
 	SINGLESTAGE,
-	LAKESHORE;
+    LAKESHORE,
+    ATTENUATOR;
 	
 	private Target target;
 

@@ -12,6 +12,20 @@
 			</value>
 		</entry>
 		<entry>
+			<key>Attenuator</key>
+			<value>
+				<type>ATTENUATOR</type>
+				<path>attenuator.opi</path>
+				<description>The OPI for the attenuator.</description>
+				<macros>
+                    <macro>
+						<name>Q</name>
+						<description>Description required.</description>
+					</macro>                    
+				</macros>
+			</value>
+		</entry>
+		<entry>
 			<key>Beam-stop</key>
 			<value>
 				<type>BEAMSTOP</type>

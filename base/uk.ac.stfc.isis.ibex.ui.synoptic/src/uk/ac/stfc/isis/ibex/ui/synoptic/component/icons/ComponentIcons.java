@@ -85,6 +85,7 @@ public final class ComponentIcons {
             case SAMPLECHANGER:
                 return "sample_changer";
             case ANALYSER:
+            case ATTENUATOR:
                 return "analyser";
             case POLARISER:
                 return "polariser";
