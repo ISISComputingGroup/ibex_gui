@@ -39,7 +39,6 @@ import org.csstudio.trends.databrowser2.ui.Plot;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -124,23 +123,15 @@ public class BeamStatusGraphView extends DataBrowserAwareView implements ModelLi
             }
         });
 
-        parent.setLayout(new GridLayout(3, false));
+        parent.setLayout(new GridLayout(2, false));
         Composite graphPanel = new Composite(parent, SWT.NONE);
         graphPanel.setLayout(new GridLayout(1, false));
-        graphPanel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
+        graphPanel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
         createTimeRangeRadioButtons(graphPanel);
         createBeamStatusPlot(graphPanel);
 
-        ScrolledComposite statusNewsPanel = new ScrolledComposite(parent, SWT.V_SCROLL);
-        statusNewsPanel.setLayout(new GridLayout(1, false));
-        statusNewsPanel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-        statusNewsPanel.setExpandVertical(true);
-        statusNewsPanel.setExpandHorizontal(true);
-        statusNewsPanel.setAlwaysShowScrollBars(true);
-        StatusPanel status = new StatusPanel(statusNewsPanel, SWT.NONE);
-        GridData gdStatus = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
-        status.setLayoutData(gdStatus);
-        statusNewsPanel.setContent(status);
+        BeamStatusStatsAndNewsPanel statsAndNewsPanel =
+                new BeamStatusStatsAndNewsPanel(parent, SWT.BORDER | SWT.V_SCROLL);
 
         selectPV(TS1_BEAM_CURRENT_PV);
         selectPV(TS2_BEAM_CURRENT_PV);

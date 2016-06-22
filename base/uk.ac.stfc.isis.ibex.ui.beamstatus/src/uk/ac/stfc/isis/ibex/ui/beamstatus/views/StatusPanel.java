@@ -40,15 +40,13 @@ public class StatusPanel extends Composite {
      * @param style the SWT style
      */
     public StatusPanel(Composite parent, int style) {
-        super(parent, style);
+        super(parent, SWT.NONE);
         setLayout(new GridLayout(1, false));
 
         ExpandBar expandBar = new ExpandBar(this, SWT.FILL);
-        GridData gd_expandBar = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
-        gd_expandBar.widthHint = 380;
-        expandBar.setLayoutData(gd_expandBar);
+        expandBar.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, true, 1, 1));
 
-        ExpandItem xpndtmSynchrotron = new ExpandItem(expandBar, SWT.NONE);
+        ExpandItem xpndtmSynchrotron = new ExpandItem(expandBar, SWT.RIGHT);
         xpndtmSynchrotron.setExpanded(true);
         xpndtmSynchrotron.setText("Synchrotron");
         SynchrotronPanel sync = new SynchrotronPanel(expandBar, SWT.NONE);
@@ -69,6 +67,5 @@ public class StatusPanel extends Composite {
         xpndtmTargetStation2.setControl(ts2);
         xpndtmTargetStation2.setHeight(300);
         expandBar.layout();
-//        expandBar.setSize(370, 670);
     }
 }
