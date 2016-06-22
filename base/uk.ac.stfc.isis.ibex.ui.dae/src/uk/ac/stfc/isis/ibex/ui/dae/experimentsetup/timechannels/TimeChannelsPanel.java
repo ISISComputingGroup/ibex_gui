@@ -28,18 +28,14 @@ import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.beans.BeanProperties;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.Text;
 
 import uk.ac.stfc.isis.ibex.dae.experimentsetup.timechannels.CalculationMethod;
 import uk.ac.stfc.isis.ibex.dae.experimentsetup.timechannels.TimeRegime;
@@ -54,7 +50,7 @@ public class TimeChannelsPanel extends Composite {
 	private Combo timeUnit;
     private DataBindingContext bindingContext;
 
-    private Text timeChannelFile;
+    private Combo timeChannelFile;
     private Combo calculationMethod;
 	
 	private static final Display DISPLAY = Display.getCurrent();
@@ -66,38 +62,39 @@ public class TimeChannelsPanel extends Composite {
 		
 		Composite parameters = new Composite(this, SWT.NONE);
 		parameters.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 1, 1));
-        parameters.setLayout(new GridLayout(5, false));
+        parameters.setLayout(new GridLayout(4, false));
 
         Label lblTimeChannelFile = new Label(parameters, SWT.NONE);
         lblTimeChannelFile.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
         lblTimeChannelFile.setText("Time Channel File:");
-        timeChannelFile = new Text(parameters, SWT.BORDER);
+        timeChannelFile = new Combo(parameters, SWT.BORDER);
         GridData gd_timeChannelFile = new GridData(SWT.LEFT, SWT.FILL, true, false, 3, 1);
         gd_timeChannelFile.widthHint = 400;
         timeChannelFile.setLayoutData(gd_timeChannelFile);
 
-        Button btnFile = new Button(parameters, SWT.NONE);
-        btnFile.addSelectionListener(new SelectionAdapter() {
-            @Override
-            public void widgetSelected(SelectionEvent e) {
-                displayFileDialog();
-            }
-        });
-        btnFile.setText("Browse...");
+//        Button btnFile = new Button(parameters, SWT.NONE);
+//        btnFile.addSelectionListener(new SelectionAdapter() {
+//            @Override
+//            public void widgetSelected(SelectionEvent e) {
+//                displayFileDialog();
+//            }
+//        });
+//        btnFile.setText("Browse...");
 
         Label lblCalculationMethod = new Label(parameters, SWT.NONE);
         lblCalculationMethod.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
         lblCalculationMethod.setText("Calculation Method:");
 
         calculationMethod = new Combo(parameters, SWT.NONE);
+        calculationMethod.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
         calculationMethod.setItems(CalculationMethod.allToString().toArray(new String[0]));
 		
 		Label lblTimeUnit = new Label(parameters, SWT.NONE);
-		lblTimeUnit.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
+        lblTimeUnit.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, true, false, 1, 1));
 		lblTimeUnit.setText("Time Unit:");
 		
 		timeUnit = new Combo(parameters, SWT.DROP_DOWN | SWT.READ_ONLY);
-		timeUnit.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 1, 1));
+        timeUnit.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		timeUnit.setItems(TimeUnit.allToString().toArray(new String[0]));
 		
 		timeRegimesGroup = new Group(this, SWT.NONE);
@@ -112,11 +109,13 @@ public class TimeChannelsPanel extends Composite {
 		bindingContext = new DataBindingContext();	
         bindingContext.bindValue(WidgetProperties.singleSelectionIndex().observe(timeUnit),
                 BeanProperties.value("timeUnit").observe(viewModel));
-        bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(timeChannelFile),
-                BeanProperties.value("timeChannelFile").observe(viewModel));
         bindingContext.bindValue(WidgetProperties.singleSelectionIndex().observe(calculationMethod),
                 BeanProperties.value("calculationMethod").observe(viewModel));
-		
+        bindingContext.bindList(WidgetProperties.items().observe(timeChannelFile),
+                BeanProperties.list("timeChannelFileList").observe(viewModel));
+        bindingContext.bindValue(WidgetProperties.selection().observe(timeChannelFile),
+                BeanProperties.value("timeChannelFile").observe(viewModel));
+
 		updateTimeRegimes();
 		viewModel.addPropertyChangeListener("timeRegimes", new PropertyChangeListener() {		
 			@Override
