@@ -68,9 +68,9 @@ public class McrNewsPanel extends Composite {
         Color backgroundColor = txtTheMcrNews.getBackground();
         txtTheMcrNews.setEditable(false);
         txtTheMcrNews.setBackground(backgroundColor);
-        GridData gdNews = new GridData(SWT.FILL, SWT.TOP, true, true, 1, 1);
-        gdNews.heightHint = 120;
-        gdNews.minimumHeight = 120;
+        GridData gdNews = new GridData(SWT.FILL, SWT.FILL, false, false);
+        gdNews.heightHint = 155;
+        gdNews.widthHint = 350;
         txtTheMcrNews.setLayoutData(gdNews);
         txtTheMcrNews.setText("The MCR news will load shortly. If this message persists, please contact support.");
 

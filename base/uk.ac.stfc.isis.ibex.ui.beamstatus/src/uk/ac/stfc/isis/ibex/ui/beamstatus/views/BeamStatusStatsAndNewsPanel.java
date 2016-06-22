@@ -32,22 +32,21 @@ public class BeamStatusStatsAndNewsPanel extends ScrolledComposite {
 
     public BeamStatusStatsAndNewsPanel(Composite parent, int style) {
         super(parent, SWT.BORDER | SWT.V_SCROLL);
-        setAlwaysShowScrollBars(true);
+        setLayout(new GridLayout(1, false));
+        setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, true));
         setExpandHorizontal(true);
         setExpandVertical(true);
-        setLayout(new GridLayout(1, false));
-        setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, true));
 
         Composite statusNewsPanel = new Composite(this, SWT.NONE);
         statusNewsPanel.setLayout(new GridLayout(1, false));
-        GridData gd = new GridData(SWT.FILL, SWT.FILL, false, false);
+
+        GridData gd = new GridData(SWT.CENTER, SWT.CENTER, false, false);
         statusNewsPanel.setLayoutData(gd);
 
         McrNewsPanel news = new McrNewsPanel(statusNewsPanel, SWT.NONE);
-        news.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
 
         StatusPanel status = new StatusPanel(statusNewsPanel, SWT.V_SCROLL);
-        status.setLayoutData(new GridData(SWT.FILL, SWT.TOP, false, true, 1, 1));
+        status.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, true, 1, 1));
 
         this.setMinSize(statusNewsPanel.computeSize(SWT.DEFAULT, SWT.DEFAULT));
         setContent(statusNewsPanel);
