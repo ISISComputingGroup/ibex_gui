@@ -37,18 +37,32 @@ public class TimeChannelsViewModel extends ModelObject {
 		model = timeChannels;
 		
 		model.addPropertyChangeListener("timeRegimes", new PropertyChangeListener() {
-		@Override
-			public void propertyChange(PropertyChangeEvent e) {
-				firePropertyChange(e.getPropertyName(), e.getOldValue(), e.getNewValue());
+            @Override
+            public void propertyChange(PropertyChangeEvent e) {
+                firePropertyChange(e.getPropertyName(), e.getOldValue(), e.getNewValue());
 			}
 		});
 		
 		model.addPropertyChangeListener("timeUnit", new PropertyChangeListener() {
-			@Override
-				public void propertyChange(PropertyChangeEvent e) {
-					firePropertyChange(e.getPropertyName(), e.getOldValue(), e.getNewValue());
+            @Override
+            public void propertyChange(PropertyChangeEvent e) {
+                firePropertyChange(e.getPropertyName(), e.getOldValue(), e.getNewValue());
 				}
 			});
+
+        model.addPropertyChangeListener("timeChannelFile", new PropertyChangeListener() {
+            @Override
+            public void propertyChange(PropertyChangeEvent e) {
+                firePropertyChange(e.getPropertyName(), e.getOldValue(), e.getNewValue());
+            }
+        });
+
+        model.addPropertyChangeListener("calculationMethod", new PropertyChangeListener() {
+            @Override
+            public void propertyChange(PropertyChangeEvent e) {
+                firePropertyChange(e.getPropertyName(), e.getOldValue(), e.getNewValue());
+            }
+        });
 	}
 	
 	public List<TimeRegime> timeRegimes() {		
