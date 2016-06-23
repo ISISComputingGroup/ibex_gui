@@ -20,9 +20,12 @@ package uk.ac.stfc.isis.ibex.ui.beamstatus.views;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
+import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Label;
+import org.eclipse.wb.swt.SWTResourceManager;
 
 /**
  * The parent view for holding the various beam and news widgets.
@@ -43,7 +46,17 @@ public class BeamStatusPanel extends ScrolledComposite {
         gd.widthHint = 400;
         content.setLayoutData(gd);
 
+        Label newsLabel = new Label(content, SWT.NONE);
+        String labelCurrentFontName = newsLabel.getFont().getFontData()[0].getName();
+        Font titleFont = SWTResourceManager.getFont(labelCurrentFontName, 10, SWT.BOLD);
+        newsLabel.setText("News");
+        newsLabel.setFont(titleFont);
+
         McrNewsPanel newsPanel = new McrNewsPanel(content, SWT.NONE);
+
+        Label statsLabel = new Label(content, SWT.NONE);
+        statsLabel.setText("Beam Stats");
+        statsLabel.setFont(titleFont);
 
         StatsPanel statsPanel = new StatsPanel(content, SWT.V_SCROLL);
         statsPanel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, true, 1, 1));

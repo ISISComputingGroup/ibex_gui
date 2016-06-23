@@ -12,7 +12,7 @@
             name="Beam Status Graph"
             icon="icons/sample.gif"
             category="uk.ac.stfc.isis.ibex.ui.beamstatus"
-            class="uk.ac.stfc.isis.ibex.ui.beamstatus.views.BeamStatusGraphView"
+            class="uk.ac.stfc.isis.ibex.ui.beamstatus.views.BeamStatusView"
             id="uk.ac.stfc.isis.ibex.ui.beamstatus.views.BeamStatusGraphView">
       </view>
    </extension>

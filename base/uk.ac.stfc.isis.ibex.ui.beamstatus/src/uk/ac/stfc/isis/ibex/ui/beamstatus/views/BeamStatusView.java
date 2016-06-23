@@ -61,8 +61,8 @@ import uk.ac.stfc.isis.ibex.ui.beamstatus.BeamStatusGraphDataProvider;
  * Always used as derived classes that specify the time duration of the plot
  * (e.g. hourly, daily)
  */
-public class BeamStatusGraphView extends DataBrowserAwareView implements ModelListener {
-    public BeamStatusGraphView() {
+public class BeamStatusView extends DataBrowserAwareView implements ModelListener {
+    public BeamStatusView() {
     }
 
     /** View ID registered in plugin.xml. */
@@ -105,7 +105,7 @@ public class BeamStatusGraphView extends DataBrowserAwareView implements ModelLi
     private long currentPlotTimespanMilliseconds = MILLISECONDS_IN_DAY;
 
     /** Title for the plot. */
-    private static final String PLOT_TITLE = "Beam current";
+    private static final String PLOT_TITLE = "Beam Current";
 
     /** {@inheritDoc} */
     @Override
@@ -118,7 +118,7 @@ public class BeamStatusGraphView extends DataBrowserAwareView implements ModelLi
                 // Be ignorant of any change of the current model after
                 // this view is disposed.
                 if (model != null) {
-                    model.removeListener(BeamStatusGraphView.this);
+                    model.removeListener(BeamStatusView.this);
                 }
             }
         });
