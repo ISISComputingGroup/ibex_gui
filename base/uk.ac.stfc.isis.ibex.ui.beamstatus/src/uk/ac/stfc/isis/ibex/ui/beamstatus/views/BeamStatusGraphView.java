@@ -126,12 +126,14 @@ public class BeamStatusGraphView extends DataBrowserAwareView implements ModelLi
         parent.setLayout(new GridLayout(2, false));
         Composite graphPanel = new Composite(parent, SWT.NONE);
         graphPanel.setLayout(new GridLayout(1, false));
-        graphPanel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+        graphPanel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
         createTimeRangeRadioButtons(graphPanel);
         createBeamStatusPlot(graphPanel);
 
-        BeamStatusStatsAndNewsPanel statsAndNewsPanel =
-                new BeamStatusStatsAndNewsPanel(parent, SWT.BORDER | SWT.V_SCROLL);
+        BeamStatusPanel statusPanel =
+                new BeamStatusPanel(parent, SWT.BORDER | SWT.V_SCROLL);
+        GridData gdStatus = new GridData(SWT.CENTER, SWT.CENTER, false, true);
+        statusPanel.setLayoutData(gdStatus);
 
         selectPV(TS1_BEAM_CURRENT_PV);
         selectPV(TS2_BEAM_CURRENT_PV);

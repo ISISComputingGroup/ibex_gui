@@ -27,11 +27,11 @@ import org.eclipse.swt.widgets.ExpandBar;
 import org.eclipse.swt.widgets.ExpandItem;
 
 /**
- * The parent composite for the beam status widgets.
+ * The parent composite for the beam stats widgets.
  * 
  */
 @SuppressWarnings("checkstyle:magicnumber")
-public class StatusPanel extends Composite {
+public class StatsPanel extends Composite {
 
     /**
      * The constructor.
@@ -39,14 +39,14 @@ public class StatusPanel extends Composite {
      * @param parent the parent
      * @param style the SWT style
      */
-    public StatusPanel(Composite parent, int style) {
+    public StatsPanel(Composite parent, int style) {
         super(parent, SWT.NONE);
         setLayout(new GridLayout(1, false));
 
         ExpandBar expandBar = new ExpandBar(this, SWT.FILL);
         expandBar.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, true, 1, 1));
 
-        ExpandItem xpndtmSynchrotron = new ExpandItem(expandBar, SWT.RIGHT);
+        ExpandItem xpndtmSynchrotron = new ExpandItem(expandBar, SWT.NONE);
         xpndtmSynchrotron.setExpanded(true);
         xpndtmSynchrotron.setText("Synchrotron");
         SynchrotronPanel sync = new SynchrotronPanel(expandBar, SWT.NONE);

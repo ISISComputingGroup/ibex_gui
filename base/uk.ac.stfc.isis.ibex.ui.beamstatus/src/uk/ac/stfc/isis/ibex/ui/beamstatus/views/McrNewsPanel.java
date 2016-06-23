@@ -68,11 +68,11 @@ public class McrNewsPanel extends Composite {
         Color backgroundColor = txtTheMcrNews.getBackground();
         txtTheMcrNews.setEditable(false);
         txtTheMcrNews.setBackground(backgroundColor);
+        txtTheMcrNews.setText("The MCR news will load shortly. If this message persists, please contact support.");
+
         GridData gdNews = new GridData(SWT.FILL, SWT.FILL, false, false);
         gdNews.heightHint = 155;
-        gdNews.widthHint = 350;
         txtTheMcrNews.setLayoutData(gdNews);
-        txtTheMcrNews.setText("The MCR news will load shortly. If this message persists, please contact support.");
 
         final String currentFontName = txtTheMcrNews.getFont().getFontData()[0].getName();
         txtTheMcrNews.setFont(SWTResourceManager.getFont(currentFontName, FONT_SIZE, SWT.NORMAL));
@@ -84,8 +84,7 @@ public class McrNewsPanel extends Composite {
     /**
      * Sets the MCR news text.
      * 
-     * @param text
-     *            A String containing the MCR news.
+     * @param text A String containing the MCR news.
      */
     public void setText(String text) {
         int topIndex = txtTheMcrNews.getTopIndex();

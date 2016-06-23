@@ -28,27 +28,27 @@ import org.eclipse.swt.widgets.Composite;
  * The parent view for holding the various beam and news widgets.
  */
 @SuppressWarnings("checkstyle:magicnumber")
-public class BeamStatusStatsAndNewsPanel extends ScrolledComposite {
+public class BeamStatusPanel extends ScrolledComposite {
 
-    public BeamStatusStatsAndNewsPanel(Composite parent, int style) {
+    public BeamStatusPanel(Composite parent, int style) {
         super(parent, SWT.BORDER | SWT.V_SCROLL);
         setLayout(new GridLayout(1, false));
-        setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, true));
         setExpandHorizontal(true);
         setExpandVertical(true);
 
-        Composite statusNewsPanel = new Composite(this, SWT.NONE);
-        statusNewsPanel.setLayout(new GridLayout(1, false));
+        Composite content = new Composite(this, SWT.NONE);
+        content.setLayout(new GridLayout(1, false));
 
-        GridData gd = new GridData(SWT.CENTER, SWT.CENTER, false, false);
-        statusNewsPanel.setLayoutData(gd);
+        GridData gd = new GridData(SWT.FILL, SWT.FILL, false, false);
+        gd.widthHint = 400;
+        content.setLayoutData(gd);
 
-        McrNewsPanel news = new McrNewsPanel(statusNewsPanel, SWT.NONE);
+        McrNewsPanel newsPanel = new McrNewsPanel(content, SWT.NONE);
 
-        StatusPanel status = new StatusPanel(statusNewsPanel, SWT.V_SCROLL);
-        status.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, true, 1, 1));
+        StatsPanel statsPanel = new StatsPanel(content, SWT.V_SCROLL);
+        statsPanel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, true, 1, 1));
 
-        this.setMinSize(statusNewsPanel.computeSize(SWT.DEFAULT, SWT.DEFAULT));
-        setContent(statusNewsPanel);
+        this.setMinSize(content.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+        setContent(content);
     }
 }
