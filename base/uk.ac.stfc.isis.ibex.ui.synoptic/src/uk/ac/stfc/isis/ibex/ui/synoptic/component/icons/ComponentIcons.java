@@ -85,7 +85,6 @@ public final class ComponentIcons {
             case SAMPLECHANGER:
                 return "sample_changer";
             case ANALYSER:
-            case ATTENUATOR:
                 return "analyser";
             case POLARISER:
                 return "polariser";
@@ -99,6 +98,8 @@ public final class ComponentIcons {
                 return "pinhole_selector";
             case SINGLESTAGE:
                 return "single_stage";
+            case ATTENUATOR:
+                return "attenuator";
             default:
                 return "cog";
         }
