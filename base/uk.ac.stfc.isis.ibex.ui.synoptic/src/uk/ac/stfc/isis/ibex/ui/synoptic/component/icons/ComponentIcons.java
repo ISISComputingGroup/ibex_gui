@@ -98,6 +98,8 @@ public final class ComponentIcons {
                 return "pinhole_selector";
             case SINGLESTAGE:
                 return "single_stage";
+            case LINKAM95:
+                return "linkam95";
             case ATTENUATOR:
                 return "attenuator";
             default:
