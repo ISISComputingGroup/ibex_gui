@@ -27,10 +27,16 @@ import org.eclipse.jface.window.Window;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Configuration;
 import uk.ac.stfc.isis.ibex.ui.configserver.dialogs.ConfigSelectionDialog;
 
+/**
+ * Handler for the edit config menu command.
+ */
 public class EditConfigHandler extends ConfigHandler<Configuration> {
 
     private static final String TITLE = "Edit Configuration";
 
+    /**
+     * Default constructor, sets writable location to saveAs PV.
+     */
 	public EditConfigHandler() {
 		super(SERVER.saveAs());
 	}

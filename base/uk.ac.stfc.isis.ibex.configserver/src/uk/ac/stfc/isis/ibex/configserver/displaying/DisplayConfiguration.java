@@ -22,6 +22,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import com.google.common.base.Strings;
+
 import uk.ac.stfc.isis.ibex.configserver.ConfigServer;
 import uk.ac.stfc.isis.ibex.configserver.Displaying;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Block;
@@ -31,8 +33,6 @@ import uk.ac.stfc.isis.ibex.epics.observing.ClosableObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.TransformingObservable;
 import uk.ac.stfc.isis.ibex.runcontrol.RunControlServer;
-
-import com.google.common.base.Strings;
 
 public class DisplayConfiguration extends TransformingObservable<Configuration, DisplayConfiguration> implements
 		Displaying {
@@ -73,34 +73,76 @@ public class DisplayConfiguration extends TransformingObservable<Configuration, 
 		return displayBlocks;
 	}
 
+	/**
+	 * Returns the name of the configuration.
+	 * 
+	 * @return the name
+	 */
 	public String name() {
 		return Strings.nullToEmpty(name);
 	}
 
+	/**
+	 * Returns the description of the configuration.
+	 * 
+	 * @return the description
+	 */
 	public String description() {
 		return Strings.nullToEmpty(description);
 	}
 
+	/**
+	 * Returns the name of the default synoptic.
+	 * 
+	 * @return the default synoptic
+	 */
 	public String defaultSynoptic() {
 		return Strings.nullToEmpty(defaultSynoptic);
 	}
 	
+	/**
+	 * Returns the groups.
+	 * 
+	 * @return a copy of the group
+	 */
 	public Collection<DisplayGroup> groups() {
 		return new ArrayList<>(groups);
 	}
 	
+	/**
+	 * Sets the groups.
+	 * 
+	 * @param configGroups the groups based on the configuration
+	 */
 	protected void setGroups(Collection<Group> configGroups) {
 		groups.clear();
 		for (Group group : configGroups) {
-			groups.add(new DisplayGroup(group, displayBlocks));
+			if (!isGroupEmpty(group)) {
+				groups.add(new DisplayGroup(group, displayBlocks));
+			}
+		}
+	}
+	
+	private boolean isGroupEmpty(Group configGroup) {
+		Collection<String> blocks = configGroup.getBlocks();
+		if (blocks.isEmpty()) {
+			return true;
+		} else {
+			return false;
 		}
 	}
 
+	/**
+	 * Sets the blocks.
+	 * 
+	 * @param blocks the blocks based on the configuration
+	 */
 	protected void setDisplayBlocks(Collection<Block> blocks) {
 		displayBlocks = new ArrayList<>();
 		for (Block blk : blocks) {
 			String name = blk.getName();
-			displayBlocks.add(new DisplayBlock(blk, configServer.blockValue(name), configServer.blockDescription(name),
+            displayBlocks.add(new DisplayBlock(blk, configServer.blockValue(name), configServer.blockDescription(name),
+                    configServer.alarm(name),
 					runControlServer.blockRunControlInRange(name), runControlServer.blockRunControlLowLimit(name),
 					runControlServer.blockRunControlHighLimit(name), runControlServer.blockRunControlEnabled(name),
 					configServer.blockServerAlias(name)));

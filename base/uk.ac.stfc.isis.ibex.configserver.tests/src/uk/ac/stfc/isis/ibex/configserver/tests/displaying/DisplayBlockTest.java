@@ -27,7 +27,7 @@ import org.junit.Test;
 
 import uk.ac.stfc.isis.ibex.configserver.configuration.Block;
 import uk.ac.stfc.isis.ibex.configserver.displaying.DisplayBlock;
-import uk.ac.stfc.isis.ibex.configserver.displaying.RunControlState;
+import uk.ac.stfc.isis.ibex.configserver.displaying.RuncontrolState;
 import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.Observable;
 
@@ -36,6 +36,8 @@ public class DisplayBlockTest {
 	
 	TestableIOSObservable<String> inRangeObservable;
     TestableIOSObservable<String> enabledObservable;
+    TestableIOSObservable<String> valueObservable;
+    TestableIOSObservable<String> descriptionObservable;
 	
 	DisplayBlock displayBlock;
 	
@@ -44,51 +46,99 @@ public class DisplayBlockTest {
 		// Arrange
 		inRangeObservable = new TestableIOSObservable<>(mock(Observable.class));
         enabledObservable = new TestableIOSObservable<>(mock(Observable.class));
-		
+        valueObservable = new TestableIOSObservable<>(mock(Observable.class));
+        descriptionObservable = new TestableIOSObservable<>(mock(Observable.class));
 		displayBlock = new DisplayBlock(
                 mock(Block.class), // block
-				mock(ForwardingObservable.class),  // value
-				mock(ForwardingObservable.class),  // description
+                valueObservable, // value
+                descriptionObservable, // description
+                mock(ForwardingObservable.class), // alarm
                 inRangeObservable, // inRange
 				mock(ForwardingObservable.class),  // lowLimit
 				mock(ForwardingObservable.class),  // highLimit
                 enabledObservable, // enabled
-				"");		
+                "");
 	}
-	
+
+    @Test
+    public void GIVEN_pv_disconnected_THEN_blockstate_disconnected() {
+
+        // Act
+        valueObservable.setConnectionStatus(false);
+
+        // Assert
+        assertEquals(RuncontrolState.DISCONNECTED, displayBlock.getRuncontrolState());
+    }
+
+    @Test
+    public void GIVEN_pv_was_disconnected_WHEN_pv_connected_THEN_blockstate_runcontrol_disabled() {
+
+        // Arrange
+        valueObservable.setConnectionStatus(false);
+
+        // Act
+        valueObservable.setConnectionStatus(true);
+
+        // Assert
+        assertEquals(RuncontrolState.DISABLED, displayBlock.getRuncontrolState());
+    }
+
+    @Test
+    public void GIVEN_pv_was_connected_WHEN_pv_disconnected_THEN_blockstate_disconnected() {
+
+        // Arrange
+        valueObservable.setConnectionStatus(true);
+
+        // Act
+        valueObservable.setConnectionStatus(false);
+
+        // Assert
+        assertEquals(RuncontrolState.DISCONNECTED, displayBlock.getRuncontrolState());
+    }
+
 	@Test
-    public void if_in_range_and_disabled_unset_then_state_is_disabled() {
+    public void GIVEN_in_range_and_disabled_THEN_runcontrol_state_is_disabled() {
+        // Arrange
+        valueObservable.setConnectionStatus(true);
+
         // Act
         enabledObservable.setValue("NO");
         inRangeObservable.setValue("YES");
 		
 		// Assert
-        assertEquals(RunControlState.DISABLED, displayBlock.getRunControlState());
+        assertEquals(RuncontrolState.DISABLED, displayBlock.getRuncontrolState());
 	}
 	
 	@Test
-    public void if_in_range_while_enabled_then_state_is_in_range() {
+    public void GIVEN_in_range_and_enabled_THEN_runcontrol_state_is_enabled_in_range() {
+        // Arrange
+        valueObservable.setConnectionStatus(true);
+
         // Act
         enabledObservable.setValue("YES");
         inRangeObservable.setValue("YES");
 		
 		// Assert
-        assertEquals(RunControlState.ENABLED_IN_RANGE, displayBlock.getRunControlState());
+        assertEquals(RuncontrolState.ENABLED_IN_RANGE, displayBlock.getRuncontrolState());
 	}
 	
 	@Test
-    public void if_not_in_range_while_enabled_then_out_range() {
+    public void GIVEN_not_in_range_and_enabled_THEN_runcontrol_state_is_enabled_out_range() {
+        // Arrange
+        valueObservable.setConnectionStatus(true);
+
 		// Act
         enabledObservable.setValue("YES");
 		inRangeObservable.setValue("NO");
 		
 		// Assert
-        assertEquals(RunControlState.ENABLED_OUT_RANGE, displayBlock.getRunControlState());
+        assertEquals(RuncontrolState.ENABLED_OUT_RANGE, displayBlock.getRuncontrolState());
 	}
 	
 	@Test
-    public void if_in_range_to_false_then_true_sets_in_range() {
+    public void GIVEN_not_in_range_and_enabled_WHEN_set_to_in_range_THEN_runcontrol_state_is_enabled_in_range() {
         // Arrange
+        valueObservable.setConnectionStatus(true);
         enabledObservable.setValue("YES");
         inRangeObservable.setValue("NO");
 
@@ -96,12 +146,13 @@ public class DisplayBlockTest {
 		inRangeObservable.setValue("YES");
 		
 		// Assert
-        assertEquals(RunControlState.ENABLED_IN_RANGE, displayBlock.getRunControlState());
+        assertEquals(RuncontrolState.ENABLED_IN_RANGE, displayBlock.getRuncontrolState());
 	}
 
 	@Test
-    public void setting_in_range_to_true_then_false_sets_out_range() {
+    public void GIVEN_in_range_and_enabled_WHEN_set_to_not_in_range_THEN_runcontrol_state_is_enabled_out_range() {
         // Arrange
+        valueObservable.setConnectionStatus(true);
         enabledObservable.setValue("YES");
         inRangeObservable.setValue("YES");
 
@@ -109,14 +160,14 @@ public class DisplayBlockTest {
 		inRangeObservable.setValue("NO");
 		
 		// Assert
-        assertEquals(RunControlState.ENABLED_OUT_RANGE, displayBlock.getRunControlState());
+        assertEquals(RuncontrolState.ENABLED_OUT_RANGE, displayBlock.getRuncontrolState());
 	}
 
 	@Test
-    public void setting_in_range_to_false_then_nonsense_sets_in_range() {
-        // Setting InRange to a nonsense value should default to true.
-
+    public void
+            GIVEN_not_in_range_and_enabled_WHEN_in_range_set_to_nonsense_THEN_runcontrol_state_is_enabled_in_range() {
         // Arrange
+        valueObservable.setConnectionStatus(true);
         enabledObservable.setValue("YES");
         inRangeObservable.setValue("NO");
 
@@ -124,6 +175,62 @@ public class DisplayBlockTest {
 		inRangeObservable.setValue("maybe");
 		
 		// Assert
-        assertEquals(RunControlState.ENABLED_IN_RANGE, displayBlock.getRunControlState());
+        assertEquals(RuncontrolState.ENABLED_IN_RANGE, displayBlock.getRuncontrolState());
 	}
+
+    @Test
+    public void GIVEN_pv_disconnected_WHEN_set_to_in_range_and_enabled_THEN_runcontrol_state_is_disconnected() {
+
+        // Arrange
+        valueObservable.setConnectionStatus(false);
+
+        // Act
+        enabledObservable.setValue("YES");
+        inRangeObservable.setValue("YES");
+
+        // Assert
+        assertEquals(RuncontrolState.DISCONNECTED, displayBlock.getRuncontrolState());
+    }
+
+    @Test
+    public void GIVEN_pv_disconnected_WHEN_set_to_not_in_range_and_enabled_THEN_runcontrol_state_is_disconnected() {
+
+        // Arrange
+        valueObservable.setConnectionStatus(false);
+
+        // Act
+        enabledObservable.setValue("YES");
+        inRangeObservable.setValue("NO");
+
+        // Assert
+        assertEquals(RuncontrolState.DISCONNECTED, displayBlock.getRuncontrolState());
+    }
+
+    @Test
+    public void GIVEN_pv_disconnected_WHEN_set_to_in_range_and_not_enabled_THEN_runcontrol_state_is_disconnected() {
+
+        // Arrange
+        valueObservable.setConnectionStatus(false);
+
+        // Act
+        enabledObservable.setValue("NO");
+        inRangeObservable.setValue("YES");
+
+        // Assert
+        assertEquals(RuncontrolState.DISCONNECTED, displayBlock.getRuncontrolState());
+    }
+
+    @Test
+    public void GIVEN_pv_disconnected_WHEN_set_to_not_in_range_and_not_enabled_THEN_runcontrol_state_is_disconnected() {
+
+        // Arrange
+        valueObservable.setConnectionStatus(false);
+
+        // Act
+        enabledObservable.setValue("NO");
+        inRangeObservable.setValue("NO");
+
+        // Assert
+        assertEquals(RuncontrolState.DISCONNECTED, displayBlock.getRuncontrolState());
+    }
 }

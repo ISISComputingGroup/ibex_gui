@@ -12,6 +12,20 @@
 			</value>
 		</entry>
 		<entry>
+			<key>Attenuator</key>
+			<value>
+				<type>ATTENUATOR</type>
+				<path>attenuator.opi</path>
+				<description>The OPI for the attenuator.</description>
+				<macros>
+                    <macro>
+						<name>Q</name>
+						<description>Description required.</description>
+					</macro>                    
+				</macros>
+			</value>
+		</entry>
+		<entry>
 			<key>Beam-stop</key>
 			<value>
 				<type>BEAMSTOP</type>
@@ -159,6 +173,20 @@
 					<macro>
 						<name>IOC_NUM</name>
 						<description>PSU IOC Number, two digits, e.g. 01.</description>
+					</macro>
+				</macros>
+			</value>
+		</entry>
+		<entry>
+			<key>Lakeshore 218</key>
+			<value>
+				<type>LAKESHORE</type>
+				<path>Lakeshore218.opi</path>
+				<description>The OPI for the Lakeshore 218 temperature controller.</description>
+				<macros>
+					<macro>
+						<name>LAKESHORE218</name>
+ 						<description>The Lakeshore PV name (e.g. LAKESHORE218_01).</description>  
 					</macro>
 				</macros>
 			</value>

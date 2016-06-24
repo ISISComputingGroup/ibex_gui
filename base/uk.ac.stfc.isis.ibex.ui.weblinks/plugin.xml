@@ -46,10 +46,4 @@
             restorable="true">
       </view>
    </extension>
-   <extension
-         point="uk.ac.stfc.isis.ibex.instrument.info">
-      <InstrumentInfoReceiver
-            class="uk.ac.stfc.isis.ibex.ui.weblinks.UrlSetter"></InstrumentInfoReceiver>
-   </extension>
-
 </plugin>

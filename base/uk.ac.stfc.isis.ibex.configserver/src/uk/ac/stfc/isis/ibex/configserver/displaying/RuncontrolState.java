@@ -17,36 +17,14 @@
  * http://opensource.org/licenses/eclipse-1.0.php
  */
 
-package uk.ac.stfc.isis.ibex.ui.blocks.groups;
-
-import org.eclipse.core.databinding.conversion.Converter;
-
-import uk.ac.stfc.isis.ibex.configserver.displaying.RuncontrolState;
+package uk.ac.stfc.isis.ibex.configserver.displaying;
 
 /**
- * This is a converter for converting the value for the current run-control
- * state into the appropriate symbol for the run-control status indicator.
- * 
- * Used for data-binding.
- * 
+ * Enum for the overall state of run-control.
  */
-public class RunControlSymbolConverter extends Converter {
-    public RunControlSymbolConverter() {
-        super(RuncontrolState.class, String.class);
-    }
-
-    @Override
-    public Object convert(Object fromObject) {
-        RuncontrolState state = (RuncontrolState) fromObject;
-
-        if (state == RuncontrolState.ENABLED_IN_RANGE) {
-            // Checkmark
-            return "\u2713";
-        } else if (state == RuncontrolState.ENABLED_OUT_RANGE) {
-            return "X";
-        }
-
-        return "";
-    }
-
+public enum RuncontrolState {
+    DISABLED,
+    ENABLED_IN_RANGE,
+    ENABLED_OUT_RANGE,
+    DISCONNECTED
 }

@@ -91,7 +91,7 @@ public class EditBlockDialog extends TitleAreaDialog {
         blockLogSettingsPanel = new BlockLogSettingsPanel(blockDetailsPanel, SWT.NONE,
         		blockLogSettingsViewModel);
         blockLogSettingsPanel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
-        
+
         return blockDetailsPanel;
     }
 	
@@ -120,6 +120,9 @@ public class EditBlockDialog extends TitleAreaDialog {
 	protected void createButtonsForButtonBar(Composite parent) {
 		okButton = createButton(parent, IDialogConstants.OK_ID, "OK", true);
 		createButton(parent, IDialogConstants.CANCEL_ID, "Cancel", false);
+
+        // Validate dialog, must be called here as buttons must exist
+        blockDetailsViewModel.validate();
 	}
 
     private void setOkEnabled(boolean enabled) {

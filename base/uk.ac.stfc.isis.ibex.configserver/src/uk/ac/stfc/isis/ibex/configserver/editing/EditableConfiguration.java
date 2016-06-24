@@ -304,6 +304,9 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
 		Collection<EditableGroup> editableGroupsBefore = getEditableGroups();
 		Collection<Group> groupsBefore = getGroups();
 		
+        // Remove selected blocks
+        group.toggleSelection(group.getSelectedBlocks());
+		
 		editableGroups.remove(group);
 		
         firePropertyChange(EDITABLE_GROUPS, editableGroupsBefore, getEditableGroups());
