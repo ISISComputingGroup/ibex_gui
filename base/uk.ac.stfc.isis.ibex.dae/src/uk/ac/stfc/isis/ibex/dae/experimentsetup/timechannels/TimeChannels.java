@@ -20,13 +20,16 @@
 package uk.ac.stfc.isis.ibex.dae.experimentsetup.timechannels;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import uk.ac.stfc.isis.ibex.model.ModelObject;
+import uk.ac.stfc.isis.ibex.model.UpdatedValue;
 
 public class TimeChannels extends ModelObject {
 
 	private List<TimeRegime> timeRegimes = new ArrayList<>();
+    private UpdatedValue<Collection<String>> timeChannelFileList;
 	private String timeChannelFile = "";
 	private CalculationMethod calculationMethod = CalculationMethod.UseParametersBelow;
 	private TimeUnit timeUnit = TimeUnit.MICROSECONDS;
@@ -46,6 +49,14 @@ public class TimeChannels extends ModelObject {
 	public void setTimeChannelFile(String value) {
 		firePropertyChange("timeChannelFile", timeChannelFile, timeChannelFile = value);
 	}
+
+    public UpdatedValue<Collection<String>> timeChannelFileList() {
+        return timeChannelFileList;
+    }
+
+    public void setTimeChannelFileList(UpdatedValue<Collection<String>> files) {
+        firePropertyChange("timeChannelFileList", timeChannelFileList, timeChannelFileList = files);
+    }
 
 	public TimeUnit timeUnit() {
 		return timeUnit;

@@ -21,6 +21,7 @@ package uk.ac.stfc.isis.ibex.ui.dae.experimentsetup.timechannels;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.Collection;
 import java.util.List;
 
 import uk.ac.stfc.isis.ibex.dae.experimentsetup.timechannels.CalculationMethod;
@@ -28,6 +29,7 @@ import uk.ac.stfc.isis.ibex.dae.experimentsetup.timechannels.TimeChannels;
 import uk.ac.stfc.isis.ibex.dae.experimentsetup.timechannels.TimeRegime;
 import uk.ac.stfc.isis.ibex.dae.experimentsetup.timechannels.TimeUnit;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
+import uk.ac.stfc.isis.ibex.model.UpdatedValue;
 
 public class TimeChannelsViewModel extends ModelObject {
 
@@ -57,6 +59,14 @@ public class TimeChannelsViewModel extends ModelObject {
             }
         });
 
+        model.addPropertyChangeListener("timeChannelFileList", new PropertyChangeListener() {
+            @Override
+            public void propertyChange(PropertyChangeEvent e) {
+                System.out.println("update filelist 2 " + e.getNewValue());
+                firePropertyChange(e.getPropertyName(), e.getOldValue(), e.getNewValue());
+            }
+        });
+
         model.addPropertyChangeListener("calculationMethod", new PropertyChangeListener() {
             @Override
             public void propertyChange(PropertyChangeEvent e) {
@@ -76,7 +86,15 @@ public class TimeChannelsViewModel extends ModelObject {
 	public void setTimeChannelFile(String value) {
 		model.setTimeChannelFile(value);
 	}
-	
+
+    public String[] getTimeChannelFileList() {
+        return valueOrEmpty(model.timeChannelFileList());
+    }
+
+    public void setTimeChannelFileList(UpdatedValue<Collection<String>> files) {
+        model.setTimeChannelFileList(files);
+    }
+
 	public int getCalculationMethod() {	
 		return model.calculationMethod().ordinal();
 	}
@@ -94,4 +112,9 @@ public class TimeChannelsViewModel extends ModelObject {
 		TimeUnit value = TimeUnit.values()[index];
 		model.setTimeUnit(value);
 	}
+
+    private String[] valueOrEmpty(UpdatedValue<Collection<String>> updated) {
+        Collection<String> value = updated.getValue();
+        return value != null ? value.toArray(new String[0]) : new String[0];
+    }
 }

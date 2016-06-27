@@ -64,6 +64,7 @@ public class DaeObservables {
     public final ForwardingObservable<String> spectraTables;
     public final ForwardingObservable<String> wiringTables;
     public final ForwardingObservable<String> periodFiles;
+    public final ForwardingObservable<String> timeChannelFiles;
     public final ForwardingObservable<String> vetos;
     public final ForwardingObservable<Number> beamCurrent;
     public final ForwardingObservable<Double> totalDaeCounts;
@@ -120,6 +121,8 @@ public class DaeObservables {
                 addPrefix(DAE.endWith("WIRINGTABLES")));
         periodFiles = obsFactory.getSwitchableObservable(new CompressedCharWaveformChannel(),
                 addPrefix(DAE.endWith("PERIODFILES")));
+        timeChannelFiles = obsFactory.getSwitchableObservable(new CompressedCharWaveformChannel(),
+                addPrefix(DAE.endWith("TCBFILES")));
         vetos = obsFactory.getSwitchableObservable(new CharWaveformChannel(), addPrefix(DAE.endWith("VETOSTATUS")));
         beamCurrent = obsFactory.getSwitchableObservable(new NumberChannel(), addPrefix(DAE.endWith("BEAMCURRENT")));
         totalDaeCounts = obsFactory.getSwitchableObservable(new DoubleChannel(),
