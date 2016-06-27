@@ -19,6 +19,8 @@
 
 package uk.ac.stfc.isis.ibex.dae.experimentsetup.timechannels;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -55,7 +57,15 @@ public class TimeChannels extends ModelObject {
     }
 
     public void setTimeChannelFileList(UpdatedValue<Collection<String>> files) {
-        firePropertyChange("timeChannelFileList", timeChannelFileList, timeChannelFileList = files);
+        timeChannelFileList = files;
+
+        timeChannelFileList.addPropertyChangeListener(new PropertyChangeListener() {
+
+            @Override
+            public void propertyChange(PropertyChangeEvent evt) {
+                firePropertyChange("timeChannelFileList", null, null);
+            }
+        });
     }
 
 	public TimeUnit timeUnit() {

@@ -72,15 +72,6 @@ public class TimeChannelsPanel extends Composite {
         gd_timeChannelFile.widthHint = 400;
         timeChannelFile.setLayoutData(gd_timeChannelFile);
 
-//        Button btnFile = new Button(parameters, SWT.NONE);
-//        btnFile.addSelectionListener(new SelectionAdapter() {
-//            @Override
-//            public void widgetSelected(SelectionEvent e) {
-//                displayFileDialog();
-//            }
-//        });
-//        btnFile.setText("Browse...");
-
         Label lblCalculationMethod = new Label(parameters, SWT.NONE);
         lblCalculationMethod.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
         lblCalculationMethod.setText("Calculation Method:");

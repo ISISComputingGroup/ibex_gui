@@ -62,7 +62,6 @@ public class TimeChannelsViewModel extends ModelObject {
         model.addPropertyChangeListener("timeChannelFileList", new PropertyChangeListener() {
             @Override
             public void propertyChange(PropertyChangeEvent e) {
-                System.out.println("update filelist 2 " + e.getNewValue());
                 firePropertyChange(e.getPropertyName(), e.getOldValue(), e.getNewValue());
             }
         });
