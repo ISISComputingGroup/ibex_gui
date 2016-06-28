@@ -88,6 +88,36 @@
 					</macro>
                 </macros>
 			</value>
+		</entry>
+		<entry>
+			<key>Mercury iTC</key>
+			<value>
+				<type>MERCURY</type>
+				<path>mercuryiTC.opi</path>
+				<description>The OPI for the Mercury temperature controller.</description>
+				<macros>
+					<macro>
+						<name>MERCURY</name>
+						<description>The Mercury PV name (e.g. MERCURY_01).</description>
+					</macro>
+                    <macro>
+						<name>TEMP_NUM1</name>
+						<description>The first card number (e.g. 1).</description>
+					</macro>
+					<macro>
+						<name>TEMP_NUM2</name>
+						<description>The second card number (e.g. 2).</description>
+					</macro>
+					<macro>
+						<name>TEMP_NUM3</name>
+						<description>The third card number (e.g. 3).</description>
+					</macro>
+					<macro>
+						<name>TEMP_NUM4</name>
+						<description>The fourth card number (e.g. 4).</description>
+					</macro>                   
+				</macros>
+			</value>
 		</entry>        
 		<entry>
 			<key>In Out Monitor</key>
