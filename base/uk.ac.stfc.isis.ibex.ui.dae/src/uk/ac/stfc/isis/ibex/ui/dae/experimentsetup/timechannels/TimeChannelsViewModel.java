@@ -86,10 +86,21 @@ public class TimeChannelsViewModel extends ModelObject {
 		model.setTimeChannelFile(value);
 	}
 
+    /**
+     * Returns a string array containing paths to all time channel configuration
+     * files available to this instrument.
+     * 
+     * @return the file paths as string array
+     */
     public String[] getTimeChannelFileList() {
         return valueOrEmpty(model.timeChannelFileList());
     }
 
+    /**
+     * Sets the list of time channel configuration files available.
+     * 
+     * @param files a collection containing the available time channel files
+     */
     public void setTimeChannelFileList(UpdatedValue<Collection<String>> files) {
         model.setTimeChannelFileList(files);
     }
@@ -112,6 +123,13 @@ public class TimeChannelsViewModel extends ModelObject {
 		model.setTimeUnit(value);
 	}
 
+    /**
+     * Used to convert an UpdatedValue with type string collection into a string
+     * array.
+     * 
+     * @param updated the UpdatedValue object to be converted
+     * @return the String array
+     */
     private String[] valueOrEmpty(UpdatedValue<Collection<String>> updated) {
         Collection<String> value = updated.getValue();
         return value != null ? value.toArray(new String[0]) : new String[0];

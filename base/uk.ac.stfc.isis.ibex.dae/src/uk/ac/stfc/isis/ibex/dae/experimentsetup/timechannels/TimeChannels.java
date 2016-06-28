@@ -52,10 +52,21 @@ public class TimeChannels extends ModelObject {
 		firePropertyChange("timeChannelFile", timeChannelFile, timeChannelFile = value);
 	}
 
+    /**
+     * Returns a list of time channel configuration files available to the
+     * instrument.
+     * 
+     * @return the list of time channel files
+     */
     public UpdatedValue<Collection<String>> timeChannelFileList() {
         return timeChannelFileList;
     }
 
+    /**
+     * Sets the list of time channel files and adds a listener.
+     * 
+     * @param files
+     */
     public void setTimeChannelFileList(UpdatedValue<Collection<String>> files) {
         timeChannelFileList = files;
 
