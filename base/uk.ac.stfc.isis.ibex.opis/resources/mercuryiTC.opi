@@ -49,7 +49,7 @@
     <wuid>-1c6864:1559161122d:-7fbf</wuid>
     <auto_size>false</auto_size>
     <scripts />
-    <height>37</height>
+    <height>75</height>
     <border_width>1</border_width>
     <scale_options>
       <width_scalable>true</width_scalable>
@@ -98,7 +98,7 @@
     <wuid>-1c6864:1559161122d:-7f5e</wuid>
     <auto_size>false</auto_size>
     <scripts />
-    <height>37</height>
+    <height>75</height>
     <border_width>1</border_width>
     <scale_options>
       <width_scalable>true</width_scalable>
@@ -122,7 +122,7 @@
     <width>559</width>
     <x>12</x>
     <name>Linking Container_1</name>
-    <y>102</y>
+    <y>140</y>
     <foreground_color>
       <color red="192" green="192" blue="192" />
     </foreground_color>
@@ -147,7 +147,7 @@
     <wuid>-1c6864:1559161122d:-7e8a</wuid>
     <auto_size>false</auto_size>
     <scripts />
-    <height>37</height>
+    <height>75</height>
     <border_width>1</border_width>
     <scale_options>
       <width_scalable>true</width_scalable>
@@ -171,7 +171,7 @@
     <width>559</width>
     <x>12</x>
     <name>Linking Container_2</name>
-    <y>144</y>
+    <y>220</y>
     <foreground_color>
       <color red="192" green="192" blue="192" />
     </foreground_color>
@@ -196,7 +196,7 @@
     <wuid>-1c6864:1559161122d:-7e30</wuid>
     <auto_size>false</auto_size>
     <scripts />
-    <height>37</height>
+    <height>75</height>
     <border_width>1</border_width>
     <scale_options>
       <width_scalable>true</width_scalable>
@@ -220,7 +220,7 @@
     <width>559</width>
     <x>12</x>
     <name>Linking Container_3</name>
-    <y>186</y>
+    <y>300</y>
     <foreground_color>
       <color red="192" green="192" blue="192" />
     </foreground_color>
