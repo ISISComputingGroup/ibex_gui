@@ -77,8 +77,8 @@ $(pv_value)</tooltip>
     <password_input>false</password_input>
     <name>Text_1</name>
     <width>170</width>
-    <x>293</x>
-    <y>42</y>
+    <x>299</x>
+    <y>66</y>
     <maximum>1.7976931348623157E308</maximum>
     <actions hook="false" hook_all="false" />
     <foreground_color>
@@ -129,9 +129,9 @@ $(pv_value)</tooltip>
       <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
     </background_color>
     <width>84</width>
-    <x>462</x>
+    <x>468</x>
     <name>Text Update_2</name>
-    <y>39</y>
+    <y>63</y>
     <foreground_color>
       <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
     </foreground_color>
@@ -184,8 +184,8 @@ $(pv_value)</tooltip>
     <password_input>false</password_input>
     <name>Text_3</name>
     <width>115</width>
-    <x>0</x>
-    <y>42</y>
+    <x>6</x>
+    <y>66</y>
     <maximum>1.7976931348623157E308</maximum>
     <actions hook="false" hook_all="false" />
     <foreground_color>
@@ -236,9 +236,9 @@ $(pv_value)</tooltip>
       <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
     </background_color>
     <width>79</width>
-    <x>126</x>
+    <x>132</x>
     <name>Text Update_3</name>
-    <y>39</y>
+    <y>63</y>
     <foreground_color>
       <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
     </foreground_color>
@@ -292,8 +292,8 @@ $(pv_value)</tooltip>
       <color name="ISIS_Textbox_Background" red="255" green="255" blue="255" />
     </background_color>
     <width>85</width>
-    <x>204</x>
-    <y>39</y>
+    <x>210</x>
+    <y>63</y>
     <maximum>1.7976931348623157E308</maximum>
     <foreground_color>
       <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
@@ -347,8 +347,8 @@ $(pv_value)</tooltip>
     <password_input>false</password_input>
     <name>Text_4</name>
     <width>115</width>
-    <x>0</x>
-    <y>9</y>
+    <x>6</x>
+    <y>33</y>
     <maximum>1.7976931348623157E308</maximum>
     <actions hook="false" hook_all="false" />
     <foreground_color>
@@ -404,8 +404,8 @@ $(pv_value)</tooltip>
       <color name="ISIS_Textbox_Background" red="255" green="255" blue="255" />
     </background_color>
     <width>423</width>
-    <x>123</x>
-    <y>6</y>
+    <x>129</x>
+    <y>30</y>
     <maximum>1.7976931348623157E308</maximum>
     <foreground_color>
       <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
@@ -413,6 +413,62 @@ $(pv_value)</tooltip>
     <minimum>-1.7976931348623157E308</minimum>
     <font>
       <opifont.name fontName="Arial" height="14" style="1">ISIS_Value</opifont.name>
+    </font>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.NativeText" version="1.0">
+    <border_style>0</border_style>
+    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+    <show_native_border>false</show_native_border>
+    <precision>0</precision>
+    <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+    <horizontal_alignment>0</horizontal_alignment>
+    <rules />
+    <enabled>true</enabled>
+    <wuid>-1c6864:1559161122d:-7335</wuid>
+    <next_focus>0</next_focus>
+    <pv_value />
+    <auto_size>false</auto_size>
+    <read_only>true</read_only>
+    <text>CARD $(TEMP_NUM)</text>
+    <scripts />
+    <show_units>true</show_units>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <height>24</height>
+    <multiline_input>false</multiline_input>
+    <border_width>1</border_width>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <visible>true</visible>
+    <pv_name></pv_name>
+    <border_color>
+      <color name="ISIS_Check_Border" red="0" green="128" blue="255" />
+    </border_color>
+    <precision_from_pv>true</precision_from_pv>
+    <widget_type>Text</widget_type>
+    <confirm_message></confirm_message>
+    <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+    <format_type>0</format_type>
+    <limits_from_pv>false</limits_from_pv>
+    <background_color>
+      <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
+    </background_color>
+    <password_input>false</password_input>
+    <name>Text_5</name>
+    <width>205</width>
+    <x>6</x>
+    <y>3</y>
+    <maximum>1.7976931348623157E308</maximum>
+    <actions hook="false" hook_all="false" />
+    <foreground_color>
+      <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
+    </foreground_color>
+    <minimum>-1.7976931348623157E308</minimum>
+    <font>
+      <opifont.name fontName="Arial" height="14" style="1">ISIS_Label</opifont.name>
     </font>
   </widget>
 </display>

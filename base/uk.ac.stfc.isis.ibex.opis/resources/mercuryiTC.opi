@@ -9,7 +9,6 @@
   <height>600</height>
   <macros>
     <include_parent_macros>true</include_parent_macros>
-    <NAME>TEST</NAME>
   </macros>
   <boy_version>3.1.4.201301231545</boy_version>
   <show_edit_range>true</show_edit_range>
@@ -49,7 +48,7 @@
     <wuid>-1c6864:1559161122d:-7fbf</wuid>
     <auto_size>false</auto_size>
     <scripts />
-    <height>75</height>
+    <height>100</height>
     <border_width>1</border_width>
     <scale_options>
       <width_scalable>true</width_scalable>
@@ -98,7 +97,7 @@
     <wuid>-1c6864:1559161122d:-7f5e</wuid>
     <auto_size>false</auto_size>
     <scripts />
-    <height>75</height>
+    <height>100</height>
     <border_width>1</border_width>
     <scale_options>
       <width_scalable>true</width_scalable>
@@ -122,7 +121,7 @@
     <width>559</width>
     <x>12</x>
     <name>Linking Container_1</name>
-    <y>140</y>
+    <y>165</y>
     <foreground_color>
       <color red="192" green="192" blue="192" />
     </foreground_color>
@@ -147,7 +146,7 @@
     <wuid>-1c6864:1559161122d:-7e8a</wuid>
     <auto_size>false</auto_size>
     <scripts />
-    <height>75</height>
+    <height>100</height>
     <border_width>1</border_width>
     <scale_options>
       <width_scalable>true</width_scalable>
@@ -171,7 +170,7 @@
     <width>559</width>
     <x>12</x>
     <name>Linking Container_2</name>
-    <y>220</y>
+    <y>270</y>
     <foreground_color>
       <color red="192" green="192" blue="192" />
     </foreground_color>
@@ -196,7 +195,7 @@
     <wuid>-1c6864:1559161122d:-7e30</wuid>
     <auto_size>false</auto_size>
     <scripts />
-    <height>75</height>
+    <height>100</height>
     <border_width>1</border_width>
     <scale_options>
       <width_scalable>true</width_scalable>
@@ -220,7 +219,7 @@
     <width>559</width>
     <x>12</x>
     <name>Linking Container_3</name>
-    <y>300</y>
+    <y>375</y>
     <foreground_color>
       <color red="192" green="192" blue="192" />
     </foreground_color>
