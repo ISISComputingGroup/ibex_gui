@@ -39,14 +39,34 @@ public class DeviceScreenVariables implements Closable {
     
     private static final String GET_SCREENS_SUFFIX = "CS:BLOCKSERVER:GET_SCREENS";
 
-    private ObservableFactory switchingObservableFactory = new ObservableFactory(OnInstrumentSwitch.SWITCH);
+    private ObservableFactory switchingObservableFactory;
     private ForwardingObservable<DeviceScreensDescription> deviceScreensObservable;
+
+    private final String pvPrefix;
+
+    /**
+     * Default constructor.
+     */
+    public DeviceScreenVariables() {
+        this(new ObservableFactory(OnInstrumentSwitch.SWITCH), null);
+    }
+
+    /**
+     * Constructor used for testing, so we can mock out the factories.
+     * 
+     * @param switchingObservableFactory an observable factory to be used, could
+     *            be a mock
+     */
+    public DeviceScreenVariables(ObservableFactory switchingObservableFactory, String pvPrefix) {
+        this.switchingObservableFactory = switchingObservableFactory;
+        this.pvPrefix = pvPrefix;
+    }
 
     public ForwardingObservable<DeviceScreensDescription> getDeviceScreens() {
         close();
 
         deviceScreensObservable = InstrumentVariables.convert(
-                readCompressedClosing(Instrument.getInstance().getPvPrefix() + GET_SCREENS_SUFFIX),
+                readCompressedClosing(getPvPrefix() + GET_SCREENS_SUFFIX),
                 new DeviceScreensDescriptionParser());
 
         return deviceScreensObservable;
@@ -60,6 +80,20 @@ public class DeviceScreenVariables implements Closable {
     public void close() {
         if (deviceScreensObservable != null) {
             deviceScreensObservable.close();
+        }
+    }
+
+    /**
+     * This method allows us to pass a pvPrefix in the constructor during the
+     * tests, when the pvPrefix cannot come from Instrument.
+     * 
+     * @return the PV prefix
+     */
+    private String getPvPrefix() {
+        if (pvPrefix == null) {
+            return Instrument.getInstance().getPvPrefix();
+        } else {
+            return pvPrefix;
         }
     }
 
