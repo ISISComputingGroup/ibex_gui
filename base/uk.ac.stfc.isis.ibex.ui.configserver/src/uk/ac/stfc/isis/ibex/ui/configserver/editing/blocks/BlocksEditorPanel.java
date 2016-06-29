@@ -39,6 +39,7 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.MessageBox;
 
+import uk.ac.stfc.isis.ibex.configserver.editing.BlockFactory;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableBlock;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
 
@@ -90,7 +91,8 @@ public class BlocksEditorPanel extends Composite {
 		add.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				EditableBlock added = config.addNewBlock();
+                BlockFactory blockFactory = new BlockFactory(config);
+                EditableBlock added = blockFactory.createNewBlock();
                 EditBlockDialog dialog = new EditBlockDialog(getShell(), added, config);
 				dialog.open();
 				setBlocks(config);

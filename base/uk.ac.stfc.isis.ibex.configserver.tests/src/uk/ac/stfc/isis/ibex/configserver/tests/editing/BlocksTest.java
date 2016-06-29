@@ -19,40 +19,94 @@
 
 package uk.ac.stfc.isis.ibex.configserver.tests.editing;
 
+import static org.junit.Assert.*;
+
 import java.util.ArrayList;
 import java.util.Collection;
 
 import org.junit.Test;
 
+import uk.ac.stfc.isis.ibex.configserver.editing.BlockFactory;
+import uk.ac.stfc.isis.ibex.configserver.editing.DuplicateBlockNameException;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableBlock;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
 
 @SuppressWarnings("checkstyle:methodname")
 public class BlocksTest extends EditableConfigurationTest {
-	
+
 	@Test
-	public void a_new_config_has_no_blocks() {
+    public void GIVEN_new_config_THEN_list_of_blocks_is_empty() {
 		// Arrange
-		EditableConfiguration edited = edit(emptyConfig());
+        EditableConfiguration edited = edit(emptyConfig());
 		
 		// Assert
 		assertEmpty(edited.asConfiguration().getBlocks());
 	}	
-	
+
+    @Test
+    public void WHEN_new_block_is_created_THEN_new_object_is_not_null_and_of_type_EditableBlock() {
+        // Arrange
+        EditableConfiguration edited = edit(emptyConfig());
+        BlockFactory blockFactory = new BlockFactory(edited);
+
+        // Act
+        EditableBlock block = blockFactory.createNewBlock();
+
+        // Assert
+        assertEquals(EditableBlock.class, block.getClass());
+    }
+
 	@Test
-	public void a_new_block_can_be_added() {
+    public void
+            GIVEN_a_new_block_and_config_WHEN_block_is_added_to_config_THEN_list_of_blocks_in_config_contains_new_block()
+                    throws DuplicateBlockNameException {
 		// Arrange
 		EditableConfiguration edited = edit(emptyConfig());
+        BlockFactory blockFactory = new BlockFactory(edited);
+        EditableBlock block = blockFactory.createNewBlock();
 	
 		// Act
-		edited.addNewBlock();
+		edited.addNewBlock(block);
 		
 		// Assert
 		assertNotEmpty(edited.asConfiguration().getBlocks());
 	}
-	
+
+    @Test
+    public void GIVEN_a_block_in_the_config_WHEN_another_block_is_created_THEN_those_blocks_have_unique_names()
+            throws DuplicateBlockNameException {
+        // Arrange
+        EditableConfiguration edited = edit(emptyConfig());
+        BlockFactory blockFactory = new BlockFactory(edited);
+        EditableBlock block1 = blockFactory.createNewBlock();
+        edited.addNewBlock(block1);
+
+        // Act
+        EditableBlock block2 = blockFactory.createNewBlock();
+
+        // Assert
+        assertNotEquals(block1.getName(), block2.getName());
+    }
+
+    @Test
+    public void GIVEN_a_block_in_the_config_WHEN_trying_to_add_block_of_same_name_THEN_block_is_not_added()
+            throws DuplicateBlockNameException {
+        // Arrange
+        EditableConfiguration edited = edit(emptyConfig());
+        BlockFactory blockFactory = new BlockFactory(edited);
+        EditableBlock block1 = blockFactory.createNewBlock();
+        edited.addNewBlock(block1);
+
+        // Act
+        EditableBlock block2 = blockFactory.createNewBlock();
+        block2.setName(block1.getName());
+
+        // Assert
+        assertTrue(!edited.getEditableBlocks().contains(block2));
+        
+    }
 	@Test
-	public void a_block_can_be_removed() {
+    public void GIVEN_a_block_is_stored_in_config_WHEN_block_is_removed_THEN_block_is_no_longer_stored_in_config() {
 		// Arrange
 		blocks.add(GAPX);
 		EditableConfiguration edited = edit(config());
@@ -66,7 +120,7 @@ public class BlocksTest extends EditableConfigurationTest {
 	}
 	
 	@Test
-	public void multiple_blocks_can_be_removed() {
+    public void WHEN_multiple_blocks_removed_from_config_THEN_all_those_blocks_no_longer_stored_in_config() {
 		// Arrange
 		blocks.add(GAPX);
 		blocks.add(GAPY);
