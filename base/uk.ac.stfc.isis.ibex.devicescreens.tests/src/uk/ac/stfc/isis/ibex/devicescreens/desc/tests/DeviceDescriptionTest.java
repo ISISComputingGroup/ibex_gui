@@ -85,4 +85,16 @@ public class DeviceDescriptionTest {
         // Assert
         assertEquals(expected, deviceDescription.getType());
     }
+
+    @Test
+    public void GIVEN_new_device_description_THEN_properties_is_not_null() {
+        // Assert
+        assertNotNull(deviceDescription.getProperties());
+    }
+
+    @Test
+    public void GIVEN_new_device_description_THEN_properties_is_empty() {
+        // Assert
+        assertTrue(deviceDescription.getProperties().isEmpty());
+    }
 }

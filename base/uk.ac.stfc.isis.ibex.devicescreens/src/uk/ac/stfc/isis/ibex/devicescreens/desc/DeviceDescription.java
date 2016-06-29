@@ -22,6 +22,9 @@
  */
 package uk.ac.stfc.isis.ibex.devicescreens.desc;
 
+
+import java.util.List;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -81,5 +84,12 @@ public class DeviceDescription {
      */
     public void setName(String name) {
         this.name = name;
+    }
+
+    /**
+     * @return the list of properties
+     */
+    public List<PropertyDescription> getProperties() {
+        return properties.getProperties();
     }
 }

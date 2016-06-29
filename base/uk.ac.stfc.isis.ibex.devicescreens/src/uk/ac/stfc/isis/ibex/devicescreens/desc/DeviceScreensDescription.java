@@ -20,6 +20,7 @@
 package uk.ac.stfc.isis.ibex.devicescreens.desc;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.annotation.XmlAccessType;
@@ -43,6 +44,15 @@ public class DeviceScreensDescription {
 
     @XmlElement(name = "device", type = DeviceDescription.class)
     private ArrayList<DeviceDescription> devices = new ArrayList<>();
+
+    /**
+     * Getter for the list of devices, for testing purposes.
+     * 
+     * @return the list of devices
+     */
+    public List<DeviceDescription> getDevices() {
+        return devices;
+    }
 
     @Override
     public String toString() {
