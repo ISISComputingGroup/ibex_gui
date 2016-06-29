@@ -43,7 +43,7 @@ public class Panel extends Composite {
     private final Display display = Display.getCurrent();
     private final Observer<DeviceScreensDescription> pvObserver = new BaseObserver<DeviceScreensDescription>() {
         @Override
-        public void onValue(DeviceScreensDescription value) {
+        public void onValue(final DeviceScreensDescription value) {
             display.asyncExec(new Runnable() {
                 @Override
                 public void run() {
