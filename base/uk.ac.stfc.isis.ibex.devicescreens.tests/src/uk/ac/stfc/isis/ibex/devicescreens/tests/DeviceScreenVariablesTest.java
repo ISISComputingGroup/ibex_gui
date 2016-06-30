@@ -34,7 +34,6 @@ import org.junit.Test;
 import uk.ac.stfc.isis.ibex.devicescreens.DeviceScreenVariables;
 import uk.ac.stfc.isis.ibex.devicescreens.desc.DeviceDescription;
 import uk.ac.stfc.isis.ibex.devicescreens.desc.DeviceScreensDescription;
-import uk.ac.stfc.isis.ibex.epics.observing.ClosableObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.epics.switching.ObservableFactory;
 import uk.ac.stfc.isis.ibex.epics.switching.SwitchableObservable;
@@ -92,38 +91,6 @@ public class DeviceScreenVariablesTest {
         List<DeviceDescription> devices = descriptionsObservable.getValue().getDevices();
         assertEquals(1, devices.size());
         assertEquals(expectedName, devices.get(0).getName());
-    }
-
-    @Test
-    public void
-            GIVEN_device_screens_WHEN_variables_is_closed_THEN_device_screens_no_longer_observes_value_changes_of_pv() {
-        // Arrange
-        String name1 = "name1";
-        String name2 = "name2";
-        String name3 = "name3";
-        ClosableObservable mockClosableObservable = mock(ClosableObservable.class);
-        
-        TestableSwitchableObservable testableObservable = new TestableSwitchableObservable(mockClosableObservable);
-        testableObservable.setValue(getXMLText(name1));
-        testableObservable.setConnectionStatus(true);
-
-        when(switchingObservableFactory.getSwitchableObservable(any(ChannelType.class),
-                eq(pvPrefix + GET_SCREENS_SUFFIX))).thenReturn(testableObservable);
-
-        variables = createVariables();
-        ForwardingObservable<DeviceScreensDescription> observable = variables.getDeviceScreens();
-        assertEquals(name1, observable.getValue().getDevices().get(0).getName());
-
-        // Check that the testableObservable is being observed
-        testableObservable.setValue(getXMLText(name2));
-        assertEquals(name2, observable.getValue().getDevices().get(0).getName());
-
-        // Act
-        variables.close();
-
-        // Assert - the testableObservable is not observed anymore
-        testableObservable.setValue(getXMLText(name3));
-        assertEquals(name2, observable.getValue().getDevices().get(0).getName());
     }
 
     private String getXMLText(String name) {

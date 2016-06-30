@@ -24,12 +24,11 @@ import org.osgi.framework.BundleContext;
 
 import uk.ac.stfc.isis.ibex.devicescreens.desc.DeviceScreensDescription;
 import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
-import uk.ac.stfc.isis.ibex.epics.pv.Closer;
 
 /**
  * Describes a set of screens associated with the device screens perspective.
  */
-public class DeviceScreens extends Closer implements BundleActivator {
+public class DeviceScreens implements BundleActivator {
 
     private static DeviceScreens instance;
     private static BundleContext context;
@@ -42,7 +41,7 @@ public class DeviceScreens extends Closer implements BundleActivator {
     public DeviceScreens() {
         instance = this;
 
-        variables = registerForClose(new DeviceScreenVariables());
+        variables = new DeviceScreenVariables();
     }
 
     /**
@@ -90,7 +89,6 @@ public class DeviceScreens extends Closer implements BundleActivator {
     @Override
     public void stop(BundleContext context) throws Exception {
         DeviceScreens.context = null;
-        close();
     }
 
 }

@@ -25,7 +25,6 @@ package uk.ac.stfc.isis.ibex.devicescreens;
 import uk.ac.stfc.isis.ibex.devicescreens.desc.DeviceScreensDescription;
 import uk.ac.stfc.isis.ibex.devicescreens.desc.DeviceScreensDescriptionParser;
 import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
-import uk.ac.stfc.isis.ibex.epics.pv.Closable;
 import uk.ac.stfc.isis.ibex.epics.switching.ObservableFactory;
 import uk.ac.stfc.isis.ibex.epics.switching.OnInstrumentSwitch;
 import uk.ac.stfc.isis.ibex.epics.switching.WritableFactory;
@@ -36,7 +35,7 @@ import uk.ac.stfc.isis.ibex.instrument.channels.CompressedCharWaveformChannel;
 /**
  * Contains key variables for the device screens class.
  */
-public class DeviceScreenVariables implements Closable {
+public class DeviceScreenVariables {
     
     private static final String BLOCKSERVER_ADDRESS = "CS:BLOCKSERVER:";
     private static final String GET_SCREENS_SUFFIX = "GET_SCREENS";
@@ -45,7 +44,7 @@ public class DeviceScreenVariables implements Closable {
     private final ObservableFactory switchingObservableFactory;
     private final WritableFactory switchingWritableFactory;
 
-    private ForwardingObservable<DeviceScreensDescription> deviceScreensObservable;
+    private final ForwardingObservable<DeviceScreensDescription> deviceScreensObservable;
 
     private final String pvPrefix;
 
@@ -67,27 +66,18 @@ public class DeviceScreenVariables implements Closable {
         this.switchingObservableFactory = switchingObservableFactory;
         this.switchingWritableFactory = switchingWritableFactory;
         this.pvPrefix = pvPrefix;
-    }
-
-    public ForwardingObservable<DeviceScreensDescription> getDeviceScreens() {
-        close();
-
+        
         deviceScreensObservable = InstrumentVariables.convert(
                 readCompressedClosing(getPvPrefix() + BLOCKSERVER_ADDRESS + GET_SCREENS_SUFFIX),
                 new DeviceScreensDescriptionParser());
+    }
 
+    public ForwardingObservable<DeviceScreensDescription> getDeviceScreens() {
         return deviceScreensObservable;
     }
 
     private ForwardingObservable<String> readCompressedClosing(String address) {
         return switchingObservableFactory.getSwitchableObservable(new CompressedCharWaveformChannel(), address);
-    }
-
-    @Override
-    public void close() {
-        if (deviceScreensObservable != null) {
-            deviceScreensObservable.close();
-        }
     }
 
     /**
