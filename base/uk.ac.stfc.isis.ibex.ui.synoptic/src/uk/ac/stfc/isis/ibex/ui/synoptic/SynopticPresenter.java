@@ -153,7 +153,7 @@ public class SynopticPresenter extends ModelObject {
 		LOG.info(targetName + " requested");
 		if (targets.containsKey(targetName)) {
 			Target target = targets.get(targetName).item();
-
+			
             LOG.info(target.name());
 
 			if (target instanceof OpiTarget) {
@@ -217,7 +217,7 @@ public class SynopticPresenter extends ModelObject {
 			IViewPart view = workbenchPage.showView(OpiTargetView.ID, opiTarget.name(), IWorkbenchPage.VIEW_ACTIVATE);
 			openOPIs.add(view);
 			OpiTargetView targetView = (OpiTargetView) view;
-			targetView.setOpi(opiTarget.name(), opiTarget.opiName(), opiTarget.properties());
+			targetView.setOpi(opiTarget.name(), opiTarget.opiName(), new HashMap<String, String>());
 		} catch (PartInitException e) {
 			LOG.catching(e);
 		}

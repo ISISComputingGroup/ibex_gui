@@ -2,11 +2,16 @@ package uk.ac.stfc.isis.ibex.banner;
 
 import java.util.Collection;
 
+import com.google.common.base.Strings;
+
 import uk.ac.stfc.isis.ibex.configserver.Configurations;
 import uk.ac.stfc.isis.ibex.configserver.configuration.BannerItem;
 import uk.ac.stfc.isis.ibex.epics.observing.BaseObserver;
+import uk.ac.stfc.isis.ibex.model.ModelObject;
 
-public class BannerModel {
+public class BannerModel extends ModelObject {
+	
+	Collection<BannerItem> bannerItems;
 
 	public BannerModel(){
 		Configurations.getInstance().variables().bannerDescription.addObserver(descriptionAdapter);
@@ -17,7 +22,7 @@ public class BannerModel {
 
         @Override
         public void onValue(Collection<BannerItem> value) {
-            System.out.println(value);
+            setBannerItems(value);
         }
 
         @Override
@@ -32,4 +37,12 @@ public class BannerModel {
             }
         }
     };
+    
+    private void setBannerItems(Collection<BannerItem> value) {
+        firePropertyChange("bannerItems", this.bannerItems, this.bannerItems = value);
+    }
+    
+    public Collection<BannerItem> getBannerItems(){
+    	return this.bannerItems;
+    }
 }

@@ -58,4 +58,8 @@ public class Banner implements BundleActivator {
 	public void stop(BundleContext bundleContext) throws Exception {
 		Banner.context = null;
 	}    
+	
+	public BannerModel getBannerModel() {
+		return this.model;
+	}
 }
