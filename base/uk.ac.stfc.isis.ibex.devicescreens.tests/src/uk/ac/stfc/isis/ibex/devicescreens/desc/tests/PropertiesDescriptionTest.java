@@ -32,6 +32,7 @@ import uk.ac.stfc.isis.ibex.devicescreens.desc.PropertiesDescription;
 /**
  * This class tests PropertiesDescritpion
  */
+@SuppressWarnings("checkstyle:methodname")
 public class PropertiesDescriptionTest {
 
     private PropertiesDescription propertiesDescription;

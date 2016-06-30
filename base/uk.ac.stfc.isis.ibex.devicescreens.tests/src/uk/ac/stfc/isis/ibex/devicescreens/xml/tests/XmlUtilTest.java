@@ -38,6 +38,7 @@ import uk.ac.stfc.isis.ibex.devicescreens.xml.XMLUtil;
 /**
  * This class tests the loading and parsing of an xml by the XMLUtil class.
  */
+@SuppressWarnings("checkstyle:methodname")
 public class XmlUtilTest {
 
     private DeviceScreensDescription singleDeviceScreensDescription;

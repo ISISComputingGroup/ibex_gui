@@ -36,6 +36,7 @@ import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
 /**
  * This class tests the DeviceScreensDescriptionParser.
  */
+@SuppressWarnings("checkstyle:methodname")
 public class DeviceScreensDescriptionParserTest {
 
     private String xmlText =

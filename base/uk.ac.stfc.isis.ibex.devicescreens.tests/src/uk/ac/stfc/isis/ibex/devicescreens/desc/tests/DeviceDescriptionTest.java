@@ -32,6 +32,7 @@ import uk.ac.stfc.isis.ibex.devicescreens.desc.DeviceDescription;
 /**
  * This class tests DeviceDescription.
  */
+@SuppressWarnings("checkstyle:methodname")
 public class DeviceDescriptionTest {
 
     private DeviceDescription deviceDescription;
