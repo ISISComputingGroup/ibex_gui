@@ -20,18 +20,18 @@
 package uk.ac.stfc.isis.ibex.ui.beamstatus.views;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.custom.ScrolledComposite;
-import org.eclipse.swt.layout.FillLayout;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.ExpandBar;
 import org.eclipse.swt.widgets.ExpandItem;
 
 /**
- * The parent composite for the beam status widgets.
+ * The parent composite for the beam stats widgets.
  * 
  */
 @SuppressWarnings("checkstyle:magicnumber")
-public class StatusPanel extends Composite {
+public class StatsPanel extends Composite {
 
     /**
      * The constructor.
@@ -39,14 +39,12 @@ public class StatusPanel extends Composite {
      * @param parent the parent
      * @param style the SWT style
      */
-    public StatusPanel(Composite parent, int style) {
-        super(parent, style);
-        setLayout(new FillLayout(SWT.HORIZONTAL));
+    public StatsPanel(Composite parent, int style) {
+        super(parent, SWT.NONE);
+        setLayout(new GridLayout(1, false));
 
-        ScrolledComposite scrolled = new ScrolledComposite(this, SWT.V_SCROLL);
-
-        ExpandBar expandBar = new ExpandBar(scrolled, SWT.NONE);
-        scrolled.setContent(expandBar);
+        ExpandBar expandBar = new ExpandBar(this, SWT.FILL);
+        expandBar.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, true, 1, 1));
 
         ExpandItem xpndtmSynchrotron = new ExpandItem(expandBar, SWT.NONE);
         xpndtmSynchrotron.setExpanded(true);
@@ -67,9 +65,7 @@ public class StatusPanel extends Composite {
         xpndtmTargetStation2.setText("Target Station 2");
         TargetStationTwoPanel ts2 = new TargetStationTwoPanel(expandBar, SWT.NONE);
         xpndtmTargetStation2.setControl(ts2);
-        xpndtmTargetStation2.setHeight(400);
-
+        xpndtmTargetStation2.setHeight(300);
         expandBar.layout();
-        expandBar.setSize(400, 660);
     }
 }
