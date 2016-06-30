@@ -38,6 +38,7 @@ import uk.ac.stfc.isis.ibex.epics.observing.ClosableObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.epics.switching.ObservableFactory;
 import uk.ac.stfc.isis.ibex.epics.switching.SwitchableObservable;
+import uk.ac.stfc.isis.ibex.epics.switching.WritableFactory;
 import uk.ac.stfc.isis.ibex.instrument.channels.ChannelType;
 
 /**
@@ -51,9 +52,8 @@ public class DeviceScreenVariablesTest {
 
     private DeviceScreenVariables variables;
     private ObservableFactory switchingObservableFactory;
+    private WritableFactory switchingWritableFactory;
     private SwitchableObservable mockSwitchableObservable;
-
-
 
     @Before
     public void set_up() {
@@ -64,10 +64,12 @@ public class DeviceScreenVariablesTest {
         switchingObservableFactory = mock(ObservableFactory.class);
         when(switchingObservableFactory.getSwitchableObservable(any(ChannelType.class), any(String.class)))
                 .thenReturn(defaultSwitchableObservable);
+
+        switchingWritableFactory = mock(WritableFactory.class);
     }
 
     private DeviceScreenVariables createVariables() {
-        return new DeviceScreenVariables(switchingObservableFactory, pvPrefix);
+        return new DeviceScreenVariables(switchingObservableFactory, switchingWritableFactory, pvPrefix);
     }
 
     @Test

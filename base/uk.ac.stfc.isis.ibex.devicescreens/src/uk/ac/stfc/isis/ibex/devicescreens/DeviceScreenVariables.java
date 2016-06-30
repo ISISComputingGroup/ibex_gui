@@ -28,6 +28,7 @@ import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.epics.pv.Closable;
 import uk.ac.stfc.isis.ibex.epics.switching.ObservableFactory;
 import uk.ac.stfc.isis.ibex.epics.switching.OnInstrumentSwitch;
+import uk.ac.stfc.isis.ibex.epics.switching.WritableFactory;
 import uk.ac.stfc.isis.ibex.instrument.Instrument;
 import uk.ac.stfc.isis.ibex.instrument.InstrumentVariables;
 import uk.ac.stfc.isis.ibex.instrument.channels.CompressedCharWaveformChannel;
@@ -37,9 +38,13 @@ import uk.ac.stfc.isis.ibex.instrument.channels.CompressedCharWaveformChannel;
  */
 public class DeviceScreenVariables implements Closable {
     
-    private static final String GET_SCREENS_SUFFIX = "CS:BLOCKSERVER:GET_SCREENS";
+    private static final String BLOCKSERVER_ADDRESS = "CS:BLOCKSERVER:";
+    private static final String GET_SCREENS_SUFFIX = "GET_SCREENS";
+    private static final String SET_SCREENS_SUFFIX = "SET_SCREENS";
 
-    private ObservableFactory switchingObservableFactory;
+    private final ObservableFactory switchingObservableFactory;
+    private final WritableFactory switchingWritableFactory;
+
     private ForwardingObservable<DeviceScreensDescription> deviceScreensObservable;
 
     private final String pvPrefix;
@@ -48,7 +53,7 @@ public class DeviceScreenVariables implements Closable {
      * Default constructor.
      */
     public DeviceScreenVariables() {
-        this(new ObservableFactory(OnInstrumentSwitch.SWITCH), null);
+        this(new ObservableFactory(OnInstrumentSwitch.SWITCH), new WritableFactory(OnInstrumentSwitch.SWITCH), null);
     }
 
     /**
@@ -57,8 +62,10 @@ public class DeviceScreenVariables implements Closable {
      * @param switchingObservableFactory an observable factory to be used, could
      *            be a mock
      */
-    public DeviceScreenVariables(ObservableFactory switchingObservableFactory, String pvPrefix) {
+    public DeviceScreenVariables(ObservableFactory switchingObservableFactory, WritableFactory switchingWritableFactory,
+            String pvPrefix) {
         this.switchingObservableFactory = switchingObservableFactory;
+        this.switchingWritableFactory = switchingWritableFactory;
         this.pvPrefix = pvPrefix;
     }
 
@@ -66,7 +73,7 @@ public class DeviceScreenVariables implements Closable {
         close();
 
         deviceScreensObservable = InstrumentVariables.convert(
-                readCompressedClosing(getPvPrefix() + GET_SCREENS_SUFFIX),
+                readCompressedClosing(getPvPrefix() + BLOCKSERVER_ADDRESS + GET_SCREENS_SUFFIX),
                 new DeviceScreensDescriptionParser());
 
         return deviceScreensObservable;
