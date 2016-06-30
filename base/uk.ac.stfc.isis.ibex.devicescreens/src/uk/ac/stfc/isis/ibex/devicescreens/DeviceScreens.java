@@ -17,10 +17,10 @@
  * http://opensource.org/licenses/eclipse-1.0.php
  */
 
-/**
- * 
- */
 package uk.ac.stfc.isis.ibex.devicescreens;
+
+import org.osgi.framework.BundleActivator;
+import org.osgi.framework.BundleContext;
 
 import uk.ac.stfc.isis.ibex.devicescreens.desc.DeviceScreensDescription;
 import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
@@ -29,19 +29,69 @@ import uk.ac.stfc.isis.ibex.epics.pv.Closer;
 /**
  * Describes a set of screens associated with the device screens perspective.
  */
-public class DeviceScreens extends Closer {
-    private DeviceScreenVariables variables;
+public class DeviceScreens extends Closer implements BundleActivator {
 
+    private static DeviceScreens instance;
+    private static BundleContext context;
+
+    private final DeviceScreenVariables variables;
+
+    /**
+     * Creates a new instance of the DevicesScreens class.
+     */
     public DeviceScreens() {
+        instance = this;
+
         variables = registerForClose(new DeviceScreenVariables());
     }
 
     /**
-     * @return A forwarding observable for the contents of the device screens
-     *         PV.
+     * Gets the current instance of DeviceScreens.
+     * 
+     * @return the instance of DeviceScreens
+     */
+    public static DeviceScreens getInstance() {
+        return instance;
+    }
+
+    /**
+     * Gets the bundle context for this bundle activator.
+     * 
+     * @return the bundle context
+     */
+    public static BundleContext getContext() {
+        return context;
+    }
+
+    /**
+     * Gets an observable for the get device screens PV.
+     * 
+     * @return an observable to the get device screens PV.
      */
     public ForwardingObservable<DeviceScreensDescription> getDevices() {
         return variables.getDeviceScreens();
     }
 
+    /*
+     * (non-Javadoc)
+     * @see org.osgi.framework.BundleActivator#start(org.osgi.framework.
+     * BundleContext)
+     */
+    @Override
+    public void start(BundleContext bundleContext) throws Exception {
+        DeviceScreens.context = bundleContext;
+    }
+
+    /*
+     * (non-Javadoc)
+     * @see
+     * org.osgi.framework.BundleActivator#stop(org.osgi.framework.BundleContext)
+     */
+    @Override
+    public void stop(BundleContext context) throws Exception {
+        DeviceScreens.context = null;
+        close();
+    }
+
 }
+
