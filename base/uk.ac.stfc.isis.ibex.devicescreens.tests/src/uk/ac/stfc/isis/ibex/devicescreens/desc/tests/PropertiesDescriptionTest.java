@@ -28,6 +28,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import uk.ac.stfc.isis.ibex.devicescreens.desc.PropertiesDescription;
+import uk.ac.stfc.isis.ibex.devicescreens.desc.PropertyDescription;
 
 /**
  * This class tests PropertiesDescritpion
@@ -53,4 +54,20 @@ public class PropertiesDescriptionTest {
         // Assert
         assertTrue(propertiesDescription.getProperties().isEmpty());
     }
+
+    @Test
+    public void GIVEN_new_properties_description_THEN_new_properties_can_be_added() {
+        // Arrange
+        PropertyDescription property1 = new PropertyDescription("key1", "value1");
+        PropertyDescription property2 = new PropertyDescription("key2", "value2");
+
+        // Act
+        propertiesDescription.addProperty(property1);
+        propertiesDescription.addProperty(property2);
+
+        // Assert
+        assertTrue(propertiesDescription.getProperties().contains(property1));
+        assertTrue(propertiesDescription.getProperties().contains(property2));
+    }
+
 }

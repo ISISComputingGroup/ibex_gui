@@ -31,7 +31,7 @@ import uk.ac.stfc.isis.ibex.epics.conversion.Converter;
  * Parses device screens in XML format and returns them as
  * DeviceScreenDescription instances.
  */
-public class DeviceScreensDescriptionParser extends Converter<String, DeviceScreensDescription> {
+public class DeviceScreensDescriptionXmlParser extends Converter<String, DeviceScreensDescription> {
 
     @Override
     public DeviceScreensDescription convert(String value) throws ConversionException {

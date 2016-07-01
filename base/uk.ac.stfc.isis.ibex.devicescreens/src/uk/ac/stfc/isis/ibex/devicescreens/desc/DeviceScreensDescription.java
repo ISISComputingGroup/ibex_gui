@@ -54,6 +54,15 @@ public class DeviceScreensDescription {
         return devices;
     }
 
+    /**
+     * Adds a device to the list of device descriptions.
+     * 
+     * @param device the device description to add
+     */
+    public void addDevice(DeviceDescription device) {
+        devices.add(device);
+    }
+
     @Override
     public String toString() {
         try {

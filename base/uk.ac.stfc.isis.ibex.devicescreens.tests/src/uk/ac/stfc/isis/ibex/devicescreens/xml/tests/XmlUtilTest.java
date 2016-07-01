@@ -22,7 +22,7 @@
  */
 package uk.ac.stfc.isis.ibex.devicescreens.xml.tests;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import javax.xml.bind.JAXBException;
 
@@ -54,6 +54,9 @@ public class XmlUtilTest {
     private String xmlTextMultipleDescriptionHeader =
             "<?xml version=\"1.0\" ?>" + "<devices xmlns=\"http://epics.isis.rl.ac.uk/schema/screens/1.0/\">";
 
+    private String xmlTextMultipleDescriptionHeaderNs2 = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>"
+            + "<ns2:devices xmlns:ns2=\"http://epics.isis.rl.ac.uk/schema/screens/1.0/\">";
+
     private String xmlTextMultipleDescriptionCore = "<device>" + "<name>Eurotherm 2</name>" + "<key>Eurotherm</key>"
             + "<type>OPI</type>" + "<properties>" + "<property>" + "<key>EURO</key>" + "<value>EUROTHERM1</value>"
             + "</property>" + "</properties>" + "</device>" + "<device>" + "<name>Julabo 1</name>" + "<key>Julabo</key>"
@@ -62,6 +65,7 @@ public class XmlUtilTest {
             + "</properties>" + "</device>";
 
     private String xmlEnding = "</devices>";
+    private String xmlEndingNs2 = "</ns2:devices>";
 
     private String xmlTextMultipleDescription;
 
@@ -131,10 +135,13 @@ public class XmlUtilTest {
             GIVEN_device_description_parsefd_from_xml_WHEN_it_is_written_to_xml_THEN_output_xml_is_equal_to_input_xml()
                     throws JAXBException, SAXException {
         // Act
+        String expectedOuput = xmlTextMultipleDescriptionHeaderNs2 + xmlTextMultipleDescriptionCore + xmlEndingNs2;
+
+        // Act
         String outputXml = XMLUtil.toXml(multipleDeviceScreensDescription);
 
         // Assert
-        assertTrue(outputXml.contains(xmlTextMultipleDescriptionCore));
+        assertEquals(expectedOuput, outputXml);
     }
 
     private DeviceDescription firstDeviceDescription() {

@@ -27,6 +27,7 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
+import uk.ac.stfc.isis.ibex.devicescreens.desc.DeviceDescription;
 import uk.ac.stfc.isis.ibex.devicescreens.desc.DeviceScreensDescription;
 
 /**
@@ -53,5 +54,20 @@ public class DeviceScreensDescriptionTest {
     public void GIVEN_new_device_screens_description_THEN_devices_is_empty() {
         // Assert
         assertTrue(description.getDevices().isEmpty());
+    }
+
+    @Test
+    public void GIVEN_new_device_screens_description_THEN_devices_can_be_added() {
+        // Arrange
+        DeviceDescription device1 = new DeviceDescription();
+        DeviceDescription device2 = new DeviceDescription();
+
+        // Act
+        description.addDevice(device1);
+        description.addDevice(device2);
+
+        // Assert
+        assertTrue(description.getDevices().contains(device1));
+        assertTrue(description.getDevices().contains(device2));
     }
 }

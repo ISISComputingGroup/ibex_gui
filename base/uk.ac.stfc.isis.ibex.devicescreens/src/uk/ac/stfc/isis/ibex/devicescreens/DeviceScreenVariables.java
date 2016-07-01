@@ -22,12 +22,16 @@
  */
 package uk.ac.stfc.isis.ibex.devicescreens;
 
+import uk.ac.stfc.isis.ibex.devicescreens.desc.DeviceScreenDescriptionToXmlConverter;
 import uk.ac.stfc.isis.ibex.devicescreens.desc.DeviceScreensDescription;
-import uk.ac.stfc.isis.ibex.devicescreens.desc.DeviceScreensDescriptionParser;
+import uk.ac.stfc.isis.ibex.devicescreens.desc.DeviceScreensDescriptionXmlParser;
+import uk.ac.stfc.isis.ibex.epics.conversion.Converter;
 import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.epics.switching.ObservableFactory;
 import uk.ac.stfc.isis.ibex.epics.switching.OnInstrumentSwitch;
 import uk.ac.stfc.isis.ibex.epics.switching.WritableFactory;
+import uk.ac.stfc.isis.ibex.epics.writing.ForwardingWritable;
+import uk.ac.stfc.isis.ibex.epics.writing.Writable;
 import uk.ac.stfc.isis.ibex.instrument.Instrument;
 import uk.ac.stfc.isis.ibex.instrument.InstrumentVariables;
 import uk.ac.stfc.isis.ibex.instrument.channels.CompressedCharWaveformChannel;
@@ -45,6 +49,7 @@ public class DeviceScreenVariables {
     private final WritableFactory switchingWritableFactory;
 
     private final ForwardingObservable<DeviceScreensDescription> deviceScreensObservable;
+    private final Writable<DeviceScreensDescription> deviceScreensWritable;
 
     private final String pvPrefix;
 
@@ -67,17 +72,28 @@ public class DeviceScreenVariables {
         this.switchingWritableFactory = switchingWritableFactory;
         this.pvPrefix = pvPrefix;
         
-        deviceScreensObservable = InstrumentVariables.convert(
-                readCompressedClosing(getPvPrefix() + BLOCKSERVER_ADDRESS + GET_SCREENS_SUFFIX),
-                new DeviceScreensDescriptionParser());
+        deviceScreensObservable =
+                InstrumentVariables.convert(readCompressed(getPvPrefix() + BLOCKSERVER_ADDRESS + GET_SCREENS_SUFFIX),
+                        new DeviceScreensDescriptionXmlParser());
+        
+        deviceScreensWritable = convert(writeCompressed(getPvPrefix() + BLOCKSERVER_ADDRESS + SET_SCREENS_SUFFIX),
+                new DeviceScreenDescriptionToXmlConverter());
     }
 
     public ForwardingObservable<DeviceScreensDescription> getDeviceScreens() {
         return deviceScreensObservable;
     }
 
-    private ForwardingObservable<String> readCompressedClosing(String address) {
+    private ForwardingObservable<String> readCompressed(String address) {
         return switchingObservableFactory.getSwitchableObservable(new CompressedCharWaveformChannel(), address);
+    }
+
+    private Writable<String> writeCompressed(String address) {
+        return switchingWritableFactory.getSwitchableWritable(new CompressedCharWaveformChannel(), address);
+    }
+
+    private <T> Writable<T> convert(Writable<String> destination, Converter<T, String> converter) {
+        return new ForwardingWritable<>(destination, converter);
     }
 
     /**

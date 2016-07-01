@@ -36,6 +36,14 @@ public class PropertyDescription {
     private String key;
     private String value;
     
+    public PropertyDescription() {
+    }
+
+    public PropertyDescription(String key, String value) {
+        this.key = key;
+        this.value = value;
+    }
+
     /**
      * Set the identifying key associated with the property.
      * 

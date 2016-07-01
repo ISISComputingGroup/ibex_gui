@@ -29,27 +29,25 @@ import org.junit.Test;
 
 import uk.ac.stfc.isis.ibex.devicescreens.desc.DeviceDescription;
 import uk.ac.stfc.isis.ibex.devicescreens.desc.DeviceScreensDescription;
-import uk.ac.stfc.isis.ibex.devicescreens.desc.DeviceScreensDescriptionParser;
+import uk.ac.stfc.isis.ibex.devicescreens.desc.DeviceScreensDescriptionXmlParser;
 import uk.ac.stfc.isis.ibex.devicescreens.desc.PropertyDescription;
 import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
 
-/**
- * This class tests the DeviceScreensDescriptionParser.
- */
 @SuppressWarnings("checkstyle:methodname")
-public class DeviceScreensDescriptionParserTest {
+public class DeviceScreensDescriptionXmlParserTest {
 
     private String xmlText =
-            "<?xml version=\"1.0\" ?>" + "<devices xmlns=\"http://epics.isis.rl.ac.uk/schema/screens/1.0/\">"
+            "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>"
+                    + "<devices xmlns=\"http://epics.isis.rl.ac.uk/schema/screens/1.0/\">"
                     + "<device>" + "<name>Eurotherm 2</name>" + "<key>Eurotherm</key>" + "<type>OPI</type>"
                     + "<properties>" + "<property>" + "<key>EURO</key>" + "<value>EUROTHERM1</value>" + "</property>"
                     + "</properties>" + "</device>" + "</devices>";
     
-    DeviceScreensDescriptionParser parser;
+    DeviceScreensDescriptionXmlParser parser;
     
     @Before
     public void set_up() {
-        parser = new DeviceScreensDescriptionParser();
+        parser = new DeviceScreensDescriptionXmlParser();
     }
 
     @Test

@@ -79,4 +79,18 @@ public class PropertyDescriptionTest {
         assertEquals(expectedValue, propertyDescription.getValue());
     }
 
+    @Test
+    public void WHEN_property_description_is_created_with_properties_THEN_properties_are_correct() {
+        // Arrange
+        String key = "a key";
+        String value = "a value";
+
+        // Act
+        PropertyDescription localPropertyDescription = new PropertyDescription(key, value);
+
+        // Assert
+        assertEquals(key, localPropertyDescription.getKey());
+        assertEquals(value, localPropertyDescription.getValue());
+    }
+
 }

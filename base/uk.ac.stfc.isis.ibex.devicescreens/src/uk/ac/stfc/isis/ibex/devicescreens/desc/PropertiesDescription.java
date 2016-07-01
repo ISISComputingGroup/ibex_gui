@@ -43,7 +43,22 @@ public class PropertiesDescription {
     @XmlElement(name = "property", type = PropertyDescription.class)
     private List<PropertyDescription> properties = new ArrayList<>();
 
+    /**
+     * The list of properties.
+     * 
+     * @return the list of properties
+     */
     public List<PropertyDescription> getProperties() {
         return properties;
     }
+
+    /**
+     * Add a property to the list of properties.
+     * 
+     * @param property the property to be added
+     */
+    public void addProperty(PropertyDescription property) {
+        properties.add(property);
+    }
+
 }

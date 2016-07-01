@@ -92,4 +92,11 @@ public class DeviceDescription {
     public List<PropertyDescription> getProperties() {
         return properties.getProperties();
     }
+
+    /**
+     * @param property the property to add
+     */
+    public void addProperty(PropertyDescription property) {
+        properties.addProperty(property);
+    }
 }
