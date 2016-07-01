@@ -40,7 +40,7 @@ import uk.ac.stfc.isis.ibex.epics.observing.Observer;
  */
 public class Panel extends Composite {
 
-    private Label lblRbNumber;
+    private Label lblScreensRbv;
     private final Display display = Display.getCurrent();
     private final Observer<DeviceScreensDescription> pvObserver = new BaseObserver<DeviceScreensDescription>() {
         @Override
@@ -64,11 +64,11 @@ public class Panel extends Composite {
     };
 
     private void setLabelValue(String value) {
-        lblRbNumber.setText(value);
+        lblScreensRbv.setText(value);
 
         // Need to call this, otherwise the label text will be set, but the view
         // won't be updated
-        lblRbNumber.getParent().layout();
+        lblScreensRbv.getParent().layout();
     }
 
     /**
@@ -83,7 +83,7 @@ public class Panel extends Composite {
         Composite composite = new Composite(this, SWT.NONE);
         composite.setLayout(new GridLayout(5, false));
 
-        lblRbNumber = new Label(composite, SWT.NONE);
+        lblScreensRbv = new Label(composite, SWT.NONE);
         DeviceScreens deviceScreens = DeviceScreens.getInstance();
         ForwardingObservable<DeviceScreensDescription> availableScreensObservable = deviceScreens.getDevices();
         availableScreensObservable.addObserver(pvObserver);
