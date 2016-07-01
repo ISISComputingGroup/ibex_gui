@@ -24,6 +24,7 @@ import org.osgi.framework.BundleContext;
 
 import uk.ac.stfc.isis.ibex.devicescreens.desc.DeviceScreensDescription;
 import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
+import uk.ac.stfc.isis.ibex.epics.writing.Writable;
 
 /**
  * Describes a set of screens associated with the device screens perspective.
@@ -65,10 +66,19 @@ public class DeviceScreens implements BundleActivator {
     /**
      * Gets an observable for the get device screens PV.
      * 
-     * @return an observable to the get device screens PV.
+     * @return an observable to the get device screens PV
      */
     public ForwardingObservable<DeviceScreensDescription> getDevices() {
         return variables.getDeviceScreens();
+    }
+
+    /**
+     * Gets a writable for the set device screens PV.
+     * 
+     * @return a writable to the set device screens PV
+     */
+    public Writable<DeviceScreensDescription> getDevicesSetter() {
+        return variables.getDeviceScreensSetter();
     }
 
     /*

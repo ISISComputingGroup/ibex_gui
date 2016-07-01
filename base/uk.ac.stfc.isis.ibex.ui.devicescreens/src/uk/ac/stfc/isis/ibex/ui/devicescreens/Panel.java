@@ -23,17 +23,24 @@
 package uk.ac.stfc.isis.ibex.ui.devicescreens;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.ModifyEvent;
+import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.layout.FillLayout;
+import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Text;
 
 import uk.ac.stfc.isis.ibex.devicescreens.DeviceScreens;
 import uk.ac.stfc.isis.ibex.devicescreens.desc.DeviceScreensDescription;
+import uk.ac.stfc.isis.ibex.devicescreens.desc.DeviceScreensDescriptionXmlParser;
+import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
 import uk.ac.stfc.isis.ibex.epics.observing.BaseObserver;
 import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.Observer;
+import uk.ac.stfc.isis.ibex.epics.writing.Writable;
 
 /**
  * 
@@ -41,6 +48,9 @@ import uk.ac.stfc.isis.ibex.epics.observing.Observer;
 public class Panel extends Composite {
 
     private Label lblScreensRbv;
+    private Text txtScreensSp;
+    private Writable<DeviceScreensDescription> screensSetter;
+
     private final Display display = Display.getCurrent();
     private final Observer<DeviceScreensDescription> pvObserver = new BaseObserver<DeviceScreensDescription>() {
         @Override
@@ -81,12 +91,44 @@ public class Panel extends Composite {
         setLayout(new FillLayout(SWT.HORIZONTAL));
 
         Composite composite = new Composite(this, SWT.NONE);
-        composite.setLayout(new GridLayout(5, false));
+        composite.setLayout(new GridLayout(2, false));
+
+        DeviceScreens deviceScreens = DeviceScreens.getInstance();
 
         lblScreensRbv = new Label(composite, SWT.NONE);
-        DeviceScreens deviceScreens = DeviceScreens.getInstance();
+        lblScreensRbv.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, true, 1, 1));
         ForwardingObservable<DeviceScreensDescription> availableScreensObservable = deviceScreens.getDevices();
         availableScreensObservable.addObserver(pvObserver);
+
+        txtScreensSp = new Text(composite, SWT.WRAP | SWT.MULTI);
+        GridData gdTxtScreens = new GridData(SWT.LEFT, SWT.TOP, true, true, 1, 1);
+        gdTxtScreens.heightHint = 2000;
+        gdTxtScreens.widthHint = 2000;
+        txtScreensSp.setLayoutData(gdTxtScreens);
+        screensSetter = deviceScreens.getDevicesSetter();
+
+        txtScreensSp.addModifyListener(new ModifyListener() {
+            @Override
+            public void modifyText(ModifyEvent arg0) {
+                setScreens();
+            }
+        });
+
     }
+
+    private void setScreens() {
+        String inputText = txtScreensSp.getText();
+        DeviceScreensDescriptionXmlParser parser = new DeviceScreensDescriptionXmlParser();
+        try {
+            DeviceScreensDescription screens = parser.convert(inputText);
+            screensSetter.write(screens);
+        } catch (ConversionException e) {
+            e.printStackTrace();
+            // setScreens() gets called at each key stroke, so until a valid xml
+            // is entered, there will be errors
+            // Ignore - this is just for testing anyway
+        }
+    }
+
 
 }

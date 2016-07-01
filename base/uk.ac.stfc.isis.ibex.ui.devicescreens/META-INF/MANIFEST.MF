@@ -14,5 +14,7 @@ Bundle-Activator: uk.ac.stfc.isis.ibex.ui.devicescreens.Activator
 Bundle-ActivationPolicy: lazy
 Import-Package: uk.ac.stfc.isis.ibex.devicescreens,
  uk.ac.stfc.isis.ibex.devicescreens.desc,
+ uk.ac.stfc.isis.ibex.epics.conversion,
  uk.ac.stfc.isis.ibex.epics.observing,
+ uk.ac.stfc.isis.ibex.epics.writing,
  uk.ac.stfc.isis.ibex.ui.beamstatus.views

@@ -84,6 +84,10 @@ public class DeviceScreenVariables {
         return deviceScreensObservable;
     }
 
+    public Writable<DeviceScreensDescription> getDeviceScreensSetter() {
+        return deviceScreensWritable;
+    }
+
     private ForwardingObservable<String> readCompressed(String address) {
         return switchingObservableFactory.getSwitchableObservable(new CompressedCharWaveformChannel(), address);
     }
