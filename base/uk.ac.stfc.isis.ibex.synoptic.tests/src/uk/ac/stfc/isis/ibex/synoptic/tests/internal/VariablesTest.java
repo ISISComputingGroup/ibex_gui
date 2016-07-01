@@ -54,7 +54,7 @@ public class VariablesTest {
      */
     private final String pvPrefix = "PVPrefix";
     private final String synopticPV = "Synoptic PV";
-    private static final String SYNOPTIC_ADDRESS = "CS:BLOCKSERVER:SYNOPTICS:";
+    private static final String SYNOPTIC_ADDRESS = "CS:SYNOPTICS:";
     private static final String SET_DETAILS = "SET_DETAILS";
     private static final String DELETE = "DELETE";
     private static final String NAMES = "NAMES";

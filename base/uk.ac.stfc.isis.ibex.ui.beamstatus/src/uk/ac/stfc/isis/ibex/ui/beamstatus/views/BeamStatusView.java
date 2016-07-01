@@ -61,7 +61,9 @@ import uk.ac.stfc.isis.ibex.ui.beamstatus.BeamStatusGraphDataProvider;
  * Always used as derived classes that specify the time duration of the plot
  * (e.g. hourly, daily)
  */
-public class BeamStatusGraphView extends DataBrowserAwareView implements ModelListener {
+public class BeamStatusView extends DataBrowserAwareView implements ModelListener {
+    public BeamStatusView() {
+    }
 
     /** View ID registered in plugin.xml. */
     public static final String ID = "uk.ac.stfc.isis.ibex.ui.beamstatus.views.BeamStatusGraphView"; //$NON-NLS-1$
@@ -103,7 +105,7 @@ public class BeamStatusGraphView extends DataBrowserAwareView implements ModelLi
     private long currentPlotTimespanMilliseconds = MILLISECONDS_IN_DAY;
 
     /** Title for the plot. */
-    private static final String PLOT_TITLE = "Beam current";
+    private static final String PLOT_TITLE = "Beam Current";
 
     /** {@inheritDoc} */
     @Override
@@ -116,14 +118,22 @@ public class BeamStatusGraphView extends DataBrowserAwareView implements ModelLi
                 // Be ignorant of any change of the current model after
                 // this view is disposed.
                 if (model != null) {
-                    model.removeListener(BeamStatusGraphView.this);
+                    model.removeListener(BeamStatusView.this);
                 }
             }
         });
 
-        parent.setLayout(new GridLayout(1, false));
-        createTimeRangeRadioButtons(parent);
-        createBeamStatusPlot(parent);
+        parent.setLayout(new GridLayout(2, false));
+        Composite graphPanel = new Composite(parent, SWT.NONE);
+        graphPanel.setLayout(new GridLayout(1, false));
+        graphPanel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+        createTimeRangeRadioButtons(graphPanel);
+        createBeamStatusPlot(graphPanel);
+
+        BeamStatusPanel statusPanel =
+                new BeamStatusPanel(parent, SWT.BORDER | SWT.V_SCROLL);
+        GridData gdStatus = new GridData(SWT.CENTER, SWT.CENTER, false, true);
+        statusPanel.setLayoutData(gdStatus);
 
         selectPV(TS1_BEAM_CURRENT_PV);
         selectPV(TS2_BEAM_CURRENT_PV);
@@ -181,7 +191,6 @@ public class BeamStatusGraphView extends DataBrowserAwareView implements ModelLi
         // This is a work around for the inconsistency between
         // figure.getBounds() and gc.getclipping().
         Composite plotComposite = new Composite(parent, SWT.NONE);
-
         GridData layoutData = new GridData();
         layoutData.grabExcessHorizontalSpace = true;
         layoutData.grabExcessVerticalSpace = true;
