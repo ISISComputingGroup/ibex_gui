@@ -40,6 +40,6 @@ public class Perspective extends BasePerspective {
 
 	@Override
 	public Image image() {
-		return ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui.nicos", "icons/log_32x24.png");
+		return ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui.nicos", "icons/script_32x24.png");
 	}
 }
