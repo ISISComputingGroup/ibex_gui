@@ -44,11 +44,11 @@ public class DeviceScreensDescriptionToXmlConverterTest {
         String propertyValue = "Property value";
         String expectedXml =
                 "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>"
-                        + "<ns2:devices xmlns:ns2=\"http://epics.isis.rl.ac.uk/schema/screens/1.0/\">"
+                        + "<devices xmlns=\"http://epics.isis.rl.ac.uk/schema/screens/1.0/\">"
                         + "<device>" + "<name>" + name + "</name>" + "<key>" + key + "</key>" + "<type>" + type
                         + "</type>" + "<properties>" + "<property>" + "<key>" + propertyKey + "</key>"
                         + "<value>" + propertyValue + "</value>"
-                        + "</property>" + "</properties>" + "</device>" + "</ns2:devices>";
+                        + "</property>" + "</properties>" + "</device>" + "</devices>";
 
         PropertyDescription propertyDescription = new PropertyDescription(propertyKey, propertyValue);
         DeviceDescription deviceDescription = new DeviceDescription();

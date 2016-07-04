@@ -44,12 +44,14 @@ public class DeviceScreenVariables {
     private static final String BLOCKSERVER_ADDRESS = "CS:BLOCKSERVER:";
     private static final String GET_SCREENS_SUFFIX = "GET_SCREENS";
     private static final String SET_SCREENS_SUFFIX = "SET_SCREENS";
+    private static final String SCHEMA_SUFFIX = "SCREENS_SCHEMA";
 
     private final ObservableFactory switchingObservableFactory;
     private final WritableFactory switchingWritableFactory;
 
     private final ForwardingObservable<DeviceScreensDescription> deviceScreensObservable;
     private final Writable<DeviceScreensDescription> deviceScreensWritable;
+    private final ForwardingObservable<String> deviceScreenSchema;
 
     private final String pvPrefix;
 
@@ -78,6 +80,8 @@ public class DeviceScreenVariables {
         
         deviceScreensWritable = convert(writeCompressed(getPvPrefix() + BLOCKSERVER_ADDRESS + SET_SCREENS_SUFFIX),
                 new DeviceScreenDescriptionToXmlConverter());
+
+        deviceScreenSchema = readCompressed(getPvPrefix() + BLOCKSERVER_ADDRESS + SCHEMA_SUFFIX);
     }
 
     public ForwardingObservable<DeviceScreensDescription> getDeviceScreens() {
@@ -86,6 +90,10 @@ public class DeviceScreenVariables {
 
     public Writable<DeviceScreensDescription> getDeviceScreensSetter() {
         return deviceScreensWritable;
+    }
+
+    public ForwardingObservable<String> getDeviceScreensSchema() {
+        return deviceScreenSchema;
     }
 
     private ForwardingObservable<String> readCompressed(String address) {

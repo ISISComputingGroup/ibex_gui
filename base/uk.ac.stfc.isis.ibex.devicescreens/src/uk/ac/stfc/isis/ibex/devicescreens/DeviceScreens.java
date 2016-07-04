@@ -35,7 +35,7 @@ public class DeviceScreens implements BundleActivator {
     private static BundleContext context;
 
     private final DeviceScreenVariables variables;
-
+    private ObservingSchemaHandler schemaHandler;
     /**
      * Creates a new instance of the DevicesScreens class.
      */
@@ -43,6 +43,7 @@ public class DeviceScreens implements BundleActivator {
         instance = this;
 
         variables = new DeviceScreenVariables();
+        schemaHandler = new ObservingSchemaHandler(variables);
     }
 
     /**

@@ -22,10 +22,14 @@ package uk.ac.stfc.isis.ibex.devicescreens.xml;
 import java.io.StringReader;
 import java.io.StringWriter;
 
+import javax.xml.XMLConstants;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
+import javax.xml.transform.stream.StreamSource;
+import javax.xml.validation.Schema;
+import javax.xml.validation.SchemaFactory;
 
 import org.xml.sax.SAXException;
 
@@ -36,6 +40,9 @@ public final class XMLUtil {
     private static JAXBContext context;
     private static Unmarshaller unmarshaller;
     private static Marshaller marshaller;
+
+    private static final SchemaFactory SF = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
+    private static Schema schema;
 
     private XMLUtil() {
     }
@@ -72,6 +79,22 @@ public final class XMLUtil {
         marshaller.marshal(deviceScreensDescription, writer);
 
         return writer.toString();
+    }
+
+    /**
+     * @param rawSchema the XML schema for the device screens as supplied by the
+     *            BlockServer
+     * @throws SAXException
+     * @throws JAXBException
+     */
+    public static void setSchema(String rawSchema) throws SAXException, JAXBException {
+        if (context == null) {
+            initialise();
+        }
+
+        schema = SF.newSchema(new StreamSource(new StringReader(rawSchema)));
+        marshaller.setSchema(schema);
+        unmarshaller.setSchema(schema);
     }
 
     private static void initialise() throws JAXBException, SAXException {

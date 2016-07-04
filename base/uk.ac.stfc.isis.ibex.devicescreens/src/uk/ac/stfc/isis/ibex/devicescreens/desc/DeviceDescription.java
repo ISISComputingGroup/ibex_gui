@@ -39,6 +39,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "device")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class DeviceDescription {
+
     private String name;
     private String key;
     private String type;

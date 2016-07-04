@@ -22,7 +22,14 @@
  */
 package uk.ac.stfc.isis.ibex.devicescreens.xml.tests;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 import javax.xml.bind.JAXBException;
 
@@ -44,37 +51,29 @@ public class XmlUtilTest {
     private DeviceScreensDescription singleDeviceScreensDescription;
     private DeviceScreensDescription multipleDeviceScreensDescription;
 
-    private String xmlTextSingleDescription = "<?xml version=\"1.0\" ?>" +
+    private static final String xmlTextSingleDescription = "<?xml version=\"1.0\" ?>" +
             "<devices xmlns=\"http://epics.isis.rl.ac.uk/schema/screens/1.0/\">" +
             "<device>" + "<name>Eurotherm 2</name>" + "<key>Eurotherm</key>" + "<type>OPI</type>" + "<properties>"
             + "<property>" + "<key>EURO</key>" + "<value>EUROTHERM1</value>" + "</property>" + "</properties>"
             + "</device>" +
             "</devices>";
-    
-    private String xmlTextMultipleDescriptionHeader =
-            "<?xml version=\"1.0\" ?>" + "<devices xmlns=\"http://epics.isis.rl.ac.uk/schema/screens/1.0/\">";
 
-    private String xmlTextMultipleDescriptionHeaderNs2 = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>"
-            + "<ns2:devices xmlns:ns2=\"http://epics.isis.rl.ac.uk/schema/screens/1.0/\">";
-
-    private String xmlTextMultipleDescriptionCore = "<device>" + "<name>Eurotherm 2</name>" + "<key>Eurotherm</key>"
+    private static final String xmlTextMultipleDescription =
+            "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>"
+            + "<devices xmlns=\"http://epics.isis.rl.ac.uk/schema/screens/1.0/\">" + "<device>"
+            + "<name>Eurotherm 2</name>" + "<key>Eurotherm</key>"
             + "<type>OPI</type>" + "<properties>" + "<property>" + "<key>EURO</key>" + "<value>EUROTHERM1</value>"
             + "</property>" + "</properties>" + "</device>" + "<device>" + "<name>Julabo 1</name>" + "<key>Julabo</key>"
             + "<type>OPI</type>" + "<properties>" + "<property>" + "<key>JULABO</key>" + "<value>JULABO1</value>"
             + "</property>" + "<property>" + "<key>MACRO</key>" + "<value>VALUE</value>" + "</property>"
-            + "</properties>" + "</device>";
+            + "</properties>" + "</device>" + "</devices>";
 
-    private String xmlEnding = "</devices>";
-    private String xmlEndingNs2 = "</ns2:devices>";
-
-    private String xmlTextMultipleDescription;
+    private String schema;
 
     @Before
     public void set_up() throws Exception {
         // Arrange
         singleDeviceScreensDescription = XMLUtil.fromXml(xmlTextSingleDescription);
-
-        xmlTextMultipleDescription = xmlTextMultipleDescriptionHeader + xmlTextMultipleDescriptionCore + xmlEnding;
         multipleDeviceScreensDescription = XMLUtil.fromXml(xmlTextMultipleDescription);
     }
 
@@ -132,16 +131,54 @@ public class XmlUtilTest {
 
     @Test
     public void
-            GIVEN_device_description_parsefd_from_xml_WHEN_it_is_written_to_xml_THEN_output_xml_is_equal_to_input_xml()
+            GIVEN_device_description_parsed_from_xml_WHEN_it_is_written_to_xml_THEN_output_xml_is_equal_to_input_xml()
                     throws JAXBException, SAXException {
-        // Act
-        String expectedOuput = xmlTextMultipleDescriptionHeaderNs2 + xmlTextMultipleDescriptionCore + xmlEndingNs2;
-
         // Act
         String outputXml = XMLUtil.toXml(multipleDeviceScreensDescription);
 
         // Assert
-        assertEquals(expectedOuput, outputXml);
+        assertEquals(xmlTextMultipleDescription, outputXml);
+    }
+
+    @Test
+    public void GIVEN_valid_device_description_WHEN_it_is_written_to_xml_using_schema_THEN_output_xml_is_correct()
+            throws IOException {
+        // Arrange
+        String name = "Device name";
+        String key = "Device";
+        String type = "OPI";
+        String propertyKey = "Property key";
+        String propertyValue = "Property value";
+        String expectedXml = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>"
+                + "<devices xmlns=\"http://epics.isis.rl.ac.uk/schema/screens/1.0/\">" + "<device>" + "<name>"
+                + name + "</name>" + "<key>" + key + "</key>" + "<type>" + type + "</type>" + "<properties>"
+                + "<property>" + "<key>" + propertyKey + "</key>" + "<value>" + propertyValue + "</value>"
+                + "</property>" + "</properties>" + "</device>" + "</devices>";
+
+        PropertyDescription propertyDescription = new PropertyDescription(propertyKey, propertyValue);
+
+        DeviceDescription deviceDescription = new DeviceDescription();
+        deviceDescription.setName(name);
+        deviceDescription.setType(type);
+        deviceDescription.setKey(key);
+        deviceDescription.addProperty(propertyDescription);
+
+        DeviceScreensDescription deviceScreensDescription = new DeviceScreensDescription();
+        deviceScreensDescription.addDevice(deviceDescription);
+        
+        String schemaFilePath = "/uk/ac/stfc/isis/ibex/devicescreens/xml/tests/screens_schema.xml";
+        String schema = loadFile(schemaFilePath);
+
+        // Act
+        try {
+            XMLUtil.setSchema(schema);
+            String outputXml = XMLUtil.toXml(deviceScreensDescription);
+            assertEquals(expectedXml, outputXml);
+        } catch (Exception e) {
+            e.printStackTrace();
+            fail(e.getMessage());
+        }
+        
     }
 
     private DeviceDescription firstDeviceDescription() {
@@ -150,6 +187,38 @@ public class XmlUtilTest {
 
     private DeviceDescription secondDeviceDescription() {
         return multipleDeviceScreensDescription.getDevices().get(1);
+    }
+
+    protected URL fileLocation(String filePath) throws MalformedURLException {
+        return getClass().getResource(filePath);
+    }
+
+    protected String loadFile(String filePath) throws IOException {
+        BufferedReader in = null;
+        InputStream inputStream = null;
+        URL url = fileLocation(filePath);
+        try {
+            inputStream = url.openConnection().getInputStream();
+            in = new BufferedReader(new InputStreamReader(inputStream));
+
+            String inputLine;
+            StringBuilder builder = new StringBuilder();
+            while ((inputLine = in.readLine()) != null) {
+                builder.append(inputLine);
+            }
+
+            String fileContent = builder.toString();
+            return fileContent;
+        } finally {
+            if (in != null) {
+                in.close();
+            }
+
+            if (inputStream != null) {
+                inputStream.close();
+            }
+        }
+
     }
 
 }

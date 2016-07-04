@@ -38,7 +38,7 @@ import uk.ac.stfc.isis.ibex.devicescreens.xml.XMLUtil;
  * Note any changes here will require corresponding changes to
  * EPICS/schema/configurations/screens.xsd.
  */
-@XmlRootElement(name = "devices", namespace = "http://epics.isis.rl.ac.uk/schema/screens/1.0/")
+@XmlRootElement(name = "devices")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class DeviceScreensDescription {
 

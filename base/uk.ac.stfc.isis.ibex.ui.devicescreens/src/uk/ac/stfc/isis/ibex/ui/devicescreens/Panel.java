@@ -126,7 +126,7 @@ public class Panel extends Composite {
             e.printStackTrace();
             // setScreens() gets called at each key stroke, so until a valid xml
             // is entered, there will be errors
-            // Ignore - this is just for testing anyway
+            // Ignore - this is just a temporary testing panel anyway
         }
     }
 
