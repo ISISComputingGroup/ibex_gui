@@ -11,6 +11,9 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Shell;
 
+/**
+ * The dialog for creating a new script to send to the script server
+ */
 public class CreateScriptDialog extends Dialog {
 
 	private static final Point INITIAL_SIZE = new Point(950, 800);

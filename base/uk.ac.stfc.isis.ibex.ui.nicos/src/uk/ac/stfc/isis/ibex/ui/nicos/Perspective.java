@@ -24,6 +24,9 @@ import org.eclipse.wb.swt.ResourceManager;
 
 import uk.ac.stfc.isis.ibex.ui.perspectives.BasePerspective;
 
+/**
+ * The perspective for interacting with the script server
+ */
 public class Perspective extends BasePerspective {
 
 	public static final String ID = "uk.ac.stfc.isis.ibex.ui.nicos.perspective"; //$NON-NLS-1$
