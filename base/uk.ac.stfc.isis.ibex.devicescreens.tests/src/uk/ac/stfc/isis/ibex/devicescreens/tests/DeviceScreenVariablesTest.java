@@ -34,6 +34,7 @@ import org.junit.Test;
 import uk.ac.stfc.isis.ibex.devicescreens.DeviceScreenVariables;
 import uk.ac.stfc.isis.ibex.devicescreens.desc.DeviceDescription;
 import uk.ac.stfc.isis.ibex.devicescreens.desc.DeviceScreensDescription;
+import uk.ac.stfc.isis.ibex.devicescreens.desc.PropertyDescription;
 import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.epics.switching.ObservableFactory;
 import uk.ac.stfc.isis.ibex.epics.switching.SwitchableObservable;
@@ -48,7 +49,10 @@ import uk.ac.stfc.isis.ibex.instrument.channels.ChannelType;
 public class DeviceScreenVariablesTest {
 
     private static final String pvPrefix = "PVPrefix";
-    private static final String GET_SCREENS_SUFFIX = "CS:BLOCKSERVER:GET_SCREENS";
+    private static final String BLOCKSERVER_ADDRESS = "CS:BLOCKSERVER:";
+    private static final String GET_SCREENS_SUFFIX = "GET_SCREENS";
+    private static final String SET_SCREENS_SUFFIX = "SET_SCREENS";
+    private static final String SCHEMA_SUFFIX = "SCREENS_SCHEMA";
 
     private DeviceScreenVariables variables;
     private ObservableFactory switchingObservableFactory;
@@ -79,12 +83,17 @@ public class DeviceScreenVariablesTest {
     public void GIVEN_new_variables_WHEN_get_device_screens_called_THEN_result_is_parsed_from_get_screens_pv() {
         // Arrange
         String expectedName = "A name";
-        when(mockSwitchableObservable.getValue()).thenReturn(getXMLText(expectedName));
+        String deviceKey = "device key";
+        String propertyName = "prop name";
+        String propertyValue = "prop value";
+
+        when(mockSwitchableObservable.getValue())
+                .thenReturn(getXMLText(expectedName, deviceKey, propertyName, propertyValue));
         when(mockSwitchableObservable.currentError()).thenReturn(null);
         when(mockSwitchableObservable.isConnected()).thenReturn(true);
 
         when(switchingObservableFactory.getSwitchableObservable(any(ChannelType.class),
-                eq(pvPrefix + GET_SCREENS_SUFFIX))).thenReturn(mockSwitchableObservable);
+                eq(pvPrefix + BLOCKSERVER_ADDRESS + GET_SCREENS_SUFFIX))).thenReturn(mockSwitchableObservable);
         
         variables = createVariables();
 
@@ -97,11 +106,76 @@ public class DeviceScreenVariablesTest {
         assertEquals(expectedName, devices.get(0).getName());
     }
 
-    private String getXMLText(String name) {
-        return "<?xml version=\"1.0\" ?>" + "<devices xmlns=\"http://epics.isis.rl.ac.uk/schema/screens/1.0/\">"
-                + "<device>" + "<name>" + name + "</name>" + "<key>Eurotherm</key>" + "<type>OPI</type>"
-                        + "<properties>" + "<property>" + "<key>EURO</key>" + "<value>EUROTHERM1</value>"
+    @Test
+    public void GIVEN_new_variables_WHEN_get_device_screens_schema_called_THEN_result_is_content_of_schema_pv() {
+        // Arrange
+        String expectedSchema = "This is a test schema";
+        when(mockSwitchableObservable.getValue()).thenReturn(expectedSchema);
+        when(mockSwitchableObservable.currentError()).thenReturn(null);
+        when(mockSwitchableObservable.isConnected()).thenReturn(true);
+        
+        when(switchingObservableFactory.getSwitchableObservable(any(ChannelType.class),
+                eq(pvPrefix + BLOCKSERVER_ADDRESS + SCHEMA_SUFFIX)))
+                .thenReturn(mockSwitchableObservable);
+
+        variables = createVariables();
+
+        // Act
+        ForwardingObservable<String> schemaObservable = variables.getDeviceScreensSchema();
+
+        // Assert
+        assertEquals(expectedSchema, schemaObservable.getValue());
+    }
+
+    @Test
+    public void sfsdf() {
+        // Arrange
+        Writable expectedDestination = mock(Writable.class);
+        when(switchingWritableFactory.getSwitchableWritable(any(ChannelType.class),
+                eq(pvPrefix + BLOCKSERVER_ADDRESS + SET_SCREENS_SUFFIX))).thenReturn(expectedDestination);
+
+        String deviceName = "device name";
+        String deviceKey = "device key";
+        String propertyKey = "property key";
+        String propertyValue = "property value";
+        DeviceScreensDescription inputValue =
+                getDeviceScreensDescription(deviceName, deviceKey, propertyKey, propertyValue);
+        String expectedConvertedValue = getXMLText(deviceName, deviceKey, propertyKey, propertyValue);
+
+        variables = createVariables();
+
+        // Act
+        Writable<DeviceScreensDescription> setter = variables.getDeviceScreensSetter();
+
+        // Assert
+        verify(expectedDestination, never()).write(any());
+        setter.write(inputValue);
+        verify(expectedDestination, times(1)).write(expectedConvertedValue);
+    }
+
+    private String getXMLText(String deviceName, String deviceKey, String propertyKey, String propertyValue) {
+        return "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>"
+                + "<devices xmlns=\"http://epics.isis.rl.ac.uk/schema/screens/1.0/\">"
+                + "<device>" + "<name>" + deviceName + "</name>" + "<key>" + deviceKey + "</key>" + "<type>OPI</type>"
+                + "<properties>" + "<property>" + "<key>" + propertyKey + "</key>" + "<value>" + propertyValue
+                + "</value>"
                         + "</property>" + "</properties>" + "</device>" + "</devices>";
 
     }
+
+    private DeviceScreensDescription getDeviceScreensDescription(String deviceName, String deviceKey,
+            String propertyKey, String propertyValue) {
+        DeviceScreensDescription deviceScreensDescription = new DeviceScreensDescription();
+
+        DeviceDescription deviceDescription = new DeviceDescription();
+        deviceDescription.setName(deviceName);
+        deviceDescription.setType("OPI");
+        deviceDescription.setKey(deviceKey);
+        deviceDescription.addProperty(new PropertyDescription(propertyKey, propertyValue));
+
+        deviceScreensDescription.addDevice(deviceDescription);
+
+        return deviceScreensDescription;
+    }
+
 }
