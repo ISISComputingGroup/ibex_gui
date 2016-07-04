@@ -47,14 +47,19 @@ public final class XMLUtil {
     private static final SchemaFactory SF = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
     private static Schema schema;
 
+    /**
+     * Default constructor.
+     */
     private XMLUtil() {
     }
 
     /**
+     * Parses an XML into a device screens description object.
+     * 
      * @param xml the device screens XML received from the BlockServer
      * @return the data converted into a device screens description
-     * @throws JAXBException
-     * @throws SAXException
+     * @throws JAXBException XML Exception
+     * @throws SAXException XML Exception
      */
     @SuppressWarnings("unchecked")
     public static synchronized <T> T fromXml(String xml) throws JAXBException, SAXException {
@@ -68,10 +73,10 @@ public final class XMLUtil {
      * Converts the device screens description into the XML expected by the
      * BlockServer.
      * 
-     * @param instrument the device screens description
+     * @param deviceScreensDescription the input device screens description
      * @return the XML for the device screens
-     * @throws JAXBException
-     * @throws SAXException
+     * @throws JAXBException XML Exception
+     * @throws SAXException XML Exception
      */
     public static <T> String toXml(T deviceScreensDescription) throws JAXBException, SAXException {
         if (context == null) {
@@ -85,10 +90,12 @@ public final class XMLUtil {
     }
 
     /**
+     * Sets the schema.
+     * 
      * @param rawSchema the XML schema for the device screens as supplied by the
      *            BlockServer
-     * @throws SAXException
-     * @throws JAXBException
+     * @throws SAXException XML Exception
+     * @throws JAXBException XML Exception
      */
     public static void setSchema(String rawSchema) throws SAXException, JAXBException {
         if (context == null) {

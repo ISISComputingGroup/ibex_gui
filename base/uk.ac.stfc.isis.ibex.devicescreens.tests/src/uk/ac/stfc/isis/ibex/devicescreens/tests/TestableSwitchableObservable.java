@@ -30,10 +30,15 @@ import uk.ac.stfc.isis.ibex.epics.switching.SwitchableObservable;
  * setConnectionChanged methods.
  * 
  * This is final, so no mocking this, or using it outside testing!
+ * 
+ * @param <T> the type of the source observable
  */
 public class TestableSwitchableObservable<T> extends SwitchableObservable<T> {
+
     /**
-     * @param source
+     * Creates an instance of the observable.
+     * 
+     * @param source the source observable.
      */
     public TestableSwitchableObservable(ClosableObservable<T> source) {
         super(source);

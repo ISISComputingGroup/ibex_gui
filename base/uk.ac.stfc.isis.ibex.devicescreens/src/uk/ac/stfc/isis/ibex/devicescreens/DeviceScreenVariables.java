@@ -62,11 +62,15 @@ public class DeviceScreenVariables {
         this(new ObservableFactory(OnInstrumentSwitch.SWITCH), new WritableFactory(OnInstrumentSwitch.SWITCH), null);
     }
 
+
     /**
      * Constructor used for testing, so we can mock out the factories.
-     * 
+     *
      * @param switchingObservableFactory an observable factory to be used, could
      *            be a mock
+     * @param switchingWritableFactory a writable factory to be used, could be a
+     *            mock
+     * @param pvPrefix the PV prefix
      */
     public DeviceScreenVariables(ObservableFactory switchingObservableFactory, WritableFactory switchingWritableFactory,
             String pvPrefix) {

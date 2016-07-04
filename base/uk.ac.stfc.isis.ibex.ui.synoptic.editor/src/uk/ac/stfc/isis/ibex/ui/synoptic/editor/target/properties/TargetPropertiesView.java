@@ -38,6 +38,12 @@ public class TargetPropertiesView extends Composite {
 
 	private SynopticViewModel synopticViewModel;
 
+    /**
+     * Creates a new instance of the target properties view.
+     * 
+     * @param parent this view's parent
+     * @param synopticViewModel the view model for the synoptic
+     */
     public TargetPropertiesView(Composite parent, final SynopticViewModel synopticViewModel) {
         super(parent, SWT.FILL);
 		
@@ -48,7 +54,7 @@ public class TargetPropertiesView extends Composite {
 		createControls(this);
 	}
 	
-	public void createControls(Composite parent) {	
+    private void createControls(Composite parent) {
         Label lblProperties = new Label(parent, SWT.NONE);
         lblProperties.setLayoutData(new GridData(SWT.RIGHT, SWT.TOP, false, false, 1, 1));
         lblProperties.setText("Properties");

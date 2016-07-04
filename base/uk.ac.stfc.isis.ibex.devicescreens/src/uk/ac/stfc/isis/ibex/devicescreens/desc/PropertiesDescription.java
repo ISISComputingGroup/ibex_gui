@@ -32,10 +32,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  * This class describes the properties element of the device screens xml format.
  * 
  * Note that it may be possible to eliminate this class by using an
- * @XmlElementWrapper but it's not working for me right now.
+ * XmlElementWrapper decorator but it's not working for me right now.
  * 
  * Note any changes here will require corresponding changes to
- * EPICS/schema/configurations/screens.xsd. 
+ * EPICS/schema/configurations/screens.xsd.
  */
 @XmlRootElement(name = "properties")
 public class PropertiesDescription {

@@ -24,29 +24,20 @@ import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
 /**
- * The activator class controls the plug-in life cycle
+ * The activator class controls the plug-in life cycle.
  */
 public class Activator extends AbstractUIPlugin {
 
-	// The plug-in ID
+    /**
+     * The plug-in ID.
+     */
     public static final String PLUGIN_ID = "uk.ac.stfc.isis.ibex.ui.devicescreens"; //$NON-NLS-1$
 
-	// The shared instance
+    /**
+     * The shared instance
+     */
 	private static Activator plugin;
-	
-//	private SynopticPresenter presenter;
-	
-	/**
-	 * The constructor
-	 */
-	public Activator() {
-//		presenter = new SynopticPresenter();
-	}
 
-//	public SynopticPresenter presenter() {
-//		return presenter;
-//	}
-	
 	/*
 	 * (non-Javadoc)
 	 * @see org.eclipse.ui.plugin.AbstractUIPlugin#start(org.osgi.framework.BundleContext)
@@ -68,29 +59,22 @@ public class Activator extends AbstractUIPlugin {
 	}
 
 	/**
-	 * Returns the shared instance
-	 *
-	 * @return the shared instance
-	 */
+     * Returns the shared instance.
+     *
+     * @return the shared instance
+     */
 	public static Activator getDefault() {
 		return plugin;
 	}
 	
 	
 	/**
-	 * Closes any OPIs open on the synoptic.
-	 */
-//	public void closeAllOPIs() {
-//		presenter.closeAllOPIs();
-//	}
-
-	/**
-	 * Returns an image descriptor for the image file at the given
-	 * plug-in relative path
-	 *
-	 * @param path the path
-	 * @return the image descriptor
-	 */
+     * Returns an image descriptor for the image file at the given plug-in
+     * relative path.
+     *
+     * @param path the path
+     * @return the image descriptor
+     */
 	public static ImageDescriptor getImageDescriptor(String path) {
 		return imageDescriptorFromPlugin(PLUGIN_ID, path);
 	}

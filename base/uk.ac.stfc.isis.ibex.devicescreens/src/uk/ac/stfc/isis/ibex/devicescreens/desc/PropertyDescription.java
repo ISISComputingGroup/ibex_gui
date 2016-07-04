@@ -56,7 +56,7 @@ public class PropertyDescription {
     /**
      * Set the identifying key associated with the property.
      * 
-     * @param The new key
+     * @param newKey the new key
      */
     public void setKey(String newKey) {
         key = newKey;
@@ -65,7 +65,7 @@ public class PropertyDescription {
     /**
      * Set the value associated with the property.
      * 
-     * @param The new value
+     * @param newValue the new value
      */
     public void setValue(String newValue) {
         value = newValue;
@@ -74,7 +74,7 @@ public class PropertyDescription {
     /**
      * Get the identifying key associated with the property.
      * 
-     * @return The key
+     * @return the key
      */
     public String getKey() {
         return key;
@@ -83,7 +83,7 @@ public class PropertyDescription {
     /**
      * Get the value associated with the property.
      * 
-     * @return The value
+     * @return the value
      */
     public String getValue() {
         return value;

@@ -17,6 +17,9 @@
 * http://opensource.org/licenses/eclipse-1.0.php
 */
 
+/**
+ * Defines the XML namespace.
+ */
 @XmlSchema(namespace = "http://epics.isis.rl.ac.uk/schema/screens/1.0/", elementFormDefault = XmlNsForm.QUALIFIED)
 package uk.ac.stfc.isis.ibex.devicescreens.desc;
  

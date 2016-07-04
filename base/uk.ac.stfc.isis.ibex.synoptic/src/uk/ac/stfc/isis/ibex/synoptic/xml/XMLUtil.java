@@ -47,11 +47,13 @@ public final class XMLUtil {
     private XMLUtil() { }
     
 	/**
-	 * @param xml the synoptic XML received from the BlockServer
-	 * @return the synoptic data converted into an instrument description
-	 * @throws JAXBException
-	 * @throws SAXException
-	 */
+     * Converts an input XML into a synoptic description.
+     * 
+     * @param xml the synoptic XML received from the BlockServer
+     * @return the synoptic data converted into an instrument description
+     * @throws JAXBException XML Exception
+     * @throws SAXException XML Exception
+     */
     public static synchronized <T> T fromXml(String xml) throws JAXBException, SAXException {
 		if (context == null) {
 			initialise();
@@ -61,13 +63,14 @@ public final class XMLUtil {
 	}
 	
 	/**
-	 * Converts the instrument description into the synoptic XML expected by the BlockServer.
-	 * 
-	 * @param instrument the instrument description
-	 * @return the XML for the synoptic
-	 * @throws JAXBException
-	 * @throws SAXException
-	 */
+     * Converts the instrument description into the synoptic XML expected by the
+     * BlockServer.
+     * 
+     * @param instrument the instrument description
+     * @return the XML for the synoptic
+     * @throws JAXBException XML Exception
+     * @throws SAXException XML Exception
+     */
     public static <T> String toXml(T instrument) throws JAXBException, SAXException {
 		if (context == null) {
 			initialise();
@@ -80,10 +83,13 @@ public final class XMLUtil {
 	}
 	
 	/**
-	 * @param rawSchema the XML schema for the synoptic as supplied by the BlockServer
-	 * @throws SAXException
-	 * @throws JAXBException 
-	 */
+     * Sets the XML schema.
+     * 
+     * @param rawSchema the XML schema for the synoptic as supplied by the
+     *            BlockServer
+     * @throws SAXException XML Exception
+     * @throws JAXBException XML Exception
+     */
     public static void setSchema(String rawSchema) throws SAXException, JAXBException {
 		if (context == null) {
 			initialise();

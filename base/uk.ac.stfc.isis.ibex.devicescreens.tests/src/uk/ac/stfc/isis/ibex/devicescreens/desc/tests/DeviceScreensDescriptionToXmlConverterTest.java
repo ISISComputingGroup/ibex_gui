@@ -32,6 +32,7 @@ import uk.ac.stfc.isis.ibex.devicescreens.desc.DeviceScreensDescription;
 import uk.ac.stfc.isis.ibex.devicescreens.desc.PropertyDescription;
 import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
 
+@SuppressWarnings("checkstyle:methodname")
 public class DeviceScreensDescriptionToXmlConverterTest {
 
     @Test

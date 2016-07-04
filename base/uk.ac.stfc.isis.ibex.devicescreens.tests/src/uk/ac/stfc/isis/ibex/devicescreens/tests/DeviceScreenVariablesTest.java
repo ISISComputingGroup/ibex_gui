@@ -48,7 +48,7 @@ import uk.ac.stfc.isis.ibex.instrument.channels.ChannelType;
 @SuppressWarnings({ "checkstyle:methodname", "unchecked" })
 public class DeviceScreenVariablesTest {
 
-    private static final String pvPrefix = "PVPrefix";
+    private static final String PV_PREFIX = "PVPrefix";
     private static final String BLOCKSERVER_ADDRESS = "CS:BLOCKSERVER:";
     private static final String GET_SCREENS_SUFFIX = "GET_SCREENS";
     private static final String SET_SCREENS_SUFFIX = "SET_SCREENS";
@@ -76,7 +76,7 @@ public class DeviceScreenVariablesTest {
         }
 
     private DeviceScreenVariables createVariables() {
-        return new DeviceScreenVariables(switchingObservableFactory, switchingWritableFactory, pvPrefix);
+        return new DeviceScreenVariables(switchingObservableFactory, switchingWritableFactory, PV_PREFIX);
     }
 
     @Test
@@ -93,7 +93,7 @@ public class DeviceScreenVariablesTest {
         when(mockSwitchableObservable.isConnected()).thenReturn(true);
 
         when(switchingObservableFactory.getSwitchableObservable(any(ChannelType.class),
-                eq(pvPrefix + BLOCKSERVER_ADDRESS + GET_SCREENS_SUFFIX))).thenReturn(mockSwitchableObservable);
+                eq(PV_PREFIX + BLOCKSERVER_ADDRESS + GET_SCREENS_SUFFIX))).thenReturn(mockSwitchableObservable);
         
         variables = createVariables();
 
@@ -115,7 +115,7 @@ public class DeviceScreenVariablesTest {
         when(mockSwitchableObservable.isConnected()).thenReturn(true);
         
         when(switchingObservableFactory.getSwitchableObservable(any(ChannelType.class),
-                eq(pvPrefix + BLOCKSERVER_ADDRESS + SCHEMA_SUFFIX)))
+                eq(PV_PREFIX + BLOCKSERVER_ADDRESS + SCHEMA_SUFFIX)))
                 .thenReturn(mockSwitchableObservable);
 
         variables = createVariables();
@@ -132,7 +132,7 @@ public class DeviceScreenVariablesTest {
         // Arrange
         Writable expectedDestination = mock(Writable.class);
         when(switchingWritableFactory.getSwitchableWritable(any(ChannelType.class),
-                eq(pvPrefix + BLOCKSERVER_ADDRESS + SET_SCREENS_SUFFIX))).thenReturn(expectedDestination);
+                eq(PV_PREFIX + BLOCKSERVER_ADDRESS + SET_SCREENS_SUFFIX))).thenReturn(expectedDestination);
 
         String deviceName = "device name";
         String deviceKey = "device key";

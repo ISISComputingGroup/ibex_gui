@@ -93,7 +93,7 @@ public class ObservingSynopticModel extends ModelObject {
 		this.variables.synopticSchema.addObserver(synopticSchemaObserver);
 
         synopticObservable = new SwitchableObservable<SynopticDescription>(
-                variables.<SynopticDescription> getSynopticDescription(Variables.NONE_SYNOPTIC_PV));
+                variables.<SynopticDescription>getSynopticDescription(Variables.NONE_SYNOPTIC_PV));
         synopticObservable.addObserver(descriptionObserver);
 	}
 

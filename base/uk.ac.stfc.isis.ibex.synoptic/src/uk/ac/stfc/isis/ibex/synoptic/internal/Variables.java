@@ -38,7 +38,6 @@ import uk.ac.stfc.isis.ibex.instrument.channels.StringChannel;
 import uk.ac.stfc.isis.ibex.json.JsonDeserialisingConverter;
 import uk.ac.stfc.isis.ibex.json.JsonSerialisingConverter;
 import uk.ac.stfc.isis.ibex.synoptic.SynopticInfo;
-import uk.ac.stfc.isis.ibex.synoptic.model.desc.SynopticDescription;
 
 /**
  * Holds all the PVs relating to the synoptic information.
@@ -114,11 +113,11 @@ public class Variables extends InstrumentVariables {
     private Converter<String, Collection<SynopticInfo>> toSynopticInfo() {
 		return new JsonDeserialisingConverter<>(SynopticInfo[].class).apply(Convert.<SynopticInfo>toCollection());
 	}	
-	
+
     /**
      * Parses all the information about a synoptic from its PV.
      * 
-     * @param synopticPV the PV for the synoptic
+     * @param synopticPV synopticPV the PV for the synoptic
      * @return an object containing all the information about the synoptic
      */
     public <T> ForwardingObservable<T> getSynopticDescription(String synopticPV) {
