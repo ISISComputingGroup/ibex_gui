@@ -36,9 +36,18 @@ public class PropertyDescription {
     private String key;
     private String value;
     
+    /**
+     * Default constructor. Needed for parsing XML.
+     */
     public PropertyDescription() {
     }
 
+    /**
+     * Creates a new PropertyDescription given a key and a value.
+     * 
+     * @param key the property key
+     * @param value the property value
+     */
     public PropertyDescription(String key, String value) {
         this.key = key;
         this.value = value;

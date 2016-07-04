@@ -35,6 +35,9 @@ import org.xml.sax.SAXException;
 
 import uk.ac.stfc.isis.ibex.devicescreens.desc.DeviceScreensDescription;
 
+/**
+ * Utility class used to parse from and write to XML.
+ */
 public final class XMLUtil {
 
     private static JAXBContext context;

@@ -36,6 +36,7 @@ public class DeviceScreens implements BundleActivator {
 
     private final DeviceScreenVariables variables;
     private ObservingSchemaHandler schemaHandler;
+
     /**
      * Creates a new instance of the DevicesScreens class.
      */

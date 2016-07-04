@@ -84,14 +84,29 @@ public class DeviceScreenVariables {
         deviceScreenSchema = readCompressed(getPvPrefix() + BLOCKSERVER_ADDRESS + SCHEMA_SUFFIX);
     }
 
+    /**
+     * Gets the observable for the get device screens PV.
+     * 
+     * @return an observable pointing at the get device screens PV
+     */
     public ForwardingObservable<DeviceScreensDescription> getDeviceScreens() {
         return deviceScreensObservable;
     }
 
+    /**
+     * Gets the writable to the set device screens PV.
+     * 
+     * @return a writable pointing to the set device screens PV
+     */
     public Writable<DeviceScreensDescription> getDeviceScreensSetter() {
         return deviceScreensWritable;
     }
 
+    /**
+     * Gets the observable for the PV containing the device screens schema.
+     * 
+     * @return an observable pointing at the device screens schema PV
+     */
     public ForwardingObservable<String> getDeviceScreensSchema() {
         return deviceScreenSchema;
     }

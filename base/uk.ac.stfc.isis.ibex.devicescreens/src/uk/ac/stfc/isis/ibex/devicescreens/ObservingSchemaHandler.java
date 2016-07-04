@@ -55,6 +55,9 @@ public class ObservingSchemaHandler {
         }
     };
 
+    /**
+     * @param variables the device screens variables in use
+     */
     public ObservingSchemaHandler(DeviceScreenVariables variables) {
         variables.getDeviceScreensSchema().addObserver(screensSchemaObserver);
     }

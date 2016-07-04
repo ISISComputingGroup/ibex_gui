@@ -68,8 +68,6 @@ public class XmlUtilTest {
             + "</property>" + "<property>" + "<key>MACRO</key>" + "<value>VALUE</value>" + "</property>"
             + "</properties>" + "</device>" + "</devices>";
 
-    private String schema;
-
     @Before
     public void set_up() throws Exception {
         // Arrange
