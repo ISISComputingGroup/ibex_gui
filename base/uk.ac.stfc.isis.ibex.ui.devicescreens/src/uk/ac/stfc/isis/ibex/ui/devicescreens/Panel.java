@@ -17,9 +17,6 @@
  * http://opensource.org/licenses/eclipse-1.0.php
  */
 
-/**
- * 
- */
 package uk.ac.stfc.isis.ibex.ui.devicescreens;
 
 import org.eclipse.swt.SWT;
@@ -43,7 +40,7 @@ import uk.ac.stfc.isis.ibex.epics.observing.Observer;
 import uk.ac.stfc.isis.ibex.epics.writing.Writable;
 
 /**
- * 
+ * A temporary UI panel for the devices screens.
  */
 public class Panel extends Composite {
 
