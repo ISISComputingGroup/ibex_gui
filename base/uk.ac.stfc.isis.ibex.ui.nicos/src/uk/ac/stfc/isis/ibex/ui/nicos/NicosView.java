@@ -1,3 +1,22 @@
+
+/*
+* This file is part of the ISIS IBEX application.
+* Copyright (C) 2012-2016 Science & Technology Facilities Council.
+* All rights reserved.
+*
+* This program is distributed in the hope that it will be useful.
+* This program and the accompanying materials are made available under the
+* terms of the Eclipse Public License v1.0 which accompanies this distribution.
+* EXCEPT AS EXPRESSLY SET FORTH IN THE ECLIPSE PUBLIC LICENSE V1.0, THE PROGRAM 
+* AND ACCOMPANYING MATERIALS ARE PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES 
+* OR CONDITIONS OF ANY KIND.  See the Eclipse Public License v1.0 for more details.
+*
+* You should have received a copy of the Eclipse Public License v1.0
+* along with this program; if not, you can obtain a copy from
+* https://www.eclipse.org/org/documents/epl-v10.php or 
+* http://opensource.org/licenses/eclipse-1.0.php
+*/
+
 package uk.ac.stfc.isis.ibex.ui.nicos;
 
 import org.eclipse.swt.widgets.Composite;
@@ -18,20 +37,27 @@ import uk.ac.stfc.isis.ibex.ui.nicos.dialogs.CreateScriptDialog;
 
 @SuppressWarnings("checkstyle:magicnumber")
 /**
- * The main view for the NICOS scripting perspective
+ * The main view for the NICOS scripting perspective.
  */
 public class NicosView extends ViewPart {
+	
+	/**
+	 * The public ID of this class.
+	 */
 	public static final String ID = "uk.ac.stfc.isis.ibex.ui.nicos.nicosview";
 	
 	private final Shell shell;
 	
+	/**
+	 * The default constructor for the view.
+	 */
 	public NicosView() {
 		shell = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
 	}
 
 	@Override
 	public void createPartControl(Composite parent) {
-		GridLayout glParent = new GridLayout(3, false);
+		GridLayout glParent = new GridLayout(2, false);
 		glParent.marginRight = 10;
 		glParent.marginHeight = 10;
 		glParent.marginWidth = 10;
@@ -39,7 +65,6 @@ public class NicosView extends ViewPart {
 		
 		Label lblCurrentScript = new Label(parent, SWT.NONE);
 		lblCurrentScript.setText("Current Script");
-		new Label(parent, SWT.NONE);
 		
 		Label lblOutput = new Label(parent, SWT.NONE);
 		lblOutput.setText("Output");
@@ -47,12 +72,6 @@ public class NicosView extends ViewPart {
 		StyledText txtCurrentScript = new StyledText(parent, SWT.BORDER);
 		txtCurrentScript.setEditable(false);
 		txtCurrentScript.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		
-		Label lblSpacer = new Label(parent, SWT.NONE);
-		GridData gdSpacer = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
-		gdSpacer.widthHint = 200;
-		gdSpacer.minimumWidth = 200;
-		lblSpacer.setLayoutData(gdSpacer);
 		
 		StyledText txtOutput = new StyledText(parent, SWT.BORDER);
 		txtOutput.setEditable(false);
@@ -68,8 +87,6 @@ public class NicosView extends ViewPart {
 				dialog.open();
 			}
 		});
-		new Label(parent, SWT.NONE);
-		new Label(parent, SWT.NONE);
 
 	}
 

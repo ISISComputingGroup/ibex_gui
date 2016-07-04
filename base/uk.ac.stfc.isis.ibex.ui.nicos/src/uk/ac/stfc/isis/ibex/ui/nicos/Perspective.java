@@ -1,7 +1,7 @@
 
 /*
 * This file is part of the ISIS IBEX application.
-* Copyright (C) 2012-2015 Science & Technology Facilities Council.
+* Copyright (C) 2012-2016 Science & Technology Facilities Council.
 * All rights reserved.
 *
 * This program is distributed in the hope that it will be useful.
@@ -25,10 +25,13 @@ import org.eclipse.wb.swt.ResourceManager;
 import uk.ac.stfc.isis.ibex.ui.perspectives.BasePerspective;
 
 /**
- * The perspective for interacting with the script server
+ * The perspective for interacting with the script server.
  */
 public class Perspective extends BasePerspective {
 
+	/**
+	 * The public ID of this class.
+	 */
 	public static final String ID = "uk.ac.stfc.isis.ibex.ui.nicos.perspective"; //$NON-NLS-1$
 
 	@Override
