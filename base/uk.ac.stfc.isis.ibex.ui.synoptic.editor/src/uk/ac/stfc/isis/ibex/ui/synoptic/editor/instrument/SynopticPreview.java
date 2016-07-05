@@ -21,6 +21,7 @@ package uk.ac.stfc.isis.ibex.ui.synoptic.editor.instrument;
 
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.FillLayout;
