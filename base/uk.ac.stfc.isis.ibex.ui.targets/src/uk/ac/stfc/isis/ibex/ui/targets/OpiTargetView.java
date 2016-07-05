@@ -28,7 +28,7 @@ import uk.ac.stfc.isis.ibex.instrument.Instrument;
 import uk.ac.stfc.isis.ibex.opis.Opi;
 import uk.ac.stfc.isis.ibex.opis.OpiView;
 
-public final class OpiTargetView extends OpiView {
+public abstract class OpiTargetView extends OpiView {
 
     public static final String ID = "uk.ac.stfc.isis.ibex.ui.targets.OpiTargetView"; //$NON-NLS-1$
 
