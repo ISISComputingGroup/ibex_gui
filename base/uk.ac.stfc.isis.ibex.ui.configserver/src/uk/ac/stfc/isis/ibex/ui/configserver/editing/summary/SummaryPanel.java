@@ -53,6 +53,7 @@ public class SummaryPanel extends Composite {
 	private Text txtDateCreated;
 	private Text txtDateModified;
 	private Label lblDateCreatedField;
+	private Label lblDateModifiedField;
 	private ComboViewer cmboSynoptic;
 	private EditableConfiguration config;
 	private DataBindingContext bindingContext;
@@ -105,12 +106,8 @@ public class SummaryPanel extends Composite {
 		lblDateModified.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		lblDateModified.setText("Date Modified:");
 		
-		txtDateModified = new Text(grpSummary, SWT.BORDER);
-		GridData gdTxtDateModified = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
-		gdTxtDateModified.minimumWidth = 120;
-		gdTxtDateModified.widthHint = 120;
-		txtDateModified.setLayoutData(gdTxtDateModified);
-		txtDateModified.setEditable(false);
+		lblDateModifiedField = new Label(grpSummary, SWT.NONE);
+		lblDateModifiedField.setText("Lorem Ipsum");
 	}
 	
 	public void setConfig(EditableConfiguration config) {
@@ -129,7 +126,7 @@ public class SummaryPanel extends Composite {
 		bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(txtDescription), BeanProperties.value("description").observe(config), strategy, null);
 		bindingContext.bindValue(WidgetProperties.selection().observe(cmboSynoptic.getCombo()), BeanProperties.value("synoptic").observe(config));		
 		bindingContext.bindValue(WidgetProperties.text().observe(lblDateCreatedField), BeanProperties.value("dateCreated").observe(config));
-		bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(txtDateModified), BeanProperties.value("dateModified").observe(config));
+		bindingContext.bindValue(WidgetProperties.text().observe(lblDateModifiedField), BeanProperties.value("dateModified").observe(config));
 	}
 	
 	private void updateSynopticList() {
