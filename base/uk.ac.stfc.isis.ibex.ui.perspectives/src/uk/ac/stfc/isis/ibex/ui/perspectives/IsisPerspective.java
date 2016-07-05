@@ -27,4 +27,6 @@ public interface IsisPerspective extends Comparable<IsisPerspective> {
 	String name();
 	
 	Image image();
+	
+	boolean isVisibleDefault();
 }
