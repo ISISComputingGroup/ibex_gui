@@ -243,11 +243,12 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
 	}
 
 	/**
-	 * 
+     * 
      * Add a new block to the configuration.
      * 
      * @param block the EditableBlock to be added
-     * @throws DuplicateBlockNameException If the name of the block being added is identical to one already in the configuration
+     * @throws DuplicateBlockNameException if the name of the block being added
+     *             is identical to one already in the configuration
      */
 	public void addNewBlock(EditableBlock block) throws DuplicateBlockNameException {
         if (blockNameIsUnique(block.getName())) {
@@ -276,18 +277,21 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
         }
         return true;
     }
+
 	/**
-	 * Makes a block unavailable (i.e. block is assigned to a group)
-	 * @param block the block to make unavailable
-	 */
+     * Makes a block unavailable (i.e. block is assigned to a group).
+     * 
+     * @param block the block to make unavailable
+     */
 	public void makeBlockUnavailable(EditableBlock block) {
 		availableBlocks.remove(block);
 	}
 
 	/**
-	 * Makes a block available (i.e. block can be assigned to a group)
-	 * @param block the block to make available
-	 */
+     * Makes a block available (i.e. block can be assigned to a group).
+     * 
+     * @param block the block to make available
+     */
 	public void makeBlockAvailable(EditableBlock block) {
 		if (!availableBlocks.contains(block)) {
 			availableBlocks.add(0, block);
