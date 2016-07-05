@@ -32,9 +32,15 @@ import org.eclipse.wb.swt.SWTResourceManager;
  */
 @SuppressWarnings("checkstyle:magicnumber")
 public class BeamStatusPanel extends ScrolledComposite {
-
+	
+	 /**
+	  * Constructor for the panel holding the beam stats and news widgets.
+	  * 
+	  * @param parent The parent composite
+	  * @param style The SWT style
+	  */
     public BeamStatusPanel(Composite parent, int style) {
-        super(parent, SWT.BORDER | SWT.V_SCROLL);
+        super(parent, style);
         setLayout(new GridLayout(1, false));
         setExpandHorizontal(true);
         setExpandVertical(true);
