@@ -29,7 +29,7 @@ import org.eclipse.ui.IWorkbenchPreferencePage;
 import uk.ac.stfc.isis.ibex.preferences.Preferences;
 
 /**
- * A preference page for setting which of the ISIS perspectives 
+ * A preference page for setting which of the ISIS perspectives are visible
  */
 public class PreferencePage extends FieldEditorPreferencePage implements IWorkbenchPreferencePage {		
 	public PreferencePage() {
