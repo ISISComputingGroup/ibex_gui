@@ -110,7 +110,7 @@ public class EditBlockDialog extends TitleAreaDialog {
         } catch (DuplicateBlockNameException e) {
                 MessageDialog error = new MessageDialog(this.getShell(), "Error", null,
                         "Failed to add block " + this.block.getName() + ":\nBlock with this name already exists.",
-                        MessageDialog.ERROR, new String[] { "OK" }, 0);
+                        MessageDialog.ERROR, new String[] {"OK"}, 0);
                 error.open();
         }
 	}
