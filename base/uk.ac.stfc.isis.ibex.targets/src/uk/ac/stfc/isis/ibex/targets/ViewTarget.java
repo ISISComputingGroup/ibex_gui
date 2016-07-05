@@ -17,34 +17,12 @@
 * http://opensource.org/licenses/eclipse-1.0.php
 */
 
-package uk.ac.stfc.isis.ibex.synoptic.model;
+package uk.ac.stfc.isis.ibex.targets;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
+public class ViewTarget extends Target {
 
-public class Target {
-
-	private final String name;
-	private final Map<String, String> properties = new LinkedHashMap<>();
-	
-	public Target(String name) {
-		this.name = name;
-	}
-	
-	public String name() {
-		return name;
-	}
-	
-	@Override
-	public String toString() {
-		return name;
+	public ViewTarget(String name) {
+		super(name);
 	}
 
-	public void addProperty(String key, String value) {
-		properties.put(key, value);
-	}
-
-	public Map<String, String> properties() {
-		return new LinkedHashMap<>(properties);
-	}
 }

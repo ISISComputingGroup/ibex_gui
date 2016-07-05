@@ -17,7 +17,7 @@
 * http://opensource.org/licenses/eclipse-1.0.php
 */
 
-package uk.ac.stfc.isis.ibex.ui.synoptic.views;
+package uk.ac.stfc.isis.ibex.ui.targets;
 
 import java.util.Map;
 
@@ -30,7 +30,7 @@ import uk.ac.stfc.isis.ibex.opis.OpiView;
 
 public final class OpiTargetView extends OpiView {
 
-	public static final String ID = "uk.ac.stfc.isis.ibex.ui.synoptic.views.OpiTargetView"; //$NON-NLS-1$
+    public static final String ID = "uk.ac.stfc.isis.ibex.ui.targets.OpiTargetView"; //$NON-NLS-1$
 
 	private final String pvPrefix = Instrument.getInstance().currentInstrument().pvPrefix();
 	

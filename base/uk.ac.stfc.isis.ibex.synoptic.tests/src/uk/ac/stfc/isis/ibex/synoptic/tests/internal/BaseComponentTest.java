@@ -31,8 +31,8 @@ import uk.ac.stfc.isis.ibex.synoptic.internal.BaseComponent;
 import uk.ac.stfc.isis.ibex.synoptic.model.Component;
 import uk.ac.stfc.isis.ibex.synoptic.model.ComponentProperty;
 import uk.ac.stfc.isis.ibex.synoptic.model.ComponentType;
-import uk.ac.stfc.isis.ibex.synoptic.model.Target;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.ComponentDescription;
+import uk.ac.stfc.isis.ibex.targets.Target;
 
 /**
  * This class is responsible for testing the Base Component 

@@ -8,3 +8,7 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Bundle-ActivationPolicy: lazy
+Export-Package: uk.ac.stfc.isis.ibex.ui.targets
+Import-Package: org.csstudio.opibuilder.util,
+ uk.ac.stfc.isis.ibex.instrument,
+ uk.ac.stfc.isis.ibex.opis
