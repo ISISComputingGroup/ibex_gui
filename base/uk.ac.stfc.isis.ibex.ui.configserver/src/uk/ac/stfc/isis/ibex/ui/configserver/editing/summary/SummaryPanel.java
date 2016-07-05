@@ -100,14 +100,12 @@ public class SummaryPanel extends Composite {
 		lblDateCreated.setText("Date Created:");
 		
 		lblDateCreatedField = new Label(grpSummary, SWT.NONE);
-		lblDateCreatedField.setText("Lorem Ipsum");
 				
 		Label lblDateModified = new Label(grpSummary, SWT.NONE);
 		lblDateModified.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		lblDateModified.setText("Date Modified:");
 		
 		lblDateModifiedField = new Label(grpSummary, SWT.NONE);
-		lblDateModifiedField.setText("Lorem Ipsum");
 	}
 	
 	public void setConfig(EditableConfiguration config) {
