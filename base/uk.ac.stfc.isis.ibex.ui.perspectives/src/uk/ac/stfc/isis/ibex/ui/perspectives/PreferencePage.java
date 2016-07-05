@@ -29,9 +29,12 @@ import org.eclipse.ui.IWorkbenchPreferencePage;
 import uk.ac.stfc.isis.ibex.preferences.Preferences;
 
 /**
- * A preference page for setting which of the ISIS perspectives are visible
+ * A preference page for setting which of the ISIS perspectives are visible.
  */
 public class PreferencePage extends FieldEditorPreferencePage implements IWorkbenchPreferencePage {		
+	/**
+	 * The default constructor for the class.
+	 */
 	public PreferencePage() {
 		super(GRID);
 	}

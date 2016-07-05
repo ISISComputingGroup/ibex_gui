@@ -22,11 +22,23 @@ package uk.ac.stfc.isis.ibex.ui.perspectives;
 import org.eclipse.swt.graphics.Image;
 
 public interface IsisPerspective extends Comparable<IsisPerspective> {
+	/**
+	 * @return The id of the perspective.
+	 */
 	String id();
 	
+	/**
+	 * @return The user-friendly name of the perspective. 
+	 */
 	String name();
 	
+	/**
+	 * @return The image to be used as an icon for the perspective.
+	 */
 	Image image();
 	
+	/**
+	 * @return Whether the perspective is visible as default.
+	 */
 	boolean isVisibleDefault();
 }
