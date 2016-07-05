@@ -52,6 +52,7 @@ public class SummaryPanel extends Composite {
 	private Text txtDescription;
 	private Text txtDateCreated;
 	private Text txtDateModified;
+	private Label lblDateCreatedField;
 	private ComboViewer cmboSynoptic;
 	private EditableConfiguration config;
 	private DataBindingContext bindingContext;
@@ -96,13 +97,9 @@ public class SummaryPanel extends Composite {
 		Label lblDateCreated = new Label(grpSummary, SWT.NONE);
 		lblDateCreated.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		lblDateCreated.setText("Date Created:");
-				
-		txtDateCreated = new Text(grpSummary, SWT.BORDER);
-		GridData gdTxtDateCreated = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
-		gdTxtDateCreated.widthHint = 120;
-		gdTxtDateCreated.minimumWidth = 120;
-		txtDateCreated.setLayoutData(gdTxtDateCreated);
-		txtDateCreated.setEditable(false);
+		
+		lblDateCreatedField = new Label(grpSummary, SWT.NONE);
+		lblDateCreatedField.setText("Lorem Ipsum");
 				
 		Label lblDateModified = new Label(grpSummary, SWT.NONE);
 		lblDateModified.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
@@ -131,7 +128,7 @@ public class SummaryPanel extends Composite {
 		bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(txtName), BeanProperties.value("name").observe(config));
 		bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(txtDescription), BeanProperties.value("description").observe(config), strategy, null);
 		bindingContext.bindValue(WidgetProperties.selection().observe(cmboSynoptic.getCombo()), BeanProperties.value("synoptic").observe(config));		
-		bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(txtDateCreated), BeanProperties.value("dateCreated").observe(config));
+		bindingContext.bindValue(WidgetProperties.text().observe(lblDateCreatedField), BeanProperties.value("dateCreated").observe(config));
 		bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(txtDateModified), BeanProperties.value("dateModified").observe(config));
 	}
 	
