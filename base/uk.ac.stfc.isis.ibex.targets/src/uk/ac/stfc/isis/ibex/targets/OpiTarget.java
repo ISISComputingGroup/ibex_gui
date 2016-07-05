@@ -17,9 +17,7 @@
 * http://opensource.org/licenses/eclipse-1.0.php
 */
 
-package uk.ac.stfc.isis.ibex.synoptic.model.targets;
-
-import uk.ac.stfc.isis.ibex.targets.Target;
+package uk.ac.stfc.isis.ibex.targets;
 
 public class OpiTarget extends Target {
 	
