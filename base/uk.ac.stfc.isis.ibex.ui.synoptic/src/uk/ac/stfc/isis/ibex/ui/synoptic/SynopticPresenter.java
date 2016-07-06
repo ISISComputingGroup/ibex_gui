@@ -214,7 +214,7 @@ public class SynopticPresenter extends ModelObject {
 		try {
 			OpiTarget opiTarget = (OpiTarget) currentTarget;
 			IWorkbenchPage workbenchPage = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
-			IViewPart view = workbenchPage.showView(OpiTargetView.ID, opiTarget.name(), IWorkbenchPage.VIEW_ACTIVATE);
+            IViewPart view = workbenchPage.showView(OpiTargetView.ID, opiTarget.name(), IWorkbenchPage.VIEW_ACTIVATE);
 			openOPIs.add(view);
 			OpiTargetView targetView = (OpiTargetView) view;
 			targetView.setOpi(opiTarget.name(), opiTarget.opiName(), opiTarget.properties());

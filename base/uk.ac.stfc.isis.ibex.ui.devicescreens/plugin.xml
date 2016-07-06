@@ -31,18 +31,6 @@
                standalone="true"
                visible="true">
          </view>
-         <view
-               closeable="false"
-               id="uk.ac.stfc.isis.ibex.ui.targets.OpiTargetView"
-               minimized="false"
-               moveable="false"
-               ratio="0.6f"
-               relationship="right"
-               relative="uk.ac.stfc.isis.ibex.ui.targets.OpiTargetView"
-               showTitle="false"
-               standalone="true"
-               visible="true">
-         </view>
       </perspectiveExtension>
    </extension>
    <extension

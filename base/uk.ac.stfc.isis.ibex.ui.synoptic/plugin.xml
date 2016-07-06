@@ -22,8 +22,8 @@
       </view>
       <view
             allowMultiple="true"
-            class="uk.ac.stfc.isis.ibex.ui.synoptic.views.OpiTargetView"
-            id="uk.ac.stfc.isis.ibex.ui.synoptic.views.OpiTargetView"
+            class="uk.ac.stfc.isis.ibex.ui.targets.OpiTargetView"
+            id="uk.ac.stfc.isis.ibex.ui.targets.OpiTargetView"
             name="Component view"
             restorable="true">
       </view>
@@ -72,7 +72,7 @@
          </view>
          <view
                closeable="true"
-               id="uk.ac.stfc.isis.ibex.ui.synoptic.views.OpiTargetView:*"
+               id="uk.ac.stfc.isis.ibex.ui.targets.OpiTargetView"
                minimized="false"
                moveable="false"
                ratio="0.6f"
