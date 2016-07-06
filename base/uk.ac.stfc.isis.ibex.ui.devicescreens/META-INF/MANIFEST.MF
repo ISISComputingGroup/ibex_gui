@@ -24,7 +24,7 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.ui.workbench
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
-Import-Package: uk.ac.stfc.isis.ibex.ui.synoptic.views,
+Import-Package: org.apache.logging.log4j,
  org.csstudio.opibuilder.runmode,
  org.csstudio.opibuilder.util,
  uk.ac.stfc.isis.ibex.devicescreens,
@@ -34,4 +34,5 @@ Import-Package: uk.ac.stfc.isis.ibex.ui.synoptic.views,
  uk.ac.stfc.isis.ibex.logger,
  uk.ac.stfc.isis.ibex.opis,
  uk.ac.stfc.isis.ibex.targets,
+ uk.ac.stfc.isis.ibex.ui.synoptic.views,
  uk.ac.stfc.isis.ibex.ui.targets

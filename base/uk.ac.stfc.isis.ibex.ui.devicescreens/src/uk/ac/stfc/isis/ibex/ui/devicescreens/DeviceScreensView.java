@@ -22,10 +22,17 @@
  */
 package uk.ac.stfc.isis.ibex.ui.devicescreens;
 
+import org.apache.logging.log4j.Logger;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.PartInitException;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
+
+import uk.ac.stfc.isis.ibex.logger.IsisLog;
+import uk.ac.stfc.isis.ibex.ui.targets.OpiTargetView;
 
 /**
  * 
@@ -33,6 +40,8 @@ import org.eclipse.ui.part.ViewPart;
 public class DeviceScreensView extends ViewPart {
 
     public static final String ID = "uk.ac.stfc.isis.ibex.ui.devicescreens.devicescreensview";
+
+    private static final Logger LOG = IsisLog.getLogger(DeviceScreensView.class);
 
     public DeviceScreensView() {
     }
@@ -42,9 +51,20 @@ public class DeviceScreensView extends ViewPart {
         parent.setLayout(new FillLayout(SWT.HORIZONTAL));
 //        ExperimentDetailsPanel experimentDetails = new ExperimentDetailsPanel(parent, SWT.NONE);
         Panel panel = new Panel(parent, SWT.NONE);
+        displayOpi("Lakeshore 218");
     }
 
     @Override
     public void setFocus() {
+    }
+
+    private void displayOpi(String name) {
+        try {
+            IWorkbenchPage workbenchPage = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
+            OpiTargetView view = (OpiTargetView) workbenchPage.showView(OpiTargetView.ID);
+            view.setOpi(name);
+        } catch (PartInitException e) {
+            LOG.catching(e);
+        }
     }
 }
