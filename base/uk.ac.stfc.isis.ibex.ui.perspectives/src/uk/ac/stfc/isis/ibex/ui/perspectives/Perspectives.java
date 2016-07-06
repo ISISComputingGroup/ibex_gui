@@ -29,12 +29,22 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtensionRegistry;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.jface.preference.IPreferenceStore;
 
+import uk.ac.stfc.isis.ibex.preferences.Preferences;
+
+/**
+ * Class for holding all of the ISIS perspectives.
+ */
 public class Perspectives {
 
 	private final List<IsisPerspective> perspectives = new ArrayList<>();
 	private final Map<String, String> ids = new HashMap<>();
+	private IPreferenceStore store = Preferences.getDefault().getPreferenceStore();
 	
+	/**
+	 * Default constructor for the class, will gather all of the ISIS perspectives into a list.
+	 */
 	public Perspectives() {
 		IExtensionRegistry registry = Platform.getExtensionRegistry();
 		IConfigurationElement[] elements = registry.getConfigurationElementsFor("uk.ac.stfc.isis.ibex.ui.perspectives");
@@ -44,6 +54,8 @@ public class Perspectives {
 				IsisPerspective perspective = (IsisPerspective) obj;
 				perspectives.add(perspective);
 				ids.put(perspective.name(), perspective.id());
+
+				store.setDefault(perspective.id(), perspective.isVisibleDefault());
 				
 				Collections.sort(perspectives);
 			} catch (CoreException e) {
@@ -52,10 +64,36 @@ public class Perspectives {
 		}
 	}
 	
+	/**
+	 * Get all the ISIS perspectives.
+	 * @return A list of all perspectives
+	 */
 	public List<IsisPerspective> get() {		
 		return perspectives;
 	}
 	
+	/**
+	 * Get the perspectives that are visible to the user.
+	 * @return A list of visible perspectives
+	 */
+	public List<IsisPerspective> getVisible() {
+		List<IsisPerspective> newList = new ArrayList<>();
+		
+		for (IsisPerspective perspective : perspectives) {
+			if (store.getBoolean(perspective.id())) {
+				newList.add(perspective);
+			}
+		}
+		
+		return newList;
+	}
+	
+	/**
+	 * Get the perspective id based on its name.
+	 * 
+	 * @param perspectiveName The name of an ISIS perspective
+	 * @return Its ID
+	 */
 	public String getID(String perspectiveName) {
 		return ids.get(perspectiveName);
 	}

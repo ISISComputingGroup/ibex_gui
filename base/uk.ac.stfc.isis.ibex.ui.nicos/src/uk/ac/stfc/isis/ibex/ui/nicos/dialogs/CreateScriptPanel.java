@@ -1,7 +1,7 @@
 
 /*
 * This file is part of the ISIS IBEX application.
-* Copyright (C) 2012-2015 Science & Technology Facilities Council.
+* Copyright (C) 2012-2016 Science & Technology Facilities Council.
 * All rights reserved.
 *
 * This program is distributed in the hope that it will be useful.
@@ -17,28 +17,27 @@
 * http://opensource.org/licenses/eclipse-1.0.php
 */
 
-package uk.ac.stfc.isis.ibex.ui.perspectives;
+package uk.ac.stfc.isis.ibex.ui.nicos.dialogs;
 
-import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.layout.FillLayout;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.StyledText;
 
-public interface IsisPerspective extends Comparable<IsisPerspective> {
+/**
+ * The view for the dialog that creates a new script to send to the script server.
+ */
+public class CreateScriptPanel extends Composite {
+
 	/**
-	 * @return The id of the perspective.
+	 * The constructor for this class.
+	 * @param parent The composite that this panel belongs to.
+	 * @param style The SWT style of this panel.
 	 */
-	String id();
-	
-	/**
-	 * @return The user-friendly name of the perspective. 
-	 */
-	String name();
-	
-	/**
-	 * @return The image to be used as an icon for the perspective.
-	 */
-	Image image();
-	
-	/**
-	 * @return Whether the perspective is visible as default.
-	 */
-	boolean isVisibleDefault();
+	public CreateScriptPanel(Composite parent, int style) {
+		super(parent, style);
+		setLayout(new FillLayout(SWT.HORIZONTAL));
+		
+		StyledText styledText = new StyledText(this, SWT.BORDER);
+	}
 }

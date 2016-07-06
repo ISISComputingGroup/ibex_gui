@@ -1,7 +1,7 @@
 
 /*
 * This file is part of the ISIS IBEX application.
-* Copyright (C) 2012-2015 Science & Technology Facilities Council.
+* Copyright (C) 2012-2016 Science & Technology Facilities Council.
 * All rights reserved.
 *
 * This program is distributed in the hope that it will be useful.
@@ -17,28 +17,40 @@
 * http://opensource.org/licenses/eclipse-1.0.php
 */
 
-package uk.ac.stfc.isis.ibex.ui.perspectives;
+package uk.ac.stfc.isis.ibex.ui.nicos;
 
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.wb.swt.ResourceManager;
 
-public interface IsisPerspective extends Comparable<IsisPerspective> {
+import uk.ac.stfc.isis.ibex.ui.perspectives.BasePerspective;
+
+/**
+ * The perspective for interacting with the script server.
+ */
+public class Perspective extends BasePerspective {
+
 	/**
-	 * @return The id of the perspective.
+	 * The public ID of this class.
 	 */
-	String id();
+	public static final String ID = "uk.ac.stfc.isis.ibex.ui.nicos.perspective"; //$NON-NLS-1$
+
+	@Override
+	public String id() {
+		return ID;
+	}
+
+	@Override
+	public String name() {
+		return "NICOS Scripting";
+	}
+
+	@Override
+	public Image image() {
+		return ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui.nicos", "icons/script_32x24.png");
+	}
 	
-	/**
-	 * @return The user-friendly name of the perspective. 
-	 */
-	String name();
-	
-	/**
-	 * @return The image to be used as an icon for the perspective.
-	 */
-	Image image();
-	
-	/**
-	 * @return Whether the perspective is visible as default.
-	 */
-	boolean isVisibleDefault();
+	@Override
+	public boolean isVisibleDefault() {
+		return false; 
+	}
 }

@@ -102,17 +102,16 @@ public class EditBlockDialog extends TitleAreaDialog {
 		blockDetailsViewModel.updateBlock();
 		blockRunControlViewModel.updateBlock();
         blockLogSettingsViewModel.updateBlock();
-        if (!config.getEditableBlocks().contains(this.block)) {
-            try {
+        try {
+            if (!config.getEditableBlocks().contains(this.block)) {
                 config.addNewBlock(this.block);
-                super.okPressed();
-            } catch (DuplicateBlockNameException e) {
+            }
+            super.okPressed();
+        } catch (DuplicateBlockNameException e) {
                 MessageDialog error = new MessageDialog(this.getShell(), "Error", null,
                         "Failed to add block " + this.block.getName() + ":\nBlock with this name already exists.",
-                        MessageDialog.ERROR, new String[] { "OK" }, 0);
+                        MessageDialog.ERROR, new String[] {"OK"}, 0);
                 error.open();
-                System.out.println("testst");
-            }
         }
 	}
 	

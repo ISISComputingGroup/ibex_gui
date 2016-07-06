@@ -62,9 +62,7 @@ import uk.ac.stfc.isis.ibex.ui.beamstatus.BeamStatusGraphDataProvider;
  * (e.g. hourly, daily)
  */
 public class BeamStatusView extends DataBrowserAwareView implements ModelListener {
-    public BeamStatusView() {
-    }
-
+	
     /** View ID registered in plugin.xml. */
     public static final String ID = "uk.ac.stfc.isis.ibex.ui.beamstatus.views.BeamStatusGraphView"; //$NON-NLS-1$
 
