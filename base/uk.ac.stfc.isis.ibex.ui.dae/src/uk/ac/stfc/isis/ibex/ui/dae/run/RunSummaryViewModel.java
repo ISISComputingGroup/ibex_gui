@@ -22,6 +22,7 @@ package uk.ac.stfc.isis.ibex.ui.dae.run;
 import uk.ac.stfc.isis.ibex.dae.IDae;
 import uk.ac.stfc.isis.ibex.dae.actions.DaeActions;
 import uk.ac.stfc.isis.ibex.epics.adapters.TextUpdatedObservableAdapter;
+import uk.ac.stfc.isis.ibex.epics.adapters.UpdatedObservableAdapter;
 import uk.ac.stfc.isis.ibex.epics.pv.Closer;
 import uk.ac.stfc.isis.ibex.log.ILogMessageProducer;
 import uk.ac.stfc.isis.ibex.log.Log;
@@ -36,7 +37,8 @@ public class RunSummaryViewModel extends Closer {
 	private UpdatedValue<String> runStatus;
 	private UpdatedValue<String> runNumber;
 	private UpdatedValue<String> isisCycle;	
-	private WritableObservableAdapter title;
+    private UpdatedValue<Boolean> displayTitle;
+    private WritableObservableAdapter title;
 				
 	private ILogMessageProducer logModel;
 	
@@ -47,8 +49,9 @@ public class RunSummaryViewModel extends Closer {
 		runStatus = registerForClose(new TextUpdatedObservableAdapter(registerForClose(new InstrumentState(model.runState()))));
 		runNumber = registerForClose(new TextUpdatedObservableAdapter(model.runNumber()));
 		isisCycle = registerForClose(new TextUpdatedObservableAdapter(model.isisCycle()));
-		title = registerForClose(new WritableObservableAdapter(model.setTitle(), model.title()));
-								
+        title = registerForClose(new WritableObservableAdapter(model.setTitle(), model.title()));
+        displayTitle = registerForClose(new UpdatedObservableAdapter<Boolean>(model.displayTitle()));
+        
 		logModel = Log.getInstance().producer();
 	}
 	
@@ -67,7 +70,11 @@ public class RunSummaryViewModel extends Closer {
 	public UpdatedValue<String> isisCycle() {
 		return isisCycle;
 	}
-	
+
+    public UpdatedValue<Boolean> displayTitle() {
+        return displayTitle;
+    }
+
 	public WritableObservableAdapter title() {
 		return title;
 	}

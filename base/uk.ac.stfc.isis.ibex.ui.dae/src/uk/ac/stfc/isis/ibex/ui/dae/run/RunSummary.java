@@ -43,6 +43,7 @@ public class RunSummary extends Composite {
 	private Label runNumber;
 	private Label isisCycle;
 	private WritableObservingTextBox title;
+    private Button btnDisplayTitle;
 	private LogMessageBox messageBox;
 	
 	private DaeActionButtonPanel daeButtonPanel;
@@ -127,10 +128,10 @@ public class RunSummary extends Composite {
 
         Label spacer4 = new Label(infoComposite, SWT.NONE);
 
-        Button button = new Button(infoComposite, SWT.CHECK);
-        button.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false, false));
-        button.setText("Show Title in Dataweb Dashboard Page");
-        button.addSelectionListener(new SelectionAdapter() {
+        btnDisplayTitle = new Button(infoComposite, SWT.CHECK);
+        btnDisplayTitle.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false, false));
+        btnDisplayTitle.setText("Show Title in Dataweb Dashboard Page");
+        btnDisplayTitle.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
 
@@ -150,6 +151,8 @@ public class RunSummary extends Composite {
 		bindingContext.bindValue(WidgetProperties.text().observe(runStatus), BeanProperties.value("value").observe(viewModel.runStatus()));
 		bindingContext.bindValue(WidgetProperties.text().observe(runNumber), BeanProperties.value("value").observe(viewModel.runNumber()));
 		bindingContext.bindValue(WidgetProperties.text().observe(isisCycle), BeanProperties.value("value").observe(viewModel.isisCycle()));
+        bindingContext.bindValue(WidgetProperties.selection().observe(btnDisplayTitle),
+                BeanProperties.value("value").observe(viewModel.displayTitle()));
 		
 		messageBox.setModel(viewModel.logMessageSource());		
 	}
