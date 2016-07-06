@@ -23,7 +23,7 @@
 package uk.ac.stfc.isis.ibex.configserver.editing;
 
 /**
- * 
+ * An exception indicating duplicate block names.
  */
 public class DuplicateBlockNameException extends Exception {
 
@@ -35,6 +35,8 @@ public class DuplicateBlockNameException extends Exception {
 
     /**
      * Constructor with message for the exception.
+     * 
+     * @param message the detail message for the exception
      */
     public DuplicateBlockNameException(String message) {
         super(message);
