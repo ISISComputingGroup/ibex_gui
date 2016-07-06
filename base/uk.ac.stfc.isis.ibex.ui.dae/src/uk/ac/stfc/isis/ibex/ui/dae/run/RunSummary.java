@@ -22,11 +22,14 @@ package uk.ac.stfc.isis.ibex.ui.dae.run;
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.beans.BeanProperties;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
-import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Label;
 import org.eclipse.wb.swt.SWTResourceManager;
 
 import uk.ac.stfc.isis.ibex.ui.dae.widgets.LogMessageBox;
@@ -107,9 +110,9 @@ public class RunSummary extends Composite {
 		isisCycle.setLayoutData(gdIsisCycle);
 		isisCycle.setText("UNKNOWN");
 		
-		Label spacer2 = new Label(infoComposite, SWT.NONE);
-		spacer2.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 1, 1));
-		
+        Label spacer2 = new Label(infoComposite, SWT.NONE);
+        spacer2.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 1, 1));
+
 		Label lblTitle = new Label(infoComposite, SWT.NONE);
 		lblTitle.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		lblTitle.setText("Title:");
@@ -119,12 +122,24 @@ public class RunSummary extends Composite {
 		GridData gdTitle = new GridData(SWT.FILL, SWT.CENTER, false, false, 3, 1);
 		gdTitle.widthHint = 180;
 		title.setLayoutData(gdTitle);
-		new Label(infoComposite, SWT.NONE);
+
+        Label spacer3 = new Label(infoComposite, SWT.NONE);
+
+        Label spacer4 = new Label(infoComposite, SWT.NONE);
+
+        Button button = new Button(infoComposite, SWT.CHECK);
+        button.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false, false));
+        button.setText("Show Title in Dataweb Dashboard Page");
+        button.addSelectionListener(new SelectionAdapter() {
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+
+            }
+        });
 
 		messageBox = new LogMessageBox(lhsComposite, SWT.NONE);
 		messageBox.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		
-				
 		daeButtonPanel = new DaeActionButtonPanel(this, SWT.NONE, model.actions());
 		daeButtonPanel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
 	}
