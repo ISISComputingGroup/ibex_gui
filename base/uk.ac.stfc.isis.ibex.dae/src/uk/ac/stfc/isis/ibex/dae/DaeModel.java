@@ -86,7 +86,12 @@ public class DaeModel extends Closer implements IDae {
 	public Writable<String> setTitle() {
 		return writables.title;
 	}
-	
+
+    @Override
+    public Writable<Boolean> setDisplayTitle() {
+        return writables.displayTitle;
+    }
+
 	@Override
 	public ForwardingObservable<String> vetos() {
 		return observables.vetos;

@@ -32,6 +32,6 @@ public class BooleanChannel implements ChannelType<Boolean> {
 
 	@Override
     public BaseWritable<Boolean> writer(String address) {
-		throw new UnsupportedOperationException();
+        return Channels.Booleans.writer(address);
 	}
 }

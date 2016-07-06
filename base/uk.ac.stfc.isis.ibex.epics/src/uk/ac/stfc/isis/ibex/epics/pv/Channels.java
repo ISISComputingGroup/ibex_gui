@@ -193,12 +193,17 @@ public class Channels {
 	}
 	
 	/**
-	 * Boolean reader.
-	 */
+     * Boolean I/O.
+     */
 	public static class Booleans {
 		public static ClosableObservable<Boolean> reader(String pvAddress) {
 			return new ConvertingObservable<>(Enums.reader(pvAddress), Convert.toBoolean());
 		}
+
+        public static BaseWritable<Boolean> writer(String pvAddress) {
+            return new PVManagerWritable<>(new PVInfo<>(pvAddress, Boolean.class));
+        }
+
 	}
 	
 	private static <V extends VType, T> ClosableObservable<T> convertObservablePV(String pvAddress, Class<V> pvType, Converter<V, T> converter) {

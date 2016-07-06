@@ -41,7 +41,7 @@ public class RunSummaryViewModel extends Closer {
     private WritableObservableAdapter title;
 				
 	private ILogMessageProducer logModel;
-	
+
 	public void bind(final IDae model) {
 		this.model = model;
 		
@@ -51,7 +51,7 @@ public class RunSummaryViewModel extends Closer {
 		isisCycle = registerForClose(new TextUpdatedObservableAdapter(model.isisCycle()));
         title = registerForClose(new WritableObservableAdapter(model.setTitle(), model.title()));
         displayTitle = registerForClose(new UpdatedObservableAdapter<Boolean>(model.displayTitle()));
-        
+
 		logModel = Log.getInstance().producer();
 	}
 	
