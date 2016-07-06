@@ -29,22 +29,51 @@ import uk.ac.stfc.isis.ibex.instrument.Instrument;
 import uk.ac.stfc.isis.ibex.opis.Opi;
 import uk.ac.stfc.isis.ibex.opis.OpiView;
 
-public class OpiTargetView extends OpiView {
+/**
+ * A view that allows display of an OPI target. As the view is shared by
+ * multiple perspectives, and views are singletons, the class is abstract so
+ * that each perspective that wants to use it can own its own version.
+ */
+public abstract class OpiTargetView extends OpiView {
 
+    /**
+     * Class ID.
+     */
     public static final String ID = "uk.ac.stfc.isis.ibex.ui.targets.OpiTargetView"; //$NON-NLS-1$
 
+    /**
+     * PV prefix required for adding new macros.
+     */
 	private final String pvPrefix = Instrument.getInstance().currentInstrument().pvPrefix();
 	
+    /**
+     * Name of the opi.
+     */
 	private String opiName;
 
+    /**
+     * 
+     * @param opiName - Name of the OPI to display.
+     */
     public void setOpi(String opiName) {
         this.setOpi(opiName, opiName, new LinkedHashMap<String, String>());
     }
-	
+
+    /**
+     * 
+     * @param opiName - Name of the OPI to display.
+     * @param macros - Macros associated with the OPI
+     */
     public void setOpi(String opiName, Map<String, String> macros) {
         this.setOpi(opiName, opiName, macros);
     }
 
+    /**
+     * 
+     * @param title - Title of the OPI
+     * @param opiName - Name of the OPI used for identification from list
+     * @param macros - Macros associated with the OPI
+     */
 	public void setOpi(String title, String opiName, Map<String, String> macros) {
 		this.opiName = opiName;
 		
@@ -67,6 +96,10 @@ public class OpiTargetView extends OpiView {
 		return Opi.getDefault().opiProvider().pathFromName(opiName);
 	}
 	
+    /**
+     * 
+     * @param macros - Macros to add to the OPI
+     */
 	private void addMacros(Map<String, String> macros) {
 		MacrosInput input = macros();
 		input.put("P", pvPrefix);
