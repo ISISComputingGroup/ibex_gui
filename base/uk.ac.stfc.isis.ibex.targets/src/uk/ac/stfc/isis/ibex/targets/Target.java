@@ -22,28 +22,60 @@ package uk.ac.stfc.isis.ibex.targets;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class Target {
+/**
+ * Typically identifies a target for a view to display. A target is given a name
+ * and a series of properties that can be used to customise the behaviour of the
+ * view
+ */
+public abstract class Target {
 
+    /**
+     * The name used to identify the target.
+     */
 	private final String name;
+
+    /**
+     * A list of properties used to customise the action of the target.
+     */
 	private final Map<String, String> properties = new LinkedHashMap<>();
 	
+    /**
+     * 
+     * @param name - The name of the target
+     */
 	public Target(String name) {
 		this.name = name;
 	}
 	
+    /**
+     * @return The target name
+     */
 	public String name() {
 		return name;
 	}
 	
+    /**
+     * 
+     * @return The name of the target
+     */
 	@Override
 	public String toString() {
 		return name;
 	}
 
+    /**
+     * 
+     * @param key - Property key
+     * @param value - Property value
+     */
 	public void addProperty(String key, String value) {
 		properties.put(key, value);
 	}
 
+    /**
+     * 
+     * @return The target properties
+     */
 	public Map<String, String> properties() {
 		return new LinkedHashMap<>(properties);
 	}
