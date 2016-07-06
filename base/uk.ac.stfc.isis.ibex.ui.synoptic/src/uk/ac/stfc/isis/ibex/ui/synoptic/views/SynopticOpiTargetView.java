@@ -21,7 +21,7 @@ package uk.ac.stfc.isis.ibex.ui.synoptic.views;
 
 import uk.ac.stfc.isis.ibex.ui.targets.OpiTargetView;
 
-public final class SynopticOpiTargetView extends OpiTargetView {
+public class SynopticOpiTargetView extends OpiTargetView {
 
     public static final String ID = "uk.ac.stfc.isis.ibex.ui.synoptic.views.SynopticOpiTargetView"; //$NON-NLS-1$
 
