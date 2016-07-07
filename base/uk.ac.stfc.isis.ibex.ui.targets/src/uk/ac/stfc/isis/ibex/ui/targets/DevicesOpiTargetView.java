@@ -25,8 +25,8 @@ package uk.ac.stfc.isis.ibex.ui.targets;
 /**
  * 
  */
-public class DevicesTargetView extends OpiTargetView {
+public class DevicesOpiTargetView extends OpiTargetView {
 
-    public static final String ID = "uk.ac.stfc.isis.ibex.ui.targets.DevicesTargetView"; //$NON-NLS-1$
+    public static final String ID = "uk.ac.stfc.isis.ibex.ui.targets.DevicesOpiTargetView"; //$NON-NLS-1$
 
 }
