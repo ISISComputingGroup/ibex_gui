@@ -45,6 +45,7 @@ import org.eclipse.wb.swt.SWTResourceManager;
  */
 public class McrNewsPanel extends Composite {
     private static final int FONT_SIZE = 10;
+    private static final int NEWS_FIELD_HEIGHT = 155;
 
     private static final String MCR_NEWS_PAGE_URL = "http://www.isis.stfc.ac.uk/files/mcr-news/mcrnews.txt";
     private static final String GET_NEWS_FAILED_MESSAGE =
@@ -71,7 +72,7 @@ public class McrNewsPanel extends Composite {
         txtTheMcrNews.setText("The MCR news will load shortly. If this message persists, please contact support.");
 
         GridData gdNews = new GridData(SWT.FILL, SWT.FILL, false, false);
-        gdNews.heightHint = 155;
+        gdNews.heightHint = NEWS_FIELD_HEIGHT;
         txtTheMcrNews.setLayoutData(gdNews);
 
         final String currentFontName = txtTheMcrNews.getFont().getFontData()[0].getName();

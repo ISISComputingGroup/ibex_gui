@@ -64,7 +64,7 @@ public class PerspectiveSwitcherView extends ViewPart implements ISizeProvider {
 		container.setBackground(BACKGROUND);
 		container.setLayout(new GridLayout(1, false));
 				
-		List<IsisPerspective> perspectives = Activator.getDefault().perspectives().get();
+		List<IsisPerspective> perspectives = Activator.getDefault().perspectives().getVisible();
 		
 		for (IsisPerspective perspective : perspectives) {	
 			PerspectiveButton button = buttonForPerspective(container, perspective);

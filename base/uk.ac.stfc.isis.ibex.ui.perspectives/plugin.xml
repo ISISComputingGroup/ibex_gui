@@ -55,4 +55,13 @@
             restorable="true">
       </view>
    </extension>
+   
+	<extension
+	     point="org.eclipse.ui.preferencePages">
+	  <page
+	        class="uk.ac.stfc.isis.ibex.ui.perspectives.PreferencePage"
+	        id="uk.ac.stfc.isis.ibex.ui.perspectives.PreferencePage"
+	        name="ISIS Perspectives">
+	  </page>
+	</extension>
 </plugin>
