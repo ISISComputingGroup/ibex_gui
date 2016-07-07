@@ -35,6 +35,7 @@ import uk.ac.stfc.isis.ibex.devicescreens.DeviceScreenVariables;
 import uk.ac.stfc.isis.ibex.devicescreens.desc.DeviceDescription;
 import uk.ac.stfc.isis.ibex.devicescreens.desc.DeviceScreensDescription;
 import uk.ac.stfc.isis.ibex.devicescreens.desc.PropertyDescription;
+import uk.ac.stfc.isis.ibex.devicescreens.tests.xmldata.DeviceScreensXmlProvider;
 import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.epics.switching.ObservableFactory;
 import uk.ac.stfc.isis.ibex.epics.switching.SwitchableObservable;
@@ -53,6 +54,12 @@ public class DeviceScreenVariablesTest {
     private static final String GET_SCREENS_SUFFIX = "GET_SCREENS";
     private static final String SET_SCREENS_SUFFIX = "SET_SCREENS";
     private static final String SCHEMA_SUFFIX = "SCREENS_SCHEMA";
+
+    private static String deviceName = "device name";
+    private static String deviceKey = "device key";
+    private static String deviceType = "OPI";
+    private static String propertyKey = "property key";
+    private static String propertyValue = "property value";
 
     private DeviceScreenVariables variables;
     private ObservableFactory switchingObservableFactory;
@@ -82,13 +89,11 @@ public class DeviceScreenVariablesTest {
     @Test
     public void GIVEN_new_variables_WHEN_get_device_screens_called_THEN_result_is_parsed_from_get_screens_pv() {
         // Arrange
-        String expectedName = "A name";
-        String deviceKey = "device key";
-        String propertyName = "prop name";
-        String propertyValue = "prop value";
+        String expectedName = deviceName;
 
         when(mockSwitchableObservable.getValue())
-                .thenReturn(getXMLText(expectedName, deviceKey, propertyName, propertyValue));
+                .thenReturn(DeviceScreensXmlProvider.getXML(expectedName, deviceKey, deviceType, propertyKey,
+                        propertyValue));
         when(mockSwitchableObservable.currentError()).thenReturn(null);
         when(mockSwitchableObservable.isConnected()).thenReturn(true);
 
@@ -134,13 +139,10 @@ public class DeviceScreenVariablesTest {
         when(switchingWritableFactory.getSwitchableWritable(any(ChannelType.class),
                 eq(PV_PREFIX + BLOCKSERVER_ADDRESS + SET_SCREENS_SUFFIX))).thenReturn(expectedDestination);
 
-        String deviceName = "device name";
-        String deviceKey = "device key";
-        String propertyKey = "property key";
-        String propertyValue = "property value";
         DeviceScreensDescription inputValue =
                 getDeviceScreensDescription(deviceName, deviceKey, propertyKey, propertyValue);
-        String expectedConvertedValue = getXMLText(deviceName, deviceKey, propertyKey, propertyValue);
+        String expectedConvertedValue =
+                DeviceScreensXmlProvider.getXML(deviceName, deviceKey, deviceType, propertyKey, propertyValue);
 
         variables = createVariables();
 
@@ -151,16 +153,6 @@ public class DeviceScreenVariablesTest {
         verify(expectedDestination, never()).write(any());
         setter.write(inputValue);
         verify(expectedDestination, times(1)).write(expectedConvertedValue);
-    }
-
-    private String getXMLText(String deviceName, String deviceKey, String propertyKey, String propertyValue) {
-        return "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>"
-                + "<devices xmlns=\"http://epics.isis.rl.ac.uk/schema/screens/1.0/\">"
-                + "<device>" + "<name>" + deviceName + "</name>" + "<key>" + deviceKey + "</key>" + "<type>OPI</type>"
-                + "<properties>" + "<property>" + "<key>" + propertyKey + "</key>" + "<value>" + propertyValue
-                + "</value>"
-                        + "</property>" + "</properties>" + "</device>" + "</devices>";
-
     }
 
     private DeviceScreensDescription getDeviceScreensDescription(String deviceName, String deviceKey,

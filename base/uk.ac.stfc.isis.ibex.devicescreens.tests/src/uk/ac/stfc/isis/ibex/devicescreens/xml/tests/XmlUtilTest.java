@@ -40,6 +40,7 @@ import org.xml.sax.SAXException;
 import uk.ac.stfc.isis.ibex.devicescreens.desc.DeviceDescription;
 import uk.ac.stfc.isis.ibex.devicescreens.desc.DeviceScreensDescription;
 import uk.ac.stfc.isis.ibex.devicescreens.desc.PropertyDescription;
+import uk.ac.stfc.isis.ibex.devicescreens.tests.xmldata.DeviceScreensXmlProvider;
 import uk.ac.stfc.isis.ibex.devicescreens.xml.XMLUtil;
 
 /**
@@ -48,30 +49,30 @@ import uk.ac.stfc.isis.ibex.devicescreens.xml.XMLUtil;
 @SuppressWarnings("checkstyle:methodname")
 public class XmlUtilTest {
 
+    private static String deviceName = "Eurotherm 2";
+    private static String deviceKey = "Eurotherm";
+    private static String deviceType = "OPI";
+    private static String propertyKey = "EURO";
+    private static String propertyValue = "EUROTHERM1";
+
     private DeviceScreensDescription singleDeviceScreensDescription;
     private DeviceScreensDescription multipleDeviceScreensDescription;
 
-    private static final String xmlTextSingleDescription = "<?xml version=\"1.0\" ?>" +
-            "<devices xmlns=\"http://epics.isis.rl.ac.uk/schema/screens/1.0/\">" +
-            "<device>" + "<name>Eurotherm 2</name>" + "<key>Eurotherm</key>" + "<type>OPI</type>" + "<properties>"
-            + "<property>" + "<key>EURO</key>" + "<value>EUROTHERM1</value>" + "</property>" + "</properties>"
-            + "</device>" +
-            "</devices>";
-
     private static final String xmlTextMultipleDescription =
-            "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>"
-            + "<devices xmlns=\"http://epics.isis.rl.ac.uk/schema/screens/1.0/\">" + "<device>"
+            DeviceScreensXmlProvider.HEADER + "<device>"
             + "<name>Eurotherm 2</name>" + "<key>Eurotherm</key>"
             + "<type>OPI</type>" + "<properties>" + "<property>" + "<key>EURO</key>" + "<value>EUROTHERM1</value>"
             + "</property>" + "</properties>" + "</device>" + "<device>" + "<name>Julabo 1</name>" + "<key>Julabo</key>"
             + "<type>OPI</type>" + "<properties>" + "<property>" + "<key>JULABO</key>" + "<value>JULABO1</value>"
             + "</property>" + "<property>" + "<key>MACRO</key>" + "<value>VALUE</value>" + "</property>"
-            + "</properties>" + "</device>" + "</devices>";
+                    + "</properties>" + "</device>" + DeviceScreensXmlProvider.ENDING;
 
     @Before
     public void set_up() throws Exception {
         // Arrange
-        singleDeviceScreensDescription = XMLUtil.fromXml(xmlTextSingleDescription);
+        String singleXml =
+                DeviceScreensXmlProvider.getXML(deviceName, deviceKey, deviceType, propertyKey, propertyValue);
+        singleDeviceScreensDescription = XMLUtil.fromXml(singleXml);
         multipleDeviceScreensDescription = XMLUtil.fromXml(xmlTextMultipleDescription);
     }
 
@@ -142,23 +143,14 @@ public class XmlUtilTest {
     public void GIVEN_valid_device_description_WHEN_it_is_written_to_xml_using_schema_THEN_output_xml_is_correct()
             throws IOException {
         // Arrange
-        String name = "Device name";
-        String key = "Device";
-        String type = "OPI";
-        String propertyKey = "Property key";
-        String propertyValue = "Property value";
-        String expectedXml = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>"
-                + "<devices xmlns=\"http://epics.isis.rl.ac.uk/schema/screens/1.0/\">" + "<device>" + "<name>"
-                + name + "</name>" + "<key>" + key + "</key>" + "<type>" + type + "</type>" + "<properties>"
-                + "<property>" + "<key>" + propertyKey + "</key>" + "<value>" + propertyValue + "</value>"
-                + "</property>" + "</properties>" + "</device>" + "</devices>";
-
+        String expectedXml =
+                DeviceScreensXmlProvider.getXML(deviceName, deviceKey, deviceType, propertyKey, propertyValue);
         PropertyDescription propertyDescription = new PropertyDescription(propertyKey, propertyValue);
 
         DeviceDescription deviceDescription = new DeviceDescription();
-        deviceDescription.setName(name);
-        deviceDescription.setType(type);
-        deviceDescription.setKey(key);
+        deviceDescription.setName(deviceName);
+        deviceDescription.setType(deviceType);
+        deviceDescription.setKey(deviceKey);
         deviceDescription.addProperty(propertyDescription);
 
         DeviceScreensDescription deviceScreensDescription = new DeviceScreensDescription();

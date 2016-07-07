@@ -31,18 +31,18 @@ import uk.ac.stfc.isis.ibex.devicescreens.desc.DeviceDescription;
 import uk.ac.stfc.isis.ibex.devicescreens.desc.DeviceScreensDescription;
 import uk.ac.stfc.isis.ibex.devicescreens.desc.DeviceScreensDescriptionXmlParser;
 import uk.ac.stfc.isis.ibex.devicescreens.desc.PropertyDescription;
+import uk.ac.stfc.isis.ibex.devicescreens.tests.xmldata.DeviceScreensXmlProvider;
 import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
 
 @SuppressWarnings("checkstyle:methodname")
 public class DeviceScreensDescriptionXmlParserTest {
 
-    private String xmlText =
-            "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>"
-                    + "<devices xmlns=\"http://epics.isis.rl.ac.uk/schema/screens/1.0/\">"
-                    + "<device>" + "<name>Eurotherm 2</name>" + "<key>Eurotherm</key>" + "<type>OPI</type>"
-                    + "<properties>" + "<property>" + "<key>EURO</key>" + "<value>EUROTHERM1</value>" + "</property>"
-                    + "</properties>" + "</device>" + "</devices>";
-    
+    private static String deviceName = "Eurotherm 2";
+    private static String deviceKey = "Eurotherm";
+    private static String deviceType = "OPI";
+    private static String propertyKey = "EURO";
+    private static String propertyValue = "EUROTHERM1";
+
     DeviceScreensDescriptionXmlParser parser;
     
     @Before
@@ -54,20 +54,22 @@ public class DeviceScreensDescriptionXmlParserTest {
     public void GIVEN_valid_xml_WHEN_xml_is_converted_THEN_returned_device_screens_description_is_correct() {
         try {
             // Act
-            DeviceScreensDescription description = parser.convert(xmlText);
+            String inputXml =
+                    DeviceScreensXmlProvider.getXML(deviceName, deviceKey, deviceType, propertyKey, propertyValue);
+            DeviceScreensDescription description = parser.convert(inputXml);
 
             // Assert
             assertEquals(1, description.getDevices().size());
 
             DeviceDescription device = description.getDevices().get(0);
-            assertEquals("Eurotherm 2", device.getName());
-            assertEquals("Eurotherm", device.getKey());
-            assertEquals("OPI", device.getType());
+            assertEquals(deviceName, device.getName());
+            assertEquals(deviceKey, device.getKey());
+            assertEquals(deviceType, device.getType());
             assertEquals(1, device.getProperties().size());
 
             PropertyDescription property = device.getProperties().get(0);
-            assertEquals("EURO", property.getKey());
-            assertEquals("EUROTHERM1", property.getValue());
+            assertEquals(propertyKey, property.getKey());
+            assertEquals(propertyValue, property.getValue());
 
         } catch (ConversionException e) {
             fail(e.getMessage());
