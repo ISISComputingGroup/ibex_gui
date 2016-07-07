@@ -20,13 +20,15 @@
 /**
  * 
  */
-package uk.ac.stfc.isis.ibex.ui.targets;
+package uk.ac.stfc.isis.ibex.ui.devicescreens;
+
+import uk.ac.stfc.isis.ibex.ui.targets.OpiTargetView;
 
 /**
  * 
  */
 public class DevicesOpiTargetView extends OpiTargetView {
 
-    public static final String ID = "uk.ac.stfc.isis.ibex.ui.targets.DevicesOpiTargetView"; //$NON-NLS-1$
+    public static final String ID = "uk.ac.stfc.isis.ibex.ui.devicescreens.DevicesOpiTargetView"; //$NON-NLS-1$
 
 }

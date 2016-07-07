@@ -20,13 +20,15 @@
 /**
  * 
  */
-package uk.ac.stfc.isis.ibex.ui.targets;
+package uk.ac.stfc.isis.ibex.ui.synoptic.views;
+
+import uk.ac.stfc.isis.ibex.ui.targets.OpiTargetView;
 
 /**
  * 
  */
 public class SynopticOpiTargetView extends OpiTargetView {
 
-    public static final String ID = "uk.ac.stfc.isis.ibex.ui.targets.SynopticOpiTargetView"; //$NON-NLS-1$
+    public static final String ID = "uk.ac.stfc.isis.ibex.ui.synoptic.views.SynopticOpiTargetView"; //$NON-NLS-1$
 
 }

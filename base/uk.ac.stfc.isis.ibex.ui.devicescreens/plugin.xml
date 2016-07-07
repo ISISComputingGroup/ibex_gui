@@ -33,7 +33,7 @@
          </view>
          <view
                closeable="true"
-               id="uk.ac.stfc.isis.ibex.ui.targets.DevicesOpiTargetView"
+               id="uk.ac.stfc.isis.ibex.ui.devicescreens.DevicesOpiTargetView"
                minimized="false"
                moveable="false"
                ratio="0.6f"
@@ -56,8 +56,8 @@
       </view>
       <view
             allowMultiple="false"
-            class="uk.ac.stfc.isis.ibex.ui.targets.DevicesOpiTargetView"
-            id="uk.ac.stfc.isis.ibex.ui.targets.DevicesOpiTargetView"
+            class="uk.ac.stfc.isis.ibex.ui.devicescreens.DevicesOpiTargetView"
+            id="uk.ac.stfc.isis.ibex.ui.devicescreens.DevicesOpiTargetView"
             name="OPI view"
             restorable="true">
       </view>

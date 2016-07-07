@@ -32,7 +32,6 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
 
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
-import uk.ac.stfc.isis.ibex.ui.targets.DevicesOpiTargetView;
 
 /**
  * 
