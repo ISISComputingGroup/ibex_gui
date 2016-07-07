@@ -3,7 +3,7 @@
 <plugin>
    <extension
          point="uk.ac.stfc.isis.ibex.ui.perspectives">
-         <contribution
+         <contribution 
             class="uk.ac.stfc.isis.ibex.ui.devicescreens.Perspective">
       </contribution>
    </extension>
@@ -39,8 +39,8 @@
                ratio="0.6f"
                relationship="right"
                relative="uk.ac.stfc.isis.ibex.ui.devicescreens.devicescreensview"
-               showTitle="false"
-               standalone="true"
+               showTitle="true"
+               standalone="false"
                visible="true">
          </view>
       </perspectiveExtension>
