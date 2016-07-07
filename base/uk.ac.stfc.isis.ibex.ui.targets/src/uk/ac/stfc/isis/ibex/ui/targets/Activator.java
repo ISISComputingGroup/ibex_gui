@@ -28,18 +28,35 @@ import org.osgi.framework.BundleContext;
  */
 public class Activator implements BundleActivator {
 
+    /**
+     * Context.
+     */
     private static BundleContext context;
 
+    /**
+     * Singleton of class.
+     */
     private static Activator instance;
 
+    /**
+     * Singleton constructor.
+     */
     public Activator() {
         instance = this;
     }
 
+    /**
+     * 
+     * @return Class instance
+     */
     public static Activator getDefault() {
         return instance;
     }
 
+    /**
+     * 
+     * @return Bundle context
+     */
     static BundleContext getContext() {
         return context;
     }

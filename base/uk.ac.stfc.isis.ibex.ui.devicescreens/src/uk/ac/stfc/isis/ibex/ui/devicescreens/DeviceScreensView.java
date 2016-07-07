@@ -38,10 +38,19 @@ import uk.ac.stfc.isis.ibex.logger.IsisLog;
  */
 public class DeviceScreensView extends ViewPart {
 
+    /**
+     * Class ID.
+     */
     public static final String ID = "uk.ac.stfc.isis.ibex.ui.devicescreens.devicescreensview";
 
+    /**
+     * Logger.
+     */
     private static final Logger LOG = IsisLog.getLogger(DeviceScreensView.class);
 
+    /**
+     * Default constructor.
+     */
     public DeviceScreensView() {
     }
 
@@ -57,11 +66,16 @@ public class DeviceScreensView extends ViewPart {
     public void setFocus() {
     }
 
-    private void displayOpi(String name, String opiName) {
+    /**
+     * 
+     * @param title - Title for the OPI
+     * @param opiName - Name of the OPI used to identify it from available list
+     */
+    private void displayOpi(String title, String opiName) {
         try {
             IWorkbenchPage workbenchPage = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
             DevicesOpiTargetView view = (DevicesOpiTargetView) workbenchPage.showView(DevicesOpiTargetView.ID);
-            view.setOpi(name, opiName);
+            view.setOpi(title, opiName);
         } catch (PartInitException e) {
             LOG.catching(e);
         }

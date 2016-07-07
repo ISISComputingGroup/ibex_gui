@@ -31,6 +31,9 @@ import uk.ac.stfc.isis.ibex.ui.targets.OpiTargetView;
  */
 public class DevicesOpiTargetView extends OpiTargetView {
 
+    /**
+     * Class ID.
+     */
     public static final String ID = "uk.ac.stfc.isis.ibex.ui.devicescreens.DevicesOpiTargetView"; //$NON-NLS-1$
 
     /**

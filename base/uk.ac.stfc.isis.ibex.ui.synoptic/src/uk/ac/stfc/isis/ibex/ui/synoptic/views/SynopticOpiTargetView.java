@@ -29,6 +29,9 @@ import uk.ac.stfc.isis.ibex.ui.targets.OpiTargetView;
  */
 public class SynopticOpiTargetView extends OpiTargetView {
 
+    /**
+     * Class ID.
+     */
     public static final String ID = "uk.ac.stfc.isis.ibex.ui.synoptic.views.SynopticOpiTargetView"; //$NON-NLS-1$
 
 }
