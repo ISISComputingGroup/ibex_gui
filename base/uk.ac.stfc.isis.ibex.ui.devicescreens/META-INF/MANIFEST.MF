@@ -34,5 +34,4 @@ Import-Package: org.apache.logging.log4j,
  uk.ac.stfc.isis.ibex.logger,
  uk.ac.stfc.isis.ibex.opis,
  uk.ac.stfc.isis.ibex.targets,
- uk.ac.stfc.isis.ibex.ui.synoptic.views,
  uk.ac.stfc.isis.ibex.ui.targets
