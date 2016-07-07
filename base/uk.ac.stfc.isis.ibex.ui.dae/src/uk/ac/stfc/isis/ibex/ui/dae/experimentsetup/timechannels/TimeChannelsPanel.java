@@ -45,6 +45,7 @@ import uk.ac.stfc.isis.ibex.ui.Utils;
 
 public class TimeChannelsPanel extends Composite {
 	private Group timeRegimesGroup;
+    private Group timeChannelSettings;
 	private List<TimeRegimeView> timeRegimeViews = new ArrayList<TimeRegimeView>();
 	
 	private TimeChannelsViewModel viewModel;
@@ -60,7 +61,9 @@ public class TimeChannelsPanel extends Composite {
     @SuppressWarnings({ "checkstyle:magicnumber", "checkstyle:localvariablename" })
 	public TimeChannelsPanel(Composite parent, int style) {
 		super(parent, style);
-        setLayout(new GridLayout(1, false));
+        GridLayout glParent = new GridLayout(1, false);
+        glParent.verticalSpacing = 20;
+        setLayout(glParent);
 		
 //		Composite parameters = new Composite(this, SWT.NONE);
 //		parameters.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 1, 1));
@@ -69,10 +72,10 @@ public class TimeChannelsPanel extends Composite {
         calculationMethodSelector.setText("Select Calculation Method");
         calculationMethodSelector.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
 
-        GridLayout gl = new GridLayout(1, false);
-        gl.horizontalSpacing = 100;
-        gl.marginTop = 5;
-        calculationMethodSelector.setLayout(gl);
+        GridLayout glCalcMethod = new GridLayout(1, false);
+        glCalcMethod.horizontalSpacing = 100;
+        glCalcMethod.marginTop = 5;
+        calculationMethodSelector.setLayout(glCalcMethod);
 
 //        Label lblCalculationMethod = new Label(parameters, SWT.NONE);
 //        lblCalculationMethod.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
@@ -85,21 +88,14 @@ public class TimeChannelsPanel extends Composite {
         radioUseTCBFile = new Button(calculationMethodSelector, SWT.RADIO);
         radioUseTCBFile.setText(CalculationMethod.USE_TCB_FILE.toString());
 
-        Label lblTimeUnit = new Label(this, SWT.NONE);
-        lblTimeUnit.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, true, false, 1, 1));
-		lblTimeUnit.setText("Time Unit:");
-		
-        timeUnit = new Combo(this, SWT.DROP_DOWN | SWT.READ_ONLY);
-        timeUnit.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		timeUnit.setItems(TimeUnit.allToString().toArray(new String[0]));
+        timeChannelSettings = new Group(this, SWT.NONE);
+        timeChannelSettings.setText("Time Channel Settings");
+        timeChannelSettings.setLayout(new GridLayout(2, true));
+        timeChannelSettings.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
 
-//        Label lblTimeChannelFile = new Label(parameters, SWT.NONE);
-//        lblTimeChannelFile.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-//        lblTimeChannelFile.setText("Time Channel File:");
-//        timeChannelFile = new Combo(parameters, SWT.DROP_DOWN | SWT.READ_ONLY);
-//        GridData gd_timeChannelFile = new GridData(SWT.LEFT, SWT.FILL, true, false, 3, 1);
-//        gd_timeChannelFile.widthHint = 400;
-//        timeChannelFile.setLayoutData(gd_timeChannelFile);
+        addTimeChannelFilePanel(timeChannelSettings);
+        addTimeUnitPanel(timeChannelSettings);
+
 		timeRegimesGroup = new Group(this, SWT.NONE);
 		timeRegimesGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		timeRegimesGroup.setText("Time Regimes");
@@ -180,4 +176,34 @@ public class TimeChannelsPanel extends Composite {
         }
     }
 
+    private void addTimeUnitPanel(Composite parent) {
+
+        Composite timeUnitPanel = new Composite(parent, SWT.NONE);
+        timeUnitPanel.setLayout(new GridLayout(2, false));
+        timeUnitPanel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+        
+        Label lblTimeUnit = new Label(timeUnitPanel, SWT.NONE);
+        lblTimeUnit.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
+        lblTimeUnit.setText("Time Unit:");
+
+        timeUnit = new Combo(timeUnitPanel, SWT.DROP_DOWN | SWT.READ_ONLY);
+        timeUnit.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+        timeUnit.setItems(TimeUnit.allToString().toArray(new String[0]));
+    }
+
+    private void addTimeChannelFilePanel(Composite parent) {
+        
+        Composite timeChannelFileContent = new Composite(parent, SWT.NONE);
+        timeChannelFileContent.setLayout(new GridLayout(2, false));
+        timeChannelFileContent.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+
+        Label lblTimeChannelFile = new Label(timeChannelFileContent, SWT.NONE);
+        lblTimeChannelFile.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
+        lblTimeChannelFile.setText("Time Channel File:");
+
+        timeChannelFile = new Combo(timeChannelFileContent, SWT.DROP_DOWN | SWT.READ_ONLY);
+        GridData gdTimeChannelFile = new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1);
+        gdTimeChannelFile.widthHint = 400;
+        timeChannelFile.setLayoutData(gdTimeChannelFile);
+    }
 }
