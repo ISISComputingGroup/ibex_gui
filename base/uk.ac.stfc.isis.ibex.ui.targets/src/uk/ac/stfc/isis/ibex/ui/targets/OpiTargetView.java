@@ -19,7 +19,6 @@
 
 package uk.ac.stfc.isis.ibex.ui.targets;
 
-import java.util.LinkedHashMap;
 import java.util.Map;
 
 import org.csstudio.opibuilder.util.MacrosInput;
@@ -50,23 +49,6 @@ public abstract class OpiTargetView extends OpiView {
      * Name of the opi.
      */
 	private String opiName;
-
-    /**
-     * 
-     * @param opiName - Name of the OPI to display.
-     */
-    public void setOpi(String opiName) {
-        this.setOpi(opiName, opiName, new LinkedHashMap<String, String>());
-    }
-
-    /**
-     * 
-     * @param opiName - Name of the OPI to display.
-     * @param macros - Macros associated with the OPI
-     */
-    public void setOpi(String opiName, Map<String, String> macros) {
-        this.setOpi(opiName, opiName, macros);
-    }
 
     /**
      * 

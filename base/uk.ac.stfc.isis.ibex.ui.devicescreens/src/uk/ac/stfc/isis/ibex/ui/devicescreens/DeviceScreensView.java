@@ -50,18 +50,18 @@ public class DeviceScreensView extends ViewPart {
         parent.setLayout(new FillLayout(SWT.HORIZONTAL));
 //        ExperimentDetailsPanel experimentDetails = new ExperimentDetailsPanel(parent, SWT.NONE);
         Panel panel = new Panel(parent, SWT.NONE);
-        displayOpi("Lakeshore 218");
+        displayOpi("New component", "Linkam 95");
     }
 
     @Override
     public void setFocus() {
     }
 
-    private void displayOpi(String name) {
+    private void displayOpi(String name, String opiName) {
         try {
             IWorkbenchPage workbenchPage = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
             DevicesOpiTargetView view = (DevicesOpiTargetView) workbenchPage.showView(DevicesOpiTargetView.ID);
-            view.setOpi(name);
+            view.setOpi(name, opiName);
         } catch (PartInitException e) {
             LOG.catching(e);
         }
