@@ -70,7 +70,7 @@ public class DeviceScreenVariables {
      *            be a mock
      * @param switchingWritableFactory a writable factory to be used, could be a
      *            mock
-     * @param pvPrefix the PV prefix
+     * @param pvPrefix the PV prefix - will use the one from Instrument if null
      */
     public DeviceScreenVariables(ObservableFactory switchingObservableFactory, WritableFactory switchingWritableFactory,
             String pvPrefix) {
