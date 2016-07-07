@@ -30,6 +30,7 @@ import uk.ac.stfc.isis.ibex.devicescreens.desc.DeviceDescription;
 import uk.ac.stfc.isis.ibex.devicescreens.desc.DeviceScreenDescriptionToXmlConverter;
 import uk.ac.stfc.isis.ibex.devicescreens.desc.DeviceScreensDescription;
 import uk.ac.stfc.isis.ibex.devicescreens.desc.PropertyDescription;
+import uk.ac.stfc.isis.ibex.devicescreens.tests.xmldata.DeviceScreensXmlProvider;
 import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
 
 @SuppressWarnings("checkstyle:methodname")
@@ -43,13 +44,7 @@ public class DeviceScreensDescriptionToXmlConverterTest {
         String type = "Device type";
         String propertyKey = "Property key";
         String propertyValue = "Property value";
-        String expectedXml =
-                "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>"
-                        + "<devices xmlns=\"http://epics.isis.rl.ac.uk/schema/screens/1.0/\">"
-                        + "<device>" + "<name>" + name + "</name>" + "<key>" + key + "</key>" + "<type>" + type
-                        + "</type>" + "<properties>" + "<property>" + "<key>" + propertyKey + "</key>"
-                        + "<value>" + propertyValue + "</value>"
-                        + "</property>" + "</properties>" + "</device>" + "</devices>";
+        String expectedXml = DeviceScreensXmlProvider.getXML(name, key, type, propertyKey, propertyValue);
 
         PropertyDescription propertyDescription = new PropertyDescription(propertyKey, propertyValue);
         DeviceDescription deviceDescription = new DeviceDescription();

@@ -232,8 +232,9 @@
 		<module>../uk.ac.stfc.isis.ibex.log.tests</module>
 		<module>../uk.ac.stfc.isis.ibex.experimentdetails.tests</module>
 		<module>../uk.ac.stfc.isis.ibex.validators.tests</module>
-		<module>../uk.ac.stfc.isis.ibex.devicescreens</module>	
+		<module>../uk.ac.stfc.isis.ibex.ui.nicos</module>
 		<module>../uk.ac.stfc.isis.ibex.ui.mainmenu.tests</module>
+		<module>../uk.ac.stfc.isis.ibex.devicescreens</module>
 		<module>../uk.ac.stfc.isis.ibex.ui.devicescreens</module>
 		<module>../uk.ac.stfc.isis.ibex.devicescreens.tests</module>
 		<module>../uk.ac.stfc.isis.ibex.targets</module>
