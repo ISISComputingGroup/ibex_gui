@@ -22,7 +22,7 @@ package uk.ac.stfc.isis.ibex.targets;
 /**
  * A target customised for displaying OPIs in the view.
  */
-public class OpiTarget extends Target {
+public class OpiTarget extends ViewTarget {
 	
     /**
      * The OPI name. This is used to look up the OPI from the available list and
