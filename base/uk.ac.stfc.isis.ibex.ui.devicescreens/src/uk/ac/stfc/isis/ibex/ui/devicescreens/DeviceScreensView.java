@@ -32,7 +32,7 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
 
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
-import uk.ac.stfc.isis.ibex.ui.targets.OpiTargetView;
+import uk.ac.stfc.isis.ibex.ui.targets.DevicesTargetView;
 
 /**
  * 
@@ -61,7 +61,7 @@ public class DeviceScreensView extends ViewPart {
     private void displayOpi(String name) {
         try {
             IWorkbenchPage workbenchPage = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
-            OpiTargetView view = (OpiTargetView) workbenchPage.showView(OpiTargetView.ID);
+            DevicesTargetView view = (DevicesTargetView) workbenchPage.showView(DevicesTargetView.ID);
             view.setOpi(name);
         } catch (PartInitException e) {
             LOG.catching(e);
