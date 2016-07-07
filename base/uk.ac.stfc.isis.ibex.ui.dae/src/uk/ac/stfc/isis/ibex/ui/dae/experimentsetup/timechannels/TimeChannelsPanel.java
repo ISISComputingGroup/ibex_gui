@@ -30,6 +30,7 @@ import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
@@ -51,43 +52,54 @@ public class TimeChannelsPanel extends Composite {
     private DataBindingContext bindingContext;
 
     private Combo timeChannelFile;
-    private Combo calculationMethod;
+    Button radioSpecifyParameters;
+    Button radioUseTCBFile;
 	
 	private static final Display DISPLAY = Display.getCurrent();
 	
     @SuppressWarnings({ "checkstyle:magicnumber", "checkstyle:localvariablename" })
 	public TimeChannelsPanel(Composite parent, int style) {
 		super(parent, style);
-		setLayout(new GridLayout(1, false));
+        setLayout(new GridLayout(1, false));
 		
-		Composite parameters = new Composite(this, SWT.NONE);
-		parameters.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 1, 1));
-        parameters.setLayout(new GridLayout(4, false));
+//		Composite parameters = new Composite(this, SWT.NONE);
+//		parameters.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 1, 1));
+//        parameters.setLayout(new GridLayout(3, false));
+        Group calculationMethodSelector = new Group(this, SWT.NONE);
+        calculationMethodSelector.setText("Select Calculation Method");
+        calculationMethodSelector.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
 
-        Label lblTimeChannelFile = new Label(parameters, SWT.NONE);
-        lblTimeChannelFile.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-        lblTimeChannelFile.setText("Time Channel File:");
-        timeChannelFile = new Combo(parameters, SWT.BORDER);
-        GridData gd_timeChannelFile = new GridData(SWT.LEFT, SWT.FILL, true, false, 3, 1);
-        gd_timeChannelFile.widthHint = 400;
-        timeChannelFile.setLayoutData(gd_timeChannelFile);
+        GridLayout gl = new GridLayout(1, false);
+        gl.horizontalSpacing = 100;
+        gl.marginTop = 5;
+        calculationMethodSelector.setLayout(gl);
 
-        Label lblCalculationMethod = new Label(parameters, SWT.NONE);
-        lblCalculationMethod.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-        lblCalculationMethod.setText("Calculation Method:");
+//        Label lblCalculationMethod = new Label(parameters, SWT.NONE);
+//        lblCalculationMethod.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
+//        lblCalculationMethod.setText("Calculation Method:");
 
-        calculationMethod = new Combo(parameters, SWT.NONE);
-        calculationMethod.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-        calculationMethod.setItems(CalculationMethod.allToString().toArray(new String[0]));
-		
-		Label lblTimeUnit = new Label(parameters, SWT.NONE);
+        String[] calcMethodNames = CalculationMethod.allToString().toArray(new String[0]);
+
+        radioSpecifyParameters = new Button(calculationMethodSelector, SWT.RADIO);
+        radioSpecifyParameters.setText(CalculationMethod.SPECIFY_PARAMETERS.toString());
+        radioUseTCBFile = new Button(calculationMethodSelector, SWT.RADIO);
+        radioUseTCBFile.setText(CalculationMethod.USE_TCB_FILE.toString());
+
+        Label lblTimeUnit = new Label(this, SWT.NONE);
         lblTimeUnit.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, true, false, 1, 1));
 		lblTimeUnit.setText("Time Unit:");
 		
-		timeUnit = new Combo(parameters, SWT.DROP_DOWN | SWT.READ_ONLY);
+        timeUnit = new Combo(this, SWT.DROP_DOWN | SWT.READ_ONLY);
         timeUnit.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		timeUnit.setItems(TimeUnit.allToString().toArray(new String[0]));
-		
+
+//        Label lblTimeChannelFile = new Label(parameters, SWT.NONE);
+//        lblTimeChannelFile.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
+//        lblTimeChannelFile.setText("Time Channel File:");
+//        timeChannelFile = new Combo(parameters, SWT.DROP_DOWN | SWT.READ_ONLY);
+//        GridData gd_timeChannelFile = new GridData(SWT.LEFT, SWT.FILL, true, false, 3, 1);
+//        gd_timeChannelFile.widthHint = 400;
+//        timeChannelFile.setLayoutData(gd_timeChannelFile);
 		timeRegimesGroup = new Group(this, SWT.NONE);
 		timeRegimesGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		timeRegimesGroup.setText("Time Regimes");
@@ -96,16 +108,26 @@ public class TimeChannelsPanel extends Composite {
 	
 	public void setModel(final TimeChannelsViewModel viewModel) {
 		this.viewModel = viewModel;
-		
-		bindingContext = new DataBindingContext();	
+//        SelectObservableValue test = new SelectObservableValue(CalculationMethod.class);
+//
+//        IObservableValue radioSpecifyParametersObserveSelection =
+//                SWTObservables.observeSelection(radioSpecifyParameters);
+//        test.addOption(CalculationMethod.SPECIFY_PARAMETERS, radioSpecifyParametersObserveSelection);
+//
+//        IObservableValue radioReadFromFileObserveSelection = SWTObservables.observeSelection(radioReadFromFile);
+//        test.addOption(CalculationMethod.USE_TCB_FILE, radioReadFromFileObserveSelection);
+//
+        bindingContext = new DataBindingContext();
         bindingContext.bindValue(WidgetProperties.singleSelectionIndex().observe(timeUnit),
                 BeanProperties.value("timeUnit").observe(viewModel));
-        bindingContext.bindValue(WidgetProperties.singleSelectionIndex().observe(calculationMethod),
-                BeanProperties.value("calculationMethod").observe(viewModel));
-        bindingContext.bindList(WidgetProperties.items().observe(timeChannelFile),
-                BeanProperties.list("timeChannelFileList").observe(viewModel));
-        bindingContext.bindValue(WidgetProperties.selection().observe(timeChannelFile),
-                BeanProperties.value("timeChannelFile").observe(viewModel));
+//        bindingContext.bindValue(test, PojoObservables.observeValue(updateWizardModel, "featureRepositories.policy"));
+
+//        bindingContext.bindValue(WidgetProperties.singleSelectionIndex().observe(calculationMethod),
+//                BeanProperties.value("calculationMethod").observe(viewModel));
+//        bindingContext.bindList(WidgetProperties.items().observe(timeChannelFile),
+//                BeanProperties.list("timeChannelFileList").observe(viewModel));
+//        bindingContext.bindValue(WidgetProperties.selection().observe(timeChannelFile),
+//                BeanProperties.value("timeChannelFile").observe(viewModel));
 
 		updateTimeRegimes();
 		viewModel.addPropertyChangeListener("timeRegimes", new PropertyChangeListener() {		

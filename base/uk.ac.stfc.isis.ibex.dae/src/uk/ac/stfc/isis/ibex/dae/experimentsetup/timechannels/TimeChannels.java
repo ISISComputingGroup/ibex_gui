@@ -33,7 +33,7 @@ public class TimeChannels extends ModelObject {
 	private List<TimeRegime> timeRegimes = new ArrayList<>();
     private UpdatedValue<Collection<String>> timeChannelFileList;
 	private String timeChannelFile = "";
-	private CalculationMethod calculationMethod = CalculationMethod.UseParametersBelow;
+	private CalculationMethod calculationMethod = CalculationMethod.SPECIFY_PARAMETERS;
 	private TimeUnit timeUnit = TimeUnit.MICROSECONDS;
 	
 	public List<TimeRegime> timeRegimes() {
