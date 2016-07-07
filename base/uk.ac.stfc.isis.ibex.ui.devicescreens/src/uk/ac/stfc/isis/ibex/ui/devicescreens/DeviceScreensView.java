@@ -22,18 +22,35 @@
  */
 package uk.ac.stfc.isis.ibex.ui.devicescreens;
 
+import org.apache.logging.log4j.Logger;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.PartInitException;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
+
+import uk.ac.stfc.isis.ibex.logger.IsisLog;
 
 /**
  * 
  */
 public class DeviceScreensView extends ViewPart {
 
+    /**
+     * Class ID.
+     */
     public static final String ID = "uk.ac.stfc.isis.ibex.ui.devicescreens.devicescreensview";
 
+    /**
+     * Logger.
+     */
+    private static final Logger LOG = IsisLog.getLogger(DeviceScreensView.class);
+
+    /**
+     * Default constructor.
+     */
     public DeviceScreensView() {
     }
 
@@ -42,9 +59,25 @@ public class DeviceScreensView extends ViewPart {
         parent.setLayout(new FillLayout(SWT.HORIZONTAL));
 //        ExperimentDetailsPanel experimentDetails = new ExperimentDetailsPanel(parent, SWT.NONE);
         Panel panel = new Panel(parent, SWT.NONE);
+        displayOpi("New component", "Linkam 95");
     }
 
     @Override
     public void setFocus() {
+    }
+
+    /**
+     * 
+     * @param title - Title for the OPI
+     * @param opiName - Name of the OPI used to identify it from available list
+     */
+    private void displayOpi(String title, String opiName) {
+        try {
+            IWorkbenchPage workbenchPage = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
+            DevicesOpiTargetView view = (DevicesOpiTargetView) workbenchPage.showView(DevicesOpiTargetView.ID);
+            view.setOpi(title, opiName);
+        } catch (PartInitException e) {
+            LOG.catching(e);
+        }
     }
 }

@@ -24,7 +24,7 @@ import org.eclipse.ui.IPageLayout;
 import org.eclipse.wb.swt.ResourceManager;
 
 import uk.ac.stfc.isis.ibex.ui.perspectives.BasePerspective;
-import uk.ac.stfc.isis.ibex.ui.synoptic.views.OpiTargetView;
+import uk.ac.stfc.isis.ibex.ui.targets.OpiTargetView;
 
 public class SynopticPerspective extends BasePerspective {
 

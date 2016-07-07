@@ -29,5 +29,6 @@ Import-Package: org.apache.logging.log4j,
  uk.ac.stfc.isis.ibex.epics.adapters,
  uk.ac.stfc.isis.ibex.epics.writing,
  uk.ac.stfc.isis.ibex.logger,
+ uk.ac.stfc.isis.ibex.targets,
  uk.ac.stfc.isis.ibex.ui.perspectives
 Export-Package: uk.ac.stfc.isis.ibex.ui.synoptic.editor.commands
