@@ -22,7 +22,7 @@ package uk.ac.stfc.isis.ibex.ui.configserver.tests;
 import org.junit.Test;
 
 @SuppressWarnings("checkstyle:methodname")
-public class ExperimentDataFieldsTest {
+public class BlockLogSettingsViewModelTest {
 
 	@Test
     public void GIVEN_fizz_WHEN_buzz_THEN_fizzbuzz() {
