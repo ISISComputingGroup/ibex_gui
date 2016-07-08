@@ -19,12 +19,17 @@
 
 package uk.ac.stfc.isis.ibex.ui.configserver.editing;
 
+import org.eclipse.core.databinding.DataBindingContext;
+import org.eclipse.core.databinding.UpdateValueStrategy;
+import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.swt.widgets.TabItem;
+import org.eclipse.swt.widgets.Text;
 
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
 import uk.ac.stfc.isis.ibex.ui.configserver.ConfigurationViewModels;
@@ -65,6 +70,8 @@ public class ConfigEditorPanel extends Composite {
 		gridLayout.marginHeight = 0;
 		gridLayout.horizontalSpacing = 0;
 		setLayout(gridLayout);
+		
+		summary = new SummaryPanel(parent, SWT.NONE, dialog);
 		
         editorTabs = new TabFolder(this, SWT.NONE);
 		editorTabs.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
@@ -134,11 +141,11 @@ public class ConfigEditorPanel extends Composite {
 		iocPVSets = new IocSelectorPanel(editorTabs, SWT.NONE, pvSetsFactory);
 		tbtmIocPvSets.setControl(iocPVSets);
 		
-		TabItem summaryTab = new TabItem(editorTabs, SWT.NONE);
-		summaryTab.setText("Summary");
+//		TabItem summaryTab = new TabItem(editorTabs, SWT.NONE);
+//		summaryTab.setText("Summary");
 		
-		summary = new SummaryPanel(editorTabs, SWT.NONE, dialog);
-		summaryTab.setControl(summary);
+//		summary = new SummaryPanel(editorTabs, SWT.NONE, dialog);
+//		summaryTab.setControl(summary);
 	}
 
 	public void setConfigToEdit(EditableConfiguration config) {		
@@ -150,7 +157,7 @@ public class ConfigEditorPanel extends Composite {
 		iocMacros.setConfig(config);
 		iocPVs.setConfig(config);
 		iocPVSets.setConfig(config);
-		summary.setConfig(config);
+//		summary.setConfig(config);
 	}
 	
 	@Override
