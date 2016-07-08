@@ -40,7 +40,6 @@ public class DeviceScreensView extends ViewPart {
     @Override
     public void createPartControl(Composite parent) {
         parent.setLayout(new FillLayout(SWT.HORIZONTAL));
-//        ExperimentDetailsPanel experimentDetails = new ExperimentDetailsPanel(parent, SWT.NONE);
         Panel panel = new Panel(parent, SWT.NONE);
     }
 
