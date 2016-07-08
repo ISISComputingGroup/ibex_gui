@@ -124,14 +124,17 @@ public class BlockLogSettingsViewModel extends ErrorMessageProvider {
      * @param enabled - Is logging being enabled (true) or disabled (false)
      */
     public void setEnabled(boolean enabled) {
+        // Update enabled value first. We might need the new value in
+        // updatePeriodic.
+        firePropertyChange("enabled", this.enabled, this.enabled = enabled);
+
         if (!enabled) {
             rate = 0;
             updatePeriodic(true, true);
         } else if (enabled && rate == 0) {
             rate = DEFAULT_SCAN_RATE;
+            updatePeriodic(true, true);
         }
-
-        firePropertyChange("enabled", this.enabled, this.enabled = enabled);
 
     }
 
@@ -170,7 +173,8 @@ public class BlockLogSettingsViewModel extends ErrorMessageProvider {
     	if (periodic) {
     		try {
     			rate = Integer.parseInt(text);
-                if (rate <= 0) {
+                // Value set to 0 on disabled. Don't print error in this case.
+                if (rate <= 0 && enabled) {
                     setError(true, SCAN_VALUE_ERROR);
                 } else {
                     setError(false, null);
