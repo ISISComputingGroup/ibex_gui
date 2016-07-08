@@ -45,7 +45,6 @@ import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
 
 /**
  * A view allowing selection of an instrument from a list of instruments.
- * 
  */
 @SuppressWarnings("checkstyle:magicnumber")
 public class InstrumentSelectionPanel extends Composite {
@@ -53,6 +52,13 @@ public class InstrumentSelectionPanel extends Composite {
     private Text txtSelectedName;
     private InstrumentTable instrumentTable;
 
+    /**
+     * Creates an instance of the instrument selection panel.
+     * 
+     * @param parent the parent composite
+     * @param style the style of the panel
+     * @param viewModel the view model for the instrument selection
+     */
     public InstrumentSelectionPanel(Composite parent, int style, InstrumentSelectionViewModel viewModel) {
         super(parent, style);
 
