@@ -155,7 +155,6 @@ public class BlockLogSettingsViewModel extends ErrorMessageProvider {
     	    	}
 			}
         }
-        
         firePropertyChange("textBoxText", this.textBoxText, this.textBoxText = text);
     }
 
