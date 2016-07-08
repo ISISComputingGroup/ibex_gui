@@ -36,6 +36,7 @@ public class BlockLogSettingsViewModel extends ErrorMessageProvider {
     private static final String SCAN_VALUE_ERROR = "Scan rate must be a strictly positive number of seconds";
     private static final String FLOAT_ERROR = "Deadband must be a decimal number";
     
+    private static final int DEFAULT_SCAN_RATE = 30; // Seconds
     private static final String SCAN_EMPTY = "Scan rate cannot be empty";
     private static final String DEADBAND_EMPTY = "Deadband cannot be empty";
     private static final String DEADBAND_NEGATIVE = "Deadband cannot be negative";
@@ -84,7 +85,7 @@ public class BlockLogSettingsViewModel extends ErrorMessageProvider {
 
     public void setEnabled(boolean enabled) {
         if (!enabled) {
-            rate = 0;
+            rate = DEFAULT_SCAN_RATE;
             updatePeriodic(true, true);
         }
 
