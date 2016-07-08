@@ -27,7 +27,7 @@ public class BlockLogSettingsViewModel extends ErrorMessageProvider {
     public static final String MONITOR_STRING = "Monitor With Deadband";
 
     public static final String DEADBAND_LABEL = "Deadband:";
-    public static final String SCAN_LABEL = "Scan Rate:";
+    public static final String SCAN_LABEL = "Scan Rate/seconds:";
 
     public static final String COMBO_TOOLTIP = "Periodic: Log on change but no more often than the specified period.\n"
             + "Monitor: Log when the value changes by the absolute amount specified, this amount is in the same units as the block.";
