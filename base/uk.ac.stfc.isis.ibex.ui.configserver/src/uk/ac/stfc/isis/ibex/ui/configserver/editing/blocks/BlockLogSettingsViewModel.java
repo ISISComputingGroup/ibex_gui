@@ -77,7 +77,7 @@ public class BlockLogSettingsViewModel extends ErrorMessageProvider {
     
     private final Block editingBlock;
     
-    private boolean enabled = true;
+    private boolean enabled = false;
     private String comboText;
     private String labelText;
     
