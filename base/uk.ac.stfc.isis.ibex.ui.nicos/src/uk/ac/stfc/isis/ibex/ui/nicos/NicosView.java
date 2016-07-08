@@ -19,26 +19,25 @@
 
 package uk.ac.stfc.isis.ibex.ui.nicos;
 
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.ui.PlatformUI;
-import org.eclipse.ui.part.ViewPart;
-
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.Shell;
-import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Shell;
+import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.part.ViewPart;
 
 import uk.ac.stfc.isis.ibex.ui.nicos.dialogs.CreateScriptDialog;
 
-@SuppressWarnings("checkstyle:magicnumber")
 /**
  * The main view for the NICOS scripting perspective.
  */
+@SuppressWarnings("checkstyle:magicnumber")
 public class NicosView extends ViewPart {
 	
 	/**
