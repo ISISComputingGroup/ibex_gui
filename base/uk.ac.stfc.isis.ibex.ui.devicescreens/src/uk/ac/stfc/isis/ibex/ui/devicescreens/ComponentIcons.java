@@ -17,12 +17,12 @@
  * http://opensource.org/licenses/eclipse-1.0.php
  */
 
-package uk.ac.stfc.isis.ibex.ui.synoptic.component.icons;
+package uk.ac.stfc.isis.ibex.ui.devicescreens;
 
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.wb.swt.ResourceManager;
 
-import uk.ac.stfc.isis.ibex.synoptic.model.ComponentType;
+import uk.ac.stfc.isis.ibex.devicescreens.desc.ComponentType;
 
 /**
  * Given a component type, returns an icon appropriate for that type.

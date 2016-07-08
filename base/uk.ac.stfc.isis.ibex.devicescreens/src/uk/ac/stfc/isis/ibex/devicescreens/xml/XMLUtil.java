@@ -55,7 +55,7 @@ public final class XMLUtil {
 
     /**
      * Parses an XML into a device screens description object.
-     * 
+     *
      * @param xml the device screens XML received from the BlockServer
      * @return the data converted into a device screens description
      * @throws JAXBException XML Exception

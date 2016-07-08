@@ -40,6 +40,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class DeviceDescription {
 
+    /**
+     * Type when the device screen is an OPI
+     */
     private String name;
     private String key;
     private String type;
@@ -47,7 +50,7 @@ public class DeviceDescription {
     private PropertiesDescription properties = new PropertiesDescription();
 
     /**
-     * @return the type
+     * @return the type, e.g. OPI
      */
     public String getType() {
         return type;
@@ -60,7 +63,7 @@ public class DeviceDescription {
     }
 
     /**
-     * @return the key
+     * @return the key, the subtype of the type, e.g. EUROTHERM
      */
     public String getKey() {
         return key;
@@ -99,5 +102,26 @@ public class DeviceDescription {
      */
     public void addProperty(PropertyDescription property) {
         properties.addProperty(property);
+    }
+
+
+    /**
+     * Gets the component type of this device description.
+     *
+     * @return the component type (based on the key); if the key doesn't match
+     *         return UNKNOWN, if null return null
+     */
+    public ComponentType getComponentType() {
+        String componentTypeName = getKey();
+        if (componentTypeName == null) {
+            return null;
+        }
+        try {
+
+            return ComponentType.valueOf(componentTypeName);
+        } catch (IllegalArgumentException ex) {
+            return ComponentType.UNKNOWN;
+        }
+        // TODO test
     }
 }

@@ -17,13 +17,12 @@
  * http://opensource.org/licenses/eclipse-1.0.php
  */
 
-package uk.ac.stfc.isis.ibex.synoptic.model;
+package uk.ac.stfc.isis.ibex.devicescreens.desc;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import uk.ac.stfc.isis.ibex.synoptic.model.targets.PerspectiveTarget;
 import uk.ac.stfc.isis.ibex.targets.Target;
 import uk.ac.stfc.isis.ibex.targets.ViewTarget;
 

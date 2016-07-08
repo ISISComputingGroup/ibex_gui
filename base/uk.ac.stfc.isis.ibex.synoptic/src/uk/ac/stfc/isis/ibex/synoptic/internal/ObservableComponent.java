@@ -21,11 +21,11 @@ package uk.ac.stfc.isis.ibex.synoptic.internal;
 
 import java.util.List;
 
+import uk.ac.stfc.isis.ibex.devicescreens.desc.Component;
+import uk.ac.stfc.isis.ibex.devicescreens.desc.ComponentProperty;
 import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.epics.writing.Writable;
 import uk.ac.stfc.isis.ibex.synoptic.Synoptic;
-import uk.ac.stfc.isis.ibex.synoptic.model.Component;
-import uk.ac.stfc.isis.ibex.synoptic.model.ComponentProperty;
 import uk.ac.stfc.isis.ibex.synoptic.model.ReadableComponentProperty;
 import uk.ac.stfc.isis.ibex.synoptic.model.WritableComponentProperty;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.ComponentDescription;

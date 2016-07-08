@@ -30,7 +30,7 @@ import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 
-import uk.ac.stfc.isis.ibex.synoptic.model.Component;
+import uk.ac.stfc.isis.ibex.devicescreens.desc.Component;
 import uk.ac.stfc.isis.ibex.ui.synoptic.beamline.BeamlineCompositeContainer;
 import uk.ac.stfc.isis.ibex.ui.synoptic.beamline.DotDashedLine;
 import uk.ac.stfc.isis.ibex.ui.synoptic.beamline.LineDecoration;

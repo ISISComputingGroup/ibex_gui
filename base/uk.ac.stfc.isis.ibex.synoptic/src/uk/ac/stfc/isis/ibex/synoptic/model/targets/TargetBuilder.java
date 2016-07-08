@@ -21,7 +21,7 @@ package uk.ac.stfc.isis.ibex.synoptic.model.targets;
 
 import java.util.Arrays;
 
-import uk.ac.stfc.isis.ibex.synoptic.model.Component;
+import uk.ac.stfc.isis.ibex.devicescreens.desc.Component;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.Property;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.TargetDescription;
 import uk.ac.stfc.isis.ibex.targets.OpiTarget;

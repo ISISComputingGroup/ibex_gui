@@ -28,8 +28,8 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.layout.GridLayout;
 
-import uk.ac.stfc.isis.ibex.synoptic.model.Component;
-import uk.ac.stfc.isis.ibex.synoptic.model.ComponentProperty;
+import uk.ac.stfc.isis.ibex.devicescreens.desc.Component;
+import uk.ac.stfc.isis.ibex.devicescreens.desc.ComponentProperty;
 import uk.ac.stfc.isis.ibex.synoptic.model.ReadableComponentProperty;
 import uk.ac.stfc.isis.ibex.synoptic.model.WritableComponentProperty;
 

@@ -29,7 +29,7 @@ import java.net.URL;
 import org.junit.Before;
 import org.junit.Test;
 
-import uk.ac.stfc.isis.ibex.synoptic.model.ComponentType;
+import uk.ac.stfc.isis.ibex.devicescreens.desc.ComponentType;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.ComponentDescription;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.IO;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.Property;

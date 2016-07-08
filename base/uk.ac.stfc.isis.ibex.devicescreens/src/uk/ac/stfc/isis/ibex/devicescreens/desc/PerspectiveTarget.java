@@ -17,7 +17,7 @@
 * http://opensource.org/licenses/eclipse-1.0.php
 */
 
-package uk.ac.stfc.isis.ibex.synoptic.model.targets;
+package uk.ac.stfc.isis.ibex.devicescreens.desc;
 
 import uk.ac.stfc.isis.ibex.targets.Target;
 

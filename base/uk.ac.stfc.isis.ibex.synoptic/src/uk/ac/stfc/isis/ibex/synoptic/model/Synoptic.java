@@ -21,6 +21,7 @@ package uk.ac.stfc.isis.ibex.synoptic.model;
 
 import java.util.List;
 
+import uk.ac.stfc.isis.ibex.devicescreens.desc.Component;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.SynopticDescription;
 
 /**

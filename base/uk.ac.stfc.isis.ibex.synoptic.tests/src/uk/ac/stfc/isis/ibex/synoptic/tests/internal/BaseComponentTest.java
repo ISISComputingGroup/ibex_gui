@@ -27,10 +27,10 @@ import java.util.List;
 
 import org.junit.Test;
 
+import uk.ac.stfc.isis.ibex.devicescreens.desc.Component;
+import uk.ac.stfc.isis.ibex.devicescreens.desc.ComponentProperty;
+import uk.ac.stfc.isis.ibex.devicescreens.desc.ComponentType;
 import uk.ac.stfc.isis.ibex.synoptic.internal.BaseComponent;
-import uk.ac.stfc.isis.ibex.synoptic.model.Component;
-import uk.ac.stfc.isis.ibex.synoptic.model.ComponentProperty;
-import uk.ac.stfc.isis.ibex.synoptic.model.ComponentType;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.ComponentDescription;
 import uk.ac.stfc.isis.ibex.targets.Target;
 

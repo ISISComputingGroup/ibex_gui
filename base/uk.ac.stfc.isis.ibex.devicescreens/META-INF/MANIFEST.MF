@@ -5,14 +5,12 @@ Bundle-SymbolicName: uk.ac.stfc.isis.ibex.devicescreens
 Bundle-Version: 1.0.0.qualifier
 Bundle-Activator: uk.ac.stfc.isis.ibex.devicescreens.DeviceScreens
 Require-Bundle: org.eclipse.core.runtime,
- uk.ac.stfc.isis.ibex.instrument
+ uk.ac.stfc.isis.ibex.instrument,
+ uk.ac.stfc.isis.ibex.targets
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Bundle-ActivationPolicy: lazy
 Import-Package: uk.ac.stfc.isis.ibex.epics.conversion,
  uk.ac.stfc.isis.ibex.epics.observing,
- uk.ac.stfc.isis.ibex.epics.switching,
- uk.ac.stfc.isis.ibex.synoptic.internal,
- uk.ac.stfc.isis.ibex.synoptic.model.desc,
- uk.ac.stfc.isis.ibex.synoptic.xml
+ uk.ac.stfc.isis.ibex.epics.switching
 Export-Package: uk.ac.stfc.isis.ibex.devicescreens,
  uk.ac.stfc.isis.ibex.devicescreens.desc

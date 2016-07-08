@@ -19,6 +19,7 @@
 
 package uk.ac.stfc.isis.ibex.synoptic.model;
 
+import uk.ac.stfc.isis.ibex.devicescreens.desc.ComponentProperty;
 import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.epics.writing.SameTypeWriter;
 import uk.ac.stfc.isis.ibex.epics.writing.Writable;

@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import uk.ac.stfc.isis.ibex.synoptic.model.Component;
+import uk.ac.stfc.isis.ibex.devicescreens.desc.Component;
 import uk.ac.stfc.isis.ibex.synoptic.model.Synoptic;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.SynopticDescription;
 
