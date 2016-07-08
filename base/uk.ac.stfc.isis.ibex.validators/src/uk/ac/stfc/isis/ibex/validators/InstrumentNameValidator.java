@@ -21,6 +21,8 @@ package uk.ac.stfc.isis.ibex.validators;
 
 import java.util.Collection;
 
+import uk.ac.stfc.isis.ibex.instrument.internal.PVPrefix;
+
 /**
  * Provides validation for custom instrument names.
  * 
@@ -35,7 +37,8 @@ public class InstrumentNameValidator {
     /**
      * Error message for missing prefix in instrument name.
      */
-    public static final String NAME_PREFIX_MSG = "Instrument Name invalid, must be a known name or start with \"NDW\"";
+    public static final String NAME_PREFIX_MSG =
+            "Instrument Name invalid, must be a known name or start with \"" + PVPrefix.NDW + "\"";
 
     /**
      * Error message for empty instrument name.
@@ -43,7 +46,6 @@ public class InstrumentNameValidator {
     public static final String NAME_EMPTY_MSG = "Instrument Name invalid, must not be empty";
 
     private static final String NO_ERROR_MSG = "";
-    private static final String PREFIX = "NDW";
 
     private String errorMessage;
     private Collection<String> knownValidNames;
@@ -74,7 +76,7 @@ public class InstrumentNameValidator {
         } else if (nameIsKnown(instrumentName)) {
             isValid = true;
             setErrorMessage(NO_ERROR_MSG);
-        } else if (!(instrumentName.startsWith(PREFIX))) {
+        } else if (!(instrumentName.startsWith(PVPrefix.NDW))) {
             setErrorMessage(NAME_PREFIX_MSG);
         } else if (!(instrumentName.matches("[a-zA-Z0-9_]*$"))) {
             setErrorMessage(NAME_FORMAT_MSG);
