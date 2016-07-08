@@ -30,7 +30,7 @@ import uk.ac.stfc.isis.ibex.model.UpdatedValue;
 
 
 /**
- * Links a read PV and a writable PV.
+ * Links an observable and writable object connected to a (StringChannel) PV.
  *
  */
 public class StringWritableObservableAdapter implements Closable {
@@ -43,7 +43,8 @@ public class StringWritableObservableAdapter implements Closable {
 			writeToWritables(value);
 		}
 		
-		public void onCanWriteChanged(boolean canWrite) {
+		@Override
+        public void onCanWriteChanged(boolean canWrite) {
 			canSetText.setValue(canWrite);
 		}
 	};
@@ -63,21 +64,39 @@ public class StringWritableObservableAdapter implements Closable {
 		writableSubscription = writer.writeTo(writable);
 		writerSubscription = writable.subscribe(writer);
 	}
-	
+
+    /**
+     * Returns the current string value of the associated PV.
+     * 
+     * @return the string value
+     */
 	public UpdatedValue<String> text() {
 		return text;
 	}
 	
+    /**
+     * Writes a new string value to the associated PV.
+     * 
+     * @param value the new value
+     */
 	public void setText(String text) {
 		if (text != writer.lastWritten()) {
 			writer.write(text);
 		}
 	}
-	
+
+    /**
+     * Returns whether writing value to PV is allowed.
+     * 
+     * @return the boolean value
+     */
 	public UpdatedValue<Boolean> canSetText() {
 		return canSetText;
 	}
 
+    /**
+     * Removes observers when connection to PV is closed.
+     */
 	@Override
 	public void close() {
 		writerSubscription.removeObserver();

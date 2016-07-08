@@ -125,7 +125,6 @@ public class RunSummary extends Composite {
 		title.setLayoutData(gdTitle);
 
         Label spacer3 = new Label(infoComposite, SWT.NONE);
-
         Label spacer4 = new Label(infoComposite, SWT.NONE);
 
         btnDisplayTitle = new Button(infoComposite, SWT.CHECK);
@@ -135,7 +134,7 @@ public class RunSummary extends Composite {
             @Override
             public void widgetSelected(SelectionEvent e) {
                 super.widgetSelected(e);
-                setDisplayTitle(model);
+                model.displayTitle().setValue(btnDisplayTitle.getSelection());
             }
         });
 
@@ -145,7 +144,12 @@ public class RunSummary extends Composite {
 		daeButtonPanel = new DaeActionButtonPanel(this, SWT.NONE, model.actions());
 		daeButtonPanel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
 	}
-	
+
+    /**
+     * Binds run model properties to GUI elements.
+     * 
+     * @param viewModel the model containing the run information
+     */
 	public void setModel(RunSummaryViewModel viewModel) {
 		DataBindingContext bindingContext = new DataBindingContext();
 		bindingContext.bindValue(WidgetProperties.text().observe(instrument), BeanProperties.value("value").observe(viewModel.instrument()));
@@ -153,14 +157,10 @@ public class RunSummary extends Composite {
 		bindingContext.bindValue(WidgetProperties.text().observe(runNumber), BeanProperties.value("value").observe(viewModel.runNumber()));
 		bindingContext.bindValue(WidgetProperties.text().observe(isisCycle), BeanProperties.value("value").observe(viewModel.isisCycle()));
         bindingContext.bindValue(WidgetProperties.selection().observe(btnDisplayTitle),
-                BeanProperties.value("value").observe(viewModel.displayTitle().text()));
+                BeanProperties.value("value").observe(viewModel.displayTitle().value()));
         bindingContext.bindValue(WidgetProperties.enabled().observe(btnDisplayTitle),
-                BeanProperties.value("value").observe(viewModel.displayTitle().canSetText()));
+                BeanProperties.value("value").observe(viewModel.displayTitle().canSetValue()));
 
 		messageBox.setModel(viewModel.logMessageSource());		
 	}
-
-    private void setDisplayTitle(RunSummaryViewModel model) {
-        model.displayTitle().setText(btnDisplayTitle.getSelection());
-    }
 }

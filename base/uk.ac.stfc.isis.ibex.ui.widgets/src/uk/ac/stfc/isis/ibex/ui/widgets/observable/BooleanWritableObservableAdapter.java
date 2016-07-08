@@ -30,13 +30,13 @@ import uk.ac.stfc.isis.ibex.model.UpdatedValue;
 
 
 /**
- * Links a read PV and a writable PV.
- *
+ * Links an observable and writable object connected to a binary (boolean) PV.
+ * Writing is converted to Long as Boolean output is not supported by PVManager.
  */
 public class BooleanWritableObservableAdapter implements Closable {
 	
-    private final UpdatedValue<Boolean> text;
-    private final SettableUpdatedValue<Boolean> canSetText;
+    private final UpdatedValue<Boolean> value;
+    private final SettableUpdatedValue<Boolean> canSetValue;
     private final TransformingWriter<Boolean, Long> writer = new TransformingWriter<Boolean, Long>() {
         @Override
         public void write(Boolean value) {
@@ -62,26 +62,44 @@ public class BooleanWritableObservableAdapter implements Closable {
 	 * @param observable The object for observing a PV
 	 */
     public BooleanWritableObservableAdapter(Writable<Long> writable, ForwardingObservable<Boolean> observable) {
-        text = new UpdatedObservableAdapter<Boolean>(observable);
-        canSetText = new SettableUpdatedValue<>();
-        canSetText.setValue(writable.canWrite());
+        value = new UpdatedObservableAdapter<Boolean>(observable);
+        canSetValue = new SettableUpdatedValue<>();
+        canSetValue.setValue(writable.canWrite());
 		
 		writableSubscription = writer.writeTo(writable);
 		writerSubscription = writable.subscribe(writer);
 	}
 	
-    public UpdatedValue<Boolean> text() {
-        return text;
+    /**
+     * Returns the current value of the associated PV.
+     * 
+     * @return the value
+     */
+    public UpdatedValue<Boolean> value() {
+        return value;
 	}
 	
-    public void setText(Boolean value) {
+    /**
+     * Writes a new value to the associated PV.
+     * 
+     * @param value the new value
+     */
+    public void setValue(Boolean value) {
         writer.write(value);
 	}
-	
-    public UpdatedValue<Boolean> canSetText() {
-        return canSetText;
+
+    /**
+     * Returns whether writing value to PV is allowed.
+     * 
+     * @return the boolean value
+     */
+    public UpdatedValue<Boolean> canSetValue() {
+        return canSetValue;
 	}
 
+    /**
+     * Removes observers when connection to PV is closed.
+     */
 	@Override
 	public void close() {
 		writerSubscription.removeObserver();
