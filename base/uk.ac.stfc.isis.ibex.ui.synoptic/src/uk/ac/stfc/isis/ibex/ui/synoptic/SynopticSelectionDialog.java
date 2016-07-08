@@ -29,30 +29,31 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.core.databinding.DataBindingContext;
-import org.eclipse.core.databinding.observable.value.IObservableValue;
-import org.eclipse.jface.databinding.swt.WidgetProperties;
-import org.eclipse.core.databinding.beans.PojoProperties;
 
 import uk.ac.stfc.isis.ibex.synoptic.SynopticInfo;
 
+/**
+ * Dialog for asking the user to select a single synoptic.
+ */
 @SuppressWarnings("checkstyle:magicnumber")
 public class SynopticSelectionDialog extends Dialog {
 	
 	private final String title;
 	private final Collection<SynopticInfo> available;
 	
-	private Text selectedText;
 	private List items;
 
 	private SynopticInfo selectedSynoptic;
 	
+	/**
+	 * @param parentShell The shell to open the dialog from.
+	 * @param title The title of the dialog box.
+	 * @param available The list of synoptics that the user can choose from.
+	 */
 	public SynopticSelectionDialog(
 			Shell parentShell, 
 			String title,
@@ -62,6 +63,10 @@ public class SynopticSelectionDialog extends Dialog {
 		this.available = available;
 	}
 	
+	/**
+	 * Get the synoptic that the user has selected.
+	 * @return The synoptic that the user has selected.
+	 */
 	public SynopticInfo selectedSynoptic() {
 		return selectedSynoptic;
 	}
@@ -79,7 +84,7 @@ public class SynopticSelectionDialog extends Dialog {
 	
 	@Override
 	protected void okPressed() {
-		selectedSynoptic = SynopticInfo.search(available, selectedText.getText()); 
+		selectedSynoptic = SynopticInfo.search(available, items.getSelection()[0]); 
 		
 		super.okPressed();
 	}
@@ -102,37 +107,12 @@ public class SynopticSelectionDialog extends Dialog {
 		Arrays.sort(names, String.CASE_INSENSITIVE_ORDER);
 		items.setItems(names);
 		
-		Composite selected = new Composite(container, SWT.NONE);
-		selected.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		GridLayout glSelected = new GridLayout(2, false);
-		glSelected.marginWidth = 0;
-		glSelected.marginHeight = 0;
-		selected.setLayout(glSelected);
-		
-		Label lblType = new Label(selected, SWT.NONE);
-		lblType.setText("Synoptic:");
-		
-		selectedText = new Text(selected, SWT.BORDER | SWT.READ_ONLY);
-		selectedText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		initDataBindings();
-		
 		items.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseDoubleClick(MouseEvent e) {
 				okPressed();
 			}
 		});
-	}
-	
-	 
-	protected DataBindingContext initDataBindings() {
-		DataBindingContext bindingContext = new DataBindingContext();
-		
-		IObservableValue observeSelectionItemsObserveWidget = WidgetProperties.selection().observe(items);
-		IObservableValue textSelectedObserveValue = PojoProperties.value("text").observe(selectedText);
-		bindingContext.bindValue(observeSelectionItemsObserveWidget, textSelectedObserveValue, null, null);
-		
-		return bindingContext;
 	}
 	
 }

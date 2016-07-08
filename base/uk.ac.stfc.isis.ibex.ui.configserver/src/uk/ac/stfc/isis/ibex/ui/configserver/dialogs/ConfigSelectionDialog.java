@@ -22,17 +22,12 @@ package uk.ac.stfc.isis.ibex.ui.configserver.dialogs;
 import java.util.Arrays;
 import java.util.Collection;
 
-import org.eclipse.core.databinding.DataBindingContext;
-import org.eclipse.core.databinding.beans.PojoProperties;
-import org.eclipse.core.databinding.observable.value.IObservableValue;
-import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
@@ -43,6 +38,9 @@ import org.eclipse.swt.widgets.Text;
 import uk.ac.stfc.isis.ibex.configserver.configuration.ConfigInfo;
 
 @SuppressWarnings("checkstyle:magicnumber")
+/**
+ * Dialog for asking the user to select a single configuration or component.
+ */
 public class ConfigSelectionDialog extends Dialog {
 	
 	private final String title;
@@ -55,6 +53,13 @@ public class ConfigSelectionDialog extends Dialog {
 
 	private String selectedName;
 	
+	/**
+	 * @param parentShell The shell to create the dialog in.
+	 * @param title The title of the dialog box.
+	 * @param available A collection of the available configurations/components for the user to select from.
+	 * @param isComponent Whether the user is selecting from a list of components.
+	 * @param includeCurrent Whether the current configuration should be included in the list presented to the user.
+	 */
 	public ConfigSelectionDialog(
 			Shell parentShell, 
 			String title,
@@ -66,6 +71,10 @@ public class ConfigSelectionDialog extends Dialog {
         this.includeCurrent = includeCurrent;
 	}
 	
+	/**
+	 * Get the configuartion/component that the user has chosen
+	 * @return The chosen configuration/component.
+	 */
 	public String selectedConfig() {
 		return selectedName;
 	}
@@ -110,37 +119,12 @@ public class ConfigSelectionDialog extends Dialog {
 		Arrays.sort(names, String.CASE_INSENSITIVE_ORDER);
 		items.setItems(names);
 		
-		Composite selected = new Composite(container, SWT.NONE);
-		selected.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		GridLayout glSelected = new GridLayout(2, false);
-		glSelected.marginWidth = 0;
-		glSelected.marginHeight = 0;
-		selected.setLayout(glSelected);
-		
-		Label lblType = new Label(selected, SWT.NONE);
-		lblType.setText(getTypeString() + ":");
-		
-		selectedText = new Text(selected, SWT.BORDER | SWT.READ_ONLY);
-		selectedText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		initDataBindings();
-		
 		items.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseDoubleClick(MouseEvent e) {
 				okPressed();
 			}
 		});
-	}
-	
-	 
-	protected DataBindingContext initDataBindings() {
-		DataBindingContext bindingContext = new DataBindingContext();
-		
-		IObservableValue observeSelectionItemsObserveWidget = WidgetProperties.selection().observe(items);
-		IObservableValue textSelectedObserveValue = PojoProperties.value("text").observe(selectedText);
-		bindingContext.bindValue(observeSelectionItemsObserveWidget, textSelectedObserveValue, null, null);
-		
-		return bindingContext;
 	}
 	
 	private String getTypeString() {

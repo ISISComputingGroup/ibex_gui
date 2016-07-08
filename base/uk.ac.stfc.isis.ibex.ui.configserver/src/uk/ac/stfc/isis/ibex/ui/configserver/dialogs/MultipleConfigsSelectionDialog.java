@@ -34,11 +34,13 @@ import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
-import org.eclipse.core.databinding.DataBindingContext;
 
 import uk.ac.stfc.isis.ibex.configserver.configuration.ConfigInfo;
 
 @SuppressWarnings("checkstyle:magicnumber")
+/**
+ * Dialog for asking the user to select a multiple configurations or components.
+ */
 public class MultipleConfigsSelectionDialog extends Dialog {
 	
 	private final String title;
@@ -48,6 +50,12 @@ public class MultipleConfigsSelectionDialog extends Dialog {
 
 	private Collection<String> selected = new ArrayList<>();
 	
+	/**
+	 * @param parentShell The shell to create the dialog in.
+	 * @param title The title of the dialog box.
+	 * @param available A collection of the available configurations/components for the user to select from.
+	 * @param isComponent Whether the user is selecting from a list of components.
+	 */
 	public MultipleConfigsSelectionDialog(
 			Shell parentShell, 
 			String title,
@@ -58,6 +66,9 @@ public class MultipleConfigsSelectionDialog extends Dialog {
 		this.isComponent = isComponent;
 	}
 	
+	/**
+	 * @return A collection of the selected configurations/components that the user has selected.
+	 */
 	public Collection<String> selectedConfigs() {
 		return selected;
 	}
@@ -96,7 +107,6 @@ public class MultipleConfigsSelectionDialog extends Dialog {
 		String[] names = ConfigInfo.names(available).toArray(new String[0]);
 		Arrays.sort(names);
 		items.setItems(names);
-		initDataBindings();
 		
 		items.addMouseListener(new MouseAdapter() {
 			@Override
@@ -108,10 +118,5 @@ public class MultipleConfigsSelectionDialog extends Dialog {
 	
 	private String getTypeString() {
 		return isComponent ? "components" : "configurations";
-	}
-	protected DataBindingContext initDataBindings() {
-		DataBindingContext bindingContext = new DataBindingContext();
-		//
-		return bindingContext;
 	}
 }
