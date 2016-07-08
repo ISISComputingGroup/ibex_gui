@@ -44,16 +44,16 @@ import uk.ac.stfc.isis.ibex.synoptic.ObservingSynopticModel;
 import uk.ac.stfc.isis.ibex.synoptic.Synoptic;
 import uk.ac.stfc.isis.ibex.synoptic.SynopticModel;
 import uk.ac.stfc.isis.ibex.synoptic.model.Component;
-import uk.ac.stfc.isis.ibex.synoptic.model.Target;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.SynopticDescription;
 import uk.ac.stfc.isis.ibex.synoptic.model.targets.GroupedComponentTarget;
-import uk.ac.stfc.isis.ibex.synoptic.model.targets.OpiTarget;
 import uk.ac.stfc.isis.ibex.synoptic.model.targets.PerspectiveTarget;
-import uk.ac.stfc.isis.ibex.synoptic.model.targets.ViewTarget;
 import uk.ac.stfc.isis.ibex.synoptic.navigation.TargetNode;
+import uk.ac.stfc.isis.ibex.targets.OpiTarget;
+import uk.ac.stfc.isis.ibex.targets.Target;
+import uk.ac.stfc.isis.ibex.targets.ViewTarget;
 import uk.ac.stfc.isis.ibex.ui.UI;
 import uk.ac.stfc.isis.ibex.ui.synoptic.views.LinkedViews;
-import uk.ac.stfc.isis.ibex.ui.synoptic.views.OpiTargetView;
+import uk.ac.stfc.isis.ibex.ui.synoptic.views.SynopticOpiTargetView;
 import uk.ac.stfc.isis.ibex.ui.synoptic.views.SynopticView;
 
 /**
@@ -214,9 +214,10 @@ public class SynopticPresenter extends ModelObject {
 		try {
 			OpiTarget opiTarget = (OpiTarget) currentTarget;
 			IWorkbenchPage workbenchPage = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
-			IViewPart view = workbenchPage.showView(OpiTargetView.ID, opiTarget.name(), IWorkbenchPage.VIEW_ACTIVATE);
+            IViewPart view =
+                    workbenchPage.showView(SynopticOpiTargetView.ID, opiTarget.name(), IWorkbenchPage.VIEW_ACTIVATE);
 			openOPIs.add(view);
-			OpiTargetView targetView = (OpiTargetView) view;
+            SynopticOpiTargetView targetView = (SynopticOpiTargetView) view;
 			targetView.setOpi(opiTarget.name(), opiTarget.opiName(), opiTarget.properties());
 		} catch (PartInitException e) {
 			LOG.catching(e);
