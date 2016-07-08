@@ -73,7 +73,7 @@ public class ConfigEditorPanel extends Composite {
 		setLayout(gridLayout);
 		
 		summary = new SummaryPanel(this, SWT.NONE, dialog);
-		summary.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		summary.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 		
         editorTabs = new TabFolder(this, SWT.NONE);
 		editorTabs.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
