@@ -23,6 +23,7 @@ import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.UpdateValueStrategy;
 import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
@@ -71,7 +72,8 @@ public class ConfigEditorPanel extends Composite {
 		gridLayout.horizontalSpacing = 0;
 		setLayout(gridLayout);
 		
-		summary = new SummaryPanel(parent, SWT.NONE, dialog);
+		summary = new SummaryPanel(this, SWT.NONE, dialog);
+		summary.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		
         editorTabs = new TabFolder(this, SWT.NONE);
 		editorTabs.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
