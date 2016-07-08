@@ -149,7 +149,7 @@ public class BlockLogSettingsViewModelTest {
 
     @Test
     public void
-            GIVEN_block_in_deadband_mode_with_negative_band_WHEN_view_model_initialized_with_block_THEN_view_model_is_disabled_the_mode_is_switched_to_periodic_and_the_text_box_value_matches_periodic_rate() {
+            GIVEN_block_in_deadband_mode_with_negative_band_WHEN_view_model_initialized_with_block_THEN_view_model_is_disabled_the_mode_is_switched_to_periodic_and_the_text_box_value_is_zero() {
 
         // Arrange
         final int rate_value = 13;
@@ -161,6 +161,6 @@ public class BlockLogSettingsViewModelTest {
         BlockLogSettingsViewModel vm = new BlockLogSettingsViewModel(mockBlock);
 
         // Assert
-        verifyModelValues(vm, Integer.toString(rate_value), false, true);
+        verifyModelValues(vm, Integer.toString(0), false, true);
     }
 }
