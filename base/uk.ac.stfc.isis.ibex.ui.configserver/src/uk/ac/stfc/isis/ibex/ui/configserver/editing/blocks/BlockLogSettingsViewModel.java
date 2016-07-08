@@ -32,7 +32,8 @@ public class BlockLogSettingsViewModel extends ErrorMessageProvider {
     public static final String COMBO_TOOLTIP = "Periodic: Log on change but no more often than the specified period.\n"
             + "Monitor: Log when the value changes by the absolute amount specified, this amount is in the same units as the block.";
 
-    private static final String INT_ERROR = "Scan rate must be an integer number of seconds";
+    private static final String SCAN_TYPE_ERROR = "Scan rate must be an integer number of seconds";
+    private static final String SCAN_VALUE_ERROR = "Scan rate must be a strictly positive number of seconds";
     private static final String FLOAT_ERROR = "Deadband must be a decimal number";
     
     private static final String SCAN_EMPTY = "Scan rate cannot be empty";
@@ -119,12 +120,17 @@ public class BlockLogSettingsViewModel extends ErrorMessageProvider {
     	if (periodic) {
     		try {
     			rate = Integer.parseInt(text);
-    			setError(false, null);
+                if (rate <= 0) {
+                    setError(true, SCAN_VALUE_ERROR);
+                }
+                else {
+                    setError(false, null);
+                }
     		} catch (NumberFormatException e) {
     	    	if (text.isEmpty()) {
     	    		setError(true, SCAN_EMPTY);
     	    	} else {
-        			setError(true, INT_ERROR);
+        			setError(true, SCAN_TYPE_ERROR);
     	    	}
     		}
         } else {
