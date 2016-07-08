@@ -138,7 +138,7 @@ public class BlockLogSettingsViewModel extends ErrorMessageProvider {
         	try {
 		        deadband = Float.parseFloat(text);
 		        if ( deadband<0 ) {
-		            setError(true, DEADBAND_NEGATIVE)
+                    setError(true, DEADBAND_NEGATIVE);
 		        }
 		        else
 		        {
