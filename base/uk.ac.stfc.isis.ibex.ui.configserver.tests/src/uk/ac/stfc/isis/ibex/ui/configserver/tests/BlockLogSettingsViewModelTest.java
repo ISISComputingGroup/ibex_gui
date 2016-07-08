@@ -188,7 +188,7 @@ public class BlockLogSettingsViewModelTest {
             GIVEN_block_in_periodic_mode_WHEN_set_enabled_fale_THEN_view_model_is_disabled_the_mode_is_switched_to_periodic_and_the_text_box_value_is_zero() {
 
         // Arrange
-        final int rate_value = 13;
+        final int rate_value = 20;
         final float deadband_value = 52.5f;
 
         mockPeriodicBlock(mockBlock, rate_value, deadband_value);
