@@ -48,7 +48,7 @@ public class RunSummary extends Composite {
 	
 	private DaeActionButtonPanel daeButtonPanel;
 	
-	public RunSummary(Composite parent, int style, RunSummaryViewModel model) {
+    public RunSummary(Composite parent, int style, final RunSummaryViewModel model) {
 		super(parent, style);
 		GridLayout gridLayout = new GridLayout(2, false);
 		gridLayout.horizontalSpacing = 0;
@@ -134,7 +134,8 @@ public class RunSummary extends Composite {
         btnDisplayTitle.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
-
+                super.widgetSelected(e);
+                setDisplayTitle(model);
             }
         });
 
@@ -152,8 +153,14 @@ public class RunSummary extends Composite {
 		bindingContext.bindValue(WidgetProperties.text().observe(runNumber), BeanProperties.value("value").observe(viewModel.runNumber()));
 		bindingContext.bindValue(WidgetProperties.text().observe(isisCycle), BeanProperties.value("value").observe(viewModel.isisCycle()));
         bindingContext.bindValue(WidgetProperties.selection().observe(btnDisplayTitle),
-                BeanProperties.value("value").observe(viewModel.displayTitle()));
-		
+                BeanProperties.value("value").observe(viewModel.displayTitle().text()));
+        bindingContext.bindValue(WidgetProperties.enabled().observe(btnDisplayTitle),
+                BeanProperties.value("value").observe(viewModel.displayTitle().canSetText()));
+
 		messageBox.setModel(viewModel.logMessageSource());		
 	}
+
+    private void setDisplayTitle(RunSummaryViewModel model) {
+        model.displayTitle().setText(btnDisplayTitle.getSelection());
+    }
 }

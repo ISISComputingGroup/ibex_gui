@@ -42,7 +42,7 @@ public interface IDae {
 
 	Writable<String> setTitle();
 
-    Writable<Boolean> setDisplayTitle();
+    Writable<Long> setDisplayTitle();
 		
 	ForwardingObservable<String> vetos();
 		

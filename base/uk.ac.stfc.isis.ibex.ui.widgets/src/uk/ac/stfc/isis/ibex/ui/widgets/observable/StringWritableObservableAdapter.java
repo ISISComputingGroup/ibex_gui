@@ -33,7 +33,7 @@ import uk.ac.stfc.isis.ibex.model.UpdatedValue;
  * Links a read PV and a writable PV.
  *
  */
-public class WritableObservableAdapter implements Closable {
+public class StringWritableObservableAdapter implements Closable {
 	
 	private final UpdatedValue<String> text;
 	private final SettableUpdatedValue<Boolean> canSetText;
@@ -55,7 +55,7 @@ public class WritableObservableAdapter implements Closable {
 	 * @param writable The object for writing to a PV
 	 * @param observable The object for observing a PV
 	 */
-	public WritableObservableAdapter(Writable<String> writable, Observable<String> observable) {
+	public StringWritableObservableAdapter(Writable<String> writable, Observable<String> observable) {
 		text = new TextUpdatedObservableAdapter(observable);
 		canSetText = new SettableUpdatedValue<>();
 		canSetText.setValue(writable.canWrite());

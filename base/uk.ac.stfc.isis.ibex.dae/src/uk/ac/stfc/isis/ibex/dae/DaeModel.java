@@ -88,7 +88,7 @@ public class DaeModel extends Closer implements IDae {
 	}
 
     @Override
-    public Writable<Boolean> setDisplayTitle() {
+    public Writable<Long> setDisplayTitle() {
         return writables.displayTitle;
     }
 

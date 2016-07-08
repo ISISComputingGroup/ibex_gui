@@ -23,9 +23,9 @@ import uk.ac.stfc.isis.ibex.epics.switching.OnInstrumentSwitch;
 import uk.ac.stfc.isis.ibex.epics.switching.WritableFactory;
 import uk.ac.stfc.isis.ibex.epics.writing.Writable;
 import uk.ac.stfc.isis.ibex.instrument.Instrument;
-import uk.ac.stfc.isis.ibex.instrument.channels.BooleanChannel;
 import uk.ac.stfc.isis.ibex.instrument.channels.CharWaveformChannel;
 import uk.ac.stfc.isis.ibex.instrument.channels.CompressedCharWaveformChannel;
+import uk.ac.stfc.isis.ibex.instrument.channels.LongChannel;
 import uk.ac.stfc.isis.ibex.instrument.channels.StringChannel;
 
 /**
@@ -58,7 +58,7 @@ public class DaeWritables {
     public final Writable<String> recover;
     public final Writable<String> save;
     public final Writable<String> title;
-    public final Writable<Boolean> displayTitle;
+    public final Writable<Long> displayTitle;
     public final Writable<String> daeSettings;
     public final Writable<String> hardwarePeriods;
     public final Writable<String> updateSettings;
@@ -73,7 +73,7 @@ public class DaeWritables {
         recover = writeFactory.getSwitchableWritable(new StringChannel(), daeAddress(RECOVER_RUN));
         save = writeFactory.getSwitchableWritable(new StringChannel(), daeAddress(SAVE_RUN));
         title = writeFactory.getSwitchableWritable(new CharWaveformChannel(), daeAddress(TITLE));
-        displayTitle = writeFactory.getSwitchableWritable(new BooleanChannel(), daeAddress(TITLE));
+        displayTitle = writeFactory.getSwitchableWritable(new LongChannel(), daeAddress(DISPLAY_TITLE));
         daeSettings = writeFactory.getSwitchableWritable(new CharWaveformChannel(), daeAddress(DAE_SETTINGS));
         hardwarePeriods = writeFactory.getSwitchableWritable(new CharWaveformChannel(), daeAddress(HARDWARE_PERIODS));
         updateSettings = writeFactory.getSwitchableWritable(new CharWaveformChannel(), daeAddress(UPDATE_SETTINGS));

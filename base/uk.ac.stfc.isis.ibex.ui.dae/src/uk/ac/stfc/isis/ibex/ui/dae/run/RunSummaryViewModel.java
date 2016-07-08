@@ -22,12 +22,12 @@ package uk.ac.stfc.isis.ibex.ui.dae.run;
 import uk.ac.stfc.isis.ibex.dae.IDae;
 import uk.ac.stfc.isis.ibex.dae.actions.DaeActions;
 import uk.ac.stfc.isis.ibex.epics.adapters.TextUpdatedObservableAdapter;
-import uk.ac.stfc.isis.ibex.epics.adapters.UpdatedObservableAdapter;
 import uk.ac.stfc.isis.ibex.epics.pv.Closer;
 import uk.ac.stfc.isis.ibex.log.ILogMessageProducer;
 import uk.ac.stfc.isis.ibex.log.Log;
 import uk.ac.stfc.isis.ibex.model.UpdatedValue;
-import uk.ac.stfc.isis.ibex.ui.widgets.observable.WritableObservableAdapter;
+import uk.ac.stfc.isis.ibex.ui.widgets.observable.BooleanWritableObservableAdapter;
+import uk.ac.stfc.isis.ibex.ui.widgets.observable.StringWritableObservableAdapter;
 
 public class RunSummaryViewModel extends Closer {
 	
@@ -37,8 +37,8 @@ public class RunSummaryViewModel extends Closer {
 	private UpdatedValue<String> runStatus;
 	private UpdatedValue<String> runNumber;
 	private UpdatedValue<String> isisCycle;	
-    private UpdatedValue<Boolean> displayTitle;
-    private WritableObservableAdapter title;
+    private BooleanWritableObservableAdapter displayTitle;
+    private StringWritableObservableAdapter title;
 				
 	private ILogMessageProducer logModel;
 
@@ -49,8 +49,9 @@ public class RunSummaryViewModel extends Closer {
 		runStatus = registerForClose(new TextUpdatedObservableAdapter(registerForClose(new InstrumentState(model.runState()))));
 		runNumber = registerForClose(new TextUpdatedObservableAdapter(model.runNumber()));
 		isisCycle = registerForClose(new TextUpdatedObservableAdapter(model.isisCycle()));
-        title = registerForClose(new WritableObservableAdapter(model.setTitle(), model.title()));
-        displayTitle = registerForClose(new UpdatedObservableAdapter<Boolean>(model.displayTitle()));
+        title = registerForClose(new StringWritableObservableAdapter(model.setTitle(), model.title()));
+        displayTitle =
+                registerForClose(new BooleanWritableObservableAdapter(model.setDisplayTitle(), model.displayTitle()));
 
 		logModel = Log.getInstance().producer();
 	}
@@ -71,11 +72,11 @@ public class RunSummaryViewModel extends Closer {
 		return isisCycle;
 	}
 
-    public UpdatedValue<Boolean> displayTitle() {
+    public BooleanWritableObservableAdapter displayTitle() {
         return displayTitle;
     }
 
-	public WritableObservableAdapter title() {
+	public StringWritableObservableAdapter title() {
 		return title;
 	}
 	
