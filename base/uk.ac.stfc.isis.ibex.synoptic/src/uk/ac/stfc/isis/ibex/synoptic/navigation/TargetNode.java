@@ -19,7 +19,7 @@
 
 package uk.ac.stfc.isis.ibex.synoptic.navigation;
 
-import uk.ac.stfc.isis.ibex.synoptic.model.Target;
+import uk.ac.stfc.isis.ibex.targets.Target;
 
 public class TargetNode  {
 

@@ -23,8 +23,8 @@ import org.apache.logging.log4j.Logger;
 
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
-import uk.ac.stfc.isis.ibex.synoptic.model.Target;
 import uk.ac.stfc.isis.ibex.synoptic.navigation.TargetNode;
+import uk.ac.stfc.isis.ibex.targets.Target;
 
 public class NavigationPresenter extends ModelObject {
 	

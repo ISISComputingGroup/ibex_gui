@@ -36,13 +36,13 @@ import uk.ac.stfc.isis.ibex.synoptic.internal.ObservableComponent;
 import uk.ac.stfc.isis.ibex.synoptic.internal.Variables;
 import uk.ac.stfc.isis.ibex.synoptic.model.Component;
 import uk.ac.stfc.isis.ibex.synoptic.model.ComponentType;
-import uk.ac.stfc.isis.ibex.synoptic.model.Target;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.ComponentDescription;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.IO;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.PV;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.RecordType;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.TargetDescription;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.TargetType;
+import uk.ac.stfc.isis.ibex.targets.Target;
 
 /**
  * This class is responsible for testing ObservableComponent 
@@ -131,7 +131,7 @@ public class ObservableComponentTest {
 	}
 
 	/**
-	 * Test method for {@link uk.ac.stfc.isis.ibex.synoptic.internal.ObservableComponent#setTarget(uk.ac.stfc.isis.ibex.synoptic.model.Target)}.
+	 * Test method for {@link uk.ac.stfc.isis.ibex.synoptic.internal.ObservableComponent#setTarget(uk.ac.stfc.isis.ibex.targets.Target)}.
 	 */
 	@Test
 	public final void set_the_target() {
