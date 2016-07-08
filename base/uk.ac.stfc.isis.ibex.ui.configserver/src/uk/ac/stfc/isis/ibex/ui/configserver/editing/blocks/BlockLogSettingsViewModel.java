@@ -117,6 +117,12 @@ public class BlockLogSettingsViewModel extends ErrorMessageProvider {
     	return comboText;
     }
 
+    /**
+     * Checks and sets the value in the log settings value text box. An error
+     * will be sent to the config block dialog if the value is invalid.
+     * 
+     * @param text Value to put in text box
+     */
     public void setTextBoxText(String text) {
     	if (periodic) {
     		try {
@@ -137,11 +143,9 @@ public class BlockLogSettingsViewModel extends ErrorMessageProvider {
         } else {
         	try {
 		        deadband = Float.parseFloat(text);
-		        if ( deadband<0 ) {
+                if (deadband < 0) {
                     setError(true, DEADBAND_NEGATIVE);
-		        }
-		        else
-		        {
+                } else {
 		            setError(false, null);
 		        }
 			} catch (NumberFormatException e) {
