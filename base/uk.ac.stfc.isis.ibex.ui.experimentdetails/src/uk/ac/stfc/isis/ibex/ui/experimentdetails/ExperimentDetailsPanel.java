@@ -62,6 +62,7 @@ public class ExperimentDetailsPanel extends Composite {
 	private Button btnAddUserDetails;
 	private Composite experimentTeamButtons;
 	private Button btnClearUserDetails;
+	private Button btnRemoveUserDetails;
 	private Button btnRBLookup;
 	
 	public ExperimentDetailsPanel(Composite parent, int style) {
@@ -125,7 +126,6 @@ public class ExperimentDetailsPanel extends Composite {
 		gdDetailsButtons.widthHint = 50;
 		
 		btnAddUserDetails = new Button(experimentTeamButtons, SWT.NONE);
-		btnAddUserDetails.setSize(34, 25);
 		btnAddUserDetails.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -135,6 +135,18 @@ public class ExperimentDetailsPanel extends Composite {
 		});
 		btnAddUserDetails.setText("Add");
 		btnAddUserDetails.setLayoutData(gdDetailsButtons);
+
+		btnRemoveUserDetails = new Button(experimentTeamButtons, SWT.NONE);
+		btnRemoveUserDetails.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				viewModel.model.removeUser(userDetails.firstSelectedRow());
+				viewModel.model.sendUserDetails();
+			}
+		});		
+		
+		btnRemoveUserDetails.setText("Remove");
+		btnRemoveUserDetails.setLayoutData(gdDetailsButtons);		
 		
 		btnClearUserDetails = new Button(experimentTeamButtons, SWT.NONE);
 		btnClearUserDetails.addSelectionListener(new SelectionAdapter() {
@@ -147,7 +159,6 @@ public class ExperimentDetailsPanel extends Composite {
 		btnClearUserDetails.setLayoutData(gdDetailsButtons);		
 		
 		btnUpdateUserDetails = new Button(experimentTeamButtons, SWT.NONE);
-		btnUpdateUserDetails.setSize(50, 25);
 		btnUpdateUserDetails.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
