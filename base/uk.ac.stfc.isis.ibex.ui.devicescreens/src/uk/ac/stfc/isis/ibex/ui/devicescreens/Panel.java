@@ -44,6 +44,9 @@ import uk.ac.stfc.isis.ibex.epics.writing.Writable;
  */
 public class Panel extends Composite {
 
+    private static final int TEXT_BOX_HEIGHT = 2000;
+    private static final int TEXT_BOX_WIDTH = 2000;
+
     private Label lblScreensRbv;
     private Text txtScreensSp;
     private Writable<DeviceScreensDescription> screensSetter;
@@ -79,8 +82,10 @@ public class Panel extends Composite {
     }
 
     /**
-     * @param parent
-     * @param style
+     * Creates an instance for the device screens panel.
+     * 
+     * @param parent the parent composite
+     * @param style the style for the panel
      */
     public Panel(Composite parent, int style) {
         // super(parent, style);
@@ -99,8 +104,8 @@ public class Panel extends Composite {
 
         txtScreensSp = new Text(composite, SWT.WRAP | SWT.MULTI);
         GridData gdTxtScreens = new GridData(SWT.LEFT, SWT.TOP, true, true, 1, 1);
-        gdTxtScreens.heightHint = 2000;
-        gdTxtScreens.widthHint = 2000;
+        gdTxtScreens.heightHint = TEXT_BOX_HEIGHT;
+        gdTxtScreens.widthHint = TEXT_BOX_WIDTH;
         txtScreensSp.setLayoutData(gdTxtScreens);
         screensSetter = deviceScreens.getDevicesSetter();
 

@@ -48,12 +48,6 @@ public final class XMLUtil {
     private static Schema schema;
 
     /**
-     * Default constructor.
-     */
-    private XMLUtil() {
-    }
-
-    /**
      * Parses an XML into a device screens description object.
      * 
      * @param xml the device screens XML received from the BlockServer

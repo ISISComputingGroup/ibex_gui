@@ -34,7 +34,7 @@ import org.eclipse.ui.part.ViewPart;
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
 
 /**
- * 
+ * A view for the current available device screens.
  */
 public class DeviceScreensView extends ViewPart {
 
