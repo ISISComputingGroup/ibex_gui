@@ -38,7 +38,7 @@ public class InstrumentNameValidator {
      * Error message for missing prefix in instrument name.
      */
     public static final String NAME_PREFIX_MSG =
-            "Instrument Name invalid, must be a known name or start with \"" + PVPrefix.NDW + "\"";
+            "Instrument Name invalid, must be a known name or start with \"" + PVPrefix.ND + "\"";
 
     /**
      * Error message for empty instrument name.
@@ -76,7 +76,7 @@ public class InstrumentNameValidator {
         } else if (nameIsKnown(instrumentName)) {
             isValid = true;
             setErrorMessage(NO_ERROR_MSG);
-        } else if (!(instrumentName.startsWith(PVPrefix.NDW))) {
+        } else if (!(instrumentName.startsWith(PVPrefix.ND))) {
             setErrorMessage(NAME_PREFIX_MSG);
         } else if (!(instrumentName.matches("[a-zA-Z0-9_]*$"))) {
             setErrorMessage(NAME_FORMAT_MSG);
