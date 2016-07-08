@@ -65,6 +65,7 @@ public class InstrumentSelectionPanel extends Composite {
         createInstrumentLabel(grpInstrument);
         createInstrumentTextBox(grpInstrument);
         createClearButton(grpInstrument);
+        createHelpLabel(grpInstrument);
         createTable(grpInstrument, viewModel.getInstruments());
 
         bindModel(viewModel);
@@ -78,8 +79,7 @@ public class InstrumentSelectionPanel extends Composite {
 
     private void createInstrumentTextBox(Composite parent) {
         txtSelectedName = new Text(parent, SWT.BORDER);
-        GridData gdInstrument = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
-        gdInstrument.widthHint = 130;
+        GridData gdInstrument = new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1);
         txtSelectedName.setLayoutData(gdInstrument);
         txtSelectedName.addModifyListener(new ModifyListener() {
             @Override
@@ -102,6 +102,13 @@ public class InstrumentSelectionPanel extends Composite {
         };
 
         btnClear.addListener(SWT.Selection, clearListener);
+    }
+
+    private void createHelpLabel(Composite parent) {
+        String helpText = "(For custom names, type the machine name, e.g. \"NDXLARMOR\")";
+        Label lblHelp = new Label(parent, SWT.WRAP | SWT.LEFT);
+        lblHelp.setLayoutData(new GridData(SWT.HORIZONTAL, SWT.CENTER, true, false, 3, 1));
+        lblHelp.setText(helpText);
     }
 
     private void createTable(Composite parent, Collection<InstrumentInfo> instruments) {
