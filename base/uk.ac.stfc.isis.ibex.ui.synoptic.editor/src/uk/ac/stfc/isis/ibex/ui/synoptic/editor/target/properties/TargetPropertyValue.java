@@ -17,7 +17,7 @@
  * http://opensource.org/licenses/eclipse-1.0.php
  */
 
-package uk.ac.stfc.isis.ibex.ui.synoptic.editor.target;
+package uk.ac.stfc.isis.ibex.ui.synoptic.editor.target.properties;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;

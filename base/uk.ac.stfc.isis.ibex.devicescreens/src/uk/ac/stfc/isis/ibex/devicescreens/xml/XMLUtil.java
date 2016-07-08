@@ -17,7 +17,7 @@
  * http://opensource.org/licenses/eclipse-1.0.php
  */
 
-package uk.ac.stfc.isis.ibex.synoptic.xml;
+package uk.ac.stfc.isis.ibex.devicescreens.xml;
 
 import java.io.StringReader;
 import java.io.StringWriter;
@@ -33,81 +33,88 @@ import javax.xml.validation.SchemaFactory;
 
 import org.xml.sax.SAXException;
 
-import uk.ac.stfc.isis.ibex.synoptic.model.desc.SynopticDescription;
+import uk.ac.stfc.isis.ibex.devicescreens.desc.DeviceScreensDescription;
 
+/**
+ * Utility class used to parse from and write to XML.
+ */
 public final class XMLUtil {
-	
-	private static final SchemaFactory SF = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
-    private static Schema schema; 
 
     private static JAXBContext context;
     private static Unmarshaller unmarshaller;
     private static Marshaller marshaller;
-    
-    private XMLUtil() { }
-    
-	/**
-     * Converts an input XML into a synoptic description.
+
+    private static final SchemaFactory SF = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
+    private static Schema schema;
+
+    /**
+     * Default constructor.
+     */
+    private XMLUtil() {
+    }
+
+    /**
+     * Parses an XML into a device screens description object.
      * 
-     * @param xml the synoptic XML received from the BlockServer
-     * @return the synoptic data converted into an instrument description
+     * @param xml the device screens XML received from the BlockServer
+     * @return the data converted into a device screens description
      * @throws JAXBException XML Exception
      * @throws SAXException XML Exception
      */
+    @SuppressWarnings("unchecked")
     public static synchronized <T> T fromXml(String xml) throws JAXBException, SAXException {
-		if (context == null) {
-			initialise();
-		}
-	         
+        if (context == null) {
+            initialise();
+        }
         return (T) unmarshaller.unmarshal(new StringReader(xml));
-	}
-	
-	/**
-     * Converts the instrument description into the synoptic XML expected by the
+    }
+
+    /**
+     * Converts the device screens description into the XML expected by the
      * BlockServer.
      * 
-     * @param instrument the instrument description
-     * @return the XML for the synoptic
+     * @param deviceScreensDescription the input device screens description
+     * @return the XML for the device screens
      * @throws JAXBException XML Exception
      * @throws SAXException XML Exception
      */
-    public static <T> String toXml(T instrument) throws JAXBException, SAXException {
-		if (context == null) {
-			initialise();
-		}
-	    
-		StringWriter writer = new StringWriter();
-		marshaller.marshal(instrument, writer);
-		
-		return writer.toString();		
-	}
-	
-	/**
-     * Sets the XML schema.
+    public static <T> String toXml(T deviceScreensDescription) throws JAXBException, SAXException {
+        if (context == null) {
+            initialise();
+        }
+
+        StringWriter writer = new StringWriter();
+        marshaller.marshal(deviceScreensDescription, writer);
+
+        return writer.toString();
+    }
+
+    /**
+     * Sets the schema.
      * 
-     * @param rawSchema the XML schema for the synoptic as supplied by the
+     * @param rawSchema the XML schema for the device screens as supplied by the
      *            BlockServer
      * @throws SAXException XML Exception
      * @throws JAXBException XML Exception
      */
     public static void setSchema(String rawSchema) throws SAXException, JAXBException {
-		if (context == null) {
-			initialise();
-		}
-		
-		schema = SF.newSchema(new StreamSource(new StringReader(rawSchema)));
-		marshaller.setSchema(schema);
-		unmarshaller.setSchema(schema);
-	}
-	
-	private static void initialise() throws JAXBException, SAXException {
-		try {
-			context = JAXBContext.newInstance(SynopticDescription.class);
-			marshaller = context.createMarshaller();
-			unmarshaller = context.createUnmarshaller();	
-		} catch (Exception e) {
-			context = null;
-			throw e;
-		}
-	}
+        if (context == null) {
+            initialise();
+        }
+
+        schema = SF.newSchema(new StreamSource(new StringReader(rawSchema)));
+        marshaller.setSchema(schema);
+        unmarshaller.setSchema(schema);
+    }
+
+    private static void initialise() throws JAXBException, SAXException {
+        try {
+            context = JAXBContext.newInstance(DeviceScreensDescription.class);
+            marshaller = context.createMarshaller();
+            unmarshaller = context.createUnmarshaller();
+        } catch (Exception e) {
+            context = null;
+            throw e;
+        }
+    }
 }

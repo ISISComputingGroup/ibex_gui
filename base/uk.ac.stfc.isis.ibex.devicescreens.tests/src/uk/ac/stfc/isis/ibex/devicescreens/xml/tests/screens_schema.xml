@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema"
+        targetNamespace="http://epics.isis.rl.ac.uk/schema/screens/1.0/"
+        xmlns:scns="http://epics.isis.rl.ac.uk/schema/screens/1.0/"
+        elementFormDefault="qualified">
+
+    <annotation>
+        <documentation xml:lang="en">
+            Devices view schema for ISIS instruments
+        </documentation>
+    </annotation>
+	
+    <element name="devices" type="scns:devices"></element>
+    
+    <complexType name="devices">
+        <sequence>
+            <element name="device" type="scns:device" maxOccurs="unbounded" minOccurs="0"></element>
+        </sequence>
+    </complexType>
+
+    <complexType name="device">
+        <sequence>
+            <element name="name" type="string" maxOccurs="1"
+                minOccurs="1">
+            </element>
+            <element name="key" type="string" maxOccurs="1"
+                minOccurs="1">
+            </element>
+            <element name="type" type="scns:devicetype" maxOccurs="1"
+                minOccurs="1">
+            </element>
+            <element name="properties" type="scns:properties" maxOccurs="1" minOccurs="0"></element>
+        </sequence>
+    </complexType>
+
+    <simpleType name="devicetype">
+        <restriction base="string">
+            <enumeration value="COMPONENT"></enumeration>
+            <enumeration value="OPI"></enumeration>
+        </restriction>
+    </simpleType>
+
+    <complexType name="property">
+        <sequence>
+            <element name="key" type="string"></element>
+            <element name="value" type="string"></element>
+        </sequence>
+    </complexType>
+
+    <complexType name="properties">
+        <sequence>
+            <element name="property" type="scns:property" maxOccurs="unbounded" minOccurs="0"></element>
+        </sequence>
+    </complexType>
+</schema>

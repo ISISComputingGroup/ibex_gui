@@ -17,31 +17,11 @@
  * http://opensource.org/licenses/eclipse-1.0.php
  */
 
-package uk.ac.stfc.isis.ibex.synoptic.internal;
-
-import javax.xml.bind.JAXBException;
-
-import org.xml.sax.SAXException;
-
-import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
-import uk.ac.stfc.isis.ibex.epics.conversion.Converter;
-import uk.ac.stfc.isis.ibex.synoptic.xml.XMLUtil;
-
 /**
- * Parses an input XML into an instrument description.
- * 
- * @param <T>
+ * Defines the XML namespace.
  */
-public class InstrumentDescriptionParser<T> extends
-		Converter<String, T> {
-
-	@Override
-    public T convert(String value)
-			throws ConversionException {
-		try {
-			return XMLUtil.fromXml(value);
-		} catch (JAXBException | SAXException e) {
-			throw new ConversionException("Error parsing synoptic", e);
-		}		
-	}
-}
+@XmlSchema(namespace = "http://epics.isis.rl.ac.uk/schema/screens/1.0/", elementFormDefault = XmlNsForm.QUALIFIED)
+package uk.ac.stfc.isis.ibex.devicescreens.desc;
+ 
+import javax.xml.bind.annotation.XmlNsForm;
+import javax.xml.bind.annotation.XmlSchema;

@@ -17,31 +17,28 @@
  * http://opensource.org/licenses/eclipse-1.0.php
  */
 
-package uk.ac.stfc.isis.ibex.synoptic.internal;
+package uk.ac.stfc.isis.ibex.devicescreens.desc;
 
 import javax.xml.bind.JAXBException;
 
 import org.xml.sax.SAXException;
 
+import uk.ac.stfc.isis.ibex.devicescreens.xml.XMLUtil;
 import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
 import uk.ac.stfc.isis.ibex.epics.conversion.Converter;
-import uk.ac.stfc.isis.ibex.synoptic.xml.XMLUtil;
 
 /**
- * Parses an input XML into an instrument description.
- * 
- * @param <T>
+ * Parses device screens in XML format and returns them as
+ * DeviceScreenDescription instances.
  */
-public class InstrumentDescriptionParser<T> extends
-		Converter<String, T> {
+public class DeviceScreensDescriptionXmlParser extends Converter<String, DeviceScreensDescription> {
 
-	@Override
-    public T convert(String value)
-			throws ConversionException {
-		try {
-			return XMLUtil.fromXml(value);
-		} catch (JAXBException | SAXException e) {
-			throw new ConversionException("Error parsing synoptic", e);
-		}		
-	}
+    @Override
+    public DeviceScreensDescription convert(String value) throws ConversionException {
+        try {
+            return XMLUtil.fromXml(value);
+        } catch (JAXBException | SAXException e) {
+            throw new ConversionException("Error parsing device screens", e);
+        }
+    }
 }
