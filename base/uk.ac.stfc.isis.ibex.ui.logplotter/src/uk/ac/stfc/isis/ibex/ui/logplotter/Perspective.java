@@ -61,9 +61,9 @@ public class Perspective extends BasePerspective {
 		
 		layout.addStandaloneView(EmptyLogPlotterView.ID, false, IPageLayout.RIGHT, 0.1f, "uk.ac.stfc.isis.ibex.ui.perspectives.PerspectiveSwitcher");
 		
-		IWorkbenchPage activePage = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
 		
-		activePage.addPartListener(new IPartListener() {
+		//This part listener will be called to open the empty view when all graphs are closed
+		PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().addPartListener(new IPartListener() {
 			
 			@Override
 			public void partOpened(IWorkbenchPart part) {
@@ -94,7 +94,6 @@ public class Perspective extends BasePerspective {
 						try {
 							activePage.showView(EmptyLogPlotterView.ID);
 						} catch (PartInitException e) {
-							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
 					}
