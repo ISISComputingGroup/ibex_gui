@@ -38,6 +38,7 @@ public class BlockLogSettingsViewModel extends ErrorMessageProvider {
     
     private static final String SCAN_EMPTY = "Scan rate cannot be empty";
     private static final String DEADBAND_EMPTY = "Deadband cannot be empty";
+    private static final String DEADBAND_NEGATIVE = "Deadband cannot be negative";
     
     private final Block editingBlock;
     
@@ -136,7 +137,13 @@ public class BlockLogSettingsViewModel extends ErrorMessageProvider {
         } else {
         	try {
 		        deadband = Float.parseFloat(text);
-		        setError(false, null);
+		        if ( deadband<0 ) {
+		            setError(true, DEADBAND_NEGATIVE)
+		        }
+		        else
+		        {
+		            setError(false, null);
+		        }
 			} catch (NumberFormatException e) {
     	    	if (text.isEmpty()) {
     	    		setError(true, DEADBAND_EMPTY);
