@@ -33,6 +33,20 @@ public class BlockLogSettingsViewModelTest {
 
     private EditableBlock mockBlock;
 
+    public void setUpMockBlockByMode(Boolean periodic, int rate, float deadband) {
+        when(mockBlock.getLogRate()).thenReturn(rate);
+        when(mockBlock.getLogDeadband()).thenReturn(deadband);
+        when(mockBlock.getLogPeriodic()).thenReturn(periodic);
+    }
+
+    public void mockPeriodicBlock(EditableBlock mockBlock, int rate, float deadband) {
+        setUpMockBlockByMode(true, rate, deadband);
+    }
+
+    public void mockDeadbandBlock(EditableBlock mockBlock, int rate, float deadband) {
+        setUpMockBlockByMode(false, rate, deadband);
+    }
+
     @Before
     public void setUp() {
         mockBlock = mock(EditableBlock.class);
@@ -46,9 +60,7 @@ public class BlockLogSettingsViewModelTest {
 	    final int rate_value = 7;
 	    final float deadband_value = 0.54f;
 	    
-        when(mockBlock.getLogRate()).thenReturn(rate_value);
-        when(mockBlock.getLogDeadband()).thenReturn(deadband_value);
-        when(mockBlock.getLogPeriodic()).thenReturn(true);
+        mockPeriodicBlock(mockBlock, rate_value, deadband_value);
 
         // Act
         BlockLogSettingsViewModel vm = new BlockLogSettingsViewModel(mockBlock);
@@ -56,7 +68,7 @@ public class BlockLogSettingsViewModelTest {
         // Assert
         assertEquals(Integer.toString(rate_value), vm.getTextBoxText());
         assertTrue(vm.getEnabled());
-        assertEquals(vm.getComboText(), BlockLogSettingsViewModel.PERIODIC_STRING);
+        assertEquals(BlockLogSettingsViewModel.PERIODIC_STRING, vm.getComboText());
 	}
 
     @Test
@@ -67,9 +79,7 @@ public class BlockLogSettingsViewModelTest {
         final int rate_value = 0;
         final float deadband_value = 0.54f;
 
-        when(mockBlock.getLogRate()).thenReturn(rate_value);
-        when(mockBlock.getLogDeadband()).thenReturn(deadband_value);
-        when(mockBlock.getLogPeriodic()).thenReturn(true);
+        mockPeriodicBlock(mockBlock, rate_value, deadband_value);
 
         // Act
         BlockLogSettingsViewModel vm = new BlockLogSettingsViewModel(mockBlock);
@@ -77,7 +87,7 @@ public class BlockLogSettingsViewModelTest {
         // Assert
         assertEquals(Integer.toString(rate_value), vm.getTextBoxText());
         assertFalse(vm.getEnabled());
-        assertEquals(vm.getComboText(), BlockLogSettingsViewModel.PERIODIC_STRING);
+        assertEquals(BlockLogSettingsViewModel.PERIODIC_STRING, vm.getComboText());
     }
 
     @Test
@@ -88,9 +98,7 @@ public class BlockLogSettingsViewModelTest {
         final int rate_value = -6;
         final float deadband_value = 0.54f;
 
-        when(mockBlock.getLogRate()).thenReturn(rate_value);
-        when(mockBlock.getLogDeadband()).thenReturn(deadband_value);
-        when(mockBlock.getLogPeriodic()).thenReturn(true);
+        mockPeriodicBlock(mockBlock, rate_value, deadband_value);
 
         // Act
         BlockLogSettingsViewModel vm = new BlockLogSettingsViewModel(mockBlock);
@@ -98,6 +106,63 @@ public class BlockLogSettingsViewModelTest {
         // Assert
         assertEquals("0", vm.getTextBoxText());
         assertFalse(vm.getEnabled());
-        assertEquals(vm.getComboText(), BlockLogSettingsViewModel.PERIODIC_STRING);
+        assertEquals(BlockLogSettingsViewModel.PERIODIC_STRING, vm.getComboText());
+    }
+
+    @Test
+    public void
+            GIVEN_block_in_deadband_mode_with_positive_band_WHEN_view_model_initialized_with_block_THEN_view_model_is_enabled_the_combo_box_indicates_deadband_mode_and_the_text_box_value_matches_the_blocks() {
+
+        // Arrange
+        final int rate_value = 13;
+        final float deadband_value = 0.54f;
+
+        mockDeadbandBlock(mockBlock, rate_value, deadband_value);
+
+        // Act
+        BlockLogSettingsViewModel vm = new BlockLogSettingsViewModel(mockBlock);
+
+        // Assert
+        assertEquals(Float.toString(deadband_value), vm.getTextBoxText());
+        assertTrue(vm.getEnabled());
+        assertEquals(BlockLogSettingsViewModel.MONITOR_STRING, vm.getComboText());
+    }
+
+    @Test
+    public void
+            GIVEN_block_in_deadband_mode_with_zero_band_WHEN_view_model_initialized_with_block_THEN_view_model_is_enabled_the_combo_box_indicates_deadband_mode_and_the_text_box_value_is_zero() {
+
+        // Arrange
+        final int rate_value = 13;
+        final float deadband_value = 0.0f;
+
+        mockDeadbandBlock(mockBlock, rate_value, deadband_value);
+
+        // Act
+        BlockLogSettingsViewModel vm = new BlockLogSettingsViewModel(mockBlock);
+
+        // Assert
+        assertEquals(Float.toString(deadband_value), vm.getTextBoxText());
+        assertTrue(vm.getEnabled());
+        assertEquals(BlockLogSettingsViewModel.MONITOR_STRING, vm.getComboText());
+    }
+
+    @Test
+    public void
+            GIVEN_block_in_deadband_mode_with_negative_band_WHEN_view_model_initialized_with_block_THEN_view_model_is_disabled_the_mode_is_switched_to_periodic_and_the_text_box_value_is_zero() {
+
+        // Arrange
+        final int rate_value = 13;
+        final float deadband_value = -134.012f;
+
+        mockDeadbandBlock(mockBlock, rate_value, deadband_value);
+
+        // Act
+        BlockLogSettingsViewModel vm = new BlockLogSettingsViewModel(mockBlock);
+
+        // Assert
+        assertEquals(Integer.toString(0), vm.getTextBoxText());
+        assertFalse(vm.getEnabled());
+        assertEquals(BlockLogSettingsViewModel.PERIODIC_STRING, vm.getComboText());
     }
 }
