@@ -163,4 +163,42 @@ public class BlockLogSettingsViewModelTest {
         // Assert
         verifyModelValues(vm, Integer.toString(0), false, true);
     }
+
+    @Test
+    public void
+            GIVEN_block_in_deadband_mode_WHEN_set_enabled_fale_THEN_view_model_is_disabled_the_mode_is_switched_to_periodic_and_the_text_box_value_is_zero() {
+
+        // Arrange
+        final int rate_value = 13;
+        final float deadband_value = 52.5f;
+
+        mockDeadbandBlock(mockBlock, rate_value, deadband_value);
+
+        // Act
+        BlockLogSettingsViewModel vm = new BlockLogSettingsViewModel(mockBlock);
+        verifyModelValues(vm, Float.toString(deadband_value), true, false);
+        vm.setEnabled(false);
+
+        // Assert
+        verifyModelValues(vm, Integer.toString(0), false, true);
+    }
+
+    @Test
+    public void
+            GIVEN_block_in_periodic_mode_WHEN_set_enabled_fale_THEN_view_model_is_disabled_the_mode_is_switched_to_periodic_and_the_text_box_value_is_zero() {
+
+        // Arrange
+        final int rate_value = 13;
+        final float deadband_value = 52.5f;
+
+        mockPeriodicBlock(mockBlock, rate_value, deadband_value);
+
+        // Act
+        BlockLogSettingsViewModel vm = new BlockLogSettingsViewModel(mockBlock);
+        verifyModelValues(vm, Integer.toString(rate_value), true, true);
+        vm.setEnabled(false);
+
+        // Assert
+        verifyModelValues(vm, Integer.toString(0), false, true);
+    }
 }
