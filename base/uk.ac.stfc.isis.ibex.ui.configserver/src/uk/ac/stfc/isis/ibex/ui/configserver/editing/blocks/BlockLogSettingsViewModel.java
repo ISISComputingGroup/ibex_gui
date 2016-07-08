@@ -32,13 +32,47 @@ public class BlockLogSettingsViewModel extends ErrorMessageProvider {
     public static final String COMBO_TOOLTIP = "Periodic: Log on change but no more often than the specified period.\n"
             + "Monitor: Log when the value changes by the absolute amount specified, this amount is in the same units as the block.";
 
-    private static final String SCAN_TYPE_ERROR = "Scan rate must be an integer number of seconds";
-    private static final String SCAN_VALUE_ERROR = "Scan rate must be a strictly positive number of seconds";
-    private static final String FLOAT_ERROR = "Deadband must be a decimal number";
-    
+    /**
+     * Default value to give to periodic scan.
+     */
     private static final int DEFAULT_SCAN_RATE = 30; // Seconds
+
+    /**
+     * Periodic scan validation
+     */
+
+    /**
+     * Error to emit in periodic scan mode if value is not integer.
+     */
+    private static final String SCAN_TYPE_ERROR = "Scan rate must be an integer number of seconds";
+
+    /**
+     * Error to emit in periodic scan mode if value is not positive.
+     */
+    private static final String SCAN_VALUE_ERROR = "Scan rate must be strictly positive";
+
+    /**
+     * Error to emit in periodic scan mode if value is empty.
+     */
     private static final String SCAN_EMPTY = "Scan rate cannot be empty";
+
+    /**
+     * Deadband validation
+     */
+
+    /**
+     * Error to emit in deadband mode if value is negative.
+     */
+    private static final String FLOAT_ERROR = "Deadband must be a decimal number";
+
+    /**
+     * Error to emit in deadband mode if value is empty.
+     */
     private static final String DEADBAND_EMPTY = "Deadband cannot be empty";
+
+    /**
+     * Error to emit in deadband mode if value is negative.
+     */
     private static final String DEADBAND_NEGATIVE = "Deadband cannot be negative";
     
     private final Block editingBlock;
@@ -83,10 +117,18 @@ public class BlockLogSettingsViewModel extends ErrorMessageProvider {
         }
     }
 
+    /**
+     * Sets whether logging is enabled. Sets to default value if zero value on
+     * enable
+     * 
+     * @param enabled - Is logging being enabled (true) or disabled (false)
+     */
     public void setEnabled(boolean enabled) {
         if (!enabled) {
-            rate = DEFAULT_SCAN_RATE;
+            rate = 0;
             updatePeriodic(true, true);
+        } else if (enabled && rate == 0) {
+            rate = DEFAULT_SCAN_RATE;
         }
 
         firePropertyChange("enabled", this.enabled, this.enabled = enabled);
