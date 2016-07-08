@@ -26,16 +26,36 @@ import java.util.Collection;
  * 
  */
 public class InstrumentNameValidator {
-    public static final String NAME_FORMAT = "Instrument Name invalid, must either be a known name or start with \"NDW\" and use only [a-z], [A-Z], [0-9], and _";
-    public static final String NAME_EMPTY = "Instrument Name invalid, must not be empty";
-    private static final String NO_ERROR = "";
+    /**
+     * Error message for wrong instrument name formatting.
+     */
+    public static final String NAME_FORMAT_MSG =
+            "Instrument Name invalid, must only use [a-z], [A-Z], [0-9], and _";
+
+    /**
+     * Error message for missing prefix in instrument name.
+     */
+    public static final String NAME_PREFIX_MSG = "Instrument Name invalid, must be a known name or start with \"NDW\"";
+
+    /**
+     * Error message for empty instrument name.
+     */
+    public static final String NAME_EMPTY_MSG = "Instrument Name invalid, must not be empty";
+
+    private static final String NO_ERROR_MSG = "";
     private static final String PREFIX = "NDW";
 
     private String errorMessage;
     private Collection<String> knownValidNames;
 
+    /**
+     * Creates an instance of the instrument name validator, given a list of
+     * known instrument names.
+     * 
+     * @param knownValidNames the list of known instrument names.
+     */
     public InstrumentNameValidator(Collection<String> knownValidNames) {
-        errorMessage = NO_ERROR;
+        errorMessage = NO_ERROR_MSG;
         this.knownValidNames = knownValidNames;
     }
     
@@ -50,20 +70,27 @@ public class InstrumentNameValidator {
         boolean isValid = false;
         
         if (instrumentName.isEmpty()) {
-            setErrorMessage(NAME_EMPTY);
+            setErrorMessage(NAME_EMPTY_MSG);
         } else if (nameIsKnown(instrumentName)) {
             isValid = true;
-            setErrorMessage(NO_ERROR);
-        } else if (!(instrumentName.matches(PREFIX + "[a-zA-Z0-9_]*$"))) {
-            setErrorMessage(NAME_FORMAT);
+            setErrorMessage(NO_ERROR_MSG);
+        } else if (!(instrumentName.startsWith(PREFIX))) {
+            setErrorMessage(NAME_PREFIX_MSG);
+        } else if (!(instrumentName.matches("[a-zA-Z0-9_]*$"))) {
+            setErrorMessage(NAME_FORMAT_MSG);
         } else {
             isValid = true;
-            setErrorMessage(NO_ERROR);
+            setErrorMessage(NO_ERROR_MSG);
         }
 
         return isValid;
     }
 
+    /**
+     * Gets the validation message.
+     * 
+     * @return the validation message.
+     */
     public String getErrorMessage() {
         return errorMessage;
     }
