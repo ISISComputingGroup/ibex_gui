@@ -90,13 +90,27 @@ public class BlockLogSettingsViewModel extends ErrorMessageProvider {
     public BlockLogSettingsViewModel(final Block editingBlock) {
     	this.editingBlock = editingBlock;
     	
-    	rate = editingBlock.getLogRate();
-    	deadband = editingBlock.getLogDeadband();
+        // Don't accept negative rates as input
+        rate = Math.max(editingBlock.getLogRate(), 0);
+        deadband = Math.max(editingBlock.getLogDeadband(), 0.0f);
     	
         updatePeriodic(editingBlock.getLogPeriodic(), true);
     	
-        if (periodic && rate == 0) {
-            setEnabled(false);
+        // Define enabling behaviour explicitly to avoid confusion
+        assert (rate >= 0);
+        assert (deadband >= 0.0f);
+        if (periodic) {
+            if (rate == 0) {
+                setEnabled(false);
+            } else {
+                setEnabled(true);
+            }
+        } else {
+            if (deadband == 0.0f) {
+                setEnabled(false);
+            } else {
+                setEnabled(true);
+            }
         }
     }
     
