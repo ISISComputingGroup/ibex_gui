@@ -142,12 +142,6 @@ public class ConfigEditorPanel extends Composite {
 		};
 		iocPVSets = new IocSelectorPanel(editorTabs, SWT.NONE, pvSetsFactory);
 		tbtmIocPvSets.setControl(iocPVSets);
-		
-//		TabItem summaryTab = new TabItem(editorTabs, SWT.NONE);
-//		summaryTab.setText("Summary");
-		
-//		summary = new SummaryPanel(editorTabs, SWT.NONE, dialog);
-//		summaryTab.setControl(summary);
 	}
 
 	public void setConfigToEdit(EditableConfiguration config) {		
@@ -159,7 +153,7 @@ public class ConfigEditorPanel extends Composite {
 		iocMacros.setConfig(config);
 		iocPVs.setConfig(config);
 		iocPVSets.setConfig(config);
-//		summary.setConfig(config);
+		summary.setConfig(config);
 	}
 	
 	@Override
