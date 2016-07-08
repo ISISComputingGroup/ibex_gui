@@ -129,8 +129,7 @@ public class BlockLogSettingsViewModel extends ErrorMessageProvider {
     			rate = Integer.parseInt(text);
                 if (rate <= 0) {
                     setError(true, SCAN_VALUE_ERROR);
-                }
-                else {
+                } else {
                     setError(false, null);
                 }
     		} catch (NumberFormatException e) {
