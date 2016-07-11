@@ -12,4 +12,5 @@ Bundle-ActivationPolicy: lazy
 Export-Package: uk.ac.stfc.isis.ibex.validators;uses:="org.osgi.framework"
 Import-Package: org.apache.logging.log4j,
  org.eclipse.core.databinding.validation,
+ uk.ac.stfc.isis.ibex.instrument.internal,
  uk.ac.stfc.isis.ibex.logger
