@@ -19,11 +19,16 @@
 
 package uk.ac.stfc.isis.ibex.ui.devicescreens.list;
 
+import java.util.Map;
+
 import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
 
+import uk.ac.stfc.isis.ibex.devicescreens.desc.ComponentType;
 import uk.ac.stfc.isis.ibex.devicescreens.desc.DeviceDescription;
+import uk.ac.stfc.isis.ibex.opis.Opi;
+import uk.ac.stfc.isis.ibex.opis.desc.OpiDescription;
 import uk.ac.stfc.isis.ibex.ui.devicescreens.ComponentIcons;
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundCellLabelProvider;
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundTable;
@@ -81,7 +86,7 @@ public class DeviceScreensTable extends DataboundTable<DeviceDescription> {
 	
     private void type() {
         TableViewerColumn name = createColumn("Type", 1);
-        name.setLabelProvider(new DataboundCellLabelProvider<DeviceDescription>(observeProperty("componentType")) {
+        name.setLabelProvider(new DataboundCellLabelProvider<DeviceDescription>(observeProperty("key")) {
             @Override
             protected String valueFromRow(DeviceDescription row) {
                 return null;
@@ -89,7 +94,18 @@ public class DeviceScreensTable extends DataboundTable<DeviceDescription> {
 
             @Override
             protected Image imageFromRow(DeviceDescription row) {
-                return ComponentIcons.thumbnailForType(row.getComponentType());
+                Map<String, OpiDescription> opis = Opi.getDefault().descriptionsProvider().getDescriptions().getOpis();
+                ComponentType component;
+                try {
+                    OpiDescription opiDescription = opis.get(row.getKey());
+                    component = ComponentType.valueOf(opiDescription.getType());
+                }
+                catch (IllegalArgumentException | NullPointerException ex) {
+                    // caught when the OPI does not hold the key, when the
+                    // description has no type or it does not match an enum
+                    component = ComponentType.UNKNOWN;
+                }
+                return ComponentIcons.thumbnailForType(component);
             }
         });
     }

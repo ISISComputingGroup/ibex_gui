@@ -101,7 +101,7 @@ public class DeviceDescriptionTest {
     }
 
     @Test
-    public void GIVE_new_device_description_THEN_properties_can_be_added() {
+    public void GIVEN_new_device_description_THEN_properties_can_be_added() {
         // Arrange
         PropertyDescription property1 = new PropertyDescription("key1", "value1");
         PropertyDescription property2 = new PropertyDescription("key2", "value2");

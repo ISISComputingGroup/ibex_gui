@@ -106,24 +106,4 @@ public class DeviceDescription extends ModelObject {
     public void addProperty(PropertyDescription property) {
         properties.addProperty(property);
     }
-
-
-    /**
-     * Gets the component type of this device description.
-     *
-     * @return the component type (based on the key); if the key doesn't match
-     *         return UNKNOWN, if null return null
-     */
-    public ComponentType getComponentType() {
-        String componentTypeName = getKey();
-        if (componentTypeName == null) {
-            return null;
-        }
-        try {
-            return ComponentType.valueOf(componentTypeName);
-        } catch (IllegalArgumentException ex) {
-            return ComponentType.UNKNOWN;
-        }
-        // TODO test
-    }
 }
