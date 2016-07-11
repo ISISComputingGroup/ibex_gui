@@ -47,6 +47,9 @@ import uk.ac.stfc.isis.ibex.dae.experimentsetup.timechannels.TimeRegime;
 import uk.ac.stfc.isis.ibex.dae.experimentsetup.timechannels.TimeUnit;
 import uk.ac.stfc.isis.ibex.ui.Utils;
 
+/**
+ * Panel containing all controls for time channel settings of an experiment.
+ */
 public class TimeChannelsPanel extends Composite {
     private Composite tcbSettingsSwitchPanel;
     private Composite tcbFilePanel;
@@ -64,7 +67,13 @@ public class TimeChannelsPanel extends Composite {
 
     private FontData fontdata;
 	private static final Display DISPLAY = Display.getCurrent();
-	
+
+    /**
+     * Constructor for the time channel settings panel.
+     * 
+     * @param parent the parent composite
+     * @param style the SWT style
+     */
     @SuppressWarnings({ "checkstyle:magicnumber", "checkstyle:localvariablename" })
 	public TimeChannelsPanel(Composite parent, int style) {
 
@@ -100,7 +109,12 @@ public class TimeChannelsPanel extends Composite {
         timeRegimesPanel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
         timeRegimesPanel.setLayout(new GridLayout(3, false));
 	}
-	
+
+    /**
+     * Binds model parameters to GUI elements.
+     * 
+     * @param viewModel The time channel settings model
+     */
 	public void setModel(final TimeChannelsViewModel viewModel) {
         this.viewModel = viewModel;
 
@@ -122,14 +136,17 @@ public class TimeChannelsPanel extends Composite {
         viewModel.addPropertyChangeListener("calculationMethod", new PropertyChangeListener() {
             @Override
             public void propertyChange(PropertyChangeEvent evt) {
-                updateCalcMethodSelection(viewModel.getCalculationMethod());
+                setCalculationMethod(viewModel.getCalculationMethod());
             }
         });
 
         updateTimeRegimes();
-        updateCalcMethodSelection(viewModel.getCalculationMethod());
+        setCalculationMethod(viewModel.getCalculationMethod());
 	}
 	
+    /**
+     * Updates time regime tables.
+     */
 	private void updateTimeRegimes() {
 		DISPLAY.asyncExec(new Runnable() {
 			@Override
@@ -157,6 +174,9 @@ public class TimeChannelsPanel extends Composite {
 
 	}
 
+    /**
+     * Clear all existing time regime tables.
+     */
 	private void clearExistingTimeRegimeViews() {
 		for (TimeRegimeView view : timeRegimeViews) {
 			view.dispose();
@@ -164,26 +184,23 @@ public class TimeChannelsPanel extends Composite {
 		timeRegimeViews.clear();
 	}
 
-    private void updateCalcMethodSelection(CalculationMethod method) {
+    /**
+     * Sets new calculation method and updates GUI elements accordingly.
+     * 
+     * @param method the new calculation method
+     */
+    private void setCalculationMethod(CalculationMethod method) {
+        viewModel.setCalculationMethod(method);
         switch (method) {
             case USE_TCB_FILE:
                 radioUseTCBFile.setSelection(true);
+                stack.topControl = tcbFilePanel;
                 break;
             case SPECIFY_PARAMETERS:
             default:
                 radioSpecifyParameters.setSelection(true);
+                stack.topControl = timeRegimesPanel;
                 break;
-        }
-        methodSelectionChanged();
-    }
-
-    private void methodSelectionChanged() {
-        if (radioUseTCBFile.getSelection()) {
-            stack.topControl = tcbFilePanel;
-            viewModel.setCalculationMethod(CalculationMethod.USE_TCB_FILE);
-        } else {
-            stack.topControl = timeRegimesPanel;
-            viewModel.setCalculationMethod(CalculationMethod.SPECIFY_PARAMETERS);
         }
     }
 
@@ -204,7 +221,11 @@ public class TimeChannelsPanel extends Composite {
         SelectionListener listener = new SelectionListener() {
             @Override
             public void widgetSelected(SelectionEvent e) {
-                methodSelectionChanged();
+                if (radioUseTCBFile.getSelection()) {
+                    setCalculationMethod(CalculationMethod.USE_TCB_FILE);
+                } else {
+                    setCalculationMethod(CalculationMethod.SPECIFY_PARAMETERS);
+                }
                 tcbSettingsSwitchPanel.layout();
             }
 
@@ -243,7 +264,7 @@ public class TimeChannelsPanel extends Composite {
 
         timeChannelFile = new Combo(timeChannelFileContent, SWT.DROP_DOWN | SWT.READ_ONLY);
         GridData gdTimeChannelFile = new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1);
-        gdTimeChannelFile.widthHint = 400;
+//        gdTimeChannelFile.widthHint = 400;
         timeChannelFile.setLayoutData(gdTimeChannelFile);
     }
 }

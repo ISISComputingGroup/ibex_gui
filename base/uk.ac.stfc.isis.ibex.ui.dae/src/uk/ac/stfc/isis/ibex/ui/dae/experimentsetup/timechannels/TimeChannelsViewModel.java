@@ -31,10 +31,19 @@ import uk.ac.stfc.isis.ibex.dae.experimentsetup.timechannels.TimeUnit;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 import uk.ac.stfc.isis.ibex.model.UpdatedValue;
 
+/**
+ * Model of time channel settings read by the GUI.
+ */
 public class TimeChannelsViewModel extends ModelObject {
 
 	private TimeChannels model;
-	
+
+    /**
+     * Binds Listeners to the time channel settings model used to update the
+     * GUI.
+     * 
+     * @param timeChannels the time channel settings model
+     */
 	public void setModel(TimeChannels timeChannels) {
 		model = timeChannels;
 		
@@ -74,14 +83,30 @@ public class TimeChannelsViewModel extends ModelObject {
         });
 	}
 	
+    /**
+     * A list of all time regimes used to manually define time channel settings.
+     * 
+     * @return the list of time regimes
+     */
 	public List<TimeRegime> timeRegimes() {		
 		return model.timeRegimes();
 	}
 
+    /**
+     * Return the currently selected file from which to read time channel
+     * settings.
+     * 
+     * @return the path to the file
+     */
 	public String getTimeChannelFile() {
 		return model.timeChannelFile();
 	}
 	
+    /**
+     * Set the currently selected file from which to read time channel settings.
+     * 
+     * @param value the path to the file
+     */
 	public void setTimeChannelFile(String value) {
 		model.setTimeChannelFile(value);
 	}
@@ -105,18 +130,43 @@ public class TimeChannelsViewModel extends ModelObject {
         model.setTimeChannelFileList(files);
     }
 
+    /**
+     * Returns the method used to determine time channel calculation parameters
+     * (either read from file or specify parameters manually).
+     * 
+     * @return the calculation method
+     */
     public CalculationMethod getCalculationMethod() {
         return model.calculationMethod();
 	}
 
-    public void setCalculationMethod(CalculationMethod value) {
-		model.setCalculationMethod(value);
+    /**
+     * Sets the method used to determine time channel calculation parameters
+     * (either read from file or specify parameters manually).
+     * 
+     * @param method the calculation method
+     */
+    public void setCalculationMethod(CalculationMethod method) {
+		model.setCalculationMethod(method);
 	}
-	
+
+    /**
+     * Returns the time unit used for time channel calculations (micro- or
+     * nanoseconds). Converts from time unit value to list position for binding
+     * to a dropdown selection.
+     * 
+     * @return the index of the time unit
+     */
 	public int getTimeUnit() {
 		return model.timeUnit().ordinal();
 	}
-	
+
+    /**
+     * Sets the time unit used for time channel calculations (micro- or
+     * nanoseconds). Converts from list position to time unit value.
+     * 
+     * @param index the index of the time unit
+     */
 	public void setTimeUnit(int index) {
 		TimeUnit value = TimeUnit.values()[index];
 		model.setTimeUnit(value);

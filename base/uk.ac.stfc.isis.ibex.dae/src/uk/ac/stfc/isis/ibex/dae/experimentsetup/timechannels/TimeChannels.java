@@ -28,6 +28,9 @@ import java.util.List;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 import uk.ac.stfc.isis.ibex.model.UpdatedValue;
 
+/**
+ * Observable object of time channel model.
+ */
 public class TimeChannels extends ModelObject {
 
 	private List<TimeRegime> timeRegimes = new ArrayList<>();
@@ -79,19 +82,43 @@ public class TimeChannels extends ModelObject {
         });
     }
 
+    /**
+     * Returns the time unit used for time channel calculations (micro- or
+     * nanoseconds).
+     * 
+     * @return the time unit
+     */
 	public TimeUnit timeUnit() {
 		return timeUnit;
 	}
 
+    /**
+     * Sets the time unit used for time channel calculations (micro- or
+     * nanoseconds).
+     * 
+     * @param value the time unit
+     */
 	public void setTimeUnit(TimeUnit value) {
 		firePropertyChange("timeUnit", timeUnit, timeUnit = value);
 	}
 
+    /**
+     * Returns the method used to determine time channel calculation parameters
+     * (either read from file or specify parameters manually).
+     * 
+     * @return the calculation method
+     */
 	public CalculationMethod calculationMethod() {
 		return calculationMethod;
 	}
-	
-	public void setCalculationMethod(CalculationMethod value) {
-		firePropertyChange("calculationMethod", calculationMethod, calculationMethod = value);
+
+    /**
+     * Sets the method used to determine time channel calculation parameters
+     * (either read from file or specify parameters manually).
+     * 
+     * @param method the calculation method
+     */
+	public void setCalculationMethod(CalculationMethod method) {
+		firePropertyChange("calculationMethod", calculationMethod, calculationMethod = method);
 	}
 }
