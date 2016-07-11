@@ -30,6 +30,8 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import uk.ac.stfc.isis.ibex.model.ModelObject;
+
 /**
  * This class describes the device element of the device screens xml format.
  * 
@@ -38,7 +40,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @XmlRootElement(name = "device")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class DeviceDescription {
+public class DeviceDescription extends ModelObject {
 
     /**
      * Type when the device screen is an OPI
@@ -63,7 +65,8 @@ public class DeviceDescription {
     }
 
     /**
-     * @return the key, the subtype of the type, e.g. EUROTHERM
+     * @return the resource key, for an OPI this is the key within the OPI
+     *         descriptions file, e.g. Eurotherm
      */
     public String getKey() {
         return key;
@@ -117,7 +120,6 @@ public class DeviceDescription {
             return null;
         }
         try {
-
             return ComponentType.valueOf(componentTypeName);
         } catch (IllegalArgumentException ex) {
             return ComponentType.UNKNOWN;

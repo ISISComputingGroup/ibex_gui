@@ -58,7 +58,8 @@ public class DeviceScreensView extends ViewPart {
     public void createPartControl(Composite parent) {
         parent.setLayout(new FillLayout(SWT.HORIZONTAL));
         Panel panel = new Panel(parent, SWT.NONE);
-        displayOpi("New component", "Linkam 95");
+
+        // displayOpi("New component", "Linkam 95");
     }
 
     @Override

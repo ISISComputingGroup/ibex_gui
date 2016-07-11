@@ -50,6 +50,11 @@ import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.wb.swt.SWTResourceManager;
 
+/**
+ * A table which is bound to some data in the standard IBEX style.
+ * 
+ * @param <TRow> the type for a row within the table
+ */
 public abstract class DataboundTable<TRow> extends Composite {
 
     private static final int DEFAULT_FONT_HEIGHT = 10;
@@ -64,6 +69,14 @@ public abstract class DataboundTable<TRow> extends Composite {
 	
 	private Class<TRow> rowType;
 	
+    /**
+     * Instantiates a new databound table.
+     *
+     * @param parent the parent
+     * @param style the style
+     * @param rowType the row type
+     * @param tableStyle the table style
+     */
 	public DataboundTable(Composite parent, int style, Class<TRow> rowType, int tableStyle) {
 		super(parent, style);
 		this.tableStyle = tableStyle;
@@ -86,32 +99,82 @@ public abstract class DataboundTable<TRow> extends Composite {
 		table = viewer.getTable();
 	}
 	
+
 	/**
-	 * @wbp.parser.constructor
-	 */
+     * Instantiates a new databound table with default table style.
+     *
+     * Default table style is: vertical scroll, with border, full selection of
+     * items and selection is hidden on loss of focus
+     * 
+     * @param parent the parent
+     * @param style the style
+     * @param rowType the row type
+     * @wbp.parser.constructor
+     */
 	public DataboundTable(Composite parent, int style, Class<TRow> rowType) {
 		this(parent, style, rowType, SWT.V_SCROLL | SWT.FULL_SELECTION | SWT.BORDER | SWT.HIDE_SELECTION);
 	}
 
+    /**
+     * Sets the data rows content.
+     *
+     * @param rows the new rows
+     */
 	public void setRows(Collection<TRow> rows) {
 		if (!table.isDisposed()) {
 			viewer.setInput(new WritableList(rows, rowType.getClass()));
 		}
 	}
 	
+    /**
+     * First selected row.
+     *
+     * @return the t row
+     */
 	public TRow firstSelectedRow() {
 		List<TRow> rows = selectedRows();
 	    return rows.isEmpty() ? null : rows.get(0);
 	}
 	
+    /**
+     * Gets the selection index.
+     *
+     * @return the selection index
+     */
 	public int getSelectionIndex() {
 		return table.getSelectionIndex();
 	}
 	
+    /**
+     * Sets the selection index.
+     *
+     * @param index the new selection index
+     */
 	public void setSelectionIndex(int index) {
 		table.setSelection(index);
 	}
 	
+    /**
+     * Sets the selected row based on a row.
+     *
+     * @param selected the newly selected row
+     */
+    public void setSelected(TRow selected) {
+        viewer.setSelection(new StructuredSelection(selected));
+    }
+
+    /**
+     * Deselect all rows.
+     */
+    public void deselectAll() {
+        table().deselectAll();
+    }
+
+    /**
+     * Selected rows.
+     *
+     * @return the selected rows
+     */
 	@SuppressWarnings("unchecked")
 	public List<TRow> selectedRows() {
 	    IStructuredSelection selection = (IStructuredSelection) viewer().getSelection();
@@ -130,15 +193,7 @@ public abstract class DataboundTable<TRow> extends Composite {
 			table = viewer.getTable();
 		}
 	}
-	
-	public void setSelected(TRow selected) {
-		viewer.setSelection(new StructuredSelection(selected));
-	}
-	
-	public void deselectAll() {
-		table().deselectAll();
-	}
-	
+
 	@Override
 	public void setBackground(Color color) {
 		super.setBackground(color);
@@ -151,9 +206,11 @@ public abstract class DataboundTable<TRow> extends Composite {
 		table().setFont(font);
 	}
 	
-	/*
-	 * Sets whether the table should be included in layout calculations
-	 */
+    /**
+     * Sets whether the table should be included in layout calculations.
+     * 
+     * @param isExcluded true for included; false otherwise
+     */
 	public void setExcluded(boolean isExcluded) {
 		GridData gridData = (GridData) tableComposite().getLayoutData();
 		gridData.exclude = isExcluded;	
@@ -171,10 +228,20 @@ public abstract class DataboundTable<TRow> extends Composite {
 		table.addMouseListener(listener);
 	}
 	
+    /**
+     * Adds the selection changed listener.
+     *
+     * @param listener the listener
+     */
 	public void addSelectionChangedListener(ISelectionChangedListener listener) {
 		viewer().addSelectionChangedListener(listener);
 	}
 
+    /**
+     * Removes the selection changed listener.
+     *
+     * @param listener the listener
+     */
 	public void removeSelectionChangedListener(ISelectionChangedListener listener) {
 		viewer().removeSelectionChangedListener(listener);
 	}
@@ -198,9 +265,9 @@ public abstract class DataboundTable<TRow> extends Composite {
 		tableComposite.setEnabled(enabled);
 	}
 	
-	/*
-	 * Completes the setup of the table.
-	 */
+    /**
+     * Completes the setup of the table.
+     */
 	protected void initialise() {
 		addColumns();
 		viewer.setContentProvider(contentProvider);	
@@ -209,17 +276,29 @@ public abstract class DataboundTable<TRow> extends Composite {
 		configureTable();
 	}
 	
+    /**
+     * Viewer for the table.
+     *
+     * @return the table viewer
+     */
 	protected TableViewer viewer() { 
 		return viewer;
 	}
 
+    /**
+     * Underlying table.
+     *
+     * @return the table
+     */
 	protected Table table() { 
 		return table;
 	}
 
-	/*
-	 * Table is wrapped in a composite to allow TableColumnLayout to work.
-	 */
+    /**
+     * Table is wrapped in a composite to allow TableColumnLayout to work.
+     * 
+     * @return table composite
+     */
 	protected Composite tableComposite() { 
 		return tableComposite;
 	}
@@ -228,24 +307,38 @@ public abstract class DataboundTable<TRow> extends Composite {
 		return tableColumnLayout;
 	}
 	
-	/*
-	 * Viewer should be created with tableComposite() as it's parent.
-	 */
+    /**
+     * Viewer should be created with tableComposite() as it's parent.
+     * 
+     * @return viewer
+     */
 	protected TableViewer createViewer() {
 		return viewer = new TableViewer(tableComposite, tableStyle);
 	}
 	
-	/*
-	 * Adds columns to the table. Call {@link #initialise() initialise} method to complete.
-	 */
+    /**
+     * Adds columns to the table. Call {@link #initialise() initialise} method
+     * to complete.
+     */
 	protected abstract void addColumns();
 
+    /**
+     * Configure table properties after table creation but during
+     * initialisation. Override to customise table appearance.
+     */
 	protected void configureTable() {
 		table.setLinesVisible(true);
 		table.setHeaderVisible(true);
         table.setFont(SWTResourceManager.getFont("Arial", DEFAULT_FONT_HEIGHT, SWT.NORMAL));
 	}
 	
+    /**
+     * Creates a new non resizeable column in the table at the end of the column
+     * list.
+     *
+     * @param title the title of the column
+     * @return the table viewer column
+     */
 	protected TableViewerColumn createColumn(String title) {
 		TableViewerColumn viewCol = new TableViewerColumn(viewer, SWT.LEFT);
 		TableColumn col = viewCol.getColumn();
@@ -255,6 +348,14 @@ public abstract class DataboundTable<TRow> extends Composite {
 		return viewCol;
 	}
 	
+    /**
+     * Creates a new non resizeable column in the table at the end of the column
+     * list with a weighting for its size.
+     *
+     * @param title the title of the column
+     * @param widthWeighting the width weighting
+     * @return the table viewer column
+     */
 	protected TableViewerColumn createColumn(String title, int widthWeighting) {
 		TableViewerColumn tableColumn = createColumn(title);
         tableColumnLayout().setColumnData(tableColumn.getColumn(),
