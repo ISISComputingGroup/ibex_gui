@@ -49,7 +49,7 @@ import uk.ac.stfc.isis.ibex.dae.experimentsetup.timechannels.TimeUnit;
 import uk.ac.stfc.isis.ibex.ui.Utils;
 
 public class TimeChannelsPanel extends Composite {
-    private Group timeChannelSettings;
+    private Composite tcbSettingsSwitchPanel;
     private Composite tcbFilePanel;
     private Composite timeRegimesPanel;
 	private List<TimeRegimeView> timeRegimeViews = new ArrayList<TimeRegimeView>();
@@ -62,12 +62,15 @@ public class TimeChannelsPanel extends Composite {
     private Combo timeChannelFile;
     Button radioSpecifyParameters;
     Button radioUseTCBFile;
+    private CalculationMethod calculationMethod;
 
     private FontData fontdata;
 	private static final Display DISPLAY = Display.getCurrent();
 	
     @SuppressWarnings({ "checkstyle:magicnumber", "checkstyle:localvariablename" })
 	public TimeChannelsPanel(Composite parent, int style) {
+
+        // Set window spacing parameters
 		super(parent, style);
         GridLayout glParent = new GridLayout(1, false);
         glParent.verticalSpacing = 15;
@@ -78,8 +81,6 @@ public class TimeChannelsPanel extends Composite {
 //        Group calculationMethodSelector = new Group(this, SWT.NONE);
 //        calculationMethodSelector.setText("Select Calculation Method");
 //        calculationMethodSelector.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
-
-
 //        Label lblCalculationMethod = new Label(parameters, SWT.NONE);
 //        lblCalculationMethod.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 //        lblCalculationMethod.setText("Calculation Method:");
@@ -90,21 +91,24 @@ public class TimeChannelsPanel extends Composite {
         lblSelectionMethod.setText("Select Calculation Method: ");
         fontdata = lblSelectionMethod.getFont().getFontData()[0];
         lblSelectionMethod.setFont(SWTResourceManager.getFont(fontdata.getName(), fontdata.getHeight(), SWT.BOLD));
-
         addMethodSelectionPanel(this);
-        addTimeUnitPanel(this);
 
-        timeChannelSettings = new Group(this, SWT.NONE);
-        timeChannelSettings.setText("Time Channel Settings");
-        timeChannelSettings.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+        Group tcbSettings = new Group(this, SWT.NONE);
+        tcbSettings.setText("Time Channel Settings");
+        tcbSettings.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+        tcbSettings.setLayout(new GridLayout(1, false));
+        addTimeUnitPanel(tcbSettings);
+
+        tcbSettingsSwitchPanel = new Composite(tcbSettings, SWT.NONE);
+        tcbSettingsSwitchPanel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
         stack = new StackLayout();
-        timeChannelSettings.setLayout(stack);
+        tcbSettingsSwitchPanel.setLayout(stack);
 
-        tcbFilePanel = new Composite(timeChannelSettings, SWT.NONE);
+        tcbFilePanel = new Composite(tcbSettingsSwitchPanel, SWT.NONE);
         tcbFilePanel.setLayout(new GridLayout(1, false));
         addTimeChannelFilePanel(tcbFilePanel);
 
-        timeRegimesPanel = new Composite(timeChannelSettings, SWT.FILL);
+        timeRegimesPanel = new Composite(tcbSettingsSwitchPanel, SWT.FILL);
         timeRegimesPanel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
         timeRegimesPanel.setLayout(new GridLayout(3, false));
 	}
@@ -123,12 +127,12 @@ public class TimeChannelsPanel extends Composite {
         bindingContext = new DataBindingContext();
         bindingContext.bindValue(WidgetProperties.singleSelectionIndex().observe(timeUnit),
                 BeanProperties.value("timeUnit").observe(viewModel));
-//        bindingContext.bindValue(WidgetProperties.singleSelectionIndex().observe(calculationMethod),
-//                BeanProperties.value("calculationMethod").observe(viewModel));
-//        bindingContext.bindList(WidgetProperties.items().observe(timeChannelFile),
-//                BeanProperties.list("timeChannelFileList").observe(viewModel));
-//        bindingContext.bindValue(WidgetProperties.selection().observe(timeChannelFile),
-//                BeanProperties.value("timeChannelFile").observe(viewModel));
+        bindingContext.bindValue(WidgetProperties.selection().observe(calculationMethod),
+                BeanProperties.value("calculationMethod").observe(viewModel));
+        bindingContext.bindList(WidgetProperties.items().observe(timeChannelFile),
+                BeanProperties.list("timeChannelFileList").observe(viewModel));
+        bindingContext.bindValue(WidgetProperties.selection().observe(timeChannelFile),
+                BeanProperties.value("timeChannelFile").observe(viewModel));
 
 		updateTimeRegimes();
 		viewModel.addPropertyChangeListener("timeRegimes", new PropertyChangeListener() {		
@@ -198,12 +202,8 @@ public class TimeChannelsPanel extends Composite {
         SelectionListener listener = new SelectionListener() {
             @Override
             public void widgetSelected(SelectionEvent e) {
-                if (getSelection() == CalculationMethod.USE_TCB_FILE) {
-                    stack.topControl = tcbFilePanel;
-                } else {
-                    stack.topControl = timeRegimesPanel;
-                }
-                timeChannelSettings.layout();
+                switchSettingsPanel();
+                tcbSettingsSwitchPanel.layout();
             }
 
             @Override
@@ -245,12 +245,21 @@ public class TimeChannelsPanel extends Composite {
         timeChannelFile.setLayoutData(gdTimeChannelFile);
     }
 
-    public CalculationMethod getSelection() {
-
+    public void switchSettingsPanel() {
         if (radioUseTCBFile.getSelection()) {
-            return CalculationMethod.USE_TCB_FILE;
+            setCalculationMethod(CalculationMethod.USE_TCB_FILE);
+            stack.topControl = tcbFilePanel;
         } else {
-            return CalculationMethod.SPECIFY_PARAMETERS;
+            setCalculationMethod(CalculationMethod.SPECIFY_PARAMETERS);
+            stack.topControl = timeRegimesPanel;
         }
+    }
+
+    public void setCalculationMethod(CalculationMethod method) {
+        calculationMethod = method;
+    }
+
+    public CalculationMethod getCalculationMethod() {
+        return calculationMethod;
     }
 }
