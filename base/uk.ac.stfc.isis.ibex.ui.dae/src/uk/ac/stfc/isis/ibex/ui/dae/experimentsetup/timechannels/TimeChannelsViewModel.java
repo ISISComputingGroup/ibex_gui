@@ -105,12 +105,11 @@ public class TimeChannelsViewModel extends ModelObject {
         model.setTimeChannelFileList(files);
     }
 
-	public int getCalculationMethod() {	
-		return model.calculationMethod().ordinal();
+    public CalculationMethod getCalculationMethod() {
+        return model.calculationMethod();
 	}
 
-	public void setCalculationMethod(int index) {
-		CalculationMethod value = CalculationMethod.values()[index];
+    public void setCalculationMethod(CalculationMethod value) {
 		model.setCalculationMethod(value);
 	}
 	

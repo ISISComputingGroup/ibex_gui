@@ -38,7 +38,6 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.wb.swt.SWTResourceManager;
@@ -62,7 +61,6 @@ public class TimeChannelsPanel extends Composite {
     private Combo timeChannelFile;
     Button radioSpecifyParameters;
     Button radioUseTCBFile;
-    private CalculationMethod calculationMethod;
 
     private FontData fontdata;
 	private static final Display DISPLAY = Display.getCurrent();
@@ -70,22 +68,12 @@ public class TimeChannelsPanel extends Composite {
     @SuppressWarnings({ "checkstyle:magicnumber", "checkstyle:localvariablename" })
 	public TimeChannelsPanel(Composite parent, int style) {
 
-        // Set window spacing parameters
 		super(parent, style);
         GridLayout glParent = new GridLayout(1, false);
         glParent.verticalSpacing = 15;
         glParent.marginTop = 5;
         glParent.marginLeft = 5;
         setLayout(glParent);
-
-//        Group calculationMethodSelector = new Group(this, SWT.NONE);
-//        calculationMethodSelector.setText("Select Calculation Method");
-//        calculationMethodSelector.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
-//        Label lblCalculationMethod = new Label(parameters, SWT.NONE);
-//        lblCalculationMethod.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-//        lblCalculationMethod.setText("Calculation Method:");
-
-        String[] calcMethodNames = CalculationMethod.allToString().toArray(new String[0]);
 
         Label lblSelectionMethod = new Label(this, SWT.NONE);
         lblSelectionMethod.setText("Select Calculation Method: ");
@@ -114,33 +102,32 @@ public class TimeChannelsPanel extends Composite {
 	}
 	
 	public void setModel(final TimeChannelsViewModel viewModel) {
-		this.viewModel = viewModel;
-//        SelectObservableValue test = new SelectObservableValue(CalculationMethod.class);
-//
-//        IObservableValue radioSpecifyParametersObserveSelection =
-//                SWTObservables.observeSelection(radioSpecifyParameters);
-//        test.addOption(CalculationMethod.SPECIFY_PARAMETERS, radioSpecifyParametersObserveSelection);
-//
-//        IObservableValue radioReadFromFileObserveSelection = SWTObservables.observeSelection(radioReadFromFile);
-//        test.addOption(CalculationMethod.USE_TCB_FILE, radioReadFromFileObserveSelection);
-//
+        this.viewModel = viewModel;
+
         bindingContext = new DataBindingContext();
         bindingContext.bindValue(WidgetProperties.singleSelectionIndex().observe(timeUnit),
                 BeanProperties.value("timeUnit").observe(viewModel));
-        bindingContext.bindValue(WidgetProperties.selection().observe(calculationMethod),
-                BeanProperties.value("calculationMethod").observe(viewModel));
         bindingContext.bindList(WidgetProperties.items().observe(timeChannelFile),
                 BeanProperties.list("timeChannelFileList").observe(viewModel));
         bindingContext.bindValue(WidgetProperties.selection().observe(timeChannelFile),
                 BeanProperties.value("timeChannelFile").observe(viewModel));
 
-		updateTimeRegimes();
 		viewModel.addPropertyChangeListener("timeRegimes", new PropertyChangeListener() {		
 			@Override
 			public void propertyChange(PropertyChangeEvent evt) {
 				updateTimeRegimes();
 			}
 		});
+
+        viewModel.addPropertyChangeListener("calculationMethod", new PropertyChangeListener() {
+            @Override
+            public void propertyChange(PropertyChangeEvent evt) {
+                updateCalcMethodSelection(viewModel.getCalculationMethod());
+            }
+        });
+
+        updateTimeRegimes();
+        updateCalcMethodSelection(viewModel.getCalculationMethod());
 	}
 	
 	private void updateTimeRegimes() {
@@ -177,11 +164,26 @@ public class TimeChannelsPanel extends Composite {
 		timeRegimeViews.clear();
 	}
 
-    private void displayFileDialog() {
-        FileDialog dialog = new FileDialog(this.getShell(), SWT.SINGLE);
-        String filePath = dialog.open();
-        if (filePath != null) {
-            timeChannelFile.setText(filePath);
+    private void updateCalcMethodSelection(CalculationMethod method) {
+        switch (method) {
+            case USE_TCB_FILE:
+                radioUseTCBFile.setSelection(true);
+                break;
+            case SPECIFY_PARAMETERS:
+            default:
+                radioSpecifyParameters.setSelection(true);
+                break;
+        }
+        methodSelectionChanged();
+    }
+
+    private void methodSelectionChanged() {
+        if (radioUseTCBFile.getSelection()) {
+            stack.topControl = tcbFilePanel;
+            viewModel.setCalculationMethod(CalculationMethod.USE_TCB_FILE);
+        } else {
+            stack.topControl = timeRegimesPanel;
+            viewModel.setCalculationMethod(CalculationMethod.SPECIFY_PARAMETERS);
         }
     }
 
@@ -202,7 +204,7 @@ public class TimeChannelsPanel extends Composite {
         SelectionListener listener = new SelectionListener() {
             @Override
             public void widgetSelected(SelectionEvent e) {
-                switchSettingsPanel();
+                methodSelectionChanged();
                 tcbSettingsSwitchPanel.layout();
             }
 
@@ -219,7 +221,7 @@ public class TimeChannelsPanel extends Composite {
         Composite timeUnitPanel = new Composite(parent, SWT.NONE);
         timeUnitPanel.setLayout(new GridLayout(2, false));
         timeUnitPanel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-        
+
         Label lblTimeUnit = new Label(timeUnitPanel, SWT.NONE);
         lblTimeUnit.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
         lblTimeUnit.setText("Time Unit:");
@@ -243,23 +245,5 @@ public class TimeChannelsPanel extends Composite {
         GridData gdTimeChannelFile = new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1);
         gdTimeChannelFile.widthHint = 400;
         timeChannelFile.setLayoutData(gdTimeChannelFile);
-    }
-
-    public void switchSettingsPanel() {
-        if (radioUseTCBFile.getSelection()) {
-            setCalculationMethod(CalculationMethod.USE_TCB_FILE);
-            stack.topControl = tcbFilePanel;
-        } else {
-            setCalculationMethod(CalculationMethod.SPECIFY_PARAMETERS);
-            stack.topControl = timeRegimesPanel;
-        }
-    }
-
-    public void setCalculationMethod(CalculationMethod method) {
-        calculationMethod = method;
-    }
-
-    public CalculationMethod getCalculationMethod() {
-        return calculationMethod;
     }
 }
