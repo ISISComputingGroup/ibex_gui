@@ -49,7 +49,7 @@ public class WritableObservingTextBox extends Composite {
 	public WritableObservingTextBox(
 			Composite parent, 
 			int style, 
-			WritableObservableAdapter adapter) {
+			StringWritableObservableAdapter adapter) {
 		super(parent, style);
 		int numCols = (style & SWT.UP) != 0 ? 1 : 2;
 		GridLayout gridLayout = new GridLayout(numCols, false);
@@ -71,7 +71,7 @@ public class WritableObservingTextBox extends Composite {
 		}
 	}
 
-	private void bind(final WritableObservableAdapter adapter) {
+	private void bind(final StringWritableObservableAdapter adapter) {
 		bindingContext = new DataBindingContext();	
 		bindingContext.bindValue(WidgetProperties.enabled().observe(setButton), BeanProperties.value("value").observe(adapter.canSetText()));
 		bindingContext.bindValue(WidgetProperties.enabled().observe(textbox), BeanProperties.value("value").observe(adapter.canSetText()));
@@ -95,7 +95,7 @@ public class WritableObservingTextBox extends Composite {
 		});
 	}
 	
-	private void setText(WritableObservableAdapter adapter) {
+	private void setText(StringWritableObservableAdapter adapter) {
 		adapter.setText(textbox.getText());
 	}
 }

@@ -20,14 +20,14 @@
 package uk.ac.stfc.isis.ibex.ui.dashboard.views;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Font;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Label;
 import org.eclipse.ui.ISizeProvider;
 import org.eclipse.ui.part.ViewPart;
 import org.eclipse.wb.swt.SWTResourceManager;
-import org.eclipse.swt.graphics.Font;
-import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.widgets.Label;
 
 import uk.ac.stfc.isis.ibex.dashboard.Dashboard;
 import uk.ac.stfc.isis.ibex.ui.dashboard.models.BannerModel;
@@ -63,7 +63,8 @@ public class DashboardView extends ViewPart implements ISizeProvider {
 	private final MonitorPanelModel monitorsModel = new MonitorPanelModel(dashboard.observables());
 	private final TimePanelModel timesModel = new TimePanelModel(dashboard.observables());
 	
-	public void createPartControl(Composite parent) {
+	@Override
+    public void createPartControl(Composite parent) {
 		GridLayout glParent = new GridLayout(3, false);
 		glParent.marginHeight = 0;
 		glParent.marginWidth = 0;

@@ -32,6 +32,7 @@ public class BooleanChannel implements ChannelType<Boolean> {
 
 	@Override
     public BaseWritable<Boolean> writer(String address) {
+        // Not supported by PVManager. Use Long instead.
 		throw new UnsupportedOperationException();
 	}
 }
