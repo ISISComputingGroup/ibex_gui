@@ -118,7 +118,10 @@ public class TimeChannelsViewModel extends ModelObject {
      * @return the file paths as string array
      */
     public String[] getTimeChannelFileList() {
-        return valueOrEmpty(model.timeChannelFileList());
+        String[] items = valueOrEmpty(model.timeChannelFileList());
+        items = items.length != 0 ? items : new String[] {
+                "No TCB File found on instrument. Files must be located in C:\\Instrument\\Settings\\config\\[Instrument Name]\\configuration\\tcb\\ and filename must contain string \"tcb\"." };
+        return items;
     }
 
     /**

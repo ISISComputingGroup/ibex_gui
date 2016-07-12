@@ -264,7 +264,6 @@ public class TimeChannelsPanel extends Composite {
 
         timeChannelFile = new Combo(timeChannelFileContent, SWT.DROP_DOWN | SWT.READ_ONLY);
         GridData gdTimeChannelFile = new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1);
-//        gdTimeChannelFile.widthHint = 400;
         timeChannelFile.setLayoutData(gdTimeChannelFile);
     }
 }
