@@ -35,6 +35,7 @@ import uk.ac.stfc.isis.ibex.epics.observing.BaseObserver;
 import uk.ac.stfc.isis.ibex.epics.observing.Observer;
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
+import uk.ac.stfc.isis.ibex.opis.OPIViewCreationException;
 import uk.ac.stfc.isis.ibex.synoptic.ObservingSynopticModel;
 import uk.ac.stfc.isis.ibex.synoptic.Synoptic;
 import uk.ac.stfc.isis.ibex.synoptic.SynopticModel;
@@ -150,7 +151,11 @@ public class SynopticPresenter extends ModelObject {
 
 			if (target instanceof OpiTarget) {
 				// Opi targets don't update the navigator.
-                SynopticOpiTargetView.displayOpi((OpiTarget) target);
+                try {
+                    SynopticOpiTargetView.displayOpi((OpiTarget) target);
+                } catch (OPIViewCreationException e) {
+                    LOG.catching(e);
+                }
                 return;
 			}
 
@@ -210,7 +215,11 @@ public class SynopticPresenter extends ModelObject {
 		}
 
 		if (currentTarget instanceof OpiTarget) {
-            SynopticOpiTargetView.displayOpi((OpiTarget) currentTarget);
+            try {
+                SynopticOpiTargetView.displayOpi((OpiTarget) currentTarget);
+            } catch (OPIViewCreationException e) {
+                LOG.catching(e);
+            }
 		}
 	}
 

@@ -20,6 +20,7 @@
 package uk.ac.stfc.isis.ibex.ui.devicescreens;
 
 import org.apache.logging.log4j.Logger;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.swt.SWT;
@@ -42,6 +43,7 @@ import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.Observer;
 import uk.ac.stfc.isis.ibex.epics.writing.Writable;
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
+import uk.ac.stfc.isis.ibex.opis.OPIViewCreationException;
 import uk.ac.stfc.isis.ibex.ui.devicescreens.list.DeviceScreensTable;
 
 /**
@@ -110,9 +112,15 @@ public class Panel extends Composite {
 
             @Override
             public void selectionChanged(SelectionChangedEvent event) {
+
                 for (DeviceDescription deviceScreeen : deviceScreenList.selectedRows()) {
                     LOG.info("Open opi target " + deviceScreeen.getName());
-                    DevicesOpiTargetView.displayOpi(deviceScreeen.getOPITarget());
+                    try {
+                        DevicesOpiTargetView.displayOpi(deviceScreeen.getOPITarget());
+                    } catch (OPIViewCreationException e) {
+                        LOG.catching(e);
+                        MessageDialog.openError(parent.getShell(), "Error displaying OPI", e.getMessage());
+                    }
                 }
 
             }

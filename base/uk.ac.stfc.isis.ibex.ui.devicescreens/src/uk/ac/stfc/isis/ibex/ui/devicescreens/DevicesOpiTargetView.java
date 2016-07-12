@@ -22,6 +22,7 @@
  */
 package uk.ac.stfc.isis.ibex.ui.devicescreens;
 
+import uk.ac.stfc.isis.ibex.opis.OPIViewCreationException;
 import uk.ac.stfc.isis.ibex.targets.OpiTarget;
 import uk.ac.stfc.isis.ibex.ui.targets.OpiTargetView;
 
@@ -39,8 +40,9 @@ public class DevicesOpiTargetView extends OpiTargetView {
      * Display an OPI Target in the Devices Screen.
      * 
      * @param opiTarget the opi target
+     * @throws OPIViewCreationException when opi can not be created
      */
-    public static void displayOpi(OpiTarget opiTarget) {
+    public static void displayOpi(OpiTarget opiTarget) throws OPIViewCreationException {
         OpiTargetView.displayOpi(opiTarget, ID);
     }
 

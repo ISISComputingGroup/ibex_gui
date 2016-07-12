@@ -20,30 +20,21 @@
 /**
  * 
  */
-package uk.ac.stfc.isis.ibex.ui.synoptic.views;
-
-import uk.ac.stfc.isis.ibex.opis.OPIViewCreationException;
-import uk.ac.stfc.isis.ibex.targets.OpiTarget;
-import uk.ac.stfc.isis.ibex.ui.targets.OpiTargetView;
+package uk.ac.stfc.isis.ibex.opis;
 
 /**
- * The Class SynopticOpiTargetView which shows tabbed OPIs for syniptics.
+ * Exception thrown when the OPI view can not be created.
  */
-public class SynopticOpiTargetView extends OpiTargetView {
+@SuppressWarnings("serial")
+public class OPIViewCreationException extends Exception {
 
     /**
-     * Class ID.
+     * Constructor.
+     * 
+     * @param message to show to the user
      */
-    public static final String ID = "uk.ac.stfc.isis.ibex.ui.synoptic.views.SynopticOpiTargetView"; //$NON-NLS-1$
-
-    /**
-     * Display the OPI for a given target.
-     *
-     * @param opiTarget the target
-     * @throws OPIViewCreationException when opi can not be created
-     */
-    public static void displayOpi(OpiTarget opiTarget) throws OPIViewCreationException {
-        OpiTargetView.displayOpi(opiTarget, ID);
+    public OPIViewCreationException(String message) {
+        super(message);
     }
 
 }

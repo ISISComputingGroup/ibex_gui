@@ -36,6 +36,7 @@ import org.eclipse.ui.PlatformUI;
 
 import uk.ac.stfc.isis.ibex.instrument.Instrument;
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
+import uk.ac.stfc.isis.ibex.opis.OPIViewCreationException;
 import uk.ac.stfc.isis.ibex.opis.Opi;
 import uk.ac.stfc.isis.ibex.opis.OpiView;
 import uk.ac.stfc.isis.ibex.targets.OpiTarget;
@@ -69,8 +70,9 @@ public abstract class OpiTargetView extends OpiView {
      * @param title - Title of the OPI
      * @param opiName - Name of the OPI used for identification from list
      * @param macros - Macros associated with the OPI
+     * @throws OPIViewCreationException when the OPI can not be created
      */
-    public void setOpi(OpiTarget target) {
+    public void setOpi(OpiTarget target) throws OPIViewCreationException {
         this.opiName = target.opiName();
 		
         addMacros(target);
@@ -78,7 +80,7 @@ public abstract class OpiTargetView extends OpiView {
 	}
 		
 	@Override
-	protected Path opi() {
+    protected Path opi() throws OPIViewCreationException {
 		Path path = Opi.getDefault().descriptionsProvider().pathFromName(opiName);
 		
 		if (path != null) {
@@ -87,7 +89,11 @@ public abstract class OpiTargetView extends OpiView {
 		
 		// This is for back-compatibility; previously the opi name in the synoptic was the path
 		// At some point this can be removed.
-		return Opi.getDefault().opiProvider().pathFromName(opiName);
+        try {
+            return Opi.getDefault().opiProvider().pathFromName(opiName);
+        } catch (NullPointerException ex) {
+            throw new OPIViewCreationException("OPI key or path can not be found.");
+        }
 	}
 	
     /**
@@ -128,23 +134,30 @@ public abstract class OpiTargetView extends OpiView {
             });
         }
         openOPIs.clear();
+        openOPIsWorkbenchPage.clear();
     }
 
     /**
      * Display an OPI using a target in the tab view.
      *
      * @param opiTarget the target OPI to display
+     * @throws OPIViewCreationException when opi can not be created
      */
-    public static void displayOpi(OpiTarget opiTarget, String id) {
+    public static void displayOpi(OpiTarget opiTarget, String id) throws OPIViewCreationException {
+        IWorkbenchPage workbenchPage = null;
+        IViewPart view = null;
         try {
-            IWorkbenchPage workbenchPage = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
-            IViewPart view = workbenchPage.showView(id, opiTarget.name(), IWorkbenchPage.VIEW_ACTIVATE);
-            openOPIs.add(view);
-            openOPIsWorkbenchPage.add(workbenchPage.getPerspective());
+            workbenchPage = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
+            view = workbenchPage.showView(id, opiTarget.name(), IWorkbenchPage.VIEW_ACTIVATE);
             OpiTargetView viewAsOPITarget = (OpiTargetView) view;
             viewAsOPITarget.setOpi(opiTarget);
+            openOPIs.add(view);
+            openOPIsWorkbenchPage.add(workbenchPage.getPerspective());
         } catch (PartInitException e) {
             LOG.catching(e);
+        } catch (OPIViewCreationException e) {
+            workbenchPage.hideView(view);
+            throw e;
         }
     }
 }
