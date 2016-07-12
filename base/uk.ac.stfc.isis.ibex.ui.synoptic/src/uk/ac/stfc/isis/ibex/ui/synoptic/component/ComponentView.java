@@ -21,7 +21,7 @@ package uk.ac.stfc.isis.ibex.ui.synoptic.component;
 
 import org.eclipse.swt.widgets.Composite;
 
-import uk.ac.stfc.isis.ibex.devicescreens.desc.Component;
+import uk.ac.stfc.isis.ibex.synoptic.model.Component;
 import uk.ac.stfc.isis.ibex.ui.devicescreens.ComponentIcons;
 import uk.ac.stfc.isis.ibex.ui.synoptic.beamline.BeamlineComposite;
 import uk.ac.stfc.isis.ibex.ui.synoptic.beamline.BeamlineCompositeContainer;

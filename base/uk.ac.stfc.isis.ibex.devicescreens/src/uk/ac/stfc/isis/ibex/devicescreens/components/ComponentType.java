@@ -17,12 +17,13 @@
  * http://opensource.org/licenses/eclipse-1.0.php
  */
 
-package uk.ac.stfc.isis.ibex.devicescreens.desc;
+package uk.ac.stfc.isis.ibex.devicescreens.components;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import uk.ac.stfc.isis.ibex.targets.PerspectiveTarget;
 import uk.ac.stfc.isis.ibex.targets.Target;
 import uk.ac.stfc.isis.ibex.targets.ViewTarget;
 

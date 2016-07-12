@@ -17,12 +17,14 @@
 * http://opensource.org/licenses/eclipse-1.0.php
 */
 
-package uk.ac.stfc.isis.ibex.devicescreens.desc;
+package uk.ac.stfc.isis.ibex.synoptic.model;
 
 import java.util.List;
 import java.util.Set;
 
+import uk.ac.stfc.isis.ibex.devicescreens.components.ComponentType;
 import uk.ac.stfc.isis.ibex.targets.Target;
+
 
 public interface Component {
 	String name();

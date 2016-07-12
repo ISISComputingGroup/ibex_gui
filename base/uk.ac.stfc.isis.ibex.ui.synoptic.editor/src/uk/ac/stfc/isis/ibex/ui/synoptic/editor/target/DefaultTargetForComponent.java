@@ -26,7 +26,7 @@ import java.util.Map;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Maps;
 
-import uk.ac.stfc.isis.ibex.devicescreens.desc.ComponentType;
+import uk.ac.stfc.isis.ibex.devicescreens.components.ComponentType;
 import uk.ac.stfc.isis.ibex.opis.Opi;
 import uk.ac.stfc.isis.ibex.opis.desc.OpiDescription;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.TargetDescription;

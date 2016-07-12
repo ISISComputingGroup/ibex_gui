@@ -23,9 +23,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import uk.ac.stfc.isis.ibex.devicescreens.desc.Component;
-import uk.ac.stfc.isis.ibex.devicescreens.desc.ComponentProperty;
-import uk.ac.stfc.isis.ibex.devicescreens.desc.ComponentType;
+import uk.ac.stfc.isis.ibex.devicescreens.components.ComponentType;
+import uk.ac.stfc.isis.ibex.synoptic.model.Component;
+import uk.ac.stfc.isis.ibex.synoptic.model.ComponentProperty;
 import uk.ac.stfc.isis.ibex.synoptic.model.targets.GroupedComponentTarget;
 import uk.ac.stfc.isis.ibex.targets.Target;
 

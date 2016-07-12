@@ -29,8 +29,6 @@ import java.util.Map;
 
 import org.apache.logging.log4j.Logger;
 
-import uk.ac.stfc.isis.ibex.devicescreens.desc.Component;
-import uk.ac.stfc.isis.ibex.devicescreens.desc.PerspectiveTarget;
 import uk.ac.stfc.isis.ibex.epics.observing.BaseObserver;
 import uk.ac.stfc.isis.ibex.epics.observing.Observer;
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
@@ -39,10 +37,12 @@ import uk.ac.stfc.isis.ibex.opis.OPIViewCreationException;
 import uk.ac.stfc.isis.ibex.synoptic.ObservingSynopticModel;
 import uk.ac.stfc.isis.ibex.synoptic.Synoptic;
 import uk.ac.stfc.isis.ibex.synoptic.SynopticModel;
+import uk.ac.stfc.isis.ibex.synoptic.model.Component;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.SynopticDescription;
 import uk.ac.stfc.isis.ibex.synoptic.model.targets.GroupedComponentTarget;
 import uk.ac.stfc.isis.ibex.synoptic.navigation.TargetNode;
 import uk.ac.stfc.isis.ibex.targets.OpiTarget;
+import uk.ac.stfc.isis.ibex.targets.PerspectiveTarget;
 import uk.ac.stfc.isis.ibex.targets.Target;
 import uk.ac.stfc.isis.ibex.targets.ViewTarget;
 import uk.ac.stfc.isis.ibex.ui.UI;

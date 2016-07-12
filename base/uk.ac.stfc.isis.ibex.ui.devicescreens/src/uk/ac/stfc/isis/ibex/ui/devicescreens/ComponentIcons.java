@@ -22,7 +22,7 @@ package uk.ac.stfc.isis.ibex.ui.devicescreens;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.wb.swt.ResourceManager;
 
-import uk.ac.stfc.isis.ibex.devicescreens.desc.ComponentType;
+import uk.ac.stfc.isis.ibex.devicescreens.components.ComponentType;
 
 /**
  * Given a component type, returns an icon appropriate for that type.

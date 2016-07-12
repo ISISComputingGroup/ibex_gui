@@ -17,9 +17,7 @@
 * http://opensource.org/licenses/eclipse-1.0.php
 */
 
-package uk.ac.stfc.isis.ibex.devicescreens.desc;
-
-import uk.ac.stfc.isis.ibex.targets.Target;
+package uk.ac.stfc.isis.ibex.targets;
 
 /*
  * Switch to a different Isis perspective from the synoptic

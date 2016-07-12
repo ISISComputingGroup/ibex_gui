@@ -29,7 +29,7 @@ import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
-import uk.ac.stfc.isis.ibex.devicescreens.desc.ComponentType;
+import uk.ac.stfc.isis.ibex.devicescreens.components.ComponentType;
 
 /**
  * Describes a component of the synoptic.

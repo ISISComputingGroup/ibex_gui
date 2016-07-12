@@ -24,9 +24,9 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
-import uk.ac.stfc.isis.ibex.devicescreens.desc.Component;
-import uk.ac.stfc.isis.ibex.devicescreens.desc.ComponentProperty;
-import uk.ac.stfc.isis.ibex.devicescreens.desc.ComponentType;
+import uk.ac.stfc.isis.ibex.devicescreens.components.ComponentType;
+import uk.ac.stfc.isis.ibex.synoptic.model.Component;
+import uk.ac.stfc.isis.ibex.synoptic.model.ComponentProperty;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.ComponentDescription;
 
 public abstract class BaseComponent implements Component {

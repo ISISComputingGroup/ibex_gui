@@ -26,6 +26,7 @@ Require-Bundle: org.eclipse.ui,
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Export-Package: uk.ac.stfc.isis.ibex.ui.synoptic,
+ uk.ac.stfc.isis.ibex.ui.synoptic.component,
  uk.ac.stfc.isis.ibex.ui.synoptic.views,
  uk.ac.stfc.isis.ibex.ui.synoptic.widgets
 Import-Package: org.apache.logging.log4j,

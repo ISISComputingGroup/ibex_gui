@@ -17,7 +17,7 @@
 * http://opensource.org/licenses/eclipse-1.0.php
 */
 
-package uk.ac.stfc.isis.ibex.devicescreens.desc;
+package uk.ac.stfc.isis.ibex.synoptic.model;
 
 public abstract class ComponentProperty {
 	
