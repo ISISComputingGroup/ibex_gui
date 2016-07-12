@@ -44,7 +44,7 @@ import uk.ac.stfc.isis.ibex.targets.OpiTarget;
 public class DeviceDescription extends ModelObject {
 
     /**
-     * Type when the device screen is an OPI
+     * Type when the device screen is an OPI.
      */
     private String name;
     private String key;
@@ -109,7 +109,7 @@ public class DeviceDescription extends ModelObject {
     }
 
     /**
-     * Convert the Device description to an OPI target
+     * Convert the Device description to an OPI target.
      * 
      * @return OPI Target
      */
