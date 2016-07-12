@@ -31,9 +31,6 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Text;
-import org.eclipse.ui.IWorkbenchPage;
-import org.eclipse.ui.PartInitException;
-import org.eclipse.ui.PlatformUI;
 
 import uk.ac.stfc.isis.ibex.devicescreens.DeviceScreens;
 import uk.ac.stfc.isis.ibex.devicescreens.desc.DeviceDescription;
@@ -85,7 +82,7 @@ public class Panel extends Composite {
     private DeviceScreensTable deviceScreenList;
 
     /**
-     * Create a Devices Screen Panel
+     * Create a Devices Screen Panel.
      * 
      * @param parent parent component
      * @param style SWT Style
@@ -114,7 +111,8 @@ public class Panel extends Composite {
             @Override
             public void selectionChanged(SelectionChangedEvent event) {
                 for (DeviceDescription deviceScreeen : deviceScreenList.selectedRows()) {
-                    displayOpi(deviceScreeen.getName(), deviceScreeen.getKey());
+                    LOG.info("Open opi target " + deviceScreeen.getName());
+                    DevicesOpiTargetView.displayOpi(deviceScreeen.getOPITarget());
                 }
 
             }
@@ -124,6 +122,7 @@ public class Panel extends Composite {
         GridData gdTxtScreens = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
         txtScreensSp.setLayoutData(gdTxtScreens);
         screensSetter = deviceScreens.getDevicesSetter();
+
 
         txtScreensSp.addModifyListener(new ModifyListener() {
             @Override
@@ -145,22 +144,6 @@ public class Panel extends Composite {
             // setScreens() gets called at each key stroke, so until a valid xml
             // is entered, there will be errors
             // Ignore - this is just a temporary testing panel anyway
-        }
-    }
-
-    /**
-     * Display an OPI view on the page
-     * 
-     * @param title - Title for the OPI
-     * @param opiName - Name of the OPI used to identify it from available list
-     */
-    private void displayOpi(String title, String opiName) {
-        try {
-            IWorkbenchPage workbenchPage = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
-            DevicesOpiTargetView view = (DevicesOpiTargetView) workbenchPage.showView(DevicesOpiTargetView.ID);
-            view.setOpi(title, opiName);
-        } catch (PartInitException e) {
-            LOG.catching(e);
         }
     }
 

@@ -22,12 +22,11 @@
  */
 package uk.ac.stfc.isis.ibex.ui.devicescreens;
 
-import java.util.LinkedHashMap;
-
+import uk.ac.stfc.isis.ibex.targets.OpiTarget;
 import uk.ac.stfc.isis.ibex.ui.targets.OpiTargetView;
 
 /**
- * 
+ * OPI Target View for the Device Screens Perspective.
  */
 public class DevicesOpiTargetView extends OpiTargetView {
 
@@ -37,11 +36,12 @@ public class DevicesOpiTargetView extends OpiTargetView {
     public static final String ID = "uk.ac.stfc.isis.ibex.ui.devicescreens.DevicesOpiTargetView"; //$NON-NLS-1$
 
     /**
+     * Display an OPI Target in the Devices Screen.
      * 
-     * @param title - Title for the OPI
-     * @param opiName - Name of the OPI used to locate it from file
+     * @param opiTarget the opi target
      */
-    public void setOpi(String title, String opiName) {
-        this.setOpi(title, opiName, new LinkedHashMap<String, String>());
+    public static void displayOpi(OpiTarget opiTarget) {
+        OpiTargetView.displayOpi(opiTarget, ID);
     }
+
 }

@@ -22,10 +22,11 @@
  */
 package uk.ac.stfc.isis.ibex.ui.synoptic.views;
 
+import uk.ac.stfc.isis.ibex.targets.OpiTarget;
 import uk.ac.stfc.isis.ibex.ui.targets.OpiTargetView;
 
 /**
- * 
+ * The Class SynopticOpiTargetView which shows tabbed OPIs for syniptics.
  */
 public class SynopticOpiTargetView extends OpiTargetView {
 
@@ -33,5 +34,14 @@ public class SynopticOpiTargetView extends OpiTargetView {
      * Class ID.
      */
     public static final String ID = "uk.ac.stfc.isis.ibex.ui.synoptic.views.SynopticOpiTargetView"; //$NON-NLS-1$
+
+    /**
+     * Display the OPI for a given target.
+     *
+     * @param opiTarget the target
+     */
+    public static void displayOpi(OpiTarget opiTarget) {
+        OpiTargetView.displayOpi(opiTarget, ID);
+    }
 
 }

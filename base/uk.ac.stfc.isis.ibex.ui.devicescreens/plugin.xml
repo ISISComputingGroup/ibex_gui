@@ -41,7 +41,7 @@
                relative="uk.ac.stfc.isis.ibex.ui.devicescreens.devicescreensview"
                showTitle="true"
                standalone="false"
-               visible="true">
+               visible="false">
          </view>
       </perspectiveExtension>
    </extension>
@@ -55,10 +55,10 @@
             restorable="true">
       </view>
       <view
-            allowMultiple="false"
+            allowMultiple="true"
             class="uk.ac.stfc.isis.ibex.ui.devicescreens.DevicesOpiTargetView"
             id="uk.ac.stfc.isis.ibex.ui.devicescreens.DevicesOpiTargetView"
-            name="OPI view"
+            name="DevicesOpiTargetView"
             restorable="true">
       </view>
    </extension>

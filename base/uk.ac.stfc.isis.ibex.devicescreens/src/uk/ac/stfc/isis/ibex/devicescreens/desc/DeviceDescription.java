@@ -31,6 +31,7 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import uk.ac.stfc.isis.ibex.model.ModelObject;
+import uk.ac.stfc.isis.ibex.targets.OpiTarget;
 
 /**
  * This class describes the device element of the device screens xml format.
@@ -105,5 +106,18 @@ public class DeviceDescription extends ModelObject {
      */
     public void addProperty(PropertyDescription property) {
         properties.addProperty(property);
+    }
+
+    /**
+     * Convert the Device description to an OPI target
+     * 
+     * @return OPI Target
+     */
+    public OpiTarget getOPITarget() {
+        OpiTarget target = new OpiTarget(getName(), getKey());
+        for (PropertyDescription property : getProperties()) {
+            target.addProperty(property.getKey(), property.getValue());
+        }
+        return target;
     }
 }

@@ -19,14 +19,26 @@
 
 package uk.ac.stfc.isis.ibex.ui.targets;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.ListIterator;
 import java.util.Map;
 
+import org.apache.logging.log4j.Logger;
 import org.csstudio.opibuilder.util.MacrosInput;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.ui.IPerspectiveDescriptor;
+import org.eclipse.ui.IViewPart;
+import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.PartInitException;
+import org.eclipse.ui.PlatformUI;
 
 import uk.ac.stfc.isis.ibex.instrument.Instrument;
+import uk.ac.stfc.isis.ibex.logger.IsisLog;
 import uk.ac.stfc.isis.ibex.opis.Opi;
 import uk.ac.stfc.isis.ibex.opis.OpiView;
+import uk.ac.stfc.isis.ibex.targets.OpiTarget;
 
 /**
  * A view that allows display of an OPI target. As the view is shared by
@@ -39,6 +51,8 @@ public abstract class OpiTargetView extends OpiView {
      * Class ID.
      */
     public static final String ID = "uk.ac.stfc.isis.ibex.ui.targets.OpiTargetView"; //$NON-NLS-1$
+
+    private static final Logger LOG = IsisLog.getLogger(OpiTargetView.class);
 
     /**
      * PV prefix required for adding new macros.
@@ -56,12 +70,10 @@ public abstract class OpiTargetView extends OpiView {
      * @param opiName - Name of the OPI used for identification from list
      * @param macros - Macros associated with the OPI
      */
-	public void setOpi(String title, String opiName, Map<String, String> macros) {
-		this.opiName = opiName;
+    public void setOpi(OpiTarget target) {
+        this.opiName = target.opiName();
 		
-		macros.put("NAME", title);
-		macros.put("OPINAME", opiName);
-		addMacros(macros);	
+        addMacros(target);
 		initialiseOPI();
 	}
 		
@@ -79,14 +91,60 @@ public abstract class OpiTargetView extends OpiView {
 	}
 	
     /**
+     * Add the macros to the OPI
      * 
-     * @param macros - Macros to add to the OPI
+     * @param target target of the OPI
      */
-	private void addMacros(Map<String, String> macros) {
+    private void addMacros(OpiTarget target) {
 		MacrosInput input = macros();
+
+        input.put("NAME", target.name());
+        input.put("OPINAME", this.opiName);
 		input.put("P", pvPrefix);
-		for (Map.Entry<String, String> macro : macros.entrySet()) {
+        for (Map.Entry<String, String> macro : target.properties().entrySet()) {
 			input.put(macro.getKey(), macro.getValue());
 		}
 	}
+
+    private static List<IViewPart> openOPIs = new ArrayList<>();;
+    private static List<IPerspectiveDescriptor> openOPIsWorkbenchPage = new ArrayList<>();;
+
+    /**
+     * Closes any OPIs that have been opened.
+     */
+    public static void closeAllOPIs() {
+        ListIterator<IPerspectiveDescriptor> wbiter = openOPIsWorkbenchPage.listIterator();
+        for (ListIterator<IViewPart> iter = openOPIs.listIterator(); iter.hasNext();) {
+            final IViewPart vp = iter.next();
+            final IPerspectiveDescriptor descriptor = wbiter.next();
+            // Must run on the GUI thread
+            Display.getDefault().asyncExec(new Runnable() {
+                @Override
+                public void run() {
+                    PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().setPerspective(descriptor);
+                    IWorkbenchPage wp = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
+                    wp.hideView(vp);
+                }
+            });
+        }
+        openOPIs.clear();
+    }
+
+    /**
+     * Display an OPI using a target in the tab view.
+     *
+     * @param opiTarget the target OPI to display
+     */
+    public static void displayOpi(OpiTarget opiTarget, String id) {
+        try {
+            IWorkbenchPage workbenchPage = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
+            IViewPart view = workbenchPage.showView(id, opiTarget.name(), IWorkbenchPage.VIEW_ACTIVATE);
+            openOPIs.add(view);
+            openOPIsWorkbenchPage.add(workbenchPage.getPerspective());
+            OpiTargetView viewAsOPITarget = (OpiTargetView) view;
+            viewAsOPITarget.setOpi(opiTarget);
+        } catch (PartInitException e) {
+            LOG.catching(e);
+        }
+    }
 }

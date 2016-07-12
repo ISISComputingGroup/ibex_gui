@@ -34,7 +34,7 @@ public class Activator extends AbstractUIPlugin {
     public static final String PLUGIN_ID = "uk.ac.stfc.isis.ibex.ui.devicescreens"; //$NON-NLS-1$
 
     /**
-     * The shared instance
+     * The shared instance.
      */
     private static Activator plugin;
 

@@ -99,8 +99,7 @@ public class DeviceScreensTable extends DataboundTable<DeviceDescription> {
                 try {
                     OpiDescription opiDescription = opis.get(row.getKey());
                     component = ComponentType.valueOf(opiDescription.getType());
-                }
-                catch (IllegalArgumentException | NullPointerException ex) {
+                } catch (IllegalArgumentException | NullPointerException ex) {
                     // caught when the OPI does not hold the key, when the
                     // description has no type or it does not match an enum
                     component = ComponentType.UNKNOWN;
