@@ -72,7 +72,7 @@ public class ConfigSelectionDialog extends Dialog {
 	}
 	
 	/**
-	 * Get the configuartion/component that the user has chosen
+	 * Get the name of the configuration/component that the user has chosen
 	 * @return The chosen configuration/component.
 	 */
 	public String selectedConfig() {
@@ -92,7 +92,7 @@ public class ConfigSelectionDialog extends Dialog {
 	
 	@Override
 	protected void okPressed() {
-		selectedName = selectedText.getText();
+		selectedName = items.getSelection()[0];
 		super.okPressed();
 	}
 	
