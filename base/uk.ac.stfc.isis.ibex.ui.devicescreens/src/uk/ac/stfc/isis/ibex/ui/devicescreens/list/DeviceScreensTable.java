@@ -84,26 +84,6 @@ public class DeviceScreensTable extends DataboundTable<DeviceDescription> {
         setSortListener(name.getColumn(), DeviceScreensComparitor.SortedOnType.NAME);
     }
 
-    /**
-     * @param column
-     * @param columnContents
-     */
-    private void setSortListener(TableColumn column, SortedOnType columnContents) {
-        column.addSelectionListener(new SelectionAdapter() {
-            /**
-             * @param e
-             */
-            @Override
-            public void widgetSelected(SelectionEvent e) {
-                comparator.setColumn(columnContents);
-                int dir = comparator.getDirection();
-                table().setSortDirection(dir);
-                table().setSortColumn(column);
-                refresh();
-            }
-        });
-    }
-	
     private void type() {
         TableViewerColumn typeColumn = createColumn("Type", 1);
         typeColumn.setLabelProvider(new DataboundCellLabelProvider<DeviceDescription>(observeProperty("key")) {
@@ -131,4 +111,25 @@ public class DeviceScreensTable extends DataboundTable<DeviceDescription> {
         setSortListener(typeColumn.getColumn(), DeviceScreensComparitor.SortedOnType.TYPE);
     }
 
+    /**
+     * Listener for volumn headers to make it sort the data.
+     * 
+     * @param column to sort on
+     * @param columnContents contents to sort on
+     */
+    private void setSortListener(TableColumn column, SortedOnType columnContents) {
+        column.addSelectionListener(new SelectionAdapter() {
+            /**
+             * @param e
+             */
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                comparator.setColumn(columnContents);
+                int dir = comparator.getDirection();
+                table().setSortDirection(dir);
+                table().setSortColumn(column);
+                refresh();
+            }
+        });
+    }
 }
