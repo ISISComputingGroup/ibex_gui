@@ -12,7 +12,8 @@ Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Bundle-ActivationPolicy: lazy
 Import-Package: uk.ac.stfc.isis.ibex.epics.conversion,
  uk.ac.stfc.isis.ibex.epics.observing,
- uk.ac.stfc.isis.ibex.epics.switching
+ uk.ac.stfc.isis.ibex.epics.switching,
+ uk.ac.stfc.isis.ibex.targets
 Export-Package: uk.ac.stfc.isis.ibex.devicescreens,
  uk.ac.stfc.isis.ibex.devicescreens.components,
  uk.ac.stfc.isis.ibex.devicescreens.desc

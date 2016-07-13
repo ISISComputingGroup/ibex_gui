@@ -49,12 +49,12 @@ import uk.ac.stfc.isis.ibex.ui.devicescreens.list.DeviceScreensTable;
 /**
  * A UI Panel for the devices screens.
  */
-public class Panel extends Composite {
+public class DeviceSceenListPanel extends Composite {
 
     /**
      * Logger.
      */
-    private static final Logger LOG = IsisLog.getLogger(Panel.class);
+    private static final Logger LOG = IsisLog.getLogger(DeviceSceenListPanel.class);
 
     private Text txtScreensSp;
     private Writable<DeviceScreensDescription> screensSetter;
@@ -89,7 +89,7 @@ public class Panel extends Composite {
      * @param parent parent component
      * @param style SWT Style
      */
-    public Panel(final Composite parent, int style) {
+    public DeviceSceenListPanel(final Composite parent, int style) {
         super(parent, style);
         setLayout(new FillLayout(SWT.HORIZONTAL));
 
@@ -125,6 +125,8 @@ public class Panel extends Composite {
 
             }
         });
+
+
 
         txtScreensSp = new Text(composite, SWT.WRAP | SWT.MULTI);
         GridData gdTxtScreens = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
