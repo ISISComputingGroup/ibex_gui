@@ -56,7 +56,8 @@ public enum ComponentType {
     SINGLESTAGE,
     LINKAM95,
     LAKESHORE,
-    ATTENUATOR;
+    ATTENUATOR,
+    MERCURY;
 	
 	private Target target;
 

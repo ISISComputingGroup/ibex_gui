@@ -102,6 +102,8 @@ public final class ComponentIcons {
                 return "linkam95";
             case ATTENUATOR:
                 return "attenuator";
+            case MERCURY:
+                return "mercury";
             default:
                 return "cog";
         }
