@@ -89,7 +89,7 @@ public class Panel extends Composite {
      * @param parent parent component
      * @param style SWT Style
      */
-    public Panel(Composite parent, int style) {
+    public Panel(final Composite parent, int style) {
         super(parent, style);
         setLayout(new FillLayout(SWT.HORIZONTAL));
 
