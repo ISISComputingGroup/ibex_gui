@@ -88,15 +88,14 @@ public class Perspective extends BasePerspective {
 			
 			private void checkEditorEmpty() {
 				IWorkbenchPage activePage = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
-				if (activePage != null) {
-					if (activePage.getEditorReferences().length == 0 ) {
-						activePage.setEditorAreaVisible(false);
-						try {
-							activePage.showView(EmptyLogPlotterView.ID);
-						} catch (PartInitException e) {
-							e.printStackTrace();
-						}
-					}
+				if ((activePage == null) || (activePage.getEditorReferences().length > 0)) {
+					return;
+				}
+				try {
+					activePage.showView(EmptyLogPlotterView.ID);
+					activePage.setEditorAreaVisible(false);
+				} catch (PartInitException e) {
+					e.printStackTrace();
 				}
 			}
 		});

@@ -15,9 +15,10 @@ import org.eclipse.wb.swt.SWTResourceManager;
  *	The view to be displayed to the user when no plots have yet been made.
  */
 public class EmptyLogPlotterView extends ViewPart {
-	public EmptyLogPlotterView() {
-	}
 
+	/**
+	 * The ID for the view, used to import it externally
+	 */
 	static public String ID = "uk.ac.stfc.isis.ibex.ui.logplotter.EmptyLogPlotterView";
 	
 	@Override
