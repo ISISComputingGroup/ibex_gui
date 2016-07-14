@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import uk.ac.stfc.isis.ibex.synoptic.model.Component;
-import uk.ac.stfc.isis.ibex.synoptic.model.Target;
+import uk.ac.stfc.isis.ibex.targets.Target;
 
 public class GroupedComponentTarget extends Target {
 

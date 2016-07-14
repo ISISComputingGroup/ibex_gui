@@ -26,8 +26,8 @@ import java.util.Set;
 import uk.ac.stfc.isis.ibex.synoptic.model.Component;
 import uk.ac.stfc.isis.ibex.synoptic.model.ComponentProperty;
 import uk.ac.stfc.isis.ibex.synoptic.model.ComponentType;
-import uk.ac.stfc.isis.ibex.synoptic.model.Target;
 import uk.ac.stfc.isis.ibex.synoptic.model.targets.GroupedComponentTarget;
+import uk.ac.stfc.isis.ibex.targets.Target;
 
 public class ChildlessComponent implements Component {
 

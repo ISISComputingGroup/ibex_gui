@@ -18,8 +18,10 @@ Require-Bundle: org.eclipse.core.runtime,
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Bundle-ActivationPolicy: lazy
 Export-Package: uk.ac.stfc.isis.ibex.synoptic,
+ uk.ac.stfc.isis.ibex.synoptic.internal,
  uk.ac.stfc.isis.ibex.synoptic.model,
  uk.ac.stfc.isis.ibex.synoptic.model.desc,
  uk.ac.stfc.isis.ibex.synoptic.model.targets,
  uk.ac.stfc.isis.ibex.synoptic.navigation,
  uk.ac.stfc.isis.ibex.synoptic.xml
+Import-Package: uk.ac.stfc.isis.ibex.targets

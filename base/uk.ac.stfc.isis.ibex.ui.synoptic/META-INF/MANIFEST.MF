@@ -33,4 +33,6 @@ Import-Package: org.apache.logging.log4j,
  uk.ac.stfc.isis.ibex.epics.switching,
  uk.ac.stfc.isis.ibex.epics.writing,
  uk.ac.stfc.isis.ibex.logger,
- uk.ac.stfc.isis.ibex.opis
+ uk.ac.stfc.isis.ibex.opis,
+ uk.ac.stfc.isis.ibex.targets,
+ uk.ac.stfc.isis.ibex.ui.targets
