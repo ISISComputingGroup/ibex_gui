@@ -48,15 +48,15 @@ public final class XMLUtil {
     private static Schema schema;
 
     /**
-     * Default constructor.
+     * This is a utility class so does not need constructing.
      */
     private XMLUtil() {
     }
 
     /**
      * Parses an XML into a device screens description object.
-     *
-     * @param <T> the type to unmarshal to
+     * 
+     * @param <T> the type to parse the XML into
      * @param xml the device screens XML received from the BlockServer
      * @return the data converted into a device screens description
      * @throws JAXBException XML Exception
@@ -73,8 +73,8 @@ public final class XMLUtil {
     /**
      * Converts the device screens description into the XML expected by the
      * BlockServer.
-     *
-     * @param <T> the type to marshal to
+     * 
+     * @param <T> the type than needs to be converted into XML
      * @param deviceScreensDescription the input device screens description
      * @return the XML for the device screens
      * @throws JAXBException XML Exception

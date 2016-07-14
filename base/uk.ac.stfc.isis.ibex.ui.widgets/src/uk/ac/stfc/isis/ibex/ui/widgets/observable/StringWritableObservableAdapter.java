@@ -30,10 +30,10 @@ import uk.ac.stfc.isis.ibex.model.UpdatedValue;
 
 
 /**
- * Links a read PV and a writable PV.
+ * Links an observable and writable object connected to a (StringChannel) PV.
  *
  */
-public class WritableObservableAdapter implements Closable {
+public class StringWritableObservableAdapter implements Closable {
 	
 	private final UpdatedValue<String> text;
 	private final SettableUpdatedValue<Boolean> canSetText;
@@ -43,7 +43,8 @@ public class WritableObservableAdapter implements Closable {
 			writeToWritables(value);
 		}
 		
-		public void onCanWriteChanged(boolean canWrite) {
+		@Override
+        public void onCanWriteChanged(boolean canWrite) {
 			canSetText.setValue(canWrite);
 		}
 	};
@@ -55,7 +56,7 @@ public class WritableObservableAdapter implements Closable {
 	 * @param writable The object for writing to a PV
 	 * @param observable The object for observing a PV
 	 */
-	public WritableObservableAdapter(Writable<String> writable, Observable<String> observable) {
+	public StringWritableObservableAdapter(Writable<String> writable, Observable<String> observable) {
 		text = new TextUpdatedObservableAdapter(observable);
 		canSetText = new SettableUpdatedValue<>();
 		canSetText.setValue(writable.canWrite());
@@ -63,21 +64,39 @@ public class WritableObservableAdapter implements Closable {
 		writableSubscription = writer.writeTo(writable);
 		writerSubscription = writable.subscribe(writer);
 	}
-	
+
+    /**
+     * Returns the current string value of the associated PV.
+     * 
+     * @return the string value
+     */
 	public UpdatedValue<String> text() {
 		return text;
 	}
 	
+    /**
+     * Writes a new string value to the associated PV.
+     * 
+     * @param value the new value
+     */
 	public void setText(String text) {
 		if (text != writer.lastWritten()) {
 			writer.write(text);
 		}
 	}
-	
+
+    /**
+     * Returns whether writing value to PV is allowed.
+     * 
+     * @return the boolean value
+     */
 	public UpdatedValue<Boolean> canSetText() {
 		return canSetText;
 	}
 
+    /**
+     * Removes observers when connection to PV is closed.
+     */
 	@Override
 	public void close() {
 		writerSubscription.removeObserver();

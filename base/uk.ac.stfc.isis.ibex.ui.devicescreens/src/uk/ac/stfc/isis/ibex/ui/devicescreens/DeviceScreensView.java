@@ -28,7 +28,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.part.ViewPart;
 
 /**
- * 
+ * A view for the current available device screens.
  */
 public class DeviceScreensView extends ViewPart {
 

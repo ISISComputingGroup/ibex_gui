@@ -57,7 +57,7 @@ public final class ComponentIcons {
     }
 
     private static Image icon(String fileName) {
-        return ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui.synoptic", "icons/components/" + fileName);
+        return ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui.devicescreens", "icons/components/" + fileName);
     }
 
     private static String getIconNameForType(ComponentType componentType) {
@@ -102,6 +102,8 @@ public final class ComponentIcons {
                 return "linkam95";
             case ATTENUATOR:
                 return "attenuator";
+            case MERCURY:
+                return "mercury";
             default:
                 return "cog";
         }

@@ -37,7 +37,7 @@ public enum ComponentType {
 	CHOPPER,
 	MONITOR,
 	SAMPLESTACK,
-	DAE (new PerspectiveTarget("DAE")),
+    DAE(new PerspectiveTarget("DAE")),
     DANFSYIK,
 	CAEN,
 	KEPCO,
@@ -52,21 +52,35 @@ public enum ComponentType {
 	JULABO,	
 	EUROTHERM,
 	PINHOLESELECTOR,
-	GONIOMETER (new ViewTarget("Goniometer")), 
+    GONIOMETER(new ViewTarget("Goniometer")),
     SINGLESTAGE,
     LINKAM95,
     LAKESHORE,
-    ATTENUATOR;
+    ATTENUATOR,
+    MERCURY;
 	
 	private Target target;
 
+    /**
+     * Instantiates a new component type.
+     */
 	ComponentType() {
 	}
 	
+    /**
+     * Instantiates a new component type based on a target.
+     *
+     * @param target the target
+     */
 	ComponentType(Target target) {
 		this.target = target;
 	}
 	
+    /**
+     * Gets the target of this component type .
+     *
+     * @return the target
+     */
 	public Target target() {
 		return target;
 	}

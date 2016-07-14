@@ -26,10 +26,13 @@ import org.eclipse.wb.swt.ResourceManager;
 import uk.ac.stfc.isis.ibex.ui.perspectives.BasePerspective;
 
 /**
- * The Perspective for device screens.
+ * The perspective for interacting with the devices screens.
  */
 public class Perspective extends BasePerspective {
 
+    /**
+     * The public ID of this class.
+     */
     public static final String ID = "uk.ac.stfc.isis.ibex.ui.devicescreens.perspective"; //$NON-NLS-1$
 
 	@Override
