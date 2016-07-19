@@ -151,7 +151,7 @@ public class DeviceDescriptionTest {
         // Assert
         assertEquals("Number of propeties", result.properties().size(), 2);
         assertEquals("First key value", result.properties().get(key1), value1);
-        assertEquals("First key value", result.properties().get(key2), value2);
+        assertEquals("Second key value", result.properties().get(key2), value2);
     }
 
 }

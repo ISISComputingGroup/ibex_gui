@@ -117,7 +117,7 @@ public class DeviceScreensTable extends DataboundTable<DeviceDescription> {
      * @param column to sort on
      * @param columnContents contents to sort on
      */
-    private void setSortListener(TableColumn column, SortedOnType columnContents) {
+    private void setSortListener(final TableColumn column, final SortedOnType columnContents) {
         column.addSelectionListener(new SelectionAdapter() {
             /**
              * @param e
