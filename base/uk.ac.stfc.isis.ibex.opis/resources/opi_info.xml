@@ -485,5 +485,19 @@
 				</macros>
 			</value>
 		</entry>
+		<entry>
+			<key>Iris cryo valve</key>
+			<value>
+				<type>IRISCRYOVALVE</type>
+				<path>irisCryoValve.opi</path>
+				<description>The OPI for the Iris cryo valve.</description>
+				<macros>    
+                    <macro>
+						<name>CRYOVALVE</name>
+						<description>The cryo valve PV name (e.g. CRYOVALVE_01).</description>
+					</macro>              
+				</macros>
+			</value>
+		</entry>
 	</opis>
 </descriptions>
