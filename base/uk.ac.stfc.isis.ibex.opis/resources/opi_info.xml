@@ -485,5 +485,31 @@
 				</macros>
 			</value>
 		</entry>
+		<entry>
+			<key>muon_front_end</key>
+			<value>
+				<type>MUON_FRONT_END</type>
+				<path>muon_front_end.opi</path>
+				<description>Muon front end settings.</description>
+				<macros>
+					<macro>
+						<name>MM_MOMENTUM</name>
+						<description>Motor number for momentum slits, e.g. MTR0101.</description>
+					</macro>
+					<macro>
+						<name>MM_EMU</name>
+						<description>Motor number for EMU barndoors, e.g. MTR0102.</description>
+					</macro>
+					<macro>
+						<name>MM_MuSR</name>
+						<description>Motor number for MuSR barndoors, e.g. MTR0103.</description>
+					</macro>
+					<macro>
+						<name>MM_HiFi</name>
+						<description>Motor number for HiFi barndoors, e.g. MTR0104.</description>
+					</macro>
+				</macros>
+			</value>
+		</entry>
 	</opis>
 </descriptions>
