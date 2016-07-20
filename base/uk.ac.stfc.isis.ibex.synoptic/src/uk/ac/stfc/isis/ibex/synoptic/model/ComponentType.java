@@ -57,7 +57,8 @@ public enum ComponentType {
     LINKAM95,
     LAKESHORE,
     ATTENUATOR,
-    MERCURY;
+    MERCURY,
+    MKSPDR2000;
 	
 	private Target target;
 

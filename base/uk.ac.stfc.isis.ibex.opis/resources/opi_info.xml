@@ -485,5 +485,19 @@
 				</macros>
 			</value>
 		</entry>
+		<entry>
+			<key>MKS PDR 2000</key>
+			<value>
+				<type>MKSPDR2000</type>
+				<path>mkspdr2000.opi</path>
+				<description>The OPI for the MKS PDR 2000 pressure transducer</description>
+				<macros>    
+                    <macro>
+						<name>MKSPDR2000</name>
+						<description>The MKS PDR 2000 name (e.g. MKSPDR2000_01).</description>
+					</macro>              
+				</macros>
+			</value>
+		</entry>
 	</opis>
 </descriptions>

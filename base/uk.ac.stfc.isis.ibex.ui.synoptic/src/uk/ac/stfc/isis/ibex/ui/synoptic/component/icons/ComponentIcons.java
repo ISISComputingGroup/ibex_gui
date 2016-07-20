@@ -104,6 +104,8 @@ public final class ComponentIcons {
                 return "attenuator";
             case MERCURY:
                 return "mercury";
+            case MKSPDR2000:
+                return "mkspdr2000";
             default:
                 return "cog";
         }
