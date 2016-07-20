@@ -104,6 +104,8 @@ public final class ComponentIcons {
                 return "attenuator";
             case MERCURY:
                 return "mercury";
+            case MUON_FRONT_END:
+                return "muon_front_end";
             default:
                 return "cog";
         }
