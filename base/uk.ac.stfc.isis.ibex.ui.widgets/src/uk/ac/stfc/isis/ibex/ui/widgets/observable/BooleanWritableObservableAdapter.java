@@ -46,6 +46,11 @@ public class BooleanWritableObservableAdapter implements Closable {
         }
 
         @Override
+        public void onCanWriteChanged(boolean canWrite) {
+            canSetValue.setValue(canWrite);
+        }
+
+        @Override
         protected Long transform(Boolean value) {
             if (value) {
                 return (long) 1;
