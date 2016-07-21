@@ -28,13 +28,21 @@ import org.eclipse.ui.PartInitException;
 
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
 
+/**
+ * The Class OpiView to show an OPI.
+ */
 public abstract class OpiView extends org.csstudio.opibuilder.runmode.OPIView {
 
     private static final Logger LOG = IsisLog.getLogger(OpiView.class);
 
     private MacrosInput macros = new MacrosInput(new LinkedHashMap<String, String>(), false);
 
-    public void initialiseOPI() {
+    /**
+     * Initialise OPI from a path.
+     *
+     * @throws OPIViewCreationException the OPI view creation exception
+     */
+    public void initialiseOPI() throws OPIViewCreationException {
         try {
             final RunnerInput input = new RunnerInput(opi(), null, macros);
             setOPIInput(input);
@@ -43,9 +51,21 @@ public abstract class OpiView extends org.csstudio.opibuilder.runmode.OPIView {
         }
     }
 
+    /**
+     * Macros that the OPI has.
+     *
+     * @return the macros for input to the OPI
+     */
     protected MacrosInput macros() {
         return macros;
     }
 
-    protected abstract Path opi();
+    /**
+     * Get the OPI path.
+     *
+     * @return the path
+     * @throws OPIViewCreationException if the path can not be found or can not
+     *             be read
+     */
+    protected abstract Path opi() throws OPIViewCreationException;
 }

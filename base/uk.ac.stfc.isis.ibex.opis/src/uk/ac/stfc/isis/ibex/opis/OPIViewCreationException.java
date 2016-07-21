@@ -20,36 +20,21 @@
 /**
  * 
  */
-package uk.ac.stfc.isis.ibex.ui.devicescreens;
-
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.layout.FillLayout;
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.ui.part.ViewPart;
+package uk.ac.stfc.isis.ibex.opis;
 
 /**
- * A view for the current available device screens.
+ * Exception thrown when the OPI view can not be created.
  */
-public class DeviceScreensView extends ViewPart {
+@SuppressWarnings("serial")
+public class OPIViewCreationException extends Exception {
 
     /**
-     * Class ID.
+     * Constructor.
+     * 
+     * @param message to show to the user
      */
-    public static final String ID = "uk.ac.stfc.isis.ibex.ui.devicescreens.devicescreensview";
-
-    /**
-     * Default constructor.
-     */
-    public DeviceScreensView() {
+    public OPIViewCreationException(String message) {
+        super(message);
     }
 
-    @Override
-    public void createPartControl(Composite parent) {
-        parent.setLayout(new FillLayout(SWT.HORIZONTAL));
-        new DeviceSceenListPanel(parent, SWT.NONE);
-    }
-
-    @Override
-    public void setFocus() {
-    }
 }

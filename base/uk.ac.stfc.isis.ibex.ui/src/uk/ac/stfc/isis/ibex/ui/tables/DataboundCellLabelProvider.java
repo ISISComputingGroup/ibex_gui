@@ -22,9 +22,27 @@ package uk.ac.stfc.isis.ibex.ui.tables;
 import org.eclipse.core.databinding.observable.map.IObservableMap;
 import org.eclipse.jface.databinding.viewers.ObservableMapCellLabelProvider;
 import org.eclipse.jface.viewers.ViewerCell;
+import org.eclipse.swt.graphics.Image;
 
+/**
+ * The Class DataboundCellLabelProvider allows a data table to provide the
+ * contents of a cell based on the row data. Contents can be text and/or an
+ * image.
+ * 
+ * Implement valueFromRow to set text within a cell (null for no text) Override
+ * imageFromRow to set the image on the cell
+ * 
+ *
+ * @param <TRow> the type of the row data
+ */
 public abstract class DataboundCellLabelProvider<TRow> extends ObservableMapCellLabelProvider {
 
+    /**
+     * Instantiates a new databound cell label provider that tracks changes to
+     * one attribute.
+     *
+     * @param attributeMap the attribute map
+     */
 	public DataboundCellLabelProvider(IObservableMap attributeMap) {
 		super(attributeMap);
 	}
@@ -33,15 +51,44 @@ public abstract class DataboundCellLabelProvider<TRow> extends ObservableMapCell
 	public void update(ViewerCell cell) {
 		TRow row = getRow(cell);
 		cell.setText(valueFromRow(row));
+        cell.setImage(imageFromRow(row));
 	}
 
+    /**
+     * Gets the row data for the cell.
+     *
+     * @param cell the cell to get data from
+     * @return the row as the current type
+     */
 	@SuppressWarnings("unchecked")
 	protected TRow getRow(ViewerCell cell) {
 		return (TRow) cell.getElement();
 	}
 
+    /**
+     * Set the text to be displayed in a cell.
+     *
+     * @param row the row
+     * @return the string to set in the cell
+     */
 	protected abstract String valueFromRow(TRow row);
 	
+    /**
+     * Image from row for the cell; default to null.
+     *
+     * @param row the row
+     * @return the image to set
+     */
+    protected Image imageFromRow(TRow row) {
+        return null;
+    };
+
+    /**
+     * Value or empty for a double.
+     *
+     * @param value the value
+     * @return the value as a double
+     */
 	protected String valueOrEmpty(Double value) {
 		return value == null ? "" : Double.toString(value);
 	}

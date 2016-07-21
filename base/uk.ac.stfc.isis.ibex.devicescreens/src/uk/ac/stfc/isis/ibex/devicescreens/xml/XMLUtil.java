@@ -48,6 +48,12 @@ public final class XMLUtil {
     private static Schema schema;
 
     /**
+     * This is a utility class so does not need constructing.
+     */
+    private XMLUtil() {
+    }
+
+    /**
      * Parses an XML into a device screens description object.
      * 
      * @param <T> the type to parse the XML into
