@@ -540,7 +540,7 @@ $(trace_0_y_pv_value)</tooltip>
     <axis_0_auto_scale>true</axis_0_auto_scale>
     <axis_0_minimum>0.0</axis_0_minimum>
     <trace_1_update_delay>100</trace_1_update_delay>
-    <axis_1_axis_title>Pressure/ $(PV_ROOT):UNITS</axis_1_axis_title>
+    <axis_1_axis_title>Pressure</axis_1_axis_title>
     <axis_1_auto_scale>true</axis_1_auto_scale>
     <trace_1_line_width>1</trace_1_line_width>
     <trace_1_plot_mode>0</trace_1_plot_mode>
