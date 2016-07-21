@@ -63,7 +63,7 @@
     <width>367</width>
     <x>30</x>
     <name>Grouping Container_4</name>
-    <y>378</y>
+    <y>420</y>
     <foreground_color>
       <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
     </foreground_color>
@@ -491,6 +491,7 @@ $(trace_0_y_pv_value)</tooltip>
     <title></title>
     <trace_0_visible>true</trace_0_visible>
     <trace_1_name>Channel 2</trace_1_name>
+    <trace_1_y_pv_value />
     <show_legend>true</show_legend>
     <axis_0_axis_title>Time</axis_0_axis_title>
     <axis_0_axis_color>
@@ -517,7 +518,7 @@ $(trace_0_y_pv_value)</tooltip>
     <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
     <axis_0_maximum>120.0</axis_0_maximum>
     <trace_1_y_axis_index>1</trace_1_y_axis_index>
-    <height>295</height>
+    <height>319</height>
     <trigger_pv_value />
     <axis_1_grid_color>
       <color name="ISIS_Textbox_Readonly_Background" red="200" green="200" blue="200" />
@@ -557,6 +558,7 @@ $(trace_0_y_pv_value)</tooltip>
     <border_alarm_sensitive>false</border_alarm_sensitive>
     <show_plot_area_border>false</show_plot_area_border>
     <width>757</width>
+    <trace_1_x_pv_value />
     <axis_1_minimum>0.0</axis_1_minimum>
     <title_font>
       <opifont.name fontName="Arial" height="9" style="1">ISIS_Header4</opifont.name>
@@ -667,9 +669,9 @@ $(pv_value)</tooltip>
       <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
     </background_color>
     <width>367</width>
-    <x>420</x>
+    <x>414</x>
     <name>Grouping Container_1</name>
-    <y>378</y>
+    <y>420</y>
     <foreground_color>
       <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
     </foreground_color>
