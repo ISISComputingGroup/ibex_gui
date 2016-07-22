@@ -119,7 +119,7 @@ public class ObservableModel extends Model {
 	public UserDetails addUser() {
 		Collection<UserDetails> originalUsers = getUserDetails();
 		
-		UserDetails user = new UserDetails(defaultUser, defaultOrg, Role.BLANK);
+		UserDetails user = new UserDetails(defaultUser, defaultOrg, Role.USER);
 		this.userDetails.add(user);
 		firePropertyChange("userDetails", originalUsers, getUserDetails());
 		return user;
