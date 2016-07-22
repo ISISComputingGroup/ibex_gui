@@ -67,9 +67,8 @@ public abstract class Model extends ModelObject {
 	/**
 	 * Add a new user to the model.
 	 * The user will be added with default name etc.
-	 * @return The newly added user.
 	 */
-	public abstract UserDetails addUser();
+	public abstract void addDefaultUser();
 	
 	/**
 	 * Remove a specific user from the model.

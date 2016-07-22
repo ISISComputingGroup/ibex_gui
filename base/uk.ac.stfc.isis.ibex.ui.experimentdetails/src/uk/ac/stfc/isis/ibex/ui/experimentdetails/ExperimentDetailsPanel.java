@@ -129,7 +129,7 @@ public class ExperimentDetailsPanel extends Composite {
 		btnAddUserDetails.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				viewModel.model.addUser();
+				viewModel.model.addDefaultUser();
 				viewModel.model.sendUserDetails();
 			}
 		});
@@ -153,6 +153,7 @@ public class ExperimentDetailsPanel extends Composite {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				viewModel.model.clearUserDetails();
+				viewModel.model.sendUserDetails();
 			}
 		});
 		btnClearUserDetails.setText("Clear");

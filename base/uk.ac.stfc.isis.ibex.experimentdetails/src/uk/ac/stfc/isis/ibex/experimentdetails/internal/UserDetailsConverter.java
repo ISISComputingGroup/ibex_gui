@@ -19,10 +19,7 @@
 
 package uk.ac.stfc.isis.ibex.experimentdetails.internal;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -31,6 +28,7 @@ import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
 import uk.ac.stfc.isis.ibex.epics.conversion.Converter;
 import uk.ac.stfc.isis.ibex.experimentdetails.Role;
 import uk.ac.stfc.isis.ibex.experimentdetails.UserDetails;
+import uk.ac.stfc.isis.ibex.experimentdetails.UserDetailsList;
 import uk.ac.stfc.isis.ibex.json.JsonDeserialisingConverter;
 import uk.ac.stfc.isis.ibex.json.LowercaseEnumTypeAdapterFactory;
 
@@ -62,19 +60,15 @@ public class UserDetailsConverter extends
         // Convert to intermediate
         IntermediateUserDetails[] parsed = jsonConverter.convert(value);
 		
-        Map<String, UserDetails> userDetails = new HashMap<String, UserDetails>();
-		
-        // Creates UserDetails and assigns primary role if name appears multiple
-        // times
+        UserDetailsList userDetails = new UserDetailsList();
+        
         for (IntermediateUserDetails user : parsed) {
-            if (userDetails.containsKey(user.name)) {
-                userDetails.get(user.name).setPrimaryRole(user.role);
-            } else {
-                userDetails.put(user.name, new UserDetails(user.name, user.institute, user.role));
-            }
-		}
-
-        return new ArrayList<UserDetails>(userDetails.values());
+        	userDetails.add(new UserDetails(user.name, user.institute, user.role));
+        }
+        
+        userDetails.combineSameUsers();
+        
+        return userDetails;
 	}
 
 }
