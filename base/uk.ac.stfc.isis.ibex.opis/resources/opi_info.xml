@@ -432,14 +432,28 @@
 		<entry>
 			<key>TPG300</key>
 			<value>
-				<type>UNCONFIRMED</type>
+				<type>PRESSURE_GUAGE</type>
 				<path>TPG300.opi</path>
-				<description>Description required.</description>
-				<macros>
+				<description>PFEIFFER 300 Vacuum Gauge</description>
+				<macros>    
                     <macro>
 						<name>N</name>
-						<description>Description required.</description>
-					</macro>                  
+						<description>Unknown description.</description>
+					</macro> 
+				</macros>
+			</value>
+		</entry>
+		<entry>
+			<key>TPG26x</key>
+			<value>
+				<type>PRESSURE_GAUGE</type>
+				<path>TPG26x.opi</path>
+				<description>PFEIFFER 26x Vacuum Gauge</description>
+				<macros>
+                    <macro>
+						<name>IOC_NUM</name>
+						<description>IOC Number, e.g. 01 for first IOC.</description>
+					</macro>
 				</macros>
 			</value>
 		</entry>
