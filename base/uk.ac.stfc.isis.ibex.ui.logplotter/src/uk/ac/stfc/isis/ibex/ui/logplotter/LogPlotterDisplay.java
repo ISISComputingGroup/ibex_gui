@@ -26,9 +26,6 @@ import org.csstudio.trends.databrowser2.model.PVItem;
 import org.csstudio.trends.databrowser2.preferences.Preferences;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.osgi.util.NLS;
-import org.eclipse.ui.IViewPart;
-import org.eclipse.ui.IWorkbenchPage;
-import org.eclipse.ui.PlatformUI;
 
 import uk.ac.stfc.isis.ibex.ui.UI;
 
@@ -37,11 +34,6 @@ public class LogPlotterDisplay {
 	public void displayPVHistory(String pvAddress) {	
 				
 		UI.getDefault().switchPerspective(Perspective.ID);
-		
-		IWorkbenchPage activePage = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
-		if (activePage != null) {
-			activePage.setEditorAreaVisible(true);
-		}
 		
 	    // Create new editor
 	    final DataBrowserEditor editor = DataBrowserEditor.createInstance();
@@ -62,12 +54,6 @@ public class LogPlotterDisplay {
 	        MessageDialog.openError(editor.getSite().getShell(),
 	                Messages.Error,
 	                NLS.bind(Messages.ErrorFmt, ex.getMessage()));
-	    }
-	    
-	    //Must be done after the editor is added as the close will check if there are any editors left to add the blank view
-	    if (activePage != null) {
-			IViewPart emptyView = activePage.findView(EmptyLogPlotterView.ID);
-			activePage.hideView(emptyView);
 	    }
 	}
 }
