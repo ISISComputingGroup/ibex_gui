@@ -9,27 +9,28 @@ import uk.ac.stfc.isis.ibex.instrument.Instrument;
 import uk.ac.stfc.isis.ibex.instrument.channels.BooleanChannel;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 
+/**
+ * Instrument specific property displayed in spangle banner.
+ * 
+ * CREATED FROM JSON
+ */
 public class BannerItem extends ModelObject {
 
-	private final String name;
-	private final String pv;
-	private final String type;
+    private String name;
+    private String pv;
+    private String type;
 	private BannerState true_state;
 	private BannerState false_state;
 	private BannerState unknown_state;
 	private BannerState currentState;
 
-	private final ObservableFactory obsFactory = new ObservableFactory(OnInstrumentSwitch.CLOSE);
+    private ObservableFactory obsFactory = null;
 	private ForwardingObservable<Boolean> pvObservable;
-	
-	public BannerItem(String name, String pv, String type){
-		this.name = name;
-		this.pv = pv;
-		this.type = type;
-		createPVObservable();
-	}
+
 	
 	public void createPVObservable() {
+        obsFactory = new ObservableFactory(OnInstrumentSwitch.CLOSE);
+
         pvObservable = obsFactory.getSwitchableObservable(new BooleanChannel(),
                 Instrument.getInstance().getPvPrefix() + this.pv);
         pvObservable.addObserver(stateAdapter);
@@ -39,7 +40,7 @@ public class BannerItem extends ModelObject {
 
         @Override
         public void onValue(Boolean value) {
-        	if(value){
+            if (value) {
         		setCurrentState(true_state);
         	} else {
         		setCurrentState(false_state);
@@ -88,7 +89,7 @@ public class BannerItem extends ModelObject {
 	}
 
 	public void setCurrentState(BannerState currentState) {
-		firePropertyChange("currentState", this.currentState, this.currentState=currentState);
+        firePropertyChange("currentState", this.currentState, this.currentState = currentState);
 	}
 
 }

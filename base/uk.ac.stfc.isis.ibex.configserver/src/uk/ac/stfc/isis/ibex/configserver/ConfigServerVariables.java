@@ -148,7 +148,8 @@ public class ConfigServerVariables extends InstrumentVariables {
 				
 		iocStates = convert(readCompressed(blockServerAddresses.iocs()), converters.toIocStates());
 		protectedIocs = convert(readCompressed(blockServerAddresses.iocsNotToStop()), converters.toNames());	
-		bannerDescription = convert(readCompressed(blockServerAddresses.bannerDescription()), converters.toBannerDescription());	
+        bannerDescription =
+                convert(readCompressed(blockServerAddresses.bannerDescription()), converters.toBannerDescription());
 	}
 
 	public ForwardingObservable<Configuration> config(String configName) {		

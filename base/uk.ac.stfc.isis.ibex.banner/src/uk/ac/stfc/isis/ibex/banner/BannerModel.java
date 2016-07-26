@@ -15,15 +15,14 @@ public class BannerModel extends ModelObject {
 
 	public BannerModel() {
 		Configurations.getInstance().variables().bannerDescription.addObserver(descriptionAdapter);
-	}
-	
+    }
 
     private final BaseObserver<Collection<BannerItem>> descriptionAdapter = new BaseObserver<Collection<BannerItem>>() {
 
         @Override
         public void onValue(Collection<BannerItem> value) {
             setBannerItems(value);
-            for (BannerItem item : value){
+            for (BannerItem item : value) {
             	item.createPVObservable();
             }
         }
