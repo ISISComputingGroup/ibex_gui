@@ -119,17 +119,20 @@ public class ObservableModel extends Model {
 	}
 	
 	private String getDefaultUser() {
-		Integer number_of_defaults = 0;
+		String defaultName = defaultUser;
+		int i = 1;
+		
+		List<String> userNames = new ArrayList<>();
+		
 		for (UserDetails user : userDetails) {
-			if(user.getName().startsWith(defaultUser)) {
-				number_of_defaults++;
-			}
-		}
-		if (number_of_defaults > 0) {
-			return defaultUser + "_" + number_of_defaults.toString();
+			userNames.add(user.getName());
 		}
 		
-		return defaultUser;
+		while (userNames.contains(defaultName)) {
+			defaultName = defaultUser + "_" + i++;
+		}
+		
+		return defaultName;
 	}
 	
 	@Override
