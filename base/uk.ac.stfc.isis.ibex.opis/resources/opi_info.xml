@@ -88,6 +88,36 @@
 					</macro>
                 </macros>
 			</value>
+		</entry>
+		<entry>
+			<key>Mercury iTC</key>
+			<value>
+				<type>MERCURY</type>
+				<path>mercuryiTC.opi</path>
+				<description>The OPI for the Mercury temperature controller.</description>
+				<macros>
+					<macro>
+						<name>MERCURY</name>
+						<description>The Mercury PV name (e.g. MERCURY_01).</description>
+					</macro>
+                    <macro>
+						<name>TEMP_NUM1</name>
+						<description>The first card number (e.g. 1, optional).</description>
+					</macro>
+					<macro>
+						<name>TEMP_NUM2</name>
+						<description>The second card number (e.g. 2, optional).</description>
+					</macro>
+					<macro>
+						<name>TEMP_NUM3</name>
+						<description>The third card number (e.g. 3, optional).</description>
+					</macro>
+					<macro>
+						<name>TEMP_NUM4</name>
+						<description>The fourth card number (e.g. 4, optional).</description>
+					</macro>                   
+				</macros>
+			</value>
 		</entry>        
 		<entry>
 			<key>In Out Monitor</key>
@@ -452,6 +482,33 @@
 						<name>IOC_NUM</name>
 						<description>PSU IOC Number, two digits, e.g. 01.</description>
 					</macro>                  
+				</macros>
+			</value>
+		</entry>
+		<entry>
+			<key>muon_front_end</key>
+			<value>
+				<type>MUON_FRONT_END</type>
+				<path>muon_front_end.opi</path>
+				<description>Muon front end momentum slits and barndoors.</description>
+				<macros>
+					<macro>
+						<name>MM_EMU</name>
+						<description>Motor number for EMU barndoors, e.g. MTR0101.</description>
+					</macro>
+					<macro>
+						<name>MM_MuSR</name>
+						<description>Motor number for MuSR barndoors, e.g. MTR0102.</description>
+					</macro>
+					<macro>
+						<name>MM_HiFi</name>
+						<description>Motor number for HiFi barndoors, e.g. MTR0103.</description>
+					</macro>
+					<macro>
+						<name>MM_MOMENTUM</name>
+						<description>Motor number for momentum slits, e.g. MTR0104.</description>
+					</macro>
+
 				</macros>
 			</value>
 		</entry>

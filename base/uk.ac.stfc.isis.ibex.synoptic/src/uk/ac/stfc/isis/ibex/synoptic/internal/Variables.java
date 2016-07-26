@@ -117,6 +117,7 @@ public class Variables extends InstrumentVariables {
     /**
      * Parses all the information about a synoptic from its PV.
      * 
+     * @param <T> the type of the observable source
      * @param synopticPV synopticPV the PV for the synoptic
      * @return an object containing all the information about the synoptic
      */

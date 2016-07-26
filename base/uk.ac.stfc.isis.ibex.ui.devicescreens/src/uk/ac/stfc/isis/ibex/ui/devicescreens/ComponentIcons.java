@@ -17,12 +17,12 @@
  * http://opensource.org/licenses/eclipse-1.0.php
  */
 
-package uk.ac.stfc.isis.ibex.ui.synoptic.component.icons;
+package uk.ac.stfc.isis.ibex.ui.devicescreens;
 
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.wb.swt.ResourceManager;
 
-import uk.ac.stfc.isis.ibex.synoptic.model.ComponentType;
+import uk.ac.stfc.isis.ibex.devicescreens.components.ComponentType;
 
 /**
  * Given a component type, returns an icon appropriate for that type.
@@ -57,7 +57,7 @@ public final class ComponentIcons {
     }
 
     private static Image icon(String fileName) {
-        return ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui.synoptic", "icons/components/" + fileName);
+        return ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui.devicescreens", "icons/components/" + fileName);
     }
 
     private static String getIconNameForType(ComponentType componentType) {
@@ -102,6 +102,10 @@ public final class ComponentIcons {
                 return "linkam95";
             case ATTENUATOR:
                 return "attenuator";
+            case MERCURY:
+                return "mercury";
+            case MUON_FRONT_END:
+                return "muon_front_end";
             default:
                 return "cog";
         }

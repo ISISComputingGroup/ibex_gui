@@ -20,7 +20,8 @@ Require-Bundle: uk.ac.stfc.isis.ibex.preferences,
  uk.ac.stfc.isis.ibex.opis;bundle-version="1.0.0",
  uk.ac.stfc.isis.ibex.instrument,
  org.eclipse.ui;bundle-version="3.8.2",
- org.eclipse.core.runtime;bundle-version="3.8.0"
+ org.eclipse.core.runtime;bundle-version="3.8.0",
+ uk.ac.stfc.isis.ibex.logger
 Export-Package: uk.ac.stfc.isis.ibex.ui.motor.views
 Bundle-ClassPath: .
 Import-Package: org.csstudio.opibuilder.util

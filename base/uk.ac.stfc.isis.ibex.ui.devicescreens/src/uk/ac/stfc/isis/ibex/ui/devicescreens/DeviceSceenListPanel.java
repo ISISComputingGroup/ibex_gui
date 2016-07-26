@@ -19,6 +19,10 @@
 
 package uk.ac.stfc.isis.ibex.ui.devicescreens;
 
+import org.apache.logging.log4j.Logger;
+import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.jface.viewers.ISelectionChangedListener;
+import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
@@ -27,10 +31,10 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 
 import uk.ac.stfc.isis.ibex.devicescreens.DeviceScreens;
+import uk.ac.stfc.isis.ibex.devicescreens.desc.DeviceDescription;
 import uk.ac.stfc.isis.ibex.devicescreens.desc.DeviceScreensDescription;
 import uk.ac.stfc.isis.ibex.devicescreens.desc.DeviceScreensDescriptionXmlParser;
 import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
@@ -38,13 +42,20 @@ import uk.ac.stfc.isis.ibex.epics.observing.BaseObserver;
 import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.Observer;
 import uk.ac.stfc.isis.ibex.epics.writing.Writable;
+import uk.ac.stfc.isis.ibex.logger.IsisLog;
+import uk.ac.stfc.isis.ibex.opis.OPIViewCreationException;
+import uk.ac.stfc.isis.ibex.ui.devicescreens.list.DeviceScreensTable;
 
 /**
- * A temporary UI panel for the devices screens.
+ * A UI Panel for the devices screens.
  */
-public class Panel extends Composite {
+public class DeviceSceenListPanel extends Composite {
 
-    private Label lblScreensRbv;
+    /**
+     * Logger.
+     */
+    private static final Logger LOG = IsisLog.getLogger(DeviceSceenListPanel.class);
+
     private Text txtScreensSp;
     private Writable<DeviceScreensDescription> screensSetter;
 
@@ -55,7 +66,8 @@ public class Panel extends Composite {
             display.asyncExec(new Runnable() {
                 @Override
                 public void run() {
-                    setLabelValue(value.toString());
+                    // setLabelValue(value.toString());
+                    deviceScreenList.setRows(value.getDevices());
                 }
             });
         }
@@ -69,40 +81,58 @@ public class Panel extends Composite {
         public void onConnectionStatus(boolean isConnected) {
         }
     };
-
-    private void setLabelValue(String value) {
-        lblScreensRbv.setText(value);
-
-        // Need to call this, otherwise the label text will be set, but the view
-        // won't be updated
-        lblScreensRbv.getParent().layout();
-    }
+    private DeviceScreensTable deviceScreenList;
 
     /**
-     * @param parent
-     * @param style
+     * Create a Devices Screen Panel.
+     * 
+     * @param parent parent component
+     * @param style SWT Style
      */
-    public Panel(Composite parent, int style) {
-        // super(parent, style);
+    public DeviceSceenListPanel(final Composite parent, int style) {
         super(parent, style);
         setLayout(new FillLayout(SWT.HORIZONTAL));
 
+        // TODO temporarily place list and setter in control, remove when
+        // editing functionality is added
         Composite composite = new Composite(this, SWT.NONE);
-        composite.setLayout(new GridLayout(2, false));
+
+        GridLayout compositeLayout = new GridLayout(2, true);
+        composite.setLayout(compositeLayout);
+
+        deviceScreenList = new DeviceScreensTable(composite, SWT.BORDER, SWT.V_SCROLL | SWT.NO_SCROLL | SWT.FULL_SELECTION);
+        GridData devicesListLayout = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
+        deviceScreenList.setLayoutData(devicesListLayout);
 
         DeviceScreens deviceScreens = DeviceScreens.getInstance();
-
-        lblScreensRbv = new Label(composite, SWT.NONE);
-        lblScreensRbv.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, true, 1, 1));
         ForwardingObservable<DeviceScreensDescription> availableScreensObservable = deviceScreens.getDevices();
         availableScreensObservable.addObserver(pvObserver);
 
+        deviceScreenList.addSelectionChangedListener(new ISelectionChangedListener() {
+
+            @Override
+            public void selectionChanged(SelectionChangedEvent event) {
+
+                for (DeviceDescription deviceScreeen : deviceScreenList.selectedRows()) {
+                    LOG.info("Open opi target " + deviceScreeen.getName());
+                    try {
+                        DevicesOpiTargetView.displayOpi(deviceScreeen.getOPITarget());
+                    } catch (OPIViewCreationException e) {
+                        LOG.catching(e);
+                        MessageDialog.openError(parent.getShell(), "Error displaying OPI", e.getMessage());
+                    }
+                }
+
+            }
+        });
+
+
+
         txtScreensSp = new Text(composite, SWT.WRAP | SWT.MULTI);
-        GridData gdTxtScreens = new GridData(SWT.LEFT, SWT.TOP, true, true, 1, 1);
-        gdTxtScreens.heightHint = 2000;
-        gdTxtScreens.widthHint = 2000;
+        GridData gdTxtScreens = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
         txtScreensSp.setLayoutData(gdTxtScreens);
         screensSetter = deviceScreens.getDevicesSetter();
+
 
         txtScreensSp.addModifyListener(new ModifyListener() {
             @Override

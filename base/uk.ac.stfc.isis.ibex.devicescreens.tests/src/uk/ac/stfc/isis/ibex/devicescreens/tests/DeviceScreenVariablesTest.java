@@ -133,7 +133,7 @@ public class DeviceScreenVariablesTest {
     }
 
     @Test
-    public void sfsdf() {
+    public void GIVEN_new_variable_WHEN_set_device_screens_THEN_PV_is_written_to() {
         // Arrange
         Writable expectedDestination = mock(Writable.class);
         when(switchingWritableFactory.getSwitchableWritable(any(ChannelType.class),
@@ -148,11 +148,11 @@ public class DeviceScreenVariablesTest {
 
         // Act
         Writable<DeviceScreensDescription> setter = variables.getDeviceScreensSetter();
-
-        // Assert
         verify(expectedDestination, never()).write(any());
         setter.write(inputValue);
-        verify(expectedDestination, times(1)).write(expectedConvertedValue);
+
+        // Assert
+        verify(expectedDestination).write(expectedConvertedValue);
     }
 
     private DeviceScreensDescription getDeviceScreensDescription(String deviceName, String deviceKey,

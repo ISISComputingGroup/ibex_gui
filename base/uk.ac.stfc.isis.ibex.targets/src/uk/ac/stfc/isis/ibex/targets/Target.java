@@ -64,6 +64,7 @@ public abstract class Target {
 	}
 
     /**
+     * Set the properties of the target, e.g. macro values.
      * 
      * @param key - Property key
      * @param value - Property value
@@ -73,8 +74,10 @@ public abstract class Target {
 	}
 
     /**
+     * Target properties map.
      * 
-     * @return The target properties
+     * @return The target properties Map<key, value>, e.g. Map<macro name, macro
+     *         value>
      */
 	public Map<String, String> properties() {
 		return new LinkedHashMap<>(properties);
