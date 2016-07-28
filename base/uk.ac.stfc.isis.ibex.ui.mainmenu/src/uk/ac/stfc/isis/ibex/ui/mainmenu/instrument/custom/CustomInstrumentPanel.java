@@ -33,13 +33,20 @@ import org.eclipse.swt.widgets.Text;
 
 /**
  * A view for the definition of a new custom instrument info.
- * 
  */
 @SuppressWarnings("checkstyle:magicnumber")
 public class CustomInstrumentPanel extends Composite {
 
     private Text txtPVPrefix;
 
+    /**
+     * Creates an instance of the panel for configuring a new custom instrument
+     * info.
+     * 
+     * @param parent the parent composite
+     * @param style the style of the panel
+     * @param viewModel the view model for the custom instrument
+     */
     public CustomInstrumentPanel(Composite parent, int style, CustomIntrumentViewModel viewModel) {
         super(parent, style);
 
@@ -49,22 +56,33 @@ public class CustomInstrumentPanel extends Composite {
         grpPVPrefix.setText("Instrument PV Prefix");
         grpPVPrefix.setLayout(new GridLayout(2, false));
 
-        String warningMsg = "Please configure a PV prefix for the unknown instrument \"" + viewModel.getInstrumentName()
-                + "\"";
-        Label lblWarning = new Label(grpPVPrefix, SWT.NONE);
-        lblWarning.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1));
-        lblWarning.setText(warningMsg);
-
-        Label lblPVPrefix = new Label(grpPVPrefix, SWT.NONE);
-        lblPVPrefix.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-        lblPVPrefix.setText("PV Prefix:");
-
-        txtPVPrefix = new Text(grpPVPrefix, SWT.BORDER);
-        GridData gdTxtPVPrefix = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
-        gdTxtPVPrefix.widthHint = 250;
-        txtPVPrefix.setLayoutData(gdTxtPVPrefix);
+        createWarningLabel(grpPVPrefix, viewModel.getInstrumentName());
+        createPvPrefixLabel(grpPVPrefix);
+        createPvPrefixTextBox(grpPVPrefix);
 
         bindModel(viewModel);
+    }
+
+    private void createWarningLabel(Composite parent, String instrumentName) {
+        String warningMsg =
+                "Please configure a PV prefix for the unknown instrument \"" + instrumentName
+                        + "\"\n(e.g. \"IN:LARMOR:\". Do not forget the trailing colon!)";
+        Label lblWarning = new Label(parent, SWT.WRAP | SWT.LEFT);
+        lblWarning.setLayoutData(new GridData(SWT.HORIZONTAL, SWT.CENTER, true, false, 2, 1));
+        lblWarning.setText(warningMsg);
+    }
+
+    private void createPvPrefixLabel(Composite parent) {
+        Label lblPVPrefix = new Label(parent, SWT.NONE);
+        lblPVPrefix.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
+        lblPVPrefix.setText("PV Prefix:");
+    }
+
+    private void createPvPrefixTextBox(Composite parent) {
+        txtPVPrefix = new Text(parent, SWT.BORDER);
+        GridData gdTxtPVPrefix = new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1);
+        gdTxtPVPrefix.widthHint = 250;
+        txtPVPrefix.setLayoutData(gdTxtPVPrefix);
     }
 
     private void bindModel(CustomIntrumentViewModel viewModel) {

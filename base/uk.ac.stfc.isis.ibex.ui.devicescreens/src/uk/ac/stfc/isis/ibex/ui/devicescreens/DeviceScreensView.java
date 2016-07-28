@@ -28,19 +28,25 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.part.ViewPart;
 
 /**
- * 
+ * A view for the current available device screens.
  */
 public class DeviceScreensView extends ViewPart {
 
+    /**
+     * Class ID.
+     */
     public static final String ID = "uk.ac.stfc.isis.ibex.ui.devicescreens.devicescreensview";
 
+    /**
+     * Default constructor.
+     */
     public DeviceScreensView() {
     }
 
     @Override
     public void createPartControl(Composite parent) {
         parent.setLayout(new FillLayout(SWT.HORIZONTAL));
-        Panel panel = new Panel(parent, SWT.NONE);
+        new DeviceSceenListPanel(parent, SWT.NONE);
     }
 
     @Override

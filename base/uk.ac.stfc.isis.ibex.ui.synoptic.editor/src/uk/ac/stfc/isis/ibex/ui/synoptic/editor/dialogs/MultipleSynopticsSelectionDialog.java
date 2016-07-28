@@ -61,7 +61,7 @@ public class MultipleSynopticsSelectionDialog extends SelectionDialog {
 		Label lblSelect = new Label(container, SWT.NONE);
 		lblSelect.setText("Select Synoptics:");
 
-		items = new List(container, SWT.BORDER | SWT.V_SCROLL);
+		items = new List(container, SWT.BORDER | SWT.V_SCROLL | SWT.MULTI);
 		items.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		items.setItems(SynopticInfo.names(available).toArray(new String[0]));
 	}

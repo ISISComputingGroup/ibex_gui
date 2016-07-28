@@ -22,9 +22,16 @@
       </view>
       <view
             allowMultiple="true"
-            class="uk.ac.stfc.isis.ibex.ui.synoptic.views.OpiTargetView"
-            id="uk.ac.stfc.isis.ibex.ui.synoptic.views.OpiTargetView"
+            class="uk.ac.stfc.isis.ibex.ui.synoptic.views.SynopticOpiTargetView"
+            id="uk.ac.stfc.isis.ibex.ui.synoptic.views.SynopticOpiTargetView"
             name="Component view"
+            restorable="true">
+      </view>
+      <view
+            allowMultiple="true"
+            class="uk.ac.stfc.isis.ibex.ui.synoptic.views.SynopticOpiTargetView"
+            id="uk.ac.stfc.isis.ibex.ui.synoptic.views.SynopticOpiTargetView"
+            name="SynopticOpiTargetView"
             restorable="true">
       </view>
    </extension>
@@ -72,7 +79,7 @@
          </view>
          <view
                closeable="true"
-               id="uk.ac.stfc.isis.ibex.ui.synoptic.views.OpiTargetView:*"
+               id="uk.ac.stfc.isis.ibex.ui.synoptic.views.SynopticOpiTargetView"
                minimized="false"
                moveable="false"
                ratio="0.6f"

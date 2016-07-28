@@ -39,17 +39,12 @@ public class DeviceScreensXmlProvider {
     public static final String ENDING = "</devices>";
 
     /**
-     * Default constructor.
-     */
-    public DeviceScreensXmlProvider() {
-    }
-
-    /**
      * Returns the xml string for a single device description with a single
      * property.
      * 
      * @param deviceName the device name
      * @param deviceKey the device key
+     * @param deviceType the device type
      * @param propertyKey the property name
      * @param propertyValue the property value
      * @return the xml for a device description

@@ -76,7 +76,7 @@ public class MultipleConfigsSelectionDialog extends SelectionDialog {
 		Label lblSelect = new Label(container, SWT.NONE);
 		lblSelect.setText("Select " + getTypeString() + ":");
 
-		items = new List(container, SWT.BORDER | SWT.V_SCROLL);
+		items = new List(container, SWT.BORDER | SWT.V_SCROLL | SWT.MULTI);
 		items.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		String[] names = ConfigInfo.names(available).toArray(new String[0]);
 		Arrays.sort(names);

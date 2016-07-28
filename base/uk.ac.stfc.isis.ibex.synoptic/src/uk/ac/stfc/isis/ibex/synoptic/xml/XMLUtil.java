@@ -49,6 +49,7 @@ public final class XMLUtil {
 	/**
      * Converts an input XML into a synoptic description.
      * 
+     * @param <T> the type to parse the XML into
      * @param xml the synoptic XML received from the BlockServer
      * @return the synoptic data converted into an instrument description
      * @throws JAXBException XML Exception
@@ -66,6 +67,7 @@ public final class XMLUtil {
      * Converts the instrument description into the synoptic XML expected by the
      * BlockServer.
      * 
+     * @param the type than needs to be converted into XML
      * @param instrument the instrument description
      * @return the XML for the synoptic
      * @throws JAXBException XML Exception

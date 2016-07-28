@@ -34,7 +34,7 @@ import org.eclipse.jface.viewers.ILabelProviderListener;
 import org.eclipse.swt.graphics.Image;
 
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.ComponentDescription;
-import uk.ac.stfc.isis.ibex.ui.synoptic.component.icons.ComponentIcons;
+import uk.ac.stfc.isis.ibex.ui.devicescreens.ComponentIcons;
 
 /**
  * Provides labels for components within the synoptic editor.

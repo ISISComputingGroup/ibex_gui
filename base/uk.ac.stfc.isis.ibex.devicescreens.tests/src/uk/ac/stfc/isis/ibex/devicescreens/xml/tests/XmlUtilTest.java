@@ -58,7 +58,7 @@ public class XmlUtilTest {
     private DeviceScreensDescription singleDeviceScreensDescription;
     private DeviceScreensDescription multipleDeviceScreensDescription;
 
-    private static final String xmlTextMultipleDescription =
+    private static String xmlTextMultipleDescription =
             DeviceScreensXmlProvider.HEADER + "<device>"
             + "<name>Eurotherm 2</name>" + "<key>Eurotherm</key>"
             + "<type>OPI</type>" + "<properties>" + "<property>" + "<key>EURO</key>" + "<value>EUROTHERM1</value>"

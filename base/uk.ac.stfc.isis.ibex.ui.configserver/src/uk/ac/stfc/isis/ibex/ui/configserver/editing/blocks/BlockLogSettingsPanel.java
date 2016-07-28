@@ -66,7 +66,7 @@ public class BlockLogSettingsPanel extends Composite {
         lblSettings = new Label(grpLogSettings, SWT.NONE);
         lblSettings.setAlignment(SWT.RIGHT);
         GridData gdLblSettings = new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1);
-        gdLblSettings.widthHint = 60;
+        gdLblSettings.widthHint = 80;
         lblSettings.setLayoutData(gdLblSettings);
         
         txtSettings = new Text(grpLogSettings, SWT.BORDER);

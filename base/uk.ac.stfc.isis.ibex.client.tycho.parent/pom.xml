@@ -237,6 +237,10 @@
 		<module>../uk.ac.stfc.isis.ibex.devicescreens</module>
 		<module>../uk.ac.stfc.isis.ibex.ui.devicescreens</module>
 		<module>../uk.ac.stfc.isis.ibex.devicescreens.tests</module>
+		<module>../uk.ac.stfc.isis.ibex.targets</module>
+		<module>../uk.ac.stfc.isis.ibex.ui.targets</module>
+		<module>../uk.ac.stfc.isis.ibex.targets.tests</module>
+		<module>../uk.ac.stfc.isis.ibex.ui.configserver.tests</module>
 	</modules>
 </project>
 

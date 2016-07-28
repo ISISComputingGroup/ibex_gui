@@ -20,7 +20,9 @@ Require-Bundle: org.eclipse.ui,
  uk.ac.stfc.isis.ibex.instrument,
  uk.ac.stfc.isis.ibex.ui,
  uk.ac.stfc.isis.ibex.validators;bundle-version="1.0.0",
- org.eclipse.swt
+ org.eclipse.swt,
+ uk.ac.stfc.isis.ibex.devicescreens,
+ uk.ac.stfc.isis.ibex.ui.devicescreens;bundle-version="1.0.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Bundle-ActivationPolicy: lazy
 Import-Package: org.apache.logging.log4j,
@@ -29,5 +31,6 @@ Import-Package: org.apache.logging.log4j,
  uk.ac.stfc.isis.ibex.epics.adapters,
  uk.ac.stfc.isis.ibex.epics.writing,
  uk.ac.stfc.isis.ibex.logger,
+ uk.ac.stfc.isis.ibex.targets,
  uk.ac.stfc.isis.ibex.ui.perspectives
 Export-Package: uk.ac.stfc.isis.ibex.ui.synoptic.editor.commands
