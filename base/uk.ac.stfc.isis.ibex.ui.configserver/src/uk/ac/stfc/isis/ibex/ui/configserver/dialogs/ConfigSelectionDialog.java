@@ -23,10 +23,14 @@ import java.util.Arrays;
 import java.util.Collection;
 
 import org.eclipse.jface.dialogs.Dialog;
+import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.internal.win32.CREATESTRUCT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
@@ -36,18 +40,16 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
 import uk.ac.stfc.isis.ibex.configserver.configuration.ConfigInfo;
+import uk.ac.stfc.isis.ibex.ui.dialogs.SelectionDialog;
 
 @SuppressWarnings("checkstyle:magicnumber")
 /**
  * Dialog for asking the user to select a single configuration or component.
  */
-public class ConfigSelectionDialog extends Dialog {
+public class ConfigSelectionDialog extends SelectionDialog {
 	
-	private final String title;
 	private final Collection<ConfigInfo> available;
 	
-	private Text selectedText;
-    protected List items;
 	private boolean isComponent;
     private boolean includeCurrent;
 
@@ -64,8 +66,7 @@ public class ConfigSelectionDialog extends Dialog {
 			Shell parentShell, 
 			String title,
             Collection<ConfigInfo> available, boolean isComponent, boolean includeCurrent) {
-		super(parentShell);
-		this.title = title;
+		super(parentShell, title);
 		this.available = available;
 		this.isComponent = isComponent;
         this.includeCurrent = includeCurrent;
@@ -80,31 +81,12 @@ public class ConfigSelectionDialog extends Dialog {
 	}
 	
 	@Override
-	protected void configureShell(Shell shell) {
-		super.configureShell(shell);
-		shell.setText(title);
-	}
-
-	@Override
-	protected Point getInitialSize() {
-		return new Point(450, 300);
-	}
-	
-	@Override
 	protected void okPressed() {
 		selectedName = items.getSelection()[0];
 		super.okPressed();
 	}
 	
-	@Override
-	protected Control createDialogArea(Composite parent) {
-		Composite container = (Composite) super.createDialogArea(parent);
-		createConfigSelection(container);
-		
-		return container;
-	}
-	
-	private void createConfigSelection(Composite container) {
+	protected void createSelection(Composite container) {
 		Label lblSelect = new Label(container, SWT.NONE);
 		lblSelect.setText("Select a " + getTypeString().toLowerCase() + ":");
 		
@@ -118,13 +100,6 @@ public class ConfigSelectionDialog extends Dialog {
         }
 		Arrays.sort(names, String.CASE_INSENSITIVE_ORDER);
 		items.setItems(names);
-		
-		items.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseDoubleClick(MouseEvent e) {
-				okPressed();
-			}
-		});
 	}
 	
 	private String getTypeString() {

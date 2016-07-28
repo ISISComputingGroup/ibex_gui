@@ -22,30 +22,25 @@ package uk.ac.stfc.isis.ibex.ui.synoptic;
 import java.util.Arrays;
 import java.util.Collection;
 
-import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
-import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
 
 import uk.ac.stfc.isis.ibex.synoptic.SynopticInfo;
+import uk.ac.stfc.isis.ibex.ui.dialogs.SelectionDialog;
 
 /**
  * Dialog for asking the user to select a single synoptic.
  */
 @SuppressWarnings("checkstyle:magicnumber")
-public class SynopticSelectionDialog extends Dialog {
+public class SynopticSelectionDialog extends SelectionDialog {
 	
-	private final String title;
 	private final Collection<SynopticInfo> available;
-	
-	private List items;
 
 	private SynopticInfo selectedSynoptic;
 	
@@ -58,8 +53,7 @@ public class SynopticSelectionDialog extends Dialog {
 			Shell parentShell, 
 			String title,
 			Collection<SynopticInfo> available) {
-		super(parentShell);
-		this.title = title;
+		super(parentShell, title);
 		this.available = available;
 	}
 	
@@ -72,32 +66,13 @@ public class SynopticSelectionDialog extends Dialog {
 	}
 	
 	@Override
-	protected void configureShell(Shell shell) {
-		super.configureShell(shell);
-		shell.setText(title);
-	}
-
-	@Override
-	protected Point getInitialSize() {
-		return new Point(450, 300);
-	}
-	
-	@Override
 	protected void okPressed() {
 		selectedSynoptic = SynopticInfo.search(available, items.getSelection()[0]); 
 		
 		super.okPressed();
 	}
 	
-	@Override
-	protected Control createDialogArea(Composite parent) {
-		Composite container = (Composite) super.createDialogArea(parent);
-		createSynopticSelection(container);
-		
-		return container;
-	}
-	
-	private void createSynopticSelection(Composite container) {
+	protected void createSelection(Composite container) {
 		Label lblSelect = new Label(container, SWT.NONE);
 		lblSelect.setText("Select a synoptic:");
 		
@@ -106,13 +81,6 @@ public class SynopticSelectionDialog extends Dialog {
 		String[] names = SynopticInfo.names(available).toArray(new String[0]);
 		Arrays.sort(names, String.CASE_INSENSITIVE_ORDER);
 		items.setItems(names);
-		
-		items.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseDoubleClick(MouseEvent e) {
-				okPressed();
-			}
-		});
 	}
 	
 }

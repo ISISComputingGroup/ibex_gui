@@ -23,28 +23,19 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 
-import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.MouseAdapter;
-import org.eclipse.swt.events.MouseEvent;
-import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Shell;
 
 import uk.ac.stfc.isis.ibex.synoptic.SynopticInfo;
+import uk.ac.stfc.isis.ibex.ui.dialogs.SelectionDialog;
 
-public class MultipleSynopticsSelectionDialog extends Dialog {
-    
-    private static final int DIALOG_WIDTH = 450;
-    private static final int DIALOG_HEIGHT = 300;
+public class MultipleSynopticsSelectionDialog extends SelectionDialog {
 	
-	private final String title;
 	private final Collection<SynopticInfo> available;
-	private List items;
 
 	private Collection<String> selected = new ArrayList<>();
 	
@@ -52,8 +43,7 @@ public class MultipleSynopticsSelectionDialog extends Dialog {
 			Shell parentShell, 
 			String title,
 			Collection<SynopticInfo> available) {
-		super(parentShell);
-		this.title = title;
+		super(parentShell, title);
 		this.available = available;
 	}
 	
@@ -62,44 +52,18 @@ public class MultipleSynopticsSelectionDialog extends Dialog {
 	}
 	
 	@Override
-	protected void configureShell(Shell shell) {
-		super.configureShell(shell);
-		shell.setText(title);
-	}
-
-	@Override
-	protected Point getInitialSize() {
-		return new Point(DIALOG_WIDTH, DIALOG_HEIGHT);
-	}
-	
-	@Override
 	protected void okPressed() {
 		selected = Arrays.asList(items.getSelection());
 		super.okPressed();
 	}
 	
-	@Override
-	protected Control createDialogArea(Composite parent) {
-		Composite container = (Composite) super.createDialogArea(parent);
-		createSynopticSelection(container);
-		
-		return container;
-	}
-	
-	private void createSynopticSelection(Composite container) {
+	protected void createSelection(Composite container) {
 		Label lblSelect = new Label(container, SWT.NONE);
 		lblSelect.setText("Select Synoptics:");
 
 		items = new List(container, SWT.BORDER | SWT.V_SCROLL);
 		items.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		items.setItems(SynopticInfo.names(available).toArray(new String[0]));
-		
-		items.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseDoubleClick(MouseEvent e) {
-				okPressed();
-			}
-		});
 	}
 	
 }
