@@ -106,6 +106,8 @@ public final class ComponentIcons {
                 return "mercury";
             case MUON_FRONT_END:
                 return "muon_front_end";
+            case LAKESHORE:
+                return "lakeshore";
             default:
                 return "cog";
         }
