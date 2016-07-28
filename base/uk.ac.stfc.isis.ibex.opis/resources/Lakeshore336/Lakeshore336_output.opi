@@ -122,7 +122,7 @@ $(pv_value)</tooltip>
     <background_color>
       <color red="240" green="240" blue="240" />
     </background_color>
-    <width>277</width>
+    <width>349</width>
     <x>492</x>
     <name>Grouping Container</name>
     <y>33</y>
@@ -188,7 +188,7 @@ if (lastChar == "A" || lastChar == "B" || lastChar == "C" || lastChar == "D") {
         <color red="240" green="240" blue="240" />
       </background_color>
       <zoom_to_fit>false</zoom_to_fit>
-      <width>265</width>
+      <width>337</width>
       <x>0</x>
       <name>Linking Container</name>
       <y>6</y>

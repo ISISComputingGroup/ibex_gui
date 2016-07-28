@@ -47,7 +47,7 @@ $(pv_value)</tooltip>
     <pv_value />
     <auto_size>false</auto_size>
     <read_only>true</read_only>
-    <text>TEMPERATURE:</text>
+    <text>TEMP:</text>
     <scripts />
     <show_units>true</show_units>
     <border_alarm_sensitive>false</border_alarm_sensitive>
@@ -75,7 +75,7 @@ $(pv_value)</tooltip>
     </background_color>
     <password_input>false</password_input>
     <name>Text_1</name>
-    <width>165</width>
+    <width>95</width>
     <x>6</x>
     <y>6</y>
     <maximum>1.7976931348623157E308</maximum>
@@ -128,9 +128,9 @@ $(pv_value)</tooltip>
       <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
     </background_color>
     <width>91</width>
-    <x>174</x>
+    <x>108</x>
     <name>Text Update_1</name>
-    <y>3</y>
+    <y>4</y>
     <foreground_color>
       <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
     </foreground_color>
@@ -154,7 +154,7 @@ $(pv_value)</tooltip>
     <pv_value />
     <auto_size>false</auto_size>
     <read_only>true</read_only>
-    <text>INPUT NAME:</text>
+    <text>NAME:</text>
     <scripts />
     <show_units>true</show_units>
     <border_alarm_sensitive>false</border_alarm_sensitive>
@@ -182,7 +182,7 @@ $(pv_value)</tooltip>
     </background_color>
     <password_input>false</password_input>
     <name>Text_2</name>
-    <width>165</width>
+    <width>95</width>
     <x>6</x>
     <y>42</y>
     <maximum>1.7976931348623157E308</maximum>
@@ -191,57 +191,6 @@ $(pv_value)</tooltip>
       <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
     </foreground_color>
     <minimum>-1.7976931348623157E308</minimum>
-    <font>
-      <opifont.name fontName="Arial" height="14" style="1">ISIS_Label</opifont.name>
-    </font>
-  </widget>
-  <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0">
-    <border_style>0</border_style>
-    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
-    <precision>3</precision>
-    <tooltip>$(pv_name)
-$(pv_value)</tooltip>
-    <horizontal_alignment>0</horizontal_alignment>
-    <rules />
-    <enabled>true</enabled>
-    <wuid>24017828:15626637ea1:-456f</wuid>
-    <transparent>false</transparent>
-    <pv_value />
-    <auto_size>false</auto_size>
-    <text>######</text>
-    <rotation_angle>0.0</rotation_angle>
-    <scripts />
-    <border_alarm_sensitive>true</border_alarm_sensitive>
-    <show_units>false</show_units>
-    <height>30</height>
-    <border_width>1</border_width>
-    <scale_options>
-      <width_scalable>true</width_scalable>
-      <height_scalable>true</height_scalable>
-      <keep_wh_ratio>false</keep_wh_ratio>
-    </scale_options>
-    <visible>true</visible>
-    <pv_name>$(PV_ROOT):NAME_$(INPUT)</pv_name>
-    <vertical_alignment>1</vertical_alignment>
-    <border_color>
-      <color name="ISIS_Check_Border" red="0" green="128" blue="255" />
-    </border_color>
-    <precision_from_pv>false</precision_from_pv>
-    <widget_type>Text Update</widget_type>
-    <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
-    <wrap_words>false</wrap_words>
-    <format_type>0</format_type>
-    <background_color>
-      <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
-    </background_color>
-    <width>91</width>
-    <x>174</x>
-    <name>Text Update_2</name>
-    <y>39</y>
-    <foreground_color>
-      <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
-    </foreground_color>
-    <actions hook="false" hook_all="false" />
     <font>
       <opifont.name fontName="Arial" height="14" style="1">ISIS_Label</opifont.name>
     </font>
@@ -279,7 +228,7 @@ $(pv_value)</tooltip>
       <color name="ISIS_Standard_Button" red="187" green="187" blue="187" />
     </background_color>
     <width>127</width>
-    <x>138</x>
+    <x>210</x>
     <name>autotune_sp_1</name>
     <y>114</y>
     <foreground_color>
@@ -342,7 +291,7 @@ $(pv_value)</tooltip>
     </background_color>
     <password_input>false</password_input>
     <name>Text_3</name>
-    <width>165</width>
+    <width>95</width>
     <x>6</x>
     <y>78</y>
     <maximum>1.7976931348623157E308</maximum>
@@ -395,9 +344,60 @@ $(pv_value)</tooltip>
       <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
     </background_color>
     <width>91</width>
-    <x>174</x>
+    <x>108</x>
     <name>Text Update_3</name>
-    <y>75</y>
+    <y>76</y>
+    <foreground_color>
+      <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
+    </foreground_color>
+    <actions hook="false" hook_all="false" />
+    <font>
+      <opifont.name fontName="Arial" height="14" style="1">ISIS_Label</opifont.name>
+    </font>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0">
+    <border_style>0</border_style>
+    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+    <precision>3</precision>
+    <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+    <horizontal_alignment>0</horizontal_alignment>
+    <rules />
+    <enabled>true</enabled>
+    <wuid>24017828:15626637ea1:50fa</wuid>
+    <transparent>false</transparent>
+    <pv_value />
+    <auto_size>false</auto_size>
+    <text>######</text>
+    <rotation_angle>0.0</rotation_angle>
+    <scripts />
+    <border_alarm_sensitive>true</border_alarm_sensitive>
+    <show_units>true</show_units>
+    <height>30</height>
+    <border_width>1</border_width>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <visible>true</visible>
+    <pv_name>$(PV_ROOT):NAME_$(INPUT)</pv_name>
+    <vertical_alignment>1</vertical_alignment>
+    <border_color>
+      <color name="ISIS_Check_Border" red="0" green="128" blue="255" />
+    </border_color>
+    <precision_from_pv>true</precision_from_pv>
+    <widget_type>Text Update</widget_type>
+    <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+    <wrap_words>false</wrap_words>
+    <format_type>0</format_type>
+    <background_color>
+      <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
+    </background_color>
+    <width>229</width>
+    <x>108</x>
+    <name>Text Update_4</name>
+    <y>40</y>
     <foreground_color>
       <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
     </foreground_color>

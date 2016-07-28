@@ -169,7 +169,7 @@ $(pv_value)</tooltip>
     <background_color>
       <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
     </background_color>
-    <width>787</width>
+    <width>865</width>
     <x>6</x>
     <horizontal_tabs>true</horizontal_tabs>
     <y>90</y>
@@ -246,7 +246,7 @@ $(pv_value)</tooltip>
       <macros>
         <include_parent_macros>true</include_parent_macros>
       </macros>
-      <visible>true</visible>
+      <visible>false</visible>
       <border_color>
         <color name="ISIS_Check_Border" red="0" green="128" blue="255" />
       </border_color>
@@ -254,7 +254,7 @@ $(pv_value)</tooltip>
       <background_color>
         <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
       </background_color>
-      <width>785</width>
+      <width>863</width>
       <x>1</x>
       <name>Output 1</name>
       <y>1</y>
@@ -296,7 +296,7 @@ $(pv_value)</tooltip>
           <color red="240" green="240" blue="240" />
         </background_color>
         <zoom_to_fit>false</zoom_to_fit>
-        <width>770</width>
+        <width>854</width>
         <x>5</x>
         <name>Linking Container</name>
         <y>10</y>
@@ -336,7 +336,7 @@ $(pv_value)</tooltip>
       <background_color>
         <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
       </background_color>
-      <width>785</width>
+      <width>863</width>
       <x>1</x>
       <name>Output 2</name>
       <y>1</y>
@@ -378,7 +378,7 @@ $(pv_value)</tooltip>
           <color red="240" green="240" blue="240" />
         </background_color>
         <zoom_to_fit>false</zoom_to_fit>
-        <width>770</width>
+        <width>854</width>
         <x>5</x>
         <name>Linking Container</name>
         <y>10</y>
@@ -418,7 +418,7 @@ $(pv_value)</tooltip>
       <background_color>
         <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
       </background_color>
-      <width>785</width>
+      <width>863</width>
       <x>1</x>
       <name>Graph All T</name>
       <y>1</y>
@@ -469,6 +469,7 @@ $(trace_0_y_pv_value)</tooltip>
         <trace_0_x_axis_index>0</trace_0_x_axis_index>
         <axis_count>2</axis_count>
         <trace_4_x_pv></trace_4_x_pv>
+        <trace_3_y_pv_value />
         <trace_1_point_size>4</trace_1_point_size>
         <trace_1_anti_alias>true</trace_1_anti_alias>
         <pv_value />
@@ -485,6 +486,7 @@ $(trace_0_y_pv_value)</tooltip>
         <trace_2_line_width>1</trace_2_line_width>
         <trace_4_plot_mode>0</trace_4_plot_mode>
         <trace_3_concatenate_data>true</trace_3_concatenate_data>
+        <trace_4_x_pv_value />
         <axis_1_axis_color>
           <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
         </axis_1_axis_color>
@@ -509,6 +511,7 @@ $(trace_0_y_pv_value)</tooltip>
         </axis_0_axis_color>
         <trace_3_update_delay>100</trace_3_update_delay>
         <trace_2_update_delay>100</trace_2_update_delay>
+        <trace_5_y_pv_value />
         <trace_4_point_style>0</trace_4_point_style>
         <trace_5_point_style>0</trace_5_point_style>
         <axis_0_dash_grid_line>true</axis_0_dash_grid_line>
@@ -518,6 +521,7 @@ $(trace_0_y_pv_value)</tooltip>
         <trace_5_name>Setpoint 2</trace_5_name>
         <trace_5_point_size>4</trace_5_point_size>
         <trace_0_line_width>1</trace_0_line_width>
+        <trace_3_x_pv_value />
         <axis_0_time_format>5</axis_0_time_format>
         <trace_count>6</trace_count>
         <axis_1_show_grid>true</axis_1_show_grid>
@@ -543,8 +547,10 @@ $(trace_0_y_pv_value)</tooltip>
         <trace_1_y_pv>$(PV_ROOT):TEMP_B</trace_1_y_pv>
         <trace_2_concatenate_data>true</trace_2_concatenate_data>
         <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+        <trace_2_y_pv_value />
         <trace_2_anti_alias>true</trace_2_anti_alias>
         <axis_0_maximum>120.0</axis_0_maximum>
+        <trace_5_x_pv_value />
         <trace_1_y_axis_index>1</trace_1_y_axis_index>
         <trace_2_name>Meas 3</trace_2_name>
         <height>451</height>
@@ -584,6 +590,7 @@ $(trace_0_y_pv_value)</tooltip>
         <trace_2_y_axis_index>1</trace_2_y_axis_index>
         <trace_1_update_delay>100</trace_1_update_delay>
         <axis_1_axis_title>Temperature</axis_1_axis_title>
+        <trace_2_x_pv_value />
         <axis_1_auto_scale>true</axis_1_auto_scale>
         <trace_1_line_width>1</trace_1_line_width>
         <trace_3_trace_type>0</trace_3_trace_type>
@@ -607,7 +614,7 @@ $(trace_0_y_pv_value)</tooltip>
         <border_alarm_sensitive>false</border_alarm_sensitive>
         <trace_5_y_axis_index>1</trace_5_y_axis_index>
         <show_plot_area_border>false</show_plot_area_border>
-        <width>763</width>
+        <width>841</width>
         <trace_1_x_pv_value />
         <axis_1_minimum>0.0</axis_1_minimum>
         <title_font>
@@ -631,6 +638,7 @@ $(trace_0_y_pv_value)</tooltip>
         <trace_1_buffer_size>1000</trace_1_buffer_size>
         <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
         <trace_5_buffer_size>1000</trace_5_buffer_size>
+        <trace_4_y_pv_value />
         <scripts />
         <trace_0_point_size>4</trace_0_point_size>
         <trace_0_trace_color>
@@ -666,7 +674,7 @@ $(trace_0_y_pv_value)</tooltip>
       <macros>
         <include_parent_macros>true</include_parent_macros>
       </macros>
-      <visible>false</visible>
+      <visible>true</visible>
       <border_color>
         <color red="0" green="128" blue="255" />
       </border_color>
@@ -674,7 +682,7 @@ $(trace_0_y_pv_value)</tooltip>
       <background_color>
         <color red="240" green="240" blue="240" />
       </background_color>
-      <width>785</width>
+      <width>863</width>
       <x>1</x>
       <name>Measurements</name>
       <y>1</y>
@@ -713,8 +721,8 @@ $(trace_0_y_pv_value)</tooltip>
         <background_color>
           <color red="240" green="240" blue="240" />
         </background_color>
-        <width>370</width>
-        <x>12</x>
+        <width>360</width>
+        <x>6</x>
         <name>Grouping Container</name>
         <y>24</y>
         <foreground_color>
@@ -755,7 +763,7 @@ $(trace_0_y_pv_value)</tooltip>
             <color red="240" green="240" blue="240" />
           </background_color>
           <zoom_to_fit>false</zoom_to_fit>
-          <width>265</width>
+          <width>350</width>
           <x>0</x>
           <name>Linking Container</name>
           <y>42</y>
@@ -851,8 +859,8 @@ $(pv_value)</tooltip>
         <background_color>
           <color red="240" green="240" blue="240" />
         </background_color>
-        <width>370</width>
-        <x>402</x>
+        <width>360</width>
+        <x>408</x>
         <name>Grouping Container</name>
         <y>24</y>
         <foreground_color>
@@ -893,7 +901,7 @@ $(pv_value)</tooltip>
             <color red="240" green="240" blue="240" />
           </background_color>
           <zoom_to_fit>false</zoom_to_fit>
-          <width>265</width>
+          <width>350</width>
           <x>0</x>
           <name>Linking Container</name>
           <y>42</y>
@@ -989,8 +997,8 @@ $(pv_value)</tooltip>
         <background_color>
           <color red="240" green="240" blue="240" />
         </background_color>
-        <width>370</width>
-        <x>12</x>
+        <width>360</width>
+        <x>6</x>
         <name>Grouping Container</name>
         <y>252</y>
         <foreground_color>
@@ -1031,7 +1039,7 @@ $(pv_value)</tooltip>
             <color red="240" green="240" blue="240" />
           </background_color>
           <zoom_to_fit>false</zoom_to_fit>
-          <width>265</width>
+          <width>350</width>
           <x>0</x>
           <name>Linking Container</name>
           <y>42</y>
@@ -1127,8 +1135,8 @@ $(pv_value)</tooltip>
         <background_color>
           <color red="240" green="240" blue="240" />
         </background_color>
-        <width>370</width>
-        <x>402</x>
+        <width>360</width>
+        <x>408</x>
         <name>Grouping Container</name>
         <y>252</y>
         <foreground_color>
@@ -1169,7 +1177,7 @@ $(pv_value)</tooltip>
             <color red="240" green="240" blue="240" />
           </background_color>
           <zoom_to_fit>false</zoom_to_fit>
-          <width>265</width>
+          <width>350</width>
           <x>0</x>
           <name>Linking Container</name>
           <y>42</y>
@@ -1266,7 +1274,7 @@ $(pv_value)</tooltip>
       <background_color>
         <color red="240" green="240" blue="240" />
       </background_color>
-      <width>785</width>
+      <width>863</width>
       <x>1</x>
       <name>Graph Measurements</name>
       <y>1</y>
@@ -1430,7 +1438,7 @@ $(trace_0_y_pv_value)</tooltip>
         <trace_3_plot_mode>0</trace_3_plot_mode>
         <border_alarm_sensitive>false</border_alarm_sensitive>
         <show_plot_area_border>false</show_plot_area_border>
-        <width>763</width>
+        <width>841</width>
         <trace_1_x_pv_value />
         <axis_1_minimum>0.0</axis_1_minimum>
         <title_font>
