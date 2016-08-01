@@ -32,10 +32,19 @@ import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.IPropertySelectionListener;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.SynopticViewModel;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.UpdateTypes;
 
+/**
+ * The Class TargetPropertiesDescription GUI description for the selected macro.
+ */
 public class TargetPropertiesDescription extends Composite {
 
     private Text txtDescription;
 
+    /**
+     * Instantiates a new target properties description.
+     *
+     * @param parent the parent
+     * @param synopticViewModel the synoptic view model
+     */
     public TargetPropertiesDescription(Composite parent, final SynopticViewModel synopticViewModel) {
 		super(parent, SWT.NONE);
 		
