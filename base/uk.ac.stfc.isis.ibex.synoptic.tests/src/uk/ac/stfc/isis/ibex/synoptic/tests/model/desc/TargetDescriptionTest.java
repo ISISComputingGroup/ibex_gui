@@ -1,19 +1,19 @@
 
 /**
- * This file is part of the ISIS IBEX application.
- * Copyright (C) 2012-2015 Science & Technology Facilities Council.
- * All rights reserved.
+ * This file is part of the ISIS IBEX application. Copyright (C) 2012-2016
+ * Science & Technology Facilities Council. All rights reserved.
  *
- * This program is distributed in the hope that it will be useful.
- * This program and the accompanying materials are made available under the
- * terms of the Eclipse Public License v1.0 which accompanies this distribution.
- * EXCEPT AS EXPRESSLY SET FORTH IN THE ECLIPSE PUBLIC LICENSE V1.0, THE PROGRAM 
- * AND ACCOMPANYING MATERIALS ARE PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES 
- * OR CONDITIONS OF ANY KIND.  See the Eclipse Public License v1.0 for more details.
+ * This program is distributed in the hope that it will be useful. This program
+ * and the accompanying materials are made available under the terms of the
+ * Eclipse Public License v1.0 which accompanies this distribution. EXCEPT AS
+ * EXPRESSLY SET FORTH IN THE ECLIPSE PUBLIC LICENSE V1.0, THE PROGRAM AND
+ * ACCOMPANYING MATERIALS ARE PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES
+ * OR CONDITIONS OF ANY KIND. See the Eclipse Public License v1.0 for more
+ * details.
  *
- * You should have received a copy of the Eclipse Public License v1.0
- * along with this program; if not, you can obtain a copy from
- * https://www.eclipse.org/org/documents/epl-v10.php or 
+ * You should have received a copy of the Eclipse Public License v1.0 along with
+ * this program; if not, you can obtain a copy from
+ * https://www.eclipse.org/org/documents/epl-v10.php or
  * http://opensource.org/licenses/eclipse-1.0.php
  */
 
@@ -57,8 +57,8 @@ public class TargetDescriptionTest {
         propertyKeys.add(KEY_1);
         source.addProperties(propertyKeys);
 
-        source.replaceProperty(source.getProperties().get(0), PROPERTY_0);
-        source.replaceProperty(source.getProperties().get(1), PROPERTY_1);
+        source.replaceOrAddProperty(PROPERTY_0);
+        source.replaceOrAddProperty(PROPERTY_1);
     }
 
     @Test
@@ -172,4 +172,33 @@ public class TargetDescriptionTest {
             assertTrue(copied.getProperties().get(i).value().equals(sourceValue));
         }
     }
+
+    @Test
+    public void GIVEN_property_in_target_WHEN_property_replaced_THEN_property_is_changed() {
+        // Arrange
+        Property newProperty = new Property(KEY_0, "new value");
+
+        // Act
+        source.replaceOrAddProperty(newProperty);
+
+        // Assert
+        Property defaultProperty = new Property();
+        assertSame(newProperty, source.getProperty(KEY_0, defaultProperty));
+    }
+
+    @Test
+    public void GIVEN_property_not_in_target_WHEN_property_replaced_THEN_property_is_added() {
+        // Arrange
+        String new_key = "new key";
+        Property newProperty = new Property(new_key, "new value");
+
+        // Act
+        source.replaceOrAddProperty(newProperty);
+
+        // Assert
+        Property defaultProperty = new Property();
+        assertSame(newProperty, source.getProperty(new_key, defaultProperty));
+        assertEquals("Number of properties in the list", 3, source.getProperties().size());
+    }
+
 }
