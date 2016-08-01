@@ -36,25 +36,31 @@ public class OpiDescriptionTest {
 	}
 
 	@Test
-    public void GIVEN_no_macros_WHEN_get_desciption_by_key_THEN_default_answer_returned() {
+    public void GIVEN_no_macros_WHEN_get_description_by_key_THEN_default_answer_returned() {
+        // Arrange
         OpiDescription opiDescription = new OpiDescription("", "", "", new ArrayList<MacroInfo>());
 
+        // Act
         String result = opiDescription.getMacroDescription("name");
 
+        // Assert
         assertEquals("", result);
 	}
 
     @Test
     public void
             GIVEN_macros_with_description_WHEN_get_desciption_by_key_THEN_description_is_returned() {
+        // Arrange
         ArrayList<MacroInfo> macros = new ArrayList<MacroInfo>();
         String expectedDescription = "desc";
         String expectedName = "name";
         macros.add(new MacroInfo(expectedName, expectedDescription));
         OpiDescription opiDescription = new OpiDescription("", "", "", macros);
 
+        // Act
         String result = opiDescription.getMacroDescription(expectedName);
 
+        // Assert
         assertEquals(expectedDescription, result);
     }
 

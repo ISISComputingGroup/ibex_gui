@@ -134,7 +134,7 @@ public class TargetDescription {
     }
 
     /**
-     * Adds possible the property names; default blank properties are added.
+     * Adds possibly the property names; default blank properties are added.
      *
      * @param propertyKeys the property keys
      */
@@ -147,7 +147,7 @@ public class TargetDescription {
     }
 
     /**
-     * Does this targty contain a property key.
+     * Does this target contain a property key.
      *
      * @param key the key
      * @return true, if successful
@@ -178,6 +178,7 @@ public class TargetDescription {
                 return;
             }
         }
+
         properties.add(newProperty);
     }
 
@@ -211,6 +212,7 @@ public class TargetDescription {
                 return property;
             }
         }
+
         return defaultProperty;
     }
 }

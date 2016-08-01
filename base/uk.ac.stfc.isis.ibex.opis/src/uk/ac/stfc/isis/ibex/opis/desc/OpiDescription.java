@@ -128,6 +128,7 @@ public class OpiDescription {
                 return macro.getDescription();
             }
         }
+
         return "";
     }
 

@@ -145,7 +145,7 @@ public class TargetPropertyTable extends Composite {
 	
     /**
      * Show the property list for target. This is the property values set which
-     * correspond to macro names in the OPI for the selected target
+     * correspond to macro names in the OPI for the selected target.
      * 
      * @param component selected component
      */

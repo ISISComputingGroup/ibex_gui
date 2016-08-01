@@ -84,12 +84,15 @@ public class Property {
         if (this == obj) {
             return true;
         }
+
         if (obj == null) {
             return false;
         }
+
         if (getClass() != obj.getClass()) {
             return false;
         }
+
         Property other = (Property) obj;
         if (key == null) {
             if (other.key != null) {
@@ -98,6 +101,7 @@ public class Property {
         } else if (!key.equals(other.key)) {
             return false;
         }
+
         if (value == null) {
             if (other.value != null) {
                 return false;
@@ -105,6 +109,7 @@ public class Property {
         } else if (!value.equals(other.value)) {
             return false;
         }
+
         return true;
     }
 
