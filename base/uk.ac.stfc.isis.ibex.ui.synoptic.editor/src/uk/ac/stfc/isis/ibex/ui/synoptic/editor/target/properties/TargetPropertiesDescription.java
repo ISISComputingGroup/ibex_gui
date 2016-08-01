@@ -24,7 +24,6 @@ import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Text;
 
-import uk.ac.stfc.isis.ibex.opis.desc.MacroInfo;
 import uk.ac.stfc.isis.ibex.opis.desc.OpiDescription;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.ComponentDescription;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.Property;
@@ -55,8 +54,7 @@ public class TargetPropertiesDescription extends Composite {
                 if (newProperty != null) {
                     ComponentDescription component = synopticViewModel.getFirstSelectedComponent();
                     OpiDescription opi = synopticViewModel.getOpi(component.target().name());
-                    newProperty.key();
-                    txtDescription.setText(generateDescription(opi, newProperty.key()));
+                    txtDescription.setText(opi.getMacroDescription(newProperty.key()));
                 } else {
                     txtDescription.setText("");
                 }
@@ -71,15 +69,4 @@ public class TargetPropertiesDescription extends Composite {
 
         txtDescription = new Text(parent, SWT.BORDER | SWT.READ_ONLY | SWT.WRAP | SWT.MULTI);
     }
-
-    private String generateDescription(OpiDescription opi, String macroName) {
-        for (MacroInfo macro : opi.getMacros()) {
-            if (macroName.equals(macro.getName())) {
-                return macro.getDescription();
-            }
-        }
-        
-        return null;
-    }
-
 }

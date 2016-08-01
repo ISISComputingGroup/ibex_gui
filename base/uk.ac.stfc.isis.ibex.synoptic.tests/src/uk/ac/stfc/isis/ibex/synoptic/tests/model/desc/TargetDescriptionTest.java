@@ -57,8 +57,8 @@ public class TargetDescriptionTest {
         propertyKeys.add(KEY_1);
         source.addProperties(propertyKeys);
 
-        source.replaceProperty(source.getProperties().get(0), PROPERTY_0);
-        source.replaceProperty(source.getProperties().get(1), PROPERTY_1);
+        source.replaceOrAddProperty(PROPERTY_0);
+        source.replaceOrAddProperty(PROPERTY_1);
     }
 
     @Test
@@ -172,4 +172,33 @@ public class TargetDescriptionTest {
             assertTrue(copied.getProperties().get(i).value().equals(sourceValue));
         }
     }
+
+    @Test
+    public void GIVEN_property_in_target_WHEN_property_replaced_THEN_property_is_changed() {
+        // Arrange
+        Property newProperty = new Property(KEY_0, "new value");
+
+        // Act
+        source.replaceOrAddProperty(newProperty);
+
+        // Assert
+        Property defaultProperty = new Property();
+        assertSame(newProperty, source.getProperty(KEY_0, defaultProperty));
+    }
+
+    @Test
+    public void GIVEN_property_not_in_target_WHEN_property_replaced_THEN_property_is_added() {
+        // Arrange
+        String new_key = "new key";
+        Property newProperty = new Property(new_key, "new value");
+
+        // Act
+        source.replaceOrAddProperty(newProperty);
+
+        // Assert
+        Property defaultProperty = new Property();
+        assertSame(newProperty, source.getProperty(new_key, defaultProperty));
+        assertEquals("Number of properties in the list", 3, source.getProperties().size());
+    }
+
 }

@@ -23,6 +23,11 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 
+/**
+ * The Class Property which represents a property within a target. This are the
+ * macro name and macro value for the target to have. This object is used in
+ * serialisation from and to xml.
+ */
 @XmlRootElement(name = "targetproperty")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Property {
@@ -30,35 +35,82 @@ public class Property {
 	private String key;
 	private String value;
 	
-	// Required for XML unmarshalling
+    /**
+     * Instantiates a new property. NB: Required for XML unmarshalling.
+     */
 	public Property() {
 	}
 	
+    /**
+     * Instantiates a new property.
+     *
+     * @param key the key
+     * @param value the value
+     */
 	public Property(String key, String value) {
 		this.key = key;
 		this.value = value;
 	}
 	
+    /**
+     * Key.
+     *
+     * @return the string
+     */
 	public String key() {
 		return key;
 	}
 
+    /**
+     * Value.
+     *
+     * @return the string
+     */
 	public String value() {
 		return value;
-	}	
-	
-	@Override
-	public boolean equals(Object obj) {
-		if (!(obj instanceof Property)) {
-			return false;
-		}
-		
-		Property other = (Property) obj;
-		return key.equals(other.key) && value.equals(other.value);
-	}
-	
-	@Override
-	public int hashCode() {
-		return key.hashCode() ^ value.hashCode();
-	}
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((key == null) ? 0 : key.hashCode());
+        result = prime * result + ((value == null) ? 0 : value.hashCode());
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        Property other = (Property) obj;
+        if (key == null) {
+            if (other.key != null) {
+                return false;
+            }
+        } else if (!key.equals(other.key)) {
+            return false;
+        }
+        if (value == null) {
+            if (other.value != null) {
+                return false;
+            }
+        } else if (!value.equals(other.value)) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "Property [key=" + key + ", value=" + value + "]";
+    }
+
 }
