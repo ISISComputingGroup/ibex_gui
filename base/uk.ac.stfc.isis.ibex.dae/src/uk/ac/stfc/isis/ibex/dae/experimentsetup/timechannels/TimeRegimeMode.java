@@ -22,7 +22,7 @@ package uk.ac.stfc.isis.ibex.dae.experimentsetup.timechannels;
 import java.util.HashMap;
 
 public enum TimeRegimeMode {
-	TCBFILE ("TCB File"),
+    BLANK("Blank"),
 	DT ("dT = C"),
 	DTDIVT ("dT/T = C"),
 	DTDIVT2 ("dT/T**2 = C"),
@@ -39,7 +39,7 @@ public enum TimeRegimeMode {
 	}
 	
 	public static TimeRegimeMode fromString(String text) {
-		return lookup.containsKey(text) ? lookup.get(text) : TCBFILE;
+		return lookup.containsKey(text) ? lookup.get(text) : BLANK;
 	}
 	
 	TimeRegimeMode(String mode) {
