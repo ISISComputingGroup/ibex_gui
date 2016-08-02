@@ -19,16 +19,24 @@
 
 package uk.ac.stfc.isis.ibex.dae.experimentsetup.timechannels;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import uk.ac.stfc.isis.ibex.model.ModelObject;
+import uk.ac.stfc.isis.ibex.model.UpdatedValue;
 
+/**
+ * Observable object of time channel model.
+ */
 public class TimeChannels extends ModelObject {
 
 	private List<TimeRegime> timeRegimes = new ArrayList<>();
+    private UpdatedValue<Collection<String>> timeChannelFileList;
 	private String timeChannelFile = "";
-	private CalculationMethod calculationMethod = CalculationMethod.UseParametersBelow;
+	private CalculationMethod calculationMethod = CalculationMethod.SPECIFY_PARAMETERS;
 	private TimeUnit timeUnit = TimeUnit.MICROSECONDS;
 	
 	public List<TimeRegime> timeRegimes() {
@@ -47,19 +55,70 @@ public class TimeChannels extends ModelObject {
 		firePropertyChange("timeChannelFile", timeChannelFile, timeChannelFile = value);
 	}
 
+    /**
+     * Returns a list of time channel configuration files available to the
+     * instrument.
+     * 
+     * @return the list of time channel files
+     */
+    public UpdatedValue<Collection<String>> timeChannelFileList() {
+        return timeChannelFileList;
+    }
+
+    /**
+     * Sets the list of time channel files and adds a listener.
+     * 
+     * @param files
+     */
+    public void setTimeChannelFileList(UpdatedValue<Collection<String>> files) {
+        timeChannelFileList = files;
+
+        timeChannelFileList.addPropertyChangeListener(new PropertyChangeListener() {
+
+            @Override
+            public void propertyChange(PropertyChangeEvent evt) {
+                firePropertyChange("timeChannelFileList", null, null);
+            }
+        });
+    }
+
+    /**
+     * Returns the time unit used for time channel calculations (micro- or
+     * nanoseconds).
+     * 
+     * @return the time unit
+     */
 	public TimeUnit timeUnit() {
 		return timeUnit;
 	}
 
+    /**
+     * Sets the time unit used for time channel calculations (micro- or
+     * nanoseconds).
+     * 
+     * @param value the time unit
+     */
 	public void setTimeUnit(TimeUnit value) {
 		firePropertyChange("timeUnit", timeUnit, timeUnit = value);
 	}
 
+    /**
+     * Returns the method used to determine time channel calculation parameters
+     * (either read from file or specify parameters manually).
+     * 
+     * @return the calculation method
+     */
 	public CalculationMethod calculationMethod() {
 		return calculationMethod;
 	}
-	
-	public void setCalculationMethod(CalculationMethod value) {
-		firePropertyChange("calculationMethod", calculationMethod, calculationMethod = value);
+
+    /**
+     * Sets the method used to determine time channel calculation parameters
+     * (either read from file or specify parameters manually).
+     * 
+     * @param method the calculation method
+     */
+	public void setCalculationMethod(CalculationMethod method) {
+		firePropertyChange("calculationMethod", calculationMethod, calculationMethod = method);
 	}
 }

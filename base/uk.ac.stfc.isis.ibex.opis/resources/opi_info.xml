@@ -216,7 +216,7 @@
 				<macros>
 					<macro>
 						<name>LAKESHORE218</name>
- 						<description>The Lakeshore PV name (e.g. LAKESHORE218_01).</description>  
+ 						<description>The Lakeshore PV name (e.g. LKSH218_01).</description>  
 					</macro>
 				</macros>
 			</value>

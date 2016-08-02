@@ -41,6 +41,7 @@ public class ExperimentSetupViewModel {
 		daeSettings.setSpectraTableList(model.spectraTables());
 		
 		timeChannels.setModel(model.timeChannels());
+        timeChannels.setTimeChannelFileList(model.timeChannelFiles());
 		
 		periodSettings.setSettings(model.periodSettings());
 		periodSettings.setPeriodFilesList(model.periodFiles());
