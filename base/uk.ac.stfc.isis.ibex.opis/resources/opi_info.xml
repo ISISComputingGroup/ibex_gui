@@ -486,15 +486,15 @@
 			</value>
 		</entry>
 		<entry>
-			<key>Iris cryo valve</key>
+			<key>Cryo valve</key>
 			<value>
-				<type>IRISCRYOVALVE</type>
-				<path>irisCryoValve.opi</path>
+				<type>CRYVALVE</type>
+				<path>cryValve.opi</path>
 				<description>The OPI for the Iris cryo valve.</description>
 				<macros>    
                     <macro>
-						<name>CRYOVALVE</name>
-						<description>The cryo valve PV name (e.g. CRYOVALVE_01).</description>
+						<name>CRYVALVE</name>
+						<description>The cryo valve PV name (e.g. CRYVALVE_01).</description>
 					</macro>              
 				</macros>
 			</value>
