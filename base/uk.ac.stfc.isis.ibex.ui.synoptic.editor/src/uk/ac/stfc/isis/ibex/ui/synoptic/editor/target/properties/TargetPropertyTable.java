@@ -38,6 +38,11 @@ import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.IInstrumentUpdateListener;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.SynopticViewModel;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.UpdateTypes;
 
+/**
+ * The Class TargetPropertyTable.
+ * 
+ * A table of properties for a target. These are the macros set on an OPI.
+ */
 public class TargetPropertyTable extends Composite {
 
     private static final int TABLE_HEIGHT = 150;
@@ -45,6 +50,12 @@ public class TargetPropertyTable extends Composite {
 	private SynopticViewModel synopticViewModel;
     private Table table;
 	
+    /**
+     * Instantiates a new target property table.
+     *
+     * @param parent the parent
+     * @param instrument the synoptic model for the instrument
+     */
     public TargetPropertyTable(Composite parent, final SynopticViewModel instrument) {
 		super(parent, SWT.NONE);
 		
@@ -93,6 +104,11 @@ public class TargetPropertyTable extends Composite {
 		createControls(this);
 	}
 	
+    /**
+     * Creates the controls in the composite.
+     *
+     * @param parent the parent
+     */
 	public void createControls(Composite parent) {
 	    
 	    Composite controlComposite = new Composite(parent, SWT.NONE);
@@ -127,41 +143,41 @@ public class TargetPropertyTable extends Composite {
         });
 	}
 	
+    /**
+     * Show the property list for target. This is the property values set which
+     * correspond to macro names in the OPI for the selected target.
+     * 
+     * @param component selected component
+     */
 	public void showPropertyList(ComponentDescription component) {
         table.removeAll();
 
         if (synopticViewModel.getFirstSelectedComponent() != null) {
-            List<String> propertyKeys = synopticViewModel.getPropertyKeys(component.target().name());
-            
-            for (String property : propertyKeys) {
+            List<String> opiPropertyKeys = synopticViewModel.getPropertyKeys(component.target().name());
+            for (String propertyKey : opiPropertyKeys) {
                 TableItem item = new TableItem(table, SWT.NULL);
-                item.setText(0, property);
-                item.setText(1, getPropertyFromKey(property).value());
+                Property componentProperty = getPropertyFromKey(propertyKey);
+                item.setText(0, componentProperty.key());
+                item.setText(1, componentProperty.value());
             }
 
-            table.setEnabled(propertyKeys.size() > 0);
+            table.setEnabled(opiPropertyKeys.size() > 0);
         }
 
         table.getColumn(0).pack();
         table.getColumn(1).pack();
 	}
 	
-    public Property getSelectedProperty() {
+    private Property getSelectedProperty() {
         String selectedProperty = table.getItem(table.getSelectionIndex()).getText(0);
 
         return getPropertyFromKey(selectedProperty);
 
     }
 
-    public Property getPropertyFromKey(String key) {
+    private Property getPropertyFromKey(String key) {
         ComponentDescription component = synopticViewModel.getFirstSelectedComponent();
 
-        for (Property property : component.target().getProperties()) {
-            if (key.equals(property.key())) {
-                return property;
-            }
-        }
-
-        return new Property("", "");
+        return component.target().getProperty(key, new Property(key, ""));
     }
 }

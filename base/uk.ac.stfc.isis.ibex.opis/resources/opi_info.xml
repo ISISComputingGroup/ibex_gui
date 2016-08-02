@@ -216,7 +216,7 @@
 				<macros>
 					<macro>
 						<name>LAKESHORE218</name>
- 						<description>The Lakeshore PV name (e.g. LAKESHORE218_01).</description>  
+ 						<description>The Lakeshore PV name (e.g. LKSH218_01).</description>  
 					</macro>
 				</macros>
 			</value>
@@ -495,7 +495,33 @@
                     <macro>
 						<name>CRYVALVE</name>
 						<description>The cryo valve PV name (e.g. CRYVALVE_01).</description>
-					</macro>              
+					</macro>  
+				</macros>
+			</value>
+		</entry>
+		<entry>
+			<key>muon_front_end</key>
+			<value>
+				<type>MUON_FRONT_END</type>
+				<path>muon_front_end.opi</path>
+				<description>Muon front end momentum slits and barndoors.</description>
+				<macros>
+					<macro>
+						<name>MM_EMU</name>
+						<description>Motor number for EMU barndoors, e.g. MTR0101.</description>
+					</macro>
+					<macro>
+						<name>MM_MuSR</name>
+						<description>Motor number for MuSR barndoors, e.g. MTR0102.</description>
+					</macro>
+					<macro>
+						<name>MM_HiFi</name>
+						<description>Motor number for HiFi barndoors, e.g. MTR0103.</description>
+					</macro>
+					<macro>
+						<name>MM_MOMENTUM</name>
+						<description>Motor number for momentum slits, e.g. MTR0104.</description>
+					</macro>  
 				</macros>
 			</value>
 		</entry>

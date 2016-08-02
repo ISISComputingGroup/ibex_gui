@@ -52,5 +52,13 @@
             class="uk.ac.stfc.isis.ibex.ui.logplotter.LogPlotterSettings">
       </InstrumentInfoReceiver>
    </extension>
+   <extension
+         point="org.eclipse.ui.views">
+      <view
+            class="uk.ac.stfc.isis.ibex.ui.logplotter.EmptyLogPlotterView"
+            id="uk.ac.stfc.isis.ibex.ui.logplotter.EmptyLogPlotterView"
+            name="Empty Log Plotter">
+      </view>
+   </extension>
 
 </plugin>
