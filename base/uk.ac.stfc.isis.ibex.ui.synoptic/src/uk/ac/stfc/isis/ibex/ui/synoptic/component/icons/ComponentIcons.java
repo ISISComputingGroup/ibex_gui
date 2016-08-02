@@ -104,7 +104,7 @@ public final class ComponentIcons {
                 return "attenuator";
             case MERCURY:
                 return "mercury";
-            case CRYOVALVE:
+            case CRYVALVE:
                 return "iriscryovalve";
             default:
                 return "cog";

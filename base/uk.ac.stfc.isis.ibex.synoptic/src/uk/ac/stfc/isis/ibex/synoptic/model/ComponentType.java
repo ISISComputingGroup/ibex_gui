@@ -58,7 +58,7 @@ public enum ComponentType {
     LAKESHORE,
     ATTENUATOR,
     MERCURY,
-    CRYOVALVE;
+    CRYVALVE;
 	
 	private Target target;
 
