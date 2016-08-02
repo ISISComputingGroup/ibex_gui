@@ -1,6 +1,6 @@
 package uk.ac.stfc.isis.ibex.configserver.configuration;
 
-public class BannerState {
+public class BannerItemState {
 	private String colour;
 	private String message;
 	

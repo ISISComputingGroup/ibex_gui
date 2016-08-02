@@ -19,10 +19,10 @@ public class BannerItem extends ModelObject {
     private String name;
     private String pv;
     private String type;
-	private BannerState true_state;
-	private BannerState false_state;
-	private BannerState unknown_state;
-	private BannerState currentState;
+	private BannerItemState true_state;
+	private BannerItemState false_state;
+	private BannerItemState unknown_state;
+	private BannerItemState currentState;
 
     private ObservableFactory obsFactory = null;
 	private ForwardingObservable<Boolean> pvObservable;
@@ -72,23 +72,23 @@ public class BannerItem extends ModelObject {
 		return pv;
 	}
 	
-	public BannerState true_state() {
+	public BannerItemState true_state() {
 		return true_state;
 	}
 	
-	public BannerState false_state() {
+	public BannerItemState false_state() {
 		return false_state;
 	}
 	
-	public BannerState unknown_state() {
+	public BannerItemState unknown_state() {
 		return unknown_state;
 	}
 	
-    public BannerState getCurrentState() {
+    public BannerItemState getCurrentState() {
 		return currentState;
 	}
 
-	public void setCurrentState(BannerState currentState) {
+	public void setCurrentState(BannerItemState currentState) {
         firePropertyChange("currentState", this.currentState, this.currentState = currentState);
 	}
 
