@@ -18,6 +18,7 @@ Export-Package: org.eclipse.wb.swt,
  org.mihalis.opal,
  org.mihalis.opal.breadcrumb,
  uk.ac.stfc.isis.ibex.ui,
+ uk.ac.stfc.isis.ibex.ui.dialogs,
  uk.ac.stfc.isis.ibex.ui.preference,
  uk.ac.stfc.isis.ibex.ui.tables
 Import-Package: org.apache.logging.log4j,
