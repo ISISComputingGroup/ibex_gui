@@ -140,7 +140,7 @@ public class ExperimentDetailsPanel extends Composite {
 		btnRemoveUserDetails.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				viewModel.model.removeUser(userDetails.firstSelectedRow());
+				viewModel.model.removeUser(userDetails.selectedRows());
 				viewModel.model.sendUserDetails();
 			}
 		});		

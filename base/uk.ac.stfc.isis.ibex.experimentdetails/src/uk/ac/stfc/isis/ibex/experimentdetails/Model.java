@@ -20,6 +20,7 @@
 package uk.ac.stfc.isis.ibex.experimentdetails;
 
 import java.util.Collection;
+import java.util.List;
 
 import uk.ac.stfc.isis.ibex.epics.observing.Observable;
 import uk.ac.stfc.isis.ibex.epics.writing.Writable;
@@ -71,10 +72,10 @@ public abstract class Model extends ModelObject {
 	public abstract void addDefaultUser();
 	
 	/**
-	 * Remove a specific user from the model.
-	 * @param toRemove The user to remove.
+	 * Remove a specific group of users from the model.
+	 * @param toRemove The users to remove.
 	 */
-	public abstract void removeUser(UserDetails toRemove);
+	public abstract void removeUser(List<UserDetails> toRemove);
 
 	/**
 	 * Remove all user details from the model.

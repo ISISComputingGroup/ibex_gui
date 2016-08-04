@@ -150,11 +150,11 @@ public class ObservableModel extends Model {
 		this.userDetails = new UserDetailsList();
 		firePropertyChange("userDetails", originalUsers, getUserDetails());
 	}
-
+	
 	@Override
-	public void removeUser(UserDetails toRemove) {
+	public void removeUser(List<UserDetails> toRemove) {
 		Collection<UserDetails> originalUsers = getUserDetails();
-		userDetails.remove(toRemove);
+		userDetails.removeAll(toRemove);
 		firePropertyChange("userDetails", originalUsers, getUserDetails());
 	}
 }
