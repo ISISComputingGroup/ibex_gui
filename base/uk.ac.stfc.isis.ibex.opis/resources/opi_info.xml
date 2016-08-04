@@ -507,6 +507,10 @@
 				<description>Muon front end momentum slits and barndoors.</description>
 				<macros>
 					<macro>
+						<name>BARNDOORS</name>
+						<description>Barndoors PV prefix, e.g. MOT.</description>
+					</macro>
+					<macro>
 						<name>MM_EMU</name>
 						<description>Motor PV for EMU barndoors, e.g. MOT:MTR0101.</description>
 					</macro>
