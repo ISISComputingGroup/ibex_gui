@@ -34,6 +34,7 @@ import org.eclipse.wb.swt.SWTResourceManager;
 
 import uk.ac.stfc.isis.ibex.banner.Banner;
 import uk.ac.stfc.isis.ibex.configserver.configuration.BannerItem;
+import uk.ac.stfc.isis.ibex.epics.observing.BaseObserver;
 import uk.ac.stfc.isis.ibex.instrument.baton.Baton;
 import uk.ac.stfc.isis.ibex.ui.banner.controls.ControlModel;
 import uk.ac.stfc.isis.ibex.ui.banner.indicators.IndicatorModel;
@@ -56,8 +57,6 @@ public class BannerView extends ViewPart implements ISizeProvider {
 
     private final Banner banner = Banner.getInstance();
 
-    private final Collection<IndicatorModel> bannerItemModels =
-            convertBannerItems(banner.observables().bannerItems.getValue());
     private final IndicatorModel batonUserModel = new BatonUserModel(Baton.getInstance().baton());
     private final IndicatorModel inMotionModel = new InMotionModel(banner.observables());
     private final ControlModel motionModel = new MotionControlModel(banner.observables());
@@ -66,6 +65,8 @@ public class BannerView extends ViewPart implements ISizeProvider {
     private Indicator inMotion;
     private Control motionControl;
     private Label spacer;
+    private Composite bannerItemPanel;
+    private Composite parent;
 
     @Override
     public void createPartControl(Composite parent) {
@@ -76,15 +77,20 @@ public class BannerView extends ViewPart implements ISizeProvider {
         glParent.marginWidth = 0;
         parent.setLayout(glParent);
 
+        this.parent = parent;
+
         spacer = new Label(parent, SWT.NONE);
         spacer.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 1, 1));
 
-        for (IndicatorModel item : bannerItemModels) {
-            Indicator bannerItem = new Indicator(parent, SWT.NONE, item, ALARM_FONT);
-            GridData gdBumpStop = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
-            gdBumpStop.widthHint = 200;
-            bannerItem.setLayoutData(gdBumpStop);
-        }
+        bannerItemPanel = new Composite(parent, SWT.NONE);
+//        bannerItemPanel.setBackground(SWTResourceManager.getColor(0, 100, 100));
+        GridData gdBannerItemPanel = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+        gdBannerItemPanel.widthHint = 200;
+        gdBannerItemPanel.heightHint = 20;
+        bannerItemPanel.setLayoutData(gdBannerItemPanel);
+        bannerItemPanel.setLayout(new GridLayout(1, false));
+
+        banner.observables().bannerItems.addObserver(modelAdapter);
 
         batonUser = new Indicator(parent, SWT.NONE, batonUserModel, ALARM_FONT);
         GridData gdBatonUser = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
@@ -131,5 +137,40 @@ public class BannerView extends ViewPart implements ISizeProvider {
     @Override
     public void setFocus() {
     }
+
+    public void setBannerItems(Collection<IndicatorModel> models) {
+        for (IndicatorModel model : models) {
+            Indicator bannerItem = new Indicator(parent, SWT.NONE, model, ALARM_FONT);
+            GridData gdBumpStop = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+            gdBumpStop.widthHint = 200;
+            bannerItem.setLayoutData(gdBumpStop);
+        }
+    }
+
+    public void disposeBannerItems() {
+        for (org.eclipse.swt.widgets.Control item : parent.getChildren()) {
+            item.dispose();
+        }
+    }
+
+    private final BaseObserver<Collection<BannerItem>> modelAdapter = new BaseObserver<Collection<BannerItem>>() {
+        @Override
+        public void onValue(Collection<BannerItem> value) {
+            System.out.println("setvalue " + value.size());
+            setBannerItems(convertBannerItems(value));
+        }
+
+        @Override
+        public void onError(Exception e) {
+        }
+
+        @Override
+        public void onConnectionStatus(boolean isConnected) {
+            if (!isConnected) {
+                System.out.println("dispose");
+                disposeBannerItems();
+            }
+        }
+    };
 
 }
