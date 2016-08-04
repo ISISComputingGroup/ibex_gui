@@ -486,6 +486,20 @@
 			</value>
 		</entry>
 		<entry>
+			<key>Cryo valve</key>
+			<value>
+				<type>CRYVALVE</type>
+				<path>cryValve.opi</path>
+				<description>The OPI for the Iris cryo valve.</description>
+				<macros>    
+                    <macro>
+						<name>CRYVALVE</name>
+						<description>The cryo valve PV name (e.g. CRYVALVE_01).</description>
+					</macro>  
+				</macros>
+			</value>
+		</entry>
+		<entry>
 			<key>muon_front_end</key>
 			<value>
 				<type>MUON_FRONT_END</type>
@@ -507,8 +521,7 @@
 					<macro>
 						<name>MM_MOMENTUM</name>
 						<description>Motor number for momentum slits, e.g. MTR0104.</description>
-					</macro>
-
+					</macro>  
 				</macros>
 			</value>
 		</entry>
