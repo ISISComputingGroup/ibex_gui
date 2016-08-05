@@ -26,12 +26,12 @@ import org.eclipse.swt.graphics.Color;
 
 import uk.ac.stfc.isis.ibex.configserver.configuration.BannerItem;
 import uk.ac.stfc.isis.ibex.configserver.configuration.BannerItemState;
-import uk.ac.stfc.isis.ibex.epics.pv.Closer;
+import uk.ac.stfc.isis.ibex.model.ModelObject;
 import uk.ac.stfc.isis.ibex.model.SettableUpdatedValue;
 import uk.ac.stfc.isis.ibex.model.UpdatedValue;
 import uk.ac.stfc.isis.ibex.ui.banner.indicators.IndicatorModel;
 
-public class BannerItemModel extends Closer implements IndicatorModel {
+public class BannerItemModel extends ModelObject implements IndicatorModel {
 
     private SettableUpdatedValue<String> text;
     private SettableUpdatedValue<Color> color;
