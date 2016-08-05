@@ -81,7 +81,7 @@ public class PeriodsPanel extends Composite {
 		lblPeriodFile.setSize(58, 15);
 		lblPeriodFile.setText("Period File:");
 		
-		periodFile = new Combo(composite, SWT.DROP_DOWN);
+        periodFile = new Combo(composite, SWT.DROP_DOWN | SWT.READ_ONLY);
 		GridData gd_periodFile = new GridData(SWT.LEFT, SWT.FILL, false, false, 4, 1);
 		gd_periodFile.widthHint = 500;
 		periodFile.setLayoutData(gd_periodFile);

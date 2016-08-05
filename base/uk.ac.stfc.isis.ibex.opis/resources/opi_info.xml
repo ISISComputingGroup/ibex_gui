@@ -216,7 +216,7 @@
 				<macros>
 					<macro>
 						<name>LAKESHORE218</name>
- 						<description>The Lakeshore PV name (e.g. LAKESHORE218_01).</description>  
+ 						<description>The Lakeshore PV name (e.g. LKSH218_01).</description>  
 					</macro>
 				</macros>
 			</value>
@@ -432,28 +432,14 @@
 		<entry>
 			<key>TPG300</key>
 			<value>
-				<type>PRESSURE_GUAGE</type>
+				<type>UNCONFIRMED</type>
 				<path>TPG300.opi</path>
-				<description>PFEIFFER 300 Vacuum Gauge</description>
-				<macros>    
-                    <macro>
-						<name>N</name>
-						<description>Unknown description.</description>
-					</macro> 
-				</macros>
-			</value>
-		</entry>
-		<entry>
-			<key>TPG26x</key>
-			<value>
-				<type>PRESSURE_GAUGE</type>
-				<path>TPG26x.opi</path>
-				<description>PFEIFFER 26x Vacuum Gauge</description>
+				<description>Description required.</description>
 				<macros>
                     <macro>
-						<name>TPG</name>
-						<description>TPG IOC PV Prefix, e.g. TPG26X_01.</description>
-					</macro>
+						<name>N</name>
+						<description>Description required.</description>
+					</macro>                  
 				</macros>
 			</value>
 		</entry>
@@ -500,6 +486,20 @@
 			</value>
 		</entry>
 		<entry>
+			<key>Cryo valve</key>
+			<value>
+				<type>CRYVALVE</type>
+				<path>cryValve.opi</path>
+				<description>The OPI for the Iris cryo valve.</description>
+				<macros>    
+                    <macro>
+						<name>CRYVALVE</name>
+						<description>The cryo valve PV name (e.g. CRYVALVE_01).</description>
+					</macro>  
+				</macros>
+			</value>
+		</entry>
+		<entry>
 			<key>muon_front_end</key>
 			<value>
 				<type>MUON_FRONT_END</type>
@@ -507,26 +507,21 @@
 				<description>Muon front end momentum slits and barndoors.</description>
 				<macros>
 					<macro>
-						<name>BARNDOORS</name>
-						<description>Barndoors PV prefix, e.g. MOT.</description>
-					</macro>
-					<macro>
 						<name>MM_EMU</name>
-						<description>Motor PV for EMU barndoors, e.g. MOT:MTR0101.</description>
+						<description>Motor number for EMU barndoors, e.g. MTR0101.</description>
 					</macro>
 					<macro>
 						<name>MM_MuSR</name>
-						<description>Motor PV for MuSR barndoors, e.g. MOT:MTR0102.</description>
+						<description>Motor number for MuSR barndoors, e.g. MTR0102.</description>
 					</macro>
 					<macro>
 						<name>MM_HiFi</name>
-						<description>Motor PV for HiFi barndoors, e.g. MOT:MTR0103.</description>
+						<description>Motor number for HiFi barndoors, e.g. MTR0103.</description>
 					</macro>
 					<macro>
 						<name>MM_MOMENTUM</name>
-						<description>Motor PV for momentum slits, e.g. MOT:MTR0104.</description>
-					</macro>
-
+						<description>Motor number for momentum slits, e.g. MTR0104.</description>
+					</macro>  
 				</macros>
 			</value>
 		</entry>

@@ -1,21 +1,21 @@
 
 /*
-* This file is part of the ISIS IBEX application.
-* Copyright (C) 2012-2015 Science & Technology Facilities Council.
-* All rights reserved.
-*
-* This program is distributed in the hope that it will be useful.
-* This program and the accompanying materials are made available under the
-* terms of the Eclipse Public License v1.0 which accompanies this distribution.
-* EXCEPT AS EXPRESSLY SET FORTH IN THE ECLIPSE PUBLIC LICENSE V1.0, THE PROGRAM 
-* AND ACCOMPANYING MATERIALS ARE PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES 
-* OR CONDITIONS OF ANY KIND.  See the Eclipse Public License v1.0 for more details.
-*
-* You should have received a copy of the Eclipse Public License v1.0
-* along with this program; if not, you can obtain a copy from
-* https://www.eclipse.org/org/documents/epl-v10.php or 
-* http://opensource.org/licenses/eclipse-1.0.php
-*/
+ * This file is part of the ISIS IBEX application. Copyright (C) 2012-2016
+ * Science & Technology Facilities Council. All rights reserved.
+ *
+ * This program is distributed in the hope that it will be useful. This program
+ * and the accompanying materials are made available under the terms of the
+ * Eclipse Public License v1.0 which accompanies this distribution. EXCEPT AS
+ * EXPRESSLY SET FORTH IN THE ECLIPSE PUBLIC LICENSE V1.0, THE PROGRAM AND
+ * ACCOMPANYING MATERIALS ARE PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES
+ * OR CONDITIONS OF ANY KIND. See the Eclipse Public License v1.0 for more
+ * details.
+ *
+ * You should have received a copy of the Eclipse Public License v1.0 along with
+ * this program; if not, you can obtain a copy from
+ * https://www.eclipse.org/org/documents/epl-v10.php or
+ * http://opensource.org/licenses/eclipse-1.0.php
+ */
 
 /*
  * Copyright (C) 2013-2014 Research Councils UK (STFC)
@@ -44,7 +44,6 @@ import org.eclipse.ui.PlatformUI;
 import uk.ac.stfc.isis.ibex.configserver.editing.DefaultName;
 import uk.ac.stfc.isis.ibex.devicescreens.components.ComponentType;
 import uk.ac.stfc.isis.ibex.opis.Opi;
-import uk.ac.stfc.isis.ibex.opis.desc.MacroInfo;
 import uk.ac.stfc.isis.ibex.opis.desc.OpiDescription;
 import uk.ac.stfc.isis.ibex.synoptic.Synoptic;
 import uk.ac.stfc.isis.ibex.synoptic.SynopticModel;
@@ -377,13 +376,16 @@ public class SynopticViewModel {
 		propertySelectionListeners.remove(listener);
 	}
 
-	public void updateSelectedProperty(Property newProperty) {
+    /**
+     * Update or add the selected property.
+     * 
+     * Will try to update an existing property but if it does not exist then
+     * will add it to the list of properties.
+     *
+     * @param newProperty the new property
+     */
+	public void updateOrAddSelectedProperty(Property newProperty) {
 		if (newProperty == null) {
-			return;
-		}
-
-		Property current = getSelectedProperty();
-		if (newProperty == current) {
 			return;
 		}
 
@@ -391,7 +393,7 @@ public class SynopticViewModel {
 		if (component != null) {
 			TargetDescription target = component.target();
 			if (target != null) {
-				target.replaceProperty(current, newProperty);
+                target.replaceOrAddProperty(newProperty);
 				broadcastInstrumentUpdate(UpdateTypes.EDIT_PROPERTY);
 				setSelectedProperty(newProperty);
 			}
@@ -487,14 +489,14 @@ public class SynopticViewModel {
         return opi;
 	}
     
+    /**
+     * Gets the OPI property keys for a given target.
+     *
+     * @param targetName the target name
+     * @return the property keys
+     */
     public List<String> getPropertyKeys(String targetName) {
-        List<String> macros = new ArrayList<>();
-
-        for (MacroInfo macro : getOpi(targetName).getMacros()) {
-            macros.add(macro.getName());
-        }
-        
-        return macros;
+        return getOpi(targetName).getKeys();
     }
 
     public List<String> getSelectedPropertyKeys() {

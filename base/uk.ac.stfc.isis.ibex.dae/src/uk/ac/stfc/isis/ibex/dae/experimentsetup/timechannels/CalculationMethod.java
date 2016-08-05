@@ -24,8 +24,8 @@ import java.util.Collections;
 import java.util.List;
 
 public enum CalculationMethod {
-	UseParametersBelow ("Use parameters below"),
-	ReadFromFile ("Read from file");
+    SPECIFY_PARAMETERS("Specify Parameters"),
+    USE_TCB_FILE("Use TCB File");
 	
 	private String text;
 
