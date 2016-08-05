@@ -437,8 +437,8 @@
 				<description>Description required.</description>
 				<macros>
                     <macro>
-						<name>N</name>
-						<description>Description required.</description>
+						<name>TPG300</name>
+						<description>The TPG300 PV name (e.g. TPG300_01).</description>
 					</macro>                  
 				</macros>
 			</value>
@@ -479,8 +479,8 @@
 				<description>DANFYSIK power supply for magnets.</description>
 				<macros>
 					<macro>
-						<name>IOC_NUM</name>
-						<description>PSU IOC Number, two digits, e.g. 01.</description>
+						<name>DFKPS</name>
+						<description>The Danfysik PV name (e.g. DFKPS_01).</description>
 					</macro>                  
 				</macros>
 			</value>
