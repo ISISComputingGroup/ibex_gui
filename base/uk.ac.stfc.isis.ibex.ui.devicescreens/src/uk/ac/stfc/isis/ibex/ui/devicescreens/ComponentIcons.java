@@ -72,7 +72,7 @@ public final class ComponentIcons {
                 return "sample_stack";
             case DAE:
                 return "dae";
-            case DANFSYIK:
+            case DANFYSIK:
             case KEPCO:
             case TDK_LAMBDA_GENESYS:
             case CAEN:

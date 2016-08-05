@@ -38,7 +38,7 @@ public enum ComponentType {
 	MONITOR,
 	SAMPLESTACK,
     DAE(new PerspectiveTarget("DAE")),
-    DANFSYIK,
+    DANFYSIK,
 	CAEN,
 	KEPCO,
     TDK_LAMBDA_GENESYS,

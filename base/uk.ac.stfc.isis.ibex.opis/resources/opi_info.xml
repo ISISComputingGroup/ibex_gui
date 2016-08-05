@@ -474,7 +474,7 @@
 		<entry>
 			<key>Danfysik</key>
 			<value>
-				<type>DANFSYIK</type>
+				<type>DANFYSIK</type>
 				<path>danfysik.opi</path>
 				<description>DANFYSIK power supply for magnets.</description>
 				<macros>
