@@ -62,7 +62,6 @@ public class BannerView extends ViewPart implements ISizeProvider {
 
     public static final String ID = "uk.ac.stfc.isis.ibex.ui.banner.views.BannerView"; //$NON-NLS-1$
     public static final int FIXED_HEIGHT = 35;
-    private final int ITEM_WIDTH = 225;
 
     private final Banner banner = Banner.getInstance();
 
@@ -164,20 +163,20 @@ public class BannerView extends ViewPart implements ISizeProvider {
         Display.getDefault().asyncExec(new Runnable() {
             @Override
             public void run() {
+                GridData gdBannerItem = new GridData(SWT.CENTER, SWT.FILL, false, true, 1, 1);
+                gdBannerItem.widthHint = 250;
+                GridData gdSep = new GridData(SWT.CENTER, SWT.TOP, false, false, 1, 1);
+                gdSep.heightHint = 20;
                 for (IndicatorModel model : models) {
                     glBannerItemPanel.numColumns = 2 * models.size();
 
                     Label sep = new Label(bannerItemPanel, SWT.SEPARATOR | SWT.VERTICAL);
-                    GridData gdSep = new GridData(SWT.CENTER, SWT.TOP, false, false, 1, 1);
-                    gdSep.heightHint = 20;
                     sep.setLayoutData(gdSep);
 
                     Indicator bannerItem = new Indicator(bannerItemPanel, SWT.LEFT_TO_RIGHT, model, ALARM_FONT);
-                    GridData gdBannerItem = new GridData(SWT.CENTER, SWT.FILL, false, true, 1, 1);
-                    gdBannerItem.widthHint = 250;
                     bannerItem.setLayoutData(gdBannerItem);
-                    bannerItemPanel.layout(true);
                 }
+                bannerItemPanel.layout(true);
             }
         });
     }
@@ -213,7 +212,7 @@ public class BannerView extends ViewPart implements ISizeProvider {
         @Override
         public void onConnectionStatus(boolean isConnected) {
             if (!isConnected) {
-//                disposeBanner();
+                disposeBanner();
             }
         }
     };
