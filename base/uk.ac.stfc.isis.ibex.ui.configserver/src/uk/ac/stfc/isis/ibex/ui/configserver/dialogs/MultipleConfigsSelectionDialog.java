@@ -23,54 +23,47 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 
-import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.swt.events.MouseAdapter;
-import org.eclipse.swt.events.MouseEvent;
-import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
-import org.eclipse.core.databinding.DataBindingContext;
 
 import uk.ac.stfc.isis.ibex.configserver.configuration.ConfigInfo;
+import uk.ac.stfc.isis.ibex.ui.dialogs.SelectionDialog;
 
 @SuppressWarnings("checkstyle:magicnumber")
-public class MultipleConfigsSelectionDialog extends Dialog {
+/**
+ * Dialog for asking the user to select a multiple configurations or components.
+ */
+public class MultipleConfigsSelectionDialog extends SelectionDialog {
 	
-	private final String title;
 	private final Collection<ConfigInfo> available;
-	private List items;
 	private boolean isComponent;
 
 	private Collection<String> selected = new ArrayList<>();
 	
+	/**
+	 * @param parentShell The shell to create the dialog in.
+	 * @param title The title of the dialog box.
+	 * @param available A collection of the available configurations/components for the user to select from.
+	 * @param isComponent Whether the user is selecting from a list of components.
+	 */
 	public MultipleConfigsSelectionDialog(
 			Shell parentShell, 
 			String title,
 			Collection<ConfigInfo> available, boolean isComponent) {
-		super(parentShell);
-		this.title = title;
+		super(parentShell, title);
 		this.available = available;
 		this.isComponent = isComponent;
 	}
 	
+	/**
+	 * @return A collection of the selected configurations/components that the user has selected.
+	 */
 	public Collection<String> selectedConfigs() {
 		return selected;
-	}
-	
-	@Override
-	protected void configureShell(Shell shell) {
-		super.configureShell(shell);
-		shell.setText(title);
-	}
-
-	@Override
-	protected Point getInitialSize() {
-		return new Point(450, 300);
 	}
 	
 	@Override
@@ -79,15 +72,7 @@ public class MultipleConfigsSelectionDialog extends Dialog {
 		super.okPressed();
 	}
 	
-	@Override
-	protected Control createDialogArea(Composite parent) {
-		Composite container = (Composite) super.createDialogArea(parent);
-		createConfigSelection(container);
-		
-		return container;
-	}
-	
-	private void createConfigSelection(Composite container) {
+	protected void createSelection(Composite container) {
 		Label lblSelect = new Label(container, SWT.NONE);
 		lblSelect.setText("Select " + getTypeString() + ":");
 
@@ -96,22 +81,9 @@ public class MultipleConfigsSelectionDialog extends Dialog {
 		String[] names = ConfigInfo.names(available).toArray(new String[0]);
 		Arrays.sort(names);
 		items.setItems(names);
-		initDataBindings();
-		
-		items.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseDoubleClick(MouseEvent e) {
-				okPressed();
-			}
-		});
 	}
 	
 	private String getTypeString() {
 		return isComponent ? "components" : "configurations";
-	}
-	protected DataBindingContext initDataBindings() {
-		DataBindingContext bindingContext = new DataBindingContext();
-		//
-		return bindingContext;
 	}
 }

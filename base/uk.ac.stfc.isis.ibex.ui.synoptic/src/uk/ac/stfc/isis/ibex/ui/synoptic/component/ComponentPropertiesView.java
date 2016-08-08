@@ -25,8 +25,8 @@ import java.util.Set;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Composite;
 
 import uk.ac.stfc.isis.ibex.synoptic.model.Component;
 import uk.ac.stfc.isis.ibex.synoptic.model.ComponentProperty;
@@ -86,8 +86,8 @@ public class ComponentPropertiesView extends Composite {
 	}
 
 	private void createReaderWriterPair(ReadableComponentProperty reader, WritableComponentProperty writer) {
-		createReader((ReadableComponentProperty) reader); 
-		createWriter((WritableComponentProperty) writer, false); 
+		createReader(reader); 
+		createWriter(writer, false); 
 	}
 
 	private void createReader(ReadableComponentProperty property) {
