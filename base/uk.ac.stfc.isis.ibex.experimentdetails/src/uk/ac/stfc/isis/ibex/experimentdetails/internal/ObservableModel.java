@@ -152,7 +152,7 @@ public class ObservableModel extends Model {
 	}
 	
 	@Override
-	public void removeUser(List<UserDetails> toRemove) {
+	public void removeUsers(List<UserDetails> toRemove) {
 		Collection<UserDetails> originalUsers = getUserDetails();
 		userDetails.removeAll(toRemove);
 		firePropertyChange("userDetails", originalUsers, getUserDetails());

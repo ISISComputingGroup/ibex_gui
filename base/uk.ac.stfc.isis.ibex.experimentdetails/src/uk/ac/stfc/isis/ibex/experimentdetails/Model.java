@@ -75,7 +75,7 @@ public abstract class Model extends ModelObject {
 	 * Remove a specific group of users from the model.
 	 * @param toRemove The users to remove.
 	 */
-	public abstract void removeUser(List<UserDetails> toRemove);
+	public abstract void removeUsers(List<UserDetails> toRemove);
 
 	/**
 	 * Remove all user details from the model.
