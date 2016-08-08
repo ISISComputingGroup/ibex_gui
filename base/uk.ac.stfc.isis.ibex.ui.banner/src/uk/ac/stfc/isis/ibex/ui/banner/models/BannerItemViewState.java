@@ -26,26 +26,42 @@ import uk.ac.stfc.isis.ibex.configserver.configuration.BannerItemState;
 import uk.ac.stfc.isis.ibex.ui.banner.indicators.IndicatorColours;
 import uk.ac.stfc.isis.ibex.ui.banner.indicators.IndicatorViewStateConverter;
 
-// TODO
+/**
+ * Converts banner item state models for display in GUI.
+ */
 public class BannerItemViewState implements IndicatorViewStateConverter<BannerItemState> {
     private BannerItem item;
     private BannerItemState state;
 
     public BannerItemViewState(BannerItem item) {
         this.item = item;
-        this.state = item.getCurrentState();
+        setState(item.getCurrentState());
     }
 
+    /**
+     * Sets the state.
+     */
     @Override
     public void setState(BannerItemState state) {
         this.state = state;
     }
 
+    /**
+     * Gets the message displayed in the GUI consisting of name and state of the
+     * property.
+     * 
+     * @return the message
+     */
     @Override
     public String getName() {
         return item.name().toUpperCase() + " is " + state.message().toUpperCase();
     }
 
+    /**
+     * Gets the text colour for the message displayed in the GUI.
+     * 
+     * @return the colour
+     */
     @Override
     public Color color() {
         switch (state.colour()) {
@@ -59,11 +75,21 @@ public class BannerItemViewState implements IndicatorViewStateConverter<BannerIt
         }
     }
 
+    /**
+     * Not used.
+     * 
+     * @return
+     */
     @Override
     public Boolean toBool() {
         return true;
     }
 
+    /**
+     * Not used.
+     * 
+     * @return
+     */
     @Override
     public Boolean availability() {
         return true;

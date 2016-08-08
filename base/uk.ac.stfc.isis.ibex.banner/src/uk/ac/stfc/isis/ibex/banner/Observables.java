@@ -57,6 +57,10 @@ public class Observables {
     public final ForwardingObservable<InMotionState> inMotion;
     public final Writable<Long> stop;
 	
+    /**
+     * Constructs the object and points the class variables at the correct
+     * observable objects.
+     */
     public Observables() {
         bannerItems = Configurations.getInstance().variables().bannerDescription;
         inMotion = InstrumentVariables.convert(obsFactory.getSwitchableObservable(new DoubleChannel(),

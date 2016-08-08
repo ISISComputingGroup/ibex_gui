@@ -22,18 +22,29 @@ package uk.ac.stfc.isis.ibex.banner;
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
 
+/**
+ * Banner singleton providing access to banner model and observables.
+ */
 public class Banner implements BundleActivator {
 
 	private static Banner instance;
 	private static BundleContext context;
 	private static BannerModel model;
 	
+    /**
+     * Returns the single instance of the banner.
+     * 
+     * @return the banner
+     */
     public static Banner getInstance() { 
     	return instance; 
     }	
     
 	private final Observables observables;
-    
+
+    /**
+     * Standard constructor.
+     */
 	public Banner() {
 		super();
 		instance = this;
@@ -41,6 +52,11 @@ public class Banner implements BundleActivator {
         model = new BannerModel();
 	}
 	
+    /**
+     * Returns the observables class associated to the Banner.
+     * 
+     * @return the observables
+     */
 	public Observables observables() {
 		return observables;
 	}	
@@ -58,7 +74,13 @@ public class Banner implements BundleActivator {
 	public void stop(BundleContext bundleContext) throws Exception {
 		Banner.context = null;
 	}    
-	
+
+    /**
+     * Returns the model associated to the banner (containing all banner items
+     * and their respective states).
+     * 
+     * @return the model
+     */
 	public BannerModel getBannerModel() {
 		return this.model;
 	}

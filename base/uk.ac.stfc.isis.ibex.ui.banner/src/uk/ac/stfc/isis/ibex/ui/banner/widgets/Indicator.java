@@ -43,7 +43,7 @@ public class Indicator extends Composite {
 		text = new StyledText(this, SWT.READ_ONLY | SWT.SINGLE);
         text.setMargins(0, 1, 0, 2);
 		text.setText("Lorem Ipsum");
-        text.setAlignment(SWT.RIGHT);
+        text.setAlignment(SWT.CENTER);
 		text.setEnabled(false);
         text.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_BACKGROUND));
 		text.setFont(font);

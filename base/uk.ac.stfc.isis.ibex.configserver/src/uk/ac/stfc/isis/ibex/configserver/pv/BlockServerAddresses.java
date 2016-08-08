@@ -151,6 +151,11 @@ public class BlockServerAddresses {
 		return pvAddress + DESCRIPTION_FIELD;
 	}
 
+    /**
+     * Get the address of the PV holding the banner description.
+     * 
+     * @return the banner description
+     */
 	public String bannerDescription() {
 		return blockServerAddress.endWith(BANNER_DESCRIPTION);
 	}

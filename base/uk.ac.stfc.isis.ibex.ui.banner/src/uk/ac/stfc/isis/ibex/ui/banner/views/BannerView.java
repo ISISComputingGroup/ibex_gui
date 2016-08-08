@@ -46,8 +46,15 @@ import uk.ac.stfc.isis.ibex.ui.banner.models.MotionControlModel;
 import uk.ac.stfc.isis.ibex.ui.banner.widgets.Control;
 import uk.ac.stfc.isis.ibex.ui.banner.widgets.Indicator;
 
+/**
+ * View of the spangle banner containing various instrument status messages.
+ */
 @SuppressWarnings("checkstyle:magicnumber")
 public class BannerView extends ViewPart implements ISizeProvider {
+
+    /**
+     * Standard constructor.
+     */
     public BannerView() {
     }
 
@@ -64,7 +71,6 @@ public class BannerView extends ViewPart implements ISizeProvider {
     private final ControlModel motionModel = new MotionControlModel(banner.observables());
 
     private Composite bannerItemPanel;
-    private GridData gdBannerItemPanel;
     private GridLayout glBannerItemPanel;
 
     private Indicator batonUser;
@@ -86,12 +92,11 @@ public class BannerView extends ViewPart implements ISizeProvider {
         spacer.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1));
 
         bannerItemPanel = new Composite(parent, SWT.RIGHT_TO_LEFT);
-        gdBannerItemPanel = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
         glBannerItemPanel = new GridLayout(1, false);
-        glBannerItemPanel.marginHeight = 0;
-        glBannerItemPanel.marginWidth = 0;
+        glBannerItemPanel.marginHeight = 3;
         glBannerItemPanel.horizontalSpacing = 15;
         bannerItemPanel.setLayout(glBannerItemPanel);
+        GridData gdBannerItemPanel = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
         bannerItemPanel.setLayoutData(gdBannerItemPanel);
 
         banner.observables().bannerItems.addObserver(modelAdapter);
@@ -132,6 +137,13 @@ public class BannerView extends ViewPart implements ISizeProvider {
     public void setFocus() {
     }
 
+    /**
+     * Converts a collection of banner item objects (the banner description)
+     * into models readable by indicator widgets in the UI.
+     * 
+     * @param items the banner items
+     * @return the indicator models
+     */
     private Collection<IndicatorModel> convertBannerItems(Collection<BannerItem> items) {
         Collection<IndicatorModel> convertedItems = new ArrayList<IndicatorModel>();
         if (!(items == null)) {
@@ -142,27 +154,38 @@ public class BannerView extends ViewPart implements ISizeProvider {
         return convertedItems;
     }
 
+    /**
+     * Adds an indicator widget for each banner item.
+     * 
+     * @param models the banner item indicator models observed by the widget
+     */
     private void setBanner(final Collection<IndicatorModel> models) {
+        disposeBanner();
         Display.getDefault().asyncExec(new Runnable() {
             @Override
             public void run() {
                 for (IndicatorModel model : models) {
-                    Indicator bannerItem = new Indicator(bannerItemPanel, SWT.NONE, model, ALARM_FONT);
-                    GridData gdBannerItem = new GridData(SWT.RIGHT, SWT.CENTER, false, true, 1, 1);
-                    gdBannerItem.widthHint = 210;
+                    glBannerItemPanel.numColumns = 2 * models.size();
+
+                    Label sep = new Label(bannerItemPanel, SWT.SEPARATOR | SWT.VERTICAL);
+                    GridData gdSep = new GridData(SWT.CENTER, SWT.TOP, false, false, 1, 1);
+                    gdSep.heightHint = 20;
+                    sep.setLayoutData(gdSep);
+
+                    Indicator bannerItem = new Indicator(bannerItemPanel, SWT.LEFT_TO_RIGHT, model, ALARM_FONT);
+                    GridData gdBannerItem = new GridData(SWT.CENTER, SWT.FILL, false, true, 1, 1);
+                    gdBannerItem.widthHint = 250;
                     bannerItem.setLayoutData(gdBannerItem);
-                    updateBanner(models.size());
+                    bannerItemPanel.layout(true);
                 }
             }
         });
     }
 
-    private void updateBanner(int numItems) {
-        gdBannerItemPanel.widthHint = numItems * ITEM_WIDTH;
-        glBannerItemPanel.numColumns = numItems;
-        bannerItemPanel.layout(true);
-    }
-
+    /**
+     * Removes all indicators for instrument-specific properties from the
+     * spangle banner.
+     */
     private void disposeBanner() {
         Display.getDefault().asyncExec(new Runnable() {
             @Override
@@ -174,6 +197,9 @@ public class BannerView extends ViewPart implements ISizeProvider {
         });
     }
 
+    /**
+     * Observes the banner model and forwards changes to the UI.
+     */
     private final BaseObserver<Collection<BannerItem>> modelAdapter = new BaseObserver<Collection<BannerItem>>() {
         @Override
         public void onValue(Collection<BannerItem> value) {
@@ -187,7 +213,7 @@ public class BannerView extends ViewPart implements ISizeProvider {
         @Override
         public void onConnectionStatus(boolean isConnected) {
             if (!isConnected) {
-                disposeBanner();
+//                disposeBanner();
             }
         }
     };

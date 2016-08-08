@@ -69,7 +69,10 @@ public interface Converters {
 	Converter<String, Collection<IocState>> toIocStates();
 
 	Converter<String, Collection<String>> toNames();
-	
+
+    /**
+     * @return converter for the banner description
+     */
 	Converter<String, Collection<BannerItem>> toBannerDescription();
 
 }

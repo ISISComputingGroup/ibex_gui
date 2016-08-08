@@ -27,7 +27,10 @@ public class BannerItem extends ModelObject {
     private ObservableFactory obsFactory = null;
 	private ForwardingObservable<Boolean> pvObservable;
 
-	
+    /**
+     * Creates an observable for the PV holding the current state of this banner
+     * item.
+     */
 	public void createPVObservable() {
         obsFactory = new ObservableFactory(OnInstrumentSwitch.CLOSE);
 
@@ -60,34 +63,76 @@ public class BannerItem extends ModelObject {
         }
     };
 
+    /**
+     * The name of the property.
+     * 
+     * @return the name
+     */
 	public String name() {
 		return name;
 	}
 	
+    /**
+     * The property type.
+     * 
+     * @return the type
+     */
 	public String type() {
 		return type;
 	}
 	
+    /**
+     * The PV holding the property state.
+     * 
+     * @return the PV address
+     */
 	public String pv() {
 		return pv;
 	}
 	
+    /**
+     * Returns the display specification for the banner item in true state.
+     * 
+     * @return the true state
+     */
 	public BannerItemState true_state() {
 		return true_state;
 	}
-	
+
+    /**
+     * Returns the display specification for the banner item in false state.
+     * 
+     * @return the false state
+     */
 	public BannerItemState false_state() {
 		return false_state;
 	}
-	
+
+    /**
+     * Returns the display specification for the banner item in unknown state.
+     * 
+     * @return the unknown state
+     */
 	public BannerItemState unknown_state() {
 		return unknown_state;
 	}
 	
+    /**
+     * Returns the display specification for the banner item in its current
+     * state.
+     * 
+     * @return the current state
+     */
     public BannerItemState getCurrentState() {
 		return currentState;
 	}
 
+    /**
+     * Sets the current state of the property and fires a property change for
+     * listeners.
+     * 
+     * @param currentState the current state of the property
+     */
 	public void setCurrentState(BannerItemState currentState) {
         firePropertyChange("currentState", this.currentState, this.currentState = currentState);
 	}

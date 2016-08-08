@@ -31,6 +31,10 @@ import uk.ac.stfc.isis.ibex.model.SettableUpdatedValue;
 import uk.ac.stfc.isis.ibex.model.UpdatedValue;
 import uk.ac.stfc.isis.ibex.ui.banner.indicators.IndicatorModel;
 
+/**
+ * Model containing banner item status as updated values used for display in
+ * GUI.
+ */
 public class BannerItemModel extends ModelObject implements IndicatorModel {
 
     private SettableUpdatedValue<String> text;
@@ -38,6 +42,11 @@ public class BannerItemModel extends ModelObject implements IndicatorModel {
     private SettableUpdatedValue<Boolean> availability;
     private BannerItemViewState converter;
 
+    /**
+     * Instantiates model and converter.
+     * 
+     * @param item the banner item being observed
+     */
     public BannerItemModel(BannerItem item) {
         converter = new BannerItemViewState(item);
         text = new SettableUpdatedValue<>();
@@ -58,6 +67,10 @@ public class BannerItemModel extends ModelObject implements IndicatorModel {
         update();
     }
 
+    /**
+     * Updates the display parameters of the status message in the GUI upon
+     * state change of the banner item.
+     */
     public void update() {
         text.setValue(converter.getName());
         color.setValue(converter.color());
