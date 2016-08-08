@@ -432,7 +432,7 @@
 		<entry>
 			<key>TPG300</key>
 			<value>
-				<type>PRESSURE_GUAGE</type>
+				<type>PRESSURE_GAUGE</type>
 				<path>TPG300.opi</path>
 				<description>PFEIFFER 300 Vacuum Gauge.</description>
 				<macros>
@@ -446,7 +446,7 @@
 		<entry>
 			<key>TPG26x</key>
 			<value>
-				<type>PRESSURE_GUAGE</type>
+				<type>PRESSURE_GAUGE</type>
 				<path>TPG26x.opi</path>
 				<description>PFEIFFER 26x Vacuum Gauge.</description>
 				<macros>
