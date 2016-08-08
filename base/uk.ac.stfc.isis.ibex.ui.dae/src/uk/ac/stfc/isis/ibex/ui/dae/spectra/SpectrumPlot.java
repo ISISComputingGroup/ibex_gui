@@ -101,13 +101,13 @@ public class SpectrumPlot extends Canvas {
 		trace = new Trace("Spectrum", plot.primaryXAxis, plot.primaryYAxis, traceDataProvider);
 		trace.setAntiAliasing(true);
 		
-        plot.primaryXAxis.setTitle("Count (/" + Utils.MU + "s)");
+        plot.primaryXAxis.setTitle("Time-of-flight (" + Utils.MU + "s)");
 		plot.primaryXAxis.setDashGridLine(true);
 		plot.primaryXAxis.setAutoScale(true);
         plot.primaryXAxis.setAutoScaleThreshold(0);
         plot.primaryXAxis.setFormatPattern("0");
 				
-        plot.primaryYAxis.setTitle("Time-of-flight (" + Utils.MU + "s)");
+        plot.primaryYAxis.setTitle("Count (/" + Utils.MU + "s)");
 		plot.primaryYAxis.setDashGridLine(true);
 		plot.primaryYAxis.setAutoScale(true);
         plot.primaryYAxis.setAutoScaleThreshold(0);

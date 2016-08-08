@@ -1,20 +1,20 @@
 /*
-* This file is part of the ISIS IBEX application.
-* Copyright (C) 2012-2015 Science & Technology Facilities Council.
-* All rights reserved.
-*
-* This program is distributed in the hope that it will be useful.
-* This program and the accompanying materials are made available under the
-* terms of the Eclipse Public License v1.0 which accompanies this distribution.
-* EXCEPT AS EXPRESSLY SET FORTH IN THE ECLIPSE PUBLIC LICENSE V1.0, THE PROGRAM 
-* AND ACCOMPANYING MATERIALS ARE PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES 
-* OR CONDITIONS OF ANY KIND.  See the Eclipse Public License v1.0 for more details.
-*
-* You should have received a copy of the Eclipse Public License v1.0
-* along with this program; if not, you can obtain a copy from
-* https://www.eclipse.org/org/documents/epl-v10.php or 
-* http://opensource.org/licenses/eclipse-1.0.php
-*/
+ * This file is part of the ISIS IBEX application. Copyright (C) 2012-2016
+ * Science & Technology Facilities Council. All rights reserved.
+ *
+ * This program is distributed in the hope that it will be useful. This program
+ * and the accompanying materials are made available under the terms of the
+ * Eclipse Public License v1.0 which accompanies this distribution. EXCEPT AS
+ * EXPRESSLY SET FORTH IN THE ECLIPSE PUBLIC LICENSE V1.0, THE PROGRAM AND
+ * ACCOMPANYING MATERIALS ARE PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES
+ * OR CONDITIONS OF ANY KIND. See the Eclipse Public License v1.0 for more
+ * details.
+ *
+ * You should have received a copy of the Eclipse Public License v1.0 along with
+ * this program; if not, you can obtain a copy from
+ * https://www.eclipse.org/org/documents/epl-v10.php or
+ * http://opensource.org/licenses/eclipse-1.0.php
+ */
 
 package uk.ac.stfc.isis.ibex.epics.observing;
 
@@ -35,7 +35,7 @@ public abstract class ClosableObservable<T> implements Observable<T>, Closable {
     private final Collection<Observer<T>> observers = new CopyOnWriteArrayList<>();
     private T value;
     private boolean isConnected;
-    private Exception lastError;
+    private Exception currentError;
 
     @Override
     public Subscription addObserver(Observer<T> observer) {
@@ -57,8 +57,8 @@ public abstract class ClosableObservable<T> implements Observable<T>, Closable {
     }
 
     @Override
-    public Exception lastError() {
-        return lastError;
+    public Exception currentError() {
+        return currentError;
     }
 
     @Override
@@ -66,7 +66,13 @@ public abstract class ClosableObservable<T> implements Observable<T>, Closable {
         // Do nothing by default
     }
 
+    /**
+     * Sets the value. Also blank any error
+     *
+     * @param value the new value
+     */
     protected void setValue(T value) {
+        currentError = null;
         if (value == null) {
             return;
         }
@@ -78,14 +84,25 @@ public abstract class ClosableObservable<T> implements Observable<T>, Closable {
         }
     }
 
+    /**
+     * Sets the current error experienced by this observable. Error is blanked
+     * if a new value is set
+     *
+     * @param e the new error
+     */
     protected void setError(Exception e) {
-        lastError = e;
+        currentError = e;
 
         for (Observer<T> observer : observers) {
             observer.onError(e);
         }
     }
 
+    /**
+     * Sets the connection status.
+     *
+     * @param isConnected the new connection status
+     */
     protected void setConnectionStatus(boolean isConnected) {
         this.isConnected = isConnected;
 

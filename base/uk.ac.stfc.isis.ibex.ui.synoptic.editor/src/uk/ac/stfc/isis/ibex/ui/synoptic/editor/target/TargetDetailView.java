@@ -1,19 +1,19 @@
 
 /*
- * This file is part of the ISIS IBEX application.
- * Copyright (C) 2012-2015 Science & Technology Facilities Council.
- * All rights reserved.
+ * This file is part of the ISIS IBEX application. Copyright (C) 2012-2016
+ * Science & Technology Facilities Council. All rights reserved.
  *
- * This program is distributed in the hope that it will be useful.
- * This program and the accompanying materials are made available under the
- * terms of the Eclipse Public License v1.0 which accompanies this distribution.
- * EXCEPT AS EXPRESSLY SET FORTH IN THE ECLIPSE PUBLIC LICENSE V1.0, THE PROGRAM 
- * AND ACCOMPANYING MATERIALS ARE PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES 
- * OR CONDITIONS OF ANY KIND.  See the Eclipse Public License v1.0 for more details.
+ * This program is distributed in the hope that it will be useful. This program
+ * and the accompanying materials are made available under the terms of the
+ * Eclipse Public License v1.0 which accompanies this distribution. EXCEPT AS
+ * EXPRESSLY SET FORTH IN THE ECLIPSE PUBLIC LICENSE V1.0, THE PROGRAM AND
+ * ACCOMPANYING MATERIALS ARE PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES
+ * OR CONDITIONS OF ANY KIND. See the Eclipse Public License v1.0 for more
+ * details.
  *
- * You should have received a copy of the Eclipse Public License v1.0
- * along with this program; if not, you can obtain a copy from
- * https://www.eclipse.org/org/documents/epl-v10.php or 
+ * You should have received a copy of the Eclipse Public License v1.0 along with
+ * this program; if not, you can obtain a copy from
+ * https://www.eclipse.org/org/documents/epl-v10.php or
  * http://opensource.org/licenses/eclipse-1.0.php
  */
 
@@ -34,6 +34,7 @@ import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.IComponentSelectionListener
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.IInstrumentUpdateListener;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.SynopticViewModel;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.UpdateTypes;
+import uk.ac.stfc.isis.ibex.ui.synoptic.editor.target.properties.TargetPropertiesView;
 
 /**
  * Shows the synoptic editor part that allows selection of a target, normally an
@@ -113,30 +114,8 @@ public class TargetDetailView extends Composite {
         gdDescription.heightHint = 70;
         desc.setLayoutData(gdDescription);
 
-        Label lblProperties = new Label(fieldsComposite, SWT.NONE);
-        lblProperties.setLayoutData(new GridData(SWT.RIGHT, SWT.TOP, false, false, 1, 1));
-        lblProperties.setText("Properties");
-
-        TargetPropertyTable properties = new TargetPropertyTable(fieldsComposite, synopticViewModel);
-        properties.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
-        properties.showPropertyList(synopticViewModel.getFirstSelectedComponent());
-
-        Label lblValue = new Label(fieldsComposite, SWT.NONE);
-        lblValue.setLayoutData(new GridData(SWT.RIGHT, SWT.TOP, false, false, 1, 1));
-        lblValue.setText("Value");
-
-        TargetPropertyValue value = new TargetPropertyValue(fieldsComposite, synopticViewModel);
-        value.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
-
-        Label lblPropertyDescription = new Label(fieldsComposite, SWT.NONE);
-        lblPropertyDescription.setLayoutData(new GridData(SWT.RIGHT, SWT.TOP, false, false, 1, 1));
-        lblPropertyDescription.setText("Description");
-
-        TargetPropertiesDescription propertyDescription = new TargetPropertiesDescription(fieldsComposite,
-                synopticViewModel);
-        GridData gdPropertyDescription = new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1);
-        gdPropertyDescription.heightHint = 70;
-        propertyDescription.setLayoutData(gdPropertyDescription);
+        TargetPropertiesView propertiesView = new TargetPropertiesView(fieldsComposite, synopticViewModel);
+        propertiesView.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
 	}
 	
     private void showTarget(ComponentDescription component) {

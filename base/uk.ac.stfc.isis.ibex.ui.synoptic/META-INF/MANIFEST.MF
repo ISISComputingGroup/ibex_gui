@@ -20,11 +20,13 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.ui.ide,
  uk.ac.stfc.isis.ibex.ui.dae;bundle-version="1.0.0",
  uk.ac.stfc.isis.ibex.instrument;bundle-version="1.0.0",
- uk.ac.stfc.isis.ibex.configserver;bundle-version="1.0.0"
+ uk.ac.stfc.isis.ibex.configserver;bundle-version="1.0.0",
+ uk.ac.stfc.isis.ibex.devicescreens,
+ uk.ac.stfc.isis.ibex.ui.devicescreens;bundle-version="1.0.0"
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Export-Package: uk.ac.stfc.isis.ibex.ui.synoptic,
- uk.ac.stfc.isis.ibex.ui.synoptic.component.icons,
+ uk.ac.stfc.isis.ibex.ui.synoptic.component,
  uk.ac.stfc.isis.ibex.ui.synoptic.views,
  uk.ac.stfc.isis.ibex.ui.synoptic.widgets
 Import-Package: org.apache.logging.log4j,
@@ -33,4 +35,6 @@ Import-Package: org.apache.logging.log4j,
  uk.ac.stfc.isis.ibex.epics.switching,
  uk.ac.stfc.isis.ibex.epics.writing,
  uk.ac.stfc.isis.ibex.logger,
- uk.ac.stfc.isis.ibex.opis
+ uk.ac.stfc.isis.ibex.opis,
+ uk.ac.stfc.isis.ibex.targets,
+ uk.ac.stfc.isis.ibex.ui.targets

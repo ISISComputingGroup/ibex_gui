@@ -29,14 +29,14 @@ import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Text;
 
 import com.google.common.base.Predicate;
@@ -45,6 +45,8 @@ import com.google.common.collect.Iterables;
 @SuppressWarnings("checkstyle:magicnumber")
 public class SaveSynopticDialog extends TitleAreaDialog {
 
+    private static final int MAX_SYNOPTIC_NAME_LENGTH = 30;
+
     private Text txtName;
 
     private String newName = "";
@@ -52,66 +54,61 @@ public class SaveSynopticDialog extends TitleAreaDialog {
 
     public SaveSynopticDialog(Shell parent, String currentName,
 	    Collection<String> existingSynoptics) {
-	super(parent);
-	setShellStyle(SWT.DIALOG_TRIM | SWT.APPLICATION_MODAL);
-	this.existingSynoptics = new ArrayList<>(existingSynoptics);
+        super(parent);
+        setShellStyle(SWT.DIALOG_TRIM | SWT.APPLICATION_MODAL);
+        this.existingSynoptics = new ArrayList<>(existingSynoptics);
     }
 
     public String getNewName() {
-	return newName;
+        return newName;
     }
 
     @Override
     protected void configureShell(Shell shell) {
-	super.configureShell(shell);
-	shell.setText("Save Synoptic As");
+        super.configureShell(shell);
+        shell.setText("Save Synoptic As");
     }
 
     @Override
     protected Control createDialogArea(Composite parent) {
-	setTitle("Save Synoptic");
-	Composite container = (Composite) super.createDialogArea(parent);
-	GridLayout glContainer = new GridLayout(1, false);
-	container.setLayout(glContainer);
+        setTitle("Save Synoptic");
+        Composite container = (Composite) super.createDialogArea(parent);
+        GridLayout glContainer = new GridLayout(1, false);
+        container.setLayout(glContainer);
 
-	Composite composite = new Composite(container, SWT.NONE);
-	composite.setLayout(new GridLayout(2, false));
-	GridData gdComposite = new GridData(SWT.FILL, SWT.CENTER, true, false,
-		1, 1);
-	gdComposite.widthHint = 95;
-	composite.setLayoutData(gdComposite);
+        Composite composite = new Composite(container, SWT.NONE);
+        composite.setLayout(new GridLayout(2, false));
+        GridData gdComposite = new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1);
+        gdComposite.widthHint = 95;
+        composite.setLayoutData(gdComposite);
 
-	Label lblConfigurationName = new Label(composite, SWT.NONE);
-	lblConfigurationName.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER,
-		false, false, 1, 1));
-	lblConfigurationName.setText("Name:");
+        Label lblConfigurationName = new Label(composite, SWT.NONE);
+        lblConfigurationName.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
+        lblConfigurationName.setText("Name:");
 
-	txtName = new Text(composite, SWT.BORDER);
-	GridData gdTxtName = new GridData(SWT.FILL, SWT.CENTER, true, false,
-		1, 1);
-	gdTxtName.widthHint = 383;
-	txtName.setLayoutData(gdTxtName);
-	txtName.setBounds(0, 0, 76, 21);
-	new Label(composite, SWT.NONE);
+        txtName = new Text(composite, SWT.BORDER);
+        GridData gdTxtName = new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1);
+        gdTxtName.widthHint = 383;
+        txtName.setLayoutData(gdTxtName);
+        txtName.setBounds(0, 0, 76, 21);
+        new Label(composite, SWT.NONE);
 
-	Label lblConfigurationNameCannot = new Label(composite, SWT.NONE);
-	lblConfigurationNameCannot.setLayoutData(new GridData(SWT.CENTER,
-		SWT.CENTER, false, false, 1, 1));
-	lblConfigurationNameCannot
-		.setText("Name must start with a letter and contain only [A-Z], [0-9] and \"_\"");
-	new Label(composite, SWT.NONE);
-	new Label(composite, SWT.NONE);
+        Label lblConfigurationNameCannot = new Label(composite, SWT.NONE);
+        lblConfigurationNameCannot.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1));
+        lblConfigurationNameCannot.setText("Name must start with a letter and contain only [A-Z], [0-9] and \"_\"");
+        new Label(composite, SWT.NONE);
+        new Label(composite, SWT.NONE);
 
-	txtName.addModifyListener(new ModifyListener() {
-	    @Override
-	    public void modifyText(ModifyEvent arg0) {
-		update();
-	    }
-	});
+        txtName.addModifyListener(new ModifyListener() {
+            @Override
+            public void modifyText(ModifyEvent arg0) {
+                update();
+            }
+        });
 
-	update();
+        update();
 
-	return container;
+        return container;
     }
 
     /**
@@ -121,115 +118,115 @@ public class SaveSynopticDialog extends TitleAreaDialog {
      */
     @Override
     protected void createButtonsForButtonBar(Composite parent) {
-	Button button = createButton(parent, IDialogConstants.OK_ID,
-		IDialogConstants.OK_LABEL, true);
-	button.setEnabled(false);
-	button.addSelectionListener(new SelectionAdapter() {
-	    @Override
-	    public void widgetSelected(SelectionEvent e) {
-	    }
-	});
-	createButton(parent, IDialogConstants.CANCEL_ID,
-		IDialogConstants.CANCEL_LABEL, false);
+        Button button = createButton(parent, IDialogConstants.OK_ID, IDialogConstants.OK_LABEL, true);
+        button.setEnabled(false);
+        button.addSelectionListener(new SelectionAdapter() {
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+            }
+        });
+        createButton(parent, IDialogConstants.CANCEL_ID, IDialogConstants.CANCEL_LABEL, false);
     }
 
     @Override
     protected void okPressed() {
-	if (validate(name())) {
-	    newName = name();
-	    // Warn about overwriting if already exists
-	    if (isDuplicate(newName)) {
-		boolean userCancelled = askUserWhetherToOverwrite(newName);
-		if (userCancelled) {
-		    return;
-		}
-	    }
+        if (validate(name())) {
+            newName = name();
+            // Warn about overwriting if already exists
+            if (isDuplicate(newName)) {
+                boolean userCancelled = askUserWhetherToOverwrite(newName);
+                if (userCancelled) {
+                    return;
+                }
+            }
 
-	    super.okPressed();
-	    close();
-	}
-	// else ignore the click
+            super.okPressed();
+            close();
+        }
+        // else ignore the click
     }
 
     private boolean askUserWhetherToOverwrite(String newName) {
-	MessageBox box = new MessageBox(getShell(), SWT.ICON_WARNING | SWT.YES
-		| SWT.NO);
-	box.setMessage("The synoptic \"" + newName
-		+ "\" already exists. \n Do you want to replace it?");
+        MessageBox box = new MessageBox(getShell(), SWT.ICON_WARNING | SWT.YES | SWT.NO);
+        box.setMessage("The synoptic \"" + newName + "\" already exists. \n Do you want to replace it?");
 
-	// Message boxes return the ID of the button to close, so need to check
-	// that value..
-	return box.open() != SWT.YES;
+        // Message boxes return the ID of the button to close, so need to check
+        // that value..
+        return box.open() != SWT.YES;
     }
 
     private String name() {
-	return txtName.getText().trim();
+        return txtName.getText().trim();
     }
 
     private void update() {
-	checkInput(name());
+        checkInput(name());
     }
 
     private void allowSaving(boolean canSave) {
-	Button ok = getButton(IDialogConstants.OK_ID);
-	if (ok != null) {
-	    ok.setEnabled(canSave);
-	}
+        Button ok = getButton(IDialogConstants.OK_ID);
+        if (ok != null) {
+            ok.setEnabled(canSave);
+        }
     }
 
     private boolean isDuplicate(final String name) {
-	return Iterables.any(existingSynoptics, new Predicate<String>() {
-	    @Override
-	    public boolean apply(String existing) {
-		return compareIgnoringCase(existing, name);
-	    }
-	});
+        return Iterables.any(existingSynoptics, new Predicate<String>() {
+            @Override
+            public boolean apply(String existing) {
+                return compareIgnoringCase(existing, name);
+            }
+        });
     }
 
     private boolean compareIgnoringCase(String text, String other) {
-	return text.toUpperCase().equals(other.toUpperCase());
+        return text.toUpperCase().equals(other.toUpperCase());
     }
 
     private Boolean validate(String name) {
-	// Must start with a letter and contain no spaces
-	return name.matches("^[a-zA-Z][a-zA-Z0-9_]*$");
+        // Must start with a letter and contain no spaces
+        return name.matches("^[a-zA-Z][a-zA-Z0-9_]*$");
     }
 
     private void checkInput(String name) {
-	setErrorMessage(null);
-	setMessage(null);
+        setErrorMessage(null);
+        setMessage(null);
 
-	String error = getErrorMessage(name);
-	if (error.length() > 0) {
-	    setErrorMessage(error);
-	    allowSaving(false);
-	    return;
-	}
+        String error = getErrorMessage(name);
+        if (error.length() > 0) {
+            setErrorMessage(error);
+            allowSaving(false);
+            return;
+        }
 
-	allowSaving(true);
-	String warning = getWarningMessage(name);
-	if (warning.length() > 0) {
-	    setMessage(warning);
-	}
+        allowSaving(true);
+        String warning = getWarningMessage(name);
+        if (warning.length() > 0) {
+            setMessage(warning);
+        }
     }
 
     private String getErrorMessage(String name) {
-	if (name.length() == 0) {
-	    return "Name cannot be blank";
-	}
+        if (name.length() == 0) {
+            return "Name cannot be blank";
+        }
 
-	if (!validate(name)) {
-	    return "Name contains invalid characters";
-	}
+        if (name.length() > MAX_SYNOPTIC_NAME_LENGTH) {
+            return "Name cannot be more than " + MAX_SYNOPTIC_NAME_LENGTH + " characters long";
+        }
 
-	return "";
+        if (!validate(name)) {
+            return "Name contains invalid characters";
+        }
+
+        return "";
     }
 
     private String getWarningMessage(String name) {
-	if (isDuplicate(name)) {
-	    return "A synoptic with this name already exists";
-	}
+        if (isDuplicate(name)) {
+            return "A synoptic with this name already exists";
+        }
 
-	return "";
+        return "";
     }
 }

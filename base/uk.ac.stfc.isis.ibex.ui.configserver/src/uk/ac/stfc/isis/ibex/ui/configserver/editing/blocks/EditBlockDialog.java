@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.jface.dialogs.IDialogConstants;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.dialogs.TitleAreaDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
@@ -15,6 +16,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Shell;
 
+import uk.ac.stfc.isis.ibex.configserver.editing.DuplicateBlockNameException;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableBlock;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
 import uk.ac.stfc.isis.ibex.runcontrol.RunControlServer;
@@ -59,16 +61,16 @@ public class EditBlockDialog extends TitleAreaDialog {
 
     protected EditBlockDialog(Shell parentShell, EditableBlock block, EditableConfiguration config) {
 		super(parentShell);
-		this.config = config;
-		this.block = block;
+        this.config = config;
+        this.block = block;
 
-		blockLogSettingsViewModel = new BlockLogSettingsViewModel(block);
+        blockLogSettingsViewModel = new BlockLogSettingsViewModel(this.block);
 		viewModels.add(blockLogSettingsViewModel);
 		
-		blockRunControlViewModel = new BlockRunControlViewModel(block);
+        blockRunControlViewModel = new BlockRunControlViewModel(this.block);
 		viewModels.add(blockRunControlViewModel);
 		
-		blockDetailsViewModel = new BlockDetailsViewModel(block, config);
+        blockDetailsViewModel = new BlockDetailsViewModel(this.block, this.config);
 		viewModels.add(blockDetailsViewModel);
 		
 		for (ErrorMessageProvider provider : viewModels) {
@@ -100,14 +102,17 @@ public class EditBlockDialog extends TitleAreaDialog {
 		blockDetailsViewModel.updateBlock();
 		blockRunControlViewModel.updateBlock();
         blockLogSettingsViewModel.updateBlock();
-        
-		super.okPressed();
-	}
-	
-	@Override
-	protected void cancelPressed() {
-        config.removeBlock(block);
-		super.cancelPressed();
+        try {
+            if (!config.getEditableBlocks().contains(this.block)) {
+                config.addNewBlock(this.block);
+            }
+            super.okPressed();
+        } catch (DuplicateBlockNameException e) {
+                MessageDialog error = new MessageDialog(this.getShell(), "Error", null,
+                        "Failed to add block " + this.block.getName() + ":\nBlock with this name already exists.",
+                        MessageDialog.ERROR, new String[] {"OK"}, 0);
+                error.open();
+        }
 	}
 	
 	@Override

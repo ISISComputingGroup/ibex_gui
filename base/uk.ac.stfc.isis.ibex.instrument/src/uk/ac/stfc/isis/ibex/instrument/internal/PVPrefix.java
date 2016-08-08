@@ -24,7 +24,7 @@ public class PVPrefix {
 	private static final String INSTRUMENT_FORMAT = "IN:%s:";
 	private static final String USER_FORMAT = "%s:%s:";
 	public static final String NDX = "NDX";
-    public static final String NDW = "NDW";
+    public static final String ND = "ND";
 	
 	private final String prefix;
 	

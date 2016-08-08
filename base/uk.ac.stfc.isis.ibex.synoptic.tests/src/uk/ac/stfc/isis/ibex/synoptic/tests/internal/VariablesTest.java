@@ -1,6 +1,6 @@
 
 /*
- * This file is part of the ISIS IBEX application. Copyright (C) 2012-2015
+ * This file is part of the ISIS IBEX application. Copyright (C) 2012-2016
  * Science & Technology Facilities Council. All rights reserved.
  *
  * This program is distributed in the hope that it will be useful. This program
@@ -54,7 +54,7 @@ public class VariablesTest {
      */
     private final String pvPrefix = "PVPrefix";
     private final String synopticPV = "Synoptic PV";
-    private static final String SYNOPTIC_ADDRESS = "CS:BLOCKSERVER:SYNOPTICS:";
+    private static final String SYNOPTIC_ADDRESS = "CS:SYNOPTICS:";
     private static final String SET_DETAILS = "SET_DETAILS";
     private static final String DELETE = "DELETE";
     private static final String NAMES = "NAMES";
@@ -158,7 +158,7 @@ public class VariablesTest {
                 + "\", \"name\": \"" + expectedName1 + "\"}]";
 
         when(mockSwitchableObservable.getValue()).thenReturn(input);
-        when(mockSwitchableObservable.lastError()).thenReturn(null);
+        when(mockSwitchableObservable.currentError()).thenReturn(null);
         when(mockSwitchableObservable.isConnected()).thenReturn(true);
 
         when(switchingObservableFactory.getSwitchableObservable(any(ChannelType.class),
@@ -201,7 +201,7 @@ public class VariablesTest {
         String value = "<?xml version=\"1.0\" ?>\n" + "<instrument xmlns=\"http://www.isis.stfc.ac.uk//instrument\">"
                 + " <name>" + expectedName + "</name>" + "</instrument>";
         when(mockSwitchableObservable.getValue()).thenReturn(value);
-        when(mockSwitchableObservable.lastError()).thenReturn(null);
+        when(mockSwitchableObservable.currentError()).thenReturn(null);
         when(mockSwitchableObservable.isConnected()).thenReturn(true);
 
         String synopticPV = "TEST";

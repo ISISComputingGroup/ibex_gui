@@ -59,11 +59,7 @@ import uk.ac.stfc.isis.ibex.validators.GroupNamesProvider;
 public class EditableConfiguration extends ModelObject implements GroupNamesProvider {
 
     public static final String EDITABLE_GROUPS = "editableGroups";
-
-	private static final String DEFAULT_BLOCK_NAME = "NEW_BLOCK";
 	private static final String DEFAULT_GROUP_NAME = "NEW_GROUP";
-	
-	private final DefaultName blockName = new DefaultName(DEFAULT_BLOCK_NAME);
 	private final DefaultName groupName = new DefaultName(DEFAULT_GROUP_NAME);
 
 	private String name;
@@ -185,7 +181,7 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
 		firePropertyChange("dateModified", this.dateModified, this.dateModified = dateModified);
 	}
 	
-	private Collection<Block> getBlocks() {
+    Collection<Block> getBlocks() {
 		return Lists.newArrayList(Iterables.transform(editableBlocks, new Function<EditableBlock, Block>() {
 			@Override
 			public Block apply(EditableBlock block) {
@@ -245,38 +241,78 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
 	public Collection<EditableIoc> getEditableIocs() {
 		return editableIocs;
 	}
-	
-	public EditableBlock addNewBlock() {
-		Collection<Block> blocksBeforeAdd = getBlocks();
-		
-		String name = blockName.getUnique(blockNames());
-        EditableBlock block = new EditableBlock(new Block(name, "", true, true));
-		editableBlocks.add(0, block);
-		makeBlockAvailable(block);
-		addRenameListener(block);
-		
-		firePropertyChange("blocks", blocksBeforeAdd, getBlocks());
-		
-		return block;
+
+	/**
+     * 
+     * Add a new block to the configuration.
+     * 
+     * @param block the EditableBlock to be added
+     * @throws DuplicateBlockNameException if the name of the block being added
+     *             is identical to one already in the configuration
+     */
+	public void addNewBlock(EditableBlock block) throws DuplicateBlockNameException {
+        if (blockNameIsUnique(block.getName())) {
+            Collection<Block> blocksBeforeAdd = getBlocks();
+            editableBlocks.add(0, block);
+            makeBlockAvailable(block);
+            addRenameListener(block);
+            firePropertyChange("blocks", blocksBeforeAdd, getBlocks());
+        } else {
+            throw new DuplicateBlockNameException();
+        }
 	}
-	
+
+    /**
+     * Checks whether a given block name is unique or whether a block of that
+     * name already exists.
+     * 
+     * @param name the name whose uniqueness is checked
+     * @return whether the name is unique as boolean
+     */
+    public boolean blockNameIsUnique(String name) {
+        for (EditableBlock existingBlock : editableBlocks) {
+            if (existingBlock.getName().equals(name)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+	/**
+     * Makes a block unavailable (i.e. block is assigned to a group).
+     * 
+     * @param block the block to make unavailable
+     */
 	public void makeBlockUnavailable(EditableBlock block) {
 		availableBlocks.remove(block);
 	}
-	
+
+	/**
+     * Makes a block available (i.e. block can be assigned to a group).
+     * 
+     * @param block the block to make available
+     */
 	public void makeBlockAvailable(EditableBlock block) {
 		if (!availableBlocks.contains(block)) {
 			availableBlocks.add(0, block);
 		}
 	}
-	
+
+	/**
+	 * Remove a block from the configuration.
+	 * @param block the block to remove
+	 */
 	public void removeBlock(EditableBlock block) {
 		Collection<Block> blocksBefore = getBlocks();
-		editableBlocks.remove(block);
+        editableBlocks.remove(block);
 		makeBlockUnavailable(block);
 		firePropertyChange("blocks", blocksBefore, getBlocks());
 	}
-	
+
+	/**
+	 * Remove multiple blocks from the configuration.
+	 * @param blocks the list of blocks to remove
+	 */
 	public void removeBlocks(List<EditableBlock> blocks) {
 		Collection<Block> blocksBefore = getBlocks();
 		for (EditableBlock block : blocks) {
@@ -333,6 +369,11 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
 				Collections.<Component>emptyList(), config.getHistory());
 	}
 	
+	/**
+	 * Swaps the indices of two groups in the configuration (for moving them up and down).
+	 * @param group1 The first group
+	 * @param group2 The second group
+	 */
 	public void swapGroups(EditableGroup group1, EditableGroup group2) {
 		Collection<EditableGroup> editableGroupsBefore = getEditableGroups();
 		Collection<Group> groupsBefore = getGroups();
@@ -387,16 +428,13 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
 			ioc.getValue().setIocDescriber(descriptions.getDescription(ioc.getKey()));
 		}
 	}
-	
-	private Collection<String> blockNames() {
-		List<String> names = new ArrayList<>();
-		for (Block block : getBlocks()) {
-			names.add(block.getName());
-		}
-		
-		return names;
-	}
-	
+
+	/**
+	 * Return a Block object associated to a given block name.
+	 * @param blocks a list of blocks in the configuration
+	 * @param name the name of the block in question
+	 * @return the Block object
+	 */
 	private static Block getBlockByName(Iterable<Block> blocks, final String name) {
 		return Iterables.find(blocks, new Predicate<Block>() {
 			@Override
@@ -424,4 +462,5 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
 
         return names;
     }
+
 }

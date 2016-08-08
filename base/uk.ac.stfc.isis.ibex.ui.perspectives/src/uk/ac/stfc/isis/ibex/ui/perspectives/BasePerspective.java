@@ -32,7 +32,7 @@ import uk.ac.stfc.isis.ibex.ui.perspectives.switcher.PerspectiveSwitcherView;
 public abstract class BasePerspective implements IPerspectiveFactory, IsisPerspective {
 	
 	public static final String ID = "uk.ac.stfc.isis.ibex.ui.perspectives.base"; //$NON-NLS-1$	
-		
+	
 	public void createInitialLayout(IPageLayout layout) {					
 		layout.setEditorAreaVisible(false);
 		layout.setFixed(true);
@@ -54,5 +54,10 @@ public abstract class BasePerspective implements IPerspectiveFactory, IsisPerspe
 			view.setMoveable(false);
 			view.setCloseable(true);
 		}
+	}
+	
+	@Override
+	public boolean isVisibleDefault() {
+		return true;
 	}
 }

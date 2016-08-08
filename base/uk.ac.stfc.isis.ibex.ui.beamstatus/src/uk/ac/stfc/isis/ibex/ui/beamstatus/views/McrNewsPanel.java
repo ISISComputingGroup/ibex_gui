@@ -44,7 +44,8 @@ import org.eclipse.wb.swt.SWTResourceManager;
  * the MCR news content.
  */
 public class McrNewsPanel extends Composite {
-    private static final int FONT_SIZE = 12;
+    private static final int FONT_SIZE = 10;
+    private static final int NEWS_FIELD_HEIGHT = 155;
 
     private static final String MCR_NEWS_PAGE_URL = "http://www.isis.stfc.ac.uk/files/mcr-news/mcrnews.txt";
     private static final String GET_NEWS_FAILED_MESSAGE =
@@ -68,8 +69,11 @@ public class McrNewsPanel extends Composite {
         Color backgroundColor = txtTheMcrNews.getBackground();
         txtTheMcrNews.setEditable(false);
         txtTheMcrNews.setBackground(backgroundColor);
-        txtTheMcrNews.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
         txtTheMcrNews.setText("The MCR news will load shortly. If this message persists, please contact support.");
+
+        GridData gdNews = new GridData(SWT.FILL, SWT.FILL, false, false);
+        gdNews.heightHint = NEWS_FIELD_HEIGHT;
+        txtTheMcrNews.setLayoutData(gdNews);
 
         final String currentFontName = txtTheMcrNews.getFont().getFontData()[0].getName();
         txtTheMcrNews.setFont(SWTResourceManager.getFont(currentFontName, FONT_SIZE, SWT.NORMAL));
@@ -81,8 +85,7 @@ public class McrNewsPanel extends Composite {
     /**
      * Sets the MCR news text.
      * 
-     * @param text
-     *            A String containing the MCR news.
+     * @param text A String containing the MCR news.
      */
     public void setText(String text) {
         int topIndex = txtTheMcrNews.getTopIndex();
