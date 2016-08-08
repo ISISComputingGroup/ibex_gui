@@ -104,8 +104,8 @@ public final class ComponentIcons {
                 return "attenuator";
             case MERCURY:
                 return "mercury";
-            case MKSPDR2000:
-                return "mkspdr2000";
+            case PDR2000:
+                return "pdr2000";
             case CRYVALVE:
                 return "iriscryovalve";
             case MUON_FRONT_END:
