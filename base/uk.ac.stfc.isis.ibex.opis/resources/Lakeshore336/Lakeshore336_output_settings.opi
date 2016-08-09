@@ -309,8 +309,8 @@ $(pv_value)</tooltip>
       <background_color>
         <color name="ISIS_Textbox_Background" red="255" green="255" blue="255" />
       </background_color>
-      <width>119</width>
-      <x>263</x>
+      <width>134</width>
+      <x>288</x>
       <y>75</y>
       <maximum>1.7976931348623157E308</maximum>
       <foreground_color>
@@ -353,8 +353,8 @@ $(pv_value)</tooltip>
       <background_color>
         <color name="ISIS_Standard_Button" red="187" green="187" blue="187" />
       </background_color>
-      <width>119</width>
-      <x>263</x>
+      <width>134</width>
+      <x>288</x>
       <name>autotune_sp_1</name>
       <y>38</y>
       <foreground_color>
@@ -732,8 +732,8 @@ $(pv_value)</tooltip>
       <background_color>
         <color name="ISIS_Textbox_Background" red="255" green="255" blue="255" />
       </background_color>
-      <width>119</width>
-      <x>263</x>
+      <width>134</width>
+      <x>288</x>
       <y>3</y>
       <maximum>1.7976931348623157E308</maximum>
       <foreground_color>
@@ -839,7 +839,7 @@ $(pv_value)</tooltip>
       <background_color>
         <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
       </background_color>
-      <width>116</width>
+      <width>134</width>
       <x>145</x>
       <name>Text Update_7</name>
       <y>75</y>
