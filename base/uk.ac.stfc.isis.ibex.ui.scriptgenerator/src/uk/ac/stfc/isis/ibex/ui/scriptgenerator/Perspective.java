@@ -45,6 +45,11 @@ public class Perspective extends BasePerspective {
 		return "Script Generator";
 	}
 	
+    @Override
+    public boolean isVisibleDefault() {
+        return false; 
+    }
+	
 	@Override
 	public Image image() {
 		return ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui.scripting", "icons/script_32x24.png");
