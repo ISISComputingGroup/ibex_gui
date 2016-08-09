@@ -26,7 +26,7 @@ public class TimeRegimeRow extends ModelObject {
 	private double from;
 	private double to;
 	private double step;
-	private TimeRegimeMode mode = TimeRegimeMode.TCBFILE;
+	private TimeRegimeMode mode = TimeRegimeMode.BLANK;
 	
 	public double getFrom() {
 		return from;

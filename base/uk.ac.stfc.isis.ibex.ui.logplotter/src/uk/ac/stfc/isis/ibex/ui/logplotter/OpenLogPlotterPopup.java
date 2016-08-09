@@ -24,8 +24,8 @@ import org.eclipse.core.commands.ExecutionException;
 
 import uk.ac.stfc.isis.ibex.ui.UI;
 
-/*
- * This class is needed to disply OPI PVs in the databrowser
+/**
+ * This class is needed to display OPI PVs in the databrowser
  */
 public class OpenLogPlotterPopup extends org.csstudio.trends.databrowser2.OpenDataBrowserPopup {
 
