@@ -14,8 +14,6 @@ public class ScriptGeneratorView extends ViewPart {
 	@Override
 	public void createPartControl(Composite parent) {
 		
-		Browser browser = new Browser(parent, SWT.NONE);
-		
 	}
 
 	@Override
