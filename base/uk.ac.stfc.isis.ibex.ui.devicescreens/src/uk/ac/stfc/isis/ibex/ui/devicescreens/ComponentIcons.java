@@ -108,6 +108,8 @@ public final class ComponentIcons {
                 return "iriscryovalve";
             case MUON_FRONT_END:
                 return "muon_front_end";
+            case PRESSURE_GAUGE:
+                return "pressure_gauge";
             default:
                 return "cog";
         }

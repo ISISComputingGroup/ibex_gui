@@ -59,7 +59,8 @@ public enum ComponentType {
     ATTENUATOR,
     MERCURY,
     CRYVALVE,
-    MUON_FRONT_END;
+    MUON_FRONT_END,
+    PRESSURE_GAUGE;
 	
 	private Target target;
 
