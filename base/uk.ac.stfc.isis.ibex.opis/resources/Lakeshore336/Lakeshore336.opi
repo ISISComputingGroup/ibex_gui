@@ -410,7 +410,7 @@ $(pv_value)</tooltip>
       <macros>
         <include_parent_macros>true</include_parent_macros>
       </macros>
-      <visible>false</visible>
+      <visible>true</visible>
       <border_color>
         <color name="ISIS_Check_Border" red="0" green="128" blue="255" />
       </border_color>
@@ -439,13 +439,17 @@ $(trace_0_y_pv_value)</tooltip>
         <trace_0_trace_type>0</trace_0_trace_type>
         <trace_4_line_width>1</trace_4_line_width>
         <border_width>1</border_width>
+        <trace_6_update_delay>100</trace_6_update_delay>
         <trace_3_point_size>4</trace_3_point_size>
+        <trace_7_update_delay>100</trace_7_update_delay>
         <trace_1_x_axis_index>0</trace_1_x_axis_index>
         <border_style>1</border_style>
         <axis_0_grid_color>
           <color name="ISIS_Textbox_Readonly_Background" red="200" green="200" blue="200" />
         </axis_0_grid_color>
+        <axis_2_visible>true</axis_2_visible>
         <trace_0_name>Meas 1</trace_0_name>
+        <axis_2_minimum>0.0</axis_2_minimum>
         <trace_0_update_mode>0</trace_0_update_mode>
         <trace_1_x_pv></trace_1_x_pv>
         <wuid>24017828:15626637ea1:4569</wuid>
@@ -454,7 +458,10 @@ $(trace_0_y_pv_value)</tooltip>
         <axis_0_title_font>
           <opifont.name fontName="Arial" height="9" style="1">ISIS_Header4</opifont.name>
         </axis_0_title_font>
+        <trace_7_trace_type>0</trace_7_trace_type>
         <trace_5_y_pv>$(PV_ROOT):TEMP2:SP:RBV</trace_5_y_pv>
+        <trace_7_update_mode>0</trace_7_update_mode>
+        <trace_6_plot_mode>0</trace_6_plot_mode>
         <trace_2_update_mode>0</trace_2_update_mode>
         <trace_5_trace_type>0</trace_5_trace_type>
         <background_color>
@@ -462,17 +469,22 @@ $(trace_0_y_pv_value)</tooltip>
         </background_color>
         <trace_3_update_mode>0</trace_3_update_mode>
         <x>12</x>
+        <trace_6_update_mode>0</trace_6_update_mode>
         <y>12</y>
+        <trace_7_y_axis_index>2</trace_7_y_axis_index>
         <trace_4_update_mode>0</trace_4_update_mode>
         <trace_3_x_axis_index>0</trace_3_x_axis_index>
         <trace_5_update_mode>0</trace_5_update_mode>
         <trace_0_x_axis_index>0</trace_0_x_axis_index>
-        <axis_count>2</axis_count>
+        <axis_count>3</axis_count>
         <trace_4_x_pv></trace_4_x_pv>
         <trace_3_y_pv_value />
         <trace_1_point_size>4</trace_1_point_size>
         <trace_1_anti_alias>true</trace_1_anti_alias>
         <pv_value />
+        <axis_2_grid_color>
+          <color name="ISIS_Textbox_Readonly_Background" red="200" green="200" blue="200" />
+        </axis_2_grid_color>
         <trace_0_buffer_size>1000</trace_0_buffer_size>
         <trace_2_buffer_size>1000</trace_2_buffer_size>
         <axis_1_maximum>50.0</axis_1_maximum>
@@ -491,24 +503,33 @@ $(trace_0_y_pv_value)</tooltip>
           <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
         </axis_1_axis_color>
         <axis_0_scale_format></axis_0_scale_format>
+        <trace_6_line_width>1</trace_6_line_width>
         <axis_1_log_scale>false</axis_1_log_scale>
         <trace_5_anti_alias>true</trace_5_anti_alias>
         <title></title>
         <trace_0_visible>true</trace_0_visible>
         <trace_4_buffer_size>1000</trace_4_buffer_size>
+        <trace_6_buffer_size>100</trace_6_buffer_size>
         <trace_1_name>Meas 2</trace_1_name>
         <trace_3_anti_alias>true</trace_3_anti_alias>
         <trace_1_y_pv_value />
+        <axis_2_auto_scale>true</axis_2_auto_scale>
         <trace_4_y_pv>$(PV_ROOT):TEMP1:SP:RBV</trace_4_y_pv>
         <show_legend>true</show_legend>
         <trace_3_visible>true</trace_3_visible>
+        <trace_6_y_axis_index>2</trace_6_y_axis_index>
         <trace_5_x_pv></trace_5_x_pv>
         <trace_4_x_axis_index>0</trace_4_x_axis_index>
+        <trace_7_name>Heater Out 2</trace_7_name>
+        <trace_6_x_axis_index>0</trace_6_x_axis_index>
         <trace_3_name>Meas 4</trace_3_name>
         <axis_0_axis_title>Time</axis_0_axis_title>
         <axis_0_axis_color>
           <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
         </axis_0_axis_color>
+        <axis_2_scale_font>
+          <opifont.name fontName="Arial" height="9" style="0">ISIS_Label_Small</opifont.name>
+        </axis_2_scale_font>
         <trace_3_update_delay>100</trace_3_update_delay>
         <trace_2_update_delay>100</trace_2_update_delay>
         <trace_5_y_pv_value />
@@ -517,14 +538,18 @@ $(trace_0_y_pv_value)</tooltip>
         <axis_0_dash_grid_line>true</axis_0_dash_grid_line>
         <trace_0_point_style>0</trace_0_point_style>
         <trace_1_point_style>0</trace_1_point_style>
+        <trace_6_anti_alias>true</trace_6_anti_alias>
         <trace_5_x_axis_index>0</trace_5_x_axis_index>
         <trace_5_name>Setpoint 2</trace_5_name>
         <trace_5_point_size>4</trace_5_point_size>
+        <trace_7_x_axis_index>0</trace_7_x_axis_index>
         <trace_0_line_width>1</trace_0_line_width>
+        <axis_2_y_axis>true</axis_2_y_axis>
         <trace_3_x_pv_value />
         <axis_0_time_format>5</axis_0_time_format>
-        <trace_count>6</trace_count>
+        <trace_count>8</trace_count>
         <axis_1_show_grid>true</axis_1_show_grid>
+        <trace_6_point_size>4</trace_6_point_size>
         <trace_3_x_pv></trace_3_x_pv>
         <trace_2_trace_color>
           <color name="ISIS_Trace_2" red="33" green="179" blue="33" />
@@ -533,12 +558,18 @@ $(trace_0_y_pv_value)</tooltip>
         <axis_1_dash_grid_line>true</axis_1_dash_grid_line>
         <trace_3_buffer_size>1000</trace_3_buffer_size>
         <trace_2_trace_type>0</trace_2_trace_type>
+        <trace_6_y_pv>$(PV_ROOT):HEATER1:OUTPUT</trace_6_y_pv>
+        <trace_6_trace_color>
+          <color red="255" green="0" blue="240" />
+        </trace_6_trace_color>
         <trace_3_line_width>1</trace_3_line_width>
         <show_toolbar>false</show_toolbar>
         <axis_0_visible>true</axis_0_visible>
+        <trace_7_plot_mode>0</trace_7_plot_mode>
         <axis_0_show_grid>true</axis_0_show_grid>
         <trace_0_y_axis_index>1</trace_0_y_axis_index>
         <trace_5_concatenate_data>true</trace_5_concatenate_data>
+        <trace_7_buffer_size>100</trace_7_buffer_size>
         <scale_options>
           <width_scalable>true</width_scalable>
           <height_scalable>true</height_scalable>
@@ -548,6 +579,7 @@ $(trace_0_y_pv_value)</tooltip>
         <trace_2_concatenate_data>true</trace_2_concatenate_data>
         <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
         <trace_2_y_pv_value />
+        <trace_7_line_width>1</trace_7_line_width>
         <trace_2_anti_alias>true</trace_2_anti_alias>
         <axis_0_maximum>120.0</axis_0_maximum>
         <trace_5_x_pv_value />
@@ -563,13 +595,20 @@ $(trace_0_y_pv_value)</tooltip>
         <actions hook="false" hook_all="false" />
         <trace_2_point_size>4</trace_2_point_size>
         <trace_4_concatenate_data>true</trace_4_concatenate_data>
+        <axis_2_axis_color>
+          <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
+        </axis_2_axis_color>
+        <trace_6_x_pv></trace_6_x_pv>
+        <trace_6_name>Heater Out 1</trace_6_name>
         <axis_0_log_scale>false</axis_0_log_scale>
         <trace_0_x_pv_value />
+        <trace_6_trace_type>0</trace_6_trace_type>
         <trace_5_visible>true</trace_5_visible>
         <axis_0_auto_scale_threshold>0.0</axis_0_auto_scale_threshold>
         <rules />
         <trace_5_plot_mode>0</trace_5_plot_mode>
         <axis_1_visible>true</axis_1_visible>
+        <axis_2_show_grid>true</axis_2_show_grid>
         <trace_3_y_axis_index>1</trace_3_y_axis_index>
         <trace_0_update_delay>100</trace_0_update_delay>
         <trace_1_concatenate_data>true</trace_1_concatenate_data>
@@ -583,12 +622,20 @@ $(trace_0_y_pv_value)</tooltip>
         <trace_5_trace_color>
           <color red="255" green="170" blue="0" />
         </trace_5_trace_color>
+        <axis_2_log_scale>false</axis_2_log_scale>
+        <trace_6_concatenate_data>true</trace_6_concatenate_data>
+        <trace_7_anti_alias>true</trace_7_anti_alias>
+        <axis_2_auto_scale_threshold>0.0</axis_2_auto_scale_threshold>
+        <trace_7_trace_color>
+          <color red="243" green="132" blue="132" />
+        </trace_7_trace_color>
         <name></name>
         <trace_1_trace_type>0</trace_1_trace_type>
         <axis_0_auto_scale>true</axis_0_auto_scale>
         <axis_0_minimum>0.0</axis_0_minimum>
         <trace_2_y_axis_index>1</trace_2_y_axis_index>
         <trace_1_update_delay>100</trace_1_update_delay>
+        <axis_2_dash_grid_line>true</axis_2_dash_grid_line>
         <axis_1_axis_title>Temperature</axis_1_axis_title>
         <trace_2_x_pv_value />
         <axis_1_auto_scale>true</axis_1_auto_scale>
@@ -599,19 +646,30 @@ $(trace_0_y_pv_value)</tooltip>
         <border_color>
           <color name="ISIS_Border" red="0" green="0" blue="0" />
         </border_color>
+        <trace_6_point_style>0</trace_6_point_style>
+        <axis_2_title_font>
+          <fontdata fontName="Arial" height="9" style="1" />
+        </axis_2_title_font>
         <trace_3_point_style>0</trace_3_point_style>
         <trace_0_y_pv>$(PV_ROOT):TEMP_A</trace_0_y_pv>
+        <trace_6_visible>true</trace_6_visible>
         <trace_2_point_style>0</trace_2_point_style>
         <trace_0_plot_mode>0</trace_0_plot_mode>
         <trace_4_trace_type>0</trace_4_trace_type>
         <enabled>true</enabled>
         <trace_0_x_pv></trace_0_x_pv>
+        <trace_7_point_style>0</trace_7_point_style>
         <axis_1_scale_font>
           <opifont.name fontName="Arial" height="9" style="0">ISIS_Label_Small</opifont.name>
         </axis_1_scale_font>
         <axis_1_time_format>0</axis_1_time_format>
+        <axis_2_time_format>0</axis_2_time_format>
+        <axis_2_left_bottom_side>false</axis_2_left_bottom_side>
+        <trace_7_x_pv></trace_7_x_pv>
         <trace_3_plot_mode>0</trace_3_plot_mode>
         <border_alarm_sensitive>false</border_alarm_sensitive>
+        <axis_2_maximum>100.0</axis_2_maximum>
+        <trace_7_concatenate_data>true</trace_7_concatenate_data>
         <trace_5_y_axis_index>1</trace_5_y_axis_index>
         <show_plot_area_border>false</show_plot_area_border>
         <width>841</width>
@@ -621,6 +679,7 @@ $(trace_0_y_pv_value)</tooltip>
           <opifont.name fontName="Arial" height="9" style="1">ISIS_Header4</opifont.name>
         </title_font>
         <trace_4_anti_alias>true</trace_4_anti_alias>
+        <trace_7_point_size>4</trace_7_point_size>
         <trace_0_y_pv_value />
         <trace_1_visible>true</trace_1_visible>
         <plot_area_background_color>
@@ -632,11 +691,13 @@ $(trace_0_y_pv_value)</tooltip>
           <opifont.name fontName="Arial" height="9" style="1">ISIS_Header4</opifont.name>
         </axis_1_title_font>
         <visible>true</visible>
+        <axis_2_axis_title>Heater Output</axis_2_axis_title>
         <trace_4_trace_color>
           <color red="128" green="0" blue="255" />
         </trace_4_trace_color>
         <trace_1_buffer_size>1000</trace_1_buffer_size>
         <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+        <axis_2_scale_format></axis_2_scale_format>
         <trace_5_buffer_size>1000</trace_5_buffer_size>
         <trace_4_y_pv_value />
         <scripts />
@@ -647,9 +708,11 @@ $(trace_0_y_pv_value)</tooltip>
         <trace_0_anti_alias>true</trace_0_anti_alias>
         <trace_4_name>Setpoint 1</trace_4_name>
         <axis_1_auto_scale_threshold>0.0</axis_1_auto_scale_threshold>
+        <trace_7_visible>true</trace_7_visible>
         <trace_4_y_axis_index>1</trace_4_y_axis_index>
         <trace_2_plot_mode>0</trace_2_plot_mode>
         <trace_2_x_pv></trace_2_x_pv>
+        <trace_7_y_pv>$(PV_ROOT):HEATER2:OUTPUT</trace_7_y_pv>
         <foreground_color>
           <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
         </foreground_color>
@@ -674,7 +737,7 @@ $(trace_0_y_pv_value)</tooltip>
       <macros>
         <include_parent_macros>true</include_parent_macros>
       </macros>
-      <visible>true</visible>
+      <visible>false</visible>
       <border_color>
         <color red="0" green="128" blue="255" />
       </border_color>
