@@ -227,8 +227,8 @@ $(pv_value)</tooltip>
     <background_color>
       <color name="ISIS_Standard_Button" red="187" green="187" blue="187" />
     </background_color>
-    <width>145</width>
-    <x>192</x>
+    <width>157</width>
+    <x>180</x>
     <name>autotune_sp_1</name>
     <y>114</y>
     <foreground_color>
@@ -313,57 +313,6 @@ $(pv_value)</tooltip>
     <horizontal_alignment>0</horizontal_alignment>
     <rules />
     <enabled>true</enabled>
-    <wuid>24017828:15626637ea1:-33bc</wuid>
-    <transparent>false</transparent>
-    <pv_value />
-    <auto_size>false</auto_size>
-    <text>######</text>
-    <rotation_angle>0.0</rotation_angle>
-    <scripts />
-    <border_alarm_sensitive>true</border_alarm_sensitive>
-    <show_units>false</show_units>
-    <height>30</height>
-    <border_width>1</border_width>
-    <scale_options>
-      <width_scalable>true</width_scalable>
-      <height_scalable>true</height_scalable>
-      <keep_wh_ratio>false</keep_wh_ratio>
-    </scale_options>
-    <visible>true</visible>
-    <pv_name>$(PV_ROOT):ALARM_$(INPUT):SUMMARY</pv_name>
-    <vertical_alignment>1</vertical_alignment>
-    <border_color>
-      <color name="ISIS_Check_Border" red="0" green="128" blue="255" />
-    </border_color>
-    <precision_from_pv>false</precision_from_pv>
-    <widget_type>Text Update</widget_type>
-    <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
-    <wrap_words>false</wrap_words>
-    <format_type>0</format_type>
-    <background_color>
-      <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
-    </background_color>
-    <width>91</width>
-    <x>108</x>
-    <name>Text Update_3</name>
-    <y>76</y>
-    <foreground_color>
-      <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
-    </foreground_color>
-    <actions hook="false" hook_all="false" />
-    <font>
-      <opifont.name fontName="Arial" height="14" style="1">ISIS_Label</opifont.name>
-    </font>
-  </widget>
-  <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0">
-    <border_style>0</border_style>
-    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
-    <precision>3</precision>
-    <tooltip>$(pv_name)
-$(pv_value)</tooltip>
-    <horizontal_alignment>0</horizontal_alignment>
-    <rules />
-    <enabled>true</enabled>
     <wuid>24017828:15626637ea1:50fa</wuid>
     <transparent>false</transparent>
     <pv_value />
@@ -405,5 +354,58 @@ $(pv_value)</tooltip>
     <font>
       <opifont.name fontName="Arial" height="14" style="1">ISIS_Label</opifont.name>
     </font>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.LED" version="1.0">
+    <border_style>0</border_style>
+    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+    <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+    <rules />
+    <effect_3d>true</effect_3d>
+    <bit>-1</bit>
+    <enabled>true</enabled>
+    <wuid>-5ce80d84:1564b874a6f:-75bf</wuid>
+    <on_color>
+      <color name="ISIS_Red_LED_On" red="255" green="50" blue="50" />
+    </on_color>
+    <pv_value />
+    <scripts />
+    <border_alarm_sensitive>true</border_alarm_sensitive>
+    <height>28</height>
+    <on_label>ON</on_label>
+    <border_width>1</border_width>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>true</keep_wh_ratio>
+    </scale_options>
+    <visible>true</visible>
+    <pv_name>$(PV_ROOT):ALARM_$(INPUT):SUMMARY</pv_name>
+    <border_color>
+      <color name="ISIS_Check_Border" red="0" green="128" blue="255" />
+    </border_color>
+    <widget_type>LED</widget_type>
+    <off_color>
+      <color name="ISIS_Red_LED_Off" red="102" green="0" blue="0" />
+    </off_color>
+    <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+    <background_color>
+      <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
+    </background_color>
+    <square_led>false</square_led>
+    <width>28</width>
+    <x>139</x>
+    <name>LED_1</name>
+    <data_type>0</data_type>
+    <y>76</y>
+    <foreground_color>
+      <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
+    </foreground_color>
+    <actions hook="false" hook_all="false" />
+    <show_boolean_label>false</show_boolean_label>
+    <font>
+      <opifont.name fontName="Arial" height="9" style="0">ISIS_Label_Small</opifont.name>
+    </font>
+    <off_label>OFF</off_label>
   </widget>
 </display>
