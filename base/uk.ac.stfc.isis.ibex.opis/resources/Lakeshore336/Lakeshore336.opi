@@ -450,31 +450,31 @@ $(trace_0_y_pv_value)</tooltip>
         <axis_2_visible>true</axis_2_visible>
         <trace_0_name>Meas 1</trace_0_name>
         <axis_2_minimum>0.0</axis_2_minimum>
-        <trace_0_update_mode>0</trace_0_update_mode>
+        <trace_0_update_mode>4</trace_0_update_mode>
         <trace_1_x_pv></trace_1_x_pv>
         <wuid>24017828:15626637ea1:4569</wuid>
         <transparent>false</transparent>
-        <trace_1_update_mode>0</trace_1_update_mode>
+        <trace_1_update_mode>4</trace_1_update_mode>
         <axis_0_title_font>
           <opifont.name fontName="Arial" height="9" style="1">ISIS_Header4</opifont.name>
         </axis_0_title_font>
         <trace_7_trace_type>0</trace_7_trace_type>
         <trace_5_y_pv>$(PV_ROOT):TEMP2:SP:RBV</trace_5_y_pv>
-        <trace_7_update_mode>0</trace_7_update_mode>
+        <trace_7_update_mode>4</trace_7_update_mode>
         <trace_6_plot_mode>0</trace_6_plot_mode>
-        <trace_2_update_mode>0</trace_2_update_mode>
+        <trace_2_update_mode>4</trace_2_update_mode>
         <trace_5_trace_type>0</trace_5_trace_type>
         <background_color>
           <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
         </background_color>
-        <trace_3_update_mode>0</trace_3_update_mode>
+        <trace_3_update_mode>4</trace_3_update_mode>
         <x>12</x>
-        <trace_6_update_mode>0</trace_6_update_mode>
+        <trace_6_update_mode>4</trace_6_update_mode>
         <y>12</y>
         <trace_7_y_axis_index>2</trace_7_y_axis_index>
-        <trace_4_update_mode>0</trace_4_update_mode>
+        <trace_4_update_mode>4</trace_4_update_mode>
         <trace_3_x_axis_index>0</trace_3_x_axis_index>
-        <trace_5_update_mode>0</trace_5_update_mode>
+        <trace_5_update_mode>4</trace_5_update_mode>
         <trace_0_x_axis_index>0</trace_0_x_axis_index>
         <axis_count>3</axis_count>
         <trace_4_x_pv></trace_4_x_pv>
@@ -492,7 +492,7 @@ $(trace_0_y_pv_value)</tooltip>
         <axis_0_scale_font>
           <opifont.name fontName="Arial" height="9" style="0">ISIS_Label_Small</opifont.name>
         </axis_0_scale_font>
-        <trigger_pv>$(PV_ROOT):RBV_ACTIVITY</trigger_pv>
+        <trigger_pv>sim://ramp(0,1,1)</trigger_pv>
         <trace_4_update_delay>100</trace_4_update_delay>
         <widget_type>XY Graph</widget_type>
         <trace_2_line_width>1</trace_2_line_width>
@@ -1364,19 +1364,19 @@ $(trace_0_y_pv_value)</tooltip>
           <color name="ISIS_Textbox_Readonly_Background" red="200" green="200" blue="200" />
         </axis_0_grid_color>
         <trace_0_name>Meas 1</trace_0_name>
-        <trace_0_update_mode>0</trace_0_update_mode>
+        <trace_0_update_mode>4</trace_0_update_mode>
         <trace_1_x_pv></trace_1_x_pv>
         <wuid>24017828:15626637ea1:47cc</wuid>
         <transparent>false</transparent>
-        <trace_1_update_mode>0</trace_1_update_mode>
+        <trace_1_update_mode>4</trace_1_update_mode>
         <axis_0_title_font>
           <opifont.name fontName="Arial" height="9" style="1">ISIS_Header4</opifont.name>
         </axis_0_title_font>
-        <trace_2_update_mode>0</trace_2_update_mode>
+        <trace_2_update_mode>4</trace_2_update_mode>
         <background_color>
           <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
         </background_color>
-        <trace_3_update_mode>0</trace_3_update_mode>
+        <trace_3_update_mode>4</trace_3_update_mode>
         <x>12</x>
         <y>12</y>
         <trace_3_x_axis_index>0</trace_3_x_axis_index>
@@ -1392,7 +1392,7 @@ $(trace_0_y_pv_value)</tooltip>
         <axis_0_scale_font>
           <opifont.name fontName="Arial" height="9" style="0">ISIS_Label_Small</opifont.name>
         </axis_0_scale_font>
-        <trigger_pv>$(PV_ROOT):RBV_ACTIVITY</trigger_pv>
+        <trigger_pv>sim://ramp(0,1,1)</trigger_pv>
         <widget_type>XY Graph</widget_type>
         <trace_2_line_width>1</trace_2_line_width>
         <trace_3_concatenate_data>true</trace_3_concatenate_data>
