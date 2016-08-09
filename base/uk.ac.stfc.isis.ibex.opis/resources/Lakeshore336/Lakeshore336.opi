@@ -492,7 +492,7 @@ $(trace_0_y_pv_value)</tooltip>
         <axis_0_scale_font>
           <opifont.name fontName="Arial" height="9" style="0">ISIS_Label_Small</opifont.name>
         </axis_0_scale_font>
-        <trigger_pv>sim://ramp(0,1,0.5)</trigger_pv>
+        <trigger_pv>$(PV_ROOT):RBV_ACTIVITY</trigger_pv>
         <trace_4_update_delay>100</trace_4_update_delay>
         <widget_type>XY Graph</widget_type>
         <trace_2_line_width>1</trace_2_line_width>
@@ -1392,7 +1392,7 @@ $(trace_0_y_pv_value)</tooltip>
         <axis_0_scale_font>
           <opifont.name fontName="Arial" height="9" style="0">ISIS_Label_Small</opifont.name>
         </axis_0_scale_font>
-        <trigger_pv>sim://ramp(0,1,0.5)</trigger_pv>
+        <trigger_pv>$(PV_ROOT):RBV_ACTIVITY</trigger_pv>
         <widget_type>XY Graph</widget_type>
         <trace_2_line_width>1</trace_2_line_width>
         <trace_3_concatenate_data>true</trace_3_concatenate_data>
