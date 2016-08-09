@@ -206,7 +206,7 @@ $(pv_value)</tooltip>
     <enabled>true</enabled>
     <wuid>24017828:15626637ea1:-3789</wuid>
     <pv_value />
-    <text>Input $(INPUT) Details...</text>
+    <text>Measurement $(INPUT) Settings...</text>
     <scripts />
     <border_alarm_sensitive>false</border_alarm_sensitive>
     <height>26</height>
@@ -227,8 +227,8 @@ $(pv_value)</tooltip>
     <background_color>
       <color name="ISIS_Standard_Button" red="187" green="187" blue="187" />
     </background_color>
-    <width>127</width>
-    <x>210</x>
+    <width>145</width>
+    <x>192</x>
     <name>autotune_sp_1</name>
     <y>114</y>
     <foreground_color>

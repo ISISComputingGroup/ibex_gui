@@ -854,7 +854,7 @@ $(pv_value)</tooltip>
       <enabled>true</enabled>
       <wuid>24017828:15626637ea1:-37a7</wuid>
       <pv_value />
-      <text>Output $(OUT) Details...</text>
+      <text>Output $(OUT) Settings...</text>
       <scripts />
       <border_alarm_sensitive>false</border_alarm_sensitive>
       <height>26</height>
@@ -1933,7 +1933,7 @@ $(pv_value)</tooltip>
     <background_color>
       <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
     </background_color>
-    <width>102</width>
+    <width>174</width>
     <x>667</x>
     <name>Text Update_3</name>
     <y>0</y>

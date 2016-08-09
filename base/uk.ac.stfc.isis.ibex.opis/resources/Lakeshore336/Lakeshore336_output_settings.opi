@@ -513,10 +513,10 @@ $(pv_value)</tooltip>
       <background_color>
         <color name="ISIS_Textbox_Background" red="255" green="255" blue="255" />
       </background_color>
-      <width>97</width>
-      <x>708</x>
+      <width>181</width>
+      <x>624</x>
       <name>comFreqs_2</name>
-      <y>1</y>
+      <y>37</y>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </foreground_color>
@@ -564,7 +564,7 @@ $(pv_value)</tooltip>
       <background_color>
         <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
       </background_color>
-      <width>79</width>
+      <width>181</width>
       <x>624</x>
       <name>Text Update_10</name>
       <y>3</y>
