@@ -3117,7 +3117,7 @@ $(pv_value)</tooltip>
       <x>335</x>
       <name>LED_3</name>
       <data_type>0</data_type>
-      <y>73</y>
+      <y>76</y>
       <foreground_color>
         <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
       </foreground_color>
@@ -3173,7 +3173,7 @@ $(pv_value)</tooltip>
       <name>Text_15</name>
       <width>105</width>
       <x>220</x>
-      <y>104</y>
+      <y>114</y>
       <maximum>1.7976931348623157E308</maximum>
       <actions hook="false" hook_all="false" />
       <foreground_color>
@@ -3229,7 +3229,7 @@ $(pv_value)</tooltip>
       <name>Text_14</name>
       <width>105</width>
       <x>220</x>
-      <y>75</y>
+      <y>78</y>
       <maximum>1.7976931348623157E308</maximum>
       <actions hook="false" hook_all="false" />
       <foreground_color>
@@ -3391,7 +3391,7 @@ $(pv_value)</tooltip>
       <x>335</x>
       <name>LED_4</name>
       <data_type>0</data_type>
-      <y>102</y>
+      <y>112</y>
       <foreground_color>
         <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
       </foreground_color>

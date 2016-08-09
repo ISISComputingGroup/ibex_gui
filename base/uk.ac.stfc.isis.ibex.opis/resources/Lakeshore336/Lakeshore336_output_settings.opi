@@ -879,10 +879,10 @@ $(pv_value)</tooltip>
     <background_color>
       <color red="240" green="240" blue="240" />
     </background_color>
-    <width>220</width>
+    <width>223</width>
     <x>6</x>
     <name>Grouping Container_1</name>
-    <y>258</y>
+    <y>252</y>
     <foreground_color>
       <color red="192" green="192" blue="192" />
     </foreground_color>
@@ -1411,7 +1411,7 @@ $(pv_value)</tooltip>
     <width>811</width>
     <x>6</x>
     <name>Grouping Container_1</name>
-    <y>420</y>
+    <y>414</y>
     <foreground_color>
       <color red="192" green="192" blue="192" />
     </foreground_color>
@@ -1864,7 +1864,7 @@ $(pv_value)</tooltip>
     <width>583</width>
     <x>234</x>
     <name>Grouping Container_3</name>
-    <y>258</y>
+    <y>252</y>
     <foreground_color>
       <color red="192" green="192" blue="192" />
     </foreground_color>
@@ -2279,10 +2279,10 @@ $(pv_value)</tooltip>
       <background_color>
         <color name="ISIS_Textbox_Background" red="255" green="255" blue="255" />
       </background_color>
-      <width>119</width>
+      <width>162</width>
       <x>216</x>
       <name>comFreqs_3</name>
-      <y>109</y>
+      <y>111</y>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </foreground_color>
