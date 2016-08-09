@@ -879,7 +879,7 @@ $(pv_value)</tooltip>
     <background_color>
       <color red="240" green="240" blue="240" />
     </background_color>
-    <width>199</width>
+    <width>220</width>
     <x>6</x>
     <name>Grouping Container_1</name>
     <y>258</y>
@@ -935,8 +935,8 @@ $(pv_value)</tooltip>
       <background_color>
         <color name="ISIS_Textbox_Background" red="255" green="255" blue="255" />
       </background_color>
-      <width>61</width>
-      <x>120</x>
+      <width>73</width>
+      <x>138</x>
       <y>3</y>
       <maximum>1.7976931348623157E308</maximum>
       <foreground_color>
@@ -1042,7 +1042,7 @@ $(pv_value)</tooltip>
       <background_color>
         <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
       </background_color>
-      <width>50</width>
+      <width>73</width>
       <x>59</x>
       <name>Text Update_6</name>
       <y>75</y>
@@ -1149,7 +1149,7 @@ $(pv_value)</tooltip>
       <background_color>
         <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
       </background_color>
-      <width>50</width>
+      <width>73</width>
       <x>59</x>
       <name>Text Update_5</name>
       <y>39</y>
@@ -1261,8 +1261,8 @@ $(pv_value)</tooltip>
       <background_color>
         <color name="ISIS_Textbox_Background" red="255" green="255" blue="255" />
       </background_color>
-      <width>61</width>
-      <x>120</x>
+      <width>73</width>
+      <x>138</x>
       <y>39</y>
       <maximum>1.7976931348623157E308</maximum>
       <foreground_color>
@@ -1312,7 +1312,7 @@ $(pv_value)</tooltip>
       <background_color>
         <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
       </background_color>
-      <width>50</width>
+      <width>73</width>
       <x>59</x>
       <name>Text Update_4</name>
       <y>3</y>
@@ -1368,8 +1368,8 @@ $(pv_value)</tooltip>
       <background_color>
         <color name="ISIS_Textbox_Background" red="255" green="255" blue="255" />
       </background_color>
-      <width>61</width>
-      <x>120</x>
+      <width>73</width>
+      <x>138</x>
       <y>75</y>
       <maximum>1.7976931348623157E308</maximum>
       <foreground_color>
@@ -1861,8 +1861,8 @@ $(pv_value)</tooltip>
     <background_color>
       <color red="240" green="240" blue="240" />
     </background_color>
-    <width>601</width>
-    <x>216</x>
+    <width>583</width>
+    <x>234</x>
     <name>Grouping Container_3</name>
     <y>258</y>
     <foreground_color>
@@ -1905,7 +1905,7 @@ $(pv_value)</tooltip>
       <background_color>
         <color name="ISIS_Standard_Button" red="187" green="187" blue="187" />
       </background_color>
-      <width>143</width>
+      <width>181</width>
       <x>390</x>
       <name>autotune_sp_1</name>
       <y>38</y>
@@ -1976,7 +1976,7 @@ $(pv_value)</tooltip>
       <background_color>
         <color name="ISIS_Textbox_Background" red="255" green="255" blue="255" />
       </background_color>
-      <width>143</width>
+      <width>181</width>
       <x>390</x>
       <y>75</y>
       <maximum>1.7976931348623157E308</maximum>
@@ -2481,7 +2481,7 @@ $(pv_value)</tooltip>
       <background_color>
         <color name="ISIS_Standard_Button" red="187" green="187" blue="187" />
       </background_color>
-      <width>143</width>
+      <width>181</width>
       <x>390</x>
       <name>autotune_sp_2</name>
       <y>110</y>

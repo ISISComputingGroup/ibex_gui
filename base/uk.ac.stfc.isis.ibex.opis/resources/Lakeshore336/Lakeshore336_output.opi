@@ -975,7 +975,7 @@ $(pv_value)</tooltip>
       <background_color>
         <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
       </background_color>
-      <width>55</width>
+      <width>73</width>
       <x>48</x>
       <name>Text Update_4</name>
       <y>6</y>
@@ -1026,7 +1026,7 @@ $(pv_value)</tooltip>
       <background_color>
         <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
       </background_color>
-      <width>55</width>
+      <width>73</width>
       <x>48</x>
       <name>Text Update_5</name>
       <y>42</y>
@@ -1082,8 +1082,8 @@ $(pv_value)</tooltip>
       <background_color>
         <color name="ISIS_Textbox_Background" red="255" green="255" blue="255" />
       </background_color>
-      <width>55</width>
-      <x>114</x>
+      <width>73</width>
+      <x>126</x>
       <y>42</y>
       <maximum>1.7976931348623157E308</maximum>
       <foreground_color>
@@ -1133,7 +1133,7 @@ $(pv_value)</tooltip>
       <background_color>
         <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
       </background_color>
-      <width>55</width>
+      <width>73</width>
       <x>48</x>
       <name>Text Update_6</name>
       <y>78</y>
@@ -1301,8 +1301,8 @@ $(pv_value)</tooltip>
       <background_color>
         <color name="ISIS_Textbox_Background" red="255" green="255" blue="255" />
       </background_color>
-      <width>55</width>
-      <x>114</x>
+      <width>73</width>
+      <x>126</x>
       <y>78</y>
       <maximum>1.7976931348623157E308</maximum>
       <foreground_color>
@@ -1408,8 +1408,8 @@ $(pv_value)</tooltip>
       <background_color>
         <color name="ISIS_Textbox_Background" red="255" green="255" blue="255" />
       </background_color>
-      <width>55</width>
-      <x>114</x>
+      <width>73</width>
+      <x>126</x>
       <y>6</y>
       <maximum>1.7976931348623157E308</maximum>
       <foreground_color>
