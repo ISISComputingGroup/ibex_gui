@@ -322,6 +322,16 @@
 				<macros>
 				</macros>
 			</value>
+		</entry>   
+		<entry>
+			<key>Linear sample changer</key>
+			<value>
+				<type>LINEARSAMPLECHANGER</type>
+				<path>stage/linear_sample_changer.opi</path>
+				<description>Description required. No properties required.</description>
+				<macros>
+				</macros>
+			</value>
 		</entry>
 		<entry>
 			<key>Sample stage</key>
