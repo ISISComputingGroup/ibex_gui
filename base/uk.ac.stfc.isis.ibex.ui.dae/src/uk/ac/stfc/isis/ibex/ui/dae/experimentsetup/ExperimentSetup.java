@@ -103,7 +103,7 @@ public class ExperimentSetup extends Composite {
 			}
 		});
 		btnSendChanges.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-		btnSendChanges.setText("Send Changes");
+        btnSendChanges.setText("Apply Changes");
 	}
 	
 	public void bind(final ExperimentSetupViewModel viewModel) {
