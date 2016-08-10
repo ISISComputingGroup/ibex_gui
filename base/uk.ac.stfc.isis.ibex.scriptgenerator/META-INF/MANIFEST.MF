@@ -1,0 +1,9 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Scriptgenerator
+Bundle-SymbolicName: uk.ac.stfc.isis.ibex.scriptgenerator
+Bundle-Version: 1.0.0.qualifier
+Bundle-Activator: uk.ac.stfc.isis.ibex.scriptgenerator.ScriptGeneratorActivator
+Require-Bundle: org.eclipse.core.runtime
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-ActivationPolicy: lazy
