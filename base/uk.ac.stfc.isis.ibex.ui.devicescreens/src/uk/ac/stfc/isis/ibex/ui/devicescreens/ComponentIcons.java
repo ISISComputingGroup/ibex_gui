@@ -104,8 +104,12 @@ public final class ComponentIcons {
                 return "attenuator";
             case MERCURY:
                 return "mercury";
+            case CRYVALVE:
+                return "iriscryovalve";
             case MUON_FRONT_END:
                 return "muon_front_end";
+            case PRESSURE_GAUGE:
+                return "pressure_gauge";
             default:
                 return "cog";
         }
