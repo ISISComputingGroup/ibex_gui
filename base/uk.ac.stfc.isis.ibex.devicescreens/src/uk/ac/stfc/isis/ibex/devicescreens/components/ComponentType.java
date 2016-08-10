@@ -59,6 +59,7 @@ public enum ComponentType {
     LAKESHORE,
     ATTENUATOR,
     MERCURY,
+    PDR2000,
     CRYVALVE,
     MUON_FRONT_END,
     PRESSURE_GAUGE;
