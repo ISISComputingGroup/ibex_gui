@@ -437,8 +437,8 @@
 				<description>PFEIFFER 300 Vacuum Gauge.</description>
 				<macros>
                     <macro>
-						<name>N</name>
-						<description>Unknown description.</description>
+						<name>TPG300</name>
+						<description>The TPG300 PV name (e.g. TPG300_01).</description>
 					</macro>                  
 				</macros>
 			</value>
@@ -488,13 +488,13 @@
 		<entry>
 			<key>Danfysik</key>
 			<value>
-				<type>DANFSYIK</type>
+				<type>DANFYSIK</type>
 				<path>danfysik.opi</path>
 				<description>DANFYSIK power supply for magnets.</description>
 				<macros>
 					<macro>
-						<name>IOC_NUM</name>
-						<description>PSU IOC Number, two digits, e.g. 01.</description>
+						<name>DFKPS</name>
+						<description>The Danfysik PV name (e.g. DFKPS_01).</description>
 					</macro>                  
 				</macros>
 			</value>
