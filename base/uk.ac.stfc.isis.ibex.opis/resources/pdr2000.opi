@@ -458,7 +458,7 @@ $(trace_0_y_pv_value)</tooltip>
       <color name="ISIS_Textbox_Readonly_Background" red="200" green="200" blue="200" />
     </axis_0_grid_color>
     <trace_0_name>Channel 1</trace_0_name>
-    <trace_0_update_mode>0</trace_0_update_mode>
+    <trace_0_update_mode>4</trace_0_update_mode>
     <trace_1_x_pv></trace_1_x_pv>
     <wuid>-24fcfafc:1552a54e5ce:-6eb9</wuid>
     <transparent>false</transparent>
@@ -481,7 +481,7 @@ $(trace_0_y_pv_value)</tooltip>
     <axis_0_scale_font>
       <opifont.name fontName="Arial" height="9" style="0">ISIS_Label_Small</opifont.name>
     </axis_0_scale_font>
-    <trigger_pv></trigger_pv>
+    <trigger_pv>sim://ramp(0,1,0.5)</trigger_pv>
     <widget_type>XY Graph</widget_type>
     <axis_1_axis_color>
       <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
