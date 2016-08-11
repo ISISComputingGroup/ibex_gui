@@ -72,7 +72,7 @@ public class BannerItemModel extends ModelObject implements IndicatorModel {
      * state change of the banner item.
      */
     public void update() {
-        text.setValue(converter.getName());
+        text.setValue(converter.getMessage());
         color.setValue(converter.color());
         availability.setValue(converter.toBool());
     }

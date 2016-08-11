@@ -38,6 +38,7 @@ import uk.ac.stfc.isis.ibex.configserver.configuration.BannerItem;
 import uk.ac.stfc.isis.ibex.epics.observing.BaseObserver;
 import uk.ac.stfc.isis.ibex.instrument.baton.Baton;
 import uk.ac.stfc.isis.ibex.ui.banner.controls.ControlModel;
+import uk.ac.stfc.isis.ibex.ui.banner.indicators.IndicatorColours;
 import uk.ac.stfc.isis.ibex.ui.banner.indicators.IndicatorModel;
 import uk.ac.stfc.isis.ibex.ui.banner.models.BannerItemModel;
 import uk.ac.stfc.isis.ibex.ui.banner.models.BatonUserModel;
@@ -77,7 +78,6 @@ public class BannerView extends ViewPart implements ISizeProvider {
     private Control motionControl;
     private Label spacer;
 
-
     @Override
     public void createPartControl(Composite parent) {
         GridLayout glParent = new GridLayout(5, false);
@@ -98,7 +98,7 @@ public class BannerView extends ViewPart implements ISizeProvider {
         GridData gdBannerItemPanel = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
         bannerItemPanel.setLayoutData(gdBannerItemPanel);
 
-        banner.observables().bannerItems.addObserver(modelAdapter);
+        banner.observables().bannerDescription.addObserver(modelAdapter);
 
         batonUser = new Indicator(parent, SWT.NONE, batonUserModel, ALARM_FONT);
         GridData gdBatonUser = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
@@ -165,13 +165,11 @@ public class BannerView extends ViewPart implements ISizeProvider {
             public void run() {
                 GridData gdBannerItem = new GridData(SWT.CENTER, SWT.FILL, false, true, 1, 1);
                 gdBannerItem.widthHint = 250;
-                GridData gdSep = new GridData(SWT.CENTER, SWT.TOP, false, false, 1, 1);
-                gdSep.heightHint = 20;
+
                 for (IndicatorModel model : models) {
                     glBannerItemPanel.numColumns = 2 * models.size();
 
-                    Label sep = new Label(bannerItemPanel, SWT.SEPARATOR | SWT.VERTICAL);
-                    sep.setLayoutData(gdSep);
+                    addSeparator();
 
                     Indicator bannerItem = new Indicator(bannerItemPanel, SWT.LEFT_TO_RIGHT, model, ALARM_FONT);
                     bannerItem.setLayoutData(gdBannerItem);
@@ -179,6 +177,33 @@ public class BannerView extends ViewPart implements ISizeProvider {
                 bannerItemPanel.layout(true);
             }
         });
+    }
+
+    private void addSeparator() {
+        Label sep = new Label(bannerItemPanel, SWT.SEPARATOR | SWT.VERTICAL);
+        GridData gdSep = new GridData(SWT.CENTER, SWT.TOP, false, false, 1, 1);
+        gdSep.heightHint = 20;
+        sep.setLayoutData(gdSep);
+    }
+
+    private Label newBannerLabel() {
+        Label bannerLabel = new Label(bannerItemPanel, SWT.NONE);
+        bannerLabel.setFont(ALARM_FONT);
+        bannerLabel.setForeground(IndicatorColours.RED);
+        bannerLabel.setLayoutData(new GridData(SWT.CENTER, SWT.TOP, false, false, 1, 1));
+        return bannerLabel;
+    }
+
+    private void setBannerError() {
+        disposeBanner();
+        Label errorLabel = newBannerLabel();
+        errorLabel.setText("Error: Invalid Banner Description from BlockServer");
+    }
+
+    private void setBannerDisc() {
+        disposeBanner();
+        Label errorLabel = newBannerLabel();
+        errorLabel.setText("No response from Blockserver");
     }
 
     /**
@@ -207,6 +232,7 @@ public class BannerView extends ViewPart implements ISizeProvider {
 
         @Override
         public void onError(Exception e) {
+            //setBannerError();
         }
 
         @Override

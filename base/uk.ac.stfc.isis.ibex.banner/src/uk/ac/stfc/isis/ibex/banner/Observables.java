@@ -53,7 +53,7 @@ public class Observables {
 		}
 	};
 
-    public final ForwardingObservable<Collection<BannerItem>> bannerItems;
+    public final ForwardingObservable<Collection<BannerItem>> bannerDescription;
     public final ForwardingObservable<InMotionState> inMotion;
     public final Writable<Long> stop;
 	
@@ -62,7 +62,7 @@ public class Observables {
      * observable objects.
      */
     public Observables() {
-        bannerItems = Configurations.getInstance().variables().bannerDescription;
+        bannerDescription = Configurations.getInstance().variables().bannerDescription;
         inMotion = InstrumentVariables.convert(obsFactory.getSwitchableObservable(new DoubleChannel(),
                 Instrument.getInstance().getPvPrefix() + "CS:MOT:MOVING"),
                 doubleToMotionState);

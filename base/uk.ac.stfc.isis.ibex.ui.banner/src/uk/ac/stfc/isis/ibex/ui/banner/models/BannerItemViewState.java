@@ -53,7 +53,7 @@ public class BannerItemViewState implements IndicatorViewStateConverter<BannerIt
      * @return the message
      */
     @Override
-    public String getName() {
+    public String getMessage() {
         return item.name().toUpperCase() + " is " + state.message().toUpperCase();
     }
 
