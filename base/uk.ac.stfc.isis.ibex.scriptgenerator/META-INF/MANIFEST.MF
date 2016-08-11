@@ -7,3 +7,4 @@ Bundle-Activator: uk.ac.stfc.isis.ibex.scriptgenerator.ScriptGeneratorActivator
 Require-Bundle: org.eclipse.core.runtime
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
+Export-Package: uk.ac.stfc.isis.ibex.scriptgenerator
