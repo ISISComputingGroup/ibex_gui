@@ -87,7 +87,7 @@ public class TableOfMotorsView extends ViewPart {
 		scrolledComposite.setMinWidth(numMotors * MOTOR_WIDTH + TABLE_MARGIN);
 		scrolledComposite.setExpandVertical(true);
 		
-        MotorsOverview motorsOverview = new MotorsOverview(scrolledComposite, SWT.NONE, getTableControllerOffset());
+        MotorsOverview motorsOverview = new MotorsOverview(scrolledComposite, SWT.NONE);
 		GridData gdOverview = new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1);
 		motorsOverview.setLayoutData(gdOverview);
 		
@@ -98,7 +98,7 @@ public class TableOfMotorsView extends ViewPart {
 		Label spacer = new Label(parent, SWT.NONE);
 		spacer.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		
-		motorsOverview.setMotors(motorsTable);
+        motorsOverview.setMotors(motorsTable, getTableControllerOffset());
 	}
 
 	@Override
