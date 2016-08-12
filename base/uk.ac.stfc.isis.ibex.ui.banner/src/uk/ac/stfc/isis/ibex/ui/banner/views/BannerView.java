@@ -38,7 +38,6 @@ import uk.ac.stfc.isis.ibex.configserver.configuration.BannerItem;
 import uk.ac.stfc.isis.ibex.epics.observing.BaseObserver;
 import uk.ac.stfc.isis.ibex.instrument.baton.Baton;
 import uk.ac.stfc.isis.ibex.ui.banner.controls.ControlModel;
-import uk.ac.stfc.isis.ibex.ui.banner.indicators.IndicatorColours;
 import uk.ac.stfc.isis.ibex.ui.banner.indicators.IndicatorModel;
 import uk.ac.stfc.isis.ibex.ui.banner.models.BannerItemModel;
 import uk.ac.stfc.isis.ibex.ui.banner.models.BatonUserModel;
@@ -63,6 +62,7 @@ public class BannerView extends ViewPart implements ISizeProvider {
 
     public static final String ID = "uk.ac.stfc.isis.ibex.ui.banner.views.BannerView"; //$NON-NLS-1$
     public static final int FIXED_HEIGHT = 35;
+    private final int ITEM_WIDTH = 250;
 
     private final Banner banner = Banner.getInstance();
 
@@ -76,7 +76,6 @@ public class BannerView extends ViewPart implements ISizeProvider {
     private Indicator batonUser;
     private Indicator inMotion;
     private Control motionControl;
-    private Label spacer;
 
     @Override
     public void createPartControl(Composite parent) {
@@ -87,16 +86,11 @@ public class BannerView extends ViewPart implements ISizeProvider {
         glParent.marginWidth = 0;
         parent.setLayout(glParent);
 
-        spacer = new Label(parent, SWT.NONE);
-        spacer.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1));
-
         bannerItemPanel = new Composite(parent, SWT.RIGHT_TO_LEFT);
-        glBannerItemPanel = new GridLayout(1, false);
+        bannerItemPanel.setLayout(glBannerItemPanel = new GridLayout(1, false));
+        bannerItemPanel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
         glBannerItemPanel.marginHeight = 3;
         glBannerItemPanel.horizontalSpacing = 15;
-        bannerItemPanel.setLayout(glBannerItemPanel);
-        GridData gdBannerItemPanel = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
-        bannerItemPanel.setLayoutData(gdBannerItemPanel);
 
         banner.observables().bannerDescription.addObserver(modelAdapter);
 
@@ -164,12 +158,12 @@ public class BannerView extends ViewPart implements ISizeProvider {
             @Override
             public void run() {
                 GridData gdBannerItem = new GridData(SWT.CENTER, SWT.FILL, false, true, 1, 1);
-                gdBannerItem.widthHint = 250;
+                gdBannerItem.widthHint = ITEM_WIDTH;
 
                 for (IndicatorModel model : models) {
                     glBannerItemPanel.numColumns = 2 * models.size();
 
-                    addSeparator();
+                    addSeparator(bannerItemPanel);
 
                     Indicator bannerItem = new Indicator(bannerItemPanel, SWT.LEFT_TO_RIGHT, model, ALARM_FONT);
                     bannerItem.setLayoutData(gdBannerItem);
@@ -179,31 +173,11 @@ public class BannerView extends ViewPart implements ISizeProvider {
         });
     }
 
-    private void addSeparator() {
-        Label sep = new Label(bannerItemPanel, SWT.SEPARATOR | SWT.VERTICAL);
+    private void addSeparator(Composite parent) {
+        Label sep = new Label(parent, SWT.SEPARATOR | SWT.VERTICAL);
         GridData gdSep = new GridData(SWT.CENTER, SWT.TOP, false, false, 1, 1);
         gdSep.heightHint = 20;
         sep.setLayoutData(gdSep);
-    }
-
-    private Label newBannerLabel() {
-        Label bannerLabel = new Label(bannerItemPanel, SWT.NONE);
-        bannerLabel.setFont(ALARM_FONT);
-        bannerLabel.setForeground(IndicatorColours.RED);
-        bannerLabel.setLayoutData(new GridData(SWT.CENTER, SWT.TOP, false, false, 1, 1));
-        return bannerLabel;
-    }
-
-    private void setBannerError() {
-        disposeBanner();
-        Label errorLabel = newBannerLabel();
-        errorLabel.setText("Error: Invalid Banner Description from BlockServer");
-    }
-
-    private void setBannerDisc() {
-        disposeBanner();
-        Label errorLabel = newBannerLabel();
-        errorLabel.setText("No response from Blockserver");
     }
 
     /**
@@ -232,7 +206,6 @@ public class BannerView extends ViewPart implements ISizeProvider {
 
         @Override
         public void onError(Exception e) {
-            //setBannerError();
         }
 
         @Override

@@ -91,12 +91,10 @@ public class Banner implements BundleActivator {
 
         @Override
         public void onError(Exception e) {
-            // handled in UI side
         }
 
         @Override
         public void onConnectionStatus(boolean isConnected) {
-            // handled in UI side
         }
     };
 }
