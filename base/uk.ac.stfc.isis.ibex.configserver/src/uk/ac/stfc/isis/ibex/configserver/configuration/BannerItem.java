@@ -43,80 +43,26 @@ public class BannerItem extends ModelObject {
 
         @Override
         public void onValue(Boolean value) {
-            if (value) {
-        		setCurrentState(true_state);
-        	} else {
-        		setCurrentState(false_state);
-        	}
+            setCurrentState(value);
         }
 
         @Override
         public void onError(Exception e) {
-    		setCurrentState(unknown_state);
+            setCurrentState(null);
         }
 
         @Override
         public void onConnectionStatus(boolean isConnected) {
             if (!isConnected) {
-        		setCurrentState(unknown_state);
+                setCurrentState(null);
             }
         }
     };
 
-    /**
-     * The name of the property.
-     * 
-     * @return the name
-     */
-	public String name() {
-		return name;
-	}
-	
-    /**
-     * The property type.
-     * 
-     * @return the type
-     */
-	public String type() {
-		return type;
-	}
-	
-    /**
-     * The PV holding the property state.
-     * 
-     * @return the PV address
-     */
-	public String pv() {
-		return pv;
-	}
-	
-    /**
-     * Returns the display specification for the banner item in true state.
-     * 
-     * @return the true state
-     */
-	public BannerItemState true_state() {
-		return true_state;
-	}
+    public String name() {
+        return this.name;
+    }
 
-    /**
-     * Returns the display specification for the banner item in false state.
-     * 
-     * @return the false state
-     */
-	public BannerItemState false_state() {
-		return false_state;
-	}
-
-    /**
-     * Returns the display specification for the banner item in unknown state.
-     * 
-     * @return the unknown state
-     */
-	public BannerItemState unknown_state() {
-		return unknown_state;
-	}
-	
     /**
      * Returns the display specification for the banner item in its current
      * state.
@@ -128,13 +74,23 @@ public class BannerItem extends ModelObject {
 	}
 
     /**
-     * Sets the current state of the property and fires a property change for
-     * listeners.
+     * Sets the current state of the property based on the PV value and fires a
+     * property change for listeners.
      * 
-     * @param currentState the current state of the property
+     * @param value the state value of the property.
      */
-	public void setCurrentState(BannerItemState currentState) {
-        firePropertyChange("currentState", this.currentState, this.currentState = currentState);
+    public void setCurrentState(Boolean value) {
+        BannerItemState newState;
+        if (value == null) {
+            newState = this.unknown_state;
+        } else {
+            if (value) {
+                newState = this.true_state;
+            } else {
+                newState = this.false_state;
+            }
+        }
+        firePropertyChange("currentState", this.currentState, this.currentState = newState);
 	}
 
 }

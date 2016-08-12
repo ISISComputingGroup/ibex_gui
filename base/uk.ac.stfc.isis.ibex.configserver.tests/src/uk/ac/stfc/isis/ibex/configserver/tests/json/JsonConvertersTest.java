@@ -1,7 +1,6 @@
 package uk.ac.stfc.isis.ibex.configserver.tests.json;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -48,6 +47,8 @@ public class JsonConvertersTest {
             + "\", \"local\": true, \"pv\": \"NDWXXX:xxxx:SIMPLE:VALUE1\", \"component\": null, \"visible\": true}";
     
     private String bannerJson = "[{\"pv\": \"MOT:BUMP_STOP\", \"name\": \"bumpstrip\", \"false_state\": {\"colour\": \"RED\", \"message\": \"FALSE\"}, \"true_state\": {\"colour\": \"GREEN\", \"message\": \"true\"}, \"type\": \"bool_str\", \"unknown_state\": {\"colour\": \"RED\", \"message\": \"unknown\"}}]";
+    private String bannerJsonBroken =
+            "[\"pv\": \"MOT:BUMP_STOP\", \"name\": \"bumpstrip\", \"false_state\": {\"colour\": \"RED\", \"message\": \"FALSE\"}, \"true_state\": {\"colour\": \"GREEN\", \"message\": \"true\"}, \"type\": \"bool_str\", \"unknown_state\": {\"colour\": \"RED\", \"message\": \"unknown\"}}]";
 
 	@Before
     public void setUp() {
@@ -269,19 +270,25 @@ public class JsonConvertersTest {
     }
     
     @Test
-    public void conversion_to_banner_description() throws ConversionException {
-		// Arrange
-		Converter<String, Collection<BannerItem>> conv = new JsonConverters().toBannerDescription();
-		
-		// Act
-		List<BannerItem> bannerList = new ArrayList<BannerItem>(conv.convert(bannerJson));
-		
-		// Assert
-		assertEquals(1, bannerList.size());
-		assertEquals("MOT:BUMP_STOP", bannerList.get(0).pv());
-		assertEquals("GREEN", bannerList.get(0).true_state().colour());
-		assertEquals("RED", bannerList.get(0).false_state().colour());
-		assertEquals("RED", bannerList.get(0).unknown_state().colour());
+    public void GIVEN_banner_json_is_valid_WHEN_transformed_to_banneritem_THEN_conversion_is_successful()
+            throws ConversionException {
+        // Arrange
+        Converter<String, Collection<BannerItem>> conv = new JsonConverters().toBannerDescription();
+
+        // Act
+        List<BannerItem> bannerList = new ArrayList<BannerItem>(conv.convert(bannerJson));
+
+        // Assert
+        assertEquals(1, bannerList.size());
     }
 
+    @Test(expected = ConversionException.class)
+    public void GIVEN_banner_json_is_invalid_WHEN_transformed_to_banneritem_THEN_conversion_fails()
+            throws ConversionException {
+        // Arrange
+        Converter<String, Collection<BannerItem>> conv = new JsonConverters().toBannerDescription();
+
+        // Act
+        List<BannerItem> bannerList = new ArrayList<BannerItem>(conv.convert(bannerJsonBroken));
+    }
 }
