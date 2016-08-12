@@ -66,8 +66,9 @@ public class BannerItemViewState {
             case "GREEN":
                 return IndicatorColours.GREEN;
             case "RED":
+                return IndicatorColours.DEFAULT;
             default:
-                return IndicatorColours.RED;
+                return IndicatorColours.DEFAULT;
         }
     }
 }
