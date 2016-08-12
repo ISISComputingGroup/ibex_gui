@@ -46,13 +46,17 @@ public class MotorsOverview extends Composite {
 	
 	private final Color background = SWTResourceManager.getColor(SWT.COLOR_WHITE);
 	
-	public MotorsOverview(Composite parent, int style) {
+    private int controllerIndexOffset = 0;
+
+    public MotorsOverview(Composite parent, int style, int controllerIndexOffset) {
 		super(parent, style);
 		setBackground(SWTResourceManager.getColor(192, 192, 192));
 		setLayout(new FillLayout(SWT.HORIZONTAL));
 		
 		motorComposite = new Composite(this, SWT.NONE);
 		motorComposite.setBackground(background);
+		
+		this.controllerIndexOffset = controllerIndexOffset;
 	}
 	
 	public void setMotors(MotorsTable motorsTable) {
@@ -60,7 +64,7 @@ public class MotorsOverview extends Composite {
 		
 		addSpacerLabel();		
 		for (int i = 1; i <= motorsTable.getNumMotors(); i++) {
-			addNumberLabel(i);
+            addMotorNumberLabel(i);
 		}		
 		
 		resetViews();
@@ -68,7 +72,7 @@ public class MotorsOverview extends Composite {
 		int i = 0;
 		for (Motor motor : motorsTable.motors()) {
 			if (i % motorsTable.getNumMotors() == 0) {
-				addNumberLabel(1 + i / motorsTable.getNumMotors());
+                addControllerNumberLabel(i, motorsTable);
 			}
 			i++;
 			
@@ -138,4 +142,12 @@ public class MotorsOverview extends Composite {
 		
 		return gd;
 	}
+
+    private void addMotorNumberLabel(int i) {
+        addNumberLabel(i);
+	}
+
+    private void addControllerNumberLabel(int i, MotorsTable motorsTable) {
+        addNumberLabel(1 + i / motorsTable.getNumMotors() + controllerIndexOffset);
+    }
 }

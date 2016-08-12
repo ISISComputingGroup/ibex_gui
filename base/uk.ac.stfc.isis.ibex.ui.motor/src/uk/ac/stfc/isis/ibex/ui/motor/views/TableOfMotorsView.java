@@ -4,25 +4,25 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.ScrolledComposite;
+import org.eclipse.swt.events.MouseAdapter;
+import org.eclipse.swt.events.MouseEvent;
+import org.eclipse.swt.events.MouseListener;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Label;
 import org.eclipse.ui.IViewPart;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
-import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.custom.ScrolledComposite;
-import org.eclipse.swt.events.MouseAdapter;
-import org.eclipse.swt.events.MouseEvent;
-import org.eclipse.swt.events.MouseListener;
-import org.eclipse.swt.widgets.Label;
+
+import com.google.common.base.Strings;
 
 import uk.ac.stfc.isis.ibex.motor.Motor;
 import uk.ac.stfc.isis.ibex.motor.Motors;
 import uk.ac.stfc.isis.ibex.motor.internal.MotorsTable;
-
-import com.google.common.base.Strings;
 
 /** A view that shows a collection of motors. */
 public class TableOfMotorsView extends ViewPart {
@@ -38,6 +38,12 @@ public class TableOfMotorsView extends ViewPart {
 	private List<String> tabTitles = Arrays.asList("Main Motors (Controllers 1 - 8)",
 												   "Additional Motors (Controllers 9 - 16)",
 												   "Additional Motors (Controllers 17 - 24)");
+
+    /**
+     * List the offset for the index of the first controller in the table. Used
+     * to set labels down left hand side.
+     */
+    private List<Integer> tabControllerOffsets = Arrays.asList(0, 8, 16);
 	
 	/** Listens for clicks on a motor in the table, and makes a call to open the OPI for that motor. */
 	private MouseListener motorSelection = new MouseAdapter() {
@@ -61,7 +67,7 @@ public class TableOfMotorsView extends ViewPart {
 	
 	@Override
 	public void createPartControl(Composite parent) {
-		setMotorsTable();		
+        setMotorsTable();
 		
 		GridLayout glParent = new GridLayout(2, false);
 		glParent.verticalSpacing = 0;
@@ -81,7 +87,7 @@ public class TableOfMotorsView extends ViewPart {
 		scrolledComposite.setMinWidth(numMotors * MOTOR_WIDTH + TABLE_MARGIN);
 		scrolledComposite.setExpandVertical(true);
 		
-		MotorsOverview motorsOverview = new MotorsOverview(scrolledComposite, SWT.NONE);		
+        MotorsOverview motorsOverview = new MotorsOverview(scrolledComposite, SWT.NONE, getTableControllerOffset());
 		GridData gdOverview = new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1);
 		motorsOverview.setLayoutData(gdOverview);
 		
@@ -132,4 +138,12 @@ public class TableOfMotorsView extends ViewPart {
 		int motorTableID = tabTitles.indexOf(getTitle());
 		this.motorsTable = Motors.getInstance().getMotorsTablesList().get(motorTableID);
 	}
+
+    /**
+     * Gets the controller number offset for this particular tab
+     */
+    protected int getTableControllerOffset() {
+        int motorTableID = tabTitles.indexOf(getTitle());
+        return tabControllerOffsets.get(motorTableID);
+    }
 }
