@@ -51,7 +51,7 @@ public class BannerItemModel extends ModelObject implements IndicatorModel {
         converter = new BannerItemViewState(item);
         text = new SettableUpdatedValue<>();
         color = new SettableUpdatedValue<>();
-        availability = new SettableUpdatedValue<>();
+        availability = new SettableUpdatedValue<>(true);
         item.addPropertyChangeListener(new PropertyChangeListener() {
 
             @Override
@@ -74,7 +74,6 @@ public class BannerItemModel extends ModelObject implements IndicatorModel {
     public void update() {
         text.setValue(converter.getMessage());
         color.setValue(converter.color());
-        availability.setValue(converter.toBool());
     }
 
     @Override

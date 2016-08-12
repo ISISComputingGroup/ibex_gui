@@ -24,12 +24,11 @@ import org.eclipse.swt.graphics.Color;
 import uk.ac.stfc.isis.ibex.configserver.configuration.BannerItem;
 import uk.ac.stfc.isis.ibex.configserver.configuration.BannerItemState;
 import uk.ac.stfc.isis.ibex.ui.banner.indicators.IndicatorColours;
-import uk.ac.stfc.isis.ibex.ui.banner.indicators.IndicatorViewStateConverter;
 
 /**
  * Converts banner item state models for display in GUI.
  */
-public class BannerItemViewState implements IndicatorViewStateConverter<BannerItemState> {
+public class BannerItemViewState {
     private BannerItem item;
     private BannerItemState state;
 
@@ -41,7 +40,6 @@ public class BannerItemViewState implements IndicatorViewStateConverter<BannerIt
     /**
      * Sets the state.
      */
-    @Override
     public void setState(BannerItemState state) {
         this.state = state;
     }
@@ -52,7 +50,6 @@ public class BannerItemViewState implements IndicatorViewStateConverter<BannerIt
      * 
      * @return the message
      */
-    @Override
     public String getMessage() {
         return item.name().toUpperCase() + " is " + state.message().toUpperCase();
     }
@@ -62,7 +59,6 @@ public class BannerItemViewState implements IndicatorViewStateConverter<BannerIt
      * 
      * @return the colour
      */
-    @Override
     public Color color() {
         switch (state.colour()) {
             case "BLACK":
@@ -74,25 +70,4 @@ public class BannerItemViewState implements IndicatorViewStateConverter<BannerIt
                 return IndicatorColours.RED;
         }
     }
-
-    /**
-     * Not used.
-     * 
-     * @return
-     */
-    @Override
-    public Boolean toBool() {
-        return true;
-    }
-
-    /**
-     * Not used.
-     * 
-     * @return
-     */
-    @Override
-    public Boolean availability() {
-        return true;
-    }
-
 }
