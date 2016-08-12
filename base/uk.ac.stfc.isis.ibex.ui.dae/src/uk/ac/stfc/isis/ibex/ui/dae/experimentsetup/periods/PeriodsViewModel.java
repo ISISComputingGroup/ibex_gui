@@ -60,7 +60,10 @@ public class PeriodsViewModel extends ModelObject {
 	}
 	
 	public String[] getPeriodFilesList() {
-		return valueOrEmpty(periodFiles);
+        String[] files = valueOrEmpty(periodFiles);
+        files = files.length != 0 ? files : new String[] {
+                "No period files found on instrument. Files must be located in C:\\Instrument\\Settings\\config\\[Instrument Name]\\configuration\\tables\\ and filename must contain string \"period\"." };
+        return files;
 	}
 	
 	private String[] valueOrEmpty(UpdatedValue<Collection<String>> updated) {

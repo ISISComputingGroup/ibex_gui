@@ -48,7 +48,15 @@ public class ExperimentSetup extends Closer  {
 	private final UpdatedObservableAdapter<Collection<String>> spectraTables;
 	private final UpdatedObservableAdapter<Collection<String>> wiringTables;
 	private final UpdatedObservableAdapter<Collection<String>> periodFiles;
-	
+    private final UpdatedObservableAdapter<Collection<String>> timeChannelFiles;
+
+    /**
+     * Model of the experiment setup including DAE, period, time channel and
+     * update settings.
+     * 
+     * @param observables observables for experiment setting PVs
+     * @param writables writables for experiment setting PVs
+     */
 	public ExperimentSetup(DaeObservables observables, DaeWritables writables) {
 		daeSettings = registerForClose(new ObservingDaeSettings(observables.daeSettings, writables.daeSettings));
 		periodSettings = registerForClose(new ObservingPeriodSettings(observables.hardwarePeriods, writables.hardwarePeriods));
@@ -59,40 +67,94 @@ public class ExperimentSetup extends Closer  {
 		spectraTables = createAdapter(observables.spectraTables);
 		wiringTables = createAdapter(observables.wiringTables);
 		periodFiles = createAdapter(observables.periodFiles);
+        timeChannelFiles = createAdapter(observables.timeChannelFiles);
 	}
 	
+    /**
+     * Returns model of DAE settings.
+     * 
+     * @return the model
+     */
 	public DaeSettings daeSettings() {
 		return daeSettings;
 	}
 	
+    /**
+     * Returns observable list of wiring tables available to the instrument.
+     * 
+     * @return the list of wiring tables
+     */
 	public UpdatedValue<Collection<String>> wiringList() {
 		return wiringTables;
 	}
 	
+    /**
+     * Returns observable list of detector tables available to the instrument.
+     * 
+     * @return the list of detector tables
+     */
 	public UpdatedValue<Collection<String>> detectorTables() {
 		return detectorTables;
 	}
 	
+    /**
+     * Returns observable list of spectra tables available to the instrument.
+     * 
+     * @return the list of spectra tables
+     */
 	public UpdatedValue<Collection<String>> spectraTables() {
 		return spectraTables;
 	}
 	
+    /**
+     * Returns observable list of period files available to the instrument.
+     * 
+     * @return the list of period files
+     */
 	public UpdatedValue<Collection<String>> periodFiles() {
 		return periodFiles;
 	}
 	
+    /**
+     * Returns observable list of time channel files available to the
+     * instrument.
+     * 
+     * @return the list of time channel files
+     */
+    public UpdatedValue<Collection<String>> timeChannelFiles() {
+        return timeChannelFiles;
+    }
+
+    /**
+     * Returns observable object of the update settings.
+     * 
+     * @return the update settings
+     */
 	public UpdateSettings updateSettings() {
 		return updateSettings;
 	}
-	
+
+    /**
+     * Returns observable object of the time channel model.
+     * 
+     * @return the timechannels
+     */
 	public TimeChannels timeChannels() {
 		return timeChannels;
 	}
 	
+    /**
+     * Returns observable object of the period settings.
+     * 
+     * @return the period settings
+     */
 	public PeriodSettings periodSettings() {
 		return periodSettings;
 	}
 	
+    /**
+     * Sends all changes made to the experiment setup in the GUI to the server.
+     */
 	public void sendAllSettings() {
 		daeSettings.sendUpdate();
 		periodSettings.sendUpdate();

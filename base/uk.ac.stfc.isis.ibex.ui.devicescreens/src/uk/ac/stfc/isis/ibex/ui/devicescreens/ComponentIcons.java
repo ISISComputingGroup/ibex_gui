@@ -72,7 +72,7 @@ public final class ComponentIcons {
                 return "sample_stack";
             case DAE:
                 return "dae";
-            case DANFSYIK:
+            case DANFYSIK:
             case KEPCO:
             case TDK_LAMBDA_GENESYS:
             case CAEN:
@@ -82,6 +82,7 @@ public final class ComponentIcons {
             case MOVINGMONITOR:
             case MOVINGBEAMSTOP:
                 return "moving_monitor";
+            case LINEARSAMPLECHANGER:
             case SAMPLECHANGER:
                 return "sample_changer";
             case ANALYSER:
@@ -104,10 +105,16 @@ public final class ComponentIcons {
                 return "attenuator";
             case MERCURY:
                 return "mercury";
+            case PDR2000:
+                return "pdr2000";
+            case CRYVALVE:
+                return "iriscryovalve";
             case MUON_FRONT_END:
                 return "muon_front_end";
             case LAKESHORE:
                 return "lakeshore";
+            case PRESSURE_GAUGE:
+                return "pressure_gauge";
             default:
                 return "cog";
         }
