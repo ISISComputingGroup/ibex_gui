@@ -41,8 +41,6 @@ public class ScriptGeneratorTable extends DataboundTable<ScriptGeneratorRow> {
 	public ScriptGeneratorTable (Composite parent, int style, int tableStyle, boolean isRowVisibilityShown) {
 		super(parent, style, ScriptGeneratorRow.class, tableStyle | SWT.BORDER);
 		
-		this.isRowVisibilityShown = isRowVisibilityShown;
-		
 		initialise();
 	}
 	

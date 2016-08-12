@@ -19,7 +19,9 @@
 
 package uk.ac.stfc.isis.ibex.scriptgenerator;
 
-public class ScriptGeneratorRow {
+import uk.ac.stfc.isis.ibex.model.ModelObject;
+
+public class ScriptGeneratorRow extends ModelObject {
 	private String name;
 	private int temperature;
 	private boolean wait;
@@ -35,7 +37,7 @@ public class ScriptGeneratorRow {
 	}
 	
 	public void setName(String name) {
-		this.name = name;
+		firePropertyChange("name", this.name, this.name = name);
 	}
 	
 	public int getTemperature() {
@@ -43,7 +45,7 @@ public class ScriptGeneratorRow {
 	}
 	
 	public void setTemperature(int temperature) {
-		this.temperature = temperature;
+		firePropertyChange("temperature", this.temperature, this.temperature = temperature);
 	}
 	
 	public boolean getWait() {
@@ -51,10 +53,9 @@ public class ScriptGeneratorRow {
 	}
 	
 	public void setWait(boolean wait) {
-		this.wait = wait;
+		firePropertyChange("wait", this.wait, this.wait = wait);
 	}
 	
-	@Override
 	public String toString() {
 		return name;
 	}
