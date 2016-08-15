@@ -20,9 +20,12 @@
 package uk.ac.stfc.isis.ibex.ui.scriptgenerator;
 import org.eclipse.swt.widgets.Composite;
 
+import uk.ac.stfc.isis.ibex.scriptgenerator.PythonBuilder;
 import uk.ac.stfc.isis.ibex.scriptgenerator.ScriptGeneratorRow;
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundCellLabelProvider;
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundTable;
+import uk.ac.stfc.isis.ibex.ui.widgets.StringEditingSupport;
+import uk.ac.stfc.isis.ibex.scriptgenerator.ScriptGeneratorRow;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -38,10 +41,26 @@ public class ScriptGeneratorTable extends DataboundTable<ScriptGeneratorRow> {
 	protected TableViewerColumn temperature;
 	protected TableViewerColumn wait;
 	
+	private final StringEditingSupport<ScriptGeneratorRow> valueEditingSupport = new StringEditingSupport<ScriptGeneratorRow>(viewer(), ScriptGeneratorRow.class) {
+		@Override
+		protected String valueFromRow(ScriptGeneratorRow row) {
+			return row.getName();
+		}
+
+		@Override
+		protected void setValueForRow(ScriptGeneratorRow row, String name) {
+			row.setName(name);
+		}
+	};
+	
 	public ScriptGeneratorTable (Composite parent, int style, int tableStyle, boolean isRowVisibilityShown) {
 		super(parent, style, ScriptGeneratorRow.class, tableStyle | SWT.BORDER);
 		
 		initialise();
+	}
+	
+	public void enableEditing(boolean enabled) {
+		valueEditingSupport.setEnabled(enabled);
 	}
 	
 	@Override
@@ -65,11 +84,12 @@ public class ScriptGeneratorTable extends DataboundTable<ScriptGeneratorRow> {
 				return row.getName();
 			}
 		});
+		name.setEditingSupport(valueEditingSupport);
 	}
 	
 	private void temperature() {
 		temperature = createColumn("Temperature", 3);
-		name.setLabelProvider(new DataboundCellLabelProvider<ScriptGeneratorRow>(
+		temperature.setLabelProvider(new DataboundCellLabelProvider<ScriptGeneratorRow>(
 				observeProperty("temperature")) {
 			@Override
 			protected String valueFromRow(ScriptGeneratorRow row) {
@@ -79,8 +99,8 @@ public class ScriptGeneratorTable extends DataboundTable<ScriptGeneratorRow> {
 	}
 	
 	private void waitValue() {
-		temperature = createColumn("Wait", 3);
-		name.setLabelProvider(new DataboundCellLabelProvider<ScriptGeneratorRow>(
+		wait = createColumn("Wait", 3);
+		wait.setLabelProvider(new DataboundCellLabelProvider<ScriptGeneratorRow>(
 				observeProperty("wait")) {
 			@Override
 			protected String valueFromRow(ScriptGeneratorRow row) {
@@ -88,6 +108,4 @@ public class ScriptGeneratorTable extends DataboundTable<ScriptGeneratorRow> {
 			}
 		});
 	}
-
-	
 }

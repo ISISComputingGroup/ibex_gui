@@ -25,6 +25,8 @@ public class ScriptGeneratorRow extends ModelObject {
 	private String name;
 	private int temperature;
 	private boolean wait;
+	private String script;
+	private PythonBuilder builder;
 	
 	public ScriptGeneratorRow(String name, int temperature, boolean wait) {
 		this.name = name;
@@ -33,27 +35,41 @@ public class ScriptGeneratorRow extends ModelObject {
 	}
 	
 	public String getName() {
-		return this.name;
+		return name;
 	}
 	
 	public void setName(String name) {
 		firePropertyChange("name", this.name, this.name = name);
+		builder.setName(name);
+		setScript(builder.getScript());
 	}
 	
+	private void setScript(String script) {
+		this.script = script;
+	}
+
 	public int getTemperature() {
-		return this.temperature;
+		return temperature;
 	}
 	
 	public void setTemperature(int temperature) {
 		firePropertyChange("temperature", this.temperature, this.temperature = temperature);
+		builder.setTemperature(temperature);
+		setScript(builder.getScript());
 	}
 	
 	public boolean getWait() {
-		return this.wait;
+		return wait;
 	}
 	
 	public void setWait(boolean wait) {
 		firePropertyChange("wait", this.wait, this.wait = wait);
+		builder.setWait(wait);
+		setScript(builder.getScript());
+	}
+	
+	public String getScript() {
+		return script;
 	}
 	
 	public String toString() {
