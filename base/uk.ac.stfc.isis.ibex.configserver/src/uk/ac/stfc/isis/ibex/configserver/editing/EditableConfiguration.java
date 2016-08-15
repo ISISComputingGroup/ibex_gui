@@ -392,7 +392,7 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
 	private void mergeSelectedAndAvailableIocs(Collection<Ioc> selected, Collection<EditableIoc> available) {
 		Map<String, EditableIoc> iocs = new HashMap<>();
 		for (EditableIoc ioc : available) {
-			iocs.put(ioc.getName(), ioc);
+			iocs.put(ioc.getName(), new EditableIoc(ioc));
 		}
 		
 		// IOCs from the actual configuration contain the active macros and description
