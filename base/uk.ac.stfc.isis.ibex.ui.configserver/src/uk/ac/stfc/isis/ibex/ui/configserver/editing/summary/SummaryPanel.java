@@ -117,7 +117,7 @@ public class SummaryPanel extends Composite {
 		bindingContext = new DataBindingContext();
 		
         BlockServerNameValidator configDescritpionRules =
-                Configurations.getInstance().variables().configDescritpionRules.getValue();
+                Configurations.getInstance().variables().configDescriptionRules.getValue();
         strategy.setBeforeSetValidator(new SummaryDescriptionValidator(messageDisplayer, configDescritpionRules));
 		
 		bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(txtName), BeanProperties.value("name").observe(config));

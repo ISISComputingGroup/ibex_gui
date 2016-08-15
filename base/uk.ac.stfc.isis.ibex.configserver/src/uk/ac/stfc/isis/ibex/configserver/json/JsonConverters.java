@@ -30,6 +30,7 @@ import com.google.gson.GsonBuilder;
 import uk.ac.stfc.isis.ibex.configserver.BlockRules;
 import uk.ac.stfc.isis.ibex.configserver.IocState;
 import uk.ac.stfc.isis.ibex.configserver.ServerStatus;
+import uk.ac.stfc.isis.ibex.configserver.configuration.BannerItem;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Component;
 import uk.ac.stfc.isis.ibex.configserver.configuration.ConfigInfo;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Configuration;
@@ -148,4 +149,9 @@ public class JsonConverters implements Converters {
 			return new Component(uninitialised);
 		}
 	};
+
+	@Override
+	public Converter<String, Collection<BannerItem>> toBannerDescription() {
+		return new JsonDeserialisingConverter<>(BannerItem[].class).apply(Convert.<BannerItem>toCollection());
+	}
 }

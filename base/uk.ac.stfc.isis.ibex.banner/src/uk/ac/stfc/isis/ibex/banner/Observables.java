@@ -19,6 +19,10 @@
 
 package uk.ac.stfc.isis.ibex.banner;
 
+import java.util.Collection;
+
+import uk.ac.stfc.isis.ibex.configserver.Configurations;
+import uk.ac.stfc.isis.ibex.configserver.configuration.BannerItem;
 import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
 import uk.ac.stfc.isis.ibex.epics.conversion.Converter;
 import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
@@ -29,7 +33,6 @@ import uk.ac.stfc.isis.ibex.epics.writing.Writable;
 import uk.ac.stfc.isis.ibex.instrument.Instrument;
 import uk.ac.stfc.isis.ibex.instrument.InstrumentVariables;
 import uk.ac.stfc.isis.ibex.instrument.channels.DoubleChannel;
-import uk.ac.stfc.isis.ibex.instrument.channels.EnumChannel;
 import uk.ac.stfc.isis.ibex.instrument.channels.LongChannel;
 
 /**
@@ -50,13 +53,16 @@ public class Observables {
 		}
 	};
 
-    public final ForwardingObservable<BumpStopState> bumpStop;
+    public final ForwardingObservable<Collection<BannerItem>> bannerDescription;
     public final ForwardingObservable<InMotionState> inMotion;
     public final Writable<Long> stop;
 	
+    /**
+     * Constructs the object and points the class variables at the correct
+     * observable objects.
+     */
     public Observables() {
-        bumpStop = obsFactory.getSwitchableObservable(new EnumChannel<>(BumpStopState.class),
-                Instrument.getInstance().getPvPrefix() + "MOT:BUMP_STOP");
+        bannerDescription = Configurations.getInstance().variables().bannerDescription;
         inMotion = InstrumentVariables.convert(obsFactory.getSwitchableObservable(new DoubleChannel(),
                 Instrument.getInstance().getPvPrefix() + "CS:MOT:MOVING"),
                 doubleToMotionState);

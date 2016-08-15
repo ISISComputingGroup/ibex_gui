@@ -24,6 +24,7 @@ import java.util.Collection;
 import uk.ac.stfc.isis.ibex.configserver.BlockRules;
 import uk.ac.stfc.isis.ibex.configserver.IocState;
 import uk.ac.stfc.isis.ibex.configserver.ServerStatus;
+import uk.ac.stfc.isis.ibex.configserver.configuration.BannerItem;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Component;
 import uk.ac.stfc.isis.ibex.configserver.configuration.ConfigInfo;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Configuration;
@@ -68,5 +69,10 @@ public interface Converters {
 	Converter<String, Collection<IocState>> toIocStates();
 
 	Converter<String, Collection<String>> toNames();
+
+    /**
+     * @return converter for the banner description
+     */
+	Converter<String, Collection<BannerItem>> toBannerDescription();
 
 }

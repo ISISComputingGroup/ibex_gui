@@ -26,6 +26,7 @@ import java.util.NoSuchElementException;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 
+import uk.ac.stfc.isis.ibex.configserver.configuration.BannerItem;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Component;
 import uk.ac.stfc.isis.ibex.configserver.configuration.ConfigInfo;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Configuration;
@@ -76,7 +77,7 @@ public class ConfigServerVariables extends InstrumentVariables {
     /** Rules from the block server for how the group should be named. */
     public final ForwardingObservable<BlockServerNameValidator> groupRules;
     /** Rules from the description should be formed . */
-    public final ForwardingObservable<BlockServerNameValidator> configDescritpionRules;
+    public final ForwardingObservable<BlockServerNameValidator> configDescriptionRules;
 	
 	public final ForwardingObservable<Collection<Component>> components;
 	public final ForwardingObservable<Collection<EditableIoc>> iocs;
@@ -100,6 +101,7 @@ public class ConfigServerVariables extends InstrumentVariables {
 	
 	public final ForwardingObservable<Collection<IocState>> iocStates;
 	public final ForwardingObservable<Collection<String>> protectedIocs;
+	public final ForwardingObservable<Collection<BannerItem>> bannerDescription;
 	
     /**
      * Set the configuration server variables from the block server using the
@@ -120,7 +122,7 @@ public class ConfigServerVariables extends InstrumentVariables {
 		
         blockRules = convert(readCompressed(blockServerAddresses.blockRules()), converters.toBlockRules());
         groupRules = convert(readCompressed(blockServerAddresses.groupRules()), converters.toBlockServerTextValidor());
-        configDescritpionRules = convert(readCompressed(blockServerAddresses.configDescritpionRules()),
+        configDescriptionRules = convert(readCompressed(blockServerAddresses.configDescritpionRules()),
                 converters.toBlockServerTextValidor());
 		
 		components = convert(readCompressed(blockServerAddresses.components()), converters.toComponents());
@@ -145,7 +147,9 @@ public class ConfigServerVariables extends InstrumentVariables {
 		restartIoc = convert(writeCompressed(blockServerAddresses.restartIocs()), converters.namesToString());
 				
 		iocStates = convert(readCompressed(blockServerAddresses.iocs()), converters.toIocStates());
-		protectedIocs = convert(readCompressed(blockServerAddresses.iocsNotToStop()), converters.toNames());		
+		protectedIocs = convert(readCompressed(blockServerAddresses.iocsNotToStop()), converters.toNames());	
+        bannerDescription =
+                convert(readCompressed(blockServerAddresses.bannerDescription()), converters.toBannerDescription());
 	}
 
 	public ForwardingObservable<Configuration> config(String configName) {		
