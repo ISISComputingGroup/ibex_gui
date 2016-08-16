@@ -140,7 +140,7 @@ public class DataAcquisitionViewModel extends ModelObject {
     public String[] getWiringTableList() {
         String[] tables = valueOrEmpty(wiringTables);
         tables = tables.length != 0 ? tables : new String[] {
-                "No wiring tables found on instrument. Files must be located in C:\\Instrument\\Settings\\config\\[Instrument Name]\\configuration\\tables\\ and filename must contain string \"wiring\"." };
+                "None found in C:\\Instrument\\Settings\\config\\[Instrument Name]\\configurations\\tables\\ (file name must contain string \"wiring\")." };
         return addBlank(tables);
     }
 
@@ -156,9 +156,9 @@ public class DataAcquisitionViewModel extends ModelObject {
 	public String[] getDetectorTableList() {
         String[] tables = valueOrEmpty(detectorTables);
         tables = tables.length != 0 ? tables : new String[] {
-                "No detector tables found on instrument. Files must be located in C:\\Instrument\\Settings\\config\\[Instrument Name]\\configuration\\tables\\ and filename must contain string \"det\"." };
+                "None found in C:\\Instrument\\Settings\\config\\[Instrument Name]\\configurations\\tables\\ (file name must contain string \"det\")." };
         return addBlank(tables);
-	}
+    }
 	
 	public String getDetectorTable() {
 		return settings.detectorTable();
@@ -171,7 +171,7 @@ public class DataAcquisitionViewModel extends ModelObject {
 	public String[] getSpectraTableList() {
         String[] tables = valueOrEmpty(spectraTables);
         tables = tables.length != 0 ? tables : new String[] {
-                "No spectra tables found on instrument. Files must be located in C:\\Instrument\\Settings\\config\\[Instrument Name]\\configuration\\tables\\ and filename must contain string \"spec\"." };
+                "None found in C:\\Instrument\\Settings\\config\\[Instrument Name]\\configurations\\tables\\ (file name must contain string \"spec\")." };
         return addBlank(tables);
 	}
 	
