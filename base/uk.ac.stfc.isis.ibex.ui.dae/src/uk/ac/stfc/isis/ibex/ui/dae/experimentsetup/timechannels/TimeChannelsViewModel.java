@@ -121,7 +121,7 @@ public class TimeChannelsViewModel extends ModelObject {
         String[] items = valueOrEmpty(model.timeChannelFileList());
         items = items.length != 0 ? items : new String[] {
                 "No TCB File found on instrument. Files must be located in C:\\Instrument\\Settings\\config\\[Instrument Name]\\configuration\\tcb\\ and filename must contain string \"tcb\"." };
-        return items;
+        return addBlank(items);
     }
 
     /**
@@ -185,5 +185,14 @@ public class TimeChannelsViewModel extends ModelObject {
     private String[] valueOrEmpty(UpdatedValue<Collection<String>> updated) {
         Collection<String> value = updated.getValue();
         return value != null ? value.toArray(new String[0]) : new String[0];
+    }
+
+    private String[] addBlank(String[] tables) {
+        String[] result = new String[tables.length + 1];
+        result[0] = " ";
+        for (int i = 0; i < tables.length; i++) {
+            result[i + 1] = tables[i];
+        }
+        return result;
     }
 }
