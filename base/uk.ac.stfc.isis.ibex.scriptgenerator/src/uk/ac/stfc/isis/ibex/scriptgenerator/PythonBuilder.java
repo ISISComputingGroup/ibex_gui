@@ -12,20 +12,23 @@ public class PythonBuilder extends ModelObject {
 	}
 
 	public void setName(String name) {
-		//updateScript()
+		this.name = name;
+		updateScript();
 	}
 	
 	public void setTemperature(int temperature) {
-		//updateScript()
+		this.temperature = temperature;
+		updateScript();
 	}
 	
 	public void setWait(boolean wait) {
-		//updateScript()
+		this.wait = wait;
+		updateScript();
 	}
 	
 	public void updateScript() {
-		script = name + " " + temperature + " " + wait;
-		firePropertyChange("script", this.script, this.script = script);
+		String tempScript = name + " " + temperature + " " + wait;
+		firePropertyChange("script", this.script, this.script = tempScript);
 	}
 	
 	public String getScript() {

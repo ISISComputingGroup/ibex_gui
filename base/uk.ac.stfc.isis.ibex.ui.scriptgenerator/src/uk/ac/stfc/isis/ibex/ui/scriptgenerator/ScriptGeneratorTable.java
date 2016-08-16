@@ -93,7 +93,7 @@ public class ScriptGeneratorTable extends DataboundTable<ScriptGeneratorRow> {
 				observeProperty("temperature")) {
 			@Override
 			protected String valueFromRow(ScriptGeneratorRow row) {
-				return row.getName();
+				return String.valueOf(row.getTemperature());
 			}
 		});
 	}
@@ -104,7 +104,7 @@ public class ScriptGeneratorTable extends DataboundTable<ScriptGeneratorRow> {
 				observeProperty("wait")) {
 			@Override
 			protected String valueFromRow(ScriptGeneratorRow row) {
-				return row.getName();
+				return String.valueOf(row.getWait());
 			}
 		});
 	}
