@@ -52,7 +52,9 @@ public class SummaryPanel extends Composite {
 	private Text txtDescription;
 	private Text txtDateCreated;
 	private Text txtDateModified;
+    private Label lblDateCreated;
 	private Label lblDateCreatedField;
+    private Label lblDateModified;
 	private Label lblDateModifiedField;
 	private ComboViewer cmboSynoptic;
 	private EditableConfiguration config;
@@ -95,13 +97,13 @@ public class SummaryPanel extends Composite {
 		cmboSynoptic.setContentProvider(new ArrayContentProvider());
 		updateSynopticList();
 		
-		Label lblDateCreated = new Label(grpSummary, SWT.NONE);
+        lblDateCreated = new Label(grpSummary, SWT.NONE);
 		lblDateCreated.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		lblDateCreated.setText("Date Created:");
 		
 		lblDateCreatedField = new Label(grpSummary, SWT.NONE);
 				
-		Label lblDateModified = new Label(grpSummary, SWT.NONE);
+        lblDateModified = new Label(grpSummary, SWT.NONE);
 		lblDateModified.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		lblDateModified.setText("Date Modified:");
 		
@@ -122,7 +124,11 @@ public class SummaryPanel extends Composite {
 		
 		bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(txtName), BeanProperties.value("name").observe(config));
 		bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(txtDescription), BeanProperties.value("description").observe(config), strategy, null);
-		bindingContext.bindValue(WidgetProperties.selection().observe(cmboSynoptic.getCombo()), BeanProperties.value("synoptic").observe(config));		
+		bindingContext.bindValue(WidgetProperties.selection().observe(cmboSynoptic.getCombo()), BeanProperties.value("synoptic").observe(config));
+        bindingContext.bindValue(WidgetProperties.visible().observe(lblDateCreated),
+                BeanProperties.value("datesVisible").observe(config));
+        bindingContext.bindValue(WidgetProperties.visible().observe(lblDateModified),
+                BeanProperties.value("datesVisible").observe(config));
 		bindingContext.bindValue(WidgetProperties.text().observe(lblDateCreatedField), BeanProperties.value("dateCreated").observe(config));
 		bindingContext.bindValue(WidgetProperties.text().observe(lblDateModifiedField), BeanProperties.value("dateModified").observe(config));
 	}
