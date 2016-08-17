@@ -80,11 +80,11 @@
 			<value>
 				<type>EUROTHERM</type>
 				<path>Eurotherm.opi</path>
-				<description>The OPI for the standard Eurotherm controller.</description>
+				<description>The OPI for the Eurotherm controller connected to multiple eurotherms.</description>
                 <macros>
 					<macro>
 						<name>EURO</name>
-						<description>The Eurotherm PV name (e.g. EUROTHERM1).</description>
+						<description>The Eurotherm base name (e.g. EUROTHERM1).</description>
 					</macro>
                 </macros>
 			</value>
