@@ -89,7 +89,7 @@ public class IndicatorStateObserver<T> implements Closable {
 	
 	protected void setState(T value) {
 		viewConverter.setState(value);
-		text.setValue(viewConverter.getName());
+		text.setValue(viewConverter.getMessage());
 		color.setValue(viewConverter.color());
 		bool.setValue(viewConverter.toBool());
 		bool.setValue(viewConverter.availability());

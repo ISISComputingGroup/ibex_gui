@@ -19,4 +19,5 @@ Export-Package: uk.ac.stfc.isis.ibex.ui.banner;uses:="org.eclipse.jface.resource
  uk.ac.stfc.isis.ibex.ui.banner.views;uses:="org.eclipse.ui,org.eclipse.ui.part,org.eclipse.swt.widgets"
 Import-Package: com.google.common.base,
  uk.ac.stfc.isis.ibex.banner.motion,
+ uk.ac.stfc.isis.ibex.configserver.configuration,
  uk.ac.stfc.isis.ibex.preferences

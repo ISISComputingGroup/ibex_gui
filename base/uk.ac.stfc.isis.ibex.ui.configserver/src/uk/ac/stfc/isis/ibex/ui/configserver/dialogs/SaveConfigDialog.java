@@ -346,7 +346,7 @@ public class SaveConfigDialog extends TitleAreaDialog {
 		}
 		
         BlockServerNameValidator configDescritpionRules =
-                Configurations.getInstance().variables().configDescritpionRules.getValue();
+                Configurations.getInstance().variables().configDescriptionRules.getValue();
         SummaryDescriptionValidator descriptionValidator =
                 new SummaryDescriptionValidator(null, configDescritpionRules);
 		IStatus status = descriptionValidator.validate(description);

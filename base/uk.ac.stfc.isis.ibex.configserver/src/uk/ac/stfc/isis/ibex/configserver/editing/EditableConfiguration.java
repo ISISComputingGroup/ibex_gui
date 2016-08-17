@@ -67,6 +67,7 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
 	private String synoptic;
 	private String dateCreated;
 	private String dateModified;
+    private Boolean datesVisible;
 	private final List<EditableIoc> editableIocs = new ArrayList<>();
 	private final List<EditableGroup> editableGroups = new ArrayList<>();
 	private final List<EditableBlock> editableBlocks = new ArrayList<>();
@@ -180,7 +181,20 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
 	public void setDateModified(String dateModified) {
 		firePropertyChange("dateModified", this.dateModified, this.dateModified = dateModified);
 	}
-	
+
+    /**
+     * Whether the date labels should be visible in the GUI.
+     * 
+     * @return False if configuration is new.
+     */
+    public boolean getDatesVisible() {
+        if (history.size() != 0) {
+            datesVisible = true;
+        } else {
+            datesVisible = false;
+        }
+        return datesVisible;
+    }
     Collection<Block> getBlocks() {
 		return Lists.newArrayList(Iterables.transform(editableBlocks, new Function<EditableBlock, Block>() {
 			@Override
@@ -392,7 +406,7 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
 	private void mergeSelectedAndAvailableIocs(Collection<Ioc> selected, Collection<EditableIoc> available) {
 		Map<String, EditableIoc> iocs = new HashMap<>();
 		for (EditableIoc ioc : available) {
-			iocs.put(ioc.getName(), ioc);
+			iocs.put(ioc.getName(), new EditableIoc(ioc));
 		}
 		
 		// IOCs from the actual configuration contain the active macros and description

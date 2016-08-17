@@ -222,6 +222,20 @@
 			</value>
 		</entry>
 		<entry>
+			<key>Lakeshore 336</key>
+			<value>
+				<type>LAKESHORE</type>
+				<path>Lakeshore336/Lakeshore336.opi</path>
+				<description>The OPI for the Lakeshore 336 temperature controller.</description>
+				<macros>
+					<macro>
+						<name>LAKESHORE336</name>
+ 						<description>The Lakeshore PV name (e.g. LKSH336_01).</description>  
+					</macro>
+				</macros>
+			</value>
+		</entry>
+		<entry>
 			<key>Mk3 Chopper</key>
 			<value>
 				<type>CHOPPER</type>
@@ -318,6 +332,16 @@
 			<value>
 				<type>SAMPLECHANGER</type>
 				<path>stage/sample_changer.opi</path>
+				<description>Description required. No properties required.</description>
+				<macros>
+				</macros>
+			</value>
+		</entry>   
+		<entry>
+			<key>Linear sample changer</key>
+			<value>
+				<type>LINEARSAMPLECHANGER</type>
+				<path>stage/linear_sample_changer.opi</path>
 				<description>Description required. No properties required.</description>
 				<macros>
 				</macros>
@@ -437,8 +461,8 @@
 				<description>PFEIFFER 300 Vacuum Gauge.</description>
 				<macros>
                     <macro>
-						<name>N</name>
-						<description>Unknown description.</description>
+						<name>TPG300</name>
+						<description>The TPG300 PV name (e.g. TPG300_01).</description>
 					</macro>                  
 				</macros>
 			</value>
@@ -488,14 +512,28 @@
 		<entry>
 			<key>Danfysik</key>
 			<value>
-				<type>DANFSYIK</type>
+				<type>DANFYSIK</type>
 				<path>danfysik.opi</path>
 				<description>DANFYSIK power supply for magnets.</description>
 				<macros>
 					<macro>
-						<name>IOC_NUM</name>
-						<description>PSU IOC Number, two digits, e.g. 01.</description>
+						<name>DFKPS</name>
+						<description>The Danfysik PV name (e.g. DFKPS_01).</description>
 					</macro>                  
+				</macros>
+			</value>
+		</entry>
+		<entry>
+			<key>PDR2000</key>
+			<value>
+				<type>PDR2000</type>
+				<path>pdr2000.opi</path>
+				<description>The OPI for the MKS PDR 2000 pressure transducer</description>
+				<macros>    
+                    <macro>
+						<name>PDR2000</name>
+						<description>The MKS PDR 2000 name (e.g. PDR2000_01).</description>
+					</macro>               
 				</macros>
 			</value>
 		</entry>
@@ -539,7 +577,7 @@
 					<macro>
 						<name>MM_MOMENTUM</name>
 						<description>Motor PV for momentum slits, e.g. MOT:MTR0104.</description>
-					</macro>  
+					</macro>
 				</macros>
 			</value>
 		</entry>
