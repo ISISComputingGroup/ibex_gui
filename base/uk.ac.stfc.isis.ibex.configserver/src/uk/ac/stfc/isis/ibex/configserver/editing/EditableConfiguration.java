@@ -183,8 +183,9 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
 	}
 
     /**
-     * @return Whether the date labels should be visible in the GUI. False if
-     *         configuration is new.
+     * Whether the date labels should be visible in the GUI.
+     * 
+     * @return False if configuration is new.
      */
     public boolean getDatesVisible() {
         if (history.size() != 0) {
