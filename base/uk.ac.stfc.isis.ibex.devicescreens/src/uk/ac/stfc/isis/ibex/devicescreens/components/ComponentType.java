@@ -38,7 +38,7 @@ public enum ComponentType {
 	MONITOR,
 	SAMPLESTACK,
     DAE(new PerspectiveTarget("DAE")),
-    DANFSYIK,
+    DANFYSIK,
 	CAEN,
 	KEPCO,
     TDK_LAMBDA_GENESYS,
@@ -46,6 +46,7 @@ public enum ComponentType {
 	MOVINGMONITOR,
 	ROTATINGBENCH,
 	SAMPLECHANGER,
+    LINEARSAMPLECHANGER,
 	MOVINGBEAMSTOP,
 	ANALYSER,
 	POLARISER,
@@ -58,7 +59,10 @@ public enum ComponentType {
     LAKESHORE,
     ATTENUATOR,
     MERCURY,
-    MUON_FRONT_END;
+    PDR2000,
+    CRYVALVE,
+    MUON_FRONT_END,
+    PRESSURE_GAUGE;
 	
 	private Target target;
 

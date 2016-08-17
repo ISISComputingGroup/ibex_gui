@@ -24,8 +24,8 @@ import java.util.Collections;
 import java.util.List;
 
 public enum TimeUnit {
-	MICROSECONDS ("Microseconds"),
-	NANOSECONDS ("Nanoseconds");
+    MICROSECONDS("Microseconds (default for neutron instruments)"),
+    NANOSECONDS("Nanoseconds (default for muon instruments)");
 
 	private String text;
 	
