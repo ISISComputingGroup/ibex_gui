@@ -52,14 +52,18 @@ public class ObservedSpectrum extends UpdatableSpectrum implements Closable {
 
 		@Override
 		public void onValue(float[] value) {
-            setXData(toDoubleArray(value, xLengthObserver.getValue()));
-		}
+            if (xLengthObserver.getValue() != null) {
+                setXData(toDoubleArray(value, xLengthObserver.getValue()));
+            }
+        }
 	};
 
 	private final DataObserver yDataObserver = new DataObserver() {
 		@Override
-		public void onValue(float[] value) {
-            setYData(toDoubleArray(value, yLengthObserver.getValue()));
+        public void onValue(float[] value) {
+            if (yLengthObserver.getValue() != null) {
+                setYData(toDoubleArray(value, yLengthObserver.getValue()));
+            }
 		}
 	};
 
