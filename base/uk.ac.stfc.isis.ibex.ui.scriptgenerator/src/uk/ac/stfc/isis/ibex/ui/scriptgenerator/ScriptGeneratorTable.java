@@ -25,7 +25,7 @@ import uk.ac.stfc.isis.ibex.scriptgenerator.ScriptGeneratorRow;
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundCellLabelProvider;
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundTable;
 import uk.ac.stfc.isis.ibex.ui.widgets.StringEditingSupport;
-import uk.ac.stfc.isis.ibex.scriptgenerator.ScriptGeneratorRow;
+import uk.ac.stfc.isis.ibex.ui.widgets.IntegerEditingSupport;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -37,21 +37,14 @@ import org.eclipse.swt.SWT;
 
 public class ScriptGeneratorTable extends DataboundTable<ScriptGeneratorRow> {
 	
-	protected TableViewerColumn name;
-	protected TableViewerColumn temperature;
-	protected TableViewerColumn wait;
-	
-	private final StringEditingSupport<ScriptGeneratorRow> valueEditingSupport = new StringEditingSupport<ScriptGeneratorRow>(viewer(), ScriptGeneratorRow.class) {
-		@Override
-		protected String valueFromRow(ScriptGeneratorRow row) {
-			return row.getName();
-		}
-
-		@Override
-		protected void setValueForRow(ScriptGeneratorRow row, String name) {
-			row.setName(name);
-		}
-	};
+	protected TableViewerColumn position;
+	protected TableViewerColumn trans;
+	protected TableViewerColumn transWait;
+	protected TableViewerColumn sans;
+	protected TableViewerColumn sansWait;
+	protected TableViewerColumn period;
+	protected TableViewerColumn sampleName;
+	protected TableViewerColumn thickness;
 	
 	public ScriptGeneratorTable (Composite parent, int style, int tableStyle, boolean isRowVisibilityShown) {
 		super(parent, style, ScriptGeneratorRow.class, tableStyle | SWT.BORDER);
@@ -59,15 +52,16 @@ public class ScriptGeneratorTable extends DataboundTable<ScriptGeneratorRow> {
 		initialise();
 	}
 	
-	public void enableEditing(boolean enabled) {
-		valueEditingSupport.setEnabled(enabled);
-	}
-	
 	@Override
 	protected void addColumns() {
-		name();
-		temperature();
-		waitValue();
+		position();
+		trans();
+		transWait();
+		sans();
+		sansWait();
+		period();
+		sampleName();
+		thickness();
 	}
 	
 	@Override
@@ -75,36 +69,180 @@ public class ScriptGeneratorTable extends DataboundTable<ScriptGeneratorRow> {
 		super.setRows(rows);
 	}
 	
-	private void name() {
-		name = createColumn("Name", 3);
-		name.setLabelProvider(new DataboundCellLabelProvider<ScriptGeneratorRow>(
-				observeProperty("name")) {
+	private void position() {
+		position = createColumn("POSITION", 3);
+		position.setLabelProvider(new DataboundCellLabelProvider<ScriptGeneratorRow>(
+				observeProperty("position")) {
 			@Override
 			protected String valueFromRow(ScriptGeneratorRow row) {
-				return row.getName();
+				return String.valueOf(row.getPosition());
 			}
 		});
-		name.setEditingSupport(valueEditingSupport);
-	}
-	
-	private void temperature() {
-		temperature = createColumn("Temperature", 3);
-		temperature.setLabelProvider(new DataboundCellLabelProvider<ScriptGeneratorRow>(
-				observeProperty("temperature")) {
+		
+		
+		position.setEditingSupport(new IntegerEditingSupport<ScriptGeneratorRow>(viewer(), ScriptGeneratorRow.class) {
 			@Override
-			protected String valueFromRow(ScriptGeneratorRow row) {
-				return String.valueOf(row.getTemperature());
+			protected Integer valueFromRow(ScriptGeneratorRow row) {
+				return row.getPosition();
+			}
+
+			@Override
+			protected void setValueForRow(ScriptGeneratorRow row, Integer position) {
+				row.setPosition(position);
 			}
 		});
 	}
 	
-	private void waitValue() {
-		wait = createColumn("Wait", 3);
-		wait.setLabelProvider(new DataboundCellLabelProvider<ScriptGeneratorRow>(
-				observeProperty("wait")) {
+	private void trans() {
+		trans = createColumn("TRANS", 3);
+		trans.setLabelProvider(new DataboundCellLabelProvider<ScriptGeneratorRow>(
+				observeProperty("trans")) {
 			@Override
 			protected String valueFromRow(ScriptGeneratorRow row) {
-				return String.valueOf(row.getWait());
+				return String.valueOf(row.getTrans());
+			}
+		});
+		trans.setEditingSupport(new IntegerEditingSupport<ScriptGeneratorRow>(viewer(), ScriptGeneratorRow.class) {
+			@Override
+			protected Integer valueFromRow(ScriptGeneratorRow row) {
+				return row.getPosition();
+			}
+
+			@Override
+			protected void setValueForRow(ScriptGeneratorRow row, Integer position) {
+				row.setPosition(position);
+			}
+		});
+	}
+	
+	private void transWait() {
+		transWait = createColumn("TRANS_WAIT", 3);
+		transWait.setLabelProvider(new DataboundCellLabelProvider<ScriptGeneratorRow>(
+				observeProperty("transWait")) {
+			@Override
+			protected String valueFromRow(ScriptGeneratorRow row) {
+				return String.valueOf(row.getTransWait());
+			}
+		});
+		transWait.setEditingSupport(new IntegerEditingSupport<ScriptGeneratorRow>(viewer(), ScriptGeneratorRow.class) {
+			@Override
+			protected Integer valueFromRow(ScriptGeneratorRow row) {
+				return row.getPosition();
+			}
+
+			@Override
+			protected void setValueForRow(ScriptGeneratorRow row, Integer position) {
+				row.setPosition(position);
+			}
+		});
+	}
+	
+	private void sans() {
+		sans = createColumn("SANS", 3);
+		sans.setLabelProvider(new DataboundCellLabelProvider<ScriptGeneratorRow>(
+				observeProperty("sans")) {
+			@Override
+			protected String valueFromRow(ScriptGeneratorRow row) {
+				return String.valueOf(row.getSans());
+			}
+		});
+		sans.setEditingSupport(new IntegerEditingSupport<ScriptGeneratorRow>(viewer(), ScriptGeneratorRow.class) {
+			@Override
+			protected Integer valueFromRow(ScriptGeneratorRow row) {
+				return row.getPosition();
+			}
+
+			@Override
+			protected void setValueForRow(ScriptGeneratorRow row, Integer position) {
+				row.setPosition(position);
+			}
+		});
+	}
+	
+	private void sansWait() {
+		sansWait = createColumn("SANS_WAIT", 3);
+		sansWait.setLabelProvider(new DataboundCellLabelProvider<ScriptGeneratorRow>(
+				observeProperty("sans")) {
+			@Override
+			protected String valueFromRow(ScriptGeneratorRow row) {
+				return String.valueOf(row.getSansWait());
+			}
+		});
+		sansWait.setEditingSupport(new IntegerEditingSupport<ScriptGeneratorRow>(viewer(), ScriptGeneratorRow.class) {
+			@Override
+			protected Integer valueFromRow(ScriptGeneratorRow row) {
+				return row.getPosition();
+			}
+
+			@Override
+			protected void setValueForRow(ScriptGeneratorRow row, Integer position) {
+				row.setPosition(position);
+			}
+		});
+	}
+	
+	private void period() {
+		period = createColumn("PERIOD", 3);
+		period.setLabelProvider(new DataboundCellLabelProvider<ScriptGeneratorRow>(
+				observeProperty("period")) {
+			@Override
+			protected String valueFromRow(ScriptGeneratorRow row) {
+				return String.valueOf(row.getPeriod());
+			}
+		});
+		period.setEditingSupport(new IntegerEditingSupport<ScriptGeneratorRow>(viewer(), ScriptGeneratorRow.class) {
+			@Override
+			protected Integer valueFromRow(ScriptGeneratorRow row) {
+				return row.getPosition();
+			}
+
+			@Override
+			protected void setValueForRow(ScriptGeneratorRow row, Integer position) {
+				row.setPosition(position);
+			}
+		});
+	}
+	
+	private void sampleName() {
+		sampleName = createColumn("SAMPLE_NAME", 3);
+		sampleName.setLabelProvider(new DataboundCellLabelProvider<ScriptGeneratorRow>(
+				observeProperty("sampleName")) {
+			@Override
+			protected String valueFromRow(ScriptGeneratorRow row) {
+				return String.valueOf(row.getSampleName());
+			}
+		});
+		sampleName.setEditingSupport(new IntegerEditingSupport<ScriptGeneratorRow>(viewer(), ScriptGeneratorRow.class) {
+			@Override
+			protected Integer valueFromRow(ScriptGeneratorRow row) {
+				return row.getPosition();
+			}
+
+			@Override
+			protected void setValueForRow(ScriptGeneratorRow row, Integer position) {
+				row.setPosition(position);
+			}
+		});
+	}
+	
+	private void thickness() {
+		thickness = createColumn("THICKNESS", 3);
+		thickness.setLabelProvider(new DataboundCellLabelProvider<ScriptGeneratorRow>(
+				observeProperty("thickness")) {
+			@Override
+			protected String valueFromRow(ScriptGeneratorRow row) {
+				return String.valueOf(row.getThickness());
+			}
+		});
+		thickness.setEditingSupport(new IntegerEditingSupport<ScriptGeneratorRow>(viewer(), ScriptGeneratorRow.class) {
+			@Override
+			protected Integer valueFromRow(ScriptGeneratorRow row) {
+				return row.getPosition();
+			}
+
+			@Override
+			protected void setValueForRow(ScriptGeneratorRow row, Integer position) {
+				row.setPosition(position);
 			}
 		});
 	}

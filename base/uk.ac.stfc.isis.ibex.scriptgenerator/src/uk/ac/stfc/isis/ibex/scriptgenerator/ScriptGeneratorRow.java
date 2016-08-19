@@ -22,50 +22,58 @@ package uk.ac.stfc.isis.ibex.scriptgenerator;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 
 public class ScriptGeneratorRow extends ModelObject {
-	private String name;
-	private int temperature;
-	private boolean wait;
+	private int position; // drop-down?
+	private int trans;
+	private int transWait; // drop-down
+	private int sans;
+	private int sansWait; // drop-down
+	private int period;
+	private String sampleName; 
+	private int thickness; 
 	private String script;
 	private PythonBuilder builder;
 	
-	public ScriptGeneratorRow(String name, int temperature, boolean wait) {
-		this.name = name;
-		this.temperature = temperature;
-		this.wait = wait;
+	public ScriptGeneratorRow(int position, int trans, int transWait, int sans, int sansWait, int period, 
+			String sampleName, int thickness, String script, PythonBuilder builder) {
+		this.position = position;
+		this.trans = trans;
+		this.transWait = transWait;
+		this.sans = sans;
+		this.sansWait = sansWait;
+		this.period = period;
+		this.sampleName = sampleName;
+		this.thickness = thickness;
+		this.script = script;
 		builder = new PythonBuilder();
 	}
 	
-	public String getName() {
-		return name;
+	public int getPosition() {
+		return position;
 	}
 	
-	public void setName(String name) {
-		firePropertyChange("name", this.name, this.name = name);
-		builder.setName(name);
+	public void setPosition(int position) {
+		firePropertyChange("position", this.position, this.position = position);
+		builder.setPosition(position);
 		setScript(builder.getScript());
-	}
-	
-	private void setScript(String script) {
-		firePropertyChange("script", this.script, this.script = script);
 	}
 
-	public int getTemperature() {
-		return temperature;
+	public int getTrans() {
+		return trans;
 	}
 	
-	public void setTemperature(int temperature) {
-		firePropertyChange("temperature", this.temperature, this.temperature = temperature);
-		builder.setTemperature(temperature);
+	public void setTrans(int trans) {
+		firePropertyChange("trans", this.trans, this.trans = trans);
+		builder.setTrans(trans);
 		setScript(builder.getScript());
 	}
 	
-	public boolean getWait() {
-		return wait;
+	public int getTransWait() {
+		return transWait;
 	}
 	
-	public void setWait(boolean wait) {
-		firePropertyChange("wait", this.wait, this.wait = wait);
-		builder.setWait(wait);
+	public void setTransWait(int transWait) {
+		firePropertyChange("wait", this.transWait, this.transWait = transWait);
+		builder.setTransWait(transWait);
 		setScript(builder.getScript());
 	}
 	
@@ -73,7 +81,7 @@ public class ScriptGeneratorRow extends ModelObject {
 		return script;
 	}
 	
-	public String toString() {
-		return name;
+	private void setScript(String script) {
+		firePropertyChange("script", this.script, this.script = script);
 	}
 }
