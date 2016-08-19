@@ -581,5 +581,19 @@
 				</macros>
 			</value>
 		</entry>
+		<entry>
+			<key>SCIMAG3D</key>
+			<value>
+				<type>SCIMAG3D</type>
+				<path>scimag3D.opi</path>
+				<description>Scienticfic Magnetics 3D Magnet.</description>
+				<macros>
+					<macro>
+						<name>SCIMAG3D</name>
+						<description>The ioc running the magnet, e.g. SCIMAG3D_01.</description>
+					</macro>
+				</macros>
+			</value>
+		</entry>		
 	</opis>
 </descriptions>
