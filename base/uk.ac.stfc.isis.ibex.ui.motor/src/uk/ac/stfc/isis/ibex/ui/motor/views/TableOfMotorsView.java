@@ -43,7 +43,7 @@ public class TableOfMotorsView extends ViewPart {
      * List the offset for the index of the first controller in the table. Used
      * to set labels down left hand side.
      */
-    private List<Integer> tabControllerOffsets = Arrays.asList(0, 8, 16);
+    private static final List<Integer> TAB_CONTROLLER_OFFSETS = Arrays.asList(0, 8, 16);
 	
 	/** Listens for clicks on a motor in the table, and makes a call to open the OPI for that motor. */
 	private MouseListener motorSelection = new MouseAdapter() {
@@ -140,10 +140,10 @@ public class TableOfMotorsView extends ViewPart {
 	}
 
     /**
-     * Gets the controller number offset for this particular tab
+     * @return The controller number offset for this particular tab
      */
     protected int getTableControllerOffset() {
         int motorTableID = tabTitles.indexOf(getTitle());
-        return tabControllerOffsets.get(motorTableID);
+        return TAB_CONTROLLER_OFFSETS.get(motorTableID);
     }
 }
