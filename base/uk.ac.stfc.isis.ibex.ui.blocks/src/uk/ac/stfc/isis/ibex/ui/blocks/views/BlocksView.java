@@ -79,6 +79,7 @@ public class BlocksView extends ViewPart implements ISizeProvider {
 		}		
 	};	
 
+	@Override
 	public void createPartControl(final Composite parent) {
 		
 		GridLayout glParent = new GridLayout(1, false);

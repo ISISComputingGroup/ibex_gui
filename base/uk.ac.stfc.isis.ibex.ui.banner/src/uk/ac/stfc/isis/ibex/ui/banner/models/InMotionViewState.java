@@ -36,7 +36,7 @@ public class InMotionViewState implements IndicatorViewStateConverter<InMotionSt
 		}
 	}
 	
-	public String getName() {
+	public String getMessage() {
 		return "Motors are " + state.name();
 	}
 	

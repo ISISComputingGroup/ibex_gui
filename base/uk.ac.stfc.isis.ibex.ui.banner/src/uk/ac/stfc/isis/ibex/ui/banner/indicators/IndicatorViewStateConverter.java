@@ -23,7 +23,7 @@ import org.eclipse.swt.graphics.Color;
 
 public interface IndicatorViewStateConverter<T> {
 	void setState(T state);
-	String getName();
+	String getMessage();
 	Color color();
 	Boolean toBool();
 	Boolean availability();

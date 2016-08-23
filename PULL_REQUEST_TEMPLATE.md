@@ -25,3 +25,6 @@
 - [ ] Do changes function as described? Add comments below that describe the tests performed.
 - [ ] How do the changes handle unexpected situations, e.g. bad input?
 - [ ] Has developer documentation been updated if required?
+
+### Final Steps
+- [ ] Reviewer has moved the [release notes](https://github.com/ISISComputingGroup/IBEX/wiki/ReleaseNotes_Dev) entry for this ticket in the "Changes merged into master" section
