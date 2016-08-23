@@ -60,9 +60,21 @@ public class PeriodsViewModel extends ModelObject {
 	}
 	
 	public String[] getPeriodFilesList() {
-		return valueOrEmpty(periodFiles);
+        String[] files = valueOrEmpty(periodFiles);
+        files = files.length != 0 ? files : new String[] {
+                "None found in C:\\Instrument\\Settings\\config\\[Instrument Name]\\configurations\\tables\\ (file name must contain string \"period\")." };
+        return addBlank(files);
 	}
-	
+
+    private String[] addBlank(String[] tables) {
+        String[] result = new String[tables.length + 1];
+        result[0] = " ";
+        for (int i = 0; i < tables.length; i++) {
+            result[i + 1] = tables[i];
+        }
+        return result;
+    }
+
 	private String[] valueOrEmpty(UpdatedValue<Collection<String>> updated) {
 		Collection<String> value = updated.getValue();
 		return value != null ? value.toArray(new String[0]) : new String[0];

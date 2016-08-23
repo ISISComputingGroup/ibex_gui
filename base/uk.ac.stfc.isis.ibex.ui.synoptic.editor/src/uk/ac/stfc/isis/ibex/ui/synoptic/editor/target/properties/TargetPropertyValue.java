@@ -34,7 +34,7 @@ import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.SynopticViewModel;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.UpdateTypes;
 
 /**
- * 
+ * GUI Composite for the target property value display and change.
  */
 public class TargetPropertyValue extends Composite {
     private Text valueText;
@@ -59,6 +59,12 @@ public class TargetPropertyValue extends Composite {
         }
     };
 
+    /**
+     * Instantiates a new target property value.
+     *
+     * @param parent the parent
+     * @param synopticViewModel the synoptic view model
+     */
     public TargetPropertyValue(Composite parent, final SynopticViewModel synopticViewModel) {
         super(parent, SWT.NONE);
 
@@ -79,7 +85,7 @@ public class TargetPropertyValue extends Composite {
                 if (valueText.isFocusControl()) {
                     updateLock = true;
                     String key = synopticViewModel.getSelectedProperty().key();
-                    synopticViewModel.updateSelectedProperty(new Property(key, valueText.getText()));
+                    synopticViewModel.updateOrAddSelectedProperty(new Property(key, valueText.getText()));
                     updateLock = false;
                 }
             }

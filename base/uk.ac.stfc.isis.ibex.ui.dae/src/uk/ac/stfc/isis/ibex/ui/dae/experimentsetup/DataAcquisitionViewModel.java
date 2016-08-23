@@ -122,15 +122,28 @@ public class DataAcquisitionViewModel extends ModelObject {
 	public void setTo(double value) {
 		settings.setTo(value);
 	}
-	
-	public String[] getWiringTableList() {
-		return valueOrEmpty(wiringTables);
-	}
-	
-	private String[] valueOrEmpty(UpdatedValue<Collection<String>> updated) {
-		Collection<String> value = updated.getValue();
-		return value != null ? value.toArray(new String[0]) : new String[0];
-	}
+
+    private String[] addBlank(String[] tables) {
+        String[] result = new String[tables.length + 1];
+        result[0] = " ";
+        for (int i = 0; i < tables.length; i++) {
+            result[i + 1] = tables[i];
+        }
+        return result;
+    }
+
+    private String[] valueOrEmpty(UpdatedValue<Collection<String>> updated) {
+        Collection<String> value = updated.getValue();
+        return value != null ? value.toArray(new String[0]) : new String[0];
+    }
+
+    public String[] getWiringTableList() {
+        String[] tables = valueOrEmpty(wiringTables);
+        tables = tables.length != 0 ? tables : new String[] {
+                "None found in C:\\Instrument\\Settings\\config\\[Instrument Name]\\configurations\\tables\\ (file name must contain string \"wiring\")." };
+        return addBlank(tables);
+    }
+
 
 	public String getWiringTable() {
 		return settings.wiringTable();
@@ -141,8 +154,11 @@ public class DataAcquisitionViewModel extends ModelObject {
 	}
 	
 	public String[] getDetectorTableList() {
-		return valueOrEmpty(detectorTables);
-	}
+        String[] tables = valueOrEmpty(detectorTables);
+        tables = tables.length != 0 ? tables : new String[] {
+                "None found in C:\\Instrument\\Settings\\config\\[Instrument Name]\\configurations\\tables\\ (file name must contain string \"det\")." };
+        return addBlank(tables);
+    }
 	
 	public String getDetectorTable() {
 		return settings.detectorTable();
@@ -153,7 +169,10 @@ public class DataAcquisitionViewModel extends ModelObject {
 	}
 	
 	public String[] getSpectraTableList() {
-		return valueOrEmpty(spectraTables);
+        String[] tables = valueOrEmpty(spectraTables);
+        tables = tables.length != 0 ? tables : new String[] {
+                "None found in C:\\Instrument\\Settings\\config\\[Instrument Name]\\configurations\\tables\\ (file name must contain string \"spec\")." };
+        return addBlank(tables);
 	}
 	
 	public String getSpectraTable() {

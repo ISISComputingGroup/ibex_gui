@@ -294,7 +294,7 @@ public class BeamStatusView extends DataBrowserAwareView implements ModelListene
                     displayName = "TS2";
                     break;
                 case SYNCH_BEAM_CURRENT_PV:
-                    displayName = "Synchotron";
+                    displayName = "Synchrotron";
                     break;
                 default:
                     displayName = newItem.getDisplayName();

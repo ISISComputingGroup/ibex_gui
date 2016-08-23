@@ -79,9 +79,8 @@ public class DataAcquisitionPanel extends Composite {
 		lblWiringTable.setSize(70, 15);
 		lblWiringTable.setText("Wiring Table:");
 		
-		wiringTable = new Combo(grpTables, SWT.DROP_DOWN);	
-		GridData gd_wiringTable = new GridData(SWT.LEFT, SWT.FILL, false, false, 1, 1);
-		gd_wiringTable.widthHint = 500;
+		wiringTable = new Combo(grpTables, SWT.DROP_DOWN | SWT.READ_ONLY);	
+        GridData gd_wiringTable = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
 		wiringTable.setLayoutData(gd_wiringTable);
 		wiringTable.setSize(317, 25);
 				
@@ -89,9 +88,8 @@ public class DataAcquisitionPanel extends Composite {
 		lblDetectorTable.setSize(80, 15);
 		lblDetectorTable.setText("Detector Table:");
 		
-		detectorTable = new Combo(grpTables, SWT.DROP_DOWN);
-		GridData gd_detectorTable = new GridData(SWT.LEFT, SWT.FILL, false, false, 1, 1);
-		gd_detectorTable.widthHint = 500;
+        detectorTable = new Combo(grpTables, SWT.DROP_DOWN | SWT.READ_ONLY);
+        GridData gd_detectorTable = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
 		detectorTable.setLayoutData(gd_detectorTable);
 		detectorTable.setSize(317, 25);
 		
@@ -100,9 +98,8 @@ public class DataAcquisitionPanel extends Composite {
 		lblSpectraTable.setSize(74, 15);
 		lblSpectraTable.setText("Spectra Table:");
 		
-		spectraTable = new Combo(grpTables, SWT.DROP_DOWN);
-		GridData gd_spectraTable = new GridData(SWT.LEFT, SWT.FILL, false, false, 1, 1);
-		gd_spectraTable.widthHint = 500;
+        spectraTable = new Combo(grpTables, SWT.DROP_DOWN | SWT.READ_ONLY);
+        GridData gd_spectraTable = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
 		spectraTable.setLayoutData(gd_spectraTable);
 		spectraTable.setSize(317, 21);
 		
