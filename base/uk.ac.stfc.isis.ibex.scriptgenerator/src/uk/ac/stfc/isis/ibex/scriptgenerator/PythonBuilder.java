@@ -6,6 +6,11 @@ public class PythonBuilder extends ModelObject {
 	private int position;
 	private int trans;
 	private int transWait;
+	private int sans;
+	private int sansWait;
+	private int period;
+	private String sampleName; 
+	private int thickness; 
 	private String script;
 	
 	public PythonBuilder() {
@@ -31,6 +36,31 @@ public class PythonBuilder extends ModelObject {
 	
 	public void setTransWait(int transWait) {
 		this.transWait = transWait;
+		updateScript();
+	}
+	
+	public void setSans(int sans) {
+		this.sans = sans;
+		updateScript();
+	}
+	
+	public void setSansWait(int sansWait) {
+		this.sansWait = sansWait;
+		updateScript();
+	}
+	
+	public void setPeriod(int period) {
+		this.period = period;
+		updateScript();
+	}
+	
+	public void setSampleName(String sampleName) {
+		this.sampleName = sampleName;
+		updateScript();
+	}
+	
+	public void setThickness(int thickness) {
+		this.thickness = thickness;
 		updateScript();
 	}
 	

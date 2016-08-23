@@ -34,7 +34,7 @@ public class ScriptGeneratorRow extends ModelObject {
 	private PythonBuilder builder;
 	
 	public ScriptGeneratorRow(int position, int trans, int transWait, int sans, int sansWait, int period, 
-			String sampleName, int thickness, String script, PythonBuilder builder) {
+			String sampleName, int thickness, String script) {
 		this.position = position;
 		this.trans = trans;
 		this.transWait = transWait;
@@ -74,6 +74,56 @@ public class ScriptGeneratorRow extends ModelObject {
 	public void setTransWait(int transWait) {
 		firePropertyChange("wait", this.transWait, this.transWait = transWait);
 		builder.setTransWait(transWait);
+		setScript(builder.getScript());
+	}
+	
+	public int getSans() {
+		return sans;
+	}
+	
+	public void setSans() {
+		firePropertyChange("sans", this.sans, this.sans = sans);
+		builder.setSans(sans);
+		setScript(builder.getScript());
+	}
+	
+	public int getSansWait() {
+		return sansWait;
+	}
+	
+	public void setSansWait() {
+		firePropertyChange("sansWait", this.sansWait, this.sansWait = sansWait);
+		builder.setSansWait(sansWait);
+		setScript(builder.getScript());
+	}
+	
+	public int getPeriod() {
+		return period;
+	}
+	
+	public void setPeriod() {
+		firePropertyChange("period", this.period, this.period = period);
+		builder.setPeriod(period);
+		setScript(builder.getScript());
+	}
+	
+	public String getSampleName() {
+		return sampleName;
+	}
+	
+	public void setSampleName() {
+		firePropertyChange("sampleName", this.sampleName, this.sampleName = sampleName);
+		builder.setSampleName(sampleName);
+		setScript(builder.getScript());
+	}
+	
+	public int getThickness() {
+		return thickness;
+	}
+	
+	public void setThickness() {
+		firePropertyChange("sampleName", this.sampleName, this.sampleName = sampleName);
+		builder.setSampleName(sampleName);
 		setScript(builder.getScript());
 	}
 	

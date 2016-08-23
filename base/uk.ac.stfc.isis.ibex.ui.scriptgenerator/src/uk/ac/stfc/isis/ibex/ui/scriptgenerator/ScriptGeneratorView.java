@@ -36,7 +36,7 @@ public class ScriptGeneratorView extends ViewPart {
 		parent.setLayout(new GridLayout(10, true));
 		
 		list = new ArrayList<ScriptGeneratorRow>();
-		list.add(new ScriptGeneratorRow("", 0, false));
+		list.add(new ScriptGeneratorRow(1, 2, 3, 4, 5, 6, "sample name", 7, "script"));
 		ScriptGeneratorTable table = new ScriptGeneratorTable(parent, SWT.NONE, SWT.MULTI | SWT.NO_SCROLL | SWT.V_SCROLL | SWT.FULL_SELECTION | SWT.BORDER, false);
 		table.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 10, 1));
 		table.setRows(list);
