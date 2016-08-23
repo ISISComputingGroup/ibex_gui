@@ -80,11 +80,11 @@
 			<value>
 				<type>EUROTHERM</type>
 				<path>Eurotherm.opi</path>
-				<description>The OPI for the standard Eurotherm controller.</description>
+				<description>The OPI for the Eurotherm controller connected to multiple eurotherms.</description>
                 <macros>
 					<macro>
 						<name>EURO</name>
-						<description>The Eurotherm PV name (e.g. EUROTHERM1).</description>
+						<description>The Eurotherm base name (e.g. EUROTHERM1).</description>
 					</macro>
                 </macros>
 			</value>
@@ -217,6 +217,20 @@
 					<macro>
 						<name>LAKESHORE218</name>
  						<description>The Lakeshore PV name (e.g. LKSH218_01).</description>  
+					</macro>
+				</macros>
+			</value>
+		</entry>
+		<entry>
+			<key>Lakeshore 336</key>
+			<value>
+				<type>LAKESHORE</type>
+				<path>Lakeshore336/Lakeshore336.opi</path>
+				<description>The OPI for the Lakeshore 336 temperature controller.</description>
+				<macros>
+					<macro>
+						<name>LAKESHORE336</name>
+ 						<description>The Lakeshore PV name (e.g. LKSH336_01).</description>  
 					</macro>
 				</macros>
 			</value>
