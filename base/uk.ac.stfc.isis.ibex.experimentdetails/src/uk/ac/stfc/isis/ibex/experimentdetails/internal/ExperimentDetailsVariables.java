@@ -81,18 +81,39 @@ public class ExperimentDetailsVariables extends InstrumentVariables {
         return new ForwardingWritable<>(destination, converter);
 	}
 	
+	 /**
+   * A helper method that returns the name of the parameter given its PV.
+   * This based on the description field of the PV.
+   * @param address The address of the PV that you want the name of.
+   * @return An observable to the name of the parameter.
+   */
 	public ForwardingObservable<String> parameterName(String address) {
         return obsFactory.getSwitchableObservable(new StringChannel(), addPrefix(address + ".DESC"));
 	}
 	
+	/**
+	 * A helper method that returns an observable for the units of a parameter PV.
+	 * @param address The address of the PV that you want the units of.
+	 * @return An observable to the units of a PV.
+	 */
 	public ForwardingObservable<String> parameterUnits(String address) {
         return obsFactory.getSwitchableObservable(new StringChannel(), addPrefix(address + ".EGU"));
 	}
 	
+	 /**
+   * A helper method that returns an observable for a parameter PV.
+   * @param address The address of the PV that you want to read from.
+   * @return An observable to the PV.
+   */
 	public ForwardingObservable<String> parameterValue(String address) {
         return obsFactory.getSwitchableObservable(new DefaultChannelWithoutUnits(), addPrefix(address));
 	}
 
+  /**
+   * A helper method that returns a writable for a parameter PV.
+   * @param address The address of the PV that you want to write to.
+   * @return A writable to the PV.
+   */
 	public Writable<String> parameterValueSetter(String address) {
         return writeFactory.getSwitchableWritable(new DefaultChannelWithoutUnits(), addPrefix(address + ":SP"));
 	}

@@ -19,7 +19,7 @@
 package uk.ac.stfc.isis.ibex.experimentdetails.preferences;
 
 /**
- * Constant definitions for plug-in preferences
+ * Constant definitions for plug-in preferences.
  */
 public final class PreferenceConstants {
     

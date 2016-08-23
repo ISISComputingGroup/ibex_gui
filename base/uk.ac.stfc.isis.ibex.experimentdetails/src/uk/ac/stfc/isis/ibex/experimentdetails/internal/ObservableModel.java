@@ -32,6 +32,9 @@ import uk.ac.stfc.isis.ibex.experimentdetails.Role;
 import uk.ac.stfc.isis.ibex.experimentdetails.UserDetails;
 import uk.ac.stfc.isis.ibex.experimentdetails.UserDetailsList;
 
+/**
+ * A model for holding the current experiment details that is linked to a set of observables.
+ */
 public class ObservableModel extends Model {
 	
 	private List<Parameter> sampleParameters = new ArrayList<>();
@@ -65,7 +68,10 @@ public class ObservableModel extends Model {
 	
 	private final ExperimentDetailsVariables variables;
 	
-	
+	/**
+	 * The constructor for the concrete Observable Model.
+	 * @param variables The set of observables that this model should be linked to.
+	 */
 	public ObservableModel(ExperimentDetailsVariables variables) {
 		variables.userDetails.addObserver(userDetailsObserver);
 		variables.sampleParameters.addObserver(sampleParametersObserver);
@@ -108,6 +114,7 @@ public class ObservableModel extends Model {
 		return new ArrayList<>(userDetails);
 	}
 	
+	@Override
 	public void setUserDetails(Collection<UserDetails> values) {
 		firePropertyChange("userDetails", this.userDetails, this.userDetails = new UserDetailsList(values));
 	}

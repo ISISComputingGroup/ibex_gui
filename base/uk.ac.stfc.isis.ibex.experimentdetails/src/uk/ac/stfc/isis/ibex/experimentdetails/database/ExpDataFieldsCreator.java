@@ -22,6 +22,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * A class that converts a table and field to a ExpDataField object. Also confirms that the field exists in the given table.
+ */
 public final class ExpDataFieldsCreator {
 	private static List<ExpDataFieldsEnum> experimentteamsFields = new ArrayList<ExpDataFieldsEnum>(
 			Arrays.asList(ExpDataFieldsEnum.USER_ID, ExpDataFieldsEnum.EXPERIMENT_ID, ExpDataFieldsEnum.ROLE_ID));

@@ -36,13 +36,20 @@ import uk.ac.stfc.isis.ibex.logger.IsisLog;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 
 /**
- * Provides a model specific to the searching of the database
+ * Provides a model specific to the searching of the database.
  *
  */
 public class SearchModel extends ModelObject {
 	private Collection<UserDetails> searchResults = new ArrayList<UserDetails>();
 	private static final Logger LOG = IsisLog.getLogger(SearchModel.class);
 	
+	/**
+	 * Search the experiment details database with the following parameters.
+	 * 
+	 * @param searchName The name of the person to search for
+	 * @param searchRole The role of the person, a blank role will search all roles
+	 * @param date The date that the experiment takes place on, this can be null to search all dates
+	 */
 	public void searchExperiments(String searchName, Role searchRole, GregorianCalendar date) {
 		try {
 			
@@ -72,10 +79,17 @@ public class SearchModel extends ModelObject {
 		firePropertyChange("searchResults", this.searchResults, this.searchResults = newResults);
 	}
 	
+	/**
+	 * Get the collection of UserDetails that match the results entered into searchExperiments().
+	 * @return The results of the search. An empty collection if no results were found. 	
+	 */
 	public Collection<UserDetails> getSearchResults() {
 		return searchResults;
 	}
 	
+	/**
+	 * Clear the collection of search results to an empty list.
+	 */
 	public void clearResults() {
 		firePropertyChange("searchResults", this.searchResults, this.searchResults = new ArrayList<UserDetails>());
 	}
