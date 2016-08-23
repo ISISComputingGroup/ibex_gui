@@ -26,6 +26,9 @@ import uk.ac.stfc.isis.ibex.experimentdetails.database.SearchModel;
 import uk.ac.stfc.isis.ibex.experimentdetails.internal.ExperimentDetailsVariables;
 import uk.ac.stfc.isis.ibex.experimentdetails.internal.ObservableModel;
 
+/**
+ * The Activator for the experimentdetails plugin.
+ */
 public class ExperimentDetails extends AbstractUIPlugin {
 
 	private static BundleContext context;
@@ -39,6 +42,9 @@ public class ExperimentDetails extends AbstractUIPlugin {
 		return context;
 	}
 	
+	/**
+	 *  The default constructor, called by the eclipse framework.
+	 */
 	public ExperimentDetails() {
 		instance = this;		
         variables = new ExperimentDetailsVariables();
@@ -50,10 +56,16 @@ public class ExperimentDetails extends AbstractUIPlugin {
 		return instance;
 	}
 	
+	/**
+	 * @return The model for reading and writing the current experiment details information.
+	 */
 	public Model model() {
 		return model;
 	}
 
+	/**
+	 * @return A model that is used to search the experiment details for users.
+	 */
 	public SearchModel searchModel() {
 		return searchModel;
 	}
