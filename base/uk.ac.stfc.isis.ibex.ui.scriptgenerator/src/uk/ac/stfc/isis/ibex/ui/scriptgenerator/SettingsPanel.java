@@ -131,7 +131,8 @@ public class SettingsPanel extends Composite {
 		new Label(grpSettings, SWT.CENTER);
 		new Label(grpSettings, SWT.CENTER);
 		new Label(grpSettings, SWT.CENTER);
-		
+		new Label(grpSettings, SWT.CENTER);
+
 		Combo comboApertureSans = new Combo(grpSettings, SWT.NONE | SWT.READ_ONLY);
 		comboApertureSans.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 		String[] comboApertureSansItems = {"Large = ?, ? mm", "Medium = 20, 14 mm", "Small = ?, ? mm"};

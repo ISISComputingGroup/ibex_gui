@@ -36,30 +36,25 @@ public class ScriptGeneratorView extends ViewPart {
 		
 		// Top panel to hold three panels - settingsPanel, estimatePanel and buttonsPanel
 		Composite topPanel = new Composite(parent, SWT.NONE);
-		topPanel.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false, 1, 1));
-		topPanel.setLayout(new GridLayout(3, false));
+		topPanel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+		topPanel.setLayout(new GridLayout(2, false));
 		
 		SettingsPanel settingsPanel = new SettingsPanel(topPanel, SWT.NONE);
-		settingsPanel.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false, 2, 1));
+		settingsPanel.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, true, false, 1, 2));
 		
 		EstimatePanel estimatePanel = new EstimatePanel(topPanel, SWT.NONE);
-		estimatePanel.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false, 1, 1));
-		
-		new Label(topPanel, SWT.NONE);
-		new Label(topPanel, SWT.NONE);
+		estimatePanel.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, true, false, 1, 1));
 		
 		ButtonsPanel buttonsPanel = new ButtonsPanel(topPanel, SWT.NONE);
-		buttonsPanel.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false, 1, 1));
+		buttonsPanel.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 1, 1));
 		
 		TablePanel tablePanel = new TablePanel(parent, SWT.NONE);
-		tablePanel.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false, 1, 1));
+		tablePanel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 		
 		// temporary colours
-		topPanel.setBackground(topPanel.getDisplay().getSystemColor(SWT.COLOR_GRAY)); 
 		settingsPanel.setBackground(settingsPanel.getDisplay().getSystemColor(SWT.COLOR_MAGENTA));
 		estimatePanel.setBackground(estimatePanel.getDisplay().getSystemColor(SWT.COLOR_BLUE)); 
 		buttonsPanel.setBackground(buttonsPanel.getDisplay().getSystemColor(SWT.COLOR_GREEN)); 
-		new Label(topPanel, SWT.NONE);
 		tablePanel.setBackground(tablePanel.getDisplay().getSystemColor(SWT.COLOR_YELLOW)); 
 	}
 	
