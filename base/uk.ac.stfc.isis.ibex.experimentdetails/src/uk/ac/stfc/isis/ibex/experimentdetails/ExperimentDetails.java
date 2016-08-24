@@ -52,6 +52,9 @@ public class ExperimentDetails extends AbstractUIPlugin {
 		searchModel = new SearchModel();
 	}
 	
+	/**
+	 * @return The instance of this static activator.
+	 */
 	public static ExperimentDetails getInstance() {
 		return instance;
 	}
