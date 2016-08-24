@@ -110,7 +110,7 @@ public class BufferedObservablePairTest {
 
     @Test
     public void
-            GIVEN_value_pair_in_buffer_WHEN_new_second_value_observed_THEN_values_collated_into_most_recent_value_pair_and_set() {
+            GIVEN_value_pair_in_buffer_WHEN_new_first_value_observed_THEN_values_collated_into_most_recent_value_pair_and_set() {
         // Arrange
         testableStringObservable.setValue("initial_val");
         testableIntegerObservable.setValue(TestHelpers.NEW_INT_VALUE);
