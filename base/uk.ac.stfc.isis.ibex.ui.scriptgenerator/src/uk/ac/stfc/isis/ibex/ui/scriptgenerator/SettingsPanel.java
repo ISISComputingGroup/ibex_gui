@@ -24,31 +24,37 @@ import org.eclipse.swt.widgets.Text;
 
 public class ScriptGeneratorView extends ViewPart {
 	public static final String ID = "uk.ac.stfc.isis.ibex.ui.scriptgenerator.scriptgeneratorview";
+	private ScriptGeneratorTable table;
+	private Text text;
+	private ArrayList<ScriptGeneratorRow> list;
 	 
 	public ScriptGeneratorView() {
 		super();
 	}
 
-	@SuppressWarnings("unused")
-	@Override
 	public void createPartControl(Composite parent) {
-		parent.setLayout(new FillLayout(SWT.VERTICAL));
+		parent.setLayout(new GridLayout(10, true));
 		
-		// Top panel to hold three panels - settingsPanel, estimatePanel and buttonsPanel
-		Composite topPanel = new Composite(parent, SWT.NONE);
-		topPanel.setLayout(new GridLayout(2, false));
+		list = new ArrayList<ScriptGeneratorRow>();
+		list.add(new ScriptGeneratorRow(1, 2, 3, 4, 5, 6, "sample name", 7, "script"));
+		ScriptGeneratorTable table = new ScriptGeneratorTable(parent, SWT.NONE, SWT.MULTI | SWT.NO_SCROLL | SWT.V_SCROLL | SWT.FULL_SELECTION | SWT.BORDER, false);
+		table.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 10, 1));
+		table.setRows(list);
+	
+		Button btnPreview = new Button(parent, SWT.NONE);
+		btnPreview.setText("Preview");
+		btnPreview.setLayoutData(new GridData(SWT.FILL, SWT.NONE, false, false, 1, 1));
 		
-		SettingsPanel settingsPanel = new SettingsPanel(topPanel, SWT.NONE);
-		EstimatePanel estimatePanel = new EstimatePanel(topPanel, SWT.NONE);
-		ButtonsPanel buttonsPanel = new ButtonsPanel(topPanel, SWT.NONE);
-		TablePanel tablePanel = new TablePanel(parent, SWT.NONE);
-		
-		// temp colours
-		topPanel.setBackground(topPanel.getDisplay().getSystemColor(SWT.COLOR_GRAY)); 
-		settingsPanel.setBackground(settingsPanel.getDisplay().getSystemColor(SWT.COLOR_MAGENTA));
-		estimatePanel.setBackground(estimatePanel.getDisplay().getSystemColor(SWT.COLOR_BLUE)); 
-		buttonsPanel.setBackground(buttonsPanel.getDisplay().getSystemColor(SWT.COLOR_GREEN)); 
-		tablePanel.setBackground(tablePanel.getDisplay().getSystemColor(SWT.COLOR_YELLOW)); 
+		text = new Text(parent, SWT.BORDER);
+		text.setEditable(false);
+		text.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 9, 1));
+
+		bind();
+	}
+
+	public void bind() {
+		DataBindingContext bindingContext = new DataBindingContext();
+        bindingContext.bindValue(WidgetProperties.text().observe(text), BeanProperties.value("script").observe(list.get(0)));
 	}
 	
 	@Override
