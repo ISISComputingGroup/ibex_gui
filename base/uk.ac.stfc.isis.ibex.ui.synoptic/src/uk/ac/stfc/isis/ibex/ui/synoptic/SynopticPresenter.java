@@ -146,7 +146,7 @@ public class SynopticPresenter extends ModelObject {
 		LOG.info(targetName + " requested");
 		if (targets.containsKey(targetName)) {
 			Target target = targets.get(targetName).item();
-
+			
             LOG.info(target.name());
 
 			if (target instanceof OpiTarget) {

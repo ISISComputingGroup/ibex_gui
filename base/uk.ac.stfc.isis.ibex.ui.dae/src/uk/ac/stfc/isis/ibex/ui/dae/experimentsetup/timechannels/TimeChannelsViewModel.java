@@ -36,7 +36,7 @@ import uk.ac.stfc.isis.ibex.model.UpdatedValue;
  */
 public class TimeChannelsViewModel extends ModelObject {
 
-	private TimeChannels model;
+    private TimeChannels model;
 
     /**
      * Binds Listeners to the time channel settings model used to update the
@@ -44,22 +44,22 @@ public class TimeChannelsViewModel extends ModelObject {
      * 
      * @param timeChannels the time channel settings model
      */
-	public void setModel(TimeChannels timeChannels) {
-		model = timeChannels;
-		
-		model.addPropertyChangeListener("timeRegimes", new PropertyChangeListener() {
+    public void setModel(TimeChannels timeChannels) {
+        model = timeChannels;
+
+        model.addPropertyChangeListener("timeRegimes", new PropertyChangeListener() {
             @Override
             public void propertyChange(PropertyChangeEvent e) {
                 firePropertyChange(e.getPropertyName(), e.getOldValue(), e.getNewValue());
-			}
-		});
-		
-		model.addPropertyChangeListener("timeUnit", new PropertyChangeListener() {
+            }
+        });
+
+        model.addPropertyChangeListener("timeUnit", new PropertyChangeListener() {
             @Override
             public void propertyChange(PropertyChangeEvent e) {
                 firePropertyChange(e.getPropertyName(), e.getOldValue(), e.getNewValue());
-				}
-			});
+            }
+        });
 
         model.addPropertyChangeListener("timeChannelFile", new PropertyChangeListener() {
             @Override
@@ -81,16 +81,16 @@ public class TimeChannelsViewModel extends ModelObject {
                 firePropertyChange(e.getPropertyName(), e.getOldValue(), e.getNewValue());
             }
         });
-	}
-	
+    }
+
     /**
      * A list of all time regimes used to manually define time channel settings.
      * 
      * @return the list of time regimes
      */
-	public List<TimeRegime> timeRegimes() {		
-		return model.timeRegimes();
-	}
+    public List<TimeRegime> timeRegimes() {
+        return model.timeRegimes();
+    }
 
     /**
      * Return the currently selected file from which to read time channel
@@ -98,18 +98,18 @@ public class TimeChannelsViewModel extends ModelObject {
      * 
      * @return the path to the file
      */
-	public String getTimeChannelFile() {
-		return model.timeChannelFile();
-	}
-	
+    public String getTimeChannelFile() {
+        return model.timeChannelFile();
+    }
+
     /**
      * Set the currently selected file from which to read time channel settings.
      * 
      * @param value the path to the file
      */
-	public void setTimeChannelFile(String value) {
-		model.setTimeChannelFile(value);
-	}
+    public void setTimeChannelFile(String value) {
+        model.setTimeChannelFile(value);
+    }
 
     /**
      * Returns a string array containing paths to all time channel configuration
@@ -120,8 +120,8 @@ public class TimeChannelsViewModel extends ModelObject {
     public String[] getTimeChannelFileList() {
         String[] items = valueOrEmpty(model.timeChannelFileList());
         items = items.length != 0 ? items : new String[] {
-                "No TCB File found on instrument. Files must be located in C:\\Instrument\\Settings\\config\\[Instrument Name]\\configuration\\tcb\\ and filename must contain string \"tcb\"." };
-        return items;
+                "None found in C:\\Instrument\\Settings\\config\\[Instrument]\\configurations\\tcb\\ (file name must contain \"tcb\")." };
+        return addBlank(items);
     }
 
     /**
@@ -141,7 +141,7 @@ public class TimeChannelsViewModel extends ModelObject {
      */
     public CalculationMethod getCalculationMethod() {
         return model.calculationMethod();
-	}
+    }
 
     /**
      * Sets the method used to determine time channel calculation parameters
@@ -150,8 +150,8 @@ public class TimeChannelsViewModel extends ModelObject {
      * @param method the calculation method
      */
     public void setCalculationMethod(CalculationMethod method) {
-		model.setCalculationMethod(method);
-	}
+        model.setCalculationMethod(method);
+    }
 
     /**
      * Returns the time unit used for time channel calculations (micro- or
@@ -160,9 +160,9 @@ public class TimeChannelsViewModel extends ModelObject {
      * 
      * @return the index of the time unit
      */
-	public int getTimeUnit() {
-		return model.timeUnit().ordinal();
-	}
+    public int getTimeUnit() {
+        return model.timeUnit().ordinal();
+    }
 
     /**
      * Sets the time unit used for time channel calculations (micro- or
@@ -170,10 +170,10 @@ public class TimeChannelsViewModel extends ModelObject {
      * 
      * @param index the index of the time unit
      */
-	public void setTimeUnit(int index) {
-		TimeUnit value = TimeUnit.values()[index];
-		model.setTimeUnit(value);
-	}
+    public void setTimeUnit(int index) {
+        TimeUnit value = TimeUnit.values()[index];
+        model.setTimeUnit(value);
+    }
 
     /**
      * Used to convert an UpdatedValue with type string collection into a string
@@ -185,5 +185,14 @@ public class TimeChannelsViewModel extends ModelObject {
     private String[] valueOrEmpty(UpdatedValue<Collection<String>> updated) {
         Collection<String> value = updated.getValue();
         return value != null ? value.toArray(new String[0]) : new String[0];
+    }
+
+    private String[] addBlank(String[] tables) {
+        String[] result = new String[tables.length + 1];
+        result[0] = " ";
+        for (int i = 0; i < tables.length; i++) {
+            result[i + 1] = tables[i];
+        }
+        return result;
     }
 }
