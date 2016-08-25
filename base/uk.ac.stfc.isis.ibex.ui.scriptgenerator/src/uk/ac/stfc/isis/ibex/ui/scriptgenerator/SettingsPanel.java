@@ -57,6 +57,7 @@ public class SettingsPanel extends Composite {
 		GridLayout glGrpSettings = new GridLayout(5, false);
 		grpSettings.setLayout(glGrpSettings);
 		glGrpSettings.horizontalSpacing = 10;
+
 		
 		Label lblOrder = new Label(grpSettings, SWT.RIGHT);
 		lblOrder.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
@@ -69,7 +70,7 @@ public class SettingsPanel extends Composite {
 		comboOrder.select(0);
 		
 		CLabel lblSeparator = new CLabel(grpSettings, SWT.CENTER);
-		lblSeparator.setMargins(150, 0, 0, 0);
+		lblSeparator.setMargins(100, 0, 0, 0);
 		
 		Label lblSampleGeometry = new Label(grpSettings, SWT.RIGHT);
 		lblSampleGeometry.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
@@ -85,8 +86,10 @@ public class SettingsPanel extends Composite {
 		lblDoSans.setLayoutData(new GridData(SWT.RIGHT, SWT.FILL, false, false, 1, 1));
 		lblDoSans.setText("Do SANS:");
 		
-		Text txtDoSans = new Text(grpSettings, SWT.RIGHT);
-		txtDoSans.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false, 1, 1));
+		Text txtDoSans = new Text(grpSettings, SWT.BORDER);
+		GridData gdTxtDoSans = new GridData(SWT.LEFT, SWT.FILL, false, false, 1, 1);
+		txtDoSans.setLayoutData(gdTxtDoSans);
+		gdTxtDoSans.widthHint = 30;
 		txtDoSans.setText("1");
 		
 		new Label(grpSettings, SWT.CENTER);
@@ -95,7 +98,7 @@ public class SettingsPanel extends Composite {
 		lblSampleHeight.setLayoutData(new GridData(SWT.RIGHT, SWT.FILL, false, false, 1, 1));
 		lblSampleHeight.setText("Sample Height:");
 		
-		Text txtSampleHeight = new Text(grpSettings, SWT.RIGHT);
+		Text txtSampleHeight = new Text(grpSettings, SWT.BORDER);
 		txtSampleHeight.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false, 1, 1));
 		txtSampleHeight.setText("7");
 		
@@ -103,9 +106,9 @@ public class SettingsPanel extends Composite {
 		lblDoTrans.setLayoutData(new GridData(SWT.RIGHT, SWT.FILL, false, false, 1, 1));
 		lblDoTrans.setText("Do TRANS:");
 		
-		Text txtDoTrans = new Text(grpSettings, SWT.RIGHT);
+		Text txtDoTrans = new Text(grpSettings, SWT.BORDER);
 		txtDoTrans.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1));
-		txtDoTrans.setText("11");
+		txtDoTrans.setText("1");
 		
 		new Label(grpSettings, SWT.CENTER);
 		
@@ -113,7 +116,7 @@ public class SettingsPanel extends Composite {
 		lblSampleWidth.setLayoutData(new GridData(SWT.RIGHT, SWT.FILL, false, false, 1, 1));
 		lblSampleWidth.setText("Sample Width:");
 		
-		Text txtSampleWidth = new Text(grpSettings, SWT.RIGHT);
+		Text txtSampleWidth = new Text(grpSettings, SWT.BORDER);
 		txtSampleWidth.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1));
 		txtSampleWidth.setText("7");
 		

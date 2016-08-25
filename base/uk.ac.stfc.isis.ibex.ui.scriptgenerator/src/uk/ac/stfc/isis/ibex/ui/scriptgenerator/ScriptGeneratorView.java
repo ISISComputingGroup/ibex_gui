@@ -61,12 +61,12 @@ public class ScriptGeneratorView extends ViewPart {
 		new Label(topPanel, SWT.NONE);
 		
 		EstimatePanel estimatePanel = new EstimatePanel(topPanel, SWT.NONE);
-		estimatePanel.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, true, false, 1, 1));
+		estimatePanel.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1));
 		
 		new Label(topPanel, SWT.NONE);
 		
 		ButtonsPanel buttonsPanel = new ButtonsPanel(topPanel, SWT.NONE);
-		buttonsPanel.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, false, 1, 1));
+		buttonsPanel.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1));
 		
 		TablePanel tablePanel = new TablePanel(parent, SWT.NONE);
 		tablePanel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
