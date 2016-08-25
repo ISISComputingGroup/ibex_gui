@@ -16,8 +16,7 @@ public class EstimatePanel extends Composite {
 		setLayout(new GridLayout(1, true));
 		
 		Group grpEstimate = new Group(this, SWT.NONE);
-		grpEstimate.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		grpEstimate.setText("Estimated Script Time");
+		grpEstimate.setLayoutData(new GridData(SWT.FILL, SWT.LEFT, true, false, 1, 1));
 		grpEstimate.setLayout(new GridLayout(2, false));
 		
 		Label lblCountRate = new Label(grpEstimate, SWT.RIGHT);

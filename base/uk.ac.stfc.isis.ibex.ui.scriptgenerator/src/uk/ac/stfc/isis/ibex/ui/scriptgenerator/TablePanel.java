@@ -56,14 +56,6 @@ public class TablePanel extends Composite {
 		ScriptGeneratorTable table = new ScriptGeneratorTable(this, SWT.NONE, SWT.MULTI | SWT.NO_SCROLL | SWT.V_SCROLL | SWT.FULL_SELECTION | SWT.BORDER, false);
 		table.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
 		table.setRows(list);
-	
-		Button btnPreview = new Button(this, SWT.NONE);
-		btnPreview.setText("Preview");
-		btnPreview.setLayoutData(new GridData(SWT.FILL, SWT.NONE, false, false, 1, 1));
-		
-		text = new Text(this, SWT.BORDER);
-		text.setEditable(false);
-		text.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 	}
 
 	public void bind() {
