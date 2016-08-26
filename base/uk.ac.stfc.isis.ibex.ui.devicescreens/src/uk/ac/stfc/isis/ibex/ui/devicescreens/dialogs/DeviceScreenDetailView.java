@@ -21,6 +21,10 @@ package uk.ac.stfc.isis.ibex.ui.devicescreens.dialogs;
 
 import java.util.Collection;
 
+import org.eclipse.core.databinding.DataBindingContext;
+import org.eclipse.core.databinding.beans.BeanProperties;
+import org.eclipse.core.databinding.observable.value.IObservableValue;
+import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -30,6 +34,7 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.ComponentDescription;
+import uk.ac.stfc.isis.ibex.ui.devicescreens.models.DeviceScreensDescriptionViewModel;
 
 /**
  * The editor panel for individual device screens.
@@ -43,9 +48,12 @@ public class DeviceScreenDetailView extends Composite {
 	private Composite detailssComposite;
 
     private TargetNameWidget targetSelect;
+    private DeviceScreensDescriptionViewModel viewModel;
 
-    public DeviceScreenDetailView(Composite parent, Collection<String> availableOPIs) {
+    public DeviceScreenDetailView(Composite parent, Collection<String> availableOPIs,
+            DeviceScreensDescriptionViewModel viewModel) {
         super(parent, SWT.NONE);
+        this.viewModel = viewModel;
 		
 //		this.synopticViewModel = synopticViewModel;
 //		
@@ -93,6 +101,12 @@ public class DeviceScreenDetailView extends Composite {
 
         Text txtName = new Text(detailssComposite, SWT.BORDER);
         txtName.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false, 1, 1));
+
+        DataBindingContext ctx = new DataBindingContext();
+
+        IObservableValue target = WidgetProperties.text(SWT.Modify).observe(txtName);
+        IObservableValue model = BeanProperties.value("name").observe(viewModel);
+        ctx.bindValue(target, model);
 
         Label lblTarget = new Label(detailssComposite, SWT.NONE);
         lblTarget.setLayoutData(new GridData(SWT.RIGHT, SWT.TOP, false, false, 1, 1));

@@ -29,6 +29,12 @@ import org.eclipse.jface.window.Window;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.PlatformUI;
 
+import uk.ac.stfc.isis.ibex.devicescreens.DeviceScreens;
+import uk.ac.stfc.isis.ibex.devicescreens.desc.DeviceScreensDescription;
+import uk.ac.stfc.isis.ibex.epics.adapters.UpdatedObservableAdapter;
+import uk.ac.stfc.isis.ibex.model.Awaited;
+import uk.ac.stfc.isis.ibex.model.UpdatedValue;
+import uk.ac.stfc.isis.ibex.opis.Opi;
 import uk.ac.stfc.isis.ibex.ui.devicescreens.dialogs.ConfigureDeviceScreensDialog;
 
 /**
@@ -58,18 +64,33 @@ public class ConfigureDeviceScreensHandler extends AbstractHandler {
         // destination.subscribe(configService);
     }
 
+    /**
+     * Helper method for getting the GUI shell for the active window.
+     * 
+     * @return the current active shell
+     */
     protected Shell shell() {
         return PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
     }
 
     @Override
     public Object execute(ExecutionEvent event) throws ExecutionException {
-        ConfigureDeviceScreensDialog dialog = new ConfigureDeviceScreensDialog(shell());
+        ConfigureDeviceScreensDialog dialog =
+                new ConfigureDeviceScreensDialog(shell(), Opi.getDefault().descriptionsProvider().getOpiList(), load());
 
         if (dialog.open() == Window.OK) {
 
         }
 
+        return null;
+    }
+
+    private DeviceScreensDescription load() {
+        UpdatedValue<DeviceScreensDescription> instrumentDescription =
+                new UpdatedObservableAdapter<>(DeviceScreens.getInstance().getDevices());
+        if (Awaited.returnedValue(instrumentDescription, 1)) {
+            return instrumentDescription.getValue();
+        }
         return null;
     }
 

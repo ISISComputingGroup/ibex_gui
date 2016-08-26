@@ -22,6 +22,7 @@
  */
 package uk.ac.stfc.isis.ibex.ui.devicescreens.dialogs;
 
+import org.eclipse.core.databinding.beans.BeanProperties;
 import org.eclipse.jface.databinding.viewers.ObservableListContentProvider;
 import org.eclipse.jface.viewers.ListViewer;
 import org.eclipse.swt.SWT;
@@ -37,6 +38,8 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.List;
 import org.eclipse.wb.swt.ResourceManager;
 
+import uk.ac.stfc.isis.ibex.ui.devicescreens.models.DeviceScreensDescriptionViewModel;
+
 /**
  * 
  */
@@ -51,14 +54,18 @@ public class DeviceScreenListView extends Composite {
     private Composite orderComposite;
     private Composite btnsComposite;
 
+    private DeviceScreensDescriptionViewModel viewModel;
+
     /**
      * @param parent
      * @param style
      */
-    public DeviceScreenListView(Composite parent) {
+    public DeviceScreenListView(Composite parent, DeviceScreensDescriptionViewModel viewModel) {
         super(parent, SWT.NONE);
         setLayout(new GridLayout(1, false));
         setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, true, 1, 1));
+
+        this.viewModel = viewModel;
 
         Group grpList = new Group(this, SWT.NONE);
         grpList.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
@@ -68,8 +75,7 @@ public class DeviceScreenListView extends Composite {
         devicesViewer = new ListViewer(grpList, SWT.BORDER | SWT.V_SCROLL | SWT.SINGLE);
         ObservableListContentProvider contentProvider = new ObservableListContentProvider();
         devicesViewer.setContentProvider(contentProvider);
-//        devicesViewer.setInput(BeanProperties.list(EditableConfiguration.EDITABLE_GROUPS)
-//                .observe(configurationViewModels.getConfigModel().getValue()));
+        devicesViewer.setInput(BeanProperties.list("screenNames").observe(viewModel));
 
         devicesList = devicesViewer.getList();
         GridData gdViewer = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
@@ -83,6 +89,7 @@ public class DeviceScreenListView extends Composite {
             @Override
             public void keyPressed(KeyEvent e) {
                 if (e.keyCode == SWT.DEL) {
+                    viewModel.addScreen("Hello");
                     // groupEditorViewModel.removeGroup(groupList.getSelectionIndex());
                 }
             }

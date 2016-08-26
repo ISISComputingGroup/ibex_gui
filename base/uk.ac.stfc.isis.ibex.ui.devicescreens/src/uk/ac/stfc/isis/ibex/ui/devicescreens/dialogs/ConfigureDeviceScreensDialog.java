@@ -22,8 +22,7 @@
  */
 package uk.ac.stfc.isis.ibex.ui.devicescreens.dialogs;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Collection;
 
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.swt.SWT;
@@ -33,6 +32,9 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Shell;
 
+import uk.ac.stfc.isis.ibex.devicescreens.desc.DeviceScreensDescription;
+import uk.ac.stfc.isis.ibex.ui.devicescreens.models.DeviceScreensDescriptionViewModel;
+
 /**
  * The main dialog for editing the device screens.
  */
@@ -40,23 +42,28 @@ public class ConfigureDeviceScreensDialog extends Dialog {
 
     private static final Point INITIAL_SIZE = new Point(650, 750);
     private final String title = "Configure Device Screens";
-
-
-    /** Error messages that are displayed. <Source, message> */
-    private Map<String, String> errorMessages = new HashMap<String, String>();
+    private Collection<String> availableOPIs;
+    private DeviceScreensDescriptionViewModel viewModel;
 
     /**
-     * @param parentShell
+     * The constructor.
+     * 
+     * @param parentShell the parent
+     * @param availableOPIs the names of the OPIs
      */
-    public ConfigureDeviceScreensDialog(Shell parentShell) {
+    public ConfigureDeviceScreensDialog(Shell parentShell, Collection<String> availableOPIs,
+            DeviceScreensDescription description) {
         super(parentShell);
         setShellStyle(getShellStyle() | SWT.DIALOG_TRIM | SWT.RESIZE);
+        this.availableOPIs = availableOPIs;
+        this.viewModel = new DeviceScreensDescriptionViewModel(description);
 
     }
 
     @Override
     protected Control createDialogArea(Composite parent) {
-        ConfigureDeviceScreensPanel editor = new ConfigureDeviceScreensPanel(parent, SWT.NONE);
+        ConfigureDeviceScreensPanel editor =
+                new ConfigureDeviceScreensPanel(parent, SWT.NONE, availableOPIs, viewModel);
         editor.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
         return editor;
     }

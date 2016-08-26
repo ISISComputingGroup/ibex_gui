@@ -22,12 +22,14 @@
  */
 package uk.ac.stfc.isis.ibex.ui.devicescreens.dialogs;
 
-import java.util.ArrayList;
+import java.util.Collection;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
+
+import uk.ac.stfc.isis.ibex.ui.devicescreens.models.DeviceScreensDescriptionViewModel;
 
 /**
  * 
@@ -40,7 +42,8 @@ public class ConfigureDeviceScreensPanel extends Composite {
      * @param parent
      * @param style
      */
-    public ConfigureDeviceScreensPanel(Composite parent, int style) {
+    public ConfigureDeviceScreensPanel(Composite parent, int style, Collection<String> availableOPIs,
+            DeviceScreensDescriptionViewModel viewModel) {
         super(parent, style);
 
         setLayout(new GridLayout(1, true));
@@ -49,8 +52,8 @@ public class ConfigureDeviceScreensPanel extends Composite {
         targetComposite.setLayout(new GridLayout(2, false));
         targetComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 
-        new DeviceScreenListView(targetComposite);
-        new DeviceScreenDetailView(targetComposite, new ArrayList<String>());
+        new DeviceScreenListView(targetComposite, viewModel);
+        new DeviceScreenDetailView(targetComposite, availableOPIs, viewModel);
 
     }
 
