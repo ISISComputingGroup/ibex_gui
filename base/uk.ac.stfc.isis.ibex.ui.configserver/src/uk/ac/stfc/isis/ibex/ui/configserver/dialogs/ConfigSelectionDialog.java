@@ -51,5 +51,23 @@ public class ConfigSelectionDialog extends MultipleConfigsSelectionDialog {
      */
 	public String selectedConfig() {
         return selected.toArray(new String[1])[0];
-	}
+    }
+
+    /**
+     * @return A string corresponding to the type of item in the list.
+     */
+    @Override
+    protected String getTypeString() {
+        String plural = super.getTypeString();
+
+        // Remove final s, if it exists
+        String singular;
+        if (plural != null && plural.length() > 0 && plural.charAt(plural.length() - 1) == 's') {
+            singular = plural.substring(0, plural.length() - 1);
+        } else {
+            singular = plural;
+        }
+
+        return singular;
+    }
 }

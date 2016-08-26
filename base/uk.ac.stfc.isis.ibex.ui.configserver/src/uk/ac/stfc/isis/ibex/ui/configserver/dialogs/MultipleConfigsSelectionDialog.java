@@ -95,7 +95,7 @@ public class MultipleConfigsSelectionDialog extends SelectionDialog {
 	@Override
     protected void createSelection(Composite container) {
 		Label lblSelect = new Label(container, SWT.NONE);
-		lblSelect.setText("Select " + getTypeString() + ":");
+        lblSelect.setText("Select " + getTypeString() + ":");
 
 		items = new List(container, SWT.BORDER | SWT.V_SCROLL | SWT.MULTI);
 		items.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
@@ -112,7 +112,7 @@ public class MultipleConfigsSelectionDialog extends SelectionDialog {
     /**
      * @return A string corresponding to the type of item in the list.
      */
-	private String getTypeString() {
-		return isComponent ? "components" : "configurations";
+    protected String getTypeString() {
+        return isComponent ? "component" : "configuration";
 	}
 }
