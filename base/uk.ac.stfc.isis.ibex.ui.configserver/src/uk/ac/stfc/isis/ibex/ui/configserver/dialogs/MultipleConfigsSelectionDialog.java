@@ -24,39 +24,59 @@ import java.util.Arrays;
 import java.util.Collection;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.swt.layout.GridData;
 
 import uk.ac.stfc.isis.ibex.configserver.configuration.ConfigInfo;
 import uk.ac.stfc.isis.ibex.ui.dialogs.SelectionDialog;
 
-@SuppressWarnings("checkstyle:magicnumber")
 /**
  * Dialog for asking the user to select a multiple configurations or components.
  */
 public class MultipleConfigsSelectionDialog extends SelectionDialog {
 	
-	private final Collection<ConfigInfo> available;
-	private boolean isComponent;
+    /**
+     * The collection of the available configurations/components for the user to
+     * select from.
+     */
+    protected final Collection<ConfigInfo> available;
 
-	private Collection<String> selected = new ArrayList<>();
+    /**
+     * Is the dialog to do with components? (as opposed to configs)
+     */
+    protected boolean isComponent;
+
+    /**
+     * The currently selected items.
+     */
+    protected Collection<String> selected = new ArrayList<>();
 	
+    /**
+     * Include the current config in the list of available items.
+     */
+    protected boolean includeCurrent;
+
 	/**
-	 * @param parentShell The shell to create the dialog in.
-	 * @param title The title of the dialog box.
-	 * @param available A collection of the available configurations/components for the user to select from.
-	 * @param isComponent Whether the user is selecting from a list of components.
-	 */
+     * @param parentShell The shell to create the dialog in.
+     * @param title The title of the dialog box.
+     * @param available A collection of the available configurations/components
+     *            for the user to select from.
+     * @param isComponent Whether the user is selecting from a list of
+     *            components.
+     * @param includeCurrent Whether the current config/component should be
+     *            included in the list of available items
+     */
 	public MultipleConfigsSelectionDialog(
 			Shell parentShell, 
 			String title,
-			Collection<ConfigInfo> available, boolean isComponent) {
+            Collection<ConfigInfo> available, boolean isComponent, boolean includeCurrent) {
 		super(parentShell, title);
 		this.available = available;
 		this.isComponent = isComponent;
+        this.includeCurrent = includeCurrent;
 	}
 	
 	/**
@@ -72,17 +92,26 @@ public class MultipleConfigsSelectionDialog extends SelectionDialog {
 		super.okPressed();
 	}
 	
-	protected void createSelection(Composite container) {
+	@Override
+    protected void createSelection(Composite container) {
 		Label lblSelect = new Label(container, SWT.NONE);
 		lblSelect.setText("Select " + getTypeString() + ":");
 
 		items = new List(container, SWT.BORDER | SWT.V_SCROLL | SWT.MULTI);
 		items.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		String[] names = ConfigInfo.names(available).toArray(new String[0]);
+        String[] names;
+        if (includeCurrent) {
+            names = ConfigInfo.names(available).toArray(new String[0]);
+        } else {
+            names = ConfigInfo.namesWithoutCurrent(available).toArray(new String[0]);
+        }
 		Arrays.sort(names);
 		items.setItems(names);
 	}
 	
+    /**
+     * @return A string corresponding to the type of item in the list.
+     */
 	private String getTypeString() {
 		return isComponent ? "components" : "configurations";
 	}

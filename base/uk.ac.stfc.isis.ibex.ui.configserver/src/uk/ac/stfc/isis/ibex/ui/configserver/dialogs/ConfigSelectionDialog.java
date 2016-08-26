@@ -19,41 +19,16 @@
 
 package uk.ac.stfc.isis.ibex.ui.configserver.dialogs;
 
-import java.util.Arrays;
 import java.util.Collection;
 
-import org.eclipse.jface.dialogs.Dialog;
-import org.eclipse.jface.dialogs.IDialogConstants;
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.MouseAdapter;
-import org.eclipse.swt.events.MouseEvent;
-import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.events.SelectionListener;
-import org.eclipse.swt.graphics.Point;
-import org.eclipse.swt.internal.win32.CREATESTRUCT;
-import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.swt.widgets.Text;
 
 import uk.ac.stfc.isis.ibex.configserver.configuration.ConfigInfo;
-import uk.ac.stfc.isis.ibex.ui.dialogs.SelectionDialog;
 
-@SuppressWarnings("checkstyle:magicnumber")
 /**
  * Dialog for asking the user to select a single configuration or component.
  */
-public class ConfigSelectionDialog extends SelectionDialog {
-	
-	private final Collection<ConfigInfo> available;
-	
-	private boolean isComponent;
-    private boolean includeCurrent;
-
-	private String selectedName;
+public class ConfigSelectionDialog extends MultipleConfigsSelectionDialog {
 	
 	/**
 	 * @param parentShell The shell to create the dialog in.
@@ -66,43 +41,15 @@ public class ConfigSelectionDialog extends SelectionDialog {
 			Shell parentShell, 
 			String title,
             Collection<ConfigInfo> available, boolean isComponent, boolean includeCurrent) {
-		super(parentShell, title);
-		this.available = available;
-		this.isComponent = isComponent;
-        this.includeCurrent = includeCurrent;
+        super(parentShell, title, available, isComponent, includeCurrent);
 	}
 	
 	/**
-	 * Get the name of the configuration/component that the user has chosen
-	 * @return The chosen configuration/component.
-	 */
+     * Get the name of the configuration/component that the user has chosen.
+     * 
+     * @return The chosen configuration/component.
+     */
 	public String selectedConfig() {
-		return selectedName;
-	}
-	
-	@Override
-	protected void okPressed() {
-		selectedName = items.getSelection()[0];
-		super.okPressed();
-	}
-	
-	protected void createSelection(Composite container) {
-		Label lblSelect = new Label(container, SWT.NONE);
-		lblSelect.setText("Select a " + getTypeString().toLowerCase() + ":");
-		
-		items = new List(container, SWT.BORDER | SWT.V_SCROLL);
-		items.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-        String[] names;
-        if (includeCurrent) {
-            names = ConfigInfo.names(available).toArray(new String[0]);
-        } else {
-            names = ConfigInfo.namesWithoutCurrent(available).toArray(new String[0]);
-        }
-		Arrays.sort(names, String.CASE_INSENSITIVE_ORDER);
-		items.setItems(names);
-	}
-	
-	private String getTypeString() {
-		return isComponent ? "Component" : "Configuration";
+        return selected.toArray(new String[1])[0];
 	}
 }
