@@ -5,6 +5,7 @@ import org.eclipse.ui.part.ViewPart;
 import org.eclipse.wb.swt.SWTResourceManager;
 import org.eclipse.swt.browser.Browser;
 import org.eclipse.swt.custom.CLabel;
+import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.layout.FillLayout;
 
 import java.util.ArrayList;
@@ -39,23 +40,39 @@ public class ScriptGeneratorView extends ViewPart {
 		parent.setLayout(new GridLayout(1, true));
 		
 		Composite topPanel = new Composite(parent, SWT.NONE);
-		topPanel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
-		topPanel.setLayout(new GridLayout(3, false));
+		topPanel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
+		topPanel.setLayout(new GridLayout(5, false));
+		
+		StyledText test = new StyledText(topPanel, SWT.NONE);
+		GridData gdTest = new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1);
+		test.setLayoutData(gdTest);
 		
 		Label lblSettingsTitle = new Label(topPanel, SWT.LEFT);
 		lblSettingsTitle.setFont(SWTResourceManager.getFont("Segoe UI", 10, SWT.BOLD));
-		lblSettingsTitle.setLayoutData(new GridData(SWT.FILL, SWT.BOTTOM, false, false, 1, 1));
+		lblSettingsTitle.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 		lblSettingsTitle.setText(" Settings");
 		
-		CLabel lblSeparator = new CLabel(topPanel, SWT.NONE);
-		//lblSeparator.setMargins(0, 0, 40, 0);
+		Label lblSeparator = new Label(topPanel, SWT.NONE);
+		GridData gdSeparator = new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1);
+		gdSeparator.widthHint = 20;
+		lblSeparator.setLayoutData(gdSeparator);
 		
 		Label lblEstimateTitle = new Label(topPanel, SWT.LEFT);
 		lblEstimateTitle.setFont(SWTResourceManager.getFont("Segoe UI", 10, SWT.BOLD));
-		lblEstimateTitle.setLayoutData(new GridData(SWT.FILL, SWT.BOTTOM, true, false, 1, 1));
 		lblEstimateTitle.setText(" Estimated Script Time");
 		
+		Label lblSeparator2 = new Label(topPanel, SWT.NONE);
+		GridData gdSeparator2 = new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 2);
+		gdSeparator2.widthHint = 20;
+		lblSeparator2.setLayoutData(gdSeparator2);
+		
+		Label lblSaveLoad = new Label(topPanel, SWT.LEFT);
+		lblSaveLoad.setFont(SWTResourceManager.getFont("Segoe UI", 10, SWT.BOLD));
+		lblSaveLoad.setText("  Save / Load");
+		
 		SettingsPanel settingsPanel = new SettingsPanel(topPanel, SWT.BORDER_SOLID);
+		GridLayout glSettingsPanel = (GridLayout) settingsPanel.getLayout();
+		glSettingsPanel.makeColumnsEqualWidth = true;
 		settingsPanel.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 2));
 		
 		new Label(topPanel, SWT.NONE);
@@ -63,10 +80,21 @@ public class ScriptGeneratorView extends ViewPart {
 		EstimatePanel estimatePanel = new EstimatePanel(topPanel, SWT.NONE);
 		estimatePanel.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1));
 		
-		new Label(topPanel, SWT.NONE);
+		SaveLoadPanel saveLoadPanel = new SaveLoadPanel(topPanel, SWT.NONE);
+		saveLoadPanel.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1));
 		
+		new Label(topPanel, SWT.NONE);
+
 		ButtonsPanel buttonsPanel = new ButtonsPanel(topPanel, SWT.NONE);
 		buttonsPanel.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1));
+		
+		new Label(topPanel, SWT.NONE);
+		
+		Button btnClearTable = new Button(topPanel, SWT.NONE);
+		btnClearTable.setText("Clear Table");
+		GridData gdButtonClearTable = new GridData(SWT.RIGHT, SWT.BOTTOM, true, false, 1, 1);
+		gdButtonClearTable.minimumWidth = 80;
+		btnClearTable.setLayoutData(gdButtonClearTable);
 		
 		TablePanel tablePanel = new TablePanel(parent, SWT.NONE);
 		tablePanel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));

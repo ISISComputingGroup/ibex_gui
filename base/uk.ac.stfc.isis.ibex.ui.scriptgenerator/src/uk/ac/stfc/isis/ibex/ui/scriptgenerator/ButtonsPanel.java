@@ -16,11 +16,14 @@ public class ButtonsPanel extends Composite {
 		
 		Button btnPreview = new Button(this, SWT.NONE);
 		btnPreview.setText("Preview Script");
-		btnPreview.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		GridData gdButtonPreview = new GridData(SWT.CENTER, SWT.CENTER, true, false, 1, 1);
+		gdButtonPreview.minimumWidth = 80;
+		btnPreview.setLayoutData(gdButtonPreview);
 		
 		Button btnWrite = new Button(this, SWT.NONE);
 		btnWrite.setText("Write Script");
-		btnWrite.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		
+		GridData gdButtonWrite = new GridData(SWT.CENTER, SWT.CENTER, true, false, 1, 1);
+		gdButtonWrite.minimumWidth = 80;
+		btnWrite.setLayoutData(gdButtonWrite);
 	}
 }

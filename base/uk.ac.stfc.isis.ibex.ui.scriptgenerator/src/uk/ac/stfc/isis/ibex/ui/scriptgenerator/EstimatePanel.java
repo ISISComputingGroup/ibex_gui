@@ -15,9 +15,12 @@ public class EstimatePanel extends Composite {
 		super(parent, style);
 		setLayout(new GridLayout(1, true));
 		
-		Group grpEstimate = new Group(this, SWT.NONE);
-		grpEstimate.setLayoutData(new GridData(SWT.FILL, SWT.LEFT, true, false, 1, 1));
-		grpEstimate.setLayout(new GridLayout(2, false));
+		Group grpEstimate = new Group(this, SWT.NULL);
+		grpEstimate.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+		GridLayout glGrpEstimate = new GridLayout(2, false);
+		grpEstimate.setLayout(glGrpEstimate);
+		glGrpEstimate.horizontalSpacing = 10;
+		glGrpEstimate.verticalSpacing = 6;
 		
 		Label lblCountRate = new Label(grpEstimate, SWT.RIGHT);
 		lblCountRate.setLayoutData(new GridData(SWT.RIGHT, SWT.FILL, false, false, 1, 1));
@@ -44,7 +47,9 @@ public class EstimatePanel extends Composite {
 		lblTimeValue.setText("00:00:00");
 		
 		Button btnCalculate = new Button(grpEstimate, SWT.NONE);
+		GridData gdButtonCalculate = new GridData(SWT.CENTER, SWT.FILL, true, false, 2, 1);
+		btnCalculate.setLayoutData(gdButtonCalculate);
+		gdButtonCalculate.minimumWidth = 80;
 		btnCalculate.setText("Calculate");
-		btnCalculate.setLayoutData(new GridData(SWT.CENTER, SWT.FILL, false, false, 2, 1));
 	}
 }

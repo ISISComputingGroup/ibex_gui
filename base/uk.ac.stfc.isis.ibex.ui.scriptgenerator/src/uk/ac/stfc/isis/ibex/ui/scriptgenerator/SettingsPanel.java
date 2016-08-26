@@ -24,6 +24,7 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.ui.part.ViewPart;
 import org.eclipse.swt.browser.Browser;
 import org.eclipse.swt.custom.CLabel;
+import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.layout.FillLayout;
 
 import java.util.ArrayList;
@@ -52,13 +53,12 @@ public class SettingsPanel extends Composite {
 		setLayout(new GridLayout(2, false));
 		
 		Group grpSettings = new Group(this, SWT.NULL);
-		GridData gdSettings = new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1);
-		grpSettings.setLayoutData(gdSettings);
+		grpSettings.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1));
 		GridLayout glGrpSettings = new GridLayout(5, false);
 		grpSettings.setLayout(glGrpSettings);
 		glGrpSettings.horizontalSpacing = 10;
+		glGrpSettings.verticalSpacing = 6;
 
-		
 		Label lblOrder = new Label(grpSettings, SWT.RIGHT);
 		lblOrder.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		lblOrder.setText("Order:");
@@ -97,9 +97,12 @@ public class SettingsPanel extends Composite {
 		Label lblSampleHeight = new Label(grpSettings, SWT.RIGHT);
 		lblSampleHeight.setLayoutData(new GridData(SWT.RIGHT, SWT.FILL, false, false, 1, 1));
 		lblSampleHeight.setText("Sample Height:");
-		
 		Text txtSampleHeight = new Text(grpSettings, SWT.BORDER);
+
 		txtSampleHeight.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false, 1, 1));
+		GridData gdTxtSampleHeight = new GridData(SWT.LEFT, SWT.FILL, false, false, 1, 1);
+		txtSampleHeight.setLayoutData(gdTxtSampleHeight);
+		gdTxtSampleHeight.widthHint = 30;
 		txtSampleHeight.setText("7");
 		
 		Label lblDoTrans = new Label(grpSettings, SWT.RIGHT);
@@ -107,7 +110,9 @@ public class SettingsPanel extends Composite {
 		lblDoTrans.setText("Do TRANS:");
 		
 		Text txtDoTrans = new Text(grpSettings, SWT.BORDER);
-		txtDoTrans.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1));
+		GridData gdTxtDoTrans = new GridData(SWT.LEFT, SWT.FILL, false, false, 1, 1);
+		txtDoTrans.setLayoutData(gdTxtDoTrans);
+		gdTxtDoTrans.widthHint = 30;
 		txtDoTrans.setText("1");
 		
 		new Label(grpSettings, SWT.CENTER);
@@ -117,7 +122,9 @@ public class SettingsPanel extends Composite {
 		lblSampleWidth.setText("Sample Width:");
 		
 		Text txtSampleWidth = new Text(grpSettings, SWT.BORDER);
-		txtSampleWidth.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1));
+		GridData gdTxtSampleWidth = new GridData(SWT.LEFT, SWT.FILL, false, false, 1, 1);
+		txtSampleWidth.setLayoutData(gdTxtSampleWidth);
+		gdTxtSampleWidth.widthHint = 30;
 		txtSampleWidth.setText("7");
 		
 		new Label(grpSettings, SWT.CENTER);
@@ -138,14 +145,12 @@ public class SettingsPanel extends Composite {
 		comboCollectionMode.setItems(comboCollectionModeItems);
 		comboCollectionMode.select(0);
 		
-		new Label(grpSettings, SWT.CENTER);
-		new Label(grpSettings, SWT.CENTER);
-		new Label(grpSettings, SWT.CENTER);
-		new Label(grpSettings, SWT.CENTER);
-		new Label(grpSettings, SWT.CENTER);
-		
+		Composite separator = new Composite(grpSettings, SWT.NONE);
+		GridData gdSeparator = new GridData(SWT.FILL, SWT.CENTER, true, false, 5, 1);
+		gdSeparator.heightHint = 5;
+		separator.setLayoutData(gdSeparator);
+
 		Label lblApertureSettings = new Label(grpSettings, SWT.RIGHT);
-		lblApertureSettings.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1));
 		lblApertureSettings.setText("A1, S1 Setting:");
 
 		Combo comboApertureSans = new Combo(grpSettings, SWT.NONE | SWT.READ_ONLY);
@@ -155,7 +160,6 @@ public class SettingsPanel extends Composite {
 		comboApertureSans.select(1);
 		
 		Label lblApertureSans = new Label(grpSettings, SWT.RIGHT);
-		lblApertureSans.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1));
 		lblApertureSans.setText("SANS");
 		
 		new Label(grpSettings, SWT.CENTER);
@@ -169,8 +173,9 @@ public class SettingsPanel extends Composite {
 		comboApertureTrans.select(1);
 		
 		Label lblApertureTrans = new Label(grpSettings, SWT.RIGHT);
-		lblApertureTrans.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1));
 		lblApertureTrans.setText("TRANS");
+		new Label(grpSettings, SWT.NONE);
+		new Label(grpSettings, SWT.NONE);
 	}
 
 	public void bind() {
