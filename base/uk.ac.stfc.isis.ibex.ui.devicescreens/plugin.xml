@@ -62,6 +62,31 @@
             restorable="true">
       </view>
    </extension>
+   <extension
+         point="org.eclipse.ui.commands">
+      <command
+            defaultHandler="uk.ac.stfc.isis.ibex.ui.devicescreens.commands.ConfigureDeviceScreensHandler"
+            id="uk.ac.stfc.isis.ibex.ui.devicescreens.command.ConfigureDeviceScreens"
+            name="Configure Device Screens">
+      </command>
+   </extension>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            allPopups="false"
+            locationURI="menu:org.eclipse.ui.main.menu?after=instrumentMenu">
+         <menu
+               id="configurationMenu"
+               label="Configuration">
+            <command
+                  commandId="uk.ac.stfc.isis.ibex.ui.devicescreens.command.ConfigureDeviceScreens"
+                  label="Configure Device Screens"
+                  style="push"
+                  tooltip="Configure the device screens">
+            </command>
+         </menu>
+      </menuContribution>
+   </extension>
 </plugin>
 
 
