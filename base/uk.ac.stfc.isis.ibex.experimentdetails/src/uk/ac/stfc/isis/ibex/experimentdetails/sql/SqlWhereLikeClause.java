@@ -22,7 +22,7 @@ package uk.ac.stfc.isis.ibex.experimentdetails.sql;
 import uk.ac.stfc.isis.ibex.experimentdetails.database.ExpDataField;
 
 /**
- * Add any components to the SQL string based on LIKE clause
+ * Add any components to the SQL string based on LIKE clause.
  */
 public class SqlWhereLikeClause extends SqlWhereClause {
 	

@@ -20,7 +20,7 @@
 package uk.ac.stfc.isis.ibex.experimentdetails.database;
 
 /**
- * An enum to improve readability as to which table is which
+ * An enum to improve readability as to which table is which.
  */
 public enum ExpDataTablesEnum {
 	USER_TABLE("user"),

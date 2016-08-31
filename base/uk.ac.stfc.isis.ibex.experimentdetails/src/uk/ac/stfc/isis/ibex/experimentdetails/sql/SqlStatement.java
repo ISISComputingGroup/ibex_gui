@@ -60,8 +60,8 @@ public class SqlStatement {
     }
 
     /**
-     * Set the (ordered) list of fields that will be retrieved by the select
-     * statement
+     * @param selectFields The (ordered) list of fields that will be retrieved by the select
+     * statement.
      */
     public void setSelectFields(ExpDataField[] selectFields) {
 		this.selectFields = new ArrayList<ExpDataField>(
@@ -69,36 +69,35 @@ public class SqlStatement {
     }
 
     /**
-     * Set the ordered list of fields that will be featured in
-     * WHERE clauses.
+     * @param whereLikeFields The ordered list of fields that will be featured in the WHERE clauses.
      */
     public void setWhereClause(List<SqlWhereClause> whereLikeFields) {
-		this.whereFields = whereLikeFields;
+      this.whereFields = whereLikeFields;
     }
     
     /**
-     * Set the ordered list of tables that will be queried.
+     * @param fromTables The ordered list of tables that will be queried.
      */
     public void setFromTables(List<ExpDataTablesEnum> fromTables) {   	
-		this.fromTables = fromTables;
+      this.fromTables = fromTables;
     }
     
     /**
-     * Set the field to Group By.
+     * @param groupBy The fields to group the returned results by.
      */
     public void setGroupBy(List<ExpDataField> groupBy) {
-		this.groupBy = groupBy;
+      this.groupBy = groupBy;
     }
     
     /**
-     * Set the field to Order By.
+     * @param orderBy The field to Order By
      */
     public void setOrderBy(ExpDataField orderBy) {
-		this.orderBy = orderBy;
+      this.orderBy = orderBy;
     }
 
     /**
-     * Return a string representation of the SQL select statement with SELECT
+     * @return A string representation of the SQL select statement with SELECT
      * fields, WHERE clauses.
      */
     public String getSelectStatement() {
@@ -138,7 +137,7 @@ public class SqlStatement {
     }
     
     /**
-     * Get string representation of the SELECT list
+     * @return A string representation of the SELECT list.
      */
     private String selectList() {
     	//add aliases
@@ -150,7 +149,7 @@ public class SqlStatement {
     }
 
     /**
-     * Get string representation of the Tables list
+     *  @return A string representation of the Tables list.
      */
     private String selectTableList() {
 

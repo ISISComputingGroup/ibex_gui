@@ -24,6 +24,12 @@ import java.util.Collection;
 
 import uk.ac.stfc.isis.ibex.epics.observing.BaseObserver;
 
+/**
+ * An observer that observes a collection. 
+ * It updates with an empty collection when the observable goes into error or disconnects.
+ *
+ * @param <T> The type of the collection.
+ */
 public abstract class CollectionObserver<T> extends BaseObserver<Collection<T>> {
 
 	@Override

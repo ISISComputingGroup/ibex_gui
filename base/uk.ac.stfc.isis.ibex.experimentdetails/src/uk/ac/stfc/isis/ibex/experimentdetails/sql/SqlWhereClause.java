@@ -20,7 +20,7 @@
 package uk.ac.stfc.isis.ibex.experimentdetails.sql;
 
 /**
- * Build up a where clause to search the SQL database
+ * Build up a where clause to search the SQL database.
  */
 public abstract class SqlWhereClause {
 	protected final String lhs;

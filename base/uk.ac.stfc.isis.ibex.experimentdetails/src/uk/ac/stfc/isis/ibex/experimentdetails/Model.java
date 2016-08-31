@@ -20,11 +20,15 @@
 package uk.ac.stfc.isis.ibex.experimentdetails;
 
 import java.util.Collection;
+import java.util.List;
 
 import uk.ac.stfc.isis.ibex.epics.observing.Observable;
 import uk.ac.stfc.isis.ibex.epics.writing.Writable;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 
+/**
+ * The model for the experiment details information.
+ */
 public abstract class Model extends ModelObject {
 
 	public abstract Collection<Parameter> getSampleParameters();
@@ -35,17 +39,46 @@ public abstract class Model extends ModelObject {
 
 	protected abstract void setBeamParameters(Collection<Parameter> beamParameters);
 	
+	/**
+	 * @return An observable that tracks the RB number
+	 */
 	public abstract Observable<String> rbNumber();
 	
+	/**
+	 * @return A writable for setting the RB number
+	 */
 	public abstract Writable<String> rbNumberSetter();
 	
+	/**
+	 * @return The current user details in the model
+	 */
 	public abstract Collection<UserDetails> getUserDetails();
 
+	/**
+	 * Set the user details for the model.
+	 * @param userDetails The new user details.
+	 */
 	public abstract void setUserDetails(Collection<UserDetails> userDetails);
 
+	/**
+	 * Send user details on to the DAE.
+	 */
 	public abstract void sendUserDetails();
 	
-	public abstract UserDetails addUser();
+	/**
+	 * Add a new user to the model.
+	 * The user will be added with default name etc.
+	 */
+	public abstract void addDefaultUser();
+	
+	/**
+	 * Remove a specific group of users from the model.
+	 * @param toRemove The users to remove.
+	 */
+	public abstract void removeUsers(List<UserDetails> toRemove);
 
+	/**
+	 * Remove all user details from the model.
+	 */
 	public abstract void clearUserDetails();
 }
