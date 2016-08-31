@@ -45,8 +45,13 @@ public class MotorsOverview extends Composite {
 	private final List<MouseListener> mouseListeners = new ArrayList<>();
 	
 	private final Color background = SWTResourceManager.getColor(SWT.COLOR_WHITE);
-	
-	public MotorsOverview(Composite parent, int style) {
+
+    /**
+     * 
+     * @param parent - The parent of this element
+     * @param style - The base style to be applied to the overview
+     */
+    public MotorsOverview(Composite parent, int style) {
 		super(parent, style);
 		setBackground(SWTResourceManager.getColor(192, 192, 192));
 		setLayout(new FillLayout(SWT.HORIZONTAL));
@@ -55,12 +60,18 @@ public class MotorsOverview extends Composite {
 		motorComposite.setBackground(background);
 	}
 	
-	public void setMotors(MotorsTable motorsTable) {
+    /**
+     * 
+     * @param motorsTable - The table of motors to be displayed in the view
+     * @param controllerIndexOffset - The offset from 1 of the controller
+     *            numbers (e.g. tab starting at controller 9 has offset of 8).
+     */
+    public void setMotors(MotorsTable motorsTable, int controllerIndexOffset) {
 		motorComposite.setLayout(new GridLayout(motorsTable.getNumMotors() + 1, false));
 		
 		addSpacerLabel();		
 		for (int i = 1; i <= motorsTable.getNumMotors(); i++) {
-			addNumberLabel(i);
+            addMotorNumberLabel(i);
 		}		
 		
 		resetViews();
@@ -68,7 +79,7 @@ public class MotorsOverview extends Composite {
 		int i = 0;
 		for (Motor motor : motorsTable.motors()) {
 			if (i % motorsTable.getNumMotors() == 0) {
-				addNumberLabel(1 + i / motorsTable.getNumMotors());
+                addControllerNumberLabel(i, motorsTable, controllerIndexOffset);
 			}
 			i++;
 			
@@ -138,4 +149,12 @@ public class MotorsOverview extends Composite {
 		
 		return gd;
 	}
+
+    private void addMotorNumberLabel(int i) {
+        addNumberLabel(i);
+	}
+
+    private void addControllerNumberLabel(int i, MotorsTable motorsTable, int controllerIndexOffset) {
+        addNumberLabel(1 + i / motorsTable.getNumMotors() + controllerIndexOffset);
+    }
 }

@@ -19,10 +19,19 @@
 
 package uk.ac.stfc.isis.ibex.experimentdetails.database;
 
+/**
+ * A class to hold a single field from the experiment details table.
+ * Used to construct SQL to ensure that only the correct tables and fields can be used.
+ */
 public class ExpDataField {
 	private ExpDataTablesEnum table;
 	private ExpDataFieldsEnum field;
 	
+	/**
+	 * Constructor to create an ExpDataField Object based on a table and field.
+	 * @param table The table that the field can be found in.
+	 * @param field The specific field.
+	 */
 	public ExpDataField(ExpDataTablesEnum table, ExpDataFieldsEnum field) {
 		this.table = table;
 		this.field = field;

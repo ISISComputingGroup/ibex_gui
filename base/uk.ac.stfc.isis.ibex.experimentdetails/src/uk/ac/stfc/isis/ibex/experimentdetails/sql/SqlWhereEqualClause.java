@@ -23,7 +23,7 @@ import uk.ac.stfc.isis.ibex.experimentdetails.Role;
 import uk.ac.stfc.isis.ibex.experimentdetails.database.ExpDataField;
 
 /**
- * Add SQL clauses for column values which are equal to a given value
+ * Add SQL clauses for column values which are equal to a given value.
  */
 public class SqlWhereEqualClause extends SqlWhereClause {
 	

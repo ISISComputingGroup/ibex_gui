@@ -241,6 +241,7 @@
 		<module>../uk.ac.stfc.isis.ibex.ui.targets</module>
 		<module>../uk.ac.stfc.isis.ibex.targets.tests</module>
 		<module>../uk.ac.stfc.isis.ibex.ui.configserver.tests</module>
+		<module>../uk.ac.stfc.isis.ibex.ui.scriptgenerator</module>
 	</modules>
 </project>
 
