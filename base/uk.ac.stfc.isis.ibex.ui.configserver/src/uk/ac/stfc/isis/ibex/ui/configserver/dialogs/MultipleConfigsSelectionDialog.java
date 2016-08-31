@@ -59,6 +59,12 @@ public class MultipleConfigsSelectionDialog extends SelectionDialog {
      */
     protected boolean includeCurrent;
 
+    /**
+     * Any additional options to be applied when generating the selection list
+     * template.
+     */
+    protected int extraListOptions;
+
 	/**
      * @param parentShell The shell to create the dialog in.
      * @param title The title of the dialog box.
@@ -77,6 +83,7 @@ public class MultipleConfigsSelectionDialog extends SelectionDialog {
 		this.available = available;
 		this.isComponent = isComponent;
         this.includeCurrent = includeCurrent;
+        this.extraListOptions = SWT.MULTI;
 	}
 	
 	/**
@@ -97,7 +104,7 @@ public class MultipleConfigsSelectionDialog extends SelectionDialog {
 		Label lblSelect = new Label(container, SWT.NONE);
         lblSelect.setText("Select " + getTypeString() + ":");
 
-		items = new List(container, SWT.BORDER | SWT.V_SCROLL | SWT.MULTI);
+        items = new List(container, SWT.BORDER | SWT.V_SCROLL | extraListOptions);
 		items.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
         String[] names;
         if (includeCurrent) {

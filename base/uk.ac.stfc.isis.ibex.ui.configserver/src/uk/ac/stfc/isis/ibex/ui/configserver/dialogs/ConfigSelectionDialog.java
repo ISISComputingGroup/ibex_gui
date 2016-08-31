@@ -42,6 +42,7 @@ public class ConfigSelectionDialog extends MultipleConfigsSelectionDialog {
 			String title,
             Collection<ConfigInfo> available, boolean isComponent, boolean includeCurrent) {
         super(parentShell, title, available, isComponent, includeCurrent);
+        this.extraListOptions = 0;
 	}
 	
 	/**
