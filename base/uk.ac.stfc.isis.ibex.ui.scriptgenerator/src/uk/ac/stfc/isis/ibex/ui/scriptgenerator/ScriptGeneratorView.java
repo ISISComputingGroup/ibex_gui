@@ -43,10 +43,6 @@ public class ScriptGeneratorView extends ViewPart {
 		topPanel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
 		topPanel.setLayout(new GridLayout(5, false));
 		
-		StyledText test = new StyledText(topPanel, SWT.NONE);
-		GridData gdTest = new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1);
-		test.setLayoutData(gdTest);
-		
 		Label lblSettingsTitle = new Label(topPanel, SWT.LEFT);
 		lblSettingsTitle.setFont(SWTResourceManager.getFont("Segoe UI", 10, SWT.BOLD));
 		lblSettingsTitle.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
@@ -81,12 +77,14 @@ public class ScriptGeneratorView extends ViewPart {
 		estimatePanel.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1));
 		
 		SaveLoadPanel saveLoadPanel = new SaveLoadPanel(topPanel, SWT.NONE);
+		GridLayout gridLayout = (GridLayout) saveLoadPanel.getLayout();
+		gridLayout.marginWidth = 0;
 		saveLoadPanel.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1));
 		
 		new Label(topPanel, SWT.NONE);
 
 		ButtonsPanel buttonsPanel = new ButtonsPanel(topPanel, SWT.NONE);
-		buttonsPanel.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1));
+		buttonsPanel.setLayoutData(new GridData(SWT.CENTER, SWT.BOTTOM, false, false, 1, 1));
 		
 		new Label(topPanel, SWT.NONE);
 		
