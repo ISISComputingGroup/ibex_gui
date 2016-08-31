@@ -75,7 +75,7 @@
     <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0">
       <border_style>0</border_style>
       <tooltip></tooltip>
-      <horizontal_alignment>1</horizontal_alignment>
+      <horizontal_alignment>0</horizontal_alignment>
       <rules />
       <enabled>true</enabled>
       <wuid>-2deab042:141dd53b96d:-7d88</wuid>
@@ -198,7 +198,7 @@
     <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0">
       <border_style>0</border_style>
       <tooltip></tooltip>
-      <horizontal_alignment>1</horizontal_alignment>
+      <horizontal_alignment>0</horizontal_alignment>
       <rules />
       <enabled>true</enabled>
       <wuid>-25bc645f:1569d378d27:-7f1c</wuid>
@@ -239,7 +239,7 @@
     <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0">
       <border_style>0</border_style>
       <tooltip></tooltip>
-      <horizontal_alignment>1</horizontal_alignment>
+      <horizontal_alignment>0</horizontal_alignment>
       <rules />
       <enabled>true</enabled>
       <wuid>-25bc645f:1569d378d27:-7f0d</wuid>
@@ -280,7 +280,7 @@
     <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0">
       <border_style>0</border_style>
       <tooltip></tooltip>
-      <horizontal_alignment>1</horizontal_alignment>
+      <horizontal_alignment>0</horizontal_alignment>
       <rules />
       <enabled>true</enabled>
       <wuid>-25bc645f:1569d378d27:-7e85</wuid>
@@ -372,7 +372,7 @@ $(pv_value)</tooltip>
     <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0">
       <border_style>0</border_style>
       <tooltip></tooltip>
-      <horizontal_alignment>1</horizontal_alignment>
+      <horizontal_alignment>0</horizontal_alignment>
       <rules />
       <enabled>true</enabled>
       <wuid>-25bc645f:1569d378d27:-7e83</wuid>
@@ -464,7 +464,7 @@ $(pv_value)</tooltip>
     <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0">
       <border_style>0</border_style>
       <tooltip></tooltip>
-      <horizontal_alignment>1</horizontal_alignment>
+      <horizontal_alignment>0</horizontal_alignment>
       <rules />
       <enabled>true</enabled>
       <wuid>-25bc645f:1569d378d27:-7e81</wuid>
@@ -930,7 +930,7 @@ $(pv_value)</tooltip>
       <wuid>-2deab042:141dd53b96d:-7d94</wuid>
       <transparent>false</transparent>
       <scripts />
-      <border_alarm_sensitive>true</border_alarm_sensitive>
+      <border_alarm_sensitive>false</border_alarm_sensitive>
       <scale_options>
         <width_scalable>true</width_scalable>
         <height_scalable>true</height_scalable>
@@ -965,8 +965,8 @@ $(pv_value)</tooltip>
       <wuid>-515aa7a1:1546134cba8:-7e1c</wuid>
       <pv_value />
       <scripts />
-      <border_alarm_sensitive>true</border_alarm_sensitive>
-      <height>34</height>
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+      <height>30</height>
       <border_width>1</border_width>
       <scale_options>
         <width_scalable>true</width_scalable>
@@ -975,7 +975,7 @@ $(pv_value)</tooltip>
       </scale_options>
       <items_from_pv>true</items_from_pv>
       <visible>true</visible>
-      <pv_name>$(PV_ROOT)PSU:SP:UNITS:SP</pv_name>
+      <pv_name>$(PV_ROOT)PSU:SP:UNITS:SEL</pv_name>
       <border_color>
         <color red="0" green="128" blue="255" />
       </border_color>
@@ -987,7 +987,7 @@ $(pv_value)</tooltip>
       <width>92</width>
       <x>402</x>
       <name>Combo_1</name>
-      <y>111</y>
+      <y>113</y>
       <foreground_color>
         <color red="0" green="0" blue="0" />
       </foreground_color>
@@ -1091,7 +1091,7 @@ $(pv_value)</tooltip>
     <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0">
       <border_style>0</border_style>
       <tooltip></tooltip>
-      <horizontal_alignment>1</horizontal_alignment>
+      <horizontal_alignment>0</horizontal_alignment>
       <rules />
       <enabled>true</enabled>
       <wuid>-25bc645f:1569d378d27:-7d2f</wuid>
@@ -1354,7 +1354,7 @@ $(pv_value)</tooltip>
       <wuid>-25bc645f:1569d378d27:-7c50</wuid>
       <transparent>false</transparent>
       <scripts />
-      <border_alarm_sensitive>true</border_alarm_sensitive>
+      <border_alarm_sensitive>false</border_alarm_sensitive>
       <scale_options>
         <width_scalable>true</width_scalable>
         <height_scalable>true</height_scalable>
@@ -1410,7 +1410,7 @@ $(pv_value)</tooltip>
       <wuid>-25bc645f:1569d378d27:-7c4c</wuid>
       <transparent>false</transparent>
       <scripts />
-      <border_alarm_sensitive>true</border_alarm_sensitive>
+      <border_alarm_sensitive>false</border_alarm_sensitive>
       <scale_options>
         <width_scalable>true</width_scalable>
         <height_scalable>true</height_scalable>
@@ -1466,7 +1466,7 @@ $(pv_value)</tooltip>
       <wuid>-25bc645f:1569d378d27:-7b0f</wuid>
       <transparent>false</transparent>
       <scripts />
-      <border_alarm_sensitive>true</border_alarm_sensitive>
+      <border_alarm_sensitive>false</border_alarm_sensitive>
       <scale_options>
         <width_scalable>true</width_scalable>
         <height_scalable>true</height_scalable>
@@ -1665,7 +1665,7 @@ $(pv_value)</tooltip>
       <wuid>-25bc645f:1569d378d27:-7a73</wuid>
       <transparent>false</transparent>
       <scripts />
-      <border_alarm_sensitive>true</border_alarm_sensitive>
+      <border_alarm_sensitive>false</border_alarm_sensitive>
       <scale_options>
         <width_scalable>true</width_scalable>
         <height_scalable>true</height_scalable>
@@ -1732,7 +1732,7 @@ $(pv_value)</tooltip>
       <width>92</width>
       <x>202</x>
       <name>Text Update_6</name>
-      <y>84</y>
+      <y>81</y>
       <foreground_color>
         <color red="0" green="0" blue="0" />
       </foreground_color>
@@ -1823,7 +1823,7 @@ $(pv_value)</tooltip>
       <wuid>-25bc645f:1569d378d27:-7a6b</wuid>
       <transparent>false</transparent>
       <scripts />
-      <border_alarm_sensitive>true</border_alarm_sensitive>
+      <border_alarm_sensitive>false</border_alarm_sensitive>
       <scale_options>
         <width_scalable>true</width_scalable>
         <height_scalable>true</height_scalable>
@@ -1890,7 +1890,7 @@ $(pv_value)</tooltip>
       <width>92</width>
       <x>302</x>
       <name>Text Update_8</name>
-      <y>84</y>
+      <y>81</y>
       <foreground_color>
         <color red="0" green="0" blue="0" />
       </foreground_color>
@@ -1976,7 +1976,7 @@ $(pv_value)</tooltip>
         <keep_wh_ratio>false</keep_wh_ratio>
       </scale_options>
       <visible>true</visible>
-      <pv_name>$(PV_ROOT)PSU:SP:UNITS</pv_name>
+      <pv_name>$(PV_ROOT)PSU:SP:UNITS:SEL:RBV</pv_name>
       <vertical_alignment>1</vertical_alignment>
       <border_color>
         <color red="0" green="128" blue="255" />
@@ -1992,7 +1992,7 @@ $(pv_value)</tooltip>
       <width>92</width>
       <x>402</x>
       <name>Text Update_10</name>
-      <y>84</y>
+      <y>81</y>
       <foreground_color>
         <color red="0" green="0" blue="0" />
       </foreground_color>
@@ -2011,8 +2011,8 @@ $(pv_value)</tooltip>
       <wuid>-25bc645f:1569d378d27:-7a2a</wuid>
       <pv_value />
       <scripts />
-      <border_alarm_sensitive>true</border_alarm_sensitive>
-      <height>34</height>
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+      <height>30</height>
       <border_width>1</border_width>
       <scale_options>
         <width_scalable>true</width_scalable>
@@ -2021,7 +2021,7 @@ $(pv_value)</tooltip>
       </scale_options>
       <items_from_pv>true</items_from_pv>
       <visible>true</visible>
-      <pv_name>$(PV_ROOT)PSU:RAMP:SP:UNITS:SP</pv_name>
+      <pv_name>$(PV_ROOT)PSU:RAMP:SP:UNITS:SEL</pv_name>
       <border_color>
         <color red="0" green="128" blue="255" />
       </border_color>
@@ -2033,7 +2033,7 @@ $(pv_value)</tooltip>
       <width>92</width>
       <x>402</x>
       <name>Combo_2</name>
-      <y>179</y>
+      <y>181</y>
       <foreground_color>
         <color red="0" green="0" blue="0" />
       </foreground_color>
@@ -2068,7 +2068,7 @@ $(pv_value)</tooltip>
         <keep_wh_ratio>false</keep_wh_ratio>
       </scale_options>
       <visible>true</visible>
-      <pv_name>$(PV_ROOT)PSU:RAMP:SP:UNITS</pv_name>
+      <pv_name>$(PV_ROOT)PSU:RAMP:SP:UNITS:SEL:RBV</pv_name>
       <vertical_alignment>1</vertical_alignment>
       <border_color>
         <color red="0" green="128" blue="255" />
@@ -2116,7 +2116,7 @@ $(pv_value)</tooltip>
       </scale_options>
       <image></image>
       <visible>true</visible>
-      <pv_name>$(PV_ROOT)PSU:ZERO:SP</pv_name>
+      <pv_name>$(PV_ROOT)PSU:ZERO:CMD</pv_name>
       <border_color>
         <color red="0" green="128" blue="255" />
       </border_color>
@@ -2143,7 +2143,7 @@ $(pv_value)</tooltip>
     <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0">
       <border_style>0</border_style>
       <tooltip></tooltip>
-      <horizontal_alignment>1</horizontal_alignment>
+      <horizontal_alignment>0</horizontal_alignment>
       <rules />
       <enabled>true</enabled>
       <wuid>-500a51c8:156a2255ef4:-7e27</wuid>
@@ -2184,7 +2184,7 @@ $(pv_value)</tooltip>
     <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0">
       <border_style>0</border_style>
       <tooltip></tooltip>
-      <horizontal_alignment>1</horizontal_alignment>
+      <horizontal_alignment>0</horizontal_alignment>
       <rules />
       <enabled>true</enabled>
       <wuid>-500a51c8:156a2255ef4:-7e26</wuid>
@@ -2225,7 +2225,7 @@ $(pv_value)</tooltip>
     <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0">
       <border_style>0</border_style>
       <tooltip></tooltip>
-      <horizontal_alignment>1</horizontal_alignment>
+      <horizontal_alignment>0</horizontal_alignment>
       <rules />
       <enabled>true</enabled>
       <wuid>-500a51c8:156a2255ef4:-7e25</wuid>
@@ -2270,14 +2270,7 @@ $(pv_value)</tooltip>
       <tooltip>$(pv_name)
 $(pv_value)</tooltip>
       <push_action_index>0</push_action_index>
-      <rules>
-        <rule name="Rule" prop_id="pv_value" out_exp="true">
-          <exp bool_exp="1==1">
-            <value>1</value>
-          </exp>
-          <pv trig="true">$(PV_ROOT)PSU:PAUSE:SP:RBV</pv>
-        </rule>
-      </rules>
+      <rules />
       <enabled>true</enabled>
       <wuid>-25bc645f:1569d378d27:-72be</wuid>
       <pv_value />
@@ -2293,7 +2286,7 @@ $(pv_value)</tooltip>
       </scale_options>
       <image></image>
       <visible>true</visible>
-      <pv_name></pv_name>
+      <pv_name>$(PV_ROOT)PSU:RAMP:CMD</pv_name>
       <border_color>
         <color red="0" green="128" blue="255" />
       </border_color>
@@ -2307,7 +2300,7 @@ $(pv_value)</tooltip>
       </foreground_color>
       <actions hook="false" hook_all="false">
         <action type="WRITE_PV">
-          <pv_name>$(PV_ROOT)PSU:RAMP:SP</pv_name>
+          <pv_name>$(pv_name)</pv_name>
           <value>1</value>
           <timeout>10</timeout>
           <description></description>
@@ -2324,14 +2317,7 @@ $(pv_value)</tooltip>
       <tooltip>$(pv_name)
 $(pv_value)</tooltip>
       <push_action_index>0</push_action_index>
-      <rules>
-        <rule name="Rule" prop_id="pv_value" out_exp="true">
-          <exp bool_exp="1==1">
-            <value>1</value>
-          </exp>
-          <pv trig="true">$(PV_ROOT)PSU:PAUSE:SP:RBV</pv>
-        </rule>
-      </rules>
+      <rules />
       <enabled>true</enabled>
       <wuid>-25bc645f:1569d378d27:-773e</wuid>
       <pv_value />
@@ -2347,7 +2333,7 @@ $(pv_value)</tooltip>
       </scale_options>
       <image></image>
       <visible>true</visible>
-      <pv_name></pv_name>
+      <pv_name>$(PV_ROOT)PSU:PAUSE:CMD</pv_name>
       <border_color>
         <color red="0" green="128" blue="255" />
       </border_color>
@@ -2361,7 +2347,7 @@ $(pv_value)</tooltip>
       </foreground_color>
       <actions hook="false" hook_all="false">
         <action type="WRITE_PV">
-          <pv_name>$(PV_ROOT)PSU:PAUSE:SP</pv_name>
+          <pv_name>$(pv_name)</pv_name>
           <value>1</value>
           <timeout>10</timeout>
           <description></description>
@@ -2383,7 +2369,7 @@ $(pv_value)</tooltip>
     <auto_size>true</auto_size>
     <text>PSU</text>
     <scripts />
-    <height>31</height>
+    <height>22</height>
     <border_width>1</border_width>
     <scale_options>
       <width_scalable>true</width_scalable>
@@ -2400,7 +2386,7 @@ $(pv_value)</tooltip>
     <background_color>
       <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
     </background_color>
-    <width>61</width>
+    <width>39</width>
     <x>12</x>
     <name>Label</name>
     <y>239</y>
@@ -2518,7 +2504,7 @@ $(pv_value)</tooltip>
         <keep_wh_ratio>true</keep_wh_ratio>
       </scale_options>
       <visible>true</visible>
-      <pv_name>$(PV_ROOT)PSH:X:SP:RBV</pv_name>
+      <pv_name>$(PV_ROOT)PSH:X</pv_name>
       <border_color>
         <color red="0" green="128" blue="255" />
       </border_color>
@@ -2594,14 +2580,7 @@ $(pv_value)</tooltip>
       <tooltip>$(pv_name)
 $(pv_value)</tooltip>
       <push_action_index>0</push_action_index>
-      <rules>
-        <rule name="Rule" prop_id="pv_value" out_exp="true">
-          <exp bool_exp="1==1">
-            <value>1</value>
-          </exp>
-          <pv trig="true">$(PV_ROOT)PSU:PAUSE:SP:RBV</pv>
-        </rule>
-      </rules>
+      <rules />
       <enabled>true</enabled>
       <wuid>-25bc645f:1569d378d27:-773e</wuid>
       <pv_value />
@@ -2617,7 +2596,7 @@ $(pv_value)</tooltip>
       </scale_options>
       <image></image>
       <visible>true</visible>
-      <pv_name></pv_name>
+      <pv_name>$(PV_ROOT)PSH:X:SP</pv_name>
       <border_color>
         <color red="0" green="128" blue="255" />
       </border_color>
@@ -2631,7 +2610,7 @@ $(pv_value)</tooltip>
       </foreground_color>
       <actions hook="false" hook_all="false">
         <action type="WRITE_PV">
-          <pv_name>$(PV_ROOT)PSH:X:SP</pv_name>
+          <pv_name>$(pv_name)</pv_name>
           <value>1</value>
           <timeout>10</timeout>
           <description></description>
@@ -2648,14 +2627,7 @@ $(pv_value)</tooltip>
       <tooltip>$(pv_name)
 $(pv_value)</tooltip>
       <push_action_index>0</push_action_index>
-      <rules>
-        <rule name="Rule" prop_id="pv_value" out_exp="true">
-          <exp bool_exp="1==1">
-            <value>1</value>
-          </exp>
-          <pv trig="true">$(PV_ROOT)PSU:PAUSE:SP:RBV</pv>
-        </rule>
-      </rules>
+      <rules />
       <enabled>true</enabled>
       <wuid>-25bc645f:1569d378d27:-7369</wuid>
       <pv_value />
@@ -2671,7 +2643,7 @@ $(pv_value)</tooltip>
       </scale_options>
       <image></image>
       <visible>true</visible>
-      <pv_name></pv_name>
+      <pv_name>$(PV_ROOT)PSH:X:SP</pv_name>
       <border_color>
         <color red="0" green="128" blue="255" />
       </border_color>
@@ -2685,7 +2657,7 @@ $(pv_value)</tooltip>
       </foreground_color>
       <actions hook="false" hook_all="false">
         <action type="WRITE_PV">
-          <pv_name>$(PV_ROOT)PSH:X:SP</pv_name>
+          <pv_name>$(pv_name)</pv_name>
           <value>0</value>
           <timeout>10</timeout>
           <description></description>
@@ -2720,7 +2692,7 @@ $(pv_value)</tooltip>
         <keep_wh_ratio>true</keep_wh_ratio>
       </scale_options>
       <visible>true</visible>
-      <pv_name>$(PV_ROOT)PSH:Y:SP:RBV</pv_name>
+      <pv_name>$(PV_ROOT)PSH:Y</pv_name>
       <border_color>
         <color red="0" green="128" blue="255" />
       </border_color>
@@ -2789,114 +2761,6 @@ $(pv_value)</tooltip>
         <opifont.name fontName="Arial" height="14" style="1">ISIS_Label</opifont.name>
       </font>
     </widget>
-    <widget typeId="org.csstudio.opibuilder.widgets.NativeButton" version="1.0">
-      <toggle_button>false</toggle_button>
-      <border_style>0</border_style>
-      <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
-      <tooltip>$(pv_name)
-$(pv_value)</tooltip>
-      <push_action_index>0</push_action_index>
-      <rules>
-        <rule name="Rule" prop_id="pv_value" out_exp="true">
-          <exp bool_exp="1==1">
-            <value>1</value>
-          </exp>
-          <pv trig="true">$(PV_ROOT)PSU:PAUSE:SP:RBV</pv>
-        </rule>
-      </rules>
-      <enabled>true</enabled>
-      <wuid>-25bc645f:1569d378d27:-6eca</wuid>
-      <pv_value />
-      <text>On</text>
-      <scripts />
-      <border_alarm_sensitive>false</border_alarm_sensitive>
-      <height>19</height>
-      <border_width>1</border_width>
-      <scale_options>
-        <width_scalable>true</width_scalable>
-        <height_scalable>true</height_scalable>
-        <keep_wh_ratio>false</keep_wh_ratio>
-      </scale_options>
-      <image></image>
-      <visible>true</visible>
-      <pv_name></pv_name>
-      <border_color>
-        <color red="0" green="128" blue="255" />
-      </border_color>
-      <widget_type>Button</widget_type>
-      <width>48</width>
-      <x>141</x>
-      <name>Button_4</name>
-      <y>56</y>
-      <foreground_color>
-        <color red="0" green="0" blue="0" />
-      </foreground_color>
-      <actions hook="false" hook_all="false">
-        <action type="WRITE_PV">
-          <pv_name>$(PV_ROOT)PSH:Y:SP</pv_name>
-          <value>1</value>
-          <timeout>10</timeout>
-          <description></description>
-        </action>
-      </actions>
-      <font>
-        <opifont.name fontName="Arial" height="9" style="0">ISIS_Button_Small</opifont.name>
-      </font>
-    </widget>
-    <widget typeId="org.csstudio.opibuilder.widgets.NativeButton" version="1.0">
-      <toggle_button>false</toggle_button>
-      <border_style>0</border_style>
-      <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
-      <tooltip>$(pv_name)
-$(pv_value)</tooltip>
-      <push_action_index>0</push_action_index>
-      <rules>
-        <rule name="Rule" prop_id="pv_value" out_exp="true">
-          <exp bool_exp="1==1">
-            <value>1</value>
-          </exp>
-          <pv trig="true">$(PV_ROOT)PSU:PAUSE:SP:RBV</pv>
-        </rule>
-      </rules>
-      <enabled>true</enabled>
-      <wuid>-25bc645f:1569d378d27:-6ec9</wuid>
-      <pv_value />
-      <text>Off</text>
-      <scripts />
-      <border_alarm_sensitive>false</border_alarm_sensitive>
-      <height>19</height>
-      <border_width>1</border_width>
-      <scale_options>
-        <width_scalable>true</width_scalable>
-        <height_scalable>true</height_scalable>
-        <keep_wh_ratio>false</keep_wh_ratio>
-      </scale_options>
-      <image></image>
-      <visible>true</visible>
-      <pv_name></pv_name>
-      <border_color>
-        <color red="0" green="128" blue="255" />
-      </border_color>
-      <widget_type>Button</widget_type>
-      <width>48</width>
-      <x>141</x>
-      <name>Button_5</name>
-      <y>74</y>
-      <foreground_color>
-        <color red="0" green="0" blue="0" />
-      </foreground_color>
-      <actions hook="false" hook_all="false">
-        <action type="WRITE_PV">
-          <pv_name>$(PV_ROOT)PSH:Y:SP</pv_name>
-          <value>0</value>
-          <timeout>10</timeout>
-          <description></description>
-        </action>
-      </actions>
-      <font>
-        <opifont.name fontName="Arial" height="9" style="0">ISIS_Button_Small</opifont.name>
-      </font>
-    </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.LED" version="1.0">
       <border_style>0</border_style>
       <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
@@ -2922,7 +2786,7 @@ $(pv_value)</tooltip>
         <keep_wh_ratio>true</keep_wh_ratio>
       </scale_options>
       <visible>true</visible>
-      <pv_name>$(PV_ROOT)PSH:Z:SP:RBV</pv_name>
+      <pv_name>$(PV_ROOT)PSH:Z</pv_name>
       <border_color>
         <color red="0" green="128" blue="255" />
       </border_color>
@@ -2989,114 +2853,6 @@ $(pv_value)</tooltip>
       <show_scrollbar>false</show_scrollbar>
       <font>
         <opifont.name fontName="Arial" height="14" style="1">ISIS_Label</opifont.name>
-      </font>
-    </widget>
-    <widget typeId="org.csstudio.opibuilder.widgets.NativeButton" version="1.0">
-      <toggle_button>false</toggle_button>
-      <border_style>0</border_style>
-      <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
-      <tooltip>$(pv_name)
-$(pv_value)</tooltip>
-      <push_action_index>0</push_action_index>
-      <rules>
-        <rule name="Rule" prop_id="pv_value" out_exp="true">
-          <exp bool_exp="1==1">
-            <value>1</value>
-          </exp>
-          <pv trig="true">$(PV_ROOT)PSU:PAUSE:SP:RBV</pv>
-        </rule>
-      </rules>
-      <enabled>true</enabled>
-      <wuid>-25bc645f:1569d378d27:-6ec0</wuid>
-      <pv_value />
-      <text>On</text>
-      <scripts />
-      <border_alarm_sensitive>false</border_alarm_sensitive>
-      <height>19</height>
-      <border_width>1</border_width>
-      <scale_options>
-        <width_scalable>true</width_scalable>
-        <height_scalable>true</height_scalable>
-        <keep_wh_ratio>false</keep_wh_ratio>
-      </scale_options>
-      <image></image>
-      <visible>true</visible>
-      <pv_name></pv_name>
-      <border_color>
-        <color red="0" green="128" blue="255" />
-      </border_color>
-      <widget_type>Button</widget_type>
-      <width>48</width>
-      <x>234</x>
-      <name>Button_6</name>
-      <y>56</y>
-      <foreground_color>
-        <color red="0" green="0" blue="0" />
-      </foreground_color>
-      <actions hook="false" hook_all="false">
-        <action type="WRITE_PV">
-          <pv_name>$(PV_ROOT)PSH:Z:SP</pv_name>
-          <value>1</value>
-          <timeout>10</timeout>
-          <description></description>
-        </action>
-      </actions>
-      <font>
-        <opifont.name fontName="Arial" height="9" style="0">ISIS_Button_Small</opifont.name>
-      </font>
-    </widget>
-    <widget typeId="org.csstudio.opibuilder.widgets.NativeButton" version="1.0">
-      <toggle_button>false</toggle_button>
-      <border_style>0</border_style>
-      <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
-      <tooltip>$(pv_name)
-$(pv_value)</tooltip>
-      <push_action_index>0</push_action_index>
-      <rules>
-        <rule name="Rule" prop_id="pv_value" out_exp="true">
-          <exp bool_exp="1==1">
-            <value>1</value>
-          </exp>
-          <pv trig="true">$(PV_ROOT)PSU:PAUSE:SP:RBV</pv>
-        </rule>
-      </rules>
-      <enabled>true</enabled>
-      <wuid>-25bc645f:1569d378d27:-6ebf</wuid>
-      <pv_value />
-      <text>Off</text>
-      <scripts />
-      <border_alarm_sensitive>false</border_alarm_sensitive>
-      <height>19</height>
-      <border_width>1</border_width>
-      <scale_options>
-        <width_scalable>true</width_scalable>
-        <height_scalable>true</height_scalable>
-        <keep_wh_ratio>false</keep_wh_ratio>
-      </scale_options>
-      <image></image>
-      <visible>true</visible>
-      <pv_name></pv_name>
-      <border_color>
-        <color red="0" green="128" blue="255" />
-      </border_color>
-      <widget_type>Button</widget_type>
-      <width>48</width>
-      <x>234</x>
-      <name>Button_7</name>
-      <y>74</y>
-      <foreground_color>
-        <color red="0" green="0" blue="0" />
-      </foreground_color>
-      <actions hook="false" hook_all="false">
-        <action type="WRITE_PV">
-          <pv_name>$(PV_ROOT)PSH:Z:SP</pv_name>
-          <value>0</value>
-          <timeout>10</timeout>
-          <description></description>
-        </action>
-      </actions>
-      <font>
-        <opifont.name fontName="Arial" height="9" style="0">ISIS_Button_Small</opifont.name>
       </font>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0">
@@ -3189,6 +2945,194 @@ $(pv_value)</tooltip>
       <show_scrollbar>false</show_scrollbar>
       <font>
         <opifont.name fontName="Arial" height="14" style="1">ISIS_Label</opifont.name>
+      </font>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.NativeButton" version="1.0">
+      <toggle_button>false</toggle_button>
+      <border_style>0</border_style>
+      <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+      <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+      <push_action_index>0</push_action_index>
+      <rules />
+      <enabled>true</enabled>
+      <wuid>45634c62:156dff089aa:-7a78</wuid>
+      <pv_value />
+      <text>On</text>
+      <scripts />
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+      <height>19</height>
+      <border_width>1</border_width>
+      <scale_options>
+        <width_scalable>true</width_scalable>
+        <height_scalable>true</height_scalable>
+        <keep_wh_ratio>false</keep_wh_ratio>
+      </scale_options>
+      <image></image>
+      <visible>true</visible>
+      <pv_name>$(PV_ROOT)PSH:Y:SP</pv_name>
+      <border_color>
+        <color red="0" green="128" blue="255" />
+      </border_color>
+      <widget_type>Button</widget_type>
+      <width>48</width>
+      <x>144</x>
+      <name>Button_2</name>
+      <y>56</y>
+      <foreground_color>
+        <color red="0" green="0" blue="0" />
+      </foreground_color>
+      <actions hook="false" hook_all="false">
+        <action type="WRITE_PV">
+          <pv_name>$(pv_name)</pv_name>
+          <value>1</value>
+          <timeout>10</timeout>
+          <description></description>
+        </action>
+      </actions>
+      <font>
+        <opifont.name fontName="Arial" height="9" style="0">ISIS_Button_Small</opifont.name>
+      </font>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.NativeButton" version="1.0">
+      <toggle_button>false</toggle_button>
+      <border_style>0</border_style>
+      <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+      <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+      <push_action_index>0</push_action_index>
+      <rules />
+      <enabled>true</enabled>
+      <wuid>45634c62:156dff089aa:-7a77</wuid>
+      <pv_value />
+      <text>Off</text>
+      <scripts />
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+      <height>19</height>
+      <border_width>1</border_width>
+      <scale_options>
+        <width_scalable>true</width_scalable>
+        <height_scalable>true</height_scalable>
+        <keep_wh_ratio>false</keep_wh_ratio>
+      </scale_options>
+      <image></image>
+      <visible>true</visible>
+      <pv_name>$(PV_ROOT)PSH:Y:SP</pv_name>
+      <border_color>
+        <color red="0" green="128" blue="255" />
+      </border_color>
+      <widget_type>Button</widget_type>
+      <width>48</width>
+      <x>144</x>
+      <name>Button_3</name>
+      <y>74</y>
+      <foreground_color>
+        <color red="0" green="0" blue="0" />
+      </foreground_color>
+      <actions hook="false" hook_all="false">
+        <action type="WRITE_PV">
+          <pv_name>$(pv_name)</pv_name>
+          <value>0</value>
+          <timeout>10</timeout>
+          <description></description>
+        </action>
+      </actions>
+      <font>
+        <opifont.name fontName="Arial" height="9" style="0">ISIS_Button_Small</opifont.name>
+      </font>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.NativeButton" version="1.0">
+      <toggle_button>false</toggle_button>
+      <border_style>0</border_style>
+      <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+      <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+      <push_action_index>0</push_action_index>
+      <rules />
+      <enabled>true</enabled>
+      <wuid>45634c62:156dff089aa:-7a69</wuid>
+      <pv_value />
+      <text>On</text>
+      <scripts />
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+      <height>19</height>
+      <border_width>1</border_width>
+      <scale_options>
+        <width_scalable>true</width_scalable>
+        <height_scalable>true</height_scalable>
+        <keep_wh_ratio>false</keep_wh_ratio>
+      </scale_options>
+      <image></image>
+      <visible>true</visible>
+      <pv_name>$(PV_ROOT)PSH:Z:SP</pv_name>
+      <border_color>
+        <color red="0" green="128" blue="255" />
+      </border_color>
+      <widget_type>Button</widget_type>
+      <width>48</width>
+      <x>234</x>
+      <name>Button_2</name>
+      <y>56</y>
+      <foreground_color>
+        <color red="0" green="0" blue="0" />
+      </foreground_color>
+      <actions hook="false" hook_all="false">
+        <action type="WRITE_PV">
+          <pv_name>$(pv_name)</pv_name>
+          <value>1</value>
+          <timeout>10</timeout>
+          <description></description>
+        </action>
+      </actions>
+      <font>
+        <opifont.name fontName="Arial" height="9" style="0">ISIS_Button_Small</opifont.name>
+      </font>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.NativeButton" version="1.0">
+      <toggle_button>false</toggle_button>
+      <border_style>0</border_style>
+      <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+      <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+      <push_action_index>0</push_action_index>
+      <rules />
+      <enabled>true</enabled>
+      <wuid>45634c62:156dff089aa:-7a68</wuid>
+      <pv_value />
+      <text>Off</text>
+      <scripts />
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+      <height>19</height>
+      <border_width>1</border_width>
+      <scale_options>
+        <width_scalable>true</width_scalable>
+        <height_scalable>true</height_scalable>
+        <keep_wh_ratio>false</keep_wh_ratio>
+      </scale_options>
+      <image></image>
+      <visible>true</visible>
+      <pv_name>$(PV_ROOT)PSH:Z:SP</pv_name>
+      <border_color>
+        <color red="0" green="128" blue="255" />
+      </border_color>
+      <widget_type>Button</widget_type>
+      <width>48</width>
+      <x>234</x>
+      <name>Button_3</name>
+      <y>74</y>
+      <foreground_color>
+        <color red="0" green="0" blue="0" />
+      </foreground_color>
+      <actions hook="false" hook_all="false">
+        <action type="WRITE_PV">
+          <pv_name>$(pv_name)</pv_name>
+          <value>0</value>
+          <timeout>10</timeout>
+          <description></description>
+        </action>
+      </actions>
+      <font>
+        <opifont.name fontName="Arial" height="9" style="0">ISIS_Button_Small</opifont.name>
       </font>
     </widget>
   </widget>
@@ -3303,7 +3247,7 @@ $(pv_value)</tooltip>
       <wuid>-2deab042:141dd53b96d:-7d94</wuid>
       <transparent>false</transparent>
       <scripts />
-      <border_alarm_sensitive>true</border_alarm_sensitive>
+      <border_alarm_sensitive>false</border_alarm_sensitive>
       <scale_options>
         <width_scalable>true</width_scalable>
         <height_scalable>true</height_scalable>
@@ -3338,8 +3282,8 @@ $(pv_value)</tooltip>
       <wuid>-515aa7a1:1546134cba8:-7e1c</wuid>
       <pv_value />
       <scripts />
-      <border_alarm_sensitive>true</border_alarm_sensitive>
-      <height>34</height>
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+      <height>30</height>
       <border_width>1</border_width>
       <scale_options>
         <width_scalable>true</width_scalable>
@@ -3348,7 +3292,7 @@ $(pv_value)</tooltip>
       </scale_options>
       <items_from_pv>true</items_from_pv>
       <visible>true</visible>
-      <pv_name>$(PV_ROOT)HX:TEMP:UNITS:SP</pv_name>
+      <pv_name>$(PV_ROOT)HX:TEMP:UNITS:SEL</pv_name>
       <border_color>
         <color red="0" green="128" blue="255" />
       </border_color>
@@ -3372,7 +3316,7 @@ $(pv_value)</tooltip>
     <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0">
       <border_style>0</border_style>
       <tooltip></tooltip>
-      <horizontal_alignment>1</horizontal_alignment>
+      <horizontal_alignment>0</horizontal_alignment>
       <rules />
       <enabled>true</enabled>
       <wuid>-25bc645f:1569d378d27:-7d72</wuid>
@@ -3505,7 +3449,7 @@ $(pv_value)</tooltip>
     <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0">
       <border_style>0</border_style>
       <tooltip></tooltip>
-      <horizontal_alignment>1</horizontal_alignment>
+      <horizontal_alignment>0</horizontal_alignment>
       <rules />
       <enabled>true</enabled>
       <wuid>-25bc645f:1569d378d27:-7d6f</wuid>
@@ -3661,7 +3605,7 @@ $(pv_value)</tooltip>
         <keep_wh_ratio>false</keep_wh_ratio>
       </scale_options>
       <visible>true</visible>
-      <pv_name>$(PV_ROOT)HX:TEMP:UNITS</pv_name>
+      <pv_name>$(PV_ROOT)HX:TEMP:UNITS:SEL:RBV</pv_name>
       <vertical_alignment>1</vertical_alignment>
       <border_color>
         <color red="0" green="128" blue="255" />
@@ -3870,8 +3814,8 @@ $(pv_value)</tooltip>
       <wuid>-25bc645f:1569d378d27:-6969</wuid>
       <pv_value />
       <scripts />
-      <border_alarm_sensitive>true</border_alarm_sensitive>
-      <height>34</height>
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+      <height>30</height>
       <border_width>1</border_width>
       <scale_options>
         <width_scalable>true</width_scalable>
@@ -3880,7 +3824,7 @@ $(pv_value)</tooltip>
       </scale_options>
       <items_from_pv>true</items_from_pv>
       <visible>true</visible>
-      <pv_name>$(PV_ROOT)HX:HEATER:MODE:SP</pv_name>
+      <pv_name>$(PV_ROOT)HX:HEATER:MODE:SEL</pv_name>
       <border_color>
         <color red="0" green="128" blue="255" />
       </border_color>
@@ -3927,7 +3871,7 @@ $(pv_value)</tooltip>
         <keep_wh_ratio>false</keep_wh_ratio>
       </scale_options>
       <visible>true</visible>
-      <pv_name>$(PV_ROOT)HX:HEATER:MODE</pv_name>
+      <pv_name>$(PV_ROOT)HX:HEATER:MODE:SEL:RBV</pv_name>
       <vertical_alignment>1</vertical_alignment>
       <border_color>
         <color red="0" green="128" blue="255" />
@@ -3983,7 +3927,7 @@ $(pv_value)</tooltip>
       <wuid>-25bc645f:1569d378d27:-6833</wuid>
       <transparent>false</transparent>
       <scripts />
-      <border_alarm_sensitive>true</border_alarm_sensitive>
+      <border_alarm_sensitive>false</border_alarm_sensitive>
       <scale_options>
         <width_scalable>true</width_scalable>
         <height_scalable>true</height_scalable>
@@ -4018,8 +3962,8 @@ $(pv_value)</tooltip>
       <wuid>-25bc645f:1569d378d27:-6832</wuid>
       <pv_value />
       <scripts />
-      <border_alarm_sensitive>true</border_alarm_sensitive>
-      <height>34</height>
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+      <height>30</height>
       <border_width>1</border_width>
       <scale_options>
         <width_scalable>true</width_scalable>
@@ -4028,7 +3972,7 @@ $(pv_value)</tooltip>
       </scale_options>
       <items_from_pv>true</items_from_pv>
       <visible>true</visible>
-      <pv_name>$(PV_ROOT)SAMPLE:TEMP:UNITS:SP</pv_name>
+      <pv_name>$(PV_ROOT)SAMPLE:TEMP:UNITS:SEL</pv_name>
       <border_color>
         <color red="0" green="128" blue="255" />
       </border_color>
@@ -4177,7 +4121,7 @@ $(pv_value)</tooltip>
         <keep_wh_ratio>false</keep_wh_ratio>
       </scale_options>
       <visible>true</visible>
-      <pv_name>$(PV_ROOT)SAMPLE:TEMP:UNITS</pv_name>
+      <pv_name>$(PV_ROOT)SAMPLE:TEMP:UNITS:SEL:RBV</pv_name>
       <vertical_alignment>1</vertical_alignment>
       <border_color>
         <color red="0" green="128" blue="255" />
@@ -4263,8 +4207,8 @@ $(pv_value)</tooltip>
       <wuid>-25bc645f:1569d378d27:-682d</wuid>
       <pv_value />
       <scripts />
-      <border_alarm_sensitive>true</border_alarm_sensitive>
-      <height>34</height>
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+      <height>30</height>
       <border_width>1</border_width>
       <scale_options>
         <width_scalable>true</width_scalable>
@@ -4273,7 +4217,7 @@ $(pv_value)</tooltip>
       </scale_options>
       <items_from_pv>true</items_from_pv>
       <visible>true</visible>
-      <pv_name>$(PV_ROOT)SAMPLE:HEATER:MODE:SP</pv_name>
+      <pv_name>$(PV_ROOT)SAMPLE:HEATER:MODE:SEL</pv_name>
       <border_color>
         <color red="0" green="128" blue="255" />
       </border_color>
@@ -4320,7 +4264,7 @@ $(pv_value)</tooltip>
         <keep_wh_ratio>false</keep_wh_ratio>
       </scale_options>
       <visible>true</visible>
-      <pv_name>$(PV_ROOT)SAMPLE:HEATER:MODE</pv_name>
+      <pv_name>$(PV_ROOT)SAMPLE:HEATER:MODE:SEL:RBV</pv_name>
       <vertical_alignment>1</vertical_alignment>
       <border_color>
         <color red="0" green="128" blue="255" />
@@ -4468,7 +4412,7 @@ $(pv_value)</tooltip>
       <wuid>-2deab042:141dd53b96d:-7d94</wuid>
       <transparent>false</transparent>
       <scripts />
-      <border_alarm_sensitive>true</border_alarm_sensitive>
+      <border_alarm_sensitive>false</border_alarm_sensitive>
       <scale_options>
         <width_scalable>true</width_scalable>
         <height_scalable>true</height_scalable>
@@ -4631,47 +4575,6 @@ $(pv_value)</tooltip>
       <horizontal_alignment>2</horizontal_alignment>
       <rules />
       <enabled>true</enabled>
-      <wuid>-25bc645f:1569d378d27:-698f</wuid>
-      <transparent>false</transparent>
-      <auto_size>false</auto_size>
-      <text>Level B:</text>
-      <scripts />
-      <height>22</height>
-      <border_width>1</border_width>
-      <scale_options>
-        <width_scalable>true</width_scalable>
-        <height_scalable>true</height_scalable>
-        <keep_wh_ratio>false</keep_wh_ratio>
-      </scale_options>
-      <visible>true</visible>
-      <vertical_alignment>1</vertical_alignment>
-      <border_color>
-        <color red="0" green="128" blue="255" />
-      </border_color>
-      <widget_type>Label</widget_type>
-      <wrap_words>true</wrap_words>
-      <background_color>
-        <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
-      </background_color>
-      <width>90</width>
-      <x>37</x>
-      <name>Label_13</name>
-      <y>38</y>
-      <foreground_color>
-        <color red="0" green="0" blue="0" />
-      </foreground_color>
-      <actions hook="false" hook_all="false" />
-      <show_scrollbar>false</show_scrollbar>
-      <font>
-        <opifont.name fontName="Arial" height="14" style="1">ISIS_Label</opifont.name>
-      </font>
-    </widget>
-    <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0">
-      <border_style>0</border_style>
-      <tooltip></tooltip>
-      <horizontal_alignment>2</horizontal_alignment>
-      <rules />
-      <enabled>true</enabled>
       <wuid>-25bc645f:1569d378d27:-6983</wuid>
       <transparent>false</transparent>
       <auto_size>false</auto_size>
@@ -4695,9 +4598,9 @@ $(pv_value)</tooltip>
         <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
       </background_color>
       <width>114</width>
-      <x>13</x>
+      <x>7</x>
       <name>Label_14</name>
-      <y>72</y>
+      <y>54</y>
       <foreground_color>
         <color red="0" green="0" blue="0" />
       </foreground_color>
@@ -4717,8 +4620,8 @@ $(pv_value)</tooltip>
       <wuid>-25bc645f:1569d378d27:-6969</wuid>
       <pv_value />
       <scripts />
-      <border_alarm_sensitive>true</border_alarm_sensitive>
-      <height>34</height>
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+      <height>30</height>
       <border_width>1</border_width>
       <scale_options>
         <width_scalable>true</width_scalable>
@@ -4727,7 +4630,7 @@ $(pv_value)</tooltip>
       </scale_options>
       <items_from_pv>true</items_from_pv>
       <visible>true</visible>
-      <pv_name>$(PV_ROOT)HE_LEVEL:MODE:SP</pv_name>
+      <pv_name>$(PV_ROOT)HE_LEVEL:MODE:SEL</pv_name>
       <border_color>
         <color red="0" green="128" blue="255" />
       </border_color>
@@ -4737,9 +4640,9 @@ $(pv_value)</tooltip>
         <color red="255" green="255" blue="255" />
       </background_color>
       <width>85</width>
-      <x>204</x>
+      <x>198</x>
       <name>Combo_1</name>
-      <y>66</y>
+      <y>50</y>
       <foreground_color>
         <color red="0" green="0" blue="0" />
       </foreground_color>
@@ -4774,7 +4677,7 @@ $(pv_value)</tooltip>
         <keep_wh_ratio>false</keep_wh_ratio>
       </scale_options>
       <visible>true</visible>
-      <pv_name>$(PV_ROOT)HE_LEVEL:MODE</pv_name>
+      <pv_name>$(PV_ROOT)HE_LEVEL:MODE:SEL:RBV</pv_name>
       <vertical_alignment>1</vertical_alignment>
       <border_color>
         <color red="0" green="128" blue="255" />
@@ -4788,60 +4691,9 @@ $(pv_value)</tooltip>
         <color red="255" green="255" blue="255" />
       </background_color>
       <width>79</width>
-      <x>132</x>
+      <x>126</x>
       <name>Text Update_13</name>
-      <y>68</y>
-      <foreground_color>
-        <color red="0" green="0" blue="0" />
-      </foreground_color>
-      <actions hook="false" hook_all="false" />
-      <font>
-        <opifont.name fontName="Arial" height="14" style="1">ISIS_Value</opifont.name>
-      </font>
-    </widget>
-    <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0">
-      <border_style>0</border_style>
-      <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
-      <precision>0</precision>
-      <tooltip>$(pv_name)
-$(pv_value)</tooltip>
-      <horizontal_alignment>0</horizontal_alignment>
-      <rules />
-      <enabled>true</enabled>
-      <wuid>-25bc645f:1569d378d27:-6830</wuid>
-      <transparent>true</transparent>
-      <pv_value />
-      <auto_size>false</auto_size>
-      <text>######</text>
-      <rotation_angle>0.0</rotation_angle>
-      <scripts />
-      <border_alarm_sensitive>true</border_alarm_sensitive>
-      <show_units>false</show_units>
-      <height>30</height>
-      <border_width>1</border_width>
-      <scale_options>
-        <width_scalable>true</width_scalable>
-        <height_scalable>true</height_scalable>
-        <keep_wh_ratio>false</keep_wh_ratio>
-      </scale_options>
-      <visible>true</visible>
-      <pv_name>$(PV_ROOT)B:HE_LEVEL</pv_name>
-      <vertical_alignment>1</vertical_alignment>
-      <border_color>
-        <color red="0" green="128" blue="255" />
-      </border_color>
-      <precision_from_pv>true</precision_from_pv>
-      <widget_type>Text Update</widget_type>
-      <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
-      <wrap_words>true</wrap_words>
-      <format_type>0</format_type>
-      <background_color>
-        <color red="255" green="255" blue="255" />
-      </background_color>
-      <width>92</width>
-      <x>132</x>
-      <name>Text Update_15</name>
-      <y>34</y>
+      <y>50</y>
       <foreground_color>
         <color red="0" green="0" blue="0" />
       </foreground_color>
@@ -4852,7 +4704,7 @@ $(pv_value)</tooltip>
     </widget>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.NativeText" version="1.0">
-    <border_style>0</border_style>
+    <border_style>1</border_style>
     <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
     <show_native_border>false</show_native_border>
     <precision>0</precision>
@@ -4869,7 +4721,7 @@ $(pv_value)</tooltip>
     <scripts />
     <show_units>true</show_units>
     <border_alarm_sensitive>false</border_alarm_sensitive>
-    <height>43</height>
+    <height>36</height>
     <multiline_input>false</multiline_input>
     <border_width>1</border_width>
     <scale_options>
@@ -4880,7 +4732,7 @@ $(pv_value)</tooltip>
     <visible>true</visible>
     <pv_name></pv_name>
     <border_color>
-      <color red="0" green="128" blue="255" />
+      <color name="ISIS_Border" red="0" green="0" blue="0" />
     </border_color>
     <precision_from_pv>true</precision_from_pv>
     <widget_type>Text</widget_type>
@@ -4893,9 +4745,9 @@ $(pv_value)</tooltip>
     </background_color>
     <password_input>false</password_input>
     <name>Title</name>
-    <width>385</width>
+    <width>433</width>
     <x>402</x>
-    <y>15</y>
+    <y>13</y>
     <maximum>1.7976931348623157E308</maximum>
     <actions hook="false" hook_all="false" />
     <foreground_color>
@@ -4907,7 +4759,7 @@ $(pv_value)</tooltip>
     </font>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.NativeText" version="1.0">
-    <border_style>0</border_style>
+    <border_style>1</border_style>
     <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
     <show_native_border>false</show_native_border>
     <precision>0</precision>
@@ -4925,7 +4777,7 @@ $(pv_value)</tooltip>
     <scripts />
     <show_units>true</show_units>
     <border_alarm_sensitive>false</border_alarm_sensitive>
-    <height>45</height>
+    <height>36</height>
     <multiline_input>false</multiline_input>
     <border_width>1</border_width>
     <scale_options>
