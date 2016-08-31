@@ -113,6 +113,6 @@ public class MultipleConfigsSelectionDialog extends SelectionDialog {
      * @return A string corresponding to the type of item in the list.
      */
     protected String getTypeString() {
-        return isComponent ? "component" : "configuration";
+        return isComponent ? "components" : "configurations";
 	}
 }
