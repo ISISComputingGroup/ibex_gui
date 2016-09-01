@@ -36,7 +36,7 @@ public class EstimatePanel extends Composite {
 		
 		Text txtTimeBetween = new Text(grpEstimate, SWT.BORDER);
 		txtTimeBetween.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		txtTimeBetween.setText("120");
+		txtTimeBetween.setText("5");
 		
 		Label lblScriptTime = new Label(grpEstimate, SWT.RIGHT);
 		lblScriptTime.setLayoutData(new GridData(SWT.RIGHT, SWT.FILL, false, false, 1, 1));
