@@ -18,6 +18,7 @@
 */
 
 package uk.ac.stfc.isis.ibex.ui.scriptgenerator;
+
 import org.eclipse.swt.widgets.Composite;
 
 import uk.ac.stfc.isis.ibex.scriptgenerator.PythonBuilder;
@@ -45,6 +46,7 @@ public class ScriptGeneratorTable extends DataboundTable<ScriptGeneratorRow> {
 	protected TableViewerColumn period;
 	protected TableViewerColumn sampleName;
 	protected TableViewerColumn thickness;
+	public Collection<ScriptGeneratorRow> rows;
 	
 	public ScriptGeneratorTable (Composite parent, int style, int tableStyle, boolean isRowVisibilityShown) {
 		super(parent, style, ScriptGeneratorRow.class, tableStyle | SWT.BORDER);
@@ -67,8 +69,14 @@ public class ScriptGeneratorTable extends DataboundTable<ScriptGeneratorRow> {
 	@Override
 	public void setRows(Collection<ScriptGeneratorRow> rows) {
 		super.setRows(rows);
+		
+		this.rows = rows;
 	}
 	
+	public Collection<ScriptGeneratorRow> getRows() {
+		return this.rows;
+	}
+
 	private void position() {
 		position = createColumn("POSITION", 3);
 		position.setLabelProvider(new DataboundCellLabelProvider<ScriptGeneratorRow>(

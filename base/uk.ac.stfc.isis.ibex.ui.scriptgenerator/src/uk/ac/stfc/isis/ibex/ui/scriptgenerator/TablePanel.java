@@ -25,6 +25,7 @@ import org.eclipse.swt.browser.Browser;
 import org.eclipse.swt.layout.FillLayout;
 
 import java.util.ArrayList;
+import java.util.Collection;
 
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.beans.BeanProperties;
@@ -45,21 +46,28 @@ public class TablePanel extends Composite {
 	public static final String ID = "uk.ac.stfc.isis.ibex.ui.scriptgenerator.scriptgeneratorview";
 	private ScriptGeneratorTable table;
 	private Text text;
-	private ArrayList<ScriptGeneratorRow> list;
+	private ArrayList<ScriptGeneratorRow> rows;
 	 
 	public TablePanel(Composite parent, int style) {
 		super(parent, style);
 		setLayout(new GridLayout(2, true));
 		
-		list = new ArrayList<ScriptGeneratorRow>();
-		list.add(new ScriptGeneratorRow(1, 2, 3, 4, 5, 6, "sample name", 7, "script"));
-		ScriptGeneratorTable table = new ScriptGeneratorTable(this, SWT.NONE, SWT.MULTI | SWT.NO_SCROLL | SWT.V_SCROLL | SWT.FULL_SELECTION | SWT.BORDER, false);
+		rows = (ArrayList<ScriptGeneratorRow>) table.getRows();
+		
+//		rowList = new ArrayList<ScriptGeneratorRow>();
+//		rowList.add(new ScriptGeneratorRow(1, 2, 3, 4, 5, 6, "sample name", 7, "script"));
+		
+		table = new ScriptGeneratorTable(this, SWT.NONE, SWT.MULTI | SWT.NO_SCROLL | SWT.V_SCROLL | SWT.FULL_SELECTION | SWT.BORDER, false);
 		table.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
-		table.setRows(list);
+		table.setRows(rows);
 	}
 
+	public Collection<ScriptGeneratorRow> getRows() {
+		return this.rows;
+	}
+	
 	public void bind() {
 		DataBindingContext bindingContext = new DataBindingContext();
-        bindingContext.bindValue(WidgetProperties.text().observe(text), BeanProperties.value("script").observe(list.get(0)));
+        bindingContext.bindValue(WidgetProperties.text().observe(text), BeanProperties.value("script").observe(rows.get(0)));
 	}
-}
+} 
