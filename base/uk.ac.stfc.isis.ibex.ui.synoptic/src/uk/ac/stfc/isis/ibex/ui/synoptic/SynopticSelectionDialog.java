@@ -23,13 +23,11 @@ import java.util.Arrays;
 import java.util.Collection;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.swt.events.MouseAdapter;
-import org.eclipse.swt.events.MouseEvent;
-import org.eclipse.swt.layout.GridData;
 
 import uk.ac.stfc.isis.ibex.synoptic.SynopticInfo;
 import uk.ac.stfc.isis.ibex.ui.dialogs.SelectionDialog;
@@ -72,9 +70,10 @@ public class SynopticSelectionDialog extends SelectionDialog {
 		super.okPressed();
 	}
 	
-	protected void createSelection(Composite container) {
+	@Override
+    protected void createSelection(Composite container) {
 		Label lblSelect = new Label(container, SWT.NONE);
-		lblSelect.setText("Select a synoptic:");
+        lblSelect.setText("Select synoptic:");
 		
 		items = new List(container, SWT.BORDER | SWT.V_SCROLL);
 		items.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
