@@ -36,6 +36,7 @@ import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.swt.SWT;
 
+import uk.ac.stfc.isis.ibex.scriptgenerator.PythonBuilder;
 import uk.ac.stfc.isis.ibex.scriptgenerator.ScriptGeneratorRow;
 import uk.ac.stfc.isis.ibex.ui.scriptgenerator.ScriptGeneratorTable;
 import org.eclipse.swt.layout.GridLayout;
@@ -49,10 +50,13 @@ import org.eclipse.swt.widgets.Text;
 
 public class ScriptGeneratorView extends ViewPart {
 	public static final String ID = "uk.ac.stfc.isis.ibex.ui.scriptgenerator.scriptgeneratorview";
-	public Collection<ScriptGeneratorRow> rows;
+	private Collection<ScriptGeneratorRow> rows;
+	private PythonBuilder builder;
 	 
 	public ScriptGeneratorView() {
 		super();
+		
+		builder = new PythonBuilder(rows);
 	}
 
 	@SuppressWarnings("unused")
@@ -103,9 +107,22 @@ public class ScriptGeneratorView extends ViewPart {
 		saveLoadPanel.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1));
 		
 		new Label(topPanel, SWT.NONE);
-
-		ButtonsPanel buttonsPanel = new ButtonsPanel(topPanel, SWT.NONE);
-		buttonsPanel.setLayoutData(new GridData(SWT.CENTER, SWT.BOTTOM, false, false, 1, 1));
+		
+		Composite buttonsComposite = new Composite(topPanel, SWT.NONE);
+		buttonsComposite.setLayout(new GridLayout(2, true));
+		buttonsComposite.setLayoutData(new GridData(SWT.CENTER, SWT.BOTTOM, false, false, 1, 1));
+		
+		Button btnPreview = new Button(buttonsComposite, SWT.NONE);
+		btnPreview.setText("Preview Script");
+		GridData gdButtonPreview = new GridData(SWT.CENTER, SWT.CENTER, true, false, 1, 1);
+		gdButtonPreview.minimumWidth = 80;
+		btnPreview.setLayoutData(gdButtonPreview);
+		
+		Button btnWrite = new Button(buttonsComposite, SWT.NONE);
+		btnWrite.setText("Write Script");
+		GridData gdButtonWrite = new GridData(SWT.CENTER, SWT.CENTER, true, false, 1, 1);
+		gdButtonWrite.minimumWidth = 80;
+		btnWrite.setLayoutData(gdButtonWrite);
 		
 		new Label(topPanel, SWT.NONE);
 		
@@ -118,15 +135,27 @@ public class ScriptGeneratorView extends ViewPart {
 		TablePanel tablePanel = new TablePanel(parent, SWT.NONE);
 		tablePanel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		
-		// temporary colours
-//		topPanel.setBackground(settingsPanel.getDisplay().getSystemColor(SWT.COLOR_DARK_GREEN));
+//		rows = tablePanel.getRows(); 
+//		buildPython(rows);
+		
+//		temporary colours
+//		buttonsComposite.setBackground(settingsPanel.getDisplay().getSystemColor(SWT.COLOR_DARK_GREEN));
 //		settingsPanel.setBackground(settingsPanel.getDisplay().getSystemColor(SWT.COLOR_MAGENTA));
 //		estimatePanel.setBackground(estimatePanel.getDisplay().getSystemColor(SWT.COLOR_BLUE)); 
 //		buttonsPanel.setBackground(buttonsPanel.getDisplay().getSystemColor(SWT.COLOR_GREEN));  
 	}
 	
-	public void getRows() {
-		
+	public void buildPython(Collection<ScriptGeneratorRow> rows) {
+		// build Python
+	}
+	
+	
+	public void sendToNicos() {
+		// send to NICOS
+	}
+	
+	public void saveToCsv() {
+		// save to csv
 	}
 	
 	@Override
