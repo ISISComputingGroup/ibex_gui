@@ -62,6 +62,7 @@ public class TimeChannelsPanel extends Composite {
     StackLayout stack;
 
     private Combo timeChannelFile;
+    private Label timeChannelFileRB;
     Button radioSpecifyParameters;
     Button radioUseTCBFile;
 
@@ -123,7 +124,7 @@ public class TimeChannelsPanel extends Composite {
                 BeanProperties.value("timeUnit").observe(viewModel));
         bindingContext.bindList(WidgetProperties.items().observe(timeChannelFile),
                 BeanProperties.list("timeChannelFileList").observe(viewModel));
-        bindingContext.bindValue(WidgetProperties.selection().observe(timeChannelFile),
+        bindingContext.bindValue(WidgetProperties.text().observe(timeChannelFileRB),
                 BeanProperties.value("timeChannelFile").observe(viewModel));
 
 		viewModel.addPropertyChangeListener("timeRegimes", new PropertyChangeListener() {		
@@ -254,16 +255,36 @@ public class TimeChannelsPanel extends Composite {
 
     private void addTimeChannelFilePanel(Composite parent) {
         
+        // Wiring table selection
         Composite timeChannelFileContent = new Composite(parent, SWT.NONE);
-        timeChannelFileContent.setLayout(new GridLayout(2, false));
-        timeChannelFileContent.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+        timeChannelFileContent.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1));
+        timeChannelFileContent.setLayout(new GridLayout(3, false));
 
         Label lblTimeChannelFile = new Label(timeChannelFileContent, SWT.NONE);
         lblTimeChannelFile.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
         lblTimeChannelFile.setText("Time Channel File:");
 
         timeChannelFile = new Combo(timeChannelFileContent, SWT.DROP_DOWN | SWT.READ_ONLY);
-        GridData gdTimeChannelFile = new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1);
-        timeChannelFile.setLayoutData(gdTimeChannelFile);
+        timeChannelFile.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1));
+
+        Label spacer = new Label(timeChannelFileContent, SWT.None);
+
+        Label lblCrntWiring = new Label(timeChannelFileContent, SWT.None);
+        lblCrntWiring.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
+        lblCrntWiring.setText("Current:");
+
+        timeChannelFileRB = new Label(timeChannelFileContent, SWT.NONE);
+        timeChannelFileRB.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+
+        timeChannelFile.addSelectionListener(new SelectionListener() {
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                viewModel.setTimeChannelFile(timeChannelFile.getText());
+            }
+
+            @Override
+            public void widgetDefaultSelected(SelectionEvent e) {
+            }
+        });
     }
 }

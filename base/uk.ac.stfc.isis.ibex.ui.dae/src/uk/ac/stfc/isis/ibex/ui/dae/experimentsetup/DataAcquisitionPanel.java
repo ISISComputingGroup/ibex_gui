@@ -338,8 +338,6 @@ public class DataAcquisitionPanel extends Composite {
 
         bindingContext.bindList(WidgetProperties.items().observe(wiringTable),
                 BeanProperties.list("wiringTableList").observe(viewModel));
-        bindingContext.bindValue(WidgetProperties.selection().observe(wiringTable),
-                BeanProperties.value("tableIndex").observe(viewModel));
         bindingContext.bindValue(WidgetProperties.text().observe(wiringTableRB),
                 BeanProperties.value("wiringTable").observe(viewModel));
 

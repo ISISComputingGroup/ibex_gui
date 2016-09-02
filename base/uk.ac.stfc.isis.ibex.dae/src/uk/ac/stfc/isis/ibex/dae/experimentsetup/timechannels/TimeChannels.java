@@ -35,7 +35,8 @@ public class TimeChannels extends ModelObject {
 
 	private List<TimeRegime> timeRegimes = new ArrayList<>();
     private UpdatedValue<Collection<String>> timeChannelFileList;
-	private String timeChannelFile = "";
+    private String timeChannelFile = "";
+    private String newTimeChannelFile = "";
 	private CalculationMethod calculationMethod = CalculationMethod.SPECIFY_PARAMETERS;
 	private TimeUnit timeUnit = TimeUnit.MICROSECONDS;
 	
@@ -46,13 +47,21 @@ public class TimeChannels extends ModelObject {
 	public void setTimeRegimes(List<TimeRegime> value) {
 		firePropertyChange("timeRegimes", timeRegimes, timeRegimes = value);
 	}
-	
-	public String timeChannelFile() {
-		return timeChannelFile;
+
+    public String timeChannelFile() {
+        return timeChannelFile;
+    }
+
+    public void setTimeChannelFile(String value) {
+        firePropertyChange("timeChannelFile", timeChannelFile, timeChannelFile = value);
+    }
+
+    public String newTimeChannelFile() {
+        return newTimeChannelFile;
 	}
 
-	public void setTimeChannelFile(String value) {
-		firePropertyChange("timeChannelFile", timeChannelFile, timeChannelFile = value);
+    public void setNewTimeChannelFile(String value) {
+        firePropertyChange("timeChannelFile", newTimeChannelFile, newTimeChannelFile = value);
 	}
 
     /**

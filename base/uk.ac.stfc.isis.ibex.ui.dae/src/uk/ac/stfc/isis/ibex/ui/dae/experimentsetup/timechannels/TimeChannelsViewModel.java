@@ -108,7 +108,7 @@ public class TimeChannelsViewModel extends ModelObject {
      * @param value the path to the file
      */
     public void setTimeChannelFile(String value) {
-        model.setTimeChannelFile(value);
+        model.setNewTimeChannelFile(value);
     }
 
     /**

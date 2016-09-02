@@ -95,8 +95,8 @@ public class XmlBackedTimeChannels extends TimeChannels {
 	}
 	
 	@Override
-	public void setTimeChannelFile(String value) {
-		super.setTimeChannelFile(value);
+	public void setNewTimeChannelFile(String value) {
+		super.setNewTimeChannelFile(value);
 		
 		if (doc == null) { 
 			return; 
