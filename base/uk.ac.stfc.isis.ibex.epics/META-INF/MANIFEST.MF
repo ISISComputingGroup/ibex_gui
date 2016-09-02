@@ -23,4 +23,5 @@ Export-Package: uk.ac.stfc.isis.ibex.epics.adapters,
  uk.ac.stfc.isis.ibex.epics.observing,
  uk.ac.stfc.isis.ibex.epics.pv,
  uk.ac.stfc.isis.ibex.epics.writing
-Import-Package: uk.ac.stfc.isis.ibex.alarm
+Import-Package: uk.ac.stfc.isis.ibex.alarm,
+ uk.ac.stfc.isis.ibex.epics.observing
