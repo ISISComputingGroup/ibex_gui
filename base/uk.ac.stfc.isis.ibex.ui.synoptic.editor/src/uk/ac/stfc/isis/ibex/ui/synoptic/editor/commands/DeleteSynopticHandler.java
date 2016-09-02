@@ -29,7 +29,7 @@ import uk.ac.stfc.isis.ibex.ui.synoptic.editor.dialogs.MultipleSynopticsSelectio
 
 public class DeleteSynopticHandler extends SynopticHandler<Collection<String>> {
 
-    private static final String TITLE = "Delete synoptics";
+    private static final String TITLE = "Delete Synoptics";
 
 	public DeleteSynopticHandler() {
 		super(SYNOPTIC.delete());
