@@ -26,9 +26,12 @@ public class DaeSettings extends ModelObject {
 	private int monitorSpectrum;
 	private double from;
 	private double to;
-	private String wiringTable = "";
-	private String detectorTable = "";
-	private String spectraTable = "";
+	private String newWiringTable = "";
+	private String newDetectorTable = "";
+	private String newSpectraTable = "";
+    private String wiringTable = "";
+    private String detectorTable = "";
+    private String spectraTable = "";
 	private DaeTimingSource timingSource = DaeTimingSource.ISIS;
 	private BinaryChoice smpVeto = BinaryChoice.NO;
 	private BinaryChoice veto0 = BinaryChoice.NO;
@@ -67,29 +70,29 @@ public class DaeSettings extends ModelObject {
 		firePropertyChange("to", to, to = value);
 	}
 	
-	public String wiringTable() {
-		return wiringTable;
+	public String newWiringTable() {
+		return newWiringTable;
 	}
 	
-	public void setWiringTable(String value) {
-		firePropertyChange("wiringTable", wiringTable, wiringTable = value);
+	public void setNewWiringTable(String value) {
+		firePropertyChange("wiringTable", newWiringTable, newWiringTable = value);
 	}
 	
-	public String detectorTable() {
-		return detectorTable;
+	public String newDetectorTable() {
+		return newDetectorTable;
 	}
 	
-	public void setDetectorTable(String value) {
-		firePropertyChange("detectorTable", detectorTable, detectorTable = value);
+	public void setNewDetectorTable(String value) {
+		firePropertyChange("detectorTable", newDetectorTable, newDetectorTable = value);
 	}
 	
 	
-	public String spectraTable() {
-		return spectraTable;
+	public String newSpectraTable() {
+		return newSpectraTable;
 	}
 	
-	public void setSpectraTable(String value) {
-		firePropertyChange("spectraTable", spectraTable, spectraTable = value);
+	public void setNewSpectraTable(String value) {
+		firePropertyChange("spectraTable", newSpectraTable, newSpectraTable = value);
 	}
 	
 	public DaeTimingSource timingSource() {
@@ -195,4 +198,46 @@ public class DaeSettings extends ModelObject {
 	public void setIsis50HzVeto(BinaryChoice value) {
 		firePropertyChange("isis50HzVeto", isis50HzVeto, isis50HzVeto = value);
 	}
+
+    /**
+     * @return the currentWiringTable
+     */
+    public String wiringTable() {
+        return wiringTable;
+    }
+
+    /**
+     * @param value the currentWiringTable to set
+     */
+    public void setWiringTable(String value) {
+        firePropertyChange("wiringTable", this.wiringTable, this.wiringTable = value);
+    }
+
+    /**
+     * @return the currentDetectorTable
+     */
+    public String detectorTable() {
+        return detectorTable;
+    }
+
+    /**
+     * @param value the currentDetectorTable to set
+     */
+    public void setDetectorTable(String value) {
+        firePropertyChange("detectorTable", this.detectorTable, this.detectorTable = value);
+    }
+
+    /**
+     * @return the currentSpectraTable
+     */
+    public String spectraTable() {
+        return spectraTable;
+    }
+
+    /**
+     * @param value the currentSpectraTable to set
+     */
+    public void setSpectraTable(String value) {
+        firePropertyChange("spectraTable", this.spectraTable, this.spectraTable = value);
+    }
 }
