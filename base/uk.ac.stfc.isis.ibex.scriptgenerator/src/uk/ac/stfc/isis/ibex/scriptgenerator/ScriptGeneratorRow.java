@@ -22,16 +22,14 @@ package uk.ac.stfc.isis.ibex.scriptgenerator;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 
 public class ScriptGeneratorRow extends ModelObject {
-	private int position; // drop-down?
+	private int position;
 	private int trans;
-	private int transWait; // drop-down
+	private int transWait; 
 	private int sans;
-	private int sansWait; // drop-down
+	private int sansWait; 
 	private int period;
 	private String sampleName; 
 	private int thickness; 
-	private String script;
-	private PythonBuilder builder;
 	
 	public ScriptGeneratorRow(int position, int trans, int transWait, int sans, int sansWait, int period, 
 			String sampleName, int thickness, String script) {
@@ -43,8 +41,6 @@ public class ScriptGeneratorRow extends ModelObject {
 		this.period = period;
 		this.sampleName = sampleName;
 		this.thickness = thickness;
-		this.script = script;
-		builder = new PythonBuilder();
 	}
 	
 	public int getPosition() {
@@ -53,8 +49,6 @@ public class ScriptGeneratorRow extends ModelObject {
 	
 	public void setPosition(int position) {
 		firePropertyChange("position", this.position, this.position = position);
-		builder.setPosition(position);
-		setScript(builder.getScript());
 	}
 
 	public int getTrans() {
@@ -63,8 +57,6 @@ public class ScriptGeneratorRow extends ModelObject {
 	
 	public void setTrans(int trans) {
 		firePropertyChange("trans", this.trans, this.trans = trans);
-		builder.setTrans(trans);
-		setScript(builder.getScript());
 	}
 	
 	public int getTransWait() {
@@ -73,8 +65,6 @@ public class ScriptGeneratorRow extends ModelObject {
 	
 	public void setTransWait(int transWait) {
 		firePropertyChange("wait", this.transWait, this.transWait = transWait);
-		builder.setTransWait(transWait);
-		setScript(builder.getScript());
 	}
 	
 	public int getSans() {
@@ -83,8 +73,6 @@ public class ScriptGeneratorRow extends ModelObject {
 	
 	public void setSans() {
 		firePropertyChange("sans", this.sans, this.sans = sans);
-		builder.setSans(sans);
-		setScript(builder.getScript());
 	}
 	
 	public int getSansWait() {
@@ -93,8 +81,6 @@ public class ScriptGeneratorRow extends ModelObject {
 	
 	public void setSansWait() {
 		firePropertyChange("sansWait", this.sansWait, this.sansWait = sansWait);
-		builder.setSansWait(sansWait);
-		setScript(builder.getScript());
 	}
 	
 	public int getPeriod() {
@@ -103,8 +89,6 @@ public class ScriptGeneratorRow extends ModelObject {
 	
 	public void setPeriod() {
 		firePropertyChange("period", this.period, this.period = period);
-		builder.setPeriod(period);
-		setScript(builder.getScript());
 	}
 	
 	public String getSampleName() {
@@ -113,8 +97,6 @@ public class ScriptGeneratorRow extends ModelObject {
 	
 	public void setSampleName() {
 		firePropertyChange("sampleName", this.sampleName, this.sampleName = sampleName);
-		builder.setSampleName(sampleName);
-		setScript(builder.getScript());
 	}
 	
 	public int getThickness() {
@@ -123,15 +105,5 @@ public class ScriptGeneratorRow extends ModelObject {
 	
 	public void setThickness() {
 		firePropertyChange("sampleName", this.sampleName, this.sampleName = sampleName);
-		builder.setSampleName(sampleName);
-		setScript(builder.getScript());
-	}
-	
-	public String getScript() {
-		return script;
-	}
-	
-	private void setScript(String script) {
-		firePropertyChange("script", this.script, this.script = script);
 	}
 }
