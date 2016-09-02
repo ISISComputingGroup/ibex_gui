@@ -635,7 +635,7 @@ $(pv_value)</tooltip>
       <rules />
       <enabled>true</enabled>
       <wuid>-48159ee9:1567f536160:-5214</wuid>
-      <transparent>false</transparent>
+      <transparent>true</transparent>
       <pv_value />
       <auto_size>false</auto_size>
       <text>######</text>
