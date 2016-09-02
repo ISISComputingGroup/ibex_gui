@@ -1,7 +1,7 @@
 
 /*
 * This file is part of the ISIS IBEX application.
-* Copyright (C) 2012-2015 Science & Technology Facilities Council.
+* Copyright (C) 2012-2016 Science & Technology Facilities Council.
 * All rights reserved.
 *
 * This program is distributed in the hope that it will be useful.
@@ -21,55 +21,62 @@ package uk.ac.stfc.isis.ibex.dae.spectra;
 
 import uk.ac.stfc.isis.ibex.dae.DaeObservables;
 import uk.ac.stfc.isis.ibex.epics.observing.BaseObserver;
+import uk.ac.stfc.isis.ibex.epics.observing.BufferedObservablePair;
 import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
+import uk.ac.stfc.isis.ibex.epics.observing.Pair;
 import uk.ac.stfc.isis.ibex.epics.observing.Subscription;
 import uk.ac.stfc.isis.ibex.epics.pv.Closable;
 
 public class ObservedSpectrum extends UpdatableSpectrum implements Closable {
 		
 	private final DaeObservables observables;
+    private BufferedObservablePair<Integer, float[]> xData;
+    private BufferedObservablePair<Integer, float[]> yData;
 	
-	private abstract class DataObserver extends BaseObserver<float[]> {
+    private abstract class DataObserver extends BaseObserver<Pair<Integer, float[]>> {
 		@Override
 		public void onError(Exception e) {			
 		}
 
 		@Override
 		public void onConnectionStatus(boolean isConnected) {			
-		}
-		
+        }
+
         protected double[] toDoubleArray(float[] value, int length) {
             double[] doubles = new double[length];
             for (int i = 0; i < length; i++) {
-				doubles[i] = value[i];
-			}
-			
-			return doubles;
-		}
+                doubles[i] = value[i];
+            }
+            return doubles;
+
+        }
 	}
 	
 	private final DataObserver xDataObserver = new DataObserver() {
 
 		@Override
-		public void onValue(float[] value) {
-            setXData(toDoubleArray(value, xLengthObserver.getValue()));
-		}
+        public void onValue(Pair<Integer, float[]> value) {
+            setXData(toDoubleArray(value.second, value.first));
+        }
 	};
 
 	private final DataObserver yDataObserver = new DataObserver() {
 		@Override
-		public void onValue(float[] value) {
-            setYData(toDoubleArray(value, yLengthObserver.getValue()));
-		}
+        public void onValue(Pair<Integer, float[]> value) {
+            setYData(toDoubleArray(value.second, value.first));
+        }
 	};
 
 	private Subscription xSubscription;
 	private Subscription ySubscription;
 
-    private ForwardingObservable<Integer> xLengthObserver;
-    private ForwardingObservable<Integer> yLengthObserver;
+    private ForwardingObservable<Integer> xLengthObservable;
+    private ForwardingObservable<Integer> yLengthObservable;
 
-	public ObservedSpectrum(DaeObservables observables) {
+    private ForwardingObservable<float[]> xValObservable;
+    private ForwardingObservable<float[]> yValObservable;
+
+    public ObservedSpectrum(DaeObservables observables) {
 		this.observables = observables;
 	}
 	
@@ -90,13 +97,20 @@ public class ObservedSpectrum extends UpdatableSpectrum implements Closable {
 	}
 	
 	private void updateSubscriptions() {
-		cancelSubscriptions();
-        xLengthObserver = observables.spectrumXDataLength(getNumber(), getPeriod());
-        yLengthObserver = observables.spectrumYDataLength(getNumber(), getPeriod());
+        cancelSubscriptions();
 
-		xSubscription = observables.spectrumXData(getNumber(), getPeriod()).addObserver(xDataObserver);
-		ySubscription = observables.spectrumYData(getNumber(), getPeriod()).addObserver(yDataObserver);
-	}
+        xLengthObservable = observables.spectrumXDataLength(getNumber(), getPeriod());
+        yLengthObservable = observables.spectrumYDataLength(getNumber(), getPeriod());
+        
+        xValObservable = observables.spectrumXData(getNumber(), getPeriod());
+        yValObservable = observables.spectrumYData(getNumber(), getPeriod());
+        
+        xData = new BufferedObservablePair<>(xLengthObservable, xValObservable);
+        yData = new BufferedObservablePair<>(yLengthObservable, yValObservable);
+
+        xSubscription = xData.addObserver(xDataObserver);
+        ySubscription = yData.addObserver(yDataObserver);
+    }
 
 	@Override
 	public void close() {
