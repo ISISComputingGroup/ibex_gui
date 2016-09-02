@@ -162,7 +162,7 @@ public class ScriptGeneratorView extends ViewPart {
             public void widgetSelected(SelectionEvent e) {
                 builder.setRows(table.getRows());
                 script = builder.getScript();
-                // popup window
+
                 Shell shell = new Shell();
                 MessageDialog.openInformation(shell, "Script Preview", script);
             }

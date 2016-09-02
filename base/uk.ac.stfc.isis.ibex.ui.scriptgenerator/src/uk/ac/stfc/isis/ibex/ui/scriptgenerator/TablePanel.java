@@ -53,7 +53,8 @@ public class TablePanel extends Composite {
 		setLayout(new GridLayout(2, true));
 		
 		rows = new ArrayList<ScriptGeneratorRow>();
-		rows.add(new ScriptGeneratorRow(1, 2, 3, 4, 5, 6, "sample name", 7, "script"));
+		rows.add(new ScriptGeneratorRow(1.0, 2.0, 3.0, 4.0, 5.0, 6.0, "sample name", 7.0, "script"));
+		rows.add(new ScriptGeneratorRow());
 		
 		table = new ScriptGeneratorTable(this, SWT.NONE, SWT.MULTI | SWT.NO_SCROLL | SWT.V_SCROLL | SWT.FULL_SELECTION | SWT.BORDER, false);
 		table.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));

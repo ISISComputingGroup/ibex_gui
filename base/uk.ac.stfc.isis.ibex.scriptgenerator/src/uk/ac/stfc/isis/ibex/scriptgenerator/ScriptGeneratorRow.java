@@ -22,17 +22,18 @@ package uk.ac.stfc.isis.ibex.scriptgenerator;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 
 public class ScriptGeneratorRow extends ModelObject {
-	protected int position;
-	protected int trans;
-	protected int transWait; 
-	protected int sans;
-	protected int sansWait; 
-	protected int period;
+	protected Double position;
+	protected Double trans;
+	protected Double transWait; 
+	protected Double sans;
+	protected Double sansWait; 
+	protected Double period;
 	protected String sampleName; 
-	protected int thickness; 
+	protected Double thickness; 
+	private boolean wasNull;
 	
-	public ScriptGeneratorRow(int position, int trans, int transWait, int sans, int sansWait, int period, 
-			String sampleName, int thickness, String script) {
+	public ScriptGeneratorRow(Double position, Double trans, Double transWait, Double sans, Double sansWait, Double period, 
+			String sampleName, Double thickness, String script) {
 		this.position = position;
 		this.trans = trans;
 		this.transWait = transWait;
@@ -41,53 +42,65 @@ public class ScriptGeneratorRow extends ModelObject {
 		this.period = period;
 		this.sampleName = sampleName;
 		this.thickness = thickness;
+		this.wasNull = false;
 	}
 	
-	public int getPosition() {
+	public ScriptGeneratorRow() {
+		this.sampleName = "";
+		this.wasNull = true;
+	}
+	
+	public Double getPosition() {
 		return position;
 	}
 	
-	public void setPosition(int position) {
+	public void setPosition(Double position) {
+		this.wasNull = false;
 		firePropertyChange("position", this.position, this.position = position);
 	}
 
-	public int getTrans() {
+	public Double getTrans() {
 		return trans;
 	}
 	
-	public void setTrans(int trans) {
+	public void setTrans(Double trans) {
+		this.wasNull = false;
 		firePropertyChange("trans", this.trans, this.trans = trans);
 	}
 	
-	public int getTransWait() {
+	public Double getTransWait() {
 		return transWait;
 	}
 	
-	public void setTransWait(int transWait) {
+	public void setTransWait(Double transWait) {
+		this.wasNull = false;
 		firePropertyChange("wait", this.transWait, this.transWait = transWait);
 	}
 	
-	public int getSans() {
+	public Double getSans() {
 		return sans;
 	}
 	
 	public void setSans() {
+		this.wasNull = false;
 		firePropertyChange("sans", this.sans, this.sans = sans);
 	}
 	
-	public int getSansWait() {
+	public Double getSansWait() {
 		return sansWait;
 	}
 	
 	public void setSansWait() {
+		this.wasNull = false;
 		firePropertyChange("sansWait", this.sansWait, this.sansWait = sansWait);
 	}
 	
-	public int getPeriod() {
+	public Double getPeriod() {
 		return period;
 	}
 	
 	public void setPeriod() {
+		this.wasNull = false;
 		firePropertyChange("period", this.period, this.period = period);
 	}
 	
@@ -95,15 +108,21 @@ public class ScriptGeneratorRow extends ModelObject {
 		return sampleName;
 	}
 	
-	public void setSampleName() {
+	public void setSampleName(String sampleName) {
+		this.wasNull = false;
 		firePropertyChange("sampleName", this.sampleName, this.sampleName = sampleName);
 	}
 	
-	public int getThickness() {
+	public Double getThickness() {
 		return thickness;
 	}
 	
 	public void setThickness() {
+		this.wasNull = false;
 		firePropertyChange("sampleName", this.sampleName, this.sampleName = sampleName);
+	}
+	
+	public boolean wasNull() {
+		return wasNull;
 	}
 }

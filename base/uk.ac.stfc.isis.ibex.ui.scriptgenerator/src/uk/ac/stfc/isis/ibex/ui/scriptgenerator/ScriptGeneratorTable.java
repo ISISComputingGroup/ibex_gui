@@ -26,6 +26,9 @@ import uk.ac.stfc.isis.ibex.scriptgenerator.ScriptGeneratorRow;
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundCellLabelProvider;
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundTable;
 import uk.ac.stfc.isis.ibex.ui.widgets.StringEditingSupport;
+import uk.ac.stfc.isis.ibex.ui.widgets.DoubleEditingSupport;
+import uk.ac.stfc.isis.ibex.ui.widgets.DoubleEditingSupportBlankIfNull;
+import uk.ac.stfc.isis.ibex.ui.widgets.DoubleEditingSupport;
 import uk.ac.stfc.isis.ibex.ui.widgets.IntegerEditingSupport;
 
 import java.util.Arrays;
@@ -83,19 +86,23 @@ public class ScriptGeneratorTable extends DataboundTable<ScriptGeneratorRow> {
 				observeProperty("position")) {
 			@Override
 			protected String valueFromRow(ScriptGeneratorRow row) {
-				return String.valueOf(row.getPosition());
+				return row.getPosition() == null ? "" : String.valueOf(row.getPosition());
 			}
 		});
 		
 		
-		position.setEditingSupport(new IntegerEditingSupport<ScriptGeneratorRow>(viewer(), ScriptGeneratorRow.class) {
+		position.setEditingSupport(new DoubleEditingSupportBlankIfNull<ScriptGeneratorRow>(viewer(), ScriptGeneratorRow.class) {
 			@Override
-			protected Integer valueFromRow(ScriptGeneratorRow row) {
+			protected Double valueFromRow(ScriptGeneratorRow row) {
 				return row.getPosition();
 			}
 
 			@Override
-			protected void setValueForRow(ScriptGeneratorRow row, Integer position) {
+			protected void setValueForRow(ScriptGeneratorRow row, Double position) {
+				if (row.wasNull()) {
+					rows.add(new ScriptGeneratorRow());
+					setRows(rows);
+				}
 				row.setPosition(position);
 			}
 		});
@@ -110,14 +117,14 @@ public class ScriptGeneratorTable extends DataboundTable<ScriptGeneratorRow> {
 				return String.valueOf(row.getTrans());
 			}
 		});
-		trans.setEditingSupport(new IntegerEditingSupport<ScriptGeneratorRow>(viewer(), ScriptGeneratorRow.class) {
+		trans.setEditingSupport(new DoubleEditingSupport<ScriptGeneratorRow>(viewer(), ScriptGeneratorRow.class) {
 			@Override
-			protected Integer valueFromRow(ScriptGeneratorRow row) {
-				return row.getPosition();
+			protected Double valueFromRow(ScriptGeneratorRow row) {
+				return row.getTrans();
 			}
 
 			@Override
-			protected void setValueForRow(ScriptGeneratorRow row, Integer position) {
+			protected void setValueForRow(ScriptGeneratorRow row, Double position) {
 				row.setPosition(position);
 			}
 		});
@@ -132,14 +139,14 @@ public class ScriptGeneratorTable extends DataboundTable<ScriptGeneratorRow> {
 				return String.valueOf(row.getTransWait());
 			}
 		});
-		transWait.setEditingSupport(new IntegerEditingSupport<ScriptGeneratorRow>(viewer(), ScriptGeneratorRow.class) {
+		transWait.setEditingSupport(new DoubleEditingSupport<ScriptGeneratorRow>(viewer(), ScriptGeneratorRow.class) {
 			@Override
-			protected Integer valueFromRow(ScriptGeneratorRow row) {
+			protected Double valueFromRow(ScriptGeneratorRow row) {
 				return row.getPosition();
 			}
 
 			@Override
-			protected void setValueForRow(ScriptGeneratorRow row, Integer position) {
+			protected void setValueForRow(ScriptGeneratorRow row, Double position) {
 				row.setPosition(position);
 			}
 		});
@@ -154,14 +161,14 @@ public class ScriptGeneratorTable extends DataboundTable<ScriptGeneratorRow> {
 				return String.valueOf(row.getSans());
 			}
 		});
-		sans.setEditingSupport(new IntegerEditingSupport<ScriptGeneratorRow>(viewer(), ScriptGeneratorRow.class) {
+		sans.setEditingSupport(new DoubleEditingSupport<ScriptGeneratorRow>(viewer(), ScriptGeneratorRow.class) {
 			@Override
-			protected Integer valueFromRow(ScriptGeneratorRow row) {
+			protected Double valueFromRow(ScriptGeneratorRow row) {
 				return row.getPosition();
 			}
 
 			@Override
-			protected void setValueForRow(ScriptGeneratorRow row, Integer position) {
+			protected void setValueForRow(ScriptGeneratorRow row, Double position) {
 				row.setPosition(position);
 			}
 		});
@@ -176,14 +183,14 @@ public class ScriptGeneratorTable extends DataboundTable<ScriptGeneratorRow> {
 				return String.valueOf(row.getSansWait());
 			}
 		});
-		sansWait.setEditingSupport(new IntegerEditingSupport<ScriptGeneratorRow>(viewer(), ScriptGeneratorRow.class) {
+		sansWait.setEditingSupport(new DoubleEditingSupport<ScriptGeneratorRow>(viewer(), ScriptGeneratorRow.class) {
 			@Override
-			protected Integer valueFromRow(ScriptGeneratorRow row) {
+			protected Double valueFromRow(ScriptGeneratorRow row) {
 				return row.getPosition();
 			}
 
 			@Override
-			protected void setValueForRow(ScriptGeneratorRow row, Integer position) {
+			protected void setValueForRow(ScriptGeneratorRow row, Double position) {
 				row.setPosition(position);
 			}
 		});
@@ -195,17 +202,17 @@ public class ScriptGeneratorTable extends DataboundTable<ScriptGeneratorRow> {
 				observeProperty("period")) {
 			@Override
 			protected String valueFromRow(ScriptGeneratorRow row) {
-				return String.valueOf(row.getPeriod());
+				return row.getPeriod() == null ? "" : String.valueOf(row.getPeriod());
 			}
 		});
-		period.setEditingSupport(new IntegerEditingSupport<ScriptGeneratorRow>(viewer(), ScriptGeneratorRow.class) {
+		period.setEditingSupport(new DoubleEditingSupport<ScriptGeneratorRow>(viewer(), ScriptGeneratorRow.class) {
 			@Override
-			protected Integer valueFromRow(ScriptGeneratorRow row) {
+			protected Double valueFromRow(ScriptGeneratorRow row) {
 				return row.getPosition();
 			}
 
 			@Override
-			protected void setValueForRow(ScriptGeneratorRow row, Integer position) {
+			protected void setValueForRow(ScriptGeneratorRow row, Double position) {
 				row.setPosition(position);
 			}
 		});
@@ -217,18 +224,18 @@ public class ScriptGeneratorTable extends DataboundTable<ScriptGeneratorRow> {
 				observeProperty("sampleName")) {
 			@Override
 			protected String valueFromRow(ScriptGeneratorRow row) {
-				return String.valueOf(row.getSampleName());
+				return row.getSampleName();
 			}
 		});
-		sampleName.setEditingSupport(new IntegerEditingSupport<ScriptGeneratorRow>(viewer(), ScriptGeneratorRow.class) {
+		sampleName.setEditingSupport(new StringEditingSupport<ScriptGeneratorRow>(viewer(), ScriptGeneratorRow.class) {
 			@Override
-			protected Integer valueFromRow(ScriptGeneratorRow row) {
-				return row.getPosition();
+			protected String valueFromRow(ScriptGeneratorRow row) {
+				return row.getSampleName();
 			}
 
 			@Override
-			protected void setValueForRow(ScriptGeneratorRow row, Integer position) {
-				row.setPosition(position);
+			protected void setValueForRow(ScriptGeneratorRow row, String sampleName) {
+				row.setSampleName(sampleName);
 			}
 		});
 	}
@@ -242,14 +249,14 @@ public class ScriptGeneratorTable extends DataboundTable<ScriptGeneratorRow> {
 				return String.valueOf(row.getThickness());
 			}
 		});
-		thickness.setEditingSupport(new IntegerEditingSupport<ScriptGeneratorRow>(viewer(), ScriptGeneratorRow.class) {
+		thickness.setEditingSupport(new DoubleEditingSupport<ScriptGeneratorRow>(viewer(), ScriptGeneratorRow.class) {
 			@Override
-			protected Integer valueFromRow(ScriptGeneratorRow row) {
+			protected Double valueFromRow(ScriptGeneratorRow row) {
 				return row.getPosition();
 			}
 
 			@Override
-			protected void setValueForRow(ScriptGeneratorRow row, Integer position) {
+			protected void setValueForRow(ScriptGeneratorRow row, Double position) {
 				row.setPosition(position);
 			}
 		});

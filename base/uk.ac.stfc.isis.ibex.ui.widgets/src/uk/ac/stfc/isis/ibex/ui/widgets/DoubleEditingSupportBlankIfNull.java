@@ -19,18 +19,14 @@
 
 package uk.ac.stfc.isis.ibex.ui.widgets;
 
-import org.eclipse.jface.viewers.CellEditor;
 import org.eclipse.jface.viewers.ColumnViewer;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.jface.viewers.TextCellEditor;
 
-public abstract class DoubleEditingSupport<TRow> extends GenericEditingSupport<TRow, Double> {
-
-	protected CellEditor editor;
+public abstract class DoubleEditingSupportBlankIfNull<TRow> extends DoubleEditingSupport<TRow> {
 	
-	public DoubleEditingSupport(ColumnViewer viewer, Class<TRow> rowType) {
-		super(viewer, rowType, Double.class);
-		createEditor(viewer);
+	public DoubleEditingSupportBlankIfNull(ColumnViewer viewer, Class<TRow> rowType) {
+		super(viewer, rowType);
 	}
 	
 	protected void createEditor(ColumnViewer viewer) { 		
@@ -40,26 +36,11 @@ public abstract class DoubleEditingSupport<TRow> extends GenericEditingSupport<T
 			protected void doSetValue(final Object value) {
 				if (value == null) {
 					// If value is null set to zero instead
-					super.doSetValue(String.valueOf(new Double(0)));
+					super.doSetValue("");
 				} else {
 					super.doSetValue(String.valueOf(value.toString()));
 				}
 			}
 		};
-	}
-
-	@Override
-	protected CellEditor getCellEditor(Object element) {
-		return editor;
-	}
-	
-	@Override
-	protected Double valueFromString(String text) {
-		try {
-			return Double.parseDouble(text);
-		} catch (NumberFormatException e) {
-			return null;
-		}
-		
 	}
 }
