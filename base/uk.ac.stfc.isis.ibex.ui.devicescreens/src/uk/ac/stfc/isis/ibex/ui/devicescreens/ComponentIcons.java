@@ -115,6 +115,8 @@ public final class ComponentIcons {
                 return "lakeshore";
             case PRESSURE_GAUGE:
                 return "pressure_gauge";
+            case SCIMAG3D:
+                return "scimag3D";
             default:
                 return "cog";
         }
