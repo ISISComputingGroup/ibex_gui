@@ -50,19 +50,41 @@ public class PeriodSettings extends ModelObject {
 	public void setSetupSource(PeriodSetupSource value) {
 		firePropertyChange("setupSource", setupSource, setupSource = value);
 	}
-	
+
+    /**
+     * Get the path for the currently set period file.
+     * 
+     * @return the file path.
+     */
     public String getPeriodFile() {
         return periodFile;
     }
 
+    /**
+     * Set the path for the current period file.
+     * 
+     * @param value the file path.
+     */
     public void setPeriodFile(String value) {
         firePropertyChange("periodFile", periodFile, periodFile = value);
     }
 
+    /**
+     * Get the path for the new period file (to be set as current file once
+     * changes are applied).
+     * 
+     * @return the file path.
+     */
     public String getNewPeriodFile() {
         return newPeriodFile;
 	}
-	
+
+    /**
+     * Set the path for the new period file (to be set as current file once
+     * changes are applied).
+     * 
+     * @param value the file path.
+     */
     public void setNewPeriodFile(String value) {
         firePropertyChange("periodFile", newPeriodFile, newPeriodFile = value);
 	}

@@ -36,6 +36,11 @@ public class PeriodsViewModel extends ModelObject {
 	private PeriodSettings settings;
 	private UpdatedValue<Collection<String>> periodFiles;
 	
+    /**
+     * Sets the period settings.
+     * 
+     * @param settings the settings.
+     */
 	public void setSettings(PeriodSettings settings) {
 		this.settings = settings;
 		
@@ -47,6 +52,11 @@ public class PeriodsViewModel extends ModelObject {
 		});	
 	}
 	
+    /**
+     * Sets the list of period files currently available to the instrument.
+     * 
+     * @param files the list of currently available period files.
+     */
 	public void setPeriodFilesList(UpdatedValue<Collection<String>> files) {
 		periodFiles = files;
 		
@@ -58,7 +68,12 @@ public class PeriodsViewModel extends ModelObject {
 			}
 		});	
 	}
-	
+
+    /**
+     * Gets the list of period files currently available to the instrument.
+     * 
+     * @return the list of period files.
+     */
 	public String[] getPeriodFilesList() {
         String[] files = valueOrEmpty(periodFiles);
         files = files.length != 0 ? files : new String[] {
@@ -66,15 +81,29 @@ public class PeriodsViewModel extends ModelObject {
         return addBlank(files);
 	}
 
-    private String[] addBlank(String[] tables) {
-        String[] result = new String[tables.length + 1];
+    /**
+     * Adds a blank option to the list for displaying in a drop down menu in the
+     * GUI.
+     * 
+     * @param files a list of files.
+     * @return the list of files with a blank entry added at the beginning.
+     */
+    private String[] addBlank(String[] files) {
+        String[] result = new String[files.length + 1];
         result[0] = " ";
-        for (int i = 0; i < tables.length; i++) {
-            result[i + 1] = tables[i];
+        for (int i = 0; i < files.length; i++) {
+            result[i + 1] = files[i];
         }
         return result;
     }
 
+    /**
+     * Returns a string array from a string collection, or an empty array if the
+     * input is null.
+     * 
+     * @param updated the string collection.
+     * @return the resulting array.
+     */
 	private String[] valueOrEmpty(UpdatedValue<Collection<String>> updated) {
 		Collection<String> value = updated.getValue();
 		return value != null ? value.toArray(new String[0]) : new String[0];
@@ -88,10 +117,21 @@ public class PeriodsViewModel extends ModelObject {
 		settings.setSetupSource(PeriodSetupSource.values()[index]);
 	}
 	
+    /**
+     * Returns the path to the period file currently in use.
+     * 
+     * @return the file path.
+     */
 	public String getPeriodFile() {
 		return settings.getPeriodFile();
 	}
 	
+    /**
+     * Sets a new period file in the settings (does not take effect until
+     * changes are applied).
+     * 
+     * @param value the path to the new period file.
+     */
 	public void setPeriodFile(String value) {
         settings.setNewPeriodFile(value);
 	}

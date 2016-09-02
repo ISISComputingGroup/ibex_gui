@@ -176,17 +176,24 @@ public class TimeChannelsViewModel extends ModelObject {
     }
 
     /**
-     * Used to convert an UpdatedValue with type string collection into a string
-     * array.
+     * Returns a string array from a string collection, or an empty array if the
+     * input is null.
      * 
-     * @param updated the UpdatedValue object to be converted
-     * @return the String array
+     * @param updated the string collection.
+     * @return the resulting array.
      */
     private String[] valueOrEmpty(UpdatedValue<Collection<String>> updated) {
         Collection<String> value = updated.getValue();
         return value != null ? value.toArray(new String[0]) : new String[0];
     }
 
+    /**
+     * Adds a blank option to the list for displaying in a drop down menu in the
+     * GUI.
+     * 
+     * @param files a list of files.
+     * @return the list of files with a blank entry added at the beginning.
+     */
     private String[] addBlank(String[] tables) {
         String[] result = new String[tables.length + 1];
         result[0] = " ";

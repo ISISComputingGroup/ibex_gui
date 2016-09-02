@@ -171,6 +171,11 @@ public class PeriodsPanel extends Composite {
         });
 	}
 
+    /**
+     * Binds model data to the relevant UI elements for automatic update.
+     * 
+     * @param viewModel the model holding the period settings.
+     */
 	public void setModel(final PeriodsViewModel viewModel) {
         this.model = viewModel;
 

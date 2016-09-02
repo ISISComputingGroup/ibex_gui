@@ -48,18 +48,40 @@ public class TimeChannels extends ModelObject {
 		firePropertyChange("timeRegimes", timeRegimes, timeRegimes = value);
 	}
 
+    /**
+     * Get the path for the currently set time channel file.
+     * 
+     * @return the file path.
+     */
     public String timeChannelFile() {
         return timeChannelFile;
     }
 
+    /**
+     * Set the path for the current time channel file.
+     * 
+     * @param value the file path.
+     */
     public void setTimeChannelFile(String value) {
         firePropertyChange("timeChannelFile", timeChannelFile, timeChannelFile = value);
     }
 
+    /**
+     * Get the path for the new time channel file (to be set as current file
+     * once changes are applied).
+     * 
+     * @return the file path.
+     */
     public String newTimeChannelFile() {
         return newTimeChannelFile;
 	}
 
+    /**
+     * Set the path for the new time channel file (to be set as current file
+     * once changes are applied).
+     * 
+     * @param value the file path.
+     */
     public void setNewTimeChannelFile(String value) {
         firePropertyChange("timeChannelFile", newTimeChannelFile, newTimeChannelFile = value);
 	}
@@ -77,7 +99,7 @@ public class TimeChannels extends ModelObject {
     /**
      * Sets the list of time channel files and adds a listener.
      * 
-     * @param files
+     * @param files the collection of available time channel files.
      */
     public void setTimeChannelFileList(UpdatedValue<Collection<String>> files) {
         timeChannelFileList = files;

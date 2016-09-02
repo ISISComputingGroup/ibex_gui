@@ -331,6 +331,11 @@ public class DataAcquisitionPanel extends Composite {
         });
     }
 
+    /**
+     * Binds model data to the relevant UI elements for automatic update.
+     * 
+     * @param viewModel the model holding the DAE settings.
+     */
     public void setModel(DataAcquisitionViewModel viewModel) {
         this.model = viewModel;
 

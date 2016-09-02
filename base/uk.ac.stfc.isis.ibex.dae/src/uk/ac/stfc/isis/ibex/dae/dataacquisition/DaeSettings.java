@@ -70,27 +70,62 @@ public class DaeSettings extends ModelObject {
 		firePropertyChange("to", to, to = value);
 	}
 	
+    /**
+     * Get the path for the new wiring table (to be set as current table once
+     * changes are applied).
+     * 
+     * @return the file path.
+     */
 	public String newWiringTable() {
 		return newWiringTable;
 	}
 	
+    /**
+     * Set the path for the new wiring table (to be set as current table once
+     * changes are applied).
+     * 
+     * @param value the file path.
+     */
 	public void setNewWiringTable(String value) {
 		firePropertyChange("wiringTable", newWiringTable, newWiringTable = value);
 	}
 	
+    /**
+     * Get the path for the new detector table (to be set as current table once
+     * changes are applied).
+     * 
+     * @return the file path.
+     */
 	public String newDetectorTable() {
 		return newDetectorTable;
 	}
 	
+    /**
+     * Set the path for the new detector table (to be set as current table once
+     * changes are applied).
+     * 
+     * @param value the file path.
+     */
 	public void setNewDetectorTable(String value) {
 		firePropertyChange("detectorTable", newDetectorTable, newDetectorTable = value);
 	}
 	
-	
+    /**
+     * Get the path for the new spectra table (to be set as current table once
+     * changes are applied).
+     * 
+     * @return the file path.
+     */
 	public String newSpectraTable() {
 		return newSpectraTable;
 	}
 	
+    /**
+     * Set the path for the new spectra table (to be set as current table once
+     * changes are applied).
+     * 
+     * @param value the file path.
+     */
 	public void setNewSpectraTable(String value) {
 		firePropertyChange("spectraTable", newSpectraTable, newSpectraTable = value);
 	}
@@ -199,43 +234,60 @@ public class DaeSettings extends ModelObject {
 		firePropertyChange("isis50HzVeto", isis50HzVeto, isis50HzVeto = value);
 	}
 
+
     /**
-     * @return the currentWiringTable
+     * Get the path for the currently set wiring table.
+     * 
+     * @return the file path.
      */
     public String wiringTable() {
         return wiringTable;
     }
 
     /**
-     * @param value the currentWiringTable to set
+     * Set the path for the current wiring table.
+     * 
+     * @param value the file path.
      */
     public void setWiringTable(String value) {
         firePropertyChange("wiringTable", this.wiringTable, this.wiringTable = value);
     }
 
+
     /**
-     * @return the currentDetectorTable
+     * Get the path for the currently set detector table.
+     * 
+     * @return the file path.
      */
     public String detectorTable() {
         return detectorTable;
     }
 
+
     /**
-     * @param value the currentDetectorTable to set
+     * Set the path for the current detector table.
+     * 
+     * @param value the file path.
      */
     public void setDetectorTable(String value) {
         firePropertyChange("detectorTable", this.detectorTable, this.detectorTable = value);
     }
 
+
     /**
-     * @return the currentSpectraTable
+     * Get the path for the currently set spectra table.
+     * 
+     * @return the file path.
      */
     public String spectraTable() {
         return spectraTable;
     }
 
+
     /**
-     * @param value the currentSpectraTable to set
+     * Set the path for the current spectra table.
+     * 
+     * @param value the file path.
      */
     public void setSpectraTable(String value) {
         firePropertyChange("spectraTable", this.spectraTable, this.spectraTable = value);
