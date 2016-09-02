@@ -331,69 +331,69 @@ public class DataAcquisitionPanel extends Composite {
         });
     }
 
-    public void setModel(DataAcquisitionViewModel model) {
-        this.model = model;
+    public void setModel(DataAcquisitionViewModel viewModel) {
+        this.model = viewModel;
 
         bindingContext = new DataBindingContext();
 
         bindingContext.bindList(WidgetProperties.items().observe(wiringTable),
-                BeanProperties.list("wiringTableList").observe(model));
+                BeanProperties.list("wiringTableList").observe(viewModel));
         bindingContext.bindValue(WidgetProperties.selection().observe(wiringTable),
-                BeanProperties.value("tableIndex").observe(model));
+                BeanProperties.value("tableIndex").observe(viewModel));
         bindingContext.bindValue(WidgetProperties.text().observe(wiringTableRB),
-                BeanProperties.value("wiringTable").observe(model));
+                BeanProperties.value("wiringTable").observe(viewModel));
 
         bindingContext.bindList(WidgetProperties.items().observe(detectorTable),
-                BeanProperties.list("detectorTableList").observe(model));
+                BeanProperties.list("detectorTableList").observe(viewModel));
         bindingContext.bindValue(WidgetProperties.text().observe(detectorTableRB),
-                BeanProperties.value("detectorTable").observe(model));
+                BeanProperties.value("detectorTable").observe(viewModel));
 
         bindingContext.bindList(WidgetProperties.items().observe(spectraTable),
-                BeanProperties.list("spectraTableList").observe(model));
+                BeanProperties.list("spectraTableList").observe(viewModel));
         bindingContext.bindValue(WidgetProperties.text().observe(spectraTableRB),
-                BeanProperties.value("spectraTable").observe(model));
+                BeanProperties.value("spectraTable").observe(viewModel));
 
         bindingContext.bindValue(WidgetProperties.selection().observe(monitorSpectrum),
-                BeanProperties.value("monitorSpectrum").observe(model));
+                BeanProperties.value("monitorSpectrum").observe(viewModel));
         bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(from),
-                BeanProperties.value("from").observe(model));
+                BeanProperties.value("from").observe(viewModel));
         bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(to),
-                BeanProperties.value("to").observe(model));
+                BeanProperties.value("to").observe(viewModel));
 
         bindingContext.bindValue(WidgetProperties.selection().observe(btnVeto0),
-                BeanProperties.value("veto0").observe(model));
+                BeanProperties.value("veto0").observe(viewModel));
         bindingContext.bindValue(WidgetProperties.selection().observe(btnVeto1),
-                BeanProperties.value("veto1").observe(model));
+                BeanProperties.value("veto1").observe(viewModel));
         bindingContext.bindValue(WidgetProperties.selection().observe(btnVeto2),
-                BeanProperties.value("veto2").observe(model));
+                BeanProperties.value("veto2").observe(viewModel));
         bindingContext.bindValue(WidgetProperties.selection().observe(btnVeto3),
-                BeanProperties.value("veto3").observe(model));
+                BeanProperties.value("veto3").observe(viewModel));
 
         bindingContext.bindValue(WidgetProperties.selection().observe(btnSMP),
-                BeanProperties.value("smpVeto").observe(model));
+                BeanProperties.value("smpVeto").observe(viewModel));
         bindingContext.bindValue(WidgetProperties.selection().observe(btnFermiChopper),
-                BeanProperties.value("fermiChopperVeto").observe(model));
+                BeanProperties.value("fermiChopperVeto").observe(viewModel));
         bindingContext.bindValue(WidgetProperties.selection().observe(btnTs2Pulse),
-                BeanProperties.value("ts2PulseVeto").observe(model));
+                BeanProperties.value("ts2PulseVeto").observe(viewModel));
         bindingContext.bindValue(WidgetProperties.selection().observe(btnIsisHz),
-                BeanProperties.value("isis50HzVeto").observe(model));
+                BeanProperties.value("isis50HzVeto").observe(viewModel));
 
         bindingContext.bindValue(WidgetProperties.text().observe(fcDelay),
-                BeanProperties.value("fcDelay").observe(model));
+                BeanProperties.value("fcDelay").observe(viewModel));
         bindingContext.bindValue(WidgetProperties.text().observe(fcWidth),
-                BeanProperties.value("fcWidth").observe(model));
+                BeanProperties.value("fcWidth").observe(viewModel));
 
         bindingContext.bindValue(WidgetProperties.selection().observe(btnMuonMsMode),
-                BeanProperties.value("muonMsMode").observe(model));
+                BeanProperties.value("muonMsMode").observe(viewModel));
         bindingContext.bindValue(WidgetProperties.singleSelectionIndex().observe(daeTimingSource),
-                BeanProperties.value("timingSource").observe(model));
+                BeanProperties.value("timingSource").observe(viewModel));
 
         bindingContext.bindValue(WidgetProperties.selection().observe(btnMuonPulseFirst),
-                BeanProperties.value("muonCerenkovPulse").observe(model));
+                BeanProperties.value("muonCerenkovPulse").observe(viewModel));
 
         bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(autosaveFrequency),
-                BeanProperties.value("autosaveFrequency").observe(model));
+                BeanProperties.value("autosaveFrequency").observe(viewModel));
         bindingContext.bindValue(WidgetProperties.singleSelectionIndex().observe(autosaveUnits),
-                BeanProperties.value("autosaveUnits").observe(model));
+                BeanProperties.value("autosaveUnits").observe(viewModel));
     }
 }

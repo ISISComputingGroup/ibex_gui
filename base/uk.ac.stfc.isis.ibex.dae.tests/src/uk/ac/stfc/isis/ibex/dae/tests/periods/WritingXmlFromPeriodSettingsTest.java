@@ -121,11 +121,11 @@ public class WritingXmlFromPeriodSettingsTest extends FileReadingTest {
 	public void period_file_is_updated() {
 		String newValue = "new_path";
 		
-		assertThat(periodSettings.getPeriodFile(), is(not(newValue)));
-		periodSettings.setPeriodFile(newValue);
+		assertThat(periodSettings.getNewPeriodFile(), is(not(newValue)));
+		periodSettings.setNewPeriodFile(newValue);
 		reloadSettingsFromCurrentValues();
 		
-		assertThat(periodSettings.getPeriodFile(), is(newValue));
+		assertThat(periodSettings.getNewPeriodFile(), is(newValue));
 	}
 	
 	@Test

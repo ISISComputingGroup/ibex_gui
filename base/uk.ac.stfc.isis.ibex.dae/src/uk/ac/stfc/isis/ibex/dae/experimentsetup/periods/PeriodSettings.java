@@ -28,7 +28,8 @@ public class PeriodSettings extends ModelObject {
 	
 	private List<Period> periods = new ArrayList<>();
 	private PeriodSetupSource setupSource = PeriodSetupSource.PARAMETERS;
-	private String periodFile = "";
+    private String periodFile = "";
+    private String newPeriodFile = "";
 	private PeriodControlType periodType = PeriodControlType.SOFTWARE;
 	private int softwarePeriods;
 	private double hardwarePeriods;
@@ -50,12 +51,20 @@ public class PeriodSettings extends ModelObject {
 		firePropertyChange("setupSource", setupSource, setupSource = value);
 	}
 	
-	public String getPeriodFile() {
-		return periodFile;
+    public String getPeriodFile() {
+        return periodFile;
+    }
+
+    public void setPeriodFile(String value) {
+        firePropertyChange("periodFile", periodFile, periodFile = value);
+    }
+
+    public String getNewPeriodFile() {
+        return newPeriodFile;
 	}
 	
-	public void setPeriodFile(String value) {
-		firePropertyChange("periodFile", periodFile, periodFile = value);
+    public void setNewPeriodFile(String value) {
+        firePropertyChange("periodFile", newPeriodFile, newPeriodFile = value);
 	}
 	
 	public PeriodControlType getPeriodType() {

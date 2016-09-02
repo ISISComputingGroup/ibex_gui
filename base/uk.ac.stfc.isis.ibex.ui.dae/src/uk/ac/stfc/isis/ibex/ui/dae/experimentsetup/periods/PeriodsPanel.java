@@ -27,6 +27,8 @@ import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.beans.BeanProperties;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Combo;
@@ -50,7 +52,9 @@ public class PeriodsPanel extends Composite {
 	private Text softwarePeriods;
 	private Text hardwarePeriods;
 	private Text outputDelay;
+    private Label periodFileRB;
 	private PeriodsTableView periods;
+    private PeriodsViewModel model;
 	
 	private static final Display DISPLAY = Display.getCurrent();
 	
@@ -59,49 +63,66 @@ public class PeriodsPanel extends Composite {
 		super(parent, style);
 		setLayout(new GridLayout(1, false));
 		
-		Group composite = new Group(this, SWT.NONE);
-		composite.setText("Setup");
-		composite.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		composite.setLayout(new GridLayout(5, false));
+		Group grpSetup = new Group(this, SWT.NONE);
+		grpSetup.setText("Setup");
+		grpSetup.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		grpSetup.setLayout(new GridLayout(5, false));
 		
-		Label lblPeriodSetupSource = new Label(composite, SWT.NONE);
+		Label lblPeriodSetupSource = new Label(grpSetup, SWT.NONE);
 		lblPeriodSetupSource.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		lblPeriodSetupSource.setSize(107, 15);
 		lblPeriodSetupSource.setText("Period setup source:");
 		
-		setupSource = new Combo(composite, SWT.DROP_DOWN | SWT.READ_ONLY);
+		setupSource = new Combo(grpSetup, SWT.DROP_DOWN | SWT.READ_ONLY);
 		setupSource.setSize(177, 23);
 		setupSource.setItems(PeriodSetupSource.allToString().toArray(new String[0]));
-		new Label(composite, SWT.NONE);
-		new Label(composite, SWT.NONE);
-		new Label(composite, SWT.NONE);
+		new Label(grpSetup, SWT.NONE);
+		new Label(grpSetup, SWT.NONE);
+		new Label(grpSetup, SWT.NONE);
 		
-		Label lblPeriodFile = new Label(composite, SWT.NONE);
+		Label lblPeriodFile = new Label(grpSetup, SWT.NONE);
 		lblPeriodFile.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		lblPeriodFile.setSize(58, 15);
 		lblPeriodFile.setText("Period File:");
 		
-        periodFile = new Combo(composite, SWT.DROP_DOWN | SWT.READ_ONLY);
+        periodFile = new Combo(grpSetup, SWT.DROP_DOWN | SWT.READ_ONLY);
 		GridData gd_periodFile = new GridData(SWT.LEFT, SWT.FILL, false, false, 4, 1);
 		gd_periodFile.widthHint = 500;
 		periodFile.setLayoutData(gd_periodFile);
 		periodFile.setSize(412, 25);
-		
-		Label lblPeriodType = new Label(composite, SWT.NONE);
+
+        Label spacer = new Label(grpSetup, SWT.None);
+
+        Composite currentFileRBPanel = new Composite(grpSetup, SWT.NONE);
+        GridLayout glCurrentFileRBPanel = new GridLayout(2, false);
+        glCurrentFileRBPanel.marginLeft = 0;
+        glCurrentFileRBPanel.marginTop = 0;
+        glCurrentFileRBPanel.marginBottom = 10;
+        currentFileRBPanel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 4, 1));
+        currentFileRBPanel.setLayout(glCurrentFileRBPanel);
+
+        Label lblCrntDetector = new Label(currentFileRBPanel, SWT.None);
+        lblCrntDetector.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1));
+        lblCrntDetector.setText("Current:");
+
+        periodFileRB = new Label(currentFileRBPanel, SWT.NONE);
+        periodFileRB.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+
+		Label lblPeriodType = new Label(grpSetup, SWT.NONE);
 		lblPeriodType.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		lblPeriodType.setSize(66, 15);
 		lblPeriodType.setText("Period Type:");
 		
-		periodType = new Combo(composite, SWT.DROP_DOWN | SWT.READ_ONLY);
+		periodType = new Combo(grpSetup, SWT.DROP_DOWN | SWT.READ_ONLY);
 		periodType.setSize(177, 23);
 		periodType.setItems(PeriodControlType.allToString().toArray(new String[0]));
-		new Label(composite, SWT.NONE);
+		new Label(grpSetup, SWT.NONE);
 		
-		Label lblNumberOfSoftware = new Label(composite, SWT.NONE);
+		Label lblNumberOfSoftware = new Label(grpSetup, SWT.NONE);
 		lblNumberOfSoftware.setSize(91, 15);
 		lblNumberOfSoftware.setText("Software periods:");
 		
-		softwarePeriods = new Text(composite, SWT.BORDER | SWT.RIGHT);
+		softwarePeriods = new Text(grpSetup, SWT.BORDER | SWT.RIGHT);
 		GridData gd_softwarePeriods = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
 		gd_softwarePeriods.widthHint = 60;
 		softwarePeriods.setLayoutData(gd_softwarePeriods);
@@ -137,13 +158,27 @@ public class PeriodsPanel extends Composite {
 		
 		periods = new PeriodsTableView(periodsComposite, SWT.NONE);
 		periods.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+
+        periodFile.addSelectionListener(new SelectionListener() {
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                model.setPeriodFile(periodFile.getText());
+            }
+
+            @Override
+            public void widgetDefaultSelected(SelectionEvent e) {
+            }
+        });
 	}
 
 	public void setModel(final PeriodsViewModel viewModel) {
+        this.model = viewModel;
+
 		bindingContext = new DataBindingContext();	
 		
 		bindingContext.bindList(WidgetProperties.items().observe(periodFile), BeanProperties.list("periodFilesList").observe(viewModel));
-		bindingContext.bindValue(WidgetProperties.selection().observe(periodFile), BeanProperties.value("periodFile").observe(viewModel));
+        bindingContext.bindValue(WidgetProperties.text().observe(periodFileRB),
+                BeanProperties.value("periodFile").observe(viewModel));
 
 		bindingContext.bindValue(WidgetProperties.singleSelectionIndex().observe(setupSource), BeanProperties.value("setupSource").observe(viewModel));
 		bindingContext.bindValue(WidgetProperties.singleSelectionIndex().observe(periodType), BeanProperties.value("periodType").observe(viewModel));

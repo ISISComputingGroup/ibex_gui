@@ -84,8 +84,8 @@ public class XMLBackedPeriodSettings extends PeriodSettings {
 	}
 	
 	@Override
-	public void setPeriodFile(String value) {
-		super.setPeriodFile(value);
+	public void setNewPeriodFile(String value) {
+		super.setNewPeriodFile(value);
 		periodFile.setValue(value);
 	}
 	

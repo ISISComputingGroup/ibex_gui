@@ -141,7 +141,7 @@ public class DataAcquisitionViewModel extends ModelObject {
         String[] tables = valueOrEmpty(wiringTables);
         tables = tables.length != 0 ? tables : new String[] {
                 "None found in C:\\Instrument\\Settings\\config\\[Instrument Name]\\configurations\\tables\\ (file name must contain string \"wiring\")." };
-        return addPrompt(tables);
+        return addBlank(tables);
     }
 
 
@@ -157,7 +157,7 @@ public class DataAcquisitionViewModel extends ModelObject {
         String[] tables = valueOrEmpty(detectorTables);
         tables = tables.length != 0 ? tables : new String[] {
                 "None found in C:\\Instrument\\Settings\\config\\[Instrument Name]\\configurations\\tables\\ (file name must contain string \"det\")." };
-        return addPrompt(tables);
+        return addBlank(tables);
     }
 	
 	public String getDetectorTable() {
@@ -172,7 +172,7 @@ public class DataAcquisitionViewModel extends ModelObject {
         String[] tables = valueOrEmpty(spectraTables);
         tables = tables.length != 0 ? tables : new String[] {
                 "None found in C:\\Instrument\\Settings\\config\\[Instrument Name]\\configurations\\tables\\ (file name must contain string \"spec\")." };
-        return addPrompt(tables);
+        return addBlank(tables);
 	}
 	
 	public String getSpectraTable() {

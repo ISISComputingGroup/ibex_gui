@@ -93,7 +93,7 @@ public class PeriodsViewModel extends ModelObject {
 	}
 	
 	public void setPeriodFile(String value) {
-		settings.setPeriodFile(value);
+        settings.setNewPeriodFile(value);
 	}
 	
 	public int getPeriodType() {
