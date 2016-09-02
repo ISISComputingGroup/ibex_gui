@@ -38,15 +38,15 @@ import org.eclipse.swt.SWT;
 
 public class ScriptGeneratorTable extends DataboundTable<ScriptGeneratorRow> {
 	
-	protected TableViewerColumn position;
-	protected TableViewerColumn trans;
-	protected TableViewerColumn transWait;
-	protected TableViewerColumn sans;
-	protected TableViewerColumn sansWait;
-	protected TableViewerColumn period;
-	protected TableViewerColumn sampleName;
-	protected TableViewerColumn thickness;
-	public Collection<ScriptGeneratorRow> rows;
+	private TableViewerColumn position;
+	private TableViewerColumn trans;
+	private TableViewerColumn transWait;
+	private TableViewerColumn sans;
+	private TableViewerColumn sansWait;
+	private TableViewerColumn period;
+	private TableViewerColumn sampleName;
+	private TableViewerColumn thickness;
+	private Collection<ScriptGeneratorRow> rows;
 	
 	public ScriptGeneratorTable (Composite parent, int style, int tableStyle, boolean isRowVisibilityShown) {
 		super(parent, style, ScriptGeneratorRow.class, tableStyle | SWT.BORDER);

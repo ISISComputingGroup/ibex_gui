@@ -1,5 +1,7 @@
 package uk.ac.stfc.isis.ibex.scriptgenerator;
 
+import java.util.Collection;
+
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 
 public class PythonBuilder extends ModelObject {
@@ -11,6 +13,7 @@ public class PythonBuilder extends ModelObject {
 	private int period;
 	private String sampleName; 
 	private int thickness; 
+	private Collection<ScriptGeneratorRow> rows;
 	private String script;
 	
 	public PythonBuilder() {
@@ -64,6 +67,12 @@ public class PythonBuilder extends ModelObject {
 		updateScript();
 	}
 	
+	public void setRows(Collection<ScriptGeneratorRow> rows) {
+		this.rows = rows;
+		
+		createScript();
+	}
+	
 	public void updateScript() {
 		String tempScript = position + " " + trans + " " + transWait;
 		firePropertyChange("script", this.script, this.script = tempScript);
@@ -72,5 +81,12 @@ public class PythonBuilder extends ModelObject {
 	public String getScript() {
 		return script;
 	}
-
+	
+	public void createScript() {
+		script = new String();
+		
+		for (ScriptGeneratorRow row : rows) {
+			script += "position = " + row.position;
+		}
+	}
 }

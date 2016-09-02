@@ -22,14 +22,14 @@ package uk.ac.stfc.isis.ibex.scriptgenerator;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 
 public class ScriptGeneratorRow extends ModelObject {
-	private int position;
-	private int trans;
-	private int transWait; 
-	private int sans;
-	private int sansWait; 
-	private int period;
-	private String sampleName; 
-	private int thickness; 
+	protected int position;
+	protected int trans;
+	protected int transWait; 
+	protected int sans;
+	protected int sansWait; 
+	protected int period;
+	protected String sampleName; 
+	protected int thickness; 
 	
 	public ScriptGeneratorRow(int position, int trans, int transWait, int sans, int sansWait, int period, 
 			String sampleName, int thickness, String script) {

@@ -33,6 +33,7 @@ import java.util.Collection;
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.beans.BeanProperties;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.swt.SWT;
 
@@ -42,6 +43,7 @@ import uk.ac.stfc.isis.ibex.ui.scriptgenerator.ScriptGeneratorTable;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -50,13 +52,20 @@ import org.eclipse.swt.widgets.Text;
 
 public class ScriptGeneratorView extends ViewPart {
 	public static final String ID = "uk.ac.stfc.isis.ibex.ui.scriptgenerator.scriptgeneratorview";
+	
+	private Button btnPreview;
+	private Button btnWrite;
+	private Button btnClearTable;
+	private TablePanel table;
+	
 	private Collection<ScriptGeneratorRow> rows;
 	private PythonBuilder builder;
+	private String script;
 	 
 	public ScriptGeneratorView() {
 		super();
 		
-		builder = new PythonBuilder(rows);
+		builder = new PythonBuilder();
 	}
 
 	@SuppressWarnings("unused")
@@ -112,13 +121,13 @@ public class ScriptGeneratorView extends ViewPart {
 		buttonsComposite.setLayout(new GridLayout(2, true));
 		buttonsComposite.setLayoutData(new GridData(SWT.CENTER, SWT.BOTTOM, false, false, 1, 1));
 		
-		Button btnPreview = new Button(buttonsComposite, SWT.NONE);
+		btnPreview = new Button(buttonsComposite, SWT.NONE);
 		btnPreview.setText("Preview Script");
 		GridData gdButtonPreview = new GridData(SWT.CENTER, SWT.CENTER, true, false, 1, 1);
 		gdButtonPreview.minimumWidth = 80;
 		btnPreview.setLayoutData(gdButtonPreview);
 		
-		Button btnWrite = new Button(buttonsComposite, SWT.NONE);
+		btnWrite = new Button(buttonsComposite, SWT.NONE);
 		btnWrite.setText("Write Script");
 		GridData gdButtonWrite = new GridData(SWT.CENTER, SWT.CENTER, true, false, 1, 1);
 		gdButtonWrite.minimumWidth = 80;
@@ -126,14 +135,14 @@ public class ScriptGeneratorView extends ViewPart {
 		
 		new Label(topPanel, SWT.NONE);
 		
-		Button btnClearTable = new Button(topPanel, SWT.NONE);
+		btnClearTable = new Button(topPanel, SWT.NONE);
 		btnClearTable.setText("Clear Table");
 		GridData gdButtonClearTable = new GridData(SWT.RIGHT, SWT.BOTTOM, true, false, 1, 1);
 		gdButtonClearTable.minimumWidth = 80;
 		btnClearTable.setLayoutData(gdButtonClearTable);
 		
-		TablePanel tablePanel = new TablePanel(parent, SWT.NONE);
-		tablePanel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		table = new TablePanel(parent, SWT.NONE);
+		table.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		
 //		rows = tablePanel.getRows(); 
 //		buildPython(rows);
@@ -143,6 +152,31 @@ public class ScriptGeneratorView extends ViewPart {
 //		settingsPanel.setBackground(settingsPanel.getDisplay().getSystemColor(SWT.COLOR_MAGENTA));
 //		estimatePanel.setBackground(estimatePanel.getDisplay().getSystemColor(SWT.COLOR_BLUE)); 
 //		buttonsPanel.setBackground(buttonsPanel.getDisplay().getSystemColor(SWT.COLOR_GREEN));  
+		
+		bind();
+	}
+	
+	public void bind() {
+		btnPreview.addSelectionListener(new SelectionAdapter() {
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                builder.setRows(table.getRows());
+                script = builder.getScript();
+                // popup window
+                Shell shell = new Shell();
+                MessageDialog.openInformation(shell, "Script Preview", script);
+            }
+        });
+		
+		btnWrite.addSelectionListener(new SelectionAdapter() {
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                builder.setRows(table.getRows());
+                script = builder.getScript();
+            }
+        });
+		
+		// btnClearTable etc
 	}
 	
 	public void buildPython(Collection<ScriptGeneratorRow> rows) {
