@@ -77,14 +77,14 @@ public class ScriptGeneratorRow extends ModelObject {
 	
 	public void setTransWait(Double transWait) {
 		this.wasNull = false;
-		firePropertyChange("wait", this.transWait, this.transWait = transWait);
+		firePropertyChange("transWait", this.transWait, this.transWait = transWait);
 	}
 	
 	public Double getSans() {
 		return sans;
 	}
 	
-	public void setSans() {
+	public void setSans(Double sans) {
 		this.wasNull = false;
 		firePropertyChange("sans", this.sans, this.sans = sans);
 	}
@@ -93,7 +93,7 @@ public class ScriptGeneratorRow extends ModelObject {
 		return sansWait;
 	}
 	
-	public void setSansWait() {
+	public void setSansWait(Double sansWait) {
 		this.wasNull = false;
 		firePropertyChange("sansWait", this.sansWait, this.sansWait = sansWait);
 	}
@@ -102,7 +102,7 @@ public class ScriptGeneratorRow extends ModelObject {
 		return period;
 	}
 	
-	public void setPeriod() {
+	public void setPeriod(Double period) {
 		this.wasNull = false;
 		firePropertyChange("period", this.period, this.period = period);
 	}
@@ -120,9 +120,9 @@ public class ScriptGeneratorRow extends ModelObject {
 		return thickness;
 	}
 	
-	public void setThickness() {
+	public void setThickness(Double thickness) {
 		this.wasNull = false;
-		firePropertyChange("sampleName", this.sampleName, this.sampleName = sampleName);
+		firePropertyChange("thickness", this.thickness, this.thickness = thickness);
 	}
 	
 	public boolean wasNull() {
