@@ -4,6 +4,9 @@ import java.util.Collection;
 
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 
+/**
+ * Generates Python code based on values in a ScriptGeneratorTable row.
+ */
 public class PythonBuilder extends ModelObject {
 	private int position;
 	private int trans;

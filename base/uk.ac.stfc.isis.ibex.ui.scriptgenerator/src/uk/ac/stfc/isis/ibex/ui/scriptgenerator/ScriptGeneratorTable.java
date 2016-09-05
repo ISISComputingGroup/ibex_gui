@@ -39,6 +39,10 @@ import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.jface.viewers.ViewerColumn;
 import org.eclipse.swt.SWT;
 
+/**
+ * A table that contains ScriptGeneratorRows.
+ *
+ */
 public class ScriptGeneratorTable extends DataboundTable<ScriptGeneratorRow> {
 	
 	private TableViewerColumn position;

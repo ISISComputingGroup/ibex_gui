@@ -23,6 +23,12 @@ import org.eclipse.jface.viewers.ColumnViewer;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.jface.viewers.TextCellEditor;
 
+/***
+ * A double editing support that displays an empty string if 
+ * the value is null.
+ *
+ * @param <TRow> the type of row from a table
+ */
 public abstract class DoubleEditingSupportBlankIfNull<TRow> extends DoubleEditingSupport<TRow> {
 	
 	public DoubleEditingSupportBlankIfNull(ColumnViewer viewer, Class<TRow> rowType) {
@@ -30,14 +36,15 @@ public abstract class DoubleEditingSupportBlankIfNull<TRow> extends DoubleEditin
 	}
 	
 	protected void createEditor(ColumnViewer viewer) { 		
-	// Override TextCellEditor to handle doubles better
+		// Override TextCellEditor to handle doubles better
 		editor = new TextCellEditor((Composite) viewer.getControl()) {
 			@Override
 			protected void doSetValue(final Object value) {
 				if (value == null) {
-					// If value is null set to zero instead
+					// If value is null set to an empty string
 					super.doSetValue("");
 				} else {
+					// Otherwise set the value
 					super.doSetValue(String.valueOf(value.toString()));
 				}
 			}

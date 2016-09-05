@@ -50,6 +50,9 @@ import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.widgets.Text;
 
+/**
+ * Holds all UI elements of the Script Generator.
+ */
 public class ScriptGeneratorView extends ViewPart {
 	public static final String ID = "uk.ac.stfc.isis.ibex.ui.scriptgenerator.scriptgeneratorview";
 	

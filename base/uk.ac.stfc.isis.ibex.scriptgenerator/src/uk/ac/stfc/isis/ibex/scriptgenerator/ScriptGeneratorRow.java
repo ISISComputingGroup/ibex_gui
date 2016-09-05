@@ -21,6 +21,9 @@ package uk.ac.stfc.isis.ibex.scriptgenerator;
 
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 
+/**
+ * A row of data to be inserted into a ScriptGeneratorTable.
+ */
 public class ScriptGeneratorRow extends ModelObject {
 	protected Double position;
 	protected Double trans;

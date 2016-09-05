@@ -42,6 +42,9 @@ import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.widgets.Text;
 
+/**
+ * A panel to hold a ScriptGeneratorTable.
+ */
 public class TablePanel extends Composite {
 	public static final String ID = "uk.ac.stfc.isis.ibex.ui.scriptgenerator.scriptgeneratorview";
 	private ScriptGeneratorTable table;
