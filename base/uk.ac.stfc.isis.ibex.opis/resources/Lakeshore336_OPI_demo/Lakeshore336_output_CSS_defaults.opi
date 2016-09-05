@@ -62,7 +62,7 @@
     <width>343</width>
     <x>0</x>
     <name>Operation</name>
-    <y>36</y>
+    <y>0</y>
     <foreground_color>
       <color red="192" green="192" blue="192" />
     </foreground_color>
@@ -488,7 +488,7 @@ $(pv_value)</tooltip>
       </background_color>
       <square_led>false</square_led>
       <width>25</width>
-      <x>126</x>
+      <x>120</x>
       <name>LED</name>
       <data_type>0</data_type>
       <y>33</y>
@@ -541,7 +541,7 @@ $(pv_value)</tooltip>
       </background_color>
       <square_led>false</square_led>
       <width>25</width>
-      <x>126</x>
+      <x>120</x>
       <name>LED</name>
       <data_type>0</data_type>
       <y>63</y>
@@ -613,13 +613,13 @@ else:
     <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0">
       <border_style>0</border_style>
       <tooltip></tooltip>
-      <horizontal_alignment>0</horizontal_alignment>
+      <horizontal_alignment>2</horizontal_alignment>
       <rules />
       <enabled>true</enabled>
       <wuid>3c70a182:156ea885a6f:-7a38</wuid>
       <transparent>true</transparent>
       <auto_size>false</auto_size>
-      <text>Control Input:</text>
+      <text>Control input:</text>
       <scripts />
       <height>20</height>
       <border_width>1</border_width>
@@ -638,8 +638,8 @@ else:
       <background_color>
         <color red="255" green="255" blue="255" />
       </background_color>
-      <width>80</width>
-      <x>22</x>
+      <width>96</width>
+      <x>6</x>
       <name>Label_2</name>
       <y>126</y>
       <foreground_color>
@@ -712,7 +712,7 @@ $(pv_value)</tooltip>
     <transparent>false</transparent>
     <lock_children>false</lock_children>
     <scripts />
-    <height>121</height>
+    <height>156</height>
     <border_width>1</border_width>
     <scale_options>
       <width_scalable>true</width_scalable>
@@ -730,10 +730,10 @@ $(pv_value)</tooltip>
     <background_color>
       <color red="240" green="240" blue="240" />
     </background_color>
-    <width>343</width>
+    <width>342</width>
     <x>0</x>
     <name>Control Parameters</name>
-    <y>211</y>
+    <y>175</y>
     <foreground_color>
       <color red="192" green="192" blue="192" />
     </foreground_color>
@@ -1189,7 +1189,7 @@ $(pv_value)</tooltip>
     <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0">
       <border_style>0</border_style>
       <tooltip></tooltip>
-      <horizontal_alignment>0</horizontal_alignment>
+      <horizontal_alignment>2</horizontal_alignment>
       <rules />
       <enabled>true</enabled>
       <wuid>-48159ee9:1567f536160:-57d0</wuid>
@@ -1214,10 +1214,10 @@ $(pv_value)</tooltip>
       <background_color>
         <color red="255" green="255" blue="255" />
       </background_color>
-      <width>96</width>
-      <x>204</x>
+      <width>85</width>
+      <x>6</x>
       <name>Label_4</name>
-      <y>6</y>
+      <y>106</y>
       <foreground_color>
         <color red="0" green="0" blue="0" />
       </foreground_color>
@@ -1267,11 +1267,66 @@ $(pv_value)</tooltip>
         <color red="255" green="255" blue="255" />
       </background_color>
       <width>97</width>
-      <x>204</x>
+      <x>101</x>
       <name>Text Update_3</name>
-      <y>36</y>
+      <y>106</y>
       <foreground_color>
         <color red="0" green="0" blue="0" />
+      </foreground_color>
+      <actions hook="false" hook_all="false" />
+      <font>
+        <opifont.name fontName="Segoe UI" height="9" style="0">Default</opifont.name>
+      </font>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.polyline" version="1.0">
+      <border_style>4</border_style>
+      <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+      <line_width>1</line_width>
+      <horizontal_fill>true</horizontal_fill>
+      <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+      <arrows>0</arrows>
+      <rules />
+      <enabled>true</enabled>
+      <wuid>-32b7f8d:156f9c2bdb9:-6455</wuid>
+      <transparent>false</transparent>
+      <points>
+        <point x="306" y="96" />
+        <point x="0" y="96" />
+      </points>
+      <fill_arrow>true</fill_arrow>
+      <pv_value />
+      <alpha>255</alpha>
+      <rotation_angle>0.0</rotation_angle>
+      <scripts />
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+      <height>1</height>
+      <border_width>1</border_width>
+      <scale_options>
+        <width_scalable>true</width_scalable>
+        <height_scalable>true</height_scalable>
+        <keep_wh_ratio>true</keep_wh_ratio>
+      </scale_options>
+      <visible>true</visible>
+      <pv_name></pv_name>
+      <border_color>
+        <color red="0" green="128" blue="255" />
+      </border_color>
+      <anti_alias>true</anti_alias>
+      <line_style>0</line_style>
+      <arrow_length>20</arrow_length>
+      <widget_type>Polyline</widget_type>
+      <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+      <background_color>
+        <color red="30" green="144" blue="255" />
+      </background_color>
+      <width>307</width>
+      <x>0</x>
+      <name>Polyline</name>
+      <y>96</y>
+      <fill_level>0.0</fill_level>
+      <foreground_color>
+        <color red="255" green="0" blue="0" />
       </foreground_color>
       <actions hook="false" hook_all="false" />
       <font>
@@ -1288,7 +1343,7 @@ $(pv_value)</tooltip>
     <transparent>false</transparent>
     <lock_children>false</lock_children>
     <scripts />
-    <height>97</height>
+    <height>156</height>
     <border_width>1</border_width>
     <scale_options>
       <width_scalable>true</width_scalable>
@@ -1306,10 +1361,10 @@ $(pv_value)</tooltip>
     <background_color>
       <color red="240" green="240" blue="240" />
     </background_color>
-    <width>343</width>
-    <x>0</x>
+    <width>283</width>
+    <x>342</x>
     <name>Heater</name>
-    <y>331</y>
+    <y>175</y>
     <foreground_color>
       <color red="192" green="192" blue="192" />
     </foreground_color>
@@ -1346,7 +1401,7 @@ $(pv_value)</tooltip>
       <background_color>
         <color red="255" green="255" blue="255" />
       </background_color>
-      <width>55</width>
+      <width>40</width>
       <x>6</x>
       <name>Label</name>
       <y>6</y>
@@ -1387,7 +1442,7 @@ $(pv_value)</tooltip>
       <background_color>
         <color red="255" green="255" blue="255" />
       </background_color>
-      <width>55</width>
+      <width>40</width>
       <x>6</x>
       <name>Label_1</name>
       <y>36</y>
@@ -1440,7 +1495,7 @@ $(pv_value)</tooltip>
         <color red="255" green="255" blue="255" />
       </background_color>
       <width>112</width>
-      <x>75</x>
+      <x>60</x>
       <name>Text Update</name>
       <y>6</y>
       <foreground_color>
@@ -1490,8 +1545,8 @@ $(pv_value)</tooltip>
       <background_color>
         <color red="255" green="255" blue="255" />
       </background_color>
-      <width>112</width>
-      <x>75</x>
+      <width>104</width>
+      <x>60</x>
       <name>Text Update_1</name>
       <y>36</y>
       <foreground_color>
@@ -1530,8 +1585,8 @@ $(pv_value)</tooltip>
         <color red="0" green="128" blue="255" />
       </border_color>
       <widget_type>Button</widget_type>
-      <width>90</width>
-      <x>216</x>
+      <width>79</width>
+      <x>171</x>
       <name>Button</name>
       <y>32</y>
       <foreground_color>
@@ -1580,7 +1635,7 @@ $(pv_value)</tooltip>
     <width>284</width>
     <x>341</x>
     <name>Measurement</name>
-    <y>36</y>
+    <y>0</y>
     <foreground_color>
       <color red="192" green="192" blue="192" />
     </foreground_color>
@@ -1633,7 +1688,7 @@ else if (value == "None") {
           <pv trig="true">$(PV_ROOT):CTRL_IN$(OUT)</pv>
         </path>
       </scripts>
-      <height>131</height>
+      <height>139</height>
       <border_width>1</border_width>
       <scale_options>
         <width_scalable>true</width_scalable>
@@ -1695,9 +1750,9 @@ $(pv_value)</tooltip>
     </border_color>
     <widget_type>Button</widget_type>
     <width>119</width>
-    <x>492</x>
+    <x>498</x>
     <name>Button</name>
-    <y>390</y>
+    <y>334</y>
     <foreground_color>
       <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
     </foreground_color>
