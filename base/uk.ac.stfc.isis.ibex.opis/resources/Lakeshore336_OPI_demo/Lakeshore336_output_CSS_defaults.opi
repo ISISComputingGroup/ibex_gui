@@ -621,7 +621,7 @@ $(pv_value)</tooltip>
       <enabled>true</enabled>
       <wuid>3c70a182:156ea885a6f:-7268</wuid>
       <pv_value />
-      <text>Output 1 Settings...</text>
+      <text>Output $(OUT) Settings...</text>
       <scripts />
       <border_alarm_sensitive>false</border_alarm_sensitive>
       <height>28</height>
