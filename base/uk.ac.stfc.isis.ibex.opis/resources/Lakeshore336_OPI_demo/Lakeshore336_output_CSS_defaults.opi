@@ -41,7 +41,7 @@
     <transparent>false</transparent>
     <lock_children>false</lock_children>
     <scripts />
-    <height>199</height>
+    <height>176</height>
     <border_width>1</border_width>
     <scale_options>
       <width_scalable>true</width_scalable>
@@ -610,51 +610,94 @@ else:
         <opifont.name fontName="Segoe UI" height="9" style="0">Default</opifont.name>
       </font>
     </widget>
-    <widget typeId="org.csstudio.opibuilder.widgets.NativeButton" version="1.0">
-      <toggle_button>false</toggle_button>
+    <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0">
       <border_style>0</border_style>
-      <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
-      <tooltip>$(pv_name)
-$(pv_value)</tooltip>
-      <push_action_index>0</push_action_index>
+      <tooltip></tooltip>
+      <horizontal_alignment>0</horizontal_alignment>
       <rules />
       <enabled>true</enabled>
-      <wuid>3c70a182:156ea885a6f:-7268</wuid>
-      <pv_value />
-      <text>Output $(OUT) Settings...</text>
+      <wuid>3c70a182:156ea885a6f:-7a38</wuid>
+      <transparent>true</transparent>
+      <auto_size>false</auto_size>
+      <text>Control Input:</text>
       <scripts />
-      <border_alarm_sensitive>false</border_alarm_sensitive>
-      <height>28</height>
+      <height>20</height>
       <border_width>1</border_width>
       <scale_options>
         <width_scalable>true</width_scalable>
         <height_scalable>true</height_scalable>
         <keep_wh_ratio>false</keep_wh_ratio>
       </scale_options>
-      <image></image>
       <visible>true</visible>
-      <pv_name></pv_name>
+      <vertical_alignment>1</vertical_alignment>
       <border_color>
         <color red="0" green="128" blue="255" />
       </border_color>
-      <widget_type>Button</widget_type>
-      <width>119</width>
-      <x>187</x>
-      <name>Button</name>
-      <y>138</y>
+      <widget_type>Label</widget_type>
+      <wrap_words>true</wrap_words>
+      <background_color>
+        <color red="255" green="255" blue="255" />
+      </background_color>
+      <width>80</width>
+      <x>22</x>
+      <name>Label_2</name>
+      <y>126</y>
       <foreground_color>
-        <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
+        <color red="0" green="0" blue="0" />
       </foreground_color>
-      <actions hook="false" hook_all="false">
-        <action type="OPEN_DISPLAY">
-          <path>Lakeshore336_output_settings_CSS_defaults.opi</path>
-          <macros>
-            <include_parent_macros>true</include_parent_macros>
-          </macros>
-          <replace>1</replace>
-          <description>Open Output Settings</description>
-        </action>
-      </actions>
+      <actions hook="false" hook_all="false" />
+      <show_scrollbar>false</show_scrollbar>
+      <font>
+        <opifont.name fontName="Segoe UI" height="9" style="1">Default Bold</opifont.name>
+      </font>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0">
+      <border_style>0</border_style>
+      <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+      <precision>0</precision>
+      <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+      <horizontal_alignment>0</horizontal_alignment>
+      <rules />
+      <enabled>true</enabled>
+      <wuid>3c70a182:156ea885a6f:-7a37</wuid>
+      <transparent>true</transparent>
+      <pv_value />
+      <auto_size>false</auto_size>
+      <text>######</text>
+      <rotation_angle>0.0</rotation_angle>
+      <scripts />
+      <border_alarm_sensitive>true</border_alarm_sensitive>
+      <show_units>true</show_units>
+      <height>20</height>
+      <border_width>1</border_width>
+      <scale_options>
+        <width_scalable>true</width_scalable>
+        <height_scalable>true</height_scalable>
+        <keep_wh_ratio>false</keep_wh_ratio>
+      </scale_options>
+      <visible>true</visible>
+      <pv_name>$(PV_ROOT):CTRL_IN$(OUT)</pv_name>
+      <vertical_alignment>1</vertical_alignment>
+      <border_color>
+        <color red="0" green="128" blue="255" />
+      </border_color>
+      <precision_from_pv>true</precision_from_pv>
+      <widget_type>Text Update</widget_type>
+      <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+      <wrap_words>false</wrap_words>
+      <format_type>0</format_type>
+      <background_color>
+        <color red="255" green="255" blue="255" />
+      </background_color>
+      <width>112</width>
+      <x>120</x>
+      <name>Text Update</name>
+      <y>126</y>
+      <foreground_color>
+        <color red="0" green="0" blue="0" />
+      </foreground_color>
+      <actions hook="false" hook_all="false" />
       <font>
         <opifont.name fontName="Segoe UI" height="9" style="0">Default</opifont.name>
       </font>
@@ -690,7 +733,7 @@ $(pv_value)</tooltip>
     <width>343</width>
     <x>0</x>
     <name>Control Parameters</name>
-    <y>234</y>
+    <y>211</y>
     <foreground_color>
       <color red="192" green="192" blue="192" />
     </foreground_color>
@@ -1266,7 +1309,7 @@ $(pv_value)</tooltip>
     <width>343</width>
     <x>0</x>
     <name>Heater</name>
-    <y>354</y>
+    <y>331</y>
     <foreground_color>
       <color red="192" green="192" blue="192" />
     </foreground_color>
@@ -1507,115 +1550,16 @@ $(pv_value)</tooltip>
       </font>
     </widget>
   </widget>
-  <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0">
-    <border_style>0</border_style>
-    <tooltip></tooltip>
-    <horizontal_alignment>0</horizontal_alignment>
-    <rules />
-    <enabled>true</enabled>
-    <wuid>3c70a182:156ea885a6f:-7a38</wuid>
-    <transparent>true</transparent>
-    <auto_size>false</auto_size>
-    <text>Control Input:</text>
-    <scripts />
-    <height>20</height>
-    <border_width>1</border_width>
-    <scale_options>
-      <width_scalable>true</width_scalable>
-      <height_scalable>true</height_scalable>
-      <keep_wh_ratio>false</keep_wh_ratio>
-    </scale_options>
-    <visible>true</visible>
-    <vertical_alignment>1</vertical_alignment>
-    <border_color>
-      <color red="0" green="128" blue="255" />
-    </border_color>
-    <widget_type>Label</widget_type>
-    <wrap_words>true</wrap_words>
-    <background_color>
-      <color red="255" green="255" blue="255" />
-    </background_color>
-    <width>80</width>
-    <x>349</x>
-    <name>Label_2</name>
-    <y>6</y>
-    <foreground_color>
-      <color red="0" green="0" blue="0" />
-    </foreground_color>
-    <actions hook="false" hook_all="false" />
-    <show_scrollbar>false</show_scrollbar>
-    <font>
-      <opifont.name fontName="Segoe UI" height="9" style="1">Default Bold</opifont.name>
-    </font>
-  </widget>
-  <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0">
-    <border_style>0</border_style>
-    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
-    <precision>0</precision>
-    <tooltip>$(pv_name)
-$(pv_value)</tooltip>
-    <horizontal_alignment>0</horizontal_alignment>
-    <rules />
-    <enabled>true</enabled>
-    <wuid>3c70a182:156ea885a6f:-7a37</wuid>
-    <transparent>true</transparent>
-    <pv_value />
-    <auto_size>false</auto_size>
-    <text>######</text>
-    <rotation_angle>0.0</rotation_angle>
-    <scripts />
-    <border_alarm_sensitive>true</border_alarm_sensitive>
-    <show_units>true</show_units>
-    <height>20</height>
-    <border_width>1</border_width>
-    <scale_options>
-      <width_scalable>true</width_scalable>
-      <height_scalable>true</height_scalable>
-      <keep_wh_ratio>false</keep_wh_ratio>
-    </scale_options>
-    <visible>true</visible>
-    <pv_name>$(PV_ROOT):CTRL_IN$(OUT)</pv_name>
-    <vertical_alignment>1</vertical_alignment>
-    <border_color>
-      <color red="0" green="128" blue="255" />
-    </border_color>
-    <precision_from_pv>true</precision_from_pv>
-    <widget_type>Text Update</widget_type>
-    <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
-    <wrap_words>false</wrap_words>
-    <format_type>0</format_type>
-    <background_color>
-      <color red="255" green="255" blue="255" />
-    </background_color>
-    <width>112</width>
-    <x>431</x>
-    <name>Text Update</name>
-    <y>6</y>
-    <foreground_color>
-      <color red="0" green="0" blue="0" />
-    </foreground_color>
-    <actions hook="false" hook_all="false" />
-    <font>
-      <opifont.name fontName="Segoe UI" height="9" style="0">Default</opifont.name>
-    </font>
-  </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0">
     <border_style>13</border_style>
     <tooltip></tooltip>
-    <rules>
-      <rule name="Visibility" prop_id="visible" out_exp="false">
-        <exp bool_exp="pvStr0 == &quot;None&quot;">
-          <value>false</value>
-        </exp>
-        <pv trig="true">$(PV_ROOT):CTRL_IN$(OUT)</pv>
-      </rule>
-    </rules>
+    <rules />
     <enabled>true</enabled>
     <wuid>3c70a182:156ea885a6f:-6dfc</wuid>
     <transparent>false</transparent>
     <lock_children>false</lock_children>
     <scripts />
-    <height>169</height>
+    <height>176</height>
     <border_width>1</border_width>
     <scale_options>
       <width_scalable>true</width_scalable>
@@ -1661,6 +1605,10 @@ $(pv_value)</tooltip>
 var value = PVUtil.getString(pvs[0]);
 var lastChar = value.substring(value.length() - 1);
 
+var inputViewOpi = "Lakeshore336_input_CSS_defaults.opi";
+var noInputViewOpi = "Lakeshore336_input_none.opi";
+var currentOpi =String(widgetController.getPropertyValue("opi_file"));
+
 if (lastChar == "A" || lastChar == "B" || lastChar == "C" || lastChar == "D") {
 	// Create a new Macro Input
 	var macroInput = DataUtil.createMacrosInput(true);
@@ -1671,11 +1619,17 @@ if (lastChar == "A" || lastChar == "B" || lastChar == "C" || lastChar == "D") {
 	// Set the Macro Input of the linking container to this new Macro Input
 	widgetController.setPropertyValue("macros", macroInput);
 
-	// Reload hte OPI in the linking container
+	// Reload the OPI in the linking container
 	// by setting the value property with forcing fire option as true
-	widgetController.setPropertyValue("opi_file", widgetController.getPropertyValue("opi_file"), true);
-
-} ]]></scriptText>
+	var opiToLoad = currentOpi.replace(noInputViewOpi, inputViewOpi);
+	widgetController.setPropertyValue("opi_file", opiToLoad, true);
+	//widgetController.setPropertyValue("opi_file", widgetController.getPropertyValue("opi_file"), true);
+} 
+else if (value == "None") {
+	// Set the OPI for No Control Input
+	var opiToLoad = currentOpi.replace(inputViewOpi, noInputViewOpi);
+	widgetController.setPropertyValue("opi_file", opiToLoad, true);
+}]]></scriptText>
           <pv trig="true">$(PV_ROOT):CTRL_IN$(OUT)</pv>
         </path>
       </scripts>
@@ -1711,5 +1665,54 @@ if (lastChar == "A" || lastChar == "B" || lastChar == "C" || lastChar == "D") {
         <opifont.name fontName="Segoe UI" height="9" style="0">Default</opifont.name>
       </font>
     </widget>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.NativeButton" version="1.0">
+    <toggle_button>false</toggle_button>
+    <border_style>0</border_style>
+    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+    <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+    <push_action_index>0</push_action_index>
+    <rules />
+    <enabled>true</enabled>
+    <wuid>3c70a182:156ea885a6f:-7268</wuid>
+    <pv_value />
+    <text>Output $(OUT) Settings...</text>
+    <scripts />
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <height>28</height>
+    <border_width>1</border_width>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <image></image>
+    <visible>true</visible>
+    <pv_name></pv_name>
+    <border_color>
+      <color red="0" green="128" blue="255" />
+    </border_color>
+    <widget_type>Button</widget_type>
+    <width>119</width>
+    <x>492</x>
+    <name>Button</name>
+    <y>390</y>
+    <foreground_color>
+      <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
+    </foreground_color>
+    <actions hook="false" hook_all="false">
+      <action type="OPEN_DISPLAY">
+        <path>Lakeshore336_output_settings_CSS_defaults.opi</path>
+        <macros>
+          <include_parent_macros>true</include_parent_macros>
+        </macros>
+        <replace>1</replace>
+        <description>Open Output Settings</description>
+      </action>
+    </actions>
+    <font>
+      <opifont.name fontName="Segoe UI" height="9" style="0">Default</opifont.name>
+    </font>
   </widget>
 </display>
