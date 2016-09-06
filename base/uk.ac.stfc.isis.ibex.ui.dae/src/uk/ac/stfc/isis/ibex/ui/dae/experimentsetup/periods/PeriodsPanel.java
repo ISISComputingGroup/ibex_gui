@@ -70,7 +70,6 @@ public class PeriodsPanel extends Composite {
 		
 		Label lblPeriodSetupSource = new Label(grpSetup, SWT.NONE);
 		lblPeriodSetupSource.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-		lblPeriodSetupSource.setSize(107, 15);
 		lblPeriodSetupSource.setText("Period setup source:");
 		
 		setupSource = new Combo(grpSetup, SWT.DROP_DOWN | SWT.READ_ONLY);
@@ -82,14 +81,12 @@ public class PeriodsPanel extends Composite {
 		
 		Label lblPeriodFile = new Label(grpSetup, SWT.NONE);
 		lblPeriodFile.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-		lblPeriodFile.setSize(58, 15);
 		lblPeriodFile.setText("Period File:");
 		
         periodFile = new Combo(grpSetup, SWT.DROP_DOWN | SWT.READ_ONLY);
 		GridData gd_periodFile = new GridData(SWT.LEFT, SWT.FILL, false, false, 4, 1);
-		gd_periodFile.widthHint = 500;
+        gd_periodFile.widthHint = 500;
 		periodFile.setLayoutData(gd_periodFile);
-		periodFile.setSize(412, 25);
 
         Label spacer = new Label(grpSetup, SWT.None);
 
@@ -109,23 +106,19 @@ public class PeriodsPanel extends Composite {
 
 		Label lblPeriodType = new Label(grpSetup, SWT.NONE);
 		lblPeriodType.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-		lblPeriodType.setSize(66, 15);
 		lblPeriodType.setText("Period Type:");
 		
 		periodType = new Combo(grpSetup, SWT.DROP_DOWN | SWT.READ_ONLY);
-		periodType.setSize(177, 23);
 		periodType.setItems(PeriodControlType.allToString().toArray(new String[0]));
 		new Label(grpSetup, SWT.NONE);
 		
 		Label lblNumberOfSoftware = new Label(grpSetup, SWT.NONE);
-		lblNumberOfSoftware.setSize(91, 15);
 		lblNumberOfSoftware.setText("Software periods:");
 		
 		softwarePeriods = new Text(grpSetup, SWT.BORDER | SWT.RIGHT);
 		GridData gd_softwarePeriods = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
 		gd_softwarePeriods.widthHint = 60;
 		softwarePeriods.setLayoutData(gd_softwarePeriods);
-		softwarePeriods.setSize(76, 23);
 		
 		Group periodsComposite = new Group(this, SWT.NONE);
 		periodsComposite.setText("Hardware Periods");

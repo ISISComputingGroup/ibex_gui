@@ -258,23 +258,20 @@ public class TimeChannelsPanel extends Composite {
         
         Composite timeChannelFileContent = new Composite(parent, SWT.NONE);
         timeChannelFileContent.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1));
-        timeChannelFileContent.setLayout(new GridLayout(3, false));
+        GridLayout glTimeChannelFileContent = new GridLayout(3, false);
+        glTimeChannelFileContent.marginWidth = 0;
+        glTimeChannelFileContent.horizontalSpacing = 20;
+        timeChannelFileContent.setLayout(glTimeChannelFileContent);
 
         Label lblTimeChannelFile = new Label(timeChannelFileContent, SWT.NONE);
         lblTimeChannelFile.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
         lblTimeChannelFile.setText("Time Channel File:");
+        
+        timeChannelFileRB = new Label(timeChannelFileContent, SWT.NONE);
+        timeChannelFileRB.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 
         timeChannelFile = new Combo(timeChannelFileContent, SWT.DROP_DOWN | SWT.READ_ONLY);
         timeChannelFile.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1));
-
-        Label spacer = new Label(timeChannelFileContent, SWT.None);
-
-        Label lblCrntWiring = new Label(timeChannelFileContent, SWT.None);
-        lblCrntWiring.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-        lblCrntWiring.setText("Current:");
-
-        timeChannelFileRB = new Label(timeChannelFileContent, SWT.NONE);
-        timeChannelFileRB.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 
         timeChannelFile.addSelectionListener(new SelectionListener() {
             @Override

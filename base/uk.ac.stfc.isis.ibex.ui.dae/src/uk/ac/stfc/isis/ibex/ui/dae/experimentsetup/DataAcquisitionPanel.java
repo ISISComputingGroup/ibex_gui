@@ -88,68 +88,50 @@ public class DataAcquisitionPanel extends Composite {
         // Wiring table selection
         Composite wiringTablePanel = new Composite(grpTables, SWT.NONE);
         wiringTablePanel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1));
-        wiringTablePanel.setLayout(new GridLayout(3, false));
+        wiringTablePanel.setLayout(new GridLayout(2, false));
 
         Label lblWiringTable = new Label(wiringTablePanel, SWT.NONE);
         lblWiringTable.setLayoutData(gdLabels);
         lblWiringTable.setText("Wiring Table:");
 
+        wiringTableRB = new Label(wiringTablePanel, SWT.NONE);
+        wiringTableRB.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+
         wiringTable = new Combo(wiringTablePanel, SWT.DROP_DOWN | SWT.READ_ONLY);
         GridData gd_wiringTable = new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1);
         wiringTable.setLayoutData(gd_wiringTable);
 
-        Label spacerWiring = new Label(wiringTablePanel, SWT.None);
-
-        Label lblCrntWiring = new Label(wiringTablePanel, SWT.None);
-        lblCrntWiring.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-        lblCrntWiring.setText("Current:");
-
-        wiringTableRB = new Label(wiringTablePanel, SWT.NONE);
-        wiringTableRB.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
-
         // Detector table selection
         Composite detectorTablePanel = new Composite(grpTables, SWT.NONE);
         detectorTablePanel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1));
-        detectorTablePanel.setLayout(new GridLayout(3, false));
+        detectorTablePanel.setLayout(new GridLayout(2, false));
 
         Label lblDetectorTable = new Label(detectorTablePanel, SWT.NONE);
         lblDetectorTable.setLayoutData(gdLabels);
         lblDetectorTable.setText("Detector Table:");
 
+        detectorTableRB = new Label(detectorTablePanel, SWT.NONE);
+        detectorTableRB.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+
         detectorTable = new Combo(detectorTablePanel, SWT.DROP_DOWN | SWT.READ_ONLY);
         GridData gd_detectorTable = new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1);
         detectorTable.setLayoutData(gd_detectorTable);
 
-        Label spacerDetector = new Label(detectorTablePanel, SWT.None);
-
-        Label lblCrntDetector = new Label(detectorTablePanel, SWT.None);
-        lblCrntDetector.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-        lblCrntDetector.setText("Current:");
-
-        detectorTableRB = new Label(detectorTablePanel, SWT.NONE);
-        detectorTableRB.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
-
         // Spectra table selection
         Composite spectraTablePanel = new Composite(grpTables, SWT.NONE);
         spectraTablePanel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1));
-        spectraTablePanel.setLayout(new GridLayout(3, false));
+        spectraTablePanel.setLayout(new GridLayout(2, false));
 
         Label lblSpectraTable = new Label(spectraTablePanel, SWT.NONE);
         lblSpectraTable.setLayoutData(gdLabels);
         lblSpectraTable.setText("Spectra Table:");
 
+        spectraTableRB = new Label(spectraTablePanel, SWT.NONE);
+        spectraTableRB.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+
         spectraTable = new Combo(spectraTablePanel, SWT.DROP_DOWN | SWT.READ_ONLY);
         GridData gd_spectraTable = new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1);
         spectraTable.setLayoutData(gd_spectraTable);
-
-        Label spacerSpectra = new Label(spectraTablePanel, SWT.None);
-
-        Label lblCrntSpectra = new Label(spectraTablePanel, SWT.None);
-        lblCrntSpectra.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-        lblCrntSpectra.setText("Current:");
-
-        spectraTableRB = new Label(spectraTablePanel, SWT.NONE);
-        spectraTableRB.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 
         Group grpMonitor = new Group(this, SWT.NONE);
         grpMonitor.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
