@@ -74,7 +74,6 @@ public class PeriodsPanel extends Composite {
 		lblPeriodSetupSource.setText("Period setup source:");
 		
 		setupSource = new Combo(grpSetup, SWT.DROP_DOWN | SWT.READ_ONLY);
-		setupSource.setSize(177, 23);
 		setupSource.setItems(PeriodSetupSource.allToString().toArray(new String[0]));
 		new Label(grpSetup, SWT.NONE);
 		new Label(grpSetup, SWT.NONE);
@@ -83,28 +82,25 @@ public class PeriodsPanel extends Composite {
 		Label lblPeriodFile = new Label(grpSetup, SWT.NONE);
 		lblPeriodFile.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		lblPeriodFile.setText("Period File:");
-		
-        periodFile = new Combo(grpSetup, SWT.DROP_DOWN | SWT.READ_ONLY);
-		GridData gd_periodFile = new GridData(SWT.LEFT, SWT.FILL, false, false, 4, 1);
-        gd_periodFile.widthHint = 500;
-		periodFile.setLayoutData(gd_periodFile);
+
+        periodFileRB = new Label(grpSetup, SWT.NONE);
+        periodFileRB.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 4, 1));
+        periodFileRB.setFont(JFaceResources.getFontRegistry().getItalic(JFaceResources.DEFAULT_FONT));
 
         Label spacer = new Label(grpSetup, SWT.None);
 
-        Composite currentFileRBPanel = new Composite(grpSetup, SWT.NONE);
-        GridLayout glCurrentFileRBPanel = new GridLayout(2, false);
-        glCurrentFileRBPanel.marginHeight = 0;
-        glCurrentFileRBPanel.marginWidth = 0;
-        glCurrentFileRBPanel.marginBottom = 10;
-        currentFileRBPanel.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, true, false, 4, 1));
-        currentFileRBPanel.setLayout(glCurrentFileRBPanel);
+        Composite periodFilePanel = new Composite(grpSetup, SWT.NONE);
+        GridLayout glPeriodFilePanel = new GridLayout(1, false);
+        glPeriodFilePanel.marginHeight = 0;
+        glPeriodFilePanel.marginWidth = 0;
+        glPeriodFilePanel.marginBottom = 10;
+        periodFilePanel.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, true, false, 4, 1));
+        periodFilePanel.setLayout(glPeriodFilePanel);
 
-        Label lblCrntDetector = new Label(currentFileRBPanel, SWT.None);
-        lblCrntDetector.setText("Current:");
-
-        periodFileRB = new Label(currentFileRBPanel, SWT.NONE);
-        periodFileRB.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
-        periodFileRB.setFont(JFaceResources.getFontRegistry().getItalic(JFaceResources.DEFAULT_FONT));
+        periodFile = new Combo(periodFilePanel, SWT.DROP_DOWN | SWT.READ_ONLY);
+        GridData gd_periodFile = new GridData(SWT.LEFT, SWT.FILL, false, false, 1, 1);
+        gd_periodFile.widthHint = 500;
+		periodFile.setLayoutData(gd_periodFile);
 
 		Label lblPeriodType = new Label(grpSetup, SWT.NONE);
 		lblPeriodType.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
