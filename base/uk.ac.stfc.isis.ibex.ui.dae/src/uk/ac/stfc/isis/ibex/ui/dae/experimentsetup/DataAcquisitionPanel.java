@@ -22,6 +22,7 @@ package uk.ac.stfc.isis.ibex.ui.dae.experimentsetup;
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.beans.BeanProperties;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
+import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
@@ -96,6 +97,7 @@ public class DataAcquisitionPanel extends Composite {
 
         wiringTableRB = new Label(wiringTablePanel, SWT.NONE);
         wiringTableRB.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+        wiringTableRB.setFont(JFaceResources.getFontRegistry().getItalic(JFaceResources.DEFAULT_FONT));
 
         wiringTable = new Combo(wiringTablePanel, SWT.DROP_DOWN | SWT.READ_ONLY);
         GridData gd_wiringTable = new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1);
@@ -112,6 +114,7 @@ public class DataAcquisitionPanel extends Composite {
 
         detectorTableRB = new Label(detectorTablePanel, SWT.NONE);
         detectorTableRB.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+        detectorTableRB.setFont(JFaceResources.getFontRegistry().getItalic(JFaceResources.DEFAULT_FONT));
 
         detectorTable = new Combo(detectorTablePanel, SWT.DROP_DOWN | SWT.READ_ONLY);
         GridData gd_detectorTable = new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1);
@@ -128,6 +131,7 @@ public class DataAcquisitionPanel extends Composite {
 
         spectraTableRB = new Label(spectraTablePanel, SWT.NONE);
         spectraTableRB.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+        spectraTableRB.setFont(JFaceResources.getFontRegistry().getItalic(JFaceResources.DEFAULT_FONT));
 
         spectraTable = new Combo(spectraTablePanel, SWT.DROP_DOWN | SWT.READ_ONLY);
         GridData gd_spectraTable = new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1);
