@@ -95,14 +95,13 @@ public class PeriodsPanel extends Composite {
 
         Composite currentFileRBPanel = new Composite(grpSetup, SWT.NONE);
         GridLayout glCurrentFileRBPanel = new GridLayout(2, false);
-        glCurrentFileRBPanel.marginLeft = 0;
-        glCurrentFileRBPanel.marginTop = 0;
+        glCurrentFileRBPanel.marginHeight = 0;
+        glCurrentFileRBPanel.marginWidth = 0;
         glCurrentFileRBPanel.marginBottom = 10;
-        currentFileRBPanel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 4, 1));
+        currentFileRBPanel.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, true, false, 4, 1));
         currentFileRBPanel.setLayout(glCurrentFileRBPanel);
 
         Label lblCrntDetector = new Label(currentFileRBPanel, SWT.None);
-        lblCrntDetector.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1));
         lblCrntDetector.setText("Current:");
 
         periodFileRB = new Label(currentFileRBPanel, SWT.NONE);
