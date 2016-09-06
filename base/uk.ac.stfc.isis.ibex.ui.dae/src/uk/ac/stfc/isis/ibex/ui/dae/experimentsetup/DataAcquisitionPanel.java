@@ -300,7 +300,7 @@ public class DataAcquisitionPanel extends Composite {
         wiringTable.addSelectionListener(new SelectionListener() {
             @Override
             public void widgetSelected(SelectionEvent e) {
-                model.setWiringTable(wiringTable.getText());
+                model.setNewWiringTable(wiringTable.getText());
             }
 
             @Override
@@ -311,7 +311,7 @@ public class DataAcquisitionPanel extends Composite {
         detectorTable.addSelectionListener(new SelectionListener() {
             @Override
             public void widgetSelected(SelectionEvent e) {
-                model.setDetectorTable(detectorTable.getText());
+                model.setNewDetectorTable(detectorTable.getText());
             }
 
             @Override
@@ -322,7 +322,7 @@ public class DataAcquisitionPanel extends Composite {
         spectraTable.addSelectionListener(new SelectionListener() {
             @Override
             public void widgetSelected(SelectionEvent e) {
-                model.setSpectraTable(spectraTable.getText());
+                model.setNewSpectraTable(spectraTable.getText());
             }
 
             @Override

@@ -1,7 +1,7 @@
 
 /*
 * This file is part of the ISIS IBEX application.
-* Copyright (C) 2012-2015 Science & Technology Facilities Council.
+* Copyright (C) 2012-2016 Science & Technology Facilities Council.
 * All rights reserved.
 *
 * This program is distributed in the hope that it will be useful.
@@ -76,7 +76,7 @@ public class DaeSettings extends ModelObject {
      * 
      * @return the file path.
      */
-	public String newWiringTable() {
+	public String getNewWiringTable() {
 		return newWiringTable;
 	}
 	
@@ -87,7 +87,7 @@ public class DaeSettings extends ModelObject {
      * @param value the file path.
      */
 	public void setNewWiringTable(String value) {
-		firePropertyChange("wiringTable", newWiringTable, newWiringTable = value);
+        firePropertyChange("newWiringTable", newWiringTable, newWiringTable = value);
 	}
 	
     /**
@@ -96,7 +96,7 @@ public class DaeSettings extends ModelObject {
      * 
      * @return the file path.
      */
-	public String newDetectorTable() {
+	public String getNewDetectorTable() {
 		return newDetectorTable;
 	}
 	
@@ -107,7 +107,7 @@ public class DaeSettings extends ModelObject {
      * @param value the file path.
      */
 	public void setNewDetectorTable(String value) {
-		firePropertyChange("detectorTable", newDetectorTable, newDetectorTable = value);
+        firePropertyChange("newDetectorTable", newDetectorTable, newDetectorTable = value);
 	}
 	
     /**
@@ -116,7 +116,7 @@ public class DaeSettings extends ModelObject {
      * 
      * @return the file path.
      */
-	public String newSpectraTable() {
+	public String getNewSpectraTable() {
 		return newSpectraTable;
 	}
 	
@@ -127,7 +127,7 @@ public class DaeSettings extends ModelObject {
      * @param value the file path.
      */
 	public void setNewSpectraTable(String value) {
-		firePropertyChange("spectraTable", newSpectraTable, newSpectraTable = value);
+        firePropertyChange("newSpectraTable", newSpectraTable, newSpectraTable = value);
 	}
 	
 	public DaeTimingSource timingSource() {
@@ -240,7 +240,7 @@ public class DaeSettings extends ModelObject {
      * 
      * @return the file path.
      */
-    public String wiringTable() {
+    public String getWiringTable() {
         return wiringTable;
     }
 
@@ -259,7 +259,7 @@ public class DaeSettings extends ModelObject {
      * 
      * @return the file path.
      */
-    public String detectorTable() {
+    public String getDetectorTable() {
         return detectorTable;
     }
 
@@ -279,7 +279,7 @@ public class DaeSettings extends ModelObject {
      * 
      * @return the file path.
      */
-    public String spectraTable() {
+    public String getSpectraTable() {
         return spectraTable;
     }
 

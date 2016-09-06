@@ -1,7 +1,7 @@
 
 /*
 * This file is part of the ISIS IBEX application.
-* Copyright (C) 2012-2015 Science & Technology Facilities Council.
+* Copyright (C) 2012-2016 Science & Technology Facilities Council.
 * All rights reserved.
 *
 * This program is distributed in the hope that it will be useful.
@@ -92,22 +92,23 @@ public class TimeChannelsViewModel extends ModelObject {
         return model.timeRegimes();
     }
 
+
     /**
-     * Return the currently selected file from which to read time channel
-     * settings.
+     * Returns the path to the time channel file currently in use.
      * 
-     * @return the path to the file
+     * @return the file path.
      */
     public String getTimeChannelFile() {
-        return model.timeChannelFile();
+        return model.getTimeChannelFile();
     }
 
     /**
-     * Set the currently selected file from which to read time channel settings.
+     * Sets a new time channel file in the settings (does not take effect until
+     * changes are applied).
      * 
-     * @param value the path to the file
+     * @param value the path to the new time channel file.
      */
-    public void setTimeChannelFile(String value) {
+    public void setNewTimeChannelFile(String value) {
         model.setNewTimeChannelFile(value);
     }
 
@@ -118,7 +119,7 @@ public class TimeChannelsViewModel extends ModelObject {
      * @return the file paths as string array
      */
     public String[] getTimeChannelFileList() {
-        String[] items = valueOrEmpty(model.timeChannelFileList());
+        String[] items = valueOrEmpty(model.getTimeChannelFileList());
         items = items.length != 0 ? items : new String[] {
                 "None found in C:\\Instrument\\Settings\\config\\[Instrument]\\configurations\\tcb\\ (file name must contain \"tcb\")." };
         return addBlank(items);

@@ -1,7 +1,7 @@
 
 /*
 * This file is part of the ISIS IBEX application.
-* Copyright (C) 2012-2015 Science & Technology Facilities Council.
+* Copyright (C) 2012-2016 Science & Technology Facilities Council.
 * All rights reserved.
 *
 * This program is distributed in the hope that it will be useful.
@@ -132,7 +132,7 @@ public class PeriodsViewModel extends ModelObject {
      * 
      * @param value the path to the new period file.
      */
-	public void setPeriodFile(String value) {
+	public void setNewPeriodFile(String value) {
         settings.setNewPeriodFile(value);
 	}
 	

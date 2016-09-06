@@ -86,7 +86,7 @@ public class PeriodSettings extends ModelObject {
      * @param value the file path.
      */
     public void setNewPeriodFile(String value) {
-        firePropertyChange("periodFile", newPeriodFile, newPeriodFile = value);
+        firePropertyChange("newPeriodFile", newPeriodFile, newPeriodFile = value);
 	}
 	
 	public PeriodControlType getPeriodType() {

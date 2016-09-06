@@ -1,7 +1,7 @@
 
 /*
 * This file is part of the ISIS IBEX application.
-* Copyright (C) 2012-2015 Science & Technology Facilities Council.
+* Copyright (C) 2012-2016 Science & Technology Facilities Council.
 * All rights reserved.
 *
 * This program is distributed in the hope that it will be useful.
@@ -195,7 +195,7 @@ public class DataAcquisitionViewModel extends ModelObject {
      * @return the file path.
      */
 	public String getWiringTable() {
-        return settings.wiringTable();
+        return settings.getWiringTable();
 	}
 	
     /**
@@ -204,7 +204,7 @@ public class DataAcquisitionViewModel extends ModelObject {
      * 
      * @param value the path to the new wiring table.
      */
-	public void setWiringTable(String value) {
+	public void setNewWiringTable(String value) {
 		settings.setNewWiringTable(value);
 	}
 	
@@ -226,7 +226,7 @@ public class DataAcquisitionViewModel extends ModelObject {
      * @return the file path.
      */
 	public String getDetectorTable() {
-        return settings.detectorTable();
+        return settings.getDetectorTable();
 	}
 	
     /**
@@ -235,7 +235,7 @@ public class DataAcquisitionViewModel extends ModelObject {
      * 
      * @param value the path to the new detector table.
      */
-	public void setDetectorTable(String value) {
+	public void setNewDetectorTable(String value) {
 		settings.setNewDetectorTable(value);
 	}
 
@@ -257,7 +257,7 @@ public class DataAcquisitionViewModel extends ModelObject {
      * @return the file path.
      */
 	public String getSpectraTable() {
-        return settings.spectraTable();
+        return settings.getSpectraTable();
 	}
 
     /**
@@ -266,7 +266,7 @@ public class DataAcquisitionViewModel extends ModelObject {
      * 
      * @param value the path to the new spectra table.
      */
-	public void setSpectraTable(String value) {
+	public void setNewSpectraTable(String value) {
 		settings.setNewSpectraTable(value);
 	}
 	

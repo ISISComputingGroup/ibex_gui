@@ -253,9 +253,9 @@ public class TimeChannelsPanel extends Composite {
         timeUnit.setItems(TimeUnit.allToString().toArray(new String[0]));
     }
 
+    @SuppressWarnings({ "checkstyle:magicnumber", })
     private void addTimeChannelFilePanel(Composite parent) {
         
-        // Wiring table selection
         Composite timeChannelFileContent = new Composite(parent, SWT.NONE);
         timeChannelFileContent.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1));
         timeChannelFileContent.setLayout(new GridLayout(3, false));
@@ -279,7 +279,7 @@ public class TimeChannelsPanel extends Composite {
         timeChannelFile.addSelectionListener(new SelectionListener() {
             @Override
             public void widgetSelected(SelectionEvent e) {
-                viewModel.setTimeChannelFile(timeChannelFile.getText());
+                viewModel.setNewTimeChannelFile(timeChannelFile.getText());
             }
 
             @Override

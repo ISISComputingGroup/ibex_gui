@@ -1,7 +1,7 @@
 
 /*
 * This file is part of the ISIS IBEX application.
-* Copyright (C) 2012-2015 Science & Technology Facilities Council.
+* Copyright (C) 2012-2016 Science & Technology Facilities Council.
 * All rights reserved.
 *
 * This program is distributed in the hope that it will be useful.
@@ -161,7 +161,7 @@ public class PeriodsPanel extends Composite {
         periodFile.addSelectionListener(new SelectionListener() {
             @Override
             public void widgetSelected(SelectionEvent e) {
-                model.setPeriodFile(periodFile.getText());
+                model.setNewPeriodFile(periodFile.getText());
             }
 
             @Override

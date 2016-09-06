@@ -1,7 +1,7 @@
 
 /*
 * This file is part of the ISIS IBEX application.
-* Copyright (C) 2012-2015 Science & Technology Facilities Council.
+* Copyright (C) 2012-2016 Science & Technology Facilities Council.
 * All rights reserved.
 *
 * This program is distributed in the hope that it will be useful.
@@ -53,7 +53,7 @@ public class TimeChannels extends ModelObject {
      * 
      * @return the file path.
      */
-    public String timeChannelFile() {
+    public String getTimeChannelFile() {
         return timeChannelFile;
     }
 
@@ -72,7 +72,7 @@ public class TimeChannels extends ModelObject {
      * 
      * @return the file path.
      */
-    public String newTimeChannelFile() {
+    public String getNewTimeChannelFile() {
         return newTimeChannelFile;
 	}
 
@@ -83,7 +83,7 @@ public class TimeChannels extends ModelObject {
      * @param value the file path.
      */
     public void setNewTimeChannelFile(String value) {
-        firePropertyChange("timeChannelFile", newTimeChannelFile, newTimeChannelFile = value);
+        firePropertyChange("newTimeChannelFile", newTimeChannelFile, newTimeChannelFile = value);
 	}
 
     /**
@@ -92,7 +92,7 @@ public class TimeChannels extends ModelObject {
      * 
      * @return the list of time channel files
      */
-    public UpdatedValue<Collection<String>> timeChannelFileList() {
+    public UpdatedValue<Collection<String>> getTimeChannelFileList() {
         return timeChannelFileList;
     }
 
