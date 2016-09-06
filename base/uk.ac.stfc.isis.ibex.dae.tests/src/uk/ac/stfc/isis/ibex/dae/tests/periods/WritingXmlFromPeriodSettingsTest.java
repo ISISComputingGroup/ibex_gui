@@ -1,7 +1,7 @@
 
 /*
 * This file is part of the ISIS IBEX application.
-* Copyright (C) 2012-2015 Science & Technology Facilities Council.
+* Copyright (C) 2012-2016 Science & Technology Facilities Council.
 * All rights reserved.
 *
 * This program is distributed in the hope that it will be useful.
@@ -121,11 +121,11 @@ public class WritingXmlFromPeriodSettingsTest extends FileReadingTest {
 	public void period_file_is_updated() {
 		String newValue = "new_path";
 		
-		assertThat(periodSettings.getPeriodFile(), is(not(newValue)));
-		periodSettings.setPeriodFile(newValue);
+		assertThat(periodSettings.getNewPeriodFile(), is(not(newValue)));
+		periodSettings.setNewPeriodFile(newValue);
 		reloadSettingsFromCurrentValues();
 		
-		assertThat(periodSettings.getPeriodFile(), is(newValue));
+		assertThat(periodSettings.getNewPeriodFile(), is(newValue));
 	}
 	
 	@Test

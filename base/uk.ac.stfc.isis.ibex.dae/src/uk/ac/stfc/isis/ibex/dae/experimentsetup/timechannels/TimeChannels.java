@@ -1,7 +1,7 @@
 
 /*
 * This file is part of the ISIS IBEX application.
-* Copyright (C) 2012-2015 Science & Technology Facilities Council.
+* Copyright (C) 2012-2016 Science & Technology Facilities Council.
 * All rights reserved.
 *
 * This program is distributed in the hope that it will be useful.
@@ -35,7 +35,8 @@ public class TimeChannels extends ModelObject {
 
 	private List<TimeRegime> timeRegimes = new ArrayList<>();
     private UpdatedValue<Collection<String>> timeChannelFileList;
-	private String timeChannelFile = "";
+    private String timeChannelFile = "";
+    private String newTimeChannelFile = "";
 	private CalculationMethod calculationMethod = CalculationMethod.SPECIFY_PARAMETERS;
 	private TimeUnit timeUnit = TimeUnit.MICROSECONDS;
 	
@@ -46,13 +47,43 @@ public class TimeChannels extends ModelObject {
 	public void setTimeRegimes(List<TimeRegime> value) {
 		firePropertyChange("timeRegimes", timeRegimes, timeRegimes = value);
 	}
-	
-	public String timeChannelFile() {
-		return timeChannelFile;
+
+    /**
+     * Get the path for the currently set time channel file.
+     * 
+     * @return the file path.
+     */
+    public String getTimeChannelFile() {
+        return timeChannelFile;
+    }
+
+    /**
+     * Set the path for the current time channel file.
+     * 
+     * @param value the file path.
+     */
+    public void setTimeChannelFile(String value) {
+        firePropertyChange("timeChannelFile", timeChannelFile, timeChannelFile = value);
+    }
+
+    /**
+     * Get the path for the new time channel file (to be set as current file
+     * once changes are applied).
+     * 
+     * @return the file path.
+     */
+    public String getNewTimeChannelFile() {
+        return newTimeChannelFile;
 	}
 
-	public void setTimeChannelFile(String value) {
-		firePropertyChange("timeChannelFile", timeChannelFile, timeChannelFile = value);
+    /**
+     * Set the path for the new time channel file (to be set as current file
+     * once changes are applied).
+     * 
+     * @param value the file path.
+     */
+    public void setNewTimeChannelFile(String value) {
+        firePropertyChange("newTimeChannelFile", newTimeChannelFile, newTimeChannelFile = value);
 	}
 
     /**
@@ -61,14 +92,14 @@ public class TimeChannels extends ModelObject {
      * 
      * @return the list of time channel files
      */
-    public UpdatedValue<Collection<String>> timeChannelFileList() {
+    public UpdatedValue<Collection<String>> getTimeChannelFileList() {
         return timeChannelFileList;
     }
 
     /**
      * Sets the list of time channel files and adds a listener.
      * 
-     * @param files
+     * @param files the collection of available time channel files.
      */
     public void setTimeChannelFileList(UpdatedValue<Collection<String>> files) {
         timeChannelFileList = files;

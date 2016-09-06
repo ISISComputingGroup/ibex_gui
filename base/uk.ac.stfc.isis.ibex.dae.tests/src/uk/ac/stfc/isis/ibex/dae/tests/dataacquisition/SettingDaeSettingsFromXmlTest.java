@@ -1,7 +1,7 @@
 
 /*
 * This file is part of the ISIS IBEX application.
-* Copyright (C) 2012-2015 Science & Technology Facilities Council.
+* Copyright (C) 2012-2016 Science & Technology Facilities Council.
 * All rights reserved.
 *
 * This program is distributed in the hope that it will be useful.
@@ -66,17 +66,17 @@ public class SettingDaeSettingsFromXmlTest extends FileReadingTest {
 	
 	@Test
 	public void wiring_table_is_updated() {
-		assertEquals("Wiring table not parsed correctly", "C:\\Instrument\\Settings\\tables\\wiring.dat", daeSettings.wiringTable());
+		assertEquals("Wiring table not parsed correctly", "C:\\Instrument\\Settings\\tables\\wiring.dat", daeSettings.getWiringTable());
 	}	
 	
 	@Test
 	public void detector_table_is_updated() {
-		assertEquals("Detector table not parsed correctly", "C:\\Instrument\\Settings\\tables\\detector.dat", daeSettings.detectorTable());
+		assertEquals("Detector table not parsed correctly", "C:\\Instrument\\Settings\\tables\\detector.dat", daeSettings.getDetectorTable());
 	}	
 	
 	@Test
 	public void spectra_table_is_updated() {
-		assertEquals("Spectra table not parsed correctly", "C:\\Instrument\\Settings\\tables\\spectra.dat", daeSettings.spectraTable());
+		assertEquals("Spectra table not parsed correctly", "C:\\Instrument\\Settings\\tables\\spectra.dat", daeSettings.getSpectraTable());
 	}	
 	
 	@Test

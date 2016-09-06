@@ -1,7 +1,7 @@
 
 /*
 * This file is part of the ISIS IBEX application.
-* Copyright (C) 2012-2015 Science & Technology Facilities Council.
+* Copyright (C) 2012-2016 Science & Technology Facilities Council.
 * All rights reserved.
 *
 * This program is distributed in the hope that it will be useful.
@@ -137,8 +137,8 @@ public class XmlBackedDaeSettings extends DaeSettings {
 	}
 
 	@Override
-	public void setWiringTable(String value) {
-		super.setWiringTable(value);
+	public void setNewWiringTable(String value) {
+		super.setNewWiringTable(value);
 		
 		if (doc == null) {
 			return;
@@ -147,8 +147,8 @@ public class XmlBackedDaeSettings extends DaeSettings {
 	}
 		
 	@Override
-	public void setDetectorTable(String value) {
-		super.setDetectorTable(value);
+	public void setNewDetectorTable(String value) {
+		super.setNewDetectorTable(value);
 
 		if (doc == null) {
 			return;
@@ -157,8 +157,8 @@ public class XmlBackedDaeSettings extends DaeSettings {
 	}
 	
 	@Override
-	public void setSpectraTable(String value) {
-		super.setSpectraTable(value);
+	public void setNewSpectraTable(String value) {
+		super.setNewSpectraTable(value);
 		
 		if (doc == null) {
 			return;
@@ -345,9 +345,9 @@ public class XmlBackedDaeSettings extends DaeSettings {
 		super.setFrom(Double.parseDouble(from.getTextContent()));
 		super.setTo(Double.parseDouble(to.getTextContent()));
 		
-		super.setWiringTable(wiringTable.getTextContent());	
-		super.setDetectorTable(detectorTable.getTextContent());
-		super.setSpectraTable(spectraTable.getTextContent());
+        super.setWiringTable(wiringTable.getTextContent());
+        super.setDetectorTable(detectorTable.getTextContent());
+        super.setSpectraTable(spectraTable.getTextContent());
 		
 		int index = Integer.parseInt(daeTimingSource.getTextContent());
 		super.setTimingSource(DaeTimingSource.values()[index]);
