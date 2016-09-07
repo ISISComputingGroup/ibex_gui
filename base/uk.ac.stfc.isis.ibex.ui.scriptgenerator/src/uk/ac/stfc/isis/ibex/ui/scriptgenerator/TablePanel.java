@@ -48,15 +48,13 @@ import org.eclipse.swt.widgets.Text;
 public class TablePanel extends Composite {
 	public static final String ID = "uk.ac.stfc.isis.ibex.ui.scriptgenerator.scriptgeneratorview";
 	private ScriptGeneratorTable table;
-	private Text text;
 	private ArrayList<ScriptGeneratorRow> rows;
-	 
+	
 	public TablePanel(Composite parent, int style) {
 		super(parent, style);
 		setLayout(new GridLayout(2, true));
 		
 		rows = new ArrayList<ScriptGeneratorRow>();
-		rows.add(new ScriptGeneratorRow(1.0, 2.0, 3.0, 4.0, 5.0, 6.0, "sample name", 7.0, "script"));
 		rows.add(new ScriptGeneratorRow());
 		
 		table = new ScriptGeneratorTable(this, SWT.NONE, SWT.MULTI | SWT.NO_SCROLL | SWT.V_SCROLL | SWT.FULL_SELECTION | SWT.BORDER, false);
@@ -64,12 +62,14 @@ public class TablePanel extends Composite {
 		table.setRows(rows);
 	}
 
+	/**
+	 * Gets the list of rows used in ScriptGeneratorTable
+	 * @return the collection of rows in ScriptGeneratorTable
+	 */
 	public Collection<ScriptGeneratorRow> getRows() {
-		return this.rows;
+		return this.rows; 
 	}
 	
 	public void bind() {
-		DataBindingContext bindingContext = new DataBindingContext();
-        bindingContext.bindValue(WidgetProperties.text().observe(text), BeanProperties.value("script").observe(rows.get(0)));
 	}
 } 

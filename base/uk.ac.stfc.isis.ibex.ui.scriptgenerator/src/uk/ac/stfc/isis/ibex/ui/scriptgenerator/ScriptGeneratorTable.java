@@ -38,6 +38,7 @@ import org.eclipse.core.databinding.observable.map.IObservableMap;
 import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.jface.viewers.ViewerColumn;
 import org.eclipse.swt.SWT;
+import org.eclipse.core.databinding.validation.IValidator;
 
 /**
  * A table that contains ScriptGeneratorRows.
@@ -103,10 +104,8 @@ public class ScriptGeneratorTable extends DataboundTable<ScriptGeneratorRow> {
 
 			@Override
 			protected void setValueForRow(ScriptGeneratorRow row, Double position) {
-				if (row.wasNull()) {
-					rows.add(new ScriptGeneratorRow());
-					setRows(rows);
-				}
+				addRowIfNull(row);
+				
 				row.setPosition(position);
 			}
 		});
@@ -129,6 +128,8 @@ public class ScriptGeneratorTable extends DataboundTable<ScriptGeneratorRow> {
 
 			@Override
 			protected void setValueForRow(ScriptGeneratorRow row, Double trans) {
+				addRowIfNull(row);
+				
 				row.setTrans(trans);
 			}
 		});
@@ -151,6 +152,8 @@ public class ScriptGeneratorTable extends DataboundTable<ScriptGeneratorRow> {
 
 			@Override
 			protected void setValueForRow(ScriptGeneratorRow row, Double transWait) {
+				addRowIfNull(row);
+				
 				row.setTransWait(transWait);
 			}
 		});
@@ -173,6 +176,8 @@ public class ScriptGeneratorTable extends DataboundTable<ScriptGeneratorRow> {
 
 			@Override
 			protected void setValueForRow(ScriptGeneratorRow row, Double sans) {
+				addRowIfNull(row);
+				
 				row.setSans(sans);
 			}
 		});
@@ -195,6 +200,8 @@ public class ScriptGeneratorTable extends DataboundTable<ScriptGeneratorRow> {
 
 			@Override
 			protected void setValueForRow(ScriptGeneratorRow row, Double sansWait) {
+				addRowIfNull(row);
+				
 				row.setSansWait(sansWait);
 			}
 		});
@@ -217,6 +224,8 @@ public class ScriptGeneratorTable extends DataboundTable<ScriptGeneratorRow> {
 
 			@Override
 			protected void setValueForRow(ScriptGeneratorRow row, Double period) {
+				addRowIfNull(row);
+				
 				row.setPeriod(period);
 			}
 		});
@@ -239,6 +248,8 @@ public class ScriptGeneratorTable extends DataboundTable<ScriptGeneratorRow> {
 
 			@Override
 			protected void setValueForRow(ScriptGeneratorRow row, String sampleName) {
+				addRowIfNull(row);
+				
 				row.setSampleName(sampleName);
 			}
 		});
@@ -261,8 +272,17 @@ public class ScriptGeneratorTable extends DataboundTable<ScriptGeneratorRow> {
 
 			@Override
 			protected void setValueForRow(ScriptGeneratorRow row, Double thickness) {
+				addRowIfNull(row);
+				
 				row.setThickness(thickness);
 			}
 		});
+	}
+	
+	private void addRowIfNull(ScriptGeneratorRow row) {
+		if (row.wasNull()) {
+			rows.add(new ScriptGeneratorRow());
+			setRows(rows);
+		}
 	}
 }

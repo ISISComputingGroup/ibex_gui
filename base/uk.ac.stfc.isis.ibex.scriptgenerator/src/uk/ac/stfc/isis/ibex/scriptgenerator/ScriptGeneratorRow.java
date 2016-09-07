@@ -25,14 +25,14 @@ import uk.ac.stfc.isis.ibex.model.ModelObject;
  * A row of data to be inserted into a ScriptGeneratorTable.
  */
 public class ScriptGeneratorRow extends ModelObject {
-	protected Double position;
-	protected Double trans;
-	protected Double transWait; 
-	protected Double sans;
-	protected Double sansWait; 
-	protected Double period;
-	protected String sampleName; 
-	protected Double thickness; 
+	private Double position;
+	private Double trans;
+	private Double transWait; 
+	private Double sans;
+	private Double sansWait; 
+	private Double period;
+	private String sampleName; 
+	private Double thickness; 
 	private boolean wasNull;
 	
 	public ScriptGeneratorRow(Double position, Double trans, Double transWait, Double sans, Double sansWait, Double period, 
@@ -53,28 +53,50 @@ public class ScriptGeneratorRow extends ModelObject {
 		this.wasNull = true;
 	}
 	
+	/*
+	 * Gets the position.
+	 */
 	public Double getPosition() {
 		return position;
 	}
 	
+	/**
+	 * Sets the position
+	 * 
+	 * @param position the position
+	 */
 	public void setPosition(Double position) {
 		this.wasNull = false;
 		firePropertyChange("position", this.position, this.position = position);
 	}
 
+	/*
+	 * Gets the trans.
+	 */
 	public Double getTrans() {
 		return trans;
 	}
 	
+	/**
+	 * Sets the trans.
+	 * @param trans
+	 */
 	public void setTrans(Double trans) {
 		this.wasNull = false;
 		firePropertyChange("trans", this.trans, this.trans = trans);
 	}
 	
+	/*
+	 * Gets the trans wait
+	 */
 	public Double getTransWait() {
 		return transWait;
 	}
 	
+	/**
+	 * Sets the trans wait
+	 * @param transWait
+	 */
 	public void setTransWait(Double transWait) {
 		this.wasNull = false;
 		firePropertyChange("transWait", this.transWait, this.transWait = transWait);

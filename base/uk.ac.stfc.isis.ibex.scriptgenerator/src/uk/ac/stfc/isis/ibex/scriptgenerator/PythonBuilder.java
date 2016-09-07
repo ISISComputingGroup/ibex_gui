@@ -42,7 +42,7 @@ public class PythonBuilder extends ModelObject {
 		script = new String();
 		
 		for (ScriptGeneratorRow row : rows) {
-			script += "position = " + row.position;
+			script += "position = " + row.getPosition();
 		}
 	}
 }

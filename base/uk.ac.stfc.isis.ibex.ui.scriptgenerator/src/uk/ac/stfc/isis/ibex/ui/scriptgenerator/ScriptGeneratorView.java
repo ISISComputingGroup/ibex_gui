@@ -147,15 +147,6 @@ public class ScriptGeneratorView extends ViewPart {
 		table = new TablePanel(parent, SWT.NONE);
 		table.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		
-//		rows = tablePanel.getRows(); 
-//		buildPython(rows);
-		
-//		temporary colours
-//		buttonsComposite.setBackground(settingsPanel.getDisplay().getSystemColor(SWT.COLOR_DARK_GREEN));
-//		settingsPanel.setBackground(settingsPanel.getDisplay().getSystemColor(SWT.COLOR_MAGENTA));
-//		estimatePanel.setBackground(estimatePanel.getDisplay().getSystemColor(SWT.COLOR_BLUE)); 
-//		buttonsPanel.setBackground(buttonsPanel.getDisplay().getSystemColor(SWT.COLOR_GREEN));  
-		
 		bind();
 	}
 	
@@ -178,21 +169,6 @@ public class ScriptGeneratorView extends ViewPart {
                 script = builder.getScript();
             }
         });
-		
-		// btnClearTable etc
-	}
-	
-	public void buildPython(Collection<ScriptGeneratorRow> rows) {
-		// build Python
-	}
-	
-	
-	public void sendToNicos() {
-		// send to NICOS
-	}
-	
-	public void saveToCsv() {
-		// save to csv
 	}
 	
 	@Override
