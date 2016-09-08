@@ -22,7 +22,8 @@ REM the password for isis\builder is contained in the BUILDERPW system environme
 net use p: /d
 net use p: \\isis\inst$ /user:isis\builder %BUILDERPW%
 
-set INSTALLBASEDIR=p:\Kits$\CompGroup\ICP\Client\Releases
+set CLIENTDEPLOYDIR=p:\Kits$\CompGroup\ICP\Client
+set INSTALLBASEDIR=%CLIENTDEPLOYDIR%\Releases
 if not exist "%INSTALLBASEDIR%" (
     @echo Creating client directory %INSTALLBASEDIR%
     mkdir %INSTALLBASEDIR%
@@ -67,7 +68,7 @@ if %errorlevel% neq 0 (
 )
 
 REM Add EPICS_UTILS and the Client
-%ZIPEXE% a installer.7z %INSTALLBASEDIR%\EPICS_UTILS
+%ZIPEXE% a installer.7z %CLIENTDEPLOYDIR%\EPICS_UTILS
 if %errorlevel% neq 0 (
     @echo Could not add EPICS_UTILS to zip
     exit /b %errorlevel%
