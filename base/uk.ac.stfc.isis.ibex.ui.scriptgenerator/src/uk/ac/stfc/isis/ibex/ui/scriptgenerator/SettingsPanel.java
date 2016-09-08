@@ -39,13 +39,13 @@ import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.swt.SWT;
 
-import uk.ac.stfc.isis.ibex.scriptgenerator.ScriptGeneratorRow;
+import uk.ac.stfc.isis.ibex.scriptgenerator.Row;
 import uk.ac.stfc.isis.ibex.scriptgenerator.ApertureSans;
 import uk.ac.stfc.isis.ibex.scriptgenerator.ApertureTrans;
 import uk.ac.stfc.isis.ibex.scriptgenerator.CollectionMode;
 import uk.ac.stfc.isis.ibex.scriptgenerator.Order;
 import uk.ac.stfc.isis.ibex.scriptgenerator.SampleGeometry;
-import uk.ac.stfc.isis.ibex.ui.scriptgenerator.ScriptGeneratorTable;
+import uk.ac.stfc.isis.ibex.ui.scriptgenerator.Table;
 
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.layout.GridData;

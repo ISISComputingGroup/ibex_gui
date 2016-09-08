@@ -10,7 +10,7 @@ import uk.ac.stfc.isis.ibex.model.ModelObject;
 public class PythonBuilder extends ModelObject {
 	private int doSans = 1;
 	private int doTrans = 1;
-	private Collection<ScriptGeneratorRow> rows;
+	private Collection<Row> rows;
 	private String script;
 	
 	public PythonBuilder() {
@@ -28,7 +28,7 @@ public class PythonBuilder extends ModelObject {
 		this.doSans = doSans;
 	}
 	
-	public void setRows(Collection<ScriptGeneratorRow> rows) {
+	public void setRows(Collection<Row> rows) {
 		this.rows = rows;
 		
 		createScript();
@@ -41,7 +41,7 @@ public class PythonBuilder extends ModelObject {
 	public void createScript() {
 		script = new String();
 		
-		for (ScriptGeneratorRow row : rows) {
+		for (Row row : rows) {
 			script += "position = " + row.getPosition();
 		}
 	}

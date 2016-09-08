@@ -13,8 +13,8 @@ import org.eclipse.core.databinding.beans.BeanProperties;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.swt.SWT;
 
-import uk.ac.stfc.isis.ibex.scriptgenerator.ScriptGeneratorRow;
-import uk.ac.stfc.isis.ibex.ui.scriptgenerator.ScriptGeneratorTable;
+import uk.ac.stfc.isis.ibex.scriptgenerator.Row;
+import uk.ac.stfc.isis.ibex.ui.scriptgenerator.Table;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Label;
