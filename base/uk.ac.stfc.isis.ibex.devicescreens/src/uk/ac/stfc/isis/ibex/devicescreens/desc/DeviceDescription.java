@@ -77,7 +77,7 @@ public class DeviceDescription extends ModelObject {
      * @param key the key to set
      */
     public void setKey(String key) {
-        this.key = key;
+        firePropertyChange("key", this.key, this.key = key);
     }
 
     /**
@@ -91,7 +91,7 @@ public class DeviceDescription extends ModelObject {
      * @param name the name to set
      */
     public void setName(String name) {
-        firePropertyChange("Name", name, this.name = name);
+        firePropertyChange("name", this.name, this.name = name);
     }
 
     /**

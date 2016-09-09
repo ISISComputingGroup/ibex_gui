@@ -24,7 +24,6 @@ import java.util.Collection;
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.beans.BeanProperties;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
-import org.eclipse.jface.databinding.viewers.ViewerProperties;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.jface.viewers.ISelection;
@@ -41,8 +40,8 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Text;
 
-import uk.ac.stfc.isis.ibex.devicescreens.desc.DeviceDescription;
 import uk.ac.stfc.isis.ibex.opis.Opi;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.TargetDescription;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.TargetType;
@@ -55,6 +54,9 @@ public class TargetNameWidget extends Composite {
     private DeviceScreensDescriptionViewModel viewModel;
 	private TargetType type;
 	private Collection<String> availableOPIs;
+
+    /** The text box for holding the description. **/
+    private Text txtDescription;
 
 
     public TargetNameWidget(Composite parent, Collection<String> availableOPIs,
@@ -168,9 +170,14 @@ public class TargetNameWidget extends Composite {
     public void bindToSelected(ListViewer devicesViewer) {
         DataBindingContext bindingContext = new DataBindingContext();
 
+//        bindingContext.bindValue(
+//                WidgetProperties.selection().observe(cmboOpiName.getCombo()), ViewerProperties.singleSelection()
+//                        .value(BeanProperties.value("key", DeviceDescription.class)).observe(devicesViewer),
+//                null, null);
+
         bindingContext.bindValue(
-                WidgetProperties.selection().observe(cmboOpiName.getCombo()), ViewerProperties.singleSelection()
-                        .value(BeanProperties.value("key", DeviceDescription.class)).observe(devicesViewer),
+                WidgetProperties.selection().observe(cmboOpiName.getCombo()),
+                BeanProperties.value("currentKey").observe(viewModel),
                 null, null);
     }
 

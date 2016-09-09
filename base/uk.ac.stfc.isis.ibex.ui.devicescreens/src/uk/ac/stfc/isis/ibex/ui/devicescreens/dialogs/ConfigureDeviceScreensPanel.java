@@ -28,7 +28,6 @@ import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.beans.BeanProperties;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.databinding.viewers.ObservableListContentProvider;
-import org.eclipse.jface.databinding.viewers.ViewerProperties;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.ListViewer;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
@@ -49,7 +48,6 @@ import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.wb.swt.ResourceManager;
 
-import uk.ac.stfc.isis.ibex.devicescreens.desc.DeviceDescription;
 import uk.ac.stfc.isis.ibex.ui.devicescreens.models.DeviceScreensDescriptionViewModel;
 
 /**
@@ -71,6 +69,7 @@ public class ConfigureDeviceScreensPanel extends Composite {
     private Collection<String> availableOPIs;
     private Composite detailsComposite;
     private TargetNameWidget targetSelect;
+    private TargetDescriptionWidget targetDescription;
 
     private DeviceScreensDescriptionViewModel viewModel;
 
@@ -174,20 +173,8 @@ public class ConfigureDeviceScreensPanel extends Composite {
 
             @Override
             public void selectionChanged(SelectionChangedEvent arg0) {
-                // int selectionIndex = devicesList.getSelectionIndex();
-                // viewModel.setSelectedScreen(selectionIndex);
-//                groupNamesValidator.setSelectedIndex(selectionIndex);
-//                if (selectionIndex == -1) {
-//                    groupNamesValidator.validate("");
-//                } else {
-//                    groupNamesValidator.validate(groupList.getSelection()[0]);
-//                }
-//                boolean canEditSelected = groupEditorViewModel.canEditSelected(selectionIndex);
-//
-//                btnRemove.setEnabled(canEditSelected);
-//                name.setEnabled(canEditSelected);
-//                blocksEditor.setEnabled(canEditSelected);
-
+                int selectionIndex = devicesList.getSelectionIndex();
+                viewModel.setSelectedScreen(selectionIndex);
             }
         });
     }
@@ -210,8 +197,8 @@ public class ConfigureDeviceScreensPanel extends Composite {
         txtName.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false, 1, 1));
 
         bindingContext.bindValue(
-                WidgetProperties.text(SWT.Modify).observe(txtName), ViewerProperties.singleSelection()
-                        .value(BeanProperties.value("name", DeviceDescription.class)).observe(devicesViewer),
+                WidgetProperties.text(SWT.Modify).observe(txtName),
+                BeanProperties.value("currentName").observe(viewModel),
                 null, null);
 
         txtName.addModifyListener(new ModifyListener() {
@@ -233,11 +220,10 @@ public class ConfigureDeviceScreensPanel extends Composite {
         lblDescription.setLayoutData(new GridData(SWT.RIGHT, SWT.TOP, false, false, 1, 1));
         lblDescription.setText("Description");
 
-        TargetDescriptionWidget desc = new TargetDescriptionWidget(detailsComposite, viewModel);
+        targetDescription = new TargetDescriptionWidget(detailsComposite, viewModel);
         GridData gdDescription = new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1);
         gdDescription.heightHint = 70;
-        desc.setLayoutData(gdDescription);
-        desc.bindToSelected(devicesViewer);
+        targetDescription.setLayoutData(gdDescription);
 
         TargetPropertiesView propertiesView = new TargetPropertiesView(detailsComposite);
         propertiesView.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));

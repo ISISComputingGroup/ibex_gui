@@ -35,7 +35,13 @@ import uk.ac.stfc.isis.ibex.opis.desc.OpiDescription;
  */
 public class DeviceScreensDescriptionViewModel extends ModelObject {
     
+    private DeviceDescription selectedScreen = null;
     private DeviceScreensDescription description;
+
+    // Proxy objects
+    private String currentName = "";
+    private String currentKey = "";
+    private String currentDescription = "";
 
     public DeviceScreensDescriptionViewModel(DeviceScreensDescription description) {
         this.description = description;
@@ -45,7 +51,71 @@ public class DeviceScreensDescriptionViewModel extends ModelObject {
         return description.getDevices();
     }
 
-    public OpiDescription getOpi(String targetName) {
+    /**
+     * @param selectionIndex
+     */
+    public void setSelectedScreen(int selectionIndex) {
+        DeviceDescription newDescription = null;
+
+        try {
+            newDescription = description.getDevices().get(selectionIndex);
+        } catch (IndexOutOfBoundsException e) {
+            newDescription = null;
+        }
+
+        firePropertyChange("SelectedScreen", selectedScreen, selectedScreen = newDescription);
+
+        // Update cached values to match selection
+        setCurrentName(selectedScreen.getName());
+        setCurrentKey(selectedScreen.getKey());
+        setCurrentDescription(selectedScreen.getKey());
+    }
+
+    public DeviceDescription getSelectedScreen() {
+        return selectedScreen;
+    }
+
+    public String getCurrentName() {
+        return currentName;
+    }
+
+    public void setCurrentName(String name) {
+        if (selectedScreen == null) {
+            return;
+        }
+
+        selectedScreen.setName(name);
+        firePropertyChange("currentName", currentName, currentName = name);
+    }
+
+    public String getCurrentKey() {
+        return currentKey;
+    }
+
+    public void setCurrentKey(String key) {
+        if (selectedScreen == null) {
+            return;
+        }
+
+        selectedScreen.setKey(key);
+        firePropertyChange("currentKey", currentKey, currentKey = key);
+        // Must update to the corresponding description
+        setCurrentDescription(key);
+    }
+
+    public String getCurrentDescription() {
+        return currentDescription;
+    }
+
+    public void setCurrentDescription(String key) {
+        if (selectedScreen == null) {
+            return;
+        }
+
+        firePropertyChange("currentDescription", currentDescription, currentDescription = getOpi(key).getDescription());
+    }
+
+    private OpiDescription getOpi(String targetName) {
         String name = Opi.getDefault().descriptionsProvider().guessOpiName(targetName);
         OpiDescription opi = Opi.getDefault().descriptionsProvider().getDescription(name);
         return opi;
