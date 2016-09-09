@@ -22,13 +22,13 @@
  */
 package uk.ac.stfc.isis.ibex.ui.devicescreens.models;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
 import uk.ac.stfc.isis.ibex.devicescreens.desc.DeviceDescription;
 import uk.ac.stfc.isis.ibex.devicescreens.desc.DeviceScreensDescription;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
+import uk.ac.stfc.isis.ibex.opis.Opi;
+import uk.ac.stfc.isis.ibex.opis.desc.OpiDescription;
 
 /**
  * 
@@ -36,29 +36,19 @@ import uk.ac.stfc.isis.ibex.model.ModelObject;
 public class DeviceScreensDescriptionViewModel extends ModelObject {
     
     private DeviceScreensDescription description;
-    private List<String> screenNames;
-    private String name = "Hello";
 
     public DeviceScreensDescriptionViewModel(DeviceScreensDescription description) {
         this.description = description;
-        screenNames = new ArrayList<>();
-        for (DeviceDescription s : description.getDevices()) {
-            screenNames.add(s.getName());
-        }
     }
 
-    public Collection<String> getScreenNames() {
-        return screenNames;
+    public Collection<DeviceDescription> getScreens() {
+        return description.getDevices();
     }
 
-    public void addScreen(String name) {
-        List<String> namesBefore = new ArrayList<>(screenNames);
-        screenNames.add(name);
-        firePropertyChange("screenNames", namesBefore, screenNames);
-    }
-
-    public String getName() {
-        return name;
+    public OpiDescription getOpi(String targetName) {
+        String name = Opi.getDefault().descriptionsProvider().guessOpiName(targetName);
+        OpiDescription opi = Opi.getDefault().descriptionsProvider().getDescription(name);
+        return opi;
     }
 
 }

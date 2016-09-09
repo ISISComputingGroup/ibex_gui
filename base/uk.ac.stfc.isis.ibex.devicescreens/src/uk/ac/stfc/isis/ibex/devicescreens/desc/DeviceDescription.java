@@ -91,7 +91,7 @@ public class DeviceDescription extends ModelObject {
      * @param name the name to set
      */
     public void setName(String name) {
-        this.name = name;
+        firePropertyChange("Name", name, this.name = name);
     }
 
     /**
@@ -119,5 +119,15 @@ public class DeviceDescription extends ModelObject {
             target.addProperty(property.getKey(), property.getValue());
         }
         return target;
+    }
+
+    @Override
+    public int hashCode() {
+        return name.hashCode() ^ key.hashCode() ^ type.hashCode();
+    }
+
+    @Override
+    public String toString() {
+        return name;
     }
 }

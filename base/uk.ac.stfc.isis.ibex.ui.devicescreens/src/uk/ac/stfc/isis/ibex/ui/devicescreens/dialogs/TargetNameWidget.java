@@ -21,11 +21,16 @@ package uk.ac.stfc.isis.ibex.ui.devicescreens.dialogs;
 
 import java.util.Collection;
 
+import org.eclipse.core.databinding.DataBindingContext;
+import org.eclipse.core.databinding.beans.BeanProperties;
+import org.eclipse.jface.databinding.swt.WidgetProperties;
+import org.eclipse.jface.databinding.viewers.ViewerProperties;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.ListViewer;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.swt.SWT;
@@ -37,22 +42,26 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 
+import uk.ac.stfc.isis.ibex.devicescreens.desc.DeviceDescription;
 import uk.ac.stfc.isis.ibex.opis.Opi;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.TargetDescription;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.TargetType;
+import uk.ac.stfc.isis.ibex.ui.devicescreens.models.DeviceScreensDescriptionViewModel;
 
 public class TargetNameWidget extends Composite {
 
 	private ComboViewer cmboOpiName;
 	private boolean updateLock;
-    // private SynopticViewModel synopticViewModel;
+    private DeviceScreensDescriptionViewModel viewModel;
 	private TargetType type;
 	private Collection<String> availableOPIs;
 
-    public TargetNameWidget(Composite parent, Collection<String> availableOPIs) {
+
+    public TargetNameWidget(Composite parent, Collection<String> availableOPIs,
+            DeviceScreensDescriptionViewModel viewModel) {
 		super(parent, SWT.NONE);
 		
-        // this.synopticViewModel = synopticViewModel;
+        this.viewModel = viewModel;
 		
 		this.availableOPIs = availableOPIs;
 		
@@ -90,8 +99,8 @@ public class TargetNameWidget extends Composite {
         btnSetDefault.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
-//                Collection<TargetDescription> potentialTargets = DefaultTargetForComponent
-//                        .defaultTarget(synopticViewModel.getFirstSelectedComponent().type());
+//                Collection<TargetDescription> potentialTargets =
+//                        DefaultTargetForComponent.defaultTarget(synopticViewModel.getFirstSelectedComponent().type());
 //
 //                if (potentialTargets.size() == 1) {
 //                    updateModel(potentialTargets.iterator().next().name());
@@ -100,7 +109,7 @@ public class TargetNameWidget extends Composite {
 //                    if (dialog.open() == Window.OK) {
 //                        updateModel(dialog.selectedTargetName());
 //                    }
-//                }                
+//                }
             }
         });
         btnSetDefault.setText("Default Target");
@@ -155,4 +164,14 @@ public class TargetNameWidget extends Composite {
 		
 		updateLock = false;
 	}
+
+    public void bindToSelected(ListViewer devicesViewer) {
+        DataBindingContext bindingContext = new DataBindingContext();
+
+        bindingContext.bindValue(
+                WidgetProperties.selection().observe(cmboOpiName.getCombo()), ViewerProperties.singleSelection()
+                        .value(BeanProperties.value("key", DeviceDescription.class)).observe(devicesViewer),
+                null, null);
+    }
+
 }
