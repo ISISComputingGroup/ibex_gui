@@ -53,6 +53,7 @@ import org.eclipse.swt.widgets.Text;
 /**
  * Holds all UI elements of the Script Generator.
  */
+@SuppressWarnings("checkstyle:magicnumber")
 public class View extends ViewPart {
 	public static final String ID = "uk.ac.stfc.isis.ibex.ui.scriptgenerator.scriptgeneratorview";
 	
@@ -65,9 +66,12 @@ public class View extends ViewPart {
 	private PythonBuilder builder;
 	private String script;
 	 
+	/**
+	 * The default constructor.
+	 */
 	public View() {
 		super();
-		
+	
 		builder = new PythonBuilder();
 	}
 
@@ -150,6 +154,9 @@ public class View extends ViewPart {
 		bind();
 	}
 	
+	/**
+	 * Binding for the Write Script and Preview Script buttons.
+	 */
 	public void bind() {
 		btnPreview.addSelectionListener(new SelectionAdapter() {
             @Override

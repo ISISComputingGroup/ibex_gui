@@ -50,6 +50,11 @@ public class TablePanel extends Composite {
 	private Table table;
 	private ArrayList<Row> rows;
 	
+	/**
+	 * The default constructor.
+	 * @param parent the parent that the EstimatePanel will be placed in
+	 * @param style the style of the parent
+	 */
 	public TablePanel(Composite parent, int style) {
 		super(parent, style);
 		setLayout(new GridLayout(2, true));
@@ -63,13 +68,10 @@ public class TablePanel extends Composite {
 	}
 
 	/**
-	 * Gets the list of rows used in ScriptGeneratorTable
+	 * Gets the list of rows used in ScriptGeneratorTable.
 	 * @return the collection of rows in ScriptGeneratorTable
 	 */
 	public Collection<Row> getRows() {
 		return this.rows; 
-	}
-	
-	public void bind() {
 	}
 } 

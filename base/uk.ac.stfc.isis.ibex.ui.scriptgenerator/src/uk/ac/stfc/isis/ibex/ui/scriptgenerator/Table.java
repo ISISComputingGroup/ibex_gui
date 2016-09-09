@@ -19,26 +19,17 @@
 
 package uk.ac.stfc.isis.ibex.ui.scriptgenerator;
 
+import java.util.Collection;
+
+import org.eclipse.jface.viewers.TableViewerColumn;
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 
-import uk.ac.stfc.isis.ibex.scriptgenerator.PythonBuilder;
 import uk.ac.stfc.isis.ibex.scriptgenerator.Row;
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundCellLabelProvider;
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundTable;
-import uk.ac.stfc.isis.ibex.ui.widgets.StringEditingSupport;
-import uk.ac.stfc.isis.ibex.ui.widgets.DoubleEditingSupport;
 import uk.ac.stfc.isis.ibex.ui.widgets.DoubleEditingSupportBlankIfNull;
-import uk.ac.stfc.isis.ibex.ui.widgets.DoubleEditingSupport;
-import uk.ac.stfc.isis.ibex.ui.widgets.IntegerEditingSupport;
-
-import java.util.Arrays;
-import java.util.Collection;
-
-import org.eclipse.core.databinding.observable.map.IObservableMap;
-import org.eclipse.jface.viewers.TableViewerColumn;
-import org.eclipse.jface.viewers.ViewerColumn;
-import org.eclipse.swt.SWT;
-import org.eclipse.core.databinding.validation.IValidator;
+import uk.ac.stfc.isis.ibex.ui.widgets.StringEditingSupport;
 
 /**
  * A table that contains ScriptGeneratorRows.
@@ -218,26 +209,27 @@ public class Table extends DataboundTable<Row> {
 		});
 	}
 	
+	// Change to support int
 	private void period() {
 		period = createColumn("PERIOD", 3);
 		period.setLabelProvider(new DataboundCellLabelProvider<Row>(
 				observeProperty("period")) {
 			@Override
 			protected String valueFromRow(Row row) {
-				return row.getPeriod() == null ? "" : String.valueOf(row.getPeriod());
+				return row.getPeriod() == 0 ? "" : String.valueOf(row.getPeriod());
 			}
 		});
 		period.setEditingSupport(new DoubleEditingSupportBlankIfNull<Row>(viewer(), Row.class) {
 			@Override
 			protected Double valueFromRow(Row row) {
-				return row.getPeriod();
+				return 5.5;
 			}
 
 			@Override
 			protected void setValueForRow(Row row, Double period) {
 				addRowIfNull(row);
 				
-				row.setPeriod(period);
+				row.setPeriod(5);
 			}
 		});
 	}

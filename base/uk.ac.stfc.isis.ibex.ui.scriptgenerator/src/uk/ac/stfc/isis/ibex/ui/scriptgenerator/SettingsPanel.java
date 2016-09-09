@@ -19,45 +19,37 @@
 
 package uk.ac.stfc.isis.ibex.ui.scriptgenerator;
 
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Group;
-import org.eclipse.ui.part.ViewPart;
-import org.eclipse.swt.browser.Browser;
-import org.eclipse.swt.custom.CLabel;
-import org.eclipse.swt.custom.StyledText;
-import org.eclipse.swt.layout.FillLayout;
-
-import java.util.ArrayList;
-
-import org.eclipse.core.databinding.DataBindingContext;
-import org.eclipse.core.databinding.beans.BeanProperties;
-import org.eclipse.jface.databinding.swt.WidgetProperties;
-import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.CLabel;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Group;
+import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Text;
 
-import uk.ac.stfc.isis.ibex.scriptgenerator.Row;
 import uk.ac.stfc.isis.ibex.scriptgenerator.ApertureSans;
 import uk.ac.stfc.isis.ibex.scriptgenerator.ApertureTrans;
 import uk.ac.stfc.isis.ibex.scriptgenerator.CollectionMode;
 import uk.ac.stfc.isis.ibex.scriptgenerator.Order;
 import uk.ac.stfc.isis.ibex.scriptgenerator.SampleGeometry;
-import uk.ac.stfc.isis.ibex.ui.scriptgenerator.Table;
 
-import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.Button;
-import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.widgets.Text;
-import org.eclipse.swt.widgets.Combo;
-
+/**
+ * Contains all of the settings.
+ */
+@SuppressWarnings("checkstyle:magicnumber")
 public class SettingsPanel extends Composite {
-	 
+	
+	/**
+	 * The default constructor.
+	 * @param parent the parent that the EstimatePanel will be placed in
+	 * @param style the style of the parent
+	 */
 	public SettingsPanel(Composite parent, int style) {
 		super(parent, style);
 		setLayout(new GridLayout(2, false));
@@ -191,8 +183,5 @@ public class SettingsPanel extends Composite {
 		lblApertureTrans.setText("TRANS");
 		new Label(grpSettings, SWT.NONE);
 		new Label(grpSettings, SWT.NONE);
-	}
-
-	public void bind() {
 	}
 }
