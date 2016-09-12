@@ -62,7 +62,7 @@ public class TimeChannelsPanel extends Composite {
     private DataBindingContext bindingContext;
     StackLayout stack;
 
-    private Combo timeChannelFile;
+    private Combo timeChannelFileSelector;
     private Label timeChannelFileRB;
     Button radioSpecifyParameters;
     Button radioUseTCBFile;
@@ -123,7 +123,7 @@ public class TimeChannelsPanel extends Composite {
         bindingContext = new DataBindingContext();
         bindingContext.bindValue(WidgetProperties.singleSelectionIndex().observe(timeUnit),
                 BeanProperties.value("timeUnit").observe(viewModel));
-        bindingContext.bindList(WidgetProperties.items().observe(timeChannelFile),
+        bindingContext.bindList(WidgetProperties.items().observe(timeChannelFileSelector),
                 BeanProperties.list("timeChannelFileList").observe(viewModel));
         bindingContext.bindValue(WidgetProperties.text().observe(timeChannelFileRB),
                 BeanProperties.value("timeChannelFile").observe(viewModel));
@@ -256,29 +256,37 @@ public class TimeChannelsPanel extends Composite {
 
     @SuppressWarnings({ "checkstyle:magicnumber", })
     private void addTimeChannelFilePanel(Composite parent) {
-        
-        Composite timeChannelFileContent = new Composite(parent, SWT.NONE);
-        timeChannelFileContent.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1));
-        GridLayout glTimeChannelFileContent = new GridLayout(3, false);
-        glTimeChannelFileContent.marginWidth = 0;
-        glTimeChannelFileContent.horizontalSpacing = 20;
-        timeChannelFileContent.setLayout(glTimeChannelFileContent);
 
-        Label lblTimeChannelFile = new Label(timeChannelFileContent, SWT.NONE);
-        lblTimeChannelFile.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-        lblTimeChannelFile.setText("Time Channel File:");
-        
-        timeChannelFileRB = new Label(timeChannelFileContent, SWT.NONE);
+        Composite timeChannelFilePanel = new Composite(parent, SWT.NONE);
+        timeChannelFilePanel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 5, 1));
+        GridLayout glTcbFilePanel = new GridLayout(3, false);
+        glTcbFilePanel.horizontalSpacing = 20;
+        timeChannelFilePanel.setLayout(glTcbFilePanel);
+
+        Label lblTimeChannel = new Label(timeChannelFilePanel, SWT.NONE);
+        lblTimeChannel.setText("Time Channel File:");
+
+        Label lblTimeChannelRB = new Label(timeChannelFilePanel, SWT.NONE);
+        lblTimeChannelRB.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
+        lblTimeChannelRB.setText("Current:");
+
+        timeChannelFileRB = new Label(timeChannelFilePanel, SWT.NONE);
         timeChannelFileRB.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
         timeChannelFileRB.setFont(JFaceResources.getFontRegistry().getItalic(JFaceResources.DEFAULT_FONT));
 
-        timeChannelFile = new Combo(timeChannelFileContent, SWT.DROP_DOWN | SWT.READ_ONLY);
-        timeChannelFile.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1));
+        Label lblTimeChannelSpacer = new Label(timeChannelFilePanel, SWT.NONE);
 
-        timeChannelFile.addSelectionListener(new SelectionListener() {
+        Label lblTimeChannelChange = new Label(timeChannelFilePanel, SWT.NONE);
+        lblTimeChannelChange.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
+        lblTimeChannelChange.setText("Change:");
+
+        timeChannelFileSelector = new Combo(timeChannelFilePanel, SWT.DROP_DOWN | SWT.READ_ONLY);
+        timeChannelFileSelector.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+
+        timeChannelFileSelector.addSelectionListener(new SelectionListener() {
             @Override
             public void widgetSelected(SelectionEvent e) {
-                viewModel.setNewTimeChannelFile(timeChannelFile.getText());
+                viewModel.setNewTimeChannelFile(timeChannelFileSelector.getText());
             }
 
             @Override

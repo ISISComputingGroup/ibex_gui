@@ -48,7 +48,7 @@ public class PeriodsPanel extends Composite {
 	private DataBindingContext bindingContext;
 	
 	private Combo setupSource;
-	private Combo periodFile;
+	private Combo periodFileSelector;
 	private Combo periodType;
 	private Text softwarePeriods;
 	private Text hardwarePeriods;
@@ -79,45 +79,48 @@ public class PeriodsPanel extends Composite {
 		new Label(grpSetup, SWT.NONE);
 		new Label(grpSetup, SWT.NONE);
 		
-		Label lblPeriodFile = new Label(grpSetup, SWT.NONE);
-		lblPeriodFile.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-		lblPeriodFile.setText("Period File:");
+        Label lblPeriodType = new Label(grpSetup, SWT.NONE);
+        lblPeriodType.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
+        lblPeriodType.setText("Period Type:");
 
-        periodFileRB = new Label(grpSetup, SWT.NONE);
-        periodFileRB.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 4, 1));
-        periodFileRB.setFont(JFaceResources.getFontRegistry().getItalic(JFaceResources.DEFAULT_FONT));
+        periodType = new Combo(grpSetup, SWT.DROP_DOWN | SWT.READ_ONLY);
+        periodType.setItems(PeriodControlType.allToString().toArray(new String[0]));
+        new Label(grpSetup, SWT.NONE);
 
-        Label spacer = new Label(grpSetup, SWT.None);
+        Label lblNumberOfSoftware = new Label(grpSetup, SWT.NONE);
+        lblNumberOfSoftware.setText("Software periods:");
+
+        softwarePeriods = new Text(grpSetup, SWT.BORDER | SWT.RIGHT);
+        GridData gd_softwarePeriods = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+        gd_softwarePeriods.widthHint = 60;
+        softwarePeriods.setLayoutData(gd_softwarePeriods);
 
         Composite periodFilePanel = new Composite(grpSetup, SWT.NONE);
-        GridLayout glPeriodFilePanel = new GridLayout(1, false);
-        glPeriodFilePanel.marginHeight = 0;
-        glPeriodFilePanel.marginWidth = 0;
-        glPeriodFilePanel.marginBottom = 10;
-        periodFilePanel.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, true, false, 4, 1));
+        GridLayout glPeriodFilePanel = new GridLayout(3, false);
+        glPeriodFilePanel.horizontalSpacing = 20;
+        periodFilePanel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 5, 1));
         periodFilePanel.setLayout(glPeriodFilePanel);
 
-        periodFile = new Combo(periodFilePanel, SWT.DROP_DOWN | SWT.READ_ONLY);
-        GridData gd_periodFile = new GridData(SWT.LEFT, SWT.FILL, false, false, 1, 1);
-        gd_periodFile.widthHint = 500;
-		periodFile.setLayoutData(gd_periodFile);
+        Label lblPeriod = new Label(periodFilePanel, SWT.NONE);
+        lblPeriod.setText("Period File:");
 
-		Label lblPeriodType = new Label(grpSetup, SWT.NONE);
-		lblPeriodType.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-		lblPeriodType.setText("Period Type:");
-		
-		periodType = new Combo(grpSetup, SWT.DROP_DOWN | SWT.READ_ONLY);
-		periodType.setItems(PeriodControlType.allToString().toArray(new String[0]));
-		new Label(grpSetup, SWT.NONE);
-		
-		Label lblNumberOfSoftware = new Label(grpSetup, SWT.NONE);
-		lblNumberOfSoftware.setText("Software periods:");
-		
-		softwarePeriods = new Text(grpSetup, SWT.BORDER | SWT.RIGHT);
-		GridData gd_softwarePeriods = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
-		gd_softwarePeriods.widthHint = 60;
-		softwarePeriods.setLayoutData(gd_softwarePeriods);
-		
+        Label lblPeriodRB = new Label(periodFilePanel, SWT.NONE);
+        lblPeriodRB.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
+        lblPeriodRB.setText("Current:");
+
+        periodFileRB = new Label(periodFilePanel, SWT.NONE);
+        periodFileRB.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+        periodFileRB.setFont(JFaceResources.getFontRegistry().getItalic(JFaceResources.DEFAULT_FONT));
+
+        Label lblPeriodSpacer = new Label(periodFilePanel, SWT.NONE);
+
+        Label lblPeriodChange = new Label(periodFilePanel, SWT.NONE);
+        lblPeriodChange.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
+        lblPeriodChange.setText("Change:");
+
+        periodFileSelector = new Combo(periodFilePanel, SWT.DROP_DOWN | SWT.READ_ONLY);
+        periodFileSelector.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+
 		Group periodsComposite = new Group(this, SWT.NONE);
 		periodsComposite.setText("Hardware Periods");
 		periodsComposite.setLayout(new GridLayout(1, false));
@@ -149,10 +152,10 @@ public class PeriodsPanel extends Composite {
 		periods = new PeriodsTableView(periodsComposite, SWT.NONE);
 		periods.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 
-        periodFile.addSelectionListener(new SelectionListener() {
+        periodFileSelector.addSelectionListener(new SelectionListener() {
             @Override
             public void widgetSelected(SelectionEvent e) {
-                model.setNewPeriodFile(periodFile.getText());
+                model.setNewPeriodFile(periodFileSelector.getText());
             }
 
             @Override
@@ -171,7 +174,7 @@ public class PeriodsPanel extends Composite {
 
 		bindingContext = new DataBindingContext();	
 		
-		bindingContext.bindList(WidgetProperties.items().observe(periodFile), BeanProperties.list("periodFilesList").observe(viewModel));
+		bindingContext.bindList(WidgetProperties.items().observe(periodFileSelector), BeanProperties.list("periodFilesList").observe(viewModel));
         bindingContext.bindValue(WidgetProperties.text().observe(periodFileRB),
                 BeanProperties.value("periodFile").observe(viewModel));
 
