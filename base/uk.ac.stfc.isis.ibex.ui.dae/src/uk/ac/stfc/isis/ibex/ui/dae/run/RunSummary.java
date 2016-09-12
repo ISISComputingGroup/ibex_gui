@@ -59,12 +59,14 @@ public class RunSummary extends Composite {
 		
 		Composite lhsComposite = new Composite(this, SWT.NONE);
 		lhsComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		lhsComposite.setLayout(new GridLayout(1, false));
-		
-		Composite infoComposite = new Composite(lhsComposite, SWT.NONE);
-		infoComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
-		infoComposite.setLayout(new GridLayout(5, false));
-		
+        GridLayout gl = new GridLayout(1, false);
+        gl.verticalSpacing = 25;
+        lhsComposite.setLayout(gl);
+        
+        Composite infoComposite = new Composite(lhsComposite, SWT.NONE);
+        infoComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+        infoComposite.setLayout(new GridLayout(5, false));
+
 		Label lblInstrument = new Label(infoComposite, SWT.NONE);
 		lblInstrument.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		lblInstrument.setText("Instrument:");

@@ -33,6 +33,7 @@ import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.DateTime;
+import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.wb.swt.ResourceManager;
@@ -88,26 +89,34 @@ public class SearchControl extends Canvas {
 		this.parent = parent;
 		this.searcher = searcher;
 
-        GridLayout gridLayout = new GridLayout(5, false);
-        gridLayout.verticalSpacing = 0;
-        setLayout(gridLayout);
+        GridLayout gl = new GridLayout(1, false);
+        gl.marginWidth = 0;
+        setLayout(gl);
+
+        Group grpFilter = new Group(this, SWT.NONE);
+        grpFilter.setText("Filter Options");
+        grpFilter.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+
+        GridLayout glGrpFilter = new GridLayout(5, false);
+        glGrpFilter.verticalSpacing = 0;
+        grpFilter.setLayout(glGrpFilter);
 
 		// Create search text box
 		GridData valueLayout = new GridData(SWT.FILL, SWT.CENTER, false, false,
 				1, 1);
 		valueLayout.widthHint = 300;
 
-		txtValue = new Text(this, SWT.BORDER);
+        txtValue = new Text(grpFilter, SWT.BORDER);
 		txtValue.setLayoutData(valueLayout);
-		new Label(this, SWT.NONE);
-		cmboFields = new Combo(this, SWT.READ_ONLY);
+        new Label(grpFilter, SWT.NONE);
+        cmboFields = new Combo(grpFilter, SWT.READ_ONLY);
 		cmboFields.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false,
 				false, 1, 1));
 		cmboFields.setItems(FIELD_NAMES);
 		cmboFields.select(0);
 
 		// Create search button
-		Button btnSearch = new Button(this, SWT.NONE);
+        Button btnSearch = new Button(grpFilter, SWT.NONE);
 		btnSearch.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -122,7 +131,7 @@ public class SearchControl extends Canvas {
 		btnSearch.setToolTipText("Search");
 
 		// Create clear button
-		Button btnClear = new Button(this, SWT.NONE);
+        Button btnClear = new Button(grpFilter, SWT.NONE);
 		btnClear.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -137,7 +146,7 @@ public class SearchControl extends Canvas {
 		// timeLayout.widthHint = 600;
 
 		// Date-time picker
-		Composite timePicker = new Composite(this, SWT.NONE);
+        Composite timePicker = new Composite(grpFilter, SWT.NONE);
 		timePicker.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false,
 				false, 1, 1));
         GridLayout gl_timePicker = new GridLayout(7, false);
@@ -191,15 +200,15 @@ public class SearchControl extends Canvas {
 			}
 		});
 		
-		new Label(this, SWT.NONE);
+        new Label(grpFilter, SWT.NONE);
 		
 		// Add the info filter check
-        cmboSeverity = new Combo(this, SWT.DROP_DOWN | SWT.READ_ONLY);
+        cmboSeverity = new Combo(grpFilter, SWT.DROP_DOWN | SWT.READ_ONLY);
         cmboSeverity.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
         cmboSeverity.setItems(SEVERITY_LEVELS);
         cmboSeverity.setText(MAJOR);
-        new Label(this, SWT.NONE);
-        new Label(this, SWT.NONE);
+        new Label(grpFilter, SWT.NONE);
+        new Label(grpFilter, SWT.NONE);
         cmboSeverity.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {

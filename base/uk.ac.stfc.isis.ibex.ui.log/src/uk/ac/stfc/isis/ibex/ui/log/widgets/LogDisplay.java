@@ -70,7 +70,6 @@ import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
-import org.eclipse.wb.swt.SWTResourceManager;
 
 import uk.ac.stfc.isis.ibex.log.message.LogMessage;
 import uk.ac.stfc.isis.ibex.log.message.LogMessageFields;
@@ -278,11 +277,6 @@ public class LogDisplay extends Canvas {
 		// Add the search box
 		searchControl = new SearchControl(this, model);
 		searchControl.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-
-		// Add the table title
-		lblTableTitle = new Label(this, SWT.NONE);
-        lblTableTitle.setFont(SWTResourceManager.getFont("Segoe UI", 9, SWT.BOLD));
-		lblTableTitle.setText("Recent Log Messages");
 
 		// Add log message table
 		tableViewer = new TableViewer(this, SWT.MULTI | SWT.H_SCROLL
