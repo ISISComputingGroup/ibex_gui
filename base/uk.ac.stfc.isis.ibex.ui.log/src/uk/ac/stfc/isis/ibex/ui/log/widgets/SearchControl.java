@@ -22,20 +22,20 @@ package uk.ac.stfc.isis.ibex.ui.log.widgets;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
-import org.eclipse.swt.widgets.Canvas;
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.Text;
-import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Combo;
-import org.eclipse.wb.swt.ResourceManager;
+import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.DateTime;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Text;
+import org.eclipse.wb.swt.ResourceManager;
 
 import uk.ac.stfc.isis.ibex.log.message.LogMessageFields;
 import uk.ac.stfc.isis.ibex.ui.log.filter.LogMessageFilter;
@@ -66,12 +66,21 @@ public class SearchControl extends Canvas {
 	private DateTime dtToDate;
 	private DateTime dtToTime;
 	
-	private Button chkInfo;
+    private Combo cmboSeverity;
 
 	private ISearchModel searcher;
 	private LogDisplay parent;
 	
-	private final LogMessageFilter infoFilter = new LogMessageFilter(LogMessageFields.SEVERITY, "INFO", true); 
+    private final String INFO = "Info";
+    private final String MINOR = "Minor";
+    private final String MAJOR = "Major";
+
+    private final String[] SEVERITY_LEVELS = { "Major", "Minor", "Info" };
+
+    private final LogMessageFilter infoFilter =
+            new LogMessageFilter(LogMessageFields.SEVERITY, INFO.toUpperCase(), true);
+    private final LogMessageFilter minorFilter =
+            new LogMessageFilter(LogMessageFields.SEVERITY, MINOR.toUpperCase(), true);
 	
 	public SearchControl(LogDisplay parent, final ISearchModel searcher) {
 		super(parent, SWT.NONE);
@@ -79,7 +88,9 @@ public class SearchControl extends Canvas {
 		this.parent = parent;
 		this.searcher = searcher;
 
-		setLayout(new GridLayout(5, false));
+        GridLayout gridLayout = new GridLayout(5, false);
+        gridLayout.verticalSpacing = 0;
+        setLayout(gridLayout);
 
 		// Create search text box
 		GridData valueLayout = new GridData(SWT.FILL, SWT.CENTER, false, false,
@@ -129,7 +140,9 @@ public class SearchControl extends Canvas {
 		Composite timePicker = new Composite(this, SWT.NONE);
 		timePicker.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false,
 				false, 1, 1));
-		timePicker.setLayout(new GridLayout(7, false));
+        GridLayout gl_timePicker = new GridLayout(7, false);
+        gl_timePicker.marginWidth = 0;
+        timePicker.setLayout(gl_timePicker);
 
 		// 'From' control
 		chkFrom = new Button(timePicker, SWT.CHECK);
@@ -181,15 +194,19 @@ public class SearchControl extends Canvas {
 		new Label(this, SWT.NONE);
 		
 		// Add the info filter check
-		chkInfo = new Button(this, SWT.CHECK);
-		chkInfo.setText("Show info messages");
-		chkInfo.addSelectionListener(new SelectionAdapter() {
+        cmboSeverity = new Combo(this, SWT.DROP_DOWN | SWT.READ_ONLY);
+        cmboSeverity.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+        cmboSeverity.setItems(SEVERITY_LEVELS);
+        cmboSeverity.setText(MAJOR);
+        new Label(this, SWT.NONE);
+        new Label(this, SWT.NONE);
+        cmboSeverity.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				setInfoFilter(!chkInfo.getSelection());
+                setInfoFilter(cmboSeverity.getText());
 			}
 		});
-		setInfoFilter(!chkInfo.getSelection());
+        setInfoFilter(cmboSeverity.getText());
 		
 	}
 
@@ -237,11 +254,14 @@ public class SearchControl extends Canvas {
 		}
 	}
 	
-	private void setInfoFilter(boolean set) {
-		if (set) {
-			parent.addMessageFilter(infoFilter);
-		} else {
-			parent.removeMessageFilter(infoFilter);
-		}
+    private void setInfoFilter(String set) {
+        parent.removeMessageFilter(infoFilter);
+        parent.removeMessageFilter(minorFilter);
+        if (set.equals(MAJOR)) {
+            parent.addMessageFilter(infoFilter);
+            parent.addMessageFilter(minorFilter);
+        } else if (set.equals(MINOR)) {
+            parent.addMessageFilter(infoFilter);
+        }
 	}
 }
