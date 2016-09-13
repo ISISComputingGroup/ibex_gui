@@ -109,12 +109,12 @@ public class PeriodsViewModel extends ModelObject {
 		return value != null ? value.toArray(new String[0]) : new String[0];
 	}
 	
-	public int getSetupSource() {
-		return settings.getSetupSource().ordinal();
+    public PeriodSetupSource getSetupSource() {
+        return settings.getSetupSource();
 	}
 	
-	public void setSetupSource(int index) {
-		settings.setSetupSource(PeriodSetupSource.values()[index]);
+    public void setSetupSource(PeriodSetupSource source) {
+        settings.setSetupSource(source);
 	}
 	
     /**

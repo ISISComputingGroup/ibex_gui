@@ -26,7 +26,7 @@ import java.util.List;
 
 public enum PeriodControlType {
 	SOFTWARE ("Software: PC controlled"),
-	HARDWARE_DAE ("Harware: DAE internal control"),
+    HARDWARE_DAE("Hardware: DAE internal control"),
 	HARDWARE_EXTERNAL ("Hardware: External signal control");
 
 	private String text;
