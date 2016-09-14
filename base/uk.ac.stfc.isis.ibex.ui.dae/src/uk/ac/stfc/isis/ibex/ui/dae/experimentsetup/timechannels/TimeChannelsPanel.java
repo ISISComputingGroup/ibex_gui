@@ -41,7 +41,6 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
-import org.eclipse.wb.swt.SWTResourceManager;
 
 import uk.ac.stfc.isis.ibex.dae.experimentsetup.timechannels.CalculationMethod;
 import uk.ac.stfc.isis.ibex.dae.experimentsetup.timechannels.TimeRegime;
@@ -82,14 +81,12 @@ public class TimeChannelsPanel extends Composite {
 		super(parent, style);
         GridLayout glParent = new GridLayout(1, false);
         glParent.verticalSpacing = 15;
-        glParent.marginTop = 5;
+        glParent.marginTop = 15;
         glParent.marginLeft = 5;
         setLayout(glParent);
 
         Label lblSelectionMethod = new Label(this, SWT.NONE);
         lblSelectionMethod.setText("Select Calculation Method: ");
-        fontdata = lblSelectionMethod.getFont().getFontData()[0];
-        lblSelectionMethod.setFont(SWTResourceManager.getFont(fontdata.getName(), fontdata.getHeight(), SWT.BOLD));
         addMethodSelectionPanel(this);
 
         Group tcbSettings = new Group(this, SWT.NONE);
