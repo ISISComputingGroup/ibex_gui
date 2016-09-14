@@ -20,6 +20,8 @@
 package uk.ac.stfc.isis.ibex.scriptgenerator;
 
 import java.util.Collection;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 
@@ -30,7 +32,7 @@ public class PythonBuilder extends ModelObject {
 	private int doSans = 1;
 	private int doTrans = 1;
 	private Collection<Row> rows;
-	private String script;
+	private StringBuilder script;
 	
 	/**
 	 * The default constructor.
@@ -38,13 +40,35 @@ public class PythonBuilder extends ModelObject {
 	public PythonBuilder() {
 	}
 	
-//	private void generateHeader() {
-//		
-//	}
-//	
-//	private void setSamplePar(String name, String value) {
-//		String s = String.format("    set_sample_par(%s, %s)", name, value);
-//	}
+	/**
+	 * Generates necessary header code needed for each script.
+	 * @return the header block of Python code
+	 */
+	private String generateHeader() {
+		StringBuilder header = new StringBuilder();
+		
+		String creationComment = "# Script created by ZOOM Script at " + LocalDate.now() + LocalTime.now() + "\n";
+		String sansImport = "import LSS.SANSroutines as lm" + "\n\n";
+		String functionName = "def my_script():" + "\n";
+		String genieImport = "    from genie_python.genie import *";
+		String zoomSetup = "    lm.setupzoom_normal()";
+		
+		header.append(creationComment).append(sansImport).append(functionName).append(genieImport).append(zoomSetup);
+		
+		return header.toString();
+	}
+
+	/**
+	 * Uses set_sample_par for the "Sample Height", "Sample Width" and "Sample Geometry" settings.
+	 * @param name the name of the setting, "width", "height" or "geometry"
+	 * @param value a numerical value for the "width" and "height", or the type of geometry, e.g. "disc"
+	 * @return
+	 */
+	private String setSamplePar(String name, String value) {
+		String samplePar = String.format("    set_sample_par(%s, %s)", name, value);
+		
+		return samplePar;
+	}
 
 	/**
 	 * Sets the "Do SANS:" text box value.
@@ -69,17 +93,17 @@ public class PythonBuilder extends ModelObject {
 	 * @return the completed script
 	 */
 	public String getScript() {
-		return script;
+		return script.toString();
 	}
 	
 	/**
 	 * Calls relevant internal methods in order to create a valid Python script.
 	 */
 	public void createScript() {
-		script = new String();
+		script.append(generateHeader());
 		
 		for (Row row : rows) {
-			script += "position = " + row.getPosition();
+			script.append("position = " + row.getPosition());
 		}
 	}
 }
