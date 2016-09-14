@@ -52,7 +52,7 @@ public class PeriodsPanel extends Composite {
     private PeriodsViewModel model;
 
 	private Combo periodFileSelector;
-	private Combo periodType;
+	private Combo periodTypeSelector;
 	private Text softwarePeriods;
 	private Text hardwarePeriods;
 	private Text outputDelay;
@@ -67,6 +67,9 @@ public class PeriodsPanel extends Composite {
     private Composite hardwareSwitchPanel;
     private Composite sourcePanel;
     private Group grpSettings;
+
+    private PeriodControlType periodType;
+    private PeriodSetupSource periodSource;
 
     private StackLayout typeStack = new StackLayout();
     private StackLayout sourceStack = new StackLayout();
@@ -99,8 +102,8 @@ public class PeriodsPanel extends Composite {
         Label lblPeriodType = new Label(periodTypePanel, SWT.NONE);
         lblPeriodType.setText("Period Type:");
 
-        periodType = new Combo(periodTypePanel, SWT.DROP_DOWN | SWT.READ_ONLY);
-        periodType.setItems(PeriodControlType.allToString().toArray(new String[0]));
+        periodTypeSelector = new Combo(periodTypePanel, SWT.DROP_DOWN | SWT.READ_ONLY);
+        periodTypeSelector.setItems(PeriodControlType.allToString().toArray(new String[0]));
 
         radioSpecifyParameters = new Button(setupPanel, SWT.RADIO);
         radioSpecifyParameters.setText(PeriodSetupSource.PARAMETERS.toString());
@@ -112,11 +115,10 @@ public class PeriodsPanel extends Composite {
             @Override
             public void widgetSelected(SelectionEvent e) {
                 if (radioUsePeriodFile.getSelection()) {
-                    setSource(PeriodSetupSource.FILE);
+                    model.setSetupSource(PeriodSetupSource.FILE);
                 } else {
-                    setSource(PeriodSetupSource.PARAMETERS);
+                    model.setSetupSource(PeriodSetupSource.PARAMETERS);
                 }
-                sourcePanel.layout();
             }
 
             @Override
@@ -231,11 +233,11 @@ public class PeriodsPanel extends Composite {
             }
         });
 
-        periodType.addSelectionListener(new SelectionListener() {
+        periodTypeSelector.addSelectionListener(new SelectionListener() {
 
             @Override
             public void widgetSelected(SelectionEvent e) {
-                setType(periodType.getSelectionIndex());
+                model.setPeriodType(periodTypeSelector.getSelectionIndex());
             }
 
             @Override
@@ -255,11 +257,9 @@ public class PeriodsPanel extends Composite {
 		bindingContext = new DataBindingContext();	
 		
 		bindingContext.bindList(WidgetProperties.items().observe(periodFileSelector), BeanProperties.list("periodFilesList").observe(viewModel));
-        bindingContext.bindValue(WidgetProperties.text().observe(periodFileRB),
-                BeanProperties.value("periodFile").observe(viewModel));
+        bindingContext.bindValue(WidgetProperties.text().observe(periodFileRB), BeanProperties.value("periodFile").observe(viewModel));
 
-        bindingContext.bindValue(WidgetProperties.singleSelectionIndex().observe(periodType),
-                BeanProperties.value("periodType").observe(viewModel));
+        bindingContext.bindValue(WidgetProperties.singleSelectionIndex().observe(periodTypeSelector), BeanProperties.value("periodType").observe(viewModel));
 		bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(softwarePeriods), BeanProperties.value("softwarePeriods").observe(viewModel));
 		bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(hardwarePeriods), BeanProperties.value("hardwarePeriods").observe(viewModel));
 		bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(outputDelay), BeanProperties.value("outputDelay").observe(viewModel));
@@ -272,14 +272,24 @@ public class PeriodsPanel extends Composite {
 			}
 		});
 
+        viewModel.addPropertyChangeListener("setupSource", new PropertyChangeListener() {
+            @Override
+            public void propertyChange(PropertyChangeEvent evt) {
+                periodSource = model.getSetupSource();
+                updateWindow();
+            }
+        });
+
         viewModel.addPropertyChangeListener("periodType", new PropertyChangeListener() {
             @Override
             public void propertyChange(PropertyChangeEvent evt) {
-                setType(model.getPeriodType());
+                periodType = PeriodControlType.values()[model.getPeriodType()];
+                updateWindow();
             }
         });
-        setSource(model.getSetupSource());
-        setType(model.getPeriodType());
+        periodSource = model.getSetupSource();
+        periodType = PeriodControlType.values()[model.getPeriodType()];
+        updateWindow();
 	}
 	
 	private void setPeriods(final List<Period> newPeriods) {
@@ -291,40 +301,30 @@ public class PeriodsPanel extends Composite {
 		});
 	}
 
-    private void setType(final int type) {
+    private void updateWindow() {
         DISPLAY.asyncExec(new Runnable() {
             @Override
             public void run() {
-                model.setPeriodType(type);
-                if (type == PeriodControlType.SOFTWARE.ordinal()) {
-                    typeStack.topControl = softwareSwitchPanel;
-                    radioSpecifyParameters.setEnabled(false);
-                    radioUsePeriodFile.setEnabled(false);
-                } else {
-                    typeStack.topControl = hardwareSwitchPanel;
+                radioSpecifyParameters.setEnabled(false);
+                radioUsePeriodFile.setEnabled(false);
+                typeStack.topControl = softwareSwitchPanel;
+                if ((periodType == PeriodControlType.HARDWARE_DAE)
+                        || (periodType == PeriodControlType.HARDWARE_EXTERNAL)) {
                     radioSpecifyParameters.setEnabled(true);
                     radioUsePeriodFile.setEnabled(true);
+                    typeStack.topControl = hardwareSwitchPanel;
                 }
-                grpSettings.layout();
-            }
-        });
-    }
-
-    private void setSource(final PeriodSetupSource source) {
-        DISPLAY.asyncExec(new Runnable() {
-            @Override
-            public void run() {
-                model.setSetupSource(source);
-                if (source == PeriodSetupSource.PARAMETERS) {
+                if (periodSource == PeriodSetupSource.PARAMETERS) {
                     radioUsePeriodFile.setSelection(false);
                     radioSpecifyParameters.setSelection(true);
-                    sourceStack.topControl = fileSwitchPanel;
+                    sourceStack.topControl = tableSwitchPanel;
                 } else {
                     radioSpecifyParameters.setSelection(false);
                     radioUsePeriodFile.setSelection(true);
-                    sourceStack.topControl = tableSwitchPanel;
+                    sourceStack.topControl = fileSwitchPanel;
                 }
-
+                grpSettings.layout();
+                sourcePanel.layout();
             }
         });
     }
