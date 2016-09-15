@@ -22,7 +22,7 @@ package uk.ac.stfc.isis.ibex.scriptgenerator;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 
 /**
- * All settings for the script generator.
+ * All settings (excluding estimate and table).
  */
 public class Settings extends ModelObject {
 	private Order order;
@@ -35,28 +35,32 @@ public class Settings extends ModelObject {
 	private Integer sampleHeight;
 	private Integer sampleWidth;
 	private CollectionMode collection;
-	private Integer estCountRate;
-	private Integer estMoveTime;
-	private String estScriptTime;
-	
+
 	/**
 	 * The default constructor.
 	 * @param doSans how many times to do SANS
 	 * @param doTrans how many times to do TRANS
 	 * @param sampleHeight height of the sample
 	 * @param sampleWidth width of the sample
-	 * @param estCountRate estimated count rate (in microamp-hours)
-	 * @param estMoveTime estimated move time (in seconds)
-	 * @param estScriptTime the generated estimated script time
+	 * @param order the Order in which to do SANS and TRANS
+	 * @param loopOver how many times to loop through the table
+	 * @param sansSize the SANS aperture size
+	 * @param transSize the TRANS aperture size
+	 * @param geometry the sample geometry
+	 * @param collection the collection mode
 	 */
-	public Settings(Integer doSans, Integer doTrans, Integer sampleHeight, Integer sampleWidth, Integer estCountRate, Integer estMoveTime, String estScriptTime) {
+	public Settings(Integer doSans, Integer doTrans, Integer sampleHeight, Integer sampleWidth, Order order,
+			Boolean loopOver, ApertureSans sansSize, ApertureTrans transSize, SampleGeometry geometry, CollectionMode collection) {
 		this.doSans = doSans;
 		this.doTrans = doTrans;
 		this.sampleHeight = sampleHeight;
 		this.sampleWidth = sampleWidth;
-		this.estCountRate = estCountRate;
-		this.estMoveTime = estMoveTime;
-		this.estScriptTime = estScriptTime;
+		this.order = order;
+		this.loopOver = loopOver;
+		this.sansSize = sansSize;
+		this.transSize = transSize;
+		this.geometry = geometry;
+		this.collection = collection;
 	}
 	
 	/**
@@ -121,54 +125,6 @@ public class Settings extends ModelObject {
 	 */
 	public void setSampleWidth(Integer sampleWidth) {
 		firePropertyChange("sampleWidth", this.sampleWidth, this.sampleWidth = sampleWidth);
-	}
-
-	/**
-	 * Gets the estimated count rate.
-	 * @return the estimated count rate
-	 */
-	public Integer getEstCountRate() {
-		return estCountRate;
-	}
-
-	/**
-	 * Sets the estimated count rate.
-	 * @param estCountRate the estimated count rate
-	 */
-	public void setEstCountRate(Integer estCountRate) {
-		firePropertyChange("estCountRate", this.estCountRate, this.estCountRate = estCountRate);
-	}
-
-	/**
-	 * Gets the estimated move time.
-	 * @return the estimated move time
-	 */
-	public Integer getEstMoveTime() {
-		return estMoveTime;
-	}
-
-	/**
-	 * Sets the estimated move time.
-	 * @param estMoveTime the estimated move time
-	 */
-	public void setEstMoveTime(Integer estMoveTime) {
-		firePropertyChange("estMoveTime", this.estMoveTime, this.estMoveTime = estMoveTime);
-	}
-
-	/** 
-	 * Gets the estimated script time.
-	 * @return the estimated script time
-	 */
-	public String getEstScriptTime() {
-		return estScriptTime;
-	}
-
-	/**
-	 * Sets the estimated script time.
-	 * @param estScriptTime the estimated script time
-	 */
-	public void setEstScriptTime(String estScriptTime) {
-		firePropertyChange("estScriptTime", this.estScriptTime, this.estScriptTime = estScriptTime);
 	}		
 	
 	/**
