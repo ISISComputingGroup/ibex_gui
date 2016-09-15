@@ -71,7 +71,7 @@ public abstract class GenericEditingSupport<TRow, T> extends EditingSupport {
 		}
 		
 		T rowValue = valueFromRow(row);
-		if (rowValue == null || rowValue.equals(newValue)) {
+		if (rowValue != null && rowValue.equals(newValue)) {
 			return;
 		}
 		
