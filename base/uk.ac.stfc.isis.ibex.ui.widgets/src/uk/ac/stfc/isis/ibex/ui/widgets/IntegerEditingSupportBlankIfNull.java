@@ -19,43 +19,35 @@
 
 package uk.ac.stfc.isis.ibex.ui.widgets;
 
-import org.eclipse.jface.viewers.TextCellEditor;
-import org.eclipse.jface.viewers.CellEditor;
 import org.eclipse.jface.viewers.ColumnViewer;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.jface.viewers.TextCellEditor;
 
-public abstract class IntegerEditingSupport<TRow> extends GenericEditingSupport<TRow, Integer> {
-
-	protected CellEditor editor;
-
-	public IntegerEditingSupport(ColumnViewer viewer, Class<TRow> rowType) {
-		super(viewer, rowType, Integer.class);
+/***
+ * An integer editing support that displays an empty string if 
+ * the value is null.
+ *
+ * @param <TRow> the type of row from a table
+ */
+public abstract class IntegerEditingSupportBlankIfNull<TRow> extends IntegerEditingSupport<TRow> {
+	
+	public IntegerEditingSupportBlankIfNull(ColumnViewer viewer, Class<TRow> rowType) {
+		super(viewer, rowType);
+	}
+	
+	protected void createEditor(ColumnViewer viewer) { 		
 		// Override TextCellEditor to handle integers better
 		editor = new TextCellEditor((Composite) viewer.getControl()) {
 			@Override
 			protected void doSetValue(final Object value) {
 				if (value == null) {
-					// If value is null set to zero instead
-					super.doSetValue(String.valueOf(Integer.valueOf(0)));
+					// If value is null set to an empty string
+					super.doSetValue("");
 				} else {
+					// Otherwise set the value
 					super.doSetValue(String.valueOf(value.toString()));
 				}
 			}
 		};
-	}
-
-	@Override
-	protected CellEditor getCellEditor(Object element) {
-		return editor;
-	}
-
-	@Override
-	protected Integer valueFromString(String text) {
-		try {
-			return Integer.parseInt(text);
-		} catch (NumberFormatException e) {
-			return null;
-		}
-
 	}
 }
