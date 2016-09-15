@@ -32,7 +32,7 @@ public class PythonBuilder extends ModelObject {
 	private int doSans = 1;
 	private int doTrans = 1;
 	private Collection<Row> rows;
-	private StringBuilder script;
+	private StringBuilder script = new StringBuilder();
 	
 	/**
 	 * The default constructor.
@@ -47,11 +47,11 @@ public class PythonBuilder extends ModelObject {
 	private String generateHeader() {
 		StringBuilder header = new StringBuilder();
 		
-		String creationComment = "# Script created by ZOOM Script at " + LocalDate.now() + LocalTime.now() + "\n";
+		String creationComment = "# Script created by ZOOM Script at " + LocalDate.now() + " " +  LocalTime.now() + "\n";
 		String sansImport = "import LSS.SANSroutines as lm" + "\n\n";
 		String functionName = "def my_script():" + "\n";
-		String genieImport = "    from genie_python.genie import *";
-		String zoomSetup = "    lm.setupzoom_normal()";
+		String genieImport = "    from genie_python.genie import *" + "\n";
+		String zoomSetup = "    lm.setupzoom_normal()" + "\n";
 		
 		header.append(creationComment).append(sansImport).append(functionName).append(genieImport).append(zoomSetup);
 		
@@ -74,9 +74,23 @@ public class PythonBuilder extends ModelObject {
 	 * Sets the "Do SANS:" text box value.
 	 * @param doSans the do SANS value
 	 */
-	public void setDoSans(int doSans) {
+	private void setDoSans(int doSans) {
 		this.doSans = doSans;
 	}
+	
+//	/**
+//	 * sets the aperture for the sans and trans aperture drop-down.
+//	 * @param value
+//	 */
+//	private void setAperture(combobox value) {
+//		String aperture;
+//		
+//		if (value is medium) {
+//			aperture = "set_aperture('medium')";
+//		}
+//		
+//		return aperture;
+//	}
 	
 	/**
 	 * Receives and sets the rows from the view.
