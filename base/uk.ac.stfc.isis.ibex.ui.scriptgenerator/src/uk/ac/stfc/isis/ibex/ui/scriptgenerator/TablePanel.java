@@ -19,28 +19,15 @@
 
 package uk.ac.stfc.isis.ibex.ui.scriptgenerator;
 
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.ui.part.ViewPart;
-import org.eclipse.swt.browser.Browser;
-import org.eclipse.swt.layout.FillLayout;
-
 import java.util.ArrayList;
 import java.util.Collection;
 
-import org.eclipse.core.databinding.DataBindingContext;
-import org.eclipse.core.databinding.beans.BeanProperties;
-import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Composite;
 
 import uk.ac.stfc.isis.ibex.scriptgenerator.Row;
-import uk.ac.stfc.isis.ibex.ui.scriptgenerator.Table;
-import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.Button;
-import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.widgets.Text;
 
 /**
  * A panel to hold a ScriptGeneratorTable.

@@ -19,7 +19,7 @@
 
 package uk.ac.stfc.isis.ibex.scriptgenerator;
 
-/*
+/**
  * Options for the Order combo box setting. 
  */
 public enum Order {

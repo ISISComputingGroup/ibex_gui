@@ -19,7 +19,7 @@
 
 package uk.ac.stfc.isis.ibex.scriptgenerator;
 
-/*
+/**
  * Sizes that can be used in the TRANS combo box within the Aperture settings.
  */
 public enum ApertureTrans {
