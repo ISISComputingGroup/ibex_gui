@@ -19,7 +19,7 @@
 
 package uk.ac.stfc.isis.ibex.scriptgenerator;
 
-/*
+/**
  * Data recording methods for use in the Collection Mode combo box within the settings.
  */
 public enum CollectionMode {

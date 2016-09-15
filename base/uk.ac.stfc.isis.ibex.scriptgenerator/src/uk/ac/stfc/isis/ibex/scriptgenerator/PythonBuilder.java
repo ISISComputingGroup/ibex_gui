@@ -94,7 +94,7 @@ public class PythonBuilder extends ModelObject {
 	
 	/**
 	 * Receives and sets the rows from the view.
-	 * @param rows
+	 * @param rows the table rows
 	 */
 	public void setRows(Collection<Row> rows) {
 		this.rows = rows;
