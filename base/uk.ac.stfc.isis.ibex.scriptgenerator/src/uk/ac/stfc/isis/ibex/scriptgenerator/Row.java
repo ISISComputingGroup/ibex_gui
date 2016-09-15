@@ -30,7 +30,7 @@ public class Row extends ModelObject {
 	private Double transWait; 
 	private Double sans;
 	private Double sansWait; 
-	private int period;
+	private Integer period;
 	private String sampleName; 
 	private Double thickness; 
 	private boolean wasNull;
@@ -46,7 +46,7 @@ public class Row extends ModelObject {
 	 * @param sampleName the name of the sample
 	 * @param thickness the thickness of the sample
 	 */
-	public Row(Double position, Double trans, Double transWait, Double sans, Double sansWait, int period, 
+	public Row(Double position, Double trans, Double transWait, Double sans, Double sansWait, Integer period, 
 			String sampleName, Double thickness) {
 		this.position = position;
 		this.trans = trans;
@@ -155,7 +155,7 @@ public class Row extends ModelObject {
 	 * Gets the period.
 	 * @return the period
 	 */
-	public int getPeriod() {
+	public Integer getPeriod() {
 		return period;
 	}
 	
@@ -163,7 +163,7 @@ public class Row extends ModelObject {
 	 * Sets the period.
 	 * @param period the period
 	 */
-	public void setPeriod(int period) {
+	public void setPeriod(Integer period) {
 		this.wasNull = false;
 		firePropertyChange("period", this.period, this.period = period);
 	}

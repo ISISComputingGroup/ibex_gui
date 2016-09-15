@@ -216,7 +216,7 @@ public class Table extends DataboundTable<Row> {
 				observeProperty("period")) {
 			@Override
 			protected String valueFromRow(Row row) {
-				return row.getPeriod() == 0 ? "" : String.valueOf(row.getPeriod());
+				return row.getPeriod() == null ? "" : String.valueOf(row.getPeriod());
 			}
 		});
 		period.setEditingSupport(new IntegerEditingSupportBlankIfNull<Row>(viewer(), Row.class) {
