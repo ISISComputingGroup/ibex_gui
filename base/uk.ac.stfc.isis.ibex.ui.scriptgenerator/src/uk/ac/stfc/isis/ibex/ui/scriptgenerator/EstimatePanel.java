@@ -19,6 +19,10 @@
 
 package uk.ac.stfc.isis.ibex.ui.scriptgenerator;
 
+import org.eclipse.core.databinding.DataBindingContext;
+import org.eclipse.core.databinding.beans.BeanProperties;
+import org.eclipse.core.databinding.observable.value.IObservableValue;
+import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -28,19 +32,24 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 
+import uk.ac.stfc.isis.ibex.scriptgenerator.Estimate;
+
 /**
  * The estimated script time composite.
  *
  */
 @SuppressWarnings("checkstyle:magicnumber")
 public class EstimatePanel extends Composite {
+	Text txtCountRate;
+	Text txtTimeBetween;
+	Label lblScriptTime;
 	
 	/**
 	 * The default constructor.
 	 * @param parent the parent that the EstimatePanel will be placed in
 	 * @param style the style of the parent
 	 */
-	public EstimatePanel(Composite parent, int style) {
+	public EstimatePanel(Composite parent, int style, final Estimate estimate) {
 		super(parent, style);
 		setLayout(new GridLayout(1, true));
 		
@@ -55,7 +64,7 @@ public class EstimatePanel extends Composite {
 		lblCountRate.setLayoutData(new GridData(SWT.RIGHT, SWT.FILL, false, false, 1, 1));
 		lblCountRate.setText("Est. count rate:");
 
-		Text txtCountRate = new Text(grpEstimate, SWT.BORDER);
+		txtCountRate = new Text(grpEstimate, SWT.BORDER);
 		txtCountRate.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		txtCountRate.setText("40");
 				
@@ -63,11 +72,11 @@ public class EstimatePanel extends Composite {
 		lblTimeBetween.setLayoutData(new GridData(SWT.RIGHT, SWT.FILL, false, false, 1, 1));  
 		lblTimeBetween.setText("Est. time between moves:");
 		
-		Text txtTimeBetween = new Text(grpEstimate, SWT.BORDER);
+		txtTimeBetween = new Text(grpEstimate, SWT.BORDER);
 		txtTimeBetween.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		txtTimeBetween.setText("5");
 		
-		Label lblScriptTime = new Label(grpEstimate, SWT.RIGHT);
+		lblScriptTime = new Label(grpEstimate, SWT.RIGHT);
 		lblScriptTime.setLayoutData(new GridData(SWT.RIGHT, SWT.FILL, false, false, 1, 1));
 		lblScriptTime.setText("Est. script time:");
 
@@ -80,5 +89,23 @@ public class EstimatePanel extends Composite {
 		btnCalculate.setLayoutData(gdButtonCalculate);
 		gdButtonCalculate.minimumWidth = 80;
 		btnCalculate.setText("Calculate");
+		
+		bind(estimate);
+	}
+	
+	public void bind(Estimate estimate) {
+		DataBindingContext ctx = new DataBindingContext();
+		
+        IObservableValue targetCountRate = WidgetProperties.text(SWT.Modify).observe(txtCountRate);
+        IObservableValue modelCountRate = BeanProperties.value("estCountRate").observe(estimate);
+        ctx.bindValue(targetCountRate, modelCountRate); 
+        
+        IObservableValue targetTimeBetween = WidgetProperties.text(SWT.Modify).observe(txtTimeBetween);
+        IObservableValue modelTimeBetween = BeanProperties.value("estMoveTime").observe(estimate);
+        ctx.bindValue(targetTimeBetween, modelTimeBetween); 
+        
+        IObservableValue targetScriptTime = WidgetProperties.text(SWT.Modify).observe(lblScriptTime);
+        IObservableValue modelScriptTime = BeanProperties.value("estScriptTime").observe(estimate);
+        ctx.bindValue(targetScriptTime, modelScriptTime); 
 	}
 }

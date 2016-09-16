@@ -35,6 +35,7 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.part.ViewPart;
 import org.eclipse.wb.swt.SWTResourceManager;
 
+import uk.ac.stfc.isis.ibex.scriptgenerator.Estimate;
 import uk.ac.stfc.isis.ibex.scriptgenerator.PythonBuilder;
 import uk.ac.stfc.isis.ibex.scriptgenerator.Row;
 
@@ -52,6 +53,7 @@ public class View extends ViewPart {
 	
 	private Collection<Row> rows;
 	private PythonBuilder builder;
+	private Estimate estimate;
 	private String script;
 	 
 	/**
@@ -61,6 +63,7 @@ public class View extends ViewPart {
 		super();
 	
 		builder = new PythonBuilder();
+		estimate = new Estimate(40, 120);
 		
 		rows = new ArrayList<Row>();
 		rows.add(new Row());
@@ -106,7 +109,7 @@ public class View extends ViewPart {
 		
 		new Label(topPanel, SWT.NONE);
 		
-		EstimatePanel estimatePanel = new EstimatePanel(topPanel, SWT.NONE);
+		EstimatePanel estimatePanel = new EstimatePanel(topPanel, SWT.NONE, estimate);
 		estimatePanel.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1));
 		
 		SaveLoadPanel saveLoadPanel = new SaveLoadPanel(topPanel, SWT.NONE);

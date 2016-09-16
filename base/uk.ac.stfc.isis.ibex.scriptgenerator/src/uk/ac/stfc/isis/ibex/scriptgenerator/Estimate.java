@@ -35,10 +35,9 @@ public class Estimate extends ModelObject {
 	 * @param estMoveTime the estimated move time
 	 * @param estScriptTime the estimated script time
 	 */
-	public Estimate(Integer estCountRate, Integer estMoveTime, String estScriptTime) {
+	public Estimate(Integer estCountRate, Integer estMoveTime) {
 		this.estCountRate = estCountRate;
 		this.estMoveTime = estMoveTime;
-		this.estScriptTime = estScriptTime;
 	}
 	
 	/**
