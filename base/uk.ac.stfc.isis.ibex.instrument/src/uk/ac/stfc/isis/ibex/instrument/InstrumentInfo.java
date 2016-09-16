@@ -29,20 +29,10 @@ import uk.ac.stfc.isis.ibex.instrument.internal.PVPrefix;
 public class InstrumentInfo {
 
 	private final String name;
-	private final String pv;
-	private final String hostName;
-	
-	public InstrumentInfo(String name, String pv, String hostName) {
-		this.name = name;
-		this.pv = pv;
-		this.hostName = hostName;
-	}
 	
 	public InstrumentInfo(String name) {
 		this.name = name;
         assert (hasValidHostName());
-        this.pv = PVAddress.startWith("IN").append(name).toString() + PVAddress.COLON;
-        this.hostName = PVPrefix.NDX + name;
 	}
 
 	public String name() {
@@ -50,11 +40,11 @@ public class InstrumentInfo {
 	}
 	
 	public String pvPrefix() {
-		return pv;
+		return PVAddress.startWith("IN").append(name).toString() + PVAddress.COLON;
 	}
 	
     public String hostName() {
-        return hostName;
+        return PVPrefix.NDX + name;
 	}
 
     public static String validInstrumentRegex() {

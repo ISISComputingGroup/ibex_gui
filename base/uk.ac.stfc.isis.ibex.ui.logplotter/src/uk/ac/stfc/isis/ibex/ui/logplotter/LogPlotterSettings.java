@@ -70,7 +70,7 @@ public class LogPlotterSettings implements InstrumentInfoReceiver {
         } else if (containsRegex(preference, CustomInstrumentInfo.validCustomInstrumentRegex())) {
             preference = preference.replaceAll(CustomInstrumentInfo.validCustomInstrumentRegex(), hostName);
         } else {
-            throw new RuntimeException("Invalid preference string, does not contain a matching host pattern:" + preference);
+            //throw new RuntimeException("Invalid preference string, does not contain a matching host pattern:" + preference);
         }
 
         return preference;

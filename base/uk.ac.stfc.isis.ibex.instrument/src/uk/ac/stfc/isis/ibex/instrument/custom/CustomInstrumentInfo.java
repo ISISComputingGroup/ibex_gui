@@ -26,14 +26,17 @@ import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
 import uk.ac.stfc.isis.ibex.instrument.internal.PVPrefix;
 
 /**
- * Some basic info that defines a custom instrument. Instrument hostname is the
- * same as the instrument name. User must specify a pvPrefix.
+ * Some basic info that defines a custom instrument. User must specify a pvPrefix and hostname.
  */
 public class CustomInstrumentInfo extends InstrumentInfo {
 
     private String pvPrefix;
 
     public CustomInstrumentInfo(String name, String pvPrefix) {
+    	this(name, pvPrefix, name);
+    }
+    
+    public CustomInstrumentInfo(String name, String pvPrefix, String hostName) {
         super(name);
 
         checkPreconditions(pvPrefix);

@@ -43,6 +43,7 @@ import org.osgi.service.prefs.Preferences;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 
+import uk.ac.stfc.isis.ibex.instrument.custom.CustomInstrumentInfo;
 import uk.ac.stfc.isis.ibex.instrument.internal.LocalHostInstrumentInfo;
 import uk.ac.stfc.isis.ibex.instrument.list.InstrumentListObservable;
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
@@ -145,7 +146,7 @@ public class Instrument implements BundleActivator {
                 count++;
             }
         }
-        LOG.debug("Changing to instrument " + instrumentInfo.hostName()
+        LOG.debug("Changing to instrument " + instrumentInfo.name()
         		+ ", Number of connected channels = " + Integer.toString(count));
     }
 
@@ -168,11 +169,14 @@ public class Instrument implements BundleActivator {
 	}
 	
 	private InstrumentInfo initialInstrument() {
-		final String initalName = initalPreference.get(INIT_INST_NAME_KEY, localhost.name());
-		final String initalPV = initalPreference.get(INIT_INST_PV_KEY, localhost.pvPrefix());
-		final String initalHost = initalPreference.get(INIT_INST_HOST_KEY, localhost.hostName());
+		final String initialName = initalPreference.get(INIT_INST_NAME_KEY, localhost.name());
+		if (initialName.equals(localhost.name())) {
+			return new LocalHostInstrumentInfo();
+		}
+		final String initialPV = initalPreference.get(INIT_INST_PV_KEY, localhost.pvPrefix());
+		final String initialHost = initalPreference.get(INIT_INST_HOST_KEY, localhost.hostName());
 		
-		return new InstrumentInfo(initalName, initalPV, initalHost);
+		return new CustomInstrumentInfo(initialName, initialPV, initialHost);
 	}
 	
 	public void setInitial() {		
