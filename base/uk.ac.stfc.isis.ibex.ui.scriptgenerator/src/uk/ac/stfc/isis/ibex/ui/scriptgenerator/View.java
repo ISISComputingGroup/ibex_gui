@@ -19,6 +19,7 @@
 
 package uk.ac.stfc.isis.ibex.ui.scriptgenerator;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -60,6 +61,10 @@ public class View extends ViewPart {
 		super();
 	
 		builder = new PythonBuilder();
+		
+		rows = new ArrayList<Row>();
+		rows.add(new Row());
+        builder.setRows(rows);
 	}
 
 	@SuppressWarnings("unused")
@@ -135,7 +140,7 @@ public class View extends ViewPart {
 		gdButtonClearTable.minimumWidth = 80;
 		btnClearTable.setLayoutData(gdButtonClearTable);
 		
-		table = new TablePanel(parent, SWT.NONE);
+		table = new TablePanel(parent, SWT.NONE, rows);
 		table.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		
 		bind();
@@ -148,7 +153,6 @@ public class View extends ViewPart {
 		btnPreview.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
-                builder.setRows(table.getRows());
                 script = builder.getScript();
 
                 Shell shell = new Shell();
@@ -159,7 +163,6 @@ public class View extends ViewPart {
 		btnWrite.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
-                builder.setRows(table.getRows());
                 script = builder.getScript();
             }
         });
