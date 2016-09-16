@@ -1177,45 +1177,4 @@ $(pv_value)</tooltip>
     </font>
     <off_label>OFF</off_label>
   </widget>
-  <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0">
-    <border_style>0</border_style>
-    <tooltip></tooltip>
-    <horizontal_alignment>1</horizontal_alignment>
-    <rules />
-    <enabled>true</enabled>
-    <wuid>-3fae0efd:143af0f81ec:-73c8</wuid>
-    <transparent>false</transparent>
-    <auto_size>false</auto_size>
-    <text>Racks:</text>
-    <scripts />
-    <height>26</height>
-    <border_width>1</border_width>
-    <scale_options>
-      <width_scalable>true</width_scalable>
-      <height_scalable>true</height_scalable>
-      <keep_wh_ratio>false</keep_wh_ratio>
-    </scale_options>
-    <visible>false</visible>
-    <vertical_alignment>1</vertical_alignment>
-    <border_color>
-      <color name="ISIS_Check_Border" red="0" green="128" blue="255" />
-    </border_color>
-    <widget_type>Label</widget_type>
-    <wrap_words>true</wrap_words>
-    <background_color>
-      <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
-    </background_color>
-    <width>109</width>
-    <x>252</x>
-    <name>Label_2</name>
-    <y>254</y>
-    <foreground_color>
-      <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
-    </foreground_color>
-    <actions hook="false" hook_all="false" />
-    <show_scrollbar>false</show_scrollbar>
-    <font>
-      <opifont.name fontName="Arial" height="14" style="1">ISIS_Label</opifont.name>
-    </font>
-  </widget>
 </display>
