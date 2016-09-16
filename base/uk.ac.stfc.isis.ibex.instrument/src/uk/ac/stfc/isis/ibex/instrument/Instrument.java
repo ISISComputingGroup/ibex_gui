@@ -66,7 +66,9 @@ public class Instrument implements BundleActivator {
 	
 	private final Preferences initalPreference = ConfigurationScope.INSTANCE.getNode("uk.ac.stfc.isis.ibex.instrument").node("preferences");
 	
-	private static String initialInstrument = "initial";
+	private static String INIT_INST_NAME_KEY = "initialName";
+	private static String INIT_INST_HOST_KEY = "initialHost";
+	private static String INIT_INST_PV_KEY = "initialPV";	
 	
 	public Instrument() {
 		instance = this;
@@ -123,8 +125,7 @@ public class Instrument implements BundleActivator {
 		this.instrumentInfo = selectedInstrument;
 
         if (!instrumentInfo.hasValidHostName()) {
-            LOG.error("Invalid host name:" + instrumentInfo.hostName());
-            return;
+            LOG.warn("Invalid host name:" + instrumentInfo.hostName());
 		}
 
         instrumentName.setValue(selectedInstrument.name());
@@ -167,18 +168,17 @@ public class Instrument implements BundleActivator {
 	}
 	
 	private InstrumentInfo initialInstrument() {
-		final String initalName = initalPreference.get(initialInstrument, localhost.name());
+		final String initalName = initalPreference.get(INIT_INST_NAME_KEY, localhost.name());
+		final String initalPV = initalPreference.get(INIT_INST_PV_KEY, localhost.pvPrefix());
+		final String initalHost = initalPreference.get(INIT_INST_HOST_KEY, localhost.hostName());
 		
-        return Iterables.find(instruments(), new Predicate<InstrumentInfo>() {
-			@Override
-			public boolean apply(InstrumentInfo info) {
-				return initalName.endsWith(info.name());
-			}
-		}, localhost);
+		return new InstrumentInfo(initalName, initalPV, initalHost);
 	}
 	
-	public void setInitial() {
-		initalPreference.put(initialInstrument, currentInstrument().name());
+	public void setInitial() {		
+		initalPreference.put(INIT_INST_NAME_KEY, currentInstrument().name());
+		initalPreference.put(INIT_INST_PV_KEY, currentInstrument().pvPrefix());
+		initalPreference.put(INIT_INST_HOST_KEY, currentInstrument().hostName());
 		
         try {
             // forces the application to save the preferences
