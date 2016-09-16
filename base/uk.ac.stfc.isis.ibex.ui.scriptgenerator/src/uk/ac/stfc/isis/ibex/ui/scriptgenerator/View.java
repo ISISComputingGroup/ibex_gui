@@ -35,9 +35,15 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.part.ViewPart;
 import org.eclipse.wb.swt.SWTResourceManager;
 
+import uk.ac.stfc.isis.ibex.scriptgenerator.ApertureSans;
+import uk.ac.stfc.isis.ibex.scriptgenerator.ApertureTrans;
+import uk.ac.stfc.isis.ibex.scriptgenerator.CollectionMode;
 import uk.ac.stfc.isis.ibex.scriptgenerator.Estimate;
+import uk.ac.stfc.isis.ibex.scriptgenerator.Order;
 import uk.ac.stfc.isis.ibex.scriptgenerator.PythonBuilder;
 import uk.ac.stfc.isis.ibex.scriptgenerator.Row;
+import uk.ac.stfc.isis.ibex.scriptgenerator.SampleGeometry;
+import uk.ac.stfc.isis.ibex.scriptgenerator.Settings;
 
 /**
  * Holds all UI elements of the Script Generator.
@@ -54,6 +60,7 @@ public class View extends ViewPart {
 	private Collection<Row> rows;
 	private PythonBuilder builder;
 	private Estimate estimate;
+	private Settings settings;
 	private String script;
 	 
 	/**
@@ -64,6 +71,7 @@ public class View extends ViewPart {
 	
 		builder = new PythonBuilder();
 		estimate = new Estimate(40, 120);
+		settings = new Settings(1, 1, 7, 7, Order.TRANS, false, ApertureSans.MEDIUM, ApertureTrans.MEDIUM, SampleGeometry.DISC, CollectionMode.HISTOGRAM);
 		
 		rows = new ArrayList<Row>();
 		rows.add(new Row());
@@ -102,7 +110,7 @@ public class View extends ViewPart {
 		lblSaveLoad.setFont(SWTResourceManager.getFont("Segoe UI", 10, SWT.BOLD));
 		lblSaveLoad.setText("  Save / Load");
 		
-		SettingsPanel settingsPanel = new SettingsPanel(topPanel, SWT.BORDER_SOLID);
+		SettingsPanel settingsPanel = new SettingsPanel(topPanel, SWT.BORDER_SOLID, settings);
 		GridLayout glSettingsPanel = (GridLayout) settingsPanel.getLayout();
 		glSettingsPanel.makeColumnsEqualWidth = true;
 		settingsPanel.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 2));

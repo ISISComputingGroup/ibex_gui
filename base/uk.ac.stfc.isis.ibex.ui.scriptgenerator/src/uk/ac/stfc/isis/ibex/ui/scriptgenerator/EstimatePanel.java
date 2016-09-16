@@ -40,9 +40,9 @@ import uk.ac.stfc.isis.ibex.scriptgenerator.Estimate;
  */
 @SuppressWarnings("checkstyle:magicnumber")
 public class EstimatePanel extends Composite {
-	Text txtCountRate;
-	Text txtTimeBetween;
-	Label lblScriptTime;
+	private Text txtCountRate;
+	private Text txtTimeBetween;
+	private Label lblTimeValue;
 	
 	/**
 	 * The default constructor.
@@ -76,11 +76,11 @@ public class EstimatePanel extends Composite {
 		txtTimeBetween.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		txtTimeBetween.setText("5");
 		
-		lblScriptTime = new Label(grpEstimate, SWT.RIGHT);
+		Label lblScriptTime = new Label(grpEstimate, SWT.RIGHT);
 		lblScriptTime.setLayoutData(new GridData(SWT.RIGHT, SWT.FILL, false, false, 1, 1));
 		lblScriptTime.setText("Est. script time:");
 
-		Label lblTimeValue = new Label(grpEstimate, SWT.RIGHT);
+		lblTimeValue = new Label(grpEstimate, SWT.RIGHT);
 		lblTimeValue.setLayoutData(new GridData(SWT.CENTER, SWT.FILL, false, false, 1, 1));  
 		lblTimeValue.setText("00:00:00");
 		
@@ -98,14 +98,14 @@ public class EstimatePanel extends Composite {
 		
         IObservableValue targetCountRate = WidgetProperties.text(SWT.Modify).observe(txtCountRate);
         IObservableValue modelCountRate = BeanProperties.value("estCountRate").observe(estimate);
-        ctx.bindValue(targetCountRate, modelCountRate); 
+        ctx.bindValue(targetCountRate, modelCountRate);
         
         IObservableValue targetTimeBetween = WidgetProperties.text(SWT.Modify).observe(txtTimeBetween);
         IObservableValue modelTimeBetween = BeanProperties.value("estMoveTime").observe(estimate);
-        ctx.bindValue(targetTimeBetween, modelTimeBetween); 
+        ctx.bindValue(targetTimeBetween, modelTimeBetween);
         
-        IObservableValue targetScriptTime = WidgetProperties.text(SWT.Modify).observe(lblScriptTime);
+        IObservableValue targetScriptTime = WidgetProperties.text().observe(lblTimeValue);
         IObservableValue modelScriptTime = BeanProperties.value("estScriptTime").observe(estimate);
-        ctx.bindValue(targetScriptTime, modelScriptTime); 
+        ctx.bindValue(targetScriptTime, modelScriptTime);
 	}
 }

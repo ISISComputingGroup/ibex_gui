@@ -19,6 +19,11 @@
 
 package uk.ac.stfc.isis.ibex.ui.scriptgenerator;
 
+import org.eclipse.core.databinding.DataBindingContext;
+import org.eclipse.core.databinding.beans.BeanProperties;
+import org.eclipse.core.databinding.observable.value.IObservableValue;
+import org.eclipse.jface.databinding.swt.WidgetProperties;
+import org.eclipse.jface.databinding.viewers.ViewersObservables;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.jface.viewers.ISelection;
@@ -38,19 +43,30 @@ import uk.ac.stfc.isis.ibex.scriptgenerator.ApertureTrans;
 import uk.ac.stfc.isis.ibex.scriptgenerator.CollectionMode;
 import uk.ac.stfc.isis.ibex.scriptgenerator.Order;
 import uk.ac.stfc.isis.ibex.scriptgenerator.SampleGeometry;
+import uk.ac.stfc.isis.ibex.scriptgenerator.Settings;
 
 /**
  * Contains all of the settings.
  */
 @SuppressWarnings("checkstyle:magicnumber")
 public class SettingsPanel extends Composite {
-	
+	private ComboViewer comboOrder;
+	private ComboViewer comboSampleGeometry;
+	private Text txtDoSans;
+	private Text txtSampleHeight;
+	private Text txtDoTrans;
+	private Text txtSampleWidth;
+	private Button btnLoopOver;
+	private ComboViewer comboCollectionMode;
+	private ComboViewer comboApertureSans;
+	private ComboViewer comboApertureTrans;
+
 	/**
 	 * The default constructor.
 	 * @param parent the parent that the EstimatePanel will be placed in
 	 * @param style the style of the parent
 	 */
-	public SettingsPanel(Composite parent, int style) {
+	public SettingsPanel(Composite parent, int style, final Settings settings) {
 		super(parent, style);
 		setLayout(new GridLayout(2, false));
 		
@@ -65,7 +81,7 @@ public class SettingsPanel extends Composite {
 		lblOrder.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		lblOrder.setText("Order:");
 		
-		ComboViewer comboOrder = new ComboViewer(grpSettings, SWT.NONE | SWT.READ_ONLY);
+		comboOrder = new ComboViewer(grpSettings, SWT.NONE | SWT.READ_ONLY);
 		comboOrder.getCombo().setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		comboOrder.setContentProvider(new ArrayContentProvider());
 		comboOrder.setInput(Order.values());	
@@ -79,7 +95,7 @@ public class SettingsPanel extends Composite {
 		lblSampleGeometry.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		lblSampleGeometry.setText("Sample Geometry:");
 		
-		ComboViewer comboSampleGeometry = new ComboViewer(grpSettings, SWT.NONE | SWT.READ_ONLY);
+		comboSampleGeometry = new ComboViewer(grpSettings, SWT.NONE | SWT.READ_ONLY);
 		comboSampleGeometry.getCombo().setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		comboSampleGeometry.setContentProvider(new ArrayContentProvider());
 		comboSampleGeometry.setInput(SampleGeometry.values());	
@@ -90,7 +106,7 @@ public class SettingsPanel extends Composite {
 		lblDoSans.setLayoutData(new GridData(SWT.RIGHT, SWT.FILL, false, false, 1, 1));
 		lblDoSans.setText("Do SANS:");
 		
-		Text txtDoSans = new Text(grpSettings, SWT.BORDER);
+		txtDoSans = new Text(grpSettings, SWT.BORDER);
 		GridData gdTxtDoSans = new GridData(SWT.LEFT, SWT.FILL, false, false, 1, 1);
 		txtDoSans.setLayoutData(gdTxtDoSans);
 		gdTxtDoSans.widthHint = 30;
@@ -101,7 +117,7 @@ public class SettingsPanel extends Composite {
 		Label lblSampleHeight = new Label(grpSettings, SWT.RIGHT);
 		lblSampleHeight.setLayoutData(new GridData(SWT.RIGHT, SWT.FILL, false, false, 1, 1));
 		lblSampleHeight.setText("Sample Height:");
-		Text txtSampleHeight = new Text(grpSettings, SWT.BORDER);
+		txtSampleHeight = new Text(grpSettings, SWT.BORDER);
 
 		txtSampleHeight.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false, 1, 1));
 		GridData gdTxtSampleHeight = new GridData(SWT.LEFT, SWT.FILL, false, false, 1, 1);
@@ -113,7 +129,7 @@ public class SettingsPanel extends Composite {
 		lblDoTrans.setLayoutData(new GridData(SWT.RIGHT, SWT.FILL, false, false, 1, 1));
 		lblDoTrans.setText("Do TRANS:");
 		
-		Text txtDoTrans = new Text(grpSettings, SWT.BORDER);
+		txtDoTrans = new Text(grpSettings, SWT.BORDER);
 		GridData gdTxtDoTrans = new GridData(SWT.LEFT, SWT.FILL, false, false, 1, 1);
 		txtDoTrans.setLayoutData(gdTxtDoTrans);
 		gdTxtDoTrans.widthHint = 30;
@@ -125,7 +141,7 @@ public class SettingsPanel extends Composite {
 		lblSampleWidth.setLayoutData(new GridData(SWT.RIGHT, SWT.FILL, false, false, 1, 1));
 		lblSampleWidth.setText("Sample Width:");
 		
-		Text txtSampleWidth = new Text(grpSettings, SWT.BORDER);
+		txtSampleWidth = new Text(grpSettings, SWT.BORDER);
 		GridData gdTxtSampleWidth = new GridData(SWT.LEFT, SWT.FILL, false, false, 1, 1);
 		txtSampleWidth.setLayoutData(gdTxtSampleWidth);
 		gdTxtSampleWidth.widthHint = 30;
@@ -133,7 +149,7 @@ public class SettingsPanel extends Composite {
 		
 		new Label(grpSettings, SWT.CENTER);
 		
-		Button btnLoopOver = new Button(grpSettings, SWT.CHECK);
+		btnLoopOver = new Button(grpSettings, SWT.CHECK);
 		btnLoopOver.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false, 1, 1));
 		btnLoopOver.setText("Loop over each run?");
 		
@@ -143,7 +159,7 @@ public class SettingsPanel extends Composite {
 		lblCollectionMode.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		lblCollectionMode.setText("Collection Mode:");
 		
-		ComboViewer comboCollectionMode = new ComboViewer(grpSettings, SWT.NONE | SWT.READ_ONLY);
+		comboCollectionMode = new ComboViewer(grpSettings, SWT.NONE | SWT.READ_ONLY);
 		comboCollectionMode.getCombo().setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		comboCollectionMode.setContentProvider(new ArrayContentProvider());
 		comboCollectionMode.setInput(CollectionMode.values());	
@@ -158,7 +174,7 @@ public class SettingsPanel extends Composite {
 		Label lblApertureSettings = new Label(grpSettings, SWT.RIGHT);
 		lblApertureSettings.setText("A1, S1 Setting:");
 
-		ComboViewer comboApertureSans = new ComboViewer(grpSettings, SWT.NONE | SWT.READ_ONLY);
+		comboApertureSans = new ComboViewer(grpSettings, SWT.NONE | SWT.READ_ONLY);
 		comboApertureSans.getCombo().setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		comboApertureSans.setContentProvider(new ArrayContentProvider());
 		comboApertureSans.setInput(ApertureSans.values());	
@@ -172,7 +188,7 @@ public class SettingsPanel extends Composite {
 		new Label(grpSettings, SWT.CENTER);
 		new Label(grpSettings, SWT.CENTER);
 			
-		ComboViewer comboApertureTrans = new ComboViewer(grpSettings, SWT.NONE | SWT.READ_ONLY);
+		comboApertureTrans = new ComboViewer(grpSettings, SWT.NONE | SWT.READ_ONLY);
 		comboApertureTrans.getCombo().setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		comboApertureTrans.setContentProvider(new ArrayContentProvider());
 		comboApertureTrans.setInput(ApertureTrans.values());	
@@ -183,5 +199,28 @@ public class SettingsPanel extends Composite {
 		lblApertureTrans.setText("TRANS");
 		new Label(grpSettings, SWT.NONE);
 		new Label(grpSettings, SWT.NONE);
+		
+		bind(settings);
+	}
+	
+	public void bind(Settings settings) {
+		DataBindingContext ctx = new DataBindingContext();
+		
+        IObservableValue targetLoopOver = WidgetProperties.selection().observe(btnLoopOver);
+        IObservableValue modelLoopOver = BeanProperties.value("loopOver").observe(settings);
+        ctx.bindValue(targetLoopOver, modelLoopOver);
+		
+        IObservableValue targetOrder = ViewersObservables.observeSingleSelection(comboOrder);
+        IObservableValue modelOrder = BeanProperties.value("order").observe(settings);
+        ctx.bindValue(targetOrder, modelOrder);
+        
+        IObservableValue targetGeometry = ViewersObservables.observeSingleSelection(comboSampleGeometry);
+        IObservableValue modelGeometry = BeanProperties.value("geometry").observe(settings);
+        ctx.bindValue(targetGeometry, modelGeometry);
+        
+        IObservableValue targetDoSans = WidgetProperties.text(SWT.Modify).observe(txtDoSans);
+        IObservableValue modelDoSans= BeanProperties.value("doSans").observe(settings);
+        ctx.bindValue(targetDoSans, modelDoSans);
+        
 	}
 }

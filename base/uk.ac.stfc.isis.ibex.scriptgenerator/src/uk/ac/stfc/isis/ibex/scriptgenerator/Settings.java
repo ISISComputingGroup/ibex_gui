@@ -140,7 +140,7 @@ public class Settings extends ModelObject {
 	 * @param order the order
 	 */
 	public void setOrder(Order order) {
-		this.order = order;
+		firePropertyChange("order", this.order, this.order = order);
 	}
 
 	/**
@@ -156,7 +156,7 @@ public class Settings extends ModelObject {
 	 * @param loopOver the "Loop over each run?" boolean
 	 */
 	public void setLoopOver(Boolean loopOver) {
-		this.loopOver = loopOver;
+		firePropertyChange("loopOver", this.loopOver, this.loopOver = loopOver);
 	}
 
 	/**
@@ -172,7 +172,7 @@ public class Settings extends ModelObject {
 	 * @param sansSize the SANS aperture size
 	 */
 	public void setSansSize(ApertureSans sansSize) {
-		this.sansSize = sansSize;
+		firePropertyChange("sansSize", this.sansSize, this.sansSize = sansSize);
 	}
 
 	/**
@@ -188,7 +188,7 @@ public class Settings extends ModelObject {
 	 * @param transSize the TRANS aperture size
 	 */
 	public void setTransSize(ApertureTrans transSize) {
-		this.transSize = transSize;
+		firePropertyChange("transSize", this.transSize, this.transSize = transSize);
 	}
 
 	/**
@@ -204,7 +204,7 @@ public class Settings extends ModelObject {
 	 * @param geometry the Sample Geometry
 	 */
 	public void setGeometry(SampleGeometry geometry) {
-		this.geometry = geometry;
+		firePropertyChange("geometry", this.geometry, this.geometry = geometry);
 	}
 
 	/**
@@ -220,6 +220,6 @@ public class Settings extends ModelObject {
 	 * @param collection the Collection Mode
 	 */
 	public void setCollection(CollectionMode collection) {
-		this.collection = collection;
+		firePropertyChange("collection", this.collection, this.collection = collection);
 	}
 }
