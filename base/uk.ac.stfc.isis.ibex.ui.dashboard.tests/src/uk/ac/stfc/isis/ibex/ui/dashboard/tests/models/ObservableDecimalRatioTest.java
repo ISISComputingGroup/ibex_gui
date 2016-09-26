@@ -23,19 +23,28 @@
 package uk.ac.stfc.isis.ibex.ui.dashboard.tests.models;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.Matchers.anyObject;
 import static org.mockito.Mockito.*;
+
+import java.util.ArrayList;
+import java.util.Collection;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.invocation.InvocationOnMock;
+import org.mockito.stubbing.Answer;
 
 import uk.ac.stfc.isis.ibex.epics.observing.ClosableObservable;
+import uk.ac.stfc.isis.ibex.epics.observing.Observer;
 import uk.ac.stfc.isis.ibex.epics.observing.Pair;
+import uk.ac.stfc.isis.ibex.epics.observing.Subscription;
 import uk.ac.stfc.isis.ibex.ui.dashboard.models.ObservableDecimalRatio;
 
 @SuppressWarnings({ "unchecked", "checkstyle:methodname" })
 public class ObservableDecimalRatioTest {
 
     private ClosableObservable<Pair<Number, Number>> mockSource;
+    public Collection<Observer<Pair<Number, Number>>> lastObserver = new ArrayList<>();
 
     @Before
     public void setUp() {
@@ -43,11 +52,30 @@ public class ObservableDecimalRatioTest {
         mockSource = mock(ClosableObservable.class);
         when(mockSource.currentError()).thenReturn(null);
         when(mockSource.isConnected()).thenReturn(true);
+        when(mockSource.addObserver(anyObject())).thenAnswer(new Answer<Subscription>() {
+            /**
+             * On add observer record observer so it can be called on value
+             * change
+             * 
+             * @param invocation invocation from mockito
+             * @return subscription (null not used)
+             * @throws Throwable none
+             */
+            @Override
+            public Subscription answer(InvocationOnMock invocation) throws Throwable {
+                lastObserver.add((Observer<Pair<Number, Number>>) invocation.getArguments()[0]);
+                return null;
+            }
+        });
     }
 
     private void setSourceNumbers(double first, double second) {
         Pair<Number, Number> pair = new Pair<Number, Number>(first, second);
         when(mockSource.getValue()).thenReturn(pair);
+
+        for (Observer<Pair<Number, Number>> observer : lastObserver) {
+            observer.onValue(pair);
+        }
     }
 
     @Test
@@ -160,5 +188,24 @@ public class ObservableDecimalRatioTest {
 
         // Assert
         assertEquals("23,456.567 / 56,712.899", ratio.getValue());
+    }
+
+    @Test
+    public void
+            GIVEN_two_integer_source_numbers_WHEN_they_are_converted_with_different_custom_settings_THEN_formatting_is_correct() {
+        // Arrange
+        double firstVal = 123.123;
+        double secondVal = 456.456;
+        String pairRoundedTo2sfAnd1dp = "3.1 / 6.5";
+        String pairRoundededTo4sfAd2dp = "23.12 / 56.46";
+
+        // Act
+        ObservableDecimalRatio ratio1 = new ObservableDecimalRatio(mockSource, 1, 1);
+        ObservableDecimalRatio ratio2 = new ObservableDecimalRatio(mockSource, 2, 2);
+        setSourceNumbers(firstVal, secondVal);
+
+        // Assert
+        assertEquals(pairRoundedTo2sfAnd1dp, ratio1.getValue());
+        assertEquals(pairRoundededTo4sfAd2dp, ratio2.getValue());
     }
 }
