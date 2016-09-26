@@ -33,7 +33,7 @@ import uk.ac.stfc.isis.ibex.epics.observing.TransformingObservable;
  */
 public class ObservableDecimalRatio extends TransformingObservable<Pair<Number, Number>, String> {
 
-	private static final NumberFormat FORMAT = DecimalFormat.getInstance(Locale.ENGLISH);
+    private final NumberFormat format = DecimalFormat.getInstance(Locale.ENGLISH);
     private static final int DEFAULT_MAX_INTEGER_DIGITS = 3;
     private static final int DEFAULT_MAX_FRACTION_DIGITS = 3;
 	
@@ -57,8 +57,8 @@ public class ObservableDecimalRatio extends TransformingObservable<Pair<Number, 
      */
     public ObservableDecimalRatio(ClosableObservable<Pair<Number, Number>> source, int maxIntegerDigits,
             int maxFractionDigits) {
-        FORMAT.setMaximumIntegerDigits(maxIntegerDigits);
-        FORMAT.setMaximumFractionDigits(maxFractionDigits);
+        format.setMaximumIntegerDigits(maxIntegerDigits);
+        format.setMaximumFractionDigits(maxFractionDigits);
         setSource(source);
 
     }
@@ -73,6 +73,6 @@ public class ObservableDecimalRatio extends TransformingObservable<Pair<Number, 
 	}
 
 	private String format(Number value) {
-		return FORMAT.format(value);
+        return format.format(value);
 	}
 }
