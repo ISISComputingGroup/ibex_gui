@@ -203,6 +203,10 @@ public class SettingsPanel extends Composite {
 		bind(settings);
 	}
 	
+	/**
+	 * The databinding of all settings between SettingsPanel and Settings.
+	 * @param settings the settings to be displayed
+	 */
 	public void bind(Settings settings) {
 		DataBindingContext ctx = new DataBindingContext();
 		
