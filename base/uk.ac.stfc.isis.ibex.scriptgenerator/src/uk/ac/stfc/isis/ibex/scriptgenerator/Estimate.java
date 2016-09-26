@@ -27,7 +27,7 @@ import uk.ac.stfc.isis.ibex.model.ModelObject;
 public class Estimate extends ModelObject {
 	private Integer estCountRate;
 	private Integer estMoveTime;
-	private String estScriptTime = "hello world";
+	private String estScriptTime;
 	
 	/**
 	 * The default constructor.

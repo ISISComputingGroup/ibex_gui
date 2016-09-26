@@ -206,21 +206,44 @@ public class SettingsPanel extends Composite {
 	public void bind(Settings settings) {
 		DataBindingContext ctx = new DataBindingContext();
 		
-        IObservableValue targetLoopOver = WidgetProperties.selection().observe(btnLoopOver);
-        IObservableValue modelLoopOver = BeanProperties.value("loopOver").observe(settings);
-        ctx.bindValue(targetLoopOver, modelLoopOver);
-		
         IObservableValue targetOrder = ViewersObservables.observeSingleSelection(comboOrder);
         IObservableValue modelOrder = BeanProperties.value("order").observe(settings);
         ctx.bindValue(targetOrder, modelOrder);
+		
+        IObservableValue targetDoSans = WidgetProperties.text(SWT.Modify).observe(txtDoSans);
+        IObservableValue modelDoSans = BeanProperties.value("doSans").observe(settings);
+        ctx.bindValue(targetDoSans, modelDoSans);
+        
+        IObservableValue targetDoTrans = WidgetProperties.text(SWT.Modify).observe(txtDoTrans);
+        IObservableValue modelDoTrans = BeanProperties.value("doTrans").observe(settings);
+        ctx.bindValue(targetDoTrans, modelDoTrans);
+		
+        IObservableValue targetLoopOver = WidgetProperties.selection().observe(btnLoopOver);
+        IObservableValue modelLoopOver = BeanProperties.value("loopOver").observe(settings);
+        ctx.bindValue(targetLoopOver, modelLoopOver);
+        
+        IObservableValue targetApertureSans = ViewersObservables.observeSingleSelection(comboApertureSans);
+        IObservableValue modelApertureSans = BeanProperties.value("sansSize").observe(settings);
+        ctx.bindValue(targetApertureSans, modelApertureSans);
+        
+        IObservableValue targetApertureTrans = ViewersObservables.observeSingleSelection(comboApertureTrans);
+        IObservableValue modelApertureTrans = BeanProperties.value("transSize").observe(settings);
+        ctx.bindValue(targetApertureTrans, modelApertureTrans);
         
         IObservableValue targetGeometry = ViewersObservables.observeSingleSelection(comboSampleGeometry);
         IObservableValue modelGeometry = BeanProperties.value("geometry").observe(settings);
         ctx.bindValue(targetGeometry, modelGeometry);
         
-        IObservableValue targetDoSans = WidgetProperties.text(SWT.Modify).observe(txtDoSans);
-        IObservableValue modelDoSans= BeanProperties.value("doSans").observe(settings);
-        ctx.bindValue(targetDoSans, modelDoSans);
+        IObservableValue targetSampleHeight = WidgetProperties.text(SWT.Modify).observe(txtSampleHeight);
+        IObservableValue modelSampleHeight = BeanProperties.value("sampleHeight").observe(settings);
+        ctx.bindValue(targetSampleHeight, modelSampleHeight);
         
+        IObservableValue targetSampleWidth = WidgetProperties.text(SWT.Modify).observe(txtSampleWidth);
+        IObservableValue modelSampleWidth = BeanProperties.value("sampleWidth").observe(settings);
+        ctx.bindValue(targetSampleWidth, modelSampleWidth);
+        
+        IObservableValue targetCollection = ViewersObservables.observeSingleSelection(comboCollectionMode);
+        IObservableValue modelCollection = BeanProperties.value("collection").observe(settings);
+        ctx.bindValue(targetCollection, modelCollection);
 	}
 }
