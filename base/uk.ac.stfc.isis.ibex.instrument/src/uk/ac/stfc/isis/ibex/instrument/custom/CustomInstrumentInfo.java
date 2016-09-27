@@ -30,27 +30,14 @@ import uk.ac.stfc.isis.ibex.instrument.internal.PVPrefix;
  */
 public class CustomInstrumentInfo extends InstrumentInfo {
 
-    private String pvPrefix;
-
     public CustomInstrumentInfo(String name, String pvPrefix) {
     	this(name, pvPrefix, name);
     }
     
     public CustomInstrumentInfo(String name, String pvPrefix, String hostName) {
-        super(name);
-
+        super(name, pvPrefix, hostName);
+        
         checkPreconditions(pvPrefix);
-        this.pvPrefix = pvPrefix;
-    }
-
-    @Override
-    public String pvPrefix() {
-        return pvPrefix;
-    }
-
-    @Override
-    public String hostName() {
-        return name();
     }
 
     public static String validCustomInstrumentRegex() {

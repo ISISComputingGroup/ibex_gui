@@ -29,9 +29,16 @@ import uk.ac.stfc.isis.ibex.instrument.internal.PVPrefix;
 public class InstrumentInfo {
 
 	private final String name;
-	
-	public InstrumentInfo(String name) {
+    private final String pvPrefix;
+    private final String hostName;
+    
+    /**
+     * CONSTRUCTOR NOT CALLED FOR INSTRUMENTS IN INSTLIST AS JSON DESERIALISED
+     */
+	public InstrumentInfo(String name, String pvPrefix, String hostName) {
 		this.name = name;
+		this.hostName = hostName;
+		this.pvPrefix = pvPrefix;
         assert (hasValidHostName());
 	}
 
@@ -40,11 +47,11 @@ public class InstrumentInfo {
 	}
 	
 	public String pvPrefix() {
-		return PVAddress.startWith("IN").append(name).toString() + PVAddress.COLON;
+		return pvPrefix == null ? PVAddress.startWith("IN").append(name).toString() + PVAddress.COLON : pvPrefix;
 	}
 	
     public String hostName() {
-        return PVPrefix.NDX + name;
+    	return hostName == null ? PVPrefix.NDX + name : hostName;
 	}
 
     public static String validInstrumentRegex() {

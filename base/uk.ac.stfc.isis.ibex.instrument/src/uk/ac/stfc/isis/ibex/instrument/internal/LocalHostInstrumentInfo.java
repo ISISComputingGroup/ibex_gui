@@ -24,18 +24,12 @@ import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
 public class LocalHostInstrumentInfo extends InstrumentInfo {
 
 	public LocalHostInstrumentInfo() {
-		super(MachineName.get());
+		super(MachineName.get(), constructPvPrefix(), "localhost");
 	}
 
-	@Override
-	public String pvPrefix() {
+	private static String constructPvPrefix() {
 	    PVPrefix pvPrefix = new PVPrefix(MachineName.get(), UserName.get());
         return pvPrefix.get();
-	}
-	
-	@Override
-	public String hostName() {
-		return "localhost";
 	}
 
     public static String validLocalInstrumentRegex() {
