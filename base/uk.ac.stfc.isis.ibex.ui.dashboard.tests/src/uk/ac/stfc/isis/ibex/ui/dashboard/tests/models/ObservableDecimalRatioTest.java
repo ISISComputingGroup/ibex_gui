@@ -24,6 +24,7 @@ package uk.ac.stfc.isis.ibex.ui.dashboard.tests.models;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.anyObject;
+import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.*;
 
 import java.util.ArrayList;
@@ -52,7 +53,8 @@ public class ObservableDecimalRatioTest {
         mockSource = mock(ClosableObservable.class);
         when(mockSource.currentError()).thenReturn(null);
         when(mockSource.isConnected()).thenReturn(true);
-        when(mockSource.addObserver(anyObject())).thenAnswer(new Answer<Subscription>() {
+        Observer<Pair<Number, Number>> anyObserver = (Observer<Pair<Number, Number>>) any();
+        when(mockSource.addObserver(anyObserver)).thenAnswer(new Answer<Subscription>() {
             /**
              * On add observer record observer so it can be called on value
              * change
