@@ -22,12 +22,14 @@
  */
 package uk.ac.stfc.isis.ibex.instrument.list;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import org.apache.logging.log4j.Logger;
 
 import uk.ac.stfc.isis.ibex.epics.conversion.Convert;
 import uk.ac.stfc.isis.ibex.epics.conversion.Converter;
+import uk.ac.stfc.isis.ibex.epics.observing.BaseObserver;
 import uk.ac.stfc.isis.ibex.epics.observing.ClosableObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.ConvertingObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
@@ -39,10 +41,30 @@ import uk.ac.stfc.isis.ibex.json.JsonDeserialisingConverter;
  * Holds the connection to the Instrument List PV.
  * 
  */
-public class InstrumentListObservable {
+public class InstrumentListObservable extends ClosableObservable<Collection<InstrumentInfo>> {
     
     private static final int MAX_RETRIES = 200;
     private static final int WAIT_FOR_OBSERVABLE = 100; // milliseconds
+
+    private BaseObserver<Collection<InstrumentInfo>> instrumentObserver =
+            new BaseObserver<Collection<InstrumentInfo>>() {
+
+                @Override
+                public void onValue(Collection<InstrumentInfo> value) {
+                    InstrumentListObservable.this.setValue(getValidInstruments(value));
+                }
+
+                @Override
+                public void onError(Exception e) {
+                    //
+                }
+
+                @Override
+                public void onConnectionStatus(boolean isConnected) {
+                    //
+                }
+
+            };
 
     /**
      * This is the PV that holds the list of instruments that can be selected.
@@ -61,11 +83,13 @@ public class InstrumentListObservable {
     public InstrumentListObservable(Logger logger) {
         this.logger = logger;
 
-        ForwardingObservable<String> instrumentsPV = readCompressed(ADDRESS);
+        instrumentsRBV = convert(readCompressed(ADDRESS));
+        this.setValue(new ArrayList<InstrumentInfo>());
+        instrumentsRBV.addObserver(instrumentObserver);
 
         // Wait for the PV to be connected
         int i = 0;
-        while (!instrumentsPV.isConnected() && instrumentsPV.getValue() == null && i < MAX_RETRIES) {
+        while (!instrumentsRBV.isConnected() && instrumentsRBV.getValue() == null && i < MAX_RETRIES) {
             try {
                 Thread.sleep(WAIT_FOR_OBSERVABLE);
             } catch (InterruptedException e) {
@@ -73,15 +97,13 @@ public class InstrumentListObservable {
             }
             i++;
         }
-
-        logger.info("Instrument List PV content: " + instrumentsPV.getValue());
-        instrumentsRBV = convert(instrumentsPV);
     }
 
     public Collection<InstrumentInfo> getInstruments() {
-        return getValidInstruments();
+        return this.getValue();
     }
 
+    @Override
     public void close() {
         instrumentsRBV.close();
     }
@@ -97,7 +119,7 @@ public class InstrumentListObservable {
         return new ForwardingObservable<>(new ConvertingObservable<>(source, converter));
     }
 
-    private Collection<InstrumentInfo> getValidInstruments() {
-        return InstrumentListUtils.filterValidInstruments(instrumentsRBV, logger);
+    private Collection<InstrumentInfo> getValidInstruments(Collection<InstrumentInfo> instruments) {
+        return InstrumentListUtils.filterValidInstruments(instruments, logger);
     }
 }

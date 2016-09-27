@@ -204,7 +204,7 @@ public class InstrumentListUtilsTest {
     }
 
     private Collection<InstrumentInfo> doFiltering() {
-        return InstrumentListUtils.filterValidInstruments(mockObservable, mockLogger);
+        return InstrumentListUtils.filterValidInstruments(mockObservable.getValue(), mockLogger);
     }
 }
 
