@@ -99,10 +99,6 @@ public class InstrumentListObservable extends ClosableObservable<Collection<Inst
         }
     }
 
-    public Collection<InstrumentInfo> getInstruments() {
-        return this.getValue();
-    }
-
     @Override
     public void close() {
         instrumentsRBV.close();

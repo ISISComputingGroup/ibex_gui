@@ -43,6 +43,7 @@ import org.osgi.service.prefs.Preferences;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 
+import uk.ac.stfc.isis.ibex.epics.observing.BaseObserver;
 import uk.ac.stfc.isis.ibex.instrument.internal.LocalHostInstrumentInfo;
 import uk.ac.stfc.isis.ibex.instrument.list.InstrumentListObservable;
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
@@ -64,6 +65,29 @@ public class Instrument implements BundleActivator {
 	private InstrumentInfo instrumentInfo;
 	private final InstrumentInfo localhost;
 	
+    private final InstrumentListObservable instrumentsObservable = new InstrumentListObservable(LOG);
+    private Collection<InstrumentInfo> instruments = new ArrayList<InstrumentInfo>();
+    private BaseObserver<Collection<InstrumentInfo>> instrumentsListener =
+            new BaseObserver<Collection<InstrumentInfo>>() {
+                @Override
+                public void onValue(Collection<InstrumentInfo> value) {
+                    instruments = new ArrayList<>();
+                    instruments.add(localhost);
+
+                    List<InstrumentInfo> instrumentsAlphabetical = new ArrayList<>(value);
+                    Collections.sort(instrumentsAlphabetical, alphabeticalNameComparator());
+                    instruments.addAll(instrumentsAlphabetical);
+                }
+
+                @Override
+                public void onError(Exception e) {
+                }
+
+                @Override
+                public void onConnectionStatus(boolean isConnected) {
+                }
+            };
+
 	private final Preferences initalPreference = ConfigurationScope.INSTANCE.getNode("uk.ac.stfc.isis.ibex.instrument").node("preferences");
 	
 	private static String initialInstrument = "initial";
@@ -71,7 +95,7 @@ public class Instrument implements BundleActivator {
 	public Instrument() {
 		instance = this;
         localhost = new LocalHostInstrumentInfo();
-		
+        instrumentsObservable.addObserver(instrumentsListener);
         setInstrument(initialInstrument());
     }
     
@@ -84,16 +108,6 @@ public class Instrument implements BundleActivator {
     }
 
 	public Collection<InstrumentInfo> instruments() {
-        List<InstrumentInfo> instruments = new ArrayList<>();
-        instruments.add(localhost);
-
-        InstrumentListObservable instrumentsObservable = new InstrumentListObservable(LOG);
-        Collection<InstrumentInfo> unorderedInstruments = instrumentsObservable.getInstruments();
-        List<InstrumentInfo> instrumentsAlphabetical = new ArrayList<>(unorderedInstruments);
-        Collections.sort(instrumentsAlphabetical, alphabeticalNameComparator());
-        instruments.addAll(instrumentsAlphabetical);
-
-        instrumentsObservable.close();
         return instruments;
 	}
 	
@@ -116,6 +130,7 @@ public class Instrument implements BundleActivator {
 	 */
 	@Override
     public void stop(BundleContext bundleContext) throws Exception {
+        instrumentsObservable.close();
 		Instrument.context = null;
 	}
 
