@@ -66,7 +66,8 @@ public class Instrument implements BundleActivator {
 	private final InstrumentInfo localhost;
 	
     private final InstrumentListObservable instrumentsObservable = new InstrumentListObservable(LOG);
-    private Collection<InstrumentInfo> instruments = new ArrayList<InstrumentInfo>();
+    private Collection<InstrumentInfo> instruments =
+            new ArrayList<InstrumentInfo>();
     private BaseObserver<Collection<InstrumentInfo>> instrumentsListener =
             new BaseObserver<Collection<InstrumentInfo>>() {
                 @Override
@@ -107,7 +108,7 @@ public class Instrument implements BundleActivator {
         return instrumentInfo.pvPrefix();
     }
 
-	public Collection<InstrumentInfo> instruments() {
+    public Collection<InstrumentInfo> instruments() {
         return instruments;
 	}
 	

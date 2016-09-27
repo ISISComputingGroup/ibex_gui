@@ -83,8 +83,9 @@ public class InstrumentListObservable extends ClosableObservable<Collection<Inst
     public InstrumentListObservable(Logger logger) {
         this.logger = logger;
 
+        setValue(new ArrayList<InstrumentInfo>());
+
         instrumentsRBV = convert(readCompressed(ADDRESS));
-        this.setValue(new ArrayList<InstrumentInfo>());
         instrumentsRBV.addObserver(instrumentObserver);
 
         // Wait for the PV to be connected
@@ -104,12 +105,12 @@ public class InstrumentListObservable extends ClosableObservable<Collection<Inst
         instrumentsRBV.close();
     }
 
-    private ForwardingObservable<String> readCompressed(String address) {
+    private static ForwardingObservable<String> readCompressed(String address) {
         ClosableObservable<String> pvObservable = new CompressedCharWaveformChannel().reader(address);
         return new ForwardingObservable<>(pvObservable);
     }
 
-    private ForwardingObservable<Collection<InstrumentInfo>> convert(ForwardingObservable<String> source) {
+    private static ForwardingObservable<Collection<InstrumentInfo>> convert(ForwardingObservable<String> source) {
         Converter<String, Collection<InstrumentInfo>> converter = new JsonDeserialisingConverter<>(
                 InstrumentInfo[].class).apply(Convert.<InstrumentInfo>toCollection());
         return new ForwardingObservable<>(new ConvertingObservable<>(source, converter));
