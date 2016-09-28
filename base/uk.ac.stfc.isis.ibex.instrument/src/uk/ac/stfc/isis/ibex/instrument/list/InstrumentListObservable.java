@@ -22,7 +22,6 @@
  */
 package uk.ac.stfc.isis.ibex.instrument.list;
 
-import java.util.ArrayList;
 import java.util.Collection;
 
 import org.apache.logging.log4j.Logger;
@@ -65,7 +64,6 @@ public class InstrumentListObservable extends ForwardingObservable<Collection<In
     public InstrumentListObservable(Logger logger) {
         super(convert(readCompressed()));
         this.logger = logger;
-        setValue(new ArrayList<InstrumentInfo>());
     }
 
     @Override
