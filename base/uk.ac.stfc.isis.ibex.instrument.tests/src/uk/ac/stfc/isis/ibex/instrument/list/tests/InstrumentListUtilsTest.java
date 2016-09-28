@@ -191,20 +191,19 @@ public class InstrumentListUtilsTest {
         expected.add(instrument1);
         expected.add(instrument2);
 
-        when(mockObservable.isConnected()).thenReturn(true);
-        when(mockObservable.getValue()).thenReturn(input);
         verify(mockLogger, never()).warn(anyString());
 
         // Act
-        doFiltering();
+        Collection<InstrumentInfo> filtered = doFiltering(input);
 
         // Assert
+        verify(filtered.equals(expected));
         verify(mockLogger, times(1)).warn(contains("Error while parsing"));
         verify(mockLogger, times(1)).warn(contains("one or more instruments"));
     }
 
-    private Collection<InstrumentInfo> doFiltering() {
-        return InstrumentListUtils.filterValidInstruments(mockObservable.getValue(), mockLogger);
+    private Collection<InstrumentInfo> doFiltering(Collection<InstrumentInfo> input) {
+        return InstrumentListUtils.filterValidInstruments(input, mockLogger);
     }
 }
 
