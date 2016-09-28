@@ -33,8 +33,13 @@ public class InstrumentInfo {
     private final String hostName;
     
     /**
-     * CONSTRUCTOR NOT CALLED FOR INSTRUMENTS IN INSTLIST AS JSON DESERIALISED
+     * CONSTRUCTORS NOT CALLED FOR INSTRUMENTS IN INSTLIST AS JSON DESERIALISED
      */
+    
+	public InstrumentInfo(String name) {
+		this(name, null, null);
+	}
+    
 	public InstrumentInfo(String name, String pvPrefix, String hostName) {
 		this.name = name;
 		this.hostName = hostName;
