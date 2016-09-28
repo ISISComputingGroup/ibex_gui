@@ -40,9 +40,6 @@ import org.osgi.framework.BundleContext;
 import org.osgi.service.prefs.BackingStoreException;
 import org.osgi.service.prefs.Preferences;
 
-import com.google.common.base.Predicate;
-import com.google.common.collect.Iterables;
-
 import uk.ac.stfc.isis.ibex.instrument.custom.CustomInstrumentInfo;
 import uk.ac.stfc.isis.ibex.instrument.internal.LocalHostInstrumentInfo;
 import uk.ac.stfc.isis.ibex.instrument.list.InstrumentListObservable;
@@ -122,6 +119,12 @@ public class Instrument implements BundleActivator {
 		Instrument.context = null;
 	}
 
+	/**
+	 * Set the instrument that IBEX is pointing to. 
+	 * This will update all plugins that are hooked into the instrument extension point. 
+	 * 
+	 * @param selectedInstrument Information on the new instrument.
+	 */
 	public void setInstrument(InstrumentInfo selectedInstrument) {
 		this.instrumentInfo = selectedInstrument;
 
