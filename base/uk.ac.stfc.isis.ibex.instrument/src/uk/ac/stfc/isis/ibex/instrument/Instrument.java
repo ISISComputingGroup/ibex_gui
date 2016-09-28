@@ -146,6 +146,7 @@ public class Instrument implements BundleActivator {
 
             @Override
             public void onError(Exception e) {
+                LOG.error("Error whilst reading instrument list : " + e.getMessage());
             }
 
             @Override
