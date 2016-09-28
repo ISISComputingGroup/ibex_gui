@@ -41,16 +41,24 @@ import uk.ac.stfc.isis.ibex.json.JsonDeserialisingConverter;
  * 
  */
 public class InstrumentListObservable extends ForwardingObservable<Collection<InstrumentInfo>> {
-    
-    private static final int MAX_RETRIES = 200;
-    private static final int WAIT_FOR_OBSERVABLE = 100; // milliseconds
 
     /**
      * This is the PV that holds the list of instruments that can be selected.
      */
     private static final String ADDRESS = "CS:INSTLIST";
 
-    private Logger logger;
+    /**
+     * Reads the instrument list PV data. Note that we keep it as a variable to
+     * prevent garbage collection of the PVReader. If we don't keep a reference
+     * it gets GCed, potentially before the list has been read and we'll never
+     * get the values.
+     */
+    private static final ClosableObservable<String> PV_READER = new CompressedCharWaveformChannel().reader(ADDRESS);
+
+    /**
+     * Logs messages regarding the instrument list.
+     */
+    private final Logger logger;
 
     /**
      * Instantiate a new observable for the instrument list PV.
@@ -59,24 +67,9 @@ public class InstrumentListObservable extends ForwardingObservable<Collection<In
      *            PV
      */
     public InstrumentListObservable(Logger logger) {
-        super(convert(readCompressed(ADDRESS)));
-
-        ForwardingObservable<Collection<InstrumentInfo>> source = convert(readCompressed(ADDRESS));
-        this.setSource(source);
-
+        super(convert(readCompressed()));
         this.logger = logger;
         setValue(new ArrayList<InstrumentInfo>());
-
-        // Wait for the PV to be connected
-        int i = 0;
-        while (!source.isConnected() && source.getValue() == null && i < MAX_RETRIES) {
-            try {
-                Thread.sleep(WAIT_FOR_OBSERVABLE);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            i++;
-        }
     }
 
     @Override
@@ -84,17 +77,30 @@ public class InstrumentListObservable extends ForwardingObservable<Collection<In
         super.setValue(getValidInstruments(value));
     }
 
-    private static ForwardingObservable<String> readCompressed(String address) {
-        ClosableObservable<String> pvObservable = new CompressedCharWaveformChannel().reader(address);
-        return new ForwardingObservable<>(pvObservable);
+
+    /**
+     * @return A forwarding observable of the instrument list PV reader.
+     */
+    private static ForwardingObservable<String> readCompressed() {
+        return new ForwardingObservable<String>(PV_READER);
     }
 
+    /**
+     * @param source A forwarding observable for the instrument list as a JSON
+     *            string
+     * @return A forwarding observable for a collection of InstrumentInfo
+     *         containing the list of instruments
+     */
     private static ForwardingObservable<Collection<InstrumentInfo>> convert(ForwardingObservable<String> source) {
         Converter<String, Collection<InstrumentInfo>> converter = new JsonDeserialisingConverter<>(
                 InstrumentInfo[].class).apply(Convert.<InstrumentInfo>toCollection());
         return new ForwardingObservable<>(new ConvertingObservable<>(source, converter));
     }
 
+    /**
+     * @param instruments A list of instruments
+     * @return The original list with any invalid elements filtered
+     */
     private Collection<InstrumentInfo> getValidInstruments(Collection<InstrumentInfo> instruments) {
         return InstrumentListUtils.filterValidInstruments(instruments, logger);
     }

@@ -52,67 +52,133 @@ import uk.ac.stfc.isis.ibex.model.UpdatedValue;
 
 public class Instrument implements BundleActivator {
 
+    /**
+     * Logs messages related to the instrument.
+     */
     private static final Logger LOG = IsisLog.getLogger("Instrument");
 
+    /**
+     * Singleton instance of the instrument.
+     */
     private static Instrument instance;
+
+    /**
+     * The context for the bundle.
+     */
     private static BundleContext context;
 
+    /**
+     * @return The instrument instance
+     */
     public static Instrument getInstance() {
         return instance;
     }
 
+    /**
+     * The preference lookup key for the initial instrument.
+     */
+    private static String initialInstrument = "initial";
+
+    /**
+     * The current instrument name as an updated value - needed for instance by
+     * banner.
+     */
     private SettableUpdatedValue<String> instrumentName = new SettableUpdatedValue<>();
+
+    /**
+     * The current instrument information.
+     */
     private InstrumentInfo instrumentInfo;
-    private final InstrumentInfo localhost;
+    
+    /**
+     * The local instrument information.
+     */
+    private final InstrumentInfo localhost = new LocalHostInstrumentInfo();
 
+    /**
+     * An observable for the instrument list.
+     */
     private final InstrumentListObservable instrumentsObservable = new InstrumentListObservable(LOG);
-    private Collection<InstrumentInfo> instruments = new ArrayList<InstrumentInfo>();
 
-    private final BaseObserver<Collection<InstrumentInfo>> instrumentsListener =
-            new BaseObserver<Collection<InstrumentInfo>>() {
-                @Override
-                public void onValue(Collection<InstrumentInfo> value) {
-                    instruments = new ArrayList<>();
-                    instruments.add(localhost);
+    /**
+     * The current list of instruments read from the instrument observable. We
+     * always start with localhost.
+     */
+    @SuppressWarnings("serial")
+    private Collection<InstrumentInfo> instruments = new ArrayList<InstrumentInfo>() {
+        {
+            add(localhost);
+        }
+    };
 
-                    List<InstrumentInfo> instrumentsAlphabetical = new ArrayList<>(value);
-                    Collections.sort(instrumentsAlphabetical, alphabeticalNameComparator());
-                    instruments.addAll(instrumentsAlphabetical);
-                }
-
-                @Override
-                public void onError(Exception e) {
-                }
-
-                @Override
-                public void onConnectionStatus(boolean isConnected) {
-                }
-            };
-
+    /**
+     * Initial instrument preference.
+     */
     private final Preferences initalPreference =
             ConfigurationScope.INSTANCE.getNode("uk.ac.stfc.isis.ibex.instrument").node("preferences");
 
-    private static String initialInstrument = "initial";
-
+    /**
+     * Constructor. Create a singleton instance of the instrument and set an
+     * observer for the instrument list.
+     */
     public Instrument() {
         instance = this;
-        localhost = new LocalHostInstrumentInfo();
-        instrumentsObservable.addObserver(instrumentsListener);
+        setInstrumentsObserver();
+    }
+
+    /**
+     * Adds an observer to the instrument list observable.
+     */
+    private void setInstrumentsObserver() {
+        instrumentsObservable.addObserver(new BaseObserver<Collection<InstrumentInfo>>() {
+
+            @Override
+            public void onValue(Collection<InstrumentInfo> value) {
+                instruments = new ArrayList<>();
+                // Localhost is always added to the instrument list separately
+                instruments.add(localhost);
+
+                List<InstrumentInfo> instrumentsAlphabetical = new ArrayList<>(value);
+                Collections.sort(instrumentsAlphabetical, alphabeticalNameComparator());
+                instruments.addAll(instrumentsAlphabetical);
+            }
+
+            @Override
+            public void onError(Exception e) {
+            }
+
+            @Override
+            public void onConnectionStatus(boolean isConnected) {
+            }
+        });
         setInstrument(initialInstrument());
     }
 
+    /**
+     * @return The current instrument name as an updated value.
+     */
     public UpdatedValue<String> name() {
         return instrumentName;
     }
 
+    /**
+     * @return The PV prefix for the current instrument.
+     */
     public String getPvPrefix() {
         return instrumentInfo.pvPrefix();
     }
 
+    /**
+     * @return The current list of instruments. Note this is read from an
+     *         observable so can vary with time.
+     */
     public Collection<InstrumentInfo> instruments() {
         return instruments;
     }
 
+    /**
+     * @return The bundle context.
+     */
     static BundleContext getContext() {
         return context;
     }
@@ -136,10 +202,15 @@ public class Instrument implements BundleActivator {
      */
     @Override
     public void stop(BundleContext bundleContext) throws Exception {
-        instrumentsObservable.close();
+        // instrumentsObservable.close();
         Instrument.context = null;
     }
 
+    /**
+     * Sets the current instrument.
+     * 
+     * @param selectedInstrument The instrument to switch to.
+     */
     public void setInstrument(InstrumentInfo selectedInstrument) {
         this.instrumentInfo = selectedInstrument;
 
@@ -169,6 +240,9 @@ public class Instrument implements BundleActivator {
                 + Integer.toString(count));
     }
 
+    /**
+     * @return The information about the current instrument.
+     */
     public InstrumentInfo currentInstrument() {
         return instrumentInfo;
     }
@@ -187,7 +261,13 @@ public class Instrument implements BundleActivator {
         }
     }
 
+    /**
+     * @return Get the information for the initial instrument. Currently fixed
+     *         as localhost. Requires that localhost always be added to the
+     *         instrument list at startup.
+     */
     private InstrumentInfo initialInstrument() {
+
         final String initalName = initalPreference.get(initialInstrument, localhost.name());
 
         return Iterables.find(instruments(), new Predicate<InstrumentInfo>() {
@@ -198,6 +278,9 @@ public class Instrument implements BundleActivator {
         }, localhost);
     }
 
+    /**
+     * Set the initial instrument which is used at the subsequent startup.
+     */
     public void setInitial() {
         initalPreference.put(initialInstrument, currentInstrument().name());
 
@@ -209,7 +292,12 @@ public class Instrument implements BundleActivator {
         }
     }
 
-    private Comparator<InstrumentInfo> alphabeticalNameComparator() {
+    /**
+     * Compares instrument infos by their name in alphabetical order.
+     * 
+     * @return The comparison value of two instrument info names alphabetically
+     */
+    private static Comparator<InstrumentInfo> alphabeticalNameComparator() {
         return new Comparator<InstrumentInfo>() {
             @Override
             public int compare(InstrumentInfo info1, InstrumentInfo info2) {

@@ -71,7 +71,7 @@ public final class InstrumentListUtils {
         if (returnValue.size() < instruments.size()) {
             logger.warn("Error while parsing instrument list PV - one or more instruments could not be read");
         } else {
-            logger.info("Instrument list PV was read successfully");
+            logger.info("Instrument list PV was read successfully: " + validInstruments.toString());
         }
 
         return returnValue;
