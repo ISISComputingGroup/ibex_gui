@@ -29,7 +29,6 @@ import org.apache.logging.log4j.Logger;
 
 import uk.ac.stfc.isis.ibex.epics.conversion.Convert;
 import uk.ac.stfc.isis.ibex.epics.conversion.Converter;
-import uk.ac.stfc.isis.ibex.epics.observing.BaseObserver;
 import uk.ac.stfc.isis.ibex.epics.observing.ClosableObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.ConvertingObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
@@ -41,37 +40,16 @@ import uk.ac.stfc.isis.ibex.json.JsonDeserialisingConverter;
  * Holds the connection to the Instrument List PV.
  * 
  */
-public class InstrumentListObservable extends ClosableObservable<Collection<InstrumentInfo>> {
+public class InstrumentListObservable extends ForwardingObservable<Collection<InstrumentInfo>> {
     
     private static final int MAX_RETRIES = 200;
     private static final int WAIT_FOR_OBSERVABLE = 100; // milliseconds
-
-    private BaseObserver<Collection<InstrumentInfo>> instrumentObserver =
-            new BaseObserver<Collection<InstrumentInfo>>() {
-
-                @Override
-                public void onValue(Collection<InstrumentInfo> value) {
-                    InstrumentListObservable.this.setValue(getValidInstruments(value));
-                }
-
-                @Override
-                public void onError(Exception e) {
-                    //
-                }
-
-                @Override
-                public void onConnectionStatus(boolean isConnected) {
-                    //
-                }
-
-            };
 
     /**
      * This is the PV that holds the list of instruments that can be selected.
      */
     private static final String ADDRESS = "CS:INSTLIST";
 
-    private final ForwardingObservable<Collection<InstrumentInfo>> instrumentsRBV;
     private Logger logger;
 
     /**
@@ -81,16 +59,17 @@ public class InstrumentListObservable extends ClosableObservable<Collection<Inst
      *            PV
      */
     public InstrumentListObservable(Logger logger) {
+        super(convert(readCompressed(ADDRESS)));
+
+        ForwardingObservable<Collection<InstrumentInfo>> source = convert(readCompressed(ADDRESS));
+        this.setSource(source);
+
         this.logger = logger;
-
         setValue(new ArrayList<InstrumentInfo>());
-
-        instrumentsRBV = convert(readCompressed(ADDRESS));
-        instrumentsRBV.addObserver(instrumentObserver);
 
         // Wait for the PV to be connected
         int i = 0;
-        while (!instrumentsRBV.isConnected() && instrumentsRBV.getValue() == null && i < MAX_RETRIES) {
+        while (!source.isConnected() && source.getValue() == null && i < MAX_RETRIES) {
             try {
                 Thread.sleep(WAIT_FOR_OBSERVABLE);
             } catch (InterruptedException e) {
@@ -101,8 +80,8 @@ public class InstrumentListObservable extends ClosableObservable<Collection<Inst
     }
 
     @Override
-    public void close() {
-        instrumentsRBV.close();
+    public void setValue(Collection<InstrumentInfo> value) {
+        super.setValue(getValidInstruments(value));
     }
 
     private static ForwardingObservable<String> readCompressed(String address) {
