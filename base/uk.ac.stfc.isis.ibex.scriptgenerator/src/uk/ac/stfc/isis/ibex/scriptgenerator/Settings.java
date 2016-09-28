@@ -136,7 +136,7 @@ public class Settings extends ModelObject {
 	}
 
 	/** 
-	 * Sets the order 
+	 * Sets the order.
 	 * @param order the order
 	 */
 	public void setOrder(Order order) {
@@ -144,7 +144,7 @@ public class Settings extends ModelObject {
 	}
 
 	/**
-	 * Gets the "Loop over each run?" checkbox value
+	 * Gets the "Loop over each run?" checkbox value.
 	 * @return the "Loop over each run?" boolean
 	 */
 	public Boolean getLoopOver() {
@@ -152,7 +152,7 @@ public class Settings extends ModelObject {
 	}
 
 	/**
-	 * Sets the "Loop over each run?" checkbox value
+	 * Sets the "Loop over each run?" checkbox value.
 	 * @param loopOver the "Loop over each run?" boolean
 	 */
 	public void setLoopOver(Boolean loopOver) {
@@ -160,7 +160,7 @@ public class Settings extends ModelObject {
 	}
 
 	/**
-	 * Gets the SANS aperture size
+	 * Gets the SANS aperture size.
 	 * @return the SANS aperture
 	 */
 	public ApertureSans getSansSize() {
@@ -168,7 +168,7 @@ public class Settings extends ModelObject {
 	}
 
 	/**
-	 * Sets the SANS aperture size
+	 * Sets the SANS aperture size.
 	 * @param sansSize the SANS aperture size
 	 */
 	public void setSansSize(ApertureSans sansSize) {
@@ -176,7 +176,7 @@ public class Settings extends ModelObject {
 	}
 
 	/**
-	 * Gets the TRANS aperture size
+	 * Gets the TRANS aperture size.
 	 * @return the TRANS aperture size
 	 */
 	public ApertureTrans getTransSize() {
@@ -184,7 +184,7 @@ public class Settings extends ModelObject {
 	}
 
 	/**
-	 * Sets the TRANS aperture size
+	 * Sets the TRANS aperture size.
 	 * @param transSize the TRANS aperture size
 	 */
 	public void setTransSize(ApertureTrans transSize) {
@@ -192,7 +192,7 @@ public class Settings extends ModelObject {
 	}
 
 	/**
-	 * Gets the Sample Geometry
+	 * Gets the Sample Geometry.
 	 * @return the Sample Geometry
 	 */
 	public SampleGeometry getGeometry() {
@@ -200,7 +200,7 @@ public class Settings extends ModelObject {
 	}
 
 	/**
-	 * Sets the Sample Geometry
+	 * Sets the Sample Geometry.
 	 * @param geometry the Sample Geometry
 	 */
 	public void setGeometry(SampleGeometry geometry) {
@@ -208,7 +208,7 @@ public class Settings extends ModelObject {
 	}
 
 	/**
-	 * Gets the Collection Mode 
+	 * Gets the Collection Mode.
 	 * @return the Collection Mode 
 	 */
 	public CollectionMode getCollection() {
@@ -216,7 +216,7 @@ public class Settings extends ModelObject {
 	}
 
 	/** 
-	 * Sets the Collection Mode
+	 * Sets the Collection Mode.
 	 * @param collection the Collection Mode
 	 */
 	public void setCollection(CollectionMode collection) {
