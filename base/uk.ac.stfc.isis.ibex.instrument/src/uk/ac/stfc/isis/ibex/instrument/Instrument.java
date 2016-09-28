@@ -134,13 +134,14 @@ public class Instrument implements BundleActivator {
 
             @Override
             public void onValue(Collection<InstrumentInfo> value) {
-                instruments = new ArrayList<>();
+                Collection<InstrumentInfo> newInstruments = new ArrayList<>();
                 // Localhost is always added to the instrument list separately
-                instruments.add(localhost);
+                newInstruments.add(localhost);
 
                 List<InstrumentInfo> instrumentsAlphabetical = new ArrayList<>(value);
                 Collections.sort(instrumentsAlphabetical, alphabeticalNameComparator());
-                instruments.addAll(instrumentsAlphabetical);
+                newInstruments.addAll(instrumentsAlphabetical);
+                instruments = newInstruments;
             }
 
             @Override
@@ -172,7 +173,7 @@ public class Instrument implements BundleActivator {
      * @return The current list of instruments. Note this is read from an
      *         observable so can vary with time.
      */
-    public Collection<InstrumentInfo> instruments() {
+    public Collection<InstrumentInfo> getInstruments() {
         return instruments;
     }
 
@@ -267,15 +268,10 @@ public class Instrument implements BundleActivator {
      *         instrument list at startup.
      */
     private InstrumentInfo initialInstrument() {
-
-        final String initalName = initalPreference.get(initialInstrument, localhost.name());
-
-        return Iterables.find(instruments(), new Predicate<InstrumentInfo>() {
-            @Override
-            public boolean apply(InstrumentInfo info) {
-                return initalName.endsWith(info.name());
-            }
-        }, localhost);
+        
+        // We can't set the initial instrument until we've got some values from
+        // the PV
+        return waitForInstrument(initalPreference.get(initialInstrument, localhost.name()));
     }
 
     /**
@@ -304,5 +300,33 @@ public class Instrument implements BundleActivator {
                 return info1.name().compareTo(info2.name());
             }
         };
+    }
+    
+    /**
+     * Waits for the specified instrument to appear in the instrument list.
+     * 
+     * @param name Instrument name to wait for
+     * @return The instrument info for the corresponding instrument
+     */
+    public InstrumentInfo waitForInstrument(final String name) {
+        final Predicate<InstrumentInfo> predicate = new Predicate<InstrumentInfo>() {
+            @Override
+            public boolean apply(InstrumentInfo info) {
+                return name.endsWith(info.name());
+            }
+        };
+
+        final int maxRetries = 200;
+        final int waitLength = 100; // milliseconds
+        int i = 0;
+        while (!Iterables.any(instruments, predicate) && i++ <= maxRetries) {
+            
+            try {
+                Thread.sleep(waitLength);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        return Iterables.find(instruments, predicate, localhost);
     }
 }

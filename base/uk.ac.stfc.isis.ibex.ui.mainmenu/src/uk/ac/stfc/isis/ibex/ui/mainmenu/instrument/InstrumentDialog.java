@@ -58,7 +58,7 @@ public class InstrumentDialog extends TitleAreaDialog {
 	protected InstrumentDialog(Shell parentShell) {
 		super(parentShell);
 
-        selectorViewModel = new InstrumentSelectionViewModel(MainMenuUI.INSTRUMENT.instruments());
+        selectorViewModel = new InstrumentSelectionViewModel(MainMenuUI.INSTRUMENT.getInstruments());
         configureErrorListener();
         selectorViewModel.addPropertyChangeListener("error", errorListener);
 	}
