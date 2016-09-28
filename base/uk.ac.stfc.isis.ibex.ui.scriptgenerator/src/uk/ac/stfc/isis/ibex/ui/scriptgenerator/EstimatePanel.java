@@ -19,9 +19,12 @@
 
 package uk.ac.stfc.isis.ibex.ui.scriptgenerator;
 
+import org.eclipse.core.databinding.Binding;
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.beans.BeanProperties;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
+import org.eclipse.core.databinding.validation.IValidator;
+import org.eclipse.jface.databinding.fieldassist.ControlDecorationSupport;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
@@ -33,10 +36,10 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 
 import uk.ac.stfc.isis.ibex.scriptgenerator.Estimate;
+import uk.ac.stfc.isis.ibex.validators.NumbersOnlyValidator;
 
 /**
  * The estimated script time composite.
- *
  */
 @SuppressWarnings("checkstyle:magicnumber")
 public class EstimatePanel extends Composite {
@@ -48,6 +51,7 @@ public class EstimatePanel extends Composite {
 	 * The default constructor.
 	 * @param parent the parent that the EstimatePanel will be placed in
 	 * @param style the style of the parent
+	 * @param estimate the estimate data
 	 */
 	public EstimatePanel(Composite parent, int style, final Estimate estimate) {
 		super(parent, style);
@@ -93,16 +97,25 @@ public class EstimatePanel extends Composite {
 		bind(estimate);
 	}
 	
+	/**
+	 * Databinding between EstimatePanel and Estimate. 
+	 * @param estimate the estimate settings
+	 */
 	public void bind(Estimate estimate) {
 		DataBindingContext ctx = new DataBindingContext();
+		IValidator validator = new NumbersOnlyValidator();
 		
         IObservableValue targetCountRate = WidgetProperties.text(SWT.Modify).observe(txtCountRate);
         IObservableValue modelCountRate = BeanProperties.value("estCountRate").observe(estimate);
-        ctx.bindValue(targetCountRate, modelCountRate);
+        Binding bindValueCountRate = ctx.bindValue(targetCountRate, modelCountRate);
+        
+        ControlDecorationSupport.create(bindValueCountRate, SWT.TOP | SWT.RIGHT);
         
         IObservableValue targetTimeBetween = WidgetProperties.text(SWT.Modify).observe(txtTimeBetween);
         IObservableValue modelTimeBetween = BeanProperties.value("estMoveTime").observe(estimate);
-        ctx.bindValue(targetTimeBetween, modelTimeBetween);
+        Binding bindValueTimeBetween = ctx.bindValue(targetTimeBetween, modelTimeBetween);
+        
+        ControlDecorationSupport.create(bindValueTimeBetween, SWT.TOP | SWT.RIGHT);
         
         IObservableValue targetScriptTime = WidgetProperties.text().observe(lblTimeValue);
         IObservableValue modelScriptTime = BeanProperties.value("estScriptTime").observe(estimate);

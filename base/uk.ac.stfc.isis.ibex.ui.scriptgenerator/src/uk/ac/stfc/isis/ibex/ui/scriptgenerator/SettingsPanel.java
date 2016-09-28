@@ -19,9 +19,12 @@
 
 package uk.ac.stfc.isis.ibex.ui.scriptgenerator;
 
+import org.eclipse.core.databinding.Binding;
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.beans.BeanProperties;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
+import org.eclipse.core.databinding.validation.IValidator;
+import org.eclipse.jface.databinding.fieldassist.ControlDecorationSupport;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.databinding.viewers.ViewersObservables;
 import org.eclipse.jface.viewers.ArrayContentProvider;
@@ -44,6 +47,7 @@ import uk.ac.stfc.isis.ibex.scriptgenerator.CollectionMode;
 import uk.ac.stfc.isis.ibex.scriptgenerator.Order;
 import uk.ac.stfc.isis.ibex.scriptgenerator.SampleGeometry;
 import uk.ac.stfc.isis.ibex.scriptgenerator.Settings;
+import uk.ac.stfc.isis.ibex.validators.NumbersOnlyValidator;
 
 /**
  * Contains all of the settings.
@@ -65,6 +69,7 @@ public class SettingsPanel extends Composite {
 	 * The default constructor.
 	 * @param parent the parent that the EstimatePanel will be placed in
 	 * @param style the style of the parent
+	 * @param settings the settings
 	 */
 	public SettingsPanel(Composite parent, int style, final Settings settings) {
 		super(parent, style);
@@ -209,6 +214,7 @@ public class SettingsPanel extends Composite {
 	 */
 	public void bind(Settings settings) {
 		DataBindingContext ctx = new DataBindingContext();
+		IValidator validator = new NumbersOnlyValidator();
 		
         IObservableValue targetOrder = ViewersObservables.observeSingleSelection(comboOrder);
         IObservableValue modelOrder = BeanProperties.value("order").observe(settings);
@@ -216,11 +222,15 @@ public class SettingsPanel extends Composite {
 		
         IObservableValue targetDoSans = WidgetProperties.text(SWT.Modify).observe(txtDoSans);
         IObservableValue modelDoSans = BeanProperties.value("doSans").observe(settings);
-        ctx.bindValue(targetDoSans, modelDoSans);
+        Binding bindValueDoSans = ctx.bindValue(targetDoSans, modelDoSans);
+        
+        ControlDecorationSupport.create(bindValueDoSans, SWT.TOP | SWT.RIGHT);
         
         IObservableValue targetDoTrans = WidgetProperties.text(SWT.Modify).observe(txtDoTrans);
         IObservableValue modelDoTrans = BeanProperties.value("doTrans").observe(settings);
-        ctx.bindValue(targetDoTrans, modelDoTrans);
+        Binding bindValueDoTrans = ctx.bindValue(targetDoTrans, modelDoTrans);
+        
+        ControlDecorationSupport.create(bindValueDoTrans, SWT.TOP | SWT.RIGHT);
 		
         IObservableValue targetLoopOver = WidgetProperties.selection().observe(btnLoopOver);
         IObservableValue modelLoopOver = BeanProperties.value("loopOver").observe(settings);
@@ -240,11 +250,15 @@ public class SettingsPanel extends Composite {
         
         IObservableValue targetSampleHeight = WidgetProperties.text(SWT.Modify).observe(txtSampleHeight);
         IObservableValue modelSampleHeight = BeanProperties.value("sampleHeight").observe(settings);
-        ctx.bindValue(targetSampleHeight, modelSampleHeight);
+        Binding bindValueSampleHeight = ctx.bindValue(targetSampleHeight, modelSampleHeight);
+        
+        ControlDecorationSupport.create(bindValueSampleHeight, SWT.TOP | SWT.RIGHT);
         
         IObservableValue targetSampleWidth = WidgetProperties.text(SWT.Modify).observe(txtSampleWidth);
         IObservableValue modelSampleWidth = BeanProperties.value("sampleWidth").observe(settings);
-        ctx.bindValue(targetSampleWidth, modelSampleWidth);
+        Binding bindValueSampleWidth = ctx.bindValue(targetSampleWidth, modelSampleWidth);
+        
+        ControlDecorationSupport.create(bindValueSampleWidth, SWT.TOP | SWT.RIGHT);
         
         IObservableValue targetCollection = ViewersObservables.observeSingleSelection(comboCollectionMode);
         IObservableValue modelCollection = BeanProperties.value("collection").observe(settings);
