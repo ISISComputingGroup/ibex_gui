@@ -67,7 +67,7 @@ public class IocPanel extends Composite {
 		glContainer.marginWidth = 0;
 		container.setLayout(glContainer);
 		
-		table = new IocTable(container, SWT.BORDER, SWT.V_SCROLL | SWT.NO_SCROLL | SWT.FULL_SELECTION);
+		table = new IocTable(container, SWT.BORDER, SWT.FULL_SELECTION);
 		table.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		
 		this.control = control;
