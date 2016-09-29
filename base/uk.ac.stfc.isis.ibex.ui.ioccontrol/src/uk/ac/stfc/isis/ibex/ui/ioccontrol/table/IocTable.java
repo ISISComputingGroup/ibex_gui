@@ -26,6 +26,7 @@ import java.util.List;
 
 import org.eclipse.core.databinding.observable.map.IObservableMap;
 import org.eclipse.jface.viewers.TableViewerColumn;
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 
 import uk.ac.stfc.isis.ibex.configserver.EditableIocState;
@@ -33,11 +34,20 @@ import uk.ac.stfc.isis.ibex.ui.ioccontrol.StateLabelProvider;
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundCellLabelProvider;
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundTable;
 
+/**
+ * Table allowing IOCs to be started and stopped.
+ * 
+ * Note that all columns in this table are not resizable as the H_SCROLL 
+ * has been removed and resizing could cause columns to disappear.
+ * 
+ * The H_SCROLL has been removed as it was appearing despite no extra 
+ * data being in the table (unsure why)
+ */
 @SuppressWarnings("checkstyle:magicnumber")
 public class IocTable extends DataboundTable<EditableIocState> {
 
 	public IocTable(Composite parent, int style, int tableStyle) {
-		super(parent, style, EditableIocState.class, tableStyle);
+		super(parent, style, EditableIocState.class, tableStyle | SWT.NO_SCROLL | SWT.V_SCROLL);
 		
 		initialise();
 	}
@@ -58,7 +68,7 @@ public class IocTable extends DataboundTable<EditableIocState> {
 	}
 
 	private void name() {
-		TableViewerColumn name = createColumn("Name", 4);
+		TableViewerColumn name = createColumn("Name", 4, false);
 		name.setLabelProvider(new DataboundCellLabelProvider<EditableIocState>(observeProperty("name")) {
 			@Override
 			protected String valueFromRow(EditableIocState row) {
@@ -68,7 +78,7 @@ public class IocTable extends DataboundTable<EditableIocState> {
 	}
 	
 	private void description() {
-		TableViewerColumn name = createColumn("Description", 4);
+		TableViewerColumn name = createColumn("Description", 4, false);
 		name.setLabelProvider(new DataboundCellLabelProvider<EditableIocState>(observeProperty("description")) {
 			@Override
 			protected String valueFromRow(EditableIocState row) {
@@ -78,7 +88,7 @@ public class IocTable extends DataboundTable<EditableIocState> {
 	}
 	
 	private void state() {
-		TableViewerColumn name = createColumn("Status", 2);
+		TableViewerColumn name = createColumn("Status", 2, false);
 		IObservableMap[] stateProperties = {observeProperty("isRunning")};
 		name.setLabelProvider(new StateLabelProvider(stateProperties));		
 	}
