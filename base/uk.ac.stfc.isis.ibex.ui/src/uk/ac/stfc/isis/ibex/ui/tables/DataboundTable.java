@@ -36,6 +36,8 @@ import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.ControlAdapter;
+import org.eclipse.swt.events.ControlEvent;
 import org.eclipse.swt.events.FocusListener;
 import org.eclipse.swt.events.KeyListener;
 import org.eclipse.swt.events.MouseListener;
@@ -79,7 +81,7 @@ public abstract class DataboundTable<TRow> extends Composite {
      */
 	public DataboundTable(Composite parent, int style, Class<TRow> rowType, int tableStyle) {
 		super(parent, style);
-		this.tableStyle = tableStyle;
+		this.tableStyle = tableStyle | SWT.BORDER;
 		this.rowType = rowType;
 
 		// GridLayout is used so that the table can be excluded from a view
@@ -112,7 +114,7 @@ public abstract class DataboundTable<TRow> extends Composite {
      * @wbp.parser.constructor
      */
 	public DataboundTable(Composite parent, int style, Class<TRow> rowType) {
-		this(parent, style, rowType, SWT.V_SCROLL | SWT.FULL_SELECTION | SWT.BORDER | SWT.HIDE_SELECTION);
+		this(parent, style, rowType, SWT.FULL_SELECTION | SWT.BORDER | SWT.HIDE_SELECTION);
 	}
 
     /**
@@ -273,9 +275,13 @@ public abstract class DataboundTable<TRow> extends Composite {
      */
 	protected void initialise() {
 		addColumns();
+		
 		viewer.setContentProvider(contentProvider);	
 				
 		table = viewer.getTable();
+		
+		addColumnMinWidth(table);
+		
 		configureTable();
 	}
 	
@@ -340,8 +346,31 @@ public abstract class DataboundTable<TRow> extends Composite {
         table.setFont(SWTResourceManager.getFont("Arial", DEFAULT_FONT_HEIGHT, SWT.NORMAL));
 	}
 	
+	/**
+	 * Adds a resize listener to all columns that cause them not to be resized to
+	 * below the minimum width.
+	 * @param cosl The columns to add the listener to
+	 */
+	private void addColumnMinWidth(final Table table) {
+		final TableColumn[] cols = table.getColumns();
+		for (final TableColumn col: cols) {
+			col.addControlListener(new ControlAdapter() {
+				@Override
+				public void controlResized(ControlEvent e) {
+					for (TableColumn otherCol : cols) {
+						// Column can't be smaller than minimum width
+						if (otherCol.getWidth() < MIN_TABLE_COLUMN_WIDTH) {
+							otherCol.setWidth(MIN_TABLE_COLUMN_WIDTH);
+						}
+					}
+				}
+			});
+		}
+		
+	}
+	
     /**
-     * Creates a new non resizeable column in the table at the end of the column
+     * Creates a new resizeable column in the table at the end of the column
      * list.
      *
      * @param title the title of the column
@@ -351,13 +380,13 @@ public abstract class DataboundTable<TRow> extends Composite {
 		TableViewerColumn viewCol = new TableViewerColumn(viewer, SWT.LEFT);
 		TableColumn col = viewCol.getColumn();
 		col.setText(title);
-		col.setResizable(false);
+		col.setResizable(true);
 		
 		return viewCol;
 	}
 	
     /**
-     * Creates a new non resizeable column in the table at the end of the column
+     * Creates a new resizeable column in the table at the end of the column
      * list with a weighting for its size.
      *
      * @param title the title of the column
@@ -365,10 +394,24 @@ public abstract class DataboundTable<TRow> extends Composite {
      * @return the table viewer column
      */
 	protected TableViewerColumn createColumn(String title, int widthWeighting) {
+		return createColumn(title, widthWeighting, true);
+	}
+	
+    /**
+     * Creates a new column in the table at the end of the column
+     * list with a weighting for its size.
+     *
+     * @param title the title of the column
+     * @param widthWeighting the width weighting
+     * @param resizable whether the column is resizable
+     * @return the table viewer column
+     */
+	protected TableViewerColumn createColumn(String title, int widthWeighting, boolean resizable) {
 		TableViewerColumn tableColumn = createColumn(title);
-        tableColumnLayout().setColumnData(tableColumn.getColumn(),
-                new ColumnWeightData(widthWeighting, MIN_TABLE_COLUMN_WIDTH, false));
-
+        TableColumn col = tableColumn.getColumn();
+		tableColumnLayout().setColumnData(col,
+                new ColumnWeightData(widthWeighting, MIN_TABLE_COLUMN_WIDTH, resizable));
+        
 		return tableColumn;
 	}
 	
