@@ -411,7 +411,7 @@ public abstract class DataboundTable<TRow> extends Composite {
         TableColumn col = tableColumn.getColumn();
 		tableColumnLayout().setColumnData(col,
                 new ColumnWeightData(widthWeighting, MIN_TABLE_COLUMN_WIDTH, resizable));
-        
+        col.setResizable(resizable);
 		return tableColumn;
 	}
 	

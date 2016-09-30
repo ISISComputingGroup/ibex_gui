@@ -118,7 +118,7 @@ public class InstrumentSelectionPanel extends Composite {
     }
 
     private void createTable(Composite parent, Collection<InstrumentInfo> instruments) {
-        instrumentTable = new InstrumentTable(parent, SWT.NONE, SWT.V_SCROLL | SWT.NO_SCROLL | SWT.FULL_SELECTION, instruments);
+        instrumentTable = new InstrumentTable(parent, SWT.NONE, SWT.FULL_SELECTION, instruments);
         GridData gdInstrumentTable = new GridData(SWT.FILL, SWT.FILL, true, true, 3, 1);
         gdInstrumentTable.heightHint = 300;
         instrumentTable.setLayoutData(gdInstrumentTable);

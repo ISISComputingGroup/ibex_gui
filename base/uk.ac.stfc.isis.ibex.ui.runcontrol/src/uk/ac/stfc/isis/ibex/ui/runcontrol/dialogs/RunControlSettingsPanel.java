@@ -77,8 +77,7 @@ public class RunControlSettingsPanel extends Composite {
 		this.runControlServer = runControlServer;
         setLayout(new GridLayout(2, false));
 
-        table = new RunControlSettingsTable(this, SWT.NONE,
-                SWT.V_SCROLL | SWT.NO_SCROLL | SWT.FULL_SELECTION | SWT.BORDER);
+        table = new RunControlSettingsTable(this, SWT.NONE, SWT.FULL_SELECTION | SWT.BORDER);
         GridData gdTable = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
         gdTable.heightHint = 200;
 		table.setLayoutData(gdTable);
