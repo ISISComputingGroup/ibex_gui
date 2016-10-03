@@ -75,6 +75,7 @@ public class View extends ViewPart {
 		
 		rows = new ArrayList<Row>();
 		rows.add(new Row());
+		builder.setSettings(settings);
         builder.setRows(rows);
 	}
 
