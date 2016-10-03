@@ -21,6 +21,7 @@ package uk.ac.stfc.isis.ibex.ui.scriptgenerator;
 
 import org.eclipse.core.databinding.Binding;
 import org.eclipse.core.databinding.DataBindingContext;
+import org.eclipse.core.databinding.UpdateValueStrategy;
 import org.eclipse.core.databinding.beans.BeanProperties;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.core.databinding.validation.IValidator;
@@ -216,19 +217,22 @@ public class SettingsPanel extends Composite {
 		DataBindingContext ctx = new DataBindingContext();
 		IValidator validator = new NumbersOnlyValidator();
 		
+		UpdateValueStrategy strategy = new UpdateValueStrategy();
+		strategy.setAfterGetValidator(validator);
+		
         IObservableValue targetOrder = ViewersObservables.observeSingleSelection(comboOrder);
         IObservableValue modelOrder = BeanProperties.value("order").observe(settings);
         ctx.bindValue(targetOrder, modelOrder);
 		
         IObservableValue targetDoSans = WidgetProperties.text(SWT.Modify).observe(txtDoSans);
         IObservableValue modelDoSans = BeanProperties.value("doSans").observe(settings);
-        Binding bindValueDoSans = ctx.bindValue(targetDoSans, modelDoSans);
+        Binding bindValueDoSans = ctx.bindValue(targetDoSans, modelDoSans, strategy, null);
         
         ControlDecorationSupport.create(bindValueDoSans, SWT.TOP | SWT.RIGHT);
         
         IObservableValue targetDoTrans = WidgetProperties.text(SWT.Modify).observe(txtDoTrans);
         IObservableValue modelDoTrans = BeanProperties.value("doTrans").observe(settings);
-        Binding bindValueDoTrans = ctx.bindValue(targetDoTrans, modelDoTrans);
+        Binding bindValueDoTrans = ctx.bindValue(targetDoTrans, modelDoTrans, strategy, null);
         
         ControlDecorationSupport.create(bindValueDoTrans, SWT.TOP | SWT.RIGHT);
 		
@@ -250,13 +254,13 @@ public class SettingsPanel extends Composite {
         
         IObservableValue targetSampleHeight = WidgetProperties.text(SWT.Modify).observe(txtSampleHeight);
         IObservableValue modelSampleHeight = BeanProperties.value("sampleHeight").observe(settings);
-        Binding bindValueSampleHeight = ctx.bindValue(targetSampleHeight, modelSampleHeight);
+        Binding bindValueSampleHeight = ctx.bindValue(targetSampleHeight, modelSampleHeight, strategy, null);
         
         ControlDecorationSupport.create(bindValueSampleHeight, SWT.TOP | SWT.RIGHT);
         
         IObservableValue targetSampleWidth = WidgetProperties.text(SWT.Modify).observe(txtSampleWidth);
         IObservableValue modelSampleWidth = BeanProperties.value("sampleWidth").observe(settings);
-        Binding bindValueSampleWidth = ctx.bindValue(targetSampleWidth, modelSampleWidth);
+        Binding bindValueSampleWidth = ctx.bindValue(targetSampleWidth, modelSampleWidth, strategy, null);
         
         ControlDecorationSupport.create(bindValueSampleWidth, SWT.TOP | SWT.RIGHT);
         

@@ -21,6 +21,7 @@ package uk.ac.stfc.isis.ibex.ui.scriptgenerator;
 
 import org.eclipse.core.databinding.Binding;
 import org.eclipse.core.databinding.DataBindingContext;
+import org.eclipse.core.databinding.UpdateValueStrategy;
 import org.eclipse.core.databinding.beans.BeanProperties;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.core.databinding.validation.IValidator;
@@ -105,15 +106,18 @@ public class EstimatePanel extends Composite {
 		DataBindingContext ctx = new DataBindingContext();
 		IValidator validator = new NumbersOnlyValidator();
 		
+		UpdateValueStrategy strategy = new UpdateValueStrategy();
+		strategy.setBeforeSetValidator(validator);
+		
         IObservableValue targetCountRate = WidgetProperties.text(SWT.Modify).observe(txtCountRate);
         IObservableValue modelCountRate = BeanProperties.value("estCountRate").observe(estimate);
-        Binding bindValueCountRate = ctx.bindValue(targetCountRate, modelCountRate);
+        Binding bindValueCountRate = ctx.bindValue(targetCountRate, modelCountRate, strategy, null);
         
         ControlDecorationSupport.create(bindValueCountRate, SWT.TOP | SWT.RIGHT);
         
         IObservableValue targetTimeBetween = WidgetProperties.text(SWT.Modify).observe(txtTimeBetween);
         IObservableValue modelTimeBetween = BeanProperties.value("estMoveTime").observe(estimate);
-        Binding bindValueTimeBetween = ctx.bindValue(targetTimeBetween, modelTimeBetween);
+        Binding bindValueTimeBetween = ctx.bindValue(targetTimeBetween, modelTimeBetween, strategy, null);
         
         ControlDecorationSupport.create(bindValueTimeBetween, SWT.TOP | SWT.RIGHT);
         
