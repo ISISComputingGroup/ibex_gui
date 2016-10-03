@@ -35,6 +35,9 @@ public class PeriodsViewModel extends ModelObject {
 
 	private PeriodSettings settings;
 	private UpdatedValue<Collection<String>> periodFiles;
+
+    private boolean hardwarePeriodsEnabled;
+    private boolean radiosEnabled;
 	
     /**
      * Sets the period settings.
@@ -142,6 +145,7 @@ public class PeriodsViewModel extends ModelObject {
 	
 	public void setPeriodType(int index) {
 		settings.setPeriodType(PeriodControlType.values()[index]);
+        updateWindow(PeriodControlType.values()[index]);
 	} 
 	
 	public int getSoftwarePeriods() {
@@ -171,4 +175,44 @@ public class PeriodsViewModel extends ModelObject {
 	public List<Period> periods() {
 		return settings.getPeriods();
 	}
+
+    public void updateWindow(PeriodControlType type) {
+        setRadiosEnabled(false);
+        setHardwarePeriodsEnabled(false);
+        if (type == PeriodControlType.HARDWARE_EXTERNAL) {
+            setRadiosEnabled(true);
+        } else if (type == PeriodControlType.HARDWARE_DAE) {
+            setRadiosEnabled(true);
+            setHardwarePeriodsEnabled(true);
+        }
+    }
+
+    /**
+     * @return the hardwarePeriodsEnabled
+     */
+    public boolean isHardwarePeriodsEnabled() {
+        return hardwarePeriodsEnabled;
+    }
+
+    /**
+     * @param hardwarePeriodsEnabled the hardwarePeriodsEnabled to set
+     */
+    public void setHardwarePeriodsEnabled(boolean hardwarePeriodsEnabled) {
+        firePropertyChange("hardwarePeriodsEnabled", this.hardwarePeriodsEnabled,
+                this.hardwarePeriodsEnabled = hardwarePeriodsEnabled);
+    }
+
+    /**
+     * @return the radiosEnabled
+     */
+    public boolean isRadiosEnabled() {
+        return radiosEnabled;
+    }
+
+    /**
+     * @param radiosEnabled the radiosEnabled to set
+     */
+    public void setRadiosEnabled(boolean radiosEnabled) {
+        firePropertyChange("radiosEnabled", this.radiosEnabled, this.radiosEnabled = radiosEnabled);
+    }
 }

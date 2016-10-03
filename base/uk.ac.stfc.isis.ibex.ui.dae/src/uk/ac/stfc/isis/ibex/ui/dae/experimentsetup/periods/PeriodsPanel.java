@@ -36,6 +36,7 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
@@ -59,6 +60,7 @@ public class PeriodsPanel extends Composite {
     private Label lblPeriodFileRB;
     private Button radioSpecifyParameters;
     private Button radioUsePeriodFile;
+    private Label lblNote;
 
     private Group grpSettings;
     private Composite cmpSwitchTypeSoftware;
@@ -67,9 +69,6 @@ public class PeriodsPanel extends Composite {
     private Composite cmpSwitchSourceFile;
     private Composite cmpSwitchSourceParam;
     private PeriodsTableView tblPeriods;
-
-    private PeriodControlType periodType;
-    private PeriodSetupSource periodSource;
 
     private StackLayout stackType = new StackLayout();
     private StackLayout stackSource = new StackLayout();
@@ -202,7 +201,7 @@ public class PeriodsPanel extends Composite {
         cmpSwitchSourceParam = new Composite(cmpSource, SWT.NONE);
         cmpSwitchSourceParam.setLayout(gl_noMargins);
 
-        Label lblNote = new Label(cmpSwitchSourceParam, SWT.NONE);
+        lblNote = new Label(cmpSwitchSourceParam, SWT.NONE);
         lblNote.setText("Period frames are not used in external signal control mode");
         lblNote.setFont(JFaceResources.getFontRegistry().getItalic(JFaceResources.DEFAULT_FONT));
 
@@ -278,6 +277,13 @@ public class PeriodsPanel extends Composite {
 		bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(txtHardwarePeriods), BeanProperties.value("hardwarePeriods").observe(viewModel));
 		bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(txtOutputDelay), BeanProperties.value("outputDelay").observe(viewModel));
 
+        bindingContext.bindValue(WidgetProperties.enabled().observe(txtHardwarePeriods),
+                BeanProperties.value("hardwarePeriodsEnabled").observe(viewModel));
+        bindingContext.bindValue(WidgetProperties.enabled().observe(radioSpecifyParameters),
+                BeanProperties.value("radiosEnabled").observe(viewModel));
+        bindingContext.bindValue(WidgetProperties.enabled().observe(radioUsePeriodFile),
+                BeanProperties.value("radiosEnabled").observe(viewModel));
+
 		setPeriods(viewModel.periods());
 		viewModel.addPropertyChangeListener("periods", new PropertyChangeListener() {
 			@Override
@@ -286,24 +292,24 @@ public class PeriodsPanel extends Composite {
 			}
 		});
 
-        viewModel.addPropertyChangeListener("setupSource", new PropertyChangeListener() {
-            @Override
-            public void propertyChange(PropertyChangeEvent evt) {
-                periodSource = model.getSetupSource();
-                updateWindow();
-            }
-        });
-
         viewModel.addPropertyChangeListener("periodType", new PropertyChangeListener() {
             @Override
             public void propertyChange(PropertyChangeEvent evt) {
-                periodType = PeriodControlType.values()[model.getPeriodType()];
-                updateWindow();
+                System.out.println(evt.getNewValue());
+                updateType(matchType((PeriodControlType) evt.getNewValue()));
+            }
+
+        });
+
+        viewModel.addPropertyChangeListener("setupSource", new PropertyChangeListener() {
+            @Override
+            public void propertyChange(PropertyChangeEvent evt) {
+                System.out.println(evt.getNewValue());
+                updateSource(matchSource((PeriodSetupSource) evt.getNewValue()));
             }
         });
-        periodSource = model.getSetupSource();
-        periodType = PeriodControlType.values()[model.getPeriodType()];
-        updateWindow();
+        updateType(matchType(PeriodControlType.values()[model.getPeriodType()]));
+        updateSource(matchSource(model.getSetupSource()));
 	}
 	
 	private void setPeriods(final List<Period> newPeriods) {
@@ -315,33 +321,39 @@ public class PeriodsPanel extends Composite {
 		});
 	}
 
-    private void updateWindow() {
+    private Control matchType(PeriodControlType type) {
+        if (type == PeriodControlType.SOFTWARE) {
+            return cmpSwitchTypeSoftware;
+        } else {
+            return cmpSwitchTypeHardware;
+        }
+    }
+
+    private Control matchSource(PeriodSetupSource type) {
+        if (type == PeriodSetupSource.FILE) {
+            radioUsePeriodFile.setSelection(true);
+            return cmpSwitchSourceFile;
+        } else {
+            radioSpecifyParameters.setSelection(true);
+            return cmpSwitchSourceParam;
+        }
+    }
+
+    private void updateType(final Control top) {
         DISPLAY.asyncExec(new Runnable() {
             @Override
             public void run() {
-                txtHardwarePeriods.setEnabled(true);
-                radioSpecifyParameters.setEnabled(false);
-                radioUsePeriodFile.setEnabled(false);
-                stackType.topControl = cmpSwitchTypeSoftware;
-                if ((periodType == PeriodControlType.HARDWARE_DAE)
-                        || (periodType == PeriodControlType.HARDWARE_EXTERNAL)) {
-                    radioSpecifyParameters.setEnabled(true);
-                    radioUsePeriodFile.setEnabled(true);
-                    stackType.topControl = cmpSwitchTypeHardware;
-                    if (periodType == PeriodControlType.HARDWARE_EXTERNAL) {
-                        txtHardwarePeriods.setEnabled(false);
-                    }
-                }
-                if (periodSource == PeriodSetupSource.PARAMETERS) {
-                    radioUsePeriodFile.setSelection(false);
-                    radioSpecifyParameters.setSelection(true);
-                    stackSource.topControl = cmpSwitchSourceParam;
-                } else {
-                    radioSpecifyParameters.setSelection(false);
-                    radioUsePeriodFile.setSelection(true);
-                    stackSource.topControl = cmpSwitchSourceFile;
-                }
+                stackType.topControl = top;
                 grpSettings.layout();
+            }
+        });
+	}
+
+    private void updateSource(final Control top) {
+        DISPLAY.asyncExec(new Runnable() {
+            @Override
+            public void run() {
+                stackSource.topControl = top;
                 cmpSource.layout();
             }
         });
