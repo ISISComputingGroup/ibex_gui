@@ -19,6 +19,7 @@
 
 package uk.ac.stfc.isis.ibex.scriptgenerator;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -29,10 +30,9 @@ import uk.ac.stfc.isis.ibex.model.ModelObject;
  * Generates Python code based on values in the Script Generator table and the settings.
  */
 public class PythonBuilder extends ModelObject {
-	private int doSans = 1;
-	private int doTrans = 1;
 	private Collection<Row> rows;
-	private StringBuilder script = new StringBuilder();
+	private Settings settings;
+	private StringBuilder script;
 	
 	/**
 	 * The default constructor.
@@ -64,33 +64,25 @@ public class PythonBuilder extends ModelObject {
 	 * @param value a numerical value for the "width" and "height", or the type of geometry, e.g. "disc"
 	 * @return
 	 */
-	private String setSamplePar(String name, String value) {
-		String samplePar = String.format("    set_sample_par(%s, %s)", name, value);
+	private String setSamplePar(String name, String value) {	
+		String samplePar = String.format("    set_sample_par(\'%s\', \'%s\') \n", name, value);
 		
 		return samplePar;
 	}
-
-	/**
-	 * Sets the "Do SANS:" text box value.
-	 * @param doSans the do SANS value
-	 */
-	private void setDoSans(int doSans) {
-		this.doSans = doSans;
-	}
 	
-//	/**
-//	 * sets the aperture for the sans and trans aperture drop-down.
-//	 * @param value
-//	 */
-//	private void setAperture(combobox value) {
-//		String aperture;
-//		
-//		if (value is medium) {
-//			aperture = "set_aperture('medium')";
-//		}
-//		
-//		return aperture;
-//	}
+	private String setSans() {
+		StringBuilder sansLoop = new StringBuilder();
+		
+		sansLoop.append(String.format("\nfor i in range(%d):\n", settings.getDoSans()));
+		
+		for (Row row: rows) {
+			sansLoop.append(String.format("    set_aperture('%s')", settings.getSansSize()));
+			sansLoop.append(String.format("lm.dosans_normal(position='%d%, title='%s%', uamps='what is this', thickness='%s', rtype='and this'\n", 
+					row.getPosition(), row.getSampleName(), row.getThickness()));
+		}
+		
+		return sansLoop.toString();
+	}
 	
 	/**
 	 * Receives and sets the rows from the view.
@@ -102,11 +94,17 @@ public class PythonBuilder extends ModelObject {
 		createScript();
 	}
 	
+	public void setSettings(Settings settings) {
+		this.settings = settings;
+	}
+	
 	/**
 	 * Returns the script back to the view to be displayed.
 	 * @return the completed script
 	 */
 	public String getScript() {
+		createScript();
+		
 		return script.toString();
 	}
 	
@@ -114,10 +112,17 @@ public class PythonBuilder extends ModelObject {
 	 * Calls relevant internal methods in order to create a valid Python script.
 	 */
 	public void createScript() {
+		script = new StringBuilder();
+		
 		script.append(generateHeader());
 		
-		for (Row row : rows) {
-			script.append("position = " + row.getPosition());
+		script.append(setSamplePar("width", settings.getSampleWidth().toString()));
+		script.append(setSamplePar("height", settings.getSampleHeight().toString()));
+		script.append(setSamplePar("geometry", settings.getGeometry().toString()));
+		
+		
+		script.append(setSans());
+		
+
 		}
-	}
 }
