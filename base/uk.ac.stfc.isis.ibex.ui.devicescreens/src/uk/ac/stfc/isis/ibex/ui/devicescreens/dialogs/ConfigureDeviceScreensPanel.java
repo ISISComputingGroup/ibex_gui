@@ -94,7 +94,6 @@ public class ConfigureDeviceScreensPanel extends Composite {
 
         createListGroup();
         createTargetGroup();
-
     }
 
     private void createListGroup() {
@@ -120,7 +119,7 @@ public class ConfigureDeviceScreensPanel extends Composite {
             @Override
             public void keyPressed(KeyEvent e) {
                 if (e.keyCode == SWT.DEL) {
-                    // groupEditorViewModel.removeGroup(groupList.getSelectionIndex());
+                    deleteScreen();
                 }
             }
         });
@@ -137,7 +136,8 @@ public class ConfigureDeviceScreensPanel extends Composite {
         btnUp.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
-                // groupEditorViewModel.moveGroupUp(groupList.getSelectionIndex());
+                viewModel.moveScreenUp(devicesList.getSelectionIndex());
+                devicesViewer.refresh();
             }
         });
 
@@ -149,7 +149,8 @@ public class ConfigureDeviceScreensPanel extends Composite {
         btnDown.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
-                // groupEditorViewModel.moveGroupDown(groupList.getSelectionIndex());
+                viewModel.moveScreenDown(devicesList.getSelectionIndex());
+                devicesViewer.refresh();
             }
         });
 
@@ -162,21 +163,50 @@ public class ConfigureDeviceScreensPanel extends Composite {
         GridData gdBtnAdd = new GridData(SWT.LEFT, SWT.BOTTOM, false, false, 1, 1);
         gdBtnAdd.widthHint = 100;
         btnAdd.setLayoutData(gdBtnAdd);
+        btnAdd.addSelectionListener(new SelectionAdapter() {
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                viewModel.addScreen();
+                devicesViewer.refresh();
+            }
+        });
 
         Button btnDelete = new Button(btnsComposite, SWT.NONE);
         btnDelete.setText("Delete");
         GridData gdBtnDelete = new GridData(SWT.LEFT, SWT.BOTTOM, false, false, 1, 1);
         gdBtnDelete.widthHint = 100;
         btnDelete.setLayoutData(gdBtnDelete);
+        btnDelete.addSelectionListener(new SelectionAdapter() {
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                deleteScreen();
+            }
+        });
 
         devicesViewer.addSelectionChangedListener(new ISelectionChangedListener() {
-
             @Override
             public void selectionChanged(SelectionChangedEvent arg0) {
                 int selectionIndex = devicesList.getSelectionIndex();
                 viewModel.setSelectedScreen(selectionIndex);
             }
         });
+    }
+
+    /**
+     * Deletes the screen and selects the previous item.
+     */
+    private void deleteScreen() {
+        int index = devicesList.getSelectionIndex();
+        viewModel.deleteScreen(devicesList.getSelectionIndex());
+        devicesViewer.refresh();
+
+        if (index > 0 && index < devicesList.getItemCount()) {
+            --index;
+        } else if (index >= devicesList.getItemCount()) {
+            index = devicesList.getItemCount() - 1;
+        }
+
+        devicesList.select(index);
     }
 
     private void createTargetGroup() {
@@ -214,7 +244,6 @@ public class ConfigureDeviceScreensPanel extends Composite {
 
         targetSelect = new TargetNameWidget(detailsComposite, availableOPIs, viewModel);
         targetSelect.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-        targetSelect.bindToSelected(devicesViewer);
 
         Label lblDescription = new Label(detailsComposite, SWT.NONE);
         lblDescription.setLayoutData(new GridData(SWT.RIGHT, SWT.TOP, false, false, 1, 1));

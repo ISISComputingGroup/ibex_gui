@@ -19,19 +19,18 @@
 
 package uk.ac.stfc.isis.ibex.ui.devicescreens.dialogs;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.beans.BeanProperties;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ComboViewer;
-import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.jface.viewers.ListViewer;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
-import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -40,10 +39,7 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Text;
 
-import uk.ac.stfc.isis.ibex.opis.Opi;
-import uk.ac.stfc.isis.ibex.synoptic.model.desc.TargetDescription;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.TargetType;
 import uk.ac.stfc.isis.ibex.ui.devicescreens.models.DeviceScreensDescriptionViewModel;
 
@@ -53,10 +49,7 @@ public class TargetNameWidget extends Composite {
 	private boolean updateLock;
     private DeviceScreensDescriptionViewModel viewModel;
 	private TargetType type;
-	private Collection<String> availableOPIs;
-
-    /** The text box for holding the description. **/
-    private Text txtDescription;
+    private List<String> availableOPIs;
 
 
     public TargetNameWidget(Composite parent, Collection<String> availableOPIs,
@@ -65,7 +58,9 @@ public class TargetNameWidget extends Composite {
 		
         this.viewModel = viewModel;
 		
-		this.availableOPIs = availableOPIs;
+        this.availableOPIs = new ArrayList<>(availableOPIs);
+        // Insert a blank option for the OPIs
+        this.availableOPIs.add(0, "");
 		
 		createControls(this);
 
@@ -125,6 +120,11 @@ public class TargetNameWidget extends Composite {
             }
         });
         btnClearSelection.setText("Clear Target");
+
+        DataBindingContext bindingContext = new DataBindingContext();
+
+        bindingContext.bindValue(WidgetProperties.selection().observe(cmboOpiName.getCombo()),
+                BeanProperties.value("currentKey").observe(viewModel), null, null);
 	}
 	
 	
@@ -146,39 +146,5 @@ public class TargetNameWidget extends Composite {
 //            }
 //        }
 	}
-	
-	public void setTarget(TargetDescription target) {
-		updateLock = true;
-		
-		if (target == null) {
-			cmboOpiName.getCombo().select(-1);
-        } else {
-            this.type = target.type();
-            String name = Opi.getDefault().descriptionsProvider().guessOpiName(target.name());
-            if (name == "") {
-                // If no OPI found leave the selection blank
-                cmboOpiName.setSelection(null);
-            } else {
-                ISelection selection = new StructuredSelection(name);
-                cmboOpiName.setSelection(selection);
-            }
-		}
-		
-		updateLock = false;
-	}
-
-    public void bindToSelected(ListViewer devicesViewer) {
-        DataBindingContext bindingContext = new DataBindingContext();
-
-//        bindingContext.bindValue(
-//                WidgetProperties.selection().observe(cmboOpiName.getCombo()), ViewerProperties.singleSelection()
-//                        .value(BeanProperties.value("key", DeviceDescription.class)).observe(devicesViewer),
-//                null, null);
-
-        bindingContext.bindValue(
-                WidgetProperties.selection().observe(cmboOpiName.getCombo()),
-                BeanProperties.value("currentKey").observe(viewModel),
-                null, null);
-    }
 
 }

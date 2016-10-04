@@ -22,8 +22,12 @@
  */
 package uk.ac.stfc.isis.ibex.ui.devicescreens.models;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
+import uk.ac.stfc.isis.ibex.configserver.editing.DefaultName;
 import uk.ac.stfc.isis.ibex.devicescreens.desc.DeviceDescription;
 import uk.ac.stfc.isis.ibex.devicescreens.desc.DeviceScreensDescription;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
@@ -55,16 +59,21 @@ public class DeviceScreensDescriptionViewModel extends ModelObject {
      * @param selectionIndex
      */
     public void setSelectedScreen(int selectionIndex) {
-        DeviceDescription newDescription = null;
-
+        DeviceDescription newDescription = new DeviceDescription();
+        
+        // Valid selection
         try {
             newDescription = description.getDevices().get(selectionIndex);
         } catch (IndexOutOfBoundsException e) {
-            newDescription = null;
+            // No item is selected - may be it was deleted
+            // Clear the cached values
+            setCurrentName("");
+            setCurrentKey("");
+            setCurrentDescription("");
+            return;
         }
 
         firePropertyChange("SelectedScreen", selectedScreen, selectedScreen = newDescription);
-
         // Update cached values to match selection
         setCurrentName(selectedScreen.getName());
         setCurrentKey(selectedScreen.getKey());
@@ -119,6 +128,51 @@ public class DeviceScreensDescriptionViewModel extends ModelObject {
         String name = Opi.getDefault().descriptionsProvider().guessOpiName(targetName);
         OpiDescription opi = Opi.getDefault().descriptionsProvider().getDescription(name);
         return opi;
+    }
+
+    public void deleteScreen(int index) {
+        if (index >= 0 && index < description.getDevices().size()) {
+            List<DeviceDescription> oldList = new ArrayList<>(description.getDevices());
+            // Delete it
+            description.getDevices().remove(index);
+            firePropertyChange("Screens", oldList, description.getDevices());
+        }
+    }
+
+    public void addScreen() {
+        List<DeviceDescription> oldList = new ArrayList<>(description.getDevices());
+
+        DefaultName namer = new DefaultName("Screen", " ", true);
+        List<String> names = new ArrayList<>();
+        for (DeviceDescription d : oldList) {
+            names.add(d.getName());
+        }
+
+        DeviceDescription newScreen = new DeviceDescription();
+        newScreen.setName(namer.getUnique(names));
+        newScreen.setKey("");
+        newScreen.setType("");
+
+        description.getDevices().add(newScreen);
+        firePropertyChange("Screens", oldList, description.getDevices());
+    }
+
+    public void moveScreenUp(int index) {
+        if (index > 0) {
+            swapScreens(index, index - 1);
+        }
+    }
+
+    public void moveScreenDown(int index) {
+        if (index < description.getDevices().size() - 1) {
+            swapScreens(index, index + 1);
+        }
+    }
+
+    private void swapScreens(int selected, int toSwapWith) {
+        List<DeviceDescription> oldOrder = new ArrayList<>(description.getDevices());
+        Collections.swap(description.getDevices(), selected, toSwapWith);
+        firePropertyChange("Screens", oldOrder, description.getDevices());
     }
 
 }
