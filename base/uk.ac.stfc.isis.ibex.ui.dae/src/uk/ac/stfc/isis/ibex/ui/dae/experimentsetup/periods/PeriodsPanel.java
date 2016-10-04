@@ -202,7 +202,7 @@ public class PeriodsPanel extends Composite {
         cmpSwitchSourceParam.setLayout(gl_noMargins);
 
         lblNote = new Label(cmpSwitchSourceParam, SWT.NONE);
-        lblNote.setText("Period frames are not used in external signal control mode");
+        lblNote.setText("Frames are not used in external signal control mode");
         lblNote.setFont(JFaceResources.getFontRegistry().getItalic(JFaceResources.DEFAULT_FONT));
 
         tblPeriods = new PeriodsTableView(cmpSwitchSourceParam, SWT.NONE);
@@ -278,16 +278,22 @@ public class PeriodsPanel extends Composite {
 		bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(txtOutputDelay), BeanProperties.value("outputDelay").observe(viewModel));
 
         bindingContext.bindValue(WidgetProperties.enabled().observe(txtHardwarePeriods),
-                BeanProperties.value("hardwarePeriodsEnabled").observe(viewModel));
+                BeanProperties.value("internalPeriod").observe(viewModel));
         bindingContext.bindValue(WidgetProperties.enabled().observe(radioSpecifyParameters),
-                BeanProperties.value("radiosEnabled").observe(viewModel));
+                BeanProperties.value("hardwarePeriod").observe(viewModel));
         bindingContext.bindValue(WidgetProperties.enabled().observe(radioUsePeriodFile),
-                BeanProperties.value("radiosEnabled").observe(viewModel));
+                BeanProperties.value("hardwarePeriod").observe(viewModel));
 
-		setPeriods(viewModel.periods());
+        viewModel.addPropertyChangeListener("internalPeriod", new PropertyChangeListener() {
+            @Override
+            public void propertyChange(PropertyChangeEvent evt) {
+                lblNote.setVisible(!model.isInternalPeriod());
+            }
+        });
+
 		viewModel.addPropertyChangeListener("periods", new PropertyChangeListener() {
 			@Override
-			public void propertyChange(PropertyChangeEvent arg0) {
+            public void propertyChange(PropertyChangeEvent evt) {
 				setPeriods(viewModel.periods());
 			}
 		});
@@ -295,8 +301,7 @@ public class PeriodsPanel extends Composite {
         viewModel.addPropertyChangeListener("periodType", new PropertyChangeListener() {
             @Override
             public void propertyChange(PropertyChangeEvent evt) {
-                System.out.println(evt.getNewValue());
-                updateType(matchType((PeriodControlType) evt.getNewValue()));
+                updateTypeStack(matchType((PeriodControlType) evt.getNewValue()));
             }
 
         });
@@ -304,12 +309,13 @@ public class PeriodsPanel extends Composite {
         viewModel.addPropertyChangeListener("setupSource", new PropertyChangeListener() {
             @Override
             public void propertyChange(PropertyChangeEvent evt) {
-                System.out.println(evt.getNewValue());
-                updateSource(matchSource((PeriodSetupSource) evt.getNewValue()));
+                updateSourceStack(matchSource((PeriodSetupSource) evt.getNewValue()));
             }
         });
-        updateType(matchType(PeriodControlType.values()[model.getPeriodType()]));
-        updateSource(matchSource(model.getSetupSource()));
+
+        setPeriods(viewModel.periods());
+        updateTypeStack(matchType(PeriodControlType.values()[model.getPeriodType()]));
+        updateSourceStack(matchSource(model.getSetupSource()));
 	}
 	
 	private void setPeriods(final List<Period> newPeriods) {
@@ -339,7 +345,7 @@ public class PeriodsPanel extends Composite {
         }
     }
 
-    private void updateType(final Control top) {
+    private void updateTypeStack(final Control top) {
         DISPLAY.asyncExec(new Runnable() {
             @Override
             public void run() {
@@ -349,7 +355,7 @@ public class PeriodsPanel extends Composite {
         });
 	}
 
-    private void updateSource(final Control top) {
+    private void updateSourceStack(final Control top) {
         DISPLAY.asyncExec(new Runnable() {
             @Override
             public void run() {

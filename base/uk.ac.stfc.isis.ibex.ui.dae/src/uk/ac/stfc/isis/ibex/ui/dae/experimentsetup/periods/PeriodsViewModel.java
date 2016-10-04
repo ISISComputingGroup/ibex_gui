@@ -36,8 +36,8 @@ public class PeriodsViewModel extends ModelObject {
 	private PeriodSettings settings;
 	private UpdatedValue<Collection<String>> periodFiles;
 
-    private boolean hardwarePeriodsEnabled;
-    private boolean radiosEnabled;
+    private boolean internalPeriod;
+    private boolean hardwarePeriod;
 	
     /**
      * Sets the period settings.
@@ -140,11 +140,12 @@ public class PeriodsViewModel extends ModelObject {
 	}
 	
 	public int getPeriodType() {
+        updateWindow(PeriodControlType.values()[settings.getPeriodType().ordinal()]);
 		return settings.getPeriodType().ordinal();
 	}
 	
 	public void setPeriodType(int index) {
-		settings.setPeriodType(PeriodControlType.values()[index]);
+        settings.setPeriodType(PeriodControlType.values()[index]);
         updateWindow(PeriodControlType.values()[index]);
 	} 
 	
@@ -177,42 +178,29 @@ public class PeriodsViewModel extends ModelObject {
 	}
 
     public void updateWindow(PeriodControlType type) {
-        setRadiosEnabled(false);
-        setHardwarePeriodsEnabled(false);
+        setHardwarePeriod(false);
+        setInternalPeriod(false);
         if (type == PeriodControlType.HARDWARE_EXTERNAL) {
-            setRadiosEnabled(true);
+            setHardwarePeriod(true);
         } else if (type == PeriodControlType.HARDWARE_DAE) {
-            setRadiosEnabled(true);
-            setHardwarePeriodsEnabled(true);
+            setHardwarePeriod(true);
+            setInternalPeriod(true);
         }
     }
 
-    /**
-     * @return the hardwarePeriodsEnabled
-     */
-    public boolean isHardwarePeriodsEnabled() {
-        return hardwarePeriodsEnabled;
+    public boolean isInternalPeriod() {
+        return internalPeriod;
     }
 
-    /**
-     * @param hardwarePeriodsEnabled the hardwarePeriodsEnabled to set
-     */
-    public void setHardwarePeriodsEnabled(boolean hardwarePeriodsEnabled) {
-        firePropertyChange("hardwarePeriodsEnabled", this.hardwarePeriodsEnabled,
-                this.hardwarePeriodsEnabled = hardwarePeriodsEnabled);
+    public void setInternalPeriod(boolean internalPeriod) {
+        firePropertyChange("internalPeriod", this.internalPeriod, this.internalPeriod = internalPeriod);
     }
 
-    /**
-     * @return the radiosEnabled
-     */
-    public boolean isRadiosEnabled() {
-        return radiosEnabled;
+    public boolean isHardwarePeriod() {
+        return hardwarePeriod;
     }
 
-    /**
-     * @param radiosEnabled the radiosEnabled to set
-     */
-    public void setRadiosEnabled(boolean radiosEnabled) {
-        firePropertyChange("radiosEnabled", this.radiosEnabled, this.radiosEnabled = radiosEnabled);
+    public void setHardwarePeriod(boolean hardwarePeriod) {
+        firePropertyChange("hardwarePeriod", this.hardwarePeriod, this.hardwarePeriod = hardwarePeriod);
     }
 }
