@@ -30,11 +30,14 @@ import uk.ac.stfc.isis.ibex.dae.dataacquisition.DaeTimingSource;
 import uk.ac.stfc.isis.ibex.dae.dataacquisition.MuonCerenkovPulse;
 import uk.ac.stfc.isis.ibex.dae.updatesettings.AutosaveUnit;
 import uk.ac.stfc.isis.ibex.dae.updatesettings.UpdateSettings;
+import uk.ac.stfc.isis.ibex.epics.observing.BaseObserver;
+import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 import uk.ac.stfc.isis.ibex.model.UpdatedValue;
 
 public class DataAcquisitionViewModel extends ModelObject {
-	
+
+    private String instrumentName;
 	private DaeSettings settings;
 	private UpdateSettings updateSettings;
 	private UpdatedValue<Collection<String>> wiringTables;
@@ -185,7 +188,8 @@ public class DataAcquisitionViewModel extends ModelObject {
     public String[] getWiringTableList() {
         String[] tables = valueOrEmpty(wiringTables);
         tables = tables.length != 0 ? tables : new String[] {
-                "None found in C:\\Instrument\\Settings\\config\\[Instrument Name]\\configurations\\tables\\ (file name must contain string \"wiring\")." };
+                "None found in C:\\Instrument\\Settings\\config\\" + this.instrumentName
+                        + "\\configurations\\tables\\ (file name must contain string \"wiring\")." };
         return addBlank(tables);
     }
 
@@ -216,7 +220,8 @@ public class DataAcquisitionViewModel extends ModelObject {
 	public String[] getDetectorTableList() {
         String[] tables = valueOrEmpty(detectorTables);
         tables = tables.length != 0 ? tables : new String[] {
-                "None found in C:\\Instrument\\Settings\\config\\[Instrument Name]\\configurations\\tables\\ (file name must contain string \"det\")." };
+                "None found in C:\\Instrument\\Settings\\config\\" + this.instrumentName
+                        + "\\configurations\\tables\\ (file name must contain string \"det\")." };
         return addBlank(tables);
     }
 
@@ -247,7 +252,8 @@ public class DataAcquisitionViewModel extends ModelObject {
 	public String[] getSpectraTableList() {
         String[] tables = valueOrEmpty(spectraTables);
         tables = tables.length != 0 ? tables : new String[] {
-                "None found in C:\\Instrument\\Settings\\config\\[Instrument Name]\\configurations\\tables\\ (file name must contain string \"spec\")." };
+                "None found in C:\\Instrument\\Settings\\config\\" + this.instrumentName
+                        + "\\configurations\\tables\\ (file name must contain string \"spec\")." };
         return addBlank(tables);
 	}
 
@@ -398,4 +404,44 @@ public class DataAcquisitionViewModel extends ModelObject {
 	private static BinaryChoice vetoIsActive(Boolean selected) {
 		return BinaryChoice.values()[selected ? 1 : 0];
 	}
+
+    /**
+     * Binds an observer to the observable holding the name of the current
+     * instrument.
+     * 
+     * @param instrumentName the name of the current instrument.
+     */
+    public void bindInstName(ForwardingObservable<String> instrumentName) {
+        this.instrumentName = instrumentName.getValue();
+        instrumentName.addObserver(instrumentAdapter);
+    }
+
+    private final BaseObserver<String> instrumentAdapter = new BaseObserver<String>() {
+
+        @Override
+        public void onValue(String value) {
+            setInstrumentName(value);
+        }
+
+        @Override
+        public void onError(Exception e) {
+            // handle
+        }
+
+        @Override
+        public void onConnectionStatus(boolean isConnected) {
+            // handle
+        }
+
+    };
+
+    /**
+     * Updates the local variable holding the instrument name when the value
+     * changes.
+     * 
+     * @param instrumentName the name of the new instrument.
+     */
+    public void setInstrumentName(String instrumentName) {
+        firePropertyChange("instrumentName", this.instrumentName, this.instrumentName = instrumentName);
+    }
 }

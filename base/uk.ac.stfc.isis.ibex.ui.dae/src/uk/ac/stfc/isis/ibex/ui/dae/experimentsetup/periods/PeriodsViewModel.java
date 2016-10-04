@@ -28,11 +28,14 @@ import uk.ac.stfc.isis.ibex.dae.experimentsetup.periods.Period;
 import uk.ac.stfc.isis.ibex.dae.experimentsetup.periods.PeriodControlType;
 import uk.ac.stfc.isis.ibex.dae.experimentsetup.periods.PeriodSettings;
 import uk.ac.stfc.isis.ibex.dae.experimentsetup.periods.PeriodSetupSource;
+import uk.ac.stfc.isis.ibex.epics.observing.BaseObserver;
+import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 import uk.ac.stfc.isis.ibex.model.UpdatedValue;
 
 public class PeriodsViewModel extends ModelObject {
 
+    private String instrumentName;
 	private PeriodSettings settings;
 	private UpdatedValue<Collection<String>> periodFiles;
 
@@ -80,7 +83,8 @@ public class PeriodsViewModel extends ModelObject {
 	public String[] getPeriodFilesList() {
         String[] files = valueOrEmpty(periodFiles);
         files = files.length != 0 ? files : new String[] {
-                "None found in C:\\Instrument\\Settings\\config\\[Instrument Name]\\configurations\\tables\\ (file name must contain string \"period\")." };
+                "None found in C:\\Instrument\\Settings\\config\\" + this.instrumentName
+                        + "\\configurations\\tables\\ (file name must contain string \"period\")." };
         return addBlank(files);
 	}
 
@@ -273,5 +277,45 @@ public class PeriodsViewModel extends ModelObject {
      */
     public void setHardwarePeriod(boolean hardwarePeriod) {
         firePropertyChange("hardwarePeriod", this.hardwarePeriod, this.hardwarePeriod = hardwarePeriod);
+    }
+
+    /**
+     * Binds an observer to the observable holding the name of the current
+     * instrument.
+     * 
+     * @param instrumentName the name of the current instrument.
+     */
+    public void bindInstName(ForwardingObservable<String> instrumentName) {
+        this.instrumentName = instrumentName.getValue();
+        instrumentName.addObserver(instrumentAdapter);
+    }
+
+    private final BaseObserver<String> instrumentAdapter = new BaseObserver<String>() {
+
+        @Override
+        public void onValue(String value) {
+            setInstrumentName(value);
+        }
+
+        @Override
+        public void onError(Exception e) {
+            // handle
+        }
+
+        @Override
+        public void onConnectionStatus(boolean isConnected) {
+            // handle
+        }
+
+    };
+
+    /**
+     * Updates the local variable holding the instrument name when the value
+     * changes.
+     * 
+     * @param instrumentName the name of the new instrument.
+     */
+    public void setInstrumentName(String instrumentName) {
+        firePropertyChange("instrumentName", this.instrumentName, this.instrumentName = instrumentName);
     }
 }

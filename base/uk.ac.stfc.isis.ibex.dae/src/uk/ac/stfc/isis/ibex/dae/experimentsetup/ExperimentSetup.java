@@ -49,6 +49,7 @@ public class ExperimentSetup extends Closer  {
 	private final UpdatedObservableAdapter<Collection<String>> wiringTables;
 	private final UpdatedObservableAdapter<Collection<String>> periodFiles;
     private final UpdatedObservableAdapter<Collection<String>> timeChannelFiles;
+    private final ForwardingObservable<String> instrumentName;
 
     /**
      * Model of the experiment setup including DAE, period, time channel and
@@ -63,6 +64,8 @@ public class ExperimentSetup extends Closer  {
 		updateSettings = registerForClose(new ObservingUpdateSettings(observables.updateSettings, writables.updateSettings));
 		timeChannels = registerForClose(new ObservingTimeChannels(observables.timeChannelSettings, writables.timeChannelSettings));
 		
+        instrumentName = observables.instrumentName;
+
 		detectorTables = createAdapter(observables.detectorTables);
 		spectraTables = createAdapter(observables.spectraTables);
 		wiringTables = createAdapter(observables.wiringTables);
@@ -167,4 +170,8 @@ public class ExperimentSetup extends Closer  {
 		FileList files = registerForClose(new FileList(tables));
 		return registerForClose(new UpdatedObservableAdapter<>(new ForwardingObservable<>(files)));
 	}
+
+    public ForwardingObservable<String> getInstrumentName() {
+        return instrumentName;
+    }
 }
