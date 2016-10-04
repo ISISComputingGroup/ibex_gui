@@ -35,18 +35,38 @@ public class PeriodSettings extends ModelObject {
 	private double hardwarePeriods;
 	private double outputDelay;
 	
+    /**
+     * Returns the currently set list of periods.
+     * 
+     * @return the periods.
+     */
 	public List<Period> getPeriods() {
 		return periods;
 	}
-	
+
+    /**
+     * Sets the list of periods.
+     * 
+     * @return the periods.
+     */
 	public void setPeriods(List<Period> value) {
 		firePropertyChange("periods", periods, periods = value);
 	}
 	
+    /**
+     * Get the source from which the period settings are being read.
+     * 
+     * @return the setup source
+     */
 	public PeriodSetupSource getSetupSource() {
 		return setupSource;
 	}
 	
+    /**
+     * Set the source from which the period settings are being read.
+     * 
+     * @param value the setup source
+     */
 	public void setSetupSource(PeriodSetupSource value) {
 		firePropertyChange("setupSource", setupSource, setupSource = value);
 	}
@@ -89,34 +109,74 @@ public class PeriodSettings extends ModelObject {
         firePropertyChange("newPeriodFile", newPeriodFile, newPeriodFile = value);
 	}
 	
+    /**
+     * Get the period type used to determine the mode of control.
+     * 
+     * @return the period type.
+     */
 	public PeriodControlType getPeriodType() {
 		return periodType;
 	}
 	
+    /**
+     * Set the period type used to determine the mode of control.
+     * 
+     * @param value the period type.
+     */
 	public void setPeriodType(PeriodControlType value) {
 		firePropertyChange("periodType", periodType, periodType = value);
 	}
 	
+    /**
+     * Get the number of software periods.
+     * 
+     * @return the software periods.
+     */
 	public int getSoftwarePeriods() {
 		return softwarePeriods;
 	}
 	
+    /**
+     * Set the number of software periods.
+     * 
+     * @param value the software periods.
+     */
 	public void setSoftwarePeriods(int value) {
 		firePropertyChange("softwarePeriods", softwarePeriods, softwarePeriods = value);
 	}
 	
+    /**
+     * Get the number of hardware periods.
+     * 
+     * @return the hardware periods.
+     */
 	public double getHardwarePeriods() {
 		return hardwarePeriods;
 	}
-	
+
+    /**
+     * Set the number of hardware periods.
+     * 
+     * @param value the hardware periods.
+     */
 	public void setHardwarePeriods(double value) {
 		firePropertyChange("hardwarePeriods", hardwarePeriods, hardwarePeriods = value);
 	}
-	
+
+    /**
+     * Get the length of the output delay.
+     * 
+     * @return the output delay.
+     */
 	public double getOutputDelay() {
 		return outputDelay;
 	}
-	
+
+    /**
+     * Set the length of the output delay.
+     * 
+     * @return the output delay.
+     */
 	public void setOutputDelay(double value) {
 		firePropertyChange("outputDelay", outputDelay, outputDelay = value);
 	}		

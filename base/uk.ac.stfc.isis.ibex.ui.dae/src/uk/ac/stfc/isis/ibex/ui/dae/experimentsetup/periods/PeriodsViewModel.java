@@ -139,44 +139,95 @@ public class PeriodsViewModel extends ModelObject {
         settings.setNewPeriodFile(value);
 	}
 	
+    /**
+     * Returns the enum index of the period type.
+     * 
+     * @return the period type.
+     */
 	public int getPeriodType() {
         updateWindow(PeriodControlType.values()[settings.getPeriodType().ordinal()]);
 		return settings.getPeriodType().ordinal();
 	}
-	
+
+    /**
+     * Sets the period type by enum index.
+     * 
+     * @param index the index of the chosen type.
+     */
 	public void setPeriodType(int index) {
         settings.setPeriodType(PeriodControlType.values()[index]);
         updateWindow(PeriodControlType.values()[index]);
 	} 
-	
+
+    /**
+     * Gets the number of software periods.
+     * 
+     * @return the number of software periods.
+     */
 	public int getSoftwarePeriods() {
 		return settings.getSoftwarePeriods();
 	}
 	
+    /**
+     * Sets the number of software periods.
+     * 
+     * @param value the number of software periods.
+     */
 	public void setSoftwarePeriods(int value) {
 		settings.setSoftwarePeriods(value);
 	}
 	
+    /**
+     * Gets the number of hardware periods.
+     * 
+     * @return the number of hardware periods.
+     */
 	public double getHardwarePeriods() {
 		return settings.getHardwarePeriods();
 	}
-	
+
+    /**
+     * Sets the number of hardware periods.
+     * 
+     * @param value the number of hardware periods.
+     */
 	public void setHardwarePeriods(double value) {
 		settings.setHardwarePeriods(value);
 	}
 	
+    /**
+     * Gets the length of the output delay in us.
+     * 
+     * @return the length of the output delay.
+     */
 	public double getOutputDelay() {
 		return settings.getOutputDelay();
 	}
 	
+    /**
+     * Sets the length of the output delay in us.
+     * 
+     * @param value the length of the output delay.
+     */
 	public void setOutputDelay(double value) {
 		settings.setOutputDelay(value);
 	}
 	
+    /**
+     * Returns the currently set list of periods.
+     * 
+     * @return the periods.
+     */
 	public List<Period> periods() {
 		return settings.getPeriods();
 	}
 
+    /**
+     * Sets internal parameters used by the view to show/omit elements based on
+     * the chosen period type.
+     * 
+     * @param type the period type.
+     */
     public void updateWindow(PeriodControlType type) {
         setHardwarePeriod(false);
         setInternalPeriod(false);
@@ -188,18 +239,38 @@ public class PeriodsViewModel extends ModelObject {
         }
     }
 
+    /**
+     * Returns whether the period is controlled internally by the DAE.
+     * 
+     * @return whether period is internal.
+     */
     public boolean isInternalPeriod() {
         return internalPeriod;
     }
 
+    /**
+     * Set whether the chosen period is controlled internally by the DAE.
+     * 
+     * @param internalPeriod whether period is internal.
+     */
     public void setInternalPeriod(boolean internalPeriod) {
         firePropertyChange("internalPeriod", this.internalPeriod, this.internalPeriod = internalPeriod);
     }
 
+    /**
+     * Returns whether the period is of type hardware.
+     * 
+     * @return whether period is hardware period.
+     */
     public boolean isHardwarePeriod() {
         return hardwarePeriod;
     }
 
+    /**
+     * Set whether the chosen period is of type hardware.
+     * 
+     * @param hardwarePeriod whether period is hardware period.
+     */
     public void setHardwarePeriod(boolean hardwarePeriod) {
         firePropertyChange("hardwarePeriod", this.hardwarePeriod, this.hardwarePeriod = hardwarePeriod);
     }
