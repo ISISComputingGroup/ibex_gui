@@ -24,7 +24,11 @@ net use p: \\isis\inst$ /user:isis\builder %BUILDERPW%
 
 REM We ignore the 15 characters of origin/Release_
 set RELEASE_NUMBER=%GIT_BRANCH:~15%
-set INSTALLBASEDIR=p:\Kits$\CompGroup\ICP\Releases\%RELEASE_NUMBER%\Client
+set RELEASE_DIR=p:\Kits$\CompGroup\ICP\Releases\%RELEASE_NUMBER%\
+if not exist %RELEASE_DIR% {
+    mkdir %RELEASE_DIR%
+}
+set INSTALLBASEDIR=%RELEASE_DIR%\Client
 if not exist "%INSTALLBASEDIR%" (
     @echo Creating client directory %INSTALLBASEDIR%
     mkdir %INSTALLBASEDIR%
@@ -69,7 +73,7 @@ if %errorlevel% neq 0 (
 )
 
 REM Add EPICS_UTILS and the Client
-%ZIPEXE% a installer.7z %INSTALLBASEDIR%\EPICS_UTILS
+%ZIPEXE% a installer.7z P:\Kits$\CompGroup\ICP\Client\EPICS_UTILS
 if %errorlevel% neq 0 (
     @echo Could not add EPICS_UTILS to zip
     exit /b %errorlevel%
