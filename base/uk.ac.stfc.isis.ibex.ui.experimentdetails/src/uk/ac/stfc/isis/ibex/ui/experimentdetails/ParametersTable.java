@@ -20,6 +20,7 @@
 package uk.ac.stfc.isis.ibex.ui.experimentdetails;
 
 import org.eclipse.jface.viewers.TableViewerColumn;
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 
 import uk.ac.stfc.isis.ibex.experimentdetails.Parameter;
@@ -27,6 +28,15 @@ import uk.ac.stfc.isis.ibex.ui.tables.DataboundCellLabelProvider;
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundTable;
 import uk.ac.stfc.isis.ibex.ui.widgets.StringEditingSupport;
 
+/**
+ * Table for inputting experimental parameters.
+ * 
+ * Note that all columns in this table are not resizable as the H_SCROLL 
+ * has been removed and resizing could cause columns to disappear.
+ * 
+ * The H_SCROLL has been removed as it was appearing despite no extra 
+ * data being in the table (unsure why)
+ */
 @SuppressWarnings("checkstyle:magicnumber")
 public class ParametersTable extends DataboundTable<Parameter> {
 
@@ -43,7 +53,7 @@ public class ParametersTable extends DataboundTable<Parameter> {
 	};
 	
 	public ParametersTable(Composite parent, int style, int tableStyle) {
-		super(parent, style, Parameter.class, tableStyle);
+		super(parent, style, Parameter.class, tableStyle | SWT.NO_SCROLL | SWT.V_SCROLL);
 		initialise();
 	}
 
@@ -55,7 +65,7 @@ public class ParametersTable extends DataboundTable<Parameter> {
 	}
 
 	private void name() {
-		TableViewerColumn name = createColumn("Name", 4);
+		TableViewerColumn name = createColumn("Name", 4, false);
 		name.setLabelProvider(new DataboundCellLabelProvider<Parameter>(observeProperty("name")) {
 			@Override
 			protected String valueFromRow(Parameter row) {
@@ -65,7 +75,7 @@ public class ParametersTable extends DataboundTable<Parameter> {
 	}
 	
 	private void units() {
-		TableViewerColumn name = createColumn("Units", 1);
+		TableViewerColumn name = createColumn("Units", 1, false);
 		name.setLabelProvider(new DataboundCellLabelProvider<Parameter>(observeProperty("units")) {
 			@Override
 			protected String valueFromRow(Parameter row) {
@@ -79,7 +89,7 @@ public class ParametersTable extends DataboundTable<Parameter> {
 	}
 	
 	private void value() {
-		TableViewerColumn valueColumn = createColumn("Value", 2);
+		TableViewerColumn valueColumn = createColumn("Value", 2, false);
 		valueColumn.setLabelProvider(new DataboundCellLabelProvider<Parameter>(observeProperty("value")) {
 			@Override
 			protected String valueFromRow(Parameter row) {

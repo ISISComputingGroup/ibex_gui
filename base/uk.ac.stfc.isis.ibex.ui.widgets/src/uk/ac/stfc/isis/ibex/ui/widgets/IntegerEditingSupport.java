@@ -26,17 +26,21 @@ import org.eclipse.swt.widgets.Composite;
 
 public abstract class IntegerEditingSupport<TRow> extends GenericEditingSupport<TRow, Integer> {
 
-	private CellEditor editor;
+	protected CellEditor editor;
 
 	public IntegerEditingSupport(ColumnViewer viewer, Class<TRow> rowType) {
 		super(viewer, rowType, Integer.class);
-		// Override TextCellEditor to handle integers better
+		createEditor(viewer);
+	}
+	
+	protected void createEditor(ColumnViewer viewer) { 		
+	// Override TextCellEditor to handle doubles better
 		editor = new TextCellEditor((Composite) viewer.getControl()) {
 			@Override
 			protected void doSetValue(final Object value) {
 				if (value == null) {
 					// If value is null set to zero instead
-					super.doSetValue(String.valueOf(Integer.valueOf(0)));
+					super.doSetValue(String.valueOf(new Double(0)));
 				} else {
 					super.doSetValue(String.valueOf(value.toString()));
 				}
