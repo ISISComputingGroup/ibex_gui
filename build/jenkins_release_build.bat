@@ -33,7 +33,7 @@ if not exist "%INSTALLBASEDIR%" (
     @echo Creating client directory %INSTALLBASEDIR%
     mkdir %INSTALLBASEDIR%
 )
-set INSTALLDIR=%INSTALLBASEDIR%\BUILD%BUILD_NUMBER%
+set INSTALLDIR=%INSTALLBASEDIR%
 if not exist "%INSTALLDIR%" (
     @echo Creating client directory %INSTALLDIR%
     mkdir %INSTALLDIR%
