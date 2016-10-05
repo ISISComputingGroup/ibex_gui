@@ -22,7 +22,8 @@ REM the password for isis\builder is contained in the BUILDERPW system environme
 net use p: /d
 net use p: \\isis\inst$ /user:isis\builder %BUILDERPW%
 
-set RELEASE_NUMBER=%GIT_BRANCH:~8%
+REM We ignore the 15 characters of origin/Release_
+set RELEASE_NUMBER=%GIT_BRANCH:~15%
 set INSTALLBASEDIR=p:\Kits$\CompGroup\ICP\Releases\%RELEASE_NUMBER%\Client
 if not exist "%INSTALLBASEDIR%" (
     @echo Creating client directory %INSTALLBASEDIR%
