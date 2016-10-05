@@ -35,7 +35,8 @@ public class DeleteConfigsHandler extends ConfigHandler<Collection<String>> {
 	
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {		
-		MultipleConfigsSelectionDialog dialog = new MultipleConfigsSelectionDialog(shell(), "Delete Configurations", SERVER.configsInfo().getValue(), false);
+        MultipleConfigsSelectionDialog dialog = new MultipleConfigsSelectionDialog(shell(), "Delete Configurations",
+                SERVER.configsInfo().getValue(), false, false);
 		if (dialog.open() == Window.OK) {
 			configService.write((dialog.selectedConfigs()));
 		}

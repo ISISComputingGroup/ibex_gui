@@ -23,12 +23,13 @@
 package uk.ac.stfc.isis.ibex.validators;
 
 /**
- * Provides validation for PV items
+ * Provides validation for PV items.
  *
  */
 public class PvValidator {
 
-    public static final String ADDRESS_FORMAT = "PV Address invalid, use only [a-z], [A-Z], [0-9], : and _";
+    public static final String ADDRESS_FORMAT =
+            "PV Address invalid, use only [a-z], [A-Z], [0-9], : and _ (a field may be added using a .)";
     public static final String ADDRESS_EMPTY = "PV Address invalid, must not be empty";    
     private static final String NO_ERROR = "";
 
@@ -45,18 +46,18 @@ public class PvValidator {
     /**
      * Checks that a String conforms to the requirements of a PV address Can
      * only contain alphanumeric, underscore and colon Case is not specified as
-     * PVs are not necessarily uppercase - e.g. non instrument prefixes
+     * PVs are not necessarily upper case - e.g. non instrument prefixes
      * 
-     * @param pvAddress
+     * @param pvAddress the address to validate
      * @return Boolean addressValid
      */
     public Boolean validatePvAddress(String pvAddress) {
         boolean isValid = false;
 
-        if (!(pvAddress.matches("^[a-zA-Z0-9_:]*$"))) {
+        if (pvAddress.isEmpty()) {
+            setErrorMessage(ADDRESS_EMPTY);
+        } else if (!(pvAddress.matches("^[a-zA-Z0-9_:]+(\\.[a-zA-Z0-9_:]+)?$"))) {
             setErrorMessage(ADDRESS_FORMAT);
-        } else if (pvAddress.isEmpty()) {
-        	setErrorMessage(ADDRESS_EMPTY);
         } else {
             isValid = true;
             setErrorMessage(NO_ERROR);
@@ -69,6 +70,9 @@ public class PvValidator {
         this.errorMessage = errorMessage;
     }
 
+    /**
+     * @return the last error message
+     */
     public String getErrorMessage() {
         return errorMessage;
     }

@@ -23,6 +23,7 @@ import java.util.Arrays;
 
 import org.eclipse.core.databinding.observable.map.IObservableMap;
 import org.eclipse.jface.viewers.TableViewerColumn;
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 
 import uk.ac.stfc.isis.ibex.configserver.configuration.Ioc;
@@ -31,6 +32,15 @@ import uk.ac.stfc.isis.ibex.ui.configserver.editing.CellDecorator;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.DecoratedCellLabelProvider;
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundTable;
 
+/**
+ * Table describing all the IOCs to be started with a configuration.
+ * 
+ * Note that all columns in this table are not resizable as the H_SCROLL 
+ * has been removed and resizing could cause columns to disappear.
+ * 
+ * The H_SCROLL has been removed as it was appearing despite no extra 
+ * data being in the table (unsure why)
+ */
 @SuppressWarnings("checkstyle:magicnumber")
 public class IocsTable extends DataboundTable<EditableIoc> {
 
@@ -38,7 +48,7 @@ public class IocsTable extends DataboundTable<EditableIoc> {
 	private final CellDecorator<EditableIoc> simulationDecorator = new IocSimulationCellDecorator();
 	
 	public IocsTable(Composite parent, int style, int tableStyle) {
-		super(parent, style, EditableIoc.class, tableStyle);
+		super(parent, style, EditableIoc.class, tableStyle | SWT.NO_SCROLL | SWT.V_SCROLL);
 				
 		initialise();		
 	}
@@ -53,7 +63,7 @@ public class IocsTable extends DataboundTable<EditableIoc> {
 	}
 
 	private void name() {
-		TableViewerColumn name = createColumn("Name", 4);
+		TableViewerColumn name = createColumn("Name", 2, false);
 		name.setLabelProvider(new DecoratedCellLabelProvider<EditableIoc>(
 				observeProperty("name"), 
 				Arrays.asList(rowDecorator, simulationDecorator)) {
@@ -65,7 +75,7 @@ public class IocsTable extends DataboundTable<EditableIoc> {
 	}
 	
 	private void description() {
-		TableViewerColumn desc = createColumn("Description", 4);
+		TableViewerColumn desc = createColumn("Description", 2, false);
 		desc.setLabelProvider(new DecoratedCellLabelProvider<EditableIoc>(
 				observeProperty("name"), 
 				Arrays.asList(rowDecorator)) {
@@ -77,7 +87,7 @@ public class IocsTable extends DataboundTable<EditableIoc> {
 	}
 	
 	private void autostart() {
-		TableViewerColumn enabled = createColumn("Auto-start?", 2);
+		TableViewerColumn enabled = createColumn("Auto-start?", 1, false);
 		IObservableMap[] stateProperties = {observeProperty("autostart")};
 		enabled.setLabelProvider(new IocCheckboxLabelProvider<Ioc>(stateProperties) {	
 			@Override
@@ -98,7 +108,7 @@ public class IocsTable extends DataboundTable<EditableIoc> {
 	}
 	
 	private void restart() {
-		TableViewerColumn enabled = createColumn("Auto-restart?", 2);
+		TableViewerColumn enabled = createColumn("Auto-restart?", 1, false);
 		IObservableMap[] stateProperties = {observeProperty("restart")};
 		enabled.setLabelProvider(new IocCheckboxLabelProvider<Ioc>(stateProperties) {	
 			@Override
@@ -119,7 +129,7 @@ public class IocsTable extends DataboundTable<EditableIoc> {
 	}
 	
 	private void simLevel() {
-		TableViewerColumn simLevel = createColumn("Sim. level", 2);
+		TableViewerColumn simLevel = createColumn("Sim. level", 1, false);
 		simLevel.setLabelProvider(new DecoratedCellLabelProvider<EditableIoc>(
 				observeProperty("simLevel"), 
 				Arrays.asList(rowDecorator)) {

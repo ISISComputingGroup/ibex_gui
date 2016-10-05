@@ -139,7 +139,7 @@ public class PVSelectorPanel extends Composite {
 		};
 		btnClear.addListener(SWT.Selection, clearListener);
 		
-		blockPVTable = new BlockPVTable(grpPV, SWT.NONE, SWT.V_SCROLL | SWT.NO_SCROLL | SWT.FULL_SELECTION);
+		blockPVTable = new BlockPVTable(grpPV, SWT.NONE, SWT.FULL_SELECTION);
 		GridData gdPvTable = new GridData(SWT.FILL, SWT.FILL, true, true, 3, 1);
 		gdPvTable.heightHint = 300;
 		blockPVTable.setLayoutData(gdPvTable);
