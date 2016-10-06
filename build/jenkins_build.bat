@@ -27,15 +27,32 @@ net use p: \\isis\inst$ /user:isis\builder %BUILDERPW%
 
 python.exe purge_archive_client.py
 
-set INSTALLBASEDIR=p:\Kits$\CompGroup\ICP\Client
-set INSTALLDIR=%INSTALLBASEDIR%\BUILD%BUILD_NUMBER%
-if not exist "%INSTALLDIR%\Client" (
-    @echo Creating client directory %INSTALLDIR%\Client
-    mkdir %INSTALLDIR%\Client
+set RELEASE_JOB_NAME="ibex_gui_latest_release"
+if %JOB_NAME%==%RELEASE_JOB_NAME% (
+	REM We ignore the 15 characters of origin/Release_
+	set RELEASE_NUMBER=%GIT_BRANCH:~15%
+	set RELEASE_DIR=p:\Kits$\CompGroup\ICP\Releases\%RELEASE_NUMBER%\
+	if not exist %RELEASE_DIR% mkdir %RELEASE_DIR%
+	set INSTALLBASEDIR=%RELEASE_DIR%\Client
+	if not exist "%INSTALLBASEDIR%" (
+		@echo Creating client directory %INSTALLBASEDIR%
+		mkdir %INSTALLBASEDIR%
+	)
+	set INSTALLDIR=%INSTALLBASEDIR%
+	if not exist "%INSTALLDIR%" (
+		@echo Creating client directory %INSTALLDIR%
+		mkdir %INSTALLDIR%
+	)
+) else (
+	set INSTALLBASEDIR=p:\Kits$\CompGroup\ICP\Client
+	set INSTALLDIR=%INSTALLBASEDIR%\BUILD%BUILD_NUMBER%
+	if not exist "%INSTALLDIR%\Client" (
+		@echo Creating client directory %INSTALLDIR%\Client
+		mkdir %INSTALLDIR%\Client
+	)
+	REM Set a symlink for folder BUILD_LATEST to point to most recent build
+	set INSTALLLINKDIR=%INSTALLBASEDIR%\BUILD_LATEST
 )
-
-REM Set a symlink for folder BUILD_LATEST to point to most recent build
-set INSTALLLINKDIR=%INSTALLBASEDIR%\BUILD_LATEST
 
 robocopy %CD%\..\base\uk.ac.stfc.isis.ibex.client.product\target\products\ibex.product\win32\win32\x86_64 %INSTALLDIR%\Client /MIR /R:1 /NFL /NDL /NP
 if %errorlevel% geq 4 (
@@ -47,11 +64,12 @@ if %errorlevel% geq 4 (
     exit /b 1
 )
 
-if exist "%INSTALLLINKDIR%" (
-    rmdir "%INSTALLLINKDIR%"
+if not %JOB_NAME%==%RELEASE_JOB_NAME% (
+	if exist "%INSTALLLINKDIR%" (
+		rmdir "%INSTALLLINKDIR%"
+	)
+	mklink /J "%INSTALLLINKDIR%" "%INSTALLDIR%"
 )
-
-mklink /J "%INSTALLLINKDIR%" "%INSTALLDIR%"
 
 REM Copy the install script across
 cd %BASEDIR%
@@ -73,7 +91,7 @@ if %errorlevel% neq 0 (
 )
 
 REM Add EPICS_UTILS and the Client
-%ZIPEXE% a installer.7z %INSTALLBASEDIR%\EPICS_UTILS
+%ZIPEXE% a installer.7z P:\Kits$\CompGroup\ICP\Client\EPICS_UTILS
 if %errorlevel% neq 0 (
     @echo Could not add EPICS_UTILS to zip
     exit /b %errorlevel%
