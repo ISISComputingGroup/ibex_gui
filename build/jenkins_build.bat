@@ -13,8 +13,8 @@ for /F %%f in ('dir "C:\Program Files\Java\jdk1.*" /b') do set JAVA_HOME=C:\Prog
 
 set PATH=%M2%;%JAVA_HOME%;%PYTHON%;%PATH%
 
-REM call build.bat
-REM if %errorlevel% neq 0 exit /b %errorlevel%
+call build.bat
+if %errorlevel% neq 0 exit /b %errorlevel%
 
 @echo on
 
