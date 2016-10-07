@@ -203,7 +203,7 @@
     <tab_1_foreground_color>
       <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
     </tab_1_foreground_color>
-    <tab_1_title>Tabular Layout Suggestion</tab_1_title>
+    <tab_1_title>Suggestion for Tabular Layout</tab_1_title>
     <scripts />
     <tab_count>2</tab_count>
     <scale_options>
@@ -235,7 +235,7 @@
       <macros>
         <include_parent_macros>true</include_parent_macros>
       </macros>
-      <visible>false</visible>
+      <visible>true</visible>
       <border_color>
         <color name="ISIS_Check_Border" red="0" green="128" blue="255" />
       </border_color>
@@ -420,6 +420,47 @@ $(trace_0_y_pv_value)</tooltip>
           <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
         </foreground_color>
       </widget>
+      <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0">
+        <border_style>0</border_style>
+        <tooltip></tooltip>
+        <horizontal_alignment>1</horizontal_alignment>
+        <rules />
+        <enabled>true</enabled>
+        <wuid>-49a2eed4:1579e4efc70:-7f70</wuid>
+        <transparent>false</transparent>
+        <auto_size>false</auto_size>
+        <text>For lines in graphs, check the guildelines for designing for colour blindness on the Wiki</text>
+        <scripts />
+        <height>32</height>
+        <border_width>1</border_width>
+        <scale_options>
+          <width_scalable>true</width_scalable>
+          <height_scalable>true</height_scalable>
+          <keep_wh_ratio>false</keep_wh_ratio>
+        </scale_options>
+        <visible>true</visible>
+        <vertical_alignment>1</vertical_alignment>
+        <border_color>
+          <color red="0" green="128" blue="255" />
+        </border_color>
+        <widget_type>Label</widget_type>
+        <wrap_words>true</wrap_words>
+        <background_color>
+          <color red="255" green="255" blue="105" />
+        </background_color>
+        <width>235</width>
+        <x>450</x>
+        <name>Label_9</name>
+        <y>209</y>
+        <foreground_color>
+          <color name="Major" red="255" green="0" blue="0" />
+        </foreground_color>
+        <actions hook="false" hook_all="false" />
+        <show_scrollbar>false</show_scrollbar>
+        <font>
+          <opifont.name fontName="Segoe UI" height="9" style="0">Default</opifont.name>
+        </font>
+      </widget>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0">
       <border_style>0</border_style>
@@ -440,7 +481,7 @@ $(trace_0_y_pv_value)</tooltip>
       <macros>
         <include_parent_macros>true</include_parent_macros>
       </macros>
-      <visible>true</visible>
+      <visible>false</visible>
       <border_color>
         <color name="ISIS_Check_Border" red="0" green="128" blue="255" />
       </border_color>
@@ -450,7 +491,7 @@ $(trace_0_y_pv_value)</tooltip>
       </background_color>
       <width>709</width>
       <x>1</x>
-      <name>Tabular Layout Suggestion</name>
+      <name>Suggestion for Tabular Layout</name>
       <y>1</y>
       <foreground_color>
         <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
@@ -2766,7 +2807,7 @@ $(pv_value)</tooltip>
     <wuid>-30237fc9:157958fdf6d:-7b14</wuid>
     <transparent>false</transparent>
     <auto_size>false</auto_size>
-    <text>Try to have all controls within group boxes.&#xD;
+    <text>Please make use of group boxes.&#xD;
 If something is REALLY for the entire device (e.g. a Settings button) and doesn't fit in any group box, it can be on its own.</text>
     <scripts />
     <height>73</height>
@@ -2808,14 +2849,9 @@ If something is REALLY for the entire device (e.g. a Settings button) and doesn'
     <wuid>-30237fc9:157958fdf6d:-7a9c</wuid>
     <transparent>false</transparent>
     <auto_size>false</auto_size>
-    <text>TODO:&#xD;
-* fonts file&#xD;
-* check all colours are fine&#xD;
-* link to docs for tips&#xD;
-* table layout?&#xD;
-* check colour blind</text>
+    <text>When converting an existing OPI to this style, be aware of the tips and gotchas in the Wiki!!</text>
     <scripts />
-    <height>139</height>
+    <height>73</height>
     <border_width>1</border_width>
     <scale_options>
       <width_scalable>true</width_scalable>
@@ -2832,17 +2868,17 @@ If something is REALLY for the entire device (e.g. a Settings button) and doesn'
     <background_color>
       <color name="Purple" red="128" green="0" blue="255" />
     </background_color>
-    <width>217</width>
-    <x>474</x>
+    <width>265</width>
+    <x>726</x>
     <name>Label_6</name>
-    <y>642</y>
+    <y>306</y>
     <foreground_color>
-      <color name="Major" red="255" green="0" blue="0" />
+      <color red="255" green="255" blue="255" />
     </foreground_color>
     <actions hook="false" hook_all="false" />
     <show_scrollbar>false</show_scrollbar>
     <font>
-      <opifont.name fontName="Segoe UI" height="9" style="0">Default</opifont.name>
+      <opifont.name fontName="Segoe UI" height="12" style="1">Header 3</opifont.name>
     </font>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0">
@@ -3311,7 +3347,7 @@ $(pv_value)</tooltip>
       <enabled>true</enabled>
       <wuid>-48159ee9:1567f536160:-59a9</wuid>
       <on_color>
-        <color name="ISIS_Red_LED_On" red="255" green="50" blue="50" />
+        <color name="ISIS_Red_LED_On" red="255" green="100" blue="100" />
       </on_color>
       <pv_value />
       <scripts />
@@ -3576,7 +3612,7 @@ $(pv_value)</tooltip>
     <wuid>-3243ce99:1579a45dec4:-7b64</wuid>
     <transparent>false</transparent>
     <auto_size>false</auto_size>
-    <text>NOTE: labels are made using the Label widget, rather than the Text widget under Native. Text allows selection of the contents, with a flashing marker, which may be confusing.</text>
+    <text>NOTE: labels are made using the Label widget, rather than the Text widget under Native. Text allows selection of the contents, with a flashing cursor, which may be confusing.</text>
     <scripts />
     <height>73</height>
     <border_width>1</border_width>
@@ -3599,6 +3635,47 @@ $(pv_value)</tooltip>
     <x>732</x>
     <name>Label_8</name>
     <y>168</y>
+    <foreground_color>
+      <color name="Major" red="255" green="0" blue="0" />
+    </foreground_color>
+    <actions hook="false" hook_all="false" />
+    <show_scrollbar>false</show_scrollbar>
+    <font>
+      <opifont.name fontName="Segoe UI" height="9" style="0">Default</opifont.name>
+    </font>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0">
+    <border_style>0</border_style>
+    <tooltip></tooltip>
+    <horizontal_alignment>1</horizontal_alignment>
+    <rules />
+    <enabled>true</enabled>
+    <wuid>-49a2eed4:1579e4efc70:-7f62</wuid>
+    <transparent>false</transparent>
+    <auto_size>false</auto_size>
+    <text>&lt;-- a possible tabular layout</text>
+    <scripts />
+    <height>23</height>
+    <border_width>1</border_width>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <visible>true</visible>
+    <vertical_alignment>1</vertical_alignment>
+    <border_color>
+      <color red="0" green="128" blue="255" />
+    </border_color>
+    <widget_type>Label</widget_type>
+    <wrap_words>true</wrap_words>
+    <background_color>
+      <color red="255" green="255" blue="105" />
+    </background_color>
+    <width>157</width>
+    <x>270</x>
+    <name>Label_9</name>
+    <y>320</y>
     <foreground_color>
       <color name="Major" red="255" green="0" blue="0" />
     </foreground_color>
