@@ -41,7 +41,7 @@ import uk.ac.stfc.isis.ibex.targets.OpiTarget;
  */
 @XmlRootElement(name = "device")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class DeviceDescription extends ModelObject {
+public class DeviceDescription extends ModelObject implements Cloneable {
 
     /**
      * Type when the device screen is an OPI.
@@ -51,6 +51,27 @@ public class DeviceDescription extends ModelObject {
     private String type;
     @XmlElement(name = "properties", type = PropertiesDescription.class)
     private PropertiesDescription properties = new PropertiesDescription();
+
+    /**
+     * Default constructor. Needed for parsing XML.
+     */
+    public DeviceDescription() {
+    }
+
+    /**
+     * A copy constructor.
+     * 
+     * @param original the item to copy
+     */
+    public DeviceDescription(DeviceDescription original) {
+        key = original.getKey();
+        name = original.getName();
+        type = original.getType();
+
+        for (PropertyDescription p : original.getProperties()) {
+            this.addProperty(new PropertyDescription(p.getKey(), p.getValue()));
+        }
+    }
 
     /**
      * @return the type, e.g. OPI
@@ -102,6 +123,13 @@ public class DeviceDescription extends ModelObject {
     }
 
     /**
+     * Clears out the properties.
+     */
+    public void clearProperties() {
+        properties = new PropertiesDescription();
+    }
+
+    /**
      * @param property the property to add
      */
     public void addProperty(PropertyDescription property) {
@@ -119,15 +147,5 @@ public class DeviceDescription extends ModelObject {
             target.addProperty(property.getKey(), property.getValue());
         }
         return target;
-    }
-
-    @Override
-    public int hashCode() {
-        return name.hashCode() ^ key.hashCode() ^ type.hashCode();
-    }
-
-    @Override
-    public String toString() {
-        return name;
     }
 }

@@ -28,50 +28,48 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Text;
 
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.Property;
+import uk.ac.stfc.isis.ibex.ui.devicescreens.models.DeviceScreensDescriptionViewModel;
 
 /**
  * GUI Composite for the target property value display and change.
  */
 public class TargetPropertyValue extends Composite {
     private Text valueText;
-    // private SynopticViewModel synopticViewModel;
+    private DeviceScreensDescriptionViewModel viewModel;
 
     private boolean updateLock;
-
-//    private final IInstrumentUpdateListener instrumentListener = new IInstrumentUpdateListener() {
-//        @Override
-//        public void instrumentUpdated(UpdateTypes updateType) {
-//            if (updateType == UpdateTypes.ADD_TARGET || updateType == UpdateTypes.EDIT_TARGET) {
-//                Property selected = synopticViewModel.getSelectedProperty();
-//                setProperty(selected);
-//            }
-//        }
-//    };
-//
-//    private final IPropertySelectionListener propertyListener = new IPropertySelectionListener() {
-//        @Override
-//        public void selectionChanged(Property oldProperty, Property newProperty) {
-//            setProperty(newProperty);
-//        }
-//    };
 
     /**
      * Instantiates a new target property value.
      *
      * @param parent the parent
-     * @param synopticViewModel the synoptic view model
+     * @param viewModel the view model
      */
-    public TargetPropertyValue(Composite parent) {
+    public TargetPropertyValue(Composite parent, DeviceScreensDescriptionViewModel viewModel) {
         super(parent, SWT.NONE);
 
-//        this.synopticViewModel = synopticViewModel;
-//        this.synopticViewModel.addPropertySelectionListener(propertyListener);
-//        this.synopticViewModel.addInstrumentUpdateListener(instrumentListener);
+        this.viewModel = viewModel;
 
         GridLayout gridLayout = new GridLayout(1, false);
         gridLayout.marginWidth = 0;
         gridLayout.marginHeight = 0;
         setLayout(gridLayout);
+
+        // If the selected screen changes, clear the text
+//        viewModel.addPropertyChangeListener("selectedScreen", new PropertyChangeListener() {
+//            @Override
+//            public void propertyChange(PropertyChangeEvent evt) {
+//                valueText.setText("");
+//            }
+//        });
+//
+//        // If the selected property changes, get the new value
+//        viewModel.addPropertyChangeListener("selectedProperty", new PropertyChangeListener() {
+//            @Override
+//            public void propertyChange(PropertyChangeEvent evt) {
+//                valueText.setText(viewModel.getSelectedPropertyValue());
+//            }
+//        });
 
         valueText = new Text(this, SWT.BORDER);
         valueText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
@@ -80,6 +78,7 @@ public class TargetPropertyValue extends Composite {
             public void modifyText(ModifyEvent e) {
                 if (valueText.isFocusControl()) {
                     updateLock = true;
+                    // viewModel.setSelectedPropertyValue(valueText.getText());
 //                    String key = synopticViewModel.getSelectedProperty().key();
 //                    synopticViewModel.updateOrAddSelectedProperty(new Property(key, valueText.getText()));
                     updateLock = false;

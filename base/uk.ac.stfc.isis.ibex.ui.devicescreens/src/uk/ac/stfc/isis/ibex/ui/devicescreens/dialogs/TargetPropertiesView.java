@@ -23,59 +23,52 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Label;
+
+import uk.ac.stfc.isis.ibex.ui.devicescreens.models.DeviceScreensDescriptionViewModel;
 
 /**
- * Shows the synoptic editor part that allows selection of a target, normally an
- * OPI or a Java SWT screen for goniometers or DAEs. OPI can be chosen, but
- * goniometers and DAEs have a fixed target.
- *
+ * Shows the synoptic editor part that allows setting of properties.
  */
 @SuppressWarnings("checkstyle:magicnumber")
 public class TargetPropertiesView extends Composite {
 
-    // private SynopticViewModel synopticViewModel;
+    private DeviceScreensDescriptionViewModel viewModel;
 
     /**
      * Creates a new instance of the target properties view.
      * 
      * @param parent this view's parent
-     * @param synopticViewModel the view model for the synoptic
+     * @param viewModel the view model for the synoptic
      */
-    public TargetPropertiesView(Composite parent) {
+    public TargetPropertiesView(Composite parent, DeviceScreensDescriptionViewModel viewModel) {
         super(parent, SWT.FILL);
 		
         setLayout(new GridLayout(2, false));
 
-        // this.synopticViewModel = synopticViewModel;
+        this.viewModel = viewModel;
 		
 		createControls(this);
 	}
 	
     private void createControls(Composite parent) {
-        Label lblProperties = new Label(parent, SWT.NONE);
-        lblProperties.setLayoutData(new GridData(SWT.RIGHT, SWT.TOP, false, false, 1, 1));
-        lblProperties.setText("Properties");
 
-        TargetPropertyTable properties = new TargetPropertyTable(parent);
+        TargetPropertyTable properties = new TargetPropertyTable(parent, viewModel);
         properties.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-        // properties.showPropertyList(synopticViewModel.getFirstSelectedComponent());
 
-        Label lblValue = new Label(parent, SWT.NONE);
-        lblValue.setLayoutData(new GridData(SWT.RIGHT, SWT.TOP, false, false, 1, 1));
-        lblValue.setText("Value");
-
-        TargetPropertyValue value = new TargetPropertyValue(parent);
-        value.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-
-        Label lblPropertyDescription = new Label(parent, SWT.NONE);
-        lblPropertyDescription.setLayoutData(new GridData(SWT.RIGHT, SWT.TOP, false, false, 1, 1));
-        lblPropertyDescription.setText("Description");
-
-        TargetPropertiesDescription propertyDescription = new TargetPropertiesDescription(parent);
-        GridData gdPropertyDescription = new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1);
-        gdPropertyDescription.heightHint = 70;
-        propertyDescription.setLayoutData(gdPropertyDescription);
-
+//        Label lblValue = new Label(parent, SWT.NONE);
+//        lblValue.setLayoutData(new GridData(SWT.RIGHT, SWT.TOP, false, false, 1, 1));
+//        lblValue.setText("Value");
+//
+//        TargetPropertyValue value = new TargetPropertyValue(parent, viewModel);
+//        value.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+//
+//        Label lblPropertyDescription = new Label(parent, SWT.NONE);
+//        lblPropertyDescription.setLayoutData(new GridData(SWT.RIGHT, SWT.TOP, false, false, 1, 1));
+//        lblPropertyDescription.setText("Description");
+//
+//        TargetPropertiesDescription propertyDescription = new TargetPropertiesDescription(parent, viewModel);
+//        GridData gdPropertyDescription = new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1);
+//        gdPropertyDescription.heightHint = 70;
+//        propertyDescription.setLayoutData(gdPropertyDescription);
 	}
 }

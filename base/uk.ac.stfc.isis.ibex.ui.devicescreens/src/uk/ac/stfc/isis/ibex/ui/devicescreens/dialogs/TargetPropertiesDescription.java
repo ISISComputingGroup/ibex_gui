@@ -24,43 +24,26 @@ import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Text;
 
+import uk.ac.stfc.isis.ibex.ui.devicescreens.models.DeviceScreensDescriptionViewModel;
+
 /**
  * The Class TargetPropertiesDescription GUI description for the selected macro.
  */
 public class TargetPropertiesDescription extends Composite {
 
     private Text txtDescription;
+    private DeviceScreensDescriptionViewModel viewModel;
 
     /**
      * Instantiates a new target properties description.
      *
      * @param parent the parent
-     * @param synopticViewModel the synoptic view model
+     * @param viewModel the view model
      */
-    public TargetPropertiesDescription(Composite parent) {
+    public TargetPropertiesDescription(Composite parent, DeviceScreensDescriptionViewModel viewModel) {
 		super(parent, SWT.NONE);
 		
-//        synopticViewModel.addInstrumentUpdateListener(new IInstrumentUpdateListener() {
-//            @Override
-//            public void instrumentUpdated(UpdateTypes updateType) {
-//                if (updateType == UpdateTypes.EDIT_TARGET) {
-//                    txtDescription.setText("");
-//                }
-//            }
-//        });
-//
-//        synopticViewModel.addPropertySelectionListener(new IPropertySelectionListener() {
-//            @Override
-//            public void selectionChanged(Property oldProperty, Property newProperty) {
-//                if (newProperty != null) {
-//                    ComponentDescription component = synopticViewModel.getFirstSelectedComponent();
-//                    OpiDescription opi = synopticViewModel.getOpi(component.target().name());
-//                    txtDescription.setText(opi.getMacroDescription(newProperty.key()));
-//                } else {
-//                    txtDescription.setText("");
-//                }
-//            }
-//        });
+        this.viewModel = viewModel;
 
 		createControls(this);
 	}
@@ -69,5 +52,19 @@ public class TargetPropertiesDescription extends Composite {
         setLayout(new FillLayout());
 
         txtDescription = new Text(parent, SWT.BORDER | SWT.READ_ONLY | SWT.WRAP | SWT.MULTI);
+
+        // If the selected screen changes, clear the text
+//        viewModel.addPropertyChangeListener("currentKey", new PropertyChangeListener() {
+//            @Override
+//            public void propertyChange(PropertyChangeEvent evt) {
+//                OpiDescription opi = viewModel.getOpiDescription();
+//
+//                if (opi != null) {
+//                    txtDescription.setText(opi.getDescription());
+//                } else {
+//                    txtDescription.setText("");
+//                }
+//            }
+//        });
     }
 }

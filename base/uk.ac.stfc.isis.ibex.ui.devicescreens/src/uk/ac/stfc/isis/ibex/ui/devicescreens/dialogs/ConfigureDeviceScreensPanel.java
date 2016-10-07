@@ -226,10 +226,8 @@ public class ConfigureDeviceScreensPanel extends Composite {
         Text txtName = new Text(detailsComposite, SWT.BORDER);
         txtName.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false, 1, 1));
 
-        bindingContext.bindValue(
-                WidgetProperties.text(SWT.Modify).observe(txtName),
-                BeanProperties.value("currentName").observe(viewModel),
-                null, null);
+        bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(txtName),
+                BeanProperties.value("currentName").observe(viewModel), null, null);
 
         txtName.addModifyListener(new ModifyListener() {
             @Override
@@ -254,7 +252,7 @@ public class ConfigureDeviceScreensPanel extends Composite {
         gdDescription.heightHint = 70;
         targetDescription.setLayoutData(gdDescription);
 
-        TargetPropertiesView propertiesView = new TargetPropertiesView(detailsComposite);
+        TargetPropertiesView propertiesView = new TargetPropertiesView(detailsComposite, viewModel);
         propertiesView.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
     }
 
