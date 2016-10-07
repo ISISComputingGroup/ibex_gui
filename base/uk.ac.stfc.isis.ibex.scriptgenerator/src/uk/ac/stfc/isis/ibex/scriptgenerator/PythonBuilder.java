@@ -72,21 +72,27 @@ public class PythonBuilder extends ModelObject {
 	
 	private String setSans() {
 		StringBuilder sans = new StringBuilder();
-		
-		sans.append(String.format("\nfor i in range(%d):\n", settings.getDoSans()));
+		StringBuilder rowData = new StringBuilder();
+		boolean populatedRow = false;
 		
 		for (Row row: rows) {
 			if (row.getPosition() != null) {
-				sans.append(String.format("    set_aperture('%s')\n", settings.getSansSize()));
+				rowData.append(String.format("    set_aperture('%s')\n", settings.getSansSize()));
 				if (row.getSans() == null) {
-					sans.append(String.format("    lm.dosans_normal(position='%s', title='%s', uamps='0', thickness='%s', rtype='and this')\n", 
+					rowData.append(String.format("    lm.dosans_normal(position='%s', title='%s', uamps='0', thickness='%s', rtype='and this')\n", 
 							row.getPosition(), row.getSampleName(), row.getThickness()));
 				}
 				else {
-					sans.append(String.format("    lm.dosans_normal(position='%s', title='%s', %s='%s', thickness='%s', rtype='and this')\n", 
+					rowData.append(String.format("    lm.dosans_normal(position='%s', title='%s', %s='%s', thickness='%s', rtype='and this')\n", 
 							row.getPosition(), row.getSampleName(), row.getSansWait(), row.getSansWait(), row.getThickness()));
 				}
+			populatedRow = true;
 			}
+		}
+		
+		if (populatedRow) {
+			sans.append(String.format("\nfor i in range(%d):\n", settings.getDoSans()));
+			sans.append(rowData);
 		}
 		
 		return sans.toString();
@@ -94,15 +100,27 @@ public class PythonBuilder extends ModelObject {
 	
 	private String setTrans() {
 		StringBuilder trans = new StringBuilder();
-		
-		trans.append(String.format("\nfor i in range(%d):\n", settings.getDoTrans()));
+		StringBuilder rowData = new StringBuilder();
+		boolean populatedRow = false;
 		
 		for (Row row: rows) {
 			if (row.getPosition() != null) {
-				trans.append(String.format("    set_aperture('%s')\n", settings.getTransSize()));
-				trans.append(String.format("    lm.dotrans_normal(position='%s', title='%s', uamps='0', thickness='%s', rtype='and this')\n", 
-						row.getPosition(), row.getSampleName(), row.getThickness()));
+				rowData.append(String.format("    set_aperture('%s')\n", settings.getTransSize()));
+				if (row.getTrans() == null) {
+					rowData.append(String.format("    lm.dotrans_normal(position='%s', title='%s', uamps='0', thickness='%s', rtype='and this')\n", 
+							row.getPosition(), row.getSampleName(), row.getThickness()));
+				}
+				else {
+					rowData.append(String.format("    lm.dotrans_normal(position='%s', title='%s', %s='%s', thickness='%s', rtype='and this')\n", 
+							row.getPosition(), row.getSampleName(), row.getTransWait(), row.getTransWait(), row.getThickness()));
+				}
+			populatedRow = true;
 			}
+		}
+		
+		if (populatedRow) {
+			trans.append(String.format("\nfor i in range(%d):\n", settings.getDoTrans()));
+			trans.append(rowData);
 		}
 		
 		return trans.toString();
