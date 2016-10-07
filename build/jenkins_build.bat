@@ -42,3 +42,22 @@ if "%RELEASE%" == "YES" (
     REM Set a symlink for folder BUILD_LATEST to point to most recent build
     set INSTALLLINKDIR=%INSTALLBASEDIR%\BUILD_LATEST
 )
+
+if "%RELEASE%" == "YES" (
+    if not exist "%RELEASE_DIR%" (
+        mkdir %RELEASE_DIR%
+    )
+    if not exist "%INSTALLBASEDIR%" (
+        mkdir %INSTALLBASEDIR%
+    )
+    RMDIR /S /Q %INSTALLDIR%
+    @echo Creating client directory %INSTALLDIR%
+    if not exist "%INSTALLDIR%" (
+        mkdir %INSTALLDIR%
+    )
+) else (
+    if exist "%INSTALLDIR%\Client"
+        @echo Creating client directory %INSTALLDIR%\Client
+        mkdir %INSTALLDIR%\Client
+    )
+)
