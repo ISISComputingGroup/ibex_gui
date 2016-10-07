@@ -39,14 +39,13 @@ if %JOB_NAME%==%RELEASE_JOB_NAME% (
 		mkdir %INSTALLBASEDIR%
 	)
 	set INSTALLDIR=%INSTALLBASEDIR%
-	if not exist "%INSTALLDIR%" (
-		@echo Creating client directory %INSTALLDIR%
-		mkdir %INSTALLDIR%
-	)
+	if exist %INSTALLDIR% RMDIR /S /Q %INSTALLDIR%
+	@echo Creating client directory %INSTALLDIR%
+	mkdir %INSTALLDIR%
 ) else (
 	set INSTALLBASEDIR=p:\Kits$\CompGroup\ICP\Client
 	set INSTALLDIR=%INSTALLBASEDIR%\BUILD%BUILD_NUMBER%
-	if not exist "%INSTALLDIR%\Client" (
+	if exist "%INSTALLDIR%\Client" 
 		@echo Creating client directory %INSTALLDIR%\Client
 		mkdir %INSTALLDIR%\Client
 	)
