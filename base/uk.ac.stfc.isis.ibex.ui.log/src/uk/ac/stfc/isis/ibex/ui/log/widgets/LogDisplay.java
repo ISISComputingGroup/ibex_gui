@@ -278,6 +278,10 @@ public class LogDisplay extends Canvas {
 		searchControl = new SearchControl(this, model);
 		searchControl.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 
+        // Add table title label
+        lblTableTitle = new Label(this, SWT.NONE);
+        lblTableTitle.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1,1));
+
 		// Add log message table
 		tableViewer = new TableViewer(this, SWT.MULTI | SWT.H_SCROLL
 				| SWT.V_SCROLL | SWT.FULL_SELECTION | SWT.BORDER);
