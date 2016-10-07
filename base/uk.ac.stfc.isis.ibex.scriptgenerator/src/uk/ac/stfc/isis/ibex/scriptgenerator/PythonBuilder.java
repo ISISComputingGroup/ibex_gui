@@ -70,12 +70,17 @@ public class PythonBuilder extends ModelObject {
 		return samplePar;
 	}
 	
+	/**
+	 * Builds a string used for the do sans loop.
+	 * @return the sans loop string
+	 */
 	private String buildSans() {
 		StringBuilder sans = new StringBuilder();
 		StringBuilder rowData = new StringBuilder();
 		boolean populatedRow = false;
 		String collectionMode = null;
 		
+		// Based on the collection mode's two settings, set the rtype value to one of its two possibilities 
 		if (settings.getCollection().toString() != null) {
 			collectionMode = (settings.getCollection().toString() == "Histogram") ? "rtype='0'" : "rtype='1'"; 
 		}
@@ -109,15 +114,18 @@ public class PythonBuilder extends ModelObject {
 		return sans.toString();
 	}
 	
+	/**
+	 * Builds a string used for the do trans loop.
+	 * @return the trans loop
+	 */
 	private String buildTrans() {
 		StringBuilder trans = new StringBuilder();
 		StringBuilder rowData = new StringBuilder();
 		boolean populatedRow = false;
 		String collectionMode = null;
 		
-		if (settings.getCollection().toString() != null) {
-			collectionMode = (settings.getCollection().toString() == "Histogram") ? "rtype='0'" : "rtype='1'"; 
-		}
+		// Based on the collection mode's two settings, set the rtype value to one of its two possibilities 
+		collectionMode = (settings.getCollection().toString() == "Histogram") ? "rtype='0'" : "rtype='1'"; 
 		
 		for (Row row: rows) {
 			if (row.getPosition() != null) {
@@ -173,7 +181,7 @@ public class PythonBuilder extends ModelObject {
 	}
 	
 	/**
-	 * Calls relevant internal methods in order to create a valid Python script.
+	 * Calls internal build script methods and adds these returned strings to the main script.
 	 */
 	public void createScript() {
 		script = new StringBuilder();
@@ -183,7 +191,6 @@ public class PythonBuilder extends ModelObject {
 		script.append(buildSamplePar("width", settings.getSampleWidth().toString()));
 		script.append(buildSamplePar("height", settings.getSampleHeight().toString()));
 		script.append(buildSamplePar("geometry", settings.getGeometry().toString()));
-		
 		
 		script.append(buildSans());
 		script.append(buildTrans());
