@@ -41,7 +41,7 @@ import uk.ac.stfc.isis.ibex.targets.OpiTarget;
  */
 @XmlRootElement(name = "device")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class DeviceDescription extends ModelObject implements Cloneable {
+public class DeviceDescription extends ModelObject {
 
     /**
      * Type when the device screen is an OPI.

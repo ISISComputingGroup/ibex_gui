@@ -40,7 +40,7 @@ import uk.ac.stfc.isis.ibex.devicescreens.xml.XMLUtil;
  */
 @XmlRootElement(name = "devices")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class DeviceScreensDescription implements Cloneable {
+public class DeviceScreensDescription {
 
     @XmlElement(name = "device", type = DeviceDescription.class)
     private ArrayList<DeviceDescription> devices = new ArrayList<>();

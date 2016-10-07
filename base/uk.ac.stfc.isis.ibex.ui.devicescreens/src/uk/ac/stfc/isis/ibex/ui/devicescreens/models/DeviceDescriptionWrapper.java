@@ -93,6 +93,10 @@ public class DeviceDescriptionWrapper {
         return opi;
     }
 
+    public String getType() {
+        return device.getType();
+    }
+
     /**
      * Take the set properties for the device and combine them with the OPI's
      * list of macros.

@@ -39,18 +39,15 @@ import uk.ac.stfc.isis.ibex.opis.desc.OpiDescription;
  */
 public class DeviceScreensDescriptionViewModel extends ModelObject {
     
-    private DeviceDescriptionWrapper selectedScreen = null;
-    private DeviceScreensDescription description;
     private DeviceScreensDescription original;
+    private DeviceDescriptionWrapper selectedScreen = null;
     private PropertyDescription selectedProperty = null;
     private List<DeviceDescriptionWrapper> devices;
 
-    // Proxy objects
+    // Proxy objects for data-binding
     private String currentName = "";
     private String currentKey = "";
     private String currentDescription = "";
-    private String currentPropertyValue = "";
-    private OpiDescription currentOpi = null;
 
     public DeviceScreensDescriptionViewModel(DeviceScreensDescription description) {
         // Keep a reference to the original, so we can change it after editing
@@ -60,9 +57,6 @@ public class DeviceScreensDescriptionViewModel extends ModelObject {
         for (DeviceDescription d : description.getDevices()) {
             devices.add(new DeviceDescriptionWrapper(d));
         }
-
-        // Create a copy of the description, so we can cancel the changes
-        // this.description = new DeviceScreensDescription(description);
     }
 
     public List<DeviceDescriptionWrapper> getScreens() {
@@ -73,38 +67,25 @@ public class DeviceScreensDescriptionViewModel extends ModelObject {
      * @param index
      */
     public void setSelectedScreen(int index) {
-        // TODO: Need to check index is in bounds
-        firePropertyChange("selectedScreen", selectedScreen, selectedScreen = devices.get(index));
+        if (index >= 0 && index < devices.size()) {
+            // Okay
+            firePropertyChange("selectedScreen", selectedScreen, selectedScreen = devices.get(index));
+            // Fire property changes for associated values
+            firePropertyChange("currentName", currentName, currentName = selectedScreen.getName());
+            firePropertyChange("currentKey", currentKey, currentKey = selectedScreen.getKey());
+            firePropertyChange("currentDescription", currentDescription,
+                    currentDescription = selectedScreen.getDescription());
+        } else {
+            // Clear the settings
+            firePropertyChange("selectedScreen", selectedScreen, selectedScreen = null);
+            // Fire property changes for associated values
+            firePropertyChange("currentName", currentName, currentName = "");
+            firePropertyChange("currentKey", currentKey, currentKey = "");
+            firePropertyChange("currentDescription", currentDescription, currentDescription = "");
+        }
 
-        // Fire property changes for associated values
-        firePropertyChange("currentName", currentName, currentName = selectedScreen.getName());
-        firePropertyChange("currentKey", currentKey, currentKey = selectedScreen.getKey());
-        firePropertyChange("currentDescription", currentDescription,
-                currentDescription = selectedScreen.getDescription());
         // Clear out the stored property information
         setSelectedProperty(-1);
-
-//        DeviceDescription newDescription = new DeviceDescription();
-//        
-//        // Valid selection
-//        try {
-//            newDescription = description.getDevices().get(selectionIndex);
-//        } catch (IndexOutOfBoundsException e) {
-//            // No item is selected - may be it was deleted
-//            // Clear the cached values
-//            setCurrentName("");
-//            setCurrentKey("");
-//            setCurrentDescription("");
-//            return;
-//        }
-//
-//        firePropertyChange("selectedScreen", selectedScreen, selectedScreen = newDescription);
-//        // Clear the selected property
-//        setSelectedProperty(-1);
-//        // Update cached values to match selection
-//        setCurrentName(selectedScreen.getName());
-//        setCurrentKey(selectedScreen.getKey());
-//        setCurrentDescription(selectedScreen.getKey());
     }
 
     public DeviceDescriptionWrapper getSelectedScreen() {
@@ -135,9 +116,7 @@ public class DeviceScreensDescriptionViewModel extends ModelObject {
 
         selectedScreen.setKey(key);
         // Must update to the corresponding description
-        setCurrentDescription(key);
-        // Set the OPI description
-        setOpiDescription(key);
+        setCurrentDescription(selectedScreen.getDescription());
 
         firePropertyChange("currentKey", currentKey, currentKey = key);
     }
@@ -146,12 +125,12 @@ public class DeviceScreensDescriptionViewModel extends ModelObject {
         return currentDescription;
     }
 
-    public void setCurrentDescription(String key) {
+    public void setCurrentDescription(String value) {
         if (selectedScreen == null) {
             return;
         }
 
-        firePropertyChange("currentDescription", currentDescription, currentDescription = getOpi(key).getDescription());
+        firePropertyChange("currentDescription", currentDescription, currentDescription = value);
     }
 
     private OpiDescription getOpi(String targetName) {
@@ -161,20 +140,20 @@ public class DeviceScreensDescriptionViewModel extends ModelObject {
     }
 
     public void deleteScreen(int index) {
-        if (index >= 0 && index < description.getDevices().size()) {
-            List<DeviceDescription> oldList = new ArrayList<>(description.getDevices());
+        if (index >= 0 && index < devices.size()) {
+            List<DeviceDescriptionWrapper> oldList = new ArrayList<>(devices);
             // Delete it
-            description.getDevices().remove(index);
-            firePropertyChange("screens", oldList, description.getDevices());
+            devices.remove(index);
+            firePropertyChange("screens", oldList, devices);
         }
     }
 
     public void addScreen() {
-        List<DeviceDescription> oldList = new ArrayList<>(description.getDevices());
+        List<DeviceDescriptionWrapper> oldList = new ArrayList<>(devices);
 
         DefaultName namer = new DefaultName("Screen", " ", true);
         List<String> names = new ArrayList<>();
-        for (DeviceDescription d : oldList) {
+        for (DeviceDescriptionWrapper d : oldList) {
             names.add(d.getName());
         }
 
@@ -183,8 +162,8 @@ public class DeviceScreensDescriptionViewModel extends ModelObject {
         newScreen.setKey("");
         newScreen.setType("");
 
-        description.getDevices().add(newScreen);
-        firePropertyChange("screens", oldList, description.getDevices());
+        devices.add(new DeviceDescriptionWrapper(newScreen));
+        firePropertyChange("screens", oldList, devices);
     }
 
     public void moveScreenUp(int index) {
@@ -194,15 +173,15 @@ public class DeviceScreensDescriptionViewModel extends ModelObject {
     }
 
     public void moveScreenDown(int index) {
-        if (index < description.getDevices().size() - 1) {
+        if (index < devices.size() - 1) {
             swapScreens(index, index + 1);
         }
     }
 
     private void swapScreens(int selected, int toSwapWith) {
-        List<DeviceDescription> oldOrder = new ArrayList<>(description.getDevices());
-        Collections.swap(description.getDevices(), selected, toSwapWith);
-        firePropertyChange("screens", oldOrder, description.getDevices());
+        List<DeviceDescriptionWrapper> oldOrder = new ArrayList<>(devices);
+        Collections.swap(devices, selected, toSwapWith);
+        firePropertyChange("screens", oldOrder, devices);
     }
 
     /**
@@ -212,12 +191,10 @@ public class DeviceScreensDescriptionViewModel extends ModelObject {
      */
     public void setSelectedProperty(int index) {
         if (selectedScreen != null && index != -1) {
-            // setSelectedPropertyValue(null);
             firePropertyChange("selectedProperty", selectedProperty,
                     selectedProperty = selectedScreen.getProperties().get(index));
         }
         else {
-            // setSelectedPropertyValue(null);
             firePropertyChange("selectedProperty", selectedProperty, selectedProperty = null);
         }
     }
@@ -241,9 +218,16 @@ public class DeviceScreensDescriptionViewModel extends ModelObject {
         }
     }
 
-    public void setOpiDescription(String name) {
-        currentOpi = getOpi(name);
+    /**
+     * @return
+     */
+    public String getSelectedPropertyDescription() {
+        if (selectedScreen != null && selectedProperty != null) {
+            return selectedScreen.getOpi().getMacroDescription(selectedProperty.getKey());
+        }
+        return "";
     }
+
 
     public OpiDescription getOpiDescription() {
         if (selectedScreen != null) {
@@ -251,5 +235,30 @@ public class DeviceScreensDescriptionViewModel extends ModelObject {
         }
         return null;
     }
+
+    /**
+     * Gets the new device description for saving.
+     */
+    public DeviceScreensDescription getDeviceDescription() {
+        DeviceScreensDescription desc = new DeviceScreensDescription();
+
+        for (DeviceDescriptionWrapper d : devices) {
+            DeviceDescription device = new DeviceDescription();
+            device.setName(d.getName());
+            device.setKey(d.getKey());
+            device.setType(d.getType());
+            for (PropertyDescription p : d.getProperties()) {
+                // Only add the filled in ones
+                if (p.getValue() != "") {
+                    device.addProperty(p);
+                }
+            }
+
+            desc.addDevice(device);
+        }
+
+        return desc;
+    }
+
 
 }

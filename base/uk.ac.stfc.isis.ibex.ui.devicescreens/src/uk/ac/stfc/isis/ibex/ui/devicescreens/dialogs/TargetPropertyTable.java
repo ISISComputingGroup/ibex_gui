@@ -42,9 +42,9 @@ import uk.ac.stfc.isis.ibex.ui.devicescreens.models.DeviceDescriptionWrapper;
 import uk.ac.stfc.isis.ibex.ui.devicescreens.models.DeviceScreensDescriptionViewModel;
 
 /**
- * The Class TargetPropertyTable.
+ * The target properties widget used to set the macros for an OPI.
  * 
- * A table of properties for a target. These are the macros set on an OPI.
+ * 
  */
 public class TargetPropertyTable extends Composite {
 
@@ -55,48 +55,15 @@ public class TargetPropertyTable extends Composite {
     private Text valueText;
 	
     /**
-     * Instantiates a new target property table.
+     * Instantiates a new widget.
      *
      * @param parent the parent
-     * @param instrument the synoptic model for the instrument
+     * @param viewModel the view model
      */
     public TargetPropertyTable(Composite parent, DeviceScreensDescriptionViewModel viewModel) {
 		super(parent, SWT.NONE);
 		
         this.viewModel = viewModel;
-//		
-//		instrument.addComponentSelectionListener(new IComponentSelectionListener() {			
-//			@Override
-//			public void selectionChanged(List<ComponentDescription> oldSelection, List<ComponentDescription> newSelection) {
-//				if (newSelection != null && newSelection.size() == 1) {
-//					showPropertyList(newSelection.iterator().next());
-//				} else {
-//					showPropertyList(null);
-//				}
-//			}
-//		});
-//		
-//		instrument.addInstrumentUpdateListener(new IInstrumentUpdateListener() {	
-//			@Override
-//			public void instrumentUpdated(UpdateTypes updateType) {
-//                if (updateType == UpdateTypes.EDIT_PROPERTY || updateType == UpdateTypes.ADD_TARGET
-//                        || updateType == UpdateTypes.EDIT_TARGET) {
-//					
-//					int selected;
-//					
-//					switch (updateType) {
-//						case EDIT_PROPERTY:
-//                            selected = table.getSelectionIndex();
-//							break;
-//						default:
-//							selected = -1;
-//							break;
-//					}
-//                    showPropertyList(instrument.getFirstSelectedComponent());
-//                    table.setSelection(selected);
-//				}
-//			}
-//		});
 		
 		GridLayout compositeLayout = new GridLayout(1, false);
 		compositeLayout.marginHeight = 0;
@@ -110,6 +77,9 @@ public class TargetPropertyTable extends Composite {
 	
     /**
      * Creates the controls in the composite.
+     * 
+     * Because the behaviour logic is quite complicated simple data-binding was
+     * not used. Instead property change listeners were used.
      *
      * @param parent the parent
      */
@@ -160,16 +130,11 @@ public class TargetPropertyTable extends Composite {
             @Override
             public void modifyText(ModifyEvent e) {
                 if (valueText.isFocusControl()) {
-                    // updateLock = true;
                     viewModel.setSelectedPropertyValue(valueText.getText());
-                    // String key =
-                    // synopticViewModel.getSelectedProperty().key();
-                    // synopticViewModel.updateOrAddSelectedProperty(new
-                    // Property(key, valueText.getText()));
-                    // updateLock = false;
                 }
             }
         });
+        valueText.setEnabled(false);
 
         Label lblPropertyDescription = new Label(controlComposite, SWT.NONE);
         lblPropertyDescription.setLayoutData(new GridData(SWT.RIGHT, SWT.TOP, false, false, 1, 1));
@@ -180,20 +145,37 @@ public class TargetPropertyTable extends Composite {
         gdDescription.heightHint = 70;
         txtDescription.setLayoutData(gdDescription);
 
+        // This updates when the screens change, e.g. if a screen is deleted
+        viewModel.addPropertyChangeListener("screens", new PropertyChangeListener() {
+            @Override
+            public void propertyChange(PropertyChangeEvent evt) {
+                updatePropertyList(viewModel.getSelectedScreen());
+                table.setSelection(-1);
+                valueText.setEnabled(false);
+            }
+        });
+
         // This updates when the user switches the selected screen
         viewModel.addPropertyChangeListener("selectedScreen", new PropertyChangeListener() {
             @Override
             public void propertyChange(PropertyChangeEvent evt) {
                 updatePropertyList(viewModel.getSelectedScreen());
                 table.setSelection(-1);
+                valueText.setEnabled(false);
             }
         });
 
-        // This updates when the property selecting the table changes
+        // This updates when the property selected in the table changes
         viewModel.addPropertyChangeListener("selectedProperty", new PropertyChangeListener() {
             @Override
             public void propertyChange(PropertyChangeEvent evt) {
                 valueText.setText(viewModel.getSelectedPropertyValue());
+                txtDescription.setText(viewModel.getSelectedPropertyDescription());
+                if (table.getSelectionIndex() == -1) {
+                    valueText.setEnabled(false);
+                } else {
+                    valueText.setEnabled(true);
+                }
             }
         });
 
@@ -214,6 +196,7 @@ public class TargetPropertyTable extends Composite {
                 // Clear the property text and description
                 txtDescription.setText("");
                 valueText.setText("");
+                valueText.setEnabled(false);
             }
         });
 	}
@@ -241,17 +224,5 @@ public class TargetPropertyTable extends Composite {
         table.getColumn(0).pack();
         table.getColumn(1).pack();
 	}
-	
-//    private Property getSelectedProperty() {
-//        String selectedProperty = table.getItem(table.getSelectionIndex()).getText(0);
-//
-//        return getPropertyFromKey(selectedProperty);
-//
-//    }
-//
-//    private Property getPropertyFromKey(String key) {
-//        DeviceDescription component = viewModel.getFirstSelectedComponent();
-//
-//        return component.getProperty(key, new Property(key, ""));
-//    }
+
 }

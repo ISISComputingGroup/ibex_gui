@@ -198,7 +198,6 @@ public class ConfigureDeviceScreensPanel extends Composite {
     private void deleteScreen() {
         int index = devicesList.getSelectionIndex();
         viewModel.deleteScreen(devicesList.getSelectionIndex());
-        devicesViewer.refresh();
 
         if (index > 0 && index < devicesList.getItemCount()) {
             --index;
@@ -206,7 +205,9 @@ public class ConfigureDeviceScreensPanel extends Composite {
             index = devicesList.getItemCount() - 1;
         }
 
-        devicesList.select(index);
+        devicesList.setSelection(index);
+        viewModel.setSelectedScreen(index);
+        devicesViewer.refresh();
     }
 
     private void createTargetGroup() {

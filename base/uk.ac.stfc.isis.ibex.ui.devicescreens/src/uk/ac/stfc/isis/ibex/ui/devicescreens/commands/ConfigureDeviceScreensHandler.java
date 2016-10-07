@@ -32,6 +32,8 @@ import org.eclipse.ui.PlatformUI;
 import uk.ac.stfc.isis.ibex.devicescreens.DeviceScreens;
 import uk.ac.stfc.isis.ibex.devicescreens.desc.DeviceScreensDescription;
 import uk.ac.stfc.isis.ibex.epics.adapters.UpdatedObservableAdapter;
+import uk.ac.stfc.isis.ibex.epics.writing.SameTypeWriter;
+import uk.ac.stfc.isis.ibex.epics.writing.Writable;
 import uk.ac.stfc.isis.ibex.model.Awaited;
 import uk.ac.stfc.isis.ibex.model.UpdatedValue;
 import uk.ac.stfc.isis.ibex.opis.Opi;
@@ -42,26 +44,29 @@ import uk.ac.stfc.isis.ibex.ui.devicescreens.dialogs.ConfigureDeviceScreensDialo
  */
 public class ConfigureDeviceScreensHandler extends AbstractHandler {
 
+    final Writable<DeviceScreensDescription> writeable = DeviceScreens.getInstance().getDevicesSetter();
+
     /**
      * This is an inner anonymous class inherited from SameTypeWriter with added
      * functionality for disabling the command if the underlying PV cannot be
      * written to.
      */
-//    protected final SameTypeWriter<T> configService = new SameTypeWriter<T>() { 
-//        @Override
-//        public void onCanWriteChanged(boolean canWrite) {
-//            setBaseEnabled(canWrite);
-//        };  
-//    };
+    protected final SameTypeWriter<DeviceScreensDescription> configService =
+            new SameTypeWriter<DeviceScreensDescription>() {
+                @Override
+                public void onCanWriteChanged(boolean canWrite) {
+                    setBaseEnabled(canWrite);
+                };
+            };
 
     /**
      * Constructor.
      * 
      * @param destination where to write the data to
      */
-    public ConfigureDeviceScreensHandler() {// Writable<T> destination) {
-        // configService.writeTo(destination);
-        // destination.subscribe(configService);
+    public ConfigureDeviceScreensHandler() {
+        configService.writeTo(writeable);
+        writeable.subscribe(configService);
     }
 
     /**
@@ -79,7 +84,8 @@ public class ConfigureDeviceScreensHandler extends AbstractHandler {
                 new ConfigureDeviceScreensDialog(shell(), Opi.getDefault().descriptionsProvider().getOpiList(), load());
 
         if (dialog.open() == Window.OK) {
-
+            DeviceScreensDescription desc = dialog.getDeviceDescription();
+            writeable.write(desc);
         }
 
         return null;

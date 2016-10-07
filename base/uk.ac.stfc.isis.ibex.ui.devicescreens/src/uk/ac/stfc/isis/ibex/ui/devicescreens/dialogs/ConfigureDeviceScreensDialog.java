@@ -78,4 +78,8 @@ public class ConfigureDeviceScreensDialog extends Dialog {
     protected Point getInitialSize() {
         return INITIAL_SIZE;
     }
+
+    public DeviceScreensDescription getDeviceDescription() {
+        return viewModel.getDeviceDescription();
+    }
 }

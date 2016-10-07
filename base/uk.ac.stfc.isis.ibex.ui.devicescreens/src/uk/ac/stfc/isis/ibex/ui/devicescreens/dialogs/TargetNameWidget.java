@@ -29,7 +29,6 @@ import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
-import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -63,9 +62,6 @@ public class TargetNameWidget extends Composite {
         this.availableOPIs.add(0, "");
 		
 		createControls(this);
-
-        IStructuredSelection selection = (IStructuredSelection) cmboOpiName.getSelection();
-        updateModel((String) selection.getFirstElement());
     }
 
     private void createControls(Composite parent) {
@@ -84,10 +80,7 @@ public class TargetNameWidget extends Composite {
         cmboOpiName.addSelectionChangedListener(new ISelectionChangedListener() {
             @Override
             public void selectionChanged(SelectionChangedEvent e) {
-                IStructuredSelection selection = (IStructuredSelection) e.getSelection();
-                String target = (String) selection.getFirstElement();
 
-                updateModel(target);
             }
         });
 		
@@ -96,17 +89,7 @@ public class TargetNameWidget extends Composite {
         btnSetDefault.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
-//                Collection<TargetDescription> potentialTargets =
-//                        DefaultTargetForComponent.defaultTarget(synopticViewModel.getFirstSelectedComponent().type());
-//
-//                if (potentialTargets.size() == 1) {
-//                    updateModel(potentialTargets.iterator().next().name());
-//                } else if (potentialTargets.size() > 1) {
-//                    SuggestedTargetsDialog dialog = new SuggestedTargetsDialog(getShell(), potentialTargets);
-//                    if (dialog.open() == Window.OK) {
-//                        updateModel(dialog.selectedTargetName());
-//                    }
-//                }
+                // Need to decide what to do
             }
         });
         btnSetDefault.setText("Default Target");
@@ -116,7 +99,7 @@ public class TargetNameWidget extends Composite {
         btnClearSelection.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
-                updateModel("NONE");
+                // Need to decide what to do on clear
             }
         });
         btnClearSelection.setText("Clear Target");
@@ -125,26 +108,6 @@ public class TargetNameWidget extends Composite {
 
         bindingContext.bindValue(WidgetProperties.selection().observe(cmboOpiName.getCombo()),
                 BeanProperties.value("currentKey").observe(viewModel), null, null);
-	}
-	
-	
-	private void updateModel(String targetName) 	{
-//        if (!updateLock && synopticViewModel.getFirstSelectedComponent() != null) {
-//            TargetDescription target = synopticViewModel.getFirstSelectedComponent().target();
-//
-//            if (target != null) {
-//                target.setName(targetName);
-//                target.setType(type);
-//                target.setUserSelected(true);
-//                target.clearProperties();
-//                
-//                List<String> keys = synopticViewModel.getPropertyKeys(target.name());
-//                target.addProperties(keys);
-//
-//                synopticViewModel.setSelectedProperty(null);
-//                synopticViewModel.broadcastInstrumentUpdate(UpdateTypes.EDIT_TARGET);
-//            }
-//        }
 	}
 
 }
