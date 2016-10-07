@@ -34,40 +34,99 @@ python.exe purge_archive_client.py
 
 if "%RELEASE%" == "YES" (
     set RELEASE_DIR=p:\Kits$\CompGroup\ICP\Releases\%GIT_BRANCH:~15%
-)
-
-if "%RELEASE%" == "YES" (
-    set INSTALLBASEDIR=%RELEASE_DIR%\Client
-) else (
-    set INSTALLBASEDIR=p:\Kits$\CompGroup\ICP\Client
-)
-
-if "%RELEASE%" == "YES" (
-    set INSTALLDIR=%INSTALLBASEDIR%
-) else (
-    set INSTALLDIR=%INSTALLBASEDIR%\BUILD%BUILD_NUMBER%
-)
-
-if not "%RELEASE%" == "YES" (
-    REM Set a symlink for folder BUILD_LATEST to point to most recent build
-    set INSTALLLINKDIR=%INSTALLBASEDIR%\BUILD_LATEST
-)
-
-if "%RELEASE%" == "YES" (
     if not exist "%RELEASE_DIR%" (
         mkdir %RELEASE_DIR%
     )
+    set INSTALLBASEDIR=%RELEASE_DIR%\Client
     if not exist "%INSTALLBASEDIR%" (
         mkdir %INSTALLBASEDIR%
     )
+    set INSTALLDIR=%INSTALLBASEDIR%
     RMDIR /S /Q %INSTALLDIR%
     @echo Creating client directory %INSTALLDIR%
     if not exist "%INSTALLDIR%" (
         mkdir %INSTALLDIR%
     )
 ) else (
-    if exist "%INSTALLDIR%\Client"
+    set INSTALLBASEDIR=p:\Kits$\CompGroup\ICP\Client
+    set INSTALLDIR=%INSTALLBASEDIR%\BUILD%BUILD_NUMBER%
+    if exist "%INSTALLDIR%\Client" (
         @echo Creating client directory %INSTALLDIR%\Client
         mkdir %INSTALLDIR%\Client
     )
+    REM Set a symlink for folder BUILD_LATEST to point to most recent build
+    set INSTALLLINKDIR=%INSTALLBASEDIR%\BUILD_LATEST
 )
+
+robocopy %CD%\..\base\uk.ac.stfc.isis.ibex.client.product\target\products\ibex.product\win32\win32\x86_64 %INSTALLDIR%\Client /MIR /R:1 /NFL /NDL /NP
+if %errorlevel% geq 4 (
+    if not "%INSTALLDIR%" == "" (
+        @echo Removing invalid client directory %INSTALLDIR%\Client
+        rd /q /s %INSTALLDIR%\Client
+    )
+    @echo Client copy failed
+    exit /b 1
+)
+
+if not "%RELEASE%"=="YES" (
+    if exist "%INSTALLLINKDIR%" (
+        rmdir "%INSTALLLINKDIR%"
+    )
+    mklink /J "%INSTALLLINKDIR%" "%INSTALLDIR%"
+)
+
+REM Copy the install script across
+cd %BASEDIR%
+copy /Y %BASEDIR%\install_client.bat %INSTALLDIR%
+if %errorlevel% neq 0 (
+    @echo Installl client copy failed
+    exit /b %errorlevel%
+)
+
+REM Create the installer
+if exist C:\"Program Files (x86)"\7-Zip\7z.exe set ZIPEXE=C:\"Program Files (x86)"\7-Zip\7z.exe
+if exist C:\"Program Files"\7-Zip\7z.exe set ZIPEXE=C:\"Program Files"\7-Zip\7z.exe
+
+REM First copy the zip with genie_python already in it
+copy %ZIPLOCATION%\installer.7z .
+if %errorlevel% neq 0 (
+    @echo Could not find genie_python zip
+    exit /b %errorlevel%
+)
+
+REM Add EPICS_UTILS and the Client
+%ZIPEXE% a installer.7z P:\Kits$\CompGroup\ICP\Client\EPICS_UTILS
+if %errorlevel% neq 0 (
+    @echo Could not add EPICS_UTILS to zip
+    exit /b %errorlevel%
+)
+%ZIPEXE% a installer.7z %INSTALLDIR%\Client
+if %errorlevel% neq 0 (
+    @echo Could not add Client to zip
+    exit /b %errorlevel%
+)
+
+REM Add the install_client.bat to the archive
+%ZIPEXE% a installer.7z install_client_zip.bat
+if %errorlevel% neq 0 (
+    @echo Could not add install_client_zip.bat to zip
+    exit /b %errorlevel%
+)
+
+REM Build the installer
+copy /b 7zSD.sfx + installer_config.txt + installer.7z ClientInstaller.exe
+if %errorlevel% neq 0 (
+    @echo Installer build failed
+    exit /b %errorlevel%
+)
+
+REM Copy to Kits
+xcopy ClientInstaller.exe %INSTALLDIR%
+if %errorlevel% neq 0 (
+    @echo Installer copy failed
+    exit /b %errorlevel%
+)
+
+REM Delete local copies
+del installer.7z
+del ClientInstaller.exe
