@@ -73,9 +73,9 @@ public class SearchControl extends Canvas {
 	private LogDisplay parent;
 
     private final LogMessageFilter infoFilter =
-            new LogMessageFilter(LogMessageFields.SEVERITY, LogMessageSeverity.INFO.toString().toUpperCase(), true);
+            new LogMessageFilter(LogMessageFields.SEVERITY, LogMessageSeverity.INFO.name(), true);
     private final LogMessageFilter minorFilter =
-            new LogMessageFilter(LogMessageFields.SEVERITY, LogMessageSeverity.MINOR.toString().toUpperCase(), true);
+            new LogMessageFilter(LogMessageFields.SEVERITY, LogMessageSeverity.MINOR.name(), true);
 	
 	public SearchControl(LogDisplay parent, final ISearchModel searcher) {
 		super(parent, SWT.NONE);
