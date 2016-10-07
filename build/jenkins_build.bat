@@ -42,7 +42,7 @@ if not "%RELEASE%" == "YES" set INSTALLDIR=%INSTALLBASEDIR%\BUILD%BUILD_NUMBER%
 REM Set a symlink for folder BUILD_LATEST to point to most recent build
 if not "%RELEASE%" == "YES" set INSTALLLINKDIR=%INSTALLBASEDIR%\BUILD_LATEST
 
-if "%RELEASE%" == "YES"
+if "%RELEASE%" == "YES" (
     if not exist "%RELEASE_DIR%" (
         mkdir %RELEASE_DIR%
     )
