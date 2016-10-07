@@ -88,19 +88,12 @@ public class PythonBuilder extends ModelObject {
 		for (Row row: rows) {
 			if (row.getPosition() != null) {
 				rowData.append(String.format("    set_aperture('%s')\n", settings.getSansSize()));
-				if (row.getSans() == null && settings.getCollection().toString() == null) {
+				if (row.getSans() != null && row.getSansWait() != null) {
+					rowData.append(String.format("    lm.dosans_normal(position='%s', title='%s', %s='%s', thickness='%s', %s)\n", 
+							row.getPosition(), row.getSampleName(), row.getSansWait() /*row.getSansWait().toString().toLowerCase()*/, row.getSansWait(), row.getThickness(), collectionMode));
+				} else {
 					rowData.append(String.format("    lm.dosans_normal(position='%s', title='%s', uamps='0', thickness='%s', %s)\n", 
 							row.getPosition(), row.getSampleName(), row.getThickness(), collectionMode));
-				} else if (row.getSans() != null && settings.getCollection().toString() == null) {
-					rowData.append(String.format("    lm.dosans_normal(position='%s', title='%s', %s='%s', thickness='%s', %s)\n", 
-							row.getPosition(), row.getSampleName(), row.getSansWait() /*row.getSansWait().toString().toLowerCase()*/, row.getThickness(), collectionMode));
-				} else if (row.getSans() == null && settings.getCollection().toString() != null) {
-					rowData.append(String.format("    lm.dosans_normal(position='%s', title='%s', uamps='0', thickness='%s', %s)\n", 
-							row.getPosition(), row.getSampleName(), row.getThickness(), collectionMode));
-				} else if (row.getSans() != null && settings.getCollection().toString() != null) {
-					rowData.append(String.format("    lm.dosans_normal(position='%s', title='%s', %s='%s', thickness='%s', %s)\n", 
-							row.getPosition(), row.getSampleName(), row.getSansWait() /*row.getSansWait().toString().toLowerCase()*/, row.getSansWait(), 
-							row.getThickness(), collectionMode));
 				} 
 			populatedRow = true;
 			}
@@ -124,32 +117,27 @@ public class PythonBuilder extends ModelObject {
 		boolean populatedRow = false;
 		String collectionMode = null;
 		
-		// Based on the collection mode's two settings, set the rtype value to one of its two possibilities 
-		collectionMode = (settings.getCollection().toString() == "Histogram") ? "rtype='0'" : "rtype='1'"; 
+		// Based on the collection mode's two settings, set the rtype value to one of its two possibilities  
+		if (settings.getCollection().toString() != null) {
+			collectionMode = (settings.getCollection().toString() == "Histogram") ? "rtype='0'" : "rtype='1'"; 
+		}
 		
 		for (Row row: rows) {
 			if (row.getPosition() != null) {
 				rowData.append(String.format("    set_aperture('%s')\n", settings.getTransSize()));
-				if (row.getTrans() == null && settings.getCollection().toString() == null) {
+				if (row.getTrans() != null && row.getTransWait() != null) {
+					rowData.append(String.format("    lm.dotrans_normal(position='%s', title='%s', %s='%s', thickness='%s', %s)\n", 
+							row.getPosition(), row.getSampleName(), row.getTransWait() /*row.getSansWait().toString().toLowerCase()*/, row.getTransWait(), row.getThickness(), collectionMode));
+				} else {
 					rowData.append(String.format("    lm.dotrans_normal(position='%s', title='%s', uamps='0', thickness='%s', %s)\n", 
 							row.getPosition(), row.getSampleName(), row.getThickness(), collectionMode));
-				} else if (row.getSans() != null && settings.getCollection().toString() == null) {
-					rowData.append(String.format("    lm.dotrans_normal(position='%s', title='%s', %s='%s', thickness='%s', %s)\n", 
-							row.getPosition(), row.getSampleName(), row.getTransWait() /*row.getTransWait().toString().toLowerCase()*/, row.getThickness(), collectionMode));
-				} else if (row.getSans() == null && settings.getCollection().toString() != null) {
-					rowData.append(String.format("    lm.dotrans_normal(position='%s', title='%s', uamps='0', thickness='%s', %s)\n", 
-							row.getPosition(), row.getSampleName(), row.getThickness(), collectionMode));
-				} else if (row.getSans() != null && settings.getCollection().toString() != null) {
-					rowData.append(String.format("    lm.dotrans_normal(position='%s', title='%s', %s='%s', thickness='%s', %s)\n", 
-							row.getPosition(), row.getSampleName(), row.getSansWait() /*row.getTransWait().toString().toLowerCase()*/, row.getTransWait(), 
-							row.getThickness(), collectionMode));
 				} 
 			populatedRow = true;
 			}
 		}
 		
 		if (populatedRow) {
-			trans.append(String.format("\nfor i in range(%d):\n", settings.getDoSans()));
+			trans.append(String.format("\nfor i in range(%d):\n", settings.getDoTrans()));
 			trans.append(rowData);
 		}
 		
