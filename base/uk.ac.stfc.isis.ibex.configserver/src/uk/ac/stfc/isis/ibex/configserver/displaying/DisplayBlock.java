@@ -146,7 +146,9 @@ public class DisplayBlock extends ModelObject {
 
         @Override
         public void onError(Exception e) {
-            setValue("error");
+            BlockState alarm = BlockState.MINOR_ALARM;
+            lastAlarmState = alarm;
+            setBlockState(alarm);
         }
 
         @Override

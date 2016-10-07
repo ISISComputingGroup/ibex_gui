@@ -25,30 +25,24 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
-import java.util.ListIterator;
 import java.util.Map;
 
 import org.apache.logging.log4j.Logger;
-import org.eclipse.swt.widgets.Display;
-import org.eclipse.ui.IPerspectiveDescriptor;
-import org.eclipse.ui.IViewPart;
-import org.eclipse.ui.IWorkbenchPage;
-import org.eclipse.ui.PartInitException;
-import org.eclipse.ui.PlatformUI;
 
 import uk.ac.stfc.isis.ibex.epics.observing.BaseObserver;
 import uk.ac.stfc.isis.ibex.epics.observing.Observer;
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
+import uk.ac.stfc.isis.ibex.opis.OPIViewCreationException;
 import uk.ac.stfc.isis.ibex.synoptic.ObservingSynopticModel;
 import uk.ac.stfc.isis.ibex.synoptic.Synoptic;
 import uk.ac.stfc.isis.ibex.synoptic.SynopticModel;
 import uk.ac.stfc.isis.ibex.synoptic.model.Component;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.SynopticDescription;
 import uk.ac.stfc.isis.ibex.synoptic.model.targets.GroupedComponentTarget;
-import uk.ac.stfc.isis.ibex.synoptic.model.targets.PerspectiveTarget;
 import uk.ac.stfc.isis.ibex.synoptic.navigation.TargetNode;
 import uk.ac.stfc.isis.ibex.targets.OpiTarget;
+import uk.ac.stfc.isis.ibex.targets.PerspectiveTarget;
 import uk.ac.stfc.isis.ibex.targets.Target;
 import uk.ac.stfc.isis.ibex.targets.ViewTarget;
 import uk.ac.stfc.isis.ibex.ui.UI;
@@ -62,7 +56,7 @@ import uk.ac.stfc.isis.ibex.ui.synoptic.views.SynopticView;
  */
 public class SynopticPresenter extends ModelObject {
 
-	private static final Logger LOG = IsisLog.getLogger(SynopticPresenter.class);
+    private static final Logger LOG = IsisLog.getLogger(SynopticPresenter.class);
 
 	private SynopticModel model;
 	private NavigationPresenter navigator;
@@ -70,9 +64,8 @@ public class SynopticPresenter extends ModelObject {
 	private Map<String, TargetNode> targets = new HashMap<>();
 	private List<Component> components = new ArrayList<>();
 	private List<String> trail;
-	private List<IViewPart> openOPIs = new ArrayList<>();
 
-	private final PropertyChangeListener navigationListener = new PropertyChangeListener() {
+    private final PropertyChangeListener navigationListener = new PropertyChangeListener() {
 		@Override
 		public void propertyChange(PropertyChangeEvent evt) {
 			Target next = navigator.currentTarget();
@@ -153,12 +146,16 @@ public class SynopticPresenter extends ModelObject {
 		LOG.info(targetName + " requested");
 		if (targets.containsKey(targetName)) {
 			Target target = targets.get(targetName).item();
-
+			
             LOG.info(target.name());
 
 			if (target instanceof OpiTarget) {
 				// Opi targets don't update the navigator.
-                displayOpi(target);
+                try {
+                    SynopticOpiTargetView.displayOpi((OpiTarget) target);
+                } catch (OPIViewCreationException e) {
+                    LOG.catching(e);
+                }
                 return;
 			}
 
@@ -210,20 +207,6 @@ public class SynopticPresenter extends ModelObject {
 		LinkedViews.openView(target.name());
 	}
 
-	private void displayOpi(Target currentTarget) {
-		try {
-			OpiTarget opiTarget = (OpiTarget) currentTarget;
-			IWorkbenchPage workbenchPage = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
-            IViewPart view =
-                    workbenchPage.showView(SynopticOpiTargetView.ID, opiTarget.name(), IWorkbenchPage.VIEW_ACTIVATE);
-			openOPIs.add(view);
-            SynopticOpiTargetView targetView = (SynopticOpiTargetView) view;
-			targetView.setOpi(opiTarget.name(), opiTarget.opiName(), opiTarget.properties());
-		} catch (PartInitException e) {
-			LOG.catching(e);
-		}
-	}
-
 	private void displayTarget(Target currentTarget) {
 		LOG.info(currentTarget);
 
@@ -232,7 +215,11 @@ public class SynopticPresenter extends ModelObject {
 		}
 
 		if (currentTarget instanceof OpiTarget) {
-			displayOpi(currentTarget);
+            try {
+                SynopticOpiTargetView.displayOpi((OpiTarget) currentTarget);
+            } catch (OPIViewCreationException e) {
+                LOG.catching(e);
+            }
 		}
 	}
 
@@ -284,23 +271,9 @@ public class SynopticPresenter extends ModelObject {
 	}
 
 	/**
-	 * Closes any OPIs that have been opened on the synoptic.
-	 */
-	public void closeAllOPIs() {
-		for (ListIterator<IViewPart> iter = openOPIs.listIterator(); iter.hasNext();) {
-			final IViewPart vp = iter.next();
-			// Must run on the GUI thread
-			Display.getDefault().asyncExec(new Runnable() {
-				@Override
-				public void run() {
-					IPerspectiveDescriptor descriptor = PlatformUI.getWorkbench().getPerspectiveRegistry()
-							.findPerspectiveWithId(SynopticPerspective.ID);
-					PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().setPerspective(descriptor);
-					IWorkbenchPage wp = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
-					wp.hideView(vp);
-				}
-			});
-		}
-		openOPIs.clear();
-	}
+     * Closes any OPIs that have been opened on the synoptic.
+     */
+    public void closeAllOPIs() {
+        SynopticOpiTargetView.closeAllOPIs();
+    }
 }

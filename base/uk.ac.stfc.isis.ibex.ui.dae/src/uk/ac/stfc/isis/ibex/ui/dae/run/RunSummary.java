@@ -22,11 +22,14 @@ package uk.ac.stfc.isis.ibex.ui.dae.run;
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.beans.BeanProperties;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
-import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Label;
 import org.eclipse.wb.swt.SWTResourceManager;
 
 import uk.ac.stfc.isis.ibex.ui.dae.widgets.LogMessageBox;
@@ -40,11 +43,12 @@ public class RunSummary extends Composite {
 	private Label runNumber;
 	private Label isisCycle;
 	private WritableObservingTextBox title;
+    private Button btnDisplayTitle;
 	private LogMessageBox messageBox;
 	
 	private DaeActionButtonPanel daeButtonPanel;
 	
-	public RunSummary(Composite parent, int style, RunSummaryViewModel model) {
+    public RunSummary(Composite parent, int style, final RunSummaryViewModel model) {
 		super(parent, style);
 		GridLayout gridLayout = new GridLayout(2, false);
 		gridLayout.horizontalSpacing = 0;
@@ -107,9 +111,9 @@ public class RunSummary extends Composite {
 		isisCycle.setLayoutData(gdIsisCycle);
 		isisCycle.setText("UNKNOWN");
 		
-		Label spacer2 = new Label(infoComposite, SWT.NONE);
-		spacer2.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 1, 1));
-		
+        Label spacer2 = new Label(infoComposite, SWT.NONE);
+        spacer2.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 1, 1));
+
 		Label lblTitle = new Label(infoComposite, SWT.NONE);
 		lblTitle.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		lblTitle.setText("Title:");
@@ -119,23 +123,44 @@ public class RunSummary extends Composite {
 		GridData gdTitle = new GridData(SWT.FILL, SWT.CENTER, false, false, 3, 1);
 		gdTitle.widthHint = 180;
 		title.setLayoutData(gdTitle);
-		new Label(infoComposite, SWT.NONE);
+
+        Label spacer3 = new Label(infoComposite, SWT.NONE);
+        Label spacer4 = new Label(infoComposite, SWT.NONE);
+
+        btnDisplayTitle = new Button(infoComposite, SWT.CHECK);
+        btnDisplayTitle.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false, false));
+        btnDisplayTitle.setText("Show Title in Dataweb Dashboard Page");
+        btnDisplayTitle.addSelectionListener(new SelectionAdapter() {
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                super.widgetSelected(e);
+                model.displayTitle().setValue(btnDisplayTitle.getSelection());
+            }
+        });
 
 		messageBox = new LogMessageBox(lhsComposite, SWT.NONE);
 		messageBox.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		
-				
 		daeButtonPanel = new DaeActionButtonPanel(this, SWT.NONE, model.actions());
 		daeButtonPanel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
 	}
-	
+
+    /**
+     * Binds run model properties to GUI elements.
+     * 
+     * @param viewModel the model containing the run information
+     */
 	public void setModel(RunSummaryViewModel viewModel) {
 		DataBindingContext bindingContext = new DataBindingContext();
 		bindingContext.bindValue(WidgetProperties.text().observe(instrument), BeanProperties.value("value").observe(viewModel.instrument()));
 		bindingContext.bindValue(WidgetProperties.text().observe(runStatus), BeanProperties.value("value").observe(viewModel.runStatus()));
 		bindingContext.bindValue(WidgetProperties.text().observe(runNumber), BeanProperties.value("value").observe(viewModel.runNumber()));
 		bindingContext.bindValue(WidgetProperties.text().observe(isisCycle), BeanProperties.value("value").observe(viewModel.isisCycle()));
-		
+        bindingContext.bindValue(WidgetProperties.selection().observe(btnDisplayTitle),
+                BeanProperties.value("value").observe(viewModel.displayTitle().value()));
+        bindingContext.bindValue(WidgetProperties.enabled().observe(btnDisplayTitle),
+                BeanProperties.value("value").observe(viewModel.displayTitle().canSetValue()));
+
 		messageBox.setModel(viewModel.logMessageSource());		
 	}
 }

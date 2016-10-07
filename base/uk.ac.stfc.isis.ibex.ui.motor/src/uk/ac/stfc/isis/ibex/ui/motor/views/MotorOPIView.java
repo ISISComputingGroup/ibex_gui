@@ -19,38 +19,64 @@
 
 package uk.ac.stfc.isis.ibex.ui.motor.views;
 
+import org.apache.logging.log4j.Logger;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.wb.swt.ResourceManager;
 
 import uk.ac.stfc.isis.ibex.instrument.Instrument;
+import uk.ac.stfc.isis.ibex.logger.IsisLog;
+import uk.ac.stfc.isis.ibex.opis.OPIViewCreationException;
 import uk.ac.stfc.isis.ibex.opis.Opi;
 import uk.ac.stfc.isis.ibex.opis.OpiView;
 
+/**
+ * The Class MotorOPIView which is the opi view generated from opening an opi
+ * from the motors page.
+ */
 public class MotorOPIView extends OpiView {
 		
 	private static final String MOTOR_OPI = "Motor/mymotor.opi";
 	private String partName = "Motor view";
+    private static final Logger LOG = IsisLog.getLogger(MotorOPIView.class);
 	
+    /**
+     * Instantiates a new motor opi view.
+     */
 	public MotorOPIView() {
 		setTitleToolTip("A more detailed view of the motor");
 		setTitleImage(ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui.motor", "icons/cog.png"));
 	}
 
+    /** The ID for the view. */
 	public static final String ID = "uk.ac.stfc.isis.ibex.ui.motor.views.MotorOPIView"; //$NON-NLS-1$
 	
+    /**
+     * Sets the motor name.
+     *
+     * @param motorName the new motor name
+     */
 	public void setMotorName(String motorName) {
 		macros().put("P", Instrument.getInstance().currentInstrument().pvPrefix());
 		macros().put("MM", motorName);		
 	}
 	
+    /**
+     * Sets the OPI title.
+     *
+     * @param partName the new OPI title
+     */
 	public void setOPITitle(String partName) {
 		this.partName = partName;
 	}
 	
 	@Override
 	public void initialiseOPI() {
-		super.initialiseOPI();
-		super.setPartName(partName);
+	    try {
+	        super.initialiseOPI();
+	        super.setPartName(partName);
+	    } catch (OPIViewCreationException ex) {
+            LOG.catching(ex);
+	    }
 	}
 
 	@Override

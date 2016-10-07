@@ -45,7 +45,6 @@ import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
 
 /**
  * A view allowing selection of an instrument from a list of instruments.
- * 
  */
 @SuppressWarnings("checkstyle:magicnumber")
 public class InstrumentSelectionPanel extends Composite {
@@ -53,6 +52,13 @@ public class InstrumentSelectionPanel extends Composite {
     private Text txtSelectedName;
     private InstrumentTable instrumentTable;
 
+    /**
+     * Creates an instance of the instrument selection panel.
+     * 
+     * @param parent the parent composite
+     * @param style the style of the panel
+     * @param viewModel the view model for the instrument selection
+     */
     public InstrumentSelectionPanel(Composite parent, int style, InstrumentSelectionViewModel viewModel) {
         super(parent, style);
 
@@ -65,6 +71,7 @@ public class InstrumentSelectionPanel extends Composite {
         createInstrumentLabel(grpInstrument);
         createInstrumentTextBox(grpInstrument);
         createClearButton(grpInstrument);
+        createHelpLabel(grpInstrument);
         createTable(grpInstrument, viewModel.getInstruments());
 
         bindModel(viewModel);
@@ -78,8 +85,7 @@ public class InstrumentSelectionPanel extends Composite {
 
     private void createInstrumentTextBox(Composite parent) {
         txtSelectedName = new Text(parent, SWT.BORDER);
-        GridData gdInstrument = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
-        gdInstrument.widthHint = 130;
+        GridData gdInstrument = new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1);
         txtSelectedName.setLayoutData(gdInstrument);
         txtSelectedName.addModifyListener(new ModifyListener() {
             @Override
@@ -104,8 +110,15 @@ public class InstrumentSelectionPanel extends Composite {
         btnClear.addListener(SWT.Selection, clearListener);
     }
 
+    private void createHelpLabel(Composite parent) {
+        String helpText = "(For custom names, type the machine name, e.g. \"NDXLARMOR\")";
+        Label lblHelp = new Label(parent, SWT.WRAP | SWT.LEFT);
+        lblHelp.setLayoutData(new GridData(SWT.HORIZONTAL, SWT.CENTER, true, false, 3, 1));
+        lblHelp.setText(helpText);
+    }
+
     private void createTable(Composite parent, Collection<InstrumentInfo> instruments) {
-        instrumentTable = new InstrumentTable(parent, SWT.NONE, SWT.V_SCROLL | SWT.NO_SCROLL | SWT.FULL_SELECTION, instruments);
+        instrumentTable = new InstrumentTable(parent, SWT.NONE, SWT.FULL_SELECTION, instruments);
         GridData gdInstrumentTable = new GridData(SWT.FILL, SWT.FILL, true, true, 3, 1);
         gdInstrumentTable.heightHint = 300;
         instrumentTable.setLayoutData(gdInstrumentTable);

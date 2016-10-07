@@ -85,7 +85,7 @@ $(pv_value)</tooltip>
     </background_color>
     <password_input>false</password_input>
     <name>Text</name>
-    <width>241</width>
+    <width>263</width>
     <x>20</x>
     <y>5</y>
     <maximum>1.7976931348623157E308</maximum>

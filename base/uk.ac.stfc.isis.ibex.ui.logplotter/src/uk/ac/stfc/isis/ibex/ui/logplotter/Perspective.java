@@ -21,6 +21,13 @@ package uk.ac.stfc.isis.ibex.ui.logplotter;
 
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.ui.IPageLayout;
+import org.eclipse.ui.IPartListener;
+import org.eclipse.ui.IViewPart;
+import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.IWorkbenchPart;
+import org.eclipse.ui.IWorkbenchWindow;
+import org.eclipse.ui.PartInitException;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.wb.swt.ResourceManager;
 
 import uk.ac.stfc.isis.ibex.ui.perspectives.BasePerspective;
@@ -51,7 +58,63 @@ public class Perspective extends BasePerspective {
 	public void createInitialLayout(IPageLayout layout) {
 		super.createInitialLayout(layout);
 		
-		layout.setEditorAreaVisible(true);
-		lockView(layout, "org.csstudio.trends.databrowser.waveformview.WaveformView");		
+		lockView(layout, "org.csstudio.trends.databrowser.waveformview.WaveformView");
+		
+		layout.addStandaloneView(EmptyLogPlotterView.ID, false, IPageLayout.RIGHT, 0.1f, "uk.ac.stfc.isis.ibex.ui.perspectives.PerspectiveSwitcher");
+		
+		
+		//This part listener will be called to open the empty view when all graphs are closed
+		PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().addPartListener(new IPartListener() {
+			
+			@Override
+			public void partOpened(IWorkbenchPart part) {
+				checkEditorEmpty(part);
+			}
+			
+			@Override
+			public void partDeactivated(IWorkbenchPart part) {
+			}
+			
+			@Override
+			public void partClosed(IWorkbenchPart part) {
+				checkEditorEmpty(part);
+			}
+			
+			@Override
+			public void partBroughtToTop(IWorkbenchPart part) {
+			}
+			
+			@Override
+			public void partActivated(IWorkbenchPart part) {
+			}
+			
+			private void checkEditorEmpty(IWorkbenchPart part) {
+				if (part.getClass().equals(EmptyLogPlotterView.class)) {
+					return;
+				}
+				
+				IWorkbenchPage activePage = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
+				if (activePage == null) {
+					return;
+				}
+				
+				if (!activePage.getPerspective().getId().equals(ID)) {
+					return;
+				}
+				
+				if (activePage.getEditorReferences().length > 0) {
+					IViewPart emptyView = activePage.findView(EmptyLogPlotterView.ID);
+					activePage.setEditorAreaVisible(true);		
+					activePage.hideView(emptyView);
+				} else {
+					try {
+						activePage.showView(EmptyLogPlotterView.ID);
+						activePage.setEditorAreaVisible(false);
+					} catch (PartInitException e) {
+						e.printStackTrace();
+					}
+				}
+			}
+		});
 	}
 }

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="uk.ac.stfc.isis.ibex.ui.perspectives">
+      <contribution 
+            class="uk.ac.stfc.isis.ibex.ui.scriptgenerator.Perspective">
+      </contribution>
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectives">
+      <perspective
+            class="uk.ac.stfc.isis.ibex.ui.scriptgenerator.Perspective"
+            id="uk.ac.stfc.isis.ibex.ui.scriptgenerator.perspective"
+            name="Script Generator">
+      </perspective>
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectiveExtensions">
+      <perspectiveExtension
+            targetID="uk.ac.stfc.isis.ibex.ui.scriptgenerator.perspective">
+         <view
+               closeable="false"
+               id="uk.ac.stfc.isis.ibex.ui.scriptgenerator.scriptgeneratorview"
+               minimized="false"
+               moveable="false"
+               ratio="0.1f"
+               relationship="right"
+               relative="uk.ac.stfc.isis.ibex.ui.perspectives.PerspectiveSwitcher"
+               showTitle="false"
+               standalone="true"
+               visible="true">
+         </view>
+      </perspectiveExtension>
+   </extension>
+   <extension
+         point="org.eclipse.ui.views">
+      <view
+            allowMultiple="false"
+            class="uk.ac.stfc.isis.ibex.ui.scriptgenerator.View"
+            id="uk.ac.stfc.isis.ibex.ui.scriptgenerator.scriptgeneratorview"
+            name="Script Generator View"
+            restorable="true">
+      </view>
+   </extension>
+</plugin>

@@ -30,6 +30,9 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import uk.ac.stfc.isis.ibex.model.ModelObject;
+import uk.ac.stfc.isis.ibex.targets.OpiTarget;
+
 /**
  * This class describes the device element of the device screens xml format.
  * 
@@ -38,8 +41,11 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @XmlRootElement(name = "device")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class DeviceDescription {
+public class DeviceDescription extends ModelObject {
 
+    /**
+     * Type when the device screen is an OPI.
+     */
     private String name;
     private String key;
     private String type;
@@ -47,7 +53,7 @@ public class DeviceDescription {
     private PropertiesDescription properties = new PropertiesDescription();
 
     /**
-     * @return the type
+     * @return the type, e.g. OPI
      */
     public String getType() {
         return type;
@@ -60,7 +66,8 @@ public class DeviceDescription {
     }
 
     /**
-     * @return the key
+     * @return the resource key, for an OPI this is the key within the OPI
+     *         descriptions file, e.g. Eurotherm
      */
     public String getKey() {
         return key;
@@ -99,5 +106,18 @@ public class DeviceDescription {
      */
     public void addProperty(PropertyDescription property) {
         properties.addProperty(property);
+    }
+
+    /**
+     * Convert the Device description to an OPI target.
+     * 
+     * @return OPI Target
+     */
+    public OpiTarget getOPITarget() {
+        OpiTarget target = new OpiTarget(getName(), getKey());
+        for (PropertyDescription property : getProperties()) {
+            target.addProperty(property.getKey(), property.getValue());
+        }
+        return target;
     }
 }

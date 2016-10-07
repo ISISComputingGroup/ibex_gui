@@ -108,11 +108,11 @@ public class ExperimentIDQuery {
      * Performs a database search, returning all experiment IDs in the DB that
      * match the request parameters.
      * 
-     * @param searchName
-     *            The user name to search by.
-     *            
-     * @param searchRole
-     * 			  The user role to search by.
+     * @param searchName The user name to search by.
+     * @param searchRole The user role to search by. If blank will search all roles.
+     * @param date The date to search by. If null will search all dates.
+     * 
+     * @return A list of the search results
      */
     public List<UserDetails> getExperiments(String searchName, Role searchRole, GregorianCalendar date) throws Exception {
 		String selectStatement = buildSQL(searchName, searchRole, date).getSelectStatement();

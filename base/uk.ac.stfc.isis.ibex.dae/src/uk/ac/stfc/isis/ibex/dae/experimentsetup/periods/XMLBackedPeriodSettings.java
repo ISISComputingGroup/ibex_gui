@@ -1,7 +1,7 @@
 
 /*
 * This file is part of the ISIS IBEX application.
-* Copyright (C) 2012-2015 Science & Technology Facilities Council.
+* Copyright (C) 2012-2016 Science & Technology Facilities Council.
 * All rights reserved.
 *
 * This program is distributed in the hope that it will be useful.
@@ -84,8 +84,8 @@ public class XMLBackedPeriodSettings extends PeriodSettings {
 	}
 	
 	@Override
-	public void setPeriodFile(String value) {
-		super.setPeriodFile(value);
+	public void setNewPeriodFile(String value) {
+		super.setNewPeriodFile(value);
 		periodFile.setValue(value);
 	}
 	

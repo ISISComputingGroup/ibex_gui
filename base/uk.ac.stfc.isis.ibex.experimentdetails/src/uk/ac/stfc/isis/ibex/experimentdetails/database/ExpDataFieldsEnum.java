@@ -20,7 +20,7 @@
 package uk.ac.stfc.isis.ibex.experimentdetails.database;
 
 /**
- * An enum to improve the readability of the column names in the database
+ * An enum to improve the readability of the column names in the database.
  */
 public enum ExpDataFieldsEnum {
 	EXPERIMENT_ID("experimentID"),

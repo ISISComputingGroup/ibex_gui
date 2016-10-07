@@ -51,7 +51,7 @@ public class CustomInstrumentInfo extends InstrumentInfo {
     }
 
     public static String validCustomInstrumentRegex() {
-        return PVPrefix.NDW + "[_a-zA-Z0-9]+";
+        return PVPrefix.ND + "[_a-zA-Z0-9]+";
     }
 
     @Override

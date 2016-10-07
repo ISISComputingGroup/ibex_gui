@@ -50,6 +50,7 @@ public class RunInformationViewModel extends Closer {
 	public UpdatedObservableAdapter<Integer> timeChannels;
 	public UpdatedObservableAdapter<Integer> spectra;
 	public UpdatedObservableAdapter<String> title;
+    public UpdatedObservableAdapter<Boolean> displayTitle;
 	public UpdatedObservableAdapter<String> users;
 	
 	public UpdatedObservableAdapter<Integer> period;
@@ -89,6 +90,7 @@ public class RunInformationViewModel extends Closer {
 		isisCycle = adapt(observables.isisCycle);
 		
 		title = adapt(observables.title);
+        displayTitle = adapt(observables.displayTitle);
 		users = adapt(observables.users);
 		
 		period = adapt(observables.currentPeriod);

@@ -1,160 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <display typeId="org.csstudio.opibuilder.Display" version="1.0">
+  <show_close_button>true</show_close_button>
+  <rules />
+  <wuid>-cbb41b:142c71b4f20:-7b1a</wuid>
+  <show_grid>true</show_grid>
   <auto_zoom_to_fit_all>false</auto_zoom_to_fit_all>
+  <scripts />
+  <height>600</height>
   <macros>
     <include_parent_macros>true</include_parent_macros>
   </macros>
-  <wuid>-cbb41b:142c71b4f20:-7b1a</wuid>
   <boy_version>3.1.4.201301231545</boy_version>
-  <scripts />
-  <show_ruler>true</show_ruler>
-  <height>600</height>
-  <name />
-  <snap_to_geometry>true</snap_to_geometry>
-  <show_grid>true</show_grid>
-  <background_color>
-    <color blue="240" green="240" name="ISIS_OPI_Background" red="240" />
-  </background_color>
-  <foreground_color>
-    <color blue="192" green="192" name="ISIS_OPI_Foreground" red="192" />
-  </foreground_color>
-  <widget_type>Display</widget_type>
-  <show_close_button>true</show_close_button>
-  <width>1200</width>
-  <rules />
   <show_edit_range>true</show_edit_range>
-  <grid_space>6</grid_space>
+  <widget_type>Display</widget_type>
   <auto_scale_widgets>
     <auto_scale_widgets>false</auto_scale_widgets>
     <min_width>-1</min_width>
     <min_height>-1</min_height>
   </auto_scale_widgets>
-  <actions hook="false" hook_all="false" />
-  <y>-1</y>
+  <background_color>
+    <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
+  </background_color>
+  <width>1200</width>
   <x>-1</x>
+  <name></name>
+  <grid_space>6</grid_space>
+  <show_ruler>true</show_ruler>
+  <y>-1</y>
+  <snap_to_geometry>true</snap_to_geometry>
+  <foreground_color>
+    <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
+  </foreground_color>
+  <actions hook="false" hook_all="false" />
   <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0">
+    <opi_file>../Motor/mymotor.opi</opi_file>
+    <border_style>3</border_style>
+    <tooltip></tooltip>
+    <rules />
+    <enabled>true</enabled>
+    <wuid>-cbb41b:142c71b4f20:-7aa8</wuid>
+    <auto_size>false</auto_size>
+    <scripts />
+    <height>235</height>
+    <border_width>1</border_width>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
     <macros>
       <include_parent_macros>true</include_parent_macros>
       <MM>MTR04</MM>
     </macros>
     <visible>true</visible>
-    <wuid>-cbb41b:142c71b4f20:-7aa8</wuid>
+    <group_name></group_name>
+    <border_color>
+      <color name="ISIS_Check_Border" red="0" green="128" blue="255" />
+    </border_color>
+    <widget_type>Linking Container</widget_type>
+    <background_color>
+      <color red="240" green="240" blue="240" />
+    </background_color>
+    <zoom_to_fit>true</zoom_to_fit>
+    <width>384</width>
+    <x>6</x>
+    <name>Linking Container</name>
+    <y>6</y>
+    <foreground_color>
+      <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
+    </foreground_color>
+    <actions hook="false" hook_all="false" />
+    <font>
+      <opifont.name fontName="Arial" height="9" style="0">ISIS_Label_Small</opifont.name>
+    </font>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0">
+    <opi_file>../Motor/mymotor.opi</opi_file>
+    <border_style>3</border_style>
+    <tooltip></tooltip>
+    <rules />
+    <enabled>true</enabled>
+    <wuid>-cbb41b:142c71b4f20:-7a7d</wuid>
     <auto_size>false</auto_size>
     <scripts />
-    <zoom_to_fit>false</zoom_to_fit>
-    <height>279</height>
-    <name>Linking Container</name>
+    <height>235</height>
+    <border_width>1</border_width>
     <scale_options>
       <width_scalable>true</width_scalable>
       <height_scalable>true</height_scalable>
       <keep_wh_ratio>false</keep_wh_ratio>
     </scale_options>
-    <opi_file>../../motor/mymotor.opi</opi_file>
-    <foreground_color>
-      <color blue="192" green="192" name="ISIS_OPI_Foreground" red="192" />
-    </foreground_color>
-    <background_color>
-      <color blue="240" green="240" name="ISIS_OPI_Background" red="240" />
-    </background_color>
-    <group_name />
-    <enabled>true</enabled>
-    <widget_type>Linking Container</widget_type>
-    <font>
-      <opifont.name fontName="Arial" height="9" style="0">ISIS_Label_Small</opifont.name>
-    </font>
-    <width>384</width>
-    <border_style>3</border_style>
-    <rules />
-    <border_width>1</border_width>
-    <border_color>
-      <color blue="255" green="128" name="ISIS_Check_Border" red="0" />
-    </border_color>
-    <y>6</y>
-    <actions hook="false" hook_all="false" />
-    <x>6</x>
-    <tooltip />
-  </widget>
-  <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0">
     <macros>
       <include_parent_macros>true</include_parent_macros>
       <MM>MTR05</MM>
     </macros>
     <visible>true</visible>
-    <wuid>-cbb41b:142c71b4f20:-7a7d</wuid>
+    <group_name></group_name>
+    <border_color>
+      <color name="ISIS_Check_Border" red="0" green="128" blue="255" />
+    </border_color>
+    <widget_type>Linking Container</widget_type>
+    <background_color>
+      <color red="240" green="240" blue="240" />
+    </background_color>
+    <zoom_to_fit>true</zoom_to_fit>
+    <width>384</width>
+    <x>396</x>
+    <name>Linking Container_1</name>
+    <y>6</y>
+    <foreground_color>
+      <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
+    </foreground_color>
+    <actions hook="false" hook_all="false" />
+    <font>
+      <opifont.name fontName="Arial" height="9" style="0">ISIS_Label_Small</opifont.name>
+    </font>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0">
+    <opi_file>../Motor/mymotor.opi</opi_file>
+    <border_style>3</border_style>
+    <tooltip></tooltip>
+    <rules />
+    <enabled>true</enabled>
+    <wuid>-cbb41b:142c71b4f20:-7a55</wuid>
     <auto_size>false</auto_size>
     <scripts />
-    <zoom_to_fit>false</zoom_to_fit>
-    <height>279</height>
-    <name>Linking Container_1</name>
+    <height>235</height>
+    <border_width>1</border_width>
     <scale_options>
       <width_scalable>true</width_scalable>
       <height_scalable>true</height_scalable>
       <keep_wh_ratio>false</keep_wh_ratio>
     </scale_options>
-    <opi_file>../../motor/mymotor.opi</opi_file>
-    <foreground_color>
-      <color blue="192" green="192" name="ISIS_OPI_Foreground" red="192" />
-    </foreground_color>
-    <background_color>
-      <color blue="240" green="240" name="ISIS_OPI_Background" red="240" />
-    </background_color>
-    <group_name />
-    <enabled>true</enabled>
-    <widget_type>Linking Container</widget_type>
-    <font>
-      <opifont.name fontName="Arial" height="9" style="0">ISIS_Label_Small</opifont.name>
-    </font>
-    <width>384</width>
-    <border_style>3</border_style>
-    <rules />
-    <border_width>1</border_width>
-    <border_color>
-      <color blue="255" green="128" name="ISIS_Check_Border" red="0" />
-    </border_color>
-    <y>6</y>
-    <actions hook="false" hook_all="false" />
-    <x>396</x>
-    <tooltip />
-  </widget>
-  <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0">
     <macros>
       <include_parent_macros>true</include_parent_macros>
       <MM>MTR06</MM>
     </macros>
     <visible>true</visible>
-    <wuid>-cbb41b:142c71b4f20:-7a55</wuid>
-    <auto_size>false</auto_size>
-    <scripts />
-    <zoom_to_fit>false</zoom_to_fit>
-    <height>279</height>
-    <name>Linking Container_2</name>
-    <scale_options>
-      <width_scalable>true</width_scalable>
-      <height_scalable>true</height_scalable>
-      <keep_wh_ratio>false</keep_wh_ratio>
-    </scale_options>
-    <opi_file>../../motor/mymotor.opi</opi_file>
-    <foreground_color>
-      <color blue="192" green="192" name="ISIS_OPI_Foreground" red="192" />
-    </foreground_color>
-    <background_color>
-      <color blue="240" green="240" name="ISIS_OPI_Background" red="240" />
-    </background_color>
-    <group_name />
-    <enabled>true</enabled>
+    <group_name></group_name>
+    <border_color>
+      <color name="ISIS_Check_Border" red="0" green="128" blue="255" />
+    </border_color>
     <widget_type>Linking Container</widget_type>
+    <background_color>
+      <color red="240" green="240" blue="240" />
+    </background_color>
+    <zoom_to_fit>true</zoom_to_fit>
+    <width>384</width>
+    <x>786</x>
+    <name>Linking Container_2</name>
+    <y>6</y>
+    <foreground_color>
+      <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
+    </foreground_color>
+    <actions hook="false" hook_all="false" />
     <font>
       <opifont.name fontName="Arial" height="9" style="0">ISIS_Label_Small</opifont.name>
     </font>
-    <width>384</width>
-    <border_style>3</border_style>
-    <rules />
-    <border_width>1</border_width>
-    <border_color>
-      <color blue="255" green="128" name="ISIS_Check_Border" red="0" />
-    </border_color>
-    <y>6</y>
-    <actions hook="false" hook_all="false" />
-    <x>786</x>
-    <tooltip />
   </widget>
 </display>

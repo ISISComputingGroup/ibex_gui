@@ -23,54 +23,74 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 
-import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.swt.events.MouseAdapter;
-import org.eclipse.swt.events.MouseEvent;
-import org.eclipse.swt.graphics.Point;
-import org.eclipse.swt.layout.GridData;
-import org.eclipse.core.databinding.DataBindingContext;
 
 import uk.ac.stfc.isis.ibex.configserver.configuration.ConfigInfo;
+import uk.ac.stfc.isis.ibex.ui.dialogs.SelectionDialog;
 
-@SuppressWarnings("checkstyle:magicnumber")
-public class MultipleConfigsSelectionDialog extends Dialog {
+/**
+ * Dialog for asking the user to select a multiple configurations or components.
+ */
+public class MultipleConfigsSelectionDialog extends SelectionDialog {
 	
-	private final String title;
-	private final Collection<ConfigInfo> available;
-	private List items;
-	private boolean isComponent;
+    /**
+     * The collection of the available configurations/components for the user to
+     * select from.
+     */
+    protected final Collection<ConfigInfo> available;
 
-	private Collection<String> selected = new ArrayList<>();
+    /**
+     * Is the dialog to do with components? (as opposed to configs)
+     */
+    protected boolean isComponent;
+
+    /**
+     * The currently selected items.
+     */
+    protected Collection<String> selected = new ArrayList<>();
 	
+    /**
+     * Include the current config in the list of available items.
+     */
+    protected boolean includeCurrent;
+
+    /**
+     * Any additional options to be applied when generating the selection list
+     * template.
+     */
+    protected int extraListOptions;
+
+	/**
+     * @param parentShell The shell to create the dialog in.
+     * @param title The title of the dialog box.
+     * @param available A collection of the available configurations/components
+     *            for the user to select from.
+     * @param isComponent Whether the user is selecting from a list of
+     *            components.
+     * @param includeCurrent Whether the current config/component should be
+     *            included in the list of available items
+     */
 	public MultipleConfigsSelectionDialog(
 			Shell parentShell, 
 			String title,
-			Collection<ConfigInfo> available, boolean isComponent) {
-		super(parentShell);
-		this.title = title;
+            Collection<ConfigInfo> available, boolean isComponent, boolean includeCurrent) {
+		super(parentShell, title);
 		this.available = available;
 		this.isComponent = isComponent;
+        this.includeCurrent = includeCurrent;
+        this.extraListOptions = SWT.MULTI;
 	}
 	
+	/**
+	 * @return A collection of the selected configurations/components that the user has selected.
+	 */
 	public Collection<String> selectedConfigs() {
 		return selected;
-	}
-	
-	@Override
-	protected void configureShell(Shell shell) {
-		super.configureShell(shell);
-		shell.setText(title);
-	}
-
-	@Override
-	protected Point getInitialSize() {
-		return new Point(450, 300);
 	}
 	
 	@Override
@@ -80,38 +100,26 @@ public class MultipleConfigsSelectionDialog extends Dialog {
 	}
 	
 	@Override
-	protected Control createDialogArea(Composite parent) {
-		Composite container = (Composite) super.createDialogArea(parent);
-		createConfigSelection(container);
-		
-		return container;
-	}
-	
-	private void createConfigSelection(Composite container) {
+    protected void createSelection(Composite container) {
 		Label lblSelect = new Label(container, SWT.NONE);
-		lblSelect.setText("Select " + getTypeString() + ":");
+        lblSelect.setText("Select " + getTypeString() + ":");
 
-		items = new List(container, SWT.BORDER | SWT.V_SCROLL);
+        items = new List(container, SWT.BORDER | SWT.V_SCROLL | extraListOptions);
 		items.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		String[] names = ConfigInfo.names(available).toArray(new String[0]);
+        String[] names;
+        if (includeCurrent) {
+            names = ConfigInfo.names(available).toArray(new String[0]);
+        } else {
+            names = ConfigInfo.namesWithoutCurrent(available).toArray(new String[0]);
+        }
 		Arrays.sort(names);
 		items.setItems(names);
-		initDataBindings();
-		
-		items.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseDoubleClick(MouseEvent e) {
-				okPressed();
-			}
-		});
 	}
 	
-	private String getTypeString() {
-		return isComponent ? "components" : "configurations";
-	}
-	protected DataBindingContext initDataBindings() {
-		DataBindingContext bindingContext = new DataBindingContext();
-		//
-		return bindingContext;
+    /**
+     * @return A string corresponding to the type of item in the list.
+     */
+    protected String getTypeString() {
+        return isComponent ? "components" : "configurations";
 	}
 }

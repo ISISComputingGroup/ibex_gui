@@ -24,6 +24,9 @@ import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.epics.writing.Writable;
 import uk.ac.stfc.isis.ibex.experimentdetails.Parameter;
 
+/**
+ * Brings together all the observables for the parts of a parameter to hold in one Parameter object.
+ */
 public class ObservableParameter extends Parameter {
 	
 	private final BaseObserver<String> nameObserver = new ParameterFieldObserver() {

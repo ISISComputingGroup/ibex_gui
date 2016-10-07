@@ -57,9 +57,9 @@ public class CustomInstrumentInfoTest {
     }
 
     @Test
-    public final void host_name_starting_with_NDW_is_valid() {
+    public final void host_name_starting_with_ND_is_valid() {
         // Arrange
-        String name = "NDW_a_valid_name_123";
+        String name = "ND_a_valid_name_123";
         String pvPrefix = "myPrefix";
         CustomInstrumentInfo instrument = new CustomInstrumentInfo(name, pvPrefix);
 
@@ -71,7 +71,7 @@ public class CustomInstrumentInfoTest {
     }
 
     @Test
-    public final void host_name_not_starting_with_NDW_is_invalid() {
+    public final void host_name_not_starting_with_ND_is_invalid() {
         // Arrange
         String name = "invalid_name";
         String pvPrefix = "prefix";

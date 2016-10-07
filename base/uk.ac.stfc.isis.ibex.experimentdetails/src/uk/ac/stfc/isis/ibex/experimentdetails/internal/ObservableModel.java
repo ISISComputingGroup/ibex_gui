@@ -30,12 +30,16 @@ import uk.ac.stfc.isis.ibex.experimentdetails.Model;
 import uk.ac.stfc.isis.ibex.experimentdetails.Parameter;
 import uk.ac.stfc.isis.ibex.experimentdetails.Role;
 import uk.ac.stfc.isis.ibex.experimentdetails.UserDetails;
+import uk.ac.stfc.isis.ibex.experimentdetails.UserDetailsList;
 
+/**
+ * A model for holding the current experiment details that is linked to a set of observables.
+ */
 public class ObservableModel extends Model {
 	
 	private List<Parameter> sampleParameters = new ArrayList<>();
 	private List<Parameter> beamParameters = new ArrayList<>();
-	private List<UserDetails> userDetails = new ArrayList<>();
+	private UserDetailsList userDetails = new UserDetailsList();
 	
 	private final String defaultUser = "DEFAULT_USER";
 	private final String defaultOrg = "STFC";
@@ -64,7 +68,10 @@ public class ObservableModel extends Model {
 	
 	private final ExperimentDetailsVariables variables;
 	
-	
+	/**
+	 * The constructor for the concrete Observable Model.
+	 * @param variables The set of observables that this model should be linked to.
+	 */
 	public ObservableModel(ExperimentDetailsVariables variables) {
 		variables.userDetails.addObserver(userDetailsObserver);
 		variables.sampleParameters.addObserver(sampleParametersObserver);
@@ -104,31 +111,57 @@ public class ObservableModel extends Model {
 
 	@Override
 	public Collection<UserDetails> getUserDetails() {
-		return userDetails;
+		return new ArrayList<>(userDetails);
 	}
 	
+	@Override
 	public void setUserDetails(Collection<UserDetails> values) {
-		firePropertyChange("userDetails", this.userDetails, this.userDetails = new ArrayList<>(values));
+		firePropertyChange("userDetails", this.userDetails, this.userDetails = new UserDetailsList(values));
 	}
 
 	@Override
 	public void sendUserDetails() {
+		userDetails.combineSameUsers();
 		variables.userDetailsSetter.write(userDetails.toArray(new UserDetails[0]));
 	}
 	
-	public UserDetails addUser() {
+	private String getDefaultUser() {
+		String defaultName = defaultUser;
+		int i = 1;
+		
+		List<String> userNames = new ArrayList<>();
+		
+		for (UserDetails user : userDetails) {
+			userNames.add(user.getName());
+		}
+		
+		while (userNames.contains(defaultName)) {
+			defaultName = defaultUser + "_" + i++;
+		}
+		
+		return defaultName;
+	}
+	
+	@Override
+	public void addDefaultUser() {
 		Collection<UserDetails> originalUsers = getUserDetails();
 		
-		UserDetails user = new UserDetails(defaultUser, defaultOrg, Role.BLANK);
+		UserDetails user = new UserDetails(getDefaultUser(), defaultOrg, Role.USER);
 		this.userDetails.add(user);
 		firePropertyChange("userDetails", originalUsers, getUserDetails());
-		return user;
 	}
 
 	@Override
 	public void clearUserDetails() {
 		Collection<UserDetails> originalUsers = getUserDetails();
-		this.userDetails = new ArrayList<>();
+		this.userDetails = new UserDetailsList();
+		firePropertyChange("userDetails", originalUsers, getUserDetails());
+	}
+	
+	@Override
+	public void removeUsers(List<UserDetails> toRemove) {
+		Collection<UserDetails> originalUsers = getUserDetails();
+		userDetails.removeAll(toRemove);
 		firePropertyChange("userDetails", originalUsers, getUserDetails());
 	}
 }

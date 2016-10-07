@@ -28,7 +28,7 @@ import uk.ac.stfc.isis.ibex.experimentdetails.database.ExpDataFieldsEnum;
 import uk.ac.stfc.isis.ibex.experimentdetails.database.ExpDataTablesEnum;
 
 /**
- * Provide a start and end date for the SQL statement
+ * Provide a start and end date for the SQL statement.
  */
 public class SqlWhereDateBetweenClause extends SqlWhereClause {
 

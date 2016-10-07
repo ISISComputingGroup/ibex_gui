@@ -47,6 +47,7 @@ public class DaeObservables {
     public final ForwardingObservable<DaeRunState> runState;
     public final ForwardingObservable<String> runNumber;
     public final ForwardingObservable<String> title;
+    public final ForwardingObservable<Boolean> displayTitle;
     public final ForwardingObservable<String> users;
     public final ForwardingObservable<Integer> goodFrames;
     public final ForwardingObservable<Integer> rawFrames;
@@ -64,6 +65,7 @@ public class DaeObservables {
     public final ForwardingObservable<String> spectraTables;
     public final ForwardingObservable<String> wiringTables;
     public final ForwardingObservable<String> periodFiles;
+    public final ForwardingObservable<String> timeChannelFiles;
     public final ForwardingObservable<String> vetos;
     public final ForwardingObservable<Number> beamCurrent;
     public final ForwardingObservable<Double> totalDaeCounts;
@@ -93,6 +95,8 @@ public class DaeObservables {
                 addPrefix(DAE.endWith("RUNSTATE_STR")));
         runNumber = obsFactory.getSwitchableObservable(new StringChannel(), addPrefix(DAE.endWith("RUNNUMBER")));
         title = obsFactory.getSwitchableObservable(new CharWaveformChannel(), addPrefix(DAE.endWith("TITLE")));
+        displayTitle =
+                obsFactory.getSwitchableObservable(new BooleanChannel(), addPrefix(DAE.endWith("TITLE:DISPLAY")));
         users = obsFactory.getSwitchableObservable(new CharWaveformChannel(), addPrefix(DAE.endWith("USERNAME")));
         goodFrames = obsFactory.getSwitchableObservable(new IntegerChannel(), addPrefix(DAE.endWith("GOODFRAMES")));
         rawFrames = obsFactory.getSwitchableObservable(new IntegerChannel(), addPrefix(DAE.endWith("RAWFRAMES")));
@@ -120,6 +124,8 @@ public class DaeObservables {
                 addPrefix(DAE.endWith("WIRINGTABLES")));
         periodFiles = obsFactory.getSwitchableObservable(new CompressedCharWaveformChannel(),
                 addPrefix(DAE.endWith("PERIODFILES")));
+        timeChannelFiles = obsFactory.getSwitchableObservable(new CompressedCharWaveformChannel(),
+                addPrefix(DAE.endWith("TCBFILES")));
         vetos = obsFactory.getSwitchableObservable(new CharWaveformChannel(), addPrefix(DAE.endWith("VETOSTATUS")));
         beamCurrent = obsFactory.getSwitchableObservable(new NumberChannel(), addPrefix(DAE.endWith("BEAMCURRENT")));
         totalDaeCounts = obsFactory.getSwitchableObservable(new DoubleChannel(),

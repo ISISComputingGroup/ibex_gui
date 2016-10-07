@@ -1,7 +1,7 @@
 
 /*
 * This file is part of the ISIS IBEX application.
-* Copyright (C) 2012-2015 Science & Technology Facilities Council.
+* Copyright (C) 2012-2016 Science & Technology Facilities Council.
 * All rights reserved.
 *
 * This program is distributed in the hope that it will be useful.
@@ -26,9 +26,12 @@ public class DaeSettings extends ModelObject {
 	private int monitorSpectrum;
 	private double from;
 	private double to;
-	private String wiringTable = "";
-	private String detectorTable = "";
-	private String spectraTable = "";
+	private String newWiringTable = "";
+	private String newDetectorTable = "";
+	private String newSpectraTable = "";
+    private String wiringTable = "";
+    private String detectorTable = "";
+    private String spectraTable = "";
 	private DaeTimingSource timingSource = DaeTimingSource.ISIS;
 	private BinaryChoice smpVeto = BinaryChoice.NO;
 	private BinaryChoice veto0 = BinaryChoice.NO;
@@ -67,29 +70,64 @@ public class DaeSettings extends ModelObject {
 		firePropertyChange("to", to, to = value);
 	}
 	
-	public String wiringTable() {
-		return wiringTable;
+    /**
+     * Get the path for the new wiring table (to be set as current table once
+     * changes are applied).
+     * 
+     * @return the file path.
+     */
+	public String getNewWiringTable() {
+		return newWiringTable;
 	}
 	
-	public void setWiringTable(String value) {
-		firePropertyChange("wiringTable", wiringTable, wiringTable = value);
+    /**
+     * Set the path for the new wiring table (to be set as current table once
+     * changes are applied).
+     * 
+     * @param value the file path.
+     */
+	public void setNewWiringTable(String value) {
+        firePropertyChange("newWiringTable", newWiringTable, newWiringTable = value);
 	}
 	
-	public String detectorTable() {
-		return detectorTable;
+    /**
+     * Get the path for the new detector table (to be set as current table once
+     * changes are applied).
+     * 
+     * @return the file path.
+     */
+	public String getNewDetectorTable() {
+		return newDetectorTable;
 	}
 	
-	public void setDetectorTable(String value) {
-		firePropertyChange("detectorTable", detectorTable, detectorTable = value);
+    /**
+     * Set the path for the new detector table (to be set as current table once
+     * changes are applied).
+     * 
+     * @param value the file path.
+     */
+	public void setNewDetectorTable(String value) {
+        firePropertyChange("newDetectorTable", newDetectorTable, newDetectorTable = value);
 	}
 	
-	
-	public String spectraTable() {
-		return spectraTable;
+    /**
+     * Get the path for the new spectra table (to be set as current table once
+     * changes are applied).
+     * 
+     * @return the file path.
+     */
+	public String getNewSpectraTable() {
+		return newSpectraTable;
 	}
 	
-	public void setSpectraTable(String value) {
-		firePropertyChange("spectraTable", spectraTable, spectraTable = value);
+    /**
+     * Set the path for the new spectra table (to be set as current table once
+     * changes are applied).
+     * 
+     * @param value the file path.
+     */
+	public void setNewSpectraTable(String value) {
+        firePropertyChange("newSpectraTable", newSpectraTable, newSpectraTable = value);
 	}
 	
 	public DaeTimingSource timingSource() {
@@ -195,4 +233,63 @@ public class DaeSettings extends ModelObject {
 	public void setIsis50HzVeto(BinaryChoice value) {
 		firePropertyChange("isis50HzVeto", isis50HzVeto, isis50HzVeto = value);
 	}
+
+
+    /**
+     * Get the path for the currently set wiring table.
+     * 
+     * @return the file path.
+     */
+    public String getWiringTable() {
+        return wiringTable;
+    }
+
+    /**
+     * Set the path for the current wiring table.
+     * 
+     * @param value the file path.
+     */
+    public void setWiringTable(String value) {
+        firePropertyChange("wiringTable", this.wiringTable, this.wiringTable = value);
+    }
+
+
+    /**
+     * Get the path for the currently set detector table.
+     * 
+     * @return the file path.
+     */
+    public String getDetectorTable() {
+        return detectorTable;
+    }
+
+
+    /**
+     * Set the path for the current detector table.
+     * 
+     * @param value the file path.
+     */
+    public void setDetectorTable(String value) {
+        firePropertyChange("detectorTable", this.detectorTable, this.detectorTable = value);
+    }
+
+
+    /**
+     * Get the path for the currently set spectra table.
+     * 
+     * @return the file path.
+     */
+    public String getSpectraTable() {
+        return spectraTable;
+    }
+
+
+    /**
+     * Set the path for the current spectra table.
+     * 
+     * @param value the file path.
+     */
+    public void setSpectraTable(String value) {
+        firePropertyChange("spectraTable", this.spectraTable, this.spectraTable = value);
+    }
 }

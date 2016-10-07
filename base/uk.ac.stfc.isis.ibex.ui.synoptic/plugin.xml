@@ -27,6 +27,13 @@
             name="Component view"
             restorable="true">
       </view>
+      <view
+            allowMultiple="true"
+            class="uk.ac.stfc.isis.ibex.ui.synoptic.views.SynopticOpiTargetView"
+            id="uk.ac.stfc.isis.ibex.ui.synoptic.views.SynopticOpiTargetView"
+            name="SynopticOpiTargetView"
+            restorable="true">
+      </view>
    </extension>
    <extension
          point="org.eclipse.ui.perspectives">

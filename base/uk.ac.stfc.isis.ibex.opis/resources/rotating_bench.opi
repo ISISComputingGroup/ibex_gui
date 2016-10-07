@@ -585,9 +585,9 @@ $(pv_value)</tooltip>
     <rules />
     <enabled>true</enabled>
     <wuid>463da55e:14ef3853acc:-7ac8</wuid>
-    <auto_size>false</auto_size>
+    <auto_size>true</auto_size>
     <scripts />
-    <height>289</height>
+    <height>266</height>
     <border_width>1</border_width>
     <scale_options>
       <width_scalable>true</width_scalable>
@@ -607,10 +607,10 @@ $(pv_value)</tooltip>
       <color red="240" green="240" blue="240" />
     </background_color>
     <zoom_to_fit>true</zoom_to_fit>
-    <width>331</width>
-    <x>24</x>
+    <width>446</width>
+    <x>18</x>
     <name>Linking Container</name>
-    <y>288</y>
+    <y>270</y>
     <foreground_color>
       <color red="192" green="192" blue="192" />
     </foreground_color>

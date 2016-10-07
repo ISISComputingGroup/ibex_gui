@@ -26,7 +26,8 @@ import uk.ac.stfc.isis.ibex.epics.pv.Closer;
 import uk.ac.stfc.isis.ibex.log.ILogMessageProducer;
 import uk.ac.stfc.isis.ibex.log.Log;
 import uk.ac.stfc.isis.ibex.model.UpdatedValue;
-import uk.ac.stfc.isis.ibex.ui.widgets.observable.WritableObservableAdapter;
+import uk.ac.stfc.isis.ibex.ui.widgets.observable.BooleanWritableObservableAdapter;
+import uk.ac.stfc.isis.ibex.ui.widgets.observable.StringWritableObservableAdapter;
 
 public class RunSummaryViewModel extends Closer {
 	
@@ -36,10 +37,16 @@ public class RunSummaryViewModel extends Closer {
 	private UpdatedValue<String> runStatus;
 	private UpdatedValue<String> runNumber;
 	private UpdatedValue<String> isisCycle;	
-	private WritableObservableAdapter title;
+    private BooleanWritableObservableAdapter displayTitle;
+    private StringWritableObservableAdapter title;
 				
 	private ILogMessageProducer logModel;
-	
+
+    /**
+     * Binds Observables/Writables to model.
+     * 
+     * @param model the RunSummaryViewModel
+     */
 	public void bind(final IDae model) {
 		this.model = model;
 		
@@ -47,28 +54,59 @@ public class RunSummaryViewModel extends Closer {
 		runStatus = registerForClose(new TextUpdatedObservableAdapter(registerForClose(new InstrumentState(model.runState()))));
 		runNumber = registerForClose(new TextUpdatedObservableAdapter(model.runNumber()));
 		isisCycle = registerForClose(new TextUpdatedObservableAdapter(model.isisCycle()));
-		title = registerForClose(new WritableObservableAdapter(model.setTitle(), model.title()));
-								
+        title = registerForClose(new StringWritableObservableAdapter(model.setTitle(), model.title()));
+        displayTitle =
+                registerForClose(new BooleanWritableObservableAdapter(model.setDisplayTitle(), model.displayTitle()));
+
 		logModel = Log.getInstance().producer();
 	}
-	
+
+    /**
+     * @return an observable of the instrument name
+     */
 	public UpdatedValue<String> instrument() {
 		return instrument;
 	}
-	
+
+    /**
+     * @return an observable of the run status
+     */
 	public UpdatedValue<String> runStatus() {
 		return runStatus;
 	}
-	
+
+    /**
+     * @return an observable of the run number
+     */
 	public UpdatedValue<String> runNumber() {
 		return runNumber;
 	}
-	
+
+    /**
+     * @return an observable of the isis cycle
+     */
 	public UpdatedValue<String> isisCycle() {
 		return isisCycle;
 	}
-	
-	public WritableObservableAdapter title() {
+
+    /**
+     * Returns an object linking the observable and writable connected to the
+     * display title PV (specifies whether run title is visible on dataweb
+     * dashboard page).
+     * 
+     * @return the object linking the observable and writable object
+     */
+    public BooleanWritableObservableAdapter displayTitle() {
+        return displayTitle;
+    }
+
+    /**
+     * Returns an object linking the observable and writable connected to the PV
+     * containing the run title.
+     * 
+     * @return the object linking the observable and writable object
+     */
+	public StringWritableObservableAdapter title() {
 		return title;
 	}
 	

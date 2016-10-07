@@ -38,7 +38,11 @@ public interface IDae {
 
 	ForwardingObservable<String> title();
 
+    ForwardingObservable<Boolean> displayTitle();
+
 	Writable<String> setTitle();
+
+    Writable<Long> setDisplayTitle();
 		
 	ForwardingObservable<String> vetos();
 		
