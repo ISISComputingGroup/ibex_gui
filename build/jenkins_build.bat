@@ -34,11 +34,21 @@ python.exe purge_archive_client.py
 
 if "%RELEASE%" == "YES" (
     set RELEASE_DIR=p:\Kits$\CompGroup\ICP\Releases\%GIT_BRANCH:~15%
+)
+
+if "%RELEASE%" == "YES" (
     set INSTALLBASEDIR=%RELEASE_DIR%\Client
-    set INSTALLDIR=%INSTALLBASEDIR%
 ) else (
     set INSTALLBASEDIR=p:\Kits$\CompGroup\ICP\Client
+)
+
+if "%RELEASE%" == "YES" (
+    set INSTALLDIR=%INSTALLBASEDIR%
+) else (
     set INSTALLDIR=%INSTALLBASEDIR%\BUILD%BUILD_NUMBER%
+)
+
+if not "%RELEASE%" == "YES" (
     REM Set a symlink for folder BUILD_LATEST to point to most recent build
     set INSTALLLINKDIR=%INSTALLBASEDIR%\BUILD_LATEST
 )
