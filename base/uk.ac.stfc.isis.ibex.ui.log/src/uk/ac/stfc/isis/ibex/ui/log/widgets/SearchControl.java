@@ -71,17 +71,11 @@ public class SearchControl extends Canvas {
 
 	private ISearchModel searcher;
 	private LogDisplay parent;
-	
-    private final String INFO = "Info";
-    private final String MINOR = "Minor";
-    private final String MAJOR = "Major";
-
-    private final String[] SEVERITY_LEVELS = { "Major", "Minor", "Info" };
 
     private final LogMessageFilter infoFilter =
-            new LogMessageFilter(LogMessageFields.SEVERITY, INFO.toUpperCase(), true);
+            new LogMessageFilter(LogMessageFields.SEVERITY, LogMessageSeverity.INFO.toString().toUpperCase(), true);
     private final LogMessageFilter minorFilter =
-            new LogMessageFilter(LogMessageFields.SEVERITY, MINOR.toUpperCase(), true);
+            new LogMessageFilter(LogMessageFields.SEVERITY, LogMessageSeverity.MINOR.toString().toUpperCase(), true);
 	
 	public SearchControl(LogDisplay parent, final ISearchModel searcher) {
 		super(parent, SWT.NONE);
@@ -205,8 +199,8 @@ public class SearchControl extends Canvas {
 		// Add the info filter check
         cmboSeverity = new Combo(grpFilter, SWT.DROP_DOWN | SWT.READ_ONLY);
         cmboSeverity.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
-        cmboSeverity.setItems(SEVERITY_LEVELS);
-        cmboSeverity.setText(MAJOR);
+        cmboSeverity.setItems(LogMessageSeverity.allToString().toArray(new String[0]));
+        cmboSeverity.setText(LogMessageSeverity.MAJOR.toString());
         new Label(grpFilter, SWT.NONE);
         new Label(grpFilter, SWT.NONE);
         cmboSeverity.addSelectionListener(new SelectionAdapter() {
@@ -266,10 +260,10 @@ public class SearchControl extends Canvas {
     private void setInfoFilter(String set) {
         parent.removeMessageFilter(infoFilter);
         parent.removeMessageFilter(minorFilter);
-        if (set.equals(MAJOR)) {
+        if (set.equals(LogMessageSeverity.MAJOR.toString())) {
             parent.addMessageFilter(infoFilter);
             parent.addMessageFilter(minorFilter);
-        } else if (set.equals(MINOR)) {
+        } else if (set.equals(LogMessageSeverity.MINOR.toString())) {
             parent.addMessageFilter(infoFilter);
         }
 	}
