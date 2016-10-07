@@ -27,7 +27,7 @@ net use p: \\isis\inst$ /user:isis\builder %BUILDERPW%
 
 python.exe purge_archive_client.py
 
-set RELEASE_JOB_NAME="ibex_gui_latest_release"
+set RELEASE_JOB_NAME=ibex_gui_build_latest_release
 if %JOB_NAME%==%RELEASE_JOB_NAME% (
 	REM We ignore the 15 characters of origin/Release_
 	set RELEASE_NUMBER=%GIT_BRANCH:~15%
