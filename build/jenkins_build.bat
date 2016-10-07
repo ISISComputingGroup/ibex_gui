@@ -1,3 +1,5 @@
+@echo on
+
 REM %~dp0 expands to directory where this file lives
 set BASEDIR=%~dp0
 
