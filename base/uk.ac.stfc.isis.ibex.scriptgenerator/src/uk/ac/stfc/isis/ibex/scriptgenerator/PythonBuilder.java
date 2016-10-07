@@ -74,18 +74,29 @@ public class PythonBuilder extends ModelObject {
 		StringBuilder sans = new StringBuilder();
 		StringBuilder rowData = new StringBuilder();
 		boolean populatedRow = false;
+		String collectionMode = null;
+		
+		if (settings.getCollection().toString() != null) {
+			collectionMode = (settings.getCollection().toString() == "Histogram") ? "rtype='0'" : "rtype='1'"; 
+		}
 		
 		for (Row row: rows) {
 			if (row.getPosition() != null) {
 				rowData.append(String.format("    set_aperture('%s')\n", settings.getSansSize()));
-				if (row.getSans() == null) {
-					rowData.append(String.format("    lm.dosans_normal(position='%s', title='%s', uamps='0', thickness='%s', rtype='and this')\n", 
-							row.getPosition(), row.getSampleName(), row.getThickness()));
-				}
-				else {
-					rowData.append(String.format("    lm.dosans_normal(position='%s', title='%s', %s='%s', thickness='%s', rtype='and this')\n", 
-							row.getPosition(), row.getSampleName(), row.getSansWait(), row.getSansWait(), row.getThickness()));
-				}
+				if (row.getSans() == null && settings.getCollection().toString() == null) {
+					rowData.append(String.format("    lm.dosans_normal(position='%s', title='%s', uamps='0', thickness='%s', %s)\n", 
+							row.getPosition(), row.getSampleName(), row.getThickness(), collectionMode));
+				} else if (row.getSans() != null && settings.getCollection().toString() == null) {
+					rowData.append(String.format("    lm.dosans_normal(position='%s', title='%s', %s='%s', thickness='%s', %s)\n", 
+							row.getPosition(), row.getSampleName(), row.getSansWait() /*row.getSansWait().toString().toLowerCase()*/, row.getThickness(), collectionMode));
+				} else if (row.getSans() == null && settings.getCollection().toString() != null) {
+					rowData.append(String.format("    lm.dosans_normal(position='%s', title='%s', uamps='0', thickness='%s', %s)\n", 
+							row.getPosition(), row.getSampleName(), row.getThickness(), collectionMode));
+				} else if (row.getSans() != null && settings.getCollection().toString() != null) {
+					rowData.append(String.format("    lm.dosans_normal(position='%s', title='%s', %s='%s', thickness='%s', %s)\n", 
+							row.getPosition(), row.getSampleName(), row.getSansWait() /*row.getSansWait().toString().toLowerCase()*/, row.getSansWait(), 
+							row.getThickness(), collectionMode));
+				} 
 			populatedRow = true;
 			}
 		}
