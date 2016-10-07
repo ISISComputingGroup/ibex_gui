@@ -65,23 +65,47 @@ public class PythonBuilder extends ModelObject {
 	 * @return
 	 */
 	private String setSamplePar(String name, String value) {	
-		String samplePar = String.format("    set_sample_par(\'%s\', \'%s\') \n", name, value);
+		String samplePar = String.format("    set_sample_par('%s', '%s') \n", name, value);
 		
 		return samplePar;
 	}
 	
 	private String setSans() {
-		StringBuilder sansLoop = new StringBuilder();
+		StringBuilder sans = new StringBuilder();
 		
-		sansLoop.append(String.format("\nfor i in range(%d):\n", settings.getDoSans()));
+		sans.append(String.format("\nfor i in range(%d):\n", settings.getDoSans()));
 		
 		for (Row row: rows) {
-			sansLoop.append(String.format("    set_aperture('%s')", settings.getSansSize()));
-			sansLoop.append(String.format("lm.dosans_normal(position='%d%, title='%s%', uamps='what is this', thickness='%s', rtype='and this'\n", 
-					row.getPosition(), row.getSampleName(), row.getThickness()));
+			if (row.getPosition() != null) {
+				sans.append(String.format("    set_aperture('%s')\n", settings.getSansSize()));
+				if (row.getSans() == null) {
+					sans.append(String.format("    lm.dosans_normal(position='%s', title='%s', uamps='0', thickness='%s', rtype='and this')\n", 
+							row.getPosition(), row.getSampleName(), row.getThickness()));
+				}
+				else {
+					sans.append(String.format("    lm.dosans_normal(position='%s', title='%s', %s='%s', thickness='%s', rtype='and this')\n", 
+							row.getPosition(), row.getSampleName(), row.getSansWait(), row.getSansWait(), row.getThickness()));
+				}
+			}
 		}
 		
-		return sansLoop.toString();
+		return sans.toString();
+	}
+	
+	private String setTrans() {
+		StringBuilder trans = new StringBuilder();
+		
+		trans.append(String.format("\nfor i in range(%d):\n", settings.getDoTrans()));
+		
+		for (Row row: rows) {
+			if (row.getPosition() != null) {
+				trans.append(String.format("    set_aperture('%s')\n", settings.getTransSize()));
+				trans.append(String.format("    lm.dotrans_normal(position='%s', title='%s', uamps='0', thickness='%s', rtype='and this')\n", 
+						row.getPosition(), row.getSampleName(), row.getThickness()));
+			}
+		}
+		
+		return trans.toString();
 	}
 	
 	/**
@@ -122,7 +146,6 @@ public class PythonBuilder extends ModelObject {
 		
 		
 		script.append(setSans());
-		
-
-		}
+		script.append(setTrans());
+	}
 }
