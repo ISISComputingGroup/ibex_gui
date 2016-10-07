@@ -19,7 +19,10 @@ REM if %errorlevel% neq 0 exit /b %errorlevel%
 @echo on
 
 REM Whether to deploy
-if not "%DEPLOY%" == "YES" exit
+set EXIT=YES
+if "%DEPLOY%" == "YES" set EXIT=NO
+if "%RELEASE%" == "YES" set EXIT=NO
+if "%EXIT%" == "YES" exit
 
 REM Copy zip to installs area
 REM Delete older versions?
