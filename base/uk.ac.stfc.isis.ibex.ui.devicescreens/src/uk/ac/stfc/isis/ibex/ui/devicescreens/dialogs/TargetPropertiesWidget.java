@@ -46,7 +46,7 @@ import uk.ac.stfc.isis.ibex.ui.devicescreens.models.DeviceScreensDescriptionView
  * 
  * 
  */
-public class TargetPropertyTable extends Composite {
+public class TargetPropertiesWidget extends Composite {
 
     private static final int TABLE_HEIGHT = 150;
 	
@@ -60,7 +60,7 @@ public class TargetPropertyTable extends Composite {
      * @param parent the parent
      * @param viewModel the view model
      */
-    public TargetPropertyTable(Composite parent, DeviceScreensDescriptionViewModel viewModel) {
+    public TargetPropertiesWidget(Composite parent, DeviceScreensDescriptionViewModel viewModel) {
 		super(parent, SWT.NONE);
 		
         this.viewModel = viewModel;

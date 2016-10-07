@@ -27,11 +27,13 @@ import org.eclipse.swt.widgets.Composite;
 import uk.ac.stfc.isis.ibex.ui.devicescreens.models.DeviceScreensDescriptionViewModel;
 
 /**
- * Shows the synoptic editor part that allows setting of properties.
+ * Shows the target properties editor part.
  */
 @SuppressWarnings("checkstyle:magicnumber")
 public class TargetPropertiesView extends Composite {
-
+    /**
+     * The view model.
+     */
     private DeviceScreensDescriptionViewModel viewModel;
 
     /**
@@ -50,25 +52,13 @@ public class TargetPropertiesView extends Composite {
 		createControls(this);
 	}
 	
+    /**
+     * Creates the controls.
+     * 
+     * @param parent the parent
+     */
     private void createControls(Composite parent) {
-
-        TargetPropertyTable properties = new TargetPropertyTable(parent, viewModel);
+        TargetPropertiesWidget properties = new TargetPropertiesWidget(parent, viewModel);
         properties.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-
-//        Label lblValue = new Label(parent, SWT.NONE);
-//        lblValue.setLayoutData(new GridData(SWT.RIGHT, SWT.TOP, false, false, 1, 1));
-//        lblValue.setText("Value");
-//
-//        TargetPropertyValue value = new TargetPropertyValue(parent, viewModel);
-//        value.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-//
-//        Label lblPropertyDescription = new Label(parent, SWT.NONE);
-//        lblPropertyDescription.setLayoutData(new GridData(SWT.RIGHT, SWT.TOP, false, false, 1, 1));
-//        lblPropertyDescription.setText("Description");
-//
-//        TargetPropertiesDescription propertyDescription = new TargetPropertiesDescription(parent, viewModel);
-//        GridData gdPropertyDescription = new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1);
-//        gdPropertyDescription.heightHint = 70;
-//        propertyDescription.setLayoutData(gdPropertyDescription);
 	}
 }
