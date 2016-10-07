@@ -64,13 +64,13 @@ public class PythonBuilder extends ModelObject {
 	 * @param value a numerical value for the "width" and "height", or the type of geometry, e.g. "disc"
 	 * @return
 	 */
-	private String setSamplePar(String name, String value) {	
+	private String buildSamplePar(String name, String value) {	
 		String samplePar = String.format("    set_sample_par('%s', '%s') \n", name, value);
 		
 		return samplePar;
 	}
 	
-	private String setSans() {
+	private String buildSans() {
 		StringBuilder sans = new StringBuilder();
 		StringBuilder rowData = new StringBuilder();
 		boolean populatedRow = false;
@@ -109,28 +109,39 @@ public class PythonBuilder extends ModelObject {
 		return sans.toString();
 	}
 	
-	private String setTrans() {
+	private String buildTrans() {
 		StringBuilder trans = new StringBuilder();
 		StringBuilder rowData = new StringBuilder();
 		boolean populatedRow = false;
+		String collectionMode = null;
+		
+		if (settings.getCollection().toString() != null) {
+			collectionMode = (settings.getCollection().toString() == "Histogram") ? "rtype='0'" : "rtype='1'"; 
+		}
 		
 		for (Row row: rows) {
 			if (row.getPosition() != null) {
 				rowData.append(String.format("    set_aperture('%s')\n", settings.getTransSize()));
-				if (row.getTrans() == null) {
-					rowData.append(String.format("    lm.dotrans_normal(position='%s', title='%s', uamps='0', thickness='%s', rtype='and this')\n", 
-							row.getPosition(), row.getSampleName(), row.getThickness()));
-				}
-				else {
-					rowData.append(String.format("    lm.dotrans_normal(position='%s', title='%s', %s='%s', thickness='%s', rtype='and this')\n", 
-							row.getPosition(), row.getSampleName(), row.getTransWait(), row.getTransWait(), row.getThickness()));
-				}
+				if (row.getTrans() == null && settings.getCollection().toString() == null) {
+					rowData.append(String.format("    lm.dotrans_normal(position='%s', title='%s', uamps='0', thickness='%s', %s)\n", 
+							row.getPosition(), row.getSampleName(), row.getThickness(), collectionMode));
+				} else if (row.getSans() != null && settings.getCollection().toString() == null) {
+					rowData.append(String.format("    lm.dotrans_normal(position='%s', title='%s', %s='%s', thickness='%s', %s)\n", 
+							row.getPosition(), row.getSampleName(), row.getTransWait() /*row.getTransWait().toString().toLowerCase()*/, row.getThickness(), collectionMode));
+				} else if (row.getSans() == null && settings.getCollection().toString() != null) {
+					rowData.append(String.format("    lm.dotrans_normal(position='%s', title='%s', uamps='0', thickness='%s', %s)\n", 
+							row.getPosition(), row.getSampleName(), row.getThickness(), collectionMode));
+				} else if (row.getSans() != null && settings.getCollection().toString() != null) {
+					rowData.append(String.format("    lm.dotrans_normal(position='%s', title='%s', %s='%s', thickness='%s', %s)\n", 
+							row.getPosition(), row.getSampleName(), row.getSansWait() /*row.getTransWait().toString().toLowerCase()*/, row.getTransWait(), 
+							row.getThickness(), collectionMode));
+				} 
 			populatedRow = true;
 			}
 		}
 		
 		if (populatedRow) {
-			trans.append(String.format("\nfor i in range(%d):\n", settings.getDoTrans()));
+			trans.append(String.format("\nfor i in range(%d):\n", settings.getDoSans()));
 			trans.append(rowData);
 		}
 		
@@ -169,12 +180,12 @@ public class PythonBuilder extends ModelObject {
 		
 		script.append(generateHeader());
 		
-		script.append(setSamplePar("width", settings.getSampleWidth().toString()));
-		script.append(setSamplePar("height", settings.getSampleHeight().toString()));
-		script.append(setSamplePar("geometry", settings.getGeometry().toString()));
+		script.append(buildSamplePar("width", settings.getSampleWidth().toString()));
+		script.append(buildSamplePar("height", settings.getSampleHeight().toString()));
+		script.append(buildSamplePar("geometry", settings.getGeometry().toString()));
 		
 		
-		script.append(setSans());
-		script.append(setTrans());
+		script.append(buildSans());
+		script.append(buildTrans());
 	}
 }
