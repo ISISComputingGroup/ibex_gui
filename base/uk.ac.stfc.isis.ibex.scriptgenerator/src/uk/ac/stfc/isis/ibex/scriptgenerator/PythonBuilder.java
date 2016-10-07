@@ -85,6 +85,7 @@ public class PythonBuilder extends ModelObject {
 			collectionMode = (settings.getCollection().toString() == "Histogram") ? "rtype='0'" : "rtype='1'"; 
 		}
 		
+		// Loop through each row. If a row is populated (with a position), add that row's data to the Python for loop
 		for (Row row: rows) {
 			if (row.getPosition() != null) {
 				rowData.append(String.format("    set_aperture('%s')\n", settings.getSansSize()));
@@ -95,10 +96,11 @@ public class PythonBuilder extends ModelObject {
 					rowData.append(String.format("    lm.dosans_normal(position='%s', title='%s', uamps='0', thickness='%s', %s)\n", 
 							row.getPosition(), row.getSampleName(), row.getThickness(), collectionMode));
 				} 
-			populatedRow = true;
+				populatedRow = true;
 			}
 		}
 		
+		// If any of the rows contain data, add the Python for loop initialiser and the row data to the sans string
 		if (populatedRow) {
 			sans.append(String.format("\nfor i in range(%d):\n", settings.getDoSans()));
 			sans.append(rowData);
@@ -122,6 +124,7 @@ public class PythonBuilder extends ModelObject {
 			collectionMode = (settings.getCollection().toString() == "Histogram") ? "rtype='0'" : "rtype='1'"; 
 		}
 		
+		// Loop through each row. If a row is populated (with a position), add that row's data to the Python for loop
 		for (Row row: rows) {
 			if (row.getPosition() != null) {
 				rowData.append(String.format("    set_aperture('%s')\n", settings.getTransSize()));
@@ -132,10 +135,11 @@ public class PythonBuilder extends ModelObject {
 					rowData.append(String.format("    lm.dotrans_normal(position='%s', title='%s', uamps='0', thickness='%s', %s)\n", 
 							row.getPosition(), row.getSampleName(), row.getThickness(), collectionMode));
 				} 
-			populatedRow = true;
+				populatedRow = true;
 			}
 		}
 		
+		// If any of the rows contain data, add the Python for loop initialiser and the row data to the trans string
 		if (populatedRow) {
 			trans.append(String.format("\nfor i in range(%d):\n", settings.getDoTrans()));
 			trans.append(rowData);
