@@ -29,23 +29,21 @@ net use p: \\isis\inst$ /user:isis\builder %BUILDERPW%
 
 python.exe purge_archive_client.py
 
-set RELEASE_JOB_NAME=ibex_gui_build_latest_release
-if "%JOB_NAME%"=="%RELEASE_JOB_NAME%" (
+if "%RELEASE%" == "YES" (
     set RELEASE_DIR=p:\Kits$\CompGroup\ICP\Releases\%GIT_BRANCH:~15%
     if not exist "%RELEASE_DIR%" (
         mkdir %RELEASE_DIR%
     )
     set INSTALLBASEDIR=%RELEASE_DIR%\Client
     if not exist "%INSTALLBASEDIR%" (
-        @echo Creating client directory %INSTALLBASEDIR%
         mkdir %INSTALLBASEDIR%
     )
     set INSTALLDIR=%INSTALLBASEDIR%
-    if exist "%INSTALLDIR%" (
-        RMDIR /S /Q %INSTALLDIR%
-    )
+    RMDIR /S /Q %INSTALLDIR%
     @echo Creating client directory %INSTALLDIR%
-    mkdir %INSTALLDIR%
+    if not exist "%INSTALLDIR%" (
+        mkdir %INSTALLDIR%
+    )
 ) else (
     set INSTALLBASEDIR=p:\Kits$\CompGroup\ICP\Client
     set INSTALLDIR=%INSTALLBASEDIR%\BUILD%BUILD_NUMBER%
