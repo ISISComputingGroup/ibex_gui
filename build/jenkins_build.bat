@@ -1,5 +1,3 @@
-@echo on
-
 REM %~dp0 expands to directory where this file lives
 set BASEDIR=%~dp0
 
@@ -15,8 +13,10 @@ for /F %%f in ('dir "C:\Program Files\Java\jdk1.*" /b') do set JAVA_HOME=C:\Prog
 
 set PATH=%M2%;%JAVA_HOME%;%PYTHON%;%PATH%
 
-call build.bat
-if %errorlevel% neq 0 exit /b %errorlevel%
+REM call build.bat
+REM if %errorlevel% neq 0 exit /b %errorlevel%
+
+@echo on
 
 REM Whether to deploy
 if not "%DEPLOY%" == "YES" exit
@@ -31,8 +31,7 @@ python.exe purge_archive_client.py
 
 set RELEASE_JOB_NAME=ibex_gui_build_latest_release
 if "%JOB_NAME%"=="%RELEASE_JOB_NAME%" (
-    set RELEASE_NUMBER=%GIT_BRANCH:~15%
-    set RELEASE_DIR=p:\Kits$\CompGroup\ICP\Releases\%RELEASE_NUMBER%\
+    set RELEASE_DIR=p:\Kits$\CompGroup\ICP\Releases\%GIT_BRANCH:~15%
     if not exist "%RELEASE_DIR%" (
         mkdir %RELEASE_DIR%
     )
