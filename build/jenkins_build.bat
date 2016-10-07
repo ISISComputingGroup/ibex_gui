@@ -32,30 +32,30 @@ net use p: \\isis\inst$ /user:isis\builder %BUILDERPW%
 
 python.exe purge_archive_client.py
 
-if "%RELEASE%" == "YES" (
-    set RELEASE_DIR=p:\Kits$\CompGroup\ICP\Releases\%GIT_BRANCH:~15%
+REM Don't group these. Bat expands whole if at once, not sequentially
+if "%RELEASE%" == "YES" set RELEASE_DIR=p:\Kits$\CompGroup\ICP\Releases\%GIT_BRANCH:~15%
+if "%RELEASE%" == "YES" set INSTALLBASEDIR=%RELEASE_DIR%\Client
+if "%RELEASE%" == "YES" set INSTALLDIR=%INSTALLBASEDIR%
+
+if not "%RELEASE%" == "YES" set INSTALLBASEDIR=p:\Kits$\CompGroup\ICP\Client
+if not "%RELEASE%" == "YES" set INSTALLDIR=%INSTALLBASEDIR%\BUILD%BUILD_NUMBER%
+REM Set a symlink for folder BUILD_LATEST to point to most recent build
+if not "%RELEASE%" == "YES" set INSTALLLINKDIR=%INSTALLBASEDIR%\BUILD_LATEST
+
+if "%RELEASE%" == "YES"
     if not exist "%RELEASE_DIR%" (
         mkdir %RELEASE_DIR%
     )
-    set INSTALLBASEDIR=%RELEASE_DIR%\Client
-    if not exist "%INSTALLBASEDIR%" (
-        mkdir %INSTALLBASEDIR%
-    )
-    set INSTALLDIR=%INSTALLBASEDIR%
     RMDIR /S /Q %INSTALLDIR%
     @echo Creating client directory %INSTALLDIR%
     if not exist "%INSTALLDIR%" (
         mkdir %INSTALLDIR%
     )
 ) else (
-    set INSTALLBASEDIR=p:\Kits$\CompGroup\ICP\Client
-    set INSTALLDIR=%INSTALLBASEDIR%\BUILD%BUILD_NUMBER%
     if exist "%INSTALLDIR%\Client" (
         @echo Creating client directory %INSTALLDIR%\Client
         mkdir %INSTALLDIR%\Client
     )
-    REM Set a symlink for folder BUILD_LATEST to point to most recent build
-    set INSTALLLINKDIR=%INSTALLBASEDIR%\BUILD_LATEST
 )
 
 robocopy %CD%\..\base\uk.ac.stfc.isis.ibex.client.product\target\products\ibex.product\win32\win32\x86_64 %INSTALLDIR%\Client /MIR /R:1 /NFL /NDL /NP
