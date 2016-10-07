@@ -100,7 +100,7 @@ public class DeviceSceenListPanel extends Composite {
         GridLayout compositeLayout = new GridLayout(2, true);
         composite.setLayout(compositeLayout);
 
-        deviceScreenList = new DeviceScreensTable(composite, SWT.BORDER, SWT.V_SCROLL | SWT.NO_SCROLL | SWT.FULL_SELECTION);
+        deviceScreenList = new DeviceScreensTable(composite, SWT.BORDER, SWT.FULL_SELECTION);
         GridData devicesListLayout = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
         deviceScreenList.setLayoutData(devicesListLayout);
 

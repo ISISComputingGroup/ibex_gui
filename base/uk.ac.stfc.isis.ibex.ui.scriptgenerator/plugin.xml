@@ -37,7 +37,7 @@
          point="org.eclipse.ui.views">
       <view
             allowMultiple="false"
-            class="uk.ac.stfc.isis.ibex.ui.scriptgenerator.ScriptGeneratorView"
+            class="uk.ac.stfc.isis.ibex.ui.scriptgenerator.View"
             id="uk.ac.stfc.isis.ibex.ui.scriptgenerator.scriptgeneratorview"
             name="Script Generator View"
             restorable="true">
