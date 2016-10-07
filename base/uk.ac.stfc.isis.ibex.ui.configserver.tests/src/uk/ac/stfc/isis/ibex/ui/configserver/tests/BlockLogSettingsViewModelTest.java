@@ -25,6 +25,7 @@ import static org.mockito.Mockito.*;
 import org.junit.Before;
 import org.junit.Test;
 
+import uk.ac.stfc.isis.ibex.configserver.configuration.Block;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableBlock;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.blocks.BlockLogSettingsViewModel;
 
@@ -166,7 +167,7 @@ public class BlockLogSettingsViewModelTest {
 
     @Test
     public void
-            GIVEN_block_in_deadband_mode_WHEN_set_enabled_fale_THEN_view_model_is_disabled_the_mode_is_switched_to_periodic_and_the_text_box_value_is_zero() {
+            GIVEN_block_in_deadband_mode_WHEN_set_enabled_false_THEN_view_model_is_disabled_the_mode_is_switched_to_periodic_and_the_text_box_value_is_zero() {
 
         // Arrange
         final int rate_value = 13;
@@ -185,7 +186,7 @@ public class BlockLogSettingsViewModelTest {
 
     @Test
     public void
-            GIVEN_block_in_periodic_mode_WHEN_set_enabled_fale_THEN_view_model_is_disabled_the_mode_is_switched_to_periodic_and_the_text_box_value_is_zero() {
+            GIVEN_block_in_periodic_mode_WHEN_set_enabled_false_THEN_view_model_is_disabled_the_mode_is_switched_to_periodic_and_the_text_box_value_is_zero() {
 
         // Arrange
         final int rate_value = 20;
@@ -201,4 +202,25 @@ public class BlockLogSettingsViewModelTest {
         // Assert
         verifyModelValues(vm, Integer.toString(0), false, true);
     }
+
+    @Test
+    public void
+            GIVEN_block_with_periodic_scan_and_zero_rate_WHEN_set_enabled_true_THEN_view_model_is_enabled_the_combo_box_indicates_periodic_scan_and_the_text_box_matches_the_default_scan_value() {
+
+        // Arrange
+        final int rate_value = 0;
+        final float deadband_value = 0.54f;
+        final int expected_default_rate = Block.DEFAULT_SCAN_RATE;
+
+        mockPeriodicBlock(mockBlock, rate_value, deadband_value);
+
+        // Act
+        BlockLogSettingsViewModel vm = new BlockLogSettingsViewModel(mockBlock);
+        verifyModelValues(vm, Integer.toString(rate_value), false, true);
+        vm.setEnabled(true);
+
+        // Assert
+        verifyModelValues(vm, Integer.toString(expected_default_rate), true, true);
+    }
+
 }
