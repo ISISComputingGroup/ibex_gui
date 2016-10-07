@@ -12,7 +12,7 @@ set ZIPLOCATION=c:\Installers\client_zip
 
 REM Find latest Java 7 version
 for /F %%f in ('dir "C:\Program Files\Java\jdk1.*" /b') do set JAVA_HOME=C:\Program Files\Java\%%f
-	
+
 set PATH=%M2%;%JAVA_HOME%;%PYTHON%;%PATH%
 
 call build.bat
@@ -23,36 +23,39 @@ if not "%DEPLOY%" == "YES" exit
 
 REM Copy zip to installs area
 REM Delete older versions?
-REM the password for isis\builder is contained in the BUILDERPW system environment variable on the build server 
+REM the password for isis\builder is contained in the BUILDERPW system environment variable on the build server
 net use p: /d
 net use p: \\isis\inst$ /user:isis\builder %BUILDERPW%
 
 python.exe purge_archive_client.py
 
 set RELEASE_JOB_NAME=ibex_gui_build_latest_release
-if %JOB_NAME%==%RELEASE_JOB_NAME% (
-	REM We ignore the 15 characters of origin/Release_
-	set RELEASE_NUMBER=%GIT_BRANCH:~15%
-	set RELEASE_DIR=p:\Kits$\CompGroup\ICP\Releases\%RELEASE_NUMBER%\
-	if not exist %RELEASE_DIR% mkdir %RELEASE_DIR%
-	set INSTALLBASEDIR=%RELEASE_DIR%\Client
-	if not exist "%INSTALLBASEDIR%" (
-		@echo Creating client directory %INSTALLBASEDIR%
-		mkdir %INSTALLBASEDIR%
-	)
-	set INSTALLDIR=%INSTALLBASEDIR%
-	if exist %INSTALLDIR% RMDIR /S /Q %INSTALLDIR%
-	@echo Creating client directory %INSTALLDIR%
-	mkdir %INSTALLDIR%
+if "%JOB_NAME%"=="%RELEASE_JOB_NAME%" (
+    set RELEASE_NUMBER=%GIT_BRANCH:~15%
+    set RELEASE_DIR=p:\Kits$\CompGroup\ICP\Releases\%RELEASE_NUMBER%\
+    if not exist "%RELEASE_DIR%" (
+        mkdir %RELEASE_DIR%
+    )
+    set INSTALLBASEDIR=%RELEASE_DIR%\Client
+    if not exist "%INSTALLBASEDIR%" (
+        @echo Creating client directory %INSTALLBASEDIR%
+        mkdir %INSTALLBASEDIR%
+    )
+    set INSTALLDIR=%INSTALLBASEDIR%
+    if exist "%INSTALLDIR%" (
+        RMDIR /S /Q %INSTALLDIR%
+    )
+    @echo Creating client directory %INSTALLDIR%
+    mkdir %INSTALLDIR%
 ) else (
-	set INSTALLBASEDIR=p:\Kits$\CompGroup\ICP\Client
-	set INSTALLDIR=%INSTALLBASEDIR%\BUILD%BUILD_NUMBER%
-	if exist "%INSTALLDIR%\Client" 
-		@echo Creating client directory %INSTALLDIR%\Client
-		mkdir %INSTALLDIR%\Client
-	)
-	REM Set a symlink for folder BUILD_LATEST to point to most recent build
-	set INSTALLLINKDIR=%INSTALLBASEDIR%\BUILD_LATEST
+    set INSTALLBASEDIR=p:\Kits$\CompGroup\ICP\Client
+    set INSTALLDIR=%INSTALLBASEDIR%\BUILD%BUILD_NUMBER%
+    if exist "%INSTALLDIR%\Client"
+        @echo Creating client directory %INSTALLDIR%\Client
+        mkdir %INSTALLDIR%\Client
+    )
+    REM Set a symlink for folder BUILD_LATEST to point to most recent build
+    set INSTALLLINKDIR=%INSTALLBASEDIR%\BUILD_LATEST
 )
 
 robocopy %CD%\..\base\uk.ac.stfc.isis.ibex.client.product\target\products\ibex.product\win32\win32\x86_64 %INSTALLDIR%\Client /MIR /R:1 /NFL /NDL /NP
@@ -66,10 +69,10 @@ if %errorlevel% geq 4 (
 )
 
 if not %JOB_NAME%==%RELEASE_JOB_NAME% (
-	if exist "%INSTALLLINKDIR%" (
-		rmdir "%INSTALLLINKDIR%"
-	)
-	mklink /J "%INSTALLLINKDIR%" "%INSTALLDIR%"
+    if exist "%INSTALLLINKDIR%" (
+        rmdir "%INSTALLLINKDIR%"
+    )
+    mklink /J "%INSTALLLINKDIR%" "%INSTALLDIR%"
 )
 
 REM Copy the install script across
