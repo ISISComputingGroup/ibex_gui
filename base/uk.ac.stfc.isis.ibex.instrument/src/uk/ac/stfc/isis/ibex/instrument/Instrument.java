@@ -40,7 +40,6 @@ import org.osgi.framework.BundleContext;
 import org.osgi.service.prefs.BackingStoreException;
 import org.osgi.service.prefs.Preferences;
 
-import com.google.common.base.Joiner;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 
@@ -266,7 +265,7 @@ public class Instrument implements BundleActivator {
                 InstrumentInfoReceiver receiver = (InstrumentInfoReceiver) obj;
                 receiver.setInstrument(selectedInstrument);
             } catch (CoreException e) {
-                logErrorWithStackTrace("Unable to update extended plugins", e);
+                InstrumentUtils.logErrorWithStackTrace(LOG, "Unable to update extended plugins", e);
             }
         }
     }
@@ -293,7 +292,7 @@ public class Instrument implements BundleActivator {
             // forces the application to save the preferences
             initalPreference.flush();
         } catch (BackingStoreException e) {
-            logErrorWithStackTrace("Unable to set initial instrument", e);
+            InstrumentUtils.logErrorWithStackTrace(LOG, "Unable to set initial instrument", e);
         }
     }
 
@@ -333,20 +332,9 @@ public class Instrument implements BundleActivator {
             try {
                 Thread.sleep(waitLength);
             } catch (InterruptedException e) {
-                logErrorWithStackTrace("System interrupted whilst waiting for instrument", e);
+                InstrumentUtils.logErrorWithStackTrace(LOG, "System interrupted whilst waiting for instrument", e);
             }
         }
         return Iterables.find(instruments, predicate, localhost);
-    }
-
-    /**
-     * Sends an error to the log along with the stack trace of an exception
-     * related to the error.
-     * 
-     * @param message The message to accompany the error
-     * @param e The exception whose stack trace will be printed
-     */
-    private static void logErrorWithStackTrace(String message, Exception e) {
-        LOG.error(message + "\n    " + Joiner.on("\n    ").join(e.getStackTrace()));
     }
 }
