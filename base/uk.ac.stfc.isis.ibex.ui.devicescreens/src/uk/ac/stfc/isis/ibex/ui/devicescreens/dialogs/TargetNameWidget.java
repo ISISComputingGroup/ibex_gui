@@ -39,18 +39,27 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 
-import uk.ac.stfc.isis.ibex.synoptic.model.desc.TargetType;
 import uk.ac.stfc.isis.ibex.ui.devicescreens.models.DeviceScreensDescriptionViewModel;
 
+/**
+ * The widget for setting the screen name and OPI.
+ */
+@SuppressWarnings("checkstyle:magicnumber")
 public class TargetNameWidget extends Composite {
 
-	private ComboViewer cmboOpiName;
-	private boolean updateLock;
+    /** The view model. */
     private DeviceScreensDescriptionViewModel viewModel;
-	private TargetType type;
+
+    /** The OPI list. */
     private List<String> availableOPIs;
 
-
+    /**
+     * The constructor.
+     * 
+     * @param parent the parent composite
+     * @param availableOPIs the OPIs available for selection
+     * @param viewModel the view model
+     */
     public TargetNameWidget(Composite parent, Collection<String> availableOPIs,
             DeviceScreensDescriptionViewModel viewModel) {
 		super(parent, SWT.NONE);
@@ -64,13 +73,18 @@ public class TargetNameWidget extends Composite {
 		createControls(this);
     }
 
+    /**
+     * Create the controls.
+     * 
+     * @param parent the parent composite
+     */
     private void createControls(Composite parent) {
         GridLayout gridLayout = new GridLayout(2, false);
         gridLayout.marginHeight = 0;
         gridLayout.marginWidth = 0;
         setLayout(gridLayout);
 
-        cmboOpiName = new ComboViewer(parent, SWT.READ_ONLY);
+        ComboViewer cmboOpiName = new ComboViewer(parent, SWT.READ_ONLY);
         Combo combo = cmboOpiName.getCombo();
         combo.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
         cmboOpiName.setContentProvider(new ArrayContentProvider());
@@ -89,7 +103,9 @@ public class TargetNameWidget extends Composite {
         btnSetDefault.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
-                // Need to decide what to do
+                // TODO: Need to decide what to do as there is no way of
+                // guessing what
+                // the user wants
             }
         });
         btnSetDefault.setText("Default Target");
@@ -99,7 +115,7 @@ public class TargetNameWidget extends Composite {
         btnClearSelection.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
-                // Need to decide what to do on clear
+                viewModel.setCurrentKey(null);
             }
         });
         btnClearSelection.setText("Clear Target");

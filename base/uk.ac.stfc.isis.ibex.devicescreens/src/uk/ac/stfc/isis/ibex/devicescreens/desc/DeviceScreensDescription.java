@@ -42,6 +42,7 @@ import uk.ac.stfc.isis.ibex.devicescreens.xml.XMLUtil;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class DeviceScreensDescription {
 
+    /** The devices that make up the description. */
     @XmlElement(name = "device", type = DeviceDescription.class)
     private ArrayList<DeviceDescription> devices = new ArrayList<>();
 

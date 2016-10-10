@@ -39,10 +39,22 @@ import uk.ac.stfc.isis.ibex.opis.desc.OpiDescription;
  */
 public class DeviceDescriptionWrapper {
 
+    /** The original device description. */
     private DeviceDescription device;
+
+    /** The properties for the device. */
     private List<PropertyDescription> properties;
+
+    /** The screen name. */
     private String name = "";
+
+    /** The key is the the OPI name or custom screen name. */
     private String key = "";
+
+    /** Either an OPI or a custom screen. */
+    private String type = "";
+
+    /** The OPI description for the current key. */
     private OpiDescription opi = null;
 
     /**
@@ -55,21 +67,36 @@ public class DeviceDescriptionWrapper {
         name = this.device.getName();
         key = this.device.getKey();
 
+        // Default to OPI.
+        type = "OPI";
+
         mergeProperties();
     }
 
+    /**
+     * @return the current name
+     */
     public String getName() {
         return name;
     }
     
+    /**
+     * @param name the new value to set
+     */
     public void setName(String name) {
         this.name = name;
     }
 
+    /**
+     * @return the current key
+     */
     public String getKey() {
         return key;
     }
     
+    /**
+     * @param key the new value to set
+     */
     public void setKey(String key) {
         this.key = key;
         
@@ -78,6 +105,9 @@ public class DeviceDescriptionWrapper {
         mergeProperties();
     }
 
+    /**
+     * @return the OPI's description text
+     */
     public String getDescription() {
         if (opi != null) {
             return opi.getDescription();
@@ -85,16 +115,25 @@ public class DeviceDescriptionWrapper {
         return "";
     }
 
+    /**
+     * @return the list of properties for this device
+     */
     public List<PropertyDescription> getProperties() {
         return properties;
     }
 
+    /**
+     * @return the OPI description for the current OPI
+     */
     public OpiDescription getOpi() {
         return opi;
     }
 
+    /**
+     * @return the type of device screen (e.g. OPI)
+     */
     public String getType() {
-        return device.getType();
+        return type;
     }
 
     /**
@@ -125,6 +164,12 @@ public class DeviceDescriptionWrapper {
         }
     }
 
+    /**
+     * Finds the OPI description from the OPI name supplied.
+     * 
+     * @param targetName the name to look for
+     * @return the corresponding OPI description
+     */
     private OpiDescription getOpi(String targetName) {
         String name = Opi.getDefault().descriptionsProvider().guessOpiName(targetName);
         OpiDescription opi = Opi.getDefault().descriptionsProvider().getDescription(name);

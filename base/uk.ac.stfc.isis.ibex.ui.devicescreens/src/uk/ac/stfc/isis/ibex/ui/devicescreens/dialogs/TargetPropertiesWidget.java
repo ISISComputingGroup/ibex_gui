@@ -43,16 +43,18 @@ import uk.ac.stfc.isis.ibex.ui.devicescreens.models.DeviceScreensDescriptionView
 
 /**
  * The target properties widget used to set the macros for an OPI.
- * 
- * 
  */
+@SuppressWarnings("checkstyle:magicnumber")
 public class TargetPropertiesWidget extends Composite {
 
+    /** The minimum table height. */
     private static final int TABLE_HEIGHT = 150;
 	
+    /** The view model. */
     private DeviceScreensDescriptionViewModel viewModel;
+
+    /** The properties table. */
     private Table table;
-    private Text valueText;
 	
     /**
      * Instantiates a new widget.
@@ -124,7 +126,7 @@ public class TargetPropertiesWidget extends Composite {
         lblValue.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
         lblValue.setText("Value");
 
-        valueText = new Text(controlComposite, SWT.BORDER);
+        Text valueText = new Text(controlComposite, SWT.BORDER);
         valueText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
         valueText.addModifyListener(new ModifyListener() {
             @Override

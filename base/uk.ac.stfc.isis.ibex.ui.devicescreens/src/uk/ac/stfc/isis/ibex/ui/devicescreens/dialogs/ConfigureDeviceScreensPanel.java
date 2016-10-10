@@ -51,8 +51,9 @@ import org.eclipse.wb.swt.ResourceManager;
 import uk.ac.stfc.isis.ibex.ui.devicescreens.models.DeviceScreensDescriptionViewModel;
 
 /**
- * 
+ * The main panel for the configure device screens dialog.
  */
+@SuppressWarnings("checkstyle:magicnumber")
 public class ConfigureDeviceScreensPanel extends Composite {
 
     /** The groups viewer. */
@@ -61,24 +62,22 @@ public class ConfigureDeviceScreensPanel extends Composite {
     /** The group list. */
     private List devicesList;
 
-    private Composite targetComposite;
-
-    private Composite orderComposite;
-    private Composite btnsComposite;
-
+    /** The OPIs available. */
     private Collection<String> availableOPIs;
-    private Composite detailsComposite;
-    private TargetNameWidget targetSelect;
-    private TargetDescriptionWidget targetDescription;
 
+    /** The view model. */
     private DeviceScreensDescriptionViewModel viewModel;
 
     /** binding context. */
     private DataBindingContext bindingContext = new DataBindingContext();
 
     /**
-     * @param parent
-     * @param style
+     * The constructor.
+     * 
+     * @param parent the main composite
+     * @param style the SWT style
+     * @param availableOPIs the available OPIs
+     * @param viewModel the view model
      */
     public ConfigureDeviceScreensPanel(Composite parent, int style, Collection<String> availableOPIs,
             DeviceScreensDescriptionViewModel viewModel) {
@@ -88,16 +87,21 @@ public class ConfigureDeviceScreensPanel extends Composite {
 
         setLayout(new GridLayout(1, true));
 
-        targetComposite = new Composite(this, SWT.NONE);
-        targetComposite.setLayout(new GridLayout(2, false));
-        targetComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+        Composite mainComposite = new Composite(this, SWT.NONE);
+        mainComposite.setLayout(new GridLayout(2, false));
+        mainComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 
-        createListGroup();
-        createTargetGroup();
+        createListGroup(mainComposite);
+        createTargetGroup(mainComposite);
     }
 
-    private void createListGroup() {
-        Group grpList = new Group(targetComposite, SWT.NONE);
+    /**
+     * Creates the screens list part of the display.
+     * 
+     * @param mainComposite the parent composite
+     */
+    private void createListGroup(Composite mainComposite) {
+        Group grpList = new Group(mainComposite, SWT.NONE);
         grpList.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
         grpList.setText("Device Screens");
         grpList.setLayout(new GridLayout(2, false));
@@ -109,7 +113,6 @@ public class ConfigureDeviceScreensPanel extends Composite {
 
         devicesList = devicesViewer.getList();
         GridData gdViewer = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
-        // gdViewer.widthHint = 125;
         devicesList.setLayoutData(gdViewer);
         devicesList.addKeyListener(new KeyListener() {
             @Override
@@ -124,7 +127,7 @@ public class ConfigureDeviceScreensPanel extends Composite {
             }
         });
 
-        orderComposite = new Composite(grpList, SWT.NONE);
+        Composite orderComposite = new Composite(grpList, SWT.NONE);
         orderComposite.setLayout(new GridLayout(1, false));
         orderComposite.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, true, 1, 1));
 
@@ -154,7 +157,7 @@ public class ConfigureDeviceScreensPanel extends Composite {
             }
         });
 
-        btnsComposite = new Composite(grpList, SWT.NONE);
+        Composite btnsComposite = new Composite(grpList, SWT.NONE);
         btnsComposite.setLayout(new GridLayout(2, false));
         btnsComposite.setLayoutData(new GridData(SWT.FILL, SWT.TOP, false, false, 1, 1));
 
@@ -210,13 +213,18 @@ public class ConfigureDeviceScreensPanel extends Composite {
         devicesViewer.refresh();
     }
 
-    private void createTargetGroup() {
-        Group grpDetails = new Group(targetComposite, SWT.NONE);
+    /**
+     * Creates the target details part of the display.
+     * 
+     * @param mainComposite the parent composite
+     */
+    private void createTargetGroup(Composite mainComposite) {
+        Group grpDetails = new Group(mainComposite, SWT.NONE);
         grpDetails.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
         grpDetails.setText("Device Screens");
         grpDetails.setLayout(new GridLayout(1, false));
 
-        detailsComposite = new Composite(grpDetails, SWT.NONE);
+        Composite detailsComposite = new Composite(grpDetails, SWT.NONE);
         detailsComposite.setLayout(new GridLayout(2, false));
         detailsComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 
@@ -241,14 +249,14 @@ public class ConfigureDeviceScreensPanel extends Composite {
         lblTarget.setLayoutData(new GridData(SWT.RIGHT, SWT.TOP, false, false, 1, 1));
         lblTarget.setText("Target");
 
-        targetSelect = new TargetNameWidget(detailsComposite, availableOPIs, viewModel);
+        TargetNameWidget targetSelect = new TargetNameWidget(detailsComposite, availableOPIs, viewModel);
         targetSelect.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 
         Label lblDescription = new Label(detailsComposite, SWT.NONE);
         lblDescription.setLayoutData(new GridData(SWT.RIGHT, SWT.TOP, false, false, 1, 1));
         lblDescription.setText("Description");
 
-        targetDescription = new TargetDescriptionWidget(detailsComposite, viewModel);
+        TargetDescriptionWidget targetDescription = new TargetDescriptionWidget(detailsComposite, viewModel);
         GridData gdDescription = new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1);
         gdDescription.heightHint = 70;
         targetDescription.setLayoutData(gdDescription);

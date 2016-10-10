@@ -40,7 +40,7 @@ public class TargetPropertiesView extends Composite {
      * Creates a new instance of the target properties view.
      * 
      * @param parent this view's parent
-     * @param viewModel the view model for the synoptic
+     * @param viewModel the view model
      */
     public TargetPropertiesView(Composite parent, DeviceScreensDescriptionViewModel viewModel) {
         super(parent, SWT.FILL);

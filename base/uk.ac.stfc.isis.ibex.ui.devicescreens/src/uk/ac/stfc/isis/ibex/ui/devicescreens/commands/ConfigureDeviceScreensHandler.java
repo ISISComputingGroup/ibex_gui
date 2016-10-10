@@ -40,11 +40,12 @@ import uk.ac.stfc.isis.ibex.opis.Opi;
 import uk.ac.stfc.isis.ibex.ui.devicescreens.dialogs.ConfigureDeviceScreensDialog;
 
 /**
- * 
+ * The handler for launching the configure screens dialog.
  */
 public class ConfigureDeviceScreensHandler extends AbstractHandler {
 
-    final Writable<DeviceScreensDescription> writeable = DeviceScreens.getInstance().getDevicesSetter();
+    /** The writable for the setting the devices screens. */
+    private final Writable<DeviceScreensDescription> writeable = DeviceScreens.getInstance().getDevicesSetter();
 
     /**
      * This is an inner anonymous class inherited from SameTypeWriter with added
@@ -61,8 +62,6 @@ public class ConfigureDeviceScreensHandler extends AbstractHandler {
 
     /**
      * Constructor.
-     * 
-     * @param destination where to write the data to
      */
     public ConfigureDeviceScreensHandler() {
         configService.writeTo(writeable);
@@ -81,7 +80,8 @@ public class ConfigureDeviceScreensHandler extends AbstractHandler {
     @Override
     public Object execute(ExecutionEvent event) throws ExecutionException {
         ConfigureDeviceScreensDialog dialog =
-                new ConfigureDeviceScreensDialog(shell(), Opi.getDefault().descriptionsProvider().getOpiList(), load());
+                new ConfigureDeviceScreensDialog(shell(), Opi.getDefault().descriptionsProvider().getOpiList(),
+                        getCurrent());
 
         if (dialog.open() == Window.OK) {
             DeviceScreensDescription desc = dialog.getDeviceDescription();
@@ -91,7 +91,12 @@ public class ConfigureDeviceScreensHandler extends AbstractHandler {
         return null;
     }
 
-    private DeviceScreensDescription load() {
+    /**
+     * Gets the current device description.
+     * 
+     * @return the current device description
+     */
+    private DeviceScreensDescription getCurrent() {
         UpdatedValue<DeviceScreensDescription> instrumentDescription =
                 new UpdatedObservableAdapter<>(DeviceScreens.getInstance().getDevices());
         if (Awaited.returnedValue(instrumentDescription, 1)) {

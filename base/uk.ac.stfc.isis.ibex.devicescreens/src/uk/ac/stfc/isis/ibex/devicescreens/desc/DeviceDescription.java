@@ -34,7 +34,7 @@ import uk.ac.stfc.isis.ibex.model.ModelObject;
 import uk.ac.stfc.isis.ibex.targets.OpiTarget;
 
 /**
- * This class describes the device element of the device screens xml format.
+ * This class describes the device element of the device screens XML format.
  * 
  * Note any changes here will require corresponding changes to
  * EPICS/schema/configurations/screens.xsd.
@@ -43,12 +43,16 @@ import uk.ac.stfc.isis.ibex.targets.OpiTarget;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class DeviceDescription extends ModelObject {
 
-    /**
-     * Type when the device screen is an OPI.
-     */
+    /** The device name. */
     private String name;
+
+    /** The key is either the OPI name or custom screen name. */
     private String key;
+
+    /** The type is either an OPI or a custom screen. */
     private String type;
+
+    /** The properties that have been set. */
     @XmlElement(name = "properties", type = PropertiesDescription.class)
     private PropertiesDescription properties = new PropertiesDescription();
 

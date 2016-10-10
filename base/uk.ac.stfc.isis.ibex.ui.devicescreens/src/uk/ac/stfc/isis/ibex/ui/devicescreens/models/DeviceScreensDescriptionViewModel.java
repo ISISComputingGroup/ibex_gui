@@ -31,27 +31,52 @@ import uk.ac.stfc.isis.ibex.devicescreens.desc.DeviceDescription;
 import uk.ac.stfc.isis.ibex.devicescreens.desc.DeviceScreensDescription;
 import uk.ac.stfc.isis.ibex.devicescreens.desc.PropertyDescription;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
-import uk.ac.stfc.isis.ibex.opis.Opi;
 import uk.ac.stfc.isis.ibex.opis.desc.OpiDescription;
+import uk.ac.stfc.isis.ibex.validators.MessageDisplayer;
 
 /**
- * 
+ * The view model for linking the GUI with the device screens description.
  */
 public class DeviceScreensDescriptionViewModel extends ModelObject {
-    
-    private DeviceScreensDescription original;
+
+    /** Used to display any errors relating to values entered. */
+    private final MessageDisplayer messageDisplayer;
+
+    /** The currently selected screen. */
     private DeviceDescriptionWrapper selectedScreen = null;
+
+    /** The currently selected property in the table. */
     private PropertyDescription selectedProperty = null;
+
+    /** The screens. */
     private List<DeviceDescriptionWrapper> devices;
 
-    // Proxy objects for data-binding
+    /**
+     * A proxy object for the current name to allow simple data-binding to work.
+     */
     private String currentName = "";
+
+    /**
+     * A proxy object for the current key to allow simple data-binding to work.
+     */
     private String currentKey = "";
+
+    /**
+     * A proxy object for the current description to allow simple data-binding
+     * to work.
+     */
     private String currentDescription = "";
 
-    public DeviceScreensDescriptionViewModel(DeviceScreensDescription description) {
-        // Keep a reference to the original, so we can change it after editing
-        original = description;
+    /**
+     * The constructor.
+     * 
+     * @param description the description to edit
+     * @param messageDisplayer a reference to the dialog to allow error messages
+     *            to be displayed
+     */
+    public DeviceScreensDescriptionViewModel(DeviceScreensDescription description, MessageDisplayer messageDisplayer) {
+        this.messageDisplayer = messageDisplayer;
+
         // From the description create a list of devices
         devices = new ArrayList<>();
         for (DeviceDescription d : description.getDevices()) {
@@ -59,12 +84,17 @@ public class DeviceScreensDescriptionViewModel extends ModelObject {
         }
     }
 
+    /**
+     * @return the devices
+     */
     public List<DeviceDescriptionWrapper> getScreens() {
         return devices;
     }
 
     /**
-     * @param index
+     * Changes the selected screen.
+     * 
+     * @param index the index of the selected screen
      */
     public void setSelectedScreen(int index) {
         if (index >= 0 && index < devices.size()) {
@@ -88,30 +118,72 @@ public class DeviceScreensDescriptionViewModel extends ModelObject {
         setSelectedProperty(-1);
     }
 
+    /**
+     * @return the currently selected screen
+     */
     public DeviceDescriptionWrapper getSelectedScreen() {
         return selectedScreen;
     }
 
+    /**
+     * @return the current name
+     */
     public String getCurrentName() {
         return currentName;
     }
 
+    /**
+     * @param name the new name to set
+     */
     public void setCurrentName(String name) {
         if (selectedScreen == null) {
             return;
+        }
+
+        // Check for duplicate names
+        if (isDuplicateName(name)) {
+            messageDisplayer.setErrorMessage("ViewModel", "Duplicate names are not allowed");
+        } else {
+            messageDisplayer.setErrorMessage("ViewModel", null);
         }
 
         selectedScreen.setName(name);
         firePropertyChange("currentName", currentName, currentName = name);
     }
 
+    /**
+     * Checks to see if this name matches one of the existing names.
+     * 
+     * @param name the name to check
+     * @return true is the name is a duplicate; false otherwise
+     */
+    private boolean isDuplicateName(String name) {
+        for (int i = 0; i < devices.size(); ++i) {
+            if (name.trim().equalsIgnoreCase(devices.get(i).getName().trim())) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * @return the current key
+     */
     public String getCurrentKey() {
         return currentKey;
     }
 
+    /**
+     * @param key the new value to set
+     */
     public void setCurrentKey(String key) {
         if (selectedScreen == null) {
             return;
+        }
+
+        if (key == null) {
+            key = "";
         }
 
         selectedScreen.setKey(key);
@@ -121,11 +193,17 @@ public class DeviceScreensDescriptionViewModel extends ModelObject {
         firePropertyChange("currentKey", currentKey, currentKey = key);
     }
 
+    /**
+     * @return the current OPI description
+     */
     public String getCurrentDescription() {
         return currentDescription;
     }
 
-    public void setCurrentDescription(String value) {
+    /**
+     * @param value the description to set
+     */
+    private void setCurrentDescription(String value) {
         if (selectedScreen == null) {
             return;
         }
@@ -133,12 +211,11 @@ public class DeviceScreensDescriptionViewModel extends ModelObject {
         firePropertyChange("currentDescription", currentDescription, currentDescription = value);
     }
 
-    private OpiDescription getOpi(String targetName) {
-        String name = Opi.getDefault().descriptionsProvider().guessOpiName(targetName);
-        OpiDescription opi = Opi.getDefault().descriptionsProvider().getDescription(name);
-        return opi;
-    }
-
+    /**
+     * Deletes a screen.
+     * 
+     * @param index the index of the screen to delete
+     */
     public void deleteScreen(int index) {
         if (index >= 0 && index < devices.size()) {
             List<DeviceDescriptionWrapper> oldList = new ArrayList<>(devices);
@@ -148,6 +225,9 @@ public class DeviceScreensDescriptionViewModel extends ModelObject {
         }
     }
 
+    /**
+     * Add a blank screen to the description.
+     */
     public void addScreen() {
         List<DeviceDescriptionWrapper> oldList = new ArrayList<>(devices);
 
@@ -166,18 +246,34 @@ public class DeviceScreensDescriptionViewModel extends ModelObject {
         firePropertyChange("screens", oldList, devices);
     }
 
+    /**
+     * Move a screen towards the front of the list.
+     * 
+     * @param index the index of the screen to move
+     */
     public void moveScreenUp(int index) {
         if (index > 0) {
             swapScreens(index, index - 1);
         }
     }
 
+    /**
+     * Move a screen towards the back of the list.
+     * 
+     * @param index the index of the screen to move
+     */
     public void moveScreenDown(int index) {
         if (index < devices.size() - 1) {
             swapScreens(index, index + 1);
         }
     }
 
+    /**
+     * Swap two devices in the list.
+     * 
+     * @param selected the index of the selected item
+     * @param toSwapWith the index of the item to swap with
+     */
     private void swapScreens(int selected, int toSwapWith) {
         List<DeviceDescriptionWrapper> oldOrder = new ArrayList<>(devices);
         Collections.swap(devices, selected, toSwapWith);
@@ -193,8 +289,7 @@ public class DeviceScreensDescriptionViewModel extends ModelObject {
         if (selectedScreen != null && index != -1) {
             firePropertyChange("selectedProperty", selectedProperty,
                     selectedProperty = selectedScreen.getProperties().get(index));
-        }
-        else {
+        } else {
             firePropertyChange("selectedProperty", selectedProperty, selectedProperty = null);
         }
     }
@@ -209,6 +304,9 @@ public class DeviceScreensDescriptionViewModel extends ModelObject {
         return "";
     }
 
+    /**
+     * @param value the value to set for the property
+     */
     public void setSelectedPropertyValue(String value) {
         if (selectedProperty != null) {
             String oldVal = selectedProperty.getValue();
@@ -219,7 +317,7 @@ public class DeviceScreensDescriptionViewModel extends ModelObject {
     }
 
     /**
-     * @return
+     * @return the selected property's description
      */
     public String getSelectedPropertyDescription() {
         if (selectedScreen != null && selectedProperty != null) {
@@ -228,7 +326,9 @@ public class DeviceScreensDescriptionViewModel extends ModelObject {
         return "";
     }
 
-
+    /**
+     * @return the OPI description
+     */
     public OpiDescription getOpiDescription() {
         if (selectedScreen != null) {
             return selectedScreen.getOpi();
@@ -237,7 +337,9 @@ public class DeviceScreensDescriptionViewModel extends ModelObject {
     }
 
     /**
-     * Gets the new device description for saving.
+     * Gets the new constructed device description for saving.
+     * 
+     * @return The description
      */
     public DeviceScreensDescription getDeviceDescription() {
         DeviceScreensDescription desc = new DeviceScreensDescription();
@@ -259,6 +361,4 @@ public class DeviceScreensDescriptionViewModel extends ModelObject {
 
         return desc;
     }
-
-
 }
