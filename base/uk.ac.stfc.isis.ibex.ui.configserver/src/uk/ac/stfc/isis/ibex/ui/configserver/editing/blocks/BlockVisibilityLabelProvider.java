@@ -42,7 +42,7 @@ public class BlockVisibilityLabelProvider extends ButtonCellLabelProvider {
 
 		cell.setText("");
 		final EditableBlock block = (EditableBlock) cell.getElement();		
-		final Button checkBox = (Button) getControl(cell, SWT.CHECK);
+		final Button checkBox = getControl(cell, SWT.CHECK);
 		
 		checkBox.setSelection(block.getIsVisible());	
 		checkBox.setText(isVisible(block));
