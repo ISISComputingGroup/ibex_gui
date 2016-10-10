@@ -151,6 +151,7 @@ public class Instrument implements BundleActivator {
 
             @Override
             public void onConnectionStatus(boolean isConnected) {
+                LOG.info("Instrument list connection state: " + Boolean.toString(isConnected));
             }
         });
         setInstrument(initialInstrument());

@@ -67,6 +67,14 @@ public class InstrumentListObservable extends ForwardingObservable<Collection<In
     }
 
     @Override
+    public void setConnectionStatus(boolean isConnected) {
+        if (isConnected) {
+            System.out.println("Instrument list connected");
+        }
+        super.setConnectionStatus(isConnected);
+    }
+
+    @Override
     public void setValue(Collection<InstrumentInfo> value) {
         super.setValue(getValidInstruments(value));
     }
