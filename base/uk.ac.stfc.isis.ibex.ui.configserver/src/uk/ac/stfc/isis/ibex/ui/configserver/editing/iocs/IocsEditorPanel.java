@@ -54,7 +54,7 @@ public class IocsEditorPanel extends Composite {
 		super(parent, style);
 		setLayout(new GridLayout(1, false));
 		
-		table = new IocsTable(this, SWT.NONE, SWT.V_SCROLL | SWT.NO_SCROLL | SWT.FULL_SELECTION | SWT.BORDER);
+		table = new IocsTable(this, SWT.NONE, SWT.FULL_SELECTION);
 		GridData gdTable = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
 		gdTable.heightHint = 200;
 		table.setLayoutData(gdTable);
