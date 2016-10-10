@@ -34,7 +34,6 @@ import uk.ac.stfc.isis.ibex.model.UpdatedValue;
 /**
  * The model for the monitor panel in the dashboard.
  */
-@SuppressWarnings("checkstyle:magicnumber")
 public class MonitorPanelModel extends Closer {
 
     private final UpdatedValue<String> goodOverRawFrames;
