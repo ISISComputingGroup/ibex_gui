@@ -41,7 +41,7 @@ import uk.ac.stfc.isis.ibex.epics.observing.Pair;
 import uk.ac.stfc.isis.ibex.epics.observing.Subscription;
 import uk.ac.stfc.isis.ibex.ui.dashboard.models.ObservableDecimalRatio;
 
-@SuppressWarnings({ "unchecked", "checkstyle:methodname" })
+@SuppressWarnings({ "unchecked", "checkstyle:methodname", "checkstyle:magicnumber" })
 public class ObservableDecimalRatioTest {
 
     private ClosableObservable<Pair<Number, Number>> mockSource;
