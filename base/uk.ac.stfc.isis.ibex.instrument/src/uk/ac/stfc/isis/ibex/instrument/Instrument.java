@@ -132,6 +132,8 @@ public class Instrument implements BundleActivator {
     private void setInstrumentsObserver() {
         instrumentsObservable.addObserver(new BaseObserver<Collection<InstrumentInfo>>() {
 
+            boolean firstConnection = true;
+
             @Override
             public void onValue(Collection<InstrumentInfo> value) {
                 Collection<InstrumentInfo> newInstruments = new ArrayList<>();
@@ -151,7 +153,11 @@ public class Instrument implements BundleActivator {
 
             @Override
             public void onConnectionStatus(boolean isConnected) {
-                LOG.info("Instrument list connection state: " + Boolean.toString(isConnected));
+                if (isConnected) {
+                    firstConnection = false;
+                } else if (!firstConnection) {
+                    LOG.error("Connection to the instrument list has been lost");
+                }
             }
         });
         setInstrument(initialInstrument());
