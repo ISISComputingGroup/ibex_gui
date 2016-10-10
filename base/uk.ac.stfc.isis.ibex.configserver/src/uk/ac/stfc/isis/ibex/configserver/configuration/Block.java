@@ -45,8 +45,8 @@ public class Block extends ModelObject {
 	private String component;
 
     private boolean runcontrol;
-    private float lowlimit;
-    private float highlimit;
+    private float lowLimit;
+    private float highLimit;
 
     // Logging configurations, default is logging every DEFAULT_SCAN_RATE
     // seconds
@@ -74,23 +74,23 @@ public class Block extends ModelObject {
      * @param visible whether the block should be shown
      * @param local whether the PV is local to the instrument
      * @param component the component the block belongs to
-     * @param lowlimit the low limit for run-control
-     * @param highlimit the high limit for run-control
+     * @param lowLimit the low limit for run-control
+     * @param highLimit the high limit for run-control
      * @param runcontrol whether run-control is enabled
      * @param logPeriodic whether the block is sampled periodically in the
      *            archiver
      * @param logRate time between archive samples (seconds)
      * @param logDeadband deadband for the block to be archived
      */
-    public Block(String name, String pv, boolean visible, boolean local, String component, float lowlimit,
-            float highlimit, Boolean runcontrol, boolean logPeriodic, int logRate, float logDeadband) {
+    public Block(String name, String pv, boolean visible, boolean local, String component, float lowLimit,
+            float highLimit, Boolean runcontrol, boolean logPeriodic, int logRate, float logDeadband) {
 		this.name = name;
 		this.pv = pv;
 		this.visible = visible;
 		this.local = local;
 		this.component = component;
-        this.lowlimit = lowlimit;
-        this.highlimit = highlimit;
+        this.lowLimit = lowLimit;
+        this.highLimit = highLimit;
         this.runcontrol = runcontrol;
         this.log_deadband = logDeadband;
         this.log_periodic = logPeriodic;
@@ -103,7 +103,7 @@ public class Block extends ModelObject {
      * @param other the block to be copied
      */
 	public Block(Block other) {
-        this(other.name, other.pv, other.visible, other.local, other.component, other.lowlimit, other.highlimit,
+        this(other.name, other.pv, other.visible, other.local, other.component, other.lowLimit, other.highLimit,
                 other.runcontrol, other.log_periodic, other.log_rate, other.log_deadband);
 	}
 
@@ -258,7 +258,7 @@ public class Block extends ModelObject {
      * @return the low limit for run-control
      */
     public float getRCLowLimit() {
-        return lowlimit;
+        return lowLimit;
     }
 
     /**
@@ -267,7 +267,7 @@ public class Block extends ModelObject {
      * @param rclow the new low limit for run-control
      */
     public void setRCLowLimit(float rclow) {
-        firePropertyChange("RCLowLimit", this.lowlimit, this.lowlimit = rclow);
+        firePropertyChange("RCLowLimit", this.lowLimit, this.lowLimit = rclow);
     }
 
     /**
@@ -276,7 +276,7 @@ public class Block extends ModelObject {
      * @return the high limit for run-control
      */
     public float getRCHighLimit() {
-        return highlimit;
+        return highLimit;
     }
 
     /**
@@ -285,7 +285,7 @@ public class Block extends ModelObject {
      * @param rchigh the new high limit for run-control
      */
     public void setRCHighLimit(float rchigh) {
-        firePropertyChange("RCHighLimit", this.highlimit, this.highlimit = rchigh);
+        firePropertyChange("RCHighLimit", this.highLimit, this.highLimit = rchigh);
     }
 
     /**
