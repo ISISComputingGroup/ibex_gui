@@ -27,18 +27,17 @@ import org.eclipse.jface.databinding.viewers.ObservableMapCellLabelProvider;
 import org.eclipse.jface.viewers.ViewerCell;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.TableEditor;
-import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.TableItem;
 
-public abstract class ControlCellLabelProvider {
+public abstract class ControlCellLabelProvider extends ObservableMapCellLabelProvider {
 	
 	private final Map<ViewerCell, Control> cellControls = new HashMap<>();
 	private final Map<ViewerCell, TableEditor> cellEditors = new HashMap<>();
 	
-	protected ControlCellLabelProvider() {
+	protected ControlCellLabelProvider(IObservableMap[] attributeMaps) {
+		super(attributeMaps);
 	}
 	
 	protected Control getControl(ViewerCell cell, int style) {
@@ -68,11 +67,11 @@ public abstract class ControlCellLabelProvider {
 		return control;
 	}
 	
-	private Composite composite(ViewerCell cell) {
+	protected Composite composite(ViewerCell cell) {
 		return (Composite) cell.getControl();
 	}
 	
-	private void setEditor(ViewerCell cell, Control control) {
+	protected void setEditor(ViewerCell cell, Control control) {
 		TableItem item = (TableItem) cell.getItem();
 		TableEditor editor = new TableEditor(item.getParent());
 		editor.horizontalAlignment = SWT.FILL;

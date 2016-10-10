@@ -26,7 +26,8 @@ import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.widgets.Button;
 
-import uk.ac.stfc.isis.ibex.ui.configserver.editing.ButtonCellLabelProvider;
+import uk.ac.stfc.isis.ibex.ui.widgets.ButtonCellLabelProvider;
+
 
 public abstract class IocCheckboxLabelProvider<T> extends ButtonCellLabelProvider {
 			
@@ -40,7 +41,7 @@ public abstract class IocCheckboxLabelProvider<T> extends ButtonCellLabelProvide
 
 		cell.setText("");
 		final T ioc = (T) cell.getElement();		
-		final Button checkBox = getButton(cell, SWT.CHECK);
+		final Button checkBox = (Button) getControl(cell, SWT.CHECK);
 		
 		checkBox.setSelection(checked(ioc));	
 		checkBox.setText(displayText(ioc));

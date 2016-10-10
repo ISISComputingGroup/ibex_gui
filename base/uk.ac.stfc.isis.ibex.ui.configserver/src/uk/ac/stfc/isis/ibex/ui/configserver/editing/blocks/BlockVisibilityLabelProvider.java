@@ -28,7 +28,7 @@ import org.eclipse.swt.widgets.Button;
 
 import uk.ac.stfc.isis.ibex.configserver.configuration.Block;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableBlock;
-import uk.ac.stfc.isis.ibex.ui.configserver.editing.ButtonCellLabelProvider;
+import uk.ac.stfc.isis.ibex.ui.widgets.ButtonCellLabelProvider;
 
 public class BlockVisibilityLabelProvider extends ButtonCellLabelProvider {
 
@@ -42,7 +42,7 @@ public class BlockVisibilityLabelProvider extends ButtonCellLabelProvider {
 
 		cell.setText("");
 		final EditableBlock block = (EditableBlock) cell.getElement();		
-		final Button checkBox = getButton(cell, SWT.CHECK);
+		final Button checkBox = (Button) getControl(cell, SWT.CHECK);
 		
 		checkBox.setSelection(block.getIsVisible());	
 		checkBox.setText(isVisible(block));
