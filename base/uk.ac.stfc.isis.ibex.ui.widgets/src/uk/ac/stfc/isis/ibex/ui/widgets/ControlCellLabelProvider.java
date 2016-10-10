@@ -31,16 +31,16 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.TableItem;
 
-public abstract class ControlCellLabelProvider extends ObservableMapCellLabelProvider {
+public abstract class ControlCellLabelProvider <T extends Control> extends ObservableMapCellLabelProvider {
 	
-	private final Map<ViewerCell, Control> cellControls = new HashMap<>();
+	private final Map<ViewerCell, T> cellControls = new HashMap<>();
 	private final Map<ViewerCell, TableEditor> cellEditors = new HashMap<>();
 	
 	protected ControlCellLabelProvider(IObservableMap[] attributeMaps) {
 		super(attributeMaps);
 	}
 	
-	protected Control getControl(ViewerCell cell, int style) {
+	protected T getControl(ViewerCell cell, int style) {
 		return cellControls.containsKey(cell) ? cellControls.get(cell) : create(cell, style);
 	}
 	
@@ -56,10 +56,10 @@ public abstract class ControlCellLabelProvider extends ObservableMapCellLabelPro
 		cellControls.clear();
 	}
 	
-	protected abstract Control createControl(final ViewerCell cell, int style);
+	protected abstract T createControl(final ViewerCell cell, int style);
 	
-	private Control create(final ViewerCell cell, int style) {
-		Control control = createControl(cell, style);
+	private T create(final ViewerCell cell, int style) {
+		T control = createControl(cell, style);
 		
 		setEditor(cell, control);
 		cellControls.put(cell, control);

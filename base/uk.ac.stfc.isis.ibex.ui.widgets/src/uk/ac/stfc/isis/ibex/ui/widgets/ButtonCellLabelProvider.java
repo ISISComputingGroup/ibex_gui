@@ -25,7 +25,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Button;
 
-public class ButtonCellLabelProvider extends ControlCellLabelProvider {
+public class ButtonCellLabelProvider extends ControlCellLabelProvider<Button> {
 	
 	protected ButtonCellLabelProvider(IObservableMap[] attributeMaps) {
 		super(attributeMaps);

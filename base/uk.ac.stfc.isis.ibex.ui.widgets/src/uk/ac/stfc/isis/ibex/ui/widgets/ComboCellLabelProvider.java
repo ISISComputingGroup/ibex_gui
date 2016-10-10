@@ -4,7 +4,6 @@ import org.eclipse.core.databinding.observable.map.IObservableMap;
 import org.eclipse.jface.viewers.ViewerCell;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 
 public class ComboCellLabelProvider extends ControlCellLabelProvider<Combo> {
@@ -14,7 +13,7 @@ public class ComboCellLabelProvider extends ControlCellLabelProvider<Combo> {
 	}
 
 	protected Combo createControl(final ViewerCell cell, int style) {
-		Combo combo= new Combo(composite(cell), style);
+		Combo combo = new Combo(composite(cell), style);
 		combo.setText("");
 		combo.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		
