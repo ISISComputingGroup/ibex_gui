@@ -71,11 +71,4 @@ public class BlockTest {
                 expectedRunControl, expectedLogPeriodic, expectedLogRate, expectedLogDeadband);
 
     }
-
-//    public Block(String name, String pv, boolean visible, boolean local) {
-//        this(name, pv, visible, local, null, 0.0f, 0.0f, false, true, DEFAULT_SCAN_RATE, 0.0f);
-//    }
-
-//    public Block(String name, String pv, boolean visible, boolean local, String component, float lowlimit,
-//            float highlimit, Boolean runcontrol, boolean logPeriodic, int logRate, float logDeadband) {
 }
