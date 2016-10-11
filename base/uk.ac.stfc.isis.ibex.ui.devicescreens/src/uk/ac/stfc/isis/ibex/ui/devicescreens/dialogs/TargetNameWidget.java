@@ -103,9 +103,8 @@ public class TargetNameWidget extends Composite {
         btnSetDefault.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
-                // TODO: Need to decide what to do as there is no way of
-                // guessing what
-                // the user wants
+                // Need to decide what to do as there is no way of
+                // guessing what the user wants
             }
         });
         btnSetDefault.setText("Default Target");

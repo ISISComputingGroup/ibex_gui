@@ -238,6 +238,14 @@ public class ConfigureDeviceScreensPanel extends Composite {
         bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(txtName),
                 BeanProperties.value("currentName").observe(viewModel), null, null);
 
+//        viewModel.addPropertyChangeListener("currentName", new PropertyChangeListener() {
+//            @Override
+//            public void propertyChange(PropertyChangeEvent evt) {
+//                System.out.println("hello");
+//                System.out.println(viewModel.getCurrentName());
+//            }
+//        });
+
         txtName.addModifyListener(new ModifyListener() {
             @Override
             public void modifyText(ModifyEvent arg0) {

@@ -27,7 +27,7 @@ import java.util.List;
 
 import uk.ac.stfc.isis.ibex.devicescreens.desc.DeviceDescription;
 import uk.ac.stfc.isis.ibex.devicescreens.desc.PropertyDescription;
-import uk.ac.stfc.isis.ibex.opis.Opi;
+import uk.ac.stfc.isis.ibex.opis.DescriptionsProvider;
 import uk.ac.stfc.isis.ibex.opis.desc.MacroInfo;
 import uk.ac.stfc.isis.ibex.opis.desc.OpiDescription;
 
@@ -41,6 +41,9 @@ public class DeviceDescriptionWrapper {
 
     /** The original device description. */
     private DeviceDescription device;
+
+    /** Provides information about the OPIs. */
+    private DescriptionsProvider provider;
 
     /** The properties for the device. */
     private List<PropertyDescription> properties;
@@ -61,8 +64,10 @@ public class DeviceDescriptionWrapper {
      * The constructor.
      * 
      * @param device the device description to wrap
+     * @param provider supplies the OPI information
      */
-    public DeviceDescriptionWrapper(DeviceDescription device) {
+    public DeviceDescriptionWrapper(DeviceDescription device, DescriptionsProvider provider) {
+        this.provider = provider;
         this.device = new DeviceDescription(device);
         name = this.device.getName();
         key = this.device.getKey();
@@ -123,10 +128,17 @@ public class DeviceDescriptionWrapper {
     }
 
     /**
-     * @return the OPI description for the current OPI
+     * Gets the property value.
+     * 
+     * @param key the name of the property
+     * @return the property value for the specified key
      */
-    public OpiDescription getOpi() {
-        return opi;
+    public String getMacroDescription(String key) {
+        if (opi != null && opi.getKeys().contains(key)) {
+            return opi.getMacroDescription(key);
+        }
+
+        return "";
     }
 
     /**
@@ -171,8 +183,8 @@ public class DeviceDescriptionWrapper {
      * @return the corresponding OPI description
      */
     private OpiDescription getOpi(String targetName) {
-        String name = Opi.getDefault().descriptionsProvider().guessOpiName(targetName);
-        OpiDescription opi = Opi.getDefault().descriptionsProvider().getDescription(name);
+        String name = provider.guessOpiName(targetName);
+        OpiDescription opi = provider.getDescription(name);
         return opi;
     }
 
