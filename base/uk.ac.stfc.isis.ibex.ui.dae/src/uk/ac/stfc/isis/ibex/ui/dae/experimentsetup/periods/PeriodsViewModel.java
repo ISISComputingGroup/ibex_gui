@@ -256,6 +256,12 @@ public class PeriodsViewModel extends ModelObject {
         firePropertyChange("hardwarePeriod", this.hardwarePeriod, this.hardwarePeriod = hardwarePeriod);
     }
 
+    /**
+     * Sets the object responsible for filling the file selection combo box with
+     * appropriate options.
+     * 
+     * @param provider The content provider.
+     */
     public void setComboContentProvider(DAEComboContentProvider provider) {
         this.comboContentProvider = provider;
     }

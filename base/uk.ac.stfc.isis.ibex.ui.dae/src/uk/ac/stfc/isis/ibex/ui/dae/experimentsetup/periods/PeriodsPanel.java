@@ -131,12 +131,12 @@ public class PeriodsPanel extends Composite {
         GridLayout gl_cmpSwitchTypeHardware = new GridLayout(1, false);
         gl_cmpSwitchTypeHardware.marginWidth = 10;
         gl_cmpSwitchTypeHardware.marginHeight = 10;
-        gl_cmpSwitchTypeHardware.verticalSpacing = 15;
         cmpSwitchTypeHardware.setLayout(gl_cmpSwitchTypeHardware);
         cmpSwitchTypeHardware.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 
         Composite cmpHardwareSettings = new Composite(cmpSwitchTypeHardware, SWT.NONE);
-        GridLayout gl_cmpHardwareSettings = new GridLayout(5, false);
+        GridLayout gl_cmpHardwareSettings = new GridLayout(4, false);
+        gl_cmpHardwareSettings.verticalSpacing = 15;
         gl_cmpHardwareSettings.marginWidth = 0;
         gl_cmpHardwareSettings.marginHeight = 0;
         cmpHardwareSettings.setLayout(gl_cmpHardwareSettings);
@@ -150,7 +150,6 @@ public class PeriodsPanel extends Composite {
         GridData gd_txtHardwarePeriods = new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1);
         gd_txtHardwarePeriods.widthHint = 80;
         txtHardwarePeriods.setLayoutData(gd_txtHardwarePeriods);
-        new Label(cmpHardwareSettings, SWT.NONE);
 
         Label lblOutputDelayus = new Label(cmpHardwareSettings, SWT.NONE);
         lblOutputDelayus.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
@@ -161,21 +160,15 @@ public class PeriodsPanel extends Composite {
         gd_txtOutputDelay.widthHint = 80;
         txtOutputDelay.setLayoutData(gd_txtOutputDelay);
 
-        Label lblSelectionMethod = new Label(cmpHardwareSettings, SWT.NONE);
+        Composite cmpSourceSelector = new Composite(cmpHardwareSettings, SWT.NONE);
+        cmpSourceSelector.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 4, 1));
+        GridLayout gl_composite = new GridLayout(5, false);
+        gl_composite.verticalSpacing = 10;
+        cmpSourceSelector.setLayout(gl_composite);
+
+        Label lblSelectionMethod = new Label(cmpSourceSelector, SWT.NONE);
+        lblSelectionMethod.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 5, 1));
         lblSelectionMethod.setText("Select Period Source: ");
-        lblSelectionMethod.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 5, 1));
-
-        radioSpecifyParameters = new Button(cmpHardwareSettings, SWT.RADIO);
-        GridData gd_radioSpecifyParameters = new GridData(SWT.LEFT, SWT.CENTER, false, false, 5, 1);
-        gd_radioSpecifyParameters.horizontalIndent = 5;
-        radioSpecifyParameters.setLayoutData(gd_radioSpecifyParameters);
-        radioSpecifyParameters.setText(PeriodSetupSource.PARAMETERS.toString());
-
-        radioUsePeriodFile = new Button(cmpHardwareSettings, SWT.RADIO);
-        GridData gd_radioUsePeriodFile = new GridData(SWT.LEFT, SWT.CENTER, false, false, 5, 1);
-        gd_radioUsePeriodFile.horizontalIndent = 5;
-        radioUsePeriodFile.setLayoutData(gd_radioUsePeriodFile);
-        radioUsePeriodFile.setText(PeriodSetupSource.FILE.toString());
 
         SelectionListener sourceSelectionListener = new SelectionListener() {
             @Override
@@ -191,7 +184,14 @@ public class PeriodsPanel extends Composite {
             public void widgetDefaultSelected(SelectionEvent e) {
             }
         };
+
+        radioSpecifyParameters = new Button(cmpSourceSelector, SWT.RADIO);
+        radioSpecifyParameters.setText(PeriodSetupSource.PARAMETERS.toString());
         radioSpecifyParameters.addSelectionListener(sourceSelectionListener);
+
+        radioUsePeriodFile = new Button(cmpSourceSelector, SWT.RADIO);
+        radioUsePeriodFile.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 4, 1));
+        radioUsePeriodFile.setText(PeriodSetupSource.FILE.toString());
         radioUsePeriodFile.addSelectionListener(sourceSelectionListener);
 
         cmpSource = new Composite(cmpSwitchTypeHardware, SWT.NONE);

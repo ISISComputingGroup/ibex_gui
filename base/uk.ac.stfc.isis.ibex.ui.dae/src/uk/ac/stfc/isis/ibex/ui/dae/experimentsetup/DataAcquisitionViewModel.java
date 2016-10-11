@@ -362,6 +362,12 @@ public class DataAcquisitionViewModel extends ModelObject {
 		return BinaryChoice.values()[selected ? 1 : 0];
 	}
 
+    /**
+     * Sets the object responsible for filling the file selection combo boxes
+     * with appropriate options.
+     * 
+     * @param provider The content provider.
+     */
     public void setComboContentProvider(DAEComboContentProvider provider) {
         this.comboContentProvider = provider;
     }
