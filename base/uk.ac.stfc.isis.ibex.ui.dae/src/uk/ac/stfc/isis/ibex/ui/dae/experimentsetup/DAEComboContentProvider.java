@@ -32,7 +32,6 @@ import uk.ac.stfc.isis.ibex.model.UpdatedValue;
  * Provides the content for file selection menus in the DAE experiment setup
  * tab.
  */
-@SuppressWarnings("checkstyle:whitespace")
 public class DAEComboContentProvider {
     
     String instrumentName;
