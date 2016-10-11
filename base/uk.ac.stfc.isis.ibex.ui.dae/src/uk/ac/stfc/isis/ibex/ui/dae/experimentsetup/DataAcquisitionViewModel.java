@@ -30,16 +30,14 @@ import uk.ac.stfc.isis.ibex.dae.dataacquisition.DaeTimingSource;
 import uk.ac.stfc.isis.ibex.dae.dataacquisition.MuonCerenkovPulse;
 import uk.ac.stfc.isis.ibex.dae.updatesettings.AutosaveUnit;
 import uk.ac.stfc.isis.ibex.dae.updatesettings.UpdateSettings;
-import uk.ac.stfc.isis.ibex.epics.observing.BaseObserver;
-import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 import uk.ac.stfc.isis.ibex.model.UpdatedValue;
 
 public class DataAcquisitionViewModel extends ModelObject {
 
-    private String instrumentName;
 	private DaeSettings settings;
 	private UpdateSettings updateSettings;
+    private DAEComboContentProvider comboContentProvider;
 	private UpdatedValue<Collection<String>> wiringTables;
 	private UpdatedValue<Collection<String>> detectorTables;
 	private UpdatedValue<Collection<String>> spectraTables;
@@ -152,45 +150,12 @@ public class DataAcquisitionViewModel extends ModelObject {
 	}
 
     /**
-     * Adds a blank option to the list for displaying in a drop down menu in the
-     * GUI.
-     * 
-     * @param files a list of available files.
-     * @return the list of files with a blank entry added at the beginning.
-     */
-    private String[] addBlank(String[] tables) {
-        String[] result = new String[tables.length + 1];
-        result[0] = " ";
-        for (int i = 0; i < tables.length; i++) {
-            result[i + 1] = tables[i];
-        }
-        return result;
-    }
-
-    /**
-     * Returns a string array from a string collection, or an empty array if the
-     * input is null.
-     * 
-     * @param updated the string collection.
-     * @return the resulting array.
-     */
-    private String[] valueOrEmpty(UpdatedValue<Collection<String>> updated) {
-        Collection<String> value = updated.getValue();
-        return value != null ? value.toArray(new String[0]) : new String[0];
-    }
-
-
-    /**
      * Gets the list of wiring tables currently available to the instrument.
      * 
      * @return the list of wiring tables.
      */
     public String[] getWiringTableList() {
-        String[] tables = valueOrEmpty(wiringTables);
-        tables = tables.length != 0 ? tables : new String[] {
-                "None found in C:\\Instrument\\Settings\\config\\" + this.instrumentName
-                        + "\\configurations\\tables\\ (file name must contain string \"wiring\")." };
-        return addBlank(tables);
+        return comboContentProvider.getContent(wiringTables, "wiring");
     }
 
     /**
@@ -218,11 +183,7 @@ public class DataAcquisitionViewModel extends ModelObject {
      * @return the list of detector tables.
      */
 	public String[] getDetectorTableList() {
-        String[] tables = valueOrEmpty(detectorTables);
-        tables = tables.length != 0 ? tables : new String[] {
-                "None found in C:\\Instrument\\Settings\\config\\" + this.instrumentName
-                        + "\\configurations\\tables\\ (file name must contain string \"det\")." };
-        return addBlank(tables);
+        return comboContentProvider.getContent(detectorTables, "det");
     }
 
     /**
@@ -250,11 +211,7 @@ public class DataAcquisitionViewModel extends ModelObject {
      * @return the list of detector tables.
      */
 	public String[] getSpectraTableList() {
-        String[] tables = valueOrEmpty(spectraTables);
-        tables = tables.length != 0 ? tables : new String[] {
-                "None found in C:\\Instrument\\Settings\\config\\" + this.instrumentName
-                        + "\\configurations\\tables\\ (file name must contain string \"spec\")." };
-        return addBlank(tables);
+        return comboContentProvider.getContent(spectraTables, "spec");
 	}
 
     /**
@@ -405,43 +362,7 @@ public class DataAcquisitionViewModel extends ModelObject {
 		return BinaryChoice.values()[selected ? 1 : 0];
 	}
 
-    /**
-     * Binds an observer to the observable holding the name of the current
-     * instrument.
-     * 
-     * @param instrumentName the name of the current instrument.
-     */
-    public void bindInstName(ForwardingObservable<String> instrumentName) {
-        this.instrumentName = instrumentName.getValue();
-        instrumentName.addObserver(instrumentAdapter);
-    }
-
-    private final BaseObserver<String> instrumentAdapter = new BaseObserver<String>() {
-
-        @Override
-        public void onValue(String value) {
-            setInstrumentName(value);
-        }
-
-        @Override
-        public void onError(Exception e) {
-            // handle
-        }
-
-        @Override
-        public void onConnectionStatus(boolean isConnected) {
-            // handle
-        }
-
-    };
-
-    /**
-     * Updates the local variable holding the instrument name when the value
-     * changes.
-     * 
-     * @param instrumentName the name of the new instrument.
-     */
-    public void setInstrumentName(String instrumentName) {
-        firePropertyChange("instrumentName", this.instrumentName, this.instrumentName = instrumentName);
+    public void setComboContentProvider(DAEComboContentProvider provider) {
+        this.comboContentProvider = provider;
     }
 }

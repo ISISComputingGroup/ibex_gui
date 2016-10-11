@@ -28,10 +28,9 @@ import uk.ac.stfc.isis.ibex.dae.experimentsetup.timechannels.CalculationMethod;
 import uk.ac.stfc.isis.ibex.dae.experimentsetup.timechannels.TimeChannels;
 import uk.ac.stfc.isis.ibex.dae.experimentsetup.timechannels.TimeRegime;
 import uk.ac.stfc.isis.ibex.dae.experimentsetup.timechannels.TimeUnit;
-import uk.ac.stfc.isis.ibex.epics.observing.BaseObserver;
-import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 import uk.ac.stfc.isis.ibex.model.UpdatedValue;
+import uk.ac.stfc.isis.ibex.ui.dae.experimentsetup.DAEComboContentProvider;
 
 /**
  * Model of time channel settings read by the GUI.
@@ -39,7 +38,7 @@ import uk.ac.stfc.isis.ibex.model.UpdatedValue;
 public class TimeChannelsViewModel extends ModelObject {
 
     private TimeChannels model;
-    private String instrumentName;
+    private DAEComboContentProvider comboContentProvider;
 
     /**
      * Binds Listeners to the time channel settings model used to update the
@@ -122,11 +121,7 @@ public class TimeChannelsViewModel extends ModelObject {
      * @return the file paths as string array
      */
     public String[] getTimeChannelFileList() {
-        String[] items = valueOrEmpty(model.getTimeChannelFileList());
-        items = items.length != 0 ? items : new String[] {
-                "None found in C:\\Instrument\\Settings\\config\\" + instrumentName
-                        + "\\configurations\\tcb\\ (file name must contain \"tcb\")." };
-        return addBlank(items);
+        return comboContentProvider.getContent(model.getTimeChannelFileList(), "tcb");
     }
 
     /**
@@ -180,71 +175,7 @@ public class TimeChannelsViewModel extends ModelObject {
         model.setTimeUnit(value);
     }
 
-    /**
-     * Returns a string array from a string collection, or an empty array if the
-     * input is null.
-     * 
-     * @param updated the string collection.
-     * @return the resulting array.
-     */
-    private String[] valueOrEmpty(UpdatedValue<Collection<String>> updated) {
-        Collection<String> value = updated.getValue();
-        return value != null ? value.toArray(new String[0]) : new String[0];
-    }
-
-    /**
-     * Adds a blank option to the list for displaying in a drop down menu in the
-     * GUI.
-     * 
-     * @param files a list of files.
-     * @return the list of files with a blank entry added at the beginning.
-     */
-    private String[] addBlank(String[] tables) {
-        String[] result = new String[tables.length + 1];
-        result[0] = " ";
-        for (int i = 0; i < tables.length; i++) {
-            result[i + 1] = tables[i];
-        }
-        return result;
-    }
-
-    /**
-     * Binds an observer to the observable holding the name of the current
-     * instrument.
-     * 
-     * @param instrumentName the name of the current instrument.
-     */
-    public void bindInstName(ForwardingObservable<String> instrumentName) {
-        this.instrumentName = instrumentName.getValue();
-        instrumentName.addObserver(instrumentAdapter);
-    }
-
-    private final BaseObserver<String> instrumentAdapter = new BaseObserver<String>() {
-
-        @Override
-        public void onValue(String value) {
-            setInstrumentName(value);
-        }
-
-        @Override
-        public void onError(Exception e) {
-            // handle
-        }
-
-        @Override
-        public void onConnectionStatus(boolean isConnected) {
-            // handle
-        }
-
-    };
-
-    /**
-     * Updates the local variable holding the instrument name when the value
-     * changes.
-     * 
-     * @param instrumentName the name of the new instrument.
-     */
-    public void setInstrumentName(String instrumentName) {
-        firePropertyChange("instrumentName", this.instrumentName, this.instrumentName = instrumentName);
+    public void setComboContentProvider(DAEComboContentProvider provider) {
+        this.comboContentProvider = provider;
     }
 }

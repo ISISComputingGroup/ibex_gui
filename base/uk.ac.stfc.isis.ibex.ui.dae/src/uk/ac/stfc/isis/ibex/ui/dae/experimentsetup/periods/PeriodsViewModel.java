@@ -28,16 +28,15 @@ import uk.ac.stfc.isis.ibex.dae.experimentsetup.periods.Period;
 import uk.ac.stfc.isis.ibex.dae.experimentsetup.periods.PeriodControlType;
 import uk.ac.stfc.isis.ibex.dae.experimentsetup.periods.PeriodSettings;
 import uk.ac.stfc.isis.ibex.dae.experimentsetup.periods.PeriodSetupSource;
-import uk.ac.stfc.isis.ibex.epics.observing.BaseObserver;
-import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 import uk.ac.stfc.isis.ibex.model.UpdatedValue;
+import uk.ac.stfc.isis.ibex.ui.dae.experimentsetup.DAEComboContentProvider;
 
 public class PeriodsViewModel extends ModelObject {
 
-    private String instrumentName;
 	private PeriodSettings settings;
 	private UpdatedValue<Collection<String>> periodFiles;
+    private DAEComboContentProvider comboContentProvider;
 
     private boolean internalPeriod;
     private boolean hardwarePeriod;
@@ -81,45 +80,23 @@ public class PeriodsViewModel extends ModelObject {
      * @return the list of period files.
      */
 	public String[] getPeriodFilesList() {
-        String[] files = valueOrEmpty(periodFiles);
-        files = files.length != 0 ? files : new String[] {
-                "None found in C:\\Instrument\\Settings\\config\\" + this.instrumentName
-                        + "\\configurations\\tables\\ (file name must contain string \"period\")." };
-        return addBlank(files);
+        return comboContentProvider.getContent(periodFiles, "period");
 	}
 
     /**
-     * Adds a blank option to the list for displaying in a drop down menu in the
-     * GUI.
+     * Returns which soruce the period settings are read from.
      * 
-     * @param files a list of files.
-     * @return the list of files with a blank entry added at the beginning.
+     * @return The period source.
      */
-    private String[] addBlank(String[] files) {
-        String[] result = new String[files.length + 1];
-        result[0] = " ";
-        for (int i = 0; i < files.length; i++) {
-            result[i + 1] = files[i];
-        }
-        return result;
-    }
-
-    /**
-     * Returns a string array from a string collection, or an empty array if the
-     * input is null.
-     * 
-     * @param updated the string collection.
-     * @return the resulting array.
-     */
-	private String[] valueOrEmpty(UpdatedValue<Collection<String>> updated) {
-		Collection<String> value = updated.getValue();
-		return value != null ? value.toArray(new String[0]) : new String[0];
-	}
-	
     public PeriodSetupSource getSetupSource() {
         return settings.getSetupSource();
 	}
-	
+
+    /**
+     * Sets which soruce the period settings are read from.
+     * 
+     * @param source The period source.
+     */
     public void setSetupSource(PeriodSetupSource source) {
         settings.setSetupSource(source);
 	}
@@ -279,43 +256,7 @@ public class PeriodsViewModel extends ModelObject {
         firePropertyChange("hardwarePeriod", this.hardwarePeriod, this.hardwarePeriod = hardwarePeriod);
     }
 
-    /**
-     * Binds an observer to the observable holding the name of the current
-     * instrument.
-     * 
-     * @param instrumentName the name of the current instrument.
-     */
-    public void bindInstName(ForwardingObservable<String> instrumentName) {
-        this.instrumentName = instrumentName.getValue();
-        instrumentName.addObserver(instrumentAdapter);
-    }
-
-    private final BaseObserver<String> instrumentAdapter = new BaseObserver<String>() {
-
-        @Override
-        public void onValue(String value) {
-            setInstrumentName(value);
-        }
-
-        @Override
-        public void onError(Exception e) {
-            // handle
-        }
-
-        @Override
-        public void onConnectionStatus(boolean isConnected) {
-            // handle
-        }
-
-    };
-
-    /**
-     * Updates the local variable holding the instrument name when the value
-     * changes.
-     * 
-     * @param instrumentName the name of the new instrument.
-     */
-    public void setInstrumentName(String instrumentName) {
-        firePropertyChange("instrumentName", this.instrumentName, this.instrumentName = instrumentName);
+    public void setComboContentProvider(DAEComboContentProvider provider) {
+        this.comboContentProvider = provider;
     }
 }

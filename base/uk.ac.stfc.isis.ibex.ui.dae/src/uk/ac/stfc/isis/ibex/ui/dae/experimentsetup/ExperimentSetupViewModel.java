@@ -20,7 +20,6 @@
 package uk.ac.stfc.isis.ibex.ui.dae.experimentsetup;
 
 import uk.ac.stfc.isis.ibex.dae.experimentsetup.ExperimentSetup;
-import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.ui.dae.experimentsetup.periods.PeriodsViewModel;
 import uk.ac.stfc.isis.ibex.ui.dae.experimentsetup.timechannels.TimeChannelsViewModel;
 
@@ -31,7 +30,7 @@ public class ExperimentSetupViewModel {
 	private DataAcquisitionViewModel daeSettings = new DataAcquisitionViewModel();
 	private TimeChannelsViewModel timeChannels = new TimeChannelsViewModel();
 	private PeriodsViewModel periodSettings = new PeriodsViewModel();
-    private ForwardingObservable<String> instrumentName;
+    private DAEComboContentProvider comboContentProvider;
 
     /**
      * Sets all view models used in the experiment setup perspective to the
@@ -41,22 +40,22 @@ public class ExperimentSetupViewModel {
      */
 	public void setModel(ExperimentSetup model) {
 		this.model = model;	
-        instrumentName = model.getInstrumentName();
+        comboContentProvider = new DAEComboContentProvider(model.getInstrumentName());
 		
 		daeSettings.setModel(model.daeSettings());
+        daeSettings.setComboContentProvider(comboContentProvider);
 		daeSettings.setUpdateSettings(model.updateSettings());
 		daeSettings.setWiringTableList(model.wiringList());
 		daeSettings.setDetectorTableList(model.detectorTables());
 		daeSettings.setSpectraTableList(model.spectraTables());
-        daeSettings.bindInstName(instrumentName);
 		
 		timeChannels.setModel(model.timeChannels());
+        timeChannels.setComboContentProvider(comboContentProvider);
         timeChannels.setTimeChannelFileList(model.timeChannelFiles());
-        timeChannels.bindInstName(instrumentName);
 		
 		periodSettings.setSettings(model.periodSettings());
+        periodSettings.setComboContentProvider(comboContentProvider);
 		periodSettings.setPeriodFilesList(model.periodFiles());
-        periodSettings.bindInstName(instrumentName);
 
 	}
 	
