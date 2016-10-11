@@ -47,7 +47,7 @@ public class PeriodSettings extends ModelObject {
     /**
      * Sets the list of periods.
      * 
-     * @return the periods.
+     * @param value The list of periods.
      */
 	public void setPeriods(List<Period> value) {
 		firePropertyChange("periods", periods, periods = value);
@@ -175,7 +175,7 @@ public class PeriodSettings extends ModelObject {
     /**
      * Set the length of the output delay.
      * 
-     * @return the output delay.
+     * @param value The output delay.
      */
 	public void setOutputDelay(double value) {
 		firePropertyChange("outputDelay", outputDelay, outputDelay = value);

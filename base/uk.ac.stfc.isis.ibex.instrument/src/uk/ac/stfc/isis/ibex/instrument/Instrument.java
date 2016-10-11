@@ -49,6 +49,9 @@ import uk.ac.stfc.isis.ibex.logger.IsisLog;
 import uk.ac.stfc.isis.ibex.model.SettableUpdatedValue;
 import uk.ac.stfc.isis.ibex.model.UpdatedValue;
 
+/**
+ * Singleton holding information on the current instrument.
+ */
 public class Instrument implements BundleActivator {
 
     private static final Logger LOG = IsisLog.getLogger("Instrument");
@@ -56,6 +59,11 @@ public class Instrument implements BundleActivator {
     private static Instrument instance;
 	private static BundleContext context;
 	
+    /**
+     * Returns the active instance of the instrument singleton.
+     * 
+     * @return The instrument instance.
+     */
     public static Instrument getInstance() {
     	return instance; 
     }
@@ -68,21 +76,39 @@ public class Instrument implements BundleActivator {
 	
 	private static String initialInstrument = "initial";
 	
+    /**
+     * Instantiates and initialises the instrument.
+     */
 	public Instrument() {
 		instance = this;
         localhost = new LocalHostInstrumentInfo();
 		
         setInstrument(initialInstrument());
     }
-    
+
+    /**
+     * Returns the name of the instrument.
+     * 
+     * @return The instrument name.
+     */
 	public UpdatedValue<String> name() {
 		return instrumentName;
 	}
 	
+    /**
+     * Returns the instrument's PV prefix.
+     * 
+     * @return The PV prefix.
+     */
     public String getPvPrefix() {
         return instrumentInfo.pvPrefix();
     }
 
+    /**
+     * Returns a collection of available instruments.
+     * 
+     * @return The available instruments.
+     */
 	public Collection<InstrumentInfo> instruments() {
         List<InstrumentInfo> instruments = new ArrayList<>();
         instruments.add(localhost);
@@ -119,6 +145,11 @@ public class Instrument implements BundleActivator {
 		Instrument.context = null;
 	}
 
+    /**
+     * Sets a new selected instrument.
+     * 
+     * @param selectedInstrument The new instrument.
+     */
 	public void setInstrument(InstrumentInfo selectedInstrument) {
 		this.instrumentInfo = selectedInstrument;
 
@@ -148,6 +179,11 @@ public class Instrument implements BundleActivator {
         		+ ", Number of connected channels = " + Integer.toString(count));
     }
 
+    /**
+     * Returns the info on the current instrument.
+     * 
+     * @return The current instrument's info.
+     */
 	public InstrumentInfo currentInstrument() {
 		return instrumentInfo;
 	}
@@ -177,6 +213,9 @@ public class Instrument implements BundleActivator {
 		}, localhost);
 	}
 	
+    /**
+     * Sets the initial instrument.
+     */
 	public void setInitial() {
 		initalPreference.put(initialInstrument, currentInstrument().name());
 		

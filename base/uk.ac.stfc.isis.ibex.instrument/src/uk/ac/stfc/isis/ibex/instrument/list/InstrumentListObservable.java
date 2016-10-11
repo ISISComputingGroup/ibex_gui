@@ -78,10 +78,18 @@ public class InstrumentListObservable {
         instrumentsRBV = convert(instrumentsPV);
     }
 
+    /**
+     * Returns a list of available valid instruments.
+     * 
+     * @return The list of instruments.
+     */
     public Collection<InstrumentInfo> getInstruments() {
         return getValidInstruments();
     }
 
+    /**
+     * Closes the observable for the instrument list.
+     */
     public void close() {
         instrumentsRBV.close();
     }

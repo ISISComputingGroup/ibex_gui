@@ -46,6 +46,9 @@ import uk.ac.stfc.isis.ibex.dae.experimentsetup.periods.Period;
 import uk.ac.stfc.isis.ibex.dae.experimentsetup.periods.PeriodControlType;
 import uk.ac.stfc.isis.ibex.dae.experimentsetup.periods.PeriodSetupSource;
 
+/**
+ * View for the periods tab in the experiment setup.
+ */
 public class PeriodsPanel extends Composite {
 
     private DataBindingContext bindingContext;
@@ -75,6 +78,12 @@ public class PeriodsPanel extends Composite {
 
 	private static final Display DISPLAY = Display.getCurrent();
 	
+    /**
+     * Standard constructor.
+     * 
+     * @param parent The parent composite.
+     * @param style The SWT style.
+     */
     @SuppressWarnings({ "checkstyle:magicnumber", "checkstyle:localvariablename" })
 	public PeriodsPanel(Composite parent, int style) {
 		super(parent, style);

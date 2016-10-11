@@ -32,6 +32,9 @@ import uk.ac.stfc.isis.ibex.model.ModelObject;
 import uk.ac.stfc.isis.ibex.model.UpdatedValue;
 import uk.ac.stfc.isis.ibex.ui.dae.experimentsetup.DAEComboContentProvider;
 
+/**
+ * ViewModel used for the period tab.
+ */
 public class PeriodsViewModel extends ModelObject {
 
 	private PeriodSettings settings;

@@ -125,26 +125,56 @@ public class DataAcquisitionViewModel extends ModelObject {
 		});	
 	}
 	
+    /**
+     * Gets the monitor spectrum.
+     * 
+     * @return The monitor spectrum.
+     */
 	public int getMonitorSpectrum() {
 		return settings.monitorSpectrum();
 	}
 	
+    /**
+     * Sets the monitor spectrum.
+     * 
+     * @param value The monitor spectrum.
+     */
 	public void setMonitorSpectrum(int value) {
 		settings.setMonitorSpectrum(value);
 	}
 
+    /**
+     * Sets the monitor spectrum lower limit.
+     * 
+     * @return The monitor spectrum lower limit.
+     */
 	public double getFrom() {
 		return settings.from();
 	}
 	
+    /**
+     * Gets the monitor spectrum lower limit.
+     * 
+     * @param value The monitor spectrum lower limit.
+     */
 	public void setFrom(double value) {
 		settings.setFrom(value);
 	}
 
+    /**
+     * Sets the monitor spectrum upper limit.
+     * 
+     * @return The monitor spectrum upper limit.
+     */
 	public double getTo() {
 		return settings.to();
 	}
-	
+
+    /**
+     * Gets the monitor spectrum upper limit.
+     * 
+     * @param value The monitor spectrum upper limit.
+     */
 	public void setTo(double value) {
 		settings.setTo(value);
 	}

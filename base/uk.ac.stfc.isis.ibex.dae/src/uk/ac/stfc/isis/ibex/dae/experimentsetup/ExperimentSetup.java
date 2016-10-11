@@ -171,6 +171,11 @@ public class ExperimentSetup extends Closer  {
 		return registerForClose(new UpdatedObservableAdapter<>(new ForwardingObservable<>(files)));
 	}
 
+    /**
+     * Returns an Observable for the name of the current instrument.
+     * 
+     * @return The instrument name.
+     */
     public ForwardingObservable<String> getInstrumentName() {
         return instrumentName;
     }
