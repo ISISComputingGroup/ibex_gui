@@ -146,6 +146,11 @@ public class BlockLogSettingsViewModel extends ErrorMessageProvider {
 
     }
 
+    /**
+     * Gets whether logging is enabled.
+     * 
+     * @return whether logging is enabled
+     */
     public boolean getEnabled() {
         return enabled;
     }
