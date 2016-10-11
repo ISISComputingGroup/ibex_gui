@@ -45,8 +45,8 @@ public class Block extends ModelObject {
 	private String component;
 
     private boolean runcontrol;
-    private float lowLimit;
-    private float highLimit;
+    private float lowlimit;
+    private float highlimit;
 
     // Logging configurations, default is logging every DEFAULT_SCAN_RATE
     // seconds
@@ -89,8 +89,8 @@ public class Block extends ModelObject {
 		this.visible = visible;
 		this.local = local;
 		this.component = component;
-        this.lowLimit = lowLimit;
-        this.highLimit = highLimit;
+        this.lowlimit = lowLimit;
+        this.highlimit = highLimit;
         this.runcontrol = runcontrol;
         this.log_deadband = logDeadband;
         this.log_periodic = logPeriodic;
@@ -103,7 +103,7 @@ public class Block extends ModelObject {
      * @param other the block to be copied
      */
 	public Block(Block other) {
-        this(other.name, other.pv, other.visible, other.local, other.component, other.lowLimit, other.highLimit,
+        this(other.name, other.pv, other.visible, other.local, other.component, other.lowlimit, other.highlimit,
                 other.runcontrol, other.log_periodic, other.log_rate, other.log_deadband);
 	}
 
@@ -258,7 +258,7 @@ public class Block extends ModelObject {
      * @return the low limit for run-control
      */
     public float getRCLowLimit() {
-        return lowLimit;
+        return lowlimit;
     }
 
     /**
@@ -267,7 +267,7 @@ public class Block extends ModelObject {
      * @param rclow the new low limit for run-control
      */
     public void setRCLowLimit(float rclow) {
-        firePropertyChange("RCLowLimit", this.lowLimit, this.lowLimit = rclow);
+        firePropertyChange("RCLowLimit", this.lowlimit, this.lowlimit = rclow);
     }
 
     /**
@@ -276,7 +276,7 @@ public class Block extends ModelObject {
      * @return the high limit for run-control
      */
     public float getRCHighLimit() {
-        return highLimit;
+        return highlimit;
     }
 
     /**
@@ -285,7 +285,7 @@ public class Block extends ModelObject {
      * @param rchigh the new high limit for run-control
      */
     public void setRCHighLimit(float rchigh) {
-        firePropertyChange("RCHighLimit", this.highLimit, this.highLimit = rchigh);
+        firePropertyChange("RCHighLimit", this.highlimit, this.highlimit = rchigh);
     }
 
     /**
