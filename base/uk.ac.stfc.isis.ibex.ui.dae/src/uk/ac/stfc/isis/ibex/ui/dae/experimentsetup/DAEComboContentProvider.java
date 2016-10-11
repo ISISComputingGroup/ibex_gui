@@ -29,13 +29,20 @@ import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.model.UpdatedValue;
 
 /**
- * 
+ * Provides the content for file selection menus in the DAE experiment setup
+ * tab.
  */
 public class DAEComboContentProvider {
     
     String instrumentName;
     boolean connectionError;
 
+    /**
+     * Constructor. Binds the name of the current instrument to display in
+     * messages.
+     * 
+     * @param instrument The instrument name.
+     */
     public DAEComboContentProvider(ForwardingObservable<String> instrument) {
         this.instrumentName = instrument.getValue();
         instrument.addObserver(instrumentAdapter);
@@ -79,12 +86,14 @@ public class DAEComboContentProvider {
      */
     public String[] getContent(UpdatedValue<Collection<String>> list, String pattern) {
         String[] tables = valueOrEmpty(list);
+
         if (connectionError) {
             tables = new String[] { "Error: please check connection to instrument." };
         } else if (tables.length == 0) {
             tables = new String[] { "None found in C:\\Instrument\\Settings\\config\\" + this.instrumentName
                     + "\\configurations\\tables\\ (file name must contain \"" + pattern + "\")." };
         }
+
         return addBlank(tables);
     }
 
