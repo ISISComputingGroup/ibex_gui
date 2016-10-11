@@ -126,7 +126,7 @@ public class TargetPropertiesWidget extends Composite {
         lblValue.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
         lblValue.setText("Value");
 
-        Text valueText = new Text(controlComposite, SWT.BORDER);
+        final Text valueText = new Text(controlComposite, SWT.BORDER);
         valueText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
         valueText.addModifyListener(new ModifyListener() {
             @Override
@@ -142,7 +142,7 @@ public class TargetPropertiesWidget extends Composite {
         lblPropertyDescription.setLayoutData(new GridData(SWT.RIGHT, SWT.TOP, false, false, 1, 1));
         lblPropertyDescription.setText("Description");
 
-        Text txtDescription = new Text(controlComposite, SWT.BORDER | SWT.READ_ONLY | SWT.WRAP | SWT.MULTI);
+        final Text txtDescription = new Text(controlComposite, SWT.BORDER | SWT.READ_ONLY | SWT.WRAP | SWT.MULTI);
         GridData gdDescription = new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1);
         gdDescription.heightHint = 70;
         txtDescription.setLayoutData(gdDescription);
