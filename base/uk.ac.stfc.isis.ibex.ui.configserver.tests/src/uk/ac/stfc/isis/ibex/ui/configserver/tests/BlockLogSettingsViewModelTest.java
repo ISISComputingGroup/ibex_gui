@@ -68,16 +68,16 @@ public class BlockLogSettingsViewModelTest {
             GIVEN_block_with_periodic_scan_and_positive_rate_WHEN_view_model_initialized_with_block_THEN_view_model_is_enabled_the_combo_box_indicates_periodic_scan_and_the_text_box_matches_the_scan_value() {
 	    
 	    // Arrange
-	    final int rate_value = 7;
-	    final float deadband_value = 0.54f;
+	    final int rateValue = 7;
+	    final float deadbandValue = 0.54f;
 	    
-        mockPeriodicBlock(mockBlock, rate_value, deadband_value);
+        mockPeriodicBlock(mockBlock, rateValue, deadbandValue);
 
         // Act
         BlockLogSettingsViewModel vm = new BlockLogSettingsViewModel(mockBlock);
         
         // Assert
-        verifyModelValues(vm, Integer.toString(rate_value), true, true);
+        verifyModelValues(vm, Integer.toString(rateValue), true, true);
 	}
 
     @Test
@@ -85,16 +85,16 @@ public class BlockLogSettingsViewModelTest {
             GIVEN_block_with_periodic_scan_and_zero_rate_WHEN_view_model_initialized_with_block_THEN_view_model_is_disabled_the_combo_box_indicates_periodic_scan_and_the_text_box_matches_the_scan_value() {
 
         // Arrange
-        final int rate_value = 0;
-        final float deadband_value = 0.54f;
+        final int rateValue = 0;
+        final float deadbandValue = 0.54f;
 
-        mockPeriodicBlock(mockBlock, rate_value, deadband_value);
+        mockPeriodicBlock(mockBlock, rateValue, deadbandValue);
 
         // Act
         BlockLogSettingsViewModel vm = new BlockLogSettingsViewModel(mockBlock);
 
         // Assert
-        verifyModelValues(vm, Integer.toString(rate_value), false, true);
+        verifyModelValues(vm, Integer.toString(rateValue), false, true);
     }
 
     @Test
@@ -102,10 +102,10 @@ public class BlockLogSettingsViewModelTest {
             GIVEN_block_with_periodic_scan_and_negative_rate_WHEN_view_model_initialized_with_block_THEN_view_model_is_disabled_the_combo_box_indicates_periodic_scan_and_the_text_box_value_is_zero() {
 
         // Arrange
-        final int rate_value = -6;
-        final float deadband_value = 0.54f;
+        final int rateValue = -6;
+        final float deadbandValue = 0.54f;
 
-        mockPeriodicBlock(mockBlock, rate_value, deadband_value);
+        mockPeriodicBlock(mockBlock, rateValue, deadbandValue);
 
         // Act
         BlockLogSettingsViewModel vm = new BlockLogSettingsViewModel(mockBlock);
@@ -119,16 +119,16 @@ public class BlockLogSettingsViewModelTest {
             GIVEN_block_in_deadband_mode_with_positive_band_WHEN_view_model_initialized_with_block_THEN_view_model_is_enabled_the_combo_box_indicates_deadband_mode_and_the_text_box_value_matches_the_blocks() {
 
         // Arrange
-        final int rate_value = 13;
-        final float deadband_value = 0.54f;
+        final int rateValue = 13;
+        final float deadbandValue = 0.54f;
 
-        mockDeadbandBlock(mockBlock, rate_value, deadband_value);
+        mockDeadbandBlock(mockBlock, rateValue, deadbandValue);
 
         // Act
         BlockLogSettingsViewModel vm = new BlockLogSettingsViewModel(mockBlock);
 
         // Assert
-        verifyModelValues(vm, Float.toString(deadband_value), true, false);
+        verifyModelValues(vm, Float.toString(deadbandValue), true, false);
     }
 
     @Test
@@ -136,16 +136,16 @@ public class BlockLogSettingsViewModelTest {
             GIVEN_block_in_deadband_mode_with_zero_band_WHEN_view_model_initialized_with_block_THEN_view_model_is_enabled_the_combo_box_indicates_deadband_mode_and_the_text_box_value_is_zero() {
 
         // Arrange
-        final int rate_value = 13;
-        final float deadband_value = 0.0f;
+        final int rateValue = 13;
+        final float deadbandValue = 0.0f;
 
-        mockDeadbandBlock(mockBlock, rate_value, deadband_value);
+        mockDeadbandBlock(mockBlock, rateValue, deadbandValue);
 
         // Act
         BlockLogSettingsViewModel vm = new BlockLogSettingsViewModel(mockBlock);
 
         // Assert
-        verifyModelValues(vm, Float.toString(deadband_value), true, false);
+        verifyModelValues(vm, Float.toString(deadbandValue), true, false);
     }
 
     @Test
@@ -153,10 +153,10 @@ public class BlockLogSettingsViewModelTest {
             GIVEN_block_in_deadband_mode_with_negative_band_WHEN_view_model_initialized_with_block_THEN_view_model_is_disabled_the_mode_is_switched_to_periodic_and_the_text_box_value_is_zero() {
 
         // Arrange
-        final int rate_value = 13;
-        final float deadband_value = -134.012f;
+        final int rateValue = 13;
+        final float deadbandValue = -134.012f;
 
-        mockDeadbandBlock(mockBlock, rate_value, deadband_value);
+        mockDeadbandBlock(mockBlock, rateValue, deadbandValue);
 
         // Act
         BlockLogSettingsViewModel vm = new BlockLogSettingsViewModel(mockBlock);
@@ -170,14 +170,14 @@ public class BlockLogSettingsViewModelTest {
             GIVEN_block_in_deadband_mode_WHEN_set_enabled_false_THEN_view_model_is_disabled_the_mode_is_switched_to_periodic_and_the_text_box_value_is_zero() {
 
         // Arrange
-        final int rate_value = 13;
-        final float deadband_value = 52.5f;
+        final int rateValue = 13;
+        final float deadbandValue = 52.5f;
 
-        mockDeadbandBlock(mockBlock, rate_value, deadband_value);
+        mockDeadbandBlock(mockBlock, rateValue, deadbandValue);
 
         // Act
         BlockLogSettingsViewModel vm = new BlockLogSettingsViewModel(mockBlock);
-        verifyModelValues(vm, Float.toString(deadband_value), true, false);
+        verifyModelValues(vm, Float.toString(deadbandValue), true, false);
         vm.setEnabled(false);
 
         // Assert
@@ -189,14 +189,14 @@ public class BlockLogSettingsViewModelTest {
             GIVEN_block_in_periodic_mode_WHEN_set_enabled_false_THEN_view_model_is_disabled_the_mode_is_switched_to_periodic_and_the_text_box_value_is_zero() {
 
         // Arrange
-        final int rate_value = 20;
-        final float deadband_value = 52.5f;
+        final int rateValue = 20;
+        final float deadbandValue = 52.5f;
 
-        mockPeriodicBlock(mockBlock, rate_value, deadband_value);
+        mockPeriodicBlock(mockBlock, rateValue, deadbandValue);
 
         // Act
         BlockLogSettingsViewModel vm = new BlockLogSettingsViewModel(mockBlock);
-        verifyModelValues(vm, Integer.toString(rate_value), true, true);
+        verifyModelValues(vm, Integer.toString(rateValue), true, true);
         vm.setEnabled(false);
 
         // Assert
@@ -208,19 +208,19 @@ public class BlockLogSettingsViewModelTest {
             GIVEN_block_with_periodic_scan_and_zero_rate_WHEN_set_enabled_true_THEN_view_model_is_enabled_the_combo_box_indicates_periodic_scan_and_the_text_box_matches_the_default_scan_value() {
 
         // Arrange
-        final int rate_value = 0;
-        final float deadband_value = 0.54f;
-        final int expected_default_rate = Block.DEFAULT_SCAN_RATE;
+        final int rateValue = 0;
+        final float deadbandValue = 0.54f;
+        final int expectedDefaultRate = Block.DEFAULT_SCAN_RATE;
 
-        mockPeriodicBlock(mockBlock, rate_value, deadband_value);
+        mockPeriodicBlock(mockBlock, rateValue, deadbandValue);
 
         // Act
         BlockLogSettingsViewModel vm = new BlockLogSettingsViewModel(mockBlock);
-        verifyModelValues(vm, Integer.toString(rate_value), false, true);
+        verifyModelValues(vm, Integer.toString(rateValue), false, true);
         vm.setEnabled(true);
 
         // Assert
-        verifyModelValues(vm, Integer.toString(expected_default_rate), true, true);
+        verifyModelValues(vm, Integer.toString(expectedDefaultRate), true, true);
     }
 
 }

@@ -31,6 +31,8 @@ import uk.ac.stfc.isis.ibex.configserver.configuration.Block;
 @SuppressWarnings("checkstyle:methodname")
 public class BlockTest {
 
+    private static final int DEFAULT_LOG_RATE = 30;
+
     private void verifyBlockProperties(Block block, String name, String pv, boolean visible, boolean local,
             String component, float lowLimit, float highLimit, Boolean runcontrol, boolean logPeriodic, int logRate,
             float logDeadband) {
@@ -60,7 +62,7 @@ public class BlockTest {
         float expectedHighLimit = 0.0f;
         Boolean expectedRunControl = false;
         Boolean expectedLogPeriodic = true;
-        int expectedLogRate = 30;
+        int expectedLogRate = DEFAULT_LOG_RATE;
         float expectedLogDeadband = 0.0f;
 
         // Act
