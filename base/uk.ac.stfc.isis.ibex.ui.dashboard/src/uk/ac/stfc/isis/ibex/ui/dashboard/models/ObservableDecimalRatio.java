@@ -27,19 +27,42 @@ import uk.ac.stfc.isis.ibex.epics.observing.ClosableObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.Pair;
 import uk.ac.stfc.isis.ibex.epics.observing.TransformingObservable;
 
-@SuppressWarnings("checkstyle:magicnumber")
+/**
+ * A class to translate an observable pair of numbers into a string
+ * representation of their ratio, also an observable.
+ */
 public class ObservableDecimalRatio extends TransformingObservable<Pair<Number, Number>, String> {
 
-	private static final NumberFormat FORMAT = DecimalFormat.getInstance(Locale.ENGLISH);
-	static {
-		FORMAT.setMaximumIntegerDigits(3);
-		FORMAT.setMaximumFractionDigits(3);
-	}
+    private final NumberFormat format = DecimalFormat.getInstance(Locale.ENGLISH);
+    private static final int DEFAULT_MAX_INTEGER_DIGITS = 3;
+    private static final int DEFAULT_MAX_FRACTION_DIGITS = 3;
 	
+    /**
+     * Creates a new instance of the class. Maps an input observable pair of
+     * numbers into an observable string representation of their ratio.
+     * 
+     * @param source the pair of numbers to observe
+     */
 	public ObservableDecimalRatio(ClosableObservable<Pair<Number, Number>> source) {
-		setSource(source);
+        this(source, DEFAULT_MAX_INTEGER_DIGITS, DEFAULT_MAX_FRACTION_DIGITS);
 	}
 	
+    /**
+     * Creates a new instance of the class. Maps an input observable pair of
+     * numbers into an observable string representation of their ratio.
+     * 
+     * @param source the pair of numbers to observe
+     * @param maxIntegerDigits how many digits to be used for the integer part
+     * @param maxFractionDigits how many digits to be used for the fraction part
+     */
+    public ObservableDecimalRatio(ClosableObservable<Pair<Number, Number>> source, int maxIntegerDigits,
+            int maxFractionDigits) {
+        format.setMaximumIntegerDigits(maxIntegerDigits);
+        format.setMaximumFractionDigits(maxFractionDigits);
+        setSource(source);
+
+    }
+
 	@Override
 	protected String transform(Pair<Number, Number> value) {		
 		if (value.first == null || value.second == null) {
@@ -50,6 +73,6 @@ public class ObservableDecimalRatio extends TransformingObservable<Pair<Number, 
 	}
 
 	private String format(Number value) {
-		return FORMAT.format(value);
+        return format.format(value);
 	}
 }

@@ -1,7 +1,7 @@
 
 /*
 * This file is part of the ISIS IBEX application.
-* Copyright (C) 2012-2015 Science & Technology Facilities Council.
+* Copyright (C) 2012-2016 Science & Technology Facilities Council.
 * All rights reserved.
 *
 * This program is distributed in the hope that it will be useful.
@@ -30,7 +30,13 @@ public class ExperimentSetupViewModel {
 	private DataAcquisitionViewModel daeSettings = new DataAcquisitionViewModel();
 	private TimeChannelsViewModel timeChannels = new TimeChannelsViewModel();
 	private PeriodsViewModel periodSettings = new PeriodsViewModel();
-	
+
+    /**
+     * Sets all view models used in the experiment setup perspective to the
+     * models in the backend.
+     * 
+     * @param model the model of the experiment setup.
+     */
 	public void setModel(ExperimentSetup model) {
 		this.model = model;	
 		
@@ -47,18 +53,37 @@ public class ExperimentSetupViewModel {
 		periodSettings.setPeriodFilesList(model.periodFiles());
 	}
 	
+    /**
+     * updates the experiment setup saved in the blockserver with changes made
+     * in the frontend.
+     */
 	public void updateDae() {
 		model.sendAllSettings();
 	}
 	
+    /**
+     * Returns the view model for the time channel settings.
+     * 
+     * @return the time channel view model.
+     */
 	public TimeChannelsViewModel timeChannels() {
 		return timeChannels;
 	}
-	
+
+    /**
+     * Returns the view model for the DAE settings.
+     * 
+     * @return the DAE view model.
+     */
 	public DataAcquisitionViewModel daeSettings() {
 		return daeSettings;
 	}
-	
+
+    /**
+     * Returns the view model for the period settings.
+     * 
+     * @return the period view model.
+     */
 	public PeriodsViewModel periodSettings() {
 		return periodSettings;
 	}

@@ -62,7 +62,8 @@ public enum ComponentType {
     PDR2000,
     CRYVALVE,
     MUON_FRONT_END,
-    PRESSURE_GAUGE;
+    PRESSURE_GAUGE,
+    SCIMAG3D;
 	
 	private Target target;
 

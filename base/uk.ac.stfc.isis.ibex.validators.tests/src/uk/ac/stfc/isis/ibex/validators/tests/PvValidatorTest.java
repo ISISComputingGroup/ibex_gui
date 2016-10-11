@@ -22,9 +22,7 @@
  */
 package uk.ac.stfc.isis.ibex.validators.tests;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 import org.junit.Test;
 
@@ -37,13 +35,63 @@ public class PvValidatorTest {
      * Test method for {@link uk.ac.stfc.isis.ibex.validators.PvValidator#validatePvAddress(java.lang.String)}.
      */
     @Test
-    public void valid_pv_address() {
+    public void GIVEN_plain_pv_address_WHEN_validate_THEN_valid() {
         // Arrange
         String testAddress = "valid";
         // Act
         PvValidator addressValid = new PvValidator();
         // Assert
         assertTrue(addressValid.validatePvAddress(testAddress));
+    }
+
+    @Test
+    public void GIVEN_pv_address_with_field_WHEN_validate_THEN_valid() {
+        // Arrange
+        String testAddress = "valid.field";
+        // Act
+        PvValidator addressValid = new PvValidator();
+        // Assert
+        assertTrue(addressValid.validatePvAddress(testAddress));
+    }
+
+    @Test
+    public void GIVEN_pv_address_with_non_alpha_character_WHEN_validate_THEN_valid() {
+        // Arrange
+        String testAddress = "va_:lid.fi_:eld";
+        // Act
+        PvValidator addressValid = new PvValidator();
+        // Assert
+        assertTrue(addressValid.validatePvAddress(testAddress));
+    }
+
+    @Test
+    public void GIVEN_pv_address_two_field_WHEN_validate_THEN_error() {
+        // Arrange
+        String testAddress = "invalid.field.field";
+        // Act
+        PvValidator addressValid = new PvValidator();
+        // Assert
+        assertFalse(addressValid.validatePvAddress(testAddress));
+    }
+
+    @Test
+    public void GIVEN_pv_address_blank_field_WHEN_validate_THEN_error() {
+        // Arrange
+        String testAddress = "invalid.";
+        // Act
+        PvValidator addressValid = new PvValidator();
+        // Assert
+        assertFalse(addressValid.validatePvAddress(testAddress));
+    }
+
+    @Test
+    public void GIVEN_pv_address_just_field_WHEN_validate_THEN_error() {
+        // Arrange
+        String testAddress = ".invalid";
+        // Act
+        PvValidator addressValid = new PvValidator();
+        // Assert
+        assertFalse(addressValid.validatePvAddress(testAddress));
     }
 
     /**
