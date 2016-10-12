@@ -105,6 +105,17 @@ public class BeamStatusView extends DataBrowserAwareView implements ModelListene
     /** Title for the plot. */
     private static final String PLOT_TITLE = "Beam Current";
 
+    private static final RGB MAGENTA = new RGB(204, 0, 153); // SWTResourceManager.getColor(204,
+                                                             // 0, 153);
+    private static final RGB GREEN = new RGB(0, 255, 0); // SWTResourceManager.getColor(0,
+                                                         // 255, 0);
+    private static final RGB BLUE = new RGB(0, 0, 255); // SWTResourceManager.getColor(0,
+                                                        // 0, 255);
+    private static final RGB DEFAULT = new RGB(0, 0, 0);
+
+//    private static final Color[] traceCols = { MAGENTA, GREEN, BLUE };
+    private int numTraces = 0;
+
     /** {@inheritDoc} */
     @Override
     protected void doCreatePartControl(final Composite parent) {
@@ -286,20 +297,26 @@ public class BeamStatusView extends DataBrowserAwareView implements ModelListene
         try {
             PVItem newItem = new PVItem(pvAddress, Preferences.getScanPeriod());
             String displayName;
+            RGB rgb;
             switch (pvAddress) {
                 case TS1_BEAM_CURRENT_PV:
                     displayName = "TS1";
+                    rgb = MAGENTA;
                     break;
                 case TS2_BEAM_CURRENT_PV:
                     displayName = "TS2";
+                    rgb = BLUE;
                     break;
                 case SYNCH_BEAM_CURRENT_PV:
                     displayName = "Synchrotron";
+                    rgb = GREEN;
                     break;
                 default:
+                    rgb = DEFAULT;
                     displayName = newItem.getDisplayName();
             }
             newItem.setDisplayName(displayName);
+            newItem.setColor(rgb);
             selectPV(newItem);
         } catch (Exception ex) {
             MessageDialog.openError(getSite().getShell(), Messages.Error, NLS.bind(Messages.ErrorFmt, ex.getMessage()));
@@ -349,6 +366,7 @@ public class BeamStatusView extends DataBrowserAwareView implements ModelListene
         trace.setPointSize(1);
         // Add to graph
         xygraph.addTrace(trace);
+        numTraces++;
         }
 
     private void setTimeRangeDaily() {
