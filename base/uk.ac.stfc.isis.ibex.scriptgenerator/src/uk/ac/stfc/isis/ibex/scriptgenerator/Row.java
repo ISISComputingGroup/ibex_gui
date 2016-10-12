@@ -27,9 +27,9 @@ import uk.ac.stfc.isis.ibex.model.ModelObject;
 public class Row extends ModelObject {
 	private Double position;
 	private Double trans;
-	private Double transWait; 
+	private WaitUnit transWait; 
 	private Double sans;
-	private Double sansWait; 
+	private WaitUnit sansWait; 
 	private Integer period;
 	private String sampleName; 
 	private Double thickness; 
@@ -46,7 +46,7 @@ public class Row extends ModelObject {
 	 * @param sampleName the name of the sample
 	 * @param thickness the thickness of the sample
 	 */
-	public Row(Double position, Double trans, Double transWait, Double sans, Double sansWait, Integer period, 
+	public Row(Double position, Double trans, WaitUnit transWait, Double sans, WaitUnit sansWait, Integer period, 
 			String sampleName, Double thickness) {
 		this.position = position;
 		this.trans = trans;
@@ -105,7 +105,7 @@ public class Row extends ModelObject {
 	 * Gets the trans wait.
 	 * @return the trans wait combo selection
 	 */
-	public Double getTransWait() {
+	public WaitUnit getTransWait() {
 		return transWait;
 	}
 	
@@ -113,7 +113,7 @@ public class Row extends ModelObject {
 	 * Sets the trans wait.
 	 * @param transWait  the trans wait
 	 */
-	public void setTransWait(Double transWait) {
+	public void setTransWait(WaitUnit transWait) {
 		this.wasNull = false;
 		firePropertyChange("transWait", this.transWait, this.transWait = transWait);
 	}
@@ -138,7 +138,7 @@ public class Row extends ModelObject {
 	 * Gets the sans wait.
 	 * @return the sans wait.
 	 */
-	public Double getSansWait() {
+	public WaitUnit getSansWait() {
 		return sansWait;
 	}
 	
@@ -146,7 +146,7 @@ public class Row extends ModelObject {
 	 * Sets the sans wait.
 	 * @param sansWait the sans wait
 	 */
-	public void setSansWait(Double sansWait) {
+	public void setSansWait(WaitUnit sansWait) {
 		this.wasNull = false;
 		firePropertyChange("sansWait", this.sansWait, this.sansWait = sansWait);
 	}
