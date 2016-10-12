@@ -79,14 +79,6 @@ public class Table extends DataboundTable<Row> {
 		
 		this.rows = rows;
 	}
-	
-	/**
-	 * Returns a collection of rows that can be called in the TablePanel.
-	 * @return the rows in the table
-	 */
-	public Collection<Row> getRows() {
-		return this.rows;
-	}
 
 	private void position() {
 		position = createColumn("POSITION", 3);
