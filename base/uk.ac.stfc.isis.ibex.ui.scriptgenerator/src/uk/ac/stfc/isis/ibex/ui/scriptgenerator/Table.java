@@ -26,11 +26,15 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 
 import uk.ac.stfc.isis.ibex.scriptgenerator.Row;
+import uk.ac.stfc.isis.ibex.scriptgenerator.WaitUnit;
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundCellLabelProvider;
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundTable;
 import uk.ac.stfc.isis.ibex.ui.widgets.DoubleEditingSupportBlankIfNull;
 import uk.ac.stfc.isis.ibex.ui.widgets.IntegerEditingSupportBlankIfNull;
+import uk.ac.stfc.isis.ibex.ui.widgets.SansWaitEditingSupport;
 import uk.ac.stfc.isis.ibex.ui.widgets.StringEditingSupport;
+import uk.ac.stfc.isis.ibex.ui.widgets.TransWaitEditingSupport;
+import uk.ac.stfc.isis.ibex.ui.widgets.WaitEditingSupport;
 
 /**
  * A table that contains ScriptGeneratorRows.
@@ -139,14 +143,14 @@ public class Table extends DataboundTable<Row> {
 				return row.getTransWait() == null ? "" : String.valueOf(row.getTransWait());
 			}
 		});
-		transWait.setEditingSupport(new DoubleEditingSupportBlankIfNull<Row>(viewer(), Row.class) {
+		transWait.setEditingSupport(new WaitEditingSupport(viewer()) {
 			@Override
-			protected Double valueFromRow(Row row) {
+			protected WaitUnit getEnumValueForRow(Row row) {
 				return row.getTransWait();
 			}
-
+			
 			@Override
-			protected void setValueForRow(Row row, Double transWait) {
+			protected void setEnumForRow(Row row, WaitUnit transWait) {
 				addRowIfNull(row);
 				
 				row.setTransWait(transWait);
@@ -187,14 +191,14 @@ public class Table extends DataboundTable<Row> {
 				return row.getSansWait() == null ? "" : String.valueOf(row.getSansWait());
 			}
 		});
-		sansWait.setEditingSupport(new DoubleEditingSupportBlankIfNull<Row>(viewer(), Row.class) {
+		sansWait.setEditingSupport(new WaitEditingSupport(viewer()) {
 			@Override
-			protected Double valueFromRow(Row row) {
+			protected WaitUnit getEnumValueForRow(Row row) {
 				return row.getSansWait();
 			}
-
+			
 			@Override
-			protected void setValueForRow(Row row, Double sansWait) {
+			protected void setEnumForRow(Row row, WaitUnit sansWait) {
 				addRowIfNull(row);
 				
 				row.setSansWait(sansWait);
