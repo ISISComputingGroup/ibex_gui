@@ -105,16 +105,17 @@ public class BeamStatusView extends DataBrowserAwareView implements ModelListene
     /** Title for the plot. */
     private static final String PLOT_TITLE = "Beam Current";
 
-    private static final RGB MAGENTA = new RGB(204, 0, 153); // SWTResourceManager.getColor(204,
-                                                             // 0, 153);
-    private static final RGB GREEN = new RGB(0, 255, 0); // SWTResourceManager.getColor(0,
-                                                         // 255, 0);
-    private static final RGB BLUE = new RGB(0, 0, 255); // SWTResourceManager.getColor(0,
-                                                        // 0, 255);
-    private static final RGB DEFAULT = new RGB(0, 0, 0);
+    /** Custom magenta colour for high-contrast plot traces. */
+    private static final RGB MAGENTA = new RGB(204, 0, 153);
 
-//    private static final Color[] traceCols = { MAGENTA, GREEN, BLUE };
-    private int numTraces = 0;
+    /** Custom green colour for high-contrast plot traces. */
+    private static final RGB GREEN = new RGB(0, 220, 0);
+
+    /** Custom blue colour for high-contrast plot traces. */
+    private static final RGB BLUE = new RGB(0, 0, 255);
+
+    /** Default colour for undefined plot traces. */
+    private static final RGB DEFAULT = new RGB(0, 0, 0);
 
     /** {@inheritDoc} */
     @Override
@@ -366,7 +367,6 @@ public class BeamStatusView extends DataBrowserAwareView implements ModelListene
         trace.setPointSize(1);
         // Add to graph
         xygraph.addTrace(trace);
-        numTraces++;
         }
 
     private void setTimeRangeDaily() {
