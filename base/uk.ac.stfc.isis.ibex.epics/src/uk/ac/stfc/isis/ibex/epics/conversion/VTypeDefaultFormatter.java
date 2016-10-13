@@ -19,6 +19,8 @@
 
 package uk.ac.stfc.isis.ibex.epics.conversion;
 
+import java.text.NumberFormat;
+
 import org.epics.vtype.SimpleValueFormat;
 import org.epics.vtype.VByteArray;
 import org.epics.vtype.VNumber;
@@ -60,7 +62,9 @@ public class VTypeDefaultFormatter<T extends VType> {
 	}
 	
 	public String asString(VNumber vnum) {
-		return vnum.getFormat().format(vnum.getValue());
+        NumberFormat vnumFormat = vnum.getFormat();
+        NumberFormat exponentialWhenNeededFormat = new ExponentialOnThresholdFormat(vnumFormat);
+        return exponentialWhenNeededFormat.format(vnum.getValue());
 	}
 
 	private static String defaultValueFormat(Object value) {
