@@ -31,7 +31,7 @@ import org.junit.Test;
 
 import uk.ac.stfc.isis.ibex.epics.conversion.ExponentialOnThresholdFormat;
 
-@SuppressWarnings({ "checkstyle:methodname" })
+@SuppressWarnings({ "checkstyle:methodname", "checkstyle:magicnumber" })
 public class ExponentialOnThresholdFormatTest {
 
     private static final String THREE_FRACTION_DIGITS_PATTERN = "0.000";

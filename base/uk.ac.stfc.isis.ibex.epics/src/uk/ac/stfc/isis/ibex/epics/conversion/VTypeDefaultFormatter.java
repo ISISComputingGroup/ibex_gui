@@ -28,11 +28,23 @@ import org.epics.vtype.VString;
 import org.epics.vtype.VType;
 import org.epics.vtype.ValueFormat;
 
+/**
+ * The default formatter for VType to String.
+ * 
+ * @param <T> the type of the input
+ */
 public class VTypeDefaultFormatter<T extends VType> {
 
     private static final int ARRAY_ELEMENTS_TO_DISPLAY = 10;
 
+    /**
+     * Returns a converter for formatting the input and its units.
+     */
     public final Converter<T, String> withUnits = new WithUnits<T>();
+
+    /**
+     * Returns a converted for formatting the input without units.
+     */
 	public final Converter<T, String> noUnits = new NoUnits<T>();
 	
 	private class WithUnits<R extends VType> extends Converter<R, String> {
@@ -61,7 +73,7 @@ public class VTypeDefaultFormatter<T extends VType> {
 		}
 	}
 	
-	public String asString(VNumber vnum) {
+    private String asString(VNumber vnum) {
         NumberFormat vnumFormat = vnum.getFormat();
         NumberFormat exponentialWhenNeededFormat = new ExponentialOnThresholdFormat(vnumFormat);
         return exponentialWhenNeededFormat.format(vnum.getValue());
