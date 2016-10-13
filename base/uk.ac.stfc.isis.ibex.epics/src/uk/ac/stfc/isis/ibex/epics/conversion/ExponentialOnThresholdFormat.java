@@ -28,7 +28,12 @@ import java.text.NumberFormat;
 import java.text.ParsePosition;
 
 /**
- * 
+ * Class to format numbers into string. This format receives another
+ * NumberFormat as input. Integers are formatted according to the default
+ * format. Doubles are formatted according to the default format if they are
+ * between a high and low threshold, scientific format otherwise. Scientific
+ * format for doubles accounts for the number of fractional digits specified in
+ * the default format.
  */
 public class ExponentialOnThresholdFormat extends NumberFormat {
 
@@ -37,19 +42,22 @@ public class ExponentialOnThresholdFormat extends NumberFormat {
     private static final double BIG_NUMBER_THRESHOLD = 1000000;
     private static final int INTEGER_EXPO_FRACTIONAL_DIGITS = 4;
 
-    private NumberFormat originalFormat;
+    private NumberFormat defaultFormat;
 
     /**
+     * Creates a new instance of this format.
      * 
+     * @param defaultFormat the format to be used when no scientific format is
+     *            required
      */
-    public ExponentialOnThresholdFormat(NumberFormat originalFormat) {
-        this.originalFormat = originalFormat;
+    public ExponentialOnThresholdFormat(NumberFormat defaultFormat) {
+        this.defaultFormat = defaultFormat;
     }
 
     @Override
     public StringBuffer format(double number, StringBuffer toAppendTo, FieldPosition pos) {
         
-        NumberFormat formatToUse = originalFormat;
+        NumberFormat formatToUse = defaultFormat;
         if (needsExponentialFormat(number)) {
             formatToUse = getExponentialFormatForDoubles();
         }
@@ -59,12 +67,12 @@ public class ExponentialOnThresholdFormat extends NumberFormat {
 
     @Override
     public StringBuffer format(long number, StringBuffer toAppendTo, FieldPosition pos) {
-        return originalFormat.format(number, toAppendTo, pos);
+        return defaultFormat.format(number, toAppendTo, pos);
     }
 
     @Override
     public Number parse(String source, ParsePosition parsePosition) {
-        return originalFormat.parse(source, parsePosition);
+        return defaultFormat.parse(source, parsePosition);
     }
 
     private boolean needsExponentialFormat(double number) {
@@ -77,8 +85,8 @@ public class ExponentialOnThresholdFormat extends NumberFormat {
 
     private NumberFormat getExponentialFormatForDoubles() {
         NumberFormat exponentialFormat = new DecimalFormat(EXPONENTIAL_PATTERN);
-        exponentialFormat.setMaximumFractionDigits(originalFormat.getMaximumFractionDigits());
-        exponentialFormat.setMinimumFractionDigits(originalFormat.getMinimumFractionDigits());
+        exponentialFormat.setMaximumFractionDigits(defaultFormat.getMaximumFractionDigits());
+        exponentialFormat.setMinimumFractionDigits(defaultFormat.getMinimumFractionDigits());
         return exponentialFormat;
     }
 }
