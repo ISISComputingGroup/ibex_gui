@@ -109,7 +109,7 @@ public class BeamStatusView extends DataBrowserAwareView implements ModelListene
     private static final RGB MAGENTA = new RGB(204, 0, 153);
 
     /** Custom green colour for high-contrast plot traces. */
-    private static final RGB GREEN = new RGB(0, 220, 0);
+    private static final RGB GREEN = new RGB(0, 255, 0);
 
     /** Custom blue colour for high-contrast plot traces. */
     private static final RGB BLUE = new RGB(0, 0, 255);
@@ -302,11 +302,11 @@ public class BeamStatusView extends DataBrowserAwareView implements ModelListene
             switch (pvAddress) {
                 case TS1_BEAM_CURRENT_PV:
                     displayName = "TS1";
-                    rgb = MAGENTA;
+                    rgb = BLUE;
                     break;
                 case TS2_BEAM_CURRENT_PV:
                     displayName = "TS2";
-                    rgb = BLUE;
+                    rgb = MAGENTA;
                     break;
                 case SYNCH_BEAM_CURRENT_PV:
                     displayName = "Synchrotron";
