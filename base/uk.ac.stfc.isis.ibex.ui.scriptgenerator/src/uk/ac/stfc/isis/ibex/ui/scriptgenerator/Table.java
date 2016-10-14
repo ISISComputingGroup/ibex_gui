@@ -88,19 +88,19 @@ public class Table extends DataboundTable<Row> {
 				observeProperty("position")) {
 			@Override
 			protected String valueFromRow(Row row) {
-				return row.getPosition() == null ? "" : String.valueOf(row.getPosition());
+				return row.getPosition();
 			}
 		});
 		
 		
-		position.setEditingSupport(new DoubleEditingSupportBlankIfNull<Row>(viewer(), Row.class) {
+		position.setEditingSupport(new StringEditingSupport<Row>(viewer(), Row.class) {
 			@Override
-			protected Double valueFromRow(Row row) {
+			protected String valueFromRow(Row row) {
 				return row.getPosition();
 			}
 
 			@Override
-			protected void setValueForRow(Row row, Double position) {
+			protected void setValueForRow(Row row, String position) {
 				addRowIfNull(row);
 				
 				row.setPosition(position);
@@ -213,14 +213,14 @@ public class Table extends DataboundTable<Row> {
 				return row.getPeriod() == null ? "" : String.valueOf(row.getPeriod());
 			}
 		});
-		period.setEditingSupport(new IntegerEditingSupportBlankIfNull<Row>(viewer(), Row.class) {
+		period.setEditingSupport(new DoubleEditingSupportBlankIfNull<Row>(viewer(), Row.class) {
 			@Override
-			protected Integer valueFromRow(Row row) {
+			protected Double valueFromRow(Row row) {
 				return row.getPeriod();
 			}
 
 			@Override
-			protected void setValueForRow(Row row, Integer period) {
+			protected void setValueForRow(Row row, Double period) {
 				addRowIfNull(row);
 				
 				row.setPeriod(period);
