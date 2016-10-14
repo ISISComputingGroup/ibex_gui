@@ -25,7 +25,7 @@ import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 
-import uk.ac.stfc.isis.ibex.scriptgenerator.Row;
+import uk.ac.stfc.isis.ibex.scriptgenerator.row.Row;
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundCellLabelProvider;
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundTable;
 import uk.ac.stfc.isis.ibex.ui.widgets.DoubleEditingSupportBlankIfNull;
@@ -78,14 +78,6 @@ public class Table extends DataboundTable<Row> {
 		super.setRows(rows);
 		
 		this.rows = rows;
-	}
-	
-	/**
-	 * Returns a collection of rows that can be called in the TablePanel.
-	 * @return the rows in the table
-	 */
-	public Collection<Row> getRows() {
-		return this.rows;
 	}
 
 	private void position() {

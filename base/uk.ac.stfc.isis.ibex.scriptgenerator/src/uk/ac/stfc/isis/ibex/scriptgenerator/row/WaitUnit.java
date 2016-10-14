@@ -17,20 +17,20 @@
 * http://opensource.org/licenses/eclipse-1.0.php
 */
 
-package uk.ac.stfc.isis.ibex.scriptgenerator;
+package uk.ac.stfc.isis.ibex.scriptgenerator.row;
 
 /**
- * Options for what a sample can be contained in, as used in the Sample Geometry setting.
+ * The wait units used in the "SANS Wait" and "TRANS Wait" fields in the table.
  */
-public enum SampleGeometry {
-	DISC("Disc"),
-	CYLINDRICAL("Cylindrical"),
-	FLATPLATE("Flat Plate"),
-	SINGLECRYSTAL("Single Crystal");
+public enum WaitUnit {
+	MICROAMP("MicroAmp Hours"),
+	MINUTES("Minutes"),
+	SECONDS("Seconds"),
+	FRAMES("Frames");
 	
 	private String name;
 	
-	SampleGeometry(String displayName) {
+	WaitUnit(String displayName) {
 		this.name = displayName;
 	}
 	

@@ -17,18 +17,20 @@
 * http://opensource.org/licenses/eclipse-1.0.php
 */
 
-package uk.ac.stfc.isis.ibex.scriptgenerator;
+package uk.ac.stfc.isis.ibex.scriptgenerator.settings;
 
 /**
- * Data recording methods for use in the Collection Mode combo box within the settings.
+ * Sizes that can be used in the SANS combo box within the Aperture settings.
  */
-public enum CollectionMode {
-	HISTOGRAM("Histogram"),
-	EVENTS("Events");
+public enum ApertureSans {
+
+	LARGE("Large = ?, ? mm"),
+	MEDIUM("Medium = 20, 14 mm"),
+	SMALL("Small = ?, ? mm");
 	
 	private String name;
 	
-	CollectionMode(String displayName) {
+	ApertureSans(String displayName) {
 		this.name = displayName;
 	}
 	

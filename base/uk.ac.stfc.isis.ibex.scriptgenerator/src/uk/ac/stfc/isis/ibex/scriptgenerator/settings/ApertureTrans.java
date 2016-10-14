@@ -17,20 +17,19 @@
 * http://opensource.org/licenses/eclipse-1.0.php
 */
 
-package uk.ac.stfc.isis.ibex.scriptgenerator;
+package uk.ac.stfc.isis.ibex.scriptgenerator.settings;
 
 /**
- * Options for the Order combo box setting. 
+ * Sizes that can be used in the TRANS combo box within the Aperture settings.
  */
-public enum Order {
-	TRANS("All TRANS first"),
-	ALTTRANS("Alternate - TRANS first"),
-	SANS("All SANS first"),
-	ALTSANS("Alternate - SANS first");
+public enum ApertureTrans {
+	LARGE("Large = ?, ? mm"),
+	MEDIUM("Medium = 20, 14 mm"),
+	SMALL("Small = ?, ? mm");
 	
 	private String name;
 	
-	Order(String displayName) {
+	ApertureTrans(String displayName) {
 		this.name = displayName;
 	}
 	
