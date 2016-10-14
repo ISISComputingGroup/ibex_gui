@@ -25,6 +25,9 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Button;
 
+/**
+ * A cell provider that puts a button within a table cell 
+ */
 public class ButtonCellLabelProvider extends ControlCellLabelProvider<Button> {
 	
 	protected ButtonCellLabelProvider(IObservableMap[] attributeMaps) {
