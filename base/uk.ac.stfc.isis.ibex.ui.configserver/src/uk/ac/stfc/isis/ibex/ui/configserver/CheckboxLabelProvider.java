@@ -34,7 +34,11 @@ import uk.ac.stfc.isis.ibex.ui.widgets.ButtonCellLabelProvider;
  * @param <T> The model to get the/set the information for the checkbox
  */
 public abstract class CheckboxLabelProvider<T> extends ButtonCellLabelProvider {
-			
+	
+	/**
+	 * The default constructor for the CheckboxLabelProvider.
+	 * @param stateProperties The properties that this label provider should be observing
+	 */
 	public CheckboxLabelProvider(IObservableMap[] stateProperties) {
 		super(stateProperties);
 	}

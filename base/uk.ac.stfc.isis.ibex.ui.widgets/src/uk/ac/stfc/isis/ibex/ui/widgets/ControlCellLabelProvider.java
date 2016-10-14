@@ -56,7 +56,7 @@ public abstract class ControlCellLabelProvider<T extends Control> extends Observ
 	}
 	
 	/**
-	 * Dispose of the cell along with it's control
+	 * Dispose of the cell along with it's control.
 	 */
 	public void dispose() {
 		for (Control control : cellControls.values()) {
