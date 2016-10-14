@@ -17,20 +17,20 @@
 * http://opensource.org/licenses/eclipse-1.0.php
 */
 
-package uk.ac.stfc.isis.ibex.scriptgenerator;
+package uk.ac.stfc.isis.ibex.scriptgenerator.settings;
 
 /**
- * Options for what a sample can be contained in, as used in the Sample Geometry setting.
+ * Sizes that can be used in the SANS combo box within the Aperture settings.
  */
-public enum SampleGeometry {
-	DISC("Disc"),
-	CYLINDRICAL("Cylindrical"),
-	FLATPLATE("Flat Plate"),
-	SINGLECRYSTAL("Single Crystal");
+public enum ApertureSans {
+
+	LARGE("Large = ?, ? mm"),
+	MEDIUM("Medium = 20, 14 mm"),
+	SMALL("Small = ?, ? mm");
 	
 	private String name;
 	
-	SampleGeometry(String displayName) {
+	ApertureSans(String displayName) {
 		this.name = displayName;
 	}
 	

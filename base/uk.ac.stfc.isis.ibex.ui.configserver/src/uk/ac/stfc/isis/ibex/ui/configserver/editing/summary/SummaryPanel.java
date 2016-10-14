@@ -34,7 +34,6 @@ import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 
@@ -67,47 +66,45 @@ public class SummaryPanel extends Composite {
 		messageDisplayer = dialog;
 		setLayout(new FillLayout(SWT.HORIZONTAL));
 		
-		Group grpSummary = new Group(this, SWT.NONE);
-		grpSummary.setText("Summary");
-		grpSummary.setBounds(0, 0, 70, 81);
-		grpSummary.setLayout(new GridLayout(2, false));
-		
-		Label lblName = new Label(grpSummary, SWT.NONE);
+        Composite cmpSummary = new Composite(this, SWT.NONE);
+        cmpSummary.setLayout(new GridLayout(2, false));
+
+        Label lblName = new Label(cmpSummary, SWT.NONE);
 		lblName.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		lblName.setText("Name:");
 		
-		txtName = new Text(grpSummary, SWT.BORDER);
+        txtName = new Text(cmpSummary, SWT.BORDER);
 		txtName.setEditable(false);
 		txtName.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
-		Label lblDescription = new Label(grpSummary, SWT.NONE);
+        Label lblDescription = new Label(cmpSummary, SWT.NONE);
 		lblDescription.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		lblDescription.setText("Description:");
 		
-		txtDescription = new Text(grpSummary, SWT.BORDER);
+        txtDescription = new Text(cmpSummary, SWT.BORDER);
 		txtDescription.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		txtDescription.setTextLimit(39);
 		
-		Label lblSynoptic = new Label(grpSummary, SWT.NONE);
+        Label lblSynoptic = new Label(cmpSummary, SWT.NONE);
 		lblSynoptic.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		lblSynoptic.setText("Synoptic:");
 		
-		cmboSynoptic = new ComboViewer(grpSummary, SWT.READ_ONLY);
+        cmboSynoptic = new ComboViewer(cmpSummary, SWT.READ_ONLY);
 		cmboSynoptic.getCombo().setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 		cmboSynoptic.setContentProvider(new ArrayContentProvider());
 		updateSynopticList();
 		
-        lblDateCreated = new Label(grpSummary, SWT.NONE);
+        lblDateCreated = new Label(cmpSummary, SWT.NONE);
 		lblDateCreated.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		lblDateCreated.setText("Date Created:");
 		
-		lblDateCreatedField = new Label(grpSummary, SWT.NONE);
+        lblDateCreatedField = new Label(cmpSummary, SWT.NONE);
 				
-        lblDateModified = new Label(grpSummary, SWT.NONE);
+        lblDateModified = new Label(cmpSummary, SWT.NONE);
 		lblDateModified.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		lblDateModified.setText("Date Modified:");
 		
-		lblDateModifiedField = new Label(grpSummary, SWT.NONE);
+        lblDateModifiedField = new Label(cmpSummary, SWT.NONE);
 	}
 	
 	public void setConfig(EditableConfiguration config) {

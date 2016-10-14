@@ -22,20 +22,21 @@ package uk.ac.stfc.isis.ibex.ui.log.widgets;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
-import org.eclipse.swt.widgets.Canvas;
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.Text;
-import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Combo;
-import org.eclipse.wb.swt.ResourceManager;
+import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.DateTime;
+import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Text;
+import org.eclipse.wb.swt.ResourceManager;
 
 import uk.ac.stfc.isis.ibex.log.message.LogMessageFields;
 import uk.ac.stfc.isis.ibex.ui.log.filter.LogMessageFilter;
@@ -66,12 +67,15 @@ public class SearchControl extends Canvas {
 	private DateTime dtToDate;
 	private DateTime dtToTime;
 	
-	private Button chkInfo;
+    private Combo cmboSeverity;
 
 	private ISearchModel searcher;
 	private LogDisplay parent;
-	
-	private final LogMessageFilter infoFilter = new LogMessageFilter(LogMessageFields.SEVERITY, "INFO", true); 
+
+    private final LogMessageFilter infoFilter =
+            new LogMessageFilter(LogMessageFields.SEVERITY, LogMessageSeverity.INFO.name(), true);
+    private final LogMessageFilter minorFilter =
+            new LogMessageFilter(LogMessageFields.SEVERITY, LogMessageSeverity.MINOR.name(), true);
 	
 	public SearchControl(LogDisplay parent, final ISearchModel searcher) {
 		super(parent, SWT.NONE);
@@ -79,24 +83,34 @@ public class SearchControl extends Canvas {
 		this.parent = parent;
 		this.searcher = searcher;
 
-		setLayout(new GridLayout(5, false));
+        GridLayout gl = new GridLayout(1, false);
+        gl.marginWidth = 0;
+        setLayout(gl);
+
+        Group grpFilter = new Group(this, SWT.NONE);
+        grpFilter.setText("Filter Options");
+        grpFilter.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+
+        GridLayout glGrpFilter = new GridLayout(5, false);
+        glGrpFilter.verticalSpacing = 0;
+        grpFilter.setLayout(glGrpFilter);
 
 		// Create search text box
 		GridData valueLayout = new GridData(SWT.FILL, SWT.CENTER, false, false,
 				1, 1);
 		valueLayout.widthHint = 300;
 
-		txtValue = new Text(this, SWT.BORDER);
+        txtValue = new Text(grpFilter, SWT.BORDER);
 		txtValue.setLayoutData(valueLayout);
-		new Label(this, SWT.NONE);
-		cmboFields = new Combo(this, SWT.READ_ONLY);
+        new Label(grpFilter, SWT.NONE);
+        cmboFields = new Combo(grpFilter, SWT.READ_ONLY);
 		cmboFields.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false,
 				false, 1, 1));
 		cmboFields.setItems(FIELD_NAMES);
 		cmboFields.select(0);
 
 		// Create search button
-		Button btnSearch = new Button(this, SWT.NONE);
+        Button btnSearch = new Button(grpFilter, SWT.NONE);
 		btnSearch.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -111,7 +125,7 @@ public class SearchControl extends Canvas {
 		btnSearch.setToolTipText("Search");
 
 		// Create clear button
-		Button btnClear = new Button(this, SWT.NONE);
+        Button btnClear = new Button(grpFilter, SWT.NONE);
 		btnClear.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -126,10 +140,12 @@ public class SearchControl extends Canvas {
 		// timeLayout.widthHint = 600;
 
 		// Date-time picker
-		Composite timePicker = new Composite(this, SWT.NONE);
+        Composite timePicker = new Composite(grpFilter, SWT.NONE);
 		timePicker.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false,
 				false, 1, 1));
-		timePicker.setLayout(new GridLayout(7, false));
+        GridLayout gl_timePicker = new GridLayout(7, false);
+        gl_timePicker.marginWidth = 0;
+        timePicker.setLayout(gl_timePicker);
 
 		// 'From' control
 		chkFrom = new Button(timePicker, SWT.CHECK);
@@ -178,18 +194,22 @@ public class SearchControl extends Canvas {
 			}
 		});
 		
-		new Label(this, SWT.NONE);
+        new Label(grpFilter, SWT.NONE);
 		
 		// Add the info filter check
-		chkInfo = new Button(this, SWT.CHECK);
-		chkInfo.setText("Show info messages");
-		chkInfo.addSelectionListener(new SelectionAdapter() {
+        cmboSeverity = new Combo(grpFilter, SWT.DROP_DOWN | SWT.READ_ONLY);
+        cmboSeverity.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+        cmboSeverity.setItems(LogMessageSeverity.allToString().toArray(new String[0]));
+        cmboSeverity.setText(LogMessageSeverity.MAJOR.toString());
+        new Label(grpFilter, SWT.NONE);
+        new Label(grpFilter, SWT.NONE);
+        cmboSeverity.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				setInfoFilter(!chkInfo.getSelection());
+                setInfoFilter(cmboSeverity.getText());
 			}
 		});
-		setInfoFilter(!chkInfo.getSelection());
+        setInfoFilter(cmboSeverity.getText());
 		
 	}
 
@@ -237,11 +257,14 @@ public class SearchControl extends Canvas {
 		}
 	}
 	
-	private void setInfoFilter(boolean set) {
-		if (set) {
-			parent.addMessageFilter(infoFilter);
-		} else {
-			parent.removeMessageFilter(infoFilter);
-		}
+    private void setInfoFilter(String set) {
+        parent.removeMessageFilter(infoFilter);
+        parent.removeMessageFilter(minorFilter);
+        if (set.equals(LogMessageSeverity.MAJOR.toString())) {
+            parent.addMessageFilter(infoFilter);
+            parent.addMessageFilter(minorFilter);
+        } else if (set.equals(LogMessageSeverity.MINOR.toString())) {
+            parent.addMessageFilter(infoFilter);
+        }
 	}
 }

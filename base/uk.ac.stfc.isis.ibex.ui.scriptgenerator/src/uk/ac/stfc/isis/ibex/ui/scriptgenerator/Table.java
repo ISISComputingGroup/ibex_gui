@@ -25,8 +25,8 @@ import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 
-import uk.ac.stfc.isis.ibex.scriptgenerator.Row;
-import uk.ac.stfc.isis.ibex.scriptgenerator.WaitUnit;
+import uk.ac.stfc.isis.ibex.scriptgenerator.row.Row;
+import uk.ac.stfc.isis.ibex.scriptgenerator.row.WaitUnit;
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundCellLabelProvider;
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundTable;
 import uk.ac.stfc.isis.ibex.ui.widgets.DoubleEditingSupportBlankIfNull;
