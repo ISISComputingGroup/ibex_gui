@@ -28,6 +28,7 @@ import org.eclipse.swt.widgets.Composite;
 
 import uk.ac.stfc.isis.ibex.configserver.configuration.Ioc;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableIoc;
+import uk.ac.stfc.isis.ibex.ui.configserver.CheckboxLabelProvider;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.CellDecorator;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.DecoratedCellLabelProvider;
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundTable;
@@ -89,7 +90,7 @@ public class IocsTable extends DataboundTable<EditableIoc> {
 	private void autostart() {
 		TableViewerColumn enabled = createColumn("Auto-start?", 1, false);
 		IObservableMap[] stateProperties = {observeProperty("autostart")};
-		enabled.setLabelProvider(new IocCheckboxLabelProvider<Ioc>(stateProperties) {	
+		enabled.setLabelProvider(new CheckboxLabelProvider<Ioc>(stateProperties) {	
 			@Override
 			protected boolean checked(Ioc ioc) {
 				return ioc.getAutostart();
@@ -110,7 +111,7 @@ public class IocsTable extends DataboundTable<EditableIoc> {
 	private void restart() {
 		TableViewerColumn enabled = createColumn("Auto-restart?", 1, false);
 		IObservableMap[] stateProperties = {observeProperty("restart")};
-		enabled.setLabelProvider(new IocCheckboxLabelProvider<Ioc>(stateProperties) {	
+		enabled.setLabelProvider(new CheckboxLabelProvider<Ioc>(stateProperties) {	
 			@Override
 			protected boolean checked(Ioc ioc) {
 				return ioc.getRestart();

@@ -17,36 +17,37 @@
 * http://opensource.org/licenses/eclipse-1.0.php
 */
 
-package uk.ac.stfc.isis.ibex.ui.scriptgenerator;
+package uk.ac.stfc.isis.ibex.ui.widgets;
 
-import java.util.Collection;
-
+import org.eclipse.jface.viewers.CellEditor;
+import org.eclipse.jface.viewers.ColumnViewer;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Composite;
 
 import uk.ac.stfc.isis.ibex.scriptgenerator.row.Row;
+import uk.ac.stfc.isis.ibex.scriptgenerator.row.WaitUnit;
 
 /**
- * A panel to hold a ScriptGeneratorTable.
+ * Editing support for the script generator's wait unit enums. 
  */
-public class TablePanel extends Composite {
-	public static final String ID = "uk.ac.stfc.isis.ibex.ui.scriptgenerator.scriptgeneratorview";
-	private Table table;
-	
-	/**
+public abstract class WaitEditingSupport extends EnumEditingSupport<Row, WaitUnit> {
+	/** 
 	 * The default constructor.
-	 * @param parent the parent that the EstimatePanel will be placed in
-	 * @param style the style of the parent
-	 * @param rows the collection of rows in the table
+	 * @param viewer the viewer
 	 */
-	public TablePanel(Composite parent, int style, final Collection<Row> rows) {
-		super(parent, style);
-		setLayout(new GridLayout(2, true));
-		
-		table = new Table(this, SWT.NONE, SWT.MULTI | SWT.NO_SCROLL | SWT.V_SCROLL | SWT.FULL_SELECTION | SWT.BORDER);
-		table.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
-		table.setRows(rows);
+	public WaitEditingSupport(ColumnViewer viewer) {
+		super(viewer, Row.class, WaitUnit.class);
 	}
-} 
+	
+	@Override
+	protected CellEditor getCellEditor(Object element) {		
+		CellEditor editor = super.getCellEditor(element);
+		editor.setStyle(SWT.READ_ONLY);
+		
+		return editor;
+	}
+	
+	@Override
+	protected boolean canEdit(Object element) {
+		return true;
+	}
+}
