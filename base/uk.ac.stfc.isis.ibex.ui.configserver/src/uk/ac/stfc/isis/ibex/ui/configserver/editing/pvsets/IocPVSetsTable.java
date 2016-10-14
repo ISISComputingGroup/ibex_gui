@@ -26,7 +26,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 
 import uk.ac.stfc.isis.ibex.configserver.editing.EditablePVSet;
-import uk.ac.stfc.isis.ibex.ui.configserver.editing.iocs.IocCheckboxLabelProvider;
+import uk.ac.stfc.isis.ibex.ui.configserver.CheckboxLabelProvider;
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundCellLabelProvider;
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundTable;
 
@@ -70,7 +70,7 @@ public class IocPVSetsTable extends DataboundTable<EditablePVSet> {
 	private void enable() {
 		TableViewerColumn enabled = createColumn("Enabled?", 2);
 		IObservableMap[] stateProperties = {observeProperty("enabled")};
-		enabled.setLabelProvider(new IocCheckboxLabelProvider<EditablePVSet>(stateProperties) {	
+		enabled.setLabelProvider(new CheckboxLabelProvider<EditablePVSet>(stateProperties) {	
 			@Override
 			protected boolean checked(EditablePVSet pvset) {
 				return pvset.getEnabled();
