@@ -35,15 +35,15 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.part.ViewPart;
 import org.eclipse.wb.swt.SWTResourceManager;
 
-import uk.ac.stfc.isis.ibex.scriptgenerator.ApertureSans;
-import uk.ac.stfc.isis.ibex.scriptgenerator.ApertureTrans;
-import uk.ac.stfc.isis.ibex.scriptgenerator.CollectionMode;
-import uk.ac.stfc.isis.ibex.scriptgenerator.Estimate;
-import uk.ac.stfc.isis.ibex.scriptgenerator.Order;
 import uk.ac.stfc.isis.ibex.scriptgenerator.PythonBuilder;
-import uk.ac.stfc.isis.ibex.scriptgenerator.Row;
-import uk.ac.stfc.isis.ibex.scriptgenerator.SampleGeometry;
-import uk.ac.stfc.isis.ibex.scriptgenerator.Settings;
+import uk.ac.stfc.isis.ibex.scriptgenerator.estimate.Estimate;
+import uk.ac.stfc.isis.ibex.scriptgenerator.row.Row;
+import uk.ac.stfc.isis.ibex.scriptgenerator.settings.ApertureSans;
+import uk.ac.stfc.isis.ibex.scriptgenerator.settings.ApertureTrans;
+import uk.ac.stfc.isis.ibex.scriptgenerator.settings.CollectionMode;
+import uk.ac.stfc.isis.ibex.scriptgenerator.settings.Order;
+import uk.ac.stfc.isis.ibex.scriptgenerator.settings.SampleGeometry;
+import uk.ac.stfc.isis.ibex.scriptgenerator.settings.Settings;
 
 /**
  * Holds all UI elements of the Script Generator.

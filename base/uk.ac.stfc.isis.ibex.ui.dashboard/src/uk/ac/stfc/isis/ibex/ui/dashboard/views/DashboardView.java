@@ -65,26 +65,28 @@ public class DashboardView extends ViewPart implements ISizeProvider {
 	
 	@Override
     public void createPartControl(Composite parent) {
-		GridLayout glParent = new GridLayout(3, false);
+        GridLayout glParent = new GridLayout(3, false);
 		glParent.marginHeight = 0;
 		glParent.marginWidth = 0;
 		glParent.horizontalSpacing = 1;
 		glParent.verticalSpacing = 0;
 		parent.setLayout(glParent);
 		Banner banner = new Banner(parent, SWT.NONE, bannerModel, bannerTitleFont, bannerFont);
-		banner.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 3, 1));
+        banner.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 3, 1));
 		
 		Label separator1 = new Label(parent, SWT.SEPARATOR | SWT.HORIZONTAL);
-		separator1.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 3, 1));
+        separator1.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 3, 1));
 		
 		TitlePanel title = new TitlePanel(parent, SWT.NONE, titleModel, textFont);
-		title.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 3, 1));
+        title.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 3, 1));
 		
 		Label separator2 = new Label(parent, SWT.SEPARATOR | SWT.HORIZONTAL);
-		separator2.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 3, 1));
+        separator2.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 3, 1));
 		
 		MonitorPanel monitors = new MonitorPanel(parent, SWT.NONE, monitorsModel, textFont);
-		monitors.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+        GridData monitorsLayoutGridData = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
+        monitorsLayoutGridData.widthHint = 315;
+        monitors.setLayoutData(monitorsLayoutGridData);
 		
 		Label separator3 = new Label(parent, SWT.SEPARATOR | SWT.VERTICAL);
 		separator3.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false, 1, 1));

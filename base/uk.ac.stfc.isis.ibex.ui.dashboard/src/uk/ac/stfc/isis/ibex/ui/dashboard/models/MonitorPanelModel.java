@@ -31,26 +31,46 @@ import uk.ac.stfc.isis.ibex.epics.observing.Pair;
 import uk.ac.stfc.isis.ibex.epics.pv.Closer;
 import uk.ac.stfc.isis.ibex.model.UpdatedValue;
 
+/**
+ * The model for the monitor panel in the dashboard.
+ */
 public class MonitorPanelModel extends Closer {
 
     private final UpdatedValue<String> goodOverRawFrames;
     private final UpdatedValue<String> currentOverTotal;
     private final UpdatedValue<String> monitorCounts;
+    private static final int MAX_CURR_INT_DIGITS = 4;
+    private static final int MAX_CURR_FRAC_DIGITS = 2;
 
+    /**
+     * The constructor.
+     * 
+     * @param observables the observables
+     */
+    @SuppressWarnings("checkstyle:magicnumber")
     public MonitorPanelModel(DashboardObservables observables) {
         goodOverRawFrames = createGoodOverRawFrames(observables);
         currentOverTotal = createCurrentOverTotal(observables);
         monitorCounts = createMonitorCounts(observables);
     }
 
+    /**
+     * @return good / raw frames
+     */
     public UpdatedValue<String> goodOverRawFrames() {
         return goodOverRawFrames;
     }
 
+    /**
+     * @return monitor counts
+     */
     public UpdatedValue<String> monitorCounts() {
         return monitorCounts;
     }
 
+    /**
+     * @return current / total
+     */
     public UpdatedValue<String> currentOverTotal() {
         return currentOverTotal;
     }
@@ -68,7 +88,7 @@ public class MonitorPanelModel extends Closer {
         ClosableObservable<Pair<Number, Number>> pair = registerForClose(
                 new ObservablePair<>(observables.dae.beamCurrent, observables.dae.goodCurrent));
         ForwardingObservable<String> ratio = new ForwardingObservable<String>(
-                new ObservableDecimalRatio(pair));
+                new ObservableDecimalRatio(pair, MAX_CURR_INT_DIGITS, MAX_CURR_FRAC_DIGITS));
 
         return registerForClose(new TextUpdatedObservableAdapter(ratio));
     }

@@ -25,6 +25,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 
 import uk.ac.stfc.isis.ibex.model.ModelObject;
+import uk.ac.stfc.isis.ibex.scriptgenerator.row.Row;
 
 /**
  * Generates Python code based on values in the Script Generator table and the settings.

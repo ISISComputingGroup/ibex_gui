@@ -1,5 +1,4 @@
 //CHECKSTYLE:OFF
-
 /*******************************************************************************
  * Copyright (c) 2011 Google, Inc.
  * All rights reserved. This program and the accompanying materials
@@ -447,5 +446,4 @@ public class SWTResourceManager {
 		disposeCursors();
 	}
 }
-
 //CHECKSTYLE:ON

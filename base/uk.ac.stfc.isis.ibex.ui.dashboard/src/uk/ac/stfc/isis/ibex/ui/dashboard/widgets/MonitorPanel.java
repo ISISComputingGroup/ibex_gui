@@ -22,13 +22,13 @@ package uk.ac.stfc.isis.ibex.ui.dashboard.widgets;
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.beans.BeanProperties;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
-import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.graphics.Font;
-import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Label;
 import org.eclipse.wb.swt.SWTResourceManager;
 
 import uk.ac.stfc.isis.ibex.ui.dashboard.models.MonitorPanelModel;
@@ -46,14 +46,14 @@ public class MonitorPanel extends Composite {
 		
 		Label lblGoodRaw = new Label(this, SWT.NONE);
 		lblGoodRaw.setFont(font);
-		lblGoodRaw.setText("Good / Raw Frames:");
+        lblGoodRaw.setText("Good / Raw Frames:");
 		
 		goodRawFrames = new StyledText(this, SWT.READ_ONLY | SWT.SINGLE);
 		goodRawFrames.setEnabled(false);
 		goodRawFrames.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_BACKGROUND));
 		goodRawFrames.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		goodRawFrames.setFont(font);
-		goodRawFrames.setText("xxx / xxx");
+        goodRawFrames.setText("xxxxxxxx / xxxxxxxx");
 		
 		Label lblCurrentTotal = new Label(this, SWT.NONE);
 		lblCurrentTotal.setFont(font);

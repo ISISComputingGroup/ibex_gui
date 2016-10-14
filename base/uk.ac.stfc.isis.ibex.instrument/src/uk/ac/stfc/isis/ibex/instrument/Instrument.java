@@ -40,9 +40,7 @@ import org.osgi.framework.BundleContext;
 import org.osgi.service.prefs.BackingStoreException;
 import org.osgi.service.prefs.Preferences;
 
-import com.google.common.base.Predicate;
-import com.google.common.collect.Iterables;
-
+import uk.ac.stfc.isis.ibex.instrument.custom.CustomInstrumentInfo;
 import uk.ac.stfc.isis.ibex.instrument.internal.LocalHostInstrumentInfo;
 import uk.ac.stfc.isis.ibex.instrument.list.InstrumentListObservable;
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
@@ -66,7 +64,9 @@ public class Instrument implements BundleActivator {
 	
 	private final Preferences initalPreference = ConfigurationScope.INSTANCE.getNode("uk.ac.stfc.isis.ibex.instrument").node("preferences");
 	
-	private static String initialInstrument = "initial";
+	private static String initNameKey = "initialName";
+	private static String initHostKey = "initialHost";
+	private static String initPVKey = "initialPV";	
 	
 	public Instrument() {
 		instance = this;
@@ -119,12 +119,17 @@ public class Instrument implements BundleActivator {
 		Instrument.context = null;
 	}
 
+	/**
+	 * Set the instrument that IBEX is pointing to. 
+	 * This will update all plugins that are hooked into the instrument extension point. 
+	 * 
+	 * @param selectedInstrument Information on the new instrument.
+	 */
 	public void setInstrument(InstrumentInfo selectedInstrument) {
 		this.instrumentInfo = selectedInstrument;
 
         if (!instrumentInfo.hasValidHostName()) {
-            LOG.error("Invalid host name:" + instrumentInfo.hostName());
-            return;
+            LOG.warn("Invalid host name:" + instrumentInfo.hostName());
 		}
 
         instrumentName.setValue(selectedInstrument.name());
@@ -144,7 +149,7 @@ public class Instrument implements BundleActivator {
                 count++;
             }
         }
-        LOG.debug("Changing to instrument " + instrumentInfo.hostName()
+        LOG.debug("Changing to instrument " + instrumentInfo.name()
         		+ ", Number of connected channels = " + Integer.toString(count));
     }
 
@@ -167,18 +172,20 @@ public class Instrument implements BundleActivator {
 	}
 	
 	private InstrumentInfo initialInstrument() {
-		final String initalName = initalPreference.get(initialInstrument, localhost.name());
+		final String initialName = initalPreference.get(initNameKey, localhost.name());
+		if (initialName.equals(localhost.name())) {
+			return new LocalHostInstrumentInfo();
+		}
+		final String initialPV = initalPreference.get(initPVKey, localhost.pvPrefix());
+		final String initialHost = initalPreference.get(initHostKey, localhost.hostName());
 		
-        return Iterables.find(instruments(), new Predicate<InstrumentInfo>() {
-			@Override
-			public boolean apply(InstrumentInfo info) {
-				return initalName.endsWith(info.name());
-			}
-		}, localhost);
+		return new CustomInstrumentInfo(initialName, initialPV, initialHost);
 	}
 	
-	public void setInitial() {
-		initalPreference.put(initialInstrument, currentInstrument().name());
+	public void setInitial() {		
+		initalPreference.put(initNameKey, currentInstrument().name());
+		initalPreference.put(initPVKey, currentInstrument().pvPrefix());
+		initalPreference.put(initHostKey, currentInstrument().hostName());
 		
         try {
             // forces the application to save the preferences

@@ -243,6 +243,7 @@
 		<module>../uk.ac.stfc.isis.ibex.ui.configserver.tests</module>
 		<module>../uk.ac.stfc.isis.ibex.ui.scriptgenerator</module>
 		<module>../uk.ac.stfc.isis.ibex.scriptgenerator</module>
+		<module>../uk.ac.stfc.isis.ibex.ui.dashboard.tests</module>
 	</modules>
 </project>
 

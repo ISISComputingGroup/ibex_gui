@@ -17,19 +17,20 @@
 * http://opensource.org/licenses/eclipse-1.0.php
 */
 
-package uk.ac.stfc.isis.ibex.scriptgenerator;
+package uk.ac.stfc.isis.ibex.scriptgenerator.row;
 
 /**
- * Sizes that can be used in the TRANS combo box within the Aperture settings.
+ * The wait units used in the "SANS Wait" and "TRANS Wait" fields in the table.
  */
-public enum ApertureTrans {
-	LARGE("Large = ?, ? mm"),
-	MEDIUM("Medium = 20, 14 mm"),
-	SMALL("Small = ?, ? mm");
+public enum WaitUnit {
+	MICROAMP("MicroAmp Hours"),
+	MINUTES("Minutes"),
+	SECONDS("Seconds"),
+	FRAMES("Frames");
 	
 	private String name;
 	
-	ApertureTrans(String displayName) {
+	WaitUnit(String displayName) {
 		this.name = displayName;
 	}
 	

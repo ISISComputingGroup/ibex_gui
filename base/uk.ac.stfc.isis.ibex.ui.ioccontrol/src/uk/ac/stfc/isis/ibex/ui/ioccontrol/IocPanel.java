@@ -26,11 +26,11 @@ import java.util.Collection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.layout.FillLayout;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.layout.FillLayout;
-import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.layout.GridData;
 
 import uk.ac.stfc.isis.ibex.configserver.EditableIocState;
 import uk.ac.stfc.isis.ibex.configserver.IocControl;
@@ -67,7 +67,7 @@ public class IocPanel extends Composite {
 		glContainer.marginWidth = 0;
 		container.setLayout(glContainer);
 		
-		table = new IocTable(container, SWT.BORDER, SWT.V_SCROLL | SWT.NO_SCROLL | SWT.FULL_SELECTION);
+		table = new IocTable(container, SWT.BORDER, SWT.FULL_SELECTION);
 		table.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		
 		this.control = control;
@@ -110,7 +110,7 @@ public class IocPanel extends Composite {
 		// Preserve selection if possible
 		for (EditableIocState row : rows) {
 			if (row.getName().equals(lastSelected.getName())) {
-				editor.setIoc(row);
+                table.setSelected(row);
 				return;
 			}
 		}

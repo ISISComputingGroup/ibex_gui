@@ -17,20 +17,18 @@
 * http://opensource.org/licenses/eclipse-1.0.php
 */
 
-package uk.ac.stfc.isis.ibex.scriptgenerator;
+package uk.ac.stfc.isis.ibex.scriptgenerator.settings;
 
 /**
- * Options for the Order combo box setting. 
+ * Data recording methods for use in the Collection Mode combo box within the settings.
  */
-public enum Order {
-	TRANS("All TRANS first"),
-	ALTTRANS("Alternate - TRANS first"),
-	SANS("All SANS first"),
-	ALTSANS("Alternate - SANS first");
+public enum CollectionMode {
+	HISTOGRAM("Histogram"),
+	EVENTS("Events");
 	
 	private String name;
 	
-	Order(String displayName) {
+	CollectionMode(String displayName) {
 		this.name = displayName;
 	}
 	
