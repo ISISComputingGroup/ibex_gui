@@ -17,9 +17,6 @@
  * http://opensource.org/licenses/eclipse-1.0.php
  */
 
-/**
- * 
- */
 package uk.ac.stfc.isis.ibex.instrument.custom;
 
 import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
