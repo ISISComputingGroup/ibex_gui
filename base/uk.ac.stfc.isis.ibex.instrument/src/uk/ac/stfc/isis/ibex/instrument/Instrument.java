@@ -64,9 +64,9 @@ public class Instrument implements BundleActivator {
 	
 	private final Preferences initalPreference = ConfigurationScope.INSTANCE.getNode("uk.ac.stfc.isis.ibex.instrument").node("preferences");
 	
-	private static String INIT_INST_NAME_KEY = "initialName";
-	private static String INIT_INST_HOST_KEY = "initialHost";
-	private static String INIT_INST_PV_KEY = "initialPV";	
+	private static String initNameKey = "initialName";
+	private static String initHostKey = "initialHost";
+	private static String initPVKey = "initialPV";	
 	
 	public Instrument() {
 		instance = this;
@@ -172,20 +172,20 @@ public class Instrument implements BundleActivator {
 	}
 	
 	private InstrumentInfo initialInstrument() {
-		final String initialName = initalPreference.get(INIT_INST_NAME_KEY, localhost.name());
+		final String initialName = initalPreference.get(initNameKey, localhost.name());
 		if (initialName.equals(localhost.name())) {
 			return new LocalHostInstrumentInfo();
 		}
-		final String initialPV = initalPreference.get(INIT_INST_PV_KEY, localhost.pvPrefix());
-		final String initialHost = initalPreference.get(INIT_INST_HOST_KEY, localhost.hostName());
+		final String initialPV = initalPreference.get(initPVKey, localhost.pvPrefix());
+		final String initialHost = initalPreference.get(initHostKey, localhost.hostName());
 		
 		return new CustomInstrumentInfo(initialName, initialPV, initialHost);
 	}
 	
 	public void setInitial() {		
-		initalPreference.put(INIT_INST_NAME_KEY, currentInstrument().name());
-		initalPreference.put(INIT_INST_PV_KEY, currentInstrument().pvPrefix());
-		initalPreference.put(INIT_INST_HOST_KEY, currentInstrument().hostName());
+		initalPreference.put(initNameKey, currentInstrument().name());
+		initalPreference.put(initPVKey, currentInstrument().pvPrefix());
+		initalPreference.put(initHostKey, currentInstrument().hostName());
 		
         try {
             // forces the application to save the preferences
