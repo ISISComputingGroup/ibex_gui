@@ -26,7 +26,14 @@ import org.eclipse.swt.SWT;
 import uk.ac.stfc.isis.ibex.scriptgenerator.Row;
 import uk.ac.stfc.isis.ibex.scriptgenerator.WaitUnit;
 
-public abstract class WaitEditingSupport extends EnumEditingSupport<Row, WaitUnit>{
+/**
+ * Editing support for the script generator's wait unit enums. 
+ */
+public abstract class WaitEditingSupport extends EnumEditingSupport<Row, WaitUnit> {
+	/** 
+	 * The default constructor.
+	 * @param viewer the viewer
+	 */
 	public WaitEditingSupport(ColumnViewer viewer) {
 		super(viewer, Row.class, WaitUnit.class);
 	}

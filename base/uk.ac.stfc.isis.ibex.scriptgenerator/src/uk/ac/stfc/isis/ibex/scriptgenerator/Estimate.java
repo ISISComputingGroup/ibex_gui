@@ -33,7 +33,6 @@ public class Estimate extends ModelObject {
 	 * The default constructor.
 	 * @param estCountRate the estimated count rate
 	 * @param estMoveTime the estimated move time
-	 * @param estScriptTime the estimated script time
 	 */
 	public Estimate(Integer estCountRate, Integer estMoveTime) {
 		this.estCountRate = estCountRate;

@@ -19,7 +19,6 @@
 
 package uk.ac.stfc.isis.ibex.ui.scriptgenerator;
 
-import java.util.ArrayList;
 import java.util.Collection;
 
 import org.eclipse.swt.SWT;
