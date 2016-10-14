@@ -39,6 +39,9 @@ public class NumbersOnlyValidator implements IValidator {
     /**
      * Checks that a value consists only of digits and is not null. Sends an OK
      * status if so and an error message if not.
+     * 
+     * @param value The object to validate
+     * @return The status of the validation
      */
     public IStatus validate(Object value) {
         if (value != null && numbersOnly.matcher(value.toString()).matches()) {

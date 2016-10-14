@@ -31,7 +31,12 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.TableItem;
 
-public abstract class ControlCellLabelProvider <T extends Control> extends ObservableMapCellLabelProvider {
+/**
+ * A cell provider that puts any type of control into a table's cell.
+ *
+ * @param <T> the type of control to put in the cell
+ */
+public abstract class ControlCellLabelProvider<T extends Control> extends ObservableMapCellLabelProvider {
 	
 	private final Map<ViewerCell, T> cellControls = new HashMap<>();
 	private final Map<ViewerCell, TableEditor> cellEditors = new HashMap<>();
@@ -40,10 +45,19 @@ public abstract class ControlCellLabelProvider <T extends Control> extends Obser
 		super(attributeMaps);
 	}
 	
+	/**
+	 * Gets the control out of the cell, adds one if none exist already.
+	 * @param cell The cell to add the control to
+	 * @param style The style to create the new control with
+	 * @return The control that the cell contains
+	 */
 	protected T getControl(ViewerCell cell, int style) {
 		return cellControls.containsKey(cell) ? cellControls.get(cell) : create(cell, style);
 	}
 	
+	/**
+	 * Dispose of the cell along with it's control.
+	 */
 	public void dispose() {
 		for (Control control : cellControls.values()) {
 			control.dispose();
