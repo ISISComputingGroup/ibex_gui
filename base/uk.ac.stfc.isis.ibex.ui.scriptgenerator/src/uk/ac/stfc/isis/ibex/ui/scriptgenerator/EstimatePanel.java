@@ -27,6 +27,8 @@ import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.core.databinding.validation.IValidator;
 import org.eclipse.jface.databinding.fieldassist.ControlDecorationSupport;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
+import org.eclipse.jface.window.DefaultToolTip;
+import org.eclipse.jface.window.ToolTip;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -60,7 +62,7 @@ public class EstimatePanel extends Composite {
 		
 		Group grpEstimate = new Group(this, SWT.NULL);
 		grpEstimate.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
-		GridLayout glGrpEstimate = new GridLayout(2, false);
+		GridLayout glGrpEstimate = new GridLayout(3, false);
 		grpEstimate.setLayout(glGrpEstimate);
 		glGrpEstimate.horizontalSpacing = 10;
 		glGrpEstimate.verticalSpacing = 6;
@@ -68,29 +70,45 @@ public class EstimatePanel extends Composite {
 		Label lblCountRate = new Label(grpEstimate, SWT.RIGHT);
 		lblCountRate.setLayoutData(new GridData(SWT.RIGHT, SWT.FILL, false, false, 1, 1));
 		lblCountRate.setText("Est. count rate:");
-
+		
+		GridData gdTxtCountRate = new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1);
 		txtCountRate = new Text(grpEstimate, SWT.BORDER);
-		txtCountRate.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		txtCountRate.setLayoutData(gdTxtCountRate);
+		gdTxtCountRate.widthHint = 30;
 		txtCountRate.setText("40");
+		txtCountRate.setToolTipText("The estimated count rate");
+		
+		GridData gdLblCountRateUnit = new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1);
+		Label lblCountRateUnit = new Label(grpEstimate, SWT.LEFT);
+		lblCountRateUnit.setLayoutData(gdLblCountRateUnit);
+		lblCountRateUnit.setText("µA/hr");
 				
 		Label lblTimeBetween = new Label(grpEstimate, SWT.RIGHT);
 		lblTimeBetween.setLayoutData(new GridData(SWT.RIGHT, SWT.FILL, false, false, 1, 1));  
 		lblTimeBetween.setText("Est. time between moves:");
 		
+		GridData gdTextTimeBetween = new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1);
 		txtTimeBetween = new Text(grpEstimate, SWT.BORDER);
-		txtTimeBetween.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		txtTimeBetween.setLayoutData(gdTextTimeBetween);
 		txtTimeBetween.setText("5");
+		txtTimeBetween.setToolTipText("The estimated time between each move");
+		
+		GridData gdLblTimeBetweenUnits = new GridData(SWT.LEFT, SWT.FILL, false, false, 1, 1);
+		Label lblTimeBetweenUnits = new Label(grpEstimate, SWT.LEFT);
+		lblTimeBetweenUnits.setLayoutData(gdLblTimeBetweenUnits);
+		lblTimeBetweenUnits.setText("seconds");
 		
 		Label lblScriptTime = new Label(grpEstimate, SWT.RIGHT);
 		lblScriptTime.setLayoutData(new GridData(SWT.RIGHT, SWT.FILL, false, false, 1, 1));
 		lblScriptTime.setText("Est. script time:");
 
+		GridData gdLblTimeValue = new GridData(SWT.LEFT, SWT.FILL, false, false, 2, 1);
 		lblTimeValue = new Label(grpEstimate, SWT.RIGHT);
-		lblTimeValue.setLayoutData(new GridData(SWT.CENTER, SWT.FILL, false, false, 1, 1));  
-		lblTimeValue.setText("00:00:00");
+		lblTimeValue.setLayoutData(gdLblTimeValue);  
+		lblTimeValue.setToolTipText("The estimated script time");
 		
 		Button btnCalculate = new Button(grpEstimate, SWT.NONE);
-		GridData gdButtonCalculate = new GridData(SWT.CENTER, SWT.FILL, true, false, 2, 1);
+		GridData gdButtonCalculate = new GridData(SWT.CENTER, SWT.FILL, true, false, 3, 1);
 		btnCalculate.setLayoutData(gdButtonCalculate);
 		gdButtonCalculate.minimumWidth = 80;
 		btnCalculate.setText("Calculate");
