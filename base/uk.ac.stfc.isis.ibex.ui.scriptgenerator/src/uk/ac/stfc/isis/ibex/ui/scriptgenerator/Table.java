@@ -31,9 +31,7 @@ import uk.ac.stfc.isis.ibex.ui.tables.DataboundCellLabelProvider;
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundTable;
 import uk.ac.stfc.isis.ibex.ui.widgets.DoubleEditingSupportBlankIfNull;
 import uk.ac.stfc.isis.ibex.ui.widgets.IntegerEditingSupportBlankIfNull;
-import uk.ac.stfc.isis.ibex.ui.widgets.SansWaitEditingSupport;
 import uk.ac.stfc.isis.ibex.ui.widgets.StringEditingSupport;
-import uk.ac.stfc.isis.ibex.ui.widgets.TransWaitEditingSupport;
 import uk.ac.stfc.isis.ibex.ui.widgets.WaitEditingSupport;
 
 /**
