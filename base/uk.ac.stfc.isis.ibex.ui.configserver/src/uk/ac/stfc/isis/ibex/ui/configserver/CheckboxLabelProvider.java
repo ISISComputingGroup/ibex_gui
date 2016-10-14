@@ -17,7 +17,7 @@
 * http://opensource.org/licenses/eclipse-1.0.php
 */
 
-package uk.ac.stfc.isis.ibex.ui.configserver.editing.iocs;
+package uk.ac.stfc.isis.ibex.ui.configserver;
 
 import org.eclipse.core.databinding.observable.map.IObservableMap;
 import org.eclipse.jface.viewers.ViewerCell;
@@ -28,13 +28,18 @@ import org.eclipse.swt.widgets.Button;
 
 import uk.ac.stfc.isis.ibex.ui.widgets.ButtonCellLabelProvider;
 
-
-public abstract class IocCheckboxLabelProvider<T> extends ButtonCellLabelProvider {
+/**
+ * A LabelProvider that adds a checkbox to a cell in a table. 
+ *
+ * @param <T> The model to get the/set the information for the checkbox
+ */
+public abstract class CheckboxLabelProvider<T> extends ButtonCellLabelProvider {
 			
-	public IocCheckboxLabelProvider(IObservableMap[] stateProperties) {
+	public CheckboxLabelProvider(IObservableMap[] stateProperties) {
 		super(stateProperties);
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public void update(final ViewerCell cell) {
 		super.update(cell);
@@ -57,13 +62,13 @@ public abstract class IocCheckboxLabelProvider<T> extends ButtonCellLabelProvide
 		checkBox.setEnabled(isEditable(ioc));
 	}
 	
-	private String displayText(T ioc) {
-		return checked(ioc) ? "Yes" : "No";
+	private String displayText(T model) {
+		return checked(model) ? "Yes" : "No";
 	}
 	
-	protected abstract boolean checked(T ioc);
+	protected abstract boolean checked(T model);
 	
-	protected abstract void setChecked(T ioc, boolean checked);
+	protected abstract void setChecked(T model, boolean checked);
 	
-	protected abstract boolean isEditable(T ioc);
+	protected abstract boolean isEditable(T model);
 }
