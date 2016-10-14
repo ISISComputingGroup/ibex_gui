@@ -20,4 +20,5 @@ Export-Package: uk.ac.stfc.isis.ibex.ui.widgets,
  uk.ac.stfc.isis.ibex.ui.widgets.observable,
  uk.ac.stfc.isis.ibex.ui.widgets.states,
  uk.ac.stfc.isis.ibex.ui.widgets.styles
-Import-Package: uk.ac.stfc.isis.ibex.scriptgenerator
+Import-Package: uk.ac.stfc.isis.ibex.scriptgenerator,
+ uk.ac.stfc.isis.ibex.scriptgenerator.row

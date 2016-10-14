@@ -23,8 +23,8 @@ import org.eclipse.jface.viewers.CellEditor;
 import org.eclipse.jface.viewers.ColumnViewer;
 import org.eclipse.swt.SWT;
 
-import uk.ac.stfc.isis.ibex.scriptgenerator.Row;
-import uk.ac.stfc.isis.ibex.scriptgenerator.WaitUnit;
+import uk.ac.stfc.isis.ibex.scriptgenerator.row.Row;
+import uk.ac.stfc.isis.ibex.scriptgenerator.row.WaitUnit;
 
 /**
  * Editing support for the script generator's wait unit enums. 
