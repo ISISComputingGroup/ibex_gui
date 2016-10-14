@@ -19,7 +19,11 @@
 
 package uk.ac.stfc.isis.ibex.model;
 
-
+/**
+ * A class for sending a command from the UI. <br>
+ * The class allows for cases when the command cannot be set for whatever reason.
+ * @param <T> The type of the data that should be sent
+ */
 public abstract class SetCommand<T> extends ModelObject {
 		
 	private boolean canSend;

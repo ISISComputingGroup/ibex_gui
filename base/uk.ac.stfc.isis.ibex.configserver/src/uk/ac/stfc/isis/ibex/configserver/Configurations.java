@@ -39,6 +39,10 @@ import uk.ac.stfc.isis.ibex.logger.IsisLog;
 import uk.ac.stfc.isis.ibex.runcontrol.RunControlActivator;
 import uk.ac.stfc.isis.ibex.runcontrol.RunControlServer;
 
+/**
+ * The initial BundleActivator for the configserver plugin. <br>
+ * This is the singleton that should be used to access configuration information from across the GUI.
+ */
 public class Configurations extends Closer implements BundleActivator {
 
 	public static final Logger LOG = IsisLog.getLogger(Configurations.class);
@@ -56,6 +60,9 @@ public class Configurations extends Closer implements BundleActivator {
 	private final RunControlServer runcontrol;
 	private final Collection<Subscription> loggingSubscriptions = new ArrayList<>();
 	
+	/**
+	 * The default constructor that is called when the plugin is first loaded.
+	 */
 	public Configurations() {
 		instance = this;
 		
