@@ -42,12 +42,12 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 
-import uk.ac.stfc.isis.ibex.scriptgenerator.ApertureSans;
-import uk.ac.stfc.isis.ibex.scriptgenerator.ApertureTrans;
-import uk.ac.stfc.isis.ibex.scriptgenerator.CollectionMode;
-import uk.ac.stfc.isis.ibex.scriptgenerator.Order;
-import uk.ac.stfc.isis.ibex.scriptgenerator.SampleGeometry;
-import uk.ac.stfc.isis.ibex.scriptgenerator.Settings;
+import uk.ac.stfc.isis.ibex.scriptgenerator.settings.ApertureSans;
+import uk.ac.stfc.isis.ibex.scriptgenerator.settings.ApertureTrans;
+import uk.ac.stfc.isis.ibex.scriptgenerator.settings.CollectionMode;
+import uk.ac.stfc.isis.ibex.scriptgenerator.settings.Order;
+import uk.ac.stfc.isis.ibex.scriptgenerator.settings.SampleGeometry;
+import uk.ac.stfc.isis.ibex.scriptgenerator.settings.Settings;
 import uk.ac.stfc.isis.ibex.validators.NumbersOnlyValidator;
 
 /**
