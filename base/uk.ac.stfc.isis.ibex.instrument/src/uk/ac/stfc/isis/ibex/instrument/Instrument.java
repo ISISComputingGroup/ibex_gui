@@ -123,7 +123,7 @@ public class Instrument implements BundleActivator {
     /**
      * Initial instrument preference.
      */
-    private final Preferences initalPreference =
+    private final Preferences initialPreference =
             ConfigurationScope.INSTANCE.getNode("uk.ac.stfc.isis.ibex.instrument").node("preferences");
 
     /**
@@ -286,12 +286,12 @@ public class Instrument implements BundleActivator {
      */
     private InstrumentInfo initialInstrument() {
         
-        final String initialName = initalPreference.get(initNameKey, localhost.name());
+        final String initialName = initialPreference.get(initNameKey, localhost.name());
         if (initialName.equals(localhost.name())) {
             return new LocalHostInstrumentInfo();
         }
-        final String initialPV = initalPreference.get(initPVKey, localhost.pvPrefix());
-        final String initialHost = initalPreference.get(initHostKey, localhost.hostName());
+        final String initialPV = initialPreference.get(initPVKey, localhost.pvPrefix());
+        final String initialHost = initialPreference.get(initHostKey, localhost.hostName());
 
         return new CustomInstrumentInfo(initialName, initialPV, initialHost);
     }
@@ -300,13 +300,13 @@ public class Instrument implements BundleActivator {
      * Set the initial instrument which is used at the subsequent startup.
      */
     public void setInitial() {
-        initalPreference.put(initNameKey, currentInstrument().name());
-        initalPreference.put(initPVKey, currentInstrument().pvPrefix());
-        initalPreference.put(initHostKey, currentInstrument().hostName());
+        initialPreference.put(initNameKey, currentInstrument().name());
+        initialPreference.put(initPVKey, currentInstrument().pvPrefix());
+        initialPreference.put(initHostKey, currentInstrument().hostName());
 
         try {
             // forces the application to save the preferences
-            initalPreference.flush();
+            initialPreference.flush();
         } catch (BackingStoreException e) {
             LoggerUtils.logErrorWithStackTrace(LOG, "Unable to set initial instrument", e);
         }
