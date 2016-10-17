@@ -49,4 +49,8 @@ public class TablePanel extends Composite {
 		table.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
 		table.setRows(rows);
 	}
+	
+	public void clearTable() {
+		table.clearTable();
+	}
 } 

@@ -81,6 +81,15 @@ public class Table extends DataboundTable<Row> {
 		
 		this.rows = rows;
 	}
+	
+	/**
+	 * Clears the table.
+	 */
+	public void clearTable() {
+		rows.clear();
+		rows.add(new Row());
+		setRows(rows);
+	}
 
 	private void position() {
 		position = createColumn("POSITION", 3);
