@@ -74,8 +74,7 @@ public class VTypeDefaultFormatter<T extends VType> {
 	}
 	
     private String asString(VNumber vnum) {
-        NumberFormat vnumFormat = vnum.getFormat();
-        NumberFormat exponentialWhenNeededFormat = new ExponentialOnThresholdFormat(vnumFormat);
+        NumberFormat exponentialWhenNeededFormat = new ExponentialOnThresholdFormat(vnum.getFormat());
         return exponentialWhenNeededFormat.format(vnum.getValue());
 	}
 
