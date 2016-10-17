@@ -17,24 +17,25 @@
 * http://opensource.org/licenses/eclipse-1.0.php
 */
 
-package uk.ac.stfc.isis.ibex.model;
+package uk.ac.stfc.isis.ibex.scriptgenerator.settings;
 
 /**
- * A class for sending a command from the UI. <br>
- * The class allows for cases when the command cannot be set for whatever reason.
- * @param <T> The type of the data that should be sent
+ * Options for the Order combo box setting. 
  */
-public abstract class SetCommand<T> extends ModelObject {
-		
-	private boolean canSend;
+public enum Order {
+	TRANS("All TRANS first"),
+	ALTTRANS("Alternate - TRANS first"),
+	SANS("All SANS first"),
+	ALTSANS("Alternate - SANS first");
 	
-	public abstract void send(T value);
+	private String name;
 	
-	public boolean getCanSend() {
-		return canSend;
+	Order(String displayName) {
+		this.name = displayName;
 	}
-
-	protected void setCanSend(boolean canSend) {
-		firePropertyChange("canSend", this.canSend, this.canSend = canSend);
+	
+	@Override
+	public String toString() {
+		return name;
 	}
 }

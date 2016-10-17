@@ -17,24 +17,25 @@
 * http://opensource.org/licenses/eclipse-1.0.php
 */
 
-package uk.ac.stfc.isis.ibex.model;
+package uk.ac.stfc.isis.ibex.scriptgenerator.settings;
 
 /**
- * A class for sending a command from the UI. <br>
- * The class allows for cases when the command cannot be set for whatever reason.
- * @param <T> The type of the data that should be sent
+ * Sizes that can be used in the SANS combo box within the Aperture settings.
  */
-public abstract class SetCommand<T> extends ModelObject {
-		
-	private boolean canSend;
-	
-	public abstract void send(T value);
-	
-	public boolean getCanSend() {
-		return canSend;
-	}
+public enum ApertureSans {
 
-	protected void setCanSend(boolean canSend) {
-		firePropertyChange("canSend", this.canSend, this.canSend = canSend);
+	LARGE("Large = ?, ? mm"),
+	MEDIUM("Medium = 20, 14 mm"),
+	SMALL("Small = ?, ? mm");
+	
+	private String name;
+	
+	ApertureSans(String displayName) {
+		this.name = displayName;
+	}
+	
+	@Override
+	public String toString() {
+		return name;
 	}
 }

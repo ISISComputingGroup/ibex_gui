@@ -40,10 +40,8 @@ import org.osgi.framework.BundleContext;
 import org.osgi.service.prefs.BackingStoreException;
 import org.osgi.service.prefs.Preferences;
 
-import com.google.common.base.Predicate;
-import com.google.common.collect.Iterables;
-
 import uk.ac.stfc.isis.ibex.epics.observing.BaseObserver;
+import uk.ac.stfc.isis.ibex.instrument.custom.CustomInstrumentInfo;
 import uk.ac.stfc.isis.ibex.instrument.internal.LocalHostInstrumentInfo;
 import uk.ac.stfc.isis.ibex.instrument.list.InstrumentListObservable;
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
@@ -71,13 +69,23 @@ public class Instrument implements BundleActivator {
      * @return The instrument instance
      */
     public static Instrument getInstance() {
-        return instance;
+    	return instance; 
     }
 
     /**
-     * The preference lookup key for the initial instrument.
+     * The preference key for looking up the initial instrument name.
      */
-    private static String initialInstrument = "initial";
+    private static String initNameKey = "initialName";
+
+    /**
+     * The preference key for looking up the initial instrument host.
+     */
+    private static String initHostKey = "initialHost";
+
+    /**
+     * The preference key for looking up the initial instrument PV.
+     */
+    private static String initPVKey = "initialPV";
 
     /**
      * The current instrument name as an updated value - needed for instance by
@@ -215,18 +223,18 @@ public class Instrument implements BundleActivator {
         Instrument.context = null;
     }
 
-    /**
-     * Sets the current instrument.
-     * 
-     * @param selectedInstrument The instrument to switch to.
-     */
-    public void setInstrument(InstrumentInfo selectedInstrument) {
-        this.instrumentInfo = selectedInstrument;
+	/**
+	 * Set the instrument that IBEX is pointing to. 
+	 * This will update all plugins that are hooked into the instrument extension point. 
+	 * 
+	 * @param selectedInstrument Information on the new instrument.
+	 */
+	public void setInstrument(InstrumentInfo selectedInstrument) {
+		this.instrumentInfo = selectedInstrument;
 
         if (!instrumentInfo.hasValidHostName()) {
-            LOG.error("Invalid host name:" + instrumentInfo.hostName());
-            return;
-        }
+            LOG.warn("Invalid host name:" + instrumentInfo.hostName());
+		}
 
         instrumentName.setValue(selectedInstrument.name());
 
@@ -277,16 +285,23 @@ public class Instrument implements BundleActivator {
      */
     private InstrumentInfo initialInstrument() {
         
-        // We can't set the initial instrument until we've got some values from
-        // the PV
-        return waitForInstrument(initalPreference.get(initialInstrument, localhost.name()));
+        final String initialName = initalPreference.get(initNameKey, localhost.name());
+        if (initialName.equals(localhost.name())) {
+            return new LocalHostInstrumentInfo();
+        }
+        final String initialPV = initalPreference.get(initPVKey, localhost.pvPrefix());
+        final String initialHost = initalPreference.get(initHostKey, localhost.hostName());
+
+        return new CustomInstrumentInfo(initialName, initialPV, initialHost);
     }
 
     /**
      * Set the initial instrument which is used at the subsequent startup.
      */
     public void setInitial() {
-        initalPreference.put(initialInstrument, currentInstrument().name());
+        initalPreference.put(initNameKey, currentInstrument().name());
+        initalPreference.put(initPVKey, currentInstrument().pvPrefix());
+        initalPreference.put(initHostKey, currentInstrument().hostName());
 
         try {
             // forces the application to save the preferences
@@ -308,33 +323,5 @@ public class Instrument implements BundleActivator {
                 return info1.name().compareTo(info2.name());
             }
         };
-    }
-    
-    /**
-     * Waits for the specified instrument to appear in the instrument list.
-     * 
-     * @param name Instrument name to wait for
-     * @return The instrument info for the corresponding instrument
-     */
-    public InstrumentInfo waitForInstrument(final String name) {
-        final Predicate<InstrumentInfo> predicate = new Predicate<InstrumentInfo>() {
-            @Override
-            public boolean apply(InstrumentInfo info) {
-                return name.endsWith(info.name());
-            }
-        };
-
-        final int maxRetries = 200;
-        final int waitLength = 100; // milliseconds
-        int i = 0;
-        while (!Iterables.any(instruments, predicate) && i++ <= maxRetries) {
-            
-            try {
-                Thread.sleep(waitLength);
-            } catch (InterruptedException e) {
-                InstrumentUtils.logErrorWithStackTrace(LOG, "System interrupted whilst waiting for instrument", e);
-            }
-        }
-        return Iterables.find(instruments, predicate, localhost);
     }
 }

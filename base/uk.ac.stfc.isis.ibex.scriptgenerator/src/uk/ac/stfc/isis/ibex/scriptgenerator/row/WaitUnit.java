@@ -17,18 +17,20 @@
 * http://opensource.org/licenses/eclipse-1.0.php
 */
 
-package uk.ac.stfc.isis.ibex.scriptgenerator;
+package uk.ac.stfc.isis.ibex.scriptgenerator.row;
 
 /**
- * Data recording methods for use in the Collection Mode combo box within the settings.
+ * The wait units used in the "SANS Wait" and "TRANS Wait" fields in the table.
  */
-public enum CollectionMode {
-	HISTOGRAM("Histogram"),
-	EVENTS("Events");
+public enum WaitUnit {
+	MICROAMP("MicroAmp Hours"),
+	MINUTES("Minutes"),
+	SECONDS("Seconds"),
+	FRAMES("Frames");
 	
 	private String name;
 	
-	CollectionMode(String displayName) {
+	WaitUnit(String displayName) {
 		this.name = displayName;
 	}
 	

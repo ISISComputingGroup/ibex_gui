@@ -17,24 +17,37 @@
 * http://opensource.org/licenses/eclipse-1.0.php
 */
 
-package uk.ac.stfc.isis.ibex.model;
+package uk.ac.stfc.isis.ibex.ui.widgets;
+
+import org.eclipse.jface.viewers.CellEditor;
+import org.eclipse.jface.viewers.ColumnViewer;
+import org.eclipse.swt.SWT;
+
+import uk.ac.stfc.isis.ibex.scriptgenerator.row.Row;
+import uk.ac.stfc.isis.ibex.scriptgenerator.row.WaitUnit;
 
 /**
- * A class for sending a command from the UI. <br>
- * The class allows for cases when the command cannot be set for whatever reason.
- * @param <T> The type of the data that should be sent
+ * Editing support for the script generator's wait unit enums. 
  */
-public abstract class SetCommand<T> extends ModelObject {
-		
-	private boolean canSend;
-	
-	public abstract void send(T value);
-	
-	public boolean getCanSend() {
-		return canSend;
+public abstract class WaitEditingSupport extends EnumEditingSupport<Row, WaitUnit> {
+	/** 
+	 * The default constructor.
+	 * @param viewer the viewer
+	 */
+	public WaitEditingSupport(ColumnViewer viewer) {
+		super(viewer, Row.class, WaitUnit.class);
 	}
-
-	protected void setCanSend(boolean canSend) {
-		firePropertyChange("canSend", this.canSend, this.canSend = canSend);
+	
+	@Override
+	protected CellEditor getCellEditor(Object element) {		
+		CellEditor editor = super.getCellEditor(element);
+		editor.setStyle(SWT.READ_ONLY);
+		
+		return editor;
+	}
+	
+	@Override
+	protected boolean canEdit(Object element) {
+		return true;
 	}
 }
