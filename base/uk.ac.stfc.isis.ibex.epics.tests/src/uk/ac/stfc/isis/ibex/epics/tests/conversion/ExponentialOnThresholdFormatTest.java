@@ -78,7 +78,7 @@ public class ExponentialOnThresholdFormatTest {
 
     @Test
     public void
-            GIVEN_value_0_1_above_lower_threshold_WHEN_formatting_with_precision_3_THEN_no_exponential_notation_used() {
+            GIVEN_value_0_1_which_is_above_lower_threshold_WHEN_formatting_with_precision_3_THEN_no_exponential_notation_used() {
         // Arrange
         double value = 0.1;
         String expected = "0.100";
@@ -89,7 +89,7 @@ public class ExponentialOnThresholdFormatTest {
 
     @Test
     public void
-            GIVEN_negative_value_0_1_above_lower_threshold_WHEN_formatting_with_precision_3_THEN_no_exponential_notation_used() {
+            GIVEN_negative_value_0_1_which_is_above_lower_threshold_WHEN_formatting_with_precision_3_THEN_no_exponential_notation_used() {
         // Arrange
         double value = -0.1;
         String expected = "-0.100";
@@ -100,7 +100,7 @@ public class ExponentialOnThresholdFormatTest {
 
     @Test
     public void
-            GIVEN_value_0_01_above_lower_threshold_WHEN_formatting_with_precision_3_THEN_no_exponential_notation_used() {
+            GIVEN_value_0_01_which_is_above_lower_threshold_WHEN_formatting_with_precision_3_THEN_no_exponential_notation_used() {
         // Arrange
         double value = 0.01;
         String expected = "0.010";
