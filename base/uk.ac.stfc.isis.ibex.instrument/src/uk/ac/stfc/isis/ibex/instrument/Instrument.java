@@ -45,6 +45,7 @@ import uk.ac.stfc.isis.ibex.instrument.custom.CustomInstrumentInfo;
 import uk.ac.stfc.isis.ibex.instrument.internal.LocalHostInstrumentInfo;
 import uk.ac.stfc.isis.ibex.instrument.list.InstrumentListObservable;
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
+import uk.ac.stfc.isis.ibex.logger.LoggerUtils;
 import uk.ac.stfc.isis.ibex.model.SettableUpdatedValue;
 import uk.ac.stfc.isis.ibex.model.UpdatedValue;
 
@@ -273,7 +274,7 @@ public class Instrument implements BundleActivator {
                 InstrumentInfoReceiver receiver = (InstrumentInfoReceiver) obj;
                 receiver.setInstrument(selectedInstrument);
             } catch (CoreException e) {
-                InstrumentUtils.logErrorWithStackTrace(LOG, "Unable to update extended plugins", e);
+                LoggerUtils.logErrorWithStackTrace(LOG, "Unable to update extended plugins", e);
             }
         }
     }
@@ -307,7 +308,7 @@ public class Instrument implements BundleActivator {
             // forces the application to save the preferences
             initalPreference.flush();
         } catch (BackingStoreException e) {
-            InstrumentUtils.logErrorWithStackTrace(LOG, "Unable to set initial instrument", e);
+            LoggerUtils.logErrorWithStackTrace(LOG, "Unable to set initial instrument", e);
         }
     }
 

@@ -20,7 +20,7 @@
 /**
  * 
  */
-package uk.ac.stfc.isis.ibex.instrument;
+package uk.ac.stfc.isis.ibex.logger;
 
 import org.apache.logging.log4j.Logger;
 
@@ -29,7 +29,7 @@ import com.google.common.base.Joiner;
 /**
  * Utilities used by the instruments package.
  */
-public final class InstrumentUtils {
+public final class LoggerUtils {
 
     /**
      * Sends an error to the log along with the stack trace of an exception

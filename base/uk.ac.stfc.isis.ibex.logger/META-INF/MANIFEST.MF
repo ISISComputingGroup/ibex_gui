@@ -17,3 +17,4 @@ Bundle-ClassPath: lib/log4j/log4j-api-2.0.1.jar,
  lib/log4j/log4j-core-2.0.1-javadoc.jar,
  lib/log4j/log4j-core-2.0.1-sources.jar,
  .
+Import-Package: com.google.common.base
