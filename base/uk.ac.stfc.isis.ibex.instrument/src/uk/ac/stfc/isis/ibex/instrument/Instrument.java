@@ -157,7 +157,7 @@ public class Instrument implements BundleActivator {
 
             @Override
             public void onError(Exception e) {
-                LOG.error("Error whilst reading instrument list : " + e.getMessage());
+                LoggerUtils.logErrorWithStackTrace(LOG, "Error whilst reading instrument list", e);
             }
 
             @Override
