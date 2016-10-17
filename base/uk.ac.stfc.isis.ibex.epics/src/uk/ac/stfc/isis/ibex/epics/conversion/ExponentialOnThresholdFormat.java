@@ -42,7 +42,7 @@ public class ExponentialOnThresholdFormat extends NumberFormat {
     private static final double BIG_NUMBER_THRESHOLD = 1000000;
     private static final int INTEGER_EXPO_FRACTIONAL_DIGITS = 4;
 
-    private NumberFormat defaultFormat;
+    private final NumberFormat defaultFormat;
 
     /**
      * Creates a new instance of this format.
