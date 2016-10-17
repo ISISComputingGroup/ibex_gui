@@ -19,6 +19,8 @@
 
 package uk.ac.stfc.isis.ibex.ui.scriptgenerator;
 
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -30,6 +32,7 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.part.ViewPart;
@@ -128,6 +131,7 @@ public class View extends ViewPart {
 		new Label(topPanel, SWT.NONE);
 		
 		Composite buttonsComposite = new Composite(topPanel, SWT.NONE);
+		Shell buttonsShell = new Shell(buttonsComposite.getShell());
 		buttonsComposite.setLayout(new GridLayout(2, true));
 		buttonsComposite.setLayoutData(new GridData(SWT.CENTER, SWT.BOTTOM, false, false, 1, 1));
 		
@@ -154,13 +158,14 @@ public class View extends ViewPart {
 		table = new TablePanel(parent, SWT.NONE, rows);
 		table.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		
-		bind();
+		bind(buttonsShell);
 	}
 	
 	/**
 	 * Binding for the Write Script and Preview Script buttons.
+	 * @param saveShell the shell of the composite used for Write Script
 	 */
-	public void bind() {
+	public void bind(final Shell saveShell) {
 		btnPreview.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
@@ -174,9 +179,38 @@ public class View extends ViewPart {
 		btnWrite.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
-                script = builder.getScript();
+                String defaultFileName = ".py";
+
+        		FileDialog dialog = new FileDialog(saveShell, SWT.SAVE);
+
+        		dialog.setFilterNames(new String[] {"Python File (*.py)", 
+        				"All Files (*.*)" });
+        		dialog.setFilterExtensions(new String[] {"*.py"});
+        		dialog.setFilterPath("c:\\");
+        		dialog.setFileName(defaultFileName);
+
+        		String filename = dialog.open();
+        		
+        		if (filename != null) {
+        			String script = builder.getScript();
+        			PrintWriter writer;
+					try {
+						writer = new PrintWriter(filename);
+						writer.print(script);
+						writer.close();
+					} catch (FileNotFoundException e1) {
+						e1.printStackTrace();
+					}
+        		}
             }
         });
+		
+		btnClearTable.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				
+			}
+		});
 	}
 	
 	@Override
