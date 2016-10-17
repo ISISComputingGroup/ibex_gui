@@ -70,7 +70,7 @@ public class Instrument implements BundleActivator {
      * @return The instrument instance
      */
     public static Instrument getInstance() {
-    	return instance; 
+        return instance;
     }
 
     /**
@@ -98,7 +98,7 @@ public class Instrument implements BundleActivator {
      * The current instrument information.
      */
     private InstrumentInfo instrumentInfo;
-    
+
     /**
      * The local instrument information.
      */
@@ -224,18 +224,18 @@ public class Instrument implements BundleActivator {
         Instrument.context = null;
     }
 
-	/**
-	 * Set the instrument that IBEX is pointing to. 
-	 * This will update all plugins that are hooked into the instrument extension point. 
-	 * 
-	 * @param selectedInstrument Information on the new instrument.
-	 */
-	public void setInstrument(InstrumentInfo selectedInstrument) {
-		this.instrumentInfo = selectedInstrument;
+    /**
+     * Set the instrument that IBEX is pointing to. This will update all plugins
+     * that are hooked into the instrument extension point.
+     * 
+     * @param selectedInstrument Information on the new instrument.
+     */
+    public void setInstrument(InstrumentInfo selectedInstrument) {
+        this.instrumentInfo = selectedInstrument;
 
         if (!instrumentInfo.hasValidHostName()) {
             LOG.warn("Invalid host name:" + instrumentInfo.hostName());
-		}
+        }
 
         instrumentName.setValue(selectedInstrument.name());
 
@@ -285,7 +285,7 @@ public class Instrument implements BundleActivator {
      *         instrument list at startup.
      */
     private InstrumentInfo initialInstrument() {
-        
+
         final String initialName = initialPreference.get(initNameKey, localhost.name());
         if (initialName.equals(localhost.name())) {
             return new LocalHostInstrumentInfo();
