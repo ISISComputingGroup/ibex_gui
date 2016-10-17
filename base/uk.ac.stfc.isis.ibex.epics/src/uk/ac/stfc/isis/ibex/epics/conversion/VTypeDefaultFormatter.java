@@ -43,7 +43,7 @@ public class VTypeDefaultFormatter<T extends VType> {
     public final Converter<T, String> withUnits = new WithUnits<T>();
 
     /**
-     * Returns a converted for formatting the input without units.
+     * Returns a converter for formatting the input without units.
      */
 	public final Converter<T, String> noUnits = new NoUnits<T>();
 	
