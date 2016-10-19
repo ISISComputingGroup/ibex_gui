@@ -19,13 +19,13 @@
 
 package uk.ac.stfc.isis.ibex.scriptgenerator;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.Collection;
 
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 import uk.ac.stfc.isis.ibex.scriptgenerator.row.Row;
+import uk.ac.stfc.isis.ibex.scriptgenerator.settings.Settings;
 
 /**
  * Generates Python code based on values in the Script Generator table and the settings.
