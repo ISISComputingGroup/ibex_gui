@@ -1,21 +1,21 @@
 
 /*
-* This file is part of the ISIS IBEX application.
-* Copyright (C) 2012-2015 Science & Technology Facilities Council.
-* All rights reserved.
-*
-* This program is distributed in the hope that it will be useful.
-* This program and the accompanying materials are made available under the
-* terms of the Eclipse Public License v1.0 which accompanies this distribution.
-* EXCEPT AS EXPRESSLY SET FORTH IN THE ECLIPSE PUBLIC LICENSE V1.0, THE PROGRAM 
-* AND ACCOMPANYING MATERIALS ARE PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES 
-* OR CONDITIONS OF ANY KIND.  See the Eclipse Public License v1.0 for more details.
-*
-* You should have received a copy of the Eclipse Public License v1.0
-* along with this program; if not, you can obtain a copy from
-* https://www.eclipse.org/org/documents/epl-v10.php or 
-* http://opensource.org/licenses/eclipse-1.0.php
-*/
+ * This file is part of the ISIS IBEX application. Copyright (C) 2012-2016
+ * Science & Technology Facilities Council. All rights reserved.
+ *
+ * This program is distributed in the hope that it will be useful. This program
+ * and the accompanying materials are made available under the terms of the
+ * Eclipse Public License v1.0 which accompanies this distribution. EXCEPT AS
+ * EXPRESSLY SET FORTH IN THE ECLIPSE PUBLIC LICENSE V1.0, THE PROGRAM AND
+ * ACCOMPANYING MATERIALS ARE PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES
+ * OR CONDITIONS OF ANY KIND. See the Eclipse Public License v1.0 for more
+ * details.
+ *
+ * You should have received a copy of the Eclipse Public License v1.0 along with
+ * this program; if not, you can obtain a copy from
+ * https://www.eclipse.org/org/documents/epl-v10.php or
+ * http://opensource.org/licenses/eclipse-1.0.php
+ */
 
 package uk.ac.stfc.isis.ibex.ui.log.widgets;
 
@@ -32,6 +32,7 @@ import uk.ac.stfc.isis.ibex.log.ILogMessageProducer;
 import uk.ac.stfc.isis.ibex.log.message.LogMessage;
 import uk.ac.stfc.isis.ibex.log.message.LogMessageFields;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
+import uk.ac.stfc.isis.ibex.ui.AsyncMessageModeratorTask;
 import uk.ac.stfc.isis.ibex.ui.log.comparator.LogMessageComparator;
 import uk.ac.stfc.isis.ibex.ui.log.filter.LogMessageFilter;
 import uk.ac.stfc.isis.ibex.ui.log.save.LogMessageFileWriter;
@@ -42,9 +43,10 @@ import uk.ac.stfc.isis.ibex.ui.log.save.LogMessageFileWriter;
  * Stores a cache of recently received messages and provides access to a message
  * searching service.
  */
-public class LogDisplayModel extends ModelObject implements ILogMessageConsumer, ISearchModel {
+public class LogDisplayModel extends ModelObject
+        implements ILogMessageConsumer, ISearchModel, AsyncMessageModeratorTask {
 	/** The maximum number of recent messages to display; older messages are dropped */
-	private static final int MAX_LIVE_MESSAGES = 10000;
+    private static final int MAX_LIVE_MESSAGES = 10000;
 	
 	/** The log message source */
 	private ILogMessageProducer messageProducer;
@@ -230,4 +232,13 @@ public class LogDisplayModel extends ModelObject implements ILogMessageConsumer,
 		firePropertyChange("message", null, liveMessageCache);
 		firePropertyChange("displayMode", null, latestSearchResults);
 	}
+
+    /**
+     * rerun the update task for the live message cache
+     */
+    @Override
+    public void rerunTask() {
+        firePropertyChange("message", null, liveMessageCache);
+    }
+
 }

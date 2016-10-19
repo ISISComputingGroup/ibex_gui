@@ -244,6 +244,7 @@
 		<module>../uk.ac.stfc.isis.ibex.ui.scriptgenerator</module>
 		<module>../uk.ac.stfc.isis.ibex.scriptgenerator</module>
 		<module>../uk.ac.stfc.isis.ibex.ui.dashboard.tests</module>
+		<module>../uk.ac.stfc.isis.ibex.ui.tests</module>
 	</modules>
 </project>
 

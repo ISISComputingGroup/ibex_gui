@@ -1,21 +1,21 @@
 
 /*
-* This file is part of the ISIS IBEX application.
-* Copyright (C) 2012-2015 Science & Technology Facilities Council.
-* All rights reserved.
-*
-* This program is distributed in the hope that it will be useful.
-* This program and the accompanying materials are made available under the
-* terms of the Eclipse Public License v1.0 which accompanies this distribution.
-* EXCEPT AS EXPRESSLY SET FORTH IN THE ECLIPSE PUBLIC LICENSE V1.0, THE PROGRAM 
-* AND ACCOMPANYING MATERIALS ARE PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES 
-* OR CONDITIONS OF ANY KIND.  See the Eclipse Public License v1.0 for more details.
-*
-* You should have received a copy of the Eclipse Public License v1.0
-* along with this program; if not, you can obtain a copy from
-* https://www.eclipse.org/org/documents/epl-v10.php or 
-* http://opensource.org/licenses/eclipse-1.0.php
-*/
+ * This file is part of the ISIS IBEX application. Copyright (C) 2012-2016
+ * Science & Technology Facilities Council. All rights reserved.
+ *
+ * This program is distributed in the hope that it will be useful. This program
+ * and the accompanying materials are made available under the terms of the
+ * Eclipse Public License v1.0 which accompanies this distribution. EXCEPT AS
+ * EXPRESSLY SET FORTH IN THE ECLIPSE PUBLIC LICENSE V1.0, THE PROGRAM AND
+ * ACCOMPANYING MATERIALS ARE PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES
+ * OR CONDITIONS OF ANY KIND. See the Eclipse Public License v1.0 for more
+ * details.
+ *
+ * You should have received a copy of the Eclipse Public License v1.0 along with
+ * this program; if not, you can obtain a copy from
+ * https://www.eclipse.org/org/documents/epl-v10.php or
+ * http://opensource.org/licenses/eclipse-1.0.php
+ */
 
 /*
  * Copyright (C) 2013-2014 Research Councils UK (STFC)
@@ -73,6 +73,7 @@ import org.eclipse.swt.widgets.TableColumn;
 
 import uk.ac.stfc.isis.ibex.log.message.LogMessage;
 import uk.ac.stfc.isis.ibex.log.message.LogMessageFields;
+import uk.ac.stfc.isis.ibex.ui.AsyncMessageModerator;
 import uk.ac.stfc.isis.ibex.ui.log.comparator.LogMessageComparator;
 import uk.ac.stfc.isis.ibex.ui.log.filter.LogMessageFilter;
 
@@ -114,6 +115,7 @@ public class LogDisplay extends Canvas {
 	private MenuItem mnuClearSelected;
 	private MenuItem mnuSaveAll;
 	private MenuItem mnuSaveSelected;
+    private AsyncMessageModerator asyncMessageModerator;
 
 	public LogDisplay(Composite parent, LogDisplayModel model) {
 		super(parent, SWT.NONE);
@@ -134,14 +136,17 @@ public class LogDisplay extends Canvas {
 	public void setModel(final LogDisplayModel model) {
 		this.model = model;
 		this.searchControl.setSearcher(model);
+        this.asyncMessageModerator = new AsyncMessageModerator(model);
 
 		// Listen for updates to the list of messages to be displayed
 		final LogDisplay display = this;
 		model.addPropertyChangeListener("message",
 				new PropertyChangeListener() {
-					@Override
+                    @Override
 					public void propertyChange(PropertyChangeEvent event) {
-						display.setMessageData(model.getMessages());
+                        if (asyncMessageModerator.canStartTask()) {
+                            display.setMessageData(model.getMessages());
+                        }
 					}
 				});
 
@@ -209,12 +214,13 @@ public class LogDisplay extends Canvas {
 	/**
 	 * Set the list of messages to be displayed in the table.
 	 */
-	private void setMessageData(final List<LogMessage> messages) {
+    private void setMessageData(final List<LogMessage> messages) {
 		Display.getDefault().asyncExec(new Runnable() {
 			@Override
 			public void run() {
-				tableViewer.setInput(messages);
-				tableViewer.refresh();
+                tableViewer.setInput(messages);
+                tableViewer.refresh();
+                asyncMessageModerator.finishedTask();
 			}
 		});
 	}
