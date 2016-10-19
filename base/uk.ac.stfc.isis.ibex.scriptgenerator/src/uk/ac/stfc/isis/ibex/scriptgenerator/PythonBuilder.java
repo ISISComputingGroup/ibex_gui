@@ -19,7 +19,10 @@
 
 package uk.ac.stfc.isis.ibex.scriptgenerator;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 import uk.ac.stfc.isis.ibex.scriptgenerator.row.Row;
@@ -28,10 +31,9 @@ import uk.ac.stfc.isis.ibex.scriptgenerator.row.Row;
  * Generates Python code based on values in the Script Generator table and the settings.
  */
 public class PythonBuilder extends ModelObject {
-	private int doSans = 1;
-	private int doTrans = 1;
 	private Collection<Row> rows;
-	private String script;
+	private Settings settings;
+	private StringBuilder script;
 	
 	/**
 	 * The default constructor.
@@ -39,20 +41,112 @@ public class PythonBuilder extends ModelObject {
 	public PythonBuilder() {
 	}
 	
-//	private void generateHeader() {
-//		
-//	}
-//	
-//	private void setSamplePar(String name, String value) {
-//		String s = String.format("    set_sample_par(%s, %s)", name, value);
-//	}
+	/**
+	 * Generates necessary header code needed for each script.
+	 * @return the header block of Python code
+	 */
+	private String generateHeader() {
+		StringBuilder header = new StringBuilder();
+		
+		String creationComment = "# Script created by ZOOM Script at " + LocalDate.now() + " " +  LocalTime.now() + "\n";
+		String sansImport = "import LSS.SANSroutines as lm" + "\n\n";
+		String functionName = "def my_script():" + "\n";
+		String genieImport = "    from genie_python.genie import *" + "\n";
+		String zoomSetup = "    lm.setupzoom_normal()" + "\n";
+		
+		header.append(creationComment).append(sansImport).append(functionName).append(genieImport).append(zoomSetup);
+		
+		return header.toString();
+	}
 
 	/**
-	 * Sets the "Do SANS:" text box value.
-	 * @param doSans the do SANS value
+	 * Uses set_sample_par for the "Sample Height", "Sample Width" and "Sample Geometry" settings.
+	 * @param name the name of the setting, "width", "height" or "geometry"
+	 * @param value a numerical value for the "width" and "height", or the type of geometry, e.g. "disc"
+	 * @return
 	 */
-	public void setDoSans(int doSans) {
-		this.doSans = doSans;
+	private String buildSamplePar(String name, String value) {	
+		String samplePar = String.format("    set_sample_par('%s', '%s') \n", name, value);
+		
+		return samplePar;
+	}
+	
+	/**
+	 * Builds a string used for the do sans loop.
+	 * @return the sans loop string
+	 */
+	private String buildSans() {
+		StringBuilder sans = new StringBuilder();
+		StringBuilder rowData = new StringBuilder();
+		boolean populatedRow = false;
+		String collectionMode = null;
+		
+		// Based on the collection mode's two settings, set the rtype value to one of its two possibilities 
+		if (settings.getCollection().toString() != null) {
+			collectionMode = (settings.getCollection().toString() == "Histogram") ? "rtype='0'" : "rtype='1'"; 
+		}
+		
+		// Loop through each row. If a row is populated (with a position), add that row's data to the Python for loop
+		for (Row row: rows) {
+			if (row.getPosition() != null) {
+				rowData.append(String.format("    set_aperture('%s')\n", settings.getSansSize()));
+				if (row.getSans() != null && row.getSansWait() != null) {
+					rowData.append(String.format("    lm.dosans_normal(position='%s', title='%s', %s='%s', thickness='%s', %s)\n", 
+							row.getPosition(), row.getSampleName(), row.getSansWait() /*row.getSansWait().toString().toLowerCase()*/, row.getSansWait(), row.getThickness(), collectionMode));
+				} else {
+					rowData.append(String.format("    lm.dosans_normal(position='%s', title='%s', uamps='0', thickness='%s', %s)\n", 
+							row.getPosition(), row.getSampleName(), row.getThickness(), collectionMode));
+				} 
+				populatedRow = true;
+			}
+		}
+		
+		// If any of the rows contain data, add the Python for loop initialiser and the row data to the sans string
+		if (populatedRow) {
+			sans.append(String.format("\nfor i in range(%d):\n", settings.getDoSans()));
+			sans.append(rowData);
+		}
+		
+		return sans.toString();
+	}
+	
+	/**
+	 * Builds a string used for the do trans loop.
+	 * @return the trans loop
+	 */
+	private String buildTrans() {
+		StringBuilder trans = new StringBuilder();
+		StringBuilder rowData = new StringBuilder();
+		boolean populatedRow = false;
+		String collectionMode = null;
+		
+		// Based on the collection mode's two settings, set the rtype value to one of its two possibilities  
+		if (settings.getCollection().toString() != null) {
+			collectionMode = (settings.getCollection().toString() == "Histogram") ? "rtype='0'" : "rtype='1'"; 
+		}
+		
+		// Loop through each row. If a row is populated (with a position), add that row's data to the Python for loop
+		for (Row row: rows) {
+			if (row.getPosition() != null) {
+				rowData.append(String.format("    set_aperture('%s')\n", settings.getTransSize()));
+				if (row.getTrans() != null && row.getTransWait() != null) {
+					rowData.append(String.format("    lm.dotrans_normal(position='%s', title='%s', %s='%s', thickness='%s', %s)\n", 
+							row.getPosition(), row.getSampleName(), row.getTransWait() /*row.getSansWait().toString().toLowerCase()*/, row.getTransWait(), row.getThickness(), collectionMode));
+				} else {
+					rowData.append(String.format("    lm.dotrans_normal(position='%s', title='%s', uamps='0', thickness='%s', %s)\n", 
+							row.getPosition(), row.getSampleName(), row.getThickness(), collectionMode));
+				} 
+				populatedRow = true;
+			}
+		}
+		
+		// If any of the rows contain data, add the Python for loop initialiser and the row data to the trans string
+		if (populatedRow) {
+			trans.append(String.format("\nfor i in range(%d):\n", settings.getDoTrans()));
+			trans.append(rowData);
+		}
+		
+		return trans.toString();
 	}
 	
 	/**
@@ -65,22 +159,33 @@ public class PythonBuilder extends ModelObject {
 		createScript();
 	}
 	
+	public void setSettings(Settings settings) {
+		this.settings = settings;
+	}
+	
 	/**
 	 * Returns the script back to the view to be displayed.
 	 * @return the completed script
 	 */
 	public String getScript() {
-		return script;
+		createScript();
+		
+		return script.toString();
 	}
 	
 	/**
-	 * Calls relevant internal methods in order to create a valid Python script.
+	 * Calls internal build script methods and adds these returned strings to the main script.
 	 */
 	public void createScript() {
-		script = new String();
+		script = new StringBuilder();
 		
-		for (Row row : rows) {
-			script += "position = " + row.getPosition();
-		}
+		script.append(generateHeader());
+		
+		script.append(buildSamplePar("width", settings.getSampleWidth().toString()));
+		script.append(buildSamplePar("height", settings.getSampleHeight().toString()));
+		script.append(buildSamplePar("geometry", settings.getGeometry().toString()));
+		
+		script.append(buildSans());
+		script.append(buildTrans());
 	}
 }
