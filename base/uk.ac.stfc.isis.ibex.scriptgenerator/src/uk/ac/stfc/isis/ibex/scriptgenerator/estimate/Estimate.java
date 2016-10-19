@@ -19,7 +19,11 @@
 
 package uk.ac.stfc.isis.ibex.scriptgenerator.estimate;
 
+import java.util.Collection;
+
 import uk.ac.stfc.isis.ibex.model.ModelObject;
+import uk.ac.stfc.isis.ibex.scriptgenerator.row.Row;
+import uk.ac.stfc.isis.ibex.scriptgenerator.settings.Settings;
 
 /**
  * The estimate settings.
@@ -28,6 +32,8 @@ public class Estimate extends ModelObject {
 	private Integer estCountRate;
 	private Integer estMoveTime;
 	private String estScriptTime;
+	private Settings settings;
+	private Collection<Row> rows;
 	
 	/**
 	 * The default constructor.
@@ -37,6 +43,22 @@ public class Estimate extends ModelObject {
 	public Estimate(Integer estCountRate, Integer estMoveTime) {
 		this.estCountRate = estCountRate;
 		this.estMoveTime = estMoveTime;
+	}
+	
+	/**
+	 * Set the table rows.
+	 * @param rows the rows in the table
+	 */
+	public void setRows(Collection<Row> rows) {
+		this.rows = rows;
+	}
+	
+	/**
+	 * Set the settings.
+	 * @param settings the settings
+	 */
+	public void setSettings(Settings settings) {
+		this.settings = settings;
 	}
 	
 	/**
@@ -76,7 +98,11 @@ public class Estimate extends ModelObject {
 	 * @return the estimated script time
 	 */
 	public String getEstScriptTime() {
-		return estScriptTime;
+		Integer total = new Integer(0);
+		
+		
+		
+		return total.toString();
 	}
 
 	/**

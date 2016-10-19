@@ -76,6 +76,9 @@ public class View extends ViewPart {
 		rows = new ArrayList<Row>();
 		rows.add(new Row());
         builder.setRows(rows);
+        
+        estimate.setRows(rows);
+        estimate.setSettings(settings);
 	}
 
 	@SuppressWarnings("unused")
