@@ -31,9 +31,9 @@ public class LogSettings implements InstrumentInfoReceiver {
 	    .getPreferenceStore();
 
     @Override
-    public void setInstrument(InstrumentInfo instrument) {
+    public void setInstrument(InstrumentInfo newInstrument, InstrumentInfo oldInstrument) {
 		PREFERENCES.setValue(PreferenceConstants.P_JMS_ADDRESS,
-			instrument.hostName());
+                newInstrument.hostName());
 	
 		LOG.clearMessages();
     }

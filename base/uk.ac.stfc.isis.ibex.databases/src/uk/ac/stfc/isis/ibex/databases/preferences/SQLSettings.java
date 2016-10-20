@@ -25,8 +25,8 @@ import uk.ac.stfc.isis.ibex.instrument.InstrumentInfoReceiver;
 public class SQLSettings implements InstrumentInfoReceiver {
 
     @Override
-    public void setInstrument(InstrumentInfo instrument) {
+    public void setInstrument(InstrumentInfo newInstrument, InstrumentInfo oldInstrument) {
     	Databases.getDefault().getPreferenceStore()
-    		.setValue(PreferenceSupplier.SQL_ADDRESS, instrument.hostName());
+                .setValue(PreferenceSupplier.SQL_ADDRESS, newInstrument.hostName());
     }
 }
