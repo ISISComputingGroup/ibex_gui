@@ -46,7 +46,7 @@ public class AlarmSettings implements InstrumentInfoReceiver {
 
     private static String updateHostName(String newHostName, String oldHostName, String preference) {
         // Extra replace of localhost is needed because preference not restored
-        // on startup, so defaults to localhost. See ticket #1110
+        // on startup, so defaults to localhost. See ticket #1109
         String newPreference = preference.replace(oldHostName, newHostName).replace("localhost", newHostName);
         if (newPreference == preference) {
             throw new RuntimeException(
