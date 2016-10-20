@@ -19,6 +19,8 @@
 
 package uk.ac.stfc.isis.ibex.ui.alarm;
 
+import java.util.regex.Pattern;
+
 import org.csstudio.alarm.beast.Preferences;
 import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.jface.preference.IPreferenceStore;
@@ -26,6 +28,8 @@ import org.eclipse.ui.preferences.ScopedPreferenceStore;
 
 import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
 import uk.ac.stfc.isis.ibex.instrument.InstrumentInfoReceiver;
+import uk.ac.stfc.isis.ibex.instrument.custom.CustomInstrumentInfo;
+import uk.ac.stfc.isis.ibex.instrument.internal.LocalHostInstrumentInfo;
 
 public class AlarmSettings implements InstrumentInfoReceiver {
 
@@ -35,26 +39,32 @@ public class AlarmSettings implements InstrumentInfoReceiver {
             new ScopedPreferenceStore(InstanceScope.INSTANCE, PREF_QUALIFIER_ID);
 
 	@Override
-    public void setInstrument(InstrumentInfo newInstrument, InstrumentInfo oldInstrument) {
-        setAlarmURL(newInstrument.hostName(), oldInstrument.hostName());
+	public void setInstrument(InstrumentInfo instrument) {
+        setAlarmURL(instrument.hostName());
 	}
 
-    private void setAlarmURL(String newHostName, String oldHostName) {
-        PREFERENCES.setValue(Preferences.RDB_URL, updateHostName(newHostName, oldHostName, getAlarmURL()));
-        PREFERENCES.setValue(Preferences.JMS_URL, updateHostName(newHostName, oldHostName, getJMSURL()));
+    private void setAlarmURL(String hostName) {
+        PREFERENCES.setValue(Preferences.RDB_URL, updateHostName(hostName, getAlarmURL()));
+        PREFERENCES.setValue(Preferences.JMS_URL, updateHostName(hostName, getJMSURL()));
 	}
 
-    private static String updateHostName(String newHostName, String oldHostName, String preference) {
-        // Extra replace of localhost is needed because preference not restored
-        // on startup, so defaults to localhost. See ticket #1110
-        String newPreference = preference.replace(oldHostName, newHostName).replace("localhost", newHostName);
-        if (newPreference == preference) {
-            throw new RuntimeException(
-                    "Unable to update preference: " + preference + ". Does not contain old host name: " + oldHostName);
+    private static String updateHostName(String hostName, String preference) {
+        if (containsRegex(preference, InstrumentInfo.validInstrumentRegex())) {
+            preference = preference.replaceAll(InstrumentInfo.validInstrumentRegex(), hostName);
+        } else if (containsRegex(preference, LocalHostInstrumentInfo.validLocalInstrumentRegex())) {
+            preference = preference.replaceAll(LocalHostInstrumentInfo.validLocalInstrumentRegex(), hostName);
+        } else if (containsRegex(preference, CustomInstrumentInfo.validCustomInstrumentRegex())) {
+            preference = preference.replaceAll(CustomInstrumentInfo.validCustomInstrumentRegex(), hostName);
         } else {
-            preference = newPreference;
+            throw new RuntimeException(
+                    "Invalid preference string, does not contain a matching host pattern:" + preference);
         }
+
         return preference;
+    }
+
+    private static boolean containsRegex(String string, String regex) {
+        return Pattern.compile(regex).matcher(string).find();
     }
 
     private static String getAlarmURL() {

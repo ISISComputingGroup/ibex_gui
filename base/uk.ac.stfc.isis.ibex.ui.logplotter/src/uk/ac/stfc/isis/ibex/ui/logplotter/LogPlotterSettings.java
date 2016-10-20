@@ -19,12 +19,16 @@
 
 package uk.ac.stfc.isis.ibex.ui.logplotter;
 
+import java.util.regex.Pattern;
+
 import org.csstudio.trends.databrowser2.Activator;
 import org.csstudio.trends.databrowser2.preferences.Preferences;
 import org.eclipse.jface.preference.IPreferenceStore;
 
 import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
 import uk.ac.stfc.isis.ibex.instrument.InstrumentInfoReceiver;
+import uk.ac.stfc.isis.ibex.instrument.custom.CustomInstrumentInfo;
+import uk.ac.stfc.isis.ibex.instrument.internal.LocalHostInstrumentInfo;
 
 /**
  * This class is responsible for changing the settings for the DataBrowser when
@@ -45,29 +49,36 @@ public class LogPlotterSettings implements InstrumentInfoReceiver {
 	
 	// Connect the databrowser to the archive engine.
 	@Override
-    public void setInstrument(InstrumentInfo newInstrument, InstrumentInfo oldInstrument) {
-        setURLs(newInstrument.hostName(), oldInstrument.hostName());
-        setArchives(newInstrument.hostName(), oldInstrument.hostName());
+	public void setInstrument(InstrumentInfo instrument) {	
+		setURLs(instrument.hostName());
+		setArchives(instrument.hostName());
 	}
 
-    private void setURLs(String newHostName, String oldHostName) {
-        preferences.setValue(Preferences.URLS, updateHostName(newHostName, oldHostName, getDatabaseUrls()));
+	private void setURLs(String hostName) {
+        preferences.setValue(Preferences.URLS, updateHostName(hostName, getDatabaseUrls()));
 	}
 	
-    private void setArchives(String newHostName, String oldHostName) {
-        preferences.setValue(Preferences.ARCHIVES, updateHostName(newHostName, oldHostName, getArchives()));
+	private void setArchives(String hostName) {
+        preferences.setValue(Preferences.ARCHIVES, updateHostName(hostName, getArchives()));
 	}
 	
-    private static String updateHostName(String newHostName, String oldHostName, String preference) {
-        String newPreference = preference.replace(oldHostName, newHostName);
-        if (newPreference == preference) {
-            throw new RuntimeException(
-                    "Unable to update preference: " + preference + ". Does not contain old host name: " + oldHostName);
+    private static String updateHostName(String hostName, String preference) {
+        if (containsRegex(preference, InstrumentInfo.validInstrumentRegex())) {
+            preference = preference.replaceAll(InstrumentInfo.validInstrumentRegex(), hostName);
+        } else if (containsRegex(preference, LocalHostInstrumentInfo.validLocalInstrumentRegex())) {
+            preference = preference.replaceAll(LocalHostInstrumentInfo.validLocalInstrumentRegex(), hostName);
+        } else if (containsRegex(preference, CustomInstrumentInfo.validCustomInstrumentRegex())) {
+            preference = preference.replaceAll(CustomInstrumentInfo.validCustomInstrumentRegex(), hostName);
         } else {
-            preference = newPreference;
+            throw new RuntimeException("Invalid preference string, does not contain a matching host pattern:" + preference);
         }
+
         return preference;
 	}
+    
+    private static boolean containsRegex(String string, String regex) {
+    	return Pattern.compile(regex).matcher(string).find();
+    }
 
     private String getDatabaseUrls() {
         return preferences.getString(Preferences.URLS);

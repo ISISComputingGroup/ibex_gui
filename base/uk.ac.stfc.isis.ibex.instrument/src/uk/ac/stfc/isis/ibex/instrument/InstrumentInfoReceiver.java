@@ -20,5 +20,5 @@
 package uk.ac.stfc.isis.ibex.instrument;
 
 public interface InstrumentInfoReceiver {
-    void setInstrument(InstrumentInfo newInstrument, InstrumentInfo oldInstrument);
+	void setInstrument(InstrumentInfo instrument);	
 }

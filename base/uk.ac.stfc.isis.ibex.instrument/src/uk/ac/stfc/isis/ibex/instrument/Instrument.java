@@ -60,7 +60,6 @@ public class Instrument implements BundleActivator {
 	
 	private SettableUpdatedValue<String> instrumentName = new SettableUpdatedValue<>();
 	private InstrumentInfo instrumentInfo;
-    private InstrumentInfo previousInstrumentInfo;
 	private final InstrumentInfo localhost;
 	
 	private final Preferences initalPreference = ConfigurationScope.INSTANCE.getNode("uk.ac.stfc.isis.ibex.instrument").node("preferences");
@@ -72,6 +71,7 @@ public class Instrument implements BundleActivator {
 	public Instrument() {
 		instance = this;
         localhost = new LocalHostInstrumentInfo();
+		
         setInstrument(initialInstrument());
     }
     
@@ -126,15 +126,7 @@ public class Instrument implements BundleActivator {
 	 * @param selectedInstrument Information on the new instrument.
 	 */
 	public void setInstrument(InstrumentInfo selectedInstrument) {
-
-        if (this.instrumentInfo != selectedInstrument) {
-            this.previousInstrumentInfo = this.instrumentInfo;
-            this.instrumentInfo = selectedInstrument;
-        }
-
-        if (this.previousInstrumentInfo == null) {
-            this.previousInstrumentInfo = selectedInstrument;
-        }
+		this.instrumentInfo = selectedInstrument;
 
         if (!instrumentInfo.hasValidHostName()) {
             LOG.warn("Invalid host name:" + instrumentInfo.hostName());
@@ -142,7 +134,7 @@ public class Instrument implements BundleActivator {
 
         instrumentName.setValue(selectedInstrument.name());
 
-        updateExtendingPlugins(selectedInstrument);
+		updateExtendingPlugins(selectedInstrument);
         logNumberOfChannels();
 	}
 
@@ -164,10 +156,6 @@ public class Instrument implements BundleActivator {
 	public InstrumentInfo currentInstrument() {
 		return instrumentInfo;
 	}
-
-    public InstrumentInfo previousInstrument() {
-        return previousInstrumentInfo;
-    }
 	
 	private static void updateExtendingPlugins(InstrumentInfo selectedInstrument) {
 		IExtensionRegistry registry = Platform.getExtensionRegistry();
@@ -176,7 +164,7 @@ public class Instrument implements BundleActivator {
 			try {
 				final Object obj = element.createExecutableExtension("class");
 				InstrumentInfoReceiver receiver = (InstrumentInfoReceiver) obj;
-                receiver.setInstrument(selectedInstrument, Instrument.getInstance().previousInstrument());
+				receiver.setInstrument(selectedInstrument);
 			} catch (CoreException e) {
                 e.printStackTrace();
 			}

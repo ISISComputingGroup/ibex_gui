@@ -99,7 +99,7 @@ public class LogPlotterSettingsTest {
     @Test
     public void switching_from_local_host_to_NDXLARMOR_updates_archives_settings() {
         // Act
-        logPlotterSettings.setInstrument(mockLarmor, mockLocalHost);
+        logPlotterSettings.setInstrument(mockLarmor);
 
         // Assert
         assertEquals(LARMOR_ARCHIVE_SETTINGS, preferenceStore.getString(Preferences.ARCHIVES));
@@ -108,7 +108,7 @@ public class LogPlotterSettingsTest {
     @Test
     public void switching_from_local_host_to_NDXLARMOR_updates_urls_settings() {
         // Act
-        logPlotterSettings.setInstrument(mockLarmor, mockLocalHost);
+        logPlotterSettings.setInstrument(mockLarmor);
 
         // Assert
         assertEquals(LARMOR_URLS_SETTINGS, preferenceStore.getString(Preferences.URLS));
@@ -118,8 +118,8 @@ public class LogPlotterSettingsTest {
     @Test
     public void switching_from_NDXLARMOR_to_NDXDEMO_updates_archives_settings() {
         // Act
-        logPlotterSettings.setInstrument(mockLarmor, mockLocalHost);
-        logPlotterSettings.setInstrument(mockDemo, mockLarmor);
+        logPlotterSettings.setInstrument(mockLarmor);
+        logPlotterSettings.setInstrument(mockDemo);
 
         // Assert
         assertEquals(DEMO_ARCHIVE_SETTINGS, preferenceStore.getString(Preferences.ARCHIVES));
@@ -128,8 +128,8 @@ public class LogPlotterSettingsTest {
     @Test
     public void switching_from_NDXLARMOR_to_NDXDEMO_updates_urls_settings() {
         // Act
-        logPlotterSettings.setInstrument(mockLarmor, mockLocalHost);
-        logPlotterSettings.setInstrument(mockDemo, mockLarmor);
+        logPlotterSettings.setInstrument(mockLarmor);
+        logPlotterSettings.setInstrument(mockDemo);
 
         // Assert
         assertEquals(DEMO_URLS_SETTINGS, preferenceStore.getString(Preferences.URLS));
@@ -138,8 +138,8 @@ public class LogPlotterSettingsTest {
     @Test
     public void switching_from_NDXLARMOR_to_local_host_updates_archives_settings() {
         // Act
-        logPlotterSettings.setInstrument(mockLarmor, mockLocalHost);
-        logPlotterSettings.setInstrument(mockLocalHost, mockLarmor);
+        logPlotterSettings.setInstrument(mockLarmor);
+        logPlotterSettings.setInstrument(mockLocalHost);
 
         // Assert
         assertEquals(DEFAULT_ARCHIVE_SETTINGS, preferenceStore.getString(Preferences.ARCHIVES));
@@ -148,8 +148,8 @@ public class LogPlotterSettingsTest {
     @Test
     public void switching_from_NDXLARMOR_to_local_host_updates_urls_settings() {
         // Act
-        logPlotterSettings.setInstrument(mockLarmor, mockLocalHost);
-        logPlotterSettings.setInstrument(mockLocalHost, mockLarmor);
+        logPlotterSettings.setInstrument(mockLarmor);
+        logPlotterSettings.setInstrument(mockLocalHost);
 
         // Assert
         assertEquals(DEFAULT_URLS_SETTINGS, preferenceStore.getString(Preferences.URLS));
@@ -158,7 +158,7 @@ public class LogPlotterSettingsTest {
     @Test
     public void switching_from_local_host_to_NDWCUSTOM_updates_archives_settings() {
         // Act
-        logPlotterSettings.setInstrument(mockCustom, mockLocalHost);
+        logPlotterSettings.setInstrument(mockCustom);
 
         // Assert
         assertEquals(CUSTOM_ARCHIVE_SETTINGS, preferenceStore.getString(Preferences.ARCHIVES));
@@ -167,7 +167,7 @@ public class LogPlotterSettingsTest {
     @Test
     public void switching_from_local_host_to_NDWCUSTOM_updates_urls_settings() {
         // Act
-        logPlotterSettings.setInstrument(mockCustom, mockLocalHost);
+        logPlotterSettings.setInstrument(mockCustom);
 
         // Assert
         assertEquals(CUSTOM_URLS_SETTINGS, preferenceStore.getString(Preferences.URLS));
@@ -176,8 +176,8 @@ public class LogPlotterSettingsTest {
     @Test
     public void switching_from_NDWCUSTOM_to_NDXLARMOR_updates_archives_settings() {
         // Act
-        logPlotterSettings.setInstrument(mockCustom, mockLocalHost);
-        logPlotterSettings.setInstrument(mockLarmor, mockCustom);
+        logPlotterSettings.setInstrument(mockCustom);
+        logPlotterSettings.setInstrument(mockLarmor);
 
         // Assert
         assertEquals(LARMOR_ARCHIVE_SETTINGS, preferenceStore.getString(Preferences.ARCHIVES));
@@ -186,8 +186,8 @@ public class LogPlotterSettingsTest {
     @Test
     public void switching_from_NDWCUSTOM_to_NDXLARMOR_updates_urls_settings() {
         // Act
-        logPlotterSettings.setInstrument(mockCustom, mockLocalHost);
-        logPlotterSettings.setInstrument(mockLarmor, mockLarmor);
+        logPlotterSettings.setInstrument(mockCustom);
+        logPlotterSettings.setInstrument(mockLarmor);
 
         // Assert
         assertEquals(LARMOR_URLS_SETTINGS, preferenceStore.getString(Preferences.URLS));
@@ -196,8 +196,8 @@ public class LogPlotterSettingsTest {
     @Test
     public void switching_from_lowercase_ndxdemo_to_local_host_does_not_update_archives_settings() {
         // Act
-        logPlotterSettings.setInstrument(mockInstrument(NDXLARMOR_LOWERCASE), mockLocalHost);
-        logPlotterSettings.setInstrument(mockLocalHost, mockInstrument(NDXLARMOR_LOWERCASE));
+        logPlotterSettings.setInstrument(mockInstrument(NDXLARMOR_LOWERCASE));
+        logPlotterSettings.setInstrument(mockLocalHost);
 
         // Assert
         assertEquals(DEFAULT_ARCHIVE_SETTINGS.replace(NDXLARMOR, NDXLARMOR_LOWERCASE),
@@ -207,8 +207,8 @@ public class LogPlotterSettingsTest {
     @Test
     public void switching_from_lowercase_ndxdemo_to_local_host_does_not_update_urls_settings() {
         // Act
-        logPlotterSettings.setInstrument(mockInstrument(NDXLARMOR_LOWERCASE), mockLocalHost);
-        logPlotterSettings.setInstrument(mockLocalHost, mockInstrument(NDXLARMOR_LOWERCASE));
+        logPlotterSettings.setInstrument(mockInstrument(NDXLARMOR_LOWERCASE));
+        logPlotterSettings.setInstrument(mockLocalHost);
 
         // Assert
         assertEquals(DEFAULT_ARCHIVE_SETTINGS.replace(NDXLARMOR, NDXLARMOR_LOWERCASE),
@@ -218,8 +218,8 @@ public class LogPlotterSettingsTest {
     @Test(expected = RuntimeException.class)
     public void switching_from_invalid_host_name_to_local_host_throws_runtime_error() {
         // Act
-        logPlotterSettings.setInstrument(mockInstrument(NOT_A_HOST_NAME), mockLocalHost);
-        logPlotterSettings.setInstrument(mockLocalHost, mockInstrument(NOT_A_HOST_NAME));
+        logPlotterSettings.setInstrument(mockInstrument(NOT_A_HOST_NAME));
+        logPlotterSettings.setInstrument(mockLocalHost);
 
         // Assert
         assertFalse(DEFAULT_ARCHIVE_SETTINGS.equals(preferenceStore.getString(Preferences.ARCHIVES)));
@@ -228,8 +228,8 @@ public class LogPlotterSettingsTest {
     @Test(expected = RuntimeException.class)
     public void switching_from_IP_host_name_to_local_host_throws_runtime_error() {
         // Act
-        logPlotterSettings.setInstrument(mockInstrument(IP_ADDRESS), mockLocalHost);
-        logPlotterSettings.setInstrument(mockLocalHost, mockInstrument(IP_ADDRESS));
+        logPlotterSettings.setInstrument(mockInstrument(IP_ADDRESS));
+        logPlotterSettings.setInstrument(mockLocalHost);
 
         // Assert
         assertFalse(DEFAULT_ARCHIVE_SETTINGS.equals(preferenceStore.getString(Preferences.ARCHIVES)));
