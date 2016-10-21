@@ -46,7 +46,7 @@ public class Estimate extends ModelObject {
 	}
 	
 	/**
-	 * Set the table rows.
+	 * Sets the table rows.
 	 * @param rows the rows in the table
 	 */
 	public void setRows(Collection<Row> rows) {
@@ -54,7 +54,23 @@ public class Estimate extends ModelObject {
 	}
 	
 	/**
-	 * Set the settings.
+	 * Gets the settings.
+	 * @return the settings
+	 */
+	public Settings getSettings() {
+		return settings;
+	}
+	
+	/**
+	 * Gets the table rows.
+	 * @return the rows in the table
+	 */
+	public Collection<Row> getRows() {
+		return rows;
+	}
+	
+	/**
+	 * Sets the settings.
 	 * @param settings the settings
 	 */
 	public void setSettings(Settings settings) {
@@ -98,11 +114,47 @@ public class Estimate extends ModelObject {
 	 * @return the estimated script time
 	 */
 	public String getEstScriptTime() {
-		Integer total = new Integer(0);
+		Integer total = 0;
 		
+		Integer defaultRowTime = estMoveTime * 2;
+		Integer minute = 60;
+		Integer countRate = 3600 / estCountRate;
+	
+		for (Row row : rows) {
+			if (row.getPosition() != "") {
+				total += defaultRowTime;
+				if (row.getTransWait() != null && row.getTrans() != null && row.getTrans() != 0) {
+					switch(row.getTransWait()) {
+						case FRAMES:
+							if (row.getTrans() >= 25) {
+								total += row.getTrans().intValue() / 25;
+							}
+							break;
+						case MINUTES: 
+							total += row.getTrans().intValue() * minute;
+							System.out.print(total);
+							break;
+						case SECONDS: 
+							total += row.getTrans().intValue();
+							break;
+						case MICROAMP: 
+							total += row.getTrans().intValue() * countRate; 
+							break;
+					}
+				}
+				else { 
+					total += defaultRowTime; 
+				}
+			}
+		}
 		
+		Integer hrs = total / 3600;
+		Integer mins = (total % 3600) / 60;
+		Integer secs = total % 60;
 		
-		return total.toString();
+		estScriptTime = String.format("%02d:%02d:%02d", hrs, mins, secs);
+		
+		return estScriptTime;
 	}
 
 	/**
