@@ -54,7 +54,7 @@ public class AlarmSettings implements InstrumentInfoReceiver {
     /**
      * Create an AlarmSettings object with a specific preference store.
      * 
-     * @param scopedPreferenceStore
+     * @param preferences The preference store to use for the alarm settings
      */
     public AlarmSettings(IPreferenceStore preferences) {
         this.preferences = preferences;
