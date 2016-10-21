@@ -19,7 +19,7 @@
 
 package uk.ac.stfc.isis.ibex.ui.logplotter.tests;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
 
 import org.csstudio.trends.databrowser2.preferences.Preferences;
@@ -34,24 +34,39 @@ import uk.ac.stfc.isis.ibex.ui.logplotter.LogPlotterSettings;
 @SuppressWarnings("checkstyle:methodname")
 public class LogPlotterSettingsTest {
 
-    // These settings represent the defaults, as set in
-    // uk.ac.stfc.isis.ibex.product/plugin_customization.ini
-    private static final String DEFAULT_ARCHIVE_SETTINGS = "RDB|1|jdbc\\:mysql\\://localhost/archive*RDB|2|jdbc\\:mysql\\://130.246.39.152/archive";
-    private static final String DEFAULT_URLS_SETTINGS = "jdbc\\:mysql\\://localhost/archive*jdbc\\:mysql\\://130.246.39.152/archive";
-    private static final String LARMOR_ARCHIVE_SETTINGS = "RDB|1|jdbc\\:mysql\\://NDXLARMOR/archive*RDB|2|jdbc\\:mysql\\://130.246.39.152/archive";
-    private static final String LARMOR_URLS_SETTINGS = "jdbc\\:mysql\\://NDXLARMOR/archive*jdbc\\:mysql\\://130.246.39.152/archive";
-    private static final String DEMO_ARCHIVE_SETTINGS = "RDB|1|jdbc\\:mysql\\://NDXDEMO/archive*RDB|2|jdbc\\:mysql\\://130.246.39.152/archive";
-    private static final String DEMO_URLS_SETTINGS = "jdbc\\:mysql\\://NDXDEMO/archive*jdbc\\:mysql\\://130.246.39.152/archive";
-    private static final String CUSTOM_ARCHIVE_SETTINGS = "RDB|1|jdbc\\:mysql\\://NDWCUSTOM/archive*RDB|2|jdbc\\:mysql\\://130.246.39.152/archive";
-    private static final String CUSTOM_URLS_SETTINGS = "jdbc\\:mysql\\://NDWCUSTOM/archive*jdbc\\:mysql\\://130.246.39.152/archive";
-
     private static final String LOCALHOST = "localhost";
     private static final String NDXLARMOR = "NDXLARMOR";
     private static final String NDXDEMO = "NDXDEMO";
     private static final String NDXLARMOR_LOWERCASE = "NDXlarmor";
-    private static final String NOT_A_HOST_NAME = "JDBC";
     private static final String NDWCUSTOM = "NDWCUSTOM";
     private static final String IP_ADDRESS = "123.123.123.123";
+    private static final String NON_ISIS_INST_NAME = "JOES_PC";
+
+    private static String BuildArchiveSettings(String inst_name) {
+        return "RDB|1|jdbc\\:mysql\\://" + inst_name + "/archive*RDB|2|jdbc\\:mysql\\://130.246.39.152/archive";
+    }
+
+    private static String BuildUrlsSettings(String inst_name) {
+        return "jdbc\\:mysql\\://" + inst_name + "/archive*jdbc\\:mysql\\://130.246.39.152/archive";
+    }
+
+    // These settings represent the defaults, as set in
+    // uk.ac.stfc.isis.ibex.product/plugin_customization.ini
+    private static final String LOCALHOST_ARCHIVE_SETTINGS = BuildArchiveSettings(LOCALHOST);
+    private static final String LOCALHOST_URLS_SETTINGS = BuildUrlsSettings(LOCALHOST);
+    private static final String LARMOR_ARCHIVE_SETTINGS = BuildArchiveSettings(NDXLARMOR);
+    private static final String LARMOR_URLS_SETTINGS = BuildUrlsSettings(NDXLARMOR);
+    private static final String DEMO_ARCHIVE_SETTINGS = BuildArchiveSettings(NDXDEMO);
+    private static final String DEMO_URLS_SETTINGS = BuildUrlsSettings(NDXDEMO);
+    private static final String CUSTOM_ARCHIVE_SETTINGS = BuildArchiveSettings(NDWCUSTOM);
+    private static final String CUSTOM_URLS_SETTINGS = BuildUrlsSettings(NDWCUSTOM);
+    private static final String NON_ISIS_INST_ARCHIVE_SETTINGS = BuildArchiveSettings(NON_ISIS_INST_NAME);
+    private static final String NON_ISIS_INST_URLS_SETTINGS = BuildUrlsSettings(NON_ISIS_INST_NAME);
+    private static final String IP_ARCHIVE_SETTINGS = BuildArchiveSettings(IP_ADDRESS);
+    private static final String IP_URLS_SETTINGS = BuildUrlsSettings(IP_ADDRESS);
+
+    private static final String DEFAULT_ARCHIVE_SETTINGS = LOCALHOST_ARCHIVE_SETTINGS;
+    private static final String DEFAULT_URLS_SETTINGS = LOCALHOST_URLS_SETTINGS;
 
     private IPreferenceStore preferenceStore;
     
@@ -187,7 +202,7 @@ public class LogPlotterSettingsTest {
     public void switching_from_NDWCUSTOM_to_NDXLARMOR_updates_urls_settings() {
         // Act
         logPlotterSettings.setInstrument(mockCustom, mockLocalHost);
-        logPlotterSettings.setInstrument(mockLarmor, mockLarmor);
+        logPlotterSettings.setInstrument(mockLarmor, mockCustom);
 
         // Assert
         assertEquals(LARMOR_URLS_SETTINGS, preferenceStore.getString(Preferences.URLS));
@@ -215,23 +230,105 @@ public class LogPlotterSettingsTest {
                 preferenceStore.getString(Preferences.ARCHIVES));
     }
 
-    @Test(expected = RuntimeException.class)
-    public void switching_from_invalid_host_name_to_local_host_throws_runtime_error() {
+    @Test
+    public void switching_from_local_host_to_non_ISIS_instrument_name_updates_urls_settings() {
         // Act
-        logPlotterSettings.setInstrument(mockInstrument(NOT_A_HOST_NAME), mockLocalHost);
-        logPlotterSettings.setInstrument(mockLocalHost, mockInstrument(NOT_A_HOST_NAME));
+        logPlotterSettings.setInstrument(mockInstrument(NON_ISIS_INST_NAME), mockLocalHost);
 
         // Assert
-        assertFalse(DEFAULT_ARCHIVE_SETTINGS.equals(preferenceStore.getString(Preferences.ARCHIVES)));
+        assertEquals(NON_ISIS_INST_URLS_SETTINGS, preferenceStore.getString(Preferences.URLS));
+    }
+
+    @Test
+    public void switching_from_local_host_to_non_ISIS_instrument_name_updates_archives_settings() {
+        // Act
+        logPlotterSettings.setInstrument(mockInstrument(NON_ISIS_INST_NAME), mockLocalHost);
+
+        // Assert
+        assertEquals(NON_ISIS_INST_ARCHIVE_SETTINGS, preferenceStore.getString(Preferences.ARCHIVES));
+    }
+
+    @Test
+    public void switching_from_local_host_to_IP_host_name_updates_urls_settings() {
+        // Act
+        logPlotterSettings.setInstrument(mockInstrument(IP_ADDRESS), mockLocalHost);
+
+        // Assert
+        assertEquals(IP_URLS_SETTINGS, preferenceStore.getString(Preferences.URLS));
+    }
+
+    @Test
+    public void switching_from_local_host_to_IP_host_name_updates_archives_settings() {
+        // Act
+        logPlotterSettings.setInstrument(mockInstrument(IP_ADDRESS), mockLocalHost);
+
+        // Assert
+        assertEquals(IP_ARCHIVE_SETTINGS, preferenceStore.getString(Preferences.ARCHIVES));
+    }
+
+    @Test
+    public void switching_from_local_host_to_local_host_causes_no_change_to_urls_settings() {
+        // Act
+        logPlotterSettings.setInstrument(mockLocalHost, mockLocalHost);
+
+        // Assert
+        assertEquals(LOCALHOST_URLS_SETTINGS, preferenceStore.getString(Preferences.URLS));
+    }
+
+    @Test
+    public void switching_from_local_host_to_local_host_causes_no_change_to_archives_settings() {
+        // Act
+        logPlotterSettings.setInstrument(mockLocalHost, mockLocalHost);
+
+        // Assert
+        assertEquals(LOCALHOST_ARCHIVE_SETTINGS, preferenceStore.getString(Preferences.ARCHIVES));
+    }
+
+    @Test
+    public void switching_from_larmor_to_larmor_causes_no_change_to_urls_settings() {
+        // Act
+        logPlotterSettings.setInstrument(mockLarmor, mockLocalHost);
+        String expectedUrls = preferenceStore.getString(Preferences.URLS);
+        logPlotterSettings.setInstrument(mockLarmor, mockLarmor);
+        String actualUrls = preferenceStore.getString(Preferences.URLS);
+
+        // Assert
+        assertEquals(actualUrls, expectedUrls);
+    }
+
+    @Test
+    public void switching_from_larmor_to_larmor_causes_no_change_to_archives_settings() {
+        // Act
+        logPlotterSettings.setInstrument(mockLarmor, mockLocalHost);
+        String expectedArchives = preferenceStore.getString(Preferences.ARCHIVES);
+        logPlotterSettings.setInstrument(mockLarmor, mockLarmor);
+        String actualArchives = preferenceStore.getString(Preferences.ARCHIVES);
+
+        // Assert
+        assertEquals(actualArchives, expectedArchives);
     }
 
     @Test(expected = RuntimeException.class)
-    public void switching_from_IP_host_name_to_local_host_throws_runtime_error() {
+    public void switching_from_localhost_to_larmor_with_demo_as_old_instrument_raises_RuntimeException() {
         // Act
-        logPlotterSettings.setInstrument(mockInstrument(IP_ADDRESS), mockLocalHost);
-        logPlotterSettings.setInstrument(mockLocalHost, mockInstrument(IP_ADDRESS));
+        logPlotterSettings.setInstrument(mockLarmor, mockDemo);
+    }
+
+    @Test(expected = RuntimeException.class)
+    public void switching_from_localhost_to_larmor_with_demo_as_old_instrument_does_not_change_urls_settings() {
+        // Act
+        logPlotterSettings.setInstrument(mockLarmor, mockDemo);
 
         // Assert
-        assertFalse(DEFAULT_ARCHIVE_SETTINGS.equals(preferenceStore.getString(Preferences.ARCHIVES)));
+        assertEquals(LOCALHOST_URLS_SETTINGS, preferenceStore.getString(Preferences.URLS));
+    }
+
+    @Test(expected = RuntimeException.class)
+    public void switching_from_localhost_to_larmor_with_demo_as_old_instrument_does_not_change_archives_settings() {
+        // Act
+        logPlotterSettings.setInstrument(mockLarmor, mockDemo);
+
+        // Assert
+        assertEquals(LOCALHOST_ARCHIVE_SETTINGS, preferenceStore.getString(Preferences.ARCHIVES));
     }
 }
