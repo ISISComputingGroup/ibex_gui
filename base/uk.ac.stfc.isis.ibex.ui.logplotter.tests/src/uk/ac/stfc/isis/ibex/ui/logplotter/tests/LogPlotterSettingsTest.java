@@ -34,49 +34,165 @@ import uk.ac.stfc.isis.ibex.ui.logplotter.LogPlotterSettings;
 @SuppressWarnings("checkstyle:methodname")
 public class LogPlotterSettingsTest {
 
+    /**
+     * Localhost instrument name.
+     */
     private static final String LOCALHOST = "localhost";
+
+    /**
+     * Larmor instrument name.
+     */
     private static final String NDXLARMOR = "NDXLARMOR";
+
+    /**
+     * Demo instrument name.
+     */
     private static final String NDXDEMO = "NDXDEMO";
+
+    /**
+     * Larmor instrument name with larmor in lower case.
+     */
     private static final String NDXLARMOR_LOWERCASE = "NDXlarmor";
+
+    /**
+     * Custom instrument name.
+     */
     private static final String NDWCUSTOM = "NDWCUSTOM";
+
+    /**
+     * Generic IP address.
+     */
     private static final String IP_ADDRESS = "123.123.123.123";
+
+    /**
+     * Instrument name not conforming to standard ISIS naming convention.
+     */
     private static final String NON_ISIS_INST_NAME = "JOES_PC";
 
+    /**
+     * @param inst_name The instrument name
+     * @return The archive settings string corresponding to the given
+     *         instrument.
+     */
     private static String BuildArchiveSettings(String inst_name) {
         return "RDB|1|jdbc\\:mysql\\://" + inst_name + "/archive*RDB|2|jdbc\\:mysql\\://130.246.39.152/archive";
     }
 
+    /**
+     * @param inst_name The instrument name
+     * @return The URLs settings string corresponding to the given instrument.
+     */
     private static String BuildUrlsSettings(String inst_name) {
         return "jdbc\\:mysql\\://" + inst_name + "/archive*jdbc\\:mysql\\://130.246.39.152/archive";
     }
 
     // These settings represent the defaults, as set in
     // uk.ac.stfc.isis.ibex.product/plugin_customization.ini
+
+    /**
+     * Archive settings for localhost.
+     */
     private static final String LOCALHOST_ARCHIVE_SETTINGS = BuildArchiveSettings(LOCALHOST);
+
+    /**
+     * URL settings for localhost.
+     */
     private static final String LOCALHOST_URLS_SETTINGS = BuildUrlsSettings(LOCALHOST);
+
+    /**
+     * Archive settings for larmor.
+     */
     private static final String LARMOR_ARCHIVE_SETTINGS = BuildArchiveSettings(NDXLARMOR);
+
+    /**
+     * URL settings for larmor.
+     */
     private static final String LARMOR_URLS_SETTINGS = BuildUrlsSettings(NDXLARMOR);
+
+    /**
+     * Archive settings for demo.
+     */
     private static final String DEMO_ARCHIVE_SETTINGS = BuildArchiveSettings(NDXDEMO);
+
+    /**
+     * URL settings for demo.
+     */
     private static final String DEMO_URLS_SETTINGS = BuildUrlsSettings(NDXDEMO);
+
+    /**
+     * Archive settings for a custom instrument.
+     */
     private static final String CUSTOM_ARCHIVE_SETTINGS = BuildArchiveSettings(NDWCUSTOM);
+
+    /**
+     * URL settings for a custom instrument.
+     */
     private static final String CUSTOM_URLS_SETTINGS = BuildUrlsSettings(NDWCUSTOM);
+
+    /**
+     * Archive settings for an instrument not conforming to standard ISIS naming
+     * convention.
+     */
     private static final String NON_ISIS_INST_ARCHIVE_SETTINGS = BuildArchiveSettings(NON_ISIS_INST_NAME);
+
+    /**
+     * URL settings for an instrument not conforming to standard ISIS naming
+     * convention.
+     */
     private static final String NON_ISIS_INST_URLS_SETTINGS = BuildUrlsSettings(NON_ISIS_INST_NAME);
+
+    /**
+     * Archive settings for an instrument in IP address format.
+     */
     private static final String IP_ARCHIVE_SETTINGS = BuildArchiveSettings(IP_ADDRESS);
+
+    /**
+     * URL settings for an instrument in IP address format.
+     */
     private static final String IP_URLS_SETTINGS = BuildUrlsSettings(IP_ADDRESS);
 
+    /**
+     * Archive settings for the default instrument (currently localhost).
+     */
     private static final String DEFAULT_ARCHIVE_SETTINGS = LOCALHOST_ARCHIVE_SETTINGS;
+
+    /**
+     * URL settings for the default instrument (currently localhost).
+     */
     private static final String DEFAULT_URLS_SETTINGS = LOCALHOST_URLS_SETTINGS;
 
+    /**
+     * Preference store.
+     */
     private IPreferenceStore preferenceStore;
     
+    /**
+     * Log plotter settings instance to use for tests.
+     */
     private LogPlotterSettings logPlotterSettings;
 
+    /**
+     * Mock instrument with host name localhost.
+     */
     private InstrumentInfo mockLocalHost;
+
+    /**
+     * Mock instrument with host name larmor.
+     */
     private InstrumentInfo mockLarmor;
+    /**
+     * Mock instrument with host name demo.
+     */
     private InstrumentInfo mockDemo;
+
+    /**
+     * Mock instrument with custom instrument host name.
+     */
     private InstrumentInfo mockCustom;
 
+    /**
+     * Set up procedure to run before tests.
+     */
     @Before
     public void setUp() {
         // Arrange
@@ -93,6 +209,12 @@ public class LogPlotterSettingsTest {
         mockCustom = mockInstrument(NDWCUSTOM);
     }
 
+    /**
+     * Generate a mock instrument based on a given host name.
+     * 
+     * @param hostName Host name of mock instrument
+     * @return An instrumentInfo object with host name same as input parameter
+     */
     private InstrumentInfo mockInstrument(String hostName) {
         InstrumentInfo returnedInstrument = mock(InstrumentInfo.class);
         when(returnedInstrument.hostName()).thenReturn(hostName);

@@ -27,10 +27,21 @@ import org.eclipse.ui.preferences.ScopedPreferenceStore;
 import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
 import uk.ac.stfc.isis.ibex.instrument.InstrumentInfoReceiver;
 
+/**
+ * This class is responsible for changing the alarm settings for the DataBrowser
+ * when the instrument is changed, or first set. Several url settings get
+ * changed.
+ */
 public class AlarmSettings implements InstrumentInfoReceiver {
 
+    /**
+     * The plugin activator ID.
+     */
 	private static final String PREF_QUALIFIER_ID = org.csstudio.alarm.beast.Activator.ID;
 	
+    /**
+     * The current preferences stored in the preference store.
+     */
     private static final IPreferenceStore PREFERENCES =
             new ScopedPreferenceStore(InstanceScope.INSTANCE, PREF_QUALIFIER_ID);
 
@@ -39,11 +50,27 @@ public class AlarmSettings implements InstrumentInfoReceiver {
         setAlarmURL(newInstrument.hostName(), oldInstrument.hostName());
 	}
 
+    /**
+     * Update the current alarm URLs by replacing the oldHostName with the
+     * newHostName.
+     * 
+     * @param newHostName The name of the new instrument host
+     * @param oldHostName The name of the previous instrument host
+     */
     private void setAlarmURL(String newHostName, String oldHostName) {
         PREFERENCES.setValue(Preferences.RDB_URL, updateHostName(newHostName, oldHostName, getAlarmURL()));
         PREFERENCES.setValue(Preferences.JMS_URL, updateHostName(newHostName, oldHostName, getJMSURL()));
-	}
+    }
 
+    /**
+     * Update the host name in a specific URL by replacing the old host name
+     * with the new one.
+     * 
+     * @param newHostName The name of the new instrument host
+     * @param oldHostName The name of the previous instrument host
+     * @param preference The preference to be updated
+     * @return The updated preference string
+     */
     private static String updateHostName(String newHostName, String oldHostName, String preference) {
         // Extra replace of localhost is needed because preference not restored
         // on startup, so defaults to localhost. See ticket #1109
@@ -57,10 +84,16 @@ public class AlarmSettings implements InstrumentInfoReceiver {
         return preference;
     }
 
+    /**
+     * @return The current alarm URL
+     */
     private static String getAlarmURL() {
         return PREFERENCES.getString(Preferences.RDB_URL);
     }
 
+    /**
+     * @return The current JMS URL
+     */
     private static String getJMSURL() {
         return PREFERENCES.getString(Preferences.JMS_URL);
     }

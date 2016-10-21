@@ -33,12 +33,23 @@ import uk.ac.stfc.isis.ibex.instrument.InstrumentInfoReceiver;
  */
 public class LogPlotterSettings implements InstrumentInfoReceiver {
 
+    /**
+     * Current log plotter settings preferences.
+     **/
     private IPreferenceStore preferences;
 	
+    /**
+     * Default constructor.
+     */
 	public LogPlotterSettings() {
         this(Activator.getDefault().getPreferenceStore());
 	}
 	
+    /**
+     * Construct with initial preferences.
+     * 
+     * @param preferences Initial preferences
+     */
 	public LogPlotterSettings(IPreferenceStore preferences) {
 	    this.preferences = preferences;
 	}
@@ -50,14 +61,37 @@ public class LogPlotterSettings implements InstrumentInfoReceiver {
         setArchives(newInstrument.hostName(), oldInstrument.hostName());
 	}
 
+    /**
+     * Update the URL preferences. Finds instances of oldHostName and replaces
+     * with newHostName.
+     * 
+     * @param newHostName The new host instrument name
+     * @param oldHostName The previous host instrument name
+     */
     private void setURLs(String newHostName, String oldHostName) {
         preferences.setValue(Preferences.URLS, updateHostName(newHostName, oldHostName, getDatabaseUrls()));
 	}
-	
+
+    /**
+     * Update the archive preferences. Finds instances of oldHostName and
+     * replaces with newHostName.
+     * 
+     * @param newHostName The new host instrument name
+     * @param oldHostName The previous host instrument name
+     */
     private void setArchives(String newHostName, String oldHostName) {
         preferences.setValue(Preferences.ARCHIVES, updateHostName(newHostName, oldHostName, getArchives()));
 	}
-	
+
+    /**
+     * Updates a particular preference. Finds instances of oldHostName and
+     * replaces with newHostName.
+     * 
+     * @param newHostName The new host instrument name
+     * @param oldHostName The previous host instrument name
+     * @param preference The preference to update
+     * @return The update preference string
+     */
     private static String updateHostName(String newHostName, String oldHostName, String preference) {
         String newPreference = preference.replace(oldHostName, newHostName);
         if (newPreference == preference) {
@@ -69,10 +103,16 @@ public class LogPlotterSettings implements InstrumentInfoReceiver {
         return preference;
 	}
 
+    /**
+     * @return The current URLs preferences
+     */
     private String getDatabaseUrls() {
         return preferences.getString(Preferences.URLS);
     }
 
+    /**
+     * @return The current archive preferences
+     */
     private String getArchives() {
         return preferences.getString(Preferences.ARCHIVES);
     }
