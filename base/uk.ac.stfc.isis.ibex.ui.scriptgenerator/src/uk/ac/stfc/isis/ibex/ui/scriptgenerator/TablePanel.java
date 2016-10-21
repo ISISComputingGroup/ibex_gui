@@ -50,6 +50,9 @@ public class TablePanel extends Composite {
 		table.setRows(rows);
 	}
 	
+	/**
+	 * Clears the table.
+	 */
 	public void clearTable() {
 		table.clearTable();
 	}
