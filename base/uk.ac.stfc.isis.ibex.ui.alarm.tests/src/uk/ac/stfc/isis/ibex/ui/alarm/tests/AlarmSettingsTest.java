@@ -32,7 +32,7 @@ import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
 import uk.ac.stfc.isis.ibex.ui.logplotter.LogPlotterSettings;
 
 @SuppressWarnings("checkstyle:methodname")
-public class LogPlotterSettingsTest {
+public class AlarmSettingsTest {
 
     /**
      * Localhost instrument name.
@@ -161,15 +161,38 @@ public class LogPlotterSettingsTest {
      */
     private static final String DEFAULT_URLS_SETTINGS = LOCALHOST_URLS_SETTINGS;
 
+    /**
+     * Preference store.
+     */
     private IPreferenceStore preferenceStore;
     
+    /**
+     * Log plotter settings instance to use for tests.
+     */
     private LogPlotterSettings logPlotterSettings;
 
+    /**
+     * Mock instrument with host name localhost.
+     */
     private InstrumentInfo mockLocalHost;
+
+    /**
+     * Mock instrument with host name larmor.
+     */
     private InstrumentInfo mockLarmor;
+    /**
+     * Mock instrument with host name demo.
+     */
     private InstrumentInfo mockDemo;
+
+    /**
+     * Mock instrument with custom instrument host name.
+     */
     private InstrumentInfo mockCustom;
 
+    /**
+     * Set up procedure to run before tests.
+     */
     @Before
     public void setUp() {
         // Arrange
@@ -186,6 +209,12 @@ public class LogPlotterSettingsTest {
         mockCustom = mockInstrument(NDWCUSTOM);
     }
 
+    /**
+     * Generate a mock instrument based on a given host name.
+     * 
+     * @param hostName Host name of mock instrument
+     * @return An instrumentInfo object with host name same as input parameter
+     */
     private InstrumentInfo mockInstrument(String hostName) {
         InstrumentInfo returnedInstrument = mock(InstrumentInfo.class);
         when(returnedInstrument.hostName()).thenReturn(hostName);
