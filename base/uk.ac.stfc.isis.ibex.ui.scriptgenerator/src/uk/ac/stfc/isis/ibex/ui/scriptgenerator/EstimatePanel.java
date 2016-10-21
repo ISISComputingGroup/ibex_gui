@@ -27,13 +27,17 @@ import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.core.databinding.validation.IValidator;
 import org.eclipse.jface.databinding.fieldassist.ControlDecorationSupport;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
 import uk.ac.stfc.isis.ibex.scriptgenerator.estimate.Estimate;
@@ -47,6 +51,7 @@ public class EstimatePanel extends Composite {
 	private Text txtCountRate;
 	private Text txtTimeBetween;
 	private Label lblTimeValue;
+	private Button btnCalculate;
 	
 	/**
 	 * The default constructor.
@@ -76,36 +81,34 @@ public class EstimatePanel extends Composite {
 		txtCountRate.setText("40");
 		txtCountRate.setToolTipText("The estimated count rate");
 		
-		GridData gdLblCountRateUnit = new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1);
 		Label lblCountRateUnit = new Label(grpEstimate, SWT.LEFT);
-		lblCountRateUnit.setLayoutData(gdLblCountRateUnit);
+		lblCountRateUnit.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
 		lblCountRateUnit.setText("µA/hr");
 				
 		Label lblTimeBetween = new Label(grpEstimate, SWT.RIGHT);
 		lblTimeBetween.setLayoutData(new GridData(SWT.RIGHT, SWT.FILL, false, false, 1, 1));  
 		lblTimeBetween.setText("Est. time between moves:");
-		
-		GridData gdTextTimeBetween = new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1);
 		txtTimeBetween = new Text(grpEstimate, SWT.BORDER);
-		txtTimeBetween.setLayoutData(gdTextTimeBetween);
+		txtTimeBetween.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 		txtTimeBetween.setText("5");
 		txtTimeBetween.setToolTipText("The estimated time between each move");
 		
-		GridData gdLblTimeBetweenUnits = new GridData(SWT.LEFT, SWT.FILL, false, false, 1, 1);
 		Label lblTimeBetweenUnits = new Label(grpEstimate, SWT.LEFT);
-		lblTimeBetweenUnits.setLayoutData(gdLblTimeBetweenUnits);
+		lblTimeBetweenUnits.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false, 1, 1));
 		lblTimeBetweenUnits.setText("seconds");
 		
 		Label lblScriptTime = new Label(grpEstimate, SWT.RIGHT);
-		lblScriptTime.setLayoutData(new GridData(SWT.RIGHT, SWT.FILL, false, false, 1, 1));
+		GridData gdLblScriptTime = new GridData(SWT.RIGHT, SWT.FILL, false, false, 1, 1);
+		lblScriptTime.setLayoutData(gdLblScriptTime);
 		lblScriptTime.setText("Est. script time:");
-
-		GridData gdLblTimeValue = new GridData(SWT.LEFT, SWT.FILL, false, false, 2, 1);
-		lblTimeValue = new Label(grpEstimate, SWT.RIGHT);
-		lblTimeValue.setLayoutData(gdLblTimeValue);  
+		
+		lblTimeValue = new Label(grpEstimate, SWT.LEFT);
+		GridData gdLblTimeValue = new GridData(SWT.LEFT, SWT.FILL, true, false, 2, 1);
+		lblTimeValue.setLayoutData(gdLblTimeValue);
+		gdLblTimeValue.minimumWidth = 120;
 		lblTimeValue.setToolTipText("The estimated script time");
 		
-		Button btnCalculate = new Button(grpEstimate, SWT.NONE);
+		btnCalculate = new Button(grpEstimate, SWT.NONE);
 		GridData gdButtonCalculate = new GridData(SWT.CENTER, SWT.FILL, true, false, 3, 1);
 		btnCalculate.setLayoutData(gdButtonCalculate);
 		gdButtonCalculate.minimumWidth = 80;
@@ -118,7 +121,7 @@ public class EstimatePanel extends Composite {
 	 * Databinding between EstimatePanel and Estimate. 
 	 * @param estimate the estimate settings
 	 */
-	public void bind(Estimate estimate) {
+	public void bind(final Estimate estimate) {
 		DataBindingContext ctx = new DataBindingContext();
 		IValidator validator = new NumbersOnlyValidator();
 		
@@ -140,5 +143,12 @@ public class EstimatePanel extends Composite {
         IObservableValue targetScriptTime = WidgetProperties.text().observe(lblTimeValue);
         IObservableValue modelScriptTime = BeanProperties.value("estScriptTime").observe(estimate);
         ctx.bindValue(targetScriptTime, modelScriptTime);
+        
+		btnCalculate.addSelectionListener(new SelectionAdapter() {
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+            	lblTimeValue.setText(estimate.getEstScriptTime());
+            }
+        });
 	}
 }
