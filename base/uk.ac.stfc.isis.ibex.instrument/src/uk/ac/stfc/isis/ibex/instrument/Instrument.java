@@ -165,7 +165,10 @@ public class Instrument implements BundleActivator {
 		return instrumentInfo;
 	}
 
-    public InstrumentInfo previousInstrument() {
+    /**
+     * @return The instrument info for the previous instrument.
+     */
+    private InstrumentInfo previousInstrument() {
         return previousInstrumentInfo;
     }
 	
