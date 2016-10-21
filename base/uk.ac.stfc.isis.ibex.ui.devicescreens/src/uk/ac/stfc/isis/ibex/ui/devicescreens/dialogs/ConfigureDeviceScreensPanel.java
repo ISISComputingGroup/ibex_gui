@@ -221,7 +221,7 @@ public class ConfigureDeviceScreensPanel extends Composite {
     private void createTargetGroup(Composite mainComposite) {
         Group grpDetails = new Group(mainComposite, SWT.NONE);
         grpDetails.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-        grpDetails.setText("Device Screens");
+        grpDetails.setText("Target");
         grpDetails.setLayout(new GridLayout(1, false));
 
         Composite detailsComposite = new Composite(grpDetails, SWT.NONE);
@@ -237,14 +237,6 @@ public class ConfigureDeviceScreensPanel extends Composite {
 
         bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(txtName),
                 BeanProperties.value("currentName").observe(viewModel), null, null);
-
-//        viewModel.addPropertyChangeListener("currentName", new PropertyChangeListener() {
-//            @Override
-//            public void propertyChange(PropertyChangeEvent evt) {
-//                System.out.println("hello");
-//                System.out.println(viewModel.getCurrentName());
-//            }
-//        });
 
         txtName.addModifyListener(new ModifyListener() {
             @Override

@@ -25,6 +25,7 @@ package uk.ac.stfc.isis.ibex.ui.devicescreens.models;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import uk.ac.stfc.isis.ibex.configserver.editing.DefaultName;
 import uk.ac.stfc.isis.ibex.devicescreens.desc.DeviceDescription;
@@ -173,16 +174,37 @@ public class DeviceScreensDescriptionViewModel extends ModelObject {
             return;
         }
 
-        // Check for duplicate names
-        if (isDuplicateName(name)) {
-            messageDisplayer.setErrorMessage("ViewModel", "Duplicate names are not allowed");
-        } else {
-            messageDisplayer.setErrorMessage("ViewModel", null);
-        }
-
         selectedScreen.setName(name);
         updateCurrentName(selectedScreen.getName());
+
+        checkScreensValid();
     }
+
+    /**
+     * Checks that the parameters entered for all the screens are valid.
+     */
+    private void checkScreensValid() {
+        String errorMessageNames = "Names must be unique and contain only alphanumeric or underscore characters";
+        
+        Pattern charsOnly = Pattern.compile("\\w+");
+
+        if (!areAllNamesUnique()) {
+            messageDisplayer.setErrorMessage("ViewModel", errorMessageNames);
+            return;
+        }
+
+        for (DeviceDescriptionWrapper d : devices) {
+            // Only need to find one error in the names as message covers all
+            if (!charsOnly.matcher(d.getName()).matches()) {
+                messageDisplayer.setErrorMessage("ViewModel", errorMessageNames);
+                return;
+            }
+        }
+
+        // No errors
+        messageDisplayer.setErrorMessage("ViewModel", null);
+    }
+
 
     /**
      * Update the current name value and raise a change event.
@@ -194,19 +216,22 @@ public class DeviceScreensDescriptionViewModel extends ModelObject {
     }
 
     /**
-     * Checks to see if this name matches one of the existing names.
+     * Checks to see if any names clash.
      * 
-     * @param name the name to check
-     * @return true is the name is a duplicate; false otherwise
+     * @return true if a name is a duplicate; false otherwise
      */
-    private boolean isDuplicateName(String name) {
+    private boolean areAllNamesUnique() {
+        List<String> names = new ArrayList<>();
+
         for (int i = 0; i < devices.size(); ++i) {
-            if (name.trim().equalsIgnoreCase(devices.get(i).getName().trim())) {
-                return true;
+            if (names.contains(devices.get(i).getName().trim())) {
+                return false;
             }
+
+            names.add(devices.get(i).getName().trim());
         }
 
-        return false;
+        return true;
     }
 
     /**
@@ -282,6 +307,8 @@ public class DeviceScreensDescriptionViewModel extends ModelObject {
             devices.remove(index);
             firePropertyChange("screens", oldList, devices);
         }
+
+        checkScreensValid();
     }
 
     /**
@@ -290,7 +317,7 @@ public class DeviceScreensDescriptionViewModel extends ModelObject {
     public void addScreen() {
         List<DeviceDescriptionWrapper> oldList = new ArrayList<>(devices);
 
-        DefaultName namer = new DefaultName("Screen", " ", true);
+        DefaultName namer = new DefaultName("Screen", "_", false);
         List<String> names = new ArrayList<>();
         for (DeviceDescriptionWrapper d : oldList) {
             names.add(d.getName());
@@ -303,6 +330,8 @@ public class DeviceScreensDescriptionViewModel extends ModelObject {
 
         devices.add(new DeviceDescriptionWrapper(newScreen, provider));
         firePropertyChange("screens", oldList, devices);
+
+        checkScreensValid();
     }
 
     /**

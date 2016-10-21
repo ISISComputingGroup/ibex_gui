@@ -31,11 +31,8 @@ import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 
@@ -97,27 +94,6 @@ public class TargetNameWidget extends Composite {
 
             }
         });
-		
-        Button btnSetDefault = new Button(this, SWT.NONE);
-        btnSetDefault.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false, 1, 1));
-        btnSetDefault.addSelectionListener(new SelectionAdapter() {
-            @Override
-            public void widgetSelected(SelectionEvent e) {
-                // Need to decide what to do as there is no way of
-                // guessing what the user wants
-            }
-        });
-        btnSetDefault.setText("Default Target");
-
-        Button btnClearSelection = new Button(this, SWT.NONE);
-        btnClearSelection.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-        btnClearSelection.addSelectionListener(new SelectionAdapter() {
-            @Override
-            public void widgetSelected(SelectionEvent e) {
-                viewModel.setCurrentKey(null);
-            }
-        });
-        btnClearSelection.setText("Clear Target");
 
         DataBindingContext bindingContext = new DataBindingContext();
 
