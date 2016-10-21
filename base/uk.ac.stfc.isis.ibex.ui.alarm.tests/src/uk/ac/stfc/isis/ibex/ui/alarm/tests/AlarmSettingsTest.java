@@ -77,16 +77,16 @@ public class AlarmSettingsTest {
      * @return The archive settings string corresponding to the given
      *         instrument.
      */
-    private static String BuildRdbUrl(String inst_name) {
-        return "jdbc:mysql://" + inst_name + "/ALARM";
+    private static String BuildRdbUrl(String instrumentName) {
+        return "jdbc:mysql://" + instrumentName + "/ALARM";
     }
 
     /**
      * @param inst_name The instrument name
      * @return The URLs settings string corresponding to the given instrument.
      */
-    private static String BuildJmsUrl(String inst_name) {
-        return "failover:(tcp://" + inst_name + ":61616)";
+    private static String BuildJmsUrl(String instrumentName) {
+        return "failover:(tcp://" + instrumentName + ":61616)";
     }
 
     // These settings represent the defaults, as set in
@@ -196,12 +196,12 @@ public class AlarmSettingsTest {
     /**
      * Return value for mocked preference store jms value.
      */
-    private String mock_jms_url;
+    private String mockJmsUrl;
 
     /**
      * Return value for mocked preference store rdb value.
      */
-    private String mock_rdb_url;
+    private String mockRdbUrl;
 
     /**
      * Set up procedure to run before tests.
@@ -209,34 +209,34 @@ public class AlarmSettingsTest {
     @Before
     public void setUp() {
         // Arrange
-        mock_rdb_url = DEFAULT_RDB_URL;
-        mock_jms_url = DEFAULT_JMS_URL;
+        mockRdbUrl = DEFAULT_RDB_URL;
+        mockJmsUrl = DEFAULT_JMS_URL;
 
         preferenceStore = mock(PreferenceStore.class);
         doAnswer(new Answer<Void>() {
             @Override
             public Void answer(InvocationOnMock invocation) throws Throwable {
-                mock_rdb_url = (String) invocation.getArguments()[1];
+                mockRdbUrl = (String) invocation.getArguments()[1];
                 return null;
             }
         }).when(preferenceStore).setValue(eq(Preferences.RDB_URL), anyString());
         doAnswer(new Answer<Void>() {
             @Override
             public Void answer(InvocationOnMock invocation) throws Throwable {
-                mock_jms_url = (String) invocation.getArguments()[1];
+                mockJmsUrl = (String) invocation.getArguments()[1];
                 return null;
             }
         }).when(preferenceStore).setValue(eq(Preferences.JMS_URL), anyString());
         doAnswer(new Answer<String>() {
             @Override
             public String answer(InvocationOnMock invocation) throws Throwable {
-                return mock_jms_url;
+                return mockJmsUrl;
             }
         }).when(preferenceStore).getString(eq(Preferences.JMS_URL));
         doAnswer(new Answer<String>() {
             @Override
             public String answer(InvocationOnMock invocation) throws Throwable {
-                return mock_rdb_url;
+                return mockRdbUrl;
             }
         }).when(preferenceStore).getString(eq(Preferences.RDB_URL));
 

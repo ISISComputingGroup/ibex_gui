@@ -70,20 +70,20 @@ public class LogPlotterSettingsTest {
     private static final String NON_ISIS_INST_NAME = "JOES_PC";
 
     /**
-     * @param inst_name The instrument name
+     * @param instrumentName The instrument name
      * @return The archive settings string corresponding to the given
      *         instrument.
      */
-    private static String BuildArchiveSettings(String inst_name) {
-        return "RDB|1|jdbc\\:mysql\\://" + inst_name + "/archive*RDB|2|jdbc\\:mysql\\://130.246.39.152/archive";
+    private static String BuildArchiveSettings(String instrumentName) {
+        return "RDB|1|jdbc\\:mysql\\://" + instrumentName + "/archive*RDB|2|jdbc\\:mysql\\://130.246.39.152/archive";
     }
 
     /**
-     * @param inst_name The instrument name
+     * @param instrumentName The instrument name
      * @return The URLs settings string corresponding to the given instrument.
      */
-    private static String BuildUrlsSettings(String inst_name) {
-        return "jdbc\\:mysql\\://" + inst_name + "/archive*jdbc\\:mysql\\://130.246.39.152/archive";
+    private static String BuildUrlsSettings(String instrumentName) {
+        return "jdbc\\:mysql\\://" + instrumentName + "/archive*jdbc\\:mysql\\://130.246.39.152/archive";
     }
 
     // These settings represent the defaults, as set in
