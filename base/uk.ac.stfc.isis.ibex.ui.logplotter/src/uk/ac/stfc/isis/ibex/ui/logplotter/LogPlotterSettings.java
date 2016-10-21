@@ -34,7 +34,7 @@ import uk.ac.stfc.isis.ibex.instrument.InstrumentInfoReceiver;
 public class LogPlotterSettings implements InstrumentInfoReceiver {
 
     /**
-     * Current log plotter settings preferences.
+     * Current log plotter settings preference store.
      **/
     private IPreferenceStore preferences;
 	

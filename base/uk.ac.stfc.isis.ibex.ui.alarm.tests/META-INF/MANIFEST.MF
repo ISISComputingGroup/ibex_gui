@@ -7,3 +7,5 @@ Fragment-Host: uk.ac.stfc.isis.ibex.ui.logplotter;bundle-version="1.0.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Require-Bundle: org.mockito;bundle-version="1.9.5",
  org.junit;bundle-version="4.11.0"
+Import-Package: org.csstudio.alarm.beast,
+ uk.ac.stfc.isis.ibex.ui.alarm

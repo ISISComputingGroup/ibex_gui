@@ -40,10 +40,25 @@ public class AlarmSettings implements InstrumentInfoReceiver {
     private static final String PREF_QUALIFIER_ID = org.csstudio.alarm.beast.Activator.ID;
 
     /**
-     * The current preferences stored in the preference store.
+     * The current preferences store.
      */
-    private static final IPreferenceStore PREFERENCES =
-            new ScopedPreferenceStore(InstanceScope.INSTANCE, PREF_QUALIFIER_ID);
+    private IPreferenceStore preferences;
+
+    /**
+     * Default constructor.
+     */
+    public AlarmSettings() {
+        this(new ScopedPreferenceStore(InstanceScope.INSTANCE, PREF_QUALIFIER_ID));
+    }
+
+    /**
+     * Create an AlarmSettings object with a specific preference store.
+     * 
+     * @param scopedPreferenceStore
+     */
+    public AlarmSettings(IPreferenceStore preferences) {
+        this.preferences = preferences;
+    }
 
     @Override
     public void setInstrument(InstrumentInfo newInstrument, InstrumentInfo oldInstrument) {
@@ -58,8 +73,8 @@ public class AlarmSettings implements InstrumentInfoReceiver {
      * @param oldHostName The name of the previous instrument host
      */
     private void setAlarmURL(String newHostName, String oldHostName) {
-        PREFERENCES.setValue(Preferences.RDB_URL, updateHostName(newHostName, oldHostName, getAlarmURL()));
-        PREFERENCES.setValue(Preferences.JMS_URL, updateHostName(newHostName, oldHostName, getJMSURL()));
+        preferences.setValue(Preferences.RDB_URL, updateHostName(newHostName, oldHostName, getAlarmURL()));
+        preferences.setValue(Preferences.JMS_URL, updateHostName(newHostName, oldHostName, getJMSURL()));
     }
 
     /**
@@ -87,14 +102,14 @@ public class AlarmSettings implements InstrumentInfoReceiver {
     /**
      * @return The current alarm URL
      */
-    private static String getAlarmURL() {
-        return PREFERENCES.getString(Preferences.RDB_URL);
+    private String getAlarmURL() {
+        return preferences.getString(Preferences.RDB_URL);
     }
 
     /**
      * @return The current JMS URL
      */
-    private static String getJMSURL() {
-        return PREFERENCES.getString(Preferences.JMS_URL);
+    private String getJMSURL() {
+        return preferences.getString(Preferences.JMS_URL);
     }
 }

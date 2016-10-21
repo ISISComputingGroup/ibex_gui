@@ -20,16 +20,19 @@
 package uk.ac.stfc.isis.ibex.ui.alarm.tests;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.Matchers.*;
 import static org.mockito.Mockito.*;
 
-import org.csstudio.trends.databrowser2.preferences.Preferences;
+import org.csstudio.alarm.beast.Preferences;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.preference.PreferenceStore;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.invocation.InvocationOnMock;
+import org.mockito.stubbing.Answer;
 
 import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
-import uk.ac.stfc.isis.ibex.ui.logplotter.LogPlotterSettings;
+import uk.ac.stfc.isis.ibex.ui.alarm.AlarmSettings;
 
 @SuppressWarnings("checkstyle:methodname")
 public class AlarmSettingsTest {
@@ -74,102 +77,97 @@ public class AlarmSettingsTest {
      * @return The archive settings string corresponding to the given
      *         instrument.
      */
-    private static String BuildArchiveSettings(String inst_name) {
-        return "RDB|1|jdbc\\:mysql\\://" + inst_name + "/archive*RDB|2|jdbc\\:mysql\\://130.246.39.152/archive";
+    private static String BuildRdbUrl(String inst_name) {
+        return "jdbc:mysql://" + inst_name + "/ALARM";
     }
 
     /**
      * @param inst_name The instrument name
      * @return The URLs settings string corresponding to the given instrument.
      */
-    private static String BuildUrlsSettings(String inst_name) {
-        return "jdbc\\:mysql\\://" + inst_name + "/archive*jdbc\\:mysql\\://130.246.39.152/archive";
+    private static String BuildJmsUrl(String inst_name) {
+        return "failover:(tcp://" + inst_name + ":61616)";
     }
 
     // These settings represent the defaults, as set in
     // uk.ac.stfc.isis.ibex.product/plugin_customization.ini
 
     /**
-     * Archive settings for localhost.
+     * RDB URL for localhost.
      */
-    private static final String LOCALHOST_ARCHIVE_SETTINGS = BuildArchiveSettings(LOCALHOST);
+    private static final String LOCALHOST_RDB_URL = BuildRdbUrl(LOCALHOST);
 
     /**
-     * URL settings for localhost.
+     * JMS URL for localhost.
      */
-    private static final String LOCALHOST_URLS_SETTINGS = BuildUrlsSettings(LOCALHOST);
+    private static final String LOCALHOST_JMS_URL = BuildJmsUrl(LOCALHOST);
 
     /**
-     * Archive settings for larmor.
+     * RDB URL for larmor.
      */
-    private static final String LARMOR_ARCHIVE_SETTINGS = BuildArchiveSettings(NDXLARMOR);
+    private static final String LARMOR_RDB_URL = BuildRdbUrl(NDXLARMOR);
 
     /**
-     * URL settings for larmor.
+     * JMS URL for larmor.
      */
-    private static final String LARMOR_URLS_SETTINGS = BuildUrlsSettings(NDXLARMOR);
+    private static final String LARMOR_JMS_URL = BuildJmsUrl(NDXLARMOR);
 
     /**
-     * Archive settings for demo.
+     * RDB URL for demo.
      */
-    private static final String DEMO_ARCHIVE_SETTINGS = BuildArchiveSettings(NDXDEMO);
+    private static final String DEMO_RDB_URL = BuildRdbUrl(NDXDEMO);
 
     /**
-     * URL settings for demo.
+     * JMS URL for demo.
      */
-    private static final String DEMO_URLS_SETTINGS = BuildUrlsSettings(NDXDEMO);
+    private static final String DEMO_JMS_URL = BuildJmsUrl(NDXDEMO);
 
     /**
-     * Archive settings for a custom instrument.
+     * RDB URL for a custom instrument.
      */
-    private static final String CUSTOM_ARCHIVE_SETTINGS = BuildArchiveSettings(NDWCUSTOM);
+    private static final String CUSTOM_RDB_URL = BuildRdbUrl(NDWCUSTOM);
 
     /**
-     * URL settings for a custom instrument.
+     * JMS URL for a custom instrument.
      */
-    private static final String CUSTOM_URLS_SETTINGS = BuildUrlsSettings(NDWCUSTOM);
+    private static final String CUSTOM_JMS_URL = BuildJmsUrl(NDWCUSTOM);
 
     /**
-     * Archive settings for an instrument not conforming to standard ISIS naming
+     * RDB URL for an instrument not conforming to standard ISIS naming
      * convention.
      */
-    private static final String NON_ISIS_INST_ARCHIVE_SETTINGS = BuildArchiveSettings(NON_ISIS_INST_NAME);
+    private static final String NON_ISIS_INST_RDB_URL = BuildRdbUrl(NON_ISIS_INST_NAME);
 
     /**
-     * URL settings for an instrument not conforming to standard ISIS naming
+     * JMS URL for an instrument not conforming to standard ISIS naming
      * convention.
      */
-    private static final String NON_ISIS_INST_URLS_SETTINGS = BuildUrlsSettings(NON_ISIS_INST_NAME);
+    private static final String NON_ISIS_INST_JMS_URL = BuildJmsUrl(NON_ISIS_INST_NAME);
 
     /**
-     * Archive settings for an instrument in IP address format.
+     * RDB URL for an instrument in IP address format.
      */
-    private static final String IP_ARCHIVE_SETTINGS = BuildArchiveSettings(IP_ADDRESS);
+    private static final String IP_RDB_URL = BuildRdbUrl(IP_ADDRESS);
 
     /**
-     * URL settings for an instrument in IP address format.
+     * JMS URL for an instrument in IP address format.
      */
-    private static final String IP_URLS_SETTINGS = BuildUrlsSettings(IP_ADDRESS);
+    private static final String IP_JMS_URL = BuildJmsUrl(IP_ADDRESS);
 
     /**
-     * Archive settings for the default instrument (currently localhost).
+     * RDB URL for the default instrument (currently localhost).
      */
-    private static final String DEFAULT_ARCHIVE_SETTINGS = LOCALHOST_ARCHIVE_SETTINGS;
+    private static final String DEFAULT_RDB_URL = LOCALHOST_RDB_URL;
 
     /**
-     * URL settings for the default instrument (currently localhost).
+     * JMS URL for the default instrument (currently localhost).
      */
-    private static final String DEFAULT_URLS_SETTINGS = LOCALHOST_URLS_SETTINGS;
-
-    /**
-     * Preference store.
-     */
-    private IPreferenceStore preferenceStore;
+    private static final String DEFAULT_JMS_URL = LOCALHOST_JMS_URL;
     
     /**
      * Log plotter settings instance to use for tests.
      */
-    private LogPlotterSettings logPlotterSettings;
+    private AlarmSettings alarmSettings;
 
     /**
      * Mock instrument with host name localhost.
@@ -191,17 +189,58 @@ public class AlarmSettingsTest {
     private InstrumentInfo mockCustom;
 
     /**
+     * Preference store.
+     */
+    private IPreferenceStore preferenceStore;
+
+    /**
+     * Return value for mocked preference store jms value.
+     */
+    private String mock_jms_url;
+
+    /**
+     * Return value for mocked preference store rdb value.
+     */
+    private String mock_rdb_url;
+
+    /**
      * Set up procedure to run before tests.
      */
     @Before
     public void setUp() {
         // Arrange
-        preferenceStore = new PreferenceStore();
-        
-        preferenceStore.setValue(Preferences.ARCHIVES, DEFAULT_ARCHIVE_SETTINGS);
-        preferenceStore.setValue(Preferences.URLS, DEFAULT_URLS_SETTINGS);
-        
-        logPlotterSettings = new LogPlotterSettings(preferenceStore);
+        mock_rdb_url = DEFAULT_RDB_URL;
+        mock_jms_url = DEFAULT_JMS_URL;
+
+        preferenceStore = mock(PreferenceStore.class);
+        doAnswer(new Answer<Void>() {
+            @Override
+            public Void answer(InvocationOnMock invocation) throws Throwable {
+                mock_rdb_url = (String) invocation.getArguments()[1];
+                return null;
+            }
+        }).when(preferenceStore).setValue(eq(Preferences.RDB_URL), anyString());
+        doAnswer(new Answer<Void>() {
+            @Override
+            public Void answer(InvocationOnMock invocation) throws Throwable {
+                mock_jms_url = (String) invocation.getArguments()[1];
+                return null;
+            }
+        }).when(preferenceStore).setValue(eq(Preferences.JMS_URL), anyString());
+        doAnswer(new Answer<String>() {
+            @Override
+            public String answer(InvocationOnMock invocation) throws Throwable {
+                return mock_jms_url;
+            }
+        }).when(preferenceStore).getString(eq(Preferences.JMS_URL));
+        doAnswer(new Answer<String>() {
+            @Override
+            public String answer(InvocationOnMock invocation) throws Throwable {
+                return mock_rdb_url;
+            }
+        }).when(preferenceStore).getString(eq(Preferences.RDB_URL));
+
+        alarmSettings = new AlarmSettings(preferenceStore);
 
         mockLocalHost = mockInstrument(LOCALHOST);
         mockLarmor = mockInstrument(NDXLARMOR);
@@ -222,235 +261,268 @@ public class AlarmSettingsTest {
     }
 
     @Test
-    public void default_archives_setting_is_set_correctly() {
+    public void default_rdb_url_is_set_correctly() {
         // Assert
-        assertEquals(DEFAULT_ARCHIVE_SETTINGS, preferenceStore.getString(Preferences.ARCHIVES));
+        assertEquals(DEFAULT_RDB_URL, preferenceStore.getString(Preferences.RDB_URL));
     }
 
     @Test
-    public void default_urls_setting_is_set_correctly() {
+    public void default_jms_url_is_set_correctly() {
         // Assert
-        assertEquals(DEFAULT_URLS_SETTINGS, preferenceStore.getString(Preferences.URLS));
+        assertEquals(DEFAULT_JMS_URL, preferenceStore.getString(Preferences.JMS_URL));
     }
 
     @Test
-    public void switching_from_local_host_to_NDXLARMOR_updates_archives_settings() {
+    public void switching_from_local_host_to_NDXLARMOR_updates_rdb_url() {
         // Act
-        logPlotterSettings.setInstrument(mockLarmor, mockLocalHost);
+        alarmSettings.setInstrument(mockLarmor, mockLocalHost);
 
         // Assert
-        assertEquals(LARMOR_ARCHIVE_SETTINGS, preferenceStore.getString(Preferences.ARCHIVES));
+        assertEquals(LARMOR_RDB_URL, preferenceStore.getString(Preferences.RDB_URL));
     }
 
     @Test
-    public void switching_from_local_host_to_NDXLARMOR_updates_urls_settings() {
+    public void switching_from_local_host_to_NDXLARMOR_updates_jms_url() {
         // Act
-        logPlotterSettings.setInstrument(mockLarmor, mockLocalHost);
+        alarmSettings.setInstrument(mockLarmor, mockLocalHost);
 
         // Assert
-        assertEquals(LARMOR_URLS_SETTINGS, preferenceStore.getString(Preferences.URLS));
+        assertEquals(LARMOR_JMS_URL, preferenceStore.getString(Preferences.JMS_URL));
     }
 
 
     @Test
-    public void switching_from_NDXLARMOR_to_NDXDEMO_updates_archives_settings() {
+    public void switching_from_NDXLARMOR_to_NDXDEMO_updates_rdb_url() {
         // Act
-        logPlotterSettings.setInstrument(mockLarmor, mockLocalHost);
-        logPlotterSettings.setInstrument(mockDemo, mockLarmor);
+        alarmSettings.setInstrument(mockLarmor, mockLocalHost);
+        alarmSettings.setInstrument(mockDemo, mockLarmor);
 
         // Assert
-        assertEquals(DEMO_ARCHIVE_SETTINGS, preferenceStore.getString(Preferences.ARCHIVES));
+        assertEquals(DEMO_RDB_URL, preferenceStore.getString(Preferences.RDB_URL));
     }
 
     @Test
-    public void switching_from_NDXLARMOR_to_NDXDEMO_updates_urls_settings() {
+    public void switching_from_NDXLARMOR_to_NDXDEMO_updates_jms_url() {
         // Act
-        logPlotterSettings.setInstrument(mockLarmor, mockLocalHost);
-        logPlotterSettings.setInstrument(mockDemo, mockLarmor);
+        alarmSettings.setInstrument(mockLarmor, mockLocalHost);
+        alarmSettings.setInstrument(mockDemo, mockLarmor);
 
         // Assert
-        assertEquals(DEMO_URLS_SETTINGS, preferenceStore.getString(Preferences.URLS));
+        assertEquals(DEMO_JMS_URL, preferenceStore.getString(Preferences.JMS_URL));
     }
 
     @Test
-    public void switching_from_NDXLARMOR_to_local_host_updates_archives_settings() {
+    public void switching_from_NDXLARMOR_to_local_host_updates_rdb_url() {
         // Act
-        logPlotterSettings.setInstrument(mockLarmor, mockLocalHost);
-        logPlotterSettings.setInstrument(mockLocalHost, mockLarmor);
+        alarmSettings.setInstrument(mockLarmor, mockLocalHost);
+        alarmSettings.setInstrument(mockLocalHost, mockLarmor);
 
         // Assert
-        assertEquals(DEFAULT_ARCHIVE_SETTINGS, preferenceStore.getString(Preferences.ARCHIVES));
+        assertEquals(DEFAULT_RDB_URL, preferenceStore.getString(Preferences.RDB_URL));
     }
 
     @Test
-    public void switching_from_NDXLARMOR_to_local_host_updates_urls_settings() {
+    public void switching_from_NDXLARMOR_to_local_host_updates_jms_url() {
         // Act
-        logPlotterSettings.setInstrument(mockLarmor, mockLocalHost);
-        logPlotterSettings.setInstrument(mockLocalHost, mockLarmor);
+        alarmSettings.setInstrument(mockLarmor, mockLocalHost);
+        alarmSettings.setInstrument(mockLocalHost, mockLarmor);
 
         // Assert
-        assertEquals(DEFAULT_URLS_SETTINGS, preferenceStore.getString(Preferences.URLS));
+        assertEquals(DEFAULT_JMS_URL, preferenceStore.getString(Preferences.JMS_URL));
     }
 
     @Test
-    public void switching_from_local_host_to_NDWCUSTOM_updates_archives_settings() {
+    public void switching_from_local_host_to_NDWCUSTOM_updates_rdb_url() {
         // Act
-        logPlotterSettings.setInstrument(mockCustom, mockLocalHost);
+        alarmSettings.setInstrument(mockCustom, mockLocalHost);
 
         // Assert
-        assertEquals(CUSTOM_ARCHIVE_SETTINGS, preferenceStore.getString(Preferences.ARCHIVES));
+        assertEquals(CUSTOM_RDB_URL, preferenceStore.getString(Preferences.RDB_URL));
     }
 
     @Test
-    public void switching_from_local_host_to_NDWCUSTOM_updates_urls_settings() {
+    public void switching_from_local_host_to_NDWCUSTOM_updates_jms_url() {
         // Act
-        logPlotterSettings.setInstrument(mockCustom, mockLocalHost);
+        alarmSettings.setInstrument(mockCustom, mockLocalHost);
 
         // Assert
-        assertEquals(CUSTOM_URLS_SETTINGS, preferenceStore.getString(Preferences.URLS));
+        assertEquals(CUSTOM_JMS_URL, preferenceStore.getString(Preferences.JMS_URL));
     }
 
     @Test
-    public void switching_from_NDWCUSTOM_to_NDXLARMOR_updates_archives_settings() {
+    public void switching_from_NDWCUSTOM_to_NDXLARMOR_updates_rdb_url() {
         // Act
-        logPlotterSettings.setInstrument(mockCustom, mockLocalHost);
-        logPlotterSettings.setInstrument(mockLarmor, mockCustom);
+        alarmSettings.setInstrument(mockCustom, mockLocalHost);
+        alarmSettings.setInstrument(mockLarmor, mockCustom);
 
         // Assert
-        assertEquals(LARMOR_ARCHIVE_SETTINGS, preferenceStore.getString(Preferences.ARCHIVES));
+        assertEquals(LARMOR_RDB_URL, preferenceStore.getString(Preferences.RDB_URL));
     }
 
     @Test
-    public void switching_from_NDWCUSTOM_to_NDXLARMOR_updates_urls_settings() {
+    public void switching_from_NDWCUSTOM_to_NDXLARMOR_updates_jms_url() {
         // Act
-        logPlotterSettings.setInstrument(mockCustom, mockLocalHost);
-        logPlotterSettings.setInstrument(mockLarmor, mockCustom);
+        alarmSettings.setInstrument(mockCustom, mockLocalHost);
+        alarmSettings.setInstrument(mockLarmor, mockCustom);
 
         // Assert
-        assertEquals(LARMOR_URLS_SETTINGS, preferenceStore.getString(Preferences.URLS));
+        assertEquals(LARMOR_JMS_URL, preferenceStore.getString(Preferences.JMS_URL));
     }
 
     @Test
-    public void switching_from_lowercase_ndxdemo_to_local_host_does_not_update_archives_settings() {
+    public void switching_from_lowercase_ndxdemo_to_local_host_does_not_update_rdb_url() {
         // Act
-        logPlotterSettings.setInstrument(mockInstrument(NDXLARMOR_LOWERCASE), mockLocalHost);
-        logPlotterSettings.setInstrument(mockLocalHost, mockInstrument(NDXLARMOR_LOWERCASE));
+        alarmSettings.setInstrument(mockInstrument(NDXLARMOR_LOWERCASE), mockLocalHost);
+        alarmSettings.setInstrument(mockLocalHost, mockInstrument(NDXLARMOR_LOWERCASE));
 
         // Assert
-        assertEquals(DEFAULT_ARCHIVE_SETTINGS.replace(NDXLARMOR, NDXLARMOR_LOWERCASE),
-                preferenceStore.getString(Preferences.ARCHIVES));
+        assertEquals(DEFAULT_RDB_URL.replace(NDXLARMOR, NDXLARMOR_LOWERCASE),
+                preferenceStore.getString(Preferences.RDB_URL));
     }
 
     @Test
-    public void switching_from_lowercase_ndxdemo_to_local_host_does_not_update_urls_settings() {
+    public void switching_from_lowercase_ndxdemo_to_local_host_does_not_update_jms_url() {
         // Act
-        logPlotterSettings.setInstrument(mockInstrument(NDXLARMOR_LOWERCASE), mockLocalHost);
-        logPlotterSettings.setInstrument(mockLocalHost, mockInstrument(NDXLARMOR_LOWERCASE));
+        alarmSettings.setInstrument(mockInstrument(NDXLARMOR_LOWERCASE), mockLocalHost);
+        alarmSettings.setInstrument(mockLocalHost, mockInstrument(NDXLARMOR_LOWERCASE));
 
         // Assert
-        assertEquals(DEFAULT_ARCHIVE_SETTINGS.replace(NDXLARMOR, NDXLARMOR_LOWERCASE),
-                preferenceStore.getString(Preferences.ARCHIVES));
+        assertEquals(DEFAULT_RDB_URL.replace(NDXLARMOR, NDXLARMOR_LOWERCASE),
+                preferenceStore.getString(Preferences.RDB_URL));
     }
 
     @Test
-    public void switching_from_local_host_to_non_ISIS_instrument_name_updates_urls_settings() {
+    public void switching_from_local_host_to_non_ISIS_instrument_name_updates_jms_url() {
         // Act
-        logPlotterSettings.setInstrument(mockInstrument(NON_ISIS_INST_NAME), mockLocalHost);
+        alarmSettings.setInstrument(mockInstrument(NON_ISIS_INST_NAME), mockLocalHost);
 
         // Assert
-        assertEquals(NON_ISIS_INST_URLS_SETTINGS, preferenceStore.getString(Preferences.URLS));
+        assertEquals(NON_ISIS_INST_JMS_URL, preferenceStore.getString(Preferences.JMS_URL));
     }
 
     @Test
-    public void switching_from_local_host_to_non_ISIS_instrument_name_updates_archives_settings() {
+    public void switching_from_local_host_to_non_ISIS_instrument_name_updates_rdb_url() {
         // Act
-        logPlotterSettings.setInstrument(mockInstrument(NON_ISIS_INST_NAME), mockLocalHost);
+        alarmSettings.setInstrument(mockInstrument(NON_ISIS_INST_NAME), mockLocalHost);
 
         // Assert
-        assertEquals(NON_ISIS_INST_ARCHIVE_SETTINGS, preferenceStore.getString(Preferences.ARCHIVES));
+        assertEquals(NON_ISIS_INST_RDB_URL, preferenceStore.getString(Preferences.RDB_URL));
     }
 
     @Test
-    public void switching_from_local_host_to_IP_host_name_updates_urls_settings() {
+    public void switching_from_local_host_to_IP_host_name_updates_jms_url() {
         // Act
-        logPlotterSettings.setInstrument(mockInstrument(IP_ADDRESS), mockLocalHost);
+        alarmSettings.setInstrument(mockInstrument(IP_ADDRESS), mockLocalHost);
 
         // Assert
-        assertEquals(IP_URLS_SETTINGS, preferenceStore.getString(Preferences.URLS));
+        assertEquals(IP_JMS_URL, preferenceStore.getString(Preferences.JMS_URL));
     }
 
     @Test
-    public void switching_from_local_host_to_IP_host_name_updates_archives_settings() {
+    public void switching_from_local_host_to_IP_host_name_updates_rdb_url() {
         // Act
-        logPlotterSettings.setInstrument(mockInstrument(IP_ADDRESS), mockLocalHost);
+        alarmSettings.setInstrument(mockInstrument(IP_ADDRESS), mockLocalHost);
 
         // Assert
-        assertEquals(IP_ARCHIVE_SETTINGS, preferenceStore.getString(Preferences.ARCHIVES));
+        assertEquals(IP_RDB_URL, preferenceStore.getString(Preferences.RDB_URL));
     }
 
     @Test
-    public void switching_from_local_host_to_local_host_causes_no_change_to_urls_settings() {
+    public void switching_from_local_host_to_local_host_causes_no_change_to_jms_url() {
         // Act
-        logPlotterSettings.setInstrument(mockLocalHost, mockLocalHost);
+        alarmSettings.setInstrument(mockLocalHost, mockLocalHost);
 
         // Assert
-        assertEquals(LOCALHOST_URLS_SETTINGS, preferenceStore.getString(Preferences.URLS));
+        assertEquals(LOCALHOST_JMS_URL, preferenceStore.getString(Preferences.JMS_URL));
     }
 
     @Test
-    public void switching_from_local_host_to_local_host_causes_no_change_to_archives_settings() {
+    public void switching_from_local_host_to_local_host_causes_no_change_to_rdb_url() {
         // Act
-        logPlotterSettings.setInstrument(mockLocalHost, mockLocalHost);
+        alarmSettings.setInstrument(mockLocalHost, mockLocalHost);
 
         // Assert
-        assertEquals(LOCALHOST_ARCHIVE_SETTINGS, preferenceStore.getString(Preferences.ARCHIVES));
+        assertEquals(LOCALHOST_RDB_URL, preferenceStore.getString(Preferences.RDB_URL));
     }
 
     @Test
-    public void switching_from_larmor_to_larmor_causes_no_change_to_urls_settings() {
+    public void switching_from_larmor_to_larmor_causes_no_change_to_jms_url() {
         // Act
-        logPlotterSettings.setInstrument(mockLarmor, mockLocalHost);
-        String expectedUrls = preferenceStore.getString(Preferences.URLS);
-        logPlotterSettings.setInstrument(mockLarmor, mockLarmor);
-        String actualUrls = preferenceStore.getString(Preferences.URLS);
+        alarmSettings.setInstrument(mockLarmor, mockLocalHost);
+        String expectedUrls = preferenceStore.getString(Preferences.JMS_URL);
+        alarmSettings.setInstrument(mockLarmor, mockLarmor);
+        String actualUrls = preferenceStore.getString(Preferences.JMS_URL);
 
         // Assert
         assertEquals(actualUrls, expectedUrls);
     }
 
     @Test
-    public void switching_from_larmor_to_larmor_causes_no_change_to_archives_settings() {
+    public void switching_from_larmor_to_larmor_causes_no_change_to_rdb_url() {
         // Act
-        logPlotterSettings.setInstrument(mockLarmor, mockLocalHost);
-        String expectedArchives = preferenceStore.getString(Preferences.ARCHIVES);
-        logPlotterSettings.setInstrument(mockLarmor, mockLarmor);
-        String actualArchives = preferenceStore.getString(Preferences.ARCHIVES);
+        alarmSettings.setInstrument(mockLarmor, mockLocalHost);
+        String expectedArchives = preferenceStore.getString(Preferences.RDB_URL);
+        alarmSettings.setInstrument(mockLarmor, mockLarmor);
+        String actualArchives = preferenceStore.getString(Preferences.RDB_URL);
 
         // Assert
         assertEquals(actualArchives, expectedArchives);
     }
 
-    @Test(expected = RuntimeException.class)
-    public void switching_from_localhost_to_larmor_with_demo_as_old_instrument_raises_RuntimeException() {
+    @Test
+    public void switching_from_localhost_to_larmor_with_demo_as_old_instrument_updates_jms_url() {
+
+        // Works this way for localhost because the values on exit are not
+        // stored in the standard
+        // preference store so value is always localhost on startup. See ticket
+        // #1109
+
         // Act
-        logPlotterSettings.setInstrument(mockLarmor, mockDemo);
+        alarmSettings.setInstrument(mockLarmor, mockDemo);
+
+        // Assert
+        assertEquals(LARMOR_JMS_URL, preferenceStore.getString(Preferences.JMS_URL));
+    }
+
+    @Test
+    public void switching_from_localhost_to_larmor_with_demo_as_old_instrument_does_not_change_rdb_url() {
+
+        // Works this way for localhost because the values on exit are not
+        // stored in the standard
+        // preference store so value is always localhost on startup. See ticket
+        // #1109
+
+        // Act
+        alarmSettings.setInstrument(mockLarmor, mockDemo);
+
+        // Assert
+        assertEquals(LARMOR_RDB_URL, preferenceStore.getString(Preferences.RDB_URL));
     }
 
     @Test(expected = RuntimeException.class)
-    public void switching_from_localhost_to_larmor_with_demo_as_old_instrument_does_not_change_urls_settings() {
+    public void switching_from_custom_to_larmor_with_demo_as_old_instrument_raises_RuntimeException() {
         // Act
-        logPlotterSettings.setInstrument(mockLarmor, mockDemo);
-
-        // Assert
-        assertEquals(LOCALHOST_URLS_SETTINGS, preferenceStore.getString(Preferences.URLS));
+        alarmSettings.setInstrument(mockCustom, mockLocalHost);
+        alarmSettings.setInstrument(mockLarmor, mockDemo);
     }
 
     @Test(expected = RuntimeException.class)
-    public void switching_from_localhost_to_larmor_with_demo_as_old_instrument_does_not_change_archives_settings() {
+    public void switching_from_custom_to_larmor_with_demo_as_old_instrument_does_not_change_jms_url() {
         // Act
-        logPlotterSettings.setInstrument(mockLarmor, mockDemo);
+        alarmSettings.setInstrument(mockCustom, mockLocalHost);
+        alarmSettings.setInstrument(mockLarmor, mockDemo);
 
         // Assert
-        assertEquals(LOCALHOST_ARCHIVE_SETTINGS, preferenceStore.getString(Preferences.ARCHIVES));
+        assertEquals(CUSTOM_JMS_URL, preferenceStore.getString(Preferences.JMS_URL));
+    }
+
+    @Test(expected = RuntimeException.class)
+    public void switching_from_custom_to_larmor_with_demo_as_old_instrument_does_not_change_rdb_url() {
+        // Act
+        alarmSettings.setInstrument(mockCustom, mockLocalHost);
+        alarmSettings.setInstrument(mockLarmor, mockDemo);
+
+        // Assert
+        assertEquals(CUSTOM_RDB_URL, preferenceStore.getString(Preferences.RDB_URL));
     }
 }
