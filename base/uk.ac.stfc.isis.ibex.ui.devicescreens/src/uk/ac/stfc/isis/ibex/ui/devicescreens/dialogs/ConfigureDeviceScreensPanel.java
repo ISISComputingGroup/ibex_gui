@@ -25,7 +25,9 @@ package uk.ac.stfc.isis.ibex.ui.devicescreens.dialogs;
 import java.util.Collection;
 
 import org.eclipse.core.databinding.DataBindingContext;
+import org.eclipse.core.databinding.UpdateValueStrategy;
 import org.eclipse.core.databinding.beans.BeanProperties;
+import org.eclipse.core.databinding.conversion.Converter;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.databinding.viewers.ObservableListContentProvider;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
@@ -244,6 +246,15 @@ public class ConfigureDeviceScreensPanel extends Composite {
                 devicesViewer.refresh();
             }
         });
+
+        // Disable the name box if there is no screen selected
+        Converter isScreenSelectedConverter = new IsNullConverter();
+
+        UpdateValueStrategy enabledStrategy = new UpdateValueStrategy();
+        enabledStrategy.setConverter(isScreenSelectedConverter);
+
+        bindingContext.bindValue(WidgetProperties.enabled().observe(txtName),
+                BeanProperties.value("selectedScreen").observe(viewModel), null, enabledStrategy);
 
         Label lblTarget = new Label(detailsComposite, SWT.NONE);
         lblTarget.setLayoutData(new GridData(SWT.RIGHT, SWT.TOP, false, false, 1, 1));
