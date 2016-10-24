@@ -445,7 +445,7 @@ public class LogPlotterSettingsTest {
     public void switching_to_instrument_called_RDB_and_back_does_not_affect_archives_url() {
         // Act
         String expectedUrl = preferenceStore.getString(Preferences.ARCHIVES);
-        logPlotterSettings.setInstrument(mockInstrument("failover"));
+        logPlotterSettings.setInstrument(mockInstrument("RDB"));
         logPlotterSettings.setInstrument(mockLocalHost);
 
         // Assert
