@@ -101,6 +101,7 @@ public class TargetPropertiesWidget extends Composite {
         lblProperties.setLayoutData(new GridData(SWT.RIGHT, SWT.TOP, false, false, 1, 1));
         lblProperties.setText("Properties");
 
+        // Build up the table
         Composite tableComposite = new Composite(controlComposite, SWT.NONE);
         GridData gdTable = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
         gdTable.minimumHeight = TABLE_HEIGHT;
@@ -121,7 +122,7 @@ public class TargetPropertiesWidget extends Composite {
         TableViewerColumn colTesting2 = new TableViewerColumn(viewer, SWT.NONE);
         colTesting2.getColumn().setText("Value");
 
-        tableColumnLayout.setColumnData(colTesting.getColumn(), new ColumnWeightData(20, 20, false));
+        tableColumnLayout.setColumnData(colTesting.getColumn(), new ColumnWeightData(20, 20, true));
         tableColumnLayout.setColumnData(colTesting2.getColumn(), new ColumnWeightData(40, 20, false));
 
         table.addSelectionListener(new SelectionListener() {
