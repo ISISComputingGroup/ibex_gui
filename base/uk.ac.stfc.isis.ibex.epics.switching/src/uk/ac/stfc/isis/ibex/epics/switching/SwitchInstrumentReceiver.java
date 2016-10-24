@@ -30,8 +30,8 @@ import uk.ac.stfc.isis.ibex.instrument.InstrumentInfoReceiver;
 public class SwitchInstrumentReceiver implements InstrumentInfoReceiver {
 
     @Override
-    public void setInstrument(InstrumentInfo newInstrument, InstrumentInfo oldInstrument) {
-        InstrumentSwitchers.getDefault().setInstrument(newInstrument);
+    public void setInstrument(InstrumentInfo instrument) {
+        InstrumentSwitchers.getDefault().setInstrument(instrument);
     }
 
 }

@@ -60,7 +60,6 @@ public class Instrument implements BundleActivator {
 	
 	private SettableUpdatedValue<String> instrumentName = new SettableUpdatedValue<>();
 	private InstrumentInfo instrumentInfo;
-    private InstrumentInfo previousInstrumentInfo;
 	private final InstrumentInfo localhost;
 	
 	private final Preferences initalPreference = ConfigurationScope.INSTANCE.getNode("uk.ac.stfc.isis.ibex.instrument").node("preferences");
@@ -128,12 +127,7 @@ public class Instrument implements BundleActivator {
 	public void setInstrument(InstrumentInfo selectedInstrument) {
 
         if (this.instrumentInfo != selectedInstrument) {
-            this.previousInstrumentInfo = this.instrumentInfo;
             this.instrumentInfo = selectedInstrument;
-        }
-
-        if (this.previousInstrumentInfo == null) {
-            this.previousInstrumentInfo = selectedInstrument;
         }
 
         if (!instrumentInfo.hasValidHostName()) {
@@ -164,13 +158,6 @@ public class Instrument implements BundleActivator {
 	public InstrumentInfo currentInstrument() {
 		return instrumentInfo;
 	}
-
-    /**
-     * @return The instrument info for the previous instrument.
-     */
-    private InstrumentInfo previousInstrument() {
-        return previousInstrumentInfo;
-    }
 	
 	private static void updateExtendingPlugins(InstrumentInfo selectedInstrument) {
 		IExtensionRegistry registry = Platform.getExtensionRegistry();
@@ -179,7 +166,7 @@ public class Instrument implements BundleActivator {
 			try {
 				final Object obj = element.createExecutableExtension("class");
 				InstrumentInfoReceiver receiver = (InstrumentInfoReceiver) obj;
-                receiver.setInstrument(selectedInstrument, Instrument.getInstance().previousInstrument());
+                receiver.setInstrument(selectedInstrument);
 			} catch (CoreException e) {
                 e.printStackTrace();
 			}

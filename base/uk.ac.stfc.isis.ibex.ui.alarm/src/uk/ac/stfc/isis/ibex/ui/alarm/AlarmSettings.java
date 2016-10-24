@@ -61,55 +61,35 @@ public class AlarmSettings implements InstrumentInfoReceiver {
     }
 
     @Override
-    public void setInstrument(InstrumentInfo newInstrument, InstrumentInfo oldInstrument) {
-        setAlarmURL(newInstrument.hostName(), oldInstrument.hostName());
+    public void setInstrument(InstrumentInfo instrument) {
+        setAlarmURL(instrument.hostName());
     }
 
     /**
      * Update the current alarm URLs by replacing the oldHostName with the
      * newHostName.
      * 
-     * @param newHostName The name of the new instrument host
-     * @param oldHostName The name of the previous instrument host
+     * @param hostName The name of the new instrument host
      */
-    private void setAlarmURL(String newHostName, String oldHostName) {
-        preferences.setValue(Preferences.RDB_URL, updateHostName(newHostName, oldHostName, getAlarmURL()));
-        preferences.setValue(Preferences.JMS_URL, updateHostName(newHostName, oldHostName, getJMSURL()));
+    private void setAlarmURL(String hostName) {
+        preferences.setValue(Preferences.RDB_URL, buildRdbUrl(hostName));
+        preferences.setValue(Preferences.JMS_URL, buildJmsUrl(hostName));
     }
 
     /**
-     * Update the host name in a specific URL by replacing the old host name
-     * with the new one.
-     * 
-     * @param newHostName The name of the new instrument host
-     * @param oldHostName The name of the previous instrument host
-     * @param preference The preference to be updated
-     * @return The updated preference string
+     * @param hostName The instrument name
+     * @return The archive settings string corresponding to the given
+     *         instrument.
      */
-    private static String updateHostName(String newHostName, String oldHostName, String preference) {
-        // Extra replace of localhost is needed because preference not restored
-        // on startup, so defaults to localhost. See ticket #1109
-        String newPreference = preference.replace(oldHostName, newHostName).replace("localhost", newHostName);
-        if (newPreference == preference) {
-            throw new RuntimeException(
-                    "Unable to update preference: " + preference + ". Does not contain old host name: " + oldHostName);
-        } else {
-            preference = newPreference;
-        }
-        return preference;
+    private static String buildRdbUrl(String hostName) {
+        return "jdbc:mysql://" + hostName + "/ALARM";
     }
 
     /**
-     * @return The current alarm URL
+     * @param hostName The instrument name
+     * @return The URLs settings string corresponding to the given instrument.
      */
-    private String getAlarmURL() {
-        return preferences.getString(Preferences.RDB_URL);
-    }
-
-    /**
-     * @return The current JMS URL
-     */
-    private String getJMSURL() {
-        return preferences.getString(Preferences.JMS_URL);
+    private static String buildJmsUrl(String hostName) {
+        return "failover:(tcp://" + hostName + ":61616)";
     }
 }

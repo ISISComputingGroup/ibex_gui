@@ -56,64 +56,44 @@ public class LogPlotterSettings implements InstrumentInfoReceiver {
 	
 	// Connect the databrowser to the archive engine.
 	@Override
-    public void setInstrument(InstrumentInfo newInstrument, InstrumentInfo oldInstrument) {
-        setURLs(newInstrument.hostName(), oldInstrument.hostName());
-        setArchives(newInstrument.hostName(), oldInstrument.hostName());
+    public void setInstrument(InstrumentInfo instrument) {
+        setURLs(instrument.hostName());
+        setArchives(instrument.hostName());
 	}
 
     /**
      * Update the URL preferences. Finds instances of oldHostName and replaces
      * with newHostName.
      * 
-     * @param newHostName The new host instrument name
-     * @param oldHostName The previous host instrument name
+     * @param hostName The new host instrument name
      */
-    private void setURLs(String newHostName, String oldHostName) {
-        preferences.setValue(Preferences.URLS, updateHostName(newHostName, oldHostName, getDatabaseUrls()));
+    private void setURLs(String hostName) {
+        preferences.setValue(Preferences.URLS, buildDatabaseUrl(hostName));
 	}
 
     /**
      * Update the archive preferences. Finds instances of oldHostName and
      * replaces with newHostName.
      * 
-     * @param newHostName The new host instrument name
-     * @param oldHostName The previous host instrument name
+     * @param hostName The new host instrument name
      */
-    private void setArchives(String newHostName, String oldHostName) {
-        preferences.setValue(Preferences.ARCHIVES, updateHostName(newHostName, oldHostName, getArchives()));
+    private void setArchives(String hostName) {
+        preferences.setValue(Preferences.ARCHIVES, buildArchivesUrl(hostName));
 	}
 
     /**
-     * Updates a particular preference. Finds instances of oldHostName and
-     * replaces with newHostName.
-     * 
-     * @param newHostName The new host instrument name
-     * @param oldHostName The previous host instrument name
-     * @param preference The preference to update
-     * @return The update preference string
+     * @param hostName The instrument name
+     * @return The database URL corresponding to the given instrument.
      */
-    private static String updateHostName(String newHostName, String oldHostName, String preference) {
-        String newPreference = preference.replace(oldHostName, newHostName);
-        if (newPreference == preference) {
-            throw new RuntimeException(
-                    "Unable to update preference: " + preference + ". Does not contain old host name: " + oldHostName);
-        } else {
-            preference = newPreference;
-        }
-        return preference;
-	}
-
-    /**
-     * @return The current URLs preferences
-     */
-    private String getDatabaseUrls() {
-        return preferences.getString(Preferences.URLS);
+    private static String buildDatabaseUrl(String hostName) {
+        return "jdbc\\:mysql\\://" + hostName + "/archive*jdbc\\:mysql\\://130.246.39.152/archive";
     }
 
     /**
-     * @return The current archive preferences
+     * @param hostName The instrument name
+     * @return The archives URL corresponding to the given instrument.
      */
-    private String getArchives() {
-        return preferences.getString(Preferences.ARCHIVES);
+    private static String buildArchivesUrl(String hostName) {
+        return "RDB|1|jdbc\\:mysql\\://" + hostName + "/archive*RDB|2|jdbc\\:mysql\\://130.246.39.152/archive";
     }
 }
