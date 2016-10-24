@@ -19,38 +19,90 @@
 
 package uk.ac.stfc.isis.ibex.instrument.internal;
 
+import com.google.common.collect.ImmutableList;
+
+/**
+ * The Class PVPrefix representing the prefix for the instrument.
+ */
 public class PVPrefix {
 
+    /**
+     * Length after which to use a CRC.
+     */
+    private static final int LENGTH_AT_WHICH_TO_USES_CRC8 = 8;
+
+    /**
+     * Length of the string to use when added a CRC to the PV PREFIX.
+     */
+    private static final int LENGTH_OF_MACHINE_NAME_WITH_CRC = LENGTH_AT_WHICH_TO_USES_CRC8 - 2;
+
+    /** instruments are prefixed with IN and do not contain NDX/NDE. */
 	private static final String INSTRUMENT_FORMAT = "IN:%s:";
-	private static final String USER_FORMAT = "%s:%s:";
+	
+    /** test machine start TE and do contain NDW. */
+    private static final String USER_FORMAT = "TE:%s:";
+    
 	public static final String NDX = "NDX";
     public static final String ND = "ND";
+    
+    /** List of possible prefixes for instruments on the machine name. */
+    public static final ImmutableList<String> INSTRUMENT_MACHINE_NAME_PREFIXES = ImmutableList.of("NDX", "NDE");
 	
 	private final String prefix;
 	
-	public PVPrefix(String machineName, String userName) {
-		prefix = isInstrument(machineName) 
- ? instrumentPrefix(machineName) : userPrefix(machineName, userName);
+    /**
+     * Constructor.
+     * 
+     * @param machineName machine name from which to construct the PV Prefix
+     */
+    public PVPrefix(String machineName) {
+
+        prefix = calcPrefix(machineName).toUpperCase();
 	}
+
+    /**
+     * Calculate the prefix based on the machine name.
+     * 
+     * @param machineName machine name
+     */
+    private String calcPrefix(String machineName) {
+        for (String prefix : INSTRUMENT_MACHINE_NAME_PREFIXES) {
+            if (machineName.startsWith(prefix)) {
+                String instrument = getInstrumentName(machineName, prefix);
+                return String.format(INSTRUMENT_FORMAT, instrument);
+            }
+
+        }
+        String instrument = getInstrumentName(machineName, "");
+        return String.format(USER_FORMAT, instrument);
+    }
+
 	
-	public String get() {
-		return prefix;
-	}
-	
-	private boolean isInstrument(String machineName) {
-		return machineName.startsWith(NDX);
-	}
+    /**
+     * Generate the instrument name from the machine name using a CRC8 if
+     * needed.
+     * 
+     * @param machineName the machine name
+     * @param prefixToRemove the prefix to remove from the machine name
+     * @return
+     */
+    private String getInstrumentName(String machineName, String prefixToRemove) {
+        String cleanMachineName = machineName.substring(prefixToRemove.length());
+        if (cleanMachineName.length() > LENGTH_AT_WHICH_TO_USES_CRC8) {
+            String crc8 = CRC8.fromString(cleanMachineName).toString();
+            return cleanMachineName.substring(0, LENGTH_OF_MACHINE_NAME_WITH_CRC) + crc8;
+        }
+        return cleanMachineName;
+    }
 
-	private String userPrefix(String machineName, String userName) {
-        return String.format(USER_FORMAT, machineName, userName).toUpperCase();
-	}
+    /**
+     * PvPrefix to a string.
+     * 
+     * @return PV prefix
+     */
+    @Override
+    public String toString() {
+        return prefix;
+    }
 
-	private String instrumentPrefix(String machineName) {
-        return String.format(INSTRUMENT_FORMAT, instrumentName(machineName)).toUpperCase();
-	}
-
-	// Strip off the NDX prefix
-	private String instrumentName(String machineName) {
-		return machineName.substring(NDX.length()).toUpperCase();
-	}
 }
