@@ -267,8 +267,6 @@ public class ConfigureDeviceScreensPanel extends Composite {
         lblDescription.setLayoutData(new GridData(SWT.RIGHT, SWT.TOP, false, false, 1, 1));
         lblDescription.setText("Description");
 
-        // TargetDescriptionWidget targetDescription = new
-        // TargetDescriptionWidget(detailsComposite, viewModel);
         Text txtDescription = new Text(detailsComposite, SWT.BORDER | SWT.READ_ONLY | SWT.WRAP | SWT.MULTI);
         GridData gdDescription = new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1);
         gdDescription.heightHint = 70;

@@ -23,6 +23,10 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.List;
 
+import org.eclipse.jface.layout.TableColumnLayout;
+import org.eclipse.jface.viewers.ColumnWeightData;
+import org.eclipse.jface.viewers.TableViewer;
+import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
@@ -33,7 +37,6 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Table;
-import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
 
@@ -92,23 +95,34 @@ public class TargetPropertiesWidget extends Composite {
         glControlComposite.marginHeight = 0;
         glControlComposite.marginWidth = 0;
         controlComposite.setLayout(glControlComposite);
-	    controlComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+        controlComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 
         Label lblProperties = new Label(controlComposite, SWT.NONE);
         lblProperties.setLayoutData(new GridData(SWT.RIGHT, SWT.TOP, false, false, 1, 1));
         lblProperties.setText("Properties");
 
-        table = new Table(controlComposite, SWT.BORDER | SWT.FULL_SELECTION);
+        Composite tableComposite = new Composite(controlComposite, SWT.NONE);
         GridData gdTable = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
         gdTable.minimumHeight = TABLE_HEIGHT;
-        table.setLayoutData(gdTable);
+        tableComposite.setLayoutData(gdTable);
+
+        TableColumnLayout tableColumnLayout = new TableColumnLayout();
+        tableComposite.setLayout(tableColumnLayout);
+        TableViewer viewer =
+                new TableViewer(tableComposite, SWT.SINGLE | SWT.V_SCROLL | SWT.FULL_SELECTION | SWT.BORDER);
+
+        table = viewer.getTable();
         table.setHeaderVisible(true);
         table.setLinesVisible(true);
 
-        TableColumn keyColumn = new TableColumn(table, SWT.NULL);
-        keyColumn.setText("Name");
-        TableColumn valueColumn = new TableColumn(table, SWT.NULL);
-        valueColumn.setText("Value");
+        TableViewerColumn colTesting = new TableViewerColumn(viewer, SWT.NONE);
+        colTesting.getColumn().setText("Name");
+
+        TableViewerColumn colTesting2 = new TableViewerColumn(viewer, SWT.NONE);
+        colTesting2.getColumn().setText("Value");
+
+        tableColumnLayout.setColumnData(colTesting.getColumn(), new ColumnWeightData(20, 20, false));
+        tableColumnLayout.setColumnData(colTesting2.getColumn(), new ColumnWeightData(40, 20, false));
 
         table.addSelectionListener(new SelectionListener() {
             @Override
@@ -222,9 +236,6 @@ public class TargetPropertiesWidget extends Composite {
 
             table.setEnabled(properties.size() > 0);
         }
-
-        table.getColumn(0).pack();
-        table.getColumn(1).pack();
 	}
 
 }
