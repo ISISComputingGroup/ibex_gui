@@ -34,7 +34,7 @@ public class LocalHostInstrumentTest {
     }
 
     @Test
-    public void GIVEN_locahost_WHEN_get_THEN_PV_prefix_is_new() {
+    public void GIVEN_locahost_WHEN_get_THEN_PV_prefix_is_TE() {
         String hostname = "HOSTNAME";
         String expected = "TE:" + hostname + ":";
         LocalHostInstrumentInfo hostInfo = new LocalHostInstrumentInfo(hostname);
@@ -44,6 +44,30 @@ public class LocalHostInstrumentTest {
         assertEquals(expected, result);
 
     }
-    
+
+    @Test
+    public void GIVEN_locahost_is_NDE_instrument_WHEN_get_THEN_PV_prefix_is_IN() {
+        String hostname = "NDEMUONFE";
+        String expected = "IN:" + "MUONFE" + ":";
+        LocalHostInstrumentInfo hostInfo = new LocalHostInstrumentInfo(hostname);
+
+        String result = hostInfo.pvPrefix();
+
+        assertEquals(expected, result);
+
+    }
+
+    @Test
+    public void GIVEN_locahost_is_NDX_instrument_WHEN_get_THEN_PV_prefix_is_IN() {
+        String hostname = "NDXINST";
+        String expected = "IN:" + "INST" + ":";
+        LocalHostInstrumentInfo hostInfo = new LocalHostInstrumentInfo(hostname);
+
+        String result = hostInfo.pvPrefix();
+
+        assertEquals(expected, result);
+
+    }
+
 }
 
