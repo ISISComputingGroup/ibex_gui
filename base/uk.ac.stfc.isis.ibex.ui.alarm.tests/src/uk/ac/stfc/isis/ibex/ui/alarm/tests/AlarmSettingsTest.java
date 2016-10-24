@@ -449,23 +449,45 @@ public class AlarmSettingsTest {
     public void switching_from_larmor_to_larmor_causes_no_change_to_jms_url() {
         // Act
         alarmSettings.setInstrument(mockLarmor);
-        String expectedUrls = preferenceStore.getString(Preferences.JMS_URL);
+        String expectedUrl = preferenceStore.getString(Preferences.JMS_URL);
         alarmSettings.setInstrument(mockLarmor);
-        String actualUrls = preferenceStore.getString(Preferences.JMS_URL);
+        String actualUrl = preferenceStore.getString(Preferences.JMS_URL);
 
         // Assert
-        assertEquals(actualUrls, expectedUrls);
+        assertEquals(expectedUrl, actualUrl);
     }
 
     @Test
     public void switching_from_larmor_to_larmor_causes_no_change_to_rdb_url() {
         // Act
         alarmSettings.setInstrument(mockLarmor);
-        String expectedArchives = preferenceStore.getString(Preferences.RDB_URL);
+        String expectedUrl = preferenceStore.getString(Preferences.RDB_URL);
         alarmSettings.setInstrument(mockLarmor);
-        String actualArchives = preferenceStore.getString(Preferences.RDB_URL);
+        String actualUrl = preferenceStore.getString(Preferences.RDB_URL);
 
         // Assert
-        assertEquals(actualArchives, expectedArchives);
+        assertEquals(expectedUrl, actualUrl);
+    }
+
+    @Test
+    public void switching_to_instrument_called_jdbc_and_back_does_not_affect_rdb_url() {
+        // Act
+        String expectedUrl = preferenceStore.getString(Preferences.RDB_URL);
+        alarmSettings.setInstrument(mockInstrument("jdbc"));
+        alarmSettings.setInstrument(mockLocalHost);
+
+        // Assert
+        assertEquals(expectedUrl, preferenceStore.getString(Preferences.RDB_URL));
+    }
+
+    @Test
+    public void switching_to_instrument_called_failover_and_back_does_not_affect_jms_url() {
+        // Act
+        String expectedUrl = preferenceStore.getString(Preferences.JMS_URL);
+        alarmSettings.setInstrument(mockInstrument("failover"));
+        alarmSettings.setInstrument(mockLocalHost);
+
+        // Assert
+        assertEquals(expectedUrl, preferenceStore.getString(Preferences.JMS_URL));
     }
 }

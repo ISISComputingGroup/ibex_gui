@@ -429,4 +429,26 @@ public class LogPlotterSettingsTest {
         // Assert
         assertEquals(actualArchives, expectedArchives);
     }
+
+    @Test
+    public void switching_to_instrument_called_jdbc_and_back_does_not_affect_database_url() {
+        // Act
+        String expectedUrl = preferenceStore.getString(Preferences.URLS);
+        logPlotterSettings.setInstrument(mockInstrument("jdbc"));
+        logPlotterSettings.setInstrument(mockLocalHost);
+
+        // Assert
+        assertEquals(expectedUrl, preferenceStore.getString(Preferences.URLS));
+    }
+
+    @Test
+    public void switching_to_instrument_called_RDB_and_back_does_not_affect_archives_url() {
+        // Act
+        String expectedUrl = preferenceStore.getString(Preferences.ARCHIVES);
+        logPlotterSettings.setInstrument(mockInstrument("failover"));
+        logPlotterSettings.setInstrument(mockLocalHost);
+
+        // Assert
+        assertEquals(expectedUrl, preferenceStore.getString(Preferences.ARCHIVES));
+    }
 }
