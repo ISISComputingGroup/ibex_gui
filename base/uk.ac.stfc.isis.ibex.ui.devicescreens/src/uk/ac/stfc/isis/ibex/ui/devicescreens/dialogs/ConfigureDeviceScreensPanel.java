@@ -104,7 +104,7 @@ public class ConfigureDeviceScreensPanel extends Composite {
      */
     private void createListGroup(Composite mainComposite) {
         Group grpList = new Group(mainComposite, SWT.NONE);
-        grpList.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+        grpList.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, true, 1, 1));
         grpList.setText("Device Screens");
         grpList.setLayout(new GridLayout(2, false));
 
@@ -267,10 +267,15 @@ public class ConfigureDeviceScreensPanel extends Composite {
         lblDescription.setLayoutData(new GridData(SWT.RIGHT, SWT.TOP, false, false, 1, 1));
         lblDescription.setText("Description");
 
-        TargetDescriptionWidget targetDescription = new TargetDescriptionWidget(detailsComposite, viewModel);
-        GridData gdDescription = new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1);
+        // TargetDescriptionWidget targetDescription = new
+        // TargetDescriptionWidget(detailsComposite, viewModel);
+        Text txtDescription = new Text(detailsComposite, SWT.BORDER | SWT.READ_ONLY | SWT.WRAP | SWT.MULTI);
+        GridData gdDescription = new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1);
         gdDescription.heightHint = 70;
-        targetDescription.setLayoutData(gdDescription);
+        txtDescription.setLayoutData(gdDescription);
+
+        bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(txtDescription),
+                BeanProperties.value("currentDescription").observe(viewModel), null, null);
 
         TargetPropertiesView propertiesView = new TargetPropertiesView(detailsComposite, viewModel);
         propertiesView.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
