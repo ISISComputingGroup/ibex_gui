@@ -384,6 +384,20 @@
 					</macro>
 				</macros>
 			</value>
+		</entry>
+        <entry>
+			<key>SKF G5 Chopper</key>
+			<value>
+				<type>CHOPPER</type>
+				<path>SKFChopper.opi</path>
+				<description>GUI for the SKF G5 Controllers</description>
+				<macros>
+                    <macro>
+						<name>DEFAULT_ACTIVE_TAB</name>
+ 						<description>The tab which is displayed when the OPI is opened (0 to 4).</description>  
+					</macro>
+				</macros>
+			</value>
 		</entry>        
 		<entry>
 			<key>Slit 1</key>

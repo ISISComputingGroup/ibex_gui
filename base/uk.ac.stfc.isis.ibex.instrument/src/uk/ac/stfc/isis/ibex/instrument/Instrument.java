@@ -49,6 +49,9 @@ import uk.ac.stfc.isis.ibex.logger.LoggerUtils;
 import uk.ac.stfc.isis.ibex.model.SettableUpdatedValue;
 import uk.ac.stfc.isis.ibex.model.UpdatedValue;
 
+/**
+ * Instrument bundle.
+ */
 public class Instrument implements BundleActivator {
 
     /**
@@ -220,18 +223,20 @@ public class Instrument implements BundleActivator {
      */
     @Override
     public void stop(BundleContext bundleContext) throws Exception {
-        // instrumentsObservable.close();
-        Instrument.context = null;
-    }
+		Instrument.context = null;
+	}
 
-    /**
-     * Set the instrument that IBEX is pointing to. This will update all plugins
-     * that are hooked into the instrument extension point.
-     * 
-     * @param selectedInstrument Information on the new instrument.
-     */
-    public void setInstrument(InstrumentInfo selectedInstrument) {
-        this.instrumentInfo = selectedInstrument;
+	/**
+	 * Set the instrument that IBEX is pointing to. 
+	 * This will update all plugins that are hooked into the instrument extension point. 
+	 * 
+	 * @param selectedInstrument Information on the new instrument.
+	 */
+	public void setInstrument(InstrumentInfo selectedInstrument) {
+
+        if (this.instrumentInfo != selectedInstrument) {
+            this.instrumentInfo = selectedInstrument;
+        }
 
         if (!instrumentInfo.hasValidHostName()) {
             LOG.warn("Invalid host name:" + instrumentInfo.hostName());

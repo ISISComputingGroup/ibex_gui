@@ -59,9 +59,11 @@ public class CustomInstrumentInfo extends InstrumentInfo {
     }
 
     private void checkPreconditions(String pvPrefix) {
+        if (pvPrefix == null) {
+            throw new RuntimeException("The PV prefix must not be null");
+        }
         if (pvPrefix.isEmpty()) {
-            String msg = "The PV prefix must not be empty";
-            throw new IllegalArgumentException(msg);
+            throw new IllegalArgumentException("The PV prefix must not be empty");
         }
     }
 }
