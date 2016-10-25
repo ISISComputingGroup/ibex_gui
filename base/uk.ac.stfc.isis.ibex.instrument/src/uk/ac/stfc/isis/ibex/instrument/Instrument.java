@@ -71,7 +71,6 @@ public class Instrument implements BundleActivator {
 	public Instrument() {
 		instance = this;
         localhost = new LocalHostInstrumentInfo();
-		
         setInstrument(initialInstrument());
     }
     
@@ -126,7 +125,10 @@ public class Instrument implements BundleActivator {
 	 * @param selectedInstrument Information on the new instrument.
 	 */
 	public void setInstrument(InstrumentInfo selectedInstrument) {
-		this.instrumentInfo = selectedInstrument;
+
+        if (this.instrumentInfo != selectedInstrument) {
+            this.instrumentInfo = selectedInstrument;
+        }
 
         if (!instrumentInfo.hasValidHostName()) {
             LOG.warn("Invalid host name:" + instrumentInfo.hostName());
@@ -134,7 +136,7 @@ public class Instrument implements BundleActivator {
 
         instrumentName.setValue(selectedInstrument.name());
 
-		updateExtendingPlugins(selectedInstrument);
+        updateExtendingPlugins(selectedInstrument);
         logNumberOfChannels();
 	}
 
@@ -164,7 +166,7 @@ public class Instrument implements BundleActivator {
 			try {
 				final Object obj = element.createExecutableExtension("class");
 				InstrumentInfoReceiver receiver = (InstrumentInfoReceiver) obj;
-				receiver.setInstrument(selectedInstrument);
+                receiver.setInstrument(selectedInstrument);
 			} catch (CoreException e) {
                 e.printStackTrace();
 			}
