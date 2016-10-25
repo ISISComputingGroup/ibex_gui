@@ -41,7 +41,7 @@ import org.osgi.service.prefs.BackingStoreException;
 import org.osgi.service.prefs.Preferences;
 
 import uk.ac.stfc.isis.ibex.epics.observing.BaseObserver;
-import uk.ac.stfc.isis.ibex.instrument.custom.CustomInstrumentInfo;
+import uk.ac.stfc.isis.ibex.instrument.internal.CustomInstrumentInfo;
 import uk.ac.stfc.isis.ibex.instrument.internal.LocalHostInstrumentInfo;
 import uk.ac.stfc.isis.ibex.instrument.list.InstrumentListObservable;
 import uk.ac.stfc.isis.ibex.logger.IsisLog;

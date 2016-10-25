@@ -17,7 +17,7 @@
  * http://opensource.org/licenses/eclipse-1.0.php
  */
 
-package uk.ac.stfc.isis.ibex.instrument.internal;
+package uk.ac.stfc.isis.ibex.instrumentinfo.tests;
 
 import static org.junit.Assert.*;
 
@@ -25,6 +25,8 @@ import java.security.InvalidParameterException;
 
 import org.junit.Before;
 import org.junit.Test;
+
+import uk.ac.stfc.isis.ibex.instrument.internal.CRC8;
 
 @SuppressWarnings("checkstyle:methodname")
 public class CRC8Test {

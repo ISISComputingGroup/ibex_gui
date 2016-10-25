@@ -17,10 +17,9 @@
  * http://opensource.org/licenses/eclipse-1.0.php
  */
 
-package uk.ac.stfc.isis.ibex.instrument.custom;
+package uk.ac.stfc.isis.ibex.instrument.internal;
 
 import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
-import uk.ac.stfc.isis.ibex.instrument.internal.PVPrefix;
 
 /**
  * Some basic info that defines a custom instrument. User can specify a pvPrefix and hostname. <br>
@@ -49,8 +48,8 @@ public class CustomInstrumentInfo extends InstrumentInfo {
         checkPreconditions(pvPrefix);
     }
 
-    public static String validCustomInstrumentRegex() {
-        return PVPrefix.ND + "[_a-zA-Z0-9]+";
+    private static String validCustomInstrumentRegex() {
+        return "[_a-zA-Z0-9]+";
     }
 
     @Override

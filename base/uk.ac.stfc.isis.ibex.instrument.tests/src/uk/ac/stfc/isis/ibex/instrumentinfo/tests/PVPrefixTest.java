@@ -17,12 +17,14 @@
  * http://opensource.org/licenses/eclipse-1.0.php
  */
 
-package uk.ac.stfc.isis.ibex.instrument.internal;
+package uk.ac.stfc.isis.ibex.instrumentinfo.tests;
 
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Before;
 import org.junit.Test;
+
+import uk.ac.stfc.isis.ibex.instrument.internal.PVPrefix;
 
 @SuppressWarnings("checkstyle:methodname")
 public class PVPrefixTest {

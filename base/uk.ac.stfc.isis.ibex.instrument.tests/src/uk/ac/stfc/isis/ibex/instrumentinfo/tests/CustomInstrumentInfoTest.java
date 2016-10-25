@@ -24,7 +24,7 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
-import uk.ac.stfc.isis.ibex.instrument.custom.CustomInstrumentInfo;
+import uk.ac.stfc.isis.ibex.instrument.internal.CustomInstrumentInfo;
 
 @SuppressWarnings("checkstyle:methodname")
 public class CustomInstrumentInfoTest {
