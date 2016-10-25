@@ -86,7 +86,7 @@ public class LogPlotterSettings implements InstrumentInfoReceiver {
      * @return The database URL corresponding to the given instrument.
      */
     private static String buildDatabaseUrl(String hostName) {
-        return "jdbc\\:mysql\\://" + hostName + "/archive*jdbc\\:mysql\\://130.246.39.152/archive";
+        return "jdbc:mysql://" + hostName + "/archive*jdbc:mysql://130.246.39.152/archive";
     }
 
     /**
@@ -94,6 +94,6 @@ public class LogPlotterSettings implements InstrumentInfoReceiver {
      * @return The archives URL corresponding to the given instrument.
      */
     private static String buildArchivesUrl(String hostName) {
-        return "RDB|1|jdbc\\:mysql\\://" + hostName + "/archive*RDB|2|jdbc\\:mysql\\://130.246.39.152/archive";
+        return "RDB|1|jdbc:mysql://" + hostName + "/archive*RDB|2|jdbc:mysql://130.246.39.152/archive";
     }
 }
