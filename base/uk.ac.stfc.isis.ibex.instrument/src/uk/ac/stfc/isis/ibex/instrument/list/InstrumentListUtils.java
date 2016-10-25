@@ -28,7 +28,6 @@ import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 
-import uk.ac.stfc.isis.ibex.epics.observing.Observable;
 import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
 
 /**
@@ -55,15 +54,7 @@ public final class InstrumentListUtils {
      * @return the valid instruments extracted from the input observable
      */
     public static Collection<InstrumentInfo> filterValidInstruments(
-            Observable<Collection<InstrumentInfo>> instrumentsRBV, Logger logger) {
-        if (!instrumentsRBV.isConnected()) {
-            logger.warn("Could not connect to instrument list PV - no instrument could be read");
-            return new ArrayList<>();
-        }
-
-        // In case of parsing errors the collection or individual fields may be
-        // null
-        Collection<InstrumentInfo> instruments = instrumentsRBV.getValue();
+            Collection<InstrumentInfo> instruments, Logger logger) {
         if (instruments == null) {
             logger.warn("Error while parsing instrument list PV - no instrument could be read");
             return new ArrayList<>();

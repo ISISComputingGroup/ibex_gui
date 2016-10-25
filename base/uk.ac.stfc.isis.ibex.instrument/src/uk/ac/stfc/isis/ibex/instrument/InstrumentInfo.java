@@ -67,7 +67,9 @@ public class InstrumentInfo {
 	 * @return The PV prefix of the instrument. Returns IN:name: if no pvPrefix has been set.
 	 */
 	public String pvPrefix() {
-		return pvPrefix == null ? PVAddress.startWith("IN").append(name).toString() + PVAddress.COLON : pvPrefix;
+        return pvPrefix == null
+                ? PVAddress.startWith("IN").append(name == null ? "null" : name).toString() + PVAddress.COLON
+                : pvPrefix;
 	}
 	
 	/**
@@ -80,7 +82,7 @@ public class InstrumentInfo {
     /**
      * @return Regex describing a valid default instrument hostname.
      */
-    public static String validInstrumentRegex() {
+    private static String validInstrumentRegex() {
         return PVPrefix.NDX + "[_a-zA-Z0-9]+";
     }
 

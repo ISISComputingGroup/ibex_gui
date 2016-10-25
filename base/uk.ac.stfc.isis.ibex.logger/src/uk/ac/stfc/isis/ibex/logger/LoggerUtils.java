@@ -1,6 +1,7 @@
+
 /*
  * This file is part of the ISIS IBEX application.
- * Copyright (C) 2012-2015 Science & Technology Facilities Council.
+ * Copyright (C) 2012-2016 Science & Technology Facilities Council.
  * All rights reserved.
  *
  * This program is distributed in the hope that it will be useful.
@@ -16,17 +17,29 @@
  * http://opensource.org/licenses/eclipse-1.0.php
  */
 
-package uk.ac.stfc.isis.ibex.databases.preferences;
+/**
+ * 
+ */
+package uk.ac.stfc.isis.ibex.logger;
 
-import uk.ac.stfc.isis.ibex.databases.Databases;
-import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
-import uk.ac.stfc.isis.ibex.instrument.InstrumentInfoReceiver;
+import org.apache.logging.log4j.Logger;
 
-public class SQLSettings implements InstrumentInfoReceiver {
+import com.google.common.base.Joiner;
 
-    @Override
-    public void setInstrument(InstrumentInfo instrument) {
-    	Databases.getDefault().getPreferenceStore()
-                .setValue(PreferenceSupplier.SQL_ADDRESS, instrument.hostName());
+/**
+ * Utilities used by the instruments package.
+ */
+public final class LoggerUtils {
+
+    /**
+     * Sends an error to the log along with the stack trace of an exception
+     * related to the error.
+     * 
+     * @param logger The logger to use
+     * @param message The message to accompany the error
+     * @param e The exception whose stack trace will be printed
+     */
+    public static void logErrorWithStackTrace(Logger log, String message, Exception e) {
+        log.error(message + "\n    " + Joiner.on("\n    ").join(e.getStackTrace()));
     }
 }

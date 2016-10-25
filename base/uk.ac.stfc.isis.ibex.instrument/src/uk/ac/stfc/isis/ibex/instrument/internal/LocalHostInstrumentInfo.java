@@ -55,17 +55,10 @@ public class LocalHostInstrumentInfo extends InstrumentInfo {
         return pvPrefix.toString();
 	}
 
-    /**
-     * Valid local instrument regex.
-     *
-     * @return the string
-     */
-    public static String validLocalInstrumentRegex() {
-        return "localhost";
-    }
 
     /**
-     * @return
+     * 
+     * @return True because host name is always valid for a local instrument
      */
     @Override
     public boolean hasValidHostName() {
