@@ -22,13 +22,13 @@ package uk.ac.stfc.isis.ibex.ui.dashboard.widgets;
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.beans.BeanProperties;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
-import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.graphics.Font;
-import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Label;
 import org.eclipse.wb.swt.SWTResourceManager;
 
 import uk.ac.stfc.isis.ibex.ui.dashboard.models.TimePanelModel;
@@ -52,7 +52,7 @@ public class TimePanel extends Composite {
 		instrumentTime.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_BACKGROUND));
 		instrumentTime.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		instrumentTime.setFont(font);
-		instrumentTime.setText("DD:HHHH:MM:SS");
+        instrumentTime.setText("99/99/9999 99:99:99");
 		
 		Label lblRunTime = new Label(this, SWT.NONE);
 		lblRunTime.setFont(font);
@@ -61,7 +61,7 @@ public class TimePanel extends Composite {
 		runTime = new Label(this, SWT.NONE);
 		runTime.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		runTime.setFont(font);
-		runTime.setText("x s");
+        runTime.setText("999 hours 99 mins 99 s");
 		
 		Label lblPeriod = new Label(this, SWT.NONE);
 		lblPeriod.setFont(font);
@@ -70,11 +70,11 @@ public class TimePanel extends Composite {
 		period = new Label(this, SWT.NONE);
 		period.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		period.setFont(font);
-		period.setText("x / x");
+        period.setText("99999 / 99999");
 		
-		if (model != null) {
-			bind(model);
-		}
+        if (model != null) {
+            bind(model);
+        }
 	}
 
 	private void bind(TimePanelModel model) {

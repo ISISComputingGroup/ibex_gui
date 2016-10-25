@@ -53,7 +53,7 @@ public class MonitorPanel extends Composite {
 		goodRawFrames.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_BACKGROUND));
 		goodRawFrames.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		goodRawFrames.setFont(font);
-        goodRawFrames.setText("xxxxxxxx / xxxxxxxx");
+        goodRawFrames.setText("999999999 / 999999999");
 		
 		Label lblCurrentTotal = new Label(this, SWT.NONE);
 		lblCurrentTotal.setFont(font);
@@ -64,7 +64,7 @@ public class MonitorPanel extends Composite {
 		currentTotal.setEditable(false);
 		currentTotal.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		currentTotal.setFont(font);
-		currentTotal.setText("d.dd / d.dd");
+        currentTotal.setText("999.99 / 99999.99");
 		
 		Label lblMonitorCounts = new Label(this, SWT.NONE);
 		lblMonitorCounts.setFont(font);
@@ -74,11 +74,11 @@ public class MonitorPanel extends Composite {
 		monitorCounts.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_BACKGROUND));
 		monitorCounts.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		monitorCounts.setFont(font);
-		monitorCounts.setText("x count");
+        monitorCounts.setText("999999999999");
 		
-		if (model != null) {
-			bind(model);
-		}
+        if (model != null) {
+            bind(model);
+        }
 	}
 
 	private void bind(MonitorPanelModel model) {
