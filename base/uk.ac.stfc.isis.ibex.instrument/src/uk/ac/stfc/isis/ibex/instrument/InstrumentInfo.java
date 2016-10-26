@@ -19,7 +19,6 @@
 
 package uk.ac.stfc.isis.ibex.instrument;
 
-import uk.ac.stfc.isis.ibex.epics.pv.PVAddress;
 import uk.ac.stfc.isis.ibex.instrument.internal.PVPrefix;
 
 /**
@@ -29,19 +28,9 @@ import uk.ac.stfc.isis.ibex.instrument.internal.PVPrefix;
 public class InstrumentInfo {
 
 	private final String name;
-    private final String pvPrefix;
+    private String pvPrefix;
     private final String hostName;
-    
-    /**
-     * Default constructor for creating a simple instrument based on only a name.
-     * CONSTRUCTORS NOT CALLED FOR INSTRUMENTS IN INSTLIST AS JSON DESERIALISED
-     * 
-     * @param name The name of the instrument
-     */
-	public InstrumentInfo(String name) {
-		this(name, null, null);
-	}
-    
+
 	/**
 	 * Constructor for creating any general instrument.
 	 * CONSTRUCTORS NOT CALLED FOR INSTRUMENTS IN INSTLIST AS JSON DESERIALISED
@@ -67,14 +56,20 @@ public class InstrumentInfo {
 	 * @return The PV prefix of the instrument. Returns IN:name: if no pvPrefix has been set.
 	 */
 	public String pvPrefix() {
-        return pvPrefix == null
-                ? PVAddress.startWith("IN").append(name == null ? "null" : name).toString() + PVAddress.COLON
-                : pvPrefix;
+        if (pvPrefix == null) {
+            pvPrefix = PVPrefix.fromInstrumentName(name).toString();
+        }
+
+        return pvPrefix;
 	}
 	
 	/**
-	 * @return The hostname of the machine that the instrument is running on. Returns NDX + name if no host name has been set.
-	 */
+     * @return The hostname of the machine that the instrument is running on.
+     *         Returns NDX + name if no host name has been set. This is the
+     *         default and will work on most instruments from the instrument
+     *         list, usually the instrument list will explicitly set the
+     *         hostname.
+     */
     public String hostName() {
     	return hostName == null ? PVPrefix.NDX + name : hostName;
 	}
@@ -83,7 +78,7 @@ public class InstrumentInfo {
      * @return Regex describing a valid default instrument hostname.
      */
     private static String validInstrumentRegex() {
-        return PVPrefix.NDX + "[_a-zA-Z0-9]+";
+        return "[_a-zA-Z0-9]+";
     }
 
     /**

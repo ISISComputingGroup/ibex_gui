@@ -48,15 +48,6 @@ public class CustomInstrumentInfo extends InstrumentInfo {
         checkPreconditions(pvPrefix);
     }
 
-    private static String validCustomInstrumentRegex() {
-        return "[_a-zA-Z0-9]+";
-    }
-
-    @Override
-    public boolean hasValidHostName() {
-        return hostName().matches(validCustomInstrumentRegex());
-    }
-
     private void checkPreconditions(String pvPrefix) {
         if (pvPrefix == null) {
             throw new RuntimeException("The PV prefix must not be null");

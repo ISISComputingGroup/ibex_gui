@@ -91,7 +91,7 @@ public class InstrumentListObservable extends ForwardingObservable<Collection<In
      */
     private static ForwardingObservable<Collection<InstrumentInfo>> convert(ForwardingObservable<String> source) {
         Converter<String, Collection<InstrumentInfo>> converter =
-                new JsonDeserialisingConverter<>(InstrumentInfo[].class).apply(Convert.<InstrumentInfo> toCollection());
+                new JsonDeserialisingConverter<>(InstrumentInfo[].class).apply(Convert.<InstrumentInfo>toCollection());
         return new ForwardingObservable<>(new ConvertingObservable<>(source, converter));
     }
 

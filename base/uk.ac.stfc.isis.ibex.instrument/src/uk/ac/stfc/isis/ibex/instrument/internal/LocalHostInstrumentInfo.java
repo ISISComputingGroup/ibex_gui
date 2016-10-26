@@ -51,7 +51,7 @@ public class LocalHostInstrumentInfo extends InstrumentInfo {
      * @return the pvs prefix
      */
     private static String constructPvPrefix(String machineName) {
-        PVPrefix pvPrefix = new PVPrefix(machineName);
+        PVPrefix pvPrefix = PVPrefix.fromMachineName(machineName);
         return pvPrefix.toString();
 	}
 

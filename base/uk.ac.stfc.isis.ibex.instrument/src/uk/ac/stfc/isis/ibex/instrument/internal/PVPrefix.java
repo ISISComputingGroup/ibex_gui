@@ -43,7 +43,6 @@ public class PVPrefix {
     private static final String USER_FORMAT = "TE:%s:";
     
 	public static final String NDX = "NDX";
-    public static final String ND = "ND";
     
     /** List of possible prefixes for instruments on the machine name. */
     public static final ImmutableList<String> INSTRUMENT_MACHINE_NAME_PREFIXES = ImmutableList.of("NDX", "NDE");
@@ -53,21 +52,47 @@ public class PVPrefix {
     /**
      * Constructor.
      * 
-     * @param machineName machine name from which to construct the PV Prefix
+     * @param prefix the pv prefix
      */
-    public PVPrefix(String machineName) {
+    public PVPrefix(String prefix) {
+        this.prefix = prefix;
 
-        prefix = calcPrefix(machineName).toUpperCase();
 	}
+    
+    /**
+     * Create a PVPrefix from a machine name. Machines starting with an
+     * instrument prefix are in the TE domain. Blank or null machines return
+     * TE::.
+     *
+     * @param machineName the machine name
+     * @return the PV prefix
+     */
+    public static PVPrefix fromMachineName(String machineName) {
+        String prefix = PVPrefix.calcPrefix(machineName).toUpperCase();
+        return new PVPrefix(prefix);
+    }
+
+    /**
+     * Create a PVPrefix from an instrument name, this is an IRIS instrument so
+     * the prefix will start IN.
+     * 
+     * @param instrumentName the instrument name
+     * @return pv prefix for the instrument name
+     */
+    public static PVPrefix fromInstrumentName(String instrumentName) {
+        String instrument = getInstrumentName(instrumentName, "");
+        String prefix = String.format(INSTRUMENT_FORMAT, instrument);
+        return new PVPrefix(prefix);
+    }
 
     /**
      * Calculate the prefix based on the machine name.
      * 
      * @param machineName machine name
      */
-    private String calcPrefix(String machineName) {
+    private static String calcPrefix(String machineName) {
         for (String prefix : INSTRUMENT_MACHINE_NAME_PREFIXES) {
-            if (machineName.startsWith(prefix)) {
+            if (machineName != null && machineName.startsWith(prefix)) {
                 String instrument = getInstrumentName(machineName, prefix);
                 return String.format(INSTRUMENT_FORMAT, instrument);
             }
@@ -80,13 +105,16 @@ public class PVPrefix {
 	
     /**
      * Generate the instrument name from the machine name using a CRC8 if
-     * needed.
+     * needed. Empty of null machine names are returned as blank.
      * 
      * @param machineName the machine name
      * @param prefixToRemove the prefix to remove from the machine name
      * @return
      */
-    private String getInstrumentName(String machineName, String prefixToRemove) {
+    private static String getInstrumentName(String machineName, String prefixToRemove) {
+        if (machineName == null || machineName.isEmpty()) {
+            return "";
+        }
         String cleanMachineName = machineName.substring(prefixToRemove.length());
         if (cleanMachineName.length() > LENGTH_AT_WHICH_TO_USES_CRC8) {
             String crc8 = CRC8.fromString(cleanMachineName).toString();
