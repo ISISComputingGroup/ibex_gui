@@ -31,6 +31,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
+import uk.ac.stfc.isis.ibex.instrument.internal.LocalHostInstrumentInfo;
 import uk.ac.stfc.isis.ibex.instrument.list.InstrumentListUtils;
 
 @SuppressWarnings("checkstyle:methodname")
@@ -143,6 +144,103 @@ public class InstrumentListUtilsTest {
         // Assert
         verify(mockLogger, times(1)).warn(contains("Error while parsing"));
         verify(mockLogger, times(1)).warn(contains("one or more instruments"));
+    }
+
+    @Test
+    public void GIVEN_no_instruments_WHEN_combine_with_localhost_THEN_list_contains_only_localhost() {
+        // Arrange
+        Collection<InstrumentInfo> value = new ArrayList<>();
+        InstrumentInfo localhost = new InstrumentInfo("", "", "");
+        Collection<InstrumentInfo> expetedList = new ArrayList<>();
+        expetedList.add(localhost);
+
+        // Act
+        Collection<InstrumentInfo> result =
+                InstrumentListUtils.combineInstrumentsAndLocalHost(value, localhost);
+
+        // Assert
+        assertEquals(expetedList, result);
+
+    }
+
+    @Test
+    public void
+            GIVEN_instruments_no_host_match_WHEN_combine_with_localhost_THEN_list_contains_localhost_and_all_instruments() {
+        // Arrange
+        InstrumentInfo instA = new InstrumentInfo("a", "", "no match");
+        InstrumentInfo instB = new InstrumentInfo("b", "", "no match");
+        Collection<InstrumentInfo> value = new ArrayList<>();
+        value.add(instA);
+        value.add(instB);
+
+        InstrumentInfo localhost = new LocalHostInstrumentInfo("machineName");
+
+        Collection<InstrumentInfo> expetedList = new ArrayList<>();
+        expetedList.add(localhost);
+        expetedList.add(instA);
+        expetedList.add(instB);
+
+        // Act
+        Collection<InstrumentInfo> result =
+                InstrumentListUtils.combineInstrumentsAndLocalHost(value, localhost);
+
+        // Assert
+        assertEquals(expetedList, result);
+
+    }
+
+    @Test
+    public void
+            GIVEN_instruments_host_match_WHEN_combine_with_localhost_THEN_list_contains_localhost_wih_new_name_and_all_instruments_except_match() {
+        // Arrange
+        String machineName = "machineName";
+        InstrumentInfo instA = new InstrumentInfo("a", "", machineName);
+        InstrumentInfo instB = new InstrumentInfo("b", "", "no match");
+        Collection<InstrumentInfo> value = new ArrayList<>();
+        value.add(instA);
+        value.add(instB);
+
+        InstrumentInfo localhost = new LocalHostInstrumentInfo(machineName);
+
+        // Act
+        Collection<InstrumentInfo> result = InstrumentListUtils.combineInstrumentsAndLocalHost(value, localhost);
+
+        // Assert
+        assertEquals(2, result.size());
+        InstrumentInfo[] results = result.toArray(new InstrumentInfo[0]);
+        assertEquals(instA.name(), results[0].name());
+        assertEquals("localhost", results[0].hostName());
+        assertEquals(instB, results[1]);
+
+    }
+
+    public void
+            GIVEN_instruments_WHEN_combine_with_localhost_THEN_list_is_alphebetic() {
+        // Arrange
+        InstrumentInfo instA = new InstrumentInfo("a", "", "no match");
+        InstrumentInfo instB = new InstrumentInfo("b", "", "no match");
+        InstrumentInfo instC = new InstrumentInfo("c", "", "no match");
+
+        Collection<InstrumentInfo> value = new ArrayList<>();
+        value.add(instC);
+        value.add(instA);
+        value.add(instB);
+
+
+        InstrumentInfo localhost = new LocalHostInstrumentInfo("machineName");
+
+        Collection<InstrumentInfo> expetedList = new ArrayList<>();
+        expetedList.add(localhost);
+        expetedList.add(instA);
+        expetedList.add(instB);
+        expetedList.add(instC);
+
+        // Act
+        Collection<InstrumentInfo> result = InstrumentListUtils.combineInstrumentsAndLocalHost(value, localhost);
+
+        // Assert
+        assertEquals(expetedList, result);
+
     }
 
     private Collection<InstrumentInfo> doFiltering(Collection<InstrumentInfo> input) {

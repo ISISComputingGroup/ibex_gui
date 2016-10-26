@@ -88,4 +88,12 @@ public class InstrumentInfo {
     public boolean hasValidHostName() {
         return hostName().matches(validInstrumentRegex());
     }
+
+    /**
+     * @return String representation of instrument info
+     */
+    @Override
+    public String toString() {
+        return String.format("Instrument %s (%s, %s)", this.name, this.hostName(), this.pvPrefix);
+    }
 }
