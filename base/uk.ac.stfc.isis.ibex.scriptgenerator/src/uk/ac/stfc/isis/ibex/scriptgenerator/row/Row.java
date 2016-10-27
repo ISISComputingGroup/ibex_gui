@@ -81,6 +81,7 @@ public class Row extends ModelObject {
 	 * @param position the position
 	 */
 	public void setPosition(String position) {
+		this.wasNull = false;
 		firePropertyChange("position", this.position, this.position = position);
 	}
 
