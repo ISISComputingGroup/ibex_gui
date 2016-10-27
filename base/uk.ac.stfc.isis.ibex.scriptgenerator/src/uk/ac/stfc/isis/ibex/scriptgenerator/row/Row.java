@@ -63,6 +63,7 @@ public class Row extends ModelObject {
 	 * Secondary constructor for creating a blank row.
 	 */
 	public Row() {
+		this.position = "";
 		this.sampleName = "";
 		this.wasNull = true;
 	}
