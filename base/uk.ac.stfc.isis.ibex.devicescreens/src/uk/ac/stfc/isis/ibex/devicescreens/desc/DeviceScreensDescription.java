@@ -33,7 +33,7 @@ import org.xml.sax.SAXException;
 import uk.ac.stfc.isis.ibex.devicescreens.xml.XMLUtil;
 
 /**
- * This class describes the devices element of the device screens xml format.
+ * This class describes the devices element of the device screens XML format.
  * 
  * Note any changes here will require corresponding changes to
  * EPICS/schema/configurations/screens.xsd.
@@ -42,16 +42,43 @@ import uk.ac.stfc.isis.ibex.devicescreens.xml.XMLUtil;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class DeviceScreensDescription {
 
+    /** The devices that make up the description. */
     @XmlElement(name = "device", type = DeviceDescription.class)
     private ArrayList<DeviceDescription> devices = new ArrayList<>();
 
     /**
-     * Getter for the list of devices, for testing purposes.
+     * Default constructor. Needed for parsing XML.
+     */
+    public DeviceScreensDescription() {
+    }
+
+    /**
+     * A copy constructor.
+     * 
+     * @param original the item to copy
+     */
+    public DeviceScreensDescription(DeviceScreensDescription original) {
+        for (DeviceDescription d : original.getDevices()) {
+            this.addDevice(new DeviceDescription(d));
+        }
+    }
+
+    /**
+     * Getter for the list of devices.
      * 
      * @return the list of devices
      */
     public List<DeviceDescription> getDevices() {
         return devices;
+    }
+
+    /**
+     * Setter for the list of devices.
+     * 
+     * @param devices the new device list
+     */
+    public void setDevices(List<DeviceDescription> devices) {
+        this.devices = (ArrayList<DeviceDescription>) devices;
     }
 
     /**
@@ -75,4 +102,5 @@ public class DeviceScreensDescription {
             return e.toString();
         }
     }
+
 }
