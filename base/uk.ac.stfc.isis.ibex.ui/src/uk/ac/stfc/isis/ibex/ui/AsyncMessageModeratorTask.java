@@ -24,12 +24,13 @@ package uk.ac.stfc.isis.ibex.ui;
 
 /**
  * The Interface AsyncMessageModeratorTask which allow the async moderator to
- * rerun a task.
+ * re-queue a task.
  */
 public interface AsyncMessageModeratorTask {
 
     /**
-     * Rerun a task.
+     * Re queue a task. This is used when a task lock is denied to re-queue the
+     * task to run after the lock is released.
      */
-    void rerunTask();
+    void reQueueTask();
 }

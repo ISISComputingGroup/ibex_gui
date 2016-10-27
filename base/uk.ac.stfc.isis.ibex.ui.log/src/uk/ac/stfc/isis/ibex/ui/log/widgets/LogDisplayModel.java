@@ -237,7 +237,7 @@ public class LogDisplayModel extends ModelObject
      * rerun the update task for the live message cache
      */
     @Override
-    public void rerunTask() {
+    public void reQueueTask() {
         firePropertyChange("message", null, liveMessageCache);
     }
 

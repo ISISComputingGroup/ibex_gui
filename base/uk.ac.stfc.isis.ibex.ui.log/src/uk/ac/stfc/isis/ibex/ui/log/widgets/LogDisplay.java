@@ -144,7 +144,7 @@ public class LogDisplay extends Canvas {
 				new PropertyChangeListener() {
                     @Override
 					public void propertyChange(PropertyChangeEvent event) {
-                        if (asyncMessageModerator.canStartTask()) {
+                        if (asyncMessageModerator.requestTaskLock()) {
                             display.setMessageData(model.getMessages());
                         }
 					}
@@ -220,7 +220,7 @@ public class LogDisplay extends Canvas {
 			public void run() {
                 tableViewer.setInput(messages);
                 tableViewer.refresh();
-                asyncMessageModerator.finishedTask();
+                asyncMessageModerator.releaseTaskLock();
 			}
 		});
 	}

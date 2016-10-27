@@ -49,7 +49,7 @@ public class ASyncEventLimiterTest {
     @Test
     public void GIVEN_no_asycn_event_WHEN_run_new_event_THEN_event_allowed() {
 
-        boolean result = underTest.canStartTask();
+        boolean result = underTest.requestTaskLock();
 
         assertTrue("Process property change", result);
 
@@ -58,9 +58,9 @@ public class ASyncEventLimiterTest {
     @Test
     public void GIVEN_asycn_event_already_running_WHEN_run_new_event_THEN_event_disallowed() {
 
-        underTest.canStartTask();
+        underTest.requestTaskLock();
 
-        boolean result = underTest.canStartTask();
+        boolean result = underTest.requestTaskLock();
 
         assertFalse("Process property change", result);
 
@@ -69,10 +69,10 @@ public class ASyncEventLimiterTest {
     @Test
     public void GIVEN_asycn_event_processed_WHEN_run_new_event_THEN_event_allowed() {
 
-        underTest.canStartTask();
-        underTest.finishedTask();
+        underTest.requestTaskLock();
+        underTest.releaseTaskLock();
 
-        boolean result = underTest.canStartTask();
+        boolean result = underTest.requestTaskLock();
 
         assertTrue("Process property change", result);
     }
@@ -80,34 +80,34 @@ public class ASyncEventLimiterTest {
     @Test
     public void GIVEN_asycn_event_has_not_been_processed_WHEN_initial_task_finish_THEN_task_refired() {
 
-        underTest.canStartTask(); // first task starts
-        underTest.canStartTask(); // second task fails to start
+        underTest.requestTaskLock(); // first task starts
+        underTest.requestTaskLock(); // second task fails to start
 
-        underTest.finishedTask(); // task finish
+        underTest.releaseTaskLock(); // task finish
 
-        verify(rerunTask).rerunTask();
+        verify(rerunTask).reQueueTask();
     }
 
     @Test
     public void GIVEN_asycn_event_has_been_processed_WHEN_initial_task_finish_THEN_task_not_refired() {
 
-        underTest.canStartTask(); // first task starts
-        underTest.finishedTask(); // first task finish
+        underTest.requestTaskLock(); // first task starts
+        underTest.releaseTaskLock(); // first task finish
         
-        underTest.canStartTask(); // second task fails to start
-        underTest.finishedTask(); // second task finish
+        underTest.requestTaskLock(); // second task fails to start
+        underTest.releaseTaskLock(); // second task finish
 
-        verify(rerunTask, never()).rerunTask();
+        verify(rerunTask, never()).reQueueTask();
     }
 
     @Test
     public void GIVEN_null_as_task_WHEN_initial_task_finish_THEN_task_not_refired() {
 
         AsyncMessageModerator localUnderTest = new AsyncMessageModerator(null);
-        localUnderTest.canStartTask(); // first task starts
-        localUnderTest.canStartTask(); // second task fails to start
+        localUnderTest.requestTaskLock(); // first task starts
+        localUnderTest.requestTaskLock(); // second task fails to start
 
-        localUnderTest.finishedTask(); // task finish
+        localUnderTest.releaseTaskLock(); // task finish
 
     }
 
