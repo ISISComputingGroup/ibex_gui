@@ -33,12 +33,27 @@ import org.eclipse.wb.swt.SWTResourceManager;
 
 import uk.ac.stfc.isis.ibex.ui.dashboard.models.TimePanelModel;
 
+/**
+ * The time panel on the dashboard.
+ */
 public class TimePanel extends Composite {
-
+    /** The control for showing the time. */
 	private final StyledText instrumentTime; 
+
+    /** The run time label. */
 	private final Label runTime;
+
+    /** The period label. */
 	private final Label period;
 	
+    /**
+     * Constructor.
+     * 
+     * @param parent the parent control
+     * @param style the SWT style
+     * @param font the font for the text
+     * @param model the view model
+     */
 	public TimePanel(Composite parent, int style, Font font, TimePanelModel model) {
 		super(parent, SWT.NONE);
 		setLayout(new GridLayout(2, false));
@@ -77,6 +92,11 @@ public class TimePanel extends Composite {
         }
 	}
 
+    /**
+     * Sets up the data binding.
+     * 
+     * @param model the view model
+     */
 	private void bind(TimePanelModel model) {
 		DataBindingContext bindingContext = new DataBindingContext();
 		bindingContext.bindValue(WidgetProperties.text().observe(instrumentTime), BeanProperties.value("value").observe(model.instrumentTime()));

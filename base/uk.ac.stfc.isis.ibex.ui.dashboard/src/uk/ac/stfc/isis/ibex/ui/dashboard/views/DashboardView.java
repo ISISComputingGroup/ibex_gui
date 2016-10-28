@@ -39,15 +39,15 @@ import uk.ac.stfc.isis.ibex.ui.dashboard.widgets.MonitorPanel;
 import uk.ac.stfc.isis.ibex.ui.dashboard.widgets.TimePanel;
 import uk.ac.stfc.isis.ibex.ui.dashboard.widgets.TitlePanel;
 
+/**
+ * The dashboard view.
+ */
 @SuppressWarnings("checkstyle:magicnumber")
 public class DashboardView extends ViewPart implements ISizeProvider {
-	public DashboardView() {
-	}
-
 	public static final String ID = "uk.ac.stfc.isis.ibex.ui.dashboard.views.DashboardView"; //$NON-NLS-1$
 			
-    public static final int FIXED_WIDTH = 600;
-	public static final int FIXED_HEIGHT = 250;
+    private static final int FIXED_WIDTH = 600;
+    private static final int FIXED_HEIGHT = 250;
 	
 	private final Font bannerTitleFont = SWTResourceManager.getFont("Arial", 24, SWT.BOLD);
 	private final Font bannerFont = SWTResourceManager.getFont("Arial", 14, SWT.NORMAL);
@@ -62,7 +62,7 @@ public class DashboardView extends ViewPart implements ISizeProvider {
 	
 	private final MonitorPanelModel monitorsModel = new MonitorPanelModel(dashboard.observables());
 	private final TimePanelModel timesModel = new TimePanelModel(dashboard.observables());
-	
+
 	@Override
     public void createPartControl(Composite parent) {
         GridLayout glParent = new GridLayout(3, false);

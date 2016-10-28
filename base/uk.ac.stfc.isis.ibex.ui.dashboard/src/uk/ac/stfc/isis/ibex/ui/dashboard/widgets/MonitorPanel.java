@@ -33,12 +33,27 @@ import org.eclipse.wb.swt.SWTResourceManager;
 
 import uk.ac.stfc.isis.ibex.ui.dashboard.models.MonitorPanelModel;
 
+/**
+ * The monitor panel for the dashboard.
+ */
 public class MonitorPanel extends Composite {
-
+    /** The control for showing the frames. */
 	private final StyledText goodRawFrames;
+
+    /** The control for showing the monitor counts. */
 	private final StyledText monitorCounts;
+
+    /** The control for showing the current. */
 	private final StyledText currentTotal;
 	
+    /**
+     * Constructor.
+     * 
+     * @param parent the parent control
+     * @param style the SWT style
+     * @param model the view model
+     * @param font the font for the text
+     */
 	public MonitorPanel(Composite parent, int style, MonitorPanelModel model, Font font) {
 		super(parent, style);
 		setEnabled(false);
@@ -81,6 +96,11 @@ public class MonitorPanel extends Composite {
         }
 	}
 
+    /**
+     * Sets up the data binding.
+     * 
+     * @param model the view model
+     */
 	private void bind(MonitorPanelModel model) {
 		DataBindingContext bindingContext = new DataBindingContext();
 		bindingContext.bindValue(WidgetProperties.text().observe(goodRawFrames), BeanProperties.value("value").observe(model.goodOverRawFrames()));
