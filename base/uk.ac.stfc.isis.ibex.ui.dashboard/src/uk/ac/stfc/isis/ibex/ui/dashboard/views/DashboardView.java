@@ -92,7 +92,9 @@ public class DashboardView extends ViewPart implements ISizeProvider {
 		separator3.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false, 1, 1));
 		
 		TimePanel times = new TimePanel(parent, SWT.NONE, textFont, timesModel);
-		times.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+        GridData timesGridData = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
+        timesGridData.widthHint = FIXED_WIDTH - monitorsLayoutGridData.widthHint;
+        times.setLayoutData(timesGridData);
 	}
 	
 	@Override
