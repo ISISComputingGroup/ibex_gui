@@ -17,25 +17,28 @@
 * http://opensource.org/licenses/eclipse-1.0.php
 */
 
-package uk.ac.stfc.isis.ibex.scriptgenerator;
+package uk.ac.stfc.isis.ibex.ui.widgets;
+
+import org.eclipse.core.databinding.observable.map.IObservableMap;
+import org.eclipse.jface.viewers.ViewerCell;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.widgets.Button;
 
 /**
- * Options for what a sample can be contained in, as used in the Sample Geometry setting.
+ * A cell provider that puts a button within a table cell.
  */
-public enum SampleGeometry {
-	DISC("Disc"),
-	CYLINDRICAL("Cylindrical"),
-	FLATPLATE("Flat Plate"),
-	SINGLECRYSTAL("Single Crystal");
+public class ButtonCellLabelProvider extends ControlCellLabelProvider<Button> {
 	
-	private String name;
-	
-	SampleGeometry(String displayName) {
-		this.name = displayName;
+	protected ButtonCellLabelProvider(IObservableMap[] attributeMaps) {
+		super(attributeMaps);
 	}
-	
-	@Override
-	public String toString() {
-		return name;
+
+	protected Button createControl(final ViewerCell cell, int style) {
+		Button button = new Button(composite(cell), style);
+		button.setText("");
+		button.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+		
+		return button;
 	}
 }

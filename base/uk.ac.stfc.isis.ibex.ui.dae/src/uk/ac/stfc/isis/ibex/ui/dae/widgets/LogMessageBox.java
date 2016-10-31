@@ -19,6 +19,7 @@
 
 package uk.ac.stfc.isis.ibex.ui.dae.widgets;
 
+import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -40,7 +41,8 @@ public class LogMessageBox extends Composite {
 		setLayout(new GridLayout(1, false));
 		
 		title = new Label(this, SWT.NONE);
-		title.setText("Messages:");
+		title.setText("Log Messages:");
+        title.setFont(JFaceResources.getFontRegistry().getBold(JFaceResources.DEFAULT_FONT));
 				
 		logDisplay = new LogDisplay(this, null);
 		logDisplay.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));

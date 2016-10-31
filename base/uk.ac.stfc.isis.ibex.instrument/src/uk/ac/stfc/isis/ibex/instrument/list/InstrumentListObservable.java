@@ -1,19 +1,19 @@
 
 /*
- * This file is part of the ISIS IBEX application.
- * Copyright (C) 2012-2016 Science & Technology Facilities Council.
- * All rights reserved.
+ * This file is part of the ISIS IBEX application. Copyright (C) 2012-2016
+ * Science & Technology Facilities Council. All rights reserved.
  *
- * This program is distributed in the hope that it will be useful.
- * This program and the accompanying materials are made available under the
- * terms of the Eclipse Public License v1.0 which accompanies this distribution.
- * EXCEPT AS EXPRESSLY SET FORTH IN THE ECLIPSE PUBLIC LICENSE V1.0, THE PROGRAM 
- * AND ACCOMPANYING MATERIALS ARE PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES 
- * OR CONDITIONS OF ANY KIND.  See the Eclipse Public License v1.0 for more details.
+ * This program is distributed in the hope that it will be useful. This program
+ * and the accompanying materials are made available under the terms of the
+ * Eclipse Public License v1.0 which accompanies this distribution. EXCEPT AS
+ * EXPRESSLY SET FORTH IN THE ECLIPSE PUBLIC LICENSE V1.0, THE PROGRAM AND
+ * ACCOMPANYING MATERIALS ARE PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES
+ * OR CONDITIONS OF ANY KIND. See the Eclipse Public License v1.0 for more
+ * details.
  *
- * You should have received a copy of the Eclipse Public License v1.0
- * along with this program; if not, you can obtain a copy from
- * https://www.eclipse.org/org/documents/epl-v10.php or 
+ * You should have received a copy of the Eclipse Public License v1.0 along with
+ * this program; if not, you can obtain a copy from
+ * https://www.eclipse.org/org/documents/epl-v10.php or
  * http://opensource.org/licenses/eclipse-1.0.php
  */
 
@@ -39,18 +39,21 @@ import uk.ac.stfc.isis.ibex.json.JsonDeserialisingConverter;
  * Holds the connection to the Instrument List PV.
  * 
  */
-public class InstrumentListObservable {
-    
-    private static final int MAX_RETRIES = 200;
-    private static final int WAIT_FOR_OBSERVABLE = 100; // milliseconds
+public class InstrumentListObservable extends ForwardingObservable<Collection<InstrumentInfo>> {
 
     /**
-     * This is the PV that holds the list of instruments that can be selected.
+     * Reads the instrument list PV data. Note that we keep it as a variable to
+     * prevent garbage collection of the PVReader. If we don't keep a reference
+     * it gets GCed, potentially before the list has been read and we'll never
+     * get the values.
      */
-    private static final String ADDRESS = "CS:INSTLIST";
+    private static final ClosableObservable<String> PV_READER =
+            new CompressedCharWaveformChannel().reader("CS:INSTLIST");
 
-    private final ForwardingObservable<Collection<InstrumentInfo>> instrumentsRBV;
-    private Logger logger;
+    /**
+     * Logs messages regarding the instrument list.
+     */
+    private final Logger logger;
 
     /**
      * Instantiate a new observable for the instrument list PV.
@@ -59,53 +62,44 @@ public class InstrumentListObservable {
      *            PV
      */
     public InstrumentListObservable(Logger logger) {
+        super(convert(readCompressed()));
         this.logger = logger;
+    }
 
-        ForwardingObservable<String> instrumentsPV = readCompressed(ADDRESS);
+    @Override
+    public void setConnectionStatus(boolean isConnected) {
+        super.setConnectionStatus(isConnected);
+    }
 
-        // Wait for the PV to be connected
-        int i = 0;
-        while (!instrumentsPV.isConnected() && instrumentsPV.getValue() == null && i < MAX_RETRIES) {
-            try {
-                Thread.sleep(WAIT_FOR_OBSERVABLE);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            i++;
-        }
-
-        logger.info("Instrument List PV content: " + instrumentsPV.getValue());
-        instrumentsRBV = convert(instrumentsPV);
+    @Override
+    public void setValue(Collection<InstrumentInfo> value) {
+        super.setValue(getValidInstruments(value));
     }
 
     /**
-     * Returns a list of available valid instruments.
-     * 
-     * @return The list of instruments.
+     * @return A forwarding observable of the instrument list PV reader.
      */
-    public Collection<InstrumentInfo> getInstruments() {
-        return getValidInstruments();
+    private static ForwardingObservable<String> readCompressed() {
+        return new ForwardingObservable<String>(PV_READER);
     }
 
     /**
-     * Closes the observable for the instrument list.
+     * @param source A forwarding observable for the instrument list as a JSON
+     *            string
+     * @return A forwarding observable for a collection of InstrumentInfo
+     *         containing the list of instruments
      */
-    public void close() {
-        instrumentsRBV.close();
-    }
-
-    private ForwardingObservable<String> readCompressed(String address) {
-        ClosableObservable<String> pvObservable = new CompressedCharWaveformChannel().reader(address);
-        return new ForwardingObservable<>(pvObservable);
-    }
-
-    private ForwardingObservable<Collection<InstrumentInfo>> convert(ForwardingObservable<String> source) {
-        Converter<String, Collection<InstrumentInfo>> converter = new JsonDeserialisingConverter<>(
-                InstrumentInfo[].class).apply(Convert.<InstrumentInfo>toCollection());
+    private static ForwardingObservable<Collection<InstrumentInfo>> convert(ForwardingObservable<String> source) {
+        Converter<String, Collection<InstrumentInfo>> converter =
+                new JsonDeserialisingConverter<>(InstrumentInfo[].class).apply(Convert.<InstrumentInfo> toCollection());
         return new ForwardingObservable<>(new ConvertingObservable<>(source, converter));
     }
 
-    private Collection<InstrumentInfo> getValidInstruments() {
-        return InstrumentListUtils.filterValidInstruments(instrumentsRBV, logger);
+    /**
+     * @param instruments A list of instruments
+     * @return The original list with any invalid elements filtered
+     */
+    private Collection<InstrumentInfo> getValidInstruments(Collection<InstrumentInfo> instruments) {
+        return InstrumentListUtils.filterValidInstruments(instruments, logger);
     }
 }

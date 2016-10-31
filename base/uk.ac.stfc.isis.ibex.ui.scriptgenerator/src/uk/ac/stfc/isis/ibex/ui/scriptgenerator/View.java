@@ -19,6 +19,7 @@
 
 package uk.ac.stfc.isis.ibex.ui.scriptgenerator;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -35,7 +36,14 @@ import org.eclipse.ui.part.ViewPart;
 import org.eclipse.wb.swt.SWTResourceManager;
 
 import uk.ac.stfc.isis.ibex.scriptgenerator.PythonBuilder;
-import uk.ac.stfc.isis.ibex.scriptgenerator.Row;
+import uk.ac.stfc.isis.ibex.scriptgenerator.estimate.Estimate;
+import uk.ac.stfc.isis.ibex.scriptgenerator.row.Row;
+import uk.ac.stfc.isis.ibex.scriptgenerator.settings.ApertureSans;
+import uk.ac.stfc.isis.ibex.scriptgenerator.settings.ApertureTrans;
+import uk.ac.stfc.isis.ibex.scriptgenerator.settings.CollectionMode;
+import uk.ac.stfc.isis.ibex.scriptgenerator.settings.Order;
+import uk.ac.stfc.isis.ibex.scriptgenerator.settings.SampleGeometry;
+import uk.ac.stfc.isis.ibex.scriptgenerator.settings.Settings;
 
 /**
  * Holds all UI elements of the Script Generator.
@@ -46,11 +54,13 @@ public class View extends ViewPart {
 	
 	private Button btnPreview;
 	private Button btnWrite;
-	private Button btnClearTable;
+	private Button btnClear;
 	private TablePanel table;
 	
 	private Collection<Row> rows;
 	private PythonBuilder builder;
+	private Estimate estimate;
+	private Settings settings;
 	private String script;
 	 
 	/**
@@ -60,6 +70,12 @@ public class View extends ViewPart {
 		super();
 	
 		builder = new PythonBuilder();
+		estimate = new Estimate(40, 120);
+		settings = new Settings(1, 1, 7, 7, Order.TRANS, false, ApertureSans.MEDIUM, ApertureTrans.MEDIUM, SampleGeometry.DISC, CollectionMode.HISTOGRAM);
+		
+		rows = new ArrayList<Row>();
+		rows.add(new Row());
+        builder.setRows(rows);
 	}
 
 	@SuppressWarnings("unused")
@@ -94,14 +110,14 @@ public class View extends ViewPart {
 		lblSaveLoad.setFont(SWTResourceManager.getFont("Segoe UI", 10, SWT.BOLD));
 		lblSaveLoad.setText("  Save / Load");
 		
-		SettingsPanel settingsPanel = new SettingsPanel(topPanel, SWT.BORDER_SOLID);
+		SettingsPanel settingsPanel = new SettingsPanel(topPanel, SWT.BORDER_SOLID, settings);
 		GridLayout glSettingsPanel = (GridLayout) settingsPanel.getLayout();
 		glSettingsPanel.makeColumnsEqualWidth = true;
 		settingsPanel.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 2));
 		
 		new Label(topPanel, SWT.NONE);
 		
-		EstimatePanel estimatePanel = new EstimatePanel(topPanel, SWT.NONE);
+		EstimatePanel estimatePanel = new EstimatePanel(topPanel, SWT.NONE, estimate);
 		estimatePanel.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1));
 		
 		SaveLoadPanel saveLoadPanel = new SaveLoadPanel(topPanel, SWT.NONE);
@@ -129,13 +145,13 @@ public class View extends ViewPart {
 		
 		new Label(topPanel, SWT.NONE);
 		
-		btnClearTable = new Button(topPanel, SWT.NONE);
-		btnClearTable.setText("Clear Table");
+		btnClear = new Button(topPanel, SWT.NONE);
+		btnClear.setText("Clear Table");
 		GridData gdButtonClearTable = new GridData(SWT.RIGHT, SWT.BOTTOM, true, false, 1, 1);
 		gdButtonClearTable.minimumWidth = 80;
-		btnClearTable.setLayoutData(gdButtonClearTable);
+		btnClear.setLayoutData(gdButtonClearTable);
 		
-		table = new TablePanel(parent, SWT.NONE);
+		table = new TablePanel(parent, SWT.NONE, rows);
 		table.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		
 		bind();
@@ -148,7 +164,6 @@ public class View extends ViewPart {
 		btnPreview.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
-                builder.setRows(table.getRows());
                 script = builder.getScript();
 
                 Shell shell = new Shell();
@@ -159,10 +174,16 @@ public class View extends ViewPart {
 		btnWrite.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
-                builder.setRows(table.getRows());
                 script = builder.getScript();
             }
         });
+		
+		btnClear.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				table.clearTable();
+			}
+		});
 	}
 	
 	@Override

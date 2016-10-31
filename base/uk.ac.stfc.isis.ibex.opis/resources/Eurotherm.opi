@@ -98,7 +98,7 @@ $(pv_value)</tooltip>
     <tab_6_background_color>
       <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
     </tab_6_background_color>
-    <tab_6_title>Eurotherm 7</tab_6_title>
+    <tab_6_title>Sensor 7</tab_6_title>
     <height>565</height>
     <tab_6_foreground_color>
       <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
@@ -114,7 +114,7 @@ $(pv_value)</tooltip>
     <actions hook="false" hook_all="false" />
     <tab_1_enabled>true</tab_1_enabled>
     <border_style>0</border_style>
-    <tab_4_title>Eurotherm 5</tab_4_title>
+    <tab_4_title>Sensor 5</tab_4_title>
     <tab_5_enabled>true</tab_5_enabled>
     <enabled>true</enabled>
     <wuid>4fbad31a:1436c3e166f:-6fb0</wuid>
@@ -128,7 +128,7 @@ $(pv_value)</tooltip>
     <tab_1_font>
       <opifont.name fontName="Arial" height="9" style="0">ISIS_Label_Small</opifont.name>
     </tab_1_font>
-    <tab_3_title>Eurotherm 4</tab_3_title>
+    <tab_3_title>Sensor 4</tab_3_title>
     <tab_4_background_color>
       <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
     </tab_4_background_color>
@@ -216,7 +216,7 @@ $(pv_value)</tooltip>
     <tab_3_background_color>
       <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
     </tab_3_background_color>
-    <tab_5_title>Eurotherm 6</tab_5_title>
+    <tab_5_title>Sensor 6</tab_5_title>
     <tab_5_icon_path></tab_5_icon_path>
     <tab_3_enabled>true</tab_3_enabled>
     <tab_5_font>
@@ -224,7 +224,7 @@ $(pv_value)</tooltip>
     </tab_5_font>
     <name>Tabbed Container</name>
     <minimum_tab_height>10</minimum_tab_height>
-    <tab_2_title>Eurotherm 3</tab_2_title>
+    <tab_2_title>Sensor 3</tab_2_title>
     <tab_0_font>
       <opifont.name fontName="Arial" height="9" style="0">ISIS_Label_Small</opifont.name>
     </tab_0_font>
@@ -234,11 +234,11 @@ $(pv_value)</tooltip>
     <tab_6_font>
       <opifont.name fontName="Arial" height="9" style="0">ISIS_Label_Small</opifont.name>
     </tab_6_font>
-    <tab_0_title>Eurotherm 1</tab_0_title>
+    <tab_0_title>Sensor 1</tab_0_title>
     <tab_1_foreground_color>
       <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
     </tab_1_foreground_color>
-    <tab_1_title>Eurotherm 2</tab_1_title>
+    <tab_1_title>Sensor 2</tab_1_title>
     <scripts />
     <tab_count>7</tab_count>
     <scale_options>
@@ -283,7 +283,7 @@ $(pv_value)</tooltip>
       </background_color>
       <width>899</width>
       <x>1</x>
-      <name>Eurotherm 1</name>
+      <name>Sensor 1</name>
       <y>1</y>
       <foreground_color>
         <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
@@ -365,7 +365,7 @@ $(pv_value)</tooltip>
       </background_color>
       <width>899</width>
       <x>1</x>
-      <name>Eurotherm 2</name>
+      <name>Sensor 2</name>
       <y>1</y>
       <foreground_color>
         <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
@@ -487,7 +487,7 @@ $(pv_value)</tooltip>
       </background_color>
       <width>899</width>
       <x>1</x>
-      <name>Eurotherm 3</name>
+      <name>Sensor 3</name>
       <y>1</y>
       <foreground_color>
         <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
@@ -569,7 +569,7 @@ $(pv_value)</tooltip>
       </background_color>
       <width>899</width>
       <x>1</x>
-      <name>Eurotherm 4</name>
+      <name>Sensor 4</name>
       <y>1</y>
       <foreground_color>
         <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
@@ -651,7 +651,7 @@ $(pv_value)</tooltip>
       </background_color>
       <width>899</width>
       <x>1</x>
-      <name>Eurotherm 5</name>
+      <name>Sensor 5</name>
       <y>1</y>
       <foreground_color>
         <color red="192" green="192" blue="192" />
@@ -733,7 +733,7 @@ $(pv_value)</tooltip>
       </background_color>
       <width>899</width>
       <x>1</x>
-      <name>Eurotherm 6</name>
+      <name>Sensor 6</name>
       <y>1</y>
       <foreground_color>
         <color red="192" green="192" blue="192" />
@@ -815,7 +815,7 @@ $(pv_value)</tooltip>
       </background_color>
       <width>899</width>
       <x>1</x>
-      <name>Eurotherm 7</name>
+      <name>Sensor 7</name>
       <y>1</y>
       <foreground_color>
         <color red="192" green="192" blue="192" />

@@ -8,4 +8,7 @@ Require-Bundle: org.eclipse.core.runtime,
  uk.ac.stfc.isis.ibex.model;bundle-version="1.0.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Bundle-ActivationPolicy: lazy
-Export-Package: uk.ac.stfc.isis.ibex.scriptgenerator
+Export-Package: uk.ac.stfc.isis.ibex.scriptgenerator,
+ uk.ac.stfc.isis.ibex.scriptgenerator.estimate,
+ uk.ac.stfc.isis.ibex.scriptgenerator.row,
+ uk.ac.stfc.isis.ibex.scriptgenerator.settings

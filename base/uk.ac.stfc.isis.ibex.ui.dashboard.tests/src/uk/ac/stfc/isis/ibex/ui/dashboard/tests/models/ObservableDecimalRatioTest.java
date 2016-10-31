@@ -23,7 +23,6 @@
 package uk.ac.stfc.isis.ibex.ui.dashboard.tests.models;
 
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Matchers.anyObject;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.*;
 
@@ -41,7 +40,7 @@ import uk.ac.stfc.isis.ibex.epics.observing.Pair;
 import uk.ac.stfc.isis.ibex.epics.observing.Subscription;
 import uk.ac.stfc.isis.ibex.ui.dashboard.models.ObservableDecimalRatio;
 
-@SuppressWarnings({ "unchecked", "checkstyle:methodname" })
+@SuppressWarnings({ "unchecked", "checkstyle:methodname", "checkstyle:magicnumber" })
 public class ObservableDecimalRatioTest {
 
     private ClosableObservable<Pair<Number, Number>> mockSource;

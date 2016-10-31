@@ -17,37 +17,36 @@
  * http://opensource.org/licenses/eclipse-1.0.php
  */
 
-/**
- * 
- */
 package uk.ac.stfc.isis.ibex.instrument.custom;
 
 import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
 import uk.ac.stfc.isis.ibex.instrument.internal.PVPrefix;
 
 /**
- * Some basic info that defines a custom instrument. Instrument hostname is the
- * same as the instrument name. User must specify a pvPrefix.
+ * Some basic info that defines a custom instrument. User can specify a pvPrefix and hostname. <br>
+ * If no hostname is specified it is assumed to be the same as the instrument name.
  */
 public class CustomInstrumentInfo extends InstrumentInfo {
 
-    private String pvPrefix;
-
+	/**
+	 * Constructor that sets the hostname as the same as the instrument name.
+	 * @param name The instrument name
+	 * @param pvPrefix The PV prefix for the instrument
+	 */
     public CustomInstrumentInfo(String name, String pvPrefix) {
-        super(name);
-
+    	this(name, pvPrefix, name);
+    }
+    
+	/**
+	 * Constructor that sets a different name, pv prefix and hostname for an instrument.
+	 * @param name The instrument name
+	 * @param pvPrefix The PV prefix for the instrument
+	 * @param hostName The hostname of the instrument PC
+	 */
+    public CustomInstrumentInfo(String name, String pvPrefix, String hostName) {
+        super(name, pvPrefix, hostName);
+        
         checkPreconditions(pvPrefix);
-        this.pvPrefix = pvPrefix;
-    }
-
-    @Override
-    public String pvPrefix() {
-        return pvPrefix;
-    }
-
-    @Override
-    public String hostName() {
-        return name();
     }
 
     public static String validCustomInstrumentRegex() {
@@ -60,9 +59,11 @@ public class CustomInstrumentInfo extends InstrumentInfo {
     }
 
     private void checkPreconditions(String pvPrefix) {
+        if (pvPrefix == null) {
+            throw new RuntimeException("The PV prefix must not be null");
+        }
         if (pvPrefix.isEmpty()) {
-            String msg = "The PV prefix must not be empty";
-            throw new IllegalArgumentException(msg);
+            throw new IllegalArgumentException("The PV prefix must not be empty");
         }
     }
 }

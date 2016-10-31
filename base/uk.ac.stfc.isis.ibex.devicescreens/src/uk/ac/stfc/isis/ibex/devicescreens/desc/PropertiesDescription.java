@@ -60,5 +60,4 @@ public class PropertiesDescription {
     public void addProperty(PropertyDescription property) {
         properties.add(property);
     }
-
 }

@@ -25,12 +25,14 @@ import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 
-import uk.ac.stfc.isis.ibex.scriptgenerator.Row;
+import uk.ac.stfc.isis.ibex.scriptgenerator.row.Row;
+import uk.ac.stfc.isis.ibex.scriptgenerator.row.WaitUnit;
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundCellLabelProvider;
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundTable;
 import uk.ac.stfc.isis.ibex.ui.widgets.DoubleEditingSupportBlankIfNull;
 import uk.ac.stfc.isis.ibex.ui.widgets.IntegerEditingSupportBlankIfNull;
 import uk.ac.stfc.isis.ibex.ui.widgets.StringEditingSupport;
+import uk.ac.stfc.isis.ibex.ui.widgets.WaitEditingSupport;
 
 /**
  * A table that contains ScriptGeneratorRows.
@@ -81,11 +83,12 @@ public class Table extends DataboundTable<Row> {
 	}
 	
 	/**
-	 * Returns a collection of rows that can be called in the TablePanel.
-	 * @return the rows in the table
+	 * Clears the table.
 	 */
-	public Collection<Row> getRows() {
-		return this.rows;
+	public void clearTable() {
+		rows.clear();
+		rows.add(new Row());
+		setRows(rows);
 	}
 
 	private void position() {
@@ -94,19 +97,19 @@ public class Table extends DataboundTable<Row> {
 				observeProperty("position")) {
 			@Override
 			protected String valueFromRow(Row row) {
-				return row.getPosition() == null ? "" : String.valueOf(row.getPosition());
+				return row.getPosition();
 			}
 		});
 		
 		
-		position.setEditingSupport(new DoubleEditingSupportBlankIfNull<Row>(viewer(), Row.class) {
+		position.setEditingSupport(new StringEditingSupport<Row>(viewer(), Row.class) {
 			@Override
-			protected Double valueFromRow(Row row) {
+			protected String valueFromRow(Row row) {
 				return row.getPosition();
 			}
 
 			@Override
-			protected void setValueForRow(Row row, Double position) {
+			protected void setValueForRow(Row row, String position) {
 				addRowIfNull(row);
 				
 				row.setPosition(position);
@@ -147,14 +150,14 @@ public class Table extends DataboundTable<Row> {
 				return row.getTransWait() == null ? "" : String.valueOf(row.getTransWait());
 			}
 		});
-		transWait.setEditingSupport(new DoubleEditingSupportBlankIfNull<Row>(viewer(), Row.class) {
+		transWait.setEditingSupport(new WaitEditingSupport(viewer()) {
 			@Override
-			protected Double valueFromRow(Row row) {
+			protected WaitUnit getEnumValueForRow(Row row) {
 				return row.getTransWait();
 			}
-
+			
 			@Override
-			protected void setValueForRow(Row row, Double transWait) {
+			protected void setEnumForRow(Row row, WaitUnit transWait) {
 				addRowIfNull(row);
 				
 				row.setTransWait(transWait);
@@ -195,14 +198,14 @@ public class Table extends DataboundTable<Row> {
 				return row.getSansWait() == null ? "" : String.valueOf(row.getSansWait());
 			}
 		});
-		sansWait.setEditingSupport(new DoubleEditingSupportBlankIfNull<Row>(viewer(), Row.class) {
+		sansWait.setEditingSupport(new WaitEditingSupport(viewer()) {
 			@Override
-			protected Double valueFromRow(Row row) {
+			protected WaitUnit getEnumValueForRow(Row row) {
 				return row.getSansWait();
 			}
-
+			
 			@Override
-			protected void setValueForRow(Row row, Double sansWait) {
+			protected void setEnumForRow(Row row, WaitUnit sansWait) {
 				addRowIfNull(row);
 				
 				row.setSansWait(sansWait);
@@ -219,14 +222,14 @@ public class Table extends DataboundTable<Row> {
 				return row.getPeriod() == null ? "" : String.valueOf(row.getPeriod());
 			}
 		});
-		period.setEditingSupport(new IntegerEditingSupportBlankIfNull<Row>(viewer(), Row.class) {
+		period.setEditingSupport(new DoubleEditingSupportBlankIfNull<Row>(viewer(), Row.class) {
 			@Override
-			protected Integer valueFromRow(Row row) {
+			protected Double valueFromRow(Row row) {
 				return row.getPeriod();
 			}
 
 			@Override
-			protected void setValueForRow(Row row, Integer period) {
+			protected void setValueForRow(Row row, Double period) {
 				addRowIfNull(row);
 				
 				row.setPeriod(period);

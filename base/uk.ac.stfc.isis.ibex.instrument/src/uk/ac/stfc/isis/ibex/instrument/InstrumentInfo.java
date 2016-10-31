@@ -29,28 +29,67 @@ import uk.ac.stfc.isis.ibex.instrument.internal.PVPrefix;
 public class InstrumentInfo {
 
 	private final String name;
-	
+    private final String pvPrefix;
+    private final String hostName;
+    
+    /**
+     * Default constructor for creating a simple instrument based on only a name.
+     * CONSTRUCTORS NOT CALLED FOR INSTRUMENTS IN INSTLIST AS JSON DESERIALISED
+     * 
+     * @param name The name of the instrument
+     */
 	public InstrumentInfo(String name) {
+		this(name, null, null);
+	}
+    
+	/**
+	 * Constructor for creating any general instrument.
+	 * CONSTRUCTORS NOT CALLED FOR INSTRUMENTS IN INSTLIST AS JSON DESERIALISED
+	 * @param name The user friendly name of the instrument
+	 * @param pvPrefix The PV prefix used to connect to the instrument
+	 * @param hostName The host name of the machine that the instrument is running on
+	 */
+	public InstrumentInfo(String name, String pvPrefix, String hostName) {
 		this.name = name;
+		this.hostName = hostName;
+		this.pvPrefix = pvPrefix;
         assert (hasValidHostName());
 	}
 
+	/**
+	 * @return The user friendly name of the instrument.
+	 */
 	public String name() {
 		return name;
 	}
 	
+	/**
+	 * @return The PV prefix of the instrument. Returns IN:name: if no pvPrefix has been set.
+	 */
 	public String pvPrefix() {
-		return PVAddress.startWith("IN").append(name).toString() + PVAddress.COLON;
+        return pvPrefix == null
+                ? PVAddress.startWith("IN").append(name == null ? "null" : name).toString() + PVAddress.COLON
+                : pvPrefix;
 	}
 	
+	/**
+	 * @return The hostname of the machine that the instrument is running on. Returns NDX + name if no host name has been set.
+	 */
     public String hostName() {
-        return PVPrefix.NDX + name;
+    	return hostName == null ? PVPrefix.NDX + name : hostName;
 	}
 
-    public static String validInstrumentRegex() {
+    /**
+     * @return Regex describing a valid default instrument hostname.
+     */
+    private static String validInstrumentRegex() {
         return PVPrefix.NDX + "[_a-zA-Z0-9]+";
     }
 
+    /**
+     * A helper method to check the instrument host name against its valid regex.
+     * @return True if the host name is valid.
+     */
     public boolean hasValidHostName() {
         return hostName().matches(validInstrumentRegex());
     }

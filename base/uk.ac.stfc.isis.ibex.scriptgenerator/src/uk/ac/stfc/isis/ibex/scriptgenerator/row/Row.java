@@ -17,7 +17,7 @@
 * http://opensource.org/licenses/eclipse-1.0.php
 */
 
-package uk.ac.stfc.isis.ibex.scriptgenerator;
+package uk.ac.stfc.isis.ibex.scriptgenerator.row;
 
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 
@@ -25,12 +25,12 @@ import uk.ac.stfc.isis.ibex.model.ModelObject;
  * A row of data to be inserted into a ScriptGeneratorTable.
  */
 public class Row extends ModelObject {
-	private Double position;
+	private String position;
 	private Double trans;
-	private Double transWait; 
+	private WaitUnit transWait; 
 	private Double sans;
-	private Double sansWait; 
-	private Integer period;
+	private WaitUnit sansWait; 
+	private Double period;
 	private String sampleName; 
 	private Double thickness; 
 	private boolean wasNull;
@@ -46,7 +46,7 @@ public class Row extends ModelObject {
 	 * @param sampleName the name of the sample
 	 * @param thickness the thickness of the sample
 	 */
-	public Row(Double position, Double trans, Double transWait, Double sans, Double sansWait, Integer period, 
+	public Row(String position, Double trans, WaitUnit transWait, Double sans, WaitUnit sansWait, Double period, 
 			String sampleName, Double thickness) {
 		this.position = position;
 		this.trans = trans;
@@ -63,6 +63,7 @@ public class Row extends ModelObject {
 	 * Secondary constructor for creating a blank row.
 	 */
 	public Row() {
+		this.position = "";
 		this.sampleName = "";
 		this.wasNull = true;
 	}
@@ -71,7 +72,7 @@ public class Row extends ModelObject {
 	 * Gets the position.
 	 * @return the position
 	 */
-	public Double getPosition() {
+	public String getPosition() {
 		return position;
 	}
 	
@@ -79,7 +80,7 @@ public class Row extends ModelObject {
 	 * Sets the position.
 	 * @param position the position
 	 */
-	public void setPosition(Double position) {
+	public void setPosition(String position) {
 		this.wasNull = false;
 		firePropertyChange("position", this.position, this.position = position);
 	}
@@ -105,7 +106,7 @@ public class Row extends ModelObject {
 	 * Gets the trans wait.
 	 * @return the trans wait combo selection
 	 */
-	public Double getTransWait() {
+	public WaitUnit getTransWait() {
 		return transWait;
 	}
 	
@@ -113,7 +114,7 @@ public class Row extends ModelObject {
 	 * Sets the trans wait.
 	 * @param transWait  the trans wait
 	 */
-	public void setTransWait(Double transWait) {
+	public void setTransWait(WaitUnit transWait) {
 		this.wasNull = false;
 		firePropertyChange("transWait", this.transWait, this.transWait = transWait);
 	}
@@ -138,7 +139,7 @@ public class Row extends ModelObject {
 	 * Gets the sans wait.
 	 * @return the sans wait.
 	 */
-	public Double getSansWait() {
+	public WaitUnit getSansWait() {
 		return sansWait;
 	}
 	
@@ -146,7 +147,7 @@ public class Row extends ModelObject {
 	 * Sets the sans wait.
 	 * @param sansWait the sans wait
 	 */
-	public void setSansWait(Double sansWait) {
+	public void setSansWait(WaitUnit sansWait) {
 		this.wasNull = false;
 		firePropertyChange("sansWait", this.sansWait, this.sansWait = sansWait);
 	}
@@ -155,7 +156,7 @@ public class Row extends ModelObject {
 	 * Gets the period.
 	 * @return the period
 	 */
-	public Integer getPeriod() {
+	public Double getPeriod() {
 		return period;
 	}
 	
@@ -163,7 +164,7 @@ public class Row extends ModelObject {
 	 * Sets the period.
 	 * @param period the period
 	 */
-	public void setPeriod(Integer period) {
+	public void setPeriod(Double period) {
 		this.wasNull = false;
 		firePropertyChange("period", this.period, this.period = period);
 	}

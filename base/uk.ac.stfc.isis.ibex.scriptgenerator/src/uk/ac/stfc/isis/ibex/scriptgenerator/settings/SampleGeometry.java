@@ -17,19 +17,20 @@
 * http://opensource.org/licenses/eclipse-1.0.php
 */
 
-package uk.ac.stfc.isis.ibex.scriptgenerator;
+package uk.ac.stfc.isis.ibex.scriptgenerator.settings;
 
 /**
- * Sizes that can be used in the TRANS combo box within the Aperture settings.
+ * Options for what a sample can be contained in, as used in the Sample Geometry setting.
  */
-public enum ApertureTrans {
-	LARGE("Large = ?, ? mm"),
-	MEDIUM("Medium = 20, 14 mm"),
-	SMALL("Small = ?, ? mm");
+public enum SampleGeometry {
+	DISC("Disc"),
+	CYLINDRICAL("Cylindrical"),
+	FLATPLATE("Flat Plate"),
+	SINGLECRYSTAL("Single Crystal");
 	
 	private String name;
 	
-	ApertureTrans(String displayName) {
+	SampleGeometry(String displayName) {
 		this.name = displayName;
 	}
 	
