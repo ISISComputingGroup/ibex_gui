@@ -20,7 +20,7 @@
 package uk.ac.stfc.isis.ibex.ui.mainmenu.instrument.custom;
 
 import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
-import uk.ac.stfc.isis.ibex.instrument.custom.CustomInstrumentInfo;
+import uk.ac.stfc.isis.ibex.instrument.internal.CustomInstrumentInfo;
 import uk.ac.stfc.isis.ibex.validators.ErrorMessageProvider;
 import uk.ac.stfc.isis.ibex.validators.PvValidator;
 

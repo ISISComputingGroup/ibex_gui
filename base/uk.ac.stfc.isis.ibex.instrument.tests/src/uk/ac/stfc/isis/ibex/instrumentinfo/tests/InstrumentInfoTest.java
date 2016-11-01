@@ -29,26 +29,26 @@ import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
 public class InstrumentInfoTest {
 
     @Test
-    public final void GIVEN_name_WHEN_instrument_info_constructed_with_name_THEN_instrument_info_name_matches_input() {
+    public final void GIVEN_only_name_set_WHEN_instrument_info_constructed_THEN_instrument_info_name_matches_input() {
         // Arrange
         final String name = "myInstrument";
 
         // Act
 
         // Assert
-        assertEquals(name, new InstrumentInfo(name).name());
+        assertEquals(name, new InstrumentInfo(name, null, null).name());
     }
 
     @Test
     public final void
             WHEN_instrument_info_constructed_with_just_name_THEN_pv_prefix_is_IN_plus_colon_plus_name_plus_colon() {
         // Arrange
-        final String name = "my_inst_name";
+        final String name = "my_inst";
 
         // Act
 
         // Assert
-        assertEquals("IN:" + name + ":", new InstrumentInfo(name).pvPrefix());
+        assertEquals("IN:" + name + ":", new InstrumentInfo(name, null, null).pvPrefix());
     }
 
     @Test
@@ -59,7 +59,7 @@ public class InstrumentInfoTest {
         // Act
 
         // Assert
-        assertEquals("NDX" + name, new InstrumentInfo(name).hostName());
+        assertEquals("NDX" + name, new InstrumentInfo(name, null, null).hostName());
     }
 
     @Test
@@ -148,48 +148,7 @@ public class InstrumentInfoTest {
         // Act
 
         // Assert
-        assertEquals("IN:null:", new InstrumentInfo(null, null, null).pvPrefix());
-    }
-
-    @Test
-    public final void
-            GIVEN_host_name_starting_nd_WHEN_instrument_is_constructed_THEN_host_name_is_invalid() {
-        // Arrange
-
-        // Act
-
-        // Assert
-        assertFalse(new InstrumentInfo(null, null, "nd_is_not_a_valid_host_name").hasValidHostName());
-    }
-
-    @Test
-    public final void GIVEN_host_name_starting_ndx_WHEN_instrument_is_constructed_THEN_host_name_is_invalid() {
-        // Arrange
-
-        // Act
-
-        // Assert
-        assertFalse(new InstrumentInfo(null, null, "ndx_is_not_a_valid_host_name").hasValidHostName());
-    }
-
-    @Test
-    public final void GIVEN_host_name_starting_ND_WHEN_instrument_is_constructed_THEN_host_name_is_invalid() {
-        // Arrange
-
-        // Act
-
-        // Assert
-        assertFalse(new InstrumentInfo(null, null, "ND_is_not_a_valid_host_name").hasValidHostName());
-    }
-
-    @Test
-    public final void GIVEN_host_name_starting_NDW_WHEN_instrument_is_constructed_THEN_host_name_is_invalid() {
-        // Arrange
-
-        // Act
-
-        // Assert
-        assertFalse(new InstrumentInfo(null, null, "NDW_is_not_a_valid_host_name").hasValidHostName());
+        assertEquals("IN::", new InstrumentInfo(null, null, null).pvPrefix());
     }
 
     @Test

@@ -36,7 +36,7 @@ import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
 public class InstrumentSwitchersTest {
 
     InstrumentSwitchers instrumentSwitchers = new InstrumentSwitchers();
-    InstrumentInfo instrumentInfo = new InstrumentInfo("instrument");
+    InstrumentInfo instrumentInfo = new InstrumentInfo("instrument", null, null);
 
     @Test
     public void get_nothing_observable_switcher_returns_a_nothing_switcher() {

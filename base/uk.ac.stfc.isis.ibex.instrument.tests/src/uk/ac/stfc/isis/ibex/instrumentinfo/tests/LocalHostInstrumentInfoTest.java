@@ -25,7 +25,6 @@ import org.junit.Test;
 
 import uk.ac.stfc.isis.ibex.instrument.internal.LocalHostInstrumentInfo;
 import uk.ac.stfc.isis.ibex.instrument.internal.MachineName;
-import uk.ac.stfc.isis.ibex.instrument.internal.UserName;
 
 @SuppressWarnings("checkstyle:methodname")
 public class LocalHostInstrumentInfoTest {
@@ -61,14 +60,38 @@ public class LocalHostInstrumentInfoTest {
     }
 
     @Test
-    public final void
-            GIVEN_machine_name_and_user_name_WHEN_local_host_instrument_info_is_constructed_THEN_pv_prefix_is_machine_name_colon_user_name_in_upper_case() {
-        // Arrange
+    public void GIVEN_locahost_WHEN_get_THEN_PV_prefix_is_TE() {
+        String hostname = "HOSTNAME";
+        String expected = "TE:" + hostname + ":";
+        LocalHostInstrumentInfo hostInfo = new LocalHostInstrumentInfo(hostname);
 
-        // Act
+        String result = hostInfo.pvPrefix();
 
-        // Assert
-        assertEquals((MachineName.get() + ":" + UserName.get() + ":").toUpperCase(),
-                new LocalHostInstrumentInfo().pvPrefix());
+        assertEquals(expected, result);
+
+    }
+
+    @Test
+    public void GIVEN_locahost_is_NDE_instrument_WHEN_get_THEN_PV_prefix_is_IN() {
+        String hostname = "NDEMUONFE";
+        String expected = "IN:" + "MUONFE" + ":";
+        LocalHostInstrumentInfo hostInfo = new LocalHostInstrumentInfo(hostname);
+
+        String result = hostInfo.pvPrefix();
+
+        assertEquals(expected, result);
+
+    }
+
+    @Test
+    public void GIVEN_locahost_is_NDX_instrument_WHEN_get_THEN_PV_prefix_is_IN() {
+        String hostname = "NDXINST";
+        String expected = "IN:" + "INST" + ":";
+        LocalHostInstrumentInfo hostInfo = new LocalHostInstrumentInfo(hostname);
+
+        String result = hostInfo.pvPrefix();
+
+        assertEquals(expected, result);
+
     }
 }

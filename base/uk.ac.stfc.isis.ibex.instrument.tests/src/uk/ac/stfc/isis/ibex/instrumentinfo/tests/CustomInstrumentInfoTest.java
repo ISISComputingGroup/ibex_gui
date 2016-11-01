@@ -24,7 +24,7 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
-import uk.ac.stfc.isis.ibex.instrument.custom.CustomInstrumentInfo;
+import uk.ac.stfc.isis.ibex.instrument.internal.CustomInstrumentInfo;
 
 @SuppressWarnings("checkstyle:methodname")
 public class CustomInstrumentInfoTest {
@@ -106,40 +106,6 @@ public class CustomInstrumentInfoTest {
 
         // Assert
         assertTrue(valid);
-    }
-
-    @Test
-    public final void host_name_not_starting_with_ND_is_invalid() {
-        // Arrange
-        String name = "invalid_name";
-        String pvPrefix = "prefix";
-        CustomInstrumentInfo instrument = new CustomInstrumentInfo(name, pvPrefix);
-        
-        // Act
-        boolean valid = instrument.hasValidHostName();
-
-        // Assert
-        assertFalse(valid);
-    }
-
-    @Test
-    public final void GIVEN_host_name_starting_nd_WHEN_instrument_is_constructed_THEN_host_name_is_invalid() {
-        // Arrange
-
-        // Act
-
-        // Assert
-        assertFalse(new CustomInstrumentInfo(null, "pv_prefix", "nd_is_not_a_valid_host_name").hasValidHostName());
-    }
-
-    @Test
-    public final void GIVEN_host_name_starting_ndx_WHEN_instrument_is_constructed_THEN_host_name_is_invalid() {
-        // Arrange
-
-        // Act
-
-        // Assert
-        assertFalse(new CustomInstrumentInfo(null, "pv_prefix", "ndx_is_not_a_valid_host_name").hasValidHostName());
     }
 
     @Test

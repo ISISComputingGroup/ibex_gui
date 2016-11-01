@@ -21,10 +21,7 @@ package uk.ac.stfc.isis.ibex.instrument;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 
 import org.apache.logging.log4j.Logger;
@@ -41,9 +38,10 @@ import org.osgi.service.prefs.BackingStoreException;
 import org.osgi.service.prefs.Preferences;
 
 import uk.ac.stfc.isis.ibex.epics.observing.BaseObserver;
-import uk.ac.stfc.isis.ibex.instrument.custom.CustomInstrumentInfo;
+import uk.ac.stfc.isis.ibex.instrument.internal.CustomInstrumentInfo;
 import uk.ac.stfc.isis.ibex.instrument.internal.LocalHostInstrumentInfo;
 import uk.ac.stfc.isis.ibex.instrument.list.InstrumentListObservable;
+import uk.ac.stfc.isis.ibex.instrument.list.InstrumentListUtils;
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
 import uk.ac.stfc.isis.ibex.logger.LoggerUtils;
 import uk.ac.stfc.isis.ibex.model.SettableUpdatedValue;
@@ -148,14 +146,7 @@ public class Instrument implements BundleActivator {
 
             @Override
             public void onValue(Collection<InstrumentInfo> value) {
-                Collection<InstrumentInfo> newInstruments = new ArrayList<>();
-                // Localhost is always added to the instrument list separately
-                newInstruments.add(localhost);
-
-                List<InstrumentInfo> instrumentsAlphabetical = new ArrayList<>(value);
-                Collections.sort(instrumentsAlphabetical, alphabeticalNameComparator());
-                newInstruments.addAll(instrumentsAlphabetical);
-                instruments = newInstruments;
+                instruments = InstrumentListUtils.combineInstrumentsAndLocalHost(value, localhost);
             }
 
             @Override
@@ -315,19 +306,5 @@ public class Instrument implements BundleActivator {
         } catch (BackingStoreException e) {
             LoggerUtils.logErrorWithStackTrace(LOG, "Unable to set initial instrument", e);
         }
-    }
-
-    /**
-     * Compares instrument infos by their name in alphabetical order.
-     * 
-     * @return The comparison value of two instrument info names alphabetically
-     */
-    private static Comparator<InstrumentInfo> alphabeticalNameComparator() {
-        return new Comparator<InstrumentInfo>() {
-            @Override
-            public int compare(InstrumentInfo info1, InstrumentInfo info2) {
-                return info1.name().compareTo(info2.name());
-            }
-        };
     }
 }

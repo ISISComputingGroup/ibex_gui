@@ -21,6 +21,9 @@ package uk.ac.stfc.isis.ibex.instrument.list;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 import org.apache.logging.log4j.Logger;
 
@@ -47,7 +50,7 @@ public final class InstrumentListUtils {
      * Given an observable for a list of instruments, filter out invalid
      * instruments.
      * 
-     * @param instrumentsRBV the input observable to be checked
+     * @param instruments instruments to filter
      * @param logger a logger to log information and warnings about invalid
      *            instruments
      * 
@@ -75,6 +78,50 @@ public final class InstrumentListUtils {
         }
 
         return returnValue;
+    }
+
+    /**
+     * Combine the localhost and instruments list to create one list to show the
+     * user. Localhost should be at the top. If there is an instrument with the
+     * same host name as localhost this name should be used instead of the
+     * current name and that instrument should not appear in the list.
+     * 
+     * @param instruments list of instruments
+     * @param localhost the localhost instrument
+     * @return list of instruments alphetically order with localhost at the top
+     */
+    public static Collection<InstrumentInfo> combineInstrumentsAndLocalHost(
+            Collection<InstrumentInfo> instruments,
+            InstrumentInfo localhost) {
+
+        List<InstrumentInfo> instrumentsAlphabetical = new ArrayList<>();
+
+        InstrumentInfo topInstrument = localhost;
+        for (InstrumentInfo instrument : instruments) {
+            if (instrument.hostName().equals(localhost.name())) {
+                topInstrument = new InstrumentInfo(instrument.name(), instrument.pvPrefix(), localhost.hostName());
+            } else {
+                instrumentsAlphabetical.add(instrument);
+            }
+        }
+
+        Collections.sort(instrumentsAlphabetical, alphabeticalNameComparator());
+        instrumentsAlphabetical.add(0, topInstrument);
+        return instrumentsAlphabetical;
+    }
+
+    /**
+     * Compares instrument infos by their name in alphabetical order.
+     * 
+     * @return The comparison value of two instrument info names alphabetically
+     */
+    private static Comparator<InstrumentInfo> alphabeticalNameComparator() {
+        return new Comparator<InstrumentInfo>() {
+            @Override
+            public int compare(InstrumentInfo info1, InstrumentInfo info2) {
+                return info1.name().compareTo(info2.name());
+            }
+        };
     }
 }
 
