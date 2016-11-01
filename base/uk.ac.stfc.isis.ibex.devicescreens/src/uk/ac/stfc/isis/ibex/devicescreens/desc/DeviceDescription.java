@@ -34,7 +34,7 @@ import uk.ac.stfc.isis.ibex.model.ModelObject;
 import uk.ac.stfc.isis.ibex.targets.OpiTarget;
 
 /**
- * This class describes the device element of the device screens xml format.
+ * This class describes the device element of the device screens XML format.
  * 
  * Note any changes here will require corresponding changes to
  * EPICS/schema/configurations/screens.xsd.
@@ -43,14 +43,39 @@ import uk.ac.stfc.isis.ibex.targets.OpiTarget;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class DeviceDescription extends ModelObject {
 
-    /**
-     * Type when the device screen is an OPI.
-     */
+    /** The device name. */
     private String name;
+
+    /** The key is either the OPI name or custom screen name. */
     private String key;
+
+    /** The type is either an OPI or a custom screen. */
     private String type;
+
+    /** The properties that have been set. */
     @XmlElement(name = "properties", type = PropertiesDescription.class)
     private PropertiesDescription properties = new PropertiesDescription();
+
+    /**
+     * Default constructor. Needed for parsing XML.
+     */
+    public DeviceDescription() {
+    }
+
+    /**
+     * A copy constructor.
+     * 
+     * @param original the item to copy
+     */
+    public DeviceDescription(DeviceDescription original) {
+        key = original.getKey();
+        name = original.getName();
+        type = original.getType();
+
+        for (PropertyDescription p : original.getProperties()) {
+            this.addProperty(new PropertyDescription(p.getKey(), p.getValue()));
+        }
+    }
 
     /**
      * @return the type, e.g. OPI
@@ -77,7 +102,7 @@ public class DeviceDescription extends ModelObject {
      * @param key the key to set
      */
     public void setKey(String key) {
-        this.key = key;
+        firePropertyChange("key", this.key, this.key = key);
     }
 
     /**
@@ -91,7 +116,7 @@ public class DeviceDescription extends ModelObject {
      * @param name the name to set
      */
     public void setName(String name) {
-        this.name = name;
+        firePropertyChange("name", this.name, this.name = name);
     }
 
     /**
@@ -99,6 +124,13 @@ public class DeviceDescription extends ModelObject {
      */
     public List<PropertyDescription> getProperties() {
         return properties.getProperties();
+    }
+
+    /**
+     * Clears out the properties.
+     */
+    public void clearProperties() {
+        properties = new PropertiesDescription();
     }
 
     /**

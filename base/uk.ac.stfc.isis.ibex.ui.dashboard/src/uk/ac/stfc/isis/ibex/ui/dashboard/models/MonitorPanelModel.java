@@ -39,7 +39,10 @@ public class MonitorPanelModel extends Closer {
     private final UpdatedValue<String> goodOverRawFrames;
     private final UpdatedValue<String> currentOverTotal;
     private final UpdatedValue<String> monitorCounts;
-    private static final int MAX_CURR_INT_DIGITS = 4;
+
+    // Should never go this large, but being cut off the view is better than the
+    // wrong number being reported.
+    private static final int MAX_CURR_INT_DIGITS = 15;
     private static final int MAX_CURR_FRAC_DIGITS = 2;
 
     /**

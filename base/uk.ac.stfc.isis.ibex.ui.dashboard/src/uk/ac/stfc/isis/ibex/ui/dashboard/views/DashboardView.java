@@ -39,15 +39,15 @@ import uk.ac.stfc.isis.ibex.ui.dashboard.widgets.MonitorPanel;
 import uk.ac.stfc.isis.ibex.ui.dashboard.widgets.TimePanel;
 import uk.ac.stfc.isis.ibex.ui.dashboard.widgets.TitlePanel;
 
+/**
+ * The dashboard view.
+ */
 @SuppressWarnings("checkstyle:magicnumber")
 public class DashboardView extends ViewPart implements ISizeProvider {
-	public DashboardView() {
-	}
-
 	public static final String ID = "uk.ac.stfc.isis.ibex.ui.dashboard.views.DashboardView"; //$NON-NLS-1$
 			
-	public static final int FIXED_WIDTH = 550;
-	public static final int FIXED_HEIGHT = 250;
+    private static final int FIXED_WIDTH = 600;
+    private static final int FIXED_HEIGHT = 250;
 	
 	private final Font bannerTitleFont = SWTResourceManager.getFont("Arial", 24, SWT.BOLD);
 	private final Font bannerFont = SWTResourceManager.getFont("Arial", 14, SWT.NORMAL);
@@ -62,7 +62,7 @@ public class DashboardView extends ViewPart implements ISizeProvider {
 	
 	private final MonitorPanelModel monitorsModel = new MonitorPanelModel(dashboard.observables());
 	private final TimePanelModel timesModel = new TimePanelModel(dashboard.observables());
-	
+
 	@Override
     public void createPartControl(Composite parent) {
         GridLayout glParent = new GridLayout(3, false);
@@ -85,14 +85,16 @@ public class DashboardView extends ViewPart implements ISizeProvider {
 		
 		MonitorPanel monitors = new MonitorPanel(parent, SWT.NONE, monitorsModel, textFont);
         GridData monitorsLayoutGridData = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
-        monitorsLayoutGridData.widthHint = 315;
+        monitorsLayoutGridData.widthHint = 325;
         monitors.setLayoutData(monitorsLayoutGridData);
 		
 		Label separator3 = new Label(parent, SWT.SEPARATOR | SWT.VERTICAL);
 		separator3.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false, 1, 1));
 		
 		TimePanel times = new TimePanel(parent, SWT.NONE, textFont, timesModel);
-		times.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+        GridData timesGridData = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
+        timesGridData.widthHint = FIXED_WIDTH - monitorsLayoutGridData.widthHint;
+        times.setLayoutData(timesGridData);
 	}
 	
 	@Override
