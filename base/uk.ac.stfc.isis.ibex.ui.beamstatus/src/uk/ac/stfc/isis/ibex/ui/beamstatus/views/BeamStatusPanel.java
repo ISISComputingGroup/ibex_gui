@@ -58,10 +58,10 @@ public class BeamStatusPanel extends ScrolledComposite {
         newsLabel.setText("News");
         newsLabel.setFont(titleFont);
 
-        McrNewsPanel newsPanel = new McrNewsPanel(content, SWT.NONE);
+        new McrNewsPanel(content, SWT.NONE);
 
         Label statsLabel = new Label(content, SWT.NONE);
-        statsLabel.setText("Beam Stats");
+        statsLabel.setText("Beam statistics");
         statsLabel.setFont(titleFont);
 
         StatsPanel statsPanel = new StatsPanel(content, SWT.V_SCROLL);
