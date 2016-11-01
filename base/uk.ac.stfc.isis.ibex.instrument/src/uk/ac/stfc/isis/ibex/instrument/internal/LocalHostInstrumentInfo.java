@@ -26,6 +26,8 @@ import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
  */
 public class LocalHostInstrumentInfo extends InstrumentInfo {
 
+    private static final PVPrefixFactory PV_PREFIX_FACTORY = new PVPrefixFactory();
+
     /**
      * Instantiates a new local host instrument info; allowing the machine name
      * to be set.
@@ -33,7 +35,7 @@ public class LocalHostInstrumentInfo extends InstrumentInfo {
      * @param machineName the machine name
      */
     public LocalHostInstrumentInfo(String machineName) {
-        super(machineName, constructPvPrefix(machineName), "localhost");
+        super(machineName, PV_PREFIX_FACTORY.fromMachineName(machineName), "localhost");
     }
 
     /**
@@ -43,18 +45,6 @@ public class LocalHostInstrumentInfo extends InstrumentInfo {
 	public LocalHostInstrumentInfo() {
         this(MachineName.get());
 	}
-
-    /**
-     * Construct pv prefix.
-     *
-     * @param machineName the machine name
-     * @return the pvs prefix
-     */
-    private static String constructPvPrefix(String machineName) {
-        PVPrefix pvPrefix = PVPrefix.fromMachineName(machineName);
-        return pvPrefix.toString();
-	}
-
 
     /**
      * 

@@ -19,7 +19,7 @@
 
 package uk.ac.stfc.isis.ibex.instrument;
 
-import uk.ac.stfc.isis.ibex.instrument.internal.PVPrefix;
+import uk.ac.stfc.isis.ibex.instrument.internal.PVPrefixFactory;
 
 /**
  * Some basic info that defines an instrument. Instruments hostnames will always
@@ -30,6 +30,7 @@ public class InstrumentInfo {
 	private final String name;
     private String pvPrefix;
     private final String hostName;
+    private PVPrefixFactory pvPrefixFactory = new PVPrefixFactory();
 
 	/**
 	 * Constructor for creating any general instrument.
@@ -57,7 +58,7 @@ public class InstrumentInfo {
 	 */
 	public String pvPrefix() {
         if (pvPrefix == null) {
-            pvPrefix = PVPrefix.fromInstrumentName(name).toString();
+            pvPrefix = pvPrefixFactory.fromInstrumentName(name);
         }
 
         return pvPrefix;
@@ -71,7 +72,7 @@ public class InstrumentInfo {
      *         hostname.
      */
     public String hostName() {
-    	return hostName == null ? PVPrefix.NDX + name : hostName;
+    	return hostName == null ? PVPrefixFactory.DEFAULT_HOSTNAME_PREFIX + name : hostName;
 	}
 
     /**
