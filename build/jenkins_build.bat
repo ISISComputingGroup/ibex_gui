@@ -127,6 +127,8 @@ if %errorlevel% neq 0 (
     exit /b %errorlevel%
 )
 
+@echo Copy complete>%INSTALLDIR%\COPY_COMPLETE.txt
+
 REM Delete local copies
 del installer.7z
 del ClientInstaller.exe

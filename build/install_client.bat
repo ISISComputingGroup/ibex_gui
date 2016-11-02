@@ -3,6 +3,10 @@ REM When run will install all the client stuff (gui, genie_python, epics_utils)
 REM %~dp0 expands to directory where this file lives
 set BASEDIR=%~dp0
 
+if not exist "%BASEDIR%COPY_COMPLETE.txt" (
+    @echo ERROR Client copy in %BASEDIR% is not complete
+	goto FINISH
+)
 REM Copy the Client files across
 set APPSDIR=C:\Instrument\Apps
 set CLIENTDIR=%APPSDIR%\Client
