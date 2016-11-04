@@ -97,7 +97,7 @@ public class DaeObservables {
         title = obsFactory.getSwitchableObservable(new CharWaveformChannel(), addPrefix(DAE.endWith("TITLE")));
         displayTitle =
                 obsFactory.getSwitchableObservable(new BooleanChannel(), addPrefix(DAE.endWith("TITLE:DISPLAY")));
-        users = obsFactory.getSwitchableObservable(new CharWaveformChannel(), addPrefix(DAE.endWith("USERNAME")));
+        users = obsFactory.getSwitchableObservable(new CharWaveformChannel(), addPrefix(DAE.endWith("_USERNAME")));
         goodFrames = obsFactory.getSwitchableObservable(new IntegerChannel(), addPrefix(DAE.endWith("GOODFRAMES")));
         rawFrames = obsFactory.getSwitchableObservable(new IntegerChannel(), addPrefix(DAE.endWith("RAWFRAMES")));
         monitorCounts = obsFactory.getSwitchableObservable(new IntegerChannel(),
@@ -134,7 +134,7 @@ public class DaeObservables {
                 addPrefix(DAE.endWith("DAEMEMORYUSED")));
         timingSource = obsFactory.getSwitchableObservable(new StringChannel(),
                 addPrefix(DAE.endWith("DAETIMINGSOURCE")));
-        rbNumber = obsFactory.getSwitchableObservable(new StringChannel(), addPrefix(DAE.endWith("RBNUMBER")));
+        rbNumber = obsFactory.getSwitchableObservable(new StringChannel(), addPrefix(DAE.endWith("_RBNUMBER")));
         countRate = obsFactory.getSwitchableObservable(new DoubleChannel(), addPrefix(DAE.endWith("COUNTRATE")));
         eventMode = obsFactory.getSwitchableObservable(new DoubleChannel(),
                 addPrefix(DAE.endWith("EVENTMODEFRACTION")));
