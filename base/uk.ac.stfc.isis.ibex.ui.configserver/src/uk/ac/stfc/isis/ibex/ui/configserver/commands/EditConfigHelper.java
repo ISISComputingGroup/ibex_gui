@@ -101,7 +101,6 @@ public class EditConfigHelper {
             } else {
                 if (isCurrent) {
                     server.setCurrentConfig().write(dialog.getConfig());
-                    server.save().write(dialog.getConfig().name());
                 } else {
                     server.saveAs().write(dialog.getConfig());
                 }
