@@ -98,10 +98,10 @@ public class LogDisplay extends Canvas {
 			LogMessageFields.CREATE_TIME, LogMessageFields.SEVERITY,
 			LogMessageFields.TYPE, LogMessageFields.APPLICATION_ID };
 
-	/** The data model */
+	/** The data model. */
 	private LogDisplayModel model;
 
-	/** Comparator that specifies how messages should be sorted */
+    /** Comparator that specifies how messages should be sorted. */
 	private LogMessageComparator comparator;
 
 	private Set<LogMessageFilter> filters = new HashSet<>();
@@ -117,6 +117,12 @@ public class LogDisplay extends Canvas {
 	private MenuItem mnuSaveSelected;
     private AsyncMessageModerator asyncMessageModerator;
 
+    /**
+     * Default constructor.
+     * 
+     * @param parent Parent component
+     * @param model Model to use for the view
+     */
 	public LogDisplay(Composite parent, LogDisplayModel model) {
 		super(parent, SWT.NONE);
 
@@ -130,9 +136,11 @@ public class LogDisplay extends Canvas {
 	}
 
 	/**
-	 * Set the model that will be used to supply the data (i.e. Log messages)
-	 * for the table.
-	 */
+     * Set the model that will be used to supply the data (i.e. Log messages)
+     * for the table.
+     * 
+     * @param model The model to apply to the view.
+     */
 	public void setModel(final LogDisplayModel model) {
 		this.model = model;
 		this.searchControl.setSearcher(model);
@@ -263,9 +271,11 @@ public class LogDisplay extends Canvas {
 	}
 
 	/**
-	 * Show an error dialog with a specified message. Used for e.g. when a
-	 * database operation fails.
-	 */
+     * Show an error dialog with a specified message. Used for e.g. when a
+     * database operation fails.
+     * 
+     * @param message Message to display in the dialog
+     */
 	public void displayErrorDialog(final String message) {
 		MessageBox dialog = new MessageBox(getShell(), SWT.ICON_ERROR | SWT.OK);
 		dialog.setText("Error");
