@@ -193,8 +193,8 @@ public class View extends ViewPart {
             public void widgetSelected(SelectionEvent e) {
                 FileDialog dialog = new FileDialog(saveShell, SWT.SAVE);
 
-                dialog.setFilterNames(new String[] { "Python File (*.py)", "All Files (*.*)" });
-                dialog.setFilterExtensions(new String[] { "*.py" });
+                dialog.setFilterNames(new String[] {"Python File (*.py)", "All Files (*.*)"});
+                dialog.setFilterExtensions(new String[] {"*.py"});
                 dialog.setFilterPath(defaultLocation);
                 dialog.setFileName(defaultFileName);
 
