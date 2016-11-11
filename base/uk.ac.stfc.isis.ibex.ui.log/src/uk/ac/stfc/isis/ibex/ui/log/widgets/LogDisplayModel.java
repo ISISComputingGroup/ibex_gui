@@ -45,28 +45,31 @@ import uk.ac.stfc.isis.ibex.ui.log.save.LogMessageFileWriter;
  */
 public class LogDisplayModel extends ModelObject
         implements ILogMessageConsumer, ISearchModel, AsyncMessageModeratorTask {
-	/** The maximum number of recent messages to display; older messages are dropped */
+    /**
+     * The maximum number of recent messages to display; older messages are
+     * dropped.
+     */
     private static final int MAX_LIVE_MESSAGES = 10000;
 	
-	/** The log message source */
+    /** The log message source. */
 	private ILogMessageProducer messageProducer;
 	
-	/** A store of recently received log messages */
+    /** A store of recently received log messages. */
 	private List<LogMessage> liveMessageCache;
 	
-	/** 
-	 * Value indicating the current status of the connection to the message
-	 * producing service (typically JMS) - true=live, false=down
-	 */
+	/**
+     * Value indicating the current status of the connection to the message
+     * producing service (typically JMS) - true=live, false=down.
+     */
 	private boolean connectionStatus;
 	
-	/** Results of the most recently performed search */
+    /** Results of the most recently performed search. */
 	private List<LogMessage> latestSearchResults;
 	
-	/** 
-	 * Value indicating whether display should currently be showing search
-	 * results (true) or live message feed (false)
-	 */
+	/**
+     * Value indicating whether display should currently be showing search
+     * results (true) or live message feed (false).
+     */
 	private boolean usingSearch;
 	
 	public LogDisplayModel(ILogMessageProducer messageProducer) {
