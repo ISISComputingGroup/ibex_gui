@@ -183,7 +183,7 @@ public class LogDisplayModel extends ModelObject
 	}
 
 	/**
-     * Indicates whether the current set of messages bing displayed are search
+     * Indicates whether the current set of messages being displayed are search
      * results (true) or recent messages (false).
      * 
      * @return whether in search mode or not
