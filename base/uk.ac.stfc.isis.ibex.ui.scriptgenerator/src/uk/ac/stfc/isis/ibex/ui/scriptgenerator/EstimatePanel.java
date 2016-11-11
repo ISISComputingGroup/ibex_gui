@@ -36,7 +36,7 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 
-import uk.ac.stfc.isis.ibex.scriptgenerator.estimate.Estimate;
+import uk.ac.stfc.isis.ibex.scriptgenerator.estimate.EstimateSettingsModel;
 import uk.ac.stfc.isis.ibex.validators.NumbersOnlyValidator;
 
 /**
@@ -54,7 +54,7 @@ public class EstimatePanel extends Composite {
 	 * @param style the style of the parent
 	 * @param estimate the estimate data
 	 */
-	public EstimatePanel(Composite parent, int style, final Estimate estimate) {
+	public EstimatePanel(Composite parent, int style, final EstimateSettingsModel estimate) {
 		super(parent, style);
 		setLayout(new GridLayout(1, true));
 		
@@ -118,7 +118,7 @@ public class EstimatePanel extends Composite {
 	 * Databinding between EstimatePanel and Estimate. 
 	 * @param estimate the estimate settings
 	 */
-	public void bind(Estimate estimate) {
+	public void bind(EstimateSettingsModel estimate) {
 		DataBindingContext ctx = new DataBindingContext();
 		IValidator validator = new NumbersOnlyValidator();
 		

@@ -24,7 +24,7 @@ import uk.ac.stfc.isis.ibex.model.ModelObject;
 /**
  * The estimate settings.
  */
-public class Estimate extends ModelObject {
+public class EstimateSettingsModel extends ModelObject {
 	private Integer estCountRate;
 	private Integer estMoveTime;
 	private String estScriptTime;
@@ -34,7 +34,7 @@ public class Estimate extends ModelObject {
 	 * @param estCountRate the estimated count rate
 	 * @param estMoveTime the estimated move time
 	 */
-	public Estimate(Integer estCountRate, Integer estMoveTime) {
+	public EstimateSettingsModel(Integer estCountRate, Integer estMoveTime) {
 		this.estCountRate = estCountRate;
 		this.estMoveTime = estMoveTime;
 	}
