@@ -124,7 +124,7 @@ public class GroupNameValidator implements IValidator {
     }
 
     /**
-     * Dose this name match one on the list of names.
+     * Does this name match one on the list of names.
      * 
      * @param newGroupName to set
      * @return true is group name is a duplicate; false otherwise

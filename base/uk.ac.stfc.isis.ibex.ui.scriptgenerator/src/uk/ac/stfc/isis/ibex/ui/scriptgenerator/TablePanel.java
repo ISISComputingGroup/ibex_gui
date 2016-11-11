@@ -34,6 +34,8 @@ import uk.ac.stfc.isis.ibex.scriptgenerator.row.Row;
 public class TablePanel extends Composite {
     /** The class ID string. **/
 	public static final String ID = "uk.ac.stfc.isis.ibex.ui.scriptgenerator.scriptgeneratorview";
+    /** The table. */
+    private Table table;
 	
 	/**
      * The default constructor.
@@ -46,9 +48,15 @@ public class TablePanel extends Composite {
 		super(parent, style);
 		setLayout(new GridLayout(2, true));
 		
-        Table table =
-                new Table(this, SWT.NONE, SWT.MULTI | SWT.NO_SCROLL | SWT.V_SCROLL | SWT.FULL_SELECTION | SWT.BORDER);
+        table = new Table(this, SWT.NONE, SWT.MULTI | SWT.NO_SCROLL | SWT.V_SCROLL | SWT.FULL_SELECTION | SWT.BORDER);
 		table.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
 		table.setRows(rows);
+	}
+	
+	/**
+	 * Clears the table.
+	 */
+	public void clearTable() {
+		table.clearTable();
 	}
 } 

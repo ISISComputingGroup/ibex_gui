@@ -29,11 +29,11 @@ public final class MachineName {
     private MachineName() {
     }
 
+    /**
+     * 
+     * @return the machine name
+     */
 	public static String get() {
-		return machineName();
-	}
-	
-	private static String machineName() {
 		java.net.InetAddress localMachine = null;
 		try {
 			localMachine = java.net.InetAddress.getLocalHost();

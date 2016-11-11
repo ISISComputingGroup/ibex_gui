@@ -3,6 +3,10 @@ REM When run will install all the client stuff (gui, genie_python, epics_utils)
 REM %~dp0 expands to directory where this file lives
 set BASEDIR=%~dp0
 
+if not exist "%BASEDIR%COPY_COMPLETE.txt" (
+    @echo ERROR Client copy in %BASEDIR% is not complete
+	goto FINISH
+)
 REM Copy the Client files across
 set APPSDIR=C:\Instrument\Apps
 set CLIENTDIR=%APPSDIR%\Client
@@ -16,7 +20,7 @@ if %errorlevel% neq 0 (
 REM Copy EPICS_UTILS across
 set UTILSDIR=%APPSDIR%\EPICS_UTILS
 mkdir %UTILSDIR%
-xcopy /q /s /e /h %BASEDIR%\..\EPICS_UTILS %UTILSDIR%
+xcopy /q /s /e /h \\isis.cclrc.ac.uk\inst$\Kits$\CompGroup\ICP\Client\EPICS_UTILS %UTILSDIR%
 if %errorlevel% neq 0 (
     @echo ERROR copying EPICS UTILS
 	goto FINISH

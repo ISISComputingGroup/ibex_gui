@@ -43,11 +43,12 @@ public class Table extends DataboundTable<Row> {
 	private Collection<Row> rows;
 	
 	/**
-	 * The default constructor.
-	 * @param parent the parent composite
-	 * @param style the style of the DataboundTable composite
-	 * @param tableStyle the style of the table
-	 */
+     * The default constructor.
+     * 
+     * @param parent the parent composite
+     * @param style the style of the DataboundTable composite
+     * @param tableStyle the style of the table
+     */
 	public Table(Composite parent, int style, int tableStyle) {
 		super(parent, style, Row.class, tableStyle | SWT.BORDER);
 		
@@ -70,6 +71,15 @@ public class Table extends DataboundTable<Row> {
 	public void setRows(Collection<Row> rows) {
 		super.setRows(rows);
 		this.rows = rows;
+	}
+	
+	/**
+	 * Clears the table.
+	 */
+	public void clearTable() {
+		rows.clear();
+		rows.add(new Row());
+		setRows(rows);
 	}
 
 	private void position() {

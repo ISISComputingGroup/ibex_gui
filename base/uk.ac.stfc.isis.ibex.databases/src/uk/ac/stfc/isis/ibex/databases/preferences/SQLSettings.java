@@ -27,6 +27,6 @@ public class SQLSettings implements InstrumentInfoReceiver {
     @Override
     public void setInstrument(InstrumentInfo instrument) {
     	Databases.getDefault().getPreferenceStore()
-    		.setValue(PreferenceSupplier.SQL_ADDRESS, instrument.hostName());
+                .setValue(PreferenceSupplier.SQL_ADDRESS, instrument.hostName());
     }
 }

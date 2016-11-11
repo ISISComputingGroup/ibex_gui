@@ -49,11 +49,12 @@ public class EstimatePanel extends Composite {
 	private Label lblTimeValue;
 	
 	/**
-	 * The default constructor.
-	 * @param parent the parent that the EstimatePanel will be placed in
-	 * @param style the style of the parent
-	 * @param estimate the estimate data
-	 */
+     * The default constructor.
+     * 
+     * @param parent the parent that the EstimatePanel will be placed in
+     * @param style the style of the parent
+     * @param estimate the estimate data
+     */
 	public EstimatePanel(Composite parent, int style, final EstimateSettingsModel estimate) {
 		super(parent, style);
 		setLayout(new GridLayout(1, true));
@@ -115,9 +116,10 @@ public class EstimatePanel extends Composite {
 	}
 	
 	/**
-	 * Databinding between EstimatePanel and Estimate. 
-	 * @param estimate the estimate settings
-	 */
+     * Databinding between EstimatePanel and Estimate.
+     * 
+     * @param estimate the estimate settings
+     */
 	public void bind(EstimateSettingsModel estimate) {
 		DataBindingContext ctx = new DataBindingContext();
 		IValidator validator = new NumbersOnlyValidator();

@@ -17,10 +17,9 @@
  * http://opensource.org/licenses/eclipse-1.0.php
  */
 
-package uk.ac.stfc.isis.ibex.instrument.custom;
+package uk.ac.stfc.isis.ibex.instrument.internal;
 
 import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
-import uk.ac.stfc.isis.ibex.instrument.internal.PVPrefix;
 
 /**
  * Some basic info that defines a custom instrument. User can specify a pvPrefix and hostname. <br>
@@ -49,19 +48,12 @@ public class CustomInstrumentInfo extends InstrumentInfo {
         checkPreconditions(pvPrefix);
     }
 
-    public static String validCustomInstrumentRegex() {
-        return PVPrefix.ND + "[_a-zA-Z0-9]+";
-    }
-
-    @Override
-    public boolean hasValidHostName() {
-        return hostName().matches(validCustomInstrumentRegex());
-    }
-
     private void checkPreconditions(String pvPrefix) {
+        if (pvPrefix == null) {
+            throw new RuntimeException("The PV prefix must not be null");
+        }
         if (pvPrefix.isEmpty()) {
-            String msg = "The PV prefix must not be empty";
-            throw new IllegalArgumentException(msg);
+            throw new IllegalArgumentException("The PV prefix must not be empty");
         }
     }
 }

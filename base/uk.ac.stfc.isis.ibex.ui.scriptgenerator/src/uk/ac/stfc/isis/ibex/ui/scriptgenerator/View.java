@@ -64,7 +64,9 @@ public class View extends ViewPart {
     /** The write button. */
 	private Button btnWrite;
     /** The clear entries button. */
-	private Button btnClearTable;
+	private Button btnClear;
+    /** The table panel. */
+	private TablePanel table;
     /** Holds the rows of the table. */
 	private Collection<Row> rows;
     /** The script builder. */
@@ -160,13 +162,13 @@ public class View extends ViewPart {
 		
 		new Label(topPanel, SWT.NONE);
 		
-		btnClearTable = new Button(topPanel, SWT.NONE);
-		btnClearTable.setText("Clear Table");
+		btnClear = new Button(topPanel, SWT.NONE);
+		btnClear.setText("Clear Table");
 		GridData gdButtonClearTable = new GridData(SWT.RIGHT, SWT.BOTTOM, true, false, 1, 1);
 		gdButtonClearTable.minimumWidth = 80;
-		btnClearTable.setLayoutData(gdButtonClearTable);
+		btnClear.setLayoutData(gdButtonClearTable);
 		
-        TablePanel table = new TablePanel(parent, SWT.NONE, rows);
+        table = new TablePanel(parent, SWT.NONE, rows);
 		table.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		
 		bind(buttonsShell);
@@ -218,10 +220,10 @@ public class View extends ViewPart {
             }
         });
 		
-		btnClearTable.addSelectionListener(new SelectionAdapter() {
+		btnClear.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				
+				table.clearTable();
 			}
 		});
 	}

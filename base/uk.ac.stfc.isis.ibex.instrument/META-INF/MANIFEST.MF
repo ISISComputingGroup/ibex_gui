@@ -16,7 +16,6 @@ Require-Bundle: org.eclipse.osgi,
 Bundle-ActivationPolicy: lazy
 Export-Package: uk.ac.stfc.isis.ibex.instrument,
  uk.ac.stfc.isis.ibex.instrument.channels,
- uk.ac.stfc.isis.ibex.instrument.custom,
  uk.ac.stfc.isis.ibex.instrument.internal,
  uk.ac.stfc.isis.ibex.instrument.pv
 Bundle-Activator: uk.ac.stfc.isis.ibex.instrument.Instrument

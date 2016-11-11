@@ -18,7 +18,9 @@
 - [ ] Does the code conform to the [coding standards](https://github.com/ISISComputingGroup/ibex_developers_manual/wiki/GUI-Coding-Conventions)? Is it well structured with small focussed classes/methods/functions?
 - [ ] Are there unit tests in place? Are the unit tests small and test the a class in isolation?
 - [ ] Are there [system tests](https://github.com/ISISComputingGroup/ibex_developers_manual/wiki/System-Testing-with-RCPTT) in place? Do they test a minimal set of functionality and leave the gui as close as possible to its original state?
+- [ ] Did any existing system test break as a result of the current changes? 
 - [ ] Have the changes been documented in the [release notes](https://github.com/ISISComputingGroup/IBEX/wiki/ReleaseNotes_Dev). If so, do they describe the changes appropriately?
+- [ ] Has the [manual system tests spreadsheet](https://github.com/ISISComputingGroup/ibex_developers_manual/wiki/Manual-system-tests) been updated?
 
 ### Functional Tests
 
