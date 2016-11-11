@@ -50,7 +50,7 @@ public class Perspective extends BasePerspective {
 	
     @Override
     public boolean isVisibleDefault() {
-        return true;
+        return false;
     }
 	
 	@Override

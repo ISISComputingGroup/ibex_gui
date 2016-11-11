@@ -35,7 +35,6 @@ import uk.ac.stfc.isis.ibex.ui.widgets.WaitEditingSupport;
 
 /**
  * A table that contains ScriptGeneratorRows.
- *
  */
 @SuppressWarnings("checkstyle:magicnumber")
 public class Table extends DataboundTable<Row> {
