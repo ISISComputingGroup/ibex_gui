@@ -25,6 +25,7 @@ import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.window.Window;
 
 import uk.ac.stfc.isis.ibex.configserver.configuration.Configuration;
+import uk.ac.stfc.isis.ibex.ui.configserver.commands.helpers.EditConfigHelper;
 import uk.ac.stfc.isis.ibex.ui.configserver.dialogs.ConfigSelectionDialog;
 
 /**

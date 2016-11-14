@@ -31,6 +31,9 @@ import org.eclipse.ui.menus.UIElement;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Configuration;
 import uk.ac.stfc.isis.ibex.epics.observing.BaseObserver;
 import uk.ac.stfc.isis.ibex.epics.observing.Observer;
+import uk.ac.stfc.isis.ibex.ui.configserver.commands.helpers.ConfigHelper;
+import uk.ac.stfc.isis.ibex.ui.configserver.commands.helpers.EditConfigHelper;
+import uk.ac.stfc.isis.ibex.ui.configserver.commands.helpers.ViewConfigHelper;
 
 /**
  * The handler class for editing the current config.
@@ -91,9 +94,13 @@ public class EditCurrentConfigHandler extends ConfigHandler<Configuration> imple
 	
 	@Override
     public Object execute(ExecutionEvent event) throws ExecutionException {
-        EditConfigHelper helper = new EditConfigHelper(shell(), SERVER);
-        helper.createDialogCurrent(blockName);
-				
+		ConfigHelper helper;
+		if (canWrite) {
+			helper = new EditConfigHelper(shell(), SERVER);
+		} else {
+			helper = new ViewConfigHelper(shell());
+		}
+		helper.createDialogCurrent(blockName);
 		return null;
 	}
 
