@@ -30,7 +30,7 @@ import uk.ac.stfc.isis.ibex.ui.configserver.dialogs.ConfigSelectionDialog;
 /**
  * Handler for the edit config menu command.
  */
-public class EditConfigHandler extends ConfigHandler<Configuration> {
+public class EditConfigHandler extends DisablingConfigHandler<Configuration> {
 
     private static final String TITLE = "Edit Configuration";
 

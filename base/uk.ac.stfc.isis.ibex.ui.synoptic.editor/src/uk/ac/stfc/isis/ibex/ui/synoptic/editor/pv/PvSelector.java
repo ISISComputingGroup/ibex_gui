@@ -28,7 +28,7 @@ import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
 import uk.ac.stfc.isis.ibex.epics.adapters.UpdatedObservableAdapter;
 import uk.ac.stfc.isis.ibex.model.Awaited;
 import uk.ac.stfc.isis.ibex.model.UpdatedValue;
-import uk.ac.stfc.isis.ibex.ui.configserver.commands.ConfigHandler;
+import uk.ac.stfc.isis.ibex.ui.configserver.commands.DisablingConfigHandler;
 import uk.ac.stfc.isis.ibex.ui.configserver.dialogs.PvSelectorDialog;
 
 /**
@@ -36,7 +36,7 @@ import uk.ac.stfc.isis.ibex.ui.configserver.dialogs.PvSelectorDialog;
  * Provides access to the selected PV
  *
  */
-public class PvSelector extends ConfigHandler<Configuration> {
+public class PvSelector extends DisablingConfigHandler<Configuration> {
 	
 	private String pvAddress = "";
     private boolean confirmed = false;

@@ -27,7 +27,7 @@ import org.eclipse.jface.window.Window;
 
 import uk.ac.stfc.isis.ibex.ui.configserver.dialogs.MultipleConfigsSelectionDialog;
 
-public class DeleteComponentsHandler extends ConfigHandler<Collection<String>> {
+public class DeleteComponentsHandler extends DisablingConfigHandler<Collection<String>> {
 	
 	public DeleteComponentsHandler() {
 		super(SERVER.deleteComponents());
