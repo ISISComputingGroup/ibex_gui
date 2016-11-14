@@ -115,7 +115,6 @@ public class EditCurrentConfigHandler extends ConfigHandler<Configuration> imple
 	public void canWriteChanged(final boolean canWrite) {
 		// Update the element
 		Display.getDefault().asyncExec(new Runnable() {
-
 			@Override
 			public void run() {
 				ICommandService commandService = (ICommandService)activeWindow().getService(ICommandService.class);

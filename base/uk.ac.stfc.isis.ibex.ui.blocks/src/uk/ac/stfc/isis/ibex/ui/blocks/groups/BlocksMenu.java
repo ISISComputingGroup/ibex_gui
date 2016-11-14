@@ -24,10 +24,14 @@ import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.MenuManager;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Menu;
 
+import uk.ac.stfc.isis.ibex.configserver.Configurations;
+import uk.ac.stfc.isis.ibex.configserver.configuration.Configuration;
 import uk.ac.stfc.isis.ibex.configserver.displaying.DisplayBlock;
+import uk.ac.stfc.isis.ibex.epics.writing.SameTypeWriter;
 import uk.ac.stfc.isis.ibex.ui.blocks.presentation.PVHistoryPresenter;
 import uk.ac.stfc.isis.ibex.ui.blocks.presentation.Presenter;
 import uk.ac.stfc.isis.ibex.ui.configserver.commands.EditCurrentConfigHandler;
@@ -36,11 +40,39 @@ public class BlocksMenu extends MenuManager {
 	
 	private final DisplayBlock block;
 	
+	private static String EDIT_BLOCK = "Edit block";
+	
+	private final IAction editBlockAction;
+	
 	private final PVHistoryPresenter pvHistoryPresenter = Presenter.getInstance().pvHistoryPresenter();
+	
+	/**
+	 * This is an inner anonymous class inherited from SameTypeWriter with added functionality
+	 * for modifying the command if the underlying configuration PV cannot be written to.
+	 */
+	protected final SameTypeWriter<Configuration> readOnlyListener = new SameTypeWriter<Configuration>() {	
+		@Override
+		public void onCanWriteChanged(final boolean canWrite) {
+			Display.getDefault().asyncExec(new Runnable() {
+				@Override
+				public void run() {
+					if (canWrite) {
+						if (find(editBlockAction.getId()) == null) {
+							add(editBlockAction);
+						}
+					} else {
+						remove(editBlockAction.getId());
+					}
+				}
+			});
+		};	
+	};
 	
 	public BlocksMenu(DisplayBlock displayBlock) {
 		
 		this.block = displayBlock;
+		
+		Configurations.getInstance().server().setCurrentConfig().subscribe(readOnlyListener);
 		
         IAction displayHistory = new Action("Display block history") {
 			@Override
@@ -51,7 +83,7 @@ public class BlocksMenu extends MenuManager {
 		
 		add(displayHistory);
 
-        IAction editBlock = new Action("Edit block") {
+        editBlockAction = new Action(EDIT_BLOCK) {
             @Override
             public void run() {
                 EditCurrentConfigHandler editBlockHandler = new EditCurrentConfigHandler(block.getName());
@@ -62,8 +94,6 @@ public class BlocksMenu extends MenuManager {
                 }
             }
         };
-
-        add(editBlock);
 	}
 	
 	public Menu createContextMenu(Label label, GroupsMenu menu) {
