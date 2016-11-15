@@ -25,7 +25,7 @@ import org.eclipse.jface.window.Window;
 
 import uk.ac.stfc.isis.ibex.ui.configserver.dialogs.ConfigSelectionDialog;
 
-public class LoadConfigHandler extends ConfigHandler<String> {
+public class LoadConfigHandler extends DisablingConfigHandler<String> {
 			
 	public LoadConfigHandler() {
 		super(SERVER.load());
