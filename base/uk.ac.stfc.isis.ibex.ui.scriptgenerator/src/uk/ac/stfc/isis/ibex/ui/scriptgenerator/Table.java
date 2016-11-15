@@ -30,33 +30,24 @@ import uk.ac.stfc.isis.ibex.scriptgenerator.row.WaitUnit;
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundCellLabelProvider;
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundTable;
 import uk.ac.stfc.isis.ibex.ui.widgets.DoubleEditingSupportBlankIfNull;
-import uk.ac.stfc.isis.ibex.ui.widgets.IntegerEditingSupportBlankIfNull;
 import uk.ac.stfc.isis.ibex.ui.widgets.StringEditingSupport;
 import uk.ac.stfc.isis.ibex.ui.widgets.WaitEditingSupport;
 
 /**
  * A table that contains ScriptGeneratorRows.
- *
  */
 @SuppressWarnings("checkstyle:magicnumber")
 public class Table extends DataboundTable<Row> {
-	
-	private TableViewerColumn position;
-	private TableViewerColumn trans;
-	private TableViewerColumn transWait;
-	private TableViewerColumn sans;
-	private TableViewerColumn sansWait;
-	private TableViewerColumn period;
-	private TableViewerColumn sampleName;
-	private TableViewerColumn thickness;
+    /** The rows of the table. */
 	private Collection<Row> rows;
 	
 	/**
-	 * The default constructor.
-	 * @param parent the parent composite
-	 * @param style the style of the DataboundTable composite
-	 * @param tableStyle the style of the table
-	 */
+     * The default constructor.
+     * 
+     * @param parent the parent composite
+     * @param style the style of the DataboundTable composite
+     * @param tableStyle the style of the table
+     */
 	public Table(Composite parent, int style, int tableStyle) {
 		super(parent, style, Row.class, tableStyle | SWT.BORDER);
 		
@@ -78,7 +69,6 @@ public class Table extends DataboundTable<Row> {
 	@Override
 	public void setRows(Collection<Row> rows) {
 		super.setRows(rows);
-		
 		this.rows = rows;
 	}
 	
@@ -92,7 +82,7 @@ public class Table extends DataboundTable<Row> {
 	}
 
 	private void position() {
-		position = createColumn("POSITION", 3);
+        TableViewerColumn position = createColumn("POSITION", 3);
 		position.setLabelProvider(new DataboundCellLabelProvider<Row>(
 				observeProperty("position")) {
 			@Override
@@ -118,7 +108,7 @@ public class Table extends DataboundTable<Row> {
 	}
 	
 	private void trans() {
-		trans = createColumn("TRANS", 3);
+        TableViewerColumn trans = createColumn("TRANS", 3);
 		trans.setLabelProvider(new DataboundCellLabelProvider<Row>(
 				observeProperty("trans")) {
 			@Override
@@ -142,7 +132,7 @@ public class Table extends DataboundTable<Row> {
 	}
 	
 	private void transWait() {
-		transWait = createColumn("TRANS_WAIT", 3);
+        TableViewerColumn transWait = createColumn("TRANS_WAIT", 3);
 		transWait.setLabelProvider(new DataboundCellLabelProvider<Row>(
 				observeProperty("transWait")) {
 			@Override
@@ -166,7 +156,7 @@ public class Table extends DataboundTable<Row> {
 	}
 	
 	private void sans() {
-		sans = createColumn("SANS", 3);
+        TableViewerColumn sans = createColumn("SANS", 3);
 		sans.setLabelProvider(new DataboundCellLabelProvider<Row>(
 				observeProperty("sans")) {
 			@Override
@@ -190,7 +180,7 @@ public class Table extends DataboundTable<Row> {
 	}
 	
 	private void sansWait() {
-		sansWait = createColumn("SANS_WAIT", 3);
+        TableViewerColumn sansWait = createColumn("SANS_WAIT", 3);
 		sansWait.setLabelProvider(new DataboundCellLabelProvider<Row>(
 				observeProperty("sans")) {
 			@Override
@@ -214,7 +204,7 @@ public class Table extends DataboundTable<Row> {
 	}
 	
 	private void period() {
-		period = createColumn("PERIOD", 3);
+        TableViewerColumn period = createColumn("PERIOD", 3);
 		period.setLabelProvider(new DataboundCellLabelProvider<Row>(
 				observeProperty("period")) {
 			@Override
@@ -238,7 +228,7 @@ public class Table extends DataboundTable<Row> {
 	}
 	
 	private void sampleName() {
-		sampleName = createColumn("SAMPLE_NAME", 3);
+        TableViewerColumn sampleName = createColumn("SAMPLE_NAME", 3);
 		sampleName.setLabelProvider(new DataboundCellLabelProvider<Row>(
 				observeProperty("sampleName")) {
 			@Override
@@ -262,7 +252,7 @@ public class Table extends DataboundTable<Row> {
 	}
 	
 	private void thickness() {
-		thickness = createColumn("THICKNESS", 3);
+        TableViewerColumn thickness = createColumn("THICKNESS", 3);
 		thickness.setLabelProvider(new DataboundCellLabelProvider<Row>(
 				observeProperty("thickness")) {
 			@Override

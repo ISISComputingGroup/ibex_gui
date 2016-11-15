@@ -77,6 +77,9 @@ import uk.ac.stfc.isis.ibex.ui.AsyncMessageModerator;
 import uk.ac.stfc.isis.ibex.ui.log.comparator.LogMessageComparator;
 import uk.ac.stfc.isis.ibex.ui.log.filter.LogMessageFilter;
 
+/**
+ * The canvas for displaying the logs.
+ */
 @SuppressWarnings("checkstyle:magicnumber")
 public class LogDisplay extends Canvas {
 	private static final Color COLOR_CONNECTION_OK = Display.getDefault()
@@ -98,7 +101,7 @@ public class LogDisplay extends Canvas {
 			LogMessageFields.CREATE_TIME, LogMessageFields.SEVERITY,
 			LogMessageFields.TYPE, LogMessageFields.APPLICATION_ID };
 
-	/** The data model. */
+    /** The data model. */
 	private LogDisplayModel model;
 
     /** Comparator that specifies how messages should be sorted. */
@@ -139,7 +142,7 @@ public class LogDisplay extends Canvas {
      * Set the model that will be used to supply the data (i.e. Log messages)
      * for the table.
      * 
-     * @param model The model to apply to the view.
+     * @param model the view model
      */
 	public void setModel(final LogDisplayModel model) {
 		this.model = model;
@@ -192,23 +195,30 @@ public class LogDisplay extends Canvas {
 	}
 
 	/**
-	 * Apply a filter that restricts the type of log messages that will be
-	 * displayed in this widget.
-	 */
+     * Apply a filter that restricts the type of log messages that will be
+     * displayed in this widget.
+     * 
+     * @param filter the message filter to apply
+     */
 	public void addMessageFilter(final LogMessageFilter filter) {
 		this.filters.add(filter);
 		updateFilter();
 	}
 	
 	/**
-	 * Remove a filter that restricts the type of log messages that will be
-	 * displayed in this widget.
-	 */
+     * Remove a filter that restricts the type of log messages that will be
+     * displayed in this widget.
+     * 
+     * @param filter the message filter to remove
+     */
 	public void removeMessageFilter(final LogMessageFilter filter) {
 		this.filters.remove(filter);
 		updateFilter();
 	}
 
+    /**
+     * Update the filter.
+     */
 	private void updateFilter() {
 		Display.getDefault().asyncExec(new Runnable() {
 			@Override
@@ -220,8 +230,10 @@ public class LogDisplay extends Canvas {
 	}
 
 	/**
-	 * Set the list of messages to be displayed in the table.
-	 */
+     * Set the list of messages to be displayed in the table.
+     * 
+     * @param messages the messages to display
+     */
     private void setMessageData(final List<LogMessage> messages) {
 		Display.getDefault().asyncExec(new Runnable() {
 			@Override
@@ -234,8 +246,10 @@ public class LogDisplay extends Canvas {
 	}
 
 	/**
-	 * Set the status of the connection to the message producer (JMS server).
-	 */
+     * Set the status of the connection to the message producer (JMS server).
+     * 
+     * @param connectionOk sets the connection status
+     */
 	private void setConnectionStatus(final boolean connectionOk) {
 		if (jmsStatusLabel != null) {
 			Display.getDefault().asyncExec(new Runnable() {
@@ -254,9 +268,11 @@ public class LogDisplay extends Canvas {
 	}
 
 	/**
-	 * Set the current display mode - live messages or search results. Updates
-	 * the table title accordingly.
-	 */
+     * Set the current display mode - live messages or search results. Updates
+     * the table title accordingly.
+     * 
+     * @param isSearchMode whether to show search results or live messages
+     */
 	private void setDisplayMode(final boolean isSearchMode) {
 		Display.getDefault().asyncExec(new Runnable() {
 			@Override
@@ -284,8 +300,8 @@ public class LogDisplay extends Canvas {
 	}
 
 	/**
-	 * Create all the elements and behaviours of the widget's UI
-	 */
+     * Create all the elements and behaviours of the widget's UI.
+     */
 	private void createLayout() {
 		// Layout
 		setLayout(new GridLayout(1, false));
@@ -296,7 +312,7 @@ public class LogDisplay extends Canvas {
 
         // Add table title label
         lblTableTitle = new Label(this, SWT.NONE);
-        lblTableTitle.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1,1));
+        lblTableTitle.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 
 		// Add log message table
 		tableViewer = new TableViewer(this, SWT.MULTI | SWT.H_SCROLL
@@ -355,8 +371,10 @@ public class LogDisplay extends Canvas {
 	}
 
 	/**
-	 * Create all the table columns (one for each property of LogMessage)
-	 */
+     * Create all the table columns (one for each property of LogMessage).
+     * 
+     * @param viewer the table viewer
+     */
 	private void createTableColumns(TableViewer viewer) {
 		if (viewer == null) {
 			return;
@@ -401,8 +419,10 @@ public class LogDisplay extends Canvas {
 	}
 
 	/**
-	 * Create and populate the right-click context menu
-	 */
+     * Create and populate the right-click context menu.
+     * 
+     * @param tableViewer the table viewer
+     */
 	private void createContextMenu(TableViewer tableViewer) {
 		Table table = tableViewer.getTable();
 
@@ -460,8 +480,11 @@ public class LogDisplay extends Canvas {
 	}
 
 	/**
-	 * Add a show/hide item to the context menu for the specified column
-	 */
+     * Add a show/hide item to the context menu for the specified column.
+     * 
+     * @param contextMenu the context menu
+     * @param column the column
+     */
 	private void addColumnMenuItem(Menu contextMenu, final TableColumn column) {
 		final MenuItem itemName = new MenuItem(contextMenu, SWT.CHECK);
 		itemName.setText(column.getText());
@@ -481,8 +504,8 @@ public class LogDisplay extends Canvas {
 	}
 
 	/**
-	 * Update the enabled state of items in the context menu
-	 */
+     * Update the enabled state of items in the context menu.
+     */
 	private void updateContextMenu() {
 		IStructuredSelection selection = (IStructuredSelection) tableViewer
 				.getSelection();
@@ -498,9 +521,11 @@ public class LogDisplay extends Canvas {
 	}
 
 	/**
-	 * Add a listener to the table that displays a dialog showing details of the
-	 * selected message when it is double clicked.
-	 */
+     * Add a listener to the table that displays a dialog showing details of the
+     * selected message when it is double clicked.
+     * 
+     * @param viewer the table viewer
+     */
 	private void addDoubleClickListener(final TableViewer viewer) {
 		final Shell shell = this.getShell();
 		viewer.getTable().addMouseListener(new MouseListener() {
@@ -557,8 +582,8 @@ public class LogDisplay extends Canvas {
 	}
 
 	/**
-	 * Remove the currently selected messages from the list
-	 */
+     * Remove the currently selected messages from the list.
+     */
 	private void clearSelectedMessages() {
 		IStructuredSelection selection = (IStructuredSelection) tableViewer
 				.getSelection();
@@ -571,6 +596,11 @@ public class LogDisplay extends Canvas {
 		model.removeMessagesFromCurrentView(msgs);
 	}
 
+    /**
+     * Save the logs to file.
+     * 
+     * @param onlySelected save only the selected entries
+     */
 	private void saveToLogFile(boolean onlySelected) {
 		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd--HH-mm-ss");
 		String date = dateFormat.format(new Date());
