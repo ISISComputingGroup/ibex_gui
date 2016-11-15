@@ -31,11 +31,17 @@ import uk.ac.stfc.isis.ibex.ui.configserver.ConfigurationServerUI;
 import uk.ac.stfc.isis.ibex.ui.configserver.ConfigurationViewModels;
 import uk.ac.stfc.isis.ibex.ui.configserver.dialogs.EditConfigDialog;
 
-public class NewConfigHandler extends ConfigHandler<Configuration> {
+/**
+ * Handles the selection of the new configuration menu item.
+ */
+public class NewConfigHandler extends DisablingConfigHandler<Configuration> {
 
 	private static final String TITLE = "New configuration";
 	private static final String SUB_TITLE = "Editing a new configuration";
 
+    /**
+     * The constructor.
+     */
 	public NewConfigHandler() {
 		super(SERVER.saveAs());
 	}

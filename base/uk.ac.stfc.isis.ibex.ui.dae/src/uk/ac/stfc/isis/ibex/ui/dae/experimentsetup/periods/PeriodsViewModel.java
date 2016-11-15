@@ -30,11 +30,19 @@ import uk.ac.stfc.isis.ibex.dae.experimentsetup.periods.PeriodSettings;
 import uk.ac.stfc.isis.ibex.dae.experimentsetup.periods.PeriodSetupSource;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 import uk.ac.stfc.isis.ibex.model.UpdatedValue;
+import uk.ac.stfc.isis.ibex.ui.dae.experimentsetup.DAEComboContentProvider;
 
+/**
+ * ViewModel used for the period tab.
+ */
 public class PeriodsViewModel extends ModelObject {
 
 	private PeriodSettings settings;
 	private UpdatedValue<Collection<String>> periodFiles;
+    private DAEComboContentProvider comboContentProvider;
+
+    private boolean internalPeriod;
+    private boolean hardwarePeriod;
 	
     /**
      * Sets the period settings.
@@ -75,46 +83,25 @@ public class PeriodsViewModel extends ModelObject {
      * @return the list of period files.
      */
 	public String[] getPeriodFilesList() {
-        String[] files = valueOrEmpty(periodFiles);
-        files = files.length != 0 ? files : new String[] {
-                "None found in C:\\Instrument\\Settings\\config\\[Instrument Name]\\configurations\\tables\\ (file name must contain string \"period\")." };
-        return addBlank(files);
+        return comboContentProvider.getContent(periodFiles, "period");
 	}
 
     /**
-     * Adds a blank option to the list for displaying in a drop down menu in the
-     * GUI.
+     * Returns which soruce the period settings are read from.
      * 
-     * @param files a list of files.
-     * @return the list of files with a blank entry added at the beginning.
+     * @return The period source.
      */
-    private String[] addBlank(String[] files) {
-        String[] result = new String[files.length + 1];
-        result[0] = " ";
-        for (int i = 0; i < files.length; i++) {
-            result[i + 1] = files[i];
-        }
-        return result;
-    }
+    public PeriodSetupSource getSetupSource() {
+        return settings.getSetupSource();
+	}
 
     /**
-     * Returns a string array from a string collection, or an empty array if the
-     * input is null.
+     * Sets which soruce the period settings are read from.
      * 
-     * @param updated the string collection.
-     * @return the resulting array.
+     * @param source The period source.
      */
-	private String[] valueOrEmpty(UpdatedValue<Collection<String>> updated) {
-		Collection<String> value = updated.getValue();
-		return value != null ? value.toArray(new String[0]) : new String[0];
-	}
-	
-	public int getSetupSource() {
-		return settings.getSetupSource().ordinal();
-	}
-	
-	public void setSetupSource(int index) {
-		settings.setSetupSource(PeriodSetupSource.values()[index]);
+    public void setSetupSource(PeriodSetupSource source) {
+        settings.setSetupSource(source);
 	}
 	
     /**
@@ -136,39 +123,149 @@ public class PeriodsViewModel extends ModelObject {
         settings.setNewPeriodFile(value);
 	}
 	
+    /**
+     * Returns the enum index of the period type.
+     * 
+     * @return the period type.
+     */
 	public int getPeriodType() {
+        updateWindow(PeriodControlType.values()[settings.getPeriodType().ordinal()]);
 		return settings.getPeriodType().ordinal();
 	}
-	
+
+    /**
+     * Sets the period type by enum index.
+     * 
+     * @param index the index of the chosen type.
+     */
 	public void setPeriodType(int index) {
-		settings.setPeriodType(PeriodControlType.values()[index]);
+        settings.setPeriodType(PeriodControlType.values()[index]);
+        updateWindow(PeriodControlType.values()[index]);
 	} 
-	
+
+    /**
+     * Gets the number of software periods.
+     * 
+     * @return the number of software periods.
+     */
 	public int getSoftwarePeriods() {
 		return settings.getSoftwarePeriods();
 	}
 	
+    /**
+     * Sets the number of software periods.
+     * 
+     * @param value the number of software periods.
+     */
 	public void setSoftwarePeriods(int value) {
 		settings.setSoftwarePeriods(value);
 	}
 	
+    /**
+     * Gets the number of hardware periods.
+     * 
+     * @return the number of hardware periods.
+     */
 	public double getHardwarePeriods() {
 		return settings.getHardwarePeriods();
 	}
-	
+
+    /**
+     * Sets the number of hardware periods.
+     * 
+     * @param value the number of hardware periods.
+     */
 	public void setHardwarePeriods(double value) {
 		settings.setHardwarePeriods(value);
 	}
 	
+    /**
+     * Gets the length of the output delay in us.
+     * 
+     * @return the length of the output delay.
+     */
 	public double getOutputDelay() {
 		return settings.getOutputDelay();
 	}
 	
+    /**
+     * Sets the length of the output delay in us.
+     * 
+     * @param value the length of the output delay.
+     */
 	public void setOutputDelay(double value) {
 		settings.setOutputDelay(value);
 	}
 	
+    /**
+     * Returns the currently set list of periods.
+     * 
+     * @return the periods.
+     */
 	public List<Period> periods() {
 		return settings.getPeriods();
 	}
+
+    /**
+     * Sets internal parameters used by the view to show/omit elements based on
+     * the chosen period type.
+     * 
+     * @param type the period type.
+     */
+    public void updateWindow(PeriodControlType type) {
+        setHardwarePeriod(false);
+        setInternalPeriod(false);
+        if (type == PeriodControlType.HARDWARE_EXTERNAL) {
+            setHardwarePeriod(true);
+        } else if (type == PeriodControlType.HARDWARE_DAE) {
+            setHardwarePeriod(true);
+            setInternalPeriod(true);
+        }
+    }
+
+    /**
+     * Returns whether the period is controlled internally by the DAE.
+     * 
+     * @return whether period is internal.
+     */
+    public boolean isInternalPeriod() {
+        return internalPeriod;
+    }
+
+    /**
+     * Set whether the chosen period is controlled internally by the DAE.
+     * 
+     * @param internalPeriod whether period is internal.
+     */
+    public void setInternalPeriod(boolean internalPeriod) {
+        firePropertyChange("internalPeriod", this.internalPeriod, this.internalPeriod = internalPeriod);
+    }
+
+    /**
+     * Returns whether the period is of type hardware.
+     * 
+     * @return whether period is hardware period.
+     */
+    public boolean isHardwarePeriod() {
+        return hardwarePeriod;
+    }
+
+    /**
+     * Set whether the chosen period is of type hardware.
+     * 
+     * @param hardwarePeriod whether period is hardware period.
+     */
+    public void setHardwarePeriod(boolean hardwarePeriod) {
+        firePropertyChange("hardwarePeriod", this.hardwarePeriod, this.hardwarePeriod = hardwarePeriod);
+    }
+
+    /**
+     * Sets the object responsible for filling the file selection combo box with
+     * appropriate options.
+     * 
+     * @param provider The content provider.
+     */
+    public void setComboContentProvider(DAEComboContentProvider provider) {
+        this.comboContentProvider = provider;
+    }
 }

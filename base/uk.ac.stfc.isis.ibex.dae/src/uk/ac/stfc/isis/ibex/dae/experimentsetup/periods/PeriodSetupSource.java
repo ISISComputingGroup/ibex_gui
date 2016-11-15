@@ -25,7 +25,7 @@ import java.util.List;
 
 
 public enum PeriodSetupSource {
-	PARAMETERS ("Use parameters below"),
+    PARAMETERS("Specify Parameters"),
 	FILE ("Read from file");
 	
 	private String text;

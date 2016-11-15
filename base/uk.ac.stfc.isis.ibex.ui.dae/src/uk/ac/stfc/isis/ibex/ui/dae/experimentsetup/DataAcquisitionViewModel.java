@@ -34,9 +34,10 @@ import uk.ac.stfc.isis.ibex.model.ModelObject;
 import uk.ac.stfc.isis.ibex.model.UpdatedValue;
 
 public class DataAcquisitionViewModel extends ModelObject {
-	
+
 	private DaeSettings settings;
 	private UpdateSettings updateSettings;
+    private DAEComboContentProvider comboContentProvider;
 	private UpdatedValue<Collection<String>> wiringTables;
 	private UpdatedValue<Collection<String>> detectorTables;
 	private UpdatedValue<Collection<String>> spectraTables;
@@ -124,58 +125,59 @@ public class DataAcquisitionViewModel extends ModelObject {
 		});	
 	}
 	
+    /**
+     * Gets the monitor spectrum.
+     * 
+     * @return The monitor spectrum.
+     */
 	public int getMonitorSpectrum() {
 		return settings.monitorSpectrum();
 	}
 	
+    /**
+     * Sets the monitor spectrum.
+     * 
+     * @param value The monitor spectrum.
+     */
 	public void setMonitorSpectrum(int value) {
 		settings.setMonitorSpectrum(value);
 	}
 
+    /**
+     * Sets the monitor spectrum lower limit.
+     * 
+     * @return The monitor spectrum lower limit.
+     */
 	public double getFrom() {
 		return settings.from();
 	}
 	
+    /**
+     * Gets the monitor spectrum lower limit.
+     * 
+     * @param value The monitor spectrum lower limit.
+     */
 	public void setFrom(double value) {
 		settings.setFrom(value);
 	}
 
+    /**
+     * Sets the monitor spectrum upper limit.
+     * 
+     * @return The monitor spectrum upper limit.
+     */
 	public double getTo() {
 		return settings.to();
 	}
-	
+
+    /**
+     * Gets the monitor spectrum upper limit.
+     * 
+     * @param value The monitor spectrum upper limit.
+     */
 	public void setTo(double value) {
 		settings.setTo(value);
 	}
-
-    /**
-     * Adds a blank option to the list for displaying in a drop down menu in the
-     * GUI.
-     * 
-     * @param files a list of available files.
-     * @return the list of files with a blank entry added at the beginning.
-     */
-    private String[] addBlank(String[] tables) {
-        String[] result = new String[tables.length + 1];
-        result[0] = " ";
-        for (int i = 0; i < tables.length; i++) {
-            result[i + 1] = tables[i];
-        }
-        return result;
-    }
-
-    /**
-     * Returns a string array from a string collection, or an empty array if the
-     * input is null.
-     * 
-     * @param updated the string collection.
-     * @return the resulting array.
-     */
-    private String[] valueOrEmpty(UpdatedValue<Collection<String>> updated) {
-        Collection<String> value = updated.getValue();
-        return value != null ? value.toArray(new String[0]) : new String[0];
-    }
-
 
     /**
      * Gets the list of wiring tables currently available to the instrument.
@@ -183,10 +185,7 @@ public class DataAcquisitionViewModel extends ModelObject {
      * @return the list of wiring tables.
      */
     public String[] getWiringTableList() {
-        String[] tables = valueOrEmpty(wiringTables);
-        tables = tables.length != 0 ? tables : new String[] {
-                "None found in C:\\Instrument\\Settings\\config\\[Instrument Name]\\configurations\\tables\\ (file name must contain string \"wiring\")." };
-        return addBlank(tables);
+        return comboContentProvider.getContent(wiringTables, "wiring");
     }
 
     /**
@@ -214,10 +213,7 @@ public class DataAcquisitionViewModel extends ModelObject {
      * @return the list of detector tables.
      */
 	public String[] getDetectorTableList() {
-        String[] tables = valueOrEmpty(detectorTables);
-        tables = tables.length != 0 ? tables : new String[] {
-                "None found in C:\\Instrument\\Settings\\config\\[Instrument Name]\\configurations\\tables\\ (file name must contain string \"det\")." };
-        return addBlank(tables);
+        return comboContentProvider.getContent(detectorTables, "det");
     }
 
     /**
@@ -245,10 +241,7 @@ public class DataAcquisitionViewModel extends ModelObject {
      * @return the list of detector tables.
      */
 	public String[] getSpectraTableList() {
-        String[] tables = valueOrEmpty(spectraTables);
-        tables = tables.length != 0 ? tables : new String[] {
-                "None found in C:\\Instrument\\Settings\\config\\[Instrument Name]\\configurations\\tables\\ (file name must contain string \"spec\")." };
-        return addBlank(tables);
+        return comboContentProvider.getContent(spectraTables, "spec");
 	}
 
     /**
@@ -398,4 +391,14 @@ public class DataAcquisitionViewModel extends ModelObject {
 	private static BinaryChoice vetoIsActive(Boolean selected) {
 		return BinaryChoice.values()[selected ? 1 : 0];
 	}
+
+    /**
+     * Sets the object responsible for filling the file selection combo boxes
+     * with appropriate options.
+     * 
+     * @param provider The content provider.
+     */
+    public void setComboContentProvider(DAEComboContentProvider provider) {
+        this.comboContentProvider = provider;
+    }
 }

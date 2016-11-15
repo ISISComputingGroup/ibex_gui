@@ -121,10 +121,10 @@ public class LogDisplay extends Canvas {
     private AsyncMessageModerator asyncMessageModerator;
 
     /**
-     * The constructor.
+     * Default constructor.
      * 
-     * @param parent the parent composite
-     * @param model the view model
+     * @param parent Parent component
+     * @param model Model to use for the view
      */
 	public LogDisplay(Composite parent, LogDisplayModel model) {
 		super(parent, SWT.NONE);
@@ -290,7 +290,7 @@ public class LogDisplay extends Canvas {
      * Show an error dialog with a specified message. Used for e.g. when a
      * database operation fails.
      * 
-     * @param message the message to display
+     * @param message Message to display in the dialog
      */
 	public void displayErrorDialog(final String message) {
 		MessageBox dialog = new MessageBox(getShell(), SWT.ICON_ERROR | SWT.OK);

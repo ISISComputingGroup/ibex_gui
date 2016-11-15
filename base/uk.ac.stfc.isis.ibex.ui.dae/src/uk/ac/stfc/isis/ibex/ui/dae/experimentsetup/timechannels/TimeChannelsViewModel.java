@@ -30,6 +30,7 @@ import uk.ac.stfc.isis.ibex.dae.experimentsetup.timechannels.TimeRegime;
 import uk.ac.stfc.isis.ibex.dae.experimentsetup.timechannels.TimeUnit;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 import uk.ac.stfc.isis.ibex.model.UpdatedValue;
+import uk.ac.stfc.isis.ibex.ui.dae.experimentsetup.DAEComboContentProvider;
 
 /**
  * Model of time channel settings read by the GUI.
@@ -37,6 +38,7 @@ import uk.ac.stfc.isis.ibex.model.UpdatedValue;
 public class TimeChannelsViewModel extends ModelObject {
 
     private TimeChannels model;
+    private DAEComboContentProvider comboContentProvider;
 
     /**
      * Binds Listeners to the time channel settings model used to update the
@@ -119,10 +121,7 @@ public class TimeChannelsViewModel extends ModelObject {
      * @return the file paths as string array
      */
     public String[] getTimeChannelFileList() {
-        String[] items = valueOrEmpty(model.getTimeChannelFileList());
-        items = items.length != 0 ? items : new String[] {
-                "None found in C:\\Instrument\\Settings\\config\\[Instrument]\\configurations\\tcb\\ (file name must contain \"tcb\")." };
-        return addBlank(items);
+        return comboContentProvider.getContent(model.getTimeChannelFileList(), "tcb");
     }
 
     /**
@@ -177,30 +176,12 @@ public class TimeChannelsViewModel extends ModelObject {
     }
 
     /**
-     * Returns a string array from a string collection, or an empty array if the
-     * input is null.
+     * Sets the object responsible for filling the file selection combo box with
+     * appropriate options.
      * 
-     * @param updated the string collection.
-     * @return the resulting array.
+     * @param provider The content provider.
      */
-    private String[] valueOrEmpty(UpdatedValue<Collection<String>> updated) {
-        Collection<String> value = updated.getValue();
-        return value != null ? value.toArray(new String[0]) : new String[0];
-    }
-
-    /**
-     * Adds a blank option to the list for displaying in a drop down menu in the
-     * GUI.
-     * 
-     * @param files a list of files.
-     * @return the list of files with a blank entry added at the beginning.
-     */
-    private String[] addBlank(String[] tables) {
-        String[] result = new String[tables.length + 1];
-        result[0] = " ";
-        for (int i = 0; i < tables.length; i++) {
-            result[i + 1] = tables[i];
-        }
-        return result;
+    public void setComboContentProvider(DAEComboContentProvider provider) {
+        this.comboContentProvider = provider;
     }
 }
