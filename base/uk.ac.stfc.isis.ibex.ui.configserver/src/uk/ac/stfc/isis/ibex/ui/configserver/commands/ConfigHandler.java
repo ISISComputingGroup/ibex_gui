@@ -40,8 +40,9 @@ import uk.ac.stfc.isis.ibex.epics.writing.Writable;
  * @param <T> The type of data expected from the underlying PV
  */
 public abstract class ConfigHandler<T> extends AbstractHandler {
-
+    /** The configuration server object. */
 	protected static final ConfigServer SERVER = Configurations.getInstance().server();
+    /** The object for editing a configuration. */
 	protected static final Editing EDITING = Configurations.getInstance().edit();
 
 	/**
@@ -65,13 +66,28 @@ public abstract class ConfigHandler<T> extends AbstractHandler {
 		destination.subscribe(configService);
 	}
 	
+    /**
+     * Returns the shell for the active window.
+     * 
+     * @return the shell
+     */
 	protected Shell shell() {
 		return activeWindow().getShell();
 	}
 	
+    /**
+     * Returns the active workbench window.
+     * 
+     * @return the window
+     */
 	protected IWorkbenchWindow activeWindow() {
 		return PlatformUI.getWorkbench().getActiveWorkbenchWindow();
 	}
 	
+    /**
+     * Abstract method for handling a change in write status.
+     * 
+     * @param canWrite whether can write or not
+     */
 	public abstract void canWriteChanged(boolean canWrite);
 }

@@ -32,15 +32,17 @@ import uk.ac.stfc.isis.ibex.ui.configserver.commands.DisablingConfigHandler;
 import uk.ac.stfc.isis.ibex.ui.configserver.dialogs.PvSelectorDialog;
 
 /**
- * Provides access to the current configuration and displays the PV selection dialog
- * Provides access to the selected PV
- *
+ * Provides access to the current configuration and displays the PV selection
+ * dialog Provides access to the selected PV. *
  */
 public class PvSelector extends DisablingConfigHandler<Configuration> {
 	
 	private String pvAddress = "";
     private boolean confirmed = false;
 
+    /**
+     * The constructor.
+     */
 	public PvSelector() {
 		super(SERVER.setCurrentConfig());
 	}
@@ -65,10 +67,20 @@ public class PvSelector extends DisablingConfigHandler<Configuration> {
 		}
 	}
 	
+    /**
+     * Get the associated PV address.
+     * 
+     * @return the address
+     */
 	public String getPvAddress() {
 		return pvAddress;
 	}
 
+    /**
+     * Get whether confirmed.
+     * 
+     * @return true for confirmed
+     */
     public boolean isConfirmed() {
         return confirmed;
     }

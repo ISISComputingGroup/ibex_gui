@@ -25,8 +25,6 @@ import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.Menu;
 
 import uk.ac.stfc.isis.ibex.configserver.Configurations;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Configuration;
@@ -36,6 +34,9 @@ import uk.ac.stfc.isis.ibex.ui.blocks.presentation.PVHistoryPresenter;
 import uk.ac.stfc.isis.ibex.ui.blocks.presentation.Presenter;
 import uk.ac.stfc.isis.ibex.ui.configserver.commands.EditCurrentConfigHandler;
 
+/**
+ * The right-click menu for blocks in the dashboard
+ */
 public class BlocksMenu extends MenuManager {
 	
 	private final DisplayBlock block;
@@ -68,8 +69,12 @@ public class BlocksMenu extends MenuManager {
 		};	
 	};
 	
-	public BlocksMenu(DisplayBlock displayBlock) {
-		
+    /**
+     * The constructor.
+     * 
+     * @param displayBlock the selected block
+     */
+    public BlocksMenu(DisplayBlock displayBlock) {
 		this.block = displayBlock;
 		
 		Configurations.getInstance().server().setCurrentConfig().subscribe(readOnlyListener);
@@ -94,9 +99,5 @@ public class BlocksMenu extends MenuManager {
                 }
             }
         };
-	}
-	
-	public Menu createContextMenu(Label label, GroupsMenu menu) {
-		return super.createContextMenu(label);
 	}
 }

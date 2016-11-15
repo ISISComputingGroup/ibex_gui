@@ -32,9 +32,15 @@ import uk.ac.stfc.isis.ibex.ui.configserver.ConfigurationViewModels;
 import uk.ac.stfc.isis.ibex.ui.configserver.dialogs.ConfigSelectionDialog;
 import uk.ac.stfc.isis.ibex.ui.configserver.dialogs.EditConfigDialog;
 
+/**
+ * Handles the selection of the edit component menu item.
+ */
 public class EditComponentHandler extends DisablingConfigHandler<Configuration> {
 	private static final String TITLE = "Edit Component";
 	
+    /**
+     * The constructor.
+     */
 	public EditComponentHandler() {
 		super(SERVER.saveAsComponent());
 	}

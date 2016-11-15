@@ -41,6 +41,9 @@ public class BlockSelector extends DisablingConfigHandler<Configuration> {
 	private String pvAddress = "";
     private boolean confirmed = false;
 
+    /**
+     * The constructor.
+     */
 	public BlockSelector() {
 		super(SERVER.setCurrentConfig());
 	}
@@ -66,14 +69,29 @@ public class BlockSelector extends DisablingConfigHandler<Configuration> {
 		}
 	}
 	
+    /**
+     * Returns the block's name.
+     * 
+     * @return the name
+     */
 	public String getBlockName() {
 		return blockName;
 	}
 	
+    /**
+     * Get the associated PV address.
+     * 
+     * @return the address
+     */
 	public String getPvAddress() {
 		return pvAddress;
 	}
 
+    /**
+     * Get whether confirmed.
+     * 
+     * @return true for confirmed
+     */
     public boolean isConfirmed() {
         return confirmed;
     }

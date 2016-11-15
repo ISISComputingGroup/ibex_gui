@@ -133,6 +133,11 @@ public class EditCurrentConfigHandler extends ConfigHandler<Configuration> imple
 		});
 	}
 	
+    /**
+     * Handles the setting of "can write".
+     * 
+     * @param canWrite True for can write
+     */
 	protected void setCanWrite(Boolean canWrite) {
 		if (this.canWrite != canWrite) {
 			this.canWrite = canWrite;

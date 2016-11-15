@@ -29,7 +29,7 @@ import uk.ac.stfc.isis.ibex.ui.configserver.commands.helpers.EditConfigHelper;
 import uk.ac.stfc.isis.ibex.ui.configserver.dialogs.ConfigSelectionDialog;
 
 /**
- * Handler for the edit config menu command.
+ * Handler for the edit configuration menu command.
  */
 public class EditConfigHandler extends DisablingConfigHandler<Configuration> {
 

@@ -29,14 +29,13 @@ import uk.ac.stfc.isis.ibex.ui.configserver.ConfigurationServerUI;
 import uk.ac.stfc.isis.ibex.ui.configserver.dialogs.ConfigDetailsDialog;
 
 /**
- * A helper class to open config editing dialog boxes.
+ * A helper class to open configuration editing dialog boxes.
  */
 public class ViewConfigHelper extends ConfigHelper {
     /**
      * Constructor for the helper class.
      * 
      * @param shell The shell in which to display dialog boxes
-     * @param server The ConfigServer to save configurations to
      */
     public ViewConfigHelper(Shell shell) {
         this.shell = shell;
@@ -46,6 +45,15 @@ public class ViewConfigHelper extends ConfigHelper {
         sub_title_current = "Viewing the current configuration";
     }
 
+    /**
+     * Opens the dialog.
+     * 
+     * @param subTitle the window sub-title
+     * @param config the configuration to edit
+     * @param blockname the block name
+     * @param isCurrent whether it is the current configuration
+     */
+    @Override
     protected void openDialog(String subTitle, EditableConfiguration config,
             String blockname, boolean isCurrent) {
         ConfigDetailsDialog dialog = new ConfigDetailsDialog(shell, title, sub_title_current, config, false, false, blockname,
