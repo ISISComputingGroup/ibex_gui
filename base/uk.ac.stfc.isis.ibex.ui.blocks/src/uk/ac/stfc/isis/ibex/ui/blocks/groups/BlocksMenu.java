@@ -35,7 +35,7 @@ import uk.ac.stfc.isis.ibex.ui.blocks.presentation.Presenter;
 import uk.ac.stfc.isis.ibex.ui.configserver.commands.EditCurrentConfigHandler;
 
 /**
- * The right-click menu for blocks in the dashboard
+ * The right-click menu for blocks in the dashboard.
  */
 public class BlocksMenu extends MenuManager {
 	
