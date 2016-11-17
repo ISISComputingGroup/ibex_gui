@@ -61,7 +61,7 @@
     <background_color>
       <color name="ISIS_Title_Background_NEW" red="240" green="240" blue="240" />
     </background_color>
-    <width>343</width>
+    <width>326</width>
     <x>6</x>
     <name>Label</name>
     <y>6</y>
@@ -102,7 +102,7 @@
     <background_color>
       <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
     </background_color>
-    <width>343</width>
+    <width>326</width>
     <x>6</x>
     <name>Label_1</name>
     <y>42</y>
@@ -134,7 +134,7 @@
     <wuid>-4c24f7a9:157d349e44c:-7f89</wuid>
     <auto_size>true</auto_size>
     <scripts />
-    <height>194</height>
+    <height>182</height>
     <border_width>1</border_width>
     <scale_options>
       <width_scalable>true</width_scalable>
@@ -155,7 +155,7 @@
       <color red="240" green="240" blue="240" />
     </background_color>
     <zoom_to_fit>false</zoom_to_fit>
-    <width>344</width>
+    <width>326</width>
     <x>6</x>
     <name>A Linking Container That Looks Like a Group Box</name>
     <y>90</y>
@@ -176,7 +176,7 @@
     <transparent>false</transparent>
     <lock_children>false</lock_children>
     <scripts />
-    <height>193</height>
+    <height>97</height>
     <border_width>1</border_width>
     <scale_options>
       <width_scalable>true</width_scalable>
@@ -194,10 +194,10 @@
     <background_color>
       <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
     </background_color>
-    <width>343</width>
+    <width>325</width>
     <x>6</x>
     <name>Status</name>
-    <y>288</y>
+    <y>276</y>
     <foreground_color>
       <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
     </foreground_color>
@@ -234,7 +234,7 @@
       <background_color>
         <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
       </background_color>
-      <width>96</width>
+      <width>78</width>
       <x>6</x>
       <name>Label</name>
       <y>6</y>
@@ -275,7 +275,7 @@
       <background_color>
         <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
       </background_color>
-      <width>96</width>
+      <width>78</width>
       <x>6</x>
       <name>Label_3</name>
       <y>36</y>
@@ -328,7 +328,7 @@ $(pv_value)</tooltip>
         <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
       </background_color>
       <width>85</width>
-      <x>150</x>
+      <x>132</x>
       <name>Text Update</name>
       <y>6</y>
       <foreground_color>
@@ -379,7 +379,7 @@ $(pv_value)</tooltip>
         <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
       </background_color>
       <width>85</width>
-      <x>120</x>
+      <x>102</x>
       <name>Text Update</name>
       <y>36</y>
       <foreground_color>
@@ -429,7 +429,7 @@ $(pv_value)</tooltip>
       </background_color>
       <square_led>false</square_led>
       <width>25</width>
-      <x>120</x>
+      <x>102</x>
       <name>LED</name>
       <data_type>0</data_type>
       <y>3</y>
@@ -473,7 +473,7 @@ $(pv_value)</tooltip>
         <color name="ISIS_Textbox_Background" red="255" green="255" blue="255" />
       </background_color>
       <width>90</width>
-      <x>216</x>
+      <x>198</x>
       <name>Combo</name>
       <y>32</y>
       <foreground_color>
