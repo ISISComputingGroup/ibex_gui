@@ -62,6 +62,11 @@ public class ComponentDescription implements SynopticParentDescription {
     public ComponentDescription() {
     }
 
+    /**
+     * Copy constructor.
+     * 
+     * @param other the description to be copied
+     */
     public ComponentDescription(ComponentDescription other) {
         this(other, true, null);
     }
@@ -72,8 +77,9 @@ public class ComponentDescription implements SynopticParentDescription {
      * while the top level part of the copy will share a parent with what it is
      * copied from.
      * 
-     * @param other
-     *            The ComponentDescription to copy
+     * @param other the one to copy
+     * @param isTopLevelCopy copying from the top
+     * @param parent the parent
      */
     private ComponentDescription(ComponentDescription other, boolean isTopLevelCopy, ComponentDescription parent) {
         if (isTopLevelCopy) {
@@ -102,14 +108,29 @@ public class ComponentDescription implements SynopticParentDescription {
         }
     }
 
+    /**
+     * Get the name of the component.
+     * 
+     * @return the name
+     */
     public String name() {
 		return name;
 	}
 	
+    /**
+     * Set a new name for this component.
+     * 
+     * @param name the new name
+     */
 	public void setName(String name) {
 		this.name = name;
 	}
 
+    /**
+     * get the type of this component. For example: JAWS, PSU etc.
+     * 
+     * @return the type
+     */
 	public ComponentType type() {
 		if (type == null) {
 			// This means the synoptic contains a component type that the GUI 
@@ -120,40 +141,81 @@ public class ComponentDescription implements SynopticParentDescription {
 		return type;
 	}
 	
+    /**
+     * Set the component type.
+     * 
+     * @param type the new type
+     */
+    public void setType(ComponentType type) {
+        this.type = type;
+    }
+
+    /**
+     * Get the target description.
+     * 
+     * @return the description
+     */
 	public TargetDescription target() {
 		return target;
 	}
 	
-	public void setType(ComponentType type) {
-		this.type = type;
-	}
-	
+    /**
+     * Set a new target.
+     * 
+     * @param target the target to set
+     */
 	public void setTarget(TargetDescription target) {
 		this.target = target;
 	}
 	
+    /**
+     * get the PVs associated with this component.
+     * 
+     * @return the PVs
+     */
 	public List<PV> pvs() {
 		return pvs;
 	}
 	
+    /**
+     * Remove a PV from this component.
+     * 
+     * @param pv the PV to remove
+     */
 	public void removePV(PV pv) {
 		if (pv != null && pvs.contains(pv)) {
 			pvs.remove(pv);
 		}
 	}
 	
+    /**
+     * Add a PV to this component.
+     * 
+     * @param pv the PV to add
+     */
 	public void addPV(PV pv) {
 		if (pv != null) {
 			pvs.add(0, pv);
 		}
 	}
 	
+    /**
+     * Add a PV to this component in a certain place.
+     * 
+     * @param pv the PV to add
+     * @param position the index for it
+     */
 	public void addPV(PV pv, int position) {
 		if (pv != null) {
 			pvs.add(position, pv);
 		}
 	}
 	
+    /**
+     * Move a PV up the list.
+     * 
+     * @param pv the PV to move up
+     */
 	public void promotePV(PV pv) {
 		if (pv != null && pvs.contains(pv)) {
 			int position = pvs.indexOf(pv) - 1;
@@ -164,6 +226,11 @@ public class ComponentDescription implements SynopticParentDescription {
 		}
 	}
 	
+    /**
+     * Move a PV down the list.
+     * 
+     * @param pv the pv to move down
+     */
 	public void demotePV(PV pv) {
 		if (pv != null && pvs.contains(pv)) {
 			int position = pvs.indexOf(pv) + 1;
@@ -194,14 +261,29 @@ public class ComponentDescription implements SynopticParentDescription {
 		components.remove(component);
 	}
 	
+    /**
+     * Get the parent synoptic for this component.
+     * 
+     * @return the parent's description
+     */
 	public SynopticParentDescription getParent() {
 		return parent;
 	}
 
+    /**
+     * Set a parent for this component.
+     * 
+     * @param parent the parent's description
+     */
 	public void setParent(SynopticParentDescription parent) {
 		this.parent = parent;
 	}
 	
+    /**
+     * Process the child components of this component.
+     * 
+     * Effectively sets the child component's parent to this.
+     */
 	public void processChildComponents() {
 		for (ComponentDescription cd: components) {
 			cd.setParent(this);
@@ -209,6 +291,12 @@ public class ComponentDescription implements SynopticParentDescription {
 		}
 	}
 	
+    /**
+     * Whether this component contain the specified child.
+     * 
+     * @param child the child to look for
+     * @return true if contained
+     */
 	public boolean hasChild(ComponentDescription child) {
 		// Recursive function that returns true if child is in components
 		for (ComponentDescription component : components()) {
