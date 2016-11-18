@@ -60,29 +60,32 @@ import uk.ac.stfc.isis.ibex.ui.synoptic.editor.dialogs.SuggestedTargetsDialog;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.target.DefaultTargetForComponent;
 
 /**
- * Provides the model for the view of the synoptic. This is an observable
- * model, which various other classes subscribe to.
- * 
+ * Provides the model for the view of the synoptic. This is an observable model,
+ * which various other classes subscribe to.
  */
 public class SynopticViewModel {
-	
 	private SynopticModel editing = Synoptic.getInstance().edit();
-	
 	private SynopticDescription synoptic;
-
 	private List<ComponentDescription> selectedComponents;
 	private PV selectedPV;
 	private Property selectedProperty;
-
 	private List<IInstrumentUpdateListener> instrumentUpdateListeners = new CopyOnWriteArrayList<>();
 	private List<IComponentSelectionListener> componentSelectionListeners = new CopyOnWriteArrayList<>();
 	private List<IPVSelectionListener> pvSelectionListeners = new CopyOnWriteArrayList<>();
 	private List<IPropertySelectionListener> propertySelectionListeners = new CopyOnWriteArrayList<>();
 
+    /**
+     * The constructor.
+     */
 	public SynopticViewModel() {
 		loadCurrentInstrument();
 	}
 	
+    /**
+     * Loads a synoptic description for editing etc.
+     * 
+     * @param description the description
+     */
     public void loadSynopticDescription(SynopticDescription description) {
         synoptic = description;
         synoptic.processChildComponents();
@@ -93,10 +96,21 @@ public class SynopticViewModel {
 		broadcastInstrumentUpdate(UpdateTypes.NEW_INSTRUMENT);
 	}
 
+    /**
+     * Gets the current synoptic description.
+     * 
+     * @return the synoptic
+     */
 	public SynopticDescription getSynoptic() {
 		return synoptic;
 	}
 
+    /**
+     * Gets the parent synoptic of a particular component.
+     * 
+     * @param component the component
+     * @return the parent
+     */
 	public SynopticParentDescription getParent(ComponentDescription component) {
 		SynopticParentDescription parent = component.getParent();
 		if (parent == null) {
@@ -104,7 +118,10 @@ public class SynopticViewModel {
 		}
 		return parent;
 	}
-	 
+
+    /**
+     * Add a new blank component to the synoptic.
+     */
 	public void addNewComponent() {
 		ComponentDescription component = new ComponentDescription();
 
@@ -128,6 +145,9 @@ public class SynopticViewModel {
 
 	}
 
+    /**
+     * Allows the selected component(s) to be copied.
+     */
     public void copySelectedComponent() {
         if (selectedComponents == null || selectedComponents.isEmpty()) {
             return;
@@ -207,6 +227,9 @@ public class SynopticViewModel {
 		return message;
     }
     
+    /**
+     * Removes the selected component(s) from the synoptic.
+     */
 	public void removeSelectedComponent() {
 		if (selectedComponents != null) {
 			Shell shell = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
@@ -221,6 +244,11 @@ public class SynopticViewModel {
 		}
 	}
 
+    /**
+     * Adds a PV writer/reader to the component.
+     * 
+     * @return the index
+     */
 	public int addNewPV() {
 		PV pv = new PV();
 		pv.setDisplayName("New PV");
@@ -245,16 +273,28 @@ public class SynopticViewModel {
 		return index;
 	}
 
+    /**
+     * Moves a PV up the list.
+     */
 	public void promoteSelectedPV() {
 		getFirstSelectedComponent().promotePV(selectedPV);
 		broadcastInstrumentUpdate(UpdateTypes.EDIT_PV);
 	}
 
+    /**
+     * Moves a PV down the list.
+     */
 	public void demoteSelectedPV() {
 		getFirstSelectedComponent().demotePV(selectedPV);
 		broadcastInstrumentUpdate(UpdateTypes.EDIT_PV);
 	}
 
+    /**
+     * Determines whether the PV be moved up (enables or disable the associated
+     * control).
+     * 
+     * @return true means can promote
+     */
 	public boolean canPromotePV() {
 		if (selectedPV == null) {
 			return false;
@@ -264,6 +304,12 @@ public class SynopticViewModel {
 		return index > 0;
 	}
 
+    /**
+     * Determines whether the PV be moved down (enables or disable the
+     * associated control).
+     * 
+     * @return true means can promote
+     */
 	public boolean canDemotePV() {
 		if (selectedPV == null) {
 			return false;
@@ -273,6 +319,9 @@ public class SynopticViewModel {
 		return index < selectedComponents.get(0).pvs().size() - 1;
 	}
 
+    /**
+     * Remove the selected PV from the component.
+     */
 	public void removeSelectedPV() {
 		if (selectedPV != null) {
 			selectedComponents.get(0).removePV(selectedPV);
@@ -281,6 +330,12 @@ public class SynopticViewModel {
 		}
 	}
 
+    /**
+     * Add a target (e.g. an OPI) to the component.
+     * 
+     * @param isFinalEdit has focus moved onto something else (e.g another
+     *            component)
+     */
     public void addTargetToSelectedComponent(boolean isFinalEdit) {
 		ComponentDescription component = getFirstSelectedComponent();
         ComponentType compType = component.type();
@@ -306,6 +361,11 @@ public class SynopticViewModel {
 
 	}
 
+    /**
+     * Sets which component(s) is/are selected.
+     * 
+     * @param selected the selected component(s)
+     */
 	public void setSelectedComponent(List<ComponentDescription> selected) {
 		broadcastComponentSelectionChanged(selectedComponents,
 				selectedComponents = selected);
@@ -313,6 +373,11 @@ public class SynopticViewModel {
 		setSelectedProperty(null);
 	}
 	
+    /**
+     * Gets the first selected component as many could be selected.
+     * 
+     * @return the first component selected
+     */
 	public ComponentDescription getFirstSelectedComponent() {
 		if (selectedComponents != null && selectedComponents.size() == 1) {
 			return selectedComponents.get(0);
@@ -321,6 +386,11 @@ public class SynopticViewModel {
 		}
 	}
 	
+    /**
+     * Get all the selected components.
+     * 
+     * @return the selected components
+     */
 	public List<ComponentDescription> getSelectedComponents() {
 		if (selectedComponents != null) {
 			return selectedComponents;
@@ -329,6 +399,13 @@ public class SynopticViewModel {
 		}
 	}
 
+    /**
+     * Change the settings for the selected PV.
+     * 
+     * @param name the display name
+     * @param address the underlying PV
+     * @param mode whether it is read or write
+     */
     public void updateSelectedPV(String name, String address, IO mode) {
 		if (selectedPV == null) {
 			return;
@@ -346,23 +423,48 @@ public class SynopticViewModel {
 		broadcastInstrumentUpdate(UpdateTypes.EDIT_PV);
 	}
 
+    /**
+     * Set the selected PV.
+     * 
+     * @param selected the PV
+     */
 	public void setSelectedPV(PV selected) {
 		broadcastPVSelectionChanged(selectedPV, selectedPV = selected);
 	}
 
+    /**
+     * Gets the currently selected PV. Can be null.
+     * 
+     * @return the PV
+     */
 	public PV getSelectedPV() {
 		return selectedPV;
 	}
 
+    /**
+     * Set the currently selected property.
+     * 
+     * @param selected the property
+     */
 	public void setSelectedProperty(Property selected) {
 		broadcastPropertySelectionChanged(selectedProperty,
 				selectedProperty = selected);
 	}
 
+    /**
+     * Gets the currently selected property. Can be null.
+     * 
+     * @return the property
+     */
 	public Property getSelectedProperty() {
 		return selectedProperty;
 	}
 
+    /**
+     * Add a listener for a change in the selected property.
+     * 
+     * @param listener the listener to add
+     */
 	public void addPropertySelectionListener(IPropertySelectionListener listener) {
 		if (listener == null) {
 			return;
@@ -371,6 +473,11 @@ public class SynopticViewModel {
 		propertySelectionListeners.add(listener);
 	}
 
+    /**
+     * Remove a listener to the change of selected property.
+     * 
+     * @param listener the listener to remove
+     */
 	public void removePropertySelectionListener(
 			IPropertySelectionListener listener) {
 		propertySelectionListeners.remove(listener);
@@ -400,6 +507,11 @@ public class SynopticViewModel {
 		}
 	}
 
+    /**
+     * Add a listener for changes to the instrument.
+     * 
+     * @param listener the listener to add
+     */
 	public void addInstrumentUpdateListener(IInstrumentUpdateListener listener) {
 		if (listener == null) {
 			return;
@@ -408,12 +520,22 @@ public class SynopticViewModel {
 		instrumentUpdateListeners.add(listener);
 	}
 
+    /**
+     * Let the listeners know that the instrument has updated.
+     * 
+     * @param updateType the type of update
+     */
 	public void broadcastInstrumentUpdate(UpdateTypes updateType) {
 		for (IInstrumentUpdateListener listener : instrumentUpdateListeners) {
 			listener.instrumentUpdated(updateType);
 		}
 	}
 
+    /**
+     * Add a listener for changes in which component is selected.
+     * 
+     * @param listener the listener to add
+     */
 	public void addComponentSelectionListener(
 			IComponentSelectionListener listener) {
 		if (listener == null) {
@@ -430,6 +552,11 @@ public class SynopticViewModel {
 		}
 	}
 	
+    /**
+     * Add a listener for changes in which PV is selected.
+     * 
+     * @param listener the listener to add
+     */
 	public void addPVSelectionListener(IPVSelectionListener listener) {
 		if (listener == null) {
 			return;
@@ -455,14 +582,29 @@ public class SynopticViewModel {
 		}
 	}
 	
+    /**
+     * Whether to show the beam in the synoptic.
+     * 
+     * @param showBeam true means show it
+     */
 	public void setShowBeam(Boolean showBeam) {
 		synoptic.setShowBeam(showBeam);
 	}
 	
+    /**
+     * Whether the synoptic is set to show the beam or not.
+     * 
+     * @return true means show it
+     */
 	public Boolean getShowBeam() {
 		return synoptic.showBeam();
 	}
 	
+    /**
+     * Whether the selected components have the same parent.
+     * 
+     * @return true for the same
+     */
 	public Boolean selectedHaveSameParent() {
 		SynopticParentDescription parent = selectedComponents.get(0).getParent();
 		for (ComponentDescription selected : selectedComponents) {
@@ -473,6 +615,11 @@ public class SynopticViewModel {
 		return true;
 	}
 
+    /**
+     * Checks for duplicate names in the components.
+     * 
+     * @return true means duplicate(s)
+     */
     public boolean getHasDuplicatedName() {
         List<String> comps = getSynoptic().getComponentNameListWithChildren();
         return listHasDuplicates(comps);
@@ -483,6 +630,12 @@ public class SynopticViewModel {
         return (set.size() < list.size());
     }
 
+    /**
+     * Gets the OPI for the specified target.
+     * 
+     * @param targetName the name of the OPI.
+     * @return the OPI description
+     */
     public OpiDescription getOpi(String targetName) {
         String name = Opi.getDefault().descriptionsProvider().guessOpiName(targetName);
         OpiDescription opi = Opi.getDefault().descriptionsProvider().getDescription(name);
@@ -499,6 +652,11 @@ public class SynopticViewModel {
         return getOpi(targetName).getKeys();
     }
 
+    /**
+     * Gets the OPI property keys for the selected target.
+     *
+     * @return the property keys
+     */
     public List<String> getSelectedPropertyKeys() {
         return getPropertyKeys(getFirstSelectedComponent().target().name());
     }
