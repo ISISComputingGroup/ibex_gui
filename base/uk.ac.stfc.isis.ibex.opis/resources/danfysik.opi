@@ -127,7 +127,7 @@
         <exp bool_exp="pv0==0">
           <value>"danfysik_uncalibrated.opi"</value>
         </exp>
-        <pv trig="true">$(PV_ROOT)IS_CALIBRATED</pv>
+        <pv trig="true">$(PV_ROOT)IS_CALIB</pv>
       </rule>
     </rules>
     <enabled>true</enabled>
