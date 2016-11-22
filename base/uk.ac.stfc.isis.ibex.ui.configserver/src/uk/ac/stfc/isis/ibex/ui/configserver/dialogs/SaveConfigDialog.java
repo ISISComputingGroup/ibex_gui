@@ -264,7 +264,7 @@ public class SaveConfigDialog extends TitleAreaDialog {
 	}
 	
 	private String name() {
-		return txtName.getText().trim();
+        return txtName.getText();
 	}
 	
 	private String description() {
