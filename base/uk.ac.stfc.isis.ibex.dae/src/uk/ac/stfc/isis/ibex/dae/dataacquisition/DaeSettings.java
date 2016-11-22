@@ -43,8 +43,8 @@ public class DaeSettings extends ModelObject {
 	private double fcWidth;
 	private BinaryState muonMsMode = BinaryState.DISABLED;
 	private MuonCerenkovPulse muonCerenkovPulse = MuonCerenkovPulse.FIRST;
-	private BinaryChoice ts2PulseVeto = BinaryChoice.NO;;
-	private BinaryChoice isis50HzVeto = BinaryChoice.NO;;
+	private BinaryChoice ts2PulseVeto = BinaryChoice.NO;
+	private BinaryChoice isis50HzVeto = BinaryChoice.NO;
 	
 	public int monitorSpectrum() {
 		return monitorSpectrum;

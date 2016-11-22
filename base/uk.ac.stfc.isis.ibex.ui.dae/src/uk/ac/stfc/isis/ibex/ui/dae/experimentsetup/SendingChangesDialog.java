@@ -22,25 +22,33 @@ package uk.ac.stfc.isis.ibex.ui.dae.experimentsetup;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.swt.widgets.Button;
-import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
 
+
+/**
+ * Dialog to alert the user that changes to the DAE are being sent.
+ */
 @SuppressWarnings("checkstyle:magicnumber")
 public class SendingChangesDialog extends Dialog {
 
 	private int maxSeconds;
 
 	/**
-	 * Create the dialog.
-	 * @param parentShell
-	 */
+     * Create the dialog.
+     * 
+     * @param parentShell
+     *            The shell to create the dialog from
+     * @param secondsToShowFor
+     *            The length of time to show the dialog box for
+     */
 	public SendingChangesDialog(Shell parentShell, int secondsToShowFor) {
 		super(parentShell);
 		this.maxSeconds = secondsToShowFor;
@@ -64,7 +72,8 @@ public class SendingChangesDialog extends Dialog {
 			private int counter = 0;
 			private final int oneSecondInMilliseconds = 1000;
 			
-			public void run() {
+			@Override
+            public void run() {
 				if (!lblSendingChanges.isDisposed()) {
 					if (counter >= maxSeconds) {
 						SendingChangesDialog.this.close();

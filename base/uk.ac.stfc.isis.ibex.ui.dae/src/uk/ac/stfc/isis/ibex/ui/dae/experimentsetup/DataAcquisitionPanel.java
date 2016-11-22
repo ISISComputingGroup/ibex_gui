@@ -39,6 +39,9 @@ import org.eclipse.swt.widgets.Text;
 import uk.ac.stfc.isis.ibex.dae.dataacquisition.DaeTimingSource;
 import uk.ac.stfc.isis.ibex.dae.updatesettings.AutosaveUnit;
 
+/**
+ * Panel to show the information regarding the data acquisition of the DAE.
+ */
 public class DataAcquisitionPanel extends Composite {
     private Combo wiringTableSelector;
     private Combo detectorTableSelector;
@@ -70,6 +73,15 @@ public class DataAcquisitionPanel extends Composite {
     private DataBindingContext bindingContext;
     private DataAcquisitionViewModel model;
 
+
+    /**
+     * The default constructor for the panel.
+     * 
+     * @param parent
+     *            The parent composite that this panel belongs to.
+     * @param style
+     *            The SWT flags giving the style of the panel.
+     */
     @SuppressWarnings({ "checkstyle:magicnumber", "checkstyle:localvariablename" })
     public DataAcquisitionPanel(Composite parent, int style) {
         super(parent, style);

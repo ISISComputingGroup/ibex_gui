@@ -81,7 +81,7 @@ public abstract class DataboundCellLabelProvider<TRow> extends ObservableMapCell
      */
     protected Image imageFromRow(TRow row) {
         return null;
-    };
+    }
 
     /**
      * Value or empty for a double.
