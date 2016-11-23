@@ -58,27 +58,53 @@ import uk.ac.stfc.isis.ibex.validators.GroupNamesProvider;
  */
 public class EditableConfiguration extends ModelObject implements GroupNamesProvider {
 
+    /** The property change identifier associated with editing groups. */
     public static final String EDITABLE_GROUPS = "editableGroups";
+
+    /** The default group name text to apply to new groups. */
 	private static final String DEFAULT_GROUP_NAME = "NEW_GROUP";
+    /** The default Name to apply to groups. */
 	private final DefaultName groupName = new DefaultName(DEFAULT_GROUP_NAME);
 
+    /** The name of the configuration. */
 	private String name;
+    /** A description of the configuration. */
 	private String description;
+    /** The default synoptic to load with the configuration. */
 	private String synoptic;
+    /** The date the configuration was created. */
 	private String dateCreated;
+    /** The date the configuration was last modified. */
 	private String dateModified;
+    /**
+     * Whether the created and modified dates can be viewed via the web
+     * dashboard.
+     */
     private Boolean datesVisible;
+    /** The IOCs associated with the configuration. */
 	private final List<EditableIoc> editableIocs = new ArrayList<>();
+    /** The groups associated with the configuration. */
 	private final List<EditableGroup> editableGroups = new ArrayList<>();
+    /** The blocks associated with the configuration. */
 	private final List<EditableBlock> editableBlocks = new ArrayList<>();
+    /**
+     * The blocks that are available to the configuration (i.e. including those
+     * associated with components.
+     */
 	private final List<EditableBlock> availableBlocks = new ArrayList<>();
+    /** The components associated with the configuration. */
 	private final EditableComponents editableComponents;
+    /** Dates when the configuration has been changed. */
 	private List<String> history = new ArrayList<>();
 	
-
+    /** Available PVs. */
 	private final List<PV> pvs;
+    /** IOC descriptions. */
 	private final IocDescriber descriptions;
 	
+    /**
+     * Listener for block renaming events.
+     */
 	private final PropertyChangeListener blockRenameListener = new PropertyChangeListener() {
 		@Override
 		public void propertyChange(PropertyChangeEvent evt) {
@@ -98,6 +124,14 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
 		}
 	};
 	
+    /**
+     * @param config The root configuration to derive the editable configuration
+     *            from
+     * @param iocs The IOCs available to the configuration
+     * @param components The components available to the configuration
+     * @param pvs The PVs available to the configuration
+     * @param descriptions The descriptions for the IOCs
+     */
 	public EditableConfiguration(
 			Configuration config,
 			Collection<EditableIoc> iocs,
@@ -134,18 +168,30 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
 		editableComponents.addPropertyChangeListener(passThrough());
 	}
 
+    /**
+     * @return The configuration name
+     */
 	public String getName() {
 		return name;
 	}
-	
+
+    /**
+     * @return The configuration description
+     */
 	public String getDescription() {
 		return description;
 	}
-	
+
+    /**
+     * @return The name of the default synoptic
+     */
 	public String getSynoptic() {
 		return synoptic;
 	}
-	
+
+    /**
+     * @return The date the configuration was created
+     */
 	public String getDateCreated() {
 		if (history.size() != 0) {
 			return history.get(0);
@@ -153,7 +199,10 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
 			return "";
 		}
 	}
-	
+
+    /**
+     * @return The date the configuration was last modified
+     */
 	public String getDateModified() {
 		if (history.size() != 0) {
 			return history.get(history.size() - 1);
@@ -161,23 +210,39 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
 			return "";
 		}
 	}
-	
+
+    /**
+     * @param name The new configuration name
+     */
 	public void setName(String name) {
 		firePropertyChange("name", this.name, this.name = name);
 	}
-	
+
+    /**
+     * @param description The new configuration description
+     */
 	public void setDescription(String description) {
 		firePropertyChange("description", this.description, this.description = description);
 	}
-	
+
+    /**
+     * @param synoptic The name of the new default synoptic for the
+     *            configuration
+     */
 	public void setSynoptic(String synoptic) {
 		firePropertyChange("synoptic", this.synoptic, this.synoptic = synoptic);
 	}
 	
+    /**
+     * @param dateCreated The date the configuration was created
+     */
 	public void setDateCreated(String dateCreated) {
 		firePropertyChange("dateCreated", this.dateCreated, this.dateCreated = dateCreated);
 	}
-	
+
+    /**
+     * @param dateModified The date the configuration was last modified
+     */
 	public void setDateModified(String dateModified) {
 		firePropertyChange("dateModified", this.dateModified, this.dateModified = dateModified);
 	}
@@ -195,7 +260,11 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
         }
         return datesVisible;
     }
-    Collection<Block> getBlocks() {
+
+    /**
+     * @return The blocks associated with the configuration
+     */
+    private Collection<Block> getBlocks() {
 		return Lists.newArrayList(Iterables.transform(editableBlocks, new Function<EditableBlock, Block>() {
 			@Override
 			public Block apply(EditableBlock block) {
@@ -204,7 +273,9 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
 		}));
 	}
 	
-	
+    /**
+     * @return The groups associated with the configuration
+     */
 	private Collection<Group> getGroups() {
 		return Lists.newArrayList(Iterables.transform(getEditableGroups(), new Function<EditableGroup, Group>() {
 			@Override
@@ -215,6 +286,9 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
 		}));
 	}
 	
+    /**
+     * @return The IOCs associated with the configuration
+     */
 	private Collection<Ioc> getIocs() {
 		return Lists.newArrayList(Iterables.transform(editableIocs, new Function<EditableIoc, Ioc>() {
 			@Override
@@ -223,35 +297,59 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
 			}
 		}));
 	}
-	
+
+    /**
+     * @return The components associated with the configuration
+     */
 	private Collection<Component> getComponents() {
 		return editableComponents.getSelected();
 	}
 	
+    /**
+     * @return The dates when the configuration has been modified
+     */
 	private Collection<String> getHistory() {
 		return history;
 	}
 	
+    /**
+     * @return The PVs associated with the configuration
+     */
 	public Collection<PV> pvs() {
 		return new ArrayList<>(pvs);
 	}
 	
+    /**
+     * @return The editable blocks associated with the configuration
+     */
 	public Collection<EditableBlock> getEditableBlocks() {
 		return new ArrayList<>(editableBlocks);
 	}
 	
+    /**
+     * @return All of the blocks available to the configuration
+     */
 	public Collection<EditableBlock> getAvailableBlocks() {
 		return new ArrayList<>(availableBlocks);
 	}
-	
+
+    /**
+     * @return The editable groups associated with the configuration
+     */
 	public Collection<EditableGroup> getEditableGroups() {
 		return new ArrayList<>(DisplayUtils.removeOtherGroup(editableGroups));
 	}
 
+    /**
+     * @return The editable components associated with the configuration
+     */
 	public EditableComponents getEditableComponents() {
 		return editableComponents;
 	}
 
+    /**
+     * @return The editable IOCs associated with the configuration
+     */
 	public Collection<EditableIoc> getEditableIocs() {
 		return editableIocs;
 	}
@@ -336,6 +434,12 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
 		firePropertyChange("blocks", blocksBefore, getBlocks());
 	}
 	
+    /**
+     * Add a new editable group to the configuration, constructed using the
+     * default name.
+     * 
+     * @return The new group
+     */
 	public EditableGroup addNewGroup() {
 		Collection<EditableGroup> editableGroupsBefore = getEditableGroups();
 		Collection<Group> groupsBefore = getGroups();
@@ -350,6 +454,11 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
 		return newGroup;
 	}
 	
+    /**
+     * Remove a group from the configuration.
+     * 
+     * @param group The group to remove
+     */
 	public void removeGroup(EditableGroup group) {
 		Collection<EditableGroup> editableGroupsBefore = getEditableGroups();
 		Collection<Group> groupsBefore = getGroups();
@@ -400,9 +509,15 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
 		
 		firePropertyChange("editableGroups", editableGroupsBefore, getEditableGroups());
 		firePropertyChange("groups", groupsBefore, getGroups());	
-
-}
+    }
 	
+    /**
+     * Take a list of IOCs selected for use in the configuration and all of the
+     * potential IOCs available and construct a merged list.
+     * 
+     * @param selected The IOCs currently used by the configuration
+     * @param available All of the available IOCs
+     */
 	private void mergeSelectedAndAvailableIocs(Collection<Ioc> selected, Collection<EditableIoc> available) {
 		Map<String, EditableIoc> iocs = new HashMap<>();
 		for (EditableIoc ioc : available) {
@@ -458,6 +573,11 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
 		});
 	}
 
+    /**
+     * Add a block to the rename listener.
+     * 
+     * @param block The block to add to the listener
+     */
 	private void addRenameListener(EditableBlock block) {
 		block.addPropertyChangeListener("name", blockRenameListener);
 	}
