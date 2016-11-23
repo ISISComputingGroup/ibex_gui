@@ -90,9 +90,10 @@ public class EditConfigDialog extends ConfigDetailsDialog {
 						.getInstance().server().componentNames();
 				boolean hasComponents = !config.getEditableComponents()
 						.getSelected().isEmpty();
+                String currentConfigName = Configurations.getInstance().server().currentConfig().getValue().name();
 				SaveConfigDialog dlg = new SaveConfigDialog(null, config
 						.getName(), config.getDescription(), configNames,
-						componentNames, !isComponent, hasComponents);
+                        componentNames, !isComponent, hasComponents, currentConfigName);
 				if (dlg.open() == Window.OK) {
 					if (dlg.getNewName() != config.getName()) {
 						config.setName(dlg.getNewName());
