@@ -76,8 +76,10 @@ public class SaveConfigDialog extends TitleAreaDialog {
      * Instantiates a new save configuration dialog.
      *
      * @param parent the parent
-     * @param currentName the current name
-     * @param currentDesc the current description
+     * @param currentName the original name of the config if editing an existing
+     *            one, otherwise blank
+     * @param currentDesc the original description of the config if editing an
+     *            existing one, otherwise blank
      * @param existingConfigs the existing configuration names (so not to
      *            duplicate)
      * @param existingComponents the existing component names (so not to
