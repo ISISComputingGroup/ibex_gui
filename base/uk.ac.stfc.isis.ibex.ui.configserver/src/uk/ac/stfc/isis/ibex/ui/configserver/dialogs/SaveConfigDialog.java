@@ -54,22 +54,74 @@ import uk.ac.stfc.isis.ibex.validators.SummaryDescriptionValidator;
 @SuppressWarnings("checkstyle:magicnumber")
 public class SaveConfigDialog extends TitleAreaDialog {
 
+    /**
+     * The text to use when referring to a component.
+     */
 	private static final String COMPONENT = "Component";
+
+    /**
+     * The test to use when referring to a configuration.
+     */
 	private static final String CONFIGURATION = "Configuration";
 	
+    /**
+     * Container for the name label.
+     */
 	private Text txtName;	
+
+    /**
+     * Container for the description label.
+     */
 	private Text txtDesc;		
+
+    /**
+     * Button to save the new object. as a component.
+     */
 	private Button btnAsComponent;
 	
+    /**
+     * Name of the new object.
+     */
 	private String newName = "";
+
+    /**
+     * Name of the new object as it currently exists in the text box.
+     */
 	private String currentName = "";
+
+    /**
+     * Description of the new object.
+     */
 	private String newDesc = "";
+
+    /**
+     * Description of the new object as it currently exists in the text box.
+     */
 	private String currentDesc = "";
+
+    /**
+     * Collection of existing configurations.
+     */
 	private List<String> existingConfigs;
+
+    /**
+     * Collection of existing components.
+     */
 	private List<String> existingComponents;
+
+    /**
+     * Is the new object a configuration (or component).
+     */
 	private boolean isConfig;
 
+    /**
+     * Does the new object have components.
+     */
 	private boolean hasComponents;
+
+    /**
+     * Should the new object be saved as a component.
+     */
 	private boolean asComponent = false;
 	
     /**
@@ -239,22 +291,22 @@ public class SaveConfigDialog extends TitleAreaDialog {
 		if (validate(name())) {
 			newName = name();
 			newDesc = description();
-			if (compareIgnoringCase(newName, currentName)) {
-				//Warn about overwriting if already exists
-				if (isDuplicate(newName)) {
-					boolean userCancelled = askUserWhetherToOverwrite();
-					if (userCancelled) {
-						return;
-					}
-				}
-			}
-			
+            // Warn about overwriting if already exists
+            if (isDuplicate(newName)) {
+                boolean userCancelled = askUserWhetherToOverwrite();
+                if (userCancelled) {
+                    return;
+                }
+            }
 			super.okPressed();
 			close();
 		}
 		// else ignore the click
 	}
 
+    /**
+     * @return Does the user want to overwrite the current configuration
+     */
 	private boolean askUserWhetherToOverwrite() {
 		MessageBox box = new MessageBox(getShell(), SWT.YES | SWT.NO);
 		box.setMessage(String.format("The specified %s name already exists - do you want to replace it? ", getTypeName().toLowerCase()));
@@ -263,27 +315,47 @@ public class SaveConfigDialog extends TitleAreaDialog {
 		return box.open() != SWT.YES;
 	}
 	
+    /**
+     * @return The name of the object
+     */
 	private String name() {
-		return txtName.getText().trim();
+        return txtName.getText();
 	}
 	
+    /**
+     * @return The description of the object
+     */
 	private String description() {
 		return txtDesc.getText().trim();
 	}
 	
+    /**
+     * @return The type of the object as a string, either component or
+     *         configuration
+     */
 	private String getTypeName() {
 		return willBeComponent() ? COMPONENT : CONFIGURATION;
 	}
 		
+    /**
+     * Update the view by checking whether the name and description are valid.
+     */
 	private void update() {
 		checkInput(name(), description());
 	}
 	
+    /**
+     * Update whether this is a configuration or component and change the title
+     * of the dialog accordingly.
+     */
 	private void updateConfigType() {
 		asComponent = btnAsComponent.getSelection();
 		setTitle(String.format("Save %s", getTypeName()));
 	}
 	
+    /**
+     * @param canSave The object has valid parameters and can be saved
+     */
 	private void allowSaving(boolean canSave) {
 		Button ok = getButton(IDialogConstants.OK_ID);
 		if (ok != null) {
@@ -291,10 +363,17 @@ public class SaveConfigDialog extends TitleAreaDialog {
 		}
 	}
 	
+    /**
+     * @return The object is a component containing components
+     */
 	private boolean savingComponentWithComponents() {
 		return willBeComponent() && hasComponents;
 	}
 	
+    /**
+     * @param name The config/component name
+     * @return Whether an object already exists with this name
+     */
 	private boolean isDuplicate(final String name) {
 		List<String> prexisting = willBeComponent() ? existingComponents : existingConfigs;	
 		return Iterables.any(prexisting, new Predicate<String>() {
@@ -305,15 +384,31 @@ public class SaveConfigDialog extends TitleAreaDialog {
 		});
 	}
 
+    /**
+     * @param text The text to compare
+     * @param other The text to compare against
+     * @return Whether the two pieces of text match case-insensitively
+     */
 	private boolean compareIgnoringCase(String text, String other) {
 		return text.toUpperCase().equals(other.toUpperCase());
 	}
 	
+    /**
+     * @param name The proposed name of the object
+     * @return Whether the proposed name is valid
+     */
 	private Boolean validate(String name) {		
 		//Must start with a letter and contain no spaces	
 		return name.matches("^[a-zA-Z][a-zA-Z0-9_]*$");
 	}
 
+    /**
+     * Check whether the proposed name and description of the object are valid.
+     * Add an error message if they aren't, allow saving if they are.
+     * 
+     * @param name The proposed name of the object
+     * @param desc The proposed description of the object
+     */
 	private void checkInput(String name, String desc) {
 		setErrorMessage(null);
 		setMessage(null);
@@ -332,6 +427,15 @@ public class SaveConfigDialog extends TitleAreaDialog {
 		}
 	}
 	
+    /**
+     * Get any error messages associated with proposed name/description of the
+     * object.
+     * 
+     * @param name Proposed name of the object
+     * @param description Proposed description of the object
+     * @return The error message associated with the proposed name and
+     *         description
+     */
 	private String getErrorMessage(String name, String description) {
 		if (savingComponentWithComponents()) {
 			return "To be saved as a component, the configuration must have no components of its own.";
@@ -357,6 +461,12 @@ public class SaveConfigDialog extends TitleAreaDialog {
 		return "";
 	}
 
+    /**
+     * Get any warning messages associated with proposed name of the object.
+     * 
+     * @param name Proposed name of the object
+     * @return The error message associated with the proposed name
+     */
 	private String getWarningMessage(String name) {	
 		if (isDuplicate(name)) {
 			return String.format("A %s with this name already exists", getTypeName().toLowerCase());
