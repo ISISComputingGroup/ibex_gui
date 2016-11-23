@@ -239,16 +239,13 @@ public class SaveConfigDialog extends TitleAreaDialog {
 		if (validate(name())) {
 			newName = name();
 			newDesc = description();
-			if (compareIgnoringCase(newName, currentName)) {
-				//Warn about overwriting if already exists
-				if (isDuplicate(newName)) {
-					boolean userCancelled = askUserWhetherToOverwrite();
-					if (userCancelled) {
-						return;
-					}
+            // Warn about overwriting if already exists
+            if (isDuplicate(newName)) {
+                boolean userCancelled = askUserWhetherToOverwrite();
+                if (userCancelled) {
+                    return;
 				}
-			}
-			
+            }
 			super.okPressed();
 			close();
 		}
