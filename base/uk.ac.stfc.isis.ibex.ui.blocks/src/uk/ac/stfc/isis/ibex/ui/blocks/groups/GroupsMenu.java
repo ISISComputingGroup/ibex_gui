@@ -21,8 +21,6 @@ package uk.ac.stfc.isis.ibex.ui.blocks.groups;
 
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
-import org.eclipse.jface.action.IMenuListener;
-import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.swt.widgets.Menu;
 
@@ -34,10 +32,12 @@ public class GroupsMenu {
 	private final MenuManager manager = new MenuManager();
 	private final GroupsPanel groups;
 	
-	private final IAction showAllBlocks = new Action("Show hidden blocks") {
+    private final IAction showAllBlocks = new Action("Show hidden blocks") {
 		@Override
 		public void run() {
 			groups.setShowHiddenBlocks(true);
+            manager.remove(hideBlocks.getId());
+            manager.add(showAllBlocks);
 		}
 	};
 	
@@ -45,25 +45,33 @@ public class GroupsMenu {
 		@Override
 		public void run() {
 			groups.setShowHiddenBlocks(false);
+            manager.remove(showAllBlocks.getId());
+            manager.add(hideBlocks);
 		}
 	};
 
-	
+    /**
+     * Constructor for the class. Sets up the menu manager to include show or
+     * hide blocks.
+     * 
+     * @param groups
+     *            The panel on which to hide/show blocks.
+     */
 	public GroupsMenu(final GroupsPanel groups) {
 		this.groups = groups;
 		
-		manager.addMenuListener(new IMenuListener() {		
-			@Override
-			public void menuAboutToShow(IMenuManager manager) {						
-				showAllBlocks.setEnabled(!groups.showHiddenBlocks());				
-				hideBlocks.setEnabled(!showAllBlocks.isEnabled());
-			}
-		});
-		
-		manager.add(showAllBlocks);
-		manager.add(hideBlocks);
+        if (groups.showHiddenBlocks()) {
+            manager.add(hideBlocks);
+        } else {
+            manager.add(showAllBlocks);
+        }
 	}
 	
+    /**
+     * Creates and returns a context menu for the GroupsPanel.
+     * 
+     * @return A context menu
+     */
 	public Menu get() {
 		return manager.createContextMenu(groups);
 	}
