@@ -64,6 +64,8 @@ public class EditBlockHelper extends ConfigHelper {
      */
     @Override
     protected void openDialog(String subTitle, EditableConfiguration config, String blockname, boolean isCurrent) {
+        // We only edit stand alone blocks as part of the current config
+        assert (isCurrent);
         openDialog(config, blockname);
     }
 
