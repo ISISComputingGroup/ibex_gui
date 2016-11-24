@@ -264,7 +264,7 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
     /**
      * @return The blocks associated with the configuration
      */
-    private Collection<Block> getBlocks() {
+    Collection<Block> getBlocks() {
 		return Lists.newArrayList(Iterables.transform(editableBlocks, new Function<EditableBlock, Block>() {
 			@Override
 			public Block apply(EditableBlock block) {
