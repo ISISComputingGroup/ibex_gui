@@ -84,7 +84,7 @@ public class EditBlockHelper extends ConfigHelper {
             MessageDialog.openError(shell, "Error",
                     "Unable to find editable block with name " + blockname + " in configuration " + config.getName());
         } else {
-            EditBlockDialog dialog = new EditBlockDialog(shell, thisEditableBlock, config, true);
+            EditBlockDialog dialog = new EditBlockDialog(shell, thisEditableBlock, config);
             if (dialog.open() == Window.OK) {
                 server.setCurrentConfig().write(config.asConfiguration());
             }
