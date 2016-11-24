@@ -73,12 +73,12 @@ public class AsyncMessageModerator {
 
     /**
      * Once a task has finished this should be called to release the task lock.
-     * 
+     * It will also reset the task lock was denied because the job will run.
      * 
      */
     public void releaseTaskLock() {
         processing.set(false);
-        if (this.taskRerunner != null && taskLockDenied.get()) {
+        if (this.taskRerunner != null && taskLockDenied.getAndSet(false)) {
             this.taskRerunner.reQueueTask();
         }
     }

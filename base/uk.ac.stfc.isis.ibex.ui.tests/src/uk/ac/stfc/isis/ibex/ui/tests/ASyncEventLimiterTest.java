@@ -111,4 +111,17 @@ public class ASyncEventLimiterTest {
 
     }
 
+    @Test
+    public void GIVEN_asycn_event_has_not_been_processed_and_reQueued_WHEN_new_task_THEN_task_is_not_rerun() {
+
+        underTest.requestTaskLock(); // first task starts
+        underTest.requestTaskLock(); // second task fails to start
+        underTest.releaseTaskLock(); // task finish and task should be requeued
+        underTest.requestTaskLock(); // last task
+        underTest.releaseTaskLock(); // task is requeued without interuption and
+                                     // so task is not requeued
+
+        verify(rerunTask, times(1)).reQueueTask();
+    }
+
 }
