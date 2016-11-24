@@ -45,9 +45,13 @@ public class EditCurrentConfigHandler extends ConfigHandler<Configuration> imple
     
     private static final String ID = "uk.ac.stfc.isis.ibex.ui.configserver.commands.EditCurrentConfig";
     
-    private String blockName = "";
     private Boolean canWrite = false;
     
+    /**
+     * The name of the block being edited, if any.
+     */
+    protected String blockName = "";
+
 	/**
 	 * This is an inner anonymous class will disable the menu item if the current config is not available.
 	 */

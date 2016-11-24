@@ -68,7 +68,6 @@ public class EditBlockHelper extends ConfigHelper {
     }
 
     /**
-     * 
      * @param config the configuration to edit
      * @param blockname the block name
      */
