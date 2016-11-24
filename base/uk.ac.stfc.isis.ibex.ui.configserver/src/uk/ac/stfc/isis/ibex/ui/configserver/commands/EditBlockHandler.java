@@ -25,7 +25,8 @@ import org.eclipse.core.commands.ExecutionException;
 import uk.ac.stfc.isis.ibex.ui.configserver.commands.helpers.EditBlockHelper;
 
 /**
- * The handler class for editing the current config.
+ * The handler class for editing a block on its own, without being part of a
+ * config panel.
  */
 public final class EditBlockHandler extends EditCurrentConfigHandler {
 
