@@ -23,9 +23,11 @@ import uk.ac.stfc.isis.ibex.runcontrol.RunControlServer;
 import uk.ac.stfc.isis.ibex.validators.ErrorMessage;
 import uk.ac.stfc.isis.ibex.validators.ErrorMessageProvider;
 
+/**
+ * A dialog for editing blocks.
+ */
 public class EditBlockDialog extends TitleAreaDialog {
 	
-    private final boolean standalone;
 	EditableConfiguration config;
 	EditableBlock block;
     RunControlServer runControl;
@@ -44,27 +46,32 @@ public class EditBlockDialog extends TitleAreaDialog {
 	List<ErrorMessageProvider> viewModels = new ArrayList<>();
 	
 	private PropertyChangeListener errorListener = new PropertyChangeListener() {
-			@Override
-			public void propertyChange(PropertyChangeEvent evt) {
-				for (ErrorMessageProvider model : viewModels) {
-					ErrorMessage error = model.getError();
-					if (error.isError()) {
-						setErrorMessage(error.getMessage());
-						setOkEnabled(false);
-						return;
-					}
+        @Override
+        public void propertyChange(PropertyChangeEvent evt) {
+            for (ErrorMessageProvider model : viewModels) {
+                ErrorMessage error = model.getError();
+                if (error.isError()) {
+                    setErrorMessage(error.getMessage());
+                    setOkEnabled(false);
+                    return;
 				}
-				
-				setOkEnabled(true);
-				setErrorMessage(null);
 			}
-		};
+            setOkEnabled(true);
+            setErrorMessage(null);
+        }
+    };
 
-    public EditBlockDialog(Shell parentShell, EditableBlock block, EditableConfiguration config, boolean standalone) {
+    /**
+     * Default constructor.
+     * 
+     * @param parentShell The shell of the parent element
+     * @param block The block to edit
+     * @param config The configuration the block belongs to
+     */
+    public EditBlockDialog(Shell parentShell, EditableBlock block, EditableConfiguration config) {
 		super(parentShell);
         this.config = config;
         this.block = block;
-        this.standalone = standalone;
 
         blockLogSettingsViewModel = new BlockLogSettingsViewModel(this.block);
 		viewModels.add(blockLogSettingsViewModel);
