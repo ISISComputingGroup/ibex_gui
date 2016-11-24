@@ -116,7 +116,7 @@ public class BaseComponentTest {
 		// Arrange
 		ComponentDescription compDesc = new ComponentDescription();
 		ComponentType compType = ComponentType.ANALYSER;
-		compDesc.setType(compType);
+        compDesc.setType(compType, false);
 		BaseComponent baseComp = new BaseComponent(compDesc) {
 			@Override
 			public Target target() {

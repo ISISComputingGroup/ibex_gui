@@ -281,7 +281,7 @@ public class ComponentDetailView extends Composite {
 			int typeIndex = cmboType.getCombo().getSelectionIndex();
             String selection = typeList.get(typeIndex);
             ComponentType type = ComponentType.valueOf(selection);
-			component.setType(type);
+            component.setType(type, true);
 
             if (isFinalUpdate) {
                 synopticViewModel.broadcastInstrumentUpdate(UpdateTypes.EDIT_COMPONENT_FINAL);

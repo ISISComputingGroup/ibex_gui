@@ -145,9 +145,13 @@ public class ComponentDescription implements SynopticParentDescription {
      * Set the component type.
      * 
      * @param type the new type
+     * @param whether to clear the target whilst changing type
      */
-    public void setType(ComponentType type) {
+    public void setType(ComponentType type, boolean clearTarget) {
         this.type = type;
+        if (clearTarget) {
+            target = null;
+        }
     }
 
     /**
