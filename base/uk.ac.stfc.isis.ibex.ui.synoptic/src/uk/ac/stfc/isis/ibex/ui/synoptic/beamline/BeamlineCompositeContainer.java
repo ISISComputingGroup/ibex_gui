@@ -88,10 +88,11 @@ public class BeamlineCompositeContainer extends BeamlineComposite {
 	}
 	
 	/**
-	 * Overrides standard getBounds() method, to ensure only extent of children is used
-	 * 
-	 * @return Width and height give maximum extent of container
-	 */
+     * Overrides standard getBounds() method, to ensure only extent of children
+     * is used.
+     * 
+     * @return Width and height give maximum extent of container
+     */
 	@Override
 	public Rectangle getBounds() {
 		Control[] controls = getChildren();

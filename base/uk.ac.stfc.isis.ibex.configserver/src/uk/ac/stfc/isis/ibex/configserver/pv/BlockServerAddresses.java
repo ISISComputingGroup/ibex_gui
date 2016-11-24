@@ -22,7 +22,7 @@ package uk.ac.stfc.isis.ibex.configserver.pv;
 import uk.ac.stfc.isis.ibex.epics.pv.PVAddress;
 
 /**
- * Addresses for PVs within the block server
+ * Addresses for PVs within the block server.
  */
 public class BlockServerAddresses {
 

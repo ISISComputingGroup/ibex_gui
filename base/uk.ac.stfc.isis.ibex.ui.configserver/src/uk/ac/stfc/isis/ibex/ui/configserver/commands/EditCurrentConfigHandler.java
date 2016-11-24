@@ -59,7 +59,9 @@ public class EditCurrentConfigHandler extends ConfigHandler<Configuration> imple
 		}
 
 		@Override
-		public void onValue(Configuration value) {}
+        public void onValue(Configuration value) {
+
+        }
 
 		@Override
 		public void onError(Exception e) {
@@ -124,7 +126,7 @@ public class EditCurrentConfigHandler extends ConfigHandler<Configuration> imple
 		Display.getDefault().asyncExec(new Runnable() {
 			@Override
 			public void run() {
-				ICommandService commandService = (ICommandService)activeWindow().getService(ICommandService.class);
+                ICommandService commandService = (ICommandService) activeWindow().getService(ICommandService.class);
 				if (commandService != null) {
 					setCanWrite(canWrite);
 					commandService.refreshElements(ID, null);

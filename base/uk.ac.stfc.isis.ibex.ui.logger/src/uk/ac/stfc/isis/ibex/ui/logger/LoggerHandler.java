@@ -61,8 +61,8 @@ public class LoggerHandler implements IHandler {
 	}
 
 	/**
-	 * Display the dialog
-	 */
+     * Display the dialog.
+     */
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		LoggerDialog dialog = new LoggerDialog(shell(), model);

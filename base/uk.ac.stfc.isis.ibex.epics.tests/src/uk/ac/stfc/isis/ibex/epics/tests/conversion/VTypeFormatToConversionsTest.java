@@ -40,8 +40,7 @@ import uk.ac.stfc.isis.ibex.epics.conversion.Converter;
 import uk.ac.stfc.isis.ibex.epics.conversion.VTypeFormat;
 
 /**
- * This class is responsible for testing the various to conversions 
- *
+ * This class is responsible for testing the various to conversions.
  */
 @SuppressWarnings({ "checkstyle:magicnumber", "checkstyle:localvariablename", "checkstyle:methodname" })
 public class VTypeFormatToConversionsTest {

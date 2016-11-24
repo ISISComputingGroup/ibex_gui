@@ -25,7 +25,7 @@ import java.util.List;
 import com.google.common.base.Joiner;
 
 /**
- * Represents a PV name
+ * Represents a PV name.
  */
 public final class PVAddress {
 	
