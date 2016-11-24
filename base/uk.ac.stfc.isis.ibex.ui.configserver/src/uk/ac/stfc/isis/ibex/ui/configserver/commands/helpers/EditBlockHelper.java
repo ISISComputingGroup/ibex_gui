@@ -57,7 +57,7 @@ public class EditBlockHelper extends ConfigHelper {
     /**
      * Opens the dialog.
      * 
-     * @param subTitle the window sub-title
+     * @param subTitle unused
      * @param config the configuration to edit
      * @param blockname the block name
      * @param isCurrent whether it is the current configuration
