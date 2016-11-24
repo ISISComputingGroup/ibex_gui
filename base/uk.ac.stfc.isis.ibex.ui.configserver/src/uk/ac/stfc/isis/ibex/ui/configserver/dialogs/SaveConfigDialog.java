@@ -73,6 +73,11 @@ public class SaveConfigDialog extends TitleAreaDialog {
 	private boolean asComponent = false;
 	
     /**
+     * The name of the current configuration
+     */
+    private final String currentConfigName;
+
+    /**
      * Instantiates a new save configuration dialog.
      *
      * @param parent the parent
@@ -87,6 +92,7 @@ public class SaveConfigDialog extends TitleAreaDialog {
      * @param isConfig current configuration
      * @param hasComponents true if this configuration has components; false
      *            otherwise
+     * @param currentConfigName The name of the current configuration
      */
 	public SaveConfigDialog(
 			Shell parent, 
@@ -95,7 +101,7 @@ public class SaveConfigDialog extends TitleAreaDialog {
 			Collection<String> existingConfigs, 
 			Collection<String> existingComponents, 
 			boolean isConfig,
-			boolean hasComponents) {
+            boolean hasComponents, String currentConfigName) {
 		super(parent);
 		setShellStyle(SWT.DIALOG_TRIM | SWT.APPLICATION_MODAL);
 		this.currentName = currentName;
@@ -104,6 +110,7 @@ public class SaveConfigDialog extends TitleAreaDialog {
 		this.existingComponents = new ArrayList<>(existingComponents);
 		this.isConfig = isConfig;
 		this.hasComponents = hasComponents;
+        this.currentConfigName = currentConfigName;
 	}
 	
     /**
@@ -241,16 +248,13 @@ public class SaveConfigDialog extends TitleAreaDialog {
 		if (validate(name())) {
 			newName = name();
 			newDesc = description();
-			if (compareIgnoringCase(newName, currentName)) {
-				//Warn about overwriting if already exists
-				if (isDuplicate(newName)) {
-					boolean userCancelled = askUserWhetherToOverwrite();
-					if (userCancelled) {
-						return;
-					}
+            // Warn about overwriting if already exists
+            if (isDuplicate(newName)) {
+                boolean userCancelled = askUserWhetherToOverwrite();
+                if (userCancelled) {
+                    return;
 				}
-			}
-			
+            }
 			super.okPressed();
 			close();
 		}
@@ -347,6 +351,10 @@ public class SaveConfigDialog extends TitleAreaDialog {
 			return "Name contains invalid characters";
 		}
 		
+        if (nameMatchesCurrentConfig(name)) {
+            return "Name matches the current configuration";
+        }
+
         BlockServerNameValidator configDescritpionRules =
                 Configurations.getInstance().variables().configDescriptionRules.getValue();
         SummaryDescriptionValidator descriptionValidator =
@@ -365,5 +373,12 @@ public class SaveConfigDialog extends TitleAreaDialog {
 		}
 		
 		return "";
+	}
+
+    /**
+	 * return The requested name matches that of the current configuration
+	 */
+	private boolean nameMatchesCurrentConfig(String name) {
+        return compareIgnoringCase(name, currentConfigName);
 	}
 }
