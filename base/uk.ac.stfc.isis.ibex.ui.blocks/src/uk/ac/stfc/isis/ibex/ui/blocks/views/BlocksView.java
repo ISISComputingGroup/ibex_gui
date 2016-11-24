@@ -23,11 +23,11 @@ import java.util.Collection;
 import java.util.Collections;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.ISizeProvider;
 import org.eclipse.ui.part.ViewPart;
-import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.layout.GridData;
 
 import uk.ac.stfc.isis.ibex.configserver.Configurations;
 import uk.ac.stfc.isis.ibex.configserver.displaying.DisplayConfiguration;
@@ -37,12 +37,24 @@ import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.Subscription;
 import uk.ac.stfc.isis.ibex.ui.blocks.groups.GroupsPanel;
 
+/**
+ * The overall view that holds the information on the blocks in the main ISIS
+ * perspective.
+ */
 public class BlocksView extends ViewPart implements ISizeProvider {
+
+    /**
+     * The default constructor.
+     */
 	public BlocksView() {
 	}
 
+    /**
+     * The view ID.
+     */
 	public static final String ID = "uk.ac.stfc.isis.ibex.ui.blocks.views.BlocksView"; //$NON-NLS-1$
-	public static final int FIXED_HEIGHT = 250;	
+
+    private static final int FIXED_HEIGHT = 250;
 
 	private static final ForwardingObservable<DisplayConfiguration> CONFIG = 
 			Configurations.getInstance().display().displayCurrentConfig();

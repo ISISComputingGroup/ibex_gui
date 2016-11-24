@@ -48,6 +48,8 @@ public class GroupsPanel extends Composite {
 	private ScrolledComposite scrolledComposite;
 	private CLabel banner;
 	
+    private Menu contextMenu;
+	
 	private boolean showHiddenBlocks = false;
 	
 	private Collection<DisplayGroup> displayGroups;
@@ -79,7 +81,7 @@ public class GroupsPanel extends Composite {
 
 	private void configureMenu() {
 		GroupsMenu menu = new GroupsMenu(this);
-		Menu contextMenu = menu.get();
+        contextMenu = menu.get();
 		mainComposite.setMenu(contextMenu);
 		scrolledComposite.setMenu(contextMenu);
 	}
@@ -166,6 +168,7 @@ public class GroupsPanel extends Composite {
 		gd.minimumHeight = gd.heightHint;
 		groupWidget.setLayoutData(gd);
 		groupWidget.pack();
+        groupWidget.setMenu(contextMenu);
 		
 		groups.add(groupWidget);
 		
