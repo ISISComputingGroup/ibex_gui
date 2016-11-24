@@ -59,6 +59,5 @@ public class ViewConfigHelper extends ConfigHelper {
         ConfigDetailsDialog dialog = new ConfigDetailsDialog(shell, title, sub_title_current, config, false, false, blockname,
                 configurationViewModels);
         dialog.open();
-
     }
 }

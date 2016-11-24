@@ -93,7 +93,7 @@ public class BlocksEditorPanel extends Composite {
 			public void widgetSelected(SelectionEvent e) {
                 BlockFactory blockFactory = new BlockFactory(config);
                 EditableBlock added = blockFactory.createNewBlock();
-                EditBlockDialog dialog = new EditBlockDialog(getShell(), added, config);
+                EditBlockDialog dialog = new EditBlockDialog(getShell(), added, config, false);
 				dialog.open();
 				setBlocks(config);
 				setSelectedBlocks(new ArrayList<EditableBlock>(Arrays.asList(added)));
@@ -226,7 +226,7 @@ public class BlocksEditorPanel extends Composite {
 	}
 
     private void openEditBlockDialog(EditableBlock toEdit) {
-        EditBlockDialog dialog = new EditBlockDialog(getShell(), toEdit, config);
+        EditBlockDialog dialog = new EditBlockDialog(getShell(), toEdit, config, false);
         dialog.open();
     }
 

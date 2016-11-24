@@ -25,6 +25,7 @@ import uk.ac.stfc.isis.ibex.validators.ErrorMessageProvider;
 
 public class EditBlockDialog extends TitleAreaDialog {
 	
+    private final boolean standalone;
 	EditableConfiguration config;
 	EditableBlock block;
     RunControlServer runControl;
@@ -59,10 +60,11 @@ public class EditBlockDialog extends TitleAreaDialog {
 			}
 		};
 
-    protected EditBlockDialog(Shell parentShell, EditableBlock block, EditableConfiguration config) {
+    public EditBlockDialog(Shell parentShell, EditableBlock block, EditableConfiguration config, boolean standalone) {
 		super(parentShell);
         this.config = config;
         this.block = block;
+        this.standalone = standalone;
 
         blockLogSettingsViewModel = new BlockLogSettingsViewModel(this.block);
 		viewModels.add(blockLogSettingsViewModel);
@@ -75,8 +77,7 @@ public class EditBlockDialog extends TitleAreaDialog {
 		
 		for (ErrorMessageProvider provider : viewModels) {
 			provider.addPropertyChangeListener("error", errorListener);
-		}
-			
+        }
 	}
 	
     @Override
