@@ -21,14 +21,14 @@ package uk.ac.stfc.isis.ibex.alarm;
 import org.apache.logging.log4j.Logger;
 import org.csstudio.alarm.beast.Messages;
 import org.csstudio.alarm.beast.ui.clientmodel.AlarmClientModel;
-import org.csstudio.alarm.beast.ui.clientmodel.AlarmClientModelListener;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
 
 /**
- * Class which provides an interaction between the perspective switcher and the alarm system
+ * Class which provides an interaction between the perspective switcher and the
+ * alarm system.
  */
 public class Alarm extends AbstractUIPlugin {
 
@@ -39,19 +39,29 @@ public class Alarm extends AbstractUIPlugin {
 	
 	private static BundleContext context;
 	private static Alarm instance;
+
+    private AlarmClientModel alarmModel;
+    private AlarmCounter counter;
 	
+    /**
+     * @return the instance of the Alarm bundle
+     */
 	public static Alarm getInstance() {
 		return instance;
 	    }
 
+    /**
+     * @return the default alarm instance
+     */
 	public static Alarm getDefault() {
 		return instance;
 	}
 
-    private AlarmClientModel alarmModel;
-	private AlarmCounter counter;
-	AlarmClientModelListener listener;
-	
+    /**
+     * Instantiates a new alarm.
+     * 
+     * Usually you would call get instance.
+     */
 	public Alarm() {
 		super();
 		instance = this;
@@ -63,10 +73,25 @@ public class Alarm extends AbstractUIPlugin {
 		counter = new AlarmCounter(alarmModel);
 	}
 
-    public AlarmClientModel getAlarmModel() {
-        return alarmModel;
+    /**
+     * Stop the bundle releasing all the resources.
+     * 
+     * @param context context of the bundle
+     * @throws Exception if something goes wrong
+     */
+    @Override
+    public void stop(BundleContext context) throws Exception {
+        super.stop(context);
+        AlarmConnectionCloser alarmConnectionCloser = releaseAlarm();
+        alarmConnectionCloser.close();
     }
 
+
+    /**
+     * Gets the context for the bundle.
+     *
+     * @return the context
+     */
 	static BundleContext getContext() {
 		return context;
 	}
@@ -80,10 +105,20 @@ public class Alarm extends AbstractUIPlugin {
 	
     /**
      * This should be called after closing the alarm view, else the instance of
-     * the alarm model will be held on to by BEAST.
+     * the alarm model will be held on to by BEAST. This returns a connection
+     * closer which should be closed as late as possible because the rest of the
+     * connection is closed on a separate thread; give it a chance to close
+     * first.
+     * 
+     * @return an active MQ connection closer
      */
-    public void releaseAlarm() {
+    public AlarmConnectionCloser releaseAlarm() {
+
+        AlarmConnectionCloser alarmConnectionCloser = new AlarmConnectionCloser(alarmModel);
         alarmModel.release();
+        alarmModel = null;
+
+        return alarmConnectionCloser;
     }
 
     /**
@@ -121,5 +156,12 @@ public class Alarm extends AbstractUIPlugin {
                 counter.forceRefresh();
             }
         }).start();
+    }
+
+    /**
+     * @return the number of active alarms
+     */
+    public int getActiveAlarmsCount() {
+        return alarmModel.getActiveAlarms().length;
     }
 }

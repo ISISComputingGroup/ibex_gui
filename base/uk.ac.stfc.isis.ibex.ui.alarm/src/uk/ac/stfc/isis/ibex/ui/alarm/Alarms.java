@@ -27,6 +27,7 @@ import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
 import uk.ac.stfc.isis.ibex.alarm.Alarm;
+import uk.ac.stfc.isis.ibex.alarm.AlarmConnectionCloser;
 
 /**
  * The activator class controls the plug-in life cycle
@@ -71,14 +72,14 @@ public class Alarms extends AbstractUIPlugin {
     /**
      * Close alarm views, these need to be restarted on instrument change.
      */
-    public void closeAll() {
+    public AlarmConnectionCloser closeAll() {
         IPerspectiveDescriptor descriptor = PlatformUI.getWorkbench().getPerspectiveRegistry()
                 .findPerspectiveWithId(AlarmPerspective.ID);
         IWorkbenchPage wp = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
         wp.closePerspective(descriptor, true, true);
 
         // Must release alarm, else it will be held on to and will not switch!
-        Alarm.getDefault().releaseAlarm();
+        return Alarm.getDefault().releaseAlarm();
     }
 
     public void updateAlarmModel() {

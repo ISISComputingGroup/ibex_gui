@@ -29,6 +29,7 @@ import org.eclipse.ui.IPerspectiveDescriptor;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.WorkbenchException;
 
+import uk.ac.stfc.isis.ibex.alarm.AlarmConnectionCloser;
 import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
 import uk.ac.stfc.isis.ibex.ui.alarm.Alarms;
 import uk.ac.stfc.isis.ibex.ui.mainmenu.MainMenuUI;
@@ -65,7 +66,7 @@ public class InstrumentHandler extends AbstractHandler {
         IPerspectiveDescriptor activePerspective = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage()
                 .getPerspective();
 
-        alarms.closeAll();
+        AlarmConnectionCloser alarmConnectionCloser = alarms.closeAll();
 
         // Close any OPIs in the synoptic
         synoptic.closeAllOPIs();
@@ -103,6 +104,7 @@ public class InstrumentHandler extends AbstractHandler {
 
         alarms.updateAlarmModel();
 
+        alarmConnectionCloser.close();
         return null;
     }
 

@@ -36,6 +36,11 @@ import uk.ac.stfc.isis.ibex.model.ModelObject;
 public class AlarmCounter extends ModelObject {
 	private int count;
 
+    /**
+     * Instantiates a new alarm counter.
+     *
+     * @param alarmModel the alarm model
+     */
     public AlarmCounter(final AlarmClientModel alarmModel) {
         count = 0;
 
@@ -60,16 +65,22 @@ public class AlarmCounter extends ModelObject {
 		});
     }
 
+    /**
+     * Reset the counter to 0.
+     */
 	public void resetCount() {
         fireCountChanged(count, count = 0);
 	}
 	
+    /**
+     * Force refresh of the counter.
+     */
     public void forceRefresh() {
-        fireCountChanged(count, count = Alarm.getDefault().getAlarmModel().getActiveAlarms().length);
+        fireCountChanged(count, count = Alarm.getDefault().getActiveAlarmsCount());
 	}
 
 	/**
-     * Use of runnable to avoid error between SWT and BEAST
+     * Use of runnable to avoid error between SWT and BEAST.
      * 
      * @param prevCount the previous count
      * @param newCount the new count
