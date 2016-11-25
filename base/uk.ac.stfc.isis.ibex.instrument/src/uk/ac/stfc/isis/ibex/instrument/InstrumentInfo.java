@@ -30,15 +30,17 @@ public class InstrumentInfo {
 	private final String name;
     private String pvPrefix;
     private final String hostName;
-    private PVPrefixFactory pvPrefixFactory = new PVPrefixFactory();
 
 	/**
-	 * Constructor for creating any general instrument.
-	 * CONSTRUCTORS NOT CALLED FOR INSTRUMENTS IN INSTLIST AS JSON DESERIALISED
-	 * @param name The user friendly name of the instrument
-	 * @param pvPrefix The PV prefix used to connect to the instrument
-	 * @param hostName The host name of the machine that the instrument is running on
-	 */
+     * Constructor for creating any general instrument. CONSTRUCTORS NOT CALLED
+     * FOR INSTRUMENTS IN INSTLIST AS JSON DESERIALISED. THIS INCLUDES INLINE
+     * CONSTRUCTOR.
+     * 
+     * @param name The user friendly name of the instrument
+     * @param pvPrefix The PV prefix used to connect to the instrument
+     * @param hostName The host name of the machine that the instrument is
+     *            running on
+     */
 	public InstrumentInfo(String name, String pvPrefix, String hostName) {
 		this.name = name;
 		this.hostName = hostName;
@@ -58,6 +60,7 @@ public class InstrumentInfo {
 	 */
 	public String pvPrefix() {
         if (pvPrefix == null) {
+            PVPrefixFactory pvPrefixFactory = new PVPrefixFactory();
             pvPrefix = pvPrefixFactory.fromInstrumentName(name);
         }
 
