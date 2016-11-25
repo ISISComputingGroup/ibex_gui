@@ -31,12 +31,24 @@ import org.eclipse.swt.widgets.Label;
 
 import uk.ac.stfc.isis.ibex.help.Help;
 
+/**
+ * A panel showing the Ibex client and server version numbers.
+ */
 public class VersionPanel extends Composite {
 
+    /** The version of the client. */
 	private Label clientVersion;
+    /** The version of the server. */
 	private Label serverVersion;
+    /** The ID of the bundle which owns the client version number. */
     private final String versionBundleId = "uk.ac.stfc.isis.ibex.product";
 
+    /**
+     * Construct a new version panel.
+     * 
+     * @param parent The parent component
+     * @param style The style to apply to the panel
+     */
 	public VersionPanel(Composite parent, int style) {
 		super(parent, style);
 		setLayout(new GridLayout(2, false));
@@ -63,6 +75,13 @@ public class VersionPanel extends Composite {
 		
 	}
 
+    /**
+     * Bind the server version as read from the target instrument to the local
+     * server version so we can see changes.
+     * 
+     * @param help The help model which monitors, amongst other things, the
+     *            server version
+     */
 	private void bind(Help help) {
 		DataBindingContext bindingContext = new DataBindingContext();
 		bindingContext.bindValue(WidgetProperties.text().observe(serverVersion), BeanProperties.value("value").observe(help.revision()));	

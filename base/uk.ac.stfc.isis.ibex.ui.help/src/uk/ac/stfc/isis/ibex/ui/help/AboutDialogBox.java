@@ -29,9 +29,22 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Shell;
 
-@SuppressWarnings("checkstyle:magicnumber")
+/**
+ * A dialog box that contains information about the Ibex client and server
+ * versions.
+ */
 public class AboutDialogBox extends TitleAreaDialog {
 
+    /** Dialog width. */
+    private static final int WIDTH = 300;
+    /** Dialog height. */
+    private static final int HEIGHT = 250;
+
+    /**
+     * Construct a new about Ibex dialog box.
+     * 
+     * @param parentShell The parent shell in which in the dialog will be loaded
+     */
 	public AboutDialogBox(Shell parentShell) {
 		super(parentShell);		
 	}
@@ -46,7 +59,7 @@ public class AboutDialogBox extends TitleAreaDialog {
 	
 	@Override
 	protected Point getInitialSize() {
-		return new Point(300, 250);
+        return new Point(WIDTH, HEIGHT);
 	}
 
 	@Override
@@ -56,7 +69,7 @@ public class AboutDialogBox extends TitleAreaDialog {
 		Composite container = (Composite) super.createDialogArea(parent);
 		container.setLayout(new GridLayout(1, false));
 			
-		VersionPanel version = new VersionPanel(container, SWT.NONE);
+		new VersionPanel(container, SWT.NONE);
 		
 		return container;
 	}	
