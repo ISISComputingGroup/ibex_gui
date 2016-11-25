@@ -84,13 +84,14 @@ public class Variables extends InstrumentVariables {
      * Constructor used for testing which avoids making any .getInstance()
      * calls.
      * 
-     * @param writableFactory
-     *            A writable factory to be used, could be a mock.
+     * @param closingWritableFactory
+     *            A closing writable factory to be used, could be a mock.
+     * @param switchingWritableFactory
+     *            A switching writable factory to be used, could be a mock.
      * @param closingObservableFactory
-     *            An observable factory to be used, could be a mock.
-     * @param instrumentSwitchers
-     *            An instrument switcher instance to use. Could be a mock for
-     *            testing.
+     *            A closing observable factory to be used, could be a mock.
+     * @param switchingObservableFactory
+     *            A switching observable factory to be used, could be a mock.
      * @param pvPrefix
      *            A PV Prefix to be used in place of
      *            Instrument.getInstance().getPvPrefix().

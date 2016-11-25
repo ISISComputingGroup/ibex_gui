@@ -30,8 +30,8 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "pvtype")
 @XmlEnum(String.class)
 public enum PVType {
-	LOCAL_PV ("Local PV"),
-	REMOTE_PV ("Remote PV");
+    LOCAL_PV("Local PV"),
+    REMOTE_PV("Remote PV");
 	
 	private String displayName;
 	
