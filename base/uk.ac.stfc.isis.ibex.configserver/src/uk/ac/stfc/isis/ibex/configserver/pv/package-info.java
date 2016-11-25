@@ -17,6 +17,6 @@
  */
 
 /**
- * Provides the classes needed for managing PVs
+ * Provides the classes needed for managing PVs.
  */
 package uk.ac.stfc.isis.ibex.configserver.pv;
