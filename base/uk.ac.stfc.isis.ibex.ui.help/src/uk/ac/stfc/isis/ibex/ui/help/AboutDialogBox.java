@@ -36,7 +36,7 @@ import org.eclipse.swt.widgets.Shell;
 public class AboutDialogBox extends TitleAreaDialog {
 
     /** Dialog width. */
-    private static final int WIDTH = 300;
+    public static final int WIDTH = 300;
     /** Dialog height. */
     private static final int HEIGHT = 250;
 

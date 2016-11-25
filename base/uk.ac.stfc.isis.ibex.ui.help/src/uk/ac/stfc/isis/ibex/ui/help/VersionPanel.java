@@ -67,12 +67,13 @@ public class VersionPanel extends Composite {
 		lblServerVersion.setText("Server Version:");
 		
 		serverVersion = new Label(this, SWT.NONE);
-		serverVersion.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		GridData serverVersionGd = new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1);
+		serverVersionGd.widthHint = AboutDialogBox.WIDTH;
+		serverVersion.setLayoutData(serverVersionGd);
 		
 		if (Help.getInstance() != null) {
 			bind(Help.getInstance());
-		}
-		
+        }
 	}
 
     /**
