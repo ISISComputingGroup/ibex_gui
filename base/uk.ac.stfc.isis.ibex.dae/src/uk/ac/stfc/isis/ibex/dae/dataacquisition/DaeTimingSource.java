@@ -24,12 +24,12 @@ import java.util.Collections;
 import java.util.List;
 
 public enum DaeTimingSource {
-	ISIS ("ISIS"),
-	INTERNAL_TEST_CLOCK ("Internal Test Clock"),
-	SMP ("SMP"),
-	MUON_CERENKOV ("Muon Cerenkov"),
-	MUON_MS ("Muon MS"),
-	ISIS_FIRST_TS1 ("ISIS (first TS1)");
+    ISIS("ISIS"),
+    INTERNAL_TEST_CLOCK("Internal Test Clock"),
+    SMP("SMP"),
+    MUON_CERENKOV("Muon Cerenkov"),
+    MUON_MS("Muon MS"),
+    ISIS_FIRST_TS1("ISIS (first TS1)");
 
 	private String text;
 
