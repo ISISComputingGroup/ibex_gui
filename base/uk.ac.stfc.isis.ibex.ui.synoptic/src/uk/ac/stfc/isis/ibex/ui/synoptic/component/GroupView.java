@@ -49,8 +49,9 @@ public class GroupView extends BeamlineComposite {
 	private Component component;
 	
 	/**
-	 * @wbp.parser.constructor
-	 */
+     * @param parent
+     *            The parent component
+     */
 	public GroupView(Composite parent) {
 		this(parent, null);
 	}
