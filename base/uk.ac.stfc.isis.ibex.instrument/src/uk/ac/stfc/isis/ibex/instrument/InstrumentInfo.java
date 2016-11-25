@@ -60,8 +60,7 @@ public class InstrumentInfo {
 	 */
 	public String pvPrefix() {
         if (pvPrefix == null) {
-            PVPrefixFactory pvPrefixFactory = new PVPrefixFactory();
-            pvPrefix = pvPrefixFactory.fromInstrumentName(name);
+            pvPrefix = new PVPrefixFactory().fromInstrumentName(name);
         }
 
         return pvPrefix;
