@@ -178,8 +178,9 @@ public class Synoptic extends Closer implements BundleActivator {
 	
 
 	/**
-	 * The writables below were added for greying out the menu items - they are not used otherwise
-	 */
+     * The writables below were added for greying out the menu items - they are
+     * not used otherwise.
+     */
 	public Writable<Collection<String>> delete() {
 		return editorModel.deleteSynoptics();
 	}

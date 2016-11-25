@@ -364,6 +364,10 @@
 				<path>SDTEST.opi</path>
 				<description>Description required.</description>
 				<macros>
+					<macro>
+						<name>DEV</name>
+						<description>The SDTest PV name (e.g. SDTEST_01)</description>
+					</macro>
 				</macros>
 			</value>
 		</entry>

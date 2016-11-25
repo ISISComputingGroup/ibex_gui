@@ -25,12 +25,13 @@ import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.window.Window;
 
 import uk.ac.stfc.isis.ibex.configserver.configuration.Configuration;
+import uk.ac.stfc.isis.ibex.ui.configserver.commands.helpers.EditConfigHelper;
 import uk.ac.stfc.isis.ibex.ui.configserver.dialogs.ConfigSelectionDialog;
 
 /**
- * Handler for the edit config menu command.
+ * Handler for the edit configuration menu command.
  */
-public class EditConfigHandler extends ConfigHandler<Configuration> {
+public class EditConfigHandler extends DisablingConfigHandler<Configuration> {
 
     private static final String TITLE = "Edit Configuration";
 

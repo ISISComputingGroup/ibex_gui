@@ -24,7 +24,7 @@ import org.eclipse.jface.viewers.ViewerFilter;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 
 /**
- * Class to extend when creating a new filter type for the available PVs
+ * Class to extend when creating a new filter type for the available PVs.
  */
 public class PVFilter extends ModelObject {
 	protected boolean refresh;

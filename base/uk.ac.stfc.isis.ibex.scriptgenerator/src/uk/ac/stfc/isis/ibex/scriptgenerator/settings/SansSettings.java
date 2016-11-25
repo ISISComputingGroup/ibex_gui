@@ -22,9 +22,12 @@ package uk.ac.stfc.isis.ibex.scriptgenerator.settings;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 
 /**
- * All settings (excluding estimate and table).
+ * All the general/global experiment settings for a SANS instrument.
+ * 
+ * Does not include the settings for time estimation and individual runs (i.e.
+ * the table data).
  */
-public class Settings extends ModelObject {
+public class SansSettings extends ModelObject {
 	private Order order;
 	private Integer doSans;
 	private Integer doTrans;
@@ -49,7 +52,7 @@ public class Settings extends ModelObject {
 	 * @param geometry the sample geometry
 	 * @param collection the collection mode
 	 */
-	public Settings(Integer doSans, Integer doTrans, Integer sampleHeight, Integer sampleWidth, Order order,
+	public SansSettings(Integer doSans, Integer doTrans, Integer sampleHeight, Integer sampleWidth, Order order,
 			Boolean loopOver, ApertureSans sansSize, ApertureTrans transSize, SampleGeometry geometry, CollectionMode collection) {
 		this.doSans = doSans;
 		this.doTrans = doTrans;

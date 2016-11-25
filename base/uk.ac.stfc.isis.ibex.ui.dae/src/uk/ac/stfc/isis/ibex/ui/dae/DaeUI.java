@@ -26,7 +26,7 @@ import uk.ac.stfc.isis.ibex.dae.Dae;
 
 
 /**
- * The activator class controls the plug-in life cycle
+ * The activator class controls the plug-in life cycle.
  */
 public class DaeUI extends AbstractUIPlugin {
 
@@ -39,8 +39,8 @@ public class DaeUI extends AbstractUIPlugin {
 	private DaeViewModel viewModel;
 	
 	/**
-	 * The constructor
-	 */
+     * The constructor.
+     */
 	public DaeUI() {
 	}
 
@@ -57,7 +57,8 @@ public class DaeUI extends AbstractUIPlugin {
 	 * (non-Javadoc)
 	 * @see org.eclipse.ui.plugin.AbstractUIPlugin#start(org.osgi.framework.BundleContext)
 	 */
-	public void start(BundleContext context) throws Exception {
+	@Override
+    public void start(BundleContext context) throws Exception {
 		super.start(context);
 		plugin = this;
 	}
@@ -66,16 +67,17 @@ public class DaeUI extends AbstractUIPlugin {
 	 * (non-Javadoc)
 	 * @see org.eclipse.ui.plugin.AbstractUIPlugin#stop(org.osgi.framework.BundleContext)
 	 */
-	public void stop(BundleContext context) throws Exception {
+	@Override
+    public void stop(BundleContext context) throws Exception {
 		plugin = null;
 		super.stop(context);
 	}
 
 	/**
-	 * Returns the shared instance
-	 *
-	 * @return the shared instance
-	 */
+     * Returns the shared instance.
+     *
+     * @return the shared instance
+     */
 	public static DaeUI getDefault() {
 		return plugin;
 	}

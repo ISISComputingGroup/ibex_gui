@@ -19,7 +19,7 @@
 package uk.ac.stfc.isis.ibex.log.message;
 
 /**
- * Names for log message fields as used in the XML representations
+ * Names for log message fields as used in the XML representations.
  */
 final class LogMessageFieldTags {
     static final String TAG_CONTENTS = "contents";

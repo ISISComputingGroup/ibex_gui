@@ -219,15 +219,6 @@ public class ConfigServer extends Closer {
 	}
 
 	/**
-	 * Returns a writable to save the current configuration.<br>
-	 * The writable expects a string with the name of what to save the configuration as.
-	 * @return the String writable object
-	 */
-	public Writable<String> save() {
-		return variables.saveConfiguration;
-	}
-
-	/**
 	 * Returns a writable to save a configuration.<br>
 	 * The writable expects a {@link Configuration} to save.
 	 * @return the {@link Configuration} writable object
@@ -318,6 +309,14 @@ public class ConfigServer extends Closer {
 		return WritingSetCommand.forDestination(log("Restart ioc", variables.restartIoc));		
 	}
 
+    /**
+     * Provides a writable that logs when it is written to.
+     * 
+     * @param <T> This is the type parameter
+     * @param id the message to write
+     * @param destination the writable being written to
+     * @return the logging writable
+     */
 	private <T> Writable<T> log(String id, Writable<T> destination) {
         return new LoggingForwardingWritable<>(Configurations.LOG, id, destination, new DoNothingConverter<T>());
 	}

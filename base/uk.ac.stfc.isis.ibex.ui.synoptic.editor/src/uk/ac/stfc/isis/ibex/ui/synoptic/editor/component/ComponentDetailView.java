@@ -51,37 +51,32 @@ import uk.ac.stfc.isis.ibex.ui.synoptic.editor.pv.PVList;
 
 /**
  * UI section that allows the user to view and edit the details of a component:
- * name, type, and PVs
- * 
+ * name, type, and PVs.
  */
 @SuppressWarnings("checkstyle:magicnumber")
 public class ComponentDetailView extends Composite {
-    
     private static final String SELECT_COMPONENT = "Select a component to view/edit details";
     private static final String UNIQUE_COMPONENT_NAME = "Component names must be unique";
-
     private final Color colorBlack = SWTResourceManager.getColor(0, 0, 0);
     private final Color colorRed = SWTResourceManager.getColor(255, 0, 0);
-    
 	private SynopticViewModel synopticViewModel;
-
 	private ComponentDescription component;
-
 	private Composite fieldsComposite;
 	private Composite labelComposite;
-
 	private Text txtName;
 	private ComboViewer cmboType;
 	private Label lblTypeIcon;
-
     private Label lblNoSelection;
-
     private boolean selectionCausedByMouseClick = false;
-
 	private PVList pvList;
-
     private static List<String> typeList = ComponentType.componentTypeAlphaList();
 
+    /**
+     * The constructor.
+     * 
+     * @param parent the parent composite
+     * @param synopticViewModel the view model
+     */
 	public ComponentDetailView(Composite parent,
 			final SynopticViewModel synopticViewModel) {
 		super(parent, SWT.NONE);
@@ -142,6 +137,11 @@ public class ComponentDetailView extends Composite {
 		showComponent(null);
 	}
 
+    /**
+     * Create the widgets for the view.
+     * 
+     * @param parent the parent composite (this)
+     */
 	public void createControls(final Composite parent) {
 		labelComposite = new Composite(parent, SWT.NONE);
 		labelComposite.setLayoutData(new GridData(SWT.CENTER, SWT.FILL, true,
@@ -241,6 +241,11 @@ public class ComponentDetailView extends Composite {
         pvList.setLayoutData(pvGridData);
 	}
 
+    /**
+     * Display a synoptic component in the view.
+     * 
+     * @param component the component to display
+     */
 	public void showComponent(ComponentDescription component) {
 		if (component != null) {
 			fieldsComposite.setVisible(true);

@@ -25,7 +25,7 @@ package uk.ac.stfc.isis.ibex.validators.tests;
 import uk.ac.stfc.isis.ibex.validators.MessageDisplayer;
 
 /**
- * Stub to help test message display functionality
+ * Stub to help test message display functionality.
  */
 final class MessageDisplayerStub implements MessageDisplayer {
     public String message;

@@ -45,30 +45,38 @@ import uk.ac.stfc.isis.ibex.ui.log.save.LogMessageFileWriter;
  */
 public class LogDisplayModel extends ModelObject
         implements ILogMessageConsumer, ISearchModel, AsyncMessageModeratorTask {
-	/** The maximum number of recent messages to display; older messages are dropped */
+    /**
+     * The maximum number of recent messages to display; older messages are
+     * dropped.
+     */
     private static final int MAX_LIVE_MESSAGES = 10000;
 	
-	/** The log message source */
+    /** The log message source. */
 	private ILogMessageProducer messageProducer;
 	
-	/** A store of recently received log messages */
+    /** A store of recently received log messages. */
 	private List<LogMessage> liveMessageCache;
 	
-	/** 
-	 * Value indicating the current status of the connection to the message
-	 * producing service (typically JMS) - true=live, false=down
-	 */
+	/**
+     * Value indicating the current status of the connection to the message
+     * producing service (typically JMS) - true=live, false=down.
+     */
 	private boolean connectionStatus;
 	
-	/** Results of the most recently performed search */
+    /** Results of the most recently performed search. */
 	private List<LogMessage> latestSearchResults;
 	
-	/** 
-	 * Value indicating whether display should currently be showing search
-	 * results (true) or live message feed (false)
-	 */
+	/**
+     * Value indicating whether display should currently be showing search
+     * results (true) or live message feed (false).
+     */
 	private boolean usingSearch;
 	
+    /**
+     * The constructor.
+     * 
+     * @param messageProducer the source of log messages
+     */
 	public LogDisplayModel(ILogMessageProducer messageProducer) {
 		this.messageProducer = messageProducer;		
 		
@@ -86,9 +94,11 @@ public class LogDisplayModel extends ModelObject
 	}
 	
 	/**
-	 * Returns the current message cache or latest search results (if search has
-	 * recently been performed)
-	 */
+     * Returns the current message cache or latest search results (if search has
+     * recently been performed).
+     * 
+     * @return The messages
+     */
 	public List<LogMessage> getMessages() {
 		if (usingSearch) {
 			return latestSearchResults;
@@ -98,9 +108,11 @@ public class LogDisplayModel extends ModelObject
 	}
 
 	/**
-	 * Returns a value indicating the status of the connection to the log
-	 * message producing service (probably JMS).
-	 */
+     * Returns a value indicating the status of the connection to the log
+     * message producing service (probably JMS).
+     * 
+     * @return the status of the connection
+     */
 	public boolean getConnectionStatus() {
 		return connectionStatus;
 	}
@@ -129,8 +141,10 @@ public class LogDisplayModel extends ModelObject
 	}
 	
 	/**
-	 * Receive a new log message - add it to the local cache
-	 */
+     * Receive a new log message - add it to the local cache.
+     * 
+     * @param logMessage the new message to add
+     */
 	@Override
 	public void newMessage(LogMessage logMessage) {
 		if (liveMessageCache.size() >= MAX_LIVE_MESSAGES) {
@@ -142,12 +156,17 @@ public class LogDisplayModel extends ModelObject
 	}
 
 	/**
-	 * Performs a search, returning all log messages that match the request parameters.
-	 * @param searchField The log message field to search by.
-	 * @param searchValue Search the 'searchField' field of every record for this string value
-	 * @param from Consider only messages that occurred after this time (null = no limit).
-	 * @param to Consider only messages that occurred before this time (null = no limit).
-	 */
+     * Performs a search, returning all log messages that match the request
+     * parameters.
+     * 
+     * @param field The log message field to search by.
+     * @param value Search the 'searchField' field of every record for this
+     *            string value
+     * @param from Consider only messages that occurred after this time (null =
+     *            no limit).
+     * @param to Consider only messages that occurred before this time (null =
+     *            no limit).
+     */
 	@Override
 	public void search(LogMessageFields field, String value, Calendar from,
 			Calendar to) {
@@ -164,19 +183,23 @@ public class LogDisplayModel extends ModelObject
 	}
 
 	/**
-	 * Indicates whether the current set of messages bing displayed are search
-	 * results (true) or recent messages (false).
-	 */
+     * Indicates whether the current set of messages being displayed are search
+     * results (true) or recent messages (false).
+     * 
+     * @return whether in search mode or not
+     */
 	public boolean isSearchMode() {
 		return usingSearch;
 	}
 
 	/**
-	 * Removes the specified log messages from the current view (live messages
-	 * or recent search results). If live messages are removed, they are
-	 * permanently gone from the live cache, but may still be retrieved by
-	 * searching.
-	 */
+     * Removes the specified log messages from the current view (live messages
+     * or recent search results). If live messages are removed, they are
+     * permanently gone from the live cache, but may still be retrieved by
+     * searching.
+     * 
+     * @param messages the messages to remove
+     */
 	public void removeMessagesFromCurrentView(List<LogMessage> messages) {
 		List<LogMessage> displayList = getMessages();
 
@@ -188,9 +211,13 @@ public class LogDisplayModel extends ModelObject
 	}
 
 	/**
-	 * Save a filtered and sorted version of the current display list (cached
-	 * messages or search results) to the specified file.
-	 */
+     * Save a filtered and sorted version of the current display list (cached
+     * messages or search results) to the specified file.
+     * 
+     * @param filename the file to save to
+     * @param filters the filters to apply
+     * @param comparator the comparator
+     */
 	public void saveCurrentViewToLogFile(String filename,
 			Set<LogMessageFilter> filters, LogMessageComparator comparator) {
 		// Select list
@@ -213,8 +240,11 @@ public class LogDisplayModel extends ModelObject
 	}
 
 	/**
-	 * Save a list of log messages to the specified file file.
-	 */
+     * Save a list of log messages to the specified file file.
+     * 
+     * @param selected the selected messages
+     * @param filename the file to save to
+     */
 	public void saveSelectedToLogFile(List<LogMessage> selected, String filename) {
 		// Write to file; emit an error message on fail
 		LogMessageFileWriter writer = new LogMessageFileWriter();
@@ -234,7 +264,7 @@ public class LogDisplayModel extends ModelObject
 	}
 
     /**
-     * rerun the update task for the live message cache
+     * Rerun the update task for the live message cache.
      */
     @Override
     public void reQueueTask() {

@@ -23,8 +23,7 @@
 package uk.ac.stfc.isis.ibex.validators;
 
 /**
- * Provides validation for PV items
- *
+ * Provides validation for PV items.
  */
 public class RunControlValidator {
 
