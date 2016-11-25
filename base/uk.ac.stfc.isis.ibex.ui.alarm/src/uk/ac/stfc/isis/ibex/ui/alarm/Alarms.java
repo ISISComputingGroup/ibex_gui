@@ -29,11 +29,13 @@ import org.osgi.framework.BundleContext;
 import uk.ac.stfc.isis.ibex.alarm.Alarm;
 
 /**
- * The activator class controls the plug-in life cycle
+ * The activator class controls the plug-in life cycle.
  */
 public class Alarms extends AbstractUIPlugin {
     
-	// The plug-in ID
+    /**
+     * The plug-in ID.
+     */
 	public static final String PLUGIN_ID = "uk.ac.stfc.isis.ibex.ui.test"; //$NON-NLS-1$
 
 	// The shared instance
@@ -60,10 +62,10 @@ public class Alarms extends AbstractUIPlugin {
 	}
 
 	/**
-	 * Returns the shared instance
-	 *
-	 * @return the shared instance
-	 */
+     * Returns the shared instance.
+     *
+     * @return the shared instance
+     */
 	public static Alarms getDefault() {
 		return plugin;
 	}
@@ -86,12 +88,13 @@ public class Alarms extends AbstractUIPlugin {
     }
 
 	/**
-	 * Returns an image descriptor for the image file at the given
-	 * plug-in relative path
-	 *
-	 * @param path the path
-	 * @return the image descriptor
-	 */
+     * Returns an image descriptor for the image file at the given plug-in
+     * relative path.
+     *
+     * @param path
+     *            the path
+     * @return the image descriptor
+     */
 	public static ImageDescriptor getImageDescriptor(String path) {
 		return imageDescriptorFromPlugin(PLUGIN_ID, path);
 	}

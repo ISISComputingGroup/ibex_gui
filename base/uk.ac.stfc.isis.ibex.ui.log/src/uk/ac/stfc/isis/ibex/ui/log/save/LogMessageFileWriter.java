@@ -40,7 +40,7 @@ import uk.ac.stfc.isis.ibex.log.message.LogMessage;
 import uk.ac.stfc.isis.ibex.log.message.LogMessageFields;
 
 /**
- * Writes a list of IOC log messages to a log file
+ * Writes a list of IOC log messages to a log file.
  */
 public class LogMessageFileWriter {
 	/** Title displayed at the top of the log file */
@@ -64,8 +64,8 @@ public class LogMessageFileWriter {
 	private int[] columnWidths;
 
 	/**
-	 * Save the list of log messages to a log file
-	 */
+     * Save the list of log messages to a log file.
+     */
 	public boolean saveLogFile(List<LogMessage> messages, String filename) {
 		PrintWriter out = null;
 		boolean success = true;

@@ -18,14 +18,14 @@
 
 package uk.ac.stfc.isis.ibex.log.tests;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
 import uk.ac.stfc.isis.ibex.log.message.sql.LogMessageFieldsSql;
 
 /**
- * This class is responsible for testing the Log Message Fields Sql values
+ * This class is responsible for testing the Log Message Fields Sql values.
  * 
  */
 public class LogMessageFieldsSqlTest {

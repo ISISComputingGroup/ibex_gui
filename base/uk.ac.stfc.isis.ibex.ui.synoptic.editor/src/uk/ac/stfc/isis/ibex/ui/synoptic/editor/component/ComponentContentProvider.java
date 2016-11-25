@@ -37,8 +37,7 @@ import uk.ac.stfc.isis.ibex.synoptic.model.desc.SynopticDescription;
 
 /**
  * Presents the Instrument and its descendant components in a form that can be
- * used by the ComponentTreeView
- * 
+ * used by the ComponentTreeView.
  */
 public class ComponentContentProvider implements ITreeContentProvider {
 	@Override

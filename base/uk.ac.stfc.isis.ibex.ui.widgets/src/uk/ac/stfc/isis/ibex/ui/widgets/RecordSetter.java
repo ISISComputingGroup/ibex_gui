@@ -36,29 +36,29 @@ import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.beans.BeanProperties;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.Text;
+import org.eclipse.swt.events.FocusAdapter;
+import org.eclipse.swt.events.FocusEvent;
+import org.eclipse.swt.events.KeyAdapter;
+import org.eclipse.swt.events.KeyEvent;
+import org.eclipse.swt.events.ModifyEvent;
+import org.eclipse.swt.events.ModifyListener;
+import org.eclipse.swt.events.MouseAdapter;
+import org.eclipse.swt.events.MouseEvent;
+import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
-import org.eclipse.swt.events.ModifyListener;
-import org.eclipse.swt.events.ModifyEvent;
-import org.eclipse.swt.events.FocusAdapter;
-import org.eclipse.swt.events.FocusEvent;
-import org.eclipse.swt.events.MouseAdapter;
-import org.eclipse.swt.events.MouseEvent;
-import org.eclipse.swt.events.KeyAdapter;
-import org.eclipse.swt.events.KeyEvent;
-import org.eclipse.swt.graphics.Color;
-import org.eclipse.swt.graphics.Font;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Text;
 import org.eclipse.wb.swt.SWTResourceManager;
 
 import uk.ac.stfc.isis.ibex.ui.widgets.models.SetterModel;
 import uk.ac.stfc.isis.ibex.ui.widgets.styles.RecordSetterStyle;
 
 /**
- * Widget that allows write-only access to a model record
+ * Widget that allows write-only access to a model record.
  */
 public class RecordSetter extends Composite {
 	/** The fixed width (in pixels) of the 'Set' button */
@@ -73,7 +73,7 @@ public class RecordSetter extends Composite {
 	/** The background colour of the widget */
 	private static final Color BACKGROUND_COLOR = SWTResourceManager.getColor(SWT.COLOR_WHITE);
 	
-	private static final RecordSetterStyle[] DEFAULT_STYLES = { 
+    private static final RecordSetterStyle[] DEFAULT_STYLES = {
 		RecordSetterStyle.BUTTON,  
 		RecordSetterStyle.ICON };
 	
@@ -197,7 +197,8 @@ public class RecordSetter extends Composite {
 		textbox = new Text(this, SWT.BORDER);
 		textbox.setFont(TEXT_FONT);
 		textbox.addModifyListener(new ModifyListener() {
-			public void modifyText(ModifyEvent e) {
+			@Override
+            public void modifyText(ModifyEvent e) {
 				setModelValue(textbox.getText());
 			}
 		});

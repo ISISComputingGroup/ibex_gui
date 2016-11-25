@@ -18,7 +18,7 @@
 
 package uk.ac.stfc.isis.ibex.log.tests;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
@@ -26,7 +26,7 @@ import uk.ac.stfc.isis.ibex.log.MessageCounter;
 import uk.ac.stfc.isis.ibex.log.message.LogMessage;
 
 /**
- * This class is responsible for the counter used by the messages
+ * This class is responsible for the counter used by the messages.
  * 
  */
 public class MessageCounterTest {

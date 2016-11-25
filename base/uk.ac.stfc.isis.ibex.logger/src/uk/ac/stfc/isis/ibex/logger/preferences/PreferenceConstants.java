@@ -33,7 +33,7 @@ import org.apache.logging.log4j.Level;
 import org.eclipse.core.runtime.Platform;
 
 /**
- * Constant definitions for plug-in preferences
+ * Constant definitions for plug-in preferences.
  */
 public final class PreferenceConstants {
 	public static final String P_LOG_DIR = "logDir";

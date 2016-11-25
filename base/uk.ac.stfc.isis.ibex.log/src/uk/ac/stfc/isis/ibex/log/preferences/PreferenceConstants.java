@@ -19,7 +19,7 @@
 package uk.ac.stfc.isis.ibex.log.preferences;
 
 /**
- * Constant definitions for plug-in preferences
+ * Constant definitions for plug-in preferences.
  */
 public final class PreferenceConstants {
     public static final String P_JMS_ADDRESS = "jmsAddress";

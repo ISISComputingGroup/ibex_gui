@@ -35,7 +35,7 @@ import uk.ac.stfc.isis.ibex.synoptic.model.desc.ComponentDescription;
 import uk.ac.stfc.isis.ibex.targets.Target;
 
 /**
- * This class is responsible for testing the Base Component 
+ * This class is responsible for testing the Base Component.
  *
  */
 @SuppressWarnings({ "checkstyle:magicnumber", "checkstyle:methodname", "unchecked" })

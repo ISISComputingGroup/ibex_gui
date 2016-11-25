@@ -12,8 +12,9 @@ import uk.ac.stfc.isis.ibex.model.ModelObject;
 /**
  * Instrument specific property displayed in spangle banner.
  * 
- * CREATED FROM JSON
+ * CREATED FROM JSON therefore uses snake case
  */
+@SuppressWarnings("checkstyle:MemberName")
 public class BannerItem extends ModelObject {
 
     private String name;
