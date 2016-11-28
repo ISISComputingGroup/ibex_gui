@@ -43,11 +43,13 @@ import org.osgi.framework.BundleContext;
 import uk.ac.stfc.isis.ibex.logger.config.LoggingConfiguration;
 
 /**
- * The activator class controls the plug-in life cycle
+ * The activator class controls the plug-in life cycle.
  */
 public class IsisLog extends AbstractUIPlugin {
 
-	// The plug-in ID
+    /**
+     * The plug-in ID.
+     */
 	public static final String PLUGIN_ID = "uk.ac.stfc.isis.ibex.logger"; //$NON-NLS-1$
 
 	// The shared instance
@@ -63,8 +65,8 @@ public class IsisLog extends AbstractUIPlugin {
 	private final List<LogListener> pluginLogHooks = new ArrayList<LogListener>();
 	
 	/**
-	 * The constructor
-	 */
+     * The constructor.
+     */
 	public IsisLog() {
 	}
 	
@@ -76,7 +78,8 @@ public class IsisLog extends AbstractUIPlugin {
 		return LogManager.getLogger(clazz);
 	}
 
-	public void start(BundleContext context) throws Exception {
+	@Override
+    public void start(BundleContext context) throws Exception {
 		super.start(context);
 		plugin = this;
 		
@@ -91,7 +94,8 @@ public class IsisLog extends AbstractUIPlugin {
 		hookPluginLoggers(context);
 	}
 
-	public void stop(BundleContext context) throws Exception {
+	@Override
+    public void stop(BundleContext context) throws Exception {
 		plugin = null;
 		super.stop(context);
 	}
@@ -105,10 +109,10 @@ public class IsisLog extends AbstractUIPlugin {
 	}
 
 	/**
-	 * Returns the shared instance
-	 *
-	 * @return the shared instance
-	 */
+     * Returns the shared instance.
+     *
+     * @return the shared instance
+     */
 	public static IsisLog getDefault() {
 		return plugin;
 	}

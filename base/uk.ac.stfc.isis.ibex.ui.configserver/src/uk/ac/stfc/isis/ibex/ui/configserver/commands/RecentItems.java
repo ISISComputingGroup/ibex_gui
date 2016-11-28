@@ -57,8 +57,8 @@ public class RecentItems extends ContributionItem {
 	}
 
 	/**
-	 * Create the menu
-	 */
+     * Create the menu.
+     */
 	@Override
 	public void fill(Menu menu, int index) {
 		// Create the parent for the list
@@ -89,8 +89,8 @@ public class RecentItems extends ContributionItem {
 	}
 	
 	/**
-	 * Say the list is dynamic, or fill will only be called once
-	 */
+     * Say the list is dynamic, or fill will only be called once.
+     */
 	@Override
 	public boolean isDynamic() {
 		return true;

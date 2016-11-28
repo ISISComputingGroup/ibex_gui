@@ -78,11 +78,8 @@ public class ExponentialOnThresholdFormat extends NumberFormat {
     private boolean needsExponentialFormat(double number) {
         if (number == 0.0) {
             return false;
-        }
-        else if (Math.abs(number) < SMALL_NUMBER_THRESHOLD || Math.abs(number) >= BIG_NUMBER_THRESHOLD) {
-            return true;
         } else {
-            return false;
+            return Math.abs(number) < SMALL_NUMBER_THRESHOLD || Math.abs(number) >= BIG_NUMBER_THRESHOLD;
         }
     }
 

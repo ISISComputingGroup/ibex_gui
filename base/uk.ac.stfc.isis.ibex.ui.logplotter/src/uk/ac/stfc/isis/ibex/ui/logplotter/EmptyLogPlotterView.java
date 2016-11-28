@@ -3,23 +3,24 @@
  */
 package uk.ac.stfc.isis.ibex.ui.logplotter;
 
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.ui.part.ViewPart;
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.wb.swt.SWTResourceManager;
 
-@SuppressWarnings("checkstyle:magicnumber")
+
 /**
  *	The view to be displayed to the user when no plots have yet been made.
  */
+@SuppressWarnings("checkstyle:magicnumber")
 public class EmptyLogPlotterView extends ViewPart {
 
 	/**
-	 * The ID for the view, used to import it externally
-	 */
-	static public String ID = "uk.ac.stfc.isis.ibex.ui.logplotter.EmptyLogPlotterView";
+     * The ID for the view, used to import it externally.
+     */
+    public static final String ID = "uk.ac.stfc.isis.ibex.ui.logplotter.EmptyLogPlotterView";
 	
 	@Override
 	public void createPartControl(Composite parent) {

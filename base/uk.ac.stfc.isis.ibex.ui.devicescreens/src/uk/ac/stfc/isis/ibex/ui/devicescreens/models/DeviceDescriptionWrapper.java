@@ -194,6 +194,18 @@ public class DeviceDescriptionWrapper {
     }
 
     @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof DeviceDescriptionWrapper)) {
+            return false;
+        }
+        if (obj == this) {
+            return true;
+        }
+        DeviceDescriptionWrapper other = (DeviceDescriptionWrapper) obj;
+        return other.key.equals(key) && other.name.equals(name);
+    }
+
+    @Override
     public String toString() {
         return name;
     }

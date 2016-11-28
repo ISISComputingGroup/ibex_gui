@@ -125,7 +125,7 @@ public class SaveConfigDialog extends TitleAreaDialog {
 	private boolean asComponent = false;
 	
     /**
-     * The name of the current configuration
+     * The name of the current configuration.
      */
     private final String currentConfigName;
 
@@ -489,8 +489,8 @@ public class SaveConfigDialog extends TitleAreaDialog {
 	}
 
     /**
-	 * return The requested name matches that of the current configuration
-	 */
+     * @return The requested name matches that of the current configuration
+     */
 	private boolean nameMatchesCurrentConfig(String name) {
         return compareIgnoringCase(name, currentConfigName);
 	}

@@ -24,8 +24,8 @@ import java.util.Collections;
 import java.util.List;
 
 public enum BinaryChoice {
-	NO ("No"),
-	YES ("Yes");
+    NO("No"),
+    YES("Yes");
 	
 	private String text;
 

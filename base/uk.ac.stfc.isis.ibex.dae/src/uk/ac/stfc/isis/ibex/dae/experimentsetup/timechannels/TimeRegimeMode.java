@@ -23,10 +23,10 @@ import java.util.HashMap;
 
 public enum TimeRegimeMode {
     BLANK("Blank"),
-	DT ("dT = C"),
-	DTDIVT ("dT/T = C"),
-	DTDIVT2 ("dT/T**2 = C"),
-	SHIFTED ("Shifted");
+    DT("dT = C"),
+    DTDIVT("dT/T = C"),
+    DTDIVT2("dT/T**2 = C"),
+    SHIFTED("Shifted");
 		
 	private String mode;
 	

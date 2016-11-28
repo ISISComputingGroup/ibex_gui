@@ -48,14 +48,32 @@ public class EditableIoc extends Ioc {
 	private UpdatedValue<String> describer;
 	private String descriptionText = "";
 
+    /**
+     * An IOC which can be edited as part of a configuration.
+     * 
+     * @param name
+     *            The IOC name
+     */
 	public EditableIoc(String name) {
 		super(name);
 	}
 	
+    /**
+     * Create an editable IOC with properties matching another IOC.
+     * 
+     * @param other
+     *            The IOC whose properties to match
+     */
 	public EditableIoc(Ioc other) {
 		super(other);
 	}
 	
+    /**
+     * Create an editable IOC with properties matching another editable IOC.
+     * 
+     * @param other
+     *            The Editable IOC whose properties to match
+     */
 	public EditableIoc(EditableIoc other) {
 		this((Ioc) other);
 		
@@ -75,6 +93,9 @@ public class EditableIoc extends Ioc {
 		this.descriptionText = other.getDescription();
 	}
 
+    /**
+     * @return The macros available to edit
+     */
 	public Collection<Macro> getAvailableMacros() {
 		if (availableMacros == null) {
 			availableMacros = new ArrayList<>();
@@ -83,10 +104,17 @@ public class EditableIoc extends Ioc {
 		return availableMacros;
 	}
 	
+    /**
+     * @param macros
+     *            The new macros to apply to the IOC
+     */
 	public void setAvailableMacros(Collection<Macro> macros) {
 		firePropertyChange("availableMacros", this.availableMacros, this.availableMacros = macros);
 	}
 
+    /**
+     * @return The PV sets available to edit
+     */
 	public Collection<AvailablePVSet> getAvailablePVSets() {
 		if (availablePVSets == null) {
 			availablePVSets = new ArrayList<>();
@@ -95,23 +123,42 @@ public class EditableIoc extends Ioc {
 		return availablePVSets;
 	}
 	
+    /**
+     * @param availablePVSets
+     *            The new PV set values
+     */
 	public void setAvailablePVSets(Collection<AvailablePVSet> availablePVSets) {
 		firePropertyChange("availablePVSets", this.availablePVSets, this.availablePVSets = availablePVSets);
 	}
 	
+    /**
+     * @return The IOC describer: an updating IOC description
+     */
 	public UpdatedValue<String> getDescriber() {
 		return this.describer;
 	}
 	
+    /**
+     * @return The current IOC description
+     */
 	public String getDescription() {
 		return this.descriptionText;
 	}
 	
+    /**
+     * @return Whether the IOC is editable
+     */
 	public boolean isEditable() {
 		return !hasComponent();
 	}
 	
-	// Find a actual (rather than available) PVSet and return it, or null
+    /**
+     * Find a actual (rather than available) PVSet and return it, or null.
+     * 
+     * @param name
+     *            The name of the set
+     * @return The PV set
+     */
 	public PVSet findPVSet(String name) {
 		for (PVSet pvset : getPvSets()) {
 			if (pvset.getName().equals(name)) {
@@ -121,6 +168,9 @@ public class EditableIoc extends Ioc {
 		return null;
 	}
 	
+    /**
+     * @return A collection of available PVs
+     */
 	public Collection<AvailablePV> getAvailablePVs() {
 		if (availablePVs == null) {
 			availablePVs = new ArrayList<>();
@@ -129,10 +179,18 @@ public class EditableIoc extends Ioc {
 		return availablePVs;
 	}
 	
+    /**
+     * @param pvs
+     *            The new collection of available PVs
+     */
 	public void setAvailablePVs(Collection<AvailablePV> pvs) {
 		firePropertyChange("availablePVs", this.availablePVs, this.availablePVs = pvs);
 	}
 	
+    /**
+     * @param description
+     *            The new describer to apply to the IOC
+     */
 	public void setIocDescriber(UpdatedValue<String> description) {
 		this.describer = description;
 		description.addPropertyChangeListener(updatedDesc, true);
@@ -145,6 +203,10 @@ public class EditableIoc extends Ioc {
 		}
 	};
 	
+    /**
+     * @param text
+     *            The new IOC description
+     */
 	public void setDescription(String text) {
 		firePropertyChange("description", this.descriptionText, this.descriptionText = text);
 	}

@@ -23,14 +23,15 @@ import javax.xml.bind.annotation.XmlEnum;
 import javax.xml.bind.annotation.XmlType;
 
 /**
- * ENUM of types and an associated display name for linking to PVs for the synoptic
+ * ENUM of types and an associated display name for linking to PVs for the
+ * synoptic.
  *
  */
 @XmlType(name = "pvtype")
 @XmlEnum(String.class)
 public enum PVType {
-	LOCAL_PV ("Local PV"),
-	REMOTE_PV ("Remote PV");
+    LOCAL_PV("Local PV"),
+    REMOTE_PV("Remote PV");
 	
 	private String displayName;
 	
