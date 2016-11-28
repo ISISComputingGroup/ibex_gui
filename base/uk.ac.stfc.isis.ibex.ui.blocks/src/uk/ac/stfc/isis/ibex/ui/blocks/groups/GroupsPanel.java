@@ -113,7 +113,12 @@ public class GroupsPanel extends Composite {
 		setRows();
 		layoutGroups();
 	}
-		
+	
+	/**
+	 * Updates the groups to display a new set of groups/blocks.
+	 * 
+	 * @param groups The new set of groups.
+	 */
 	public synchronized void updateGroups(final Collection<DisplayGroup> groups) {
 		this.displayGroups = groups;
 		display.syncExec(new Runnable() {
@@ -162,7 +167,7 @@ public class GroupsPanel extends Composite {
 	}
 	
 	private Group groupWidget(DisplayGroup group) {
-		Group groupWidget = new Group(mainComposite, SWT.NONE, group, showHiddenBlocks);
+        Group groupWidget = new Group(mainComposite, SWT.NONE, group, this);
 		GridData gd = new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1);
 		gd.heightHint = GROUP_HEIGHT;
 		gd.minimumHeight = gd.heightHint;

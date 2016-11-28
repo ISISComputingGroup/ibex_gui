@@ -29,7 +29,7 @@ import org.eclipse.swt.widgets.Menu;
  */
 public class GroupsMenu {
 
-	private final MenuManager manager = new MenuManager();
+    private final MenuManager manager;
 	private final GroupsPanel groups;
 	
     private final IAction showAllBlocks = new Action("Show hidden blocks") {
@@ -51,20 +51,35 @@ public class GroupsMenu {
 	};
 
     /**
-     * Constructor for the class. Sets up the menu manager to include show or
-     * hide blocks.
+     * Constructor for the class when there is already a menu that we want to
+     * add on to the end of. Sets up the menu manager to include show or hide
+     * blocks.
      * 
      * @param groups
      *            The panel on which to hide/show blocks.
+     * @param manager
+     *            The pre-existing menu
      */
-	public GroupsMenu(final GroupsPanel groups) {
-		this.groups = groups;
-		
+    public GroupsMenu(final GroupsPanel groups, final MenuManager manager) {
+        this.manager = manager;
+        this.groups = groups;
+
         if (groups.showHiddenBlocks()) {
             manager.add(hideBlocks);
         } else {
             manager.add(showAllBlocks);
         }
+    }
+
+    /**
+     * Constructor for the class when there is no menu already. Sets up the menu
+     * manager to include show or hide blocks.
+     * 
+     * @param groups
+     *            The panel on which to hide/show blocks.
+     */
+    public GroupsMenu(final GroupsPanel groups) {
+        this(groups, new MenuManager());
 	}
 	
     /**
