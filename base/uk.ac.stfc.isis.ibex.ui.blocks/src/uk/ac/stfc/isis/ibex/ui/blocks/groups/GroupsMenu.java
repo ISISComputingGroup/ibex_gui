@@ -20,8 +20,10 @@
 package uk.ac.stfc.isis.ibex.ui.blocks.groups;
 
 import org.eclipse.jface.action.Action;
+import org.eclipse.jface.action.GroupMarker;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.MenuManager;
+import org.eclipse.jface.action.Separator;
 import org.eclipse.swt.widgets.Menu;
 
 /**
@@ -32,12 +34,14 @@ public class GroupsMenu {
     private final MenuManager manager;
 	private final GroupsPanel groups;
 	
+    private static final String GROUP_MENU_GROUP = "Group";
+
     private final IAction showAllBlocks = new Action("Show hidden blocks") {
 		@Override
 		public void run() {
 			groups.setShowHiddenBlocks(true);
             manager.remove(hideBlocks.getId());
-            manager.add(showAllBlocks);
+            manager.appendToGroup(GROUP_MENU_GROUP, showAllBlocks);
 		}
 	};
 	
@@ -46,7 +50,7 @@ public class GroupsMenu {
 		public void run() {
 			groups.setShowHiddenBlocks(false);
             manager.remove(showAllBlocks.getId());
-            manager.add(hideBlocks);
+            manager.appendToGroup(GROUP_MENU_GROUP, hideBlocks);
 		}
 	};
 
@@ -64,11 +68,9 @@ public class GroupsMenu {
         this.manager = manager;
         this.groups = groups;
 
-        if (groups.showHiddenBlocks()) {
-            manager.add(hideBlocks);
-        } else {
-            manager.add(showAllBlocks);
-        }
+        initialise();
+
+        manager.prependToGroup(GROUP_MENU_GROUP, new Separator());
     }
 
     /**
@@ -79,8 +81,21 @@ public class GroupsMenu {
      *            The panel on which to hide/show blocks.
      */
     public GroupsMenu(final GroupsPanel groups) {
-        this(groups, new MenuManager());
+        this.manager = new MenuManager();
+        this.groups = groups;
+
+        initialise();
 	}
+    
+    private void initialise() {
+        manager.add(new GroupMarker(GROUP_MENU_GROUP));
+
+        if (groups.showHiddenBlocks()) {
+            manager.appendToGroup(GROUP_MENU_GROUP, hideBlocks);
+        } else {
+            manager.appendToGroup(GROUP_MENU_GROUP, showAllBlocks);
+        }
+    }
 	
     /**
      * Creates and returns a context menu for the GroupsPanel.
