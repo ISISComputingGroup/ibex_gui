@@ -50,6 +50,7 @@ public class Group extends Composite {
     private static final Color WHITE = SWTResourceManager.getColor(SWT.COLOR_WHITE);
     private static final int NUMBER_OF_ROWS = 8;
     private static final int NUMBER_OF_FIELDS = 3;
+    private Label title;
 
     /**
      * Provides the display of groups.
@@ -85,7 +86,7 @@ public class Group extends Composite {
         this.setBackground(WHITE);
 
         // In the first column put the title in
-        Label title = labelMaker(this, SWT.NONE, group.name(), "", null);
+        title = labelMaker(this, SWT.NONE, group.name(), "", null);
         Font titleFont = getEditedLabelFont(title, 10, SWT.BOLD);
         title.setFont(titleFont);
 
@@ -220,5 +221,6 @@ public class Group extends Composite {
     @Override
     public void setMenu(Menu menu) {
         super.setMenu(menu);
+        title.setMenu(menu);
     }
 }
