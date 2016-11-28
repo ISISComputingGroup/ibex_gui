@@ -23,7 +23,6 @@ import java.util.Arrays;
 import java.util.Collection;
 
 import org.eclipse.core.databinding.DataBindingContext;
-import org.eclipse.core.databinding.UpdateValueStrategy;
 import org.eclipse.core.databinding.beans.BeanProperties;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.viewers.ArrayContentProvider;
@@ -37,20 +36,17 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 
-import uk.ac.stfc.isis.ibex.configserver.Configurations;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
 import uk.ac.stfc.isis.ibex.synoptic.Synoptic;
 import uk.ac.stfc.isis.ibex.synoptic.SynopticInfo;
-import uk.ac.stfc.isis.ibex.validators.BlockServerNameValidator;
-import uk.ac.stfc.isis.ibex.validators.MessageDisplayer;
-import uk.ac.stfc.isis.ibex.validators.SummaryDescriptionValidator;
 
+/**
+ * The panel that holds general misc information about the configuration.
+ */
 @SuppressWarnings("checkstyle:magicnumber")
 public class SummaryPanel extends Composite {
 	private Text txtName;
 	private Text txtDescription;
-	private Text txtDateCreated;
-	private Text txtDateModified;
     private Label lblDateCreated;
 	private Label lblDateCreatedField;
     private Label lblDateModified;
@@ -58,12 +54,17 @@ public class SummaryPanel extends Composite {
 	private ComboViewer cmboSynoptic;
 	private EditableConfiguration config;
 	private DataBindingContext bindingContext;
-	private UpdateValueStrategy strategy = new UpdateValueStrategy();
-	private final MessageDisplayer messageDisplayer;
 
-	public SummaryPanel(Composite parent, int style, MessageDisplayer dialog) {
+    /**
+     * Constructor for the general information about the configuration.
+     * 
+     * @param parent
+     *            The parent composite that this panel is a part of.
+     * @param style
+     *            An integer giving the panel style using SWT style flags.
+     */
+    public SummaryPanel(Composite parent, int style) {
 		super(parent, style);
-		messageDisplayer = dialog;
 		setLayout(new FillLayout(SWT.HORIZONTAL));
 		
         Composite cmpSummary = new Composite(this, SWT.NONE);
@@ -74,7 +75,6 @@ public class SummaryPanel extends Composite {
 		lblName.setText("Name:");
 		
         txtName = new Text(cmpSummary, SWT.BORDER);
-		txtName.setEditable(false);
 		txtName.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
         Label lblDescription = new Label(cmpSummary, SWT.NONE);
@@ -107,6 +107,12 @@ public class SummaryPanel extends Composite {
         lblDateModifiedField = new Label(cmpSummary, SWT.NONE);
 	}
 	
+    /**
+     * Sets the configuration that the panel information relates to.
+     * 
+     * @param config
+     *            The configuration that the panel relates to.
+     */
 	public void setConfig(EditableConfiguration config) {
 		this.config = config;
 		setBindings();
@@ -115,12 +121,9 @@ public class SummaryPanel extends Composite {
 	private void setBindings() {
 		bindingContext = new DataBindingContext();
 		
-        BlockServerNameValidator configDescritpionRules =
-                Configurations.getInstance().variables().configDescriptionRules.getValue();
-        strategy.setBeforeSetValidator(new SummaryDescriptionValidator(messageDisplayer, configDescritpionRules));
-		
 		bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(txtName), BeanProperties.value("name").observe(config));
-		bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(txtDescription), BeanProperties.value("description").observe(config), strategy, null);
+        bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(txtDescription),
+                BeanProperties.value("description").observe(config));
 		bindingContext.bindValue(WidgetProperties.selection().observe(cmboSynoptic.getCombo()), BeanProperties.value("synoptic").observe(config));
         bindingContext.bindValue(WidgetProperties.visible().observe(lblDateCreated),
                 BeanProperties.value("datesVisible").observe(config));
