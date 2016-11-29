@@ -125,11 +125,7 @@ public class DisplayConfiguration extends TransformingObservable<Configuration, 
 	
 	private boolean isGroupEmpty(Group configGroup) {
 		Collection<String> blocks = configGroup.getBlocks();
-		if (blocks.isEmpty()) {
-			return true;
-		} else {
-			return false;
-		}
+        return blocks.isEmpty();
 	}
 
 	/**

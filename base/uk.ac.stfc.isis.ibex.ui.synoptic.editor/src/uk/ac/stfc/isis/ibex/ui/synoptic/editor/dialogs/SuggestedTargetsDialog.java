@@ -56,6 +56,9 @@ public class SuggestedTargetsDialog extends Dialog {
 
     /**
      * @param parentShell
+     *            The shell of the parent dialog
+     * @param targetDescriptions
+     *            The list of available target descriptions
      */
     public SuggestedTargetsDialog(Shell parentShell, Collection<TargetDescription> targetDescriptions) {
         super(parentShell);

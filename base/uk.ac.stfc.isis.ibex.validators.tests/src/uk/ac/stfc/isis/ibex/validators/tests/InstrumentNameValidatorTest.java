@@ -62,16 +62,6 @@ public class InstrumentNameValidatorTest {
     }
 
     @Test
-    public void WHEN_alphanumeric_name_without_prefix_is_validated_THEN_name_is_invalid() {
-        // Arrange
-        String name = "invalid123";
-        InstrumentNameValidator valid = new InstrumentNameValidator(knownValidNames);
-
-        // Act - Assert
-        assertFalse(valid.validateInstrumentName(name));
-    }
-
-    @Test
     public void WHEN_non_alphanumeric_name_is_validated_THEN_name_is_invalid() {
         // Arrange
         String name = PREFIX + "invalid@";
@@ -114,20 +104,6 @@ public class InstrumentNameValidatorTest {
         // Arrange
         String expected = InstrumentNameValidator.NAME_EMPTY_MSG;
         String name = "";
-        InstrumentNameValidator valid = new InstrumentNameValidator(knownValidNames);
-
-        // Act
-        valid.validateInstrumentName(name);
-
-        // Assert
-        assertEquals(expected, valid.getErrorMessage());
-    }
-
-    @Test
-    public void WHEN_unknown_name_not_starting_with_prefix_is_validated_THEN_message_is_correct() {
-        // Arrange
-        String expected = InstrumentNameValidator.NAME_PREFIX_MSG;
-        String name = "AName";
         InstrumentNameValidator valid = new InstrumentNameValidator(knownValidNames);
 
         // Act

@@ -24,10 +24,16 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Locale;
 
+/**
+ * Provides a series of converters for common PV types.
+ */
 public final class Convert {
 	
 	private Convert() { }
 	
+    /**
+     * @return A converter from a String to a zipped and hexed byte array
+     */
 	public static Converter<String, byte[]> toZippedHex() {
 		return asBytes()
 				.apply(compress())
@@ -36,6 +42,9 @@ public final class Convert {
 				.apply(asBytes());
 	}
 
+    /**
+     * @return A converter from a zipped and hexed byte array to a String
+     */
 	public static Converter<byte[], String> fromZippedHex() {
 		return fromBytes()
 				.apply(asChars())
@@ -43,35 +52,56 @@ public final class Convert {
 				.apply(decompress())
 				.apply(fromBytes());
 	}
-	
+
+    /**
+     * @return A converter from a String to a hexed String
+     */
 	public static Converter<String, String> toHexString() {
 		return asBytes()
 				.apply(toHex())
 				.apply(fromChars());
 	}
 
+    /**
+     * @return A converter from a hexed String to a dehexed String
+     */
 	public static Converter<String, String> fromHexString() {
 		return asChars()
 				.apply(deHex())
 				.apply(fromBytes());
 	}
-	
+
+    /**
+     * @return A converter to compress a byte array
+     */
 	public static Converter<byte[], byte[]> compress() {
 		return new Compressor();
 	}
-	
+
+    /**
+     * @return A converter to decompress a byte array
+     */
 	public static Converter<byte[], byte[]> decompress() {
 		return new Decompressor();
 	}
-	
+
+    /**
+     * @return A converter to hex a byte array to a char array
+     */
 	public static Converter<byte[], char[]> toHex() {
 		return new Hexer();
 	}
-	
+
+    /**
+     * @return A converter to dehex a char array to a byte array
+     */
 	public static Converter<char[], byte[]> deHex() {
 		return removeUnsetChars().apply(new Dehexer());
 	}
 	
+    /**
+     * @return A converter to remove white space from a char array
+     */
 	public static Converter<char[], char[]> removeUnsetChars() {
 		return new Converter<char[], char[]>() {	
 			@Override
@@ -80,7 +110,10 @@ public final class Convert {
 			}
 		};
 	}
-	
+
+    /**
+     * @return A converter to remove white space from a String
+     */
 	public static Converter<String, String> trim() {
 		return new Converter<String, String>() {
 			@Override
@@ -89,7 +122,10 @@ public final class Convert {
 			}
 		};
 	}
-	
+
+    /**
+     * @return A converter from a byte array to a String
+     */
 	public static Converter<byte[], String> fromBytes() {
 		return new Converter<byte[], String>() {
 			@Override
@@ -102,7 +138,10 @@ public final class Convert {
 			}
 		};
 	}	
-	
+
+    /**
+     * @return A converter from a char array to a String
+     */
 	public static Converter<char[], String> fromChars() {
 		return new Converter<char[], String>() {
 			@Override
@@ -112,6 +151,9 @@ public final class Convert {
 		};
 	}
 
+    /**
+     * @return A converter from a String to an array of characters
+     */
 	public static Converter<String, char[]> asChars() {
 		return new Converter<String, char[]>() {
 			@Override
@@ -121,6 +163,9 @@ public final class Convert {
 		};
 	}
 	
+    /**
+     * @return A converter from a String to a byte array
+     */
 	public static Converter<String, byte[]> asBytes() {
 		return new Converter<String, byte[]>() {
 			@Override
@@ -134,6 +179,9 @@ public final class Convert {
 		};
 	}
 
+    /**
+     * @return A converter from a String to a boolean value
+     */
 	public static Converter<String, Boolean> toBoolean() {
 		return new Converter<String, Boolean>() {
 			@Override
@@ -151,6 +199,11 @@ public final class Convert {
 		};
 	}
 
+    /**
+     * @param <T>
+     *            The array/collection type
+     * @return A converter from an array to a collection
+     */
 	public static <T> Converter<T[], Collection<T>> toCollection() {
 		return new Converter<T[], Collection<T>>() {
 			@Override
@@ -159,7 +212,14 @@ public final class Convert {
 			}
 		};
 	}
-	
+
+    /**
+     * @param arrayOfType
+     *            The array to convert
+     * @param <T>
+     *            The array/collection type
+     * @return A converter from a collection to an array
+     */
 	public static <T> Converter<Collection<T>, T[]> toArray(final T[] arrayOfType) {
 		return new Converter<Collection<T>, T[]>() {
 			@Override

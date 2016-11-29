@@ -21,27 +21,35 @@ package uk.ac.stfc.isis.ibex.instrument.internal;
 
 import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
 
+/**
+ * Instrument Information for the instrument on the local host.
+ */
 public class LocalHostInstrumentInfo extends InstrumentInfo {
 
-	public LocalHostInstrumentInfo() {
-		super(MachineName.get());
-	}
+    private static final PVPrefixFactory PV_PREFIX_FACTORY = new PVPrefixFactory();
 
-	@Override
-	public String pvPrefix() {
-	    PVPrefix pvPrefix = new PVPrefix(MachineName.get(), UserName.get());
-        return pvPrefix.get();
-	}
-	
-	@Override
-	public String hostName() {
-		return "localhost";
-	}
-
-    public static String validLocalInstrumentRegex() {
-        return "localhost";
+    /**
+     * Instantiates a new local host instrument info; allowing the machine name
+     * to be set.
+     *
+     * @param machineName the machine name
+     */
+    public LocalHostInstrumentInfo(String machineName) {
+        super(machineName, PV_PREFIX_FACTORY.fromMachineName(machineName), "localhost");
     }
 
+    /**
+     * Instantiates a new local host instrument info; machine name defaults to
+     * current machine name.
+     */
+	public LocalHostInstrumentInfo() {
+        this(MachineName.get());
+	}
+
+    /**
+     * 
+     * @return True because host name is always valid for a local instrument
+     */
     @Override
     public boolean hasValidHostName() {
         return true;

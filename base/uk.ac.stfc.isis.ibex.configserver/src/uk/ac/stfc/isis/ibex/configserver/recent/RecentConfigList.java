@@ -48,8 +48,8 @@ public class RecentConfigList {
 	private static final String PLUGIN_ID = "uk.ac.stfc.isis.ibex.configserver";
 	
 	/**
-	 * Constructor - loads the saved list from preferences
-	 */
+     * Constructor - loads the saved list from preferences.
+     */
 	public RecentConfigList() {
 		load();
 	}
@@ -85,9 +85,8 @@ public class RecentConfigList {
 	}
 	
 	/**
-	 * Returns the list of recently used configuration names
-	 * @return
-	 */
+     * @return Returns the list of recently used configuration names.
+     */
 	public List<String> get() {
 		return recent;
 	}

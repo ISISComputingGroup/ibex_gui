@@ -143,9 +143,9 @@ public class SearchControl extends Canvas {
         Composite timePicker = new Composite(grpFilter, SWT.NONE);
 		timePicker.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false,
 				false, 1, 1));
-        GridLayout gl_timePicker = new GridLayout(7, false);
-        gl_timePicker.marginWidth = 0;
-        timePicker.setLayout(gl_timePicker);
+        GridLayout timePickerGridLayout = new GridLayout(7, false);
+        timePickerGridLayout.marginWidth = 0;
+        timePicker.setLayout(timePickerGridLayout);
 
 		// 'From' control
 		chkFrom = new Button(timePicker, SWT.CHECK);

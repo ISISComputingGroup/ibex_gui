@@ -45,23 +45,46 @@ import uk.ac.stfc.isis.ibex.synoptic.xml.XMLUtil;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class SynopticDescription implements SynopticParentDescription {
 	private String name;
-	
 	private String showbeam;
 	
 	@XmlElementWrapper(name = "components")
 	@XmlElement(name = "component", type = ComponentDescription.class)
 	private ArrayList<ComponentDescription> components = new ArrayList<>();
 	
+    /**
+     * Gets an empty synoptic.
+     * 
+     * @return an empty description
+     */
     public static SynopticDescription getEmptySynopticDescription() {
         SynopticDescription toReturn = new SynopticDescription();
         toReturn.setShowBeam(false);
         return toReturn;
     }
 
+    /**
+     * Gets the synoptic name.
+     * 
+     * @return the name
+     */
 	public String name() {
 		return name;
 	}
 	
+    /**
+     * Set the synoptic's name.
+     * 
+     * @param name the new name
+     */
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    /**
+     * Determines whether the beam is shown on the synoptic.
+     * 
+     * @return true means show it
+     */
 	public boolean showBeam() {
 		if (showbeam == null) {
 			return true;
@@ -70,16 +93,17 @@ public class SynopticDescription implements SynopticParentDescription {
 		return Boolean.valueOf(showbeam);
 	}
 	
+    /**
+     * Sets whether to show the beam on the synoptic.
+     * 
+     * @param showBeam true means show it
+     */
 	public void setShowBeam(boolean showBeam) {
 		if (showBeam) {
 			showbeam = "TRUE";
 		} else {
 			showbeam = "FALSE";
 		}
-	}
-	
-	public void setName(String name) {
-		this.name = name;
 	}
 	
 	@Override
@@ -102,6 +126,10 @@ public class SynopticDescription implements SynopticParentDescription {
 		components.remove(component);
 	}
 	
+    /**
+     * Processes the child components. Sets the parent for the components to
+     * this.
+     */
 	public void processChildComponents() {
 		for (ComponentDescription cd: components) {
 			cd.setParent(null);
@@ -109,6 +137,13 @@ public class SynopticDescription implements SynopticParentDescription {
 		}
 	}
 	
+    /**
+     * Gets the description as XML.
+     * 
+     * @return an XML string
+     * @throws JAXBException standard XML parsing error
+     * @throws SAXException standard XML parsing error
+     */
 	public String getXmlDescription() throws JAXBException, SAXException {
 		return XMLUtil.toXml(this);
 	}

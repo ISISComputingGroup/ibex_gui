@@ -27,8 +27,7 @@ import org.eclipse.swt.widgets.ExpandBar;
 import org.eclipse.swt.widgets.ExpandItem;
 
 /**
- * The parent composite for the beam stats widgets.
- * 
+ * The parent composite for the beam statistics widgets.
  */
 @SuppressWarnings("checkstyle:magicnumber")
 public class StatsPanel extends Composite {

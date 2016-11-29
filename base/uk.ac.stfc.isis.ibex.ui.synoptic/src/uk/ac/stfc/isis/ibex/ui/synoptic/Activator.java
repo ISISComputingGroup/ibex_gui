@@ -24,11 +24,13 @@ import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
 /**
- * The activator class controls the plug-in life cycle
+ * The activator class controls the plug-in life cycle.
  */
 public class Activator extends AbstractUIPlugin {
 
-	// The plug-in ID
+    /**
+     * The plug-in ID.
+     */
 	public static final String PLUGIN_ID = "uk.ac.stfc.isis.ibex.ui.synoptic"; //$NON-NLS-1$
 
 	// The shared instance
@@ -37,8 +39,8 @@ public class Activator extends AbstractUIPlugin {
 	private SynopticPresenter presenter;
 	
 	/**
-	 * The constructor
-	 */
+     * The constructor.
+     */
 	public Activator() {
 		presenter = new SynopticPresenter();
 	}
@@ -51,7 +53,8 @@ public class Activator extends AbstractUIPlugin {
 	 * (non-Javadoc)
 	 * @see org.eclipse.ui.plugin.AbstractUIPlugin#start(org.osgi.framework.BundleContext)
 	 */
-	public void start(BundleContext context) throws Exception {
+	@Override
+    public void start(BundleContext context) throws Exception {
 		super.start(context);
 		plugin = this;
 	}
@@ -60,16 +63,17 @@ public class Activator extends AbstractUIPlugin {
 	 * (non-Javadoc)
 	 * @see org.eclipse.ui.plugin.AbstractUIPlugin#stop(org.osgi.framework.BundleContext)
 	 */
-	public void stop(BundleContext context) throws Exception {
+	@Override
+    public void stop(BundleContext context) throws Exception {
 		plugin = null;
 		super.stop(context);
 	}
 
 	/**
-	 * Returns the shared instance
-	 *
-	 * @return the shared instance
-	 */
+     * Returns the shared instance.
+     *
+     * @return the shared instance
+     */
 	public static Activator getDefault() {
 		return plugin;
 	}
@@ -83,12 +87,13 @@ public class Activator extends AbstractUIPlugin {
 	}
 
 	/**
-	 * Returns an image descriptor for the image file at the given
-	 * plug-in relative path
-	 *
-	 * @param path the path
-	 * @return the image descriptor
-	 */
+     * Returns an image descriptor for the image file at the given plug-in
+     * relative path.
+     *
+     * @param path
+     *            the path
+     * @return the image descriptor
+     */
 	public static ImageDescriptor getImageDescriptor(String path) {
 		return imageDescriptorFromPlugin(PLUGIN_ID, path);
 	}

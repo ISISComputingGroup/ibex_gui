@@ -23,11 +23,13 @@ import java.util.Arrays;
 import java.util.Collection;
 
 import org.eclipse.core.databinding.observable.map.IObservableMap;
+import org.eclipse.jface.viewers.CellLabelProvider;
 import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableBlock;
+import uk.ac.stfc.isis.ibex.ui.configserver.CheckboxLabelProvider;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.CellDecorator;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.DecoratedCellLabelProvider;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.blocks.filters.BlockNameSearch;
@@ -43,12 +45,29 @@ public class BlocksTable extends DataboundTable<EditableBlock> {
 	
 	private TableViewerColumn enabled;
 	private IObservableMap[] stateProperties = {observeProperty("isVisible")};
-	private BlockVisibilityLabelProvider visibilityLabelProvider;
 	private boolean isBlockVisibilityShown;
 	
 	private BlockNameSearch search;
 	
 	private CellDecorator<EditableBlock> rowDecorator = new BlockRowCellDecorator();
+	
+	private CellLabelProvider visibilityLabelProvider = 
+			new CheckboxLabelProvider<EditableBlock>(stateProperties) {
+		@Override
+		protected boolean checked(EditableBlock block) {
+			return block.getIsVisible();
+		}
+
+		@Override
+		protected void setChecked(EditableBlock block, boolean checked) {
+			block.setIsVisible(checked);
+		}
+
+		@Override
+		protected boolean isEditable(EditableBlock block) {
+			return block.isEditable();
+		}
+	};
 	
 	public BlocksTable(Composite parent, int style, int tableStyle, boolean isBlockVisibilityShown) {
 		super(parent, style, EditableBlock.class, tableStyle | SWT.BORDER);
@@ -78,8 +97,6 @@ public class BlocksTable extends DataboundTable<EditableBlock> {
 	
 	private void clear() {
 		if (isBlockVisibilityShown) {
-			visibilityLabelProvider.dispose();
-			visibilityLabelProvider = new BlockVisibilityLabelProvider(stateProperties);
 			enabled.setLabelProvider(visibilityLabelProvider);
 		}
 	}
@@ -110,7 +127,6 @@ public class BlocksTable extends DataboundTable<EditableBlock> {
 	
 	private void blockIsVisible() {
 		enabled = createColumn("Visible?", 2);
-		visibilityLabelProvider = new BlockVisibilityLabelProvider(stateProperties);
 		enabled.setLabelProvider(visibilityLabelProvider);		
 	}
 	

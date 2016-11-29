@@ -26,16 +26,17 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 
 /**
- * Contains the various save/load/export buttons.
+ * Panel containing the various save/load/export buttons.
  */
 @SuppressWarnings("checkstyle:magicnumber")
 public class SaveLoadPanel extends Composite {
 	
 	/**
-	 * The default constructor.
-	 * @param parent the parent that the EstimatePanel will be placed in
-	 * @param style the style of the parent
-	 */
+     * The default constructor.
+     * 
+     * @param parent the parent that the EstimatePanel will be placed in
+     * @param style the style of the parent
+     */
 	public SaveLoadPanel(Composite parent, int style) {
 		super(parent, style);
 		setLayout(new GridLayout(1, false));

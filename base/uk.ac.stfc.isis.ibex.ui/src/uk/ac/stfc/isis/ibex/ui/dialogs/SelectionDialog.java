@@ -13,7 +13,7 @@ import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Shell;
 
 /**
- *  Generic selection dialog class
+ * Generic selection dialog class.
  */
 @SuppressWarnings("checkstyle:magicnumber")
 public abstract class SelectionDialog extends Dialog {
@@ -62,7 +62,9 @@ public abstract class SelectionDialog extends Dialog {
 			}
 			
 			@Override
-			public void widgetDefaultSelected(SelectionEvent e) {}
+            public void widgetDefaultSelected(SelectionEvent e) {
+
+            }
 		});
 		
 		return container;

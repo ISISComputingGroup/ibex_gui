@@ -41,7 +41,6 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
-import org.eclipse.wb.swt.SWTResourceManager;
 
 import uk.ac.stfc.isis.ibex.dae.experimentsetup.timechannels.CalculationMethod;
 import uk.ac.stfc.isis.ibex.dae.experimentsetup.timechannels.TimeRegime;
@@ -62,13 +61,16 @@ public class TimeChannelsPanel extends Composite {
     private DataBindingContext bindingContext;
     StackLayout stack;
 
-    private Combo timeChannelFile;
+    private Combo timeChannelFileSelector;
     private Label timeChannelFileRB;
     Button radioSpecifyParameters;
     Button radioUseTCBFile;
 
     private FontData fontdata;
 	private static final Display DISPLAY = Display.getCurrent();
+
+    private static final int TOP_MARGIN_WIDTH = 5;
+    private static final int HORIZONTAL_SPACING = 100;
 
     /**
      * Constructor for the time channel settings panel.
@@ -82,14 +84,12 @@ public class TimeChannelsPanel extends Composite {
 		super(parent, style);
         GridLayout glParent = new GridLayout(1, false);
         glParent.verticalSpacing = 15;
-        glParent.marginTop = 5;
+        glParent.marginTop = 15;
         glParent.marginLeft = 5;
         setLayout(glParent);
 
         Label lblSelectionMethod = new Label(this, SWT.NONE);
         lblSelectionMethod.setText("Select Calculation Method: ");
-        fontdata = lblSelectionMethod.getFont().getFontData()[0];
-        lblSelectionMethod.setFont(SWTResourceManager.getFont(fontdata.getName(), fontdata.getHeight(), SWT.BOLD));
         addMethodSelectionPanel(this);
 
         Group tcbSettings = new Group(this, SWT.NONE);
@@ -123,7 +123,7 @@ public class TimeChannelsPanel extends Composite {
         bindingContext = new DataBindingContext();
         bindingContext.bindValue(WidgetProperties.singleSelectionIndex().observe(timeUnit),
                 BeanProperties.value("timeUnit").observe(viewModel));
-        bindingContext.bindList(WidgetProperties.items().observe(timeChannelFile),
+        bindingContext.bindList(WidgetProperties.items().observe(timeChannelFileSelector),
                 BeanProperties.list("timeChannelFileList").observe(viewModel));
         bindingContext.bindValue(WidgetProperties.text().observe(timeChannelFileRB),
                 BeanProperties.value("timeChannelFile").observe(viewModel));
@@ -212,8 +212,8 @@ public class TimeChannelsPanel extends Composite {
         methodSelectionPanel.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 1, 1));
         methodSelectionPanel.setLayout(new GridLayout(1, false));
         GridLayout glCalcMethod = new GridLayout(1, false);
-        glCalcMethod.horizontalSpacing = 100;
-        glCalcMethod.marginTop = 5;
+        glCalcMethod.horizontalSpacing = HORIZONTAL_SPACING;
+        glCalcMethod.marginTop = TOP_MARGIN_WIDTH;
 
         radioSpecifyParameters = new Button(methodSelectionPanel, SWT.RADIO);
         radioSpecifyParameters.setText(CalculationMethod.SPECIFY_PARAMETERS.toString());
@@ -256,29 +256,37 @@ public class TimeChannelsPanel extends Composite {
 
     @SuppressWarnings({ "checkstyle:magicnumber", })
     private void addTimeChannelFilePanel(Composite parent) {
-        
-        Composite timeChannelFileContent = new Composite(parent, SWT.NONE);
-        timeChannelFileContent.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1));
-        GridLayout glTimeChannelFileContent = new GridLayout(3, false);
-        glTimeChannelFileContent.marginWidth = 0;
-        glTimeChannelFileContent.horizontalSpacing = 20;
-        timeChannelFileContent.setLayout(glTimeChannelFileContent);
 
-        Label lblTimeChannelFile = new Label(timeChannelFileContent, SWT.NONE);
-        lblTimeChannelFile.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-        lblTimeChannelFile.setText("Time Channel File:");
-        
-        timeChannelFileRB = new Label(timeChannelFileContent, SWT.NONE);
+        Composite timeChannelFilePanel = new Composite(parent, SWT.NONE);
+        timeChannelFilePanel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 5, 1));
+        GridLayout glTcbFilePanel = new GridLayout(3, false);
+        glTcbFilePanel.horizontalSpacing = 20;
+        timeChannelFilePanel.setLayout(glTcbFilePanel);
+
+        Label lblTimeChannel = new Label(timeChannelFilePanel, SWT.NONE);
+        lblTimeChannel.setText("Time Channel File:");
+
+        Label lblTimeChannelRB = new Label(timeChannelFilePanel, SWT.NONE);
+        lblTimeChannelRB.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
+        lblTimeChannelRB.setText("Current:");
+
+        timeChannelFileRB = new Label(timeChannelFilePanel, SWT.NONE);
         timeChannelFileRB.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
         timeChannelFileRB.setFont(JFaceResources.getFontRegistry().getItalic(JFaceResources.DEFAULT_FONT));
 
-        timeChannelFile = new Combo(timeChannelFileContent, SWT.DROP_DOWN | SWT.READ_ONLY);
-        timeChannelFile.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1));
+        Label lblTimeChannelSpacer = new Label(timeChannelFilePanel, SWT.NONE);
 
-        timeChannelFile.addSelectionListener(new SelectionListener() {
+        Label lblTimeChannelChange = new Label(timeChannelFilePanel, SWT.NONE);
+        lblTimeChannelChange.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
+        lblTimeChannelChange.setText("Change:");
+
+        timeChannelFileSelector = new Combo(timeChannelFilePanel, SWT.DROP_DOWN | SWT.READ_ONLY);
+        timeChannelFileSelector.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+
+        timeChannelFileSelector.addSelectionListener(new SelectionListener() {
             @Override
             public void widgetSelected(SelectionEvent e) {
-                viewModel.setNewTimeChannelFile(timeChannelFile.getText());
+                viewModel.setNewTimeChannelFile(timeChannelFileSelector.getText());
             }
 
             @Override

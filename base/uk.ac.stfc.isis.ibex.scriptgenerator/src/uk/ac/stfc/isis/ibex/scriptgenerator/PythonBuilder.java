@@ -22,6 +22,7 @@ package uk.ac.stfc.isis.ibex.scriptgenerator;
 import java.util.Collection;
 
 import uk.ac.stfc.isis.ibex.model.ModelObject;
+import uk.ac.stfc.isis.ibex.scriptgenerator.row.Row;
 
 /**
  * Generates Python code based on values in the Script Generator table and the settings.
@@ -30,21 +31,12 @@ public class PythonBuilder extends ModelObject {
 	private int doSans = 1;
 	private int doTrans = 1;
 	private Collection<Row> rows;
-	private String script;
 	
 	/**
 	 * The default constructor.
 	 */
 	public PythonBuilder() {
 	}
-	
-//	private void generateHeader() {
-//		
-//	}
-//	
-//	private void setSamplePar(String name, String value) {
-//		String s = String.format("    set_sample_par(%s, %s)", name, value);
-//	}
 
 	/**
 	 * Sets the "Do SANS:" text box value.
@@ -60,8 +52,6 @@ public class PythonBuilder extends ModelObject {
 	 */
 	public void setRows(Collection<Row> rows) {
 		this.rows = rows;
-		
-		createScript();
 	}
 	
 	/**
@@ -69,17 +59,21 @@ public class PythonBuilder extends ModelObject {
 	 * @return the completed script
 	 */
 	public String getScript() {
-		return script;
+        return createScript();
 	}
 	
 	/**
-	 * Calls relevant internal methods in order to create a valid Python script.
-	 */
-	public void createScript() {
-		script = new String();
+     * Creates a valid Python script.
+     * 
+     * Currently does not create a valid script!
+     */
+    private String createScript() {
+        StringBuilder sb = new StringBuilder();
 		
 		for (Row row : rows) {
-			script += "position = " + row.getPosition();
+            sb.append("position = " + row.getPosition() + System.lineSeparator());
 		}
+
+        return sb.toString();
 	}
 }

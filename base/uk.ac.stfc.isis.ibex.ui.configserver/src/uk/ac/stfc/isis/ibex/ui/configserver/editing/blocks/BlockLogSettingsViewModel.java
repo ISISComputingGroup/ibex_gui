@@ -33,11 +33,6 @@ public class BlockLogSettingsViewModel extends ErrorMessageProvider {
             + "Monitor: Log when the value changes by the absolute amount specified, this amount is in the same units as the block.";
 
     /**
-     * Default value to give to periodic scan.
-     */
-    private static final int DEFAULT_SCAN_RATE = 30; // Seconds
-
-    /**
      * Periodic scan validation
      */
 
@@ -145,12 +140,17 @@ public class BlockLogSettingsViewModel extends ErrorMessageProvider {
             rate = 0;
             updatePeriodic(true, true);
         } else if (enabled && rate == 0) {
-            rate = DEFAULT_SCAN_RATE;
+            rate = Block.DEFAULT_SCAN_RATE;
             updatePeriodic(true, true);
         }
 
     }
 
+    /**
+     * Gets whether logging is enabled.
+     * 
+     * @return whether logging is enabled
+     */
     public boolean getEnabled() {
         return enabled;
     }

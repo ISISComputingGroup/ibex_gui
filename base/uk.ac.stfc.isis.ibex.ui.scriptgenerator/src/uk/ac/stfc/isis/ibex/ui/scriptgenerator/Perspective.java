@@ -25,8 +25,11 @@ import org.eclipse.wb.swt.ResourceManager;
 
 import uk.ac.stfc.isis.ibex.ui.perspectives.BasePerspective;
 
+/**
+ * The script generator perspective.
+ */
 public class Perspective extends BasePerspective {
-
+    /** The ID string for the perspective. */
 	public static final String ID = "uk.ac.stfc.isis.ibex.ui.scriptgenerator.perspective"; //$NON-NLS-1$
 
 	@Override
@@ -47,7 +50,7 @@ public class Perspective extends BasePerspective {
 	
     @Override
     public boolean isVisibleDefault() {
-        return false; 
+        return false;
     }
 	
 	@Override

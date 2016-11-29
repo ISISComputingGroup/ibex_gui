@@ -23,11 +23,13 @@ import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
 /**
- * The activator class controls the plug-in life cycle
+ * The activator class controls the plug-in life cycle.
  */
 public class LogPlotter extends AbstractUIPlugin {
 
-	// The plug-in ID
+    /**
+     * The plug-in ID.
+     */
     public static final String PLUGIN_ID = "uk.ac.stfc.isis.ibex.ui.logplotter"; //$NON-NLS-1$
 	
 	// The shared instance
@@ -48,10 +50,10 @@ public class LogPlotter extends AbstractUIPlugin {
 	}
 
 	/**
-	 * Returns the shared instance
-	 *
-	 * @return the shared instance
-	 */
+     * Returns the shared instance.
+     *
+     * @return the shared instance
+     */
 	public static LogPlotter getDefault() {
 		return plugin;
 	}

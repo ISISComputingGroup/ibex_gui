@@ -23,10 +23,10 @@ package uk.ac.stfc.isis.ibex.ui.configserver.editing.blocks.filters;
  * The filter values allowed based on the interest of PVs.
  */
 public enum InterestFilters {
-	HIGH ("High"),
-	MEDIUM ("Medium"),
+    HIGH("High"),
+    MEDIUM("Medium"),
     FACILITY("Facility"),
-	ALL ("All");
+    ALL("All");
 	
 	private String displayName;
     private static InterestFilters lastSelection;

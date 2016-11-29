@@ -66,6 +66,9 @@ public class ConfigEditorPanel extends Composite {
 		gridLayout.horizontalSpacing = 0;
 		setLayout(gridLayout);
 		
+		summary = new SummaryPanel(this, SWT.NONE, dialog);
+		summary.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+		
         editorTabs = new TabFolder(this, SWT.NONE);
 		editorTabs.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 
@@ -133,12 +136,6 @@ public class ConfigEditorPanel extends Composite {
 		};
 		iocPVSets = new IocSelectorPanel(editorTabs, SWT.NONE, pvSetsFactory);
 		tbtmIocPvSets.setControl(iocPVSets);
-		
-		TabItem summaryTab = new TabItem(editorTabs, SWT.NONE);
-		summaryTab.setText("Summary");
-		
-		summary = new SummaryPanel(editorTabs, SWT.NONE, dialog);
-		summaryTab.setControl(summary);
 	}
 
 	public void setConfigToEdit(EditableConfiguration config) {		

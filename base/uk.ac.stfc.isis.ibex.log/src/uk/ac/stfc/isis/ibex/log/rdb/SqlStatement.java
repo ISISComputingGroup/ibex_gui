@@ -61,7 +61,7 @@ public class SqlStatement {
 
     /**
      * Set the (ordered) list of fields that will be retrieved by the select
-     * statement
+     * statement.
      */
     public void setSelectFields(LogMessageFieldsSql[] selectFields) {
 	this.selectFields = new ArrayList<LogMessageFieldsSql>(
