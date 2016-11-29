@@ -23,6 +23,7 @@ import java.util.Arrays;
 import java.util.Collection;
 
 import org.eclipse.core.databinding.DataBindingContext;
+import org.eclipse.core.databinding.UpdateValueStrategy;
 import org.eclipse.core.databinding.beans.BeanProperties;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.viewers.ArrayContentProvider;
@@ -36,9 +37,13 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 
+import uk.ac.stfc.isis.ibex.configserver.Configurations;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
 import uk.ac.stfc.isis.ibex.synoptic.Synoptic;
 import uk.ac.stfc.isis.ibex.synoptic.SynopticInfo;
+import uk.ac.stfc.isis.ibex.validators.BlockServerNameValidator;
+import uk.ac.stfc.isis.ibex.validators.MessageDisplayer;
+import uk.ac.stfc.isis.ibex.validators.SummaryDescriptionValidator;
 
 /**
  * The panel that holds general misc information about the configuration.
@@ -54,6 +59,7 @@ public class SummaryPanel extends Composite {
 	private ComboViewer cmboSynoptic;
 	private EditableConfiguration config;
 	private DataBindingContext bindingContext;
+    private final MessageDisplayer messageDisplayer;
 
     /**
      * Constructor for the general information about the configuration.
@@ -62,9 +68,12 @@ public class SummaryPanel extends Composite {
      *            The parent composite that this panel is a part of.
      * @param style
      *            An integer giving the panel style using SWT style flags.
+     * @param dialog
+     *            The message displayer used to show error messages to the user.
      */
-    public SummaryPanel(Composite parent, int style) {
+    public SummaryPanel(Composite parent, int style, MessageDisplayer dialog) {
 		super(parent, style);
+        messageDisplayer = dialog;
 		setLayout(new FillLayout(SWT.HORIZONTAL));
 		
         Composite cmpSummary = new Composite(this, SWT.NONE);
@@ -121,14 +130,32 @@ public class SummaryPanel extends Composite {
 	private void setBindings() {
 		bindingContext = new DataBindingContext();
 		
+		UpdateValueStrategy descValidator = new UpdateValueStrategy();
+        // Set validator if not saving a new config
+        if (!config.getIsNew()) {
+            BlockServerNameValidator configDescritpionRules =
+                Configurations.getInstance().variables().configDescriptionRules.getValue();
+            descValidator
+                    .setBeforeSetValidator(new SummaryDescriptionValidator(messageDisplayer, configDescritpionRules));
+        }
+		
+        UpdateValueStrategy notConverter = new UpdateValueStrategy() {
+            @Override
+            public Object convert(Object value) {
+                return !(Boolean) value;
+            }
+        };
+		
+        bindingContext.bindValue(WidgetProperties.enabled().observe(txtName),
+                BeanProperties.value("isNew").observe(config));
 		bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(txtName), BeanProperties.value("name").observe(config));
         bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(txtDescription),
-                BeanProperties.value("description").observe(config));
+                BeanProperties.value("description").observe(config), descValidator, null);
 		bindingContext.bindValue(WidgetProperties.selection().observe(cmboSynoptic.getCombo()), BeanProperties.value("synoptic").observe(config));
         bindingContext.bindValue(WidgetProperties.visible().observe(lblDateCreated),
-                BeanProperties.value("datesVisible").observe(config));
+                BeanProperties.value("isNew").observe(config), null, notConverter);
         bindingContext.bindValue(WidgetProperties.visible().observe(lblDateModified),
-                BeanProperties.value("datesVisible").observe(config));
+                BeanProperties.value("isNew").observe(config), null, notConverter);
 		bindingContext.bindValue(WidgetProperties.text().observe(lblDateCreatedField), BeanProperties.value("dateCreated").observe(config));
 		bindingContext.bindValue(WidgetProperties.text().observe(lblDateModifiedField), BeanProperties.value("dateModified").observe(config));
 	}
