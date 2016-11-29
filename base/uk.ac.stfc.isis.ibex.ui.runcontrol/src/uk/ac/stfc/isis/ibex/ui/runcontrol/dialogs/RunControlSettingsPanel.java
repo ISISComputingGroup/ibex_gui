@@ -47,17 +47,16 @@ import uk.ac.stfc.isis.ibex.ui.runcontrol.RunControlViewModel;
  */
 @SuppressWarnings("checkstyle:magicnumber")
 public class RunControlSettingsPanel extends Composite {
-	private final Display display = Display.getDefault();
 	private RunControlSettingsTable table;
 	private RunControlEditorPanel editor;
 	private final ConfigServer configServer;
 	private final RunControlServer runControlServer;
-    UpdatedValue<Configuration> config;
+    private UpdatedValue<Configuration> config;
 
 	private PropertyChangeListener updateTable = new PropertyChangeListener() {
 		@Override
 		public void propertyChange(final PropertyChangeEvent arg0) {
-			display.asyncExec(new Runnable() {
+            Display.getDefault().asyncExec(new Runnable() {
 				@Override
 				public void run() {
 					setBlocks();
@@ -66,6 +65,15 @@ public class RunControlSettingsPanel extends Composite {
 		}
 	};
 
+    /**
+     * The constructor.
+     * 
+     * @param parent the parent composite
+     * @param style the SWT style
+     * @param configServer the configuration server
+     * @param runControlServer the runcontrol server
+     * @param viewModel the view model
+     */
 	public RunControlSettingsPanel(Composite parent, int style, ConfigServer configServer, RunControlServer runControlServer,
 			RunControlViewModel viewModel) {
 		super(parent, style);
