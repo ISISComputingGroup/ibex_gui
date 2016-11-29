@@ -50,8 +50,14 @@ public class PerspectiveSwitcherView extends ViewPart implements ISizeProvider {
 	private static final Font BUTTON_FONT = SWTResourceManager.getFont("Arial", 12, SWT.NORMAL);
 	private static final Color BACKGROUND = SWTResourceManager.getColor(250, 250, 252);
 	
+    /**
+     * The perspective ID.
+     */
 	public static final String ID = "uk.ac.stfc.isis.ibex.ui.perspectives.PerspectiveSwitcher"; //$NON-NLS-1$
 
+    /**
+     * The width of the switcher.
+     */
 	public static final int FIXED_WIDTH = 200;
 	
 	/**
