@@ -37,7 +37,7 @@ public class Blocks extends AbstractUIPlugin {
 	private static Blocks plugin;
 	
     /**
-     * The default constructor.
+     * Default constructor.
      */
 	public Blocks() {
 	}

@@ -19,6 +19,9 @@
 
 package uk.ac.stfc.isis.ibex.ui.devicescreens;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.logging.log4j.Logger;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
@@ -55,6 +58,7 @@ public class DeviceSceenListPanel extends Composite {
      * Logger.
      */
     private static final Logger LOG = IsisLog.getLogger(DeviceSceenListPanel.class);
+    private final List<DeviceDescription> blankList = new ArrayList<DeviceDescription>();
 
     private Button configureDevScreensButton;
 
@@ -78,6 +82,9 @@ public class DeviceSceenListPanel extends Composite {
 
         @Override
         public void onConnectionStatus(boolean isConnected) {
+            if (!isConnected) {
+                deviceScreenList.setRows(blankList);
+            }
         }
     };
     private DeviceScreensTable deviceScreenList;

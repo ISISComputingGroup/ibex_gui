@@ -24,17 +24,20 @@ import java.util.Collection;
 import java.util.List;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Menu;
-import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.custom.CLabel;
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.layout.FillLayout;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Menu;
 
 import uk.ac.stfc.isis.ibex.configserver.displaying.DisplayGroup;
 
+/**
+ * The panel that shows blocks and groups in the main IBEX perspective.
+ */
 @SuppressWarnings("checkstyle:magicnumber")
 public class GroupsPanel extends Composite {
 	
@@ -45,12 +48,22 @@ public class GroupsPanel extends Composite {
 	private ScrolledComposite scrolledComposite;
 	private CLabel banner;
 	
+    private Menu contextMenu;
+	
 	private boolean showHiddenBlocks = false;
 	
 	private Collection<DisplayGroup> displayGroups;
 
 	private static final int GROUP_HEIGHT = 235;
 	
+    /**
+     * Constructor for the groups panel.
+     * 
+     * @param parent
+     *            The parent composite that this panel belongs to.
+     * @param style
+     *            The SWT style of the panel.
+     */
 	public GroupsPanel(Composite parent, int style) {
 		super(parent, SWT.NONE);
 		setLayout(new FillLayout(SWT.HORIZONTAL));
@@ -68,15 +81,26 @@ public class GroupsPanel extends Composite {
 
 	private void configureMenu() {
 		GroupsMenu menu = new GroupsMenu(this);
-		Menu contextMenu = menu.get();
+        contextMenu = menu.get();
 		mainComposite.setMenu(contextMenu);
 		scrolledComposite.setMenu(contextMenu);
 	}
 
+    /**
+     * Get whether the hidden blocks are showing or not.
+     * 
+     * @return True if blocks are showing
+     */
 	public boolean showHiddenBlocks() {
 		return showHiddenBlocks;
 	}
 	
+    /**
+     * Set whether hidden blocks are visible or not.
+     * 
+     * @param showHidden
+     *            True to show hidden blocks, false to hide.
+     */
 	public void setShowHiddenBlocks(boolean showHidden) {
 		if (showHiddenBlocks == showHidden) {
 			return;
@@ -89,7 +113,12 @@ public class GroupsPanel extends Composite {
 		setRows();
 		layoutGroups();
 	}
-		
+	
+	/**
+	 * Updates the groups to display a new set of groups/blocks.
+	 * 
+	 * @param groups The new set of groups.
+	 */
 	public synchronized void updateGroups(final Collection<DisplayGroup> groups) {
 		this.displayGroups = groups;
 		display.syncExec(new Runnable() {
@@ -138,12 +167,13 @@ public class GroupsPanel extends Composite {
 	}
 	
 	private Group groupWidget(DisplayGroup group) {
-		Group groupWidget = new Group(mainComposite, SWT.NONE, group, showHiddenBlocks);
+        Group groupWidget = new Group(mainComposite, SWT.NONE, group, this);
 		GridData gd = new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1);
 		gd.heightHint = GROUP_HEIGHT;
 		gd.minimumHeight = gd.heightHint;
 		groupWidget.setLayoutData(gd);
 		groupWidget.pack();
+        groupWidget.setMenu(contextMenu);
 		
 		groups.add(groupWidget);
 		

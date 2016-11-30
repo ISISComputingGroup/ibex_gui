@@ -32,10 +32,22 @@ import uk.ac.stfc.isis.ibex.ui.log.filter.LogMessageFilter;
 import uk.ac.stfc.isis.ibex.ui.log.widgets.LogDisplay;
 import uk.ac.stfc.isis.ibex.ui.log.widgets.LogDisplayModel;
 
+/**
+ * A composite which contains a view of the IOC log messages produced by the
+ * DAE.
+ */
 public class LogMessageBox extends Composite {
 	private Label title;
 	private LogDisplay logDisplay;
 	
+    /**
+     * The constructor for the composite.
+     * 
+     * @param parent
+     *            The parent composite that the panel belongs to.
+     * @param style
+     *            The SWT style flags for the panel.
+     */
 	public LogMessageBox(Composite parent, int style) {
 		super(parent, style);
 		setLayout(new GridLayout(1, false));
@@ -54,6 +66,12 @@ public class LogMessageBox extends Composite {
 		logDisplay.addMessageFilter(filter);
 	}
 	
+    /**
+     * Set the model to obtain the log messages from.
+     * 
+     * @param model
+     *            A log message producer that gives messages from the IOCs.
+     */
 	public void setModel(ILogMessageProducer model) {
 		// Create model and subscribe to updates from Log
 		LogDisplayModel logDisplayModel = new LogDisplayModel(model);

@@ -30,7 +30,9 @@ import uk.ac.stfc.isis.ibex.dae.Dae;
  */
 public class DaeUI extends AbstractUIPlugin {
 
-	// The plug-in ID
+    /**
+     * The plug-in ID.
+     */
 	public static final String PLUGIN_ID = "uk.ac.stfc.isis.ibex.ui.dae"; //$NON-NLS-1$
 
 	// The shared instance
@@ -44,6 +46,12 @@ public class DaeUI extends AbstractUIPlugin {
 	public DaeUI() {
 	}
 
+    /**
+     * Get the View Model for the DAE. Creates a new one if no view model yet
+     * exists.
+     * 
+     * @return The view model
+     */
 	public DaeViewModel viewModel() {
 		if (viewModel == null) {
 			viewModel = new DaeViewModel();

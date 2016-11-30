@@ -206,6 +206,7 @@ public class TimeChannelsPanel extends Composite {
         }
     }
 
+    @SuppressWarnings("checkstyle:magicnumber")
     private void addMethodSelectionPanel(Composite parent) {
 
         Composite methodSelectionPanel = new Composite(parent, SWT.NONE);

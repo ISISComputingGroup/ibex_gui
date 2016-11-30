@@ -41,8 +41,15 @@ import uk.ac.stfc.isis.ibex.ui.configserver.editing.pvsets.IocPVSetsEditorPanel;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.summary.SummaryPanel;
 import uk.ac.stfc.isis.ibex.validators.MessageDisplayer;
 
+/**
+ * The panel that contains all the information for editing a configuration.
+ */
 public class ConfigEditorPanel extends Composite {
     
+    /**
+     * The name of the blocks tab. Needs to be public so it can be switched to
+     * from elsewhere.
+     */
     public static final String BLOCK_TAB_NAME = "Blocks";
 
 	private final IocsEditorPanel iocs;
@@ -56,6 +63,23 @@ public class ConfigEditorPanel extends Composite {
 	
     private TabFolder editorTabs;
 
+    /**
+     * The constructor for the overall panel that is used for editing and
+     * viewing a configuration.
+     * 
+     * @param parent
+     *            The composite that holds this panel.
+     * @param style
+     *            An integer giving the panel style using SWT style flags.
+     * @param dialog
+     *            The message displayer used to show error messages to the user.
+     * @param isComponent
+     *            Whether the configuration being displayed is a component or
+     *            not.
+     * @param configurationViewModels
+     *            A class holding a number of view models for displaying
+     *            configuration data to the user.
+     */
     public ConfigEditorPanel(Composite parent, int style, MessageDisplayer dialog, boolean isComponent,
             ConfigurationViewModels configurationViewModels) {
 		super(parent, style);
@@ -66,7 +90,7 @@ public class ConfigEditorPanel extends Composite {
 		gridLayout.horizontalSpacing = 0;
 		setLayout(gridLayout);
 		
-		summary = new SummaryPanel(this, SWT.NONE, dialog);
+        summary = new SummaryPanel(this, SWT.NONE, dialog);
 		summary.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 		
         editorTabs = new TabFolder(this, SWT.NONE);
@@ -138,6 +162,12 @@ public class ConfigEditorPanel extends Composite {
 		tbtmIocPvSets.setControl(iocPVSets);
 	}
 
+    /**
+     * Set which EditableConfiguration the dialog is editing.
+     * 
+     * @param config
+     *            The configuration to edit.
+     */
 	public void setConfigToEdit(EditableConfiguration config) {		
 		iocs.setConfig(config);
 		blocks.setConfig(config);
@@ -164,6 +194,12 @@ public class ConfigEditorPanel extends Composite {
 		iocPVSets.setEnabled(enabled);
 	}
 
+    /**
+     * Opens a specific tab of the editing window.
+     * 
+     * @param tabName
+     *            The name of the tab to open.
+     */
     public void openTab(String tabName) {
         for (TabItem tab : editorTabs.getItems()) {
             if (tab.getText() == tabName) {
@@ -172,6 +208,12 @@ public class ConfigEditorPanel extends Composite {
         }
 	}
 
+    /**
+     * Opens the dialog box for editing a specific block.
+     * 
+     * @param blockName
+     *            The name of the block to edit.
+     */
     public void openEditBlockDialog(String blockName) {
         blocks.openEditBlockDialog(blockName);
     }
