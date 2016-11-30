@@ -65,127 +65,16 @@
 	  </page>
 	</extension>
  <extension
-       point="org.eclipse.ui.bindings">
-    <key
-          commandId="uk.ac.stfc.isis.ibex.ui.perspectives.commands.SwitchPerspective"
-          schemeId="IBEX_key_scheme"
-          sequence="F2">
-       <parameter
-             id="uk.ac.stfc.isis.ibex.ui.perspectives.commands.perspectiveNumber"
-             value="0">
-       </parameter>
-    </key>
-    <key
-          commandId="uk.ac.stfc.isis.ibex.ui.perspectives.commands.SwitchPerspective"
-          schemeId="IBEX_key_scheme"
-          sequence="F3">
-       <parameter
-             id="uk.ac.stfc.isis.ibex.ui.perspectives.commands.perspectiveNumber"
-             value="1">
-       </parameter>
-    </key>
-    <key
-          commandId="uk.ac.stfc.isis.ibex.ui.perspectives.commands.SwitchPerspective"
-          schemeId="IBEX_key_scheme"
-          sequence="F4">
-       <parameter
-             id="uk.ac.stfc.isis.ibex.ui.perspectives.commands.perspectiveNumber"
-             value="2">
-       </parameter>
-    </key>
-    <key
-          commandId="uk.ac.stfc.isis.ibex.ui.perspectives.commands.SwitchPerspective"
-          schemeId="IBEX_key_scheme"
-          sequence="F5">
-       <parameter
-             id="uk.ac.stfc.isis.ibex.ui.perspectives.commands.perspectiveNumber"
-             value="3">
-       </parameter>
-    </key>
-    <key
-          commandId="uk.ac.stfc.isis.ibex.ui.perspectives.commands.SwitchPerspective"
-          schemeId="IBEX_key_scheme"
-          sequence="F6">
-       <parameter
-             id="uk.ac.stfc.isis.ibex.ui.perspectives.commands.perspectiveNumber"
-             value="4">
-       </parameter>
-    </key>
-    <key
-          commandId="uk.ac.stfc.isis.ibex.ui.perspectives.commands.SwitchPerspective"
-          schemeId="IBEX_key_scheme"
-          sequence="F7">
-       <parameter
-             id="uk.ac.stfc.isis.ibex.ui.perspectives.commands.perspectiveNumber"
-             value="5">
-       </parameter>
-    </key>
-    <key
-          commandId="uk.ac.stfc.isis.ibex.ui.perspectives.commands.SwitchPerspective"
-          schemeId="IBEX_key_scheme"
-          sequence="F8">
-       <parameter
-             id="uk.ac.stfc.isis.ibex.ui.perspectives.commands.perspectiveNumber"
-             value="6">
-       </parameter>
-    </key>
-    <key
-          commandId="uk.ac.stfc.isis.ibex.ui.perspectives.commands.SwitchPerspective"
-          schemeId="IBEX_key_scheme"
-          sequence="F9">
-       <parameter
-             id="uk.ac.stfc.isis.ibex.ui.perspectives.commands.perspectiveNumber"
-             value="7">
-       </parameter>
-    </key>
-    <key
-          commandId="uk.ac.stfc.isis.ibex.ui.perspectives.commands.SwitchPerspective"
-          schemeId="IBEX_key_scheme"
-          sequence="F10">
-       <parameter
-             id="uk.ac.stfc.isis.ibex.ui.perspectives.commands.perspectiveNumber"
-             value="8">
-       </parameter>
-    </key>
-    <key
-          commandId="uk.ac.stfc.isis.ibex.ui.perspectives.commands.SwitchPerspective"
-          schemeId="IBEX_key_scheme"
-          sequence="F11">
-       <parameter
-             id="uk.ac.stfc.isis.ibex.ui.perspectives.commands.perspectiveNumber"
-             value="9">
-       </parameter>
-    </key>
-    <key
-          commandId="uk.ac.stfc.isis.ibex.ui.perspectives.commands.SwitchPerspective"
-          schemeId="IBEX_key_scheme"
-          sequence="F12">
-       <parameter
-             id="uk.ac.stfc.isis.ibex.ui.perspectives.commands.perspectiveNumber"
-             value="10">
-       </parameter>
-    </key>
-    <key
-          commandId="uk.ac.stfc.isis.ibex.ui.perspectives.commands.SwitchPerspective"
-          schemeId="IBEX_key_scheme"
-          sequence="F12">
-       <parameter
-             id="uk.ac.stfc.isis.ibex.ui.perspectives.commands.perspectiveNumber"
-             value="11">
-       </parameter>
-    </key>
- </extension>
- <extension
        point="org.eclipse.ui.commands">
     <command
           defaultHandler="uk.ac.stfc.isis.ibex.ui.perspectives.commands.SwitchPerspectiveHandler"
           id="uk.ac.stfc.isis.ibex.ui.perspectives.commands.SwitchPerspective"
           name="Switch Perspective">
        <commandParameter
-             id="uk.ac.stfc.isis.ibex.ui.perspectives.commands.perspectiveNumber"
-             name="number"
+             id="uk.ac.stfc.isis.ibex.ui.perspectives.commands.perspectiveID"
+             name="id"
              optional="false"
-             typeId="java.lang.Integer">
+             typeId="java.lang.String">
        </commandParameter>
     </command>
  </extension>
