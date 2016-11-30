@@ -50,6 +50,7 @@ public class Group extends Composite {
     private static final Color WHITE = SWTResourceManager.getColor(SWT.COLOR_WHITE);
     private static final int NUMBER_OF_ROWS = 8;
     private static final int NUMBER_OF_FIELDS = 3;
+    private Label title;
 
     /**
      * Provides the display of groups.
@@ -57,16 +58,16 @@ public class Group extends Composite {
      * @param parent a widget which will be the parent of the new instance
      * @param style the style of widget to construct
      * @param group the group to be displayed
-     * @param showHiddenBlocks whether hidden blocks should be shown
+     * @param panel The panel that shows the groups and blocks. 
      */
-    public Group(Composite parent, int style, DisplayGroup group, boolean showHiddenBlocks) {
+    public Group(Composite parent, int style, DisplayGroup group, GroupsPanel panel) {
         super(parent, style | SWT.BORDER);
 
         // Add the blocks to the list if they are visible, or if
         // showHiddenBlocks is true
         List<DisplayBlock> blocksList = new ArrayList<>();
         for (DisplayBlock block : group.blocks()) {
-            if (block.getIsVisible() || showHiddenBlocks) {
+            if (block.getIsVisible() || panel.showHiddenBlocks()) {
                 blocksList.add(block);
             }
         }
@@ -85,7 +86,7 @@ public class Group extends Composite {
         this.setBackground(WHITE);
 
         // In the first column put the title in
-        Label title = labelMaker(this, SWT.NONE, group.name(), "", null);
+        title = labelMaker(this, SWT.NONE, group.name(), "", null);
         Font titleFont = getEditedLabelFont(title, 10, SWT.BOLD);
         title.setFont(titleFont);
 
@@ -114,9 +115,11 @@ public class Group extends Composite {
 
                 DisplayBlock currentBlock = blocksList.get(position);
 
+                GroupsMenu fullMenu = new GroupsMenu(panel, new BlocksMenu(currentBlock));
+
                 Label blockName =
                         labelMaker(this, SWT.NONE, currentBlock.getName() + ": ", currentBlock.getDescription(), null);
-                blockName.setMenu(new BlocksMenu(currentBlock).createContextMenu(blockName));
+                blockName.setMenu(fullMenu.get());
                 blockName.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1));
 
                 // additional container to hold value label to draw a border around it
@@ -136,7 +139,7 @@ public class Group extends Composite {
                 Label blockValue =
                         labelMaker(valueContainer, SWT.RIGHT, currentBlock.getValue(), currentBlock.getDescription(),
                                 null);
-                blockValue.setMenu(new BlocksMenu(currentBlock).createContextMenu(blockName));
+                blockValue.setMenu(fullMenu.get());
                 GridData gdValue = new GridData(SWT.CENTER, SWT.NONE, false, false, 1, 1);
                 gdValue.widthHint = 75;
                 blockValue.setLayoutData(gdValue);
@@ -220,5 +223,6 @@ public class Group extends Composite {
     @Override
     public void setMenu(Menu menu) {
         super.setMenu(menu);
+        title.setMenu(menu);
     }
 }
