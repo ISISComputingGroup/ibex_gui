@@ -47,7 +47,7 @@ public class ASyncEventLimiterTest {
     }
 
     @Test
-    public void GIVEN_no_asycn_event_WHEN_run_new_event_THEN_event_allowed() {
+    public void GIVEN_no_async_event_WHEN_run_new_event_THEN_event_allowed() {
 
         boolean result = underTest.requestTaskLock();
 
@@ -56,7 +56,7 @@ public class ASyncEventLimiterTest {
     }
 
     @Test
-    public void GIVEN_asycn_event_already_running_WHEN_run_new_event_THEN_event_disallowed() {
+    public void GIVEN_async_event_already_running_WHEN_run_new_event_THEN_event_disallowed() {
 
         underTest.requestTaskLock();
 
@@ -67,7 +67,7 @@ public class ASyncEventLimiterTest {
     }
 
     @Test
-    public void GIVEN_asycn_event_processed_WHEN_run_new_event_THEN_event_allowed() {
+    public void GIVEN_async_event_processed_WHEN_run_new_event_THEN_event_allowed() {
 
         underTest.requestTaskLock();
         underTest.releaseTaskLock();
@@ -78,7 +78,7 @@ public class ASyncEventLimiterTest {
     }
 
     @Test
-    public void GIVEN_asycn_event_has_not_been_processed_WHEN_initial_task_finish_THEN_task_refired() {
+    public void GIVEN_async_event_has_not_been_processed_WHEN_initial_task_finish_THEN_task_refired() {
 
         underTest.requestTaskLock(); // first task starts
         underTest.requestTaskLock(); // second task fails to start
@@ -89,7 +89,7 @@ public class ASyncEventLimiterTest {
     }
 
     @Test
-    public void GIVEN_asycn_event_has_been_processed_WHEN_initial_task_finish_THEN_task_not_refired() {
+    public void GIVEN_async_event_has_been_processed_WHEN_initial_task_finish_THEN_task_not_refired() {
 
         underTest.requestTaskLock(); // first task starts
         underTest.releaseTaskLock(); // first task finish
@@ -109,6 +109,19 @@ public class ASyncEventLimiterTest {
 
         localUnderTest.releaseTaskLock(); // task finish
 
+    }
+
+    @Test
+    public void GIVEN_async_event_has_not_been_processed_and_reQueued_WHEN_new_task_THEN_task_is_not_rerun() {
+
+        underTest.requestTaskLock(); // first task starts
+        underTest.requestTaskLock(); // second task fails to start
+        underTest.releaseTaskLock(); // task finish and task should be requeued
+        underTest.requestTaskLock(); // last task
+        underTest.releaseTaskLock(); // task is requeued without interuption and
+                                     // so task is not requeued
+
+        verify(rerunTask, times(1)).reQueueTask();
     }
 
 }
