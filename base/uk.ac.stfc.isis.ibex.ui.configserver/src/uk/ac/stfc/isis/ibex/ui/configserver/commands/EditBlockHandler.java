@@ -28,7 +28,10 @@ import uk.ac.stfc.isis.ibex.ui.configserver.commands.helpers.EditBlockHelper;
  * The handler class for editing a block on its own, without being part of a
  * config panel.
  */
-public final class EditBlockHandler extends EditCurrentConfigHandler {
+public final class EditBlockHandler extends EditConfigHandler {
+
+    /** The name of the block being edited. */
+    private String blockName = "";
 
     /**
      * Create the handler for opening the editor on one block.
@@ -36,7 +39,8 @@ public final class EditBlockHandler extends EditCurrentConfigHandler {
      * @param blockName The block to edit
      */
     public EditBlockHandler(String blockName) {
-        super(blockName);
+        super();
+        this.blockName = blockName;
     }
 
     @Override

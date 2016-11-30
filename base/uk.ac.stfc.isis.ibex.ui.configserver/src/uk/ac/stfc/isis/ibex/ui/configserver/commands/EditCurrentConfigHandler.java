@@ -46,11 +46,6 @@ public class EditCurrentConfigHandler extends ConfigHandler<Configuration> imple
     private static final String ID = "uk.ac.stfc.isis.ibex.ui.configserver.commands.EditCurrentConfig";
     
     private Boolean canWrite = false;
-    
-    /**
-     * The name of the block being edited, if any.
-     */
-    protected String blockName = "";
 
 	/**
 	 * This is an inner anonymous class will disable the menu item if the current config is not available.
@@ -87,21 +82,11 @@ public class EditCurrentConfigHandler extends ConfigHandler<Configuration> imple
 		SERVER.currentConfig().addObserver(currentConfigObserver);
 	}
 
-    /**
-     * Create the handler for opening the editor on one block.
-     * 
-     * @param blockName The block to edit
-     */
-    public EditCurrentConfigHandler(String blockName) {
-        this();
-        this.blockName = blockName;
-    }
-
 	
 	@Override
     public Object execute(ExecutionEvent event) throws ExecutionException {
         ConfigHelper helper = canWrite ? new EditConfigHelper(shell(), SERVER) : new ViewConfigHelper(shell());
-		helper.createDialogCurrent(blockName);
+        helper.createDialogCurrent("");
 		return null;
 	}
 
