@@ -45,7 +45,7 @@ public final class EditBlockHandler extends EditConfigHandler {
 
     @Override
     public Object execute(ExecutionEvent event) throws ExecutionException {
-        new EditBlockHelper(shell(), SERVER).createDialogCurrent(blockName);
+        new EditBlockHelper(shell(), SERVER).createDialog(blockName);
         return null;
     }
 }

@@ -29,13 +29,21 @@ import org.eclipse.swt.widgets.Shell;
 import uk.ac.stfc.isis.ibex.configserver.ConfigServer;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableBlock;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
+import uk.ac.stfc.isis.ibex.model.Awaited;
+import uk.ac.stfc.isis.ibex.model.UpdatedValue;
 import uk.ac.stfc.isis.ibex.ui.configserver.ConfigurationServerUI;
+import uk.ac.stfc.isis.ibex.ui.configserver.ConfigurationViewModels;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.blocks.EditBlockDialog;
 
 /**
  * A helper class to open a stand-alone block editing dialog.
  */
-public class EditBlockHelper extends ConfigHelper {
+public class EditBlockHelper {
+
+    /** The view models for existing configurations. */
+    protected ConfigurationViewModels configurationViewModels;
+    /** The parent shell to load the dialog in. */
+    protected Shell shell;
 
     /**
      * The configuration server used to save modifications to the configuration.
@@ -62,8 +70,7 @@ public class EditBlockHelper extends ConfigHelper {
      * @param blockname the block name
      * @param isCurrent whether it is the current configuration
      */
-    @Override
-    protected void openDialog(String subTitle, EditableConfiguration config, String blockname, boolean isCurrent) {
+    public void openDialog(String subTitle, EditableConfiguration config, String blockname, boolean isCurrent) {
         // We only edit stand alone blocks as part of the current config
         assert (isCurrent);
         openDialog(config, blockname);
@@ -89,6 +96,22 @@ public class EditBlockHelper extends ConfigHelper {
             if (dialog.open() == Window.OK) {
                 server.setCurrentConfig().write(config.asConfiguration());
             }
+        }
+    }
+
+    /**
+     * Create a dialog box for editing the block.
+     * 
+     * @param blockName The name of the block to edit
+     */
+    public void createDialog(String blockName) {
+        configurationViewModels.setModelAsCurrentConfig();
+        UpdatedValue<EditableConfiguration> config = configurationViewModels.getConfigModel();
+
+        if (Awaited.returnedValue(config, 1)) {
+            openDialog(config.getValue(), blockName);
+        } else {
+            MessageDialog.openError(shell, "Error", "There is no current configuration, so it can not be edited.");
         }
     }
 }

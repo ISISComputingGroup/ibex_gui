@@ -86,7 +86,7 @@ public class EditCurrentConfigHandler extends ConfigHandler<Configuration> imple
 	@Override
     public Object execute(ExecutionEvent event) throws ExecutionException {
         ConfigHelper helper = canWrite ? new EditConfigHelper(shell(), SERVER) : new ViewConfigHelper(shell());
-        helper.createDialogCurrent("");
+        helper.createDialogCurrent();
 		return null;
 	}
 

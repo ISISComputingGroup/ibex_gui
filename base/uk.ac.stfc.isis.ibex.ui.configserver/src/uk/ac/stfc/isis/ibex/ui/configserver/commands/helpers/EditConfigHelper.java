@@ -52,10 +52,10 @@ public class EditConfigHelper extends ConfigHelper {
         currentSubTitle = "Editing the current configuration";
     }
 
-    protected void openDialog(String subTitle, EditableConfiguration config,
-            String blockname, boolean isCurrent) {
-        EditConfigDialog dialog = new EditConfigDialog(shell, title, currentSubTitle, config, false, false, blockname,
-                configurationViewModels);
+    @Override
+    protected void openDialog(String subTitle, EditableConfiguration config, boolean isCurrent) {
+        EditConfigDialog dialog =
+                new EditConfigDialog(shell, title, currentSubTitle, config, false, false, configurationViewModels);
         if (dialog.open() == Window.OK) {
             if (dialog.doAsComponent()) {
                 server.saveAsComponent().write(dialog.getComponent());
