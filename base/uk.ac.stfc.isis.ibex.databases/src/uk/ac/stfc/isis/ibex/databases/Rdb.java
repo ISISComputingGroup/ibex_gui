@@ -62,7 +62,9 @@ public class Rdb {
 		return connection;
     }
 
-    /** Must be called when RDB no longer used to release resources */
+    /**
+     * Must be called when RDB no longer used to release resources.
+     */
     public void close() {
 		try {
 		    connection.close();

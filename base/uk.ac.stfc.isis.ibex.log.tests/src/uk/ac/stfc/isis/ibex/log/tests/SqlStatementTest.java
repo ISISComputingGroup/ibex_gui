@@ -18,7 +18,6 @@
 
 package uk.ac.stfc.isis.ibex.log.tests;
 
-import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
 import java.util.Calendar;
@@ -30,8 +29,7 @@ import uk.ac.stfc.isis.ibex.log.message.sql.LogMessageFieldsWhereSql;
 import uk.ac.stfc.isis.ibex.log.rdb.SqlStatement;
 
 /**
- * This class is responsible for testing the Sql Statement Class
- * 
+ * This class is responsible for testing the Sql Statement Class.
  */
 public class SqlStatementTest {
 

@@ -67,11 +67,15 @@ public final class XMLUtil {
      * Converts the instrument description into the synoptic XML expected by the
      * BlockServer.
      * 
-     * @param the type than needs to be converted into XML
-     * @param instrument the instrument description
+     * @param <T>
+     *            the type than needs to be converted into XML
+     * @param instrument
+     *            the instrument description
      * @return the XML for the synoptic
-     * @throws JAXBException XML Exception
-     * @throws SAXException XML Exception
+     * @throws JAXBException
+     *             XML Exception
+     * @throws SAXException
+     *             XML Exception
      */
     public static <T> String toXml(T instrument) throws JAXBException, SAXException {
 		if (context == null) {

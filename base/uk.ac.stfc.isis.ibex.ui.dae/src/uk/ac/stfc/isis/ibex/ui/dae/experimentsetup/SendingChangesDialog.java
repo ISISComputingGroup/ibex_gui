@@ -45,9 +45,9 @@ public class SendingChangesDialog extends Dialog {
      * Create the dialog.
      * 
      * @param parentShell
-     *            The shell to create the dialog from
+     *            The shell of the parent dialog
      * @param secondsToShowFor
-     *            The length of time to show the dialog box for
+     *            The maximum number of seconds to show the dialog for
      */
 	public SendingChangesDialog(Shell parentShell, int secondsToShowFor) {
 		super(parentShell);

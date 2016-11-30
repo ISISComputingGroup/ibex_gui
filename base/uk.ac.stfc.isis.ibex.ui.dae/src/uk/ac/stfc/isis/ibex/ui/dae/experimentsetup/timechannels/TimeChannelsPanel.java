@@ -69,6 +69,9 @@ public class TimeChannelsPanel extends Composite {
     private FontData fontdata;
 	private static final Display DISPLAY = Display.getCurrent();
 
+    private static final int TOP_MARGIN_WIDTH = 5;
+    private static final int HORIZONTAL_SPACING = 100;
+
     /**
      * Constructor for the time channel settings panel.
      * 
@@ -210,8 +213,8 @@ public class TimeChannelsPanel extends Composite {
         methodSelectionPanel.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 1, 1));
         methodSelectionPanel.setLayout(new GridLayout(1, false));
         GridLayout glCalcMethod = new GridLayout(1, false);
-        glCalcMethod.horizontalSpacing = 100;
-        glCalcMethod.marginTop = 5;
+        glCalcMethod.horizontalSpacing = HORIZONTAL_SPACING;
+        glCalcMethod.marginTop = TOP_MARGIN_WIDTH;
 
         radioSpecifyParameters = new Button(methodSelectionPanel, SWT.RADIO);
         radioSpecifyParameters.setText(CalculationMethod.SPECIFY_PARAMETERS.toString());

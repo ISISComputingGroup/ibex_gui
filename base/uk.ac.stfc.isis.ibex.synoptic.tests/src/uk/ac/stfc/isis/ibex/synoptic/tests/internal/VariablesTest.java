@@ -43,7 +43,7 @@ import uk.ac.stfc.isis.ibex.synoptic.internal.Variables;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.SynopticDescription;
 
 /**
- * This class is responsible for testing instrument.Variables
+ * This class is responsible for testing instrument.Variables.
  *
  */
 @SuppressWarnings({ "checkstyle:magicnumber", "checkstyle:methodname", "unchecked" })
@@ -73,7 +73,7 @@ public class VariablesTest {
     private SwitchableObservable mockSwitchableObservable;
 
     /**
-     * Code to generate the required components
+     * Code to generate the required components.
      */
     @Before
     public void set_up() {

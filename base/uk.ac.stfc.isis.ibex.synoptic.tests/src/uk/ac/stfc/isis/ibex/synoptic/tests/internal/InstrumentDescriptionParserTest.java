@@ -28,8 +28,7 @@ import uk.ac.stfc.isis.ibex.synoptic.internal.InstrumentDescriptionParser;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.SynopticDescription;
 
 /**
- * This class is responsible for testing the Instrument Description Parser 
- *
+ * This class is responsible for testing the Instrument Description Parser.
  */
 
 @SuppressWarnings({ "checkstyle:magicnumber", "checkstyle:methodname", "unchecked" })

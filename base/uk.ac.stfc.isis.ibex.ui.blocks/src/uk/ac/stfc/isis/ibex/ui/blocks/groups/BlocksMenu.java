@@ -41,7 +41,7 @@ public class BlocksMenu extends MenuManager {
 	
 	private final DisplayBlock block;
 	
-	private static String EDIT_BLOCK = "Edit block";
+    private static final String EDIT_BLOCK = "Edit block";
 	
 	private final IAction editBlockAction;
 	

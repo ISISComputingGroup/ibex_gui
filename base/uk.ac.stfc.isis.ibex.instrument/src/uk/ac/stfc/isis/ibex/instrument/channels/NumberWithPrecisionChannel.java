@@ -24,8 +24,8 @@ import uk.ac.stfc.isis.ibex.epics.pv.Channels;
 import uk.ac.stfc.isis.ibex.epics.writing.BaseWritable;
 
 /**
- * A channel for a number which will be formatted based on the PREC field of the underlying PV
- *
+ * A channel for a number which will be formatted based on the PREC field of the
+ * underlying PV.
  */
 public class NumberWithPrecisionChannel implements ChannelType<Number> {
 

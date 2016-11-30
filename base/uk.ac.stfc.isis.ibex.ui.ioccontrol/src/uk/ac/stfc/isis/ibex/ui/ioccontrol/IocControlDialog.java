@@ -31,17 +31,17 @@ package uk.ac.stfc.isis.ibex.ui.ioccontrol;
 
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.TitleAreaDialog;
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.layout.GridData;
 
 import uk.ac.stfc.isis.ibex.configserver.IocControl;
 
 /**
- * Class to display a dialog to start/stop IOCs
+ * Class to display a dialog to start/stop IOCs.
  */
 public class IocControlDialog extends TitleAreaDialog {
 
