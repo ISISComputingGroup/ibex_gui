@@ -39,8 +39,7 @@ import uk.ac.stfc.isis.ibex.ui.synoptic.editor.instrument.InstrumentTreeView;
 
 /**
  * Provides event notifications for drag events in the component tree when the
- * user is rearranging the tree elements
- * 
+ * user is rearranging the tree elements.
  */
 public class ComponentDragListener implements DragSourceListener {
 	private final InstrumentTreeView viewer;

@@ -55,9 +55,9 @@ public enum RecordSetterStyle {
 	ICON,
 	
 	/**
-	 * Specifies that the RecordSetter will provide more prominent colour
-	 * highlighting to indicate status
-	 */
+     * Specifies that the RecordSetter will provide more prominent colour
+     * highlighting to indicate status.
+     */
 	HIGHLIGHTING,
 	
 	/**

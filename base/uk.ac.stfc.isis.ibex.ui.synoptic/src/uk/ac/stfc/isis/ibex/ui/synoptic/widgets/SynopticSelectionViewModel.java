@@ -121,9 +121,9 @@ public class SynopticSelectionViewModel extends ModelObject {
     }
 
     /**
-     * Sets the selected synoptic from the UI
+     * Sets the selected synoptic from the UI.
      * 
-     * @param synoptic
+     * @param selected
      *            The string name of the synoptic to set
      */
     public void setSelected(String selected) {

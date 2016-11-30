@@ -35,8 +35,10 @@ import uk.ac.stfc.isis.ibex.ui.synoptic.editor.dialogs.EditSynopticDialog;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.SynopticViewModel;
 
 /**
- * Handles opening the Synoptic Editor and saving the synoptic when updated. 
+ * Handles opening the Synoptic Editor and saving the synoptic when updated.
  * 
+ * @param <T>
+ *            The type of the write destination for the synoptic data
  */
 public abstract class SynopticHandler<T> extends AbstractHandler {
 

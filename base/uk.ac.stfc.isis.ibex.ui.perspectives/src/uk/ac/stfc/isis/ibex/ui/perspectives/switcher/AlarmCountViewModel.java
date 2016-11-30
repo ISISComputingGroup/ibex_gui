@@ -26,7 +26,8 @@ import uk.ac.stfc.isis.ibex.alarm.AlarmCounter;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 
 /**
- * A model to provide easy access to listeners for the interaction with the alarm system
+ * A model to provide easy access to listeners for the interaction with the
+ * alarm system.
  */
 public class AlarmCountViewModel extends ModelObject {
 	

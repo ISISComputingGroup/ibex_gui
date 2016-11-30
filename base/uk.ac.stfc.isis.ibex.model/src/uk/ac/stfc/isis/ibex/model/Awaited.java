@@ -51,9 +51,10 @@ public class Awaited<T> extends UpdatedValue<T> {
 	}
 	
     /**
-     * Waits for a value to be set
+     * Waits for a value to be set.
      * 
-     * @param secondsToWait how many seconds to wait for
+     * @param secondsToWait
+     *            how many seconds to wait for
      * @return true if the value was set
      */
 	public boolean until(int secondsToWait) {

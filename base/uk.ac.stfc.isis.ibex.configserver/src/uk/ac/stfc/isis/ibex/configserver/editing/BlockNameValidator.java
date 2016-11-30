@@ -55,12 +55,15 @@ public class BlockNameValidator {
 	}
 	
 	/**
-	 * Checks the validity of a proposed block name, and sets the error message if the
-	 * name is invalid.
-	 * 
-	 * @param name The proposed name
-	 * @return True if the name is valid, else false with the error message set
-	 */
+     * Checks the validity of a proposed block name, and sets the error message
+     * if the name is invalid.
+     * 
+     * @param name
+     *            The proposed name
+     * @param blockRules
+     *            The rules for naming blocks
+     * @return True if the name is valid, else false with the error message set
+     */
 	public Boolean isValidName(String name, BlockRules blockRules) {
 		boolean isValid = false;
 		

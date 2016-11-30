@@ -24,10 +24,10 @@ import java.util.Collections;
 import java.util.List;
 
 public enum AutosaveUnit {
-	FRAMES ("Frames"),
-	EVENTS ("Events"),
-	DASHBOARD_POLLS ("Dashboard polls"),
-	MICROAMPS ("μA");
+    FRAMES("Frames"),
+    EVENTS("Events"),
+    DASHBOARD_POLLS("Dashboard polls"),
+    MICROAMPS("μA");
 	
 	private String text;
 

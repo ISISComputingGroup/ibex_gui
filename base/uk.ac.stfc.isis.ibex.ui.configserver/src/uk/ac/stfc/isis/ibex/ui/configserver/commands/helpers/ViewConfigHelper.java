@@ -42,7 +42,7 @@ public class ViewConfigHelper extends ConfigHelper {
         this.configurationViewModels = ConfigurationServerUI.getDefault().configurationViewModels();
         
         title = "View Configuration";
-        sub_title_current = "Viewing the current configuration";
+        currentSubTitle = "Viewing the current configuration";
     }
 
     /**
@@ -56,7 +56,7 @@ public class ViewConfigHelper extends ConfigHelper {
     @Override
     protected void openDialog(String subTitle, EditableConfiguration config,
             String blockname, boolean isCurrent) {
-        ConfigDetailsDialog dialog = new ConfigDetailsDialog(shell, title, sub_title_current, config, false, false, blockname,
+        ConfigDetailsDialog dialog = new ConfigDetailsDialog(shell, title, currentSubTitle, config, false, false, blockname,
                 configurationViewModels);
         dialog.open();
     }

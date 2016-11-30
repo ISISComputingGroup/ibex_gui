@@ -20,8 +20,7 @@
 package uk.ac.stfc.isis.ibex.epics.pv;
 
 /**
- * Stores the PV information for a PV
- *
+ * Stores the PV information for a PV.
  */
 public final class PVInfo<T> {
 

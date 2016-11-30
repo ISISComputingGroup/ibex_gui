@@ -22,8 +22,7 @@ import uk.ac.stfc.isis.ibex.log.message.sql.LogMessageFieldsSql;
 
 /**
  * This class is responsible for maintaining a log message either in relation to
- * the XML or SQL database
- * 
+ * the XML or SQL database.
  */
 public class LogMessage {
     // message info

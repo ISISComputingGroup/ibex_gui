@@ -30,7 +30,7 @@ import uk.ac.stfc.isis.ibex.experimentdetails.Role;
 import uk.ac.stfc.isis.ibex.experimentdetails.UserDetails;
 
 /**
- * Unit tests for UserDetails
+ * Unit tests for UserDetails.
  */
 @SuppressWarnings("checkstyle:methodname")
 public class UserDetailsTest {

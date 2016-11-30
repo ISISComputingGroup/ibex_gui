@@ -23,9 +23,9 @@ package uk.ac.stfc.isis.ibex.ui.configserver.editing.blocks.filters;
  * The filter values allowed based on the source of PVs.
  */
 public enum SourceFilters {
-	ALL ("All IOCs"),
-	ACTIVE ("Active IOCs"),
-	ASSOCIATED ("Config IOCs");
+    ALL("All IOCs"),
+    ACTIVE("Active IOCs"),
+    ASSOCIATED("Config IOCs");
 	
 	private String displayName;
     private static SourceFilters lastSelection;

@@ -107,7 +107,7 @@ public class JmsHandler extends ModelObject implements Runnable {
 
     /**
      * Establish connection with JMS server and listen for messages to forward
-     * on to consumer
+     * on to consumer.
      */
     @SuppressWarnings("checkstyle:emptyblock")
     @Override
