@@ -52,7 +52,7 @@ public class EditConfigHandler extends DisablingConfigHandler<Configuration> {
 			String configName = selectionDialog.selectedConfig();
             if (configName.equals(SERVER.currentConfig().getValue().name())) {
                 if (editCurrentConfigConfirmDialog(configName)) {
-                    helper.createDialogCurrent("");
+                    helper.createDialogCurrent();
                 }
             } else {
                 helper.createDialog(configName);

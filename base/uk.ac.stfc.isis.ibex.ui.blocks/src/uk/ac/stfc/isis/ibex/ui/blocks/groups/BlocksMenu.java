@@ -25,7 +25,9 @@ import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.GroupMarker;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.MenuManager;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.ui.PlatformUI;
 
 import uk.ac.stfc.isis.ibex.configserver.Configurations;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Configuration;
@@ -33,7 +35,7 @@ import uk.ac.stfc.isis.ibex.configserver.displaying.DisplayBlock;
 import uk.ac.stfc.isis.ibex.epics.writing.SameTypeWriter;
 import uk.ac.stfc.isis.ibex.ui.blocks.presentation.PVHistoryPresenter;
 import uk.ac.stfc.isis.ibex.ui.blocks.presentation.Presenter;
-import uk.ac.stfc.isis.ibex.ui.configserver.commands.EditCurrentConfigHandler;
+import uk.ac.stfc.isis.ibex.ui.configserver.commands.EditBlockHandler;
 
 /**
  * The right-click menu for blocks in the dashboard.
@@ -96,11 +98,11 @@ public class BlocksMenu extends MenuManager {
         editBlockAction = new Action(EDIT_BLOCK) {
             @Override
             public void run() {
-                EditCurrentConfigHandler editBlockHandler = new EditCurrentConfigHandler(block.getName());
                 try {
-                    editBlockHandler.execute(new ExecutionEvent());
+                    new EditBlockHandler(block.getName()).execute(new ExecutionEvent());
                 } catch (ExecutionException e) {
-                    e.printStackTrace();
+                    MessageDialog.openError(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), "Error",
+                            "Unable to edit block.");
                 }
             }
         };
