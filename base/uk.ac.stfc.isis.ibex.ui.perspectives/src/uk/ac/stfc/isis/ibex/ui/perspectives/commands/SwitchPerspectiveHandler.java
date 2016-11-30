@@ -21,11 +21,15 @@
  */
 package uk.ac.stfc.isis.ibex.ui.perspectives.commands;
 
+import java.util.List;
+
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 
 import uk.ac.stfc.isis.ibex.ui.UI;
+import uk.ac.stfc.isis.ibex.ui.perspectives.Activator;
+import uk.ac.stfc.isis.ibex.ui.perspectives.IsisPerspective;
 
 /**
  * Class for switching perspectives based on a key press.
@@ -46,8 +50,14 @@ public class SwitchPerspectiveHandler extends AbstractHandler {
     public Object execute(ExecutionEvent event) throws ExecutionException {
         String id = event.getParameter("uk.ac.stfc.isis.ibex.ui.perspectives.commands.perspectiveID");
 
-        UI.getDefault().switchPerspective(id);
+        List<IsisPerspective> visiblePerspectives = Activator.getDefault().perspectives().getVisible();
 
+        for (IsisPerspective perspective : visiblePerspectives) {
+            if (perspective.id().equals(id)) {
+                UI.getDefault().switchPerspective(id);
+                return null;
+            }
+        }
         return null;
     }
 
