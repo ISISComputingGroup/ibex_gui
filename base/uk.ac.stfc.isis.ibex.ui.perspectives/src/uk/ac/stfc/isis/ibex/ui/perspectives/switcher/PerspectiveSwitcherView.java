@@ -29,6 +29,8 @@ import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Event;
 import org.eclipse.ui.ISizeProvider;
 import org.eclipse.ui.part.ViewPart;
 import org.eclipse.wb.swt.SWTResourceManager;
@@ -80,6 +82,7 @@ public class PerspectiveSwitcherView extends ViewPart implements ISizeProvider {
 		createActions();
 		initializeToolBar();
 		initializeMenu();
+        showMnemonics();
 	}
 
     /**
@@ -93,7 +96,7 @@ public class PerspectiveSwitcherView extends ViewPart implements ISizeProvider {
 		button.setImage(perspective.image());
 		button.setAlignment(SWT.LEFT);
 		button.setFont(BUTTON_FONT);
-				
+
 		GridData gd = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
 		gd.heightHint = 30;
 		gd.minimumHeight = 30;
@@ -128,8 +131,22 @@ public class PerspectiveSwitcherView extends ViewPart implements ISizeProvider {
 	}
 
 	/**
-	 * Create the actions.
-	 */
+     * This method will display an underline on the character that is the
+     * shortcut for the button. This underline is normally only displayed after
+     * pressing ALT.
+     */
+    private void showMnemonics() {
+        Event event = new Event();
+        event.keyCode = SWT.ALT;
+        event.type = SWT.KeyDown;
+        Display.getDefault().post(event);
+        event.type = SWT.KeyUp;
+        Display.getDefault().post(event);
+    }
+
+    /**
+     * Create the actions.
+     */
 	private void createActions() {
 		// Create the actions
 	}

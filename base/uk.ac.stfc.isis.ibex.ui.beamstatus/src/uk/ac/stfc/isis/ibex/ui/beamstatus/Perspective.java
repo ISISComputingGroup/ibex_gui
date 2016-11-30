@@ -24,8 +24,17 @@ import org.eclipse.wb.swt.ResourceManager;
 
 import uk.ac.stfc.isis.ibex.ui.perspectives.BasePerspective;
 
+/**
+ * The perspective that shows the status of the beam.
+ * 
+ * Registers the perspective to be displayed in the list (see plugin.xml file
+ * for this package).
+ */
 public class Perspective extends BasePerspective {
 
+    /**
+     * The ID of this perspective.
+     */
     public static final String ID = "uk.ac.stfc.isis.ibex.ui.beamstatus.perspective"; //$NON-NLS-1$
 
     @Override
@@ -35,7 +44,7 @@ public class Perspective extends BasePerspective {
 
     @Override
     public String name() {
-        return "Beam Status";
+        return "&Beam Status";
     }
 
     @Override

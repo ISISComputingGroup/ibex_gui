@@ -28,12 +28,19 @@ import uk.ac.stfc.isis.ibex.ui.blocks.views.BlocksView;
 import uk.ac.stfc.isis.ibex.ui.dashboard.views.DashboardView;
 import uk.ac.stfc.isis.ibex.ui.perspectives.switcher.PerspectiveSwitcherView;
 
+/**
+ * The base perspective that all IBEX perspectives should inherit from.
+ */
 @SuppressWarnings("checkstyle:magicnumber")
 public abstract class BasePerspective implements IPerspectiveFactory, IsisPerspective {
 	
-	public static final String ID = "uk.ac.stfc.isis.ibex.ui.perspectives.base"; //$NON-NLS-1$	
+    /**
+     * The ID for this perspective.
+     */
+    public static final String ID = "uk.ac.stfc.isis.ibex.ui.perspectives.base";
 	
-	public void createInitialLayout(IPageLayout layout) {					
+	@Override
+    public void createInitialLayout(IPageLayout layout) {					
 		layout.setEditorAreaVisible(false);
 		layout.setFixed(true);
 		
@@ -45,7 +52,7 @@ public abstract class BasePerspective implements IPerspectiveFactory, IsisPerspe
 	
 	@Override
 	public int compareTo(IsisPerspective other) {
-		return this.name().compareTo(other.name());
+        return this.name().replace("&", "").compareTo(other.name());
 	}
 	
 	protected void lockView(IPageLayout layout, String viewID) {
