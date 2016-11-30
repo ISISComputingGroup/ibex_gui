@@ -133,10 +133,10 @@ public class SummaryPanel extends Composite {
 		UpdateValueStrategy descValidator = new UpdateValueStrategy();
         // Set validator if not saving a new config
         if (!config.getIsNew()) {
-            BlockServerNameValidator configDescritpionRules =
+            BlockServerNameValidator configDescriptionRules =
                 Configurations.getInstance().variables().configDescriptionRules.getValue();
             descValidator
-                    .setBeforeSetValidator(new SummaryDescriptionValidator(messageDisplayer, configDescritpionRules));
+                    .setBeforeSetValidator(new SummaryDescriptionValidator(messageDisplayer, configDescriptionRules));
         }
 		
         UpdateValueStrategy notConverter = new UpdateValueStrategy() {
