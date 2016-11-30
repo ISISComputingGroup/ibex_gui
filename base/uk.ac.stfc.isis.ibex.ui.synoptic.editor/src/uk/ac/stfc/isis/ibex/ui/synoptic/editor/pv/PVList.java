@@ -41,6 +41,9 @@ import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.IInstrumentUpdateListener;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.SynopticViewModel;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.UpdateTypes;
 
+/**
+ * The class that displays the list of which PVs a synoptic component has.
+ */
 public class PVList extends Composite {
 	private ListViewer list;
 	
@@ -51,6 +54,15 @@ public class PVList extends Composite {
 	
 	private SynopticViewModel instrument;
 	
+    /**
+     * The constructor for the class. Creates the controls to be displayed and
+     * binds them to the view model.
+     * 
+     * @param parent
+     *            The parent composite that holds this view.
+     * @param instrument
+     *            The view model for the synoptic.
+     */
 	public PVList(Composite parent, final SynopticViewModel instrument) {
 		super(parent, SWT.NONE);
 		
@@ -87,7 +99,13 @@ public class PVList extends Composite {
 		createControls(this);
 	}
 	
-	public void createControls(Composite parent) {
+    /**
+     * Creates the controls to be displayed.
+     * 
+     * @param parent
+     *            The composite on which to display the controls.
+     */
+    private void createControls(Composite parent) {
 		list = new ListViewer(parent, SWT.BORDER | SWT.V_SCROLL);
 		list.getList().setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 	    list.setContentProvider(new PvContentProvider());
@@ -154,13 +172,13 @@ public class PVList extends Composite {
         });
 	}
 	
-	public void showPvList(ComponentDescription component) {
+    private void showPvList(ComponentDescription component) {
 		if (component != null) {
 			list.setInput(component.pvs());
 		}
 	}
 	
-	public PV getSelectedPV() {
+    private PV getSelectedPV() {
 		IStructuredSelection selection = (IStructuredSelection) list.getSelection();
 		return (PV) selection.getFirstElement();
 	}

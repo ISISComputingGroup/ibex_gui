@@ -178,9 +178,23 @@ public class ComponentDescription implements SynopticParentDescription {
 	}
 	
     /**
+     * Get the names of the PVs associated with this component.
+     * 
+     * @return the names of the pvs
+     */
+    public List<String> pvNames() {
+        List<String> names = new ArrayList<>();
+        for (PV pv : pvs) {
+            names.add(pv.displayName());
+        }
+        return names;
+    }
+
+    /**
      * Remove a PV from this component.
      * 
-     * @param pv the PV to remove
+     * @param pv
+     *            the PV to remove
      */
 	public void removePV(PV pv) {
 		if (pv != null && pvs.contains(pv)) {

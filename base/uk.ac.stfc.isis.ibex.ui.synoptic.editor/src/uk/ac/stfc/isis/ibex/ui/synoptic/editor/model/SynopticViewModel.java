@@ -119,14 +119,18 @@ public class SynopticViewModel {
 		return parent;
 	}
 
+    private String getUniqueName(String rootName, List<String> existingNames) {
+        DefaultName namer = new DefaultName(rootName, " ", true);
+        return namer.getUnique(existingNames);
+    }
+
     /**
      * Add a new blank component to the synoptic.
      */
 	public void addNewComponent() {
 		ComponentDescription component = new ComponentDescription();
 
-        DefaultName namer = new DefaultName("New Component", " ", true);
-        component.setName(namer.getUnique(synoptic.getComponentNameListWithChildren()));
+        component.setName(getUniqueName("New Component", synoptic.getComponentNameListWithChildren()));
 		component.setType(ComponentType.UNKNOWN);
 
 		int position = 0;
@@ -160,8 +164,7 @@ public class SynopticViewModel {
         for (ComponentDescription selectedComponent : selectedComponents) {
 	        ComponentDescription componentCopy = new ComponentDescription(selectedComponent);
 
-	        DefaultName namer = new DefaultName(selectedComponent.name(), " ", true);
-            String uniqueName = namer.getUnique(allComponentNames);
+            String uniqueName = getUniqueName(selectedComponent.name(), allComponentNames);
             allComponentNames.add(uniqueName);
 
             componentCopy.setName(uniqueName);
@@ -182,8 +185,7 @@ public class SynopticViewModel {
 
     private void setUniqueChildNames(ComponentDescription component, List<String> allComponentNames) {
         for (ComponentDescription cd : component.components()) {
-            DefaultName namer = new DefaultName(cd.name(), " ", true);
-            String uniqueName = namer.getUnique(allComponentNames);
+            String uniqueName = getUniqueName(cd.name(), allComponentNames);
             allComponentNames.add(uniqueName);
             
             cd.setName(uniqueName);
@@ -251,15 +253,15 @@ public class SynopticViewModel {
      */
 	public int addNewPV() {
 		PV pv = new PV();
-		pv.setDisplayName("New PV");
+	    ComponentDescription selected = getFirstSelectedComponent();
+		
+        pv.setDisplayName(getUniqueName("New PV", selected.pvNames()));
 		pv.setAddress("NONE");
 		RecordType rt = new RecordType();
 		rt.setIO(IO.READ);
 		pv.setRecordType(rt);
 
 		int index = 0;
-		
-		ComponentDescription selected = getFirstSelectedComponent();
 		
 		if (selectedPV == null) {
 			selected.addPV(pv);

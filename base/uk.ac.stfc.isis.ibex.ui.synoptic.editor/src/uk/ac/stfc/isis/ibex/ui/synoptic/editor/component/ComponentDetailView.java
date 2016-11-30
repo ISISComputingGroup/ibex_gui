@@ -26,11 +26,11 @@ import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.FocusListener;
+import org.eclipse.swt.events.FocusAdapter;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
+import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
-import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
@@ -180,11 +180,7 @@ public class ComponentDetailView extends Composite {
         cmboType.setContentProvider(ArrayContentProvider.getInstance());
         cmboType.setInput(typeList);
         cmboType.getCombo().select(0);
-        cmboType.getCombo().addFocusListener(new FocusListener() {
-            @Override
-            public void focusGained(org.eclipse.swt.events.FocusEvent e) {
-            }
-
+        cmboType.getCombo().addFocusListener(new FocusAdapter() {
             @Override
             public void focusLost(org.eclipse.swt.events.FocusEvent e) {
                 if (!selectionCausedByMouseClick) {
@@ -194,16 +190,7 @@ public class ComponentDetailView extends Composite {
             }
         });
 
-        cmboType.getCombo().addMouseListener(new MouseListener() {
-
-            @Override
-            public void mouseDoubleClick(MouseEvent e) {
-            }
-
-            @Override
-            public void mouseDown(MouseEvent e) {
-            }
-
+        cmboType.getCombo().addMouseListener(new MouseAdapter() {
             @Override
             public void mouseUp(MouseEvent e) {
                 selectionCausedByMouseClick = true;
