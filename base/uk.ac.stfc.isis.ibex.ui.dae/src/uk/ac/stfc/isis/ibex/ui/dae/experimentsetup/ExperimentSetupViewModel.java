@@ -23,6 +23,10 @@ import uk.ac.stfc.isis.ibex.dae.experimentsetup.ExperimentSetup;
 import uk.ac.stfc.isis.ibex.ui.dae.experimentsetup.periods.PeriodsViewModel;
 import uk.ac.stfc.isis.ibex.ui.dae.experimentsetup.timechannels.TimeChannelsViewModel;
 
+/**
+ * The view model that contains the logic for displaying how the experiment is
+ * set up on the DAE.
+ */
 public class ExperimentSetupViewModel {
 
 	private ExperimentSetup model;

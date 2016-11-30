@@ -32,6 +32,10 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 
+
+/**
+ * Dialog to alert the user that changes to the DAE are being sent.
+ */
 @SuppressWarnings("checkstyle:magicnumber")
 public class SendingChangesDialog extends Dialog {
 

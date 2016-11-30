@@ -36,6 +36,10 @@ import uk.ac.stfc.isis.ibex.ui.dae.experimentsetup.periods.PeriodsPanel;
 import uk.ac.stfc.isis.ibex.ui.dae.experimentsetup.timechannels.TimeChannelsPanel;
 import uk.ac.stfc.isis.ibex.ui.dae.run.RunSummaryViewModel;
 
+/**
+ * The panel that holds all information about setting up the experiment. Further
+ * information is held in child panels.
+ */
 public class ExperimentSetup extends Composite {
 
 	private ExperimentSetupViewModel viewModel;
@@ -48,6 +52,14 @@ public class ExperimentSetup extends Composite {
 	
 	private SendingChangesDialog sendingChanges = new SendingChangesDialog(getShell(), timeToDisplayDialog);
 	
+    /**
+     * The constructor for the panel.
+     * 
+     * @param parent
+     *            The parent composite which this panel belongs to.
+     * @param style
+     *            The SWT style flags for this panel.
+     */
 	public ExperimentSetup(Composite parent, int style) {
 		super(parent, SWT.NONE);
 		GridLayout gridLayout = new GridLayout(1, false);
@@ -106,6 +118,12 @@ public class ExperimentSetup extends Composite {
         btnSendChanges.setText("Apply Changes");
 	}
 	
+    /**
+     * Binds this panel to a specific view model.
+     * 
+     * @param viewModel
+     *            The view model to bind the panel information to.
+     */
 	public void bind(final ExperimentSetupViewModel viewModel) {
 		this.viewModel = viewModel;
 		
