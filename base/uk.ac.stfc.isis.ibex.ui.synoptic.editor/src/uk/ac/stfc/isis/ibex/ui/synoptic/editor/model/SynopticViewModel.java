@@ -78,7 +78,7 @@ public class SynopticViewModel {
      * The constructor.
      */
 	public SynopticViewModel() {
-		loadCurrentInstrument();
+        loadCurrentInstrument();
 	}
 	
     /**

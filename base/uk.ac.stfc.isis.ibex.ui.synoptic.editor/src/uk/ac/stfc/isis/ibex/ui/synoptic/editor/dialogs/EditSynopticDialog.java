@@ -69,6 +69,22 @@ public class EditSynopticDialog extends Dialog {
     private SynopticViewModel synopticViewModel;
     private Collection<String> availableOPIs;
 
+    /**
+     * The constructor for the overall Synoptic editor dialog.
+     * 
+     * @param parentShell
+     *            The shell to open the dialog in.
+     * @param title
+     *            The title of the dialog.
+     * @param synoptic
+     *            The synoptic that the dialog is editing.
+     * @param isBlank
+     *            Whether the synoptic is blank or not, i.e. a new synoptic.
+     * @param availableOPIs
+     *            The OPIs that are available to put into the synoptic
+     * @param synopticViewModel
+     *            The view model describing the logic of the synoptic editor
+     */
     public EditSynopticDialog(Shell parentShell, String title, SynopticDescription synoptic, boolean isBlank,
             Collection<String> availableOPIs, SynopticViewModel synopticViewModel) {
 		super(parentShell);

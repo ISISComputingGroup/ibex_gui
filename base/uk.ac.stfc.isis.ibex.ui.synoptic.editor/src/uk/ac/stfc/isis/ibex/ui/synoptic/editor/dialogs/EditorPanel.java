@@ -36,6 +36,7 @@ import uk.ac.stfc.isis.ibex.ui.synoptic.editor.instrument.InstrumentTreeControls
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.instrument.InstrumentTreeView;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.SynopticViewModel;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.pv.PvDetailView;
+import uk.ac.stfc.isis.ibex.ui.synoptic.editor.pv.PvDetailViewModel;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.target.TargetDetailView;
 
 @SuppressWarnings("checkstyle:magicnumber")
@@ -114,7 +115,7 @@ public class EditorPanel extends Composite {
         lblPvTitle.setFont(titleFont);
         lblPvTitle.setText("PV Details");
 
-        new PvDetailView(pvComposite, this.synopticViewModel);
+        new PvDetailView(pvComposite, new PvDetailViewModel(synopticViewModel));
 		
 		targetBarComposite = new Composite(this, SWT.NONE);
 		targetBarComposite.setLayout(targetBarLayout);
