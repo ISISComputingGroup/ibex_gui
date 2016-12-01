@@ -10,32 +10,53 @@ set ZIPLOCATION=c:\Installers\client_zip
 
 REM Find latest Java 7 version
 for /F %%f in ('dir "C:\Program Files\Java\jdk1.*" /b') do set JAVA_HOME=C:\Program Files\Java\%%f
-	
+
 set PATH=%M2%;%JAVA_HOME%;%PYTHON%;%PATH%
 
 call build.bat
 if %errorlevel% neq 0 exit /b %errorlevel%
 
+@echo on
+
 REM Whether to deploy
-if not "%DEPLOY%" == "YES" exit
+set EXIT=YES
+if "%DEPLOY%" == "YES" set EXIT=NO
+if "%RELEASE%" == "YES" set EXIT=NO
+if "%EXIT%" == "YES" exit
 
 REM Copy zip to installs area
 REM Delete older versions?
-REM the password for isis\builder is contained in the BUILDERPW system environment variable on the build server 
+REM the password for isis\builder is contained in the BUILDERPW system environment variable on the build server
 net use p: /d
 net use p: \\isis\inst$ /user:isis\builder %BUILDERPW%
 
 python.exe purge_archive_client.py
 
-set INSTALLBASEDIR=p:\Kits$\CompGroup\ICP\Client
-set INSTALLDIR=%INSTALLBASEDIR%\BUILD%BUILD_NUMBER%
-if not exist "%INSTALLDIR%\Client" (
-    @echo Creating client directory %INSTALLDIR%\Client
-    mkdir %INSTALLDIR%\Client
-)
+REM Don't group these. Bat expands whole if at once, not sequentially
+if "%RELEASE%" == "YES" set RELEASE_DIR=p:\Kits$\CompGroup\ICP\Releases\%GIT_BRANCH:~15%
+if "%RELEASE%" == "YES" set INSTALLBASEDIR=%RELEASE_DIR%\Client
+if "%RELEASE%" == "YES" set INSTALLDIR=%INSTALLBASEDIR%
 
+if not "%RELEASE%" == "YES" set INSTALLBASEDIR=p:\Kits$\CompGroup\ICP\Client
+if not "%RELEASE%" == "YES" set INSTALLDIR=%INSTALLBASEDIR%\BUILD%BUILD_NUMBER%
 REM Set a symlink for folder BUILD_LATEST to point to most recent build
-set INSTALLLINKDIR=%INSTALLBASEDIR%\BUILD_LATEST
+if not "%RELEASE%" == "YES" set INSTALLLINKDIR=%INSTALLBASEDIR%\BUILD_LATEST
+
+if "%RELEASE%" == "YES" (
+    if not exist "%RELEASE_DIR%" (
+        mkdir %RELEASE_DIR%
+    )
+    RMDIR /S /Q %INSTALLDIR%
+    @echo Creating client directory %INSTALLDIR%
+    if not exist "%INSTALLDIR%" (
+        mkdir %INSTALLDIR%
+    )
+) else (
+    if exist "%INSTALLDIR%\Client" (
+        @echo Creating client directory %INSTALLDIR%\Client
+        mkdir %INSTALLDIR%\Client
+    )
+)
 
 robocopy %CD%\..\base\uk.ac.stfc.isis.ibex.client.product\target\products\ibex.product\win32\win32\x86_64 %INSTALLDIR%\Client /MIR /R:1 /NFL /NDL /NP
 if %errorlevel% geq 4 (
@@ -47,11 +68,12 @@ if %errorlevel% geq 4 (
     exit /b 1
 )
 
-if exist "%INSTALLLINKDIR%" (
-    rmdir "%INSTALLLINKDIR%"
+if not "%RELEASE%"=="YES" (
+    if exist "%INSTALLLINKDIR%" (
+        rmdir "%INSTALLLINKDIR%"
+    )
+    mklink /J "%INSTALLLINKDIR%" "%INSTALLDIR%"
 )
-
-mklink /J "%INSTALLLINKDIR%" "%INSTALLDIR%"
 
 REM Copy the install script across
 cd %BASEDIR%
@@ -73,7 +95,7 @@ if %errorlevel% neq 0 (
 )
 
 REM Add EPICS_UTILS and the Client
-%ZIPEXE% a installer.7z %INSTALLBASEDIR%\EPICS_UTILS
+%ZIPEXE% a installer.7z P:\Kits$\CompGroup\ICP\Client\EPICS_UTILS
 if %errorlevel% neq 0 (
     @echo Could not add EPICS_UTILS to zip
     exit /b %errorlevel%
@@ -104,6 +126,8 @@ if %errorlevel% neq 0 (
     @echo Installer copy failed
     exit /b %errorlevel%
 )
+
+@echo Copy complete>%INSTALLDIR%\COPY_COMPLETE.txt
 
 REM Delete local copies
 del installer.7z

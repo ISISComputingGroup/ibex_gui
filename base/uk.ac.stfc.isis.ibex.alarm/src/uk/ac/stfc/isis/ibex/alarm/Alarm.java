@@ -28,7 +28,8 @@ import org.osgi.framework.BundleContext;
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
 
 /**
- * Class which provides an interaction between the perspective switcher and the alarm system
+ * Class which provides an interaction between the perspective switcher and the
+ * alarm system.
  */
 public class Alarm extends AbstractUIPlugin {
 

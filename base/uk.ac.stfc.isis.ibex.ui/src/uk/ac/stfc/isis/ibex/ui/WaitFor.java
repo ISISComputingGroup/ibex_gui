@@ -102,9 +102,7 @@ public class WaitFor {
 	private Runnable handleWait(final Waiting waiter) {
 		return new Runnable() {
 			@Override
-			public void run() {
-				UI.getDefault().switchPerspective(PerspectiveSwitcher.LOG_PERSPECTIVE_ID);
-			
+            public void run() {
 				boolean isWaiting = waiter.isWaiting();
 				if (isWaiting) {
 					doWait();

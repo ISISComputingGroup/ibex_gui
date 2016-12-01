@@ -47,11 +47,11 @@ import uk.ac.stfc.isis.ibex.scriptgenerator.settings.ApertureTrans;
 import uk.ac.stfc.isis.ibex.scriptgenerator.settings.CollectionMode;
 import uk.ac.stfc.isis.ibex.scriptgenerator.settings.Order;
 import uk.ac.stfc.isis.ibex.scriptgenerator.settings.SampleGeometry;
-import uk.ac.stfc.isis.ibex.scriptgenerator.settings.Settings;
+import uk.ac.stfc.isis.ibex.scriptgenerator.settings.SansSettings;
 import uk.ac.stfc.isis.ibex.validators.NumbersOnlyValidator;
 
 /**
- * Contains all of the settings.
+ * Panel that contains all of the global settings for the experiment(s).
  */
 @SuppressWarnings("checkstyle:magicnumber")
 public class SettingsPanel extends Composite {
@@ -67,12 +67,13 @@ public class SettingsPanel extends Composite {
 	private ComboViewer comboApertureTrans;
 
 	/**
-	 * The default constructor.
-	 * @param parent the parent that the EstimatePanel will be placed in
-	 * @param style the style of the parent
-	 * @param settings the settings
-	 */
-	public SettingsPanel(Composite parent, int style, final Settings settings) {
+     * The default constructor.
+     * 
+     * @param parent the parent that the EstimatePanel will be placed in
+     * @param style the style of the parent
+     * @param settings the settings
+     */
+	public SettingsPanel(Composite parent, int style, final SansSettings settings) {
 		super(parent, style);
 		setLayout(new GridLayout(2, false));
 		
@@ -242,10 +243,11 @@ public class SettingsPanel extends Composite {
 	}
 	
 	/**
-	 * The databinding of all settings between SettingsPanel and Settings.
-	 * @param settings the settings to be displayed
-	 */
-	public void bind(Settings settings) {
+     * The databinding of all settings between SettingsPanel and Settings.
+     * 
+     * @param settings the settings to be displayed
+     */
+	public void bind(SansSettings settings) {
 		DataBindingContext ctx = new DataBindingContext();
 		IValidator validator = new NumbersOnlyValidator();
 		

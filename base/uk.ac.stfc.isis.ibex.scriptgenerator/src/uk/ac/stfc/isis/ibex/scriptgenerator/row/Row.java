@@ -25,12 +25,12 @@ import uk.ac.stfc.isis.ibex.model.ModelObject;
  * A row of data to be inserted into a ScriptGeneratorTable.
  */
 public class Row extends ModelObject {
-	private Double position;
+	private String position;
 	private Double trans;
 	private WaitUnit transWait; 
 	private Double sans;
 	private WaitUnit sansWait; 
-	private Integer period;
+	private Double period;
 	private String sampleName; 
 	private Double thickness; 
 	private boolean wasNull;
@@ -46,7 +46,7 @@ public class Row extends ModelObject {
 	 * @param sampleName the name of the sample
 	 * @param thickness the thickness of the sample
 	 */
-	public Row(Double position, Double trans, WaitUnit transWait, Double sans, WaitUnit sansWait, Integer period, 
+	public Row(String position, Double trans, WaitUnit transWait, Double sans, WaitUnit sansWait, Double period, 
 			String sampleName, Double thickness) {
 		this.position = position;
 		this.trans = trans;
@@ -63,6 +63,7 @@ public class Row extends ModelObject {
 	 * Secondary constructor for creating a blank row.
 	 */
 	public Row() {
+		this.position = "";
 		this.sampleName = "";
 		this.wasNull = true;
 	}
@@ -71,7 +72,7 @@ public class Row extends ModelObject {
 	 * Gets the position.
 	 * @return the position
 	 */
-	public Double getPosition() {
+	public String getPosition() {
 		return position;
 	}
 	
@@ -79,7 +80,7 @@ public class Row extends ModelObject {
 	 * Sets the position.
 	 * @param position the position
 	 */
-	public void setPosition(Double position) {
+	public void setPosition(String position) {
 		this.wasNull = false;
 		firePropertyChange("position", this.position, this.position = position);
 	}
@@ -155,7 +156,7 @@ public class Row extends ModelObject {
 	 * Gets the period.
 	 * @return the period
 	 */
-	public Integer getPeriod() {
+	public Double getPeriod() {
 		return period;
 	}
 	
@@ -163,7 +164,7 @@ public class Row extends ModelObject {
 	 * Sets the period.
 	 * @param period the period
 	 */
-	public void setPeriod(Integer period) {
+	public void setPeriod(Double period) {
 		this.wasNull = false;
 		firePropertyChange("period", this.period, this.period = period);
 	}

@@ -19,31 +19,34 @@
 
 package uk.ac.stfc.isis.ibex.ui.devicescreens;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.logging.log4j.Logger;
+import org.eclipse.core.commands.ExecutionEvent;
+import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.ModifyEvent;
-import org.eclipse.swt.events.ModifyListener;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Text;
 
 import uk.ac.stfc.isis.ibex.devicescreens.DeviceScreens;
 import uk.ac.stfc.isis.ibex.devicescreens.desc.DeviceDescription;
 import uk.ac.stfc.isis.ibex.devicescreens.desc.DeviceScreensDescription;
-import uk.ac.stfc.isis.ibex.devicescreens.desc.DeviceScreensDescriptionXmlParser;
-import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
 import uk.ac.stfc.isis.ibex.epics.observing.BaseObserver;
 import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.Observer;
-import uk.ac.stfc.isis.ibex.epics.writing.Writable;
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
 import uk.ac.stfc.isis.ibex.opis.OPIViewCreationException;
+import uk.ac.stfc.isis.ibex.ui.devicescreens.commands.ConfigureDeviceScreensHandler;
 import uk.ac.stfc.isis.ibex.ui.devicescreens.list.DeviceScreensTable;
 
 /**
@@ -55,9 +58,9 @@ public class DeviceSceenListPanel extends Composite {
      * Logger.
      */
     private static final Logger LOG = IsisLog.getLogger(DeviceSceenListPanel.class);
+    private final List<DeviceDescription> blankList = new ArrayList<DeviceDescription>();
 
-    private Text txtScreensSp;
-    private Writable<DeviceScreensDescription> screensSetter;
+    private Button configureDevScreensButton;
 
     private final Display display = Display.getCurrent();
     private final Observer<DeviceScreensDescription> pvObserver = new BaseObserver<DeviceScreensDescription>() {
@@ -79,9 +82,14 @@ public class DeviceSceenListPanel extends Composite {
 
         @Override
         public void onConnectionStatus(boolean isConnected) {
+            if (!isConnected) {
+                deviceScreenList.setRows(blankList);
+            }
         }
     };
     private DeviceScreensTable deviceScreenList;
+
+    private ConfigureDeviceScreensHandler configureDeviceScreensHandler = new ConfigureDeviceScreensHandler();
 
     /**
      * Create a Devices Screen Panel.
@@ -93,11 +101,11 @@ public class DeviceSceenListPanel extends Composite {
         super(parent, style);
         setLayout(new FillLayout(SWT.HORIZONTAL));
 
-        // TODO temporarily place list and setter in control, remove when
-        // editing functionality is added
+        // TODO temporarily place list and button in control, remove when
+        // editing functionality is moved to configuration dialogue
         Composite composite = new Composite(this, SWT.NONE);
 
-        GridLayout compositeLayout = new GridLayout(2, true);
+        GridLayout compositeLayout = new GridLayout(1, true);
         composite.setLayout(compositeLayout);
 
         deviceScreenList = new DeviceScreensTable(composite, SWT.BORDER, SWT.FULL_SELECTION);
@@ -127,35 +135,29 @@ public class DeviceSceenListPanel extends Composite {
         });
 
 
+        configureDevScreensButton = new Button(composite, SWT.NONE);
+        configureDevScreensButton.setText("Edit Device Screens");
+        GridData gdconfigureDevScreensButton = new GridData(SWT.FILL, SWT.TOP, false, false, 1, 1);
+        configureDevScreensButton.setLayoutData(gdconfigureDevScreensButton);
 
-        txtScreensSp = new Text(composite, SWT.WRAP | SWT.MULTI);
-        GridData gdTxtScreens = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
-        txtScreensSp.setLayoutData(gdTxtScreens);
-        screensSetter = deviceScreens.getDevicesSetter();
+        configureDevScreensButton.addSelectionListener(new SelectionListener() {
 
-
-        txtScreensSp.addModifyListener(new ModifyListener() {
             @Override
-            public void modifyText(ModifyEvent arg0) {
-                setScreens();
+            public void widgetSelected(SelectionEvent e) {
+                try {
+                    configureDeviceScreensHandler.execute(new ExecutionEvent());
+                } catch (ExecutionException ex) {
+                    LOG.catching(ex);
+                    MessageDialog.openError(parent.getShell(), "Error displaying config dialogue", ex.getMessage());
+                }
+            }
+
+            @Override
+            public void widgetDefaultSelected(SelectionEvent e) {
+
             }
         });
 
     }
-
-    private void setScreens() {
-        String inputText = txtScreensSp.getText();
-        DeviceScreensDescriptionXmlParser parser = new DeviceScreensDescriptionXmlParser();
-        try {
-            DeviceScreensDescription screens = parser.convert(inputText);
-            screensSetter.write(screens);
-        } catch (ConversionException e) {
-            e.printStackTrace();
-            // setScreens() gets called at each key stroke, so until a valid xml
-            // is entered, there will be errors
-            // Ignore - this is just a temporary testing panel anyway
-        }
-    }
-
 
 }

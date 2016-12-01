@@ -26,8 +26,8 @@ import org.junit.Test;
 import uk.ac.stfc.isis.ibex.instrument.pv.PVType;
 
 /**
- * This class is responsible for testing the values of the PVType ENUM for completion 
- *
+ * This class is responsible for testing the values of the PVType ENUM for
+ * completion.
  */
 @SuppressWarnings({ "checkstyle:magicnumber", "checkstyle:methodname" })
 public class PVTypeTest {

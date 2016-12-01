@@ -45,8 +45,7 @@ import uk.ac.stfc.isis.ibex.synoptic.model.desc.TargetType;
 import uk.ac.stfc.isis.ibex.targets.Target;
 
 /**
- * This class is responsible for testing ObservableComponent 
- *
+ * This class is responsible for testing ObservableComponent.
  */
 @SuppressWarnings({ "checkstyle:magicnumber", "checkstyle:methodname", "unchecked" })
 public class ObservableComponentTest {
@@ -56,8 +55,8 @@ public class ObservableComponentTest {
 	ObservableComponent obsComp;
 	
 	/**
-	 * Prep method to generate the appropriate mocks
-	 */
+     * Prep method to generate the appropriate mocks.
+     */
 	@Before
 	public void set_up_observable_component() {
 		// Arrange - used as before for use in each test

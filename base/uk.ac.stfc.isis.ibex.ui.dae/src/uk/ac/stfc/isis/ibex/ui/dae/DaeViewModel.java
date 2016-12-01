@@ -32,6 +32,10 @@ import uk.ac.stfc.isis.ibex.ui.dae.experimentsetup.ExperimentSetupViewModel;
 import uk.ac.stfc.isis.ibex.ui.dae.run.RunSummaryViewModel;
 import uk.ac.stfc.isis.ibex.ui.dae.runinformation.RunInformationViewModel;
 
+/**
+ * A View Model that holds the logic for displaying general information about
+ * the DAE.
+ */
 public class DaeViewModel extends Closer {
 	
 	private IDae model;
@@ -43,6 +47,12 @@ public class DaeViewModel extends Closer {
 	private UpdatedValue<String> vetos;
 	private UpdatedValue<Boolean> isRunning;
 	
+    /**
+     * Binds a model to this view model.
+     * 
+     * @param model
+     *            A IDae model object that holds information about the DAE.
+     */
 	public void bind(IDae model) {
 		this.model = model;
 		
@@ -54,26 +64,58 @@ public class DaeViewModel extends Closer {
 		isRunning = new UpdatedObservableAdapter<>(model.isRunning());
 	}
 	
+    /**
+     * Get an updated value on the running status of the DAE.
+     * 
+     * @return An updating boolean, true if the DAE is running.
+     */
 	public UpdatedValue<Boolean> isRunning() {
 		return isRunning;
 	}
 	
+    /**
+     * Get a view model for the display logic of the run summary.
+     * 
+     * @return The run summary view model.
+     */
 	public RunSummaryViewModel runSummary() {
 		return runSummary;
 	}
 	
+    /**
+     * Get a view model for the display logic of the experiment setup.
+     * 
+     * @return The experiment setup view model.
+     */
 	public ExperimentSetupViewModel experimentSetup() {
 		return experimentSetup;
 	}
 	
+    /**
+     * Get a list of updating spectrums from the model.
+     * 
+     * @return A list, each item is an updating spectrum to be displayed.
+     *         Currently 4 spectra are contained within the list.
+     */
 	public List<? extends UpdatableSpectrum> spectra() {
 		return model.spectra().spectra();
 	}
 	
+    /**
+     * Get an updated value on the status of the vetoes.
+     * 
+     * @return An updating string, giving the status of the DAE vetoes as
+     *         human-readable text.
+     */
 	public UpdatedValue<String> vetos() {
 		return vetos;
 	}
 
+    /**
+     * Get a view model for the display logic of the run information.
+     * 
+     * @return The run information view model.
+     */
 	public RunInformationViewModel runInformation() {
 		return runInformation;
 	}

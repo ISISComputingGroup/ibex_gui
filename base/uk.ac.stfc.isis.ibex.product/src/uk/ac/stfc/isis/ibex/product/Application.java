@@ -26,14 +26,15 @@ import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.PlatformUI;
 
 /**
- * This class controls all aspects of the application's execution
+ * This class controls all aspects of the application's execution.
  */
 public class Application implements IApplication {
 
 	/* (non-Javadoc)
 	 * @see org.eclipse.equinox.app.IApplication#start(org.eclipse.equinox.app.IApplicationContext)
 	 */
-	public Object start(IApplicationContext context) {
+	@Override
+    public Object start(IApplicationContext context) {
 		Display display = PlatformUI.createDisplay();
 		try {
 			int returnCode = PlatformUI.createAndRunWorkbench(display, new ApplicationWorkbenchAdvisor());
@@ -49,14 +50,16 @@ public class Application implements IApplication {
 	/* (non-Javadoc)
 	 * @see org.eclipse.equinox.app.IApplication#stop()
 	 */
-	public void stop() {
+	@Override
+    public void stop() {
 		if (!PlatformUI.isWorkbenchRunning()) {
 			return;
 		}
 		final IWorkbench workbench = PlatformUI.getWorkbench();
 		final Display display = workbench.getDisplay();
 		display.syncExec(new Runnable() {
-			public void run() {
+			@Override
+            public void run() {
 				if (!display.isDisposed()) {
 					workbench.close();
 				}

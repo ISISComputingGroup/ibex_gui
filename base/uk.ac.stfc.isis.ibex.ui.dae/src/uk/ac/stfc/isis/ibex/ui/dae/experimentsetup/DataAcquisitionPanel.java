@@ -39,10 +39,13 @@ import org.eclipse.swt.widgets.Text;
 import uk.ac.stfc.isis.ibex.dae.dataacquisition.DaeTimingSource;
 import uk.ac.stfc.isis.ibex.dae.updatesettings.AutosaveUnit;
 
+/**
+ * Panel to show the information regarding the data acquisition of the DAE.
+ */
 public class DataAcquisitionPanel extends Composite {
-    private Combo wiringTable;
-    private Combo detectorTable;
-    private Combo spectraTable;
+    private Combo wiringTableSelector;
+    private Combo detectorTableSelector;
+    private Combo spectraTableSelector;
     private Text from;
     private Text to;
     private Text autosaveFrequency;
@@ -70,10 +73,22 @@ public class DataAcquisitionPanel extends Composite {
     private DataBindingContext bindingContext;
     private DataAcquisitionViewModel model;
 
+
+    /**
+     * The default constructor for the panel.
+     * 
+     * @param parent
+     *            The parent composite that this panel belongs to.
+     * @param style
+     *            The SWT flags giving the style of the panel.
+     */
     @SuppressWarnings({ "checkstyle:magicnumber", "checkstyle:localvariablename" })
     public DataAcquisitionPanel(Composite parent, int style) {
         super(parent, style);
         setLayout(new GridLayout(1, false));
+
+        GridData gdLabels = new GridData(SWT.LEFT, SWT.FILL, false, false, 1, 1);
+        gdLabels.widthHint = 80;
 
         Group grpTables = new Group(this, SWT.NONE);
         grpTables.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
@@ -83,59 +98,83 @@ public class DataAcquisitionPanel extends Composite {
         glGrpTables.verticalSpacing = 10;
         grpTables.setLayout(glGrpTables);
 
-        GridData gdLabels = new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1);
-        gdLabels.widthHint = 80;
-
         // Wiring table selection
         Composite wiringTablePanel = new Composite(grpTables, SWT.NONE);
         wiringTablePanel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1));
-        wiringTablePanel.setLayout(new GridLayout(2, false));
+        wiringTablePanel.setLayout(new GridLayout(3, false));
 
-        Label lblWiringTable = new Label(wiringTablePanel, SWT.NONE);
-        lblWiringTable.setLayoutData(gdLabels);
-        lblWiringTable.setText("Wiring Table:");
+        Label lblWiring = new Label(wiringTablePanel, SWT.NONE);
+        lblWiring.setLayoutData(gdLabels);
+        lblWiring.setText("Wiring Table:");
+
+        Label lblWiringRB = new Label(wiringTablePanel, SWT.NONE);
+        lblWiringRB.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
+        lblWiringRB.setText("Current:");
 
         wiringTableRB = new Label(wiringTablePanel, SWT.NONE);
         wiringTableRB.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
         wiringTableRB.setFont(JFaceResources.getFontRegistry().getItalic(JFaceResources.DEFAULT_FONT));
 
-        wiringTable = new Combo(wiringTablePanel, SWT.DROP_DOWN | SWT.READ_ONLY);
-        GridData gd_wiringTable = new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1);
-        wiringTable.setLayoutData(gd_wiringTable);
+        Label lblWiringSpacer = new Label(wiringTablePanel, SWT.NONE);
+
+        Label lblWiringChange = new Label(wiringTablePanel, SWT.NONE);
+        lblWiringChange.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
+        lblWiringChange.setText("Change:");
+
+        wiringTableSelector = new Combo(wiringTablePanel, SWT.DROP_DOWN | SWT.READ_ONLY);
+        wiringTableSelector.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 
         // Detector table selection
         Composite detectorTablePanel = new Composite(grpTables, SWT.NONE);
         detectorTablePanel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1));
-        detectorTablePanel.setLayout(new GridLayout(2, false));
+        detectorTablePanel.setLayout(new GridLayout(3, false));
 
-        Label lblDetectorTable = new Label(detectorTablePanel, SWT.NONE);
-        lblDetectorTable.setLayoutData(gdLabels);
-        lblDetectorTable.setText("Detector Table:");
+        Label lblDetector = new Label(detectorTablePanel, SWT.NONE);
+        lblDetector.setLayoutData(gdLabels);
+        lblDetector.setText("Detector Table:");
+
+        Label lblDetectorRB = new Label(detectorTablePanel, SWT.NONE);
+        lblDetectorRB.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
+        lblDetectorRB.setText("Current:");
 
         detectorTableRB = new Label(detectorTablePanel, SWT.NONE);
         detectorTableRB.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
         detectorTableRB.setFont(JFaceResources.getFontRegistry().getItalic(JFaceResources.DEFAULT_FONT));
 
-        detectorTable = new Combo(detectorTablePanel, SWT.DROP_DOWN | SWT.READ_ONLY);
-        GridData gd_detectorTable = new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1);
-        detectorTable.setLayoutData(gd_detectorTable);
+        Label lblDetectorSpacer = new Label(detectorTablePanel, SWT.NONE);
+
+        Label lblDetectorChange = new Label(detectorTablePanel, SWT.NONE);
+        lblDetectorChange.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
+        lblDetectorChange.setText("Change:");
+
+        detectorTableSelector = new Combo(detectorTablePanel, SWT.DROP_DOWN | SWT.READ_ONLY);
+        detectorTableSelector.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 
         // Spectra table selection
         Composite spectraTablePanel = new Composite(grpTables, SWT.NONE);
         spectraTablePanel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1));
-        spectraTablePanel.setLayout(new GridLayout(2, false));
+        spectraTablePanel.setLayout(new GridLayout(3, false));
 
-        Label lblSpectraTable = new Label(spectraTablePanel, SWT.NONE);
-        lblSpectraTable.setLayoutData(gdLabels);
-        lblSpectraTable.setText("Spectra Table:");
+        Label lblSpectra = new Label(spectraTablePanel, SWT.NONE);
+        lblSpectra.setLayoutData(gdLabels);
+        lblSpectra.setText("Spectra Table:");
+
+        Label lblSpectraRB = new Label(spectraTablePanel, SWT.NONE);
+        lblSpectraRB.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
+        lblSpectraRB.setText("Current:");
 
         spectraTableRB = new Label(spectraTablePanel, SWT.NONE);
         spectraTableRB.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
         spectraTableRB.setFont(JFaceResources.getFontRegistry().getItalic(JFaceResources.DEFAULT_FONT));
 
-        spectraTable = new Combo(spectraTablePanel, SWT.DROP_DOWN | SWT.READ_ONLY);
-        GridData gd_spectraTable = new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1);
-        spectraTable.setLayoutData(gd_spectraTable);
+        Label lblSpectraSpacer = new Label(spectraTablePanel, SWT.NONE);
+
+        Label lblSpectraChange = new Label(spectraTablePanel, SWT.NONE);
+        lblSpectraChange.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
+        lblSpectraChange.setText("Change:");
+
+        spectraTableSelector = new Combo(spectraTablePanel, SWT.DROP_DOWN | SWT.READ_ONLY);
+        spectraTableSelector.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 
         Group grpMonitor = new Group(this, SWT.NONE);
         grpMonitor.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
@@ -283,10 +322,10 @@ public class DataAcquisitionPanel extends Composite {
         autosaveUnits.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false, 1, 1));
         autosaveUnits.setItems(AutosaveUnit.allToString().toArray(new String[0]));
 
-        wiringTable.addSelectionListener(new SelectionListener() {
+        wiringTableSelector.addSelectionListener(new SelectionListener() {
             @Override
             public void widgetSelected(SelectionEvent e) {
-                model.setNewWiringTable(wiringTable.getText());
+                model.setNewWiringTable(wiringTableSelector.getText());
             }
 
             @Override
@@ -294,10 +333,10 @@ public class DataAcquisitionPanel extends Composite {
             }
         });
 
-        detectorTable.addSelectionListener(new SelectionListener() {
+        detectorTableSelector.addSelectionListener(new SelectionListener() {
             @Override
             public void widgetSelected(SelectionEvent e) {
-                model.setNewDetectorTable(detectorTable.getText());
+                model.setNewDetectorTable(detectorTableSelector.getText());
             }
 
             @Override
@@ -305,10 +344,10 @@ public class DataAcquisitionPanel extends Composite {
             }
         });
 
-        spectraTable.addSelectionListener(new SelectionListener() {
+        spectraTableSelector.addSelectionListener(new SelectionListener() {
             @Override
             public void widgetSelected(SelectionEvent e) {
-                model.setNewSpectraTable(spectraTable.getText());
+                model.setNewSpectraTable(spectraTableSelector.getText());
             }
 
             @Override
@@ -327,17 +366,17 @@ public class DataAcquisitionPanel extends Composite {
 
         bindingContext = new DataBindingContext();
 
-        bindingContext.bindList(WidgetProperties.items().observe(wiringTable),
+        bindingContext.bindList(WidgetProperties.items().observe(wiringTableSelector),
                 BeanProperties.list("wiringTableList").observe(viewModel));
         bindingContext.bindValue(WidgetProperties.text().observe(wiringTableRB),
                 BeanProperties.value("wiringTable").observe(viewModel));
 
-        bindingContext.bindList(WidgetProperties.items().observe(detectorTable),
+        bindingContext.bindList(WidgetProperties.items().observe(detectorTableSelector),
                 BeanProperties.list("detectorTableList").observe(viewModel));
         bindingContext.bindValue(WidgetProperties.text().observe(detectorTableRB),
                 BeanProperties.value("detectorTable").observe(viewModel));
 
-        bindingContext.bindList(WidgetProperties.items().observe(spectraTable),
+        bindingContext.bindList(WidgetProperties.items().observe(spectraTableSelector),
                 BeanProperties.list("spectraTableList").observe(viewModel));
         bindingContext.bindValue(WidgetProperties.text().observe(spectraTableRB),
                 BeanProperties.value("spectraTable").observe(viewModel));

@@ -364,6 +364,10 @@
 				<path>SDTEST.opi</path>
 				<description>Description required.</description>
 				<macros>
+					<macro>
+						<name>DEV</name>
+						<description>The SDTest PV name (e.g. SDTEST_01)</description>
+					</macro>
 				</macros>
 			</value>
 		</entry>
@@ -381,6 +385,20 @@
 					<macro>
 						<name>MM</name>
 						<description>The motor PV relating to the motor controlling the stage  (e.g. MOT:MTR0605).</description>
+					</macro>
+				</macros>
+			</value>
+		</entry>
+        <entry>
+			<key>SKF G5 Chopper</key>
+			<value>
+				<type>CHOPPER</type>
+				<path>SKFChopper.opi</path>
+				<description>GUI for the SKF G5 Controllers</description>
+				<macros>
+                    <macro>
+						<name>DEFAULT_ACTIVE_TAB</name>
+ 						<description>The tab which is displayed when the OPI is opened (0 to 4).</description>  
 					</macro>
 				</macros>
 			</value>

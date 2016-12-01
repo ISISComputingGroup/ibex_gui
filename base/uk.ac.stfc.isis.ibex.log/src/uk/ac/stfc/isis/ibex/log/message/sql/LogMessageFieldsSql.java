@@ -19,7 +19,7 @@
 package uk.ac.stfc.isis.ibex.log.message.sql;
 
 /**
- * Names for log message fields as used in the SQL database
+ * Names for log message fields as used in the SQL database.
  */
 final class LogMessageSqlFieldTags {
     static final String TAG_CONTENTS = "contents";

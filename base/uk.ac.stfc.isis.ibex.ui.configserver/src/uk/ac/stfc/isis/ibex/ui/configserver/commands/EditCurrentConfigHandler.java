@@ -19,41 +19,114 @@
 
 package uk.ac.stfc.isis.ibex.ui.configserver.commands;
 
+import java.util.Map;
+
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.ui.commands.ICommandService;
+import org.eclipse.ui.commands.IElementUpdater;
+import org.eclipse.ui.menus.UIElement;
 
 import uk.ac.stfc.isis.ibex.configserver.configuration.Configuration;
+import uk.ac.stfc.isis.ibex.epics.observing.BaseObserver;
+import uk.ac.stfc.isis.ibex.epics.observing.Observer;
+import uk.ac.stfc.isis.ibex.ui.configserver.commands.helpers.ConfigHelper;
+import uk.ac.stfc.isis.ibex.ui.configserver.commands.helpers.EditConfigHelper;
+import uk.ac.stfc.isis.ibex.ui.configserver.commands.helpers.ViewConfigHelper;
 
 /**
  * The handler class for editing the current config.
  */
-public class EditCurrentConfigHandler extends ConfigHandler<Configuration> {
-	
-    private String blockName = "";
+public class EditCurrentConfigHandler extends ConfigHandler<Configuration> implements IElementUpdater {
+
+    private static final String EDIT_MENU_TEXT = "Edit Current Configuration...";
+    private static final String READ_ONLY_TEXT = "View Current Configuration...";
+    
+    private static final String ID = "uk.ac.stfc.isis.ibex.ui.configserver.commands.EditCurrentConfig";
+    
+    private Boolean canWrite = false;
+
+	/**
+	 * This is an inner anonymous class will disable the menu item if the current config is not available.
+	 */
+    private Observer<Configuration> currentConfigObserver = new BaseObserver<Configuration>() {
+		
+		@Override
+		public void onConnectionStatus(boolean isConnected) {
+			updateDisabled(isConnected);
+		}
+
+		@Override
+        public void onValue(Configuration value) {
+
+        }
+
+		@Override
+		public void onError(Exception e) {
+			updateDisabled(false);
+		}
+		
+		private void updateDisabled(boolean isConnected) {
+			if (!(canWrite)) {
+				setBaseEnabled(isConnected);
+			}
+		}
+	};
 	
     /**
      * Create the handler for opening the editor via the menu.
      */
 	public EditCurrentConfigHandler() {
 		super(SERVER.setCurrentConfig());
+		SERVER.currentConfig().addObserver(currentConfigObserver);
 	}
-
-    /**
-     * Create the handler for opening the editor on one block.
-     * 
-     * @param blockName The block to edit
-     */
-    public EditCurrentConfigHandler(String blockName) {
-        this();
-        this.blockName = blockName;
-    }
 
 	
 	@Override
     public Object execute(ExecutionEvent event) throws ExecutionException {
-        EditConfigHelper helper = new EditConfigHelper(shell(), SERVER);
-        helper.createDialogCurrent(blockName);
-				
+        ConfigHelper helper = canWrite ? new EditConfigHelper(shell(), SERVER) : new ViewConfigHelper(shell());
+        helper.createDialogCurrent();
 		return null;
+	}
+
+
+	@SuppressWarnings("rawtypes")
+	@Override
+	public void updateElement(UIElement element, Map parameters) {
+		// Added so as to update text for viewing/editing configs
+		if (canWrite) {
+			element.setText(EDIT_MENU_TEXT);
+			setBaseEnabled(true);
+		} else {
+			element.setText(READ_ONLY_TEXT);
+			setBaseEnabled(SERVER.currentConfig().isConnected());
+		}
+	}
+
+	@Override
+	public void canWriteChanged(final boolean canWrite) {
+		// Update the element
+		Display.getDefault().asyncExec(new Runnable() {
+			@Override
+			public void run() {
+                ICommandService commandService = (ICommandService) activeWindow().getService(ICommandService.class);
+				if (commandService != null) {
+					setCanWrite(canWrite);
+					commandService.refreshElements(ID, null);
+				}
+			}
+		});
+	}
+	
+    /**
+     * Handles the setting of "can write".
+     * 
+     * @param canWrite True for can write
+     */
+	protected void setCanWrite(Boolean canWrite) {
+		if (this.canWrite != canWrite) {
+			this.canWrite = canWrite;
+		}
 	}
 }

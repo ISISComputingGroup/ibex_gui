@@ -19,16 +19,21 @@
 
 package uk.ac.stfc.isis.ibex.instrument.internal;
 
+/**
+ * Handles retrieving the user name of the logged in user.
+ */
 public final class UserName {
 
     private UserName() {
     }
 
+    /**
+     * Gets the user name.
+     *
+     * @return the user name
+     */
 	public static String get() {
-		return userName();
+        return System.getProperty("user.name");
 	}
 	
-	private static String userName() {
-		return System.getProperty("user.name");
-	}
 }

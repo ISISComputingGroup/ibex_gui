@@ -21,6 +21,7 @@ package uk.ac.stfc.isis.ibex.ui.configserver.commands;
 
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 
 import uk.ac.stfc.isis.ibex.configserver.ConfigServer;
@@ -36,21 +37,22 @@ import uk.ac.stfc.isis.ibex.epics.writing.Writable;
  * Commands are used by the Eclipse framework to contribute actions to the user interface 
  * (e.g. menus, context menus etc.)
  *
- * @param <T>
+ * @param <T> The type of data expected from the underlying PV
  */
 public abstract class ConfigHandler<T> extends AbstractHandler {
-
+    /** The configuration server object. */
 	protected static final ConfigServer SERVER = Configurations.getInstance().server();
+    /** The object for editing a configuration. */
 	protected static final Editing EDITING = Configurations.getInstance().edit();
-	
+
 	/**
 	 * This is an inner anonymous class inherited from SameTypeWriter with added functionality
-	 * for disabling the command if the underlying PV cannot be written to.
+	 * for modifying the command if the underlying PV cannot be written to.
 	 */
 	protected final SameTypeWriter<T> configService = new SameTypeWriter<T>() {	
 		@Override
 		public void onCanWriteChanged(boolean canWrite) {
-			setBaseEnabled(canWrite);
+			canWriteChanged(canWrite);
 		};	
 	};
 	
@@ -64,7 +66,28 @@ public abstract class ConfigHandler<T> extends AbstractHandler {
 		destination.subscribe(configService);
 	}
 	
+    /**
+     * Returns the shell for the active window.
+     * 
+     * @return the shell
+     */
 	protected Shell shell() {
-		return PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
+		return activeWindow().getShell();
 	}
+	
+    /**
+     * Returns the active workbench window.
+     * 
+     * @return the window
+     */
+	protected IWorkbenchWindow activeWindow() {
+		return PlatformUI.getWorkbench().getActiveWorkbenchWindow();
+	}
+	
+    /**
+     * Abstract method for handling a change in write status.
+     * 
+     * @param canWrite whether can write or not
+     */
+	public abstract void canWriteChanged(boolean canWrite);
 }

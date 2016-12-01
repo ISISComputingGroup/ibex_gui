@@ -33,10 +33,15 @@ import uk.ac.stfc.isis.ibex.dae.updatesettings.UpdateSettings;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 import uk.ac.stfc.isis.ibex.model.UpdatedValue;
 
+/**
+ * This class is the View Model for the DAE screen and contains all
+ * the logic for how the screen should be displayed.
+ */
 public class DataAcquisitionViewModel extends ModelObject {
-	
+
 	private DaeSettings settings;
 	private UpdateSettings updateSettings;
+    private DAEComboContentProvider comboContentProvider;
 	private UpdatedValue<Collection<String>> wiringTables;
 	private UpdatedValue<Collection<String>> detectorTables;
 	private UpdatedValue<Collection<String>> spectraTables;
@@ -124,58 +129,59 @@ public class DataAcquisitionViewModel extends ModelObject {
 		});	
 	}
 	
+    /**
+     * Gets the monitor spectrum.
+     * 
+     * @return The monitor spectrum.
+     */
 	public int getMonitorSpectrum() {
 		return settings.monitorSpectrum();
 	}
 	
+    /**
+     * Sets the monitor spectrum.
+     * 
+     * @param value The monitor spectrum.
+     */
 	public void setMonitorSpectrum(int value) {
 		settings.setMonitorSpectrum(value);
 	}
 
+    /**
+     * Sets the monitor spectrum lower limit.
+     * 
+     * @return The monitor spectrum lower limit.
+     */
 	public double getFrom() {
 		return settings.from();
 	}
 	
+    /**
+     * Gets the monitor spectrum lower limit.
+     * 
+     * @param value The monitor spectrum lower limit.
+     */
 	public void setFrom(double value) {
 		settings.setFrom(value);
 	}
 
+    /**
+     * Sets the monitor spectrum upper limit.
+     * 
+     * @return The monitor spectrum upper limit.
+     */
 	public double getTo() {
 		return settings.to();
 	}
-	
+
+    /**
+     * Gets the monitor spectrum upper limit.
+     * 
+     * @param value The monitor spectrum upper limit.
+     */
 	public void setTo(double value) {
 		settings.setTo(value);
 	}
-
-    /**
-     * Adds a blank option to the list for displaying in a drop down menu in the
-     * GUI.
-     * 
-     * @param files a list of available files.
-     * @return the list of files with a blank entry added at the beginning.
-     */
-    private String[] addBlank(String[] tables) {
-        String[] result = new String[tables.length + 1];
-        result[0] = " ";
-        for (int i = 0; i < tables.length; i++) {
-            result[i + 1] = tables[i];
-        }
-        return result;
-    }
-
-    /**
-     * Returns a string array from a string collection, or an empty array if the
-     * input is null.
-     * 
-     * @param updated the string collection.
-     * @return the resulting array.
-     */
-    private String[] valueOrEmpty(UpdatedValue<Collection<String>> updated) {
-        Collection<String> value = updated.getValue();
-        return value != null ? value.toArray(new String[0]) : new String[0];
-    }
-
 
     /**
      * Gets the list of wiring tables currently available to the instrument.
@@ -183,10 +189,7 @@ public class DataAcquisitionViewModel extends ModelObject {
      * @return the list of wiring tables.
      */
     public String[] getWiringTableList() {
-        String[] tables = valueOrEmpty(wiringTables);
-        tables = tables.length != 0 ? tables : new String[] {
-                "None found in C:\\Instrument\\Settings\\config\\[Instrument Name]\\configurations\\tables\\ (file name must contain string \"wiring\")." };
-        return addBlank(tables);
+        return comboContentProvider.getContent(wiringTables, "wiring");
     }
 
     /**
@@ -214,10 +217,7 @@ public class DataAcquisitionViewModel extends ModelObject {
      * @return the list of detector tables.
      */
 	public String[] getDetectorTableList() {
-        String[] tables = valueOrEmpty(detectorTables);
-        tables = tables.length != 0 ? tables : new String[] {
-                "None found in C:\\Instrument\\Settings\\config\\[Instrument Name]\\configurations\\tables\\ (file name must contain string \"det\")." };
-        return addBlank(tables);
+        return comboContentProvider.getContent(detectorTables, "det");
     }
 
     /**
@@ -245,10 +245,7 @@ public class DataAcquisitionViewModel extends ModelObject {
      * @return the list of detector tables.
      */
 	public String[] getSpectraTableList() {
-        String[] tables = valueOrEmpty(spectraTables);
-        tables = tables.length != 0 ? tables : new String[] {
-                "None found in C:\\Instrument\\Settings\\config\\[Instrument Name]\\configurations\\tables\\ (file name must contain string \"spec\")." };
-        return addBlank(tables);
+        return comboContentProvider.getContent(spectraTables, "spec");
 	}
 
     /**
@@ -270,63 +267,145 @@ public class DataAcquisitionViewModel extends ModelObject {
 		settings.setNewSpectraTable(value);
 	}
 	
+	/**
+	 * Returns the ordinal within DaeTimingSource of the current timing source.
+	 * 
+	 * @return the ordinal
+	 */
 	public int getTimingSource() {
 		return settings.timingSource().ordinal();
 	}
 
+	/**
+     * Sets a new timing source based on the ordinal of the source within DaeTimingSource
+     * (does not take effect until changes are applied).
+     * 
+	 * @param index the ordinal of the new timing source
+	 */
 	public void setTimingSource(int index) {
 		DaeTimingSource value = DaeTimingSource.values()[index];
 		settings.setTimingSource(value);
 	}
 
+	/**
+     * Gets whether the SMP Veto has been selected or not.
+     * 
+     * @return true if the SMP Veto has been enabled
+     */
 	public boolean getSmpVeto() {
 		return settings.smpVeto() == BinaryChoice.YES;
 	}
 	
+	/**
+     * Sets whether the SMP Veto has been enabled (does not 
+     * take effect until changes are applied).
+     * 
+	 * @param selected true to enable the SMP Veto
+	 */
 	public void setSmpVeto(boolean selected) {
 		settings.setSmpVeto(vetoIsActive(selected));
 	}
 
+	/**
+     * Gets whether Veto 0 has been selected or not.
+     * 
+     * @return true if Veto 0 has been enabled
+     */
 	public boolean getVeto0() {
 		return vetoIsActive(settings.veto0());
 	}
 	
+    /**
+     * Sets whether Veto 0 has been enabled (does not take effect until changes
+     * are applied).
+     * 
+     * @param selected
+     *            true to enable Veto 0
+     */
 	public void setVeto0(boolean selected) {
 		settings.setVeto0(vetoIsActive(selected));	
 	}
 
+	/**
+     * Gets whether Veto 1 has been selected or not.
+     * 
+     * @return true if Veto 1 has been enabled
+     */
 	public boolean getVeto1() {
 		return vetoIsActive(settings.veto1());
 	}
 	
+    /**
+     * Sets whether Veto 1 has been enabled (does not take effect until changes
+     * are applied).
+     * 
+     * @param selected
+     *            true to enable Veto 1
+     */
 	public void setVeto1(boolean selected) {
 		settings.setVeto1(vetoIsActive(selected));	
 	}
 	
+	/**
+     * Gets whether Veto 2 has been selected or not.
+     * 
+     * @return true if Veto 2 has been enabled
+     */	
 	public boolean getVeto2() {
 		return vetoIsActive(settings.veto2());
 	}
 	
+    /**
+     * Sets whether Veto 2 has been enabled (does not take effect until changes
+     * are applied).
+     * 
+     * @param selected
+     *            true to enable Veto 2
+     */
 	public void setVeto2(boolean selected) {
 		settings.setVeto2(vetoIsActive(selected));	
 	}
 	
+	/**
+     * Gets whether Veto 3 has been selected or not.
+     * 
+     * @return true if Veto 3 has been enabled
+     */
 	public boolean getVeto3() {
 		return vetoIsActive(settings.veto3());
 	}
-	
+
+    /**
+     * Sets whether Veto 3 has been enabled (does not take effect until changes
+     * are applied).
+     * 
+     * @param selected
+     *            true to enable Veto 3
+     */
 	public void setVeto3(boolean selected) {
 		settings.setVeto3(vetoIsActive(selected));	
 	}
-		
+	
+	/**
+     * Gets whether the Fermi Chopper Veto has been selected or not.
+     * 
+     * @return true if the Fermi Chopper Veto has been enabled
+     */
 	public boolean getFermiChopperVeto() {
 		return vetoIsActive(settings.fermiChopperVeto());
 	}
 	
+    /**
+     * Sets whether the Fermi Chopper Veto has been enabled (does not take
+     * effect until changes are applied).
+     * 
+     * @param selected
+     *            true to enable the Fermi Chopper Veto
+     */
 	public void setFermiChopperVeto(boolean selected) {
 		settings.setFermiChopperVeto(vetoIsActive(selected));	
 	}
-		
+
 	public double getFcDelay() {
 		return settings.fcDelay();
 	}
@@ -359,34 +438,82 @@ public class DataAcquisitionViewModel extends ModelObject {
 		settings.setMuonCerenkovPulse(firstEnabled ? MuonCerenkovPulse.FIRST : MuonCerenkovPulse.SECOND);
 	}
 	
+    /**
+     * Gets whether the TS2 Veto has been selected or not.
+     * 
+     * @return true if the TS2 Veto has been enabled
+     */
 	public boolean getTs2PulseVeto() {
 		return vetoIsActive(settings.ts2PulseVeto());
 	}
 	
+    /**
+     * Sets whether the TS2 Veto has been enabled (does not take effect until
+     * changes are applied).
+     * 
+     * @param selected
+     *            true to enable the TS2 Veto
+     */
 	public void setTs2PulseVeto(boolean selected) {
 		settings.setTs2PulseVeto(vetoIsActive(selected));
 	}
 	
+    /**
+     * Gets whether the ISIS 50 Hz Veto has been selected or not.
+     * 
+     * @return true if the ISIS 50 Hz Veto has been enabled
+     */
 	public boolean getIsis50HzVeto() {
 		return vetoIsActive(settings.isis50HzVeto());
 	}
 	
+    /**
+     * Sets whether the ISIS 50Hz Veto has been enabled (does not take effect
+     * until changes are applied).
+     * 
+     * @param selected
+     *            true to enable the ISIS 50Hz Veto
+     */
 	public void setIsis50HzVeto(boolean selected) {
 		settings.setIsis50HzVeto(vetoIsActive(selected));
 	}
 	
+    /**
+     * Get the frequency at which autosave saves values.
+     * 
+     * @return The frequency, it's units are variable and can be found from
+     *         getAutosaveUnits.
+     */
 	public int getAutosaveFrequency() {
 		return updateSettings.getAutosaveFrequency();
 	}
 	
+    /**
+     * Set the frequency at which autosave saves values.
+     * 
+     * @param value
+     *            The frequency, it's units are variable and can be found from
+     *            getAutosaveUnits.
+     */
 	public void setAutosaveFrequency(int value) {
 		updateSettings.setAutosaveFrequency(value);
 	}
 	
+    /**
+     * Get the units at which the frequency of autosaving is set.
+     * 
+     * @return An ordinal of AutosaveUnit giving the units.
+     */
 	public int getAutosaveUnits() {
 		return updateSettings.getAutosaveUnits().ordinal();
 	}
 	
+    /**
+     * Set the units at which the frequency of autosaving is measured.
+     * 
+     * @param index
+     *            An ordinal of AutosaveUnit giving the units.
+     */
 	public void setAutosaveUnits(int index) {
 		updateSettings.setAutosaveUnits(AutosaveUnit.values()[index]);
 	}
@@ -398,4 +525,14 @@ public class DataAcquisitionViewModel extends ModelObject {
 	private static BinaryChoice vetoIsActive(Boolean selected) {
 		return BinaryChoice.values()[selected ? 1 : 0];
 	}
+
+    /**
+     * Sets the object responsible for filling the file selection combo boxes
+     * with appropriate options.
+     * 
+     * @param provider The content provider.
+     */
+    public void setComboContentProvider(DAEComboContentProvider provider) {
+        this.comboContentProvider = provider;
+    }
 }

@@ -27,34 +27,116 @@ import uk.ac.stfc.isis.ibex.epics.pv.Closer;
 import uk.ac.stfc.isis.ibex.model.UpdatedValue;
 import uk.ac.stfc.isis.ibex.ui.dae.run.InstrumentState;
 
+/**
+ * A view model holding the logic for updating the display of run information in
+ * the DAE.
+ */
 public class RunInformationViewModel extends Closer {
 	
+    /**
+     * An updating string with the name of the instrument.
+     */
 	public UpdatedValue<String> instrument;
+
+    /**
+     * An updating string with the status of the run.
+     */
 	public UpdatedValue<String> runStatus;
+
+    /**
+     * An updating string with the run number.
+     */
 	public UpdatedValue<String> runNumber;
+
+    /**
+     * An updating string with the cycle number.
+     */
 	public UpdatedValue<String> isisCycle;
+
+    /**
+     * An updating number giving the current beam current.
+     */
 	public UpdatedObservableAdapter<Number> beamCurrent;
+
+    /**
+     * An updating integer giving the number of good frames for this run.
+     */
 	public UpdatedObservableAdapter<Integer> goodFrames;
+
+    /**
+     * An updating double giving the number of counts for this run.
+     */
 	public UpdatedObservableAdapter<Double> totalCounts;
+
+    /**
+     * An updating integer giving the memory used on the DAE.
+     */
 	public UpdatedObservableAdapter<Integer> memoryUsed;
+
+    /**
+     * An updating string giving the timing source being used by the DAE.
+     */
 	public UpdatedObservableAdapter<String> timingSource;
 	
+    /**
+     * An updating string with the current RB number.
+     */
 	public UpdatedObservableAdapter<String> rbNumber;
+
+    /**
+     * An updating integer giving the number of raw frames for this run.
+     */
 	public UpdatedObservableAdapter<Integer> rawFrames;
+
+    /**
+     * An updating number giving the total current for this run.
+     */
 	public UpdatedObservableAdapter<Number> totalCurrent;
+
+    /**
+     * An updating double giving the count rate of the DAE.
+     */
 	public UpdatedObservableAdapter<Double> countRate;
+
 	public UpdatedObservableAdapter<Double> eventMode;
 	
+    /**
+     * An updating string with the start time of the current run.
+     */
 	public UpdatedObservableAdapter<String> startTime;
+
+    /**
+     * An updating integer giving the duration of the current run in seconds.
+     */
 	public UpdatedObservableAdapter<Integer> runDuration;
+
 	public UpdatedObservableAdapter<Integer> timeChannels;
 	public UpdatedObservableAdapter<Integer> spectra;
+
+    /**
+     * An updating string giving the title for the current run.
+     */
 	public UpdatedObservableAdapter<String> title;
+
+    /**
+     * An updating boolean giving whether or not to display the title on the
+     * webpage.
+     */
     public UpdatedObservableAdapter<Boolean> displayTitle;
+
+    /**
+     * An updating string giving the users of the instrument for the current
+     * run.
+     */
 	public UpdatedObservableAdapter<String> users;
 	
+
 	public UpdatedObservableAdapter<Integer> period;
 	public UpdatedObservableAdapter<Integer> periodGoodFrames;
+
+    /**
+     * An updating integer giving the duration of the current period in seconds.
+     */
 	public UpdatedObservableAdapter<Integer> periodDuration;
 	public UpdatedObservableAdapter<Integer> totalPeriods;
 	public UpdatedObservableAdapter<Integer> periodRawFrames;
@@ -67,6 +149,12 @@ public class RunInformationViewModel extends Closer {
 	public UpdatedObservableAdapter<Double> monitorTo;
 	public UpdatedObservableAdapter<Double> npRatio;
 
+    /**
+     * The constructor that binds updating values to observables.
+     * 
+     * @param observables
+     *            A class containing observables bound to underling PVs
+     */
 	public RunInformationViewModel(DaeObservables observables) {
 		instrument = adapt(observables.instrumentName);
 		beamCurrent = adapt(observables.beamCurrent);

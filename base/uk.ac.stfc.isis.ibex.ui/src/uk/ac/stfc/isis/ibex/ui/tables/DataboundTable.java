@@ -347,10 +347,11 @@ public abstract class DataboundTable<TRow> extends Composite {
 	}
 	
 	/**
-	 * Adds a resize listener to all columns that cause them not to be resized to
-	 * below the minimum width.
-	 * @param cosl The columns to add the listener to
-	 */
+     * Adds a resize listener to all columns that cause them not to be resized
+     * to below the minimum width.
+     * 
+     * @param table The columns to add the listener to
+     */
 	private void addColumnMinWidth(final Table table) {
 		final TableColumn[] cols = table.getColumns();
 		for (final TableColumn col: cols) {

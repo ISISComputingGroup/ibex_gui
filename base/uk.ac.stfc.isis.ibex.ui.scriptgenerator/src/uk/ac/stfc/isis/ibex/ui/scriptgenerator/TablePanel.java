@@ -32,21 +32,31 @@ import uk.ac.stfc.isis.ibex.scriptgenerator.row.Row;
  * A panel to hold a ScriptGeneratorTable.
  */
 public class TablePanel extends Composite {
+    /** The class ID string. **/
 	public static final String ID = "uk.ac.stfc.isis.ibex.ui.scriptgenerator.scriptgeneratorview";
-	private Table table;
+    /** The table. */
+    private Table table;
 	
 	/**
-	 * The default constructor.
-	 * @param parent the parent that the EstimatePanel will be placed in
-	 * @param style the style of the parent
-	 * @param rows the collection of rows in the table
-	 */
+     * The default constructor.
+     * 
+     * @param parent the parent that the EstimatePanel will be placed in
+     * @param style the style of the parent
+     * @param rows the collection of rows in the table
+     */
 	public TablePanel(Composite parent, int style, final Collection<Row> rows) {
 		super(parent, style);
 		setLayout(new GridLayout(2, true));
 		
-		table = new Table(this, SWT.NONE, SWT.MULTI | SWT.NO_SCROLL | SWT.V_SCROLL | SWT.FULL_SELECTION | SWT.BORDER);
+        table = new Table(this, SWT.NONE, SWT.MULTI | SWT.NO_SCROLL | SWT.V_SCROLL | SWT.FULL_SELECTION | SWT.BORDER);
 		table.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
 		table.setRows(rows);
+	}
+	
+	/**
+	 * Clears the table.
+	 */
+	public void clearTable() {
+		table.clearTable();
 	}
 } 

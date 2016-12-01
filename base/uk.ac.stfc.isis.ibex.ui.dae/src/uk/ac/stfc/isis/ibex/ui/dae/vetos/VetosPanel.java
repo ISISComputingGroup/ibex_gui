@@ -20,16 +20,27 @@
 package uk.ac.stfc.isis.ibex.ui.dae.vetos;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.layout.FillLayout;
+import org.eclipse.swt.widgets.Composite;
 
 import uk.ac.stfc.isis.ibex.ui.dae.DaeViewModel;
 import uk.ac.stfc.isis.ibex.ui.dae.widgets.MessageBox;
 
+/**
+ * The panel that gives information on the vetoes arriving from the DAE.
+ */
 public class VetosPanel extends Composite {
 
 	private MessageBox vetos;
 	
+    /**
+     * The constructor for the panel.
+     * 
+     * @param parent
+     *            The parent composite that the panel belongs to.
+     * @param style
+     *            The SWT style flags for the panel.
+     */
 	public VetosPanel(Composite parent, int style) {
 		super(parent, style);
 		setLayout(new FillLayout(SWT.HORIZONTAL));
@@ -38,6 +49,12 @@ public class VetosPanel extends Composite {
 		vetos.setTitle("Vetos");
 	}
 	
+    /**
+     * Set the view model from which the veto status information is obtained.
+     * 
+     * @param viewModel
+     *            The view model which contains the veto status data.
+     */
 	public void setModel(DaeViewModel viewModel) {
 		vetos.setModel(viewModel.vetos());
 	}

@@ -70,11 +70,12 @@ public class PVManagerObservable<R extends VType> extends ObservablePV<R> {
 				.read(channel(info.address(), info.type(), Object.class))
 				.readListener(observingListener)
 				.notifyOn(new CurrentThreadExecutor())
-.maxRate(ofHertz(UPDATE_FREQUENCY));
+                .maxRate(ofHertz(UPDATE_FREQUENCY));
 	}	
 	
 	@Override
 	public void close() {
-		pv.close();
+        pv.close();
+        super.close();
 	}
 }

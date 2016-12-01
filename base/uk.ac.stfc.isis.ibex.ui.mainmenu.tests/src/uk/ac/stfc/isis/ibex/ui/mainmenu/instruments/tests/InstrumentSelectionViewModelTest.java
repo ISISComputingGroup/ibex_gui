@@ -95,11 +95,11 @@ public class InstrumentSelectionViewModelTest {
     public void get_selected_instrument_returns_correct_instrument_in_input_list() {
         // Arrange
         String expectedName = "expected";
-        InstrumentInfo expectedInstrument = new InstrumentInfo(expectedName);
+        InstrumentInfo expectedInstrument = new InstrumentInfo(expectedName, null, null);
         ArrayList<InstrumentInfo> instruments = new ArrayList<>();
-        instruments.add(new InstrumentInfo("instrument0"));
+        instruments.add(new InstrumentInfo("instrument0", null, null));
         instruments.add(expectedInstrument);
-        instruments.add(new InstrumentInfo("instrument2"));
+        instruments.add(new InstrumentInfo("instrument2", null, null));
         
         InstrumentSelectionViewModel viewModel = new InstrumentSelectionViewModel(instruments);
         
@@ -179,9 +179,9 @@ public class InstrumentSelectionViewModelTest {
 
     private Collection<InstrumentInfo> createInstruments() {
         ArrayList<InstrumentInfo> instruments = new ArrayList<>();
-        instruments.add(new InstrumentInfo("instrument0"));
-        instruments.add(new InstrumentInfo("instrument1"));
-        instruments.add(new InstrumentInfo("instrument2"));
+        instruments.add(new InstrumentInfo("instrument0", null, null));
+        instruments.add(new InstrumentInfo("instrument1", null, null));
+        instruments.add(new InstrumentInfo("instrument2", null, null));
 
         return instruments;
     }

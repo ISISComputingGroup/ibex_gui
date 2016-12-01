@@ -22,8 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * This is an enum class to use while testing
- * 
+ * This is an enum class to use while testing.
  */
 public enum TestingEnum {
     TEST1, TEST2;

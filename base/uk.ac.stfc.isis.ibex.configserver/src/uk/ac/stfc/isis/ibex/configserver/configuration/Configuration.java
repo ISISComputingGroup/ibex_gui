@@ -47,11 +47,39 @@ public class Configuration extends ModelObject {
 	private List<Component> components = new ArrayList<>();
 	private List<String> history = new ArrayList<>();
 	
+    /**
+     * Create a new configuration.
+     * 
+     * @param name
+     *            The configuration name
+     * @param description
+     *            The configuration description
+     */
 	public Configuration(String name, String description) {
 		this.name = name;
 		this.description = description;
 	}
 	
+    /**
+     * Create a new configuration.
+     * 
+     * @param name
+     *            The configuration name
+     * @param description
+     *            The configuration description
+     * @param defaultSynoptic
+     *            The default synoptic to open when the configuration is current
+     * @param iocs
+     *            The IOCs associated with the configuration
+     * @param blocks
+     *            The configuration's blocks
+     * @param groups
+     *            The configuration's groups
+     * @param components
+     *            The configuration's components
+     * @param history
+     *            A collection of dates when the configuration was updated
+     */
 	public Configuration(
 			String name, 
 			String description,
@@ -87,51 +115,93 @@ public class Configuration extends ModelObject {
 		}
 	}
 	
+    /**
+     * Create a new configuration matching the properties of another.
+     * 
+     * @param other
+     *            The other configuration.
+     */
 	public Configuration(Configuration other) {
 		this(other.name(), other.description(), other.synoptic(), other.getIocs(), other.getBlocks(), other.getGroups(), other.getComponents(), other.getHistory());
 		this.pv = other.pv;
 	}
 	
+    /**
+     * @return The name of the configuration
+     */
 	public String name() {
 		return name;
 	}
 	
+    /**
+     * @return The description of the configuration
+     */
 	public String description() {
 		return description;
 	}
 	
+    /**
+     * @return The configuration's default synoptic
+     */
 	public String synoptic() {
 		return synoptic;
 	}
 	
+    /**
+     * @return The PV used to get the configuration
+     */
 	public String pv() {
 		return pv;
 	}
 	
+    /**
+     * @param name
+     *            The new configuration name
+     */
 	public void setName(String name) {
 		firePropertyChange("name", this.name, this.name = name);
 	}
 	
+    /**
+     * @param description
+     *            The new configuration description
+     */
 	public void setDescripion(String description) {
 		firePropertyChange("description", this.description, this.description = description);
 	}
 	
+    /**
+     * @return A collection of the IOCs associated with the configuration
+     */
 	public Collection<Ioc> getIocs() {	
 		return new ArrayList<>(iocs);
 	}
 
+    /**
+     * @return A collection of the configuration's blocks
+     */
 	public Collection<Block> getBlocks() {	
 		return blocks != null ? new ArrayList<>(blocks) : Collections.<Block>emptyList();
 	}
 		
+    /**
+     * @return A collection of the configuration's groups
+     */
 	public Collection<Group> getGroups() {
 		return groups != null ? new ArrayList<>(groups) : Collections.<Group>emptyList();
 	}
 	
+    /**
+     * @return A collection of the components associated with the configuration
+     */
 	public Collection<Component> getComponents() {
 		return new ArrayList<>(components);
 	}
 	
+    /**
+     * @return A collection of dates (as Strings) when the configuration was
+     *         updated
+     */
 	public Collection<String> getHistory() {
 		return new ArrayList<>(history);
 	}

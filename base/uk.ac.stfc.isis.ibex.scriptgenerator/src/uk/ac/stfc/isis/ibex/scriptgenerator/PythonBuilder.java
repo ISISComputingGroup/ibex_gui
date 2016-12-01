@@ -188,4 +188,5 @@ public class PythonBuilder extends ModelObject {
 		script.append(buildSans());
 		script.append(buildTrans());
 	}
+        return sb.toString();
 }

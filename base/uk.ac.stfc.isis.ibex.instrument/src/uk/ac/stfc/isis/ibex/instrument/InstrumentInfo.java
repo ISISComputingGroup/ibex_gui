@@ -19,8 +19,7 @@
 
 package uk.ac.stfc.isis.ibex.instrument;
 
-import uk.ac.stfc.isis.ibex.epics.pv.PVAddress;
-import uk.ac.stfc.isis.ibex.instrument.internal.PVPrefix;
+import uk.ac.stfc.isis.ibex.instrument.internal.PVPrefixFactory;
 
 /**
  * Some basic info that defines an instrument. Instruments hostnames will always
@@ -29,26 +28,19 @@ import uk.ac.stfc.isis.ibex.instrument.internal.PVPrefix;
 public class InstrumentInfo {
 
 	private final String name;
-    private final String pvPrefix;
+    private String pvPrefix;
     private final String hostName;
-    
-    /**
-     * Default constructor for creating a simple instrument based on only a name.
-     * CONSTRUCTORS NOT CALLED FOR INSTRUMENTS IN INSTLIST AS JSON DESERIALISED
-     * 
-     * @param name The name of the instrument
-     */
-	public InstrumentInfo(String name) {
-		this(name, null, null);
-	}
-    
+
 	/**
-	 * Constructor for creating any general instrument.
-	 * CONSTRUCTORS NOT CALLED FOR INSTRUMENTS IN INSTLIST AS JSON DESERIALISED
-	 * @param name The user friendly name of the instrument
-	 * @param pvPrefix The PV prefix used to connect to the instrument
-	 * @param hostName The host name of the machine that the instrument is running on
-	 */
+     * Constructor for creating any general instrument. CONSTRUCTORS NOT CALLED
+     * FOR INSTRUMENTS IN INSTLIST AS JSON DESERIALISED. THIS INCLUDES INLINE
+     * CONSTRUCTOR.
+     * 
+     * @param name The user friendly name of the instrument
+     * @param pvPrefix The PV prefix used to connect to the instrument
+     * @param hostName The host name of the machine that the instrument is
+     *            running on
+     */
 	public InstrumentInfo(String name, String pvPrefix, String hostName) {
 		this.name = name;
 		this.hostName = hostName;
@@ -67,21 +59,29 @@ public class InstrumentInfo {
 	 * @return The PV prefix of the instrument. Returns IN:name: if no pvPrefix has been set.
 	 */
 	public String pvPrefix() {
-		return pvPrefix == null ? PVAddress.startWith("IN").append(name).toString() + PVAddress.COLON : pvPrefix;
+        if (pvPrefix == null) {
+            pvPrefix = new PVPrefixFactory().fromInstrumentName(name);
+        }
+
+        return pvPrefix;
 	}
 	
 	/**
-	 * @return The hostname of the machine that the instrument is running on. Returns NDX + name if no host name has been set.
-	 */
+     * @return The hostname of the machine that the instrument is running on.
+     *         Returns NDX + name if no host name has been set. This is the
+     *         default and will work on most instruments from the instrument
+     *         list, usually the instrument list will explicitly set the
+     *         hostname.
+     */
     public String hostName() {
-    	return hostName == null ? PVPrefix.NDX + name : hostName;
+    	return hostName == null ? PVPrefixFactory.DEFAULT_HOSTNAME_PREFIX + name : hostName;
 	}
 
     /**
      * @return Regex describing a valid default instrument hostname.
      */
-    public static String validInstrumentRegex() {
-        return PVPrefix.NDX + "[_a-zA-Z0-9]+";
+    private static String validInstrumentRegex() {
+        return "[_a-zA-Z0-9]+";
     }
 
     /**
@@ -90,5 +90,13 @@ public class InstrumentInfo {
      */
     public boolean hasValidHostName() {
         return hostName().matches(validInstrumentRegex());
+    }
+
+    /**
+     * @return String representation of instrument info
+     */
+    @Override
+    public String toString() {
+        return String.format("Instrument %s (%s, %s)", this.name, this.hostName(), this.pvPrefix);
     }
 }
