@@ -66,10 +66,6 @@ public class PV {
 		return address;
 	}
 	
-	public String fullAddress() {
-        return address;
-	}
-	
 	public RecordType recordType() {
 		return recordType;
 	}

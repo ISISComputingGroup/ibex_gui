@@ -19,6 +19,9 @@
 
 package uk.ac.stfc.isis.ibex.ui.synoptic.editor.target.properties;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
@@ -28,7 +31,6 @@ import uk.ac.stfc.isis.ibex.opis.desc.OpiDescription;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.ComponentDescription;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.Property;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.IInstrumentUpdateListener;
-import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.IPropertySelectionListener;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.SynopticViewModel;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.UpdateTypes;
 
@@ -57,9 +59,11 @@ public class TargetPropertiesDescription extends Composite {
             }
         });
 
-        synopticViewModel.addPropertySelectionListener(new IPropertySelectionListener() {
+        synopticViewModel.addPropertyChangeListener("propSelection", new PropertyChangeListener() {
+            
             @Override
-            public void selectionChanged(Property oldProperty, Property newProperty) {
+            public void propertyChange(PropertyChangeEvent evt) {
+                Property newProperty = (Property) evt.getNewValue();
                 if (newProperty != null) {
                     ComponentDescription component = synopticViewModel.getFirstSelectedComponent();
                     OpiDescription opi = synopticViewModel.getOpi(component.target().name());

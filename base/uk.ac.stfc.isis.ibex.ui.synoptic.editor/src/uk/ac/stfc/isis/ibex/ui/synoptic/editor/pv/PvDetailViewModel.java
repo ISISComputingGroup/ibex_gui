@@ -21,11 +21,13 @@
  */
 package uk.ac.stfc.isis.ibex.ui.synoptic.editor.pv;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.IO;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.PV;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.blockselector.BlockSelector;
-import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.IPVSelectionListener;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.SynopticViewModel;
 import uk.ac.stfc.isis.ibex.validators.PvValidator;
 
@@ -54,10 +56,11 @@ public class PvDetailViewModel extends ModelObject {
         this.synoptic = synoptic;
 
         if (synoptic != null) {
-            synoptic.addPVSelectionListener(new IPVSelectionListener() {
+            synoptic.addPropertyChangeListener("pvSelection", new PropertyChangeListener() {
+
                 @Override
-                public void selectionChanged(PV oldSelection, PV newSelection) {
-                    showPV(selectedPv = newSelection);
+                public void propertyChange(PropertyChangeEvent evt) {
+                    showPV(selectedPv = (PV) evt.getNewValue());
                 }
             });
         }

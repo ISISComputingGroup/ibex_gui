@@ -43,6 +43,7 @@ import org.eclipse.ui.PlatformUI;
 
 import uk.ac.stfc.isis.ibex.configserver.editing.DefaultName;
 import uk.ac.stfc.isis.ibex.devicescreens.components.ComponentType;
+import uk.ac.stfc.isis.ibex.model.ModelObject;
 import uk.ac.stfc.isis.ibex.opis.Opi;
 import uk.ac.stfc.isis.ibex.opis.desc.OpiDescription;
 import uk.ac.stfc.isis.ibex.synoptic.Synoptic;
@@ -63,7 +64,7 @@ import uk.ac.stfc.isis.ibex.ui.synoptic.editor.target.DefaultTargetForComponent;
  * Provides the model for the view of the synoptic. This is an observable model,
  * which various other classes subscribe to.
  */
-public class SynopticViewModel {
+public class SynopticViewModel extends ModelObject {
 	private SynopticModel editing = Synoptic.getInstance().edit();
 	private SynopticDescription synoptic;
 	private List<ComponentDescription> selectedComponents;
@@ -71,8 +72,6 @@ public class SynopticViewModel {
 	private Property selectedProperty;
 	private List<IInstrumentUpdateListener> instrumentUpdateListeners = new CopyOnWriteArrayList<>();
 	private List<IComponentSelectionListener> componentSelectionListeners = new CopyOnWriteArrayList<>();
-	private List<IPVSelectionListener> pvSelectionListeners = new CopyOnWriteArrayList<>();
-	private List<IPropertySelectionListener> propertySelectionListeners = new CopyOnWriteArrayList<>();
 
     /**
      * The constructor.
@@ -434,7 +433,7 @@ public class SynopticViewModel {
      * @param selected the PV
      */
 	public void setSelectedPV(PV selected) {
-		broadcastPVSelectionChanged(selectedPV, selectedPV = selected);
+        firePropertyChange("pvSelection", selectedPV, selectedPV = selected);
 	}
 
     /**
@@ -452,8 +451,7 @@ public class SynopticViewModel {
      * @param selected the property
      */
 	public void setSelectedProperty(Property selected) {
-		broadcastPropertySelectionChanged(selectedProperty,
-				selectedProperty = selected);
+        firePropertyChange("propSelection", selectedProperty, selectedProperty = selected);
 	}
 
     /**
@@ -463,29 +461,6 @@ public class SynopticViewModel {
      */
 	public Property getSelectedProperty() {
 		return selectedProperty;
-	}
-
-    /**
-     * Add a listener for a change in the selected property.
-     * 
-     * @param listener the listener to add
-     */
-	public void addPropertySelectionListener(IPropertySelectionListener listener) {
-		if (listener == null) {
-			return;
-		}
-
-		propertySelectionListeners.add(listener);
-	}
-
-    /**
-     * Remove a listener to the change of selected property.
-     * 
-     * @param listener the listener to remove
-     */
-	public void removePropertySelectionListener(
-			IPropertySelectionListener listener) {
-		propertySelectionListeners.remove(listener);
 	}
 
     /**
@@ -554,32 +529,6 @@ public class SynopticViewModel {
 			List<ComponentDescription> oldSelected, List<ComponentDescription> newSelected) {
 		for (IComponentSelectionListener listener : componentSelectionListeners) {
 			listener.selectionChanged(oldSelected, newSelected);
-		}
-	}
-	
-    /**
-     * Add a listener for changes in which PV is selected.
-     * 
-     * @param listener the listener to add
-     */
-	public void addPVSelectionListener(IPVSelectionListener listener) {
-		if (listener == null) {
-			return;
-		}
-
-		pvSelectionListeners.add(listener);
-	}
-
-	private void broadcastPVSelectionChanged(PV oldSelected, PV newSelected) {
-		for (IPVSelectionListener listener : pvSelectionListeners) {
-			listener.selectionChanged(oldSelected, newSelected);
-		}
-	}
-
-	private void broadcastPropertySelectionChanged(Property oldProperty,
-			Property newProperty) {
-		for (IPropertySelectionListener listener : propertySelectionListeners) {
-			listener.selectionChanged(oldProperty, newProperty);
 		}
 	}
 	
