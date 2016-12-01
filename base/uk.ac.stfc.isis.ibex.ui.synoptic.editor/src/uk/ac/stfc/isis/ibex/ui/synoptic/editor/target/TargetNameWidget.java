@@ -96,7 +96,7 @@ public class TargetNameWidget extends Composite {
             @Override
             public void widgetSelected(SelectionEvent e) {
                 Collection<TargetDescription> potentialTargets = DefaultTargetForComponent
-                        .defaultTarget(synopticViewModel.getFirstSelectedComponent().type());
+                        .defaultTarget(synopticViewModel.getSingleSelectedComp().type());
 
                 if (potentialTargets.size() == 1) {
                     updateModel(potentialTargets.iterator().next().name());
@@ -124,8 +124,8 @@ public class TargetNameWidget extends Composite {
 	
 	
 	private void updateModel(String targetName) 	{
-        if (!updateLock && synopticViewModel.getFirstSelectedComponent() != null) {
-            TargetDescription target = synopticViewModel.getFirstSelectedComponent().target();
+        if (!updateLock && synopticViewModel.getSingleSelectedComp() != null) {
+            TargetDescription target = synopticViewModel.getSingleSelectedComp().target();
 
             if (target != null) {
                 target.setName(targetName);

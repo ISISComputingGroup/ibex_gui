@@ -70,8 +70,8 @@ public class SynopticViewModel extends ModelObject {
 	private List<ComponentDescription> selectedComponents;
 	private PV selectedPV;
 	private Property selectedProperty;
+    private boolean singleCompSelected;
 	private List<IInstrumentUpdateListener> instrumentUpdateListeners = new CopyOnWriteArrayList<>();
-	private List<IComponentSelectionListener> componentSelectionListeners = new CopyOnWriteArrayList<>();
 
     /**
      * The constructor.
@@ -213,7 +213,7 @@ public class SynopticViewModel extends ModelObject {
     private String constructDeleteMessage() {
 		String message = "Are you sure you want to delete the component";
 		if (selectedComponents.size() == 1) {
-			message += " " + getFirstSelectedComponent().name() + "?";
+            message += " " + getSingleSelectedComp().name() + "?";
 		} else {
 			int idx = 0;
             message += "s ";
@@ -255,7 +255,7 @@ public class SynopticViewModel extends ModelObject {
      */
 	public int addNewPV() {
 		PV pv = new PV();
-	    ComponentDescription selected = getFirstSelectedComponent();
+        ComponentDescription selected = getSingleSelectedComp();
 		
         pv.setDisplayName(getUniqueName("New PV", selected.pvNames()));
 		pv.setAddress("NONE");
@@ -281,7 +281,7 @@ public class SynopticViewModel extends ModelObject {
      * Moves a PV up the list.
      */
 	public void promoteSelectedPV() {
-		getFirstSelectedComponent().promotePV(selectedPV);
+        getSingleSelectedComp().promotePV(selectedPV);
 		broadcastInstrumentUpdate(UpdateTypes.EDIT_PV);
 	}
 
@@ -289,7 +289,7 @@ public class SynopticViewModel extends ModelObject {
      * Moves a PV down the list.
      */
 	public void demoteSelectedPV() {
-		getFirstSelectedComponent().demotePV(selectedPV);
+        getSingleSelectedComp().demotePV(selectedPV);
 		broadcastInstrumentUpdate(UpdateTypes.EDIT_PV);
 	}
 
@@ -341,7 +341,7 @@ public class SynopticViewModel extends ModelObject {
      *            component)
      */
     public void addTargetToSelectedComponent(boolean isFinalEdit) {
-		ComponentDescription component = getFirstSelectedComponent();
+        ComponentDescription component = getSingleSelectedComp();
         ComponentType compType = component.type();
 
         Collection<TargetDescription> potentialTargets = DefaultTargetForComponent.defaultTarget(compType);
@@ -371,18 +371,17 @@ public class SynopticViewModel extends ModelObject {
      * @param selected the selected component(s)
      */
 	public void setSelectedComponent(List<ComponentDescription> selected) {
-		broadcastComponentSelectionChanged(selectedComponents,
-				selectedComponents = selected);
+        firePropertyChange("compSelection", selectedComponents, selectedComponents = selected);
 		setSelectedPV(null);
 		setSelectedProperty(null);
 	}
 	
     /**
-     * Gets the first selected component as many could be selected.
+     * Gets the selected component if there is only one, otherwise returns null.
      * 
-     * @return the first component selected
+     * @return the selected component or null
      */
-	public ComponentDescription getFirstSelectedComponent() {
+    public ComponentDescription getSingleSelectedComp() {
 		if (selectedComponents != null && selectedComponents.size() == 1) {
 			return selectedComponents.get(0);
 		} else {
@@ -476,7 +475,7 @@ public class SynopticViewModel extends ModelObject {
 			return;
 		}
 
-		ComponentDescription component = getFirstSelectedComponent();
+        ComponentDescription component = getSingleSelectedComp();
 		if (component != null) {
 			TargetDescription target = component.target();
 			if (target != null) {
@@ -508,27 +507,6 @@ public class SynopticViewModel extends ModelObject {
 	public void broadcastInstrumentUpdate(UpdateTypes updateType) {
 		for (IInstrumentUpdateListener listener : instrumentUpdateListeners) {
 			listener.instrumentUpdated(updateType);
-		}
-	}
-
-    /**
-     * Add a listener for changes in which component is selected.
-     * 
-     * @param listener the listener to add
-     */
-	public void addComponentSelectionListener(
-			IComponentSelectionListener listener) {
-		if (listener == null) {
-			return;
-		}
-
-		componentSelectionListeners.add(listener);
-	}
-
-	private void broadcastComponentSelectionChanged(
-			List<ComponentDescription> oldSelected, List<ComponentDescription> newSelected) {
-		for (IComponentSelectionListener listener : componentSelectionListeners) {
-			listener.selectionChanged(oldSelected, newSelected);
 		}
 	}
 	
@@ -608,6 +586,6 @@ public class SynopticViewModel extends ModelObject {
      * @return the property keys
      */
     public List<String> getSelectedPropertyKeys() {
-        return getPropertyKeys(getFirstSelectedComponent().target().name());
+        return getPropertyKeys(getSingleSelectedComp().target().name());
     }
 }

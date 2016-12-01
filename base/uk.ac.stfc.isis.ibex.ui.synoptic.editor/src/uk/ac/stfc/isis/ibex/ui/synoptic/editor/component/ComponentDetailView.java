@@ -19,6 +19,8 @@
 
 package uk.ac.stfc.isis.ibex.ui.synoptic.editor.component;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.List;
 
 import org.eclipse.jface.viewers.ArrayContentProvider;
@@ -43,7 +45,6 @@ import org.eclipse.wb.swt.SWTResourceManager;
 import uk.ac.stfc.isis.ibex.devicescreens.components.ComponentType;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.ComponentDescription;
 import uk.ac.stfc.isis.ibex.ui.devicescreens.ComponentIcons;
-import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.IComponentSelectionListener;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.IInstrumentUpdateListener;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.SynopticViewModel;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.UpdateTypes;
@@ -94,26 +95,17 @@ public class ComponentDetailView extends Composite {
 
                 if (updateType != UpdateTypes.EDIT_COMPONENT && updateType != UpdateTypes.EDIT_TARGET
                         && updateType != UpdateTypes.ADD_TARGET) {
-					component = synopticViewModel.getFirstSelectedComponent();
-					showComponent(component);
+                    showComponent(synopticViewModel.getSingleSelectedComp());
 				}
 			}
 		});
 
-		synopticViewModel
-				.addComponentSelectionListener(new IComponentSelectionListener() {
-					@Override
-					public void selectionChanged(
-							List<ComponentDescription> oldSelection,
-							List<ComponentDescription> newSelection) {
-						if (newSelection != null && newSelection.size() == 1) {
-							component = newSelection.iterator().next();
-						} else {
-							component = null;
-						}
-						showComponent(component);
-					}
-				});
+        synopticViewModel.addPropertyChangeListener("compSelection", new PropertyChangeListener() {
+            @Override
+            public void propertyChange(PropertyChangeEvent evt) {
+                showComponent(synopticViewModel.getSingleSelectedComp());
+            }
+        });
 		
         synopticViewModel.addInstrumentUpdateListener(new IInstrumentUpdateListener() {
             @Override

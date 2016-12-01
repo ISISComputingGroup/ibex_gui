@@ -19,7 +19,8 @@
 
 package uk.ac.stfc.isis.ibex.ui.synoptic.editor.pv;
 
-import java.util.List;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -36,7 +37,6 @@ import org.eclipse.wb.swt.ResourceManager;
 
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.ComponentDescription;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.PV;
-import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.IComponentSelectionListener;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.IInstrumentUpdateListener;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.SynopticViewModel;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.UpdateTypes;
@@ -75,16 +75,13 @@ public class PVList extends Composite {
 		setLayout(compositeLayout);
 		setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		
-		instrument.addComponentSelectionListener(new IComponentSelectionListener() {			
-			@Override
-			public void selectionChanged(List<ComponentDescription> oldSelection, List<ComponentDescription> newSelection) {
-				if (newSelection != null && newSelection.size() == 1) {
-					showPvList(newSelection.iterator().next());
-				} else {
-					showPvList(null);
-				}
-			}
-		});
+		instrument.addPropertyChangeListener("compSelection", new PropertyChangeListener() {
+            
+            @Override
+            public void propertyChange(PropertyChangeEvent evt) {
+                showPvList(instrument.getSingleSelectedComp());
+            }
+        });
 		
 		instrument.addInstrumentUpdateListener(new IInstrumentUpdateListener() {	
 			@Override

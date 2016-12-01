@@ -65,7 +65,7 @@ public class TargetPropertiesDescription extends Composite {
             public void propertyChange(PropertyChangeEvent evt) {
                 Property newProperty = (Property) evt.getNewValue();
                 if (newProperty != null) {
-                    ComponentDescription component = synopticViewModel.getFirstSelectedComponent();
+                    ComponentDescription component = synopticViewModel.getSingleSelectedComp();
                     OpiDescription opi = synopticViewModel.getOpi(component.target().name());
                     txtDescription.setText(opi.getMacroDescription(newProperty.key()));
                 } else {
