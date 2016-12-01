@@ -106,10 +106,10 @@ public class BeamStatusView extends DataBrowserAwareView implements ModelListene
     private static final String PLOT_TITLE = "Beam Current";
 
     /** Custom magenta colour for high-contrast plot traces. */
-    private static final RGB MAGENTA = new RGB(204, 0, 153);
+    private static final RGB MAGENTA = new RGB(255, 0, 170);
 
     /** Custom green colour for high-contrast plot traces. */
-    private static final RGB GREEN = new RGB(0, 255, 0);
+    private static final RGB GREEN = new RGB(0, 200, 0);
 
     /** Custom blue colour for high-contrast plot traces. */
     private static final RGB BLUE = new RGB(0, 0, 255);
