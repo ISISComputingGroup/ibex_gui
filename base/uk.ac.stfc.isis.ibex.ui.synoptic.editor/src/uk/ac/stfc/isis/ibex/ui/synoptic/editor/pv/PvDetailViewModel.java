@@ -65,16 +65,23 @@ public class PvDetailViewModel extends ModelObject {
         setSelectionVisible(false);
     }
 
-    private synchronized void showPV(PV componentPv) {
-        if (selectedPv != null) {
+    /**
+     * Update the displayed PV from the backend. Directly fire the property
+     * changes here as we don't want to update the model at all.
+     * 
+     * @param pv
+     *            The PV to update the front end with
+     */
+    private void showPV(PV pv) {
+        if (pv != null) {
             setSelectionVisible(true);
 
-            setPvName(selectedPv.displayName());
+            firePropertyChange("pvName", pvName, pvName = pv.displayName());
 
-            // Use the full address to avoid confusion
-            setPvAddress(selectedPv.fullAddress());
+            firePropertyChange("pvAddress", pvAddress, pvAddress = pv.address());
 
-            setPvMode(selectedPv.recordType().io());
+            firePropertyChange("pvMode", pvMode, pvMode = pv.recordType().io());
+
         } else {
             setSelectionVisible(false);
         }
@@ -158,7 +165,7 @@ public class PvDetailViewModel extends ModelObject {
         validateAddress();
     }
 
-    private synchronized void updateModel() {
+    private void updateModel() {
         if (selectedPv != null) {
             synoptic.updateSelectedPV(pvName, pvAddress, pvMode);
         }

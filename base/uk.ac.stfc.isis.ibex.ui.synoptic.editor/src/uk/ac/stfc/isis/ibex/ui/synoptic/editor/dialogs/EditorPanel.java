@@ -30,7 +30,6 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.wb.swt.SWTResourceManager;
 
-import uk.ac.stfc.isis.ibex.synoptic.model.desc.SynopticDescription;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.component.ComponentDetailView;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.instrument.InstrumentTreeControls;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.instrument.InstrumentTreeView;
@@ -131,8 +130,4 @@ public class EditorPanel extends Composite {
 
         new TargetDetailView(targetComposite, this.synopticViewModel, availableOPIs);
     }
-	
-	public void setSynopticToEdit(SynopticDescription instrument) {
-        synopticViewModel.loadSynopticDescription(instrument);
-	}
 }

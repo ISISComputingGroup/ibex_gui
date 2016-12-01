@@ -76,9 +76,12 @@ public class SynopticViewModel {
 
     /**
      * The constructor.
+     * 
+     * @param description
+     *            The description of the synoptic to edit.
      */
-	public SynopticViewModel() {
-        loadCurrentInstrument();
+    public SynopticViewModel(SynopticDescription description) {
+        loadSynopticDescription(description);
 	}
 	
     /**
@@ -565,10 +568,6 @@ public class SynopticViewModel {
 		}
 
 		pvSelectionListeners.add(listener);
-	}
-	
-	private void loadCurrentInstrument() {
-		loadSynopticDescription(editing.instrument().getDescription());
 	}
 
 	private void broadcastPVSelectionChanged(PV oldSelected, PV newSelected) {
