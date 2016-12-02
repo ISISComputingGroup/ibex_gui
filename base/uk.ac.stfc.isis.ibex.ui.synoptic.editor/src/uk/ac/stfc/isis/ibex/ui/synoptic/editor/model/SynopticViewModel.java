@@ -70,7 +70,6 @@ public class SynopticViewModel extends ModelObject {
 	private List<ComponentDescription> selectedComponents;
 	private PV selectedPV;
 	private Property selectedProperty;
-    private boolean singleCompSelected;
 	private List<IInstrumentUpdateListener> instrumentUpdateListeners = new CopyOnWriteArrayList<>();
 
     /**

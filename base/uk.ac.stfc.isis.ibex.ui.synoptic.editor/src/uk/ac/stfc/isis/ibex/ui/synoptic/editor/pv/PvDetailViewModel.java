@@ -81,6 +81,7 @@ public class PvDetailViewModel extends ModelObject {
 
             firePropertyChange("pvName", pvName, pvName = pv.displayName());
 
+            addressValid(pv.address());
             firePropertyChange("pvAddress", pvAddress, pvAddress = pv.address());
 
             firePropertyChange("pvMode", pvMode, pvMode = pv.recordType().io());
@@ -165,7 +166,9 @@ public class PvDetailViewModel extends ModelObject {
      */
     public void setPvAddress(String name) {
         firePropertyChange("pvAddress", pvAddress, pvAddress = name);
-        validateAddress();
+        if (addressValid(name)) {
+            updateModel();
+        }
     }
 
     private void updateModel() {
@@ -174,14 +177,15 @@ public class PvDetailViewModel extends ModelObject {
         }
     }
 
-    private void validateAddress() {
-        PvValidator addressValid = new PvValidator();
-        if (addressValid.validatePvAddress(pvAddress)) {
+    private boolean addressValid(String address) {
+        PvValidator addressValidator = new PvValidator();
+        boolean addressValid = addressValidator.validatePvAddress(address);
+        if (addressValid) {
             setErrorText("");
-            updateModel();
         } else {
-            setErrorText(addressValid.getErrorMessage());
+            setErrorText(addressValidator.getErrorMessage());
         }
+        return addressValid;
     }
 
     /**

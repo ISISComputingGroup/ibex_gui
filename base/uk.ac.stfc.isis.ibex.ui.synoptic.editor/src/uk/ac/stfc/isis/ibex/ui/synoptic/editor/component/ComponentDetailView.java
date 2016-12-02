@@ -103,7 +103,8 @@ public class ComponentDetailView extends Composite {
         synopticViewModel.addPropertyChangeListener("compSelection", new PropertyChangeListener() {
             @Override
             public void propertyChange(PropertyChangeEvent evt) {
-                showComponent(synopticViewModel.getSingleSelectedComp());
+                component = synopticViewModel.getSingleSelectedComp();
+                showComponent(component);
             }
         });
 		
