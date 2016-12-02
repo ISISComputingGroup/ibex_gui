@@ -247,6 +247,9 @@
 		<module>../uk.ac.stfc.isis.ibex.ui.dashboard.tests</module>
 		<module>../uk.ac.stfc.isis.ibex.ui.tests</module>
 		<module>../uk.ac.stfc.isis.ibex.ui.devicescreens.tests</module>
+		<module>
+			../../workspace/uk.ac.stfc.isis.ibex.ui.synoptic.editor.tests
+		</module>
 	</modules>
 </project>
 
