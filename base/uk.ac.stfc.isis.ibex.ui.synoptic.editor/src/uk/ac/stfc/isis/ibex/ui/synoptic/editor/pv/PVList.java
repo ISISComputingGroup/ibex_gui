@@ -37,9 +37,7 @@ import org.eclipse.wb.swt.ResourceManager;
 
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.ComponentDescription;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.PV;
-import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.IInstrumentUpdateListener;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.SynopticViewModel;
-import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.UpdateTypes;
 
 /**
  * The class that displays the list of which PVs a synoptic component has.
@@ -83,15 +81,14 @@ public class PVList extends Composite {
             }
         });
 		
-		instrument.addInstrumentUpdateListener(new IInstrumentUpdateListener() {	
-			@Override
-			public void instrumentUpdated(UpdateTypes updateType) {
-				if (updateType == UpdateTypes.EDIT_PV) {
-					list.refresh();
-					setButtonStates();
-				}
-			}
-		});
+        instrument.addPropertyChangeListener("pvListChanged", new PropertyChangeListener() {
+            
+            @Override
+            public void propertyChange(PropertyChangeEvent arg0) {
+                list.refresh();
+                setButtonStates();
+            }
+        });
 		
 		createControls(this);
 	}

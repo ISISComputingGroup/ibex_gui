@@ -271,7 +271,7 @@ public class SynopticViewModel extends ModelObject {
 			selected.addPV(pv, index);
 		}
 
-		broadcastInstrumentUpdate(UpdateTypes.EDIT_PV);
+        firePropertyChange("pvListChanged", "", "new");
 		
 		return index;
 	}
@@ -281,7 +281,7 @@ public class SynopticViewModel extends ModelObject {
      */
 	public void promoteSelectedPV() {
         getSingleSelectedComp().promotePV(selectedPV);
-		broadcastInstrumentUpdate(UpdateTypes.EDIT_PV);
+        firePropertyChange("pvListChanged", "", "new");
 	}
 
     /**
@@ -289,7 +289,7 @@ public class SynopticViewModel extends ModelObject {
      */
 	public void demoteSelectedPV() {
         getSingleSelectedComp().demotePV(selectedPV);
-		broadcastInstrumentUpdate(UpdateTypes.EDIT_PV);
+        firePropertyChange("pvListChanged", "", "new");
 	}
 
     /**
@@ -329,7 +329,7 @@ public class SynopticViewModel extends ModelObject {
 		if (selectedPV != null) {
 			selectedComponents.get(0).removePV(selectedPV);
 			setSelectedPV(null);
-			broadcastInstrumentUpdate(UpdateTypes.EDIT_PV);
+            firePropertyChange("pvListChanged", "", "new");
 		}
 	}
 
@@ -422,7 +422,7 @@ public class SynopticViewModel extends ModelObject {
 		
 		selectedPV.setAddress(addressToUse);
 		
-		broadcastInstrumentUpdate(UpdateTypes.EDIT_PV);
+        firePropertyChange("pvListChanged", "", "new");
 	}
 
     /**
