@@ -96,6 +96,16 @@ public class ConfigEditorPanel extends Composite {
         editorTabs = new TabFolder(this, SWT.NONE);
 		editorTabs.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 
+        if (isComponent) {
+            components = null;
+        } else {
+            TabItem componentsTab = new TabItem(editorTabs, SWT.NONE);
+            componentsTab.setText("Components");
+
+            components = new ComponentEditorPanel(editorTabs, SWT.NONE, dialog);
+            componentsTab.setControl(components);
+        }
+
 		iocs = new IocsEditorPanel(editorTabs, SWT.NONE, dialog);
 		
 		TabItem iocsTab = new TabItem(editorTabs, SWT.NONE);
@@ -113,16 +123,6 @@ public class ConfigEditorPanel extends Composite {
 		
         groups = new GroupsEditorPanel(editorTabs, SWT.NONE, dialog, configurationViewModels);
 		groupsTab.setControl(groups);
-		
-		if (isComponent) {
-			components = null;
-		} else {
-			TabItem componentsTab = new TabItem(editorTabs, SWT.NONE);
-			componentsTab.setText("Components");
-			
-			components = new ComponentEditorPanel(editorTabs, SWT.NONE, dialog);
-			componentsTab.setControl(components);
-		}
 		
 		TabItem tbtmIocMacros = new TabItem(editorTabs, SWT.NONE);
 		tbtmIocMacros.setText("IOC Macros");
