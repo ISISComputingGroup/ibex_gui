@@ -232,7 +232,7 @@ public class PythonBuilder extends ModelObject {
         return script.toString();
 	}
 
-    private String indent(String line) {
-        return line.replaceAll("(?m)^", INDENT);
+    private String indent(String block) {
+        return block.replaceAll("(?m)^", INDENT);
     }
 }
