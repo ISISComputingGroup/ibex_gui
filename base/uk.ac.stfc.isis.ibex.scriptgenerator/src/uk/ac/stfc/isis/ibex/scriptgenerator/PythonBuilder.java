@@ -85,92 +85,143 @@ public class PythonBuilder extends ModelObject {
 		return samplePar;
 	}
 	
+    private String buildSequential(boolean sansFirst) {
+        StringBuilder result = new StringBuilder();
+        StringBuilder sansData = new StringBuilder();
+        StringBuilder transData = new StringBuilder();
+        boolean populatedRow = false;
+
+        for (Row row : rows) {
+            if (row.getPosition().length() > 0) {
+                sansData.append(buildSans(row));
+                transData.append(buildTrans(row));
+                populatedRow = true;
+            }
+        }
+        // Return if no data read
+        if (!populatedRow) {
+            return result.toString();
+        }
+
+        if (sansFirst) {
+            result.append(String.format("\nfor i in range(%d):\n", settings.getDoSans()));
+            result.append(sansData);
+            result.append(String.format("\nfor i in range(%d):\n", settings.getDoTrans()));
+            result.append(transData);
+        } else {
+            result.append(String.format("\nfor i in range(%d):\n", settings.getDoTrans()));
+            result.append(transData);
+            result.append(String.format("\nfor i in range(%d):\n", settings.getDoSans()));
+            result.append(sansData);
+        }
+        return result.toString();
+    }
+
+    private String buildAlternating(boolean sansFirst) {
+        StringBuilder result = new StringBuilder();
+        StringBuilder rowData = new StringBuilder();
+        boolean populatedRow = false;
+
+        // Get sans and trans data for every row.
+        if (sansFirst) {
+            for (Row row : rows) {
+                if (row.getPosition().length() > 0) {
+                    rowData.append("if count < num_sans:\n");
+                    rowData.append(buildSans(row) + "\n");
+                    rowData.append("if count < num_trans:\n");
+                    rowData.append(buildTrans(row) + "\n");
+                    populatedRow = true;
+                }
+            }
+        } else {
+            for (Row row : rows) {
+                if (row.getPosition().length() > 0) {
+                    rowData.append("if count < num_trans:\n");
+                    rowData.append(buildTrans(row) + "\n");
+                    rowData.append("if count < num_sans:\n");
+                    rowData.append(buildSans(row) + "\n");
+                    populatedRow = true;
+                }
+            }
+        }
+        // Return if no data read
+        if (!populatedRow) {
+            return result.toString();
+        }
+
+        result.append(String.format("num_sans = %s\n", settings.getDoSans()));
+        result.append(String.format("num_trans = %s\n", settings.getDoTrans()));
+        result.append("count = 0\n");
+        result.append("while True:\n");
+        result.append(indent(rowData.toString()));
+        result.append(indent("count += 1\n"));
+        result.append(indent("if count >= num_trans and count >= num_sans : break\n"));
+
+        return result.toString();
+    }
+
 	/**
      * Builds a string used for the do sans loop.
      * 
      * @return the sans loop string
      */
-	private String buildSans() {
-		StringBuilder sans = new StringBuilder();
-		StringBuilder rowData = new StringBuilder();
-        boolean populatedRow = false;
-		String collectionMode = null;
-		
-		// Based on the collection mode's two settings, set the rtype value to one of its two possibilities 
-		if (settings.getCollection().toString() != null) {
+    private String buildSans(Row row) {
+        StringBuilder sansData = new StringBuilder();
+        String collectionMode = null;
+
+        // Based on the collection mode's two settings, set the rtype value to
+        // one of its two possibilities
+        if (settings.getCollection().toString() != null) {
             collectionMode = (settings.getCollection() == CollectionMode.HISTOGRAM) ? "rtype=0" : "rtype=1";
-		}
-		
-		// Loop through each row. If a row is populated (with a position), add that row's data to the Python for loop
-		for (Row row: rows) {
-            if (row.getPosition().length() == 0) {
-                break;
-            }
-            rowData.append(indent(String.format("set_aperture('%s')\n", settings.getSansSize().name().toLowerCase())));
-            if (row.getSansWaitValue() != null && row.getSansWaitUnit() != null) {
-                rowData.append(
-                        indent(String.format("lm.dosans_normal(position='%s', title='%s', %s=%s, thickness=%s, %s)\n",
-                                row.getPosition(), row.getSampleName(), row.getSansWaitUnit().name().toLowerCase(),
-                                row.getSansWaitValue(), row.getThickness(), collectionMode)));
-            } else {
-                rowData.append(
-                        indent(String.format("lm.dosans_normal(position='%s', title='%s', uamps=0, thickness=%s, %s)\n",
-                                row.getPosition(), row.getSampleName(), row.getThickness(), collectionMode)));
-            }
-            populatedRow = true;
         }
-		
-		// If any of the rows contain data, add the Python for loop initialiser and the row data to the sans string
-		if (populatedRow) {
-            sans.append(String.format("\nfor i in range(%d):\n", settings.getDoSans()));
-            sans.append(rowData);
-		}
-		
-		return sans.toString();
-	}
+        if (row.getPosition().length() == 0) {
+            return sansData.toString();
+        }
+        sansData.append(indent(String.format("set_aperture('%s')\n", settings.getSansSize().name().toLowerCase())));
+        if (row.getSansWaitValue() != null && row.getSansWaitUnit() != null) {
+            sansData.append(
+                    indent(String.format("lm.dosans_normal(position='%s', title='%s', %s=%s, thickness=%s, %s)\n",
+                            row.getPosition(), row.getSampleName(), row.getSansWaitUnit().name().toLowerCase(),
+                            row.getSansWaitValue(), row.getThickness(), collectionMode)));
+        } else {
+            sansData.append(
+                    indent(String.format("lm.dosans_normal(position='%s', title='%s', uamps=0, thickness=%s, %s)\n",
+                            row.getPosition(), row.getSampleName(), row.getThickness(), collectionMode)));
+        }
+        return sansData.toString();
+    }
 	
 	/**
-	 * Builds a string used for the do trans loop.
-	 * @return the trans loop
-	 */
-	private String buildTrans() {
-		StringBuilder trans = new StringBuilder();
-		StringBuilder rowData = new StringBuilder();
-		boolean populatedRow = false;
-		String collectionMode = null;
-		
-		// Based on the collection mode's two settings, set the rtype value to one of its two possibilities  
-		if (settings.getCollection().toString() != null) {
+     * Builds a string used for the do trans loop.
+     * 
+     * @return the trans loop
+     */
+    private String buildTrans(Row row) {
+        StringBuilder transData = new StringBuilder();
+        String collectionMode = null;
+
+        // Based on the collection mode's two settings, set the rtype value to
+        // one of its two possibilities
+        if (settings.getCollection().toString() != null) {
             collectionMode = (settings.getCollection().toString() == "Histogram") ? "rtype=0" : "rtype=1";
-		}
-		
-		// Loop through each row. If a row is populated (with a position), add that row's data to the Python for loop
-		for (Row row: rows) {
-            if (row.getPosition().length() > 0) {
-                rowData.append(
-                        indent(String.format("set_aperture('%s')\n", settings.getTransSize().name().toLowerCase())));
-                if (row.getTransWaitValue() != null && row.getTransWaitUnit() != null) {
-                    rowData.append(indent(
-                            String.format("lm.dotrans_normal(position='%s', title='%s', %s=%s, thickness=%s, %s)\n",
-                                    row.getPosition(), row.getSampleName(), row.getTransWaitUnit().name().toLowerCase(),
-                                    row.getTransWaitValue(), row.getThickness(), collectionMode)));
-                } else {
-                    rowData.append(indent(
-                            String.format("lm.dotrans_normal(position='%s', title='%s', uamps=0.0, thickness=%s, %s)\n",
-                                    row.getPosition(), row.getSampleName(), row.getThickness(), collectionMode)));
-                }
-				populatedRow = true;
-			}
-		}
-		
-		// If any of the rows contain data, add the Python for loop initialiser and the row data to the trans string
-		if (populatedRow) {
-			trans.append(String.format("\nfor i in range(%d):\n", settings.getDoTrans()));
-			trans.append(rowData);
-		}
-		
-		return trans.toString();
-	}
+        }
+
+        if (row.getPosition().length() > 0) {
+            transData.append(
+                    indent(String.format("set_aperture('%s')\n", settings.getTransSize().name().toLowerCase())));
+            if (row.getTransWaitValue() != null && row.getTransWaitUnit() != null) {
+                transData.append(
+                        indent(String.format("lm.dotrans_normal(position='%s', title='%s', %s=%s, thickness=%s, %s)\n",
+                                row.getPosition(), row.getSampleName(), row.getTransWaitUnit().name().toLowerCase(),
+                                row.getTransWaitValue(), row.getThickness(), collectionMode)));
+            } else {
+                transData.append(indent(
+                        String.format("lm.dotrans_normal(position='%s', title='%s', uamps=0.0, thickness=%s, %s)\n",
+                                row.getPosition(), row.getSampleName(), row.getThickness(), collectionMode)));
+            }
+        }
+        return transData.toString();
+    }
 	
 	/**
 	 * Receives and sets the rows from the view.
@@ -214,16 +265,16 @@ public class PythonBuilder extends ModelObject {
         script.append(indent(buildSamplePar("geometry", settings.getGeometry().toString())));
         switch (settings.getOrder()) {
             case SANS:
-                script.append(indent(buildSans()));
-                script.append(indent(buildTrans()));
+                script.append(indent(buildSequential(true)));
                 break;
             case TRANS:
-                script.append(indent(buildTrans()));
-                script.append(indent(buildSans()));
+                script.append(indent(buildSequential(false)));
                 break;
             case ALTSANS:
+                script.append(indent(buildAlternating(true)));
                 break;
             case ALTTRANS:
+                script.append(indent(buildAlternating(false)));
                 break;
 
             default:

@@ -71,7 +71,7 @@ public class PythonBuilderTest {
             + "while True:\n";
     
     String altFooter = "count += 1\n"
-            + "if count >= num_trans and count >= num_sans: break\n";
+            + "if count >= num_trans and count >= num_sans : break\n";
 
     String altSansCondition = "if count < num_sans:\n";
 
@@ -83,7 +83,11 @@ public class PythonBuilderTest {
     String defaultDoTrans = "set_aperture('medium')\n"
             + "lm.dotrans_normal(position='AA', title='', uamps=0.0, thickness=1.0, rtype=0)\n";
 
+    String customDoSans = "set aperture('small')\n"
+            + "lm.dosans_normal(position='BB', title='sample', frames=10.0, thickness=1.0, rtype=1)\n";
 
+    String customDoTrans = "set aperture('large')\n"
+            + "lm.dosans_normal(position='BB', title='sample', seconds=3.0, thickness=1.0, rtype=1)\n";
 
     @Before
     public void setUp() {
@@ -216,6 +220,30 @@ public class PythonBuilderTest {
     }
 
     @Test
+    public void GIVEN_order_is_altsans_WHEN_generating_script_THEN_script_alternates_with_sans_first() {
+        // Arrange
+        rows.add(defaultRow);
+        builder.setRows(rows);
+        String expected = getHeader() 
+                + indent(defaultSetup) 
+                + indent(altHeader) 
+                + indent(indent(altSansCondition))
+                + indent(indent(indent(defaultDoSans))) 
+                + indent(indent("\n")) 
+                + indent(indent(altTransCondition))
+                + indent(indent(indent(defaultDoTrans))) 
+                + indent(indent("\n"))
+                + indent(indent(altFooter));
+
+        // Act
+        settings.setOrder(Order.ALTSANS);
+        String actual = builder.createScript();
+
+        // Assert
+        assertEquals(expected.trim(), actual.trim());
+    }
+
+    @Test
     public void GIVEN_order_is_alttrans_WHEN_generating_script_THEN_script_alternates_with_trans_first() {
         // Arrange
         rows.add(defaultRow);
@@ -225,14 +253,14 @@ public class PythonBuilderTest {
                 + indent(altHeader)
                 + indent(indent(altTransCondition))
                 + indent(indent(indent(defaultDoTrans)))
-                + indent("\n")
+                + indent(indent("\n"))
                 + indent(indent(altSansCondition))
                 + indent(indent(indent(defaultDoSans))) 
-                + indent("\n") 
+                + indent(indent("\n")) 
                 + indent(indent(altFooter));
 
         // Act
-        settings.setOrder(Order.TRANS);
+        settings.setOrder(Order.ALTTRANS);
         String actual = builder.createScript();
 
         // Assert
