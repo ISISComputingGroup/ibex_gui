@@ -110,7 +110,7 @@ public class Table extends DataboundTable<Row> {
 	private void trans() {
         TableViewerColumn trans = createColumn("TRANS", 3);
 		trans.setLabelProvider(new DataboundCellLabelProvider<Row>(
-				observeProperty("trans")) {
+                observeProperty("transWaitValue")) {
 			@Override
 			protected String valueFromRow(Row row) {
 				return row.getTransWaitValue() == null ? "" : String.valueOf(row.getTransWaitValue());
@@ -134,7 +134,7 @@ public class Table extends DataboundTable<Row> {
 	private void transWait() {
         TableViewerColumn transWait = createColumn("TRANS_WAIT", 3);
 		transWait.setLabelProvider(new DataboundCellLabelProvider<Row>(
-				observeProperty("transWait")) {
+                observeProperty("transWaitUnit")) {
 			@Override
 			protected String valueFromRow(Row row) {
 				return row.getTransWaitUnit() == null ? "" : String.valueOf(row.getTransWaitUnit());
@@ -158,7 +158,7 @@ public class Table extends DataboundTable<Row> {
 	private void sans() {
         TableViewerColumn sans = createColumn("SANS", 3);
 		sans.setLabelProvider(new DataboundCellLabelProvider<Row>(
-				observeProperty("sans")) {
+                observeProperty("sansWaitValue")) {
 			@Override
 			protected String valueFromRow(Row row) {
 				return row.getSansWaitValue() == null ? "" : String.valueOf(row.getSansWaitValue());
@@ -182,7 +182,7 @@ public class Table extends DataboundTable<Row> {
 	private void sansWait() {
         TableViewerColumn sansWait = createColumn("SANS_WAIT", 3);
 		sansWait.setLabelProvider(new DataboundCellLabelProvider<Row>(
-				observeProperty("sans")) {
+                observeProperty("sansWaitUnit")) {
 			@Override
 			protected String valueFromRow(Row row) {
 				return row.getSansWaitUnit() == null ? "" : String.valueOf(row.getSansWaitUnit());

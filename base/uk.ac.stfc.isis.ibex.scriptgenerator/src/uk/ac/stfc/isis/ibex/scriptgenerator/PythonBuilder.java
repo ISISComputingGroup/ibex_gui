@@ -93,7 +93,7 @@ public class PythonBuilder extends ModelObject {
 	private String buildSans() {
 		StringBuilder sans = new StringBuilder();
 		StringBuilder rowData = new StringBuilder();
-		boolean populatedRow = false;
+        boolean populatedRow = false;
 		String collectionMode = null;
 		
 		// Based on the collection mode's two settings, set the rtype value to one of its two possibilities 
@@ -122,8 +122,8 @@ public class PythonBuilder extends ModelObject {
 		
 		// If any of the rows contain data, add the Python for loop initialiser and the row data to the sans string
 		if (populatedRow) {
-			sans.append(String.format("\nfor i in range(%d):\n", settings.getDoSans()));
-			sans.append(rowData);
+            sans.append(String.format("\nfor i in range(%d):\n", settings.getDoSans()));
+            sans.append(rowData);
 		}
 		
 		return sans.toString();
@@ -149,17 +149,16 @@ public class PythonBuilder extends ModelObject {
             if (row.getPosition().length() > 0) {
                 rowData.append(
                         indent(String.format("set_aperture('%s')\n", settings.getTransSize().name().toLowerCase())));
-				if (row.getTransWaitValue() != null && row.getTransWaitUnit() != null) {
-                    rowData.append(indent(String.format(
-                            "lm.dotrans_normal(position='%s', title='%s', %s=%s, thickness=%s, %s)\n",
-                            row.getPosition(), row.getSampleName(),
-                            row.getTransWaitUnit().name().toLowerCase(), row.getTransWaitValue(),
-                            row.getThickness(), collectionMode)));
-				} else {
-                    rowData.append(indent(String.format(
-                            "lm.dotrans_normal(position='%s', title='%s', uamps=0, thickness=%s, %s)\n",
-                            row.getPosition(), row.getSampleName(), row.getThickness(), collectionMode)));
-				} 
+                if (row.getTransWaitValue() != null && row.getTransWaitUnit() != null) {
+                    rowData.append(indent(
+                            String.format("lm.dotrans_normal(position='%s', title='%s', %s=%s, thickness=%s, %s)\n",
+                                    row.getPosition(), row.getSampleName(), row.getTransWaitUnit().name().toLowerCase(),
+                                    row.getTransWaitValue(), row.getThickness(), collectionMode)));
+                } else {
+                    rowData.append(indent(
+                            String.format("lm.dotrans_normal(position='%s', title='%s', uamps=0.0, thickness=%s, %s)\n",
+                                    row.getPosition(), row.getSampleName(), row.getThickness(), collectionMode)));
+                }
 				populatedRow = true;
 			}
 		}
@@ -210,8 +209,8 @@ public class PythonBuilder extends ModelObject {
 		
 		script.append(generateHeader());
 		
-        script.append(indent(buildSamplePar("width", settings.getSampleWidth().toString())));
         script.append(indent(buildSamplePar("height", settings.getSampleHeight().toString())));
+        script.append(indent(buildSamplePar("width", settings.getSampleWidth().toString())));
         script.append(indent(buildSamplePar("geometry", settings.getGeometry().toString())));
         switch (settings.getOrder()) {
             case SANS:

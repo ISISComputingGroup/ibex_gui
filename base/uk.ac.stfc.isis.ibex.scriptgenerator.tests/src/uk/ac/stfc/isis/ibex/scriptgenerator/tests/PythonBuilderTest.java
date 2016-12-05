@@ -59,8 +59,8 @@ public class PythonBuilderTest {
     Row defaultRow = new Row("AA", 0.0, WaitUnit.UAMPS, 0.0, WaitUnit.UAMPS, 1.0, "", 1.0);
 
 
-    String defaultSetup = "    set_sample_par('width', '7')\n" 
-            + "    set_sample_par('height', '7')\n"
+    String defaultSetup = "    set_sample_par('height', '7')\n" 
+            + "    set_sample_par('width', '7')\n"
             + "    set_sample_par('geometry', 'Disc')\n";
 
     String defaultDoSans = "    for i in range(1):\n"
@@ -137,9 +137,10 @@ public class PythonBuilderTest {
         int customWidth = 5;
         int customHeight = 10;
         String customGeometry = "Flat Plate";
-        String expected = getHeader() + "    set_sample_par('width', '" + customWidth + "')\n"
-                + "    set_sample_par('height', '" + customHeight + "')\n" 
-                + "    set_sample_par('geometry', '" + customGeometry + "')\n";
+        String expected =
+                getHeader() + "    set_sample_par('height', '" + customHeight + "')\n" 
+                        + "    set_sample_par('width', '" + customWidth + "')\n"
+                        + "    set_sample_par('geometry', '" + customGeometry + "')\n";
 
         // Act
         settings.setSampleHeight(10);

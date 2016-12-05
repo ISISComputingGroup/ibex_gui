@@ -19,6 +19,9 @@
 
 package uk.ac.stfc.isis.ibex.ui.scriptgenerator;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+
 import org.eclipse.core.databinding.Binding;
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.UpdateValueStrategy;
@@ -171,6 +174,7 @@ public class SettingsPanel extends Composite {
 		gdTxtSampleWidth.widthHint = 30;
 		txtSampleWidth.setText("7");
 		txtSampleWidth.setToolTipText("The sample's width");
+        txtSampleWidth.setEnabled(false);
 		
 		Label lblSampleWidthUnits = new Label(grpSettings, SWT.RIGHT);
 		lblSampleWidthUnits.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false, 1, 1));
@@ -301,5 +305,20 @@ public class SettingsPanel extends Composite {
         IObservableValue targetCollection = ViewersObservables.observeSingleSelection(comboCollectionMode);
         IObservableValue modelCollection = BeanProperties.value("collection").observe(settings);
         ctx.bindValue(targetCollection, modelCollection);
+
+        settings.addPropertyChangeListener("geometry", new PropertyChangeListener() {
+
+            @Override
+            public void propertyChange(PropertyChangeEvent evt) {
+                txtSampleWidth.setEnabled(true);
+                ctx.bindValue(WidgetProperties.text().observe(txtSampleWidth),
+                        BeanProperties.value("sampleWidth").observe(settings));
+                if (settings.getGeometry() == SampleGeometry.DISC) {
+                    txtSampleWidth.setEnabled(false);
+                    ctx.bindValue(WidgetProperties.text().observe(txtSampleWidth),
+                            BeanProperties.value("sampleHeight").observe(settings));
+                }
+            }
+        });
 	}
 }
