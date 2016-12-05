@@ -19,42 +19,56 @@
 
 package uk.ac.stfc.isis.ibex.scriptgenerator;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.Collection;
 
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 import uk.ac.stfc.isis.ibex.scriptgenerator.row.Row;
-import uk.ac.stfc.isis.ibex.scriptgenerator.settings.Settings;
+import uk.ac.stfc.isis.ibex.scriptgenerator.settings.CollectionMode;
+import uk.ac.stfc.isis.ibex.scriptgenerator.settings.SansSettings;
 
 /**
  * Generates Python code based on values in the Script Generator table and the settings.
  */
 public class PythonBuilder extends ModelObject {
 	private Collection<Row> rows;
-	private Settings settings;
+    private SansSettings settings;
 	private StringBuilder script;
+    private static final String INDENT = "    ";
+    private DateTimeProvider dateTime;
 	
-	/**
-	 * The default constructor.
-	 */
-	public PythonBuilder() {
+    /**
+     * The default constructor.
+     */
+    public PythonBuilder() {
+        this(new DateTimeProvider());
+    }
+	
+    /**
+     * Creates a PythonBuilder with a custom DateTimeProvider.
+     * 
+     * @param dateTime
+     *            the DateTimeProvider
+     */
+    public PythonBuilder(DateTimeProvider dateTime) {
+        this.dateTime = dateTime;
 	}
 	
 	/**
 	 * Generates necessary header code needed for each script.
 	 * @return the header block of Python code
 	 */
-	private String generateHeader() {
+    private String generateHeader() {
 		StringBuilder header = new StringBuilder();
 		
-		String creationComment = "# Script created by ZOOM Script at " + LocalDate.now() + " " +  LocalTime.now() + "\n";
+        String creationComment =
+                "# Script created by ZOOM Script at " + dateTime.getDate() + " " + dateTime.getTime() + "\n";
 		String sansImport = "import LSS.SANSroutines as lm" + "\n\n";
 		String functionName = "def my_script():" + "\n";
-		String genieImport = "    from genie_python.genie import *" + "\n";
-		String zoomSetup = "    lm.setupzoom_normal()" + "\n";
+        String genieImport = "from genie_python.genie import *" + "\n";
+        String zoomSetup = "lm.setupzoom_normal()" + "\n";
 		
-		header.append(creationComment).append(sansImport).append(functionName).append(genieImport).append(zoomSetup);
+        header.append(creationComment).append(sansImport).append(functionName).append(indent(genieImport))
+                .append(indent(zoomSetup));
 		
 		return header.toString();
 	}
@@ -66,15 +80,16 @@ public class PythonBuilder extends ModelObject {
 	 * @return
 	 */
 	private String buildSamplePar(String name, String value) {	
-		String samplePar = String.format("    set_sample_par('%s', '%s') \n", name, value);
+        String samplePar = String.format("set_sample_par('%s', '%s')\n", name, value);
 		
 		return samplePar;
 	}
 	
 	/**
-	 * Builds a string used for the do sans loop.
-	 * @return the sans loop string
-	 */
+     * Builds a string used for the do sans loop.
+     * 
+     * @return the sans loop string
+     */
 	private String buildSans() {
 		StringBuilder sans = new StringBuilder();
 		StringBuilder rowData = new StringBuilder();
@@ -83,23 +98,27 @@ public class PythonBuilder extends ModelObject {
 		
 		// Based on the collection mode's two settings, set the rtype value to one of its two possibilities 
 		if (settings.getCollection().toString() != null) {
-			collectionMode = (settings.getCollection().toString() == "Histogram") ? "rtype='0'" : "rtype='1'"; 
+            collectionMode = (settings.getCollection() == CollectionMode.HISTOGRAM) ? "rtype=0" : "rtype=1";
 		}
 		
 		// Loop through each row. If a row is populated (with a position), add that row's data to the Python for loop
 		for (Row row: rows) {
-			if (row.getPosition() != null) {
-				rowData.append(String.format("    set_aperture('%s')\n", settings.getSansSize()));
-				if (row.getSans() != null && row.getSansWait() != null) {
-					rowData.append(String.format("    lm.dosans_normal(position='%s', title='%s', %s='%s', thickness='%s', %s)\n", 
-							row.getPosition(), row.getSampleName(), row.getSansWait() /*row.getSansWait().toString().toLowerCase()*/, row.getSansWait(), row.getThickness(), collectionMode));
-				} else {
-					rowData.append(String.format("    lm.dosans_normal(position='%s', title='%s', uamps='0', thickness='%s', %s)\n", 
-							row.getPosition(), row.getSampleName(), row.getThickness(), collectionMode));
-				} 
-				populatedRow = true;
-			}
-		}
+            if (row.getPosition().length() == 0) {
+                break;
+            }
+            rowData.append(indent(String.format("set_aperture('%s')\n", settings.getSansSize().name().toLowerCase())));
+            if (row.getSansWaitValue() != null && row.getSansWaitUnit() != null) {
+                rowData.append(
+                        indent(String.format("lm.dosans_normal(position='%s', title='%s', %s=%s, thickness=%s, %s)\n",
+                                row.getPosition(), row.getSampleName(), row.getSansWaitUnit().name().toLowerCase(),
+                                row.getSansWaitValue(), row.getThickness(), collectionMode)));
+            } else {
+                rowData.append(
+                        indent(String.format("lm.dosans_normal(position='%s', title='%s', uamps=0, thickness=%s, %s)\n",
+                                row.getPosition(), row.getSampleName(), row.getThickness(), collectionMode)));
+            }
+            populatedRow = true;
+        }
 		
 		// If any of the rows contain data, add the Python for loop initialiser and the row data to the sans string
 		if (populatedRow) {
@@ -122,19 +141,24 @@ public class PythonBuilder extends ModelObject {
 		
 		// Based on the collection mode's two settings, set the rtype value to one of its two possibilities  
 		if (settings.getCollection().toString() != null) {
-			collectionMode = (settings.getCollection().toString() == "Histogram") ? "rtype='0'" : "rtype='1'"; 
+            collectionMode = (settings.getCollection().toString() == "Histogram") ? "rtype=0" : "rtype=1";
 		}
 		
 		// Loop through each row. If a row is populated (with a position), add that row's data to the Python for loop
 		for (Row row: rows) {
-			if (row.getPosition() != null) {
-				rowData.append(String.format("    set_aperture('%s')\n", settings.getTransSize()));
-				if (row.getTrans() != null && row.getTransWait() != null) {
-					rowData.append(String.format("    lm.dotrans_normal(position='%s', title='%s', %s='%s', thickness='%s', %s)\n", 
-							row.getPosition(), row.getSampleName(), row.getTransWait() /*row.getSansWait().toString().toLowerCase()*/, row.getTransWait(), row.getThickness(), collectionMode));
+            if (row.getPosition().length() > 0) {
+                rowData.append(
+                        indent(String.format("set_aperture('%s')\n", settings.getTransSize().name().toLowerCase())));
+				if (row.getTransWaitValue() != null && row.getTransWaitUnit() != null) {
+                    rowData.append(indent(String.format(
+                            "lm.dotrans_normal(position='%s', title='%s', %s=%s, thickness=%s, %s)\n",
+                            row.getPosition(), row.getSampleName(),
+                            row.getTransWaitUnit().name().toLowerCase(), row.getTransWaitValue(),
+                            row.getThickness(), collectionMode)));
 				} else {
-					rowData.append(String.format("    lm.dotrans_normal(position='%s', title='%s', uamps='0', thickness='%s', %s)\n", 
-							row.getPosition(), row.getSampleName(), row.getThickness(), collectionMode));
+                    rowData.append(indent(String.format(
+                            "lm.dotrans_normal(position='%s', title='%s', uamps=0, thickness=%s, %s)\n",
+                            row.getPosition(), row.getSampleName(), row.getThickness(), collectionMode)));
 				} 
 				populatedRow = true;
 			}
@@ -155,11 +179,15 @@ public class PythonBuilder extends ModelObject {
 	 */
 	public void setRows(Collection<Row> rows) {
 		this.rows = rows;
-		
-		createScript();
 	}
 	
-	public void setSettings(Settings settings) {
+    /**
+     * Sets the SANS settings used in the script.
+     * 
+     * @param settings
+     *            The settings
+     */
+    public void setSettings(SansSettings settings) {
 		this.settings = settings;
 	}
 	
@@ -168,25 +196,44 @@ public class PythonBuilder extends ModelObject {
 	 * @return the completed script
 	 */
 	public String getScript() {
-		createScript();
-		
 		return script.toString();
 	}
 	
 	/**
-	 * Calls internal build script methods and adds these returned strings to the main script.
-	 */
-	public void createScript() {
+     * Calls internal build script methods and adds these returned strings to
+     * the main script.
+     * 
+     * @return The Script.
+     */
+    public String createScript() {
 		script = new StringBuilder();
 		
 		script.append(generateHeader());
 		
-		script.append(buildSamplePar("width", settings.getSampleWidth().toString()));
-		script.append(buildSamplePar("height", settings.getSampleHeight().toString()));
-		script.append(buildSamplePar("geometry", settings.getGeometry().toString()));
-		
-		script.append(buildSans());
-		script.append(buildTrans());
+        script.append(indent(buildSamplePar("width", settings.getSampleWidth().toString())));
+        script.append(indent(buildSamplePar("height", settings.getSampleHeight().toString())));
+        script.append(indent(buildSamplePar("geometry", settings.getGeometry().toString())));
+        switch (settings.getOrder()) {
+            case SANS:
+                script.append(indent(buildSans()));
+                script.append(indent(buildTrans()));
+                break;
+            case TRANS:
+                script.append(indent(buildTrans()));
+                script.append(indent(buildSans()));
+                break;
+            case ALTSANS:
+                break;
+            case ALTTRANS:
+                break;
+
+            default:
+                break;
+        }
+        return script.toString();
 	}
-        return sb.toString();
+
+    private String indent(String line) {
+        return line.replaceAll("(?m)^", INDENT);
+    }
 }

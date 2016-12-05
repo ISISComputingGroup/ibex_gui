@@ -113,20 +113,20 @@ public class Table extends DataboundTable<Row> {
 				observeProperty("trans")) {
 			@Override
 			protected String valueFromRow(Row row) {
-				return row.getTrans() == null ? "" : String.valueOf(row.getTrans());
+				return row.getTransWaitValue() == null ? "" : String.valueOf(row.getTransWaitValue());
 			}
 		});
 		trans.setEditingSupport(new DoubleEditingSupportBlankIfNull<Row>(viewer(), Row.class) {
 			@Override
 			protected Double valueFromRow(Row row) {
-				return row.getTrans();
+				return row.getTransWaitValue();
 			}
 
 			@Override
 			protected void setValueForRow(Row row, Double trans) {
 				addRowIfNull(row);
 				
-				row.setTrans(trans);
+				row.setTransWaitValue(trans);
 			}
 		});
 	}
@@ -137,20 +137,20 @@ public class Table extends DataboundTable<Row> {
 				observeProperty("transWait")) {
 			@Override
 			protected String valueFromRow(Row row) {
-				return row.getTransWait() == null ? "" : String.valueOf(row.getTransWait());
+				return row.getTransWaitUnit() == null ? "" : String.valueOf(row.getTransWaitUnit());
 			}
 		});
 		transWait.setEditingSupport(new WaitEditingSupport(viewer()) {
 			@Override
 			protected WaitUnit getEnumValueForRow(Row row) {
-				return row.getTransWait();
+				return row.getTransWaitUnit();
 			}
 			
 			@Override
 			protected void setEnumForRow(Row row, WaitUnit transWait) {
 				addRowIfNull(row);
 				
-				row.setTransWait(transWait);
+				row.setTransWaitUnit(transWait);
 			}
 		});
 	}
@@ -161,20 +161,20 @@ public class Table extends DataboundTable<Row> {
 				observeProperty("sans")) {
 			@Override
 			protected String valueFromRow(Row row) {
-				return row.getSans() == null ? "" : String.valueOf(row.getSans());
+				return row.getSansWaitValue() == null ? "" : String.valueOf(row.getSansWaitValue());
 			}
 		});
 		sans.setEditingSupport(new DoubleEditingSupportBlankIfNull<Row>(viewer(), Row.class) {
 			@Override
 			protected Double valueFromRow(Row row) {
-				return row.getSans();
+				return row.getSansWaitValue();
 			}
 
 			@Override
 			protected void setValueForRow(Row row, Double sans) {
 				addRowIfNull(row);
 				
-				row.setSans(sans);
+				row.setSansWaitValue(sans);
 			}
 		});
 	}
@@ -185,13 +185,13 @@ public class Table extends DataboundTable<Row> {
 				observeProperty("sans")) {
 			@Override
 			protected String valueFromRow(Row row) {
-				return row.getSansWait() == null ? "" : String.valueOf(row.getSansWait());
+				return row.getSansWaitUnit() == null ? "" : String.valueOf(row.getSansWaitUnit());
 			}
 		});
 		sansWait.setEditingSupport(new WaitEditingSupport(viewer()) {
 			@Override
 			protected WaitUnit getEnumValueForRow(Row row) {
-				return row.getSansWait();
+				return row.getSansWaitUnit();
 			}
 			
 			@Override
