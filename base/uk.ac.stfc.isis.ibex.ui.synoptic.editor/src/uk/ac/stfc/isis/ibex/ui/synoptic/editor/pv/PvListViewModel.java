@@ -56,17 +56,29 @@ public class PvListViewModel extends ModelObject {
 
             @Override
             public void propertyChange(PropertyChangeEvent evt) {
-                selectedComp = synoptic.getSingleSelectedComp();
-                updatePvList();
-                setSelectedPV(null);
+                changeComponent(synoptic.getSingleSelectedComp());
             }
         });
     }
 
     /**
-     * Adds a PV writer/reader to the component.
+     * Called when a the component selected in the editor has been changed.
+     * 
+     * @param newComp
+     *            The component to change to.
      */
-    public void addNewPV() {
+    public void changeComponent(ComponentDescription newComp) {
+        selectedComp = newComp;
+        updatePvList();
+        setSelectedPV(null);
+    }
+
+    /**
+     * Adds a PV writer/reader to the component.
+     * 
+     * @return The PV that has been created
+     */
+    public PV addNewPV() {
         PV pv = new PV(selectedComp.getUniquePvName("New PV"), "NONE", IO.READ);
 
         // Will add at the beginning if null
@@ -76,6 +88,7 @@ public class PvListViewModel extends ModelObject {
         
         setSelectedPV(pv);
 
+        return pv;
     }
 
     private void updatePvList() {
@@ -96,7 +109,7 @@ public class PvListViewModel extends ModelObject {
     }
 
     private int getIndex(PV selected) {
-        return pvList.indexOf(selectedPV);
+        return pvList.indexOf(selected);
     }
 
     /**
