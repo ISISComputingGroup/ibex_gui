@@ -58,6 +58,7 @@ public class PythonBuilderTest {
             ApertureTrans.MEDIUM, SampleGeometry.DISC, CollectionMode.HISTOGRAM);
 
     Row defaultRow = new Row("AA", 0.0, WaitUnit.UAMPS, 0.0, WaitUnit.UAMPS, 1.0, "", 1.0);
+    Row customRow = new Row("BB", 3.0, WaitUnit.SECONDS, 10.0, WaitUnit.FRAMES, 1.0, "sample", 1.0);
 
     String defaultSetup = "set_sample_par('height', '7')\n"
             + "set_sample_par('width', '7')\n"
@@ -83,11 +84,11 @@ public class PythonBuilderTest {
     String defaultDoTrans = "set_aperture('medium')\n"
             + "lm.dotrans_normal(position='AA', title='', uamps=0.0, thickness=1.0, rtype=0)\n";
 
-    String customDoSans = "set aperture('small')\n"
+    String customDoSans = "set_aperture('small')\n"
             + "lm.dosans_normal(position='BB', title='sample', frames=10.0, thickness=1.0, rtype=1)\n";
 
-    String customDoTrans = "set aperture('large')\n"
-            + "lm.dosans_normal(position='BB', title='sample', seconds=3.0, thickness=1.0, rtype=1)\n";
+    String customDoTrans = "set_aperture('large')\n"
+            + "lm.dotrans_normal(position='BB', title='sample', seconds=3.0, thickness=1.0, rtype=1)\n";
 
     @Before
     public void setUp() {
@@ -261,6 +262,66 @@ public class PythonBuilderTest {
 
         // Act
         settings.setOrder(Order.ALTTRANS);
+        String actual = builder.createScript();
+
+        // Assert
+        assertEquals(expected.trim(), actual.trim());
+    }
+
+    @Test
+    public void
+            GIVEN_multiple_rows_WHEN_generating_alternating_script_THEN_script_includes_all_non_blank_rows() {
+        // Arrange
+        settings.setOrder(Order.ALTTRANS);
+        String expected = getHeader() 
+                + indent(defaultSetup) 
+                + indent(altHeader) 
+                + indent(indent(altTransCondition))
+                + indent(indent(indent(defaultDoTrans))) 
+                + indent(indent("\n")) 
+                + indent(indent(altSansCondition))
+                + indent(indent(indent(defaultDoSans))) 
+                + indent(indent("\n")) 
+                + indent(indent(altTransCondition))
+                + indent(indent(indent(defaultDoTrans)))
+                + indent(indent("\n")) 
+                + indent(indent(altSansCondition))
+                + indent(indent(indent(defaultDoSans)))
+                + indent(indent("\n")) 
+                + indent(indent(altFooter));
+
+        // Act
+        rows.add(defaultRow);
+        rows.add(defaultRow);
+        rows.add(new Row());
+        builder.setRows(rows);
+        String actual = builder.createScript();
+
+        // Assert
+        assertEquals(expected.trim(), actual.trim());
+    }
+
+    @Test
+    public void
+            GIVEN_multiple_rows_WHEN_generating_sequential_script_THEN_script_includes_all_non_blank_rows() {
+        // Arrange
+        settings.setOrder(Order.TRANS);
+        String expected = getHeader() 
+                + indent(defaultSetup)
+                + indent("\n") 
+                + indent(sequentialLoop)
+                + indent(indent(defaultDoTrans))
+                + indent(indent(defaultDoTrans))
+                + indent("\n")
+                + indent(sequentialLoop)
+                + indent(indent(defaultDoSans))
+                + indent(indent(defaultDoSans));
+
+        // Act
+        rows.add(defaultRow);
+        rows.add(defaultRow);
+        rows.add(new Row());
+        builder.setRows(rows);
         String actual = builder.createScript();
 
         // Assert
