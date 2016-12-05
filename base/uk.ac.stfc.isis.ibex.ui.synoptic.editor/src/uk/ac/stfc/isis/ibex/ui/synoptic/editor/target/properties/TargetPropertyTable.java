@@ -24,8 +24,8 @@ import java.beans.PropertyChangeListener;
 import java.util.List;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
@@ -127,15 +127,10 @@ public class TargetPropertyTable extends Composite {
         TableColumn valueColumn = new TableColumn(table, SWT.NULL);
         valueColumn.setText("Value");
 
-        table.addSelectionListener(new SelectionListener() {
+        table.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
                 synopticViewModel.setSelectedProperty(getSelectedProperty());
-            }
-
-            @Override
-            public void widgetDefaultSelected(SelectionEvent e) {
-                // Can add double click behaviour here...
             }
         });
 	}

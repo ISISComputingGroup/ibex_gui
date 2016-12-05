@@ -27,8 +27,8 @@ import static org.mockito.Mockito.mock;
 import org.junit.Before;
 import org.junit.Test;
 
-import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.SynopticViewModel;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.pv.PvDetailViewModel;
+import uk.ac.stfc.isis.ibex.ui.synoptic.editor.pv.PvListViewModel;
 
 /**
  * Tests for the PvViewModel
@@ -36,14 +36,14 @@ import uk.ac.stfc.isis.ibex.ui.synoptic.editor.pv.PvDetailViewModel;
 public class PvDetailViewModelTest {
 
     private PvDetailViewModel viewModel;
-    private SynopticViewModel synoptic;
+    private PvListViewModel synoptic;
 
     private static String VALID_ADDRESS = "TEST_DESC";
     private static String INVALID_ADDRESS = "";
 
     @Before
     public void setUp() {
-        synoptic = mock(SynopticViewModel.class);
+        synoptic = mock(PvListViewModel.class);
 
         viewModel = new PvDetailViewModel(synoptic);
     }

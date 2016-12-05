@@ -31,6 +31,8 @@ import org.eclipse.jface.viewers.ListViewer;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.KeyAdapter;
+import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
@@ -139,6 +141,16 @@ public class PVList extends Composite {
                 }
 			}
 		});
+	    
+	    list.getList().addKeyListener(new KeyAdapter() {
+	        @Override
+	        public void keyPressed(KeyEvent e) {
+                if (e.keyCode == SWT.DEL) {
+                    viewModel.removeSelectedPV();
+                }
+	        }
+            
+        });
 	    
 	    Composite moveComposite = new Composite(parent, SWT.NONE);
 	    moveComposite.setLayout(new GridLayout(1, false));
