@@ -49,6 +49,7 @@ import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.IInstrumentUpdateListener;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.SynopticViewModel;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.UpdateTypes;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.pv.PVList;
+import uk.ac.stfc.isis.ibex.ui.synoptic.editor.pv.PvListViewModel;
 
 /**
  * UI section that allows the user to view and edit the details of a component:
@@ -61,6 +62,7 @@ public class ComponentDetailView extends Composite {
     private final Color colorBlack = SWTResourceManager.getColor(0, 0, 0);
     private final Color colorRed = SWTResourceManager.getColor(255, 0, 0);
 	private SynopticViewModel synopticViewModel;
+    private PvListViewModel pvListViewModel;
 	private ComponentDescription component;
 	private Composite fieldsComposite;
 	private Composite labelComposite;
@@ -75,14 +77,19 @@ public class ComponentDetailView extends Composite {
     /**
      * The constructor.
      * 
-     * @param parent the parent composite
-     * @param synopticViewModel the view model
+     * @param parent
+     *            the parent composite
+     * @param synopticViewModel
+     *            the view model
+     * @param pvListViewModel
+     *            the view model specifically for the pv list
      */
 	public ComponentDetailView(Composite parent,
-			final SynopticViewModel synopticViewModel) {
+            final SynopticViewModel synopticViewModel, final PvListViewModel pvListViewModel) {
 		super(parent, SWT.NONE);
 
 		this.synopticViewModel = synopticViewModel;
+        this.pvListViewModel = pvListViewModel;
 
 		synopticViewModel.addInstrumentUpdateListener(new IInstrumentUpdateListener() {
 			@Override
@@ -215,7 +222,7 @@ public class ComponentDetailView extends Composite {
         lblPvs.setLayoutData(new GridData(SWT.RIGHT, SWT.TOP, false, false, 1, 1));
         lblPvs.setText("PVs");
 
-        pvList = new PVList(fieldsComposite, synopticViewModel);
+        pvList = new PVList(fieldsComposite, pvListViewModel);
         GridData pvGridData = new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1);
         pvGridData.heightHint = 150;
         pvList.setLayoutData(pvGridData);

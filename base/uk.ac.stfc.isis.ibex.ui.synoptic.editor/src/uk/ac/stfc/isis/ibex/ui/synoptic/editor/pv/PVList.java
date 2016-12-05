@@ -22,10 +22,14 @@ package uk.ac.stfc.isis.ibex.ui.synoptic.editor.pv;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
+import org.eclipse.core.databinding.DataBindingContext;
+import org.eclipse.core.databinding.beans.BeanProperties;
+import org.eclipse.jface.databinding.swt.WidgetProperties;
+import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
-import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.ListViewer;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
+import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -35,9 +39,7 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.wb.swt.ResourceManager;
 
-import uk.ac.stfc.isis.ibex.synoptic.model.desc.ComponentDescription;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.PV;
-import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.SynopticViewModel;
 
 /**
  * The class that displays the list of which PVs a synoptic component has.
@@ -50,7 +52,7 @@ public class PVList extends Composite {
 	private Button btnUp;
 	private Button btnDown;
 	
-	private SynopticViewModel instrument;
+    private PvListViewModel viewModel;
 	
     /**
      * The constructor for the class. Creates the controls to be displayed and
@@ -58,13 +60,13 @@ public class PVList extends Composite {
      * 
      * @param parent
      *            The parent composite that holds this view.
-     * @param instrument
-     *            The view model for the synoptic.
+     * @param viewModel
+     *            The view model for the pv list.
      */
-	public PVList(Composite parent, final SynopticViewModel instrument) {
+    public PVList(Composite parent, final PvListViewModel viewModel) {
 		super(parent, SWT.NONE);
 		
-		this.instrument = instrument;
+        this.viewModel = viewModel;
 		
 		GridLayout compositeLayout = new GridLayout(2, false);
 		compositeLayout.marginHeight = 0;
@@ -73,26 +75,49 @@ public class PVList extends Composite {
 		setLayout(compositeLayout);
 		setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		
-		instrument.addPropertyChangeListener("compSelection", new PropertyChangeListener() {
+        viewModel.addPropertyChangeListener("pvListChanged", new PropertyChangeListener() {
             
             @Override
-            public void propertyChange(PropertyChangeEvent evt) {
-                showPvList(instrument.getSingleSelectedComp());
+            public void propertyChange(PropertyChangeEvent e) {
+                list.setInput(e.getNewValue());
+                list.refresh();
             }
         });
-		
-        instrument.addPropertyChangeListener("pvListChanged", new PropertyChangeListener() {
-            
+
+        viewModel.addPropertyChangeListener("pvSelection", new PropertyChangeListener() {
+
             @Override
-            public void propertyChange(PropertyChangeEvent arg0) {
-                list.refresh();
-                setButtonStates();
+            public void propertyChange(PropertyChangeEvent e) {
+                PV selected = (PV) e.getNewValue();
+                if (selected != null) {
+                    list.refresh();
+                    list.setSelection(new StructuredSelection(selected), true);
+                }
             }
         });
 		
 		createControls(this);
+		
+        bind(viewModel);
 	}
 	
+    /**
+     * Bind the controls to the view model.
+     * 
+     * @param viewModel
+     *            The view model to bind to.
+     */
+    private void bind(PvListViewModel viewModel) {
+        DataBindingContext bindingContext = new DataBindingContext();
+
+        bindingContext.bindValue(WidgetProperties.enabled().observe(btnDelete),
+                BeanProperties.value("deleteEnabled").observe(viewModel));
+        bindingContext.bindValue(WidgetProperties.enabled().observe(btnUp),
+                BeanProperties.value("upEnabled").observe(viewModel));
+        bindingContext.bindValue(WidgetProperties.enabled().observe(btnDown),
+                BeanProperties.value("downEnabled").observe(viewModel));
+    }
+
     /**
      * Creates the controls to be displayed.
      * 
@@ -102,13 +127,16 @@ public class PVList extends Composite {
     private void createControls(Composite parent) {
 		list = new ListViewer(parent, SWT.BORDER | SWT.V_SCROLL);
 		list.getList().setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-	    list.setContentProvider(new PvContentProvider());
+        list.setContentProvider(new ArrayContentProvider());
 	    list.setLabelProvider(new PvLabelProvider());
 	    
 	    list.addSelectionChangedListener(new ISelectionChangedListener() {
 			@Override
 			public void selectionChanged(SelectionChangedEvent event) {
-				updateSelection();
+                if (!event.getSelection().isEmpty()) {
+                    StructuredSelection selection = (StructuredSelection) event.getSelection();
+                    viewModel.setSelectedPV((PV) selection.getFirstElement());
+                }
 			}
 		});
 	    
@@ -123,7 +151,7 @@ public class PVList extends Composite {
         btnUp.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
-                instrument.promoteSelectedPV();
+                viewModel.promoteSelectedPV();
             }
         });
 
@@ -134,7 +162,7 @@ public class PVList extends Composite {
         btnDown.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
-                instrument.demoteSelectedPV();
+                viewModel.demoteSelectedPV();
             }
         });
 	    
@@ -148,9 +176,7 @@ public class PVList extends Composite {
         btnAdd.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
-                int index = instrument.addNewPV();
-                list.getList().select(index);
-                updateSelection();
+                viewModel.addNewPV();
             }
         });
 
@@ -161,30 +187,8 @@ public class PVList extends Composite {
         btnDelete.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
-                instrument.removeSelectedPV();
+                viewModel.removeSelectedPV();
             }
         });
-	}
-	
-    private void showPvList(ComponentDescription component) {
-		if (component != null) {
-			list.setInput(component.pvs());
-		}
-	}
-	
-    private PV getSelectedPV() {
-		IStructuredSelection selection = (IStructuredSelection) list.getSelection();
-		return (PV) selection.getFirstElement();
-	}
-	
-	private void setButtonStates() {
-		btnDelete.setEnabled(getSelectedPV() != null);
-		btnUp.setEnabled(instrument.canPromotePV());
-		btnDown.setEnabled(instrument.canDemotePV());
-	}
-
-	private void updateSelection() {
-		instrument.setSelectedPV(getSelectedPV());
-		setButtonStates();
 	}
 }

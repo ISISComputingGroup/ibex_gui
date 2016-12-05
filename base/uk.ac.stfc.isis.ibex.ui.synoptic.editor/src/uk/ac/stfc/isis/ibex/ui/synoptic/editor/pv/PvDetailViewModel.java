@@ -27,16 +27,14 @@ import java.beans.PropertyChangeListener;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.IO;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.PV;
+import uk.ac.stfc.isis.ibex.synoptic.model.desc.RecordType;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.blockselector.BlockSelector;
-import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.SynopticViewModel;
 import uk.ac.stfc.isis.ibex.validators.PvValidator;
 
 /**
  * This is the view model that contains the logic for the pv details panel.
  */
 public class PvDetailViewModel extends ModelObject {
-    private SynopticViewModel synoptic;
-
     private boolean selectionVisible;
     private String pvName = "";
     private String errorText = "";
@@ -49,14 +47,12 @@ public class PvDetailViewModel extends ModelObject {
     /**
      * The constructor for the view model.
      * 
-     * @param synoptic
-     *            The view model for the synoptic as a whole
+     * @param pvList
+     *            The view model for the PV List as a whole
      */
-    public PvDetailViewModel(SynopticViewModel synoptic) {
-        this.synoptic = synoptic;
-
-        if (synoptic != null) {
-            synoptic.addPropertyChangeListener("pvSelection", new PropertyChangeListener() {
+    public PvDetailViewModel(PvListViewModel pvList) {
+        if (pvList != null) {
+            pvList.addPropertyChangeListener("pvSelection", new PropertyChangeListener() {
 
                 @Override
                 public void propertyChange(PropertyChangeEvent evt) {
@@ -173,8 +169,35 @@ public class PvDetailViewModel extends ModelObject {
 
     private void updateModel() {
         if (selectedPv != null) {
-            synoptic.updateSelectedPV(pvName, pvAddress, pvMode);
+            updateSelectedPV(pvName, pvAddress, pvMode);
         }
+    }
+
+    /**
+     * Change the settings for the selected PV.
+     * 
+     * @param name
+     *            the display name
+     * @param address
+     *            the underlying PV
+     * @param mode
+     *            whether it is read or write
+     */
+    public void updateSelectedPV(String name, String address, IO mode) {
+        if (selectedPv == null) {
+            return;
+        }
+
+        selectedPv.setDisplayName(name);
+        RecordType recordType = new RecordType();
+        recordType.setIO(mode);
+        selectedPv.setRecordType(recordType);
+
+        String addressToUse = address;
+
+        selectedPv.setAddress(addressToUse);
+
+        firePropertyChange("pvListChanged", "", "new");
     }
 
     private boolean addressValid(String address) {

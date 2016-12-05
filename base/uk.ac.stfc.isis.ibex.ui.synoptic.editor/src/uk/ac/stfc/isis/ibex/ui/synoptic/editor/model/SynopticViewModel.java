@@ -49,10 +49,7 @@ import uk.ac.stfc.isis.ibex.opis.desc.OpiDescription;
 import uk.ac.stfc.isis.ibex.synoptic.Synoptic;
 import uk.ac.stfc.isis.ibex.synoptic.SynopticModel;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.ComponentDescription;
-import uk.ac.stfc.isis.ibex.synoptic.model.desc.IO;
-import uk.ac.stfc.isis.ibex.synoptic.model.desc.PV;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.Property;
-import uk.ac.stfc.isis.ibex.synoptic.model.desc.RecordType;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.SynopticDescription;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.SynopticParentDescription;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.TargetDescription;
@@ -68,7 +65,6 @@ public class SynopticViewModel extends ModelObject {
 	private SynopticModel editing = Synoptic.getInstance().edit();
 	private SynopticDescription synoptic;
 	private List<ComponentDescription> selectedComponents;
-	private PV selectedPV;
 	private Property selectedProperty;
 	private List<IInstrumentUpdateListener> instrumentUpdateListeners = new CopyOnWriteArrayList<>();
 
@@ -120,7 +116,16 @@ public class SynopticViewModel extends ModelObject {
 		return parent;
 	}
 
-    private String getUniqueName(String rootName, List<String> existingNames) {
+    /**
+     * Get a name that is unique for an object.
+     * 
+     * @param rootName
+     *            The ideal name for the object
+     * @param existingNames
+     *            The existing names
+     * @return A unique name
+     */
+    public String getUniqueName(String rootName, List<String> existingNames) {
         DefaultName namer = new DefaultName(rootName, " ", true);
         return namer.getUnique(existingNames);
     }
@@ -248,92 +253,6 @@ public class SynopticViewModel extends ModelObject {
 	}
 
     /**
-     * Adds a PV writer/reader to the component.
-     * 
-     * @return the index
-     */
-	public int addNewPV() {
-		PV pv = new PV();
-        ComponentDescription selected = getSingleSelectedComp();
-		
-        pv.setDisplayName(getUniqueName("New PV", selected.pvNames()));
-		pv.setAddress("NONE");
-		RecordType rt = new RecordType();
-		rt.setIO(IO.READ);
-		pv.setRecordType(rt);
-
-		int index = 0;
-		
-		if (selectedPV == null) {
-			selected.addPV(pv);
-		} else {
-			index = selected.pvs().indexOf(selectedPV) + 1;
-			selected.addPV(pv, index);
-		}
-
-        firePropertyChange("pvListChanged", "", "new");
-		
-		return index;
-	}
-
-    /**
-     * Moves a PV up the list.
-     */
-	public void promoteSelectedPV() {
-        getSingleSelectedComp().promotePV(selectedPV);
-        firePropertyChange("pvListChanged", "", "new");
-	}
-
-    /**
-     * Moves a PV down the list.
-     */
-	public void demoteSelectedPV() {
-        getSingleSelectedComp().demotePV(selectedPV);
-        firePropertyChange("pvListChanged", "", "new");
-	}
-
-    /**
-     * Determines whether the PV be moved up (enables or disable the associated
-     * control).
-     * 
-     * @return true means can promote
-     */
-	public boolean canPromotePV() {
-		if (selectedPV == null) {
-			return false;
-		}
-
-		int index = selectedComponents.get(0).pvs().indexOf(selectedPV);
-		return index > 0;
-	}
-
-    /**
-     * Determines whether the PV be moved down (enables or disable the
-     * associated control).
-     * 
-     * @return true means can promote
-     */
-	public boolean canDemotePV() {
-		if (selectedPV == null) {
-			return false;
-		}
-
-		int index = selectedComponents.get(0).pvs().indexOf(selectedPV);
-		return index < selectedComponents.get(0).pvs().size() - 1;
-	}
-
-    /**
-     * Remove the selected PV from the component.
-     */
-	public void removeSelectedPV() {
-		if (selectedPV != null) {
-			selectedComponents.get(0).removePV(selectedPV);
-			setSelectedPV(null);
-            firePropertyChange("pvListChanged", "", "new");
-		}
-	}
-
-    /**
      * Add a target (e.g. an OPI) to the component.
      * 
      * @param isFinalEdit has focus moved onto something else (e.g another
@@ -367,13 +286,13 @@ public class SynopticViewModel extends ModelObject {
     /**
      * Sets which component(s) is/are selected.
      * 
-     * @param selected the selected component(s)
+     * @param selected
+     *            the selected component(s)
      */
-	public void setSelectedComponent(List<ComponentDescription> selected) {
+    public void setSelectedComponent(List<ComponentDescription> selected) {
         firePropertyChange("compSelection", selectedComponents, selectedComponents = selected);
-		setSelectedPV(null);
-		setSelectedProperty(null);
-	}
+        setSelectedProperty(null);
+    }
 	
     /**
      * Gets the selected component if there is only one, otherwise returns null.
@@ -399,48 +318,6 @@ public class SynopticViewModel extends ModelObject {
 		} else {
 			return null;
 		}
-	}
-
-    /**
-     * Change the settings for the selected PV.
-     * 
-     * @param name the display name
-     * @param address the underlying PV
-     * @param mode whether it is read or write
-     */
-    public void updateSelectedPV(String name, String address, IO mode) {
-		if (selectedPV == null) {
-			return;
-		}
-
-		selectedPV.setDisplayName(name);
-		RecordType recordType = new RecordType();
-		recordType.setIO(mode);
-		selectedPV.setRecordType(recordType);
-
-		String addressToUse = address;
-		
-		selectedPV.setAddress(addressToUse);
-		
-        firePropertyChange("pvListChanged", "", "new");
-	}
-
-    /**
-     * Set the selected PV.
-     * 
-     * @param selected the PV
-     */
-	public void setSelectedPV(PV selected) {
-        firePropertyChange("pvSelection", selectedPV, selectedPV = selected);
-	}
-
-    /**
-     * Gets the currently selected PV. Can be null.
-     * 
-     * @return the PV
-     */
-	public PV getSelectedPV() {
-		return selectedPV;
 	}
 
     /**
