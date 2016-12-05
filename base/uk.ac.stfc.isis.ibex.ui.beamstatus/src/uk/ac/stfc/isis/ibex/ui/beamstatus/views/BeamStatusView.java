@@ -105,6 +105,18 @@ public class BeamStatusView extends DataBrowserAwareView implements ModelListene
     /** Title for the plot. */
     private static final String PLOT_TITLE = "Beam Current";
 
+    /** Custom magenta colour for high-contrast plot traces. */
+    private static final RGB MAGENTA = new RGB(255, 0, 170);
+
+    /** Custom green colour for high-contrast plot traces. */
+    private static final RGB GREEN = new RGB(0, 200, 0);
+
+    /** Custom blue colour for high-contrast plot traces. */
+    private static final RGB BLUE = new RGB(0, 0, 255);
+
+    /** Default colour for undefined plot traces. */
+    private static final RGB DEFAULT = new RGB(0, 0, 0);
+
     /** {@inheritDoc} */
     @Override
     protected void doCreatePartControl(final Composite parent) {
@@ -286,20 +298,26 @@ public class BeamStatusView extends DataBrowserAwareView implements ModelListene
         try {
             PVItem newItem = new PVItem(pvAddress, Preferences.getScanPeriod());
             String displayName;
+            RGB rgb;
             switch (pvAddress) {
                 case TS1_BEAM_CURRENT_PV:
                     displayName = "TS1";
+                    rgb = BLUE;
                     break;
                 case TS2_BEAM_CURRENT_PV:
                     displayName = "TS2";
+                    rgb = MAGENTA;
                     break;
                 case SYNCH_BEAM_CURRENT_PV:
                     displayName = "Synchrotron";
+                    rgb = GREEN;
                     break;
                 default:
+                    rgb = DEFAULT;
                     displayName = newItem.getDisplayName();
             }
             newItem.setDisplayName(displayName);
+            newItem.setColor(rgb);
             selectPV(newItem);
         } catch (Exception ex) {
             MessageDialog.openError(getSite().getShell(), Messages.Error, NLS.bind(Messages.ErrorFmt, ex.getMessage()));
