@@ -58,7 +58,6 @@ public class PythonBuilderTest {
             ApertureTrans.MEDIUM, SampleGeometry.DISC, CollectionMode.HISTOGRAM);
 
     Row defaultRow = new Row("AA", 0.0, WaitUnit.UAMPS, 0.0, WaitUnit.UAMPS, 1.0, "", 1.0);
-    Row customRow = new Row("BB", 3.0, WaitUnit.SECONDS, 10.0, WaitUnit.FRAMES, 1.0, "sample", 1.0);
 
     String defaultSetup = "set_sample_par('height', '7')\n"
             + "set_sample_par('width', '7')\n"
@@ -84,17 +83,12 @@ public class PythonBuilderTest {
     String defaultDoTrans = "set_aperture('medium')\n"
             + "lm.dotrans_normal(position='AA', title='', uamps=0.0, thickness=1.0, rtype=0)\n";
 
-    String customDoSans = "set_aperture('small')\n"
-            + "lm.dosans_normal(position='BB', title='sample', frames=10.0, thickness=1.0, rtype=1)\n";
-
-    String customDoTrans = "set_aperture('large')\n"
-            + "lm.dotrans_normal(position='BB', title='sample', seconds=3.0, thickness=1.0, rtype=1)\n";
-
     @Before
     public void setUp() {
         DateTimeProvider dateTime = mock(DateTimeProvider.class);
         rows = new ArrayList<Row>();
         settings = defaultSettings;
+        settings.setOrder(Order.SANS);
 
         builder = new PythonBuilder(dateTime);
         builder.setSettings(settings);
@@ -104,11 +98,6 @@ public class PythonBuilderTest {
         when(dateTime.getDate()).thenReturn(date);
         when(dateTime.getTime()).thenReturn(time);
     }
-
-//    @After
-//    public void tearDown() {
-//
-//    }
 
     public String getHeader() {
 
@@ -127,7 +116,7 @@ public class PythonBuilderTest {
     }
 
     @Test
-    public void GIVEN_blank_rows_and_default_settings_WHEN_generating_script_THEN_valid_base_script_is_generated() {
+    public void GIVEN_no_rows_and_default_settings_WHEN_generating_script_THEN_valid_base_script_is_generated() {
         // Arrange
         builder.setRows(rows);
         String expected = getHeader() + indent(defaultSetup);
@@ -322,6 +311,102 @@ public class PythonBuilderTest {
         rows.add(defaultRow);
         rows.add(new Row());
         builder.setRows(rows);
+        String actual = builder.createScript();
+
+        // Assert
+        assertEquals(expected.trim(), actual.trim());
+    }
+
+    @Test
+    public void GIVEN_custom_row_parameter_values_THEN_script_contains_correct_values() {
+        // Arrange
+        String samplePos = "BB";
+        double waitTrans = 3.0;
+        double waitSans = 10.0;
+        WaitUnit waitTransUnit = WaitUnit.SECONDS;
+        WaitUnit waitSansUnit = WaitUnit.FRAMES;
+        String sampleName = "sample";
+        double thickness = 5.0;
+        double period = 2.0;
+
+        Row customRow =
+                new Row(samplePos, waitTrans, waitTransUnit, waitSans, waitSansUnit, period, sampleName, thickness);
+        rows.add(customRow);
+
+        String doSans = "set_aperture('medium')\n"
+                + "lm.dosans_normal(position='" + samplePos + "', title='" + sampleName + "', frames=" + waitSans
+                + ", thickness=" + thickness + ", rtype=0)\n";
+
+        String doTrans = "set_aperture('medium')\n"
+                + "lm.dotrans_normal(position='" + samplePos + "', title='" + sampleName + "', seconds=" + waitTrans
+                + ", thickness=" + thickness + ", rtype=0)\n";
+
+        String expected = getHeader() 
+                + indent(defaultSetup)
+                + indent("\n") 
+                + indent(sequentialLoop)
+                + indent(indent(doSans)) 
+                + indent("\n") 
+                + indent(sequentialLoop) 
+                + indent(indent(doTrans));
+
+        // Act
+        builder.setRows(rows);
+        String actual = builder.createScript();
+
+        // Assert
+        assertEquals(expected.trim(), actual.trim());
+    }
+    @Test
+    public void WHEN_changing_collection_mode_THEN_rtype_in_script_is_set_correctly() {
+        // Arrange
+        rows.add(defaultRow);
+        builder.setRows(rows);
+
+        String doSansEvent = "set_aperture('medium')\n"
+                + "lm.dosans_normal(position='AA', title='', uamps=0.0, thickness=1.0, rtype=1)\n";
+
+        String doTransEvent = "set_aperture('medium')\n"
+                + "lm.dotrans_normal(position='AA', title='', uamps=0.0, thickness=1.0, rtype=1)\n";
+
+        String expected = getHeader() 
+                + indent(defaultSetup)
+                + indent("\n") 
+                + indent(sequentialLoop)
+                + indent(indent(doSansEvent)) + indent("\n") + indent(sequentialLoop) + indent(indent(doTransEvent));
+
+        // Act
+        settings.setCollection(CollectionMode.EVENTS);
+        String actual = builder.createScript();
+
+        // Assert
+        assertEquals(expected.trim(), actual.trim());
+    }
+
+
+    @Test
+    public void WHEN_changing_sans_and_trans_iterations_THEN_script_contains_correct_values() {
+        // Arrange
+        rows.add(defaultRow);
+        builder.setRows(rows);
+        
+        int timesSans = 5;
+        int timesTrans = 7;
+
+        String sansLoop = "for i in range(" + timesSans + "):\n";
+        String transLoop = "for i in range(" + timesTrans + "):\n";
+        String expected = getHeader() 
+                + indent(defaultSetup)
+                + indent("\n") 
+                + indent(sansLoop)
+                + indent(indent(defaultDoSans))
+                + indent("\n") 
+                + indent(transLoop) 
+                + indent(indent(defaultDoTrans));
+
+        // Act
+        settings.setDoSans(timesSans);
+        settings.setDoTrans(timesTrans);
         String actual = builder.createScript();
 
         // Assert
