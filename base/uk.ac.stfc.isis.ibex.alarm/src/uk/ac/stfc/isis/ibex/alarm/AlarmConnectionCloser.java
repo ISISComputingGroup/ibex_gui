@@ -104,7 +104,7 @@ public class AlarmConnectionCloser {
                 LOG.catching(Level.WARN, e);
             }
         } else {
-            LOG.info("No active MQ connection to close. ");
+            LOG.debug("No active MQ connection to close.");
         }
     }
 

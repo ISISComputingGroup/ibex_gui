@@ -19,29 +19,34 @@
 package uk.ac.stfc.isis.ibex.alarm;
 
 import org.apache.logging.log4j.Logger;
-import org.csstudio.alarm.beast.Messages;
 import org.csstudio.alarm.beast.ui.clientmodel.AlarmClientModel;
-import org.eclipse.ui.plugin.AbstractUIPlugin;
+import org.eclipse.core.runtime.Plugin;
 import org.osgi.framework.BundleContext;
 
+import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
+import uk.ac.stfc.isis.ibex.instrument.InstrumentInfoReceiver;
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
 
 /**
  * Class which provides an interaction between the perspective switcher and the
  * alarm system.
  */
-public class Alarm extends AbstractUIPlugin {
-
-    private static final int MAX_RETRIES = 100;
-    private static final int WAIT_FOR_MODEL = 100;
+public class Alarm extends Plugin implements InstrumentInfoReceiver {
 
 	private static final Logger LOG = IsisLog.getLogger(Alarm.class);
 	
 	private static BundleContext context;
 	private static Alarm instance;
 
-    private AlarmClientModel alarmModel;
-    private AlarmCounter counter;
+    /** The alarmModel is a singleton so have a single copy. */
+    private static AlarmClientModel alarmModel = null;
+
+    /**
+     * Alarm counter is based on the alarmModle so there is a single copy this.
+     */
+    private static AlarmCounter counter = new AlarmCounter(null);
+    private AlarmSettings alarmSettings = new AlarmSettings();
+    private AlarmConnectionCloser alarmConnectionCloser = null;
 	
     /**
      * @return the instance of the Alarm bundle
@@ -65,13 +70,23 @@ public class Alarm extends AbstractUIPlugin {
 	public Alarm() {
 		super();
 		instance = this;
-		try {
-			alarmModel = AlarmClientModel.getInstance();
+        setupAlarmModel();
+
+    }
+
+    /**
+     * If there is no alarm model then setup a new alarm model and counter.
+     */
+    private void setupAlarmModel() {
+        try {
+            if (alarmModel == null) {
+                alarmModel = AlarmClientModel.getInstance();
+                counter.setAlarmModel(alarmModel);
+            }
 		} catch (Exception e) {
 			LOG.info("Alarm Client Model not found");
 		}
-		counter = new AlarmCounter(alarmModel);
-	}
+    }
 
     /**
      * Stop the bundle releasing all the resources.
@@ -112,56 +127,49 @@ public class Alarm extends AbstractUIPlugin {
      * 
      * @return an active MQ connection closer
      */
-    public AlarmConnectionCloser releaseAlarm() {
+    private AlarmConnectionCloser releaseAlarm() {
 
         AlarmConnectionCloser alarmConnectionCloser = new AlarmConnectionCloser(alarmModel);
         alarmModel.release();
         alarmModel = null;
+        counter.setAlarmModel(null);
 
         return alarmConnectionCloser;
     }
 
     /**
-     * Run the alarm model update in the background, to ensure the button is
-     * showing the correct number of alarms. This is made difficult by the fact
-     * AlarmClientModel.getInstance() will return something that may not yet be
-     * initialised.
+     * Set up the alarm model default value and create the new alarm model.
+     * 
+     * @param instrument that is being changed to
      */
-    public void updateAlarmModel() {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                counter.resetCount();
-
-                try {
-                    alarmModel = AlarmClientModel.getInstance();
-                } catch (Exception e) {
-                    LOG.info("Alarm Client Model not found");
-                    return;
-                }
-                
-                // The alarm model counter runs on a separate thread so may not
-                // be initialised immediately. Wait for a bit (up to 10 s) here
-                // to see if it gets initialised.
-                int i = 0;
-                while (alarmModel.toString().contains(Messages.AlarmClientModel_NotInitialized) && i < MAX_RETRIES) {
-                    try {
-                        Thread.sleep(WAIT_FOR_MODEL);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                    i++;
-                }
-
-                counter.forceRefresh();
-            }
-        }).start();
+    @Override
+    public void setInstrument(InstrumentInfo instrument) {
+        alarmSettings.setInstrument(instrument);
+        setupAlarmModel();
     }
 
     /**
-     * @return the number of active alarms
+     * Close the current alarm model.
+     * 
+     * @param instrument that is being changed to
      */
-    public int getActiveAlarmsCount() {
-        return alarmModel.getActiveAlarms().length;
+    @Override
+    public void preSetInstrument(InstrumentInfo instrument) {
+        alarmConnectionCloser = releaseAlarm();
     }
+
+    /**
+     * Clean up for the active MQ.
+     * 
+     * @param instrument that has been changed to
+     */
+    @Override
+    public void postSetInstrument(InstrumentInfo instrument) {
+        // close the active MQ as late as possible
+        if (alarmConnectionCloser != null) {
+            alarmConnectionCloser.close();
+            alarmConnectionCloser = null;
+        }
+    }
+
 }

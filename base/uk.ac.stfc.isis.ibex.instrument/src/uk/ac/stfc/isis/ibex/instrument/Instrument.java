@@ -22,6 +22,7 @@ package uk.ac.stfc.isis.ibex.instrument;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.logging.log4j.Logger;
@@ -264,15 +265,31 @@ public class Instrument implements BundleActivator {
     private static void updateExtendingPlugins(InstrumentInfo selectedInstrument) {
         IExtensionRegistry registry = Platform.getExtensionRegistry();
         IConfigurationElement[] elements = registry.getConfigurationElementsFor("uk.ac.stfc.isis.ibex.instrument.info");
+
+        List<InstrumentInfoReceiver> instrumentInfoRecievers = new ArrayList<InstrumentInfoReceiver>();
         for (IConfigurationElement element : elements) {
             try {
                 final Object obj = element.createExecutableExtension("class");
                 InstrumentInfoReceiver receiver = (InstrumentInfoReceiver) obj;
-                receiver.setInstrument(selectedInstrument);
+                instrumentInfoRecievers.add(receiver);
             } catch (CoreException e) {
-                LoggerUtils.logErrorWithStackTrace(LOG, "Unable to update extended plugins", e);
+                LoggerUtils.logErrorWithStackTrace(LOG,
+                        "Unable to update extended plugin for element named " + element.getName(), e);
             }
         }
+
+        for (InstrumentInfoReceiver receiver : instrumentInfoRecievers) {
+            receiver.preSetInstrument(selectedInstrument);
+        }
+
+        for (InstrumentInfoReceiver receiver : instrumentInfoRecievers) {
+            receiver.setInstrument(selectedInstrument);
+        }
+
+        for (InstrumentInfoReceiver receiver : instrumentInfoRecievers) {
+            receiver.postSetInstrument(selectedInstrument);
+        }
+
     }
 
     /**

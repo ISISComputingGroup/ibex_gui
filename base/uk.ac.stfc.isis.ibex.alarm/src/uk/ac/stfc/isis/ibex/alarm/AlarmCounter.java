@@ -32,6 +32,7 @@ import uk.ac.stfc.isis.ibex.model.ModelObject;
 
 /**
  * A model to provide listeners and events which interact with the alarm server.
+ * Chiefly the number of active alarms.
  */
 public class AlarmCounter extends ModelObject {
 	private int count;
@@ -42,45 +43,49 @@ public class AlarmCounter extends ModelObject {
      * @param alarmModel the alarm model
      */
     public AlarmCounter(final AlarmClientModel alarmModel) {
-        count = 0;
-
-		alarmModel.addListener(new AlarmClientModelListener() {
-
-			@Override
-			public void newAlarmConfiguration(AlarmClientModel model) {
-			}
-
-			@Override
-			public void serverTimeout(AlarmClientModel model) {
-			}
-
-			@Override
-			public void serverModeUpdate(AlarmClientModel model, boolean maintenanceMode) {
-			}
-
-			@Override
-			public void newAlarmState(AlarmClientModel model, AlarmTreePV pv, boolean parentChanged) {
-                fireCountChanged(count, count = alarmModel.getActiveAlarms().length);
-			}
-		});
+        setAlarmModel(alarmModel);
     }
 
     /**
-     * Reset the counter to 0.
+     * Set the alarm model used by the alarm counter. On set count property if
+     * updated.
+     * 
+     * @param alarmModel the alarm model; null to signal no alarm model and
+     *            count will be 0.
      */
-	public void resetCount() {
-        fireCountChanged(count, count = 0);
-	}
+    public void setAlarmModel(final AlarmClientModel alarmModel) {
+        
+        if (alarmModel == null) {
+            fireCountChanged(count, count = 0);
+        } else {
+    		alarmModel.addListener(new AlarmClientModelListener() {
+    
+    			@Override
+    			public void newAlarmConfiguration(AlarmClientModel model) {
+                    fireCountChanged(count, count = model.getActiveAlarms().length);
+    			}
+    
+    			@Override
+    			public void serverTimeout(AlarmClientModel model) {
+    			}
+    
+    			@Override
+    			public void serverModeUpdate(AlarmClientModel model, boolean maintenanceMode) {
+                    fireCountChanged(count, count = model.getActiveAlarms().length);
+    			}
+    
+    			@Override
+    			public void newAlarmState(AlarmClientModel model, AlarmTreePV pv, boolean parentChanged) {
+                    fireCountChanged(count, count = model.getActiveAlarms().length);
+    			}
+    		});
+            fireCountChanged(count, count = alarmModel.getActiveAlarms().length);
+        }
+    }
 	
-    /**
-     * Force refresh of the counter.
-     */
-    public void forceRefresh() {
-        fireCountChanged(count, count = Alarm.getDefault().getActiveAlarmsCount());
-	}
-
 	/**
-     * Use of runnable to avoid error between SWT and BEAST.
+     * Fire a change in the number of active alarms. Use of runnable to avoid
+     * error between SWT and BEAST.
      * 
      * @param prevCount the previous count
      * @param newCount the new count
@@ -95,10 +100,11 @@ public class AlarmCounter extends ModelObject {
 	}
 
 	/**
-	 * @return count value
-	 */
+     * @return count of active alarms
+     */
 	public int getCount() {
 		return count;
 	}
+
 
 }

@@ -26,13 +26,14 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
-import uk.ac.stfc.isis.ibex.alarm.Alarm;
-import uk.ac.stfc.isis.ibex.alarm.AlarmConnectionCloser;
+import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
+import uk.ac.stfc.isis.ibex.instrument.InstrumentInfoReceiver;
 
 /**
- * The activator class controls the plug-in life cycle
+ * The activator class controls the plug-in life cycle, this plugin shows the
+ * alarm perspective.
  */
-public class Alarms extends AbstractUIPlugin {
+public class Alarms extends AbstractUIPlugin implements InstrumentInfoReceiver {
     
 	// The plug-in ID
 	public static final String PLUGIN_ID = "uk.ac.stfc.isis.ibex.ui.test"; //$NON-NLS-1$
@@ -61,39 +62,49 @@ public class Alarms extends AbstractUIPlugin {
 	}
 
 	/**
-	 * Returns the shared instance
-	 *
-	 * @return the shared instance
-	 */
+     * Returns the shared instance.
+     *
+     * @return the shared instance
+     */
 	public static Alarms getDefault() {
 		return plugin;
 	}
-	
-    /**
-     * Close alarm views, these need to be restarted on instrument change.
-     */
-    public AlarmConnectionCloser closeAll() {
-        IPerspectiveDescriptor descriptor = PlatformUI.getWorkbench().getPerspectiveRegistry()
-                .findPerspectiveWithId(AlarmPerspective.ID);
-        IWorkbenchPage wp = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
-        wp.closePerspective(descriptor, true, true);
-
-        // Must release alarm, else it will be held on to and will not switch!
-        return Alarm.getDefault().releaseAlarm();
-    }
-
-    public void updateAlarmModel() {
-        Alarm.getDefault().updateAlarmModel();
-    }
 
 	/**
-	 * Returns an image descriptor for the image file at the given
-	 * plug-in relative path
-	 *
-	 * @param path the path
-	 * @return the image descriptor
-	 */
+     * Returns an image descriptor for the image file at the given plug-in
+     * relative path.
+     *
+     * @param path the path
+     * @return the image descriptor
+     */
 	public static ImageDescriptor getImageDescriptor(String path) {
 		return imageDescriptorFromPlugin(PLUGIN_ID, path);
 	}
+
+    @Override
+    public void setInstrument(InstrumentInfo instrument) {
+        // nothing to do on set instrument
+    }
+
+
+    /**
+     * Before the instrument changes close the alarm perspective so that it
+     * releases it alarm model.
+     * 
+     * @param instrument instrument to switch to
+     */
+    @Override
+    public void preSetInstrument(InstrumentInfo instrument) {
+        IPerspectiveDescriptor descriptor =
+                PlatformUI.getWorkbench().getPerspectiveRegistry().findPerspectiveWithId(AlarmPerspective.ID);
+        IWorkbenchPage wp = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
+        if (wp != null) {
+            wp.closePerspective(descriptor, true, true);
+        }
+    }
+
+    @Override
+    public void postSetInstrument(InstrumentInfo instrument) {
+        // nothing to do
+    }
 }

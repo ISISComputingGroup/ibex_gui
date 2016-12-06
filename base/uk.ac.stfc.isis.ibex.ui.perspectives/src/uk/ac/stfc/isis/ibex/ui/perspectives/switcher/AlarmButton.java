@@ -32,6 +32,9 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.wb.swt.SWTResourceManager;
 
+import uk.ac.stfc.isis.ibex.alarm.Alarm;
+import uk.ac.stfc.isis.ibex.alarm.AlarmCounter;
+
 /**
  * A button which relates to the alarm model from BEAST.
  */
@@ -48,6 +51,8 @@ public class AlarmButton extends PerspectiveButton {
 
 	private final AlarmCountViewModel model;
     private String buttonPerspective;
+
+    private static AlarmCounter alarmCounter = Alarm.getInstance().getCounter();
 	
     /**
      * @param parent where the button is stored
@@ -62,13 +67,25 @@ public class AlarmButton extends PerspectiveButton {
 		flash.setDefaultColour(this.getBackground());
 	
 		model = new AlarmCountViewModel(alarmCounter);
-		bindingContext.bindValue(WidgetProperties.text().observe(this), BeanProperties.value("text").observe(model));
+
+        bindingContext.bindValue(WidgetProperties.text().observe(this), BeanProperties.value("text").observe(model));
+        updateFlashing();
+
 		model.addPropertyChangeListener("hasMessages", new PropertyChangeListener() {			
 			@Override
 			public void propertyChange(PropertyChangeEvent arg0) {
 				updateFlashing();
 			}
 		});
+
+        // update flashing when count changes so that if the number goes up or
+        // down a new alarm is issued
+        model.addPropertyChangeListener("text", new PropertyChangeListener() {
+            @Override
+            public void propertyChange(PropertyChangeEvent arg0) {
+                updateFlashing();
+            }
+        });
 	}
 	
     @Override

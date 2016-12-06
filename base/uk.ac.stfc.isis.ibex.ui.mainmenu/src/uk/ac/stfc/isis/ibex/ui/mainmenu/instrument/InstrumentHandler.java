@@ -29,9 +29,8 @@ import org.eclipse.ui.IPerspectiveDescriptor;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.WorkbenchException;
 
-import uk.ac.stfc.isis.ibex.alarm.AlarmConnectionCloser;
+//import uk.ac.stfc.isis.ibex.alarm.AlarmConnectionCloser;
 import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
-import uk.ac.stfc.isis.ibex.ui.alarm.Alarms;
 import uk.ac.stfc.isis.ibex.ui.mainmenu.MainMenuUI;
 import uk.ac.stfc.isis.ibex.ui.scripting.Consoles;
 import uk.ac.stfc.isis.ibex.ui.synoptic.Activator;
@@ -43,7 +42,6 @@ import uk.ac.stfc.isis.ibex.ui.synoptic.Activator;
 public class InstrumentHandler extends AbstractHandler {
 
     private final Consoles consoles = Consoles.getDefault();
-    private final Alarms alarms = Alarms.getDefault();
     private final Activator synoptic = Activator.getDefault();
 
     @Override
@@ -66,13 +64,11 @@ public class InstrumentHandler extends AbstractHandler {
         IPerspectiveDescriptor activePerspective = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage()
                 .getPerspective();
 
-        AlarmConnectionCloser alarmConnectionCloser = alarms.closeAll();
-
         // Close any OPIs in the synoptic
         synoptic.closeAllOPIs();
 
         InstrumentInfo selected = dialog.selectedInstrument();
-        setInstrument(selected);
+        MainMenuUI.INSTRUMENT.setInstrument(selected);
         
         IPerspectiveDescriptor scriptingPerspective = PlatformUI.getWorkbench().getPerspectiveRegistry()
                 .findPerspectiveWithId(uk.ac.stfc.isis.ibex.ui.scripting.Perspective.ID);
@@ -102,18 +98,11 @@ public class InstrumentHandler extends AbstractHandler {
                     false, false);
         }
 
-        alarms.updateAlarmModel();
-
-        alarmConnectionCloser.close();
         return null;
     }
 
     private boolean shouldCloseAllConsoles(InstrumentDialog dialog) {
         return MessageDialog.openConfirm(dialog.getShell(), "Confirm Instrument Switch",
                 "All console scripting sessions for this instrument will be closed.\nWould you like to continue?");
-    }
-
-    private void setInstrument(InstrumentInfo selected) {
-        MainMenuUI.INSTRUMENT.setInstrument(selected);
     }
 }
