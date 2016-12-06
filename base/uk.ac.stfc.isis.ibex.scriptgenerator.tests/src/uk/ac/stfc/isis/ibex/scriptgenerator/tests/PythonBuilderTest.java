@@ -44,7 +44,8 @@ import uk.ac.stfc.isis.ibex.scriptgenerator.settings.SampleGeometry;
 import uk.ac.stfc.isis.ibex.scriptgenerator.settings.SansSettings;
 
 /**
- * Tests the PythonBuilder class for correct behaviour.
+ * Tests that the PythonBuilder class builds valid and correct python scripts
+ * based on script generator settings.
  */
 public class PythonBuilderTest {
     PythonBuilder builder;

@@ -84,7 +84,15 @@ public class PythonBuilder extends ModelObject {
 		
 		return samplePar;
 	}
-	
+
+    /**
+     * Builds the python code for running SANS and TRANS in sequential order.
+     * 
+     * @param sansFirst
+     *            specifies whether SANS data will be collected first (TRANS
+     *            first if false)
+     * @return the script code as String.
+     */
     private String buildSequential(boolean sansFirst) {
         StringBuilder result = new StringBuilder();
         StringBuilder sansData = new StringBuilder();
@@ -117,6 +125,14 @@ public class PythonBuilder extends ModelObject {
         return result.toString();
     }
 
+    /**
+     * Builds the python code for running SANS and TRANS in alternating order.
+     * 
+     * @param sansFirst
+     *            specifies whether SANS data will be collected first (TRANS
+     *            first if false)
+     * @return the script code as String.
+     */
     private String buildAlternating(boolean sansFirst) {
         StringBuilder result = new StringBuilder();
         StringBuilder rowData = new StringBuilder();
@@ -161,9 +177,9 @@ public class PythonBuilder extends ModelObject {
     }
 
 	/**
-     * Builds a string used for the do sans loop.
+     * Builds a string used for the do_sans loop from a single row.
      * 
-     * @return the sans loop string
+     * @return the code block for the do_sans python command.
      */
     private String buildSans(Row row) {
         StringBuilder sansData = new StringBuilder();
@@ -192,9 +208,9 @@ public class PythonBuilder extends ModelObject {
     }
 	
 	/**
-     * Builds a string used for the do trans loop.
+     * Builds a string used for the do_trans loop from a single row.
      * 
-     * @return the trans loop
+     * @return the code block for the do_trans python command.
      */
     private String buildTrans(Row row) {
         StringBuilder transData = new StringBuilder();
@@ -283,6 +299,13 @@ public class PythonBuilder extends ModelObject {
         return script.toString();
 	}
 
+    /**
+     * Indents a single- or multiline block of python code.
+     * 
+     * @param block
+     *            The block of code.
+     * @return The indented block of code.
+     */
     private String indent(String block) {
         return block.replaceAll("(?m)^", INDENT);
     }
