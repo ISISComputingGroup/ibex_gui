@@ -46,18 +46,22 @@ public class MotorsOverview extends Composite {
 	
 	private final Color background = SWTResourceManager.getColor(SWT.COLOR_WHITE);
 
+    private MotorBackgroundPalette palette;
+
+
     /**
      * 
      * @param parent - The parent of this element
      * @param style - The base style to be applied to the overview
      */
-    public MotorsOverview(Composite parent, int style) {
+    public MotorsOverview(Composite parent, int style, MotorBackgroundPalette palette) {
 		super(parent, style);
 		setBackground(SWTResourceManager.getColor(192, 192, 192));
 		setLayout(new FillLayout(SWT.HORIZONTAL));
 		
 		motorComposite = new Composite(this, SWT.NONE);
 		motorComposite.setBackground(background);
+        this.palette = palette;
 	}
 	
     /**
@@ -87,6 +91,12 @@ public class MotorsOverview extends Composite {
 		}
 	}
 
+    public void setPalette(MotorBackgroundPalette palette) {
+        for (MinimalMotorView view : minimalViews) {
+            view.setPalette(palette);
+        }
+    }
+
 	@Override
 	public void addMouseListener(MouseListener listener) {
 		super.addMouseListener(listener);
@@ -104,7 +114,7 @@ public class MotorsOverview extends Composite {
 	}
 	
 	private void addMinimalView(Motor motor) {
-		MinimalMotorView view = new MinimalMotorView(motorComposite, SWT.NONE);
+        MinimalMotorView view = new MinimalMotorView(motorComposite, SWT.NONE, palette);
 		view.setMotor(motor);
 		view.setLayoutData(viewLayout());
 		

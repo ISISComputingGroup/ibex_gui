@@ -23,6 +23,7 @@ import com.google.common.base.Strings;
 import uk.ac.stfc.isis.ibex.motor.Motor;
 import uk.ac.stfc.isis.ibex.motor.Motors;
 import uk.ac.stfc.isis.ibex.motor.internal.MotorsTable;
+import uk.ac.stfc.isis.ibex.ui.motor.DisplayPreferences;
 
 /** A view that shows a collection of motors. */
 public class TableOfMotorsView extends ViewPart {
@@ -60,6 +61,7 @@ public class TableOfMotorsView extends ViewPart {
 	 * Empty constructor.
 	 */
 	public TableOfMotorsView() {
+        int a = 1;
 	}
 	
 	/** The MotorsTable used for this particular table of motors view. */
@@ -87,7 +89,8 @@ public class TableOfMotorsView extends ViewPart {
 		scrolledComposite.setMinWidth(numMotors * MOTOR_WIDTH + TABLE_MARGIN);
 		scrolledComposite.setExpandVertical(true);
 		
-        MotorsOverview motorsOverview = new MotorsOverview(scrolledComposite, SWT.NONE);
+        MotorsOverview motorsOverview =
+                new MotorsOverview(scrolledComposite, SWT.NONE, DisplayPreferences.getMotorBackgroundPalette());
 		GridData gdOverview = new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1);
 		motorsOverview.setLayoutData(gdOverview);
 		

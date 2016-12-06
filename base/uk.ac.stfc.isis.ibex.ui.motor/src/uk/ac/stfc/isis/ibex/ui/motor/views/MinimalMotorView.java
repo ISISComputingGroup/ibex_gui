@@ -26,9 +26,6 @@ import java.beans.PropertyChangeListener;
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.beans.BeanProperties;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
@@ -36,9 +33,12 @@ import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.layout.FillLayout;
-import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Event;
+import org.eclipse.swt.widgets.Label;
 import org.eclipse.wb.swt.SWTResourceManager;
 
 import uk.ac.stfc.isis.ibex.motor.Motor;
@@ -60,15 +60,23 @@ public class MinimalMotorView extends Composite {
 	private Motor motor;
 	private Label motorName;
 		
-	private static final Color MOVINGCOLOR = SWTResourceManager.getColor(160, 250, 170);
-	private static final Color STOPPEDCOLOR = SWTResourceManager.getColor(255, 200, 200);
-	private static final Color DISABLEDCOLOR = SWTResourceManager.getColor(200, 200, 200);
-	private static final Color UNAMEDCOLOR = SWTResourceManager.getColor(220, 220, 220);
+    /*
+     * 
+     * private static final Color MOVINGCOLOR = SWTResourceManager.getColor(160,
+     * 250, 170); private static final Color STOPPEDCOLOR =
+     * SWTResourceManager.getColor(255, 200, 200); private static final Color
+     * DISABLEDCOLOR = SWTResourceManager.getColor(200, 200, 200); private
+     * static final Color UNAMEDCOLOR = SWTResourceManager.getColor(220, 220,
+     * 220);
+     * 
+     */
 
 	private Label value;
 	private Label setpoint;
 	
-	public MinimalMotorView(Composite parent, int style) {
+    private MotorBackgroundPalette palette;
+
+    public MinimalMotorView(Composite parent, int style, MotorBackgroundPalette palette) {
 		super(parent, style);
 		setLayout(new FillLayout(SWT.HORIZONTAL));
 		
@@ -102,7 +110,14 @@ public class MinimalMotorView extends Composite {
 		indicator.setLayoutData(new GridData(SWT.FILL, SWT.TOP, false, false, 1, 1));
 		
 		setMouseListeners();
+
+        this.palette = palette;
 	}
+
+    public void setPalette(MotorBackgroundPalette palette) {
+        this.palette = palette;
+        updateMotorColor(motor);
+    }
 		
 	public Motor motor() {
 		return motor;
@@ -207,7 +222,7 @@ public class MinimalMotorView extends Composite {
 				motorComposite.setEnabled(isEnabled);
 				motorName.setFont(isEnabled ? ENABLEDFONT : DISABLEDFONT);
 				
-				setColor(motor);
+				updateMotorColor(motor);
 			}
 		});
 	}
@@ -216,18 +231,33 @@ public class MinimalMotorView extends Composite {
 		display.asyncExec(new Runnable() {
 			@Override
 			public void run() {
-				setColor(motor);
+				updateMotorColor(motor);
 			}
 		});
 	}
 
-	private void setColor(Motor motor) {
+	private void updateMotorColor(Motor motor) {
 		Boolean movingValue = motor.getMoving();
 		boolean isMoving = movingValue != null && movingValue;
 		boolean isEnabled = (motor.getEnabled() == MotorEnable.ENABLE);
 		boolean isNamed = (motor.getDescription() != "");
 
-		setColor(isEnabled ? (isNamed ? (isMoving ? MOVINGCOLOR : STOPPEDCOLOR) : UNAMEDCOLOR) : DISABLEDCOLOR);
+        // setColor(isEnabled ? (isNamed ? (isMoving ? MOVINGCOLOR :
+        // STOPPEDCOLOR) : UNAMEDCOLOR) : DISABLEDCOLOR);
+
+        Color backgroundColour;
+
+        if (!isEnabled) {
+            backgroundColour = palette.getDisabledColor();
+        } else if (!isNamed) {
+            backgroundColour = palette.getUnnamedColor();
+        } else if (!isMoving) {
+            backgroundColour = palette.getStoppedColor();
+        } else {
+            backgroundColour = palette.getMovingColor();
+        }
+
+        setColor(backgroundColour);
 		
 	}
 	

@@ -105,5 +105,30 @@
          </view>
       </perspectiveExtension>
    </extension>
+   <extension
+         point="org.eclipse.ui.commands">
+      <command
+            defaultHandler="uk.ac.stfc.isis.ibex.ui.motor.MotorHandler"
+            id="uk.ac.stfc.isis.ibex.ui.motor.MotorHandler"
+            name="name">
+      </command>
+   </extension>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            allPopups="false"
+            locationURI="menu:org.eclipse.ui.main.menu?after=runcontrolMenu">
+         <menu
+               id="preferencesMenu"
+               label="Preferences">
+            <command
+                  commandId="uk.ac.stfc.isis.ibex.ui.motor.MotorHandler"
+                  id="uk.ac.stfc.isis.ibex.ui.motor.MotorHandler"
+                  label="Motor"
+                  style="push">
+            </command>
+         </menu>
+      </menuContribution>
+   </extension>
 
 </plugin>
