@@ -238,9 +238,11 @@ public class LogDisplay extends Canvas {
 		Display.getDefault().asyncExec(new Runnable() {
 			@Override
 			public void run() {
-                tableViewer.setInput(messages);
-                tableViewer.refresh();
-                asyncMessageModerator.releaseTaskLock();
+                if (!tableViewer.getControl().isDisposed()) {
+                    tableViewer.setInput(messages);
+                    tableViewer.refresh();
+                    asyncMessageModerator.releaseTaskLock();
+                }
 			}
 		});
 	}
