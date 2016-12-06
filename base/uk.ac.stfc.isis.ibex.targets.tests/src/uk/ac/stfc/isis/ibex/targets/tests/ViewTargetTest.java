@@ -94,8 +94,8 @@ public class ViewTargetTest {
         final String existing_key_2 = "key2";
         final String existing_value_2 = "value2";
         
-        vt.addProperty(existing_key_1,existing_value_1);
-        vt.addProperty(existing_key_2,existing_value_2);
+        vt.addProperty(existing_key_1, existing_value_1);
+        vt.addProperty(existing_key_2, existing_value_2);
 
         final String new_property_key = "key";
         final String new_property_value = "value";

@@ -24,24 +24,24 @@ import org.eclipse.wb.swt.SWTResourceManager;
 
 public enum RunState {
 
-	PROCESSING (RunStateColour.YELLOW),
-	RUNNING (RunStateColour.LIGHT_GREEN),
-	SETUP (RunStateColour.LIGHT_BLUE),
-	PAUSED (RunStateColour.RED),
-	WAITING (RunStateColour.GOLDEN_ROD),
-	VETOING (RunStateColour.GOLDEN_ROD),	
-	ENDING (RunStateColour.BLUE),
+    PROCESSING(RunStateColour.YELLOW),
+    RUNNING(RunStateColour.LIGHT_GREEN),
+    SETUP(RunStateColour.LIGHT_BLUE),
+    PAUSED(RunStateColour.RED),
+    WAITING(RunStateColour.GOLDEN_ROD),
+    VETOING(RunStateColour.GOLDEN_ROD),
+    ENDING(RunStateColour.BLUE),
 	
-	PAUSING (RunStateColour.DARK_RED),
-	BEGINNING (RunStateColour.GREEN),
-	ABORTING (RunStateColour.BLUE),
-	RESUMING (RunStateColour.GREEN),
+    PAUSING(RunStateColour.DARK_RED),
+    BEGINNING(RunStateColour.GREEN),
+    ABORTING(RunStateColour.BLUE),
+    RESUMING(RunStateColour.GREEN),
 	
-	UPDATING (RunStateColour.YELLOW),
-	STORING (RunStateColour.YELLOW),	
-	SAVING (RunStateColour.YELLOW),
+    UPDATING(RunStateColour.YELLOW),
+    STORING(RunStateColour.YELLOW),
+    SAVING(RunStateColour.YELLOW),
 	
-	UNKNOWN (RunStateColour.YELLOW);
+    UNKNOWN(RunStateColour.YELLOW);
 	
 	private final String name;
 	private final Color color;

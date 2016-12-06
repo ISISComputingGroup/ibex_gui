@@ -40,22 +40,22 @@ import org.eclipse.wb.swt.SWTResourceManager;
  */
 public enum RecordSetterState {
 	/** The record is not connected to its backing data-store; no updates possible. */
-	DISCONNECTED (255, 0, 0, // DARK RED
+    DISCONNECTED(255, 0, 0, // DARK RED
 			ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui.widgets", "icons/warning_red.png"),
 			"The record is DISCONNECTED"),
 	
 	/** The record is connected but the current value is not a valid record value.. */
-	INVALID (240, 150, 150, // LIGHT RED
+    INVALID(240, 150, 150, // LIGHT RED
 			ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui.widgets", "icons/thumb_down.png"),
 			"The value entered is INVALID for this record type"),
 	
 	/** The record is connected and the current value is a valid record value. */
-	VALID (150, 240, 150, // LIGHT GREEN
+    VALID(150, 240, 150, // LIGHT GREEN
 			ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui.widgets", "icons/thumb_up.png"),
 			"The value entered is VALID for this record type"),
 	
 	/** The record is connected and the current value is the last one sent to the record. */
-	CURRENT (150, 240, 150, // LIGHT GREEN
+    CURRENT(150, 240, 150, // LIGHT GREEN
 			ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui.widgets", "icons/check.png"),
 			"The value entered was SENT to the record");
 	
