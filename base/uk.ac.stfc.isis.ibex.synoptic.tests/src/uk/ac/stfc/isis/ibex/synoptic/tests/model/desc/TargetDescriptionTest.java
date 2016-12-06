@@ -31,7 +31,7 @@ import uk.ac.stfc.isis.ibex.synoptic.model.desc.Property;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.TargetDescription;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.TargetType;
 
-@SuppressWarnings("checkstyle:methodname")
+@SuppressWarnings("checkstyle:methodname checkstyle:magicnumber")
 public class TargetDescriptionTest {
     
     private static final String NAME = "name";
@@ -198,7 +198,8 @@ public class TargetDescriptionTest {
         // Assert
         Property defaultProperty = new Property();
         assertSame(newProperty, source.getProperty(new_key, defaultProperty));
-        assertEquals("Number of properties in the list", 3, source.getProperties().size());
+        final int expected_number_of_properties = 3;
+        assertEquals("Number of properties in the list", expected_number_of_properties, source.getProperties().size());
     }
 
 }
