@@ -121,12 +121,26 @@
          <menu
                id="preferencesMenu"
                label="Preferences">
-            <command
-                  commandId="uk.ac.stfc.isis.ibex.ui.motor.MotorHandler"
-                  id="uk.ac.stfc.isis.ibex.ui.motor.MotorHandler"
-                  label="Motor"
-                  style="push">
-            </command>
+            <menu
+                  id="colourSettingsMenu"
+                  label="Colour Settings">
+               <command
+                     commandId="uk.ac.stfc.isis.ibex.ui.motor.MotorHandler"
+                     id="normalVisionCommand"
+                     label="Normal Vision"
+                     style="radio">
+                  <parameter
+                        name="uk.ac.stfc.isis.ibex.ui.motor.colorOptionID"
+                        value="hello">
+                  </parameter>
+               </command>
+               <command
+                     commandId="uk.ac.stfc.isis.ibex.ui.motor.MotorHandler"
+                     id="deuteranopiaCommand"
+                     label="Deuteranopia"
+                     style="radio">
+               </command>
+            </menu>
          </menu>
       </menuContribution>
    </extension>

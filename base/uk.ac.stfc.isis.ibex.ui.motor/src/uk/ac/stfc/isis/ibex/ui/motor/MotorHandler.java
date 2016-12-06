@@ -22,9 +22,17 @@
  */
 package uk.ac.stfc.isis.ibex.ui.motor;
 
+import java.util.Map;
+
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.ui.IViewPart;
+import org.eclipse.ui.IViewReference;
+import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.PlatformUI;
+
+import uk.ac.stfc.isis.ibex.ui.motor.views.TableOfMotorsView;
 
 /**
  * 
@@ -39,15 +47,24 @@ public class MotorHandler extends AbstractHandler {
     @Override
     public Object execute(ExecutionEvent event) throws ExecutionException {
 
-//        Activator.getDefault().
-//
-//        List<IsisPerspective> allPerspectives = Activator.getDefault().perspectives().get();
-//        
-//        for (IsisPerspective perspective : allPerspectives) {
-//            perspective.
-//        }
+        Map test = event.getParameters();
+        String output = event.getParameter("uk.ac.stfc.isis.ibex.ui.motor.colourOptionID");
 
-        System.out.println("HELLO");
+        System.out.println(output);
+
+        DisplayPreferences.setMotorBackgroundPalette(ColourOption.DEUTERANOPIA);
+
+        IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
+        IViewReference[] viewReferences = page.getViewReferences();
+
+        for (IViewReference viewReference : viewReferences) {
+            IViewPart viewPart = viewReference.getView(false);
+            if (viewPart instanceof TableOfMotorsView) {
+                TableOfMotorsView motorsView = (TableOfMotorsView) viewPart;
+                motorsView.updatePalette();
+            }
+        }
+
         return null;
     }
 

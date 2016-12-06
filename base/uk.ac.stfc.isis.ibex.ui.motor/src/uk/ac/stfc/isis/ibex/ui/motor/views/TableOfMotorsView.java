@@ -57,15 +57,18 @@ public class TableOfMotorsView extends ViewPart {
 		}
 	};
 	
+    /** The MotorsTable used for this particular table of motors view. */
+    protected MotorsTable motorsTable;
+
+    /** The MotorsOverview used by this view. **/
+    private MotorsOverview motorsOverview;
+
 	/**
 	 * Empty constructor.
 	 */
 	public TableOfMotorsView() {
-        int a = 1;
+//        int a = 1;
 	}
-	
-	/** The MotorsTable used for this particular table of motors view. */
-	protected MotorsTable motorsTable;
 	
 	@Override
 	public void createPartControl(Composite parent) {
@@ -89,7 +92,7 @@ public class TableOfMotorsView extends ViewPart {
 		scrolledComposite.setMinWidth(numMotors * MOTOR_WIDTH + TABLE_MARGIN);
 		scrolledComposite.setExpandVertical(true);
 		
-        MotorsOverview motorsOverview =
+        motorsOverview =
                 new MotorsOverview(scrolledComposite, SWT.NONE, DisplayPreferences.getMotorBackgroundPalette());
 		GridData gdOverview = new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1);
 		motorsOverview.setLayoutData(gdOverview);
@@ -107,6 +110,10 @@ public class TableOfMotorsView extends ViewPart {
 	@Override
 	public void setFocus() {	
 	}
+
+    public void updatePalette() {
+        motorsOverview.setPalette(DisplayPreferences.getMotorBackgroundPalette());
+    }
 
 	/**
 	 * Opens the motor OPI for a particular motor.
