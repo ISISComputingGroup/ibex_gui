@@ -34,6 +34,11 @@ public class Row extends ModelObject {
 	private String sampleName; 
 	private Double thickness; 
 	private boolean wasNull;
+    private static final double DEFAULT_WAIT = 10.0;
+    private static final WaitUnit DEFAULT_WAIT_UNIT = WaitUnit.UAMPS;
+    private static final String DEFAULT_NAME = "";
+    private static final double DEFAULT_THICKNESS = 1.0;
+    private static final double DEFAULT_PERIOD = 1.0;
 	
 	/**
 	 * The default constructor.
@@ -68,6 +73,26 @@ public class Row extends ModelObject {
 		this.wasNull = true;
 	}
 	
+    private void initRow() {
+        this.transWaitValue = DEFAULT_WAIT;
+        this.transWaitUnit = DEFAULT_WAIT_UNIT;
+        this.sansWaitValue = DEFAULT_WAIT;
+        this.sansWaitUnit = DEFAULT_WAIT_UNIT;
+        this.period = DEFAULT_PERIOD;
+        this.sampleName = DEFAULT_NAME;
+        this.thickness = DEFAULT_THICKNESS;
+    }
+
+    private void clearRow() {
+        this.transWaitValue = null;
+        this.transWaitUnit = null;
+        this.sansWaitValue = null;
+        this.sansWaitUnit = null;
+        this.period = null;
+        this.sampleName = "";
+        this.thickness = null;
+    }
+
 	/**
 	 * Gets the position.
 	 * @return the position
@@ -81,7 +106,14 @@ public class Row extends ModelObject {
 	 * @param position the position
 	 */
 	public void setPosition(String position) {
-		this.wasNull = false;
+        if (this.wasNull) {
+            this.wasNull = false;
+            initRow();
+        }
+        if (position.length() == 0) {
+            this.wasNull = true;
+            clearRow();
+        }
 		firePropertyChange("position", this.position, this.position = position);
 	}
 
