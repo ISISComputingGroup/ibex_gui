@@ -40,15 +40,10 @@ public class DisplayPreferences {
     private static final Color NORMAL_VISION_DISABLED_COLOR = SWTResourceManager.getColor(200, 200, 200);
     private static final Color NORMAL_VISION_UNNAMED_COLOR = SWTResourceManager.getColor(220, 220, 220);
 
-    private static final Color DEUTERANOPIA_MOVING_COLOR = SWTResourceManager.getColor(0, 250, 0);
-    private static final Color DEUTERANOPIA_STOPPED_COLOR = SWTResourceManager.getColor(250, 0, 0);
-    private static final Color DEUTERANOPIA_DISABLED_COLOR = SWTResourceManager.getColor(0, 0, 250);
-    private static final Color DEUTERANOPIA_UNNAMED_COLOR = SWTResourceManager.getColor(220, 220, 220);
-
-    private static final Color PROTANOPIA_MOVING_COLOR = SWTResourceManager.getColor(0, 250, 250);
-    private static final Color PROTANOPIA_STOPPED_COLOR = SWTResourceManager.getColor(250, 0, 250);
-    private static final Color PROTANOPIA_DISABLED_COLOR = SWTResourceManager.getColor(250, 0, 250);
-    private static final Color PROTANOPIA_UNNAMED_COLOR = SWTResourceManager.getColor(220, 220, 220);
+    private static final Color COLOURBLIND_MOVING_COLOR = SWTResourceManager.getColor(0, 255, 0);
+    private static final Color COLOURBLIND_STOPPED_COLOR = SWTResourceManager.getColor(120, 120, 255);
+    private static final Color COLOURBLIND_DISABLED_COLOR = SWTResourceManager.getColor(200, 200, 200);
+    private static final Color COLOURBLIND_UNNAMED_COLOR = SWTResourceManager.getColor(220, 220, 220);
 
 
     private static final Map<ColourOption, MotorBackgroundPalette> paletteOptions;
@@ -57,10 +52,8 @@ public class DisplayPreferences {
         paletteOptions.put(ColourOption.NORMAL_VISION,
                 new MotorBackgroundPalette(NORMAL_VISION_MOVING_COLOR, NORMAL_VISION_STOPPED_COLOR,
                 NORMAL_VISION_DISABLED_COLOR, NORMAL_VISION_UNNAMED_COLOR));
-        paletteOptions.put(ColourOption.DEUTERANOPIA, new MotorBackgroundPalette(DEUTERANOPIA_MOVING_COLOR,
-                DEUTERANOPIA_STOPPED_COLOR, DEUTERANOPIA_DISABLED_COLOR, DEUTERANOPIA_UNNAMED_COLOR));
-        paletteOptions.put(ColourOption.PROTANOPIA, new MotorBackgroundPalette(PROTANOPIA_MOVING_COLOR,
-                PROTANOPIA_STOPPED_COLOR, PROTANOPIA_DISABLED_COLOR, PROTANOPIA_UNNAMED_COLOR));
+        paletteOptions.put(ColourOption.COLOURBLIND, new MotorBackgroundPalette(COLOURBLIND_MOVING_COLOR,
+                COLOURBLIND_STOPPED_COLOR, COLOURBLIND_DISABLED_COLOR, COLOURBLIND_UNNAMED_COLOR));
     }
 
     private static MotorBackgroundPalette currentMotorBackgroundPalette =

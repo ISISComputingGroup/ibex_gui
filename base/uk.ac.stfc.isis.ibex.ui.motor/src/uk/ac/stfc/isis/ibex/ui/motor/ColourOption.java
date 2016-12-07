@@ -27,6 +27,5 @@ package uk.ac.stfc.isis.ibex.ui.motor;
  */
 public enum ColourOption {
     NORMAL_VISION,
-    DEUTERANOPIA,
-    PROTANOPIA
+    COLOURBLIND
 }

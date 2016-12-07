@@ -157,21 +157,11 @@
                <command
                      commandId="uk.ac.stfc.isis.ibex.ui.motor.colourOptionsCommand"
                      id="uk.ac.stfc.isis.ibex.ui.motor.colourOptionsCommand2"
-                     label="Deuteranopia"
+                     label="Colour Blind"
                      style="radio">
                   <parameter
                         name="org.eclipse.ui.commands.radioStateParameter"
-                        value="DEUTERANOPIA">
-                  </parameter>
-               </command>
-               <command
-                     commandId="uk.ac.stfc.isis.ibex.ui.motor.colourOptionsCommand"
-                     id="uk.ac.stfc.isis.ibex.ui.motor.colourOptionsCommand3"
-                     label="Protanopia"
-                     style="push">
-                  <parameter
-                        name="org.eclipse.ui.commands.radioStateParameter"
-                        value="PROTANOPIA">
+                        value="COLOURBLIND">
                   </parameter>
                </command>
             </menu>
