@@ -20,10 +20,10 @@
 package uk.ac.stfc.isis.ibex.ui.blocks.groups;
 
 import org.eclipse.jface.action.Action;
+import org.eclipse.jface.action.GroupMarker;
 import org.eclipse.jface.action.IAction;
-import org.eclipse.jface.action.IMenuListener;
-import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.MenuManager;
+import org.eclipse.jface.action.Separator;
 import org.eclipse.swt.widgets.Menu;
 
 /**
@@ -31,13 +31,17 @@ import org.eclipse.swt.widgets.Menu;
  */
 public class GroupsMenu {
 
-	private final MenuManager manager = new MenuManager();
+    private final MenuManager manager;
 	private final GroupsPanel groups;
 	
-	private final IAction showAllBlocks = new Action("Show hidden blocks") {
+    private static final String GROUP_MENU_GROUP = "Group";
+
+    private final IAction showAllBlocks = new Action("Show hidden blocks") {
 		@Override
 		public void run() {
 			groups.setShowHiddenBlocks(true);
+            manager.remove(hideBlocks.getId());
+            manager.appendToGroup(GROUP_MENU_GROUP, showAllBlocks);
 		}
 	};
 	
@@ -45,25 +49,59 @@ public class GroupsMenu {
 		@Override
 		public void run() {
 			groups.setShowHiddenBlocks(false);
+            manager.remove(showAllBlocks.getId());
+            manager.appendToGroup(GROUP_MENU_GROUP, hideBlocks);
 		}
 	};
 
-	
-	public GroupsMenu(final GroupsPanel groups) {
-		this.groups = groups;
-		
-		manager.addMenuListener(new IMenuListener() {		
-			@Override
-			public void menuAboutToShow(IMenuManager manager) {						
-				showAllBlocks.setEnabled(!groups.showHiddenBlocks());				
-				hideBlocks.setEnabled(!showAllBlocks.isEnabled());
-			}
-		});
-		
-		manager.add(showAllBlocks);
-		manager.add(hideBlocks);
+    /**
+     * Constructor for the class when there is already a menu that we want to
+     * add on to the end of. Sets up the menu manager to include show or hide
+     * blocks.
+     * 
+     * @param groups
+     *            The panel on which to hide/show blocks.
+     * @param manager
+     *            The pre-existing menu
+     */
+    public GroupsMenu(final GroupsPanel groups, final MenuManager manager) {
+        this.manager = manager;
+        this.groups = groups;
+
+        initialise();
+
+        manager.prependToGroup(GROUP_MENU_GROUP, new Separator());
+    }
+
+    /**
+     * Constructor for the class when there is no menu already. Sets up the menu
+     * manager to include show or hide blocks.
+     * 
+     * @param groups
+     *            The panel on which to hide/show blocks.
+     */
+    public GroupsMenu(final GroupsPanel groups) {
+        this.manager = new MenuManager();
+        this.groups = groups;
+
+        initialise();
 	}
+    
+    private void initialise() {
+        manager.add(new GroupMarker(GROUP_MENU_GROUP));
+
+        if (groups.showHiddenBlocks()) {
+            manager.appendToGroup(GROUP_MENU_GROUP, hideBlocks);
+        } else {
+            manager.appendToGroup(GROUP_MENU_GROUP, showAllBlocks);
+        }
+    }
 	
+    /**
+     * Creates and returns a context menu for the GroupsPanel.
+     * 
+     * @return A context menu
+     */
 	public Menu get() {
 		return manager.createContextMenu(groups);
 	}

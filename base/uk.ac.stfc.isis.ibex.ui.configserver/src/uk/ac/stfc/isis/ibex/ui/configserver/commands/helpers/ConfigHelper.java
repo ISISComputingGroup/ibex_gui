@@ -13,7 +13,7 @@ import uk.ac.stfc.isis.ibex.ui.configserver.ConfigurationViewModels;
  */
 public abstract class ConfigHelper {
     protected String title;
-    protected String sub_title_current;
+    protected String currentSubTitle;
 	
     protected ConfigurationViewModels configurationViewModels;
     protected Shell shell;
@@ -45,7 +45,7 @@ public abstract class ConfigHelper {
         UpdatedValue<EditableConfiguration> config = configurationViewModels.getConfigModel();
 
         if (Awaited.returnedValue(config, 1)) {
-            openDialog(sub_title_current, config.getValue(), blockname, true);
+            openDialog(currentSubTitle, config.getValue(), blockname, true);
         } else {
             MessageDialog.openError(shell, "Error", "There is no current configuration, so it can not be edited.");
         }

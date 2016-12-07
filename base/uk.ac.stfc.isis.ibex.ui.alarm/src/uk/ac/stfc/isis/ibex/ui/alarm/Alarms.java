@@ -40,7 +40,9 @@ public class Alarms extends AbstractUIPlugin implements InstrumentInfoReceiver {
 
     private static final Logger LOG = IsisLog.getLogger(Alarms.class);
     
-	// The plug-in ID
+    /**
+     * The plug-in ID.
+     */
 	public static final String PLUGIN_ID = "uk.ac.stfc.isis.ibex.ui.test"; //$NON-NLS-1$
 
 	// The shared instance

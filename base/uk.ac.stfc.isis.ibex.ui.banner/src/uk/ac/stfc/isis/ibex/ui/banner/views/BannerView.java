@@ -60,9 +60,12 @@ public class BannerView extends ViewPart implements ISizeProvider {
 
     private static final Font ALARM_FONT = SWTResourceManager.getFont("Arial", 10, SWT.BOLD);
 
-    public static final String ID = "uk.ac.stfc.isis.ibex.ui.banner.views.BannerView"; //$NON-NLS-1$
-    public static final int FIXED_HEIGHT = 35;
-    private final int ITEM_WIDTH = 250;
+    /**
+     * View ID.
+     */
+    public static final String ID = "uk.ac.stfc.isis.ibex.ui.banner.views.BannerView";
+    private static final int FIXED_HEIGHT = 35;
+    private static final int ITEM_WIDTH = 250;
 
     private final Banner banner = Banner.getInstance();
 

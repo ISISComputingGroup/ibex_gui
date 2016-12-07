@@ -25,9 +25,9 @@ import java.util.List;
 
 
 public enum PeriodType {
-	UNUSED ("Unused"),
-	DAQ ("DAQ"),
-	DWELL ("Dwell");
+    UNUSED("Unused"),
+    DAQ("DAQ"),
+    DWELL("Dwell");
 
 	private String text;
 

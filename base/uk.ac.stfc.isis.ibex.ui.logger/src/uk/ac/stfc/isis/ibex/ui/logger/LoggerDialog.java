@@ -101,8 +101,8 @@ public class LoggerDialog extends TitleAreaDialog {
 	}
 
 	/**
-	 * Override to get rid of the cancel button
-	 */
+     * Override to get rid of the cancel button.
+     */
 	@Override
 	public void createButtonsForButtonBar(Composite parent) {
 	}

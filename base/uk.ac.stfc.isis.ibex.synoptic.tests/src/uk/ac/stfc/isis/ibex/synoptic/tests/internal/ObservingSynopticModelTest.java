@@ -19,13 +19,12 @@
 
 package uk.ac.stfc.isis.ibex.synoptic.tests.internal;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
 /**
- * This class is responsible for testing the Observing Synoptic Model
- *
+ * This class is responsible for testing the Observing Synoptic Model.
  */
 @SuppressWarnings({ "checkstyle:magicnumber", "checkstyle:methodname", "unchecked" })
 public class ObservingSynopticModelTest {

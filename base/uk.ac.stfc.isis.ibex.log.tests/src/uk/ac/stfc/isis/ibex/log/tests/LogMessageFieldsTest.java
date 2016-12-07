@@ -18,7 +18,7 @@
 
 package uk.ac.stfc.isis.ibex.log.tests;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
@@ -26,7 +26,7 @@ import uk.ac.stfc.isis.ibex.log.message.LogMessageFields;
 
 /**
  * This class is responsible for testing the Log Message Fields for the XML
- * interaction
+ * interaction.
  * 
  */
 public class LogMessageFieldsTest {

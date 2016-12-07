@@ -18,10 +18,12 @@
 
 package uk.ac.stfc.isis.ibex.epics.tests.conversion;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import java.util.Arrays;
 
+import org.epics.util.array.ListByte;
+import org.epics.util.array.ListFloat;
 import org.epics.vtype.VByteArray;
 import org.epics.vtype.VDouble;
 import org.epics.vtype.VFloatArray;
@@ -31,8 +33,6 @@ import org.epics.vtype.VShort;
 import org.epics.vtype.VString;
 import org.epics.vtype.VType;
 import org.epics.vtype.ValueFactory;
-import org.epics.util.array.ListByte;
-import org.epics.util.array.ListFloat;
 import org.junit.Test;
 
 import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
@@ -40,8 +40,7 @@ import uk.ac.stfc.isis.ibex.epics.conversion.Converter;
 import uk.ac.stfc.isis.ibex.epics.conversion.VTypeFormat;
 
 /**
- * This class is responsible for testing the various from conversions
- * 
+ * This class is responsible for testing the various from conversions.
  */
 @SuppressWarnings({ "checkstyle:magicnumber", "checkstyle:localvariablename",
 	"checkstyle:methodname" })
