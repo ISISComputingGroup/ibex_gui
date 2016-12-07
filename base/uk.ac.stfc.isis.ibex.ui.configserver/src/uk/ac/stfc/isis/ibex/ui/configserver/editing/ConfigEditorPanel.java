@@ -112,6 +112,19 @@ public class ConfigEditorPanel extends Composite {
 		iocsTab.setText("IOCs");
 		iocsTab.setControl(iocs);
 		
+        TabItem tbtmIocMacros = new TabItem(editorTabs, SWT.NONE);
+        tbtmIocMacros.setText("IOC Macros");
+
+        final MessageDisplayer msgDisp = dialog;
+        IIocPanelCreator macroFactory = new IIocPanelCreator() {
+            @Override
+            public IIocDependentPanel factory(Composite parent) {
+                return new MacroPanel(parent, SWT.NONE);
+            }
+        };
+        iocMacros = new IocSelectorPanel(editorTabs, SWT.NONE, macroFactory);
+        tbtmIocMacros.setControl(iocMacros);
+
 		TabItem blocksTab = new TabItem(editorTabs, SWT.NONE);
         blocksTab.setText(BLOCK_TAB_NAME);
 		
@@ -123,19 +136,6 @@ public class ConfigEditorPanel extends Composite {
 		
         groups = new GroupsEditorPanel(editorTabs, SWT.NONE, dialog, configurationViewModels);
 		groupsTab.setControl(groups);
-		
-		TabItem tbtmIocMacros = new TabItem(editorTabs, SWT.NONE);
-		tbtmIocMacros.setText("IOC Macros");
-		
-		final MessageDisplayer msgDisp = dialog;
-		IIocPanelCreator macroFactory = new IIocPanelCreator() {
-			@Override
-			public IIocDependentPanel factory(Composite parent) {
-				return new MacroPanel(parent, SWT.NONE);
-			}
-		};
-		iocMacros = new IocSelectorPanel(editorTabs, SWT.NONE, macroFactory);
-		tbtmIocMacros.setControl(iocMacros);
 		
 		TabItem tbtmIocPvValues = new TabItem(editorTabs, SWT.NONE);
 		tbtmIocPvValues.setText("IOC PV Values");
