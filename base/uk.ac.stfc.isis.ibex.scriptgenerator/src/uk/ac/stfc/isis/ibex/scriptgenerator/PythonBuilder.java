@@ -195,14 +195,10 @@ public class PythonBuilder extends ModelObject {
         }
         sansData.append(indent(String.format("set_aperture('%s')\n", settings.getSansSize().name().toLowerCase())));
         if (row.getSansWaitValue() != null && row.getSansWaitUnit() != null) {
-            sansData.append(
-                    indent(String.format("lm.dosans_normal(position='%s', title='%s', %s=%s, thickness=%s, %s)\n",
-                            row.getPosition(), row.getSampleName(), row.getSansWaitUnit().name().toLowerCase(),
-                            row.getSansWaitValue(), row.getThickness(), collectionMode)));
-        } else {
-            sansData.append(
-                    indent(String.format("lm.dosans_normal(position='%s', title='%s', uamps=0, thickness=%s, %s)\n",
-                            row.getPosition(), row.getSampleName(), row.getThickness(), collectionMode)));
+            sansData.append(indent(String.format(
+                    "lm.dosans_normal(position='%s', waitfor=%s, waitfortype='%s', change_period=%s, title='%s', thickness=%s, %s)\n",
+                    row.getPosition(), row.getSansWaitValue(), row.getSansWaitUnit().name().toLowerCase(),
+                    row.getPeriod(), row.getSampleName(), row.getThickness(), collectionMode)));
         }
         return sansData.toString();
     }
@@ -226,14 +222,10 @@ public class PythonBuilder extends ModelObject {
             transData.append(
                     indent(String.format("set_aperture('%s')\n", settings.getTransSize().name().toLowerCase())));
             if (row.getTransWaitValue() != null && row.getTransWaitUnit() != null) {
-                transData.append(
-                        indent(String.format("lm.dotrans_normal(position='%s', title='%s', %s=%s, thickness=%s, %s)\n",
-                                row.getPosition(), row.getSampleName(), row.getTransWaitUnit().name().toLowerCase(),
-                                row.getTransWaitValue(), row.getThickness(), collectionMode)));
-            } else {
-                transData.append(indent(
-                        String.format("lm.dotrans_normal(position='%s', title='%s', uamps=0.0, thickness=%s, %s)\n",
-                                row.getPosition(), row.getSampleName(), row.getThickness(), collectionMode)));
+                transData.append(indent(String.format(
+                        "lm.dotrans_normal(position='%s', waitfor=%s, waitfortype='%s', change_period=%s, title='%s', thickness=%s, %s)\n",
+                        row.getPosition(), row.getTransWaitValue(), row.getTransWaitUnit().name().toLowerCase(),
+                        row.getPeriod(), row.getSampleName(), row.getThickness(), collectionMode)));
             }
         }
         return transData.toString();

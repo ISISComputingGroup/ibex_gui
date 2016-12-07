@@ -58,7 +58,7 @@ public class PythonBuilderTest {
     SansSettings defaultSettings = new SansSettings(1, 1, 7, 7, Order.TRANS, false, ApertureSans.MEDIUM,
             ApertureTrans.MEDIUM, SampleGeometry.DISC, CollectionMode.HISTOGRAM);
 
-    Row defaultRow = new Row("AA", 0.0, WaitUnit.UAMPS, 0.0, WaitUnit.UAMPS, 1.0, "", 1.0);
+    Row defaultRow = new Row("AA", 10.0, WaitUnit.UAMPS, 10.0, WaitUnit.UAMPS, 1.0, "", 1.0);
 
     String defaultSetup = "set_sample_par('height', '7')\n"
             + "set_sample_par('width', '7')\n"
@@ -79,10 +79,10 @@ public class PythonBuilderTest {
     String altTransCondition = "if count < num_trans:\n";
 
     String defaultDoSans = "set_aperture('medium')\n"
-            + "lm.dosans_normal(position='AA', title='', uamps=0.0, thickness=1.0, rtype=0)\n";
-    
+            + "lm.dosans_normal(position='AA', waitfor=10.0, waitfortype='uamps', change_period=1.0, title='', thickness=1.0, rtype=0)\n";
+
     String defaultDoTrans = "set_aperture('medium')\n"
-            + "lm.dotrans_normal(position='AA', title='', uamps=0.0, thickness=1.0, rtype=0)\n";
+            + "lm.dotrans_normal(position='AA', waitfor=10.0, waitfortype='uamps', change_period=1.0, title='', thickness=1.0, rtype=0)\n";
 
     @Before
     public void setUp() {
@@ -334,13 +334,13 @@ public class PythonBuilderTest {
                 new Row(samplePos, waitTrans, waitTransUnit, waitSans, waitSansUnit, period, sampleName, thickness);
         rows.add(customRow);
 
-        String doSans = "set_aperture('medium')\n"
-                + "lm.dosans_normal(position='" + samplePos + "', title='" + sampleName + "', frames=" + waitSans
-                + ", thickness=" + thickness + ", rtype=0)\n";
+        String doSans = "set_aperture('medium')\n" + "lm.dosans_normal(position='" + samplePos + "', waitfor="
+                + waitSans + ", waitfortype='" + waitSansUnit.name().toLowerCase() + "', change_period=" + period
+                + ", title='" + sampleName + "', thickness=" + thickness + ", rtype=0)\n";
 
-        String doTrans = "set_aperture('medium')\n"
-                + "lm.dotrans_normal(position='" + samplePos + "', title='" + sampleName + "', seconds=" + waitTrans
-                + ", thickness=" + thickness + ", rtype=0)\n";
+        String doTrans = "set_aperture('medium')\n" + "lm.dotrans_normal(position='" + samplePos + "', waitfor="
+                + waitTrans + ", waitfortype='" + waitTransUnit.name().toLowerCase() + "', change_period=" + period
+                + ", title='" + sampleName + "', thickness=" + thickness + ", rtype=0)\n";
 
         String expected = getHeader() 
                 + indent(defaultSetup)
@@ -365,10 +365,10 @@ public class PythonBuilderTest {
         builder.setRows(rows);
 
         String doSansEvent = "set_aperture('medium')\n"
-                + "lm.dosans_normal(position='AA', title='', uamps=0.0, thickness=1.0, rtype=1)\n";
+                + "lm.dosans_normal(position='AA', waitfor=10.0, waitfortype='uamps', change_period=1.0, title='', thickness=1.0, rtype=1)\n";
 
         String doTransEvent = "set_aperture('medium')\n"
-                + "lm.dotrans_normal(position='AA', title='', uamps=0.0, thickness=1.0, rtype=1)\n";
+                + "lm.dotrans_normal(position='AA', waitfor=10.0, waitfortype='uamps', change_period=1.0, title='', thickness=1.0, rtype=1)\n";
 
         String expected = getHeader() 
                 + indent(defaultSetup)
