@@ -58,31 +58,58 @@ public class PythonBuilderTest {
     SansSettings defaultSettings = new SansSettings(1, 1, 7, 7, Order.TRANS, false, ApertureSans.MEDIUM,
             ApertureTrans.MEDIUM, SampleGeometry.DISC, CollectionMode.HISTOGRAM);
 
-    Row defaultRow = new Row("AA", 10.0, WaitUnit.UAMPS, 10.0, WaitUnit.UAMPS, 1.0, "", 1.0);
+    Row defaultRow1 = new Row("AA", 10.0, WaitUnit.UAMPS, 10.0, WaitUnit.UAMPS, 1.0, "", 1.0);
+    Row defaultRow2 = new Row("AB", 10.0, WaitUnit.UAMPS, 10.0, WaitUnit.UAMPS, 1.0, "", 1.0);
 
     String defaultSetup = "set_sample_par('height', '7')\n"
             + "set_sample_par('width', '7')\n"
-            + "set_sample_par('geometry', 'Disc')\n";
+            + "set_sample_par('geometry', 'Disc')\n\n";
 
-    String sequentialLoop = "for i in range(1):\n";
-
-    String altHeader = "num_sans = 1\n" 
-            + "num_trans = 1\n"
-            + "count = 0\n" 
-            + "while True:\n";
-    
-    String altFooter = "count += 1\n"
-            + "if count >= num_trans and count >= num_sans : break\n";
-
+    String altLoop = "count = 0\n" + "while True:\n";
     String altSansCondition = "if count < num_sans:\n";
-
     String altTransCondition = "if count < num_trans:\n";
+    String altFooter = "count += 1\n"
+            + "if count >= num_trans and count >= num_sans : break\n\n";
 
-    String defaultDoSans = "set_aperture('medium')\n"
-            + "lm.dosans_normal(position='AA', waitfor=10.0, waitfortype='uamps', change_period=1.0, title='', thickness=1.0, rtype=0)\n";
+    String defaultDoSans1 = "set_aperture('medium')\n"
+            + "lm.dosans_normal(position='AA', waitfor=10.0, waitfortype='uamps', change_period=1.0, title='', thickness=1.0, rtype=0)\n\n";
 
-    String defaultDoTrans = "set_aperture('medium')\n"
-            + "lm.dotrans_normal(position='AA', waitfor=10.0, waitfortype='uamps', change_period=1.0, title='', thickness=1.0, rtype=0)\n";
+    String defaultDoSans2 = "set_aperture('medium')\n"
+            + "lm.dosans_normal(position='AB', waitfor=10.0, waitfortype='uamps', change_period=1.0, title='', thickness=1.0, rtype=0)\n\n";
+
+    String defaultDoTrans1 = "set_aperture('medium')\n"
+            + "lm.dotrans_normal(position='AA', waitfor=10.0, waitfortype='uamps', change_period=1.0, title='', thickness=1.0, rtype=0)\n\n";
+
+    String defaultDoTrans2 = "set_aperture('medium')\n"
+            + "lm.dotrans_normal(position='AB', waitfor=10.0, waitfortype='uamps', change_period=1.0, title='', thickness=1.0, rtype=0)\n\n";
+
+    public String getHeader() {
+
+        String header = "# Script created by ZOOM Script at " + date + " " + time + "\n" 
+                + "import LSS.SANSroutines as lm\n"
+                + "\n" 
+                + "def my_script():\n" 
+                + indent("from genie_python.genie import *\n")
+                + indent("lm.setupzoom_normal()\n");
+
+        return header;
+    }
+    
+    public String getSequentialLoop(int iter) {
+        return "for i in range(" + iter + "):\n";
+    }
+
+    public String getAltHeader(int numSans, int numTrans) {
+
+        String altHeader = "num_sans = " + numSans + "\n" 
+                + "num_trans = " + numTrans + "\n";
+
+        return altHeader;
+    }
+
+    public String indent(String block) {
+        return block.replaceAll("(?m)^", INDENT);
+    }
 
     @Before
     public void setUp() {
@@ -98,22 +125,6 @@ public class PythonBuilderTest {
         time = LocalTime.now();
         when(dateTime.getDate()).thenReturn(date);
         when(dateTime.getTime()).thenReturn(time);
-    }
-
-    public String getHeader() {
-
-        String header = "# Script created by ZOOM Script at " + date + " " + time + "\n" 
-                + "import LSS.SANSroutines as lm\n"
-                + "\n" 
-                + "def my_script():\n" 
-                + indent("from genie_python.genie import *\n")
-                + indent("lm.setupzoom_normal()\n");
-
-        return header;
-    }
-
-    public String indent(String block) {
-        return block.replaceAll("(?m)^", INDENT);
     }
 
     @Test
@@ -169,16 +180,14 @@ public class PythonBuilderTest {
     @Test
     public void GIVEN_order_is_sans_first_WHEN_generating_script_THEN_script_runs_sans_first() {
         // Arrange
-        rows.add(defaultRow);
+        rows.add(defaultRow1);
         builder.setRows(rows);
         String expected = getHeader() 
                 + indent(defaultSetup)
-                + indent("\n") 
-                + indent(sequentialLoop)
-                + indent(indent(defaultDoSans)) 
-                + indent("\n")
-                + indent(sequentialLoop)
-                + indent(indent(defaultDoTrans));
+                + indent(getSequentialLoop(1))
+                + indent(indent(defaultDoSans1))
+                + indent(getSequentialLoop(1))
+                + indent(indent(defaultDoTrans1));
 
         // Act
         settings.setOrder(Order.SANS);
@@ -191,16 +200,14 @@ public class PythonBuilderTest {
     @Test
     public void GIVEN_order_is_trans_first_WHEN_generating_script_THEN_script_runs_trans_first() {
         // Arrange
-        rows.add(defaultRow);
+        rows.add(defaultRow1);
         builder.setRows(rows);
         String expected = getHeader() 
                 + indent(defaultSetup)
-                + indent("\n") 
-                + indent(sequentialLoop)
-                + indent(indent(defaultDoTrans))
-                + indent("\n")
-                + indent(sequentialLoop)
-                + indent(indent(defaultDoSans));
+                + indent(getSequentialLoop(1))
+                + indent(indent(defaultDoTrans1))
+                + indent(getSequentialLoop(1))
+                + indent(indent(defaultDoSans1));
 
         // Act
         settings.setOrder(Order.TRANS);
@@ -213,17 +220,16 @@ public class PythonBuilderTest {
     @Test
     public void GIVEN_order_is_altsans_WHEN_generating_script_THEN_script_alternates_with_sans_first() {
         // Arrange
-        rows.add(defaultRow);
+        rows.add(defaultRow1);
         builder.setRows(rows);
         String expected = getHeader() 
                 + indent(defaultSetup) 
-                + indent(altHeader) 
+                + indent(getAltHeader(1, 1)) 
+                + indent(altLoop)
                 + indent(indent(altSansCondition))
-                + indent(indent(indent(defaultDoSans))) 
-                + indent(indent("\n")) 
+                + indent(indent(indent(defaultDoSans1)))
                 + indent(indent(altTransCondition))
-                + indent(indent(indent(defaultDoTrans))) 
-                + indent(indent("\n"))
+                + indent(indent(indent(defaultDoTrans1)))
                 + indent(indent(altFooter));
 
         // Act
@@ -237,17 +243,16 @@ public class PythonBuilderTest {
     @Test
     public void GIVEN_order_is_alttrans_WHEN_generating_script_THEN_script_alternates_with_trans_first() {
         // Arrange
-        rows.add(defaultRow);
+        rows.add(defaultRow1);
         builder.setRows(rows);
         String expected = getHeader() 
                 + indent(defaultSetup)
-                + indent(altHeader)
+                + indent(getAltHeader(1, 1))
+                + indent(altLoop)
                 + indent(indent(altTransCondition))
-                + indent(indent(indent(defaultDoTrans)))
-                + indent(indent("\n"))
+                + indent(indent(indent(defaultDoTrans1)))
                 + indent(indent(altSansCondition))
-                + indent(indent(indent(defaultDoSans))) 
-                + indent(indent("\n")) 
+                + indent(indent(indent(defaultDoSans1)))
                 + indent(indent(altFooter));
 
         // Act
@@ -265,24 +270,21 @@ public class PythonBuilderTest {
         settings.setOrder(Order.ALTTRANS);
         String expected = getHeader() 
                 + indent(defaultSetup) 
-                + indent(altHeader) 
+                + indent(getAltHeader(1, 1)) 
+                + indent(altLoop)
                 + indent(indent(altTransCondition))
-                + indent(indent(indent(defaultDoTrans))) 
-                + indent(indent("\n")) 
+                + indent(indent(indent(defaultDoTrans1)))
                 + indent(indent(altSansCondition))
-                + indent(indent(indent(defaultDoSans))) 
-                + indent(indent("\n")) 
+                + indent(indent(indent(defaultDoSans1)))
                 + indent(indent(altTransCondition))
-                + indent(indent(indent(defaultDoTrans)))
-                + indent(indent("\n")) 
+                + indent(indent(indent(defaultDoTrans2)))
                 + indent(indent(altSansCondition))
-                + indent(indent(indent(defaultDoSans)))
-                + indent(indent("\n")) 
+                + indent(indent(indent(defaultDoSans2)))
                 + indent(indent(altFooter));
 
         // Act
-        rows.add(defaultRow);
-        rows.add(defaultRow);
+        rows.add(defaultRow1);
+        rows.add(defaultRow2);
         rows.add(new Row());
         builder.setRows(rows);
         String actual = builder.createScript();
@@ -298,18 +300,16 @@ public class PythonBuilderTest {
         settings.setOrder(Order.TRANS);
         String expected = getHeader() 
                 + indent(defaultSetup)
-                + indent("\n") 
-                + indent(sequentialLoop)
-                + indent(indent(defaultDoTrans))
-                + indent(indent(defaultDoTrans))
-                + indent("\n")
-                + indent(sequentialLoop)
-                + indent(indent(defaultDoSans))
-                + indent(indent(defaultDoSans));
+                + indent(getSequentialLoop(1))
+                + indent(indent(defaultDoTrans1))
+                + indent(indent(defaultDoTrans2))
+                + indent(getSequentialLoop(1))
+                + indent(indent(defaultDoSans1))
+                + indent(indent(defaultDoSans2));
 
         // Act
-        rows.add(defaultRow);
-        rows.add(defaultRow);
+        rows.add(defaultRow1);
+        rows.add(defaultRow2);
         rows.add(new Row());
         builder.setRows(rows);
         String actual = builder.createScript();
@@ -336,19 +336,17 @@ public class PythonBuilderTest {
 
         String doSans = "set_aperture('medium')\n" + "lm.dosans_normal(position='" + samplePos + "', waitfor="
                 + waitSans + ", waitfortype='" + waitSansUnit.name().toLowerCase() + "', change_period=" + period
-                + ", title='" + sampleName + "', thickness=" + thickness + ", rtype=0)\n";
+                + ", title='" + sampleName + "', thickness=" + thickness + ", rtype=0)\n\n";
 
         String doTrans = "set_aperture('medium')\n" + "lm.dotrans_normal(position='" + samplePos + "', waitfor="
                 + waitTrans + ", waitfortype='" + waitTransUnit.name().toLowerCase() + "', change_period=" + period
-                + ", title='" + sampleName + "', thickness=" + thickness + ", rtype=0)\n";
+                + ", title='" + sampleName + "', thickness=" + thickness + ", rtype=0)\n\n";
 
         String expected = getHeader() 
                 + indent(defaultSetup)
-                + indent("\n") 
-                + indent(sequentialLoop)
+                + indent(getSequentialLoop(1))
                 + indent(indent(doSans)) 
-                + indent("\n") 
-                + indent(sequentialLoop) 
+                + indent(getSequentialLoop(1)) 
                 + indent(indent(doTrans));
 
         // Act
@@ -361,20 +359,21 @@ public class PythonBuilderTest {
     @Test
     public void WHEN_changing_collection_mode_THEN_rtype_in_script_is_set_correctly() {
         // Arrange
-        rows.add(defaultRow);
+        rows.add(defaultRow1);
         builder.setRows(rows);
 
         String doSansEvent = "set_aperture('medium')\n"
-                + "lm.dosans_normal(position='AA', waitfor=10.0, waitfortype='uamps', change_period=1.0, title='', thickness=1.0, rtype=1)\n";
+                + "lm.dosans_normal(position='AA', waitfor=10.0, waitfortype='uamps', change_period=1.0, title='', thickness=1.0, rtype=1)\n\n";
 
         String doTransEvent = "set_aperture('medium')\n"
-                + "lm.dotrans_normal(position='AA', waitfor=10.0, waitfortype='uamps', change_period=1.0, title='', thickness=1.0, rtype=1)\n";
+                + "lm.dotrans_normal(position='AA', waitfor=10.0, waitfortype='uamps', change_period=1.0, title='', thickness=1.0, rtype=1)\n\n";
 
         String expected = getHeader() 
                 + indent(defaultSetup)
-                + indent("\n") 
-                + indent(sequentialLoop)
-                + indent(indent(doSansEvent)) + indent("\n") + indent(sequentialLoop) + indent(indent(doTransEvent));
+                + indent(getSequentialLoop(1))
+                + indent(indent(doSansEvent)) 
+                + indent(getSequentialLoop(1))
+                + indent(indent(doTransEvent));
 
         // Act
         settings.setCollection(CollectionMode.EVENTS);
@@ -388,26 +387,92 @@ public class PythonBuilderTest {
     @Test
     public void WHEN_changing_sans_and_trans_iterations_THEN_script_contains_correct_values() {
         // Arrange
-        rows.add(defaultRow);
+        rows.add(defaultRow1);
         builder.setRows(rows);
         
         int timesSans = 5;
         int timesTrans = 7;
 
-        String sansLoop = "for i in range(" + timesSans + "):\n";
-        String transLoop = "for i in range(" + timesTrans + "):\n";
         String expected = getHeader() 
                 + indent(defaultSetup)
-                + indent("\n") 
-                + indent(sansLoop)
-                + indent(indent(defaultDoSans))
-                + indent("\n") 
-                + indent(transLoop) 
-                + indent(indent(defaultDoTrans));
+                + indent(getSequentialLoop(timesSans))
+                + indent(indent(defaultDoSans1))
+                + indent(getSequentialLoop(timesTrans)) 
+                + indent(indent(defaultDoTrans1));
 
         // Act
         settings.setDoSans(timesSans);
         settings.setDoTrans(timesTrans);
+        String actual = builder.createScript();
+
+        // Assert
+        assertEquals(expected.trim(), actual.trim());
+    }
+
+    @Test
+    public void GIVEN_loop_over_every_run_set_WHEN_creating_sequential_script_THEN_order_is_correct() {
+        // Arrange
+        rows.add(defaultRow1);
+        rows.add(defaultRow2);
+        builder.setRows(rows);
+
+        int timesSans = 2;
+        int timesTrans = 3;
+        settings.setDoSans(timesSans);
+        settings.setDoTrans(timesTrans);
+
+        String sansLoop = "for i in range(" + timesSans + "):\n";
+        String transLoop = "for i in range(" + timesTrans + "):\n";
+        String expected = getHeader() 
+                + indent(defaultSetup) 
+                + indent(sansLoop)
+                + indent(indent(defaultDoSans1)) 
+                + indent(sansLoop)
+                + indent(indent(defaultDoSans2)) 
+                + indent(transLoop) 
+                + indent(indent(defaultDoTrans1))
+                + indent(transLoop)
+                + indent(indent(defaultDoTrans2));
+
+        // Act
+        settings.setLoopOver(true);
+        String actual = builder.createScript();
+
+        // Assert
+        assertEquals(expected.trim(), actual.trim());
+    }
+
+    @Test
+    public void GIVEN_loop_over_every_run_set_WHEN_creating_alternating_script_THEN_order_is_correct() {
+        // Arrange
+        rows.add(defaultRow1);
+        rows.add(defaultRow2);
+        builder.setRows(rows);
+
+        int timesSans = 2;
+        int timesTrans = 3;
+        settings.setDoSans(timesSans);
+        settings.setDoTrans(timesTrans);
+        settings.setOrder(Order.ALTTRANS);
+
+        String expected = getHeader() 
+                + indent(defaultSetup)
+                + indent(getAltHeader(timesSans, timesTrans))
+                + indent(altLoop)
+                + indent(indent(altTransCondition))
+                + indent(indent(indent(defaultDoTrans1)))
+                + indent(indent(altSansCondition))
+                + indent(indent(indent(defaultDoSans1)))
+                + indent(indent(altFooter))
+                + indent(altLoop)
+                + indent(indent(altTransCondition))
+                + indent(indent(indent(defaultDoTrans2)))
+                + indent(indent(altSansCondition))
+                + indent(indent(indent(defaultDoSans2)))
+                + indent(indent(altFooter));
+
+        // Act
+        settings.setLoopOver(true);
         String actual = builder.createScript();
 
         // Assert

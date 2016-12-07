@@ -112,14 +112,14 @@ public class PythonBuilder extends ModelObject {
         }
 
         if (sansFirst) {
-            result.append(String.format("\nfor i in range(%d):\n", settings.getDoSans()));
+            result.append(String.format("for i in range(%d):\n", settings.getDoSans()));
             result.append(sansData);
-            result.append(String.format("\nfor i in range(%d):\n", settings.getDoTrans()));
+            result.append(String.format("for i in range(%d):\n", settings.getDoTrans()));
             result.append(transData);
         } else {
-            result.append(String.format("\nfor i in range(%d):\n", settings.getDoTrans()));
+            result.append(String.format("for i in range(%d):\n", settings.getDoTrans()));
             result.append(transData);
-            result.append(String.format("\nfor i in range(%d):\n", settings.getDoSans()));
+            result.append(String.format("for i in range(%d):\n", settings.getDoSans()));
             result.append(sansData);
         }
         return result.toString();
@@ -143,9 +143,9 @@ public class PythonBuilder extends ModelObject {
             for (Row row : rows) {
                 if (row.getPosition().length() > 0) {
                     rowData.append("if count < num_sans:\n");
-                    rowData.append(buildSans(row) + "\n");
+                    rowData.append(buildSans(row));
                     rowData.append("if count < num_trans:\n");
-                    rowData.append(buildTrans(row) + "\n");
+                    rowData.append(buildTrans(row));
                     populatedRow = true;
                 }
             }
@@ -153,9 +153,9 @@ public class PythonBuilder extends ModelObject {
             for (Row row : rows) {
                 if (row.getPosition().length() > 0) {
                     rowData.append("if count < num_trans:\n");
-                    rowData.append(buildTrans(row) + "\n");
+                    rowData.append(buildTrans(row));
                     rowData.append("if count < num_sans:\n");
-                    rowData.append(buildSans(row) + "\n");
+                    rowData.append(buildSans(row));
                     populatedRow = true;
                 }
             }
@@ -196,7 +196,7 @@ public class PythonBuilder extends ModelObject {
         sansData.append(indent(String.format("set_aperture('%s')\n", settings.getSansSize().name().toLowerCase())));
         if (row.getSansWaitValue() != null && row.getSansWaitUnit() != null) {
             sansData.append(indent(String.format(
-                    "lm.dosans_normal(position='%s', waitfor=%s, waitfortype='%s', change_period=%s, title='%s', thickness=%s, %s)\n",
+                    "lm.dosans_normal(position='%s', waitfor=%s, waitfortype='%s', change_period=%s, title='%s', thickness=%s, %s)\n\n",
                     row.getPosition(), row.getSansWaitValue(), row.getSansWaitUnit().name().toLowerCase(),
                     row.getPeriod(), row.getSampleName(), row.getThickness(), collectionMode)));
         }
@@ -223,7 +223,7 @@ public class PythonBuilder extends ModelObject {
                     indent(String.format("set_aperture('%s')\n", settings.getTransSize().name().toLowerCase())));
             if (row.getTransWaitValue() != null && row.getTransWaitUnit() != null) {
                 transData.append(indent(String.format(
-                        "lm.dotrans_normal(position='%s', waitfor=%s, waitfortype='%s', change_period=%s, title='%s', thickness=%s, %s)\n",
+                        "lm.dotrans_normal(position='%s', waitfor=%s, waitfortype='%s', change_period=%s, title='%s', thickness=%s, %s)\n\n",
                         row.getPosition(), row.getTransWaitValue(), row.getTransWaitUnit().name().toLowerCase(),
                         row.getPeriod(), row.getSampleName(), row.getThickness(), collectionMode)));
             }
@@ -271,6 +271,7 @@ public class PythonBuilder extends ModelObject {
         script.append(indent(buildSamplePar("height", settings.getSampleHeight().toString())));
         script.append(indent(buildSamplePar("width", settings.getSampleWidth().toString())));
         script.append(indent(buildSamplePar("geometry", settings.getGeometry().toString())));
+        script.append(indent("\n"));
         switch (settings.getOrder()) {
             case SANS:
                 script.append(indent(buildSequential(true)));
