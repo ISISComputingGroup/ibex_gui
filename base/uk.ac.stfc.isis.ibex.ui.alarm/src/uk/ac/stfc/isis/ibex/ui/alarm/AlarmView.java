@@ -22,11 +22,17 @@ package uk.ac.stfc.isis.ibex.ui.alarm;
 import org.csstudio.alarm.beast.ui.alarmtree.AlarmTreeView;
 
 
+/**
+ * The Class AlarmView which is the view which contains the alarm tree.
+ */
 public class AlarmView extends AlarmTreeView {
 
 	public static final String ID = "uk.ac.stfc.isis.ibex.ui.test.views.TestView"; //$NON-NLS-1$
 
 	
+    /**
+     * Instantiates a new alarm view.
+     */
 	public AlarmView() {
 		setPartName("TestView");
 	}
