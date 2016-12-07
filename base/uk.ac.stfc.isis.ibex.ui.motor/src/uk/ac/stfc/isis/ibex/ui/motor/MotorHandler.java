@@ -22,8 +22,6 @@
  */
 package uk.ac.stfc.isis.ibex.ui.motor;
 
-import java.util.Map;
-
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
@@ -31,6 +29,7 @@ import org.eclipse.ui.IViewPart;
 import org.eclipse.ui.IViewReference;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.handlers.HandlerUtil;
 
 import uk.ac.stfc.isis.ibex.ui.motor.views.TableOfMotorsView;
 
@@ -38,6 +37,10 @@ import uk.ac.stfc.isis.ibex.ui.motor.views.TableOfMotorsView;
  * 
  */
 public class MotorHandler extends AbstractHandler {
+
+//    private static final String PARAMETER_ID = "uk.ac.stfc.isis.ibex.ui.motor.colourOption";
+    private static final String PARAMETER_ID = "org.eclipse.ui.commands.radioStateParameter";
+//    private String currentColourSelectionValue;
 
     /**
      * @param event
@@ -47,12 +50,18 @@ public class MotorHandler extends AbstractHandler {
     @Override
     public Object execute(ExecutionEvent event) throws ExecutionException {
 
-        Map test = event.getParameters();
-        String output = event.getParameter("uk.ac.stfc.isis.ibex.ui.motor.colourOptionID");
+        // If we are already in the updated state - do nothing
+        if (HandlerUtil.matchesRadioState(event)) {
+            return null;
+        }
 
-        System.out.println(output);
+        String newColourSelectionValue = event.getParameter(PARAMETER_ID);
+        System.out.println("## " + newColourSelectionValue);
+//        if (newColourSelectionValue.equals(currentColourSelectionValue)) {
+//            return null;
+//        }
 
-        DisplayPreferences.setMotorBackgroundPalette(ColourOption.DEUTERANOPIA);
+        DisplayPreferences.setMotorBackgroundPalette(ColourOption.valueOf(newColourSelectionValue));
 
         IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
         IViewReference[] viewReferences = page.getViewReferences();
@@ -65,7 +74,36 @@ public class MotorHandler extends AbstractHandler {
             }
         }
 
+        // Update the current state
+        HandlerUtil.updateRadioState(event.getCommand(), newColourSelectionValue);
+
         return null;
     }
 
+//        currentColourSelectionValue = newColourSelectionValue;
+
+//        // update our radio button states ... get the service from
+//        // a place that's most appropriate
+//        // As per eclipse documentation:
+//        // https://wiki.eclipse.org/Menu_Contributions/Radio_Button_Command
+//        ICommandService service = (ICommandService) HandlerUtil
+//                .getActiveWorkbenchWindowChecked(event).getService(
+//                    ICommandService.class);
+//        service.refreshElements(event.getCommand().getId(), null);
+//        return null;
+//    }
+
+    // Need this, otherwise radio button selection gets lost when window is out
+    // of focus.
+//    @Override
+//    public void updateElement(UIElement element, Map parameters) {
+//        String parameter = (String) parameters.get(PARAMETER_ID);
+//        if (parameter != null) {
+//            if (currentColourSelectionValue != null && currentColourSelectionValue.equals(parameter)) {
+//                element.setChecked(true);
+//            } else {
+//                element.setChecked(false);
+//            }
+//        }
+//    }
 }

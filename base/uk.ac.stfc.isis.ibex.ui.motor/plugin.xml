@@ -109,8 +109,17 @@
          point="org.eclipse.ui.commands">
       <command
             defaultHandler="uk.ac.stfc.isis.ibex.ui.motor.MotorHandler"
-            id="uk.ac.stfc.isis.ibex.ui.motor.MotorHandler"
-            name="name">
+            id="uk.ac.stfc.isis.ibex.ui.motor.colourOptionsCommand"
+            name="ColourOptions">
+         <commandParameter
+               id="org.eclipse.ui.commands.radioStateParameter"
+               name="colourOptions"
+               optional="false">
+         </commandParameter>
+         <state
+               class="org.eclipse.ui.handlers.RadioState:NORMAL_VISION"
+               id="org.eclipse.ui.commands.radioState">
+         </state>
       </command>
    </extension>
    <extension
@@ -125,20 +134,25 @@
                   id="colourSettingsMenu"
                   label="Colour Settings">
                <command
-                     commandId="uk.ac.stfc.isis.ibex.ui.motor.MotorHandler"
-                     id="normalVisionCommand"
+                     commandId="uk.ac.stfc.isis.ibex.ui.motor.colourOptionsCommand"
+                     id="uk.ac.stfc.isis.ibex.ui.motor.colourOptionsCommand1"
                      label="Normal Vision"
                      style="radio">
                   <parameter
-                        name="uk.ac.stfc.isis.ibex.ui.motor.colorOptionID"
-                        value="hello">
+                   		name="org.eclipse.ui.commands.radioStateParameter"
+                        value="NORMAL_VISION">
                   </parameter>
+                       
                </command>
                <command
-                     commandId="uk.ac.stfc.isis.ibex.ui.motor.MotorHandler"
-                     id="deuteranopiaCommand"
+                     commandId="uk.ac.stfc.isis.ibex.ui.motor.colourOptionsCommand"
+                     id="uk.ac.stfc.isis.ibex.ui.motor.colourOptionsCommand2"
                      label="Deuteranopia"
                      style="radio">
+                  <parameter
+                        name="org.eclipse.ui.commands.radioStateParameter"
+                        value="DEUTERANOPIA">
+                  </parameter>
                </command>
             </menu>
          </menu>
