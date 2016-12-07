@@ -164,6 +164,16 @@
                         value="DEUTERANOPIA">
                   </parameter>
                </command>
+               <command
+                     commandId="uk.ac.stfc.isis.ibex.ui.motor.colourOptionsCommand"
+                     id="uk.ac.stfc.isis.ibex.ui.motor.colourOptionsCommand3"
+                     label="Protanopia"
+                     style="push">
+                  <parameter
+                        name="org.eclipse.ui.commands.radioStateParameter"
+                        value="PROTANOPIA">
+                  </parameter>
+               </command>
             </menu>
          </menu>
       </menuContribution>
