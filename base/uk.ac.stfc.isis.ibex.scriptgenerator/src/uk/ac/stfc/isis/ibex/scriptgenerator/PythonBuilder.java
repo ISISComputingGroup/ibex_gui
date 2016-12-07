@@ -99,10 +99,23 @@ public class PythonBuilder extends ModelObject {
         StringBuilder transData = new StringBuilder();
         boolean populatedRow = false;
 
+        if (settings.getLoopOver()) {
+
+        }
+        boolean prependLoop = true;
         for (Row row : rows) {
             if (row.getPosition().length() > 0) {
+                if (prependLoop) {
+                    sansData.append(String.format("for i in range(%d):\n", settings.getDoSans()));
+                    transData.append(String.format("for i in range(%d):\n", settings.getDoTrans()));
+                }
                 sansData.append(buildSans(row));
                 transData.append(buildTrans(row));
+
+                if (!settings.getLoopOver()) {
+                    prependLoop = false;
+                }
+
                 populatedRow = true;
             }
         }
@@ -112,14 +125,10 @@ public class PythonBuilder extends ModelObject {
         }
 
         if (sansFirst) {
-            result.append(String.format("for i in range(%d):\n", settings.getDoSans()));
             result.append(sansData);
-            result.append(String.format("for i in range(%d):\n", settings.getDoTrans()));
             result.append(transData);
         } else {
-            result.append(String.format("for i in range(%d):\n", settings.getDoTrans()));
             result.append(transData);
-            result.append(String.format("for i in range(%d):\n", settings.getDoSans()));
             result.append(sansData);
         }
         return result.toString();
