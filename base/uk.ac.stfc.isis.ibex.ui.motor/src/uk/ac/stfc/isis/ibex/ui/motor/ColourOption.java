@@ -23,7 +23,7 @@
 package uk.ac.stfc.isis.ibex.ui.motor;
 
 /**
- * 
+ * Enum listing colour palette options.
  */
 public enum ColourOption {
     NORMAL_VISION,

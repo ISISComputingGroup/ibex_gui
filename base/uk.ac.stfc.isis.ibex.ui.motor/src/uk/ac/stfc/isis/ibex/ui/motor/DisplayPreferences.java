@@ -31,7 +31,7 @@ import org.eclipse.wb.swt.SWTResourceManager;
 import uk.ac.stfc.isis.ibex.ui.motor.views.MotorBackgroundPalette;
 
 /**
- * 
+ * Stores all the display options (for example colour blindness palettes).
  */
 public class DisplayPreferences {
 
@@ -59,10 +59,20 @@ public class DisplayPreferences {
     private static MotorBackgroundPalette currentMotorBackgroundPalette =
             paletteOptions.get(ColourOption.NORMAL_VISION);
 
+    /**
+     * Get the current motor background palette.
+     * 
+     * @return the current motor background palette.
+     */
     public static MotorBackgroundPalette getMotorBackgroundPalette() {
         return currentMotorBackgroundPalette;
     }
 
+    /**
+     * Set a new motor background palette.
+     * 
+     * @param paletteKey the new motor background palette
+     */
     public static void setMotorBackgroundPalette(ColourOption paletteKey) {
         currentMotorBackgroundPalette = paletteOptions.get(paletteKey);
     }

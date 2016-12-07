@@ -34,17 +34,12 @@ import org.eclipse.ui.handlers.HandlerUtil;
 import uk.ac.stfc.isis.ibex.ui.motor.views.TableOfMotorsView;
 
 /**
- * 
+ * Sets the current motor background palette.
  */
 public class DisplaySettingsHandler extends AbstractHandler {
 
     private static final String PARAMETER_ID = "org.eclipse.ui.commands.radioStateParameter";
 
-    /**
-     * @param event
-     * @return
-     * @throws ExecutionException
-     */
     @Override
     public Object execute(ExecutionEvent event) throws ExecutionException {
 

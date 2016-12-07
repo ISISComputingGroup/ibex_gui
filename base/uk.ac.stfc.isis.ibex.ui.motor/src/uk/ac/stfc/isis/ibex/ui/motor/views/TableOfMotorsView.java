@@ -67,7 +67,6 @@ public class TableOfMotorsView extends ViewPart {
 	 * Empty constructor.
 	 */
 	public TableOfMotorsView() {
-//        int a = 1;
 	}
 	
 	@Override
@@ -111,6 +110,10 @@ public class TableOfMotorsView extends ViewPart {
 	public void setFocus() {	
 	}
 
+    /**
+     * Updates the current motor background palette according to the latest menu
+     * setting.
+     */
     public void updatePalette() {
         motorsOverview.setPalette(DisplayPreferences.getMotorBackgroundPalette());
     }

@@ -44,6 +44,9 @@ import org.eclipse.wb.swt.SWTResourceManager;
 import uk.ac.stfc.isis.ibex.motor.Motor;
 import uk.ac.stfc.isis.ibex.motor.MotorEnable;
 
+/**
+ * The viewer for an individual motor.
+ */
 @SuppressWarnings("checkstyle:magicnumber")
 public class MinimalMotorView extends Composite {
 
@@ -76,6 +79,13 @@ public class MinimalMotorView extends Composite {
 	
     private MotorBackgroundPalette palette;
 
+    /**
+     * Constructor. Creates a new instance of the MinimalMotorView object.
+     * 
+     * @param parent the parent of this element
+     * @param style the base style to be applied to the overview
+     * @param palette the palette to be used.
+     */
     public MinimalMotorView(Composite parent, int style, MotorBackgroundPalette palette) {
 		super(parent, style);
 		setLayout(new FillLayout(SWT.HORIZONTAL));
@@ -114,15 +124,30 @@ public class MinimalMotorView extends Composite {
         this.palette = palette;
 	}
 
+    /**
+     * Set the palette used in the background of the cells for motors.
+     * 
+     * @param palette the new palette to use.
+     */
     public void setPalette(MotorBackgroundPalette palette) {
         this.palette = palette;
         updateMotorColor(motor);
     }
-		
+
+    /**
+     * Getter for the motor used by the cell.
+     * 
+     * @return the motor used by the cell
+     */
 	public Motor motor() {
 		return motor;
 	}
 	
+    /**
+     * Sets the motor pointed at by the cell.
+     * 
+     * @param motor the new motor.
+     */
 	public void setMotor(final Motor motor) {
 		this.motor = motor;
 		
@@ -241,9 +266,6 @@ public class MinimalMotorView extends Composite {
 		boolean isMoving = movingValue != null && movingValue;
 		boolean isEnabled = (motor.getEnabled() == MotorEnable.ENABLE);
 		boolean isNamed = (motor.getDescription() != "");
-
-        // setColor(isEnabled ? (isNamed ? (isMoving ? MOVINGCOLOR :
-        // STOPPEDCOLOR) : UNAMEDCOLOR) : DISABLEDCOLOR);
 
         Color backgroundColour;
 
