@@ -19,27 +19,38 @@
 
 package uk.ac.stfc.isis.ibex.ui.alarm;
 
+import org.apache.logging.log4j.Logger;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.IPerspectiveDescriptor;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.WorkbenchException;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
 import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
 import uk.ac.stfc.isis.ibex.instrument.InstrumentInfoReceiver;
+import uk.ac.stfc.isis.ibex.logger.IsisLog;
 
 /**
  * The activator class controls the plug-in life cycle, this plugin shows the
  * alarm perspective.
  */
 public class Alarms extends AbstractUIPlugin implements InstrumentInfoReceiver {
+
+    private static final Logger LOG = IsisLog.getLogger(Alarms.class);
     
 	// The plug-in ID
 	public static final String PLUGIN_ID = "uk.ac.stfc.isis.ibex.ui.test"; //$NON-NLS-1$
 
 	// The shared instance
 	private static Alarms plugin;
+
+    /**
+     * Store whether after instrument switch the alarm perspective should be
+     * reopened.
+     */
+    private boolean reopenalarmPerspective = false;
 		
 	/*
 	 * (non-Javadoc)
@@ -95,16 +106,31 @@ public class Alarms extends AbstractUIPlugin implements InstrumentInfoReceiver {
      */
     @Override
     public void preSetInstrument(InstrumentInfo instrument) {
+        reopenalarmPerspective = false;
         IPerspectiveDescriptor descriptor =
                 PlatformUI.getWorkbench().getPerspectiveRegistry().findPerspectiveWithId(AlarmPerspective.ID);
-        IWorkbenchPage wp = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
-        if (wp != null) {
-            wp.closePerspective(descriptor, true, true);
+        IWorkbenchPage activePage = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
+        if (activePage != null) {
+            IPerspectiveDescriptor alarmPerspective = PlatformUI.getWorkbench().getPerspectiveRegistry()
+                    .findPerspectiveWithId(uk.ac.stfc.isis.ibex.ui.alarm.AlarmPerspective.ID);
+            reopenalarmPerspective = (activePage.getPerspective() == alarmPerspective);
+            activePage.closePerspective(descriptor, true, true);
         }
     }
 
     @Override
     public void postSetInstrument(InstrumentInfo instrument) {
-        // nothing to do
+        if (!reopenalarmPerspective) {
+            return;
+        }
+        try {
+            PlatformUI.getWorkbench().showPerspective(uk.ac.stfc.isis.ibex.ui.alarm.AlarmPerspective.ID,
+                    PlatformUI.getWorkbench().getActiveWorkbenchWindow());
+        } catch (WorkbenchException ex) {
+            ex.printStackTrace();
+            LOG.error("Error reopening alarm perspective.");
+            LOG.catching(ex);
+        }
+
     }
 }
