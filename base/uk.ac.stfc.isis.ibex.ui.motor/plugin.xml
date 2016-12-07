@@ -117,8 +117,18 @@
                optional="false">
          </commandParameter>
          <state
-               class="org.eclipse.ui.handlers.RadioState:NORMAL_VISION"
                id="org.eclipse.ui.commands.radioState">
+            <class
+                  class="org.eclipse.ui.handlers.RadioState">
+               <parameter
+                     name="default"
+                     value="NORMAL_VISION">
+               </parameter>
+               <parameter
+                     name="persisted"
+                     value="false">
+               </parameter>
+            </class>
          </state>
       </command>
    </extension>

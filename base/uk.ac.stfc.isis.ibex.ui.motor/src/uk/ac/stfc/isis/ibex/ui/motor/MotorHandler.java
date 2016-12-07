@@ -38,9 +38,7 @@ import uk.ac.stfc.isis.ibex.ui.motor.views.TableOfMotorsView;
  */
 public class MotorHandler extends AbstractHandler {
 
-//    private static final String PARAMETER_ID = "uk.ac.stfc.isis.ibex.ui.motor.colourOption";
     private static final String PARAMETER_ID = "org.eclipse.ui.commands.radioStateParameter";
-//    private String currentColourSelectionValue;
 
     /**
      * @param event
@@ -57,9 +55,6 @@ public class MotorHandler extends AbstractHandler {
 
         String newColourSelectionValue = event.getParameter(PARAMETER_ID);
         System.out.println("## " + newColourSelectionValue);
-//        if (newColourSelectionValue.equals(currentColourSelectionValue)) {
-//            return null;
-//        }
 
         DisplayPreferences.setMotorBackgroundPalette(ColourOption.valueOf(newColourSelectionValue));
 
@@ -80,30 +75,4 @@ public class MotorHandler extends AbstractHandler {
         return null;
     }
 
-//        currentColourSelectionValue = newColourSelectionValue;
-
-//        // update our radio button states ... get the service from
-//        // a place that's most appropriate
-//        // As per eclipse documentation:
-//        // https://wiki.eclipse.org/Menu_Contributions/Radio_Button_Command
-//        ICommandService service = (ICommandService) HandlerUtil
-//                .getActiveWorkbenchWindowChecked(event).getService(
-//                    ICommandService.class);
-//        service.refreshElements(event.getCommand().getId(), null);
-//        return null;
-//    }
-
-    // Need this, otherwise radio button selection gets lost when window is out
-    // of focus.
-//    @Override
-//    public void updateElement(UIElement element, Map parameters) {
-//        String parameter = (String) parameters.get(PARAMETER_ID);
-//        if (parameter != null) {
-//            if (currentColourSelectionValue != null && currentColourSelectionValue.equals(parameter)) {
-//                element.setChecked(true);
-//            } else {
-//                element.setChecked(false);
-//            }
-//        }
-//    }
 }
