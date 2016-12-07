@@ -36,7 +36,7 @@ import uk.ac.stfc.isis.ibex.ui.motor.views.TableOfMotorsView;
 /**
  * 
  */
-public class MotorHandler extends AbstractHandler {
+public class DisplaySettingsHandler extends AbstractHandler {
 
     private static final String PARAMETER_ID = "org.eclipse.ui.commands.radioStateParameter";
 
@@ -54,7 +54,6 @@ public class MotorHandler extends AbstractHandler {
         }
 
         String newColourSelectionValue = event.getParameter(PARAMETER_ID);
-        System.out.println("## " + newColourSelectionValue);
 
         DisplayPreferences.setMotorBackgroundPalette(ColourOption.valueOf(newColourSelectionValue));
 
