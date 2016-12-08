@@ -32,9 +32,7 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.ComponentDescription;
-import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.IInstrumentUpdateListener;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.SynopticViewModel;
-import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.UpdateTypes;
 
 /**
  * This Composite provides the controls relating to the tree view of the instrument
@@ -56,18 +54,11 @@ public class InstrumentTreeControls extends Composite {
 
 		this.synopticViewModel = instrument;
 
-		instrument.addInstrumentUpdateListener(new IInstrumentUpdateListener() {
+        instrument.addPropertyChangeListener("refreshTree", new PropertyChangeListener() {
 			@Override
-			public void instrumentUpdated(UpdateTypes updateType) {
-				refresh();
-			}
-		});
-
-        instrument.addPropertyChangeListener("compSelection", new PropertyChangeListener() {
-            @Override
             public void propertyChange(PropertyChangeEvent evt) {
-				refresh();
-			}
+                refresh();
+            }
 		});
 
         setLayout(new GridLayout(2, true));

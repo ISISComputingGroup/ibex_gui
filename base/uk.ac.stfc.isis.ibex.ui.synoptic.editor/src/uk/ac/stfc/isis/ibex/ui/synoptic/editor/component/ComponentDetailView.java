@@ -29,6 +29,7 @@ import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
+import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.FocusAdapter;
 import org.eclipse.swt.events.MouseAdapter;
@@ -125,7 +126,8 @@ public class ComponentDetailView extends Composite {
             @Override
             public void focusLost(org.eclipse.swt.events.FocusEvent e) {
                 if (!selectionCausedByMouseClick) {
-                    compDetailsViewModel.updateModelType(true);
+                    StructuredSelection selection = (StructuredSelection) cmboType.getSelection();
+                    compDetailsViewModel.updateModelType((String) selection.getFirstElement(), true);
                 }
             }
         });
@@ -141,7 +143,9 @@ public class ComponentDetailView extends Composite {
             @Override
             public void selectionChanged(SelectionChangedEvent event) {
                 boolean isFinalUpdate = selectionCausedByMouseClick;
-                compDetailsViewModel.updateModelType(isFinalUpdate);
+                StructuredSelection selection = (StructuredSelection) cmboType.getSelection();
+
+                compDetailsViewModel.updateModelType((String) selection.getFirstElement(), isFinalUpdate);
                 selectionCausedByMouseClick = false;
             }
         });

@@ -88,11 +88,14 @@ public class ComponentDetailViewModel extends ErrorMessageProvider {
     /**
      * Updates the component type based on the user input.
      * 
+     * @param modelType
+     *            The type to updaet the model to.
      * @param isFinalUpdate
      *            Whether this is the final update for the user
      */
-    public void updateModelType(boolean isFinalUpdate) {
+    public void updateModelType(String modelType, boolean isFinalUpdate) {
         if (component != null) {
+            setCompType(modelType);
             ComponentType type = ComponentType.valueOf(compType);
             component.setType(type);
 
@@ -146,6 +149,7 @@ public class ComponentDetailViewModel extends ErrorMessageProvider {
             setError(false, null);
         }
         firePropertyChange("componentName", componentName, componentName = name);
+        model.refreshTreeView();
     }
 
     /**
@@ -176,6 +180,7 @@ public class ComponentDetailViewModel extends ErrorMessageProvider {
      */
     public void setTypeIcon(Image icon) {
         firePropertyChange("typeIcon", typeIcon, typeIcon = icon);
+        model.refreshTreeView();
     }
 
     /**

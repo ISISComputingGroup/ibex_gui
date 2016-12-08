@@ -60,7 +60,7 @@ public class PvDetailViewModel extends ErrorMessageProvider {
 
                 @Override
                 public void propertyChange(PropertyChangeEvent evt) {
-                    showPV(selectedPv = (PV) evt.getNewValue());
+                    showPV((PV) evt.getNewValue());
                 }
             });
         }
@@ -77,6 +77,8 @@ public class PvDetailViewModel extends ErrorMessageProvider {
      */
     public void showPV(PV pv) {
         if (pv != null) {
+            selectedPv = pv;
+
             setSelectionVisible(true);
 
             firePropertyChange("pvName", pvName, pvName = pv.displayName());
@@ -84,8 +86,6 @@ public class PvDetailViewModel extends ErrorMessageProvider {
             firePropertyChange("pvAddress", pvAddress, pvAddress = pv.address());
 
             firePropertyChange("pvMode", pvMode, pvMode = pv.recordType().io());
-            
-            validatePv(new PV(pvName, pvAddress, pvMode));
 
         } else {
             setSelectionVisible(false);
@@ -157,7 +157,7 @@ public class PvDetailViewModel extends ErrorMessageProvider {
 
     private void updateModel() {
         updateSelectedPV(pvName, pvAddress, pvMode);
-        validatePv(new PV(pvName, pvAddress, pvMode));
+        validatePv(selectedPv);
     }
 
     /**
@@ -193,8 +193,8 @@ public class PvDetailViewModel extends ErrorMessageProvider {
         String address = pv.address();
 
         for (PV otherPv : model.getList()) {
-            if (otherPv.equals(pv)) {
-                break;
+            if (otherPv == pv) {
+                continue;
             }
 
             if (otherPv.displayName().equals(pv.displayName())) {

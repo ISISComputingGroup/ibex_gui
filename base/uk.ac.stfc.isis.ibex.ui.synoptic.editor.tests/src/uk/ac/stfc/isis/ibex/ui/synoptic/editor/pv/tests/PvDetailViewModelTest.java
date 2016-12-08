@@ -57,14 +57,14 @@ public class PvDetailViewModelTest {
         
         List<PV> startingPVs = new ArrayList<>();
         
-        startingPVs.add(preExistingPV);
+        startingPVs.add(new PV(preExistingPV));
 
         when(synoptic.getList()).thenReturn(startingPVs);
 
         viewModel = new PvDetailViewModel(synoptic);
 
         // Start with a valid PV
-        viewModel.showPV(startingPV);
+        viewModel.showPV(new PV(startingPV));
     }
     
     @Test

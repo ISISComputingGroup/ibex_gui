@@ -168,7 +168,7 @@ public class SynopticViewModel extends ErrorMessageProvider {
             component.setParent(parent);
 		}
 
-		broadcastInstrumentUpdate(UpdateTypes.NEW_COMPONENT);
+        refreshTreeView();
 		setSelectedComponent(Arrays.asList(component));
 
 	}
@@ -265,7 +265,7 @@ public class SynopticViewModel extends ErrorMessageProvider {
 					parent.removeComponent(selected);
 				}
 				setSelectedComponent(null);
-				broadcastInstrumentUpdate(UpdateTypes.DELETE_COMPONENT);
+                refreshTreeView();
 			}
 		}
 	}
@@ -310,6 +310,7 @@ public class SynopticViewModel extends ErrorMessageProvider {
     public void setSelectedComponent(List<ComponentDescription> selected) {
         firePropertyChange("compSelection", selectedComponents, selectedComponents = selected);
         setSelectedProperty(null);
+        refreshTreeView();
     }
 	
     /**
@@ -492,5 +493,12 @@ public class SynopticViewModel extends ErrorMessageProvider {
     public void registerErrorProvider(ErrorMessageProvider provider) {
         errorProviders.add(provider);
         provider.addPropertyChangeListener("error", errorListener);
+    }
+
+    /**
+     * Refreshes the tree view of the instrument.
+     */
+    public void refreshTreeView() {
+        firePropertyChange("refreshTree", 0, 1);
     }
 }
