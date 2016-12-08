@@ -58,7 +58,7 @@ public class PythonBuilderTest {
     SansSettings defaultSettings = new SansSettings(1, 1, 7, 7, Order.TRANS, false, ApertureSans.MEDIUM,
             ApertureTrans.MEDIUM, SampleGeometry.DISC, CollectionMode.HISTOGRAM);
 
-    Row defaultRow1 = new Row("AA", 10.0, WaitUnit.UAMPS, 10.0, WaitUnit.UAMPS, 1.0, "", 1.0);
+    Row defaultRow1 = new Row("AT", 10.0, WaitUnit.UAMPS, 10.0, WaitUnit.UAMPS, 1.0, "", 1.0);
     Row defaultRow2 = new Row("AB", 10.0, WaitUnit.UAMPS, 10.0, WaitUnit.UAMPS, 1.0, "", 1.0);
 
     String defaultSetup = "set_sample_par('height', '7')\n"
@@ -72,13 +72,13 @@ public class PythonBuilderTest {
             + "if count >= num_trans and count >= num_sans : break\n\n";
 
     String defaultDoSans1 = "set_aperture('medium')\n"
-            + "lm.dosans_normal(position='AA', waitfor=10.0, waitfortype='uamps', change_period=1.0, title='', thickness=1.0, rtype=0)\n\n";
+            + "lm.dosans_normal(position='AT', waitfor=10.0, waitfortype='uamps', change_period=1.0, title='', thickness=1.0, rtype=0)\n\n";
 
     String defaultDoSans2 = "set_aperture('medium')\n"
             + "lm.dosans_normal(position='AB', waitfor=10.0, waitfortype='uamps', change_period=1.0, title='', thickness=1.0, rtype=0)\n\n";
 
     String defaultDoTrans1 = "set_aperture('medium')\n"
-            + "lm.dotrans_normal(position='AA', waitfor=10.0, waitfortype='uamps', change_period=1.0, title='', thickness=1.0, rtype=0)\n\n";
+            + "lm.dotrans_normal(position='AT', waitfor=10.0, waitfortype='uamps', change_period=1.0, title='', thickness=1.0, rtype=0)\n\n";
 
     String defaultDoTrans2 = "set_aperture('medium')\n"
             + "lm.dotrans_normal(position='AB', waitfor=10.0, waitfortype='uamps', change_period=1.0, title='', thickness=1.0, rtype=0)\n\n";
@@ -378,10 +378,10 @@ public class PythonBuilderTest {
         builder.setRows(rows);
 
         String doSansEvent = "set_aperture('medium')\n"
-                + "lm.dosans_normal(position='AA', waitfor=10.0, waitfortype='uamps', change_period=1.0, title='', thickness=1.0, rtype=1)\n\n";
+                + "lm.dosans_normal(position='AT', waitfor=10.0, waitfortype='uamps', change_period=1.0, title='', thickness=1.0, rtype=1)\n\n";
 
         String doTransEvent = "set_aperture('medium')\n"
-                + "lm.dotrans_normal(position='AA', waitfor=10.0, waitfortype='uamps', change_period=1.0, title='', thickness=1.0, rtype=1)\n\n";
+                + "lm.dotrans_normal(position='AT', waitfor=10.0, waitfortype='uamps', change_period=1.0, title='', thickness=1.0, rtype=1)\n\n";
 
         String expected = getHeader() 
                 + indent(defaultSetup)
