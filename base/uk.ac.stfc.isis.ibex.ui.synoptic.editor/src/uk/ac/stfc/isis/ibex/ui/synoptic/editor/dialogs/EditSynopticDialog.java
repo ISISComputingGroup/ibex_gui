@@ -25,8 +25,8 @@ import java.util.Collection;
 
 import javax.xml.bind.JAXBException;
 
-import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
+import org.eclipse.jface.dialogs.TitleAreaDialog;
 import org.eclipse.jface.window.Window;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -45,6 +45,7 @@ import uk.ac.stfc.isis.ibex.synoptic.SynopticInfo;
 import uk.ac.stfc.isis.ibex.synoptic.xml.XMLUtil;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.instrument.SynopticPreview;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.SynopticViewModel;
+import uk.ac.stfc.isis.ibex.validators.ErrorMessage;
 
 /**
  * This class provides the dialog to edit the synoptic. While this class is responsible for
@@ -52,7 +53,7 @@ import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.SynopticViewModel;
  * 
  */
 @SuppressWarnings("checkstyle:magicnumber")
-public class EditSynopticDialog extends Dialog {
+public class EditSynopticDialog extends TitleAreaDialog {
 	
 	private static final Point INITIAL_SIZE = new Point(950, 800);
 	private final String title;
@@ -156,14 +157,15 @@ public class EditSynopticDialog extends Dialog {
 			}
 		});
 		
-        synopticViewModel.addPropertyChangeListener("hasError", new PropertyChangeListener() {
+        synopticViewModel.addPropertyChangeListener("error", new PropertyChangeListener() {
 
             @Override
             public void propertyChange(PropertyChangeEvent evt) {
-                boolean hasError = (boolean) evt.getNewValue();
-                saveAsBtn.setEnabled(!hasError);
+                ErrorMessage hasError = (ErrorMessage) evt.getNewValue();
+                setErrorMessage(hasError.getMessage());
+                saveAsBtn.setEnabled(!hasError.isError());
                 if (saveBtn != null) {
-                    saveBtn.setEnabled(!hasError);
+                    saveBtn.setEnabled(!hasError.isError());
                 }
             }
         });

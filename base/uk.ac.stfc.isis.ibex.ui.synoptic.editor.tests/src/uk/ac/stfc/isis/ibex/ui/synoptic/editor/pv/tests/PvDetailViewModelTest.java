@@ -75,57 +75,57 @@ public class PvDetailViewModelTest {
     }
 
     @Test
-    public void WHEN_valid_address_entered_THEN_error_text_cleared() {
+    public void WHEN_valid_address_entered_THEN_no_error() {
         viewModel.setPvAddress(VALID_ADDRESS);
 
-        assertEquals(viewModel.getErrorText(), "");
+        assertEquals(viewModel.getError().isError(), false);
     }
 
     @Test
     public void WHEN_invalid_address_entered_THEN_error_text() {
         viewModel.setPvAddress(INVALID_ADDRESS);
 
-        assertNotEquals(viewModel.getErrorText(), "");
+        assertEquals(viewModel.getError().isError(), true);
     }
     
     @Test
-    public void WHEN_unique_name_entered_THEN_error_text_cleared() {
+    public void WHEN_unique_name_entered_THEN_no_error() {
         viewModel.setPvName(UNIQUE_NAME);
 
-        assertEquals(viewModel.getErrorText(), "");
+        assertEquals(viewModel.getError().isError(), false);
     }
 
     @Test
-    public void GIVEN_non_unique_name_WHEN_unique_name_entered_THEN_error_text_cleared() {
+    public void GIVEN_non_unique_name_WHEN_unique_name_entered_THEN_no_error() {
         viewModel.setPvName(preExistingPV.displayName());
         viewModel.setPvName(UNIQUE_NAME);
 
-        assertEquals(viewModel.getErrorText(), "");
+        assertEquals(viewModel.getError().isError(), false);
     }
 
     @Test
     public void WHEN_non_unique_name_entered_THEN_error_text() {
         viewModel.setPvName(preExistingPV.displayName());
 
-        assertNotEquals(viewModel.getErrorText(), "");
+        assertEquals(viewModel.getError().isError(), true);
     }
 
     @Test
-    public void GIVEN_non_unique_name_WHEN_IO_updated_THEN_error_text_cleared() {
+    public void GIVEN_non_unique_name_WHEN_IO_updated_THEN_no_error() {
         viewModel.setPvName(preExistingPV.displayName());
         viewModel.setPvMode(IO.WRITE);
 
-        assertEquals(viewModel.getErrorText(), "");
+        assertEquals(viewModel.getError().isError(), false);
     }
 
     @Test
-    public void GIVEN_bad_address_and_non_unique_name_WHEN_name_updated_to_be_unique_THEN_error_text_not_cleared() {
+    public void GIVEN_bad_address_and_non_unique_name_WHEN_name_updated_to_be_unique_THEN_error_persists() {
         viewModel.setPvAddress(INVALID_ADDRESS);
         viewModel.setPvName(preExistingPV.displayName());
 
         viewModel.setPvName(UNIQUE_NAME);
 
-        assertNotEquals(viewModel.getErrorText(), "");
+        assertEquals(viewModel.getError().isError(), true);
     }
 
 }

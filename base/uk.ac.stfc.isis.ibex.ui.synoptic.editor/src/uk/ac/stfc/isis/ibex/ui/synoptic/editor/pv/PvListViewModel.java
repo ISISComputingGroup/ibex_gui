@@ -27,16 +27,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 import uk.ac.stfc.isis.ibex.configserver.editing.DefaultName;
-import uk.ac.stfc.isis.ibex.model.ModelObject;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.ComponentDescription;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.IO;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.PV;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.SynopticViewModel;
+import uk.ac.stfc.isis.ibex.validators.ErrorMessageProvider;
 
 /**
  * The view model that contains the logic for the PV list.
  */
-public class PvListViewModel extends ModelObject {
+public class PvListViewModel extends ErrorMessageProvider {
     private List<PV> pvList;
     private PV selectedPV;
 
@@ -46,8 +46,6 @@ public class PvListViewModel extends ModelObject {
     private boolean upEnabled;
     private boolean downEnabled;
 
-    private SynopticViewModel synoptic;
-
     /**
      * The constructor for the view model of the pv list view.
      * 
@@ -56,7 +54,6 @@ public class PvListViewModel extends ModelObject {
      *            selection.
      */
     public PvListViewModel(final SynopticViewModel synoptic) {
-        this.synoptic = synoptic;
         synoptic.addPropertyChangeListener("compSelection", new PropertyChangeListener() {
 
             @Override
@@ -235,9 +232,9 @@ public class PvListViewModel extends ModelObject {
     }
 
     /**
-     * @return the overall synoptic view model.
+     * @return the name of the component
      */
-    public SynopticViewModel getModel() {
-        return synoptic;
+    public String getComponentName() {
+        return selectedComp.name();
     }
 }

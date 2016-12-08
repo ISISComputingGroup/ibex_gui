@@ -31,6 +31,7 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.wb.swt.SWTResourceManager;
 
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.component.ComponentDetailView;
+import uk.ac.stfc.isis.ibex.ui.synoptic.editor.component.ComponentDetailViewModel;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.instrument.InstrumentTreeControls;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.instrument.InstrumentTreeView;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.SynopticViewModel;
@@ -106,8 +107,11 @@ public class EditorPanel extends Composite {
         lblComponentTitle.setText("Component Details");
 
         PvListViewModel pvListViewModel = new PvListViewModel(synopticViewModel);
+        synopticViewModel.registerErrorProvider(pvListViewModel);
 
-        new ComponentDetailView(componentComposite, this.synopticViewModel, pvListViewModel);
+        ComponentDetailViewModel compDetailViewModel = new ComponentDetailViewModel(synopticViewModel);
+        synopticViewModel.registerErrorProvider(compDetailViewModel);
+        new ComponentDetailView(componentComposite, compDetailViewModel, pvListViewModel);
 
         pvComposite = new Composite(detailBarComposite, SWT.BORDER);
         pvComposite.setLayout(new GridLayout(1, false));
@@ -117,7 +121,9 @@ public class EditorPanel extends Composite {
         lblPvTitle.setFont(titleFont);
         lblPvTitle.setText("PV Details");
 
-        new PvDetailView(pvComposite, new PvDetailViewModel(pvListViewModel));
+        PvDetailViewModel pvDetailViewModel = new PvDetailViewModel(pvListViewModel);
+        synopticViewModel.registerErrorProvider(pvDetailViewModel);
+        new PvDetailView(pvComposite, pvDetailViewModel);
 		
 		targetBarComposite = new Composite(this, SWT.NONE);
 		targetBarComposite.setLayout(targetBarLayout);
