@@ -108,7 +108,7 @@
    <extension
          point="org.eclipse.ui.commands">
       <command
-            defaultHandler="uk.ac.stfc.isis.ibex.ui.motor.DisplaySettingsHandler"
+            defaultHandler="uk.ac.stfc.isis.ibex.ui.motor.displayoptions.DisplaySettingsHandler"
             id="uk.ac.stfc.isis.ibex.ui.motor.colourOptionsCommand"
             name="ColourOptions">
          <commandParameter

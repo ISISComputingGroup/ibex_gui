@@ -17,15 +17,13 @@
  * http://opensource.org/licenses/eclipse-1.0.php
  */
 
-package uk.ac.stfc.isis.ibex.ui.motor;
+package uk.ac.stfc.isis.ibex.ui.motor.displayoptions;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.wb.swt.SWTResourceManager;
-
-import uk.ac.stfc.isis.ibex.ui.motor.views.MotorBackgroundPalette;
 
 /**
  * Stores all the display options (for example colour blindness palettes).
