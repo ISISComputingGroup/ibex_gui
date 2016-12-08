@@ -251,8 +251,8 @@ public class SettingsPanel extends Composite {
      * 
      * @param settings the settings to be displayed
      */
-	public void bind(SansSettings settings) {
-		DataBindingContext ctx = new DataBindingContext();
+    public void bind(final SansSettings settings) {
+        final DataBindingContext bindingContext = new DataBindingContext();
 		IValidator validator = new NumbersOnlyValidator();
 		
 		UpdateValueStrategy strategy = new UpdateValueStrategy();
@@ -260,62 +260,62 @@ public class SettingsPanel extends Composite {
 		
         IObservableValue targetOrder = ViewersObservables.observeSingleSelection(comboOrder);
         IObservableValue modelOrder = BeanProperties.value("order").observe(settings);
-        ctx.bindValue(targetOrder, modelOrder);
+        bindingContext.bindValue(targetOrder, modelOrder);
 		
         IObservableValue targetDoSans = WidgetProperties.text(SWT.Modify).observe(txtDoSans);
         IObservableValue modelDoSans = BeanProperties.value("doSans").observe(settings);
-        Binding bindValueDoSans = ctx.bindValue(targetDoSans, modelDoSans, strategy, null);
+        Binding bindValueDoSans = bindingContext.bindValue(targetDoSans, modelDoSans, strategy, null);
         
         ControlDecorationSupport.create(bindValueDoSans, SWT.TOP | SWT.RIGHT);
         
         IObservableValue targetDoTrans = WidgetProperties.text(SWT.Modify).observe(txtDoTrans);
         IObservableValue modelDoTrans = BeanProperties.value("doTrans").observe(settings);
-        Binding bindValueDoTrans = ctx.bindValue(targetDoTrans, modelDoTrans, strategy, null);
+        Binding bindValueDoTrans = bindingContext.bindValue(targetDoTrans, modelDoTrans, strategy, null);
         
         ControlDecorationSupport.create(bindValueDoTrans, SWT.TOP | SWT.RIGHT);
 		
         IObservableValue targetLoopOver = WidgetProperties.selection().observe(btnLoopOver);
         IObservableValue modelLoopOver = BeanProperties.value("loopOver").observe(settings);
-        ctx.bindValue(targetLoopOver, modelLoopOver);
+        bindingContext.bindValue(targetLoopOver, modelLoopOver);
         
         IObservableValue targetApertureSans = ViewersObservables.observeSingleSelection(comboApertureSans);
         IObservableValue modelApertureSans = BeanProperties.value("sansSize").observe(settings);
-        ctx.bindValue(targetApertureSans, modelApertureSans);
+        bindingContext.bindValue(targetApertureSans, modelApertureSans);
         
         IObservableValue targetApertureTrans = ViewersObservables.observeSingleSelection(comboApertureTrans);
         IObservableValue modelApertureTrans = BeanProperties.value("transSize").observe(settings);
-        ctx.bindValue(targetApertureTrans, modelApertureTrans);
+        bindingContext.bindValue(targetApertureTrans, modelApertureTrans);
         
         IObservableValue targetGeometry = ViewersObservables.observeSingleSelection(comboSampleGeometry);
         IObservableValue modelGeometry = BeanProperties.value("geometry").observe(settings);
-        ctx.bindValue(targetGeometry, modelGeometry);
+        bindingContext.bindValue(targetGeometry, modelGeometry);
         
         IObservableValue targetSampleHeight = WidgetProperties.text(SWT.Modify).observe(txtSampleHeight);
         IObservableValue modelSampleHeight = BeanProperties.value("sampleHeight").observe(settings);
-        Binding bindValueSampleHeight = ctx.bindValue(targetSampleHeight, modelSampleHeight, strategy, null);
+        Binding bindValueSampleHeight = bindingContext.bindValue(targetSampleHeight, modelSampleHeight, strategy, null);
         
         ControlDecorationSupport.create(bindValueSampleHeight, SWT.TOP | SWT.RIGHT);
         
         IObservableValue targetSampleWidth = WidgetProperties.text(SWT.Modify).observe(txtSampleWidth);
         IObservableValue modelSampleWidth = BeanProperties.value("sampleWidth").observe(settings);
-        Binding bindValueSampleWidth = ctx.bindValue(targetSampleWidth, modelSampleWidth, strategy, null);
+        Binding bindValueSampleWidth = bindingContext.bindValue(targetSampleWidth, modelSampleWidth, strategy, null);
         
         ControlDecorationSupport.create(bindValueSampleWidth, SWT.TOP | SWT.RIGHT);
         
         IObservableValue targetCollection = ViewersObservables.observeSingleSelection(comboCollectionMode);
         IObservableValue modelCollection = BeanProperties.value("collection").observe(settings);
-        ctx.bindValue(targetCollection, modelCollection);
+        bindingContext.bindValue(targetCollection, modelCollection);
 
         settings.addPropertyChangeListener("geometry", new PropertyChangeListener() {
 
             @Override
             public void propertyChange(PropertyChangeEvent evt) {
                 txtSampleWidth.setEnabled(true);
-                ctx.bindValue(WidgetProperties.text().observe(txtSampleWidth),
+                bindingContext.bindValue(WidgetProperties.text().observe(txtSampleWidth),
                         BeanProperties.value("sampleWidth").observe(settings));
                 if (settings.getGeometry() == SampleGeometry.DISC) {
                     txtSampleWidth.setEnabled(false);
-                    ctx.bindValue(WidgetProperties.text().observe(txtSampleWidth),
+                    bindingContext.bindValue(WidgetProperties.text().observe(txtSampleWidth),
                             BeanProperties.value("sampleHeight").observe(settings));
                 }
             }
