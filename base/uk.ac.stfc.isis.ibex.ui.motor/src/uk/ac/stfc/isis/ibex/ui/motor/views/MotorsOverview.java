@@ -39,7 +39,6 @@ import uk.ac.stfc.isis.ibex.motor.internal.MotorsTable;
 /**
  * Holds the table of motors.
  */
-@SuppressWarnings("checkstyle:magicnumber")
 public class MotorsOverview extends Composite {
 	private Composite motorComposite;
 	

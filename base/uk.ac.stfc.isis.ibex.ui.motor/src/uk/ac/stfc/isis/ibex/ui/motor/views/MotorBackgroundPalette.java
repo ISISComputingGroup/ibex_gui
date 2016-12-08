@@ -17,15 +17,12 @@
  * http://opensource.org/licenses/eclipse-1.0.php
  */
 
-/**
- * 
- */
 package uk.ac.stfc.isis.ibex.ui.motor.views;
 
 import org.eclipse.swt.graphics.Color;
 
 /**
- * 
+ * Class to hold the motor background palette.
  */
 public class MotorBackgroundPalette {
 
@@ -34,6 +31,14 @@ public class MotorBackgroundPalette {
     private Color stoppedColor;
     private Color movingColor;
 
+    /**
+     * Instantiates the motor background palette.
+     * 
+     * @param movingColor colour to be used when the motor is moving.
+     * @param stoppedColor colour to be used when the motor is stopped.
+     * @param disabledColor colour to be used when the motor is disabled.
+     * @param unnamedColor colour to be used when the motor is unnamed.
+     */
     public MotorBackgroundPalette(Color movingColor, Color stoppedColor, Color disabledColor, Color unnamedColor) {
         this.movingColor = movingColor;
         this.stoppedColor = stoppedColor;
@@ -41,18 +46,38 @@ public class MotorBackgroundPalette {
         this.unnamedColor = unnamedColor;
     }
 
+    /**
+     * Returns the colour used when the motor is moving.
+     * 
+     * @return the colour used when the motor is moving.
+     */
     public Color getMovingColor() {
         return movingColor;
     }
 
+    /**
+     * Returns the colour used when the motor is disabled.
+     * 
+     * @return the colour used when the motor is disabled.
+     */
     public Color getDisabledColor() {
         return disabledColor;
     }
 
+    /**
+     * Returns the colour used when the motor is stopped.
+     * 
+     * @return the colour used when the motor is stopped.
+     */
     public Color getStoppedColor() {
         return stoppedColor;
     }
 
+    /**
+     * Returns the colour used when the motor is unnamed.
+     * 
+     * @return the colour used when the motor is unnamed.
+     */
     public Color getUnnamedColor() {
         return unnamedColor;
     }

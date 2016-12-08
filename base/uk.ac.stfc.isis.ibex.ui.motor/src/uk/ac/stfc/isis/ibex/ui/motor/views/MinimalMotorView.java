@@ -62,17 +62,6 @@ public class MinimalMotorView extends Composite {
 		
 	private Motor motor;
 	private Label motorName;
-		
-    /*
-     * 
-     * private static final Color MOVINGCOLOR = SWTResourceManager.getColor(160,
-     * 250, 170); private static final Color STOPPEDCOLOR =
-     * SWTResourceManager.getColor(255, 200, 200); private static final Color
-     * DISABLEDCOLOR = SWTResourceManager.getColor(200, 200, 200); private
-     * static final Color UNAMEDCOLOR = SWTResourceManager.getColor(220, 220,
-     * 220);
-     * 
-     */
 
 	private Label value;
 	private Label setpoint;
