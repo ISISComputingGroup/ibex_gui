@@ -97,11 +97,7 @@ public class PythonBuilder extends ModelObject {
         StringBuilder result = new StringBuilder();
         StringBuilder sansData = new StringBuilder();
         StringBuilder transData = new StringBuilder();
-        boolean populatedRow = false;
 
-        if (settings.getLoopOver()) {
-
-        }
         boolean prependLoop = true;
         for (Row row : rows) {
             if (row.getPosition().length() > 0) {
@@ -115,15 +111,8 @@ public class PythonBuilder extends ModelObject {
                 if (!settings.getLoopOver()) {
                     prependLoop = false;
                 }
-
-                populatedRow = true;
             }
         }
-        // Return if no data read
-        if (!populatedRow) {
-            return result.toString();
-        }
-
         if (sansFirst) {
             result.append(sansData);
             result.append(transData);
@@ -131,6 +120,7 @@ public class PythonBuilder extends ModelObject {
             result.append(transData);
             result.append(sansData);
         }
+
         return result.toString();
     }
 
@@ -145,44 +135,76 @@ public class PythonBuilder extends ModelObject {
     private String buildAlternating(boolean sansFirst) {
         StringBuilder result = new StringBuilder();
         StringBuilder rowData = new StringBuilder();
+
         boolean populatedRow = false;
 
         // Get sans and trans data for every row.
         if (sansFirst) {
             for (Row row : rows) {
+                StringBuilder currentRow = new StringBuilder();
                 if (row.getPosition().length() > 0) {
-                    rowData.append("if count < num_sans:\n");
-                    rowData.append(buildSans(row));
-                    rowData.append("if count < num_trans:\n");
-                    rowData.append(buildTrans(row));
+                    currentRow.append("if count < num_sans:\n");
+                    currentRow.append(buildSans(row));
+                    currentRow.append("if count < num_trans:\n");
+                    currentRow.append(buildTrans(row));
                     populatedRow = true;
                 }
+                // If loop over every run set, add loop for each row
+                if (settings.getLoopOver()) {
+                    currentRow = addAltLoop(currentRow);
+                }
+                rowData.append(currentRow);
             }
         } else {
             for (Row row : rows) {
+                StringBuilder currentRow = new StringBuilder();
                 if (row.getPosition().length() > 0) {
-                    rowData.append("if count < num_trans:\n");
-                    rowData.append(buildTrans(row));
-                    rowData.append("if count < num_sans:\n");
-                    rowData.append(buildSans(row));
+                    currentRow.append("if count < num_trans:\n");
+                    currentRow.append(buildTrans(row));
+                    currentRow.append("if count < num_sans:\n");
+                    currentRow.append(buildSans(row));
                     populatedRow = true;
                 }
+                // If loop over every run set, add loop for each row
+                if (settings.getLoopOver()) {
+                    currentRow = addAltLoop(currentRow);
+                }
+                rowData.append(currentRow);
             }
         }
-        // Return if no data read
+        // Return blank if no rows read
         if (!populatedRow) {
             return result.toString();
         }
 
+        // If loop over every run not set, add loop once
+        if (!settings.getLoopOver()) {
+            rowData = addAltLoop(rowData);
+        }
+
         result.append(String.format("num_sans = %s\n", settings.getDoSans()));
         result.append(String.format("num_trans = %s\n", settings.getDoTrans()));
-        result.append("count = 0\n");
-        result.append("while True:\n");
-        result.append(indent(rowData.toString()));
-        result.append(indent("count += 1\n"));
-        result.append(indent("if count >= num_trans and count >= num_sans : break\n"));
+        result.append(rowData);
 
         return result.toString();
+    }
+
+    /**
+     * Adds loop used in alternating mode to a block of script code.
+     * 
+     * @param block
+     *            The block of code to loop over.
+     * @return The input code surrounded with a loop.
+     */
+    private StringBuilder addAltLoop(StringBuilder block) {
+        StringBuilder result = new StringBuilder();
+        result.append("count = 0\n");
+        result.append("while True:\n");
+        result.append(indent(block.toString()));
+        result.append(indent("count += 1\n"));
+        result.append(indent("if count >= num_trans and count >= num_sans : break\n\n"));
+
+        return result;
     }
 
 	/**
