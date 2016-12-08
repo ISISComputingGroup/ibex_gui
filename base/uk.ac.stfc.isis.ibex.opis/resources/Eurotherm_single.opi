@@ -302,7 +302,7 @@ $(pv_value)</tooltip>
       <pv_value />
       <scripts />
       <border_alarm_sensitive>true</border_alarm_sensitive>
-      <height>22</height>
+      <height>25</height>
       <on_label>ON</on_label>
       <border_width>1</border_width>
       <scale_options>
@@ -324,11 +324,11 @@ $(pv_value)</tooltip>
         <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
       </background_color>
       <square_led>false</square_led>
-      <width>22</width>
+      <width>25</width>
       <x>81</x>
-      <name>LED</name>
+      <name>Lookup_LED</name>
       <data_type>0</data_type>
-      <y>125</y>
+      <y>123</y>
       <foreground_color>
         <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
       </foreground_color>
@@ -430,7 +430,7 @@ $(pv_value)</tooltip>
       <wuid>4fdc1aa2:158de06471b:-7563</wuid>
       <transparent>false</transparent>
       <auto_size>false</auto_size>
-      <text>Autotune:</text>
+      <text>Lookup:</text>
       <scripts />
       <height>20</height>
       <border_width>1</border_width>
@@ -451,7 +451,7 @@ $(pv_value)</tooltip>
       </background_color>
       <width>73</width>
       <x>0</x>
-      <name>lookup_label</name>
+      <name>Lookup_label</name>
       <y>126</y>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
@@ -492,7 +492,7 @@ $(pv_value)</tooltip>
       <widget_type>Button</widget_type>
       <width>67</width>
       <x>153</x>
-      <name>autotune_sp</name>
+      <name>Lookup_setpoint</name>
       <y>125</y>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
@@ -762,7 +762,7 @@ $(pv_value)</tooltip>
       </background_color>
       <width>73</width>
       <x>0</x>
-      <name>I_label_1</name>
+      <name>I_label</name>
       <y>30</y>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
@@ -1459,7 +1459,7 @@ $(pv_value)</tooltip>
       </background_color>
       <width>70</width>
       <x>87</x>
-      <name>Text Update_2</name>
+      <name>Temperature_text</name>
       <y>7</y>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
@@ -1510,7 +1510,7 @@ $(pv_value)</tooltip>
       </background_color>
       <width>68</width>
       <x>88</x>
-      <name>Text Update_3</name>
+      <name>Setpoint_text</name>
       <y>35</y>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
@@ -1543,7 +1543,7 @@ $(pv_value)</tooltip>
       <precision_from_pv>false</precision_from_pv>
       <widget_type>Text Input</widget_type>
       <confirm_message></confirm_message>
-      <name>txtSetpoint</name>
+      <name>Setpoint_setpoint</name>
       <actions hook="false" hook_all="false" />
       <border_style>3</border_style>
       <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
@@ -1617,7 +1617,7 @@ $(pv_value)</tooltip>
       </background_color>
       <width>68</width>
       <x>88</x>
-      <name>Text Update_2</name>
+      <name>Heater_text</name>
       <y>63</y>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
@@ -1667,7 +1667,7 @@ $(pv_value)</tooltip>
       <square_led>false</square_led>
       <width>25</width>
       <x>87</x>
-      <name>LED</name>
+      <name>Autotune_LED</name>
       <data_type>0</data_type>
       <y>88</y>
       <foreground_color>
@@ -1720,7 +1720,7 @@ $(pv_value)</tooltip>
       <square_led>false</square_led>
       <width>25</width>
       <x>87</x>
-      <name>LED</name>
+      <name>Rampon_LED</name>
       <data_type>0</data_type>
       <y>116</y>
       <foreground_color>
@@ -1774,7 +1774,7 @@ $(pv_value)</tooltip>
       </background_color>
       <width>62</width>
       <x>87</x>
-      <name>Text Update_3</name>
+      <name>Ramp_rate_text</name>
       <y>147</y>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
@@ -1807,7 +1807,7 @@ $(pv_value)</tooltip>
       <precision_from_pv>false</precision_from_pv>
       <widget_type>Text Input</widget_type>
       <confirm_message></confirm_message>
-      <name>txtSetpoint</name>
+      <name>Ramp_rate_setpoint</name>
       <actions hook="false" hook_all="false" />
       <border_style>3</border_style>
       <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
@@ -1880,7 +1880,7 @@ $(pv_value)</tooltip>
       <square_led>false</square_led>
       <width>25</width>
       <x>87</x>
-      <name>LED</name>
+      <name>Ramping_LED</name>
       <data_type>0</data_type>
       <y>176</y>
       <foreground_color>
@@ -1923,7 +1923,7 @@ $(pv_value)</tooltip>
       </background_color>
       <width>55</width>
       <x>23</x>
-      <name>Address_label_1</name>
+      <name>Setpoint_label</name>
       <y>35</y>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
@@ -1964,7 +1964,7 @@ $(pv_value)</tooltip>
       </background_color>
       <width>55</width>
       <x>23</x>
-      <name>Address_label_1</name>
+      <name>Heater_label</name>
       <y>63</y>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
@@ -2046,7 +2046,7 @@ $(pv_value)</tooltip>
       <widget_type>Button</widget_type>
       <width>81</width>
       <x>161</x>
-      <name>autotune_sp</name>
+      <name>autotune_setpoint</name>
       <y>90</y>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
@@ -2101,7 +2101,7 @@ else:
       </background_color>
       <width>66</width>
       <x>12</x>
-      <name>Autotune_label</name>
+      <name>Rampon_label</name>
       <y>119</y>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
@@ -2126,7 +2126,7 @@ $(pv_value)</tooltip>
       <text>On/Off</text>
       <scripts />
       <border_alarm_sensitive>false</border_alarm_sensitive>
-      <height>20</height>
+      <height>22</height>
       <border_width>1</border_width>
       <scale_options>
         <width_scalable>true</width_scalable>
@@ -2142,8 +2142,8 @@ $(pv_value)</tooltip>
       <widget_type>Button</widget_type>
       <width>81</width>
       <x>161</x>
-      <name>rampon_sp</name>
-      <y>119</y>
+      <name>rampon_setpoint</name>
+      <y>118</y>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </foreground_color>
@@ -2197,7 +2197,7 @@ else:
       </background_color>
       <width>66</width>
       <x>12</x>
-      <name>Autotune_label</name>
+      <name>Ramp_rate_label</name>
       <y>147</y>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
@@ -2238,7 +2238,7 @@ else:
       </background_color>
       <width>78</width>
       <x>0</x>
-      <name>Address_label_1</name>
+      <name>Temerature_label</name>
       <y>7</y>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
@@ -2279,7 +2279,7 @@ else:
       </background_color>
       <width>66</width>
       <x>12</x>
-      <name>Currently_ramping_label</name>
+      <name>Ramping_label</name>
       <y>178</y>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
@@ -2412,7 +2412,7 @@ $(pv_value)</tooltip>
       </background_color>
       <width>112</width>
       <x>90</x>
-      <name>Address_value</name>
+      <name>Address_text</name>
       <y>0</y>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
@@ -2559,7 +2559,7 @@ $(pv_value)</tooltip>
       </background_color>
       <width>79</width>
       <x>36</x>
-      <name>Ramp_file</name>
+      <name>Calibration_file_text</name>
       <y>11</y>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
@@ -2599,7 +2599,7 @@ $(pv_value)</tooltip>
       </background_color>
       <width>31</width>
       <x>0</x>
-      <name>Ramp_file_label</name>
+      <name>Calibration_file_label</name>
       <y>12</y>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
@@ -2768,8 +2768,8 @@ $(pv_value)</tooltip>
       <rotation_angle>0.0</rotation_angle>
       <scripts>
         <path pathString="EurothermFileCheck.py" checkConnect="true" sfe="false" seoe="false">
-          <pv trig="true">loc://$(DID)_calibration_file_type("calibration")</pv>
-          <pv trig="true">loc://$(DID)_calibration_widget_name("Calib_error_text_$(PV_ROOT_EURO)")</pv>
+          <pv trig="true">loc://$(PV_ROOT_EURO)_calibration_file_type("calibration")</pv>
+          <pv trig="true">loc://$(PV_ROOT_EURO)_calibration_widget_name("Calib_error_text_$(PV_ROOT_EURO)")</pv>
           <pv trig="true">$(PV_ROOT_EURO):CAL:RBV</pv>
         </path>
       </scripts>
