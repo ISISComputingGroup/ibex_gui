@@ -3,7 +3,7 @@ from org.epics.vtype import AlarmSeverity
 from org.csstudio.opibuilder.util import OPIColor
 
 def check(file_type, widget_name, pv):
-	in_error_message = "Unable to read " + file_type + " file. Check the path and format are correct"
+	in_error_message = "Error reading " + file_type + " file. Check the path and format. See log for details"
 	no_error_message = "None"
 
 	# Can't get colors working by name. Define as RBG
