@@ -57,12 +57,12 @@ public class Table extends DataboundTable<Row> {
 	@Override
 	protected void addColumns() {
 		position();
+        sampleName();
 		trans();
 		transWait();
 		sans();
 		sansWait();
 		period();
-		sampleName();
 		thickness();
 	}
 	
