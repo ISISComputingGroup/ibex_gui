@@ -23,8 +23,10 @@ package uk.ac.stfc.isis.ibex.ui.synoptic.editor.pv;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.ArrayList;
 import java.util.List;
 
+import uk.ac.stfc.isis.ibex.configserver.editing.DefaultName;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.ComponentDescription;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.IO;
@@ -35,14 +37,16 @@ import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.SynopticViewModel;
  * The view model that contains the logic for the PV list.
  */
 public class PvListViewModel extends ModelObject {
-    List<PV> pvList;
-    PV selectedPV;
+    private List<PV> pvList;
+    private PV selectedPV;
 
-    ComponentDescription selectedComp;
+    private ComponentDescription selectedComp;
 
-    boolean deleteEnabled;
-    boolean upEnabled;
-    boolean downEnabled;
+    private boolean deleteEnabled;
+    private boolean upEnabled;
+    private boolean downEnabled;
+
+    private SynopticViewModel synoptic;
 
     /**
      * The constructor for the view model of the pv list view.
@@ -52,6 +56,7 @@ public class PvListViewModel extends ModelObject {
      *            selection.
      */
     public PvListViewModel(final SynopticViewModel synoptic) {
+        this.synoptic = synoptic;
         synoptic.addPropertyChangeListener("compSelection", new PropertyChangeListener() {
 
             @Override
@@ -74,12 +79,25 @@ public class PvListViewModel extends ModelObject {
     }
 
     /**
+     * @return The names of all the PVs in the list.
+     */
+    private List<String> getPvNames() {
+        List<String> names = new ArrayList<>();
+        for (PV pv : pvList) {
+            names.add(pv.displayName());
+        }
+        return names;
+    }
+
+    /**
      * Adds a PV writer/reader to the component.
      * 
      * @return The PV that has been created
      */
     public PV addNewPV() {
-        PV pv = new PV(selectedComp.getUniquePvName("New PV"), "NONE", IO.READ);
+        
+        DefaultName namer = new DefaultName("New PV", " ", true);
+        PV pv = new PV(namer.getUnique(getPvNames()), "NONE", IO.READ);
 
         // Will add at the beginning if null
         selectedComp.addPV(pv, getIndex(selectedPV) + 1);
@@ -91,12 +109,22 @@ public class PvListViewModel extends ModelObject {
         return pv;
     }
 
-    private void updatePvList() {
+    /**
+     * Update the pv list for all listeners.
+     */
+    public void updatePvList() {
         if (selectedComp != null) {
             // We don't need to send the list as the ListViewer just needs to be
             // refreshed
             firePropertyChange("pvListChanged", 0, pvList = selectedComp.pvs());
         }
+    }
+
+    /**
+     * @return Them list of PVs.
+     */
+    public List<PV> getList() {
+        return pvList;
     }
 
     /**
@@ -204,5 +232,12 @@ public class PvListViewModel extends ModelObject {
      */
     public void setDownEnabled(boolean enabled) {
         firePropertyChange("downEnabled", downEnabled, downEnabled = enabled);
+    }
+
+    /**
+     * @return the overall synoptic view model.
+     */
+    public SynopticViewModel getModel() {
+        return synoptic;
     }
 }

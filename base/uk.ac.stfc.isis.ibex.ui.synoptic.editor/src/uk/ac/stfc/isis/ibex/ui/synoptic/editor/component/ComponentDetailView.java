@@ -123,8 +123,10 @@ public class ComponentDetailView extends Composite {
                         labelComposite.setVisible(true);
                         lblNoSelection.setText(UNIQUE_COMPONENT_NAME);
                         lblNoSelection.setForeground(colorRed);
+                        synopticViewModel.setError(true);
                     } else {
                         labelComposite.setVisible(false);
+                        synopticViewModel.setError(false);
                     }
                 }
             }

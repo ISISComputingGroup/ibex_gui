@@ -29,7 +29,6 @@ import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
-import uk.ac.stfc.isis.ibex.configserver.editing.DefaultName;
 import uk.ac.stfc.isis.ibex.devicescreens.components.ComponentType;
 
 /**
@@ -177,22 +176,6 @@ public class ComponentDescription implements SynopticParentDescription {
 	public List<PV> pvs() {
 		return pvs;
 	}
-	
-    /**
-     * Get a unique PV name for this component.
-     * 
-     * @param root
-     *            the ideal PV name
-     * @return a unique PV name
-     */
-    public String getUniquePvName(String root) {
-        List<String> names = new ArrayList<>();
-        for (PV pv : pvs) {
-            names.add(pv.displayName());
-        }
-        DefaultName namer = new DefaultName(root, " ", true);
-        return namer.getUnique(names);
-    }
 
     /**
      * Remove a PV from this component.

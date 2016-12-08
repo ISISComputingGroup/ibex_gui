@@ -19,6 +19,8 @@
 
 package uk.ac.stfc.isis.ibex.ui.synoptic.editor.dialogs;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.Collection;
 
 import javax.xml.bind.JAXBException;
@@ -42,9 +44,7 @@ import uk.ac.stfc.isis.ibex.synoptic.Synoptic;
 import uk.ac.stfc.isis.ibex.synoptic.SynopticInfo;
 import uk.ac.stfc.isis.ibex.synoptic.xml.XMLUtil;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.instrument.SynopticPreview;
-import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.IInstrumentUpdateListener;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.SynopticViewModel;
-import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.UpdateTypes;
 
 /**
  * This class provides the dialog to edit the synoptic. While this class is responsible for
@@ -156,14 +156,14 @@ public class EditSynopticDialog extends Dialog {
 			}
 		});
 		
-		synopticViewModel.addInstrumentUpdateListener(new IInstrumentUpdateListener() {
+        synopticViewModel.addPropertyChangeListener("hasError", new PropertyChangeListener() {
+
             @Override
-            public void instrumentUpdated(UpdateTypes updateType) {
-                if (updateType == UpdateTypes.EDIT_COMPONENT) {
-                    saveAsBtn.setEnabled(!synopticViewModel.getHasDuplicatedName());
-                    if (saveBtn != null) {
-                        saveBtn.setEnabled(!synopticViewModel.getHasDuplicatedName());
-                    }
+            public void propertyChange(PropertyChangeEvent evt) {
+                boolean hasError = (boolean) evt.getNewValue();
+                saveAsBtn.setEnabled(!hasError);
+                if (saveBtn != null) {
+                    saveBtn.setEnabled(!hasError);
                 }
             }
         });

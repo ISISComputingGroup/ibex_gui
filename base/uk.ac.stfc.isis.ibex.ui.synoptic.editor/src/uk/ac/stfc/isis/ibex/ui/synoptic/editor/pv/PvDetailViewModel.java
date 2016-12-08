@@ -24,6 +24,9 @@ package uk.ac.stfc.isis.ibex.ui.synoptic.editor.pv;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
+import org.eclipse.swt.graphics.Color;
+import org.eclipse.wb.swt.SWTResourceManager;
+
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.IO;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.PV;
@@ -35,14 +38,24 @@ import uk.ac.stfc.isis.ibex.validators.PvValidator;
  * This is the view model that contains the logic for the pv details panel.
  */
 public class PvDetailViewModel extends ModelObject {
+    private final static String NO_SELECTION_TEXT = "Select a PV to view/edit details";
+
     private boolean selectionVisible;
     private String pvName = "";
-    private String errorText = "";
+    private String errorText = NO_SELECTION_TEXT;
     private String pvAddress = "";
+    private final Color colorBlack = SWTResourceManager.getColor(0, 0, 0);
+    private final Color colorRed = SWTResourceManager.getColor(255, 0, 0);
+
+    private Color errorColor = colorBlack;
+
+    private static final String NON_UNIQUE_PV_ERROR = "%s (%s) PV is not unique";
 
     private IO pvMode = IO.READ;
 
     private PV selectedPv;
+
+    private PvListViewModel model;
 
     /**
      * The constructor for the view model.
@@ -51,6 +64,7 @@ public class PvDetailViewModel extends ModelObject {
      *            The view model for the PV List as a whole
      */
     public PvDetailViewModel(PvListViewModel pvList) {
+        this.model = pvList;
         if (pvList != null) {
             pvList.addPropertyChangeListener("pvSelection", new PropertyChangeListener() {
 
@@ -71,19 +85,22 @@ public class PvDetailViewModel extends ModelObject {
      * @param pv
      *            The PV to update the front end with
      */
-    private void showPV(PV pv) {
+    public void showPV(PV pv) {
         if (pv != null) {
             setSelectionVisible(true);
 
             firePropertyChange("pvName", pvName, pvName = pv.displayName());
 
-            addressValid(pv.address());
             firePropertyChange("pvAddress", pvAddress, pvAddress = pv.address());
 
             firePropertyChange("pvMode", pvMode, pvMode = pv.recordType().io());
+            
+            validatePV(new PV(pvName, pvAddress, pvMode));
 
         } else {
             setSelectionVisible(false);
+            setErrorText(NO_SELECTION_TEXT);
+            setErrorColor(colorBlack);
         }
     }
 
@@ -157,20 +174,17 @@ public class PvDetailViewModel extends ModelObject {
     }
 
     /**
-     * @param name
+     * @param address
      *            The address of the PV which is being edited.
      */
-    public void setPvAddress(String name) {
-        firePropertyChange("pvAddress", pvAddress, pvAddress = name);
-        if (addressValid(name)) {
-            updateModel();
-        }
+    public void setPvAddress(String address) {
+        firePropertyChange("pvAddress", pvAddress, pvAddress = address);
+        updateModel();
     }
 
     private void updateModel() {
-        if (selectedPv != null) {
-            updateSelectedPV(pvName, pvAddress, pvMode);
-        }
+        updateSelectedPV(pvName, pvAddress, pvMode);
+        validatePV(new PV(pvName, pvAddress, pvMode));
     }
 
     /**
@@ -197,17 +211,41 @@ public class PvDetailViewModel extends ModelObject {
 
         selectedPv.setAddress(addressToUse);
 
-        firePropertyChange("pvListChanged", "", "new");
+        model.updatePvList();
     }
 
-    private boolean addressValid(String address) {
+    private void validatePV(PV pv) {
+        if (isPvValid(pv)) {
+            setErrorColor(colorBlack);
+            model.getModel().setError(false);
+        } else {
+            setErrorColor(colorRed);
+            model.getModel().setError(true);
+        }
+    }
+
+    private boolean isPvValid(PV pv) {
+        String name = pv.displayName();
+        IO mode = pv.recordType().io();
+        String address = pv.address();
+
+        for (PV otherPv : model.getList()) {
+            if (otherPv.equals(pv)) {
+                break;
+            }
+
+            if (otherPv.displayName().equals(pv.displayName())) {
+                if (otherPv.recordType().io().equals(pv.recordType().io())) {
+                    setErrorText(String.format(NON_UNIQUE_PV_ERROR, name, mode));
+                    return false;
+                }
+            }
+        }
+
         PvValidator addressValidator = new PvValidator();
         boolean addressValid = addressValidator.validatePvAddress(address);
-        if (addressValid) {
-            setErrorText("");
-        } else {
-            setErrorText(addressValidator.getErrorMessage());
-        }
+        setErrorText(addressValidator.getErrorMessage());
+
         return addressValid;
     }
 
@@ -242,5 +280,20 @@ public class PvDetailViewModel extends ModelObject {
             setPvName(selectPV.getBlockName());
             setPvAddress(selectPV.getPvAddress());
         }
+    }
+
+    /**
+     * @param newColor
+     *            set the new color for the error text.
+     */
+    public void setErrorColor(Color newColor) {
+        firePropertyChange("errorColor", errorColor, errorColor = newColor);
+    }
+
+    /**
+     * @return get the color of the error text.
+     */
+    public Color getErrorColor() {
+        return errorColor;
     }
 }

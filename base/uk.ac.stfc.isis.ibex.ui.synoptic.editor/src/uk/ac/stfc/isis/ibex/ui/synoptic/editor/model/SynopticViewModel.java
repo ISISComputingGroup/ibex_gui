@@ -66,6 +66,7 @@ public class SynopticViewModel extends ModelObject {
 	private SynopticDescription synoptic;
 	private List<ComponentDescription> selectedComponents;
 	private Property selectedProperty;
+    private boolean hasError;
 	private List<IInstrumentUpdateListener> instrumentUpdateListeners = new CopyOnWriteArrayList<>();
 
     /**
@@ -463,5 +464,20 @@ public class SynopticViewModel extends ModelObject {
      */
     public List<String> getSelectedPropertyKeys() {
         return getPropertyKeys(getSingleSelectedComp().target().name());
+    }
+
+    /**
+     * @return get whether the synoptic contains an error or not.
+     */
+    public boolean getError() {
+        return hasError;
+    }
+
+    /**
+     * @param error
+     *            set whether the synoptic contains an error or not.
+     */
+    public void setError(boolean error) {
+        firePropertyChange("hasError", hasError, hasError = error);
     }
 }

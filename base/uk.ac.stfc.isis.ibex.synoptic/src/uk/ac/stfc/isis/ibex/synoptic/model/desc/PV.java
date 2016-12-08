@@ -112,7 +112,7 @@ public class PV {
 		PV other = (PV) obj;
 		return displayName.equals(other.displayName()) 
 				&& address.equals(other.address)
-                && recordType.equals(other.recordType);
+                && recordType.io().equals(other.recordType.io());
 	}
 	
 	@Override
