@@ -43,7 +43,7 @@
       <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
     </tab_6_background_color>
     <tab_6_title>Sensor 7</tab_6_title>
-    <height>505</height>
+    <height>511</height>
     <tab_6_foreground_color>
       <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
     </tab_6_foreground_color>
@@ -81,7 +81,7 @@
     <background_color>
       <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
     </background_color>
-    <width>787</width>
+    <width>793</width>
     <x>6</x>
     <horizontal_tabs>true</horizontal_tabs>
     <y>84</y>
@@ -207,7 +207,7 @@
       <transparent>true</transparent>
       <lock_children>false</lock_children>
       <scripts />
-      <height>476</height>
+      <height>482</height>
       <border_width>1</border_width>
       <scale_options>
         <width_scalable>true</width_scalable>
@@ -225,7 +225,7 @@
       <background_color>
         <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
       </background_color>
-      <width>785</width>
+      <width>791</width>
       <x>1</x>
       <name>Sensor 1</name>
       <y>1</y>
@@ -246,7 +246,7 @@
         <wuid>6892be24:156313795e2:-7d1e</wuid>
         <auto_size>false</auto_size>
         <scripts />
-        <height>535</height>
+        <height>475</height>
         <border_width>1</border_width>
         <scale_options>
           <width_scalable>true</width_scalable>
@@ -267,8 +267,8 @@
           <color red="240" green="240" blue="240" />
         </background_color>
         <zoom_to_fit>false</zoom_to_fit>
-        <width>907</width>
-        <x>-12</x>
+        <width>787</width>
+        <x>0</x>
         <name>Linking Container</name>
         <y>0</y>
         <foreground_color>
@@ -289,7 +289,7 @@
       <transparent>true</transparent>
       <lock_children>false</lock_children>
       <scripts />
-      <height>476</height>
+      <height>482</height>
       <border_width>1</border_width>
       <scale_options>
         <width_scalable>true</width_scalable>
@@ -307,7 +307,7 @@
       <background_color>
         <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
       </background_color>
-      <width>785</width>
+      <width>791</width>
       <x>1</x>
       <name>Sensor 2</name>
       <y>1</y>
@@ -411,7 +411,7 @@
       <transparent>true</transparent>
       <lock_children>false</lock_children>
       <scripts />
-      <height>476</height>
+      <height>482</height>
       <border_width>1</border_width>
       <scale_options>
         <width_scalable>true</width_scalable>
@@ -429,7 +429,7 @@
       <background_color>
         <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
       </background_color>
-      <width>785</width>
+      <width>791</width>
       <x>1</x>
       <name>Sensor 3</name>
       <y>1</y>
@@ -493,7 +493,7 @@
       <transparent>true</transparent>
       <lock_children>false</lock_children>
       <scripts />
-      <height>476</height>
+      <height>482</height>
       <border_width>1</border_width>
       <scale_options>
         <width_scalable>true</width_scalable>
@@ -511,7 +511,7 @@
       <background_color>
         <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
       </background_color>
-      <width>785</width>
+      <width>791</width>
       <x>1</x>
       <name>Sensor 4</name>
       <y>1</y>
@@ -575,7 +575,7 @@
       <transparent>true</transparent>
       <lock_children>false</lock_children>
       <scripts />
-      <height>476</height>
+      <height>482</height>
       <border_width>1</border_width>
       <scale_options>
         <width_scalable>true</width_scalable>
@@ -593,7 +593,7 @@
       <background_color>
         <color red="240" green="240" blue="240" />
       </background_color>
-      <width>785</width>
+      <width>791</width>
       <x>1</x>
       <name>Sensor 5</name>
       <y>1</y>
@@ -657,7 +657,7 @@
       <transparent>true</transparent>
       <lock_children>false</lock_children>
       <scripts />
-      <height>476</height>
+      <height>482</height>
       <border_width>1</border_width>
       <scale_options>
         <width_scalable>true</width_scalable>
@@ -675,7 +675,7 @@
       <background_color>
         <color red="240" green="240" blue="240" />
       </background_color>
-      <width>785</width>
+      <width>791</width>
       <x>1</x>
       <name>Sensor 6</name>
       <y>1</y>
@@ -739,7 +739,7 @@
       <transparent>true</transparent>
       <lock_children>false</lock_children>
       <scripts />
-      <height>476</height>
+      <height>482</height>
       <border_width>1</border_width>
       <scale_options>
         <width_scalable>true</width_scalable>
@@ -757,7 +757,7 @@
       <background_color>
         <color red="240" green="240" blue="240" />
       </background_color>
-      <width>785</width>
+      <width>791</width>
       <x>1</x>
       <name>Sensor 7</name>
       <y>1</y>
