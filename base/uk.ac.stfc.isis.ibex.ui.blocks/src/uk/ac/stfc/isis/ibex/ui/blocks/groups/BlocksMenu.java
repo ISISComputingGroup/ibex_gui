@@ -22,9 +22,12 @@ package uk.ac.stfc.isis.ibex.ui.blocks.groups;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.jface.action.Action;
+import org.eclipse.jface.action.GroupMarker;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.MenuManager;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.ui.PlatformUI;
 
 import uk.ac.stfc.isis.ibex.configserver.Configurations;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Configuration;
@@ -32,7 +35,7 @@ import uk.ac.stfc.isis.ibex.configserver.displaying.DisplayBlock;
 import uk.ac.stfc.isis.ibex.epics.writing.SameTypeWriter;
 import uk.ac.stfc.isis.ibex.ui.blocks.presentation.PVHistoryPresenter;
 import uk.ac.stfc.isis.ibex.ui.blocks.presentation.Presenter;
-import uk.ac.stfc.isis.ibex.ui.configserver.commands.EditCurrentConfigHandler;
+import uk.ac.stfc.isis.ibex.ui.configserver.commands.EditBlockHandler;
 
 /**
  * The right-click menu for blocks in the dashboard.
@@ -41,6 +44,8 @@ public class BlocksMenu extends MenuManager {
 	
 	private final DisplayBlock block;
 	
+    private static final String BLOCK_MENU_GROUP = "Block";
+
     private static final String EDIT_BLOCK = "Edit block";
 	
 	private final IAction editBlockAction;
@@ -59,7 +64,7 @@ public class BlocksMenu extends MenuManager {
 				public void run() {
 					if (canWrite) {
 						if (find(editBlockAction.getId()) == null) {
-							add(editBlockAction);
+                            appendToGroup(BLOCK_MENU_GROUP, editBlockAction);
 						}
 					} else {
 						remove(editBlockAction.getId());
@@ -79,6 +84,8 @@ public class BlocksMenu extends MenuManager {
 		
 		Configurations.getInstance().server().setCurrentConfig().subscribe(readOnlyListener);
 		
+        add(new GroupMarker(BLOCK_MENU_GROUP));
+
         IAction displayHistory = new Action("Display block history") {
 			@Override
 			public void run() {
@@ -86,16 +93,16 @@ public class BlocksMenu extends MenuManager {
 			}
 		};
 		
-		add(displayHistory);
+        appendToGroup(BLOCK_MENU_GROUP, displayHistory);
 
         editBlockAction = new Action(EDIT_BLOCK) {
             @Override
             public void run() {
-                EditCurrentConfigHandler editBlockHandler = new EditCurrentConfigHandler(block.getName());
                 try {
-                    editBlockHandler.execute(new ExecutionEvent());
+                    new EditBlockHandler(block.getName()).execute(new ExecutionEvent());
                 } catch (ExecutionException e) {
-                    e.printStackTrace();
+                    MessageDialog.openError(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), "Error",
+                            "Unable to edit block.");
                 }
             }
         };

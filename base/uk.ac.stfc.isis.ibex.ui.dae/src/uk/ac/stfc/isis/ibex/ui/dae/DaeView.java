@@ -52,6 +52,9 @@ import uk.ac.stfc.isis.ibex.ui.dae.vetos.VetosPanel;
 @SuppressWarnings("checkstyle:magicnumber")
 public class DaeView extends ViewPart {
 	
+    /**
+     * The view ID.
+     */
 	public static final String ID = "uk.ac.stfc.isis.ibex.ui.dae.views.DaeView"; //$NON-NLS-1$
 	
 	private RunSummary runSummary;

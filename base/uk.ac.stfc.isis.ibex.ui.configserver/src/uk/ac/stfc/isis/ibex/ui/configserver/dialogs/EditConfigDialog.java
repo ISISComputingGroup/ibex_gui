@@ -57,23 +57,6 @@ public class EditConfigDialog extends ConfigDetailsDialog {
 		super(parentShell, title, subTitle, config, isComponent, isBlank, configurationViewModels);
 	}
 
-    /**
-     * Constructor with Block name to edit set.
-     * 
-     * @param parentShell parent shell to run dialogue
-     * @param title title of dialogue
-     * @param subTitle action being taken, e.g. editing current configuration
-     * @param config configuration being edited
-     * @param isComponent is component (as opposed to configuration)
-     * @param isBlank is blank
-     * @param blockName black name to edit
-     * @param configurationViewModels view model for the configuration
-     */
-    public EditConfigDialog(Shell parentShell, String title, String subTitle, EditableConfiguration config,
-            boolean isComponent, boolean isBlank, String blockName, ConfigurationViewModels configurationViewModels) {
-        super(parentShell, title, subTitle, config, isComponent, isBlank, blockName, configurationViewModels);
-    }
-
 	@Override
 	protected void createButtonsForButtonBar(Composite parent) {
 		if (!isBlank && !this.config.getName().isEmpty()) { 
