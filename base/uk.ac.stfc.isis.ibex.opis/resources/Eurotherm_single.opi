@@ -1332,8 +1332,8 @@ $(pv_value)</tooltip>
       <rotation_angle>0.0</rotation_angle>
       <scripts>
         <path pathString="EurothermFileCheck.py" checkConnect="true" sfe="false" seoe="false">
-          <pv trig="true">loc://$(PV_ROOT_EURO)_ramp_file_type("ramp")</pv>
-          <pv trig="true">loc://$(PV_ROOT_EURO)ramp_widget_name("Ramp_error_text_$(PV_ROOT_EURO)")</pv>
+          <pv trig="true">loc://$(DID)_ramp_file_type("ramp")</pv>
+          <pv trig="true">loc://$(DID)_ramp_widget_name("Ramp_error_text_$(PV_ROOT_EURO)")</pv>
           <pv trig="true">$(PV_ROOT_EURO):RAMP_FILE</pv>
         </path>
       </scripts>
@@ -1819,8 +1819,8 @@ $(pv_value)</tooltip>
       <rotation_angle>0.0</rotation_angle>
       <scripts>
         <path pathString="EurothermFileCheck.py" checkConnect="true" sfe="false" seoe="false">
-          <pv trig="true">loc://$(PV_ROOT_EURO)_calibration_file_type("calibration")</pv>
-          <pv trig="true">loc://$(PV_ROOT_EURO)_calibration_widget_name("Calib_error_text_$(PV_ROOT_EURO)")</pv>
+          <pv trig="true">loc://$(DID)_calibration_file_type("calibration")</pv>
+          <pv trig="true">loc://$(DID)_calibration_widget_name("Calib_error_text_$(PV_ROOT_EURO)")</pv>
           <pv trig="true">$(PV_ROOT_EURO):CAL:RBV</pv>
         </path>
       </scripts>
