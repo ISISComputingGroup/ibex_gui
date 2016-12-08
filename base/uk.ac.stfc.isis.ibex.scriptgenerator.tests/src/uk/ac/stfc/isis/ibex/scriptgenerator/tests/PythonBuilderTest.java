@@ -141,11 +141,26 @@ public class PythonBuilderTest {
     }
 
     @Test
-    public void GIVEN_blank_row_WHEN_generating_script_THEN_row_is_ignored_in_script() {
+    public void GIVEN_blank_row_WHEN_generating_sequential_script_THEN_row_is_ignored_in_script() {
         // Arrange
         String expected = getHeader() + indent(defaultSetup);
 
         // Act
+        rows.add(new Row());
+        builder.setRows(rows);
+        String actual = builder.createScript();
+
+        // Assert
+        assertEquals(expected.trim(), actual.trim());
+    }
+
+    @Test
+    public void GIVEN_blank_row_WHEN_generating_alternating_script_THEN_row_is_ignored_in_script() {
+        // Arrange
+        String expected = getHeader() + indent(defaultSetup);
+
+        // Act
+        settings.setOrder(Order.ALTTRANS);
         rows.add(new Row());
         builder.setRows(rows);
         String actual = builder.createScript();
