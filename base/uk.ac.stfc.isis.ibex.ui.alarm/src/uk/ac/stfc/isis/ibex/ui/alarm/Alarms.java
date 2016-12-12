@@ -19,26 +19,19 @@
 
 package uk.ac.stfc.isis.ibex.ui.alarm;
 
-import org.apache.logging.log4j.Logger;
 import org.eclipse.jface.resource.ImageDescriptor;
-import org.eclipse.ui.IPerspectiveDescriptor;
-import org.eclipse.ui.IWorkbenchPage;
-import org.eclipse.ui.PlatformUI;
-import org.eclipse.ui.WorkbenchException;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
 import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
 import uk.ac.stfc.isis.ibex.instrument.InstrumentInfoReceiver;
-import uk.ac.stfc.isis.ibex.logger.IsisLog;
+import uk.ac.stfc.isis.ibex.ui.PerspectiveReopener;
 
 /**
  * The activator class controls the plug-in life cycle, this plugin shows the
  * alarm perspective.
  */
 public class Alarms extends AbstractUIPlugin implements InstrumentInfoReceiver {
-
-    private static final Logger LOG = IsisLog.getLogger(Alarms.class);
     
     /**
      * The plug-in ID.
@@ -49,10 +42,9 @@ public class Alarms extends AbstractUIPlugin implements InstrumentInfoReceiver {
 	private static Alarms plugin;
 
     /**
-     * Store whether after instrument switch the alarm perspective should be
-     * reopened.
+     * Allow the alarm perspective to be closed and reopened.
      */
-    private boolean reopenalarmPerspective = false;
+    private PerspectiveReopener alarmPerspectiveReopener = new PerspectiveReopener(AlarmPerspective.ID);
 		
 	/*
 	 * (non-Javadoc)
@@ -94,6 +86,12 @@ public class Alarms extends AbstractUIPlugin implements InstrumentInfoReceiver {
 		return imageDescriptorFromPlugin(PLUGIN_ID, path);
 	}
 
+    /**
+     * On change of instrument there is nothing to do for this perspective. The
+     * settings for the alarm server are changed by the alarm model.
+     * 
+     * @param instrument to set
+     */
     @Override
     public void setInstrument(InstrumentInfo instrument) {
         // nothing to do on set instrument
@@ -102,37 +100,25 @@ public class Alarms extends AbstractUIPlugin implements InstrumentInfoReceiver {
 
     /**
      * Before the instrument changes close the alarm perspective so that it
-     * releases it alarm model.
+     * releases its alarm model. Remember that it was closed so it can be
+     * reopened after the instrument has been switched.
      * 
      * @param instrument instrument to switch to
      */
     @Override
     public void preSetInstrument(InstrumentInfo instrument) {
-        reopenalarmPerspective = false;
-        IPerspectiveDescriptor descriptor =
-                PlatformUI.getWorkbench().getPerspectiveRegistry().findPerspectiveWithId(AlarmPerspective.ID);
-        IWorkbenchPage activePage = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
-        if (activePage != null) {
-            IPerspectiveDescriptor alarmPerspective = PlatformUI.getWorkbench().getPerspectiveRegistry()
-                    .findPerspectiveWithId(uk.ac.stfc.isis.ibex.ui.alarm.AlarmPerspective.ID);
-            reopenalarmPerspective = (activePage.getPerspective() == alarmPerspective);
-            activePage.closePerspective(descriptor, true, true);
-        }
+        alarmPerspectiveReopener.closePerspective();
     }
 
+
+    /**
+     * After the instrument has switched reopen the alarm perspective if it was
+     * open before switching.
+     * 
+     * @param instrument instrument to switch to
+     */
     @Override
     public void postSetInstrument(InstrumentInfo instrument) {
-        if (!reopenalarmPerspective) {
-            return;
-        }
-        try {
-            PlatformUI.getWorkbench().showPerspective(uk.ac.stfc.isis.ibex.ui.alarm.AlarmPerspective.ID,
-                    PlatformUI.getWorkbench().getActiveWorkbenchWindow());
-        } catch (WorkbenchException ex) {
-            ex.printStackTrace();
-            LOG.error("Error reopening alarm perspective.");
-            LOG.catching(ex);
-        }
-
+        alarmPerspectiveReopener.reopenPerspective();
     }
 }

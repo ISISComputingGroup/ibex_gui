@@ -24,6 +24,8 @@ package uk.ac.stfc.isis.ibex.ui;
 
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.PlatformUI;
 
 /**
  * Set of utility methods and constants for working with SWT.
@@ -54,4 +56,19 @@ public final class Utils {
 
         control.setEnabled(enabled);
     }
+
+    /**
+     * Gets the active page in the GUI. Checks that the workbench is running.
+     *
+     * @return the active page; or null if there is not one
+     */
+    public static IWorkbenchPage getActivePage() {
+        if (!PlatformUI.isWorkbenchRunning()) {
+            // workbench is not running yet so no perspectives open
+            return null;
+        }
+
+        return PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
+    }
+
 }

@@ -16,4 +16,5 @@ Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Export-Package: uk.ac.stfc.isis.ibex.ui.alarm
 Import-Package: org.csstudio.alarm.beast.ui.alarmtree,
- org.eclipse.wb.swt
+ org.eclipse.wb.swt,
+ uk.ac.stfc.isis.ibex.ui

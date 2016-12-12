@@ -25,7 +25,6 @@ import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.window.Window;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.ui.IPerspectiveDescriptor;
 import org.eclipse.ui.PlatformUI;
 
 //import uk.ac.stfc.isis.ibex.alarm.AlarmConnectionCloser;
@@ -35,7 +34,7 @@ import uk.ac.stfc.isis.ibex.ui.scripting.Consoles;
 import uk.ac.stfc.isis.ibex.ui.synoptic.Activator;
 
 /**
- * Handles the changing of the instrument pointed at.
+ * Handles the changing of the instrument pointed.
  *
  */
 public class InstrumentHandler extends AbstractHandler {
@@ -45,46 +44,45 @@ public class InstrumentHandler extends AbstractHandler {
 
     @Override
     public Object execute(ExecutionEvent arg0) throws ExecutionException {
+        InstrumentInfo selected = getUserSelectedInstrument();
+        if (selected == null) {
+            return null;
+        }
+
+        synoptic.closeAllOPIs();
+
+        MainMenuUI.INSTRUMENT.setInstrumentForAllPlugins(selected);
+        
+
+        return null;
+    }
+
+    /**
+     * Get the user to select an instrument and confirm closing python console
+     * windows if necessary.
+     * 
+     * @return selected instrument; null for do not switch instrument
+     */
+    private InstrumentInfo getUserSelectedInstrument() {
+        InstrumentInfo selected;
         Shell shell = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
         InstrumentDialog dialog = new InstrumentDialog(shell);
 
-        if (dialog.open() == Window.CANCEL || dialog.selectedInstrument() == null) {
+        if (dialog.open() == Window.CANCEL) {
+            return null;
+        }
+
+        selected = dialog.selectedInstrument();
+        if (selected == null) {
             return null;
         }
 
         if (consoles.anyActive()) {
-            if (shouldCloseAllConsoles(dialog)) {
-                consoles.closeAll();
-            } else {
+            if (!shouldCloseAllConsoles(dialog)) {
                 return null;
             }
         }
-
-        IPerspectiveDescriptor activePerspective = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage()
-                .getPerspective();
-
-        // Close any OPIs in the synoptic
-        synoptic.closeAllOPIs();
-
-        InstrumentInfo selected = dialog.selectedInstrument();
-        MainMenuUI.INSTRUMENT.setInstrument(selected);
-        
-        IPerspectiveDescriptor scriptingPerspective = PlatformUI.getWorkbench().getPerspectiveRegistry()
-                .findPerspectiveWithId(uk.ac.stfc.isis.ibex.ui.scripting.Perspective.ID);
-
-        // If the scripting perspective is currently open just create the
-        // console as the scripting perspective does when it is first created.
-        //
-        // Else close the perspective and let the scripting perspective sort
-        // itself out when it gets opened again.
-        if (activePerspective == scriptingPerspective) {
-            consoles.createConsole();
-        } else {
-            PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().closePerspective(scriptingPerspective,
-                    false, false);
-        }
-
-        return null;
+        return selected;
     }
 
     private boolean shouldCloseAllConsoles(InstrumentDialog dialog) {

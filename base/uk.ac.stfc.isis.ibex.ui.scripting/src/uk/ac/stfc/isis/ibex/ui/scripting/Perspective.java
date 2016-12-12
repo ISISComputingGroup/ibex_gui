@@ -25,6 +25,9 @@ import org.eclipse.wb.swt.ResourceManager;
 
 import uk.ac.stfc.isis.ibex.ui.perspectives.BasePerspective;
 
+/**
+ * Perspective for the scripting window.
+ */
 public class Perspective extends BasePerspective {
 
 	public static final String ID = "uk.ac.stfc.isis.ibex.ui.scripting.perspective"; //$NON-NLS-1$
@@ -33,7 +36,7 @@ public class Perspective extends BasePerspective {
 	public void createInitialLayout(IPageLayout layout) {
 		super.createInitialLayout(layout);
 		
-		Consoles.getDefault().createConsole();
+        Consoles.getDefault().createConsole();
 	}
 	
 	@Override

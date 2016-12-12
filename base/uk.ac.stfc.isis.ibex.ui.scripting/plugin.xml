@@ -51,5 +51,10 @@
             class="uk.ac.stfc.isis.ibex.ui.scripting.InterpreterInfoBuilderParticipant">
       </interpreter_info_builder_participant>
    </extension>
+   <extension
+         point="uk.ac.stfc.isis.ibex.instrument.info">
+      <InstrumentInfoReceiver
+            class="uk.ac.stfc.isis.ibex.ui.scripting.Consoles"></InstrumentInfoReceiver>
+   </extension>
 
 </plugin>

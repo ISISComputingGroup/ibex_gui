@@ -164,7 +164,7 @@ public class Instrument implements BundleActivator {
                 }
             }
         });
-        setInstrument(initialInstrument());
+        setInstrumentForAllPlugins(initialInstrument());
     }
 
     /**
@@ -224,7 +224,7 @@ public class Instrument implements BundleActivator {
 	 * 
 	 * @param selectedInstrument Information on the new instrument.
 	 */
-	public void setInstrument(InstrumentInfo selectedInstrument) {
+	public void setInstrumentForAllPlugins(InstrumentInfo selectedInstrument) {
 
         if (this.instrumentInfo != selectedInstrument) {
             this.instrumentInfo = selectedInstrument;
