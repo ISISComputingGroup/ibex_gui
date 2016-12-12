@@ -31,7 +31,6 @@ import org.eclipse.ui.PlatformUI;
 import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
 import uk.ac.stfc.isis.ibex.ui.mainmenu.MainMenuUI;
 import uk.ac.stfc.isis.ibex.ui.scripting.Consoles;
-import uk.ac.stfc.isis.ibex.ui.synoptic.Activator;
 
 /**
  * Handles the changing of the instrument pointed.
@@ -39,17 +38,12 @@ import uk.ac.stfc.isis.ibex.ui.synoptic.Activator;
  */
 public class InstrumentHandler extends AbstractHandler {
 
-    private final Consoles consoles = Consoles.getDefault();
-    private final Activator synoptic = Activator.getDefault();
-
     @Override
     public Object execute(ExecutionEvent arg0) throws ExecutionException {
         InstrumentInfo selected = getUserSelectedInstrument();
         if (selected == null) {
             return null;
         }
-
-        synoptic.closeAllOPIs();
 
         MainMenuUI.INSTRUMENT.setInstrumentForAllPlugins(selected);
         
@@ -64,6 +58,7 @@ public class InstrumentHandler extends AbstractHandler {
      * @return selected instrument; null for do not switch instrument
      */
     private InstrumentInfo getUserSelectedInstrument() {
+        final Consoles consoles = Consoles.getDefault();
         InstrumentInfo selected;
         Shell shell = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
         InstrumentDialog dialog = new InstrumentDialog(shell);

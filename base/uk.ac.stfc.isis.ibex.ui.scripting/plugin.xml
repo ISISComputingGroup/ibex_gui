@@ -54,7 +54,8 @@
    <extension
          point="uk.ac.stfc.isis.ibex.instrument.info">
       <InstrumentInfoReceiver
-            class="uk.ac.stfc.isis.ibex.ui.scripting.Consoles"></InstrumentInfoReceiver>
+            class="uk.ac.stfc.isis.ibex.ui.scripting.ConsoleSettings">
+      </InstrumentInfoReceiver>
    </extension>
 
 </plugin>

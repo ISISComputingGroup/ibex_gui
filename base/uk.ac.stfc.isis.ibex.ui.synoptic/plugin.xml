@@ -143,5 +143,11 @@
          </menu>
       </menuContribution>
    </extension>
+   <extension
+         point="uk.ac.stfc.isis.ibex.instrument.info">
+      <InstrumentInfoReceiver
+            class="uk.ac.stfc.isis.ibex.ui.synoptic.SynopticSettings">
+      </InstrumentInfoReceiver>
+   </extension>
 
 </plugin>

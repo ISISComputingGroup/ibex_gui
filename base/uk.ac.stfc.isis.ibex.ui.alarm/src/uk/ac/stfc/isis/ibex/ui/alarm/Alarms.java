@@ -36,16 +36,24 @@ public class Alarms extends AbstractUIPlugin implements InstrumentInfoReceiver {
     /**
      * The plug-in ID.
      */
-	public static final String PLUGIN_ID = "uk.ac.stfc.isis.ibex.ui.test"; //$NON-NLS-1$
+    public static final String PLUGIN_ID = "uk.ac.stfc.isis.ibex.ui.alarm"; // $NON-NLS-1$
 
-	// The shared instance
+    /** The shared instance. */
 	private static Alarms plugin;
 
     /**
      * Allow the alarm perspective to be closed and reopened.
      */
-    private PerspectiveReopener alarmPerspectiveReopener = new PerspectiveReopener(AlarmPerspective.ID);
+    private PerspectiveReopener alarmPerspectiveReopener;
 		
+    
+    /**
+     * Instantiates a new alarms; call getInstance instead in most cases.
+     */
+    public Alarms() {
+        alarmPerspectiveReopener = new PerspectiveReopener(AlarmPerspective.ID);
+    }
+
 	/*
 	 * (non-Javadoc)
 	 * @see org.eclipse.ui.plugin.AbstractUIPlugin#start(org.osgi.framework.BundleContext)

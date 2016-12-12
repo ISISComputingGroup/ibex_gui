@@ -19,42 +19,33 @@
 
 package uk.ac.stfc.isis.ibex.ui.scripting;
 
-import org.apache.logging.log4j.Logger;
-import org.eclipse.ui.IPerspectiveDescriptor;
-import org.eclipse.ui.IWorkbenchPage;
-import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.console.ConsolePlugin;
 import org.eclipse.ui.console.IConsole;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 import org.python.pydev.shared_interactive_console.console.ui.ScriptConsole;
-import org.python.pydev.shared_interactive_console.console.ui.ScriptConsoleManager;
-
-import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
-import uk.ac.stfc.isis.ibex.instrument.InstrumentInfoReceiver;
-import uk.ac.stfc.isis.ibex.logger.IsisLog;
-import uk.ac.stfc.isis.ibex.ui.Utils;
 
 /**
  * The activator class controls the plug-in life cycle.
  */
-public class Consoles extends AbstractUIPlugin implements InstrumentInfoReceiver {
-
-	public static final Logger LOG = IsisLog.getLogger("Scripting");
+public class Consoles extends AbstractUIPlugin {
 	
     /**
      * The plug-in ID.
      */
-	public static final String PLUGIN_ID = "uk.ac.stfc.isis.ibex.ui.scripting"; //$NON-NLS-1$
+    public static final String PLUGIN_ID = "uk.ac.stfc.isis.ibex.ui.scripting"; // $NON-NLS-1$
 
 	// The shared instance
 	private static Consoles plugin;
 
-    private GeniePythonConsoleFactory genieConsoleFactory = new GeniePythonConsoleFactory();
+    private GeniePythonConsoleFactory genieConsoleFactory;
 
     // true if after switching instrument the consoles need to be reopened
     private boolean reopenConsole;
 	
+    public Consoles() {
+
+    }
 
 	/*
 	 * (non-Javadoc)
@@ -65,7 +56,7 @@ public class Consoles extends AbstractUIPlugin implements InstrumentInfoReceiver
 		super.start(context);
 		plugin = this;
 		PyDevConfiguration.configure();
-
+        genieConsoleFactory = new GeniePythonConsoleFactory();
 	}
 
     /**
@@ -101,47 +92,6 @@ public class Consoles extends AbstractUIPlugin implements InstrumentInfoReceiver
 	public static Consoles getDefault() {
 		return plugin;
 	}
-
-    /**
-     * @param instrument
-     */
-    @Override
-    public void setInstrument(InstrumentInfo instrument) {
-        //
-    }
-
-    /**
-     * @param instrument
-     */
-    @Override
-    public void preSetInstrument(InstrumentInfo instrument) {
-        reopenConsole = false;
-        IWorkbenchPage activePage = Utils.getActivePage();
-        if (activePage == null) {
-            return;
-        }
-        ScriptConsoleManager.getInstance().closeAll();
-
-        IPerspectiveDescriptor scriptingPerspective =
-                PlatformUI.getWorkbench().getPerspectiveRegistry().findPerspectiveWithId(Perspective.ID);
-        if (activePage.getPerspective() == scriptingPerspective) {
-            reopenConsole = true;
-        } else {
-            activePage.closePerspective(scriptingPerspective, false, false);
-        }
-    }
-
-    /**
-     * After the instrument has been set then reopen the scripting console.
-     * 
-     * @param instrument the instrument being switched to
-     */
-    @Override
-    public void postSetInstrument(InstrumentInfo instrument) {
-        if (reopenConsole) {
-            createConsole();
-        }
-    }
 
     /**
      * Create a new pydev console based on the current instrument.
