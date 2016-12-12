@@ -279,15 +279,38 @@ public class Instrument implements BundleActivator {
         }
 
         for (InstrumentInfoReceiver receiver : instrumentInfoRecievers) {
-            receiver.preSetInstrument(selectedInstrument);
+            try {
+                receiver.preSetInstrument(selectedInstrument);
+            } catch (Exception ex) {
+                // Log the error and carry on there is not much else we can do
+                // here
+                LoggerUtils.logErrorWithStackTrace(LOG,
+                        "Can not perform preSetInstrument for pluign " + receiver.getClass().getName(), ex);
+            }
         }
 
         for (InstrumentInfoReceiver receiver : instrumentInfoRecievers) {
-            receiver.setInstrument(selectedInstrument);
+            try {
+                receiver.setInstrument(selectedInstrument);
+            } catch (Exception ex) {
+                // Log the error and carry on there is not much else we can do
+                // here
+                LoggerUtils.logErrorWithStackTrace(LOG,
+                        "Can not perform SetInstrument for pluign " + receiver.getClass().getName(), ex);
+            }
+
         }
 
         for (InstrumentInfoReceiver receiver : instrumentInfoRecievers) {
-            receiver.postSetInstrument(selectedInstrument);
+            try {
+                receiver.postSetInstrument(selectedInstrument);
+            } catch (Exception ex) {
+                // Log the error and carry on there is not much else we can do
+                // here
+                LoggerUtils.logErrorWithStackTrace(LOG,
+                        "Can not perform postSetInstrument for pluign " + receiver.getClass().getName(), ex);
+            }
+
         }
 
     }
