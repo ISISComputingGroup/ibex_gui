@@ -146,7 +146,7 @@
                <command
                      commandId="uk.ac.stfc.isis.ibex.ui.motor.colourOptionsCommand"
                      id="uk.ac.stfc.isis.ibex.ui.motor.colourOptionsCommand1"
-                     label="Normal Vision"
+                     label="Standard Colour Scheme"
                      style="radio">
                   <parameter
                    		name="org.eclipse.ui.commands.radioStateParameter"
@@ -157,7 +157,7 @@
                <command
                      commandId="uk.ac.stfc.isis.ibex.ui.motor.colourOptionsCommand"
                      id="uk.ac.stfc.isis.ibex.ui.motor.colourOptionsCommand2"
-                     label="Colour Blind"
+                     label="Alternative Colour Scheme 1"
                      style="radio">
                   <parameter
                         name="org.eclipse.ui.commands.radioStateParameter"
