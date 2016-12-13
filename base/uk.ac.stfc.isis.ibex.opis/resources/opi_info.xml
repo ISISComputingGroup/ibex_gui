@@ -120,7 +120,7 @@
 			<value>
 				<type>MOVINGMONITOR</type>
 				<path>inout_monitor.opi</path>
-				<description>Description required.</description>
+				<description>The OPI for a moving monitor.</description>
 				<macros>
 					<macro>
 						<name>M</name>
