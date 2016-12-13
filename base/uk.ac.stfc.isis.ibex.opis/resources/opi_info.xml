@@ -276,11 +276,11 @@
 				<macros>
 					<macro>
 						<name>PH</name>
-						<description>The name of the device (as defined in the positions look-up file (e.g. PINHOLE))</description>
+						<description>The name of the device (as defined in the positions look-up file, e.g. PINHOLE)</description>
 					</macro>
 					<macro>
 						<name>MM</name>
-						<description>The motor PV to point at (as defined in the motionsetpoints file (e.g. MTR0605))</description>
+						<description>The motor PV to point at (as defined in the motionsetpoints file, e.g. MTR0605)</description>
 					</macro>
 				</macros>
 			</value>
