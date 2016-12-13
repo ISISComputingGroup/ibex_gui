@@ -26,7 +26,7 @@
 			<value>
 				<type>BEAMSTOP</type>
 				<path>beamstop.opi</path>
-				<description>Description required. No properties required.</description>
+				<description>The OPI for the beam-stop. No properties required.</description>
 				<macros>
 				</macros>
 			</value>
