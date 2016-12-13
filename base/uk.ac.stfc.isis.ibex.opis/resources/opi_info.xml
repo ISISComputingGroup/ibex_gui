@@ -236,7 +236,7 @@
 			<value>
 				<type>CHOPPER</type>
 				<path>Mk3Chopper.opi</path>
-				<description>Description required. No properties required.</description>
+				<description>The OPI for the Mk3 chopper. No properties required.</description>
 				<macros>
 				</macros>
 			</value>
