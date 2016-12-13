@@ -246,15 +246,15 @@
 			<value>
 				<type>MONITOR</type>
 				<path>monitor.opi</path>
-				<description>Description required.</description>
+				<description>The OPI for a fixed monitor.</description>
 				<macros>
                     <macro>
 						<name>M</name>
-						<description>Description required.</description>
+						<description>The monitor number (e.g. 1).</description>
 					</macro> 
                     <macro>
 						<name>CHANNUM</name>
-						<description>Description required.</description>
+						<description>The channel number (e.g. 2).</description>
 					</macro>
                     <macro>
 						<name>N</name>
