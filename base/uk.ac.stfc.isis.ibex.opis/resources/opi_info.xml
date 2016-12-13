@@ -328,7 +328,7 @@
 			<value>
 				<type>SAMPLECHANGER</type>
 				<path>stage/sample_changer.opi</path>
-				<description>Description required. No properties required.</description>
+				<description>The OPI for the sample changer. No properties required.</description>
 				<macros>
 				</macros>
 			</value>
@@ -338,7 +338,7 @@
 			<value>
 				<type>LINEARSAMPLECHANGER</type>
 				<path>stage/linear_sample_changer.opi</path>
-				<description>Description required. No properties required.</description>
+				<description>The OPI for the linear sample changer. No properties required.</description>
 				<macros>
 				</macros>
 			</value>
@@ -348,7 +348,7 @@
 			<value>
 				<type>SAMPLESTACK</type>
 				<path>stage/sample.opi</path>
-				<description>Description required. No properties required.</description>
+				<description>The OPI for the sample stage. No properties required.</description>
 				<macros>
 				</macros>
 			</value>
@@ -358,7 +358,7 @@
 			<value>
 				<type>UNCONFIRMED</type>
 				<path>SDTEST.opi</path>
-				<description>Description required.</description>
+				<description>Software development test OPI.</description>
 				<macros>
 					<macro>
 						<name>DEV</name>
