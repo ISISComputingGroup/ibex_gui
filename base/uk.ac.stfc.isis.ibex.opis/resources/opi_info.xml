@@ -36,7 +36,7 @@
 			<value>
 				<type>CAEN</type>
 				<path>HV/HVMonitorSummaryDisplay.opi</path>
-				<description>Summary Display for Caens (Maintenance of list via the button on this OPI). No properties required.</description>
+				<description>Summary display for Caens (maintenance of list via the button on this OPI). No properties required.</description>
 				<macros>
 				</macros>
 			</value>
@@ -76,11 +76,11 @@
 			<value>
 				<type>EUROTHERM</type>
 				<path>Eurotherm.opi</path>
-				<description>The OPI for the Eurotherm controller connected to multiple Eurotherms.</description>
+				<description>The OPI for the Eurotherm crate connected to multiple Eurotherm temperature controllers.</description>
                 <macros>
 					<macro>
 						<name>EURO</name>
-						<description>The Eurotherm base name (e.g. EUROTHRM_01).</description>
+						<description>The Eurotherm PV name (e.g. EUROTHRM_01).</description>
 					</macro>
                 </macros>
 			</value>
