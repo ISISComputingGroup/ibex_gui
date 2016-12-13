@@ -156,7 +156,7 @@
 			<value>
 				<type>JULABO</type>
 				<path>JulaboFL300.opi</path>
-				<description>Description required. No properties required.</description>
+				<description>The OPI for the Julabo FL300 temperature controller. No properties required.</description>
 				<macros>
 				</macros>
 			</value>
@@ -166,7 +166,7 @@
 			<value>
 				<type>JULABO</type>
 				<path>JulaboFP50.opi</path>
-				<description>Description required.</description>
+				<description>The OPI for the Julabo FP50 temperature controller..</description>
 				<macros>
                     <macro>
 						<name>JULABO</name>
