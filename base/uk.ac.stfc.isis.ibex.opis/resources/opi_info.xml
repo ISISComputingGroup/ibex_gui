@@ -142,7 +142,7 @@
 			<value>
 				<type>UNCONFIRMED</type>
 				<path>Jaws.opi</path>
-				<description>Description required.</description>
+				<description>The OPI for a Jaw set.</description>
 				<macros>
                     <macro>
 						<name>J</name>
