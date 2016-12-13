@@ -198,7 +198,7 @@
 				<macros>
 					<macro>
 						<name>IOC_NUM</name>
-						<description>PSU IOC Number, two digits (e.g. 01).</description>
+						<description>PSU IOC number, two digits (e.g. 01).</description>
 					</macro>
 				</macros>
 			</value>
@@ -212,7 +212,7 @@
 				<macros>
 					<macro>
 						<name>LAKESHORE218</name>
- 						<description>The Lakeshore PV name (e.g. LKSH218_01).</description>  
+ 						<description>The Lakeshore 218 PV name (e.g. LKSH218_01).</description>  
 					</macro>
 				</macros>
 			</value>
@@ -226,7 +226,7 @@
 				<macros>
 					<macro>
 						<name>LAKESHORE336</name>
- 						<description>The Lakeshore PV name (e.g. LKSH336_01).</description>  
+ 						<description>The Lakeshore 336 PV name (e.g. LKSH336_01).</description>  
 					</macro>
 				</macros>
 			</value>
