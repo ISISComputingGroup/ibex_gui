@@ -249,17 +249,9 @@
 						<description>The monitor number (e.g. 1).</description>
 					</macro> 
                     <macro>
-						<name>CHANNUM</name>
-						<description>The channel number (e.g. 2).</description>
-					</macro>
-                    <macro>
 						<name>N</name>
 						<description>Description required.</description>
-					</macro> 
-                    <macro>
-						<name>MM</name>
-						<description>Description required.</description>
-					</macro>                      
+					</macro>                     
 				</macros>
 			</value>
 		</entry>
