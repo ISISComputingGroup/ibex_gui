@@ -132,7 +132,7 @@
 					</macro>
 					<macro>
 						<name>MM</name>
-						<description>The motor PV to point at (e.g. MOT:MTR0605).</description>
+						<description>The motor PV relating to the motor controlling the monitor (e.g. MOT:MTR0605).</description>
 					</macro>                    
 				</macros>
 			</value>
@@ -372,7 +372,7 @@
 			<value>
 				<type>SINGLESTAGE</type>
 				<path>single_stage.opi</path>
-				<description>Displays a single Motor along with a designated ID</description>
+				<description>OPI displaying a single Motor along with a designated ID.</description>
 				<macros>
 					<macro>
 						<name>S</name>
@@ -380,7 +380,7 @@
 					</macro>
 					<macro>
 						<name>MM</name>
-						<description>The motor PV relating to the motor controlling the stage  (e.g. MOT:MTR0605).</description>
+						<description>The motor PV relating to the motor controlling the stage (e.g. MOT:MTR0605).</description>
 					</macro>
 				</macros>
 			</value>
@@ -390,7 +390,7 @@
 			<value>
 				<type>CHOPPER</type>
 				<path>SKFChopper.opi</path>
-				<description>GUI for the SKF G5 Controllers</description>
+				<description>The OPI for the SKF G5 chopper controllers.</description>
 				<macros>
                     <macro>
 						<name>DEFAULT_ACTIVE_TAB</name>
@@ -446,7 +446,7 @@
 			<value>
 				<type>UNCONFIRMED</type>
 				<path>slit_motors.opi</path>
-				<description>Description required.</description>
+				<description>OPI displaying the motors of a slit.</description>
 				<macros>
 					<macro>
 						<name>M1</name>
@@ -472,7 +472,7 @@
 			<value>
 				<type>PRESSURE_GAUGE</type>
 				<path>TPG300.opi</path>
-				<description>PFEIFFER 300 Vacuum Gauge.</description>
+				<description>OPI for the PFEIFFER 300 Vacuum Gauge.</description>
 				<macros>
                     <macro>
 						<name>TPG300</name>
@@ -486,11 +486,11 @@
 			<value>
 				<type>PRESSURE_GAUGE</type>
 				<path>TPG26x.opi</path>
-				<description>PFEIFFER 26x Vacuum Gauge.</description>
+				<description>The OPI for the PFEIFFER 26x Vacuum Gauge.</description>
 				<macros>
                     <macro>
 						<name>TPG</name>
-						<description>TPG IOC PV Prefix, e.g. TPG26X_01.</description>
+						<description>TPG IOC PV Prefix (e.g. TPG26X_01).</description>
 					</macro>                  
 				</macros>
 			</value>
@@ -510,15 +510,15 @@
 			<value>
 				<type>TDK_LAMBDA_GENESYS</type>
 				<path>genesys.opi</path>
-				<description>TSK LAMBDA GENESYS PSU.</description>
+				<description>The OPI for the TDK LAMBDA GENESYS PSU.</description>
 				<macros>
 					<macro>
 						<name>IOC_NUM</name>
-						<description>PSU IOC Number, two digits, e.g. 01.</description>
+						<description>PSU IOC Number, two digits (e.g. 01).</description>
 					</macro>
 					<macro>
 						<name>PS_NUM</name>
-						<description>Number of the unit within the IOC, e.g. 3.</description>
+						<description>Number of the unit within the IOC (e.g. 3).</description>
 					</macro>                  
 				</macros>
 			</value>
