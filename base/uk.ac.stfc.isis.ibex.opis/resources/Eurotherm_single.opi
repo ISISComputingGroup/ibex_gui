@@ -116,8 +116,8 @@ $(pv_value)</tooltip>
       <background_color>
         <color name="ISIS_Textbox_Background" red="255" green="255" blue="255" />
       </background_color>
-      <width>67</width>
-      <x>153</x>
+      <width>85</width>
+      <x>162</x>
       <y>31</y>
       <maximum>1.7976931348623157E308</maximum>
       <foreground_color>
@@ -274,8 +274,8 @@ $(pv_value)</tooltip>
       <background_color>
         <color name="ISIS_Textbox_Background" red="255" green="255" blue="255" />
       </background_color>
-      <width>67</width>
-      <x>153</x>
+      <width>85</width>
+      <x>162</x>
       <y>93</y>
       <maximum>1.7976931348623157E308</maximum>
       <foreground_color>
@@ -613,8 +613,8 @@ $(pv_value)</tooltip>
       <background_color>
         <color name="ISIS_Textbox_Background" red="255" green="255" blue="255" />
       </background_color>
-      <width>67</width>
-      <x>153</x>
+      <width>85</width>
+      <x>162</x>
       <y>0</y>
       <maximum>1.7976931348623157E308</maximum>
       <foreground_color>
@@ -669,8 +669,8 @@ $(pv_value)</tooltip>
       <background_color>
         <color name="ISIS_Textbox_Background" red="255" green="255" blue="255" />
       </background_color>
-      <width>67</width>
-      <x>153</x>
+      <width>85</width>
+      <x>162</x>
       <y>61</y>
       <maximum>1.7976931348623157E308</maximum>
       <foreground_color>
