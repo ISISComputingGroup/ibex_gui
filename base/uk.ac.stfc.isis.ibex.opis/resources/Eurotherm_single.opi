@@ -2486,7 +2486,15 @@ $(pv_value)</tooltip>
       <widget_type>Text Input</widget_type>
       <confirm_message></confirm_message>
       <name>Calibration_file_SP</name>
-      <actions hook="false" hook_all="false" />
+      <actions hook="false" hook_all="false">
+        <action type="EXECUTE_PYTHONSCRIPT">
+          <path></path>
+          <scriptText><![CDATA[widget = display.getWidget("Calibration_file_SP")
+widget.setPropertyValue("text",widget.getPropertyValue('text').strip())]]></scriptText>
+          <embedded>true</embedded>
+          <description>Trim white space from requested value</description>
+        </action>
+      </actions>
       <border_style>3</border_style>
       <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
       <enabled>true</enabled>
