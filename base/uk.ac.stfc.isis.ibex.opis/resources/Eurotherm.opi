@@ -70,7 +70,7 @@
       <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
     </tab_2_foreground_color>
     <tab_1_font>
-      <opifont.name fontName="Arial" height="9" style="0">ISIS_Label_Small</opifont.name>
+      <opifont.name fontName="Segoe UI" height="9" style="0">ISIS_TabTitle_NEW</opifont.name>
     </tab_1_font>
     <tab_3_title>Sensor 4</tab_3_title>
     <tab_4_background_color>
@@ -134,13 +134,13 @@
       </rule>
     </rules>
     <tab_3_font>
-      <opifont.name fontName="Arial" height="9" style="0">ISIS_Label_Small</opifont.name>
+      <opifont.name fontName="Segoe UI" height="9" style="0">ISIS_TabTitle_NEW</opifont.name>
     </tab_3_font>
     <tab_5_background_color>
       <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
     </tab_5_background_color>
     <tab_4_font>
-      <opifont.name fontName="Arial" height="9" style="0">ISIS_Label_Small</opifont.name>
+      <opifont.name fontName="Segoe UI" height="9" style="0">ISIS_TabTitle_NEW</opifont.name>
     </tab_4_font>
     <tab_6_icon_path></tab_6_icon_path>
     <macros>
@@ -155,7 +155,7 @@
     </tab_3_foreground_color>
     <widget_type>Tabbed Container</widget_type>
     <tab_2_font>
-      <opifont.name fontName="Arial" height="9" style="0">ISIS_Label_Small</opifont.name>
+      <opifont.name fontName="Segoe UI" height="9" style="0">ISIS_TabTitle_NEW</opifont.name>
     </tab_2_font>
     <tab_3_background_color>
       <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
@@ -164,19 +164,19 @@
     <tab_5_icon_path></tab_5_icon_path>
     <tab_3_enabled>true</tab_3_enabled>
     <tab_5_font>
-      <opifont.name fontName="Arial" height="9" style="0">ISIS_Label_Small</opifont.name>
+      <opifont.name fontName="Segoe UI" height="9" style="0">ISIS_TabTitle_NEW</opifont.name>
     </tab_5_font>
     <name>Tabbed Container</name>
     <minimum_tab_height>10</minimum_tab_height>
     <tab_2_title>Sensor 3</tab_2_title>
     <tab_0_font>
-      <opifont.name fontName="Arial" height="9" style="0">ISIS_Label_Small</opifont.name>
+      <opifont.name fontName="Segoe UI" height="9" style="0">ISIS_TabTitle_NEW</opifont.name>
     </tab_0_font>
     <tab_2_background_color>
       <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
     </tab_2_background_color>
     <tab_6_font>
-      <opifont.name fontName="Arial" height="9" style="0">ISIS_Label_Small</opifont.name>
+      <opifont.name fontName="Segoe UI" height="9" style="0">ISIS_TabTitle_NEW</opifont.name>
     </tab_6_font>
     <tab_0_title>Sensor 1</tab_0_title>
     <tab_1_foreground_color>
@@ -217,7 +217,7 @@
       <macros>
         <include_parent_macros>true</include_parent_macros>
       </macros>
-      <visible>false</visible>
+      <visible>true</visible>
       <border_color>
         <color name="ISIS_Check_Border" red="0" green="128" blue="255" />
       </border_color>
@@ -709,7 +709,7 @@
       <macros>
         <include_parent_macros>true</include_parent_macros>
       </macros>
-      <visible>true</visible>
+      <visible>false</visible>
       <border_color>
         <color red="0" green="128" blue="255" />
       </border_color>
