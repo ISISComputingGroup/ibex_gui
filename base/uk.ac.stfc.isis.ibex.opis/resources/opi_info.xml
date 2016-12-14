@@ -510,7 +510,7 @@
 			<value>
 				<type>TDK_LAMBDA_GENESYS</type>
 				<path>genesys.opi</path>
-				<description>The OPI for the TDK LAMBDA GENESYS PSU.</description>
+				<description>The OPI for the TDK Lambda Genesys PSU.</description>
 				<macros>
 					<macro>
 						<name>IOC_NUM</name>
@@ -528,7 +528,7 @@
 			<value>
 				<type>DANFYSIK</type>
 				<path>danfysik.opi</path>
-				<description>DANFYSIK power supply for magnets.</description>
+				<description>The OPI for the Danfysik power supply for magnets.</description>
 				<macros>
 					<macro>
 						<name>DFKPS</name>
@@ -570,27 +570,27 @@
 			<value>
 				<type>MUON_FRONT_END</type>
 				<path>muon_front_end.opi</path>
-				<description>Muon front end momentum slits and barndoors.</description>
+				<description>The OPI for the Muon front end momentum slits and barndoors.</description>
 				<macros>
 					<macro>
 						<name>BARNDOORS</name>
-						<description>Barndoors PV prefix, e.g. MOT.</description>
+						<description>Barndoors PV prefix (e.g. MOT).</description>
 					</macro>
 					<macro>
 						<name>MM_EMU</name>
-						<description>Motor PV for EMU barndoors, e.g. MOT:MTR0101.</description>
+						<description>The motor PV relating to the EMU barndoors (e.g. MOT:MTR0101).</description>
 					</macro>
 					<macro>
-						<name>MM_MuSR</name>
-						<description>Motor PV for MuSR barndoors, e.g. MOT:MTR0102.</description>
+						<name>MM_MUSR</name>
+						<description>The motor PV relating to the MuSR barndoors (e.g. MOT:MTR0102).</description>
 					</macro>
 					<macro>
-						<name>MM_HiFi</name>
-						<description>Motor PV for HiFi barndoors, e.g. MOT:MTR0103.</description>
+						<name>MM_HIFI</name>
+						<description>The motor PV relating to the HiFi barndoors (e.g. MOT:MTR0103).</description>
 					</macro>
 					<macro>
 						<name>MM_MOMENTUM</name>
-						<description>Motor PV for momentum slits, e.g. MOT:MTR0104.</description>
+						<description>The motor PV relating to the momentum slits (e.g. MOT:MTR0104).</description>
 					</macro>
 				</macros>
 			</value>
@@ -600,11 +600,11 @@
 			<value>
 				<type>SCIMAG3D</type>
 				<path>scimag3D.opi</path>
-				<description>Scienticfic Magnetics 3D Magnet.</description>
+				<description>The OPI for the Scientific Magnetics 3D Magnet.</description>
 				<macros>
 					<macro>
 						<name>SCIMAG3D</name>
-						<description>The ioc running the magnet, e.g. SCIMAG3D_01.</description>
+						<description>The magnet PV name (e.g. SCIMAG3D_01).</description>
 					</macro>
 				</macros>
 			</value>
