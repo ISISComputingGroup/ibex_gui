@@ -80,7 +80,7 @@
                 <macros>
 					<macro>
 						<name>EURO</name>
-						<description>The Eurotherm PV name (e.g. EUROTHRM_01).</description>
+						<description>The Eurotherm PV prefix (e.g. EUROTHRM_01).</description>
 					</macro>
                 </macros>
 			</value>
@@ -94,7 +94,7 @@
 				<macros>
 					<macro>
 						<name>MERCURY</name>
-						<description>The Mercury PV name (e.g. MERCURY_01).</description>
+						<description>The Mercury PV prefix (e.g. MERCURY_01).</description>
 					</macro>
                     <macro>
 						<name>TEMP_NUM1</name>
@@ -170,7 +170,7 @@
 				<macros>
                     <macro>
 						<name>JULABO</name>
-						<description>The Julabo PV name (e.g. JULABO_01).</description>
+						<description>The Julabo PV prefix (e.g. JULABO_01).</description>
 					</macro>                     
 				</macros>
 			</value>
@@ -184,7 +184,7 @@
 				<macros>    
                     <macro>
 						<name>LINKAM95</name>
-						<description>The Linkam 95 PV name (e.g. LINKAM95_01).</description>
+						<description>The Linkam 95 PV prefix (e.g. LINKAM95_01).</description>
 					</macro>              
 				</macros>
 			</value>
@@ -212,7 +212,7 @@
 				<macros>
 					<macro>
 						<name>LAKESHORE218</name>
- 						<description>The Lakeshore 218 PV name (e.g. LKSH218_01).</description>  
+ 						<description>The Lakeshore 218 PV prefix (e.g. LKSH218_01).</description>  
 					</macro>
 				</macros>
 			</value>
@@ -226,7 +226,7 @@
 				<macros>
 					<macro>
 						<name>LAKESHORE336</name>
- 						<description>The Lakeshore 336 PV name (e.g. LKSH336_01).</description>  
+ 						<description>The Lakeshore 336 PV prefix (e.g. LKSH336_01).</description>  
 					</macro>
 				</macros>
 			</value>
@@ -362,7 +362,7 @@
 				<macros>
 					<macro>
 						<name>DEV</name>
-						<description>The SDTest PV name (e.g. SDTEST_01)</description>
+						<description>The SDTest PV prefix (e.g. SDTEST_01)</description>
 					</macro>
 				</macros>
 			</value>
@@ -476,7 +476,7 @@
 				<macros>
                     <macro>
 						<name>TPG300</name>
-						<description>The TPG300 PV name (e.g. TPG300_01).</description>
+						<description>The TPG300 PV prefix (e.g. TPG300_01).</description>
 					</macro>                  
 				</macros>
 			</value>
@@ -490,7 +490,7 @@
 				<macros>
                     <macro>
 						<name>TPG</name>
-						<description>TPG IOC PV Prefix (e.g. TPG26X_01).</description>
+						<description>The TPG26x PV prefix (e.g. TPG26X_01).</description>
 					</macro>                  
 				</macros>
 			</value>
@@ -532,7 +532,7 @@
 				<macros>
 					<macro>
 						<name>DFKPS</name>
-						<description>The Danfysik PV name (e.g. DFKPS_01).</description>
+						<description>The Danfysik PV prefix (e.g. DFKPS_01).</description>
 					</macro>                  
 				</macros>
 			</value>
@@ -546,7 +546,7 @@
 				<macros>    
                     <macro>
 						<name>PDR2000</name>
-						<description>The MKS PDR 2000 name (e.g. PDR2000_01).</description>
+						<description>The MKS PDR 2000 PV prefix (e.g. PDR2000_01).</description>
 					</macro>               
 				</macros>
 			</value>
@@ -560,7 +560,7 @@
 				<macros>    
                     <macro>
 						<name>CRYVALVE</name>
-						<description>The cryo valve PV name (e.g. CRYVALVE_01).</description>
+						<description>The cryo valve PV prefix (e.g. CRYVALVE_01).</description>
 					</macro>  
 				</macros>
 			</value>
@@ -604,7 +604,7 @@
 				<macros>
 					<macro>
 						<name>SCIMAG3D</name>
-						<description>The magnet PV name (e.g. SCIMAG3D_01).</description>
+						<description>The magnet PV prefix (e.g. SCIMAG3D_01).</description>
 					</macro>
 				</macros>
 			</value>
