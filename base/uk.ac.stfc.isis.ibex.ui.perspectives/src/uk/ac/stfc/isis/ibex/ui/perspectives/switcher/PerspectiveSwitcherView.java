@@ -31,6 +31,7 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
+import org.eclipse.swt.widgets.Listener;
 import org.eclipse.ui.ISizeProvider;
 import org.eclipse.ui.part.ViewPart;
 import org.eclipse.wb.swt.SWTResourceManager;
@@ -82,7 +83,6 @@ public class PerspectiveSwitcherView extends ViewPart implements ISizeProvider {
 		createActions();
 		initializeToolBar();
 		initializeMenu();
-        showMnemonics();
 	}
 
     /**
@@ -91,9 +91,10 @@ public class PerspectiveSwitcherView extends ViewPart implements ISizeProvider {
      * @param perspective contains the display information for the perspective
      * @param button is the button to add
      */
-	private void configureButton(IsisPerspective perspective, PerspectiveButton button) {
-		button.setText(perspective.name());
-		button.setImage(perspective.image());
+    private void configureButton(final IsisPerspective perspective, final PerspectiveButton button) {
+        button.setText(perspective.name().replaceAll("&", ""));
+
+        button.setImage(perspective.image());
 		button.setAlignment(SWT.LEFT);
 		button.setFont(BUTTON_FONT);
 
@@ -102,6 +103,31 @@ public class PerspectiveSwitcherView extends ViewPart implements ISizeProvider {
 		gd.minimumHeight = 30;
 		
 		button.setLayoutData(gd);
+
+        // Adds listeners that will add/remove the mnemonic depending on whether
+        // shift/alt are pressed. This is a bit of a fudge to recreate the
+        // character underlining behaviour.
+        Display.getCurrent().addFilter(SWT.KeyDown, new Listener() {
+            @Override
+            public void handleEvent(Event event) {
+                if ((event.stateMask & (SWT.SHIFT | SWT.ALT)) != 0) {
+                    // Add & back into index that it was in originally (used as
+                    // the button text keeps changing on alarm/log)
+                    int mnemonicIdx = perspective.name().indexOf("&");
+                    StringBuilder bldr = new StringBuilder(button.getText());
+                    bldr.insert(mnemonicIdx, "&");
+                    button.setText(bldr.toString());
+                }
+            }
+        });
+        Display.getCurrent().addFilter(SWT.KeyUp, new Listener() {
+            @Override
+            public void handleEvent(Event event) {
+                if ((event.keyCode == SWT.ALT) || (event.keyCode == SWT.SHIFT)) {
+                    button.setText(button.getText().replaceAll("&", ""));
+                }
+            }
+        });
 	}
 
 	/**
@@ -129,20 +155,6 @@ public class PerspectiveSwitcherView extends ViewPart implements ISizeProvider {
 
 		return buttonToAdd;
 	}
-
-	/**
-     * This method will display an underline on the character that is the
-     * shortcut for the button. This underline is normally only displayed after
-     * pressing ALT.
-     */
-    private void showMnemonics() {
-        Event event = new Event();
-        event.keyCode = SWT.ALT;
-        event.type = SWT.KeyDown;
-        Display.getDefault().post(event);
-        event.type = SWT.KeyUp;
-        Display.getDefault().post(event);
-    }
 
     /**
      * Create the actions.

@@ -50,9 +50,13 @@ public abstract class BasePerspective implements IPerspectiveFactory, IsisPerspe
 		layout.addStandaloneView(PerspectiveSwitcherView.ID, false, IPageLayout.LEFT, 0.15f, IPageLayout.ID_EDITOR_AREA);
 	}
 	
+    private String removeAmp(String in) {
+        return in.replaceAll("&", "");
+    }
+
 	@Override
 	public int compareTo(IsisPerspective other) {
-        return this.name().replace("&", "").compareTo(other.name());
+        return removeAmp(name()).compareTo(removeAmp(other.name()));
 	}
 	
 	protected void lockView(IPageLayout layout, String viewID) {
