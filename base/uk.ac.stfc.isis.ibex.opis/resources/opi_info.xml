@@ -129,7 +129,7 @@
 					<macro>
 						<name>MM</name>
 						<description>The motor PV relating to the motor controlling the monitor (e.g. MOT:MTR0605).</description>
-					</macro>                    
+					</macro>              
 				</macros>
 			</value>
 		</entry>
@@ -247,10 +247,6 @@
                     <macro>
 						<name>M</name>
 						<description>The monitor number (e.g. 1).</description>
-					</macro> 
-                    <macro>
-						<name>N</name>
-						<description>Description required.</description>
 					</macro>                     
 				</macros>
 			</value>
