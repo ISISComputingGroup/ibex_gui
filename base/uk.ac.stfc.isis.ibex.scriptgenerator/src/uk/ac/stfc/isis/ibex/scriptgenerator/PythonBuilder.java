@@ -32,7 +32,6 @@ import uk.ac.stfc.isis.ibex.scriptgenerator.settings.SansSettings;
 public class PythonBuilder extends ModelObject {
 	private Collection<Row> rows;
     private SansSettings settings;
-	private StringBuilder script;
     private static final String INDENT = "    ";
     private DateTimeProvider dateTime;
 	
@@ -79,10 +78,8 @@ public class PythonBuilder extends ModelObject {
 	 * @param value a numerical value for the "width" and "height", or the type of geometry, e.g. "disc"
 	 * @return
 	 */
-	private String buildSamplePar(String name, String value) {	
-        String samplePar = String.format("set_sample_par('%s', '%s')\n", name, value);
-		
-		return samplePar;
+    private String buildSamplePar(String name, Object value) {
+        return String.format("set_sample_par('%s', '%s')\n", name, value.toString());
 	}
 
     /**
@@ -210,6 +207,8 @@ public class PythonBuilder extends ModelObject {
 	/**
      * Builds a string used for the do_sans loop from a single row.
      * 
+     * @param row
+     *            A row of data from the script generator table
      * @return the code block for the do_sans python command.
      */
     private String buildSans(Row row) {
@@ -281,27 +280,19 @@ public class PythonBuilder extends ModelObject {
 	}
 	
 	/**
-	 * Returns the script back to the view to be displayed.
-	 * @return the completed script
-	 */
-	public String getScript() {
-		return script.toString();
-	}
-	
-	/**
      * Calls internal build script methods and adds these returned strings to
      * the main script.
      * 
      * @return The Script.
      */
     public String createScript() {
-		script = new StringBuilder();
+		StringBuilder script = new StringBuilder();
 		
 		script.append(generateHeader());
 		
-        script.append(indent(buildSamplePar("height", settings.getSampleHeight().toString())));
-        script.append(indent(buildSamplePar("width", settings.getSampleWidth().toString())));
-        script.append(indent(buildSamplePar("geometry", settings.getGeometry().toString())));
+        script.append(indent(buildSamplePar("height", settings.getSampleHeight())));
+        script.append(indent(buildSamplePar("width", settings.getSampleWidth())));
+        script.append(indent(buildSamplePar("geometry", settings.getGeometry())));
         script.append(indent("\n"));
         switch (settings.getOrder()) {
             case SANS:

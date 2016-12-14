@@ -48,42 +48,42 @@ import uk.ac.stfc.isis.ibex.scriptgenerator.settings.SansSettings;
  * based on script generator settings.
  */
 public class PythonBuilderTest {
-    PythonBuilder builder;
-    LocalDate date;
-    LocalTime time;
-    SansSettings settings;
-    Collection<Row> rows;
-    final String INDENT = "    ";
+    private PythonBuilder builder;
+    private LocalDate date;
+    private LocalTime time;
+    private SansSettings settings;
+    private Collection<Row> rows;
+    private final String INDENT = "    ";
 
-    SansSettings defaultSettings = new SansSettings(1, 1, 7, 7, Order.TRANS, false, ApertureSans.MEDIUM,
+    private SansSettings defaultSettings = new SansSettings(1, 1, 7, 7, Order.TRANS, false, ApertureSans.MEDIUM,
             ApertureTrans.MEDIUM, SampleGeometry.DISC, CollectionMode.HISTOGRAM);
 
-    Row defaultRow1 = new Row("AT", 10.0, WaitUnit.UAMPS, 10.0, WaitUnit.UAMPS, 1.0, "", 1.0);
-    Row defaultRow2 = new Row("AB", 10.0, WaitUnit.UAMPS, 10.0, WaitUnit.UAMPS, 1.0, "", 1.0);
+    private Row defaultRow1 = new Row("AT", 10.0, WaitUnit.UAMPS, 10.0, WaitUnit.UAMPS, 1.0, "", 1.0);
+    private Row defaultRow2 = new Row("AB", 10.0, WaitUnit.UAMPS, 10.0, WaitUnit.UAMPS, 1.0, "", 1.0);
 
-    String defaultSetup = "set_sample_par('height', '7')\n"
+    private static final String defaultSetup = "set_sample_par('height', '7')\n"
             + "set_sample_par('width', '7')\n"
             + "set_sample_par('geometry', 'Disc')\n\n";
 
-    String altLoop = "count = 0\n" + "while True:\n";
-    String altSansCondition = "if count < num_sans:\n";
-    String altTransCondition = "if count < num_trans:\n";
-    String altFooter = "count += 1\n"
+    private static final String altLoop = "count = 0\n" + "while True:\n";
+    private static final String altSansCondition = "if count < num_sans:\n";
+    private static final String altTransCondition = "if count < num_trans:\n";
+    private static final String altFooter = "count += 1\n"
             + "if count >= num_trans and count >= num_sans : break\n\n";
 
-    String defaultDoSans1 = "set_aperture('medium')\n"
+    private static final String defaultDoSans1 = "set_aperture('medium')\n"
             + "lm.dosans_normal(position='AT', waitfor=10.0, waitfortype='uamps', change_period=1.0, title='', thickness=1.0, rtype=0)\n\n";
 
-    String defaultDoSans2 = "set_aperture('medium')\n"
+    private static final String defaultDoSans2 = "set_aperture('medium')\n"
             + "lm.dosans_normal(position='AB', waitfor=10.0, waitfortype='uamps', change_period=1.0, title='', thickness=1.0, rtype=0)\n\n";
 
-    String defaultDoTrans1 = "set_aperture('medium')\n"
+    private static final String defaultDoTrans1 = "set_aperture('medium')\n"
             + "lm.dotrans_normal(position='AT', waitfor=10.0, waitfortype='uamps', change_period=1.0, title='', thickness=1.0, rtype=0)\n\n";
 
-    String defaultDoTrans2 = "set_aperture('medium')\n"
+    private static final String defaultDoTrans2 = "set_aperture('medium')\n"
             + "lm.dotrans_normal(position='AB', waitfor=10.0, waitfortype='uamps', change_period=1.0, title='', thickness=1.0, rtype=0)\n\n";
 
-    public String getHeader() {
+    private String getHeader() {
 
         String header = "# Script created by ZOOM Script at " + date + " " + time + "\n" 
                 + "import LSS.SANSroutines as lm\n"
@@ -95,11 +95,11 @@ public class PythonBuilderTest {
         return header;
     }
     
-    public String getSequentialLoop(int iter) {
+    private String getSequentialLoop(int iter) {
         return "for i in range(" + iter + "):\n";
     }
 
-    public String getAltHeader(int numSans, int numTrans) {
+    private String getAltHeader(int numSans, int numTrans) {
 
         String altHeader = "num_sans = " + numSans + "\n" 
                 + "num_trans = " + numTrans + "\n";
@@ -107,7 +107,7 @@ public class PythonBuilderTest {
         return altHeader;
     }
 
-    public String indent(String block) {
+    private String indent(String block) {
         return block.replaceAll("(?m)^", INDENT);
     }
 
