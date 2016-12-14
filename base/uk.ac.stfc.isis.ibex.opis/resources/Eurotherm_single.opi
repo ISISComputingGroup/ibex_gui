@@ -1214,7 +1214,7 @@ $(trace_0_y_pv_value)</tooltip>
     <transparent>false</transparent>
     <trace_1_update_mode>0</trace_1_update_mode>
     <axis_0_title_font>
-      <opifont.name fontName="Arial" height="9" style="1">ISIS_Header4</opifont.name>
+      <opifont.name fontName="Segoe UI" height="9" style="1">ISIS_GraphLabels_NEW</opifont.name>
     </axis_0_title_font>
     <trace_2_update_mode>0</trace_2_update_mode>
     <background_color>
@@ -1234,7 +1234,7 @@ $(trace_0_y_pv_value)</tooltip>
     <trace_2_buffer_size>100</trace_2_buffer_size>
     <axis_1_maximum>50.0</axis_1_maximum>
     <axis_0_scale_font>
-      <opifont.name fontName="Arial" height="9" style="0">ISIS_Label_Small</opifont.name>
+      <opifont.name fontName="Segoe UI" height="9" style="0">ISIS_GraphScale_NEW</opifont.name>
     </axis_0_scale_font>
     <trigger_pv>sim://ramp(0,1,0.5)</trigger_pv>
     <widget_type>XY Graph</widget_type>
@@ -1255,7 +1255,7 @@ $(trace_0_y_pv_value)</tooltip>
       <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
     </axis_0_axis_color>
     <axis_2_scale_font>
-      <opifont.name fontName="Arial" height="9" style="0">ISIS_Label_Small</opifont.name>
+      <opifont.name fontName="Segoe UI" height="9" style="0">ISIS_GraphScale_NEW</opifont.name>
     </axis_2_scale_font>
     <trace_2_update_delay>100</trace_2_update_delay>
     <axis_0_dash_grid_line>true</axis_0_dash_grid_line>
@@ -1330,7 +1330,7 @@ $(trace_0_y_pv_value)</tooltip>
       <color name="ISIS_Border" red="0" green="0" blue="0" />
     </border_color>
     <axis_2_title_font>
-      <fontdata fontName="Arial" height="9" style="1" />
+      <opifont.name fontName="Segoe UI" height="9" style="1">ISIS_GraphLabels_NEW</opifont.name>
     </axis_2_title_font>
     <trace_0_y_pv>$(PV_ROOT_EURO):TEMP</trace_0_y_pv>
     <trace_2_point_style>0</trace_2_point_style>
@@ -1338,7 +1338,7 @@ $(trace_0_y_pv_value)</tooltip>
     <enabled>true</enabled>
     <trace_0_x_pv></trace_0_x_pv>
     <axis_1_scale_font>
-      <opifont.name fontName="Arial" height="9" style="0">ISIS_Label_Small</opifont.name>
+      <opifont.name fontName="Segoe UI" height="9" style="0">ISIS_GraphScale_NEW</opifont.name>
     </axis_1_scale_font>
     <axis_1_time_format>0</axis_1_time_format>
     <axis_2_time_format>0</axis_2_time_format>
@@ -1358,7 +1358,7 @@ $(trace_0_y_pv_value)</tooltip>
       <color name="ISIS_Textbox_Background" red="255" green="255" blue="255" />
     </plot_area_background_color>
     <axis_1_title_font>
-      <opifont.name fontName="Arial" height="9" style="1">ISIS_Header4</opifont.name>
+      <opifont.name fontName="Segoe UI" height="9" style="1">ISIS_GraphLabels_NEW</opifont.name>
     </axis_1_title_font>
     <visible>true</visible>
     <axis_2_axis_title>Output</axis_2_axis_title>
