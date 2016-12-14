@@ -50,23 +50,23 @@
                 <macros>		
                     <macro>		
                         <name>M</name>		
-                        <description>The monitor number.</description>		
+                        <description>The monitor number (e.g. 1).</description>		
                     </macro>						
                     <macro>		
                         <name>MA</name>		
-                        <description>The internal number for the first channel.</description>		
+                        <description>The internal number for the first channel (e.g. 1).</description>		
                     </macro>		
                     <macro>		
                         <name>MB</name>		
-                        <description>The internal number for the second channel.</description>		
+                        <description>The internal number for the second channel (e.g. 2).</description>		
                     </macro>		
                     <macro>		
                         <name>MAHVCHAN</name>		
-                        <description>CAEN HV channel for A.</description>		
+                        <description>CAEN HV channel for A (e.g. 0).</description>		
                     </macro>		
                     <macro>		
                         <name>MBHVCHAN</name>		
-                        <description>CAEN HV channel for B.</description>		
+                        <description>CAEN HV channel for B (e.g. 1).</description>		
                     </macro>		
                 </macros>
             </value>		
