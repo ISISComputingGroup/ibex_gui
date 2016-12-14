@@ -6,7 +6,7 @@
   <show_grid>true</show_grid>
   <auto_zoom_to_fit_all>false</auto_zoom_to_fit_all>
   <scripts />
-  <height>475</height>
+  <height>470</height>
   <macros>
     <include_parent_macros>true</include_parent_macros>
     <PV_ROOT_EURO>$(P)$(EURO):A0$(EURO_NUM)</PV_ROOT_EURO>
@@ -22,7 +22,7 @@
   <background_color>
     <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
   </background_color>
-  <width>787</width>
+  <width>781</width>
   <x>18</x>
   <name>$(NAME)</name>
   <grid_space>6</grid_space>
@@ -1030,7 +1030,6 @@ $(pv_value)</tooltip>
       <scripts>
         <path pathString="EurothermFileCheck.py" checkConnect="true" sfe="false" seoe="false">
           <pv trig="true">loc://$(PV_ROOT_EURO)_ramp_file_type("ramp")</pv>
-          <pv trig="true">loc://$(PV_ROOT_EURO)_ramp_widget_name("Ramp_error_text_$(PV_ROOT_EURO)")</pv>
           <pv trig="true">$(PV_ROOT_EURO):RAMP_FILE</pv>
         </path>
       </scripts>
@@ -2777,7 +2776,6 @@ $(pv_value)</tooltip>
       <scripts>
         <path pathString="EurothermFileCheck.py" checkConnect="true" sfe="false" seoe="false">
           <pv trig="true">loc://$(PV_ROOT_EURO)_calibration_file_type("calibration")</pv>
-          <pv trig="true">loc://$(PV_ROOT_EURO)_calibration_widget_name("Calib_error_text_$(PV_ROOT_EURO)")</pv>
           <pv trig="true">$(PV_ROOT_EURO):CAL:RBV</pv>
         </path>
       </scripts>

@@ -19,4 +19,4 @@ def check(file_type, pv):
 	widget.setPropertyValue('foreground_color', OPIColor(new_rgb[0], new_rgb[1], new_rgb[2]))
 	widget.setPropertyValue('text', message)
 
-check(pvs[0].getValue().getValue(), pvs[2])
+check(pvs[0].getValue().getValue(), pvs[1])
