@@ -1350,7 +1350,7 @@ $(trace_0_y_pv_value)</tooltip>
     <trace_1_x_pv_value />
     <axis_1_minimum>0.0</axis_1_minimum>
     <title_font>
-      <opifont.name fontName="Arial" height="9" style="1">ISIS_Header4</opifont.name>
+      <opifont.name fontName="Segoe UI" height="9" style="1">ISIS_GraphLabels_NEW</opifont.name>
     </title_font>
     <trace_0_y_pv_value />
     <trace_1_visible>true</trace_1_visible>
