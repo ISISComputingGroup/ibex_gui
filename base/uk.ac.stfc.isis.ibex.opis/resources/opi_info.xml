@@ -280,7 +280,7 @@
 					</macro>
 					<macro>
 						<name>MM</name>
-						<description>The motor PV to point at (as defined in the motionsetpoints file, e.g. MTR0605)</description>
+						<description>The motor PV to point at (as defined in the motionsetpoints file, e.g. MOT:MTR0605)</description>
 					</macro>
 				</macros>
 			</value>
@@ -304,7 +304,7 @@
 			<value>
 				<type>POLARISER</type>
 				<path>polariser.opi</path>
-				<description>The OPI for the polariser.  No properties required.</description>
+				<description>The OPI for the polariser. No properties required.</description>
 				<macros>
 				</macros>
 			</value>
