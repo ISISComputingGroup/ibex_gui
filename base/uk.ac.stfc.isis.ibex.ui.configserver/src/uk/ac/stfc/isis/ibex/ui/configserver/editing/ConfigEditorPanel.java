@@ -96,12 +96,35 @@ public class ConfigEditorPanel extends Composite {
         editorTabs = new TabFolder(this, SWT.NONE);
 		editorTabs.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 
+        if (isComponent) {
+            components = null;
+        } else {
+            TabItem componentsTab = new TabItem(editorTabs, SWT.NONE);
+            componentsTab.setText("Components");
+
+            components = new ComponentEditorPanel(editorTabs, SWT.NONE, dialog);
+            componentsTab.setControl(components);
+        }
+
 		iocs = new IocsEditorPanel(editorTabs, SWT.NONE, dialog);
 		
 		TabItem iocsTab = new TabItem(editorTabs, SWT.NONE);
 		iocsTab.setText("IOCs");
 		iocsTab.setControl(iocs);
 		
+        TabItem tbtmIocMacros = new TabItem(editorTabs, SWT.NONE);
+        tbtmIocMacros.setText("IOC Macros");
+
+        final MessageDisplayer msgDisp = dialog;
+        IIocPanelCreator macroFactory = new IIocPanelCreator() {
+            @Override
+            public IIocDependentPanel factory(Composite parent) {
+                return new MacroPanel(parent, SWT.NONE);
+            }
+        };
+        iocMacros = new IocSelectorPanel(editorTabs, SWT.NONE, macroFactory);
+        tbtmIocMacros.setControl(iocMacros);
+
 		TabItem blocksTab = new TabItem(editorTabs, SWT.NONE);
         blocksTab.setText(BLOCK_TAB_NAME);
 		
@@ -113,29 +136,6 @@ public class ConfigEditorPanel extends Composite {
 		
         groups = new GroupsEditorPanel(editorTabs, SWT.NONE, dialog, configurationViewModels);
 		groupsTab.setControl(groups);
-		
-		if (isComponent) {
-			components = null;
-		} else {
-			TabItem componentsTab = new TabItem(editorTabs, SWT.NONE);
-			componentsTab.setText("Components");
-			
-			components = new ComponentEditorPanel(editorTabs, SWT.NONE, dialog);
-			componentsTab.setControl(components);
-		}
-		
-		TabItem tbtmIocMacros = new TabItem(editorTabs, SWT.NONE);
-		tbtmIocMacros.setText("IOC Macros");
-		
-		final MessageDisplayer msgDisp = dialog;
-		IIocPanelCreator macroFactory = new IIocPanelCreator() {
-			@Override
-			public IIocDependentPanel factory(Composite parent) {
-				return new MacroPanel(parent, SWT.NONE);
-			}
-		};
-		iocMacros = new IocSelectorPanel(editorTabs, SWT.NONE, macroFactory);
-		tbtmIocMacros.setControl(iocMacros);
 		
 		TabItem tbtmIocPvValues = new TabItem(editorTabs, SWT.NONE);
 		tbtmIocPvValues.setText("IOC PV Values");

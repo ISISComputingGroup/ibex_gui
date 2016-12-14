@@ -50,15 +50,12 @@ public class ViewConfigHelper extends ConfigHelper {
      * 
      * @param subTitle the window sub-title
      * @param config the configuration to edit
-     * @param blockname the block name
      * @param isCurrent whether it is the current configuration
      */
     @Override
-    protected void openDialog(String subTitle, EditableConfiguration config,
-            String blockname, boolean isCurrent) {
-        ConfigDetailsDialog dialog = new ConfigDetailsDialog(shell, title, currentSubTitle, config, false, false, blockname,
-                configurationViewModels);
+    protected void openDialog(String subTitle, EditableConfiguration config, boolean isCurrent) {
+        ConfigDetailsDialog dialog =
+                new ConfigDetailsDialog(shell, title, currentSubTitle, config, false, false, configurationViewModels);
         dialog.open();
-
     }
 }
