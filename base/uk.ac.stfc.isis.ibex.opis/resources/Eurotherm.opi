@@ -217,7 +217,7 @@
       <macros>
         <include_parent_macros>true</include_parent_macros>
       </macros>
-      <visible>true</visible>
+      <visible>false</visible>
       <border_color>
         <color name="ISIS_Check_Border" red="0" green="128" blue="255" />
       </border_color>
@@ -319,46 +319,6 @@
       <font>
         <opifont.name fontName="Arial" height="9" style="0">ISIS_Label_Small</opifont.name>
       </font>
-      <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0">
-        <border_style>0</border_style>
-        <tooltip></tooltip>
-        <rules />
-        <enabled>true</enabled>
-        <wuid>2986015a:148e62770aa:-746c</wuid>
-        <transparent>false</transparent>
-        <lock_children>false</lock_children>
-        <scripts />
-        <height>493</height>
-        <border_width>1</border_width>
-        <scale_options>
-          <width_scalable>true</width_scalable>
-          <height_scalable>true</height_scalable>
-          <keep_wh_ratio>false</keep_wh_ratio>
-        </scale_options>
-        <macros>
-          <include_parent_macros>true</include_parent_macros>
-        </macros>
-        <visible>true</visible>
-        <border_color>
-          <color red="0" green="128" blue="255" />
-        </border_color>
-        <widget_type>Grouping Container</widget_type>
-        <background_color>
-          <color red="240" green="240" blue="240" />
-        </background_color>
-        <width>865</width>
-        <x>18</x>
-        <name>Grouping Container</name>
-        <y>30</y>
-        <foreground_color>
-          <color red="192" green="192" blue="192" />
-        </foreground_color>
-        <actions hook="false" hook_all="false" />
-        <show_scrollbar>false</show_scrollbar>
-        <font>
-          <opifont.name fontName="Segoe UI" height="9" style="0">Default</opifont.name>
-        </font>
-      </widget>
       <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0">
         <opi_file>Eurotherm_single.opi</opi_file>
         <border_style>0</border_style>
@@ -368,7 +328,7 @@
         <wuid>6892be24:156313795e2:-560e</wuid>
         <auto_size>false</auto_size>
         <scripts />
-        <height>535</height>
+        <height>475</height>
         <border_width>1</border_width>
         <scale_options>
           <width_scalable>true</width_scalable>
@@ -389,7 +349,7 @@
           <color red="240" green="240" blue="240" />
         </background_color>
         <zoom_to_fit>false</zoom_to_fit>
-        <width>895</width>
+        <width>787</width>
         <x>0</x>
         <name>Linking Container</name>
         <y>0</y>
@@ -450,7 +410,7 @@
         <wuid>6892be24:156313795e2:-55a2</wuid>
         <auto_size>false</auto_size>
         <scripts />
-        <height>535</height>
+        <height>475</height>
         <border_width>1</border_width>
         <scale_options>
           <width_scalable>true</width_scalable>
@@ -471,7 +431,7 @@
           <color red="240" green="240" blue="240" />
         </background_color>
         <zoom_to_fit>false</zoom_to_fit>
-        <width>895</width>
+        <width>787</width>
         <x>0</x>
         <name>Linking Container</name>
         <y>0</y>
@@ -532,7 +492,7 @@
         <wuid>-53236bab:15635d9faea:-7f38</wuid>
         <auto_size>false</auto_size>
         <scripts />
-        <height>535</height>
+        <height>475</height>
         <border_width>1</border_width>
         <scale_options>
           <width_scalable>true</width_scalable>
@@ -553,7 +513,7 @@
           <color red="240" green="240" blue="240" />
         </background_color>
         <zoom_to_fit>false</zoom_to_fit>
-        <width>895</width>
+        <width>787</width>
         <x>0</x>
         <name>Linking Container</name>
         <y>0</y>
@@ -614,7 +574,7 @@
         <wuid>-53236bab:15635d9faea:-7eca</wuid>
         <auto_size>false</auto_size>
         <scripts />
-        <height>535</height>
+        <height>475</height>
         <border_width>1</border_width>
         <scale_options>
           <width_scalable>true</width_scalable>
@@ -635,7 +595,7 @@
           <color red="240" green="240" blue="240" />
         </background_color>
         <zoom_to_fit>false</zoom_to_fit>
-        <width>895</width>
+        <width>787</width>
         <x>0</x>
         <name>Linking Container</name>
         <y>0</y>
@@ -696,7 +656,7 @@
         <wuid>-53236bab:15635d9faea:-7e65</wuid>
         <auto_size>false</auto_size>
         <scripts />
-        <height>535</height>
+        <height>475</height>
         <border_width>1</border_width>
         <scale_options>
           <width_scalable>true</width_scalable>
@@ -717,7 +677,7 @@
           <color red="240" green="240" blue="240" />
         </background_color>
         <zoom_to_fit>false</zoom_to_fit>
-        <width>895</width>
+        <width>787</width>
         <x>0</x>
         <name>Linking Container</name>
         <y>0</y>
@@ -749,7 +709,7 @@
       <macros>
         <include_parent_macros>true</include_parent_macros>
       </macros>
-      <visible>false</visible>
+      <visible>true</visible>
       <border_color>
         <color red="0" green="128" blue="255" />
       </border_color>
@@ -778,7 +738,7 @@
         <wuid>-53236bab:15635d9faea:-7dfc</wuid>
         <auto_size>false</auto_size>
         <scripts />
-        <height>535</height>
+        <height>475</height>
         <border_width>1</border_width>
         <scale_options>
           <width_scalable>true</width_scalable>
@@ -799,7 +759,7 @@
           <color red="240" green="240" blue="240" />
         </background_color>
         <zoom_to_fit>false</zoom_to_fit>
-        <width>895</width>
+        <width>787</width>
         <x>0</x>
         <name>Linking Container</name>
         <y>0</y>
