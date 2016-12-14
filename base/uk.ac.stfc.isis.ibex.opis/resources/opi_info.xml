@@ -424,19 +424,19 @@
 					</macro>                    
 					<macro>
 						<name>M1</name>
-						<description>The motor PV relating to motor 1 (e.g. MOT:MTR0601).</description>
+						<description>The motor PV relating to motor 1 (e.g. MTR0601).</description>
 					</macro>
 					<macro>
 						<name>M2</name>
-						<description>The motor PV relating to motor 2 (e.g. MOT:MTR0602).</description>
+						<description>The motor PV relating to motor 2 (e.g. MTR0602).</description>
 					</macro>
 					<macro>
 						<name>M3</name>
-						<description>The motor PV relating to motor 3 (e.g. MOT:MTR0603).</description>
+						<description>The motor PV relating to motor 3 (e.g. MTR0603).</description>
 					</macro>
                     <macro>
 						<name>M4</name>
-						<description>The motor PV relating to motor 4 (e.g. MOT:MTR0604).</description>
+						<description>The motor PV relating to motor 4 (e.g. MTR0604).</description>
 					</macro>
 				</macros>
 			</value>
@@ -450,19 +450,19 @@
 				<macros>
 					<macro>
 						<name>M1</name>
-						<description>The motor PV relating to motor 1 (e.g. MOT:MTR0601).</description>
+						<description>The motor PV relating to motor 1 (e.g. MTR0601).</description>
 					</macro>
 					<macro>
 						<name>M2</name>
-						<description>The motor PV relating to motor 2 (e.g. MOT:MTR0602).</description>
+						<description>The motor PV relating to motor 2 (e.g. MTR0602).</description>
 					</macro>
 					<macro>
 						<name>M3</name>
-						<description>The motor PV relating to motor 3 (e.g. MOT:MTR0603).</description>
+						<description>The motor PV relating to motor 3 (e.g. MTR0603).</description>
 					</macro>
                     <macro>
 						<name>M4</name>
-						<description>The motor PV relating to motor 4 (e.g. MOT:MTR0604).</description>
+						<description>The motor PV relating to motor 4 (e.g. MTR0604).</description>
 					</macro>                
 				</macros>
 			</value>
