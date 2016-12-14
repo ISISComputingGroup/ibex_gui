@@ -23,15 +23,11 @@ import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
-import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
-import uk.ac.stfc.isis.ibex.instrument.InstrumentInfoReceiver;
-import uk.ac.stfc.isis.ibex.ui.PerspectiveReopener;
-
 /**
  * The activator class controls the plug-in life cycle, this plugin shows the
  * alarm perspective.
  */
-public class Alarms extends AbstractUIPlugin implements InstrumentInfoReceiver {
+public class Alarms extends AbstractUIPlugin {
     
     /**
      * The plug-in ID.
@@ -40,18 +36,11 @@ public class Alarms extends AbstractUIPlugin implements InstrumentInfoReceiver {
 
     /** The shared instance. */
 	private static Alarms plugin;
-
-    /**
-     * Allow the alarm perspective to be closed and reopened.
-     */
-    private PerspectiveReopener alarmPerspectiveReopener;
-		
     
     /**
      * Instantiates a new alarms; call getInstance instead in most cases.
      */
     public Alarms() {
-        alarmPerspectiveReopener = new PerspectiveReopener(AlarmPerspective.ID);
     }
 
 	/*
@@ -93,40 +82,4 @@ public class Alarms extends AbstractUIPlugin implements InstrumentInfoReceiver {
 	public static ImageDescriptor getImageDescriptor(String path) {
 		return imageDescriptorFromPlugin(PLUGIN_ID, path);
 	}
-
-    /**
-     * On change of instrument there is nothing to do for this perspective. The
-     * settings for the alarm server are changed by the alarm model.
-     * 
-     * @param instrument to set
-     */
-    @Override
-    public void setInstrument(InstrumentInfo instrument) {
-        // nothing to do on set instrument
-    }
-
-
-    /**
-     * Before the instrument changes close the alarm perspective so that it
-     * releases its alarm model. Remember that it was closed so it can be
-     * reopened after the instrument has been switched.
-     * 
-     * @param instrument instrument to switch to
-     */
-    @Override
-    public void preSetInstrument(InstrumentInfo instrument) {
-        alarmPerspectiveReopener.closePerspective();
-    }
-
-
-    /**
-     * After the instrument has switched reopen the alarm perspective if it was
-     * open before switching.
-     * 
-     * @param instrument instrument to switch to
-     */
-    @Override
-    public void postSetInstrument(InstrumentInfo instrument) {
-        alarmPerspectiveReopener.reopenPerspective();
-    }
 }

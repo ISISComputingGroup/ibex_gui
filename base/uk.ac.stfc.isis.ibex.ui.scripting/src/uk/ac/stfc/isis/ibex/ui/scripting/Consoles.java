@@ -40,13 +40,6 @@ public class Consoles extends AbstractUIPlugin {
 
     private GeniePythonConsoleFactory genieConsoleFactory;
 
-    // true if after switching instrument the consoles need to be reopened
-    private boolean reopenConsole;
-	
-    public Consoles() {
-
-    }
-
 	/*
 	 * (non-Javadoc)
 	 * @see org.eclipse.ui.plugin.AbstractUIPlugin#start(org.osgi.framework.BundleContext)
