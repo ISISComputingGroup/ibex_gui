@@ -390,18 +390,6 @@
 				<path>slit1.opi</path>
 				<description>Description required.</description>
 				<macros>
-					<macro>
-						<name>MM</name>
-						<description>The motor PV (e.g. MOT:MTR0605).</description>
-					</macro>
-					<macro>
-						<name>JAWS</name>
-						<description>Description required.</description>
-					</macro>
-					<macro>
-						<name>M</name>
-						<description>Description required.</description>
-					</macro>
                     <macro>
 						<name>J</name>
 						<description>The Jaws PV (e.g. MOT:JAWS1).</description>
