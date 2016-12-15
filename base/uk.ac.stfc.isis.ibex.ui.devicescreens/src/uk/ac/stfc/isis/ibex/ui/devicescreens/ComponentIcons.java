@@ -117,6 +117,8 @@ public final class ComponentIcons {
                 return "pressure_gauge";
             case SCIMAG3D:
                 return "scimag3D";
+            case PGC:
+                return "pgc";
             default:
                 return "cog";
         }

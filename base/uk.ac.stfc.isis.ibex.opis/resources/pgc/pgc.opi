@@ -130,7 +130,7 @@
     <transparent>false</transparent>
     <lock_children>false</lock_children>
     <scripts />
-    <height>121</height>
+    <height>139</height>
     <border_width>1</border_width>
     <scale_options>
       <width_scalable>true</width_scalable>
@@ -191,7 +191,7 @@
       <width>55</width>
       <x>0</x>
       <name>Target position label</name>
-      <y>0</y>
+      <y>10</y>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </foreground_color>
@@ -243,13 +243,13 @@ $(pv_value)</tooltip>
       <width>127</width>
       <x>60</x>
       <name>TargetPosition</name>
-      <y>0</y>
+      <y>10</y>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </foreground_color>
       <actions hook="false" hook_all="false" />
       <font>
-        <opifont.name fontName="Segoe UI" height="9" style="1">ISIS_Label_NEW</opifont.name>
+        <opifont.name fontName="Segoe UI" height="9" style="0">ISIS_Value_NEW</opifont.name>
       </font>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0">
@@ -280,10 +280,10 @@ $(pv_value)</tooltip>
       <background_color>
         <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
       </background_color>
-      <width>49</width>
-      <x>6</x>
+      <width>55</width>
+      <x>0</x>
       <name>Current position label</name>
-      <y>29</y>
+      <y>40</y>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </foreground_color>
@@ -335,13 +335,13 @@ $(pv_value)</tooltip>
       <width>127</width>
       <x>60</x>
       <name>CurrentPosition</name>
-      <y>29</y>
+      <y>40</y>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </foreground_color>
       <actions hook="false" hook_all="false" />
       <font>
-        <opifont.name fontName="Segoe UI" height="9" style="1">ISIS_Label_NEW</opifont.name>
+        <opifont.name fontName="Segoe UI" height="9" style="0">ISIS_Value_NEW</opifont.name>
       </font>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.NativeButton" version="1.0">
@@ -375,7 +375,7 @@ $(pv_value)</tooltip>
       <width>127</width>
       <x>60</x>
       <name>ReloadPositions</name>
-      <y>54</y>
+      <y>72</y>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </foreground_color>
@@ -425,10 +425,10 @@ $(pv_value)</tooltip>
       <background_color>
         <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
       </background_color>
-      <width>49</width>
-      <x>6</x>
+      <width>55</width>
+      <x>0</x>
       <name>Reload file label</name>
-      <y>59</y>
+      <y>76</y>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </foreground_color>
@@ -448,7 +448,7 @@ $(pv_value)</tooltip>
     <transparent>false</transparent>
     <lock_children>false</lock_children>
     <scripts />
-    <height>91</height>
+    <height>139</height>
     <border_width>1</border_width>
     <scale_options>
       <width_scalable>true</width_scalable>
@@ -466,10 +466,10 @@ $(pv_value)</tooltip>
     <background_color>
       <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
     </background_color>
-    <width>211</width>
-    <x>12</x>
+    <width>217</width>
+    <x>384</x>
     <name>Motor</name>
-    <y>204</y>
+    <y>84</y>
     <foreground_color>
       <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
     </foreground_color>
@@ -509,7 +509,7 @@ $(pv_value)</tooltip>
       <width>97</width>
       <x>0</x>
       <name>MoveCompleteLabel</name>
-      <y>3</y>
+      <y>6</y>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </foreground_color>
@@ -530,7 +530,7 @@ $(pv_value)</tooltip>
       <enabled>true</enabled>
       <wuid>4e9517e9:14df687cb86:-7e5f</wuid>
       <on_color>
-        <color red="0" green="255" blue="0" />
+        <color name="ISIS_Green_LED_On" red="0" green="255" blue="0" />
       </on_color>
       <pv_value />
       <scripts />
@@ -550,7 +550,7 @@ $(pv_value)</tooltip>
       </border_color>
       <widget_type>LED</widget_type>
       <off_color>
-        <color red="0" green="100" blue="0" />
+        <color name="ISIS_Green_LED_Off" red="0" green="102" blue="0" />
       </off_color>
       <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
       <background_color>
@@ -561,7 +561,7 @@ $(pv_value)</tooltip>
       <x>102</x>
       <name>Move Complete</name>
       <data_type>0</data_type>
-      <y>0</y>
+      <y>3</y>
       <foreground_color>
         <color red="192" green="192" blue="192" />
       </foreground_color>
@@ -600,10 +600,10 @@ $(pv_value)</tooltip>
         <color name="ISIS_Border" red="0" green="0" blue="0" />
       </border_color>
       <widget_type>Button</widget_type>
-      <width>79</width>
+      <width>85</width>
       <x>102</x>
       <name>ViewMotor</name>
-      <y>30</y>
+      <y>38</y>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </foreground_color>
@@ -631,7 +631,7 @@ $(pv_value)</tooltip>
       <wuid>-5be240a4:158fd3c0892:-7b68</wuid>
       <transparent>false</transparent>
       <auto_size>false</auto_size>
-      <text>OPI:</text>
+      <text>Motor OPI:</text>
       <scripts />
       <height>20</height>
       <border_width>1</border_width>
@@ -653,7 +653,7 @@ $(pv_value)</tooltip>
       <width>97</width>
       <x>0</x>
       <name>MoveCompleteLabel</name>
-      <y>34</y>
+      <y>42</y>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </foreground_color>
@@ -673,7 +673,7 @@ $(pv_value)</tooltip>
     <transparent>false</transparent>
     <lock_children>false</lock_children>
     <scripts />
-    <height>211</height>
+    <height>139</height>
     <border_width>1</border_width>
     <scale_options>
       <width_scalable>true</width_scalable>
@@ -691,7 +691,7 @@ $(pv_value)</tooltip>
     <background_color>
       <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
     </background_color>
-    <width>415</width>
+    <width>163</width>
     <x>222</x>
     <name>Select Position</name>
     <y>84</y>
@@ -850,9 +850,11 @@ $(pv_value)</tooltip>
       <tooltip>$(pv_name)
 $(pv_value)</tooltip>
       <rules>
-        <rule name="Rule" prop_id="on_state" out_exp="true">
-          <exp bool_exp="pvs[0]==1">
-            <value>1</value>
+        <rule name="Rule" prop_id="off_color" out_exp="false">
+          <exp bool_exp="pv0==0">
+            <value>
+              <color name="ISIS_Green_LED_On" red="0" green="255" blue="0" />
+            </value>
           </exp>
           <pv trig="true">$(P)LKUP:$(PGC):IPOSN</pv>
         </rule>
@@ -862,7 +864,7 @@ $(pv_value)</tooltip>
       <enabled>true</enabled>
       <wuid>-7e0aa4a7:158fe48017b:-7d4e</wuid>
       <on_color>
-        <color red="0" green="255" blue="0" />
+        <color name="ISIS_Green_LED_On" red="0" green="255" blue="0" />
       </on_color>
       <pv_value />
       <scripts />
@@ -882,7 +884,7 @@ $(pv_value)</tooltip>
       </border_color>
       <widget_type>LED</widget_type>
       <off_color>
-        <color red="0" green="100" blue="0" />
+        <color name="ISIS_Green_LED_Off" red="0" green="102" blue="0" />
       </off_color>
       <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
       <background_color>
@@ -910,9 +912,11 @@ $(pv_value)</tooltip>
       <tooltip>$(pv_name)
 $(pv_value)</tooltip>
       <rules>
-        <rule name="Rule" prop_id="on_state" out_exp="true">
-          <exp bool_exp="pvs[0]==1">
-            <value>1</value>
+        <rule name="Rule" prop_id="off_color" out_exp="false">
+          <exp bool_exp="pv0==2">
+            <value>
+              <color name="ISIS_Green_LED_On" red="0" green="255" blue="0" />
+            </value>
           </exp>
           <pv trig="true">$(P)LKUP:$(PGC):IPOSN</pv>
         </rule>
@@ -920,9 +924,9 @@ $(pv_value)</tooltip>
       <effect_3d>true</effect_3d>
       <bit>-1</bit>
       <enabled>true</enabled>
-      <wuid>-7e0aa4a7:158fe48017b:-7d07</wuid>
+      <wuid>-7e0aa4a7:158fe48017b:-7ce9</wuid>
       <on_color>
-        <color red="0" green="255" blue="0" />
+        <color name="ISIS_Green_LED_On" red="0" green="255" blue="0" />
       </on_color>
       <pv_value />
       <scripts />
@@ -942,7 +946,7 @@ $(pv_value)</tooltip>
       </border_color>
       <widget_type>LED</widget_type>
       <off_color>
-        <color red="0" green="100" blue="0" />
+        <color name="ISIS_Green_LED_Off" red="0" green="102" blue="0" />
       </off_color>
       <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
       <background_color>
@@ -951,9 +955,9 @@ $(pv_value)</tooltip>
       <square_led>false</square_led>
       <width>25</width>
       <x>108</x>
-      <name>At P0 LED</name>
+      <name>At P2 LED</name>
       <data_type>0</data_type>
-      <y>37</y>
+      <y>73</y>
       <foreground_color>
         <color red="192" green="192" blue="192" />
       </foreground_color>
@@ -970,9 +974,11 @@ $(pv_value)</tooltip>
       <tooltip>$(pv_name)
 $(pv_value)</tooltip>
       <rules>
-        <rule name="Rule" prop_id="on_state" out_exp="true">
-          <exp bool_exp="pvs[0]==1">
-            <value>1</value>
+        <rule name="Rule" prop_id="off_color" out_exp="false">
+          <exp bool_exp="pv0==1">
+            <value>
+              <color name="ISIS_Green_LED_On" red="0" green="255" blue="0" />
+            </value>
           </exp>
           <pv trig="true">$(P)LKUP:$(PGC):IPOSN</pv>
         </rule>
@@ -980,9 +986,9 @@ $(pv_value)</tooltip>
       <effect_3d>true</effect_3d>
       <bit>-1</bit>
       <enabled>true</enabled>
-      <wuid>-7e0aa4a7:158fe48017b:-7d00</wuid>
+      <wuid>-7e0aa4a7:158fe48017b:-7cf0</wuid>
       <on_color>
-        <color red="0" green="255" blue="0" />
+        <color name="ISIS_Green_LED_On" red="0" green="255" blue="0" />
       </on_color>
       <pv_value />
       <scripts />
@@ -1002,7 +1008,7 @@ $(pv_value)</tooltip>
       </border_color>
       <widget_type>LED</widget_type>
       <off_color>
-        <color red="0" green="100" blue="0" />
+        <color name="ISIS_Green_LED_Off" red="0" green="102" blue="0" />
       </off_color>
       <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
       <background_color>
@@ -1011,9 +1017,9 @@ $(pv_value)</tooltip>
       <square_led>false</square_led>
       <width>25</width>
       <x>108</x>
-      <name>At P0 LED</name>
+      <name>At P1 LED</name>
       <data_type>0</data_type>
-      <y>73</y>
+      <y>37</y>
       <foreground_color>
         <color red="192" green="192" blue="192" />
       </foreground_color>
