@@ -51,6 +51,10 @@ public class MotorsOverview extends Composite {
 
     private static final Color GREY_COLOUR = SWTResourceManager.getColor(192, 192, 192);
 
+    private static final int MINIMUM_GRID_WIDTH = 10;
+    private static final int HEIGHT_DIMENSION = 74;
+    private static final int WIDTH_DIMENSION = 85;
+
     private MotorBackgroundPalette palette;
 
 
@@ -146,7 +150,7 @@ public class MotorsOverview extends Composite {
 	private void addNumberLabel(int columnNumber) {
 		Label columnLabel = new Label(motorComposite, SWT.NONE);
 		GridData gd = new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1);
-		gd.minimumWidth = 10;
+        gd.minimumWidth = MINIMUM_GRID_WIDTH;
 		columnLabel.setLayoutData(gd);
 		columnLabel.setAlignment(SWT.CENTER);
 		columnLabel.setText(Integer.toString(columnNumber));
@@ -162,12 +166,10 @@ public class MotorsOverview extends Composite {
 	
 	private static GridData viewLayout() {
 		final GridData gd = new GridData(SWT.FILL, SWT.TOP, false, false, 1, 1);
-		int heightDimension = 74;
-		int widthDimension = 85;
-		gd.minimumHeight = heightDimension;
-		gd.minimumWidth = widthDimension;
-		gd.widthHint = widthDimension;
-		gd.heightHint = heightDimension;
+        gd.minimumHeight = HEIGHT_DIMENSION;
+        gd.minimumWidth = WIDTH_DIMENSION;
+        gd.widthHint = WIDTH_DIMENSION;
+        gd.heightHint = HEIGHT_DIMENSION;
 		
 		return gd;
 	}

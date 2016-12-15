@@ -40,19 +40,24 @@ public class DisplayPreferences {
     private static final Color COLOURBLIND_DISABLED_COLOR = SWTResourceManager.getColor(200, 200, 200);
     private static final Color COLOURBLIND_UNNAMED_COLOR = SWTResourceManager.getColor(220, 220, 220);
 
+    /**
+     * Private constructor for this utility class.
+     */
+    private DisplayPreferences() {
+    }
 
-    private static final Map<ColourOption, MotorBackgroundPalette> paletteOptions;
+    private static final Map<ColourOption, MotorBackgroundPalette> PALETTE_OPTIONS;
     static {
-        paletteOptions = new HashMap<>();
-        paletteOptions.put(ColourOption.NORMAL_VISION,
+        PALETTE_OPTIONS = new HashMap<>();
+        PALETTE_OPTIONS.put(ColourOption.NORMAL_VISION,
                 new MotorBackgroundPalette(NORMAL_VISION_MOVING_COLOR, NORMAL_VISION_STOPPED_COLOR,
                 NORMAL_VISION_DISABLED_COLOR, NORMAL_VISION_UNNAMED_COLOR));
-        paletteOptions.put(ColourOption.COLOURBLIND, new MotorBackgroundPalette(COLOURBLIND_MOVING_COLOR,
+        PALETTE_OPTIONS.put(ColourOption.COLOURBLIND, new MotorBackgroundPalette(COLOURBLIND_MOVING_COLOR,
                 COLOURBLIND_STOPPED_COLOR, COLOURBLIND_DISABLED_COLOR, COLOURBLIND_UNNAMED_COLOR));
     }
 
     private static MotorBackgroundPalette currentMotorBackgroundPalette =
-            paletteOptions.get(ColourOption.NORMAL_VISION);
+            PALETTE_OPTIONS.get(ColourOption.NORMAL_VISION);
 
     /**
      * Get the current motor background palette.
@@ -69,6 +74,6 @@ public class DisplayPreferences {
      * @param paletteKey the new motor background palette
      */
     public static void setMotorBackgroundPalette(ColourOption paletteKey) {
-        currentMotorBackgroundPalette = paletteOptions.get(paletteKey);
+        currentMotorBackgroundPalette = PALETTE_OPTIONS.get(paletteKey);
     }
 }
