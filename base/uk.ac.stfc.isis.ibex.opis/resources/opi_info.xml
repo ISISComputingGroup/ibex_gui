@@ -302,7 +302,7 @@
 					</macro>
 					<macro>
 						<name>MM</name>
-						<description>The motor PV to point at (as defined in the motionsetpoints file (e.g. MTR0101))</description>
+						<description>The motor PV to point at (as defined in the motionsetpoints file (e.g. MOT:MTR0101))</description>
 					</macro>
 				</macros>
 			</value>
