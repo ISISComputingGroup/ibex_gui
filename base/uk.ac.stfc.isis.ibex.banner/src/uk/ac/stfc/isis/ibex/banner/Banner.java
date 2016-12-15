@@ -35,15 +35,6 @@ public class Banner implements BundleActivator {
     private static Banner instance;
     private static BundleContext context;
 
-    /**
-     * Returns the single instance of the banner.
-     * 
-     * @return the banner
-     */
-    public static Banner getInstance() {
-        return instance;
-    }
-
     private final Observables observables;
 
     /**
@@ -58,6 +49,15 @@ public class Banner implements BundleActivator {
     }
 
     /**
+     * Returns the single instance of the banner.
+     * 
+     * @return the banner
+     */
+    public static Banner getInstance() {
+        return instance;
+    }
+
+    /**
      * Returns the observables class associated to the Banner.
      * 
      * @return the observables
@@ -66,18 +66,21 @@ public class Banner implements BundleActivator {
         return observables;
     }
 
+    /**
+     * @return The BundleContext for this plugin.
+     */
     static BundleContext getContext() {
         return context;
     }
 
     @Override
     public void start(BundleContext bundleContext) throws Exception {
-        Banner.context = bundleContext;
+        context = bundleContext;
     }
 
     @Override
     public void stop(BundleContext bundleContext) throws Exception {
-        Banner.context = null;
+        context = null;
     }
 
     private final BaseObserver<Collection<BannerItem>> descriptionAdapter = new BaseObserver<Collection<BannerItem>>() {
@@ -87,14 +90,6 @@ public class Banner implements BundleActivator {
             for (BannerItem item : value) {
                 item.createPVObservable();
             }
-        }
-
-        @Override
-        public void onError(Exception e) {
-        }
-
-        @Override
-        public void onConnectionStatus(boolean isConnected) {
         }
     };
 }

@@ -20,6 +20,7 @@
                   commandId="uk.ac.stfc.isis.ibex.ui.rcp.logger.logger"
                   id="uk.ac.stfc.isis.ibex.ui.rcp.logger"
                   label="Console Log"
+                  mnemonic="C"
                   style="push"
                   tooltip="Display the console showing internal log messages from this program.">
             </command>

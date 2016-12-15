@@ -40,12 +40,6 @@ public class FilterFromPVList extends PVFilter {
 				firePropertyChange("refresh", false, true);
 			}
 		}
-
-		@Override
-		public void onError(Exception e) { }
-
-		@Override
-		public void onConnectionStatus(boolean isConnected) { }
 	};	
 	
 	public FilterFromPVList(ForwardingObservable<Collection<PV>> pvList) {
