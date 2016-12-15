@@ -67,7 +67,7 @@
     <background_color>
       <color name="ISIS_Title_Background_NEW" red="240" green="240" blue="240" />
     </background_color>
-    <width>625</width>
+    <width>589</width>
     <x>12</x>
     <name>Label</name>
     <y>6</y>
@@ -108,7 +108,7 @@
     <background_color>
       <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
     </background_color>
-    <width>631</width>
+    <width>595</width>
     <x>6</x>
     <name>Label_1</name>
     <y>42</y>
@@ -149,7 +149,7 @@
       <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
     </background_color>
     <width>217</width>
-    <x>6</x>
+    <x>168</x>
     <name>Positions</name>
     <y>84</y>
     <foreground_color>
@@ -692,7 +692,7 @@ $(pv_value)</tooltip>
       <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
     </background_color>
     <width>163</width>
-    <x>222</x>
+    <x>6</x>
     <name>Select Position</name>
     <y>84</y>
     <foreground_color>
