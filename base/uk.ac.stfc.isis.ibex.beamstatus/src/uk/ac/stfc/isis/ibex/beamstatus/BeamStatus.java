@@ -24,6 +24,9 @@ import org.osgi.framework.BundleContext;
 
 import uk.ac.stfc.isis.ibex.beamstatus.internal.BeamStatusObservables;
 
+/**
+ * The plugin entry point for the back end of the beam status display.
+ */
 public class BeamStatus extends Plugin {
 
     private static BeamStatus instance;
@@ -32,20 +35,34 @@ public class BeamStatus extends Plugin {
 	private final Observables observables;	
 	private final BeamStatusObservables status;
 	
+    /**
+     * Default constructor for the singleton. Will be called by eclipse when
+     * plugin is started.
+     */
 	public BeamStatus() {
 		instance = this; 
 		status = new BeamStatusObservables();
 		observables = new Observables(status);
 	}
     
+    /**
+     * @return The instance of this singleton.
+     */
     public static BeamStatus getInstance() { 
     	return instance; 
     }
 
+    /**
+     * @return Observables for the PVs that contain information on the beam
+     *         status.
+     */
     public Observables observables() {
     	return observables;
     }
 	
+    /**
+     * @return The BundleContext for this plugin.
+     */
 	static BundleContext getContext() {
 		return context;
 	}
@@ -54,7 +71,8 @@ public class BeamStatus extends Plugin {
 	 * (non-Javadoc)
 	 * @see org.osgi.framework.BundleActivator#start(org.osgi.framework.BundleContext)
 	 */
-	public void start(BundleContext bundleContext) throws Exception {
+	@Override
+    public void start(BundleContext bundleContext) throws Exception {
 		BeamStatus.context = bundleContext;
 	}
 
@@ -62,7 +80,8 @@ public class BeamStatus extends Plugin {
 	 * (non-Javadoc)
 	 * @see org.osgi.framework.BundleActivator#stop(org.osgi.framework.BundleContext)
 	 */
-	public void stop(BundleContext bundleContext) throws Exception {
+	@Override
+    public void stop(BundleContext bundleContext) throws Exception {
 		BeamStatus.context = null;
 		status.close();
 		observables.close();

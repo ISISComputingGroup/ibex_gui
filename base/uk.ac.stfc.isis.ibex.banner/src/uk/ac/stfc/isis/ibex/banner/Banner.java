@@ -38,7 +38,7 @@ public class Banner implements BundleActivator {
     private final Observables observables;
 
     /**
-     * Standard constructor.
+     * Standard constructor. Will be called by eclipse when plugin is started.
      */
     public Banner() {
         super();
@@ -75,12 +75,12 @@ public class Banner implements BundleActivator {
 
     @Override
     public void start(BundleContext bundleContext) throws Exception {
-        context = bundleContext;
+        Banner.context = bundleContext;
     }
 
     @Override
     public void stop(BundleContext bundleContext) throws Exception {
-        context = null;
+        Banner.context = null;
     }
 
     private final BaseObserver<Collection<BannerItem>> descriptionAdapter = new BaseObserver<Collection<BannerItem>>() {
