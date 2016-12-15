@@ -851,12 +851,18 @@ $(pv_value)</tooltip>
 $(pv_value)</tooltip>
       <rules>
         <rule name="Rule" prop_id="off_color" out_exp="false">
+          <exp bool_exp="pv0!=pv1">
+            <value>
+              <color name="ISIS_Green_LED_Off" red="0" green="102" blue="0" />
+            </value>
+          </exp>
           <exp bool_exp="pv0==0">
             <value>
               <color name="ISIS_Green_LED_On" red="0" green="255" blue="0" />
             </value>
           </exp>
           <pv trig="true">$(P)LKUP:$(PGC):IPOSN</pv>
+          <pv trig="true">$(P)LKUP:$(PGC):IPOSN:SP:RBV</pv>
         </rule>
       </rules>
       <effect_3d>true</effect_3d>
@@ -913,74 +919,18 @@ $(pv_value)</tooltip>
 $(pv_value)</tooltip>
       <rules>
         <rule name="Rule" prop_id="off_color" out_exp="false">
-          <exp bool_exp="pv0==2">
+          <exp bool_exp="pv0!=pv1">
             <value>
-              <color name="ISIS_Green_LED_On" red="0" green="255" blue="0" />
+              <color name="ISIS_Green_LED_Off" red="0" green="102" blue="0" />
             </value>
           </exp>
-          <pv trig="true">$(P)LKUP:$(PGC):IPOSN</pv>
-        </rule>
-      </rules>
-      <effect_3d>true</effect_3d>
-      <bit>-1</bit>
-      <enabled>true</enabled>
-      <wuid>-7e0aa4a7:158fe48017b:-7ce9</wuid>
-      <on_color>
-        <color name="ISIS_Green_LED_On" red="0" green="255" blue="0" />
-      </on_color>
-      <pv_value />
-      <scripts />
-      <border_alarm_sensitive>true</border_alarm_sensitive>
-      <height>25</height>
-      <on_label>ON</on_label>
-      <border_width>1</border_width>
-      <scale_options>
-        <width_scalable>true</width_scalable>
-        <height_scalable>true</height_scalable>
-        <keep_wh_ratio>true</keep_wh_ratio>
-      </scale_options>
-      <visible>true</visible>
-      <pv_name></pv_name>
-      <border_color>
-        <color name="ISIS_Border" red="0" green="0" blue="0" />
-      </border_color>
-      <widget_type>LED</widget_type>
-      <off_color>
-        <color name="ISIS_Green_LED_Off" red="0" green="102" blue="0" />
-      </off_color>
-      <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
-      <background_color>
-        <color red="240" green="240" blue="240" />
-      </background_color>
-      <square_led>false</square_led>
-      <width>25</width>
-      <x>108</x>
-      <name>At P2 LED</name>
-      <data_type>0</data_type>
-      <y>73</y>
-      <foreground_color>
-        <color red="192" green="192" blue="192" />
-      </foreground_color>
-      <actions hook="false" hook_all="false" />
-      <show_boolean_label>false</show_boolean_label>
-      <font>
-        <opifont.name fontName="Segoe UI" height="9" style="0">Default</opifont.name>
-      </font>
-      <off_label>OFF</off_label>
-    </widget>
-    <widget typeId="org.csstudio.opibuilder.widgets.LED" version="1.0">
-      <border_style>0</border_style>
-      <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
-      <tooltip>$(pv_name)
-$(pv_value)</tooltip>
-      <rules>
-        <rule name="Rule" prop_id="off_color" out_exp="false">
           <exp bool_exp="pv0==1">
             <value>
               <color name="ISIS_Green_LED_On" red="0" green="255" blue="0" />
             </value>
           </exp>
           <pv trig="true">$(P)LKUP:$(PGC):IPOSN</pv>
+          <pv trig="true">$(P)LKUP:$(PGC):IPOSN:SP:RBV</pv>
         </rule>
       </rules>
       <effect_3d>true</effect_3d>
@@ -1020,6 +970,74 @@ $(pv_value)</tooltip>
       <name>At P1 LED</name>
       <data_type>0</data_type>
       <y>37</y>
+      <foreground_color>
+        <color red="192" green="192" blue="192" />
+      </foreground_color>
+      <actions hook="false" hook_all="false" />
+      <show_boolean_label>false</show_boolean_label>
+      <font>
+        <opifont.name fontName="Segoe UI" height="9" style="0">Default</opifont.name>
+      </font>
+      <off_label>OFF</off_label>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.LED" version="1.0">
+      <border_style>0</border_style>
+      <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+      <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+      <rules>
+        <rule name="Rule" prop_id="off_color" out_exp="false">
+          <exp bool_exp="pv0!=pv1">
+            <value>
+              <color name="ISIS_Green_LED_Off" red="0" green="102" blue="0" />
+            </value>
+          </exp>
+          <exp bool_exp="pv0==2">
+            <value>
+              <color name="ISIS_Green_LED_On" red="0" green="255" blue="0" />
+            </value>
+          </exp>
+          <pv trig="true">$(P)LKUP:$(PGC):IPOSN</pv>
+          <pv trig="true">$(P)LKUP:$(PGC):IPOSN:SP:RBV</pv>
+        </rule>
+      </rules>
+      <effect_3d>true</effect_3d>
+      <bit>-1</bit>
+      <enabled>true</enabled>
+      <wuid>-7e0aa4a7:158fe48017b:-7c5f</wuid>
+      <on_color>
+        <color name="ISIS_Green_LED_On" red="0" green="255" blue="0" />
+      </on_color>
+      <pv_value />
+      <scripts />
+      <border_alarm_sensitive>true</border_alarm_sensitive>
+      <height>25</height>
+      <on_label>ON</on_label>
+      <border_width>1</border_width>
+      <scale_options>
+        <width_scalable>true</width_scalable>
+        <height_scalable>true</height_scalable>
+        <keep_wh_ratio>true</keep_wh_ratio>
+      </scale_options>
+      <visible>true</visible>
+      <pv_name></pv_name>
+      <border_color>
+        <color name="ISIS_Border" red="0" green="0" blue="0" />
+      </border_color>
+      <widget_type>LED</widget_type>
+      <off_color>
+        <color name="ISIS_Green_LED_Off" red="0" green="102" blue="0" />
+      </off_color>
+      <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+      <background_color>
+        <color red="240" green="240" blue="240" />
+      </background_color>
+      <square_led>false</square_led>
+      <width>25</width>
+      <x>108</x>
+      <name>At P1 LED</name>
+      <data_type>0</data_type>
+      <y>73</y>
       <foreground_color>
         <color red="192" green="192" blue="192" />
       </foreground_color>
