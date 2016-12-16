@@ -19,18 +19,15 @@
 
 package uk.ac.stfc.isis.ibex.ui.configserver.editing.pvsets;
 
-import java.awt.CompositeContext;
-import java.awt.RenderingHints;
-import java.awt.image.ColorModel;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Composite;
 
 import uk.ac.stfc.isis.ibex.configserver.configuration.AvailablePVSet;
 import uk.ac.stfc.isis.ibex.configserver.configuration.PVSet;
@@ -39,24 +36,28 @@ import uk.ac.stfc.isis.ibex.configserver.editing.EditablePVSet;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.iocs.IIocDependentPanel;
 import uk.ac.stfc.isis.ibex.validators.MessageDisplayer;
 
+/**
+ * The panel that gives the PV sets for a specific IOC.
+ */
 public class IocPVSetsEditorPanel extends Composite implements	IIocDependentPanel {
-	private MessageDisplayer messageDisplayer;
 	private IocPVSetsTable iocPVSetsTable;
 	
+    /**
+     * Constructor for the panel.
+     * 
+     * @param parent
+     *            The parent composite that this panel belongs to.
+     * @param style
+     *            The SWT style of the panel.
+     * @param messageDisplayer
+     *            The message displayer to post errors to.
+     */
 	public IocPVSetsEditorPanel(Composite parent, int style, final MessageDisplayer messageDisplayer) {
 		super(parent, style);
-		this.messageDisplayer = messageDisplayer;
 		setLayout(new GridLayout(1, false));
 		
 		iocPVSetsTable = new IocPVSetsTable(this, SWT.NONE, 0);
 		iocPVSetsTable.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-	}
-
-	@Override
-	public CompositeContext createContext(ColorModel srcColorModel,
-			ColorModel dstColorModel, RenderingHints hints) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 	@Override
