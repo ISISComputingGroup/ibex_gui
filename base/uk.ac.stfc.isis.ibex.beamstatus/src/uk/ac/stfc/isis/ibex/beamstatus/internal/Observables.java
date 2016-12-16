@@ -55,6 +55,9 @@ public abstract class Observables extends ModelAdapter {
      * Helper method to adapt a forwarding observable to an updated value whilst
      * converting the returned Enum to a string.
      * 
+     * @param <E>
+     *            The type of the Enum to return.
+     * 
      * @param observable
      *            The observable to adapt and convert.
      * @return The converted updated value.

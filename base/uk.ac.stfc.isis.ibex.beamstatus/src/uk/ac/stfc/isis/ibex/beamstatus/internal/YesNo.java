@@ -19,7 +19,17 @@
 
 package uk.ac.stfc.isis.ibex.beamstatus.internal;
 
+/**
+ * An enum for the status of the anneal pressure.
+ */
 public enum YesNo {
+    /**
+     * No.
+     */
 	NO,
+
+    /**
+     * Yes.
+     */
 	YES
 }

@@ -60,26 +60,46 @@ public abstract class EndStationObservables extends Observables {
         lastBeamOn = adapt(obsFactory.getSwitchableObservable(new DateTimeChannel(), prefix.endWith("BEAMON:TIME")));
     }
 
+    /**
+     * @return The updated value for the end station beam status.
+     */
     public UpdatedValue<String> beam() {
         return beam;
     }
 
+    /**
+     * @return The updated value for the end station beam frequency.
+     */
     public UpdatedValue<String> pps() {
         return pps;
     }
 
+    /**
+     * @return The updated value for the end station beam current.
+     */
     public UpdatedValue<String> beamCurrent() {
         return beamCurrent;
     }
 
+    /**
+     * @return The updated value for the total current today at the end station.
+     */
     public UpdatedValue<String> uAHToday() {
         return uAHToday;
     }
 
+    /**
+     * @return The updated value for the last time the beam was off for the end
+     *         station.
+     */
     public UpdatedValue<String> lastBeamOff() {
         return lastBeamOff;
     }
 
+    /**
+     * @return The updated value for the last time the beam was on for the end
+     *         station.
+     */
     public UpdatedValue<String> lastBeamOn() {
         return lastBeamOn;
     }
