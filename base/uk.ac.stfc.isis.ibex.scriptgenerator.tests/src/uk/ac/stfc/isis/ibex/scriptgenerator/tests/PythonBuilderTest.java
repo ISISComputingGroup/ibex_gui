@@ -134,7 +134,8 @@ public class PythonBuilderTest {
         String expected = getHeader() + indent(defaultSetup);
         
         // Act
-        String actual = builder.createScript();
+        builder.createScript();
+        String actual = builder.getScript();
         
         // Assert
         assertEquals(expected.trim(), actual.trim());
@@ -148,7 +149,8 @@ public class PythonBuilderTest {
         // Act
         rows.add(new Row());
         builder.setRows(rows);
-        String actual = builder.createScript();
+        builder.createScript();
+        String actual = builder.getScript();
 
         // Assert
         assertEquals(expected.trim(), actual.trim());
@@ -163,7 +165,8 @@ public class PythonBuilderTest {
         settings.setOrder(Order.ALTTRANS);
         rows.add(new Row());
         builder.setRows(rows);
-        String actual = builder.createScript();
+        builder.createScript();
+        String actual = builder.getScript();
 
         // Assert
         assertEquals(expected.trim(), actual.trim());
@@ -185,7 +188,8 @@ public class PythonBuilderTest {
         settings.setSampleHeight(10);
         settings.setSampleWidth(5);
         settings.setGeometry(SampleGeometry.FLATPLATE);
-        String actual = builder.createScript();
+        builder.createScript();
+        String actual = builder.getScript();
         
         // Assert
         assertEquals(expected.trim(), actual.trim());
@@ -206,7 +210,8 @@ public class PythonBuilderTest {
 
         // Act
         settings.setOrder(Order.SANS);
-        String actual = builder.createScript();
+        builder.createScript();
+        String actual = builder.getScript();
 
         // Assert
         assertEquals(expected.trim(), actual.trim());
@@ -226,7 +231,8 @@ public class PythonBuilderTest {
 
         // Act
         settings.setOrder(Order.TRANS);
-        String actual = builder.createScript();
+        builder.createScript();
+        String actual = builder.getScript();
 
         // Assert
         assertEquals(expected.trim(), actual.trim());
@@ -249,7 +255,8 @@ public class PythonBuilderTest {
 
         // Act
         settings.setOrder(Order.ALTSANS);
-        String actual = builder.createScript();
+        builder.createScript();
+        String actual = builder.getScript();
 
         // Assert
         assertEquals(expected.trim(), actual.trim());
@@ -272,7 +279,8 @@ public class PythonBuilderTest {
 
         // Act
         settings.setOrder(Order.ALTTRANS);
-        String actual = builder.createScript();
+        builder.createScript();
+        String actual = builder.getScript();
 
         // Assert
         assertEquals(expected.trim(), actual.trim());
@@ -302,7 +310,8 @@ public class PythonBuilderTest {
         rows.add(defaultRow2);
         rows.add(new Row());
         builder.setRows(rows);
-        String actual = builder.createScript();
+        builder.createScript();
+        String actual = builder.getScript();
 
         // Assert
         assertEquals(expected.trim(), actual.trim());
@@ -327,7 +336,8 @@ public class PythonBuilderTest {
         rows.add(defaultRow2);
         rows.add(new Row());
         builder.setRows(rows);
-        String actual = builder.createScript();
+        builder.createScript();
+        String actual = builder.getScript();
 
         // Assert
         assertEquals(expected.trim(), actual.trim());
@@ -366,7 +376,8 @@ public class PythonBuilderTest {
 
         // Act
         builder.setRows(rows);
-        String actual = builder.createScript();
+        builder.createScript();
+        String actual = builder.getScript();
 
         // Assert
         assertEquals(expected.trim(), actual.trim());
@@ -392,7 +403,8 @@ public class PythonBuilderTest {
 
         // Act
         settings.setCollection(CollectionMode.EVENTS);
-        String actual = builder.createScript();
+        builder.createScript();
+        String actual = builder.getScript();
 
         // Assert
         assertEquals(expected.trim(), actual.trim());
@@ -418,7 +430,8 @@ public class PythonBuilderTest {
         // Act
         settings.setDoSans(timesSans);
         settings.setDoTrans(timesTrans);
-        String actual = builder.createScript();
+        builder.createScript();
+        String actual = builder.getScript();
 
         // Assert
         assertEquals(expected.trim(), actual.trim());
@@ -451,7 +464,8 @@ public class PythonBuilderTest {
 
         // Act
         settings.setLoopOver(true);
-        String actual = builder.createScript();
+        builder.createScript();
+        String actual = builder.getScript();
 
         // Assert
         assertEquals(expected.trim(), actual.trim());
@@ -488,7 +502,8 @@ public class PythonBuilderTest {
 
         // Act
         settings.setLoopOver(true);
-        String actual = builder.createScript();
+        builder.createScript();
+        String actual = builder.getScript();
 
         // Assert
         assertEquals(expected.trim(), actual.trim());
