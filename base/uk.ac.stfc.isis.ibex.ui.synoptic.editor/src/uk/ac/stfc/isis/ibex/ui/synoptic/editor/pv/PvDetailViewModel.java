@@ -119,7 +119,7 @@ public class PvDetailViewModel extends ErrorMessageProvider {
      *            The name of the PV that is being edited.
      */
     public void setPvName(String name) {
-        firePropertyChange("pvName", pvName, pvName = name);
+        firePropertyChange("pvName", pvName, pvName = name.trim());
         updateModel();
     }
 
@@ -161,7 +161,7 @@ public class PvDetailViewModel extends ErrorMessageProvider {
     }
 
     /**
-     * Change the settings for the selected PV.
+     * Change the settings for the selected PV on the back end.
      * 
      * @param name
      *            the display name

@@ -128,4 +128,32 @@ public class PvDetailViewModelTest {
         assertEquals(viewModel.getError().isError(), true);
     }
 
+    @Test
+    public void WHEN_non_unique_name_including_trailing_space_entered_THEN_space_removed() {
+        viewModel.setPvName(preExistingPV.displayName() + " ");
+
+        assertEquals(viewModel.getPvName(), preExistingPV.displayName());
+    }
+
+    @Test
+    public void WHEN_non_unique_name_including_trailing_space_entered_THEN_error_text() {
+        viewModel.setPvName(preExistingPV.displayName() + " ");
+
+        assertEquals(viewModel.getError().isError(), true);
+    }
+
+    @Test
+    public void WHEN_non_unique_name_including_prefixed_space_entered_THEN_space_removed() {
+        viewModel.setPvName(" " + preExistingPV.displayName());
+
+        assertEquals(viewModel.getPvName(), preExistingPV.displayName());
+    }
+
+    @Test
+    public void WHEN_non_unique_name_including_prefixed_space_entered_THEN_error_text() {
+        viewModel.setPvName(" " + preExistingPV.displayName());
+
+        assertEquals(viewModel.getError().isError(), true);
+    }
+
 }
