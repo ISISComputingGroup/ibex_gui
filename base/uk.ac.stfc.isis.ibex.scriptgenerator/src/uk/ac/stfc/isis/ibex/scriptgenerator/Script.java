@@ -39,10 +39,12 @@ public class Script {
     private PythonString transLoop = new PythonString();
     private PythonString altHeader = new PythonString();
     private PythonString altLoop = new PythonString();
+    private PythonString altSansCondition = new PythonString();
+    private PythonString altTransCondition = new PythonString();
     private PythonString altFooter = new PythonString();
 
-    private Collection<PythonString> doSansRows = new ArrayList<PythonString>();
-    private Collection<PythonString> doTransRows = new ArrayList<PythonString>();
+    private ArrayList<PythonString> doSansRows = new ArrayList<PythonString>();
+    private ArrayList<PythonString> doTransRows = new ArrayList<PythonString>();
     private static final String INDENT = "    ";
 
 
@@ -95,6 +97,22 @@ public class Script {
     }
 
     /**
+     * @param altSansCondition
+     *            the altSansCondition to set
+     */
+    public void setAltSansCondition(PythonString altSansCondition) {
+        this.altSansCondition = altSansCondition;
+    }
+
+    /**
+     * @param altTransCondition
+     *            the altTransCondition to set
+     */
+    public void setAltTransCondition(PythonString altTransCondition) {
+        this.altTransCondition = altTransCondition;
+    }
+
+    /**
      * @param altFooter
      *            the altFooter to set
      */
@@ -106,7 +124,7 @@ public class Script {
      * @param doSansRows
      *            the doSansRows to set
      */
-    public void setDoSansRows(Collection<PythonString> doSansRows) {
+    public void setDoSansRows(ArrayList<PythonString> doSansRows) {
         this.doSansRows = doSansRows;
     }
 
@@ -114,7 +132,7 @@ public class Script {
      * @param doTransRows
      *            the doTransRows to set
      */
-    public void setDoTransRows(Collection<PythonString> doTransRows) {
+    public void setDoTransRows(ArrayList<PythonString> doTransRows) {
         this.doTransRows = doTransRows;
     };
 
@@ -124,8 +142,8 @@ public class Script {
     }
 
     public void createScript(Order order, boolean loopOverEach) {
-        script = header;
-        header.addSub(setup);
+        script = new PythonString(header);
+        script.addSub(setup);
         switch (order) {
             case SANS:
                 buildSequential(true, loopOverEach);
@@ -133,24 +151,23 @@ public class Script {
             case TRANS:
                 buildSequential(false, loopOverEach);
                 break;
-//            case ALTSANS:
-//                buildAlternating(doSansRows, doTransRows, loopOverEach);
-//                break;
-//            case ALTTRANS:
-//                buildAlternating(doTransRows, doSansRows, loopOverEach);
-//                break;
+            case ALTSANS:
+                buildAlternating(true, loopOverEach);
+                break;
+            case ALTTRANS:
+                buildAlternating(false, loopOverEach);
+                break;
             default:
                 break;
         }
     }
     
     /**
-     * Builds the python code for running SANS and TRANS in sequential order.
+     * Assembles the python code for running SANS and TRANS in sequential order.
      * 
      * @param sansFirst
      *            specifies whether SANS data will be collected first (TRANS
      *            first if false)
-     * @return the script code as String.
      */
     public void buildSequential(boolean sansFirst, boolean loopOverEach) {
         PythonString firstLoop;
@@ -158,14 +175,14 @@ public class Script {
         Collection<PythonString> firstRows;
         Collection<PythonString> secondRows;
         if (sansFirst) {
-            firstLoop = new PythonString(sansLoop);
+            firstLoop = sansLoop;
+            secondLoop = transLoop;
             firstRows = doSansRows;
-            secondLoop = new PythonString(transLoop);
             secondRows = doTransRows;
         } else {
-            firstLoop = new PythonString(transLoop);
+            firstLoop = transLoop;
+            secondLoop = sansLoop;
             firstRows = doTransRows;
-            secondLoop = new PythonString(sansLoop);
             secondRows = doSansRows;
         }
 
@@ -174,7 +191,7 @@ public class Script {
         for (PythonString row : firstRows) {
             if (prependLoop) {
                 parentLoop = new PythonString(firstLoop);
-                header.addSub(parentLoop);
+                script.addSub(parentLoop);
             }
             parentLoop.addSub(row);
             prependLoop = loopOverEach;
@@ -184,7 +201,7 @@ public class Script {
         for (PythonString row : secondRows) {
             if (prependLoop) {
                 parentLoop = new PythonString(secondLoop);
-                header.addSub(parentLoop);
+                script.addSub(parentLoop);
             }
             parentLoop.addSub(row);
             prependLoop = loopOverEach;
@@ -197,14 +214,43 @@ public class Script {
      * @param sansFirst
      *            specifies whether SANS data will be collected first (TRANS
      *            first if false)
-     * @return the script code as String.
      */
-//    public void buildAlternating(Collection<ScriptRow> first, Collection<ScriptRow> second, boolean loopOverEach) {
-//
-//        StringBuilder result = new StringBuilder();
-//        StringBuilder rowData = new StringBuilder();
-//
-//        boolean populatedRow = false;
+    public void buildAlternating(boolean sansFirst, boolean loopOverEach) {
+        PythonString firstCondition = new PythonString(altTransCondition);
+        PythonString secondCondition = new PythonString(altSansCondition);
+        ArrayList<PythonString> firstRows = doTransRows;
+        ArrayList<PythonString> secondRows = doSansRows;
+        if (sansFirst) {
+            firstRows = doSansRows;
+            secondRows = doTransRows;
+            firstCondition = new PythonString(altSansCondition);
+            secondCondition = new PythonString(altTransCondition);
+        }
+
+
+        boolean prependLoop = true;
+        PythonString parentLoop = new PythonString();
+        for (int i = 0; i < doSansRows.size(); i++) {
+            if (i == 0) {
+                script.addSub(altHeader);
+            }
+            if (prependLoop) {
+                if (i > 0) {
+                    parentLoop.addSub(new PythonString(altFooter));
+                }
+                parentLoop = new PythonString(altLoop);
+                script.addSub(parentLoop);
+            }
+            PythonString currentFirstCondition = new PythonString(firstCondition);
+            PythonString currentSecondCondition = new PythonString(secondCondition);
+            parentLoop.addSub(currentFirstCondition);
+            parentLoop.addSub(currentSecondCondition);
+            currentFirstCondition.addSub(firstRows.get(i));
+            currentSecondCondition.addSub(secondRows.get(i));
+
+            prependLoop = loopOverEach;
+        }
+        parentLoop.addSub(new PythonString(altFooter));
 //
 //        // Get sans and trans data for every row.
 //        if (sansFirst) {
@@ -255,6 +301,6 @@ public class Script {
 //        result.append(rowData);
 //
 //        return result.toString();
-//    }
+    }
 
 }

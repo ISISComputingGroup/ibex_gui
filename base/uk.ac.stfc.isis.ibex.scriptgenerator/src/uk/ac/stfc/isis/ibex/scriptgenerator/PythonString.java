@@ -38,9 +38,9 @@ public class PythonString {
         subBlocks = new ArrayList<PythonString>();
     }
 
-    public PythonString(PythonString other) {
-        this.lines = other.lines;
-        subBlocks = new ArrayList<PythonString>();
+    public PythonString(PythonString template) {
+        this.lines = template.lines;
+        this.subBlocks = new ArrayList<PythonString>();
     }
 
     public void add(String line) {

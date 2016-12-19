@@ -108,17 +108,27 @@ public class PythonBuilder extends ModelObject {
         script.setAltLoop(altLoop);
     }
 
+    private void generateAltConditions() {
+        PythonString altSansCondition = new PythonString();
+        PythonString altTransCondition = new PythonString();
+        altSansCondition.add("if count < num_sans:");
+        altTransCondition.add("if count < num_trans:");
+        script.setAltSansCondition(altSansCondition);
+        script.setAltTransCondition(altTransCondition);
+    }
+
     private void generateAltFooter() {
         PythonString altFooter = new PythonString();
         altFooter.add("count += 1");
         altFooter.add("if count >= num_trans and count >= num_sans : break");
+        altFooter.add(BLANK);
         script.setAltFooter(altFooter);
     }
 
     public void generateRows() {
         int collectionVal = (settings.getCollection() == CollectionMode.HISTOGRAM ? 0 : 1);
-        Collection<PythonString> doSansRows = new ArrayList<PythonString>();
-        Collection<PythonString> doTransRows = new ArrayList<PythonString>();
+        ArrayList<PythonString> doSansRows = new ArrayList<PythonString>();
+        ArrayList<PythonString> doTransRows = new ArrayList<PythonString>();
         
         int count = 0;
         for (Row row : rows) {
@@ -182,6 +192,7 @@ public class PythonBuilder extends ModelObject {
         generateSetup();
         generateAltHeader();
         generateAltLoop();
+        generateAltConditions();
         generateAltFooter();
         generateSansLoop();
         generateTransLoop();
