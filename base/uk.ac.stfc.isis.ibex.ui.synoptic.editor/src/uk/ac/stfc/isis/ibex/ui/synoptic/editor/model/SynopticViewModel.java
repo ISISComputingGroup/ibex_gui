@@ -34,9 +34,7 @@ import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -437,21 +435,6 @@ public class SynopticViewModel extends ErrorMessageProvider {
 		}
 		return true;
 	}
-
-    /**
-     * Checks for duplicate names in the components.
-     * 
-     * @return true means duplicate(s)
-     */
-    public boolean getHasDuplicatedName() {
-        List<String> comps = getSynoptic().getComponentNameListWithChildren();
-        return listHasDuplicates(comps);
-    }
-
-    private boolean listHasDuplicates(List<String> list) {
-        Set<String> set = new HashSet<String>(list);
-        return (set.size() < list.size());
-    }
 
     /**
      * Gets the OPI for the specified target.

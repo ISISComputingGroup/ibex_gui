@@ -36,7 +36,7 @@ import uk.ac.stfc.isis.ibex.ui.synoptic.editor.pv.PvDetailViewModel;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.pv.PvListViewModel;
 
 /**
- * Tests for the PvViewModel
+ * Tests for the PvViewModel.
  */
 public class PvDetailViewModelTest {
 

@@ -34,7 +34,8 @@ import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.SynopticViewModel;
 import uk.ac.stfc.isis.ibex.validators.ErrorMessageProvider;
 
 /**
- *
+ * This class is responsible for the display logic of the component details
+ * view.
  */
 public class ComponentDetailViewModel extends ErrorMessageProvider {
     private final SynopticViewModel model;
@@ -51,18 +52,24 @@ public class ComponentDetailViewModel extends ErrorMessageProvider {
     private Image typeIcon;
     private String compType;
 
+    /**
+     * Constructor to create the view model.
+     * 
+     * @param synopticViewModel
+     *            A SynopticViewModel, which contains more information on the
+     *            whole synoptic.
+     */
     public ComponentDetailViewModel(final SynopticViewModel synopticViewModel) {
         model = synopticViewModel;
 
         synopticViewModel.addPropertyChangeListener("compSelection", new PropertyChangeListener() {
             @Override
             public void propertyChange(PropertyChangeEvent evt) {
-                component = synopticViewModel.getSingleSelectedComp();
-                showComponent(component);
+                setComponent(synopticViewModel.getSingleSelectedComp());
             }
         });
 
-        showComponent(null);
+        setComponent(null);
     }
 
     /**
@@ -71,11 +78,12 @@ public class ComponentDetailViewModel extends ErrorMessageProvider {
      * @param component
      *            the component to display
      */
-    public void showComponent(ComponentDescription component) {
+    public void setComponent(ComponentDescription component) {
+        this.component = component;
         if (component != null) {
             setSelectionVisible(true);
 
-            setComponentName(component.name());
+            updateComponentName(component.name());
 
             setCompType(component.type().name());
 
@@ -89,7 +97,7 @@ public class ComponentDetailViewModel extends ErrorMessageProvider {
      * Updates the component type based on the user input.
      * 
      * @param modelType
-     *            The type to updaet the model to.
+     *            The type to update the model to.
      * @param isFinalUpdate
      *            Whether this is the final update for the user
      */
@@ -113,11 +121,7 @@ public class ComponentDetailViewModel extends ErrorMessageProvider {
         ComponentType enteredType = ComponentType.valueOf(compType);
         Image icon = null;
 
-        if (enteredType.equals(ComponentType.UNKNOWN)) {
-            icon = ComponentIcons.thumbnailForType(ComponentType.UNKNOWN);
-        } else {
-            icon = ComponentIcons.thumbnailForType(enteredType);
-        }
+        icon = ComponentIcons.thumbnailForType(enteredType);
 
         setTypeIcon(icon);
     }
@@ -138,16 +142,34 @@ public class ComponentDetailViewModel extends ErrorMessageProvider {
     }
 
     /**
+     * Checks for duplicate names in the components.
+     * 
+     * @param name
+     *            The name to check for
+     * 
+     * @return true means duplicate(s)
+     */
+    private boolean getHasDuplicatedName(String name) {
+        List<String> comps = model.getSynoptic().getComponentNameListWithChildren();
+        return comps.contains(name);
+    }
+
+    /**
      * @param name
      *            set the name of the component
      */
     public void setComponentName(String name) {
-        component.setName(name);
-        if (model.getHasDuplicatedName()) {
+        name = name.trim();
+        if (getHasDuplicatedName(name)) {
             setError(true, String.format(UNIQUE_COMPONENT_NAME, name));
         } else {
-            setError(false, null);
+            setError(false, "");
         }
+        component.setName(name);
+        updateComponentName(name);
+    }
+
+    private void updateComponentName(String name) {
         firePropertyChange("componentName", componentName, componentName = name);
         model.refreshTreeView();
     }
