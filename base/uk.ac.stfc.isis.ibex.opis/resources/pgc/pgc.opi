@@ -490,7 +490,7 @@ $(pv_value)</tooltip>
       <enabled>true</enabled>
       <wuid>-5be240a4:158fd3c0892:-7b9a</wuid>
       <pv_value />
-      <text>View details</text>
+      <text>View</text>
       <scripts />
       <border_alarm_sensitive>false</border_alarm_sensitive>
       <height>28</height>
