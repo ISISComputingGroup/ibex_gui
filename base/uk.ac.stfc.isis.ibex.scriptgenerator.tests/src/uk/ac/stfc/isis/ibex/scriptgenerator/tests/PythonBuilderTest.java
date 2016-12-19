@@ -508,4 +508,27 @@ public class PythonBuilderTest {
         // Assert
         assertEquals(expected.trim(), actual.trim());
     }
+    
+
+    @Test
+    public void GIVEN_script_previously_generated_WHEN_generating_script_THEN_result_is_correct() {
+        // Arrange
+        rows.add(defaultRow1);
+        builder.setRows(rows);
+        settings.setOrder(Order.SANS);
+        String expected = getHeader() 
+                + indent(defaultSetup)
+                + indent(getSequentialLoop(1))
+                + indent(indent(defaultDoSans1))
+                + indent(getSequentialLoop(1))
+                + indent(indent(defaultDoTrans1));
+
+        // Act
+        builder.createScript();
+        builder.createScript();
+        String actual = builder.getScript();
+
+        // Assert
+        assertEquals(expected.trim(), actual.trim());
+    }
 }
