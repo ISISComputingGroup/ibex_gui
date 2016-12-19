@@ -19,6 +19,8 @@
 
 package uk.ac.stfc.isis.ibex.ui.synoptic.editor.blockselector;
 
+import java.util.Collection;
+
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.beans.BeanProperties;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
@@ -36,15 +38,12 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 
-import uk.ac.stfc.isis.ibex.configserver.Configurations;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Block;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableBlock;
-import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.blocks.BlocksTable;
 
 /**
  * A composite for selecting a block.
- *
  */
 @SuppressWarnings("checkstyle:magicnumber")
 public class BlockSelectorPanel extends Composite {
@@ -54,7 +53,17 @@ public class BlockSelectorPanel extends Composite {
 	private final BlocksTable blockTable;
 	private DataBindingContext bindingContext;
 	
-	public BlockSelectorPanel(Composite parent, int style) {
+    /**
+     * The constructor for the composite.
+     * 
+     * @param parent
+     *            The parent composite that this panel belongs to.
+     * @param style
+     *            The SWT style that the panel conforms to.
+     * @param availableBlocks
+     *            The available blocks that can be selected from.
+     */
+    public BlockSelectorPanel(Composite parent, int style, Collection<EditableBlock> availableBlocks) {
 		super(parent, style);
 		
 		setLayout(new FillLayout(SWT.HORIZONTAL));
@@ -85,7 +94,8 @@ public class BlockSelectorPanel extends Composite {
 		pvAddress.setEditable(false);
 		
 		blockName.addModifyListener(new ModifyListener() {
-			public void modifyText(ModifyEvent arg0) {
+			@Override
+            public void modifyText(ModifyEvent arg0) {
 				blockTable.setSearch(blockName.getText());
 			}
 		});
@@ -96,7 +106,8 @@ public class BlockSelectorPanel extends Composite {
 		blockTable.setLayoutData(gdPvTable);
 		
 		blockTable.addSelectionChangedListener(new ISelectionChangedListener() {
-			public void selectionChanged(SelectionChangedEvent arg0) {
+			@Override
+            public void selectionChanged(SelectionChangedEvent arg0) {
 				IStructuredSelection selection = (IStructuredSelection) arg0.getSelection();
 				if (selection.size() > 0) {
 					EditableBlock block = (EditableBlock) selection.getFirstElement();
@@ -106,15 +117,23 @@ public class BlockSelectorPanel extends Composite {
 			}
 		});
 		
-		blockTable.setRows(Configurations.getInstance().edit().currentConfig().getValue().getEditableBlocks());
+        blockTable.setRows(availableBlocks);
 		blockTable.refresh();
 	}
 	
-	public void setConfig(EditableConfiguration config, Block block) {		
+    /**
+     * Set the block that the information on the panel will be bound to.
+     * 
+     * @param block
+     *            The block that provides the information.
+     */
+    public void setBlock(Block block) {
 		//Set up the binding here
 		bindingContext = new DataBindingContext();
-		bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(blockName), BeanProperties.value("name").observe(block), null, null);
-		bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(pvAddress), BeanProperties.value("PV").observe(block), null, null);
+        bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(blockName),
+                BeanProperties.value("name").observe(block));
+        bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(pvAddress),
+                BeanProperties.value("PV").observe(block));
 	}
 
 }

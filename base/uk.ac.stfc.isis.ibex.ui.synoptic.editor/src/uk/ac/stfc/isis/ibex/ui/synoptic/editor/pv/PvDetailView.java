@@ -19,15 +19,15 @@
 
 package uk.ac.stfc.isis.ibex.ui.synoptic.editor.pv;
 
-import java.util.Arrays;
-
+import org.eclipse.core.databinding.DataBindingContext;
+import org.eclipse.core.databinding.UpdateValueStrategy;
+import org.eclipse.core.databinding.beans.BeanProperties;
+import org.eclipse.jface.databinding.swt.SWTObservables;
+import org.eclipse.jface.databinding.swt.WidgetProperties;
+import org.eclipse.jface.databinding.viewers.ViewersObservables;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ComboViewer;
-import org.eclipse.jface.viewers.ISelectionChangedListener;
-import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.ModifyEvent;
-import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.FillLayout;
@@ -41,11 +41,6 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.IO;
-import uk.ac.stfc.isis.ibex.synoptic.model.desc.PV;
-import uk.ac.stfc.isis.ibex.ui.synoptic.editor.blockselector.BlockSelector;
-import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.IPVSelectionListener;
-import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.SynopticViewModel;
-import uk.ac.stfc.isis.ibex.validators.PvValidator;
 
 /**
  * Composite that shows the options to set the PV details, and allows
@@ -55,14 +50,13 @@ import uk.ac.stfc.isis.ibex.validators.PvValidator;
  */
 @SuppressWarnings("checkstyle:magicnumber")
 public class PvDetailView extends Composite {
-	private Composite labelComposite;
+	private Composite noSelectionComposite;
+    private Composite selectionComposite;
 	private Composite fieldsComposite;
 	
-	private SynopticViewModel instrument;
-	
-	private PV selectedPv;
-	
-	private boolean updateLock;
+    private PvDetailViewModel model;
+
+    private IO[] modeList = IO.values();
 	
 	private Text txtName;
 	private Text txtAddress;
@@ -70,69 +64,50 @@ public class PvDetailView extends Composite {
 	
 	private Button btnPickPV;
 	
-	private static IO[] modeList = IO.values();
 	private Composite buttonsComposite;
 	private Button btnSelectBlock;
 
     private Label lblError;
 
-	public PvDetailView(Composite parent, SynopticViewModel instrument) {
+    /**
+     * The constructor for the panel used to edit PV details.
+     * 
+     * @param parent
+     *            The composite that holds this panel.
+     * @param model
+     *            The view model that provides the display logic for the panel.
+     */
+    public PvDetailView(Composite parent, PvDetailViewModel model) {
 		super(parent, SWT.NONE);
 		
-		this.instrument = instrument;
+        this.model = model;
 		setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		
-		if (instrument != null) {
-			instrument.addPVSelectionListener(new IPVSelectionListener() {			
-				@Override
-				public void selectionChanged(PV oldSelection, PV newSelection) {
-					showPV(newSelection);
-				}
-			});
-		}
 		createControls(this);
-		
-		buttonsComposite = new Composite(this, SWT.NONE);
-		GridData gdComposite = new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1);
-		gdComposite.widthHint = 210;
-		buttonsComposite.setLayoutData(gdComposite);
-		RowLayout rlButtonsComposite = new RowLayout(SWT.HORIZONTAL);
-		buttonsComposite.setLayout(rlButtonsComposite);
-		
-		btnSelectBlock = new Button(buttonsComposite, SWT.NONE);
-		btnSelectBlock.setLayoutData(new RowData(100, SWT.DEFAULT));
-		btnSelectBlock.setText("Select Block");
-		btnSelectBlock.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				openBlockDialog();
-				updateModel();
-			}
-		});
-		
-		btnPickPV = new Button(buttonsComposite, SWT.NONE);
-		btnPickPV.setLayoutData(new RowData(100, SWT.DEFAULT));
-		btnPickPV.setText("Select PV");
-		btnPickPV.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				openPvDialog();
-				updateModel();
-			}
-		});
-		showPV(null);
+
+        bind(model);
 	}
 	
+    /**
+     * Creates the controls to be displayed on the panel.
+     * 
+     * @param parent
+     *            The composite to display the controls on.
+     */
 	public void createControls(Composite parent) {	
 		setLayout(new GridLayout(1, false));
-		labelComposite = new Composite(parent, SWT.NONE);
-		labelComposite.setLayoutData(new GridData(SWT.CENTER, SWT.FILL, true, false, 1, 1));
-		labelComposite.setLayout(new FillLayout());
+		noSelectionComposite = new Composite(parent, SWT.NONE);
+		noSelectionComposite.setLayoutData(new GridData(SWT.CENTER, SWT.FILL, true, false, 1, 1));
+		noSelectionComposite.setLayout(new FillLayout());
 
-        Label lblNoSelection = new Label(labelComposite, SWT.NONE);
+        Label lblNoSelection = new Label(noSelectionComposite, SWT.NONE);
         lblNoSelection.setText("Select a PV to view/edit details");
 		
-		fieldsComposite = new Composite(parent, SWT.NONE);
+        selectionComposite = new Composite(parent, SWT.NONE);
+        selectionComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+        selectionComposite.setLayout(new GridLayout(1, false));
+
+        fieldsComposite = new Composite(selectionComposite, SWT.NONE);
 		fieldsComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 		fieldsComposite.setLayout(new GridLayout(2, false));
 
@@ -143,26 +118,12 @@ public class PvDetailView extends Composite {
         txtName = new Text(fieldsComposite, SWT.BORDER);
         txtName.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 
-        txtName.addModifyListener(new ModifyListener() {
-            @Override
-            public void modifyText(ModifyEvent e) {
-                updateModel();
-            }
-        });
-
         Label lblAddress = new Label(fieldsComposite, SWT.NONE);
         lblAddress.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
         lblAddress.setText("Address");
 
         txtAddress = new Text(fieldsComposite, SWT.BORDER);
         txtAddress.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-
-        txtAddress.addModifyListener(new ModifyListener() {
-            @Override
-            public void modifyText(ModifyEvent e) {
-                updateAddress();
-            }
-        });
 
         Label lblMode = new Label(fieldsComposite, SWT.NONE);
         lblMode.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
@@ -174,87 +135,56 @@ public class PvDetailView extends Composite {
         cmboMode.setContentProvider(ArrayContentProvider.getInstance());
         cmboMode.setInput(modeList);
         cmboMode.getCombo().select(0);
-        cmboMode.addSelectionChangedListener(new ISelectionChangedListener() {
-            @Override
-            public void selectionChanged(SelectionChangedEvent event) {
-                updateModel();
-            }
-        });
 
         lblError = new Label(fieldsComposite, SWT.NONE);
         lblError.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1));
-	}
 
-	private void showPV(PV componentPv) {
-		updateLock = true;
-		
-		selectedPv = componentPv;
-		
-		if (selectedPv != null) {
-			fieldsComposite.setVisible(true);
-			buttonsComposite.setVisible(true);
-			labelComposite.setVisible(false);
-			
-			txtName.setText(selectedPv.displayName());
-			
-			//Use the full address to avoid confusion
-			txtAddress.setText(selectedPv.fullAddress());
-		} else {
-			fieldsComposite.setVisible(false);
-			buttonsComposite.setVisible(false);
-			labelComposite.setVisible(true);
-			
-			txtName.setText("");
-			txtAddress.setText("");
-			cmboMode.getCombo().select(0);
-		}
-		
-		updateLock = false;
+        buttonsComposite = new Composite(selectionComposite, SWT.NONE);
+        GridData gdComposite = new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1);
+        gdComposite.widthHint = 210;
+        buttonsComposite.setLayoutData(gdComposite);
+        buttonsComposite.setLayout(new RowLayout(SWT.HORIZONTAL));
+
+        btnSelectBlock = new Button(buttonsComposite, SWT.NONE);
+        btnSelectBlock.setLayoutData(new RowData(100, SWT.DEFAULT));
+        btnSelectBlock.setText("Select Block");
+        btnSelectBlock.addSelectionListener(new SelectionAdapter() {
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                model.openBlockDialog();
+            }
+        });
+
+        btnPickPV = new Button(buttonsComposite, SWT.NONE);
+        btnPickPV.setLayoutData(new RowData(100, SWT.DEFAULT));
+        btnPickPV.setText("Select PV");
+        btnPickPV.addSelectionListener(new SelectionAdapter() {
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                model.openPvDialog();
+            }
+        });
 	}
 	
-    private void updateAddress() {
-        PvValidator addressValid = new PvValidator();
-        if (addressValid.validatePvAddress(txtAddress.getText())) {
-            lblError.setText("");
-            updateModel();
-        } else {
-            lblError.setText(addressValid.getErrorMessage());
-        }
+    private void bind(PvDetailViewModel model) {
+        UpdateValueStrategy notConverter = new UpdateValueStrategy() {
+            @Override
+            public Object convert(Object value) {
+                return !(Boolean) value;
+            }
+        };
+
+        DataBindingContext bindingContext = new DataBindingContext();
+
+        bindingContext.bindValue(WidgetProperties.visible().observe(selectionComposite),
+                BeanProperties.value("selectionVisible").observe(model));
+        bindingContext.bindValue(WidgetProperties.visible().observe(noSelectionComposite),
+                BeanProperties.value("selectionVisible").observe(model), null, notConverter);
+        bindingContext.bindValue(SWTObservables.observeText(txtName, SWT.Modify),
+                BeanProperties.value("pvName").observe(model));
+        bindingContext.bindValue(SWTObservables.observeText(txtAddress, SWT.Modify),
+                BeanProperties.value("pvAddress").observe(model));
+        bindingContext.bindValue(ViewersObservables.observeSingleSelection(cmboMode),
+                BeanProperties.value("pvMode").observe(model));
     }
-	private void updateModel() {
-		if (!updateLock && selectedPv != null) {
-			int typeIndex = cmboMode.getCombo().getSelectionIndex();
-			IO mode = Arrays.asList(modeList).get(typeIndex);
-			String name = txtName.getText();
-			String address = txtAddress.getText();
-            instrument.updateSelectedPV(name, address, mode);
-		}
-	}
-	
-	private void openPvDialog() {
-		PvSelector selectPV = new PvSelector();
-		try {
-			selectPV.execute(null);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-        if (selectPV.isConfirmed()) {
-            txtAddress.setText(selectPV.getPvAddress());
-        }
-	}
-	
-	private void openBlockDialog() {
-		BlockSelector selectPV = new BlockSelector();
-		try {
-			selectPV.execute(null);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-        if (selectPV.isConfirmed()) {
-            txtName.setText(selectPV.getBlockName());
-            txtAddress.setText(selectPV.getPvAddress());
-        }
-	}
 }

@@ -19,12 +19,14 @@
 
 package uk.ac.stfc.isis.ibex.ui.synoptic.editor.dialogs;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.Collection;
 
 import javax.xml.bind.JAXBException;
 
-import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
+import org.eclipse.jface.dialogs.TitleAreaDialog;
 import org.eclipse.jface.window.Window;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -40,12 +42,10 @@ import org.xml.sax.SAXException;
 
 import uk.ac.stfc.isis.ibex.synoptic.Synoptic;
 import uk.ac.stfc.isis.ibex.synoptic.SynopticInfo;
-import uk.ac.stfc.isis.ibex.synoptic.model.desc.SynopticDescription;
 import uk.ac.stfc.isis.ibex.synoptic.xml.XMLUtil;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.instrument.SynopticPreview;
-import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.IInstrumentUpdateListener;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.SynopticViewModel;
-import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.UpdateTypes;
+import uk.ac.stfc.isis.ibex.validators.ErrorMessage;
 
 /**
  * This class provides the dialog to edit the synoptic. While this class is responsible for
@@ -53,12 +53,10 @@ import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.UpdateTypes;
  * 
  */
 @SuppressWarnings("checkstyle:magicnumber")
-public class EditSynopticDialog extends Dialog {
+public class EditSynopticDialog extends TitleAreaDialog {
 	
 	private static final Point INITIAL_SIZE = new Point(950, 800);
 	private final String title;
-	
-	private SynopticDescription synoptic;
 	
 	private EditorPanel editor;
 	private boolean isBlank;
@@ -69,12 +67,25 @@ public class EditSynopticDialog extends Dialog {
     private SynopticViewModel synopticViewModel;
     private Collection<String> availableOPIs;
 
-    public EditSynopticDialog(Shell parentShell, String title, SynopticDescription synoptic, boolean isBlank,
+    /**
+     * The constructor for the overall Synoptic editor dialog.
+     * 
+     * @param parentShell
+     *            The shell to open the dialog in.
+     * @param title
+     *            The title of the dialog.
+     * @param isBlank
+     *            Whether the synoptic is blank or not, i.e. a new synoptic.
+     * @param availableOPIs
+     *            The OPIs that are available to put into the synoptic
+     * @param synopticViewModel
+     *            The view model describing the logic of the synoptic editor
+     */
+    public EditSynopticDialog(Shell parentShell, String title, boolean isBlank,
             Collection<String> availableOPIs, SynopticViewModel synopticViewModel) {
 		super(parentShell);
 		setShellStyle(SWT.DIALOG_TRIM | SWT.RESIZE);
 		this.title = title;
-		this.synoptic = synoptic;
 		this.isBlank = isBlank;
         this.availableOPIs = availableOPIs;
         this.synopticViewModel = synopticViewModel;
@@ -84,7 +95,6 @@ public class EditSynopticDialog extends Dialog {
 	protected Control createDialogArea(Composite parent) {
         editor = new EditorPanel(parent, SWT.NONE, synopticViewModel, availableOPIs);
 		editor.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		editor.setSynopticToEdit(synoptic);
 		return editor;
 	}
 
@@ -111,7 +121,7 @@ public class EditSynopticDialog extends Dialog {
 				public void widgetSelected(SelectionEvent e) {
 					// Check synoptic is valid
 					try {
-						XMLUtil.toXml(synoptic);
+                        XMLUtil.toXml(synopticViewModel.getSynoptic());
 						okPressed();
 					} catch (JAXBException | SAXException e1) {
 						MessageBox dialog = new MessageBox(getShell(), SWT.ERROR | SWT.OK);
@@ -128,13 +138,14 @@ public class EditSynopticDialog extends Dialog {
 		saveAsBtn.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				SaveSynopticDialog dlg = new SaveSynopticDialog(null, synoptic.name(), SynopticInfo.names(Synoptic.getInstance().availableSynoptics()));
+                SaveSynopticDialog dlg = new SaveSynopticDialog(null, synopticViewModel.getSynoptic().name(),
+                        SynopticInfo.names(Synoptic.getInstance().availableSynoptics()));
 				if (dlg.open() == Window.OK) {
-					synoptic.setName(dlg.getNewName());
+                    synopticViewModel.getSynoptic().setName(dlg.getNewName());
 					
 					// Check synoptic is valid
 					try {
-						XMLUtil.toXml(synoptic);
+                        XMLUtil.toXml(synopticViewModel.getSynoptic());
 						okPressed();
 					} catch (JAXBException | SAXException e1) {
 						MessageBox dialog = new MessageBox(getShell(), SWT.ERROR | SWT.OK);
@@ -146,14 +157,15 @@ public class EditSynopticDialog extends Dialog {
 			}
 		});
 		
-		synopticViewModel.addInstrumentUpdateListener(new IInstrumentUpdateListener() {
+        synopticViewModel.addPropertyChangeListener("error", new PropertyChangeListener() {
+
             @Override
-            public void instrumentUpdated(UpdateTypes updateType) {
-                if (updateType == UpdateTypes.EDIT_COMPONENT) {
-                    saveAsBtn.setEnabled(!synopticViewModel.getHasDuplicatedName());
-                    if (saveBtn != null) {
-                        saveBtn.setEnabled(!synopticViewModel.getHasDuplicatedName());
-                    }
+            public void propertyChange(PropertyChangeEvent evt) {
+                ErrorMessage hasError = (ErrorMessage) evt.getNewValue();
+                setErrorMessage(hasError.getMessage());
+                saveAsBtn.setEnabled(!hasError.isError());
+                if (saveBtn != null) {
+                    saveBtn.setEnabled(!hasError.isError());
                 }
             }
         });
@@ -170,9 +182,5 @@ public class EditSynopticDialog extends Dialog {
 	@Override
 	protected Point getInitialSize() {
 		return INITIAL_SIZE;
-	}
-	
-	public SynopticDescription getSynoptic() {
-		return synoptic;
 	}
 }

@@ -29,6 +29,8 @@
  */
 package uk.ac.stfc.isis.ibex.ui.synoptic.editor.instrument;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
@@ -59,7 +61,6 @@ import uk.ac.stfc.isis.ibex.ui.synoptic.editor.component.ComponentContentProvide
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.component.ComponentDragListener;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.component.ComponentDropListener;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.component.ComponentLabelProvider;
-import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.IComponentSelectionListener;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.IInstrumentUpdateListener;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.SynopticViewModel;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.UpdateTypes;
@@ -74,12 +75,11 @@ public class InstrumentTreeView extends Composite {
 
     private static final int C_CODE = 99;
 
-	public InstrumentTreeView(Composite parent,
- final SynopticViewModel synopticViewModel) {
+    public InstrumentTreeView(Composite parent, final SynopticViewModel synopticViewModel) {
 		super(parent, SWT.NONE);
 
 		this.synopticViewModel = synopticViewModel;
-        this.synopticViewModel.addInstrumentUpdateListener(new IInstrumentUpdateListener() {
+        synopticViewModel.addInstrumentUpdateListener(new IInstrumentUpdateListener() {
             @Override
             public void instrumentUpdated(UpdateTypes updateType) {
                 if (updateType == UpdateTypes.NEW_INSTRUMENT) {
@@ -93,18 +93,23 @@ public class InstrumentTreeView extends Composite {
             }
         });
 				
-		this.synopticViewModel
-			.addComponentSelectionListener(new IComponentSelectionListener() {
-				@Override
-				public void selectionChanged(
-					List<ComponentDescription> oldSelection,
-					List<ComponentDescription> newSelection) {
-
-					if (newSelection != null) {
-						treeViewer.setSelection(new StructuredSelection(newSelection));
-					}
+        synopticViewModel.addPropertyChangeListener("compSelection", new PropertyChangeListener() {
+            @Override
+            public void propertyChange(PropertyChangeEvent evt) {
+                @SuppressWarnings("unchecked")
+                List<ComponentDescription> newSelection = (List<ComponentDescription>) evt.getNewValue();
+                if (newSelection != null) {
+                    treeViewer.setSelection(new StructuredSelection(newSelection));
+                }
 			}
 		});
+
+        synopticViewModel.addPropertyChangeListener("refreshTree", new PropertyChangeListener() {
+            @Override
+            public void propertyChange(PropertyChangeEvent evt) {
+                refresh();
+            }
+        });
 
 		setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		setLayout(new GridLayout(1, false));

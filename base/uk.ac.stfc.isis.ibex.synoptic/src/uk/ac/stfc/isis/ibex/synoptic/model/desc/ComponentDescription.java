@@ -176,26 +176,16 @@ public class ComponentDescription implements SynopticParentDescription {
 	public List<PV> pvs() {
 		return pvs;
 	}
-	
+
     /**
      * Remove a PV from this component.
      * 
-     * @param pv the PV to remove
+     * @param pv
+     *            the PV to remove
      */
 	public void removePV(PV pv) {
 		if (pv != null && pvs.contains(pv)) {
 			pvs.remove(pv);
-		}
-	}
-	
-    /**
-     * Add a PV to this component.
-     * 
-     * @param pv the PV to add
-     */
-	public void addPV(PV pv) {
-		if (pv != null) {
-			pvs.add(0, pv);
 		}
 	}
 	

@@ -29,12 +29,12 @@
  */
 package uk.ac.stfc.isis.ibex.ui.synoptic.editor.model;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -48,37 +48,50 @@ import uk.ac.stfc.isis.ibex.opis.desc.OpiDescription;
 import uk.ac.stfc.isis.ibex.synoptic.Synoptic;
 import uk.ac.stfc.isis.ibex.synoptic.SynopticModel;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.ComponentDescription;
-import uk.ac.stfc.isis.ibex.synoptic.model.desc.IO;
-import uk.ac.stfc.isis.ibex.synoptic.model.desc.PV;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.Property;
-import uk.ac.stfc.isis.ibex.synoptic.model.desc.RecordType;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.SynopticDescription;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.SynopticParentDescription;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.TargetDescription;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.TargetType;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.dialogs.SuggestedTargetsDialog;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.target.DefaultTargetForComponent;
+import uk.ac.stfc.isis.ibex.validators.ErrorMessage;
+import uk.ac.stfc.isis.ibex.validators.ErrorMessageProvider;
 
 /**
  * Provides the model for the view of the synoptic. This is an observable model,
  * which various other classes subscribe to.
  */
-public class SynopticViewModel {
+public class SynopticViewModel extends ErrorMessageProvider {
 	private SynopticModel editing = Synoptic.getInstance().edit();
 	private SynopticDescription synoptic;
 	private List<ComponentDescription> selectedComponents;
-	private PV selectedPV;
 	private Property selectedProperty;
 	private List<IInstrumentUpdateListener> instrumentUpdateListeners = new CopyOnWriteArrayList<>();
-	private List<IComponentSelectionListener> componentSelectionListeners = new CopyOnWriteArrayList<>();
-	private List<IPVSelectionListener> pvSelectionListeners = new CopyOnWriteArrayList<>();
-	private List<IPropertySelectionListener> propertySelectionListeners = new CopyOnWriteArrayList<>();
+    private List<ErrorMessageProvider> errorProviders = new ArrayList<>();
+
+    private PropertyChangeListener errorListener = new PropertyChangeListener() {
+        @Override
+        public void propertyChange(PropertyChangeEvent evt) {
+            for (ErrorMessageProvider model : errorProviders) {
+                ErrorMessage error = model.getError();
+                if (error.isError()) {
+                    setError(error.isError(), error.getMessage());
+                    return;
+                }
+            }
+            setError(false, null);
+        }
+    };
 
     /**
      * The constructor.
+     * 
+     * @param description
+     *            The description of the synoptic to edit.
      */
-	public SynopticViewModel() {
-		loadCurrentInstrument();
+    public SynopticViewModel(SynopticDescription description) {
+        loadSynopticDescription(description);
 	}
 	
     /**
@@ -120,13 +133,26 @@ public class SynopticViewModel {
 	}
 
     /**
+     * Get a name that is unique for an object.
+     * 
+     * @param rootName
+     *            The ideal name for the object
+     * @param existingNames
+     *            The existing names
+     * @return A unique name
+     */
+    public String getUniqueName(String rootName, List<String> existingNames) {
+        DefaultName namer = new DefaultName(rootName, " ", true);
+        return namer.getUnique(existingNames);
+    }
+
+    /**
      * Add a new blank component to the synoptic.
      */
 	public void addNewComponent() {
 		ComponentDescription component = new ComponentDescription();
 
-        DefaultName namer = new DefaultName("New Component", " ", true);
-        component.setName(namer.getUnique(synoptic.getComponentNameListWithChildren()));
+        component.setName(getUniqueName("New Component", synoptic.getComponentNameListWithChildren()));
 		component.setType(ComponentType.UNKNOWN);
 
 		int position = 0;
@@ -140,7 +166,7 @@ public class SynopticViewModel {
             component.setParent(parent);
 		}
 
-		broadcastInstrumentUpdate(UpdateTypes.NEW_COMPONENT);
+        refreshTreeView();
 		setSelectedComponent(Arrays.asList(component));
 
 	}
@@ -160,8 +186,7 @@ public class SynopticViewModel {
         for (ComponentDescription selectedComponent : selectedComponents) {
 	        ComponentDescription componentCopy = new ComponentDescription(selectedComponent);
 
-	        DefaultName namer = new DefaultName(selectedComponent.name(), " ", true);
-            String uniqueName = namer.getUnique(allComponentNames);
+            String uniqueName = getUniqueName(selectedComponent.name(), allComponentNames);
             allComponentNames.add(uniqueName);
 
             componentCopy.setName(uniqueName);
@@ -182,8 +207,7 @@ public class SynopticViewModel {
 
     private void setUniqueChildNames(ComponentDescription component, List<String> allComponentNames) {
         for (ComponentDescription cd : component.components()) {
-            DefaultName namer = new DefaultName(cd.name(), " ", true);
-            String uniqueName = namer.getUnique(allComponentNames);
+            String uniqueName = getUniqueName(cd.name(), allComponentNames);
             allComponentNames.add(uniqueName);
             
             cd.setName(uniqueName);
@@ -209,7 +233,7 @@ public class SynopticViewModel {
     private String constructDeleteMessage() {
 		String message = "Are you sure you want to delete the component";
 		if (selectedComponents.size() == 1) {
-			message += " " + getFirstSelectedComponent().name() + "?";
+            message += " " + getSingleSelectedComp().name() + "?";
 		} else {
 			int idx = 0;
             message += "s ";
@@ -239,94 +263,8 @@ public class SynopticViewModel {
 					parent.removeComponent(selected);
 				}
 				setSelectedComponent(null);
-				broadcastInstrumentUpdate(UpdateTypes.DELETE_COMPONENT);
+                refreshTreeView();
 			}
-		}
-	}
-
-    /**
-     * Adds a PV writer/reader to the component.
-     * 
-     * @return the index
-     */
-	public int addNewPV() {
-		PV pv = new PV();
-		pv.setDisplayName("New PV");
-		pv.setAddress("NONE");
-		RecordType rt = new RecordType();
-		rt.setIO(IO.READ);
-		pv.setRecordType(rt);
-
-		int index = 0;
-		
-		ComponentDescription selected = getFirstSelectedComponent();
-		
-		if (selectedPV == null) {
-			selected.addPV(pv);
-		} else {
-			index = selected.pvs().indexOf(selectedPV) + 1;
-			selected.addPV(pv, index);
-		}
-
-		broadcastInstrumentUpdate(UpdateTypes.EDIT_PV);
-		
-		return index;
-	}
-
-    /**
-     * Moves a PV up the list.
-     */
-	public void promoteSelectedPV() {
-		getFirstSelectedComponent().promotePV(selectedPV);
-		broadcastInstrumentUpdate(UpdateTypes.EDIT_PV);
-	}
-
-    /**
-     * Moves a PV down the list.
-     */
-	public void demoteSelectedPV() {
-		getFirstSelectedComponent().demotePV(selectedPV);
-		broadcastInstrumentUpdate(UpdateTypes.EDIT_PV);
-	}
-
-    /**
-     * Determines whether the PV be moved up (enables or disable the associated
-     * control).
-     * 
-     * @return true means can promote
-     */
-	public boolean canPromotePV() {
-		if (selectedPV == null) {
-			return false;
-		}
-
-		int index = selectedComponents.get(0).pvs().indexOf(selectedPV);
-		return index > 0;
-	}
-
-    /**
-     * Determines whether the PV be moved down (enables or disable the
-     * associated control).
-     * 
-     * @return true means can promote
-     */
-	public boolean canDemotePV() {
-		if (selectedPV == null) {
-			return false;
-		}
-
-		int index = selectedComponents.get(0).pvs().indexOf(selectedPV);
-		return index < selectedComponents.get(0).pvs().size() - 1;
-	}
-
-    /**
-     * Remove the selected PV from the component.
-     */
-	public void removeSelectedPV() {
-		if (selectedPV != null) {
-			selectedComponents.get(0).removePV(selectedPV);
-			setSelectedPV(null);
-			broadcastInstrumentUpdate(UpdateTypes.EDIT_PV);
 		}
 	}
 
@@ -337,7 +275,7 @@ public class SynopticViewModel {
      *            component)
      */
     public void addTargetToSelectedComponent(boolean isFinalEdit) {
-		ComponentDescription component = getFirstSelectedComponent();
+        ComponentDescription component = getSingleSelectedComp();
         ComponentType compType = component.type();
 
         Collection<TargetDescription> potentialTargets = DefaultTargetForComponent.defaultTarget(compType);
@@ -364,21 +302,21 @@ public class SynopticViewModel {
     /**
      * Sets which component(s) is/are selected.
      * 
-     * @param selected the selected component(s)
+     * @param selected
+     *            the selected component(s)
      */
-	public void setSelectedComponent(List<ComponentDescription> selected) {
-		broadcastComponentSelectionChanged(selectedComponents,
-				selectedComponents = selected);
-		setSelectedPV(null);
-		setSelectedProperty(null);
-	}
+    public void setSelectedComponent(List<ComponentDescription> selected) {
+        firePropertyChange("compSelection", selectedComponents, selectedComponents = selected);
+        setSelectedProperty(null);
+        refreshTreeView();
+    }
 	
     /**
-     * Gets the first selected component as many could be selected.
+     * Gets the selected component if there is only one, otherwise returns null.
      * 
-     * @return the first component selected
+     * @return the selected component or null
      */
-	public ComponentDescription getFirstSelectedComponent() {
+    public ComponentDescription getSingleSelectedComp() {
 		if (selectedComponents != null && selectedComponents.size() == 1) {
 			return selectedComponents.get(0);
 		} else {
@@ -400,55 +338,12 @@ public class SynopticViewModel {
 	}
 
     /**
-     * Change the settings for the selected PV.
-     * 
-     * @param name the display name
-     * @param address the underlying PV
-     * @param mode whether it is read or write
-     */
-    public void updateSelectedPV(String name, String address, IO mode) {
-		if (selectedPV == null) {
-			return;
-		}
-
-		selectedPV.setDisplayName(name);
-		RecordType recordType = new RecordType();
-		recordType.setIO(mode);
-		selectedPV.setRecordType(recordType);
-
-		String addressToUse = address;
-		
-		selectedPV.setAddress(addressToUse);
-		
-		broadcastInstrumentUpdate(UpdateTypes.EDIT_PV);
-	}
-
-    /**
-     * Set the selected PV.
-     * 
-     * @param selected the PV
-     */
-	public void setSelectedPV(PV selected) {
-		broadcastPVSelectionChanged(selectedPV, selectedPV = selected);
-	}
-
-    /**
-     * Gets the currently selected PV. Can be null.
-     * 
-     * @return the PV
-     */
-	public PV getSelectedPV() {
-		return selectedPV;
-	}
-
-    /**
      * Set the currently selected property.
      * 
      * @param selected the property
      */
 	public void setSelectedProperty(Property selected) {
-		broadcastPropertySelectionChanged(selectedProperty,
-				selectedProperty = selected);
+        firePropertyChange("propSelection", selectedProperty, selectedProperty = selected);
 	}
 
     /**
@@ -458,29 +353,6 @@ public class SynopticViewModel {
      */
 	public Property getSelectedProperty() {
 		return selectedProperty;
-	}
-
-    /**
-     * Add a listener for a change in the selected property.
-     * 
-     * @param listener the listener to add
-     */
-	public void addPropertySelectionListener(IPropertySelectionListener listener) {
-		if (listener == null) {
-			return;
-		}
-
-		propertySelectionListeners.add(listener);
-	}
-
-    /**
-     * Remove a listener to the change of selected property.
-     * 
-     * @param listener the listener to remove
-     */
-	public void removePropertySelectionListener(
-			IPropertySelectionListener listener) {
-		propertySelectionListeners.remove(listener);
 	}
 
     /**
@@ -496,7 +368,7 @@ public class SynopticViewModel {
 			return;
 		}
 
-		ComponentDescription component = getFirstSelectedComponent();
+        ComponentDescription component = getSingleSelectedComp();
 		if (component != null) {
 			TargetDescription target = component.target();
 			if (target != null) {
@@ -528,57 +400,6 @@ public class SynopticViewModel {
 	public void broadcastInstrumentUpdate(UpdateTypes updateType) {
 		for (IInstrumentUpdateListener listener : instrumentUpdateListeners) {
 			listener.instrumentUpdated(updateType);
-		}
-	}
-
-    /**
-     * Add a listener for changes in which component is selected.
-     * 
-     * @param listener the listener to add
-     */
-	public void addComponentSelectionListener(
-			IComponentSelectionListener listener) {
-		if (listener == null) {
-			return;
-		}
-
-		componentSelectionListeners.add(listener);
-	}
-
-	private void broadcastComponentSelectionChanged(
-			List<ComponentDescription> oldSelected, List<ComponentDescription> newSelected) {
-		for (IComponentSelectionListener listener : componentSelectionListeners) {
-			listener.selectionChanged(oldSelected, newSelected);
-		}
-	}
-	
-    /**
-     * Add a listener for changes in which PV is selected.
-     * 
-     * @param listener the listener to add
-     */
-	public void addPVSelectionListener(IPVSelectionListener listener) {
-		if (listener == null) {
-			return;
-		}
-
-		pvSelectionListeners.add(listener);
-	}
-	
-	private void loadCurrentInstrument() {
-		loadSynopticDescription(editing.instrument().getDescription());
-	}
-
-	private void broadcastPVSelectionChanged(PV oldSelected, PV newSelected) {
-		for (IPVSelectionListener listener : pvSelectionListeners) {
-			listener.selectionChanged(oldSelected, newSelected);
-		}
-	}
-
-	private void broadcastPropertySelectionChanged(Property oldProperty,
-			Property newProperty) {
-		for (IPropertySelectionListener listener : propertySelectionListeners) {
-			listener.selectionChanged(oldProperty, newProperty);
 		}
 	}
 	
@@ -616,21 +437,6 @@ public class SynopticViewModel {
 	}
 
     /**
-     * Checks for duplicate names in the components.
-     * 
-     * @return true means duplicate(s)
-     */
-    public boolean getHasDuplicatedName() {
-        List<String> comps = getSynoptic().getComponentNameListWithChildren();
-        return listHasDuplicates(comps);
-    }
-
-    private boolean listHasDuplicates(List<String> list) {
-        Set<String> set = new HashSet<String>(list);
-        return (set.size() < list.size());
-    }
-
-    /**
      * Gets the OPI for the specified target.
      * 
      * @param targetName the name of the OPI.
@@ -658,6 +464,24 @@ public class SynopticViewModel {
      * @return the property keys
      */
     public List<String> getSelectedPropertyKeys() {
-        return getPropertyKeys(getFirstSelectedComponent().target().name());
+        return getPropertyKeys(getSingleSelectedComp().target().name());
+    }
+
+    /**
+     * Add a error provider that may produce errors within the synoptic editor.
+     * 
+     * @param provider
+     *            the provider to add.
+     */
+    public void registerErrorProvider(ErrorMessageProvider provider) {
+        errorProviders.add(provider);
+        provider.addPropertyChangeListener("error", errorListener);
+    }
+
+    /**
+     * Refreshes the tree view of the instrument.
+     */
+    public void refreshTreeView() {
+        firePropertyChange("refreshTree", 0, 1);
     }
 }

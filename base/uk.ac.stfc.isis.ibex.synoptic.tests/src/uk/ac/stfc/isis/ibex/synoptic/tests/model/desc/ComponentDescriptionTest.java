@@ -19,11 +19,7 @@
 
 package uk.ac.stfc.isis.ibex.synoptic.tests.model.desc;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotSame;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -70,8 +66,8 @@ public class ComponentDescriptionTest {
         pv1.setDisplayName(PV_NAME_1);
         pv2 = new PV();
         pv2.setDisplayName(PV_NAME_2);
-        source.addPV(pv1);
-        source.addPV(pv2);
+        source.addPV(pv1, 0);
+        source.addPV(pv2, 0);
 
         child1 = new ComponentDescription();
         child1.setName(CHILD_NAME_1);
