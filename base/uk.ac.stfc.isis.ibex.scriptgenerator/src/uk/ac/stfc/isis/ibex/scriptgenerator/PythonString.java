@@ -25,7 +25,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 /**
- *
+ * Class used for constructing Python code in a tree structure, where each node
+ * contains a block of code and each sub block increments the level of code
+ * indentation by one.
  */
 public class PythonString {
 
@@ -33,31 +35,62 @@ public class PythonString {
     private Collection<String> lines;
     private static final String INDENT = "    ";
 
+    /**
+     * Standard constructor.
+     */
     public PythonString() {
         lines = new ArrayList<String>();
         subBlocks = new ArrayList<PythonString>();
     }
 
+    /**
+     * Constructs a new PythonString node based on a template, copying its
+     * lines, but not its sub blocks.
+     * 
+     * @param template
+     *            The template from which to construct this node.
+     */
     public PythonString(PythonString template) {
         this.lines = template.lines;
         this.subBlocks = new ArrayList<PythonString>();
     }
 
+    /**
+     * Adds a line of code to the content of the current Python block.
+     * 
+     * @param line
+     *            The line of code.
+     */
     public void add(String line) {
         this.lines.add(line);
     }
 
+    /**
+     * Adds a block of code to the content of the current Python block.
+     * 
+     * @param lines
+     *            The block of code.
+     */
     public void addAll(Collection<String> lines) {
         this.lines.addAll(lines);
     }
 
+    /**
+     * Clears the current block of Python and removes all attached sub blocks.
+     */
     public void clear() {
         this.lines.clear();
         this.subBlocks.clear();
     }
 
-    public void addSub(PythonString sub) {
-        this.subBlocks.add(sub);
+    /**
+     * Adds a sub block of python code to the current Python block.
+     * 
+     * @param subBlock
+     *            The block of code.
+     */
+    public void addSubBlock(PythonString subBlock) {
+        this.subBlocks.add(subBlock);
     }
 
     @Override
@@ -65,6 +98,15 @@ public class PythonString {
         return this.flatten(0);
     }
 
+    /**
+     * Recursively flattens the tree structure of the Python script, producing a
+     * single auto-formatted String of code.
+     * 
+     * @param indentLevel
+     *            The level of indentation for the current recursive method
+     *            call.
+     * @return A single string containing the auto-formatted Python script.
+     */
     private String flatten(int indentLevel) {
         StringBuilder result = new StringBuilder();
         for (String line : lines) {
@@ -77,6 +119,15 @@ public class PythonString {
         return result.toString();
     }
 
+    /**
+     * Indents a line of code to the specified level of indentation.
+     * 
+     * @param indentLevel
+     *            The desired level of indentation.
+     * @param line
+     *            The line of code to be indented.
+     * @return The indented line of code.
+     */
     public String indent(int indentLevel, String line) {
         String indented = line;
         for (int i = 0; i < indentLevel; i++) {
@@ -84,13 +135,4 @@ public class PythonString {
         }
         return indented;
     }
-
-    public Collection<String> getLines() {
-        return this.lines;
-    }
-
-    public Collection<PythonString> getChildren() {
-        return this.subBlocks;
-    }
-
 }

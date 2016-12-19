@@ -45,7 +45,10 @@ public class PythonBuilder extends ModelObject {
     }
 
     /**
-     * The default constructor.
+     * Constructor using a custom DateTimeProvider. Used for testing.
+     * 
+     * @param dateTime
+     *            The DateTimeProvider.
      */
     public PythonBuilder(DateTimeProvider dateTime) {
         this.script = new Script();
@@ -125,12 +128,11 @@ public class PythonBuilder extends ModelObject {
         script.setAltFooter(altFooter);
     }
 
-    public void generateRows() {
+    private void generateRows() {
         int collectionVal = (settings.getCollection() == CollectionMode.HISTOGRAM ? 0 : 1);
         ArrayList<PythonString> doSansRows = new ArrayList<PythonString>();
         ArrayList<PythonString> doTransRows = new ArrayList<PythonString>();
         
-        int count = 0;
         for (Row row : rows) {
             if (row.getPosition().length() > 0) {
                 PythonString currentSans = new PythonString();
@@ -154,7 +156,6 @@ public class PythonBuilder extends ModelObject {
 
                 doSansRows.add(currentSans);
                 doTransRows.add(currentTrans);
-                count++;
             }
         }
         script.setDoSansRows(doSansRows);
@@ -182,12 +183,18 @@ public class PythonBuilder extends ModelObject {
 	}
 	
 	/**
-     * Calls internal build script methods and adds these returned strings to
-     * the main script.
-     * 
-     * @return The Script.
+     * Generates the Python script.
      */
     public void createScript() {
+        generateAll();
+        script.createScript(settings.getOrder(), settings.getLoopOver());
+    }
+
+    /**
+     * Calls all methods for generating the building blocks of Python code and
+     * saves these as templates in the script.
+     */
+    private void generateAll() {
         generateHeader();
         generateSetup();
         generateAltHeader();
@@ -197,9 +204,13 @@ public class PythonBuilder extends ModelObject {
         generateSansLoop();
         generateTransLoop();
         generateRows();
-        script.createScript(settings.getOrder(), settings.getLoopOver());
     }
 
+    /**
+     * Returns the script as a single auto-formatted String.
+     * 
+     * @return The script.
+     */
     public String getScript() {
         return script.toString();
     }
