@@ -183,11 +183,16 @@ public class PythonBuilder extends ModelObject {
 	}
 	
 	/**
-     * Generates the Python script.
+     * Generates the Python script and returns it as a single auto-formatted
+     * String.
+     * 
+     * @return The script as a String.
      */
-    public void createScript() {
+    public String createScript() {
         generateAll();
         script.createScript(settings.getOrder(), settings.getLoopOver());
+
+        return script.toString();
     }
 
     /**
@@ -205,14 +210,4 @@ public class PythonBuilder extends ModelObject {
         generateTransLoop();
         generateRows();
     }
-
-    /**
-     * Returns the script as a single auto-formatted String.
-     * 
-     * @return The script.
-     */
-    public String getScript() {
-        return script.toString();
-    }
-		
 }
