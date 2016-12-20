@@ -37,7 +37,7 @@ import uk.ac.stfc.isis.ibex.motor.MotorSetpoint;
 public class MinimalMotorViewModel extends ModelObject {
 
 	private Motor motor;
-    // private Double value;
+    private Double value;
     private MotorSetpoint setpoint;
 
     public MinimalMotorViewModel() {
@@ -59,6 +59,23 @@ public class MinimalMotorViewModel extends ModelObject {
 
         this.setpoint = newMotor.getSetpoint();
 	}
+
+    public String getValue() {
+        this.value = motor.getSetpoint().getValue();
+        if (this.value != null) {
+            return String.format("SP: %.2f", this.value);
+        } else {
+            return "";
+        }
+    }
+
+    public void setValue(Motor newMotor) {
+        this.motor = newMotor;
+        Double newValue = newMotor.getSetpoint().getValue();
+        firePropertyChange("value", this.setpoint, newValue);
+
+        this.value = newValue;
+    }
 	
     public void setMotor(Motor motor) {
         this.motor = motor;

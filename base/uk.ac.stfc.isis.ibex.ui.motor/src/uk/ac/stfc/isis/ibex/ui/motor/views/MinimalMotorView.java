@@ -51,7 +51,7 @@ import uk.ac.stfc.isis.ibex.ui.motor.displayoptions.MotorBackgroundPalette;
 @SuppressWarnings("checkstyle:magicnumber")
 public class MinimalMotorView extends Composite {
 	
-	private MinimalMotorViewModel minimalMotorViewModel = new MinimalMotorViewModel();
+    private MinimalMotorViewModel minimalMotorViewModel;
 
 	private DataBindingContext bindingContext = new DataBindingContext();
 
@@ -82,7 +82,7 @@ public class MinimalMotorView extends Composite {
 		super(parent, style);
 		setLayout(new FillLayout(SWT.HORIZONTAL));
 		
-        MinimalMotorViewModel minimalMotorViewModel = new MinimalMotorViewModel();
+        this.minimalMotorViewModel = new MinimalMotorViewModel();
 
 		motorComposite = new Composite(this, SWT.BORDER);
 		motorComposite.setFont(ENABLEDFONT);
@@ -172,26 +172,26 @@ public class MinimalMotorView extends Composite {
 
 		});
 		
-//		setMoving(motor);
-//		motor.addPropertyChangeListener("moving", new PropertyChangeListener() {
-//			@Override
-//			public void propertyChange(PropertyChangeEvent evt) {
-//				setMoving(motor);
-//			}
-//		});
-//		
-//        setValue(motor);
+        setMoving(motor);
+        motor.addPropertyChangeListener("moving", new PropertyChangeListener() {
+            @Override
+            public void propertyChange(PropertyChangeEvent evt) {
+                setMoving(motor);
+            }
+        });
+
+        minimalMotorViewModel.setValue(motor);
         minimalMotorViewModel.setSetpoint(motor);
-//        motor.getSetpoint().addPropertyChangeListener("value", new PropertyChangeListener() {
-//            @Override
-//            public void propertyChange(PropertyChangeEvent evt) {
-//                setValue(motor);
-//            }
-//        });
+
+        motor.getSetpoint().addPropertyChangeListener("value", new PropertyChangeListener() {
+            @Override
+            public void propertyChange(PropertyChangeEvent evt) {
+                setValue(motor);
+            }
+        });
         motor.getSetpoint().addPropertyChangeListener("setpoint", new PropertyChangeListener() {
             @Override
             public void propertyChange(PropertyChangeEvent evt) {
-                System.out.println("xxxxxxxxxxx");
                 setSetpoint(motor);
             }
         });
@@ -222,25 +222,19 @@ public class MinimalMotorView extends Composite {
         display.asyncExec(new Runnable() {
             @Override
             public void run() {
-
                 String text = minimalMotorViewModel.getSetpoint();
-                System.out.println("x = " + text);
                 setpoint.setText(text);
             }
         });
-
-//        String text = minimalMotorViewModel.getSetpoint();
-//        setpoint.setText(text);
-//        System.out.println("x = " + text);
-
 	}
 
 	private void setValue(final Motor motor) {
+        minimalMotorViewModel.setValue(motor);
+
         display.asyncExec(new Runnable() {
             @Override
             public void run() {
-                Double setpointValue = motor.getSetpoint().getValue();
-                String text = setpointValue != null ? String.format("Val: %.2f", setpointValue) : "";
+                String text = minimalMotorViewModel.getValue();
                 value.setText(text);
             }
         });
