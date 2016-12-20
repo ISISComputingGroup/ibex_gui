@@ -34,18 +34,18 @@ import org.eclipse.jface.preference.IPreferenceStore;
 import com.mysql.jdbc.exceptions.jdbc4.CommunicationsException;
 
 import uk.ac.stfc.isis.ibex.activemq.ActiveMQ;
-import uk.ac.stfc.isis.ibex.activemq.ILogMessageConsumer;
-import uk.ac.stfc.isis.ibex.activemq.ILogMessageProducer;
 import uk.ac.stfc.isis.ibex.activemq.JmsHandler;
-import uk.ac.stfc.isis.ibex.activemq.message.LogMessage;
-import uk.ac.stfc.isis.ibex.activemq.message.LogMessageFields;
+import uk.ac.stfc.isis.ibex.activemq.message.IMessageConsumer;
 import uk.ac.stfc.isis.ibex.databases.Rdb;
+import uk.ac.stfc.isis.ibex.log.jms.XmlLogMessageParser;
+import uk.ac.stfc.isis.ibex.log.message.LogMessage;
+import uk.ac.stfc.isis.ibex.log.message.LogMessageFields;
 import uk.ac.stfc.isis.ibex.log.preferences.PreferenceConstants;
 import uk.ac.stfc.isis.ibex.log.rdb.LogMessageQuery;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 
 public class LogModel extends ModelObject implements ILogMessageProducer,
-	ILogMessageConsumer {
+        IMessageConsumer<LogMessage> {
     /**
      * The maximum number of messages (from JMS) that will be stored in a local
      * cache. When the cache size is exceeded, older messages will be dropped
@@ -70,7 +70,7 @@ public class LogModel extends ModelObject implements ILogMessageProducer,
     private final JmsHandler jmsHandler;
 
     /** List of subscribers that are to received any new JMS messages */
-    private ArrayList<ILogMessageConsumer> messageReceivers = new ArrayList<>();
+    private ArrayList<IMessageConsumer<LogMessage>> messageReceivers = new ArrayList<>();
 
     /** A local cache of the most recent messages received from the JMS. */
     private final ArrayList<LogMessage> jmsMessageCache = new ArrayList<>();
@@ -78,7 +78,7 @@ public class LogModel extends ModelObject implements ILogMessageProducer,
     public LogModel() {
         String port = preferenceStore.getString(PreferenceConstants.P_JMS_PORT);
         String topic = preferenceStore.getString(PreferenceConstants.P_JMS_TOPIC);
-        jmsHandler = ActiveMQ.getInstance().getNewHandler(port, topic);
+        jmsHandler = ActiveMQ.getInstance().getNewHandler(port, topic, new XmlLogMessageParser());
     	jmsHandler.setLogMessageConsumer(this);
     	jmsHandler.addPropertyChangeListener("connection", passThrough());
     }
@@ -91,7 +91,7 @@ public class LogModel extends ModelObject implements ILogMessageProducer,
         }
         jmsMessageCache.add(logMessage);
 
-        for (ILogMessageConsumer receiver : messageReceivers) {
+        for (IMessageConsumer<LogMessage> receiver : messageReceivers) {
             receiver.newMessage(logMessage);
         }
     }
@@ -101,7 +101,7 @@ public class LogModel extends ModelObject implements ILogMessageProducer,
      * called whenever this producer has a new message to deliver.
      */
     @Override
-    public void addMessageConsumer(ILogMessageConsumer messageReceiver) {
+    public void addMessageConsumer(IMessageConsumer<LogMessage> messageReceiver) {
         messageReceivers.add(messageReceiver);
     }
 
@@ -176,7 +176,7 @@ public class LogModel extends ModelObject implements ILogMessageProducer,
     @Override
     public void clearMessages() {
         jmsMessageCache.clear();
-        for (ILogMessageConsumer receiver : messageReceivers) {
+        for (IMessageConsumer<LogMessage> receiver : messageReceivers) {
             receiver.clearMessages();
         }
     }

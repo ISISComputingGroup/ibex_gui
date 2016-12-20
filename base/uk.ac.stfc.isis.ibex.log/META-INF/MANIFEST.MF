@@ -14,6 +14,7 @@ Require-Bundle: org.eclipse.ui,
  uk.ac.stfc.isis.ibex.activemq
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Export-Package: uk.ac.stfc.isis.ibex.log,
+ uk.ac.stfc.isis.ibex.log.message,
  uk.ac.stfc.isis.ibex.log.preferences,
  uk.ac.stfc.isis.ibex.log.rdb
 Bundle-ClassPath: .,

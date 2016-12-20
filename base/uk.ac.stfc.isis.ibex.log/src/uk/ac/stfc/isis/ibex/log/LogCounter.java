@@ -20,12 +20,12 @@ package uk.ac.stfc.isis.ibex.log;
 
 import org.eclipse.jface.preference.IPreferenceStore;
 
-import uk.ac.stfc.isis.ibex.activemq.ILogMessageConsumer;
-import uk.ac.stfc.isis.ibex.activemq.message.LogMessage;
+import uk.ac.stfc.isis.ibex.activemq.message.IMessageConsumer;
+import uk.ac.stfc.isis.ibex.log.message.LogMessage;
 import uk.ac.stfc.isis.ibex.log.preferences.PreferenceConstants;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 
-public class LogCounter extends ModelObject implements ILogMessageConsumer {
+public class LogCounter extends ModelObject implements IMessageConsumer<LogMessage> {
 
     private static final String MAJOR = "MAJOR";
     private static final String MINOR = "MINOR";

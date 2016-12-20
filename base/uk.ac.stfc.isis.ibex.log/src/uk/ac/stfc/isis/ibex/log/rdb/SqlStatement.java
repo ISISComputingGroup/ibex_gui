@@ -25,9 +25,9 @@ import java.util.List;
 
 import org.eclipse.jface.preference.IPreferenceStore;
 
-import uk.ac.stfc.isis.ibex.activemq.message.LogMessageFields;
-import uk.ac.stfc.isis.ibex.activemq.message.LogMessageFieldsSql;
 import uk.ac.stfc.isis.ibex.log.Log;
+import uk.ac.stfc.isis.ibex.log.message.LogMessageFields;
+import uk.ac.stfc.isis.ibex.log.message.sql.LogMessageFieldsSql;
 import uk.ac.stfc.isis.ibex.log.message.sql.LogMessageFieldsWhereSql;
 import uk.ac.stfc.isis.ibex.log.preferences.PreferenceConstants;
 

@@ -19,11 +19,11 @@
 
 package uk.ac.stfc.isis.ibex.ui.dae.run;
 
-import uk.ac.stfc.isis.ibex.activemq.ILogMessageProducer;
 import uk.ac.stfc.isis.ibex.dae.IDae;
 import uk.ac.stfc.isis.ibex.dae.actions.DaeActions;
 import uk.ac.stfc.isis.ibex.epics.adapters.TextUpdatedObservableAdapter;
 import uk.ac.stfc.isis.ibex.epics.pv.Closer;
+import uk.ac.stfc.isis.ibex.log.ILogMessageProducer;
 import uk.ac.stfc.isis.ibex.log.Log;
 import uk.ac.stfc.isis.ibex.model.UpdatedValue;
 import uk.ac.stfc.isis.ibex.ui.widgets.observable.BooleanWritableObservableAdapter;
