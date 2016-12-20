@@ -58,7 +58,6 @@ public class MinimalMotorViewModel extends ModelObject {
         firePropertyChange("setpoint", this.setpoint, newSetpointValue);
 
         this.setpoint = newMotor.getSetpoint();
-        System.out.println("HHHHHHHHHHH " + this.getSetpoint());
 	}
 	
     public void setMotor(Motor motor) {

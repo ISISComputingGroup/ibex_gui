@@ -143,7 +143,7 @@ public class MinimalMotorView extends Composite {
      * 
      * @param motor the new motor.
      */
-	public void setMotor(final Motor motor) {
+    public void setMotor(Motor motor) {
 
 		this.motor = motor;
         minimalMotorViewModel.setMotor(motor);
@@ -181,7 +181,9 @@ public class MinimalMotorView extends Composite {
 //		});
 //		
 //        setValue(motor);
+
         minimalMotorViewModel.setSetpoint(motor);
+
 //        motor.getSetpoint().addPropertyChangeListener("value", new PropertyChangeListener() {
 //            @Override
 //            public void propertyChange(PropertyChangeEvent evt) {
@@ -191,8 +193,9 @@ public class MinimalMotorView extends Composite {
         motor.getSetpoint().addPropertyChangeListener("setpoint", new PropertyChangeListener() {
             @Override
             public void propertyChange(PropertyChangeEvent evt) {
-                System.out.println("xxxxxxxxxxx");
                 minimalMotorViewModel.setSetpoint(motor);
+                setSetpoint(motor);
+                System.out.println("xxxxxxxxxxx");
             }
         });
 	}
@@ -227,9 +230,8 @@ public class MinimalMotorView extends Composite {
 //        });
 
         String text = minimalMotorViewModel.getSetpoint();
-        setpoint.setText(text);
-        System.out.println("x = " + text);
 
+        setpoint.setText(text);
 	}
 
 	private void setValue(final Motor motor) {
