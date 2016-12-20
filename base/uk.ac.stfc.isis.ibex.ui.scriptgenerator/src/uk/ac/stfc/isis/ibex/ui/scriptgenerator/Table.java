@@ -57,12 +57,12 @@ public class Table extends DataboundTable<Row> {
 	@Override
 	protected void addColumns() {
 		position();
+        sampleName();
 		trans();
 		transWait();
 		sans();
 		sansWait();
 		period();
-		sampleName();
 		thickness();
 	}
 	
@@ -110,23 +110,23 @@ public class Table extends DataboundTable<Row> {
 	private void trans() {
         TableViewerColumn trans = createColumn("TRANS", 3);
 		trans.setLabelProvider(new DataboundCellLabelProvider<Row>(
-				observeProperty("trans")) {
+                observeProperty("transWaitValue")) {
 			@Override
 			protected String valueFromRow(Row row) {
-				return row.getTrans() == null ? "" : String.valueOf(row.getTrans());
+				return row.getTransWaitValue() == null ? "" : String.valueOf(row.getTransWaitValue());
 			}
 		});
 		trans.setEditingSupport(new DoubleEditingSupportBlankIfNull<Row>(viewer(), Row.class) {
 			@Override
 			protected Double valueFromRow(Row row) {
-				return row.getTrans();
+				return row.getTransWaitValue();
 			}
 
 			@Override
 			protected void setValueForRow(Row row, Double trans) {
 				addRowIfNull(row);
 				
-				row.setTrans(trans);
+				row.setTransWaitValue(trans);
 			}
 		});
 	}
@@ -134,23 +134,23 @@ public class Table extends DataboundTable<Row> {
 	private void transWait() {
         TableViewerColumn transWait = createColumn("TRANS_WAIT", 3);
 		transWait.setLabelProvider(new DataboundCellLabelProvider<Row>(
-				observeProperty("transWait")) {
+                observeProperty("transWaitUnit")) {
 			@Override
 			protected String valueFromRow(Row row) {
-				return row.getTransWait() == null ? "" : String.valueOf(row.getTransWait());
+				return row.getTransWaitUnit() == null ? "" : String.valueOf(row.getTransWaitUnit());
 			}
 		});
 		transWait.setEditingSupport(new WaitEditingSupport(viewer()) {
 			@Override
 			protected WaitUnit getEnumValueForRow(Row row) {
-				return row.getTransWait();
+				return row.getTransWaitUnit();
 			}
 			
 			@Override
 			protected void setEnumForRow(Row row, WaitUnit transWait) {
 				addRowIfNull(row);
 				
-				row.setTransWait(transWait);
+				row.setTransWaitUnit(transWait);
 			}
 		});
 	}
@@ -158,23 +158,23 @@ public class Table extends DataboundTable<Row> {
 	private void sans() {
         TableViewerColumn sans = createColumn("SANS", 3);
 		sans.setLabelProvider(new DataboundCellLabelProvider<Row>(
-				observeProperty("sans")) {
+                observeProperty("sansWaitValue")) {
 			@Override
 			protected String valueFromRow(Row row) {
-				return row.getSans() == null ? "" : String.valueOf(row.getSans());
+				return row.getSansWaitValue() == null ? "" : String.valueOf(row.getSansWaitValue());
 			}
 		});
 		sans.setEditingSupport(new DoubleEditingSupportBlankIfNull<Row>(viewer(), Row.class) {
 			@Override
 			protected Double valueFromRow(Row row) {
-				return row.getSans();
+				return row.getSansWaitValue();
 			}
 
 			@Override
 			protected void setValueForRow(Row row, Double sans) {
 				addRowIfNull(row);
 				
-				row.setSans(sans);
+				row.setSansWaitValue(sans);
 			}
 		});
 	}
@@ -182,16 +182,16 @@ public class Table extends DataboundTable<Row> {
 	private void sansWait() {
         TableViewerColumn sansWait = createColumn("SANS_WAIT", 3);
 		sansWait.setLabelProvider(new DataboundCellLabelProvider<Row>(
-				observeProperty("sans")) {
+                observeProperty("sansWaitUnit")) {
 			@Override
 			protected String valueFromRow(Row row) {
-				return row.getSansWait() == null ? "" : String.valueOf(row.getSansWait());
+				return row.getSansWaitUnit() == null ? "" : String.valueOf(row.getSansWaitUnit());
 			}
 		});
 		sansWait.setEditingSupport(new WaitEditingSupport(viewer()) {
 			@Override
 			protected WaitUnit getEnumValueForRow(Row row) {
-				return row.getSansWait();
+				return row.getSansWaitUnit();
 			}
 			
 			@Override
