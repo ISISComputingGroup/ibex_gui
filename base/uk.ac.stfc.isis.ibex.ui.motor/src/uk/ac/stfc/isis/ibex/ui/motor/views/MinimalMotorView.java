@@ -143,7 +143,7 @@ public class MinimalMotorView extends Composite {
      * 
      * @param motor the new motor.
      */
-    public void setMotor(Motor motor) {
+	public void setMotor(final Motor motor) {
 
 		this.motor = motor;
         minimalMotorViewModel.setMotor(motor);
@@ -181,9 +181,7 @@ public class MinimalMotorView extends Composite {
 //		});
 //		
 //        setValue(motor);
-
         minimalMotorViewModel.setSetpoint(motor);
-
 //        motor.getSetpoint().addPropertyChangeListener("value", new PropertyChangeListener() {
 //            @Override
 //            public void propertyChange(PropertyChangeEvent evt) {
@@ -193,9 +191,8 @@ public class MinimalMotorView extends Composite {
         motor.getSetpoint().addPropertyChangeListener("setpoint", new PropertyChangeListener() {
             @Override
             public void propertyChange(PropertyChangeEvent evt) {
-                minimalMotorViewModel.setSetpoint(motor);
-                setSetpoint(motor);
                 System.out.println("xxxxxxxxxxx");
+                setSetpoint(motor);
             }
         });
 	}
@@ -220,18 +217,22 @@ public class MinimalMotorView extends Composite {
 	}
 	
     private void setSetpoint(Motor motor) {
-//        display.asyncExec(new Runnable() {
-//            @Override
-//            public void run() {
-//                String text = minimalMotorViewModel.getSetpoint();
-//                setpoint.setText(text);
-//                System.out.println("x = " + text);
-//            }
-//        });
+        minimalMotorViewModel.setSetpoint(motor);
 
-        String text = minimalMotorViewModel.getSetpoint();
+        display.asyncExec(new Runnable() {
+            @Override
+            public void run() {
 
-        setpoint.setText(text);
+                String text = minimalMotorViewModel.getSetpoint();
+                System.out.println("x = " + text);
+                setpoint.setText(text);
+            }
+        });
+
+//        String text = minimalMotorViewModel.getSetpoint();
+//        setpoint.setText(text);
+//        System.out.println("x = " + text);
+
 	}
 
 	private void setValue(final Motor motor) {
