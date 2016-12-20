@@ -33,7 +33,7 @@ public class DateTimeProvider {
     DateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
 
     /**
-     * Returns the current local date.
+     * Returns the current date.
      * 
      * @return The date.
      */
@@ -43,7 +43,7 @@ public class DateTimeProvider {
     }
 
     /**
-     * Returns the current local time.
+     * Returns the current time.
      * 
      * @return The time.
      */
