@@ -16,9 +16,6 @@
  * http://opensource.org/licenses/eclipse-1.0.php
  */
 
-/**
- * 
- */
 package uk.ac.stfc.isis.ibex.scriptgenerator.tests;
 
 import static org.junit.Assert.assertEquals;
@@ -45,8 +42,8 @@ import uk.ac.stfc.isis.ibex.scriptgenerator.settings.SampleGeometry;
 import uk.ac.stfc.isis.ibex.scriptgenerator.settings.SansSettings;
 
 /**
- * Tests that the PythonBuilder class builds valid and correct python scripts
- * based on script generator settings.
+ * Integration tests checking correctness of automatically generated
+ * genie_python scripts based on settings.
  */
 public class PythonBuilderTest {
     private PythonBuilder builder;

@@ -35,13 +35,12 @@ import uk.ac.stfc.isis.ibex.scriptgenerator.Script;
 import uk.ac.stfc.isis.ibex.scriptgenerator.settings.Order;
 
 /**
- * Tests that the PythonBuilder class builds valid and correct python scripts
- * based on script generator settings.
+ * Unit tests for the Script class checking that the script is assembled
+ * correctly given ordering settings.
  */
 public class ScriptTest {
     private Script script;
     private static final String INDENT = "    ";
-    private static final String BLANK = "";
     private static final String NEWLINE = "\n";
     private static final String headerValue = "HEADER:";
     private static final String setupValue = "SETUP";

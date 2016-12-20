@@ -201,7 +201,7 @@ public class PythonBuilder extends ModelObject {
      * Calls all methods for generating the building blocks of Python code and
      * saves these as templates in the script.
      */
-    public void generateScriptBlocks() {
+    private void generateScriptBlocks() {
         generateHeader();
         generateSetup();
         generateAltHeader();

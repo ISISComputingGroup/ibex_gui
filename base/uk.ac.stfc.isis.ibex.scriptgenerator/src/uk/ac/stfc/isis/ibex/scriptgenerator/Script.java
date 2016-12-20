@@ -27,7 +27,8 @@ import java.util.Collection;
 import uk.ac.stfc.isis.ibex.scriptgenerator.settings.Order;
 
 /**
- *
+ * Holds building blocks of genie_python scripts and assembles them into a
+ * script based on run order settings.
  */
 public class Script {
 
