@@ -47,6 +47,8 @@ public class JmsHandler extends ModelObject implements Runnable {
 
     private static final String PROTOCOL = "tcp:";
 
+    private String jmsPort;
+
     /** JMS Server URL */
     private String jmsUrl;
 
@@ -83,22 +85,23 @@ public class JmsHandler extends ModelObject implements Runnable {
      */
     private boolean connectionWarnFlag;
 
-    public JmsHandler(String url, String topic) {
-        jmsUrl = PROTOCOL + url;
+    JmsHandler(String initialHost, String port, String topic) {
+        jmsPort = port;
+        updateURL(initialHost);
         jmsTopic = topic;
         xmlParser = new XmlLogMessageParser();
     }
 
     public void setLogMessageConsumer(ILogMessageConsumer messageConsumer) {
-	this.messageLogConsumer = messageConsumer;
+        this.messageLogConsumer = messageConsumer;
     }
 
     public synchronized boolean isConnected() {
-	return jmsServer != null && connectedToJms;
+        return jmsServer != null && connectedToJms;
     }
 
     public synchronized void stop() {
-	run = false;
+        run = false;
     }
 
     /**
@@ -108,131 +111,131 @@ public class JmsHandler extends ModelObject implements Runnable {
     @SuppressWarnings("checkstyle:emptyblock")
     @Override
     public void run() {
-	while (run) {
-	    // Check connection settings - if they've changed, disconnect, and
-	    // connect
-	    // using new settings
-	    String oldUrl = jmsUrl;
-	    String oldTopic = jmsTopic;
-            // jmsUrl = getPreferenceUrl();
-            // jmsTopic = getPreferenceTopic();
-
-	    if (!oldUrl.equals(jmsUrl) || !oldTopic.equals(jmsTopic)) {
-		disconnect();
-	    }
-
-	    if (isConnected()) {
-                try {
-                    TextMessage message = (TextMessage) jmsConsumer.receive(TIMEOUT_50_MS);
-                    if (message != null) {
-                        messageLogConsumer.newMessage(parseLogMessage(message));
+        while (run) {
+            if (isConnected()) {
+                synchronized (this) {
+                    try {
+                        TextMessage message = (TextMessage) jmsConsumer.receive(TIMEOUT_50_MS);
+                        if (message != null) {
+                            messageLogConsumer.newMessage(parseLogMessage(message));
+                        }
+                    } catch (JMSException e) {
+                        // Do nothing; exception will be caught be exception
+                        // listener (see connect())
                     }
-                } catch (JMSException e) {
-                    // Do nothing; exception will be caught be exception
-                    // listener (see connect())
                 }
-	    } else {
-    		// If not connected or if connection is dropped, establish
-    		// connection with JMS
-    		try {
-    		    connect();
-    
-    		    LOG.info("Connected to JMS server: " + jmsUrl);
-    		    // Use URL as server name.
-    		    jmsServer = jmsUrl;
-    		    setJmsConnectionStatus(true);
-    		} catch (Exception ex) {
-    		    if (!connectionWarnFlag) {
-    			LOG.warn("Problem connecting to JMS server. Will auto-attempt reconnection.");
-    			connectionWarnFlag = true;
-    			setJmsConnectionStatus(false);
-    		    }
-    
-    		    sleep(ONE_SECOND);
-    		}
-	    }
-	}
+            } else {
+                // If not connected or if connection is dropped, establish
+                // connection with JMS
+                try {
+                    connect();
 
-	disconnect();
+                    LOG.info("Connected to JMS server: " + jmsUrl);
+                    // Use URL as server name.
+                    jmsServer = jmsUrl;
+                    setJmsConnectionStatus(true);
+                } catch (Exception ex) {
+                    if (!connectionWarnFlag) {
+                        LOG.warn("Problem connecting to JMS server. Will auto-attempt reconnection.");
+                        connectionWarnFlag = true;
+                        setJmsConnectionStatus(false);
+                    }
+
+                    sleep(ONE_SECOND);
+                }
+            }
+        }
+    
+        disconnect();
     }
 
     private void sleep(long millis) {
-	try {
-	    Thread.sleep(millis);
-	} catch (InterruptedException e) {
-	    e.printStackTrace();
-	}
+        try {
+            Thread.sleep(millis);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     private LogMessage parseLogMessage(TextMessage message) throws JMSException {
-	return xmlParser.xmlToLogMessage(message.getText());
+        return xmlParser.xmlToLogMessage(message.getText());
     }
 
     private synchronized void setJmsConnectionStatus(boolean connected) {
-	firePropertyChange("connection", connectedToJms,
-		connectedToJms = connected);
+        firePropertyChange("connection", connectedToJms, connectedToJms = connected);
     }
 
-    /** Connect to JMS */
+    /**
+     * Connect to JMS.
+     */
     private void connect() throws JMSException {
-	createJmsConnection();
-	configureJmsConnection();
+        createJmsConnection();
+        configureJmsConnection();
 
-	// When server is unavailable, we'll hang in here
-	connection.start();
+        // When server is unavailable, we'll hang in here
+        connection.start();
 
-	connectionWarnFlag = false;
-	session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
+        connectionWarnFlag = false;
+        session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
 
-	Topic topic = session.createTopic(jmsTopic);
-	jmsConsumer = session.createConsumer(topic);
+        Topic topic = session.createTopic(jmsTopic);
+        jmsConsumer = session.createConsumer(topic);
     }
 
     private void configureJmsConnection() throws JMSException {
-	connection.setExceptionListener(new ExceptionListener() {
-	    @Override
-	    public void onException(final JMSException ex) {
-		LOG.warn("Lost connection to JMS server: " + jmsUrl
-			+ ". Will attempt auto reconnection.");
-		setJmsConnectionStatus(false);
-	    }
-	});
+        connection.setExceptionListener(new ExceptionListener() {
+            @Override
+            public void onException(final JMSException ex) {
+                LOG.warn("Lost connection to JMS server: " + jmsUrl + ". Will attempt auto reconnection.");
+                setJmsConnectionStatus(false);
+            }
+        });
     }
 
     private void createJmsConnection() throws JMSException {
-	connection = getConnectionFactory(jmsUrl).createConnection();
+        connection = getConnectionFactory(jmsUrl).createConnection();
     }
 
-    /** Disconnect from JMS - free resources */
-    private void disconnect() {
-	try {
-	    if (jmsConsumer != null) {
-		jmsConsumer.close();
-		jmsConsumer = null;
-	    }
+    /** Disconnect from JMS - free resources. */
+    public synchronized void disconnect() {
+        try {
+            if (jmsConsumer != null) {
+                jmsConsumer.close();
+            }
 
-	    if (session != null) {
-		session.close();
-		session = null;
+            if (session != null) {
+                session.close();
+            }
 
-	    }
+            if (connection != null) {
+                connection.close();
+            }
+        } catch (Exception ex) {
+            LOG.error("JMS shutdown error: " + ex);
+        } finally {
+            LOG.info("Successfully disconnected from JMS: " + jmsServer);
 
-	    if (connection != null) {
-		connection.close();
-		connection = null;
-	    }
-	} catch (Exception ex) {
-	    LOG.error("JMS shutdown error: " + ex);
-	} finally {
-	    LOG.info("Successfully disconnected from JMS: " + jmsServer);
-
-	    jmsServer = null;
-	    setJmsConnectionStatus(false);
-	}
+            jmsServer = null;
+            setJmsConnectionStatus(false);
+        }
     }
 
     private ActiveMQConnectionFactory getConnectionFactory(String url) {
-	return new ActiveMQConnectionFactory(ActiveMQConnection.DEFAULT_USER,
-		ActiveMQConnection.DEFAULT_PASSWORD, url);
+        return new ActiveMQConnectionFactory(ActiveMQConnection.DEFAULT_USER, ActiveMQConnection.DEFAULT_PASSWORD, url);
+    }
+
+    /**
+     * Updates the URL of the connection to a new instrument.
+     * 
+     * @param host
+     *            The new host instrument.
+     */
+    public void updateURL(String host) {
+
+        if (host.indexOf("//") != 0) {
+            host = "//" + host;
+        }
+
+        jmsUrl = PROTOCOL + host + ":" + jmsPort;
     }
 }

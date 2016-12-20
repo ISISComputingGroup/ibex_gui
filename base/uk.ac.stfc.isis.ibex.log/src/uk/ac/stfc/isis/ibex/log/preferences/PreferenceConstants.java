@@ -22,7 +22,6 @@ package uk.ac.stfc.isis.ibex.log.preferences;
  * Constant definitions for plug-in preferences.
  */
 public final class PreferenceConstants {
-    public static final String P_JMS_ADDRESS = "jmsAddress";
     public static final String P_JMS_PORT = "jmsPort";
     public static final String P_JMS_TOPIC = "jmsTopic";
     
@@ -30,13 +29,8 @@ public final class PreferenceConstants {
     public static final String P_MESSAGE_SQL_PASSWORD = "sqlMessagePassword";
     public static final String P_MESSAGE_SQL_SCHEMA = "sqlMessageSchema";
     
-    public static final String P_EXP_DATA_SQL_USERNAME = "sqlExpDataUsername";
-    public static final String P_EXP_DATA_SQL_PASSWORD = "sqlExpDataPassword";
-    public static final String P_EXP_DATA_SQL_SCHEMA = "sqlExpDataSchema";    
-    
     public static final String P_MINOR_MESSAGE = "msgMinor";
 
-    public static final String DEFAULT_JMS_ADDRESS = "localhost";
     public static final Integer DEFAULT_JMS_PORT = 61616;
     public static final String DEFAULT_JMS_TOPIC = "iocLogs";
     
@@ -44,10 +38,6 @@ public final class PreferenceConstants {
     public static final String DEFAULT_MESSAGE_SQL_PASSWORD = "$msg_report";
     public static final String DEFAULT_MESSAGE_SQL_SCHEMA = "msg_log";
     public static final Boolean DEFAULT_MINOR_MESSAGE = false;
-
-    public static final String DEFAULT_EXP_DATA_SQL_USERNAME = "report";
-    public static final String DEFAULT_EXP_DATA_SQL_PASSWORD = "$report";
-    public static final String DEFAULT_EXP_DATA_SQL_SCHEMA = "exp_data";
     
     private PreferenceConstants() {
     }

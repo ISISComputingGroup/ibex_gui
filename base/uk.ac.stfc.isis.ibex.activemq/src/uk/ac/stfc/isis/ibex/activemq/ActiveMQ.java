@@ -18,15 +18,31 @@
 
 package uk.ac.stfc.isis.ibex.activemq;
 
-import org.osgi.framework.BundleActivator;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
+
+import uk.ac.stfc.isis.ibex.instrument.Instrument;
 
 /**
  * Called when the plugin is first started.
  */
-public class Activator implements BundleActivator {
-
+public class ActiveMQ extends AbstractUIPlugin {
+    private static ActiveMQ instance;
 	private static BundleContext context;
+	
+    private List<JmsHandler> handlers = new ArrayList<>();
+
+    public static ActiveMQ getInstance() {
+        return instance;
+    }
+
+    public ActiveMQ() {
+        super();
+        instance = this;
+    }
 
     /**
      * @return The context for the plugin.
@@ -41,7 +57,7 @@ public class Activator implements BundleActivator {
 	 */
 	@Override
     public void start(BundleContext bundleContext) throws Exception {
-		Activator.context = bundleContext;
+		ActiveMQ.context = bundleContext;
 	}
 
 	/*
@@ -50,7 +66,17 @@ public class Activator implements BundleActivator {
 	 */
 	@Override
     public void stop(BundleContext bundleContext) throws Exception {
-		Activator.context = null;
+		ActiveMQ.context = null;
 	}
 
+    public JmsHandler getNewHandler(String port, String topic) {
+        String currentInstrument = Instrument.getInstance().currentInstrument().hostName();
+        JmsHandler handler = new JmsHandler(currentInstrument, port, topic);
+        handlers.add(handler);
+        return handler;
+    }
+
+    public List<JmsHandler> getHandlers() {
+        return handlers;
+    }
 }

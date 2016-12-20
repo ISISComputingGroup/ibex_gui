@@ -33,6 +33,7 @@ import org.eclipse.jface.preference.IPreferenceStore;
 
 import com.mysql.jdbc.exceptions.jdbc4.CommunicationsException;
 
+import uk.ac.stfc.isis.ibex.activemq.ActiveMQ;
 import uk.ac.stfc.isis.ibex.activemq.ILogMessageConsumer;
 import uk.ac.stfc.isis.ibex.activemq.ILogMessageProducer;
 import uk.ac.stfc.isis.ibex.activemq.JmsHandler;
@@ -60,12 +61,13 @@ public class LogModel extends ModelObject implements ILogMessageProducer,
     /** Eclipse Job that manages the background processing of the JmsHandler */
     private Job jmsListenerJob;
 
+    private IPreferenceStore preferenceStore = Log.getDefault().getPreferenceStore();
+
     /**
      * Starts and maintains connection to the JMS and forwards on any messages
      * received from it.
      */
-    private final uk.ac.stfc.isis.ibex.activemq.JmsHandler jmsHandler =
-            new JmsHandler(getPreferenceUrl(), getPreferenceTopic());
+    private final JmsHandler jmsHandler;
 
     /** List of subscribers that are to received any new JMS messages */
     private ArrayList<ILogMessageConsumer> messageReceivers = new ArrayList<>();
@@ -74,21 +76,24 @@ public class LogModel extends ModelObject implements ILogMessageProducer,
     private final ArrayList<LogMessage> jmsMessageCache = new ArrayList<>();
 
     public LogModel() {
-	jmsHandler.setLogMessageConsumer(this);
-	jmsHandler.addPropertyChangeListener("connection", passThrough());
+        String port = preferenceStore.getString(PreferenceConstants.P_JMS_PORT);
+        String topic = preferenceStore.getString(PreferenceConstants.P_JMS_TOPIC);
+        jmsHandler = ActiveMQ.getInstance().getNewHandler(port, topic);
+    	jmsHandler.setLogMessageConsumer(this);
+    	jmsHandler.addPropertyChangeListener("connection", passThrough());
     }
 
     @Override
     public void newMessage(LogMessage logMessage) {
-	// Add to local message cache
-	if (jmsMessageCache.size() >= MAX_CACHE_MESSAGES) {
-	    jmsMessageCache.remove(0);
-	}
-	jmsMessageCache.add(logMessage);
+        // Add to local message cache
+        if (jmsMessageCache.size() >= MAX_CACHE_MESSAGES) {
+            jmsMessageCache.remove(0);
+        }
+        jmsMessageCache.add(logMessage);
 
-	for (ILogMessageConsumer receiver : messageReceivers) {
-	    receiver.newMessage(logMessage);
-	}
+        for (ILogMessageConsumer receiver : messageReceivers) {
+            receiver.newMessage(logMessage);
+        }
     }
 
     /**
@@ -97,7 +102,7 @@ public class LogModel extends ModelObject implements ILogMessageProducer,
      */
     @Override
     public void addMessageConsumer(ILogMessageConsumer messageReceiver) {
-	messageReceivers.add(messageReceiver);
+        messageReceivers.add(messageReceiver);
     }
 
     /**
@@ -105,14 +110,12 @@ public class LogModel extends ModelObject implements ILogMessageProducer,
      * changes in connection status.
      */
     @Override
-    public void addPropertyChangeListener(String propertyName,
-	    PropertyChangeListener listener) {
-	super.addPropertyChangeListener(propertyName, listener);
+    public void addPropertyChangeListener(String propertyName, PropertyChangeListener listener) {
+        super.addPropertyChangeListener(propertyName, listener);
 
-	if (propertyName.equals("connection")) {
-	    listener.propertyChange(new PropertyChangeEvent(this, propertyName,
-		    null, jmsHandler.isConnected()));
-	}
+        if (propertyName.equals("connection")) {
+            listener.propertyChange(new PropertyChangeEvent(this, propertyName, null, jmsHandler.isConnected()));
+        }
     }
 
     /**
@@ -122,7 +125,7 @@ public class LogModel extends ModelObject implements ILogMessageProducer,
      */
     @Override
     public List<LogMessage> getAllCachedMessages() {
-	return jmsMessageCache;
+        return jmsMessageCache;
     }
 
     /**
@@ -130,86 +133,63 @@ public class LogModel extends ModelObject implements ILogMessageProducer,
      * Service (JMS) server.
      */
     public void start() {
-	jmsListenerJob = new Job("JMS Listener") {
-	    @Override
-	    protected IStatus run(IProgressMonitor monitor) {
-		jmsHandler.run();
-		return Status.OK_STATUS;
-	    }
+        jmsListenerJob = new Job("JMS Listener") {
+            @Override
+            protected IStatus run(IProgressMonitor monitor) {
+                jmsHandler.run();
+                return Status.OK_STATUS;
+            }
 
-	    @Override
-	    protected void canceling() {
-		jmsHandler.stop();
-		super.canceling();
-	    }
-	};
+            @Override
+            protected void canceling() {
+                jmsHandler.stop();
+                super.canceling();
+            }
+        };
 
-	jmsListenerJob.schedule();
+        jmsListenerJob.schedule();
     }
 
     public void stop() {
-	if (jmsListenerJob != null) {
-	    jmsListenerJob.cancel();
-	    jmsHandler.stop();
-	}
+        if (jmsListenerJob != null) {
+            jmsListenerJob.cancel();
+            jmsHandler.stop();
+        }
     }
 
     @Override
     public List<LogMessage> search(LogMessageFields field, String value,
 	    Calendar from, Calendar to) throws Exception {
-	try {
-		IPreferenceStore preferenceStore = Log.getDefault()
-				.getPreferenceStore();
-		
-		String schema = preferenceStore
-			.getString(PreferenceConstants.P_MESSAGE_SQL_SCHEMA);
-		String user = preferenceStore
-			.getString(PreferenceConstants.P_MESSAGE_SQL_USERNAME);
-		String password = preferenceStore
-			.getString(PreferenceConstants.P_MESSAGE_SQL_PASSWORD);
-		
-	    Rdb rdb = Rdb.connectToDatabase(schema, user, password);
-	    LogMessageQuery query = new LogMessageQuery(rdb);
-	    return query.getMessages(field, value, from, to);
-	} catch (SQLException ex) {
-	    throw new Exception(errorMessage(ex), ex);
-	}
+        try {
+            String schema = preferenceStore.getString(PreferenceConstants.P_MESSAGE_SQL_SCHEMA);
+            String user = preferenceStore.getString(PreferenceConstants.P_MESSAGE_SQL_USERNAME);
+            String password = preferenceStore.getString(PreferenceConstants.P_MESSAGE_SQL_PASSWORD);
+
+            Rdb rdb = Rdb.connectToDatabase(schema, user, password);
+            LogMessageQuery query = new LogMessageQuery(rdb);
+            return query.getMessages(field, value, from, to);
+        } catch (SQLException ex) {
+            throw new Exception(errorMessage(ex), ex);
+        }
     }
 
     @Override
     public void clearMessages() {
-	jmsMessageCache.clear();
-	for (ILogMessageConsumer receiver : messageReceivers) {
-	    receiver.clearMessages();
-	}
+        jmsMessageCache.clear();
+        for (ILogMessageConsumer receiver : messageReceivers) {
+            receiver.clearMessages();
+        }
     }
 
     private String errorMessage(SQLException ex) {
-	if (ex instanceof CommunicationsException) {
-	    return CONNECTION_ERROR_MESSAGE;
-	}
-
-	if (ex.getMessage().startsWith("Unknown database")) {
-	    return UNKNOWN_DATABASE_MESSAGE;
-	}
-
-	return ACCESS_DENIED_MESSAGE;
-    }
-
-    private String getPreferenceUrl() {
-        IPreferenceStore preferenceStore = Log.getDefault().getPreferenceStore();
-        String address = preferenceStore.getString(PreferenceConstants.P_JMS_ADDRESS);
-        String port = preferenceStore.getString(PreferenceConstants.P_JMS_PORT);
-
-        if (address.indexOf("//") != 0) {
-            address = "//" + address;
+        if (ex instanceof CommunicationsException) {
+            return CONNECTION_ERROR_MESSAGE;
         }
 
-        return address + ":" + port;
-    }
+        if (ex.getMessage().startsWith("Unknown database")) {
+            return UNKNOWN_DATABASE_MESSAGE;
+        }
 
-    private String getPreferenceTopic() {
-        IPreferenceStore preferenceStore = Log.getDefault().getPreferenceStore();
-        return preferenceStore.getString(PreferenceConstants.P_JMS_TOPIC);
+        return ACCESS_DENIED_MESSAGE;
     }
 }
