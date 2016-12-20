@@ -68,8 +68,6 @@ public class MinimalMotorView extends Composite {
 
 	private Label value;
 	private Label setpoint;
-	
-    private MotorBackgroundPalette palette;
 
     /**
      * Constructor. Creates a new instance of the MinimalMotorView object.
@@ -115,7 +113,7 @@ public class MinimalMotorView extends Composite {
 		
 		setMouseListeners();
 
-        this.palette = palette;
+        minimalMotorViewModel.setMotorPalette(palette);
 
 	}
 
@@ -125,8 +123,9 @@ public class MinimalMotorView extends Composite {
      * @param palette the new palette to use.
      */
     public void setPalette(MotorBackgroundPalette palette) {
-        this.palette = palette;
-        updateMotorColor(motor);
+        minimalMotorViewModel.setMotorPalette(palette);
+        Color color = minimalMotorViewModel.getMotorColor(motor);
+        setColor(color);
     }
 
     /**
@@ -248,7 +247,8 @@ public class MinimalMotorView extends Composite {
 				motorComposite.setEnabled(isEnabled);
 				motorName.setFont(isEnabled ? ENABLEDFONT : DISABLEDFONT);
 				
-				updateMotorColor(motor);
+                Color color = minimalMotorViewModel.getMotorColor(motor);
+                setColor(color);
 			}
 		});
 	}
@@ -257,32 +257,33 @@ public class MinimalMotorView extends Composite {
 		display.asyncExec(new Runnable() {
 			@Override
 			public void run() {
-				updateMotorColor(motor);
+                Color color = minimalMotorViewModel.getMotorColor(motor);
+                setColor(color);
 			}
 		});
 	}
 
-	private void updateMotorColor(Motor motor) {
-		Boolean movingValue = motor.getMoving();
-		boolean isMoving = movingValue != null && movingValue;
-		boolean isEnabled = (motor.getEnabled() == MotorEnable.ENABLE);
-		boolean isNamed = (motor.getDescription() != "");
-
-        Color backgroundColour;
-
-        if (!isEnabled) {
-            backgroundColour = palette.getDisabledColor();
-        } else if (!isNamed) {
-            backgroundColour = palette.getUnnamedColor();
-        } else if (!isMoving) {
-            backgroundColour = palette.getStoppedColor();
-        } else {
-            backgroundColour = palette.getMovingColor();
-        }
-
-        setColor(backgroundColour);
-		
-	}
+//	private void updateMotorColor(Motor motor) {
+//		Boolean movingValue = motor.getMoving();
+//		boolean isMoving = movingValue != null && movingValue;
+//		boolean isEnabled = (motor.getEnabled() == MotorEnable.ENABLE);
+//		boolean isNamed = (motor.getDescription() != "");
+//
+//        Color backgroundColour;
+//
+//        if (!isEnabled) {
+//            backgroundColour = palette.getDisabledColor();
+//        } else if (!isNamed) {
+//            backgroundColour = palette.getUnnamedColor();
+//        } else if (!isMoving) {
+//            backgroundColour = palette.getStoppedColor();
+//        } else {
+//            backgroundColour = palette.getMovingColor();
+//        }
+//
+//        setColor(backgroundColour);
+//		
+//	}
 	
 	private void setColor(Color color) {
 		motorComposite.setBackground(color);

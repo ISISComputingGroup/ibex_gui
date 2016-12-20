@@ -30,15 +30,20 @@
 
 package uk.ac.stfc.isis.ibex.ui.motor.views;
 
+import org.eclipse.swt.graphics.Color;
+
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 import uk.ac.stfc.isis.ibex.motor.Motor;
+import uk.ac.stfc.isis.ibex.motor.MotorEnable;
 import uk.ac.stfc.isis.ibex.motor.MotorSetpoint;
+import uk.ac.stfc.isis.ibex.ui.motor.displayoptions.MotorBackgroundPalette;
 
 public class MinimalMotorViewModel extends ModelObject {
 
 	private Motor motor;
     private Double value;
     private MotorSetpoint setpoint;
+    private MotorBackgroundPalette palette;
 
     public MinimalMotorViewModel() {
     }
@@ -75,6 +80,31 @@ public class MinimalMotorViewModel extends ModelObject {
         firePropertyChange("value", this.setpoint, newValue);
 
         this.value = newValue;
+    }
+
+    public Color getMotorColor(Motor motor) {
+        Boolean movingValue = motor.getMoving();
+        boolean isMoving = movingValue != null && movingValue;
+        boolean isEnabled = (motor.getEnabled() == MotorEnable.ENABLE);
+        boolean isNamed = (motor.getDescription() != "");
+
+        Color backgroundColour;
+
+        if (!isEnabled) {
+            backgroundColour = palette.getDisabledColor();
+        } else if (!isNamed) {
+            backgroundColour = palette.getUnnamedColor();
+        } else if (!isMoving) {
+            backgroundColour = palette.getStoppedColor();
+        } else {
+            backgroundColour = palette.getMovingColor();
+        }
+
+        return backgroundColour;
+    }
+
+    public void setMotorPalette(MotorBackgroundPalette palette) {
+        this.palette = palette;
     }
 	
     public void setMotor(Motor motor) {
