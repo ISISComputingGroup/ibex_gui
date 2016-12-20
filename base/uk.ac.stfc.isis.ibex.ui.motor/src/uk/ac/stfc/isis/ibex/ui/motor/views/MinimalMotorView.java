@@ -146,13 +146,6 @@ public class MinimalMotorView extends Composite {
 
 		this.motor = motor;
         minimalMotorViewModel.setMotor(motor);
-		
-		bindingContext.bindValue(WidgetProperties.text().observe(motorName), BeanProperties.value("description").observe(motor));	
-		
-		indicator.setMotor(motor);
-		
-        bindingContext.bindValue(WidgetProperties.text().observe(setpoint),
-                BeanProperties.value("setpoint").observe(minimalMotorViewModel));
 
 		motor.addPropertyChangeListener("description", new PropertyChangeListener() {	
 			@Override
@@ -178,22 +171,15 @@ public class MinimalMotorView extends Composite {
                 setMoving(motor);
             }
         });
+        
+        bindingContext.bindValue(WidgetProperties.text().observe(setpoint),
+                BeanProperties.value("setpoint").observe(minimalMotorViewModel));
 
-        minimalMotorViewModel.setValue(motor);
-        minimalMotorViewModel.setSetpoint(motor);
+        bindingContext.bindValue(WidgetProperties.text().observe(value),
+                BeanProperties.value("value").observe(minimalMotorViewModel));
 
-        motor.getSetpoint().addPropertyChangeListener("value", new PropertyChangeListener() {
-            @Override
-            public void propertyChange(PropertyChangeEvent evt) {
-                setValue(motor);
-            }
-        });
-        motor.getSetpoint().addPropertyChangeListener("setpoint", new PropertyChangeListener() {
-            @Override
-            public void propertyChange(PropertyChangeEvent evt) {
-                setSetpoint(motor);
-            }
-        });
+        bindingContext.bindValue(WidgetProperties.text().observe(motorName),
+                BeanProperties.value("motorName").observe(minimalMotorViewModel));
 	}
 	
 	private void setMouseListeners() {
@@ -213,30 +199,6 @@ public class MinimalMotorView extends Composite {
 		value.addMouseListener(forwardDoubleClick);
 		setpoint.addMouseListener(forwardDoubleClick);
 		indicator.addMouseListener(forwardDoubleClick);
-	}
-	
-    private void setSetpoint(Motor motor) {
-        minimalMotorViewModel.setSetpoint(motor);
-
-        display.asyncExec(new Runnable() {
-            @Override
-            public void run() {
-                String text = minimalMotorViewModel.getSetpoint();
-                setpoint.setText(text);
-            }
-        });
-	}
-
-	private void setValue(final Motor motor) {
-        minimalMotorViewModel.setValue(motor);
-
-        display.asyncExec(new Runnable() {
-            @Override
-            public void run() {
-                String text = minimalMotorViewModel.getValue();
-                value.setText(text);
-            }
-        });
 	}
 	
 	private void setEnabled(final MotorEnable enabled) {
@@ -262,28 +224,6 @@ public class MinimalMotorView extends Composite {
 			}
 		});
 	}
-
-//	private void updateMotorColor(Motor motor) {
-//		Boolean movingValue = motor.getMoving();
-//		boolean isMoving = movingValue != null && movingValue;
-//		boolean isEnabled = (motor.getEnabled() == MotorEnable.ENABLE);
-//		boolean isNamed = (motor.getDescription() != "");
-//
-//        Color backgroundColour;
-//
-//        if (!isEnabled) {
-//            backgroundColour = palette.getDisabledColor();
-//        } else if (!isNamed) {
-//            backgroundColour = palette.getUnnamedColor();
-//        } else if (!isMoving) {
-//            backgroundColour = palette.getStoppedColor();
-//        } else {
-//            backgroundColour = palette.getMovingColor();
-//        }
-//
-//        setColor(backgroundColour);
-//		
-//	}
 	
 	private void setColor(Color color) {
 		motorComposite.setBackground(color);

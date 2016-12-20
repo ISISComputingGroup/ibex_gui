@@ -30,56 +30,49 @@
 
 package uk.ac.stfc.isis.ibex.ui.motor.views;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+
 import org.eclipse.swt.graphics.Color;
 
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 import uk.ac.stfc.isis.ibex.motor.Motor;
 import uk.ac.stfc.isis.ibex.motor.MotorEnable;
-import uk.ac.stfc.isis.ibex.motor.MotorSetpoint;
 import uk.ac.stfc.isis.ibex.ui.motor.displayoptions.MotorBackgroundPalette;
 
 public class MinimalMotorViewModel extends ModelObject {
 
 	private Motor motor;
-    private Double value;
-    private MotorSetpoint setpoint;
+    private String value;
+    private String setpoint;
+    private String motorName;
     private MotorBackgroundPalette palette;
 
     public MinimalMotorViewModel() {
     }
 	
     public String getSetpoint() {
-        this.setpoint = motor.getSetpoint();
-        if (this.setpoint != null) {
-            return String.format("SP: %.2f", this.setpoint.getSetpoint());
-		} else {
-			return "";
-		}
+        return setpoint;
 	}
 	
-    public void setSetpoint(Motor newMotor) {
-        this.motor = newMotor;
-        MotorSetpoint newSetpointValue = newMotor.getSetpoint();
-        firePropertyChange("setpoint", this.setpoint, newSetpointValue);
-
-        this.setpoint = newMotor.getSetpoint();
+    public void setSetpoint(String newSetpoint) {
+        firePropertyChange("setpoint", this.setpoint, this.setpoint = newSetpoint);
 	}
 
     public String getValue() {
-        this.value = motor.getSetpoint().getValue();
-        if (this.value != null) {
-            return String.format("SP: %.2f", this.value);
-        } else {
-            return "";
-        }
+        return value;
     }
 
-    public void setValue(Motor newMotor) {
-        this.motor = newMotor;
-        Double newValue = newMotor.getSetpoint().getValue();
-        firePropertyChange("value", this.setpoint, newValue);
+    public void setValue(String newValue) {
+        firePropertyChange("value", this.value, this.value = newValue);
+    }
 
-        this.value = newValue;
+    public String getMotorName() {
+        return motorName;
+    }
+
+    public void setMotorName(String newMotorName) {
+        firePropertyChange("motorName", this.motorName, this.motorName = newMotorName);
     }
 
     public Color getMotorColor(Motor motor) {
@@ -107,8 +100,53 @@ public class MinimalMotorViewModel extends ModelObject {
         this.palette = palette;
     }
 	
-    public void setMotor(Motor motor) {
+    public void setMotor(final Motor motor) {
         this.motor = motor;
+        this.setpoint = formatForMotorDisplay("SP", motor.getSetpoint().getSetpoint());
+        this.value = formatForMotorDisplay("SP", motor.getSetpoint().getValue());
+        this.motorName = motor.name();
+
+        motor.getSetpoint().addPropertyChangeListener("setpoint", new PropertyChangeListener() {
+            @Override
+            public void propertyChange(PropertyChangeEvent evt) {
+                // TODO: Check cast to double.
+                setSetpoint(formatForMotorDisplay("SP", (Double) evt.getNewValue()));
+            }
+        });
+
+        motor.getSetpoint().addPropertyChangeListener("value", new PropertyChangeListener() {
+            @Override
+            public void propertyChange(PropertyChangeEvent evt) {
+                // TODO: Check cast to double.
+                setValue(formatForMotorDisplay("Val", (Double) evt.getNewValue()));
+            }
+        });
+    }
+
+//    public Font getFont(MotorEnable isEnabled) {
+//        
+//        boolean enabled;
+//        
+//        if (isEnabled == MotorEnable.ENABLE){
+//            enabled = true;
+//        } else {
+//            enabled = false;
+//        }
+//        
+//        if (enabled) {
+//            return ENABLEDFONT;
+//        } else {
+//            return DISABLEDFONT;
+//        }
+//        
+//    }
+
+    private String formatForMotorDisplay(String prefix, Double value) {
+        if (value != null) {
+            return String.format("%s: %.2f", prefix, value);
+        } else {
+            return "";
+        }
     }
 	
 }
