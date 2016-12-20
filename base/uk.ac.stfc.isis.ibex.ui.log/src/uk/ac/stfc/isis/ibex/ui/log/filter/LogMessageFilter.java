@@ -35,16 +35,16 @@ import java.util.List;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerFilter;
 
-import uk.ac.stfc.isis.ibex.activemq.message.LogMessage;
-import uk.ac.stfc.isis.ibex.activemq.message.LogMessageFields;
+import uk.ac.stfc.isis.ibex.log.message.LogMessage;
+import uk.ac.stfc.isis.ibex.log.message.LogMessageFields;
 
 public class LogMessageFilter extends ViewerFilter {
 	private String filterString;
 	private LogMessageFields filterfield;
 	private boolean isNegative;
 	
-	public LogMessageFilter(LogMessageFields field, String filterValue, boolean isNegative) {
-		this.filterfield = field;
+    public LogMessageFilter(LogMessageFields clientName, String filterValue, boolean isNegative) {
+        this.filterfield = clientName;
 		this.filterString = filterValue;
 		this.isNegative = isNegative;
 	}

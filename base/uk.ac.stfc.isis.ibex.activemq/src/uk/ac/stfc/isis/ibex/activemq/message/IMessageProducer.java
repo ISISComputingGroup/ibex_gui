@@ -16,34 +16,28 @@
  * http://opensource.org/licenses/eclipse-1.0.php
  */
 
-package uk.ac.stfc.isis.ibex.log.tests;
+package uk.ac.stfc.isis.ibex.activemq.message;
 
-import static org.junit.Assert.assertEquals;
+import java.beans.PropertyChangeListener;
 
-import org.junit.Test;
-
-import uk.ac.stfc.isis.ibex.log.message.sql.LogMessageFieldsSql;
 
 /**
- * This class is responsible for testing the Log Message Fields Sql values.
- * 
+ * Interface for a class that produces log messages. The producer provides
+ * updates of new messages and access to a cache of recently delivered messages.
  */
-public class LogMessageFieldsSqlTest {
+public interface IMessageProducer<T extends IMessage> {
+    /**
+     * Register a message consumer. The consumer's newMessage() method will be
+     * called whenever this producer has a new message to deliver.
+     */
+    void addMessageConsumer(IMessageConsumer<T> messageReceiver);
 
     /**
-     * Test method for
-     * {@link uk.ac.stfc.isis.ibex.log.message.sql.LogMessageFieldsSql#toString()}
-     * .
+     * Add a property change listener. The intended purpose is to listen for
+     * changes in connection status.
      */
-    @Test
-    public final void testToString() {
-	// Arrange
-	LogMessageFieldsSql test = LogMessageFieldsSql.APPLICATION_ID;
-	String expected = "Application ID";
-	// Act
-	String result = test.toString();
-	// Assert
-	assertEquals(expected, result);
-    }
+    void addPropertyChangeListener(String propertyName,
+	    PropertyChangeListener listener);
 
+    void clearMessages();
 }

@@ -30,7 +30,9 @@ import org.apache.activemq.ActiveMQConnection;
 import org.apache.activemq.ActiveMQConnectionFactory;
 import org.apache.logging.log4j.Logger;
 
-import uk.ac.stfc.isis.ibex.activemq.message.LogMessage;
+import uk.ac.stfc.isis.ibex.activemq.message.IMessage;
+import uk.ac.stfc.isis.ibex.activemq.message.IMessageConsumer;
+import uk.ac.stfc.isis.ibex.activemq.message.IMessageParser;
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 
@@ -74,10 +76,10 @@ public class JmsHandler extends ModelObject implements Runnable {
     private MessageConsumer jmsConsumer;
 
     /** Converts the XML messages received via JMS to LogMessages */
-    private XmlLogMessageParser xmlParser;
+    private IMessageParser parser;
 
     /** The recipient of any parsed messages */
-    private ILogMessageConsumer messageLogConsumer;
+    private IMessageConsumer messageLogConsumer;
 
     /**
      * Indicates whether a warning message has been issued since last time
@@ -85,19 +87,19 @@ public class JmsHandler extends ModelObject implements Runnable {
      */
     private boolean connectionWarnFlag;
 
-    JmsHandler(String initialHost, String port, String topic) {
+    JmsHandler(String initialHost, String port, String topic, IMessageParser parser) {
         jmsPort = port;
         updateURL(initialHost);
         jmsTopic = topic;
-        xmlParser = new XmlLogMessageParser();
+        this.parser = parser;
     }
 
-    public void setLogMessageConsumer(ILogMessageConsumer messageConsumer) {
+    public void setLogMessageConsumer(IMessageConsumer messageConsumer) {
         this.messageLogConsumer = messageConsumer;
     }
 
     public synchronized boolean isConnected() {
-        return jmsServer != null && connectedToJms;
+        return connectedToJms;
     }
 
     public synchronized void stop() {
@@ -113,16 +115,15 @@ public class JmsHandler extends ModelObject implements Runnable {
     public void run() {
         while (run) {
             if (isConnected()) {
-                synchronized (this) {
-                    try {
-                        TextMessage message = (TextMessage) jmsConsumer.receive(TIMEOUT_50_MS);
-                        if (message != null) {
-                            messageLogConsumer.newMessage(parseLogMessage(message));
-                        }
-                    } catch (JMSException e) {
-                        // Do nothing; exception will be caught be exception
-                        // listener (see connect())
+                try {
+                    TextMessage textMessage = (TextMessage) jmsConsumer.receive(TIMEOUT_50_MS);
+                    if (textMessage != null) {
+                        IMessage message = parser.parseMessage(textMessage.getText());
+                        messageLogConsumer.newMessage(message);
                     }
+                } catch (JMSException e) {
+                    // Do nothing; exception will be caught be exception
+                    // listener (see connect())
                 }
             } else {
                 // If not connected or if connection is dropped, establish
@@ -155,10 +156,6 @@ public class JmsHandler extends ModelObject implements Runnable {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-    }
-
-    private LogMessage parseLogMessage(TextMessage message) throws JMSException {
-        return xmlParser.xmlToLogMessage(message.getText());
     }
 
     private synchronized void setJmsConnectionStatus(boolean connected) {
@@ -215,7 +212,6 @@ public class JmsHandler extends ModelObject implements Runnable {
         } finally {
             LOG.info("Successfully disconnected from JMS: " + jmsServer);
 
-            jmsServer = null;
             setJmsConnectionStatus(false);
         }
     }

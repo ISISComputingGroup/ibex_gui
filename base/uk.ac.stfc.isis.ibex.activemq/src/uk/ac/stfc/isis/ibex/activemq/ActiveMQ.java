@@ -24,6 +24,7 @@ import java.util.List;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
+import uk.ac.stfc.isis.ibex.activemq.message.IMessageParser;
 import uk.ac.stfc.isis.ibex.instrument.Instrument;
 
 /**
@@ -69,9 +70,9 @@ public class ActiveMQ extends AbstractUIPlugin {
 		ActiveMQ.context = null;
 	}
 
-    public JmsHandler getNewHandler(String port, String topic) {
+    public JmsHandler getNewHandler(String port, String topic, IMessageParser parser) {
         String currentInstrument = Instrument.getInstance().currentInstrument().hostName();
-        JmsHandler handler = new JmsHandler(currentInstrument, port, topic);
+        JmsHandler handler = new JmsHandler(currentInstrument, port, topic, parser);
         handlers.add(handler);
         return handler;
     }

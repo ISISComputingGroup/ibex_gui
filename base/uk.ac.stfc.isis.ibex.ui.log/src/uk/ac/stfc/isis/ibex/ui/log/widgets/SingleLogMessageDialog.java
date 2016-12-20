@@ -38,8 +38,8 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
-import uk.ac.stfc.isis.ibex.activemq.message.LogMessage;
-import uk.ac.stfc.isis.ibex.activemq.message.LogMessageFields;
+import uk.ac.stfc.isis.ibex.log.message.LogMessage;
+import uk.ac.stfc.isis.ibex.log.message.LogMessageFields;
 
 @SuppressWarnings("checkstyle:magicnumber")
 public class SingleLogMessageDialog extends Dialog {

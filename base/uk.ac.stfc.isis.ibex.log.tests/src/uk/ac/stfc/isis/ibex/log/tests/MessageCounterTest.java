@@ -22,8 +22,8 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
-import uk.ac.stfc.isis.ibex.activemq.message.LogMessage;
 import uk.ac.stfc.isis.ibex.log.MessageCounter;
+import uk.ac.stfc.isis.ibex.log.message.LogMessage;
 
 /**
  * This class is responsible for the counter used by the messages.

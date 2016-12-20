@@ -16,7 +16,7 @@
  * http://opensource.org/licenses/eclipse-1.0.php
  */
 
-package uk.ac.stfc.isis.ibex.activemq.message;
+package uk.ac.stfc.isis.ibex.log.message.sql;
 
 /**
  * Names for log message fields as used in the SQL database.

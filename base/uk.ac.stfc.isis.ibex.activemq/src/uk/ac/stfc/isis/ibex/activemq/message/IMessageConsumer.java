@@ -16,34 +16,10 @@
  * http://opensource.org/licenses/eclipse-1.0.php
  */
 
-package uk.ac.stfc.isis.ibex.log.tests;
+package uk.ac.stfc.isis.ibex.activemq.message;
 
-import static org.junit.Assert.assertEquals;
+public interface IMessageConsumer<T extends IMessage> {
+    void newMessage(T message);
 
-import org.junit.Test;
-
-import uk.ac.stfc.isis.ibex.log.message.sql.LogMessageFieldsSql;
-
-/**
- * This class is responsible for testing the Log Message Fields Sql values.
- * 
- */
-public class LogMessageFieldsSqlTest {
-
-    /**
-     * Test method for
-     * {@link uk.ac.stfc.isis.ibex.log.message.sql.LogMessageFieldsSql#toString()}
-     * .
-     */
-    @Test
-    public final void testToString() {
-	// Arrange
-	LogMessageFieldsSql test = LogMessageFieldsSql.APPLICATION_ID;
-	String expected = "Application ID";
-	// Act
-	String result = test.toString();
-	// Assert
-	assertEquals(expected, result);
-    }
-
+    void clearMessages();
 }

@@ -35,8 +35,8 @@ import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerComparator;
 import org.eclipse.swt.SWT;
 
-import uk.ac.stfc.isis.ibex.activemq.message.LogMessage;
-import uk.ac.stfc.isis.ibex.activemq.message.LogMessageFields;
+import uk.ac.stfc.isis.ibex.log.message.LogMessage;
+import uk.ac.stfc.isis.ibex.log.message.LogMessageFields;
 
 public class LogMessageComparator extends ViewerComparator implements Comparator<LogMessage> {
 	private LogMessageFields messageField;

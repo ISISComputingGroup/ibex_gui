@@ -24,7 +24,7 @@ import java.util.Calendar;
 
 import org.junit.Test;
 
-import uk.ac.stfc.isis.ibex.activemq.message.LogMessageFieldsSql;
+import uk.ac.stfc.isis.ibex.log.message.sql.LogMessageFieldsSql;
 import uk.ac.stfc.isis.ibex.log.message.sql.LogMessageFieldsWhereSql;
 import uk.ac.stfc.isis.ibex.log.rdb.SqlStatement;
 
