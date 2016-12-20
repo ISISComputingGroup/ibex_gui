@@ -31,18 +31,53 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * This class has some static methods to retrive the SECI Links webpage, find
- * the hyperlinks and return them.
+ * This class has some static methods to retrieve the IBEX Links webpage, find
+ * sections and associated hyperlinks and return them.
  */
 public final class GetWeblinksPage {
 
-    private static final String SECI_LINKS_URL = "http://dataweb.isis.rl.ac.uk/SeciLinks/default.htm";
+    private static final String IBEX_LINKS_URL = "http://dataweb.isis.rl.ac.uk/IbexLinks/default.htm";
     private static final String REGEX_FOR_HTML_LINKS = "<a href=(.*?)</a>";
+    private static final String REGEX_FOR_HTML_TITLES = "<h3>(.*?)</h3>";
 
     /**
      * Utility class, now allowed to instantiate.
      */
     private GetWeblinksPage() {
+    }
+
+    /**
+     * Gets the section titles from the IBEX Links URL.
+     * 
+     * @return A list of strings containing section titles with HTML tags
+     *         removed.
+     */
+    public static List<String> getSections() {
+        return getSections(getWebLinkHtml());
+    }
+
+    /**
+     * Gets the section titles from a passed string of HTML.
+     * 
+     * @param html
+     *            The string of HTML to be scanned.
+     * @return A list of strings containing section titles with HTML tags
+     *         removed.
+     */
+    public static List<String> getSections(String html) {
+        List<String> sectionList = new ArrayList<>();
+
+        Pattern pattern = Pattern.compile(REGEX_FOR_HTML_TITLES);
+        Matcher matcher = pattern.matcher(html);
+        while (matcher.find()) {
+            String currentSection = removeTags(matcher.group(0));
+            sectionList.add(currentSection);
+        }
+        return sectionList;
+    }
+
+    private static String removeTags(String s) {
+        return s.replaceAll("\\<.*?>", "");
     }
 
     /**
@@ -73,7 +108,7 @@ public final class GetWeblinksPage {
         String content = null;
         URLConnection connection = null;
         try {
-            connection = new URL(SECI_LINKS_URL).openConnection();
+            connection = new URL(IBEX_LINKS_URL).openConnection();
             Scanner scanner = new Scanner(connection.getInputStream());
             scanner.useDelimiter("\\Z");
             content = scanner.next();
