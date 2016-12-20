@@ -1,0 +1,63 @@
+Manifest-Version: 1.0
+Export-Package: org.python.pydev.shared_core,org.python.pydev.shared_c
+ ore.actions,org.python.pydev.shared_core.auto_edit,org.python.pydev.s
+ hared_core.bundle,org.python.pydev.shared_core.cache,org.python.pydev
+ .shared_core.callbacks,org.python.pydev.shared_core.document,org.pyth
+ on.pydev.shared_core.editor,org.python.pydev.shared_core.index,org.py
+ thon.pydev.shared_core.io,org.python.pydev.shared_core.locator,org.py
+ thon.pydev.shared_core.log,org.python.pydev.shared_core.model,org.pyt
+ hon.pydev.shared_core.net,org.python.pydev.shared_core.out_of_memory,
+ org.python.pydev.shared_core.parsing,org.python.pydev.shared_core.par
+ titioner,org.python.pydev.shared_core.path_watch,org.python.pydev.sha
+ red_core.preferences,org.python.pydev.shared_core.process,org.python.
+ pydev.shared_core.resource_stubs,org.python.pydev.shared_core.string,
+ org.python.pydev.shared_core.structure,org.python.pydev.shared_core.t
+ estutils,org.python.pydev.shared_core.threaded_objects_pool,org.pytho
+ n.pydev.shared_core.utils,org.yaml.snakeyaml,org.yaml.snakeyaml.error
+ ,org.yaml.snakeyaml.events,org.yaml.snakeyaml.nodes,org.yaml.snakeyam
+ l.parser,org.yaml.snakeyaml.reader,org.yaml.snakeyaml.scanner,org.yam
+ l.snakeyaml.tokens
+Bundle-ActivationPolicy: lazy
+Bundle-ClassPath: shared_core.jar,libs/snakeyaml-1.11.jar,libs/lucene-
+ analyzers-common-5.2.1.jar,libs/lucene-core-5.2.1.jar
+Built-By: fabio
+Eclipse-BundleShape: dir
+Bundle-Localization: plugin
+Bundle-Name: Shared Core Plug-in
+Created-By: Apache Maven 3.2.1
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Require-Bundle: org.eclipse.core.runtime,org.eclipse.jface.text,org.ju
+ nit;bundle-version="4.0";resolution:=optional,org.eclipse.jface,org.e
+ clipse.core.resources,org.eclipse.core.filebuffers,org.eclipse.ui.wor
+ kbench
+Bundle-Vendor: Appcelerator
+Bundle-Version: 4.5.1.201601132212
+Build-Jdk: 1.7.0_55
+Bundle-ManifestVersion: 2
+Bundle-Activator: org.python.pydev.shared_core.SharedCorePlugin
+Bundle-SymbolicName: org.python.pydev.shared_core;singleton:=true
+Archiver-Version: Plexus Archiver
+
+Name: libs/lucene-core-5.2.1.jar
+SHA-256-Digest: 74Qdm58mVOS9QVL8eN4Tm8/WO9uimxaeSc7MP3I0Ygc=
+
+Name: shared_core.jar
+SHA-256-Digest: A5+IOZfy+54rLmlU9JnDFi/Awl8TA1PxeXhZowQr7A8=
+
+Name: LICENSE.txt
+SHA-256-Digest: J75t01G5GT6rkY9hiDNA+yh/SDVMI+VNinfwannMATI=
+
+Name: libs/snakeyaml-1.11.jar
+SHA-256-Digest: 93icFBQHMJOQJ+YAA46x4dfIEURdYhUqLNpgbGtMH8c=
+
+Name: libs/lucene-analyzers-common-5.2.1.jar
+SHA-256-Digest: DexkH2nj2OHR7aND7RkqHP97ssvOSycsC9wTidWWs/8=
+
+Name: META-INF/maven/org.python.pydev/org.python.pydev.shared_core/pom
+ .properties
+SHA-256-Digest: QxstAnEvaLQda/ko42ZIfRwpcBvFw2VdqAx2GmRqETQ=
+
+Name: META-INF/maven/org.python.pydev/org.python.pydev.shared_core/pom
+ .xml
+SHA-256-Digest: i+RXxx/hiagSb4ppkkFjakpkQ+rBNZCWshgoUQZmnx8=
+

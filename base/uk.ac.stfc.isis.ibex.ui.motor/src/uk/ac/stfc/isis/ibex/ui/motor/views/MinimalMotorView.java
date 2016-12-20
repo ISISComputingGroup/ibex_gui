@@ -25,6 +25,7 @@ import java.beans.PropertyChangeListener;
 
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.beans.BeanProperties;
+import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.MouseAdapter;
@@ -50,6 +51,8 @@ import uk.ac.stfc.isis.ibex.ui.motor.displayoptions.MotorBackgroundPalette;
  */
 @SuppressWarnings("checkstyle:magicnumber")
 public class MinimalMotorView extends Composite {
+	
+	private MinimalMotorViewModel minimalMotorViewModel = new MinimalMotorViewModel();
 
 	private DataBindingContext bindingContext = new DataBindingContext();
 
@@ -68,6 +71,9 @@ public class MinimalMotorView extends Composite {
 	private Label setpoint;
 	
     private MotorBackgroundPalette palette;
+    IObservableValue target = WidgetProperties.text(SWT.Modify).observe(value);
+    IObservableValue model = BeanProperties.value("name").observe(minimalMotorViewModel);
+    bindingContext.bindValue(target, model);
 
     /**
      * Constructor. Creates a new instance of the MinimalMotorView object.

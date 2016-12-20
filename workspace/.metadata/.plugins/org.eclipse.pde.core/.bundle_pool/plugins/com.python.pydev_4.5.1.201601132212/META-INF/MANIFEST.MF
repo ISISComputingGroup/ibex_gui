@@ -1,0 +1,58 @@
+Manifest-Version: 1.0
+Export-Package: com.python.pydev,com.python.pydev.actions,com.python.p
+ ydev.refactoring,com.python.pydev.ui.hierarchy,com.python.pydev.util
+Bundle-ActivationPolicy: lazy
+Bundle-ClassPath: pydev.jar
+Built-By: fabio
+Eclipse-BundleShape: dir
+Bundle-Name: Pydev Extensions
+Bundle-Localization: plugin
+Created-By: Apache Maven 3.2.1
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Require-Bundle: org.eclipse.ui,org.eclipse.core.runtime,org.eclipse.jf
+ ace.text,org.python.pydev;bundle-version="[4.5.1,4.5.2)",org.python.p
+ ydev.core;bundle-version="[4.5.1,4.5.2)",org.junit;bundle-version="4.
+ 0";resolution:=optional,org.python.pydev.ast;bundle-version="[4.5.1,4
+ .5.2)",org.python.pydev.parser;bundle-version="[4.5.1,4.5.2)",org.ecl
+ ipse.ui.editors,org.eclipse.ui.workbench.texteditor,org.eclipse.core.
+ resources,org.eclipse.core.variables,org.eclipse.debug.core,org.eclip
+ se.debug.ui,org.python.pydev.debug;bundle-version="[4.5.1,4.5.2)",org
+ .eclipse.ui.console,org.python.pydev.jython;bundle-version="[4.5.1,4.
+ 5.2)",org.eclipse.search,org.eclipse.ui.ide,org.python.pydev.shared_i
+ nteractive_console;bundle-version="[4.5.1,4.5.2)",org.python.pydev.sh
+ ared_ui;bundle-version="[4.5.1,4.5.2)"
+Bundle-Vendor: Aptana
+Build-Jdk: 1.7.0_55
+Bundle-Version: 4.5.1.201601132212
+Bundle-Activator: com.python.pydev.PydevPlugin
+Bundle-ManifestVersion: 2
+Bundle-SymbolicName: com.python.pydev; singleton:=true
+Archiver-Version: Plexus Archiver
+
+Name: LICENSE.TXT
+SHA-256-Digest: J75t01G5GT6rkY9hiDNA+yh/SDVMI+VNinfwannMATI=
+
+Name: META-INF/maven/org.python.pydev/com.python.pydev/pom.xml
+SHA-256-Digest: mICJauWrcoObsJsqKCTcDv3j9EPYfil1658frJJmzH4=
+
+Name: icons/python_16x16.png
+SHA-256-Digest: LOVLs3Qye1Syxa2V4gW/A+2PMEEtxjKOi92MJOuKyOs=
+
+Name: plugin.xml
+SHA-256-Digest: Cwm0t9I1mDA4TS/mkGlOhyP0z3V2s2gRH+M8Ob2yA5E=
+
+Name: icons/searchm_obj.gif
+SHA-256-Digest: KtCs3/NoOfMMJoHbDoWa8UysYpNiZ6lxDiV3ckMk5VE=
+
+Name: pydev.jar
+SHA-256-Digest: 4+aF7XgSJ1zjgpdjt7EJviv/tWkad0EEU5785pzhaJk=
+
+Name: icons/python_file.gif
+SHA-256-Digest: P9VbNQYYqpZTqsSzzncmO2cylcJ/PozlNnS0vccyRoM=
+
+Name: icons/class_hi.gif
+SHA-256-Digest: 4Fo4Psb2d4W3ZZKmWsBto3GlIa4qdftbShW/RiPk4w4=
+
+Name: META-INF/maven/org.python.pydev/com.python.pydev/pom.properties
+SHA-256-Digest: nyfzShVIkzKyRCFeFfjYBr6f1kbIJtdNtme/YOedKW8=
+

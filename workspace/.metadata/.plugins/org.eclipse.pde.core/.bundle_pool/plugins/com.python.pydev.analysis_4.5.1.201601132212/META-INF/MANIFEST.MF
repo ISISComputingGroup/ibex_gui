@@ -1,0 +1,61 @@
+Manifest-Version: 1.0
+Export-Package: com.python.pydev.analysis,com.python.pydev.analysis.ac
+ tions,com.python.pydev.analysis.additionalinfo,com.python.pydev.analy
+ sis.additionalinfo.builders,com.python.pydev.analysis.additionalinfo.
+ dependencies,com.python.pydev.analysis.builder,com.python.pydev.analy
+ sis.ctrl_1,com.python.pydev.analysis.messages,com.python.pydev.analys
+ is.organizeimports,com.python.pydev.analysis.scopeanalysis,com.python
+ .pydev.analysis.tabnanny,com.python.pydev.analysis.ui,com.python.pyde
+ v.analysis.visitors
+Bundle-ActivationPolicy: lazy
+Bundle-ClassPath: analysis.jar
+Built-By: fabio
+Eclipse-BundleShape: dir
+Bundle-Name: Analysis Plug-in
+Bundle-Localization: plugin
+Created-By: Apache Maven 3.2.1
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Require-Bundle: org.eclipse.ui,org.eclipse.core.runtime,org.eclipse.jf
+ ace.text,org.python.pydev;bundle-version="[4.5.1,4.5.2)",com.python.p
+ ydev;bundle-version="[4.5.1,4.5.2)",org.junit;bundle-version="4.0";re
+ solution:=optional,org.python.pydev.core;bundle-version="[4.5.1,4.5.2
+ )",org.python.pydev.ast;bundle-version="[4.5.1,4.5.2)",org.python.pyd
+ ev.parser;bundle-version="[4.5.1,4.5.2)",org.eclipse.core.resources,o
+ rg.eclipse.ui.editors,org.eclipse.ui.workbench.texteditor,org.eclipse
+ .search,org.eclipse.ui.ide,org.python.pydev.jython;bundle-version="[4
+ .5.1,4.5.2)",org.python.pydev.debug;bundle-version="[4.5.1,4.5.2)",or
+ g.python.pydev.shared_ui;bundle-version="[4.5.1,4.5.2)",org.python.py
+ dev.shared_core;bundle-version="[4.5.1,4.5.2)",org.eclipse.ltk.core.r
+ efactoring,org.python.pydev.refactoring,org.eclipse.ltk.ui.refactorin
+ g
+Bundle-Vendor: Aptana
+Build-Jdk: 1.7.0_55
+Bundle-Version: 4.5.1.201601132212
+Bundle-Activator: com.python.pydev.analysis.AnalysisPlugin
+Bundle-ManifestVersion: 2
+Bundle-SymbolicName: com.python.pydev.analysis; singleton:=true
+Archiver-Version: Plexus Archiver
+
+Name: META-INF/maven/org.python.pydev/com.python.pydev.analysis/pom.pr
+ operties
+SHA-256-Digest: HSFpgdKR4GrQ3oEauxWFKR42OzUB/IBFq7/62undIDc=
+
+Name: LICENSE.TXT
+SHA-256-Digest: J75t01G5GT6rkY9hiDNA+yh/SDVMI+VNinfwannMATI=
+
+Name: icons/opentype.gif
+SHA-256-Digest: If9ZiBB63m6CM91kcr81FolFqzDcbN1vEkIrIAo+Z8I=
+
+Name: META-INF/maven/org.python.pydev/com.python.pydev.analysis/pom.xm
+ l
+SHA-256-Digest: piPGe/yzLsICGY3h6luQaBevw9vwjCSD2aoouJ7f/Rg=
+
+Name: plugin.xml
+SHA-256-Digest: UwJlIn7wDR6vKkqLeuICrmPxZ3A//SXjvG/5lEDe4TE=
+
+Name: analysis.jar
+SHA-256-Digest: 5nKbanh4DMMrZqCFURTLK3AwHzCc2CNq8bSQGA8/Nrw=
+
+Name: icons/python_file.gif
+SHA-256-Digest: P9VbNQYYqpZTqsSzzncmO2cylcJ/PozlNnS0vccyRoM=
+
