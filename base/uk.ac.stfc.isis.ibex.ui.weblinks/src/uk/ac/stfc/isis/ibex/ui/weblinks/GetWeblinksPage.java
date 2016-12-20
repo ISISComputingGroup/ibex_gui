@@ -38,7 +38,10 @@ public final class GetWeblinksPage {
 
     private static final String IBEX_LINKS_URL = "http://dataweb.isis.rl.ac.uk/IbexLinks/default.htm";
     private static final String REGEX_FOR_HTML_LINKS = "<a href=(.*?)</a>";
-    private static final String REGEX_FOR_HTML_TITLES = "<h3>(.*?)</h3>";
+    private static final String REGEX_FOR_HTML_TITLES = "<h[0-6]>(.*?)</h[0-6]>";
+    // Match either HTML section between an h3 end- and start tag, or the
+    // rest of the document if there is no further h3 tags.
+    private static final String REGEX_FOR_HTML_SECTION = "((</h[0-6]>)(.*?)(<h[0-6]>)|(</h[0-6]>)(.+))";
 
     /**
      * Utility class, now allowed to instantiate.
@@ -81,22 +84,61 @@ public final class GetWeblinksPage {
     }
 
     /**
-     * Gets the web links from the SECI Links URL.
+     * Given a section title, gets the web links under that section from the
+     * IBEX Links URL.
      * 
-     * @return A list of strings containing weblinks, in standard HTML format
+     * @param section
+     *            The section containing the links.
+     * @return A list of strings containing web links, in standard HTML format
      */
-    public static List<String> getWebLinks() {
-        String html = getWebLinkHtml();
+    public static List<String> getWebLinks(String section) {
+        return getWebLinks(section, getWebLinkHtml());
+    }
+
+    /**
+     * Given a section title, gets the web links under that section from the
+     * passed HTML string.
+     * 
+     * @param section
+     *            The section containing the links.
+     * @param html
+     *            The HTML data to be scanned.
+     * @return A list of strings containing web links, in standard HTML format
+     */
+    public static List<String> getWebLinks(String section, String html) {
 
         List<String> webLinksList = new ArrayList<>();
 
+        String sectionHtml = getSection(section, html);
+
         Pattern pattern = Pattern.compile(REGEX_FOR_HTML_LINKS);
-        Matcher matcher = pattern.matcher(html);
+        Matcher matcher = pattern.matcher(sectionHtml);
         while (matcher.find()) {
             webLinksList.add(matcher.group(0));
         }
-        
+
         return webLinksList;
+    }
+
+    /**
+     * Gets a substring of a given HTML string, containing only the content
+     * under a specific section title.
+     * 
+     * @param section
+     *            The title of the section.
+     * @param html
+     *            The HTML data to be scanned.
+     * @return The HTML data under the section title as string.
+     */
+    private static String getSection(String section, String html) {
+        String sectionHtml = "";
+
+        Pattern pattern = Pattern.compile(section + REGEX_FOR_HTML_SECTION, Pattern.DOTALL);
+        Matcher matcher = pattern.matcher(html);
+        while (matcher.find()) {
+            sectionHtml = matcher.group(0);
+        }
+        return sectionHtml;
     }
 
     /**
