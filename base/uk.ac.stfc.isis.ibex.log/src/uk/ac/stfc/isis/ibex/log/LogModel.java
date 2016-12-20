@@ -34,7 +34,7 @@ import org.eclipse.jface.preference.IPreferenceStore;
 import com.mysql.jdbc.exceptions.jdbc4.CommunicationsException;
 
 import uk.ac.stfc.isis.ibex.activemq.ActiveMQ;
-import uk.ac.stfc.isis.ibex.activemq.JmsHandler;
+import uk.ac.stfc.isis.ibex.activemq.MQConnection;
 import uk.ac.stfc.isis.ibex.activemq.message.IMessageConsumer;
 import uk.ac.stfc.isis.ibex.databases.Rdb;
 import uk.ac.stfc.isis.ibex.log.jms.XmlLogMessageParser;
@@ -67,7 +67,7 @@ public class LogModel extends ModelObject implements ILogMessageProducer,
      * Starts and maintains connection to the JMS and forwards on any messages
      * received from it.
      */
-    private final JmsHandler jmsHandler;
+    private final MQConnection jmsHandler;
 
     /** List of subscribers that are to received any new JMS messages */
     private ArrayList<IMessageConsumer<LogMessage>> messageReceivers = new ArrayList<>();
@@ -78,8 +78,8 @@ public class LogModel extends ModelObject implements ILogMessageProducer,
     public LogModel() {
         String port = preferenceStore.getString(PreferenceConstants.P_JMS_PORT);
         String topic = preferenceStore.getString(PreferenceConstants.P_JMS_TOPIC);
-        jmsHandler = ActiveMQ.getInstance().getNewHandler(port, topic, new XmlLogMessageParser());
-    	jmsHandler.setLogMessageConsumer(this);
+        jmsHandler = ActiveMQ.getInstance().getNewConnection(port, topic, new XmlLogMessageParser());
+    	jmsHandler.setMessageConsumer(this);
     	jmsHandler.addPropertyChangeListener("connection", passThrough());
     }
 

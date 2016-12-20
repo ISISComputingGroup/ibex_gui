@@ -34,12 +34,19 @@ public class ActiveMQ extends AbstractUIPlugin {
     private static ActiveMQ instance;
 	private static BundleContext context;
 	
-    private List<JmsHandler> handlers = new ArrayList<>();
+    private List<MQConnection> connections = new ArrayList<>();
 
+    /**
+     * @return The singleton instance of this class.
+     */
     public static ActiveMQ getInstance() {
         return instance;
     }
 
+    /**
+     * Creates the singleton, this is called by eclipse when the plugin is
+     * loaded.
+     */
     public ActiveMQ() {
         super();
         instance = this;
@@ -70,14 +77,28 @@ public class ActiveMQ extends AbstractUIPlugin {
 		ActiveMQ.context = null;
 	}
 
-    public JmsHandler getNewHandler(String port, String topic, IMessageParser parser) {
+    /**
+     * Get a new Active MQ connection.
+     * 
+     * @param port
+     *            The port to connect to.
+     * @param topic
+     *            The topic or queue to connect to.
+     * @param parser
+     *            A parser that will parse the data from ActiveMQ.
+     * @return The Active MQ Connection.
+     */
+    public MQConnection getNewConnection(String port, String topic, IMessageParser parser) {
         String currentInstrument = Instrument.getInstance().currentInstrument().hostName();
-        JmsHandler handler = new JmsHandler(currentInstrument, port, topic, parser);
-        handlers.add(handler);
+        MQConnection handler = new MQConnection(currentInstrument, port, topic, parser);
+        connections.add(handler);
         return handler;
     }
 
-    public List<JmsHandler> getHandlers() {
-        return handlers;
+    /**
+     * @return All the connections created through this plugin.
+     */
+    public List<MQConnection> getConnections() {
+        return connections;
     }
 }

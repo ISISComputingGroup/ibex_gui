@@ -40,12 +40,13 @@ import uk.ac.stfc.isis.ibex.model.ModelObject;
  * Handles the connection to a Java Message Service (JMS) Server. Automatically
  * attempts to reestablish connection if it is dropped.
  */
-public class JmsHandler extends ModelObject implements Runnable {
+@SuppressWarnings("rawtypes")
+public class MQConnection extends ModelObject implements Runnable {
 
     private static final int TIMEOUT_50_MS = 50;
     private static final int ONE_SECOND = 1000;
 
-    private static final Logger LOG = IsisLog.getLogger(JmsHandler.class);
+    private static final Logger LOG = IsisLog.getLogger(MQConnection.class);
 
     private static final String PROTOCOL = "tcp:";
 
@@ -87,21 +88,45 @@ public class JmsHandler extends ModelObject implements Runnable {
      */
     private boolean connectionWarnFlag;
 
-    JmsHandler(String initialHost, String port, String topic, IMessageParser parser) {
+    /**
+     * Creates an activeMQ connection.
+     * 
+     * @param initialHost
+     *            The initial host instrument to connect to.
+     * @param port
+     *            The port to read/write the ActiveMQ messages from.
+     * @param topic
+     *            The topic or queue to read/write from/to.
+     * @param parser
+     *            The parser to convert activeMQ messages.
+     */
+    MQConnection(String initialHost, String port, String topic, IMessageParser parser) {
         jmsPort = port;
         updateURL(initialHost);
         jmsTopic = topic;
         this.parser = parser;
     }
 
-    public void setLogMessageConsumer(IMessageConsumer messageConsumer) {
+    /**
+     * Adds a message consumer to this connection.
+     * 
+     * @param messageConsumer
+     *            The consumer to add.
+     */
+    public void setMessageConsumer(IMessageConsumer messageConsumer) {
         this.messageLogConsumer = messageConsumer;
     }
 
+    /**
+     * @return Whether the connection is live or not.
+     */
     public synchronized boolean isConnected() {
         return connectedToJms;
     }
 
+    /**
+     * Stop listening on this connection.
+     */
     public synchronized void stop() {
         run = false;
     }
@@ -166,8 +191,18 @@ public class JmsHandler extends ModelObject implements Runnable {
      * Connect to JMS.
      */
     private void connect() throws JMSException {
-        createJmsConnection();
-        configureJmsConnection();
+
+        ActiveMQConnectionFactory factory = new ActiveMQConnectionFactory(ActiveMQConnection.DEFAULT_USER,
+                ActiveMQConnection.DEFAULT_PASSWORD, jmsUrl);
+        connection = factory.createConnection();
+
+        connection.setExceptionListener(new ExceptionListener() {
+            @Override
+            public void onException(final JMSException ex) {
+                LOG.warn("Lost connection to JMS server: " + jmsUrl + ". Will attempt auto reconnection.");
+                setJmsConnectionStatus(false);
+            }
+        });
 
         // When server is unavailable, we'll hang in here
         connection.start();
@@ -177,20 +212,6 @@ public class JmsHandler extends ModelObject implements Runnable {
 
         Topic topic = session.createTopic(jmsTopic);
         jmsConsumer = session.createConsumer(topic);
-    }
-
-    private void configureJmsConnection() throws JMSException {
-        connection.setExceptionListener(new ExceptionListener() {
-            @Override
-            public void onException(final JMSException ex) {
-                LOG.warn("Lost connection to JMS server: " + jmsUrl + ". Will attempt auto reconnection.");
-                setJmsConnectionStatus(false);
-            }
-        });
-    }
-
-    private void createJmsConnection() throws JMSException {
-        connection = getConnectionFactory(jmsUrl).createConnection();
     }
 
     /** Disconnect from JMS - free resources. */
@@ -214,10 +235,6 @@ public class JmsHandler extends ModelObject implements Runnable {
 
             setJmsConnectionStatus(false);
         }
-    }
-
-    private ActiveMQConnectionFactory getConnectionFactory(String url) {
-        return new ActiveMQConnectionFactory(ActiveMQConnection.DEFAULT_USER, ActiveMQConnection.DEFAULT_PASSWORD, url);
     }
 
     /**

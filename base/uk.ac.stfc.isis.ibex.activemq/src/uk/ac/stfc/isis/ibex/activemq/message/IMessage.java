@@ -22,7 +22,7 @@
 package uk.ac.stfc.isis.ibex.activemq.message;
 
 /**
- *
+ * A message that can be received from ActiveMQ.
  */
 public interface IMessage {
 

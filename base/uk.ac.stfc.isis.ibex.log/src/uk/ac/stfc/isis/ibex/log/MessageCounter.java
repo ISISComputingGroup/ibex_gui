@@ -24,9 +24,9 @@ import java.util.Map;
 import uk.ac.stfc.isis.ibex.log.message.LogMessage;
 import uk.ac.stfc.isis.ibex.log.message.LogMessageFields;
 
-/*
- * Provides a count of the number of messages received 
- * by severity or for all severities.
+/**
+ * Provides a count of the number of messages received by severity or for all
+ * severities.
  */
 public class MessageCounter {
 
