@@ -31,7 +31,6 @@ import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.graphics.Color;
-import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -39,10 +38,8 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
-import org.eclipse.wb.swt.SWTResourceManager;
 
 import uk.ac.stfc.isis.ibex.motor.Motor;
-import uk.ac.stfc.isis.ibex.motor.MotorEnable;
 import uk.ac.stfc.isis.ibex.ui.motor.displayoptions.MotorBackgroundPalette;
 
 /**
@@ -59,9 +56,6 @@ public class MinimalMotorView extends Composite {
 	private MinimalMotionIndicator indicator;
 	
 	private final Display display = Display.getDefault();
-	
-	private static final Font ENABLEDFONT = SWTResourceManager.getFont("Arial", 9, SWT.BOLD);
-	private static final Font DISABLEDFONT = SWTResourceManager.getFont("Arial", 9, SWT.ITALIC);
 		
 	private Motor motor;
 	private Label motorName;
@@ -83,7 +77,7 @@ public class MinimalMotorView extends Composite {
         this.minimalMotorViewModel = new MinimalMotorViewModel();
 
 		motorComposite = new Composite(this, SWT.BORDER);
-		motorComposite.setFont(ENABLEDFONT);
+        // motorComposite.setFont(ENABLEDFONT);
 		GridLayout glMotorComposite = new GridLayout(1, false);
 		glMotorComposite.verticalSpacing = 2;
 		glMotorComposite.marginWidth = 2;
@@ -124,7 +118,7 @@ public class MinimalMotorView extends Composite {
      */
     public void setPalette(MotorBackgroundPalette palette) {
         minimalMotorViewModel.setMotorPalette(palette);
-        Color color = minimalMotorViewModel.getMotorColor(motor);
+        Color color = minimalMotorViewModel.getMotorColor();
         setColor(color);
     }
 
@@ -147,22 +141,22 @@ public class MinimalMotorView extends Composite {
 		this.motor = motor;
         minimalMotorViewModel.setMotor(motor);
 
-		motor.addPropertyChangeListener("description", new PropertyChangeListener() {	
-			@Override
-			public void propertyChange(PropertyChangeEvent arg0) {
-				setEnabled(motor.getEnabled());
-			}
-
-		});
-		
-		setEnabled(motor.getEnabled());
-		motor.addPropertyChangeListener("enabled", new PropertyChangeListener() {	
-			@Override
-			public void propertyChange(PropertyChangeEvent arg0) {
-				setEnabled(motor.getEnabled());
-			}
-
-		});
+//		motor.addPropertyChangeListener("description", new PropertyChangeListener() {	
+//			@Override
+//			public void propertyChange(PropertyChangeEvent arg0) {
+//				setEnabled(motor.getEnabled());
+//			}
+//
+//		});
+//		
+//		setEnabled(motor.getEnabled());
+//		motor.addPropertyChangeListener("enabled", new PropertyChangeListener() {	
+//			@Override
+//			public void propertyChange(PropertyChangeEvent arg0) {
+//				setEnabled(motor.getEnabled());
+//			}
+//
+//		});
 		
         setMoving(motor);
         motor.addPropertyChangeListener("moving", new PropertyChangeListener() {
@@ -180,6 +174,10 @@ public class MinimalMotorView extends Composite {
 
         bindingContext.bindValue(WidgetProperties.text().observe(motorName),
                 BeanProperties.value("motorName").observe(minimalMotorViewModel));
+
+        bindingContext.bindValue(WidgetProperties.font().observe(motorName),
+                BeanProperties.value("font").observe(minimalMotorViewModel));
+
 	}
 	
 	private void setMouseListeners() {
@@ -201,25 +199,11 @@ public class MinimalMotorView extends Composite {
 		indicator.addMouseListener(forwardDoubleClick);
 	}
 	
-	private void setEnabled(final MotorEnable enabled) {
-		display.asyncExec(new Runnable() {
-			@Override
-			public void run() {
-				boolean isEnabled = enabled == MotorEnable.ENABLE;
-				motorComposite.setEnabled(isEnabled);
-				motorName.setFont(isEnabled ? ENABLEDFONT : DISABLEDFONT);
-				
-                Color color = minimalMotorViewModel.getMotorColor(motor);
-                setColor(color);
-			}
-		});
-	}
-	
 	private void setMoving(final Motor motor) {
 		display.asyncExec(new Runnable() {
 			@Override
 			public void run() {
-                Color color = minimalMotorViewModel.getMotorColor(motor);
+                Color color = minimalMotorViewModel.getMotorColor();
                 setColor(color);
 			}
 		});

@@ -33,7 +33,10 @@ package uk.ac.stfc.isis.ibex.ui.motor.views;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.graphics.Font;
+import org.eclipse.wb.swt.SWTResourceManager;
 
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 import uk.ac.stfc.isis.ibex.motor.Motor;
@@ -47,6 +50,10 @@ public class MinimalMotorViewModel extends ModelObject {
     private String setpoint;
     private String motorName;
     private MotorBackgroundPalette palette;
+    private Font font;
+
+    private static final Font ENABLEDFONT = SWTResourceManager.getFont("Arial", 9, SWT.BOLD);
+    private static final Font DISABLEDFONT = SWTResourceManager.getFont("Arial", 9, SWT.ITALIC);
 
     public MinimalMotorViewModel() {
     }
@@ -75,7 +82,15 @@ public class MinimalMotorViewModel extends ModelObject {
         firePropertyChange("motorName", this.motorName, this.motorName = newMotorName);
     }
 
-    public Color getMotorColor(Motor motor) {
+    public Color getMotorColor() {
+        return chooseMotorColor(this.motor);
+    }
+
+    public void setMotorPalette(MotorBackgroundPalette newPalette) {
+        firePropertyChange("motorName", this.palette, this.palette = newPalette);
+    }
+
+    private Color chooseMotorColor(Motor motor) {
         Boolean movingValue = motor.getMoving();
         boolean isMoving = movingValue != null && movingValue;
         boolean isEnabled = (motor.getEnabled() == MotorEnable.ENABLE);
@@ -95,16 +110,13 @@ public class MinimalMotorViewModel extends ModelObject {
 
         return backgroundColour;
     }
-
-    public void setMotorPalette(MotorBackgroundPalette palette) {
-        this.palette = palette;
-    }
 	
     public void setMotor(final Motor motor) {
         this.motor = motor;
         this.setpoint = formatForMotorDisplay("SP", motor.getSetpoint().getSetpoint());
         this.value = formatForMotorDisplay("SP", motor.getSetpoint().getValue());
         this.motorName = motor.name();
+        setFont(chooseFont(motor));
 
         motor.getSetpoint().addPropertyChangeListener("setpoint", new PropertyChangeListener() {
             @Override
@@ -121,25 +133,27 @@ public class MinimalMotorViewModel extends ModelObject {
                 setValue(formatForMotorDisplay("Val", (Double) evt.getNewValue()));
             }
         });
+
+
     }
 
-//    public Font getFont(MotorEnable isEnabled) {
-//        
-//        boolean enabled;
-//        
-//        if (isEnabled == MotorEnable.ENABLE){
-//            enabled = true;
-//        } else {
-//            enabled = false;
-//        }
-//        
-//        if (enabled) {
-//            return ENABLEDFONT;
-//        } else {
-//            return DISABLEDFONT;
-//        }
-//        
-//    }
+    public Font getFont() {
+        return this.font;
+    }
+
+    public void setFont(Font font) {
+        firePropertyChange("font", this.font, this.font = font);
+    }
+
+    private Font chooseFont(Motor motor) {
+        if (motor == null) {
+            return DISABLEDFONT;
+        } else if (motor.getEnabled() == MotorEnable.ENABLE) {
+            return ENABLEDFONT;
+        } else {
+            return DISABLEDFONT;
+        }
+    }
 
     private String formatForMotorDisplay(String prefix, Double value) {
         if (value != null) {
