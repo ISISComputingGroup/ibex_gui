@@ -34,6 +34,7 @@ import org.junit.Test;
 
 import uk.ac.stfc.isis.ibex.scriptgenerator.DateTimeProvider;
 import uk.ac.stfc.isis.ibex.scriptgenerator.PythonBuilder;
+import uk.ac.stfc.isis.ibex.scriptgenerator.Script;
 import uk.ac.stfc.isis.ibex.scriptgenerator.row.Row;
 import uk.ac.stfc.isis.ibex.scriptgenerator.row.WaitUnit;
 import uk.ac.stfc.isis.ibex.scriptgenerator.settings.ApertureSans;
@@ -118,7 +119,7 @@ public class PythonBuilderTest {
         settings = defaultSettings;
         settings.setOrder(Order.SANS);
 
-        builder = new PythonBuilder(dateTime);
+        builder = new PythonBuilder(new Script(), dateTime);
         builder.setSettings(settings);
 
         date = LocalDate.now();

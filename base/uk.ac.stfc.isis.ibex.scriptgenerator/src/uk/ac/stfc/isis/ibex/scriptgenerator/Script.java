@@ -63,19 +63,19 @@ public class Script {
     }
 
     /**
-     * @param seqLoop
+     * @param sansLoop
      *            the seqLoop to set
      */
-    public void setSansLoop(PythonString seqLoop) {
-        this.sansLoop = seqLoop;
+    public void setSansLoop(PythonString sansLoop) {
+        this.sansLoop = sansLoop;
     }
 
     /**
-     * @param seqLoop
+     * @param transLoop
      *            the seqLoop to set
      */
-    public void setTransLoop(PythonString seqLoop) {
-        this.transLoop = seqLoop;
+    public void setTransLoop(PythonString transLoop) {
+        this.transLoop = transLoop;
     }
 
     /**

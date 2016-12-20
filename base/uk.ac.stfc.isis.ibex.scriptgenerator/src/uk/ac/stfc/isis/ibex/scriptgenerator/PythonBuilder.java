@@ -41,17 +41,19 @@ public class PythonBuilder extends ModelObject {
      * The default constructor.
      */
     public PythonBuilder() {
-        this(new DateTimeProvider());
+        this(new Script(), new DateTimeProvider());
     }
 
     /**
-     * Constructor using a custom DateTimeProvider. Used for testing.
+     * Constructor using a custom Script and DateTimeProvider. Used for testing.
      * 
      * @param dateTime
      *            The DateTimeProvider.
+     * @param script
+     *            The Script.
      */
-    public PythonBuilder(DateTimeProvider dateTime) {
-        this.script = new Script();
+    public PythonBuilder(Script script, DateTimeProvider dateTime) {
+        this.script = script;
         this.dateTime = dateTime;
     }
 
@@ -189,7 +191,7 @@ public class PythonBuilder extends ModelObject {
      * @return The script as a String.
      */
     public String createScript() {
-        generateAll();
+        generateScriptBlocks();
         script.createScript(settings.getOrder(), settings.getLoopOver());
 
         return script.toString();
@@ -199,7 +201,7 @@ public class PythonBuilder extends ModelObject {
      * Calls all methods for generating the building blocks of Python code and
      * saves these as templates in the script.
      */
-    private void generateAll() {
+    public void generateScriptBlocks() {
         generateHeader();
         generateSetup();
         generateAltHeader();

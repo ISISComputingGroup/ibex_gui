@@ -51,7 +51,7 @@ public class PythonString {
      *            The template from which to construct this node.
      */
     public PythonString(PythonString template) {
-        this.lines = template.lines;
+        this.lines = new ArrayList<String>(template.lines);
         this.subBlocks = new ArrayList<PythonString>();
     }
 
