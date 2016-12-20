@@ -21,8 +21,6 @@ package uk.ac.stfc.isis.ibex.scriptgenerator.tests;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -47,8 +45,8 @@ import uk.ac.stfc.isis.ibex.scriptgenerator.settings.SansSettings;
  */
 public class PythonBuilderTest {
     private PythonBuilder builder;
-    private LocalDate date;
-    private LocalTime time;
+    private String date;
+    private String time;
     private SansSettings settings;
     private Collection<Row> rows;
     private final String INDENT = "    ";
@@ -119,8 +117,8 @@ public class PythonBuilderTest {
         builder = new PythonBuilder(new Script(), dateTime);
         builder.setSettings(settings);
 
-        date = LocalDate.now();
-        time = LocalTime.now();
+        date = "2016-01-01";
+        time = "12:13:14";
         when(dateTime.getDate()).thenReturn(date);
         when(dateTime.getTime()).thenReturn(time);
     }
