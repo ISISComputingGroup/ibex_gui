@@ -10,10 +10,6 @@
 -->
 <module name="Checker">
   <property name="severity" value="warning"/>
-  
-  <module name="BeforeExecutionExclusionFileFilter">
-  <property name="fileNamePattern" value="*Test.java$"/>
-  </module>
 
   <module name="TreeWalker">
     <module name="FileContentsHolder"/>
