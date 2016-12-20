@@ -25,7 +25,6 @@ import java.beans.PropertyChangeListener;
 
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.beans.BeanProperties;
-import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.MouseAdapter;
@@ -71,9 +70,6 @@ public class MinimalMotorView extends Composite {
 	private Label setpoint;
 	
     private MotorBackgroundPalette palette;
-    IObservableValue target = WidgetProperties.text(SWT.Modify).observe(value);
-    IObservableValue model = BeanProperties.value("name").observe(minimalMotorViewModel);
-    bindingContext.bindValue(target, model);
 
     /**
      * Constructor. Creates a new instance of the MinimalMotorView object.
@@ -86,6 +82,8 @@ public class MinimalMotorView extends Composite {
 		super(parent, style);
 		setLayout(new FillLayout(SWT.HORIZONTAL));
 		
+        MinimalMotorViewModel minimalMotorViewModel = new MinimalMotorViewModel();
+
 		motorComposite = new Composite(this, SWT.BORDER);
 		motorComposite.setFont(ENABLEDFONT);
 		GridLayout glMotorComposite = new GridLayout(1, false);
@@ -118,6 +116,7 @@ public class MinimalMotorView extends Composite {
 		setMouseListeners();
 
         this.palette = palette;
+
 	}
 
     /**
@@ -138,19 +137,24 @@ public class MinimalMotorView extends Composite {
 	public Motor motor() {
 		return motor;
 	}
-	
+
     /**
      * Sets the motor pointed at by the cell.
      * 
      * @param motor the new motor.
      */
 	public void setMotor(final Motor motor) {
+
 		this.motor = motor;
+        minimalMotorViewModel.setMotor(motor);
 		
 		bindingContext.bindValue(WidgetProperties.text().observe(motorName), BeanProperties.value("description").observe(motor));	
 		
 		indicator.setMotor(motor);
 		
+        bindingContext.bindValue(WidgetProperties.text().observe(setpoint),
+                BeanProperties.value("setpoint").observe(minimalMotorViewModel));
+
 		motor.addPropertyChangeListener("description", new PropertyChangeListener() {	
 			@Override
 			public void propertyChange(PropertyChangeEvent arg0) {
@@ -168,28 +172,29 @@ public class MinimalMotorView extends Composite {
 
 		});
 		
-		setMoving(motor);
-		motor.addPropertyChangeListener("moving", new PropertyChangeListener() {
-			@Override
-			public void propertyChange(PropertyChangeEvent evt) {
-				setMoving(motor);
-			}
-		});
-		
-		setValue(motor);
-		setSetpoint(motor);
-		motor.getSetpoint().addPropertyChangeListener("value", new PropertyChangeListener() {
-			@Override
-			public void propertyChange(PropertyChangeEvent evt) {
-				setValue(motor);
-			}
-		});
-		motor.getSetpoint().addPropertyChangeListener("setpoint", new PropertyChangeListener() {
-			@Override
-			public void propertyChange(PropertyChangeEvent evt) {
-				setSetpoint(motor);
-			}
-		});	
+//		setMoving(motor);
+//		motor.addPropertyChangeListener("moving", new PropertyChangeListener() {
+//			@Override
+//			public void propertyChange(PropertyChangeEvent evt) {
+//				setMoving(motor);
+//			}
+//		});
+//		
+//        setValue(motor);
+        minimalMotorViewModel.setSetpoint(motor);
+//        motor.getSetpoint().addPropertyChangeListener("value", new PropertyChangeListener() {
+//            @Override
+//            public void propertyChange(PropertyChangeEvent evt) {
+//                setValue(motor);
+//            }
+//        });
+        motor.getSetpoint().addPropertyChangeListener("setpoint", new PropertyChangeListener() {
+            @Override
+            public void propertyChange(PropertyChangeEvent evt) {
+                System.out.println("xxxxxxxxxxx");
+                minimalMotorViewModel.setSetpoint(motor);
+            }
+        });
 	}
 	
 	private void setMouseListeners() {
@@ -211,28 +216,31 @@ public class MinimalMotorView extends Composite {
 		indicator.addMouseListener(forwardDoubleClick);
 	}
 	
-	private void setSetpoint(final Motor motor) {
-		display.asyncExec(new Runnable() {
-			@Override
-			public void run() {
-				Double setpt = motor.getSetpoint().getSetpoint();
-				String text = setpt != null 
-						? String.format("SP: %.2f", setpt) : "";
-				setpoint.setText(text);
-			}
-		});
+    private void setSetpoint(Motor motor) {
+//        display.asyncExec(new Runnable() {
+//            @Override
+//            public void run() {
+//                String text = minimalMotorViewModel.getSetpoint();
+//                setpoint.setText(text);
+//                System.out.println("x = " + text);
+//            }
+//        });
+
+        String text = minimalMotorViewModel.getSetpoint();
+        setpoint.setText(text);
+        System.out.println("x = " + text);
+
 	}
 
 	private void setValue(final Motor motor) {
-		display.asyncExec(new Runnable() {
-			@Override
-			public void run() {
-				Double setpointValue = motor.getSetpoint().getValue();
-				String text = setpointValue != null 
-						? String.format("Val: %.2f", setpointValue) : "";
-				value.setText(text);
-			}
-		});
+        display.asyncExec(new Runnable() {
+            @Override
+            public void run() {
+                Double setpointValue = motor.getSetpoint().getValue();
+                String text = setpointValue != null ? String.format("Val: %.2f", setpointValue) : "";
+                value.setText(text);
+            }
+        });
 	}
 	
 	private void setEnabled(final MotorEnable enabled) {
