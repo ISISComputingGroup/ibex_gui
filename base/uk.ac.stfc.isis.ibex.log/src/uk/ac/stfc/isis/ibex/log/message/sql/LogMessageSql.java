@@ -18,7 +18,7 @@
 
 package uk.ac.stfc.isis.ibex.log.message.sql;
 
-import uk.ac.stfc.isis.ibex.log.message.LogMessageFields;
+import uk.ac.stfc.isis.ibex.activemq.message.LogMessageFields;
 
 public class LogMessageSql {
     /**

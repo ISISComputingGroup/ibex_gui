@@ -31,15 +31,17 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jface.preference.IPreferenceStore;
 
+import com.mysql.jdbc.exceptions.jdbc4.CommunicationsException;
+
+import uk.ac.stfc.isis.ibex.activemq.ILogMessageConsumer;
+import uk.ac.stfc.isis.ibex.activemq.ILogMessageProducer;
+import uk.ac.stfc.isis.ibex.activemq.JmsHandler;
+import uk.ac.stfc.isis.ibex.activemq.message.LogMessage;
+import uk.ac.stfc.isis.ibex.activemq.message.LogMessageFields;
 import uk.ac.stfc.isis.ibex.databases.Rdb;
-import uk.ac.stfc.isis.ibex.log.jms.JmsHandler;
-import uk.ac.stfc.isis.ibex.log.message.LogMessage;
-import uk.ac.stfc.isis.ibex.log.message.LogMessageFields;
 import uk.ac.stfc.isis.ibex.log.preferences.PreferenceConstants;
 import uk.ac.stfc.isis.ibex.log.rdb.LogMessageQuery;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
-
-import com.mysql.jdbc.exceptions.jdbc4.CommunicationsException;
 
 public class LogModel extends ModelObject implements ILogMessageProducer,
 	ILogMessageConsumer {
@@ -62,7 +64,8 @@ public class LogModel extends ModelObject implements ILogMessageProducer,
      * Starts and maintains connection to the JMS and forwards on any messages
      * received from it.
      */
-    private final JmsHandler jmsHandler = new JmsHandler();
+    private final uk.ac.stfc.isis.ibex.activemq.JmsHandler jmsHandler =
+            new JmsHandler(getPreferenceUrl(), getPreferenceTopic());
 
     /** List of subscribers that are to received any new JMS messages */
     private ArrayList<ILogMessageConsumer> messageReceivers = new ArrayList<>();
@@ -191,5 +194,22 @@ public class LogModel extends ModelObject implements ILogMessageProducer,
 	}
 
 	return ACCESS_DENIED_MESSAGE;
+    }
+
+    private String getPreferenceUrl() {
+        IPreferenceStore preferenceStore = Log.getDefault().getPreferenceStore();
+        String address = preferenceStore.getString(PreferenceConstants.P_JMS_ADDRESS);
+        String port = preferenceStore.getString(PreferenceConstants.P_JMS_PORT);
+
+        if (address.indexOf("//") != 0) {
+            address = "//" + address;
+        }
+
+        return address + ":" + port;
+    }
+
+    private String getPreferenceTopic() {
+        IPreferenceStore preferenceStore = Log.getDefault().getPreferenceStore();
+        return preferenceStore.getString(PreferenceConstants.P_JMS_TOPIC);
     }
 }

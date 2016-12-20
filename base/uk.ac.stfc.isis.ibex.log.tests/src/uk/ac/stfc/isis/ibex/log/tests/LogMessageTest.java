@@ -18,14 +18,14 @@
 
 package uk.ac.stfc.isis.ibex.log.tests;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
 
 import org.junit.Test;
 
-import uk.ac.stfc.isis.ibex.log.message.LogMessage;
-import uk.ac.stfc.isis.ibex.log.message.LogMessageFields;
-import uk.ac.stfc.isis.ibex.log.message.sql.LogMessageFieldsSql;
+import uk.ac.stfc.isis.ibex.activemq.message.LogMessage;
+import uk.ac.stfc.isis.ibex.activemq.message.LogMessageFields;
+import uk.ac.stfc.isis.ibex.activemq.message.LogMessageFieldsSql;
 
 /**
  * This class is responsible for ...

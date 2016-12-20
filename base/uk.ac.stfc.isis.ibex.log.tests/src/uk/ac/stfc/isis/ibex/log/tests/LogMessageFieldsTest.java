@@ -22,7 +22,7 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
-import uk.ac.stfc.isis.ibex.log.message.LogMessageFields;
+import uk.ac.stfc.isis.ibex.activemq.message.LogMessageFields;
 
 /**
  * This class is responsible for testing the Log Message Fields for the XML

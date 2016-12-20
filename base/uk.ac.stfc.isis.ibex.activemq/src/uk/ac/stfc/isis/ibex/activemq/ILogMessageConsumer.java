@@ -16,9 +16,9 @@
  * http://opensource.org/licenses/eclipse-1.0.php
  */
 
-package uk.ac.stfc.isis.ibex.log;
+package uk.ac.stfc.isis.ibex.activemq;
 
-import uk.ac.stfc.isis.ibex.log.message.LogMessage;
+import uk.ac.stfc.isis.ibex.activemq.message.LogMessage;
 
 public interface ILogMessageConsumer {
     void newMessage(LogMessage logMessage);

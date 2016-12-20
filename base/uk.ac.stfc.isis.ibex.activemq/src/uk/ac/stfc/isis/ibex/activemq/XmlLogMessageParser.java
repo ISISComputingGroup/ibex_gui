@@ -16,7 +16,7 @@
  * http://opensource.org/licenses/eclipse-1.0.php
  */
 
-package uk.ac.stfc.isis.ibex.log.jms;
+package uk.ac.stfc.isis.ibex.activemq;
 
 import java.io.IOException;
 import java.io.StringReader;
@@ -32,8 +32,8 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
-import uk.ac.stfc.isis.ibex.log.message.LogMessage;
-import uk.ac.stfc.isis.ibex.log.message.LogMessageFields;
+import uk.ac.stfc.isis.ibex.activemq.message.LogMessage;
+import uk.ac.stfc.isis.ibex.activemq.message.LogMessageFields;
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
 
 /**

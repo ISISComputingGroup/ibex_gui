@@ -35,8 +35,8 @@ import java.util.List;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerFilter;
 
-import uk.ac.stfc.isis.ibex.log.message.LogMessage;
-import uk.ac.stfc.isis.ibex.log.message.LogMessageFields;
+import uk.ac.stfc.isis.ibex.activemq.message.LogMessage;
+import uk.ac.stfc.isis.ibex.activemq.message.LogMessageFields;
 
 public class LogMessageFilter extends ViewerFilter {
 	private String filterString;

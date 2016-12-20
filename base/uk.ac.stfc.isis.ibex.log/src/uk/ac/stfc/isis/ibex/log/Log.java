@@ -21,6 +21,8 @@ package uk.ac.stfc.isis.ibex.log;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
+import uk.ac.stfc.isis.ibex.activemq.ILogMessageProducer;
+
 public class Log extends AbstractUIPlugin {
     private static Log instance;
     private static BundleContext context;
@@ -57,10 +59,12 @@ public class Log extends AbstractUIPlugin {
 	return context;
     }
 
+    @Override
     public void start(BundleContext bundleContext) throws Exception {
 	Log.context = bundleContext;
     }
 
+    @Override
     public void stop(BundleContext bundleContext) throws Exception {
 	Log.context = null;
 	model.stop();

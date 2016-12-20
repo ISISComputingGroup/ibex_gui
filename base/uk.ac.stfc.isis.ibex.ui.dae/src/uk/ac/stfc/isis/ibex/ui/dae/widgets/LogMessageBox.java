@@ -26,8 +26,8 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 
-import uk.ac.stfc.isis.ibex.log.ILogMessageProducer;
-import uk.ac.stfc.isis.ibex.log.message.LogMessageFields;
+import uk.ac.stfc.isis.ibex.activemq.ILogMessageProducer;
+import uk.ac.stfc.isis.ibex.activemq.message.LogMessageFields;
 import uk.ac.stfc.isis.ibex.ui.log.filter.LogMessageFilter;
 import uk.ac.stfc.isis.ibex.ui.log.widgets.LogDisplay;
 import uk.ac.stfc.isis.ibex.ui.log.widgets.LogDisplayModel;

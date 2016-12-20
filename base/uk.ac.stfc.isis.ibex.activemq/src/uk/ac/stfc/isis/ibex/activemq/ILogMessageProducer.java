@@ -16,14 +16,15 @@
  * http://opensource.org/licenses/eclipse-1.0.php
  */
 
-package uk.ac.stfc.isis.ibex.log;
+package uk.ac.stfc.isis.ibex.activemq;
 
 import java.beans.PropertyChangeListener;
 import java.util.Calendar;
 import java.util.List;
 
-import uk.ac.stfc.isis.ibex.log.message.LogMessage;
-import uk.ac.stfc.isis.ibex.log.message.LogMessageFields;
+import uk.ac.stfc.isis.ibex.activemq.message.LogMessage;
+import uk.ac.stfc.isis.ibex.activemq.message.LogMessageFields;
+
 
 /**
  * Interface for a class that produces log messages. The producer provides

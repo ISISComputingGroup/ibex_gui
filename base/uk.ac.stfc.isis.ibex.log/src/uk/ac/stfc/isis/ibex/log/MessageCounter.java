@@ -21,8 +21,8 @@ package uk.ac.stfc.isis.ibex.log;
 import java.util.HashMap;
 import java.util.Map;
 
-import uk.ac.stfc.isis.ibex.log.message.LogMessage;
-import uk.ac.stfc.isis.ibex.log.message.LogMessageFields;
+import uk.ac.stfc.isis.ibex.activemq.message.LogMessage;
+import uk.ac.stfc.isis.ibex.activemq.message.LogMessageFields;
 
 /*
  * Provides a count of the number of messages received 

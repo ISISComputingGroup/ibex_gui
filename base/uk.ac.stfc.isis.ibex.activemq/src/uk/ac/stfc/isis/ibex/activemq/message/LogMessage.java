@@ -16,9 +16,8 @@
  * http://opensource.org/licenses/eclipse-1.0.php
  */
 
-package uk.ac.stfc.isis.ibex.log.message;
+package uk.ac.stfc.isis.ibex.activemq.message;
 
-import uk.ac.stfc.isis.ibex.log.message.sql.LogMessageFieldsSql;
 
 /**
  * This class is responsible for maintaining a log message either in relation to

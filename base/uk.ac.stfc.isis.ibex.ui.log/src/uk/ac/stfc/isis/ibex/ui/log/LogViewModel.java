@@ -29,7 +29,7 @@
  */
 package uk.ac.stfc.isis.ibex.ui.log;
 
-import uk.ac.stfc.isis.ibex.log.ILogMessageProducer;
+import uk.ac.stfc.isis.ibex.activemq.ILogMessageProducer;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 
 public class LogViewModel extends ModelObject {

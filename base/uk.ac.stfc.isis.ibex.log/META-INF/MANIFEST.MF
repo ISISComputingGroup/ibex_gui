@@ -10,14 +10,13 @@ Require-Bundle: org.eclipse.ui,
  uk.ac.stfc.isis.ibex.instrument;bundle-version="1.0.0",
  uk.ac.stfc.isis.ibex.preferences;bundle-version="1.0.0",
  uk.ac.stfc.isis.ibex.databases,
- uk.ac.stfc.isis.ibex.logger;bundle-version="1.0.0"
+ uk.ac.stfc.isis.ibex.logger;bundle-version="1.0.0",
+ uk.ac.stfc.isis.ibex.activemq
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Export-Package: uk.ac.stfc.isis.ibex.log,
- uk.ac.stfc.isis.ibex.log.message,
  uk.ac.stfc.isis.ibex.log.preferences,
  uk.ac.stfc.isis.ibex.log.rdb
-Bundle-ClassPath: lib/activemq-all-5.4.2.jar,
- .,
+Bundle-ClassPath: .,
  lib/mysql-connector-java-5.1.31-bin.jar
 Bundle-ActivationPolicy: lazy
 Import-Package: org.apache.logging.log4j

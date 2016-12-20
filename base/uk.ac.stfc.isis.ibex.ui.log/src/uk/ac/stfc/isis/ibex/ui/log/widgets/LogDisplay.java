@@ -71,8 +71,8 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 
-import uk.ac.stfc.isis.ibex.log.message.LogMessage;
-import uk.ac.stfc.isis.ibex.log.message.LogMessageFields;
+import uk.ac.stfc.isis.ibex.activemq.message.LogMessage;
+import uk.ac.stfc.isis.ibex.activemq.message.LogMessageFields;
 import uk.ac.stfc.isis.ibex.ui.AsyncMessageModerator;
 import uk.ac.stfc.isis.ibex.ui.log.comparator.LogMessageComparator;
 import uk.ac.stfc.isis.ibex.ui.log.filter.LogMessageFilter;

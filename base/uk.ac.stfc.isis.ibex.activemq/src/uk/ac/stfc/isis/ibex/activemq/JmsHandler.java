@@ -16,7 +16,7 @@
  * http://opensource.org/licenses/eclipse-1.0.php
  */
 
-package uk.ac.stfc.isis.ibex.log.jms;
+package uk.ac.stfc.isis.ibex.activemq;
 
 import javax.jms.Connection;
 import javax.jms.ExceptionListener;
@@ -29,12 +29,8 @@ import javax.jms.Topic;
 import org.apache.activemq.ActiveMQConnection;
 import org.apache.activemq.ActiveMQConnectionFactory;
 import org.apache.logging.log4j.Logger;
-import org.eclipse.jface.preference.IPreferenceStore;
 
-import uk.ac.stfc.isis.ibex.log.ILogMessageConsumer;
-import uk.ac.stfc.isis.ibex.log.Log;
-import uk.ac.stfc.isis.ibex.log.message.LogMessage;
-import uk.ac.stfc.isis.ibex.log.preferences.PreferenceConstants;
+import uk.ac.stfc.isis.ibex.activemq.message.LogMessage;
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 
@@ -87,10 +83,10 @@ public class JmsHandler extends ModelObject implements Runnable {
      */
     private boolean connectionWarnFlag;
 
-    public JmsHandler() {
-	jmsUrl = getPreferenceUrl();
-	jmsTopic = getPreferenceTopic();
-	xmlParser = new XmlLogMessageParser();
+    public JmsHandler(String url, String topic) {
+        jmsUrl = PROTOCOL + url;
+        jmsTopic = topic;
+        xmlParser = new XmlLogMessageParser();
     }
 
     public void setLogMessageConsumer(ILogMessageConsumer messageConsumer) {
@@ -118,8 +114,8 @@ public class JmsHandler extends ModelObject implements Runnable {
 	    // using new settings
 	    String oldUrl = jmsUrl;
 	    String oldTopic = jmsTopic;
-	    jmsUrl = getPreferenceUrl();
-	    jmsTopic = getPreferenceTopic();
+            // jmsUrl = getPreferenceUrl();
+            // jmsTopic = getPreferenceTopic();
 
 	    if (!oldUrl.equals(jmsUrl) || !oldTopic.equals(jmsTopic)) {
 		disconnect();
@@ -233,26 +229,6 @@ public class JmsHandler extends ModelObject implements Runnable {
 	    jmsServer = null;
 	    setJmsConnectionStatus(false);
 	}
-    }
-
-    private String getPreferenceUrl() {
-	IPreferenceStore preferenceStore = Log.getDefault()
-		.getPreferenceStore();
-	String address = preferenceStore
-		.getString(PreferenceConstants.P_JMS_ADDRESS);
-	String port = preferenceStore.getString(PreferenceConstants.P_JMS_PORT);
-
-	if (address.indexOf("//") != 0) {
-	    address = "//" + address;
-	}
-
-	return PROTOCOL + address + ":" + port;
-    }
-
-    private String getPreferenceTopic() {
-	IPreferenceStore preferenceStore = Log.getDefault()
-		.getPreferenceStore();
-	return preferenceStore.getString(PreferenceConstants.P_JMS_TOPIC);
     }
 
     private ActiveMQConnectionFactory getConnectionFactory(String url) {
