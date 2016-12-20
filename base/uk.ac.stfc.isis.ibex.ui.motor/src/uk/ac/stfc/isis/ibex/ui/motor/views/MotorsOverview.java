@@ -35,8 +35,11 @@ import org.eclipse.wb.swt.SWTResourceManager;
 
 import uk.ac.stfc.isis.ibex.motor.Motor;
 import uk.ac.stfc.isis.ibex.motor.internal.MotorsTable;
+import uk.ac.stfc.isis.ibex.ui.motor.displayoptions.MotorBackgroundPalette;
 
-@SuppressWarnings("checkstyle:magicnumber")
+/**
+ * Holds the table of motors.
+ */
 public class MotorsOverview extends Composite {
 	private Composite motorComposite;
 	
@@ -44,20 +47,32 @@ public class MotorsOverview extends Composite {
 	
 	private final List<MouseListener> mouseListeners = new ArrayList<>();
 	
-	private final Color background = SWTResourceManager.getColor(SWT.COLOR_WHITE);
+    private static final Color BACKGROUND_COLOUR = SWTResourceManager.getColor(SWT.COLOR_WHITE);
+
+    private static final Color GREY_COLOUR = SWTResourceManager.getColor(192, 192, 192);
+
+    private static final int MINIMUM_GRID_WIDTH = 10;
+    private static final int HEIGHT_DIMENSION = 74;
+    private static final int WIDTH_DIMENSION = 85;
+
+    private MotorBackgroundPalette palette;
+
 
     /**
+     * Constructor for the motors overview.
      * 
      * @param parent - The parent of this element
      * @param style - The base style to be applied to the overview
+     * @param palette - The new palette to use.
      */
-    public MotorsOverview(Composite parent, int style) {
+    public MotorsOverview(Composite parent, int style, MotorBackgroundPalette palette) {
 		super(parent, style);
-		setBackground(SWTResourceManager.getColor(192, 192, 192));
+        setBackground(GREY_COLOUR);
 		setLayout(new FillLayout(SWT.HORIZONTAL));
 		
 		motorComposite = new Composite(this, SWT.NONE);
-		motorComposite.setBackground(background);
+        motorComposite.setBackground(BACKGROUND_COLOUR);
+        this.palette = palette;
 	}
 	
     /**
@@ -87,6 +102,17 @@ public class MotorsOverview extends Composite {
 		}
 	}
 
+    /**
+     * Sets the motor background palette for each individual motor in the view.
+     * 
+     * @param palette the new palette to set on each individual motor.
+     */
+    public void setPalette(MotorBackgroundPalette palette) {
+        for (MinimalMotorView view : minimalViews) {
+            view.setPalette(palette);
+        }
+    }
+
 	@Override
 	public void addMouseListener(MouseListener listener) {
 		super.addMouseListener(listener);
@@ -104,7 +130,7 @@ public class MotorsOverview extends Composite {
 	}
 	
 	private void addMinimalView(Motor motor) {
-		MinimalMotorView view = new MinimalMotorView(motorComposite, SWT.NONE);
+        MinimalMotorView view = new MinimalMotorView(motorComposite, SWT.NONE, palette);
 		view.setMotor(motor);
 		view.setLayoutData(viewLayout());
 		
@@ -118,17 +144,17 @@ public class MotorsOverview extends Composite {
 	private void addSpacerLabel() {
 		Label spacer = new Label(motorComposite, SWT.NONE);
 		spacer.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
-		spacer.setBackground(background);
+        spacer.setBackground(BACKGROUND_COLOUR);
 	}
 	
 	private void addNumberLabel(int columnNumber) {
 		Label columnLabel = new Label(motorComposite, SWT.NONE);
 		GridData gd = new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1);
-		gd.minimumWidth = 10;
+        gd.minimumWidth = MINIMUM_GRID_WIDTH;
 		columnLabel.setLayoutData(gd);
 		columnLabel.setAlignment(SWT.CENTER);
 		columnLabel.setText(Integer.toString(columnNumber));
-		columnLabel.setBackground(background);
+        columnLabel.setBackground(BACKGROUND_COLOUR);
 	}
 	
 	private void resetViews() {
@@ -140,12 +166,10 @@ public class MotorsOverview extends Composite {
 	
 	private static GridData viewLayout() {
 		final GridData gd = new GridData(SWT.FILL, SWT.TOP, false, false, 1, 1);
-		int heightDimension = 74;
-		int widthDimension = 85;
-		gd.minimumHeight = heightDimension;
-		gd.minimumWidth = widthDimension;
-		gd.widthHint = widthDimension;
-		gd.heightHint = heightDimension;
+        gd.minimumHeight = HEIGHT_DIMENSION;
+        gd.minimumWidth = WIDTH_DIMENSION;
+        gd.widthHint = WIDTH_DIMENSION;
+        gd.heightHint = HEIGHT_DIMENSION;
 		
 		return gd;
 	}

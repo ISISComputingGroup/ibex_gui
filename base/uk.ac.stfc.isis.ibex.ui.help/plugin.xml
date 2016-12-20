@@ -14,7 +14,7 @@
          point="org.eclipse.ui.menus">
       <menuContribution
             allPopups="false"
-            locationURI="menu:org.eclipse.ui.main.menu?after=runcontrolMenu">
+            locationURI="menu:org.eclipse.ui.main.menu?after=preferencesMenu">
             <menu
             	id="helpMenu"
                 label="Help">

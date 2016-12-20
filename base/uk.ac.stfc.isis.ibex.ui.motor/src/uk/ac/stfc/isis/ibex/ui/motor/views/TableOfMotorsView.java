@@ -23,6 +23,7 @@ import com.google.common.base.Strings;
 import uk.ac.stfc.isis.ibex.motor.Motor;
 import uk.ac.stfc.isis.ibex.motor.Motors;
 import uk.ac.stfc.isis.ibex.motor.internal.MotorsTable;
+import uk.ac.stfc.isis.ibex.ui.motor.displayoptions.DisplayPreferences;
 
 /** A view that shows a collection of motors. */
 public class TableOfMotorsView extends ViewPart {
@@ -56,14 +57,17 @@ public class TableOfMotorsView extends ViewPart {
 		}
 	};
 	
+    /** The MotorsTable used for this particular table of motors view. */
+    protected MotorsTable motorsTable;
+
+    /** The MotorsOverview used by this view. **/
+    private MotorsOverview motorsOverview;
+
 	/**
 	 * Empty constructor.
 	 */
 	public TableOfMotorsView() {
 	}
-	
-	/** The MotorsTable used for this particular table of motors view. */
-	protected MotorsTable motorsTable;
 	
 	@Override
 	public void createPartControl(Composite parent) {
@@ -87,7 +91,8 @@ public class TableOfMotorsView extends ViewPart {
 		scrolledComposite.setMinWidth(numMotors * MOTOR_WIDTH + TABLE_MARGIN);
 		scrolledComposite.setExpandVertical(true);
 		
-        MotorsOverview motorsOverview = new MotorsOverview(scrolledComposite, SWT.NONE);
+        motorsOverview =
+                new MotorsOverview(scrolledComposite, SWT.NONE, DisplayPreferences.getMotorBackgroundPalette());
 		GridData gdOverview = new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1);
 		motorsOverview.setLayoutData(gdOverview);
 		
@@ -104,6 +109,14 @@ public class TableOfMotorsView extends ViewPart {
 	@Override
 	public void setFocus() {	
 	}
+
+    /**
+     * Updates the current motor background palette according to the latest menu
+     * setting.
+     */
+    public void updatePalette() {
+        motorsOverview.setPalette(DisplayPreferences.getMotorBackgroundPalette());
+    }
 
 	/**
 	 * Opens the motor OPI for a particular motor.
