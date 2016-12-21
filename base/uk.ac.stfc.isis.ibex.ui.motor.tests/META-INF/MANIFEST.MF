@@ -7,3 +7,5 @@ Fragment-Host: uk.ac.stfc.isis.ibex.ui.motor;bundle-version="1.0.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Require-Bundle: org.junit,
  org.mockito;bundle-version="1.9.5"
+Import-Package: org.eclipse.swt.graphics,
+ uk.ac.stfc.isis.ibex.motor

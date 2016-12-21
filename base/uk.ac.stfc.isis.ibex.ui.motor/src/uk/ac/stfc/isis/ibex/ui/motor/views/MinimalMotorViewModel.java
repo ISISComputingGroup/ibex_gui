@@ -97,23 +97,23 @@ public class MinimalMotorViewModel extends ModelObject {
         }
     }
 
-    private void setMotorName(String newName) {
+    public void setMotorName(String newName) {
         firePropertyChange("motorName", this.motorName, this.motorName = newName);
     }
 
-    private void setColor(Color newColor) {
+    public void setColor(Color newColor) {
         firePropertyChange("color", this.color, this.color = newColor);
     }
 
-    private void setFont(Font newFont) {
+    public void setFont(Font newFont) {
         firePropertyChange("font", this.font, this.font = newFont);
     }
 
-    private void setSetpoint(String newSetpoint) {
+    public void setSetpoint(String newSetpoint) {
         firePropertyChange("setpoint", this.setpoint, this.setpoint = newSetpoint);
     }
 
-    private void setValue(String newValue) {
+    public void setValue(String newValue) {
         firePropertyChange("value", this.value, this.value = newValue);
     }
 
@@ -162,8 +162,12 @@ public class MinimalMotorViewModel extends ModelObject {
         return value;
     }
 
-    private void setEnabled(MotorEnable enabled) {
-        this.enabled = (enabled != null) && (enabled == MotorEnable.ENABLE);
+    public void setEnabled(MotorEnable enabled) {
+        if (enabled == MotorEnable.ENABLE) {
+            this.enabled = true;
+        } else {
+            this.enabled = false;
+        }
     }
 	
     /**
@@ -231,5 +235,24 @@ public class MinimalMotorViewModel extends ModelObject {
     public void setPalette(MotorBackgroundPalette newPalette) {
         this.palette = newPalette;
         setColor(chooseColor());
+    }
+
+    /**
+     * Gets whether the motor is moving.
+     *
+     * @return whether the motor is moving or not
+     */
+    public boolean getMoving() {
+        return moving;
+    }
+
+    /**
+     * Sets whether or not the motor is moving.
+     *
+     * @param moving
+     *            whether the motor is moving or not
+     */
+    public void setMoving(boolean moving) {
+        this.moving = moving;
     }
 }
