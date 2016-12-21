@@ -106,10 +106,6 @@ public class MinimalMotorViewModel extends ModelObject {
         firePropertyChange("font", this.font, this.font = font);
     }
 
-    private void setMotorName(String newMotorName) {
-        firePropertyChange("motorName", this.motorName, this.motorName = newMotorName);
-    }
-
     private void setSetpoint(String newSetpoint) {
         firePropertyChange("setpoint", this.setpoint, this.setpoint = newSetpoint);
     }
@@ -200,8 +196,11 @@ public class MinimalMotorViewModel extends ModelObject {
         motor.getSetpoint().addPropertyChangeListener("value", new PropertyChangeListener() {
             @Override
             public void propertyChange(PropertyChangeEvent evt) {
-                // TODO: Check cast to double.
-                setValue(formatForMotorDisplay("Val", (Double) evt.getNewValue()));
+                try {
+                    setValue(formatForMotorDisplay("Val", (Double) evt.getNewValue()));
+                } catch (java.lang.ClassCastException e) {
+                    throw e;
+                }
             }
         });
 
@@ -217,7 +216,7 @@ public class MinimalMotorViewModel extends ModelObject {
     /**
      * Sets the colour palette used by this motor.
      *
-     * @param palette
+     * @param newPalette
      *            the new palette that this motor should use
      */
     public void setPalette(MotorBackgroundPalette newPalette) {
