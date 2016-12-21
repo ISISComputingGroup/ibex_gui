@@ -32,7 +32,10 @@ import uk.ac.stfc.isis.ibex.ui.perspectives.BasePerspective;
  */
 public class Perspective extends BasePerspective {
 
-	public static final String ID = "uk.ac.stfc.isis.ibex.ui.weblinks.perspective"; //$NON-NLS-1$
+    /**
+     * The Class ID.
+     */
+    public static final String ID = "uk.ac.stfc.isis.ibex.ui.weblinks.perspective"; //$NON-NLS-1$
 
 	@Override
 	public void createInitialLayout(IPageLayout layout) {
