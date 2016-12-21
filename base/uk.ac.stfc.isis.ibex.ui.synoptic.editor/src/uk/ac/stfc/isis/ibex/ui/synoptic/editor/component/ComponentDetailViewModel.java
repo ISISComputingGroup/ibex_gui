@@ -28,19 +28,18 @@ import java.util.List;
 import org.eclipse.swt.graphics.Image;
 
 import uk.ac.stfc.isis.ibex.devicescreens.components.ComponentType;
+import uk.ac.stfc.isis.ibex.model.ModelObject;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.ComponentDescription;
 import uk.ac.stfc.isis.ibex.ui.devicescreens.ComponentIcons;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.SynopticViewModel;
-import uk.ac.stfc.isis.ibex.validators.ErrorMessageProvider;
 
 /**
  * This class is responsible for the display logic of the component details
  * view.
  */
-public class ComponentDetailViewModel extends ErrorMessageProvider {
+public class ComponentDetailViewModel extends ModelObject {
     private final SynopticViewModel model;
     private ComponentDescription component;
-    private static final String UNIQUE_COMPONENT_NAME = "Component names (%s) must be unique";
 
     /**
      * The list of possible types for components.
@@ -142,29 +141,11 @@ public class ComponentDetailViewModel extends ErrorMessageProvider {
     }
 
     /**
-     * Checks for duplicate names in the components.
-     * 
-     * @param name
-     *            The name to check for
-     * 
-     * @return true means duplicate(s)
-     */
-    private boolean getHasDuplicatedName(String name) {
-        List<String> comps = model.getSynoptic().getComponentNameListWithChildren();
-        return comps.contains(name);
-    }
-
-    /**
      * @param name
      *            set the name of the component
      */
     public void setComponentName(String name) {
         name = name.trim();
-        if (getHasDuplicatedName(name)) {
-            setError(true, String.format(UNIQUE_COMPONENT_NAME, name));
-        } else {
-            setError(false, "");
-        }
         component.setName(name);
         updateComponentName(name);
     }

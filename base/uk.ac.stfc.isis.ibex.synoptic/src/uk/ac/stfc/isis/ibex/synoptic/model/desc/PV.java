@@ -24,13 +24,15 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import uk.ac.stfc.isis.ibex.model.ModelObject;
+
 /**
  * Holds the information relating to a synoptic PV, which covers its name,
  * address and whether it is read or write (recordType).
  */
 @XmlRootElement(name = "pv")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class PV {
+public class PV extends ModelObject {
 
 	@XmlElement(name = "displayname")
 	private String displayName;
@@ -89,14 +91,17 @@ public class PV {
 	
 	public void setDisplayName(String displayName) {
 		this.displayName = displayName;
+        firePropertyChange("pvChanged", null, this);
 	}
 	
 	public void setAddress(String address) {
 		this.address = address;
+        firePropertyChange("pvChanged", null, this);
 	}
 	
 	public void setRecordType(RecordType recordType) {
 		this.recordType = recordType;
+        firePropertyChange("pvChanged", null, this);
 	}
 	
 	@Override

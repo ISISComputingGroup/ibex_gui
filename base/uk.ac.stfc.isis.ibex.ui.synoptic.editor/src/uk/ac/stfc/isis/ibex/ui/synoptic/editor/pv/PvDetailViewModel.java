@@ -24,22 +24,19 @@ package uk.ac.stfc.isis.ibex.ui.synoptic.editor.pv;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
+import uk.ac.stfc.isis.ibex.model.ModelObject;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.IO;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.PV;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.RecordType;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.blockselector.BlockSelector;
-import uk.ac.stfc.isis.ibex.validators.ErrorMessageProvider;
-import uk.ac.stfc.isis.ibex.validators.PvValidator;
 
 /**
  * This is the view model that contains the logic for the pv details panel.
  */
-public class PvDetailViewModel extends ErrorMessageProvider {
+public class PvDetailViewModel extends ModelObject {
     private boolean selectionVisible;
     private String pvName = "";
     private String pvAddress = "";
-
-    private static final String NON_UNIQUE_PV_ERROR = "%s: %s (%s) PV is not unique";
 
     private IO pvMode = IO.READ;
 
@@ -157,7 +154,6 @@ public class PvDetailViewModel extends ErrorMessageProvider {
 
     private void updateModel() {
         updateSelectedPV(pvName, pvAddress, pvMode);
-        validatePv(selectedPv);
     }
 
     /**
@@ -185,33 +181,6 @@ public class PvDetailViewModel extends ErrorMessageProvider {
         selectedPv.setAddress(addressToUse);
 
         model.updatePvList();
-    }
-
-    private void validatePv(PV pv) {
-        String name = pv.displayName();
-        IO mode = pv.recordType().io();
-        String address = pv.address();
-
-        for (PV otherPv : model.getList()) {
-            if (otherPv == pv) {
-                continue;
-            }
-
-            if (otherPv.displayName().equals(pv.displayName())) {
-                if (otherPv.recordType().io().equals(pv.recordType().io())) {
-                    setError(true, String.format(NON_UNIQUE_PV_ERROR, model.getComponentName(), name, mode));
-                    return;
-                }
-            }
-        }
-
-        PvValidator addressValidator = new PvValidator();
-        boolean addressValid = addressValidator.validatePvAddress(address);
-        if (!addressValid) {
-            setError(true, addressValidator.getErrorMessage());            
-        } else {
-            setError(false, null);
-        }
     }
 
     /**

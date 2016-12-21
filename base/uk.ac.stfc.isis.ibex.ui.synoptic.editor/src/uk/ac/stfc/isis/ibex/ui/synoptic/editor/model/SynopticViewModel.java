@@ -29,8 +29,6 @@
  */
 package uk.ac.stfc.isis.ibex.ui.synoptic.editor.model;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -43,6 +41,7 @@ import org.eclipse.ui.PlatformUI;
 
 import uk.ac.stfc.isis.ibex.configserver.editing.DefaultName;
 import uk.ac.stfc.isis.ibex.devicescreens.components.ComponentType;
+import uk.ac.stfc.isis.ibex.model.ModelObject;
 import uk.ac.stfc.isis.ibex.opis.Opi;
 import uk.ac.stfc.isis.ibex.opis.desc.OpiDescription;
 import uk.ac.stfc.isis.ibex.synoptic.Synoptic;
@@ -55,34 +54,17 @@ import uk.ac.stfc.isis.ibex.synoptic.model.desc.TargetDescription;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.TargetType;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.dialogs.SuggestedTargetsDialog;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.target.DefaultTargetForComponent;
-import uk.ac.stfc.isis.ibex.validators.ErrorMessage;
-import uk.ac.stfc.isis.ibex.validators.ErrorMessageProvider;
 
 /**
  * Provides the model for the view of the synoptic. This is an observable model,
  * which various other classes subscribe to.
  */
-public class SynopticViewModel extends ErrorMessageProvider {
+public class SynopticViewModel extends ModelObject {
 	private SynopticModel editing = Synoptic.getInstance().edit();
 	private SynopticDescription synoptic;
 	private List<ComponentDescription> selectedComponents;
 	private Property selectedProperty;
 	private List<IInstrumentUpdateListener> instrumentUpdateListeners = new CopyOnWriteArrayList<>();
-    private List<ErrorMessageProvider> errorProviders = new ArrayList<>();
-
-    private PropertyChangeListener errorListener = new PropertyChangeListener() {
-        @Override
-        public void propertyChange(PropertyChangeEvent evt) {
-            for (ErrorMessageProvider model : errorProviders) {
-                ErrorMessage error = model.getError();
-                if (error.isError()) {
-                    setError(error.isError(), error.getMessage());
-                    return;
-                }
-            }
-            setError(false, null);
-        }
-    };
 
     /**
      * The constructor.
@@ -465,17 +447,6 @@ public class SynopticViewModel extends ErrorMessageProvider {
      */
     public List<String> getSelectedPropertyKeys() {
         return getPropertyKeys(getSingleSelectedComp().target().name());
-    }
-
-    /**
-     * Add a error provider that may produce errors within the synoptic editor.
-     * 
-     * @param provider
-     *            the provider to add.
-     */
-    public void registerErrorProvider(ErrorMessageProvider provider) {
-        errorProviders.add(provider);
-        provider.addPropertyChangeListener("error", errorListener);
     }
 
     /**

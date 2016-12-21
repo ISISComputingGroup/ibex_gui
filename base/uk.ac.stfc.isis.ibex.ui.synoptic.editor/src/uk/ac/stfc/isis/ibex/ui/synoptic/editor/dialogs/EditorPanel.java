@@ -48,7 +48,7 @@ public class EditorPanel extends Composite {
 	private static Font titleFont = SWTResourceManager.getFont("Segoe UI", 11, SWT.BOLD);
 	
     private SynopticViewModel synopticViewModel;
-	
+
 	private Composite treeComposite;
 	private Composite detailBarComposite;
 	private Composite targetBarComposite;
@@ -107,10 +107,8 @@ public class EditorPanel extends Composite {
         lblComponentTitle.setText("Component Details");
 
         PvListViewModel pvListViewModel = new PvListViewModel(synopticViewModel);
-        synopticViewModel.registerErrorProvider(pvListViewModel);
 
         ComponentDetailViewModel compDetailViewModel = new ComponentDetailViewModel(synopticViewModel);
-        synopticViewModel.registerErrorProvider(compDetailViewModel);
         new ComponentDetailView(componentComposite, compDetailViewModel, pvListViewModel);
 
         pvComposite = new Composite(detailBarComposite, SWT.BORDER);
@@ -122,7 +120,6 @@ public class EditorPanel extends Composite {
         lblPvTitle.setText("PV Details");
 
         PvDetailViewModel pvDetailViewModel = new PvDetailViewModel(pvListViewModel);
-        synopticViewModel.registerErrorProvider(pvDetailViewModel);
         new PvDetailView(pvComposite, pvDetailViewModel);
 		
 		targetBarComposite = new Composite(this, SWT.NONE);

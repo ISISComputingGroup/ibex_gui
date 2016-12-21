@@ -21,7 +21,7 @@
  */
 package uk.ac.stfc.isis.ibex.ui.synoptic.editor.component.tests;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
 
 import java.util.ArrayList;
@@ -88,20 +88,6 @@ public class ComponentDetailViewModelTest {
         viewModel.setComponentName(compName + " ");
 
         assertEquals(viewModel.getComponentName(), compName);
-    }
-
-    @Test
-    public void GIVEN_pre_exisiting_comp_WHEN_setting_non_unique_name_THEN_error() {
-        viewModel.setComponentName(preexistingComp);
-
-        assertTrue(viewModel.getError().isError());
-    }
-
-    @Test
-    public void GIVEN_pre_exisiting_comp_WHEN_setting_non_unique_name_with_trailing_whitespace_THEN_error() {
-        viewModel.setComponentName(preexistingComp + " ");
-
-        assertTrue(viewModel.getError().isError());
     }
 
 }

@@ -30,13 +30,14 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 import uk.ac.stfc.isis.ibex.devicescreens.components.ComponentType;
+import uk.ac.stfc.isis.ibex.model.ModelObject;
 
 /**
  * Describes a component of the synoptic.
  */
 @XmlRootElement(name = "component")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class ComponentDescription implements SynopticParentDescription {
+public class ComponentDescription extends ModelObject implements SynopticParentDescription {
 	
 	@XmlTransient
 	private SynopticParentDescription parent;
@@ -89,9 +90,9 @@ public class ComponentDescription implements SynopticParentDescription {
         }
 
         if (isTopLevelCopy) {
-            this.name = other.name + " (copy)";
+            setName(other.name + " (copy)");
         } else {
-            this.name = other.name;
+            setName(other.name);
         }
 
         this.type = other.type;
@@ -123,7 +124,7 @@ public class ComponentDescription implements SynopticParentDescription {
      * @param name the new name
      */
 	public void setName(String name) {
-		this.name = name;
+        firePropertyChange("name", this.name, this.name = name);
 	}
 
     /**
@@ -186,6 +187,7 @@ public class ComponentDescription implements SynopticParentDescription {
 	public void removePV(PV pv) {
 		if (pv != null && pvs.contains(pv)) {
 			pvs.remove(pv);
+            firePropertyChange("pvRemoved", null, pv);
 		}
 	}
 	
@@ -198,6 +200,7 @@ public class ComponentDescription implements SynopticParentDescription {
 	public void addPV(PV pv, int position) {
 		if (pv != null) {
 			pvs.add(position, pv);
+            firePropertyChange("pvAdded", null, pv);
 		}
 	}
 	
@@ -236,19 +239,25 @@ public class ComponentDescription implements SynopticParentDescription {
 		return components;
 	}
 	
-	@Override
+    @Override
     public void addComponent(ComponentDescription component) {
-		components.add(component);
-	}
-	
-	@Override
+        addComponent(components.size(), component);
+    }
+
+    @Override
     public void addComponent(ComponentDescription component, int index) {
-		components.add(index, component);
-	}
+        addComponent(index, component);
+    }
+	
+    private void addComponent(int index, ComponentDescription component) {
+        components.add(index, component);
+        firePropertyChange("componentAdded", null, component);
+    }
 	
 	@Override
     public void removeComponent(ComponentDescription component) {
 		components.remove(component);
+        firePropertyChange("componentRemoved", null, component);
 	}
 	
     /**

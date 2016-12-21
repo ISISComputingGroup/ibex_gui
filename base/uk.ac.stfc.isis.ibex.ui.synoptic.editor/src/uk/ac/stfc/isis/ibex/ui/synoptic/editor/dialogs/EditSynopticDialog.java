@@ -43,6 +43,7 @@ import org.xml.sax.SAXException;
 import uk.ac.stfc.isis.ibex.synoptic.Synoptic;
 import uk.ac.stfc.isis.ibex.synoptic.SynopticInfo;
 import uk.ac.stfc.isis.ibex.synoptic.xml.XMLUtil;
+import uk.ac.stfc.isis.ibex.ui.synoptic.editor.component.ComponentListValidator;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.instrument.SynopticPreview;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.SynopticViewModel;
 import uk.ac.stfc.isis.ibex.validators.ErrorMessage;
@@ -67,6 +68,8 @@ public class EditSynopticDialog extends TitleAreaDialog {
     private SynopticViewModel synopticViewModel;
     private Collection<String> availableOPIs;
 
+    private ComponentListValidator synopticValidator;
+
     /**
      * The constructor for the overall Synoptic editor dialog.
      * 
@@ -89,6 +92,7 @@ public class EditSynopticDialog extends TitleAreaDialog {
 		this.isBlank = isBlank;
         this.availableOPIs = availableOPIs;
         this.synopticViewModel = synopticViewModel;
+        this.synopticValidator = new ComponentListValidator(synopticViewModel.getSynoptic());
 	}
 	
 	@Override
@@ -157,7 +161,7 @@ public class EditSynopticDialog extends TitleAreaDialog {
 			}
 		});
 		
-        synopticViewModel.addPropertyChangeListener("error", new PropertyChangeListener() {
+        synopticValidator.addPropertyChangeListener("error", new PropertyChangeListener() {
 
             @Override
             public void propertyChange(PropertyChangeEvent evt) {
