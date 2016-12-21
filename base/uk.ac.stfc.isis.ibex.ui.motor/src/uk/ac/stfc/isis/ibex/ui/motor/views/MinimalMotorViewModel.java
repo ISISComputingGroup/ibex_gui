@@ -51,6 +51,7 @@ public class MinimalMotorViewModel extends ModelObject {
     private String motorName;
     private MotorBackgroundPalette palette;
     private Font font;
+    private Color color;
 
     private static final Font ENABLEDFONT = SWTResourceManager.getFont("Arial", 9, SWT.BOLD);
     private static final Font DISABLEDFONT = SWTResourceManager.getFont("Arial", 9, SWT.ITALIC);
@@ -82,15 +83,22 @@ public class MinimalMotorViewModel extends ModelObject {
         firePropertyChange("motorName", this.motorName, this.motorName = newMotorName);
     }
 
-    public Color getMotorColor() {
-        return chooseMotorColor(this.motor);
+    public Color getColor() {
+        return color;
     }
 
-    public void setMotorPalette(MotorBackgroundPalette newPalette) {
-        firePropertyChange("motorName", this.palette, this.palette = newPalette);
+    public void setColor(Color newColor) {
+        firePropertyChange("color", this.color, this.color = newColor);
     }
 
-    private Color chooseMotorColor(Motor motor) {
+    public void setPalette(MotorBackgroundPalette newPalette) {
+        this.palette = newPalette;
+        if (this.motor != null) {
+            setColor(chooseMotorColor());
+        }
+    }
+
+    private Color chooseMotorColor() {
         Boolean movingValue = motor.getMoving();
         boolean isMoving = movingValue != null && movingValue;
         boolean isEnabled = (motor.getEnabled() == MotorEnable.ENABLE);
@@ -113,10 +121,20 @@ public class MinimalMotorViewModel extends ModelObject {
 	
     public void setMotor(final Motor motor) {
         this.motor = motor;
+        setColor(chooseMotorColor());
         this.setpoint = formatForMotorDisplay("SP", motor.getSetpoint().getSetpoint());
         this.value = formatForMotorDisplay("SP", motor.getSetpoint().getValue());
         this.motorName = motor.name();
         this.font = chooseFont();
+
+        motor.addPropertyChangeListener("moving", new PropertyChangeListener() {
+
+            @Override
+            public void propertyChange(PropertyChangeEvent evt) {
+                setColor(chooseMotorColor());
+                setFont(chooseFont());
+            }
+        });
 
         motor.getSetpoint().addPropertyChangeListener("setpoint", new PropertyChangeListener() {
             @Override
@@ -137,6 +155,7 @@ public class MinimalMotorViewModel extends ModelObject {
         motor.addPropertyChangeListener("enabled", new PropertyChangeListener() {
             @Override
             public void propertyChange(PropertyChangeEvent arg0) {
+                setColor(chooseMotorColor());
                 setFont(chooseFont());
             }
         });

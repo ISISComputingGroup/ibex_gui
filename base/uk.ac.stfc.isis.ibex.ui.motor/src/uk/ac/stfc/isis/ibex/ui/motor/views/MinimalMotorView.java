@@ -77,7 +77,7 @@ public class MinimalMotorView extends Composite {
 		setLayout(new FillLayout(SWT.HORIZONTAL));
 		
         this.minimalMotorViewModel = new MinimalMotorViewModel();
-        setPalette(palette);
+        this.minimalMotorViewModel.setPalette(palette);
 
 		motorComposite = new Composite(this, SWT.BORDER);
         // motorComposite.setFont(ENABLEDFONT);
@@ -112,23 +112,27 @@ public class MinimalMotorView extends Composite {
 
 	}
 
+    public MinimalMotorViewModel getViewModel() {
+        return minimalMotorViewModel;
+    }
+
     /**
      * Set the palette used in the background of the cells for motors.
      * 
      * @param palette the new palette to use.
      */
-    public void setPalette(MotorBackgroundPalette palette) {
-        this.palette = palette;
-        minimalMotorViewModel.setMotorPalette(palette);
-
-        display.asyncExec(new Runnable() {
-            @Override
-            public void run() {
-                Color color = minimalMotorViewModel.getMotorColor();
-                setColor(color);
-            }
-        });
-    }
+//    public void setPalette(MotorBackgroundPalette palette) {
+//        this.palette = palette;
+//        minimalMotorViewModel.setMotorPalette(palette);
+//
+//        display.asyncExec(new Runnable() {
+//            @Override
+//            public void run() {
+//                // Color color = minimalMotorViewModel.getMotorColor();
+//                // setColor(color);
+//            }
+//        });
+//    }
 
     /**
      * Getter for the motor used by the cell.
@@ -148,8 +152,8 @@ public class MinimalMotorView extends Composite {
 
 		this.motor = motor;
         minimalMotorViewModel.setMotor(motor);
-        setPalette(palette);
-
+//        setPalette(palette);
+//
 //		motor.addPropertyChangeListener("description", new PropertyChangeListener() {	
 //			@Override
 //			public void propertyChange(PropertyChangeEvent arg0) {
@@ -167,11 +171,11 @@ public class MinimalMotorView extends Composite {
 //
 //		});
 		
-        setMoving(motor);
+        refreshColor(motor);
         motor.addPropertyChangeListener("moving", new PropertyChangeListener() {
             @Override
             public void propertyChange(PropertyChangeEvent evt) {
-                setMoving(motor);
+                refreshColor(motor);
             }
         });
         
@@ -186,6 +190,21 @@ public class MinimalMotorView extends Composite {
 
         bindingContext.bindValue(WidgetProperties.font().observe(motorName),
                 BeanProperties.value("font").observe(minimalMotorViewModel));
+
+        bindingContext.bindValue(WidgetProperties.background().observe(motorName),
+                BeanProperties.value("color").observe(minimalMotorViewModel));
+
+        bindingContext.bindValue(WidgetProperties.background().observe(indicator),
+                BeanProperties.value("color").observe(minimalMotorViewModel));
+
+        bindingContext.bindValue(WidgetProperties.background().observe(value),
+                BeanProperties.value("color").observe(minimalMotorViewModel));
+
+        bindingContext.bindValue(WidgetProperties.background().observe(setpoint),
+                BeanProperties.value("color").observe(minimalMotorViewModel));
+
+        bindingContext.bindValue(WidgetProperties.background().observe(motorComposite),
+                BeanProperties.value("color").observe(minimalMotorViewModel));
 
 	}
 	
@@ -208,12 +227,17 @@ public class MinimalMotorView extends Composite {
 		indicator.addMouseListener(forwardDoubleClick);
 	}
 	
-	private void setMoving(final Motor motor) {
-		display.asyncExec(new Runnable() {
+	private void refreshColor(final Motor motor) {
+        display.asyncExec(new Runnable() {
 			@Override
 			public void run() {
-                Color color = minimalMotorViewModel.getMotorColor();
-                setColor(color);
+                // Color color = minimalMotorViewModel.getMotorColor();
+                // setColor(color);
+//                try {
+//                    Thread.sleep(1);
+//                } catch (InterruptedException e) {
+//
+//                }
 			}
 		});
 	}
