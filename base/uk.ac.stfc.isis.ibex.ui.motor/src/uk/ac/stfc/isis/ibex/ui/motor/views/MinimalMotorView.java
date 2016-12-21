@@ -50,7 +50,7 @@ public class MinimalMotorView extends Composite {
 	private Composite motorComposite;
 	private MinimalMotionIndicator indicator;
 		
-	private Motor motor;
+    private Motor motor;
 	private Label motorName;
 
 	private Label value;
@@ -88,12 +88,12 @@ public class MinimalMotorView extends Composite {
 		value = new Label(motorComposite, SWT.NONE);
 		value.setAlignment(SWT.CENTER);
 		value.setLayoutData(new GridData(SWT.FILL, SWT.TOP, false, false, 1, 1));
-		value.setText("Val: 2.12");
+        value.setText("");
 		
 		setpoint = new Label(motorComposite, SWT.NONE);
 		setpoint.setAlignment(SWT.CENTER);
 		setpoint.setLayoutData(new GridData(SWT.FILL, SWT.TOP, false, false, 1, 1));
-		setpoint.setText("SP: 1.12");
+        setpoint.setText("");
 		
 		indicator = new MinimalMotionIndicator(motorComposite, SWT.NONE);
 		indicator.setLayoutData(new GridData(SWT.FILL, SWT.TOP, false, false, 1, 1));
@@ -116,18 +116,19 @@ public class MinimalMotorView extends Composite {
      * 
      * @return the motor used by the cell
      */
-	public Motor motor() {
-		return motor;
-	}
+    public Motor motor() {
+        return motor;
+    }
 
     /**
      * Sets the motor pointed at by the cell.
      * 
-     * @param motor the new motor.
+     * @param motor
+     *            the new motor.
      */
 	public void setMotor(final Motor motor) {
 
-		this.motor = motor;
+        this.motor = motor;
         minimalMotorViewModel.setMotor(motor);
         
         bindingContext.bindValue(WidgetProperties.text().observe(setpoint),

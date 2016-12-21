@@ -50,30 +50,29 @@ public class MinimalMotorViewModel extends ModelObject {
 
     private static final Font ENABLEDFONT = SWTResourceManager.getFont("Arial", 9, SWT.BOLD);
     private static final Font DISABLEDFONT = SWTResourceManager.getFont("Arial", 9, SWT.ITALIC);
-    private Motor motor;
     private String value;
     private String setpoint;
     private String motorName;
+    private Boolean enabled;
+    private Boolean moving;
     private MotorBackgroundPalette palette;
-
     private Font font;
     private Color color;
 	
     private Font chooseFont() {
-        if (this.motor == null) {
+        if (enabled == null) {
             return DISABLEDFONT;
-        } else if (this.motor.getEnabled() == MotorEnable.ENABLE) {
+        } else if (enabled) {
             return ENABLEDFONT;
         } else {
             return DISABLEDFONT;
         }
     }
 
-    private Color chooseMotorColor() {
-        Boolean movingValue = motor.getMoving();
-        boolean isMoving = movingValue != null && movingValue;
-        boolean isEnabled = (motor.getEnabled() == MotorEnable.ENABLE);
-        boolean isNamed = (motor.getDescription() != "");
+    private Color chooseColor() {
+        boolean isMoving = (moving != null) && (moving);
+        boolean isEnabled = (enabled != null) && (enabled);
+        boolean isNamed = (motorName != null) && !(motorName.isEmpty());
 
         Color backgroundColour;
 
@@ -98,12 +97,16 @@ public class MinimalMotorViewModel extends ModelObject {
         }
     }
 
+    private void setMotorName(String newName) {
+        firePropertyChange("motorName", this.motorName, this.motorName = newName);
+    }
+
     private void setColor(Color newColor) {
         firePropertyChange("color", this.color, this.color = newColor);
     }
 
-    private void setFont(Font font) {
-        firePropertyChange("font", this.font, this.font = font);
+    private void setFont(Font newFont) {
+        firePropertyChange("font", this.font, this.font = newFont);
     }
 
     private void setSetpoint(String newSetpoint) {
@@ -158,6 +161,10 @@ public class MinimalMotorViewModel extends ModelObject {
     public String getValue() {
         return value;
     }
+
+    private void setEnabled(MotorEnable enabled) {
+        this.enabled = (enabled != null) && (enabled == MotorEnable.ENABLE);
+    }
 	
     /**
      * Sets the motor that the grid cell refers to.
@@ -166,18 +173,19 @@ public class MinimalMotorViewModel extends ModelObject {
      *            the motor that this view model should control
      */
     public void setMotor(final Motor motor) {
-        this.motor = motor;
-        setColor(chooseMotorColor());
         this.setpoint = formatForMotorDisplay("SP", motor.getSetpoint().getSetpoint());
         this.value = formatForMotorDisplay("SP", motor.getSetpoint().getValue());
-        this.motorName = motor.name();
+        setEnabled(motor.getEnabled());
+        setMotorName(motor.name());
+        setColor(chooseColor());
         this.font = chooseFont();
 
         motor.addPropertyChangeListener("moving", new PropertyChangeListener() {
 
             @Override
             public void propertyChange(PropertyChangeEvent evt) {
-                setColor(chooseMotorColor());
+                moving = (Boolean) evt.getNewValue();
+                setColor(chooseColor());
                 setFont(chooseFont());
             }
         });
@@ -207,7 +215,8 @@ public class MinimalMotorViewModel extends ModelObject {
         motor.addPropertyChangeListener("enabled", new PropertyChangeListener() {
             @Override
             public void propertyChange(PropertyChangeEvent arg0) {
-                setColor(chooseMotorColor());
+                setEnabled((MotorEnable) arg0.getNewValue());
+                setColor(chooseColor());
                 setFont(chooseFont());
             }
         });
@@ -221,8 +230,6 @@ public class MinimalMotorViewModel extends ModelObject {
      */
     public void setPalette(MotorBackgroundPalette newPalette) {
         this.palette = newPalette;
-        if (this.motor != null) {
-            setColor(chooseMotorColor());
-        }
+        setColor(chooseColor());
     }
 }
