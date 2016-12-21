@@ -248,6 +248,7 @@
 		<module>../uk.ac.stfc.isis.ibex.ui.tests</module>
 		<module>../uk.ac.stfc.isis.ibex.ui.devicescreens.tests</module>
 		<module>../uk.ac.stfc.isis.ibex.scriptgenerator.tests</module>
+		<module>../uk.ac.stfc.isis.ibex.ui.weblinks.tests</module>
 	</modules>
 </project>
 

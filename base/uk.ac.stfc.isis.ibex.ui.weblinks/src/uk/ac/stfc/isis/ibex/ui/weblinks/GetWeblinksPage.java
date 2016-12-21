@@ -105,7 +105,7 @@ public final class GetWeblinksPage {
 
     /**
      * Given a section title, gets the web links under that section from the
-     * passed HTML string.
+     * passed HTML string. Currently only used for testing.
      * 
      * @param section
      *            The section containing the links.
