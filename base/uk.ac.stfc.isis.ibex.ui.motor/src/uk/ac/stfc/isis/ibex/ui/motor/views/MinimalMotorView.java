@@ -63,6 +63,8 @@ public class MinimalMotorView extends Composite {
 	private Label value;
 	private Label setpoint;
 
+    private MotorBackgroundPalette palette;
+
     /**
      * Constructor. Creates a new instance of the MinimalMotorView object.
      * 
@@ -75,6 +77,7 @@ public class MinimalMotorView extends Composite {
 		setLayout(new FillLayout(SWT.HORIZONTAL));
 		
         this.minimalMotorViewModel = new MinimalMotorViewModel();
+        setPalette(palette);
 
 		motorComposite = new Composite(this, SWT.BORDER);
         // motorComposite.setFont(ENABLEDFONT);
@@ -107,8 +110,6 @@ public class MinimalMotorView extends Composite {
 		
 		setMouseListeners();
 
-        minimalMotorViewModel.setMotorPalette(palette);
-
 	}
 
     /**
@@ -117,9 +118,16 @@ public class MinimalMotorView extends Composite {
      * @param palette the new palette to use.
      */
     public void setPalette(MotorBackgroundPalette palette) {
+        this.palette = palette;
         minimalMotorViewModel.setMotorPalette(palette);
-        Color color = minimalMotorViewModel.getMotorColor();
-        setColor(color);
+
+        display.asyncExec(new Runnable() {
+            @Override
+            public void run() {
+                Color color = minimalMotorViewModel.getMotorColor();
+                setColor(color);
+            }
+        });
     }
 
     /**
@@ -140,6 +148,7 @@ public class MinimalMotorView extends Composite {
 
 		this.motor = motor;
         minimalMotorViewModel.setMotor(motor);
+        setPalette(palette);
 
 //		motor.addPropertyChangeListener("description", new PropertyChangeListener() {	
 //			@Override

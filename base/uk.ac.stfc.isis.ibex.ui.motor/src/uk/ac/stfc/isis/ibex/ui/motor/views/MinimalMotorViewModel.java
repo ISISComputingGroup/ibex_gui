@@ -116,7 +116,7 @@ public class MinimalMotorViewModel extends ModelObject {
         this.setpoint = formatForMotorDisplay("SP", motor.getSetpoint().getSetpoint());
         this.value = formatForMotorDisplay("SP", motor.getSetpoint().getValue());
         this.motorName = motor.name();
-        setFont(chooseFont(motor));
+        this.font = chooseFont();
 
         motor.getSetpoint().addPropertyChangeListener("setpoint", new PropertyChangeListener() {
             @Override
@@ -134,7 +134,12 @@ public class MinimalMotorViewModel extends ModelObject {
             }
         });
 
-
+        motor.addPropertyChangeListener("enabled", new PropertyChangeListener() {
+            @Override
+            public void propertyChange(PropertyChangeEvent arg0) {
+                setFont(chooseFont());
+            }
+        });
     }
 
     public Font getFont() {
@@ -145,10 +150,10 @@ public class MinimalMotorViewModel extends ModelObject {
         firePropertyChange("font", this.font, this.font = font);
     }
 
-    private Font chooseFont(Motor motor) {
-        if (motor == null) {
+    private Font chooseFont() {
+        if (this.motor == null) {
             return DISABLEDFONT;
-        } else if (motor.getEnabled() == MotorEnable.ENABLE) {
+        } else if (this.motor.getEnabled() == MotorEnable.ENABLE) {
             return ENABLEDFONT;
         } else {
             return DISABLEDFONT;
