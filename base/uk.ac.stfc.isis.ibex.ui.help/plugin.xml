@@ -32,6 +32,7 @@
            <command
                  commandId="uk.ac.stfc.isis.ibex.ui.help.manual"
                  label="User Manual (Web)"
+                 mnemonic="U"
                  style="push">
            </command>
          	</menu>
