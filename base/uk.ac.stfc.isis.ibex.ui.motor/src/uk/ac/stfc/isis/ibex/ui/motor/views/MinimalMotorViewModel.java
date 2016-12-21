@@ -43,58 +43,29 @@ import uk.ac.stfc.isis.ibex.motor.Motor;
 import uk.ac.stfc.isis.ibex.motor.MotorEnable;
 import uk.ac.stfc.isis.ibex.ui.motor.displayoptions.MotorBackgroundPalette;
 
+/**
+ * The view model for an individual motor.
+ */
 public class MinimalMotorViewModel extends ModelObject {
 
-	private Motor motor;
+    private static final Font ENABLEDFONT = SWTResourceManager.getFont("Arial", 9, SWT.BOLD);
+    private static final Font DISABLEDFONT = SWTResourceManager.getFont("Arial", 9, SWT.ITALIC);
+    private Motor motor;
     private String value;
     private String setpoint;
     private String motorName;
     private MotorBackgroundPalette palette;
+
     private Font font;
     private Color color;
-
-    private static final Font ENABLEDFONT = SWTResourceManager.getFont("Arial", 9, SWT.BOLD);
-    private static final Font DISABLEDFONT = SWTResourceManager.getFont("Arial", 9, SWT.ITALIC);
-
-    public MinimalMotorViewModel() {
-    }
 	
-    public String getSetpoint() {
-        return setpoint;
-	}
-	
-    public void setSetpoint(String newSetpoint) {
-        firePropertyChange("setpoint", this.setpoint, this.setpoint = newSetpoint);
-	}
-
-    public String getValue() {
-        return value;
-    }
-
-    public void setValue(String newValue) {
-        firePropertyChange("value", this.value, this.value = newValue);
-    }
-
-    public String getMotorName() {
-        return motorName;
-    }
-
-    public void setMotorName(String newMotorName) {
-        firePropertyChange("motorName", this.motorName, this.motorName = newMotorName);
-    }
-
-    public Color getColor() {
-        return color;
-    }
-
-    public void setColor(Color newColor) {
-        firePropertyChange("color", this.color, this.color = newColor);
-    }
-
-    public void setPalette(MotorBackgroundPalette newPalette) {
-        this.palette = newPalette;
-        if (this.motor != null) {
-            setColor(chooseMotorColor());
+    private Font chooseFont() {
+        if (this.motor == null) {
+            return DISABLEDFONT;
+        } else if (this.motor.getEnabled() == MotorEnable.ENABLE) {
+            return ENABLEDFONT;
+        } else {
+            return DISABLEDFONT;
         }
     }
 
@@ -118,7 +89,86 @@ public class MinimalMotorViewModel extends ModelObject {
 
         return backgroundColour;
     }
+
+    private String formatForMotorDisplay(String prefix, Double value) {
+        if (value != null) {
+            return String.format("%s: %.2f", prefix, value);
+        } else {
+            return "";
+        }
+    }
+
+    private void setColor(Color newColor) {
+        firePropertyChange("color", this.color, this.color = newColor);
+    }
+
+    private void setFont(Font font) {
+        firePropertyChange("font", this.font, this.font = font);
+    }
+
+    private void setMotorName(String newMotorName) {
+        firePropertyChange("motorName", this.motorName, this.motorName = newMotorName);
+    }
+
+    private void setSetpoint(String newSetpoint) {
+        firePropertyChange("setpoint", this.setpoint, this.setpoint = newSetpoint);
+    }
+
+    private void setValue(String newValue) {
+        firePropertyChange("value", this.value, this.value = newValue);
+    }
+
+    /**
+     * Gets the colour of the motor.
+     *
+     * @return the color of the motor
+     */
+    public Color getColor() {
+        return color;
+    }
+
+    /**
+     * Gets the font used by the motor.
+     *
+     * @return the font used by the motor
+     */
+    public Font getFont() {
+        return this.font;
+    }
+
+    /**
+     * Gets the name of the motor.
+     *
+     * @return the name of the motor
+     */
+    public String getMotorName() {
+        return motorName;
+    }
+
+    /**
+     * Gets the setpoint of the motor.
+     *
+     * @return the setpoint of the motor
+     */
+    public String getSetpoint() {
+        return setpoint;
+    }
+
+    /**
+     * Gets the current position of the motor.
+     *
+     * @return the current position of the motor
+     */
+    public String getValue() {
+        return value;
+    }
 	
+    /**
+     * Sets the motor that the grid cell refers to.
+     *
+     * @param motor
+     *            the motor that this view model should control
+     */
     public void setMotor(final Motor motor) {
         this.motor = motor;
         setColor(chooseMotorColor());
@@ -139,8 +189,11 @@ public class MinimalMotorViewModel extends ModelObject {
         motor.getSetpoint().addPropertyChangeListener("setpoint", new PropertyChangeListener() {
             @Override
             public void propertyChange(PropertyChangeEvent evt) {
-                // TODO: Check cast to double.
-                setSetpoint(formatForMotorDisplay("SP", (Double) evt.getNewValue()));
+                try {
+                    setSetpoint(formatForMotorDisplay("SP", (Double) evt.getNewValue()));
+                } catch (java.lang.ClassCastException e) {
+                    throw e;
+                }
             }
         });
 
@@ -161,30 +214,16 @@ public class MinimalMotorViewModel extends ModelObject {
         });
     }
 
-    public Font getFont() {
-        return this.font;
-    }
-
-    public void setFont(Font font) {
-        firePropertyChange("font", this.font, this.font = font);
-    }
-
-    private Font chooseFont() {
-        if (this.motor == null) {
-            return DISABLEDFONT;
-        } else if (this.motor.getEnabled() == MotorEnable.ENABLE) {
-            return ENABLEDFONT;
-        } else {
-            return DISABLEDFONT;
+    /**
+     * Sets the colour palette used by this motor.
+     *
+     * @param palette
+     *            the new palette that this motor should use
+     */
+    public void setPalette(MotorBackgroundPalette newPalette) {
+        this.palette = newPalette;
+        if (this.motor != null) {
+            setColor(chooseMotorColor());
         }
     }
-
-    private String formatForMotorDisplay(String prefix, Double value) {
-        if (value != null) {
-            return String.format("%s: %.2f", prefix, value);
-        } else {
-            return "";
-        }
-    }
-	
 }

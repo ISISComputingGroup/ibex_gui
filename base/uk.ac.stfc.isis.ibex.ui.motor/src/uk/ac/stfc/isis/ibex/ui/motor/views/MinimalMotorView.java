@@ -20,9 +20,6 @@
 package uk.ac.stfc.isis.ibex.ui.motor.views;
 
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.beans.BeanProperties;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
@@ -30,12 +27,10 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseListener;
-import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
 
@@ -54,16 +49,12 @@ public class MinimalMotorView extends Composite {
 
 	private Composite motorComposite;
 	private MinimalMotionIndicator indicator;
-	
-	private final Display display = Display.getDefault();
 		
 	private Motor motor;
 	private Label motorName;
 
 	private Label value;
 	private Label setpoint;
-
-    private MotorBackgroundPalette palette;
 
     /**
      * Constructor. Creates a new instance of the MinimalMotorView object.
@@ -80,7 +71,6 @@ public class MinimalMotorView extends Composite {
         this.minimalMotorViewModel.setPalette(palette);
 
 		motorComposite = new Composite(this, SWT.BORDER);
-        // motorComposite.setFont(ENABLEDFONT);
 		GridLayout glMotorComposite = new GridLayout(1, false);
 		glMotorComposite.verticalSpacing = 2;
 		glMotorComposite.marginWidth = 2;
@@ -112,27 +102,14 @@ public class MinimalMotorView extends Composite {
 
 	}
 
+    /**
+     * Gets the MinimalMotorViewModel used by the cell.
+     * 
+     * @return the motor view model used by the cell.
+     */
     public MinimalMotorViewModel getViewModel() {
         return minimalMotorViewModel;
     }
-
-    /**
-     * Set the palette used in the background of the cells for motors.
-     * 
-     * @param palette the new palette to use.
-     */
-//    public void setPalette(MotorBackgroundPalette palette) {
-//        this.palette = palette;
-//        minimalMotorViewModel.setMotorPalette(palette);
-//
-//        display.asyncExec(new Runnable() {
-//            @Override
-//            public void run() {
-//                // Color color = minimalMotorViewModel.getMotorColor();
-//                // setColor(color);
-//            }
-//        });
-//    }
 
     /**
      * Getter for the motor used by the cell.
@@ -152,32 +129,6 @@ public class MinimalMotorView extends Composite {
 
 		this.motor = motor;
         minimalMotorViewModel.setMotor(motor);
-//        setPalette(palette);
-//
-//		motor.addPropertyChangeListener("description", new PropertyChangeListener() {	
-//			@Override
-//			public void propertyChange(PropertyChangeEvent arg0) {
-//				setEnabled(motor.getEnabled());
-//			}
-//
-//		});
-//		
-//		setEnabled(motor.getEnabled());
-//		motor.addPropertyChangeListener("enabled", new PropertyChangeListener() {	
-//			@Override
-//			public void propertyChange(PropertyChangeEvent arg0) {
-//				setEnabled(motor.getEnabled());
-//			}
-//
-//		});
-		
-        refreshColor(motor);
-        motor.addPropertyChangeListener("moving", new PropertyChangeListener() {
-            @Override
-            public void propertyChange(PropertyChangeEvent evt) {
-                refreshColor(motor);
-            }
-        });
         
         bindingContext.bindValue(WidgetProperties.text().observe(setpoint),
                 BeanProperties.value("setpoint").observe(minimalMotorViewModel));
@@ -225,28 +176,5 @@ public class MinimalMotorView extends Composite {
 		value.addMouseListener(forwardDoubleClick);
 		setpoint.addMouseListener(forwardDoubleClick);
 		indicator.addMouseListener(forwardDoubleClick);
-	}
-	
-	private void refreshColor(final Motor motor) {
-        display.asyncExec(new Runnable() {
-			@Override
-			public void run() {
-                // Color color = minimalMotorViewModel.getMotorColor();
-                // setColor(color);
-//                try {
-//                    Thread.sleep(1);
-//                } catch (InterruptedException e) {
-//
-//                }
-			}
-		});
-	}
-	
-	private void setColor(Color color) {
-		motorComposite.setBackground(color);
-		indicator.setBackground(color);
-		motorName.setBackground(color);
-		value.setBackground(color);
-		setpoint.setBackground(color);
 	}
 }
