@@ -71,22 +71,31 @@ public class WebLinksPanel extends Composite {
         gridLayout.verticalSpacing = LINKS_DISPLAY_SPACING;
         setLayout(gridLayout);
         
-        Label dummy = new Label(this, SWT.NONE);
-        defaultFont = dummy.getFont();
+        Label fontDummy = new Label(parent, SWT.NONE);
+        defaultFont = fontDummy.getFont();
 
         List<String> sections = GetWeblinksPage.getSections();
         for (String section : sections) {
-            titleCreator(section, parent);
+            titleCreator(section, this);
             List<String> links = GetWeblinksPage.getWebLinks(section);
             for (String link : links) {
-                linkCreator(link, parent);
+                linkCreator(link, this);
             }
         }
 
     }
 
+    /**
+     * Creates a title label for a link section.
+     * 
+     * @param title
+     *            The section title.
+     * @param parent
+     *            The parent component.
+     * @return The display label for the section title.
+     */
     private Label titleCreator(String title, Composite parent) {
-        Label titleLabel = new Label(this, SWT.NONE);
+        Label titleLabel = new Label(parent, SWT.NONE);
 
         titleLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
         titleLabel.setText(title);
@@ -105,7 +114,7 @@ public class WebLinksPanel extends Composite {
      * @return
      */
     private Link linkCreator(String linkHtml, Composite parent) {
-        Link link = new Link(this, SWT.NONE);
+        Link link = new Link(parent, SWT.NONE);
 
         link.setText(linkHtml);
         link.setFont(getResizedFont(defaultFont, LINK_FONT_SIZE, SWT.NORMAL));

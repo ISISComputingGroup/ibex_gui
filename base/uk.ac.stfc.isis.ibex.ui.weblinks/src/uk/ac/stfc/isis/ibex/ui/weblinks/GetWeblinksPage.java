@@ -39,8 +39,8 @@ public final class GetWeblinksPage {
     private static final String IBEX_LINKS_URL = "http://dataweb.isis.rl.ac.uk/IbexLinks/default.htm";
     private static final String REGEX_FOR_HTML_LINKS = "<a href=(.*?)</a>";
     private static final String REGEX_FOR_HTML_TITLES = "<h[0-6]>(.*?)</h[0-6]>";
-    // Match either HTML section between an h3 end- and start tag, or the
-    // rest of the document if there is no further h3 tags.
+    // Match either HTML section in between an <h> end- and start tag, or up to
+    // the rest of the document if there is no further <h> tags.
     private static final String REGEX_FOR_HTML_SECTION = "((</h[0-6]>)(.*?)(<h[0-6]>)|(</h[0-6]>)(.+))";
 
     /**
@@ -78,6 +78,14 @@ public final class GetWeblinksPage {
         }
         return sectionList;
     }
+
+    /**
+     * Removes HTML tags around a string.
+     * 
+     * @param s
+     *            The original string.
+     * @return The input string with HTML tags removed.
+     */
 
     private static String removeTags(String s) {
         return s.replaceAll("\\<.*?>", "");
