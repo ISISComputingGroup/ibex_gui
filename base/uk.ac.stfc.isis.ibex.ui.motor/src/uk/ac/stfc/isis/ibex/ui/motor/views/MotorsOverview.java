@@ -109,8 +109,7 @@ public class MotorsOverview extends Composite {
      */
     public void setPalette(MotorBackgroundPalette palette) {
         for (MinimalMotorView view : minimalViews) {
-            MinimalMotorViewModel model = view.getViewModel();
-            model.setPalette(palette);
+            view.getViewModel().setPalette(palette);
         }
     }
 
