@@ -25,6 +25,8 @@ package uk.ac.stfc.isis.ibex.epics.observing;
  * value associated with the even changes, e.g. when the connection status is
  * set on the observed object it will call onConnectionStatus.
  *
+ * @param <T>
+ *            The type of the value that is being observed.
  */
 public interface Observer<T> {
 	

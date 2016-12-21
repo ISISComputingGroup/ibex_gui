@@ -1,4 +1,3 @@
-
 /*
  * This file is part of the ISIS IBEX application. Copyright (C) 2012-2016
  * Science & Technology Facilities Council. All rights reserved.
@@ -17,41 +16,7 @@
  * http://opensource.org/licenses/eclipse-1.0.php
  */
 
-package uk.ac.stfc.isis.ibex.epics.observing;
-
 /**
- * Base for an observer.
- * 
- * @param <T> the generic type that the observer is observing
+ * Provides the utility classes that the beam status uses.
  */
-public abstract class BaseObserver<T> implements Observer<T> {
-
-	@Override
-	public void update(T value, Exception error, boolean isConnected) {		
-		onConnectionStatus(isConnected);
-
-		if (error != null) {
-			onError(error);
-			return;
-		}
-
-		if (isConnected && value != null) {
-			onValue(value);			
-		}	
-	}
-
-    @Override
-    public void onValue(T value) {
-        /** Default to no code as some children may not use */
-    }
-
-    @Override
-    public void onError(Exception e) {
-        /** Default to no code as some children may not use */
-    }
-
-    @Override
-    public void onConnectionStatus(boolean isConnected) {
-        /** Default to no code as some children may not use */
-    }
-}
+package uk.ac.stfc.isis.ibex.beamstatus.internal;

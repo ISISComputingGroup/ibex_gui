@@ -22,6 +22,10 @@ package uk.ac.stfc.isis.ibex.beamstatus.internal;
 import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
 import uk.ac.stfc.isis.ibex.epics.conversion.Converter;
 
+/**
+ * Converts a number to it's string representation, giving UNKNOWN if the number
+ * is null.
+ */
 public class NumberConverter extends Converter<Number, String> {
 
 	@Override

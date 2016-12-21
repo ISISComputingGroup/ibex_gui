@@ -41,33 +41,49 @@ public class Alarm extends AbstractUIPlugin {
 	private static BundleContext context;
 	private static Alarm instance;
 	
+    private AlarmClientModel alarmModel;
+    private AlarmCounter counter;
+    AlarmClientModelListener listener;
+
+    /**
+     * The default constructor for this singleton, sets up the backend model and
+     * counter to monitor the alarms.
+     */
+    public Alarm() {
+        super();
+        instance = this;
+        try {
+            alarmModel = AlarmClientModel.getInstance();
+        } catch (Exception e) {
+            LOG.info("Alarm Client Model not found");
+        }
+        counter = new AlarmCounter(alarmModel);
+    }
+
+    /**
+     * @return the instance of this singleton.
+     */
 	public static Alarm getInstance() {
 		return instance;
 	    }
 
+    /**
+     * @return the instance of this singleton.
+     */
 	public static Alarm getDefault() {
 		return instance;
 	}
 
-    private AlarmClientModel alarmModel;
-	private AlarmCounter counter;
-	AlarmClientModelListener listener;
-	
-	public Alarm() {
-		super();
-		instance = this;
-		try {
-			alarmModel = AlarmClientModel.getInstance();
-		} catch (Exception e) {
-			LOG.info("Alarm Client Model not found");
-		}
-		counter = new AlarmCounter(alarmModel);
-	}
-
+    /**
+     * @return The model that holds information on the alarms.
+     */
     public AlarmClientModel getAlarmModel() {
         return alarmModel;
     }
 
+    /**
+     * @return The BundleContext for this plugin.
+     */
 	static BundleContext getContext() {
 		return context;
 	}

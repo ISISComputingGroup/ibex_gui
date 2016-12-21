@@ -29,7 +29,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 
 import uk.ac.stfc.isis.ibex.beamstatus.BeamStatus;
-import uk.ac.stfc.isis.ibex.beamstatus.Observables.TargetStation1;
+import uk.ac.stfc.isis.ibex.beamstatus.TS1Observables;
 
 /**
  * The GUI panel for displaying information from target station 1.
@@ -111,11 +111,11 @@ public class TargetStationOnePanel extends Composite {
         muonKicker.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 
         if (BeamStatus.getInstance() != null) {
-            bind(BeamStatus.getInstance().observables().ts1);
+            bind(BeamStatus.getInstance().ts1());
         }
     }
 
-    private void bind(TargetStation1 ts) {
+    private void bind(TS1Observables ts) {
         DataBindingContext bindingContext = new DataBindingContext();
         bindingContext.bindValue(WidgetProperties.text().observe(beam),
                 BeanProperties.value("value").observe(ts.beam()));
