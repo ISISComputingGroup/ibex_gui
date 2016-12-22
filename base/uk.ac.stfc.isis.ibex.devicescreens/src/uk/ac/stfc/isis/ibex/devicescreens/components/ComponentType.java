@@ -98,7 +98,9 @@ public enum ComponentType {
     /** 3D magnet component type. */
     SCIMAG3D,
     /** Detector motion system component type. */
-    DETECTOR_MOTION_SYSTEM;
+    DETECTOR_MOTION_SYSTEM,
+    /** Pixelman camera. */
+    PIXELMAN;
 	
 	private Target target;
 

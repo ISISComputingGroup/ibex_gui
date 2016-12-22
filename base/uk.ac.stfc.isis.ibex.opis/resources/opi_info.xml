@@ -348,6 +348,16 @@
 			</value>
 		</entry>
 		<entry>
+			<key>Pixelman</key>
+			<value>
+				<type>PIXELMAN</type>
+				<path>pixelman.opi</path>
+				<description>Pixelman camera.</description>
+				<macros>
+				</macros>
+			</value>
+		</entry>
+		<entry>
 			<key>Sample stage</key>
 			<value>
 				<type>SAMPLESTACK</type>
