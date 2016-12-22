@@ -45,9 +45,9 @@ public class PvListViewModelTest {
 
     private void createPvList() {
         ComponentDescription comp = new ComponentDescription();
-        comp.addPV(thirdTestPv, 0);
-        comp.addPV(secondTestPv, 0);
-        comp.addPV(firstTestPv, 0);
+        comp.addPV(thirdTestPv);
+        comp.addPV(secondTestPv);
+        comp.addPV(firstTestPv);
         
         viewModel.changeComponent(comp);
     }
