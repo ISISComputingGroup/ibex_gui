@@ -10,9 +10,13 @@
    <extension
          point="org.eclipse.ui.bindings">
          <key sequence="Ctrl+Alt+P"
-         	schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+         	schemeId="IBEX_key_scheme"
          	commandId="org.eclipse.ui.window.preferences"
          	name="Open Preferences"/>
+         <scheme
+               id="IBEX_key_scheme"
+               name="IBEX_key_scheme">
+         </scheme>
    </extension>
 
 </plugin>

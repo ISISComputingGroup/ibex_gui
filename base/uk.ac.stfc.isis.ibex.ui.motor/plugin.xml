@@ -106,6 +106,18 @@
       </perspectiveExtension>
    </extension>
    <extension
+         point="org.eclipse.ui.bindings">
+      <key
+            commandId="uk.ac.stfc.isis.ibex.ui.perspectives.commands.SwitchPerspective"
+            schemeId="IBEX_key_scheme"
+            sequence="Alt+Shift+M">
+         <parameter
+               id="uk.ac.stfc.isis.ibex.ui.perspectives.commands.perspectiveID"
+               value="uk.ac.stfc.isis.ibex.ui.motor.perspective">
+         </parameter>
+      </key>
+   </extension>
+   <extension
          point="org.eclipse.ui.commands">
       <command
             defaultHandler="uk.ac.stfc.isis.ibex.ui.motor.displayoptions.DisplaySettingsHandler"
@@ -139,14 +151,17 @@
             locationURI="menu:org.eclipse.ui.main.menu?after=runcontrolMenu">
          <menu
                id="preferencesMenu"
-               label="Preferences">
+               label="Preferences"
+               mnemonic="P">
             <menu
                   id="colourSettingsMenu"
-                  label="Colour Settings">
+                  label="Colour Settings"
+                  mnemonic="C">
                <command
                      commandId="uk.ac.stfc.isis.ibex.ui.motor.colourOptionsCommand"
                      id="uk.ac.stfc.isis.ibex.ui.motor.colourOptionsCommand1"
                      label="Standard Colour Scheme"
+                     mnemonic="S"
                      style="radio">
                   <parameter
                    		name="org.eclipse.ui.commands.radioStateParameter"
@@ -158,6 +173,7 @@
                      commandId="uk.ac.stfc.isis.ibex.ui.motor.colourOptionsCommand"
                      id="uk.ac.stfc.isis.ibex.ui.motor.colourOptionsCommand2"
                      label="Alternative Colour Scheme 1"
+                     mnemonic="A"
                      style="radio">
                   <parameter
                         name="org.eclipse.ui.commands.radioStateParameter"

@@ -22,12 +22,14 @@
             allPopups="false"
             locationURI="menu:org.eclipse.ui.main.menu?after=preferencesMenu">
             <menu
-            	id="helpMenu"
-                label="Help">
+                  id="helpMenu"
+                  label="Help"
+                  mnemonic="H">
 		         <command
-		               commandId="uk.ac.stfc.isis.ibex.ui.help.About"
-		               label="About"
-		               style="push">
+                 commandId="uk.ac.stfc.isis.ibex.ui.help.About"
+                 label="About"
+                 mnemonic="A"
+                 style="push">
 		         </command>
            <command
                  commandId="uk.ac.stfc.isis.ibex.ui.help.manual"
