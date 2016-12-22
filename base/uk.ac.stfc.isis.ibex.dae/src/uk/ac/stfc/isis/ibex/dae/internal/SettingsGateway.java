@@ -33,16 +33,6 @@ public abstract class SettingsGateway implements Closable {
 		@Override
 		public void onValue(String value) {
 			setFromText(value);
-		}
-
-		@Override
-		public void onError(Exception e) {
-			
-		}
-
-		@Override
-		public void onConnectionStatus(boolean isConnected) {
-			
 		}	
 	};
 	

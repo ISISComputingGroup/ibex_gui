@@ -29,8 +29,14 @@ import org.eclipse.ui.part.ViewPart;
  */
 public class WebLinksView extends ViewPart {
 
+    /**
+     * The Class ID.
+     */
     public static final String ID = "uk.ac.stfc.isis.ibex.ui.weblinks.WebLinksView";
 
+    /**
+     * Standard constructor.
+     */
     public WebLinksView() {
 	}
 	

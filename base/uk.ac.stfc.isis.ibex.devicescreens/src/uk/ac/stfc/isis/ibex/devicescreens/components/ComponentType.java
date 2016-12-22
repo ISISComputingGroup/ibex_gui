@@ -96,7 +96,9 @@ public enum ComponentType {
     /** Pressure gauge component type. */
     PRESSURE_GAUGE,
     /** 3D magnet component type. */
-    SCIMAG3D;
+    SCIMAG3D,
+    /** Detector motion system component type. */
+    DETECTOR_MOTION_SYSTEM;
 	
 	private Target target;
 
