@@ -35,7 +35,6 @@ import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
 
 import uk.ac.stfc.isis.ibex.motor.Motor;
-import uk.ac.stfc.isis.ibex.ui.motor.displayoptions.MotorBackgroundPalette;
 
 /**
  * The viewer for an individual motor.
@@ -50,7 +49,6 @@ public class MinimalMotorView extends Composite {
 	private Composite motorComposite;
 	private MinimalMotionIndicator indicator;
 		
-    private Motor motor;
 	private Label motorName;
 
 	private Label value;
@@ -59,16 +57,18 @@ public class MinimalMotorView extends Composite {
     /**
      * Constructor. Creates a new instance of the MinimalMotorView object.
      * 
-     * @param parent the parent of this element
-     * @param style the base style to be applied to the overview
-     * @param palette the palette to be used.
+     * @param parent
+     *            the parent of this element
+     * @param style
+     *            the base style to be applied to the overview
+     * @param minimalMotorViewModel
+     *            the view model to be used by this view.
      */
-    public MinimalMotorView(Composite parent, int style, MotorBackgroundPalette palette) {
+    public MinimalMotorView(Composite parent, int style, MinimalMotorViewModel minimalMotorViewModel) {
 		super(parent, style);
 		setLayout(new FillLayout(SWT.HORIZONTAL));
 		
-        this.minimalMotorViewModel = new MinimalMotorViewModel();
-        this.minimalMotorViewModel.setPalette(palette);
+        this.minimalMotorViewModel = minimalMotorViewModel;
 
 		motorComposite = new Composite(this, SWT.BORDER);
 		GridLayout glMotorComposite = new GridLayout(1, false);
@@ -117,7 +117,7 @@ public class MinimalMotorView extends Composite {
      * @return the motor used by the cell
      */
     public Motor motor() {
-        return motor;
+        return this.minimalMotorViewModel.getMotor();
     }
 
     /**
@@ -128,7 +128,6 @@ public class MinimalMotorView extends Composite {
      */
 	public void setMotor(final Motor motor) {
 
-        this.motor = motor;
         minimalMotorViewModel.setMotor(motor);
         
         bindingContext.bindValue(WidgetProperties.text().observe(setpoint),

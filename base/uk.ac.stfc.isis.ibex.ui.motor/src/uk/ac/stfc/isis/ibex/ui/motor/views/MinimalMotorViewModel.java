@@ -51,6 +51,7 @@ public class MinimalMotorViewModel extends ModelObject {
     private static final Font ENABLEDFONT = SWTResourceManager.getFont("Arial", 9, SWT.BOLD);
     private static final Font DISABLEDFONT = SWTResourceManager.getFont("Arial", 9, SWT.ITALIC);
     private static final Color NOPALETTECOLOR = SWTResourceManager.getColor(200, 200, 200);
+    private Motor motor;
     private String value;
     private String setpoint;
     private String motorName;
@@ -221,6 +222,7 @@ public class MinimalMotorViewModel extends ModelObject {
      */
     public void setMotor(final Motor motor) {
 
+        this.motor = motor;
         setMotorName(motor.name());
         this.setpoint = formatForMotorDisplay("SP", motor.getSetpoint().getSetpoint());
         this.value = formatForMotorDisplay("Val", motor.getSetpoint().getValue());
@@ -299,6 +301,13 @@ public class MinimalMotorViewModel extends ModelObject {
      */
     public void setMoving(boolean moving) {
         this.moving = moving;
+    }
+
+    /**
+     * @return the motor used by this view model
+     */
+    public Motor getMotor() {
+        return this.motor;
     }
 
 }
