@@ -199,6 +199,12 @@ public class MinimalMotorViewModel extends ModelObject {
         return value;
     }
 
+    /**
+     * Sets whether the motor is enabled.
+     *
+     * @param enabled
+     *            whether the motor is enabled or not
+     */
     public void setEnabled(MotorEnable enabled) {
         if (enabled == MotorEnable.ENABLE) {
             this.enabled = true;
