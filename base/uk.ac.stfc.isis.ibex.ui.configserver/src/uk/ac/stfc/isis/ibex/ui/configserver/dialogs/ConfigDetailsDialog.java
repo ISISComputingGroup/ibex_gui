@@ -25,15 +25,11 @@ import java.util.Map;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.TitleAreaDialog;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.ShellAdapter;
-import org.eclipse.swt.events.ShellEvent;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Shell;
-
-import com.google.common.base.Strings;
 
 import uk.ac.stfc.isis.ibex.configserver.configuration.Configuration;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
@@ -60,8 +56,6 @@ public class ConfigDetailsDialog extends TitleAreaDialog implements
 	protected boolean doAsComponent = false;
 	protected boolean isComponent;
 	protected boolean isBlank;
-	private boolean firstShowing = true;
-    private String blockToEdit;
 
     private ConfigurationViewModels configurationViewModels;
 
@@ -88,53 +82,12 @@ public class ConfigDetailsDialog extends TitleAreaDialog implements
         this.configurationViewModels = configurationViewModels;
 	}
 
-    /**
-     * Constructor with Block name to edit set.
-     * 
-     * @param parentShell parent shell to run dialogue
-     * @param title title of dialogue
-     * @param subTitle action being taken, e.g. editing current configuration
-     * @param config configuration being edited
-     * @param isComponent is component (as opposed to configuration)
-     * @param isBlank is blank
-     * @param blockName black name to edit
-     * @param configurationViewModels view model for the configuration
-     */
-    public ConfigDetailsDialog(Shell parentShell, String title, String subTitle, EditableConfiguration config,
-            boolean isComponent, boolean isBlank, String blockName, ConfigurationViewModels configurationViewModels) {
-        this(parentShell, title, subTitle, config, isComponent, isBlank, configurationViewModels);
-        this.blockToEdit = blockName;
-        
-    }
-    
-    private void showBlockDialog() {
-    	// Open the edit block dialog on shellActivated as must be done after the Config Editor dialog is shown.
-        getShell().addShellListener(new ShellAdapter() {
-			@Override
-			public void shellActivated(ShellEvent e) {
-				// Only open when the shell is activated for the first time
-				if (firstShowing) {
-					Shell s = (Shell) e.getSource();
-                    s.setVisible(true);
-		            openBlocksTab();
-		            openEditBlockDialog();
-		            firstShowing = false;
-				}
-			}
-		});    	
-    }
-    
 	@Override
 	protected Control createDialogArea(Composite parent) {
         editor = new ConfigEditorPanel(parent, SWT.NONE, this, isComponent, configurationViewModels);
 		editor.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		setTitle(subTitle);
-		editor.setConfigToEdit(config);
-		
-        if (!Strings.isNullOrEmpty(blockToEdit)) {
-        	showBlockDialog();
-        }
-		
+        editor.setConfigToEdit(config);
 		return editor;
 	}
 
@@ -153,7 +106,6 @@ public class ConfigDetailsDialog extends TitleAreaDialog implements
 	public void setErrorMessage(String source, String error) {
 		errorMessages.put(source, error);
 		showErrorMessage();
-        openEditBlockDialog();
 	}
 
     /**
@@ -205,13 +157,6 @@ public class ConfigDetailsDialog extends TitleAreaDialog implements
      */
     public void openBlocksTab() {
         editor.openTab(ConfigEditorPanel.BLOCK_TAB_NAME);
-    }
-
-    /**
-     * Open edit block dialogue.
-     */
-    public void openEditBlockDialog() {
-        editor.openEditBlockDialog(this.blockToEdit);
     }
     
     @Override

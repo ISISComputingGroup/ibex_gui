@@ -9,12 +9,18 @@
             id="uk.ac.stfc.isis.ibex.ui.help.About"
             name="About">
       </command>
+      <command
+            defaultHandler="uk.ac.stfc.isis.ibex.ui.help.ManualHandler"
+            description="Open User Manual"
+            id="uk.ac.stfc.isis.ibex.ui.help.manual"
+            name="Manual">
+      </command>
    </extension>
    <extension
          point="org.eclipse.ui.menus">
       <menuContribution
             allPopups="false"
-            locationURI="menu:org.eclipse.ui.main.menu?after=runcontrolMenu">
+            locationURI="menu:org.eclipse.ui.main.menu?after=preferencesMenu">
             <menu
             	id="helpMenu"
                 label="Help">
@@ -23,6 +29,12 @@
 		               label="About"
 		               style="push">
 		         </command>
+           <command
+                 commandId="uk.ac.stfc.isis.ibex.ui.help.manual"
+                 label="User Manual (Web)"
+                 mnemonic="U"
+                 style="push">
+           </command>
          	</menu>
       </menuContribution>
    </extension>

@@ -26,33 +26,38 @@ import uk.ac.stfc.isis.ibex.model.ModelObject;
  */
 public class Row extends ModelObject {
 	private String position;
-	private Double trans;
-	private WaitUnit transWait; 
-	private Double sans;
-	private WaitUnit sansWait; 
+	private Double transWaitValue;
+	private WaitUnit transWaitUnit; 
+    private Double sansWaitValue;
+	private WaitUnit sansWaitUnit; 
 	private Double period;
 	private String sampleName; 
 	private Double thickness; 
 	private boolean wasNull;
+    private static final double DEFAULT_WAIT = 10.0;
+    private static final WaitUnit DEFAULT_WAIT_UNIT = WaitUnit.UAMPS;
+    private static final String DEFAULT_NAME = "";
+    private static final double DEFAULT_THICKNESS = 1.0;
+    private static final double DEFAULT_PERIOD = 1.0;
 	
 	/**
 	 * The default constructor.
 	 * @param position the position
-	 * @param trans the trans wait time value
-	 * @param transWait the unit of measurement for trans
-	 * @param sans the sans wait time value
-	 * @param sansWait the unit of measurement for sans
+	 * @param transWaitValue the trans wait time value
+	 * @param transWaitUnit the unit of measurement for trans
+	 * @param sansWaitValue the sans wait time value
+	 * @param sansWaitUnit the unit of measurement for sans
 	 * @param period the period
 	 * @param sampleName the name of the sample
 	 * @param thickness the thickness of the sample
 	 */
-	public Row(String position, Double trans, WaitUnit transWait, Double sans, WaitUnit sansWait, Double period, 
+	public Row(String position, Double transWaitValue, WaitUnit transWaitUnit, Double sansWaitValue, WaitUnit sansWaitUnit, Double period, 
 			String sampleName, Double thickness) {
 		this.position = position;
-		this.trans = trans;
-		this.transWait = transWait;
-		this.sans = sans;
-		this.sansWait = sansWait;
+		this.transWaitValue = transWaitValue;
+		this.transWaitUnit = transWaitUnit;
+        this.sansWaitValue = sansWaitValue;
+		this.sansWaitUnit = sansWaitUnit;
 		this.period = period;
 		this.sampleName = sampleName;
 		this.thickness = thickness;
@@ -68,6 +73,26 @@ public class Row extends ModelObject {
 		this.wasNull = true;
 	}
 	
+    private void initRow() {
+        this.transWaitValue = DEFAULT_WAIT;
+        this.transWaitUnit = DEFAULT_WAIT_UNIT;
+        this.sansWaitValue = DEFAULT_WAIT;
+        this.sansWaitUnit = DEFAULT_WAIT_UNIT;
+        this.period = DEFAULT_PERIOD;
+        this.sampleName = DEFAULT_NAME;
+        this.thickness = DEFAULT_THICKNESS;
+    }
+
+    private void clearRow() {
+        this.transWaitValue = null;
+        this.transWaitUnit = null;
+        this.sansWaitValue = null;
+        this.sansWaitUnit = null;
+        this.period = null;
+        this.sampleName = "";
+        this.thickness = null;
+    }
+
 	/**
 	 * Gets the position.
 	 * @return the position
@@ -81,7 +106,14 @@ public class Row extends ModelObject {
 	 * @param position the position
 	 */
 	public void setPosition(String position) {
-		this.wasNull = false;
+        if (this.wasNull) {
+            this.wasNull = false;
+            initRow();
+        }
+        if (position.length() == 0) {
+            this.wasNull = true;
+            clearRow();
+        }
 		firePropertyChange("position", this.position, this.position = position);
 	}
 
@@ -89,58 +121,60 @@ public class Row extends ModelObject {
 	 * Gets the trans value.
 	 * @return the trans value
 	 */
-	public Double getTrans() {
-		return trans;
+	public Double getTransWaitValue() {
+		return transWaitValue;
 	}
 	
 	/**
 	 * Sets the trans value.
-	 * @param trans the trans value
+	 * @param transWaitValue the trans value
 	 */
-	public void setTrans(Double trans) {
+	public void setTransWaitValue(Double transWaitValue) {
 		this.wasNull = false;
-		firePropertyChange("trans", this.trans, this.trans = trans);
+        firePropertyChange("transWaitValue", this.transWaitValue, this.transWaitValue = transWaitValue);
 	}
 	
 	/**
 	 * Gets the trans wait.
 	 * @return the trans wait combo selection
 	 */
-	public WaitUnit getTransWait() {
-		return transWait;
+	public WaitUnit getTransWaitUnit() {
+		return transWaitUnit;
 	}
 	
 	/**
-	 * Sets the trans wait.
-	 * @param transWait  the trans wait
-	 */
-	public void setTransWait(WaitUnit transWait) {
+     * Sets the trans wait.
+     * 
+     * @param transWaitUnit
+     *            the trans wait
+     */
+    public void setTransWaitUnit(WaitUnit transWaitUnit) {
 		this.wasNull = false;
-		firePropertyChange("transWait", this.transWait, this.transWait = transWait);
+        firePropertyChange("transWaitUnit", this.transWaitUnit, this.transWaitUnit = transWaitUnit);
 	}
 	
 	/**
 	 * Gets the sans value.
 	 * @return the sans value.
 	 */
-	public Double getSans() {
-		return sans;
+    public Double getSansWaitValue() {
+        return sansWaitValue;
 	}
 	
 	/** Sets the sans value.
 	 * @param sans the sans value
 	 */
-	public void setSans(Double sans) {
+    public void setSansWaitValue(Double sans) {
 		this.wasNull = false;
-		firePropertyChange("sans", this.sans, this.sans = sans);
+        firePropertyChange("sansWaitValue", this.sansWaitValue, this.sansWaitValue = sans);
 	}
 	
 	/**
 	 * Gets the sans wait.
 	 * @return the sans wait.
 	 */
-	public WaitUnit getSansWait() {
-		return sansWait;
+	public WaitUnit getSansWaitUnit() {
+		return sansWaitUnit;
 	}
 	
 	/**
@@ -149,7 +183,7 @@ public class Row extends ModelObject {
 	 */
 	public void setSansWait(WaitUnit sansWait) {
 		this.wasNull = false;
-		firePropertyChange("sansWait", this.sansWait, this.sansWait = sansWait);
+        firePropertyChange("sansWaitUnit", this.sansWaitUnit, this.sansWaitUnit = sansWait);
 	}
 	
 	/** 

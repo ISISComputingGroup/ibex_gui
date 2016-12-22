@@ -32,38 +32,73 @@ import uk.ac.stfc.isis.ibex.targets.ViewTarget;
  * Basically, the things that appear on a beam-line.
  */
 public enum ComponentType {
+
+    /** Unknown component type. */
 	UNKNOWN,
+    /** Jaws component type. */
 	JAWS,
+    /** Chopper component type. */
 	CHOPPER,
+    /** Monitor component type. */
 	MONITOR,
+    /** Sample stack component type. */
 	SAMPLESTACK,
+    /** DAE component type. */
     DAE(new PerspectiveTarget("DAE")),
+    /** Danfysik component type. */
     DANFYSIK,
+    /** CAEN component type. */
 	CAEN,
+    /** Kepco component type. */
 	KEPCO,
+    /** Lambda Genesys component type. */
     TDK_LAMBDA_GENESYS,
+    /** Beamstop component type. */
 	BEAMSTOP, 
+    /** Moving monitor component type. */
 	MOVINGMONITOR,
+    /** Rotating bench component type. */
 	ROTATINGBENCH,
+    /** Sample changer component type. */
 	SAMPLECHANGER,
+    /** Linear sample changer component type. */
     LINEARSAMPLECHANGER,
+    /** Moving beam stop component type. */
 	MOVINGBEAMSTOP,
+    /** Analyser component type. */
 	ANALYSER,
+    /** Polariser component type. */
 	POLARISER,
+    /** Julabo component type. */
 	JULABO,	
+    /** Eurotherm component type. */
 	EUROTHERM,
+    /** Pinhole selector component type. */
 	PINHOLESELECTOR,
+    /** Goniometer component type. */
     GONIOMETER(new ViewTarget("Goniometer")),
+    /** Single stage component type. */
     SINGLESTAGE,
+    /** Linkam95 component type. */
     LINKAM95,
+    /** Lakeshore component type. */
     LAKESHORE,
+    /** Attenuator component type. */
     ATTENUATOR,
+    /** Mercury component type. */
     MERCURY,
+    /** Pressure transducer PDR2000 component type. */
     PDR2000,
+    /** Iris cryo valve component type. */
     CRYVALVE,
+    /** Muon Front End component type. */
     MUON_FRONT_END,
+    /** Pressure gauge component type. */
     PRESSURE_GAUGE,
-    SCIMAG3D;
+    /** 3D magnet component type. */
+    SCIMAG3D,
+    /** Detector motion system component type. */
+    DETECTOR_MOTION_SYSTEM;
 	
 	private Target target;
 

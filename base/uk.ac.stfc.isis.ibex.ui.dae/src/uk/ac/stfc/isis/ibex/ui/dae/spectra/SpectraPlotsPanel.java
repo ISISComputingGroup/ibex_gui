@@ -22,12 +22,15 @@ package uk.ac.stfc.isis.ibex.ui.dae.spectra;
 import java.util.List;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Composite;
 
 import uk.ac.stfc.isis.ibex.dae.spectra.UpdatableSpectrum;
 
+/**
+ * A panel that allows the user to plot various spectra from the DAE.
+ */
 @SuppressWarnings("checkstyle:magicnumber")
 public class SpectraPlotsPanel extends Composite {
 
@@ -37,6 +40,14 @@ public class SpectraPlotsPanel extends Composite {
 	private SpectrumView plot4;
 	private Composite plots;
 	
+    /**
+     * The constructor for the panel.
+     * 
+     * @param parent
+     *            The parent composite that the panel belongs to.
+     * @param style
+     *            The SWT style flags for the panel.
+     */
 	public SpectraPlotsPanel(Composite parent, int style) {
 		super(parent, style);
 		setLayout(new GridLayout(1, false));
@@ -62,6 +73,12 @@ public class SpectraPlotsPanel extends Composite {
 		plot4.setSize(399, 258);
 	}
 	
+    /**
+     * Set the model which the spectra graphs are updated from.
+     * 
+     * @param spectra
+     *            A list of four updating spectrum
+     */
 	public void setModel(List<? extends UpdatableSpectrum> spectra) {
 		plot1.setModel(spectra.get(0));
 		plot2.setModel(spectra.get(1));

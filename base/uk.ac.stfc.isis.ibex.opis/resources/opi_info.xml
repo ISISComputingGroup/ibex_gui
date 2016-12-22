@@ -80,11 +80,11 @@
 			<value>
 				<type>EUROTHERM</type>
 				<path>Eurotherm.opi</path>
-				<description>The OPI for the Eurotherm controller connected to multiple eurotherms.</description>
+				<description>The OPI for the Eurotherm controller connected to multiple Eurotherms.</description>
                 <macros>
 					<macro>
 						<name>EURO</name>
-						<description>The Eurotherm base name (e.g. EUROTHERM1).</description>
+						<description>The Eurotherm base name (e.g. EUROTHRM_01).</description>
 					</macro>
                 </macros>
 			</value>
@@ -612,6 +612,16 @@
 					</macro>
 				</macros>
 			</value>
-		</entry>		
+		</entry>
+		<entry>
+			<key>Detector motion system</key>
+			<value>
+				<type>DETECTOR_MOTION_SYSTEM</type>
+				<path>detector_motion_system/detector_motion_system.opi</path>
+				<description>The OPI for the detector motion system. No properties required.</description>
+				<macros>
+				</macros>
+			</value>
+		</entry>  		
 	</opis>
 </descriptions>

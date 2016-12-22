@@ -29,7 +29,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 
 import uk.ac.stfc.isis.ibex.beamstatus.BeamStatus;
-import uk.ac.stfc.isis.ibex.beamstatus.Observables.TargetStation2;
+import uk.ac.stfc.isis.ibex.beamstatus.TS2Observables;
 
 /**
  * The GUI panel for displaying information from target station 2.
@@ -139,11 +139,11 @@ public class TargetStationTwoPanel extends Composite {
         decoupledModeratoruAhBeam.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 
         if (BeamStatus.getInstance() != null) {
-            bind(BeamStatus.getInstance().observables().ts2);
+            bind(BeamStatus.getInstance().ts2());
         }
     }
 
-    private void bind(TargetStation2 ts) {
+    private void bind(TS2Observables ts) {
         DataBindingContext bindingContext = new DataBindingContext();
         bindingContext.bindValue(WidgetProperties.text().observe(beam),
                 BeanProperties.value("value").observe(ts.beam()));

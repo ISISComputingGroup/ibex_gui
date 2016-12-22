@@ -23,6 +23,9 @@ import uk.ac.stfc.isis.ibex.runcontrol.RunControlServer;
 import uk.ac.stfc.isis.ibex.validators.ErrorMessage;
 import uk.ac.stfc.isis.ibex.validators.ErrorMessageProvider;
 
+/**
+ * A dialog for editing blocks.
+ */
 public class EditBlockDialog extends TitleAreaDialog {
 	
 	EditableConfiguration config;
@@ -43,23 +46,29 @@ public class EditBlockDialog extends TitleAreaDialog {
 	List<ErrorMessageProvider> viewModels = new ArrayList<>();
 	
 	private PropertyChangeListener errorListener = new PropertyChangeListener() {
-			@Override
-			public void propertyChange(PropertyChangeEvent evt) {
-				for (ErrorMessageProvider model : viewModels) {
-					ErrorMessage error = model.getError();
-					if (error.isError()) {
-						setErrorMessage(error.getMessage());
-						setOkEnabled(false);
-						return;
-					}
+        @Override
+        public void propertyChange(PropertyChangeEvent evt) {
+            for (ErrorMessageProvider model : viewModels) {
+                ErrorMessage error = model.getError();
+                if (error.isError()) {
+                    setErrorMessage(error.getMessage());
+                    setOkEnabled(false);
+                    return;
 				}
-				
-				setOkEnabled(true);
-				setErrorMessage(null);
 			}
-		};
+            setOkEnabled(true);
+            setErrorMessage(null);
+        }
+    };
 
-    protected EditBlockDialog(Shell parentShell, EditableBlock block, EditableConfiguration config) {
+    /**
+     * Default constructor.
+     * 
+     * @param parentShell The shell of the parent element
+     * @param block The block to edit
+     * @param config The configuration the block belongs to
+     */
+    public EditBlockDialog(Shell parentShell, EditableBlock block, EditableConfiguration config) {
 		super(parentShell);
         this.config = config;
         this.block = block;
@@ -75,8 +84,7 @@ public class EditBlockDialog extends TitleAreaDialog {
 		
 		for (ErrorMessageProvider provider : viewModels) {
 			provider.addPropertyChangeListener("error", errorListener);
-		}
-			
+        }
 	}
 	
     @Override

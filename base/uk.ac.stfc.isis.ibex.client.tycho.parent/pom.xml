@@ -250,6 +250,8 @@
 		<module>
 			../../workspace/uk.ac.stfc.isis.ibex.ui.synoptic.editor.tests
 		</module>
+		<module>../uk.ac.stfc.isis.ibex.scriptgenerator.tests</module>
+		<module>../uk.ac.stfc.isis.ibex.ui.weblinks.tests</module>
 	</modules>
 </project>
 

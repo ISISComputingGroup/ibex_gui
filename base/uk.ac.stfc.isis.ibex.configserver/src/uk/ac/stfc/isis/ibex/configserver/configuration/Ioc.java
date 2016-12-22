@@ -40,10 +40,19 @@ public class Ioc extends ModelObject implements Comparable<Ioc> {
 
 	private final String name;	
 	
+    /**
+     * The IOC will be started along with the config and restarted when the
+     * block server restarts.
+     */
 	private boolean autostart;
+
+    /**
+     * If the IOC is terminated unexpectedly, and autostart is also true, the
+     * IOC will be restarted.
+     */
 	private boolean restart;
+
 	private SimLevel simlevel = SimLevel.NONE;
-	
 	private Collection<PVSet> pvsets = new ArrayList<PVSet>();
 	private Collection<PVDefaultValue> pvs = new ArrayList<PVDefaultValue>();
 	private Collection<Macro> macros = new ArrayList<Macro>();
@@ -107,15 +116,14 @@ public class Ioc extends ModelObject implements Comparable<Ioc> {
 	}
 	
     /**
-     * @return Whether the IOC is set the auto-restart
+     * @return Whether the IOC is set to auto-restart
      */
 	public boolean getRestart() {
 		return restart;
 	}
 
     /**
-     * @param restart
-     *            Set whether the IOC should auto-restart
+     * @param restart Set whether the IOC should auto-restart
      */
 	public void setRestart(boolean restart) {
 		firePropertyChange("restart", this.restart, this.restart = restart);

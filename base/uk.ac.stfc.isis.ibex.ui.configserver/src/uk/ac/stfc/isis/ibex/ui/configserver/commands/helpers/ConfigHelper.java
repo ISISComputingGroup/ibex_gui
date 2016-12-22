@@ -30,27 +30,23 @@ public abstract class ConfigHelper {
         UpdatedValue<EditableConfiguration> config = configurationViewModels.getConfigModel();
 
         if (Awaited.returnedValue(config, 1)) {
-            openDialog(subTitle, config.getValue(), null, false);
+            openDialog(subTitle, config.getValue(), false);
         }
     }
     
     /**
      * Create a dialog box for editing the current config.
-     * 
-     * @param blockname The blockname we wish to edit, if null or empty we will
-     *            edit the whole config.
      */
-    public void createDialogCurrent(String blockname) {
+    public void createDialogCurrent() {
         configurationViewModels.setModelAsCurrentConfig();
         UpdatedValue<EditableConfiguration> config = configurationViewModels.getConfigModel();
 
         if (Awaited.returnedValue(config, 1)) {
-            openDialog(currentSubTitle, config.getValue(), blockname, true);
+            openDialog(currentSubTitle, config.getValue(), true);
         } else {
             MessageDialog.openError(shell, "Error", "There is no current configuration, so it can not be edited.");
         }
     }
     
-    protected abstract void openDialog(String subTitle, EditableConfiguration config,
-            String blockname, boolean isCurrent);
+    protected abstract void openDialog(String subTitle, EditableConfiguration config, boolean isCurrent);
 }

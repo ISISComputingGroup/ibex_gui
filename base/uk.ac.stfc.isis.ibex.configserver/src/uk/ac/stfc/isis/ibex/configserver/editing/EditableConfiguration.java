@@ -76,11 +76,8 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
 	private String dateCreated;
     /** The date the configuration was last modified. */
 	private String dateModified;
-    /**
-     * Whether the created and modified dates can be viewed via the web
-     * dashboard.
-     */
-    private Boolean datesVisible;
+    /** Whether the configuration has been previously modified. */
+    private Boolean isNew;
     /** The IOCs associated with the configuration. */
 	private final List<EditableIoc> editableIocs = new ArrayList<>();
     /** The groups associated with the configuration. */
@@ -248,17 +245,12 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
 	}
 
     /**
-     * Whether the date labels should be visible in the GUI.
+     * Whether the configuration is new or not.
      * 
-     * @return False if configuration is new.
+     * @return True if configuration is new.
      */
-    public boolean getDatesVisible() {
-        if (history.size() != 0) {
-            datesVisible = true;
-        } else {
-            datesVisible = false;
-        }
-        return datesVisible;
+    public boolean getIsNew() {
+        return isNew = (history.size() == 0);
     }
 
     /**

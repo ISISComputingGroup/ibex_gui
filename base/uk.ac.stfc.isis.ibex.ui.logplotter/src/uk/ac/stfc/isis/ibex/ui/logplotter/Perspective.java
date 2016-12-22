@@ -25,7 +25,6 @@ import org.eclipse.ui.IPartListener;
 import org.eclipse.ui.IViewPart;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchPart;
-import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.wb.swt.ResourceManager;
@@ -60,7 +59,9 @@ public class Perspective extends BasePerspective {
 		
 		lockView(layout, "org.csstudio.trends.databrowser.waveformview.WaveformView");
 		
-		layout.addStandaloneView(EmptyLogPlotterView.ID, false, IPageLayout.RIGHT, 0.1f, "uk.ac.stfc.isis.ibex.ui.perspectives.PerspectiveSwitcher");
+        final float view_ratio = 0.1f;
+        layout.addStandaloneView(EmptyLogPlotterView.ID, false, IPageLayout.RIGHT, view_ratio,
+                "uk.ac.stfc.isis.ibex.ui.perspectives.PerspectiveSwitcher");
 		
 		
 		//This part listener will be called to open the empty view when all graphs are closed

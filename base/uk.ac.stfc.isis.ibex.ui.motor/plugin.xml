@@ -105,5 +105,68 @@
          </view>
       </perspectiveExtension>
    </extension>
+   <extension
+         point="org.eclipse.ui.commands">
+      <command
+            defaultHandler="uk.ac.stfc.isis.ibex.ui.motor.displayoptions.DisplaySettingsHandler"
+            id="uk.ac.stfc.isis.ibex.ui.motor.colourOptionsCommand"
+            name="ColourOptions">
+         <commandParameter
+               id="org.eclipse.ui.commands.radioStateParameter"
+               name="colourOptions"
+               optional="false">
+         </commandParameter>
+         <state
+               id="org.eclipse.ui.commands.radioState">
+            <class
+                  class="org.eclipse.ui.handlers.RadioState">
+               <parameter
+                     name="default"
+                     value="NORMAL_VISION">
+               </parameter>
+               <parameter
+                     name="persisted"
+                     value="false">
+               </parameter>
+            </class>
+         </state>
+      </command>
+   </extension>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            allPopups="false"
+            locationURI="menu:org.eclipse.ui.main.menu?after=runcontrolMenu">
+         <menu
+               id="preferencesMenu"
+               label="Preferences">
+            <menu
+                  id="colourSettingsMenu"
+                  label="Colour Settings">
+               <command
+                     commandId="uk.ac.stfc.isis.ibex.ui.motor.colourOptionsCommand"
+                     id="uk.ac.stfc.isis.ibex.ui.motor.colourOptionsCommand1"
+                     label="Standard Colour Scheme"
+                     style="radio">
+                  <parameter
+                   		name="org.eclipse.ui.commands.radioStateParameter"
+                        value="NORMAL_VISION">
+                  </parameter>
+                       
+               </command>
+               <command
+                     commandId="uk.ac.stfc.isis.ibex.ui.motor.colourOptionsCommand"
+                     id="uk.ac.stfc.isis.ibex.ui.motor.colourOptionsCommand2"
+                     label="Alternative Colour Scheme 1"
+                     style="radio">
+                  <parameter
+                        name="org.eclipse.ui.commands.radioStateParameter"
+                        value="COLOURBLIND">
+                  </parameter>
+               </command>
+            </menu>
+         </menu>
+      </menuContribution>
+   </extension>
 
 </plugin>
