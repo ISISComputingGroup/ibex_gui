@@ -51,6 +51,7 @@ public class MinimalMotorViewModelTest {
         Mockito.when(palette.getUnnamedColor()).thenReturn(new Color(null, 1, 1, 1));
         Mockito.when(palette.getMovingColor()).thenReturn(new Color(null, 2, 2, 2));
         Mockito.when(palette.getStoppedColor()).thenReturn(new Color(null, 3, 3, 3));
+        viewModel.setPalette(palette);
 
         testMotor = new TestMotor();
 
@@ -63,7 +64,6 @@ public class MinimalMotorViewModelTest {
         testMotor.enabled = MotorEnable.ENABLE;
         testMotor.moving = false;
 
-        viewModel.setPalette(palette);
         viewModel.setMotor(testMotor);
 
         // Act
@@ -79,7 +79,6 @@ public class MinimalMotorViewModelTest {
         testMotor.name = null;
         testMotor.enabled = MotorEnable.ENABLE;
 
-        viewModel.setPalette(palette);
         viewModel.setMotor(testMotor);
 
         // Act
@@ -94,7 +93,6 @@ public class MinimalMotorViewModelTest {
         // Arrange
         testMotor.enabled = MotorEnable.ENABLE;
 
-        viewModel.setPalette(palette);
         viewModel.setMotor(testMotor);
 
         // Act
@@ -110,7 +108,6 @@ public class MinimalMotorViewModelTest {
         testMotor.enabled = MotorEnable.ENABLE;
         testMotor.moving = true;
 
-        viewModel.setPalette(palette);
         viewModel.setMotor(testMotor);
 
         // Act
@@ -125,7 +122,6 @@ public class MinimalMotorViewModelTest {
         // Arrange
         testMotor.enabled = MotorEnable.DISABLE;
 
-        viewModel.setPalette(palette);
         viewModel.setMotor(testMotor);
 
         // Act
@@ -140,9 +136,7 @@ public class MinimalMotorViewModelTest {
         // Arrange
         testMotor.enabled = MotorEnable.UNKNOWN;
 
-        viewModel.setPalette(palette);
         viewModel.setMotor(testMotor);
-
 
         // Act
         Color color = viewModel.getColor();
@@ -152,14 +146,46 @@ public class MinimalMotorViewModelTest {
     }
 
     @Test
-    public void GIVEN_motor_is_set_WHEN_palette_has_not_been_set_THEN_no_exception_is_thrown() {
-        try{
-            // Act
-            viewModel.setMotor(testMotor);
-        } catch(Exception e){
-            // Assert that no exception was thrown
-            Assert.fail("Exception shouldn't have been thrown. " + e.toString());
-        }
+    public void GIVEN_motor_is_set_and_palette_is_null_WHEN_requesting_color_THEN_color_is_still_given() {
+        // Arrange
+        viewModel.setPalette(null);
+        viewModel.setMotor(testMotor);
+
+        // Act
+        Color color = viewModel.getColor();
+
+        // Assert that color is a non-null instance of Color
+        Assert.assertNotNull(color);
+        Assert.assertTrue(color instanceof Color);
+
+    }
+
+    @Test
+    public void GIVEN_motor_is_set_up_THEN_value_is_printed_as_val_colon_space_value_to_two_decimal_places() {
+        // Arrange
+        testMotor.testMotorSetpoint.value = -1.2345;
+
+        viewModel.setMotor(testMotor);
+
+        // Act
+        String output = viewModel.getValue();
+
+        // Assert
+        Assert.assertEquals("Val: -1.23", output);
+    }
+
+    @Test
+    public void GIVEN_motor_is_set_up_THEN_setpoint_is_printed_as_sp_colon_space_value_to_two_decimal_places() {
+        // Arrange
+        testMotor.testMotorSetpoint.setpoint = 4.495;
+
+        viewModel.setMotor(testMotor);
+
+        // Act
+        String output = viewModel.getSetpoint();
+
+        // Assert
+        Assert.assertEquals("SP: 4.50", output);
     }
 
 }

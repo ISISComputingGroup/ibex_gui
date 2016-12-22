@@ -50,6 +50,7 @@ public class MinimalMotorViewModel extends ModelObject {
 
     private static final Font ENABLEDFONT = SWTResourceManager.getFont("Arial", 9, SWT.BOLD);
     private static final Font DISABLEDFONT = SWTResourceManager.getFont("Arial", 9, SWT.ITALIC);
+    private static final Color NOPALETTECOLOR = SWTResourceManager.getColor(200, 200, 200);
     private String value;
     private String setpoint;
     private String motorName;
@@ -70,6 +71,12 @@ public class MinimalMotorViewModel extends ModelObject {
     }
 
     private Color chooseColor() {
+
+        if (palette == null) {
+            // If no palette has been set yet, return a default colour
+            return NOPALETTECOLOR;
+        }
+
         boolean isMoving = (moving != null) && (moving);
         boolean isEnabled = (enabled != null) && (enabled);
         boolean isNamed = (motorName != null) && !(motorName.isEmpty());
@@ -207,13 +214,6 @@ public class MinimalMotorViewModel extends ModelObject {
      *            the motor that this view model should control
      */
     public void setMotor(final Motor motor) {
-
-        if (this.palette == null) {
-            // If the palette hasn't been set before the motors are set, then default to an all-grey palette...
-            Color grey = new Color(null, 200, 200, 200);
-            MotorBackgroundPalette palette = new MotorBackgroundPalette(grey, grey, grey, grey);
-            setPalette(palette);
-        }
 
         setMotorName(motor.name());
         this.setpoint = formatForMotorDisplay("SP", motor.getSetpoint().getSetpoint());
