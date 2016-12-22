@@ -97,22 +97,52 @@ public class MinimalMotorViewModel extends ModelObject {
         }
     }
 
+    /**
+     * Sets the name of the motor in the display.
+     *
+     * @param newName
+     *            the new name of the motor
+     */
     public void setMotorName(String newName) {
         firePropertyChange("motorName", this.motorName, this.motorName = newName);
     }
 
+    /**
+     * Sets the color used by the motor.
+     *
+     * @param newColor
+     *            the new color of the motor
+     */
     public void setColor(Color newColor) {
         firePropertyChange("color", this.color, this.color = newColor);
     }
 
+    /**
+     * Sets the font used by the motor.
+     *
+     * @param newFont
+     *            the new font used by the motor
+     */
     public void setFont(Font newFont) {
         firePropertyChange("font", this.font, this.font = newFont);
     }
 
+    /**
+     * Sets the current setpoint of the motor in the display.
+     *
+     * @param newSetpoint
+     *            the new setpoint of the motor
+     */
     public void setSetpoint(String newSetpoint) {
         firePropertyChange("setpoint", this.setpoint, this.setpoint = newSetpoint);
     }
 
+    /**
+     * Sets the current position of the motor in the display.
+     *
+     * @param newValue
+     *            the new position of the motor
+     */
     public void setValue(String newValue) {
         firePropertyChange("value", this.value, this.value = newValue);
     }
@@ -177,10 +207,19 @@ public class MinimalMotorViewModel extends ModelObject {
      *            the motor that this view model should control
      */
     public void setMotor(final Motor motor) {
-        this.setpoint = formatForMotorDisplay("SP", motor.getSetpoint().getSetpoint());
-        this.value = formatForMotorDisplay("SP", motor.getSetpoint().getValue());
-        setEnabled(motor.getEnabled());
+
+        if (this.palette == null) {
+            // If the palette hasn't been set before the motors are set, then default to an all-grey palette...
+            Color grey = new Color(null, 200, 200, 200);
+            MotorBackgroundPalette palette = new MotorBackgroundPalette(grey, grey, grey, grey);
+            setPalette(palette);
+        }
+
         setMotorName(motor.name());
+        this.setpoint = formatForMotorDisplay("SP", motor.getSetpoint().getSetpoint());
+        this.value = formatForMotorDisplay("Val", motor.getSetpoint().getValue());
+        this.moving = motor.getMoving();
+        setEnabled(motor.getEnabled());
         setColor(chooseColor());
         this.font = chooseFont();
 
@@ -255,4 +294,5 @@ public class MinimalMotorViewModel extends ModelObject {
     public void setMoving(boolean moving) {
         this.moving = moving;
     }
+
 }

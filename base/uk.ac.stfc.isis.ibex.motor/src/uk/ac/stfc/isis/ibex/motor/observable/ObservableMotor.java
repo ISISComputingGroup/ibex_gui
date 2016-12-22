@@ -22,7 +22,6 @@ package uk.ac.stfc.isis.ibex.motor.observable;
 import uk.ac.stfc.isis.ibex.epics.adapters.TextUpdatedObservableAdapter;
 import uk.ac.stfc.isis.ibex.epics.adapters.UpdatedObservableAdapter;
 import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
-import uk.ac.stfc.isis.ibex.epics.observing.Observer;
 import uk.ac.stfc.isis.ibex.motor.Motor;
 import uk.ac.stfc.isis.ibex.motor.MotorDirection;
 import uk.ac.stfc.isis.ibex.motor.MotorEnable;
@@ -54,29 +53,6 @@ public class ObservableMotor extends Motor {
 		
 		direction = adapt(variables.direction, "direction");
 		moving = adapt(variables.moving, "moving");
-
-        variables.moving.addObserver(new Observer<Boolean>() {
-
-            @Override
-            public void update(Boolean value, Exception error, boolean isConnected) {
-                //
-            }
-
-            @Override
-            public void onValue(Boolean value) {
-                //
-            }
-
-            @Override
-            public void onError(Exception e) {
-                //
-            }
-
-            @Override
-            public void onConnectionStatus(boolean isConnected) {
-                //
-            }
-        });
 
 		atHome = adapt(variables.atHome, "atHome");
 		atLowerLimitSwitch = adapt(variables.atLowerLimitSwitch, "atLowerLimitSwitch");

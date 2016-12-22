@@ -40,26 +40,31 @@ public class MinimalMotorViewModelTest {
     @Mock
     private MotorBackgroundPalette palette;
     private MinimalMotorViewModel viewModel;
+    private TestMotor testMotor;
 
     @Before
     public void setUp() {
         viewModel = new MinimalMotorViewModel();
-        palette = Mockito.mock(MotorBackgroundPalette.class);
 
+        palette = Mockito.mock(MotorBackgroundPalette.class);
         Mockito.when(palette.getDisabledColor()).thenReturn(new Color(null, 0, 0, 0));
         Mockito.when(palette.getUnnamedColor()).thenReturn(new Color(null, 1, 1, 1));
         Mockito.when(palette.getMovingColor()).thenReturn(new Color(null, 2, 2, 2));
         Mockito.when(palette.getStoppedColor()).thenReturn(new Color(null, 3, 3, 3));
+
+        testMotor = new TestMotor();
+
     }
 
     @Test
     public void GIVEN_motor_name_is_empty_THEN_motor_colour_is_unnamed_colour() {
         // Arrange
-        viewModel.setMotorName("");
-        viewModel.setEnabled(MotorEnable.ENABLE);
-        viewModel.setMoving(true);
-        viewModel.setPalette(palette); // Palette update must happen last, as it
-                                       // also updates the color
+        testMotor.name = "";
+        testMotor.enabled = MotorEnable.ENABLE;
+        testMotor.moving = false;
+
+        viewModel.setPalette(palette);
+        viewModel.setMotor(testMotor);
 
         // Act
         Color color = viewModel.getColor();
@@ -71,11 +76,11 @@ public class MinimalMotorViewModelTest {
     @Test
     public void GIVEN_motor_name_is_null_THEN_motor_colour_is_unnamed_colour() {
         // Arrange
-        viewModel.setMotorName(null);
-        viewModel.setEnabled(MotorEnable.ENABLE);
-        viewModel.setMoving(true);
-        viewModel.setPalette(palette); // Palette update must happen last, as it
-                                       // also updates the color
+        testMotor.name = null;
+        testMotor.enabled = MotorEnable.ENABLE;
+
+        viewModel.setPalette(palette);
+        viewModel.setMotor(testMotor);
 
         // Act
         Color color = viewModel.getColor();
@@ -87,11 +92,10 @@ public class MinimalMotorViewModelTest {
     @Test
     public void GIVEN_motor_is_not_moving_THEN_motor_colour_is_stopped_colour() {
         // Arrange
-        viewModel.setMotorName("some name");
-        viewModel.setEnabled(MotorEnable.ENABLE);
-        viewModel.setMoving(false);
-        viewModel.setPalette(palette); // Palette update must happen last, as it
-                                       // also updates the color
+        testMotor.enabled = MotorEnable.ENABLE;
+
+        viewModel.setPalette(palette);
+        viewModel.setMotor(testMotor);
 
         // Act
         Color color = viewModel.getColor();
@@ -103,11 +107,11 @@ public class MinimalMotorViewModelTest {
     @Test
     public void GIVEN_motor_is_moving_THEN_motor_colour_is_moving_colour() {
         // Arrange
-        viewModel.setMotorName("some name");
-        viewModel.setEnabled(MotorEnable.ENABLE);
-        viewModel.setMoving(true);
-        viewModel.setPalette(palette); // Palette update must happen last, as it
-                                       // also updates the color
+        testMotor.enabled = MotorEnable.ENABLE;
+        testMotor.moving = true;
+
+        viewModel.setPalette(palette);
+        viewModel.setMotor(testMotor);
 
         // Act
         Color color = viewModel.getColor();
@@ -119,11 +123,10 @@ public class MinimalMotorViewModelTest {
     @Test
     public void GIVEN_motor_is_disabled_THEN_motor_colour_is_disabled_colour() {
         // Arrange
-        viewModel.setMotorName("some name");
-        viewModel.setEnabled(MotorEnable.DISABLE);
-        viewModel.setMoving(true);
-        viewModel.setPalette(palette); // Palette update must happen last, as it
-                                       // also updates the color
+        testMotor.enabled = MotorEnable.DISABLE;
+
+        viewModel.setPalette(palette);
+        viewModel.setMotor(testMotor);
 
         // Act
         Color color = viewModel.getColor();
@@ -134,13 +137,12 @@ public class MinimalMotorViewModelTest {
 
     @Test
     public void GIVEN_motor_is_unknown_THEN_motor_colour_is_unknown_colour() {
-
         // Arrange
-        viewModel.setMotorName("some name");
-        viewModel.setEnabled(MotorEnable.UNKNOWN);
-        viewModel.setMoving(true);
-        viewModel.setPalette(palette); // Palette update must happen last, as it
-                                       // also updates the color
+        testMotor.enabled = MotorEnable.UNKNOWN;
+
+        viewModel.setPalette(palette);
+        viewModel.setMotor(testMotor);
+
 
         // Act
         Color color = viewModel.getColor();
@@ -149,5 +151,15 @@ public class MinimalMotorViewModelTest {
         Assert.assertEquals(palette.getDisabledColor(), color);
     }
 
+    @Test
+    public void GIVEN_motor_is_set_WHEN_palette_has_not_been_set_THEN_no_exception_is_thrown() {
+        try{
+            // Act
+            viewModel.setMotor(testMotor);
+        } catch(Exception e){
+            // Assert that no exception was thrown
+            Assert.fail("Exception shouldn't have been thrown. " + e.toString());
+        }
+    }
 
 }
