@@ -23,7 +23,7 @@ package uk.ac.stfc.isis.ibex.scriptgenerator.row;
  * The wait units used in the "SANS Wait" and "TRANS Wait" fields in the table.
  */
 public enum WaitUnit {
-	MICROAMP("MicroAmp Hours"),
+	UAMPS("MicroAmp Hours"),
 	MINUTES("Minutes"),
 	SECONDS("Seconds"),
 	FRAMES("Frames");

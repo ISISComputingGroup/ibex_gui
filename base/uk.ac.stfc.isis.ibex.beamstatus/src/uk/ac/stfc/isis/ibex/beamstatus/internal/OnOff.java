@@ -19,7 +19,17 @@
 
 package uk.ac.stfc.isis.ibex.beamstatus.internal;
 
+/**
+ * An enum for the on off status of the beam or muon kicker.
+ */
 public enum OnOff {
+    /**
+     * The device is on.
+     */
 	ON,
+
+    /**
+     * The device is off.
+     */
 	OFF
 }

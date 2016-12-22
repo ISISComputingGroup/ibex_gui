@@ -36,22 +36,32 @@ import uk.ac.stfc.isis.ibex.model.ModelObject;
 public class AlarmCounter extends ModelObject {
 	private int count;
 
+    /**
+     * The constructor for the counter. Adds a listener to the BEAST alarm
+     * model.
+     * 
+     * @param alarmModel
+     *            The BEAST alarm model to monitor.
+     */
     public AlarmCounter(final AlarmClientModel alarmModel) {
         count = 0;
 
 		alarmModel.addListener(new AlarmClientModelListener() {
 
 			@Override
-			public void newAlarmConfiguration(AlarmClientModel model) {
-			}
+            public void newAlarmConfiguration(AlarmClientModel model) {
+                /* Ignore */
+            }
 
 			@Override
-			public void serverTimeout(AlarmClientModel model) {
-			}
+            public void serverTimeout(AlarmClientModel model) {
+                /* Ignore */
+            }
 
 			@Override
-			public void serverModeUpdate(AlarmClientModel model, boolean maintenanceMode) {
-			}
+            public void serverModeUpdate(AlarmClientModel model, boolean maintenanceMode) {
+                /* Ignore */
+            }
 
 			@Override
 			public void newAlarmState(AlarmClientModel model, AlarmTreePV pv, boolean parentChanged) {
@@ -60,10 +70,16 @@ public class AlarmCounter extends ModelObject {
 		});
     }
 
+    /**
+     * Resets the counter to zero alarm messages.
+     */
 	public void resetCount() {
         fireCountChanged(count, count = 0);
 	}
 	
+    /**
+     * Forces the counter to update to the count from the BEAST model.
+     */
     public void forceRefresh() {
         fireCountChanged(count, count = Alarm.getDefault().getAlarmModel().getActiveAlarms().length);
 	}
