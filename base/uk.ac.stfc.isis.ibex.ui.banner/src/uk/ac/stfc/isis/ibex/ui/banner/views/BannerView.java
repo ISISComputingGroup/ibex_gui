@@ -208,10 +208,6 @@ public class BannerView extends ViewPart implements ISizeProvider {
         }
 
         @Override
-        public void onError(Exception e) {
-        }
-
-        @Override
         public void onConnectionStatus(boolean isConnected) {
             if (!isConnected) {
                 disposeBanner();
