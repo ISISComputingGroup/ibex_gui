@@ -34,8 +34,6 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
 
-import uk.ac.stfc.isis.ibex.motor.Motor;
-
 /**
  * The viewer for an individual motor.
  */
@@ -99,6 +97,8 @@ public class MinimalMotorView extends Composite {
 		indicator.setLayoutData(new GridData(SWT.FILL, SWT.TOP, false, false, 1, 1));
 		
 		setMouseListeners();
+		
+        bind();
 
 	}
 
@@ -112,23 +112,9 @@ public class MinimalMotorView extends Composite {
     }
 
     /**
-     * Getter for the motor used by the cell.
-     * 
-     * @return the motor used by the cell
+     * Binds the model to the view.
      */
-    public Motor motor() {
-        return this.minimalMotorViewModel.getMotor();
-    }
-
-    /**
-     * Sets the motor pointed at by the cell.
-     * 
-     * @param motor
-     *            the new motor.
-     */
-	public void setMotor(final Motor motor) {
-
-        minimalMotorViewModel.setMotor(motor);
+    private void bind() {
         
         bindingContext.bindValue(WidgetProperties.text().observe(setpoint),
                 BeanProperties.value("setpoint").observe(minimalMotorViewModel));

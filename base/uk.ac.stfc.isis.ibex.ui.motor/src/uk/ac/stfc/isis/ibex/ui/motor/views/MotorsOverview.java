@@ -132,8 +132,8 @@ public class MotorsOverview extends Composite {
 	private void addMinimalView(Motor motor) {
         MinimalMotorViewModel model = new MinimalMotorViewModel();
         model.setPalette(palette);
+        model.setMotor(motor);
         MinimalMotorView view = new MinimalMotorView(motorComposite, SWT.NONE, model);
-		view.setMotor(motor);
 		view.setLayoutData(viewLayout());
 		
 		minimalViews.add(view);
