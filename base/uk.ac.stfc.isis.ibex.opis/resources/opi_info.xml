@@ -302,7 +302,7 @@
 				<macros>
 					<macro>
 						<name>MM</name>
-						<description>The motor PV relating to the motor controlling the bench rotation (e.g. MOT:MTR0605).</description>
+						<description>The PV for the motor controlling the bench rotation (e.g. MOT:MTR0605).</description>
 					</macro>
 				</macros>
 			</value>
