@@ -127,7 +127,7 @@ public class SynopticViewModel {
 
         DefaultName namer = new DefaultName("New Component", " ", true);
         component.setName(namer.getUnique(synoptic.getComponentNameListWithChildren()));
-		component.setType(ComponentType.UNKNOWN);
+        component.setType(ComponentType.UNKNOWN, false);
 
 		int position = 0;
 		if (selectedComponents == null) {
