@@ -53,7 +53,6 @@ public class ObservableMotor extends Motor {
 		
 		direction = adapt(variables.direction, "direction");
 		moving = adapt(variables.moving, "moving");
-
 		atHome = adapt(variables.atHome, "atHome");
 		atLowerLimitSwitch = adapt(variables.atLowerLimitSwitch, "atLowerLimitSwitch");
 		atUpperLimitSwitch = adapt(variables.atUpperLimitSwitch, "atUpperLimitSwitch");
