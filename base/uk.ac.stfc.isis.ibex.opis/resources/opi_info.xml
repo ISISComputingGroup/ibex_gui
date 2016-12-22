@@ -388,7 +388,7 @@
 			<value>
 				<type>JAWS</type>
 				<path>slit1.opi</path>
-				<description>Description required.</description>
+				<description>A 2D set of rectangular jaws controlled by 4 motors.</description>
 				<macros>
                     <macro>
 						<name>J</name>
