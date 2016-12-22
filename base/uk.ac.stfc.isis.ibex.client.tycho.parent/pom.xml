@@ -249,6 +249,7 @@
 		<module>../uk.ac.stfc.isis.ibex.ui.devicescreens.tests</module>
 		<module>../uk.ac.stfc.isis.ibex.scriptgenerator.tests</module>
 		<module>../uk.ac.stfc.isis.ibex.activemq</module>
+		<module>../uk.ac.stfc.isis.ibex.nicos</module>
 	</modules>
 </project>
 
