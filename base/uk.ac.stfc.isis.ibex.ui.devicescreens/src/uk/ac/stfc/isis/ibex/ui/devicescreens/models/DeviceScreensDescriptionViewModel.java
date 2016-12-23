@@ -199,6 +199,12 @@ public class DeviceScreensDescriptionViewModel extends ModelObject {
                 messageDisplayer.setErrorMessage("ViewModel", errorMessageNames);
                 return;
             }
+            if (d.getKey().length() == 0) {
+                String errorMessageTarget =
+                        "Device '" + d.getName() + "' is not pointing at a valid target. Please select a target OPI.";
+                messageDisplayer.setErrorMessage("ViewModel", errorMessageTarget);
+                return;
+            }
         }
 
         // No errors
@@ -270,6 +276,7 @@ public class DeviceScreensDescriptionViewModel extends ModelObject {
         firePropertyChange("currentKey", previousKey, previousKey = newKey);
         // Must update to the corresponding description
         updateCurrentDescription();
+        checkScreensValid();
     }
 
     /**
