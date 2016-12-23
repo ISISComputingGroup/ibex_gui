@@ -18,10 +18,11 @@
 
 package uk.ac.stfc.isis.ibex.log;
 
+import java.beans.PropertyChangeListener;
 import java.util.Calendar;
 import java.util.List;
 
-import uk.ac.stfc.isis.ibex.activemq.message.IMessageProducer;
+import uk.ac.stfc.isis.ibex.activemq.message.IMessageConsumer;
 import uk.ac.stfc.isis.ibex.log.message.LogMessage;
 import uk.ac.stfc.isis.ibex.log.message.LogMessageFields;
 
@@ -29,7 +30,23 @@ import uk.ac.stfc.isis.ibex.log.message.LogMessageFields;
  * Interface for a class that produces log messages. The producer provides
  * updates of new messages and access to a cache of recently delivered messages.
  */
-public interface ILogMessageProducer extends IMessageProducer<LogMessage> {
+public interface ILogMessageProducer {
+
+    /**
+     * Register a message consumer. The consumer's newMessage() method will be
+     * called whenever this producer has a new message to deliver.
+     * 
+     * @param messageReceiver
+     *            The object to receive messages.
+     */
+    void addMessageConsumer(IMessageConsumer<LogMessage> messageReceiver);
+
+    /**
+     * Add a property change listener. The intended purpose is to listen for
+     * changes in connection status.
+     */
+    void addPropertyChangeListener(String propertyName,
+	    PropertyChangeListener listener);
 
     /**
      * Producer stores the N most recent messages sent. These can be retrieved
@@ -44,6 +61,6 @@ public interface ILogMessageProducer extends IMessageProducer<LogMessage> {
     List<LogMessage> search(LogMessageFields field, String value,
 	    Calendar from, Calendar to) throws Exception;
 
-    @Override
+
     void clearMessages();
 }

@@ -32,7 +32,7 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
-import uk.ac.stfc.isis.ibex.activemq.message.IMessageParser;
+import uk.ac.stfc.isis.ibex.activemq.message.MessageParser;
 import uk.ac.stfc.isis.ibex.log.message.LogMessage;
 import uk.ac.stfc.isis.ibex.log.message.LogMessageFields;
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
@@ -41,7 +41,7 @@ import uk.ac.stfc.isis.ibex.logger.IsisLog;
  * Converts the XML representation of an IOC log message into an instance of
  * LogMessage.
  */
-public class XmlLogMessageParser implements IMessageParser {
+public class XmlLogMessageParser extends MessageParser<LogMessage> {
     private static final Logger LOG = IsisLog
 	    .getLogger(XmlLogMessageParser.class);
 

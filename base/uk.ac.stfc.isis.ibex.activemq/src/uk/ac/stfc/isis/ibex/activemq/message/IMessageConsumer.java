@@ -18,8 +18,23 @@
 
 package uk.ac.stfc.isis.ibex.activemq.message;
 
+/**
+ * Class for receiving new IMessages.
+ *
+ * @param <T>
+ *            The type of message to receive.
+ */
 public interface IMessageConsumer<T extends IMessage> {
+    /**
+     * Called when a new message is received.
+     * 
+     * @param message
+     *            The message received.
+     */
     void newMessage(T message);
 
+    /**
+     * Clears all received messages.
+     */
     void clearMessages();
 }

@@ -25,9 +25,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jface.preference.IPreferenceStore;
 
@@ -36,6 +33,7 @@ import com.mysql.jdbc.exceptions.jdbc4.CommunicationsException;
 import uk.ac.stfc.isis.ibex.activemq.ActiveMQ;
 import uk.ac.stfc.isis.ibex.activemq.MQConnection;
 import uk.ac.stfc.isis.ibex.activemq.message.IMessageConsumer;
+import uk.ac.stfc.isis.ibex.activemq.message.MessageParser;
 import uk.ac.stfc.isis.ibex.databases.Rdb;
 import uk.ac.stfc.isis.ibex.log.jms.XmlLogMessageParser;
 import uk.ac.stfc.isis.ibex.log.message.LogMessage;
@@ -69,6 +67,8 @@ public class LogModel extends ModelObject implements ILogMessageProducer,
      */
     private final MQConnection jmsHandler;
 
+    private final MessageParser<LogMessage> parser = new XmlLogMessageParser();
+
     /** List of subscribers that are to received any new JMS messages */
     private ArrayList<IMessageConsumer<LogMessage>> messageReceivers = new ArrayList<>();
 
@@ -78,8 +78,9 @@ public class LogModel extends ModelObject implements ILogMessageProducer,
     public LogModel() {
         String port = preferenceStore.getString(PreferenceConstants.P_JMS_PORT);
         String topic = preferenceStore.getString(PreferenceConstants.P_JMS_TOPIC);
-        jmsHandler = ActiveMQ.getInstance().getNewConnection(port, topic, new XmlLogMessageParser());
-    	jmsHandler.setMessageConsumer(this);
+        jmsHandler = ActiveMQ.getInstance().getConnection(port);
+        parser.addMessageConsumer(this);
+        jmsHandler.addMessageParser(topic, parser);
     	jmsHandler.addPropertyChangeListener("connection", passThrough());
     }
 
@@ -128,33 +129,9 @@ public class LogModel extends ModelObject implements ILogMessageProducer,
         return jmsMessageCache;
     }
 
-    /**
-     * Starts a background job that maintains a connection to the Java Messaging
-     * Service (JMS) server.
-     */
-    public void start() {
-        jmsListenerJob = new Job("JMS Listener") {
-            @Override
-            protected IStatus run(IProgressMonitor monitor) {
-                jmsHandler.run();
-                return Status.OK_STATUS;
-            }
-
-            @Override
-            protected void canceling() {
-                jmsHandler.stop();
-                super.canceling();
-            }
-        };
-
-        jmsListenerJob.schedule();
-    }
-
     public void stop() {
-        if (jmsListenerJob != null) {
-            jmsListenerJob.cancel();
-            jmsHandler.stop();
-        }
+        parser.setRunning(false);
+        jmsHandler.stop();
     }
 
     @Override

@@ -42,7 +42,6 @@ public class Log extends AbstractUIPlugin {
 	model = new LogModel();
 	counter = new LogCounter();
 	model.addMessageConsumer(counter);
-	model.start();
     }
 
     public ILogMessageProducer producer() {

@@ -18,21 +18,20 @@
 
 package uk.ac.stfc.isis.ibex.activemq;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.jms.Connection;
 import javax.jms.ExceptionListener;
 import javax.jms.JMSException;
-import javax.jms.MessageConsumer;
 import javax.jms.Session;
-import javax.jms.TextMessage;
 import javax.jms.Topic;
 
 import org.apache.activemq.ActiveMQConnection;
 import org.apache.activemq.ActiveMQConnectionFactory;
 import org.apache.logging.log4j.Logger;
 
-import uk.ac.stfc.isis.ibex.activemq.message.IMessage;
-import uk.ac.stfc.isis.ibex.activemq.message.IMessageConsumer;
-import uk.ac.stfc.isis.ibex.activemq.message.IMessageParser;
+import uk.ac.stfc.isis.ibex.activemq.message.MessageParser;
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 
@@ -43,7 +42,6 @@ import uk.ac.stfc.isis.ibex.model.ModelObject;
 @SuppressWarnings("rawtypes")
 public class MQConnection extends ModelObject implements Runnable {
 
-    private static final int TIMEOUT_50_MS = 50;
     private static final int ONE_SECOND = 1000;
 
     private static final Logger LOG = IsisLog.getLogger(MQConnection.class);
@@ -54,9 +52,6 @@ public class MQConnection extends ModelObject implements Runnable {
 
     /** JMS Server URL */
     private String jmsUrl;
-
-    /** JMS subscription Topic */
-    private String jmsTopic;
 
     /** Server name, <code>null</code> if not connected */
     private String jmsServer = null;
@@ -73,20 +68,16 @@ public class MQConnection extends ModelObject implements Runnable {
     /** Indicates whether the Handler is currently connected to the JMS server */
     private boolean connectedToJms;
 
-    /** Receives messages from the JMS server */
-    private MessageConsumer jmsConsumer;
-
-    /** Converts the XML messages received via JMS to LogMessages */
-    private IMessageParser parser;
-
-    /** The recipient of any parsed messages */
-    private IMessageConsumer messageLogConsumer;
+    /** The recipients of any parsed messages */
+    private Map<String, MessageParser> messageParsers = new HashMap<>();
 
     /**
      * Indicates whether a warning message has been issued since last time
      * server was connected
      */
     private boolean connectionWarnFlag;
+
+    private Thread thread;
 
     /**
      * Creates an activeMQ connection.
@@ -95,26 +86,26 @@ public class MQConnection extends ModelObject implements Runnable {
      *            The initial host instrument to connect to.
      * @param port
      *            The port to read/write the ActiveMQ messages from.
-     * @param topic
-     *            The topic or queue to read/write from/to.
-     * @param parser
-     *            The parser to convert activeMQ messages.
      */
-    MQConnection(String initialHost, String port, String topic, IMessageParser parser) {
+    public MQConnection(String initialHost, String port) {
         jmsPort = port;
         updateURL(initialHost);
-        jmsTopic = topic;
-        this.parser = parser;
+
+        thread = new Thread(this);
+        thread.start();
     }
 
     /**
-     * Adds a message consumer to this connection.
+     * Adds a message parser to this connection.
      * 
-     * @param messageConsumer
-     *            The consumer to add.
+     * @param topic
+     *            The topic or queue to add the consumer to.
+     * 
+     * @param messageParser
+     *            The parser to add.
      */
-    public void setMessageConsumer(IMessageConsumer messageConsumer) {
-        this.messageLogConsumer = messageConsumer;
+    public void addMessageParser(String topic, MessageParser messageParser) {
+        messageParsers.put(topic, messageParser);
     }
 
     /**
@@ -139,18 +130,7 @@ public class MQConnection extends ModelObject implements Runnable {
     @Override
     public void run() {
         while (run) {
-            if (isConnected()) {
-                try {
-                    TextMessage textMessage = (TextMessage) jmsConsumer.receive(TIMEOUT_50_MS);
-                    if (textMessage != null) {
-                        IMessage message = parser.parseMessage(textMessage.getText());
-                        messageLogConsumer.newMessage(message);
-                    }
-                } catch (JMSException e) {
-                    // Do nothing; exception will be caught be exception
-                    // listener (see connect())
-                }
-            } else {
+            if (!isConnected()) {
                 // If not connected or if connection is dropped, establish
                 // connection with JMS
                 try {
@@ -210,15 +190,18 @@ public class MQConnection extends ModelObject implements Runnable {
         connectionWarnFlag = false;
         session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
 
-        Topic topic = session.createTopic(jmsTopic);
-        jmsConsumer = session.createConsumer(topic);
+        for (Map.Entry<String, MessageParser> e : messageParsers.entrySet()) {
+            Topic topic = session.createTopic(e.getKey());
+            e.getValue().setActiveMQConsumer(session.createConsumer(topic));
+        }
     }
 
     /** Disconnect from JMS - free resources. */
     public synchronized void disconnect() {
         try {
-            if (jmsConsumer != null) {
-                jmsConsumer.close();
+
+            for (MessageParser p : messageParsers.values()) {
+                p.closeJMSConsumer();
             }
 
             if (session != null) {
@@ -249,6 +232,12 @@ public class MQConnection extends ModelObject implements Runnable {
             host = "//" + host;
         }
 
+        String oldjmsUrl = jmsUrl;
         jmsUrl = PROTOCOL + host + ":" + jmsPort;
+        
+        if (oldjmsUrl != null && !jmsUrl.equals(oldjmsUrl)) {
+            // Disconnect and reconnect
+            disconnect();
+        }
     }
 }

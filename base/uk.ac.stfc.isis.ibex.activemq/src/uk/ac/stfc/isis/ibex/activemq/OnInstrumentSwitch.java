@@ -38,10 +38,9 @@ public class OnInstrumentSwitch implements InstrumentInfoReceiver {
      */
     @Override
     public void setInstrument(InstrumentInfo instrument) {
-        for (MQConnection handler : ActiveMQ.getInstance().getConnections()) {
+        MQConnection handler = ActiveMQ.getInstance().getConnection();
+        if (handler != null) {
             handler.updateURL(instrument.hostName());
-            // Disconnect and reconnect
-            handler.disconnect();
         }
     }
 

@@ -18,13 +18,9 @@
 
 package uk.ac.stfc.isis.ibex.activemq;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
-import uk.ac.stfc.isis.ibex.activemq.message.IMessageParser;
 import uk.ac.stfc.isis.ibex.instrument.Instrument;
 
 /**
@@ -34,7 +30,7 @@ public class ActiveMQ extends AbstractUIPlugin {
     private static ActiveMQ instance;
 	private static BundleContext context;
 	
-    private List<MQConnection> connections = new ArrayList<>();
+    private MQConnection connection;
 
     /**
      * @return The singleton instance of this class.
@@ -82,23 +78,22 @@ public class ActiveMQ extends AbstractUIPlugin {
      * 
      * @param port
      *            The port to connect to.
-     * @param topic
-     *            The topic or queue to connect to.
-     * @param parser
-     *            A parser that will parse the data from ActiveMQ.
      * @return The Active MQ Connection.
      */
-    public MQConnection getNewConnection(String port, String topic, IMessageParser parser) {
-        String currentInstrument = Instrument.getInstance().currentInstrument().hostName();
-        MQConnection handler = new MQConnection(currentInstrument, port, topic, parser);
-        connections.add(handler);
-        return handler;
+    public MQConnection getConnection(String port) {
+        if (connection == null) {
+            String currentInstrument = Instrument.getInstance().currentInstrument().hostName();
+            connection = new MQConnection(currentInstrument, port);
+        }
+        return connection;
     }
 
     /**
-     * @return All the connections created through this plugin.
+     * Get the Active MQ connection if it exists.
+     * 
+     * @return The Active MQ Connection.
      */
-    public List<MQConnection> getConnections() {
-        return connections;
+    public MQConnection getConnection() {
+        return connection;
     }
 }
