@@ -45,8 +45,12 @@ public class ObservableFactory {
      * Create and return a PV observable of the correct type, registering it
      * with the switcher.
      * 
-     * @param <T> the type of the channel
-     * @param address the PV address
+     * @param <T>
+     *            the type of the channel
+     * @param channelType
+     *            the type of the channel
+     * @param address
+     *            the PV address
      * @return the PV observable
      */
     public <T> SwitchableObservable<T> getSwitchableObservable(ChannelType<T> channelType,

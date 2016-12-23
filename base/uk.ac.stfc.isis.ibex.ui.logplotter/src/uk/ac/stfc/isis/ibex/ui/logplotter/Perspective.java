@@ -68,8 +68,8 @@ public class Perspective extends BasePerspective {
 		
 		lockView(layout, "org.csstudio.trends.databrowser.waveformview.WaveformView");
 		
-        final float view_ratio = 0.1f;
-        layout.addStandaloneView(EmptyLogPlotterView.ID, false, IPageLayout.RIGHT, view_ratio,
+        final float viewRatio = 0.1f;
+        layout.addStandaloneView(EmptyLogPlotterView.ID, false, IPageLayout.RIGHT, viewRatio,
                 "uk.ac.stfc.isis.ibex.ui.perspectives.PerspectiveSwitcher");
 		
 		

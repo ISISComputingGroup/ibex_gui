@@ -66,11 +66,12 @@ public abstract class OpiTargetView extends OpiView {
 	private String opiName;
 
     /**
+     * Sets the target opi.
      * 
-     * @param title - Title of the OPI
-     * @param opiName - Name of the OPI used for identification from list
-     * @param macros - Macros associated with the OPI
-     * @throws OPIViewCreationException when the OPI can not be created
+     * @param target
+     *            The OPI target to set to.
+     * @throws OPIViewCreationException
+     *             when the OPI can not be created
      */
     public void setOpi(OpiTarget target) throws OPIViewCreationException {
         this.opiName = target.opiName();
@@ -140,8 +141,12 @@ public abstract class OpiTargetView extends OpiView {
     /**
      * Display an OPI using a target in the tab view.
      *
-     * @param opiTarget the target OPI to display
-     * @throws OPIViewCreationException when opi can not be created
+     * @param opiTarget
+     *            the target OPI to display
+     * @param id
+     *            The view in which to display the OPI.
+     * @throws OPIViewCreationException
+     *             when opi can not be created
      */
     public static void displayOpi(OpiTarget opiTarget, String id) throws OPIViewCreationException {
         IWorkbenchPage workbenchPage = null;

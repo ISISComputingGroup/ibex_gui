@@ -30,10 +30,11 @@ import uk.ac.stfc.isis.ibex.epics.observing.Subscription;
 public interface ConfigurableWriter<TIn, TOut> extends Writer<TIn> {
 	
 	/**
-	 * Add a target for the writer to write to.
-	 * 
-	 * @param writable
-	 * @return a subscription
-	 */
+     * Add a target for the writer to write to.
+     * 
+     * @param writable
+     *            The target to write to.
+     * @return a subscription
+     */
 	Subscription writeTo(Writable<TOut> writable);
 }
