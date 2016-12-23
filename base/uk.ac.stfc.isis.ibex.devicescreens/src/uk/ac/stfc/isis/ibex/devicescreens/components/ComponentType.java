@@ -97,6 +97,8 @@ public enum ComponentType {
     PRESSURE_GAUGE,
     /** 3D magnet component type. */
     SCIMAG3D,
+    /** Polarises, Guide and Collimation for MUONFE. */
+    PGC,
     /** Detector motion system component type. */
     DETECTOR_MOTION_SYSTEM;
 	

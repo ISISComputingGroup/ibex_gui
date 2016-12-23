@@ -288,7 +288,25 @@
 					</macro>
 				</macros>
 			</value>
-		</entry>        
+		</entry> 
+		<entry>
+			<key>PGC</key>
+			<value>
+				<type>PGC</type>
+				<path>pgc\pgc.opi</path>
+				<description>The OPI for the Polariser , Guide and Collimation ticket.</description>
+				<macros>
+					<macro>
+						<name>PGC</name>
+						<description>The name of the device, as defined in the positions look-up file (e.g. PGC))</description>
+					</macro>
+					<macro>
+						<name>MM</name>
+						<description>The motor PV to point at (as defined in the motionsetpoints file (e.g. MOT:MTR0101))</description>
+					</macro>
+				</macros>
+			</value>
+		</entry>       
 		<entry>
 			<key>Pixelman</key>
 			<value>
