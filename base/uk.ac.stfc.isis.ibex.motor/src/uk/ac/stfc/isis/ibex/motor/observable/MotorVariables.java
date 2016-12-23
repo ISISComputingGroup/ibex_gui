@@ -22,6 +22,7 @@ package uk.ac.stfc.isis.ibex.motor.observable;
 import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
 import uk.ac.stfc.isis.ibex.epics.conversion.Converter;
 import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
+import uk.ac.stfc.isis.ibex.epics.pv.Closer;
 import uk.ac.stfc.isis.ibex.epics.pv.PVAddress;
 import uk.ac.stfc.isis.ibex.epics.switching.ObservableFactory;
 import uk.ac.stfc.isis.ibex.epics.switching.OnInstrumentSwitch;
@@ -35,7 +36,7 @@ import uk.ac.stfc.isis.ibex.instrument.channels.StringChannel;
 import uk.ac.stfc.isis.ibex.motor.MotorDirection;
 import uk.ac.stfc.isis.ibex.motor.MotorEnable;
 
-public class MotorVariables extends InstrumentVariables {
+public class MotorVariables extends Closer {
 
 	private static final Converter<Short, MotorDirection> TO_MOTOR_DIRECTION = new Converter<Short, MotorDirection>() {
 		@Override
@@ -103,20 +104,25 @@ public class MotorVariables extends InstrumentVariables {
         lowerLimit = obsFactory.getSwitchableObservable(new DoubleChannel(), fullAddress.endWithField("DLLM"));
         upperLimit = obsFactory.getSwitchableObservable(new DoubleChannel(), fullAddress.endWithField("DHLM"));
 		
-        direction = convert(obsFactory.getSwitchableObservable(new ShortChannel(), fullAddress.endWithField("TDIR")),
+        direction = InstrumentVariables.convert(
+                obsFactory.getSwitchableObservable(new ShortChannel(), fullAddress.endWithField("TDIR")),
                 TO_MOTOR_DIRECTION);
 		
-        moving = convert(obsFactory.getSwitchableObservable(new ShortChannel(), fullAddress.endWithField("MOVN")),
+        moving = InstrumentVariables.convert(
+                obsFactory.getSwitchableObservable(new ShortChannel(), fullAddress.endWithField("MOVN")),
                 TO_BOOLEAN);
-        atHome = convert(obsFactory.getSwitchableObservable(new ShortChannel(), fullAddress.endWithField("ATHM")),
+        atHome = InstrumentVariables.convert(
+                obsFactory.getSwitchableObservable(new ShortChannel(), fullAddress.endWithField("ATHM")),
                 TO_BOOLEAN);
-        atUpperLimitSwitch = convert(
+        atUpperLimitSwitch = InstrumentVariables.convert(
                 obsFactory.getSwitchableObservable(new ShortChannel(), fullAddress.endWithField("LLS")), TO_BOOLEAN);
-        atLowerLimitSwitch = convert(
+        atLowerLimitSwitch = InstrumentVariables.convert(
                 obsFactory.getSwitchableObservable(new ShortChannel(), fullAddress.endWithField("HLS")), TO_BOOLEAN);
-        setpoint = registerForClose(new MotorSetPointVariables(fullAddress, obsFactory, writeFactory));
+        setpoint = new MotorSetPointVariables(fullAddress, obsFactory, writeFactory);
 		
-		status = convert(obsFactory.getSwitchableObservable(new StringChannel(), motorAddress.toString() + "_STATUS"), CAPITALISE_FIRST_LETTER_ONLY);
+        status = InstrumentVariables.convert(
+                obsFactory.getSwitchableObservable(new StringChannel(), motorAddress.toString() + "_STATUS"),
+                CAPITALISE_FIRST_LETTER_ONLY);
 	}
 	
 	public String motorAddress() {

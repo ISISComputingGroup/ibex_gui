@@ -20,13 +20,12 @@
 package uk.ac.stfc.isis.ibex.instrument;
 
 import uk.ac.stfc.isis.ibex.epics.conversion.Converter;
-import uk.ac.stfc.isis.ibex.epics.observing.Observable;
 import uk.ac.stfc.isis.ibex.epics.observing.ClosableObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.ConvertingObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
-import uk.ac.stfc.isis.ibex.epics.pv.Closer;
+import uk.ac.stfc.isis.ibex.epics.observing.Observable;
 
-public class InstrumentVariables extends Closer {
+public class InstrumentVariables {
 
     public static <S, T> ForwardingObservable<T> convert(ClosableObservable<S> observable,
             Converter<S, T> converter) {

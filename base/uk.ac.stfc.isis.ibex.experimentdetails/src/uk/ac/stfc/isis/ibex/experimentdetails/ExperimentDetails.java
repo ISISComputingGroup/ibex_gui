@@ -90,8 +90,6 @@ public class ExperimentDetails extends AbstractUIPlugin {
 	@Override
     public void stop(BundleContext bundleContext) throws Exception {
 		ExperimentDetails.context = null;
-		
-		variables.close();
 	}
 
 }

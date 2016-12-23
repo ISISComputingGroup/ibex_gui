@@ -40,7 +40,7 @@ import uk.ac.stfc.isis.ibex.instrument.channels.StringChannel;
 /**
  * Holds the Observables and Writables relating to experiment details.
  */
-public class ExperimentDetailsVariables extends InstrumentVariables {
+public class ExperimentDetailsVariables {
 
     private static final int INITIAL_STRING_CAPACITY = 50;
 
@@ -59,17 +59,20 @@ public class ExperimentDetailsVariables extends InstrumentVariables {
     public final Writable<UserDetails[]> userDetailsSetter;
 
     public ExperimentDetailsVariables() {
-        availableSampleParameters = convert(obsFactory.getSwitchableObservable(new CompressedCharWaveformChannel(),
+        availableSampleParameters =
+                InstrumentVariables.convert(obsFactory.getSwitchableObservable(new CompressedCharWaveformChannel(),
                 addPrefix("CS:BLOCKSERVER:SAMPLE_PARS")),
                 new ParametersConverter());
-        availableBeamParameters = convert(obsFactory.getSwitchableObservable(new CompressedCharWaveformChannel(),
+        availableBeamParameters =
+                InstrumentVariables.convert(obsFactory.getSwitchableObservable(new CompressedCharWaveformChannel(),
                 addPrefix("CS:BLOCKSERVER:BEAMLINE_PARS")),
                 new ParametersConverter());
-        sampleParameters = autoInitialise(new ParametersObservable(this, availableSampleParameters));
-        beamParameters = autoInitialise(new ParametersObservable(this, availableBeamParameters));
+        sampleParameters =
+                InstrumentVariables.autoInitialise(new ParametersObservable(this, availableSampleParameters));
+        beamParameters = InstrumentVariables.autoInitialise(new ParametersObservable(this, availableBeamParameters));
         rbNumber = obsFactory.getSwitchableObservable(new StringChannel(), addPrefix("ED:RBNUMBER"));
         rbNumberSetter = writeFactory.getSwitchableWritable(new CharWaveformChannel(), addPrefix("ED:RBNUMBER:SP"));
-        userDetails = convert(
+        userDetails = InstrumentVariables.convert(
                 obsFactory.getSwitchableObservable(new CompressedCharWaveformChannel(), addPrefix("ED:USERNAME")),
                 new UserDetailsConverter());
         userDetailsSetter = convert(

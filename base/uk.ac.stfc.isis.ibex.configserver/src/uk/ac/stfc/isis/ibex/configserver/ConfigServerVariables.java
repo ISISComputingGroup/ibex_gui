@@ -37,6 +37,7 @@ import uk.ac.stfc.isis.ibex.configserver.pv.BlockServerAddresses;
 import uk.ac.stfc.isis.ibex.epics.conversion.Converter;
 import uk.ac.stfc.isis.ibex.epics.observing.ConvertingObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
+import uk.ac.stfc.isis.ibex.epics.pv.Closer;
 import uk.ac.stfc.isis.ibex.epics.pv.PVAddress;
 import uk.ac.stfc.isis.ibex.epics.switching.ObservableFactory;
 import uk.ac.stfc.isis.ibex.epics.switching.OnInstrumentSwitch;
@@ -44,7 +45,6 @@ import uk.ac.stfc.isis.ibex.epics.switching.WritableFactory;
 import uk.ac.stfc.isis.ibex.epics.writing.ForwardingWritable;
 import uk.ac.stfc.isis.ibex.epics.writing.Writable;
 import uk.ac.stfc.isis.ibex.instrument.Instrument;
-import uk.ac.stfc.isis.ibex.instrument.InstrumentVariables;
 import uk.ac.stfc.isis.ibex.instrument.channels.CompressedCharWaveformChannel;
 import uk.ac.stfc.isis.ibex.instrument.channels.DefaultChannel;
 import uk.ac.stfc.isis.ibex.instrument.channels.EnumChannel;
@@ -55,7 +55,7 @@ import uk.ac.stfc.isis.ibex.validators.BlockServerNameValidator;
  * Holds all the Observables and Writables for the PVs associated with the
  * BlockServer.
  */
-public class ConfigServerVariables extends InstrumentVariables {
+public class ConfigServerVariables extends Closer {
 	private final BlockServerAddresses blockServerAddresses = new BlockServerAddresses();
 	private final Converters converters;
 	private ObservableFactory switchingObsFactory = new ObservableFactory(OnInstrumentSwitch.SWITCH);

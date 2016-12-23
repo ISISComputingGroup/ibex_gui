@@ -51,7 +51,7 @@ public class Synoptic extends Closer implements BundleActivator {
 	public Synoptic() {
 		instance = this;
 		
-        variables = registerForClose(new Variables());
+        variables = new Variables();
 		
 		viewerModel = new SynopticModel(variables);
 		viewerModelObserver = new ObservingSynopticModel(variables, viewerModel);
