@@ -72,13 +72,6 @@ public abstract class SynopticHandler<T> extends AbstractHandler {
                 new SynopticViewModel());
 		if (editDialog.open() == Window.OK) {
 			SYNOPTIC.edit().saveSynoptic().write(editDialog.getSynoptic());
-			
-            // Refresh the synoptic. Synoptic info may be null if the synoptic
-            // perspective has never been opened.
-            if (SYNOPTIC.getSynopticInfo() != null
-                    && editDialog.getSynoptic().name().equals(SYNOPTIC.getSynopticInfo().name())) {
-				SYNOPTIC.setViewerSynoptic(editDialog.getSynoptic().name());
-			}
 		}
 	}
 	
