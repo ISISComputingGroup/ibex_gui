@@ -24,6 +24,9 @@ package uk.ac.stfc.isis.ibex.epics.conversion;
 
 /**
  * A converter that does no conversion, it simply outputs the input value.
+ * 
+ * @param <T>
+ *            The type of the input/output value.
  */
 public class DoNothingConverter<T> extends Converter<T, T> {
 

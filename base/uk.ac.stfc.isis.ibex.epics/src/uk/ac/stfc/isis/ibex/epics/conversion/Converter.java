@@ -23,13 +23,18 @@ package uk.ac.stfc.isis.ibex.epics.conversion;
 /**
  * Abstract base class for converters.
  *
+ * @param <A>
+ *            The type to convert from.
+ * @param <B>
+ *            The type to convert to.
  */
 public abstract class Converter<A, B> {
 			
 	public <C> Converter<A, C> apply(final Converter<B, C> converter) {
 		final Converter<A, B> self = this;
 		return new Converter<A, C>() {
-			public C convert(A value) throws ConversionException {
+			@Override
+            public C convert(A value) throws ConversionException {
 				return converter.convert(self.convert(value));
 			}
 		};

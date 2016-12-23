@@ -73,11 +73,6 @@ public abstract class SynopticHandler<T> extends AbstractHandler {
                 new EditSynopticDialog(shell(), title, isBlank, opis, viewModel);
 		if (editDialog.open() == Window.OK) {
             SYNOPTIC.edit().saveSynoptic().write(viewModel.getSynoptic());
-			
-			// Refresh the synoptic
-            if (viewModel.getSynoptic().name().equals(SYNOPTIC.getSynopticInfo().name())) {
-                SYNOPTIC.setViewerSynoptic(viewModel.getSynoptic().name());
-			}
 		}
 	}
 	
