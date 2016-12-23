@@ -121,6 +121,8 @@ public final class ComponentIcons {
                 return "pgc";
             case DETECTOR_MOTION_SYSTEM:
                 return "detector_motion_system";
+            case PIXELMAN:
+                return "pixelman";
             default:
                 return "cog";
         }

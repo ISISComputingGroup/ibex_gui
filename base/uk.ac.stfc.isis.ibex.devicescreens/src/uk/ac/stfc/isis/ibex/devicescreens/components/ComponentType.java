@@ -100,7 +100,9 @@ public enum ComponentType {
     /** Polarises, Guide and Collimation for MUONFE. */
     PGC,
     /** Detector motion system component type. */
-    DETECTOR_MOTION_SYSTEM;
+    DETECTOR_MOTION_SYSTEM,
+    /** Pixelman camera. */
+    PIXELMAN;
 	
 	private Target target;
 
