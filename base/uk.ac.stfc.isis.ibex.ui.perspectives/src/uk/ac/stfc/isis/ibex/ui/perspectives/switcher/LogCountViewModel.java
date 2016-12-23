@@ -25,6 +25,10 @@ import java.beans.PropertyChangeListener;
 import uk.ac.stfc.isis.ibex.log.LogCounter;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 
+/**
+ * The view model that controls the logic for how the log button appears when
+ * log messages have been received.
+ */
 public class LogCountViewModel extends ModelObject {
 	
 	private static final String IOC_LOG = "IOC Log"; 
@@ -33,6 +37,13 @@ public class LogCountViewModel extends ModelObject {
 	private String text;
 	private boolean hasMessages;
 	
+    /**
+     * The constructor for the view model, attaches an observer to the backend
+     * log message counter.
+     * 
+     * @param counter
+     *            The back end log message counter.
+     */
 	public LogCountViewModel(final LogCounter counter) {
 		counter.addPropertyChangeListener("count", new PropertyChangeListener() {			
 			@Override
@@ -44,10 +55,18 @@ public class LogCountViewModel extends ModelObject {
 		update(counter.getCount());
 	}
 	
+    /**
+     * @return The text of the button.
+     */
 	public String getText() {
 		return text;
 	}
 	
+    /**
+     * Whether the button has outstanding messages or not.
+     * 
+     * @return True if there are outstanding messages.
+     */
 	public boolean hasMessages() {
 		return hasMessages;
 	}

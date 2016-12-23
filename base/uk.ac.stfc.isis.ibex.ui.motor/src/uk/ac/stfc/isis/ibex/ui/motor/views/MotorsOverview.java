@@ -98,7 +98,7 @@ public class MotorsOverview extends Composite {
 			}
 			i++;
 			
-			addMinimalView(motor);
+            addMinimalView(motor);
 		}
 	}
 
@@ -109,7 +109,7 @@ public class MotorsOverview extends Composite {
      */
     public void setPalette(MotorBackgroundPalette palette) {
         for (MinimalMotorView view : minimalViews) {
-            view.setPalette(palette);
+            view.getViewModel().setPalette(palette);
         }
     }
 
@@ -130,8 +130,10 @@ public class MotorsOverview extends Composite {
 	}
 	
 	private void addMinimalView(Motor motor) {
-        MinimalMotorView view = new MinimalMotorView(motorComposite, SWT.NONE, palette);
-		view.setMotor(motor);
+        MinimalMotorViewModel model = new MinimalMotorViewModel();
+        model.setPalette(palette);
+        model.setMotor(motor);
+        MinimalMotorView view = new MinimalMotorView(motorComposite, SWT.NONE, model);
 		view.setLayoutData(viewLayout());
 		
 		minimalViews.add(view);
