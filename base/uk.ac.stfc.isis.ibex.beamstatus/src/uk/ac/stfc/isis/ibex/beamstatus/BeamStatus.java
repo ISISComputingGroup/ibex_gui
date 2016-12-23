@@ -22,30 +22,61 @@ package uk.ac.stfc.isis.ibex.beamstatus;
 import org.eclipse.core.runtime.Plugin;
 import org.osgi.framework.BundleContext;
 
-import uk.ac.stfc.isis.ibex.beamstatus.internal.BeamStatusObservables;
-
+/**
+ * The plugin entry point for the back end of the beam status display.
+ */
 public class BeamStatus extends Plugin {
 
     private static BeamStatus instance;
 	private static BundleContext context;
 	
-	private final Observables observables;	
-	private final BeamStatusObservables status;
+    private final SynchrotronObservables synchrotronObservables;
+    private final TS1Observables ts1Observables;
+    private final TS2Observables ts2Observables;
 	
+    /**
+     * Default constructor for the singleton. Will be called by eclipse when
+     * plugin is started.
+     */
 	public BeamStatus() {
 		instance = this; 
-		status = new BeamStatusObservables();
-		observables = new Observables(status);
+        synchrotronObservables = new SynchrotronObservables();
+        ts1Observables = new TS1Observables();
+        ts2Observables = new TS2Observables();
 	}
     
+    /**
+     * @return The instance of this singleton.
+     */
     public static BeamStatus getInstance() { 
     	return instance; 
     }
 
-    public Observables observables() {
-    	return observables;
+    /**
+     * @return Observables for the PVs that contain information on the
+     *         synchrotron.
+     */
+    public SynchrotronObservables synchrotron() {
+        return synchrotronObservables;
+    }
+
+    /**
+     * @return Observables for the PVs that contain information on TS1.
+     */
+    public TS1Observables ts1() {
+        return ts1Observables;
+    }
+
+    /**
+     * @return Observables for the PVs that contain information on TS2.
+     */
+    public TS2Observables ts2() {
+        return ts2Observables;
     }
 	
+    /**
+     * @return The BundleContext for this plugin.
+     */
 	static BundleContext getContext() {
 		return context;
 	}
@@ -54,7 +85,8 @@ public class BeamStatus extends Plugin {
 	 * (non-Javadoc)
 	 * @see org.osgi.framework.BundleActivator#start(org.osgi.framework.BundleContext)
 	 */
-	public void start(BundleContext bundleContext) throws Exception {
+	@Override
+    public void start(BundleContext bundleContext) throws Exception {
 		BeamStatus.context = bundleContext;
 	}
 
@@ -62,10 +94,12 @@ public class BeamStatus extends Plugin {
 	 * (non-Javadoc)
 	 * @see org.osgi.framework.BundleActivator#stop(org.osgi.framework.BundleContext)
 	 */
-	public void stop(BundleContext bundleContext) throws Exception {
+	@Override
+    public void stop(BundleContext bundleContext) throws Exception {
 		BeamStatus.context = null;
-		status.close();
-		observables.close();
+        synchrotronObservables.close();
+        ts1Observables.close();
+        ts2Observables.close();
 	}
 }
 

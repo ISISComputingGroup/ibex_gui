@@ -24,9 +24,18 @@ import org.eclipse.wb.swt.ResourceManager;
 
 import uk.ac.stfc.isis.ibex.ui.perspectives.BasePerspective;
 
+/**
+ * The perspective that shows any alarms from the instrument.
+ * 
+ * Registers the perspective to be displayed in the list (see plugin.xml file
+ * for this package).
+ */
 public class AlarmPerspective extends BasePerspective {
 
-	public static final String ID = "uk.ac.stfc.isis.ibex.ui.alarm.perspective"; //$NON-NLS-1$
+    /**
+     * The ID for this perspective.
+     */
+    public static final String ID = "uk.ac.stfc.isis.ibex.ui.alarm.perspective";
 
 	@Override
 	public String id() {
@@ -35,7 +44,7 @@ public class AlarmPerspective extends BasePerspective {
 
 	@Override
 	public String name() {
-		return "Alarms";
+        return "&Alarms";
 	}
 
 	@Override

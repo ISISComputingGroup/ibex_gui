@@ -98,7 +98,9 @@ public enum ComponentType {
     /** 3D magnet component type. */
     SCIMAG3D,
     /** Polarises, Guide and Collimation for MUONFE. */
-    PGC;
+    PGC,
+    /** Detector motion system component type. */
+    DETECTOR_MOTION_SYSTEM;
 	
 	private Target target;
 

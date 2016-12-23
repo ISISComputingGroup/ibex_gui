@@ -25,12 +25,14 @@
             allPopups="false"
             locationURI="menu:org.eclipse.ui.main.menu?after=configurationMenu">
          <menu
-           id="synopticMenu"
-           label="Synoptic">
+               id="synopticMenu"
+               label="Synoptic"
+               mnemonic="S">
            <command
                  commandId="uk.ac.stfc.isis.ibex.ui.synoptic.editor.commands.NewSynoptic"
                  id="uk.ac.stfc.isis.ibex.ui.synoptic"
                  label="New"
+                 mnemonic="N"
                  style="push"
                  tooltip="Create a new synoptic">
            </command>
@@ -38,6 +40,7 @@
                  commandId="uk.ac.stfc.isis.ibex.ui.synoptic.editor.commands.EditSynoptic"
                  id="uk.ac.stfc.isis.ibex.ui.synoptic"
                  label="Edit"
+                 mnemonic="E"
                  style="push"
                  tooltip="Edit a synoptic">
            </command>
@@ -45,6 +48,7 @@
                  commandId="uk.ac.stfc.isis.ibex.ui.synoptic.editor.commands.DeleteSynoptic"
                  id="uk.ac.stfc.isis.ibex.ui.synoptic"
                  label="Delete"
+                 mnemonic="D"
                  style="push"
                  tooltip="Delete a synoptic">
            </command>

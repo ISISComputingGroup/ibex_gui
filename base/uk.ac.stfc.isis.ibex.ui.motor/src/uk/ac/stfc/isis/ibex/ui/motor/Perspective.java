@@ -26,7 +26,14 @@ import org.eclipse.wb.swt.ResourceManager;
 import uk.ac.stfc.isis.ibex.ui.motor.views.MotorOPIView;
 import uk.ac.stfc.isis.ibex.ui.perspectives.BasePerspective;
 
+/**
+ * The perspective that shows the table of motors.
+ */
 public class Perspective extends BasePerspective {
+
+    /**
+     * The ID for this perspective.
+     */
 	public static final String ID = "uk.ac.stfc.isis.ibex.ui.motor.perspective"; //$NON-NLS-1$
 	
 	@Override
@@ -43,7 +50,7 @@ public class Perspective extends BasePerspective {
 
 	@Override
 	public String name() {
-		return "Motors";
+        return "&Motors";
 	}
 
 	@Override

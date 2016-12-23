@@ -29,8 +29,21 @@ import uk.ac.stfc.isis.ibex.configserver.configuration.PVDefaultValue;
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundCellLabelProvider;
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundTable;
 
+/**
+ * The databound table that contains PV names and values for an individual IOC.
+ */
 @SuppressWarnings("checkstyle:magicnumber")
 public class IocPVsTable extends DataboundTable<PVDefaultValue> {
+    /**
+     * Constructor for the table.
+     * 
+     * @param parent
+     *            The composite that this table will belong to.
+     * @param style
+     *            The SWT style of this widget.
+     * @param tableStyle
+     *            The SWT style of the underlying table.
+     */
 	public IocPVsTable(Composite parent, int style, int tableStyle) {
 		super(parent, style, PVDefaultValue.class, tableStyle | SWT.BORDER);
 
@@ -68,6 +81,12 @@ public class IocPVsTable extends DataboundTable<PVDefaultValue> {
 		});	
 	}
 	
+    /**
+     * Set the selection on the table.
+     * 
+     * @param i
+     *            The index to set the selection to.
+     */
 	public void setSelection(int i) {
 		table().setSelection(i);
 	}
