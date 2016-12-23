@@ -66,6 +66,18 @@ public abstract class SynopticHandler<T> extends AbstractHandler {
 		destination.subscribe(synopticService);
 	}		
 	
+    /**
+     * Handle the sequence of opening a synoptic editor dialog and the
+     * subsequent cancel/save.
+     * 
+     * @param synoptic
+     *            The synoptic to edit
+     * @param title
+     *            The title of the synoptic editor dialog
+     * @param isBlank
+     *            Whether the requested synoptic has existing components or it
+     *            is blank
+     */
 	protected void openDialog(SynopticDescription synoptic, String title, boolean isBlank) {
         Collection<String> opis = Opi.getDefault().descriptionsProvider().getOpiList();
         EditSynopticDialog editDialog = new EditSynopticDialog(shell(), title, synoptic, isBlank, opis,
@@ -75,6 +87,9 @@ public abstract class SynopticHandler<T> extends AbstractHandler {
 		}
 	}
 	
+    /**
+     * @return The shell for the current workbench
+     */
 	protected Shell shell() {
 		return PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
 	}	
