@@ -31,7 +31,7 @@ import uk.ac.stfc.isis.ibex.epics.switching.OnInstrumentSwitch;
 import uk.ac.stfc.isis.ibex.epics.switching.WritableFactory;
 import uk.ac.stfc.isis.ibex.epics.writing.Writable;
 import uk.ac.stfc.isis.ibex.instrument.Instrument;
-import uk.ac.stfc.isis.ibex.instrument.InstrumentVariables;
+import uk.ac.stfc.isis.ibex.instrument.InstrumentUtils;
 import uk.ac.stfc.isis.ibex.instrument.channels.DoubleChannel;
 import uk.ac.stfc.isis.ibex.instrument.channels.LongChannel;
 
@@ -63,7 +63,7 @@ public class Observables {
      */
     public Observables() {
         bannerDescription = Configurations.getInstance().variables().bannerDescription;
-        inMotion = InstrumentVariables.convert(obsFactory.getSwitchableObservable(new DoubleChannel(),
+        inMotion = InstrumentUtils.convert(obsFactory.getSwitchableObservable(new DoubleChannel(),
                 Instrument.getInstance().getPvPrefix() + "CS:MOT:MOVING"),
                 doubleToMotionState);
         stop = writeFactory.getSwitchableWritable(new LongChannel(),

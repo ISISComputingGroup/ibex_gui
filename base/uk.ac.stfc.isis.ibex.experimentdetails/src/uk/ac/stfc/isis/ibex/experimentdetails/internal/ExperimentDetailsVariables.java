@@ -21,17 +21,15 @@ package uk.ac.stfc.isis.ibex.experimentdetails.internal;
 
 import java.util.Collection;
 
-import uk.ac.stfc.isis.ibex.epics.conversion.Converter;
 import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.epics.switching.ObservableFactory;
 import uk.ac.stfc.isis.ibex.epics.switching.OnInstrumentSwitch;
 import uk.ac.stfc.isis.ibex.epics.switching.WritableFactory;
-import uk.ac.stfc.isis.ibex.epics.writing.ForwardingWritable;
 import uk.ac.stfc.isis.ibex.epics.writing.Writable;
 import uk.ac.stfc.isis.ibex.experimentdetails.Parameter;
 import uk.ac.stfc.isis.ibex.experimentdetails.UserDetails;
 import uk.ac.stfc.isis.ibex.instrument.Instrument;
-import uk.ac.stfc.isis.ibex.instrument.InstrumentVariables;
+import uk.ac.stfc.isis.ibex.instrument.InstrumentUtils;
 import uk.ac.stfc.isis.ibex.instrument.channels.CharWaveformChannel;
 import uk.ac.stfc.isis.ibex.instrument.channels.CompressedCharWaveformChannel;
 import uk.ac.stfc.isis.ibex.instrument.channels.DefaultChannelWithoutUnits;
@@ -60,28 +58,24 @@ public class ExperimentDetailsVariables {
 
     public ExperimentDetailsVariables() {
         availableSampleParameters =
-                InstrumentVariables.convert(obsFactory.getSwitchableObservable(new CompressedCharWaveformChannel(),
+                InstrumentUtils.convert(obsFactory.getSwitchableObservable(new CompressedCharWaveformChannel(),
                 addPrefix("CS:BLOCKSERVER:SAMPLE_PARS")),
                 new ParametersConverter());
         availableBeamParameters =
-                InstrumentVariables.convert(obsFactory.getSwitchableObservable(new CompressedCharWaveformChannel(),
+                InstrumentUtils.convert(obsFactory.getSwitchableObservable(new CompressedCharWaveformChannel(),
                 addPrefix("CS:BLOCKSERVER:BEAMLINE_PARS")),
                 new ParametersConverter());
         sampleParameters =
-                InstrumentVariables.autoInitialise(new ParametersObservable(this, availableSampleParameters));
-        beamParameters = InstrumentVariables.autoInitialise(new ParametersObservable(this, availableBeamParameters));
+                new ForwardingObservable<>(new ParametersObservable(this, availableSampleParameters));
+        beamParameters = new ForwardingObservable<>(new ParametersObservable(this, availableBeamParameters));
         rbNumber = obsFactory.getSwitchableObservable(new StringChannel(), addPrefix("ED:RBNUMBER"));
         rbNumberSetter = writeFactory.getSwitchableWritable(new CharWaveformChannel(), addPrefix("ED:RBNUMBER:SP"));
-        userDetails = InstrumentVariables.convert(
+        userDetails = InstrumentUtils.convert(
                 obsFactory.getSwitchableObservable(new CompressedCharWaveformChannel(), addPrefix("ED:USERNAME")),
                 new UserDetailsConverter());
-        userDetailsSetter = convert(
+        userDetailsSetter = InstrumentUtils.convert(
                 writeFactory.getSwitchableWritable(new CompressedCharWaveformChannel(), addPrefix("ED:USERNAME:SP")),
                 new UserDetailsSerialiser());
-	}
-	
-	private <T> Writable<T> convert(Writable<String> destination, Converter<T, String> converter) {
-        return new ForwardingWritable<>(destination, converter);
 	}
 	
 	 /**

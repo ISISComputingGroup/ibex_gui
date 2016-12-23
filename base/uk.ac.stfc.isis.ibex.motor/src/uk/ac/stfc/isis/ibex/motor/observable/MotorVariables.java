@@ -28,7 +28,7 @@ import uk.ac.stfc.isis.ibex.epics.switching.ObservableFactory;
 import uk.ac.stfc.isis.ibex.epics.switching.OnInstrumentSwitch;
 import uk.ac.stfc.isis.ibex.epics.switching.WritableFactory;
 import uk.ac.stfc.isis.ibex.instrument.Instrument;
-import uk.ac.stfc.isis.ibex.instrument.InstrumentVariables;
+import uk.ac.stfc.isis.ibex.instrument.InstrumentUtils;
 import uk.ac.stfc.isis.ibex.instrument.channels.DoubleChannel;
 import uk.ac.stfc.isis.ibex.instrument.channels.EnumChannel;
 import uk.ac.stfc.isis.ibex.instrument.channels.ShortChannel;
@@ -104,23 +104,23 @@ public class MotorVariables extends Closer {
         lowerLimit = obsFactory.getSwitchableObservable(new DoubleChannel(), fullAddress.endWithField("DLLM"));
         upperLimit = obsFactory.getSwitchableObservable(new DoubleChannel(), fullAddress.endWithField("DHLM"));
 		
-        direction = InstrumentVariables.convert(
+        direction = InstrumentUtils.convert(
                 obsFactory.getSwitchableObservable(new ShortChannel(), fullAddress.endWithField("TDIR")),
                 TO_MOTOR_DIRECTION);
 		
-        moving = InstrumentVariables.convert(
+        moving = InstrumentUtils.convert(
                 obsFactory.getSwitchableObservable(new ShortChannel(), fullAddress.endWithField("MOVN")),
                 TO_BOOLEAN);
-        atHome = InstrumentVariables.convert(
+        atHome = InstrumentUtils.convert(
                 obsFactory.getSwitchableObservable(new ShortChannel(), fullAddress.endWithField("ATHM")),
                 TO_BOOLEAN);
-        atUpperLimitSwitch = InstrumentVariables.convert(
+        atUpperLimitSwitch = InstrumentUtils.convert(
                 obsFactory.getSwitchableObservable(new ShortChannel(), fullAddress.endWithField("LLS")), TO_BOOLEAN);
-        atLowerLimitSwitch = InstrumentVariables.convert(
+        atLowerLimitSwitch = InstrumentUtils.convert(
                 obsFactory.getSwitchableObservable(new ShortChannel(), fullAddress.endWithField("HLS")), TO_BOOLEAN);
         setpoint = new MotorSetPointVariables(fullAddress, obsFactory, writeFactory);
 		
-        status = InstrumentVariables.convert(
+        status = InstrumentUtils.convert(
                 obsFactory.getSwitchableObservable(new StringChannel(), motorAddress.toString() + "_STATUS"),
                 CAPITALISE_FIRST_LETTER_ONLY);
 	}

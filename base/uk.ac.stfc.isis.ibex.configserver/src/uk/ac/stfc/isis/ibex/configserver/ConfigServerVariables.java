@@ -34,17 +34,15 @@ import uk.ac.stfc.isis.ibex.configserver.configuration.PV;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableIoc;
 import uk.ac.stfc.isis.ibex.configserver.internal.Converters;
 import uk.ac.stfc.isis.ibex.configserver.pv.BlockServerAddresses;
-import uk.ac.stfc.isis.ibex.epics.conversion.Converter;
-import uk.ac.stfc.isis.ibex.epics.observing.ConvertingObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.epics.pv.Closer;
 import uk.ac.stfc.isis.ibex.epics.pv.PVAddress;
 import uk.ac.stfc.isis.ibex.epics.switching.ObservableFactory;
 import uk.ac.stfc.isis.ibex.epics.switching.OnInstrumentSwitch;
 import uk.ac.stfc.isis.ibex.epics.switching.WritableFactory;
-import uk.ac.stfc.isis.ibex.epics.writing.ForwardingWritable;
 import uk.ac.stfc.isis.ibex.epics.writing.Writable;
 import uk.ac.stfc.isis.ibex.instrument.Instrument;
+import uk.ac.stfc.isis.ibex.instrument.InstrumentUtils;
 import uk.ac.stfc.isis.ibex.instrument.channels.CompressedCharWaveformChannel;
 import uk.ac.stfc.isis.ibex.instrument.channels.DefaultChannel;
 import uk.ac.stfc.isis.ibex.instrument.channels.EnumChannel;
@@ -128,42 +126,63 @@ public class ConfigServerVariables extends Closer {
     public ConfigServerVariables(Converters converters) {
 		this.converters = converters;
 		
-		serverStatus = convert(readCompressed(blockServerAddresses.serverStatus()), converters.toServerStatus());
-		currentConfig = convert(readCompressed(blockServerAddresses.currentConfig()), converters.toConfig());
-		blankConfig = convert(readCompressed(blockServerAddresses.blankConfig()), converters.toConfig());
+        serverStatus = InstrumentUtils.convert(readCompressed(blockServerAddresses.serverStatus()),
+                converters.toServerStatus());
+        currentConfig =
+                InstrumentUtils.convert(readCompressed(blockServerAddresses.currentConfig()), converters.toConfig());
+        blankConfig =
+                InstrumentUtils.convert(readCompressed(blockServerAddresses.blankConfig()), converters.toConfig());
 
-		configsInfo = convert(readCompressed(blockServerAddresses.configs()), converters.toConfigsInfo());
-		componentsInfo = convert(readCompressed(blockServerAddresses.components()), converters.toConfigsInfo());
+        configsInfo =
+                InstrumentUtils.convert(readCompressed(blockServerAddresses.configs()), converters.toConfigsInfo());
+        componentsInfo =
+                InstrumentUtils.convert(readCompressed(blockServerAddresses.components()), converters.toConfigsInfo());
 		
-        blockRules = convert(readCompressed(blockServerAddresses.blockRules()), converters.toBlockRules());
-        groupRules = convert(readCompressed(blockServerAddresses.groupRules()), converters.toBlockServerTextValidor());
-        configDescriptionRules = convert(readCompressed(blockServerAddresses.configDescritpionRules()),
+        blockRules =
+                InstrumentUtils.convert(readCompressed(blockServerAddresses.blockRules()), converters.toBlockRules());
+        groupRules = InstrumentUtils.convert(readCompressed(blockServerAddresses.groupRules()),
+                converters.toBlockServerTextValidor());
+        configDescriptionRules = InstrumentUtils.convert(readCompressed(blockServerAddresses.configDescritpionRules()),
                 converters.toBlockServerTextValidor());
 		
-		components = convert(readCompressed(blockServerAddresses.components()), converters.toComponents());
-		iocs = convert(readCompressed(blockServerAddresses.iocs()), converters.toIocs());
-		pvs = convert(readCompressed(blockServerAddresses.pvs()), converters.toPVs());
-		highInterestPVs = convert(readCompressed(blockServerAddresses.highInterestPVs()), converters.toPVs());
-		mediumInterestPVs = convert(readCompressed(blockServerAddresses.mediumInterestPVs()), converters.toPVs());
-        facilityInterestPVs = convert(readCompressed(blockServerAddresses.facilityInterestPVs()), converters.toPVs());
-		activePVs = convert(readCompressed(blockServerAddresses.activePVs()), converters.toPVs());
+        components =
+                InstrumentUtils.convert(readCompressed(blockServerAddresses.components()), converters.toComponents());
+        iocs = InstrumentUtils.convert(readCompressed(blockServerAddresses.iocs()), converters.toIocs());
+        pvs = InstrumentUtils.convert(readCompressed(blockServerAddresses.pvs()), converters.toPVs());
+        highInterestPVs =
+                InstrumentUtils.convert(readCompressed(blockServerAddresses.highInterestPVs()), converters.toPVs());
+        mediumInterestPVs =
+                InstrumentUtils.convert(readCompressed(blockServerAddresses.mediumInterestPVs()), converters.toPVs());
+        facilityInterestPVs =
+                InstrumentUtils.convert(readCompressed(blockServerAddresses.facilityInterestPVs()), converters.toPVs());
+        activePVs = InstrumentUtils.convert(readCompressed(blockServerAddresses.activePVs()), converters.toPVs());
 		
-		setCurrentConfiguration = convert(writeCompressed(blockServerAddresses.setCurrentConfig()), converters.configToString());
-		loadConfiguration = convert(writeCompressed(blockServerAddresses.loadConfig()), converters.nameToString());
-		saveAsConfiguration = convert(writeCompressed(blockServerAddresses.saveNewConfig()), converters.configToString());
-		saveAsComponent = convert(writeCompressed(blockServerAddresses.saveComponent()), converters.configToString());
+        setCurrentConfiguration = InstrumentUtils.convert(writeCompressed(blockServerAddresses.setCurrentConfig()),
+                converters.configToString());
+        loadConfiguration =
+                InstrumentUtils.convert(writeCompressed(blockServerAddresses.loadConfig()), converters.nameToString());
+        saveAsConfiguration = InstrumentUtils.convert(writeCompressed(blockServerAddresses.saveNewConfig()),
+                converters.configToString());
+        saveAsComponent = InstrumentUtils.convert(writeCompressed(blockServerAddresses.saveComponent()),
+                converters.configToString());
 		
-		deleteConfigurations = convert(writeCompressed(blockServerAddresses.deleteConfigs()), converters.namesToString());
-		deleteComponents = convert(writeCompressed(blockServerAddresses.deleteComponents()), converters.namesToString());
+        deleteConfigurations = InstrumentUtils.convert(writeCompressed(blockServerAddresses.deleteConfigs()),
+                converters.namesToString());
+        deleteComponents = InstrumentUtils.convert(writeCompressed(blockServerAddresses.deleteComponents()),
+                converters.namesToString());
 
-		startIoc = convert(writeCompressed(blockServerAddresses.startIocs()), converters.namesToString());
-		stopIoc = convert(writeCompressed(blockServerAddresses.stopIocs()), converters.namesToString());
-		restartIoc = convert(writeCompressed(blockServerAddresses.restartIocs()), converters.namesToString());
+        startIoc =
+                InstrumentUtils.convert(writeCompressed(blockServerAddresses.startIocs()), converters.namesToString());
+        stopIoc = InstrumentUtils.convert(writeCompressed(blockServerAddresses.stopIocs()), converters.namesToString());
+        restartIoc = InstrumentUtils.convert(writeCompressed(blockServerAddresses.restartIocs()),
+                converters.namesToString());
 				
-		iocStates = convert(readCompressed(blockServerAddresses.iocs()), converters.toIocStates());
-		protectedIocs = convert(readCompressed(blockServerAddresses.iocsNotToStop()), converters.toNames());	
+        iocStates = InstrumentUtils.convert(readCompressed(blockServerAddresses.iocs()), converters.toIocStates());
+        protectedIocs =
+                InstrumentUtils.convert(readCompressed(blockServerAddresses.iocsNotToStop()), converters.toNames());
         bannerDescription =
-                convert(readCompressed(blockServerAddresses.bannerDescription()), converters.toBannerDescription());
+                InstrumentUtils.convert(readCompressed(blockServerAddresses.bannerDescription()),
+                        converters.toBannerDescription());
 	}
 
     /**
@@ -173,7 +192,8 @@ public class ConfigServerVariables extends Closer {
      * @return the corresponding observable
      */
 	public ForwardingObservable<Configuration> config(String configName) {		
-		return convert(readCompressedClosing(blockServerAddresses.config(getConfigPV(configName))), converters.toConfig());
+        return InstrumentUtils.convert(readCompressedClosing(blockServerAddresses.config(getConfigPV(configName))),
+                converters.toConfig());
 	}
 
     /**
@@ -183,7 +203,9 @@ public class ConfigServerVariables extends Closer {
      * @return the corresponding observable
      */
 	public ForwardingObservable<Configuration> component(String componentName) {
-		return convert(readCompressedClosing(blockServerAddresses.component(getComponentPV(componentName))), converters.toConfig());
+        return InstrumentUtils.convert(
+                readCompressedClosing(blockServerAddresses.component(getComponentPV(componentName))),
+                converters.toConfig());
 	}
 
     /**
@@ -256,32 +278,6 @@ public class ConfigServerVariables extends Closer {
      */
 	private static String iocDescriptionAddress(String iocName) {
 		return PVAddress.startWith("CS").append("PS").append(iocName).endWith("IOCDESC");
-	}
-	
-    /**
-     * Provides an observable that converts data from another observable.
-     * 
-     * @param <T> This is the type parameter
-     * @param source the original observable
-     * @param converter the converter
-     * @return the new observable
-     */
-	private <T> ForwardingObservable<T> convert(
-			ForwardingObservable<String> source,
-			Converter<String, T> converter) {
-		return new ForwardingObservable<>(new ConvertingObservable<>(source, converter));
-	}
-	
-    /**
-     * Provides a writable that converts data to be used by another writable.
-     * 
-     * @param <T> This is the type parameter
-     * @param destination the destination writable
-     * @param converter the converter
-     * @return the new writable
-     */
-	private <T> Writable<T> convert(Writable<String> destination, Converter<T, String> converter) {
-        return new ForwardingWritable<>(destination, converter);
 	}
 
     /**

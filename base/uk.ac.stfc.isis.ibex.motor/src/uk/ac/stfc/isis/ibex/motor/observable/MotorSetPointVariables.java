@@ -26,7 +26,7 @@ import uk.ac.stfc.isis.ibex.epics.pv.PVAddress;
 import uk.ac.stfc.isis.ibex.epics.switching.ObservableFactory;
 import uk.ac.stfc.isis.ibex.epics.switching.WritableFactory;
 import uk.ac.stfc.isis.ibex.epics.writing.Writable;
-import uk.ac.stfc.isis.ibex.instrument.InstrumentVariables;
+import uk.ac.stfc.isis.ibex.instrument.InstrumentUtils;
 import uk.ac.stfc.isis.ibex.instrument.channels.DoubleChannel;
 
 public class MotorSetPointVariables {
@@ -53,7 +53,7 @@ public class MotorSetPointVariables {
         setPointSetter = writeFactory.getSwitchableWritable(new DoubleChannel(), setPointAddress);
 		
 		String homeAddress = motorAddress.endWithField("HOMR");
-        canHome = InstrumentVariables.convert(obsFactory.getSwitchableObservable(new DoubleChannel(), homeAddress),
+        canHome = InstrumentUtils.convert(obsFactory.getSwitchableObservable(new DoubleChannel(), homeAddress),
                 TO_BOOLEAN);
 
         homeSetter = writeFactory.getSwitchableWritable(new DoubleChannel(), homeAddress);
