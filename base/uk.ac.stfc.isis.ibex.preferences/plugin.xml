@@ -13,6 +13,12 @@
          	schemeId="IBEX_key_scheme"
          	commandId="org.eclipse.ui.window.preferences"
          	name="Open Preferences"/>
+         <!--
+         Note: Overwrite the F11 binding as we don't want to use the Eclipse default
+         -->
+         <key sequence="F11" 
+            schemeId="IBEX_key_scheme"/>
+            
          <scheme
                id="IBEX_key_scheme"
                name="IBEX_key_scheme">
