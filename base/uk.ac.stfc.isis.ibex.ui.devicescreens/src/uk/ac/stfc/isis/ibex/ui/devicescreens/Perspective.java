@@ -64,6 +64,6 @@ public class Perspective extends BasePerspective {
 
     @Override
     public boolean isVisibleDefault() {
-        return false;
+        return true;
     }
 }
