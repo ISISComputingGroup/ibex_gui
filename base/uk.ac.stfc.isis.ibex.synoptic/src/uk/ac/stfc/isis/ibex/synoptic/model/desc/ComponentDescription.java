@@ -105,7 +105,7 @@ public class ComponentDescription extends ModelObject implements SynopticParentD
 
         this.components = new ArrayList<>();
         for (ComponentDescription cd : other.components) {
-            this.components.add(new ComponentDescription(cd, false, this));
+            addComponent(new ComponentDescription(cd, false, this));
         }
     }
 
@@ -124,7 +124,7 @@ public class ComponentDescription extends ModelObject implements SynopticParentD
      * @param name the new name
      */
 	public void setName(String name) {
-        firePropertyChange("name", this.name, this.name = name);
+        firePropertyChange("componentName", this.name, this.name = name);
 	}
 
     /**
@@ -198,7 +198,7 @@ public class ComponentDescription extends ModelObject implements SynopticParentD
      */
 	public void addPV(PV pv) {
 		if (pv != null) {
-			pvs.add(0, pv);
+            addPV(pv, 0);
 		}
 	}
 	
@@ -263,6 +263,10 @@ public class ComponentDescription extends ModelObject implements SynopticParentD
     private void addComponent(int index, ComponentDescription component) {
         components.add(index, component);
         firePropertyChange("componentAdded", null, component);
+
+        // Pass through when properties change on a child so that we can check
+        // for errors more easily
+        component.addPropertyChangeListener(passThrough());
     }
 	
 	@Override
@@ -297,6 +301,7 @@ public class ComponentDescription extends ModelObject implements SynopticParentD
 	public void processChildComponents() {
 		for (ComponentDescription cd: components) {
 			cd.setParent(this);
+            cd.addPropertyChangeListener(passThrough());
 			cd.processChildComponents();
 		}
 	}

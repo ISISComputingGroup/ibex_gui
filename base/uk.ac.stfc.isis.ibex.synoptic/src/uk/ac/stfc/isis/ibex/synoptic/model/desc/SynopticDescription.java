@@ -131,6 +131,10 @@ public class SynopticDescription extends ModelObject implements SynopticParentDe
     private void addComponent(int index, ComponentDescription component) {
         components.add(index, component);
         firePropertyChange("componentAdded", null, component);
+
+        // Pass through when properties change on a child so that we can check
+        // for errors more easily
+        component.addPropertyChangeListener(passThrough());
     }
 
     /**
@@ -140,6 +144,7 @@ public class SynopticDescription extends ModelObject implements SynopticParentDe
 	public void processChildComponents() {
 		for (ComponentDescription cd: components) {
 			cd.setParent(null);
+            cd.addPropertyChangeListener(passThrough());
 			cd.processChildComponents();
 		}
 	}

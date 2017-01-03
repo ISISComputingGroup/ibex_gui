@@ -19,7 +19,7 @@
 /**
  * 
  */
-package uk.ac.stfc.isis.ibex.ui.synoptic.editor.component;
+package uk.ac.stfc.isis.ibex.ui.synoptic.editor.validators;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -27,54 +27,39 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import uk.ac.stfc.isis.ibex.synoptic.model.desc.ComponentDescription;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.SynopticDescription;
 import uk.ac.stfc.isis.ibex.validators.ErrorMessageProvider;
 
 /**
- *
+ * This validator will check the list of all components and make sure that there
+ * are no duplicate names.
  */
 public class ComponentListValidator extends ErrorMessageProvider {
     private SynopticDescription synoptic;
-    private List<ComponentDescription> components;
 
     private static final String UNIQUE_COMPONENT_NAME = "Component names (%s) must be unique";
 
     private PropertyChangeListener componentNameListener = new PropertyChangeListener() {
         @Override
         public void propertyChange(PropertyChangeEvent evt) {
-            if (evt.getPropertyName().equals("name") || evt.getPropertyName().equals("componentRemoved")) {
-                String duplicate = getDuplicateName();
+            if (evt.getPropertyName().equals("componentName") || evt.getPropertyName().equals("componentRemoved")) {
+                String duplicate = getDuplicateComponentName();
                 if (!duplicate.isEmpty()) {
                     setError(true, String.format(UNIQUE_COMPONENT_NAME, duplicate));
+                } else {
+                    setError(false, null);
                 }
             }
-        }
-    };
-
-    private PropertyChangeListener componentAddedListener = new PropertyChangeListener() {
-        @Override
-        public void propertyChange(PropertyChangeEvent evt) {
-            addListeners((ComponentDescription) evt.getNewValue());
         }
     };
 
     public ComponentListValidator(SynopticDescription synoptic) {
         this.synoptic = synoptic;
 
-        components = synoptic.components();
-
-        for (ComponentDescription comp : components) {
-            addListeners(comp);
-        }
-
+        // This will add a listener to all underlying components as the property
+        // change from child components will pass through.
         synoptic.addPropertyChangeListener(componentNameListener);
-        synoptic.addPropertyChangeListener("componentAdded", componentAddedListener);
-    }
 
-    private void addListeners(ComponentDescription comp) {
-        comp.addPropertyChangeListener(componentNameListener);
-        comp.addPropertyChangeListener("componentAdded", componentAddedListener);
     }
 
     /**
@@ -83,7 +68,7 @@ public class ComponentListValidator extends ErrorMessageProvider {
      * @return The name of the first duplicated component, empty string if there
      *         are no duplicates.
      */
-    private String getDuplicateName() {
+    private String getDuplicateComponentName() {
         List<String> comps = synoptic.getComponentNameListWithChildren();
         Set<String> s = new HashSet<String>();
         for (String comp : comps) {

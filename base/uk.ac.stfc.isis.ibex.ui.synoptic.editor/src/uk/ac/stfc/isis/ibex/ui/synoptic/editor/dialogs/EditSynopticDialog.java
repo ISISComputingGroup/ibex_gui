@@ -43,9 +43,9 @@ import org.xml.sax.SAXException;
 import uk.ac.stfc.isis.ibex.synoptic.Synoptic;
 import uk.ac.stfc.isis.ibex.synoptic.SynopticInfo;
 import uk.ac.stfc.isis.ibex.synoptic.xml.XMLUtil;
-import uk.ac.stfc.isis.ibex.ui.synoptic.editor.component.ComponentListValidator;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.instrument.SynopticPreview;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.SynopticViewModel;
+import uk.ac.stfc.isis.ibex.ui.synoptic.editor.validators.ComponentListValidator;
 import uk.ac.stfc.isis.ibex.validators.ErrorMessage;
 
 /**
