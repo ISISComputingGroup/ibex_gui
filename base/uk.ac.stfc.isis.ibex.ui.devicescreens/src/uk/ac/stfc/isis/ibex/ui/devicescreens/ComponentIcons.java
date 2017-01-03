@@ -117,6 +117,12 @@ public final class ComponentIcons {
                 return "pressure_gauge";
             case SCIMAG3D:
                 return "scimag3D";
+            case PGC:
+                return "pgc";
+            case DETECTOR_MOTION_SYSTEM:
+                return "detector_motion_system";
+            case PIXELMAN:
+                return "pixelman";
             default:
                 return "cog";
         }

@@ -57,6 +57,7 @@ public class DeviceScreensDescriptionViewModelTest {
     private String propertyValue2 = "Value2";
     private String propertyDescription2 = "This is value 2";
     private List<MacroInfo> macros;
+    MessageDisplayer displayer;
 
     @Before
     public void setUp() {
@@ -81,7 +82,7 @@ public class DeviceScreensDescriptionViewModelTest {
         propertyNames.add(propertyName2);
 
         // Set up the mocks
-        MessageDisplayer displayer = mock(MessageDisplayer.class);
+        displayer = mock(MessageDisplayer.class);
         
         OpiDescription opiDesc1 = mock(OpiDescription.class);
         when(opiDesc1.getMacros()).thenReturn(macros);
@@ -241,5 +242,19 @@ public class DeviceScreensDescriptionViewModelTest {
         assertEquals("", viewModel.getScreens().get(2).getDescription());
     }
 
+    @Test
+    public void WHEN_setting_blank_target_THEN_error_triggered() {
+        // Arrange
+        String expectedSource = "ViewModel";
+        String expectedMsg = "Device 'Device1' is not pointing at a valid target. Please select a target OPI.";
+
+        // Act
+        viewModel.setSelectedScreen(0);
+        viewModel.setCurrentKey("");
+
+        // Assert
+        verify(displayer, times(0)).setErrorMessage(expectedSource, "");
+        verify(displayer).setErrorMessage(expectedSource, expectedMsg);
+    }
 }
 //CHECKSTYLE:ON

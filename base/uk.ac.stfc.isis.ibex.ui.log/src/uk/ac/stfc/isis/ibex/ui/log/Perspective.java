@@ -24,9 +24,18 @@ import org.eclipse.wb.swt.ResourceManager;
 
 import uk.ac.stfc.isis.ibex.ui.perspectives.BasePerspective;
 
+/**
+ * The perspective that shows the IOC Log.
+ * 
+ * Registers the perspective to be displayed in the list (see plugin.xml file
+ * for this package).
+ */
 public class Perspective extends BasePerspective {
 
-	public static final String ID = "uk.ac.stfc.isis.ibex.ui.log.perspective"; //$NON-NLS-1$
+    /**
+     * The ID of the perspective.
+     */
+    public static final String ID = "uk.ac.stfc.isis.ibex.ui.log.perspective";
 
 	@Override
 	public String id() {
@@ -35,7 +44,7 @@ public class Perspective extends BasePerspective {
 
 	@Override
 	public String name() {
-		return "IOC Log";
+        return "IOC &Log";
 	}
 
 	@Override

@@ -19,6 +19,8 @@
 
 package uk.ac.stfc.isis.ibex.ui.synoptic.editor.component;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.List;
 
 import org.eclipse.jface.viewers.ArrayContentProvider;
@@ -26,11 +28,11 @@ import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.FocusListener;
+import org.eclipse.swt.events.FocusAdapter;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
+import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
-import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
@@ -43,11 +45,11 @@ import org.eclipse.wb.swt.SWTResourceManager;
 import uk.ac.stfc.isis.ibex.devicescreens.components.ComponentType;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.ComponentDescription;
 import uk.ac.stfc.isis.ibex.ui.devicescreens.ComponentIcons;
-import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.IComponentSelectionListener;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.IInstrumentUpdateListener;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.SynopticViewModel;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.UpdateTypes;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.pv.PVList;
+import uk.ac.stfc.isis.ibex.ui.synoptic.editor.pv.PvListViewModel;
 
 /**
  * UI section that allows the user to view and edit the details of a component:
@@ -60,6 +62,7 @@ public class ComponentDetailView extends Composite {
     private final Color colorBlack = SWTResourceManager.getColor(0, 0, 0);
     private final Color colorRed = SWTResourceManager.getColor(255, 0, 0);
 	private SynopticViewModel synopticViewModel;
+    private PvListViewModel pvListViewModel;
 	private ComponentDescription component;
 	private Composite fieldsComposite;
 	private Composite labelComposite;
@@ -74,14 +77,19 @@ public class ComponentDetailView extends Composite {
     /**
      * The constructor.
      * 
-     * @param parent the parent composite
-     * @param synopticViewModel the view model
+     * @param parent
+     *            the parent composite
+     * @param synopticViewModel
+     *            the view model
+     * @param pvListViewModel
+     *            the view model specifically for the pv list
      */
 	public ComponentDetailView(Composite parent,
-			final SynopticViewModel synopticViewModel) {
+            final SynopticViewModel synopticViewModel, final PvListViewModel pvListViewModel) {
 		super(parent, SWT.NONE);
 
 		this.synopticViewModel = synopticViewModel;
+        this.pvListViewModel = pvListViewModel;
 
 		synopticViewModel.addInstrumentUpdateListener(new IInstrumentUpdateListener() {
 			@Override
@@ -94,26 +102,18 @@ public class ComponentDetailView extends Composite {
 
                 if (updateType != UpdateTypes.EDIT_COMPONENT && updateType != UpdateTypes.EDIT_TARGET
                         && updateType != UpdateTypes.ADD_TARGET) {
-					component = synopticViewModel.getFirstSelectedComponent();
-					showComponent(component);
+                    showComponent(synopticViewModel.getSingleSelectedComp());
 				}
 			}
 		});
 
-		synopticViewModel
-				.addComponentSelectionListener(new IComponentSelectionListener() {
-					@Override
-					public void selectionChanged(
-							List<ComponentDescription> oldSelection,
-							List<ComponentDescription> newSelection) {
-						if (newSelection != null && newSelection.size() == 1) {
-							component = newSelection.iterator().next();
-						} else {
-							component = null;
-						}
-						showComponent(component);
-					}
-				});
+        synopticViewModel.addPropertyChangeListener("compSelection", new PropertyChangeListener() {
+            @Override
+            public void propertyChange(PropertyChangeEvent evt) {
+                component = synopticViewModel.getSingleSelectedComp();
+                showComponent(component);
+            }
+        });
 		
         synopticViewModel.addInstrumentUpdateListener(new IInstrumentUpdateListener() {
             @Override
@@ -180,11 +180,7 @@ public class ComponentDetailView extends Composite {
         cmboType.setContentProvider(ArrayContentProvider.getInstance());
         cmboType.setInput(typeList);
         cmboType.getCombo().select(0);
-        cmboType.getCombo().addFocusListener(new FocusListener() {
-            @Override
-            public void focusGained(org.eclipse.swt.events.FocusEvent e) {
-            }
-
+        cmboType.getCombo().addFocusListener(new FocusAdapter() {
             @Override
             public void focusLost(org.eclipse.swt.events.FocusEvent e) {
                 if (!selectionCausedByMouseClick) {
@@ -194,16 +190,7 @@ public class ComponentDetailView extends Composite {
             }
         });
 
-        cmboType.getCombo().addMouseListener(new MouseListener() {
-
-            @Override
-            public void mouseDoubleClick(MouseEvent e) {
-            }
-
-            @Override
-            public void mouseDown(MouseEvent e) {
-            }
-
+        cmboType.getCombo().addMouseListener(new MouseAdapter() {
             @Override
             public void mouseUp(MouseEvent e) {
                 selectionCausedByMouseClick = true;
@@ -235,7 +222,7 @@ public class ComponentDetailView extends Composite {
         lblPvs.setLayoutData(new GridData(SWT.RIGHT, SWT.TOP, false, false, 1, 1));
         lblPvs.setText("PVs");
 
-        pvList = new PVList(fieldsComposite, synopticViewModel);
+        pvList = new PVList(fieldsComposite, pvListViewModel);
         GridData pvGridData = new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1);
         pvGridData.heightHint = 150;
         pvList.setLayoutData(pvGridData);

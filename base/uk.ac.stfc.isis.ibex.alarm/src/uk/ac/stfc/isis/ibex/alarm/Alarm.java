@@ -49,7 +49,7 @@ public class Alarm extends Plugin implements InstrumentInfoReceiver {
     private AlarmConnectionCloser alarmConnectionCloser = null;
 	
     /**
-     * @return the instance of the Alarm bundle
+     * @return the instance of this singleton.
      */
 	public static Alarm getInstance() {
 		return instance;
@@ -63,9 +63,9 @@ public class Alarm extends Plugin implements InstrumentInfoReceiver {
 	}
 
     /**
-     * Instantiates a new alarm.
-     * 
-     * Usually you would call get instance.
+    /**
+     * The default constructor for this singleton, sets up the backend model and
+     * counter to monitor the alarms.
      */
 	public Alarm() {
 		super();
@@ -100,7 +100,6 @@ public class Alarm extends Plugin implements InstrumentInfoReceiver {
         AlarmConnectionCloser alarmConnectionCloser = releaseAlarm();
         alarmConnectionCloser.close();
     }
-
 
     /**
      * Gets the context for the bundle.

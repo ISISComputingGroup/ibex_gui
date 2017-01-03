@@ -27,6 +27,9 @@ import uk.ac.stfc.isis.ibex.ui.perspectives.BasePerspective;
 
 /**
  * The script generator perspective.
+ * 
+ * Registers the perspective to be displayed in the list (see plugin.xml file
+ * for this package).
  */
 public class Perspective extends BasePerspective {
     /** The ID string for the perspective. */
@@ -45,7 +48,7 @@ public class Perspective extends BasePerspective {
 
 	@Override
 	public String name() {
-		return "Script Generator";
+        return "Script &Generator";
 	}
 	
     @Override

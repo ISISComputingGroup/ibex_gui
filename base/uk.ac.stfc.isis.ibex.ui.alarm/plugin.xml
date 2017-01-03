@@ -46,5 +46,17 @@
             class="uk.ac.stfc.isis.ibex.ui.alarm.AlarmsInstrumentInfoReceiver">
       </InstrumentInfoReceiver>
    </extension>
+   <extension
+         point="org.eclipse.ui.bindings">
+      <key
+            commandId="uk.ac.stfc.isis.ibex.ui.perspectives.commands.SwitchPerspective"
+            schemeId="IBEX_key_scheme"
+            sequence="Alt+Shift+A">
+         <parameter
+               id="uk.ac.stfc.isis.ibex.ui.perspectives.commands.perspectiveID"
+               value="uk.ac.stfc.isis.ibex.ui.alarm.perspective">
+         </parameter>
+      </key>
+   </extension>
 
 </plugin>

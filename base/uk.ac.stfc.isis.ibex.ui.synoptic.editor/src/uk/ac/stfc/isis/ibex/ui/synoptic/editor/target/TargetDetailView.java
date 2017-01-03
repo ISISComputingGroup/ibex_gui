@@ -19,8 +19,9 @@
 
 package uk.ac.stfc.isis.ibex.ui.synoptic.editor.target;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.Collection;
-import java.util.List;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
@@ -30,7 +31,6 @@ import org.eclipse.swt.widgets.Label;
 
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.ComponentDescription;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.TargetDescription;
-import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.IComponentSelectionListener;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.IInstrumentUpdateListener;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.SynopticViewModel;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.UpdateTypes;
@@ -62,19 +62,14 @@ public class TargetDetailView extends Composite {
 		synopticViewModel.addInstrumentUpdateListener(new IInstrumentUpdateListener() {
 			@Override
 			public void instrumentUpdated(UpdateTypes updateType) {
-				showTarget(synopticViewModel.getFirstSelectedComponent());
+				showTarget(synopticViewModel.getSingleSelectedComp());
 			}
 		});
-		
-		synopticViewModel.addComponentSelectionListener(new IComponentSelectionListener() {			
-			@Override
-			public void selectionChanged(List<ComponentDescription> oldSelection, List<ComponentDescription> newSelection) {
-				if (newSelection != null && newSelection.size() == 1) {
-					showTarget(newSelection.iterator().next());
-				} else {
-					showTarget(null);
-				}
-			}
+        synopticViewModel.addPropertyChangeListener("compSelection", new PropertyChangeListener() {
+            @Override
+            public void propertyChange(PropertyChangeEvent evt) {
+                showTarget(synopticViewModel.getSingleSelectedComp());
+            }
 		});
 		
         this.availableOPIs = availableOPIs;
@@ -132,7 +127,7 @@ public class TargetDetailView extends Composite {
                 // a target already exits, so should not be allowed to get set
                 fieldsComposite.setVisible(false);
                 labelComposite.setVisible(true);
-                addingAllowed(false, synopticViewModel.getFirstSelectedComponent().type().name());
+                addingAllowed(false, synopticViewModel.getSingleSelectedComp().type().name());
                 nameSelect.setTarget(null);
                 synopticViewModel.setSelectedProperty(null);
             } else if (target != null) {

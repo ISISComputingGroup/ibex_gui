@@ -31,14 +31,6 @@ public class EditableIocState extends IocState {
 		public void onValue(String value) {
 			EditableIocState.super.setDescription(value);
 		}
-
-		@Override
-		public void onError(Exception e) {
-		}
-
-		@Override
-		public void onConnectionStatus(boolean isConnected) {			
-		}
 	};
 	
 	private final Writer<String> setDescription;

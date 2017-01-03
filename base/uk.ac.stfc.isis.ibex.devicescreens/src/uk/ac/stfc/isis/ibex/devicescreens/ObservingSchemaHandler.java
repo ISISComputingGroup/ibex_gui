@@ -45,14 +45,6 @@ public class ObservingSchemaHandler {
                 e.printStackTrace();
             }
         }
-
-        @Override
-        public void onError(Exception e) {
-        }
-
-        @Override
-        public void onConnectionStatus(boolean isConnected) {
-        }
     };
 
     /**

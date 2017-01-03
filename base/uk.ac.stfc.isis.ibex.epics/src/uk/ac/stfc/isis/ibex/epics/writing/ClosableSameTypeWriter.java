@@ -34,6 +34,10 @@ import uk.ac.stfc.isis.ibex.epics.pv.Closable;
 public class ClosableSameTypeWriter<T> extends SameTypeWriter<T> implements Closable {
 	private Subscription destinationSubscription;
 	
+    /**
+     * @param destination
+     *            The place where this writer will write to
+     */
     public ClosableSameTypeWriter(Writable<T> destination) {
 		writeTo(destination);
 		destinationSubscription = destination.subscribe(this);
@@ -42,7 +46,10 @@ public class ClosableSameTypeWriter<T> extends SameTypeWriter<T> implements Clos
 	/**
      * A static factory used for generating an instance of this class.
      * 
-     * @param destination the Writable to write to
+     * @param <T>
+     *            Type of writable destination
+     * @param destination
+     *            the Writable to write to
      * @return the instance of this class that was created
      */
 	public static <T> ClosableSameTypeWriter<T> newInstance(Writable<T> destination) {

@@ -39,4 +39,19 @@ public abstract class BaseObserver<T> implements Observer<T> {
 			onValue(value);			
 		}	
 	}
+
+    @Override
+    public void onValue(T value) {
+        /** Default to no code as some children may not use */
+    }
+
+    @Override
+    public void onError(Exception e) {
+        /** Default to no code as some children may not use */
+    }
+
+    @Override
+    public void onConnectionStatus(boolean isConnected) {
+        /** Default to no code as some children may not use */
+    }
 }

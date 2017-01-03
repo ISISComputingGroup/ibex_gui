@@ -23,6 +23,8 @@ package uk.ac.stfc.isis.ibex.epics.observing;
 /**
  * An observable whose source is another observable.
  *
+ * @param <T>
+ *            The type of the value that you are observing.
  */
 public class ForwardingObservable<T> extends ClosableObservable<T> {
 		
