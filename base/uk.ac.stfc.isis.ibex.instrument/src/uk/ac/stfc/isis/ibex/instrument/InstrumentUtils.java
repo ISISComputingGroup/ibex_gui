@@ -69,4 +69,18 @@ public final class InstrumentUtils {
     public static <S, T> Writable<T> convert(Writable<S> destination, Converter<T, S> converter) {
         return new ForwardingWritable<>(destination, converter);
     }
+
+    /**
+     * Adds the current instrument prefix to a pv address.
+     * 
+     * @param address
+     *            The address to add the prefix to.
+     * @return The address with the prefix added.
+     */
+    public static String addPrefix(String address) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(Instrument.getInstance().getPvPrefix());
+        sb.append(address);
+        return sb.toString();
+    }
 }

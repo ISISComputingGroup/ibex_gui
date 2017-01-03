@@ -5,7 +5,7 @@ import uk.ac.stfc.isis.ibex.epics.observing.BaseObserver;
 import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.epics.switching.ObservableFactory;
 import uk.ac.stfc.isis.ibex.epics.switching.OnInstrumentSwitch;
-import uk.ac.stfc.isis.ibex.instrument.Instrument;
+import uk.ac.stfc.isis.ibex.instrument.InstrumentUtils;
 import uk.ac.stfc.isis.ibex.instrument.channels.BooleanChannel;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 
@@ -36,7 +36,7 @@ public class BannerItem extends ModelObject {
         obsFactory = new ObservableFactory(OnInstrumentSwitch.CLOSE);
 
         pvObservable = obsFactory.getSwitchableObservable(new BooleanChannel(),
-                Instrument.getInstance().getPvPrefix() + this.pv);
+                InstrumentUtils.addPrefix(this.pv));
         pvObservable.addObserver(stateAdapter);
 	}
 

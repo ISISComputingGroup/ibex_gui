@@ -41,7 +41,6 @@ import uk.ac.stfc.isis.ibex.epics.switching.ObservableFactory;
 import uk.ac.stfc.isis.ibex.epics.switching.OnInstrumentSwitch;
 import uk.ac.stfc.isis.ibex.epics.switching.WritableFactory;
 import uk.ac.stfc.isis.ibex.epics.writing.Writable;
-import uk.ac.stfc.isis.ibex.instrument.Instrument;
 import uk.ac.stfc.isis.ibex.instrument.InstrumentUtils;
 import uk.ac.stfc.isis.ibex.instrument.channels.CompressedCharWaveformChannel;
 import uk.ac.stfc.isis.ibex.instrument.channels.DefaultChannel;
@@ -215,7 +214,8 @@ public class ConfigServerVariables extends Closer {
      * @return the corresponding observable
      */
 	public ForwardingObservable<String> iocDescription(String iocName) {
-        return closingObsFactory.getSwitchableObservable(new StringChannel(), addPrefix(iocDescriptionAddress(iocName)));
+        return closingObsFactory.getSwitchableObservable(new StringChannel(),
+                InstrumentUtils.addPrefix(iocDescriptionAddress(iocName)));
 	}
 
     /**
@@ -225,7 +225,8 @@ public class ConfigServerVariables extends Closer {
      * @return the corresponding writable
      */
 	public Writable<String> iocDescriptionSetter(String iocName) {
-        return closingWriteFactory.getSwitchableWritable(new StringChannel(), addPrefix(iocDescriptionAddress(iocName)));
+        return closingWriteFactory.getSwitchableWritable(new StringChannel(),
+                InstrumentUtils.addPrefix(iocDescriptionAddress(iocName)));
 	}
 	
     /**
@@ -235,7 +236,8 @@ public class ConfigServerVariables extends Closer {
      * @return the corresponding observable
      */
 	public ForwardingObservable<String> blockValue(String blockName) {
-        return closingObsFactory.getSwitchableObservable(new DefaultChannel(), addPrefix(blockServerAlias(blockName)));
+        return closingObsFactory.getSwitchableObservable(new DefaultChannel(),
+                InstrumentUtils.addPrefix(blockServerAlias(blockName)));
 	}
 	
     /**
@@ -246,7 +248,7 @@ public class ConfigServerVariables extends Closer {
      */
 	public ForwardingObservable<String> blockDescription(String blockName) {
         return closingObsFactory.getSwitchableObservable(new StringChannel(),
-                addPrefix(blockServerAddresses.blockDescription(blockServerAlias(blockName))));
+                InstrumentUtils.addPrefix(blockServerAddresses.blockDescription(blockServerAlias(blockName))));
 	}
 
     /**
@@ -257,7 +259,7 @@ public class ConfigServerVariables extends Closer {
      */
     public ForwardingObservable<AlarmState> alarm(String blockName) {
         return closingObsFactory.getSwitchableObservable(new EnumChannel<>(AlarmState.class),
-                addPrefix(blockServerAddresses.blockAlarm(blockServerAlias(blockName))));
+                InstrumentUtils.addPrefix(blockServerAddresses.blockAlarm(blockServerAlias(blockName))));
     }
 
     /**
@@ -287,7 +289,8 @@ public class ConfigServerVariables extends Closer {
      * @return the new observable
      */
 	private ForwardingObservable<String> readCompressed(String address) {
-        return switchingObsFactory.getSwitchableObservable(new CompressedCharWaveformChannel(), addPrefix(address));
+        return switchingObsFactory.getSwitchableObservable(new CompressedCharWaveformChannel(),
+                InstrumentUtils.addPrefix(address));
 	}
 	
     /**
@@ -298,7 +301,8 @@ public class ConfigServerVariables extends Closer {
      * @return the new observable
      */
 	private ForwardingObservable<String> readCompressedClosing(String address) {
-        return closingObsFactory.getSwitchableObservable(new CompressedCharWaveformChannel(), addPrefix(address));
+        return closingObsFactory.getSwitchableObservable(new CompressedCharWaveformChannel(),
+                InstrumentUtils.addPrefix(address));
 	}
 	
     /**
@@ -308,7 +312,8 @@ public class ConfigServerVariables extends Closer {
      * @return the new writable
      */
 	private Writable<String> writeCompressed(String address) {
-        return switchingWriteFactory.getSwitchableWritable(new CompressedCharWaveformChannel(), addPrefix(address));
+        return switchingWriteFactory.getSwitchableWritable(new CompressedCharWaveformChannel(),
+                InstrumentUtils.addPrefix(address));
 	}
 	
     /**
@@ -348,17 +353,4 @@ public class ConfigServerVariables extends Closer {
 			return componentName.toUpperCase(Locale.ENGLISH);
 		}
 	}
-
-    /**
-     * Adds the PV prefix to an address.
-     * 
-     * @param address the unprefixed name
-     * @return the full PV name
-     */
-    private String addPrefix(String address) {
-        StringBuilder sb = new StringBuilder();
-        sb.append(Instrument.getInstance().getPvPrefix());
-        sb.append(address);
-        return sb.toString();
-    }
 }

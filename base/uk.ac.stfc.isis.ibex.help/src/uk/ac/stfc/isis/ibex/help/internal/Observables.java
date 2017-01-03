@@ -22,7 +22,7 @@ package uk.ac.stfc.isis.ibex.help.internal;
 import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.epics.switching.ObservableFactory;
 import uk.ac.stfc.isis.ibex.epics.switching.OnInstrumentSwitch;
-import uk.ac.stfc.isis.ibex.instrument.Instrument;
+import uk.ac.stfc.isis.ibex.instrument.InstrumentUtils;
 import uk.ac.stfc.isis.ibex.instrument.channels.StringChannel;
 
 public class Observables {
@@ -32,8 +32,8 @@ public class Observables {
 
     public Observables() {
         revision = obsFactory.getSwitchableObservable(new StringChannel(),
-                Instrument.getInstance().getPvPrefix() + "CS:VERSION:SVN:REV");
+                InstrumentUtils.addPrefix("CS:VERSION:SVN:REV"));
         date = obsFactory.getSwitchableObservable(new StringChannel(),
-                Instrument.getInstance().getPvPrefix() + "CS:VERSION:SVN:DATE");
+                InstrumentUtils.addPrefix("CS:VERSION:SVN:DATE"));
 	}
 }
