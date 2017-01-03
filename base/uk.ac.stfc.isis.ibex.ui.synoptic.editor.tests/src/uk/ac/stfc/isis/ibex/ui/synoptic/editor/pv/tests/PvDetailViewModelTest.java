@@ -53,19 +53,20 @@ public class PvDetailViewModelTest {
         viewModel.showPV(null);
 
         assertFalse(viewModel.getSelectionVisible());
+        assertEquals(PvDetailViewModel.NO_SELECTION_TEXT, viewModel.getErrorText());
     }
 
     @Test
     public void WHEN_valid_address_entered_THEN_no_error() {
         viewModel.setPvAddress(VALID_ADDRESS);
 
-        assertEquals(viewModel.getError().isError(), false);
+        assertEquals(true, viewModel.getErrorText().isEmpty());
     }
 
     @Test
     public void WHEN_invalid_address_entered_THEN_error_text() {
         viewModel.setPvAddress(INVALID_ADDRESS);
 
-        assertEquals(viewModel.getError().isError(), true);
+        assertEquals(false, viewModel.getErrorText().isEmpty());
     }
 }
