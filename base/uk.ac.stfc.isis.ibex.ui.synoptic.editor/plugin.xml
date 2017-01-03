@@ -55,8 +55,4 @@
          </menu>
       </menuContribution>
    </extension>
-	<extension
-         point="org.eclipse.ui.startup">
-      <startup>uk.ac.stfc.isis.ibex.synoptic.Activator</startup>
-   </extension>
 </plugin>
