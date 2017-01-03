@@ -151,6 +151,13 @@ public class ConfigDetailsDialog extends TitleAreaDialog implements
 	public boolean doAsComponent() {
 		return doAsComponent;
 	}
+
+    /**
+     * Open tab for blocks.
+     */
+    public void openBlocksTab() {
+        editor.openTab(ConfigEditorPanel.BLOCK_TAB_NAME);
+    }
     
     @Override
 	protected void createButtonsForButtonBar(Composite parent) {
