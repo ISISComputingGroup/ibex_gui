@@ -26,10 +26,10 @@ import uk.ac.stfc.isis.ibex.epics.pv.PVAddress;
 import uk.ac.stfc.isis.ibex.epics.switching.ObservableFactory;
 import uk.ac.stfc.isis.ibex.epics.switching.WritableFactory;
 import uk.ac.stfc.isis.ibex.epics.writing.Writable;
-import uk.ac.stfc.isis.ibex.instrument.InstrumentVariables;
+import uk.ac.stfc.isis.ibex.instrument.InstrumentUtils;
 import uk.ac.stfc.isis.ibex.instrument.channels.DoubleChannel;
 
-public class MotorSetPointVariables extends InstrumentVariables {
+public class MotorSetPointVariables {
 
 	private static final Converter<Double, Boolean> TO_BOOLEAN = new Converter<Double, Boolean>() {
 		@Override
@@ -53,7 +53,8 @@ public class MotorSetPointVariables extends InstrumentVariables {
         setPointSetter = writeFactory.getSwitchableWritable(new DoubleChannel(), setPointAddress);
 		
 		String homeAddress = motorAddress.endWithField("HOMR");
-        canHome = convert(obsFactory.getSwitchableObservable(new DoubleChannel(), homeAddress), TO_BOOLEAN);
+        canHome = InstrumentUtils.convert(obsFactory.getSwitchableObservable(new DoubleChannel(), homeAddress),
+                TO_BOOLEAN);
 
         homeSetter = writeFactory.getSwitchableWritable(new DoubleChannel(), homeAddress);
 	}
