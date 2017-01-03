@@ -24,16 +24,17 @@ package uk.ac.stfc.isis.ibex.ui.synoptic.editor.pv;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
-import uk.ac.stfc.isis.ibex.model.ModelObject;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.IO;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.PV;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.RecordType;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.blockselector.BlockSelector;
+import uk.ac.stfc.isis.ibex.validators.ErrorMessageProvider;
+import uk.ac.stfc.isis.ibex.validators.PvValidator;
 
 /**
  * This is the view model that contains the logic for the pv details panel.
  */
-public class PvDetailViewModel extends ModelObject {
+public class PvDetailViewModel extends ErrorMessageProvider {
     private boolean selectionVisible;
     private String pvName = "";
     private String pvAddress = "";
@@ -148,6 +149,7 @@ public class PvDetailViewModel extends ModelObject {
      *            The address of the PV which is being edited.
      */
     public void setPvAddress(String address) {
+        addressValid(address);
         firePropertyChange("pvAddress", pvAddress, pvAddress = address);
         updateModel();
     }
@@ -181,6 +183,17 @@ public class PvDetailViewModel extends ModelObject {
         selectedPv.setAddress(addressToUse);
 
         model.updatePvList();
+    }
+
+    private boolean addressValid(String address) {
+        PvValidator addressValidator = new PvValidator();
+        boolean addressValid = addressValidator.validatePvAddress(address);
+        if (addressValid) {
+            setError(false, null);
+        } else {
+            setError(true, addressValidator.getErrorMessage());
+        }
+        return addressValid;
     }
 
     /**

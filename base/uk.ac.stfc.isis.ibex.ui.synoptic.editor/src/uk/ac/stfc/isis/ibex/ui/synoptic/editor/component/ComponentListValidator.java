@@ -23,14 +23,12 @@ package uk.ac.stfc.isis.ibex.ui.synoptic.editor.component;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.ComponentDescription;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.SynopticDescription;
-import uk.ac.stfc.isis.ibex.validators.ErrorMessage;
 import uk.ac.stfc.isis.ibex.validators.ErrorMessageProvider;
 
 /**
@@ -40,18 +38,7 @@ public class ComponentListValidator extends ErrorMessageProvider {
     private SynopticDescription synoptic;
     private List<ComponentDescription> components;
 
-    private List<ErrorMessageProvider> compDetailsErrors = new ArrayList<>();
-
     private static final String UNIQUE_COMPONENT_NAME = "Component names (%s) must be unique";
-
-    private PropertyChangeListener detailsErrorListener = new PropertyChangeListener() {
-        @Override
-        public void propertyChange(PropertyChangeEvent evt) {
-            if (!error.isError()) {
-                checkCompDetailsErrors();
-            }
-        }
-    };
 
     private PropertyChangeListener componentNameListener = new PropertyChangeListener() {
         @Override
@@ -60,8 +47,6 @@ public class ComponentListValidator extends ErrorMessageProvider {
                 String duplicate = getDuplicateName();
                 if (!duplicate.isEmpty()) {
                     setError(true, String.format(UNIQUE_COMPONENT_NAME, duplicate));
-                } else {
-                    checkCompDetailsErrors();
                 }
             }
         }
@@ -90,10 +75,6 @@ public class ComponentListValidator extends ErrorMessageProvider {
     private void addListeners(ComponentDescription comp) {
         comp.addPropertyChangeListener(componentNameListener);
         comp.addPropertyChangeListener("componentAdded", componentAddedListener);
-
-        ErrorMessageProvider detailsError = new ComponentDetailsValidator(comp);
-        detailsError.addPropertyChangeListener("error", detailsErrorListener);
-        compDetailsErrors.add(detailsError);
     }
 
     /**
@@ -111,17 +92,5 @@ public class ComponentListValidator extends ErrorMessageProvider {
             }
         }
         return "";
-    }
-
-    private void checkCompDetailsErrors() {
-        for (ErrorMessageProvider entry : compDetailsErrors) {
-            ErrorMessage newError = entry.getError();
-            if (newError.isError()) {
-                setError(newError.isError(), newError.getMessage());
-                return;
-            }
-        }
-
-        setError(false, null);
     }
 }
