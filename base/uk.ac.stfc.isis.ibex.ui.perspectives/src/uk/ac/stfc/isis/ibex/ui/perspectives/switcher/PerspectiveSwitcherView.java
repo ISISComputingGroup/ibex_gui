@@ -114,9 +114,12 @@ public class PerspectiveSwitcherView extends ViewPart implements ISizeProvider {
                     // Add & back into index that it was in originally (used as
                     // the button text keeps changing on alarm/log)
                     int mnemonicIdx = perspective.name().indexOf("&");
-                    StringBuilder bldr = new StringBuilder(button.getText());
-                    bldr.insert(mnemonicIdx, "&");
-                    button.setText(bldr.toString());
+                    String buttonText = button.getText();
+                    if (buttonText.charAt(mnemonicIdx) != '&') {
+                        StringBuilder bldr = new StringBuilder(buttonText);
+                        bldr.insert(mnemonicIdx, "&");
+                        button.setText(bldr.toString());
+                    }
                 }
             }
         });
