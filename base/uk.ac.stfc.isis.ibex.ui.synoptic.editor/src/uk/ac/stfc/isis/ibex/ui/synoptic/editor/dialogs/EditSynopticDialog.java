@@ -162,21 +162,25 @@ public class EditSynopticDialog extends TitleAreaDialog {
 		});
 		
         synopticValidator.addPropertyChangeListener("error", new PropertyChangeListener() {
-
             @Override
             public void propertyChange(PropertyChangeEvent evt) {
-                ErrorMessage hasError = (ErrorMessage) evt.getNewValue();
-                setErrorMessage(hasError.getMessage());
-                saveAsBtn.setEnabled(!hasError.isError());
-                if (saveBtn != null) {
-                    saveBtn.setEnabled(!hasError.isError());
-                }
+                updateErrors((ErrorMessage) evt.getNewValue());
             }
         });
+
+        updateErrors(synopticValidator.getError());
 		
 		createButton(parent, IDialogConstants.CANCEL_ID, "Cancel", false);
 	}	
 	
+    private void updateErrors(ErrorMessage error) {
+        setErrorMessage(error.getMessage());
+        saveAsBtn.setEnabled(!error.isError());
+        if (saveBtn != null) {
+            saveBtn.setEnabled(!error.isError());
+        }
+    }
+
 	@Override
 	protected void configureShell(Shell shell) {
 		super.configureShell(shell);

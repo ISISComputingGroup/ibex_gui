@@ -43,15 +43,19 @@ public class ComponentListValidator extends ErrorMessageProvider {
         @Override
         public void propertyChange(PropertyChangeEvent evt) {
             if (evt.getPropertyName().equals("componentName") || evt.getPropertyName().equals("componentRemoved")) {
-                String duplicate = getDuplicateComponentName();
-                if (!duplicate.isEmpty()) {
-                    setError(true, String.format(UNIQUE_COMPONENT_NAME, duplicate));
-                } else {
-                    setError(false, null);
-                }
+                updateErrors();
             }
         }
     };
+
+    private void updateErrors() {
+        String duplicate = getDuplicateComponentName();
+        if (!duplicate.isEmpty()) {
+            setError(true, String.format(UNIQUE_COMPONENT_NAME, duplicate));
+        } else {
+            setError(false, null);
+        }
+    }
 
     public ComponentListValidator(SynopticDescription synoptic) {
         this.synoptic = synoptic;
@@ -60,6 +64,7 @@ public class ComponentListValidator extends ErrorMessageProvider {
         // change from child components will pass through.
         synoptic.addPropertyChangeListener(componentNameListener);
 
+        updateErrors();
     }
 
     /**

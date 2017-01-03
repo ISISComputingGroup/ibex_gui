@@ -186,5 +186,9 @@ public class PvDetailView extends Composite {
                 BeanProperties.value("pvAddress").observe(model));
         bindingContext.bindValue(ViewersObservables.observeSingleSelection(cmboMode),
                 BeanProperties.value("pvMode").observe(model));
+        bindingContext.bindValue(WidgetProperties.text().observe(lblError),
+                BeanProperties.value("errorText").observe(model));
+        bindingContext.bindValue(WidgetProperties.foreground().observe(lblError),
+                BeanProperties.value("errorColor").observe(model));
     }
 }
