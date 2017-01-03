@@ -17,11 +17,13 @@
         locationURI="menu:org.eclipse.ui.main.menu?after=iocMenu">
          <menu
                id="runcontrolMenu"
-               label="Run-Control">
+               label="Run-Control"
+               mnemonic="R">
             <command
                   commandId="uk.ac.stfc.isis.ibex.ui.runcontrol.commands.EditRunControl"
                   id="uk.ac.stfc.isis.ibex.ui.runcontrol"
                   label="View Run-Control Settings"
+                  mnemonic="V"
                   style="push"
                   tooltip="View Run-Control Settings">
             </command>

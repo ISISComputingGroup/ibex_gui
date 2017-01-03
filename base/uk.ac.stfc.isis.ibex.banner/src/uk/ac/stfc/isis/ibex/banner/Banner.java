@@ -35,19 +35,10 @@ public class Banner implements BundleActivator {
     private static Banner instance;
     private static BundleContext context;
 
-    /**
-     * Returns the single instance of the banner.
-     * 
-     * @return the banner
-     */
-    public static Banner getInstance() {
-        return instance;
-    }
-
     private final Observables observables;
 
     /**
-     * Standard constructor.
+     * Standard constructor. Will be called by eclipse when plugin is started.
      */
     public Banner() {
         super();
@@ -55,6 +46,15 @@ public class Banner implements BundleActivator {
         observables = new Observables();
 
         observables.bannerDescription.addObserver(descriptionAdapter);
+    }
+
+    /**
+     * Returns the single instance of the banner.
+     * 
+     * @return the banner
+     */
+    public static Banner getInstance() {
+        return instance;
     }
 
     /**
@@ -66,6 +66,9 @@ public class Banner implements BundleActivator {
         return observables;
     }
 
+    /**
+     * @return The BundleContext for this plugin.
+     */
     static BundleContext getContext() {
         return context;
     }
@@ -87,14 +90,6 @@ public class Banner implements BundleActivator {
             for (BannerItem item : value) {
                 item.createPVObservable();
             }
-        }
-
-        @Override
-        public void onError(Exception e) {
-        }
-
-        @Override
-        public void onConnectionStatus(boolean isConnected) {
         }
     };
 }

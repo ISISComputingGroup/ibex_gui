@@ -96,7 +96,13 @@ public enum ComponentType {
     /** Pressure gauge component type. */
     PRESSURE_GAUGE,
     /** 3D magnet component type. */
-    SCIMAG3D;
+    SCIMAG3D,
+    /** Polarises, Guide and Collimation for MUONFE. */
+    PGC,
+    /** Detector motion system component type. */
+    DETECTOR_MOTION_SYSTEM,
+    /** Pixelman camera. */
+    PIXELMAN;
 	
 	private Target target;
 

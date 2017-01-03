@@ -44,13 +44,16 @@ public class View extends ViewPart {
 	 * example).
 	 */
 	class ViewContentProvider implements IStructuredContentProvider {
-		public void inputChanged(Viewer v, Object oldInput, Object newInput) {
+		@Override
+        public void inputChanged(Viewer v, Object oldInput, Object newInput) {
 		}
 
-		public void dispose() {
+		@Override
+        public void dispose() {
 		}
 
-		public Object[] getElements(Object parent) {
+		@Override
+        public Object[] getElements(Object parent) {
 			if (parent instanceof Object[]) {
 				return (Object[]) parent;
 			}
@@ -60,25 +63,32 @@ public class View extends ViewPart {
 
 	class ViewLabelProvider extends LabelProvider implements
 			ITableLabelProvider {
-		public String getColumnText(Object obj, int index) {
+		@Override
+        public String getColumnText(Object obj, int index) {
 			return getText(obj);
 		}
 
-		public Image getColumnImage(Object obj, int index) {
+		@Override
+        public Image getColumnImage(Object obj, int index) {
 			return getImage(obj);
 		}
 
-		public Image getImage(Object obj) {
+		@Override
+        public Image getImage(Object obj) {
 			return PlatformUI.getWorkbench().getSharedImages().getImage(
 					ISharedImages.IMG_OBJ_ELEMENT);
 		}
 	}
 
 	/**
-	 * This is a callback that will allow us to create the viewer and initialize
-	 * it.
-	 */
-	public void createPartControl(Composite parent) {
+     * This is a callback that will allow us to create the viewer and initialize
+     * it.
+     * 
+     * @param parent
+     *            The parent composite for this view.
+     */
+	@Override
+    public void createPartControl(Composite parent) {
 		viewer = new TableViewer(parent, SWT.MULTI | SWT.H_SCROLL
 				| SWT.V_SCROLL);
 		viewer.setContentProvider(new ViewContentProvider());
@@ -90,7 +100,8 @@ public class View extends ViewPart {
 	/**
 	 * Passing the focus request to the viewer's control.
 	 */
-	public void setFocus() {
+	@Override
+    public void setFocus() {
 		viewer.getControl().setFocus();
 	}
 }

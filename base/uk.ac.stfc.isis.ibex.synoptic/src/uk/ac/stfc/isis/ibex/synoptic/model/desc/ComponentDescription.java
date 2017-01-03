@@ -192,6 +192,17 @@ public class ComponentDescription extends ModelObject implements SynopticParentD
 	}
 	
     /**
+     * Add a PV to this component.
+     * 
+     * @param pv the PV to add
+     */
+	public void addPV(PV pv) {
+		if (pv != null) {
+			pvs.add(0, pv);
+		}
+	}
+	
+    /**
      * Add a PV to this component in a certain place.
      * 
      * @param pv the PV to add

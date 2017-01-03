@@ -22,6 +22,9 @@
  */
 package uk.ac.stfc.isis.ibex.ui.devicescreens;
 
+import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.ui.PlatformUI;
+
 import uk.ac.stfc.isis.ibex.opis.OPIViewCreationException;
 import uk.ac.stfc.isis.ibex.targets.OpiTarget;
 import uk.ac.stfc.isis.ibex.ui.targets.OpiTargetView;
@@ -43,7 +46,13 @@ public class DevicesOpiTargetView extends OpiTargetView {
      * @throws OPIViewCreationException when opi can not be created
      */
     public static void displayOpi(OpiTarget opiTarget) throws OPIViewCreationException {
-        OpiTargetView.displayOpi(opiTarget, ID);
+        if (opiTarget.opiName().length() > 0) {
+            OpiTargetView.displayOpi(opiTarget, ID);
+        } else {
+            MessageDialog.openError(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), "Error",
+                    "Unable to open OPI " + opiTarget.name()
+                            + ", target is blank. Edit the device screens and select a target, then try again.");
+        }
     }
 
 }

@@ -55,21 +55,25 @@
             allPopups="false"
             locationURI="menu:org.eclipse.ui.main.menu?after=instrumentMenu">
          <menu
-         	   id="configurationMenu"
-               label="Configuration">
+               id="configurationMenu"
+               label="Configuration"
+               mnemonic="C">
             <command
                   commandId="uk.ac.stfc.isis.ibex.ui.configserver.commands.EditCurrentConfig"
                   id="uk.ac.stfc.isis.ibex.ui.config"
-                  label="Edit Current Configuration..."
+                  label="Edit &amp;Current Configuration..."
+                  mnemonic="C"
                   style="push"
                   tooltip="Edit the currently loaded configuration">
             </command>
             <menu
-                  label="Configurations">
+                  label="Configurations"
+                  mnemonic="f">
                <command
                      commandId="uk.ac.stfc.isis.ibex.ui.configserver.commands.NewConfig"
                      id="uk.ac.stfc.isis.ibex.ui.config"
                      label="New"
+                     mnemonic="N"
                      style="push"
                      tooltip="Create a new config">
                </command>
@@ -77,6 +81,7 @@
                      commandId="uk.ac.stfc.isis.ibex.ui.configserver.commands.LoadConfig"
                      id="uk.ac.stfc.isis.ibex.ui.config"
                      label="Load"
+                     mnemonic="L"
                      style="push"
                      tooltip="Load a different configuration">
                </command>
@@ -84,6 +89,7 @@
                      commandId="uk.ac.stfc.isis.ibex.ui.configserver.commands.EditConfig"
                      id="uk.ac.stfc.isis.ibex.ui.config"
                      label="Edit"
+                     mnemonic="E"
                      style="push"
                      tooltip="Edit a configuration">
                </command>
@@ -91,16 +97,19 @@
                      commandId="uk.ac.stfc.isis.ibex.ui.configserver.commands.DeleteConfigs"
                      id="uk.ac.stfc.isis.ibex.ui.config"
                      label="Delete"
+                     mnemonic="D"
                      style="push"
                      tooltip="Delete configurations from the instrument">
                </command>
             </menu>
             <menu
-                  label="Components">
+                  label="Components"
+                  mnemonic="p">
                <command
                      commandId="uk.ac.stfc.isis.ibex.ui.configserver.commands.NewComponent"
                      id="uk.ac.stfc.isis.ibex.ui.config"
                      label="New"
+                     mnemonic="N"
                      style="push"
                      tooltip="Create a new component">
                </command>
@@ -108,6 +117,7 @@
                      commandId="uk.ac.stfc.isis.ibex.ui.configserver.commands.EditComponent"
                      id="uk.ac.stfc.isis.ibex.ui.config"
                      label="Edit"
+                     mnemonic="E"
                      style="push"
                      tooltip="Edit a component">
                </command>
@@ -115,6 +125,7 @@
                      commandId="uk.ac.stfc.isis.ibex.ui.configserver.commands.DeleteComponents"
                      id="uk.ac.stfc.isis.ibex.ui.config"
                      label="Delete"
+                     mnemonic="D"
                      style="push"
                      tooltip="Delete components from the instrument">
                </command>

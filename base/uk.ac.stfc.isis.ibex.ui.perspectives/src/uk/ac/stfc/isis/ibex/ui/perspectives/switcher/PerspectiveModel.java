@@ -40,7 +40,7 @@ public class PerspectiveModel {
 
     private static final Logger LOG = IsisLog.getLogger(PerspectiveSwitcher.class);
 
-    public String previousPerspective;
+    private String previousPerspective;
 
     /**
      * @return the previousPerspective

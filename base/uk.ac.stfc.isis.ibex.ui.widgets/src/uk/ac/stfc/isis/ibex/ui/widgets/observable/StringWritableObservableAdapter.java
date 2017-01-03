@@ -77,7 +77,8 @@ public class StringWritableObservableAdapter implements Closable {
     /**
      * Writes a new string value to the associated PV.
      * 
-     * @param value the new value
+     * @param text
+     *            the new value
      */
 	public void setText(String text) {
 		if (text != writer.lastWritten()) {

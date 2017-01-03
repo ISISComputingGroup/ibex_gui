@@ -173,10 +173,6 @@ public class DisplayBlock extends ModelObject {
             // If in doubt set to true
             setInRange(true);
         }
-
-        @Override
-        public void onConnectionStatus(boolean isConnected) {
-        }
     };
 
     private final BaseObserver<String> lowLimitAdapter = new BaseObserver<String>() {
@@ -189,10 +185,6 @@ public class DisplayBlock extends ModelObject {
         public void onError(Exception e) {
             setLowLimit("error");
         }
-
-        @Override
-        public void onConnectionStatus(boolean isConnected) {
-        }
     };
 
     private final BaseObserver<String> highLimitAdapter = new BaseObserver<String>() {
@@ -204,10 +196,6 @@ public class DisplayBlock extends ModelObject {
         @Override
         public void onError(Exception e) {
             setHighLimit("error");
-        }
-
-        @Override
-        public void onConnectionStatus(boolean isConnected) {
         }
     };
 
@@ -227,10 +215,6 @@ public class DisplayBlock extends ModelObject {
         public void onError(Exception e) {
             // If in doubt set to false
             setEnabled(false);
-        }
-
-        @Override
-        public void onConnectionStatus(boolean isConnected) {
         }
     };
 

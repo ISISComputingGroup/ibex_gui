@@ -19,10 +19,17 @@
 
 package uk.ac.stfc.isis.ibex.ui.configserver.editing.iocs;
 
-import java.awt.Composite;
-
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableIoc;
 
-public interface IIocDependentPanel extends Composite {
+/**
+ * A panel that shows information relating to a specific IOC.
+ */
+public interface IIocDependentPanel {
+    /**
+     * Set the IOC to show information about.
+     * 
+     * @param ioc
+     *            The IOC.
+     */
 	void setIoc(EditableIoc ioc);
 }

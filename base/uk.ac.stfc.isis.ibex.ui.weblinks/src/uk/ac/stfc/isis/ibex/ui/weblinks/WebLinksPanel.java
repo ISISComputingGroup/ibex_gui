@@ -50,6 +50,7 @@ public class WebLinksPanel extends Composite {
     private static final int LINKS_DISPLAY_SPACING = 15;
     private static final int TITLE_FONT_SIZE = 24;
     private static final int LINK_FONT_SIZE = 16;
+    private static final int LINK_INDENT = 25;
 
     private static final String URL_REPLACEMENT_STRING = "INSTNAME";
 
@@ -65,25 +66,41 @@ public class WebLinksPanel extends Composite {
      */
     public WebLinksPanel(Composite parent, int style) {
         super(parent, style);
-
         GridLayout gridLayout = new GridLayout(1, false);
         gridLayout.marginWidth = LINKS_DISPLAY_SPACING;
         gridLayout.verticalSpacing = LINKS_DISPLAY_SPACING;
         setLayout(gridLayout);
         
-        Label titleLabel = new Label(this, SWT.NONE);
-        defaultFont = titleLabel.getFont();
-        
-        titleLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-        titleLabel.setText("Web Links");
-        titleLabel.setFont(getResizedFont(defaultFont, TITLE_FONT_SIZE, SWT.BOLD));
-        
-        List<String> links = GetWeblinksPage.getWebLinks();
+        Label fontDummy = new Label(parent, SWT.NONE);
+        defaultFont = fontDummy.getFont();
 
-        for (String link : links) {
-            linkCreator(link, parent);
+        List<String> sections = GetWeblinksPage.getSections();
+        for (String section : sections) {
+            titleCreator(section, this);
+            List<String> links = GetWeblinksPage.getWebLinks(section);
+            for (String link : links) {
+                linkCreator(link, this);
+            }
         }
 
+    }
+
+    /**
+     * Creates a title label for a link section.
+     * 
+     * @param title
+     *            The section title.
+     * @param parent
+     *            The parent component.
+     * @return The display label for the section title.
+     */
+    private Label titleCreator(String title, Composite parent) {
+        Label titleLabel = new Label(parent, SWT.NONE);
+
+        titleLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+        titleLabel.setText(title);
+        titleLabel.setFont(getResizedFont(defaultFont, TITLE_FONT_SIZE, SWT.BOLD));
+        return titleLabel;
     }
 
     /**
@@ -97,9 +114,14 @@ public class WebLinksPanel extends Composite {
      * @return
      */
     private Link linkCreator(String linkHtml, Composite parent) {
-        Link link = new Link(this, SWT.NONE);
+        Link link = new Link(parent, SWT.NONE);
+
         link.setText(linkHtml);
         link.setFont(getResizedFont(defaultFont, LINK_FONT_SIZE, SWT.NORMAL));
+
+        GridData gdLink = new GridData();
+        gdLink.horizontalIndent = LINK_INDENT;
+        link.setLayoutData(gdLink);
 
         link.addSelectionListener(new SelectionAdapter() {
             @Override

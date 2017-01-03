@@ -66,6 +66,18 @@ public abstract class SynopticHandler<T> extends AbstractHandler {
 		destination.subscribe(synopticService);
 	}		
 	
+    /**
+     * Handle the sequence of opening a synoptic editor dialog and the
+     * subsequent cancel/save.
+     * 
+     * @param synoptic
+     *            The synoptic to edit
+     * @param title
+     *            The title of the synoptic editor dialog
+     * @param isBlank
+     *            Whether the requested synoptic has existing components or it
+     *            is blank
+     */
 	protected void openDialog(SynopticDescription synoptic, String title, boolean isBlank) {
         Collection<String> opis = Opi.getDefault().descriptionsProvider().getOpiList();
         SynopticViewModel viewModel = new SynopticViewModel(synoptic);
@@ -73,11 +85,6 @@ public abstract class SynopticHandler<T> extends AbstractHandler {
                 new EditSynopticDialog(shell(), title, isBlank, opis, viewModel);
 		if (editDialog.open() == Window.OK) {
             SYNOPTIC.edit().saveSynoptic().write(viewModel.getSynoptic());
-			
-			// Refresh the synoptic
-            if (viewModel.getSynoptic().name().equals(SYNOPTIC.getSynopticInfo().name())) {
-                SYNOPTIC.setViewerSynoptic(viewModel.getSynoptic().name());
-			}
 		}
 	}
 	
