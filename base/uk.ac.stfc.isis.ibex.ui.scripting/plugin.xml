@@ -51,8 +51,12 @@
             class="uk.ac.stfc.isis.ibex.ui.scripting.InterpreterInfoBuilderParticipant">
       </interpreter_info_builder_participant>
    </extension>
-   <extension
-         point="org.eclipse.ui.bindings">
+   <extension point="uk.ac.stfc.isis.ibex.instrument.info">
+      <InstrumentInfoReceiver
+            class="uk.ac.stfc.isis.ibex.ui.scripting.ConsoleSettings">
+      </InstrumentInfoReceiver>
+   </extension>
+   <extension point="org.eclipse.ui.bindings">
       <key
             commandId="uk.ac.stfc.isis.ibex.ui.perspectives.commands.SwitchPerspective"
             schemeId="IBEX_key_scheme"
@@ -63,5 +67,4 @@
          </parameter>
       </key>
    </extension>
-
 </plugin>

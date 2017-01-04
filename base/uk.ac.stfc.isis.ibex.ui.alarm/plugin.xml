@@ -43,7 +43,7 @@
    <extension
          point="uk.ac.stfc.isis.ibex.instrument.info">
       <InstrumentInfoReceiver
-            class="uk.ac.stfc.isis.ibex.ui.alarm.AlarmSettings">
+            class="uk.ac.stfc.isis.ibex.ui.alarm.AlarmsInstrumentInfoReceiver">
       </InstrumentInfoReceiver>
    </extension>
    <extension

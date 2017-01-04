@@ -17,7 +17,7 @@
  * http://opensource.org/licenses/eclipse-1.0.php
  */
 
-package uk.ac.stfc.isis.ibex.ui.alarm.tests;
+package uk.ac.stfc.isis.ibex.alarm.tests;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.*;
@@ -31,11 +31,11 @@ import org.junit.Test;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 
+import uk.ac.stfc.isis.ibex.alarm.AlarmSettings;
 import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
-import uk.ac.stfc.isis.ibex.ui.alarm.AlarmSettings;
 
 @SuppressWarnings("checkstyle:methodname")
-public class AlarmSettingsTest {
+public class AlarmTest {
 
     /**
      * Localhost instrument name.

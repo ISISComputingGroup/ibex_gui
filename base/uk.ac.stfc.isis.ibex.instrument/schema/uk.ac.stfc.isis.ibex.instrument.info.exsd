@@ -6,7 +6,7 @@
          <meta.schema plugin="uk.ac.stfc.isis.ibex.instrument" id="uk.ac.stfc.isis.ibex.instrument.info" name="uk.ac.stfc.isis.ibex.instrument.info"/>
       </appinfo>
       <documentation>
-         [Enter description of this extension point.]
+         If an instrument switch occurs this extension point will be called.
       </documentation>
    </annotation>
 

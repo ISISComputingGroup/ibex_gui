@@ -42,7 +42,7 @@ public class Perspective extends BasePerspective {
 	public void createInitialLayout(IPageLayout layout) {
 		super.createInitialLayout(layout);
 		
-		Consoles.getDefault().createConsole();
+        Consoles.getDefault().createConsole();
 	}
 	
 	@Override

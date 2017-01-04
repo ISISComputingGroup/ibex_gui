@@ -17,28 +17,33 @@
 * http://opensource.org/licenses/eclipse-1.0.php
 */
 
-package uk.ac.stfc.isis.ibex.ui.alarm;
+package uk.ac.stfc.isis.ibex.ui.synoptic;
 
-import org.csstudio.alarm.beast.ui.alarmtree.AlarmTreeView;
-
+import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
+import uk.ac.stfc.isis.ibex.instrument.InstrumentInfoReceiver;
 
 /**
- * The Class AlarmView which is the view which contains the alarm tree.
+ * The activator class controls the plug-in life cycle.
  */
-public class AlarmView extends AlarmTreeView {
+public class SynopticSettings implements InstrumentInfoReceiver {
 
-	public static final String ID = "uk.ac.stfc.isis.ibex.ui.test.views.TestView"; //$NON-NLS-1$
+    @Override
+    public void setInstrument(InstrumentInfo instrument) {
+        // nothing to do on set instrument
+    }
 
-	
     /**
-     * Instantiates a new alarm view.
+     * Close the open OPIs they will refer to the old instrument.
+     * 
+     * @param instrument the instrument being switched to
      */
-	public AlarmView() {
-		setPartName("TestView");
-	}
+    @Override
+    public void preSetInstrument(InstrumentInfo instrument) {
+        Activator.getDefault().presenter().closeAllOPIs();
+    }
 
-	@Override
-	public void setFocus() {
-		// Set the focus
-	}
+    @Override
+    public void postSetInstrument(InstrumentInfo instrument) {
+        // nothing to do on post set instrument
+    }
 }

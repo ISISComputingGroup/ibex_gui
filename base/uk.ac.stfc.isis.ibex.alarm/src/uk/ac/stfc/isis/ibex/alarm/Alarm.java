@@ -19,47 +19,35 @@
 package uk.ac.stfc.isis.ibex.alarm;
 
 import org.apache.logging.log4j.Logger;
-import org.csstudio.alarm.beast.Messages;
 import org.csstudio.alarm.beast.ui.clientmodel.AlarmClientModel;
-import org.csstudio.alarm.beast.ui.clientmodel.AlarmClientModelListener;
-import org.eclipse.ui.plugin.AbstractUIPlugin;
+import org.eclipse.core.runtime.Plugin;
 import org.osgi.framework.BundleContext;
 
+import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
+import uk.ac.stfc.isis.ibex.instrument.InstrumentInfoReceiver;
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
 
 /**
  * Class which provides an interaction between the perspective switcher and the
  * alarm system.
  */
-public class Alarm extends AbstractUIPlugin {
-
-    private static final int MAX_RETRIES = 100;
-    private static final int WAIT_FOR_MODEL = 100;
+public class Alarm extends Plugin implements InstrumentInfoReceiver {
 
 	private static final Logger LOG = IsisLog.getLogger(Alarm.class);
 	
 	private static BundleContext context;
 	private static Alarm instance;
-	
-    private AlarmClientModel alarmModel;
-    private AlarmCounter counter;
-    AlarmClientModelListener listener;
+
+    /** The alarmModel is a singleton so have a single copy. */
+    private static AlarmClientModel alarmModel = null;
 
     /**
-     * The default constructor for this singleton, sets up the backend model and
-     * counter to monitor the alarms.
+     * Alarm counter is based on the alarmModle so there is a single copy this.
      */
-    public Alarm() {
-        super();
-        instance = this;
-        try {
-            alarmModel = AlarmClientModel.getInstance();
-        } catch (Exception e) {
-            LOG.info("Alarm Client Model not found");
-        }
-        counter = new AlarmCounter(alarmModel);
-    }
-
+    private static AlarmCounter counter = new AlarmCounter(null);
+    private AlarmSettings alarmSettings = new AlarmSettings();
+    private AlarmConnectionCloser alarmConnectionCloser = null;
+	
     /**
      * @return the instance of this singleton.
      */
@@ -68,21 +56,55 @@ public class Alarm extends AbstractUIPlugin {
 	    }
 
     /**
-     * @return the instance of this singleton.
+     * @return the default alarm instance
      */
 	public static Alarm getDefault() {
 		return instance;
 	}
 
     /**
-     * @return The model that holds information on the alarms.
+    /**
+     * The default constructor for this singleton, sets up the backend model and
+     * counter to monitor the alarms.
      */
-    public AlarmClientModel getAlarmModel() {
-        return alarmModel;
+	public Alarm() {
+		super();
+		instance = this;
+        setupAlarmModel();
+
     }
 
     /**
-     * @return The BundleContext for this plugin.
+     * If there is no alarm model then setup a new alarm model and counter.
+     */
+    private void setupAlarmModel() {
+        try {
+            if (alarmModel == null) {
+                alarmModel = AlarmClientModel.getInstance();
+                counter.setAlarmModel(alarmModel);
+            }
+		} catch (Exception e) {
+			LOG.info("Alarm Client Model not found");
+		}
+    }
+
+    /**
+     * Stop the bundle releasing all the resources.
+     * 
+     * @param context context of the bundle
+     * @throws Exception if something goes wrong
+     */
+    @Override
+    public void stop(BundleContext context) throws Exception {
+        super.stop(context);
+        AlarmConnectionCloser alarmConnectionCloser = releaseAlarm();
+        alarmConnectionCloser.close();
+    }
+
+    /**
+     * Gets the context for the bundle.
+     *
+     * @return the context
      */
 	static BundleContext getContext() {
 		return context;
@@ -97,46 +119,56 @@ public class Alarm extends AbstractUIPlugin {
 	
     /**
      * This should be called after closing the alarm view, else the instance of
-     * the alarm model will be held on to by BEAST.
+     * the alarm model will be held on to by BEAST. This returns a connection
+     * closer which should be closed as late as possible because the rest of the
+     * connection is closed on a separate thread; give it a chance to close
+     * first.
+     * 
+     * @return an active MQ connection closer
      */
-    public void releaseAlarm() {
+    private AlarmConnectionCloser releaseAlarm() {
+
+        AlarmConnectionCloser alarmConnectionCloser = new AlarmConnectionCloser(alarmModel);
         alarmModel.release();
+        alarmModel = null;
+        counter.setAlarmModel(null);
+
+        return alarmConnectionCloser;
     }
 
     /**
-     * Run the alarm model update in the background, to ensure the button is
-     * showing the correct number of alarms. This is made difficult by the fact
-     * AlarmClientModel.getInstance() will return something that may not yet be
-     * initialised.
+     * Set up the alarm model default value and create the new alarm model.
+     * 
+     * @param instrument that is being changed to
      */
-    public void updateAlarmModel() {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                counter.resetCount();
-
-                try {
-                    alarmModel = AlarmClientModel.getInstance();
-                } catch (Exception e) {
-                    LOG.info("Alarm Client Model not found");
-                    return;
-                }
-                
-                // The alarm model counter runs on a separate thread so may not
-                // be initialised immediately. Wait for a bit (up to 10 s) here
-                // to see if it gets initialised.
-                int i = 0;
-                while (alarmModel.toString().contains(Messages.AlarmClientModel_NotInitialized) && i < MAX_RETRIES) {
-                    try {
-                        Thread.sleep(WAIT_FOR_MODEL);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                    i++;
-                }
-
-                counter.forceRefresh();
-            }
-        }).start();
+    @Override
+    public void setInstrument(InstrumentInfo instrument) {
+        alarmSettings.setInstrument(instrument);
+        setupAlarmModel();
     }
+
+    /**
+     * Close the current alarm model.
+     * 
+     * @param instrument that is being changed to
+     */
+    @Override
+    public void preSetInstrument(InstrumentInfo instrument) {
+        alarmConnectionCloser = releaseAlarm();
+    }
+
+    /**
+     * Clean up for the active MQ.
+     * 
+     * @param instrument that has been changed to
+     */
+    @Override
+    public void postSetInstrument(InstrumentInfo instrument) {
+        // close the active MQ as late as possible
+        if (alarmConnectionCloser != null) {
+            alarmConnectionCloser.close();
+            alarmConnectionCloser = null;
+        }
+    }
+
 }

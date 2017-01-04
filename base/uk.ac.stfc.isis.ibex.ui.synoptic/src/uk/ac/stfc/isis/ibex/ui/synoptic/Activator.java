@@ -31,7 +31,7 @@ public class Activator extends AbstractUIPlugin {
     /**
      * The plug-in ID.
      */
-	public static final String PLUGIN_ID = "uk.ac.stfc.isis.ibex.ui.synoptic"; //$NON-NLS-1$
+    public static final String PLUGIN_ID = "uk.ac.stfc.isis.ibex.ui.synoptic"; //$NON-NLS-1$
 
 	// The shared instance
 	private static Activator plugin;
@@ -42,9 +42,14 @@ public class Activator extends AbstractUIPlugin {
      * The constructor.
      */
 	public Activator() {
-		presenter = new SynopticPresenter();
+        presenter = new SynopticPresenter();
 	}
 
+    /**
+     * Get the current synoptic presenter.
+     *
+     * @return the synoptic presenter
+     */
 	public SynopticPresenter presenter() {
 		return presenter;
 	}
@@ -80,13 +85,6 @@ public class Activator extends AbstractUIPlugin {
 	
 	
 	/**
-	 * Closes any OPIs open on the synoptic.
-	 */
-	public void closeAllOPIs() {
-		presenter.closeAllOPIs();
-	}
-
-	/**
      * Returns an image descriptor for the image file at the given plug-in
      * relative path.
      *
@@ -97,4 +95,5 @@ public class Activator extends AbstractUIPlugin {
 	public static ImageDescriptor getImageDescriptor(String path) {
 		return imageDescriptorFromPlugin(PLUGIN_ID, path);
 	}
+
 }

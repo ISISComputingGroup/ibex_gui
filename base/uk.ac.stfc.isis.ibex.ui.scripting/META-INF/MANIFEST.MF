@@ -11,11 +11,11 @@ Require-Bundle: org.eclipse.ui,
  uk.ac.stfc.isis.ibex.preferences;bundle-version="1.0.0",
  org.python.pydev,
  org.python.pydev.core,
- uk.ac.stfc.isis.ibex.instrument;bundle-version="1.0.0",
  org.python.pydev.debug,
  org.python.pydev.shared_interactive_console,
  org.eclipse.ui.console;bundle-version="3.5.100",
- uk.ac.stfc.isis.ibex.logger;bundle-version="1.0.0"
+ uk.ac.stfc.isis.ibex.logger;bundle-version="1.0.0",
+ uk.ac.stfc.isis.ibex.instrument;bundle-version="1.0.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Bundle-ActivationPolicy: lazy
 Export-Package: uk.ac.stfc.isis.ibex.ui.scripting

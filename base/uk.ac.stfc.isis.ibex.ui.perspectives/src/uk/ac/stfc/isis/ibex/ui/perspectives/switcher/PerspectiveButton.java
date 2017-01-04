@@ -33,8 +33,6 @@ import org.eclipse.ui.PerspectiveAdapter;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.wb.swt.SWTResourceManager;
 
-import uk.ac.stfc.isis.ibex.alarm.Alarm;
-import uk.ac.stfc.isis.ibex.alarm.AlarmCounter;
 import uk.ac.stfc.isis.ibex.log.Log;
 import uk.ac.stfc.isis.ibex.log.LogCounter;
 import uk.ac.stfc.isis.ibex.ui.UI;
@@ -52,8 +50,8 @@ public class PerspectiveButton extends CLabel {
     private static final Font ACTIVE_FONT = SWTResourceManager.getFont("Arial", 12, SWT.BOLD);
 	
 	protected static LogCounter logCounter = Log.getInstance().getCounter();
-	protected static AlarmCounter alarmCounter = Alarm.getInstance().getCounter();
 	
+
     private String buttonPerspective;
 
     /**

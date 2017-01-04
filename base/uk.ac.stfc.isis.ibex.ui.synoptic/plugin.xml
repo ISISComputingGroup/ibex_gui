@@ -143,8 +143,12 @@
          </menu>
       </menuContribution>
    </extension>
-   <extension
-         point="org.eclipse.ui.bindings">
+   <extension point="uk.ac.stfc.isis.ibex.instrument.info">
+      <InstrumentInfoReceiver
+            class="uk.ac.stfc.isis.ibex.ui.synoptic.SynopticSettings">
+      </InstrumentInfoReceiver>
+   </extension>  
+   <extension point="org.eclipse.ui.bindings">
       <key
             commandId="uk.ac.stfc.isis.ibex.ui.perspectives.commands.SwitchPerspective"
             schemeId="IBEX_key_scheme"

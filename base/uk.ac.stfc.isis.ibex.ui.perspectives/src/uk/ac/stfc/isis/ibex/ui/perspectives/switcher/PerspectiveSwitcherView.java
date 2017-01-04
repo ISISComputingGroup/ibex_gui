@@ -77,7 +77,7 @@ public class PerspectiveSwitcherView extends ViewPart implements ISizeProvider {
 		
 		for (IsisPerspective perspective : perspectives) {	
 			PerspectiveButton button = buttonForPerspective(container, perspective);
-			configureButton(perspective, button);
+            configureButton(perspective, button);
 		}
 	
 		createActions();
@@ -88,8 +88,10 @@ public class PerspectiveSwitcherView extends ViewPart implements ISizeProvider {
     /**
      * Configure the button for display.
      * 
-     * @param perspective contains the display information for the perspective
-     * @param button is the button to add
+     * @param perspective
+     *            the perspective being switched to
+     * @param button
+     *            is the button to add
      */
     private void configureButton(final IsisPerspective perspective, final PerspectiveButton button) {
         button.setText(perspective.name().replaceAll("&", ""));
@@ -149,10 +151,12 @@ public class PerspectiveSwitcherView extends ViewPart implements ISizeProvider {
 				buttonToAdd = new AlarmButton(container, perspective.id());
 				break;
 			default:
-				buttonToAdd = new PerspectiveButton(container, perspective.id());
+                buttonToAdd = new PerspectiveButton(container, perspective.id());
+                buttonToAdd.setText(perspective.name());
 				break;
 		}
 
+        buttonToAdd.setImage(perspective.image());
 		return buttonToAdd;
 	}
 

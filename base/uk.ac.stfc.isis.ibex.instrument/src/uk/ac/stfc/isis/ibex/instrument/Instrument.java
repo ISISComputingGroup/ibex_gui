@@ -22,6 +22,7 @@ package uk.ac.stfc.isis.ibex.instrument;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.logging.log4j.Logger;
@@ -163,7 +164,7 @@ public class Instrument implements BundleActivator {
                 }
             }
         });
-        setInstrument(initialInstrument());
+        setInstrumentForAllPlugins(initialInstrument());
     }
 
     /**
@@ -223,7 +224,7 @@ public class Instrument implements BundleActivator {
 	 * 
 	 * @param selectedInstrument Information on the new instrument.
 	 */
-	public void setInstrument(InstrumentInfo selectedInstrument) {
+	public void setInstrumentForAllPlugins(InstrumentInfo selectedInstrument) {
 
         if (this.instrumentInfo != selectedInstrument) {
             this.instrumentInfo = selectedInstrument;
@@ -264,15 +265,54 @@ public class Instrument implements BundleActivator {
     private static void updateExtendingPlugins(InstrumentInfo selectedInstrument) {
         IExtensionRegistry registry = Platform.getExtensionRegistry();
         IConfigurationElement[] elements = registry.getConfigurationElementsFor("uk.ac.stfc.isis.ibex.instrument.info");
+
+        List<InstrumentInfoReceiver> instrumentInfoRecievers = new ArrayList<InstrumentInfoReceiver>();
         for (IConfigurationElement element : elements) {
             try {
                 final Object obj = element.createExecutableExtension("class");
                 InstrumentInfoReceiver receiver = (InstrumentInfoReceiver) obj;
-                receiver.setInstrument(selectedInstrument);
+                instrumentInfoRecievers.add(receiver);
             } catch (CoreException e) {
-                LoggerUtils.logErrorWithStackTrace(LOG, "Unable to update extended plugins", e);
+                LoggerUtils.logErrorWithStackTrace(LOG,
+                        "Unable to update extended plugin for element named " + element.getName(), e);
             }
         }
+
+        for (InstrumentInfoReceiver receiver : instrumentInfoRecievers) {
+            try {
+                receiver.preSetInstrument(selectedInstrument);
+            } catch (Exception ex) {
+                // Log the error and carry on there is not much else we can do
+                // here
+                LoggerUtils.logErrorWithStackTrace(LOG,
+                        "Can not perform preSetInstrument for pluign " + receiver.getClass().getName(), ex);
+            }
+        }
+
+        for (InstrumentInfoReceiver receiver : instrumentInfoRecievers) {
+            try {
+                receiver.setInstrument(selectedInstrument);
+            } catch (Exception ex) {
+                // Log the error and carry on there is not much else we can do
+                // here
+                LoggerUtils.logErrorWithStackTrace(LOG,
+                        "Can not perform SetInstrument for pluign " + receiver.getClass().getName(), ex);
+            }
+
+        }
+
+        for (InstrumentInfoReceiver receiver : instrumentInfoRecievers) {
+            try {
+                receiver.postSetInstrument(selectedInstrument);
+            } catch (Exception ex) {
+                // Log the error and carry on there is not much else we can do
+                // here
+                LoggerUtils.logErrorWithStackTrace(LOG,
+                        "Can not perform postSetInstrument for pluign " + receiver.getClass().getName(), ex);
+            }
+
+        }
+
     }
 
     /**

@@ -56,16 +56,14 @@
       </view>
    </extension>
    
-	<extension
-	     point="org.eclipse.ui.preferencePages">
+	<extension point="org.eclipse.ui.preferencePages">
 	  <page
 	        class="uk.ac.stfc.isis.ibex.ui.perspectives.PreferencePage"
 	        id="uk.ac.stfc.isis.ibex.ui.perspectives.PreferencePage"
 	        name="ISIS Perspectives">
 	  </page>
 	</extension>
- <extension
-       point="org.eclipse.ui.commands">
+ <extension point="org.eclipse.ui.commands">
     <command
           defaultHandler="uk.ac.stfc.isis.ibex.ui.perspectives.commands.SwitchPerspectiveHandler"
           id="uk.ac.stfc.isis.ibex.ui.perspectives.commands.SwitchPerspective"
