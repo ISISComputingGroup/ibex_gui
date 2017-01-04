@@ -38,14 +38,11 @@ import org.eclipse.jface.action.ContributionItem;
  */
 public class NOP extends ContributionItem {
 
+
     /**
      * The default constructor for the menu item.
-     * 
-     * @param id
-     *            The id of the menu item.
      */
-    public NOP(String id) {
-		super(id);
+    public NOP() {
 	}
 	
 	/**
