@@ -48,6 +48,8 @@ public class NOP extends ContributionItem {
 	/**
      * Say the list is dynamic so as to force menu items to be refreshed each
      * time.
+     * 
+     * @return Whether the menu item is dynamic.
      */
 	@Override
 	public boolean isDynamic() {
