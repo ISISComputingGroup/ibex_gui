@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Nicos
+Bundle-SymbolicName: uk.ac.stfc.isis.ibex.ui.nicos;singleton:=true
+Bundle-Version: 1.0.0.qualifier
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ uk.ac.stfc.isis.ibex.ui.perspectives,
+ org.csstudio.ui.util
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
