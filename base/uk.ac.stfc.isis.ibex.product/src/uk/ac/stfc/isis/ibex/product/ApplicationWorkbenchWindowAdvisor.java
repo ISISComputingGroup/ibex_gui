@@ -139,7 +139,7 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
             }
             bufferedReader.close();
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            System.out.println("No workbench.xml - using default initial window sizes");
         } catch (IOException e) {
             e.printStackTrace();
         }
