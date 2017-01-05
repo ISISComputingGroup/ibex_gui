@@ -74,26 +74,16 @@ public class ActiveMQ extends AbstractUIPlugin {
 	}
 
     /**
-     * Get a new Active MQ connection.
-     * 
-     * @param port
-     *            The port to connect to.
-     * @return The Active MQ Connection.
-     */
-    public MQConnection getConnection(String port) {
-        if (connection == null) {
-            String currentInstrument = Instrument.getInstance().currentInstrument().hostName();
-            connection = new MQConnection(currentInstrument, port);
-        }
-        return connection;
-    }
-
-    /**
-     * Get the Active MQ connection if it exists.
+     * Get an Active MQ connection. If one does not already exist then create
+     * one.
      * 
      * @return The Active MQ Connection.
      */
     public MQConnection getConnection() {
+        if (connection == null) {
+            String currentInstrument = Instrument.getInstance().currentInstrument().hostName();
+            connection = new MQConnection(currentInstrument);
+        }
         return connection;
     }
 }

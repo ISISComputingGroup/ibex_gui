@@ -20,7 +20,6 @@ package uk.ac.stfc.isis.ibex.log.preferences;
 
 import org.eclipse.jface.preference.BooleanFieldEditor;
 import org.eclipse.jface.preference.FieldEditorPreferencePage;
-import org.eclipse.jface.preference.IntegerFieldEditor;
 import org.eclipse.jface.preference.StringFieldEditor;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.IWorkbench;
@@ -54,8 +53,6 @@ public class PreferencePage extends FieldEditorPreferencePage implements
      */
     @Override
     public void createFieldEditors() {
-	addField(new IntegerFieldEditor(PreferenceConstants.P_JMS_PORT,
-		"JMS Server Port:", getFieldEditorParent()));
 	addField(new StringFieldEditor(PreferenceConstants.P_JMS_TOPIC,
 		"JMS Message Topic:", getFieldEditorParent()));
 

@@ -44,5 +44,14 @@ public class OnInstrumentSwitch implements InstrumentInfoReceiver {
         }
     }
 
+    @Override
+    public void preSetInstrument(InstrumentInfo instrument) {
+        // nothing extra to do
+    }
+
+    @Override
+    public void postSetInstrument(InstrumentInfo instrument) {
+        // nothing extra to do
+    }
 
 }

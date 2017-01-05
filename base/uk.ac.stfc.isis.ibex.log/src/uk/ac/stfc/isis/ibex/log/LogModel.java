@@ -25,7 +25,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jface.preference.IPreferenceStore;
 
 import com.mysql.jdbc.exceptions.jdbc4.CommunicationsException;
@@ -56,9 +55,6 @@ public class LogModel extends ModelObject implements ILogMessageProducer,
 
     private static final String ACCESS_DENIED_MESSAGE = "Database access denied.";
 
-    /** Eclipse Job that manages the background processing of the JmsHandler */
-    private Job jmsListenerJob;
-
     private IPreferenceStore preferenceStore = Log.getDefault().getPreferenceStore();
 
     /**
@@ -76,9 +72,8 @@ public class LogModel extends ModelObject implements ILogMessageProducer,
     private final ArrayList<LogMessage> jmsMessageCache = new ArrayList<>();
 
     public LogModel() {
-        String port = preferenceStore.getString(PreferenceConstants.P_JMS_PORT);
         String topic = preferenceStore.getString(PreferenceConstants.P_JMS_TOPIC);
-        jmsHandler = ActiveMQ.getInstance().getConnection(port);
+        jmsHandler = ActiveMQ.getInstance().getConnection();
         parser.addMessageConsumer(this);
         jmsHandler.addMessageParser(topic, parser);
     	jmsHandler.addPropertyChangeListener("connection", passThrough());

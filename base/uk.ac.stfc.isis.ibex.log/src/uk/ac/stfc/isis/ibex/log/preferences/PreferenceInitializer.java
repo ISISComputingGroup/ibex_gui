@@ -38,8 +38,6 @@ public class PreferenceInitializer extends AbstractPreferenceInitializer {
     public void initializeDefaultPreferences() {
 	IPreferenceStore store = Log.getDefault().getPreferenceStore();
 
-	store.setDefault(PreferenceConstants.P_JMS_PORT,
-		PreferenceConstants.DEFAULT_JMS_PORT);
 	store.setDefault(PreferenceConstants.P_JMS_TOPIC,
 		PreferenceConstants.DEFAULT_JMS_TOPIC);
 	
