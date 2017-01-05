@@ -27,9 +27,12 @@ import org.apache.logging.log4j.Logger;
 import com.google.common.base.Joiner;
 
 /**
- * Utilities used by the instruments package.
+ * Utilities used for logging.
  */
 public final class LoggerUtils {
+
+    private LoggerUtils() {
+    }
 
     /**
      * Sends an error to the log along with the stack trace of an exception
@@ -43,6 +46,7 @@ public final class LoggerUtils {
      *            The exception whose stack trace will be printed
      */
     public static void logErrorWithStackTrace(Logger log, String message, Exception e) {
-        log.error(message + "\n    " + Joiner.on("\n    ").join(e.getStackTrace()));
+        log.error(message + "\n    " + e.getMessage() + "\n    Stack Trace:\n    "
+                + Joiner.on("\n    ").join(e.getStackTrace()));
     }
 }

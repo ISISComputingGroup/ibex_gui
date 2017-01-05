@@ -22,7 +22,8 @@ import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
 import uk.ac.stfc.isis.ibex.instrument.InstrumentInfoReceiver;
 
 /**
- * This class will clear the log messages when the instrument has been switched.
+ * The Class OnInstrumentSwitch allows the log framework to be set when the instrument
+ * is changed.
  */
 public class OnInstrumentSwitch implements InstrumentInfoReceiver {
 
@@ -31,5 +32,15 @@ public class OnInstrumentSwitch implements InstrumentInfoReceiver {
     @Override
     public void setInstrument(InstrumentInfo instrument) {
 		LOG.clearMessages();
+    }
+
+    @Override
+    public void preSetInstrument(InstrumentInfo instrument) {
+        // nothing extra to do
+    }
+
+    @Override
+    public void postSetInstrument(InstrumentInfo instrument) {
+        // nothing extra to do
     }
 }

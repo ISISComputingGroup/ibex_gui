@@ -34,14 +34,6 @@ public class ObservedSpectrum extends UpdatableSpectrum implements Closable {
     private BufferedObservablePair<Integer, float[]> yData;
 	
     private abstract class DataObserver extends BaseObserver<Pair<Integer, float[]>> {
-		@Override
-		public void onError(Exception e) {			
-		}
-
-		@Override
-		public void onConnectionStatus(boolean isConnected) {			
-        }
-
         protected double[] toDoubleArray(float[] value, int length) {
             double[] doubles = new double[length];
             for (int i = 0; i < length; i++) {

@@ -19,16 +19,13 @@
 
 package uk.ac.stfc.isis.ibex.ui.configserver.editing.pvs;
 
-import java.awt.CompositeContext;
-import java.awt.RenderingHints;
-import java.awt.image.ColorModel;
 import java.util.HashSet;
 
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.KeyAdapter;
 import org.eclipse.swt.events.KeyEvent;
-import org.eclipse.swt.events.KeyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
@@ -41,6 +38,10 @@ import uk.ac.stfc.isis.ibex.configserver.editing.EditableIoc;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.iocs.IIocDependentPanel;
 import uk.ac.stfc.isis.ibex.validators.MessageDisplayer;
 
+
+/**
+ * The panel for editing the pv values on individual iocs.
+ */
 @SuppressWarnings("checkstyle:magicnumber")
 public class IocPVsEditorPanel extends Composite implements IIocDependentPanel {
 	private IocPVsTable iocPVsTable;
@@ -50,6 +51,16 @@ public class IocPVsEditorPanel extends Composite implements IIocDependentPanel {
     private Button btnRemove;
     private final String newPVName = "NEW_PV";
 	
+    /**
+     * Constructor for the panel.
+     * 
+     * @param parent
+     *            The parent composite that this panel belongs to.
+     * @param style
+     *            The SWT style of the panel.
+     * @param messageDisplayer
+     *            The message displayer to post errors to.
+     */
     public IocPVsEditorPanel(Composite parent, int style, final MessageDisplayer messageDisplayer) {
 		super(parent, style);
 		setLayout(new GridLayout(1, false));
@@ -58,14 +69,10 @@ public class IocPVsEditorPanel extends Composite implements IIocDependentPanel {
 		GridData gdIocPVsTable = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
 		gdIocPVsTable.heightHint = 200;
 		iocPVsTable.setLayoutData(gdIocPVsTable);
-        iocPVsTable.addKeyListener(new KeyListener() {
-            @Override
-            public void keyReleased(KeyEvent e) {
-            }
-
+        iocPVsTable.addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
-                if (btnRemove.isEnabled()) {
+                if (btnRemove.isEnabled() && (e.keyCode == SWT.DEL)) {
                     removeSelectedPV();
                 }
             }
@@ -156,10 +163,5 @@ public class IocPVsEditorPanel extends Composite implements IIocDependentPanel {
     private void removeSelectedPV() {
         ioc.getPvs().remove(iocPVsTable.firstSelectedRow());
         iocPVsTable.setRows(ioc.getPvs());
-    }
-
-    @Override
-    public CompositeContext createContext(ColorModel arg0, ColorModel arg1, RenderingHints arg2) {
-        return null;
     }
 }

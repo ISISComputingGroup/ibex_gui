@@ -22,11 +22,25 @@ import uk.ac.stfc.isis.ibex.databases.Databases;
 import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
 import uk.ac.stfc.isis.ibex.instrument.InstrumentInfoReceiver;
 
+/**
+ * The Class SQLSettings which will change the SQL DB address on the change of
+ * instrument.
+ */
 public class SQLSettings implements InstrumentInfoReceiver {
 
     @Override
     public void setInstrument(InstrumentInfo instrument) {
     	Databases.getDefault().getPreferenceStore()
                 .setValue(PreferenceSupplier.SQL_ADDRESS, instrument.hostName());
+    }
+
+    @Override
+    public void preSetInstrument(InstrumentInfo instrument) {
+        // nothing extra to do
+    }
+
+    @Override
+    public void postSetInstrument(InstrumentInfo instrument) {
+        // nothing extra to do
     }
 }

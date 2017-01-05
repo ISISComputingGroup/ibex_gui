@@ -39,6 +39,9 @@ public class BannerItemViewState {
 
     /**
      * Sets the state.
+     * 
+     * @param state
+     *            The state to set the banner item to.
      */
     public void setState(BannerItemState state) {
         this.state = state;

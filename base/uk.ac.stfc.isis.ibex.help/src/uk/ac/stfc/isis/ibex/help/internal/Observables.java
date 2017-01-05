@@ -22,19 +22,18 @@ package uk.ac.stfc.isis.ibex.help.internal;
 import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.epics.switching.ObservableFactory;
 import uk.ac.stfc.isis.ibex.epics.switching.OnInstrumentSwitch;
-import uk.ac.stfc.isis.ibex.instrument.Instrument;
-import uk.ac.stfc.isis.ibex.instrument.InstrumentVariables;
+import uk.ac.stfc.isis.ibex.instrument.InstrumentUtils;
 import uk.ac.stfc.isis.ibex.instrument.channels.StringChannel;
 
-public class Observables extends InstrumentVariables {
+public class Observables {
     private final ObservableFactory obsFactory = new ObservableFactory(OnInstrumentSwitch.SWITCH);
     public final ForwardingObservable<String> revision;
     public final ForwardingObservable<String> date;
 
     public Observables() {
         revision = obsFactory.getSwitchableObservable(new StringChannel(),
-                Instrument.getInstance().getPvPrefix() + "CS:VERSION:SVN:REV");
+                InstrumentUtils.addPrefix("CS:VERSION:SVN:REV"));
         date = obsFactory.getSwitchableObservable(new StringChannel(),
-                Instrument.getInstance().getPvPrefix() + "CS:VERSION:SVN:DATE");
+                InstrumentUtils.addPrefix("CS:VERSION:SVN:DATE"));
 	}
 }

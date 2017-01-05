@@ -29,6 +29,9 @@ import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Event;
+import org.eclipse.swt.widgets.Listener;
 import org.eclipse.ui.ISizeProvider;
 import org.eclipse.ui.part.ViewPart;
 import org.eclipse.wb.swt.SWTResourceManager;
@@ -50,8 +53,14 @@ public class PerspectiveSwitcherView extends ViewPart implements ISizeProvider {
 	private static final Font BUTTON_FONT = SWTResourceManager.getFont("Arial", 12, SWT.NORMAL);
 	private static final Color BACKGROUND = SWTResourceManager.getColor(250, 250, 252);
 	
+    /**
+     * The perspective ID.
+     */
 	public static final String ID = "uk.ac.stfc.isis.ibex.ui.perspectives.PerspectiveSwitcher"; //$NON-NLS-1$
 
+    /**
+     * The width of the switcher.
+     */
 	public static final int FIXED_WIDTH = 200;
 	
 	/**
@@ -68,7 +77,7 @@ public class PerspectiveSwitcherView extends ViewPart implements ISizeProvider {
 		
 		for (IsisPerspective perspective : perspectives) {	
 			PerspectiveButton button = buttonForPerspective(container, perspective);
-			configureButton(perspective, button);
+            configureButton(perspective, button);
 		}
 	
 		createActions();
@@ -79,20 +88,48 @@ public class PerspectiveSwitcherView extends ViewPart implements ISizeProvider {
     /**
      * Configure the button for display.
      * 
-     * @param perspective contains the display information for the perspective
-     * @param button is the button to add
+     * @param perspective
+     *            the perspective being switched to
+     * @param button
+     *            is the button to add
      */
-	private void configureButton(IsisPerspective perspective, PerspectiveButton button) {
-		button.setText(perspective.name());
-		button.setImage(perspective.image());
+    private void configureButton(final IsisPerspective perspective, final PerspectiveButton button) {
+        button.setText(perspective.name().replaceAll("&", ""));
+
+        button.setImage(perspective.image());
 		button.setAlignment(SWT.LEFT);
 		button.setFont(BUTTON_FONT);
-				
+
 		GridData gd = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
 		gd.heightHint = 30;
 		gd.minimumHeight = 30;
 		
 		button.setLayoutData(gd);
+
+        // Adds listeners that will add/remove the mnemonic depending on whether
+        // shift/alt are pressed. This is a bit of a fudge to recreate the
+        // character underlining behaviour.
+        Display.getCurrent().addFilter(SWT.KeyDown, new Listener() {
+            @Override
+            public void handleEvent(Event event) {
+                if ((event.stateMask & (SWT.SHIFT | SWT.ALT)) != 0) {
+                    // Add & back into index that it was in originally (used as
+                    // the button text keeps changing on alarm/log)
+                    int mnemonicIdx = perspective.name().indexOf("&");
+                    StringBuilder bldr = new StringBuilder(button.getText());
+                    bldr.insert(mnemonicIdx, "&");
+                    button.setText(bldr.toString());
+                }
+            }
+        });
+        Display.getCurrent().addFilter(SWT.KeyUp, new Listener() {
+            @Override
+            public void handleEvent(Event event) {
+                if ((event.keyCode == SWT.ALT) || (event.keyCode == SWT.SHIFT)) {
+                    button.setText(button.getText().replaceAll("&", ""));
+                }
+            }
+        });
 	}
 
 	/**
@@ -114,16 +151,18 @@ public class PerspectiveSwitcherView extends ViewPart implements ISizeProvider {
 				buttonToAdd = new AlarmButton(container, perspective.id());
 				break;
 			default:
-				buttonToAdd = new PerspectiveButton(container, perspective.id());
+                buttonToAdd = new PerspectiveButton(container, perspective.id());
+                buttonToAdd.setText(perspective.name());
 				break;
 		}
 
+        buttonToAdd.setImage(perspective.image());
 		return buttonToAdd;
 	}
 
-	/**
-	 * Create the actions.
-	 */
+    /**
+     * Create the actions.
+     */
 	private void createActions() {
 		// Create the actions
 	}

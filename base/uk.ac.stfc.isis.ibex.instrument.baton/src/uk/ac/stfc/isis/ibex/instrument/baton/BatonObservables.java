@@ -24,7 +24,7 @@ import uk.ac.stfc.isis.ibex.epics.switching.ObservableFactory;
 import uk.ac.stfc.isis.ibex.epics.switching.OnInstrumentSwitch;
 import uk.ac.stfc.isis.ibex.epics.switching.WritableFactory;
 import uk.ac.stfc.isis.ibex.epics.writing.Writable;
-import uk.ac.stfc.isis.ibex.instrument.Instrument;
+import uk.ac.stfc.isis.ibex.instrument.InstrumentUtils;
 import uk.ac.stfc.isis.ibex.instrument.channels.StringChannel;
 import uk.ac.stfc.isis.ibex.instrument.internal.MachineName;
 import uk.ac.stfc.isis.ibex.instrument.internal.UserName;
@@ -42,9 +42,9 @@ public class BatonObservables {
 
     public BatonObservables() {
         requestPV = writeFactory.getSwitchableWritable(new StringChannel(),
-                Instrument.getInstance().getPvPrefix() + "CS:CONTROL:REQUEST");
+                InstrumentUtils.addPrefix("CS:CONTROL:REQUEST"));
         controlPV = obsFactory.getSwitchableObservable(new StringChannel(),
-                Instrument.getInstance().getPvPrefix() + "CS:CONTROL");
+                InstrumentUtils.addPrefix("CS:CONTROL"));
     }
 
     public void sendRequest() {

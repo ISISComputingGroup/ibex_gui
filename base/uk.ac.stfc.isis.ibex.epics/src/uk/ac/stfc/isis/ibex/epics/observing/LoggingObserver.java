@@ -25,6 +25,8 @@ import org.apache.logging.log4j.Logger;
 /**
  * Writes any changes to the observable to a logger.
  *
+ * @param <T>
+ *            The type of the value that you are observing.
  */
 public class LoggingObserver<T> extends BaseObserver<T> {
 

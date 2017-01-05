@@ -19,6 +19,7 @@
 
 package uk.ac.stfc.isis.ibex.ui.scripting;
 
+import org.apache.logging.log4j.Logger;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.jface.preference.IPreferenceStore;
@@ -32,11 +33,17 @@ import org.python.pydev.debug.newconsole.env.PydevIProcessFactory;
 import org.python.pydev.debug.newconsole.env.PydevIProcessFactory.PydevConsoleLaunchInfo;
 import org.python.pydev.plugin.PydevPlugin;
 
+import uk.ac.stfc.isis.ibex.logger.IsisLog;
 import uk.ac.stfc.isis.ibex.preferences.PreferenceSupplier;
 
+/**
+ * A factory for creating Genie Python Consoles.
+ */
 public class GeniePythonConsoleFactory extends PydevConsoleFactory {
 	
 	private final NullProgressMonitor monitor = new NullProgressMonitor();
+	
+    private static final Logger LOG = IsisLog.getLogger(GeniePythonConsoleFactory.class);
 	
     private static final String GENIE_INITIALISATION = "# Configuring genie_python, please wait\n"
 			+ "import sys;sys.executable=''\n" 
@@ -50,7 +57,7 @@ public class GeniePythonConsoleFactory extends PydevConsoleFactory {
 			setInitialInterpreterCommands();
 			super.createConsole(createGeniePydevInterpreter(), additionalInitialComands);
 		} catch (Exception e) {
-			Consoles.LOG.error(e);
+            LOG.error(e);
 		}
 	}
 	

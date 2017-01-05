@@ -25,15 +25,13 @@ package uk.ac.stfc.isis.ibex.devicescreens;
 import uk.ac.stfc.isis.ibex.devicescreens.desc.DeviceScreenDescriptionToXmlConverter;
 import uk.ac.stfc.isis.ibex.devicescreens.desc.DeviceScreensDescription;
 import uk.ac.stfc.isis.ibex.devicescreens.desc.DeviceScreensDescriptionXmlParser;
-import uk.ac.stfc.isis.ibex.epics.conversion.Converter;
 import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.epics.switching.ObservableFactory;
 import uk.ac.stfc.isis.ibex.epics.switching.OnInstrumentSwitch;
 import uk.ac.stfc.isis.ibex.epics.switching.WritableFactory;
-import uk.ac.stfc.isis.ibex.epics.writing.ForwardingWritable;
 import uk.ac.stfc.isis.ibex.epics.writing.Writable;
 import uk.ac.stfc.isis.ibex.instrument.Instrument;
-import uk.ac.stfc.isis.ibex.instrument.InstrumentVariables;
+import uk.ac.stfc.isis.ibex.instrument.InstrumentUtils;
 import uk.ac.stfc.isis.ibex.instrument.channels.CompressedCharWaveformChannel;
 
 /**
@@ -79,10 +77,11 @@ public class DeviceScreenVariables {
         this.pvPrefix = pvPrefix;
         
         deviceScreensObservable =
-                InstrumentVariables.convert(readCompressed(getPvPrefix() + BLOCKSERVER_ADDRESS + GET_SCREENS_SUFFIX),
+                InstrumentUtils.convert(readCompressed(getPvPrefix() + BLOCKSERVER_ADDRESS + GET_SCREENS_SUFFIX),
                         new DeviceScreensDescriptionXmlParser());
         
-        deviceScreensWritable = convert(writeCompressed(getPvPrefix() + BLOCKSERVER_ADDRESS + SET_SCREENS_SUFFIX),
+        deviceScreensWritable =
+                InstrumentUtils.convert(writeCompressed(getPvPrefix() + BLOCKSERVER_ADDRESS + SET_SCREENS_SUFFIX),
                 new DeviceScreenDescriptionToXmlConverter());
 
         deviceScreenSchema = readCompressed(getPvPrefix() + BLOCKSERVER_ADDRESS + SCHEMA_SUFFIX);
@@ -121,10 +120,6 @@ public class DeviceScreenVariables {
 
     private Writable<String> writeCompressed(String address) {
         return switchingWritableFactory.getSwitchableWritable(new CompressedCharWaveformChannel(), address);
-    }
-
-    private <T> Writable<T> convert(Writable<String> destination, Converter<T, String> converter) {
-        return new ForwardingWritable<>(destination, converter);
     }
 
     /**

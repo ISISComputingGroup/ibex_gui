@@ -27,6 +27,9 @@ import uk.ac.stfc.isis.ibex.ui.perspectives.BasePerspective;
 
 /**
  * The perspective for interacting with the devices screens.
+ * 
+ * Registers the perspective to be displayed in the list (see plugin.xml file
+ * for this package).
  */
 public class Perspective extends BasePerspective {
 
@@ -48,7 +51,7 @@ public class Perspective extends BasePerspective {
 
 	@Override
 	public String name() {
-        return "Device Screens";
+        return "De&vice Screens";
 	}
 	
 	@Override
@@ -61,6 +64,6 @@ public class Perspective extends BasePerspective {
 
     @Override
     public boolean isVisibleDefault() {
-        return false;
+        return true;
     }
 }

@@ -38,7 +38,6 @@ public enum UpdateTypes {
     MOVE_COMPONENT,
     EDIT_COMPONENT,
     EDIT_COMPONENT_FINAL,
-    EDIT_PV,
     EDIT_PROPERTY,
     ADD_TARGET,
     EDIT_TARGET

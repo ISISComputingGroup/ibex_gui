@@ -29,7 +29,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 
 import uk.ac.stfc.isis.ibex.beamstatus.BeamStatus;
-import uk.ac.stfc.isis.ibex.beamstatus.Observables.Synchrotron;
+import uk.ac.stfc.isis.ibex.beamstatus.SynchrotronObservables;
 
 /**
  * The GUI panel for showing the synchrotron information.
@@ -62,11 +62,11 @@ public class SynchrotronPanel extends Composite {
         beamFrequency.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 
         if (BeamStatus.getInstance() != null) {
-            bind(BeamStatus.getInstance().observables().sync);
+            bind(BeamStatus.getInstance().synchrotron());
         }
     }
 
-    private void bind(Synchrotron sync) {
+    private void bind(SynchrotronObservables sync) {
         DataBindingContext bindingContext = new DataBindingContext();
         bindingContext.bindValue(WidgetProperties.text().observe(beamCurrent),
                 BeanProperties.value("value").observe(sync.beamCurrent));

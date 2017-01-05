@@ -19,6 +19,9 @@
 
 package uk.ac.stfc.isis.ibex.ui.synoptic.editor.target.properties;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
@@ -29,7 +32,6 @@ import org.eclipse.swt.widgets.Text;
 
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.Property;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.IInstrumentUpdateListener;
-import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.IPropertySelectionListener;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.SynopticViewModel;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.UpdateTypes;
 
@@ -52,10 +54,10 @@ public class TargetPropertyValue extends Composite {
         }
     };
 
-    private final IPropertySelectionListener propertyListener = new IPropertySelectionListener() {
+    private final PropertyChangeListener propertyListener = new PropertyChangeListener() {
         @Override
-        public void selectionChanged(Property oldProperty, Property newProperty) {
-            setProperty(newProperty);
+        public void propertyChange(PropertyChangeEvent evt) {
+            setProperty((Property) evt.getNewValue());
         }
     };
 
@@ -69,7 +71,7 @@ public class TargetPropertyValue extends Composite {
         super(parent, SWT.NONE);
 
         this.synopticViewModel = synopticViewModel;
-        this.synopticViewModel.addPropertySelectionListener(propertyListener);
+        this.synopticViewModel.addPropertyChangeListener("propSelection", propertyListener);
         this.synopticViewModel.addInstrumentUpdateListener(instrumentListener);
 
         GridLayout gridLayout = new GridLayout(1, false);

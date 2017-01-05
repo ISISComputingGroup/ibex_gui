@@ -28,7 +28,7 @@ import org.eclipse.wb.swt.SWTResourceManager;
 /**
  * Stores all the display options (for example colour blindness palettes).
  */
-public class DisplayPreferences {
+public final class DisplayPreferences {
 
     private static final Color NORMAL_VISION_MOVING_COLOR = SWTResourceManager.getColor(160, 250, 170);
     private static final Color NORMAL_VISION_STOPPED_COLOR = SWTResourceManager.getColor(255, 200, 200);

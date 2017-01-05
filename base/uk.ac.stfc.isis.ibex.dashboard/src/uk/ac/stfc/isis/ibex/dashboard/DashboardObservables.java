@@ -21,10 +21,10 @@ package uk.ac.stfc.isis.ibex.dashboard;
 
 import uk.ac.stfc.isis.ibex.dae.DaeObservables;
 import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
+import uk.ac.stfc.isis.ibex.epics.pv.Closer;
 import uk.ac.stfc.isis.ibex.epics.switching.ObservableFactory;
 import uk.ac.stfc.isis.ibex.epics.switching.OnInstrumentSwitch;
-import uk.ac.stfc.isis.ibex.instrument.Instrument;
-import uk.ac.stfc.isis.ibex.instrument.InstrumentVariables;
+import uk.ac.stfc.isis.ibex.instrument.InstrumentUtils;
 import uk.ac.stfc.isis.ibex.instrument.channels.CompressedCharWaveformChannel;
 import uk.ac.stfc.isis.ibex.instrument.channels.DateTimeChannel;
 import uk.ac.stfc.isis.ibex.instrument.channels.EnumChannel;
@@ -33,7 +33,7 @@ import uk.ac.stfc.isis.ibex.instrument.channels.EnumChannel;
  * Holds the Observables for the non-DAE part of the dashboard and holds a
  * reference to the class containing the DAE Observables.
  */
-public class DashboardObservables extends InstrumentVariables {
+public class DashboardObservables extends Closer {
 
     private static final String SHUTTER_STATUS = "SHTR:STAT";    
     private static final String TIME = "CS:IOC:INSTETC_01:DEVIOS:TOD";
@@ -48,11 +48,11 @@ public class DashboardObservables extends InstrumentVariables {
 
     public DashboardObservables() {
         shutter = obsFactory.getSwitchableObservable(new EnumChannel<>(ShutterStatus.class),
-                Instrument.getInstance().getPvPrefix() + SHUTTER_STATUS);
+                InstrumentUtils.addPrefix(SHUTTER_STATUS));
         instrumentTime = obsFactory.getSwitchableObservable(new DateTimeChannel(),
-                Instrument.getInstance().getPvPrefix() + TIME);
+                InstrumentUtils.addPrefix(TIME));
         users = obsFactory.getSwitchableObservable(new CompressedCharWaveformChannel(),
-                Instrument.getInstance().getPvPrefix() + USERS);
+                InstrumentUtils.addPrefix(USERS));
 
         dae = new DaeObservables();
 	}

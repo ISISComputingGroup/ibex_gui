@@ -52,7 +52,7 @@ public class TableOfMotorsView extends ViewPart {
 		public void mouseDoubleClick(MouseEvent e) {
 			if (e.widget instanceof MinimalMotorView) {
 				MinimalMotorView minimal = (MinimalMotorView) e.widget;
-				openMotorView(minimal.motor());			
+                openMotorView(minimal.getViewModel().getMotor());
 			}
 		}
 	};

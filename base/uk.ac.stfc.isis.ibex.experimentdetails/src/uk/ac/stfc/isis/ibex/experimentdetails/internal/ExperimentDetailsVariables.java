@@ -21,17 +21,14 @@ package uk.ac.stfc.isis.ibex.experimentdetails.internal;
 
 import java.util.Collection;
 
-import uk.ac.stfc.isis.ibex.epics.conversion.Converter;
 import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.epics.switching.ObservableFactory;
 import uk.ac.stfc.isis.ibex.epics.switching.OnInstrumentSwitch;
 import uk.ac.stfc.isis.ibex.epics.switching.WritableFactory;
-import uk.ac.stfc.isis.ibex.epics.writing.ForwardingWritable;
 import uk.ac.stfc.isis.ibex.epics.writing.Writable;
 import uk.ac.stfc.isis.ibex.experimentdetails.Parameter;
 import uk.ac.stfc.isis.ibex.experimentdetails.UserDetails;
-import uk.ac.stfc.isis.ibex.instrument.Instrument;
-import uk.ac.stfc.isis.ibex.instrument.InstrumentVariables;
+import uk.ac.stfc.isis.ibex.instrument.InstrumentUtils;
 import uk.ac.stfc.isis.ibex.instrument.channels.CharWaveformChannel;
 import uk.ac.stfc.isis.ibex.instrument.channels.CompressedCharWaveformChannel;
 import uk.ac.stfc.isis.ibex.instrument.channels.DefaultChannelWithoutUnits;
@@ -40,7 +37,7 @@ import uk.ac.stfc.isis.ibex.instrument.channels.StringChannel;
 /**
  * Holds the Observables and Writables relating to experiment details.
  */
-public class ExperimentDetailsVariables extends InstrumentVariables {
+public class ExperimentDetailsVariables {
 
     private static final int INITIAL_STRING_CAPACITY = 50;
 
@@ -59,26 +56,26 @@ public class ExperimentDetailsVariables extends InstrumentVariables {
     public final Writable<UserDetails[]> userDetailsSetter;
 
     public ExperimentDetailsVariables() {
-        availableSampleParameters = convert(obsFactory.getSwitchableObservable(new CompressedCharWaveformChannel(),
-                addPrefix("CS:BLOCKSERVER:SAMPLE_PARS")),
-                new ParametersConverter());
-        availableBeamParameters = convert(obsFactory.getSwitchableObservable(new CompressedCharWaveformChannel(),
-                addPrefix("CS:BLOCKSERVER:BEAMLINE_PARS")),
-                new ParametersConverter());
-        sampleParameters = autoInitialise(new ParametersObservable(this, availableSampleParameters));
-        beamParameters = autoInitialise(new ParametersObservable(this, availableBeamParameters));
-        rbNumber = obsFactory.getSwitchableObservable(new StringChannel(), addPrefix("ED:RBNUMBER"));
-        rbNumberSetter = writeFactory.getSwitchableWritable(new CharWaveformChannel(), addPrefix("ED:RBNUMBER:SP"));
-        userDetails = convert(
-                obsFactory.getSwitchableObservable(new CompressedCharWaveformChannel(), addPrefix("ED:USERNAME")),
+        availableSampleParameters =
+                InstrumentUtils.convert(obsFactory.getSwitchableObservable(new CompressedCharWaveformChannel(),
+                        InstrumentUtils.addPrefix("CS:BLOCKSERVER:SAMPLE_PARS")), new ParametersConverter());
+        availableBeamParameters =
+                InstrumentUtils.convert(obsFactory.getSwitchableObservable(new CompressedCharWaveformChannel(),
+                        InstrumentUtils.addPrefix("CS:BLOCKSERVER:BEAMLINE_PARS")), new ParametersConverter());
+        sampleParameters =
+                new ForwardingObservable<>(new ParametersObservable(this, availableSampleParameters));
+        beamParameters = new ForwardingObservable<>(new ParametersObservable(this, availableBeamParameters));
+        rbNumber = obsFactory.getSwitchableObservable(new StringChannel(), InstrumentUtils.addPrefix("ED:RBNUMBER"));
+        rbNumberSetter = writeFactory.getSwitchableWritable(new CharWaveformChannel(),
+                InstrumentUtils.addPrefix("ED:RBNUMBER:SP"));
+        userDetails = InstrumentUtils.convert(
+                obsFactory.getSwitchableObservable(new CompressedCharWaveformChannel(),
+                        InstrumentUtils.addPrefix("ED:USERNAME")),
                 new UserDetailsConverter());
-        userDetailsSetter = convert(
-                writeFactory.getSwitchableWritable(new CompressedCharWaveformChannel(), addPrefix("ED:USERNAME:SP")),
+        userDetailsSetter = InstrumentUtils.convert(
+                writeFactory.getSwitchableWritable(new CompressedCharWaveformChannel(),
+                        InstrumentUtils.addPrefix("ED:USERNAME:SP")),
                 new UserDetailsSerialiser());
-	}
-	
-	private <T> Writable<T> convert(Writable<String> destination, Converter<T, String> converter) {
-        return new ForwardingWritable<>(destination, converter);
 	}
 	
 	 /**
@@ -88,7 +85,7 @@ public class ExperimentDetailsVariables extends InstrumentVariables {
    * @return An observable to the name of the parameter.
    */
 	public ForwardingObservable<String> parameterName(String address) {
-        return obsFactory.getSwitchableObservable(new StringChannel(), addPrefix(address + ".DESC"));
+        return obsFactory.getSwitchableObservable(new StringChannel(), InstrumentUtils.addPrefix(address + ".DESC"));
 	}
 	
 	/**
@@ -97,7 +94,7 @@ public class ExperimentDetailsVariables extends InstrumentVariables {
 	 * @return An observable to the units of a PV.
 	 */
 	public ForwardingObservable<String> parameterUnits(String address) {
-        return obsFactory.getSwitchableObservable(new StringChannel(), addPrefix(address + ".EGU"));
+        return obsFactory.getSwitchableObservable(new StringChannel(), InstrumentUtils.addPrefix(address + ".EGU"));
 	}
 	
 	 /**
@@ -106,7 +103,7 @@ public class ExperimentDetailsVariables extends InstrumentVariables {
    * @return An observable to the PV.
    */
 	public ForwardingObservable<String> parameterValue(String address) {
-        return obsFactory.getSwitchableObservable(new DefaultChannelWithoutUnits(), addPrefix(address));
+        return obsFactory.getSwitchableObservable(new DefaultChannelWithoutUnits(), InstrumentUtils.addPrefix(address));
 	}
 
   /**
@@ -115,13 +112,7 @@ public class ExperimentDetailsVariables extends InstrumentVariables {
    * @return A writable to the PV.
    */
 	public Writable<String> parameterValueSetter(String address) {
-        return writeFactory.getSwitchableWritable(new DefaultChannelWithoutUnits(), addPrefix(address + ":SP"));
+        return writeFactory.getSwitchableWritable(new DefaultChannelWithoutUnits(),
+                InstrumentUtils.addPrefix(address + ":SP"));
 	}
-
-    private String addPrefix(String address) {
-        StringBuilder sb = new StringBuilder(INITIAL_STRING_CAPACITY);
-        sb.append(Instrument.getInstance().getPvPrefix());
-        sb.append(address);
-        return sb.toString();
-    }
 }

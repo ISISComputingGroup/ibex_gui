@@ -19,11 +19,13 @@
 
 package uk.ac.stfc.isis.ibex.ui.synoptic.editor.target.properties;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.List;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
@@ -33,7 +35,6 @@ import org.eclipse.swt.widgets.TableItem;
 
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.ComponentDescription;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.Property;
-import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.IComponentSelectionListener;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.IInstrumentUpdateListener;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.SynopticViewModel;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.UpdateTypes;
@@ -61,15 +62,11 @@ public class TargetPropertyTable extends Composite {
 		
 		this.synopticViewModel = instrument;
 		
-		instrument.addComponentSelectionListener(new IComponentSelectionListener() {			
-			@Override
-			public void selectionChanged(List<ComponentDescription> oldSelection, List<ComponentDescription> newSelection) {
-				if (newSelection != null && newSelection.size() == 1) {
-					showPropertyList(newSelection.iterator().next());
-				} else {
-					showPropertyList(null);
-				}
-			}
+        instrument.addPropertyChangeListener("compSelection", new PropertyChangeListener() {
+            @Override
+            public void propertyChange(PropertyChangeEvent evt) {
+                showPropertyList(instrument.getSingleSelectedComp());
+            }
 		});
 		
 		instrument.addInstrumentUpdateListener(new IInstrumentUpdateListener() {	
@@ -88,7 +85,7 @@ public class TargetPropertyTable extends Composite {
 							selected = -1;
 							break;
 					}
-                    showPropertyList(instrument.getFirstSelectedComponent());
+                    showPropertyList(instrument.getSingleSelectedComp());
                     table.setSelection(selected);
 				}
 			}
@@ -130,15 +127,10 @@ public class TargetPropertyTable extends Composite {
         TableColumn valueColumn = new TableColumn(table, SWT.NULL);
         valueColumn.setText("Value");
 
-        table.addSelectionListener(new SelectionListener() {
+        table.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
                 synopticViewModel.setSelectedProperty(getSelectedProperty());
-            }
-
-            @Override
-            public void widgetDefaultSelected(SelectionEvent e) {
-                // Can add double click behaviour here...
             }
         });
 	}
@@ -152,7 +144,7 @@ public class TargetPropertyTable extends Composite {
 	public void showPropertyList(ComponentDescription component) {
         table.removeAll();
 
-        if (synopticViewModel.getFirstSelectedComponent() != null) {
+        if (synopticViewModel.getSingleSelectedComp() != null) {
             List<String> opiPropertyKeys = synopticViewModel.getPropertyKeys(component.target().name());
             for (String propertyKey : opiPropertyKeys) {
                 TableItem item = new TableItem(table, SWT.NULL);
@@ -176,7 +168,7 @@ public class TargetPropertyTable extends Composite {
     }
 
     private Property getPropertyFromKey(String key) {
-        ComponentDescription component = synopticViewModel.getFirstSelectedComponent();
+        ComponentDescription component = synopticViewModel.getSingleSelectedComp();
 
         return component.target().getProperty(key, new Property(key, ""));
     }

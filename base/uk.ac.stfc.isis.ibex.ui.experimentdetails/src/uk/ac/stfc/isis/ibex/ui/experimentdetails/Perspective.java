@@ -42,7 +42,7 @@ public class Perspective extends BasePerspective {
 
 	@Override
 	public String name() {
-		return "Experiment Details";
+        return "&Experiment Details";
 	}
 	
 	@Override

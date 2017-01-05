@@ -20,9 +20,6 @@
 package uk.ac.stfc.isis.ibex.ui.motor.views;
 
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.beans.BeanProperties;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
@@ -30,58 +27,48 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseListener;
-import org.eclipse.swt.graphics.Color;
-import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
-import org.eclipse.wb.swt.SWTResourceManager;
-
-import uk.ac.stfc.isis.ibex.motor.Motor;
-import uk.ac.stfc.isis.ibex.motor.MotorEnable;
-import uk.ac.stfc.isis.ibex.ui.motor.displayoptions.MotorBackgroundPalette;
 
 /**
  * The viewer for an individual motor.
  */
 @SuppressWarnings("checkstyle:magicnumber")
 public class MinimalMotorView extends Composite {
+	
+    private MinimalMotorViewModel minimalMotorViewModel;
 
 	private DataBindingContext bindingContext = new DataBindingContext();
 
 	private Composite motorComposite;
 	private MinimalMotionIndicator indicator;
-	
-	private final Display display = Display.getDefault();
-	
-	private static final Font ENABLEDFONT = SWTResourceManager.getFont("Arial", 9, SWT.BOLD);
-	private static final Font DISABLEDFONT = SWTResourceManager.getFont("Arial", 9, SWT.ITALIC);
 		
-	private Motor motor;
 	private Label motorName;
 
 	private Label value;
 	private Label setpoint;
-	
-    private MotorBackgroundPalette palette;
 
     /**
      * Constructor. Creates a new instance of the MinimalMotorView object.
      * 
-     * @param parent the parent of this element
-     * @param style the base style to be applied to the overview
-     * @param palette the palette to be used.
+     * @param parent
+     *            the parent of this element
+     * @param style
+     *            the base style to be applied to the overview
+     * @param minimalMotorViewModel
+     *            the view model to be used by this view.
      */
-    public MinimalMotorView(Composite parent, int style, MotorBackgroundPalette palette) {
+    public MinimalMotorView(Composite parent, int style, MinimalMotorViewModel minimalMotorViewModel) {
 		super(parent, style);
 		setLayout(new FillLayout(SWT.HORIZONTAL));
 		
+        this.minimalMotorViewModel = minimalMotorViewModel;
+
 		motorComposite = new Composite(this, SWT.BORDER);
-		motorComposite.setFont(ENABLEDFONT);
 		GridLayout glMotorComposite = new GridLayout(1, false);
 		glMotorComposite.verticalSpacing = 2;
 		glMotorComposite.marginWidth = 2;
@@ -99,91 +86,63 @@ public class MinimalMotorView extends Composite {
 		value = new Label(motorComposite, SWT.NONE);
 		value.setAlignment(SWT.CENTER);
 		value.setLayoutData(new GridData(SWT.FILL, SWT.TOP, false, false, 1, 1));
-		value.setText("Val: 2.12");
+        value.setText("");
 		
 		setpoint = new Label(motorComposite, SWT.NONE);
 		setpoint.setAlignment(SWT.CENTER);
 		setpoint.setLayoutData(new GridData(SWT.FILL, SWT.TOP, false, false, 1, 1));
-		setpoint.setText("SP: 1.12");
+        setpoint.setText("");
 		
 		indicator = new MinimalMotionIndicator(motorComposite, SWT.NONE);
 		indicator.setLayoutData(new GridData(SWT.FILL, SWT.TOP, false, false, 1, 1));
 		
 		setMouseListeners();
+		
+        bind();
 
-        this.palette = palette;
 	}
 
     /**
-     * Set the palette used in the background of the cells for motors.
+     * Gets the MinimalMotorViewModel used by the cell.
      * 
-     * @param palette the new palette to use.
+     * @return the motor view model used by the cell.
      */
-    public void setPalette(MotorBackgroundPalette palette) {
-        this.palette = palette;
-        updateMotorColor(motor);
+    public MinimalMotorViewModel getViewModel() {
+        return minimalMotorViewModel;
     }
 
     /**
-     * Getter for the motor used by the cell.
-     * 
-     * @return the motor used by the cell
+     * Binds the model to the view.
      */
-	public Motor motor() {
-		return motor;
-	}
-	
-    /**
-     * Sets the motor pointed at by the cell.
-     * 
-     * @param motor the new motor.
-     */
-	public void setMotor(final Motor motor) {
-		this.motor = motor;
-		
-		bindingContext.bindValue(WidgetProperties.text().observe(motorName), BeanProperties.value("description").observe(motor));	
-		
-		indicator.setMotor(motor);
-		
-		motor.addPropertyChangeListener("description", new PropertyChangeListener() {	
-			@Override
-			public void propertyChange(PropertyChangeEvent arg0) {
-				setEnabled(motor.getEnabled());
-			}
+    private void bind() {
+        
+        bindingContext.bindValue(WidgetProperties.text().observe(setpoint),
+                BeanProperties.value("setpoint").observe(minimalMotorViewModel));
 
-		});
-		
-		setEnabled(motor.getEnabled());
-		motor.addPropertyChangeListener("enabled", new PropertyChangeListener() {	
-			@Override
-			public void propertyChange(PropertyChangeEvent arg0) {
-				setEnabled(motor.getEnabled());
-			}
+        bindingContext.bindValue(WidgetProperties.text().observe(value),
+                BeanProperties.value("value").observe(minimalMotorViewModel));
 
-		});
-		
-		setMoving(motor);
-		motor.addPropertyChangeListener("moving", new PropertyChangeListener() {
-			@Override
-			public void propertyChange(PropertyChangeEvent evt) {
-				setMoving(motor);
-			}
-		});
-		
-		setValue(motor);
-		setSetpoint(motor);
-		motor.getSetpoint().addPropertyChangeListener("value", new PropertyChangeListener() {
-			@Override
-			public void propertyChange(PropertyChangeEvent evt) {
-				setValue(motor);
-			}
-		});
-		motor.getSetpoint().addPropertyChangeListener("setpoint", new PropertyChangeListener() {
-			@Override
-			public void propertyChange(PropertyChangeEvent evt) {
-				setSetpoint(motor);
-			}
-		});	
+        bindingContext.bindValue(WidgetProperties.text().observe(motorName),
+                BeanProperties.value("motorName").observe(minimalMotorViewModel));
+
+        bindingContext.bindValue(WidgetProperties.font().observe(motorName),
+                BeanProperties.value("font").observe(minimalMotorViewModel));
+
+        bindingContext.bindValue(WidgetProperties.background().observe(motorName),
+                BeanProperties.value("color").observe(minimalMotorViewModel));
+
+        bindingContext.bindValue(WidgetProperties.background().observe(indicator),
+                BeanProperties.value("color").observe(minimalMotorViewModel));
+
+        bindingContext.bindValue(WidgetProperties.background().observe(value),
+                BeanProperties.value("color").observe(minimalMotorViewModel));
+
+        bindingContext.bindValue(WidgetProperties.background().observe(setpoint),
+                BeanProperties.value("color").observe(minimalMotorViewModel));
+
+        bindingContext.bindValue(WidgetProperties.background().observe(motorComposite),
+                BeanProperties.value("color").observe(minimalMotorViewModel));
+
 	}
 	
 	private void setMouseListeners() {
@@ -203,81 +162,5 @@ public class MinimalMotorView extends Composite {
 		value.addMouseListener(forwardDoubleClick);
 		setpoint.addMouseListener(forwardDoubleClick);
 		indicator.addMouseListener(forwardDoubleClick);
-	}
-	
-	private void setSetpoint(final Motor motor) {
-		display.asyncExec(new Runnable() {
-			@Override
-			public void run() {
-				Double setpt = motor.getSetpoint().getSetpoint();
-				String text = setpt != null 
-						? String.format("SP: %.2f", setpt) : "";
-				setpoint.setText(text);
-			}
-		});
-	}
-
-	private void setValue(final Motor motor) {
-		display.asyncExec(new Runnable() {
-			@Override
-			public void run() {
-				Double setpointValue = motor.getSetpoint().getValue();
-				String text = setpointValue != null 
-						? String.format("Val: %.2f", setpointValue) : "";
-				value.setText(text);
-			}
-		});
-	}
-	
-	private void setEnabled(final MotorEnable enabled) {
-		display.asyncExec(new Runnable() {
-			@Override
-			public void run() {
-				boolean isEnabled = enabled == MotorEnable.ENABLE;
-				motorComposite.setEnabled(isEnabled);
-				motorName.setFont(isEnabled ? ENABLEDFONT : DISABLEDFONT);
-				
-				updateMotorColor(motor);
-			}
-		});
-	}
-	
-	private void setMoving(final Motor motor) {
-		display.asyncExec(new Runnable() {
-			@Override
-			public void run() {
-				updateMotorColor(motor);
-			}
-		});
-	}
-
-	private void updateMotorColor(Motor motor) {
-		Boolean movingValue = motor.getMoving();
-		boolean isMoving = movingValue != null && movingValue;
-		boolean isEnabled = (motor.getEnabled() == MotorEnable.ENABLE);
-		boolean isNamed = (motor.getDescription() != "");
-
-        Color backgroundColour;
-
-        if (!isEnabled) {
-            backgroundColour = palette.getDisabledColor();
-        } else if (!isNamed) {
-            backgroundColour = palette.getUnnamedColor();
-        } else if (!isMoving) {
-            backgroundColour = palette.getStoppedColor();
-        } else {
-            backgroundColour = palette.getMovingColor();
-        }
-
-        setColor(backgroundColour);
-		
-	}
-	
-	private void setColor(Color color) {
-		motorComposite.setBackground(color);
-		indicator.setBackground(color);
-		motorName.setBackground(color);
-		value.setBackground(color);
-		setpoint.setBackground(color);
 	}
 }

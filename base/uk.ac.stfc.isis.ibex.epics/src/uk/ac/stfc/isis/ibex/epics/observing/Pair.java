@@ -22,6 +22,10 @@ package uk.ac.stfc.isis.ibex.epics.observing;
 /**
  * Holds a pair of items.
  *
+ * @param <T1>
+ *            The type of the first item.
+ * @param <T2>
+ *            The type of the second item.
  */
 public class Pair<T1, T2> {
 

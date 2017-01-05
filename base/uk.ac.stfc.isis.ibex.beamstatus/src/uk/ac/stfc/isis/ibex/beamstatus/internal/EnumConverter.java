@@ -22,6 +22,13 @@ package uk.ac.stfc.isis.ibex.beamstatus.internal;
 import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
 import uk.ac.stfc.isis.ibex.epics.conversion.Converter;
 
+/**
+ * Converts an enum to it's string representation, giving UNKNOWN if the enum is
+ * null.
+ *
+ * @param <E>
+ *            The type of the enum to convert.
+ */
 public class EnumConverter<E extends Enum<E>> extends Converter<E, String> {
 	@Override
 	public String convert(E value) throws ConversionException {
