@@ -27,7 +27,8 @@ import java.util.List;
  */
 public final class ExpDataFieldsCreator {
 	private static List<ExpDataFieldsEnum> experimentteamsFields = new ArrayList<ExpDataFieldsEnum>(
-			Arrays.asList(ExpDataFieldsEnum.USER_ID, ExpDataFieldsEnum.EXPERIMENT_ID, ExpDataFieldsEnum.ROLE_ID));
+            Arrays.asList(ExpDataFieldsEnum.USER_ID, ExpDataFieldsEnum.EXPERIMENT_ID, ExpDataFieldsEnum.ROLE_ID,
+                    ExpDataFieldsEnum.STARTDATE));
 
 	private static List<ExpDataFieldsEnum> userFields = new ArrayList<ExpDataFieldsEnum>(
 			Arrays.asList(ExpDataFieldsEnum.USER_ID, ExpDataFieldsEnum.NAME, ExpDataFieldsEnum.ORGANISATION));
@@ -42,6 +43,15 @@ public final class ExpDataFieldsCreator {
     private ExpDataFieldsCreator() {
     }
 
+    /**
+     * Gets experiment details field.
+     *
+     * @param table
+     *            the table within the experiment database
+     * @param field
+     *            the field to get
+     * @return the experimental database field
+     */
     public static ExpDataField getField(ExpDataTablesEnum table, ExpDataFieldsEnum field) {
     	if (!getFieldList(table).contains(field)) {
     		throw new IllegalArgumentException("Unknown experiment details field: " + field);
