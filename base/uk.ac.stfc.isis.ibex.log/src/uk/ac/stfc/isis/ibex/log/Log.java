@@ -21,39 +21,60 @@ package uk.ac.stfc.isis.ibex.log;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
+/**
+ * The activator for the log plugin.
+ */
 public class Log extends AbstractUIPlugin {
     private static Log instance;
     private static BundleContext context;
 
+    /**
+     * @return The instance of this singleton.
+     */
     public static Log getInstance() {
-	return instance;
+        return instance;
     }
 
+    /**
+     * @return The instance of this singleton.
+     */
     public static Log getDefault() {
-	return instance;
+        return instance;
     }
 
     private final LogModel model;
     private LogCounter counter;
 
+    /**
+     * The constructor for the activator. Creates a new model and counter.
+     */
     public Log() {
-	super();
-	instance = this;
-	model = new LogModel();
-	counter = new LogCounter();
-	model.addMessageConsumer(counter);
+        super();
+        instance = this;
+        model = new LogModel();
+        counter = new LogCounter();
+        model.addMessageConsumer(counter);
     }
 
+    /**
+     * @return The producer that creates new LogMessages as they arrive.
+     */
     public ILogMessageProducer producer() {
-	return model;
+        return model;
     }
 
+    /**
+     * @return The counter that counts how many unread log messages there are.
+     */
     public LogCounter getCounter() {
-	return counter;
+        return counter;
     }
 
+    /**
+     * @return The bundle context for the plugin.
+     */
     static BundleContext getContext() {
-	return context;
+        return context;
     }
 
     @Override
@@ -63,11 +84,14 @@ public class Log extends AbstractUIPlugin {
 
     @Override
     public void stop(BundleContext bundleContext) throws Exception {
-	Log.context = null;
-	model.stop();
+        Log.context = null;
+        model.stop();
     }
 
+    /**
+     * Clears all the messages in the log model.
+     */
     public void clearMessages() {
-	model.clearMessages();
+        model.clearMessages();
     }
 }

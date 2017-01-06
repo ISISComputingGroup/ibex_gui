@@ -79,11 +79,36 @@ public class ActiveMQ extends AbstractUIPlugin {
      * 
      * @return The Active MQ Connection.
      */
-    public MQConnection getConnection() {
+    MQConnection getConnection() {
         if (connection == null) {
             String currentInstrument = Instrument.getInstance().currentInstrument().hostName();
             connection = new MQConnection(currentInstrument);
         }
         return connection;
+    }
+
+    /**
+     * Get an ActiveMQ Queue that only receives information.
+     * 
+     * @return A queue for receiving information.
+     */
+    public ReceiveSession getReceiveQueue() {
+        ReceiveSession queue = new ReceiveSession(getConnection());
+        queue.connect();
+        return queue;
+    }
+
+    /**
+     * Get an ActiveMQ Queue that sends information to a specific queue and
+     * receives information back on a temporary queue.
+     * 
+     * @param sendTopic
+     *            The name of the queue to send the data to.
+     * @return A queue for sending and receiving data.
+     */
+    public SendReceiveSession getSendReceiveQueue(String sendTopic) {
+        SendReceiveSession queue = new SendReceiveSession(getConnection(), sendTopic);
+        queue.connect();
+        return queue;
     }
 }

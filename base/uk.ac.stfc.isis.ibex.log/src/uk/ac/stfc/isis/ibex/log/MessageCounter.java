@@ -33,28 +33,45 @@ public class MessageCounter {
     private Map<String, Long> counts = new HashMap<String, Long>();
     private long totalCount = 0;
 
+    /**
+     * @return The total count of all unread log messages.
+     */
     public long totalCount() {
-	return totalCount;
+        return totalCount;
     }
 
+    /**
+     * Gets the number of log messages that have been counted which have a given
+     * severity.
+     * 
+     * @param severity
+     *            The severity to filter by.
+     * @return The number of log messages.
+     */
     public long countsForSeverity(String severity) {
-	return counts.containsKey(severity) ? counts.get(severity) : 0;
+        return counts.containsKey(severity) ? counts.get(severity) : 0;
     }
 
+    /**
+     * Called when a new log message is received to increment the count.
+     * 
+     * @param message
+     *            The message that has been received.
+     */
     public void countMessage(LogMessage message) {
-	incrementCount(severity(message));
+        incrementCount(severity(message));
     }
 
     private void incrementCount(String messageSeverity) {
-	incrementSeverity(messageSeverity);
-	totalCount++;
+        incrementSeverity(messageSeverity);
+        totalCount++;
     }
 
     private void incrementSeverity(String messageSeverity) {
-	counts.put(messageSeverity, countsForSeverity(messageSeverity) + 1);
+        counts.put(messageSeverity, countsForSeverity(messageSeverity) + 1);
     }
 
     private String severity(LogMessage logMessage) {
-	return logMessage.getProperty(LogMessageFields.SEVERITY);
+        return logMessage.getProperty(LogMessageFields.SEVERITY);
     }
 }

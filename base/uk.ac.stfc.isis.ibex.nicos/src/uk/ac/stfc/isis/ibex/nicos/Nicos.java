@@ -18,21 +18,18 @@
 
 package uk.ac.stfc.isis.ibex.nicos;
 
-import org.apache.logging.log4j.Logger;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
-import uk.ac.stfc.isis.ibex.logger.IsisLog;
-
 /**
- * Class which provides an interaction between the GUI and Nicos.
+ * Constructor for the NICOS plugin, which provides a connection between NICOS
+ * and the GUI.
  */
 public class Nicos extends AbstractUIPlugin {
-
-	private static final Logger LOG = IsisLog.getLogger(Nicos.class);
 	
 	private static BundleContext context;
 	private static Nicos instance;
+    private NicosModel model;
 
     /**
      * @return The instance of this singleton.
@@ -45,6 +42,15 @@ public class Nicos extends AbstractUIPlugin {
      * This class creates and manages the connection to NICOS.
      */
 	public Nicos() {
+        instance = this;
+        model = new NicosModel();
+    }
+
+    /**
+     * @return The model that is connected to nicos on the instrument.
+     */
+    public NicosModel getModel() {
+        return model;
 	}
 	
     /**

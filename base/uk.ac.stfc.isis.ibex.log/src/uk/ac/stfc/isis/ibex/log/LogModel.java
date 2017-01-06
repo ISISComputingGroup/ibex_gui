@@ -30,7 +30,7 @@ import org.eclipse.jface.preference.IPreferenceStore;
 import com.mysql.jdbc.exceptions.jdbc4.CommunicationsException;
 
 import uk.ac.stfc.isis.ibex.activemq.ActiveMQ;
-import uk.ac.stfc.isis.ibex.activemq.MQConnection;
+import uk.ac.stfc.isis.ibex.activemq.ReceiveSession;
 import uk.ac.stfc.isis.ibex.activemq.message.IMessageConsumer;
 import uk.ac.stfc.isis.ibex.activemq.message.MessageParser;
 import uk.ac.stfc.isis.ibex.databases.Rdb;
@@ -41,6 +41,9 @@ import uk.ac.stfc.isis.ibex.log.preferences.PreferenceConstants;
 import uk.ac.stfc.isis.ibex.log.rdb.LogMessageQuery;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 
+/**
+ * The Model that connects to the database and activeMQ to read log messages.
+ */
 public class LogModel extends ModelObject implements ILogMessageProducer,
         IMessageConsumer<LogMessage> {
     /**
@@ -57,11 +60,7 @@ public class LogModel extends ModelObject implements ILogMessageProducer,
 
     private IPreferenceStore preferenceStore = Log.getDefault().getPreferenceStore();
 
-    /**
-     * Starts and maintains connection to the JMS and forwards on any messages
-     * received from it.
-     */
-    private final MQConnection jmsHandler;
+    private final ReceiveSession logQueue;
 
     private final MessageParser<LogMessage> parser = new XmlLogMessageParser();
 
@@ -71,12 +70,15 @@ public class LogModel extends ModelObject implements ILogMessageProducer,
     /** A local cache of the most recent messages received from the JMS. */
     private final ArrayList<LogMessage> jmsMessageCache = new ArrayList<>();
 
+    /**
+     * The default constructor. This will connect to activeMQ on startup.
+     */
     public LogModel() {
         String topic = preferenceStore.getString(PreferenceConstants.P_JMS_TOPIC);
-        jmsHandler = ActiveMQ.getInstance().getConnection();
+        logQueue = ActiveMQ.getInstance().getReceiveQueue();
         parser.addMessageConsumer(this);
-        jmsHandler.addMessageParser(topic, parser);
-    	jmsHandler.addPropertyChangeListener("connection", passThrough());
+        logQueue.addMessageParser(topic, parser);
+        logQueue.addPropertyChangeListener("connection", passThrough());
     }
 
     @Override
@@ -110,7 +112,7 @@ public class LogModel extends ModelObject implements ILogMessageProducer,
         super.addPropertyChangeListener(propertyName, listener);
 
         if (propertyName.equals("connection")) {
-            listener.propertyChange(new PropertyChangeEvent(this, propertyName, null, jmsHandler.isConnected()));
+            listener.propertyChange(new PropertyChangeEvent(this, propertyName, null, logQueue.isConnected()));
         }
     }
 
@@ -124,9 +126,11 @@ public class LogModel extends ModelObject implements ILogMessageProducer,
         return jmsMessageCache;
     }
 
+    /**
+     * Stop the connection to activeMQ.
+     */
     public void stop() {
         parser.setRunning(false);
-        jmsHandler.stop();
     }
 
     @Override

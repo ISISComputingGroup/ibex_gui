@@ -19,10 +19,10 @@
 
 package uk.ac.stfc.isis.ibex.ui.nicos.dialogs;
 
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StyledText;
+import org.eclipse.swt.layout.FillLayout;
+import org.eclipse.swt.widgets.Composite;
 
 /**
  * The view for the dialog that creates a new script to send to the script server.
@@ -34,7 +34,8 @@ public class CreateScriptPanel extends Composite {
 	 * @param parent The composite that this panel belongs to.
 	 * @param style The SWT style of this panel.
 	 */
-	public CreateScriptPanel(Composite parent, int style) {
+    @SuppressWarnings("unused")
+    public CreateScriptPanel(Composite parent, int style) {
 		super(parent, style);
 		setLayout(new FillLayout(SWT.HORIZONTAL));
 		
