@@ -65,6 +65,29 @@ class TestCheckOpiFormatMethods(unittest.TestCase):
         # Assert
         self.assertEqual(len(checker.errors), 1)
 
+    def test_that_if_a_label_tag_with_a_valid_font_is_parsed_it_causes_no_errors(self):
+        # Arrange
+        checker = CheckOpiFormat()
+        xml = '<widget typeId="org.csstudio.opibuilder.widgets.Label"><font><opifont.name fontName="Segoe UI" height="18" style="1">ISIS_Header1_NEW</opifont.name></font></widget>'
+        root = etree.fromstring(xml)
+
+        # Act
+        checker.check_LED_colours(root)
+
+        # Assert
+        self.assertEqual(len(checker.errors), 0)
+
+    def test_that_if_a_label_tag_with_an_invalid_font_is_parsed_it_causes_one_errors(self):
+        # Arrange
+        checker = CheckOpiFormat()
+        xml = '<widget typeId="org.csstudio.opibuilder.widgets.Label"><font><opifont.name fontName="Segoe UI" height="18" style="1">MADE UP FONT</opifont.name></font></widget>'
+        root = etree.fromstring(xml)
+
+        # Act
+        checker.check_LED_colours(root)
+
+        # Assert
+        self.assertEqual(len(checker.errors), 1)
 
 
 if __name__ == '__main__':
