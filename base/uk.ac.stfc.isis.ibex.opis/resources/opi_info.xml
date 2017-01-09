@@ -384,7 +384,7 @@
 			<value>
 				<type>SINGLESTAGE</type>
 				<path>single_stage.opi</path>
-				<description>OPI displaying a single Motor along with a designated ID.</description>
+				<description>The OPI displaying a single Motor along with a designated ID.</description>
 				<macros>
 					<macro>
 						<name>S</name>
@@ -416,7 +416,7 @@
 			<value>
 				<type>JAWS</type>
 				<path>slit1.opi</path>
-				<description>A 2D set of rectangular jaws controlled by 4 motors.</description>
+				<description>The OPI for a 2D set of rectangular jaws controlled by 4 motors.</description>
 				<macros>
                     <macro>
 						<name>J</name>
@@ -446,7 +446,7 @@
 			<value>
 				<type>UNCONFIRMED</type>
 				<path>slit_motors.opi</path>
-				<description>OPI displaying the motors of a slit.</description>
+				<description>The OPI displaying the motors of a slit.</description>
 				<macros>
 					<macro>
 						<name>M1</name>
@@ -472,7 +472,7 @@
 			<value>
 				<type>PRESSURE_GAUGE</type>
 				<path>TPG300.opi</path>
-				<description>OPI for the PFEIFFER 300 Vacuum Gauge.</description>
+				<description>The OPI for the PFEIFFER 300 Vacuum Gauge.</description>
 				<macros>
                     <macro>
 						<name>TPG300</name>
