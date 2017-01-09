@@ -129,7 +129,12 @@ class CheckOpiFormat:
 
             words = name.text.split()
 
-            ignore = ["$", "OPI", "PSU", "Axis", "HW" "Hz", "LED", "X", "Y"]
+            # If any of the following are a whole word, that word won't throw any errors
+            ignorewords = ["OPI", "PSU", "Axis", "HW" "Hz", "LED", "X", "Y", "PV", "A", "B", "C"]
+
+            # If a word contains any of these characters, the whole word will be ignored
+            ignorecharacters = ["$", "&", "#",'"', "'", "("]
+
             for word in words:
                 capitalisation_error = False
                 original_word = word
@@ -139,13 +144,13 @@ class CheckOpiFormat:
                 else:
                     cased_word = word.lower()
 
-                if (original_word != cased_word) and not (original_word in ignore):
+                if (original_word != cased_word) and not (original_word in ignorewords) and not any(s in original_word for s in ignorecharacters):
                     capitalisation_error = True
 
                 if capitalisation_error:
                     err = "Error on line " + str(name.sourceline) + ": " + etree.tostring(name) \
-                          + "\n... Labels should be in 'sentence case'." \
-                          + "\n... Expected '" + cased_word + "', but got '" + original_word + "'"
+                          + "\n... Labels should be in 'sentence case' " \
+                            "(Expected '" + cased_word + "', but got '" + original_word + "')."
                     self.errors.append(err)
 
     def run(self):
