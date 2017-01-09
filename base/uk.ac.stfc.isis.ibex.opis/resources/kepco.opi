@@ -240,7 +240,7 @@ $(pv_value)</tooltip>
         <color name="ISIS_Textbox_Background" red="255" green="255" blue="255" />
       </background_color>
       <width>90</width>
-      <x>150</x>
+      <x>144</x>
       <y>6</y>
       <maximum>1.7976931348623157E308</maximum>
       <foreground_color>
@@ -337,7 +337,7 @@ $(pv_value)</tooltip>
         <color name="ISIS_Textbox_Background" red="255" green="255" blue="255" />
       </background_color>
       <width>90</width>
-      <x>150</x>
+      <x>144</x>
       <y>36</y>
       <maximum>1.7976931348623157E308</maximum>
       <foreground_color>
@@ -879,7 +879,7 @@ $(pv_value)</tooltip>
         <color name="ISIS_Textbox_Background" red="255" green="255" blue="255" />
       </background_color>
       <width>90</width>
-      <x>150</x>
+      <x>144</x>
       <name>Combo</name>
       <y>40</y>
       <foreground_color>
@@ -919,7 +919,7 @@ $(pv_value)</tooltip>
       </border_color>
       <widget_type>Button</widget_type>
       <width>90</width>
-      <x>150</x>
+      <x>144</x>
       <name>Button</name>
       <y>5</y>
       <foreground_color>
