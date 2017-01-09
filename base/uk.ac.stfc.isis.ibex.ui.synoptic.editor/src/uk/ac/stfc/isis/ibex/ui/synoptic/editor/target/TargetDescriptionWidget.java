@@ -40,7 +40,7 @@ public class TargetDescriptionWidget extends Composite {
 		synopticViewModel.addInstrumentUpdateListener(new IInstrumentUpdateListener() {
 			@Override
 			public void instrumentUpdated(UpdateTypes updateType) {
-				ComponentDescription component = synopticViewModel.getFirstSelectedComponent();
+				ComponentDescription component = synopticViewModel.getSingleSelectedComp();
 
 				if (component != null) {
 					if (component.target() != null && component.target().name() != null) {

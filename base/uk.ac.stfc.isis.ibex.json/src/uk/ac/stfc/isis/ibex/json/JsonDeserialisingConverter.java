@@ -27,6 +27,9 @@ import uk.ac.stfc.isis.ibex.epics.conversion.Converter;
 
 /**
  * Converter for deserialising JSON into an object of type T.
+ * 
+ * @param <T>
+ *            The type to deserialise into.
  */
 public class JsonDeserialisingConverter<T> extends Converter<String, T> {
 

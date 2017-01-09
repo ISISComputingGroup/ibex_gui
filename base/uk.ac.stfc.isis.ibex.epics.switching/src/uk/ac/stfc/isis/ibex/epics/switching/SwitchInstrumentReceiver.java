@@ -34,4 +34,14 @@ public class SwitchInstrumentReceiver implements InstrumentInfoReceiver {
         InstrumentSwitchers.getDefault().setInstrument(instrument);
     }
 
+    @Override
+    public void preSetInstrument(InstrumentInfo instrument) {
+        // nothing extra to do
+    }
+
+    @Override
+    public void postSetInstrument(InstrumentInfo instrument) {
+        // nothing extra to do
+    }
+
 }

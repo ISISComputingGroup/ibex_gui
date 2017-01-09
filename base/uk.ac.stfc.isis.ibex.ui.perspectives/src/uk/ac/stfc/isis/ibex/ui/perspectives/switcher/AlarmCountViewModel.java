@@ -26,8 +26,8 @@ import uk.ac.stfc.isis.ibex.alarm.AlarmCounter;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 
 /**
- * A model to provide easy access to listeners for the interaction with the
- * alarm system.
+ * A model to provide easy access to the listeners for the interaction with the
+ * alarm system; chiefly the number of active alarms.
  */
 public class AlarmCountViewModel extends ModelObject {
 	
@@ -37,8 +37,13 @@ public class AlarmCountViewModel extends ModelObject {
 	private String text;
 	private boolean hasMessages;
 	
+    /**
+     * Instantiates a new alarm count view model.
+     *
+     * @param alarmCounter the alarm counter model to listen to
+     */
 	public AlarmCountViewModel(final AlarmCounter alarmCounter) {
-		alarmCounter.addPropertyChangeListener("alarmCount", new PropertyChangeListener() {
+        alarmCounter.addPropertyChangeListener("alarmCount", new PropertyChangeListener() {
 			@Override
 			public void propertyChange(PropertyChangeEvent arg0) {
 				update(alarmCounter.getCount());
@@ -46,18 +51,37 @@ public class AlarmCountViewModel extends ModelObject {
 		});
 		
         update(alarmCounter.getCount());
-	}
+    }
 	
+    /**
+     * Gets the text which displays "Alarms" and the number of alarms, e.g.
+     * Alarms (10).
+     * 
+     * @return the text
+     */
 	public String getText() {
 		return text;
 	}
 	
+    /**
+     * Whether the number of alarms has changed (and is not 0). Typically this
+     * is set to false and then when a new alarm is set/unset this will become
+     * true.
+     * 
+     * @return true, if the number of alarms has changed; False otherwise
+     */
 	public boolean hasMessages() {
 		return hasMessages;
 	}
 	
+    /**
+     * Updates the model with the new alarm count.
+     *
+     * @param count the current alarm count
+     */
 	private void update(long count) {
-		setText(textForCount(count));
+        String textForCount = ALARM + alarmCountAsText(count);
+        setText(textForCount);
 		setHasMessages(count > 0);		
 	}
 	
@@ -66,14 +90,10 @@ public class AlarmCountViewModel extends ModelObject {
 	}
 	
 	private void setHasMessages(boolean updated) {
-		firePropertyChange("hasMessages", hasMessages, hasMessages = updated);
+        firePropertyChange("hasMessages", null, hasMessages = updated);
 	}
 	
-	private String textForCount(long count) {
-		return ALARM + optionalCount(count);
-	}
-
-	private String optionalCount(Long count) {
+    private String alarmCountAsText(Long count) {
 		if (count == 0) {
 			return "";
 		}

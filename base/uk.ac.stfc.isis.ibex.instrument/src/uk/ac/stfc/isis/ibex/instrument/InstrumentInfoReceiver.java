@@ -19,6 +19,36 @@
 
 package uk.ac.stfc.isis.ibex.instrument;
 
+/**
+ * The Interface InstrumentInfoReceiver which allows plugins to respond to
+ * switches of instrument. It is broken into three parts the preSet - called on
+ * all instruments first, Set - called on all instruments and postSet - called
+ * on all instruments last. This is the interface for the instrument switching
+ * extension point.
+ */
 public interface InstrumentInfoReceiver {
+
+    /**
+     * Sets the instrument.
+     *
+     * @param instrument the new instrument that is being switched to
+     */
     void setInstrument(InstrumentInfo instrument);
+
+    /**
+     * Called before an instrument set is called. This can be used for closing
+     * resources used by the current instrument.
+     *
+     * @param instrument the instrument that will be changed to
+     */
+    void preSetInstrument(InstrumentInfo instrument);
+
+    /**
+     * Called after an instrument set is called. This can be used for tidying up
+     * after an instrument change.
+     *
+     * @param instrument the instrument swicthed to
+     */
+    void postSetInstrument(InstrumentInfo instrument);
+
 }

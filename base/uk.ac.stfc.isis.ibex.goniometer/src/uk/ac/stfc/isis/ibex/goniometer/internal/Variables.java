@@ -23,10 +23,9 @@ import uk.ac.stfc.isis.ibex.epics.pv.PVAddress;
 import uk.ac.stfc.isis.ibex.epics.switching.ObservableFactory;
 import uk.ac.stfc.isis.ibex.epics.switching.OnInstrumentSwitch;
 import uk.ac.stfc.isis.ibex.epics.switching.WritableFactory;
-import uk.ac.stfc.isis.ibex.instrument.InstrumentVariables;
 import uk.ac.stfc.isis.ibex.motor.observable.MotorSetPointVariables;
 
-public class Variables extends InstrumentVariables {
+public class Variables {
 
 	private static final PVAddress GONIO = PVAddress.startWith("GONIO");
 

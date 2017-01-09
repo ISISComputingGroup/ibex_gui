@@ -32,7 +32,7 @@ public class SansSettings extends ModelObject {
 	private Integer doSans;
 	private Integer doTrans;
 	private Boolean loopOver;
-	private ApertureSans sansSize;
+    private ApertureSans sansSize;
 	private ApertureTrans transSize;
 	private SampleGeometry geometry;
 	private Integer sampleHeight;
@@ -166,7 +166,7 @@ public class SansSettings extends ModelObject {
 	 * Gets the SANS aperture size.
 	 * @return the SANS aperture
 	 */
-	public ApertureSans getSansSize() {
+    public ApertureSans getSansSize() {
 		return sansSize;
 	}
 

@@ -91,7 +91,8 @@ public class View extends ViewPart {
 		settings = new SansSettings(1, 1, 7, 7, Order.TRANS, false, ApertureSans.MEDIUM, ApertureTrans.MEDIUM, SampleGeometry.DISC, CollectionMode.HISTOGRAM);
 		
 		rows = new ArrayList<Row>();
-		rows.add(new Row());
+        rows.add(new Row());
+		builder.setSettings(settings);
         builder.setRows(rows);
 	}
 
@@ -184,7 +185,7 @@ public class View extends ViewPart {
             @Override
             public void widgetSelected(SelectionEvent e) {
                 Shell shell = new Shell();
-                MessageDialog.openInformation(shell, "Script Preview", builder.getScript());
+                MessageDialog.openInformation(shell, "Script Preview", builder.createScript());
             }
         });
 		
@@ -201,7 +202,7 @@ public class View extends ViewPart {
                 String filename = dialog.open();
 
                 if (filename != null) {
-                    String script = builder.getScript();
+                    String script = builder.createScript();
                     PrintWriter writer = null;
                     try {
                         writer = new PrintWriter(filename);

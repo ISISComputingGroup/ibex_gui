@@ -27,12 +27,17 @@ import org.eclipse.wb.swt.ResourceManager;
 import uk.ac.stfc.isis.ibex.ui.perspectives.BasePerspective;
 
 /**
+ * The perspective that shows weblinks for IBEX.
+ * 
  * Registers the perspective to be displayed in the list (see plugin.xml file
  * for this package).
  */
 public class Perspective extends BasePerspective {
 
-	public static final String ID = "uk.ac.stfc.isis.ibex.ui.weblinks.perspective"; //$NON-NLS-1$
+    /**
+     * The perspective ID.
+     */
+    public static final String ID = "uk.ac.stfc.isis.ibex.ui.weblinks.perspective";
 
 	@Override
 	public void createInitialLayout(IPageLayout layout) {
@@ -46,7 +51,7 @@ public class Perspective extends BasePerspective {
 
 	@Override
 	public String name() {
-		return "Web Links";
+        return "&Web Links";
 	}
 	
 	@Override

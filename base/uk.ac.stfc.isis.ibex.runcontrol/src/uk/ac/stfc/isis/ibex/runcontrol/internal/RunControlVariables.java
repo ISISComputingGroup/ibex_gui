@@ -24,7 +24,7 @@ import uk.ac.stfc.isis.ibex.epics.switching.ObservableFactory;
 import uk.ac.stfc.isis.ibex.epics.switching.OnInstrumentSwitch;
 import uk.ac.stfc.isis.ibex.epics.switching.WritableFactory;
 import uk.ac.stfc.isis.ibex.epics.writing.Writable;
-import uk.ac.stfc.isis.ibex.instrument.Instrument;
+import uk.ac.stfc.isis.ibex.instrument.InstrumentUtils;
 import uk.ac.stfc.isis.ibex.instrument.channels.DefaultChannel;
 import uk.ac.stfc.isis.ibex.instrument.channels.StringChannel;
 
@@ -42,37 +42,37 @@ public class RunControlVariables {
 	
 	public ForwardingObservable<String> blockRunControlLowLimit(String blockName) {
         return obsFactory.getSwitchableObservable(new DefaultChannel(),
-                Instrument.getInstance().getPvPrefix() + runControlAddresses.getLowLimitPv(blockName));
+                InstrumentUtils.addPrefix(runControlAddresses.getLowLimitPv(blockName)));
 	}
 	
 	public ForwardingObservable<String> blockRunControlHighLimit(String blockName) {
         return obsFactory.getSwitchableObservable(new DefaultChannel(),
-                Instrument.getInstance().getPvPrefix() + runControlAddresses.getHighLimitPv(blockName));
+                InstrumentUtils.addPrefix(runControlAddresses.getHighLimitPv(blockName)));
 	}
 	
 	public ForwardingObservable<String> blockRunControlInRange(String blockName) {
         return obsFactory.getSwitchableObservable(new DefaultChannel(),
-                Instrument.getInstance().getPvPrefix() + runControlAddresses.getInRangePv(blockName));
+                InstrumentUtils.addPrefix(runControlAddresses.getInRangePv(blockName)));
 	}
 	
 	public ForwardingObservable<String> blockRunControlEnabled(String blockName) {
         return obsFactory.getSwitchableObservable(new DefaultChannel(),
-                Instrument.getInstance().getPvPrefix() + runControlAddresses.getEnablePv(blockName));
+                InstrumentUtils.addPrefix(runControlAddresses.getEnablePv(blockName)));
 	}
 	
 	public Writable<String> blockRunControlLowLimitSetter(String blockName) {
         return writeFactory.getSwitchableWritable(new StringChannel(),
-                Instrument.getInstance().getPvPrefix() + runControlAddresses.getLowLimitPv(blockName));
+                InstrumentUtils.addPrefix(runControlAddresses.getLowLimitPv(blockName)));
 	}
 	
 	public Writable<String> blockRunControlHighLimitSetter(String blockName) {
         return writeFactory.getSwitchableWritable(new StringChannel(),
-                Instrument.getInstance().getPvPrefix() + runControlAddresses.getHighLimitPv(blockName));
+                InstrumentUtils.addPrefix(runControlAddresses.getHighLimitPv(blockName)));
 	}
 	
 	public Writable<String> blockRunControlEnabledSetter(String blockName) {
         return writeFactory.getSwitchableWritable(new StringChannel(),
-                Instrument.getInstance().getPvPrefix() + runControlAddresses.getEnablePv(blockName));
+                InstrumentUtils.addPrefix(runControlAddresses.getEnablePv(blockName)));
 	}
 
 }

@@ -42,7 +42,7 @@ public class Help extends Closer implements BundleActivator {
 	
 	public Help() {
 		instance = this;
-        observables = registerForClose(new Observables());
+        observables = new Observables();
 		revision = registerForClose(new TextUpdatedObservableAdapter(observables.revision));
 		date = registerForClose(new TextUpdatedObservableAdapter(observables.date));
 	}

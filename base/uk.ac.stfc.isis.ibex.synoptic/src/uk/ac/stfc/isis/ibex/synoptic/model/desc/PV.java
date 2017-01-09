@@ -47,6 +47,23 @@ public class PV {
     }
 
     /**
+     * Constructor to create a PV based on some pre-existing values.
+     * 
+     * @param name
+     *            the name of the PV
+     * @param address
+     *            the address of the PV
+     * @param mode
+     *            the read/write mode of the PV
+     */
+    public PV(String name, String address, IO mode) {
+        setDisplayName(name);
+        setAddress(address);
+        recordType = new RecordType();
+        recordType.setIO(mode);
+    }
+
+    /**
      * Copy constructor.
      * 
      * @param other
@@ -64,10 +81,6 @@ public class PV {
 	
 	public String address() {
 		return address;
-	}
-	
-	public String fullAddress() {
-        return address;
 	}
 	
 	public RecordType recordType() {

@@ -61,7 +61,7 @@ public class TargetPropertiesView extends Composite {
 
         TargetPropertyTable properties = new TargetPropertyTable(parent, synopticViewModel);
         properties.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-        properties.showPropertyList(synopticViewModel.getFirstSelectedComponent());
+        properties.showPropertyList(synopticViewModel.getSingleSelectedComp());
 
         Label lblValue = new Label(parent, SWT.NONE);
         lblValue.setLayoutData(new GridData(SWT.RIGHT, SWT.TOP, false, false, 1, 1));

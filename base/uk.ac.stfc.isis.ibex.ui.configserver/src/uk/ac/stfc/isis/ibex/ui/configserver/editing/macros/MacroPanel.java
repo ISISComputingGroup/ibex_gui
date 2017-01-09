@@ -19,9 +19,6 @@
 
 package uk.ac.stfc.isis.ibex.ui.configserver.editing.macros;
 
-import java.awt.CompositeContext;
-import java.awt.RenderingHints;
-import java.awt.image.ColorModel;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
@@ -70,20 +67,14 @@ public class MacroPanel extends Composite implements IIocDependentPanel {
 	}
 
 	@Override
-	public CompositeContext createContext(ColorModel arg0, ColorModel arg1,
-			RenderingHints arg2) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public void setIoc(EditableIoc ioc) {
 		setMacros(ioc.getMacros(), ioc.getAvailableMacros(), ioc.isEditable());
 	}
 	
 	public static List<Macro> sortMacroCollectionByName(Collection<Macro> collection) {
 		Comparator<Macro> comparator = new Comparator<Macro>() {
-			public int compare(Macro macro1, Macro macro2) {
+			@Override
+            public int compare(Macro macro1, Macro macro2) {
 				return macro1.getName().compareTo(macro2.getName());
 			}
 		};

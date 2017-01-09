@@ -19,14 +19,13 @@
 
 package uk.ac.stfc.isis.ibex.ui.synoptic.editor;
 
-import org.eclipse.ui.IStartup;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
 /**
  * The activator class controls the plug-in life cycle.
  */
-public class Activator extends AbstractUIPlugin implements IStartup {
+public class Activator extends AbstractUIPlugin {
 
     /**
      * The plug-in ID.
@@ -62,10 +61,5 @@ public class Activator extends AbstractUIPlugin implements IStartup {
 	public static Activator getDefault() {
 		return plugin;
 	}
-
-    @Override
-    public void earlyStartup() {
-
-    }
 
 }

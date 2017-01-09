@@ -68,6 +68,5 @@ public class Goniometer extends Plugin {
 	@Override
     public void stop(BundleContext bundleContext) throws Exception {
 		Goniometer.context = null;
-		variables.close();
 	}
 }

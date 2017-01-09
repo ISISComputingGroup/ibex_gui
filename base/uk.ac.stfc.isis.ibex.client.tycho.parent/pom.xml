@@ -183,7 +183,6 @@
 		<module>../uk.ac.stfc.isis.ibex.synoptic</module>
 		<module>../uk.ac.stfc.isis.ibex.ui</module>
 		<module>../uk.ac.stfc.isis.ibex.ui.alarm</module>
-		<module>../uk.ac.stfc.isis.ibex.ui.alarm.tests</module>
 		<module>../uk.ac.stfc.isis.ibex.ui.widgets</module>
 		<module>../uk.ac.stfc.isis.ibex.ui.help</module>
 		<module>../uk.ac.stfc.isis.ibex.ui.log</module>
@@ -247,6 +246,11 @@
 		<module>../uk.ac.stfc.isis.ibex.ui.dashboard.tests</module>
 		<module>../uk.ac.stfc.isis.ibex.ui.tests</module>
 		<module>../uk.ac.stfc.isis.ibex.ui.devicescreens.tests</module>
+		<module>../uk.ac.stfc.isis.ibex.alarm.tests</module>
+		<module>../uk.ac.stfc.isis.ibex.ui.synoptic.editor.tests</module>
+		<module>../uk.ac.stfc.isis.ibex.ui.motor.tests</module>
+		<module>../uk.ac.stfc.isis.ibex.scriptgenerator.tests</module>
+		<module>../uk.ac.stfc.isis.ibex.ui.weblinks.tests</module>
 	</modules>
 </project>
 

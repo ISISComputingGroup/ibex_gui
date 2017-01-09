@@ -105,7 +105,6 @@ public class SynopticPresenter extends ModelObject {
 		navigator.addPropertyChangeListener("currentTarget", navigationListener);
 
 		updateModel();
-		navigateTo(navigator.currentTarget().name());
 	}
 
     private void updateModel() {
@@ -208,7 +207,7 @@ public class SynopticPresenter extends ModelObject {
 	}
 
 	private void displayTarget(Target currentTarget) {
-		LOG.info(currentTarget);
+        LOG.info("Displaying target: " + currentTarget);
 
 		if (currentTarget instanceof GroupedComponentTarget) {
 			displayGroupTarget(currentTarget);

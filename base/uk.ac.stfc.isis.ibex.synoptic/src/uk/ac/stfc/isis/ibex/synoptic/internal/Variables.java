@@ -27,10 +27,9 @@ import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.epics.switching.ObservableFactory;
 import uk.ac.stfc.isis.ibex.epics.switching.OnInstrumentSwitch;
 import uk.ac.stfc.isis.ibex.epics.switching.WritableFactory;
-import uk.ac.stfc.isis.ibex.epics.writing.ForwardingWritable;
 import uk.ac.stfc.isis.ibex.epics.writing.Writable;
 import uk.ac.stfc.isis.ibex.instrument.Instrument;
-import uk.ac.stfc.isis.ibex.instrument.InstrumentVariables;
+import uk.ac.stfc.isis.ibex.instrument.InstrumentUtils;
 import uk.ac.stfc.isis.ibex.instrument.channels.CompressedCharWaveformChannel;
 import uk.ac.stfc.isis.ibex.instrument.channels.DefaultChannel;
 import uk.ac.stfc.isis.ibex.instrument.channels.DefaultChannelWithoutUnits;
@@ -43,7 +42,7 @@ import uk.ac.stfc.isis.ibex.synoptic.SynopticInfo;
  * Holds all the PVs relating to the synoptic information.
  *
  */
-public class Variables extends InstrumentVariables {
+public class Variables {
     private final WritableFactory closingWritableFactory;
     private final WritableFactory switchingWritableFactory;
     private final ObservableFactory closingObservableFactory;
@@ -58,6 +57,10 @@ public class Variables extends InstrumentVariables {
      * The name associated with the "blank" synoptic from the BlockServer.
      */
     public static final String NONE_SYNOPTIC_NAME = "-- NONE --";
+
+    /**
+     * The pv associated with the "blank" synoptic from the BlockServer.
+     */
     public static final String NONE_SYNOPTIC_PV = "__BLANK__";
 
     public final Writable<String> synopticSetter;
@@ -106,8 +109,8 @@ public class Variables extends InstrumentVariables {
         this.pvPrefix = pvPrefix;
 
         synopticSetter = writeCompressed(SYNOPTIC_ADDRESS + "SET_DETAILS");
-        synopticsDeleter = convert(writeCompressed(SYNOPTIC_ADDRESS + "DELETE"), namesToString());
-        available = convert(readCompressed(SYNOPTIC_ADDRESS + "NAMES"), toSynopticInfo());
+        synopticsDeleter = InstrumentUtils.convert(writeCompressed(SYNOPTIC_ADDRESS + "DELETE"), namesToString());
+        available = InstrumentUtils.convert(readCompressed(SYNOPTIC_ADDRESS + "NAMES"), toSynopticInfo());
         synopticSchema = readCompressed(SYNOPTIC_ADDRESS + "SCHEMA");
     }
 
@@ -123,7 +126,8 @@ public class Variables extends InstrumentVariables {
      * @return an object containing all the information about the synoptic
      */
     public <T> ForwardingObservable<T> getSynopticDescription(String synopticPV) {
-        return convert(readCompressedClosing(getFullPV(synopticPV)), new InstrumentDescriptionParser<T>());
+        return InstrumentUtils.convert(readCompressedClosing(getFullPV(synopticPV)),
+                new InstrumentDescriptionParser<T>());
 	}
 	
     // The following readers/writers are for PVs on the synoptic
@@ -172,10 +176,6 @@ public class Variables extends InstrumentVariables {
         return switchingWritableFactory.getSwitchableWritable(new CompressedCharWaveformChannel(),
                 getPvPrefix() + address);
 	}
-	
-    private <T> Writable<T> convert(Writable<String> destination, Converter<T, String> converter) {
-        return new ForwardingWritable<>(destination, converter);
-    }
 
     // Some of the synoptic PVs are common to all instruments so should be
     // switched

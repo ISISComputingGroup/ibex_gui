@@ -26,9 +26,18 @@ import org.eclipse.wb.swt.ResourceManager;
 import uk.ac.stfc.isis.ibex.ui.perspectives.BasePerspective;
 import uk.ac.stfc.isis.ibex.ui.targets.OpiTargetView;
 
+/**
+ * The perspective that shows the synoptic of the instrument.
+ * 
+ * Registers the perspective to be displayed in the list (see plugin.xml file
+ * for this package).
+ */
 public class SynopticPerspective extends BasePerspective {
 
-    public static final String ID = "uk.ac.stfc.isis.ibex.ui.synoptic.perspective"; //$NON-NLS-1$
+    /**
+     * The ID of this perspective.
+     */
+    public static final String ID = "uk.ac.stfc.isis.ibex.ui.synoptic.perspective";
 
 	@Override
 	public void createInitialLayout(IPageLayout layout) {
@@ -45,7 +54,7 @@ public class SynopticPerspective extends BasePerspective {
 
 	@Override
 	public String name() {
-		return "Synoptic";
+        return "S&ynoptic";
 	}
 
 	@Override

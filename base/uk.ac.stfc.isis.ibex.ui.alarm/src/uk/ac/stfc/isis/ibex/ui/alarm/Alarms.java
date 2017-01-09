@@ -20,27 +20,29 @@
 package uk.ac.stfc.isis.ibex.ui.alarm;
 
 import org.eclipse.jface.resource.ImageDescriptor;
-import org.eclipse.ui.IPerspectiveDescriptor;
-import org.eclipse.ui.IWorkbenchPage;
-import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
-import uk.ac.stfc.isis.ibex.alarm.Alarm;
-
 /**
- * The activator class controls the plug-in life cycle.
+ * The activator class controls the plug-in life cycle, this plugin shows the
+ * alarm perspective.
  */
 public class Alarms extends AbstractUIPlugin {
     
     /**
      * The plug-in ID.
      */
-	public static final String PLUGIN_ID = "uk.ac.stfc.isis.ibex.ui.test"; //$NON-NLS-1$
+    public static final String PLUGIN_ID = "uk.ac.stfc.isis.ibex.ui.alarm"; // $NON-NLS-1$
 
-	// The shared instance
+    /** The shared instance. */
 	private static Alarms plugin;
-		
+    
+    /**
+     * Instantiates a new alarms; call getInstance instead in most cases.
+     */
+    public Alarms() {
+    }
+
 	/*
 	 * (non-Javadoc)
 	 * @see org.eclipse.ui.plugin.AbstractUIPlugin#start(org.osgi.framework.BundleContext)
@@ -69,30 +71,12 @@ public class Alarms extends AbstractUIPlugin {
 	public static Alarms getDefault() {
 		return plugin;
 	}
-	
-    /**
-     * Close alarm views, these need to be restarted on instrument change.
-     */
-    public void closeAll() {
-        IPerspectiveDescriptor descriptor = PlatformUI.getWorkbench().getPerspectiveRegistry()
-                .findPerspectiveWithId(AlarmPerspective.ID);
-        IWorkbenchPage wp = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
-        wp.closePerspective(descriptor, true, true);
-
-        // Must release alarm, else it will be held on to and will not switch!
-        Alarm.getDefault().releaseAlarm();
-    }
-
-    public void updateAlarmModel() {
-        Alarm.getDefault().updateAlarmModel();
-    }
 
 	/**
      * Returns an image descriptor for the image file at the given plug-in
      * relative path.
      *
-     * @param path
-     *            the path
+     * @param path the path
      * @return the image descriptor
      */
 	public static ImageDescriptor getImageDescriptor(String path) {
