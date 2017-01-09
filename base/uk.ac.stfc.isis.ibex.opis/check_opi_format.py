@@ -119,7 +119,7 @@ class CheckOpiFormat:
 
             if capitalisation_error:
                 err = "Error on line " + str(name.sourceline) + ": " + etree.tostring(name) \
-                      + "\n... Grouping container titles should be in 'Proper Case (except prepositions)'."
+                      + "\n... Grouping container titles should be in 'Title Case'."
                 self.errors.append(err)
 
     def run(self):
