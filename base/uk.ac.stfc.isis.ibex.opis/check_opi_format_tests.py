@@ -8,11 +8,15 @@ class TestCheckOpiFormatMethods(unittest.TestCase):
     def test_that_if_a_valid_led_tag_is_parsed_it_causes_no_errors(self):
         # Arrange
         checker = CheckOpiFormat()
-        xml = '<widget typeId="org.csstudio.opibuilder.widgets.LED"><on_color><color name="ISIS_Green_LED_On" red="0" green="255" blue="0" /></on_color></widget>'
+        xml = '<widget typeId="org.csstudio.opibuilder.widgets.LED">' \
+              '<on_color>' \
+              '<color name="ISIS_Green_LED_On" red="0" green="255" blue="0" />' \
+              '</on_color>' \
+              '</widget>'
         root = etree.fromstring(xml)
 
         # Act
-        checker.check_LED_colours(root)
+        checker.check_led_colours(root)
 
         # Assert
         self.assertEqual(len(checker.errors), 0)
@@ -20,11 +24,15 @@ class TestCheckOpiFormatMethods(unittest.TestCase):
     def test_that_if_an_on_led_tag_without_a_named_colour_is_parsed_it_causes_one_error(self):
         # Arrange
         checker = CheckOpiFormat()
-        xml = '<widget typeId="org.csstudio.opibuilder.widgets.LED"><on_color><color red="0" green="255" blue="0" /></on_color></widget>'
+        xml = '<widget typeId="org.csstudio.opibuilder.widgets.LED">' \
+              '<on_color>' \
+              '<color red="0" green="255" blue="0" />' \
+              '</on_color>' \
+              '</widget>'
         root = etree.fromstring(xml)
 
         # Act
-        checker.check_LED_colours(root)
+        checker.check_led_colours(root)
 
         # Assert
         self.assertEqual(len(checker.errors), 1)
@@ -32,11 +40,15 @@ class TestCheckOpiFormatMethods(unittest.TestCase):
     def test_that_if_an_on_led_tag_with_an_incorrect_named_colour_is_parsed_it_causes_one_error(self):
         # Arrange
         checker = CheckOpiFormat()
-        xml = '<widget typeId="org.csstudio.opibuilder.widgets.LED"><on_color><color name="THIS IS MADE UP" red="0" green="255" blue="0" /></on_color></widget>'
+        xml = '<widget typeId="org.csstudio.opibuilder.widgets.LED">' \
+              '<on_color>' \
+              '<color name="THIS IS MADE UP" red="0" green="255" blue="0" />' \
+              '</on_color>' \
+              '</widget>'
         root = etree.fromstring(xml)
 
         # Act
-        checker.check_LED_colours(root)
+        checker.check_led_colours(root)
 
         # Assert
         self.assertEqual(len(checker.errors), 1)
@@ -44,11 +56,15 @@ class TestCheckOpiFormatMethods(unittest.TestCase):
     def test_that_if_an_off_led_tag_without_a_named_colour_is_parsed_it_causes_one_error(self):
         # Arrange
         checker = CheckOpiFormat()
-        xml = '<widget typeId="org.csstudio.opibuilder.widgets.LED"><off_color><color red="0" green="255" blue="0" /></off_color></widget>'
+        xml = '<widget typeId="org.csstudio.opibuilder.widgets.LED">' \
+              '<off_color>' \
+              '<color red="0" green="255" blue="0" />' \
+              '</off_color>' \
+              '</widget>'
         root = etree.fromstring(xml)
 
         # Act
-        checker.check_LED_colours(root)
+        checker.check_led_colours(root)
 
         # Assert
         self.assertEqual(len(checker.errors), 1)
@@ -56,11 +72,15 @@ class TestCheckOpiFormatMethods(unittest.TestCase):
     def test_that_if_an_off_led_tag_with_an_incorrect_named_colour_is_parsed_it_causes_one_error(self):
         # Arrange
         checker = CheckOpiFormat()
-        xml = '<widget typeId="org.csstudio.opibuilder.widgets.LED"><off_color><color name="THIS IS MADE UP" red="0" green="255" blue="0" /></off_color></widget>'
+        xml = '<widget typeId="org.csstudio.opibuilder.widgets.LED">' \
+              '<off_color>' \
+              '<color name="THIS IS MADE UP" red="0" green="255" blue="0" />' \
+              '</off_color>' \
+              '</widget>'
         root = etree.fromstring(xml)
 
         # Act
-        checker.check_LED_colours(root)
+        checker.check_led_colours(root)
 
         # Assert
         self.assertEqual(len(checker.errors), 1)
@@ -68,23 +88,275 @@ class TestCheckOpiFormatMethods(unittest.TestCase):
     def test_that_if_a_label_tag_with_a_valid_font_is_parsed_it_causes_no_errors(self):
         # Arrange
         checker = CheckOpiFormat()
-        xml = '<widget typeId="org.csstudio.opibuilder.widgets.Label"><font><opifont.name fontName="Segoe UI" height="18" style="1">ISIS_Header1_NEW</opifont.name></font></widget>'
+        xml = '<widget typeId="org.csstudio.opibuilder.widgets.Label">' \
+              '<font>' \
+              '<opifont.name fontName="Segoe UI" height="18" style="1">ISIS_Header1_NEW</opifont.name>' \
+              '</font>' \
+              '</widget>'
         root = etree.fromstring(xml)
 
         # Act
-        checker.check_LED_colours(root)
+        checker.check_opi_label_fonts(root)
 
         # Assert
         self.assertEqual(len(checker.errors), 0)
 
-    def test_that_if_a_label_tag_with_an_invalid_font_is_parsed_it_causes_one_errors(self):
+    def test_that_if_a_label_tag_with_a_valid_font_defined_in_the_fontname_attribute_is_parsed_it_causes_no_errors(self):
         # Arrange
         checker = CheckOpiFormat()
-        xml = '<widget typeId="org.csstudio.opibuilder.widgets.Label"><font><opifont.name fontName="Segoe UI" height="18" style="1">MADE UP FONT</opifont.name></font></widget>'
+        xml = '<widget typeId="org.csstudio.opibuilder.widgets.Label">' \
+              '<font>' \
+              '<opifont.name fontName="ISIS_VALID_FONT" height="18" style="1">MADE UP FONT</opifont.name>' \
+              '</font>' \
+              '</widget>'
         root = etree.fromstring(xml)
 
         # Act
-        checker.check_LED_colours(root)
+        checker.check_opi_label_fonts(root)
+
+        # Assert
+        self.assertEqual(len(checker.errors), 0)
+
+    def test_that_if_a_label_tag_with_an_invalid_font_is_parsed_it_causes_one_error(self):
+        # Arrange
+        checker = CheckOpiFormat()
+        xml = '<widget typeId="org.csstudio.opibuilder.widgets.Label">' \
+              '<font>' \
+              '<opifont.name fontName="Segoe UI" height="18" style="1">MADE UP FONT</opifont.name>' \
+              '</font>' \
+              '</widget>'
+        root = etree.fromstring(xml)
+
+        # Act
+        checker.check_opi_label_fonts(root)
+
+        # Assert
+        self.assertEqual(len(checker.errors), 1)
+
+    def test_that_if_a_plot_area_with_an_valid_background_colour_is_parsed_it_causes_no_errors(self):
+        # Arrange
+        checker = CheckOpiFormat()
+        xml = '<plot_area_background_color>' \
+              '<color name="ISIS_Something_valid" red="255" green="255" blue="255" />' \
+              '</plot_area_background_color>'
+        root = etree.fromstring(xml)
+
+        # Act
+        checker.check_plot_area_background(root)
+
+        # Assert
+        self.assertEqual(len(checker.errors), 0)
+
+    def test_that_if_a_plot_area_with_an_invalid_background_colour_is_parsed_it_causes_one_error(self):
+        # Arrange
+        checker = CheckOpiFormat()
+        xml = '<plot_area_background_color>' \
+              '<color name="not_anything_valid" red="255" green="255" blue="255" />' \
+              '</plot_area_background_color>'
+        root = etree.fromstring(xml)
+
+        # Act
+        checker.check_plot_area_background(root)
+
+        # Assert
+        self.assertEqual(len(checker.errors), 1)
+
+    def test_that_if_a_textbox_with_a_valid_background_colour_is_parsed_it_causes_no_errors(self):
+        # Arrange
+        checker = CheckOpiFormat()
+        xml = '<widget typeId="org.csstudio.opibuilder.widgets.TextInput" version="1.0">' \
+              '<background_color>' \
+              '<color name="ISIS_Textbox_Background" red="255" green="255" blue="255" />' \
+              '</background_color>' \
+              '</widget>'
+        root = etree.fromstring(xml)
+
+        # Act
+        checker.check_text_input_colors(root)
+
+        # Assert
+        self.assertEqual(len(checker.errors), 0)
+
+    def test_that_if_a_textbox_with_an_invalid_background_colour_is_parsed_it_causes_one_error(self):
+        # Arrange
+        checker = CheckOpiFormat()
+        xml = '<widget typeId="org.csstudio.opibuilder.widgets.TextInput" version="1.0">' \
+              '<background_color>' \
+              '<color name="invalid" red="255" green="255" blue="255" />' \
+              '</background_color>' \
+              '</widget>'
+        root = etree.fromstring(xml)
+
+        # Act
+        checker.check_text_input_colors(root)
+
+        # Assert
+        self.assertEqual(len(checker.errors), 1)
+
+    def test_that_if_a_textbox_with_no_named_background_colour_is_parsed_it_causes_one_error(self):
+        # Arrange
+        checker = CheckOpiFormat()
+        xml = '<widget typeId="org.csstudio.opibuilder.widgets.TextInput" version="1.0">' \
+              '<background_color>' \
+              '<color red="255" green="255" blue="255" />' \
+              '</background_color>' \
+              '</widget>'
+        root = etree.fromstring(xml)
+
+        # Act
+        checker.check_text_input_colors(root)
+
+        # Assert
+        self.assertEqual(len(checker.errors), 1)
+        
+    def test_that_if_a_textbox_with_a_valid_border_colour_is_parsed_it_causes_no_errors(self):
+        # Arrange
+        checker = CheckOpiFormat()
+        xml = '<widget typeId="org.csstudio.opibuilder.widgets.TextInput" version="1.0">' \
+              '<border_color>' \
+              '<color name="ISIS_something" red="255" green="255" blue="255" />' \
+              '</border_color>' \
+              '</widget>'
+        root = etree.fromstring(xml)
+
+        # Act
+        checker.check_text_input_colors(root)
+
+        # Assert
+        self.assertEqual(len(checker.errors), 0)
+
+    def test_that_if_a_textbox_with_an_invalid_border_colour_is_parsed_it_causes_one_error(self):
+        # Arrange
+        checker = CheckOpiFormat()
+        xml = '<widget typeId="org.csstudio.opibuilder.widgets.TextInput" version="1.0">' \
+              '<border_color>' \
+              '<color name="invalid" red="255" green="255" blue="255" />' \
+              '</border_color>' \
+              '</widget>'
+        root = etree.fromstring(xml)
+
+        # Act
+        checker.check_text_input_colors(root)
+
+        # Assert
+        self.assertEqual(len(checker.errors), 1)
+
+    def test_that_if_a_textbox_with_no_named_border_colour_is_parsed_it_causes_one_error(self):
+        # Arrange
+        checker = CheckOpiFormat()
+        xml = '<widget typeId="org.csstudio.opibuilder.widgets.TextInput" version="1.0">' \
+              '<border_color>' \
+              '<color red="255" green="255" blue="255" />' \
+              '</border_color>' \
+              '</widget>'
+        root = etree.fromstring(xml)
+
+        # Act
+        checker.check_text_input_colors(root)
+
+        # Assert
+        self.assertEqual(len(checker.errors), 1)
+
+    def test_that_if_a_textbox_with_a_valid_foreground_colour_is_parsed_it_causes_no_errors(self):
+        # Arrange
+        checker = CheckOpiFormat()
+        xml = '<widget typeId="org.csstudio.opibuilder.widgets.TextInput" version="1.0">' \
+              '<foreground_color>' \
+              '<color name="ISIS_Standard_Text" red="255" green="255" blue="255" />' \
+              '</foreground_color>' \
+              '</widget>'
+        root = etree.fromstring(xml)
+
+        # Act
+        checker.check_text_input_colors(root)
+
+        # Assert
+        self.assertEqual(len(checker.errors), 0)
+
+    def test_that_if_a_textbox_with_an_invalid_foreground_colour_is_parsed_it_causes_one_error(self):
+        # Arrange
+        checker = CheckOpiFormat()
+        xml = '<widget typeId="org.csstudio.opibuilder.widgets.TextInput" version="1.0">' \
+              '<foreground_color>' \
+              '<color name="invalid" red="255" green="255" blue="255" />' \
+              '</foreground_color>' \
+              '</widget>'
+        root = etree.fromstring(xml)
+
+        # Act
+        checker.check_text_input_colors(root)
+
+        # Assert
+        self.assertEqual(len(checker.errors), 1)
+
+    def test_that_if_a_textbox_with_no_named_foreground_colour_is_parsed_it_causes_one_error(self):
+        # Arrange
+        checker = CheckOpiFormat()
+        xml = '<widget typeId="org.csstudio.opibuilder.widgets.TextInput" version="1.0">' \
+              '<foreground_color>' \
+              '<color red="255" green="255" blue="255" />' \
+              '</foreground_color>' \
+              '</widget>'
+        root = etree.fromstring(xml)
+
+        # Act
+        checker.check_text_input_colors(root)
+
+        # Assert
+        self.assertEqual(len(checker.errors), 1)
+
+    def test_that_if_a_push_button_is_defined_within_a_grouping_container_it_causes_no_errors(self):
+        # Arrange
+        checker = CheckOpiFormat()
+        xml = '<widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0">' \
+              '<widget typeId="org.csstudio.opibuilder.widgets.NativeButton" version="1.0">' \
+              '</widget>' \
+              '</widget>'
+        root = etree.fromstring(xml)
+
+        # Act
+        checker.check_items_are_in_grouping_containers(root)
+
+        # Assert
+        self.assertEqual(len(checker.errors), 0)
+
+    def test_that_if_a_push_button_is_defined_outside_a_grouping_container_it_causes_one_error(self):
+        # Arrange
+        checker = CheckOpiFormat()
+        xml = '<widget typeId="org.csstudio.opibuilder.widgets.NativeButton" version="1.0">' \
+              '</widget>'
+        root = etree.fromstring(xml)
+
+        # Act
+        checker.check_items_are_in_grouping_containers(root)
+
+        # Assert
+        self.assertEqual(len(checker.errors), 1)
+
+    def test_that_if_an_led_is_defined_within_a_grouping_container_it_causes_no_errors(self):
+        # Arrange
+        checker = CheckOpiFormat()
+        xml = '<widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0">' \
+              '<widget typeId="org.csstudio.opibuilder.widgets.LED" version="1.0">' \
+              '</widget>' \
+              '</widget>'
+        root = etree.fromstring(xml)
+
+        # Act
+        checker.check_items_are_in_grouping_containers(root)
+
+        # Assert
+        self.assertEqual(len(checker.errors), 0)
+
+    def test_that_if_an_led_is_defined_outside_a_grouping_container_it_causes_one_error(self):
+        # Arrange
+        checker = CheckOpiFormat()
+        xml = '<widget typeId="org.csstudio.opibuilder.widgets.LED" version="1.0">' \
+              '</widget>'
+        root = etree.fromstring(xml)
+
+        # Act
+        checker.check_items_are_in_grouping_containers(root)
 
         # Assert
         self.assertEqual(len(checker.errors), 1)

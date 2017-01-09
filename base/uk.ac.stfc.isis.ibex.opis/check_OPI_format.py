@@ -21,50 +21,80 @@ class CheckOpiFormat:
                 yield filepath
 
     def check_plot_area_background(self, root):
-        for error in root.xpath("//plot_area_background_color/color[not(@name)]"):
+        for error in root.xpath("//plot_area_background_color/color[not(@name) or not(starts-with(@name, 'ISIS_'))]"):
             err = "Error on line " + str(error.sourceline) + ": " + etree.tostring(error) \
-                  + "\n--> The plot area background color wasn't the ISIS_* color scheme"
+                  + "\n... The plot area background color wasn't the ISIS_* color scheme"
             self.errors.append(err)
 
-        for error in root.xpath("//plot_area_background_color/color[not(@name)]"):
-            err = "Error on line " + str(error.sourceline) + ": " + etree.tostring(error) \
-                  + "\n--> The plot area background color wasn't the ISIS_* color scheme"
-            self.errors.append(err)
-
-    def check_OPI_label_fonts(self, root):
+    def check_opi_label_fonts(self, root):
         namelabel_xpath = "//widget[@typeId='org.csstudio.opibuilder.widgets.Label']"
 
-        for error in root.xpath(namelabel_xpath + "/font/opifont.name[not(@fontName)]"):
+        for error in root.xpath(
+                        namelabel_xpath + "/font/opifont.name[not(starts-with(., 'ISIS_')) and not(starts-with(@fontName, 'ISIS_'))]"):
             err = "Error on line " + str(error.sourceline) + ": " + etree.tostring(error) \
-                  + "\n--> The font must be an ISIS_* font"
+                  + "\n... The font must be an ISIS_* font"
             self.errors.append(err)
 
-        for error in root.xpath(namelabel_xpath + "/font/opifont.name[@fontName!='ISIS_*' and /text()!='ISIS_*']"):
-            err = "Error on line " + str(error.sourceline) + ": " + etree.tostring(error) \
-                  + "\n--> The font must be an ISIS_* font"
-            self.errors.append(err)
-
-    def check_LED_colours(self, root):
+    def check_led_colours(self, root):
         led_xpath = "//widget[@typeId='org.csstudio.opibuilder.widgets.LED']"
 
         for error in root.xpath(led_xpath + "/on_color/color[not(@name)]"):
             err = "Error on line " + str(error.sourceline) + ": " + etree.tostring(error) \
-                  + "\n--> An LED indicator didn't use a correct ISIS colour scheme when turned on."
+                  + "\n... An LED indicator didn't use a correct ISIS colour scheme when turned on."
             self.errors.append(err)
 
         for error in root.xpath(led_xpath + "/on_color/color[@name!='ISIS_Green_LED_On' and @name!='ISIS_Red_LED_On']"):
             err = "Error on line " + str(error.sourceline) + ": " + etree.tostring(error) \
-                  + "\n--> An LED indicator didn't use a correct ISIS colour scheme when turned on."
+                  + "\n... An LED indicator didn't use a correct ISIS colour scheme when turned on."
             self.errors.append(err)
 
         for error in root.xpath(led_xpath + "/off_color/color[not(@name)]"):
             err = "Error on line " + str(error.sourceline) + ": " + etree.tostring(error) \
-                  + "\n--> An LED indicator didn't use a correct ISIS colour scheme when turned off."
+                  + "\n... An LED indicator didn't use a correct ISIS colour scheme when turned off."
             self.errors.append(err)
 
-        for error in root.xpath(led_xpath + "/off_color/color[@name!='ISIS_Green_LED_Off' and @name!='ISIS_Red_LED_Off']"):
+        for error in root.xpath(
+                        led_xpath + "/off_color/color[@name!='ISIS_Green_LED_Off' and @name!='ISIS_Red_LED_Off']"):
             err = "Error on line " + str(error.sourceline) + ": " + etree.tostring(error) \
-                  + "\n--> An LED indicator didn't use a correct ISIS colour scheme when turned off."
+                  + "\n... An LED indicator didn't use a correct ISIS colour scheme when turned off."
+            self.errors.append(err)
+
+    def check_text_input_colors(self, root):
+        text_input_xpath = "//widget[@typeId='org.csstudio.opibuilder.widgets.TextInput']"
+
+        for error in root.xpath(text_input_xpath + "/background_color/color[not(@name) or @name!='ISIS_Textbox_Background']"):
+            err = "Error on line " + str(error.sourceline) + ": " + etree.tostring(error) \
+                  + "\n... A text input field didn't use ISIS_Textbox_Background as it's background color."
+            self.errors.append(err)
+
+        for error in root.xpath(
+                        text_input_xpath + "/foreground_color/color[not(@name) or @name!='ISIS_Standard_Text']"):
+            err = "Error on line " + str(error.sourceline) + ": " + etree.tostring(error) \
+                  + "\n... A text input field didn't use ISIS_Standard_Text as it's foreground color."
+            self.errors.append(err)
+
+        for error in root.xpath(
+                        text_input_xpath + "/border_color/color[not(@name) or not(starts-with(@name, 'ISIS_'))]"):
+            err = "Error on line " + str(error.sourceline) + ": " + etree.tostring(error) \
+                  + "\n... A text input field didn't use ISIS_* color as it's border color."
+            self.errors.append(err)
+
+    def check_items_are_in_grouping_containers(self, root):
+        button_xpath = \
+            "//widget[@typeId='org.csstudio.opibuilder.widgets.NativeButton' " \
+            "and not(ancestor::widget[@typeId='org.csstudio.opibuilder.widgets.groupingContainer'])]"
+        led_xpath = \
+            "//widget[@typeId='org.csstudio.opibuilder.widgets.LED' " \
+            "and not(ancestor::widget[@typeId='org.csstudio.opibuilder.widgets.groupingContainer'])]"
+
+        for error in root.xpath(button_xpath):
+            err = "Error on line " + str(error.sourceline) + ": " + etree.tostring(error) \
+                  + "\n... A button was not within a grouping container."
+            self.errors.append(err)
+
+        for error in root.xpath(led_xpath):
+            err = "Error on line " + str(error.sourceline) + ": " + etree.tostring(error) \
+                  + "\n... An LED indicator was not within a grouping container."
             self.errors.append(err)
 
     def run(self):
@@ -73,11 +103,14 @@ class CheckOpiFormat:
         build_contains_errors = False
 
         for filepath in self.file_iterator():
+
             root = self.get_tree(filepath)
 
-            self.check_LED_colours(root)
-            self.check_OPI_label_fonts(root)
+            self.check_led_colours(root)
+            self.check_opi_label_fonts(root)
             self.check_plot_area_background(root)
+            self.check_text_input_colors(root)
+            self.check_items_are_in_grouping_containers(root)
 
             if len(self.errors) > 0:
                 print "\n --------------"
@@ -94,6 +127,6 @@ class CheckOpiFormat:
         else:
             sys.exit(0)
 
-if __name__ == "__MAIN__":
+if __name__ == "__main__":
     checker = CheckOpiFormat()
-    CheckOpiFormat.run(checker)
+    checker.run()
