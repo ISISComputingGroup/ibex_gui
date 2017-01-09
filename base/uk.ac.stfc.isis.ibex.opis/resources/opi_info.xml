@@ -198,11 +198,11 @@
 			<value>
 				<type>KEPCO</type>
 				<path>kepco.opi</path>
-				<description>Description required. No properties required.</description>
+				<description>The OPI for the Kepco power supply.</description>
 				<macros>
 					<macro>
-						<name>IOC_NUM</name>
-						<description>PSU IOC Number, two digits, e.g. 01.</description>
+						<name>KEPCO</name>
+						<description>The Kepco PV name (e.g. KEPCO_01).</description>
 					</macro>
 				</macros>
 			</value>
