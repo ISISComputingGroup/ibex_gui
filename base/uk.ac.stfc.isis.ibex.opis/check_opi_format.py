@@ -106,11 +106,11 @@ class CheckOpiFormat:
             self.errors.append(err)
 
     def check_capitals_for_grouping_containers(self, root):
-        container_name_xpath = "//widget[@typeId='org.csstudio.opibuilder.widgets.groupingContainer']/name/text()"
+        container_name_xpath = "//widget[@typeId='org.csstudio.opibuilder.widgets.groupingContainer']/name"
 
         for name in root.xpath(container_name_xpath):
             capitalisation_error = False
-            words = name.split()
+            words = name.text.split()
 
             # Ignore words less than 4 characters as these are probably prepositions
             for word in words:
@@ -119,8 +119,7 @@ class CheckOpiFormat:
 
             if capitalisation_error:
                 err = "Error on line " + str(name.sourceline) + ": " + etree.tostring(name) \
-                      + "\n... Grouping container name was not capitalised properly."
-                #err = "Failed"
+                      + "\n... Grouping container titles should be in 'Proper Case (except prepositions)'."
                 self.errors.append(err)
 
     def run(self):
