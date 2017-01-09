@@ -86,6 +86,9 @@ class CheckOpiFormat:
         led_xpath = \
             "//widget[@typeId='org.csstudio.opibuilder.widgets.LED' " \
             "and not(ancestor::widget[@typeId='org.csstudio.opibuilder.widgets.groupingContainer'])]"
+        dropdown_xpath = \
+            "//widget[@typeId='org.csstudio.opibuilder.widgets.combo' " \
+            "and not(ancestor::widget[@typeId='org.csstudio.opibuilder.widgets.groupingContainer'])]"
 
         for error in root.xpath(button_xpath):
             err = "Error on line " + str(error.sourceline) + ": " + etree.tostring(error) \
@@ -96,6 +99,29 @@ class CheckOpiFormat:
             err = "Error on line " + str(error.sourceline) + ": " + etree.tostring(error) \
                   + "\n... An LED indicator was not within a grouping container."
             self.errors.append(err)
+
+        for error in root.xpath(dropdown_xpath):
+            err = "Error on line " + str(error.sourceline) + ": " + etree.tostring(error) \
+                  + "\n... An dropdown menu was not within a grouping container."
+            self.errors.append(err)
+
+    def check_capitals_for_grouping_containers(self, root):
+        container_name_xpath = "//widget[@typeId='org.csstudio.opibuilder.widgets.groupingContainer']/name/text()"
+
+        for name in root.xpath(container_name_xpath):
+            capitalisation_error = False
+            words = name.split()
+
+            # Ignore words less than 4 characters as these are probably prepositions
+            for word in words:
+                if len(word)>=4 and word.title() != word:
+                    capitalisation_error = True
+
+            if capitalisation_error:
+                err = "Error on line " + str(name.sourceline) + ": " + etree.tostring(name) \
+                      + "\n... Grouping container name was not capitalised properly."
+                #err = "Failed"
+                self.errors.append(err)
 
     def run(self):
 
@@ -111,6 +137,7 @@ class CheckOpiFormat:
             self.check_plot_area_background(root)
             self.check_text_input_colors(root)
             self.check_items_are_in_grouping_containers(root)
+            self.check_capitals_for_grouping_containers(root)
 
             if len(self.errors) > 0:
                 print "\n --------------"

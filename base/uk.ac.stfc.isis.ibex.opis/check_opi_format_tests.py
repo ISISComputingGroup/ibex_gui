@@ -361,6 +361,61 @@ class TestCheckOpiFormatMethods(unittest.TestCase):
         # Assert
         self.assertEqual(len(checker.errors), 1)
 
+    def test_that_if_a_dropdown_menu_is_defined_within_a_grouping_container_it_causes_no_errors(self):
+        # Arrange
+        checker = CheckOpiFormat()
+        xml = '<widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0">' \
+              '<widget typeId="org.csstudio.opibuilder.widgets.combo" version="1.0">' \
+              '</widget>' \
+              '</widget>'
+        root = etree.fromstring(xml)
+
+        # Act
+        checker.check_items_are_in_grouping_containers(root)
+
+        # Assert
+        self.assertEqual(len(checker.errors), 0)
+
+    def test_that_if_a_dropdown_menu_is_defined_outside_a_grouping_container_it_causes_one_error(self):
+        # Arrange
+        checker = CheckOpiFormat()
+        xml = '<widget typeId="org.csstudio.opibuilder.widgets.combo" version="1.0">' \
+              '</widget>'
+        root = etree.fromstring(xml)
+
+        # Act
+        checker.check_items_are_in_grouping_containers(root)
+
+        # Assert
+        self.assertEqual(len(checker.errors), 1)
+
+    def test_that_a_grouping_container_with_a_properly_capitalised_name_causes_no_errors(self):
+        # Arrange
+        checker = CheckOpiFormat()
+        xml = '<widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0">' \
+              '<name>This is a Group Box</name>' \
+              '</widget>'
+        root = etree.fromstring(xml)
+
+        # Act
+        checker.check_capitals_for_grouping_containers(root)
+
+        # Assert
+        self.assertEqual(len(checker.errors), 0)
+
+    def test_that_a_grouping_container_with_a_badly_capitalised_name_causes_one_error(self):
+        # Arrange
+        checker = CheckOpiFormat()
+        xml = '<widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0">' \
+              '<name>this is not capitalised properly</name>' \
+              '</widget>'
+        root = etree.fromstring(xml)
+
+        # Act
+        checker.check_capitals_for_grouping_containers(root)
+
+        # Assert
+        self.assertEqual(len(checker.errors), 1)
 
 if __name__ == '__main__':
     unittest.main()
