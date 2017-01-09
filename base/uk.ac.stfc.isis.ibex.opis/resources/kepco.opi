@@ -157,7 +157,7 @@
     <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0">
       <border_style>0</border_style>
       <tooltip></tooltip>
-      <horizontal_alignment>0</horizontal_alignment>
+      <horizontal_alignment>2</horizontal_alignment>
       <rules />
       <enabled>true</enabled>
       <wuid>-48159ee9:1567f536160:-5c7e</wuid>
@@ -182,7 +182,7 @@
       <background_color>
         <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
       </background_color>
-      <width>73</width>
+      <width>49</width>
       <x>6</x>
       <name>Label</name>
       <y>6</y>
@@ -240,7 +240,7 @@ $(pv_value)</tooltip>
         <color name="ISIS_Textbox_Background" red="255" green="255" blue="255" />
       </background_color>
       <width>90</width>
-      <x>162</x>
+      <x>138</x>
       <y>6</y>
       <maximum>1.7976931348623157E308</maximum>
       <foreground_color>
@@ -254,7 +254,7 @@ $(pv_value)</tooltip>
     <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0">
       <border_style>0</border_style>
       <tooltip></tooltip>
-      <horizontal_alignment>0</horizontal_alignment>
+      <horizontal_alignment>2</horizontal_alignment>
       <rules />
       <enabled>true</enabled>
       <wuid>-39851ceb:1596523964e:-77cb</wuid>
@@ -279,7 +279,7 @@ $(pv_value)</tooltip>
       <background_color>
         <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
       </background_color>
-      <width>73</width>
+      <width>49</width>
       <x>6</x>
       <name>Label_2</name>
       <y>36</y>
@@ -337,7 +337,7 @@ $(pv_value)</tooltip>
         <color name="ISIS_Textbox_Background" red="255" green="255" blue="255" />
       </background_color>
       <width>90</width>
-      <x>162</x>
+      <x>138</x>
       <y>36</y>
       <maximum>1.7976931348623157E308</maximum>
       <foreground_color>
@@ -388,7 +388,7 @@ $(pv_value)</tooltip>
         <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
       </background_color>
       <width>64</width>
-      <x>78</x>
+      <x>66</x>
       <name>Text Update</name>
       <y>6</y>
       <foreground_color>
@@ -439,7 +439,7 @@ $(pv_value)</tooltip>
         <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
       </background_color>
       <width>64</width>
-      <x>78</x>
+      <x>66</x>
       <name>Text Update_1</name>
       <y>36</y>
       <foreground_color>
@@ -493,7 +493,7 @@ $(pv_value)</tooltip>
     <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0">
       <border_style>0</border_style>
       <tooltip></tooltip>
-      <horizontal_alignment>0</horizontal_alignment>
+      <horizontal_alignment>2</horizontal_alignment>
       <rules />
       <enabled>true</enabled>
       <wuid>-48159ee9:1567f536160:-5c7e</wuid>
@@ -518,7 +518,7 @@ $(pv_value)</tooltip>
       <background_color>
         <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
       </background_color>
-      <width>55</width>
+      <width>49</width>
       <x>6</x>
       <name>Label</name>
       <y>6</y>
@@ -534,7 +534,7 @@ $(pv_value)</tooltip>
     <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0">
       <border_style>0</border_style>
       <tooltip></tooltip>
-      <horizontal_alignment>0</horizontal_alignment>
+      <horizontal_alignment>2</horizontal_alignment>
       <rules />
       <enabled>true</enabled>
       <wuid>-39851ceb:1596523964e:-77cb</wuid>
@@ -559,7 +559,7 @@ $(pv_value)</tooltip>
       <background_color>
         <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
       </background_color>
-      <width>55</width>
+      <width>49</width>
       <x>6</x>
       <name>Label_2</name>
       <y>36</y>
@@ -612,7 +612,7 @@ $(pv_value)</tooltip>
         <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
       </background_color>
       <width>64</width>
-      <x>72</x>
+      <x>66</x>
       <name>Text Update</name>
       <y>6</y>
       <foreground_color>
@@ -663,7 +663,7 @@ $(pv_value)</tooltip>
         <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
       </background_color>
       <width>64</width>
-      <x>72</x>
+      <x>66</x>
       <name>Text Update_1</name>
       <y>36</y>
       <foreground_color>
