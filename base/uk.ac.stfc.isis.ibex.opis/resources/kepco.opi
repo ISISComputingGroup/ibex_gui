@@ -163,7 +163,7 @@
       <wuid>-48159ee9:1567f536160:-5c7e</wuid>
       <transparent>false</transparent>
       <auto_size>false</auto_size>
-      <text>Voltage setpoint</text>
+      <text>Voltage setpoint:</text>
       <scripts />
       <height>20</height>
       <border_width>1</border_width>
@@ -260,7 +260,7 @@ $(pv_value)</tooltip>
       <wuid>-39851ceb:1596523964e:-77cb</wuid>
       <transparent>false</transparent>
       <auto_size>false</auto_size>
-      <text>Current setpoint</text>
+      <text>Current setpoint:</text>
       <scripts />
       <height>20</height>
       <border_width>1</border_width>
@@ -397,7 +397,7 @@ $(pv_value)</tooltip>
       <wuid>-48159ee9:1567f536160:-5c7e</wuid>
       <transparent>false</transparent>
       <auto_size>false</auto_size>
-      <text>Voltage</text>
+      <text>Voltage:</text>
       <scripts />
       <height>20</height>
       <border_width>1</border_width>
@@ -438,7 +438,7 @@ $(pv_value)</tooltip>
       <wuid>-39851ceb:1596523964e:-77cb</wuid>
       <transparent>false</transparent>
       <auto_size>false</auto_size>
-      <text>Current</text>
+      <text>Current:</text>
       <scripts />
       <height>20</height>
       <border_width>1</border_width>
@@ -621,7 +621,7 @@ $(pv_value)</tooltip>
       <wuid>-39851ceb:1596523964e:-7645</wuid>
       <transparent>false</transparent>
       <auto_size>false</auto_size>
-      <text>Mode</text>
+      <text>Mode:</text>
       <scripts />
       <height>20</height>
       <border_width>1</border_width>
@@ -662,7 +662,7 @@ $(pv_value)</tooltip>
       <wuid>-39851ceb:1596523964e:-763b</wuid>
       <transparent>false</transparent>
       <auto_size>false</auto_size>
-      <text>Status</text>
+      <text>Status:</text>
       <scripts />
       <height>20</height>
       <border_width>1</border_width>
