@@ -142,7 +142,7 @@
     <background_color>
       <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
     </background_color>
-    <width>313</width>
+    <width>271</width>
     <x>24</x>
     <name>Setpoint</name>
     <y>186</y>
@@ -240,7 +240,7 @@ $(pv_value)</tooltip>
         <color name="ISIS_Textbox_Background" red="255" green="255" blue="255" />
       </background_color>
       <width>90</width>
-      <x>138</x>
+      <x>150</x>
       <y>6</y>
       <maximum>1.7976931348623157E308</maximum>
       <foreground_color>
@@ -337,7 +337,7 @@ $(pv_value)</tooltip>
         <color name="ISIS_Textbox_Background" red="255" green="255" blue="255" />
       </background_color>
       <width>90</width>
-      <x>138</x>
+      <x>150</x>
       <y>36</y>
       <maximum>1.7976931348623157E308</maximum>
       <foreground_color>
@@ -387,7 +387,7 @@ $(pv_value)</tooltip>
       <background_color>
         <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
       </background_color>
-      <width>64</width>
+      <width>73</width>
       <x>66</x>
       <name>Text Update</name>
       <y>6</y>
@@ -438,7 +438,7 @@ $(pv_value)</tooltip>
       <background_color>
         <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
       </background_color>
-      <width>64</width>
+      <width>79</width>
       <x>66</x>
       <name>Text Update_1</name>
       <y>36</y>
@@ -478,8 +478,8 @@ $(pv_value)</tooltip>
     <background_color>
       <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
     </background_color>
-    <width>229</width>
-    <x>336</x>
+    <width>271</width>
+    <x>294</x>
     <name>Readings</name>
     <y>186</y>
     <foreground_color>
@@ -879,7 +879,7 @@ $(pv_value)</tooltip>
         <color name="ISIS_Textbox_Background" red="255" green="255" blue="255" />
       </background_color>
       <width>90</width>
-      <x>138</x>
+      <x>150</x>
       <name>Combo</name>
       <y>40</y>
       <foreground_color>
@@ -919,7 +919,7 @@ $(pv_value)</tooltip>
       </border_color>
       <widget_type>Button</widget_type>
       <width>90</width>
-      <x>138</x>
+      <x>150</x>
       <name>Button</name>
       <y>5</y>
       <foreground_color>
@@ -985,7 +985,7 @@ $(pv_value)</tooltip>
       <background_color>
         <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
       </background_color>
-      <width>64</width>
+      <width>79</width>
       <x>66</x>
       <name>Text Update</name>
       <y>44</y>
