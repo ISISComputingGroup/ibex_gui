@@ -16,7 +16,7 @@ class CheckOpiFormat:
 
     def file_iterator(self):
         for filename in os.listdir(self.root_directory):
-            if filename.endswith(self.file_extension):
+            if filename.endswith(self.file_extension) and not filename.endswith("template.opi"):
                 filepath = os.path.join(self.root_directory, filename)
                 yield filepath
 
@@ -122,6 +122,32 @@ class CheckOpiFormat:
                       + "\n... Grouping container titles should be in 'Title Case'."
                 self.errors.append(err)
 
+    def check_capitals_for_labels(self, root):
+        container_name_xpath = "//widget[@typeId='org.csstudio.opibuilder.widgets.Label']/text"
+
+        for name in root.xpath(container_name_xpath):
+
+            words = name.text.split()
+
+            ignore = ["$", "OPI", "PSU", "Axis", "HW" "Hz", "LED", "X", "Y"]
+            for word in words:
+                capitalisation_error = False
+                original_word = word
+
+                if word is words[0]:
+                    cased_word = word.title()
+                else:
+                    cased_word = word.lower()
+
+                if (original_word != cased_word) and not (original_word in ignore):
+                    capitalisation_error = True
+
+                if capitalisation_error:
+                    err = "Error on line " + str(name.sourceline) + ": " + etree.tostring(name) \
+                          + "\n... Labels should be in 'sentence case'." \
+                          + "\n... Expected '" + cased_word + "', but got '" + original_word + "'"
+                    self.errors.append(err)
+
     def run(self):
 
         self.errors = []
@@ -137,6 +163,7 @@ class CheckOpiFormat:
             self.check_text_input_colors(root)
             self.check_items_are_in_grouping_containers(root)
             self.check_capitals_for_grouping_containers(root)
+            self.check_capitals_for_labels(root)
 
             if len(self.errors) > 0:
                 print "\n --------------"
