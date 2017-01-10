@@ -73,6 +73,9 @@ public class ConfigureDeviceScreensPanel extends Composite {
     /** binding context. */
     private DataBindingContext bindingContext = new DataBindingContext();
 
+    /** persist this view between GUI sessions */
+    private Collection<String> persisted;
+
     /**
      * The constructor.
      * 
@@ -262,6 +265,13 @@ public class ConfigureDeviceScreensPanel extends Composite {
 
         TargetNameWidget targetSelect = new TargetNameWidget(detailsComposite, availableOPIs, viewModel);
         targetSelect.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+
+        Label lblPersistent = new Label(detailsComposite, SWT.NONE);
+        lblPersistent.setLayoutData(new GridData(SWT.RIGHT, SWT.TOP, false, false, 1, 1));
+        lblPersistent.setText("Persistent");
+
+        TargetNameWidget targetPersistent = new TargetNameWidget(detailsComposite, availableOPIs, viewModel);
+        targetPersistent.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 
         Label lblDescription = new Label(detailsComposite, SWT.NONE);
         lblDescription.setLayoutData(new GridData(SWT.RIGHT, SWT.TOP, false, false, 1, 1));
