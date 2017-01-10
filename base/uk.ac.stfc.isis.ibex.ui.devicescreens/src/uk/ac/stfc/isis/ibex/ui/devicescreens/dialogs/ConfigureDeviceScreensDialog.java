@@ -68,7 +68,7 @@ public class ConfigureDeviceScreensDialog extends TitleAreaDialog implements Mes
      * @param description the current screens description
      */
     public ConfigureDeviceScreensDialog(Shell parentShell, Collection<String> availableOPIs,
-            DeviceScreensDescription description, Collection<String> persistedOptions) {
+            DeviceScreensDescription description) {
         super(parentShell);
         setShellStyle(getShellStyle() | SWT.DIALOG_TRIM | SWT.RESIZE);
         this.availableOPIs = availableOPIs;

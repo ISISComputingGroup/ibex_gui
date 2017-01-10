@@ -81,7 +81,7 @@ public class ConfigureDeviceScreensHandler extends AbstractHandler {
     public Object execute(ExecutionEvent event) throws ExecutionException {
         ConfigureDeviceScreensDialog dialog =
                 new ConfigureDeviceScreensDialog(shell(), Opi.getDefault().descriptionsProvider().getOpiList(),
-                        getCurrent(), Opi.getDefault().descriptionsProvider().getPersistenceOptions());
+                        getCurrent());
 
         if (dialog.open() == Window.OK) {
             DeviceScreensDescription desc = dialog.getDeviceDescription();
