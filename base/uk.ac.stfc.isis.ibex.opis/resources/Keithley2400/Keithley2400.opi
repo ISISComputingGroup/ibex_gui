@@ -219,56 +219,7 @@ $(trace_0_y_pv_value)</tooltip>
     <axis_0_log_scale>false</axis_0_log_scale>
     <trace_0_x_pv_value />
     <axis_0_auto_scale_threshold>0.0</axis_0_auto_scale_threshold>
-    <rules>
-      <rule name="Trace0_visibility" prop_id="trace_0_visible" out_exp="false">
-        <exp bool_exp="pv0==0">
-          <value>false</value>
-        </exp>
-        <pv trig="true">loc://$(DID):$(LAKESHORE218):TEMP1:VISIBLE(1)</pv>
-      </rule>
-      <rule name="Trace1_visibility" prop_id="trace_1_visible" out_exp="false">
-        <exp bool_exp="pv0==0">
-          <value>false</value>
-        </exp>
-        <pv trig="true">loc://$(DID):$(LAKESHORE218):TEMP2:VISIBLE(1)</pv>
-      </rule>
-      <rule name="Trace2_visibility" prop_id="trace_2_visible" out_exp="false">
-        <exp bool_exp="pv0==0">
-          <value>false</value>
-        </exp>
-        <pv trig="true">loc://$(DID):$(LAKESHORE218):TEMP3:VISIBLE(1)</pv>
-      </rule>
-      <rule name="Trace3_visibility" prop_id="trace_3_visible" out_exp="false">
-        <exp bool_exp="pv0==0">
-          <value>false</value>
-        </exp>
-        <pv trig="true">loc://$(DID):$(LAKESHORE218):TEMP4:VISIBLE(1)</pv>
-      </rule>
-      <rule name="Trace4_visibility" prop_id="trace_4_visible" out_exp="false">
-        <exp bool_exp="pv0==0">
-          <value>false</value>
-        </exp>
-        <pv trig="true">loc://$(DID):$(LAKESHORE218):TEMP5:VISIBLE(1)</pv>
-      </rule>
-      <rule name="Trace5_visibility" prop_id="trace_5_visible" out_exp="false">
-        <exp bool_exp="pv0==0">
-          <value>false</value>
-        </exp>
-        <pv trig="true">loc://$(DID):$(LAKESHORE218):TEMP6:VISIBLE(1)</pv>
-      </rule>
-      <rule name="Trace6_visibility" prop_id="trace_6_visible" out_exp="false">
-        <exp bool_exp="pv0==0">
-          <value>false</value>
-        </exp>
-        <pv trig="true">loc://$(DID):$(LAKESHORE218):TEMP7:VISIBLE(1)</pv>
-      </rule>
-      <rule name="Trace7_visibility" prop_id="trace_7_visible" out_exp="false">
-        <exp bool_exp="pv0==0">
-          <value>false</value>
-        </exp>
-        <pv trig="true">loc://$(DID):$(LAKESHORE218):TEMP8:VISIBLE(1)</pv>
-      </rule>
-    </rules>
+    <rules />
     <axis_1_visible>true</axis_1_visible>
     <axis_2_show_grid>true</axis_2_show_grid>
     <trace_0_update_delay>100</trace_0_update_delay>
@@ -312,7 +263,7 @@ $(trace_0_y_pv_value)</tooltip>
     <trace_1_x_pv_value />
     <axis_1_minimum>0.0</axis_1_minimum>
     <title_font>
-      <fontdata fontName="Arial" height="12" style="1" />
+      <opifont.name fontName="Segoe UI" height="9" style="1">ISIS_GraphLabels_NEW</opifont.name>
     </title_font>
     <trace_0_y_pv_value />
     <trace_1_visible>true</trace_1_visible>
