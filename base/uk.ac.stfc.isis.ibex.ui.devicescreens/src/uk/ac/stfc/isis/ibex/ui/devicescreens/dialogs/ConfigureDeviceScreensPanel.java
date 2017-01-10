@@ -73,9 +73,6 @@ public class ConfigureDeviceScreensPanel extends Composite {
     /** binding context. */
     private DataBindingContext bindingContext = new DataBindingContext();
 
-    /** persist this view between GUI sessions */
-    private Collection<String> persistedOptions;
-
     /**
      * The constructor.
      * 
@@ -85,11 +82,10 @@ public class ConfigureDeviceScreensPanel extends Composite {
      * @param viewModel the view model
      */
     public ConfigureDeviceScreensPanel(Composite parent, int style, Collection<String> availableOPIs,
-            DeviceScreensDescriptionViewModel viewModel, Collection<String> persistedOptions) {
+            DeviceScreensDescriptionViewModel viewModel) {
         super(parent, style);
         this.viewModel = viewModel;
         this.availableOPIs = availableOPIs;
-        this.persistedOptions = persistedOptions;
 
         setLayout(new GridLayout(1, true));
 
