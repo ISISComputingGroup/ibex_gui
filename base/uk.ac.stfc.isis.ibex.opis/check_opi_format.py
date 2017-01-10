@@ -5,12 +5,13 @@ from lxml import etree
 
 class CheckOpiFormat:
 
-    # If any of the following are a whole word, that word won't throw any errors
-    ignorewords = ["X", "Y", "PV", "A", "B", "C"]
-
     # If a word contains any of the following, the whole word will be ignored
-    ignorecharacters = \
+    ignore = \
         ["$", "&", "#", '"', "'", "(", ")", "OPI", "PSU", "Axis", "HW" "Hz", "LED", "A:", "B:", "C:", "D:"]
+
+    # When checking capitalisation will ignore words <= this length
+    # This is to avoid
+    ignore_short_words_limit = 3
 
     def __init__(self):
         self.root_directory = r"C:\Instrument\Dev\ibex_gui\base\uk.ac.stfc.isis.ibex.opis\resources"
@@ -101,6 +102,9 @@ class CheckOpiFormat:
         dropdown_xpath = \
             "//widget[@typeId='org.csstudio.opibuilder.widgets.combo' " \
             "and not(ancestor::widget[@typeId='org.csstudio.opibuilder.widgets.groupingContainer'])]"
+        textinput_xpath = \
+            "//widget[@typeId='org.csstudio.opibuilder.widgets.TextInput' " \
+            "and not(ancestor::widget[@typeId='org.csstudio.opibuilder.widgets.groupingContainer'])]"
 
         for error in root.xpath(button_xpath):
             err = "Error on line " + str(error.sourceline) + ": " + etree.tostring(error) \
@@ -117,6 +121,11 @@ class CheckOpiFormat:
                   + "\n... An dropdown menu was not within a grouping container."
             self.errors.append(err)
 
+        for error in root.xpath(dropdown_xpath):
+            err = "Error on line " + str(error.sourceline) + ": " + etree.tostring(error) \
+                  + "\n... A text input field was not within a grouping container."
+            self.errors.append(err)
+
     def check_capitals_for_grouping_containers(self, root):
         container_name_xpath = "//widget[@typeId='org.csstudio.opibuilder.widgets.groupingContainer']/name"
 
@@ -126,8 +135,9 @@ class CheckOpiFormat:
 
             # Ignore words less than 4 characters as these are probably prepositions
             for word in words:
-                if len(word) >= 4 and word.title() != word and not (word in self.ignorewords) \
-                        and not any(s in word for s in self.ignorecharacters):
+                if len(word) > self.ignore_short_words_limit \
+                        and word.title() != word \
+                        and not any(s in word for s in self.ignore):
                     capitalisation_error = True
 
             if capitalisation_error:
@@ -152,8 +162,9 @@ class CheckOpiFormat:
                 else:
                     cased_word = word.lower()
 
-                if (original_word != cased_word) and not (original_word in self.ignorewords) \
-                        and not any(s in original_word for s in self.ignorecharacters):
+                if (original_word != cased_word) \
+                        and not any(s in original_word for s in self.ignore) \
+                        and len(original_word) > self.ignore_short_words_limit:
                     capitalisation_error = True
 
                 if capitalisation_error:
@@ -172,7 +183,7 @@ class CheckOpiFormat:
 
             # Check last character in the string is a colon
             if words[-1:] != ":" and words[-3:] != "..." and not words.isdigit() \
-                    and not any(s in words for s in self.ignorecharacters):
+                    and not any(s in words for s in self.ignore):
                 err = "Error on line " + str(name.sourceline) + ": " + etree.tostring(name) \
                       + "\n... Labels should usually have a colon at the end, unless this is a tabular layout"
                 self.errors.append(err)
