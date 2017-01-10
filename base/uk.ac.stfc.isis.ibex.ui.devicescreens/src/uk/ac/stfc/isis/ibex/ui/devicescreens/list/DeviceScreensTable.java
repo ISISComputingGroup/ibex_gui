@@ -90,11 +90,7 @@ public class DeviceScreensTable extends DataboundTable<DeviceDescription> {
         name.setLabelProvider(new DataboundCellLabelProvider<DeviceDescription>(observeProperty("persist")) {
             @Override
             protected String valueFromRow(DeviceDescription row) {
-                if (row.getPersist()) {
-                    return "True";
-                } else {
-                    return "False";
-                }
+                return row.getPersist();
             }
         });
         setSortListener(name.getColumn(), DeviceScreensComparitor.SortedOnType.NAME);
