@@ -5,6 +5,12 @@ from lxml import etree
 
 class CheckOpiFormat:
 
+    # Directory to iterate through
+    root_directory = r"C:\Instrument\Dev\ibex_gui\base\uk.ac.stfc.isis.ibex.opis\resources"
+
+    # Files ending with .opi are parsed:
+    file_extension = r".opi"
+
     # If a word contains any of the following, the whole word will be ignored
     ignore = \
         ["$", "&", "#", '"', "'", "(", ")", "OPI", "PSU", "HW", "Hz", "LED", "A:", "B:", "C:", "D:"]
@@ -14,8 +20,6 @@ class CheckOpiFormat:
     ignore_short_words_limit = 3
 
     def __init__(self):
-        self.root_directory = r"C:\Instrument\Dev\ibex_gui\base\uk.ac.stfc.isis.ibex.opis\resources"
-        self.file_extension = r".opi"
         self.errors = []
 
     @staticmethod
@@ -31,12 +35,18 @@ class CheckOpiFormat:
                 yield filepath
 
     def check_plot_area_background(self, root):
-        for error in root.xpath("//plot_area_background_color/color[not(@name) or not(starts-with(@name, 'ISIS_'))]"):
+
+        # Select a plot area
+        plot_area_xpath = "//plot_area_background_color/"
+
+        for error in root.xpath(plot_area_xpath + "color[not(@name) or not(starts-with(@name, 'ISIS_'))]"):
             err = "Error on line " + str(error.sourceline) + ": " + etree.tostring(error) \
                   + "\n... The plot area background color wasn't the ISIS_* color scheme"
             self.errors.append(err)
 
     def check_opi_label_fonts(self, root):
+
+        # Select labels
         namelabel_xpath = "//widget[@typeId='org.csstudio.opibuilder.widgets.Label']"
 
         for error in root.xpath(
@@ -47,6 +57,8 @@ class CheckOpiFormat:
             self.errors.append(err)
 
     def check_led_colours(self, root):
+
+        # Select LEDs
         led_xpath = "//widget[@typeId='org.csstudio.opibuilder.widgets.LED']"
 
         for error in root.xpath(led_xpath + "/on_color/color[not(@name)]"):
@@ -72,6 +84,8 @@ class CheckOpiFormat:
             self.errors.append(err)
 
     def check_text_input_colors(self, root):
+
+        # Select text input fields
         text_input_xpath = "//widget[@typeId='org.csstudio.opibuilder.widgets.TextInput']"
 
         for error in root.xpath(text_input_xpath + "/background_color/"
@@ -93,15 +107,23 @@ class CheckOpiFormat:
             self.errors.append(err)
 
     def check_items_are_in_grouping_containers(self, root):
+
+        # Select a push button outside a grouping container
         button_xpath = \
             "//widget[@typeId='org.csstudio.opibuilder.widgets.NativeButton' " \
             "and not(ancestor::widget[@typeId='org.csstudio.opibuilder.widgets.groupingContainer'])]"
+
+        # Select an LED outside a grouping container
         led_xpath = \
             "//widget[@typeId='org.csstudio.opibuilder.widgets.LED' " \
             "and not(ancestor::widget[@typeId='org.csstudio.opibuilder.widgets.groupingContainer'])]"
+
+        # Select a dropdown menu outside a grouping container
         dropdown_xpath = \
             "//widget[@typeId='org.csstudio.opibuilder.widgets.combo' " \
             "and not(ancestor::widget[@typeId='org.csstudio.opibuilder.widgets.groupingContainer'])]"
+
+        # Select a text input field outside a grouping container
         textinput_xpath = \
             "//widget[@typeId='org.csstudio.opibuilder.widgets.TextInput' " \
             "and not(ancestor::widget[@typeId='org.csstudio.opibuilder.widgets.groupingContainer'])]"
@@ -146,6 +168,8 @@ class CheckOpiFormat:
                 self.errors.append(err)
 
     def check_capitals_for_labels_outside_grouping_containers(self, root):
+
+        # Select a Label outside a grouping container
         textinput_xpath = \
             "//widget[@typeId='org.csstudio.opibuilder.widgets.Label' " \
             "and not(ancestor::widget[@typeId='org.csstudio.opibuilder.widgets.groupingContainer'])]/text"
@@ -154,7 +178,6 @@ class CheckOpiFormat:
             capitalisation_error = False
             words = name.text.split()
 
-            # Ignore words less than 4 characters as these are probably prepositions
             for word in words:
                 if len(word) > self.ignore_short_words_limit \
                         and word.title() != word \
@@ -167,6 +190,8 @@ class CheckOpiFormat:
                 self.errors.append(err)
 
     def check_capitals_for_labels(self, root):
+
+        # Select a Label within a grouping container
         container_name_xpath = "//widget[@typeId='org.csstudio.opibuilder.widgets.groupingContainer']" \
                                "/widget[@typeId='org.csstudio.opibuilder.widgets.Label']/text"
 
