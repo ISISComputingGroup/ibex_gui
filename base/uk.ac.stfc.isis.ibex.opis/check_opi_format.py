@@ -4,6 +4,12 @@ from lxml import etree
 
 class CheckOpiFormat:
 
+    # If any of the following are a whole word, that word won't throw any errors
+    ignorewords = ["OPI", "PSU", "Axis", "HW" "Hz", "LED", "X", "Y", "PV", "A", "B", "C"]
+
+    # If a word contains any of these characters, the whole word will be ignored
+    ignorecharacters = ["$", "&", "#", '"', "'", "("]
+
     def __init__(self):
         self.root_directory = r"C:\Instrument\Dev\ibex_gui\base\uk.ac.stfc.isis.ibex.opis\resources"
         self.file_extension = r".opi"
@@ -114,7 +120,7 @@ class CheckOpiFormat:
 
             # Ignore words less than 4 characters as these are probably prepositions
             for word in words:
-                if len(word)>=4 and word.title() != word:
+                if len(word) >= 4 and word.title() != word and not (word in self.ignorewords) and not any(s in word for s in self.ignorecharacters):
                     capitalisation_error = True
 
             if capitalisation_error:
@@ -129,12 +135,6 @@ class CheckOpiFormat:
 
             words = name.text.split()
 
-            # If any of the following are a whole word, that word won't throw any errors
-            ignorewords = ["OPI", "PSU", "Axis", "HW" "Hz", "LED", "X", "Y", "PV", "A", "B", "C"]
-
-            # If a word contains any of these characters, the whole word will be ignored
-            ignorecharacters = ["$", "&", "#",'"', "'", "("]
-
             for word in words:
                 capitalisation_error = False
                 original_word = word
@@ -144,7 +144,7 @@ class CheckOpiFormat:
                 else:
                     cased_word = word.lower()
 
-                if (original_word != cased_word) and not (original_word in ignorewords) and not any(s in original_word for s in ignorecharacters):
+                if (original_word != cased_word) and not (original_word in self.ignorewords) and not any(s in original_word for s in self.ignorecharacters):
                     capitalisation_error = True
 
                 if capitalisation_error:
@@ -152,6 +152,19 @@ class CheckOpiFormat:
                           + "\n... Labels should be in 'sentence case' " \
                             "(Expected '" + cased_word + "', but got '" + original_word + "')."
                     self.errors.append(err)
+
+    def check_colon_at_the_end_of_labels(self, root):
+        container_name_xpath = "//widget[@typeId='org.csstudio.opibuilder.widgets.Label']/text"
+
+        for name in root.xpath(container_name_xpath):
+
+            words = name.text
+
+            # Check last character in the string is a colon
+            if words[-1:] != ":" and not any(s in words for s in self.ignorecharacters):
+                err = "Error on line " + str(name.sourceline) + ": " + etree.tostring(name) \
+                      + "\n... Labels should have a colon at the end"
+                self.errors.append(err)
 
     def run(self):
 
@@ -169,6 +182,7 @@ class CheckOpiFormat:
             self.check_items_are_in_grouping_containers(root)
             self.check_capitals_for_grouping_containers(root)
             self.check_capitals_for_labels(root)
+            self.check_colon_at_the_end_of_labels(root)
 
             if len(self.errors) > 0:
                 print "\n --------------"
