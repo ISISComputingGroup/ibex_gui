@@ -6,10 +6,11 @@ from lxml import etree
 class CheckOpiFormat:
 
     # If any of the following are a whole word, that word won't throw any errors
-    ignorewords = ["OPI", "PSU", "Axis", "HW" "Hz", "LED", "X", "Y", "PV", "A", "B", "C"]
+    ignorewords = ["X", "Y", "PV", "A", "B", "C"]
 
-    # If a word contains any of these characters, the whole word will be ignored
-    ignorecharacters = ["$", "&", "#", '"', "'", "(", ")"]
+    # If a word contains any of the following, the whole word will be ignored
+    ignorecharacters = \
+        ["$", "&", "#", '"', "'", "(", ")", "OPI", "PSU", "Axis", "HW" "Hz", "LED", "A:", "B:", "C:", "D:"]
 
     def __init__(self):
         self.root_directory = r"C:\Instrument\Dev\ibex_gui\base\uk.ac.stfc.isis.ibex.opis\resources"
@@ -24,7 +25,7 @@ class CheckOpiFormat:
 
     def file_iterator(self):
         for filename in os.listdir(self.root_directory):
-            if filename.endswith(self.file_extension) and not filename.endswith("template.opi"):
+            if filename.endswith(self.file_extension):
                 filepath = os.path.join(self.root_directory, filename)
                 yield filepath
 
@@ -173,7 +174,7 @@ class CheckOpiFormat:
             if words[-1:] != ":" and words[-3:] != "..." and not words.isdigit() \
                     and not any(s in words for s in self.ignorecharacters):
                 err = "Error on line " + str(name.sourceline) + ": " + etree.tostring(name) \
-                      + "\n... Labels should have a colon at the end"
+                      + "\n... Labels should usually have a colon at the end, unless this is a tabular layout"
                 self.errors.append(err)
 
     def run(self):
