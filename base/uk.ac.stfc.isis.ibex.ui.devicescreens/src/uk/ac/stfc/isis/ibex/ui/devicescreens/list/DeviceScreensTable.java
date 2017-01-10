@@ -71,6 +71,7 @@ public class DeviceScreensTable extends DataboundTable<DeviceDescription> {
 	protected void addColumns() {
         type();
 		name();
+        persist();
 	}
 
 	private void name() {
@@ -80,6 +81,21 @@ public class DeviceScreensTable extends DataboundTable<DeviceDescription> {
             protected String valueFromRow(DeviceDescription row) {
 				return row.getName();
 			}
+        });
+        setSortListener(name.getColumn(), DeviceScreensComparitor.SortedOnType.NAME);
+    }
+
+    private void persist() {
+        TableViewerColumn name = createColumn("Persisted", 3);
+        name.setLabelProvider(new DataboundCellLabelProvider<DeviceDescription>(observeProperty("persist")) {
+            @Override
+            protected String valueFromRow(DeviceDescription row) {
+                if (row.getPersist()) {
+                    return "True";
+                } else {
+                    return "False";
+                }
+            }
         });
         setSortListener(name.getColumn(), DeviceScreensComparitor.SortedOnType.NAME);
     }
