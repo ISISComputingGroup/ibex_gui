@@ -201,7 +201,7 @@
 				<description>The OPI for the Keithley 2400 Source Meter.</description>
 				<macros>
 					<macro>
-						<name>KEITHLEY2400</name>
+						<name>KEIT2400</name>
 						<description>The Keithley 2400 PV name (e.g. KEIT2400_01).</description>
 					</macro>
 				</macros>
