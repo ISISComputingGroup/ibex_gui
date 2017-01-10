@@ -1517,7 +1517,7 @@ $(pv_value)</tooltip>
       </foreground_color>
       <actions hook="false" hook_all="false">
         <action type="OPEN_DISPLAY">
-          <path></path>
+          <path>Keithley2400.opi</path>
           <macros>
             <include_parent_macros>true</include_parent_macros>
           </macros>
@@ -1566,7 +1566,7 @@ $(pv_value)</tooltip>
       </foreground_color>
       <actions hook="false" hook_all="false">
         <action type="OPEN_DISPLAY">
-          <path></path>
+          <path>CustomInput.opi</path>
           <macros>
             <include_parent_macros>true</include_parent_macros>
           </macros>
