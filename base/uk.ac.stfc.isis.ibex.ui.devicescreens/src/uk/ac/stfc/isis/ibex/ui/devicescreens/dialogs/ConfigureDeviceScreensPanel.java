@@ -260,15 +260,15 @@ public class ConfigureDeviceScreensPanel extends Composite {
         lblTarget.setLayoutData(new GridData(SWT.RIGHT, SWT.TOP, false, false, 1, 1));
         lblTarget.setText("Target");
 
-        TargetNameWidget targetPersistent = new TargetNameWidget(detailsComposite, availableOPIs, viewModel);
-        targetPersistent.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+        TargetNameWidget targetSelect = new TargetNameWidget(detailsComposite, availableOPIs, viewModel);
+        targetSelect.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 
         Label lblPersistent = new Label(detailsComposite, SWT.NONE);
         lblPersistent.setLayoutData(new GridData(SWT.RIGHT, SWT.TOP, false, false, 1, 1));
         lblPersistent.setText("Persistent");
 
-        TargetPersistenceWidget targetSelect = new TargetPersistenceWidget(detailsComposite, viewModel);
-        targetSelect.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+        TargetPersistenceWidget targetPersistent = new TargetPersistenceWidget(detailsComposite, viewModel);
+        targetPersistent.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 
         Label lblDescription = new Label(detailsComposite, SWT.NONE);
         lblDescription.setLayoutData(new GridData(SWT.RIGHT, SWT.TOP, false, false, 1, 1));
