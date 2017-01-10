@@ -16,12 +16,8 @@
 			<value>
 				<type>ATTENUATOR</type>
 				<path>attenuator.opi</path>
-				<description>The OPI for the attenuator.</description>
-				<macros>
-                    <macro>
-						<name>Q</name>
-						<description>Description required.</description>
-					</macro>                    
+				<description>The OPI for the attenuator. No properties required.</description>
+				<macros>               
 				</macros>
 			</value>
 		</entry>
@@ -30,7 +26,7 @@
 			<value>
 				<type>BEAMSTOP</type>
 				<path>beamstop.opi</path>
-				<description>Description required. No properties required.</description>
+				<description>The OPI for the beam-stop. No properties required.</description>
 				<macros>
 				</macros>
 			</value>
@@ -40,7 +36,7 @@
 			<value>
 				<type>CAEN</type>
 				<path>HV/HVMonitorSummaryDisplay.opi</path>
-				<description>Summary Display for Caens (Maintenance of list via the button on this OPI). No properties required.</description>
+				<description>Summary display for Caens (maintenance of list via the button on this OPI). No properties required.</description>
 				<macros>
 				</macros>
 			</value>
@@ -54,23 +50,23 @@
                 <macros>		
                     <macro>		
                         <name>M</name>		
-                        <description>The monitor number.</description>		
+                        <description>The monitor number (e.g. 1).</description>		
                     </macro>						
                     <macro>		
                         <name>MA</name>		
-                        <description>The internal number for the first channel.</description>		
+                        <description>The internal number for the first channel (e.g. 1).</description>		
                     </macro>		
                     <macro>		
                         <name>MB</name>		
-                        <description>The internal number for the second channel.</description>		
+                        <description>The internal number for the second channel (e.g. 2).</description>		
                     </macro>		
                     <macro>		
                         <name>MAHVCHAN</name>		
-                        <description>CAEN HV channel for A.</description>		
+                        <description>CAEN HV channel for A (e.g. 0).</description>		
                     </macro>		
                     <macro>		
                         <name>MBHVCHAN</name>		
-                        <description>CAEN HV channel for B.</description>		
+                        <description>CAEN HV channel for B (e.g. 1).</description>		
                     </macro>		
                 </macros>
             </value>		
@@ -80,11 +76,11 @@
 			<value>
 				<type>EUROTHERM</type>
 				<path>Eurotherm.opi</path>
-				<description>The OPI for the Eurotherm controller connected to multiple Eurotherms.</description>
+				<description>The OPI for the Eurotherm crate connected to multiple Eurotherm temperature controllers.</description>
                 <macros>
 					<macro>
 						<name>EURO</name>
-						<description>The Eurotherm base name (e.g. EUROTHRM_01).</description>
+						<description>The Eurotherm PV prefix (e.g. EUROTHRM_01).</description>
 					</macro>
                 </macros>
 			</value>
@@ -98,7 +94,7 @@
 				<macros>
 					<macro>
 						<name>MERCURY</name>
-						<description>The Mercury PV name (e.g. MERCURY_01).</description>
+						<description>The Mercury PV prefix (e.g. MERCURY_01).</description>
 					</macro>
                     <macro>
 						<name>TEMP_NUM1</name>
@@ -124,20 +120,16 @@
 			<value>
 				<type>MOVINGMONITOR</type>
 				<path>inout_monitor.opi</path>
-				<description>Description required.</description>
+				<description>The OPI for a moving monitor.</description>
 				<macros>
 					<macro>
 						<name>M</name>
 						<description>The monitor number (e.g. 1).</description>
 					</macro>
-                    <macro>
-						<name>CHANNUM</name>
-						<description>The channel number (e.g. 2).</description>
-					</macro>
 					<macro>
 						<name>MM</name>
-						<description>The motor PV to point at (e.g. MOT:MTR0605).</description>
-					</macro>                    
+						<description>The motor PV relating to the motor controlling the monitor (e.g. MOT:MTR0605).</description>
+					</macro>              
 				</macros>
 			</value>
 		</entry>
@@ -146,7 +138,7 @@
 			<value>
 				<type>UNCONFIRMED</type>
 				<path>Jaws.opi</path>
-				<description>Description required.</description>
+				<description>The OPI for a Jaw set.</description>
 				<macros>
                     <macro>
 						<name>J</name>
@@ -160,7 +152,7 @@
 			<value>
 				<type>JULABO</type>
 				<path>JulaboFL300.opi</path>
-				<description>Description required. No properties required.</description>
+				<description>The OPI for the Julabo FL300 temperature controller. No properties required.</description>
 				<macros>
 				</macros>
 			</value>
@@ -170,11 +162,11 @@
 			<value>
 				<type>JULABO</type>
 				<path>JulaboFP50.opi</path>
-				<description>Description required.</description>
+				<description>The OPI for the Julabo FP50 temperature controller..</description>
 				<macros>
                     <macro>
 						<name>JULABO</name>
-						<description>The Julabo PV name (e.g. JULABO_01).</description>
+						<description>The Julabo PV prefix (e.g. JULABO_01).</description>
 					</macro>                     
 				</macros>
 			</value>
@@ -188,7 +180,7 @@
 				<macros>    
                     <macro>
 						<name>LINKAM95</name>
-						<description>The Linkam PV name (e.g. LINKAM95_01).</description>
+						<description>The Linkam 95 PV prefix (e.g. LINKAM95_01).</description>
 					</macro>              
 				</macros>
 			</value>
@@ -216,7 +208,7 @@
 				<macros>
 					<macro>
 						<name>LAKESHORE218</name>
- 						<description>The Lakeshore PV name (e.g. LKSH218_01).</description>  
+ 						<description>The Lakeshore 218 PV prefix (e.g. LKSH218_01).</description>  
 					</macro>
 				</macros>
 			</value>
@@ -230,7 +222,7 @@
 				<macros>
 					<macro>
 						<name>LAKESHORE336</name>
- 						<description>The Lakeshore PV name (e.g. LKSH336_01).</description>  
+ 						<description>The Lakeshore 336 PV prefix (e.g. LKSH336_01).</description>  
 					</macro>
 				</macros>
 			</value>
@@ -240,7 +232,7 @@
 			<value>
 				<type>CHOPPER</type>
 				<path>Mk3Chopper.opi</path>
-				<description>Description required. No properties required.</description>
+				<description>The OPI for the Mk3 chopper. No properties required.</description>
 				<macros>
 				</macros>
 			</value>
@@ -250,24 +242,12 @@
 			<value>
 				<type>MONITOR</type>
 				<path>monitor.opi</path>
-				<description>Description required.</description>
+				<description>The OPI for a fixed monitor.</description>
 				<macros>
                     <macro>
 						<name>M</name>
-						<description>Description required.</description>
-					</macro> 
-                    <macro>
-						<name>CHANNUM</name>
-						<description>Description required.</description>
-					</macro>
-                    <macro>
-						<name>N</name>
-						<description>Description required.</description>
-					</macro> 
-                    <macro>
-						<name>MM</name>
-						<description>Description required.</description>
-					</macro>                      
+						<description>The monitor number (e.g. 1).</description>
+					</macro>                     
 				</macros>
 			</value>
 		</entry>
@@ -280,11 +260,11 @@
 				<macros>
 					<macro>
 						<name>PH</name>
-						<description>The name of the device (as defined in the positions look-up file (e.g. PINHOLE))</description>
+						<description>The name of the device, as defined in the positions look-up file (e.g. PINHOLE)</description>
 					</macro>
 					<macro>
 						<name>MM</name>
-						<description>The motor PV to point at (as defined in the motionsetpoints file (e.g. MTR0605))</description>
+						<description>The motor PV to point at, as defined in the motionsetpoints file (e.g. MOT:MTR0605)</description>
 					</macro>
 				</macros>
 			</value>
@@ -326,7 +306,7 @@
 			<value>
 				<type>POLARISER</type>
 				<path>polariser.opi</path>
-				<description>Description required.  No properties required.</description>
+				<description>The OPI for the polariser. No properties required.</description>
 				<macros>
 				</macros>
 			</value>
@@ -340,7 +320,7 @@
 				<macros>
 					<macro>
 						<name>MM</name>
-						<description>The motor PV relating to the motor controlling the bench rotation (e.g. MOT:MTR0605).</description>
+						<description>The PV for the motor controlling the bench rotation (e.g. MOT:MTR0605).</description>
 					</macro>
 				</macros>
 			</value>
@@ -350,7 +330,7 @@
 			<value>
 				<type>SAMPLECHANGER</type>
 				<path>stage/sample_changer.opi</path>
-				<description>Description required. No properties required.</description>
+				<description>The OPI for the sample changer. No properties required.</description>
 				<macros>
 				</macros>
 			</value>
@@ -360,7 +340,7 @@
 			<value>
 				<type>LINEARSAMPLECHANGER</type>
 				<path>stage/linear_sample_changer.opi</path>
-				<description>Description required. No properties required.</description>
+				<description>The OPI for the linear sample changer. No properties required.</description>
 				<macros>
 				</macros>
 			</value>
@@ -380,7 +360,7 @@
 			<value>
 				<type>SAMPLESTACK</type>
 				<path>stage/sample.opi</path>
-				<description>Description required. No properties required.</description>
+				<description>The OPI for the sample stage. No properties required.</description>
 				<macros>
 				</macros>
 			</value>
@@ -390,11 +370,11 @@
 			<value>
 				<type>UNCONFIRMED</type>
 				<path>SDTEST.opi</path>
-				<description>Description required.</description>
+				<description>Software development test OPI.</description>
 				<macros>
 					<macro>
 						<name>DEV</name>
-						<description>The SDTest PV name (e.g. SDTEST_01)</description>
+						<description>The SDTest PV prefix (e.g. SDTEST_01)</description>
 					</macro>
 				</macros>
 			</value>
@@ -404,7 +384,7 @@
 			<value>
 				<type>SINGLESTAGE</type>
 				<path>single_stage.opi</path>
-				<description>Displays a single Motor along with a designated ID</description>
+				<description>The OPI displaying a single Motor along with a designated ID.</description>
 				<macros>
 					<macro>
 						<name>S</name>
@@ -412,7 +392,7 @@
 					</macro>
 					<macro>
 						<name>MM</name>
-						<description>The motor PV relating to the motor controlling the stage  (e.g. MOT:MTR0605).</description>
+						<description>The motor PV relating to the motor controlling the stage (e.g. MOT:MTR0605).</description>
 					</macro>
 				</macros>
 			</value>
@@ -422,7 +402,7 @@
 			<value>
 				<type>CHOPPER</type>
 				<path>SKFChopper.opi</path>
-				<description>GUI for the SKF G5 Controllers</description>
+				<description>The OPI for the SKF G5 chopper controllers.</description>
 				<macros>
                     <macro>
 						<name>DEFAULT_ACTIVE_TAB</name>
@@ -436,39 +416,27 @@
 			<value>
 				<type>JAWS</type>
 				<path>slit1.opi</path>
-				<description>Description required.</description>
+				<description>The OPI for a 2D set of rectangular jaws controlled by 4 motors.</description>
 				<macros>
-					<macro>
-						<name>MM</name>
-						<description>The motor PV (e.g. MOT:MTR0605).</description>
-					</macro>
-					<macro>
-						<name>JAWS</name>
-						<description>Description required.</description>
-					</macro>
-					<macro>
-						<name>M</name>
-						<description>Description required.</description>
-					</macro>
                     <macro>
 						<name>J</name>
 						<description>The Jaws PV (e.g. MOT:JAWS1).</description>
 					</macro>                    
 					<macro>
 						<name>M1</name>
-						<description>The motor PV relating to motor 1 (e.g. MOT:MTR0601).</description>
+						<description>The motor PV relating to motor 1 (e.g. MTR0601).</description>
 					</macro>
 					<macro>
 						<name>M2</name>
-						<description>The motor PV relating to motor 2 (e.g. MOT:MTR0602).</description>
+						<description>The motor PV relating to motor 2 (e.g. MTR0602).</description>
 					</macro>
 					<macro>
 						<name>M3</name>
-						<description>The motor PV relating to motor 3 (e.g. MOT:MTR0603).</description>
+						<description>The motor PV relating to motor 3 (e.g. MTR0603).</description>
 					</macro>
                     <macro>
 						<name>M4</name>
-						<description>The motor PV relating to motor 4 (e.g. MOT:MTR0604).</description>
+						<description>The motor PV relating to motor 4 (e.g. MTR0604).</description>
 					</macro>
 				</macros>
 			</value>
@@ -478,23 +446,23 @@
 			<value>
 				<type>UNCONFIRMED</type>
 				<path>slit_motors.opi</path>
-				<description>Description required.</description>
+				<description>The OPI displaying the motors of a slit.</description>
 				<macros>
 					<macro>
 						<name>M1</name>
-						<description>The motor PV relating to motor 1 (e.g. MOT:MTR0601).</description>
+						<description>The motor PV relating to motor 1 (e.g. MTR0601).</description>
 					</macro>
 					<macro>
 						<name>M2</name>
-						<description>The motor PV relating to motor 2 (e.g. MOT:MTR0602).</description>
+						<description>The motor PV relating to motor 2 (e.g. MTR0602).</description>
 					</macro>
 					<macro>
 						<name>M3</name>
-						<description>The motor PV relating to motor 3 (e.g. MOT:MTR0603).</description>
+						<description>The motor PV relating to motor 3 (e.g. MTR0603).</description>
 					</macro>
                     <macro>
 						<name>M4</name>
-						<description>The motor PV relating to motor 4 (e.g. MOT:MTR0604).</description>
+						<description>The motor PV relating to motor 4 (e.g. MTR0604).</description>
 					</macro>                
 				</macros>
 			</value>
@@ -504,11 +472,11 @@
 			<value>
 				<type>PRESSURE_GAUGE</type>
 				<path>TPG300.opi</path>
-				<description>PFEIFFER 300 Vacuum Gauge.</description>
+				<description>The OPI for the PFEIFFER 300 Vacuum Gauge.</description>
 				<macros>
                     <macro>
 						<name>TPG300</name>
-						<description>The TPG300 PV name (e.g. TPG300_01).</description>
+						<description>The TPG300 PV prefix (e.g. TPG300_01).</description>
 					</macro>                  
 				</macros>
 			</value>
@@ -518,11 +486,11 @@
 			<value>
 				<type>PRESSURE_GAUGE</type>
 				<path>TPG26x.opi</path>
-				<description>PFEIFFER 26x Vacuum Gauge.</description>
+				<description>The OPI for the PFEIFFER 26x Vacuum Gauge.</description>
 				<macros>
                     <macro>
 						<name>TPG</name>
-						<description>TPG IOC PV Prefix, e.g. TPG26X_01.</description>
+						<description>The TPG26x PV prefix (e.g. TPG26X_01).</description>
 					</macro>                  
 				</macros>
 			</value>
@@ -542,15 +510,15 @@
 			<value>
 				<type>TDK_LAMBDA_GENESYS</type>
 				<path>genesys.opi</path>
-				<description>TSK LAMBDA GENESYS PSU.</description>
+				<description>The OPI for the TDK Lambda Genesys PSU.</description>
 				<macros>
 					<macro>
 						<name>IOC_NUM</name>
-						<description>PSU IOC Number, two digits, e.g. 01.</description>
+						<description>PSU IOC Number, two digits (e.g. 01).</description>
 					</macro>
 					<macro>
 						<name>PS_NUM</name>
-						<description>Number of the unit within the IOC, e.g. 3.</description>
+						<description>Number of the unit within the IOC (e.g. 3).</description>
 					</macro>                  
 				</macros>
 			</value>
@@ -560,11 +528,11 @@
 			<value>
 				<type>DANFYSIK</type>
 				<path>danfysik.opi</path>
-				<description>DANFYSIK power supply for magnets.</description>
+				<description>The OPI for the Danfysik power supply for magnets.</description>
 				<macros>
 					<macro>
 						<name>DFKPS</name>
-						<description>The Danfysik PV name (e.g. DFKPS_01).</description>
+						<description>The Danfysik PV prefix (e.g. DFKPS_01).</description>
 					</macro>                  
 				</macros>
 			</value>
@@ -578,7 +546,7 @@
 				<macros>    
                     <macro>
 						<name>PDR2000</name>
-						<description>The MKS PDR 2000 name (e.g. PDR2000_01).</description>
+						<description>The MKS PDR 2000 PV prefix (e.g. PDR2000_01).</description>
 					</macro>               
 				</macros>
 			</value>
@@ -592,7 +560,7 @@
 				<macros>    
                     <macro>
 						<name>CRYVALVE</name>
-						<description>The cryo valve PV name (e.g. CRYVALVE_01).</description>
+						<description>The cryo valve PV prefix (e.g. CRYVALVE_01).</description>
 					</macro>  
 				</macros>
 			</value>
@@ -602,27 +570,27 @@
 			<value>
 				<type>MUON_FRONT_END</type>
 				<path>muon_front_end.opi</path>
-				<description>Muon front end momentum slits and barndoors.</description>
+				<description>The OPI for the Muon front end momentum slits and barndoors.</description>
 				<macros>
 					<macro>
 						<name>BARNDOORS</name>
-						<description>Barndoors PV prefix, e.g. MOT.</description>
+						<description>Barndoors PV prefix (e.g. MOT).</description>
 					</macro>
 					<macro>
 						<name>MM_EMU</name>
-						<description>Motor PV for EMU barndoors, e.g. MOT:MTR0101.</description>
+						<description>The motor PV relating to the EMU barndoors (e.g. MOT:MTR0101).</description>
 					</macro>
 					<macro>
-						<name>MM_MuSR</name>
-						<description>Motor PV for MuSR barndoors, e.g. MOT:MTR0102.</description>
+						<name>MM_MUSR</name>
+						<description>The motor PV relating to the MuSR barndoors (e.g. MOT:MTR0102).</description>
 					</macro>
 					<macro>
-						<name>MM_HiFi</name>
-						<description>Motor PV for HiFi barndoors, e.g. MOT:MTR0103.</description>
+						<name>MM_HIFI</name>
+						<description>The motor PV relating to the HiFi barndoors (e.g. MOT:MTR0103).</description>
 					</macro>
 					<macro>
 						<name>MM_MOMENTUM</name>
-						<description>Motor PV for momentum slits, e.g. MOT:MTR0104.</description>
+						<description>The motor PV relating to the momentum slits (e.g. MOT:MTR0104).</description>
 					</macro>
 				</macros>
 			</value>
@@ -632,11 +600,11 @@
 			<value>
 				<type>SCIMAG3D</type>
 				<path>scimag3D.opi</path>
-				<description>Scienticfic Magnetics 3D Magnet.</description>
+				<description>The OPI for the Scientific Magnetics 3D Magnet.</description>
 				<macros>
 					<macro>
 						<name>SCIMAG3D</name>
-						<description>The ioc running the magnet, e.g. SCIMAG3D_01.</description>
+						<description>The magnet PV prefix (e.g. SCIMAG3D_01).</description>
 					</macro>
 				</macros>
 			</value>
