@@ -8,7 +8,7 @@ class CheckOpiFormat:
     ignorewords = ["OPI", "PSU", "Axis", "HW" "Hz", "LED", "X", "Y", "PV", "A", "B", "C"]
 
     # If a word contains any of these characters, the whole word will be ignored
-    ignorecharacters = ["$", "&", "#", '"', "'", "("]
+    ignorecharacters = ["$", "&", "#", '"', "'", "(", ")"]
 
     def __init__(self):
         self.root_directory = r"C:\Instrument\Dev\ibex_gui\base\uk.ac.stfc.isis.ibex.opis\resources"
@@ -129,7 +129,7 @@ class CheckOpiFormat:
                 self.errors.append(err)
 
     def check_capitals_for_labels(self, root):
-        container_name_xpath = "//widget[@typeId='org.csstudio.opibuilder.widgets.Label']/text"
+        container_name_xpath = "//widget[@typeId='org.csstudio.opibuilder.widgets.groupingContainer']/widget[@typeId='org.csstudio.opibuilder.widgets.Label']/text"
 
         for name in root.xpath(container_name_xpath):
 
@@ -154,14 +154,14 @@ class CheckOpiFormat:
                     self.errors.append(err)
 
     def check_colon_at_the_end_of_labels(self, root):
-        container_name_xpath = "//widget[@typeId='org.csstudio.opibuilder.widgets.Label']/text"
+        container_name_xpath = "//widget[@typeId='org.csstudio.opibuilder.widgets.groupingContainer']/widget[@typeId='org.csstudio.opibuilder.widgets.Label']/text"
 
         for name in root.xpath(container_name_xpath):
 
             words = name.text
 
             # Check last character in the string is a colon
-            if words[-1:] != ":" and not any(s in words for s in self.ignorecharacters):
+            if words[-1:] != ":" and words[-3:] != "..." and not words.isdigit() and not any(s in words for s in self.ignorecharacters):
                 err = "Error on line " + str(name.sourceline) + ": " + etree.tostring(name) \
                       + "\n... Labels should have a colon at the end"
                 self.errors.append(err)

@@ -420,8 +420,10 @@ class TestCheckOpiFormatMethods(unittest.TestCase):
     def test_that_a_label_with_a_properly_capitalised_name_causes_no_errors(self):
         # Arrange
         checker = CheckOpiFormat()
-        xml = '<widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0">' \
-              '<text>Some text</text>' \
+        xml = '<widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0">' \
+              '<widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0">' \
+              '<text>Some text goes here</text>' \
+              '</widget>' \
               '</widget>'
         root = etree.fromstring(xml)
 
@@ -434,8 +436,10 @@ class TestCheckOpiFormatMethods(unittest.TestCase):
     def test_that_a_label_with_a_properly_capitalised_name_and_a_capitalised_abbreviation_causes_no_errors(self):
         # Arrange
         checker = CheckOpiFormat()
-        xml = '<widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0">' \
+        xml = '<widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0">' \
+              '<widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0">' \
               '<text>This is an OPI</text>' \
+              '</widget>' \
               '</widget>'
         root = etree.fromstring(xml)
 
@@ -449,8 +453,10 @@ class TestCheckOpiFormatMethods(unittest.TestCase):
 
         # Arrange
         checker = CheckOpiFormat()
-        xml = '<widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0">' \
+        xml = '<widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0">' \
+              '<widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0">' \
               '<text>VOLTAGE should not have been in block capitals</text>' \
+              '</widget>' \
               '</widget>'
         root = etree.fromstring(xml)
 
@@ -460,11 +466,27 @@ class TestCheckOpiFormatMethods(unittest.TestCase):
         # Assert
         self.assertEqual(len(checker.errors), 1)
 
-    def test_that_a_label_with_a_colon_at_the_end_causes_no_errors(self):
+    def test_that_a_label_outside_a_grouping_container_does_not_throw_an_error_when_it_is_in_title_case(self):
         # Arrange
         checker = CheckOpiFormat()
         xml = '<widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0">' \
+              '<text>This Is In Proper Case</text>' \
+              '</widget>'
+        root = etree.fromstring(xml)
+
+        # Act
+        checker.check_capitals_for_labels(root)
+
+        # Assert
+        self.assertEqual(len(checker.errors), 0)
+
+    def test_that_a_label_with_a_colon_at_the_end_causes_no_errors(self):
+        # Arrange
+        checker = CheckOpiFormat()
+        xml = '<widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0">' \
+              '<widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0">' \
               '<text>Voltage:</text>' \
+              '</widget>' \
               '</widget>'
         root = etree.fromstring(xml)
 
@@ -477,8 +499,10 @@ class TestCheckOpiFormatMethods(unittest.TestCase):
     def test_that_a_label_with_no_colon_at_the_end_causes_one_error(self):
         # Arrange
         checker = CheckOpiFormat()
-        xml = '<widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0">' \
+        xml = '<widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0">' \
+              '<widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0">' \
               '<text>Voltage</text>' \
+              '</widget>' \
               '</widget>'
         root = etree.fromstring(xml)
 
