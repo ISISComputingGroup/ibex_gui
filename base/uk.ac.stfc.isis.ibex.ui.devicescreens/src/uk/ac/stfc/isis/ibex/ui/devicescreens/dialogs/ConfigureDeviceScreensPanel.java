@@ -74,7 +74,7 @@ public class ConfigureDeviceScreensPanel extends Composite {
     private DataBindingContext bindingContext = new DataBindingContext();
 
     /** persist this view between GUI sessions */
-    private Collection<String> persisted;
+    private Collection<String> persistedOptions;
 
     /**
      * The constructor.
@@ -85,10 +85,11 @@ public class ConfigureDeviceScreensPanel extends Composite {
      * @param viewModel the view model
      */
     public ConfigureDeviceScreensPanel(Composite parent, int style, Collection<String> availableOPIs,
-            DeviceScreensDescriptionViewModel viewModel) {
+            DeviceScreensDescriptionViewModel viewModel, Collection<String> persistedOptions) {
         super(parent, style);
         this.viewModel = viewModel;
         this.availableOPIs = availableOPIs;
+        this.persistedOptions = persistedOptions;
 
         setLayout(new GridLayout(1, true));
 
@@ -263,15 +264,15 @@ public class ConfigureDeviceScreensPanel extends Composite {
         lblTarget.setLayoutData(new GridData(SWT.RIGHT, SWT.TOP, false, false, 1, 1));
         lblTarget.setText("Target");
 
-        TargetNameWidget targetSelect = new TargetNameWidget(detailsComposite, availableOPIs, viewModel);
-        targetSelect.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+        TargetNameWidget targetPersistent = new TargetNameWidget(detailsComposite, availableOPIs, viewModel);
+        targetPersistent.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 
         Label lblPersistent = new Label(detailsComposite, SWT.NONE);
         lblPersistent.setLayoutData(new GridData(SWT.RIGHT, SWT.TOP, false, false, 1, 1));
         lblPersistent.setText("Persistent");
 
-        TargetNameWidget targetPersistent = new TargetNameWidget(detailsComposite, availableOPIs, viewModel);
-        targetPersistent.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+        TargetPersistenceWidget targetSelect = new TargetPersistenceWidget(detailsComposite, viewModel);
+        targetSelect.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 
         Label lblDescription = new Label(detailsComposite, SWT.NONE);
         lblDescription.setLayoutData(new GridData(SWT.RIGHT, SWT.TOP, false, false, 1, 1));

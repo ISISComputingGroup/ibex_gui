@@ -105,6 +105,13 @@ public class DescriptionsProvider extends Provider {
         return availableOPIs;
 	}
 
+    public Collection<String> getPersistenceOptions() {
+        List<String> persistenceOptions = new ArrayList<String>();
+        persistenceOptions.add("Yes");
+        persistenceOptions.add("No");
+        return persistenceOptions;
+    }
+
 	@Override
 	public Path pathFromName(String name) {
 		if (!descriptions.getOpis().containsKey(name)) {

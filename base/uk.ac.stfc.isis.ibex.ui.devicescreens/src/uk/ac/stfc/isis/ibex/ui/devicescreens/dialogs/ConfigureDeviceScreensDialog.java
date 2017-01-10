@@ -57,6 +57,9 @@ public class ConfigureDeviceScreensDialog extends TitleAreaDialog implements Mes
     /** The view model. */
     private DeviceScreensDescriptionViewModel viewModel;
 
+    /** Persistence of a device screen */
+    private Collection<String> persistedOptions;
+
     /**
      * The constructor.
      * 
@@ -65,7 +68,7 @@ public class ConfigureDeviceScreensDialog extends TitleAreaDialog implements Mes
      * @param description the current screens description
      */
     public ConfigureDeviceScreensDialog(Shell parentShell, Collection<String> availableOPIs,
-            DeviceScreensDescription description) {
+            DeviceScreensDescription description, Collection<String> persistedOptions) {
         super(parentShell);
         setShellStyle(getShellStyle() | SWT.DIALOG_TRIM | SWT.RESIZE);
         this.availableOPIs = availableOPIs;
@@ -76,7 +79,7 @@ public class ConfigureDeviceScreensDialog extends TitleAreaDialog implements Mes
     @Override
     protected Control createDialogArea(Composite parent) {
         ConfigureDeviceScreensPanel editor =
-                new ConfigureDeviceScreensPanel(parent, SWT.NONE, availableOPIs, viewModel);
+                new ConfigureDeviceScreensPanel(parent, SWT.NONE, availableOPIs, viewModel, persistedOptions);
         editor.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
         setTitle(TITLE);
 
