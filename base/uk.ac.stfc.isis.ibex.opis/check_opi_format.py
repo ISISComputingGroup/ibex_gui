@@ -2,6 +2,7 @@ import os
 import sys
 from lxml import etree
 
+
 class CheckOpiFormat:
 
     # If any of the following are a whole word, that word won't throw any errors
@@ -15,7 +16,8 @@ class CheckOpiFormat:
         self.file_extension = r".opi"
         self.errors = []
 
-    def get_tree(self, filepath):
+    @staticmethod
+    def get_tree(filepath):
         with open(filepath) as opi_file:
             parser = etree.XMLParser(remove_blank_text=True)
             return etree.parse(opi_file, parser)
@@ -36,7 +38,8 @@ class CheckOpiFormat:
         namelabel_xpath = "//widget[@typeId='org.csstudio.opibuilder.widgets.Label']"
 
         for error in root.xpath(
-                        namelabel_xpath + "/font/opifont.name[not(starts-with(., 'ISIS_')) and not(starts-with(@fontName, 'ISIS_'))]"):
+                        namelabel_xpath + "/font/opifont.name[not(starts-with(., 'ISIS_')) "
+                                          "and not(starts-with(@fontName, 'ISIS_'))]"):
             err = "Error on line " + str(error.sourceline) + ": " + etree.tostring(error) \
                   + "\n... The font must be an ISIS_* font"
             self.errors.append(err)
@@ -60,7 +63,8 @@ class CheckOpiFormat:
             self.errors.append(err)
 
         for error in root.xpath(
-                        led_xpath + "/off_color/color[@name!='ISIS_Green_LED_Off' and @name!='ISIS_Red_LED_Off']"):
+                        led_xpath + "/off_color/"
+                                    "color[@name!='ISIS_Green_LED_Off' and @name!='ISIS_Red_LED_Off']"):
             err = "Error on line " + str(error.sourceline) + ": " + etree.tostring(error) \
                   + "\n... An LED indicator didn't use a correct ISIS colour scheme when turned off."
             self.errors.append(err)
@@ -68,7 +72,8 @@ class CheckOpiFormat:
     def check_text_input_colors(self, root):
         text_input_xpath = "//widget[@typeId='org.csstudio.opibuilder.widgets.TextInput']"
 
-        for error in root.xpath(text_input_xpath + "/background_color/color[not(@name) or @name!='ISIS_Textbox_Background']"):
+        for error in root.xpath(text_input_xpath + "/background_color/"
+                                                   "color[not(@name) or @name!='ISIS_Textbox_Background']"):
             err = "Error on line " + str(error.sourceline) + ": " + etree.tostring(error) \
                   + "\n... A text input field didn't use ISIS_Textbox_Background as it's background color."
             self.errors.append(err)
@@ -120,7 +125,8 @@ class CheckOpiFormat:
 
             # Ignore words less than 4 characters as these are probably prepositions
             for word in words:
-                if len(word) >= 4 and word.title() != word and not (word in self.ignorewords) and not any(s in word for s in self.ignorecharacters):
+                if len(word) >= 4 and word.title() != word and not (word in self.ignorewords) \
+                        and not any(s in word for s in self.ignorecharacters):
                     capitalisation_error = True
 
             if capitalisation_error:
@@ -129,7 +135,8 @@ class CheckOpiFormat:
                 self.errors.append(err)
 
     def check_capitals_for_labels(self, root):
-        container_name_xpath = "//widget[@typeId='org.csstudio.opibuilder.widgets.groupingContainer']/widget[@typeId='org.csstudio.opibuilder.widgets.Label']/text"
+        container_name_xpath = "//widget[@typeId='org.csstudio.opibuilder.widgets.groupingContainer']" \
+                               "/widget[@typeId='org.csstudio.opibuilder.widgets.Label']/text"
 
         for name in root.xpath(container_name_xpath):
 
@@ -144,7 +151,8 @@ class CheckOpiFormat:
                 else:
                     cased_word = word.lower()
 
-                if (original_word != cased_word) and not (original_word in self.ignorewords) and not any(s in original_word for s in self.ignorecharacters):
+                if (original_word != cased_word) and not (original_word in self.ignorewords) \
+                        and not any(s in original_word for s in self.ignorecharacters):
                     capitalisation_error = True
 
                 if capitalisation_error:
@@ -154,14 +162,16 @@ class CheckOpiFormat:
                     self.errors.append(err)
 
     def check_colon_at_the_end_of_labels(self, root):
-        container_name_xpath = "//widget[@typeId='org.csstudio.opibuilder.widgets.groupingContainer']/widget[@typeId='org.csstudio.opibuilder.widgets.Label']/text"
+        container_name_xpath = "//widget[@typeId='org.csstudio.opibuilder.widgets.groupingContainer']" \
+                               "/widget[@typeId='org.csstudio.opibuilder.widgets.Label']/text"
 
         for name in root.xpath(container_name_xpath):
 
             words = name.text
 
             # Check last character in the string is a colon
-            if words[-1:] != ":" and words[-3:] != "..." and not words.isdigit() and not any(s in words for s in self.ignorecharacters):
+            if words[-1:] != ":" and words[-3:] != "..." and not words.isdigit() \
+                    and not any(s in words for s in self.ignorecharacters):
                 err = "Error on line " + str(name.sourceline) + ": " + etree.tostring(name) \
                       + "\n... Labels should have a colon at the end"
                 self.errors.append(err)

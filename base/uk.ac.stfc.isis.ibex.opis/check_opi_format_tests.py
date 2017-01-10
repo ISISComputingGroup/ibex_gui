@@ -101,7 +101,7 @@ class TestCheckOpiFormatMethods(unittest.TestCase):
         # Assert
         self.assertEqual(len(checker.errors), 0)
 
-    def test_that_if_a_label_tag_with_a_valid_font_defined_in_the_fontname_attribute_is_parsed_it_causes_no_errors(self):
+    def test_that_if_a_label_tag_with_a_valid_font_in_the_fontname_attribute_is_parsed_it_causes_no_errors(self):
         # Arrange
         checker = CheckOpiFormat()
         xml = '<widget typeId="org.csstudio.opibuilder.widgets.Label">' \
@@ -470,7 +470,7 @@ class TestCheckOpiFormatMethods(unittest.TestCase):
         # Arrange
         checker = CheckOpiFormat()
         xml = '<widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0">' \
-              '<text>This Is In Proper Case</text>' \
+              '<text>This Is In Proper Case And Would Normally Throw An Error</text>' \
               '</widget>'
         root = etree.fromstring(xml)
 
