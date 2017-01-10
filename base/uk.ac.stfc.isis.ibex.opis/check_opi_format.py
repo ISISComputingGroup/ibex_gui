@@ -121,7 +121,7 @@ class CheckOpiFormat:
                   + "\n... An dropdown menu was not within a grouping container."
             self.errors.append(err)
 
-        for error in root.xpath(dropdown_xpath):
+        for error in root.xpath(textinput_xpath):
             err = "Error on line " + str(error.sourceline) + ": " + etree.tostring(error) \
                   + "\n... A text input field was not within a grouping container."
             self.errors.append(err)
@@ -143,6 +143,27 @@ class CheckOpiFormat:
             if capitalisation_error:
                 err = "Error on line " + str(name.sourceline) + ": " + etree.tostring(name) \
                       + "\n... Grouping container titles should be in 'Title Case'."
+                self.errors.append(err)
+
+    def check_capitals_for_labels_outside_grouping_containers(self, root):
+        textinput_xpath = \
+            "//widget[@typeId='org.csstudio.opibuilder.widgets.Label' " \
+            "and not(ancestor::widget[@typeId='org.csstudio.opibuilder.widgets.groupingContainer'])]/text"
+
+        for name in root.xpath(textinput_xpath):
+            capitalisation_error = False
+            words = name.text.split()
+
+            # Ignore words less than 4 characters as these are probably prepositions
+            for word in words:
+                if len(word) > self.ignore_short_words_limit \
+                        and word.title() != word \
+                        and not any(s in word for s in self.ignore):
+                    capitalisation_error = True
+
+            if capitalisation_error:
+                err = "Error on line " + str(name.sourceline) + ": " + etree.tostring(name) \
+                      + "\n... Labels outside grouping containers are titles, and therefore should be 'Title Case'."
                 self.errors.append(err)
 
     def check_capitals_for_labels(self, root):
@@ -204,6 +225,7 @@ class CheckOpiFormat:
             self.check_items_are_in_grouping_containers(root)
             self.check_capitals_for_grouping_containers(root)
             self.check_capitals_for_labels(root)
+            self.check_capitals_for_labels_outside_grouping_containers(root)
             self.check_colon_at_the_end_of_labels(root)
 
             if len(self.errors) > 0:
@@ -222,5 +244,4 @@ class CheckOpiFormat:
             sys.exit(0)
 
 if __name__ == "__main__":
-    checker = CheckOpiFormat()
-    checker.run()
+    CheckOpiFormat().run()

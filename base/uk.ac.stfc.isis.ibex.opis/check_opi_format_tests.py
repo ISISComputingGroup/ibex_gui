@@ -389,6 +389,34 @@ class TestCheckOpiFormatMethods(unittest.TestCase):
         # Assert
         self.assertEqual(len(checker.errors), 1)
 
+    def test_that_if_a_textinput_is_defined_within_a_grouping_container_it_causes_no_errors(self):
+        # Arrange
+        checker = CheckOpiFormat()
+        xml = '<widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0">' \
+              '<widget typeId="org.csstudio.opibuilder.widgets.TextInput" version="1.0">' \
+              '</widget>' \
+              '</widget>'
+        root = etree.fromstring(xml)
+
+        # Act
+        checker.check_items_are_in_grouping_containers(root)
+
+        # Assert
+        self.assertEqual(len(checker.errors), 0)
+
+    def test_that_if_a_textinput_is_defined_outside_a_grouping_container_it_causes_one_error(self):
+        # Arrange
+        checker = CheckOpiFormat()
+        xml = '<widget typeId="org.csstudio.opibuilder.widgets.TextInput" version="1.0">' \
+              '</widget>'
+        root = etree.fromstring(xml)
+
+        # Act
+        checker.check_items_are_in_grouping_containers(root)
+
+        # Assert
+        self.assertEqual(len(checker.errors), 1)
+
     def test_that_a_grouping_container_with_a_properly_capitalised_name_causes_no_errors(self):
         # Arrange
         checker = CheckOpiFormat()
@@ -466,20 +494,6 @@ class TestCheckOpiFormatMethods(unittest.TestCase):
         # Assert
         self.assertEqual(len(checker.errors), 1)
 
-    def test_that_a_label_outside_a_grouping_container_does_not_throw_an_error_when_it_is_in_title_case(self):
-        # Arrange
-        checker = CheckOpiFormat()
-        xml = '<widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0">' \
-              '<text>This Is In Proper Case And Would Normally Throw An Error</text>' \
-              '</widget>'
-        root = etree.fromstring(xml)
-
-        # Act
-        checker.check_capitals_for_labels(root)
-
-        # Assert
-        self.assertEqual(len(checker.errors), 0)
-
     def test_that_a_label_with_a_colon_at_the_end_causes_no_errors(self):
         # Arrange
         checker = CheckOpiFormat()
@@ -512,6 +526,33 @@ class TestCheckOpiFormatMethods(unittest.TestCase):
         # Assert
         self.assertEqual(len(checker.errors), 1)
 
+    def test_that_if_a_label_outside_a_grouping_container_is_capitalised_in_title_case_is_causes_no_errors(self):
+        # Arrange
+        checker = CheckOpiFormat()
+        xml = '<widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0">' \
+              '<text>This Is In Proper Case And Should Not Throw An Error</text>' \
+              '</widget>'
+        root = etree.fromstring(xml)
+
+        # Act
+        checker.check_capitals_for_labels_outside_grouping_containers(root)
+
+        # Assert
+        self.assertEqual(len(checker.errors), 0)
+
+    def test_that_if_a_label_outside_a_grouping_container_is_not_capitalised_in_title_case_is_causes_one_error(self):
+        # Arrange
+        checker = CheckOpiFormat()
+        xml = '<widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0">' \
+              '<text>This is not in title case and should cause an error</text>' \
+              '</widget>'
+        root = etree.fromstring(xml)
+
+        # Act
+        checker.check_capitals_for_labels_outside_grouping_containers(root)
+
+        # Assert
+        self.assertEqual(len(checker.errors), 1)
 
 if __name__ == '__main__':
     unittest.main()
