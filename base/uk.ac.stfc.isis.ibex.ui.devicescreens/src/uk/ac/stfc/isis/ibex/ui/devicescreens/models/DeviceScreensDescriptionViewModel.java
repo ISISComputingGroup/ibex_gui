@@ -73,7 +73,7 @@ public class DeviceScreensDescriptionViewModel extends ModelObject {
      */
     private String previousDesc = null;
 
-    private String persistence;
+    private String persistence = null;
 
     /**
      * The constructor.
@@ -277,27 +277,26 @@ public class DeviceScreensDescriptionViewModel extends ModelObject {
             return persistence;
         }
 
-        System.out.println("Getting persistence");
-
         return "";
     }
 
     /**
-     * @param key
-     *            the new value to set
+     * @param persistence
+     *            the new persistence setting
      */
     public void setPersistence(String persistence) {
-        if (selectedScreen == null) {
-            return;
-        }
+        // if (selectedScreen == null) {
+        // return;
+        // }
 
         if (persistence == null) {
             persistence = "";
         }
 
-        System.out.println("Persistence was set");
-
-        this.persistence = persistence;
+        if (persistence != this.persistence) {
+            System.out.println("Persistence was set to " + persistence + " for OPI " + getCurrentName());
+            firePropertyChange("persistence", persistence, this.persistence = persistence);
+        }
     }
 
     /**
