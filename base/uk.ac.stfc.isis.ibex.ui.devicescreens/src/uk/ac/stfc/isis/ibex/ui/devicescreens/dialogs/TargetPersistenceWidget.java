@@ -80,14 +80,14 @@ public class TargetPersistenceWidget extends Composite {
      *            the parent composite
      */
     private void createControls(Composite parent) {
-        GridLayout gridLayout = new GridLayout(2, false);
+        GridLayout gridLayout = new GridLayout(3, false);
         gridLayout.marginHeight = 0;
         gridLayout.marginWidth = 0;
         setLayout(gridLayout);
 
         ComboViewer cmboPersistence = new ComboViewer(parent, SWT.READ_ONLY);
         Combo combo = cmboPersistence.getCombo();
-        combo.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
+        combo.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 3, 1));
         cmboPersistence.setContentProvider(new ArrayContentProvider());
         cmboPersistence.setInput(persistedOptions);
         cmboPersistence.getCombo().select(-1);

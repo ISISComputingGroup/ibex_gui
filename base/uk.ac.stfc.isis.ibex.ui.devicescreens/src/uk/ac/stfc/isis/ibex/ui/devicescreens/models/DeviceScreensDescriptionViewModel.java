@@ -277,6 +277,8 @@ public class DeviceScreensDescriptionViewModel extends ModelObject {
             return persistence;
         }
 
+        System.out.println("Getting persistence");
+
         return "";
     }
 
@@ -292,6 +294,8 @@ public class DeviceScreensDescriptionViewModel extends ModelObject {
         if (persistence == null) {
             persistence = "";
         }
+
+        System.out.println("Persistence was set");
 
         this.persistence = persistence;
     }
