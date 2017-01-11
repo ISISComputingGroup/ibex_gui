@@ -272,6 +272,11 @@ public class ConfigureDeviceScreensPanel extends Composite {
         Button yesButton = new Button(detailsComposite, SWT.RADIO);
         yesButton.setText("Yes");
         yesButton.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1));
+        
+        // Persistence
+        Label lblPersistent2 = new Label(detailsComposite, SWT.NONE);
+        lblPersistent2.setLayoutData(new GridData(SWT.RIGHT, SWT.TOP, false, false, 1, 1));
+        lblPersistent2.setText("Persistent bla");
 
         Button noButton = new Button(detailsComposite, SWT.RADIO);
         noButton.setText("No");
