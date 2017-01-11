@@ -256,6 +256,7 @@ public class ConfigureDeviceScreensPanel extends Composite {
         bindingContext.bindValue(WidgetProperties.enabled().observe(txtName),
                 BeanProperties.value("selectedScreen").observe(viewModel), null, enabledStrategy);
 
+        // Name of IOC
         Label lblTarget = new Label(detailsComposite, SWT.NONE);
         lblTarget.setLayoutData(new GridData(SWT.RIGHT, SWT.TOP, false, false, 1, 1));
         lblTarget.setText("Target");
@@ -263,6 +264,7 @@ public class ConfigureDeviceScreensPanel extends Composite {
         TargetNameWidget targetSelect = new TargetNameWidget(detailsComposite, availableOPIs, viewModel);
         targetSelect.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 
+        // Persistence
         Label lblPersistent = new Label(detailsComposite, SWT.NONE);
         lblPersistent.setLayoutData(new GridData(SWT.RIGHT, SWT.TOP, false, false, 1, 1));
         lblPersistent.setText("Persistent");
@@ -270,6 +272,7 @@ public class ConfigureDeviceScreensPanel extends Composite {
         TargetPersistenceWidget targetPersistent = new TargetPersistenceWidget(detailsComposite, viewModel);
         targetPersistent.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 
+        // Description
         Label lblDescription = new Label(detailsComposite, SWT.NONE);
         lblDescription.setLayoutData(new GridData(SWT.RIGHT, SWT.TOP, false, false, 1, 1));
         lblDescription.setText("Description");
