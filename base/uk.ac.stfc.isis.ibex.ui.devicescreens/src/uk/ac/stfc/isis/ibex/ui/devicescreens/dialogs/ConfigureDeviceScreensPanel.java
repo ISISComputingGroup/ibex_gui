@@ -285,7 +285,7 @@ public class ConfigureDeviceScreensPanel extends Composite {
         yesButton.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1));
 
         Button noButton = new Button(detailsComposite, SWT.RADIO);
-        noButton.setText("Only keep this device screen until IBEX is closed");
+        noButton.setText("Remove this device screen when IBEX is closed");
         noButton.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1));
     }
 
