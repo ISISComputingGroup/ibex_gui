@@ -73,6 +73,8 @@ public class DeviceScreensDescriptionViewModel extends ModelObject {
      */
     private String previousDesc = null;
 
+    private String persistence;
+
     /**
      * The constructor.
      * 
@@ -265,6 +267,33 @@ public class DeviceScreensDescriptionViewModel extends ModelObject {
 
         selectedScreen.setKey(key);
         updateCurrentKey(key);
+    }
+
+    /**
+     * @return the persistence mode
+     */
+    public String getPersistence() {
+        if (selectedScreen != null) {
+            return persistence;
+        }
+
+        return "";
+    }
+
+    /**
+     * @param key
+     *            the new value to set
+     */
+    public void setPersistence(String persistence) {
+        if (selectedScreen == null) {
+            return;
+        }
+
+        if (persistence == null) {
+            persistence = "";
+        }
+
+        this.persistence = persistence;
     }
 
     /**

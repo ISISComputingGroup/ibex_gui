@@ -101,6 +101,9 @@ public class TargetPersistenceWidget extends Composite {
 
         DataBindingContext bindingContext = new DataBindingContext();
 
+        bindingContext.bindValue(WidgetProperties.selection().observe(cmboPersistence.getCombo()),
+                BeanProperties.value("persistence").observe(viewModel), null, null);
+
         // Disable the dropdown if there is no screen selected
         Converter isScreenSelectedConverter = new IsNullConverter();
 

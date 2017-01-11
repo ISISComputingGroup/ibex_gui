@@ -256,7 +256,7 @@ public class ConfigureDeviceScreensPanel extends Composite {
         bindingContext.bindValue(WidgetProperties.enabled().observe(txtName),
                 BeanProperties.value("selectedScreen").observe(viewModel), null, enabledStrategy);
 
-        // Name of IOC
+        // Target of IOC
         Label lblTarget = new Label(detailsComposite, SWT.NONE);
         lblTarget.setLayoutData(new GridData(SWT.RIGHT, SWT.TOP, false, false, 1, 1));
         lblTarget.setText("Target");
