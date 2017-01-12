@@ -285,9 +285,6 @@ public class DeviceScreensDescriptionViewModel extends ModelObject {
      *            the new persistence setting
      */
     public void setPersistence(String persistence) {
-        // if (selectedScreen == null) {
-        // return;
-        // }
 
         if (persistence == null) {
             persistence = "";
