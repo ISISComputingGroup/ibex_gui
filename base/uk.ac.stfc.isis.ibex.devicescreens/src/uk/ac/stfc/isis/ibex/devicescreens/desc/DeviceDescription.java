@@ -53,7 +53,7 @@ public class DeviceDescription extends ModelObject {
     private String type;
 
     /** */
-    private String persistence = "Hi yes ok";
+    private String persistence = "Persistence setting";
 
     /** The properties that have been set. */
     @XmlElement(name = "properties", type = PropertiesDescription.class)
@@ -109,12 +109,12 @@ public class DeviceDescription extends ModelObject {
     }
 
     public String getPersistence() {
-        System.out.println("DeviceDescription:getPersistence");
+        System.out.println("DEBUG 2");
         return persistence;
     }
 
     public void setPersistence(String persistence) {
-        System.out.println("DeviceDescription:setPersistence");
+        System.out.println("DEBUG 3");
         firePropertyChange("persistence", this.persistence, this.persistence = persistence);
     }
 
