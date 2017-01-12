@@ -72,7 +72,7 @@ class CheckOpiFormat:
         error_message = "An LED indicator didn't use a correct ISIS colour scheme when turned on."
         self.check_condition(root, xpath + condition, error_message)
 
-        condition = "/off_color/color[@name!='ISIS_Green_LED_Off' and @name!='ISIS_Red_LED_Off']"
+        condition = "/off_color/color[not(@name)]"
         error_message = "An LED indicator didn't use a correct ISIS colour scheme when turned off."
         self.check_condition(root, xpath + condition, error_message)
 
