@@ -287,6 +287,7 @@ public class ConfigureDeviceScreensPanel extends Composite {
             @Override
             public void widgetSelected(SelectionEvent e) {
                 viewModel.setPersistence("Yes");
+                devicesViewer.refresh();
             }
         });
 
@@ -297,6 +298,7 @@ public class ConfigureDeviceScreensPanel extends Composite {
             @Override
             public void widgetSelected(SelectionEvent e) {
                 viewModel.setPersistence("No");
+                devicesViewer.refresh();
             }
         });
     }

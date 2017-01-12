@@ -296,7 +296,7 @@ public class DeviceScreensDescriptionViewModel extends ModelObject {
 
         if (persistence != this.persistence) {
             System.out.println("Persistence was set to " + persistence + " for OPI " + getCurrentName());
-            firePropertyChange("persistence", persistence, this.persistence = persistence);
+            firePropertyChange("persistence", this.persistence, this.persistence = persistence);
         }
     }
 
@@ -464,9 +464,12 @@ public class DeviceScreensDescriptionViewModel extends ModelObject {
 
         for (DeviceDescriptionWrapper d : devices) {
             DeviceDescription device = new DeviceDescription();
+
             device.setName(d.getName());
             device.setKey(d.getKey());
             device.setType(d.getType());
+            device.setPersistence(d.getPersistence());
+
             for (PropertyDescription p : d.getProperties()) {
                 // Only add the filled in ones
                 if (p.getValue() != "") {

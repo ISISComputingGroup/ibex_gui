@@ -60,6 +60,8 @@ public class DeviceDescriptionWrapper {
     /** The OPI description for the current key. */
     private OpiDescription opi = null;
 
+    private String persistence = null;
+
     /**
      * The constructor.
      * 
@@ -208,6 +210,18 @@ public class DeviceDescriptionWrapper {
     @Override
     public String toString() {
         return name;
+    }
+
+    /**
+     * @return
+     */
+    public String getPersistence() {
+        System.out.println("DEBUG 6");
+        return persistence;
+    }
+
+    public void setPersistence(String persistence) {
+        this.persistence = persistence;
     }
 
 }
