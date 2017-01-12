@@ -461,6 +461,8 @@ class TestCheckOpiFormatMethods(unittest.TestCase):
         # Act
         self.checker.check_capitals_for_labels(root)
 
+        print self.checker.errors
+
         # Assert
         self.assertEqual(len(self.checker.errors), 0)
 

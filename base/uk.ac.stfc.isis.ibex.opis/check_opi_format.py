@@ -40,6 +40,35 @@ class CheckOpiFormat:
                 + "\n... " + error_message
             self.errors.append(err)
 
+    def check_title_case(self, root, xpath, error_message):
+        for name in root.xpath(xpath):
+            capitalisation_error = False
+            words = name.text.split()
+
+            # Ignore words less than 4 characters as these are probably prepositions
+            for word in words:
+                if len(word) > self.ignore_short_words_limit \
+                        and word.title() != word \
+                        and not any(s in word for s in self.ignore):
+                    capitalisation_error = True
+
+            if capitalisation_error:
+                err = "Error on line " + str(name.sourceline) + ": " + etree.tostring(name) \
+                      + "\n... " + error_message
+                self.errors.append(err)
+
+    def check_sentence_case(self, root, xpath, error_message):
+
+        for name in root.xpath(xpath):
+            words = name.text
+
+            # Check last character in the string is a colon
+            if words[-1:] != ":" and words[-3:] != "..." and not words.isdigit() \
+                    and not any(s in words for s in self.ignore):
+                err = "Error on line " + str(name.sourceline) + ": " + etree.tostring(name) \
+                      + "\n... " + error_message
+                self.errors.append(err)
+
     def check_plot_area_background(self, root):
 
         # Select a plot area
@@ -123,89 +152,42 @@ class CheckOpiFormat:
         self.check_condition(root, xpath, error_message)
 
     def check_capitals_for_grouping_containers(self, root):
-        container_name_xpath = "//widget[@typeId='org.csstudio.opibuilder.widgets.groupingContainer']/name"
+        xpath = "//widget[@typeId='org.csstudio.opibuilder.widgets.groupingContainer']/name"
+        error_message = "Grouping container titles should be in 'Title Case'."
 
-        for name in root.xpath(container_name_xpath):
-            capitalisation_error = False
-            words = name.text.split()
-
-            # Ignore words less than 4 characters as these are probably prepositions
-            for word in words:
-                if len(word) > self.ignore_short_words_limit \
-                        and word.title() != word \
-                        and not any(s in word for s in self.ignore):
-                    capitalisation_error = True
-
-            if capitalisation_error:
-                err = "Error on line " + str(name.sourceline) + ": " + etree.tostring(name) \
-                      + "\n... Grouping container titles should be in 'Title Case'."
-                self.errors.append(err)
+        self.check_title_case(root, xpath, error_message)
 
     def check_capitals_for_labels_outside_grouping_containers(self, root):
 
         # Select a Label outside a grouping container
-        textinput_xpath = \
+        xpath = \
             "//widget[@typeId='org.csstudio.opibuilder.widgets.Label' " \
             "and not(ancestor::widget[@typeId='org.csstudio.opibuilder.widgets.groupingContainer'])]/text"
 
-        for name in root.xpath(textinput_xpath):
-            capitalisation_error = False
-            words = name.text.split()
-
-            for word in words:
-                if len(word) > self.ignore_short_words_limit \
-                        and word.title() != word \
-                        and not any(s in word for s in self.ignore):
-                    capitalisation_error = True
-
-            if capitalisation_error:
-                err = "Error on line " + str(name.sourceline) + ": " + etree.tostring(name) \
-                      + "\n... Labels outside grouping containers are titles, and therefore should be 'Title Case'."
-                self.errors.append(err)
+        error_message = "Labels outside grouping containers are titles, and therefore should be 'Title Case'."
+        self.check_title_case(root, xpath, error_message)
 
     def check_capitals_for_labels(self, root):
 
         # Select a Label within a grouping container
-        container_name_xpath = "//widget[@typeId='org.csstudio.opibuilder.widgets.groupingContainer']" \
-                               "/widget[@typeId='org.csstudio.opibuilder.widgets.Label']/text"
+        xpath = "//widget[@typeId='org.csstudio.opibuilder.widgets.groupingContainer']" \
+                "/widget[@typeId='org.csstudio.opibuilder.widgets.Label']/text"
 
-        for name in root.xpath(container_name_xpath):
-
-            words = name.text.split()
-
-            for word in words:
-                capitalisation_error = False
-                original_word = word
-
-                if word is words[0]:
-                    cased_word = word.title()
-                else:
-                    cased_word = word.lower()
-
-                if (original_word != cased_word) \
-                        and not any(s in original_word for s in self.ignore) \
-                        and len(original_word) > self.ignore_short_words_limit:
-                    capitalisation_error = True
-
-                if capitalisation_error:
-                    err = "Error on line " + str(name.sourceline) + ": " + etree.tostring(name) \
-                          + "\n... Labels should be in 'sentence case' " \
-                            "(Expected '" + cased_word + "', but got '" + original_word + "')."
-                    self.errors.append(err)
+        error_message = "Labels should be in 'sentence case'"
+        self.check_sentence_case(root, xpath, error_message)
 
     def check_colon_at_the_end_of_labels(self, root):
         container_name_xpath = "//widget[@typeId='org.csstudio.opibuilder.widgets.groupingContainer']" \
-                               "/widget[@typeId='org.csstudio.opibuilder.widgets.Label']/text"
+                             "/widget[@typeId='org.csstudio.opibuilder.widgets.Label']/text"
 
         for name in root.xpath(container_name_xpath):
-
             words = name.text
 
-            # Check last character in the string is a colon
-            if words[-1:] != ":" and words[-3:] != "..." and not words.isdigit() \
-                    and not any(s in words for s in self.ignore):
+        # Check last character in the string is a colon
+        if words[-1:] != ":" and words[-3:] != "..." and not words.isdigit() \
+            and not any(s in words for s in self.ignore):
                 err = "Error on line " + str(name.sourceline) + ": " + etree.tostring(name) \
-                      + "\n... Labels should usually have a colon at the end, unless this is a tabular layout"
+                    + "\n... Labels should usually have a colon at the end, unless this is a tabular layout"
                 self.errors.append(err)
 
     def run(self):
