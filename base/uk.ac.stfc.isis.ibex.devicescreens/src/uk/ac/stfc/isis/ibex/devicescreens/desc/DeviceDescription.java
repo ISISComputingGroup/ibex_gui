@@ -53,7 +53,7 @@ public class DeviceDescription extends ModelObject {
     private String type;
 
     /** */
-    private String persistence = "Persistence setting";
+    private String persistence = "";
 
     /** The properties that have been set. */
     @XmlElement(name = "properties", type = PropertiesDescription.class)

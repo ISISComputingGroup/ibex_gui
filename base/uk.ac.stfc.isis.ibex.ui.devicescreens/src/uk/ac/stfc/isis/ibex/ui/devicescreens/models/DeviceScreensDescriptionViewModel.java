@@ -140,10 +140,12 @@ public class DeviceScreensDescriptionViewModel extends ModelObject {
             updateCurrentName(selectedScreen.getName());
             updateCurrentKey(selectedScreen.getKey());
             updateCurrentDescription();
+            updateCurrentPersistence(selectedScreen.getPersistence());
         } else {
             updateCurrentName("");
             updateCurrentKey("");
             updateCurrentDescription();
+            updateCurrentPersistence("");
         }
 
         // Clear out the stored property information
@@ -243,6 +245,46 @@ public class DeviceScreensDescriptionViewModel extends ModelObject {
     }
 
     /**
+     * @return the current persistence setting
+     */
+    public String getCurrentPersistence() {
+        if (selectedScreen != null) {
+            return selectedScreen.getPersistence();
+        }
+
+        return "";
+    }
+
+    /**
+     * @param key the new value to set
+     */
+    public void setCurrentPersistence(String persistence) {
+        if (selectedScreen == null) {
+            return;
+        }
+
+        if (persistence == null) {
+            persistence = "";
+        }
+
+        selectedScreen.setPersistence(persistence);
+        updateCurrentPersistence(persistence);
+    }
+
+    /**
+     * Update the current key value and raise a change event.
+     * 
+     * @param newKey
+     *            the new key
+     */
+    private void updateCurrentPersistence(String persistence) {
+        firePropertyChange("currentPersistence", this.persistence, this.persistence = persistence);
+        // Must update to the corresponding description
+        updateCurrentDescription();
+        checkScreensValid();
+    }
+
+    /**
      * @return the current key
      */
     public String getCurrentKey() {
@@ -254,7 +296,8 @@ public class DeviceScreensDescriptionViewModel extends ModelObject {
     }
 
     /**
-     * @param key the new value to set
+     * @param key
+     *            the new value to set
      */
     public void setCurrentKey(String key) {
         if (selectedScreen == null) {
@@ -268,6 +311,7 @@ public class DeviceScreensDescriptionViewModel extends ModelObject {
         selectedScreen.setKey(key);
         updateCurrentKey(key);
     }
+
 
     /**
      * @return the persistence mode
