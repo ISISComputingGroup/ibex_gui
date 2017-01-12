@@ -114,7 +114,7 @@ public class DeviceDescription extends ModelObject {
     }
 
     public void setPersistence(String persistence) {
-        System.out.println("DEBUG 3");
+        System.out.println("DEBUG 3 (persistence set to " + persistence + ")");
         firePropertyChange("persistence", this.persistence, this.persistence = persistence);
     }
 

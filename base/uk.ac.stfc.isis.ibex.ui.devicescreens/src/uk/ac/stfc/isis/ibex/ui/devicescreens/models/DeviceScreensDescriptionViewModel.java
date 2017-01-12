@@ -248,6 +248,7 @@ public class DeviceScreensDescriptionViewModel extends ModelObject {
      * @return the current persistence setting
      */
     public String getCurrentPersistence() {
+        System.out.println("DEBUG 10");
         if (selectedScreen != null) {
             return selectedScreen.getPersistence();
         }
@@ -259,6 +260,7 @@ public class DeviceScreensDescriptionViewModel extends ModelObject {
      * @param key the new value to set
      */
     public void setCurrentPersistence(String persistence) {
+        System.out.println("DEBUG 8");
         if (selectedScreen == null) {
             return;
         }
@@ -268,7 +270,7 @@ public class DeviceScreensDescriptionViewModel extends ModelObject {
         }
 
         selectedScreen.setPersistence(persistence);
-        updateCurrentPersistence(persistence);
+        updateCurrentPersistence(selectedScreen.getPersistence());
     }
 
     /**
@@ -278,9 +280,9 @@ public class DeviceScreensDescriptionViewModel extends ModelObject {
      *            the new key
      */
     private void updateCurrentPersistence(String persistence) {
+        System.out.println("DEBUG 9");
         firePropertyChange("currentPersistence", this.persistence, this.persistence = persistence);
-        // Must update to the corresponding description
-        updateCurrentDescription();
+
         checkScreensValid();
     }
 

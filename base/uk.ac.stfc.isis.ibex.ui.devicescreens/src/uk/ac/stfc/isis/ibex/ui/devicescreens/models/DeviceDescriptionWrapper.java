@@ -216,11 +216,12 @@ public class DeviceDescriptionWrapper {
      * @return
      */
     public String getPersistence() {
-        System.out.println("DEBUG 6");
+        System.out.println("DEBUG 6 (returning persistence as " + persistence + ")");
         return persistence;
     }
 
     public void setPersistence(String persistence) {
+        System.out.println("DEBUG 7 (setting persistence as " + persistence + ")");
         this.persistence = persistence;
     }
 

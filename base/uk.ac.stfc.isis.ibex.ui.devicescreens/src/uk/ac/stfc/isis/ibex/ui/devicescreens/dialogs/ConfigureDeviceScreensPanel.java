@@ -286,7 +286,7 @@ public class ConfigureDeviceScreensPanel extends Composite {
         yesButton.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
-                viewModel.setPersistence("Yes");
+                viewModel.setCurrentPersistence("Yes");
                 devicesViewer.refresh();
             }
         });
