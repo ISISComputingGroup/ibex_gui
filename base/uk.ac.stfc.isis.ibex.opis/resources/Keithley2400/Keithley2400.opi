@@ -462,15 +462,14 @@ $(pv_value)</tooltip>
           <path></path>
           <scriptText><![CDATA[from org.csstudio.opibuilder.scriptUtil import PVUtil
 
-pv = widget.getPV(); 
-value0 = PVUtil.getDouble(pv)
-
-if value0 ==0:
-	pv.setValue(1)
+rbv = display.getWidget("OutputOnRBV").getPV().getValue().getValue()
+sp_pv = widget.getPV()
+on = "ON"
+off = "OFF"
+if rbv == on:
+      	sp_pv.setValue(off)
 else:
-	pv.setValue(0)
-
-]]></scriptText>
+      	sp_pv.setValue(on)]]></scriptText>
           <embedded>true</embedded>
           <description></description>
         </action>
@@ -555,7 +554,14 @@ $(pv_value)</tooltip>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </foreground_color>
-      <actions hook="false" hook_all="false" />
+      <actions hook="false" hook_all="false">
+        <action type="EXECUTE_PYTHONSCRIPT">
+          <path></path>
+          <scriptText><![CDATA[widget.getPV().setValue(1)]]></scriptText>
+          <embedded>true</embedded>
+          <description></description>
+        </action>
+      </actions>
       <font>
         <opifont.name fontName="Segoe UI" height="9" style="0">ISIS_Button_NEW</opifont.name>
       </font>
