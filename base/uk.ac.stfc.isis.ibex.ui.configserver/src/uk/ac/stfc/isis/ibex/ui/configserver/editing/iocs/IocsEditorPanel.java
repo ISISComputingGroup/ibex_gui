@@ -24,10 +24,12 @@ import java.beans.PropertyChangeListener;
 import java.util.Collection;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.widgets.Label;
 
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableIoc;
@@ -41,6 +43,8 @@ public class IocsEditorPanel extends Composite {
 	private final Display display = Display.getCurrent();
 	private EditableConfiguration config;
 	
+    private static final int BUTTON_WIDTH = 100;
+
 	private final PropertyChangeListener updateIocs = new PropertyChangeListener() {
 		@Override
 		public void propertyChange(PropertyChangeEvent evt) {
@@ -52,12 +56,30 @@ public class IocsEditorPanel extends Composite {
 	
 	public IocsEditorPanel(Composite parent, int style, MessageDisplayer msgDisp) {
 		super(parent, style);
-		setLayout(new GridLayout(1, false));
+        setLayout(new GridLayout(4, false));
 		
 		table = new IocsTable(this, SWT.NONE, SWT.FULL_SELECTION);
-		GridData gdTable = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
+        GridData gdTable = new GridData(SWT.FILL, SWT.FILL, true, true, 4, 1);
 		gdTable.heightHint = 200;
 		table.setLayoutData(gdTable);
+		
+		GridData gdButton = new GridData();
+        gdButton.widthHint = BUTTON_WIDTH;
+		
+        Button btnAddIoc = new Button(this, SWT.NONE);
+        btnAddIoc.setText("Add IOC");
+        btnAddIoc.setLayoutData(gdButton);
+
+        Label spacer = new Label(this, SWT.NONE);
+        spacer.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+
+        Button btnEditIoc = new Button(this, SWT.NONE);
+        btnEditIoc.setText("Edit IOC");
+        btnEditIoc.setLayoutData(gdButton);
+
+        Button btnDeleteIoc = new Button(this, SWT.NONE);
+        btnDeleteIoc.setText("Delete IOC");
+        btnDeleteIoc.setLayoutData(gdButton);
 	}
 
 	public void setConfig(EditableConfiguration config) {

@@ -79,6 +79,8 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
     /** Whether the configuration has been previously modified. */
     private Boolean isNew;
     /** The IOCs associated with the configuration. */
+    private final List<Ioc> availableIocs = new ArrayList<>();
+    /** The IOCs associated with the configuration. */
 	private final List<EditableIoc> editableIocs = new ArrayList<>();
     /** The groups associated with the configuration. */
 	private final List<EditableGroup> editableGroups = new ArrayList<>();
@@ -159,7 +161,11 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
 			editableGroups.add(new EditableGroup(this, group));
 		}
 	
-		mergeSelectedAndAvailableIocs(config.getIocs(), iocs);
+//        mergeSelectedAndAvailableIocs(config.getIocs(), iocs);
+        for (Ioc ioc : config.getIocs()) {
+            editableIocs.add(new EditableIoc(ioc));
+        }
+        availableIocs.addAll(iocs);
 		
 		editableComponents = new EditableComponents(config.getComponents(), components);
 		editableComponents.addPropertyChangeListener(passThrough());
@@ -510,6 +516,7 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
      * @param selected The IOCs currently used by the configuration
      * @param available All of the available IOCs
      */
+    // TODO
 	private void mergeSelectedAndAvailableIocs(Collection<Ioc> selected, Collection<EditableIoc> available) {
 		Map<String, EditableIoc> iocs = new HashMap<>();
 		for (EditableIoc ioc : available) {
