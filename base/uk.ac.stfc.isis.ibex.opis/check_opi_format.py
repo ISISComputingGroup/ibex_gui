@@ -205,7 +205,8 @@ class CheckOpiFormat:
         # Select labels
         xpath = "//" + self.widget_xpath + "Label']"
 
-        condition = "/background_color/color[not(@name) or @name!='ISIS_Label_Background']"
+        condition = "/background_color/color[not(@name) or " \
+                    "(@name!='ISIS_Label_Background' and @name!='ISIS_Title_Background_NEW')]"
         error_message = "A label didn't use ISIS_Label_Background as it's background color."
         self.check_condition(root, xpath + condition, error_message)
 
@@ -214,7 +215,7 @@ class CheckOpiFormat:
         xpath = "//" + self.widget_xpath + "groupingContainer']"
 
         condition = "/background_color/color[not(@name) or @name!='ISIS_OPI_Background']"
-        error_message = "A label didn't use ISIS_OPI_Background as it's background color."
+        error_message = "A grouping container didn't use ISIS_OPI_Background as it's background color."
         self.check_condition(root, xpath + condition, error_message)
 
     def run(self):
