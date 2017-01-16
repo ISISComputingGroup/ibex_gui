@@ -19,6 +19,9 @@ class CheckOpiFormat:
     # This is to avoid
     ignore_short_words_limit = 3
 
+    # Start of the XPATH for a widget
+    widget_xpath = "widget[@typeId='org.csstudio.opibuilder.widgets."
+
     def __init__(self):
         self.errors = []
 
@@ -60,11 +63,18 @@ class CheckOpiFormat:
     def check_sentence_case(self, root, xpath, error_message):
 
         for name in root.xpath(xpath):
-            words = name.text
+            capitalisation_error = False
+            words = name.text.split()
 
-            # Check last character in the string is a colon
-            if words[-1:] != ":" and words[-3:] != "..." and not words.isdigit() \
-                    and not any(s in words for s in self.ignore):
+            # Ignore words less than 4 characters as these are probably prepositions
+            for word in words:
+                if len(word) > self.ignore_short_words_limit \
+                        and not words[0] == words[0].title() \
+                        and not word.lower() == word \
+                        and not any(s in word for s in self.ignore):
+                    capitalisation_error = True
+
+            if capitalisation_error:
                 err = "Error on line " + str(name.sourceline) + ": " + etree.tostring(name) \
                       + "\n... " + error_message
                 self.errors.append(err)
@@ -82,7 +92,7 @@ class CheckOpiFormat:
     def check_opi_label_fonts(self, root):
 
         # Select labels
-        xpath = "//widget[@typeId='org.csstudio.opibuilder.widgets.Label']"
+        xpath = "//" + self.widget_xpath + "Label']"
 
         condition = "/font/opifont.name[not(starts-with(., 'ISIS_')) and not(starts-with(@fontName, 'ISIS_'))]"
         error_message = "The font must be an ISIS_* font"
@@ -91,7 +101,7 @@ class CheckOpiFormat:
     def check_led_colours(self, root):
 
         # Select LEDs
-        xpath = "//widget[@typeId='org.csstudio.opibuilder.widgets.LED']"
+        xpath = "//" + self.widget_xpath + "LED']"
 
         condition = "/on_color/color[not(@name)]"
         error_message = "An LED indicator didn't use a correct ISIS colour scheme when turned on."
@@ -112,7 +122,7 @@ class CheckOpiFormat:
     def check_text_input_colors(self, root):
 
         # Select text input fields
-        xpath = "//widget[@typeId='org.csstudio.opibuilder.widgets.TextInput']"
+        xpath = "//" + self.widget_xpath + "TextInput']"
 
         condition = "/background_color/color[not(@name) or @name!='ISIS_Textbox_Background']"
         error_message = "A text input field didn't use ISIS_Textbox_Background as it's background color."
@@ -128,31 +138,31 @@ class CheckOpiFormat:
 
     def check_items_are_in_grouping_containers(self, root):
 
-        widget_xpath = "//widget[@typeId='org.csstudio.opibuilder.widgets."
-        ancestor_xpath = "' and not(ancestor::widget[@typeId='org.csstudio.opibuilder.widgets.groupingContainer'])]"
+        element_xpath = "//" + self.widget_xpath
+        ancestor_xpath = "' and not(ancestor::" + self.widget_xpath + "groupingContainer'])]"
 
         # Select a push button outside a grouping container
-        xpath = widget_xpath + "NativeButton" + ancestor_xpath
+        xpath = element_xpath + "NativeButton" + ancestor_xpath
         error_message = "A button was not within a grouping container."
         self.check_condition(root, xpath, error_message)
 
         # Select an LED outside a grouping container
-        xpath = widget_xpath + "LED" + ancestor_xpath
+        xpath = element_xpath + "LED" + ancestor_xpath
         error_message = "An LED indicator was not within a grouping container."
         self.check_condition(root, xpath, error_message)
 
         # Select a dropdown menu outside a grouping container
-        xpath = widget_xpath + "combo" + ancestor_xpath
+        xpath = element_xpath + "combo" + ancestor_xpath
         error_message = "A dropdown menu was not within a grouping container."
         self.check_condition(root, xpath, error_message)
 
         # Select a text input field outside a grouping container
-        xpath = widget_xpath + "TextInput" + ancestor_xpath
+        xpath = element_xpath + "TextInput" + ancestor_xpath
         error_message = "A text input field was not within a grouping container."
         self.check_condition(root, xpath, error_message)
 
     def check_capitals_for_grouping_containers(self, root):
-        xpath = "//widget[@typeId='org.csstudio.opibuilder.widgets.groupingContainer']/name"
+        xpath = "//" + self.widget_xpath + "groupingContainer']/name"
         error_message = "Grouping container titles should be in 'Title Case'."
 
         self.check_title_case(root, xpath, error_message)
@@ -161,8 +171,8 @@ class CheckOpiFormat:
 
         # Select a Label outside a grouping container
         xpath = \
-            "//widget[@typeId='org.csstudio.opibuilder.widgets.Label' " \
-            "and not(ancestor::widget[@typeId='org.csstudio.opibuilder.widgets.groupingContainer'])]/text"
+            "//" + self.widget_xpath + "Label' " \
+            "and not(ancestor::" + self.widget_xpath + "groupingContainer'])]/text"
 
         error_message = "Labels outside grouping containers are titles, and therefore should be 'Title Case'."
         self.check_title_case(root, xpath, error_message)
@@ -170,15 +180,15 @@ class CheckOpiFormat:
     def check_capitals_for_labels(self, root):
 
         # Select a Label within a grouping container
-        xpath = "//widget[@typeId='org.csstudio.opibuilder.widgets.groupingContainer']" \
-                "/widget[@typeId='org.csstudio.opibuilder.widgets.Label']/text"
+        xpath = "//" + self.widget_xpath + "groupingContainer']" \
+                "/" + self.widget_xpath + "Label']/text"
 
         error_message = "Labels should be in 'sentence case'"
         self.check_sentence_case(root, xpath, error_message)
 
     def check_colon_at_the_end_of_labels(self, root):
-        container_name_xpath = "//widget[@typeId='org.csstudio.opibuilder.widgets.groupingContainer']" \
-                             "/widget[@typeId='org.csstudio.opibuilder.widgets.Label']/text"
+        container_name_xpath = "//" + self.widget_xpath + "groupingContainer']" \
+                             "/" + self.widget_xpath + "Label']/text"
 
         for name in root.xpath(container_name_xpath):
             words = name.text
