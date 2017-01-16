@@ -1,6 +1,7 @@
 import os
 import sys
 from lxml import etree
+from time import gmtime, strftime
 
 
 class CheckOpiFormat:
@@ -193,17 +194,18 @@ class CheckOpiFormat:
         for name in root.xpath(container_name_xpath):
             words = name.text
 
-        # Check last character in the string is a colon
-        if words[-1:] != ":" and words[-3:] != "..." and not words.isdigit() \
-            and not any(s in words for s in self.ignore):
-                err = "Error on line " + str(name.sourceline) + ": " + etree.tostring(name) \
-                    + "\n... Labels should usually have a colon at the end, unless this is a tabular layout"
-                self.errors.append(err)
+            # Check last character in the string is a colon
+            if words[-1:] != ":" and words[-3:] != "..." and not words.isdigit() \
+                and not any(s in words for s in self.ignore):
+                    err = "Error on line " + str(name.sourceline) + ": " + etree.tostring(name) \
+                        + "\n... Labels should usually have a colon at the end, unless this is a tabular layout"
+                    self.errors.append(err)
 
     def run(self):
 
         self.errors = []
         build_contains_errors = False
+        time = strftime("%Y-%m-%d_%H-%M-%S", gmtime())
 
         for filepath in self.file_iterator():
 
@@ -220,12 +222,23 @@ class CheckOpiFormat:
             self.check_colon_at_the_end_of_labels(root)
 
             if len(self.errors) > 0:
+
+                build_contains_errors = True
+
+                # Write to console
                 print "\n --------------"
                 print str(len(self.errors)) + " errors found in file " + filepath
                 print " --------------\n"
-                build_contains_errors = True
                 for error in self.errors:
                     print error
+
+                # Write to file
+                f = open('check_OPI_format_logs/' + time + '.txt', 'a')
+                f.write("\n --------------\n")
+                f.write(str(len(self.errors)) + " errors found in file " + filepath + "\n")
+                f.write(" --------------\n\n")
+                for error in self.errors:
+                    f.write(error + "\n")
 
             self.errors = []
 
