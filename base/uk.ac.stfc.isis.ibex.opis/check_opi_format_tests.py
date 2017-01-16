@@ -480,6 +480,22 @@ class TestCheckOpiFormatMethods(unittest.TestCase):
         # Assert
         self.assertEqual(len(self.checker.errors), 0)
 
+    def test_that_a_label_with_a_short_first_word_that_is_not_capitalised_causes_one_error(self):
+        # Arrange
+
+        xml = '<widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0">' \
+              '<widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0">' \
+              '<text>a label this is</text>' \
+              '</widget>' \
+              '</widget>'
+        root = etree.fromstring(xml)
+
+        # Act
+        self.checker.check_capitals_for_labels(root)
+
+        # Assert
+        self.assertEqual(len(self.checker.errors), 1)
+
     def test_that_a_label_with_a_badly_capitalized_name_causes_one_error(self):
 
         # Arrange
