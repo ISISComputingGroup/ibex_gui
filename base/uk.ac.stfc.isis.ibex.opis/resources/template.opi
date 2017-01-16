@@ -1170,7 +1170,7 @@ $(pv_value)</tooltip>
           </font>
         </widget>
         <widget typeId="org.csstudio.opibuilder.widgets.polyline" version="1.0">
-          <border_style>4</border_style>
+          <border_style>0</border_style>
           <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
           <line_width>1</line_width>
           <horizontal_fill>true</horizontal_fill>
@@ -1201,7 +1201,7 @@ $(pv_value)</tooltip>
           <visible>true</visible>
           <pv_name></pv_name>
           <border_color>
-            <color red="0" green="128" blue="255" />
+            <color name="ISIS_Border" red="0" green="0" blue="0" />
           </border_color>
           <anti_alias>true</anti_alias>
           <line_style>0</line_style>
@@ -1209,7 +1209,7 @@ $(pv_value)</tooltip>
           <widget_type>Polyline</widget_type>
           <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
           <background_color>
-            <color red="30" green="144" blue="255" />
+            <color name="ISIS_Border" red="0" green="0" blue="0" />
           </background_color>
           <width>1</width>
           <x>216</x>
@@ -1490,7 +1490,7 @@ $(pv_value)</tooltip>
           </font>
         </widget>
         <widget typeId="org.csstudio.opibuilder.widgets.polyline" version="1.0">
-          <border_style>4</border_style>
+          <border_style>0</border_style>
           <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
           <line_width>1</line_width>
           <horizontal_fill>true</horizontal_fill>
@@ -1521,7 +1521,7 @@ $(pv_value)</tooltip>
           <visible>true</visible>
           <pv_name></pv_name>
           <border_color>
-            <color red="0" green="128" blue="255" />
+            <color name="ISIS_Border" red="0" green="0" blue="0" />
           </border_color>
           <anti_alias>true</anti_alias>
           <line_style>0</line_style>
@@ -1529,7 +1529,7 @@ $(pv_value)</tooltip>
           <widget_type>Polyline</widget_type>
           <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
           <background_color>
-            <color red="30" green="144" blue="255" />
+            <color name="ISIS_Border" red="0" green="0" blue="0" />
           </background_color>
           <width>1</width>
           <x>371</x>
@@ -1810,7 +1810,7 @@ $(pv_value)</tooltip>
           </font>
         </widget>
         <widget typeId="org.csstudio.opibuilder.widgets.polyline" version="1.0">
-          <border_style>4</border_style>
+          <border_style>0</border_style>
           <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
           <line_width>1</line_width>
           <horizontal_fill>true</horizontal_fill>
@@ -1841,7 +1841,7 @@ $(pv_value)</tooltip>
           <visible>true</visible>
           <pv_name></pv_name>
           <border_color>
-            <color red="0" green="128" blue="255" />
+            <color name="ISIS_Border" red="0" green="0" blue="0" />
           </border_color>
           <anti_alias>true</anti_alias>
           <line_style>0</line_style>
@@ -1849,7 +1849,7 @@ $(pv_value)</tooltip>
           <widget_type>Polyline</widget_type>
           <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
           <background_color>
-            <color red="30" green="144" blue="255" />
+            <color name="ISIS_Border" red="0" green="0" blue="0" />
           </background_color>
           <width>1</width>
           <x>526</x>
@@ -2532,7 +2532,7 @@ $(pv_value)</tooltip>
       </font>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.polyline" version="1.0">
-      <border_style>4</border_style>
+      <border_style>0</border_style>
       <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
       <line_width>1</line_width>
       <horizontal_fill>true</horizontal_fill>
@@ -2563,7 +2563,7 @@ $(pv_value)</tooltip>
       <visible>true</visible>
       <pv_name></pv_name>
       <border_color>
-        <color red="0" green="128" blue="255" />
+        <color name="ISIS_Border" red="0" green="0" blue="0" />
       </border_color>
       <anti_alias>true</anti_alias>
       <line_style>0</line_style>
@@ -2571,7 +2571,7 @@ $(pv_value)</tooltip>
       <widget_type>Polyline</widget_type>
       <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
       <background_color>
-        <color red="30" green="144" blue="255" />
+        <color name="ISIS_Border" red="0" green="0" blue="0" />
       </background_color>
       <width>1</width>
       <x>156</x>
@@ -2903,7 +2903,7 @@ $(pv_value)</tooltip>
       </font>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.polyline" version="1.0">
-      <border_style>4</border_style>
+      <border_style>0</border_style>
       <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
       <line_width>1</line_width>
       <horizontal_fill>true</horizontal_fill>
@@ -2934,7 +2934,7 @@ $(pv_value)</tooltip>
       <visible>true</visible>
       <pv_name></pv_name>
       <border_color>
-        <color red="0" green="128" blue="255" />
+        <color name="ISIS_Border" red="0" green="0" blue="0" />
       </border_color>
       <anti_alias>true</anti_alias>
       <line_style>0</line_style>
@@ -2942,7 +2942,7 @@ $(pv_value)</tooltip>
       <widget_type>Polyline</widget_type>
       <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
       <background_color>
-        <color red="30" green="144" blue="255" />
+        <color name="ISIS_Border" red="0" green="0" blue="0" />
       </background_color>
       <width>337</width>
       <x>0</x>
