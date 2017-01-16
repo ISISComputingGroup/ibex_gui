@@ -152,9 +152,9 @@ class CheckOpiFormat:
         error_message = "An LED indicator was not within a grouping container."
         self.check_condition(root, xpath, error_message)
 
-        # Select a dropdown menu outside a grouping container
+        # Select a drop down menu outside a grouping container
         xpath = element_xpath + "combo" + ancestor_xpath
-        error_message = "A dropdown menu was not within a grouping container."
+        error_message = "A drop down menu was not within a grouping container."
         self.check_condition(root, xpath, error_message)
 
         # Select a text input field outside a grouping container
@@ -201,6 +201,22 @@ class CheckOpiFormat:
                         + "\n... Labels should usually have a colon at the end, unless this is a tabular layout"
                     self.errors.append(err)
 
+    def check_background_colour_for_labels(self, root):
+        # Select labels
+        xpath = "//" + self.widget_xpath + "Label']"
+
+        condition = "/background_color/color[not(@name) or @name!='ISIS_Label_Background']"
+        error_message = "A label didn't use ISIS_Label_Background as it's background color."
+        self.check_condition(root, xpath + condition, error_message)
+
+    def check_background_colour_for_grouping_containers(self, root):
+        # Select grouping containers
+        xpath = "//" + self.widget_xpath + "groupingContainer']"
+
+        condition = "/background_color/color[not(@name) or @name!='ISIS_OPI_Background']"
+        error_message = "A label didn't use ISIS_OPI_Background as it's background color."
+        self.check_condition(root, xpath + condition, error_message)
+
     def run(self):
 
         self.errors = []
@@ -220,6 +236,8 @@ class CheckOpiFormat:
             self.check_capitals_for_labels(root)
             self.check_capitals_for_labels_outside_grouping_containers(root)
             self.check_colon_at_the_end_of_labels(root)
+            self.check_background_colour_for_labels(root)
+            self.check_background_colour_for_grouping_containers(root)
 
             if len(self.errors) > 0:
 
