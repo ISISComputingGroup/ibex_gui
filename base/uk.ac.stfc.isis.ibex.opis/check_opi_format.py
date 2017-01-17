@@ -49,9 +49,16 @@ class CheckOpiFormat:
             capitalisation_error = False
             words = name.text.split()
 
+            # Handle special case of first word (which should be capitalised regardless of length)
+            word = words[0]
+            if not word.title() == word and not any(s in word for s in self.ignore):
+                capitalisation_error = True
+
             # Ignore words less than 4 characters as these are probably prepositions
+            # Also don't check first word as that is a special case handled above
             for word in words:
                 if len(word) > self.ignore_short_words_limit \
+                        and not word == words[0] \
                         and word.title() != word \
                         and not any(s in word for s in self.ignore):
                     capitalisation_error = True
