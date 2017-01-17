@@ -217,8 +217,8 @@ $(pv_value)</tooltip>
 
 rbv = display.getWidget("OffsetCompensationOnRBV").getPV().getValue().getValue()
 sp_pv = widget.getPV()
-on = "ON"
-off = "OFF"
+on = "On"
+off = "Off"
 if rbv == on:
       	sp_pv.setValue(off)
 else:
@@ -334,8 +334,8 @@ $(pv_value)</tooltip>
       <wuid>4c937f8b:15799b33729:-7fc3</wuid>
       <pv_value />
       <scripts />
-      <border_alarm_sensitive>true</border_alarm_sensitive>
-      <height>27</height>
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+      <height>23</height>
       <border_width>1</border_width>
       <scale_options>
         <width_scalable>true</width_scalable>
@@ -356,7 +356,7 @@ $(pv_value)</tooltip>
       <width>97</width>
       <x>240</x>
       <name>OhmsModeCombo</name>
-      <y>2</y>
+      <y>4</y>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </foreground_color>
@@ -431,7 +431,7 @@ $(pv_value)</tooltip>
         <keep_wh_ratio>true</keep_wh_ratio>
       </scale_options>
       <visible>true</visible>
-      <pv_name>$(PV_ROOT):RSENS:MODE</pv_name>
+      <pv_name>$(PV_ROOT):SENS:MODE</pv_name>
       <border_color>
         <color name="ISIS_Border" red="0" green="0" blue="0" />
       </border_color>
@@ -482,7 +482,7 @@ $(pv_value)</tooltip>
       </scale_options>
       <image></image>
       <visible>true</visible>
-      <pv_name>$(PV_ROOT):RSENS:MODE:SP</pv_name>
+      <pv_name>$(PV_ROOT):SENS:MODE:SP</pv_name>
       <border_color>
         <color name="ISIS_Border" red="0" green="0" blue="0" />
       </border_color>
@@ -501,8 +501,8 @@ $(pv_value)</tooltip>
 
 rbv = display.getWidget("RemoteSensingRBV").getPV().getValue().getValue()
 sp_pv = widget.getPV()
-on = "ON"
-off = "OFF"
+on = "On"
+off = "Off"
 if rbv == on:
       	sp_pv.setValue(off)
 else:
@@ -699,8 +699,8 @@ $(pv_value)</tooltip>
       <wuid>-79c83fe2:15988060656:-7397</wuid>
       <pv_value />
       <scripts />
-      <border_alarm_sensitive>true</border_alarm_sensitive>
-      <height>27</height>
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+      <height>23</height>
       <border_width>1</border_width>
       <scale_options>
         <width_scalable>true</width_scalable>
@@ -721,7 +721,7 @@ $(pv_value)</tooltip>
       <width>97</width>
       <x>240</x>
       <name>RangeCombo</name>
-      <y>32</y>
+      <y>34</y>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </foreground_color>
@@ -755,7 +755,7 @@ $(pv_value)</tooltip>
         <keep_wh_ratio>true</keep_wh_ratio>
       </scale_options>
       <visible>true</visible>
-      <pv_name>$(PV_ROOT):RSENS:RANGE:AUTO</pv_name>
+      <pv_name>$(PV_ROOT):RES:RANGE:AUTO</pv_name>
       <border_color>
         <color name="ISIS_Border" red="0" green="0" blue="0" />
       </border_color>
@@ -806,7 +806,7 @@ $(pv_value)</tooltip>
       </scale_options>
       <image></image>
       <visible>true</visible>
-      <pv_name>$(PV_ROOT):RSENS:RANGE:AUTO:SP</pv_name>
+      <pv_name>$(PV_ROOT):RES:RANGE:AUTO:SP</pv_name>
       <border_color>
         <color name="ISIS_Border" red="0" green="0" blue="0" />
       </border_color>
@@ -825,8 +825,8 @@ $(pv_value)</tooltip>
 
 rbv = display.getWidget("AutoRangeSelectionRBV").getPV().getValue().getValue()
 sp_pv = widget.getPV()
-on = "AUTO"
-off = "MANUAL"
+on = "Auto"
+off = "Manual"
 if rbv == on:
       	sp_pv.setValue(off)
 else:
@@ -947,7 +947,7 @@ $(pv_value)</tooltip>
         <keep_wh_ratio>false</keep_wh_ratio>
       </scale_options>
       <visible>true</visible>
-      <pv_name></pv_name>
+      <pv_name>$(PV_ROOT):SOURCE:MODE</pv_name>
       <vertical_alignment>1</vertical_alignment>
       <border_color>
         <color name="ISIS_Border" red="0" green="0" blue="0" />
@@ -982,8 +982,8 @@ $(pv_value)</tooltip>
       <wuid>4c937f8b:15799b33729:-7fc3</wuid>
       <pv_value />
       <scripts />
-      <border_alarm_sensitive>true</border_alarm_sensitive>
-      <height>27</height>
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+      <height>23</height>
       <border_width>1</border_width>
       <scale_options>
         <width_scalable>true</width_scalable>
@@ -992,7 +992,7 @@ $(pv_value)</tooltip>
       </scale_options>
       <items_from_pv>true</items_from_pv>
       <visible>true</visible>
-      <pv_name></pv_name>
+      <pv_name>$(PV_ROOT):SOURCE:MODE:SP</pv_name>
       <border_color>
         <color name="ISIS_Border" red="0" green="0" blue="0" />
       </border_color>
@@ -1004,7 +1004,7 @@ $(pv_value)</tooltip>
       <width>97</width>
       <x>240</x>
       <name>SourceCombo</name>
-      <y>2</y>
+      <y>4</y>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </foreground_color>
@@ -1080,7 +1080,7 @@ $(pv_value)</tooltip>
         <keep_wh_ratio>false</keep_wh_ratio>
       </scale_options>
       <visible>true</visible>
-      <pv_name></pv_name>
+      <pv_name>$(PV_ROOT):I:COMPLIANCE</pv_name>
       <vertical_alignment>1</vertical_alignment>
       <border_color>
         <color name="ISIS_Border" red="0" green="0" blue="0" />
@@ -1097,47 +1097,6 @@ $(pv_value)</tooltip>
       <x>138</x>
       <name>CurrentComplianceRBV</name>
       <y>36</y>
-      <foreground_color>
-        <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
-      </foreground_color>
-      <actions hook="false" hook_all="false" />
-      <font>
-        <opifont.name fontName="Segoe UI" height="9" style="0">ISIS_Value_NEW</opifont.name>
-      </font>
-    </widget>
-    <widget typeId="org.csstudio.opibuilder.widgets.combo" version="1.0">
-      <border_style>0</border_style>
-      <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
-      <tooltip>$(pv_name)
-$(pv_value)</tooltip>
-      <rules />
-      <enabled>true</enabled>
-      <wuid>-79c83fe2:15988060656:-7397</wuid>
-      <pv_value />
-      <scripts />
-      <border_alarm_sensitive>true</border_alarm_sensitive>
-      <height>27</height>
-      <border_width>1</border_width>
-      <scale_options>
-        <width_scalable>true</width_scalable>
-        <height_scalable>false</height_scalable>
-        <keep_wh_ratio>false</keep_wh_ratio>
-      </scale_options>
-      <items_from_pv>true</items_from_pv>
-      <visible>true</visible>
-      <pv_name></pv_name>
-      <border_color>
-        <color name="ISIS_Border" red="0" green="0" blue="0" />
-      </border_color>
-      <widget_type>Combo</widget_type>
-      <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
-      <background_color>
-        <color name="ISIS_Textbox_Background" red="255" green="255" blue="255" />
-      </background_color>
-      <width>97</width>
-      <x>240</x>
-      <name>CurrentComplianceCombo</name>
-      <y>32</y>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </foreground_color>
@@ -1213,7 +1172,7 @@ $(pv_value)</tooltip>
         <keep_wh_ratio>false</keep_wh_ratio>
       </scale_options>
       <visible>true</visible>
-      <pv_name></pv_name>
+      <pv_name>$(PV_ROOT):V:COMPLIANCE</pv_name>
       <vertical_alignment>1</vertical_alignment>
       <border_color>
         <color name="ISIS_Border" red="0" green="0" blue="0" />
@@ -1238,43 +1197,114 @@ $(pv_value)</tooltip>
         <opifont.name fontName="Segoe UI" height="9" style="0">ISIS_Value_NEW</opifont.name>
       </font>
     </widget>
-    <widget typeId="org.csstudio.opibuilder.widgets.combo" version="1.0">
-      <border_style>0</border_style>
-      <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+    <widget typeId="org.csstudio.opibuilder.widgets.TextInput" version="1.0">
+      <precision>0</precision>
       <tooltip>$(pv_name)
 $(pv_value)</tooltip>
+      <horizontal_alignment>0</horizontal_alignment>
       <rules />
-      <enabled>true</enabled>
-      <wuid>-79c83fe2:15988060656:-72ce</wuid>
       <pv_value />
-      <scripts />
-      <border_alarm_sensitive>true</border_alarm_sensitive>
-      <height>27</height>
+      <auto_size>false</auto_size>
+      <text>0.0</text>
+      <rotation_angle>0.0</rotation_angle>
+      <show_units>true</show_units>
+      <height>20</height>
+      <multiline_input>false</multiline_input>
       <border_width>1</border_width>
-      <scale_options>
-        <width_scalable>true</width_scalable>
-        <height_scalable>false</height_scalable>
-        <keep_wh_ratio>false</keep_wh_ratio>
-      </scale_options>
-      <items_from_pv>true</items_from_pv>
       <visible>true</visible>
-      <pv_name></pv_name>
+      <pv_name>$(PV_ROOT):I:COMPLIANCE:SP</pv_name>
+      <selector_type>0</selector_type>
       <border_color>
         <color name="ISIS_Border" red="0" green="0" blue="0" />
       </border_color>
-      <widget_type>Combo</widget_type>
+      <precision_from_pv>true</precision_from_pv>
+      <widget_type>Text Input</widget_type>
+      <confirm_message></confirm_message>
+      <name>CurrentComplianceSP</name>
+      <actions hook="false" hook_all="false" />
+      <border_style>3</border_style>
+      <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+      <enabled>true</enabled>
+      <wuid>-ad6f8af:159a6f54b7b:-7f74</wuid>
+      <transparent>false</transparent>
+      <scripts />
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+      <scale_options>
+        <width_scalable>true</width_scalable>
+        <height_scalable>true</height_scalable>
+        <keep_wh_ratio>false</keep_wh_ratio>
+      </scale_options>
+      <vertical_alignment>1</vertical_alignment>
       <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+      <format_type>0</format_type>
+      <limits_from_pv>false</limits_from_pv>
       <background_color>
         <color name="ISIS_Textbox_Background" red="255" green="255" blue="255" />
       </background_color>
-      <width>97</width>
-      <x>240</x>
-      <name>VoltageComplianceCombo</name>
-      <y>62</y>
+      <width>90</width>
+      <x>244</x>
+      <y>36</y>
+      <maximum>1.7976931348623157E308</maximum>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </foreground_color>
+      <minimum>-1.7976931348623157E308</minimum>
+      <font>
+        <opifont.name fontName="Segoe UI" height="9" style="0">ISIS_Value_NEW</opifont.name>
+      </font>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.TextInput" version="1.0">
+      <precision>0</precision>
+      <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+      <horizontal_alignment>0</horizontal_alignment>
+      <rules />
+      <pv_value />
+      <auto_size>false</auto_size>
+      <text>0.0</text>
+      <rotation_angle>0.0</rotation_angle>
+      <show_units>true</show_units>
+      <height>20</height>
+      <multiline_input>false</multiline_input>
+      <border_width>1</border_width>
+      <visible>true</visible>
+      <pv_name>$(PV_ROOT):V:COMPLIANCE:SP</pv_name>
+      <selector_type>0</selector_type>
+      <border_color>
+        <color name="ISIS_Border" red="0" green="0" blue="0" />
+      </border_color>
+      <precision_from_pv>true</precision_from_pv>
+      <widget_type>Text Input</widget_type>
+      <confirm_message></confirm_message>
+      <name>VoltageComplianceSP</name>
       <actions hook="false" hook_all="false" />
+      <border_style>3</border_style>
+      <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+      <enabled>true</enabled>
+      <wuid>-ad6f8af:159a6f54b7b:-7f6d</wuid>
+      <transparent>false</transparent>
+      <scripts />
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+      <scale_options>
+        <width_scalable>true</width_scalable>
+        <height_scalable>true</height_scalable>
+        <keep_wh_ratio>false</keep_wh_ratio>
+      </scale_options>
+      <vertical_alignment>1</vertical_alignment>
+      <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+      <format_type>0</format_type>
+      <limits_from_pv>false</limits_from_pv>
+      <background_color>
+        <color name="ISIS_Textbox_Background" red="255" green="255" blue="255" />
+      </background_color>
+      <width>90</width>
+      <x>244</x>
+      <y>66</y>
+      <maximum>1.7976931348623157E308</maximum>
+      <foreground_color>
+        <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
+      </foreground_color>
+      <minimum>-1.7976931348623157E308</minimum>
       <font>
         <opifont.name fontName="Segoe UI" height="9" style="0">ISIS_Value_NEW</opifont.name>
       </font>
@@ -1309,7 +1339,7 @@ $(pv_value)</tooltip>
     </background_color>
     <width>193</width>
     <x>6</x>
-    <name>Output</name>
+    <name>Readings</name>
     <y>348</y>
     <foreground_color>
       <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />

@@ -382,8 +382,8 @@ $(pv_value)</tooltip>
 
 rbv = display.getWidget("OutputOnRBV").getPV().getValue().getValue()
 sp_pv = widget.getPV()
-on = "ON"
-off = "OFF"
+on = "On"
+off = "Off"
 if rbv == on:
       	sp_pv.setValue(off)
 else:
