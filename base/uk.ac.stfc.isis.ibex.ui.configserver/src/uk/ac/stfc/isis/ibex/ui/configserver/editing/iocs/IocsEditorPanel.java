@@ -30,6 +30,7 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Text;
 
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableIoc;
@@ -58,27 +59,46 @@ public class IocsEditorPanel extends Composite {
 		super(parent, style);
         setLayout(new GridLayout(4, false));
 		
+        // IOC selection table
 		table = new IocsTable(this, SWT.NONE, SWT.FULL_SELECTION);
         GridData gdTable = new GridData(SWT.FILL, SWT.FILL, true, true, 4, 1);
 		gdTable.heightHint = 200;
 		table.setLayoutData(gdTable);
 		
-		GridData gdButton = new GridData();
-        gdButton.widthHint = BUTTON_WIDTH;
 		
+        // Add IOC button
         Button btnAddIoc = new Button(this, SWT.NONE);
         btnAddIoc.setText("Add IOC");
-        btnAddIoc.setLayoutData(gdButton);
 
-        Label spacer = new Label(this, SWT.NONE);
-        spacer.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+        // Selected IOC readback
+        Composite cmpSelectedIoc = new Composite(this, SWT.FILL);
+        cmpSelectedIoc.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+        GridLayout glCmpSelectedIoc = new GridLayout(2, true);
+//        glCmpSelectedIoc.marginWidth = 0;
+//        glCmpSelectedIoc.marginHeight = 0;
+        cmpSelectedIoc.setLayout(glCmpSelectedIoc);
 
+        Label lblSelectedIoc = new Label(cmpSelectedIoc, SWT.NONE);
+        lblSelectedIoc.setText("Selected:");
+        lblSelectedIoc.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false));
+
+        Text selectedIoc = new Text(cmpSelectedIoc, SWT.BORDER);
+        selectedIoc.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+        selectedIoc.setEnabled(false);
+
+        // Edit IOC button
         Button btnEditIoc = new Button(this, SWT.NONE);
         btnEditIoc.setText("Edit IOC");
-        btnEditIoc.setLayoutData(gdButton);
 
+        // Delete IOC Button
         Button btnDeleteIoc = new Button(this, SWT.NONE);
         btnDeleteIoc.setText("Delete IOC");
+
+        GridData gdButton = new GridData();
+        gdButton.widthHint = BUTTON_WIDTH;
+
+        btnAddIoc.setLayoutData(gdButton);
+        btnEditIoc.setLayoutData(gdButton);
         btnDeleteIoc.setLayoutData(gdButton);
 	}
 

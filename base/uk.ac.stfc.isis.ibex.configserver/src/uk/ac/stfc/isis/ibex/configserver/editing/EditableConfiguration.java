@@ -78,7 +78,7 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
 	private String dateModified;
     /** Whether the configuration has been previously modified. */
     private Boolean isNew;
-    /** The IOCs associated with the configuration. */
+    /** All IOCs available to the instrument. */
     private final List<Ioc> availableIocs = new ArrayList<>();
     /** The IOCs associated with the configuration. */
 	private final List<EditableIoc> editableIocs = new ArrayList<>();
@@ -348,6 +348,7 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
     /**
      * @return The editable IOCs associated with the configuration
      */
+    // TODO check usage
 	public Collection<EditableIoc> getEditableIocs() {
 		return editableIocs;
 	}
