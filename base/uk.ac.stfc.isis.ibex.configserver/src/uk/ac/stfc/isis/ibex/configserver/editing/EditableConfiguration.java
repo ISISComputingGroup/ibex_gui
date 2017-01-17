@@ -349,6 +349,14 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
      * @return The editable IOCs associated with the configuration
      */
     // TODO check usage
+    public Collection<Ioc> getAvailableIocs() {
+        return availableIocs;
+    }
+    
+    /**
+     * @return The editable IOCs associated with the configuration
+     */
+    // TODO check usage
 	public Collection<EditableIoc> getEditableIocs() {
 		return editableIocs;
 	}

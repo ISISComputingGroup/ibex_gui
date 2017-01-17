@@ -38,13 +38,13 @@ import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableIoc;
 
 @SuppressWarnings("checkstyle:magicnumber")
-public class IocSelectorPanel extends Composite {
+public class IocSettingPanel extends Composite {
 	private EditableIoc ioc;
 	private ComboViewer iocCombo;
 	private Label lbDescTarget;
 	private IIocDependentPanel target;
 	
-	public IocSelectorPanel(Composite parent, int style, IIocPanelCreator panelFactory) {
+	public IocSettingPanel(Composite parent, int style, IIocPanelCreator panelFactory) {
 		super(parent, style);
 		setLayout(new GridLayout(2, false));
 		

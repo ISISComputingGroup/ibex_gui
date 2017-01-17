@@ -43,12 +43,12 @@ import uk.ac.stfc.isis.ibex.ui.tables.DataboundTable;
  * data being in the table (unsure why)
  */
 @SuppressWarnings("checkstyle:magicnumber")
-public class IocsTable extends DataboundTable<EditableIoc> {
+public class EditableIocsTable extends DataboundTable<EditableIoc> {
 
 	private final CellDecorator<EditableIoc> rowDecorator = new IocRowCellDecorator();
 	private final CellDecorator<EditableIoc> simulationDecorator = new IocSimulationCellDecorator();
 	
-	public IocsTable(Composite parent, int style, int tableStyle) {
+	public EditableIocsTable(Composite parent, int style, int tableStyle) {
 		super(parent, style, EditableIoc.class, tableStyle | SWT.NO_SCROLL | SWT.V_SCROLL);
 				
 		initialise();		

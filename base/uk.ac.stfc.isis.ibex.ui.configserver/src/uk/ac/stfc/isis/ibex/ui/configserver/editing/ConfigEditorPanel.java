@@ -33,7 +33,7 @@ import uk.ac.stfc.isis.ibex.ui.configserver.editing.components.ComponentEditorPa
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.groups.GroupsEditorPanel;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.iocs.IIocDependentPanel;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.iocs.IIocPanelCreator;
-import uk.ac.stfc.isis.ibex.ui.configserver.editing.iocs.IocSelectorPanel;
+import uk.ac.stfc.isis.ibex.ui.configserver.editing.iocs.IocSettingPanel;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.iocs.IocsEditorPanel;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.macros.MacroPanel;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.pvs.IocPVsEditorPanel;
@@ -56,9 +56,9 @@ public class ConfigEditorPanel extends Composite {
 	private final BlocksEditorPanel blocks;
 	private final GroupsEditorPanel groups;
 	private final ComponentEditorPanel components;
-	private final IocSelectorPanel iocMacros;
-	private final IocSelectorPanel iocPVs;
-	private final IocSelectorPanel iocPVSets;
+	private final IocSettingPanel iocMacros;
+	private final IocSettingPanel iocPVs;
+	private final IocSettingPanel iocPVSets;
 	private final SummaryPanel summary;
 	
     private TabFolder editorTabs;
@@ -122,7 +122,7 @@ public class ConfigEditorPanel extends Composite {
                 return new MacroPanel(parent, SWT.NONE);
             }
         };
-        iocMacros = new IocSelectorPanel(editorTabs, SWT.NONE, macroFactory);
+        iocMacros = new IocSettingPanel(editorTabs, SWT.NONE, macroFactory);
         tbtmIocMacros.setControl(iocMacros);
 
 		TabItem blocksTab = new TabItem(editorTabs, SWT.NONE);
@@ -146,7 +146,7 @@ public class ConfigEditorPanel extends Composite {
 				return new IocPVsEditorPanel(parent, SWT.NONE, msgDisp);
 			}
 		};
-		iocPVs = new IocSelectorPanel(editorTabs, SWT.NONE, pvsFactory);
+		iocPVs = new IocSettingPanel(editorTabs, SWT.NONE, pvsFactory);
 		tbtmIocPvValues.setControl(iocPVs);
 		
 		TabItem tbtmIocPvSets = new TabItem(editorTabs, SWT.NONE);
@@ -158,7 +158,7 @@ public class ConfigEditorPanel extends Composite {
 				return new IocPVSetsEditorPanel(parent, SWT.NONE, msgDisp);
 			}
 		};
-		iocPVSets = new IocSelectorPanel(editorTabs, SWT.NONE, pvSetsFactory);
+		iocPVSets = new IocSettingPanel(editorTabs, SWT.NONE, pvSetsFactory);
 		tbtmIocPvSets.setControl(iocPVSets);
 	}
 

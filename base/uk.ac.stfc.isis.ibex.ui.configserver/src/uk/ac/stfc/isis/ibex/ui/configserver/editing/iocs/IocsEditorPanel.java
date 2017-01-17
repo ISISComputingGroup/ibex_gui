@@ -24,6 +24,8 @@ import java.beans.PropertyChangeListener;
 import java.util.Collection;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -39,7 +41,7 @@ import uk.ac.stfc.isis.ibex.validators.MessageDisplayer;
 @SuppressWarnings("checkstyle:magicnumber")
 public class IocsEditorPanel extends Composite {
 
-	private IocsTable table;
+	private EditableIocsTable table;
 	
 	private final Display display = Display.getCurrent();
 	private EditableConfiguration config;
@@ -60,7 +62,7 @@ public class IocsEditorPanel extends Composite {
         setLayout(new GridLayout(4, false));
 		
         // IOC selection table
-		table = new IocsTable(this, SWT.NONE, SWT.FULL_SELECTION);
+		table = new EditableIocsTable(this, SWT.NONE, SWT.FULL_SELECTION);
         GridData gdTable = new GridData(SWT.FILL, SWT.FILL, true, true, 4, 1);
 		gdTable.heightHint = 200;
 		table.setLayoutData(gdTable);
@@ -100,6 +102,21 @@ public class IocsEditorPanel extends Composite {
         btnAddIoc.setLayoutData(gdButton);
         btnEditIoc.setLayoutData(gdButton);
         btnDeleteIoc.setLayoutData(gdButton);
+
+        btnAddIoc.addSelectionListener(new SelectionListener() {
+
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+//                EditableIoc added = blockFactory.createNewBlock();
+                EditIocDialog dialog = new EditIocDialog(getShell(), config, true);
+                dialog.open();
+            }
+
+            @Override
+            public void widgetDefaultSelected(SelectionEvent e) {
+                //
+            }
+        });
 	}
 
 	public void setConfig(EditableConfiguration config) {
