@@ -24,11 +24,14 @@ package uk.ac.stfc.isis.ibex.ui.configserver.editing.iocs;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.TitleAreaDialog;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.StackLayout;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
@@ -37,15 +40,41 @@ import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
  *
  */
 public class EditIocDialog extends TitleAreaDialog {
-    AddIocPanel addIocPanel;
     EditableConfiguration config;
     boolean isBlank;
 
-    Composite addNavButtonBar;
-    Composite editNavButtonBar;
-
     Button btnNav;
     Button btnOk;
+    Composite content;
+    StackLayout stack;
+    AddIocPanel addIocPanel;
+    EditIocPanel editIocPanel;
+    Composite nextNav;
+
+    private static final Display DISPLAY = Display.getCurrent();
+
+    SelectionListener navListener = new SelectionListener() {
+        @Override
+        public void widgetSelected(SelectionEvent e) {
+            updateStack(nextNav);
+            if (nextNav.equals(addIocPanel)) {
+                nextNav = editIocPanel;
+                btnNav.setText("Next");
+                btnNav.setFocus();
+                btnOk.setEnabled(false);
+            } else {
+                nextNav = addIocPanel;
+                btnNav.setText("Previous");
+                btnOk.setEnabled(true);
+                btnOk.setFocus();
+            }
+        }
+
+        @Override
+        public void widgetDefaultSelected(SelectionEvent e) {
+            //
+        }
+    };
 
     /**
      * @param parent
@@ -55,30 +84,50 @@ public class EditIocDialog extends TitleAreaDialog {
         super(parent);
         this.isBlank = isBlank;
         this.config = config;
-        super.createButtonsForButtonBar(parent);
-        getButton(IDialogConstants.OK_ID).setEnabled(false);
     }
 
     @Override
     protected void createButtonsForButtonBar(Composite parent) {
-        addNavButtonBar = new Composite(parent, SWT.NONE);
-        addNavButtonBar.setLayout(new GridLayout());
+        // TODO put it on a stack
+        btnNav = createButton(parent, IDialogConstants.NO_ID, "Next", false);
+        btnOk = createButton(parent, IDialogConstants.OK_ID, IDialogConstants.OK_LABEL, false);
+        createButton(parent, IDialogConstants.CANCEL_ID, IDialogConstants.CANCEL_LABEL, false);
 
-        btnNav = createButton(addNavButtonBar, IDialogConstants.NO_ID, "Next", false);
-        btnOk = createButton(addNavButtonBar, IDialogConstants.OK_ID, IDialogConstants.OK_LABEL, false);
-        createButton(addNavButtonBar, IDialogConstants.CANCEL_ID, IDialogConstants.CANCEL_LABEL, false);
-
-        btnNav.setEnabled(false);
+//        btnNav.setEnabled(false);
+        btnNav.addSelectionListener(navListener);
         btnOk.setEnabled(false);
     }
 
     @Override
     protected Control createDialogArea(Composite parent) {
-        setTitle("Add IOC");
+        // TODO conditional
+        content = new Composite(parent, SWT.NONE);
+        content.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+        stack = new StackLayout();
+        content.setLayout(stack);
 
-        addIocPanel = new AddIocPanel(parent, config, SWT.NONE);
+        addIocPanel = new AddIocPanel(content, config, SWT.NONE);
         addIocPanel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 
+        editIocPanel = new EditIocPanel(content, config, SWT.NONE);
+        editIocPanel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+
+        stack.topControl = addIocPanel;
+        nextNav = editIocPanel;
+
+        content.layout();
+
+        this.setTitle("Add IOC");
         return addIocPanel;
+    }
+
+    private void updateStack(final Control top) {
+        DISPLAY.asyncExec(new Runnable() {
+            @Override
+            public void run() {
+                stack.topControl = top;
+                content.layout();
+            }
+        });
     }
 }
