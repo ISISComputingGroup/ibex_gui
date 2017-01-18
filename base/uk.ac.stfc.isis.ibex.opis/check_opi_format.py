@@ -3,6 +3,8 @@ import sys
 from lxml import etree
 from time import gmtime, strftime
 
+from lxml.etree import LxmlError
+
 
 class CheckOpiFormat:
 
@@ -31,18 +33,27 @@ class CheckOpiFormat:
 
     @staticmethod
     def get_tree(filepath):
-        with open(filepath) as opi_file:
-            parser = etree.XMLParser(remove_blank_text=True)
-            return etree.parse(opi_file, parser)
+        try:
+            with open(filepath) as opi_file:
+                parser = etree.XMLParser(remove_blank_text=True)
+                return etree.parse(opi_file, parser)
+        except IOError:
+            print "Fatal: Could not open file " + filepath
+            sys.exit(1)
+        except LxmlError:
+            print "Fatal: Could not parse file " + filepath + " as XML."
+            sys.exit(1)
 
     def file_iterator(self):
 
         if self.single_file == "":
+            # No single file was defined - iterate through all files
             for filename in os.listdir(self.root_directory):
                 if filename.endswith(self.file_extension):
                     filepath = os.path.join(self.root_directory, filename)
                     yield filepath
         else:
+            # Only check one file
             filepath = os.path.join(self.root_directory, self.single_file)
             yield filepath
 
@@ -244,6 +255,7 @@ class CheckOpiFormat:
         number_of_args = len(sys.argv)
 
         if number_of_args == 1:
+            # Use default behaviour - do nothing
             pass
         elif number_of_args == 2:
             self.single_file = sys.argv[1]
@@ -253,6 +265,7 @@ class CheckOpiFormat:
         else:
             print("Command format incorrect. Expected format:")
             print (sys.argv[0] + " [single file [root directory]]")
+            sys.exit(1)
 
         self.errors = []
         build_contains_errors = False
