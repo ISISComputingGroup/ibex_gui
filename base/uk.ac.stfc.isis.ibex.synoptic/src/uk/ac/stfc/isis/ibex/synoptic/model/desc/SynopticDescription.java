@@ -31,6 +31,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import org.xml.sax.SAXException;
 
+import uk.ac.stfc.isis.ibex.model.ModelObject;
 import uk.ac.stfc.isis.ibex.synoptic.xml.XMLUtil;
 
 /**
@@ -43,7 +44,7 @@ import uk.ac.stfc.isis.ibex.synoptic.xml.XMLUtil;
  */
 @XmlRootElement(name = "instrument")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class SynopticDescription implements SynopticParentDescription {
+public class SynopticDescription extends ModelObject implements SynopticParentDescription {
 	private String name;
 	private String showbeam;
 	
@@ -113,19 +114,29 @@ public class SynopticDescription implements SynopticParentDescription {
 	
 	@Override
     public void addComponent(ComponentDescription component) {
-		components.add(component);
+        addComponent(components.size(), component);
 	}
 	
 	@Override
     public void addComponent(ComponentDescription component, int index) {
-		components.add(index, component);
+        addComponent(index, component);
 	}
 	
 	@Override
     public void removeComponent(ComponentDescription component) {
 		components.remove(component);
+        firePropertyChange("componentRemoved", null, component);
 	}
 	
+    private void addComponent(int index, ComponentDescription component) {
+        components.add(index, component);
+        firePropertyChange("componentAdded", null, component);
+
+        // Pass through when properties change on a child so that we can check
+        // for errors more easily
+        component.addPropertyChangeListener(passThrough());
+    }
+
     /**
      * Processes the child components. Sets the parent for the components to
      * this.
@@ -133,6 +144,7 @@ public class SynopticDescription implements SynopticParentDescription {
 	public void processChildComponents() {
 		for (ComponentDescription cd: components) {
 			cd.setParent(null);
+            cd.addPropertyChangeListener(passThrough());
 			cd.processChildComponents();
 		}
 	}
@@ -172,7 +184,7 @@ public class SynopticDescription implements SynopticParentDescription {
         ArrayList<String> nameList = new ArrayList<>();
 
         for (ComponentDescription cd : components) {
-            nameList.add(cd.name());
+            nameList.add(cd.name().trim());
             getChildNames(cd, nameList);
         }
 

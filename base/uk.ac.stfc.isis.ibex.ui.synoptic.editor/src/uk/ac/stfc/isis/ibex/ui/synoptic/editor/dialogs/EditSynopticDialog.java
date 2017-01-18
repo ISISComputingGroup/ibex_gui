@@ -19,12 +19,14 @@
 
 package uk.ac.stfc.isis.ibex.ui.synoptic.editor.dialogs;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.Collection;
 
 import javax.xml.bind.JAXBException;
 
-import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
+import org.eclipse.jface.dialogs.TitleAreaDialog;
 import org.eclipse.jface.window.Window;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -42,9 +44,9 @@ import uk.ac.stfc.isis.ibex.synoptic.Synoptic;
 import uk.ac.stfc.isis.ibex.synoptic.SynopticInfo;
 import uk.ac.stfc.isis.ibex.synoptic.xml.XMLUtil;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.instrument.SynopticPreview;
-import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.IInstrumentUpdateListener;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.SynopticViewModel;
-import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.UpdateTypes;
+import uk.ac.stfc.isis.ibex.ui.synoptic.editor.validators.ComponentListValidator;
+import uk.ac.stfc.isis.ibex.validators.ErrorMessage;
 
 /**
  * This class provides the dialog to edit the synoptic. While this class is responsible for
@@ -52,7 +54,7 @@ import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.UpdateTypes;
  * 
  */
 @SuppressWarnings("checkstyle:magicnumber")
-public class EditSynopticDialog extends Dialog {
+public class EditSynopticDialog extends TitleAreaDialog {
 	
 	private static final Point INITIAL_SIZE = new Point(950, 800);
 	private final String title;
@@ -65,6 +67,8 @@ public class EditSynopticDialog extends Dialog {
 	
     private SynopticViewModel synopticViewModel;
     private Collection<String> availableOPIs;
+
+    private ComponentListValidator synopticValidator;
 
     /**
      * The constructor for the overall Synoptic editor dialog.
@@ -88,6 +92,7 @@ public class EditSynopticDialog extends Dialog {
 		this.isBlank = isBlank;
         this.availableOPIs = availableOPIs;
         this.synopticViewModel = synopticViewModel;
+        this.synopticValidator = new ComponentListValidator(synopticViewModel.getSynoptic());
 	}
 	
 	@Override
@@ -156,21 +161,26 @@ public class EditSynopticDialog extends Dialog {
 			}
 		});
 		
-		synopticViewModel.addInstrumentUpdateListener(new IInstrumentUpdateListener() {
+        synopticValidator.addPropertyChangeListener("error", new PropertyChangeListener() {
             @Override
-            public void instrumentUpdated(UpdateTypes updateType) {
-                if (updateType == UpdateTypes.EDIT_COMPONENT) {
-                    saveAsBtn.setEnabled(!synopticViewModel.getHasDuplicatedName());
-                    if (saveBtn != null) {
-                        saveBtn.setEnabled(!synopticViewModel.getHasDuplicatedName());
-                    }
-                }
+            public void propertyChange(PropertyChangeEvent evt) {
+                updateErrors((ErrorMessage) evt.getNewValue());
             }
         });
+
+        updateErrors(synopticValidator.getError());
 		
 		createButton(parent, IDialogConstants.CANCEL_ID, "Cancel", false);
 	}	
 	
+    private void updateErrors(ErrorMessage error) {
+        setErrorMessage(error.getMessage());
+        saveAsBtn.setEnabled(!error.isError());
+        if (saveBtn != null) {
+            saveBtn.setEnabled(!error.isError());
+        }
+    }
+
 	@Override
 	protected void configureShell(Shell shell) {
 		super.configureShell(shell);

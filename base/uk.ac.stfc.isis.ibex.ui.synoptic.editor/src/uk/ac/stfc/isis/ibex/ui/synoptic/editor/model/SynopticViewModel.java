@@ -32,9 +32,7 @@ package uk.ac.stfc.isis.ibex.ui.synoptic.editor.model;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -150,7 +148,7 @@ public class SynopticViewModel extends ModelObject {
             component.setParent(parent);
 		}
 
-		broadcastInstrumentUpdate(UpdateTypes.NEW_COMPONENT);
+        refreshTreeView();
 		setSelectedComponent(Arrays.asList(component));
 
 	}
@@ -247,7 +245,7 @@ public class SynopticViewModel extends ModelObject {
 					parent.removeComponent(selected);
 				}
 				setSelectedComponent(null);
-				broadcastInstrumentUpdate(UpdateTypes.DELETE_COMPONENT);
+                refreshTreeView();
 			}
 		}
 	}
@@ -292,6 +290,7 @@ public class SynopticViewModel extends ModelObject {
     public void setSelectedComponent(List<ComponentDescription> selected) {
         firePropertyChange("compSelection", selectedComponents, selectedComponents = selected);
         setSelectedProperty(null);
+        refreshTreeView();
     }
 	
     /**
@@ -420,21 +419,6 @@ public class SynopticViewModel extends ModelObject {
 	}
 
     /**
-     * Checks for duplicate names in the components.
-     * 
-     * @return true means duplicate(s)
-     */
-    public boolean getHasDuplicatedName() {
-        List<String> comps = getSynoptic().getComponentNameListWithChildren();
-        return listHasDuplicates(comps);
-    }
-
-    private boolean listHasDuplicates(List<String> list) {
-        Set<String> set = new HashSet<String>(list);
-        return (set.size() < list.size());
-    }
-
-    /**
      * Gets the OPI for the specified target.
      * 
      * @param targetName the name of the OPI.
@@ -463,5 +447,12 @@ public class SynopticViewModel extends ModelObject {
      */
     public List<String> getSelectedPropertyKeys() {
         return getPropertyKeys(getSingleSelectedComp().target().name());
+    }
+
+    /**
+     * Refreshes the tree view of the instrument.
+     */
+    public void refreshTreeView() {
+        firePropertyChange("refreshTree", 0, 1);
     }
 }
