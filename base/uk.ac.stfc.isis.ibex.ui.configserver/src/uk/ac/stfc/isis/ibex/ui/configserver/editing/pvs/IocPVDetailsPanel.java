@@ -28,14 +28,14 @@ import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.FillLayout;
+import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
-import org.eclipse.swt.layout.GridData;
 
 import uk.ac.stfc.isis.ibex.configserver.configuration.AvailablePV;
 import uk.ac.stfc.isis.ibex.configserver.configuration.PVDefaultValue;
@@ -77,11 +77,14 @@ public class IocPVDetailsPanel extends Composite {
 		value.setEnabled(false);
 		
 		availablePVTable = new IocAvailablePVsTable(grpSelectedPv, SWT.NONE, 0);
-		availablePVTable.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
+        GridData gd_availablePVTable = new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1);
+        gd_availablePVTable.heightHint = 100;
+        availablePVTable.setLayoutData(gd_availablePVTable);
 		new Label(grpSelectedPv, SWT.NONE);
 		new Label(grpSelectedPv, SWT.NONE);
 		availablePVTable.addSelectionChangedListener(new ISelectionChangedListener() {
-			public void selectionChanged(SelectionChangedEvent arg0) {
+			@Override
+            public void selectionChanged(SelectionChangedEvent arg0) {
 				IStructuredSelection selection = (IStructuredSelection) arg0.getSelection();
 				if (selection.size() > 0) {
 					AvailablePV pv = (AvailablePV) selection.getFirstElement();

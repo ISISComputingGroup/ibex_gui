@@ -21,6 +21,9 @@
  */
 package uk.ac.stfc.isis.ibex.ui.configserver.editing.iocs;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.TitleAreaDialog;
 import org.eclipse.swt.SWT;
@@ -35,46 +38,65 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
+import uk.ac.stfc.isis.ibex.validators.MessageDisplayer;
 
 /**
  *
  */
-public class EditIocDialog extends TitleAreaDialog {
+public class EditIocDialog extends TitleAreaDialog implements MessageDisplayer {
     EditableConfiguration config;
     boolean isBlank;
 
-    Button btnNav;
+    Button btnPrev;
     Button btnOk;
     Composite content;
     StackLayout stack;
     AddIocPanel addIocPanel;
     EditIocPanel editIocPanel;
-    Composite nextNav;
+
+    /** Error messages that are displayed. <Source, message> */
+    private Map<String, String> errorMessages = new HashMap<String, String>();
 
     private static final Display DISPLAY = Display.getCurrent();
 
-    SelectionListener navListener = new SelectionListener() {
+    SelectionListener nextListener = new SelectionListener() {
         @Override
         public void widgetSelected(SelectionEvent e) {
-            updateStack(nextNav);
-            if (nextNav.equals(addIocPanel)) {
-                nextNav = editIocPanel;
-                btnNav.setText("Next");
-                btnNav.setFocus();
-                btnOk.setEnabled(false);
-            } else {
-                nextNav = addIocPanel;
-                btnNav.setText("Previous");
-                btnOk.setEnabled(true);
-                btnOk.setFocus();
-            }
+            updateStack(editIocPanel);
+            nextPage();
         }
 
         @Override
         public void widgetDefaultSelected(SelectionEvent e) {
-            //
         }
     };
+
+    SelectionListener prevListener = new SelectionListener() {
+        @Override
+        public void widgetSelected(SelectionEvent e) {
+            updateStack(addIocPanel);
+            previousPage();
+        }
+
+        @Override
+        public void widgetDefaultSelected(SelectionEvent e) {
+        }
+    };
+
+    private void previousPage() {
+        btnPrev.setVisible(false);
+        btnOk.addSelectionListener(nextListener);
+        btnOk.setData(IDialogConstants.NO_ID);
+        btnOk.setText("Next");
+    }
+
+    private void nextPage() {
+        btnPrev.setVisible(true);
+        btnOk.setFocus();
+        btnOk.removeSelectionListener(nextListener);
+        btnOk.setData(IDialogConstants.OK_ID);
+        btnOk.setText(IDialogConstants.OK_LABEL);
+    }
 
     /**
      * @param parent
@@ -88,14 +110,19 @@ public class EditIocDialog extends TitleAreaDialog {
 
     @Override
     protected void createButtonsForButtonBar(Composite parent) {
-        // TODO put it on a stack
-        btnNav = createButton(parent, IDialogConstants.NO_ID, "Next", false);
-        btnOk = createButton(parent, IDialogConstants.OK_ID, IDialogConstants.OK_LABEL, false);
-        createButton(parent, IDialogConstants.CANCEL_ID, IDialogConstants.CANCEL_LABEL, false);
+        if (isBlank) {
+            btnPrev = createButton(parent, IDialogConstants.NO_ID, "Previous", false);
+            btnPrev.addSelectionListener(prevListener);
+            btnPrev.setVisible(false);
 
-//        btnNav.setEnabled(false);
-        btnNav.addSelectionListener(navListener);
-        btnOk.setEnabled(false);
+            btnOk = createButton(parent, IDialogConstants.NO_ID, "Next", false);
+            btnOk.addSelectionListener(nextListener);
+//            btnOk.setEnabled(false);
+        } else {
+            btnOk = createButton(parent, IDialogConstants.OK_ID, IDialogConstants.OK_LABEL, false);
+        }
+
+        createButton(parent, IDialogConstants.CANCEL_ID, IDialogConstants.CANCEL_LABEL, false);
     }
 
     @Override
@@ -106,19 +133,48 @@ public class EditIocDialog extends TitleAreaDialog {
         stack = new StackLayout();
         content.setLayout(stack);
 
-        addIocPanel = new AddIocPanel(content, config, SWT.NONE);
-        addIocPanel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-
-        editIocPanel = new EditIocPanel(content, config, SWT.NONE);
+        editIocPanel = new EditIocPanel(content, this, config, SWT.NONE);
         editIocPanel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 
-        stack.topControl = addIocPanel;
-        nextNav = editIocPanel;
+        if (isBlank) {
+            addIocPanel = new AddIocPanel(content, config, SWT.NONE);
+            addIocPanel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+            stack.topControl = addIocPanel;
+            this.setTitle("Add IOC");
+        } else {
+            stack.topControl = editIocPanel;
+            this.setTitle("Edit IOC");            
+        }
 
         content.layout();
 
-        this.setTitle("Add IOC");
         return addIocPanel;
+    }
+
+    @Override
+    public void setErrorMessage(String source, String error) {
+        errorMessages.put(source, error);
+        showErrorMessage();
+    }
+
+    /**
+     * Show the current error messages.
+     */
+    protected void showErrorMessage() {
+        StringBuilder sb = new StringBuilder();
+        for (String key : errorMessages.keySet()) {
+            if (errorMessages.get(key) != null) {
+                sb.append(errorMessages.get(key));
+                sb.append("  ");
+            }
+        }
+
+        if (sb.length() > 0) {
+            setErrorMessage(sb.toString());
+            // Don't allow save until errors are cleared
+        } else {
+            setErrorMessage(null);
+        }
     }
 
     private void updateStack(final Control top) {

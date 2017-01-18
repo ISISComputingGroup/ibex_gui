@@ -67,7 +67,7 @@ public class IocPVsEditorPanel extends Composite implements IIocDependentPanel {
 		
 		iocPVsTable = new IocPVsTable(this, SWT.NONE, 0);
 		GridData gdIocPVsTable = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
-		gdIocPVsTable.heightHint = 200;
+        gdIocPVsTable.heightHint = 150;
 		iocPVsTable.setLayoutData(gdIocPVsTable);
         iocPVsTable.addKeyListener(new KeyAdapter() {
             @Override

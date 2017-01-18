@@ -27,11 +27,11 @@ import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Label;
 
 import uk.ac.stfc.isis.ibex.configserver.configuration.Ioc;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
@@ -54,7 +54,7 @@ public class IocSettingPanel extends Composite {
 		
 		iocCombo = new ComboViewer(this, SWT.DROP_DOWN | SWT.READ_ONLY);
 		GridData gridData = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
-		gridData.widthHint = 150;
+        gridData.widthHint = 100;
 		iocCombo.getCombo().setLayoutData(gridData);
 		iocCombo.setContentProvider(ArrayContentProvider.getInstance());
 		
@@ -73,7 +73,8 @@ public class IocSettingPanel extends Composite {
 	
 	public void setConfig(EditableConfiguration config) {
 		iocCombo.setLabelProvider(new LabelProvider() {
-			public String getText(Object element) {
+			@Override
+            public String getText(Object element) {
 				Ioc ioc = (Ioc) element;
 				return ioc.getName();
 			};

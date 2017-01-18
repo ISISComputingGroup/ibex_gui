@@ -36,6 +36,9 @@ import org.eclipse.swt.widgets.Text;
 
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.macros.MacroPanel;
+import uk.ac.stfc.isis.ibex.ui.configserver.editing.pvs.IocPVsEditorPanel;
+import uk.ac.stfc.isis.ibex.ui.configserver.editing.pvsets.IocPVSetsEditorPanel;
+import uk.ac.stfc.isis.ibex.validators.MessageDisplayer;
 
 /**
  *
@@ -45,7 +48,7 @@ public class EditIocPanel extends Composite {
     private static final int NUM_COLS = 6;
     private static final int SPACING = 10;
 
-    public EditIocPanel(Composite parent, EditableConfiguration config, int style) {
+    public EditIocPanel(Composite parent, MessageDisplayer dialog, EditableConfiguration config, int style) {
         super(parent, style);
         this.setLayout(new GridLayout());
 
@@ -94,6 +97,8 @@ public class EditIocPanel extends Composite {
 
         // Settings tabs
         MacroPanel macros = new MacroPanel(iocSettings, SWT.NONE);
+        IocPVsEditorPanel pvVals = new IocPVsEditorPanel(iocSettings, SWT.NONE, dialog);
+        IocPVSetsEditorPanel pvSets = new IocPVSetsEditorPanel(iocSettings, SWT.NONE, dialog);
 
         TabItem macrosTab = new TabItem(iocSettings, SWT.NONE);
         macrosTab.setText("Macros");
@@ -101,9 +106,11 @@ public class EditIocPanel extends Composite {
 
         TabItem pvValuesTab = new TabItem(iocSettings, SWT.NONE);
         pvValuesTab.setText("PV Values");
+        pvValuesTab.setControl(pvVals);
 
         TabItem pvSetsTab = new TabItem(iocSettings, SWT.NONE);
         pvSetsTab.setText("PV Sets");
+        pvSetsTab.setControl(pvSets);
 
     }
 

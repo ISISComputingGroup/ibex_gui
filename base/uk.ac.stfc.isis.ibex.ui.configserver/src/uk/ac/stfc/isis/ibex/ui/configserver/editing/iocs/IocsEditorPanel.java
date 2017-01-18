@@ -114,7 +114,19 @@ public class IocsEditorPanel extends Composite {
 
             @Override
             public void widgetDefaultSelected(SelectionEvent e) {
-                //
+            }
+        });
+        
+        btnEditIoc.addSelectionListener(new SelectionListener() {
+
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                EditIocDialog dialog = new EditIocDialog(getShell(), config, false);
+                dialog.open();
+            }
+
+            @Override
+            public void widgetDefaultSelected(SelectionEvent e) {
             }
         });
 	}
