@@ -22,6 +22,8 @@ package uk.ac.stfc.isis.ibex.ui.configserver.editing.iocs;
 import java.util.Arrays;
 
 import org.eclipse.core.databinding.observable.map.IObservableMap;
+import org.eclipse.jface.viewers.ISelectionChangedListener;
+import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
@@ -47,11 +49,18 @@ public class EditableIocsTable extends DataboundTable<EditableIoc> {
 
 	private final CellDecorator<EditableIoc> rowDecorator = new IocRowCellDecorator();
 	private final CellDecorator<EditableIoc> simulationDecorator = new IocSimulationCellDecorator();
-	
-	public EditableIocsTable(Composite parent, int style, int tableStyle) {
+
+    public EditableIocsTable(Composite parent, int style, int tableStyle) {
 		super(parent, style, EditableIoc.class, tableStyle | SWT.NO_SCROLL | SWT.V_SCROLL);
 				
-		initialise();		
+        initialise();
+        this.addSelectionChangedListener(new ISelectionChangedListener() {
+
+            @Override
+            public void selectionChanged(SelectionChangedEvent event) {
+
+            }
+        });
 	}
 	
 	@Override

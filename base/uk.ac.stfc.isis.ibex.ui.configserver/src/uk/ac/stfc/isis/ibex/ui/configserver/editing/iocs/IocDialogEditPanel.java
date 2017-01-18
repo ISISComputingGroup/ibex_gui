@@ -35,6 +35,7 @@ import org.eclipse.swt.widgets.TabItem;
 import org.eclipse.swt.widgets.Text;
 
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
+import uk.ac.stfc.isis.ibex.configserver.editing.EditableIoc;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.macros.MacroPanel;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.pvs.IocPVsEditorPanel;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.pvsets.IocPVSetsEditorPanel;
@@ -43,14 +44,18 @@ import uk.ac.stfc.isis.ibex.validators.MessageDisplayer;
 /**
  *
  */
-public class EditIocPanel extends Composite {
+public class IocDialogEditPanel extends Composite {
 
     private static final int NUM_COLS = 6;
     private static final int SPACING = 10;
 
-    public EditIocPanel(Composite parent, MessageDisplayer dialog, EditableConfiguration config, int style) {
+    private IocViewModel iocViewModel;
+
+    public IocDialogEditPanel(Composite parent, MessageDisplayer dialog, int style, EditableConfiguration config,
+            EditableIoc ioc) {
         super(parent, style);
         this.setLayout(new GridLayout());
+        this.iocViewModel = new IocViewModel(ioc, config);
 
         // Add IOC details
         Composite cmpIocDetails = new Composite(this, SWT.NONE);
@@ -111,7 +116,6 @@ public class EditIocPanel extends Composite {
         TabItem pvSetsTab = new TabItem(iocSettings, SWT.NONE);
         pvSetsTab.setText("PV Sets");
         pvSetsTab.setControl(pvSets);
-
     }
 
 }

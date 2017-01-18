@@ -23,9 +23,14 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.Collection;
 
+import org.eclipse.jface.viewers.ISelectionChangedListener;
+import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.MouseEvent;
+import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
+import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -41,11 +46,14 @@ import uk.ac.stfc.isis.ibex.validators.MessageDisplayer;
 @SuppressWarnings("checkstyle:magicnumber")
 public class IocsEditorPanel extends Composite {
 
+    private EditableConfiguration config;
+
 	private EditableIocsTable table;
-	
+    private Button btnAddIoc;
+    private Button btnEditIoc;
+    private Button btnDeleteIoc;
 	private final Display display = Display.getCurrent();
-	private EditableConfiguration config;
-	
+
     private static final int BUTTON_WIDTH = 100;
 
 	private final PropertyChangeListener updateIocs = new PropertyChangeListener() {
@@ -69,7 +77,7 @@ public class IocsEditorPanel extends Composite {
 		
 		
         // Add IOC button
-        Button btnAddIoc = new Button(this, SWT.NONE);
+        btnAddIoc = new Button(this, SWT.NONE);
         btnAddIoc.setText("Add IOC");
 
         // Selected IOC readback
@@ -89,12 +97,14 @@ public class IocsEditorPanel extends Composite {
         selectedIoc.setEnabled(false);
 
         // Edit IOC button
-        Button btnEditIoc = new Button(this, SWT.NONE);
+        btnEditIoc = new Button(this, SWT.NONE);
         btnEditIoc.setText("Edit IOC");
+        btnEditIoc.setEnabled(false);
 
         // Delete IOC Button
-        Button btnDeleteIoc = new Button(this, SWT.NONE);
+        btnDeleteIoc = new Button(this, SWT.NONE);
         btnDeleteIoc.setText("Delete IOC");
+        btnDeleteIoc.setEnabled(false);
 
         GridData gdButton = new GridData();
         gdButton.widthHint = BUTTON_WIDTH;
@@ -103,33 +113,63 @@ public class IocsEditorPanel extends Composite {
         btnEditIoc.setLayoutData(gdButton);
         btnDeleteIoc.setLayoutData(gdButton);
 
+        // Add listeners
         btnAddIoc.addSelectionListener(new SelectionListener() {
 
             @Override
             public void widgetSelected(SelectionEvent e) {
-//                EditableIoc added = blockFactory.createNewBlock();
-                EditIocDialog dialog = new EditIocDialog(getShell(), config, true);
-                dialog.open();
+                EditableIoc added = new EditableIoc("");
+                openEditIocDialog(added, true);
             }
 
             @Override
             public void widgetDefaultSelected(SelectionEvent e) {
             }
         });
-        
+
         btnEditIoc.addSelectionListener(new SelectionListener() {
 
             @Override
             public void widgetSelected(SelectionEvent e) {
-                EditIocDialog dialog = new EditIocDialog(getShell(), config, false);
-                dialog.open();
+                openEditIocDialog(table.firstSelectedRow(), false);
             }
 
             @Override
             public void widgetDefaultSelected(SelectionEvent e) {
             }
         });
+
+        table.addSelectionChangedListener(new ISelectionChangedListener() {
+            @Override
+            public void selectionChanged(SelectionChangedEvent arg0) {
+                EditableIoc selected = table.firstSelectedRow();
+                setSelectedBlocks(selected);
+            }
+        });
+
+        table.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseUp(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseDown(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseDoubleClick(MouseEvent e) {
+                if (table.getItemAtPoint(new Point(e.x, e.y)) != null) {
+                    openEditIocDialog(table.firstSelectedRow(), false);
+                }
+            }
+        });
 	}
+
+    private void setSelectedBlocks(EditableIoc selected) {
+        boolean isEditable = selected != null && selected.isEditable();
+        btnEditIoc.setEnabled(isEditable);
+        btnDeleteIoc.setEnabled(isEditable);
+    }
 
 	public void setConfig(EditableConfiguration config) {
 		this.config = config;
@@ -154,4 +194,9 @@ public class IocsEditorPanel extends Composite {
 			}
 		});
 	}
+
+    private void openEditIocDialog(EditableIoc toEdit, boolean isBlank) {
+        IocDialog dialog = new IocDialog(getShell(), config, toEdit, isBlank);
+        dialog.open();
+    }
 }

@@ -21,8 +21,6 @@
  */
 package uk.ac.stfc.isis.ibex.ui.configserver.editing.iocs;
 
-import java.util.Collection;
-
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -30,14 +28,13 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 
-import uk.ac.stfc.isis.ibex.configserver.configuration.Ioc;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.AvailableIocsTable;
 
 /**
  *
  */
-public class AddIocPanel extends Composite {
+public class IocDialogAddPanel extends Composite {
     AvailableIocsTable availableIocsTable;
     private static final int TABLE_HEIGHT = 300;
     private static final int SPACING = 25;
@@ -51,7 +48,7 @@ public class AddIocPanel extends Composite {
      * @param style
      *            - the style to use specified by the caller
      */
-    public AddIocPanel(Composite parent, EditableConfiguration config, int style) {
+    public IocDialogAddPanel(Composite parent, EditableConfiguration config, int style) {
         super(parent, style);
         GridLayout glPanel = new GridLayout(2, false);
         glPanel.verticalSpacing = SPACING;
@@ -74,25 +71,5 @@ public class AddIocPanel extends Composite {
         selectedIoc.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
         selectedIoc.setEnabled(false);
 
-    }
-
-    /**
-     * Make sure that the appropriate config is associated with any changes.
-     * 
-     * @param config
-     *            - the configuration being edited, or which is loaded
-     */
-    public void setConfig(EditableConfiguration config) {
-        setIocs(config.getAvailableIocs());
-    }
-
-    /**
-     * Display the appropriate pvs.
-     * 
-     * @param allPVs
-     *            - the pvs to display
-     */
-    private void setIocs(Collection<Ioc> allIocs) {
-        availableIocsTable.setRows(allIocs);
     }
 }

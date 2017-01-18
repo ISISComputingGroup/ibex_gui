@@ -38,21 +38,24 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
+import uk.ac.stfc.isis.ibex.configserver.editing.EditableIoc;
 import uk.ac.stfc.isis.ibex.validators.MessageDisplayer;
 
 /**
  *
  */
-public class EditIocDialog extends TitleAreaDialog implements MessageDisplayer {
+public class IocDialog extends TitleAreaDialog implements MessageDisplayer {
     EditableConfiguration config;
+    EditableIoc ioc;
+    private IocViewModel iocViewModel;
     boolean isBlank;
 
     Button btnPrev;
     Button btnOk;
     Composite content;
     StackLayout stack;
-    AddIocPanel addIocPanel;
-    EditIocPanel editIocPanel;
+    IocDialogAddPanel addIocPanel;
+    IocDialogEditPanel editIocPanel;
 
     /** Error messages that are displayed. <Source, message> */
     private Map<String, String> errorMessages = new HashMap<String, String>();
@@ -92,7 +95,6 @@ public class EditIocDialog extends TitleAreaDialog implements MessageDisplayer {
 
     private void nextPage() {
         btnPrev.setVisible(true);
-        btnOk.setFocus();
         btnOk.removeSelectionListener(nextListener);
         btnOk.setData(IDialogConstants.OK_ID);
         btnOk.setText(IDialogConstants.OK_LABEL);
@@ -102,10 +104,11 @@ public class EditIocDialog extends TitleAreaDialog implements MessageDisplayer {
      * @param parent
      * @param style
      */
-    public EditIocDialog(Shell parent, EditableConfiguration config, boolean isBlank) {
+    public IocDialog(Shell parent, EditableConfiguration config, EditableIoc ioc, boolean isBlank) {
         super(parent);
         this.isBlank = isBlank;
         this.config = config;
+        this.ioc = ioc;
     }
 
     @Override
@@ -127,17 +130,16 @@ public class EditIocDialog extends TitleAreaDialog implements MessageDisplayer {
 
     @Override
     protected Control createDialogArea(Composite parent) {
-        // TODO conditional
         content = new Composite(parent, SWT.NONE);
         content.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
         stack = new StackLayout();
         content.setLayout(stack);
 
-        editIocPanel = new EditIocPanel(content, this, config, SWT.NONE);
+        editIocPanel = new IocDialogEditPanel(content, this, SWT.NONE, config, ioc);
         editIocPanel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 
         if (isBlank) {
-            addIocPanel = new AddIocPanel(content, config, SWT.NONE);
+            addIocPanel = new IocDialogAddPanel(content, config, SWT.NONE);
             addIocPanel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
             stack.topControl = addIocPanel;
             this.setTitle("Add IOC");
