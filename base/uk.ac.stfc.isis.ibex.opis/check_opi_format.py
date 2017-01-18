@@ -12,6 +12,9 @@ class CheckOpiFormat:
     # Files ending with .opi are parsed:
     file_extension = r".opi"
 
+    # Single file
+    single_file = ""
+
     # If a word contains any of the following, the whole word will be ignored
     ignore = \
         ["$", "&", "#", '"', "'", "(", ")", "OPI", "PSU", "HW", "Hz", "LED", "A:", "B:", "C:", "D:"]
@@ -33,10 +36,15 @@ class CheckOpiFormat:
             return etree.parse(opi_file, parser)
 
     def file_iterator(self):
-        for filename in os.listdir(self.root_directory):
-            if filename.endswith(self.file_extension):
-                filepath = os.path.join(self.root_directory, filename)
-                yield filepath
+
+        if self.single_file == "":
+            for filename in os.listdir(self.root_directory):
+                if filename.endswith(self.file_extension):
+                    filepath = os.path.join(self.root_directory, filename)
+                    yield filepath
+        else:
+            filepath = os.path.join(self.root_directory, self.single_file)
+            yield filepath
 
     def check_condition(self, root, xpath, error_message):
         for error in root.xpath(xpath):
@@ -232,6 +240,19 @@ class CheckOpiFormat:
         self.check_condition(root, xpath + condition, error_message)
 
     def run(self):
+
+        number_of_args = len(sys.argv)
+
+        if number_of_args == 1:
+            pass
+        elif number_of_args == 2:
+            self.single_file = sys.argv[1]
+        elif number_of_args == 3:
+            self.single_file = sys.argv[1]
+            self.root_directory = sys.argv[2]
+        else:
+            print("Command format incorrect. Expected format:")
+            print (sys.argv[0] + " [single file [root directory]]")
 
         self.errors = []
         build_contains_errors = False
