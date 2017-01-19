@@ -69,10 +69,16 @@ public class DeviceDescription extends ModelObject {
      * 
      * @param original the item to copy
      */
-    public DeviceDescription(DeviceDescription original) {
+    public DeviceDescription(DeviceDescription original, boolean persistent) {
         key = original.getKey();
         name = original.getName();
         type = original.getType();
+
+        if (persistent) {
+            this.persist = "Yes";
+        } else {
+            this.persist = "No";
+        }
 
         for (PropertyDescription p : original.getProperties()) {
             this.addProperty(new PropertyDescription(p.getKey(), p.getValue()));
