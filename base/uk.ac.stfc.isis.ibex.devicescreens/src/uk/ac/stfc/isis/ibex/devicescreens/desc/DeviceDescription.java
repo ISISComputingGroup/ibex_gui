@@ -52,8 +52,7 @@ public class DeviceDescription extends ModelObject {
     /** The type is either an OPI or a custom screen. */
     private String type;
 
-    /** */
-    private String persistence = "";
+    private String persist;
 
     /** The properties that have been set. */
     @XmlElement(name = "properties", type = PropertiesDescription.class)
@@ -108,16 +107,6 @@ public class DeviceDescription extends ModelObject {
         firePropertyChange("key", this.key, this.key = key);
     }
 
-    public String getPersistence() {
-        System.out.println("DEBUG 2");
-        return persistence;
-    }
-
-    public void setPersistence(String persistence) {
-        System.out.println("DEBUG 3 (persistence set to " + persistence + ")");
-        firePropertyChange("persistence", this.persistence, this.persistence = persistence);
-    }
-
     /**
      * @return the name
      */
@@ -130,6 +119,21 @@ public class DeviceDescription extends ModelObject {
      */
     public void setName(String name) {
         firePropertyChange("name", this.name, this.name = name);
+    }
+
+    /**
+     * @return the persistence setting
+     */
+    public String getPersist() {
+        return persist;
+    }
+
+    /**
+     * @param persist
+     *            the persistence setting to set
+     */
+    public void setPersist(String persist) {
+        firePropertyChange("persist", this.persist, this.persist = persist);
     }
 
     /**

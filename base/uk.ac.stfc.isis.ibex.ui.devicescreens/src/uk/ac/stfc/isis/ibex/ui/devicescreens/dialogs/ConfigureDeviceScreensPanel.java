@@ -283,24 +283,10 @@ public class ConfigureDeviceScreensPanel extends Composite {
         Button yesButton = new Button(detailsComposite, SWT.RADIO);
         yesButton.setText("Save this device screen");
         yesButton.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1));
-        yesButton.addSelectionListener(new SelectionAdapter() {
-            @Override
-            public void widgetSelected(SelectionEvent e) {
-                viewModel.setCurrentPersistence("Yes");
-                devicesViewer.refresh();
-            }
-        });
 
         Button noButton = new Button(detailsComposite, SWT.RADIO);
         noButton.setText("Remove this device screen when IBEX is closed");
         noButton.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1));
-        noButton.addSelectionListener(new SelectionAdapter() {
-            @Override
-            public void widgetSelected(SelectionEvent e) {
-                viewModel.setPersistence("No");
-                devicesViewer.refresh();
-            }
-        });
     }
 
 }

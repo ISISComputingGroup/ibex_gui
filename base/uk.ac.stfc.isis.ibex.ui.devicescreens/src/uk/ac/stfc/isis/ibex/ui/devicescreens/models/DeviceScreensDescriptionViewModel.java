@@ -73,7 +73,7 @@ public class DeviceScreensDescriptionViewModel extends ModelObject {
      */
     private String previousDesc = null;
 
-    private String persistence = null;
+    private String persistence;
 
     /**
      * The constructor.
@@ -140,12 +140,10 @@ public class DeviceScreensDescriptionViewModel extends ModelObject {
             updateCurrentName(selectedScreen.getName());
             updateCurrentKey(selectedScreen.getKey());
             updateCurrentDescription();
-            updateCurrentPersistence(selectedScreen.getPersistence());
         } else {
             updateCurrentName("");
             updateCurrentKey("");
             updateCurrentDescription();
-            updateCurrentPersistence("");
         }
 
         // Clear out the stored property information
@@ -245,48 +243,6 @@ public class DeviceScreensDescriptionViewModel extends ModelObject {
     }
 
     /**
-     * @return the current persistence setting
-     */
-    public String getCurrentPersistence() {
-        System.out.println("DEBUG 10");
-        if (selectedScreen != null) {
-            return selectedScreen.getPersistence();
-        }
-
-        return "";
-    }
-
-    /**
-     * @param key the new value to set
-     */
-    public void setCurrentPersistence(String persistence) {
-        System.out.println("DEBUG 8");
-        if (selectedScreen == null) {
-            return;
-        }
-
-        if (persistence == null) {
-            persistence = "";
-        }
-
-        selectedScreen.setPersistence(persistence);
-        updateCurrentPersistence(selectedScreen.getPersistence());
-    }
-
-    /**
-     * Update the current key value and raise a change event.
-     * 
-     * @param newKey
-     *            the new key
-     */
-    private void updateCurrentPersistence(String persistence) {
-        System.out.println("DEBUG 9");
-        firePropertyChange("currentPersistence", this.persistence, this.persistence = persistence);
-
-        checkScreensValid();
-    }
-
-    /**
      * @return the current key
      */
     public String getCurrentKey() {
@@ -298,8 +254,7 @@ public class DeviceScreensDescriptionViewModel extends ModelObject {
     }
 
     /**
-     * @param key
-     *            the new value to set
+     * @param key the new value to set
      */
     public void setCurrentKey(String key) {
         if (selectedScreen == null) {
@@ -314,7 +269,6 @@ public class DeviceScreensDescriptionViewModel extends ModelObject {
         updateCurrentKey(key);
     }
 
-
     /**
      * @return the persistence mode
      */
@@ -323,27 +277,27 @@ public class DeviceScreensDescriptionViewModel extends ModelObject {
             return persistence;
         }
 
-        System.out.println("DEBUG 4");
+        System.out.println("Getting persistence");
 
         return "";
     }
 
     /**
-     * @param persistence
-     *            the new persistence setting
+     * @param key
+     *            the new value to set
      */
     public void setPersistence(String persistence) {
-
-        System.out.println("DEBUG 5");
+        if (selectedScreen == null) {
+            return;
+        }
 
         if (persistence == null) {
             persistence = "";
         }
 
-        if (persistence != this.persistence) {
-            System.out.println("Persistence was set to " + persistence + " for OPI " + getCurrentName());
-            firePropertyChange("persistence", this.persistence, this.persistence = persistence);
-        }
+        System.out.println("Persistence was set");
+
+        this.persistence = persistence;
     }
 
     /**
@@ -510,12 +464,9 @@ public class DeviceScreensDescriptionViewModel extends ModelObject {
 
         for (DeviceDescriptionWrapper d : devices) {
             DeviceDescription device = new DeviceDescription();
-
             device.setName(d.getName());
             device.setKey(d.getKey());
             device.setType(d.getType());
-            device.setPersistence(d.getPersistence());
-
             for (PropertyDescription p : d.getProperties()) {
                 // Only add the filled in ones
                 if (p.getValue() != "") {
