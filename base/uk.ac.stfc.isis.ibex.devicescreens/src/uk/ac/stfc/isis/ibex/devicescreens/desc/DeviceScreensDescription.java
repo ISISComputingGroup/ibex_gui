@@ -46,6 +46,8 @@ public class DeviceScreensDescription {
     @XmlElement(name = "device", type = DeviceDescription.class)
     private ArrayList<DeviceDescription> devices = new ArrayList<>();
 
+    private String persistence;
+
     /**
      * Default constructor. Needed for parsing XML.
      */
@@ -79,6 +81,14 @@ public class DeviceScreensDescription {
      */
     public void setDevices(List<DeviceDescription> devices) {
         this.devices = (ArrayList<DeviceDescription>) devices;
+    }
+
+    public String getPersistence() {
+        return persistence;
+    }
+
+    public void setPersistence(String persistence) {
+        this.persistence = persistence;
     }
 
     /**
