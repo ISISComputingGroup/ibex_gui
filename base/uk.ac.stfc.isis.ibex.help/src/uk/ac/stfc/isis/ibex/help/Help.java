@@ -37,14 +37,14 @@ public class Help extends Closer implements BundleActivator {
 	}
 
 	private Observables observables;
-	private UpdatedValue<String> revision;
+	private UpdatedValue<String> serverRevision;
 	private UpdatedValue<String> date;
 	
 	public Help() {
 		instance = this;
         observables = new Observables();
-		revision = registerForClose(new TextUpdatedObservableAdapter(observables.revision));
-		date = registerForClose(new TextUpdatedObservableAdapter(observables.date));
+		serverRevision = registerForClose(new TextUpdatedObservableAdapter(observables.serverRevision));
+		date = registerForClose(new TextUpdatedObservableAdapter(observables.serverDate));
 	}
 	
 	/*
@@ -71,7 +71,7 @@ public class Help extends Closer implements BundleActivator {
 	}
 	
 	public UpdatedValue<String> revision() {
-		return revision;
+		return serverRevision;
 	}
 	
 	public UpdatedValue<String> date() {
