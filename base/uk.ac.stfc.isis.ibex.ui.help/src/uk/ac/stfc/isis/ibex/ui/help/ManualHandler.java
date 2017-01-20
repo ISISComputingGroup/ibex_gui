@@ -29,6 +29,9 @@ import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.browser.IWebBrowser;
 
+/**
+ * The handler for opening the user manual via the menu.
+ */
 public class ManualHandler extends AbstractHandler {
 
     private static final String USER_MANUAL_ADDRESS = "http://shadow.nd.rl.ac.uk/ibex_user_manual/Home";

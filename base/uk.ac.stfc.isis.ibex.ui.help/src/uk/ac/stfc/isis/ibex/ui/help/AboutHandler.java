@@ -25,6 +25,9 @@ import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.PlatformUI;
 
+/**
+ * The handler for opening the about dialog window via the menu.
+ */
 public class AboutHandler extends AbstractHandler {
 
 	@Override
