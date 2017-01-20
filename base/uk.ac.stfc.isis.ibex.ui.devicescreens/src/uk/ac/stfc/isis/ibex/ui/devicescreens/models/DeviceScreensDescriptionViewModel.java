@@ -367,6 +367,7 @@ public class DeviceScreensDescriptionViewModel extends ModelObject {
         newScreen.setName(namer.getUnique(names));
         newScreen.setKey("");
         newScreen.setType("");
+        newScreen.setPersist("a");
 
         devices.add(new DeviceDescriptionWrapper(newScreen, provider));
         firePropertyChange("screens", oldList, devices);
@@ -467,6 +468,7 @@ public class DeviceScreensDescriptionViewModel extends ModelObject {
             device.setName(d.getName());
             device.setKey(d.getKey());
             device.setType(d.getType());
+            device.setPersist(d.getPersistence());
             for (PropertyDescription p : d.getProperties()) {
                 // Only add the filled in ones
                 if (p.getValue() != "") {
