@@ -242,7 +242,7 @@ from org.csstudio.opibuilder.scriptUtil import ConsoleUtil
         <tooltip></tooltip>
         <rules />
         <enabled>true</enabled>
-        <wuid>-e89b52e:15993563eb1:-76ef</wuid>
+        <wuid>152945a9:159bcb97ba7:-7ef1</wuid>
         <auto_size>false</auto_size>
         <scripts />
         <height>482</height>
@@ -254,7 +254,6 @@ from org.csstudio.opibuilder.scriptUtil import ConsoleUtil
         </scale_options>
         <macros>
           <include_parent_macros>true</include_parent_macros>
-          <EURO_NUM>2</EURO_NUM>
         </macros>
         <visible>true</visible>
         <group_name></group_name>
@@ -336,7 +335,6 @@ from org.csstudio.opibuilder.scriptUtil import ConsoleUtil
         </scale_options>
         <macros>
           <include_parent_macros>true</include_parent_macros>
-          <EURO_NUM>2</EURO_NUM>
         </macros>
         <visible>true</visible>
         <group_name></group_name>
@@ -418,7 +416,6 @@ from org.csstudio.opibuilder.scriptUtil import ConsoleUtil
         </scale_options>
         <macros>
           <include_parent_macros>true</include_parent_macros>
-          <EURO_NUM>3</EURO_NUM>
         </macros>
         <visible>true</visible>
         <group_name></group_name>
