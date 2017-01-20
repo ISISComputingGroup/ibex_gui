@@ -196,7 +196,7 @@
 		<entry>
 			<key>Keithley 2400</key>
 			<value>
-				<type>Keithley 2400</type>
+				<type>KEIT2400</type>
 				<path>Keithley2400/Keithley2400.opi</path>
 				<description>The OPI for the Keithley 2400 Source Meter.</description>
 				<macros>
