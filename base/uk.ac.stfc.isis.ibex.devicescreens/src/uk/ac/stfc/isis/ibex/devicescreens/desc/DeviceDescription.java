@@ -67,10 +67,7 @@ public class DeviceDescription extends ModelObject {
     /**
      * A copy constructor.
      * 
-     * @param original
-     *            the item to copy
-     * @param persistent
-     *            whether this device screen is saved on the server or not.
+     * @param original the item to copy
      */
     public DeviceDescription(DeviceDescription original, boolean persistent) {
         key = original.getKey();

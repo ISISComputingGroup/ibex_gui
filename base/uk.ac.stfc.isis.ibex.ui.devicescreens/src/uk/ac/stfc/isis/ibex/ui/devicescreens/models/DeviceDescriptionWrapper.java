@@ -54,8 +54,6 @@ public class DeviceDescriptionWrapper {
     /** The key is the the OPI name or custom screen name. */
     private String key = "";
 
-    private String persistence = "";
-
     /** Either an OPI or a custom screen. */
     private String type = "";
 
@@ -78,14 +76,6 @@ public class DeviceDescriptionWrapper {
         type = "OPI";
 
         mergeProperties();
-    }
-
-    public String getPersistence() {
-        return persistence;
-    }
-
-    public void setPersistence(String persistence) {
-        this.persistence = persistence;
     }
 
     /**
