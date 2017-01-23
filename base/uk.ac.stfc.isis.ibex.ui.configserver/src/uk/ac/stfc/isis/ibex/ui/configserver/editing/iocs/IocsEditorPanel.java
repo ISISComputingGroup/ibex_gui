@@ -52,6 +52,7 @@ public class IocsEditorPanel extends Composite {
     private Button btnAddIoc;
     private Button btnEditIoc;
     private Button btnDeleteIoc;
+    private Text selectedIocRb;
 	private final Display display = Display.getCurrent();
 
     private static final int BUTTON_WIDTH = 100;
@@ -83,18 +84,15 @@ public class IocsEditorPanel extends Composite {
         // Selected IOC readback
         Composite cmpSelectedIoc = new Composite(this, SWT.FILL);
         cmpSelectedIoc.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
-        GridLayout glCmpSelectedIoc = new GridLayout(2, true);
-//        glCmpSelectedIoc.marginWidth = 0;
-//        glCmpSelectedIoc.marginHeight = 0;
-        cmpSelectedIoc.setLayout(glCmpSelectedIoc);
+        cmpSelectedIoc.setLayout(new GridLayout(2, true));
 
         Label lblSelectedIoc = new Label(cmpSelectedIoc, SWT.NONE);
         lblSelectedIoc.setText("Selected:");
         lblSelectedIoc.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false));
 
-        Text selectedIoc = new Text(cmpSelectedIoc, SWT.BORDER);
-        selectedIoc.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-        selectedIoc.setEnabled(false);
+        selectedIocRb = new Text(cmpSelectedIoc, SWT.BORDER);
+        selectedIocRb.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+        selectedIocRb.setEditable(false);
 
         // Edit IOC button
         btnEditIoc = new Button(this, SWT.NONE);
@@ -143,7 +141,7 @@ public class IocsEditorPanel extends Composite {
             @Override
             public void selectionChanged(SelectionChangedEvent arg0) {
                 EditableIoc selected = table.firstSelectedRow();
-                setSelectedBlocks(selected);
+                setSelectedIoc(selected);
             }
         });
 
@@ -165,8 +163,9 @@ public class IocsEditorPanel extends Composite {
         });
 	}
 
-    private void setSelectedBlocks(EditableIoc selected) {
+    private void setSelectedIoc(EditableIoc selected) {
         boolean isEditable = selected != null && selected.isEditable();
+        selectedIocRb.setText(selected.getName());
         btnEditIoc.setEnabled(isEditable);
         btnDeleteIoc.setEnabled(isEditable);
     }

@@ -21,6 +21,11 @@
  */
 package uk.ac.stfc.isis.ibex.ui.configserver.editing.iocs;
 
+import org.eclipse.core.databinding.DataBindingContext;
+import org.eclipse.core.databinding.beans.BeanProperties;
+import org.eclipse.jface.databinding.swt.WidgetProperties;
+import org.eclipse.jface.viewers.ISelectionChangedListener;
+import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -35,7 +40,8 @@ import uk.ac.stfc.isis.ibex.ui.configserver.editing.AvailableIocsTable;
  *
  */
 public class IocDialogAddPanel extends Composite {
-    AvailableIocsTable availableIocsTable;
+    private AvailableIocsTable availableIocsTable;
+    private Text selectedIocRb;
     private static final int TABLE_HEIGHT = 300;
     private static final int SPACING = 25;
 
@@ -48,7 +54,7 @@ public class IocDialogAddPanel extends Composite {
      * @param style
      *            - the style to use specified by the caller
      */
-    public IocDialogAddPanel(Composite parent, EditableConfiguration config, int style) {
+    public IocDialogAddPanel(Composite parent, int style, EditableConfiguration config, final IocViewModel viewModel) {
         super(parent, style);
         GridLayout glPanel = new GridLayout(2, false);
         glPanel.verticalSpacing = SPACING;
@@ -67,9 +73,22 @@ public class IocDialogAddPanel extends Composite {
         lblSelectedIoc.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
         lblSelectedIoc.setText("Selected:");
 
-        Text selectedIoc = new Text(this, SWT.BORDER);
-        selectedIoc.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-        selectedIoc.setEnabled(false);
+        selectedIocRb = new Text(this, SWT.BORDER);
+        selectedIocRb.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+        selectedIocRb.setEditable(false);
 
+        availableIocsTable.addSelectionChangedListener(new ISelectionChangedListener() {
+
+            @Override
+            public void selectionChanged(SelectionChangedEvent event) {
+                viewModel.setName(availableIocsTable.firstSelectedRow().getName());
+            }
+        });
+    }
+
+    public void bind(IocViewModel viewModel) {
+        DataBindingContext bindingContext = new DataBindingContext();
+        bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(selectedIocRb),
+                BeanProperties.value("name").observe(viewModel));
     }
 }

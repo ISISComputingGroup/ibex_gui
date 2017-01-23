@@ -32,10 +32,10 @@ import uk.ac.stfc.isis.ibex.validators.ErrorMessageProvider;
 // TODO Validations
 public class IocViewModel extends ErrorMessageProvider {
 
-    String name;
-    boolean autoStart;
-    boolean autoRestart;
-    SimLevel simLevel;
+    private String name;
+    private boolean autoStart;
+    private boolean autoRestart;
+    private SimLevel simLevel;
 
     private final EditableIoc editingIoc;
     private final EditableConfiguration config;

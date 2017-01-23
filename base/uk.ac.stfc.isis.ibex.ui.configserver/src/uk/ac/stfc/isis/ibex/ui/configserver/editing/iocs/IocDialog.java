@@ -47,7 +47,6 @@ import uk.ac.stfc.isis.ibex.validators.MessageDisplayer;
 public class IocDialog extends TitleAreaDialog implements MessageDisplayer {
     EditableConfiguration config;
     EditableIoc ioc;
-    private IocViewModel iocViewModel;
     boolean isBlank;
 
     Button btnPrev;
@@ -56,6 +55,7 @@ public class IocDialog extends TitleAreaDialog implements MessageDisplayer {
     StackLayout stack;
     IocDialogAddPanel addIocPanel;
     IocDialogEditPanel editIocPanel;
+    private IocViewModel viewModel;
 
     /** Error messages that are displayed. <Source, message> */
     private Map<String, String> errorMessages = new HashMap<String, String>();
@@ -109,6 +109,7 @@ public class IocDialog extends TitleAreaDialog implements MessageDisplayer {
         this.isBlank = isBlank;
         this.config = config;
         this.ioc = ioc;
+        this.viewModel = new IocViewModel(ioc, config);
     }
 
     @Override
@@ -120,12 +121,12 @@ public class IocDialog extends TitleAreaDialog implements MessageDisplayer {
 
             btnOk = createButton(parent, IDialogConstants.NO_ID, "Next", false);
             btnOk.addSelectionListener(nextListener);
-//            btnOk.setEnabled(false);
         } else {
             btnOk = createButton(parent, IDialogConstants.OK_ID, IDialogConstants.OK_LABEL, false);
         }
 
         createButton(parent, IDialogConstants.CANCEL_ID, IDialogConstants.CANCEL_LABEL, false);
+        btnOk.setFocus();
     }
 
     @Override
@@ -135,11 +136,11 @@ public class IocDialog extends TitleAreaDialog implements MessageDisplayer {
         stack = new StackLayout();
         content.setLayout(stack);
 
-        editIocPanel = new IocDialogEditPanel(content, this, SWT.NONE, config, ioc);
+        editIocPanel = new IocDialogEditPanel(content, this, SWT.NONE, viewModel);
         editIocPanel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 
         if (isBlank) {
-            addIocPanel = new IocDialogAddPanel(content, config, SWT.NONE);
+            addIocPanel = new IocDialogAddPanel(content, SWT.NONE, config, viewModel);
             addIocPanel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
             stack.topControl = addIocPanel;
             this.setTitle("Add IOC");
@@ -187,5 +188,19 @@ public class IocDialog extends TitleAreaDialog implements MessageDisplayer {
                 content.layout();
             }
         });
+    }
+
+    /**
+     * @return the viewModel
+     */
+    public IocViewModel getViewModel() {
+        return viewModel;
+    }
+
+    /**
+     * @param viewModel the iocViewModel to set
+     */
+    public void setViewModel(IocViewModel viewModel) {
+        this.viewModel = viewModel;
     }
 }

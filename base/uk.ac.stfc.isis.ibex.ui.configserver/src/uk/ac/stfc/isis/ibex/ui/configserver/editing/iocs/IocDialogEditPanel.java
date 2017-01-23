@@ -21,6 +21,9 @@
  */
 package uk.ac.stfc.isis.ibex.ui.configserver.editing.iocs;
 
+import org.eclipse.core.databinding.DataBindingContext;
+import org.eclipse.core.databinding.beans.BeanProperties;
+import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.resource.FontDescriptor;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Font;
@@ -34,8 +37,6 @@ import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.swt.widgets.TabItem;
 import org.eclipse.swt.widgets.Text;
 
-import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
-import uk.ac.stfc.isis.ibex.configserver.editing.EditableIoc;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.macros.MacroPanel;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.pvs.IocPVsEditorPanel;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.pvsets.IocPVSetsEditorPanel;
@@ -49,13 +50,11 @@ public class IocDialogEditPanel extends Composite {
     private static final int NUM_COLS = 6;
     private static final int SPACING = 10;
 
-    private IocViewModel iocViewModel;
+    private Text selectedIoc;
 
-    public IocDialogEditPanel(Composite parent, MessageDisplayer dialog, int style, EditableConfiguration config,
-            EditableIoc ioc) {
+    public IocDialogEditPanel(Composite parent, MessageDisplayer dialog, int style, final IocViewModel viewModel) {
         super(parent, style);
         this.setLayout(new GridLayout());
-        this.iocViewModel = new IocViewModel(ioc, config);
 
         // Add IOC details
         Composite cmpIocDetails = new Composite(this, SWT.NONE);
@@ -74,10 +73,9 @@ public class IocDialogEditPanel extends Composite {
         Font boldFont = boldDescriptor.createFont(lblSelectedIoc.getDisplay());
         lblSelectedIoc.setFont(boldFont);
 
-        Text selectedIoc = new Text(cmpIocDetails, SWT.BORDER);
+        selectedIoc = new Text(cmpIocDetails, SWT.BORDER);
         selectedIoc.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, NUM_COLS - 1, 1));
-        selectedIoc.setEnabled(false);
-        selectedIoc.setText("test_ioc");
+        selectedIoc.setEditable(false);
 
         // General IOC Settings
         Label lblSimLevel = new Label(cmpIocDetails, SWT.NONE);
@@ -116,6 +114,13 @@ public class IocDialogEditPanel extends Composite {
         TabItem pvSetsTab = new TabItem(iocSettings, SWT.NONE);
         pvSetsTab.setText("PV Sets");
         pvSetsTab.setControl(pvSets);
+        bind(viewModel);
+    }
+
+    private void bind(IocViewModel viewModel) {
+        DataBindingContext bindingContext = new DataBindingContext();
+        bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(selectedIoc),
+                BeanProperties.value("name").observe(viewModel));
     }
 
 }
