@@ -38,6 +38,8 @@ import uk.ac.stfc.isis.ibex.targets.OpiTarget;
  * 
  * Note any changes here will require corresponding changes to
  * EPICS/schema/configurations/screens.xsd.
+ * 
+ * Note: the constructor of this class is NOT called!
  */
 @XmlRootElement(name = "device")
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -52,7 +54,7 @@ public class DeviceDescription extends ModelObject {
     /** The type is either an OPI or a custom screen. */
     private String type;
 
-    private String persist;
+    private boolean persist;
 
     /** The properties that have been set. */
     @XmlElement(name = "properties", type = PropertiesDescription.class)
@@ -67,18 +69,16 @@ public class DeviceDescription extends ModelObject {
     /**
      * A copy constructor.
      * 
-     * @param original the item to copy
+     * @param original
+     *            the item to copy
+     * @param persistent
+     *            whether the new device description is persistent or not.
      */
-    public DeviceDescription(DeviceDescription original, boolean persistent) {
+    public DeviceDescription(DeviceDescription original) {
         key = original.getKey();
         name = original.getName();
         type = original.getType();
-
-        if (persistent) {
-            this.persist = "Yes";
-        } else {
-            this.persist = "No";
-        }
+        persist = original.getPersist();
 
         for (PropertyDescription p : original.getProperties()) {
             this.addProperty(new PropertyDescription(p.getKey(), p.getValue()));
@@ -130,7 +130,7 @@ public class DeviceDescription extends ModelObject {
     /**
      * @return the persistence setting
      */
-    public String getPersist() {
+    public boolean getPersist() {
         return persist;
     }
 
@@ -138,7 +138,7 @@ public class DeviceDescription extends ModelObject {
      * @param persist
      *            the persistence setting to set
      */
-    public void setPersist(String persist) {
+    public void setPersist(boolean persist) {
         firePropertyChange("persist", this.persist, this.persist = persist);
     }
 

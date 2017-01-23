@@ -68,7 +68,7 @@ public class DeviceDescriptionWrapper {
      */
     public DeviceDescriptionWrapper(DeviceDescription device, DescriptionsProvider provider) {
         this.provider = provider;
-        this.device = new DeviceDescription(device, true);
+        this.device = new DeviceDescription(device);
         name = this.device.getName();
         key = this.device.getKey();
 

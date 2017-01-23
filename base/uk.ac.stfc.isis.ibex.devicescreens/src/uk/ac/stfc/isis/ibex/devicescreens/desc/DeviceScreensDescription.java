@@ -59,7 +59,7 @@ public class DeviceScreensDescription {
      */
     public DeviceScreensDescription(DeviceScreensDescription original) {
         for (DeviceDescription d : original.getDevices()) {
-            this.addDevice(new DeviceDescription(d, true));
+            this.addDevice(new DeviceDescription(d));
         }
     }
 
