@@ -73,8 +73,6 @@ public class DeviceScreensDescriptionViewModel extends ModelObject {
      */
     private String previousDesc = null;
 
-    private String persistence;
-
     /**
      * The constructor.
      * 
