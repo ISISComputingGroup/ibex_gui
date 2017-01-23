@@ -270,37 +270,6 @@ public class DeviceScreensDescriptionViewModel extends ModelObject {
     }
 
     /**
-     * @return the persistence mode
-     */
-    public String getPersistence() {
-        if (selectedScreen != null) {
-            return persistence;
-        }
-
-        System.out.println("Getting persistence");
-
-        return "";
-    }
-
-    /**
-     * @param key
-     *            the new value to set
-     */
-    public void setPersistence(String persistence) {
-        if (selectedScreen == null) {
-            return;
-        }
-
-        if (persistence == null) {
-            persistence = "";
-        }
-
-        System.out.println("Persistence was set");
-
-        this.persistence = persistence;
-    }
-
-    /**
      * Update the current key value and raise a change event.
      * 
      * @param newKey the new key

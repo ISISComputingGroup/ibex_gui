@@ -29,6 +29,7 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 import uk.ac.stfc.isis.ibex.targets.OpiTarget;
@@ -55,9 +56,15 @@ public class DeviceDescription extends ModelObject {
     /** The type is either an OPI or a custom screen. */
     private String type;
 
+    /**
+     * This stores the persistence setting. This is not sent to the blockserver.
+     */
+    @XmlTransient
     private boolean persist;
 
-    /** The properties that have been set. */
+    /**
+     * The properties that have been set.
+     */
     @XmlElement(name = "properties", type = PropertiesDescription.class)
     private PropertiesDescription properties = new PropertiesDescription();
 
