@@ -47,10 +47,23 @@ public class ForwardingObservable<T> extends ClosableObservable<T> {
 	
 	private Subscription sourceSubscription;
 
+    /**
+     * Constructor.
+     * 
+     * @param source
+     *            the Observable to observe and forward
+     * 
+     */
     public ForwardingObservable(Observable<T> source) {
         setSource(source);
     }
 
+    /**
+     * Sets the source observable.
+     * 
+     * @param newSource
+     *            the new source observable
+     */
     protected synchronized void setSource(Observable<T> newSource) {
 		cancelSubscription();	
         sourceObserver.onConnectionStatus(false);
