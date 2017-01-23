@@ -84,6 +84,8 @@ public class IocDialogAddPanel extends Composite {
                 viewModel.setName(availableIocsTable.firstSelectedRow().getName());
             }
         });
+
+        bind(viewModel);
     }
 
     public void bind(IocViewModel viewModel) {

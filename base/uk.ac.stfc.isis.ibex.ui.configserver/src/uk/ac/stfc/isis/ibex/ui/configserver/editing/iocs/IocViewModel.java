@@ -76,6 +76,14 @@ public class IocViewModel extends ErrorMessageProvider {
         firePropertyChange("autoStart", this.autoStart, this.autoStart = enabled);
     }
 
+    public int getSimLevel() {
+        return this.simLevel.ordinal();
+    }
+
+    public void setSimLevel(SimLevel simLevel) {
+        firePropertyChange("simLevel", this.simLevel, this.simLevel = simLevel);
+    }
+
     public void updateIoc() {
         editingIoc.setRestart(autoRestart);
         editingIoc.setAutostart(autoStart);

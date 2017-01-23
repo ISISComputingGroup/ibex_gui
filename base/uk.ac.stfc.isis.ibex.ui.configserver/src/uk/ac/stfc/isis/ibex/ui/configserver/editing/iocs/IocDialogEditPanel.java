@@ -37,6 +37,7 @@ import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.swt.widgets.TabItem;
 import org.eclipse.swt.widgets.Text;
 
+import uk.ac.stfc.isis.ibex.configserver.configuration.SimLevel;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.macros.MacroPanel;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.pvs.IocPVsEditorPanel;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.pvsets.IocPVSetsEditorPanel;
@@ -51,6 +52,9 @@ public class IocDialogEditPanel extends Composite {
     private static final int SPACING = 10;
 
     private Text selectedIoc;
+    private Button autoStart;
+    private Button autoRestart;
+    private Combo simLevel;
 
     public IocDialogEditPanel(Composite parent, MessageDisplayer dialog, int style, final IocViewModel viewModel) {
         super(parent, style);
@@ -82,16 +86,17 @@ public class IocDialogEditPanel extends Composite {
         lblSimLevel.setText("Sim. Level");
         lblSimLevel.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false));
 
-        Combo simLevel = new Combo(cmpIocDetails, SWT.NONE);
+        simLevel = new Combo(cmpIocDetails, SWT.NONE);
         simLevel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 2, 1));
+        simLevel.setItems(SimLevel.allToString().toArray(new String[0]));
 
         Label spacer = new Label(cmpIocDetails, SWT.NONE);
 
-        Button autoStart = new Button(cmpIocDetails, SWT.CHECK);
+        autoStart = new Button(cmpIocDetails, SWT.CHECK);
         autoStart.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false));
         autoStart.setText("Auto-Start");
 
-        Button autoRestart = new Button(cmpIocDetails, SWT.CHECK);
+        autoRestart = new Button(cmpIocDetails, SWT.CHECK);
         autoRestart.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false));
         autoRestart.setText("Auto-Restart");
 
@@ -114,6 +119,7 @@ public class IocDialogEditPanel extends Composite {
         TabItem pvSetsTab = new TabItem(iocSettings, SWT.NONE);
         pvSetsTab.setText("PV Sets");
         pvSetsTab.setControl(pvSets);
+
         bind(viewModel);
     }
 
@@ -121,6 +127,12 @@ public class IocDialogEditPanel extends Composite {
         DataBindingContext bindingContext = new DataBindingContext();
         bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(selectedIoc),
                 BeanProperties.value("name").observe(viewModel));
+        bindingContext.bindValue(WidgetProperties.selection().observe(autoStart),
+                BeanProperties.value("autoStart").observe(viewModel));
+        bindingContext.bindValue(WidgetProperties.selection().observe(autoRestart),
+                BeanProperties.value("autoRestart").observe(viewModel));
+        bindingContext.bindValue(WidgetProperties.singleSelectionIndex().observe(simLevel),
+                BeanProperties.value("simLevel").observe(viewModel));
     }
 
 }

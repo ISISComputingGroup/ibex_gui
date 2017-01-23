@@ -19,8 +19,24 @@
 
 package uk.ac.stfc.isis.ibex.configserver.configuration;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 public enum SimLevel {
-	NONE,
-	DEVSIM,
-	RECSIM
+    NONE,
+    DEVSIM,
+    RECSIM;
+
+    private static final List<String> ALLTOSTRING;
+    static {
+        ALLTOSTRING = new ArrayList<>();
+        for (SimLevel level : SimLevel.values()) {
+            ALLTOSTRING.add(level.toString());
+        }
+    }
+
+    public static List<String> allToString() {
+        return Collections.unmodifiableList(ALLTOSTRING);
+    }
 }
