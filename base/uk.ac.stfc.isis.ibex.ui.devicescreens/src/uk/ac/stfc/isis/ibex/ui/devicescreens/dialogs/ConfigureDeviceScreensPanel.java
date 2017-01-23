@@ -40,6 +40,7 @@ import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -281,12 +282,32 @@ public class ConfigureDeviceScreensPanel extends Composite {
         propertiesView.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
 
         Button yesButton = new Button(detailsComposite, SWT.RADIO);
-        yesButton.setText("Save this device screen");
-        yesButton.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1));
-
         Button noButton = new Button(detailsComposite, SWT.RADIO);
-        noButton.setText("Remove this device screen when IBEX is closed");
+
+        String yesText = "Save this device screen";
+        String noText = "Remove this device screen when IBEX is closed";
+
+        SelectionListener selectionListener = new SelectionAdapter() {
+            @Override
+            public void widgetSelected(SelectionEvent selectionEvent) {
+                Button radioButton = ((Button) selectionEvent.widget);
+                if (radioButton.getSelection() && radioButton.getText().equals(yesText)) {
+                    // Set the persistence of this device screen to true.
+                    System.out.println("");
+                } else if ((radioButton.getSelection() && radioButton.getText().equals(noText))) {
+                    // Set the persistence of this device screen to false.
+                    System.out.println("a");
+                }
+            };
+        };
+
+        yesButton.setText(yesText);
+        yesButton.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1));
+        yesButton.addSelectionListener(selectionListener);
+
+        noButton.setText(noText);
         noButton.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1));
+        noButton.addSelectionListener(selectionListener);
         
         // viewModel.getDeviceScreensDescription().getDevices().;
         
