@@ -100,7 +100,7 @@ public class ConfigureDeviceScreensDialog extends TitleAreaDialog implements Mes
      * @return the new device description
      */
     public DeviceScreensDescription getDeviceDescription() {
-        return viewModel.getDeviceDescription();
+        return viewModel.getDeviceScreensDescription();
     }
 
     /**

@@ -426,7 +426,7 @@ public class DeviceScreensDescriptionViewModel extends ModelObject {
      * 
      * @return The description
      */
-    public DeviceScreensDescription getDeviceDescription() {
+    public DeviceScreensDescription getDeviceScreensDescription() {
         DeviceScreensDescription desc = new DeviceScreensDescription();
 
         for (DeviceDescriptionWrapper d : devices) {
@@ -434,6 +434,8 @@ public class DeviceScreensDescriptionViewModel extends ModelObject {
             device.setName(d.getName());
             device.setKey(d.getKey());
             device.setType(d.getType());
+            device.setPersist(d.getPersistent());
+
             for (PropertyDescription p : d.getProperties()) {
                 // Only add the filled in ones
                 if (p.getValue() != "") {

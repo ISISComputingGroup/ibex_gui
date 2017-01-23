@@ -46,7 +46,7 @@ public class DeviceScreenVariablesWithPersistence extends DeviceScreenVariables 
                 List<DeviceDescription> deviceDescriptionList = output.getDevices();
 
                 for (DeviceDescription deviceDescription : deviceDescriptionList) {
-                    deviceDescription.setPersist(deviceDescription.getPersist());
+                    deviceDescription.setPersist(true);
                 }
 
                 return output;
