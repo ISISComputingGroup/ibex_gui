@@ -39,7 +39,8 @@ import uk.ac.stfc.isis.ibex.targets.OpiTarget;
  * Note any changes here will require corresponding changes to
  * EPICS/schema/configurations/screens.xsd.
  * 
- * Note: the constructor of this class is NOT called!
+ * Note: the constructor of this class is NOT called! Instead, this class is
+ * instantiated via reflection.
  */
 @XmlRootElement(name = "device")
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -71,8 +72,6 @@ public class DeviceDescription extends ModelObject {
      * 
      * @param original
      *            the item to copy
-     * @param persistent
-     *            whether the new device description is persistent or not.
      */
     public DeviceDescription(DeviceDescription original) {
         key = original.getKey();
