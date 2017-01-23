@@ -34,25 +34,6 @@ public class DeviceScreenVariablesWithPersistence extends DeviceScreenVariables 
 
     private boolean persistence = true;
 
-    /**
-     * Sets the persistence of this device screen.
-     * 
-     * @param persistence
-     *            the persistence of this device screen.
-     */
-    public void setPersistence(boolean persistence) {
-        this.persistence = persistence;
-    }
-
-    /**
-     * Gets the persistence of this device screen.
-     * 
-     * @return the persistence of this device screen.
-     */
-    public boolean getPersistence() {
-        return persistence;
-    }
-
     @Override
     public ForwardingObservable<DeviceScreensDescription> getDeviceScreens() {
         ForwardingObservable<DeviceScreensDescription> forwardingObservable = super.getDeviceScreens();
@@ -65,7 +46,7 @@ public class DeviceScreenVariablesWithPersistence extends DeviceScreenVariables 
                 List<DeviceDescription> deviceDescriptionList = output.getDevices();
 
                 for (DeviceDescription deviceDescription : deviceDescriptionList) {
-                    deviceDescription.setPersist(getPersistence());
+                    deviceDescription.setPersist(deviceDescription.getPersist());
                 }
 
                 return output;
