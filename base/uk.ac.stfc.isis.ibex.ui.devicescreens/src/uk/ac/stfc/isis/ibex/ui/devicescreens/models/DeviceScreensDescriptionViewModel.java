@@ -35,6 +35,7 @@ import uk.ac.stfc.isis.ibex.model.ModelObject;
 import uk.ac.stfc.isis.ibex.opis.DescriptionsProvider;
 import uk.ac.stfc.isis.ibex.validators.MessageDisplayer;
 
+// TODO: Auto-generated Javadoc
 /**
  * The view model for linking the GUI with the device screens description.
  */
@@ -94,6 +95,8 @@ public class DeviceScreensDescriptionViewModel extends ModelObject {
     }
 
     /**
+     * Gets the screens.
+     *
      * @return the devices
      */
     public List<DeviceDescriptionWrapper> getScreens() {
@@ -149,6 +152,8 @@ public class DeviceScreensDescriptionViewModel extends ModelObject {
     }
 
     /**
+     * Gets the selected screen.
+     *
      * @return the currently selected screen
      */
     public DeviceDescriptionWrapper getSelectedScreen() {
@@ -156,6 +161,18 @@ public class DeviceScreensDescriptionViewModel extends ModelObject {
     }
 
     /**
+     * Sets the current persistence.
+     *
+     * @param persistence
+     *            the new persistence
+     */
+    public void setCurrentPersistence(boolean persistence) {
+        selectedScreen.setPersistent(persistence);
+    }
+
+    /**
+     * Gets the current name.
+     *
      * @return the current name
      */
     public String getCurrentName() {
@@ -167,7 +184,10 @@ public class DeviceScreensDescriptionViewModel extends ModelObject {
     }
 
     /**
-     * @param name the new name to set
+     * Sets the current name.
+     *
+     * @param name
+     *            the new name to set
      */
     public void setCurrentName(String name) {
         if (selectedScreen == null) {
@@ -241,6 +261,8 @@ public class DeviceScreensDescriptionViewModel extends ModelObject {
     }
 
     /**
+     * Gets the current key.
+     *
      * @return the current key
      */
     public String getCurrentKey() {
@@ -252,7 +274,10 @@ public class DeviceScreensDescriptionViewModel extends ModelObject {
     }
 
     /**
-     * @param key the new value to set
+     * Sets the current key.
+     *
+     * @param key
+     *            the new value to set
      */
     public void setCurrentKey(String key) {
         if (selectedScreen == null) {
@@ -280,6 +305,8 @@ public class DeviceScreensDescriptionViewModel extends ModelObject {
     }
 
     /**
+     * Gets the current description.
+     *
      * @return the current OPI description
      */
     public String getCurrentDescription() {
@@ -390,6 +417,8 @@ public class DeviceScreensDescriptionViewModel extends ModelObject {
     }
 
     /**
+     * Gets the selected property value.
+     *
      * @return the selected property value
      */
     public String getSelectedPropertyValue() {
@@ -400,7 +429,10 @@ public class DeviceScreensDescriptionViewModel extends ModelObject {
     }
 
     /**
-     * @param value the value to set for the property
+     * Sets the selected property value.
+     *
+     * @param value
+     *            the value to set for the property
      */
     public void setSelectedPropertyValue(String value) {
         if (selectedProperty != null) {
@@ -412,6 +444,8 @@ public class DeviceScreensDescriptionViewModel extends ModelObject {
     }
 
     /**
+     * Gets the selected property description.
+     *
      * @return the selected property's description
      */
     public String getSelectedPropertyDescription() {

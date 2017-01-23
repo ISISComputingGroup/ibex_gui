@@ -293,10 +293,10 @@ public class ConfigureDeviceScreensPanel extends Composite {
                 Button radioButton = ((Button) selectionEvent.widget);
                 if (radioButton.getSelection() && radioButton.getText().equals(yesText)) {
                     // Set the persistence of this device screen to true.
-                    System.out.println("");
+                    viewModel.setCurrentPersistence(true);
                 } else if ((radioButton.getSelection() && radioButton.getText().equals(noText))) {
                     // Set the persistence of this device screen to false.
-                    System.out.println("a");
+                    viewModel.setCurrentPersistence(false);
                 }
             };
         };
