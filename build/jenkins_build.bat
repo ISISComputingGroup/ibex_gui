@@ -8,6 +8,9 @@ set LOCINSTALLDIR=c:\Installers\CSStudio_ISIS\
 set GENIEPYTHONDIR=c:\Installers\genie_python
 set ZIPLOCATION=c:\Installers\client_zip
 
+REM We bundle our own JRE with the client, this is where it is
+set JRELOCATION=p:\Kits$\CompGroup\ICP\ibex_client_jre
+
 REM Find latest Java 7 version
 for /F %%f in ('dir "C:\Program Files\Java\jdk1.*" /b') do set JAVA_HOME=C:\Program Files\Java\%%f
 
@@ -68,6 +71,13 @@ if %errorlevel% geq 4 (
     exit /b 1
 )
 
+REM Copy the JRE across 
+robocopy %JRELOCATION% %INSTALLDIR%\Client\jre /MIR /R:1 /NFL /NDL /NP
+if %errorlevel% geq 4 (
+    @echo Failed to copy JRE across
+    exit /b 1
+)
+
 if not "%RELEASE%"=="YES" (
     if exist "%INSTALLLINKDIR%" (
         rmdir "%INSTALLLINKDIR%"
@@ -82,6 +92,8 @@ if %errorlevel% neq 0 (
     @echo Installl client copy failed
     exit /b %errorlevel%
 )
+
+
 
 REM Create the installer
 if exist C:\"Program Files (x86)"\7-Zip\7z.exe set ZIPEXE=C:\"Program Files (x86)"\7-Zip\7z.exe
