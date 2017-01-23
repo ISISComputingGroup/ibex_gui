@@ -13,7 +13,7 @@ REM First zip everything up
 %ZIPEXE% a installer.7z %INSTALLDIR%\*
 
 REM Add the install_client.bat to the archive
-%ZIPEXE% a installer.7z install_client.bat
+%ZIPEXE% a installer.7z install_client_zip.bat
 
 REM Build the installer
 copy /b 7zSD.sfx + installer_config.txt + installer.7z ClientInstaller.exe
