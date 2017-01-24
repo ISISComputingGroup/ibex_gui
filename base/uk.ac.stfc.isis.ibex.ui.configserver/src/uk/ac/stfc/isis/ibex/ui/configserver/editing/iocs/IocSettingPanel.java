@@ -79,7 +79,7 @@ public class IocSettingPanel extends Composite {
 				return ioc.getName();
 			};
 		});
-		Collection<EditableIoc> iocs = config.getEditableIocs();
+		Collection<EditableIoc> iocs = config.getSelectedIocs();
 		iocCombo.setInput(iocs);
 		
 		iocCombo.addSelectionChangedListener(new ISelectionChangedListener() {

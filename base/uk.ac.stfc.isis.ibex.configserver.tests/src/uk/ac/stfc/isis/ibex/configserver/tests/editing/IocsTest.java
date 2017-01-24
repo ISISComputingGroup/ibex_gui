@@ -30,7 +30,7 @@ public class IocsTest extends EditableConfigurationTest {
 	public void an_editable_config_has_all_available_iocs_to_edit() {
 		allIocs.add(GALIL01);
 		EditableConfiguration edited = edit(config());
-		assertContains(edited.getEditableIocs(), new EditableIoc(GALIL01));
+		assertContains(edited.getSelectedIocs(), new EditableIoc(GALIL01));
 	}
 	
 	@Test
@@ -53,7 +53,7 @@ public class IocsTest extends EditableConfigurationTest {
 		EditableConfiguration edited = edit(config());
 		assertDoesNotContain(edited.asConfiguration().getIocs(), GALIL01);
 		
-		EditableIoc galil = getFirst(edited.getEditableIocs());
+		EditableIoc galil = getFirst(edited.getSelectedIocs());
 		galil.setAutostart(true);
 		
 		assertContains(edited.asConfiguration().getIocs(), GALIL01);

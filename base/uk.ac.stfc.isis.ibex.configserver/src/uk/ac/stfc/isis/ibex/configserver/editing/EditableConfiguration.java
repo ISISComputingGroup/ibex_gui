@@ -24,7 +24,6 @@ import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -80,9 +79,9 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
     /** Whether the configuration has been previously modified. */
     private Boolean isNew;
     /** All IOCs available to the instrument. */
-    private final List<Ioc> availableIocs = new ArrayList<>();
+    private Collection<EditableIoc> availableIocs = new ArrayList<>();
     /** The IOCs associated with the configuration. */
-    private final List<EditableIoc> editableIocs = new ArrayList<>();
+    private final List<EditableIoc> selectedIocs = new ArrayList<>();
     /** The groups associated with the configuration. */
     private final List<EditableGroup> editableGroups = new ArrayList<>();
     /** The blocks associated with the configuration. */
@@ -163,11 +162,10 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
             editableGroups.add(new EditableGroup(this, group));
         }
 
-//        mergeSelectedAndAvailableIocs(config.getIocs(), iocs);
         for (Ioc ioc : config.getIocs()) {
-            editableIocs.add(new EditableIoc(ioc));
+            selectedIocs.add(new EditableIoc(ioc));
         }
-        availableIocs.addAll(iocs);
+        availableIocs = iocs;
 
         editableComponents = new EditableComponents(config.getComponents(), components);
         editableComponents.addPropertyChangeListener(passThrough());
@@ -294,7 +292,7 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
      * @return The IOCs associated with the configuration
      */
     private Collection<Ioc> getIocs() {
-        return Lists.newArrayList(Iterables.transform(editableIocs, new Function<EditableIoc, Ioc>() {
+        return Lists.newArrayList(Iterables.transform(selectedIocs, new Function<EditableIoc, Ioc>() {
             @Override
             public Ioc apply(EditableIoc ioc) {
                 return ioc;
@@ -352,19 +350,31 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
     }
 
     /**
-     * @return The editable IOCs associated with the configuration
+     * @return The available IOCs not associated with the configuration
      */
-    // TODO check usage
-    public Collection<Ioc> getAvailableIocs() {
-        return availableIocs;
+    public Collection<EditableIoc> getUnselectedIocs() {
+        List<EditableIoc> result = new ArrayList<EditableIoc>();
+
+        List<String> selectedIocNames = new ArrayList<String>();
+        for (EditableIoc ioc : this.selectedIocs) {
+            selectedIocNames.add(ioc.getName());
+        }
+
+        for (EditableIoc ioc : availableIocs) {
+            if (!selectedIocNames.contains(ioc.getName())) {
+                result.add(ioc);
+            }
+        }
+        Collections.sort(result);
+        return result;
     }
 
     /**
      * @return The editable IOCs associated with the configuration
      */
     // TODO check usage
-    public Collection<EditableIoc> getEditableIocs() {
-        return editableIocs;
+    public Collection<EditableIoc> getSelectedIocs() {
+        return selectedIocs;
     }
 
     /**
@@ -543,44 +553,6 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
     }
 
     /**
-     * Take a list of IOCs selected for use in the configuration and all of the
-     * potential IOCs available and construct a merged list.
-     * 
-     * @param selected
-     *            The IOCs currently used by the configuration
-     * @param available
-     *            All of the available IOCs
-     */
-    // TODO
-    private void mergeSelectedAndAvailableIocs(Collection<Ioc> selected, Collection<EditableIoc> available) {
-        Map<String, EditableIoc> iocs = new HashMap<>();
-        for (EditableIoc ioc : available) {
-            iocs.put(ioc.getName(), new EditableIoc(ioc));
-        }
-
-        // IOCs from the actual configuration contain the active macros and
-        // description
-        for (Ioc ioc : selected) {
-            String name = ioc.getName();
-            EditableIoc replacementIoc = new EditableIoc(ioc);
-            EditableIoc iocToReplace = iocs.get(name);
-
-            if (iocToReplace == null) {
-                continue;
-            }
-
-            replacementIoc.setAvailableMacros(iocToReplace.getAvailableMacros());
-            // Put will replace existing entries
-            iocs.put(name, replacementIoc);
-        }
-
-        setIocDescriptions(iocs);
-
-        editableIocs.addAll(iocs.values());
-        Collections.sort(editableIocs);
-    }
-
-    /**
      * Iterate over the IOCs in the map, and add the description.
      * 
      * @param iocs
@@ -635,6 +607,12 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
         }
 
         return names;
+    }
+
+    public void addIoc(EditableIoc ioc) {
+        Collection<Block> iocsBeforeAdd = getBlocks();
+        selectedIocs.add(ioc);
+        firePropertyChange("iocs", iocsBeforeAdd, getSelectedIocs());
     }
 
 }

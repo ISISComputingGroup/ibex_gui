@@ -56,7 +56,11 @@ public class IocDialogEditPanel extends Composite {
     private Button autoRestart;
     private Combo simLevel;
 
-    public IocDialogEditPanel(Composite parent, MessageDisplayer dialog, int style, final IocViewModel viewModel) {
+    private MacroPanel macros;
+    private IocPVsEditorPanel pvVals;
+    private IocPVSetsEditorPanel pvSets;
+
+    public IocDialogEditPanel(Composite parent, MessageDisplayer dialog, int style) {
         super(parent, style);
         this.setLayout(new GridLayout());
 
@@ -104,9 +108,9 @@ public class IocDialogEditPanel extends Composite {
         iocSettings.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 
         // Settings tabs
-        MacroPanel macros = new MacroPanel(iocSettings, SWT.NONE);
-        IocPVsEditorPanel pvVals = new IocPVsEditorPanel(iocSettings, SWT.NONE, dialog);
-        IocPVSetsEditorPanel pvSets = new IocPVSetsEditorPanel(iocSettings, SWT.NONE, dialog);
+        macros = new MacroPanel(iocSettings, SWT.NONE);
+        pvVals = new IocPVsEditorPanel(iocSettings, SWT.NONE, dialog);
+        pvSets = new IocPVSetsEditorPanel(iocSettings, SWT.NONE, dialog);
 
         TabItem macrosTab = new TabItem(iocSettings, SWT.NONE);
         macrosTab.setText("Macros");
@@ -119,10 +123,16 @@ public class IocDialogEditPanel extends Composite {
         TabItem pvSetsTab = new TabItem(iocSettings, SWT.NONE);
         pvSetsTab.setText("PV Sets");
         pvSetsTab.setControl(pvSets);
+    }
+
+    public void setViewModel(final IocViewModel viewModel) {
+
+        macros.setIoc(viewModel.getIoc());
+        pvVals.setIoc(viewModel.getIoc());
+        pvSets.setIoc(viewModel.getIoc());
 
         bind(viewModel);
     }
-
     private void bind(IocViewModel viewModel) {
         DataBindingContext bindingContext = new DataBindingContext();
         bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(selectedIoc),

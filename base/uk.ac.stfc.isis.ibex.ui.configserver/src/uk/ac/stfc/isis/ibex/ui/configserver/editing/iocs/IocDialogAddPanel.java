@@ -54,7 +54,7 @@ public class IocDialogAddPanel extends Composite {
      * @param style
      *            - the style to use specified by the caller
      */
-    public IocDialogAddPanel(Composite parent, int style, EditableConfiguration config, final IocViewModel viewModel) {
+    public IocDialogAddPanel(Composite parent, int style, final EditableConfiguration config) {
         super(parent, style);
         GridLayout glPanel = new GridLayout(2, false);
         glPanel.verticalSpacing = SPACING;
@@ -62,7 +62,7 @@ public class IocDialogAddPanel extends Composite {
 
         // Add selection table
         availableIocsTable = new AvailableIocsTable(this, SWT.NONE, SWT.FULL_SELECTION);
-        availableIocsTable.setRows(config.getAvailableIocs());
+        availableIocsTable.setRows(config.getUnselectedIocs());
 
         GridData gdIocTable = new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1);
         gdIocTable.heightHint = TABLE_HEIGHT;
@@ -76,12 +76,14 @@ public class IocDialogAddPanel extends Composite {
         selectedIocRb = new Text(this, SWT.BORDER);
         selectedIocRb.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
         selectedIocRb.setEditable(false);
+    }
 
+    public void setViewModel(final IocViewModel viewModel) {
         availableIocsTable.addSelectionChangedListener(new ISelectionChangedListener() {
-
             @Override
             public void selectionChanged(SelectionChangedEvent event) {
-                viewModel.setName(availableIocsTable.firstSelectedRow().getName());
+                String selectedIocName = availableIocsTable.firstSelectedRow().getName();
+                viewModel.setName(selectedIocName);
             }
         });
 

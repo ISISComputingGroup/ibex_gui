@@ -61,7 +61,7 @@ public class IocsEditorPanel extends Composite {
 		@Override
 		public void propertyChange(PropertyChangeEvent evt) {
 			if (config != null) {
-				updateIocs(config.getEditableIocs());
+				updateIocs(config.getSelectedIocs());
 			}
 		}
 	};
@@ -172,7 +172,7 @@ public class IocsEditorPanel extends Composite {
 
 	public void setConfig(EditableConfiguration config) {
 		this.config = config;
-		updateIocs(config.getEditableIocs());	
+		updateIocs(config.getSelectedIocs());	
 		config.addPropertyChangeListener(updateIocs);
 	}
 

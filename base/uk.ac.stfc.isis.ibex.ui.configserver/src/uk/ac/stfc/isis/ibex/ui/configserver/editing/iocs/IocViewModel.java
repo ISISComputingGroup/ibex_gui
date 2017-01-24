@@ -37,19 +37,30 @@ public class IocViewModel extends ErrorMessageProvider {
     private boolean autoRestart;
     private SimLevel simLevel;
 
-    private final EditableIoc editingIoc;
-    private final EditableConfiguration config;
+    private EditableIoc editingIoc;
+    private EditableConfiguration config;
 
-    public IocViewModel(final EditableIoc ioc, EditableConfiguration config) {
-        this.editingIoc = ioc;
+    public IocViewModel(EditableConfiguration config) {
         this.config = config;
+        init();
+    }
 
-        if (ioc != null) {
-            name = ioc.getName();
-            autoStart = ioc.getAutostart();
-            autoRestart = ioc.getRestart();
-            simLevel = ioc.getSimLevel();
+    private void init() {
+        if (editingIoc != null) {
+            name = editingIoc.getName();
+            autoStart = editingIoc.getAutostart();
+            autoRestart = editingIoc.getRestart();
+            simLevel = editingIoc.getSimLevel();
+        } else {
+            name = "";
+            autoStart = false;
+            autoRestart = false;
+            simLevel = SimLevel.NONE;
         }
+    }
+
+    public EditableIoc getIoc() {
+        return this.editingIoc;
     }
 
     public String getName() {
@@ -80,7 +91,8 @@ public class IocViewModel extends ErrorMessageProvider {
         return this.simLevel.ordinal();
     }
 
-    public void setSimLevel(SimLevel simLevel) {
+    public void setSimLevel(int index) {
+        SimLevel simLevel = SimLevel.values()[index];
         firePropertyChange("simLevel", this.simLevel, this.simLevel = simLevel);
     }
 
@@ -88,5 +100,25 @@ public class IocViewModel extends ErrorMessageProvider {
         editingIoc.setRestart(autoRestart);
         editingIoc.setAutostart(autoStart);
         editingIoc.setSimLevel(simLevel);
+    }
+
+    public void setIoc(EditableIoc ioc) {
+        this.editingIoc = ioc;
+        init();
+    }
+
+    public void setIocByName() {
+        for (EditableIoc ioc : config.getSelectedIocs()) {
+            if (ioc.getName().equals(name)) {
+                editingIoc = ioc;
+                break;
+            }
+        }
+        for (EditableIoc ioc : config.getUnselectedIocs()) {
+            if (ioc.getName().equals(name)) {
+                editingIoc = ioc;
+                break;
+            }
+        }
     }
 }

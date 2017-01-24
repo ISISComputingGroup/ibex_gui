@@ -47,7 +47,7 @@ import uk.ac.stfc.isis.ibex.validators.MessageDisplayer;
 public class IocDialog extends TitleAreaDialog implements MessageDisplayer {
     EditableConfiguration config;
     EditableIoc ioc;
-    boolean isBlank;
+    boolean isNew;
 
     Button btnPrev;
     Button btnOk;
@@ -94,6 +94,9 @@ public class IocDialog extends TitleAreaDialog implements MessageDisplayer {
     }
 
     private void nextPage() {
+        viewModel.setIocByName();
+        this.ioc = viewModel.getIoc();
+        editIocPanel.setViewModel(viewModel);
         btnPrev.setVisible(true);
         btnOk.removeSelectionListener(nextListener);
         btnOk.setData(IDialogConstants.OK_ID);
@@ -104,17 +107,17 @@ public class IocDialog extends TitleAreaDialog implements MessageDisplayer {
      * @param parent
      * @param style
      */
-    public IocDialog(Shell parent, EditableConfiguration config, EditableIoc ioc, boolean isBlank) {
+    public IocDialog(Shell parent, EditableConfiguration config, EditableIoc ioc, boolean isNew) {
         super(parent);
-        this.isBlank = isBlank;
+        this.isNew = isNew;
         this.config = config;
         this.ioc = ioc;
-        this.viewModel = new IocViewModel(ioc, config);
+        this.viewModel = new IocViewModel(config);
     }
 
     @Override
     protected void createButtonsForButtonBar(Composite parent) {
-        if (isBlank) {
+        if (isNew) {
             btnPrev = createButton(parent, IDialogConstants.NO_ID, "Previous", false);
             btnPrev.addSelectionListener(prevListener);
             btnPrev.setVisible(false);
@@ -136,17 +139,21 @@ public class IocDialog extends TitleAreaDialog implements MessageDisplayer {
         stack = new StackLayout();
         content.setLayout(stack);
 
-        editIocPanel = new IocDialogEditPanel(content, this, SWT.NONE, viewModel);
+        addIocPanel = new IocDialogAddPanel(content, SWT.NONE, config);
+        addIocPanel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+
+        editIocPanel = new IocDialogEditPanel(content, this, SWT.NONE);
         editIocPanel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 
-        if (isBlank) {
-            addIocPanel = new IocDialogAddPanel(content, SWT.NONE, config, viewModel);
-            addIocPanel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+        if (isNew) {
+            addIocPanel.setViewModel(viewModel);
             stack.topControl = addIocPanel;
             this.setTitle("Add IOC");
         } else {
+            viewModel.setIoc(this.ioc);
+            editIocPanel.setViewModel(viewModel);
             stack.topControl = editIocPanel;
-            this.setTitle("Edit IOC");            
+            this.setTitle("Edit IOC");
         }
 
         content.layout();
@@ -190,17 +197,12 @@ public class IocDialog extends TitleAreaDialog implements MessageDisplayer {
         });
     }
 
-    /**
-     * @return the viewModel
-     */
-    public IocViewModel getViewModel() {
-        return viewModel;
-    }
-
-    /**
-     * @param viewModel the iocViewModel to set
-     */
-    public void setViewModel(IocViewModel viewModel) {
-        this.viewModel = viewModel;
+    @Override
+    protected void okPressed() {
+        viewModel.updateIoc();
+        if (isNew) {
+            config.addIoc(viewModel.getIoc());
+        }
+        super.okPressed();
     }
 }

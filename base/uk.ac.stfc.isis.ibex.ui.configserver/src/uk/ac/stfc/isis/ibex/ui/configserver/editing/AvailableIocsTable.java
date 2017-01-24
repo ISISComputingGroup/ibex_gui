@@ -28,13 +28,14 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 
 import uk.ac.stfc.isis.ibex.configserver.configuration.Ioc;
+import uk.ac.stfc.isis.ibex.configserver.editing.EditableIoc;
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundCellLabelProvider;
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundTable;
 
 /**
  *
  */
-public class AvailableIocsTable extends DataboundTable<Ioc> {
+public class AvailableIocsTable extends DataboundTable<EditableIoc> {
 
     /**
      * Doc blockpvtable too
@@ -44,12 +45,12 @@ public class AvailableIocsTable extends DataboundTable<Ioc> {
      * @param tableStyle
      */
     public AvailableIocsTable(Composite parent, int style, int tableStyle) {
-        super(parent, style, Ioc.class, tableStyle | SWT.BORDER);
+        super(parent, style, EditableIoc.class, tableStyle | SWT.BORDER);
         initialise();
     }
 
     @Override
-    public void setRows(Collection<Ioc> rows) {
+    public void setRows(Collection<EditableIoc> rows) {
         super.setRows(rows);
     }
 
@@ -59,7 +60,7 @@ public class AvailableIocsTable extends DataboundTable<Ioc> {
     }
 
     private void name() {
-        TableViewerColumn desc = createColumn("IOC Name", 1);
+        TableViewerColumn desc = createColumn("IOCs available to add:", 1);
         desc.setLabelProvider(new DataboundCellLabelProvider<Ioc>(observeProperty("name")) {
             @Override
             protected String valueFromRow(Ioc row) {
