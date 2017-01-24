@@ -26,34 +26,62 @@ import java.util.List;
 import uk.ac.stfc.isis.ibex.devicescreens.desc.DeviceDescription;
 import uk.ac.stfc.isis.ibex.devicescreens.desc.DeviceScreensDescription;
 import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
+import uk.ac.stfc.isis.ibex.epics.observing.Observable;
+import uk.ac.stfc.isis.ibex.epics.writing.ForwardingWritable;
+import uk.ac.stfc.isis.ibex.epics.writing.Writable;
 
 /**
  *
  */
 public class DeviceScreenVariablesWithPersistence extends DeviceScreenVariables {
 
-    private boolean persistence = true;
+    /**
+     * Class to define an observable observer pair which add persistence to
+     * device screens
+     */
+    private final class DeviceScreenObservableWithPersistence extends ForwardingObservable<DeviceScreensDescription> {
+        /**
+         * @param source
+         */
+        private DeviceScreenObservableWithPersistence(Observable<DeviceScreensDescription> source) {
+            super(source);
+        }
+
+        @Override
+        public DeviceScreensDescription getValue() {
+            DeviceScreensDescription output = new DeviceScreensDescription(super.getValue());
+            List<DeviceDescription> deviceDescriptionList = output.getDevices();
+
+            for (DeviceDescription deviceDescription : deviceDescriptionList) {
+                deviceDescription.setPersist(true);
+            }
+
+            return output;
+        }
+    }
+
+
 
     @Override
     public ForwardingObservable<DeviceScreensDescription> getDeviceScreens() {
         ForwardingObservable<DeviceScreensDescription> forwardingObservable = super.getDeviceScreens();
 
-        return new ForwardingObservable<DeviceScreensDescription>(forwardingObservable) {
-
-            @Override
-            public DeviceScreensDescription getValue() {
-                DeviceScreensDescription output = new DeviceScreensDescription(super.getValue());
-                List<DeviceDescription> deviceDescriptionList = output.getDevices();
-
-                for (DeviceDescription deviceDescription : deviceDescriptionList) {
-                    deviceDescription.setPersist(true);
-                }
-
-                return output;
-            }
-            
-        };
+        DeviceScreenObservableWithPersistence deviceScreenObservableWithPersistence =
+                new DeviceScreenObservableWithPersistence(forwardingObservable);
+        return deviceScreenObservableWithPersistence;
             
         
+    }
+
+    @Override
+    public Writable<DeviceScreensDescription> getDeviceScreensSetter() {
+
+        Writable<DeviceScreensDescription> writable = super.getDeviceScreensSetter();
+
+        Writable<DeviceScreensDescription> deviceScreenWritable =
+                new ForwardingWritable<>(writable, new DeviceScreensDescriptionConverterFromPersistence());
+
+        return deviceScreenWritable;
+
     }
 }

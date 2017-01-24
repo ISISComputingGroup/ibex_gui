@@ -102,6 +102,7 @@ public class DeviceScreenVariables {
      * @return a writable pointing to the set device screens PV
      */
     public Writable<DeviceScreensDescription> getDeviceScreensSetter() {
+
         return deviceScreensWritable;
     }
 

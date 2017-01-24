@@ -35,7 +35,6 @@ import uk.ac.stfc.isis.ibex.model.ModelObject;
 import uk.ac.stfc.isis.ibex.opis.DescriptionsProvider;
 import uk.ac.stfc.isis.ibex.validators.MessageDisplayer;
 
-// TODO: Auto-generated Javadoc
 /**
  * The view model for linking the GUI with the device screens description.
  */
@@ -141,10 +140,12 @@ public class DeviceScreensDescriptionViewModel extends ModelObject {
             updateCurrentName(selectedScreen.getName());
             updateCurrentKey(selectedScreen.getKey());
             updateCurrentDescription();
+            updateCurrentPersistence(selectedScreen.getPersistent());
         } else {
             updateCurrentName("");
             updateCurrentKey("");
             updateCurrentDescription();
+            updateCurrentPersistence(false);
         }
 
         // Clear out the stored property information
@@ -239,6 +240,16 @@ public class DeviceScreensDescriptionViewModel extends ModelObject {
      */
     private void updateCurrentName(String newName) {
         firePropertyChange("currentName", previousName, previousName = newName);
+    }
+
+    /**
+     * Update the current persistence setting and raise a change event.
+     * 
+     * @param newPersistence
+     *            the new persiststence setting.
+     */
+    private void updateCurrentPersistence(boolean newPersistence) {
+        firePropertyChange("currentPersistence", false, newPersistence);
     }
 
     /**
