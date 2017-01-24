@@ -20,8 +20,10 @@
 package uk.ac.stfc.isis.ibex.ui.configserver.editing.iocs;
 
 import java.util.Arrays;
+import java.util.Collection;
 
 import org.eclipse.core.databinding.observable.map.IObservableMap;
+import org.eclipse.jface.viewers.CellLabelProvider;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.TableViewerColumn;
@@ -47,8 +49,50 @@ import uk.ac.stfc.isis.ibex.ui.tables.DataboundTable;
 @SuppressWarnings("checkstyle:magicnumber")
 public class EditableIocsTable extends DataboundTable<EditableIoc> {
 
+    TableViewerColumn autoStart;
+    TableViewerColumn autoRestart;
+
+    IObservableMap[] autoStartProperties = {observeProperty("autostart")};
+    IObservableMap[] autoRestartProperties = {observeProperty("restart")};
+
 	private final CellDecorator<EditableIoc> rowDecorator = new IocRowCellDecorator();
 	private final CellDecorator<EditableIoc> simulationDecorator = new IocSimulationCellDecorator();
+
+    private CellLabelProvider autoStartLabelProvider = new CheckboxLabelProvider<Ioc>(autoStartProperties) {
+
+    @Override
+    protected boolean checked(Ioc ioc) {
+        return ioc.getAutostart();
+    }
+
+    @Override
+    protected void setChecked(Ioc ioc, boolean checked) {
+        ioc.setAutostart(checked);
+    }
+
+    @Override
+        protected boolean isEditable(Ioc ioc) {
+            return !ioc.hasComponent();
+        }
+
+    };
+
+    private CellLabelProvider autoRestartLabelProvider = new CheckboxLabelProvider<Ioc>(autoRestartProperties) {
+        @Override
+        protected boolean checked(Ioc ioc) {
+            return ioc.getRestart();
+        }
+
+        @Override
+        protected void setChecked(Ioc ioc, boolean checked) {
+            ioc.setRestart(checked);
+        }
+
+        @Override
+        protected boolean isEditable(Ioc ioc) {
+            return !ioc.hasComponent();
+        }
+    };
 
     public EditableIocsTable(Composite parent, int style, int tableStyle) {
 		super(parent, style, EditableIoc.class, tableStyle | SWT.NO_SCROLL | SWT.V_SCROLL);
@@ -97,47 +141,26 @@ public class EditableIocsTable extends DataboundTable<EditableIoc> {
 	}
 	
 	private void autostart() {
-		TableViewerColumn enabled = createColumn("Auto-start?", 1, false);
-		IObservableMap[] stateProperties = {observeProperty("autostart")};
-		enabled.setLabelProvider(new CheckboxLabelProvider<Ioc>(stateProperties) {	
-			@Override
-			protected boolean checked(Ioc ioc) {
-				return ioc.getAutostart();
-			}
-			
-			@Override
-			protected void setChecked(Ioc ioc, boolean checked) {
-				ioc.setAutostart(checked);
-			}
-			
-			@Override
-			protected boolean isEditable(Ioc ioc) {
-				return !ioc.hasComponent();
-			}
-		});	
+        autoStart = createColumn("Auto-start?", 1, false);
+        autoStart.setLabelProvider(autoStartLabelProvider);
 	}
 	
 	private void restart() {
-		TableViewerColumn enabled = createColumn("Auto-restart?", 1, false);
-		IObservableMap[] stateProperties = {observeProperty("restart")};
-		enabled.setLabelProvider(new CheckboxLabelProvider<Ioc>(stateProperties) {	
-			@Override
-			protected boolean checked(Ioc ioc) {
-				return ioc.getRestart();
-			}
-			
-			@Override
-			protected void setChecked(Ioc ioc, boolean checked) {
-				ioc.setRestart(checked);
-			}
-			
-			@Override
-			protected boolean isEditable(Ioc ioc) {
-				return !ioc.hasComponent();
-			}
-		});	
+        autoRestart = createColumn("Auto-restart?", 1, false);
+        autoRestart.setLabelProvider(autoRestartLabelProvider);
 	}
 	
+    @Override
+    public void setRows(Collection<EditableIoc> rows) {
+        clear();
+        super.setRows(rows);
+    }
+
+    private void clear() {
+        autoStart.setLabelProvider(autoStartLabelProvider);
+        autoRestart.setLabelProvider(autoRestartLabelProvider);
+    }
+
 	private void simLevel() {
 		TableViewerColumn simLevel = createColumn("Sim. level", 1, false);
 		simLevel.setLabelProvider(new DecoratedCellLabelProvider<EditableIoc>(

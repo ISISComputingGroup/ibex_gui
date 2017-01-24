@@ -22,6 +22,7 @@ package uk.ac.stfc.isis.ibex.ui.configserver.editing.iocs;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.Collection;
+import java.util.List;
 
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
@@ -37,6 +38,7 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Text;
 
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
@@ -44,7 +46,7 @@ import uk.ac.stfc.isis.ibex.configserver.editing.EditableIoc;
 import uk.ac.stfc.isis.ibex.validators.MessageDisplayer;
 
 @SuppressWarnings("checkstyle:magicnumber")
-public class IocsEditorPanel extends Composite {
+public class IocOverviewPanel extends Composite {
 
     private EditableConfiguration config;
 
@@ -66,12 +68,12 @@ public class IocsEditorPanel extends Composite {
 		}
 	};
 	
-	public IocsEditorPanel(Composite parent, int style, MessageDisplayer msgDisp) {
+	public IocOverviewPanel(Composite parent, int style, MessageDisplayer msgDisp) {
 		super(parent, style);
         setLayout(new GridLayout(4, false));
 		
         // IOC selection table
-		table = new EditableIocsTable(this, SWT.NONE, SWT.FULL_SELECTION);
+        table = new EditableIocsTable(this, SWT.NONE, SWT.V_SCROLL | SWT.MULTI | SWT.FULL_SELECTION);
         GridData gdTable = new GridData(SWT.FILL, SWT.FILL, true, true, 4, 1);
 		gdTable.heightHint = 200;
 		table.setLayoutData(gdTable);
@@ -136,12 +138,25 @@ public class IocsEditorPanel extends Composite {
             public void widgetDefaultSelected(SelectionEvent e) {
             }
         });
+        
+        btnDeleteIoc.addSelectionListener(new SelectionListener() {
+            
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                deleteSelected();
+            }
+            
+            @Override
+            public void widgetDefaultSelected(SelectionEvent e) {
+                // 
+            }
+        });
 
         table.addSelectionChangedListener(new ISelectionChangedListener() {
             @Override
             public void selectionChanged(SelectionChangedEvent arg0) {
-                EditableIoc selected = table.firstSelectedRow();
-                setSelectedIoc(selected);
+                List<EditableIoc> selected = table.selectedRows();
+                setSelectedIocs(selected);
             }
         });
 
@@ -163,11 +178,21 @@ public class IocsEditorPanel extends Composite {
         });
 	}
 
-    private void setSelectedIoc(EditableIoc selected) {
-        boolean isEditable = selected != null && selected.isEditable();
-        selectedIocRb.setText(selected.getName());
-        btnEditIoc.setEnabled(isEditable);
-        btnDeleteIoc.setEnabled(isEditable);
+    private void setSelectedIocs(List<EditableIoc> selected) {
+        if (selected.size() > 1) {
+            btnEditIoc.setEnabled(false);
+        } else {
+            btnEditIoc.setEnabled(editEnabled(selected));
+        }
+        btnDeleteIoc.setEnabled(editEnabled(selected));
+    }
+
+    private boolean editEnabled(List<EditableIoc> iocs) {
+        boolean output = true;
+        for (EditableIoc ioc : iocs) {
+            output &= ioc != null && ioc.isEditable();
+        }
+        return output;
     }
 
 	public void setConfig(EditableConfiguration config) {
@@ -198,4 +223,50 @@ public class IocsEditorPanel extends Composite {
         IocDialog dialog = new IocDialog(getShell(), config, toEdit, isBlank);
         dialog.open();
     }
+    
+    private void deleteSelected() {
+
+        List<EditableIoc> toRemove = table.selectedRows();
+        String dialogTitle = "Delete IOC";
+        String dialogText = "Do you really want to delete the IOC";
+        
+        if (toRemove.size() == 1) {
+            dialogText += " " + toRemove.get(0).getName() + "?";
+        } else {
+            dialogTitle = "Delete IOCs";
+            dialogText += "s " + iocNamesToString(toRemove) + "?";
+        }
+                
+        MessageBox dialog = new MessageBox(getShell(), SWT.ICON_WARNING | SWT.OK | SWT.CANCEL);
+        dialog.setText(dialogTitle);
+        dialog.setMessage(dialogText);
+        int returnCode = dialog.open();
+        
+        if (returnCode == SWT.OK) {
+            int index = table.getSelectionIndex();
+            config.removeIocs(toRemove);
+            table.setRows(config.getSelectedIocs());
+            table.refresh();
+        
+            // Update new selection
+            int newIndex = index > 0 ? index - 1 : index;
+            table.setSelectionIndex(newIndex);
+            setSelectedIocs(table.selectedRows());
+        }
+    }
+
+    private String iocNamesToString(List<EditableIoc> iocs) {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < iocs.size(); i++) {
+            EditableIoc ioc = iocs.get(i);
+            sb.append(ioc.getName());
+            if (i == iocs.size() - 2) {
+                sb.append(" and ");
+            } else if (i != iocs.size() - 1) {
+                sb.append(", ");
+            }
+        }
+        return sb.toString();
+    }
+
 }

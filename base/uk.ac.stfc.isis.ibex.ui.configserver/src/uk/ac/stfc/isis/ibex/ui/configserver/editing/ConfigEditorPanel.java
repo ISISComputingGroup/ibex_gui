@@ -34,7 +34,7 @@ import uk.ac.stfc.isis.ibex.ui.configserver.editing.groups.GroupsEditorPanel;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.iocs.IIocDependentPanel;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.iocs.IIocPanelCreator;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.iocs.IocSettingPanel;
-import uk.ac.stfc.isis.ibex.ui.configserver.editing.iocs.IocsEditorPanel;
+import uk.ac.stfc.isis.ibex.ui.configserver.editing.iocs.IocOverviewPanel;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.macros.MacroPanel;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.pvs.IocPVsEditorPanel;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.pvsets.IocPVSetsEditorPanel;
@@ -52,7 +52,7 @@ public class ConfigEditorPanel extends Composite {
      */
     public static final String BLOCK_TAB_NAME = "Blocks";
 
-	private final IocsEditorPanel iocs;
+	private final IocOverviewPanel iocs;
 	private final BlocksEditorPanel blocks;
 	private final GroupsEditorPanel groups;
 	private final ComponentEditorPanel components;
@@ -106,7 +106,7 @@ public class ConfigEditorPanel extends Composite {
             componentsTab.setControl(components);
         }
 
-		iocs = new IocsEditorPanel(editorTabs, SWT.NONE, dialog);
+		iocs = new IocOverviewPanel(editorTabs, SWT.NONE, dialog);
 		
 		TabItem iocsTab = new TabItem(editorTabs, SWT.NONE);
 		iocsTab.setText("IOCs");

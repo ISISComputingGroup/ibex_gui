@@ -110,13 +110,13 @@ public class IocViewModel extends ErrorMessageProvider {
     public void setIocByName() {
         for (EditableIoc ioc : config.getSelectedIocs()) {
             if (ioc.getName().equals(name)) {
-                editingIoc = ioc;
+                setIoc(ioc);
                 break;
             }
         }
         for (EditableIoc ioc : config.getUnselectedIocs()) {
             if (ioc.getName().equals(name)) {
-                editingIoc = ioc;
+                setIoc(new EditableIoc(ioc));
                 break;
             }
         }

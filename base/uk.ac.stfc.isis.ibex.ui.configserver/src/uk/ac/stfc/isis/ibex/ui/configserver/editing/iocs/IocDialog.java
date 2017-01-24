@@ -21,6 +21,8 @@
  */
 package uk.ac.stfc.isis.ibex.ui.configserver.editing.iocs;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -113,6 +115,18 @@ public class IocDialog extends TitleAreaDialog implements MessageDisplayer {
         this.config = config;
         this.ioc = ioc;
         this.viewModel = new IocViewModel(config);
+        viewModel.addPropertyChangeListener("name", new PropertyChangeListener() {
+
+            @Override
+            public void propertyChange(PropertyChangeEvent evt) {
+                if (viewModel.getName().length() > 0) {
+                    btnOk.setEnabled(true);
+                    btnOk.setFocus();
+                } else {
+                    btnOk.setEnabled(false);
+                }
+            }
+        });
     }
 
     @Override
@@ -124,6 +138,7 @@ public class IocDialog extends TitleAreaDialog implements MessageDisplayer {
 
             btnOk = createButton(parent, IDialogConstants.NO_ID, "Next", false);
             btnOk.addSelectionListener(nextListener);
+            btnOk.setEnabled(false);
         } else {
             btnOk = createButton(parent, IDialogConstants.OK_ID, IDialogConstants.OK_LABEL, false);
         }

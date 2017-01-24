@@ -615,4 +615,17 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
         firePropertyChange("iocs", iocsBeforeAdd, getSelectedIocs());
     }
 
+    /**
+     * Remove multiple blocks from the configuration.
+     * 
+     * @param iocs
+     *            the list of blocks to remove
+     */
+    public void removeIocs(List<EditableIoc> iocs) {
+        Collection<EditableIoc> iocsBefore = getSelectedIocs();
+        for (EditableIoc ioc : iocs) {
+            selectedIocs.remove(ioc);
+        }
+        firePropertyChange("iocs", iocsBefore, getSelectedIocs());
+    }
 }
