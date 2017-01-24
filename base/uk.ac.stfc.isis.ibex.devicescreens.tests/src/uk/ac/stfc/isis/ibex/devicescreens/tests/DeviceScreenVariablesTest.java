@@ -37,6 +37,7 @@ import uk.ac.stfc.isis.ibex.devicescreens.desc.DeviceScreensDescription;
 import uk.ac.stfc.isis.ibex.devicescreens.desc.PropertyDescription;
 import uk.ac.stfc.isis.ibex.devicescreens.tests.xmldata.DeviceScreensXmlProvider;
 import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
+import uk.ac.stfc.isis.ibex.epics.observing.Observable;
 import uk.ac.stfc.isis.ibex.epics.switching.ObservableFactory;
 import uk.ac.stfc.isis.ibex.epics.switching.SwitchableObservable;
 import uk.ac.stfc.isis.ibex.epics.switching.WritableFactory;
@@ -103,7 +104,7 @@ public class DeviceScreenVariablesTest {
         variables = createVariables();
 
         // Act
-        ForwardingObservable<DeviceScreensDescription> descriptionsObservable = variables.getDeviceScreens();
+        Observable<DeviceScreensDescription> descriptionsObservable = variables.getDeviceScreens();
 
         // Assert
         List<DeviceDescription> devices = descriptionsObservable.getValue().getDevices();
