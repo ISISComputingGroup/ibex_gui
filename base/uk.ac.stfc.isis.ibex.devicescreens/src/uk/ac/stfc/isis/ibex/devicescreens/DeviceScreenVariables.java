@@ -22,6 +22,9 @@
  */
 package uk.ac.stfc.isis.ibex.devicescreens;
 
+import java.util.ArrayList;
+
+import uk.ac.stfc.isis.ibex.devicescreens.desc.DeviceDescription;
 import uk.ac.stfc.isis.ibex.devicescreens.desc.DeviceScreenDescriptionToXmlConverter;
 import uk.ac.stfc.isis.ibex.devicescreens.desc.DeviceScreensDescription;
 import uk.ac.stfc.isis.ibex.devicescreens.desc.DeviceScreensDescriptionXmlParser;
@@ -52,6 +55,8 @@ public class DeviceScreenVariables {
     private final ForwardingObservable<String> deviceScreenSchema;
 
     private final String pvPrefix;
+
+    private static ArrayList<DeviceDescription> nonPersistentDeviceScreens = new ArrayList<DeviceDescription>();
 
     /**
      * Default constructor.
@@ -135,6 +140,18 @@ public class DeviceScreenVariables {
         } else {
             return pvPrefix;
         }
+    }
+
+    public static void clearNonPersistentDeviceScreens() {
+        nonPersistentDeviceScreens.clear();
+    }
+
+    public static void addNonPersistentDeviceScreen(DeviceDescription nonPersistentDevice) {
+        nonPersistentDeviceScreens.add(nonPersistentDevice);
+    }
+
+    public static ArrayList<DeviceDescription> getNonPersistentDeviceScreens() {
+        return nonPersistentDeviceScreens;
     }
 
 }

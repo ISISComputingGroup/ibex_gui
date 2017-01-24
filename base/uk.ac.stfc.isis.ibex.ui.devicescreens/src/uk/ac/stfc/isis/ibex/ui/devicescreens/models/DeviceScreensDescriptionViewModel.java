@@ -168,7 +168,13 @@ public class DeviceScreensDescriptionViewModel extends ModelObject {
      *            the new persistence
      */
     public void setCurrentPersistence(boolean persistence) {
+        if (selectedScreen == null) {
+            return;
+        }
         selectedScreen.setPersistent(persistence);
+        updateCurrentPersistence(selectedScreen.getPersistent());
+
+        checkScreensValid();
     }
 
     /**
