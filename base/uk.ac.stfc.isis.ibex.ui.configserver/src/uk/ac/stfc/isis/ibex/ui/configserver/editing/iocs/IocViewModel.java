@@ -47,20 +47,25 @@ public class IocViewModel extends ErrorMessageProvider {
 
     private void init() {
         if (editingIoc != null) {
-            name = editingIoc.getName();
-            autoStart = editingIoc.getAutostart();
-            autoRestart = editingIoc.getRestart();
-            simLevel = editingIoc.getSimLevel();
+            setName(editingIoc.getName());
+            setAutoStart(editingIoc.getAutostart());
+            setAutoRestart(editingIoc.getRestart());
+            setSimLevel(editingIoc.getSimLevel().ordinal());
         } else {
-            name = "";
-            autoStart = false;
-            autoRestart = false;
-            simLevel = SimLevel.NONE;
+            setName("");
+            setAutoStart(false);
+            setAutoRestart(false);
+            setSimLevel(SimLevel.NONE.ordinal());
         }
     }
 
     public EditableIoc getIoc() {
         return this.editingIoc;
+    }
+
+    public void setIoc(EditableIoc ioc) {
+        firePropertyChange("ioc", this.editingIoc, this.editingIoc = ioc);
+        init();
     }
 
     public String getName() {
@@ -100,14 +105,10 @@ public class IocViewModel extends ErrorMessageProvider {
         editingIoc.setRestart(autoRestart);
         editingIoc.setAutostart(autoStart);
         editingIoc.setSimLevel(simLevel);
+//        editingIoc.setMacros(macros);
     }
 
-    public void setIoc(EditableIoc ioc) {
-        this.editingIoc = ioc;
-        init();
-    }
-
-    public void setIocByName() {
+    public void setIocByName(String name) {
         for (EditableIoc ioc : config.getSelectedIocs()) {
             if (ioc.getName().equals(name)) {
                 setIoc(ioc);

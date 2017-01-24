@@ -96,7 +96,6 @@ public class IocDialog extends TitleAreaDialog implements MessageDisplayer {
     }
 
     private void nextPage() {
-        viewModel.setIocByName();
         this.ioc = viewModel.getIoc();
         editIocPanel.setViewModel(viewModel);
         btnPrev.setVisible(true);
@@ -115,18 +114,6 @@ public class IocDialog extends TitleAreaDialog implements MessageDisplayer {
         this.config = config;
         this.ioc = ioc;
         this.viewModel = new IocViewModel(config);
-        viewModel.addPropertyChangeListener("name", new PropertyChangeListener() {
-
-            @Override
-            public void propertyChange(PropertyChangeEvent evt) {
-                if (viewModel.getName().length() > 0) {
-                    btnOk.setEnabled(true);
-                    btnOk.setFocus();
-                } else {
-                    btnOk.setEnabled(false);
-                }
-            }
-        });
     }
 
     @Override
@@ -145,6 +132,19 @@ public class IocDialog extends TitleAreaDialog implements MessageDisplayer {
 
         createButton(parent, IDialogConstants.CANCEL_ID, IDialogConstants.CANCEL_LABEL, false);
         btnOk.setFocus();
+
+        viewModel.addPropertyChangeListener("name", new PropertyChangeListener() {
+
+            @Override
+            public void propertyChange(PropertyChangeEvent evt) {
+                if (viewModel.getName().length() > 0) {
+                    btnOk.setEnabled(true);
+                    btnOk.setFocus();
+                } else {
+                    btnOk.setEnabled(false);
+                }
+            }
+        });
     }
 
     @Override

@@ -181,8 +181,10 @@ public class IocOverviewPanel extends Composite {
     private void setSelectedIocs(List<EditableIoc> selected) {
         if (selected.size() > 1) {
             btnEditIoc.setEnabled(false);
+            selectedIocRb.setText("(Multiple)");
         } else {
             btnEditIoc.setEnabled(editEnabled(selected));
+            selectedIocRb.setText(table.firstSelectedRow().getName());
         }
         btnDeleteIoc.setEnabled(editEnabled(selected));
     }

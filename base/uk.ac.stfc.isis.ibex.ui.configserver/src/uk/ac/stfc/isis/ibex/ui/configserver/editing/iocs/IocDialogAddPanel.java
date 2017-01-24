@@ -79,15 +79,15 @@ public class IocDialogAddPanel extends Composite {
     }
 
     public void setViewModel(final IocViewModel viewModel) {
+        bind(viewModel);
+
         availableIocsTable.addSelectionChangedListener(new ISelectionChangedListener() {
             @Override
             public void selectionChanged(SelectionChangedEvent event) {
                 String selectedIocName = availableIocsTable.firstSelectedRow().getName();
-                viewModel.setName(selectedIocName);
+                viewModel.setIocByName(selectedIocName);
             }
         });
-
-        bind(viewModel);
     }
 
     public void bind(IocViewModel viewModel) {

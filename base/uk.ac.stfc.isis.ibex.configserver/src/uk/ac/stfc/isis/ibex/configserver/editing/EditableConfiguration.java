@@ -24,6 +24,7 @@ import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -39,6 +40,7 @@ import uk.ac.stfc.isis.ibex.configserver.configuration.Component;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Configuration;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Group;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Ioc;
+import uk.ac.stfc.isis.ibex.configserver.configuration.Macro;
 import uk.ac.stfc.isis.ibex.configserver.configuration.PV;
 import uk.ac.stfc.isis.ibex.configserver.internal.ComponentFilteredConfiguration;
 import uk.ac.stfc.isis.ibex.configserver.internal.DisplayUtils;
@@ -161,10 +163,10 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
         for (Group group : config.getGroups()) {
             editableGroups.add(new EditableGroup(this, group));
         }
-
         for (Ioc ioc : config.getIocs()) {
             selectedIocs.add(new EditableIoc(ioc));
         }
+        initMacros(iocs);
         availableIocs = iocs;
 
         editableComponents = new EditableComponents(config.getComponents(), components);
@@ -321,6 +323,70 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
         return new ArrayList<>(pvs);
     }
 
+    public void addIoc(EditableIoc ioc) {
+        Collection<Block> iocsBeforeAdd = getBlocks();
+        selectedIocs.add(ioc);
+        firePropertyChange("iocs", iocsBeforeAdd, getSelectedIocs());
+    }
+
+    /**
+     * Remove multiple IOCs from the configuration.
+     * 
+     * @param iocs
+     *            the list of IOCs to remove
+     */
+    public void removeIocs(List<EditableIoc> iocs) {
+        Collection<EditableIoc> iocsBefore = getSelectedIocs();
+        for (EditableIoc ioc : iocs) {
+            selectedIocs.remove(ioc);
+        }
+        firePropertyChange("iocs", iocsBefore, getSelectedIocs());
+    }
+
+    /**
+     * @return The available IOCs not associated with the configuration
+     */
+    public Collection<EditableIoc> getUnselectedIocs() {
+        List<EditableIoc> result = new ArrayList<EditableIoc>();
+    
+        List<String> selectedIocNames = new ArrayList<String>();
+        for (EditableIoc ioc : this.selectedIocs) {
+            selectedIocNames.add(ioc.getName());
+        }
+    
+        for (EditableIoc ioc : availableIocs) {
+            if (!selectedIocNames.contains(ioc.getName())) {
+                result.add(ioc);
+            }
+        }
+        Collections.sort(result);
+        return result;
+    }
+
+    /**
+     * @return The editable IOCs associated with the configuration
+     */
+    // TODO check usage
+    public Collection<EditableIoc> getSelectedIocs() {
+        return selectedIocs;
+    }
+
+    private void initMacros(Collection<EditableIoc> available) {
+        Map<String, EditableIoc> iocs = new HashMap<>();
+        for (EditableIoc ioc : available) {
+            iocs.put(ioc.getName(), new EditableIoc(ioc));
+        }
+        
+        for (EditableIoc selectedIoc : selectedIocs) {
+            Collection<Macro> availableMacros = iocs.get(selectedIoc.getName()).getAvailableMacros();
+            selectedIoc.setAvailableMacros(availableMacros);
+        }
+
+//        setIocDescriptions(iocs);
+    
+        Collections.sort(selectedIocs);
+    }
+
     /**
      * @return The editable blocks associated with the configuration
      */
@@ -347,34 +413,6 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
      */
     public EditableComponents getEditableComponents() {
         return editableComponents;
-    }
-
-    /**
-     * @return The available IOCs not associated with the configuration
-     */
-    public Collection<EditableIoc> getUnselectedIocs() {
-        List<EditableIoc> result = new ArrayList<EditableIoc>();
-
-        List<String> selectedIocNames = new ArrayList<String>();
-        for (EditableIoc ioc : this.selectedIocs) {
-            selectedIocNames.add(ioc.getName());
-        }
-
-        for (EditableIoc ioc : availableIocs) {
-            if (!selectedIocNames.contains(ioc.getName())) {
-                result.add(ioc);
-            }
-        }
-        Collections.sort(result);
-        return result;
-    }
-
-    /**
-     * @return The editable IOCs associated with the configuration
-     */
-    // TODO check usage
-    public Collection<EditableIoc> getSelectedIocs() {
-        return selectedIocs;
     }
 
     /**
@@ -607,25 +645,5 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
         }
 
         return names;
-    }
-
-    public void addIoc(EditableIoc ioc) {
-        Collection<Block> iocsBeforeAdd = getBlocks();
-        selectedIocs.add(ioc);
-        firePropertyChange("iocs", iocsBeforeAdd, getSelectedIocs());
-    }
-
-    /**
-     * Remove multiple blocks from the configuration.
-     * 
-     * @param iocs
-     *            the list of blocks to remove
-     */
-    public void removeIocs(List<EditableIoc> iocs) {
-        Collection<EditableIoc> iocsBefore = getSelectedIocs();
-        for (EditableIoc ioc : iocs) {
-            selectedIocs.remove(ioc);
-        }
-        firePropertyChange("iocs", iocsBefore, getSelectedIocs());
     }
 }
