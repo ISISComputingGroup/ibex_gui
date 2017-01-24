@@ -181,9 +181,10 @@ public class IocDialog extends TitleAreaDialog implements MessageDisplayer {
 
         if (sb.length() > 0) {
             setErrorMessage(sb.toString());
-            // Don't allow save until errors are cleared
+            btnOk.setEnabled(false);
         } else {
             setErrorMessage(null);
+            btnOk.setEnabled(true);
         }
     }
 
