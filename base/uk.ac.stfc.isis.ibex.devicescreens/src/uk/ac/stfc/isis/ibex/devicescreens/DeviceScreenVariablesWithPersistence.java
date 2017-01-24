@@ -51,6 +51,7 @@ public class DeviceScreenVariablesWithPersistence extends DeviceScreenVariables 
         public DeviceScreensDescription getValue() {
             DeviceScreensDescription deviceScreens = new DeviceScreensDescription(super.getValue());
             List<DeviceDescription> persistentDeviceScreensList = deviceScreens.getDevices();
+            DeviceScreenVariables variables = DeviceScreens.getInstance().getVariables();
 
             // Persistent devices
             // From server.
@@ -61,7 +62,7 @@ public class DeviceScreenVariablesWithPersistence extends DeviceScreenVariables 
 
             // Non-persistent devices:
             // Stored locally in the DeviceScreensVariables class.
-            for (DeviceDescription deviceDescription : DeviceScreenVariables.getNonPersistentDeviceScreens()) {
+            for (DeviceDescription deviceDescription : variables.getNonPersistentDeviceScreens()) {
                 deviceDescription.setPersist(false);
                 deviceScreens.addDevice(deviceDescription);
                 System.out.println("DEBUG 4");

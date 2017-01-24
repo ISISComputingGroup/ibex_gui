@@ -101,5 +101,9 @@ public class DeviceScreens implements BundleActivator {
         DeviceScreens.context = null;
     }
 
+    public DeviceScreenVariablesWithPersistence getVariables() {
+        return variables;
+    }
+
 }
 

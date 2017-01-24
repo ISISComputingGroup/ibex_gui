@@ -56,7 +56,7 @@ public class DeviceScreenVariables {
 
     private final String pvPrefix;
 
-    private static ArrayList<DeviceDescription> nonPersistentDeviceScreens = new ArrayList<DeviceDescription>();
+    private ArrayList<DeviceDescription> nonPersistentDeviceScreens = new ArrayList<DeviceDescription>();
 
     /**
      * Default constructor.
@@ -142,15 +142,15 @@ public class DeviceScreenVariables {
         }
     }
 
-    public static void clearNonPersistentDeviceScreens() {
+    public void clearNonPersistentDeviceScreens() {
         nonPersistentDeviceScreens.clear();
     }
 
-    public static void addNonPersistentDeviceScreen(DeviceDescription nonPersistentDevice) {
+    public void addNonPersistentDeviceScreen(DeviceDescription nonPersistentDevice) {
         nonPersistentDeviceScreens.add(nonPersistentDevice);
     }
 
-    public static ArrayList<DeviceDescription> getNonPersistentDeviceScreens() {
+    public ArrayList<DeviceDescription> getNonPersistentDeviceScreens() {
         return nonPersistentDeviceScreens;
     }
 
