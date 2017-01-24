@@ -29,6 +29,7 @@ import uk.ac.stfc.isis.ibex.devicescreens.desc.DeviceScreenDescriptionToXmlConve
 import uk.ac.stfc.isis.ibex.devicescreens.desc.DeviceScreensDescription;
 import uk.ac.stfc.isis.ibex.devicescreens.desc.DeviceScreensDescriptionXmlParser;
 import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
+import uk.ac.stfc.isis.ibex.epics.observing.Observable;
 import uk.ac.stfc.isis.ibex.epics.switching.ObservableFactory;
 import uk.ac.stfc.isis.ibex.epics.switching.OnInstrumentSwitch;
 import uk.ac.stfc.isis.ibex.epics.switching.WritableFactory;
@@ -97,7 +98,7 @@ public class DeviceScreenVariables {
      * 
      * @return an observable pointing at the get device screens PV
      */
-    public ForwardingObservable<DeviceScreensDescription> getDeviceScreens() {
+    public Observable<DeviceScreensDescription> getDeviceScreens() {
         return deviceScreensObservable;
     }
 

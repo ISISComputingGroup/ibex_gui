@@ -79,8 +79,8 @@ public class DeviceScreenVariablesWithPersistence extends DeviceScreenVariables 
 
 
     @Override
-    public ForwardingObservable<DeviceScreensDescription> getDeviceScreens() {
-        ForwardingObservable<DeviceScreensDescription> forwardingObservable = super.getDeviceScreens();
+    public Observable<DeviceScreensDescription> getDeviceScreens() {
+        Observable<DeviceScreensDescription> forwardingObservable = super.getDeviceScreens();
 
         DeviceScreenObservableWithPersistence deviceScreenObservableWithPersistence =
                 new DeviceScreenObservableWithPersistence(forwardingObservable);

@@ -42,7 +42,7 @@ import uk.ac.stfc.isis.ibex.devicescreens.DeviceScreens;
 import uk.ac.stfc.isis.ibex.devicescreens.desc.DeviceDescription;
 import uk.ac.stfc.isis.ibex.devicescreens.desc.DeviceScreensDescription;
 import uk.ac.stfc.isis.ibex.epics.observing.BaseObserver;
-import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
+import uk.ac.stfc.isis.ibex.epics.observing.Observable;
 import uk.ac.stfc.isis.ibex.epics.observing.Observer;
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
 import uk.ac.stfc.isis.ibex.opis.OPIViewCreationException;
@@ -113,7 +113,7 @@ public class DeviceSceenListPanel extends Composite {
         deviceScreenList.setLayoutData(devicesListLayout);
 
         DeviceScreens deviceScreens = DeviceScreens.getInstance();
-        ForwardingObservable<DeviceScreensDescription> availableScreensObservable = deviceScreens.getDevices();
+        Observable<DeviceScreensDescription> availableScreensObservable = deviceScreens.getDevices();
         availableScreensObservable.addObserver(pvObserver);
 
         deviceScreenList.addSelectionChangedListener(new ISelectionChangedListener() {

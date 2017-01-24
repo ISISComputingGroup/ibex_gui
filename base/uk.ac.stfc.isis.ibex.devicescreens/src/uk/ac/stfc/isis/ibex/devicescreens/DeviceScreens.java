@@ -23,7 +23,7 @@ import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
 
 import uk.ac.stfc.isis.ibex.devicescreens.desc.DeviceScreensDescription;
-import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
+import uk.ac.stfc.isis.ibex.epics.observing.Observable;
 import uk.ac.stfc.isis.ibex.epics.writing.Writable;
 
 /**
@@ -68,7 +68,7 @@ public class DeviceScreens implements BundleActivator {
      * 
      * @return an observable to the get device screens PV
      */
-    public ForwardingObservable<DeviceScreensDescription> getDevices() {
+    public Observable<DeviceScreensDescription> getDevices() {
         return variables.getDeviceScreens();
     }
 
