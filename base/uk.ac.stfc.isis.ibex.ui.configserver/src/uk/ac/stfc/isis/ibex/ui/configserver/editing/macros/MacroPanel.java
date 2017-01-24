@@ -63,7 +63,6 @@ public class MacroPanel extends Composite implements IIocDependentPanel {
 		
 		displayMacros = sortMacroCollectionByName(displayMacros);
 		details.setMacros(displayMacros, canEditMacros);
-
 	}
 
 	@Override

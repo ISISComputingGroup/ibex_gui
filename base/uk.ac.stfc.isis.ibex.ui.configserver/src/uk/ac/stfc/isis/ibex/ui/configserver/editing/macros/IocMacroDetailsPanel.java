@@ -181,6 +181,10 @@ public class IocMacroDetailsPanel extends Composite {
 				WidgetProperties.enabled().observe(setMacroButton), 
 				BeanProperties.value(MacroValueValidator.NAME_IS_VALID).observe(valueValidator));
 		
+        bindingContext.bindValue(
+                WidgetProperties.focused().observe(setMacroButton), 
+                BeanProperties.value(MacroValueValidator.NAME_IS_VALID).observe(valueValidator));
+		
 		bindingContext.bindValue(WidgetProperties.visible().observe(errorIconLabel), 
 				BeanProperties.value(MacroValueValidator.SHOW_WARNING_ICON).observe(valueValidator));
 		

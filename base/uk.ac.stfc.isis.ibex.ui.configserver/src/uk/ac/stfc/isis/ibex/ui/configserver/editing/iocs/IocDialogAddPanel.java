@@ -27,6 +27,8 @@ import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.MouseEvent;
+import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
@@ -84,6 +86,22 @@ public class IocDialogAddPanel extends Composite {
         availableIocsTable.addSelectionChangedListener(new ISelectionChangedListener() {
             @Override
             public void selectionChanged(SelectionChangedEvent event) {
+                String selectedIocName = availableIocsTable.firstSelectedRow().getName();
+                viewModel.setName(selectedIocName);
+//                viewModel.setIocByName(selectedIocName);
+            }
+        });
+        
+        availableIocsTable.addMouseListener(new MouseListener() {
+            
+            @Override
+            public void mouseUp(MouseEvent e) {
+            }
+            @Override
+            public void mouseDown(MouseEvent e) {
+            }
+            @Override
+            public void mouseDoubleClick(MouseEvent e) {
                 String selectedIocName = availableIocsTable.firstSelectedRow().getName();
                 viewModel.setIocByName(selectedIocName);
             }

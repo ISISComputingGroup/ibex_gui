@@ -67,7 +67,6 @@ public class IocDialog extends TitleAreaDialog implements MessageDisplayer {
     SelectionListener nextListener = new SelectionListener() {
         @Override
         public void widgetSelected(SelectionEvent e) {
-            updateStack(editIocPanel);
             nextPage();
         }
 
@@ -79,7 +78,6 @@ public class IocDialog extends TitleAreaDialog implements MessageDisplayer {
     SelectionListener prevListener = new SelectionListener() {
         @Override
         public void widgetSelected(SelectionEvent e) {
-            updateStack(addIocPanel);
             previousPage();
         }
 
@@ -89,6 +87,7 @@ public class IocDialog extends TitleAreaDialog implements MessageDisplayer {
     };
 
     private void previousPage() {
+        updateStack(addIocPanel);
         btnPrev.setVisible(false);
         btnOk.addSelectionListener(nextListener);
         btnOk.setData(IDialogConstants.NO_ID);
@@ -96,6 +95,7 @@ public class IocDialog extends TitleAreaDialog implements MessageDisplayer {
     }
 
     private void nextPage() {
+        updateStack(editIocPanel);
         this.ioc = viewModel.getIoc();
         editIocPanel.setViewModel(viewModel);
         btnPrev.setVisible(true);
@@ -143,6 +143,15 @@ public class IocDialog extends TitleAreaDialog implements MessageDisplayer {
                 } else {
                     btnOk.setEnabled(false);
                 }
+            }
+        });
+
+        // Enables selection by double click
+        viewModel.addPropertyChangeListener("ioc", new PropertyChangeListener() {
+
+            @Override
+            public void propertyChange(PropertyChangeEvent evt) {
+                nextPage();
             }
         });
     }

@@ -366,7 +366,6 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
     /**
      * @return The editable IOCs associated with the configuration
      */
-    // TODO check usage
     public Collection<EditableIoc> getSelectedIocs() {
         return selectedIocs;
     }
@@ -382,7 +381,7 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
             selectedIoc.setAvailableMacros(availableMacros);
         }
 
-//        setIocDescriptions(iocs);
+        setIocDescriptions(iocs);
     
         Collections.sort(selectedIocs);
     }
