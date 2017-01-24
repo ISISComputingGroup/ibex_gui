@@ -126,7 +126,7 @@ if %errorlevel% neq 0 (
 )
 
 REM Build the installer
-copy /b 7zSD.sfx + installer_config.txt + installer.7z ClientInstaller.exe
+copy /b 7z.sfx + installer_config.txt + installer.7z ClientInstaller.exe
 if %errorlevel% neq 0 (
     @echo Installer build failed
     exit /b %errorlevel%
