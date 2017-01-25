@@ -36,6 +36,7 @@ import org.eclipse.swt.widgets.Composite;
 import uk.ac.stfc.isis.ibex.configserver.configuration.PVDefaultValue;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableIoc;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.iocs.IIocDependentPanel;
+import uk.ac.stfc.isis.ibex.ui.configserver.editing.iocs.IocViewModel;
 import uk.ac.stfc.isis.ibex.validators.MessageDisplayer;
 
 
@@ -149,15 +150,16 @@ public class IocPVsEditorPanel extends Composite implements IIocDependentPanel {
         return name;
     }
 
+    // TODO check this works
 	@Override
-	public void setIoc(EditableIoc ioc) {
-		this.ioc = ioc;
-		iocPVsTable.setRows(ioc != null ? ioc.getPvs() : null);
-		boolean enabled = ioc != null && ioc.isEditable();
+    public void setViewModel(IocViewModel viewModel) {
+        this.ioc = viewModel.getIoc();
+        iocPVsTable.setRows(viewModel != null ? viewModel.getPvVals() : null);
+        boolean enabled = viewModel != null && viewModel.getIoc().isEditable();
 		setEnabled(enabled);
 		btnAdd.setEnabled(enabled);
 		details.setEnabled(enabled);
-		details.setPVs(ioc.getAvailablePVs());
+        details.setPVs(viewModel.getIoc().getAvailablePVs());
 	}
 
     private void removeSelectedPV() {

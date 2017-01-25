@@ -34,8 +34,8 @@ import org.eclipse.swt.widgets.Composite;
 import com.google.common.base.Strings;
 
 import uk.ac.stfc.isis.ibex.configserver.configuration.Macro;
-import uk.ac.stfc.isis.ibex.configserver.editing.EditableIoc;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.iocs.IIocDependentPanel;
+import uk.ac.stfc.isis.ibex.ui.configserver.editing.iocs.IocViewModel;
 
 /**
  * This panel shows the macros that have been set for a given IOC, and allows macros to be added
@@ -66,8 +66,8 @@ public class MacroPanel extends Composite implements IIocDependentPanel {
 	}
 
 	@Override
-	public void setIoc(EditableIoc ioc) {
-		setMacros(ioc.getMacros(), ioc.getAvailableMacros(), ioc.isEditable());
+    public void setViewModel(IocViewModel viewModel) {
+        setMacros(viewModel.getMacros(), viewModel.getIoc().getAvailableMacros(), viewModel.getIoc().isEditable());
 	}
 	
 	public static List<Macro> sortMacroCollectionByName(Collection<Macro> collection) {

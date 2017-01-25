@@ -23,9 +23,23 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * An enum of possible simulation levels for an IOC.
+ */
 public enum SimLevel {
+    /**
+     * Simulation level is None.
+     */
     NONE,
+
+    /**
+     * Simulation level is Device.
+     */
     DEVSIM,
+
+    /**
+     * Simulation level is Record.
+     */
     RECSIM;
 
     private static final List<String> ALLTOSTRING;
@@ -36,6 +50,11 @@ public enum SimLevel {
         }
     }
 
+    /**
+     * Returns the enum keys as a list of strings.
+     * 
+     * @return The enum keys.
+     */
     public static List<String> allToString() {
         return Collections.unmodifiableList(ALLTOSTRING);
     }

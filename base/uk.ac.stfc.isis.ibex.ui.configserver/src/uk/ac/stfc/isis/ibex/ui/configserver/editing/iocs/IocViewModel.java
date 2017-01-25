@@ -21,6 +21,12 @@
  */
 package uk.ac.stfc.isis.ibex.ui.configserver.editing.iocs;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
+import uk.ac.stfc.isis.ibex.configserver.configuration.Macro;
+import uk.ac.stfc.isis.ibex.configserver.configuration.PVDefaultValue;
+import uk.ac.stfc.isis.ibex.configserver.configuration.PVSet;
 import uk.ac.stfc.isis.ibex.configserver.configuration.SimLevel;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableIoc;
@@ -39,6 +45,9 @@ public class IocViewModel extends ErrorMessageProvider {
 
     private EditableIoc editingIoc;
     private EditableConfiguration config;
+    private Collection<Macro> macros;
+    private Collection<PVDefaultValue> pvVals;
+    private Collection<PVSet> pvSets;
 
     public IocViewModel(EditableConfiguration config) {
         this.config = config;
@@ -51,12 +60,51 @@ public class IocViewModel extends ErrorMessageProvider {
             setAutoStart(editingIoc.getAutostart());
             setAutoRestart(editingIoc.getRestart());
             setSimLevel(editingIoc.getSimLevel().ordinal());
+            setMacros(copyMacros(editingIoc.getMacros()));
+            setPvVals(copyPvVals(editingIoc.getPvs()));
+            setPvSets(copyPvSets(editingIoc.getPvSets()));
         } else {
             setName("");
             setAutoStart(false);
             setAutoRestart(false);
             setSimLevel(SimLevel.NONE.ordinal());
+            setMacros(new ArrayList<Macro>());
+            setPvVals(new ArrayList<PVDefaultValue>());
+            setPvSets(new ArrayList<PVSet>());
         }
+    }
+
+    private Collection<Macro> copyMacros(Collection<Macro> macros) {
+        Collection<Macro> copied = new ArrayList<Macro>();
+        for (Macro macro : macros) {
+            copied.add(new Macro(macro));
+        }
+        return copied;
+    }
+
+    private Collection<PVDefaultValue> copyPvVals(Collection<PVDefaultValue> pvVals) {
+        Collection<PVDefaultValue> copied = new ArrayList<PVDefaultValue>();
+        for (PVDefaultValue pvVal : pvVals) {
+            copied.add(new PVDefaultValue(pvVal));
+        }
+        return copied;
+    }
+
+    private Collection<PVSet> copyPvSets(Collection<PVSet> pvSets) {
+        Collection<PVSet> copied = new ArrayList<PVSet>();
+        for (PVSet pvSet : pvSets) {
+            copied.add(new PVSet(pvSet));
+        }
+        return copied;
+    }
+
+    public void updateIoc() {
+        editingIoc.setRestart(autoRestart);
+        editingIoc.setAutostart(autoStart);
+        editingIoc.setSimLevel(simLevel);
+        editingIoc.setMacros(macros);
+        editingIoc.setPvs(pvVals);
+        editingIoc.setPvSets(pvSets);
     }
 
     public EditableIoc getIoc() {
@@ -66,6 +114,21 @@ public class IocViewModel extends ErrorMessageProvider {
     public void setIoc(EditableIoc ioc) {
         firePropertyChange("ioc", this.editingIoc, this.editingIoc = ioc);
         init();
+    }
+
+    public void setIocByName(String name) {
+        for (EditableIoc ioc : config.getSelectedIocs()) {
+            if (ioc.getName().equals(name)) {
+                setIoc(ioc);
+                break;
+            }
+        }
+        for (EditableIoc ioc : config.getUnselectedIocs()) {
+            if (ioc.getName().equals(name)) {
+                setIoc(new EditableIoc(ioc));
+                break;
+            }
+        }
     }
 
     public String getName() {
@@ -101,25 +164,49 @@ public class IocViewModel extends ErrorMessageProvider {
         firePropertyChange("simLevel", this.simLevel, this.simLevel = simLevel);
     }
 
-    public void updateIoc() {
-        editingIoc.setRestart(autoRestart);
-        editingIoc.setAutostart(autoStart);
-        editingIoc.setSimLevel(simLevel);
-//        editingIoc.setMacros(macros);
+    /**
+     * @return the macros
+     */
+    public Collection<Macro> getMacros() {
+        return macros;
     }
 
-    public void setIocByName(String name) {
-        for (EditableIoc ioc : config.getSelectedIocs()) {
-            if (ioc.getName().equals(name)) {
-                setIoc(ioc);
-                break;
-            }
-        }
-        for (EditableIoc ioc : config.getUnselectedIocs()) {
-            if (ioc.getName().equals(name)) {
-                setIoc(new EditableIoc(ioc));
-                break;
-            }
-        }
+    /**
+     * @param macros
+     *            the macros to set
+     */
+    public void setMacros(Collection<Macro> macros) {
+        firePropertyChange("macros", this.macros, this.macros = macros);
     }
+
+    /**
+     * @return the pvVals
+     */
+    public Collection<PVDefaultValue> getPvVals() {
+        return pvVals;
+    }
+
+    /**
+     * @param pvVals
+     *            the pvVals to set
+     */
+    public void setPvVals(Collection<PVDefaultValue> pvVals) {
+        firePropertyChange("pvVals", this.pvVals, this.pvVals = pvVals);
+    }
+
+    /**
+     * @return the pvSets
+     */
+    public Collection<PVSet> getPvSets() {
+        return pvSets;
+    }
+
+    /**
+     * @param pvSets
+     *            the pvSets to set
+     */
+    public void setPvSets(Collection<PVSet> pvSets) {
+        firePropertyChange("pvSets", this.pvSets, this.pvSets = pvSets);
+    }
+
 }

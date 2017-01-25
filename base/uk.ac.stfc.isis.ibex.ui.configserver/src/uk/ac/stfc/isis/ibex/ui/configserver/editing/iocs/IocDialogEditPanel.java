@@ -127,9 +127,9 @@ public class IocDialogEditPanel extends Composite {
 
     public void setViewModel(final IocViewModel viewModel) {
 
-        macros.setIoc(viewModel.getIoc());
-        pvVals.setIoc(viewModel.getIoc());
-        pvSets.setIoc(viewModel.getIoc());
+        macros.setViewModel(viewModel);
+        pvVals.setViewModel(viewModel);
+        pvSets.setViewModel(viewModel);
 
         bind(viewModel);
     }
