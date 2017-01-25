@@ -40,7 +40,7 @@ import uk.ac.stfc.isis.ibex.validators.MessageDisplayer;
 
 
 /**
- * The panel for editing the pv values on individual iocs.
+ * The panel for displaying and editing the PV values of a given IOC.
  */
 @SuppressWarnings("checkstyle:magicnumber")
 public class IocPVsEditorPanel extends Composite implements IIocDependentPanel {
@@ -125,7 +125,7 @@ public class IocPVsEditorPanel extends Composite implements IIocDependentPanel {
 			public void selectionChanged(SelectionChangedEvent arg0) {
 				PVDefaultValue selected = iocPVsTable.firstSelectedRow();
 				btnRemove.setEnabled(selected != null);
-                details.setPV(selected, viewModel.getIoc());
+                details.setPV(selected, viewModel.getIoc()); // TODO
 			}
 		});
 		details.setEnabled(false);

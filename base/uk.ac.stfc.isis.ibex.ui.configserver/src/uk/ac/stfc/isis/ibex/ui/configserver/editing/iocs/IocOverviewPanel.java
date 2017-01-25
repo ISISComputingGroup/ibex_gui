@@ -45,6 +45,9 @@ import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableIoc;
 import uk.ac.stfc.isis.ibex.validators.MessageDisplayer;
 
+/**
+ * Panel showing an overview of all IOCs that are part of this configuration.
+ */
 @SuppressWarnings("checkstyle:magicnumber")
 public class IocOverviewPanel extends Composite {
 
@@ -68,6 +71,16 @@ public class IocOverviewPanel extends Composite {
 		}
 	};
 	
+    /**
+     * Constructor for the IOC overview panel.
+     * 
+     * @param parent
+     *            The parent composite.
+     * @param style
+     *            The SWT style.
+     * @param msgDisp
+     *            The dialog used for displaying error messages.
+     */
 	public IocOverviewPanel(Composite parent, int style, MessageDisplayer msgDisp) {
 		super(parent, style);
         setLayout(new GridLayout(4, false));
@@ -148,7 +161,6 @@ public class IocOverviewPanel extends Composite {
             
             @Override
             public void widgetDefaultSelected(SelectionEvent e) {
-                // 
             }
         });
 
@@ -200,6 +212,12 @@ public class IocOverviewPanel extends Composite {
         return output;
     }
 
+    /**
+     * Sets the configuration being edited.
+     * 
+     * @param config
+     *            The configuration.
+     */
 	public void setConfig(EditableConfiguration config) {
 		this.config = config;
 		updateIocs(config.getSelectedIocs());	

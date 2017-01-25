@@ -42,6 +42,9 @@ import uk.ac.stfc.isis.ibex.configserver.configuration.PVDefaultValue;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableIoc;
 import uk.ac.stfc.isis.ibex.validators.MessageDisplayer;
 
+/**
+ * Panel displaying the details of a selected default PV value.
+ */
 public class IocPVDetailsPanel extends Composite {
 	private final MessageDisplayer messageDisplayer;
 	private Text name;
@@ -51,6 +54,18 @@ public class IocPVDetailsPanel extends Composite {
 	private UpdateValueStrategy strategy = new UpdateValueStrategy();
 	private Collection<AvailablePV> pvs;
 
+    private static final int TABLE_HEIGHT = 100;
+
+    /**
+     * Constructor for the PV value details panel.
+     * 
+     * @param parent
+     *            The parent composite.
+     * @param style
+     *            The SWT style.
+     * @param messageDisplayer
+     *            The dialog used for displaying error messages.
+     */
 	public IocPVDetailsPanel(Composite parent, int style, MessageDisplayer messageDisplayer) {
 		super(parent, style);
 		this.messageDisplayer = messageDisplayer;
@@ -77,9 +92,9 @@ public class IocPVDetailsPanel extends Composite {
 		value.setEnabled(false);
 		
 		availablePVTable = new IocAvailablePVsTable(grpSelectedPv, SWT.NONE, 0);
-        GridData gd_availablePVTable = new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1);
-        gd_availablePVTable.heightHint = 100;
-        availablePVTable.setLayoutData(gd_availablePVTable);
+        GridData gdAvailablePVTable = new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1);
+        gdAvailablePVTable.heightHint = TABLE_HEIGHT;
+        availablePVTable.setLayoutData(gdAvailablePVTable);
 		new Label(grpSelectedPv, SWT.NONE);
 		new Label(grpSelectedPv, SWT.NONE);
 		availablePVTable.addSelectionChangedListener(new ISelectionChangedListener() {
@@ -94,6 +109,14 @@ public class IocPVDetailsPanel extends Composite {
 		});
 	}
 	
+    /**
+     * Sets the default PV value. // TODO elaborate
+     * 
+     * @param pv
+     *            The default PV value
+     * @param ioc
+     *            The IOC being edited
+     */
 	public void setPV(PVDefaultValue pv, EditableIoc ioc) {
 		if (bindingContext != null) {
 			bindingContext.dispose();
@@ -135,6 +158,12 @@ public class IocPVDetailsPanel extends Composite {
 		}
 	}
 	
+    /**
+     * Sets the PV values.
+     * 
+     * @param pvs
+     *            The PV values.
+     */
 	public void setPVs(Collection<AvailablePV> pvs) { 
 		this.pvs = pvs;
 		updateAvailablePVs();

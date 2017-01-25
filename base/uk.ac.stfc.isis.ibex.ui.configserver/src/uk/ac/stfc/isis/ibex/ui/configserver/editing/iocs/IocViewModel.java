@@ -33,7 +33,8 @@ import uk.ac.stfc.isis.ibex.configserver.editing.EditableIoc;
 import uk.ac.stfc.isis.ibex.validators.ErrorMessageProvider;
 
 /**
- *
+ * A Viewmodel for IOCs, containing values used for displaying in the edit IOC
+ * dialog.
  */
 // TODO Validations
 public class IocViewModel extends ErrorMessageProvider {
@@ -49,11 +50,20 @@ public class IocViewModel extends ErrorMessageProvider {
     private Collection<PVDefaultValue> pvVals;
     private Collection<PVSet> pvSets;
 
+    /**
+     * Constructor for the IOC view model.
+     * 
+     * @param config
+     *            The configuration this IOC is part of.
+     */
     public IocViewModel(EditableConfiguration config) {
         this.config = config;
         init();
     }
 
+    /**
+     * Initialises Viewmodel values.
+     */
     private void init() {
         if (editingIoc != null) {
             setName(editingIoc.getName());
@@ -74,6 +84,13 @@ public class IocViewModel extends ErrorMessageProvider {
         }
     }
 
+    /**
+     * Makes an editing copy of the macros available to the IOC.
+     * 
+     * @param macros
+     *            The available macros.
+     * @return A copy of the available macros.
+     */
     private Collection<Macro> copyMacros(Collection<Macro> macros) {
         Collection<Macro> copied = new ArrayList<Macro>();
         for (Macro macro : macros) {
@@ -82,6 +99,13 @@ public class IocViewModel extends ErrorMessageProvider {
         return copied;
     }
 
+    /**
+     * Makes an editing copy of the IOCs default PV values.
+     * 
+     * @param pvVals
+     *            The IOCs default PV values.
+     * @return A copy of the default PV values.
+     */
     private Collection<PVDefaultValue> copyPvVals(Collection<PVDefaultValue> pvVals) {
         Collection<PVDefaultValue> copied = new ArrayList<PVDefaultValue>();
         for (PVDefaultValue pvVal : pvVals) {
@@ -90,6 +114,13 @@ public class IocViewModel extends ErrorMessageProvider {
         return copied;
     }
 
+    /**
+     * Makes an editing copy of the PV sets available to the IOC.
+     * 
+     * @param macros
+     *            The available PV sets.
+     * @return A copy of the available PV sets.
+     */
     private Collection<PVSet> copyPvSets(Collection<PVSet> pvSets) {
         Collection<PVSet> copied = new ArrayList<PVSet>();
         for (PVSet pvSet : pvSets) {
@@ -98,6 +129,9 @@ public class IocViewModel extends ErrorMessageProvider {
         return copied;
     }
 
+    /**
+     * Updates the IOC with the new values.
+     */
     public void updateIoc() {
         editingIoc.setRestart(autoRestart);
         editingIoc.setAutostart(autoStart);
@@ -107,15 +141,30 @@ public class IocViewModel extends ErrorMessageProvider {
         editingIoc.setPvSets(pvSets);
     }
 
+    /**
+     * @return The editing IOC
+     */
     public EditableIoc getIoc() {
         return this.editingIoc;
     }
 
+    /**
+     * Sets the IOC.
+     * 
+     * @param ioc
+     *            The IOC
+     */
     public void setIoc(EditableIoc ioc) {
         firePropertyChange("ioc", this.editingIoc, this.editingIoc = ioc);
         init();
     }
 
+    /**
+     * Sets the IOC by IOC name.
+     * 
+     * @param name
+     *            The IOC name
+     */
     public void setIocByName(String name) {
         for (EditableIoc ioc : config.getSelectedIocs()) {
             if (ioc.getName().equals(name)) {
@@ -131,41 +180,77 @@ public class IocViewModel extends ErrorMessageProvider {
         }
     }
 
+    /**
+     * @return The IOC name
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * Sets the IOC name.
+     * 
+     * @param name
+     *            The IOC name
+     */
     public void setName(String name) {
         firePropertyChange("name", this.name, this.name = name);
     }
 
+    /**
+     * @return Whether this IOC is set to Auto-Restart
+     */
     public boolean isAutoRestart() {
         return autoRestart;
     }
 
+    /**
+     * Sets the IOCs Auto-Restart.
+     * 
+     * @param enabled
+     *            The Auto-Restart enabled status.
+     */
     public void setAutoRestart(boolean enabled) {
         firePropertyChange("autoRestart", this.autoRestart, this.autoRestart = enabled);
     }
 
+    /**
+     * @return Whether this IOC is set to Auto-Start
+     */
     public boolean isAutoStart() {
         return autoStart;
     }
 
+    /**
+     * Sets the IOCs Auto-Start.
+     * 
+     * @param enabled
+     *            The Auto-Start enabled status.
+     */
     public void setAutoStart(boolean enabled) {
         firePropertyChange("autoStart", this.autoStart, this.autoStart = enabled);
     }
 
+    /**
+     * @return The ordinal of the IOCs Simulation Level.
+     */
     public int getSimLevel() {
         return this.simLevel.ordinal();
     }
 
+    /**
+     * Sets the IOCs Simulation Level by ordinal.
+     * 
+     * @param index
+     *            The Simulation Level index.
+     */
     public void setSimLevel(int index) {
         SimLevel simLevel = SimLevel.values()[index];
         firePropertyChange("simLevel", this.simLevel, this.simLevel = simLevel);
     }
 
     /**
-     * @return the macros
+     * @return the IOCs macros
      */
     public Collection<Macro> getMacros() {
         return macros;
@@ -180,7 +265,7 @@ public class IocViewModel extends ErrorMessageProvider {
     }
 
     /**
-     * @return the pvVals
+     * @return the IOCs pvVals
      */
     public Collection<PVDefaultValue> getPvVals() {
         return pvVals;
@@ -195,7 +280,7 @@ public class IocViewModel extends ErrorMessageProvider {
     }
 
     /**
-     * @return the pvSets
+     * @return the IOCs pvSets
      */
     public Collection<PVSet> getPvSets() {
         return pvSets;

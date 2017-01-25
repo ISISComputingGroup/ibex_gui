@@ -37,6 +37,9 @@ import uk.ac.stfc.isis.ibex.configserver.configuration.Ioc;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableIoc;
 
+/**
+ * Panel for displaying an IOC dependant settings page. (Currently unused)
+ */
 @SuppressWarnings("checkstyle:magicnumber")
 public class IocSettingPanel extends Composite {
 	private EditableIoc ioc;
@@ -44,6 +47,16 @@ public class IocSettingPanel extends Composite {
 	private Label lbDescTarget;
 	private IIocDependentPanel target;
 	
+    /**
+     * Constructor for the IOC setting panel.
+     * 
+     * @param parent
+     *            The parent composite.
+     * @param style
+     *            The SWT style.
+     * @param panelFactory
+     *            The Panel factory delivering the content for this panel.
+     */
 	public IocSettingPanel(Composite parent, int style, IIocPanelCreator panelFactory) {
 		super(parent, style);
 		setLayout(new GridLayout(2, false));
@@ -71,6 +84,12 @@ public class IocSettingPanel extends Composite {
 		new Label(this, SWT.NONE);
 	}
 	
+    /**
+     * Sets the configuration currently being edited.
+     * 
+     * @param config
+     *            The configuration.
+     */
 	public void setConfig(EditableConfiguration config) {
 		iocCombo.setLabelProvider(new LabelProvider() {
 			@Override

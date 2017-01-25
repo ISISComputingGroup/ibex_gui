@@ -67,7 +67,6 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
     private static final String DEFAULT_GROUP_NAME = "NEW_GROUP";
     /** The default Name to apply to groups. */
     private final DefaultName groupName = new DefaultName(DEFAULT_GROUP_NAME);
-
     /** The name of the configuration. */
     private String name;
     /** A description of the configuration. */
@@ -78,8 +77,6 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
     private String dateCreated;
     /** The date the configuration was last modified. */
     private String dateModified;
-    /** Whether the configuration has been previously modified. */
-    private Boolean isNew;
     /** All IOCs available to the instrument. */
     private Collection<EditableIoc> availableIocs = new ArrayList<>();
     /** The IOCs associated with the configuration. */
@@ -257,12 +254,13 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
     }
 
     /**
-     * Whether the configuration is new or not.
+     * Whether the configuration is new or not (has previously been modified).
      * 
      * @return True if configuration is new.
      */
     public boolean getIsNew() {
-        return isNew = (history.size() == 0);
+        boolean isNew = (history.size() == 0);
+        return isNew;
     }
 
     /**
@@ -323,14 +321,20 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
         return new ArrayList<>(pvs);
     }
 
+    /**
+     * Adds an IOC to the configuration.
+     * 
+     * @param ioc
+     *            The IOC to be added.
+     */
     public void addIoc(EditableIoc ioc) {
-        Collection<Block> iocsBeforeAdd = getBlocks();
+        Collection<EditableIoc> iocsBeforeAdd = getSelectedIocs();
         selectedIocs.add(ioc);
         firePropertyChange("iocs", iocsBeforeAdd, getSelectedIocs());
     }
 
     /**
-     * Remove multiple IOCs from the configuration.
+     * Remove one or multiple IOCs from the configuration.
      * 
      * @param iocs
      *            the list of IOCs to remove
@@ -370,6 +374,7 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
         return selectedIocs;
     }
 
+    // Add available macros to IOCs that are part of the configuration.
     private void initMacros(Collection<EditableIoc> available) {
         Map<String, EditableIoc> iocs = new HashMap<>();
         for (EditableIoc ioc : available) {
@@ -562,7 +567,7 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
     public Configuration asComponent() {
         Configuration config = asConfiguration();
         return new Configuration(config.name(), config.description(), config.synoptic(), config.getIocs(),
-                config.getBlocks(), config.getGroups(), Collections.<Component> emptyList(), config.getHistory());
+                config.getBlocks(), config.getGroups(), Collections.<Component>emptyList(), config.getHistory());
     }
 
     /**
@@ -595,6 +600,8 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
      * @param iocs
      *            A map of the iocs
      */
+
+    // TODO check this works
     private void setIocDescriptions(Map<String, EditableIoc> iocs) {
         Iterator<Entry<String, EditableIoc>> it = iocs.entrySet().iterator();
         while (it.hasNext()) {

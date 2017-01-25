@@ -38,7 +38,7 @@ import uk.ac.stfc.isis.ibex.ui.configserver.editing.iocs.IocViewModel;
 import uk.ac.stfc.isis.ibex.validators.MessageDisplayer;
 
 /**
- * The panel that gives the PV sets for a specific IOC.
+ * The panel for displaying and editing the PV sets for a given IOC.
  */
 public class IocPVSetsEditorPanel extends Composite implements	IIocDependentPanel {
 	private IocPVSetsTable iocPVSetsTable;

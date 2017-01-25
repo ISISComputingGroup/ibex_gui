@@ -39,7 +39,7 @@ import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.AvailableIocsTable;
 
 /**
- *
+ * Dialog panel for selecting a new IOC to add to a configuration.
  */
 public class IocDialogAddPanel extends Composite {
     private AvailableIocsTable availableIocsTable;
@@ -47,14 +47,16 @@ public class IocDialogAddPanel extends Composite {
     private static final int TABLE_HEIGHT = 300;
     private static final int SPACING = 25;
 
+
     /**
-     * Builds the selector panel for display.
+     * Constructor for the Add IOC panel.
      * 
      * @param parent
-     *            - the composite the panel is being added to
-     * @param config
+     *            The parent composite.
      * @param style
-     *            - the style to use specified by the caller
+     *            The SWT style.
+     * @param config
+     *            The configuration currently being edited.
      */
     public IocDialogAddPanel(Composite parent, int style, final EditableConfiguration config) {
         super(parent, style);
@@ -80,6 +82,12 @@ public class IocDialogAddPanel extends Composite {
         selectedIocRb.setEditable(false);
     }
 
+    /**
+     * Sets the IOC view model used by the panel.
+     * 
+     * @param viewModel
+     *            The view model.
+     */
     public void setViewModel(final IocViewModel viewModel) {
         bind(viewModel);
 
@@ -88,10 +96,10 @@ public class IocDialogAddPanel extends Composite {
             public void selectionChanged(SelectionChangedEvent event) {
                 String selectedIocName = availableIocsTable.firstSelectedRow().getName();
                 viewModel.setName(selectedIocName);
-//                viewModel.setIocByName(selectedIocName);
             }
         });
         
+        // Enable selection by double click.
         availableIocsTable.addMouseListener(new MouseListener() {
             
             @Override
@@ -108,7 +116,13 @@ public class IocDialogAddPanel extends Composite {
         });
     }
 
-    public void bind(IocViewModel viewModel) {
+    /**
+     * Binds view model values to widgets.
+     * 
+     * @param viewModel
+     *            The IOC view model.
+     */
+    private void bind(IocViewModel viewModel) {
         DataBindingContext bindingContext = new DataBindingContext();
         bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(selectedIocRb),
                 BeanProperties.value("name").observe(viewModel));

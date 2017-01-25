@@ -44,7 +44,7 @@ import uk.ac.stfc.isis.ibex.configserver.editing.EditableIoc;
 import uk.ac.stfc.isis.ibex.validators.MessageDisplayer;
 
 /**
- *
+ * Dialog window for adding and editing IOCs.
  */
 public class IocDialog extends TitleAreaDialog implements MessageDisplayer {
     EditableConfiguration config;
@@ -86,6 +86,9 @@ public class IocDialog extends TitleAreaDialog implements MessageDisplayer {
         }
     };
 
+    /**
+     * Sets dialog content to the first page.
+     */
     private void previousPage() {
         updateStack(addIocPanel);
         btnPrev.setVisible(false);
@@ -94,6 +97,9 @@ public class IocDialog extends TitleAreaDialog implements MessageDisplayer {
         btnOk.setText("Next");
     }
 
+    /**
+     * Sets dialog content to the second page.
+     */
     private void nextPage() {
         updateStack(editIocPanel);
         this.ioc = viewModel.getIoc();
@@ -105,8 +111,17 @@ public class IocDialog extends TitleAreaDialog implements MessageDisplayer {
     }
 
     /**
+     * Constructor for the IOC dialog.
+     * 
      * @param parent
-     * @param style
+     *            The parent composite.
+     * @param config
+     *            The configuration currently being edited.
+     * @param ioc
+     *            The IOC to add.
+     * @param isNew
+     *            Flag indicating whether IOC to edit is newly added or
+     *            pre-existing.
      */
     public IocDialog(Shell parent, EditableConfiguration config, EditableIoc ioc, boolean isNew) {
         super(parent);
@@ -119,6 +134,7 @@ public class IocDialog extends TitleAreaDialog implements MessageDisplayer {
     @Override
     protected void createButtonsForButtonBar(Composite parent) {
         if (isNew) {
+            // Make IOC selection page available if new IOC.
             btnPrev = createButton(parent, IDialogConstants.NO_ID, "Previous", false);
             btnPrev.addSelectionListener(prevListener);
             btnPrev.setVisible(false);
@@ -127,12 +143,14 @@ public class IocDialog extends TitleAreaDialog implements MessageDisplayer {
             btnOk.addSelectionListener(nextListener);
             btnOk.setEnabled(false);
         } else {
+            // Only edit page is relevant if pre-existing IOC.
             btnOk = createButton(parent, IDialogConstants.OK_ID, IDialogConstants.OK_LABEL, false);
         }
 
         createButton(parent, IDialogConstants.CANCEL_ID, IDialogConstants.CANCEL_LABEL, false);
         btnOk.setFocus();
 
+        // Disable OK button if no IOC is selected.
         viewModel.addPropertyChangeListener("name", new PropertyChangeListener() {
 
             @Override
@@ -166,7 +184,7 @@ public class IocDialog extends TitleAreaDialog implements MessageDisplayer {
         addIocPanel = new IocDialogAddPanel(content, SWT.NONE, config);
         addIocPanel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 
-        editIocPanel = new IocDialogEditPanel(content, this, SWT.NONE);
+        editIocPanel = new IocDialogEditPanel(content, SWT.NONE, this);
         editIocPanel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 
         if (isNew) {
@@ -212,6 +230,13 @@ public class IocDialog extends TitleAreaDialog implements MessageDisplayer {
         }
     }
 
+    /**
+     * Method for swapping content in the dialog window when moving between
+     * pages.
+     * 
+     * @param top
+     *            The panel to be displayed.
+     */
     private void updateStack(final Control top) {
         DISPLAY.asyncExec(new Runnable() {
             @Override
@@ -222,6 +247,9 @@ public class IocDialog extends TitleAreaDialog implements MessageDisplayer {
         });
     }
 
+    /**
+     * Update IOC and add to configuration when confirming changes.
+     */
     @Override
     protected void okPressed() {
         viewModel.updateIoc();

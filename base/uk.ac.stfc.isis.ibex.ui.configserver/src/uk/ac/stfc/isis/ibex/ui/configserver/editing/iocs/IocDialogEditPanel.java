@@ -44,7 +44,7 @@ import uk.ac.stfc.isis.ibex.ui.configserver.editing.pvsets.IocPVSetsEditorPanel;
 import uk.ac.stfc.isis.ibex.validators.MessageDisplayer;
 
 /**
- *
+ * Dialog panel for editing the settings of an IOC.
  */
 public class IocDialogEditPanel extends Composite {
 
@@ -60,7 +60,17 @@ public class IocDialogEditPanel extends Composite {
     private IocPVsEditorPanel pvVals;
     private IocPVSetsEditorPanel pvSets;
 
-    public IocDialogEditPanel(Composite parent, MessageDisplayer dialog, int style) {
+    /**
+     * Constructor for the Edit IOC panel.
+     * 
+     * @param parent
+     *            The parent composite.
+     * @param style
+     *            The SWT style
+     * @param dialog
+     *            The dialog displaying error messages.
+     */
+    public IocDialogEditPanel(Composite parent, int style, MessageDisplayer dialog) {
         super(parent, style);
         this.setLayout(new GridLayout());
 
@@ -94,7 +104,7 @@ public class IocDialogEditPanel extends Composite {
         simLevel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 2, 1));
         simLevel.setItems(SimLevel.allToString().toArray(new String[0]));
 
-        Label spacer = new Label(cmpIocDetails, SWT.NONE);
+        new Label(cmpIocDetails, SWT.NONE);
 
         autoStart = new Button(cmpIocDetails, SWT.CHECK);
         autoStart.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false));
@@ -125,6 +135,12 @@ public class IocDialogEditPanel extends Composite {
         pvSetsTab.setControl(pvSets);
     }
 
+    /**
+     * Sets the IOC view model used by the panel.
+     * 
+     * @param viewModel
+     *            The view model.
+     */
     public void setViewModel(final IocViewModel viewModel) {
 
         macros.setViewModel(viewModel);
@@ -133,6 +149,13 @@ public class IocDialogEditPanel extends Composite {
 
         bind(viewModel);
     }
+
+    /**
+     * Binds view model values to widgets.
+     * 
+     * @param viewModel
+     *            The IOC view model.
+     */
     private void bind(IocViewModel viewModel) {
         DataBindingContext bindingContext = new DataBindingContext();
         bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(selectedIoc),

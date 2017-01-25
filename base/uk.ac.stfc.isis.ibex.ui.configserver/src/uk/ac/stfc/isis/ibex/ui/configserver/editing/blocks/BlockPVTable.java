@@ -32,6 +32,9 @@ import uk.ac.stfc.isis.ibex.ui.configserver.editing.blocks.filters.PVAddressSear
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundCellLabelProvider;
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundTable;
 
+/**
+ * Table for selecting a PV address to associate to a block.
+ */
 @SuppressWarnings("checkstyle:magicnumber")
 public class BlockPVTable extends DataboundTable<PV> {
 	private PVAddressSearch search;
@@ -39,6 +42,16 @@ public class BlockPVTable extends DataboundTable<PV> {
 	private ViewerFilter sourceFilter;
 	private ViewerFilter interestFilter;	
 	
+    /**
+     * Standard constructor.
+     * 
+     * @param parent
+     *            The parent composite.
+     * @param style
+     *            The SWT style.
+     * @param tableStyle
+     *            The SWT table style.
+     */
 	public BlockPVTable(Composite parent, int style, int tableStyle) {
 		super(parent, style, PV.class, tableStyle | SWT.BORDER);
 
@@ -79,11 +92,23 @@ public class BlockPVTable extends DataboundTable<PV> {
 		});	
 	}
 	
+    /**
+     * Sets the search text to the paramter specified.
+     * 
+     * @param searchText
+     *            The text to search for.
+     */
 	public void setSearch(String searchText) {
 		search.setSearchText(searchText);
 		this.viewer().refresh();
 	}
 	
+	/**
+     * Filters the list of PVs by source.
+     * 
+     * @param filter
+     *            The source filter.
+     */
 	public void setSourceFilter(ViewerFilter filter) {
 		sourceFilter = filter;
 		removeFilters();
@@ -91,6 +116,12 @@ public class BlockPVTable extends DataboundTable<PV> {
 		addFilterIfNotNull(interestFilter);
 	}
 	
+    /**
+     * Filters the list of PVs by interest level.
+     * 
+     * @param filter
+     *            The interest level filter.
+     */
 	public void setInterestFilter(ViewerFilter filter) {
 		interestFilter = filter;
 		removeFilters();

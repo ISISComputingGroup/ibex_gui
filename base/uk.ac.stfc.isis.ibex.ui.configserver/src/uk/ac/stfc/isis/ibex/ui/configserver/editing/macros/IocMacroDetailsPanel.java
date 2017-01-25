@@ -70,22 +70,25 @@ public class IocMacroDetailsPanel extends Composite {
 	private Button clearMacro;
     private Image scaled;
 	
+    /**
+     * Constructor for the macro details panel.
+     * 
+     * @param parent
+     *            The parent composite.
+     * @param style
+     *            The SWT style.
+     */
 	public IocMacroDetailsPanel(Composite parent, int style) {
 		super(parent, style);
 		setLayout(new FillLayout(SWT.HORIZONTAL));
 		
         Composite cmpSelectedPv = new Composite(this, SWT.NONE);
-//		grpSelectedPv.setText("Selected Macro");
         cmpSelectedPv.setLayout(new GridLayout(4, false));
 
         displayMacrosTable = new MacroTable(cmpSelectedPv, SWT.NONE, SWT.FULL_SELECTION);
         GridData gdAvailableMacrosTable = new GridData(SWT.FILL, SWT.FILL, true, true, 4, 1);
         gdAvailableMacrosTable.widthHint = 428;
         displayMacrosTable.setLayoutData(gdAvailableMacrosTable);
-//        new Label(grpSelectedPv, SWT.NONE);
-//        new Label(grpSelectedPv, SWT.NONE);
-//        new Label(grpSelectedPv, SWT.NONE);
-//        new Label(grpSelectedPv, SWT.NONE);
         displayMacrosTable.addSelectionChangedListener(new ISelectionChangedListener() {
             @Override
             public void selectionChanged(SelectionChangedEvent arg0) {
@@ -154,10 +157,14 @@ public class IocMacroDetailsPanel extends Composite {
 	}
 	
 	/**
-	 * Called when changing IOCs. Should reset everything such as name, selection etc.
-	 * @param macros The macros to display of the current IOC
-	 * @param canEdit If the IOC is editable
-	 */
+     * Called when changing IOCs. Should reset everything such as name,
+     * selection etc.
+     * 
+     * @param macros
+     *            The macros to display of the current IOC
+     * @param canEdit
+     *            If the IOC is editable
+     */
 	public void setMacros(Collection<Macro> macros, boolean canEdit) {
 		this.macro = null;
 		
