@@ -40,6 +40,7 @@ import org.eclipse.swt.widgets.Text;
 import uk.ac.stfc.isis.ibex.configserver.configuration.AvailablePV;
 import uk.ac.stfc.isis.ibex.configserver.configuration.PVDefaultValue;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableIoc;
+import uk.ac.stfc.isis.ibex.ui.configserver.editing.iocs.IocViewModel;
 import uk.ac.stfc.isis.ibex.validators.MessageDisplayer;
 
 /**
@@ -114,10 +115,11 @@ public class IocPVDetailsPanel extends Composite {
      * 
      * @param pv
      *            The default PV value
-     * @param ioc
+     * @param viewModel
      *            The IOC being edited
      */
-	public void setPV(PVDefaultValue pv, EditableIoc ioc) {
+    public void setPV(PVDefaultValue pv, IocViewModel viewModel) {
+        EditableIoc ioc = viewModel.getIoc();
 		if (bindingContext != null) {
 			bindingContext.dispose();
 		}
@@ -129,11 +131,11 @@ public class IocPVDetailsPanel extends Composite {
 			return;
 		}
 		
-		setEnabled(ioc.isEditable());
-		setTextEnabled(ioc.isEditable());
+        setEnabled(ioc.isEditable());
+        setTextEnabled(ioc.isEditable());
 		
 		bindingContext = new DataBindingContext();
-		strategy.setBeforeSetValidator(new PVNameValidator(ioc, pv, messageDisplayer));
+        strategy.setBeforeSetValidator(new PVNameValidator(viewModel, pv, messageDisplayer));
 		
 		bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(name), BeanProperties.value("name").observe(pv), strategy, null); 
 		bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(value), BeanProperties.value("value").observe(pv));

@@ -112,7 +112,7 @@ public class IocPVsEditorPanel extends Composite implements IIocDependentPanel {
 
                 // Why is this not happening automatically
                 btnRemove.setEnabled(true);
-                details.setPV(selected, viewModel.getIoc());
+                details.setPV(selected, viewModel);
 			}
 		});
 
@@ -125,7 +125,7 @@ public class IocPVsEditorPanel extends Composite implements IIocDependentPanel {
 			public void selectionChanged(SelectionChangedEvent arg0) {
 				PVDefaultValue selected = iocPVsTable.firstSelectedRow();
 				btnRemove.setEnabled(selected != null);
-                details.setPV(selected, viewModel.getIoc()); // TODO
+                details.setPV(selected, viewModel); // TODO
 			}
 		});
 		details.setEnabled(false);
