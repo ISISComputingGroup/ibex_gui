@@ -88,7 +88,7 @@ public class IocSettingPanel extends Composite {
 				StructuredSelection selection = (StructuredSelection) arg0.getSelection();
 				ioc = (EditableIoc) selection.getFirstElement();
 				lbDescTarget.setText(ioc.getDescription());
-				target.setIoc(ioc);
+//				target.setIoc(ioc);
 			}
 		});
 
