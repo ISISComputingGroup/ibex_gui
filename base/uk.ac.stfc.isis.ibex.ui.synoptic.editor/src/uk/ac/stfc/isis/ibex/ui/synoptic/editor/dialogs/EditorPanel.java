@@ -31,6 +31,7 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.wb.swt.SWTResourceManager;
 
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.component.ComponentDetailView;
+import uk.ac.stfc.isis.ibex.ui.synoptic.editor.component.ComponentDetailViewModel;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.instrument.InstrumentTreeControls;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.instrument.InstrumentTreeView;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.SynopticViewModel;
@@ -47,7 +48,7 @@ public class EditorPanel extends Composite {
 	private static Font titleFont = SWTResourceManager.getFont("Segoe UI", 11, SWT.BOLD);
 	
     private SynopticViewModel synopticViewModel;
-	
+
 	private Composite treeComposite;
 	private Composite detailBarComposite;
 	private Composite targetBarComposite;
@@ -107,7 +108,8 @@ public class EditorPanel extends Composite {
 
         PvListViewModel pvListViewModel = new PvListViewModel(synopticViewModel);
 
-        new ComponentDetailView(componentComposite, this.synopticViewModel, pvListViewModel);
+        ComponentDetailViewModel compDetailViewModel = new ComponentDetailViewModel(synopticViewModel);
+        new ComponentDetailView(componentComposite, compDetailViewModel, pvListViewModel);
 
         pvComposite = new Composite(detailBarComposite, SWT.BORDER);
         pvComposite.setLayout(new GridLayout(1, false));
@@ -117,7 +119,8 @@ public class EditorPanel extends Composite {
         lblPvTitle.setFont(titleFont);
         lblPvTitle.setText("PV Details");
 
-        new PvDetailView(pvComposite, new PvDetailViewModel(pvListViewModel));
+        PvDetailViewModel pvDetailViewModel = new PvDetailViewModel(pvListViewModel);
+        new PvDetailView(pvComposite, pvDetailViewModel);
 		
 		targetBarComposite = new Composite(this, SWT.NONE);
 		targetBarComposite.setLayout(targetBarLayout);
