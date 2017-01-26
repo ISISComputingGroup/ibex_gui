@@ -45,7 +45,6 @@ import uk.ac.stfc.isis.ibex.configserver.configuration.PV;
 import uk.ac.stfc.isis.ibex.configserver.internal.ComponentFilteredConfiguration;
 import uk.ac.stfc.isis.ibex.configserver.internal.DisplayUtils;
 import uk.ac.stfc.isis.ibex.configserver.internal.IocDescriber;
-import uk.ac.stfc.isis.ibex.configserver.internal.IocFilteredConfiguration;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 import uk.ac.stfc.isis.ibex.validators.GroupNamesProvider;
 
@@ -161,7 +160,7 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
             editableGroups.add(new EditableGroup(this, group));
         }
         for (Ioc ioc : config.getIocs()) {
-            selectedIocs.add(new EditableIoc(ioc));
+            addIoc(new EditableIoc(ioc));
         }
         initMacros(iocs);
         availableIocs = iocs;
@@ -328,9 +327,9 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
      *            The IOC to be added.
      */
     public void addIoc(EditableIoc ioc) {
-        Collection<EditableIoc> iocsBeforeAdd = getSelectedIocs();
+        Collection<Ioc> iocsBeforeAdd = getIocs();
         selectedIocs.add(ioc);
-        firePropertyChange("iocs", iocsBeforeAdd, getSelectedIocs());
+        firePropertyChange("iocs", iocsBeforeAdd, getIocs());
     }
 
     /**
@@ -555,7 +554,7 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
     public Configuration asConfiguration() {
         Configuration config = new Configuration(getName(), getDescription(), getSynoptic(), getIocs(), getBlocks(),
                 getGroups(), getComponents(), getHistory());
-        return new IocFilteredConfiguration(new ComponentFilteredConfiguration(config));
+        return new ComponentFilteredConfiguration(config);
     }
 
     /**

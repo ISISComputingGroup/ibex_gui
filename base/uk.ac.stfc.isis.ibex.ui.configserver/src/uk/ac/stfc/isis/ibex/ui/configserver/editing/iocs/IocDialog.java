@@ -48,7 +48,6 @@ import uk.ac.stfc.isis.ibex.validators.MessageDisplayer;
  */
 public class IocDialog extends TitleAreaDialog implements MessageDisplayer {
     EditableConfiguration config;
-    EditableIoc ioc;
     boolean isNew;
 
     Button btnPrev;
@@ -67,6 +66,7 @@ public class IocDialog extends TitleAreaDialog implements MessageDisplayer {
     SelectionListener nextListener = new SelectionListener() {
         @Override
         public void widgetSelected(SelectionEvent e) {
+            viewModel.updateIoc();
             nextPage();
         }
 
@@ -101,9 +101,8 @@ public class IocDialog extends TitleAreaDialog implements MessageDisplayer {
      * Sets dialog content to the second page.
      */
     private void nextPage() {
-        updateStack(editIocPanel);
-        this.ioc = viewModel.getIoc();
         editIocPanel.setViewModel(viewModel);
+        updateStack(editIocPanel);
         btnPrev.setVisible(true);
         btnOk.removeSelectionListener(nextListener);
         btnOk.setData(IDialogConstants.OK_ID);
@@ -127,8 +126,8 @@ public class IocDialog extends TitleAreaDialog implements MessageDisplayer {
         super(parent);
         this.isNew = isNew;
         this.config = config;
-        this.ioc = ioc;
         this.viewModel = new IocViewModel(config);
+        viewModel.setIoc(ioc);
     }
 
     @Override
@@ -192,7 +191,6 @@ public class IocDialog extends TitleAreaDialog implements MessageDisplayer {
             stack.topControl = addIocPanel;
             this.setTitle("Add IOC");
         } else {
-            viewModel.setIoc(this.ioc);
             editIocPanel.setViewModel(viewModel);
             stack.topControl = editIocPanel;
             this.setTitle("Edit IOC");
@@ -252,7 +250,7 @@ public class IocDialog extends TitleAreaDialog implements MessageDisplayer {
      */
     @Override
     protected void okPressed() {
-        viewModel.updateIoc();
+        viewModel.saveIoc();
         if (isNew) {
             config.addIoc(viewModel.getIoc());
         }

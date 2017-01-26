@@ -84,7 +84,8 @@ public class MacroPanel extends Composite implements IIocDependentPanel {
 
 	@Override
     public void setViewModel(IocViewModel viewModel) {
-        setMacros(viewModel.getMacros(), viewModel.getIoc().getAvailableMacros(), viewModel.getIoc().isEditable());
+        setMacros(viewModel.getMacros(), viewModel.getIoc().getAvailableMacros(), viewModel.getIoc().isEditable()); // TODO
+                                                                                                                    // nullpointer
 	}
 	
     /**

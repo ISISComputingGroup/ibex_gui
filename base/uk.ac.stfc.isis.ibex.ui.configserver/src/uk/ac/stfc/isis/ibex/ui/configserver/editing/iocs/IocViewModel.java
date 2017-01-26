@@ -33,8 +33,8 @@ import uk.ac.stfc.isis.ibex.configserver.editing.EditableIoc;
 import uk.ac.stfc.isis.ibex.validators.ErrorMessageProvider;
 
 /**
- * A Viewmodel for IOCs, containing values used for displaying in the edit IOC
- * dialog.
+ * A Viewmodel storing an IOCs properties for displaying and editing in the GUI,
+ * to be saved in the IOC once triggered.
  */
 // TODO Validations
 public class IocViewModel extends ErrorMessageProvider {
@@ -130,9 +130,9 @@ public class IocViewModel extends ErrorMessageProvider {
     }
 
     /**
-     * Updates the IOC with the new values.
+     * Saves the IOC with new values from the view model.
      */
-    public void updateIoc() {
+    public void saveIoc() {
         editingIoc.setRestart(autoRestart);
         editingIoc.setAutostart(autoStart);
         editingIoc.setSimLevel(simLevel);
@@ -178,6 +178,13 @@ public class IocViewModel extends ErrorMessageProvider {
                 break;
             }
         }
+    }
+
+    /**
+     * Updates the current IOC in the view model.
+     */
+    public void updateIoc() {
+        setIocByName(name);
     }
 
     /**
