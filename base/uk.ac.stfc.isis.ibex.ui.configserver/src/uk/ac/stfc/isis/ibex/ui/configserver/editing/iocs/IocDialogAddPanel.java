@@ -66,7 +66,7 @@ public class IocDialogAddPanel extends Composite {
 
         // Add selection table
         availableIocsTable = new AvailableIocsTable(this, SWT.NONE, SWT.FULL_SELECTION);
-        availableIocsTable.setRows(config.getUnselectedIocs());
+        availableIocsTable.setRows(config.getAvailableIocs());
 
         GridData gdIocTable = new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1);
         gdIocTable.heightHint = TABLE_HEIGHT;

@@ -172,7 +172,7 @@ public class IocViewModel extends ErrorMessageProvider {
                 break;
             }
         }
-        for (EditableIoc ioc : config.getUnselectedIocs()) {
+        for (EditableIoc ioc : config.getAvailableIocs()) {
             if (ioc.getName().equals(name)) {
                 setIoc(new EditableIoc(ioc));
                 break;

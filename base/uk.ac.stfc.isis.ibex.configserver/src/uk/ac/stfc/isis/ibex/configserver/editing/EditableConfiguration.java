@@ -77,7 +77,7 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
     /** The date the configuration was last modified. */
     private String dateModified;
     /** All IOCs available to the instrument. */
-    private Collection<EditableIoc> availableIocs = new ArrayList<>();
+    private Collection<EditableIoc> allIocs = new ArrayList<>();
     /** The IOCs associated with the configuration. */
     private final List<EditableIoc> selectedIocs = new ArrayList<>();
     /** The groups associated with the configuration. */
@@ -163,7 +163,7 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
             addIoc(new EditableIoc(ioc));
         }
         initMacros(iocs);
-        availableIocs = iocs;
+        allIocs = iocs;
 
         editableComponents = new EditableComponents(config.getComponents(), components);
         editableComponents.addPropertyChangeListener(passThrough());
@@ -347,9 +347,9 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
     }
 
     /**
-     * @return The available IOCs not associated with the configuration
+     * @return The available IOCs not associated with the configuration.
      */
-    public Collection<EditableIoc> getUnselectedIocs() {
+    public Collection<EditableIoc> getAvailableIocs() {
         List<EditableIoc> result = new ArrayList<EditableIoc>();
     
         List<String> selectedIocNames = new ArrayList<String>();
@@ -357,7 +357,7 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
             selectedIocNames.add(ioc.getName());
         }
     
-        for (EditableIoc ioc : availableIocs) {
+        for (EditableIoc ioc : allIocs) {
             if (!selectedIocNames.contains(ioc.getName())) {
                 result.add(ioc);
             }
