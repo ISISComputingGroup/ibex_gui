@@ -266,6 +266,10 @@ class CheckOpiFormat:
         elif number_of_args == 3:
             self.single_file = sys.argv[1]
             self.root_directory = sys.argv[2]
+        elif number_of_args == 4:
+            self.single_file = sys.argv[1]
+            self.root_directory = sys.argv[2]
+            self.logs_directory = sys.argv[3]
         else:
             print("Command format incorrect. Expected format:")
             print (sys.argv[0] + " [single file [root directory]]")
