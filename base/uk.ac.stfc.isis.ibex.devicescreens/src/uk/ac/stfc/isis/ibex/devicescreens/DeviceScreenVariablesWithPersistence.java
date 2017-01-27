@@ -71,7 +71,8 @@ public class DeviceScreenVariablesWithPersistence extends DeviceScreenVariables 
             }
 
             System.out.println(
-                    "Here, the number of device screens is: " + variables.getNonPersistentDeviceScreens().size());
+                    "Here, the number of non-persistent device screens is: "
+                            + variables.getNonPersistentDeviceScreens().size());
 
             return deviceScreens;
 
