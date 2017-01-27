@@ -9,7 +9,7 @@ from lxml.etree import LxmlError
 class CheckOpiFormat:
 
     # Directory to iterate through
-    root_directory = r".\resources"
+    root_directory = r"./resources"
 
     # Files ending with .opi are parsed:
     file_extension = r".opi"
