@@ -101,6 +101,11 @@ public class DeviceScreens implements BundleActivator {
         DeviceScreens.context = null;
     }
 
+    /**
+     * Getter for the device screen variables with persistence information.
+     * 
+     * @return the device screen variables with persistence information.
+     */
     public DeviceScreenVariablesWithPersistence getVariables() {
         return variables;
     }

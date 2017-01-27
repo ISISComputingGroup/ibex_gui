@@ -31,11 +31,9 @@ import org.eclipse.ui.PlatformUI;
 
 import uk.ac.stfc.isis.ibex.devicescreens.DeviceScreens;
 import uk.ac.stfc.isis.ibex.devicescreens.desc.DeviceScreensDescription;
-import uk.ac.stfc.isis.ibex.epics.adapters.UpdatedObservableAdapter;
+import uk.ac.stfc.isis.ibex.epics.observing.Observable;
 import uk.ac.stfc.isis.ibex.epics.writing.SameTypeWriter;
 import uk.ac.stfc.isis.ibex.epics.writing.Writable;
-import uk.ac.stfc.isis.ibex.model.Awaited;
-import uk.ac.stfc.isis.ibex.model.UpdatedValue;
 import uk.ac.stfc.isis.ibex.opis.Opi;
 import uk.ac.stfc.isis.ibex.ui.devicescreens.dialogs.ConfigureDeviceScreensDialog;
 
@@ -97,12 +95,11 @@ public class ConfigureDeviceScreensHandler extends AbstractHandler {
      * @return the current device description
      */
     private DeviceScreensDescription getCurrent() {
-        UpdatedValue<DeviceScreensDescription> instrumentDescription =
-                new UpdatedObservableAdapter<>(DeviceScreens.getInstance().getDevices());
-        if (Awaited.returnedValue(instrumentDescription, 1)) {
-            return instrumentDescription.getValue();
-        }
-        return null;
+        
+        Observable<DeviceScreensDescription> foo = DeviceScreens.getInstance().getDevices();
+
+        return foo.getValue();
+        
     }
 
 }

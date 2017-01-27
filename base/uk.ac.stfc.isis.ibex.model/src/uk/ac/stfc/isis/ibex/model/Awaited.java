@@ -46,7 +46,7 @@ public class Awaited<T> extends UpdatedValue<T> {
 		}
 	}
 	
-	public static <T> boolean returnedValue(UpdatedValue<T> value, int secondsToWait) {
+    public static <T> boolean returnedValue(UpdatedValue<T> value, int secondsToWait) {
 		return new Awaited<>(value).until(secondsToWait);
 	}
 	

@@ -42,7 +42,11 @@ public class DeviceScreensDescriptionConverterNoop
      */
     @Override
     public DeviceScreensDescription convert(DeviceScreensDescription value) throws ConversionException {
-        return value;
+        if (value != null) {
+            return value;
+        } else {
+            throw new ConversionException("Can't convert null");
+        }
     }
 
 }
