@@ -51,7 +51,7 @@ public class DeviceScreenVariables {
     private final ObservableFactory switchingObservableFactory;
     private final WritableFactory switchingWritableFactory;
 
-    private final ForwardingObservable<DeviceScreensDescription> deviceScreensObservable;
+    private final Observable<DeviceScreensDescription> deviceScreensObservable;
     private final Writable<DeviceScreensDescription> deviceScreensWritable;
     private final ForwardingObservable<String> deviceScreenSchema;
 

@@ -25,7 +25,8 @@ import java.util.List;
 
 import uk.ac.stfc.isis.ibex.devicescreens.desc.DeviceDescription;
 import uk.ac.stfc.isis.ibex.devicescreens.desc.DeviceScreensDescription;
-import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
+import uk.ac.stfc.isis.ibex.epics.observing.ClosableObservable;
+import uk.ac.stfc.isis.ibex.epics.observing.ConvertingObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.Observable;
 import uk.ac.stfc.isis.ibex.epics.writing.ForwardingWritable;
 import uk.ac.stfc.isis.ibex.epics.writing.Writable;
@@ -39,12 +40,13 @@ public class DeviceScreenVariablesWithPersistence extends DeviceScreenVariables 
      * Class to define an observable observer pair which add persistence to
      * device screens
      */
-    private final class DeviceScreenObservableWithPersistence extends ForwardingObservable<DeviceScreensDescription> {
+    private final class DeviceScreenObservableWithPersistence
+            extends ConvertingObservable<DeviceScreensDescription, DeviceScreensDescription> {
         /**
          * @param source
          */
-        private DeviceScreenObservableWithPersistence(Observable<DeviceScreensDescription> source) {
-            super(source);
+        private DeviceScreenObservableWithPersistence(ClosableObservable<DeviceScreensDescription> source) {
+            super(source, new DeviceScreensDescriptionConverterNoop());
         }
 
         @Override
@@ -80,7 +82,8 @@ public class DeviceScreenVariablesWithPersistence extends DeviceScreenVariables 
 
     @Override
     public Observable<DeviceScreensDescription> getDeviceScreens() {
-        Observable<DeviceScreensDescription> forwardingObservable = super.getDeviceScreens();
+        ClosableObservable<DeviceScreensDescription> forwardingObservable =
+                (ClosableObservable<DeviceScreensDescription>) super.getDeviceScreens();
 
         DeviceScreenObservableWithPersistence deviceScreenObservableWithPersistence =
                 new DeviceScreenObservableWithPersistence(forwardingObservable);
