@@ -15,6 +15,7 @@ class CheckOpiFormat:
     file_extension = r".opi"
 
     # Specify a logs directory
+    # Remember to update .gitignore so that logs don't get pushed to git.
     logs_directory = r"./check_OPI_format_logs/"
 
     # Single file
