@@ -1,25 +1,25 @@
 import os
 import sys
+import argparse
 from lxml import etree
 from time import gmtime, strftime
 
 from lxml.etree import LxmlError
 
+# Directory to iterate through
+root_directory = r"./resources/"
+
+# Files ending with .opi are parsed:
+file_extension = r".opi"
+
+# Specify a logs directory
+# Remember to update .gitignore so that logs don't get pushed to git.
+logs_directory = r"./check_OPI_format_logs/"
+
+# Single file
+single_file = ""
 
 class CheckOpiFormat:
-
-    # Directory to iterate through
-    root_directory = r"./resources"
-
-    # Files ending with .opi are parsed:
-    file_extension = r".opi"
-
-    # Specify a logs directory
-    # Remember to update .gitignore so that logs don't get pushed to git.
-    logs_directory = r"./check_OPI_format_logs/"
-
-    # Single file
-    single_file = ""
 
     # If a word contains any of the following, the whole word will be ignored
     ignore = \
@@ -34,6 +34,10 @@ class CheckOpiFormat:
 
     def __init__(self):
         self.errors = []
+        self.single_file = ""
+        self.root_directory = ""
+        self.logs_directory = ""
+        self.file_extension = ""
 
     @staticmethod
     def get_tree(filepath):
@@ -254,26 +258,12 @@ class CheckOpiFormat:
         error_message = "A grouping container didn't use ISIS_OPI_Background as it's background color."
         self.check_condition(root, xpath + condition, error_message)
 
-    def run(self):
+    def run(self, file, directory, logs_directory, file_extension):
 
-        number_of_args = len(sys.argv)
-
-        if number_of_args == 1:
-            # Use default behaviour - do nothing
-            pass
-        elif number_of_args == 2:
-            self.single_file = sys.argv[1]
-        elif number_of_args == 3:
-            self.single_file = sys.argv[1]
-            self.root_directory = sys.argv[2]
-        elif number_of_args == 4:
-            self.single_file = sys.argv[1]
-            self.root_directory = sys.argv[2]
-            self.logs_directory = sys.argv[3]
-        else:
-            print("Command format incorrect. Expected format:")
-            print (sys.argv[0] + " [single file [root directory]]")
-            sys.exit(1)
+        self.single_file = file
+        self.root_directory = directory
+        self.logs_directory = logs_directory
+        self.file_extension = file_extension
 
         self.errors = []
         build_contains_errors = False
@@ -307,7 +297,7 @@ class CheckOpiFormat:
                     print error
 
                 # Write to file
-                f = open(self.logs_directory + time + '.txt', 'a')
+                f = open(self.logs_directory + "/" + time + '.txt', 'a')
                 f.write("\n --------------\n")
                 f.write(str(len(self.errors)) + " errors found in file " + filepath + "\n")
                 f.write(" --------------\n\n")
@@ -322,4 +312,23 @@ class CheckOpiFormat:
             sys.exit(0)
 
 if __name__ == "__main__":
-    CheckOpiFormat().run()
+
+    parser = argparse.ArgumentParser(prog='check_opi_format')
+
+    parser.add_argument('-file', nargs=1, type=str, default=[single_file],
+                        help='A single file to check')
+    parser.add_argument('-directory', nargs=1, type=str, default=[root_directory],
+                        help='A directory to check files in')
+    parser.add_argument('-logs_directory', nargs=1, type=str, default=[logs_directory],
+                        help='A directory to save the logs into')
+    parser.add_argument('-extension', nargs=1, type=str, default=[file_extension],
+                        help='The filename extension for OPIs')
+
+    args = parser.parse_args()
+
+    single_file = args.file[0]
+    root_directory = args.directory[0]
+    logs_directory = args.logs_directory[0]
+    file_extension = args.extension[0]
+
+    CheckOpiFormat().run(single_file, root_directory, logs_directory, file_extension)
