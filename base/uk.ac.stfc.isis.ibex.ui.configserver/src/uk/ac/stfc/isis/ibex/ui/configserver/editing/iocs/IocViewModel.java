@@ -30,14 +30,13 @@ import uk.ac.stfc.isis.ibex.configserver.configuration.PVSet;
 import uk.ac.stfc.isis.ibex.configserver.configuration.SimLevel;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableIoc;
-import uk.ac.stfc.isis.ibex.validators.ErrorMessageProvider;
+import uk.ac.stfc.isis.ibex.model.ModelObject;
 
 /**
- * A Viewmodel storing an IOCs properties for displaying and editing in the GUI,
- * to be saved in the IOC once triggered.
+ * A view model storing an IOCs properties for displaying and editing in the
+ * GUI, to be saved in the IOC once changes have been confirmed.
  */
-// TODO Validations
-public class IocViewModel extends ErrorMessageProvider {
+public class IocViewModel extends ModelObject {
 
     private String name;
     private boolean autoStart;
@@ -62,7 +61,7 @@ public class IocViewModel extends ErrorMessageProvider {
     }
 
     /**
-     * Initialises Viewmodel values.
+     * Initialises view model values.
      */
     private void init() {
         if (editingIoc != null) {

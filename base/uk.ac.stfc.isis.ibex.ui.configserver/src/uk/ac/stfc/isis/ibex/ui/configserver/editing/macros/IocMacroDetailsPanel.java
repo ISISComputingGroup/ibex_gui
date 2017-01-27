@@ -97,6 +97,7 @@ public class IocMacroDetailsPanel extends Composite {
                     Macro macro = (Macro) selection.getFirstElement();
                     name.setText(macro.getName());
                     setMacro(macro, true);
+                    value.setFocus();
                 }
             }
         });

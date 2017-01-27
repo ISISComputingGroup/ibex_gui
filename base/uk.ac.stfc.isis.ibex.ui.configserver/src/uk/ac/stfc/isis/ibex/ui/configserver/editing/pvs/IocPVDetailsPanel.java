@@ -111,7 +111,7 @@ public class IocPVDetailsPanel extends Composite {
 	}
 	
     /**
-     * Sets the default PV value. // TODO elaborate
+     * Sets the default PV value.
      * 
      * @param pv
      *            The default PV value

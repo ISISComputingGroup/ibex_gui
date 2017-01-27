@@ -162,7 +162,12 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
         for (Ioc ioc : config.getIocs()) {
             addIoc(new EditableIoc(ioc));
         }
-        initMacros(iocs);
+        Map<String, EditableIoc> iocMap = new HashMap<>();
+        for (EditableIoc ioc : iocs) {
+            iocMap.put(ioc.getName(), new EditableIoc(ioc));
+        }
+        initMacros(iocMap);
+        setIocDescriptions(iocMap);
         allIocs = iocs;
 
         editableComponents = new EditableComponents(config.getComponents(), components);
@@ -374,18 +379,11 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
     }
 
     // Add available macros to IOCs that are part of the configuration.
-    private void initMacros(Collection<EditableIoc> available) {
-        Map<String, EditableIoc> iocs = new HashMap<>();
-        for (EditableIoc ioc : available) {
-            iocs.put(ioc.getName(), new EditableIoc(ioc));
-        }
-        
+    private void initMacros(Map<String, EditableIoc> available) {
         for (EditableIoc selectedIoc : selectedIocs) {
-            Collection<Macro> availableMacros = iocs.get(selectedIoc.getName()).getAvailableMacros();
+            Collection<Macro> availableMacros = available.get(selectedIoc.getName()).getAvailableMacros();
             selectedIoc.setAvailableMacros(availableMacros);
         }
-
-        setIocDescriptions(iocs);
     
         Collections.sort(selectedIocs);
     }
@@ -599,8 +597,6 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
      * @param iocs
      *            A map of the iocs
      */
-
-    // TODO check this works
     private void setIocDescriptions(Map<String, EditableIoc> iocs) {
         Iterator<Entry<String, EditableIoc>> it = iocs.entrySet().iterator();
         while (it.hasNext()) {

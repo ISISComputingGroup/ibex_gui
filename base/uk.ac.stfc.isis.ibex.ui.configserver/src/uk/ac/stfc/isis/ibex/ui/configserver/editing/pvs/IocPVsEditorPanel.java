@@ -125,7 +125,7 @@ public class IocPVsEditorPanel extends Composite implements IIocDependentPanel {
 			public void selectionChanged(SelectionChangedEvent arg0) {
 				PVDefaultValue selected = iocPVsTable.firstSelectedRow();
 				btnRemove.setEnabled(selected != null);
-                details.setPV(selected, viewModel); // TODO
+                details.setPV(selected, viewModel);
 			}
 		});
 		details.setEnabled(false);
