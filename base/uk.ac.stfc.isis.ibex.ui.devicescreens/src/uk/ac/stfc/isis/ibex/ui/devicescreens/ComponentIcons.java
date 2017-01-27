@@ -1,4 +1,3 @@
-
 /*
  * This file is part of the ISIS IBEX application. Copyright (C) 2012-2016
  * Science & Technology Facilities Council. All rights reserved.
@@ -123,6 +122,8 @@ public final class ComponentIcons {
                 return "detector_motion_system";
             case PIXELMAN:
                 return "pixelman";
+            case NEOCERA:
+                return "neocera";
             default:
                 return "cog";
         }

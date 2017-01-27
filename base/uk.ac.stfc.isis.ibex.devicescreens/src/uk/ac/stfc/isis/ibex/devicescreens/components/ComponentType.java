@@ -1,4 +1,3 @@
-
 /*
  * This file is part of the ISIS IBEX application. Copyright (C) 2012-2016
  * Science & Technology Facilities Council. All rights reserved.
@@ -102,7 +101,9 @@ public enum ComponentType {
     /** Detector motion system component type. */
     DETECTOR_MOTION_SYSTEM,
     /** Pixelman camera. */
-    PIXELMAN;
+    PIXELMAN,
+    /** Neocera temperature controller. */
+    NEOCERA;
 	
 	private Target target;
 
