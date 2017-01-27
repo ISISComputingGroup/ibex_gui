@@ -96,7 +96,6 @@ public class MQConnection extends ModelObject implements Runnable {
      * Establish connection with JMS server and listen for messages to forward
      * on to consumer.
      */
-    @SuppressWarnings("checkstyle:emptyblock")
     @Override
     public void run() {
         while (run) {
