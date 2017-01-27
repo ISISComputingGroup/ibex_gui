@@ -1,6 +1,6 @@
 
 /*
- * This file is part of the ISIS IBEX application. Copyright (C) 2012-2015
+ * This file is part of the ISIS IBEX application. Copyright (C) 2012-2017
  * Science & Technology Facilities Council. All rights reserved.
  *
  * This program is distributed in the hope that it will be useful. This program
@@ -139,6 +139,7 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
         this.name = config.name();
         this.description = config.description();
         this.synoptic = config.synoptic();
+        this.allIocs = iocs;
 
         this.history = new ArrayList<>();
 
@@ -163,12 +164,11 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
             addIoc(new EditableIoc(ioc));
         }
         Map<String, EditableIoc> iocMap = new HashMap<>();
-        for (EditableIoc ioc : iocs) {
-            iocMap.put(ioc.getName(), new EditableIoc(ioc));
+        for (EditableIoc ioc : allIocs) {
+            iocMap.put(ioc.getName(), ioc);
         }
         initMacros(iocMap);
         setIocDescriptions(iocMap);
-        allIocs = iocs;
 
         editableComponents = new EditableComponents(config.getComponents(), components);
         editableComponents.addPropertyChangeListener(passThrough());
