@@ -14,6 +14,9 @@ class CheckOpiFormat:
     # Files ending with .opi are parsed:
     file_extension = r".opi"
 
+    # Specify a logs directory
+    logs_directory = r"./check_OPI_format_logs/"
+
     # Single file
     single_file = ""
 
@@ -299,7 +302,7 @@ class CheckOpiFormat:
                     print error
 
                 # Write to file
-                f = open('check_OPI_format_logs/' + time + '.txt', 'a')
+                f = open(self.logs_directory + time + '.txt', 'a')
                 f.write("\n --------------\n")
                 f.write(str(len(self.errors)) + " errors found in file " + filepath + "\n")
                 f.write(" --------------\n\n")
