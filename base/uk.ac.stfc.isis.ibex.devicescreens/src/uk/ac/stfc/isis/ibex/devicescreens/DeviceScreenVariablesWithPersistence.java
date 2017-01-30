@@ -25,6 +25,8 @@ import uk.ac.stfc.isis.ibex.devicescreens.desc.DeviceScreensDescription;
 import uk.ac.stfc.isis.ibex.epics.observing.ClosableObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.ConvertingObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.Observable;
+import uk.ac.stfc.isis.ibex.epics.observing.Observer;
+import uk.ac.stfc.isis.ibex.epics.observing.Subscription;
 import uk.ac.stfc.isis.ibex.epics.writing.ForwardingWritable;
 import uk.ac.stfc.isis.ibex.epics.writing.Writable;
 
@@ -44,6 +46,12 @@ public class DeviceScreenVariablesWithPersistence extends DeviceScreenVariables 
          */
         private DeviceScreenObservableWithPersistence(ClosableObservable<DeviceScreensDescription> source) {
             super(source, new DeviceScreensDescriptionConverterToPersistence());
+        }
+
+        @Override
+        public Subscription addObserver(Observer<DeviceScreensDescription> observer) {
+            observer.update(getValue(), currentError(), isConnected());
+            return super.addObserver(observer);
         }
 
     }
