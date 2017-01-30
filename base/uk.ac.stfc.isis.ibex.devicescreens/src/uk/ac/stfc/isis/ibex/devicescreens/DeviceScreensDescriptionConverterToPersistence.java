@@ -21,6 +21,7 @@
  */
 package uk.ac.stfc.isis.ibex.devicescreens;
 
+import uk.ac.stfc.isis.ibex.devicescreens.desc.DeviceDescription;
 import uk.ac.stfc.isis.ibex.devicescreens.desc.DeviceScreensDescription;
 import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
 import uk.ac.stfc.isis.ibex.epics.conversion.Converter;
@@ -29,21 +30,36 @@ import uk.ac.stfc.isis.ibex.epics.conversion.Converter;
  * This class defines a no-op converter between two DeviceScreensDescription
  * classes.
  */
-public class DeviceScreensDescriptionConverterNoop
+public class DeviceScreensDescriptionConverterToPersistence
         extends Converter<DeviceScreensDescription, DeviceScreensDescription> {
 
     /**
      * 
      * A no-op converter between two DeviceScreensDescription classes.
      * 
-     * @param value
+     * @param deviceScreensDescription
      * @return
      * @throws ConversionException
      */
     @Override
-    public DeviceScreensDescription convert(DeviceScreensDescription value) throws ConversionException {
-        if (value != null) {
-            return value;
+    public DeviceScreensDescription convert(DeviceScreensDescription deviceScreensDescription) throws ConversionException {
+
+        System.out.println("To persistence...");
+
+        if (deviceScreensDescription != null) {
+
+            System.out.println("And beyond...");
+
+//            for (DeviceDescription device : deviceScreensDescription.getDevices()) {
+//                device.setPersist(true);
+//            }
+
+            for (DeviceDescription device : DeviceScreens.getInstance().getVariables()
+                    .getNonPersistentDeviceScreens()) {
+                device.setPersist(false);
+                deviceScreensDescription.addDevice(device);
+            }
+            return deviceScreensDescription;
         } else {
             throw new ConversionException("Can't convert null");
         }

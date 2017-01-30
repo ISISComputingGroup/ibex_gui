@@ -60,9 +60,6 @@ public class DeviceDescriptionWrapper {
     /** The OPI description for the current key. */
     private OpiDescription opi = null;
 
-    /** Whether this device is persistent or not. */
-    private boolean persistent;
-
     /**
      * The constructor.
      * 
@@ -74,7 +71,6 @@ public class DeviceDescriptionWrapper {
         this.device = new DeviceDescription(device);
         name = this.device.getName();
         key = this.device.getKey();
-        persistent = this.device.getPersist();
 
         // Default to OPI.
         type = "OPI";
@@ -218,7 +214,7 @@ public class DeviceDescriptionWrapper {
      * @return the persistence setting
      */
     public boolean getPersistent() {
-        return persistent;
+        return device.getPersist();
     }
 
     /**
@@ -226,7 +222,7 @@ public class DeviceDescriptionWrapper {
      *            the persistence setting
      */
     public void setPersistent(boolean persistent) {
-        this.persistent = persistent;
+        device.setPersist(persistent);
     }
 
 }

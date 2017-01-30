@@ -46,7 +46,7 @@ public class DeviceScreenVariablesWithPersistence extends DeviceScreenVariables 
          * @param source
          */
         private DeviceScreenObservableWithPersistence(ClosableObservable<DeviceScreensDescription> source) {
-            super(source, new DeviceScreensDescriptionConverterNoop());
+            super(source, new DeviceScreensDescriptionConverterToPersistence());
         }
 
         @Override

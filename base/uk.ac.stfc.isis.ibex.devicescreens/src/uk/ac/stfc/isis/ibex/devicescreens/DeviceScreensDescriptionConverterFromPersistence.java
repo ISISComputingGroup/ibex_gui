@@ -56,7 +56,8 @@ final class DeviceScreensDescriptionConverterFromPersistence
 
         deviceScreens.setDevices(persistentDevices);
 
-        System.out.println("Size of persistent screens list is now " + deviceScreens.getDevices().size());
+        System.out.println(
+                "FromPersistence: Size of persistent screens list is now " + deviceScreens.getDevices().size());
 
         return deviceScreens;
     }
