@@ -51,6 +51,9 @@ public class DeviceScreenVariablesWithPersistence extends DeviceScreenVariables 
 
         @Override
         public DeviceScreensDescription getValue() {
+
+            System.out.println("getValue was called");
+
             DeviceScreensDescription deviceScreens = new DeviceScreensDescription(super.getValue());
             List<DeviceDescription> persistentDeviceScreensList = deviceScreens.getDevices();
             DeviceScreenVariables variables = DeviceScreens.getInstance().getVariables();

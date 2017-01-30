@@ -90,7 +90,7 @@ public class DeviceScreensTable extends DataboundTable<DeviceDescription> {
         name.setLabelProvider(new DataboundCellLabelProvider<DeviceDescription>(observeProperty("persist")) {
             @Override
             protected String valueFromRow(DeviceDescription row) {
-                if (row.getPersist()) {
+                if (!row.getPersist()) {
                     return "Yes";
                 } else {
                     return "No";
