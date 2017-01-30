@@ -46,37 +46,6 @@ public class DeviceScreenVariablesWithPersistence extends DeviceScreenVariables 
             super(source, new DeviceScreensDescriptionConverterToPersistence());
         }
 
-//        @Override
-//        public DeviceScreensDescription getValue() {
-//
-//            System.out.println("getValue was called");
-//
-//            DeviceScreensDescription deviceScreens = new DeviceScreensDescription(super.getValue());
-//            List<DeviceDescription> persistentDeviceScreensList = deviceScreens.getDevices();
-
-//            // Persistent devices
-//            // From server.
-//            for (DeviceDescription deviceDescription : persistentDeviceScreensList) {
-//                deviceDescription.setPersist(true);
-//                System.out.println("DEBUG 3");
-//            }
-//
-//            // Non-persistent devices:
-//            // Stored locally in the DeviceScreensVariables class.
-//            for (DeviceDescription deviceDescription : DeviceScreens.getInstance().getVariables()
-//                    .getNonPersistentDeviceScreens()) {
-//                deviceDescription.setPersist(false);
-//                deviceScreens.addDevice(deviceDescription);
-//                System.out.println("DEBUG 4");
-//            }
-
-//            System.out.println(
-//                    "(DeviceScreenVariablesWithPersistence) the number of non-persistent device screens is: "
-//                            + DeviceScreens.getInstance().getVariables().getNonPersistentDeviceScreens().size());
-//
-//            return deviceScreens;
-//
-//        }
     }
 
     @Override
