@@ -44,12 +44,8 @@ public class DeviceScreensDescriptionConverterToPersistence
     @Override
     public DeviceScreensDescription convert(DeviceScreensDescription deviceScreensDescription) throws ConversionException {
 
-        System.out.println("To persistence...");
-
         if (deviceScreensDescription != null) {
             DeviceScreensDescription copy = new DeviceScreensDescription(deviceScreensDescription);
-
-            System.out.println("And beyond...");
 
             for (DeviceDescription device : copy.getDevices()) {
                 device.setPersist(true);

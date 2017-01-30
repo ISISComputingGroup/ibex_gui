@@ -45,10 +45,8 @@ final class DeviceScreensDescriptionConverterFromPersistence
             
             if (device.getPersist()) {
                 persistentDevices.add(device);
-                System.out.println("DEBUG 1");
             } else {
                 DeviceScreens.getInstance().getVariables().addNonPersistentDeviceScreen(device);
-                System.out.println("DEBUG 2");
             }
 
         }

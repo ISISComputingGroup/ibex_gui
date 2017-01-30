@@ -31,7 +31,6 @@ import org.eclipse.ui.PlatformUI;
 
 import uk.ac.stfc.isis.ibex.devicescreens.DeviceScreens;
 import uk.ac.stfc.isis.ibex.devicescreens.desc.DeviceScreensDescription;
-import uk.ac.stfc.isis.ibex.epics.observing.Observable;
 import uk.ac.stfc.isis.ibex.epics.writing.SameTypeWriter;
 import uk.ac.stfc.isis.ibex.epics.writing.Writable;
 import uk.ac.stfc.isis.ibex.opis.Opi;
@@ -95,10 +94,8 @@ public class ConfigureDeviceScreensHandler extends AbstractHandler {
      * @return the current device description
      */
     private DeviceScreensDescription getCurrent() {
-        
-        Observable<DeviceScreensDescription> foo = DeviceScreens.getInstance().getDevices();
 
-        return foo.getValue();
+        return DeviceScreens.getInstance().getDevices().getValue();
         
     }
 
