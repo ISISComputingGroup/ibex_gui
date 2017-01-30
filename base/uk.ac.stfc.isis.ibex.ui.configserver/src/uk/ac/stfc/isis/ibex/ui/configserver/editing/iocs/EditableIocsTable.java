@@ -193,6 +193,9 @@ public class EditableIocsTable extends DataboundTable<EditableIoc> {
 
     /**
      * Fills the table with row data.
+     * 
+     * @param rows
+     *            The rows
      */
     @Override
     public void setRows(Collection<EditableIoc> rows) {
