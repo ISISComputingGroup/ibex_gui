@@ -873,7 +873,7 @@ $(pv_value)</tooltip>
       </font>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.NativeButton" version="1.0">
-      <toggle_button>true</toggle_button>
+      <toggle_button>false</toggle_button>
       <border_style>0</border_style>
       <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
       <tooltip>$(pv_name)
@@ -882,9 +882,8 @@ $(pv_value)</tooltip>
       <rules />
       <enabled>true</enabled>
       <wuid>-4b2dcc19:159dfba4f37:-78cb</wuid>
-      <release_action_index>1</release_action_index>
       <pv_value />
-      <text>Switch Monitor to Control</text>
+      <text>Monitor/ Control</text>
       <scripts />
       <border_alarm_sensitive>false</border_alarm_sensitive>
       <height>37</height>
@@ -909,17 +908,22 @@ $(pv_value)</tooltip>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </foreground_color>
       <actions hook="false" hook_all="false">
-        <action type="WRITE_PV">
-          <pv_name>$(pv_name)</pv_name>
-          <value>0</value>
-          <timeout>10</timeout>
-          <description>Monitor</description>
-        </action>
-        <action type="WRITE_PV">
-          <pv_name>$(pv_name)</pv_name>
-          <value>1</value>
-          <timeout>10</timeout>
-          <description>Control</description>
+        <action type="EXECUTE_PYTHONSCRIPT">
+          <path></path>
+          <scriptText><![CDATA[from org.csstudio.opibuilder.scriptUtil import PVUtil
+
+pv = widget.getPV(); 
+value0 = PVUtil.getDouble(pv)
+
+if value0 ==0:
+	pv.setValue(1)
+else:
+	pv.setValue(0)
+
+
+]]></scriptText>
+          <embedded>true</embedded>
+          <description></description>
         </action>
       </actions>
       <font>
