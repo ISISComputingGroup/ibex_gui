@@ -126,7 +126,7 @@ from org.csstudio.opibuilder.scriptUtil import ConsoleUtil
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.tab" version="1.0">
     <active_tab>0</active_tab>
-    <tooltip>Disabled tabs are because Eurotherm is not active in IOC.</tooltip>
+    <tooltip></tooltip>
     <height>511</height>
     <tab_2_icon_path></tab_2_icon_path>
     <border_width>1</border_width>
