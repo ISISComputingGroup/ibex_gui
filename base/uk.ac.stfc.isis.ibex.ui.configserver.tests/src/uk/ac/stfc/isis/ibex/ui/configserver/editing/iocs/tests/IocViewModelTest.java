@@ -21,17 +21,20 @@
  */
 package uk.ac.stfc.isis.ibex.ui.configserver.editing.iocs.tests;
 
-import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.mock;
+import static org.junit.Assert.*;
+import static org.mockito.Mockito.*;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import org.junit.Before;
 import org.junit.Test;
 
+import uk.ac.stfc.isis.ibex.configserver.configuration.Ioc;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Macro;
 import uk.ac.stfc.isis.ibex.configserver.configuration.SimLevel;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
+import uk.ac.stfc.isis.ibex.configserver.editing.EditableIoc;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.iocs.IocViewModel;
 
 /**
@@ -40,16 +43,10 @@ import uk.ac.stfc.isis.ibex.ui.configserver.editing.iocs.IocViewModel;
 @SuppressWarnings("checkstyle:methodname")
 public class IocViewModelTest {
 
-//    private EditableIoc mockIoc;
-//    private static final String INITIAL_NAME = "initial_name";
-//    private static final boolean INITIAL_AUTOSTART = false;
-//    private static final boolean INITIAL_AUTORESTART = false;
-//    private static final Collection<Macro> INITIAL_MACROS = mock(Collection.class);
-//    private static final Collection<PVDefaultValue> INITIAL_PVVALS = mock(Collection.class);
-//    private static final Collection<PVSet> INITIAL_PVSETS = mock(Collection.class);
-
     private IocViewModel viewModel;
     private EditableConfiguration config;
+    private EditableIoc autostartIoc;
+    private String autostartName = "autostart_ioc";
 
     public void setUpMockIoc(String name, boolean autostart, boolean autorestart, Collection<Macro> macros) {
     }
@@ -57,6 +54,9 @@ public class IocViewModelTest {
     @Before
     public void setUp() {
         config = mock(EditableConfiguration.class);
+
+        autostartIoc = new EditableIoc(new Ioc(autostartName));
+        autostartIoc.setAutostart(true);
 
         viewModel = new IocViewModel(config);
     }
@@ -132,11 +132,59 @@ public class IocViewModelTest {
     }
 
     @Test
-    public void GIVEN_ioc_set_on_viewmodel_THEN_contains_iocs_values() {
+    public void WHEN_ioc_set_on_viewmodel_THEN_viewmodel_initialised_with_values_from_ioc() {
+        // Arrange
+        viewModel.setIoc(autostartIoc);
 
+        boolean expected = true;
+        boolean actual = viewModel.isAutoStart();
+        
+        // Assert
+        assertEquals(expected, actual);
     }
 
-    // ioc set then vars set but not updated: ioc != vars
-    // ioc set then vars set then updated: ioc = vars
-    // vars set then ioc set: vars = ioc
+    @Test
+    public void GIVEN_ioc_set_WHEN_changing_viewmodel_values_without_saving_ioc_THEN_ioc_has_old_value() {
+        // Arrange
+        boolean expected = false;
+        viewModel.setIoc(autostartIoc);
+
+        // Act
+        viewModel.setAutoStart(expected);
+        boolean actual = viewModel.getIoc().getAutostart();
+
+        // Assert
+        assertNotEquals(expected, actual);
+    }
+
+    @Test
+    public void GIVEN_ioc_set_WHEN_changing_viewmodel_values_and_saving_ioc_THEN_ioc_has_new_value() {
+        // Arrange
+        boolean expected = false;
+        viewModel.setIoc(autostartIoc);
+
+        // Act
+        viewModel.setAutoStart(expected);
+        viewModel.saveIoc();
+        boolean actual = viewModel.getIoc().getAutostart();
+
+        // Assert
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void GIVEN_ioc_name_set_WHEN_updating_ioc_THEN_correct_ioc_is_set_in_viewmodel() {
+        // Arrange
+        Collection<EditableIoc> iocs = new ArrayList<EditableIoc>();
+        iocs.add(autostartIoc);
+        when(config.getSelectedIocs()).thenReturn(iocs);
+
+        viewModel.setName(autostartName);
+        
+        // Act
+        viewModel.updateIoc();
+        
+        // Assert
+        assertEquals(autostartIoc, viewModel.getIoc());
+    }
 }

@@ -180,7 +180,8 @@ public class IocViewModel extends ModelObject {
     }
 
     /**
-     * Updates the current IOC in the view model.
+     * Updates the IOC associated to the view model based on the currently set
+     * IOC name.
      */
     public void updateIoc() {
         setIocByName(name);
