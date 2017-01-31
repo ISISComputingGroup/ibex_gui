@@ -186,6 +186,20 @@
 			</value>
 		</entry>
 		<entry>
+			<key>Keithley 2400</key>
+			<value>
+				<type>KEIT2400</type>
+				<path>Keithley2400/Keithley2400.opi</path>
+				<description>The OPI for the Keithley 2400 Source Meter.</description>
+				<macros>
+					<macro>
+						<name>KEIT2400</name>
+						<description>The Keithley 2400 PV name (e.g. KEIT2400_01).</description>
+					</macro>
+				</macros>
+			</value>
+		</entry>
+		<entry>
 			<key>Kepco</key>
 			<value>
 				<type>KEPCO</type>
