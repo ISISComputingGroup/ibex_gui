@@ -57,6 +57,10 @@ public class MQConnection extends ModelObject implements Runnable {
     /** Indicates whether the Handler is currently connected to the JMS server */
     private boolean connectedToJms;
 
+    private String username;
+
+    private String password;
+
     /**
      * Indicates whether a warning message has been issued since last time
      * server was connected
@@ -70,12 +74,30 @@ public class MQConnection extends ModelObject implements Runnable {
      * 
      * @param initialHost
      *            The initial host instrument to connect to.
+     * @param username
+     *            The username to connect with.
+     * @param password
+     *            The password to connect with.
      */
-    public MQConnection(String initialHost) {
+    public MQConnection(String initialHost, String username, String password) {
+        setCredentials(username, password);
         updateURL(initialHost);
 
         thread = new Thread(this);
         thread.start();
+    }
+
+    /**
+     * Sets the credentials for the connection.
+     * 
+     * @param username
+     *            The username to connect with.
+     * @param password
+     *            The password to connect with.
+     */
+    public void setCredentials(String username, String password) {
+        this.username = username;
+        this.password = password;
     }
 
     /**
@@ -141,7 +163,8 @@ public class MQConnection extends ModelObject implements Runnable {
      */
     private void connect() throws JMSException {
 
-        ActiveMQConnectionFactory factory = new ActiveMQConnectionFactory("username", "password", jmsUrl);
+        ActiveMQConnectionFactory factory = new ActiveMQConnectionFactory(username,
+                password, jmsUrl);
         connection = factory.createConnection();
 
         connection.setExceptionListener(new ExceptionListener() {

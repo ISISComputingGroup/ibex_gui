@@ -18,6 +18,7 @@
 
 package uk.ac.stfc.isis.ibex.activemq;
 
+import org.apache.activemq.ActiveMQConnection;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
@@ -74,15 +75,34 @@ public class ActiveMQ extends AbstractUIPlugin {
 	}
 
     /**
-     * Get an Active MQ connection. If one does not already exist then create
-     * one.
+     * Get an Active MQ connection.
      * 
      * @return The Active MQ Connection.
      */
     MQConnection getConnection() {
         if (connection == null) {
+            connection = getConnection(ActiveMQConnection.DEFAULT_USER, ActiveMQConnection.DEFAULT_PASSWORD);
+        }
+        return connection;
+    }
+
+    /**
+     * Get an Active MQ connection specifying ActiveMQ login credentials. If one
+     * does not already exist then create one.
+     * 
+     * @param username
+     *            The username to connect with.
+     * @param password
+     *            The password to connect with.
+     * 
+     * @return The Active MQ Connection.
+     */
+    MQConnection getConnection(String username, String password) {
+        if (connection == null) {
             String currentInstrument = Instrument.getInstance().currentInstrument().hostName();
-            connection = new MQConnection(currentInstrument);
+            connection = new MQConnection(currentInstrument, username, password);
+        } else {
+            connection.setCredentials(username, password);
         }
         return connection;
     }
@@ -104,10 +124,14 @@ public class ActiveMQ extends AbstractUIPlugin {
      * 
      * @param sendTopic
      *            The name of the queue to send the data to.
+     * @param username
+     *            The username to connect with.
+     * @param password
+     *            The password to connect with.
      * @return A queue for sending and receiving data.
      */
-    public SendReceiveSession getSendReceiveQueue(String sendTopic) {
-        SendReceiveSession queue = new SendReceiveSession(getConnection(), sendTopic);
+    public SendReceiveSession getSendReceiveQueue(String sendTopic, String username, String password) {
+        SendReceiveSession queue = new SendReceiveSession(getConnection(username, password), sendTopic);
         queue.connect();
         return queue;
     }

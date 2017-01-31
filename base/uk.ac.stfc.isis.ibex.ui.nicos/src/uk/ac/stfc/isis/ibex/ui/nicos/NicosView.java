@@ -50,15 +50,18 @@ public class NicosView extends ViewPart {
 	private final Shell shell;
 	
     @SuppressWarnings("unused")
+
     /**
      * Currently unused, just forces the backend to connect.
      */
-    private NicosModel model = Nicos.getDefault().getModel();
+    private NicosModel model;
 
 	/**
 	 * The default constructor for the view.
 	 */
 	public NicosView() {
+        model = Nicos.getDefault().getModel();
+
 		shell = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
 	}
 

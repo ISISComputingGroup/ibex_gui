@@ -49,7 +49,7 @@ public class NicosModel extends ModelObject implements IMessageConsumer<NicosMes
      * login to nicos.
      */
     public NicosModel() {
-        connection = ActiveMQ.getInstance().getSendReceiveQueue("ss_admin");
+        connection = ActiveMQ.getInstance().getSendReceiveQueue("ss_admin", "username", "password");
         parser.addMessageConsumer(this);
         connection.addMessageParser(parser);
         connection.addPropertyChangeListener("connection", passThrough());
@@ -62,13 +62,13 @@ public class NicosModel extends ModelObject implements IMessageConsumer<NicosMes
                 }
             }
         });
-        connection.sendMessage(LOGIN);
     }
 
     @Override
     public void newMessage(NicosMessage nicosMessage) {
         System.out.println("New data on ss_admin: " + nicosMessage.getData());
     }
+
 
     @Override
     public void clearMessages() {

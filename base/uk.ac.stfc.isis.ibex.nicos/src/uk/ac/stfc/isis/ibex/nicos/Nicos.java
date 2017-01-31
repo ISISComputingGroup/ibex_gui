@@ -43,13 +43,15 @@ public class Nicos extends AbstractUIPlugin {
      */
 	public Nicos() {
         instance = this;
-        model = new NicosModel();
     }
 
     /**
      * @return The model that is connected to nicos on the instrument.
      */
     public NicosModel getModel() {
+        if (model == null) {
+            model = new NicosModel();
+        }
         return model;
 	}
 	
