@@ -35,7 +35,7 @@ public class DeviceScreensDescriptionConverterToPersistence
 
     /**
      * 
-     * A no-op converter between two DeviceScreensDescription classes.
+     * 
      * 
      * @param deviceScreensDescription
      * @return
@@ -51,10 +51,12 @@ public class DeviceScreensDescriptionConverterToPersistence
                 device.setPersist(true);
             }
 
-            for (DeviceDescription device : DeviceScreens.getInstance().getVariables()
-                    .getNonPersistentDeviceScreens()) {
-                device.setPersist(false);
-                copy.addDevice(device);
+            DeviceScreensDescription localDeviceScreensDescription = DeviceScreens.getInstance().getVariables().getLocalDeviceScreens()
+                    .getValue();
+            for (DeviceDescription device : localDeviceScreensDescription.getDevices()) {
+                DeviceDescription deviceCopy = new DeviceDescription(device);
+                deviceCopy.setPersist(false);
+                copy.addDevice(deviceCopy);
             }
             return copy;
         } else {

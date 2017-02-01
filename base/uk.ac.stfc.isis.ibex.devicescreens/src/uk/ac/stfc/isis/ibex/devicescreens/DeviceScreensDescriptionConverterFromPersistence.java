@@ -37,20 +37,22 @@ final class DeviceScreensDescriptionConverterFromPersistence
     @Override
     public DeviceScreensDescription convert(DeviceScreensDescription deviceScreens) throws ConversionException {
 
-        DeviceScreens.getInstance().getVariables().clearNonPersistentDeviceScreens();
-
         List<DeviceDescription> persistentDevices = new ArrayList<>();
+
+        DeviceScreensDescription localDevices = new DeviceScreensDescription();
 
         for (DeviceDescription device : deviceScreens.getDevices()) {
             
             if (device.getPersist()) {
                 persistentDevices.add(device);
             } else {
-                DeviceScreens.getInstance().getVariables().addNonPersistentDeviceScreen(device);
+
+                localDevices.addDevice(device);
             }
 
         }
 
+        DeviceScreens.getInstance().getVariables().getLocalDeviceScreens().updateValue(localDevices);
         deviceScreens.setDevices(persistentDevices);
 
         System.out.println(

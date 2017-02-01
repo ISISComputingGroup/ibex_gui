@@ -40,18 +40,53 @@ public class DeviceScreenVariablesWithPersistence extends DeviceScreenVariables 
      * device screens
      */
     private final class DeviceScreenObservableWithPersistence
-            extends ConvertingObservable<DeviceScreensDescription, DeviceScreensDescription> {
+            extends ConvertingObservable<DeviceScreensDescription, DeviceScreensDescription> implements Observer<DeviceScreensDescription> {
         /**
          * @param source
          */
         private DeviceScreenObservableWithPersistence(ClosableObservable<DeviceScreensDescription> source) {
             super(source, new DeviceScreensDescriptionConverterToPersistence());
+
         }
 
         @Override
         public Subscription addObserver(Observer<DeviceScreensDescription> observer) {
             observer.update(getValue(), currentError(), isConnected());
             return super.addObserver(observer);
+        }
+
+        /**
+         * @param value
+         */
+        @Override
+        public void onValue(DeviceScreensDescription value) {
+           setValue(value);
+        }
+
+        /**
+         * @param e
+         */
+        @Override
+        public void onError(Exception e) {
+            // 
+        }
+
+        /**
+         * @param isConnected
+         */
+        @Override
+        public void onConnectionStatus(boolean isConnected) {
+            // 
+        }
+
+        /**
+         * @param value
+         * @param error
+         * @param isConnected
+         */
+        @Override
+        public void update(DeviceScreensDescription value, Exception error, boolean isConnected) {
+            // 
         }
 
     }
@@ -63,6 +98,9 @@ public class DeviceScreenVariablesWithPersistence extends DeviceScreenVariables 
 
         DeviceScreenObservableWithPersistence deviceScreenObservableWithPersistence =
                 new DeviceScreenObservableWithPersistence(forwardingObservable);
+        
+        DeviceScreens.getInstance().getVariables().getLocalDeviceScreens()
+                .addObserver(deviceScreenObservableWithPersistence);
 
         return deviceScreenObservableWithPersistence;
             
