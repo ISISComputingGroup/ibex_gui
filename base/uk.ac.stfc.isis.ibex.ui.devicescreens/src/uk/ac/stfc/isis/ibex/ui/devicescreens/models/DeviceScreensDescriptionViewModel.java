@@ -73,6 +73,8 @@ public class DeviceScreensDescriptionViewModel extends ModelObject {
      */
     private String previousDesc = null;
 
+    private Boolean previousPersistence = null;
+
     /**
      * The constructor.
      * 
@@ -177,6 +179,13 @@ public class DeviceScreensDescriptionViewModel extends ModelObject {
         checkScreensValid();
     }
 
+    public Boolean getCurrentPersistence() {
+        if (selectedScreen == null) {
+            return null;
+        }
+        return selectedScreen.getPersistent();
+    }
+
     /**
      * Gets the current name.
      *
@@ -255,7 +264,7 @@ public class DeviceScreensDescriptionViewModel extends ModelObject {
      *            the new persiststence setting.
      */
     private void updateCurrentPersistence(boolean newPersistence) {
-        firePropertyChange("currentPersistence", false, newPersistence);
+        firePropertyChange("currentPersistence", previousPersistence, previousPersistence = newPersistence);
     }
 
     /**
