@@ -1383,7 +1383,7 @@ $(pv_value)</tooltip>
 $(pv_value)</tooltip>
       <push_action_index>0</push_action_index>
       <rules />
-      <enabled>true</enabled>
+      <enabled>false</enabled>
       <wuid>4e5b1dc5:159f9d09037:-79bc</wuid>
       <pv_value />
       <text>View sample changer...</text>
