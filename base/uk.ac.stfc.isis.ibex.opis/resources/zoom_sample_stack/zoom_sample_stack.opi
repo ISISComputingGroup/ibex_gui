@@ -41,7 +41,7 @@
     <wuid>4e5b1dc5:159f9d09037:-7cc4</wuid>
     <transparent>false</transparent>
     <auto_size>false</auto_size>
-    <text>JJ X-Ray Sample Stack On Rails</text>
+    <text>Zoom Sample Stack</text>
     <scripts />
     <height>37</height>
     <border_width>1</border_width>
@@ -143,7 +143,7 @@
     </background_color>
     <width>691</width>
     <x>6</x>
-    <name>Sample stack</name>
+    <name>Sample Stack</name>
     <y>78</y>
     <foreground_color>
       <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
