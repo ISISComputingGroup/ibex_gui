@@ -56,6 +56,13 @@ public class JsonConverters implements Converters {
 		return new JsonDeserialisingConverter<>(Configuration.class, gson).apply(withFunction(INIT_CONFIG));
 	}
 
+    @Override
+    public Converter<String, Collection<Configuration>> toConfigList() {
+        Gson gson = new GsonBuilder().registerTypeAdapterFactory(new LowercaseEnumTypeAdapterFactory()).create();
+        return new JsonDeserialisingConverter<>(Configuration[].class, gson)
+                .apply(Convert.<Configuration>toCollection());
+    }
+
 	@Override
 	public Converter<String, ServerStatus> toServerStatus() {
 		return new JsonDeserialisingConverter<>(ServerStatus.class);

@@ -78,6 +78,8 @@ public class ConfigServerVariables extends Closer {
     public final ForwardingObservable<BlockServerNameValidator> configDescriptionRules;
     /** Provides the components on the instrument. */
 	public final ForwardingObservable<Collection<Component>> components;
+    /** Provides the details for all components on the instrument. */
+    public final ForwardingObservable<Collection<Configuration>> componentDetails;
     /** Provides the IOCs on the instrument. */
 	public final ForwardingObservable<Collection<EditableIoc>> iocs;
     /** Provides all the PVs on the instrument. */
@@ -131,6 +133,9 @@ public class ConfigServerVariables extends Closer {
                 InstrumentUtils.convert(readCompressed(blockServerAddresses.currentConfig()), converters.toConfig());
         blankConfig =
                 InstrumentUtils.convert(readCompressed(blockServerAddresses.blankConfig()), converters.toConfig());
+        componentDetails =
+                InstrumentUtils.convert(readCompressed(blockServerAddresses.componentDetails()),
+                        converters.toConfigList());
 
         configsInfo =
                 InstrumentUtils.convert(readCompressed(blockServerAddresses.configs()), converters.toConfigsInfo());

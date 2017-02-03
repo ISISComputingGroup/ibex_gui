@@ -40,6 +40,8 @@ public interface Converters {
 
 	Converter<String, Configuration> toConfig();
 
+    Converter<String, Collection<Configuration>> toConfigList();
+
 	Converter<String, ServerStatus> toServerStatus();
 	
     /**

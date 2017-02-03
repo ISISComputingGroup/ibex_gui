@@ -132,9 +132,9 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
 	public EditableConfiguration(
 			Configuration config,
 			Collection<EditableIoc> iocs,
-			Collection<Component> components,
+            Collection<Component> components,
 			Collection<PV> pvs,
-			IocDescriber descriptions) {
+            IocDescriber descriptions) {
 		this.name = config.name();
 		this.description = config.description();
 		this.synoptic = config.synoptic();

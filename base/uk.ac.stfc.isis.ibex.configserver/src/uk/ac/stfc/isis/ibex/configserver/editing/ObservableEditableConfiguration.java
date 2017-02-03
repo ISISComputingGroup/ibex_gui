@@ -26,13 +26,13 @@ import uk.ac.stfc.isis.ibex.configserver.ConfigServer;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Configuration;
 import uk.ac.stfc.isis.ibex.configserver.internal.IocDescriber;
 import uk.ac.stfc.isis.ibex.epics.adapters.TextUpdatedObservableAdapter;
-import uk.ac.stfc.isis.ibex.epics.observing.Observable;
 import uk.ac.stfc.isis.ibex.epics.observing.ClosableObservable;
+import uk.ac.stfc.isis.ibex.epics.observing.Observable;
 import uk.ac.stfc.isis.ibex.epics.observing.TransformingObservable;
 import uk.ac.stfc.isis.ibex.model.UpdatedValue;
 
-/*
- * Build a full configuration suitable for editing. 
+/**
+ * Build a full configuration suitable for editing.
  */
 public class ObservableEditableConfiguration 
 	extends TransformingObservable<Configuration, EditableConfiguration> implements IocDescriber {
@@ -53,7 +53,7 @@ public class ObservableEditableConfiguration
 				valueOrEmptyCollection(configServer.iocs()), 
 				valueOrEmptyCollection(configServer.components()), 
 				valueOrEmptyCollection(configServer.pvs()),
-				this);
+                this);
 	}
 
 	@Override
@@ -61,6 +61,7 @@ public class ObservableEditableConfiguration
 		return new TextUpdatedObservableAdapter(configServer.iocDescription(iocName));
 	}
 	
+
     private static <T> Collection<T> valueOrEmptyCollection(Observable<Collection<T>> collection) {
 		return collection.getValue() != null ? collection.getValue() : Collections.<T>emptyList();
 	}

@@ -31,8 +31,8 @@ public class EditableComponents extends ModelObject {
 	
 	private final ExclusiveSetPair<Component> components;
 	
-	public EditableComponents(Collection<Component> selected, Collection<Component> available) {		
-		components = new ExclusiveSetPair<Component>(available, selected);		
+    public EditableComponents(Collection<Component> selected, Collection<Component> available) {
+        components = new ExclusiveSetPair<Component>(available, selected);
 	}
 	
 	public Collection<Component> getUnselected() {
