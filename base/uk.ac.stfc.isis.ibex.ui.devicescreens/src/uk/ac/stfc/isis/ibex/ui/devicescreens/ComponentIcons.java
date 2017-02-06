@@ -124,6 +124,8 @@ public final class ComponentIcons {
                 return "pixelman";
             case NEOCERA:
                 return "neocera";
+            case KHLY2400:
+                return "keithley2400";
             default:
                 return "cog";
         }

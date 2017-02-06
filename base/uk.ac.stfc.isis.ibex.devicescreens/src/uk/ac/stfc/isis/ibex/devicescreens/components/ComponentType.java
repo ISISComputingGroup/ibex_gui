@@ -104,6 +104,8 @@ public enum ComponentType {
     PIXELMAN,
     /** Neocera temperature controller. */
     NEOCERA;
+    /** Keithley 2400 Source Meter. */
+    KHLY2400;
 	
 	private Target target;
 
