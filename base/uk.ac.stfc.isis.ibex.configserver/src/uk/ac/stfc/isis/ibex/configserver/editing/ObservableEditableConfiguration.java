@@ -39,6 +39,14 @@ public class ObservableEditableConfiguration
 
 	private final ConfigServer configServer;
 
+    /**
+     * Constructor for the ObservableEditableConfiguration.
+     * 
+     * @param config
+     *            The observable for the configuration to be edited
+     * @param configServer
+     *            The config server
+     */
 	public ObservableEditableConfiguration(
 			ClosableObservable<Configuration> config,
 			ConfigServer configServer) {
