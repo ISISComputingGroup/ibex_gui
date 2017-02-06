@@ -25,7 +25,7 @@ import uk.ac.stfc.isis.ibex.configserver.BlockRules;
 import uk.ac.stfc.isis.ibex.configserver.IocState;
 import uk.ac.stfc.isis.ibex.configserver.ServerStatus;
 import uk.ac.stfc.isis.ibex.configserver.configuration.BannerItem;
-import uk.ac.stfc.isis.ibex.configserver.configuration.Component;
+import uk.ac.stfc.isis.ibex.configserver.configuration.ComponentInfo;
 import uk.ac.stfc.isis.ibex.configserver.configuration.ConfigInfo;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Configuration;
 import uk.ac.stfc.isis.ibex.configserver.configuration.PV;
@@ -56,7 +56,7 @@ public interface Converters {
 
 	Converter<String, Collection<ConfigInfo>> toConfigsInfo();
 
-	Converter<String, Collection<Component>> toComponents();
+	Converter<String, Collection<ComponentInfo>> toComponents();
 
 	Converter<String, Collection<EditableIoc>> toIocs();
 

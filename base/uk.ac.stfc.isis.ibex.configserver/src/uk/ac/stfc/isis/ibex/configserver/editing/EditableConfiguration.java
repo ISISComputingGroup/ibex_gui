@@ -36,7 +36,7 @@ import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 
 import uk.ac.stfc.isis.ibex.configserver.configuration.Block;
-import uk.ac.stfc.isis.ibex.configserver.configuration.Component;
+import uk.ac.stfc.isis.ibex.configserver.configuration.ComponentInfo;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Configuration;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Group;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Ioc;
@@ -132,7 +132,7 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
 	public EditableConfiguration(
 			Configuration config,
 			Collection<EditableIoc> iocs,
-            Collection<Component> components,
+            Collection<Configuration> components,
 			Collection<PV> pvs,
             IocDescriber descriptions) {
 		this.name = config.name();
@@ -160,9 +160,9 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
 		}
 	
 		mergeSelectedAndAvailableIocs(config.getIocs(), iocs);
-		
-		editableComponents = new EditableComponents(config.getComponents(), components);
-		editableComponents.addPropertyChangeListener(passThrough());
+		Collection<Configuration> selectedComponents = getComponentDetails(config.getComponents(), components);
+
+        editableComponents = new EditableComponents(selectedComponents, components);
 	}
 
     /**
@@ -293,8 +293,12 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
     /**
      * @return The components associated with the configuration
      */
-	private Collection<Component> getComponents() {
-		return editableComponents.getSelected();
+	private Collection<ComponentInfo> getComponents() {
+        Collection<ComponentInfo> result = new ArrayList<ComponentInfo>();
+        for (Configuration compDetails : editableComponents.getSelected()) {
+            result.add(new ComponentInfo(compDetails));
+        }
+        return result;
 	}
 	
     /**
@@ -481,7 +485,7 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
 		Configuration config = asConfiguration();
 		return new Configuration(
 				config.name(), config.description(), config.synoptic(), config.getIocs(), config.getBlocks(), config.getGroups(), 
-				Collections.<Component>emptyList(), config.getHistory());
+				Collections.<ComponentInfo>emptyList(), config.getHistory());
 	}
 	
 	/**
@@ -589,4 +593,15 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
         return names;
     }
 
+    private Collection<Configuration> getComponentDetails(Collection<ComponentInfo> selected, Collection<Configuration> available){
+        Collection<Configuration> result = new ArrayList<Configuration>();
+        for (ComponentInfo compInfo : selected) {
+            for (Configuration details : available) {
+                if (compInfo.getName().equals(details.name())) {
+                    result.add(details);
+                }
+            }
+        }
+        return result;
+    }
 }

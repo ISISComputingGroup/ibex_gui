@@ -51,7 +51,7 @@ public class ObservableEditableConfiguration
 		return new EditableConfiguration(
 				value, 
 				valueOrEmptyCollection(configServer.iocs()), 
-				valueOrEmptyCollection(configServer.components()), 
+                valueOrEmptyCollection(configServer.componentDetails()), 
 				valueOrEmptyCollection(configServer.pvs()),
                 this);
 	}

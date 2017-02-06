@@ -34,7 +34,7 @@ import org.junit.Before;
 import com.google.common.collect.Iterables;
 
 import uk.ac.stfc.isis.ibex.configserver.configuration.Block;
-import uk.ac.stfc.isis.ibex.configserver.configuration.Component;
+import uk.ac.stfc.isis.ibex.configserver.configuration.ComponentInfo;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Configuration;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Group;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Ioc;
@@ -59,16 +59,16 @@ public class EditableConfigurationTest implements IocDescriber {
     protected static final Block GAPY = new Block("GAPY", "ADDRESS", true, true);
 	protected static final Group JAWS = new Group("JAWS");
 	protected static final Group TEMPERATURE = new Group("TEMPERATURE");
-	protected static final Component MOTOR = new Component("MOTOR");
+	protected static final ComponentInfo MOTOR = new ComponentInfo("MOTOR");
 
 	protected List<Ioc> iocs;
 	protected List<Block> blocks;
 	protected List<Group> groups;
-	protected List<Component> components;
+	protected List<ComponentInfo> components;
 	protected List<String> history;
 	
 	protected List<EditableIoc> allIocs;
-	protected List<Component> allComponents;
+	protected List<ComponentInfo> allComponents;
 	protected List<PV> allPvs;
 	protected List<PV> activePvs;
 	
@@ -129,7 +129,7 @@ public class EditableConfigurationTest implements IocDescriber {
 				Collections.<Ioc>emptyList(), 
 				Collections.<Block>emptyList(),
 				Collections.<Group>emptyList(),
-				Collections.<Component>emptyList(),
+				Collections.<ComponentInfo>emptyList(),
 				Collections.<String>emptyList());
 	}
 	

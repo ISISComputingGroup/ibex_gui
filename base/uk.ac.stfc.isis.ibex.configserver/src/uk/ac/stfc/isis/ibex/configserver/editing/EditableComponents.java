@@ -23,31 +23,57 @@ package uk.ac.stfc.isis.ibex.configserver.editing;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import uk.ac.stfc.isis.ibex.configserver.configuration.Component;
+import uk.ac.stfc.isis.ibex.configserver.configuration.Configuration;
 import uk.ac.stfc.isis.ibex.model.ExclusiveSetPair;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 
+/**
+ * Class holding information of selected and unselected editable components as
+ * part of a configuration.
+ */
 public class EditableComponents extends ModelObject {
 	
-	private final ExclusiveSetPair<Component> components;
-	
-    public EditableComponents(Collection<Component> selected, Collection<Component> available) {
-        components = new ExclusiveSetPair<Component>(available, selected);
+    private final ExclusiveSetPair<Configuration> components;
+
+    /**
+     * Constructor.
+     * 
+     * @param selected
+     *            The components selected to be part of this configuration.
+     * @param unselected
+     *            The unselected components available to be added to the
+     *            configuration.
+     */
+    public EditableComponents(Collection<Configuration> selected, Collection<Configuration> unselected) {
+        components = new ExclusiveSetPair<Configuration>(unselected, selected);
 	}
 	
-	public Collection<Component> getUnselected() {
+    /**
+     * @return The unselected components
+     */
+    public Collection<Configuration> getUnselected() {
 		return new ArrayList<>(components.unselected());
 	}
 	
-	public Collection<Component> getSelected() {
+    /**
+     * @return The selected components
+     */
+    public Collection<Configuration> getSelected() {
 		return new ArrayList<>(components.selected());
 	}
 	
-	public synchronized void toggleSelection(Collection<Component> componentsToToggle) {
-		Collection<Component> selectedBefore = getSelected();
-		Collection<Component> unselectedBefore = getUnselected();
+    /**
+     * Toggles the specified components from unselected to selected or vice
+     * versa.
+     * 
+     * @param componentsToToggle
+     *            The components to be toggled
+     */
+    public synchronized void toggleSelection(Collection<Configuration> componentsToToggle) {
+        Collection<Configuration> selectedBefore = getSelected();
+        Collection<Configuration> unselectedBefore = getUnselected();
 		
-		for (Component component : componentsToToggle) {
+        for (Configuration component : componentsToToggle) {
 			components.move(component);
 		}
 		
