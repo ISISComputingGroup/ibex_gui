@@ -33,7 +33,8 @@ public class NicosMessageParser extends MessageParser<NicosMessage> {
      * data as a string.
      * 
      * @param content
-     * @return
+     *            The content of the message.
+     * @return A dummy message.
      */
     @Override
     protected NicosMessage parseMessage(String content) {

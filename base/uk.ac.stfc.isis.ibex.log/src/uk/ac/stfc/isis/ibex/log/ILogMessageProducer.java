@@ -34,7 +34,7 @@ public interface ILogMessageProducer {
 
     /**
      * Register a message consumer. The consumer's newMessage() method will be
-     * called whenever this producer has a new message to deliver.
+     * called whenever this producer has a new message to deliver
      * 
      * @param messageReceiver
      *            The object to receive messages.
@@ -44,6 +44,11 @@ public interface ILogMessageProducer {
     /**
      * Add a property change listener. The intended purpose is to listen for
      * changes in connection status.
+     * 
+     * @param propertyName
+     *            The name of the property to listen for.
+     * @param listener
+     *            The listener to be called when the property changes.
      */
     void addPropertyChangeListener(String propertyName,
 	    PropertyChangeListener listener);
@@ -52,15 +57,34 @@ public interface ILogMessageProducer {
      * Producer stores the N most recent messages sent. These can be retrieved
      * so that when a widget that displays starts up it will already have access
      * to all the messages received since program startup.
+     * 
+     * @return A list containing the most recent messages.
      */
     List<LogMessage> getAllCachedMessages();
 
     /**
      * Search the database of previous log messages.
+     * 
+     * @param field
+     *            The field to search by e.g. sender.
+     * @param value
+     *            The value to search for e.g. ISISDAE.
+     * @param from
+     *            The start of the date range to search.
+     * @param to
+     *            The end of the date range to search.
+     * 
+     * @return A list of the messages that satisfy the search.
+     * 
+     * @throws Exception
+     *             When the search cannot be made.
      */
     List<LogMessage> search(LogMessageFields field, String value,
 	    Calendar from, Calendar to) throws Exception;
 
 
+    /**
+     * Clears the chached messages.
+     */
     void clearMessages();
 }

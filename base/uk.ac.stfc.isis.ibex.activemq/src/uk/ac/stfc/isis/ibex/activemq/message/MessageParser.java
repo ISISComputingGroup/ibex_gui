@@ -88,6 +88,7 @@ public abstract class MessageParser<T extends IMessage> implements Runnable {
      * Checks for any messages on ActiveMQ and converts them.
      */
     @Override
+    @SuppressWarnings("checkstyle:emptyblock")
     public void run() {
         System.out.println("Thread Running");
         while (running) {

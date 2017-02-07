@@ -25,6 +25,9 @@ import uk.ac.stfc.isis.ibex.log.message.LogMessage;
 import uk.ac.stfc.isis.ibex.log.preferences.PreferenceConstants;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 
+/**
+ * A Counter that consumes log messages and counts how many there have been.
+ */
 public class LogCounter extends ModelObject implements IMessageConsumer<LogMessage> {
 
     private static final String MAJOR = "MAJOR";
@@ -36,18 +39,32 @@ public class LogCounter extends ModelObject implements IMessageConsumer<LogMessa
     private MessageCounter counter = new MessageCounter();
     private boolean running = true;
 
+    /**
+     * Starts the counter running.
+     */
     public void start() {
 	running = true;
     }
 
+    /**
+     * Stops the counter.
+     */
     public void stop() {
 	running = false;
     }
 
+    /**
+     * Get how many messages have been counted.
+     * 
+     * @return The number of counted messsages.
+     */
     public long getCount() {
 	return counter.countsForSeverity(MAJOR) + optionalMinorCount();
     }
 
+    /**
+     * Resets the counter to zero.
+     */
     public void resetCount() {
 	long grandTotal = counter.totalCount();
 	counter = new MessageCounter();
