@@ -60,7 +60,7 @@ public class JsonConverters implements Converters {
     public Converter<String, Collection<Configuration>> toConfigList() {
         Gson gson = new GsonBuilder().registerTypeAdapterFactory(new LowercaseEnumTypeAdapterFactory()).create();
         return new JsonDeserialisingConverter<>(Configuration[].class, gson)
-                .apply(Convert.<Configuration>toCollection());
+                .apply(Convert.<Configuration>toCollection()).apply(forEach(INIT_CONFIG));
     }
 
 	@Override

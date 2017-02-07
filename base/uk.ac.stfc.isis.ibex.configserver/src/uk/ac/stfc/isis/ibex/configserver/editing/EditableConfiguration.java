@@ -593,7 +593,8 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
         return names;
     }
 
-    private Collection<Configuration> getComponentDetails(Collection<ComponentInfo> selected, Collection<Configuration> available){
+    private Collection<Configuration> getComponentDetails(Collection<ComponentInfo> selected,
+            Collection<Configuration> available) {
         Collection<Configuration> result = new ArrayList<Configuration>();
         for (ComponentInfo compInfo : selected) {
             for (Configuration details : available) {
