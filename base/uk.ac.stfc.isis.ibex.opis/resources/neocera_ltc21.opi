@@ -982,7 +982,7 @@ $(trace_0_y_pv_value)</tooltip>
     <axis_0_scale_font>
       <opifont.name fontName="Segoe UI" height="9" style="0">ISIS_GraphScale_NEW</opifont.name>
     </axis_0_scale_font>
-    <trigger_pv>$(PV_ROOT):ACTIVITY</trigger_pv>
+    <trigger_pv>$(P)CS:IOC:$(NEOCERA):DEVIOS:HEARTBEAT</trigger_pv>
     <trace_4_update_delay>100</trace_4_update_delay>
     <widget_type>XY Graph</widget_type>
     <trace_2_line_width>1</trace_2_line_width>

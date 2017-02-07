@@ -103,7 +103,7 @@ public enum ComponentType {
     /** Pixelman camera. */
     PIXELMAN,
     /** Neocera temperature controller. */
-    NEOCERA;
+    NEOCERA,
     /** Keithley 2400 Source Meter. */
     KHLY2400;
 	
