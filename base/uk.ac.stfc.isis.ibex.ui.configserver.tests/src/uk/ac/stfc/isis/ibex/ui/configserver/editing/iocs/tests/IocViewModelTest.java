@@ -31,7 +31,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import uk.ac.stfc.isis.ibex.configserver.configuration.Ioc;
-import uk.ac.stfc.isis.ibex.configserver.configuration.Macro;
 import uk.ac.stfc.isis.ibex.configserver.configuration.SimLevel;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableIoc;
@@ -47,9 +46,6 @@ public class IocViewModelTest {
     private EditableConfiguration config;
     private EditableIoc autostartIoc;
     private String autostartName = "autostart_ioc";
-
-    public void setUpMockIoc(String name, boolean autostart, boolean autorestart, Collection<Macro> macros) {
-    }
 
     @Before
     public void setUp() {

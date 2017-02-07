@@ -110,7 +110,6 @@ public class IocPVsEditorPanel extends Composite implements IIocDependentPanel {
                 iocPVsTable.setRows(viewModel.getPvVals());
                 iocPVsTable.setSelection(viewModel.getPvVals().size() - 1);
 
-                // Why is this not happening automatically
                 btnRemove.setEnabled(true);
                 details.setPV(selected, viewModel);
 			}

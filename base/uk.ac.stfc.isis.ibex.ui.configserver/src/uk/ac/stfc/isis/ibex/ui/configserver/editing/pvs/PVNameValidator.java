@@ -80,18 +80,15 @@ public class PVNameValidator implements IValidator {
 		messageDisplayer.setErrorMessage("PVNameValidator", message);
 		return ValidationStatus.error(message);	
 	}
-	
-	private boolean nameIsDuplicated(Object text) {
+
+    private boolean nameIsDuplicated(Object text) {
         for (PVDefaultValue pv : viewModel.getPvVals()) {
-			if (isNotPVBeingEdited(pv)) {
-				if (pv.getName().equals(text)) {
-					return true;
-				}
-			}
-		}
-		
-		return false;
-	}
+            if (isNotPVBeingEdited(pv) && pv.getName().equals(text)) {
+                return true;
+            }
+        }
+        return false;
+    }
 
 	private boolean isNotPVBeingEdited(PVDefaultValue pv) {
 		return !pv.equals(selectedPV);
