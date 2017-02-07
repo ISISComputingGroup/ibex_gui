@@ -95,6 +95,7 @@ public class MinimalMotorView extends Composite {
 		
 		indicator = new MinimalMotionIndicator(motorComposite, SWT.NONE);
 		indicator.setLayoutData(new GridData(SWT.FILL, SWT.TOP, false, false, 1, 1));
+        indicator.setMotor(this.minimalMotorViewModel.getMotor());
 		
 		setMouseListeners();
 		
