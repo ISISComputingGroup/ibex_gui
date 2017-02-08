@@ -115,9 +115,9 @@ public class MotorVariables extends Closer {
                 obsFactory.getSwitchableObservable(new ShortChannel(), fullAddress.endWithField("ATHM")),
                 TO_BOOLEAN);
         atUpperLimitSwitch = InstrumentUtils.convert(
-                obsFactory.getSwitchableObservable(new ShortChannel(), fullAddress.endWithField("LLS")), TO_BOOLEAN);
-        atLowerLimitSwitch = InstrumentUtils.convert(
                 obsFactory.getSwitchableObservable(new ShortChannel(), fullAddress.endWithField("HLS")), TO_BOOLEAN);
+        atLowerLimitSwitch = InstrumentUtils.convert(
+                obsFactory.getSwitchableObservable(new ShortChannel(), fullAddress.endWithField("LLS")), TO_BOOLEAN);
         setpoint = new MotorSetPointVariables(fullAddress, obsFactory, writeFactory);
 		
         status = InstrumentUtils.convert(

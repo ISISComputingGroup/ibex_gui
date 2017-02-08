@@ -102,7 +102,9 @@ public enum ComponentType {
     /** Detector motion system component type. */
     DETECTOR_MOTION_SYSTEM,
     /** Pixelman camera. */
-    PIXELMAN;
+    PIXELMAN,
+    /** Keithley 2400 Source Meter. */
+    KHLY2400;
 	
 	private Target target;
 
