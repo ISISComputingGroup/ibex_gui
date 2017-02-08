@@ -36,13 +36,18 @@ public class DeviceScreens implements BundleActivator {
 
     private final DeviceScreenVariablesWithPersistence variables;
 
+    private DeviceScreensModel model;
+
     /**
      * Creates a new instance of the DevicesScreens class.
      */
     public DeviceScreens() {
+
         instance = this;
 
         variables = new DeviceScreenVariablesWithPersistence();
+
+        model = new DeviceScreensModel(getDevices());
     }
 
     /**
@@ -108,6 +113,10 @@ public class DeviceScreens implements BundleActivator {
      */
     public DeviceScreenVariablesWithPersistence getVariables() {
         return variables;
+    }
+
+    public DeviceScreensModel getModel() {
+        return model;
     }
 
 }

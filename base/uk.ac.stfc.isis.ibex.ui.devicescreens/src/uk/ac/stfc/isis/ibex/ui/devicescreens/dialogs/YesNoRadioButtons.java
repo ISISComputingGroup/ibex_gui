@@ -31,7 +31,7 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 
 import uk.ac.stfc.isis.ibex.model.ModelObject;
-import uk.ac.stfc.isis.ibex.ui.devicescreens.models.DeviceScreensDescriptionViewModel;
+import uk.ac.stfc.isis.ibex.ui.devicescreens.models.EditDeviceScreensDescriptionViewModel;
 
 /**
  * This class defines a set of radio buttons for the persistence setting.
@@ -43,11 +43,11 @@ public class YesNoRadioButtons extends ModelObject {
 
     private Boolean persistence = true;
 
-    private DeviceScreensDescriptionViewModel viewModel;
+    private EditDeviceScreensDescriptionViewModel viewModel;
     private Button yesButton;
     private Button noButton;
 
-    public void createButtons(DeviceScreensDescriptionViewModel viewModel, Composite detailsComposite,
+    public void createButtons(EditDeviceScreensDescriptionViewModel viewModel, Composite detailsComposite,
             SelectionListener selectionListener) {
 
         this.viewModel = viewModel;

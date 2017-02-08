@@ -51,7 +51,7 @@ import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.wb.swt.ResourceManager;
 
-import uk.ac.stfc.isis.ibex.ui.devicescreens.models.DeviceScreensDescriptionViewModel;
+import uk.ac.stfc.isis.ibex.ui.devicescreens.models.EditDeviceScreensDescriptionViewModel;
 
 /**
  * The main panel for the configure device screens dialog.
@@ -69,7 +69,7 @@ public class ConfigureDeviceScreensPanel extends Composite {
     private Collection<String> availableOPIs;
 
     /** The view model. */
-    private DeviceScreensDescriptionViewModel viewModel;
+    private EditDeviceScreensDescriptionViewModel viewModel;
 
     /** binding context. */
     private DataBindingContext bindingContext = new DataBindingContext();
@@ -83,7 +83,7 @@ public class ConfigureDeviceScreensPanel extends Composite {
      * @param viewModel the view model
      */
     public ConfigureDeviceScreensPanel(Composite parent, int style, Collection<String> availableOPIs,
-            DeviceScreensDescriptionViewModel viewModel) {
+            EditDeviceScreensDescriptionViewModel viewModel) {
         super(parent, style);
         this.viewModel = viewModel;
         this.availableOPIs = availableOPIs;

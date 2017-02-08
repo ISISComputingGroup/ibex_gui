@@ -38,7 +38,7 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 
-import uk.ac.stfc.isis.ibex.ui.devicescreens.models.DeviceScreensDescriptionViewModel;
+import uk.ac.stfc.isis.ibex.ui.devicescreens.models.EditDeviceScreensDescriptionViewModel;
 
 /**
  * The widget for setting the screen name and OPI.
@@ -47,7 +47,7 @@ import uk.ac.stfc.isis.ibex.ui.devicescreens.models.DeviceScreensDescriptionView
 public class TargetNameWidget extends Composite {
 
     /** The view model. */
-    private DeviceScreensDescriptionViewModel viewModel;
+    private EditDeviceScreensDescriptionViewModel viewModel;
 
     /** The OPI list. */
     private List<String> availableOPIs;
@@ -60,7 +60,7 @@ public class TargetNameWidget extends Composite {
      * @param viewModel the view model
      */
     public TargetNameWidget(Composite parent, Collection<String> availableOPIs,
-            DeviceScreensDescriptionViewModel viewModel) {
+            EditDeviceScreensDescriptionViewModel viewModel) {
 		super(parent, SWT.NONE);
 		
         this.viewModel = viewModel;

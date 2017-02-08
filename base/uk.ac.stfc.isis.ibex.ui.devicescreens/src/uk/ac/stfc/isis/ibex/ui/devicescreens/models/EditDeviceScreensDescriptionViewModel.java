@@ -38,7 +38,7 @@ import uk.ac.stfc.isis.ibex.validators.MessageDisplayer;
 /**
  * The view model for linking the GUI with the device screens description.
  */
-public class DeviceScreensDescriptionViewModel extends ModelObject {
+public class EditDeviceScreensDescriptionViewModel extends ModelObject {
 
     /** Used to display any errors relating to values entered. */
     private final MessageDisplayer messageDisplayer;
@@ -83,7 +83,7 @@ public class DeviceScreensDescriptionViewModel extends ModelObject {
      *            to be displayed
      * @param provider supplies the OPI information
      */
-    public DeviceScreensDescriptionViewModel(DeviceScreensDescription description, MessageDisplayer messageDisplayer,
+    public EditDeviceScreensDescriptionViewModel(DeviceScreensDescription description, MessageDisplayer messageDisplayer,
             DescriptionsProvider provider) {
         this.messageDisplayer = messageDisplayer;
         this.provider = provider;

@@ -37,7 +37,7 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 
-import uk.ac.stfc.isis.ibex.ui.devicescreens.models.DeviceScreensDescriptionViewModel;
+import uk.ac.stfc.isis.ibex.ui.devicescreens.models.EditDeviceScreensDescriptionViewModel;
 
 /**
  * The widget for setting the screen name and OPI.
@@ -46,7 +46,7 @@ import uk.ac.stfc.isis.ibex.ui.devicescreens.models.DeviceScreensDescriptionView
 public class TargetPersistenceWidget extends Composite {
 
     /** The view model. */
-    private DeviceScreensDescriptionViewModel viewModel;
+    private EditDeviceScreensDescriptionViewModel viewModel;
 
     /** The OPI list. */
     private List<String> persistedOptions;
@@ -61,7 +61,7 @@ public class TargetPersistenceWidget extends Composite {
      * @param viewModel
      *            the view model
      */
-    public TargetPersistenceWidget(Composite parent, DeviceScreensDescriptionViewModel viewModel) {
+    public TargetPersistenceWidget(Composite parent, EditDeviceScreensDescriptionViewModel viewModel) {
         super(parent, SWT.NONE);
 
         this.viewModel = viewModel;

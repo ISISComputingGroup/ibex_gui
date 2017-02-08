@@ -36,7 +36,7 @@ import org.eclipse.swt.widgets.Shell;
 
 import uk.ac.stfc.isis.ibex.devicescreens.desc.DeviceScreensDescription;
 import uk.ac.stfc.isis.ibex.opis.Opi;
-import uk.ac.stfc.isis.ibex.ui.devicescreens.models.DeviceScreensDescriptionViewModel;
+import uk.ac.stfc.isis.ibex.ui.devicescreens.models.EditDeviceScreensDescriptionViewModel;
 import uk.ac.stfc.isis.ibex.validators.MessageDisplayer;
 
 /**
@@ -55,7 +55,7 @@ public class ConfigureDeviceScreensDialog extends TitleAreaDialog implements Mes
     private Collection<String> availableOPIs;
 
     /** The view model. */
-    private DeviceScreensDescriptionViewModel viewModel;
+    private EditDeviceScreensDescriptionViewModel viewModel;
 
     /**
      * The constructor.
@@ -70,7 +70,7 @@ public class ConfigureDeviceScreensDialog extends TitleAreaDialog implements Mes
         setShellStyle(getShellStyle() | SWT.DIALOG_TRIM | SWT.RESIZE);
         this.availableOPIs = availableOPIs;
         this.viewModel =
-                new DeviceScreensDescriptionViewModel(description, this, Opi.getDefault().descriptionsProvider());
+                new EditDeviceScreensDescriptionViewModel(description, this, Opi.getDefault().descriptionsProvider());
     }
 
     @Override

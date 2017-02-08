@@ -35,7 +35,7 @@ import uk.ac.stfc.isis.ibex.devicescreens.desc.PropertyDescription;
 import uk.ac.stfc.isis.ibex.opis.DescriptionsProvider;
 import uk.ac.stfc.isis.ibex.opis.desc.MacroInfo;
 import uk.ac.stfc.isis.ibex.opis.desc.OpiDescription;
-import uk.ac.stfc.isis.ibex.ui.devicescreens.models.DeviceScreensDescriptionViewModel;
+import uk.ac.stfc.isis.ibex.ui.devicescreens.models.EditDeviceScreensDescriptionViewModel;
 import uk.ac.stfc.isis.ibex.validators.MessageDisplayer;
 
 /**
@@ -44,7 +44,7 @@ import uk.ac.stfc.isis.ibex.validators.MessageDisplayer;
 public class DeviceScreensDescriptionViewModelTest {
 
     private DeviceScreensDescription description;
-    private DeviceScreensDescriptionViewModel viewModel;
+    private EditDeviceScreensDescriptionViewModel viewModel;
     private String deviceName = "Device";
     private String opiName1 = "Test Opi 1";
     private String opiDescription1 = "This is OPI 1";
@@ -104,7 +104,7 @@ public class DeviceScreensDescriptionViewModelTest {
         when(provider.getDescription(opiName1)).thenReturn(opiDesc1);
         when(provider.getDescription(opiName2)).thenReturn(opiDesc2);
         
-        viewModel = new DeviceScreensDescriptionViewModel(description, displayer, provider);
+        viewModel = new EditDeviceScreensDescriptionViewModel(description, displayer, provider);
     }
 
     @Test
