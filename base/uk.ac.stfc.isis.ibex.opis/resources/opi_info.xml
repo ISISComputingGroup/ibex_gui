@@ -638,7 +638,7 @@
 			<value>
 				<type>ZOOM_SAMPLE_STACK</type>
 				<path>zoom_sample_stack/zoom_sample_stack.opi</path>
-				<description>The OPI for the detector motion system. No properties required.</description>
+				<description>The OPI for the ZOOM sample stack. No properties required.</description>
 				<macros>
 				</macros>
 			</value>
