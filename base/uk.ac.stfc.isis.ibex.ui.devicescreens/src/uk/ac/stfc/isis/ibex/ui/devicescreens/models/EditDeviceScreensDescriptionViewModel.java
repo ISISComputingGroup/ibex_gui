@@ -36,7 +36,7 @@ import uk.ac.stfc.isis.ibex.opis.DescriptionsProvider;
 import uk.ac.stfc.isis.ibex.validators.MessageDisplayer;
 
 /**
- * The view model for linking the GUI with the device screens description.
+ * The view model for linking the edit panel to the model.
  */
 public class EditDeviceScreensDescriptionViewModel extends ModelObject {
 

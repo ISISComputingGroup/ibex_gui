@@ -19,6 +19,8 @@
 
 package uk.ac.stfc.isis.ibex.ui.devicescreens;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,52 +43,27 @@ import org.eclipse.swt.widgets.Display;
 import uk.ac.stfc.isis.ibex.devicescreens.DeviceScreens;
 import uk.ac.stfc.isis.ibex.devicescreens.desc.DeviceDescription;
 import uk.ac.stfc.isis.ibex.devicescreens.desc.DeviceScreensDescription;
-import uk.ac.stfc.isis.ibex.epics.observing.BaseObserver;
-import uk.ac.stfc.isis.ibex.epics.observing.Observable;
-import uk.ac.stfc.isis.ibex.epics.observing.Observer;
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
 import uk.ac.stfc.isis.ibex.opis.OPIViewCreationException;
 import uk.ac.stfc.isis.ibex.ui.devicescreens.commands.ConfigureDeviceScreensHandler;
 import uk.ac.stfc.isis.ibex.ui.devicescreens.list.DeviceScreensTable;
+import uk.ac.stfc.isis.ibex.ui.devicescreens.models.ViewDeviceScreensDescriptionViewModel;
 
 /**
  * A UI Panel for the devices screens.
  */
-public class DeviceSceenListPanel extends Composite {
+public class DeviceScreenListPanel extends Composite {
 
     /**
      * Logger.
      */
-    private static final Logger LOG = IsisLog.getLogger(DeviceSceenListPanel.class);
+    private static final Logger LOG = IsisLog.getLogger(DeviceScreenListPanel.class);
     private final List<DeviceDescription> blankList = new ArrayList<DeviceDescription>();
 
     private Button configureDevScreensButton;
 
     private final Display display = Display.getCurrent();
-    private final Observer<DeviceScreensDescription> pvObserver = new BaseObserver<DeviceScreensDescription>() {
-        @Override
-        public void onValue(final DeviceScreensDescription value) {
-            display.asyncExec(new Runnable() {
-                @Override
-                public void run() {
-                    // setLabelValue(value.toString());
-                    deviceScreenList.setRows(value.getDevices());
-                }
-            });
-        }
 
-        @Override
-        public void onError(Exception e) {
-            e.printStackTrace();
-        }
-
-        @Override
-        public void onConnectionStatus(boolean isConnected) {
-            if (!isConnected) {
-                deviceScreenList.setRows(blankList);
-            }
-        }
-    };
     private DeviceScreensTable deviceScreenList;
 
     private ConfigureDeviceScreensHandler configureDeviceScreensHandler = new ConfigureDeviceScreensHandler();
@@ -97,7 +74,7 @@ public class DeviceSceenListPanel extends Composite {
      * @param parent parent component
      * @param style SWT Style
      */
-    public DeviceSceenListPanel(final Composite parent, int style) {
+    public DeviceScreenListPanel(final Composite parent, int style, ViewDeviceScreensDescriptionViewModel viewModel) {
         super(parent, style);
         setLayout(new FillLayout(SWT.HORIZONTAL));
 
@@ -113,8 +90,9 @@ public class DeviceSceenListPanel extends Composite {
         deviceScreenList.setLayoutData(devicesListLayout);
 
         DeviceScreens deviceScreens = DeviceScreens.getInstance();
-        Observable<DeviceScreensDescription> availableScreensObservable = deviceScreens.getDevices();
-        availableScreensObservable.addObserver(pvObserver);
+        // Observable<DeviceScreensDescription> availableScreensObservable =
+        // deviceScreens.getDevices();
+        // availableScreensObservable.addObserver(pvObserver);
 
         deviceScreenList.addSelectionChangedListener(new ISelectionChangedListener() {
 
@@ -158,6 +136,23 @@ public class DeviceSceenListPanel extends Composite {
             }
         });
 
+        viewModel.addPropertyChangeListener(new PropertyChangeListener() {
+            @Override
+            public void propertyChange(PropertyChangeEvent deviceScreenDescription) {
+                updateDeviceScreensDescriptions((DeviceScreensDescription) deviceScreenDescription.getNewValue());
+
+            }
+        });
+
+    }
+
+    protected void updateDeviceScreensDescriptions(DeviceScreensDescription deviceScreensDescription) {
+        Display.getDefault().asyncExec(new Runnable() {
+            @Override
+            public void run() {
+                deviceScreenList.setRows(deviceScreensDescription.getDevices());
+            }
+        });
     }
 
 }
