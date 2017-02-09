@@ -23,11 +23,13 @@
 package uk.ac.stfc.isis.ibex.ui.devicescreens.models;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.regex.Pattern;
 
 import uk.ac.stfc.isis.ibex.configserver.editing.DefaultName;
+import uk.ac.stfc.isis.ibex.devicescreens.DeviceScreensModel;
 import uk.ac.stfc.isis.ibex.devicescreens.desc.DeviceDescription;
 import uk.ac.stfc.isis.ibex.devicescreens.desc.DeviceScreensDescription;
 import uk.ac.stfc.isis.ibex.devicescreens.desc.PropertyDescription;
@@ -78,19 +80,22 @@ public class EditDeviceScreensDescriptionViewModel extends ModelObject {
     /**
      * The constructor.
      * 
-     * @param description the description to edit
-     * @param messageDisplayer a reference to the dialog to allow error messages
-     *            to be displayed
-     * @param provider supplies the OPI information
+     * @param deviceScreensModel
+     *            the model of device screens description to edit
+     * @param messageDisplayer
+     *            a reference to the dialog to allow error messages to be
+     *            displayed
+     * @param provider
+     *            supplies the OPI information
      */
-    public EditDeviceScreensDescriptionViewModel(DeviceScreensDescription description, MessageDisplayer messageDisplayer,
+    public EditDeviceScreensDescriptionViewModel(DeviceScreensModel deviceScreensModel,
             DescriptionsProvider provider) {
-        this.messageDisplayer = messageDisplayer;
+        this.messageDisplayer = null; // TODO FIX THIS
         this.provider = provider;
 
         // From the description create a list of devices
         devices = new ArrayList<>();
-        for (DeviceDescription d : description.getDevices()) {
+        for (DeviceDescription d : deviceScreensModel.getDeviceScreensDescription().getDevices()) {
             devices.add(new DeviceDescriptionWrapper(d, this.provider));
         }
     }
@@ -507,5 +512,12 @@ public class EditDeviceScreensDescriptionViewModel extends ModelObject {
         }
 
         return desc;
+    }
+
+    /**
+     * @return
+     */
+    public Collection<String> getAvailableOPIs() {
+        return this.provider.getOpiList();
     }
 }

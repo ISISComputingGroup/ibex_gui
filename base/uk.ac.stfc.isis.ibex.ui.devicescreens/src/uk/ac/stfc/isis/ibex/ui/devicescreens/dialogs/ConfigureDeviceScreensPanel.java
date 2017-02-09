@@ -22,8 +22,6 @@
  */
 package uk.ac.stfc.isis.ibex.ui.devicescreens.dialogs;
 
-import java.util.Collection;
-
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.UpdateValueStrategy;
 import org.eclipse.core.databinding.beans.BeanProperties;
@@ -65,9 +63,6 @@ public class ConfigureDeviceScreensPanel extends Composite {
     /** The group list. */
     private List devicesList;
 
-    /** The OPIs available. */
-    private Collection<String> availableOPIs;
-
     /** The view model. */
     private EditDeviceScreensDescriptionViewModel viewModel;
 
@@ -79,14 +74,11 @@ public class ConfigureDeviceScreensPanel extends Composite {
      * 
      * @param parent the main composite
      * @param style the SWT style
-     * @param availableOPIs the available OPIs
      * @param viewModel the view model
      */
-    public ConfigureDeviceScreensPanel(Composite parent, int style, Collection<String> availableOPIs,
-            EditDeviceScreensDescriptionViewModel viewModel) {
+    public ConfigureDeviceScreensPanel(Composite parent, int style, EditDeviceScreensDescriptionViewModel viewModel) {
         super(parent, style);
         this.viewModel = viewModel;
-        this.availableOPIs = availableOPIs;
 
         setLayout(new GridLayout(1, true));
 
@@ -262,7 +254,7 @@ public class ConfigureDeviceScreensPanel extends Composite {
         lblTarget.setLayoutData(new GridData(SWT.RIGHT, SWT.TOP, false, false, 1, 1));
         lblTarget.setText("Target");
 
-        TargetNameWidget targetSelect = new TargetNameWidget(detailsComposite, availableOPIs, viewModel);
+        TargetNameWidget targetSelect = new TargetNameWidget(detailsComposite, viewModel);
         targetSelect.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 
         // Description

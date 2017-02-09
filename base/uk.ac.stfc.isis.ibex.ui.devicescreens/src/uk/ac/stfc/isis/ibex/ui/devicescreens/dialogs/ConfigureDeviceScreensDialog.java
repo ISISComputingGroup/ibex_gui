@@ -22,8 +22,6 @@
  */
 package uk.ac.stfc.isis.ibex.ui.devicescreens.dialogs;
 
-import java.util.Collection;
-
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.TitleAreaDialog;
 import org.eclipse.swt.SWT;
@@ -35,7 +33,6 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Shell;
 
 import uk.ac.stfc.isis.ibex.devicescreens.desc.DeviceScreensDescription;
-import uk.ac.stfc.isis.ibex.opis.Opi;
 import uk.ac.stfc.isis.ibex.ui.devicescreens.models.EditDeviceScreensDescriptionViewModel;
 import uk.ac.stfc.isis.ibex.validators.MessageDisplayer;
 
@@ -51,9 +48,6 @@ public class ConfigureDeviceScreensDialog extends TitleAreaDialog implements Mes
     /** The dialog title. */
     private static final String TITLE = "Configure Device Screens";
 
-    /** The OPI list. */
-    private Collection<String> availableOPIs;
-
     /** The view model. */
     private EditDeviceScreensDescriptionViewModel viewModel;
 
@@ -64,19 +58,18 @@ public class ConfigureDeviceScreensDialog extends TitleAreaDialog implements Mes
      * @param availableOPIs the names of the OPIs
      * @param description the current screens description
      */
-    public ConfigureDeviceScreensDialog(Shell parentShell, Collection<String> availableOPIs,
-            DeviceScreensDescription description) {
+    public ConfigureDeviceScreensDialog(Shell parentShell,
+            EditDeviceScreensDescriptionViewModel editDeviceScreensDescriptionViewModel) {
         super(parentShell);
         setShellStyle(getShellStyle() | SWT.DIALOG_TRIM | SWT.RESIZE);
-        this.availableOPIs = availableOPIs;
-        this.viewModel =
-                new EditDeviceScreensDescriptionViewModel(description, this, Opi.getDefault().descriptionsProvider());
+        this.viewModel = editDeviceScreensDescriptionViewModel;
+
     }
 
     @Override
     protected Control createDialogArea(Composite parent) {
         ConfigureDeviceScreensPanel editor =
-                new ConfigureDeviceScreensPanel(parent, SWT.NONE, availableOPIs, viewModel);
+                new ConfigureDeviceScreensPanel(parent, SWT.NONE, viewModel);
         editor.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
         setTitle(TITLE);
 
