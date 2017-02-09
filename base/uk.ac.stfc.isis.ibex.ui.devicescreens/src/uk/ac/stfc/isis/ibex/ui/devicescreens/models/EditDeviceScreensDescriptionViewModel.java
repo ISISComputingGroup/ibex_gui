@@ -84,15 +84,12 @@ public class EditDeviceScreensDescriptionViewModel extends ModelObject {
      * 
      * @param deviceScreensModel
      *            the model of device screens description to edit
-     * @param messageDisplayer
-     *            a reference to the dialog to allow error messages to be
-     *            displayed
      * @param provider
      *            supplies the OPI information
      */
     public EditDeviceScreensDescriptionViewModel(DeviceScreensModel deviceScreensModel,
-            DescriptionsProvider provider) {
-        this.messageDisplayer = null; // TODO FIX THIS
+            DescriptionsProvider provider, MessageDisplayer messageDisplayer) {
+        this.messageDisplayer = messageDisplayer;
         this.provider = provider;
 
         // From the description create a list of devices

@@ -32,6 +32,8 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Shell;
 
+import uk.ac.stfc.isis.ibex.devicescreens.DeviceScreens;
+import uk.ac.stfc.isis.ibex.opis.Opi;
 import uk.ac.stfc.isis.ibex.ui.devicescreens.models.EditDeviceScreensDescriptionViewModel;
 import uk.ac.stfc.isis.ibex.validators.MessageDisplayer;
 
@@ -54,15 +56,12 @@ public class ConfigureDeviceScreensDialog extends TitleAreaDialog implements Mes
      * The constructor.
      * 
      * @param parentShell the parent
-     * @param availableOPIs the names of the OPIs
-     * @param description the current screens description
      */
-    public ConfigureDeviceScreensDialog(Shell parentShell,
-            EditDeviceScreensDescriptionViewModel editDeviceScreensDescriptionViewModel) {
+    public ConfigureDeviceScreensDialog(Shell parentShell) {
         super(parentShell);
         setShellStyle(getShellStyle() | SWT.DIALOG_TRIM | SWT.RESIZE);
-        this.viewModel = editDeviceScreensDescriptionViewModel;
-
+        this.viewModel = new EditDeviceScreensDescriptionViewModel(DeviceScreens.getInstance().getModel(),
+                Opi.getDefault().descriptionsProvider(), this);
     }
 
     @Override
@@ -112,5 +111,12 @@ public class ConfigureDeviceScreensDialog extends TitleAreaDialog implements Mes
         } else {
             setOKEnabled(true);
         }
+    }
+
+    /**
+     * Save the current device screen.
+     */
+    public void save() {
+        viewModel.save();
     }
 }

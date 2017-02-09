@@ -33,9 +33,7 @@ import uk.ac.stfc.isis.ibex.devicescreens.DeviceScreens;
 import uk.ac.stfc.isis.ibex.devicescreens.desc.DeviceScreensDescription;
 import uk.ac.stfc.isis.ibex.epics.writing.SameTypeWriter;
 import uk.ac.stfc.isis.ibex.epics.writing.Writable;
-import uk.ac.stfc.isis.ibex.opis.Opi;
 import uk.ac.stfc.isis.ibex.ui.devicescreens.dialogs.ConfigureDeviceScreensDialog;
-import uk.ac.stfc.isis.ibex.ui.devicescreens.models.EditDeviceScreensDescriptionViewModel;
 
 /**
  * The handler for launching the configure screens dialog.
@@ -78,13 +76,11 @@ public class ConfigureDeviceScreensHandler extends AbstractHandler {
     @Override
     public Object execute(ExecutionEvent event) throws ExecutionException {
 
-        EditDeviceScreensDescriptionViewModel viewModel = new EditDeviceScreensDescriptionViewModel(
-                DeviceScreens.getInstance().getModel(), Opi.getDefault().descriptionsProvider());
         ConfigureDeviceScreensDialog dialog =
-                new ConfigureDeviceScreensDialog(shell(), viewModel);
+                new ConfigureDeviceScreensDialog(shell());
 
         if (dialog.open() == Window.OK) {
-            viewModel.save();
+            dialog.save();
         }
 
         return null;
