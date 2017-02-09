@@ -186,6 +186,20 @@
 			</value>
 		</entry>
 		<entry>
+			<key>Keithley 2400</key>
+			<value>
+				<type>KHLY2400</type>
+				<path>Keithley2400/Keithley2400.opi</path>
+				<description>The OPI for the Keithley 2400 Source Meter.</description>
+				<macros>
+					<macro>
+						<name>KHLY2400</name>
+						<description>The Keithley 2400 PV name (e.g. KHLY2400_01).</description>
+					</macro>
+				</macros>
+			</value>
+		</entry>
+		<entry>
 			<key>Kepco</key>
 			<value>
 				<type>KEPCO</type>
@@ -618,6 +632,16 @@
 				<macros>
 				</macros>
 			</value>
-		</entry>  		
+		</entry>  	
+		<entry>
+			<key>Zoom sample stack</key>
+			<value>
+				<type>ZOOM_SAMPLE_STACK</type>
+				<path>zoom_sample_stack/zoom_sample_stack.opi</path>
+				<description>The OPI for the ZOOM sample stack. No properties required.</description>
+				<macros>
+				</macros>
+			</value>
+		</entry> 		
 	</opis>
 </descriptions>
