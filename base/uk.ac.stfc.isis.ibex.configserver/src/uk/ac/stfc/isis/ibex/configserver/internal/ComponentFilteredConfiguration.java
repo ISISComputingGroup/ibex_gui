@@ -21,28 +21,42 @@ package uk.ac.stfc.isis.ibex.configserver.internal;
 
 import java.util.Collection;
 
+import com.google.common.base.Predicate;
+import com.google.common.collect.Iterables;
+import com.google.common.collect.Lists;
+
 import uk.ac.stfc.isis.ibex.configserver.configuration.Block;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Configuration;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Group;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Ioc;
 
-import com.google.common.base.Predicate;
-import com.google.common.collect.Iterables;
-import com.google.common.collect.Lists;
-
-/*
- * A configuration from which component-derived 
- * elements have been filtered.
+/**
+ * A configuration from which component-derived elements have been filtered.
  */
 public class ComponentFilteredConfiguration extends Configuration {
 	
+    /**
+     * Constructor for the component-filtered configuration.
+     * 
+     * @param other
+     *            The unfiltered configuration
+     */
 	public ComponentFilteredConfiguration(Configuration other) {
-		super(other);
+        super(other.name(), other.description(), other.synoptic(), filterIocs(other.getIocs()),
+                filterBlocks(other.getBlocks()), filterGroups(other.getGroups()), other.getComponents(),
+                other.getHistory());
 	}
 	
-	@Override
-	public Collection<Ioc> getIocs() {
-		return Lists.newArrayList(Iterables.filter(super.getIocs(), new Predicate<Ioc>() {
+    /**
+     * Takes a collection of IOCs and filters out the ones that are part of a
+     * component.
+     * 
+     * @param iocs
+     *            The IOCs
+     * @return The filtered collection of IOCs
+     */
+    public static Collection<Ioc> filterIocs(Collection<Ioc> iocs) {
+        return Lists.newArrayList(Iterables.filter(iocs, new Predicate<Ioc>() {
 			@Override
 			public boolean apply(Ioc ioc) {
 				return !ioc.hasComponent();
@@ -50,19 +64,33 @@ public class ComponentFilteredConfiguration extends Configuration {
 		}));
 	}
 
-	@Override
-	public Collection<Block> getBlocks() {
-		return Lists.newArrayList(Iterables.filter(super.getBlocks(), new Predicate<Block>() {
+    /**
+     * Takes a collection of blocks and filters out the ones that are part of a
+     * component.
+     * 
+     * @param blocks
+     *            The blocks
+     * @return The filtered collection of blocks
+     */
+    public static Collection<Block> filterBlocks(Collection<Block> blocks) {
+        return Lists.newArrayList(Iterables.filter(blocks, new Predicate<Block>() {
 			@Override
 			public boolean apply(Block block) {
 				return !block.hasComponent();
 			}
 		}));
 	}
-	
-	@Override
-	public Collection<Group> getGroups() {
-		return Lists.newArrayList(Iterables.filter(super.getGroups(), new Predicate<Group>() {
+
+    /**
+     * Takes a collection of groups and filters out the ones that are part of a
+     * component.
+     * 
+     * @param groups
+     *            The groups
+     * @return The filtered collection of groups
+     */
+    public static Collection<Group> filterGroups(Collection<Group> groups) {
+        return Lists.newArrayList(Iterables.filter(groups, new Predicate<Group>() {
 			@Override
 			public boolean apply(Group group) {
 				return !group.hasComponent();
