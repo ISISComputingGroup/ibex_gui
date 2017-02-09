@@ -47,7 +47,7 @@ public class DeviceScreens implements BundleActivator {
 
         variables = new DeviceScreenVariablesWithPersistence();
 
-        model = new DeviceScreensModel(getDevices());
+        model = new DeviceScreensModel(getDevices(), getDevicesSetter());
     }
 
     /**

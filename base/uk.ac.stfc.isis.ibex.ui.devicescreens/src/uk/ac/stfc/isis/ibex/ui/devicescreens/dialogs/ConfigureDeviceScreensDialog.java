@@ -32,7 +32,6 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Shell;
 
-import uk.ac.stfc.isis.ibex.devicescreens.desc.DeviceScreensDescription;
 import uk.ac.stfc.isis.ibex.ui.devicescreens.models.EditDeviceScreensDescriptionViewModel;
 import uk.ac.stfc.isis.ibex.validators.MessageDisplayer;
 
@@ -85,15 +84,6 @@ public class ConfigureDeviceScreensDialog extends TitleAreaDialog implements Mes
     @Override
     protected Point getInitialSize() {
         return INITIAL_SIZE;
-    }
-
-    /**
-     * Gets the new device description for saving.
-     * 
-     * @return the new device description
-     */
-    public DeviceScreensDescription getDeviceDescription() {
-        return viewModel.getDeviceScreensDescription();
     }
 
     /**

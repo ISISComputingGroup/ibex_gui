@@ -24,6 +24,7 @@ package uk.ac.stfc.isis.ibex.devicescreens;
 import uk.ac.stfc.isis.ibex.devicescreens.desc.DeviceScreensDescription;
 import uk.ac.stfc.isis.ibex.epics.observing.Observable;
 import uk.ac.stfc.isis.ibex.epics.observing.Observer;
+import uk.ac.stfc.isis.ibex.epics.writing.Writable;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 
 /**
@@ -31,8 +32,13 @@ import uk.ac.stfc.isis.ibex.model.ModelObject;
  */
 public class DeviceScreensModel extends ModelObject {
     private DeviceScreensDescription deviceScreensDescription;
+    private Writable<DeviceScreensDescription> writableDeviceScreenDescriptions;
 
-    public DeviceScreensModel(Observable<DeviceScreensDescription> observableDeviceScreensDescription) {
+    public DeviceScreensModel(Observable<DeviceScreensDescription> observableDeviceScreensDescription,
+            Writable<DeviceScreensDescription> writableDeviceScreenDescriptions) {
+
+        this.writableDeviceScreenDescriptions = writableDeviceScreenDescriptions;
+
         observableDeviceScreensDescription.addObserver(new Observer<DeviceScreensDescription>() {
 
             @Override
@@ -42,7 +48,7 @@ public class DeviceScreensModel extends ModelObject {
 
             @Override
             public void onValue(DeviceScreensDescription value) {
-                setDeviceScreensDescription(value);
+                updateDeviceScreensDescription(value);
             }
 
             @Override
@@ -61,8 +67,13 @@ public class DeviceScreensModel extends ModelObject {
         return deviceScreensDescription;
     }
 
-    public void setDeviceScreensDescription(DeviceScreensDescription deviceScreensDescription) {
+    private void updateDeviceScreensDescription(DeviceScreensDescription deviceScreensDescription) {
         firePropertyChange("deviceScreensDescription", this.deviceScreensDescription,
                 this.deviceScreensDescription = deviceScreensDescription);
     }
+
+    public void setDeviceScreensDescription(DeviceScreensDescription deviceScreensDescription) {
+        writableDeviceScreenDescriptions.write(deviceScreensDescription);
+    }
+
 }

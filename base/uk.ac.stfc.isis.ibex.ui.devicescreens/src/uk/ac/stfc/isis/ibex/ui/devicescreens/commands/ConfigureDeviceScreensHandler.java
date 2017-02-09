@@ -84,8 +84,7 @@ public class ConfigureDeviceScreensHandler extends AbstractHandler {
                 new ConfigureDeviceScreensDialog(shell(), viewModel);
 
         if (dialog.open() == Window.OK) {
-            DeviceScreensDescription desc = dialog.getDeviceDescription();
-            writeable.write(desc);
+            viewModel.save();
         }
 
         return null;

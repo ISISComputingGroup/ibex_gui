@@ -77,6 +77,8 @@ public class EditDeviceScreensDescriptionViewModel extends ModelObject {
 
     private Boolean previousPersistence = null;
 
+    private DeviceScreensModel deviceScreensModel;
+
     /**
      * The constructor.
      * 
@@ -98,6 +100,8 @@ public class EditDeviceScreensDescriptionViewModel extends ModelObject {
         for (DeviceDescription d : deviceScreensModel.getDeviceScreensDescription().getDevices()) {
             devices.add(new DeviceDescriptionWrapper(d, this.provider));
         }
+
+        this.deviceScreensModel = deviceScreensModel;
     }
 
     /**
@@ -491,7 +495,7 @@ public class EditDeviceScreensDescriptionViewModel extends ModelObject {
      * 
      * @return The description
      */
-    public DeviceScreensDescription getDeviceScreensDescription() {
+    public void save() {
         DeviceScreensDescription desc = new DeviceScreensDescription();
 
         for (DeviceDescriptionWrapper d : devices) {
@@ -511,7 +515,7 @@ public class EditDeviceScreensDescriptionViewModel extends ModelObject {
             desc.addDevice(device);
         }
 
-        return desc;
+        deviceScreensModel.setDeviceScreensDescription(desc);
     }
 
     /**
