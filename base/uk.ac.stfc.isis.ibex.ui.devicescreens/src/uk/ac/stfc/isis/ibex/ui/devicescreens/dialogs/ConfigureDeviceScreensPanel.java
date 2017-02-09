@@ -38,7 +38,6 @@ import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -273,25 +272,13 @@ public class ConfigureDeviceScreensPanel extends Composite {
         TargetPropertiesView propertiesView = new TargetPropertiesView(detailsComposite, viewModel);
         propertiesView.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
 
-        YesNoRadioButtons radioButtons = new YesNoRadioButtons();
+        YesNoRadioButtons yesNoRadioButtons = new YesNoRadioButtons(detailsComposite, "Save this device screen",
+                "Remove this device screen when IBEX is closed");
+
+        bindingContext.bindValue(BeanProperties.value("selected").observe(yesNoRadioButtons),
+                BeanProperties.value("currentPersistence").observe(viewModel), null, null);
+        yesNoRadioButtons.setSelected(viewModel.getCurrentPersistence());
         
-        SelectionListener selectionListener = new SelectionAdapter() {
-            @Override
-            public void widgetSelected(SelectionEvent selectionEvent) {
-                Button radioButton = ((Button) selectionEvent.widget);
-                if (radioButton.getSelection() && radioButton.getText().equals(radioButtons.yesText)) {
-                    // Set the persistence of this device screen to true.
-                    radioButtons.setCurrentPersistence(true);
-                } else if ((radioButton.getSelection() && radioButton.getText().equals(radioButtons.noText))) {
-                    // Set the persistence of this device screen to false.
-                    radioButtons.setCurrentPersistence(false);
-                }
-
-            };
-        };
-
-        radioButtons.createButtons(viewModel, detailsComposite, selectionListener);
-        radioButtons.bind(bindingContext);
 
     }
 

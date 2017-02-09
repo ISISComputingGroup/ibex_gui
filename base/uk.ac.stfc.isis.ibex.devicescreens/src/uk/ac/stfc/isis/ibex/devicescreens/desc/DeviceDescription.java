@@ -60,7 +60,7 @@ public class DeviceDescription extends ModelObject {
      * This stores the persistence setting. This is not sent to the blockserver.
      */
     @XmlTransient
-    private boolean persist;
+    private Boolean persist = null;
 
     /**
      * The properties that have been set.
@@ -72,6 +72,20 @@ public class DeviceDescription extends ModelObject {
      * Default constructor. Needed for parsing XML.
      */
     public DeviceDescription() {
+        this("", "", "", false);
+    }
+
+    /**
+     * @param name
+     * @param key
+     * @param type
+     * @param persist
+     */
+    public DeviceDescription(String name, String key, String type, boolean persist) {
+        setName(name);
+        setPersist(persist);
+        setType(type);
+        setKey(key);
     }
 
     /**

@@ -23,74 +23,104 @@ package uk.ac.stfc.isis.ibex.ui.devicescreens.dialogs;
 
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.beans.BeanProperties;
-import org.eclipse.core.databinding.observable.value.IObservableValue;
+import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 
 import uk.ac.stfc.isis.ibex.model.ModelObject;
-import uk.ac.stfc.isis.ibex.ui.devicescreens.models.EditDeviceScreensDescriptionViewModel;
 
 /**
  * This class defines a set of radio buttons for the persistence setting.
  */
 public class YesNoRadioButtons extends ModelObject {
 
-    String yesText = "Save this device screen";
-    String noText = "Remove this device screen when IBEX is closed";
 
-    private Boolean persistence = true;
+    private Boolean selected;
 
-    private EditDeviceScreensDescriptionViewModel viewModel;
     private Button yesButton;
     private Button noButton;
 
-    public void createButtons(EditDeviceScreensDescriptionViewModel viewModel, Composite detailsComposite,
-            SelectionListener selectionListener) {
+    private DataBindingContext bindingContext;
 
-        this.viewModel = viewModel;
+    /**
+     * 
+     */
+    public YesNoRadioButtons(Composite parent, String trueText, String falseText) {
 
-        yesButton = new Button(detailsComposite, SWT.RADIO);
-        noButton = new Button(detailsComposite, SWT.RADIO);
-
-        String yesText = "Save this device screen";
-        String noText = "Remove this device screen when IBEX is closed";
-
-        yesButton.setText(yesText);
+        bindingContext = new DataBindingContext();
+        
+        yesButton = new Button(parent, SWT.RADIO);
+        noButton = new Button(parent, SWT.RADIO);
+        
+        yesButton.setText(trueText);
         yesButton.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1));
-        yesButton.addSelectionListener(selectionListener);
-
-        noButton.setText(noText);
+        bindingContext.bindValue(WidgetProperties.selection().observe(yesButton),
+                BeanProperties.value("yesButtonSelected").observe(this), null, null);
+        
+        noButton.setText(falseText);
         noButton.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1));
-        noButton.addSelectionListener(selectionListener);
+        bindingContext.bindValue(WidgetProperties.selection().observe(noButton),
+                BeanProperties.value("noButtonSelected").observe(this), null, null);
+        setSelected(true);
     }
 
     /**
-     * @param persistence
+     * 
+     * @return the noButtonSelected whether no button is selected; if null
+     *         returns false;
      */
-    public void setCurrentPersistence(Boolean persistence) {
-        this.persistence = persistence;
-        if (persistence == null) {
-            yesButton.setSelection(false);
-            noButton.setSelection(false);
-        } else {
-            yesButton.setSelection(persistence);
-            noButton.setSelection(!persistence);
+    public Boolean getNoButtonSelected() {
+        return selected == null ? false : !selected;
+    }
+
+    /**
+     * @param noButtonSelected
+     *            the noButtonSelected to set
+     */
+    public void setNoButtonSelected(Boolean noButtonSelected) {
+        if (noButtonSelected) {
+            setSelected(false);
         }
     }
 
-    public void bind(DataBindingContext bindingContext) {
 
-        IObservableValue a = BeanProperties.value("currentPersistence").observe(this);
-
-        bindingContext.bindValue(a,
-                BeanProperties.value("currentPersistence").observe(viewModel), null, null);
+    /**
+     * @return the yesButtonSelected whether yes button is selected; if null
+     *         returns false;
+     */
+    public Boolean getYesButtonSelected() {
+        return selected == null ? false : selected;
     }
 
-    public Boolean getCurrentPersistence() {
-        return persistence;
+    /**
+     * @param yesButtonSelected
+     *            the yesButtonSelected to set
+     */
+    public void setYesButtonSelected(Boolean yesButtonSelected) {
+        if (yesButtonSelected) {
+            setSelected(true);
+        }
+    }
+
+    /**
+     * @param selected
+     */
+    public void setSelected(Boolean selected) {
+        firePropertyChange("selected", this.selected, this.selected = selected);
+        if (selected != null) {
+            yesButton.setSelection(selected);
+            noButton.setSelection(!selected);
+        } else {
+            yesButton.setSelection(false);
+            noButton.setSelection(false);
+        }
+
+    }
+
+    public Boolean getSelected() {
+        return selected;
     }
 
 }

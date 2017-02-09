@@ -121,10 +121,12 @@ public class EditDeviceScreensDescriptionViewModel extends ModelObject {
             previousName = selectedScreen.getName();
             previousKey = (selectedScreen.getKey() == null) ? "" : selectedScreen.getKey();
             previousDesc = (selectedScreen.getDescription() == null) ? "" : selectedScreen.getDescription();
+            previousPersistence = selectedScreen.getPersistent();
         } else {
             previousName = "";
             previousKey = "";
             previousDesc = "";
+            previousPersistence = null;
         }
 
         if (index >= 0 && index < devices.size()) {
@@ -175,8 +177,9 @@ public class EditDeviceScreensDescriptionViewModel extends ModelObject {
      * @param persistence
      *            the new persistence
      */
-    public void setCurrentPersistence(boolean persistence) {
-        if (selectedScreen == null) {
+    public void setCurrentPersistence(Boolean persistence) {
+        if (selectedScreen == null || persistence == null) {
+            previousPersistence = persistence;
             return;
         }
         selectedScreen.setPersistent(persistence);
@@ -187,7 +190,7 @@ public class EditDeviceScreensDescriptionViewModel extends ModelObject {
 
     public Boolean getCurrentPersistence() {
         if (selectedScreen == null) {
-            return null;
+            return false;
         }
         return selectedScreen.getPersistent();
     }
@@ -270,7 +273,9 @@ public class EditDeviceScreensDescriptionViewModel extends ModelObject {
      *            the new persiststence setting.
      */
     private void updateCurrentPersistence(boolean newPersistence) {
+        System.out.println("old " + previousPersistence + "new " + newPersistence);
         firePropertyChange("currentPersistence", previousPersistence, previousPersistence = newPersistence);
+
     }
 
     /**
@@ -389,10 +394,7 @@ public class EditDeviceScreensDescriptionViewModel extends ModelObject {
             names.add(d.getName());
         }
 
-        DeviceDescription newScreen = new DeviceDescription();
-        newScreen.setName(namer.getUnique(names));
-        newScreen.setKey("");
-        newScreen.setType("");
+        DeviceDescription newScreen = new DeviceDescription(namer.getUnique(names), "", "", false);
 
         devices.add(new DeviceDescriptionWrapper(newScreen, provider));
         firePropertyChange("screens", oldList, devices);

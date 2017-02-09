@@ -21,6 +21,7 @@
  */
 package uk.ac.stfc.isis.ibex.devicescreens;
 
+import uk.ac.stfc.isis.ibex.devicescreens.desc.DeviceDescription;
 import uk.ac.stfc.isis.ibex.devicescreens.desc.DeviceScreensDescription;
 import uk.ac.stfc.isis.ibex.epics.observing.Observable;
 import uk.ac.stfc.isis.ibex.epics.observing.Observer;
@@ -34,9 +35,12 @@ public class DeviceScreensModel extends ModelObject {
     private DeviceScreensDescription deviceScreensDescription;
     private Writable<DeviceScreensDescription> writableDeviceScreenDescriptions;
 
+    private DeviceScreensDescription localDevices;
+
     public DeviceScreensModel(Observable<DeviceScreensDescription> observableDeviceScreensDescription,
             Writable<DeviceScreensDescription> writableDeviceScreenDescriptions) {
 
+        localDevices = new DeviceScreensDescription();
         this.writableDeviceScreenDescriptions = writableDeviceScreenDescriptions;
 
         observableDeviceScreensDescription.addObserver(new Observer<DeviceScreensDescription>() {
@@ -47,8 +51,22 @@ public class DeviceScreensModel extends ModelObject {
             }
 
             @Override
-            public void onValue(DeviceScreensDescription value) {
-                updateDeviceScreensDescription(value);
+            public void onValue(DeviceScreensDescription remoteDeviceScreenDescription) {
+
+                System.out.println("... " + remoteDeviceScreenDescription.getDevices().size());
+                DeviceScreensDescription copy = new DeviceScreensDescription(remoteDeviceScreenDescription);
+
+                for (DeviceDescription device : copy.getDevices()) {
+                    device.setPersist(true);
+                }
+
+                for (DeviceDescription device : localDevices.getDevices()) {
+                    DeviceDescription deviceCopy = new DeviceDescription(device);
+                    deviceCopy.setPersist(false);
+                    copy.addDevice(deviceCopy);
+                }
+
+                updateDeviceScreensDescription(copy);
             }
 
             @Override
@@ -73,7 +91,25 @@ public class DeviceScreensModel extends ModelObject {
     }
 
     public void setDeviceScreensDescription(DeviceScreensDescription deviceScreensDescription) {
-        writableDeviceScreenDescriptions.write(deviceScreensDescription);
+
+        this.deviceScreensDescription = deviceScreensDescription;
+
+        DeviceScreensDescription remoteDevices = new DeviceScreensDescription();
+
+        localDevices = new DeviceScreensDescription();
+
+        for (DeviceDescription device : deviceScreensDescription.getDevices()) {
+
+            if (device.getPersist()) {
+                remoteDevices.addDevice(device);
+            } else {
+                localDevices.addDevice(device);
+            }
+
+        }
+
+        writableDeviceScreenDescriptions.write(remoteDevices);
+        System.out.println("writable: " + remoteDevices.getDevices().size());
     }
 
 }
