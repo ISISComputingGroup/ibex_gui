@@ -104,7 +104,9 @@ public enum ComponentType {
     /** Pixelman camera. */
     PIXELMAN,
     /** Keithley 2400 Source Meter. */
-    KHLY2400;
+    KHLY2400,
+    /** Zoom sample stack. */
+    ZOOM_SAMPLE_STACK;
 	
 	private Target target;
 
