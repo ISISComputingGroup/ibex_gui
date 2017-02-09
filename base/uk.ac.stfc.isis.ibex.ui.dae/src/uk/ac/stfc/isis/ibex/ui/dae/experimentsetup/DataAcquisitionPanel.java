@@ -186,6 +186,7 @@ public class DataAcquisitionPanel extends Composite {
         lblSpectrum.setText("Spectrum:");
 
         monitorSpectrum = new Spinner(grpMonitor, SWT.BORDER);
+        monitorSpectrum.setMaximum(1000000);
 
         Label lblNewLabel_1 = new Label(grpMonitor, SWT.NONE);
         GridData gd_lblNewLabel_1 = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
