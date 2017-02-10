@@ -54,7 +54,6 @@ public class ConfigDetailsDialog extends TitleAreaDialog implements
 
 	private ConfigEditorPanel editor;
 	protected boolean doAsComponent = false;
-	protected boolean isComponent;
 	protected boolean isBlank;
 
     private ConfigurationViewModels configurationViewModels;
@@ -66,25 +65,23 @@ public class ConfigDetailsDialog extends TitleAreaDialog implements
      * @param title title of dialogue
      * @param subTitle action being taken, e.g. editing current configuration
      * @param config configuration being edited
-     * @param isComponent is component (as opposed to configuration)
      * @param isBlank is blank
      * @param configurationViewModels view model for the configuration
      */
     public ConfigDetailsDialog(Shell parentShell, String title, String subTitle, EditableConfiguration config,
-            boolean isComponent, boolean isBlank, ConfigurationViewModels configurationViewModels) {
+            boolean isBlank, ConfigurationViewModels configurationViewModels) {
 		super(parentShell);
 		setShellStyle(getShellStyle() | SWT.DIALOG_TRIM | SWT.RESIZE);
 		this.title = title;
 		this.subTitle = subTitle;
 		this.config = config;
-		this.isComponent = isComponent;
 		this.isBlank = isBlank;
         this.configurationViewModels = configurationViewModels;
 	}
 
 	@Override
 	protected Control createDialogArea(Composite parent) {
-        editor = new ConfigEditorPanel(parent, SWT.NONE, this, isComponent, configurationViewModels);
+        editor = new ConfigEditorPanel(parent, SWT.NONE, this, config.isComponent(), configurationViewModels);
 		editor.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		setTitle(subTitle);
         editor.setConfigToEdit(config);

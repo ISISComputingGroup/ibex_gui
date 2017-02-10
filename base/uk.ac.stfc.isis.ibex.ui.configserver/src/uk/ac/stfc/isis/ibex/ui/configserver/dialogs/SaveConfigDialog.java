@@ -112,7 +112,7 @@ public class SaveConfigDialog extends TitleAreaDialog {
     /**
      * Is the new object a configuration (or component).
      */
-	private boolean isConfig;
+    private boolean isConfig;
 
     /**
      * Does the new object have components.
@@ -132,19 +132,24 @@ public class SaveConfigDialog extends TitleAreaDialog {
     /**
      * Instantiates a new save configuration dialog.
      *
-     * @param parent the parent
-     * @param currentName the original name of the config if editing an existing
+     * @param parent
+     *            the parent
+     * @param currentName
+     *            the original name of the config if editing an existing one,
+     *            otherwise blank
+     * @param currentDesc
+     *            the original description of the config if editing an existing
      *            one, otherwise blank
-     * @param currentDesc the original description of the config if editing an
-     *            existing one, otherwise blank
-     * @param existingConfigs the existing configuration names (so not to
-     *            duplicate)
-     * @param existingComponents the existing component names (so not to
-     *            duplicate)
-     * @param isConfig current configuration
-     * @param hasComponents true if this configuration has components; false
-     *            otherwise
-     * @param currentConfigName The name of the current configuration
+     * @param existingConfigs
+     *            the existing configuration names (so not to duplicate)
+     * @param existingComponents
+     *            the existing component names (so not to duplicate)
+     * @param isConfig
+     *            current configuration
+     * @param hasComponents
+     *            true if this configuration has components; false otherwise
+     * @param currentConfigName
+     *            The name of the current configuration
      */
 	public SaveConfigDialog(
 			Shell parent, 
@@ -152,7 +157,7 @@ public class SaveConfigDialog extends TitleAreaDialog {
 			String currentDesc,
 			Collection<String> existingConfigs, 
 			Collection<String> existingComponents, 
-			boolean isConfig,
+            boolean isConfig,
             boolean hasComponents, String currentConfigName) {
 		super(parent);
 		setShellStyle(SWT.DIALOG_TRIM | SWT.APPLICATION_MODAL);
@@ -160,7 +165,7 @@ public class SaveConfigDialog extends TitleAreaDialog {
 		this.currentDesc = currentDesc;
 		this.existingConfigs = new ArrayList<>(existingConfigs);
 		this.existingComponents = new ArrayList<>(existingComponents);
-		this.isConfig = isConfig;
+        this.isConfig = isConfig;
 		this.hasComponents = hasComponents;
         this.currentConfigName = currentConfigName;
 	}

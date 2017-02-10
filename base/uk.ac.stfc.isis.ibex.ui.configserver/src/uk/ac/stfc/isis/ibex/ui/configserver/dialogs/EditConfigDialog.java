@@ -51,13 +51,12 @@ public class EditConfigDialog extends ConfigDetailsDialog {
      * @param title title of dialogue
      * @param subTitle action being taken, e.g. editing current configuration
      * @param config configuration being edited
-     * @param isComponent is component (as opposed to configuration)
      * @param isBlank is blank
      * @param configurationViewModels view model for the configuration
      */
     public EditConfigDialog(Shell parentShell, String title, String subTitle, EditableConfiguration config,
-            boolean isComponent, boolean isBlank, ConfigurationViewModels configurationViewModels) {
-		super(parentShell, title, subTitle, config, isComponent, isBlank, configurationViewModels);
+            boolean isBlank, ConfigurationViewModels configurationViewModels) {
+        super(parentShell, title, subTitle, config, isBlank, configurationViewModels);
 	}
 
 	@Override
@@ -77,7 +76,7 @@ public class EditConfigDialog extends ConfigDetailsDialog {
                 String currentConfigName = server.currentConfig().getValue().name();
 				SaveConfigDialog dlg = new SaveConfigDialog(null, config
 						.getName(), config.getDescription(), configNames,
-                        componentNames, !isComponent, hasComponents, currentConfigName);
+                        componentNames, !config.isComponent(), hasComponents, currentConfigName);
 				if (dlg.open() == Window.OK) {
 					if (dlg.getNewName() != config.getName()) {
 						config.setName(dlg.getNewName());
