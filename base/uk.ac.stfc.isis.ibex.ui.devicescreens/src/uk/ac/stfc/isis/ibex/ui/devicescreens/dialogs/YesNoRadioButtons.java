@@ -71,15 +71,18 @@ public class YesNoRadioButtons extends ModelObject {
      * @return the noButtonSelected whether no button is selected; if null
      *         returns false;
      */
-    public Boolean getNoButtonSelected() {
-        return selected == null ? false : !selected;
+    public boolean isNoButtonSelected() {
+        boolean b = selected == null ? false : !selected;
+        System.out.println("No is: " + b);
+        return b;
     }
 
     /**
      * @param noButtonSelected
      *            the noButtonSelected to set
      */
-    public void setNoButtonSelected(Boolean noButtonSelected) {
+    public void setNoButtonSelected(boolean noButtonSelected) {
+        System.out.println("No pressed " + noButtonSelected);
         if (noButtonSelected) {
             setSelected(false);
         }
@@ -90,15 +93,19 @@ public class YesNoRadioButtons extends ModelObject {
      * @return the yesButtonSelected whether yes button is selected; if null
      *         returns false;
      */
-    public Boolean getYesButtonSelected() {
-        return selected == null ? false : selected;
+    public boolean isYesButtonSelected() {
+
+        boolean b = selected == null ? false : selected;
+        System.out.println("Yes is: " + b);
+        return b;
     }
 
     /**
      * @param yesButtonSelected
      *            the yesButtonSelected to set
      */
-    public void setYesButtonSelected(Boolean yesButtonSelected) {
+    public void setYesButtonSelected(boolean yesButtonSelected) {
+        System.out.println("Yes pressed: " + yesButtonSelected);
         if (yesButtonSelected) {
             setSelected(true);
         }
@@ -108,13 +115,17 @@ public class YesNoRadioButtons extends ModelObject {
      * @param selected
      */
     public void setSelected(Boolean selected) {
+
+        System.out.println("Button old: " + this.selected + " new " + selected);
+        boolean previousSelected = this.selected == null ? false : this.selected.booleanValue();
         firePropertyChange("selected", this.selected, this.selected = selected);
+
         if (selected != null) {
-            yesButton.setSelection(selected);
-            noButton.setSelection(!selected);
+            firePropertyChange("yesButtonSelected", previousSelected, selected.booleanValue());
+            firePropertyChange("noButtonSelected", !previousSelected, !selected.booleanValue());
         } else {
-            yesButton.setSelection(false);
-            noButton.setSelection(false);
+            firePropertyChange("yesButtonSelected", previousSelected, false);
+            firePropertyChange("noButtonSelected", !previousSelected, false);
         }
 
     }

@@ -34,7 +34,7 @@ public class DeviceScreens implements BundleActivator {
     private static DeviceScreens instance;
     private static BundleContext context;
 
-    private final DeviceScreenVariablesWithPersistence variables;
+    private final DeviceScreenVariables variables;
 
     private DeviceScreensModel model;
 
@@ -45,7 +45,7 @@ public class DeviceScreens implements BundleActivator {
 
         instance = this;
 
-        variables = new DeviceScreenVariablesWithPersistence();
+        variables = new DeviceScreenVariables();
 
         model = new DeviceScreensModel(getDevices(), getDevicesSetter());
     }
@@ -73,7 +73,7 @@ public class DeviceScreens implements BundleActivator {
      * 
      * @return an observable to the get device screens PV
      */
-    public Observable<DeviceScreensDescription> getDevices() {
+    private Observable<DeviceScreensDescription> getDevices() {
         return variables.getDeviceScreens();
     }
 
@@ -111,7 +111,7 @@ public class DeviceScreens implements BundleActivator {
      * 
      * @return the device screen variables with persistence information.
      */
-    public DeviceScreenVariablesWithPersistence getVariables() {
+    public DeviceScreenVariables getVariables() {
         return variables;
     }
 

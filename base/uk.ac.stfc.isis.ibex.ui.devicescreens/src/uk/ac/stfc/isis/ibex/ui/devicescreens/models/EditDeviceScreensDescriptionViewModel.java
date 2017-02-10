@@ -86,6 +86,8 @@ public class EditDeviceScreensDescriptionViewModel extends ModelObject {
      *            the model of device screens description to edit
      * @param provider
      *            supplies the OPI information
+     * @param messageDisplayer
+     *            displays messages
      */
     public EditDeviceScreensDescriptionViewModel(DeviceScreensModel deviceScreensModel,
             DescriptionsProvider provider, MessageDisplayer messageDisplayer) {
@@ -179,7 +181,7 @@ public class EditDeviceScreensDescriptionViewModel extends ModelObject {
      */
     public void setCurrentPersistence(Boolean persistence) {
         if (selectedScreen == null || persistence == null) {
-            previousPersistence = persistence;
+            updateCurrentPersistence(persistence);
             return;
         }
         selectedScreen.setPersistent(persistence);
@@ -188,6 +190,11 @@ public class EditDeviceScreensDescriptionViewModel extends ModelObject {
         checkScreensValid();
     }
 
+    /**
+     * Gets the current persistence.
+     * 
+     * @return the current persistence
+     */
     public Boolean getCurrentPersistence() {
         if (selectedScreen == null) {
             return false;
@@ -273,7 +280,7 @@ public class EditDeviceScreensDescriptionViewModel extends ModelObject {
      *            the new persiststence setting.
      */
     private void updateCurrentPersistence(boolean newPersistence) {
-        System.out.println("old " + previousPersistence + "new " + newPersistence);
+        System.out.println("Edit   old: " + previousPersistence + " new " + newPersistence);
         firePropertyChange("currentPersistence", previousPersistence, previousPersistence = newPersistence);
 
     }
@@ -490,9 +497,7 @@ public class EditDeviceScreensDescriptionViewModel extends ModelObject {
     }
 
     /**
-     * Gets the new constructed device description for saving.
-     * 
-     * @return The description
+     * Saves the device screens description into the model.
      */
     public void save() {
         DeviceScreensDescription desc = new DeviceScreensDescription();
@@ -518,9 +523,9 @@ public class EditDeviceScreensDescriptionViewModel extends ModelObject {
     }
 
     /**
-     * @return
+     * @return the list of available OPIs
      */
     public Collection<String> getAvailableOPIs() {
-        return this.provider.getOpiList();
+        return provider.getOpiList();
     }
 }

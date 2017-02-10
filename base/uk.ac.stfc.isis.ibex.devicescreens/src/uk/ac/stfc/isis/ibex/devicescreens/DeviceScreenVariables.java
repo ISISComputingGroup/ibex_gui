@@ -54,8 +54,6 @@ public class DeviceScreenVariables {
 
     private final String pvPrefix;
 
-    private LocalDeviceScreens localDeviceScreens = new LocalDeviceScreens();
-
     /**
      * Default constructor.
      */
@@ -139,9 +137,4 @@ public class DeviceScreenVariables {
             return pvPrefix;
         }
     }
-
-    public LocalDeviceScreens getLocalDeviceScreens() {
-        return localDeviceScreens;
-    }
-
 }

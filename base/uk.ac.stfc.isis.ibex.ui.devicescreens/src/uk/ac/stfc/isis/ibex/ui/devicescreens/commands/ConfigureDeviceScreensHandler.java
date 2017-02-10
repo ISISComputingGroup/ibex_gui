@@ -86,15 +86,4 @@ public class ConfigureDeviceScreensHandler extends AbstractHandler {
         return null;
     }
 
-    /**
-     * Gets the current device description.
-     * 
-     * @return the current device description
-     */
-    private DeviceScreensDescription getCurrent() {
-
-        return DeviceScreens.getInstance().getDevices().getValue();
-        
-    }
-
 }
