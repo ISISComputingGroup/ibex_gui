@@ -136,6 +136,7 @@ public class DeviceScreenListPanel extends Composite {
             }
         });
 
+        // TODO replace with a bind
         viewModel.addPropertyChangeListener(new PropertyChangeListener() {
             @Override
             public void propertyChange(PropertyChangeEvent deviceScreenDescription) {
@@ -143,6 +144,7 @@ public class DeviceScreenListPanel extends Composite {
 
             }
         });
+        updateDeviceScreensDescriptions(viewModel.getDeviceScreensDescription());
 
     }
 

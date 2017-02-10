@@ -47,13 +47,14 @@ public class DeviceScreensModel extends ModelObject {
 
             @Override
             public void update(DeviceScreensDescription value, Exception error, boolean isConnected) {
-                //
+                if (value != null) {
+                    onValue(value);
+                }
             }
 
             @Override
             public void onValue(DeviceScreensDescription remoteDeviceScreenDescription) {
 
-                System.out.println("... " + remoteDeviceScreenDescription.getDevices().size());
                 DeviceScreensDescription copy = new DeviceScreensDescription(remoteDeviceScreenDescription);
 
                 for (DeviceDescription device : copy.getDevices()) {
@@ -77,6 +78,7 @@ public class DeviceScreensModel extends ModelObject {
             @Override
             public void onConnectionStatus(boolean isConnected) {
                 //
+                System.out.println("hi");
             }
         });
     }
@@ -109,7 +111,6 @@ public class DeviceScreensModel extends ModelObject {
         }
 
         writableDeviceScreenDescriptions.write(remoteDevices);
-        System.out.println("writable: " + remoteDevices.getDevices().size());
     }
 
 }
