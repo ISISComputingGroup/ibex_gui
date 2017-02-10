@@ -171,6 +171,8 @@ public class ConfigureDeviceScreensPanel extends Composite {
         Button btnDelete = new Button(btnsComposite, SWT.NONE);
         btnDelete.setText("Delete");
         GridData gdBtnDelete = new GridData(SWT.LEFT, SWT.BOTTOM, false, false, 1, 1);
+        bindingContext.bindValue(WidgetProperties.enabled().observe(btnDelete),
+                BeanProperties.value("currentEnabled").observe(viewModel), null, null);
         gdBtnDelete.widthHint = 100;
         btnDelete.setLayoutData(gdBtnDelete);
         btnDelete.addSelectionListener(new SelectionAdapter() {
@@ -193,18 +195,20 @@ public class ConfigureDeviceScreensPanel extends Composite {
      * Deletes the screen and selects the previous item.
      */
     private void deleteScreen() {
-        int index = devicesList.getSelectionIndex();
-        viewModel.deleteScreen(devicesList.getSelectionIndex());
+        if (viewModel.getCurrentEnabled()) {
+            int index = devicesList.getSelectionIndex();
+            viewModel.deleteScreen(devicesList.getSelectionIndex());
 
-        if (index > 0 && index < devicesList.getItemCount()) {
-            --index;
-        } else if (index >= devicesList.getItemCount()) {
-            index = devicesList.getItemCount() - 1;
+            if (index > 0 && index < devicesList.getItemCount()) {
+                --index;
+            } else if (index >= devicesList.getItemCount()) {
+                index = devicesList.getItemCount() - 1;
+            }
+
+            devicesList.setSelection(index);
+            viewModel.setSelectedScreen(index);
+            devicesViewer.refresh();
         }
-
-        devicesList.setSelection(index);
-        viewModel.setSelectedScreen(index);
-        devicesViewer.refresh();
     }
 
     /**
