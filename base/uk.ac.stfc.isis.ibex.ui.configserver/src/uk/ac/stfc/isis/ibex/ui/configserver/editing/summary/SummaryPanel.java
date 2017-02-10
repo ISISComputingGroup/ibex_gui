@@ -56,6 +56,7 @@ public class SummaryPanel extends Composite {
 	private Label lblDateCreatedField;
     private Label lblDateModified;
 	private Label lblDateModifiedField;
+    private Label lblSynoptic;
 	private ComboViewer cmboSynoptic;
 	private EditableConfiguration config;
     private final MessageDisplayer messageDisplayer;
@@ -93,7 +94,7 @@ public class SummaryPanel extends Composite {
 		txtDescription.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		txtDescription.setTextLimit(39);
 		
-        Label lblSynoptic = new Label(cmpSummary, SWT.NONE);
+        lblSynoptic = new Label(cmpSummary, SWT.NONE);
 		lblSynoptic.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		lblSynoptic.setText("Synoptic:");
 		
@@ -157,6 +158,11 @@ public class SummaryPanel extends Composite {
                 BeanProperties.value("isNew").observe(config), null, notConverter);
 		bindingContext.bindValue(WidgetProperties.text().observe(lblDateCreatedField), BeanProperties.value("dateCreated").observe(config));
 		bindingContext.bindValue(WidgetProperties.text().observe(lblDateModifiedField), BeanProperties.value("dateModified").observe(config));
+
+        bindingContext.bindValue(WidgetProperties.visible().observe(lblSynoptic),
+                BeanProperties.value("isComponent").observe(config), null, notConverter);
+        bindingContext.bindValue(WidgetProperties.visible().observe(cmboSynoptic.getCombo()),
+                BeanProperties.value("isComponent").observe(config), null, notConverter);
 	}
 	
 	private void updateSynopticList() {

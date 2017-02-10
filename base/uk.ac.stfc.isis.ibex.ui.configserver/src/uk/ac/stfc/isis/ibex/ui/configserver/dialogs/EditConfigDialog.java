@@ -76,7 +76,7 @@ public class EditConfigDialog extends ConfigDetailsDialog {
                 String currentConfigName = server.currentConfig().getValue().name();
 				SaveConfigDialog dlg = new SaveConfigDialog(null, config
 						.getName(), config.getDescription(), configNames,
-                        componentNames, !config.isComponent(), hasComponents, currentConfigName);
+                        componentNames, !config.getIsComponent(), hasComponents, currentConfigName);
 				if (dlg.open() == Window.OK) {
 					if (dlg.getNewName() != config.getName()) {
 						config.setName(dlg.getNewName());

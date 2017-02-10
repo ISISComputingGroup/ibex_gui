@@ -653,6 +653,9 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
     
     /**
      * Sets whether this configuration is a component or not.
+     * 
+     * @param isComponent
+     *            true if this is a component
      */
     public void setIsComponent(boolean isComponent) {
         firePropertyChange("isComponent", isComponent, this.isComponent = isComponent);
@@ -660,8 +663,10 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
     
     /**
      * Get whether this configuration is a component or not.
+     * 
+     * @returns true if this is a component
      */
-    public boolean isComponent() {
+    public boolean getIsComponent() {
         return isComponent;
     }
 }
