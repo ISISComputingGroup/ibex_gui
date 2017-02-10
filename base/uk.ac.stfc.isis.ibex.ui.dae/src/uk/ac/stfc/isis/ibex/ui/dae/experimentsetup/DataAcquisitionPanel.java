@@ -74,7 +74,7 @@ public class DataAcquisitionPanel extends Composite {
     private DataAcquisitionViewModel model;
 
     /**
-     * The maximum spectrum number that can be set in the data acquisition tab
+     * The maximum spectrum number that can be set in the data acquisition tab.
      */
     private static final int MAXIMUM_MONITOR_SPECTRUM = 1000000;
 
