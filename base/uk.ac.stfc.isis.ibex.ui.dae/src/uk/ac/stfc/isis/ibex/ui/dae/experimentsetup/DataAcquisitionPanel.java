@@ -73,6 +73,11 @@ public class DataAcquisitionPanel extends Composite {
     private DataBindingContext bindingContext;
     private DataAcquisitionViewModel model;
 
+    /**
+     * The maximum spectrum number that can be set in the data acquisition tab
+     */
+    private static final int MAXIMUM_MONITOR_SPECTRUM = 1000000;
+
 
     /**
      * The default constructor for the panel.
@@ -186,7 +191,7 @@ public class DataAcquisitionPanel extends Composite {
         lblSpectrum.setText("Spectrum:");
 
         monitorSpectrum = new Spinner(grpMonitor, SWT.BORDER);
-        monitorSpectrum.setMaximum(1000000);
+        monitorSpectrum.setMaximum(MAXIMUM_MONITOR_SPECTRUM);
 
         Label lblNewLabel_1 = new Label(grpMonitor, SWT.NONE);
         GridData gd_lblNewLabel_1 = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
