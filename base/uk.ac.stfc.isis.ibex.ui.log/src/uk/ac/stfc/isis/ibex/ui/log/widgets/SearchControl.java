@@ -22,6 +22,9 @@ package uk.ac.stfc.isis.ibex.ui.log.widgets;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -226,25 +229,29 @@ public class SearchControl extends Canvas {
 			int fieldIndex = cmboFields.getSelectionIndex();
 
 			if (fieldIndex != -1) {
-				LogMessageFields field = FIELDS[fieldIndex];
-				String value = txtValue.getText();
+                final LogMessageFields field = FIELDS[fieldIndex];
+                final String value = txtValue.getText();
 
-				Calendar from = null, to = null;
-				if (chkFrom.getSelection()) {
-					from = new GregorianCalendar(dtFromDate.getYear(),
+                final Calendar from = chkFrom.getSelection()
+                        ? new GregorianCalendar(dtFromDate.getYear(),
 							dtFromDate.getMonth(), dtFromDate.getDay(),
 							dtFromTime.getHours(), dtFromTime.getMinutes(),
-							dtFromTime.getSeconds());
-				}
-
-				if (chkTo.getSelection()) {
-					to = new GregorianCalendar(dtToDate.getYear(),
+							dtFromTime.getSeconds()) : null;
+                final Calendar to = chkTo.getSelection()
+                        ? new GregorianCalendar(dtToDate.getYear(),
 							dtToDate.getMonth(), dtToDate.getDay(),
 							dtToTime.getHours(), dtToTime.getMinutes(),
-							dtToTime.getSeconds());
-				}
+                        dtToTime.getSeconds()) : null;
 
-				searcher.search(field, value, from, to);
+                Job j = new Job("Searching") {
+                    @Override
+                    protected IStatus run(IProgressMonitor monitor) {
+                        searcher.search(field, value, from, to);
+                        return Job.ASYNC_FINISH;
+                    }
+                };
+                j.schedule();
+
 			}
 		}
 	}
