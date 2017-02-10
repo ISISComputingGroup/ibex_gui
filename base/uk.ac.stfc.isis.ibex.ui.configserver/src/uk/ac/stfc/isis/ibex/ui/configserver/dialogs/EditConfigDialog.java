@@ -29,6 +29,7 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Shell;
 
+import uk.ac.stfc.isis.ibex.configserver.ConfigServer;
 import uk.ac.stfc.isis.ibex.configserver.Configurations;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
 import uk.ac.stfc.isis.ibex.ui.configserver.ConfigurationViewModels;
@@ -41,6 +42,8 @@ public class EditConfigDialog extends ConfigDetailsDialog {
 
 	private Button saveAsBtn;
 	
+    private ConfigServer server = Configurations.getInstance().server();
+
     /**
      * @wbp.parser.constructor Constructor
      * 
@@ -67,13 +70,11 @@ public class EditConfigDialog extends ConfigDetailsDialog {
 		saveAsBtn.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				Collection<String> configNames = Configurations.getInstance()
-						.server().configNames();
-				Collection<String> componentNames = Configurations
-						.getInstance().server().componentNames();
+                Collection<String> configNames = server.configNames();
+                Collection<String> componentNames = server.componentNames();
 				boolean hasComponents = !config.getEditableComponents()
 						.getSelected().isEmpty();
-                String currentConfigName = Configurations.getInstance().server().currentConfig().getValue().name();
+                String currentConfigName = server.currentConfig().getValue().name();
 				SaveConfigDialog dlg = new SaveConfigDialog(null, config
 						.getName(), config.getDescription(), configNames,
                         componentNames, !isComponent, hasComponents, currentConfigName);

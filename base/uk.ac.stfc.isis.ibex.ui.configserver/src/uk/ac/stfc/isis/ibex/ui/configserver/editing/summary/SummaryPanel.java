@@ -58,7 +58,6 @@ public class SummaryPanel extends Composite {
 	private Label lblDateModifiedField;
 	private ComboViewer cmboSynoptic;
 	private EditableConfiguration config;
-	private DataBindingContext bindingContext;
     private final MessageDisplayer messageDisplayer;
 
     /**
@@ -128,7 +127,7 @@ public class SummaryPanel extends Composite {
 	}
 
 	private void setBindings() {
-		bindingContext = new DataBindingContext();
+        DataBindingContext bindingContext = new DataBindingContext();
 		
 		UpdateValueStrategy descValidator = new UpdateValueStrategy();
         // Set validator if not saving a new config
