@@ -45,7 +45,12 @@ public class YesNoRadioButtons extends ModelObject {
     private DataBindingContext bindingContext;
 
     /**
-     * 
+     * @param parent
+     *            the parent composite
+     * @param trueText
+     *            the true text
+     * @param falseText
+     *            the false text
      */
     public YesNoRadioButtons(Composite parent, String trueText, String falseText) {
 
@@ -107,6 +112,7 @@ public class YesNoRadioButtons extends ModelObject {
 
     /**
      * @param selected
+     *            if the radio buttons are selected
      */
     public void setSelected(Boolean selected) {
 
@@ -123,6 +129,11 @@ public class YesNoRadioButtons extends ModelObject {
 
     }
 
+    /**
+     * Getter for the selection of radio buttons.
+     * 
+     * @return the selection of radio buttons
+     */
     public Boolean getSelected() {
         return selected;
     }

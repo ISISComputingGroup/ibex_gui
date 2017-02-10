@@ -112,8 +112,6 @@ public class DeviceScreensModel extends ModelObject {
      */
     public void setDeviceScreensDescription(DeviceScreensDescription deviceScreensDescription) {
 
-        this.deviceScreensDescription = deviceScreensDescription;
-
         DeviceScreensDescription remoteDevices = new DeviceScreensDescription();
 
         localDevices = new DeviceScreensDescription();
@@ -129,6 +127,8 @@ public class DeviceScreensModel extends ModelObject {
         }
 
         writableDeviceScreenDescriptions.write(remoteDevices);
+
+        updateDeviceScreensDescription(deviceScreensDescription);
     }
 
 }
