@@ -25,6 +25,7 @@ import uk.ac.stfc.isis.ibex.devicescreens.desc.DeviceDescription;
 import uk.ac.stfc.isis.ibex.devicescreens.desc.DeviceScreensDescription;
 import uk.ac.stfc.isis.ibex.epics.observing.Observable;
 import uk.ac.stfc.isis.ibex.epics.observing.Observer;
+import uk.ac.stfc.isis.ibex.epics.writing.SameTypeWriter;
 import uk.ac.stfc.isis.ibex.epics.writing.Writable;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 
@@ -33,9 +34,27 @@ import uk.ac.stfc.isis.ibex.model.ModelObject;
  */
 public class DeviceScreensModel extends ModelObject {
     private DeviceScreensDescription deviceScreensDescription;
-    private Writable<DeviceScreensDescription> writableDeviceScreenDescriptions;
+    private SameTypeWriter<DeviceScreensDescription> writableDeviceScreenDescriptions;
 
     private DeviceScreensDescription localDevices;
+    private boolean canWriteRemote;
+
+    /**
+     * @return the canWriteRemoteDeviceScreens
+     */
+    public boolean isCanWriteRemote() {
+        return canWriteRemote;
+    }
+
+    /**
+     * @param canWriteRemoteDeviceScreens
+     *            the canWriteRemoteDeviceScreens to set
+     */
+    private void setCanWriteRemote(boolean canWriteRemoteDeviceScreens) {
+        firePropertyChange("canWriteRemote", this.canWriteRemote,
+                this.canWriteRemote = canWriteRemoteDeviceScreens);
+        System.out.println("Can write " + canWriteRemoteDeviceScreens);
+    }
 
     /**
      * Constructor.
@@ -49,7 +68,16 @@ public class DeviceScreensModel extends ModelObject {
             Writable<DeviceScreensDescription> writableDeviceScreenDescriptions) {
 
         localDevices = new DeviceScreensDescription();
-        this.writableDeviceScreenDescriptions = writableDeviceScreenDescriptions;
+
+        this.writableDeviceScreenDescriptions = new SameTypeWriter<DeviceScreensDescription>() {
+            @Override
+            public void onCanWriteChanged(boolean canWrite) {
+                setCanWriteRemote(canWrite);
+            };
+        };
+
+        this.writableDeviceScreenDescriptions.writeTo(writableDeviceScreenDescriptions);
+        writableDeviceScreenDescriptions.subscribe(this.writableDeviceScreenDescriptions);
 
         observableDeviceScreensDescription.addObserver(new Observer<DeviceScreensDescription>() {
 
