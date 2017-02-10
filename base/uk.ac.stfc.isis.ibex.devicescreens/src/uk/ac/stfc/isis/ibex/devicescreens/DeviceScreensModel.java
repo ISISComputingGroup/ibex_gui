@@ -37,6 +37,14 @@ public class DeviceScreensModel extends ModelObject {
 
     private DeviceScreensDescription localDevices;
 
+    /**
+     * Constructor.
+     * 
+     * @param observableDeviceScreensDescription
+     *            the observable of a device screen description
+     * @param writableDeviceScreenDescriptions
+     *            the writable of a device screen description
+     */
     public DeviceScreensModel(Observable<DeviceScreensDescription> observableDeviceScreensDescription,
             Writable<DeviceScreensDescription> writableDeviceScreenDescriptions) {
 
@@ -72,17 +80,21 @@ public class DeviceScreensModel extends ModelObject {
 
             @Override
             public void onError(Exception e) {
-                //
+                return;
             }
 
             @Override
             public void onConnectionStatus(boolean isConnected) {
-                //
-                System.out.println("hi");
+                return;
             }
         });
     }
 
+    /**
+     * Getter for the device screens description.
+     * 
+     * @return the device screens description
+     */
     public DeviceScreensDescription getDeviceScreensDescription() {
         return deviceScreensDescription;
     }
@@ -92,6 +104,12 @@ public class DeviceScreensModel extends ModelObject {
                 this.deviceScreensDescription = deviceScreensDescription);
     }
 
+    /**
+     * Setter for the device screens description.
+     * 
+     * @param deviceScreensDescription
+     *            the device screens description to set
+     */
     public void setDeviceScreensDescription(DeviceScreensDescription deviceScreensDescription) {
 
         this.deviceScreensDescription = deviceScreensDescription;

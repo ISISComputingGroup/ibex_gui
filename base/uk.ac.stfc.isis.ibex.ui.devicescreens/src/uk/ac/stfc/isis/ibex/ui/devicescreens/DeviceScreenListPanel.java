@@ -21,8 +21,6 @@ package uk.ac.stfc.isis.ibex.ui.devicescreens;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.ArrayList;
-import java.util.List;
 
 import org.apache.logging.log4j.Logger;
 import org.eclipse.core.commands.ExecutionEvent;
@@ -40,7 +38,6 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 
-import uk.ac.stfc.isis.ibex.devicescreens.DeviceScreens;
 import uk.ac.stfc.isis.ibex.devicescreens.desc.DeviceDescription;
 import uk.ac.stfc.isis.ibex.devicescreens.desc.DeviceScreensDescription;
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
@@ -58,11 +55,8 @@ public class DeviceScreenListPanel extends Composite {
      * Logger.
      */
     private static final Logger LOG = IsisLog.getLogger(DeviceScreenListPanel.class);
-    private final List<DeviceDescription> blankList = new ArrayList<DeviceDescription>();
 
     private Button configureDevScreensButton;
-
-    private final Display display = Display.getCurrent();
 
     private DeviceScreensTable deviceScreenList;
 
@@ -71,8 +65,12 @@ public class DeviceScreenListPanel extends Composite {
     /**
      * Create a Devices Screen Panel.
      * 
-     * @param parent parent component
-     * @param style SWT Style
+     * @param parent
+     *            parent component
+     * @param style
+     *            SWT Style
+     * @param viewModel
+     *            the view model to be used by this view
      */
     public DeviceScreenListPanel(final Composite parent, int style, ViewDeviceScreensDescriptionViewModel viewModel) {
         super(parent, style);
@@ -88,11 +86,6 @@ public class DeviceScreenListPanel extends Composite {
         deviceScreenList = new DeviceScreensTable(composite, SWT.BORDER, SWT.FULL_SELECTION);
         GridData devicesListLayout = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
         deviceScreenList.setLayoutData(devicesListLayout);
-
-        DeviceScreens deviceScreens = DeviceScreens.getInstance();
-        // Observable<DeviceScreensDescription> availableScreensObservable =
-        // deviceScreens.getDevices();
-        // availableScreensObservable.addObserver(pvObserver);
 
         deviceScreenList.addSelectionChangedListener(new ISelectionChangedListener() {
 
@@ -136,7 +129,6 @@ public class DeviceScreenListPanel extends Composite {
             }
         });
 
-        // TODO replace with a bind
         viewModel.addPropertyChangeListener(new PropertyChangeListener() {
             @Override
             public void propertyChange(PropertyChangeEvent deviceScreenDescription) {
@@ -144,10 +136,18 @@ public class DeviceScreenListPanel extends Composite {
 
             }
         });
+
+        // Force the device screens to update when they are first created.
         updateDeviceScreensDescriptions(viewModel.getDeviceScreensDescription());
 
     }
 
+    /**
+     * Updates the device screen description in the GUI thread.
+     * 
+     * @param deviceScreensDescription
+     *            the new device screens description
+     */
     protected void updateDeviceScreensDescriptions(DeviceScreensDescription deviceScreensDescription) {
         Display.getDefault().asyncExec(new Runnable() {
             @Override
