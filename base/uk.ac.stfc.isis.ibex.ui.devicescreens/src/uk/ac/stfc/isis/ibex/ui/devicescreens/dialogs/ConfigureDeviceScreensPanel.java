@@ -251,8 +251,6 @@ public class ConfigureDeviceScreensPanel extends Composite {
         UpdateValueStrategy enabledStrategy = new UpdateValueStrategy();
         enabledStrategy.setConverter(isScreenSelectedConverter);
 
-//        bindingContext.bindValue(WidgetProperties.enabled().observe(txtName),
-//                BeanProperties.value("selectedScreen").observe(viewModel), null, enabledStrategy);
         bindingContext.bindValue(WidgetProperties.editable().observe(txtName),
                 BeanProperties.value("currentEnabled").observe(viewModel));
 
@@ -294,7 +292,7 @@ public class ConfigureDeviceScreensPanel extends Composite {
         yesNoRadioButtons.setSelected(viewModel.getCurrentPersistence());
         
         bindingContext.bindValue(BeanProperties.value("enabled").observe(yesNoRadioButtons),
-                BeanProperties.value("currentEnabled").observe(viewModel));
+                BeanProperties.value("persistenceEnabled").observe(viewModel));
 
     }
 

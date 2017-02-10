@@ -83,6 +83,8 @@ public class EditDeviceScreensDescriptionViewModel extends ModelObject {
 
     private boolean previousEnabled;
 
+    private boolean previousPersistenceEnabled;
+
     /**
      * The constructor.
      * 
@@ -99,6 +101,7 @@ public class EditDeviceScreensDescriptionViewModel extends ModelObject {
         this.provider = provider;
 
         canWriteRemote = deviceScreensModel.isCanWriteRemote();
+        setPersistenceEnabled();
 
         // From the description create a list of devices
         devices = new ArrayList<>();
@@ -187,6 +190,7 @@ public class EditDeviceScreensDescriptionViewModel extends ModelObject {
 
         // Clear out the stored property information
         setSelectedProperty(-1);
+        setPersistenceEnabled();
     }
 
     /**
@@ -435,7 +439,7 @@ public class EditDeviceScreensDescriptionViewModel extends ModelObject {
     public void addScreen() {
         List<DeviceDescriptionWrapper> oldList = new ArrayList<>(devices);
 
-        DefaultName namer = new DefaultName("Screen", "_", false);
+        DefaultName namer = new DefaultName("Screen", "_", this.canWriteRemote);
         List<String> names = new ArrayList<>();
         for (DeviceDescriptionWrapper d : oldList) {
             names.add(d.getName());
@@ -574,5 +578,14 @@ public class EditDeviceScreensDescriptionViewModel extends ModelObject {
      */
     public boolean canWriteRemote() {
         return canWriteRemote;
+    }
+
+    public boolean getPersistenceEnabled() {
+        return previousPersistenceEnabled;
+    }
+
+    private void setPersistenceEnabled() {
+        firePropertyChange("persistenceEnabled", previousPersistenceEnabled,
+                previousPersistenceEnabled = this.canWriteRemote && selectedScreen != null);
     }
 }
