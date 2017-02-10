@@ -218,6 +218,9 @@ public class ConfigureDeviceScreensPanel extends Composite {
         grpDetails.setText("Target");
         grpDetails.setLayout(new GridLayout(1, false));
 
+        bindingContext.bindValue(WidgetProperties.enabled().observe(grpDetails),
+                BeanProperties.value("currentEnabled").observe(viewModel));
+
         Composite detailsComposite = new Composite(grpDetails, SWT.NONE);
         detailsComposite.setLayout(new GridLayout(2, false));
         detailsComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
@@ -228,9 +231,12 @@ public class ConfigureDeviceScreensPanel extends Composite {
 
         Text txtName = new Text(detailsComposite, SWT.BORDER);
         txtName.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false, 1, 1));
+        
+        bindingContext.bindValue(WidgetProperties.editable().observe(txtName),
+                BeanProperties.value("currentEnabled").observe(viewModel));
 
         bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(txtName),
-                BeanProperties.value("currentName").observe(viewModel), null, null);
+                BeanProperties.value("currentName").observe(viewModel));
 
         txtName.addModifyListener(new ModifyListener() {
             @Override
@@ -245,8 +251,10 @@ public class ConfigureDeviceScreensPanel extends Composite {
         UpdateValueStrategy enabledStrategy = new UpdateValueStrategy();
         enabledStrategy.setConverter(isScreenSelectedConverter);
 
-        bindingContext.bindValue(WidgetProperties.enabled().observe(txtName),
-                BeanProperties.value("selectedScreen").observe(viewModel), null, enabledStrategy);
+//        bindingContext.bindValue(WidgetProperties.enabled().observe(txtName),
+//                BeanProperties.value("selectedScreen").observe(viewModel), null, enabledStrategy);
+        bindingContext.bindValue(WidgetProperties.editable().observe(txtName),
+                BeanProperties.value("currentEnabled").observe(viewModel));
 
         // Target of IOC
         Label lblTarget = new Label(detailsComposite, SWT.NONE);
@@ -255,6 +263,9 @@ public class ConfigureDeviceScreensPanel extends Composite {
 
         TargetNameWidget targetSelect = new TargetNameWidget(detailsComposite, viewModel);
         targetSelect.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+
+        bindingContext.bindValue(WidgetProperties.enabled().observe(targetSelect),
+                BeanProperties.value("currentEnabled").observe(viewModel));
 
         // Description
         Label lblDescription = new Label(detailsComposite, SWT.NONE);
@@ -272,6 +283,9 @@ public class ConfigureDeviceScreensPanel extends Composite {
         TargetPropertiesView propertiesView = new TargetPropertiesView(detailsComposite, viewModel);
         propertiesView.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
 
+        bindingContext.bindValue(WidgetProperties.enabled().observe(propertiesView),
+                BeanProperties.value("currentDescription").observe(viewModel), null, null);
+
         YesNoRadioButtons yesNoRadioButtons = new YesNoRadioButtons(detailsComposite, "Save this device screen",
                 "Remove this device screen when IBEX is closed");
 
@@ -279,6 +293,8 @@ public class ConfigureDeviceScreensPanel extends Composite {
                 BeanProperties.value("currentPersistence").observe(viewModel), null, null);
         yesNoRadioButtons.setSelected(viewModel.getCurrentPersistence());
         
+        bindingContext.bindValue(BeanProperties.value("enabled").observe(yesNoRadioButtons),
+                BeanProperties.value("currentEnabled").observe(viewModel));
 
     }
 

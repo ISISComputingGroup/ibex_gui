@@ -79,6 +79,10 @@ public class EditDeviceScreensDescriptionViewModel extends ModelObject {
 
     private DeviceScreensModel deviceScreensModel;
 
+    private boolean canWriteRemote;
+
+    private boolean previousEnabled;
+
     /**
      * The constructor.
      * 
@@ -93,6 +97,8 @@ public class EditDeviceScreensDescriptionViewModel extends ModelObject {
             DescriptionsProvider provider, MessageDisplayer messageDisplayer) {
         this.messageDisplayer = messageDisplayer;
         this.provider = provider;
+
+        canWriteRemote = deviceScreensModel.isCanWriteRemote();
 
         // From the description create a list of devices
         devices = new ArrayList<>();
@@ -124,11 +130,13 @@ public class EditDeviceScreensDescriptionViewModel extends ModelObject {
             previousKey = (selectedScreen.getKey() == null) ? "" : selectedScreen.getKey();
             previousDesc = (selectedScreen.getDescription() == null) ? "" : selectedScreen.getDescription();
             previousPersistence = selectedScreen.getPersistent();
+            previousEnabled = isScreenEnabled(selectedScreen.getPersistent());
         } else {
             previousName = "";
             previousKey = "";
             previousDesc = "";
             previousPersistence = null;
+            previousEnabled = false;
         }
 
         if (index >= 0 && index < devices.size()) {
@@ -138,6 +146,21 @@ public class EditDeviceScreensDescriptionViewModel extends ModelObject {
             // Clear the settings
             changeSelectedScreen(null);
         }
+    }
+
+    /**
+     * Screen is editable and edabled when we can write remotely or the screen
+     * is local
+     * 
+     * @param persistent
+     *            is the screen persistent
+     * @return true when enabled; false otherwise
+     */
+    private boolean isScreenEnabled(boolean persistent) {
+        if (this.canWriteRemote) {
+            return true;
+        }
+        return !persistent;
     }
 
     /**
@@ -153,11 +176,13 @@ public class EditDeviceScreensDescriptionViewModel extends ModelObject {
             updateCurrentKey(selectedScreen.getKey());
             updateCurrentDescription();
             updateCurrentPersistence(selectedScreen.getPersistent());
+            updateCurrentEnabled(isScreenEnabled(selectedScreen.getPersistent()));
         } else {
             updateCurrentName("");
             updateCurrentKey("");
             updateCurrentDescription();
             updateCurrentPersistence(false);
+            updateCurrentEnabled(false);
         }
 
         // Clear out the stored property information
@@ -233,6 +258,17 @@ public class EditDeviceScreensDescriptionViewModel extends ModelObject {
     }
 
     /**
+     * 
+     * @return the current enabled status.
+     */
+    public Boolean getCurrentEnabled() {
+        if (selectedScreen == null) {
+            return false;
+        }
+        return isScreenEnabled(selectedScreen.getPersistent());
+    }
+
+    /**
      * Checks that the parameters entered for all the screens are valid.
      */
     private void checkScreensValid() {
@@ -280,8 +316,12 @@ public class EditDeviceScreensDescriptionViewModel extends ModelObject {
      *            the new persiststence setting.
      */
     private void updateCurrentPersistence(boolean newPersistence) {
-        System.out.println("Edit   old: " + previousPersistence + " new " + newPersistence);
         firePropertyChange("currentPersistence", previousPersistence, previousPersistence = newPersistence);
+
+    }
+
+    private void updateCurrentEnabled(boolean newEnabled) {
+        firePropertyChange("currentEnabled", previousEnabled, previousEnabled = newEnabled);
 
     }
 
@@ -527,5 +567,12 @@ public class EditDeviceScreensDescriptionViewModel extends ModelObject {
      */
     public Collection<String> getAvailableOPIs() {
         return provider.getOpiList();
+    }
+
+    /**
+     * @return the canWriteRemote
+     */
+    public boolean canWriteRemote() {
+        return canWriteRemote;
     }
 }

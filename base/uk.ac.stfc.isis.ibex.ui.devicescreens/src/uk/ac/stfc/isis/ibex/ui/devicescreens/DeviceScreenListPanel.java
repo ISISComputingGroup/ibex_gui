@@ -152,7 +152,9 @@ public class DeviceScreenListPanel extends Composite {
         Display.getDefault().asyncExec(new Runnable() {
             @Override
             public void run() {
-                deviceScreenList.setRows(deviceScreensDescription.getDevices());
+                if (deviceScreenList != null) {
+                    deviceScreenList.setRows(deviceScreensDescription.getDevices());
+                }
             }
         });
     }

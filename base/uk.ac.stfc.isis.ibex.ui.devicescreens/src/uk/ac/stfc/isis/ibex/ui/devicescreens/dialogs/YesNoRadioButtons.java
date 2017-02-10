@@ -44,6 +44,8 @@ public class YesNoRadioButtons extends ModelObject {
 
     private DataBindingContext bindingContext;
 
+    private boolean enabled;
+
     /**
      * @param parent
      *            the parent composite
@@ -62,12 +64,17 @@ public class YesNoRadioButtons extends ModelObject {
         yesButton.setText(trueText);
         yesButton.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1));
         bindingContext.bindValue(WidgetProperties.selection().observe(yesButton),
-                BeanProperties.value("yesButtonSelected").observe(this), null, null);
+                BeanProperties.value("yesButtonSelected").observe(this));
+        bindingContext.bindValue(WidgetProperties.enabled().observe(yesButton),
+                BeanProperties.value("enabled").observe(this));
         
         noButton.setText(falseText);
         noButton.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1));
         bindingContext.bindValue(WidgetProperties.selection().observe(noButton),
-                BeanProperties.value("noButtonSelected").observe(this), null, null);
+                BeanProperties.value("noButtonSelected").observe(this));
+        bindingContext.bindValue(WidgetProperties.enabled().observe(noButton),
+                BeanProperties.value("enabled").observe(this));
+
         setSelected(true);
     }
 
@@ -136,6 +143,14 @@ public class YesNoRadioButtons extends ModelObject {
      */
     public Boolean getSelected() {
         return selected;
+    }
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        firePropertyChange("enabled", this.enabled, this.enabled = enabled);
     }
 
 }

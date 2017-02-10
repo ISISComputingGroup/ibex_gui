@@ -23,9 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.core.databinding.DataBindingContext;
-import org.eclipse.core.databinding.UpdateValueStrategy;
 import org.eclipse.core.databinding.beans.BeanProperties;
-import org.eclipse.core.databinding.conversion.Converter;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ComboViewer;
@@ -98,16 +96,11 @@ public class TargetNameWidget extends Composite {
         DataBindingContext bindingContext = new DataBindingContext();
 
         bindingContext.bindValue(WidgetProperties.selection().observe(cmboOpiName.getCombo()),
-                BeanProperties.value("currentKey").observe(viewModel), null, null);
+                BeanProperties.value("currentKey").observe(viewModel));
 
-        // Disable the dropdown if there is no screen selected
-        Converter isScreenSelectedConverter = new IsNullConverter();
-
-        UpdateValueStrategy enabledStrategy = new UpdateValueStrategy();
-        enabledStrategy.setConverter(isScreenSelectedConverter);
 
         bindingContext.bindValue(WidgetProperties.enabled().observe(cmboOpiName.getCombo()),
-                BeanProperties.value("selectedScreen").observe(viewModel), null, enabledStrategy);
+                BeanProperties.value("currentEnabled").observe(viewModel));
 	}
 
 }
