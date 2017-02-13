@@ -44,7 +44,7 @@ public class Configuration extends ModelObject {
 	private List<Ioc> iocs = new ArrayList<>();
 	private List<Block> blocks = new ArrayList<>();
 	private List<Group> groups = new ArrayList<>();
-	private List<Component> components = new ArrayList<>();
+	private List<ComponentInfo> components = new ArrayList<>();
 	private List<String> history = new ArrayList<>();
 	
     /**
@@ -87,7 +87,7 @@ public class Configuration extends ModelObject {
 			Collection<Ioc> iocs,
 			Collection<Block> blocks, 
 			Collection<Group> groups, 
-			Collection<Component> components, 
+			Collection<ComponentInfo> components, 
 			Collection<String> history) {
 		this.name = name;
 		this.description = description;
@@ -106,8 +106,8 @@ public class Configuration extends ModelObject {
 			this.groups.add(new Group(group));
 		}
 		
-		for (Component component : components) {
-			this.components.add(new Component(component));
+		for (ComponentInfo component : components) {
+			this.components.add(new ComponentInfo(component));
 		}
 		
 		for (String date : history) {
@@ -194,7 +194,7 @@ public class Configuration extends ModelObject {
     /**
      * @return A collection of the components associated with the configuration
      */
-	public Collection<Component> getComponents() {
+	public Collection<ComponentInfo> getComponents() {
 		return new ArrayList<>(components);
 	}
 	
@@ -210,4 +210,13 @@ public class Configuration extends ModelObject {
 	public String toString() {
 		return name;
 	}
+
+    /**
+     * Method needed for data binding.
+     * 
+     * @return The name of the configuration.
+     */
+    public String getName() {
+        return name;
+    }
 }

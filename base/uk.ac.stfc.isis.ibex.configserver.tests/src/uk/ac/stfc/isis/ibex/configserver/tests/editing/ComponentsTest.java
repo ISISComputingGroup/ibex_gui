@@ -52,18 +52,18 @@ public class ComponentsTest extends EditableConfigurationTest {
 	public void config_components_are_initially_selected() {
 		components.add(MOTOR);
 		EditableConfiguration edited = edit(config());
-		assertContains(edited.getEditableComponents().getSelected(), MOTOR);
+        assertContains(edited.getEditableComponents().getSelected(), MOTOR_DETAILS);
 	}
 	
 	@Test
 	public void a_component_can_be_added_or_removed() {
 		EditableConfiguration edited = edit(emptyConfig());
-		assertDoesNotContain(edited.getEditableComponents().getSelected(), MOTOR);
+		assertDoesNotContain(edited.getEditableComponents().getSelected(), MOTOR_DETAILS);
 		
-		edited.getEditableComponents().toggleSelection(Arrays.asList(MOTOR));
-		assertContains(edited.getEditableComponents().getSelected(), MOTOR);
+		edited.getEditableComponents().toggleSelection(Arrays.asList(MOTOR_DETAILS));
+		assertContains(edited.getEditableComponents().getSelected(), MOTOR_DETAILS);
 		
-		edited.getEditableComponents().toggleSelection(Arrays.asList(MOTOR));
-		assertDoesNotContain(edited.getEditableComponents().getSelected(), MOTOR);
+		edited.getEditableComponents().toggleSelection(Arrays.asList(MOTOR_DETAILS));
+		assertDoesNotContain(edited.getEditableComponents().getSelected(), MOTOR_DETAILS);
 	}
 }

@@ -13,7 +13,7 @@ import org.junit.Test;
 import uk.ac.stfc.isis.ibex.configserver.IocState;
 import uk.ac.stfc.isis.ibex.configserver.ServerStatus;
 import uk.ac.stfc.isis.ibex.configserver.configuration.BannerItem;
-import uk.ac.stfc.isis.ibex.configserver.configuration.Component;
+import uk.ac.stfc.isis.ibex.configserver.configuration.ComponentInfo;
 import uk.ac.stfc.isis.ibex.configserver.configuration.ConfigInfo;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Configuration;
 import uk.ac.stfc.isis.ibex.configserver.configuration.PV;
@@ -124,15 +124,15 @@ public class JsonConvertersTest {
 	@Test
 	public void conversion_to_components() throws ConversionException {
 		// Arrange
-		Converter<String, Collection<Component>> conv = new JsonConverters().toComponents();
+		Converter<String, Collection<ComponentInfo>> conv = new JsonConverters().toComponents();
 	
 		// Act
-		Collection<Component> comps = conv.convert(configInfos);
+		Collection<ComponentInfo> comps = conv.convert(configInfos);
 
 		// Assert
 		assertTrue(comps.size() == 1);
 		
-		Component comp = comps.iterator().next();
+		ComponentInfo comp = comps.iterator().next();
 		
 		assertEquals(configDescription, comp.description());
 		assertEquals(configName, comp.getName());
