@@ -25,6 +25,7 @@ import java.util.Map;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.window.Window;
 
 import uk.ac.stfc.isis.ibex.configserver.configuration.ConfigInfo;
@@ -46,25 +47,26 @@ public class DeleteComponentsHandler extends DisablingConfigHandler<Collection<S
         createObservers(SERVER.componentsInfo().getValue());
 	}
 	
-	@Override
-	public Object execute(ExecutionEvent event) throws ExecutionException {		
+    @Override
+    public Object execute(ExecutionEvent event) throws ExecutionException {
         MultipleConfigsSelectionDialog dialog = new MultipleConfigsSelectionDialog(shell(), "Delete Components",
                 SERVER.componentsInfo().getValue(), true, false);
-		if (dialog.open() == Window.OK) {
+        if (dialog.open() == Window.OK) {
             Collection<String> toDelete = dialog.selectedConfigs();
             Map<String, Collection<String>> selected = filterDependencies(toDelete);
             System.out.println(selected);
             if (selected.size() > 0) {
-                // TODO pop up dialog
-                System.out.println("nope: " + selected);
+                String message = buildMessage(selected);
+                new MessageDialog(shell(), "Component in Use", null, message, MessageDialog.WARNING,
+                        new String[] {"Ok"}, 0).open();
+
+                execute(event);
             } else {
-                // configService.write(toDelete);
-                System.out.println("deleting: " + toDelete);
+                configService.write(toDelete);
             }
-		}
-		
-		return null;
-	}
+        }
+        return null;
+    }
 
     /**
      * Creates observers for each component's dependencies PV and stores values
@@ -109,18 +111,47 @@ public class DeleteComponentsHandler extends DisablingConfigHandler<Collection<S
     /**
      * Filter to return only non-empty dependencies of selected components.
      * 
-     * @param selected
+     * @param toDelete
      *            The list of selected components to delete.
      * @return A map containing dependencies for selected components only.
      */
-    private Map<String, Collection<String>> filterDependencies(Collection<String> selected) {
+    private Map<String, Collection<String>> filterDependencies(Collection<String> toDelete) {
         Map<String, Collection<String>> result = new HashMap<String, Collection<String>>();
         for (String key : dependencies.keySet()) {
             Collection<String> value = dependencies.get(key);
-            if (selected.contains(key) && (value.size() > 0)) {
+            if (toDelete.contains(key) && (value.size() > 0)) {
                     result.put(key, dependencies.get(key));
             }
         }
         return result;
+    }
+
+    /**
+     * Builds a warning message for display based on dependencies found in
+     * components to delete.
+     * 
+     * @param dependencies
+     *            The dependencies of components to delete
+     * @return A warning message as string.
+     */
+    private String buildMessage(Map<String, Collection<String>> dependencies) {
+        boolean multi = (dependencies.size() > 1);
+        StringBuilder sb = new StringBuilder();
+        sb.append("The following " + (multi ? "components are" : "component is")
+                + " currently in use and thus can not be deleted:\n\n");
+        for (String comp : dependencies.keySet()) {
+            sb.append(comp + "\nused in configuration(s): ");
+            boolean first = true;
+            for (String config : dependencies.get(comp)) {
+                if (!first) {
+                    sb.append(", ");
+                }
+                sb.append(config);
+                first = false;
+            }
+            sb.append("\n\n");
+        }
+        sb.append("\nPlease remove the component" + (multi ? "s" : "") + " from these configurations before deleting.");
+        return sb.toString();
     }
 }
