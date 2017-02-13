@@ -98,6 +98,9 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
     private final List<PV> pvs;
     /** IOC descriptions. */
     private final IocDescriber descriptions;
+    
+    /** If this is a component. */
+    private boolean isComponent;
 
     /**
      * Listener for block renaming events.
@@ -654,6 +657,25 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
         }
 
         return names;
+    }
+    
+    /**
+     * Sets whether this configuration is a component or not.
+     * 
+     * @param isComponent
+     *            true if this is a component
+     */
+    public void setIsComponent(boolean isComponent) {
+        firePropertyChange("isComponent", isComponent, this.isComponent = isComponent);
+    }
+    
+    /**
+     * Get whether this configuration is a component or not.
+     * 
+     * @returns true if this is a component
+     */
+    public boolean getIsComponent() {
+        return isComponent;
     }
     private Collection<Configuration> getComponentDetails(Collection<ComponentInfo> selected,
             Collection<Configuration> available) {
