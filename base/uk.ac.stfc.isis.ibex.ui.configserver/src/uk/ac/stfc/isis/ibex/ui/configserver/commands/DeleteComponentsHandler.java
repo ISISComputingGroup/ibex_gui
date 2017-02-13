@@ -52,13 +52,14 @@ public class DeleteComponentsHandler extends DisablingConfigHandler<Collection<S
                 SERVER.componentsInfo().getValue(), true, false);
 		if (dialog.open() == Window.OK) {
             Collection<String> toDelete = dialog.selectedConfigs();
-            Map<String, Collection<String>> selectedDependencies = filterUnselected(toDelete);
-            System.out.println(selectedDependencies);
-            if (checkNoDependencies(selectedDependencies)) {
-//              configService.write(toDelete);
-                System.out.println("deleting: " + selectedDependencies);
+            Map<String, Collection<String>> selected = filterDependencies(toDelete);
+            System.out.println(selected);
+            if (selected.size() > 0) {
+                // TODO pop up dialog
+                System.out.println("nope: " + selected);
             } else {
-                System.out.println("nope: " + selectedDependencies);
+                // configService.write(toDelete);
+                System.out.println("deleting: " + toDelete);
             }
 		}
 		
@@ -106,37 +107,20 @@ public class DeleteComponentsHandler extends DisablingConfigHandler<Collection<S
     }
 
     /**
-     * Filters dependencies for unselected components from the map of all
-     * dependencies.
+     * Filter to return only non-empty dependencies of selected components.
      * 
      * @param selected
-     *            The list of names of selected components to delete.
+     *            The list of selected components to delete.
      * @return A map containing dependencies for selected components only.
      */
-    private Map<String, Collection<String>> filterUnselected(Collection<String> selected) {
+    private Map<String, Collection<String>> filterDependencies(Collection<String> selected) {
         Map<String, Collection<String>> result = new HashMap<String, Collection<String>>();
         for (String key : dependencies.keySet()) {
-            if (selected.contains(key)) {
-                result.put(key, dependencies.get(key));
+            Collection<String> value = dependencies.get(key);
+            if (selected.contains(key) && (value.size() > 0)) {
+                    result.put(key, dependencies.get(key));
             }
         }
         return result;
-    }
-
-    /**
-     * Checks whether any component in a given map has any dependencies.
-     * 
-     * @param dependencyMap
-     *            The map of component dependencies.
-     * @return True if no dependencies for any component in the map, false
-     *         otherwise.
-     */
-    private boolean checkNoDependencies(Map<String, Collection<String>> dependencyMap) {
-        for (Collection<String> dependencies : dependencyMap.values()) {
-            if (dependencies.size() > 0) {
-                return false;
-            }
-        }
-        return true;
     }
 }
