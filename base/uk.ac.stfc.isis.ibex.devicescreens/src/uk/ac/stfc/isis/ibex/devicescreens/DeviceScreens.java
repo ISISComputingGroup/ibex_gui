@@ -115,6 +115,11 @@ public class DeviceScreens implements BundleActivator {
         return variables;
     }
 
+    /**
+     * Gets the view model.
+     * 
+     * @return the view model
+     */
     public DeviceScreensModel getModel() {
         return model;
     }

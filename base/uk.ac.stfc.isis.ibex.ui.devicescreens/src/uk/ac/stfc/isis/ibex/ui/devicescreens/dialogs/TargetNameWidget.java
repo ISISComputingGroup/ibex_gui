@@ -53,7 +53,6 @@ public class TargetNameWidget extends Composite {
      * The constructor.
      * 
      * @param parent the parent composite
-     * @param availableOPIs the OPIs available for selection
      * @param viewModel the view model
      */
     public TargetNameWidget(Composite parent, EditDeviceScreensDescriptionViewModel viewModel) {

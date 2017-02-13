@@ -76,10 +76,16 @@ public class DeviceDescription extends ModelObject {
     }
 
     /**
+     * Constructor.
+     * 
      * @param name
+     *            the name of this device screen
      * @param key
+     *            the key of this device screen
      * @param type
+     *            the type of this device screen
      * @param persist
+     *            whether this device screen is saved remotely
      */
     public DeviceDescription(String name, String key, String type, boolean persist) {
         setName(name);

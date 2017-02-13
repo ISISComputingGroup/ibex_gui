@@ -37,6 +37,12 @@ public class ViewDeviceScreensDescriptionViewModel extends ModelObject {
     private DeviceScreensDescription deviceScreensDescription;
     private final DataBindingContext bindingContext = new DataBindingContext();
 
+    /**
+     * Constructor.
+     * 
+     * @param deviceScreensModel
+     *            the device screens model.
+     */
     public ViewDeviceScreensDescriptionViewModel(DeviceScreensModel deviceScreensModel) {
         this.deviceScreensModel = deviceScreensModel;
         bindingContext.bindValue(BeanProperties.value("deviceScreensDescription").observe(this),
@@ -51,7 +57,8 @@ public class ViewDeviceScreensDescriptionViewModel extends ModelObject {
     }
 
     /**
-     * @param deviceScreensModel the deviceScreensModel to set
+     * @param deviceScreensDescription
+     *            the device screen description
      */
     public void setDeviceScreensDescription(DeviceScreensDescription deviceScreensDescription) {
         firePropertyChange("deviceScreensDescription", this.deviceScreensDescription,
