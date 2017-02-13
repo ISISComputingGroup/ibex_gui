@@ -19,8 +19,6 @@
 
 package uk.ac.stfc.isis.ibex.ui.configserver.editing.iocs;
 
-import uk.ac.stfc.isis.ibex.configserver.editing.EditableIoc;
-
 /**
  * A panel that shows information relating to a specific IOC.
  */
@@ -28,8 +26,8 @@ public interface IIocDependentPanel {
     /**
      * Set the IOC to show information about.
      * 
-     * @param ioc
-     *            The IOC.
+     * @param viewModel
+     *            The IOC view model.
      */
-	void setIoc(EditableIoc ioc);
+    void setViewModel(IocViewModel viewModel);
 }

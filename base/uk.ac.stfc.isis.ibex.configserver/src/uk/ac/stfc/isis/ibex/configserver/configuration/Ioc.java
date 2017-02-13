@@ -112,7 +112,7 @@ public class Ioc extends ModelObject implements Comparable<Ioc> {
      *            Set whether the IOC should auto-start
      */
 	public void setAutostart(boolean autostart) {
-		firePropertyChange("shouldStart", this.autostart, this.autostart = autostart);
+        firePropertyChange("autostart", this.autostart, this.autostart = autostart);
 	}
 	
     /**

@@ -31,7 +31,7 @@ import uk.ac.stfc.isis.ibex.configserver.BlockRules;
 import uk.ac.stfc.isis.ibex.configserver.IocState;
 import uk.ac.stfc.isis.ibex.configserver.ServerStatus;
 import uk.ac.stfc.isis.ibex.configserver.configuration.BannerItem;
-import uk.ac.stfc.isis.ibex.configserver.configuration.Component;
+import uk.ac.stfc.isis.ibex.configserver.configuration.ComponentInfo;
 import uk.ac.stfc.isis.ibex.configserver.configuration.ConfigInfo;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Configuration;
 import uk.ac.stfc.isis.ibex.configserver.configuration.PV;
@@ -56,6 +56,13 @@ public class JsonConverters implements Converters {
 		return new JsonDeserialisingConverter<>(Configuration.class, gson).apply(withFunction(INIT_CONFIG));
 	}
 
+    @Override
+    public Converter<String, Collection<Configuration>> toConfigList() {
+        Gson gson = new GsonBuilder().registerTypeAdapterFactory(new LowercaseEnumTypeAdapterFactory()).create();
+        return new JsonDeserialisingConverter<>(Configuration[].class, gson)
+                .apply(Convert.<Configuration>toCollection()).apply(forEach(INIT_CONFIG));
+    }
+
 	@Override
 	public Converter<String, ServerStatus> toServerStatus() {
 		return new JsonDeserialisingConverter<>(ServerStatus.class);
@@ -77,9 +84,9 @@ public class JsonConverters implements Converters {
 	}
 
 	@Override
-	public Converter<String, Collection<Component>> toComponents() {
-		return new JsonDeserialisingConverter<>(Component[].class)
-				.apply(Convert.<Component>toCollection())
+	public Converter<String, Collection<ComponentInfo>> toComponents() {
+		return new JsonDeserialisingConverter<>(ComponentInfo[].class)
+				.apply(Convert.<ComponentInfo>toCollection())
 				.apply(forEach(INIT_COMP));
 	}
 
@@ -143,10 +150,10 @@ public class JsonConverters implements Converters {
 		}
 	};
 
-	private static final Function<Component, Component> INIT_COMP = new Function<Component, Component>() {
+	private static final Function<ComponentInfo, ComponentInfo> INIT_COMP = new Function<ComponentInfo, ComponentInfo>() {
 		@Override
-		public Component apply(Component uninitialised) {
-			return new Component(uninitialised);
+		public ComponentInfo apply(ComponentInfo uninitialised) {
+			return new ComponentInfo(uninitialised);
 		}
 	};
 

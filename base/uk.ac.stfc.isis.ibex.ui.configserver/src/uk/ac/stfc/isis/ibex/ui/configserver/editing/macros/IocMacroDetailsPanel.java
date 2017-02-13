@@ -38,7 +38,6 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 
@@ -71,31 +70,55 @@ public class IocMacroDetailsPanel extends Composite {
 	private Button clearMacro;
     private Image scaled;
 	
+    /**
+     * Constructor for the macro details panel.
+     * 
+     * @param parent
+     *            The parent composite.
+     * @param style
+     *            The SWT style.
+     */
 	public IocMacroDetailsPanel(Composite parent, int style) {
 		super(parent, style);
 		setLayout(new FillLayout(SWT.HORIZONTAL));
 		
-		Group grpSelectedPv = new Group(this, SWT.NONE);
-		grpSelectedPv.setText("Selected Macro");
-		grpSelectedPv.setLayout(new GridLayout(4, false));
-		
-		Label lblName = new Label(grpSelectedPv, SWT.NONE);
+        Composite cmpSelectedPv = new Composite(this, SWT.NONE);
+        cmpSelectedPv.setLayout(new GridLayout(4, false));
+
+        displayMacrosTable = new MacroTable(cmpSelectedPv, SWT.NONE, SWT.FULL_SELECTION);
+        GridData gdAvailableMacrosTable = new GridData(SWT.FILL, SWT.FILL, true, true, 4, 1);
+        gdAvailableMacrosTable.widthHint = 428;
+        displayMacrosTable.setLayoutData(gdAvailableMacrosTable);
+        displayMacrosTable.addSelectionChangedListener(new ISelectionChangedListener() {
+            @Override
+            public void selectionChanged(SelectionChangedEvent arg0) {
+                IStructuredSelection selection = (IStructuredSelection) arg0.getSelection();
+                if (selection.size() > 0) {
+                    Macro macro = (Macro) selection.getFirstElement();
+                    name.setText(macro.getName());
+                    setMacro(macro, true);
+                    value.setFocus();
+                }
+            }
+        });
+
+        Label lblName = new Label(cmpSelectedPv, SWT.NONE);
 		lblName.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		lblName.setText("Name");
 		
-		name = new Text(grpSelectedPv, SWT.BORDER);
+        name = new Text(cmpSelectedPv, SWT.BORDER);
 		name.setEditable(false);
 		name.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 3, 1));
 		
-		Label lblValue = new Label(grpSelectedPv, SWT.NONE);
+        Label lblValue = new Label(cmpSelectedPv, SWT.NONE);
 		lblValue.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		lblValue.setText("Value");
 		
-		value = new Text(grpSelectedPv, SWT.BORDER);
+        value = new Text(cmpSelectedPv, SWT.BORDER);
 		value.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		value.setEnabled(false);
 		
-		setMacroButton = new Button(grpSelectedPv, SWT.NONE);
+        setMacroButton = new Button(cmpSelectedPv, SWT.NONE);
 		setMacroButton.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -105,7 +128,7 @@ public class IocMacroDetailsPanel extends Composite {
 		});
 		setMacroButton.setText("Set Macro");
 		
-		clearMacro = new Button(grpSelectedPv, SWT.NONE);
+        clearMacro = new Button(cmpSelectedPv, SWT.NONE);
 		clearMacro.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -115,49 +138,34 @@ public class IocMacroDetailsPanel extends Composite {
 			}
 		});
 		clearMacro.setText("Clear Macro");
-		
-		errorIconLabel = new Label(grpSelectedPv, SWT.NONE);
-		errorIconLabel.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-		errorIconLabel.setText("");
-		
-		Display display = Display.getCurrent(); 
-		Image img = display.getSystemImage(SWT.ICON_WARNING);
+
+        errorIconLabel = new Label(cmpSelectedPv, SWT.NONE);
+        errorIconLabel.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
+        errorIconLabel.setText("");
+
+        Display display = Display.getCurrent();
+        Image img = display.getSystemImage(SWT.ICON_WARNING);
         scaled = new Image(display, img.getImageData().scaledTo(20, 20));
-		
-		errorIconLabel.setImage(scaled);
-		
-		macroValueErrorLabel = new Label(grpSelectedPv, SWT.NONE);
-		GridData gdMacroValueErrorLabel = new GridData(SWT.LEFT, SWT.CENTER, false, false, 3, 1);
-		gdMacroValueErrorLabel.widthHint = 300;
-		macroValueErrorLabel.setLayoutData(gdMacroValueErrorLabel);
-		macroValueErrorLabel.setText("placeholder placeholder placeholder placeholder");
-		
-		displayMacrosTable = new MacroTable(grpSelectedPv, SWT.NONE, SWT.FULL_SELECTION);
-		GridData gdAvailableMacrosTable = new GridData(SWT.FILL, SWT.FILL, true, true, 4, 1);
-		gdAvailableMacrosTable.widthHint = 428;
-		displayMacrosTable.setLayoutData(gdAvailableMacrosTable);
-		new Label(grpSelectedPv, SWT.NONE);
-		new Label(grpSelectedPv, SWT.NONE);
-		new Label(grpSelectedPv, SWT.NONE);
-		new Label(grpSelectedPv, SWT.NONE);
-		displayMacrosTable.addSelectionChangedListener(new ISelectionChangedListener() {
-			@Override
-            public void selectionChanged(SelectionChangedEvent arg0) {
-				IStructuredSelection selection = (IStructuredSelection) arg0.getSelection();
-				if (selection.size() > 0) {
-					Macro macro = (Macro) selection.getFirstElement();
-					name.setText(macro.getName());
-					setMacro(macro, true);
-				}
-			}
-		});
+
+        errorIconLabel.setImage(scaled);
+
+        macroValueErrorLabel = new Label(cmpSelectedPv, SWT.NONE);
+        GridData gdMacroValueErrorLabel = new GridData(SWT.LEFT, SWT.CENTER, false, false, 3, 1);
+        gdMacroValueErrorLabel.widthHint = 300;
+        macroValueErrorLabel.setLayoutData(gdMacroValueErrorLabel);
+        macroValueErrorLabel.setText("placeholder placeholder placeholder placeholder");
+
 	}
 	
 	/**
-	 * Called when changing IOCs. Should reset everything such as name, selection etc.
-	 * @param macros The macros to display of the current IOC
-	 * @param canEdit If the IOC is editable
-	 */
+     * Called when changing IOCs. Should reset everything such as name,
+     * selection etc.
+     * 
+     * @param macros
+     *            The macros to display of the current IOC
+     * @param canEdit
+     *            If the IOC is editable
+     */
 	public void setMacros(Collection<Macro> macros, boolean canEdit) {
 		this.macro = null;
 		

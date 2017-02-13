@@ -101,7 +101,7 @@ public class SummaryPanel extends Composite {
         cmboSynoptic = new ComboViewer(cmpSummary, SWT.READ_ONLY);
 		cmboSynoptic.getCombo().setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 		cmboSynoptic.setContentProvider(new ArrayContentProvider());
-		updateSynopticList();
+        updateSynopticList();
 		
         lblDateCreated = new Label(cmpSummary, SWT.NONE);
 		lblDateCreated.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));

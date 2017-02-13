@@ -25,18 +25,34 @@ import org.eclipse.core.runtime.IStatus;
 
 import uk.ac.stfc.isis.ibex.configserver.configuration.PVDefaultValue;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableIoc;
+import uk.ac.stfc.isis.ibex.ui.configserver.editing.iocs.IocViewModel;
 import uk.ac.stfc.isis.ibex.validators.MessageDisplayer;
 
+/**
+ * Checks the validity of a name given to a default PV value.
+ */
 public class PVNameValidator implements IValidator {
 	private static final String DUPLICATE_GROUP_MESSAGE = "Duplicate PV name";
 	private static final String EMPTY_NAME_MESSAGE = "PV name must not be empty";
 	
 	private final EditableIoc ioc;
+    private final IocViewModel viewModel;
 	private final PVDefaultValue selectedPV;
 	private final MessageDisplayer messageDisplayer;
 	
-	public PVNameValidator(EditableIoc ioc, PVDefaultValue selectedPV, MessageDisplayer messageDisplayer) {
-		this.ioc = ioc;
+    /**
+     * Constructor for the validator.
+     * 
+     * @param viewModel
+     *            The Viewmodel of the current IOC.
+     * @param selectedPV
+     *            The selected PV value.
+     * @param messageDisplayer
+     *            The dialog used for displaying error messages.
+     */
+    public PVNameValidator(IocViewModel viewModel, PVDefaultValue selectedPV, MessageDisplayer messageDisplayer) {
+        this.viewModel = viewModel;
+        this.ioc = viewModel.getIoc();
 		this.selectedPV = selectedPV;
 		this.messageDisplayer = messageDisplayer;
 	}
@@ -64,18 +80,15 @@ public class PVNameValidator implements IValidator {
 		messageDisplayer.setErrorMessage("PVNameValidator", message);
 		return ValidationStatus.error(message);	
 	}
-	
-	private boolean nameIsDuplicated(Object text) {
-		for (PVDefaultValue pv : ioc.getPvs()) {
-			if (isNotPVBeingEdited(pv)) {
-				if (pv.getName().equals(text)) {
-					return true;
-				}
-			}
-		}
-		
-		return false;
-	}
+
+    private boolean nameIsDuplicated(Object text) {
+        for (PVDefaultValue pv : viewModel.getPvVals()) {
+            if (isNotPVBeingEdited(pv) && pv.getName().equals(text)) {
+                return true;
+            }
+        }
+        return false;
+    }
 
 	private boolean isNotPVBeingEdited(PVDefaultValue pv) {
 		return !pv.equals(selectedPV);
