@@ -27,24 +27,37 @@ import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Label;
 
 import uk.ac.stfc.isis.ibex.configserver.configuration.Ioc;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableIoc;
 
+/**
+ * Panel for displaying an IOC dependant settings page. (Currently unused)
+ */
 @SuppressWarnings("checkstyle:magicnumber")
-public class IocSelectorPanel extends Composite {
+public class IocSettingPanel extends Composite {
 	private EditableIoc ioc;
 	private ComboViewer iocCombo;
 	private Label lbDescTarget;
 	private IIocDependentPanel target;
 	
-	public IocSelectorPanel(Composite parent, int style, IIocPanelCreator panelFactory) {
+    /**
+     * Constructor for the IOC setting panel.
+     * 
+     * @param parent
+     *            The parent composite.
+     * @param style
+     *            The SWT style.
+     * @param panelFactory
+     *            The Panel factory delivering the content for this panel.
+     */
+	public IocSettingPanel(Composite parent, int style, IIocPanelCreator panelFactory) {
 		super(parent, style);
 		setLayout(new GridLayout(2, false));
 		
@@ -54,7 +67,7 @@ public class IocSelectorPanel extends Composite {
 		
 		iocCombo = new ComboViewer(this, SWT.DROP_DOWN | SWT.READ_ONLY);
 		GridData gridData = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
-		gridData.widthHint = 150;
+        gridData.widthHint = 100;
 		iocCombo.getCombo().setLayoutData(gridData);
 		iocCombo.setContentProvider(ArrayContentProvider.getInstance());
 		
@@ -71,14 +84,21 @@ public class IocSelectorPanel extends Composite {
 		new Label(this, SWT.NONE);
 	}
 	
+    /**
+     * Sets the configuration currently being edited.
+     * 
+     * @param config
+     *            The configuration.
+     */
 	public void setConfig(EditableConfiguration config) {
 		iocCombo.setLabelProvider(new LabelProvider() {
-			public String getText(Object element) {
+			@Override
+            public String getText(Object element) {
 				Ioc ioc = (Ioc) element;
 				return ioc.getName();
 			};
 		});
-		Collection<EditableIoc> iocs = config.getEditableIocs();
+		Collection<EditableIoc> iocs = config.getSelectedIocs();
 		iocCombo.setInput(iocs);
 		
 		iocCombo.addSelectionChangedListener(new ISelectionChangedListener() {
@@ -87,7 +107,6 @@ public class IocSelectorPanel extends Composite {
 				StructuredSelection selection = (StructuredSelection) arg0.getSelection();
 				ioc = (EditableIoc) selection.getFirstElement();
 				lbDescTarget.setText(ioc.getDescription());
-				target.setIoc(ioc);
 			}
 		});
 
