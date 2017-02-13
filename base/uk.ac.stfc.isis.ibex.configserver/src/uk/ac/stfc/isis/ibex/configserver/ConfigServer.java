@@ -199,7 +199,19 @@ public class ConfigServer extends Closer {
 	public ForwardingObservable<Configuration> component(String componentName) {
 		return variables.component(componentName);
 	}
-	
+
+    /**
+     * Returns an observable to the list of configurations dependent on a given
+     * component.
+     * 
+     * @param componentName
+     *            the name of the component
+     * @return the {@code Collection<String>} observable object
+     */
+    public ForwardingObservable<Collection<String>> dependencies(String componentName) {
+        return variables.dependencies(componentName);
+    }
+
 	/**
 	 * Returns a writable to set the current configuration on the instrument.<br>
 	 * The writable expects a Configuration  with the name of the configuration to load.

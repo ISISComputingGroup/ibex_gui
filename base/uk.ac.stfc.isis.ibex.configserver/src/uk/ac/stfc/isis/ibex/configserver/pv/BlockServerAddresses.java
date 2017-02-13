@@ -79,6 +79,8 @@ public class BlockServerAddresses {
 	private static final String DELETE_CONFIGS = "DELETE_CONFIGS";
     /** PV ending for deleting named components. */
 	private static final String DELETE_COMPONENTS = "DELETE_COMPONENTS";
+    /** PV ending for configs dependant on a component. */
+    private static final String DEPENDENCIES = "DEPENDENCIES";
     /** PV ending for retrieving an empty configuration. */
 	private static final String BLANK_CONFIG = "BLANK_CONFIG";
     /** PV ending for block rules. */
@@ -165,7 +167,17 @@ public class BlockServerAddresses {
 	public String component(String name) {	
 		return blockServerAddress.append(name).endWith(GET_COMPONENT);
 	}
-	
+
+    /**
+     * @param name
+     *            The name of the component whose dependencies are to be
+     *            retrieved
+     * @return The PV address to retrieve the named component's dependencies
+     */
+    public String componentDependencies(String name) {
+        return blockServerAddress.append(name).endWith(DEPENDENCIES);
+    }
+
     /**
      * @return The PV address to set the current configuration
      */

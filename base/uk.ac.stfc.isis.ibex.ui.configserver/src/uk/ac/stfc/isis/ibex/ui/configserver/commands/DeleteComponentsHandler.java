@@ -20,11 +20,14 @@
 package uk.ac.stfc.isis.ibex.ui.configserver.commands;
 
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.jface.window.Window;
 
+import uk.ac.stfc.isis.ibex.configserver.configuration.ConfigInfo;
 import uk.ac.stfc.isis.ibex.ui.configserver.dialogs.MultipleConfigsSelectionDialog;
 
 /**
@@ -44,9 +47,34 @@ public class DeleteComponentsHandler extends DisablingConfigHandler<Collection<S
         MultipleConfigsSelectionDialog dialog = new MultipleConfigsSelectionDialog(shell(), "Delete Components",
                 SERVER.componentsInfo().getValue(), true, false);
 		if (dialog.open() == Window.OK) {
-			configService.write(dialog.selectedConfigs());
+            Collection<String> toDelete = dialog.selectedConfigs();
+            Map<String, Collection<String>> dependencies = getDependencies(toDelete);
+            if (dependencies.size() == 0) {
+                configService.write(toDelete);
+            } else {
+                // TODO create dialog showing conflicts
+            }
 		}
 		
 		return null;
 	}
+
+    private Map<String, Collection<String>> getDependencies(Collection<String> names) {
+        Map<String, Collection<String>> result = new HashMap<String, Collection<String>>();
+        for (String name : names) {
+            String pv = getCompPV(name);
+            Collection<String> dependencies = SERVER.dependencies(pv).getValue();
+            result.put(name, dependencies);
+        }
+        return result;
+    }
+
+    private String getCompPV(String name) {
+        for (ConfigInfo comp : SERVER.componentsInfo().getValue()) {
+            if (comp.name().equals(name)) {
+                return comp.pv();
+            }
+        }
+        return "";
+    }
 }

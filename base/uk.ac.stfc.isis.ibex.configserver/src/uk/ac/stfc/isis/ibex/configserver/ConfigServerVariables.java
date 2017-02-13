@@ -208,6 +208,18 @@ public class ConfigServerVariables extends Closer {
 	}
 
     /**
+     * Provides a monitor on the list of configurations dependent on the specified component.
+     * 
+     * @param componentName
+     *            the component name
+     * @return the corresponding observable
+     */
+    public ForwardingObservable<Collection<String>> dependencies(String componentName) {
+        return InstrumentUtils.convert(readCompressed(blockServerAddresses.componentDependencies(componentName)),
+                converters.toNames());
+    }
+
+    /**
      * Provides a monitor on the specified IOC description.
      * 
      * @param iocName the IOC name
