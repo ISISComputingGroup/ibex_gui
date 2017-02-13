@@ -269,10 +269,7 @@ public class SaveConfigDialog extends TitleAreaDialog {
 			}
 		});
 		
-		if (isConfig) {
-			txtName.setText(currentName);
-		}
-		
+        txtName.setText(currentName);
 		txtDesc.setText(currentDesc);
 		
 		update();

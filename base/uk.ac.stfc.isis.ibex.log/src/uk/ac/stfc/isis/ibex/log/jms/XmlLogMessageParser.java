@@ -32,6 +32,7 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
+import uk.ac.stfc.isis.ibex.activemq.message.MessageParser;
 import uk.ac.stfc.isis.ibex.log.message.LogMessage;
 import uk.ac.stfc.isis.ibex.log.message.LogMessageFields;
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
@@ -40,52 +41,49 @@ import uk.ac.stfc.isis.ibex.logger.IsisLog;
  * Converts the XML representation of an IOC log message into an instance of
  * LogMessage.
  */
-public class XmlLogMessageParser {
+public class XmlLogMessageParser extends MessageParser<LogMessage> {
     private static final Logger LOG = IsisLog
 	    .getLogger(XmlLogMessageParser.class);
 
-    public LogMessage xmlToLogMessage(String xml) {
-	LogMessage message = new LogMessage();
+    @Override
+    public LogMessage parseMessage(String xml) {
+        LogMessage message = new LogMessage();
 
-	Node root;
-	try {
-	    root = getRootElement(xml);
-	} catch (SAXException | IOException | ParserConfigurationException ex) {
-	    LOG.error("Error parsing IOC log message XML root element: "
-		    + ex.getMessage());
-	    return message;
-	}
+        Node root;
+        try {
+            root = getRootElement(xml);
+        } catch (SAXException | IOException | ParserConfigurationException ex) {
+            LOG.error("Error parsing IOC log message XML root element: " + ex.getMessage());
+            return message;
+        }
 
-	NodeList messageProperties = root.getChildNodes();
+        NodeList messageProperties = root.getChildNodes();
 
-	for (int i = 0; i < messageProperties.getLength(); ++i) {
-	    String tag = messageProperties.item(i).getNodeName();
-	    String value = messageProperties.item(i).getTextContent();
+        for (int i = 0; i < messageProperties.getLength(); ++i) {
+            String tag = messageProperties.item(i).getNodeName();
+            String value = messageProperties.item(i).getTextContent();
 
-	    // Get the enum value for the log message filed from the XML tag
-	    // name
-	    try {
-		LogMessageFields field = LogMessageFields
-			.getFieldByTagName(tag);
-		message.setProperty(field, value);
-	    } catch (Exception ex) {
-		LOG.error(ex.getMessage());
-	    }
-	}
+            // Get the enum value for the log message filed from the XML tag
+            // name
+            try {
+                LogMessageFields field = LogMessageFields.getFieldByTagName(tag);
+                message.setProperty(field, value);
+            } catch (Exception ex) {
+                LOG.error(ex.getMessage());
+            }
+        }
 
-	return message;
+        return message;
     }
 
-    private Node getRootElement(String xml) throws SAXException, IOException,
-	    ParserConfigurationException {
-	DocumentBuilderFactory builderFactory = DocumentBuilderFactory
-		.newInstance();
-	DocumentBuilder builder = builderFactory.newDocumentBuilder();
+    private Node getRootElement(String xml) throws SAXException, IOException, ParserConfigurationException {
+        DocumentBuilderFactory builderFactory = DocumentBuilderFactory.newInstance();
+        DocumentBuilder builder = builderFactory.newDocumentBuilder();
 
-	InputSource inputSource = new InputSource(new StringReader(xml));
+        InputSource inputSource = new InputSource(new StringReader(xml));
 
-	Document newDoc = builder.parse(inputSource);
+        Document newDoc = builder.parse(inputSource);
 
-	return newDoc.getDocumentElement();
+        return newDoc.getDocumentElement();
     }
 }
