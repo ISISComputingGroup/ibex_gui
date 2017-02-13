@@ -18,28 +18,19 @@
 
 package uk.ac.stfc.isis.ibex.log;
 
-import org.eclipse.jface.preference.IPreferenceStore;
-
 import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
 import uk.ac.stfc.isis.ibex.instrument.InstrumentInfoReceiver;
-import uk.ac.stfc.isis.ibex.log.preferences.PreferenceConstants;
 
 /**
- * The Class LogSettings allows the log framework to be set when the instrument
+ * The Class OnInstrumentSwitch allows the log framework to be set when the instrument
  * is changed.
  */
-public class LogSettings implements InstrumentInfoReceiver {
+public class OnInstrumentSwitch implements InstrumentInfoReceiver {
 
     private static final Log LOG = Log.getDefault();
 
-    private static final IPreferenceStore PREFERENCES = Log.getDefault()
-	    .getPreferenceStore();
-
     @Override
     public void setInstrument(InstrumentInfo instrument) {
-		PREFERENCES.setValue(PreferenceConstants.P_JMS_ADDRESS,
-                instrument.hostName());
-	
 		LOG.clearMessages();
     }
 

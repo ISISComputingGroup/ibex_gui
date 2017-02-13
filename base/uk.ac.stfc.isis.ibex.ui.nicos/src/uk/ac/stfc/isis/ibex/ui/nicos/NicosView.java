@@ -32,6 +32,8 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
 
+import uk.ac.stfc.isis.ibex.nicos.Nicos;
+import uk.ac.stfc.isis.ibex.nicos.NicosModel;
 import uk.ac.stfc.isis.ibex.ui.nicos.dialogs.CreateScriptDialog;
 
 /**
@@ -47,10 +49,19 @@ public class NicosView extends ViewPart {
 	
 	private final Shell shell;
 	
+    @SuppressWarnings("unused")
+
+    /**
+     * Currently unused, just forces the backend to connect.
+     */
+    private NicosModel model;
+
 	/**
 	 * The default constructor for the view.
 	 */
 	public NicosView() {
+        model = Nicos.getDefault().getModel();
+
 		shell = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
 	}
 
@@ -86,12 +97,14 @@ public class NicosView extends ViewPart {
 				dialog.open();
 			}
 		});
-
 	}
 
-	@Override
-	public void setFocus() {
-		
-	}
+    /**
+     * 
+     */
+    @Override
+    public void setFocus() {
+        //
+    }
 
 }
