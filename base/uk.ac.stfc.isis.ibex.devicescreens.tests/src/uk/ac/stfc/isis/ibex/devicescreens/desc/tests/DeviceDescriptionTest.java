@@ -46,11 +46,11 @@ public class DeviceDescriptionTest {
     }
 
     @Test
-    public void GIVEN_new_device_description_THEN_key_name_and_type_are_null() {
+    public void GIVEN_new_device_description_THEN_key_name_and_type_are_blank() {
         // Assert
-        assertNull(deviceDescription.getName());
-        assertNull(deviceDescription.getKey());
-        assertNull(deviceDescription.getType());
+        assertEquals("", deviceDescription.getName());
+        assertEquals("", deviceDescription.getKey());
+        assertEquals("", deviceDescription.getType());
     }
 
     @Test
