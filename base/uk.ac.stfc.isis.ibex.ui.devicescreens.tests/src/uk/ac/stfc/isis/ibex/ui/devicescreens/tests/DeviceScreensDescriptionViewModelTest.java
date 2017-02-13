@@ -29,6 +29,7 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
+import uk.ac.stfc.isis.ibex.devicescreens.DeviceScreensModel;
 import uk.ac.stfc.isis.ibex.devicescreens.desc.DeviceDescription;
 import uk.ac.stfc.isis.ibex.devicescreens.desc.DeviceScreensDescription;
 import uk.ac.stfc.isis.ibex.devicescreens.desc.PropertyDescription;
@@ -104,7 +105,10 @@ public class DeviceScreensDescriptionViewModelTest {
         when(provider.getDescription(opiName1)).thenReturn(opiDesc1);
         when(provider.getDescription(opiName2)).thenReturn(opiDesc2);
         
-        viewModel = new EditDeviceScreensDescriptionViewModel(description, displayer, provider);
+        DeviceScreensModel model = mock(DeviceScreensModel.class);
+        when(model.getDeviceScreensDescription()).thenReturn(description);
+
+        viewModel = new EditDeviceScreensDescriptionViewModel(model, provider, displayer);
     }
 
     @Test

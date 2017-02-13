@@ -145,10 +145,21 @@ public class YesNoRadioButtons extends ModelObject {
         return selected;
     }
 
+    /**
+     * Gets whether the radio button is in the "yes" state.
+     * 
+     * @return true if yes is selected; false otherwise
+     */
     public boolean isEnabled() {
         return enabled;
     }
 
+    /**
+     * Sets whether the "yes" button is selected.
+     * 
+     * @param enabled
+     *            whether the "yes" button is selected
+     */
     public void setEnabled(boolean enabled) {
         firePropertyChange("enabled", this.enabled, this.enabled = enabled);
     }
