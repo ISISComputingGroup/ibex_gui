@@ -148,7 +148,7 @@ public class DeviceScreenListPanel extends Composite {
      * @param deviceScreensDescription
      *            the new device screens description
      */
-    protected void updateDeviceScreensDescriptions(DeviceScreensDescription deviceScreensDescription) {
+    protected void updateDeviceScreensDescriptions(final DeviceScreensDescription deviceScreensDescription) {
         Display.getDefault().asyncExec(new Runnable() {
             @Override
             public void run() {
