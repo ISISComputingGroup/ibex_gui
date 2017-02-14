@@ -20,14 +20,11 @@
 package uk.ac.stfc.isis.ibex.ui.synoptic.editor.dialogs;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Shell;
 
 import uk.ac.stfc.isis.ibex.synoptic.SynopticInfo;
@@ -53,7 +50,7 @@ public class MultipleSynopticsSelectionDialog extends SelectionDialog {
 	
 	@Override
 	protected void okPressed() {
-		selected = Arrays.asList(items.getSelection());
+        selected = asString(items.getSelection());
 		super.okPressed();
 	}
 	
@@ -62,9 +59,8 @@ public class MultipleSynopticsSelectionDialog extends SelectionDialog {
 		Label lblSelect = new Label(container, SWT.NONE);
         lblSelect.setText("Select synoptics:");
 
-		items = new List(container, SWT.BORDER | SWT.V_SCROLL | SWT.MULTI);
-		items.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		items.setItems(SynopticInfo.names(available).toArray(new String[0]));
+        items = createTable(container, SWT.BORDER | SWT.V_SCROLL | SWT.MULTI);
+        setItems(SynopticInfo.names(available).toArray(new String[0]));
 	}
 	
 }

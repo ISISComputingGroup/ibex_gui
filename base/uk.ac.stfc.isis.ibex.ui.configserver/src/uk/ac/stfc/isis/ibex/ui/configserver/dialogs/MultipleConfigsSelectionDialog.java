@@ -24,10 +24,8 @@ import java.util.Arrays;
 import java.util.Collection;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Shell;
 
 import uk.ac.stfc.isis.ibex.configserver.configuration.ConfigInfo;
@@ -95,7 +93,7 @@ public class MultipleConfigsSelectionDialog extends SelectionDialog {
 	
 	@Override
 	protected void okPressed() {
-		selected = Arrays.asList(items.getSelection());
+        selected = asString(items.getSelection());
 		super.okPressed();
 	}
 	
@@ -103,9 +101,8 @@ public class MultipleConfigsSelectionDialog extends SelectionDialog {
     protected void createSelection(Composite container) {
 		Label lblSelect = new Label(container, SWT.NONE);
         lblSelect.setText("Select " + getTypeString() + ":");
+        items = createTable(container, SWT.BORDER | SWT.V_SCROLL | extraListOptions);
 
-        items = new List(container, SWT.BORDER | SWT.V_SCROLL | extraListOptions);
-		items.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
         String[] names;
         if (includeCurrent) {
             names = ConfigInfo.names(available).toArray(new String[0]);
@@ -113,7 +110,7 @@ public class MultipleConfigsSelectionDialog extends SelectionDialog {
             names = ConfigInfo.namesWithoutCurrent(available).toArray(new String[0]);
         }
 		Arrays.sort(names);
-		items.setItems(names);
+        setItems(names);
 	}
 	
     /**
