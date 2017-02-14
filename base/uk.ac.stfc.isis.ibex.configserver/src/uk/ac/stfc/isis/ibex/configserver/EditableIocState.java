@@ -19,33 +19,15 @@
 
 package uk.ac.stfc.isis.ibex.configserver;
 
-import uk.ac.stfc.isis.ibex.epics.observing.BaseObserver;
 import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
-import uk.ac.stfc.isis.ibex.epics.observing.Observer;
 import uk.ac.stfc.isis.ibex.epics.writing.Writer;
 
 public class EditableIocState extends IocState {
-	
-    private final Observer<String> descriptionObserver = new BaseObserver<String>() {
-		@Override
-		public void onValue(String value) {
-			EditableIocState.super.setDescription(value);
-		}
-	};
-	
-	private final Writer<String> setDescription;
 
 	public EditableIocState(
 			IocState iocState, 
 			ForwardingObservable<String> description,
 			Writer<String> setDescription) {
 		super(iocState);
-		description.addObserver(descriptionObserver);
-		this.setDescription = setDescription;
-	}
-	
-	@Override
-	public void setDescription(String description) {
-		setDescription.write(description);
 	}
 }
