@@ -37,7 +37,7 @@ import uk.ac.stfc.isis.ibex.ui.configserver.dialogs.MultipleConfigsSelectionDial
  */
 public class DeleteComponentsHandler extends DisablingConfigHandler<Collection<String>> {
     
-    private Map<String, Collection<String>> dependencies = new HashMap<>();
+    private Map<String, Collection<String>> allDependencies = new HashMap<>();
 	
     /**
      * The constructor.
@@ -53,16 +53,14 @@ public class DeleteComponentsHandler extends DisablingConfigHandler<Collection<S
                 SERVER.componentsInfo().getValue(), true, false);
         if (dialog.open() == Window.OK) {
             Collection<String> toDelete = dialog.selectedConfigs();
-            Map<String, Collection<String>> selected = filterDependencies(toDelete);
-            System.out.println(selected);
-            if (selected.size() > 0) {
-                String message = buildMessage(selected);
+            Map<String, Collection<String>> dependencies = filterDependencies(toDelete);
+            if (dependencies.size() == 0) {
+                configService.write(toDelete);
+            } else {
+                String message = buildWarning(dependencies);
                 new MessageDialog(shell(), "Component in Use", null, message, MessageDialog.WARNING,
                         new String[] {"Ok"}, 0).open();
-
                 execute(event);
-            } else {
-                configService.write(toDelete);
             }
         }
         return null;
@@ -78,7 +76,7 @@ public class DeleteComponentsHandler extends DisablingConfigHandler<Collection<S
     private void createObservers(Collection<ConfigInfo> components) {
         Collection<String> names = ConfigInfo.names(components);
         for (final String name : names) {
-            String pv = getCompPV(name);
+            String pv = getPV(name);
             if (pv == null) {
                 continue; // TODO throw exception
             }
@@ -86,7 +84,7 @@ public class DeleteComponentsHandler extends DisablingConfigHandler<Collection<S
                 
                 @Override
                 public void onValue(java.util.Collection<String> value) {
-                    dependencies.put(name, value);
+                    allDependencies.put(name, value);
                 };
             });
         }
@@ -95,14 +93,14 @@ public class DeleteComponentsHandler extends DisablingConfigHandler<Collection<S
     /**
      * Finds the dynamic blockserver PV of a given component based on its name.
      * 
-     * @param name
+     * @param component
      *            The name of the component.
      * @return The PV associated to the component.
      */
-    private String getCompPV(String name) {
-        for (ConfigInfo comp : SERVER.componentsInfo().getValue()) {
-            if (comp.name().equals(name)) {
-                return comp.pv();
+    private String getPV(String component) {
+        for (ConfigInfo compInfo : SERVER.componentsInfo().getValue()) {
+            if (compInfo.name().equals(component)) {
+                return compInfo.pv();
             }
         }
         return null;
@@ -117,10 +115,10 @@ public class DeleteComponentsHandler extends DisablingConfigHandler<Collection<S
      */
     private Map<String, Collection<String>> filterDependencies(Collection<String> toDelete) {
         Map<String, Collection<String>> result = new HashMap<String, Collection<String>>();
-        for (String key : dependencies.keySet()) {
-            Collection<String> value = dependencies.get(key);
+        for (String key : allDependencies.keySet()) {
+            Collection<String> value = allDependencies.get(key);
             if (toDelete.contains(key) && (value.size() > 0)) {
-                    result.put(key, dependencies.get(key));
+                    result.put(key, allDependencies.get(key));
             }
         }
         return result;
@@ -134,7 +132,7 @@ public class DeleteComponentsHandler extends DisablingConfigHandler<Collection<S
      *            The dependencies of components to delete
      * @return A warning message as string.
      */
-    private String buildMessage(Map<String, Collection<String>> dependencies) {
+    private String buildWarning(Map<String, Collection<String>> dependencies) {
         boolean multi = (dependencies.size() > 1);
         StringBuilder sb = new StringBuilder();
         sb.append("The following " + (multi ? "components are" : "component is")
