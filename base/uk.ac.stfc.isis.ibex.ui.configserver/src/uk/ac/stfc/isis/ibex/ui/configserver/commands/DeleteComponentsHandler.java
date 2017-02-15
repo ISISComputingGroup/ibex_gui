@@ -30,6 +30,7 @@ import org.eclipse.jface.window.Window;
 
 import uk.ac.stfc.isis.ibex.configserver.configuration.ConfigInfo;
 import uk.ac.stfc.isis.ibex.epics.observing.BaseObserver;
+import uk.ac.stfc.isis.ibex.epics.observing.Observer;
 import uk.ac.stfc.isis.ibex.ui.configserver.dialogs.MultipleConfigsSelectionDialog;
 
 /**
@@ -37,34 +38,24 @@ import uk.ac.stfc.isis.ibex.ui.configserver.dialogs.MultipleConfigsSelectionDial
  */
 public class DeleteComponentsHandler extends DisablingConfigHandler<Collection<String>> {
     
-    private Map<String, Collection<String>> allDependencies = new HashMap<>();
+    private Map<String, Collection<String>> dependenciesAll = new HashMap<>();
+    private Map<String, Collection<String>> dependenciesNonEmpty = new HashMap<>();
 	
     /**
      * The constructor.
      */
 	public DeleteComponentsHandler() {
 		super(SERVER.deleteComponents());
-        createObservers(SERVER.componentsInfo().getValue());
+        SERVER.componentsInfo().addObserver(dependencyAdapter);
 	}
-	
-    @Override
-    public Object execute(ExecutionEvent event) throws ExecutionException {
-        MultipleConfigsSelectionDialog dialog = new MultipleConfigsSelectionDialog(shell(), "Delete Components",
-                SERVER.componentsInfo().getValue(), true, false);
-        if (dialog.open() == Window.OK) {
-            Collection<String> toDelete = dialog.selectedConfigs();
-            Map<String, Collection<String>> dependencies = filterDependencies(toDelete);
-            if (dependencies.size() == 0) {
-                configService.write(toDelete);
-            } else {
-                String message = buildWarning(dependencies);
-                new MessageDialog(shell(), "Component in Use", null, message, MessageDialog.WARNING,
-                        new String[] {"Ok"}, 0).open();
-                execute(event);
-            }
-        }
-        return null;
-    }
+
+    Observer<Collection<ConfigInfo>> dependencyAdapter = new BaseObserver<Collection<ConfigInfo>>() {
+
+        @Override
+        public void onValue(java.util.Collection<ConfigInfo> value) {
+            createObservers(value);
+        };
+    };
 
     /**
      * Creates observers for each component's dependencies PV and stores values
@@ -77,17 +68,37 @@ public class DeleteComponentsHandler extends DisablingConfigHandler<Collection<S
         Collection<String> names = ConfigInfo.names(components);
         for (final String name : names) {
             String pv = getPV(name);
-            if (pv == null) {
-                continue; // TODO throw exception
+            if (pv == null || dependenciesAll.containsKey(name)) {
+                continue; // TODO handle errors
             }
             SERVER.dependencies(pv).addObserver(new BaseObserver<Collection<String>>() {
                 
                 @Override
                 public void onValue(java.util.Collection<String> value) {
-                    allDependencies.put(name, value);
+                    dependenciesAll.put(name, value);
+                    dependenciesNonEmpty = filterEmpty(dependenciesAll);
                 };
             });
         }
+    }
+
+    @Override
+    public Object execute(ExecutionEvent event) throws ExecutionException {
+        MultipleConfigsSelectionDialog dialog = new MultipleConfigsSelectionDialog(shell(), "Delete Components",
+                SERVER.componentsInfo().getValue(), true, false);
+        if (dialog.open() == Window.OK) {
+            Collection<String> toDelete = dialog.selectedConfigs();
+            Map<String, Collection<String>> dependencies = filterSelected(toDelete);
+            if (dependencies.size() == 0) {
+                configService.write(toDelete);
+            } else {
+                String message = buildWarning(dependencies);
+                new MessageDialog(shell(), "Component in Use", null, message, MessageDialog.WARNING,
+                        new String[] {"Ok"}, 0).open();
+                execute(event);
+            }
+        }
+        return null;
     }
 
     /**
@@ -107,18 +118,36 @@ public class DeleteComponentsHandler extends DisablingConfigHandler<Collection<S
     }
 
     /**
-     * Filter to return only non-empty dependencies of selected components.
+     * Filter to return only dependencies of selected components.
      * 
      * @param toDelete
      *            The list of selected components to delete.
      * @return A map containing dependencies for selected components only.
      */
-    private Map<String, Collection<String>> filterDependencies(Collection<String> toDelete) {
+    private Map<String, Collection<String>> filterSelected(Collection<String> toDelete) {
         Map<String, Collection<String>> result = new HashMap<String, Collection<String>>();
-        for (String key : allDependencies.keySet()) {
-            Collection<String> value = allDependencies.get(key);
-            if (toDelete.contains(key) && (value.size() > 0)) {
-                    result.put(key, allDependencies.get(key));
+        for (String key : toDelete) {
+            if (dependenciesNonEmpty.keySet().contains(key)) {
+                result.put(key, dependenciesNonEmpty.get(key));
+            }
+        }
+        return result;
+    }
+
+    /**
+     * Filter to return only non-empty dependencies of components.
+     * 
+     * @param toDelete
+     *            The list of selected components to delete.
+     * @return A map containing dependencies for selected components only.
+     */
+    // TODO last thing I did
+    private Map<String, Collection<String>> filterEmpty(Map<String, Collection<String>> dependencies) {
+        Map<String, Collection<String>> result = new HashMap<String, Collection<String>>();
+        for (String key : dependencies.keySet()) {
+            Collection<String> value = dependencies.get(key);
+            if (value.size() > 0) {
+                result.put(key, dependencies.get(key));
             }
         }
         return result;
@@ -152,4 +181,5 @@ public class DeleteComponentsHandler extends DisablingConfigHandler<Collection<S
         sb.append("\nPlease remove the component" + (multi ? "s" : "") + " from these configurations before deleting.");
         return sb.toString();
     }
+
 }
