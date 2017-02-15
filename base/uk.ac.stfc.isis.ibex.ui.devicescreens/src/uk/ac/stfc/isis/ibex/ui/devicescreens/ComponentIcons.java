@@ -69,6 +69,7 @@ public final class ComponentIcons {
             case MONITOR:
                 return "monitor";
             case SAMPLESTACK:
+            case ZOOM_SAMPLE_STACK:
                 return "sample_stack";
             case DAE:
                 return "dae";
@@ -124,7 +125,7 @@ public final class ComponentIcons {
                 return "detector_motion_system";
             case PIXELMAN:
                 return "pixelman";
-            case KEIT2400:
+            case KHLY2400:
                 return "keithley2400";
             default:
                 return "cog";

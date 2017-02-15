@@ -54,8 +54,9 @@ public class ViewConfigHelper extends ConfigHelper {
      */
     @Override
     protected void openDialog(String subTitle, EditableConfiguration config, boolean isCurrent) {
+        config.setIsComponent(false);
         ConfigDetailsDialog dialog =
-                new ConfigDetailsDialog(shell, title, currentSubTitle, config, false, false, configurationViewModels);
+                new ConfigDetailsDialog(shell, title, currentSubTitle, config, false, configurationViewModels);
         dialog.open();
     }
 }

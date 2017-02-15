@@ -31,13 +31,7 @@ import uk.ac.stfc.isis.ibex.ui.configserver.ConfigurationViewModels;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.blocks.BlocksEditorPanel;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.components.ComponentEditorPanel;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.groups.GroupsEditorPanel;
-import uk.ac.stfc.isis.ibex.ui.configserver.editing.iocs.IIocDependentPanel;
-import uk.ac.stfc.isis.ibex.ui.configserver.editing.iocs.IIocPanelCreator;
-import uk.ac.stfc.isis.ibex.ui.configserver.editing.iocs.IocSelectorPanel;
-import uk.ac.stfc.isis.ibex.ui.configserver.editing.iocs.IocsEditorPanel;
-import uk.ac.stfc.isis.ibex.ui.configserver.editing.macros.MacroPanel;
-import uk.ac.stfc.isis.ibex.ui.configserver.editing.pvs.IocPVsEditorPanel;
-import uk.ac.stfc.isis.ibex.ui.configserver.editing.pvsets.IocPVSetsEditorPanel;
+import uk.ac.stfc.isis.ibex.ui.configserver.editing.iocs.IocOverviewPanel;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.summary.SummaryPanel;
 import uk.ac.stfc.isis.ibex.validators.MessageDisplayer;
 
@@ -52,13 +46,10 @@ public class ConfigEditorPanel extends Composite {
      */
     public static final String BLOCK_TAB_NAME = "Blocks";
 
-	private final IocsEditorPanel iocs;
+	private final IocOverviewPanel iocs;
 	private final BlocksEditorPanel blocks;
 	private final GroupsEditorPanel groups;
 	private final ComponentEditorPanel components;
-	private final IocSelectorPanel iocMacros;
-	private final IocSelectorPanel iocPVs;
-	private final IocSelectorPanel iocPVSets;
 	private final SummaryPanel summary;
 	
     private TabFolder editorTabs;
@@ -106,25 +97,12 @@ public class ConfigEditorPanel extends Composite {
             componentsTab.setControl(components);
         }
 
-		iocs = new IocsEditorPanel(editorTabs, SWT.NONE, dialog);
+		iocs = new IocOverviewPanel(editorTabs, SWT.NONE, dialog);
 		
 		TabItem iocsTab = new TabItem(editorTabs, SWT.NONE);
 		iocsTab.setText("IOCs");
 		iocsTab.setControl(iocs);
 		
-        TabItem tbtmIocMacros = new TabItem(editorTabs, SWT.NONE);
-        tbtmIocMacros.setText("IOC Macros");
-
-        final MessageDisplayer msgDisp = dialog;
-        IIocPanelCreator macroFactory = new IIocPanelCreator() {
-            @Override
-            public IIocDependentPanel factory(Composite parent) {
-                return new MacroPanel(parent, SWT.NONE);
-            }
-        };
-        iocMacros = new IocSelectorPanel(editorTabs, SWT.NONE, macroFactory);
-        tbtmIocMacros.setControl(iocMacros);
-
 		TabItem blocksTab = new TabItem(editorTabs, SWT.NONE);
         blocksTab.setText(BLOCK_TAB_NAME);
 		
@@ -136,30 +114,6 @@ public class ConfigEditorPanel extends Composite {
 		
         groups = new GroupsEditorPanel(editorTabs, SWT.NONE, dialog, configurationViewModels);
 		groupsTab.setControl(groups);
-		
-		TabItem tbtmIocPvValues = new TabItem(editorTabs, SWT.NONE);
-		tbtmIocPvValues.setText("IOC PV Values");
-		
-		IIocPanelCreator pvsFactory = new IIocPanelCreator() {
-			@Override
-			public IIocDependentPanel factory(Composite parent) {
-				return new IocPVsEditorPanel(parent, SWT.NONE, msgDisp);
-			}
-		};
-		iocPVs = new IocSelectorPanel(editorTabs, SWT.NONE, pvsFactory);
-		tbtmIocPvValues.setControl(iocPVs);
-		
-		TabItem tbtmIocPvSets = new TabItem(editorTabs, SWT.NONE);
-		tbtmIocPvSets.setText("IOC PV Sets");
-		
-		IIocPanelCreator pvSetsFactory = new IIocPanelCreator() {
-			@Override
-			public IIocDependentPanel factory(Composite parent) {
-				return new IocPVSetsEditorPanel(parent, SWT.NONE, msgDisp);
-			}
-		};
-		iocPVSets = new IocSelectorPanel(editorTabs, SWT.NONE, pvSetsFactory);
-		tbtmIocPvSets.setControl(iocPVSets);
 	}
 
     /**
@@ -174,9 +128,6 @@ public class ConfigEditorPanel extends Composite {
 		if (components != null) {
 			components.setConfig(config);
 		}
-		iocMacros.setConfig(config);
-		iocPVs.setConfig(config);
-		iocPVSets.setConfig(config);
 		summary.setConfig(config);
 	}
 	
@@ -189,23 +140,6 @@ public class ConfigEditorPanel extends Composite {
 		if (components != null) {
 			components.setEnabled(enabled);
 		}
-		iocMacros.setEnabled(enabled);
-		iocPVs.setEnabled(enabled);
-		iocPVSets.setEnabled(enabled);
-	}
-
-    /**
-     * Opens a specific tab of the editing window.
-     * 
-     * @param tabName
-     *            The name of the tab to open.
-     */
-    public void openTab(String tabName) {
-        for (TabItem tab : editorTabs.getItems()) {
-            if (tab.getText() == tabName) {
-                editorTabs.setSelection(tab);
-            }
-        }
 	}
 
     /**
