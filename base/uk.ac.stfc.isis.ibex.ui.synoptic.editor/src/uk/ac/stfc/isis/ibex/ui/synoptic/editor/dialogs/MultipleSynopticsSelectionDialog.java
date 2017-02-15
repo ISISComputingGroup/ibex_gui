@@ -1,7 +1,7 @@
 
 /*
 * This file is part of the ISIS IBEX application.
-* Copyright (C) 2012-2015 Science & Technology Facilities Council.
+* Copyright (C) 2012-2017 Science & Technology Facilities Council.
 * All rights reserved.
 *
 * This program is distributed in the hope that it will be useful.
@@ -30,12 +30,20 @@ import org.eclipse.swt.widgets.Shell;
 import uk.ac.stfc.isis.ibex.synoptic.SynopticInfo;
 import uk.ac.stfc.isis.ibex.ui.dialogs.SelectionDialog;
 
+/**
+ * Dialog for asking the user to select one or multiple synoptics from a list.
+ */
 public class MultipleSynopticsSelectionDialog extends SelectionDialog {
 	
 	private final Collection<SynopticInfo> available;
 
 	private Collection<String> selected = new ArrayList<>();
 	
+	/**
+     * @param parentShell The shell to open the dialog from.
+     * @param title The title of the dialog box.
+     * @param available The list of synoptics that the user can choose from.
+	 */
 	public MultipleSynopticsSelectionDialog(
 			Shell parentShell, 
 			String title,
@@ -44,6 +52,9 @@ public class MultipleSynopticsSelectionDialog extends SelectionDialog {
 		this.available = available;
 	}
 	
+    /**
+     * @return The collection of synoptics selected by the user
+     */
 	public Collection<String> selectedSynoptics() {
 		return selected;
 	}

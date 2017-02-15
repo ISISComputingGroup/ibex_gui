@@ -1,7 +1,7 @@
 
 /*
 * This file is part of the ISIS IBEX application.
-* Copyright (C) 2012-2015 Science & Technology Facilities Council.
+* Copyright (C) 2012-2017 Science & Technology Facilities Council.
 * All rights reserved.
 *
 * This program is distributed in the hope that it will be useful.
@@ -92,9 +92,6 @@ public class DeleteComponentsHandler extends DisablingConfigHandler<Collection<S
         observerRegister.clear();
         for (final String name : names) {
             String pv = getPV(name);
-            if (pv == null) {
-                continue;
-            }
             SERVER.dependencies(pv).addObserver(new BaseObserver<Collection<String>>() {
                 @Override
                 public void onValue(java.util.Collection<String> value) {
@@ -142,12 +139,14 @@ public class DeleteComponentsHandler extends DisablingConfigHandler<Collection<S
      * @return The PV associated to the component
      */
     private String getPV(String component) {
+        String pv = "";
         for (ConfigInfo compInfo : SERVER.componentsInfo().getValue()) {
             if (compInfo.name().equals(component)) {
-                return compInfo.pv();
+                pv = compInfo.pv();
+                break;
             }
         }
-        return null;
+        return pv;
     }
 
     /**
