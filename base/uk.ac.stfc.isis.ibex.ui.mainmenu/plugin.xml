@@ -18,6 +18,11 @@
             id="uk.ac.stfc.isis.ibex.ui.mainmenu.ExitHandler"
             name="Exit IBEX Client">
       </command>
+      <command
+            defaultHandler="uk.ac.stfc.isis.ibex.ui.mainmenu.ResetHandler"
+            id="uk.ac.stfc.isis.ibex.ui.mainmenu.reset"
+            name="Reset">
+      </command>
    </extension>
    <extension
          point="org.eclipse.ui.menus">
@@ -43,6 +48,14 @@
                   mnemonic="R"
                   style="push"
                   tooltip="Swith the view back to the default.">
+            </command>
+            <command
+                  commandId="uk.ac.stfc.isis.ibex.ui.mainmenu.reset"
+                  id="uk.ac.stfc.isis.ibex.ui.mainmenu.ResetHandler"
+                  label="Reset server connection"
+                  mnemonic="C"
+                  style="push"
+                  tooltip="Resets connection to current instrument. May be useful in resolving PV connectivity issues.">
             </command>
             <command
                   commandId="uk.ac.stfc.isis.ibex.ui.mainmenu.ExitHandler"

@@ -15,12 +15,6 @@
             id="uk.ac.stfc.isis.ibex.ui.help.manual"
             name="Manual">
       </command>
-      <command
-            defaultHandler="uk.ac.stfc.isis.ibex.ui.help.ResetHandler"
-            description="Reset server connection"
-            id="uk.ac.stfc.isis.ibex.ui.help.reset"
-            name="Reset">
-      </command>
    </extension>
    <extension
          point="org.eclipse.ui.menus">
@@ -41,12 +35,6 @@
                  commandId="uk.ac.stfc.isis.ibex.ui.help.manual"
                  label="User Manual (Web)"
                  mnemonic="U"
-                 style="push">
-           </command>
-           <command
-                 commandId="uk.ac.stfc.isis.ibex.ui.help.reset"
-                 label="Reset server connection"
-                 mnemonic="R"
                  style="push">
            </command>
          	</menu>
