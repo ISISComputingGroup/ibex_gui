@@ -38,17 +38,42 @@ import org.eclipse.jface.viewers.ViewerFilter;
 import uk.ac.stfc.isis.ibex.log.message.LogMessage;
 import uk.ac.stfc.isis.ibex.log.message.LogMessageFields;
 
+/**
+ * The class that filters the log messages in the table based on the user's
+ * inputed criteria.
+ */
 public class LogMessageFilter extends ViewerFilter {
 	private String filterString;
 	private LogMessageFields filterfield;
 	private boolean isNegative;
 	
-	public LogMessageFilter(LogMessageFields field, String filterValue, boolean isNegative) {
-		this.filterfield = field;
+    /**
+     * Creates the filter based on the provided options.
+     * 
+     * If isNegative is False the filter will return all messages where the
+     * specified field contains the specified value. If isNegative is True the
+     * filter will return all messages where the specified field does not
+     * contain the specified value.
+     * 
+     * @param filterField
+     *            The message field to filter on.
+     * @param filterValue
+     *            The value to filter on.
+     * @param isNegative
+     *            Whether to negatively filter (see above)
+     */
+    public LogMessageFilter(LogMessageFields filterField, String filterValue, boolean isNegative) {
+        this.filterfield = filterField;
 		this.filterString = filterValue;
 		this.isNegative = isNegative;
 	}
 	
+    /**
+     * Set the value to filter on.
+     * 
+     * @param value
+     *            The value to filter on.
+     */
 	public void setFilter(String value) {
 		this.filterString = ".*" + value + ".*";
 	}
@@ -58,7 +83,14 @@ public class LogMessageFilter extends ViewerFilter {
 		return showMessage((LogMessage) element);
 	}
 
-	public boolean showMessage(LogMessage message) {
+    /**
+     * Checks a singular message for whether or not it should be displayed.
+     * 
+     * @param message
+     *            The message to check.
+     * @return True if the message should be displayed to the user.
+     */
+    private boolean showMessage(LogMessage message) {
 		if (filterString == null) {
 			return true;
 		}
@@ -71,6 +103,13 @@ public class LogMessageFilter extends ViewerFilter {
 		return isNegative;
 	}
 
+    /**
+     * Gets all the messages that adhere to the given filtering criteria.
+     * 
+     * @param unfiltered
+     *            The list of unfiltered messages.
+     * @return The list of filtered messages.
+     */
 	public List<LogMessage> getFilteredList(final List<LogMessage> unfiltered) {
 		List<LogMessage> filtered = new ArrayList<LogMessage>();
 

@@ -27,7 +27,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
-import uk.ac.stfc.isis.ibex.log.ILogMessageConsumer;
+import uk.ac.stfc.isis.ibex.activemq.message.IMessageConsumer;
 import uk.ac.stfc.isis.ibex.log.ILogMessageProducer;
 import uk.ac.stfc.isis.ibex.log.message.LogMessage;
 import uk.ac.stfc.isis.ibex.log.message.LogMessageFields;
@@ -44,7 +44,7 @@ import uk.ac.stfc.isis.ibex.ui.log.save.LogMessageFileWriter;
  * searching service.
  */
 public class LogDisplayModel extends ModelObject
-        implements ILogMessageConsumer, ISearchModel, AsyncMessageModeratorTask {
+        implements IMessageConsumer<LogMessage>, ISearchModel, AsyncMessageModeratorTask {
     /**
      * The maximum number of recent messages to display; older messages are
      * dropped.

@@ -84,6 +84,8 @@ public class BlockServerAddresses {
     /** PV ending for retrieving an empty configuration. */
 	private static final String BLANK_CONFIG = "BLANK_CONFIG";
     /** PV ending for block rules. */
+    private static final String COMPONENT_DETAILS = "ALL_COMPONENT_DETAILS";
+    /** PV ending for block rules. */
     private static final String BLOCK_RULES = "BLOCK_RULES";
     /** PV ending for group rules. */
     private static final String GROUP_RULES = "GROUP_RULES";
@@ -136,7 +138,15 @@ public class BlockServerAddresses {
 	public String blankConfig() {
 		return blockServerAddress.endWith(BLANK_CONFIG);
 	}
-	
+
+    /**
+     * @return The PV address to get details of all components available on the
+     *         instrument
+     */
+    public String componentDetails() {
+        return blockServerAddress.endWith(COMPONENT_DETAILS);
+    }
+
     /**
      * @param configName The name of the configuration to get details for
      * @return The PV address to get the configuration details for a named

@@ -27,7 +27,7 @@ import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 
 import uk.ac.stfc.isis.ibex.configserver.configuration.BannerItem;
-import uk.ac.stfc.isis.ibex.configserver.configuration.Component;
+import uk.ac.stfc.isis.ibex.configserver.configuration.ComponentInfo;
 import uk.ac.stfc.isis.ibex.configserver.configuration.ConfigInfo;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Configuration;
 import uk.ac.stfc.isis.ibex.configserver.configuration.PV;
@@ -77,7 +77,9 @@ public class ConfigServerVariables extends Closer {
     /** Rules from the description should be formed. */
     public final ForwardingObservable<BlockServerNameValidator> configDescriptionRules;
     /** Provides the components on the instrument. */
-	public final ForwardingObservable<Collection<Component>> components;
+	public final ForwardingObservable<Collection<ComponentInfo>> components;
+    /** Provides the details for all components on the instrument. */
+    public final ForwardingObservable<Collection<Configuration>> componentDetails;
     /** Provides the IOCs on the instrument. */
 	public final ForwardingObservable<Collection<EditableIoc>> iocs;
     /** Provides all the PVs on the instrument. */
@@ -131,6 +133,9 @@ public class ConfigServerVariables extends Closer {
                 InstrumentUtils.convert(readCompressed(blockServerAddresses.currentConfig()), converters.toConfig());
         blankConfig =
                 InstrumentUtils.convert(readCompressed(blockServerAddresses.blankConfig()), converters.toConfig());
+        componentDetails =
+                InstrumentUtils.convert(readCompressed(blockServerAddresses.componentDetails()),
+                        converters.toConfigList());
 
         configsInfo =
                 InstrumentUtils.convert(readCompressed(blockServerAddresses.configs()), converters.toConfigsInfo());
