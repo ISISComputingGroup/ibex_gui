@@ -30,7 +30,9 @@ import org.eclipse.jface.window.Window;
 
 import uk.ac.stfc.isis.ibex.configserver.configuration.ConfigInfo;
 import uk.ac.stfc.isis.ibex.epics.observing.BaseObserver;
+import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.Observer;
+import uk.ac.stfc.isis.ibex.ui.configserver.dialogs.DeleteComponentsDialog;
 import uk.ac.stfc.isis.ibex.ui.configserver.dialogs.MultipleConfigsSelectionDialog;
 
 /**
@@ -38,63 +40,40 @@ import uk.ac.stfc.isis.ibex.ui.configserver.dialogs.MultipleConfigsSelectionDial
  */
 public class DeleteComponentsHandler extends DisablingConfigHandler<Collection<String>> {
     
-    private Map<String, Collection<String>> dependenciesAll = new HashMap<>();
-    private Map<String, Collection<String>> dependenciesNonEmpty = new HashMap<>();
-	
-    /**
-     * The constructor.
-     */
-	public DeleteComponentsHandler() {
-		super(SERVER.deleteComponents());
-        SERVER.componentsInfo().addObserver(dependencyAdapter);
-	}
+    private Map<String, ForwardingObservable<Collection<String>>> observerRegister = new HashMap<>();
+    private Map<String, Collection<String>> dependencies = new HashMap<>();
 
-    Observer<Collection<ConfigInfo>> dependencyAdapter = new BaseObserver<Collection<ConfigInfo>>() {
+    Observer<Collection<ConfigInfo>> componentAdapter = new BaseObserver<Collection<ConfigInfo>>() {
 
         @Override
         public void onValue(java.util.Collection<ConfigInfo> value) {
-            createObservers(value);
+            updateObservers(value);
         };
     };
 
     /**
-     * Creates observers for each component's dependencies PV and stores values
-     * in a local hashmap.
-     * 
-     * @param components
-     *            The available components.
+     * Instantiates the class and adds relevant observers.
      */
-    private void createObservers(Collection<ConfigInfo> components) {
-        Collection<String> names = ConfigInfo.names(components);
-        for (final String name : names) {
-            String pv = getPV(name);
-            if (pv == null || dependenciesAll.containsKey(name)) {
-                continue; // TODO handle errors
-            }
-            SERVER.dependencies(pv).addObserver(new BaseObserver<Collection<String>>() {
-                
-                @Override
-                public void onValue(java.util.Collection<String> value) {
-                    dependenciesAll.put(name, value);
-                    dependenciesNonEmpty = filterEmpty(dependenciesAll);
-                };
-            });
-        }
-    }
+	public DeleteComponentsHandler() {
+		super(SERVER.deleteComponents());
+        SERVER.componentsInfo().addObserver(componentAdapter);
+	}
 
     @Override
     public Object execute(ExecutionEvent event) throws ExecutionException {
-        MultipleConfigsSelectionDialog dialog = new MultipleConfigsSelectionDialog(shell(), "Delete Components",
-                SERVER.componentsInfo().getValue(), true, false);
+        MultipleConfigsSelectionDialog dialog =
+                new DeleteComponentsDialog(shell(), SERVER.componentsInfo().getValue(), dependencies.keySet());
+        
         if (dialog.open() == Window.OK) {
             Collection<String> toDelete = dialog.selectedConfigs();
-            Map<String, Collection<String>> dependencies = filterSelected(toDelete);
-            if (dependencies.size() == 0) {
+            Map<String, Collection<String>> selectedDependencies = filterSelected(toDelete);
+            if (selectedDependencies.size() == 0) {
                 configService.write(toDelete);
             } else {
-                String message = buildWarning(dependencies);
+                String message = buildWarning(selectedDependencies);
                 new MessageDialog(shell(), "Component in Use", null, message, MessageDialog.WARNING,
                         new String[] {"Ok"}, 0).open();
+                // Return to selection dialog
                 execute(event);
             }
         }
@@ -102,11 +81,65 @@ public class DeleteComponentsHandler extends DisablingConfigHandler<Collection<S
     }
 
     /**
+     * Updates the observers on component dependencies when components change.
+     * 
+     * @param updatedComponents The current list of components
+     */
+    private void updateObservers(Collection<ConfigInfo> updatedComponents) {
+        Collection<String> names = ConfigInfo.names(updatedComponents);
+        closeUnusedObservables(names);
+
+        observerRegister.clear();
+        for (final String name : names) {
+            String pv = getPV(name);
+            if (pv == null) {
+                continue;
+            }
+            SERVER.dependencies(pv).addObserver(new BaseObserver<Collection<String>>() {
+                @Override
+                public void onValue(java.util.Collection<String> value) {
+                    updateDependency(name, value);
+                };
+            });
+            observerRegister.put(name, SERVER.dependencies(pv));
+        }
+    }
+
+    /**
+     * Checks whether components still exist and removes associated observables
+     * if not.
+     * 
+     * @param updatedComponents The current list of components
+     */
+    private void closeUnusedObservables(Collection<String> updatedComponents) {
+        for (String key : observerRegister.keySet()) {
+            if (!updatedComponents.contains(key)) {
+                observerRegister.get(key).close();
+            }
+        }
+    }
+
+    /**
+     * Updates the list of configurations dependent on a given component, or
+     * removes it from the list if there are none.
+     * 
+     * @param name The name of the component
+     * @param value The list of dependent configurations
+     */
+    private void updateDependency(String name, Collection<String> value) {
+        if (!value.isEmpty()) {
+            dependencies.put(name, value);
+        } else {
+            dependencies.remove(name);
+        }
+    }
+
+    /**
      * Finds the dynamic blockserver PV of a given component based on its name.
      * 
      * @param component
-     *            The name of the component.
-     * @return The PV associated to the component.
+     *            The name of the component
+     * @return The PV associated to the component
      */
     private String getPV(String component) {
         for (ConfigInfo compInfo : SERVER.componentsInfo().getValue()) {
@@ -120,33 +153,13 @@ public class DeleteComponentsHandler extends DisablingConfigHandler<Collection<S
     /**
      * Filter to return only dependencies of selected components.
      * 
-     * @param toDelete
-     *            The list of selected components to delete.
-     * @return A map containing dependencies for selected components only.
+     * @param toDelete The list of selected components to delete
+     * @return A map containing dependencies for selected components only
      */
     private Map<String, Collection<String>> filterSelected(Collection<String> toDelete) {
         Map<String, Collection<String>> result = new HashMap<String, Collection<String>>();
         for (String key : toDelete) {
-            if (dependenciesNonEmpty.keySet().contains(key)) {
-                result.put(key, dependenciesNonEmpty.get(key));
-            }
-        }
-        return result;
-    }
-
-    /**
-     * Filter to return only non-empty dependencies of components.
-     * 
-     * @param toDelete
-     *            The list of selected components to delete.
-     * @return A map containing dependencies for selected components only.
-     */
-    // TODO last thing I did
-    private Map<String, Collection<String>> filterEmpty(Map<String, Collection<String>> dependencies) {
-        Map<String, Collection<String>> result = new HashMap<String, Collection<String>>();
-        for (String key : dependencies.keySet()) {
-            Collection<String> value = dependencies.get(key);
-            if (value.size() > 0) {
+            if (dependencies.keySet().contains(key)) {
                 result.put(key, dependencies.get(key));
             }
         }
@@ -157,8 +170,7 @@ public class DeleteComponentsHandler extends DisablingConfigHandler<Collection<S
      * Builds a warning message for display based on dependencies found in
      * components to delete.
      * 
-     * @param dependencies
-     *            The dependencies of components to delete
+     * @param dependencies The dependencies of components to delete
      * @return A warning message as string.
      */
     private String buildWarning(Map<String, Collection<String>> dependencies) {
