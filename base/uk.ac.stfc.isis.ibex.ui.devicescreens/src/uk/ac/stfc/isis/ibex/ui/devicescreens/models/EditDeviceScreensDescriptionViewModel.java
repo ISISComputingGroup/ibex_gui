@@ -580,6 +580,11 @@ public class EditDeviceScreensDescriptionViewModel extends ModelObject {
         return canWriteRemote;
     }
 
+    /**
+     * Gets whether the screen is enabled or not.
+     * 
+     * @return true if the screen is enabled; false otherwise
+     */
     public boolean getPersistenceEnabled() {
         return previousPersistenceEnabled;
     }

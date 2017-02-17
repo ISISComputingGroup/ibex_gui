@@ -257,7 +257,7 @@ public class TargetPropertiesWidget extends Composite {
     }
 
     /**
-     * 
+     * Sets whether the table is greyed out or not.
      */
     private void enableTable() {
         if (currentEnabled) {
