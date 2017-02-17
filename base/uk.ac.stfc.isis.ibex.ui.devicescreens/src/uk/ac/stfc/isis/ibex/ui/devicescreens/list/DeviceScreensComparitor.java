@@ -40,7 +40,8 @@ public class DeviceScreensComparitor extends ViewerComparator {
      */
     enum SortedOnType {
         TYPE,
-        NAME
+        NAME,
+        PERSISTENCE
     };
 
     private SortedOnType sortedOn = SortedOnType.NAME;
@@ -85,6 +86,12 @@ public class DeviceScreensComparitor extends ViewerComparator {
                 }
                 break;
             case TYPE:
+                rc = p1.getKey().compareTo(p2.getKey());
+                if (rc == 0) {
+                    rc = p1.getName().compareTo(p2.getName());
+                }
+                break;
+            case PERSISTENCE:
                 rc = p1.getKey().compareTo(p2.getKey());
                 if (rc == 0) {
                     rc = p1.getName().compareTo(p2.getName());

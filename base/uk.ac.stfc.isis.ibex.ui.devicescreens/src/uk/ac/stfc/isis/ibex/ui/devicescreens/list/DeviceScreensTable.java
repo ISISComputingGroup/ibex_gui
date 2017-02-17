@@ -86,8 +86,8 @@ public class DeviceScreensTable extends DataboundTable<DeviceDescription> {
     }
 
     private void persist() {
-        TableViewerColumn name = createColumn("Saved on server", 3);
-        name.setLabelProvider(new DataboundCellLabelProvider<DeviceDescription>(observeProperty("persist")) {
+        TableViewerColumn persist = createColumn("Saved on server", 3);
+        persist.setLabelProvider(new DataboundCellLabelProvider<DeviceDescription>(observeProperty("persist")) {
             @Override
             protected String valueFromRow(DeviceDescription row) {
                 if (row.getPersist()) {
@@ -97,7 +97,7 @@ public class DeviceScreensTable extends DataboundTable<DeviceDescription> {
                 }
             }
         });
-        setSortListener(name.getColumn(), DeviceScreensComparitor.SortedOnType.NAME);
+        setSortListener(persist.getColumn(), DeviceScreensComparitor.SortedOnType.PERSISTENCE);
     }
 
     private void type() {
