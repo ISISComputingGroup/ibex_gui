@@ -102,7 +102,7 @@ public class DeviceScreensModel extends ModelObject {
                     copy.addDevice(deviceCopy);
                 }
 
-                updateDeviceScreensDescription(copy);
+                setDeviceScreensDescription(copy);
             }
 
             @Override
@@ -126,9 +126,10 @@ public class DeviceScreensModel extends ModelObject {
         return deviceScreensDescription;
     }
 
-    private void updateDeviceScreensDescription(DeviceScreensDescription deviceScreensDescription) {
+    public void setDeviceScreensDescription(DeviceScreensDescription deviceScreensDescription) {
         firePropertyChange("deviceScreensDescription", this.deviceScreensDescription,
                 this.deviceScreensDescription = deviceScreensDescription);
+        updateDeviceScreensDescription(deviceScreensDescription);
     }
 
     /**
@@ -137,7 +138,7 @@ public class DeviceScreensModel extends ModelObject {
      * @param deviceScreensDescription
      *            the device screens description to set
      */
-    public void setDeviceScreensDescription(DeviceScreensDescription deviceScreensDescription) {
+    public void updateDeviceScreensDescription(DeviceScreensDescription deviceScreensDescription) {
 
         DeviceScreensDescription remoteDevices = new DeviceScreensDescription();
 
@@ -154,8 +155,6 @@ public class DeviceScreensModel extends ModelObject {
         }
 
         writableDeviceScreenDescriptions.write(remoteDevices);
-
-        updateDeviceScreensDescription(deviceScreensDescription);
     }
 
 }
