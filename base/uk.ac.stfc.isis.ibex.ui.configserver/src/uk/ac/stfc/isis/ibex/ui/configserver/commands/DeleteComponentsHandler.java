@@ -178,7 +178,7 @@ public class DeleteComponentsHandler extends DisablingConfigHandler<Collection<S
         sb.append("The following " + (multi ? "components are" : "component is")
                 + " currently in use and thus can not be deleted:\n\n");
         for (String comp : dependencies.keySet()) {
-            sb.append(comp + "\nused in configuration(s): ");
+            sb.append("Component: " + comp + "\nUsed in configuration(s): ");
             boolean first = true;
             for (String config : dependencies.get(comp)) {
                 if (!first) {
@@ -189,7 +189,7 @@ public class DeleteComponentsHandler extends DisablingConfigHandler<Collection<S
             }
             sb.append("\n\n");
         }
-        sb.append("\nPlease remove the component" + (multi ? "s" : "") + " from these configurations before deleting.");
+        sb.append("Please remove the component" + (multi ? "s" : "") + " from these configurations before deleting.");
         return sb.toString();
     }
 
