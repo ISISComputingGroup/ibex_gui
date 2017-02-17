@@ -92,9 +92,9 @@ public class DeviceScreensComparitor extends ViewerComparator {
                 }
                 break;
             case PERSISTENCE:
-                rc = p1.getKey().compareTo(p2.getKey());
+                rc = ((Boolean) p1.getPersist()).compareTo(p2.getPersist());
                 if (rc == 0) {
-                    rc = p1.getName().compareTo(p2.getName());
+                    rc = ((Boolean) p1.getPersist()).compareTo(p2.getPersist());
                 }
                 break;
             default:

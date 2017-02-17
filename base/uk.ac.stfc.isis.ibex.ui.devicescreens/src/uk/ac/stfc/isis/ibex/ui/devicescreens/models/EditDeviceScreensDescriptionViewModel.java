@@ -563,7 +563,7 @@ public class EditDeviceScreensDescriptionViewModel extends ModelObject {
             desc.addDevice(device);
         }
 
-        deviceScreensModel.updateDeviceScreensDescription(desc);
+        deviceScreensModel.setDeviceScreensDescription(desc);
     }
 
     /**

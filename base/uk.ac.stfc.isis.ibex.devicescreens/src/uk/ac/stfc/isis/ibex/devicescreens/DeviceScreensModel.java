@@ -126,18 +126,18 @@ public class DeviceScreensModel extends ModelObject {
         return deviceScreensDescription;
     }
 
-    public void setDeviceScreensDescription(DeviceScreensDescription deviceScreensDescription) {
-        firePropertyChange("deviceScreensDescription", this.deviceScreensDescription,
-                this.deviceScreensDescription = deviceScreensDescription);
-        updateDeviceScreensDescription(deviceScreensDescription);
-    }
-
     /**
      * Setter for the device screens description.
      * 
      * @param deviceScreensDescription
      *            the device screens description to set
      */
+    public void setDeviceScreensDescription(DeviceScreensDescription deviceScreensDescription) {
+        firePropertyChange("deviceScreensDescription", this.deviceScreensDescription,
+                this.deviceScreensDescription = deviceScreensDescription);
+        updateDeviceScreensDescription(deviceScreensDescription);
+    }
+
     public void updateDeviceScreensDescription(DeviceScreensDescription deviceScreensDescription) {
 
         DeviceScreensDescription remoteDevices = new DeviceScreensDescription();
