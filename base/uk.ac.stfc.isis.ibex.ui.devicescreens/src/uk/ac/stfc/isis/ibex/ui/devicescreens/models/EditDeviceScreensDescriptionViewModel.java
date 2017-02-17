@@ -439,7 +439,7 @@ public class EditDeviceScreensDescriptionViewModel extends ModelObject {
     public void addScreen() {
         List<DeviceDescriptionWrapper> oldList = new ArrayList<>(devices);
 
-        DefaultName namer = new DefaultName("Screen", "_", this.canWriteRemote);
+        DefaultName namer = new DefaultName("Screen", "_", false);
         List<String> names = new ArrayList<>();
         for (DeviceDescriptionWrapper d : oldList) {
             names.add(d.getName());
