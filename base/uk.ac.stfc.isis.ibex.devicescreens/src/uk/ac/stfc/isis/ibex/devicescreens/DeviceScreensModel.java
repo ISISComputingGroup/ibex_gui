@@ -53,7 +53,6 @@ public class DeviceScreensModel extends ModelObject {
     private void setCanWriteRemote(boolean canWriteRemoteDeviceScreens) {
         firePropertyChange("canWriteRemote", this.canWriteRemote,
                 this.canWriteRemote = canWriteRemoteDeviceScreens);
-        System.out.println("Can write " + canWriteRemoteDeviceScreens);
     }
 
     /**
