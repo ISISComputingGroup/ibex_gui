@@ -27,6 +27,7 @@ import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.TableColumn;
+import org.eclipse.wb.swt.ResourceManager;
 
 import uk.ac.stfc.isis.ibex.devicescreens.components.ComponentType;
 import uk.ac.stfc.isis.ibex.devicescreens.desc.DeviceDescription;
@@ -86,15 +87,22 @@ public class DeviceScreensTable extends DataboundTable<DeviceDescription> {
     }
 
     private void persist() {
-        TableViewerColumn persist = createColumn("Saved on server", 3);
+        TableViewerColumn persist = createColumn("Saved on server", 2);
         persist.setLabelProvider(new DataboundCellLabelProvider<DeviceDescription>(observeProperty("persist")) {
             @Override
-            protected String valueFromRow(DeviceDescription row) {
+            protected Image imageFromRow(DeviceDescription row) {
                 if (row.getPersist()) {
-                    return "Yes";
+                    return ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui.devicescreens",
+                            "icons/checkbox.png");
                 } else {
-                    return "No";
+                    return ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui.devicescreens",
+                            "icons/checkbox_unchecked.png");
                 }
+            }
+
+            @Override
+            protected String valueFromRow(DeviceDescription row) {
+                return null;
             }
         });
         setSortListener(persist.getColumn(), DeviceScreensComparitor.SortedOnType.PERSISTENCE);
