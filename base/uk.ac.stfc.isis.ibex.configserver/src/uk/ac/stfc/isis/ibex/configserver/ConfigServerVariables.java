@@ -219,7 +219,7 @@ public class ConfigServerVariables extends Closer {
      * @return the corresponding observable
      */
 	public ForwardingObservable<String> iocDescription(String iocName) {
-        return closingObsFactory.getSwitchableObservable(new StringChannel(),
+        return closingObsFactory.getForwardingObservable(new StringChannel(),
                 InstrumentUtils.addPrefix(iocDescriptionAddress(iocName)));
 	}
 
@@ -241,7 +241,7 @@ public class ConfigServerVariables extends Closer {
      * @return the corresponding observable
      */
 	public ForwardingObservable<String> blockValue(String blockName) {
-        return closingObsFactory.getSwitchableObservable(new DefaultChannel(),
+        return closingObsFactory.getForwardingObservable(new DefaultChannel(),
                 InstrumentUtils.addPrefix(blockServerAlias(blockName)));
 	}
 	
@@ -252,7 +252,7 @@ public class ConfigServerVariables extends Closer {
      * @return the corresponding observable
      */
 	public ForwardingObservable<String> blockDescription(String blockName) {
-        return closingObsFactory.getSwitchableObservable(new StringChannel(),
+        return closingObsFactory.getForwardingObservable(new StringChannel(),
                 InstrumentUtils.addPrefix(blockServerAddresses.blockDescription(blockServerAlias(blockName))));
 	}
 
@@ -263,7 +263,7 @@ public class ConfigServerVariables extends Closer {
      * @return the observable object
      */
     public ForwardingObservable<AlarmState> alarm(String blockName) {
-        return closingObsFactory.getSwitchableObservable(new EnumChannel<>(AlarmState.class),
+        return closingObsFactory.getForwardingObservable(new EnumChannel<>(AlarmState.class),
                 InstrumentUtils.addPrefix(blockServerAddresses.blockAlarm(blockServerAlias(blockName))));
     }
 
@@ -294,7 +294,7 @@ public class ConfigServerVariables extends Closer {
      * @return the new observable
      */
 	private ForwardingObservable<String> readCompressed(String address) {
-        return switchingObsFactory.getSwitchableObservable(new CompressedCharWaveformChannel(),
+        return switchingObsFactory.getForwardingObservable(new CompressedCharWaveformChannel(),
                 InstrumentUtils.addPrefix(address));
 	}
 	
@@ -306,7 +306,7 @@ public class ConfigServerVariables extends Closer {
      * @return the new observable
      */
 	private ForwardingObservable<String> readCompressedClosing(String address) {
-        return closingObsFactory.getSwitchableObservable(new CompressedCharWaveformChannel(),
+        return closingObsFactory.getForwardingObservable(new CompressedCharWaveformChannel(),
                 InstrumentUtils.addPrefix(address));
 	}
 	

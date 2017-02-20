@@ -20,6 +20,7 @@
 package uk.ac.stfc.isis.ibex.epics.switching;
 
 import uk.ac.stfc.isis.ibex.epics.observing.ClosableObservable;
+import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.instrument.channels.ChannelType;
 
 /**
@@ -69,6 +70,22 @@ public class ObservableFactory {
         createdObservable.setSwitcher(switcher);
 
         return createdObservable;
+    }
+
+    /**
+     * Create and return a PV observable of the correct type, registering it
+     * with the switcher.
+     * 
+     * @param <T>
+     *            the type of the channel
+     * @param channelType
+     *            the type of the channel
+     * @param address
+     *            the PV address
+     * @return the PV observable
+     */
+    public <T> ForwardingObservable<T> getForwardingObservable(ChannelType<T> channelType, String address) {
+        return new ForwardingObservable<>(getPVObservable(channelType, address));
     }
 
     public <T> ClosableObservable<T> getPVObservable(ChannelType<T> channelType, String address) {
