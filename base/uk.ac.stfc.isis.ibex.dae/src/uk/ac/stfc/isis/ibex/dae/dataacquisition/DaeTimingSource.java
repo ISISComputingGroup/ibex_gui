@@ -29,7 +29,8 @@ public enum DaeTimingSource {
     SMP("SMP"),
     MUON_CERENKOV("Muon Cerenkov"),
     MUON_MS("Muon MS"),
-    ISIS_FIRST_TS1("ISIS (first TS1)");
+    ISIS_FIRST_TS1("ISIS (first TS1)"),
+    ISIS_TS1_ONLY("ISIS (TS1 only)");
 
 	private String text;
 
