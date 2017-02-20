@@ -33,7 +33,7 @@ import uk.ac.stfc.isis.ibex.devicescreens.desc.DeviceDescription;
  * device screen list.
  * 
  */
-public class DeviceScreensComparitor extends ViewerComparator {
+public class DeviceScreensComparator extends ViewerComparator {
 
     /**
      * The Enum SortedOnType which is what the list is sorted on.
