@@ -27,12 +27,12 @@ import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.TableColumn;
-import org.eclipse.wb.swt.ResourceManager;
 
 import uk.ac.stfc.isis.ibex.devicescreens.components.ComponentType;
 import uk.ac.stfc.isis.ibex.devicescreens.desc.DeviceDescription;
 import uk.ac.stfc.isis.ibex.opis.Opi;
 import uk.ac.stfc.isis.ibex.opis.desc.OpiDescription;
+import uk.ac.stfc.isis.ibex.ui.devicescreens.CheckboxIcons;
 import uk.ac.stfc.isis.ibex.ui.devicescreens.ComponentIcons;
 import uk.ac.stfc.isis.ibex.ui.devicescreens.list.DeviceScreensComparitor.SortedOnType;
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundCellLabelProvider;
@@ -91,13 +91,7 @@ public class DeviceScreensTable extends DataboundTable<DeviceDescription> {
         persist.setLabelProvider(new DataboundCellLabelProvider<DeviceDescription>(observeProperty("persist")) {
             @Override
             protected Image imageFromRow(DeviceDescription row) {
-                if (row.getPersist()) {
-                    return ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui.devicescreens",
-                            "icons/checkbox.png");
-                } else {
-                    return ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui.devicescreens",
-                            "icons/checkbox_unchecked.png");
-                }
+                return CheckboxIcons.getCheckboxImage(row.getPersist());
             }
 
             @Override
