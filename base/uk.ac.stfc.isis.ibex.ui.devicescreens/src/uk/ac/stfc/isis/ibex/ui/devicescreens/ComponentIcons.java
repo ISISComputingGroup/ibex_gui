@@ -69,6 +69,7 @@ public final class ComponentIcons {
             case MONITOR:
                 return "monitor";
             case SAMPLESTACK:
+            case ZOOM_SAMPLE_STACK:
                 return "sample_stack";
             case DAE:
                 return "dae";
@@ -113,6 +114,7 @@ public final class ComponentIcons {
                 return "muon_front_end";
             case LAKESHORE:
                 return "lakeshore";
+            case CCD100:
             case PRESSURE_GAUGE:
                 return "pressure_gauge";
             case SCIMAG3D:
@@ -123,6 +125,8 @@ public final class ComponentIcons {
                 return "detector_motion_system";
             case PIXELMAN:
                 return "pixelman";
+            case KHLY2400:
+                return "keithley2400";
             default:
                 return "cog";
         }

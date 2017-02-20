@@ -79,7 +79,7 @@ public class InstrumentTreeView extends Composite {
 		super(parent, SWT.NONE);
 
 		this.synopticViewModel = synopticViewModel;
-        this.synopticViewModel.addInstrumentUpdateListener(new IInstrumentUpdateListener() {
+        synopticViewModel.addInstrumentUpdateListener(new IInstrumentUpdateListener() {
             @Override
             public void instrumentUpdated(UpdateTypes updateType) {
                 if (updateType == UpdateTypes.NEW_INSTRUMENT) {
@@ -93,7 +93,7 @@ public class InstrumentTreeView extends Composite {
             }
         });
 				
-		this.synopticViewModel.addPropertyChangeListener("compSelection", new PropertyChangeListener() {
+        synopticViewModel.addPropertyChangeListener("compSelection", new PropertyChangeListener() {
             @Override
             public void propertyChange(PropertyChangeEvent evt) {
                 @SuppressWarnings("unchecked")
@@ -103,6 +103,13 @@ public class InstrumentTreeView extends Composite {
                 }
 			}
 		});
+
+        synopticViewModel.addPropertyChangeListener("refreshTree", new PropertyChangeListener() {
+            @Override
+            public void propertyChange(PropertyChangeEvent evt) {
+                refresh();
+            }
+        });
 
 		setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		setLayout(new GridLayout(1, false));

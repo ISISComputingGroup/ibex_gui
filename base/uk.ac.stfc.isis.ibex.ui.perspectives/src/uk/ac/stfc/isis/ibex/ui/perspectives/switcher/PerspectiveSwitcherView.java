@@ -112,13 +112,20 @@ public class PerspectiveSwitcherView extends ViewPart implements ISizeProvider {
         Display.getCurrent().addFilter(SWT.KeyDown, new Listener() {
             @Override
             public void handleEvent(Event event) {
-                if ((event.stateMask & (SWT.SHIFT | SWT.ALT)) != 0) {
+                boolean isShiftPressed = ((SWT.SHIFT & event.stateMask) != 0);
+                boolean isAltPressed = ((SWT.ALT & event.stateMask) != 0);
+                boolean shiftThenAlt = isShiftPressed & (event.keyCode == SWT.ALT);
+                boolean altThenShift = isAltPressed & (event.keyCode == SWT.SHIFT);
+                if (altThenShift || shiftThenAlt) {
                     // Add & back into index that it was in originally (used as
                     // the button text keeps changing on alarm/log)
                     int mnemonicIdx = perspective.name().indexOf("&");
-                    StringBuilder bldr = new StringBuilder(button.getText());
-                    bldr.insert(mnemonicIdx, "&");
-                    button.setText(bldr.toString());
+                    String buttonText = button.getText();
+                    if (buttonText.charAt(mnemonicIdx) != '&') {
+                        StringBuilder bldr = new StringBuilder(buttonText);
+                        bldr.insert(mnemonicIdx, "&");
+                        button.setText(bldr.toString());
+                    }
                 }
             }
         });

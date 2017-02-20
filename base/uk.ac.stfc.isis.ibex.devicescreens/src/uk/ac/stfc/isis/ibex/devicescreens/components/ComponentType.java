@@ -49,6 +49,8 @@ public enum ComponentType {
     DANFYSIK,
     /** CAEN component type. */
 	CAEN,
+    /** CCD100 component type. */
+    CCD100,
     /** Kepco component type. */
 	KEPCO,
     /** Lambda Genesys component type. */
@@ -102,7 +104,11 @@ public enum ComponentType {
     /** Detector motion system component type. */
     DETECTOR_MOTION_SYSTEM,
     /** Pixelman camera. */
-    PIXELMAN;
+    PIXELMAN,
+    /** Keithley 2400 Source Meter. */
+    KHLY2400,
+    /** Zoom sample stack. */
+    ZOOM_SAMPLE_STACK;
 	
 	private Target target;
 

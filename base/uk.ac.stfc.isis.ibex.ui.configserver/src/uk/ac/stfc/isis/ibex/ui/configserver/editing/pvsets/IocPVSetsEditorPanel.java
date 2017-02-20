@@ -34,10 +34,11 @@ import uk.ac.stfc.isis.ibex.configserver.configuration.PVSet;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableIoc;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditablePVSet;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.iocs.IIocDependentPanel;
+import uk.ac.stfc.isis.ibex.ui.configserver.editing.iocs.IocViewModel;
 import uk.ac.stfc.isis.ibex.validators.MessageDisplayer;
 
 /**
- * The panel that gives the PV sets for a specific IOC.
+ * The panel for displaying and editing the PV sets for a given IOC.
  */
 public class IocPVSetsEditorPanel extends Composite implements	IIocDependentPanel {
 	private IocPVSetsTable iocPVSetsTable;
@@ -61,12 +62,13 @@ public class IocPVSetsEditorPanel extends Composite implements	IIocDependentPane
 	}
 
 	@Override
-	public void setIoc(final EditableIoc ioc) {
+    public void setViewModel(final IocViewModel viewModel) {
 		Collection<EditablePVSet> rows = new ArrayList<EditablePVSet>();
+        final EditableIoc ioc = viewModel.getIoc();
 		
-		for (AvailablePVSet pvset : ioc.getAvailablePVSets()) {
+        for (AvailablePVSet pvset : ioc.getAvailablePVSets()) {
 			EditablePVSet editableSet;
-			PVSet existingSet = ioc.findPVSet(pvset.getName());
+            PVSet existingSet = ioc.findPVSet(pvset.getName());
 			if (existingSet != null) {
 				editableSet = new EditablePVSet(existingSet, pvset.getDescription());
 			} else {
@@ -75,7 +77,7 @@ public class IocPVSetsEditorPanel extends Composite implements	IIocDependentPane
 			rows.add(editableSet);
 		}
 		
-		if (ioc.isEditable()) {
+        if (ioc.isEditable()) {
 			for (final EditablePVSet pvset : rows) {
                 pvset.addPropertyChangeListener("enabled", new PropertyChangeListener() {
 					// Ensure Ioc.getPVSets always contains the list of enabled sets
@@ -86,17 +88,17 @@ public class IocPVSetsEditorPanel extends Composite implements	IIocDependentPane
                             if (existingSet != null) {
                                 existingSet.setEnabled(true);
                             } else {
-                                ioc.getPvSets().add(new PVSet(pvset.getName(), true));
+                                viewModel.getPvSets().add(new PVSet(pvset.getName(), true));
 							}
                         } else if (existingSet != null) {
-                            ioc.getPvSets().remove(existingSet);
+                            viewModel.getPvSets().remove(existingSet);
 						}
 					}
 				});
 			}
 		}
 		
-		iocPVSetsTable.setIsEditable(ioc.isEditable());
+        iocPVSetsTable.setIsEditable(ioc.isEditable());
 		iocPVSetsTable.setRows(rows);
 	}
 }

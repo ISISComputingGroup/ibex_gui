@@ -42,6 +42,10 @@ public class VersionPanel extends Composite {
 	private Label serverVersion;
     /** The ID of the bundle which owns the client version number. */
     private final String versionBundleId = "uk.ac.stfc.isis.ibex.product";
+    /** The version of Java that the client is using */
+    private Label javaVersion;
+    /** The path to the Java that the client is using */
+    private Label javaPath;
 
     /**
      * Construct a new version panel.
@@ -59,6 +63,7 @@ public class VersionPanel extends Composite {
 		
 		clientVersion = new Label(this, SWT.NONE);
 		clientVersion.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+        // Not bound as fixed
         final String versionText = Platform.getBundle(versionBundleId).getVersion().toString();
         clientVersion.setText(versionText);
 		
@@ -71,9 +76,29 @@ public class VersionPanel extends Composite {
 		serverVersionGd.widthHint = AboutDialogBox.WIDTH;
 		serverVersion.setLayoutData(serverVersionGd);
 		
-		if (Help.getInstance() != null) {
-			bind(Help.getInstance());
-        }
+        Label lblJavaVersion = new Label(this, SWT.NONE);
+        lblJavaVersion.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
+        lblJavaVersion.setText("Java Version:");
+
+        javaVersion = new Label(this, SWT.NONE);
+        GridData javaVersionGd = new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1);
+        // Not bound as fixed
+        javaVersion.setText(System.getProperty("java.version"));
+        javaVersionGd.widthHint = AboutDialogBox.WIDTH;
+        javaVersion.setLayoutData(javaVersionGd);
+
+        Label lblJavaPath = new Label(this, SWT.NONE);
+        lblJavaPath.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
+        lblJavaPath.setText("Java Path:");
+
+        javaPath = new Label(this, SWT.NONE);
+        GridData javaPathGd = new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1);
+        // Not bound as fixed
+        javaPath.setText(System.getProperties().getProperty("java.home"));
+        javaPathGd.widthHint = AboutDialogBox.WIDTH;
+        javaPath.setLayoutData(javaPathGd);
+
+        bind(Help.getInstance());
 	}
 
     /**

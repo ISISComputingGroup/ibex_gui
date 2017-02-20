@@ -27,24 +27,33 @@ import uk.ac.stfc.isis.ibex.epics.pv.Closer;
 import uk.ac.stfc.isis.ibex.help.internal.Observables;
 import uk.ac.stfc.isis.ibex.model.UpdatedValue;
 
+/**
+ * Activator for the backend that holds help information.
+ */
 public class Help extends Closer implements BundleActivator {
 
 	private static BundleContext context;
 	private static Help instance;
 
+    /**
+     * @return The bundle context for the bundle.
+     */
 	static BundleContext getContext() {
 		return context;
 	}
 
 	private Observables observables;
-	private UpdatedValue<String> revision;
+	private UpdatedValue<String> serverRevision;
 	private UpdatedValue<String> date;
 	
+    /**
+     * Constructor that creates and registers the observables.
+     */
 	public Help() {
 		instance = this;
         observables = new Observables();
-		revision = registerForClose(new TextUpdatedObservableAdapter(observables.revision));
-		date = registerForClose(new TextUpdatedObservableAdapter(observables.date));
+		serverRevision = registerForClose(new TextUpdatedObservableAdapter(observables.serverRevision));
+		date = registerForClose(new TextUpdatedObservableAdapter(observables.serverDate));
 	}
 	
 	/*
@@ -56,6 +65,9 @@ public class Help extends Closer implements BundleActivator {
 		Help.context = bundleContext;
 	}
 
+    /**
+     * @return The singleton instance of this activator.
+     */
 	public static Help getInstance() {
 		return instance;
 	}
@@ -70,10 +82,16 @@ public class Help extends Closer implements BundleActivator {
 		close();
 	}
 	
+    /**
+     * @return An updating sting that holds the server revision.
+     */
 	public UpdatedValue<String> revision() {
-		return revision;
+		return serverRevision;
 	}
 	
+    /**
+     * @return An updating string that holds the date of the server revision.
+     */
 	public UpdatedValue<String> date() {
 		return date;
 	}

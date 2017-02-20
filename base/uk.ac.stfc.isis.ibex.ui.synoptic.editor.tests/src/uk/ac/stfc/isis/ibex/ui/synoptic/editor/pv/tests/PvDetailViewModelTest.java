@@ -31,7 +31,7 @@ import uk.ac.stfc.isis.ibex.ui.synoptic.editor.pv.PvDetailViewModel;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.pv.PvListViewModel;
 
 /**
- * Tests for the PvViewModel
+ * Tests for the PvViewModel.
  */
 public class PvDetailViewModelTest {
 
@@ -49,22 +49,24 @@ public class PvDetailViewModelTest {
     }
     
     @Test
-    public void WHEN_view_model_initialised_THEN_selection_invisible() {
+    public void WHEN_null_pv_selected_THEN_selection_invisible() {
+        viewModel.showPV(null);
+
         assertFalse(viewModel.getSelectionVisible());
+        assertEquals(PvDetailViewModel.NO_SELECTION_TEXT, viewModel.getErrorText());
     }
 
     @Test
-    public void GIVEN_valid_address_WHEN_address_updated_THEN_error_text_cleared() {
+    public void WHEN_valid_address_entered_THEN_no_error() {
         viewModel.setPvAddress(VALID_ADDRESS);
 
-        assertEquals(viewModel.getErrorText(), "");
+        assertEquals(true, viewModel.getErrorText().isEmpty());
     }
 
     @Test
-    public void GIVEN_invalid_address_WHEN_address_updated_THEN_error_text() {
+    public void WHEN_invalid_address_entered_THEN_error_text() {
         viewModel.setPvAddress(INVALID_ADDRESS);
 
-        assertNotEquals(viewModel.getErrorText(), "");
+        assertEquals(false, viewModel.getErrorText().isEmpty());
     }
-    
 }

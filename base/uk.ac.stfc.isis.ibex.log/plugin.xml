@@ -23,7 +23,7 @@
    <extension
          point="uk.ac.stfc.isis.ibex.instrument.info">
       <InstrumentInfoReceiver
-            class="uk.ac.stfc.isis.ibex.log.LogSettings">
+            class="uk.ac.stfc.isis.ibex.log.OnInstrumentSwitch">
       </InstrumentInfoReceiver>
    </extension>
 

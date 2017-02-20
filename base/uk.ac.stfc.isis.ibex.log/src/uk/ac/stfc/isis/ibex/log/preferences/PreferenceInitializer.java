@@ -34,13 +34,10 @@ public class PreferenceInitializer extends AbstractPreferenceInitializer {
      * @see org.eclipse.core.runtime.preferences.AbstractPreferenceInitializer#
      * initializeDefaultPreferences()
      */
+    @Override
     public void initializeDefaultPreferences() {
 	IPreferenceStore store = Log.getDefault().getPreferenceStore();
 
-	store.setDefault(PreferenceConstants.P_JMS_ADDRESS,
-		PreferenceConstants.DEFAULT_JMS_ADDRESS);
-	store.setDefault(PreferenceConstants.P_JMS_PORT,
-		PreferenceConstants.DEFAULT_JMS_PORT);
 	store.setDefault(PreferenceConstants.P_JMS_TOPIC,
 		PreferenceConstants.DEFAULT_JMS_TOPIC);
 	
@@ -50,13 +47,6 @@ public class PreferenceInitializer extends AbstractPreferenceInitializer {
 		PreferenceConstants.DEFAULT_MESSAGE_SQL_PASSWORD);
 	store.setDefault(PreferenceConstants.P_MESSAGE_SQL_SCHEMA,
 		PreferenceConstants.DEFAULT_MESSAGE_SQL_SCHEMA);
-	
-	store.setDefault(PreferenceConstants.P_EXP_DATA_SQL_USERNAME,
-			PreferenceConstants.DEFAULT_EXP_DATA_SQL_USERNAME);
-	store.setDefault(PreferenceConstants.P_EXP_DATA_SQL_PASSWORD,
-		PreferenceConstants.DEFAULT_EXP_DATA_SQL_PASSWORD);
-	store.setDefault(PreferenceConstants.P_EXP_DATA_SQL_SCHEMA,
-		PreferenceConstants.DEFAULT_EXP_DATA_SQL_SCHEMA);
 	
 	store.setDefault(PreferenceConstants.P_MINOR_MESSAGE,
 		PreferenceConstants.DEFAULT_MINOR_MESSAGE);

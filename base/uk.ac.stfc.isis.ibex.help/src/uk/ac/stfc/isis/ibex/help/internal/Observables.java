@@ -25,15 +25,28 @@ import uk.ac.stfc.isis.ibex.epics.switching.OnInstrumentSwitch;
 import uk.ac.stfc.isis.ibex.instrument.InstrumentUtils;
 import uk.ac.stfc.isis.ibex.instrument.channels.StringChannel;
 
+/**
+ * Holds all of the observables for the server versioning.
+ */
 public class Observables {
     private final ObservableFactory obsFactory = new ObservableFactory(OnInstrumentSwitch.SWITCH);
-    public final ForwardingObservable<String> revision;
-    public final ForwardingObservable<String> date;
+    /**
+     * An observable for the server version number.
+     */
+    public final ForwardingObservable<String> serverRevision;
+    /**
+     * An observable for the server version's date.
+     */
+    public final ForwardingObservable<String> serverDate;
 
+    /**
+     * Constructor that hooks the class to the PVs that contain the relevant
+     * data.
+     */
     public Observables() {
-        revision = obsFactory.getSwitchableObservable(new StringChannel(),
+        serverRevision = obsFactory.getSwitchableObservable(new StringChannel(),
                 InstrumentUtils.addPrefix("CS:VERSION:SVN:REV"));
-        date = obsFactory.getSwitchableObservable(new StringChannel(),
+        serverDate = obsFactory.getSwitchableObservable(new StringChannel(),
                 InstrumentUtils.addPrefix("CS:VERSION:SVN:DATE"));
 	}
 }
