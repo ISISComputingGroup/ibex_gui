@@ -87,7 +87,7 @@ public class DeviceScreensTable extends DataboundTable<DeviceDescription> {
     }
 
     private void persist() {
-        TableViewerColumn persist = createColumn("Saved on server", 2);
+        TableViewerColumn persist = createColumn("Saved on server", 4);
         persist.setLabelProvider(new DataboundCellLabelProvider<DeviceDescription>(observeProperty("persist")) {
             @Override
             protected Image imageFromRow(DeviceDescription row) {
