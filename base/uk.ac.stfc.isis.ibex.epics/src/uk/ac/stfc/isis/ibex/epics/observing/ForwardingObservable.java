@@ -95,5 +95,4 @@ public class ForwardingObservable<T> extends ClosableObservable<T> {
         observer.update(getValue(), currentError(), isConnected());
         return super.addObserver(observer);
     }
-
 }

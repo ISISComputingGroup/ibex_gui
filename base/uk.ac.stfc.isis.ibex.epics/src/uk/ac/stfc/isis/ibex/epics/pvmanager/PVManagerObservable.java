@@ -61,7 +61,7 @@ public class PVManagerObservable<R extends VType> extends ObservablePV<R> {
 				setValue(pv.getValue());
             }
 		}
-	};
+    };
 	
 	public PVManagerObservable(PVInfo<R> info) {
 		super(info);
