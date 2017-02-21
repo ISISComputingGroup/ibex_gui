@@ -19,6 +19,9 @@
 
 package uk.ac.stfc.isis.ibex.epics.switching;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import uk.ac.stfc.isis.ibex.epics.observing.ClosableObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.instrument.channels.ChannelType;
@@ -29,6 +32,7 @@ import uk.ac.stfc.isis.ibex.instrument.channels.ChannelType;
  */
 public class ObservableFactory {
     private Switcher switcher;
+    private List<Object> dummy_list = new ArrayList<Object>();
 
     public ObservableFactory(OnInstrumentSwitch onSwitch) {
         this(onSwitch, InstrumentSwitchers.getDefault());
@@ -85,7 +89,11 @@ public class ObservableFactory {
      * @return the PV observable
      */
     public <T> ForwardingObservable<T> getForwardingObservable(ChannelType<T> channelType, String address) {
-        return new ForwardingObservable<>(getPVObservable(channelType, address));
+        ClosableObservable<T> pvObservable = getPVObservable(channelType, address);
+        ForwardingObservable<T> obs = new ForwardingObservable<>(pvObservable);
+        // dummy_list.add(obs);
+        // dummy_list.add(pvObservable);
+        return obs;
     }
 
     public <T> ClosableObservable<T> getPVObservable(ChannelType<T> channelType, String address) {

@@ -45,41 +45,49 @@ public class ForwardingObservable<T> extends ClosableObservable<T> {
 		}
 	};
 	
+    private ClosableObservable<T> source;
+
 	private Subscription sourceSubscription;
 
-    public ForwardingObservable(Observable<T> source) {
+    public ForwardingObservable(ClosableObservable<T> source) {
         setSource(source);
     }
 
-    protected synchronized void setSource(Observable<T> newSource) {
-		cancelSubscription();	
+    protected synchronized void setSource(ClosableObservable<T> newSource) {
+        cancelSubscription();
+
+        this.source = newSource;
         sourceObserver.onConnectionStatus(false);
-		
+
         sourceObserver.onConnectionStatus(newSource.isConnected());
-		
+
         T value = newSource.getValue();
         if (value != null) {
             sourceObserver.onValue(value);
         }
 
-		Exception error = newSource.currentError();
-		if (error != null) {
-			sourceObserver.onError(error);
-		}
-		
-		sourceSubscription = newSource.addObserver(sourceObserver);
-	}
+        Exception error = newSource.currentError();
+        if (error != null) {
+            sourceObserver.onError(error);
+        }
+
+        sourceSubscription = newSource.addObserver(sourceObserver);
+    }
 	
 	@Override
 	public void close() {
 		cancelSubscription();
         sourceObserver.onConnectionStatus(false);
+        super.close();
 	}
 	
 	private void cancelSubscription() {
 		if (sourceSubscription != null) {
 			sourceSubscription.removeObserver();
 		}
+        if (source != null) {
+            source.close();
+        }
 	}
 
     @Override
@@ -87,4 +95,5 @@ public class ForwardingObservable<T> extends ClosableObservable<T> {
         observer.update(getValue(), currentError(), isConnected());
         return super.addObserver(observer);
     }
+
 }

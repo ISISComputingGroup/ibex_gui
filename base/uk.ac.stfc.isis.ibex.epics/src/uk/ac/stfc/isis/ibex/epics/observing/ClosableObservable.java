@@ -36,6 +36,7 @@ public abstract class ClosableObservable<T> implements Observable<T>, Closable {
     private T value;
     private boolean isConnected;
     private Exception currentError;
+    private boolean closed = false;
 
     @Override
     public Subscription addObserver(Observer<T> observer) {
@@ -63,6 +64,7 @@ public abstract class ClosableObservable<T> implements Observable<T>, Closable {
 
     @Override
     public void close() {
+        closed = true;
         // Do nothing by default
     }
 
@@ -109,6 +111,11 @@ public abstract class ClosableObservable<T> implements Observable<T>, Closable {
         for (Observer<T> observer : observers) {
             observer.onConnectionStatus(isConnected);
         }
+    }
+
+    @Override
+    public void finalize() {
+        close();
     }
 
 }
