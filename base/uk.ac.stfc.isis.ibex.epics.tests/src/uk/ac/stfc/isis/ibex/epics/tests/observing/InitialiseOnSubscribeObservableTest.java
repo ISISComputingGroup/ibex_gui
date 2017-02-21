@@ -26,7 +26,7 @@ import static org.mockito.Mockito.*;
 import org.junit.Before;
 import org.junit.Test;
 
-import uk.ac.stfc.isis.ibex.epics.observing.Observable;
+import uk.ac.stfc.isis.ibex.epics.observing.ClosableObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.Observer;
 import uk.ac.stfc.isis.ibex.epics.observing.Unsubscriber;
@@ -38,7 +38,7 @@ public class InitialiseOnSubscribeObservableTest {
     Observer<String> mockObserver;
     Observer<String> mockObserverTwo;
 	
-	Observable<String> mockObservable;
+    ClosableObservable<String> mockObservable;
 	TestableObservable<String> testableObservable;
 	
 	Object addObserverReturnedObject;
@@ -58,7 +58,7 @@ public class InitialiseOnSubscribeObservableTest {
 		testableObservable.setError(TestHelpers.EXCEPTION);		
 
 		// The real observables to test
-		initObservableCachingSource = new ForwardingObservable<>(mockObservable);
+        initObservableCachingSource = new ForwardingObservable<>(mockObservable);
 		initObservableCachingSource.addObserver(mockObserver);
 		initObservableCachingSource.addObserver(mockObserverTwo);
 		

@@ -22,7 +22,7 @@ package uk.ac.stfc.isis.ibex.experimentdetails;
 import java.util.Collection;
 import java.util.List;
 
-import uk.ac.stfc.isis.ibex.epics.observing.Observable;
+import uk.ac.stfc.isis.ibex.epics.observing.ClosableObservable;
 import uk.ac.stfc.isis.ibex.epics.writing.Writable;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 
@@ -42,7 +42,7 @@ public abstract class Model extends ModelObject {
 	/**
 	 * @return An observable that tracks the RB number
 	 */
-	public abstract Observable<String> rbNumber();
+    public abstract ClosableObservable<String> rbNumber();
 	
 	/**
 	 * @return A writable for setting the RB number
