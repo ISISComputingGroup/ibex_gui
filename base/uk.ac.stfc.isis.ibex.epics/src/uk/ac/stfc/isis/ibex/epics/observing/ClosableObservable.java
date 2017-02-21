@@ -111,6 +111,13 @@ public abstract class ClosableObservable<T> implements Observable<T>, Closable {
         }
     }
 
+    /**
+     * Forces this observable to close before it is garbage collected.
+     * 
+     * <p>
+     * This is necessary to prevent memory leaks!
+     * </p>
+     */
     @Override
     public void finalize() {
         close();
