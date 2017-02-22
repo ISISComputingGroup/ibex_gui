@@ -24,15 +24,27 @@ import uk.ac.stfc.isis.ibex.epics.pv.Closable;
 
 public interface Writable<T> extends Closable {
 
+    /**
+     * Whether this writable can currently be written to.
+     * 
+     * @return true if this writable can be written to, false otherwise
+     */
 	boolean canWrite();
 
+    /**
+     * Writes to the writable.
+     * 
+     * @param value
+     *            the value to write
+     */
 	void write(T value);
 	
 	/**
-	 * Allows the writer to receive updates from the writable.
-	 * 
-	 * @param writer
-	 * @return a subscription on which to listen
-	 */
+     * Allows the writer to receive updates from the writable.
+     * 
+     * @param writer
+     *            the writer
+     * @return a subscription on which to listen
+     */
 	Subscription subscribe(ConfigurableWriter<?, ?> writer);
 }

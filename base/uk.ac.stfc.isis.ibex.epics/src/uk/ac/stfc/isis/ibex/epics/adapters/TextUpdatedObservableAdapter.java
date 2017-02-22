@@ -29,6 +29,12 @@ public class TextUpdatedObservableAdapter extends UpdatedObservableAdapter<Strin
 	private static final String UNKNOWN = "Unknown";
 	private static final String EMPTY = "";
 	
+    /**
+     * Constructor.
+     * 
+     * @param observable
+     *            the observable
+     */
     public TextUpdatedObservableAdapter(ClosableObservable<String> observable) {
 		super(new ForwardingObservable<>(observable));
 	}
