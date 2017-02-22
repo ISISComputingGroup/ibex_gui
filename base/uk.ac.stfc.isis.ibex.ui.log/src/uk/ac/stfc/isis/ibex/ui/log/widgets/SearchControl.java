@@ -91,17 +91,20 @@ public class SearchControl extends Canvas {
 		this.parent = parent;
 		this.searcher = searcher;
 
-        GridLayout gl = new GridLayout(1, false);
+        GridLayout gl = new GridLayout(2, false);
         gl.marginWidth = 0;
         setLayout(gl);
 
         Group grpFilter = new Group(this, SWT.NONE);
         grpFilter.setText("Filter Options");
-        grpFilter.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+        grpFilter.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1));
 
-        GridLayout glGrpFilter = new GridLayout(5, false);
+        GridLayout glGrpFilter = new GridLayout(6, false);
         glGrpFilter.verticalSpacing = 0;
         grpFilter.setLayout(glGrpFilter);
+
+//        GridLayout glSearchProgBar = new GridLayout(2, false);
+//        glSearchProgBar.setLayout(glGrpFilter);
 
 		// Create search text box
 		GridData valueLayout = new GridData(SWT.FILL, SWT.CENTER, false, false,
@@ -146,6 +149,11 @@ public class SearchControl extends Canvas {
 				"uk.ac.stfc.isis.ibex.ui.log", "icons/delete.png"));
 		btnClear.setToolTipText("Clear search results and return to recent message view");
 		// timeLayout.widthHint = 600;
+
+        // progress bar label
+        lblSearchText = new Label(grpFilter, SWT.NONE);
+        lblSearchText.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1));
+        lblSearchText.setText("Searching...");
 
 		// Date-time picker
         Composite timePicker = new Composite(grpFilter, SWT.NONE);
@@ -219,13 +227,10 @@ public class SearchControl extends Canvas {
 		});
         setInfoFilter(cmboSeverity.getText());
 
-        // Add table title label
-        lblSearchText = new Label(this, SWT.NONE);
-        lblSearchText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
-        lblSearchText.setText("Blabla");
-
         // Progress bar
-        progressBar = new ProgressBar(this, 0);
+        progressBar = new ProgressBar(grpFilter, SWT.INDETERMINATE);
+        lblSearchText.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1));
+        setProgressBarVisible(false);
 		
 	}
 
@@ -269,11 +274,11 @@ public class SearchControl extends Canvas {
             @Override
             protected IStatus run(IProgressMonitor monitor) {
 
-                setProgressBarStatus(50);
+                setProgressBarVisible(true);
 
                 searcher.search(field, value, from, to);
 
-                setProgressBarStatus(100);
+                setProgressBarVisible(false);
 
                 return Job.ASYNC_FINISH;
             }
@@ -282,15 +287,18 @@ public class SearchControl extends Canvas {
 
         searchJob.schedule();
 	}
-	
-    private void setProgressBarStatus(final int percentComplete){
+
+    private void setProgressBarVisible(final boolean visible) {
+
         getDisplay().asyncExec(new Runnable() {
-	        @Override
-	        public void run() {
-	            progressBar.setSelection(percentComplete);
-	        }
-	    });
-	}
+            @Override
+            public void run() {
+                lblSearchText.setVisible(visible);
+                progressBar.setVisible(visible);
+            }
+        });
+
+    }
 
 	private void clearSearchResults() {
 		txtValue.setText("");
