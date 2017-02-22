@@ -24,12 +24,33 @@ import java.util.Collections;
 import java.util.List;
 
 public enum DaeTimingSource {
+    /**
+     * The isis timing source.
+     */
     ISIS("ISIS"),
+    /**
+     * The internal test clock timing source.
+     */
     INTERNAL_TEST_CLOCK("Internal Test Clock"),
+    /**
+     * The SMP timing source.
+     */
     SMP("SMP"),
+    /**
+     * The Muon Cerenkov timing source.
+     */
     MUON_CERENKOV("Muon Cerenkov"),
+    /**
+     * The muon MS timing source.
+     */
     MUON_MS("Muon MS"),
+    /**
+     * The ISIS timing source (first TS1 pulse).
+     */
     ISIS_FIRST_TS1("ISIS (first TS1)"),
+    /**
+     * The ISIS timing source (TS1 pulses only).
+     */
     ISIS_TS1_ONLY("ISIS (TS1 only)");
 
 	private String text;
