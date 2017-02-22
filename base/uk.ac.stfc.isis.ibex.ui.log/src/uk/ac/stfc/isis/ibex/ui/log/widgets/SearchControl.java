@@ -103,9 +103,6 @@ public class SearchControl extends Canvas {
         glGrpFilter.verticalSpacing = 0;
         grpFilter.setLayout(glGrpFilter);
 
-//        GridLayout glSearchProgBar = new GridLayout(2, false);
-//        glSearchProgBar.setLayout(glGrpFilter);
-
 		// Create search text box
 		GridData valueLayout = new GridData(SWT.FILL, SWT.CENTER, false, false,
 				1, 1);
@@ -230,7 +227,7 @@ public class SearchControl extends Canvas {
         // Progress bar
         progressBar = new ProgressBar(grpFilter, SWT.INDETERMINATE);
         lblSearchText.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1));
-        setProgressBarVisible(false);
+        setProgressIndicatorsVisible(false);
 		
 	}
 
@@ -274,11 +271,11 @@ public class SearchControl extends Canvas {
             @Override
             protected IStatus run(IProgressMonitor monitor) {
 
-                setProgressBarVisible(true);
+                setProgressIndicatorsVisible(true);
 
                 searcher.search(field, value, from, to);
 
-                setProgressBarVisible(false);
+                setProgressIndicatorsVisible(false);
 
                 return Job.ASYNC_FINISH;
             }
@@ -288,7 +285,7 @@ public class SearchControl extends Canvas {
         searchJob.schedule();
 	}
 
-    private void setProgressBarVisible(final boolean visible) {
+    private void setProgressIndicatorsVisible(final boolean visible) {
 
         getDisplay().asyncExec(new Runnable() {
             @Override
