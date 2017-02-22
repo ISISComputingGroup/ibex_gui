@@ -851,46 +851,6 @@ $(pv_value)</tooltip>
       <include_parent_macros>true</include_parent_macros>
     </macros>
     <visible>true</visible>
-    <wuid>77d9d918:141e97c2b68:-7260</wuid>
-    <scripts />
-    <height>1</height>
-    <name>Grouping Container</name>
-    <scale_options>
-      <width_scalable>true</width_scalable>
-      <height_scalable>true</height_scalable>
-      <keep_wh_ratio>false</keep_wh_ratio>
-    </scale_options>
-    <transparent>false</transparent>
-    <show_scrollbar>false</show_scrollbar>
-    <foreground_color>
-      <color blue="158" green="158" name="ISIS_Gray_2" red="158" />
-    </foreground_color>
-    <background_color>
-      <color blue="200" green="200" name="ISIS_Textbox_Readonly_Background" red="200" />
-    </background_color>
-    <enabled>true</enabled>
-    <widget_type>Grouping Container</widget_type>
-    <font>
-      <opifont.name fontName="Arial" height="9" style="0">ISIS_Label_Small</opifont.name>
-    </font>
-    <width>1</width>
-    <border_style>0</border_style>
-    <rules />
-    <lock_children>false</lock_children>
-    <border_width>1</border_width>
-    <border_color>
-      <color blue="255" green="128" name="ISIS_Check_Border" red="0" />
-    </border_color>
-    <y>2147483496</y>
-    <actions hook="false" hook_all="false" />
-    <x>-2147483647</x>
-    <tooltip />
-  </widget>
-  <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0">
-    <macros>
-      <include_parent_macros>true</include_parent_macros>
-    </macros>
-    <visible>true</visible>
     <wuid>77d9d918:141e97c2b68:-725f</wuid>
     <scripts />
     <height>22</height>

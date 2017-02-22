@@ -23,48 +23,81 @@ package uk.ac.stfc.isis.ibex.configserver.configuration;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 
 /**
- * Represents a component inside a configuration.
+ * General information for a component inside a configuration.
  * 
  * Note: The values from this class are populated from the BlockServer JSON via
  * reflection. Therefore variable names must reflect those expected from the
  * JSON.
  */
-public class Component extends ModelObject implements Comparable<Component> {
+public class ComponentInfo extends ModelObject implements Comparable<ComponentInfo> {
 	
 	private final String name;
 	private String description = "";
 	private String pv = "";
 	
-	public Component(String name) {
+    /**
+     * Constructor for testing.
+     * 
+     * @param name
+     *            The component name.
+     */
+	public ComponentInfo(String name) {
 		this.name = name;
 	}
 	
-	public Component(Component other) {
+    /**
+     * Constructor to initialise using another ComponentInfo-object.
+     * 
+     * @param other
+     *            The component to copy
+     */
+	public ComponentInfo(ComponentInfo other) {
 		this.name = other.name;
 		this.description = other.description;
 		this.pv = other.pv();
 	}
-	
+
+    /**
+     * Constructor to initialise using a full configuration.
+     * 
+     * @param other
+     *            The configuration to copy.
+     */
+    public ComponentInfo(Configuration other) {
+        this.name = other.name();
+        this.description = other.description();
+        this.pv = other.pv();
+    }
+
+    /**
+     * @return The name of the component.
+     */
 	public String getName() {
 		return name;
 	}
 
+    /**
+     * @return The description of the component.
+     */
 	public String description() {
 		return description;
 	}
-	
+
+    /**
+     * @return The source PV of the component.
+     */
 	public String pv() {
 		return pv;
 	}
 	
 	@Override
-	public int compareTo(Component other) {
+	public int compareTo(ComponentInfo other) {
 		return name.compareTo(other.name);
 	}
 	
 	@Override
 	public boolean equals(Object obj) {
-		if (!(obj instanceof Component)) {
+		if (!(obj instanceof ComponentInfo)) {
 			return false;
 		}
 		
@@ -72,7 +105,7 @@ public class Component extends ModelObject implements Comparable<Component> {
 			return true;
 		}
 		
-		Component other = (Component) obj;
+		ComponentInfo other = (ComponentInfo) obj;
 		return name.equals(other.name);
 	}
 	

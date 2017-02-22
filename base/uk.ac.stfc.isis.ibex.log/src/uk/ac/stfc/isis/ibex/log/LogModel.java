@@ -25,24 +25,27 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Status;
-import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jface.preference.IPreferenceStore;
 
+import com.mysql.jdbc.exceptions.jdbc4.CommunicationsException;
+
+import uk.ac.stfc.isis.ibex.activemq.ActiveMQ;
+import uk.ac.stfc.isis.ibex.activemq.ReceiveSession;
+import uk.ac.stfc.isis.ibex.activemq.message.IMessageConsumer;
+import uk.ac.stfc.isis.ibex.activemq.message.MessageParser;
 import uk.ac.stfc.isis.ibex.databases.Rdb;
-import uk.ac.stfc.isis.ibex.log.jms.JmsHandler;
+import uk.ac.stfc.isis.ibex.log.jms.XmlLogMessageParser;
 import uk.ac.stfc.isis.ibex.log.message.LogMessage;
 import uk.ac.stfc.isis.ibex.log.message.LogMessageFields;
 import uk.ac.stfc.isis.ibex.log.preferences.PreferenceConstants;
 import uk.ac.stfc.isis.ibex.log.rdb.LogMessageQuery;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 
-import com.mysql.jdbc.exceptions.jdbc4.CommunicationsException;
-
+/**
+ * The Model that connects to the database and activeMQ to read log messages.
+ */
 public class LogModel extends ModelObject implements ILogMessageProducer,
-	ILogMessageConsumer {
+        IMessageConsumer<LogMessage> {
     /**
      * The maximum number of messages (from JMS) that will be stored in a local
      * cache. When the cache size is exceeded, older messages will be dropped
@@ -55,37 +58,40 @@ public class LogModel extends ModelObject implements ILogMessageProducer,
 
     private static final String ACCESS_DENIED_MESSAGE = "Database access denied.";
 
-    /** Eclipse Job that manages the background processing of the JmsHandler */
-    private Job jmsListenerJob;
+    private IPreferenceStore preferenceStore = Log.getDefault().getPreferenceStore();
 
-    /**
-     * Starts and maintains connection to the JMS and forwards on any messages
-     * received from it.
-     */
-    private final JmsHandler jmsHandler = new JmsHandler();
+    private final ReceiveSession logQueue;
+
+    private final MessageParser<LogMessage> parser = new XmlLogMessageParser();
 
     /** List of subscribers that are to received any new JMS messages */
-    private ArrayList<ILogMessageConsumer> messageReceivers = new ArrayList<>();
+    private ArrayList<IMessageConsumer<LogMessage>> messageReceivers = new ArrayList<>();
 
     /** A local cache of the most recent messages received from the JMS. */
     private final ArrayList<LogMessage> jmsMessageCache = new ArrayList<>();
 
+    /**
+     * The default constructor. This will connect to activeMQ on startup.
+     */
     public LogModel() {
-	jmsHandler.setLogMessageConsumer(this);
-	jmsHandler.addPropertyChangeListener("connection", passThrough());
+        String topic = preferenceStore.getString(PreferenceConstants.P_JMS_TOPIC);
+        logQueue = ActiveMQ.getInstance().getReceiveQueue();
+        parser.addMessageConsumer(this);
+        logQueue.addMessageParser(topic, parser);
+        logQueue.addPropertyChangeListener("connection", passThrough());
     }
 
     @Override
     public void newMessage(LogMessage logMessage) {
-	// Add to local message cache
-	if (jmsMessageCache.size() >= MAX_CACHE_MESSAGES) {
-	    jmsMessageCache.remove(0);
-	}
-	jmsMessageCache.add(logMessage);
+        // Add to local message cache
+        if (jmsMessageCache.size() >= MAX_CACHE_MESSAGES) {
+            jmsMessageCache.remove(0);
+        }
+        jmsMessageCache.add(logMessage);
 
-	for (ILogMessageConsumer receiver : messageReceivers) {
-	    receiver.newMessage(logMessage);
-	}
+        for (IMessageConsumer<LogMessage> receiver : messageReceivers) {
+            receiver.newMessage(logMessage);
+        }
     }
 
     /**
@@ -93,8 +99,8 @@ public class LogModel extends ModelObject implements ILogMessageProducer,
      * called whenever this producer has a new message to deliver.
      */
     @Override
-    public void addMessageConsumer(ILogMessageConsumer messageReceiver) {
-	messageReceivers.add(messageReceiver);
+    public void addMessageConsumer(IMessageConsumer<LogMessage> messageReceiver) {
+        messageReceivers.add(messageReceiver);
     }
 
     /**
@@ -102,14 +108,12 @@ public class LogModel extends ModelObject implements ILogMessageProducer,
      * changes in connection status.
      */
     @Override
-    public void addPropertyChangeListener(String propertyName,
-	    PropertyChangeListener listener) {
-	super.addPropertyChangeListener(propertyName, listener);
+    public void addPropertyChangeListener(String propertyName, PropertyChangeListener listener) {
+        super.addPropertyChangeListener(propertyName, listener);
 
-	if (propertyName.equals("connection")) {
-	    listener.propertyChange(new PropertyChangeEvent(this, propertyName,
-		    null, jmsHandler.isConnected()));
-	}
+        if (propertyName.equals("connection")) {
+            listener.propertyChange(new PropertyChangeEvent(this, propertyName, null, logQueue.isConnected()));
+        }
     }
 
     /**
@@ -119,77 +123,49 @@ public class LogModel extends ModelObject implements ILogMessageProducer,
      */
     @Override
     public List<LogMessage> getAllCachedMessages() {
-	return jmsMessageCache;
+        return jmsMessageCache;
     }
 
     /**
-     * Starts a background job that maintains a connection to the Java Messaging
-     * Service (JMS) server.
+     * Stop the connection to activeMQ.
      */
-    public void start() {
-	jmsListenerJob = new Job("JMS Listener") {
-	    @Override
-	    protected IStatus run(IProgressMonitor monitor) {
-		jmsHandler.run();
-		return Status.OK_STATUS;
-	    }
-
-	    @Override
-	    protected void canceling() {
-		jmsHandler.stop();
-		super.canceling();
-	    }
-	};
-
-	jmsListenerJob.schedule();
-    }
-
     public void stop() {
-	if (jmsListenerJob != null) {
-	    jmsListenerJob.cancel();
-	    jmsHandler.stop();
-	}
+        parser.setRunning(false);
     }
 
     @Override
     public List<LogMessage> search(LogMessageFields field, String value,
 	    Calendar from, Calendar to) throws Exception {
-	try {
-		IPreferenceStore preferenceStore = Log.getDefault()
-				.getPreferenceStore();
-		
-		String schema = preferenceStore
-			.getString(PreferenceConstants.P_MESSAGE_SQL_SCHEMA);
-		String user = preferenceStore
-			.getString(PreferenceConstants.P_MESSAGE_SQL_USERNAME);
-		String password = preferenceStore
-			.getString(PreferenceConstants.P_MESSAGE_SQL_PASSWORD);
-		
-	    Rdb rdb = Rdb.connectToDatabase(schema, user, password);
-	    LogMessageQuery query = new LogMessageQuery(rdb);
-	    return query.getMessages(field, value, from, to);
-	} catch (SQLException ex) {
-	    throw new Exception(errorMessage(ex), ex);
-	}
+        try {
+            String schema = preferenceStore.getString(PreferenceConstants.P_MESSAGE_SQL_SCHEMA);
+            String user = preferenceStore.getString(PreferenceConstants.P_MESSAGE_SQL_USERNAME);
+            String password = preferenceStore.getString(PreferenceConstants.P_MESSAGE_SQL_PASSWORD);
+
+            Rdb rdb = Rdb.connectToDatabase(schema, user, password);
+            LogMessageQuery query = new LogMessageQuery(rdb);
+            return query.getMessages(field, value, from, to);
+        } catch (SQLException ex) {
+            throw new Exception(errorMessage(ex), ex);
+        }
     }
 
     @Override
     public void clearMessages() {
-	jmsMessageCache.clear();
-	for (ILogMessageConsumer receiver : messageReceivers) {
-	    receiver.clearMessages();
-	}
+        jmsMessageCache.clear();
+        for (IMessageConsumer<LogMessage> receiver : messageReceivers) {
+            receiver.clearMessages();
+        }
     }
 
     private String errorMessage(SQLException ex) {
-	if (ex instanceof CommunicationsException) {
-	    return CONNECTION_ERROR_MESSAGE;
-	}
+        if (ex instanceof CommunicationsException) {
+            return CONNECTION_ERROR_MESSAGE;
+        }
 
-	if (ex.getMessage().startsWith("Unknown database")) {
-	    return UNKNOWN_DATABASE_MESSAGE;
-	}
+        if (ex.getMessage().startsWith("Unknown database")) {
+            return UNKNOWN_DATABASE_MESSAGE;
+        }
 
-	return ACCESS_DENIED_MESSAGE;
+        return ACCESS_DENIED_MESSAGE;
     }
 }

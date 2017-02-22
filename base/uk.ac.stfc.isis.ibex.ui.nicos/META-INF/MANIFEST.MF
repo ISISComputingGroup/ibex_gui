@@ -6,5 +6,6 @@ Bundle-Version: 1.0.0.qualifier
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  uk.ac.stfc.isis.ibex.ui.perspectives,
- org.csstudio.ui.util
+ org.csstudio.ui.util,
+ uk.ac.stfc.isis.ibex.nicos
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7

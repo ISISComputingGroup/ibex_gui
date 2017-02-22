@@ -29,6 +29,7 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Shell;
 
+import uk.ac.stfc.isis.ibex.configserver.ConfigServer;
 import uk.ac.stfc.isis.ibex.configserver.Configurations;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
 import uk.ac.stfc.isis.ibex.ui.configserver.ConfigurationViewModels;
@@ -41,6 +42,8 @@ public class EditConfigDialog extends ConfigDetailsDialog {
 
 	private Button saveAsBtn;
 	
+    private ConfigServer server = Configurations.getInstance().server();
+
     /**
      * @wbp.parser.constructor Constructor
      * 
@@ -48,13 +51,12 @@ public class EditConfigDialog extends ConfigDetailsDialog {
      * @param title title of dialogue
      * @param subTitle action being taken, e.g. editing current configuration
      * @param config configuration being edited
-     * @param isComponent is component (as opposed to configuration)
      * @param isBlank is blank
      * @param configurationViewModels view model for the configuration
      */
     public EditConfigDialog(Shell parentShell, String title, String subTitle, EditableConfiguration config,
-            boolean isComponent, boolean isBlank, ConfigurationViewModels configurationViewModels) {
-		super(parentShell, title, subTitle, config, isComponent, isBlank, configurationViewModels);
+            boolean isBlank, ConfigurationViewModels configurationViewModels) {
+        super(parentShell, title, subTitle, config, isBlank, configurationViewModels);
 	}
 
 	@Override
@@ -67,16 +69,14 @@ public class EditConfigDialog extends ConfigDetailsDialog {
 		saveAsBtn.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				Collection<String> configNames = Configurations.getInstance()
-						.server().configNames();
-				Collection<String> componentNames = Configurations
-						.getInstance().server().componentNames();
+                Collection<String> configNames = server.configNames();
+                Collection<String> componentNames = server.componentNames();
 				boolean hasComponents = !config.getEditableComponents()
 						.getSelected().isEmpty();
-                String currentConfigName = Configurations.getInstance().server().currentConfig().getValue().name();
+                String currentConfigName = server.currentConfig().getValue().name();
 				SaveConfigDialog dlg = new SaveConfigDialog(null, config
 						.getName(), config.getDescription(), configNames,
-                        componentNames, !isComponent, hasComponents, currentConfigName);
+                        componentNames, !config.getIsComponent(), hasComponents, currentConfigName);
 				if (dlg.open() == Window.OK) {
 					if (dlg.getNewName() != config.getName()) {
 						config.setName(dlg.getNewName());
