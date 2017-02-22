@@ -119,7 +119,6 @@ public class LogDisplay extends Canvas {
 	private MenuItem mnuSaveAll;
 	private MenuItem mnuSaveSelected;
     private AsyncMessageModerator asyncMessageModerator;
-
     /**
      * Default constructor.
      * 

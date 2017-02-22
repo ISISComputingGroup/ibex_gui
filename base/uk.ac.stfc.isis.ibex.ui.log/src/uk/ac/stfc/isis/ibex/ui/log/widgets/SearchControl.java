@@ -38,6 +38,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.DateTime;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.ProgressBar;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.wb.swt.ResourceManager;
 
@@ -79,6 +80,10 @@ public class SearchControl extends Canvas {
             new LogMessageFilter(LogMessageFields.SEVERITY, LogMessageSeverity.INFO.name(), true);
     private final LogMessageFilter minorFilter =
             new LogMessageFilter(LogMessageFields.SEVERITY, LogMessageSeverity.MINOR.name(), true);
+
+    private Label lblSearchText;
+
+    private ProgressBar progressBar;
 	
 	public SearchControl(LogDisplay parent, final ISearchModel searcher) {
 		super(parent, SWT.NONE);
@@ -213,6 +218,14 @@ public class SearchControl extends Canvas {
 			}
 		});
         setInfoFilter(cmboSeverity.getText());
+
+        // Add table title label
+        lblSearchText = new Label(this, SWT.NONE);
+        lblSearchText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+        lblSearchText.setText("Blabla");
+
+        // Progress bar
+        progressBar = new ProgressBar(this, 0);
 		
 	}
 
@@ -243,19 +256,42 @@ public class SearchControl extends Canvas {
 							dtToTime.getHours(), dtToTime.getMinutes(),
                         dtToTime.getSeconds()) : null;
 
-                Job j = new Job("Searching") {
-                    @Override
-                    protected IStatus run(IProgressMonitor monitor) {
-                        searcher.search(field, value, from, to);
-                        return Job.ASYNC_FINISH;
-                    }
-                };
-                j.schedule();
+                runSearchJob(field, value, from, to);
 
-			}
-		}
+            }
+        }
+    }
+
+    private void runSearchJob(final LogMessageFields field, final String value, final Calendar from,
+            final Calendar to) {
+
+        final Job searchJob = new Job("Searching") {
+            @Override
+            protected IStatus run(IProgressMonitor monitor) {
+
+                setProgressBarStatus(50);
+
+                searcher.search(field, value, from, to);
+
+                setProgressBarStatus(100);
+
+                return Job.ASYNC_FINISH;
+            }
+
+        };
+
+        searchJob.schedule();
 	}
 	
+    private void setProgressBarStatus(final int percentComplete){
+        getDisplay().asyncExec(new Runnable() {
+	        @Override
+	        public void run() {
+	            progressBar.setSelection(percentComplete);
+	        }
+	    });
+	}
+
 	private void clearSearchResults() {
 		txtValue.setText("");
 
