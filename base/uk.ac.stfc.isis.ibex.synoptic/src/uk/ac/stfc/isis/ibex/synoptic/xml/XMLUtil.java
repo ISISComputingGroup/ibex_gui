@@ -33,8 +33,13 @@ import javax.xml.validation.SchemaFactory;
 
 import org.xml.sax.SAXException;
 
+import com.google.common.base.Strings;
+
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.SynopticDescription;
 
+/**
+ * Singleton class that deals with decoding/encoding XML into classes.
+ */
 public final class XMLUtil {
 	
 	private static final SchemaFactory SF = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
@@ -77,7 +82,7 @@ public final class XMLUtil {
      * @throws SAXException
      *             XML Exception
      */
-    public static <T> String toXml(T instrument) throws JAXBException, SAXException {
+    public static synchronized <T> String toXml(T instrument) throws JAXBException, SAXException {
 		if (context == null) {
 			initialise();
 		}
@@ -93,27 +98,40 @@ public final class XMLUtil {
      * 
      * @param rawSchema the XML schema for the synoptic as supplied by the
      *            BlockServer
-     * @throws SAXException XML Exception
-     * @throws JAXBException XML Exception
      */
-    public static void setSchema(String rawSchema) throws SAXException, JAXBException {
+    public static synchronized void setSchema(String rawSchema) {
 		if (context == null) {
 			initialise();
 		}
 		
-		schema = SF.newSchema(new StreamSource(new StringReader(rawSchema)));
-		marshaller.setSchema(schema);
-		unmarshaller.setSchema(schema);
+        System.out.println("Schema is: " + rawSchema);
+
+        if (Strings.isNullOrEmpty(rawSchema)) {
+            clearSchema();
+        } else {
+            try {
+                schema = SF.newSchema(new StreamSource(new StringReader(rawSchema)));
+                marshaller.setSchema(schema);
+                unmarshaller.setSchema(schema);
+            } catch (SAXException e) {
+                clearSchema();
+            }
+        }
 	}
+
+    private static void clearSchema() {
+        // Add warning here
+        marshaller.setSchema(null);
+        unmarshaller.setSchema(null);
+    }
 	
-	private static void initialise() throws JAXBException, SAXException {
+    private static void initialise() {
 		try {
 			context = JAXBContext.newInstance(SynopticDescription.class);
 			marshaller = context.createMarshaller();
 			unmarshaller = context.createUnmarshaller();	
 		} catch (Exception e) {
 			context = null;
-			throw e;
 		}
 	}
 }

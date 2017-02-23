@@ -24,7 +24,7 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
-import uk.ac.stfc.isis.ibex.synoptic.internal.InstrumentDescriptionParser;
+import uk.ac.stfc.isis.ibex.synoptic.internal.SynopticParser;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.SynopticDescription;
 
 /**
@@ -35,12 +35,12 @@ import uk.ac.stfc.isis.ibex.synoptic.model.desc.SynopticDescription;
 public class InstrumentDescriptionParserTest {
 
 	/**
-	 * Test method for {@link uk.ac.stfc.isis.ibex.synoptic.internal.InstrumentDescriptionParser#convert(java.lang.String)}.
+	 * Test method for {@link uk.ac.stfc.isis.ibex.synoptic.internal.SynopticParser#convert(java.lang.String)}.
 	 */
 	@Test
 	public final void convert_string_valid() {
 		// Arrange
-        InstrumentDescriptionParser<SynopticDescription> parser = new InstrumentDescriptionParser<>();
+        SynopticParser<SynopticDescription> parser = new SynopticParser<>();
 		String expected = "Test";
 		String value = "<?xml version=\"1.0\" ?>\n"
 				+ "<instrument xmlns=\"http://www.isis.stfc.ac.uk//instrument\">"
@@ -58,7 +58,7 @@ public class InstrumentDescriptionParserTest {
 	@Test
 	public final void convert_string_invalid() {
 		// Arrange
-        InstrumentDescriptionParser<SynopticDescription> parser = new InstrumentDescriptionParser<>();
+        SynopticParser<SynopticDescription> parser = new SynopticParser<>();
 		String expected = "Test";
 		String value = expected;
 		// Act

@@ -127,7 +127,7 @@ public class Variables {
      */
     public <T> ForwardingObservable<T> getSynopticDescription(String synopticPV) {
         return InstrumentUtils.convert(readCompressedClosing(getFullPV(synopticPV)),
-                new InstrumentDescriptionParser<T>());
+                new SynopticParser<T>());
 	}
 	
     // The following readers/writers are for PVs on the synoptic

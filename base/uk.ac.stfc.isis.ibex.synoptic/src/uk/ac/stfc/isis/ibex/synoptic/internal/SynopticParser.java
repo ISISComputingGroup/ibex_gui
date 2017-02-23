@@ -32,7 +32,7 @@ import uk.ac.stfc.isis.ibex.synoptic.xml.XMLUtil;
  * 
  * @param <T>
  */
-public class InstrumentDescriptionParser<T> extends
+public class SynopticParser<T> extends
 		Converter<String, T> {
 
 	@Override
