@@ -18,10 +18,6 @@
 
 package uk.ac.stfc.isis.ibex.synoptic;
 
-import javax.xml.bind.JAXBException;
-
-import org.xml.sax.SAXException;
-
 import uk.ac.stfc.isis.ibex.epics.observing.BaseObserver;
 import uk.ac.stfc.isis.ibex.epics.observing.Observer;
 import uk.ac.stfc.isis.ibex.epics.switching.SwitchableObservable;
@@ -64,14 +60,20 @@ public class ObservingSynopticModel extends ModelObject {
 		@Override
 		public void onValue(String value) {
 			// Set the schema
-			try {
-				XMLUtil.setSchema(value);
-			} catch (SAXException e) {
-				e.printStackTrace();
-			} catch (JAXBException e) {
-				e.printStackTrace();
-			}
+            XMLUtil.setSchema(value);
 		}
+
+        @Override
+        public void onError(Exception e) {
+            XMLUtil.setSchema(null);
+        }
+
+        @Override
+        public void onConnectionStatus(boolean isConnected) {
+            if (!isConnected) {
+                XMLUtil.setSchema(null);
+            }
+        }
 	};
 
 	private final SynopticModel model;
