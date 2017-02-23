@@ -19,16 +19,12 @@
 
 package uk.ac.stfc.isis.ibex.ui.log.widgets;
 
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-
-import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.core.databinding.DataBindingContext;
+import org.eclipse.core.databinding.beans.BeanProperties;
+import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -42,24 +38,10 @@ import org.eclipse.swt.widgets.ProgressBar;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.wb.swt.ResourceManager;
 
-import uk.ac.stfc.isis.ibex.log.message.LogMessageFields;
-import uk.ac.stfc.isis.ibex.ui.log.filter.LogMessageFilter;
-
 @SuppressWarnings("checkstyle:magicnumber")
 public class SearchControl extends Canvas {
-	private static final LogMessageFields[] FIELDS = {
-			LogMessageFields.CONTENTS, LogMessageFields.CLIENT_NAME,
-			LogMessageFields.CLIENT_HOST, LogMessageFields.SEVERITY,
-			LogMessageFields.TYPE, LogMessageFields.APPLICATION_ID };
 
-	private static final String[] FIELD_NAMES;
-
-	static {
-		FIELD_NAMES = new String[FIELDS.length];
-		for (int f = 0; f < FIELDS.length; ++f) {
-			FIELD_NAMES[f] = FIELDS[f].getDisplayName();
-		}
-	}
+    private SearchControlViewModel viewModel;
 
 	private Text txtValue;
 	private Combo cmboFields;
@@ -73,23 +55,14 @@ public class SearchControl extends Canvas {
 	
     private Combo cmboSeverity;
 
-	private ISearchModel searcher;
-	private LogDisplay parent;
-
-    private final LogMessageFilter infoFilter =
-            new LogMessageFilter(LogMessageFields.SEVERITY, LogMessageSeverity.INFO.name(), true);
-    private final LogMessageFilter minorFilter =
-            new LogMessageFilter(LogMessageFields.SEVERITY, LogMessageSeverity.MINOR.name(), true);
-
     private Label lblSearchText;
 
     private ProgressBar progressBar;
 	
 	public SearchControl(LogDisplay parent, final ISearchModel searcher) {
 		super(parent, SWT.NONE);
-		
-		this.parent = parent;
-		this.searcher = searcher;
+
+        this.viewModel = new SearchControlViewModel();
 
         GridLayout gl = new GridLayout(2, false);
         gl.marginWidth = 0;
@@ -114,7 +87,6 @@ public class SearchControl extends Canvas {
         cmboFields = new Combo(grpFilter, SWT.READ_ONLY);
 		cmboFields.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false,
 				false, 1, 1));
-		cmboFields.setItems(FIELD_NAMES);
 		cmboFields.select(0);
 
 		// Create search button
@@ -122,7 +94,7 @@ public class SearchControl extends Canvas {
 		btnSearch.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				search();
+                viewModel.search();
 			}
 		});
 
@@ -137,7 +109,7 @@ public class SearchControl extends Canvas {
 		btnClear.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				clearSearchResults();
+                viewModel.clearSearchResults();
 			}
 		});
 		btnClear.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false,
@@ -170,18 +142,6 @@ public class SearchControl extends Canvas {
 		dtFromDate.setEnabled(false);
 		dtFromTime.setEnabled(false);
 
-		chkFrom.addSelectionListener(new SelectionListener() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				dtFromDate.setEnabled(chkFrom.getSelection());
-				dtFromTime.setEnabled(chkFrom.getSelection());
-			}
-
-			@Override
-			public void widgetDefaultSelected(SelectionEvent e) {
-			}
-		});
-
 		Label lblNewLabel = new Label(timePicker, SWT.NONE);
 		lblNewLabel.setText("        ");
 
@@ -194,18 +154,6 @@ public class SearchControl extends Canvas {
 				| SWT.TIME);
 		dtToDate.setEnabled(false);
 		dtToTime.setEnabled(false);
-
-		chkTo.addSelectionListener(new SelectionListener() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				dtToDate.setEnabled(chkTo.getSelection());
-				dtToTime.setEnabled(chkTo.getSelection());
-			}
-
-			@Override
-			public void widgetDefaultSelected(SelectionEvent e) {
-			}
-		});
 		
         new Label(grpFilter, SWT.NONE);
 		
@@ -219,100 +167,46 @@ public class SearchControl extends Canvas {
         cmboSeverity.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-                setInfoFilter(cmboSeverity.getText());
+                viewModel.setInfoFilter(cmboSeverity.getText());
 			}
 		});
-        setInfoFilter(cmboSeverity.getText());
+        viewModel.setInfoFilter(cmboSeverity.getText());
 
         // Progress bar
         progressBar = new ProgressBar(grpFilter, SWT.INDETERMINATE);
-        lblSearchText.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1));
-        setProgressIndicatorsVisible(false);
+        progressBar.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1));
 		
+        bind();
 	}
 
-	public void setSearcher(ISearchModel searcher) {
-		this.searcher = searcher;
-	}
+    private void bind() {
 
-	/**
-	 * Requests that the model perform a search for log messages that match the
-	 * request parameters.
-	 */
-	private void search() {
-		if (searcher != null) {
-			int fieldIndex = cmboFields.getSelectionIndex();
+        DataBindingContext bindingContext = new DataBindingContext();
 
-			if (fieldIndex != -1) {
-                final LogMessageFields field = FIELDS[fieldIndex];
-                final String value = txtValue.getText();
+        /* Search progress indicators */
+        bindingContext.bindValue(WidgetProperties.visible().observe(lblSearchText),
+                BeanProperties.value("progressIndicatorsVisible").observe(viewModel));
+        bindingContext.bindValue(WidgetProperties.visible().observe(progressBar),
+                BeanProperties.value("progressIndicatorsVisible").observe(viewModel));
 
-                final Calendar from = chkFrom.getSelection()
-                        ? new GregorianCalendar(dtFromDate.getYear(),
-							dtFromDate.getMonth(), dtFromDate.getDay(),
-							dtFromTime.getHours(), dtFromTime.getMinutes(),
-							dtFromTime.getSeconds()) : null;
-                final Calendar to = chkTo.getSelection()
-                        ? new GregorianCalendar(dtToDate.getYear(),
-							dtToDate.getMonth(), dtToDate.getDay(),
-							dtToTime.getHours(), dtToTime.getMinutes(),
-                        dtToTime.getSeconds()) : null;
+        /* List of items in cmboFields */
+        bindingContext.bindValue(WidgetProperties.selection().observe(cmboFields),
+                BeanProperties.value("searchItems").observe(viewModel));
 
-                runSearchJob(field, value, from, to);
+        /* "To" datetime picker */
+        bindingContext.bindValue(WidgetProperties.selection().observe(chkTo),
+                BeanProperties.value("toCheckboxSelected").observe(viewModel));
+        bindingContext.bindValue(WidgetProperties.enabled().observe(dtToDate),
+                BeanProperties.value("toCheckboxSelected").observe(viewModel));
+        bindingContext.bindValue(WidgetProperties.enabled().observe(dtToTime),
+                BeanProperties.value("toCheckboxSelected").observe(viewModel));
 
-            }
-        }
+        /* "From" datetime picker */
+        bindingContext.bindValue(WidgetProperties.selection().observe(chkFrom),
+                BeanProperties.value("fromCheckboxSelected").observe(viewModel));
+        bindingContext.bindValue(WidgetProperties.enabled().observe(dtFromDate),
+                BeanProperties.value("fromCheckboxSelected").observe(viewModel));
+        bindingContext.bindValue(WidgetProperties.enabled().observe(dtFromTime),
+                BeanProperties.value("fromCheckboxSelected").observe(viewModel));
     }
-
-    private void runSearchJob(final LogMessageFields field, final String value, final Calendar from,
-            final Calendar to) {
-
-        final Job searchJob = new Job("Searching") {
-            @Override
-            protected IStatus run(IProgressMonitor monitor) {
-
-                setProgressIndicatorsVisible(true);
-
-                searcher.search(field, value, from, to);
-
-                setProgressIndicatorsVisible(false);
-
-                return Job.ASYNC_FINISH;
-            }
-
-        };
-
-        searchJob.schedule();
-	}
-
-    private void setProgressIndicatorsVisible(final boolean visible) {
-
-        getDisplay().asyncExec(new Runnable() {
-            @Override
-            public void run() {
-                lblSearchText.setVisible(visible);
-                progressBar.setVisible(visible);
-            }
-        });
-
-    }
-
-	private void clearSearchResults() {
-		txtValue.setText("");
-
-		if (searcher != null) {
-			searcher.clearSearch();
-		}
-	}
-	
-    private void setInfoFilter(String set) {
-        parent.removeMessageFilter(infoFilter);
-        parent.removeMessageFilter(minorFilter);
-        if (set.equals(LogMessageSeverity.MAJOR.toString())) {
-            parent.addMessageFilter(infoFilter);
-            parent.addMessageFilter(minorFilter);
-        } else if (set.equals(LogMessageSeverity.MINOR.toString())) {
-            parent.addMessageFilter(infoFilter);
-        }
-	}
 }
