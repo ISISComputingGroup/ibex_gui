@@ -29,7 +29,7 @@ import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 
-import uk.ac.stfc.isis.ibex.configserver.EditableIocState;
+import uk.ac.stfc.isis.ibex.configserver.IocState;
 import uk.ac.stfc.isis.ibex.ui.ioccontrol.StateLabelProvider;
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundCellLabelProvider;
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundTable;
@@ -44,17 +44,17 @@ import uk.ac.stfc.isis.ibex.ui.tables.DataboundTable;
  * data being in the table (unsure why)
  */
 @SuppressWarnings("checkstyle:magicnumber")
-public class IocTable extends DataboundTable<EditableIocState> {
+public class IocTable extends DataboundTable<IocState> {
 
 	public IocTable(Composite parent, int style, int tableStyle) {
-		super(parent, style, EditableIocState.class, tableStyle | SWT.NO_SCROLL | SWT.V_SCROLL);
+        super(parent, style, IocState.class, tableStyle | SWT.NO_SCROLL | SWT.V_SCROLL);
 		
 		initialise();
 	}
 
 	@Override
-	public void setRows(Collection<EditableIocState> rows) {
-		List<EditableIocState> states = new ArrayList<>(rows);
+    public void setRows(Collection<IocState> rows) {
+        List<IocState> states = new ArrayList<>(rows);
 		Collections.sort(states);
 		super.setRows(states);
 		refresh();
@@ -69,9 +69,9 @@ public class IocTable extends DataboundTable<EditableIocState> {
 
 	private void name() {
 		TableViewerColumn name = createColumn("Name", 4, false);
-		name.setLabelProvider(new DataboundCellLabelProvider<EditableIocState>(observeProperty("name")) {
+        name.setLabelProvider(new DataboundCellLabelProvider<IocState>(observeProperty("name")) {
 			@Override
-			protected String valueFromRow(EditableIocState row) {
+            protected String valueFromRow(IocState row) {
 				return row.getName();
 			}
 		});		
@@ -79,9 +79,9 @@ public class IocTable extends DataboundTable<EditableIocState> {
 	
 	private void description() {
 		TableViewerColumn name = createColumn("Description", 4, false);
-		name.setLabelProvider(new DataboundCellLabelProvider<EditableIocState>(observeProperty("description")) {
+        name.setLabelProvider(new DataboundCellLabelProvider<IocState>(observeProperty("description")) {
 			@Override
-			protected String valueFromRow(EditableIocState row) {
+            protected String valueFromRow(IocState row) {
 				return row.getDescription();
 			}
 		});		

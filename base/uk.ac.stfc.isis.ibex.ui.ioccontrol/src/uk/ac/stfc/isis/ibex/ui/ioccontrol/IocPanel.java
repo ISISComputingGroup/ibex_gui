@@ -32,8 +32,8 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 
-import uk.ac.stfc.isis.ibex.configserver.EditableIocState;
 import uk.ac.stfc.isis.ibex.configserver.IocControl;
+import uk.ac.stfc.isis.ibex.configserver.IocState;
 import uk.ac.stfc.isis.ibex.ui.ioccontrol.table.IocTable;
 
 public class IocPanel extends Composite {
@@ -92,9 +92,9 @@ public class IocPanel extends Composite {
 
 	private void setIocs() {		
 		if (control.iocs().isSet()) {
-			EditableIocState selected = table.firstSelectedRow();
+            IocState selected = table.firstSelectedRow();
 			
-			Collection<EditableIocState> rows = control.iocs().getValue();
+            Collection<IocState> rows = control.iocs().getValue();
 			if (rows != null) {
 				table.setRows(rows);
 				resetLastSelectedIoc(selected, rows);
@@ -102,13 +102,13 @@ public class IocPanel extends Composite {
 		}
 	}
 
-	private void resetLastSelectedIoc(EditableIocState lastSelected, Collection<EditableIocState> rows) {
+    private void resetLastSelectedIoc(IocState lastSelected, Collection<IocState> rows) {
 		if (lastSelected == null) {
 			return;
 		}
 		
 		// Preserve selection if possible
-		for (EditableIocState row : rows) {
+        for (IocState row : rows) {
 			if (row.getName().equals(lastSelected.getName())) {
                 table.setSelected(row);
 				return;

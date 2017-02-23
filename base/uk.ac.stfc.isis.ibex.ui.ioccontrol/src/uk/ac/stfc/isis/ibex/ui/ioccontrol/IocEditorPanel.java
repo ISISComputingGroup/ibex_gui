@@ -23,22 +23,22 @@ import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.UpdateValueStrategy;
 import org.eclipse.core.databinding.beans.BeanProperties;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
-import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.Text;
-import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.layout.FillLayout;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Group;
+import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Text;
 
-import uk.ac.stfc.isis.ibex.configserver.EditableIocState;
 import uk.ac.stfc.isis.ibex.configserver.IocControl;
+import uk.ac.stfc.isis.ibex.configserver.IocState;
 import uk.ac.stfc.isis.ibex.ui.ioccontrol.table.StatusColorConverter;
 import uk.ac.stfc.isis.ibex.ui.ioccontrol.table.StatusTextConverter;
 
@@ -51,7 +51,7 @@ public class IocEditorPanel extends Composite {
 	private final Button update;
 	private final IocButtonPanel buttons;
 
-	private EditableIocState ioc;
+    private IocState ioc;
 	private final IocControl control;
 
 	private DataBindingContext bindingContext;
@@ -139,7 +139,7 @@ public class IocEditorPanel extends Composite {
 		setIoc(null);
 	}
 
-	public void setIoc(EditableIocState ioc) {
+    public void setIoc(IocState ioc) {
 		this.ioc = ioc;
 		buttons.setIoc(ioc);
 

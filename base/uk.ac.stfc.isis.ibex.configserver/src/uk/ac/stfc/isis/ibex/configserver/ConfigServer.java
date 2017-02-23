@@ -27,9 +27,7 @@ import uk.ac.stfc.isis.ibex.configserver.configuration.Configuration;
 import uk.ac.stfc.isis.ibex.configserver.configuration.PV;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableIoc;
 import uk.ac.stfc.isis.ibex.configserver.internal.FilteredIocs;
-import uk.ac.stfc.isis.ibex.configserver.internal.IocStateEditingConverter;
 import uk.ac.stfc.isis.ibex.epics.conversion.DoNothingConverter;
-import uk.ac.stfc.isis.ibex.epics.observing.ConvertingObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.epics.pv.Closer;
 import uk.ac.stfc.isis.ibex.epics.writing.ClosableSameTypeWriter;
@@ -274,10 +272,9 @@ public class ConfigServer extends Closer {
 	 * Returns an observable to the states of all of the iocs.
 	 * @return the Collection<{@link EditableIocState}> observable object
 	 */
-	public ForwardingObservable<Collection<EditableIocState>> iocStates() {
-		ForwardingObservable<Collection<EditableIocState>> iocs = 
-				new ForwardingObservable<>(
-						new ConvertingObservable<>(variables.iocStates, new IocStateEditingConverter(this)));
+    public ForwardingObservable<Collection<IocState>> iocStates() {
+        ForwardingObservable<Collection<IocState>> iocs = 
+                new ForwardingObservable<>(variables.iocStates);
 		
 		return new ForwardingObservable<>(new FilteredIocs(iocs, variables.protectedIocs));
 	}
