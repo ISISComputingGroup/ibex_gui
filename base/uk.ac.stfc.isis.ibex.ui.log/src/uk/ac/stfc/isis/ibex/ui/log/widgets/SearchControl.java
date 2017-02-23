@@ -38,8 +38,16 @@ import org.eclipse.swt.widgets.ProgressBar;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.wb.swt.ResourceManager;
 
+import uk.ac.stfc.isis.ibex.log.message.LogMessageFields;
+import uk.ac.stfc.isis.ibex.ui.log.filter.LogMessageFilter;
+
 @SuppressWarnings("checkstyle:magicnumber")
 public class SearchControl extends Canvas {
+
+    private final LogMessageFilter infoFilter =
+            new LogMessageFilter(LogMessageFields.SEVERITY, LogMessageSeverity.INFO.name(), true);
+    private final LogMessageFilter minorFilter =
+            new LogMessageFilter(LogMessageFields.SEVERITY, LogMessageSeverity.MINOR.name(), true);
 
     private SearchControlViewModel viewModel;
 
@@ -58,9 +66,13 @@ public class SearchControl extends Canvas {
     private Label lblSearchText;
 
     private ProgressBar progressBar;
+
+    private LogDisplay parent;
 	
 	public SearchControl(LogDisplay parent, final ISearchModel searcher) {
 		super(parent, SWT.NONE);
+
+        this.parent = parent;
 
         this.viewModel = new SearchControlViewModel();
 
@@ -167,10 +179,10 @@ public class SearchControl extends Canvas {
         cmboSeverity.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-                viewModel.setInfoFilter(cmboSeverity.getText());
+                setInfoFilter(cmboSeverity.getText());
 			}
 		});
-        viewModel.setInfoFilter(cmboSeverity.getText());
+        setInfoFilter(cmboSeverity.getText());
 
         // Progress bar
         progressBar = new ProgressBar(grpFilter, SWT.INDETERMINATE);
@@ -189,11 +201,13 @@ public class SearchControl extends Canvas {
         bindingContext.bindValue(WidgetProperties.visible().observe(progressBar),
                 BeanProperties.value("progressIndicatorsVisible").observe(viewModel));
 
-        /* List of items in cmboFields */
-        bindingContext.bindValue(WidgetProperties.selection().observe(cmboFields),
-                BeanProperties.value("searchItems").observe(viewModel));
+        /* Filters */
+        bindingContext.bindValue(WidgetProperties.singleSelectionIndex().observe(cmboFields),
+                BeanProperties.value("searchFilterItems").observe(viewModel));
+        bindingContext.bindValue(WidgetProperties.singleSelectionIndex().observe(cmboSeverity),
+                BeanProperties.value("searchFilterSeverity").observe(viewModel));
 
-        /* "To" datetime picker */
+        /* To datetime picker enabled status */
         bindingContext.bindValue(WidgetProperties.selection().observe(chkTo),
                 BeanProperties.value("toCheckboxSelected").observe(viewModel));
         bindingContext.bindValue(WidgetProperties.enabled().observe(dtToDate),
@@ -201,12 +215,35 @@ public class SearchControl extends Canvas {
         bindingContext.bindValue(WidgetProperties.enabled().observe(dtToTime),
                 BeanProperties.value("toCheckboxSelected").observe(viewModel));
 
-        /* "From" datetime picker */
+        /* From datetime picker enabled status */
         bindingContext.bindValue(WidgetProperties.selection().observe(chkFrom),
                 BeanProperties.value("fromCheckboxSelected").observe(viewModel));
         bindingContext.bindValue(WidgetProperties.enabled().observe(dtFromDate),
                 BeanProperties.value("fromCheckboxSelected").observe(viewModel));
         bindingContext.bindValue(WidgetProperties.enabled().observe(dtFromTime),
                 BeanProperties.value("fromCheckboxSelected").observe(viewModel));
+
+        /* To datetime picker value */
+        bindingContext.bindValue(WidgetProperties.selection().observe(dtFromDate),
+                BeanProperties.value("fromDate").observe(viewModel));
+        bindingContext.bindValue(WidgetProperties.selection().observe(dtFromTime),
+                BeanProperties.value("fromTime").observe(viewModel));
+
+        /* From datetime picker value */
+        bindingContext.bindValue(WidgetProperties.selection().observe(dtToDate),
+                BeanProperties.value("toDate").observe(viewModel));
+        bindingContext.bindValue(WidgetProperties.selection().observe(dtToTime),
+                BeanProperties.value("toTime").observe(viewModel));
+    }
+
+    public void setInfoFilter(String set) {
+        parent.removeMessageFilter(infoFilter);
+        parent.removeMessageFilter(minorFilter);
+        if (set.equals(LogMessageSeverity.MAJOR.toString())) {
+            parent.addMessageFilter(infoFilter);
+            parent.addMessageFilter(minorFilter);
+        } else if (set.equals(LogMessageSeverity.MINOR.toString())) {
+            parent.addMessageFilter(infoFilter);
+        }
     }
 }

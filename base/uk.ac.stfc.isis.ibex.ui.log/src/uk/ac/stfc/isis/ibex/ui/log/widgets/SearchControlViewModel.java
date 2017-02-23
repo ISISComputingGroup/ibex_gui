@@ -22,6 +22,7 @@
 package uk.ac.stfc.isis.ibex.ui.log.widgets;
 
 import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -32,7 +33,6 @@ import org.eclipse.swt.widgets.DateTime;
 
 import uk.ac.stfc.isis.ibex.log.message.LogMessageFields;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
-import uk.ac.stfc.isis.ibex.ui.log.filter.LogMessageFilter;
 
 /**
  *
@@ -53,8 +53,6 @@ public class SearchControlViewModel extends ModelObject {
     }
 
     private ISearchModel searcher;
-    private LogDisplay parent;
-
     private boolean progressIndicatorsVisible;
 
     private boolean toCheckboxSelected = false;
@@ -65,12 +63,8 @@ public class SearchControlViewModel extends ModelObject {
     private DateTime toTime;
     private DateTime fromTime;
 
-    private final LogMessageFilter infoFilter =
-            new LogMessageFilter(LogMessageFields.SEVERITY, LogMessageSeverity.INFO.name(), true);
-    private final LogMessageFilter minorFilter =
-            new LogMessageFilter(LogMessageFields.SEVERITY, LogMessageSeverity.MINOR.name(), true);
-
-    private Object searchItems;
+    private Integer searchFilterItems;
+    private Integer searchFilterSeverity;
 
     public void setSearcher(ISearchModel searcher) {
         this.searcher = searcher;
@@ -92,39 +86,29 @@ public class SearchControlViewModel extends ModelObject {
         return fromCheckboxSelected;
     }
 
-    public void setSearchItems(Object searchItems) {
-        firePropertyChange("searchItems", this.searchItems, this.searchItems = searchItems);
-    }
-
-    public Object getSearchItems() {
-        return searchItems;
-    }
-
     /**
      * Requests that the model perform a search for log messages that match the
      * request parameters.
      */
     public void search() {
-//        if (searcher != null) {
-//            int fieldIndex = searchItems.getSelectionIndex();
-//
-//            if (fieldIndex != -1) {
-//                final LogMessageFields field = FIELDS[fieldIndex];
-//                final String value = txtValue.getText();
-//
-//                final Calendar from = fromCheckboxEnabled
-//                        ? new GregorianCalendar(fromDate.getYear(), fromDate.getMonth(), fromDate.getDay(),
-//                                fromTime.getHours(), fromTime.getMinutes(), fromTime.getSeconds())
-//                        : null;
-//                final Calendar to = toCheckboxEnabled
-//                        ? new GregorianCalendar(toDate.getYear(), toDate.getMonth(), toDate.getDay(), toTime.getHours(),
-//                                toTime.getMinutes(), toTime.getSeconds())
-//                        : null;
-//
-//                runSearchJob(field, value, from, to);
-//
-//            }
-//        }
+        if (searcher != null) {
+            int fieldIndex = 0;
+
+            if (fieldIndex != -1) {
+                final LogMessageFields field = FIELDS[fieldIndex];
+                final String value = "a";
+
+                final Calendar from = fromCheckboxSelected
+                        ? new GregorianCalendar(fromDate.getYear(), fromDate.getMonth(), fromDate.getDay(),
+                                fromTime.getHours(), fromTime.getMinutes(), fromTime.getSeconds())
+                        : null;
+                final Calendar to = toCheckboxSelected ? new GregorianCalendar(toDate.getYear(), toDate.getMonth(),
+                        toDate.getDay(), toTime.getHours(), toTime.getMinutes(), toTime.getSeconds()) : null;
+
+                runSearchJob(field, value, from, to);
+
+            }
+        }
     }
 
     private void runSearchJob(final LogMessageFields field, final String value, final Calendar from,
@@ -173,14 +157,88 @@ public class SearchControlViewModel extends ModelObject {
 //        }
     }
 
-    public void setInfoFilter(String set) {
-//        parent.removeMessageFilter(infoFilter);
-//        parent.removeMessageFilter(minorFilter);
-//        if (set.equals(LogMessageSeverity.MAJOR.toString())) {
-//            parent.addMessageFilter(infoFilter);
-//            parent.addMessageFilter(minorFilter);
-//        } else if (set.equals(LogMessageSeverity.MINOR.toString())) {
-//            parent.addMessageFilter(infoFilter);
-//        }
+    /**
+     * @return the toDate
+     */
+    public DateTime getToDate() {
+        return toDate;
+    }
+
+    /**
+     * @param toDate the toDate to set
+     */
+    public void setToDate(DateTime toDate) {
+        firePropertyChange("toDate", this.toDate, this.toDate = toDate);
+    }
+
+    /**
+     * @return the fromDate
+     */
+    public DateTime getFromDate() {
+        return fromDate;
+    }
+
+    /**
+     * @param fromDate the fromDate to set
+     */
+    public void setFromDate(DateTime fromDate) {
+        firePropertyChange("fromDate", this.fromDate, this.fromDate = fromDate);
+    }
+
+    /**
+     * @return the toTime
+     */
+    public DateTime getToTime() {
+        return toTime;
+    }
+
+    /**
+     * @param toTime the toTime to set
+     */
+    public void setToTime(DateTime toTime) {
+        firePropertyChange("toTime", this.toTime, this.toTime = toTime);
+    }
+
+    /**
+     * @return the fromTime
+     */
+    public DateTime getFromTime() {
+        return fromTime;
+    }
+
+    /**
+     * @param fromTime the fromTime to set
+     */
+    public void setFromTime(DateTime fromTime) {
+        firePropertyChange("fromTime", this.fromTime, this.fromTime = fromTime);
+    }
+
+    /**
+     * @return the searchFilterItems
+     */
+    public Integer getSearchFilterItems() {
+        return searchFilterItems;
+    }
+
+    /**
+     * @param searchFilterItems the searchFilterItems to set
+     */
+    public void setSearchFilterItems(Integer searchFilterItems) {
+        firePropertyChange("searchFilterItems", this.searchFilterItems, this.searchFilterItems = searchFilterItems);
+    }
+
+    /**
+     * @return the searchFilterSeverity
+     */
+    public Integer getSearchFilterSeverity() {
+        return searchFilterSeverity;
+    }
+
+    /**
+     * @param searchFilterSeverity the searchFilterSeverity to set
+     */
+    public void setSearchFilterSeverity(Integer searchFilterSeverity) {
+        firePropertyChange("searchFilterSeverity", this.searchFilterSeverity,
+                this.searchFilterSeverity = searchFilterSeverity);
     }
 }
