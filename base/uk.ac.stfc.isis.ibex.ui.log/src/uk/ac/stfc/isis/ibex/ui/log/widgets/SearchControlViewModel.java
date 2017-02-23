@@ -35,7 +35,7 @@ import uk.ac.stfc.isis.ibex.log.message.LogMessageFields;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 
 /**
- *
+ * The Class SearchControlViewModel.
  */
 public class SearchControlViewModel extends ModelObject {
 
@@ -65,26 +65,6 @@ public class SearchControlViewModel extends ModelObject {
 
     private Integer searchFilterItems;
     private Integer searchFilterSeverity;
-
-    public void setSearcher(ISearchModel searcher) {
-        this.searcher = searcher;
-    }
-
-    public void setToCheckboxSelected(boolean selected) {
-        firePropertyChange("toCheckboxSelected", this.toCheckboxSelected, this.toCheckboxSelected = selected);
-    }
-
-    public boolean getToCheckboxSelected() {
-        return toCheckboxSelected;
-    }
-
-    public void setFromCheckboxSelected(boolean selected) {
-        firePropertyChange("fromCheckboxSelected", this.fromCheckboxSelected, this.fromCheckboxSelected = selected);
-    }
-
-    public boolean getFromCheckboxSelected() {
-        return fromCheckboxSelected;
-    }
 
     /**
      * Requests that the model perform a search for log messages that match the
@@ -145,10 +125,18 @@ public class SearchControlViewModel extends ModelObject {
         firePropertyChange("progressIndicatorsVisible", this.progressIndicatorsVisible, this.progressIndicatorsVisible = visible);
     }
 
+    /**
+     * Gets the progress indicators visible.
+     *
+     * @return the progress indicators visible
+     */
     public boolean getProgressIndicatorsVisible() {
         return progressIndicatorsVisible;
     }
 
+    /**
+     * Clear search results.
+     */
     public void clearSearchResults() {
 //        txtValue.setText("");
 //
@@ -158,6 +146,56 @@ public class SearchControlViewModel extends ModelObject {
     }
 
     /**
+     * Sets the searcher.
+     *
+     * @param searcher
+     *            the new searcher
+     */
+    public void setSearcher(ISearchModel searcher) {
+        this.searcher = searcher;
+    }
+
+    /**
+     * Sets the to checkbox selected.
+     *
+     * @param selected
+     *            the new to checkbox selected
+     */
+    public void setToCheckboxSelected(boolean selected) {
+        firePropertyChange("toCheckboxSelected", this.toCheckboxSelected, this.toCheckboxSelected = selected);
+    }
+
+    /**
+     * Gets the to checkbox selected.
+     *
+     * @return the to checkbox selected
+     */
+    public boolean getToCheckboxSelected() {
+        return toCheckboxSelected;
+    }
+
+    /**
+     * Sets the from checkbox selected.
+     *
+     * @param selected
+     *            the new from checkbox selected
+     */
+    public void setFromCheckboxSelected(boolean selected) {
+        firePropertyChange("fromCheckboxSelected", this.fromCheckboxSelected, this.fromCheckboxSelected = selected);
+    }
+
+    /**
+     * Gets the from checkbox selected.
+     *
+     * @return the from checkbox selected
+     */
+    public boolean getFromCheckboxSelected() {
+        return fromCheckboxSelected;
+    }
+
+    /**
+     * Gets the to date.
+     *
      * @return the toDate
      */
     public DateTime getToDate() {
@@ -165,13 +203,18 @@ public class SearchControlViewModel extends ModelObject {
     }
 
     /**
-     * @param toDate the toDate to set
+     * Sets the to date.
+     *
+     * @param toDate
+     *            the toDate to set
      */
     public void setToDate(DateTime toDate) {
         firePropertyChange("toDate", this.toDate, this.toDate = toDate);
     }
 
     /**
+     * Gets the from date.
+     *
      * @return the fromDate
      */
     public DateTime getFromDate() {
@@ -179,13 +222,18 @@ public class SearchControlViewModel extends ModelObject {
     }
 
     /**
-     * @param fromDate the fromDate to set
+     * Sets the from date.
+     *
+     * @param fromDate
+     *            the fromDate to set
      */
     public void setFromDate(DateTime fromDate) {
         firePropertyChange("fromDate", this.fromDate, this.fromDate = fromDate);
     }
 
     /**
+     * Gets the to time.
+     *
      * @return the toTime
      */
     public DateTime getToTime() {
@@ -193,13 +241,18 @@ public class SearchControlViewModel extends ModelObject {
     }
 
     /**
-     * @param toTime the toTime to set
+     * Sets the to time.
+     *
+     * @param toTime
+     *            the toTime to set
      */
     public void setToTime(DateTime toTime) {
         firePropertyChange("toTime", this.toTime, this.toTime = toTime);
     }
 
     /**
+     * Gets the from time.
+     *
      * @return the fromTime
      */
     public DateTime getFromTime() {
@@ -207,13 +260,18 @@ public class SearchControlViewModel extends ModelObject {
     }
 
     /**
-     * @param fromTime the fromTime to set
+     * Sets the from time.
+     *
+     * @param fromTime
+     *            the fromTime to set
      */
     public void setFromTime(DateTime fromTime) {
         firePropertyChange("fromTime", this.fromTime, this.fromTime = fromTime);
     }
 
     /**
+     * Gets the search filter items.
+     *
      * @return the searchFilterItems
      */
     public Integer getSearchFilterItems() {
@@ -221,13 +279,18 @@ public class SearchControlViewModel extends ModelObject {
     }
 
     /**
-     * @param searchFilterItems the searchFilterItems to set
+     * Sets the search filter items.
+     *
+     * @param searchFilterItems
+     *            the searchFilterItems to set
      */
     public void setSearchFilterItems(Integer searchFilterItems) {
         firePropertyChange("searchFilterItems", this.searchFilterItems, this.searchFilterItems = searchFilterItems);
     }
 
     /**
+     * Gets the search filter severity.
+     *
      * @return the searchFilterSeverity
      */
     public Integer getSearchFilterSeverity() {
@@ -235,7 +298,10 @@ public class SearchControlViewModel extends ModelObject {
     }
 
     /**
-     * @param searchFilterSeverity the searchFilterSeverity to set
+     * Sets the search filter severity.
+     *
+     * @param searchFilterSeverity
+     *            the searchFilterSeverity to set
      */
     public void setSearchFilterSeverity(Integer searchFilterSeverity) {
         firePropertyChange("searchFilterSeverity", this.searchFilterSeverity,
