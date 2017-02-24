@@ -49,7 +49,7 @@ public class SynopticWriter extends TransformingWriter<SynopticDescription, Stri
 	protected String transform(SynopticDescription value) {
 		// Converts the raw synoptic description into XML
 		try {
-			return XMLUtil.toXml(value);
+            return XMLUtil.toXml(value, SynopticDescription.class, null);
 		} catch (JAXBException | SAXException e) {
 			onError(e);
 		}
