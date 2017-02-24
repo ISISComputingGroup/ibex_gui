@@ -138,6 +138,7 @@ public class SearchControl extends Canvas {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				clearSearchResults();
+                setProgressIndicatorsVisible(false);
 			}
 		});
 		btnClear.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false,
