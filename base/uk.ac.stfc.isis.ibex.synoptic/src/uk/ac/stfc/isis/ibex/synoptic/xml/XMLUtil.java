@@ -103,8 +103,6 @@ public final class XMLUtil {
 		if (context == null) {
 			initialise();
 		}
-		
-        System.out.println("Schema is: " + rawSchema);
 
         if (Strings.isNullOrEmpty(rawSchema)) {
             clearSchema();
