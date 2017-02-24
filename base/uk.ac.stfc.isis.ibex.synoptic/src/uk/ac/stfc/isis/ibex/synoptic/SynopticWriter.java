@@ -23,6 +23,7 @@ import javax.xml.bind.JAXBException;
 
 import org.xml.sax.SAXException;
 
+import uk.ac.stfc.isis.ibex.epics.observing.Observable;
 import uk.ac.stfc.isis.ibex.epics.writing.TransformingWriter;
 import uk.ac.stfc.isis.ibex.epics.writing.Writable;
 import uk.ac.stfc.isis.ibex.model.SettableUpdatedValue;
@@ -38,11 +39,13 @@ import uk.ac.stfc.isis.ibex.synoptic.xml.XMLUtil;
 public class SynopticWriter extends TransformingWriter<SynopticDescription, String> {
 	
 	private SettableUpdatedValue<Boolean> canSave = new SettableUpdatedValue<>();
+    private final Observable<String> schema;
 
-	public SynopticWriter(Writable<String> destination) {
+    public SynopticWriter(Writable<String> destination, Observable<String> schema) {
 		writeTo(destination);
 		canSave.setValue(destination.canWrite());
 		destination.subscribe(this);
+        this.schema = schema;
 	}
 	
 
@@ -50,7 +53,7 @@ public class SynopticWriter extends TransformingWriter<SynopticDescription, Stri
 	protected String transform(SynopticDescription value) {
 		// Converts the raw synoptic description into XML
 		try {
-            return XMLUtil.toXml(value, SynopticDescription.class, null);
+            return XMLUtil.toXml(value, SynopticDescription.class, schema.getValue());
 		} catch (JAXBException | SAXException e) {
 			onError(e);
 		}
