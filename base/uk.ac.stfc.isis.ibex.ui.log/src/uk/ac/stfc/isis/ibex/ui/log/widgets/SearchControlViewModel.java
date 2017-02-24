@@ -66,6 +66,8 @@ public class SearchControlViewModel extends ModelObject {
     private Integer searchFilterItems;
     private Integer searchFilterSeverity;
 
+    private String searchText = "abc";
+
     /**
      * Requests that the model perform a search for log messages that match the
      * request parameters.
@@ -76,7 +78,6 @@ public class SearchControlViewModel extends ModelObject {
 
             if (fieldIndex != -1) {
                 final LogMessageFields field = FIELDS[fieldIndex];
-                final String value = "a";
 
                 final Calendar from = fromCheckboxSelected
                         ? new GregorianCalendar(fromDate.getYear(), fromDate.getMonth(), fromDate.getDay(),
@@ -85,7 +86,7 @@ public class SearchControlViewModel extends ModelObject {
                 final Calendar to = toCheckboxSelected ? new GregorianCalendar(toDate.getYear(), toDate.getMonth(),
                         toDate.getDay(), toTime.getHours(), toTime.getMinutes(), toTime.getSeconds()) : null;
 
-                runSearchJob(field, value, from, to);
+                runSearchJob(field, searchText, from, to);
 
             }
         }
@@ -97,7 +98,9 @@ public class SearchControlViewModel extends ModelObject {
         final Job searchJob = new Job("Searching") {
             @Override
             protected IStatus run(IProgressMonitor monitor) {
+                setProgressIndicatorsVisible(true);
                 searcher.search(field, value, from, to);
+                setProgressIndicatorsVisible(false);
                 return Job.ASYNC_FINISH;
             }
 
@@ -121,7 +124,7 @@ public class SearchControlViewModel extends ModelObject {
 
     }
 
-    private void setProgressIndicatorsVisible(final boolean visible) {
+    private void setProgressIndicatorsVisible(boolean visible) {
         firePropertyChange("progressIndicatorsVisible", this.progressIndicatorsVisible, this.progressIndicatorsVisible = visible);
     }
 
@@ -138,11 +141,12 @@ public class SearchControlViewModel extends ModelObject {
      * Clear search results.
      */
     public void clearSearchResults() {
-//        txtValue.setText("");
-//
-//        if (searcher != null) {
-//            searcher.clearSearch();
-//        }
+        setProgressIndicatorsVisible(false);
+        setSearchText("");
+
+        if (searcher != null) {
+            searcher.clearSearch();
+        }
     }
 
     /**
@@ -306,5 +310,19 @@ public class SearchControlViewModel extends ModelObject {
     public void setSearchFilterSeverity(Integer searchFilterSeverity) {
         firePropertyChange("searchFilterSeverity", this.searchFilterSeverity,
                 this.searchFilterSeverity = searchFilterSeverity);
+    }
+
+    /**
+     * @return the searchText
+     */
+    public String getSearchText() {
+        return searchText;
+    }
+
+    /**
+     * @param searchText the searchText to set
+     */
+    public void setSearchText(String searchText) {
+        firePropertyChange("searchText", this.searchText, this.searchText = searchText);
     }
 }

@@ -234,6 +234,10 @@ public class SearchControl extends Canvas {
                 BeanProperties.value("toDate").observe(viewModel));
         bindingContext.bindValue(WidgetProperties.selection().observe(dtToTime),
                 BeanProperties.value("toTime").observe(viewModel));
+
+        /* Search text value */
+        bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(txtValue),
+                BeanProperties.value("searchText").observe(viewModel));
     }
 
     public void setInfoFilter(String set) {
@@ -245,5 +249,12 @@ public class SearchControl extends Canvas {
         } else if (set.equals(LogMessageSeverity.MINOR.toString())) {
             parent.addMessageFilter(infoFilter);
         }
+    }
+
+    /**
+     * @return the view model
+     */
+    public SearchControlViewModel getViewModel() {
+        return viewModel;
     }
 }
