@@ -36,19 +36,6 @@ import uk.ac.stfc.isis.ibex.model.ModelObject;
  */
 public class SearchControlViewModel extends ModelObject {
 
-    private static final LogMessageFields[] FIELDS =
-            { LogMessageFields.CONTENTS, LogMessageFields.CLIENT_NAME, LogMessageFields.CLIENT_HOST,
-                    LogMessageFields.SEVERITY, LogMessageFields.TYPE, LogMessageFields.APPLICATION_ID };
-
-    private static final String[] FIELD_NAMES;
-
-    static {
-        FIELD_NAMES = new String[FIELDS.length];
-        for (int f = 0; f < FIELDS.length; ++f) {
-            FIELD_NAMES[f] = FIELDS[f].getDisplayName();
-        }
-    }
-
     private ISearchModel searcher;
     private boolean progressIndicatorsVisible;
 
@@ -83,17 +70,11 @@ public class SearchControlViewModel extends ModelObject {
             return;
         }
 
-        int fieldIndex = 0;
+        Calendar from = fromCheckboxSelected ? getCalendar(fromDate, fromTime) : null;
+        Calendar to = toCheckboxSelected ? getCalendar(toDate, toTime) : null;
 
-        if (fieldIndex != -1) {
-            final LogMessageFields field = FIELDS[fieldIndex];
+        runSearchJob(field, searchText, from, to);
 
-            Calendar from = fromCheckboxSelected ? getCalendar(fromDate, fromTime) : null;
-            Calendar to = toCheckboxSelected ? getCalendar(toDate, toTime) : null;
-
-            runSearchJob(field, searchText, from, to);
-
-        }
     }
 
     private Calendar getCalendar(Date date, Date time) {

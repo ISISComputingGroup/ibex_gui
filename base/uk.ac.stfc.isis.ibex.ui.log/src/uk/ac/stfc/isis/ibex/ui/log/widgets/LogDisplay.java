@@ -119,6 +119,7 @@ public class LogDisplay extends Canvas {
 	private MenuItem mnuSaveAll;
 	private MenuItem mnuSaveSelected;
     private AsyncMessageModerator asyncMessageModerator;
+    private SearchControlViewModel searchControlViewModel;
 
     /**
      * Default constructor.
@@ -146,7 +147,7 @@ public class LogDisplay extends Canvas {
      */
 	public void setModel(final LogDisplayModel model) {
 		this.model = model;
-        this.searchControl.getViewModel().setSearcher(model);
+        this.searchControlViewModel.setSearcher(model);
         this.asyncMessageModerator = new AsyncMessageModerator(model);
 
 		// Listen for updates to the list of messages to be displayed
@@ -308,8 +309,10 @@ public class LogDisplay extends Canvas {
 		// Layout
 		setLayout(new GridLayout(1, false));
 
+        this.searchControlViewModel = new SearchControlViewModel();
+
 		// Add the search box
-		searchControl = new SearchControl(this, model);
+        searchControl = new SearchControl(this, model, this.searchControlViewModel);
 		searchControl.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 
         // Add table title label

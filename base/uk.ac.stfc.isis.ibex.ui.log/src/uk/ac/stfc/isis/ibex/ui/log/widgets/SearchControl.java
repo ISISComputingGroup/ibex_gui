@@ -44,6 +44,19 @@ import uk.ac.stfc.isis.ibex.ui.log.filter.LogMessageFilter;
 @SuppressWarnings("checkstyle:magicnumber")
 public class SearchControl extends Canvas {
 
+    private static final LogMessageFields[] FIELDS =
+            { LogMessageFields.CONTENTS, LogMessageFields.CLIENT_NAME, LogMessageFields.CLIENT_HOST,
+                    LogMessageFields.SEVERITY, LogMessageFields.TYPE, LogMessageFields.APPLICATION_ID };
+
+    private static final String[] FIELD_NAMES;
+
+    static {
+        FIELD_NAMES = new String[FIELDS.length];
+        for (int f = 0; f < FIELDS.length; ++f) {
+            FIELD_NAMES[f] = FIELDS[f].getDisplayName();
+        }
+    }
+
     private final LogMessageFilter infoFilter =
             new LogMessageFilter(LogMessageFields.SEVERITY, LogMessageSeverity.INFO.name(), true);
     private final LogMessageFilter minorFilter =
@@ -69,12 +82,12 @@ public class SearchControl extends Canvas {
 
     private LogDisplay parent;
 	
-	public SearchControl(LogDisplay parent, final ISearchModel searcher) {
+    public SearchControl(LogDisplay parent, final ISearchModel searcher, final SearchControlViewModel viewModel) {
 		super(parent, SWT.NONE);
 
         this.parent = parent;
 
-        this.viewModel = new SearchControlViewModel();
+        this.viewModel = viewModel;
 
         GridLayout gl = new GridLayout(2, false);
         gl.marginWidth = 0;
@@ -99,6 +112,7 @@ public class SearchControl extends Canvas {
         cmboFields = new Combo(grpFilter, SWT.READ_ONLY);
 		cmboFields.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false,
 				false, 1, 1));
+        cmboFields.setItems(FIELD_NAMES);
 		cmboFields.select(0);
 
 		// Create search button
@@ -249,12 +263,5 @@ public class SearchControl extends Canvas {
         } else if (set.equals(LogMessageSeverity.MINOR.toString())) {
             parent.addMessageFilter(infoFilter);
         }
-    }
-
-    /**
-     * @return the view model
-     */
-    public SearchControlViewModel getViewModel() {
-        return viewModel;
     }
 }
