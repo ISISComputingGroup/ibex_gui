@@ -22,14 +22,11 @@
 package uk.ac.stfc.isis.ibex.ui.log.widgets;
 
 import java.util.Calendar;
-import java.util.GregorianCalendar;
+import java.util.Date;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.jobs.IJobChangeEvent;
 import org.eclipse.core.runtime.jobs.Job;
-import org.eclipse.core.runtime.jobs.JobChangeAdapter;
-import org.eclipse.swt.widgets.DateTime;
 
 import uk.ac.stfc.isis.ibex.log.message.LogMessageFields;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
@@ -58,38 +55,60 @@ public class SearchControlViewModel extends ModelObject {
     private boolean toCheckboxSelected = false;
     private boolean fromCheckboxSelected = false;
 
-    private DateTime toDate;
-    private DateTime fromDate;
-    private DateTime toTime;
-    private DateTime fromTime;
+    private Date toDate;
+    private Date fromDate;
+    private Date toTime;
+    private Date fromTime;
 
     private Integer searchFilterItems;
     private Integer searchFilterSeverity;
 
-    private String searchText = "abc";
+    private String searchText = "";
+    private LogMessageFields field;
+
+    public SearchControlViewModel() {
+        final Date now = new Date();
+        toDate = now;
+        toTime = now;
+        fromDate = now;
+        fromTime = now;
+    }
 
     /**
      * Requests that the model perform a search for log messages that match the
      * request parameters.
      */
     public void search() {
-        if (searcher != null) {
-            int fieldIndex = 0;
-
-            if (fieldIndex != -1) {
-                final LogMessageFields field = FIELDS[fieldIndex];
-
-                final Calendar from = fromCheckboxSelected
-                        ? new GregorianCalendar(fromDate.getYear(), fromDate.getMonth(), fromDate.getDay(),
-                                fromTime.getHours(), fromTime.getMinutes(), fromTime.getSeconds())
-                        : null;
-                final Calendar to = toCheckboxSelected ? new GregorianCalendar(toDate.getYear(), toDate.getMonth(),
-                        toDate.getDay(), toTime.getHours(), toTime.getMinutes(), toTime.getSeconds()) : null;
-
-                runSearchJob(field, searchText, from, to);
-
-            }
+        if (searcher == null) {
+            return;
         }
+
+        int fieldIndex = 0;
+
+        if (fieldIndex != -1) {
+            final LogMessageFields field = FIELDS[fieldIndex];
+
+            Calendar from = fromCheckboxSelected ? getCalendar(fromDate, fromTime) : null;
+            Calendar to = toCheckboxSelected ? getCalendar(toDate, toTime) : null;
+
+            runSearchJob(field, searchText, from, to);
+
+        }
+    }
+
+    private Calendar getCalendar(Date date, Date time) {
+        Calendar resultCalendar = Calendar.getInstance();
+        Calendar dateCalendar = Calendar.getInstance();
+        Calendar timeCalendar = Calendar.getInstance();
+
+        dateCalendar.setTime(date);
+        timeCalendar.setTime(time);
+
+        resultCalendar.set(dateCalendar.get(Calendar.YEAR), dateCalendar.get(Calendar.MONTH),
+                dateCalendar.get(Calendar.DAY_OF_MONTH), timeCalendar.get(Calendar.HOUR),
+                timeCalendar.get(Calendar.MINUTE), timeCalendar.get(Calendar.SECOND));
+
+        return resultCalendar;
     }
 
     private void runSearchJob(final LogMessageFields field, final String value, final Calendar from,
@@ -105,20 +124,6 @@ public class SearchControlViewModel extends ModelObject {
             }
 
         };
-
-        searchJob.addJobChangeListener(new JobChangeAdapter() {
-
-            @Override
-            public void scheduled(IJobChangeEvent event) {
-                setProgressIndicatorsVisible(true);
-            }
-
-            @Override
-            public void done(IJobChangeEvent event) {
-                setProgressIndicatorsVisible(false);
-            }
-
-        });
 
         searchJob.schedule();
 
@@ -202,7 +207,7 @@ public class SearchControlViewModel extends ModelObject {
      *
      * @return the toDate
      */
-    public DateTime getToDate() {
+    public Date getToDate() {
         return toDate;
     }
 
@@ -212,7 +217,7 @@ public class SearchControlViewModel extends ModelObject {
      * @param toDate
      *            the toDate to set
      */
-    public void setToDate(DateTime toDate) {
+    public void setToDate(Date toDate) {
         firePropertyChange("toDate", this.toDate, this.toDate = toDate);
     }
 
@@ -221,7 +226,7 @@ public class SearchControlViewModel extends ModelObject {
      *
      * @return the fromDate
      */
-    public DateTime getFromDate() {
+    public Date getFromDate() {
         return fromDate;
     }
 
@@ -231,7 +236,7 @@ public class SearchControlViewModel extends ModelObject {
      * @param fromDate
      *            the fromDate to set
      */
-    public void setFromDate(DateTime fromDate) {
+    public void setFromDate(Date fromDate) {
         firePropertyChange("fromDate", this.fromDate, this.fromDate = fromDate);
     }
 
@@ -240,7 +245,7 @@ public class SearchControlViewModel extends ModelObject {
      *
      * @return the toTime
      */
-    public DateTime getToTime() {
+    public Date getToTime() {
         return toTime;
     }
 
@@ -250,7 +255,7 @@ public class SearchControlViewModel extends ModelObject {
      * @param toTime
      *            the toTime to set
      */
-    public void setToTime(DateTime toTime) {
+    public void setToTime(Date toTime) {
         firePropertyChange("toTime", this.toTime, this.toTime = toTime);
     }
 
@@ -259,7 +264,7 @@ public class SearchControlViewModel extends ModelObject {
      *
      * @return the fromTime
      */
-    public DateTime getFromTime() {
+    public Date getFromTime() {
         return fromTime;
     }
 
@@ -269,7 +274,7 @@ public class SearchControlViewModel extends ModelObject {
      * @param fromTime
      *            the fromTime to set
      */
-    public void setFromTime(DateTime fromTime) {
+    public void setFromTime(Date fromTime) {
         firePropertyChange("fromTime", this.fromTime, this.fromTime = fromTime);
     }
 
@@ -324,5 +329,20 @@ public class SearchControlViewModel extends ModelObject {
      */
     public void setSearchText(String searchText) {
         firePropertyChange("searchText", this.searchText, this.searchText = searchText);
+    }
+
+    /**
+     * @return the field
+     */
+    public LogMessageFields getField() {
+        return field;
+    }
+
+    /**
+     * @param field
+     *            the field to set
+     */
+    public void setField(LogMessageFields field) {
+        firePropertyChange("field", this.field, this.field = field);
     }
 }

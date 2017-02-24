@@ -202,9 +202,9 @@ public class SearchControl extends Canvas {
                 BeanProperties.value("progressIndicatorsVisible").observe(viewModel));
 
         /* Filters */
-        bindingContext.bindValue(WidgetProperties.singleSelectionIndex().observe(cmboFields),
-                BeanProperties.value("searchFilterItems").observe(viewModel));
-        bindingContext.bindValue(WidgetProperties.singleSelectionIndex().observe(cmboSeverity),
+        bindingContext.bindValue(WidgetProperties.selection().observe(cmboFields),
+                BeanProperties.value("field").observe(viewModel));
+        bindingContext.bindValue(WidgetProperties.selection().observe(cmboSeverity),
                 BeanProperties.value("searchFilterSeverity").observe(viewModel));
 
         /* To datetime picker enabled status */
