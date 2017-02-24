@@ -56,10 +56,6 @@ public class SynopticModel extends ModelObject {
 		return variables.synopticsDeleter;
 	}
 	
-	public Writable<String> setSynoptic() {
-		return variables.synopticSetter;
-	}
-	
 	public SynopticWriter saveSynoptic() {
 		return setCurrentSynoptic;
 	}

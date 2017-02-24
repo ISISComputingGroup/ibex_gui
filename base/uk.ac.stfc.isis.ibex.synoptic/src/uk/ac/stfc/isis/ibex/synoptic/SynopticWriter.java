@@ -45,6 +45,7 @@ public class SynopticWriter extends TransformingWriter<SynopticDescription, Stri
 		destination.subscribe(this);
 	}
 	
+
 	@Override
 	protected String transform(SynopticDescription value) {
 		// Converts the raw synoptic description into XML

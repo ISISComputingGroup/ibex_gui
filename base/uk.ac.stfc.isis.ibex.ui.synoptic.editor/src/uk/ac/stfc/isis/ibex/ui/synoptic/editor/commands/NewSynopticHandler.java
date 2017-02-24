@@ -21,15 +21,15 @@ package uk.ac.stfc.isis.ibex.ui.synoptic.editor.commands;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
+
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.SynopticDescription;
 
-public class NewSynopticHandler extends SynopticHandler<String> {
+/**
+ * Handler for creating a new synoptic.
+ */
+public class NewSynopticHandler extends SynopticEditorHandler {
 
 	private static final String TITLE = "New Synoptic";
-	
-	public NewSynopticHandler() {
-		super(SYNOPTIC.editSynoptic());
-	}
 	
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {	
