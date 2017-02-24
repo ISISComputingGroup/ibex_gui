@@ -43,10 +43,10 @@ public class DeleteComponentsHandler extends DisablingConfigHandler<Collection<S
     private Map<String, ForwardingObservable<Collection<String>>> observerRegister = new HashMap<>();
     private Map<String, Collection<String>> dependencies = new HashMap<>();
 
-    Observer<Collection<ConfigInfo>> componentAdapter = new BaseObserver<Collection<ConfigInfo>>() {
+    private Observer<Collection<ConfigInfo>> componentAdapter = new BaseObserver<Collection<ConfigInfo>>() {
 
         @Override
-        public void onValue(java.util.Collection<ConfigInfo> value) {
+        public void onValue(Collection<ConfigInfo> value) {
             updateObservers(value);
         };
     };
@@ -94,7 +94,7 @@ public class DeleteComponentsHandler extends DisablingConfigHandler<Collection<S
             String pv = getPV(name);
             SERVER.dependencies(pv).addObserver(new BaseObserver<Collection<String>>() {
                 @Override
-                public void onValue(java.util.Collection<String> value) {
+                public void onValue(Collection<String> value) {
                     updateDependency(name, value);
                 };
             });
@@ -176,7 +176,7 @@ public class DeleteComponentsHandler extends DisablingConfigHandler<Collection<S
         boolean multi = (dependencies.size() > 1);
         StringBuilder sb = new StringBuilder();
         sb.append("The following " + (multi ? "components are" : "component is")
-                + " currently in use and thus can not be deleted:\n\n");
+                + " currently in use and so cannot be deleted:\n\n");
         for (String comp : dependencies.keySet()) {
             sb.append("Component: " + comp + "\nUsed in configuration(s): ");
             boolean first = true;
