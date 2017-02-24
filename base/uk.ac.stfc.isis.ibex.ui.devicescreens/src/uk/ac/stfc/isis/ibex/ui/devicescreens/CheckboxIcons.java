@@ -49,7 +49,7 @@ public final class CheckboxIcons {
         if (checked) {
             path += "checkbox.png";
         } else {
-            path += "checkbox_unchecked.png";
+            path += "navigate_cross.png";
         }
 
         return ResourceManager.getPluginImage(folder, path);
