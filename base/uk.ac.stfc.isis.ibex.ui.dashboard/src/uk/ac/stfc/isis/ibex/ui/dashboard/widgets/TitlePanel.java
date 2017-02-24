@@ -22,13 +22,14 @@ package uk.ac.stfc.isis.ibex.ui.dashboard.widgets;
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.UpdateValueStrategy;
 import org.eclipse.core.databinding.beans.BeanProperties;
+import org.eclipse.core.databinding.conversion.Converter;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.graphics.Font;
-import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Label;
 
 import uk.ac.stfc.isis.ibex.ui.dashboard.models.TitlePanelModel;
 
@@ -68,9 +69,20 @@ public class TitlePanel extends Composite {
 	}
 
 	private void bind(TitlePanelModel model) {
+        UpdateValueStrategy literalAmpersands =
+                new UpdateValueStrategy().setConverter(new Converter(String.class, String.class) {
+            @Override
+            public Object convert(Object fromObject) {
+                String in = (String) fromObject;
+                return in.replaceAll("&", "&&");
+            }
+        });
+
 		DataBindingContext bindingContext = new DataBindingContext();
-		bindingContext.bindValue(WidgetProperties.text().observe(title), BeanProperties.value("value").observe(model.title()));
-		bindingContext.bindValue(WidgetProperties.tooltipText().observe(title), BeanProperties.value("value").observe(model.title()));
+        bindingContext.bindValue(WidgetProperties.text().observe(title),
+                BeanProperties.value("value").observe(model.title()), null, literalAmpersands);
+        bindingContext.bindValue(WidgetProperties.tooltipText().observe(title),
+                BeanProperties.value("value").observe(model.title()), null, literalAmpersands);
 		
 		UsersConverter deJsoner = new UsersConverter(String.class, String.class);
 		bindingContext.bindValue(WidgetProperties.text().observe(users), BeanProperties.value("value").observe(model.users()), null, new UpdateValueStrategy().setConverter(deJsoner));	
