@@ -223,8 +223,7 @@ public class SaveConfigDialog extends TitleAreaDialog {
 		
 		Label lblConfigurationNameCannot = new Label(composite, SWT.NONE);
 		lblConfigurationNameCannot.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1));
-        lblConfigurationNameCannot
-                .setText("Name must start with a letter and contain only letters, numbers and underscores.");
+		lblConfigurationNameCannot.setText("Name must start with a letter and contain only [A-Z], [0-9] and \"_\"");
 		new Label(composite, SWT.NONE);
 		new Label(composite, SWT.NONE);
 		
