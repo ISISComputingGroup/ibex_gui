@@ -146,7 +146,7 @@ public class LogDisplay extends Canvas {
      */
 	public void setModel(final LogDisplayModel model) {
 		this.model = model;
-        // this.searchControl.setSearcher(model);
+		this.searchControl.setSearcher(model);
         this.asyncMessageModerator = new AsyncMessageModerator(model);
 
 		// Listen for updates to the list of messages to be displayed
