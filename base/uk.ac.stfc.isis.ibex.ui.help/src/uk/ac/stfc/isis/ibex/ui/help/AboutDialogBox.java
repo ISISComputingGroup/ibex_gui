@@ -38,7 +38,7 @@ public class AboutDialogBox extends TitleAreaDialog {
     /** Dialog width. */
     public static final int WIDTH = 300;
     /** Dialog height. */
-    private static final int HEIGHT = 250;
+    private static final int HEIGHT = 260;
 
     /**
      * Construct a new about Ibex dialog box.
@@ -70,7 +70,7 @@ public class AboutDialogBox extends TitleAreaDialog {
 		container.setLayout(new GridLayout(1, false));
 			
 		new VersionPanel(container, SWT.NONE);
-		
+
 		return container;
 	}	
 
