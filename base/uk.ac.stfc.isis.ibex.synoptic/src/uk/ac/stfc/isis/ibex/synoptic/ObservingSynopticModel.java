@@ -24,7 +24,6 @@ import uk.ac.stfc.isis.ibex.epics.switching.SwitchableObservable;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 import uk.ac.stfc.isis.ibex.synoptic.internal.Variables;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.SynopticDescription;
-import uk.ac.stfc.isis.ibex.synoptic.xml.XMLUtil;
 
 /**
  * A class for linking the PV observables used to define the synoptic with the
@@ -55,27 +54,6 @@ public class ObservingSynopticModel extends ModelObject {
         }
     };
 
-    private final Observer<String> synopticSchemaObserver = new BaseObserver<String>() {
-
-		@Override
-		public void onValue(String value) {
-			// Set the schema
-            XMLUtil.setSchema(value);
-		}
-
-        @Override
-        public void onError(Exception e) {
-            XMLUtil.setSchema(null);
-        }
-
-        @Override
-        public void onConnectionStatus(boolean isConnected) {
-            if (!isConnected) {
-                XMLUtil.setSchema(null);
-            }
-        }
-	};
-
 	private final SynopticModel model;
 	private final Variables variables;
     private final SwitchableObservable<SynopticDescription> synopticObservable;
@@ -83,8 +61,6 @@ public class ObservingSynopticModel extends ModelObject {
 	public ObservingSynopticModel(Variables variables, SynopticModel model) {
 		this.model = model;
 		this.variables = variables;
-
-		this.variables.synopticSchema.addObserver(synopticSchemaObserver);
 
         synopticObservable = new SwitchableObservable<SynopticDescription>(
                 variables.<SynopticDescription>getSynopticDescription(Variables.NONE_SYNOPTIC_PV));

@@ -41,7 +41,7 @@ public class SynopticWrittenToXmlTest extends FileReadingTest {
 	
 	@Before
 	public void setUp() throws Exception {
-		instrument = XMLUtil.fromXml(fileContent());
+        instrument = XMLUtil.fromXml(fileContent(), SynopticDescription.class);
 	}
 
 	@Override
@@ -55,7 +55,7 @@ public class SynopticWrittenToXmlTest extends FileReadingTest {
         String input = fileContent();
         input = input.replace("\n", "").replace("\t", "");
 
-        String output = XMLUtil.toXml(instrument);
+        String output = XMLUtil.toXml(instrument, SynopticDescription.class, null);
         assertThat(output, is(input));
     }
 }

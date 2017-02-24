@@ -35,101 +35,68 @@ import org.xml.sax.SAXException;
 
 import com.google.common.base.Strings;
 
-import uk.ac.stfc.isis.ibex.synoptic.model.desc.SynopticDescription;
-
 /**
- * Singleton class that deals with decoding/encoding XML into classes.
+ * Static utility class that deals with decoding/encoding XML into classes.
  */
 public final class XMLUtil {
-	
-	private static final SchemaFactory SF = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
-    private static Schema schema; 
+    
+    private XMLUtil() {
+    }
 
-    private static JAXBContext context;
-    private static Unmarshaller unmarshaller;
-    private static Marshaller marshaller;
-    
-    private XMLUtil() { }
-    
 	/**
-     * Converts an input XML into a synoptic description.
+     * Converts an input XML into the given type.
      * 
-     * @param <T> the type to parse the XML into
-     * @param xml the synoptic XML received from the BlockServer
-     * @return the synoptic data converted into an instrument description
-     * @throws JAXBException XML Exception
-     * @throws SAXException XML Exception
+     * @param <T>
+     *            the type to parse the XML into
+     * @param xml
+     *            the XML to convert
+     * @param clazz
+     *            the type to parse the XML into
+     * @return the xml data converted into the specified type
+     * @throws JAXBException
+     *             XML Exception thrown if the conversion failed
      */
-    public static synchronized <T> T fromXml(String xml) throws JAXBException, SAXException {
-		if (context == null) {
-			initialise();
-		}
-	         
+    @SuppressWarnings("unchecked")
+    public static synchronized <T> T fromXml(String xml, Class<T> clazz) throws JAXBException {
+        JAXBContext context = JAXBContext.newInstance(clazz);
+        Unmarshaller unmarshaller = context.createUnmarshaller();
+
         return (T) unmarshaller.unmarshal(new StringReader(xml));
 	}
 	
 	/**
-     * Converts the instrument description into the synoptic XML expected by the
-     * BlockServer.
+     * Converts an object into an XML representation, checking it against the
+     * supplied schema.
      * 
      * @param <T>
      *            the type than needs to be converted into XML
-     * @param instrument
-     *            the instrument description
-     * @return the XML for the synoptic
+     * @param toConvert
+     *            the object to convert into XML
+     * @param clazz
+     *            the type to parse the XML into
+     * @param rawSchema
+     *            the schema to check against
+     * @return the XML that the object has been converted into
      * @throws JAXBException
-     *             XML Exception
+     *             XML Exception for if the conversion to xml failed
      * @throws SAXException
-     *             XML Exception
+     *             XML Exception for if the xml doesn't conform to the schema
      */
-    public static synchronized <T> String toXml(T instrument) throws JAXBException, SAXException {
-		if (context == null) {
-			initialise();
-		}
-	    
-		StringWriter writer = new StringWriter();
-		marshaller.marshal(instrument, writer);
+    public static synchronized <T> String toXml(T toConvert, Class<T> clazz, String rawSchema)
+            throws JAXBException, SAXException {
+        Schema schema = null; // Null means no validation
+        
+        if (!Strings.isNullOrEmpty(rawSchema)) {
+            SchemaFactory sf = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
+            schema = sf.newSchema(new StreamSource(new StringReader(rawSchema)));
+        }
+        
+        JAXBContext context = JAXBContext.newInstance(clazz);
+        Marshaller marshaller = context.createMarshaller();
+        StringWriter writer = new StringWriter();
+        marshaller.setSchema(schema);
+        marshaller.marshal(toConvert, writer);
 		
 		return writer.toString();		
-	}
-	
-	/**
-     * Sets the XML schema.
-     * 
-     * @param rawSchema the XML schema for the synoptic as supplied by the
-     *            BlockServer
-     */
-    public static synchronized void setSchema(String rawSchema) {
-		if (context == null) {
-			initialise();
-		}
-
-        if (Strings.isNullOrEmpty(rawSchema)) {
-            clearSchema();
-        } else {
-            try {
-                schema = SF.newSchema(new StreamSource(new StringReader(rawSchema)));
-                marshaller.setSchema(schema);
-                unmarshaller.setSchema(schema);
-            } catch (SAXException e) {
-                clearSchema();
-            }
-        }
-	}
-
-    private static void clearSchema() {
-        // Add warning here
-        marshaller.setSchema(null);
-        unmarshaller.setSchema(null);
-    }
-	
-    private static void initialise() {
-		try {
-			context = JAXBContext.newInstance(SynopticDescription.class);
-			marshaller = context.createMarshaller();
-			unmarshaller = context.createUnmarshaller();	
-		} catch (Exception e) {
-			context = null;
-		}
 	}
 }

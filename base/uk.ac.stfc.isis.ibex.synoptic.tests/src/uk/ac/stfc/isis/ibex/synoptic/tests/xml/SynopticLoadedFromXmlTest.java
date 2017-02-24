@@ -44,7 +44,7 @@ public class SynopticLoadedFromXmlTest extends FileReadingTest {
 	
 	@Before
 	public void setUp() throws Exception {
-		instrument = XMLUtil.fromXml(fileContent());
+        instrument = XMLUtil.fromXml(fileContent(), SynopticDescription.class);
 	}
 
 	@Override
