@@ -29,6 +29,12 @@ import org.eclipse.wb.swt.ResourceManager;
  */
 public final class CheckboxIcons {
 
+    /*
+     * This is a utility class and is never instantiated.
+     */
+    private CheckboxIcons() {
+    }
+
     /**
      * Gets a checkbox icon image.
      * 

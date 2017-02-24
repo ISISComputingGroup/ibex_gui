@@ -33,7 +33,6 @@ import uk.ac.stfc.isis.ibex.model.ModelObject;
  */
 public class ViewDeviceScreensDescriptionViewModel extends ModelObject {
 
-    private DeviceScreensModel deviceScreensModel;
     private DeviceScreensDescription deviceScreensDescription;
     private final DataBindingContext bindingContext = new DataBindingContext();
 
@@ -44,9 +43,8 @@ public class ViewDeviceScreensDescriptionViewModel extends ModelObject {
      *            the device screens model.
      */
     public ViewDeviceScreensDescriptionViewModel(DeviceScreensModel deviceScreensModel) {
-        this.deviceScreensModel = deviceScreensModel;
         bindingContext.bindValue(BeanProperties.value("deviceScreensDescription").observe(this),
-                BeanProperties.value("deviceScreensDescription").observe(this.deviceScreensModel));
+                BeanProperties.value("deviceScreensDescription").observe(deviceScreensModel));
     }
 
     /**

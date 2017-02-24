@@ -36,13 +36,7 @@ import uk.ac.stfc.isis.ibex.model.ModelObject;
  */
 public class YesNoRadioButtons extends ModelObject {
 
-
     private Boolean selected;
-
-    private Button yesButton;
-    private Button noButton;
-
-    private DataBindingContext bindingContext;
 
     private boolean enabled;
 
@@ -56,10 +50,10 @@ public class YesNoRadioButtons extends ModelObject {
      */
     public YesNoRadioButtons(Composite parent, String trueText, String falseText) {
 
-        bindingContext = new DataBindingContext();
+        DataBindingContext bindingContext = new DataBindingContext();
         
-        yesButton = new Button(parent, SWT.RADIO);
-        noButton = new Button(parent, SWT.RADIO);
+        Button yesButton = new Button(parent, SWT.RADIO);
+        Button noButton = new Button(parent, SWT.RADIO);
         
         yesButton.setText(trueText);
         yesButton.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1));

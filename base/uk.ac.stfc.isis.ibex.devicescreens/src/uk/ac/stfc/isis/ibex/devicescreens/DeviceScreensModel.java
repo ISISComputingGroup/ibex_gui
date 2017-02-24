@@ -107,12 +107,12 @@ public class DeviceScreensModel extends ModelObject {
 
             @Override
             public void onError(Exception e) {
-                return;
+                // Do nothing
             }
 
             @Override
             public void onConnectionStatus(boolean isConnected) {
-                return;
+                // Do nothing
             }
         });
     }
