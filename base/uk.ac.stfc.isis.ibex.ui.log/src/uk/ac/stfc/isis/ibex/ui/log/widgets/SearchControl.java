@@ -38,29 +38,8 @@ import org.eclipse.swt.widgets.ProgressBar;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.wb.swt.ResourceManager;
 
-import uk.ac.stfc.isis.ibex.log.message.LogMessageFields;
-import uk.ac.stfc.isis.ibex.ui.log.filter.LogMessageFilter;
-
 @SuppressWarnings("checkstyle:magicnumber")
 public class SearchControl extends Canvas {
-
-    private static final LogMessageFields[] FIELDS =
-            { LogMessageFields.CONTENTS, LogMessageFields.CLIENT_NAME, LogMessageFields.CLIENT_HOST,
-                    LogMessageFields.SEVERITY, LogMessageFields.TYPE, LogMessageFields.APPLICATION_ID };
-
-    private static final String[] FIELD_NAMES;
-
-    static {
-        FIELD_NAMES = new String[FIELDS.length];
-        for (int f = 0; f < FIELDS.length; ++f) {
-            FIELD_NAMES[f] = FIELDS[f].getDisplayName();
-        }
-    }
-
-    private final LogMessageFilter infoFilter =
-            new LogMessageFilter(LogMessageFields.SEVERITY, LogMessageSeverity.INFO.name(), true);
-    private final LogMessageFilter minorFilter =
-            new LogMessageFilter(LogMessageFields.SEVERITY, LogMessageSeverity.MINOR.name(), true);
 
     private SearchControlViewModel viewModel;
 
@@ -79,15 +58,11 @@ public class SearchControl extends Canvas {
     private Label lblSearchText;
 
     private ProgressBar progressBar;
-
-    private LogDisplay parent;
 	
-    public SearchControl(LogDisplay parent, final ISearchModel searcher, final SearchControlViewModel viewModel) {
+	public SearchControl(LogDisplay parent, final ISearchModel searcher) {
 		super(parent, SWT.NONE);
 
-        this.parent = parent;
-
-        this.viewModel = viewModel;
+        this.viewModel = new SearchControlViewModel();
 
         GridLayout gl = new GridLayout(2, false);
         gl.marginWidth = 0;
@@ -112,7 +87,6 @@ public class SearchControl extends Canvas {
         cmboFields = new Combo(grpFilter, SWT.READ_ONLY);
 		cmboFields.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false,
 				false, 1, 1));
-        cmboFields.setItems(FIELD_NAMES);
 		cmboFields.select(0);
 
 		// Create search button
@@ -193,10 +167,10 @@ public class SearchControl extends Canvas {
         cmboSeverity.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-                setInfoFilter(cmboSeverity.getText());
+                viewModel.setInfoFilter(cmboSeverity.getText());
 			}
 		});
-        setInfoFilter(cmboSeverity.getText());
+        viewModel.setInfoFilter(cmboSeverity.getText());
 
         // Progress bar
         progressBar = new ProgressBar(grpFilter, SWT.INDETERMINATE);
@@ -215,13 +189,11 @@ public class SearchControl extends Canvas {
         bindingContext.bindValue(WidgetProperties.visible().observe(progressBar),
                 BeanProperties.value("progressIndicatorsVisible").observe(viewModel));
 
-        /* Filters */
+        /* List of items in cmboFields */
         bindingContext.bindValue(WidgetProperties.selection().observe(cmboFields),
-                BeanProperties.value("field").observe(viewModel));
-        bindingContext.bindValue(WidgetProperties.selection().observe(cmboSeverity),
-                BeanProperties.value("searchFilterSeverity").observe(viewModel));
+                BeanProperties.value("searchItems").observe(viewModel));
 
-        /* To datetime picker enabled status */
+        /* "To" datetime picker */
         bindingContext.bindValue(WidgetProperties.selection().observe(chkTo),
                 BeanProperties.value("toCheckboxSelected").observe(viewModel));
         bindingContext.bindValue(WidgetProperties.enabled().observe(dtToDate),
@@ -229,39 +201,12 @@ public class SearchControl extends Canvas {
         bindingContext.bindValue(WidgetProperties.enabled().observe(dtToTime),
                 BeanProperties.value("toCheckboxSelected").observe(viewModel));
 
-        /* From datetime picker enabled status */
+        /* "From" datetime picker */
         bindingContext.bindValue(WidgetProperties.selection().observe(chkFrom),
                 BeanProperties.value("fromCheckboxSelected").observe(viewModel));
         bindingContext.bindValue(WidgetProperties.enabled().observe(dtFromDate),
                 BeanProperties.value("fromCheckboxSelected").observe(viewModel));
         bindingContext.bindValue(WidgetProperties.enabled().observe(dtFromTime),
                 BeanProperties.value("fromCheckboxSelected").observe(viewModel));
-
-        /* To datetime picker value */
-        bindingContext.bindValue(WidgetProperties.selection().observe(dtFromDate),
-                BeanProperties.value("fromDate").observe(viewModel));
-        bindingContext.bindValue(WidgetProperties.selection().observe(dtFromTime),
-                BeanProperties.value("fromTime").observe(viewModel));
-
-        /* From datetime picker value */
-        bindingContext.bindValue(WidgetProperties.selection().observe(dtToDate),
-                BeanProperties.value("toDate").observe(viewModel));
-        bindingContext.bindValue(WidgetProperties.selection().observe(dtToTime),
-                BeanProperties.value("toTime").observe(viewModel));
-
-        /* Search text value */
-        bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(txtValue),
-                BeanProperties.value("searchText").observe(viewModel));
-    }
-
-    public void setInfoFilter(String set) {
-        parent.removeMessageFilter(infoFilter);
-        parent.removeMessageFilter(minorFilter);
-        if (set.equals(LogMessageSeverity.MAJOR.toString())) {
-            parent.addMessageFilter(infoFilter);
-            parent.addMessageFilter(minorFilter);
-        } else if (set.equals(LogMessageSeverity.MINOR.toString())) {
-            parent.addMessageFilter(infoFilter);
-        }
     }
 }

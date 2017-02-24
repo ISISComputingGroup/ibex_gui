@@ -22,43 +22,82 @@
 package uk.ac.stfc.isis.ibex.ui.log.widgets;
 
 import java.util.Calendar;
-import java.util.Date;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.jobs.IJobChangeEvent;
 import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.core.runtime.jobs.JobChangeAdapter;
+import org.eclipse.swt.widgets.DateTime;
 
 import uk.ac.stfc.isis.ibex.log.message.LogMessageFields;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
+import uk.ac.stfc.isis.ibex.ui.log.filter.LogMessageFilter;
 
 /**
- * The Class SearchControlViewModel.
+ *
  */
 public class SearchControlViewModel extends ModelObject {
 
+    private static final LogMessageFields[] FIELDS =
+            { LogMessageFields.CONTENTS, LogMessageFields.CLIENT_NAME, LogMessageFields.CLIENT_HOST,
+                    LogMessageFields.SEVERITY, LogMessageFields.TYPE, LogMessageFields.APPLICATION_ID };
+
+    private static final String[] FIELD_NAMES;
+
+    static {
+        FIELD_NAMES = new String[FIELDS.length];
+        for (int f = 0; f < FIELDS.length; ++f) {
+            FIELD_NAMES[f] = FIELDS[f].getDisplayName();
+        }
+    }
+
     private ISearchModel searcher;
+    private LogDisplay parent;
+
     private boolean progressIndicatorsVisible;
 
     private boolean toCheckboxSelected = false;
     private boolean fromCheckboxSelected = false;
 
-    private Date toDate;
-    private Date fromDate;
-    private Date toTime;
-    private Date fromTime;
+    private DateTime toDate;
+    private DateTime fromDate;
+    private DateTime toTime;
+    private DateTime fromTime;
 
-    private Integer searchFilterItems;
-    private Integer searchFilterSeverity;
+    private final LogMessageFilter infoFilter =
+            new LogMessageFilter(LogMessageFields.SEVERITY, LogMessageSeverity.INFO.name(), true);
+    private final LogMessageFilter minorFilter =
+            new LogMessageFilter(LogMessageFields.SEVERITY, LogMessageSeverity.MINOR.name(), true);
 
-    private String searchText = "";
-    private LogMessageFields field;
+    private Object searchItems;
 
-    public SearchControlViewModel() {
-        final Date now = new Date();
-        toDate = now;
-        toTime = now;
-        fromDate = now;
-        fromTime = now;
+    public void setSearcher(ISearchModel searcher) {
+        this.searcher = searcher;
+    }
+
+    public void setToCheckboxSelected(boolean selected) {
+        firePropertyChange("toCheckboxSelected", this.toCheckboxSelected, this.toCheckboxSelected = selected);
+    }
+
+    public boolean getToCheckboxSelected() {
+        return toCheckboxSelected;
+    }
+
+    public void setFromCheckboxSelected(boolean selected) {
+        firePropertyChange("fromCheckboxSelected", this.fromCheckboxSelected, this.fromCheckboxSelected = selected);
+    }
+
+    public boolean getFromCheckboxSelected() {
+        return fromCheckboxSelected;
+    }
+
+    public void setSearchItems(Object searchItems) {
+        firePropertyChange("searchItems", this.searchItems, this.searchItems = searchItems);
+    }
+
+    public Object getSearchItems() {
+        return searchItems;
     }
 
     /**
@@ -66,30 +105,26 @@ public class SearchControlViewModel extends ModelObject {
      * request parameters.
      */
     public void search() {
-        if (searcher == null) {
-            return;
-        }
-
-        Calendar from = fromCheckboxSelected ? getCalendar(fromDate, fromTime) : null;
-        Calendar to = toCheckboxSelected ? getCalendar(toDate, toTime) : null;
-
-        runSearchJob(field, searchText, from, to);
-
-    }
-
-    private Calendar getCalendar(Date date, Date time) {
-        Calendar resultCalendar = Calendar.getInstance();
-        Calendar dateCalendar = Calendar.getInstance();
-        Calendar timeCalendar = Calendar.getInstance();
-
-        dateCalendar.setTime(date);
-        timeCalendar.setTime(time);
-
-        resultCalendar.set(dateCalendar.get(Calendar.YEAR), dateCalendar.get(Calendar.MONTH),
-                dateCalendar.get(Calendar.DAY_OF_MONTH), timeCalendar.get(Calendar.HOUR),
-                timeCalendar.get(Calendar.MINUTE), timeCalendar.get(Calendar.SECOND));
-
-        return resultCalendar;
+//        if (searcher != null) {
+//            int fieldIndex = searchItems.getSelectionIndex();
+//
+//            if (fieldIndex != -1) {
+//                final LogMessageFields field = FIELDS[fieldIndex];
+//                final String value = txtValue.getText();
+//
+//                final Calendar from = fromCheckboxEnabled
+//                        ? new GregorianCalendar(fromDate.getYear(), fromDate.getMonth(), fromDate.getDay(),
+//                                fromTime.getHours(), fromTime.getMinutes(), fromTime.getSeconds())
+//                        : null;
+//                final Calendar to = toCheckboxEnabled
+//                        ? new GregorianCalendar(toDate.getYear(), toDate.getMonth(), toDate.getDay(), toTime.getHours(),
+//                                toTime.getMinutes(), toTime.getSeconds())
+//                        : null;
+//
+//                runSearchJob(field, value, from, to);
+//
+//            }
+//        }
     }
 
     private void runSearchJob(final LogMessageFields field, final String value, final Calendar from,
@@ -98,232 +133,54 @@ public class SearchControlViewModel extends ModelObject {
         final Job searchJob = new Job("Searching") {
             @Override
             protected IStatus run(IProgressMonitor monitor) {
-                setProgressIndicatorsVisible(true);
                 searcher.search(field, value, from, to);
-                setProgressIndicatorsVisible(false);
                 return Job.ASYNC_FINISH;
             }
 
         };
 
+        searchJob.addJobChangeListener(new JobChangeAdapter() {
+
+            @Override
+            public void scheduled(IJobChangeEvent event) {
+                setProgressIndicatorsVisible(true);
+            }
+
+            @Override
+            public void done(IJobChangeEvent event) {
+                setProgressIndicatorsVisible(false);
+            }
+
+        });
+
         searchJob.schedule();
 
     }
 
-    private void setProgressIndicatorsVisible(boolean visible) {
+    private void setProgressIndicatorsVisible(final boolean visible) {
         firePropertyChange("progressIndicatorsVisible", this.progressIndicatorsVisible, this.progressIndicatorsVisible = visible);
     }
 
-    /**
-     * Gets the progress indicators visible.
-     *
-     * @return the progress indicators visible
-     */
     public boolean getProgressIndicatorsVisible() {
         return progressIndicatorsVisible;
     }
 
-    /**
-     * Clear search results.
-     */
     public void clearSearchResults() {
-        setProgressIndicatorsVisible(false);
-        setSearchText("");
-
-        if (searcher != null) {
-            searcher.clearSearch();
-        }
+//        txtValue.setText("");
+//
+//        if (searcher != null) {
+//            searcher.clearSearch();
+//        }
     }
 
-    /**
-     * Sets the searcher.
-     *
-     * @param searcher
-     *            the new searcher
-     */
-    public void setSearcher(ISearchModel searcher) {
-        this.searcher = searcher;
-    }
-
-    /**
-     * Sets the to checkbox selected.
-     *
-     * @param selected
-     *            the new to checkbox selected
-     */
-    public void setToCheckboxSelected(boolean selected) {
-        firePropertyChange("toCheckboxSelected", this.toCheckboxSelected, this.toCheckboxSelected = selected);
-    }
-
-    /**
-     * Gets the to checkbox selected.
-     *
-     * @return the to checkbox selected
-     */
-    public boolean getToCheckboxSelected() {
-        return toCheckboxSelected;
-    }
-
-    /**
-     * Sets the from checkbox selected.
-     *
-     * @param selected
-     *            the new from checkbox selected
-     */
-    public void setFromCheckboxSelected(boolean selected) {
-        firePropertyChange("fromCheckboxSelected", this.fromCheckboxSelected, this.fromCheckboxSelected = selected);
-    }
-
-    /**
-     * Gets the from checkbox selected.
-     *
-     * @return the from checkbox selected
-     */
-    public boolean getFromCheckboxSelected() {
-        return fromCheckboxSelected;
-    }
-
-    /**
-     * Gets the to date.
-     *
-     * @return the toDate
-     */
-    public Date getToDate() {
-        return toDate;
-    }
-
-    /**
-     * Sets the to date.
-     *
-     * @param toDate
-     *            the toDate to set
-     */
-    public void setToDate(Date toDate) {
-        firePropertyChange("toDate", this.toDate, this.toDate = toDate);
-    }
-
-    /**
-     * Gets the from date.
-     *
-     * @return the fromDate
-     */
-    public Date getFromDate() {
-        return fromDate;
-    }
-
-    /**
-     * Sets the from date.
-     *
-     * @param fromDate
-     *            the fromDate to set
-     */
-    public void setFromDate(Date fromDate) {
-        firePropertyChange("fromDate", this.fromDate, this.fromDate = fromDate);
-    }
-
-    /**
-     * Gets the to time.
-     *
-     * @return the toTime
-     */
-    public Date getToTime() {
-        return toTime;
-    }
-
-    /**
-     * Sets the to time.
-     *
-     * @param toTime
-     *            the toTime to set
-     */
-    public void setToTime(Date toTime) {
-        firePropertyChange("toTime", this.toTime, this.toTime = toTime);
-    }
-
-    /**
-     * Gets the from time.
-     *
-     * @return the fromTime
-     */
-    public Date getFromTime() {
-        return fromTime;
-    }
-
-    /**
-     * Sets the from time.
-     *
-     * @param fromTime
-     *            the fromTime to set
-     */
-    public void setFromTime(Date fromTime) {
-        firePropertyChange("fromTime", this.fromTime, this.fromTime = fromTime);
-    }
-
-    /**
-     * Gets the search filter items.
-     *
-     * @return the searchFilterItems
-     */
-    public Integer getSearchFilterItems() {
-        return searchFilterItems;
-    }
-
-    /**
-     * Sets the search filter items.
-     *
-     * @param searchFilterItems
-     *            the searchFilterItems to set
-     */
-    public void setSearchFilterItems(Integer searchFilterItems) {
-        firePropertyChange("searchFilterItems", this.searchFilterItems, this.searchFilterItems = searchFilterItems);
-    }
-
-    /**
-     * Gets the search filter severity.
-     *
-     * @return the searchFilterSeverity
-     */
-    public Integer getSearchFilterSeverity() {
-        return searchFilterSeverity;
-    }
-
-    /**
-     * Sets the search filter severity.
-     *
-     * @param searchFilterSeverity
-     *            the searchFilterSeverity to set
-     */
-    public void setSearchFilterSeverity(Integer searchFilterSeverity) {
-        firePropertyChange("searchFilterSeverity", this.searchFilterSeverity,
-                this.searchFilterSeverity = searchFilterSeverity);
-    }
-
-    /**
-     * @return the searchText
-     */
-    public String getSearchText() {
-        return searchText;
-    }
-
-    /**
-     * @param searchText the searchText to set
-     */
-    public void setSearchText(String searchText) {
-        firePropertyChange("searchText", this.searchText, this.searchText = searchText);
-    }
-
-    /**
-     * @return the field
-     */
-    public LogMessageFields getField() {
-        return field;
-    }
-
-    /**
-     * @param field
-     *            the field to set
-     */
-    public void setField(LogMessageFields field) {
-        firePropertyChange("field", this.field, this.field = field);
+    public void setInfoFilter(String set) {
+//        parent.removeMessageFilter(infoFilter);
+//        parent.removeMessageFilter(minorFilter);
+//        if (set.equals(LogMessageSeverity.MAJOR.toString())) {
+//            parent.addMessageFilter(infoFilter);
+//            parent.addMessageFilter(minorFilter);
+//        } else if (set.equals(LogMessageSeverity.MINOR.toString())) {
+//            parent.addMessageFilter(infoFilter);
+//        }
     }
 }
