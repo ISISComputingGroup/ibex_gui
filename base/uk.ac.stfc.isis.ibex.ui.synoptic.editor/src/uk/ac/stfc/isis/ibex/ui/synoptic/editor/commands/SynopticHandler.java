@@ -23,13 +23,17 @@ import java.util.Collection;
 
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.jface.window.Window;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.PlatformUI;
+import org.xml.sax.SAXParseException;
 
 import uk.ac.stfc.isis.ibex.epics.writing.SameTypeWriter;
 import uk.ac.stfc.isis.ibex.epics.writing.Writable;
 import uk.ac.stfc.isis.ibex.opis.Opi;
 import uk.ac.stfc.isis.ibex.synoptic.Synoptic;
+import uk.ac.stfc.isis.ibex.synoptic.SynopticWriter;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.SynopticDescription;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.dialogs.EditSynopticDialog;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.SynopticViewModel;
@@ -84,7 +88,21 @@ public abstract class SynopticHandler<T> extends AbstractHandler {
         EditSynopticDialog editDialog =
                 new EditSynopticDialog(shell(), title, isBlank, opis, viewModel);
 		if (editDialog.open() == Window.OK) {
-            SYNOPTIC.edit().saveSynoptic().write(viewModel.getSynoptic());
+		    SynopticWriter writer = SYNOPTIC.edit().saveSynoptic();
+            writer.write(viewModel.getSynoptic());
+            Exception error = writer.lastError();
+            if (error != null) {
+                MessageBox dialog = new MessageBox(shell(), SWT.ERROR | SWT.OK);
+                dialog.setText("Error saving synoptic");
+                if (error.getCause().getClass() == SAXParseException.class) {
+                    dialog.setMessage(
+                            "Synoptic incompatible with server, please check that you are using the latest version of IBEX");
+                } else {
+                    dialog.setMessage("Error in saving synoptic, please contact support team");
+                }
+                Synoptic.LOG.error("Error saving synoptic: " + error.getMessage());
+                dialog.open();
+            }
 		}
 	}
 	

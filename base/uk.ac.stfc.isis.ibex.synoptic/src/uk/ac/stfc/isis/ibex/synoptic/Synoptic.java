@@ -33,8 +33,14 @@ import uk.ac.stfc.isis.ibex.logger.IsisLog;
 import uk.ac.stfc.isis.ibex.synoptic.internal.Variables;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.SynopticDescription;
 
+/**
+ * The singleton that contains information on the synoptics.
+ */
 public class Synoptic extends Closer implements BundleActivator {
 
+    /**
+     * The logger to log synoptic error messages.
+     */
 	public static final Logger LOG = IsisLog.getLogger(Synoptic.class);
 	
 	private static Synoptic instance;
@@ -48,6 +54,10 @@ public class Synoptic extends Closer implements BundleActivator {
 
 	private final Variables variables;
 	
+    /**
+     * The constructor for this singleton, created by eclipse when the class is
+     * first used.
+     */
 	public Synoptic() {
 		instance = this;
 		
@@ -59,22 +69,47 @@ public class Synoptic extends Closer implements BundleActivator {
 		editorModel = new SynopticModel(variables);
 	}
 	
+    /**
+     * @return The instance of this singleton.
+     */
 	public static Synoptic getInstance() {
 		return instance;
 	}
 	
+    /**
+     * Get the model for viewing the current synoptic.
+     * 
+     * @return The current synoptic model.
+     */
 	public SynopticModel currentViewerModel() {
 		return viewerModel;
 	}
 	
+    /**
+     * Gets a model for editing synoptics.
+     * 
+     * @return The model for editing synoptics.
+     */
 	public SynopticModel edit() {
 		return editorModel;
 	}
 	
+    /**
+     * Sets the synoptic that is being viewed based on a synoptic info class.
+     * 
+     * @param info
+     *            The detailed information of the synoptic to display
+     */
 	public void setViewerSynoptic(SynopticInfo info) {
 		viewerModelObserver.switchSynoptic(info);
 	}
 	
+    /**
+     * Sets the synoptic that is being viewed based on the name of the synoptic.
+     * 
+     * @param synopticName
+     *            The name of the synoptic to view.
+     */
 	public void setViewerSynoptic(String synopticName) {
 		for (SynopticInfo synoptic : availableSynoptics()) {
 			if (synoptic.name().equals(synopticName)) {
@@ -83,9 +118,23 @@ public class Synoptic extends Closer implements BundleActivator {
 		}
 	}
 	
+    /**
+     * Get a blank synoptic model for editing.
+     * 
+     * @return A blank synoptic model.
+     */
 	public SynopticModel getBlankModel() {
 		return new SynopticModel(variables);
 	}
+
+    /**
+     * Gets the schema for what the blockserver expects from synoptics.
+     * 
+     * @return The string containing the schema.
+     */
+    public String getSchema() {
+        return variables.synopticSchema.getValue();
+    }
 
     /**
      * Provides the information about available synoptics.
@@ -141,18 +190,28 @@ public class Synoptic extends Closer implements BundleActivator {
 		return all;
 	}
 	
-	public SynopticInfo getSynopticInfo() {
-		return viewerModelObserver.getSynopticInfo();
-	}
-	
+    /**
+     * @return The model observing the current synoptic.
+     */
 	public ObservingSynopticModel currentObservingViewerModel() {
 		return viewerModelObserver;
 	}
 	
+    /**
+     * Gets an observable tied to the synoptic description for a given synoptic
+     * info.
+     * 
+     * @param synoptic
+     *            The detailed synoptic info.
+     * @return An observer on the synoptic description.
+     */
 	public ForwardingObservable<SynopticDescription> synoptic(SynopticInfo synoptic) {
 		return variables.getSynopticDescription(synoptic.pv());
 	}
 	
+    /**
+     * @return The bundle context for the activator.
+     */
 	static BundleContext getContext() {
 		return context;
 	}
@@ -187,6 +246,11 @@ public class Synoptic extends Closer implements BundleActivator {
 		return editorModel.deleteSynoptics();
 	}
 	
+    /**
+     * Get a writable that allows you to edit synoptics on the block server.
+     * 
+     * @return The writable that takes the synoptic xml.
+     */
 	public Writable<String> editSynoptic() {
 		return editorModel.setSynoptic();
 	}
