@@ -30,7 +30,7 @@ public class InstrumentNameValidator {
      * Error message for wrong instrument name formatting.
      */
     public static final String NAME_FORMAT_MSG =
-            "Instrument Name invalid, must only use [a-z], [A-Z], [0-9], and _";
+            "Instrument Name invalid, must only use letters, numbers and underscores.";
 
     /**
      * Error message for empty instrument name.
