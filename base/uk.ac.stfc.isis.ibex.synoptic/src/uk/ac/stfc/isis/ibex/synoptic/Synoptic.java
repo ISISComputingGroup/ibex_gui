@@ -245,13 +245,4 @@ public class Synoptic extends Closer implements BundleActivator {
 	public Writable<Collection<String>> delete() {
 		return editorModel.deleteSynoptics();
 	}
-	
-    /**
-     * Get a writable that allows you to edit synoptics on the block server.
-     * 
-     * @return The writable that takes the synoptic xml.
-     */
-	public Writable<String> editSynoptic() {
-		return editorModel.setSynoptic();
-	}
 }
