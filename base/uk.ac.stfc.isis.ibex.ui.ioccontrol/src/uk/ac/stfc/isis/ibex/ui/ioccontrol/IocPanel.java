@@ -41,7 +41,7 @@ public class IocPanel extends Composite {
 	private final Display display = Display.getDefault();
 	
 	private IocTable table;
-	private IocEditorPanel editor;
+    private IocButtonPanel buttons;
 	private IocControl control;
 	
 	private PropertyChangeListener updateTable = new PropertyChangeListener() {	
@@ -76,12 +76,12 @@ public class IocPanel extends Composite {
 		table.addSelectionChangedListener(new ISelectionChangedListener() {
 			@Override
 			public void selectionChanged(SelectionChangedEvent arg0) {
-				editor.setIoc(table.firstSelectedRow());
+				buttons.setIoc(table.firstSelectedRow());
 			}
 		});
 
-		editor = new IocEditorPanel(container, SWT.NONE, control);
-		editor.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
+        buttons = new IocButtonPanel(container, SWT.NONE, control);
+		buttons.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
 	}
 	
 	@Override

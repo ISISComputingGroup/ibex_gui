@@ -60,12 +60,12 @@ public class IocButtonPanel extends Composite {
 		this.control = control;
 		GridLayout gridLayout = new GridLayout(3, true);
 		gridLayout.verticalSpacing = 0;
-		gridLayout.marginWidth = 0;
+        gridLayout.marginWidth = 10;
 		gridLayout.marginHeight = 0;
 		setLayout(gridLayout);
 		
 		start = new Button(this, SWT.NONE);
-		start.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
+        start.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
 		start.setText("Start");
 		start.addSelectionListener(new SelectionAdapter() {
 			@Override
