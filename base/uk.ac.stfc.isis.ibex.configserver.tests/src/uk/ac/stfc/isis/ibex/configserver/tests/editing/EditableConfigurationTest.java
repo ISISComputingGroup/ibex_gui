@@ -32,7 +32,7 @@ import org.junit.Before;
 import com.google.common.collect.Iterables;
 
 import uk.ac.stfc.isis.ibex.configserver.configuration.Block;
-import uk.ac.stfc.isis.ibex.configserver.configuration.Component;
+import uk.ac.stfc.isis.ibex.configserver.configuration.ComponentInfo;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Configuration;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Group;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Ioc;
@@ -54,16 +54,17 @@ public class EditableConfigurationTest {
     protected static final Block GAPY = new Block("GAPY", "ADDRESS", true, true);
 	protected static final Group JAWS = new Group("JAWS");
 	protected static final Group TEMPERATURE = new Group("TEMPERATURE");
-	protected static final Component MOTOR = new Component("MOTOR");
+    protected static final Configuration MOTOR_DETAILS = new Configuration("MOTOR", "DESCRIPTION");
+    protected static final ComponentInfo MOTOR = new ComponentInfo(MOTOR_DETAILS);
 
 	protected List<Ioc> iocs;
 	protected List<Block> blocks;
 	protected List<Group> groups;
-	protected List<Component> components;
+    protected List<ComponentInfo> components;
 	protected List<String> history;
 	
 	protected List<EditableIoc> allIocs;
-	protected List<Component> allComponents;
+    protected List<Configuration> allComponents;
 	protected List<PV> allPvs;
 	protected List<PV> activePvs;
 	
@@ -80,7 +81,7 @@ public class EditableConfigurationTest {
 		allIocs.add(GALIL01);
 		
 		allComponents = new ArrayList<>();
-		allComponents.add(MOTOR);
+		allComponents.add(MOTOR_DETAILS);
 		
 		allPvs = new ArrayList<>();
 		activePvs = new ArrayList<>();		
@@ -124,7 +125,7 @@ public class EditableConfigurationTest {
 				Collections.<Ioc>emptyList(), 
 				Collections.<Block>emptyList(),
 				Collections.<Group>emptyList(),
-				Collections.<Component>emptyList(),
+				Collections.<ComponentInfo>emptyList(),
 				Collections.<String>emptyList());
 	}
 	
@@ -135,7 +136,7 @@ public class EditableConfigurationTest {
 		iocs.add(copyGalil);
 		blocks.add(GAPX);
 		groups.add(JAWS);
-		components.add(MOTOR);
+        components.add(MOTOR);
 	}
 	
 	protected Configuration config() {

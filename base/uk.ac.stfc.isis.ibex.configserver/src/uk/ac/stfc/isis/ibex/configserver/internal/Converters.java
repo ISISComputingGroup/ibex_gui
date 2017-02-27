@@ -25,7 +25,7 @@ import uk.ac.stfc.isis.ibex.configserver.BlockRules;
 import uk.ac.stfc.isis.ibex.configserver.IocState;
 import uk.ac.stfc.isis.ibex.configserver.ServerStatus;
 import uk.ac.stfc.isis.ibex.configserver.configuration.BannerItem;
-import uk.ac.stfc.isis.ibex.configserver.configuration.Component;
+import uk.ac.stfc.isis.ibex.configserver.configuration.ComponentInfo;
 import uk.ac.stfc.isis.ibex.configserver.configuration.ConfigInfo;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Configuration;
 import uk.ac.stfc.isis.ibex.configserver.configuration.PV;
@@ -38,8 +38,19 @@ import uk.ac.stfc.isis.ibex.validators.BlockServerNameValidator;
  */
 public interface Converters {
 
+    /**
+     * @return converter for converting a to a configuration.
+     */
 	Converter<String, Configuration> toConfig();
 
+    /**
+     * @return converter for converting to a list of configurations.
+     */
+    Converter<String, Collection<Configuration>> toConfigList();
+
+    /**
+     * @return converter for converting to server status.
+     */
 	Converter<String, ServerStatus> toServerStatus();
 	
     /**
@@ -52,22 +63,49 @@ public interface Converters {
      */
     Converter<String, BlockServerNameValidator> toBlockServerTextValidor();
 
+    /**
+     * @return converter for converting to config info.
+     */
 	Converter<String, Collection<ConfigInfo>> toConfigsInfo();
 
-	Converter<String, Collection<Component>> toComponents();
+    /**
+     * @return converter for converting to component info.
+     */
+	Converter<String, Collection<ComponentInfo>> toComponents();
 
+    /**
+     * @return converter for converting to IOCs.
+     */
 	Converter<String, Collection<EditableIoc>> toIocs();
 
+    /**
+     * @return converter for converting to PVs.
+     */
 	Converter<String, Collection<PV>> toPVs();
 
+    /**
+     * @return converter for converting a configuration to string.
+     */
 	Converter<Configuration, String> configToString();
 
+    /**
+     * @return converter for converting a list of config names to string.
+     */
 	Converter<Collection<String>, String> namesToString();
 
+    /**
+     * @return converter for converting a name to string.
+     */
 	Converter<String, String> nameToString();
 
+    /**
+     * @return converter for converting to a list of IOC states.
+     */
 	Converter<String, Collection<IocState>> toIocStates();
 
+    /**
+     * @return converter for converting to a list of names.
+     */
 	Converter<String, Collection<String>> toNames();
 
     /**

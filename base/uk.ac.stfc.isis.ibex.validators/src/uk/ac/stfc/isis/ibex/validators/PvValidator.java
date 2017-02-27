@@ -29,7 +29,7 @@ package uk.ac.stfc.isis.ibex.validators;
 public class PvValidator {
 
     public static final String ADDRESS_FORMAT =
-            "PV Address invalid, use only [a-z], [A-Z], [0-9], : and _ (a field may be added using a .)";
+            "PV Address invalid, use only letters, numbers, underscores and colons (a field may be added using a .)";
     public static final String ADDRESS_EMPTY = "PV Address invalid, must not be empty";    
     private static final String NO_ERROR = "";
 

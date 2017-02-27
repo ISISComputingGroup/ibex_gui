@@ -41,6 +41,32 @@
 				</macros>
 			</value>
 		</entry>
+		<entry>
+			<key>CCD100</key>
+			<value>
+				<type>CCD100</type>
+				<path>CCD100.opi</path>
+				<description>The OPI for a Chell CCD100</description>
+				<macros>
+					<macro>		
+                        <name>CCD_1</name>		
+                        <description>The PV prefix for the first CCD100 (e.g CCD100_01).</description>		
+                    </macro>						
+                    <macro>		
+                        <name>CCD_2</name>		
+                        <description>The PV prefix for the second CCD100 (e.g CCD100_01).</description>		
+                    </macro>		
+                    <macro>		
+                        <name>CCD_3</name>		
+                        <description>The PV prefix for the third CCD100 (e.g CCD100_01).</description>		
+                    </macro>		
+                    <macro>		
+                        <name>CCD_4</name>		
+                        <description>The PV prefix for the fourth CCD100 (e.g CCD100_01).</description>		
+                    </macro>				
+				</macros>
+			</value>
+		</entry>
         <entry>
             <key>Double Monitor</key>		
             <value>	

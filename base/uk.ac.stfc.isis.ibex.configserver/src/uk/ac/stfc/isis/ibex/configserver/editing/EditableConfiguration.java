@@ -34,7 +34,7 @@ import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 
 import uk.ac.stfc.isis.ibex.configserver.configuration.Block;
-import uk.ac.stfc.isis.ibex.configserver.configuration.Component;
+import uk.ac.stfc.isis.ibex.configserver.configuration.ComponentInfo;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Configuration;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Group;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Ioc;
@@ -93,6 +93,9 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
 
     /** Available PVs. */
     private final List<PV> pvs;
+    
+    /** If this is a component. */
+    private boolean isComponent;
 
     /**
      * Listener for block renaming events.
@@ -127,11 +130,14 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
      * @param pvs
      *            The PVs available to the configuration
      */
-    public EditableConfiguration(Configuration config, Collection<EditableIoc> iocs, Collection<Component> components,
+    public EditableConfiguration(
+			Configuration config,
+			Collection<EditableIoc> iocs,
+            Collection<Configuration> components,
             Collection<PV> pvs) {
-        this.name = config.name();
-        this.description = config.description();
-        this.synoptic = config.synoptic();
+		this.name = config.name();
+		this.description = config.description();
+		this.synoptic = config.synoptic();
         this.allIocs = iocs;
 
         this.history = new ArrayList<>();
@@ -164,8 +170,8 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
             addIoc(new EditableIoc(ioc, description));
         }
 
-        editableComponents = new EditableComponents(config.getComponents(), components);
-        editableComponents.addPropertyChangeListener(passThrough());
+        Collection<Configuration> selectedComponents = getComponentDetails(config.getComponents(), components);
+        editableComponents = new EditableComponents(selectedComponents, components);
     }
 
     /**
@@ -301,10 +307,14 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
     /**
      * @return The components associated with the configuration
      */
-    private Collection<Component> getComponents() {
-        return editableComponents.getSelected();
-    }
-
+	private Collection<ComponentInfo> getComponents() {
+        Collection<ComponentInfo> result = new ArrayList<ComponentInfo>();
+        for (Configuration compDetails : editableComponents.getSelected()) {
+            result.add(new ComponentInfo(compDetails));
+        }
+        return result;
+	}
+	
     /**
      * @return The dates when the configuration has been modified
      */
@@ -535,7 +545,7 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
         editableGroups.remove(group);
 
         firePropertyChange(EDITABLE_GROUPS, editableGroupsBefore, getEditableGroups());
-        firePropertyChange("groups", groupsBefore, getGroups());
+		firePropertyChange("groups", groupsBefore, getGroups());
     }
 
     /**
@@ -558,7 +568,7 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
     public Configuration asComponent() {
         Configuration config = asConfiguration();
         return new Configuration(config.name(), config.description(), config.synoptic(), config.getIocs(),
-                config.getBlocks(), config.getGroups(), Collections.<Component>emptyList(), config.getHistory());
+                config.getBlocks(), config.getGroups(), Collections.<ComponentInfo>emptyList(), config.getHistory());
     }
 
     /**
@@ -626,5 +636,36 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
         }
 
         return names;
+    }
+    
+    /**
+     * Sets whether this configuration is a component or not.
+     * 
+     * @param isComponent
+     *            true if this is a component
+     */
+    public void setIsComponent(boolean isComponent) {
+        firePropertyChange("isComponent", isComponent, this.isComponent = isComponent);
+    }
+    
+    /**
+     * Get whether this configuration is a component or not.
+     * 
+     * @returns true if this is a component
+     */
+    public boolean getIsComponent() {
+        return isComponent;
+    }
+    private Collection<Configuration> getComponentDetails(Collection<ComponentInfo> selected,
+            Collection<Configuration> available) {
+        Collection<Configuration> result = new ArrayList<Configuration>();
+        for (ComponentInfo compInfo : selected) {
+            for (Configuration details : available) {
+                if (compInfo.getName().equals(details.name())) {
+                    result.add(details);
+                }
+            }
+        }
+        return result;
     }
 }

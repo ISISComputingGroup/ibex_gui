@@ -21,7 +21,7 @@ package uk.ac.stfc.isis.ibex.configserver;
 
 import java.util.Collection;
 
-import uk.ac.stfc.isis.ibex.configserver.configuration.Component;
+import uk.ac.stfc.isis.ibex.configserver.configuration.ComponentInfo;
 import uk.ac.stfc.isis.ibex.configserver.configuration.ConfigInfo;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Configuration;
 import uk.ac.stfc.isis.ibex.configserver.configuration.PV;
@@ -137,6 +137,15 @@ public class ConfigServer extends Closer {
 		return variables.componentsInfo;
 	}
 
+    /**
+     * Returns an observable to the details of all available components.
+     * 
+     * @return the Collection<{@link Configuration}> observable object
+     */
+    public ForwardingObservable<Collection<Configuration>> componentDetails() {
+        return variables.componentDetails;
+    }
+
 	/**
 	 * Returns an observable to the iocs that are available on the instrument.
 	 * @return the Collection<{@link EditableIoc}> observable object
@@ -163,9 +172,9 @@ public class ConfigServer extends Closer {
 
 	/**
 	 * Returns an observable to the components that are currently available on the instrument.
-	 * @return the Collection<{@link Component}> observable object
+	 * @return the Collection<{@link ComponentInfo}> observable object
 	 */
-	public ForwardingObservable<Collection<Component>> components() {
+	public ForwardingObservable<Collection<ComponentInfo>> components() {
 		return variables.components;
 	}
 

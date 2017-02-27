@@ -1,6 +1,6 @@
-/*
+ /*
  * This file is part of the ISIS IBEX application.
- * Copyright (C) 2012-2015 Science & Technology Facilities Council.
+ * Copyright (C) 2012-2016 Science & Technology Facilities Council.
  * All rights reserved.
  *
  * This program is distributed in the hope that it will be useful.
@@ -16,12 +16,14 @@
  * http://opensource.org/licenses/eclipse-1.0.php
  */
 
-package uk.ac.stfc.isis.ibex.log;
+/**
+ * 
+ */
+package uk.ac.stfc.isis.ibex.activemq.message;
 
-import uk.ac.stfc.isis.ibex.log.message.LogMessage;
+/**
+ * A message that can be received from ActiveMQ.
+ */
+public interface IMessage {
 
-public interface ILogMessageConsumer {
-    void newMessage(LogMessage logMessage);
-
-    void clearMessages();
 }

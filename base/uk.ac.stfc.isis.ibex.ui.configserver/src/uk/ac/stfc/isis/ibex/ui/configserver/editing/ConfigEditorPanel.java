@@ -143,20 +143,6 @@ public class ConfigEditorPanel extends Composite {
 	}
 
     /**
-     * Opens a specific tab of the editing window.
-     * 
-     * @param tabName
-     *            The name of the tab to open.
-     */
-    public void openTab(String tabName) {
-        for (TabItem tab : editorTabs.getItems()) {
-            if (tab.getText() == tabName) {
-                editorTabs.setSelection(tab);
-            }
-        }
-	}
-
-    /**
      * Opens the dialog box for editing a specific block.
      * 
      * @param blockName

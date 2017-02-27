@@ -18,13 +18,14 @@
 
 package uk.ac.stfc.isis.ibex.log.message;
 
+import uk.ac.stfc.isis.ibex.activemq.message.IMessage;
 import uk.ac.stfc.isis.ibex.log.message.sql.LogMessageFieldsSql;
 
 /**
  * This class is responsible for maintaining a log message either in relation to
  * the XML or SQL database.
  */
-public class LogMessage {
+public class LogMessage implements IMessage {
     // message info
     private String contents = "";
     private String severity = "";

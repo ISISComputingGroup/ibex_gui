@@ -28,14 +28,22 @@ import uk.ac.stfc.isis.ibex.epics.observing.ClosableObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.Observable;
 import uk.ac.stfc.isis.ibex.epics.observing.TransformingObservable;
 
-/*
- * Build a full configuration suitable for editing. 
+/**
+ * Build a full configuration suitable for editing.
  */
 public class ObservableEditableConfiguration 
         extends TransformingObservable<Configuration, EditableConfiguration> {
 
 	private final ConfigServer configServer;
 
+    /**
+     * Constructor for the ObservableEditableConfiguration.
+     * 
+     * @param config
+     *            The observable for the configuration to be edited
+     * @param configServer
+     *            The config server
+     */
 	public ObservableEditableConfiguration(
 			ClosableObservable<Configuration> config,
 			ConfigServer configServer) {
@@ -47,11 +55,11 @@ public class ObservableEditableConfiguration
 	protected EditableConfiguration transform(Configuration value) {
 		return new EditableConfiguration(
 				value, 
-				valueOrEmptyCollection(configServer.iocs()), 
-				valueOrEmptyCollection(configServer.components()), 
+                valueOrEmptyCollection(configServer.iocs()),
+                valueOrEmptyCollection(configServer.componentDetails()), 
                 valueOrEmptyCollection(configServer.pvs()));
-	}
-	
+	}	
+
     private static <T> Collection<T> valueOrEmptyCollection(Observable<Collection<T>> collection) {
 		return collection.getValue() != null ? collection.getValue() : Collections.<T>emptyList();
 	}
