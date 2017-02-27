@@ -25,6 +25,7 @@ package uk.ac.stfc.isis.ibex.ui.devicescreens.models;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.regex.Pattern;
 
@@ -118,6 +119,21 @@ public class EditDeviceScreensDescriptionViewModel extends ModelObject {
      * @return the devices
      */
     public List<DeviceDescriptionWrapper> getScreens() {
+
+        devices.sort(new Comparator<DeviceDescriptionWrapper>() {
+
+            @Override
+            public int compare(DeviceDescriptionWrapper p1, DeviceDescriptionWrapper p2) {
+
+                int comparator = p1.getName().compareToIgnoreCase(p2.getName());
+                if (comparator == 0) {
+                    comparator = p1.getKey().compareToIgnoreCase(p2.getKey());
+                }
+                return comparator;
+            }
+
+        });
+
         return devices;
     }
 

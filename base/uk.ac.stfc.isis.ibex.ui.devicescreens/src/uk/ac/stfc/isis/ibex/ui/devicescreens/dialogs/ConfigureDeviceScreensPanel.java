@@ -46,7 +46,6 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Text;
-import org.eclipse.wb.swt.ResourceManager;
 
 import uk.ac.stfc.isis.ibex.ui.devicescreens.models.EditDeviceScreensDescriptionViewModel;
 
@@ -124,32 +123,6 @@ public class ConfigureDeviceScreensPanel extends Composite {
         Composite orderComposite = new Composite(grpList, SWT.NONE);
         orderComposite.setLayout(new GridLayout(1, false));
         orderComposite.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, true, 1, 1));
-
-        Button btnUp = new Button(orderComposite, SWT.NONE);
-        GridData gdBtnUp = new GridData(SWT.LEFT, SWT.BOTTOM, false, false, 1, 1);
-        gdBtnUp.widthHint = 25;
-        btnUp.setLayoutData(gdBtnUp);
-        btnUp.setImage(ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui", "icons/move_up.png"));
-        btnUp.addSelectionListener(new SelectionAdapter() {
-            @Override
-            public void widgetSelected(SelectionEvent e) {
-                viewModel.moveScreenUp(devicesList.getSelectionIndex());
-                devicesViewer.refresh();
-            }
-        });
-
-        Button btnDown = new Button(orderComposite, SWT.NONE);
-        GridData gdBtnDown = new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1);
-        gdBtnDown.widthHint = 25;
-        btnDown.setLayoutData(gdBtnDown);
-        btnDown.setImage(ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui", "icons/move_down.png"));
-        btnDown.addSelectionListener(new SelectionAdapter() {
-            @Override
-            public void widgetSelected(SelectionEvent e) {
-                viewModel.moveScreenDown(devicesList.getSelectionIndex());
-                devicesViewer.refresh();
-            }
-        });
 
         Composite btnsComposite = new Composite(grpList, SWT.NONE);
         btnsComposite.setLayout(new GridLayout(2, false));
