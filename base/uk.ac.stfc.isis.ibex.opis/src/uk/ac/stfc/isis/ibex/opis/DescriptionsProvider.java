@@ -101,7 +101,7 @@ public class DescriptionsProvider extends Provider {
 	@Override
 	public Collection<String> getOpiList() {
         List<String> availableOPIs = new ArrayList<String>(descriptions.getOpis().keySet());
-        Collections.sort(availableOPIs);
+        Collections.sort(availableOPIs, String.CASE_INSENSITIVE_ORDER);
         return availableOPIs;
 	}
 

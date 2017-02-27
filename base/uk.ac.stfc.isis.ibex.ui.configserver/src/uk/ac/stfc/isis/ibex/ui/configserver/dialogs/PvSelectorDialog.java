@@ -44,6 +44,7 @@ public class PvSelectorDialog extends TitleAreaDialog {
 	private PVSelectorPanel selector;
 	private EditableConfiguration config;
 	private PV pv;
+    private static final String SHELL_TITLE = "Select PV";
 	
 	public PvSelectorDialog(Shell parentShell, EditableConfiguration config, String address) {
 		super(parentShell);
@@ -53,6 +54,12 @@ public class PvSelectorDialog extends TitleAreaDialog {
 	}
 	
 	@Override
+    protected void configureShell(Shell newShell) {
+        super.configureShell(newShell);
+        newShell.setText(PvSelectorDialog.SHELL_TITLE);
+    }
+
+    @Override
 	protected Control createDialogArea(Composite parent) {
 		selector = new PVSelectorPanel(parent, SWT.NONE);
 		selector.setConfig(config, pv);

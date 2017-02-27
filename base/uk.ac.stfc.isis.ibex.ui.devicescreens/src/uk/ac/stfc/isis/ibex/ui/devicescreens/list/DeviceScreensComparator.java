@@ -80,15 +80,15 @@ public class DeviceScreensComparator extends ViewerComparator {
         int rc = 0;
         switch (this.sortedOn) {
             case NAME:
-                rc = p1.getName().compareTo(p2.getName());
+                rc = p1.getName().compareToIgnoreCase(p2.getName());
                 if (rc == 0) {
-                    rc = p1.getKey().compareTo(p2.getKey());
+                    rc = p1.getKey().compareToIgnoreCase(p2.getKey());
                 }
                 break;
             case TYPE:
-                rc = p1.getKey().compareTo(p2.getKey());
+                rc = p1.getKey().compareToIgnoreCase(p2.getKey());
                 if (rc == 0) {
-                    rc = p1.getName().compareTo(p2.getName());
+                    rc = p1.getName().compareToIgnoreCase(p2.getName());
                 }
                 break;
             case PERSISTENCE:
