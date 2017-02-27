@@ -28,9 +28,9 @@ import uk.ac.stfc.isis.ibex.epics.pv.Closable;
  * A forwarding writable.
  *
  * @param <TIn>
- *            TIn
+ *            TIn the type to convert from
  * @param <TOut>
- *            TOut
+ *            TOut the type to convert to
  */
 public class ForwardingWritable<TIn, TOut> extends BaseWritable<TIn> {
 
