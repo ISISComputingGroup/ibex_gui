@@ -24,7 +24,6 @@ package uk.ac.stfc.isis.ibex.ui.devicescreens.models;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.regex.Pattern;
@@ -467,40 +466,6 @@ public class EditDeviceScreensDescriptionViewModel extends ModelObject {
         firePropertyChange("screens", oldList, devices);
 
         checkScreensValid();
-    }
-
-    /**
-     * Move a screen towards the front of the list.
-     * 
-     * @param index the index of the screen to move
-     */
-    public void moveScreenUp(int index) {
-        if (index > 0) {
-            swapScreens(index, index - 1);
-        }
-    }
-
-    /**
-     * Move a screen towards the back of the list.
-     * 
-     * @param index the index of the screen to move
-     */
-    public void moveScreenDown(int index) {
-        if (index < devices.size() - 1) {
-            swapScreens(index, index + 1);
-        }
-    }
-
-    /**
-     * Swap two devices in the list.
-     * 
-     * @param selected the index of the selected item
-     * @param toSwapWith the index of the item to swap with
-     */
-    private void swapScreens(int selected, int toSwapWith) {
-        List<DeviceDescriptionWrapper> oldOrder = new ArrayList<>(devices);
-        Collections.swap(devices, selected, toSwapWith);
-        firePropertyChange("screens", oldOrder, devices);
     }
 
     /**

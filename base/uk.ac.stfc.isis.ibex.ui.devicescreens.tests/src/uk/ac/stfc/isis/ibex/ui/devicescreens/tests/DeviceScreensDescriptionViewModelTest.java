@@ -203,30 +203,6 @@ public class DeviceScreensDescriptionViewModelTest {
     }
 
     @Test
-    public void move_screen_up_works_and_does_not_overshoot() {
-        // Act
-        // Move to first position
-        viewModel.moveScreenUp(1);
-        // Try to move again
-        viewModel.moveScreenUp(0);
-
-        // Assert
-        assertEquals(deviceName + "2", viewModel.getScreens().get(0).getName());
-    }
-
-    @Test
-    public void move_screen_down_works_and_does_not_overshoot() {
-        // Act
-        // Move to last position
-        viewModel.moveScreenDown(0);
-        // Try to move again
-        viewModel.moveScreenDown(1);
-
-        // Assert
-        assertEquals(deviceName + "1", viewModel.getScreens().get(1).getName());
-    }
-
-    @Test
     public void delete_screen_works() {
         // Act
         viewModel.deleteScreen(1);
