@@ -30,10 +30,8 @@ import uk.ac.stfc.isis.ibex.configserver.internal.FilteredIocs;
 import uk.ac.stfc.isis.ibex.epics.conversion.DoNothingConverter;
 import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.epics.pv.Closer;
-import uk.ac.stfc.isis.ibex.epics.writing.ClosableSameTypeWriter;
 import uk.ac.stfc.isis.ibex.epics.writing.LoggingForwardingWritable;
 import uk.ac.stfc.isis.ibex.epics.writing.Writable;
-import uk.ac.stfc.isis.ibex.epics.writing.Writer;
 import uk.ac.stfc.isis.ibex.epics.writing.WritingSetCommand;
 import uk.ac.stfc.isis.ibex.model.SetCommand;
 
@@ -145,24 +143,6 @@ public class ConfigServer extends Closer {
 	 */
 	public ForwardingObservable<Collection<EditableIoc>> iocs() {
 		return variables.iocs;
-	}
-
-	/**
-	 * Returns an observable to the description of the given ioc.
-	 * @param iocName the name of the ioc
-	 * @return the String observable object
-	 */
-	public ForwardingObservable<String> iocDescription(String iocName) {
-		return variables.iocDescription(iocName);
-	}
-
-	/**
-	 * Returns a writer to the description of the given ioc.
-	 * @param name the name of the ioc
-	 * @return the String writer object
-	 */
-	public Writer<String> iocDescriptionSetter(String name) {
-		return registerForClose(ClosableSameTypeWriter.newInstance(variables.iocDescriptionSetter(name)));
 	}
 	
 	/**

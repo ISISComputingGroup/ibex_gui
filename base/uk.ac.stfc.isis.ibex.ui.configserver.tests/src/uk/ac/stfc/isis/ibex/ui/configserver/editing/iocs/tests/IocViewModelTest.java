@@ -46,12 +46,13 @@ public class IocViewModelTest {
     private EditableConfiguration config;
     private EditableIoc autostartIoc;
     private String autostartName = "autostart_ioc";
+    private String autostartDescription = "autostart_description";
 
     @Before
     public void setUp() {
         config = mock(EditableConfiguration.class);
 
-        autostartIoc = new EditableIoc(new Ioc(autostartName));
+        autostartIoc = new EditableIoc(new Ioc(autostartName), autostartDescription);
         autostartIoc.setAutostart(true);
 
         viewModel = new IocViewModel(config);

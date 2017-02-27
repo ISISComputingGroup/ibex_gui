@@ -40,9 +40,8 @@ public class IocStateConverter extends Converter<Map<String, IocParameters>, Col
 			@Override
 			public IocState apply(Entry<String, IocParameters> entry) {
 				String name = entry.getKey();
-				IocParameters parameters = entry.getValue();
-				
-                        return new IocState(name, parameters.isRunning(), parameters.getDescription(), true);
+                IocParameters parameters = entry.getValue();
+                return new IocState(name, parameters.isRunning(), parameters.getDescription(), true);
 			}
 		}));
 	}

@@ -24,18 +24,15 @@ import java.util.Collections;
 
 import uk.ac.stfc.isis.ibex.configserver.ConfigServer;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Configuration;
-import uk.ac.stfc.isis.ibex.configserver.internal.IocDescriber;
-import uk.ac.stfc.isis.ibex.epics.adapters.TextUpdatedObservableAdapter;
-import uk.ac.stfc.isis.ibex.epics.observing.Observable;
 import uk.ac.stfc.isis.ibex.epics.observing.ClosableObservable;
+import uk.ac.stfc.isis.ibex.epics.observing.Observable;
 import uk.ac.stfc.isis.ibex.epics.observing.TransformingObservable;
-import uk.ac.stfc.isis.ibex.model.UpdatedValue;
 
 /*
  * Build a full configuration suitable for editing. 
  */
 public class ObservableEditableConfiguration 
-	extends TransformingObservable<Configuration, EditableConfiguration> implements IocDescriber {
+        extends TransformingObservable<Configuration, EditableConfiguration> {
 
 	private final ConfigServer configServer;
 
@@ -52,13 +49,7 @@ public class ObservableEditableConfiguration
 				value, 
 				valueOrEmptyCollection(configServer.iocs()), 
 				valueOrEmptyCollection(configServer.components()), 
-				valueOrEmptyCollection(configServer.pvs()),
-				this);
-	}
-
-	@Override
-	public UpdatedValue<String> getDescription(String iocName) {
-		return new TextUpdatedObservableAdapter(configServer.iocDescription(iocName));
+                valueOrEmptyCollection(configServer.pvs()));
 	}
 	
     private static <T> Collection<T> valueOrEmptyCollection(Observable<Collection<T>> collection) {
