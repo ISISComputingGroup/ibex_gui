@@ -22,9 +22,6 @@ package uk.ac.stfc.isis.ibex.ui.log.widgets;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
-import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -268,22 +265,18 @@ public class SearchControl extends Canvas {
     private void runSearchJob(final LogMessageFields field, final String value, final Calendar from,
             final Calendar to) {
 
-        final Job searchJob = new Job("Searching") {
+        final Runnable searchJob = new Runnable() {
             @Override
-            protected IStatus run(IProgressMonitor monitor) {
-
+            public void run() {
                 setProgressIndicatorsVisible(true);
-
                 searcher.search(field, value, from, to);
-
                 setProgressIndicatorsVisible(false);
-
-                return Job.ASYNC_FINISH;
             }
-
         };
 
-        searchJob.schedule();
+        Thread searchJobThread = new Thread(searchJob);
+
+        searchJobThread.start();
 	}
 
     private void setProgressIndicatorsVisible(final boolean visible) {
