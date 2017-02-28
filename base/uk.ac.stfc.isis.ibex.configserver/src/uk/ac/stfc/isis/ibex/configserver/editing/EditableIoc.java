@@ -19,19 +19,14 @@
 
 package uk.ac.stfc.isis.ibex.configserver.editing;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.Collection;
-
-import com.google.common.base.Strings;
 
 import uk.ac.stfc.isis.ibex.configserver.configuration.AvailablePV;
 import uk.ac.stfc.isis.ibex.configserver.configuration.AvailablePVSet;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Ioc;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Macro;
 import uk.ac.stfc.isis.ibex.configserver.configuration.PVSet;
-import uk.ac.stfc.isis.ibex.model.UpdatedValue;
 
 /**
  * Holds an Editable IOC, which is used by the configuration editor.
@@ -44,9 +39,7 @@ public class EditableIoc extends Ioc {
 	private Collection<Macro> availableMacros = new ArrayList<Macro>();
 	private Collection<AvailablePVSet> availablePVSets = new ArrayList<AvailablePVSet>();
 	private Collection<AvailablePV> availablePVs = new ArrayList<AvailablePV>();
-	
-	private UpdatedValue<String> describer;
-	private String descriptionText = "";
+    private String description = "";
 
     /**
      * An IOC which can be edited as part of a configuration.
@@ -61,11 +54,14 @@ public class EditableIoc extends Ioc {
     /**
      * Create an editable IOC with properties matching another IOC.
      * 
+     * @param description
+     *            A description of the IOC
      * @param other
      *            The IOC whose properties to match
      */
-	public EditableIoc(Ioc other) {
-		super(other);
+    public EditableIoc(Ioc other, String description) {
+        super(other);
+        this.description = description;
 	}
 	
     /**
@@ -75,7 +71,7 @@ public class EditableIoc extends Ioc {
      *            The Editable IOC whose properties to match
      */
 	public EditableIoc(EditableIoc other) {
-		this((Ioc) other);
+        this(other, other.description);
 		
 		for (Macro macro : other.getAvailableMacros()) {
 			availableMacros.add(new Macro(macro));
@@ -88,9 +84,7 @@ public class EditableIoc extends Ioc {
 		for (AvailablePV pv : other.getAvailablePVs()) {
 			availablePVs.add(pv);
 		}
-		
-		this.describer = other.getDescriber();
-		this.descriptionText = other.getDescription();
+        this.description = other.getDescription();
 	}
 
     /**
@@ -132,17 +126,18 @@ public class EditableIoc extends Ioc {
 	}
 	
     /**
-     * @return The IOC describer: an updating IOC description
+     * @param description
+     *            The new description
      */
-	public UpdatedValue<String> getDescriber() {
-		return this.describer;
-	}
-	
+    public void setDescription(String description) {
+        firePropertyChange("description", this.description, this.description = description);
+    }
+
     /**
      * @return The current IOC description
      */
 	public String getDescription() {
-		return this.descriptionText;
+        return this.description;
 	}
 	
     /**
@@ -185,29 +180,5 @@ public class EditableIoc extends Ioc {
      */
 	public void setAvailablePVs(Collection<AvailablePV> pvs) {
 		firePropertyChange("availablePVs", this.availablePVs, this.availablePVs = pvs);
-	}
-	
-    /**
-     * @param description
-     *            The new describer to apply to the IOC
-     */
-	public void setIocDescriber(UpdatedValue<String> description) {
-		this.describer = description;
-		description.addPropertyChangeListener(updatedDesc, true);
-	}
-
-	private final PropertyChangeListener updatedDesc = new PropertyChangeListener() {	
-		@Override
-		public void propertyChange(PropertyChangeEvent evt) {
-			setDescription(Strings.nullToEmpty(describer.getValue()));
-		}
-	};
-	
-    /**
-     * @param text
-     *            The new IOC description
-     */
-	public void setDescription(String text) {
-		firePropertyChange("description", this.descriptionText, this.descriptionText = text);
 	}
 }

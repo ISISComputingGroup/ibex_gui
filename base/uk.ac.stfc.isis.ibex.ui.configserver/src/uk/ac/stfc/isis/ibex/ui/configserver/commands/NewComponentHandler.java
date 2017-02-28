@@ -60,8 +60,9 @@ public class NewComponentHandler extends DisablingConfigHandler<Configuration> {
 	}
 	
     private void openDialog(EditableConfiguration config, ConfigurationViewModels configurationViewModels) {
-        EditConfigDialog editDialog = new EditConfigDialog(shell(), TITLE, SUB_TITLE, config, true, true,
-                configurationViewModels);
+        config.setIsComponent(true);
+        EditConfigDialog editDialog =
+                new EditConfigDialog(shell(), TITLE, SUB_TITLE, config, true, configurationViewModels);
         if (editDialog.open() == Window.OK) {
             if (editDialog.doAsComponent()) {
                 SERVER.saveAsComponent().write(editDialog.getComponent());

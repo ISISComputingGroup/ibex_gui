@@ -25,10 +25,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 
 import com.google.common.base.Function;
 import com.google.common.base.Predicate;
@@ -44,7 +42,6 @@ import uk.ac.stfc.isis.ibex.configserver.configuration.Macro;
 import uk.ac.stfc.isis.ibex.configserver.configuration.PV;
 import uk.ac.stfc.isis.ibex.configserver.internal.ComponentFilteredConfiguration;
 import uk.ac.stfc.isis.ibex.configserver.internal.DisplayUtils;
-import uk.ac.stfc.isis.ibex.configserver.internal.IocDescriber;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 import uk.ac.stfc.isis.ibex.validators.GroupNamesProvider;
 
@@ -96,8 +93,9 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
 
     /** Available PVs. */
     private final List<PV> pvs;
-    /** IOC descriptions. */
-    private final IocDescriber descriptions;
+    
+    /** If this is a component. */
+    private boolean isComponent;
 
     /**
      * Listener for block renaming events.
@@ -131,15 +129,12 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
      *            The components available to the configuration
      * @param pvs
      *            The PVs available to the configuration
-     * @param descriptions
-     *            The descriptions for the IOCs
      */
-	public EditableConfiguration(
+    public EditableConfiguration(
 			Configuration config,
 			Collection<EditableIoc> iocs,
             Collection<Configuration> components,
-			Collection<PV> pvs,
-            IocDescriber descriptions) {
+            Collection<PV> pvs) {
 		this.name = config.name();
 		this.description = config.description();
 		this.synoptic = config.synoptic();
@@ -152,7 +147,6 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
         }
 
         this.pvs = new ArrayList<>(pvs);
-        this.descriptions = descriptions;
 
         for (Block block : config.getBlocks()) {
             EditableBlock eb = new EditableBlock(block);
@@ -164,15 +158,17 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
         for (Group group : config.getGroups()) {
             editableGroups.add(new EditableGroup(this, group));
         }
-        for (Ioc ioc : config.getIocs()) {
-            addIoc(new EditableIoc(ioc));
-        }
+
         Map<String, EditableIoc> iocMap = new HashMap<>();
         for (EditableIoc ioc : allIocs) {
             iocMap.put(ioc.getName(), ioc);
         }
         initMacros(iocMap);
-        setIocDescriptions(iocMap);
+
+        for (Ioc ioc : config.getIocs()) {
+            final String description = iocMap.get(ioc.getName()).getDescription();
+            addIoc(new EditableIoc(ioc, description));
+        }
 
         Collection<Configuration> selectedComponents = getComponentDetails(config.getComponents(), components);
         editableComponents = new EditableComponents(selectedComponents, components);
@@ -600,20 +596,6 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
     }
 
     /**
-     * Iterate over the IOCs in the map, and add the description.
-     * 
-     * @param iocs
-     *            A map of the iocs
-     */
-    private void setIocDescriptions(Map<String, EditableIoc> iocs) {
-        Iterator<Entry<String, EditableIoc>> it = iocs.entrySet().iterator();
-        while (it.hasNext()) {
-            Map.Entry<String, EditableIoc> ioc = it.next();
-            ioc.getValue().setIocDescriber(descriptions.getDescription(ioc.getKey()));
-        }
-    }
-
-    /**
      * Return a Block object associated to a given block name.
      * 
      * @param blocks
@@ -654,6 +636,25 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
         }
 
         return names;
+    }
+    
+    /**
+     * Sets whether this configuration is a component or not.
+     * 
+     * @param isComponent
+     *            true if this is a component
+     */
+    public void setIsComponent(boolean isComponent) {
+        firePropertyChange("isComponent", isComponent, this.isComponent = isComponent);
+    }
+    
+    /**
+     * Get whether this configuration is a component or not.
+     * 
+     * @returns true if this is a component
+     */
+    public boolean getIsComponent() {
+        return isComponent;
     }
     private Collection<Configuration> getComponentDetails(Collection<ComponentInfo> selected,
             Collection<Configuration> available) {

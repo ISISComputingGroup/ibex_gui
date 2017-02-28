@@ -113,6 +113,7 @@ public final class ComponentIcons {
                 return "muon_front_end";
             case LAKESHORE:
                 return "lakeshore";
+            case CCD100:
             case PRESSURE_GAUGE:
                 return "pressure_gauge";
             case SCIMAG3D:
