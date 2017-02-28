@@ -27,15 +27,11 @@ import uk.ac.stfc.isis.ibex.configserver.configuration.Configuration;
 import uk.ac.stfc.isis.ibex.configserver.configuration.PV;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableIoc;
 import uk.ac.stfc.isis.ibex.configserver.internal.FilteredIocs;
-import uk.ac.stfc.isis.ibex.configserver.internal.IocStateEditingConverter;
 import uk.ac.stfc.isis.ibex.epics.conversion.DoNothingConverter;
-import uk.ac.stfc.isis.ibex.epics.observing.ConvertingObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.epics.pv.Closer;
-import uk.ac.stfc.isis.ibex.epics.writing.ClosableSameTypeWriter;
 import uk.ac.stfc.isis.ibex.epics.writing.LoggingForwardingWritable;
 import uk.ac.stfc.isis.ibex.epics.writing.Writable;
-import uk.ac.stfc.isis.ibex.epics.writing.Writer;
 import uk.ac.stfc.isis.ibex.epics.writing.WritingSetCommand;
 import uk.ac.stfc.isis.ibex.model.SetCommand;
 
@@ -157,24 +153,6 @@ public class ConfigServer extends Closer {
 	public ForwardingObservable<Collection<EditableIoc>> iocs() {
 		return variables.iocs;
 	}
-
-	/**
-	 * Returns an observable to the description of the given ioc.
-	 * @param iocName the name of the ioc
-	 * @return the String observable object
-	 */
-	public ForwardingObservable<String> iocDescription(String iocName) {
-		return variables.iocDescription(iocName);
-	}
-
-	/**
-	 * Returns a writer to the description of the given ioc.
-	 * @param name the name of the ioc
-	 * @return the String writer object
-	 */
-	public Writer<String> iocDescriptionSetter(String name) {
-		return registerForClose(ClosableSameTypeWriter.newInstance(variables.iocDescriptionSetter(name)));
-	}
 	
 	/**
 	 * Returns an observable to all the pvs that have been available on the instrument.
@@ -283,10 +261,9 @@ public class ConfigServer extends Closer {
 	 * Returns an observable to the states of all of the iocs.
 	 * @return the Collection<{@link EditableIocState}> observable object
 	 */
-	public ForwardingObservable<Collection<EditableIocState>> iocStates() {
-		ForwardingObservable<Collection<EditableIocState>> iocs = 
-				new ForwardingObservable<>(
-						new ConvertingObservable<>(variables.iocStates, new IocStateEditingConverter(this)));
+    public ForwardingObservable<Collection<IocState>> iocStates() {
+        ForwardingObservable<Collection<IocState>> iocs = 
+                new ForwardingObservable<>(variables.iocStates);
 		
 		return new ForwardingObservable<>(new FilteredIocs(iocs, variables.protectedIocs));
 	}

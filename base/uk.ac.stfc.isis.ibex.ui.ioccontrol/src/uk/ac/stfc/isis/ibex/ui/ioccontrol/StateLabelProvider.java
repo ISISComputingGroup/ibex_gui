@@ -25,7 +25,7 @@ import org.eclipse.jface.viewers.ViewerCell;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.wb.swt.SWTResourceManager;
 
-import uk.ac.stfc.isis.ibex.configserver.EditableIocState;
+import uk.ac.stfc.isis.ibex.configserver.IocState;
 
 public class StateLabelProvider extends ObservableMapCellLabelProvider {
 
@@ -43,7 +43,7 @@ public class StateLabelProvider extends ObservableMapCellLabelProvider {
 	public void update(ViewerCell cell) {
 		super.update(cell);
 
-		EditableIocState state = (EditableIocState) cell.getElement();
+        IocState state = (IocState) cell.getElement();
 		boolean isRunning = state != null && state.getIsRunning();
 		cell.setText(isRunning ? TEXT_RUNNING : TEXT_NOT_RUNNING);
 		cell.setForeground(isRunning ? COLOR_RUNNING : COLOR_STOPPED);

@@ -22,30 +22,29 @@ package uk.ac.stfc.isis.ibex.configserver.internal;
 import java.util.Collection;
 import java.util.Collections;
 
-import uk.ac.stfc.isis.ibex.configserver.EditableIocState;
+import com.google.common.base.Predicate;
+import com.google.common.collect.Iterables;
+import com.google.common.collect.Lists;
+
 import uk.ac.stfc.isis.ibex.configserver.IocState;
 import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.ObservablePair;
 import uk.ac.stfc.isis.ibex.epics.observing.Pair;
 import uk.ac.stfc.isis.ibex.epics.observing.TransformingObservable;
 
-import com.google.common.base.Predicate;
-import com.google.common.collect.Iterables;
-import com.google.common.collect.Lists;
-
 /*
  * Removes iocs that whose states should not be changed by the user.
  */
 public class FilteredIocs extends 
-	TransformingObservable<Pair<Collection<EditableIocState>, Collection<String>>, Collection<EditableIocState>> {
+        TransformingObservable<Pair<Collection<IocState>, Collection<String>>, Collection<IocState>> {
 	
-	public FilteredIocs(ForwardingObservable<Collection<EditableIocState>> iocs,
+    public FilteredIocs(ForwardingObservable<Collection<IocState>> iocs,
 			ForwardingObservable<Collection<String>> iocsToFilter) {
 		setSource(new ObservablePair<>(iocs, iocsToFilter));
 	}
 
 	@Override
-	protected Collection<EditableIocState> transform(Pair<Collection<EditableIocState>, Collection<String>> value) {
+    protected Collection<IocState> transform(Pair<Collection<IocState>, Collection<String>> value) {
 		if (value.first == null || value.second == null) {
 			return Collections.emptyList();
 		}
