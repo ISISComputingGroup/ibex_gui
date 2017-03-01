@@ -31,12 +31,15 @@ import uk.ac.stfc.isis.ibex.configserver.configuration.Macro;
 public class IocParameters {
 
 	private final boolean running;
+    private final String description;
 	private List<Macro> macros = new ArrayList<Macro>();
 	private List<AvailablePV> pvs = new ArrayList<AvailablePV>();
 	private List<AvailablePVSet> pvsets = new ArrayList<AvailablePVSet>();
 
-	public IocParameters(boolean running, Collection<Macro> macros, Collection<AvailablePV> pvs, Collection<AvailablePVSet> pvsets) {
+    public IocParameters(boolean running, Collection<Macro> macros, Collection<AvailablePV> pvs,
+            Collection<AvailablePVSet> pvsets, String description) {
 		this.running = running;
+        this.description = description;
 
 		for (Macro macro : macros) {
 			this.macros.add(macro);
@@ -66,4 +69,8 @@ public class IocParameters {
 	public Collection<AvailablePVSet> getPVSets() {
 		return pvsets;
 	}
+
+    public String getDescription() {
+        return description;
+    }
 }

@@ -211,28 +211,6 @@ public class ConfigServerVariables extends Closer {
                 readCompressedClosing(blockServerAddresses.component(getComponentPV(componentName))),
                 converters.toConfig());
 	}
-
-    /**
-     * Provides a monitor on the specified IOC description.
-     * 
-     * @param iocName the IOC name
-     * @return the corresponding observable
-     */
-	public ForwardingObservable<String> iocDescription(String iocName) {
-        return closingObsFactory.getForwardingObservable(new StringChannel(),
-                InstrumentUtils.addPrefix(iocDescriptionAddress(iocName)));
-	}
-
-    /**
-     * Provides a writable for setting an IOC description.
-     * 
-     * @param iocName the IOC name
-     * @return the corresponding writable
-     */
-	public Writable<String> iocDescriptionSetter(String iocName) {
-        return closingWriteFactory.getSwitchableWritable(new StringChannel(),
-                InstrumentUtils.addPrefix(iocDescriptionAddress(iocName)));
-	}
 	
     /**
      * Provides a monitor on a specified block.
@@ -284,7 +262,7 @@ public class ConfigServerVariables extends Closer {
      * @return the PV name
      */
 	private static String iocDescriptionAddress(String iocName) {
-		return PVAddress.startWith("CS").append("PS").append(iocName).endWith("IOCDESC");
+        return PVAddress.startWith("CS").append("BS").append(iocName).endWith("IOCDESC");
 	}
 
     /**
