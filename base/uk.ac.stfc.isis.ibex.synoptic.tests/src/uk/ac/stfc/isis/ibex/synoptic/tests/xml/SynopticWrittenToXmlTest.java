@@ -19,17 +19,20 @@
 
 package uk.ac.stfc.isis.ibex.synoptic.tests.xml;
 
+import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.assertThat;
+import static org.junit.Assert.*;
 
 import java.net.MalformedURLException;
 import java.net.URL;
 
 import javax.xml.bind.JAXBException;
+import javax.xml.bind.MarshalException;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.xml.sax.SAXException;
+import org.xml.sax.SAXParseException;
 
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.SynopticDescription;
 import uk.ac.stfc.isis.ibex.synoptic.xml.XMLUtil;
@@ -38,6 +41,9 @@ import uk.ac.stfc.isis.ibex.synoptic.xml.XMLUtil;
 public class SynopticWrittenToXmlTest extends FileReadingTest {
 
     private SynopticDescription instrument;
+
+    private String badSchema =
+            "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\"> </schema>";
 	
 	@Before
 	public void setUp() throws Exception {
@@ -49,6 +55,17 @@ public class SynopticWrittenToXmlTest extends FileReadingTest {
         return getClass().getResource("/uk/ac/stfc/isis/ibex/synoptic/tests/xml/example_synoptic.xml");
 	}
 	
+    @Test
+    public void checks_against_schema_when_passed_one() throws JAXBException, SAXException {
+        try {
+            XMLUtil.toXml(instrument, SynopticDescription.class, badSchema);
+        } catch (MarshalException e) {
+            assertThat(e.getCause(), instanceOf(SAXParseException.class));
+        } catch (Exception e) {
+            assertFalse(true);
+        }
+    }
+
     @Test
     public void has_the_same_xml_content_when_unchanged() throws JAXBException, SAXException {
 
