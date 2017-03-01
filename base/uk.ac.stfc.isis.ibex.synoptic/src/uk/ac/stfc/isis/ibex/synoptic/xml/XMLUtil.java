@@ -65,8 +65,8 @@ public final class XMLUtil {
 	}
 	
 	/**
-     * Converts an object into an XML representation, checking it against the
-     * supplied schema.
+     * Converts an object into an XML representation. The XML is checked against
+     * the supplied schema if the schema is not blank or empty.
      * 
      * @param <T>
      *            the type than needs to be converted into XML

@@ -23,6 +23,8 @@ import javax.xml.bind.JAXBException;
 
 import org.xml.sax.SAXException;
 
+import com.google.common.base.Strings;
+
 import uk.ac.stfc.isis.ibex.epics.observing.Observable;
 import uk.ac.stfc.isis.ibex.epics.writing.TransformingWriter;
 import uk.ac.stfc.isis.ibex.epics.writing.Writable;
@@ -41,6 +43,15 @@ public class SynopticWriter extends TransformingWriter<SynopticDescription, Stri
 	private SettableUpdatedValue<Boolean> canSave = new SettableUpdatedValue<>();
     private final Observable<String> schema;
 
+    /**
+     * Create a new synoptic writer that converts a synoptic to xml, checks this
+     * against the supplied schema and writes it to the supplied destination.
+     * 
+     * @param destination
+     *            The destination to write the synoptic to.
+     * @param schema
+     *            The schema to check the synoptic against.
+     */
     public SynopticWriter(Writable<String> destination, Observable<String> schema) {
 		writeTo(destination);
 		canSave.setValue(destination.canWrite());
@@ -52,6 +63,9 @@ public class SynopticWriter extends TransformingWriter<SynopticDescription, Stri
 	@Override
 	protected String transform(SynopticDescription value) {
 		// Converts the raw synoptic description into XML
+        if (Strings.isNullOrEmpty(schema.getValue())) {
+            Synoptic.LOG.debug("Synoptic schema not found, attempting to save anyway.");
+        }
 		try {
             return XMLUtil.toXml(value, SynopticDescription.class, schema.getValue());
 		} catch (JAXBException | SAXException e) {
@@ -67,6 +81,10 @@ public class SynopticWriter extends TransformingWriter<SynopticDescription, Stri
 		canSave.setValue(canWrite);
 	}
 	
+    /**
+     * @return An updating Boolean that specifies whether the synoptic can be
+     *         written to or not.
+     */
 	public UpdatedValue<Boolean> canSave() {
 		return canSave;
 	}
