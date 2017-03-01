@@ -61,6 +61,7 @@ public abstract class SynopticEditorHandler extends AbstractHandler {
                 setBaseEnabled(canSave);
             }
         });
+        setBaseEnabled(writer.canWrite());
     }
 
     /**
