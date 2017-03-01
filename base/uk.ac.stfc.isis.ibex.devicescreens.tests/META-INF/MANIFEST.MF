@@ -6,4 +6,5 @@ Bundle-Version: 1.0.0.qualifier
 Fragment-Host: uk.ac.stfc.isis.ibex.devicescreens;bundle-version="1.0.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Require-Bundle: org.junit;bundle-version="4.11.0",
- org.mockito;bundle-version="1.9.5"
+ org.mockito;bundle-version="1.9.5",
+ uk.ac.stfc.isis.ibex.epics

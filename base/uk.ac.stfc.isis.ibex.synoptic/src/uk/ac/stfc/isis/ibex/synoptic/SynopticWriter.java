@@ -25,13 +25,13 @@ import org.xml.sax.SAXException;
 
 import com.google.common.base.Strings;
 
+import uk.ac.stfc.isis.ibex.epics.conversion.XMLUtil;
 import uk.ac.stfc.isis.ibex.epics.observing.Observable;
 import uk.ac.stfc.isis.ibex.epics.writing.TransformingWriter;
 import uk.ac.stfc.isis.ibex.epics.writing.Writable;
 import uk.ac.stfc.isis.ibex.model.SettableUpdatedValue;
 import uk.ac.stfc.isis.ibex.model.UpdatedValue;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.SynopticDescription;
-import uk.ac.stfc.isis.ibex.synoptic.xml.XMLUtil;
 
 
 /**

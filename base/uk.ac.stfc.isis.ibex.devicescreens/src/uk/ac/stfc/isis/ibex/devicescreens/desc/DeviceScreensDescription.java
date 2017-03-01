@@ -30,7 +30,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import org.xml.sax.SAXException;
 
-import uk.ac.stfc.isis.ibex.devicescreens.xml.XMLUtil;
+import uk.ac.stfc.isis.ibex.epics.conversion.XMLUtil;
 
 /**
  * This class describes the devices element of the device screens XML format.
@@ -93,7 +93,7 @@ public class DeviceScreensDescription {
     @Override
     public String toString() {
         try {
-            return XMLUtil.toXml(this).replaceAll("><", ">\n<");
+            return XMLUtil.toXml(this, DeviceScreensDescription.class, null).replaceAll("><", ">\n<");
         } catch (JAXBException e) {
             e.printStackTrace();
             return e.toString();

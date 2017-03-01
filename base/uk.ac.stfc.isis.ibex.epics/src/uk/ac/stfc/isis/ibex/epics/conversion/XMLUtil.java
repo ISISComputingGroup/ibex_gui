@@ -17,7 +17,7 @@
  * http://opensource.org/licenses/eclipse-1.0.php
  */
 
-package uk.ac.stfc.isis.ibex.synoptic.xml;
+package uk.ac.stfc.isis.ibex.epics.conversion;
 
 import java.io.StringReader;
 import java.io.StringWriter;

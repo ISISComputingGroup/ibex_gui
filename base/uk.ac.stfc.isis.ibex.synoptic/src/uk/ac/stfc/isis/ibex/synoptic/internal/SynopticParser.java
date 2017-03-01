@@ -23,8 +23,8 @@ import javax.xml.bind.JAXBException;
 
 import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
 import uk.ac.stfc.isis.ibex.epics.conversion.Converter;
+import uk.ac.stfc.isis.ibex.epics.conversion.XMLUtil;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.SynopticDescription;
-import uk.ac.stfc.isis.ibex.synoptic.xml.XMLUtil;
 
 /**
  * Parses an input XML into a Synoptic.
