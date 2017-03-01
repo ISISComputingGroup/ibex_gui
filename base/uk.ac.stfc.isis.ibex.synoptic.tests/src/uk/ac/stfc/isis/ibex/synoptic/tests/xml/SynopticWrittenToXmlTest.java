@@ -72,7 +72,7 @@ public class SynopticWrittenToXmlTest extends FileReadingTest {
         String input = fileContent();
         input = input.replace("\n", "").replace("\t", "");
 
-        String output = XMLUtil.toXml(instrument, SynopticDescription.class, null);
+        String output = XMLUtil.toXml(instrument, SynopticDescription.class);
         assertThat(output, is(input));
     }
 }

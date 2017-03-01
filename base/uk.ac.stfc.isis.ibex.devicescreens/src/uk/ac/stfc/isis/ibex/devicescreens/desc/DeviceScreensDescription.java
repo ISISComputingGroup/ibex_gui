@@ -93,7 +93,7 @@ public class DeviceScreensDescription {
     @Override
     public String toString() {
         try {
-            return XMLUtil.toXml(this, DeviceScreensDescription.class, null).replaceAll("><", ">\n<");
+            return XMLUtil.toXml(this, DeviceScreensDescription.class).replaceAll("><", ">\n<");
         } catch (JAXBException e) {
             e.printStackTrace();
             return e.toString();

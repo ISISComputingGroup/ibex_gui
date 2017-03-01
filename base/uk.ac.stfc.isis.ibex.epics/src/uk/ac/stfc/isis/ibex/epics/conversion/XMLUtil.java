@@ -63,6 +63,27 @@ public final class XMLUtil {
 
         return (T) unmarshaller.unmarshal(new StringReader(xml));
 	}
+
+    /**
+     * Converts an object into an XML representation without checking it against a schema.
+     * 
+     * @param <T>
+     *            the type than needs to be converted into XML
+     * @param toConvert
+     *            the object to convert into XML
+     * @param clazz
+     *            the type to parse the XML into
+     * @return the XML that the object has been converted into
+     * @throws JAXBException
+     *             XML Exception for if the conversion to xml failed
+     * @throws SAXException
+     *             XML Exception for if the xml doesn't conform to the schema
+     */
+    public static synchronized <T> String toXml(T toConvert, Class<T> clazz)
+            throws JAXBException, SAXException {
+        
+        return XMLUtil.toXml(toConvert, clazz, null);
+    }
 	
 	/**
      * Converts an object into an XML representation. The XML is checked against
