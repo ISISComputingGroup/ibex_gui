@@ -46,6 +46,7 @@ import uk.ac.stfc.isis.ibex.model.SetCommand;
 public class ConfigServer extends Closer {
 
 	private final ConfigServerVariables variables;
+    private final ComponentDependenciesModel dependenciesModel;
 	
 	/**
 	 * The default constructor for the ConfigServer.
@@ -53,6 +54,7 @@ public class ConfigServer extends Closer {
 	 */
 	public ConfigServer(ConfigServerVariables variables) {
 		this.variables = variables;
+        this.dependenciesModel = new ComponentDependenciesModel(this);
 	}
 
 	/**
@@ -341,4 +343,11 @@ public class ConfigServer extends Closer {
 	private <T> Writable<T> log(String id, Writable<T> destination) {
         return new LoggingForwardingWritable<>(Configurations.LOG, id, destination, new DoNothingConverter<T>());
 	}
+
+    /**
+     * @return the dependenciesModel
+     */
+    public ComponentDependenciesModel getDependenciesModel() {
+        return dependenciesModel;
+    }
 }

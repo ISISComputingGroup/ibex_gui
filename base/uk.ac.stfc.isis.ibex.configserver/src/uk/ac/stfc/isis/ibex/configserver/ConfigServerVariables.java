@@ -53,7 +53,7 @@ import uk.ac.stfc.isis.ibex.validators.BlockServerNameValidator;
  * BlockServer.
  */
 public class ConfigServerVariables extends Closer {
-	private final BlockServerAddresses blockServerAddresses = new BlockServerAddresses();
+	private final BlockServerAddresses blockServerAddresses;
 	private final Converters converters;
 	private ObservableFactory switchingObsFactory = new ObservableFactory(OnInstrumentSwitch.SWITCH);
     private final WritableFactory switchingWriteFactory = new WritableFactory(OnInstrumentSwitch.SWITCH);
@@ -116,15 +116,27 @@ public class ConfigServerVariables extends Closer {
 	public final ForwardingObservable<Collection<String>> protectedIocs;
     /** Provides the description for the spangle banner. */
 	public final ForwardingObservable<Collection<BannerItem>> bannerDescription;
-	
+
     /**
-     * Set the configuration server variables from the block server using the
-     * converters.
+     * Default Constructor.
      * 
      * @param converters converters to use to convert values from block server
      *            to class instances for variables
      */
     public ConfigServerVariables(Converters converters) {
+        this(new BlockServerAddresses(), converters);
+    }
+
+    /**
+     * Set the configuration server variables from the block server using the
+     * converters.
+     * 
+     * @param addresses The BlockServerAddresses to use for PV lookup
+     * @param converters converters to use to convert values from block server
+     *            to class instances for variables
+     */
+    public ConfigServerVariables(BlockServerAddresses addresses, Converters converters) {
+        blockServerAddresses = addresses;
 		this.converters = converters;
 		
         serverStatus = InstrumentUtils.convert(readCompressed(blockServerAddresses.serverStatus()),
