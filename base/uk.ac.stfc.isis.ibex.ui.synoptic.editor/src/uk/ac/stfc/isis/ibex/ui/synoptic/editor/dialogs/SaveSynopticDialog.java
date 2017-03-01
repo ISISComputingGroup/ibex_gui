@@ -42,6 +42,9 @@ import org.eclipse.swt.widgets.Text;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 
+/**
+ * The dialog used to save a synoptic.
+ */
 @SuppressWarnings("checkstyle:magicnumber")
 public class SaveSynopticDialog extends TitleAreaDialog {
 
@@ -52,6 +55,17 @@ public class SaveSynopticDialog extends TitleAreaDialog {
     private String newName = "";
     private List<String> existingSynoptics;
 
+    /**
+     * Constructor for a dialog box to ask the user what name they wish to save
+     * a synoptic under.
+     * 
+     * @param parent
+     *            The parent shell
+     * @param currentName
+     *            The current synoptic name
+     * @param existingSynoptics
+     *            List of the existing synoptics
+     */
     public SaveSynopticDialog(Shell parent, String currentName,
 	    Collection<String> existingSynoptics) {
         super(parent);
@@ -59,6 +73,9 @@ public class SaveSynopticDialog extends TitleAreaDialog {
         this.existingSynoptics = new ArrayList<>(existingSynoptics);
     }
 
+    /**
+     * @return the new name that the synoptic will be saved under.
+     */
     public String getNewName() {
         return newName;
     }
@@ -91,14 +108,6 @@ public class SaveSynopticDialog extends TitleAreaDialog {
         gdTxtName.widthHint = 383;
         txtName.setLayoutData(gdTxtName);
         txtName.setBounds(0, 0, 76, 21);
-        new Label(composite, SWT.NONE);
-
-        Label lblConfigurationNameCannot = new Label(composite, SWT.NONE);
-        lblConfigurationNameCannot.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1));
-        lblConfigurationNameCannot
-                .setText("Name must start with a letter and contain only letters, numbers and underscores.");
-        new Label(composite, SWT.NONE);
-        new Label(composite, SWT.NONE);
 
         txtName.addModifyListener(new ModifyListener() {
             @Override
@@ -131,7 +140,7 @@ public class SaveSynopticDialog extends TitleAreaDialog {
 
     @Override
     protected void okPressed() {
-        if (validate(name())) {
+        if (checkInput(name())) {
             newName = name();
             // Warn about overwriting if already exists
             if (isDuplicate(newName)) {
@@ -184,12 +193,7 @@ public class SaveSynopticDialog extends TitleAreaDialog {
         return text.toUpperCase().equals(other.toUpperCase());
     }
 
-    private Boolean validate(String name) {
-        // Must start with a letter and contain no spaces
-        return name.matches("^[a-zA-Z][a-zA-Z0-9_]*$");
-    }
-
-    private void checkInput(String name) {
+    private Boolean checkInput(String name) {
         setErrorMessage(null);
         setMessage(null);
 
@@ -197,7 +201,7 @@ public class SaveSynopticDialog extends TitleAreaDialog {
         if (error.length() > 0) {
             setErrorMessage(error);
             allowSaving(false);
-            return;
+            return false;
         }
 
         allowSaving(true);
@@ -205,6 +209,7 @@ public class SaveSynopticDialog extends TitleAreaDialog {
         if (warning.length() > 0) {
             setMessage(warning);
         }
+        return true;
     }
 
     private String getErrorMessage(String name) {
@@ -216,8 +221,12 @@ public class SaveSynopticDialog extends TitleAreaDialog {
             return "Name cannot be more than " + MAX_SYNOPTIC_NAME_LENGTH + " characters long";
         }
 
-        if (!validate(name)) {
-            return "Name contains invalid characters";
+        if (!name.matches("^[a-zA-Z].*")) {
+            return "Name must start with a character";
+        }
+
+        if (!name.matches("[a-zA-Z0-9_]*")) {
+            return "Name must only contain alphanumerics and underscores";
         }
 
         return "";
