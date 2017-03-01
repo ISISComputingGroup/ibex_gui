@@ -34,8 +34,8 @@ import org.junit.Test;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 
+import uk.ac.stfc.isis.ibex.epics.conversion.XMLUtil;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.SynopticDescription;
-import uk.ac.stfc.isis.ibex.synoptic.xml.XMLUtil;
 
 @SuppressWarnings("checkstyle:methodname")
 public class SynopticWrittenToXmlTest extends FileReadingTest {
@@ -62,7 +62,7 @@ public class SynopticWrittenToXmlTest extends FileReadingTest {
         } catch (MarshalException e) {
             assertThat(e.getCause(), instanceOf(SAXParseException.class));
         } catch (Exception e) {
-            assertFalse(true);
+            fail(e.getMessage());
         }
     }
 

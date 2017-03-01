@@ -80,11 +80,11 @@ public class DeviceScreenVariables {
                 InstrumentUtils.convert(readCompressed(getPvPrefix() + BLOCKSERVER_ADDRESS + GET_SCREENS_SUFFIX),
                         new DeviceScreensDescriptionXmlParser());
         
+        deviceScreenSchema = readCompressed(getPvPrefix() + BLOCKSERVER_ADDRESS + SCHEMA_SUFFIX);
+
         deviceScreensWritable =
                 InstrumentUtils.convert(writeCompressed(getPvPrefix() + BLOCKSERVER_ADDRESS + SET_SCREENS_SUFFIX),
-                new DeviceScreenDescriptionToXmlConverter());
-
-        deviceScreenSchema = readCompressed(getPvPrefix() + BLOCKSERVER_ADDRESS + SCHEMA_SUFFIX);
+                        new DeviceScreenDescriptionToXmlConverter(deviceScreenSchema));
     }
 
     /**

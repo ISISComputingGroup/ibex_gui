@@ -23,6 +23,7 @@
 package uk.ac.stfc.isis.ibex.devicescreens.desc.tests;
 
 import static org.junit.Assert.*;
+import static org.mockito.Mockito.*;
 
 import org.junit.Test;
 
@@ -32,6 +33,7 @@ import uk.ac.stfc.isis.ibex.devicescreens.desc.DeviceScreensDescription;
 import uk.ac.stfc.isis.ibex.devicescreens.desc.PropertyDescription;
 import uk.ac.stfc.isis.ibex.devicescreens.tests.xmldata.DeviceScreensXmlProvider;
 import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
+import uk.ac.stfc.isis.ibex.epics.observing.Observable;
 
 @SuppressWarnings("checkstyle:methodname")
 public class DeviceScreensDescriptionToXmlConverterTest {
@@ -55,7 +57,9 @@ public class DeviceScreensDescriptionToXmlConverterTest {
         DeviceScreensDescription deviceScreensDescription = new DeviceScreensDescription();
         deviceScreensDescription.addDevice(deviceDescription);
 
-        DeviceScreenDescriptionToXmlConverter converter = new DeviceScreenDescriptionToXmlConverter();
+        Observable schema = mock(Observable.class);
+        when(schema.getValue()).thenReturn(null);
+        DeviceScreenDescriptionToXmlConverter converter = new DeviceScreenDescriptionToXmlConverter(schema);
 
         try {
             // Act
