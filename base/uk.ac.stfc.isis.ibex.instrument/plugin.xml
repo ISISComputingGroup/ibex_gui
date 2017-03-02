@@ -2,5 +2,9 @@
 <?eclipse version="3.4"?>
 <plugin>
    <extension-point id="uk.ac.stfc.isis.ibex.instrument.info" name="uk.ac.stfc.isis.ibex.instrument.info" schema="schema/uk.ac.stfc.isis.ibex.instrument.info.exsd"/>
-
+   <extension
+         point="org.eclipse.ui.startup">
+      <startup
+            class="uk.ac.stfc.isis.ibex.instrument.Startup"></startup>
+   </extension>
 </plugin>
