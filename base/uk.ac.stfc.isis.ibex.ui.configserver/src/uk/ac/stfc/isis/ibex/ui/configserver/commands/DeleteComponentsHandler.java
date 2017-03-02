@@ -27,6 +27,7 @@ import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.window.Window;
 
+import uk.ac.stfc.isis.ibex.ui.configserver.DeleteComponentsViewModel;
 import uk.ac.stfc.isis.ibex.ui.configserver.dialogs.DeleteComponentsDialog;
 import uk.ac.stfc.isis.ibex.ui.configserver.dialogs.MultipleConfigsSelectionDialog;
 

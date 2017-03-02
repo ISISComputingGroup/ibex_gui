@@ -19,7 +19,7 @@
 /**
  * 
  */
-package uk.ac.stfc.isis.ibex.ui.configserver.commands;
+package uk.ac.stfc.isis.ibex.ui.configserver;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -40,7 +40,7 @@ public class DeleteComponentsViewModel extends ModelObject {
      * @param dependencies The components' dependencies
      */
     public DeleteComponentsViewModel(Map<String, Collection<String>> dependencies) {
-        this.dependencies = dependencies;
+        this.dependencies = filterEmpty(dependencies);
 
     }
 
@@ -54,7 +54,7 @@ public class DeleteComponentsViewModel extends ModelObject {
     public Map<String, Collection<String>> filterSelected(Collection<String> toDelete) {
         Map<String, Collection<String>> result = new HashMap<String, Collection<String>>();
         for (String key : toDelete) {
-            if (dependencies.keySet().contains(key)) {
+            if (dependencies.keySet().contains(key) && !dependencies.get(key).isEmpty()) {
                 result.put(key, dependencies.get(key));
             }
         }
@@ -88,6 +88,22 @@ public class DeleteComponentsViewModel extends ModelObject {
         }
         sb.append("Please remove the component" + (multi ? "s" : "") + " from these configurations before deleting.");
         return sb.toString();
+    }
+
+    /**
+     * Filters empty
+     * @param toFilter
+     * @return
+     */
+    private Map<String, Collection<String>> filterEmpty(Map<String, Collection<String>> toFilter) {
+        Map<String, Collection<String>> result = new HashMap<String, Collection<String>>();
+        for (String key : toFilter.keySet()) {
+            Collection<String> value = toFilter.get(key);
+            if (!value.isEmpty()) {
+                result.put(key, value);
+            }
+        }
+        return result;
     }
 
     /**

@@ -58,6 +58,13 @@ public class ComponentDependenciesModel {
     }
 
     /**
+     * @return The map of all component dependencies.
+     */
+    public Map<String, Collection<String>> getDependencies() {
+        return dependencies;
+    }
+
+    /**
      * Finds the dynamic blockserver PV of a given component based on its name.
      * 
      * @param component The name of the component
@@ -123,12 +130,5 @@ public class ComponentDependenciesModel {
         } else {
             dependencies.remove(name);
         }
-    }
-
-    /**
-     * @return The map of all component dependencies.
-     */
-    public Map<String, Collection<String>> getDependencies() {
-        return dependencies;
     }
 }
