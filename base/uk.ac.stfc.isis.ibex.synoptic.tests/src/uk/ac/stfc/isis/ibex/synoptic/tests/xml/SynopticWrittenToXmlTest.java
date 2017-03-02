@@ -56,7 +56,8 @@ public class SynopticWrittenToXmlTest extends FileReadingTest {
 	}
 	
     @Test
-    public void checks_against_schema_when_passed_one() throws JAXBException, SAXException {
+    public void WHEN_passed_a_schema_that_does_not_match_xml_THEN_exception_thrown()
+            throws JAXBException, SAXException {
         try {
             XMLUtil.toXml(instrument, SynopticDescription.class, badSchema);
         } catch (MarshalException e) {
@@ -67,7 +68,8 @@ public class SynopticWrittenToXmlTest extends FileReadingTest {
     }
 
     @Test
-    public void has_the_same_xml_content_when_unchanged() throws JAXBException, SAXException {
+    public void GIVEN_a_synoptic_created_from_xml_WHEN_converted_back_to_xml_THEN_xml_unchanged()
+            throws JAXBException, SAXException {
 
         String input = fileContent();
         input = input.replace("\n", "").replace("\t", "");
