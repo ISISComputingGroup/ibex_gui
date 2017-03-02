@@ -19,8 +19,8 @@
 
 package uk.ac.stfc.isis.ibex.configserver.tests.displaying;
 
+import uk.ac.stfc.isis.ibex.epics.observing.ClosableObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
-import uk.ac.stfc.isis.ibex.epics.observing.Observable;
 
 /**
  * Observable to be used for testing, allows access to setValue, setError and setConnectionChanged methods.
@@ -28,7 +28,7 @@ import uk.ac.stfc.isis.ibex.epics.observing.Observable;
  * This is final, so no mocking this, or using it outside testing!
  */
 final class TestableIOSObservable<T> extends ForwardingObservable<T> {
-  TestableIOSObservable(Observable<T> source) {
+    TestableIOSObservable(ClosableObservable<T> source) {
 		super(source);
 	}
 

@@ -27,7 +27,7 @@ import uk.ac.stfc.isis.ibex.model.UpdatedValue;
 
 public class IocControl {
 
-	private final UpdatedObservableAdapter<Collection<EditableIocState>> iocs;
+    private final UpdatedObservableAdapter<Collection<IocState>> iocs;
 	private final SetCommand<Collection<String>> start;
 	private final SetCommand<Collection<String>> stop;
 	private final SetCommand<Collection<String>> restart;
@@ -40,7 +40,7 @@ public class IocControl {
 		restart = server.restartIoc();
 	}
 	
-	public UpdatedValue<Collection<EditableIocState>> iocs() {
+    public UpdatedValue<Collection<IocState>> iocs() {
 		return iocs;
 	}
 	

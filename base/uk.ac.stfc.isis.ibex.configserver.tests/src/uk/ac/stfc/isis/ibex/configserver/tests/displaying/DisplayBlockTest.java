@@ -28,8 +28,8 @@ import org.junit.Test;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Block;
 import uk.ac.stfc.isis.ibex.configserver.displaying.DisplayBlock;
 import uk.ac.stfc.isis.ibex.configserver.displaying.RuncontrolState;
+import uk.ac.stfc.isis.ibex.epics.observing.ClosableObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
-import uk.ac.stfc.isis.ibex.epics.observing.Observable;
 
 @SuppressWarnings({ "unchecked", "checkstyle:methodname" })
 public class DisplayBlockTest {
@@ -44,10 +44,10 @@ public class DisplayBlockTest {
 	@Before
 	public void setUp() {
 		// Arrange
-		inRangeObservable = new TestableIOSObservable<>(mock(Observable.class));
-        enabledObservable = new TestableIOSObservable<>(mock(Observable.class));
-        valueObservable = new TestableIOSObservable<>(mock(Observable.class));
-        descriptionObservable = new TestableIOSObservable<>(mock(Observable.class));
+        inRangeObservable = new TestableIOSObservable<>(mock(ClosableObservable.class));
+        enabledObservable = new TestableIOSObservable<>(mock(ClosableObservable.class));
+        valueObservable = new TestableIOSObservable<>(mock(ClosableObservable.class));
+        descriptionObservable = new TestableIOSObservable<>(mock(ClosableObservable.class));
 		displayBlock = new DisplayBlock(
                 mock(Block.class), // block
                 valueObservable, // value

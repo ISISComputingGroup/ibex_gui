@@ -38,10 +38,10 @@ public class IocsParameterConverterTest {
 
 	@Before
 	public void setUp() {
-		exampleJson = "{\"TEST_01\": {\"running\": false}, \"SDTEST_03\": ";
+        exampleJson = "{\"TEST_01\": {\"running\": false, \"description\": \"Test IOC\"}, \"SDTEST_03\": ";
 		exampleJson += 
 		"{\"macros\": [{\"pattern\": \"^COM[0-9]+$\", \"description\": \"Serial COM port to connect to\", \"name\": \"PORT8\"}], ";
-		exampleJson += "\"running\": false, \"pvs\": [], \"pvsets\": []}}";
+        exampleJson += "\"running\": false, \"pvs\": [], \"pvsets\": [], \"description\": \"SD test IOC\" }}";
 			
 	}
 
@@ -60,9 +60,11 @@ public class IocsParameterConverterTest {
 		// Check the parameters
 		IocParameters testPars = pars.get("TEST_01");
 		assertEquals(testPars.isRunning(), false);
+        assertEquals(testPars.getDescription(), "Test IOC");
 		
 		IocParameters sdTestPars = pars.get("SDTEST_03");
 		assertEquals(sdTestPars.isRunning(), false);
+        assertEquals(sdTestPars.getDescription(), "SD test IOC");
 		assertEquals(sdTestPars.getPVs().size(), 0);
 		assertEquals(sdTestPars.getPVSets().size(), 0);
 		List<Macro> macros = (List<Macro>) sdTestPars.getMacros();
