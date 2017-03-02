@@ -219,14 +219,6 @@ public class SaveConfigDialog extends TitleAreaDialog {
 		gdTxtName.widthHint = 383;
 		txtName.setLayoutData(gdTxtName);
 		txtName.setBounds(0, 0, 76, 21);
-		new Label(composite, SWT.NONE);
-		
-		Label lblConfigurationNameCannot = new Label(composite, SWT.NONE);
-		lblConfigurationNameCannot.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1));
-        lblConfigurationNameCannot
-                .setText("Name must start with a letter and contain only letters, numbers and underscores.");
-		new Label(composite, SWT.NONE);
-		new Label(composite, SWT.NONE);
 		
 		Label lblConfigurationDesc = new Label(composite, SWT.NONE);
 		lblConfigurationDesc.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
