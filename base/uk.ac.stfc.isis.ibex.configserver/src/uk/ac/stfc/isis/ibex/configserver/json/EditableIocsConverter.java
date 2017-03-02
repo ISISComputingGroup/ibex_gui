@@ -23,14 +23,14 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import com.google.common.base.Function;
+import com.google.common.collect.Iterables;
+import com.google.common.collect.Lists;
+
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableIoc;
 import uk.ac.stfc.isis.ibex.configserver.internal.IocParameters;
 import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
 import uk.ac.stfc.isis.ibex.epics.conversion.Converter;
-
-import com.google.common.base.Function;
-import com.google.common.collect.Iterables;
-import com.google.common.collect.Lists;
 
 public class EditableIocsConverter extends Converter<Map<String, IocParameters>, Collection<EditableIoc>> {
 	
@@ -56,6 +56,10 @@ public class EditableIocsConverter extends Converter<Map<String, IocParameters>,
 					ioc.setAvailablePVSets(parameters.getPVSets());
 				}
 				
+                if (parameters.getDescription() != null) {
+                    ioc.setDescription(parameters.getDescription());
+                }
+
 				return ioc;				
 			}
 		}));
