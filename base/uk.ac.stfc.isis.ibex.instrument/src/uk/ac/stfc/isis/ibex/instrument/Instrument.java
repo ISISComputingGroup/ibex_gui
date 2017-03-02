@@ -164,6 +164,7 @@ public class Instrument implements BundleActivator {
                 }
             }
         });
+
         setInstrumentForAllPlugins(initialInstrument());
     }
 
@@ -236,7 +237,15 @@ public class Instrument implements BundleActivator {
 
         instrumentName.setValue(selectedInstrument.name());
 
-        updateExtendingPlugins(selectedInstrument);
+        final InstrumentInfo finalSelectedInstrument = selectedInstrument;
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                updateExtendingPlugins(finalSelectedInstrument);
+            }
+        }).start();
+        // updateExtendingPlugins(selectedInstrument);
         logNumberOfChannels();
     }
 
@@ -263,6 +272,7 @@ public class Instrument implements BundleActivator {
     }
 
     private static void updateExtendingPlugins(InstrumentInfo selectedInstrument) {
+
         IExtensionRegistry registry = Platform.getExtensionRegistry();
         IConfigurationElement[] elements = registry.getConfigurationElementsFor("uk.ac.stfc.isis.ibex.instrument.info");
 
