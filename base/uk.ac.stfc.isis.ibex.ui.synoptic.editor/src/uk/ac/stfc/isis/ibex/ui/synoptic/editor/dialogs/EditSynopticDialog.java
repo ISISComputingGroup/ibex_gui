@@ -40,8 +40,6 @@ import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
 import org.xml.sax.SAXException;
 
-import uk.ac.stfc.isis.ibex.synoptic.Synoptic;
-import uk.ac.stfc.isis.ibex.synoptic.SynopticInfo;
 import uk.ac.stfc.isis.ibex.synoptic.xml.XMLUtil;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.instrument.SynopticPreview;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.SynopticViewModel;
@@ -142,10 +140,10 @@ public class EditSynopticDialog extends TitleAreaDialog {
 		saveAsBtn.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-                SaveSynopticDialog dlg = new SaveSynopticDialog(null, synopticViewModel.getSynoptic().name(),
-                        SynopticInfo.names(Synoptic.getInstance().availableSynoptics()));
+			    SaveSynopticViewModel model = new SaveSynopticViewModel(synopticViewModel.getSynoptic().name());
+                SaveSynopticDialog dlg = new SaveSynopticDialog(null, model);
 				if (dlg.open() == Window.OK) {
-                    synopticViewModel.getSynoptic().setName(dlg.getNewName());
+                    synopticViewModel.getSynoptic().setName(model.getSynopticName());
 					
 					// Check synoptic is valid
 					try {
