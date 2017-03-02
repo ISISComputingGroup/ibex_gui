@@ -27,8 +27,6 @@ import com.google.common.base.Predicate;
 import com.google.common.base.Strings;
 import com.google.common.collect.Iterables;
 
-import uk.ac.stfc.isis.ibex.synoptic.Synoptic;
-import uk.ac.stfc.isis.ibex.synoptic.SynopticInfo;
 import uk.ac.stfc.isis.ibex.validators.ErrorMessageProvider;
 
 /**
@@ -36,7 +34,7 @@ import uk.ac.stfc.isis.ibex.validators.ErrorMessageProvider;
  */
 public class SaveSynopticViewModel extends ErrorMessageProvider {
     private static final int MAX_SYNOPTIC_NAME_LENGTH = 30;
-    private Collection<String> existingSynoptics = SynopticInfo.names(Synoptic.getInstance().availableSynoptics());
+    private Collection<String> existingSynoptics;
     private String synopticName;
     private Boolean savingAllowed;
 
@@ -45,8 +43,11 @@ public class SaveSynopticViewModel extends ErrorMessageProvider {
      * 
      * @param currentName
      *            The original name of the synoptic.
+     * @param existingSynoptics
+     *            A list of the names of the synoptics that already exist.
      */
-    public SaveSynopticViewModel(String currentName) {
+    public SaveSynopticViewModel(String currentName, Collection<String> existingSynoptics) {
+        this.existingSynoptics = existingSynoptics;
         setSynopticName(currentName);
     }
 
