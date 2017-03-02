@@ -130,14 +130,18 @@ public class SaveSynopticDialog extends TitleAreaDialog {
 
     @Override
     protected void okPressed() {
-        if (model.isDuplicate() && !askUserWhetherToOverwrite()) {
-            return;
+        if (model.isDuplicate()) {
+            if (askUserWhetherToOverwrite()) {
+                super.okPressed();
+            }
+        } else {
+            super.okPressed();
         }
-         
-        super.okPressed();
-         
     }
 
+    /**
+     * @return True if the user wishes to override.
+     */
     private boolean askUserWhetherToOverwrite() {
         MessageBox box = new MessageBox(getShell(), SWT.ICON_WARNING | SWT.YES | SWT.NO);
         box.setMessage(
@@ -145,6 +149,6 @@ public class SaveSynopticDialog extends TitleAreaDialog {
 
         // Message boxes return the ID of the button to close, so need to check
         // that value..
-        return box.open() != SWT.YES;
+        return box.open() == SWT.YES;
     }
 }
