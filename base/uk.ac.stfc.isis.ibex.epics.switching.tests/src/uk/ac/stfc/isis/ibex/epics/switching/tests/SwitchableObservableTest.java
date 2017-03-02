@@ -24,6 +24,7 @@ import static org.mockito.Mockito.*;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mockito;
 
 import uk.ac.stfc.isis.ibex.epics.observing.ClosableObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.Observer;
@@ -62,7 +63,7 @@ public class SwitchableObservableTest {
 		switchableObservable.close();
 
 		// Assert - The original ClosableCachingObservable is closed
-		verify(mockObservableReturnsValue, times(1)).close();
+        verify(mockObservableReturnsValue, Mockito.atLeast(1)).close();
 	}
 	
 	@Test
@@ -107,7 +108,7 @@ public class SwitchableObservableTest {
         switchableObservable.setSource(mockObservableReturnsNewValue);
 
 		// Assert - The original ClosableCachingObservable is closed
-		verify(mockObservableReturnsValue, times(1)).close();
+        verify(mockObservableReturnsValue, Mockito.atLeast(1)).close();
 	}
 	
 	@Test
@@ -134,6 +135,6 @@ public class SwitchableObservableTest {
         switchableObservable.setSource(mockObservableReturnsNull);
 		
 		// Assert - The original value is returned
-		verify(mockObservableReturnsValue, times(1)).close();
+        verify(mockObservableReturnsValue, Mockito.atLeast(1)).close();
 	}
 }

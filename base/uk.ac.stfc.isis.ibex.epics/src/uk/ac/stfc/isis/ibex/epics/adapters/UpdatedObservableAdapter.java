@@ -47,6 +47,12 @@ public class UpdatedObservableAdapter<T> extends SettableUpdatedValue<T> impleme
 		}
 	};
 	
+    /**
+     * Constructor.
+     * 
+     * @param observable
+     *            the observable
+     */
 	public UpdatedObservableAdapter(ForwardingObservable<T> observable) {
 		subscribeTo(observable);
 	}
