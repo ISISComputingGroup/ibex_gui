@@ -449,9 +449,13 @@ public class SaveConfigDialog extends TitleAreaDialog {
 			return "Name cannot be blank";
 		}
 		
-		if (!validate(name)) {
-			return "Name contains invalid characters";
-		}
+        if (!name.matches("^[a-zA-Z].*")) {
+            return "Name must start with a character";
+        }
+
+        if (!name.matches("[a-zA-Z0-9_]*")) {
+			return "Name must only contain alphanumerics and underscores";
+        }
 		
         if (nameMatchesCurrentConfig(name)) {
             return "Name matches the current configuration";
