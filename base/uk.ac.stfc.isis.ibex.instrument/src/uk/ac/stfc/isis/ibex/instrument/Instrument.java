@@ -245,7 +245,7 @@ public class Instrument implements BundleActivator {
                 updateExtendingPlugins(finalSelectedInstrument);
             }
         }).start();
-        // updateExtendingPlugins(selectedInstrument);
+
         logNumberOfChannels();
     }
 
