@@ -94,7 +94,7 @@ public class VersionPanel extends Composite {
         lblJavaPath.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
         lblJavaPath.setText("Java Path:");
 
-        javaPathLabel = new Label(this, SWT.WRAP);
+        javaPathLabel = new Label(this, SWT.NONE);
         GridData javaPathGd = new GridData(SWT.LEFT, SWT.CENTER, true, true, 1, 1);
         javaPathGd.widthHint = 200;
         javaPathLabel.setLayoutData(javaPathGd);
@@ -103,7 +103,7 @@ public class VersionPanel extends Composite {
 
         String javaPath = System.getProperties().getProperty("java.home");
         Point pathSize = new GC(javaPathLabel).stringExtent(javaPath);
-        if (pathSize.x > (javaPathGd.widthHint * 2.0)) {
+        if (pathSize.x > javaPathGd.widthHint) {
             javaPathLabel.setToolTipText(javaPath);
             // Assuming chars are the same width calculate how many can we fit
             // on one line
