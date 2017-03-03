@@ -21,27 +21,23 @@ package uk.ac.stfc.isis.ibex.synoptic.internal;
 
 import javax.xml.bind.JAXBException;
 
-import org.xml.sax.SAXException;
-
 import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
 import uk.ac.stfc.isis.ibex.epics.conversion.Converter;
-import uk.ac.stfc.isis.ibex.synoptic.xml.XMLUtil;
+import uk.ac.stfc.isis.ibex.epics.conversion.XMLUtil;
+import uk.ac.stfc.isis.ibex.synoptic.model.desc.SynopticDescription;
 
 /**
- * Parses an input XML into an instrument description.
- * 
- * @param <T>
+ * Parses an input XML into a Synoptic.
  */
-public class InstrumentDescriptionParser<T> extends
-		Converter<String, T> {
+public class SynopticParser extends Converter<String, SynopticDescription> {
 
 	@Override
-    public T convert(String value)
+    public SynopticDescription convert(String value)
 			throws ConversionException {
 		try {
-			return XMLUtil.fromXml(value);
-		} catch (JAXBException | SAXException e) {
-			throw new ConversionException("Error parsing synoptic", e);
+            return XMLUtil.fromXml(value, SynopticDescription.class);
+        } catch (JAXBException e) {
+            throw new ConversionException("Error creating synoptic from xml", e);
 		}		
 	}
 }

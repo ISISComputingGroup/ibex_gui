@@ -30,12 +30,12 @@ import org.junit.Before;
 import org.junit.Test;
 
 import uk.ac.stfc.isis.ibex.devicescreens.components.ComponentType;
+import uk.ac.stfc.isis.ibex.epics.conversion.XMLUtil;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.ComponentDescription;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.IO;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.Property;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.SynopticDescription;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.TargetType;
-import uk.ac.stfc.isis.ibex.synoptic.xml.XMLUtil;
 
 @SuppressWarnings("checkstyle:methodname")
 public class SynopticLoadedFromXmlTest extends FileReadingTest {
@@ -44,7 +44,7 @@ public class SynopticLoadedFromXmlTest extends FileReadingTest {
 	
 	@Before
 	public void setUp() throws Exception {
-		instrument = XMLUtil.fromXml(fileContent());
+        instrument = XMLUtil.fromXml(fileContent(), SynopticDescription.class);
 	}
 
 	@Override
