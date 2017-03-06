@@ -35,6 +35,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.DateTime;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.ProgressBar;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.wb.swt.ResourceManager;
 
@@ -76,6 +77,10 @@ public class SearchControl extends Canvas {
             new LogMessageFilter(LogMessageFields.SEVERITY, LogMessageSeverity.INFO.name(), true);
     private final LogMessageFilter minorFilter =
             new LogMessageFilter(LogMessageFields.SEVERITY, LogMessageSeverity.MINOR.name(), true);
+
+    private Label lblSearchText;
+
+    private ProgressBar progressBar;
 	
 	public SearchControl(LogDisplay parent, final ISearchModel searcher) {
 		super(parent, SWT.NONE);
@@ -83,15 +88,15 @@ public class SearchControl extends Canvas {
 		this.parent = parent;
 		this.searcher = searcher;
 
-        GridLayout gl = new GridLayout(1, false);
+        GridLayout gl = new GridLayout(2, false);
         gl.marginWidth = 0;
         setLayout(gl);
 
         Group grpFilter = new Group(this, SWT.NONE);
         grpFilter.setText("Filter Options");
-        grpFilter.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+        grpFilter.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1));
 
-        GridLayout glGrpFilter = new GridLayout(5, false);
+        GridLayout glGrpFilter = new GridLayout(6, false);
         glGrpFilter.verticalSpacing = 0;
         grpFilter.setLayout(glGrpFilter);
 
@@ -130,6 +135,7 @@ public class SearchControl extends Canvas {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				clearSearchResults();
+                setProgressIndicatorsVisible(false);
 			}
 		});
 		btnClear.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false,
@@ -138,6 +144,11 @@ public class SearchControl extends Canvas {
 				"uk.ac.stfc.isis.ibex.ui.log", "icons/delete.png"));
 		btnClear.setToolTipText("Clear search results and return to recent message view");
 		// timeLayout.widthHint = 600;
+
+        // progress bar label
+        lblSearchText = new Label(grpFilter, SWT.NONE);
+        lblSearchText.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1));
+        lblSearchText.setText("Searching...");
 
 		// Date-time picker
         Composite timePicker = new Composite(grpFilter, SWT.NONE);
@@ -210,6 +221,11 @@ public class SearchControl extends Canvas {
 			}
 		});
         setInfoFilter(cmboSeverity.getText());
+
+        // Progress bar
+        progressBar = new ProgressBar(grpFilter, SWT.INDETERMINATE);
+        lblSearchText.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1));
+        setProgressIndicatorsVisible(false);
 		
 	}
 
@@ -226,29 +242,55 @@ public class SearchControl extends Canvas {
 			int fieldIndex = cmboFields.getSelectionIndex();
 
 			if (fieldIndex != -1) {
-				LogMessageFields field = FIELDS[fieldIndex];
-				String value = txtValue.getText();
+                final LogMessageFields field = FIELDS[fieldIndex];
+                final String value = txtValue.getText();
 
-				Calendar from = null, to = null;
-				if (chkFrom.getSelection()) {
-					from = new GregorianCalendar(dtFromDate.getYear(),
+                final Calendar from = chkFrom.getSelection()
+                        ? new GregorianCalendar(dtFromDate.getYear(),
 							dtFromDate.getMonth(), dtFromDate.getDay(),
 							dtFromTime.getHours(), dtFromTime.getMinutes(),
-							dtFromTime.getSeconds());
-				}
-
-				if (chkTo.getSelection()) {
-					to = new GregorianCalendar(dtToDate.getYear(),
+							dtFromTime.getSeconds()) : null;
+                final Calendar to = chkTo.getSelection()
+                        ? new GregorianCalendar(dtToDate.getYear(),
 							dtToDate.getMonth(), dtToDate.getDay(),
 							dtToTime.getHours(), dtToTime.getMinutes(),
-							dtToTime.getSeconds());
-				}
+                        dtToTime.getSeconds()) : null;
 
-				searcher.search(field, value, from, to);
-			}
-		}
+                runSearchJob(field, value, from, to);
+
+            }
+        }
+    }
+
+    private void runSearchJob(final LogMessageFields field, final String value, final Calendar from,
+            final Calendar to) {
+
+        final Runnable searchJob = new Runnable() {
+            @Override
+            public void run() {
+                setProgressIndicatorsVisible(true);
+                searcher.search(field, value, from, to);
+                setProgressIndicatorsVisible(false);
+            }
+        };
+
+        Thread searchJobThread = new Thread(searchJob);
+
+        searchJobThread.start();
 	}
-	
+
+    private void setProgressIndicatorsVisible(final boolean visible) {
+
+        getDisplay().asyncExec(new Runnable() {
+            @Override
+            public void run() {
+                lblSearchText.setVisible(visible);
+                progressBar.setVisible(visible);
+            }
+        });
+
+    }
+
 	private void clearSearchResults() {
 		txtValue.setText("");
 

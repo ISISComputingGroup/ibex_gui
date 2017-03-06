@@ -27,16 +27,16 @@ import org.eclipse.core.databinding.beans.BeanProperties;
 import org.eclipse.core.databinding.conversion.Converter;
 import org.eclipse.core.databinding.conversion.IConverter;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
-import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.widgets.Composite;
 
-import uk.ac.stfc.isis.ibex.configserver.EditableIocState;
 import uk.ac.stfc.isis.ibex.configserver.IocControl;
+import uk.ac.stfc.isis.ibex.configserver.IocState;
 import uk.ac.stfc.isis.ibex.ui.ioccontrol.table.NegatingConverter;
 
 @SuppressWarnings("checkstyle:magicnumber")
@@ -52,7 +52,7 @@ public class IocButtonPanel extends Composite {
 		WITH_NEGATION.setConverter(new NegatingConverter());
 	};
 	
-	private EditableIocState ioc;
+    private IocState ioc;
 	private final IocControl control;
 	
 	public IocButtonPanel(Composite parent, int style, final IocControl control) {
@@ -60,12 +60,12 @@ public class IocButtonPanel extends Composite {
 		this.control = control;
 		GridLayout gridLayout = new GridLayout(3, true);
 		gridLayout.verticalSpacing = 0;
-		gridLayout.marginWidth = 0;
+        gridLayout.marginWidth = 10;
 		gridLayout.marginHeight = 0;
 		setLayout(gridLayout);
 		
 		start = new Button(this, SWT.NONE);
-		start.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
+        start.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
 		start.setText("Start");
 		start.addSelectionListener(new SelectionAdapter() {
 			@Override
@@ -101,7 +101,7 @@ public class IocButtonPanel extends Composite {
 		});
 	}
 
-	public void setIoc(final EditableIocState ioc) {
+    public void setIoc(final IocState ioc) {
 		this.ioc = ioc;
 		if (ioc == null) {
 			start.setEnabled(false);
@@ -123,7 +123,7 @@ public class IocButtonPanel extends Composite {
 	}
 
 
-	private void bindStart(final EditableIocState ioc) {
+    private void bindStart(final IocState ioc) {
 		IConverter startConverter = new Converter(Boolean.class, Boolean.class) {
 			@Override
 			public Object convert(Object arg0) {				
@@ -139,7 +139,7 @@ public class IocButtonPanel extends Composite {
 		bindingContext.bindValue(WidgetProperties.enabled().observe(start), BeanProperties.value("isRunning").observe(ioc), null, startStrategy);
 	}
 
-	private void bindStop(final EditableIocState ioc) {
+    private void bindStop(final IocState ioc) {
 		IConverter stopConverter = new Converter(Boolean.class, Boolean.class) {
 			@Override
 			public Object convert(Object arg0) {				
@@ -155,7 +155,7 @@ public class IocButtonPanel extends Composite {
 		bindingContext.bindValue(WidgetProperties.enabled().observe(stop), BeanProperties.value("isRunning").observe(ioc), null, stopStrategy);
 	}
 	
-	private void bindRestart(final EditableIocState ioc) {
+    private void bindRestart(final IocState ioc) {
 		IConverter restartConverter = new Converter(Boolean.class, Boolean.class) {
 			@Override
 			public Object convert(Object arg0) {				

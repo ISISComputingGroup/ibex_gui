@@ -19,17 +19,21 @@
 
 package uk.ac.stfc.isis.ibex.ui.synoptic.editor.commands;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.Collection;
 
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.jface.window.Window;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.PlatformUI;
+import org.xml.sax.SAXParseException;
 
-import uk.ac.stfc.isis.ibex.epics.writing.SameTypeWriter;
-import uk.ac.stfc.isis.ibex.epics.writing.Writable;
 import uk.ac.stfc.isis.ibex.opis.Opi;
 import uk.ac.stfc.isis.ibex.synoptic.Synoptic;
+import uk.ac.stfc.isis.ibex.synoptic.SynopticWriter;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.SynopticDescription;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.dialogs.EditSynopticDialog;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.SynopticViewModel;
@@ -37,35 +41,29 @@ import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.SynopticViewModel;
 /**
  * Handles opening the Synoptic Editor and saving the synoptic when updated.
  * 
- * @param <T>
- *            The type of the write destination for the synoptic data
  */
-public abstract class SynopticHandler<T> extends AbstractHandler {
+public abstract class SynopticEditorHandler extends AbstractHandler {
 
 	protected static final Synoptic SYNOPTIC = Synoptic.getInstance();
+    protected static final Shell SHELL = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
+    private final SynopticWriter writer = SYNOPTIC.edit().saveSynoptic();
 	
-	/**
-	 * This is an inner anonymous class inherited from SameTypeWriter with added functionality
-	 * for disabling the command if the underlying PV cannot be written to.
-	 */
-	protected final SameTypeWriter<T> synopticService = new SameTypeWriter<T>() {	
-		@Override
-		public void onCanWriteChanged(boolean canWrite) {
-			setBaseEnabled(canWrite);
-		};	
-	};
-	
-	
-	/**
-	 * Constructor.
-	 * 
-	 * @param destination where to write the data to
-	 */
-	public SynopticHandler(Writable<T> destination) {
-		synopticService.writeTo(destination);
-		destination.subscribe(synopticService);
-	}		
-	
+    /**
+     * Constructor for the handler that adds a listener for when the destination
+     * can not written to.
+     */
+    public SynopticEditorHandler() {
+        writer.canSave().addPropertyChangeListener(new PropertyChangeListener() {
+
+            @Override
+            public void propertyChange(PropertyChangeEvent evt) {
+                Boolean canSave = (Boolean) evt.getNewValue();
+                setBaseEnabled(canSave);
+            }
+        });
+        setBaseEnabled(writer.canWrite());
+    }
+
     /**
      * Handle the sequence of opening a synoptic editor dialog and the
      * subsequent cancel/save.
@@ -82,19 +80,23 @@ public abstract class SynopticHandler<T> extends AbstractHandler {
         Collection<String> opis = Opi.getDefault().descriptionsProvider().getOpiList();
         SynopticViewModel viewModel = new SynopticViewModel(synoptic);
         EditSynopticDialog editDialog =
-                new EditSynopticDialog(shell(), title, isBlank, opis, viewModel);
+                new EditSynopticDialog(SHELL, title, isBlank, opis, viewModel);
 		if (editDialog.open() == Window.OK) {
-            SYNOPTIC.edit().saveSynoptic().write(viewModel.getSynoptic());
+            writer.write(viewModel.getSynoptic());
+            Exception error = writer.lastError();
+            if (error != null) {
+                MessageBox dialog = new MessageBox(SHELL, SWT.ERROR | SWT.OK);
+                dialog.setText("Error saving synoptic");
+                if (error.getCause().getClass() == SAXParseException.class) {
+                    dialog.setMessage(
+                            "Synoptic incompatible with server, please check that you are using the latest version of IBEX");
+                } else {
+                    dialog.setMessage("Error in saving synoptic, please contact support team");
+                }
+                Synoptic.LOG.error("Error saving synoptic: " + error.getMessage());
+                dialog.open();
+            }
 		}
 	}
-	
-    /**
-     * Provides the shell to open dialogs in.
-     * 
-     * @return The shell to open the dialogs with.
-     */
-	protected Shell shell() {
-		return PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
-	}	
 	
 }

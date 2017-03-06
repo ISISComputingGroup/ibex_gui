@@ -46,6 +46,15 @@ public class Awaited<T> extends UpdatedValue<T> {
 		}
 	}
 	
+    /**
+     * Gets the awaited value.
+     * 
+     * @param value
+     *            the value
+     * @param secondsToWait
+     *            the number of seconds to wait
+     * @return the awaited value
+     */
 	public static <T> boolean returnedValue(UpdatedValue<T> value, int secondsToWait) {
 		return new Awaited<>(value).until(secondsToWait);
 	}

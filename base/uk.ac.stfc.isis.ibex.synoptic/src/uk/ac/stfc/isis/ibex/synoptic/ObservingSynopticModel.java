@@ -18,17 +18,12 @@
 
 package uk.ac.stfc.isis.ibex.synoptic;
 
-import javax.xml.bind.JAXBException;
-
-import org.xml.sax.SAXException;
-
 import uk.ac.stfc.isis.ibex.epics.observing.BaseObserver;
 import uk.ac.stfc.isis.ibex.epics.observing.Observer;
 import uk.ac.stfc.isis.ibex.epics.switching.SwitchableObservable;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 import uk.ac.stfc.isis.ibex.synoptic.internal.Variables;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.SynopticDescription;
-import uk.ac.stfc.isis.ibex.synoptic.xml.XMLUtil;
 
 /**
  * A class for linking the PV observables used to define the synoptic with the
@@ -59,21 +54,6 @@ public class ObservingSynopticModel extends ModelObject {
         }
     };
 
-    private final Observer<String> synopticSchemaObserver = new BaseObserver<String>() {
-
-		@Override
-		public void onValue(String value) {
-			// Set the schema
-			try {
-				XMLUtil.setSchema(value);
-			} catch (SAXException e) {
-				e.printStackTrace();
-			} catch (JAXBException e) {
-				e.printStackTrace();
-			}
-		}
-	};
-
 	private final SynopticModel model;
 	private final Variables variables;
     private final SwitchableObservable<SynopticDescription> synopticObservable;
@@ -81,8 +61,6 @@ public class ObservingSynopticModel extends ModelObject {
 	public ObservingSynopticModel(Variables variables, SynopticModel model) {
 		this.model = model;
 		this.variables = variables;
-
-		this.variables.synopticSchema.addObserver(synopticSchemaObserver);
 
         synopticObservable = new SwitchableObservable<SynopticDescription>(
                 variables.<SynopticDescription>getSynopticDescription(Variables.NONE_SYNOPTIC_PV));

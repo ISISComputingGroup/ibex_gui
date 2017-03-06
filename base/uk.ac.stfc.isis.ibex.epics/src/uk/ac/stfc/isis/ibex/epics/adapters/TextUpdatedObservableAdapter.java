@@ -21,7 +21,7 @@ package uk.ac.stfc.isis.ibex.epics.adapters;
 
 import com.google.common.base.Strings;
 
-import uk.ac.stfc.isis.ibex.epics.observing.Observable;
+import uk.ac.stfc.isis.ibex.epics.observing.ClosableObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 
 public class TextUpdatedObservableAdapter extends UpdatedObservableAdapter<String> {
@@ -29,7 +29,13 @@ public class TextUpdatedObservableAdapter extends UpdatedObservableAdapter<Strin
 	private static final String UNKNOWN = "Unknown";
 	private static final String EMPTY = "";
 	
-	public TextUpdatedObservableAdapter(Observable<String> observable) {
+    /**
+     * Constructor.
+     * 
+     * @param observable
+     *            the observable
+     */
+    public TextUpdatedObservableAdapter(ClosableObservable<String> observable) {
 		super(new ForwardingObservable<>(observable));
 	}
 	

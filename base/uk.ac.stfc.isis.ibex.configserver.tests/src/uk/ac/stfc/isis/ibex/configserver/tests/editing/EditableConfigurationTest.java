@@ -39,12 +39,9 @@ import uk.ac.stfc.isis.ibex.configserver.configuration.Ioc;
 import uk.ac.stfc.isis.ibex.configserver.configuration.PV;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableIoc;
-import uk.ac.stfc.isis.ibex.configserver.internal.IocDescriber;
-import uk.ac.stfc.isis.ibex.model.SettableUpdatedValue;
-import uk.ac.stfc.isis.ibex.model.UpdatedValue;
 
 @SuppressWarnings("checkstyle:methodname")
-public class EditableConfigurationTest implements IocDescriber {
+public class EditableConfigurationTest {
 
 	private static final String NAME = "base";
 	private static final String DESCRIPTION = "description";
@@ -132,11 +129,6 @@ public class EditableConfigurationTest implements IocDescriber {
 				Collections.<String>emptyList());
 	}
 	
-	@Override
-	public UpdatedValue<String> getDescription(String iocName) {
-		return new SettableUpdatedValue<String>("description");
-	}
-	
 	protected void populateConfig() {
 		EditableIoc copyGalil = new EditableIoc(GALIL01);
 		copyGalil.setAutostart(true);
@@ -152,7 +144,7 @@ public class EditableConfigurationTest implements IocDescriber {
 	}
 	
 	protected EditableConfiguration edit(Configuration config) {
-		return new EditableConfiguration(config, allIocs, allComponents, allPvs, this);
+        return new EditableConfiguration(config, allIocs, allComponents, allPvs);
 	}
 	
 	protected static <T> T getFirst(Iterable<T> items) {
