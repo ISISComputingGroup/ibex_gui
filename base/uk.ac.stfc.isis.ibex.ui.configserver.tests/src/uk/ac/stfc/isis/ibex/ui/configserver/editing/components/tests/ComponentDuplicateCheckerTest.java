@@ -26,11 +26,13 @@ import static org.mockito.Mockito.*;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Map;
 
 import org.junit.Before;
 import org.junit.Test;
 
+import uk.ac.stfc.isis.ibex.configserver.configuration.Block;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Configuration;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableBlock;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
@@ -52,24 +54,30 @@ public class ComponentDuplicateCheckerTest {
     private final static String TEST_COMP_NAME = "TEST_COMPONENT";
     private final static String BASE_CONFIG_STRING = "Base Configuration";
 
+    private EditableBlock mockBlock(String name, String component) {
+        EditableBlock block = mock(EditableBlock.class);
+        when(block.getName()).thenReturn(name);
+        when(block.getComponent()).thenReturn(component);
+        when(block.hasComponent()).thenReturn(component == null ? false : component.length() > 0);
+        return block;
+    }
+
+    private Configuration mockComp(String name, Collection<Block> blocks) {
+        Configuration comp = mock(Configuration.class);
+        when(comp.getName()).thenReturn(name);
+        when(comp.getBlocks()).thenReturn(blocks);
+        return comp;
+    }
+
     @Before
     public void setUp() {
         mockConfig = mock(EditableConfiguration.class);
         
-        EditableBlock block1 = mock(EditableBlock.class);
-        EditableBlock block2 = mock(EditableBlock.class);
+        EditableBlock block1 = mockBlock(BLOCK_1_NAME, BLOCK_1_COMP_NAME);
+        EditableBlock block2 = mockBlock(BLOCK_2_NAME, BLOCK_2_COMP_NAME);
 
-        when(block1.getName()).thenReturn(BLOCK_1_NAME);
-        when(block1.getComponent()).thenReturn(BLOCK_1_COMP_NAME);
-        when(block1.hasComponent()).thenReturn(false);
-        
-        when(block2.getName()).thenReturn(BLOCK_2_NAME);
-        when(block2.getComponent()).thenReturn(BLOCK_2_COMP_NAME);
-        when(block2.hasComponent()).thenReturn(true);
-        
         Collection<EditableBlock> mockBlocks = Arrays.asList(block1, block2);
         when(mockConfig.getAvailableBlocks()).thenReturn(mockBlocks);
-
 
         duplicateChecker = new ComponentDuplicateChecker(mockConfig);
     }
@@ -77,8 +85,8 @@ public class ComponentDuplicateCheckerTest {
     @Test
     public void GIVEN_component_is_blank_WHEN_adding_THEN_no_conflicts_reported() {
         // Arrange
-        Configuration comp = mock(Configuration.class);
-        when(comp.getName()).thenReturn(TEST_COMP_NAME);
+        Collection<Block> blocks = Collections.emptyList();
+        Configuration comp = mockComp(TEST_COMP_NAME, blocks);
 
         // Act
         Map<String, Map<String, String>> actual = duplicateChecker.checkBlocks(Arrays.asList(comp));
@@ -91,12 +99,8 @@ public class ComponentDuplicateCheckerTest {
     @Test
     public void GIVEN_base_config_contains_block_WHEN_adding_component_with_block_of_same_name_THEN_conflict_is_reported() {
         // Arrange
-        EditableBlock duplicateBlock1 = mock(EditableBlock.class);
-        when(duplicateBlock1.getName()).thenReturn(BLOCK_1_NAME);
-        
-        Configuration comp = mock(Configuration.class);
-        when(comp.getName()).thenReturn(TEST_COMP_NAME);
-        when(comp.getBlocks()).thenReturn(Arrays.asList(duplicateBlock1));
+        EditableBlock duplicateBlock1 = mockBlock(BLOCK_1_NAME, null);
+        Configuration comp = mockComp(TEST_COMP_NAME, Arrays.asList(duplicateBlock1));
 
         // Act
         Map<String, Map<String, String>> conflicts = duplicateChecker.checkBlocks(Arrays.asList(comp));
@@ -143,4 +147,12 @@ public class ComponentDuplicateCheckerTest {
         // Assert
         assertEquals(expected, actual);
     }
+
+    // TODO: conflict with block from component
+    // TODO: conflict with block from just added component
+    // TODO: if adding multiple components then only conflict-free ones should
+    // be added
+    // TODO: if adding then removing component then blocks should be removed
+    // TODO: adding comp with block after removing duplicate block from config
+    // should yield no conflicts
 }
