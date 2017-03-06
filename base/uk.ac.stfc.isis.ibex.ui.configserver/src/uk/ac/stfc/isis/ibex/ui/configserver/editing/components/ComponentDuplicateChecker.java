@@ -37,6 +37,7 @@ public class ComponentDuplicateChecker {
 
     private EditableConfiguration config;
     private EditableComponents components;
+    private Map<String, String> blocksFromConfig;
     private Map<String, String> allCurrentBlocks;
 
     /**
@@ -47,11 +48,46 @@ public class ComponentDuplicateChecker {
     public ComponentDuplicateChecker(EditableConfiguration config) {
         this.config = config;
         components = config.getEditableComponents();
-        allCurrentBlocks = getAllCurrentBlocks(); // TODO keep updated
+        refreshBlocks();
     }
 
-    public Map<String, Map<String, String>> checkBlocks(Collection<Configuration> toToggle) { 
-        
+    private void refreshBlocks() {
+        allCurrentBlocks = new HashMap<String, String>();
+        allCurrentBlocks.putAll(getConfigBlocks());
+        allCurrentBlocks.putAll(getComponentBlocks());
+    }
+
+    private Map<String, String> getConfigBlocks() {
+        Map<String, String> result = new HashMap<String, String>();
+        for (Block block : config.getAvailableBlocks()) {
+            String name = block.getName();
+            String source = block.hasComponent() ? block.getComponent() : "Base Configuration";
+            result.put(name, source);
+        }
+        return result;
+    }
+
+    private Map<String, String> getComponentBlocks() {
+        Map<String, String> result = new HashMap<String, String>();
+        if (components == null) {
+            return result;
+        }
+        for (Configuration comp : components.getSelected()) {
+            for (Block block : comp.getBlocks()) {
+                result.put(block.getName(), comp.getName());
+            }
+        }
+        return result;
+    }
+
+    private void addCurrentBlocks(Configuration toAdd) {
+        for (Block block : toAdd.getBlocks()) {
+            allCurrentBlocks.put(block.getName(), toAdd.getName());
+        }
+    }
+
+    public Map<String, Map<String, String>> checkBlocks(Collection<Configuration> toToggle) {
+        refreshBlocks();
         Map<String, Map<String, String>> allConflicts = new HashMap<String, Map<String, String>>();
 
         for (Configuration comp : toToggle) {
@@ -63,40 +99,16 @@ public class ComponentDuplicateChecker {
             }
         }
         return allConflicts;
-
     }
 
     private Map<String, String> getBlockConflicts(Configuration toCheck) {
         Map<String, String> conflicts = new HashMap<String, String>();
 
-        for (Configuration comp : components.getSelected()) {
-            for (Block block : comp.getBlocks()) {
-                if (!allCurrentBlocks.containsKey(block.getName())) {
-                    allCurrentBlocks.put(block.getName(), comp.getName());
-                }
-            }
-        }
         for (Block block : toCheck.getBlocks()) {
             if (allCurrentBlocks.containsKey(block.getName())) {
                 conflicts.put(block.getName(), allCurrentBlocks.get(block.getName()));
             }
         }
         return conflicts;
-    }
-
-    private Map<String, String> getAllCurrentBlocks() {
-        Map<String, String> result = new HashMap<String, String>();
-        for (Block block : config.getAvailableBlocks()) {
-            String name = block.getName();
-            String source = block.hasComponent() ? block.getComponent() : config.getName();
-            result.put(name, source);
-        }
-        return result;
-    }
-
-    private void addCurrentBlocks(Configuration toAdd) {
-        for (Block block : toAdd.getBlocks()) {
-            allCurrentBlocks.put(block.getName(), toAdd.getName());
-        }
     }
 }
