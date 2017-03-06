@@ -23,11 +23,13 @@
 package uk.ac.stfc.isis.ibex.ui.devicescreens.models;
 
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.Collection;
+import java.util.Comparator;
 import java.util.List;
 import java.util.regex.Pattern;
 
 import uk.ac.stfc.isis.ibex.configserver.editing.DefaultName;
+import uk.ac.stfc.isis.ibex.devicescreens.DeviceScreensModel;
 import uk.ac.stfc.isis.ibex.devicescreens.desc.DeviceDescription;
 import uk.ac.stfc.isis.ibex.devicescreens.desc.DeviceScreensDescription;
 import uk.ac.stfc.isis.ibex.devicescreens.desc.PropertyDescription;
@@ -36,9 +38,9 @@ import uk.ac.stfc.isis.ibex.opis.DescriptionsProvider;
 import uk.ac.stfc.isis.ibex.validators.MessageDisplayer;
 
 /**
- * The view model for linking the GUI with the device screens description.
+ * The view model for linking the edit panel to the model.
  */
-public class DeviceScreensDescriptionViewModel extends ModelObject {
+public class EditDeviceScreensDescriptionViewModel extends ModelObject {
 
     /** Used to display any errors relating to values entered. */
     private final MessageDisplayer messageDisplayer;
@@ -73,30 +75,64 @@ public class DeviceScreensDescriptionViewModel extends ModelObject {
      */
     private String previousDesc = null;
 
+    private Boolean previousPersistence = null;
+
+    private DeviceScreensModel deviceScreensModel;
+
+    private boolean canWriteRemote;
+
+    private boolean previousEnabled;
+
+    private boolean previousPersistenceEnabled;
+
     /**
      * The constructor.
      * 
-     * @param description the description to edit
-     * @param messageDisplayer a reference to the dialog to allow error messages
-     *            to be displayed
-     * @param provider supplies the OPI information
+     * @param deviceScreensModel
+     *            the model of device screens description to edit
+     * @param provider
+     *            supplies the OPI information
+     * @param messageDisplayer
+     *            displays messages
      */
-    public DeviceScreensDescriptionViewModel(DeviceScreensDescription description, MessageDisplayer messageDisplayer,
-            DescriptionsProvider provider) {
+    public EditDeviceScreensDescriptionViewModel(DeviceScreensModel deviceScreensModel,
+            DescriptionsProvider provider, MessageDisplayer messageDisplayer) {
         this.messageDisplayer = messageDisplayer;
         this.provider = provider;
 
+        canWriteRemote = deviceScreensModel.isCanWriteRemote();
+        setPersistenceEnabled();
+
         // From the description create a list of devices
         devices = new ArrayList<>();
-        for (DeviceDescription d : description.getDevices()) {
+        for (DeviceDescription d : deviceScreensModel.getDeviceScreensDescription().getDevices()) {
             devices.add(new DeviceDescriptionWrapper(d, this.provider));
         }
+
+        this.deviceScreensModel = deviceScreensModel;
     }
 
     /**
+     * Gets the screens.
+     *
      * @return the devices
      */
     public List<DeviceDescriptionWrapper> getScreens() {
+
+        devices.sort(new Comparator<DeviceDescriptionWrapper>() {
+
+            @Override
+            public int compare(DeviceDescriptionWrapper p1, DeviceDescriptionWrapper p2) {
+
+                int comparator = p1.getName().compareToIgnoreCase(p2.getName());
+                if (comparator == 0) {
+                    comparator = p1.getKey().compareToIgnoreCase(p2.getKey());
+                }
+                return comparator;
+            }
+
+        });
+
         return devices;
     }
 
@@ -111,10 +147,14 @@ public class DeviceScreensDescriptionViewModel extends ModelObject {
             previousName = selectedScreen.getName();
             previousKey = (selectedScreen.getKey() == null) ? "" : selectedScreen.getKey();
             previousDesc = (selectedScreen.getDescription() == null) ? "" : selectedScreen.getDescription();
+            previousPersistence = selectedScreen.getPersistent();
+            previousEnabled = isScreenEnabled(selectedScreen.getPersistent());
         } else {
             previousName = "";
             previousKey = "";
             previousDesc = "";
+            previousPersistence = null;
+            previousEnabled = false;
         }
 
         if (index >= 0 && index < devices.size()) {
@@ -124,6 +164,21 @@ public class DeviceScreensDescriptionViewModel extends ModelObject {
             // Clear the settings
             changeSelectedScreen(null);
         }
+    }
+
+    /**
+     * Screen is editable and edabled when we can write remotely or the screen
+     * is local
+     * 
+     * @param persistent
+     *            is the screen persistent
+     * @return true when enabled; false otherwise
+     */
+    private boolean isScreenEnabled(boolean persistent) {
+        if (this.canWriteRemote) {
+            return true;
+        }
+        return !persistent;
     }
 
     /**
@@ -138,17 +193,24 @@ public class DeviceScreensDescriptionViewModel extends ModelObject {
             updateCurrentName(selectedScreen.getName());
             updateCurrentKey(selectedScreen.getKey());
             updateCurrentDescription();
+            updateCurrentPersistence(selectedScreen.getPersistent());
+            updateCurrentEnabled(isScreenEnabled(selectedScreen.getPersistent()));
         } else {
             updateCurrentName("");
             updateCurrentKey("");
             updateCurrentDescription();
+            updateCurrentPersistence(false);
+            updateCurrentEnabled(false);
         }
 
         // Clear out the stored property information
         setSelectedProperty(-1);
+        setPersistenceEnabled();
     }
 
     /**
+     * Gets the selected screen.
+     *
      * @return the currently selected screen
      */
     public DeviceDescriptionWrapper getSelectedScreen() {
@@ -156,6 +218,37 @@ public class DeviceScreensDescriptionViewModel extends ModelObject {
     }
 
     /**
+     * Sets the current persistence.
+     *
+     * @param persistence
+     *            the new persistence
+     */
+    public void setCurrentPersistence(Boolean persistence) {
+        if (selectedScreen == null || persistence == null) {
+            updateCurrentPersistence(persistence);
+            return;
+        }
+        selectedScreen.setPersistent(persistence);
+        updateCurrentPersistence(selectedScreen.getPersistent());
+
+        checkScreensValid();
+    }
+
+    /**
+     * Gets the current persistence.
+     * 
+     * @return the current persistence
+     */
+    public Boolean getCurrentPersistence() {
+        if (selectedScreen == null) {
+            return false;
+        }
+        return selectedScreen.getPersistent();
+    }
+
+    /**
+     * Gets the current name.
+     *
      * @return the current name
      */
     public String getCurrentName() {
@@ -167,7 +260,10 @@ public class DeviceScreensDescriptionViewModel extends ModelObject {
     }
 
     /**
-     * @param name the new name to set
+     * Sets the current name.
+     *
+     * @param name
+     *            the new name to set
      */
     public void setCurrentName(String name) {
         if (selectedScreen == null) {
@@ -178,6 +274,17 @@ public class DeviceScreensDescriptionViewModel extends ModelObject {
         updateCurrentName(selectedScreen.getName());
 
         checkScreensValid();
+    }
+
+    /**
+     * 
+     * @return the current enabled status.
+     */
+    public Boolean getCurrentEnabled() {
+        if (selectedScreen == null) {
+            return false;
+        }
+        return isScreenEnabled(selectedScreen.getPersistent());
     }
 
     /**
@@ -222,6 +329,22 @@ public class DeviceScreensDescriptionViewModel extends ModelObject {
     }
 
     /**
+     * Update the current persistence setting and raise a change event.
+     * 
+     * @param newPersistence
+     *            the new persiststence setting.
+     */
+    private void updateCurrentPersistence(boolean newPersistence) {
+        firePropertyChange("currentPersistence", previousPersistence, previousPersistence = newPersistence);
+
+    }
+
+    private void updateCurrentEnabled(boolean newEnabled) {
+        firePropertyChange("currentEnabled", previousEnabled, previousEnabled = newEnabled);
+
+    }
+
+    /**
      * Checks to see if any names clash.
      * 
      * @return true if a name is a duplicate; false otherwise
@@ -241,6 +364,8 @@ public class DeviceScreensDescriptionViewModel extends ModelObject {
     }
 
     /**
+     * Gets the current key.
+     *
      * @return the current key
      */
     public String getCurrentKey() {
@@ -252,7 +377,10 @@ public class DeviceScreensDescriptionViewModel extends ModelObject {
     }
 
     /**
-     * @param key the new value to set
+     * Sets the current key.
+     *
+     * @param key
+     *            the new value to set
      */
     public void setCurrentKey(String key) {
         if (selectedScreen == null) {
@@ -280,6 +408,8 @@ public class DeviceScreensDescriptionViewModel extends ModelObject {
     }
 
     /**
+     * Gets the current description.
+     *
      * @return the current OPI description
      */
     public String getCurrentDescription() {
@@ -330,49 +460,12 @@ public class DeviceScreensDescriptionViewModel extends ModelObject {
             names.add(d.getName());
         }
 
-        DeviceDescription newScreen = new DeviceDescription();
-        newScreen.setName(namer.getUnique(names));
-        newScreen.setKey("");
-        newScreen.setType("");
+        DeviceDescription newScreen = new DeviceDescription(namer.getUnique(names), "", "", false);
 
         devices.add(new DeviceDescriptionWrapper(newScreen, provider));
         firePropertyChange("screens", oldList, devices);
 
         checkScreensValid();
-    }
-
-    /**
-     * Move a screen towards the front of the list.
-     * 
-     * @param index the index of the screen to move
-     */
-    public void moveScreenUp(int index) {
-        if (index > 0) {
-            swapScreens(index, index - 1);
-        }
-    }
-
-    /**
-     * Move a screen towards the back of the list.
-     * 
-     * @param index the index of the screen to move
-     */
-    public void moveScreenDown(int index) {
-        if (index < devices.size() - 1) {
-            swapScreens(index, index + 1);
-        }
-    }
-
-    /**
-     * Swap two devices in the list.
-     * 
-     * @param selected the index of the selected item
-     * @param toSwapWith the index of the item to swap with
-     */
-    private void swapScreens(int selected, int toSwapWith) {
-        List<DeviceDescriptionWrapper> oldOrder = new ArrayList<>(devices);
-        Collections.swap(devices, selected, toSwapWith);
-        firePropertyChange("screens", oldOrder, devices);
     }
 
     /**
@@ -390,6 +483,8 @@ public class DeviceScreensDescriptionViewModel extends ModelObject {
     }
 
     /**
+     * Gets the selected property value.
+     *
      * @return the selected property value
      */
     public String getSelectedPropertyValue() {
@@ -400,7 +495,10 @@ public class DeviceScreensDescriptionViewModel extends ModelObject {
     }
 
     /**
-     * @param value the value to set for the property
+     * Sets the selected property value.
+     *
+     * @param value
+     *            the value to set for the property
      */
     public void setSelectedPropertyValue(String value) {
         if (selectedProperty != null) {
@@ -412,6 +510,8 @@ public class DeviceScreensDescriptionViewModel extends ModelObject {
     }
 
     /**
+     * Gets the selected property description.
+     *
      * @return the selected property's description
      */
     public String getSelectedPropertyDescription() {
@@ -422,11 +522,9 @@ public class DeviceScreensDescriptionViewModel extends ModelObject {
     }
 
     /**
-     * Gets the new constructed device description for saving.
-     * 
-     * @return The description
+     * Saves the device screens description into the model.
      */
-    public DeviceScreensDescription getDeviceDescription() {
+    public void save() {
         DeviceScreensDescription desc = new DeviceScreensDescription();
 
         for (DeviceDescriptionWrapper d : devices) {
@@ -434,6 +532,8 @@ public class DeviceScreensDescriptionViewModel extends ModelObject {
             device.setName(d.getName());
             device.setKey(d.getKey());
             device.setType(d.getType());
+            device.setPersist(d.getPersistent());
+
             for (PropertyDescription p : d.getProperties()) {
                 // Only add the filled in ones
                 if (p.getValue() != "") {
@@ -444,6 +544,34 @@ public class DeviceScreensDescriptionViewModel extends ModelObject {
             desc.addDevice(device);
         }
 
-        return desc;
+        deviceScreensModel.setDeviceScreensDescription(desc);
+    }
+
+    /**
+     * @return the list of available OPIs
+     */
+    public Collection<String> getAvailableOPIs() {
+        return provider.getOpiList();
+    }
+
+    /**
+     * @return the canWriteRemote
+     */
+    public boolean canWriteRemote() {
+        return canWriteRemote;
+    }
+
+    /**
+     * Gets whether the screen is enabled or not.
+     * 
+     * @return true if the screen is enabled; false otherwise
+     */
+    public boolean getPersistenceEnabled() {
+        return previousPersistenceEnabled;
+    }
+
+    private void setPersistenceEnabled() {
+        firePropertyChange("persistenceEnabled", previousPersistenceEnabled,
+                previousPersistenceEnabled = this.canWriteRemote && selectedScreen != null);
     }
 }

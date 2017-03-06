@@ -23,6 +23,9 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
+/**
+ * Class that allows the front end to be bound to it.
+ */
 public abstract class ModelObject implements IModelObject {
 	
 	private final PropertyChangeSupport changeSupport = new PropertyChangeSupport(this);

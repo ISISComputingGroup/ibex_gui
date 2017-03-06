@@ -68,7 +68,6 @@ public class ForwardingObservable<T> extends ClosableObservable<T> {
     protected synchronized void setSource(ClosableObservable<T> newSource) {
         cancelSubscription();
 
-        this.source = newSource;
         sourceObserver.onConnectionStatus(false);
 
         sourceObserver.onConnectionStatus(newSource.isConnected());
