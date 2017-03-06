@@ -21,7 +21,6 @@
 package uk.ac.stfc.isis.ibex.ui.configserver.editing.components;
 
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
@@ -34,7 +33,6 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 
-import uk.ac.stfc.isis.ibex.configserver.configuration.Block;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Configuration;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableComponents;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
@@ -46,10 +44,8 @@ import uk.ac.stfc.isis.ibex.validators.MessageDisplayer;
  */
 public class ComponentEditorPanel extends Composite {
 	private MessageDisplayer messageDisplayer;
-	private EditableConfiguration config;
 	private DoubleListEditor editor;
 	private EditableComponents components;
-    private Map<String, String> allCurrentBlocks;
 
     /**
      * Constructor for the panel.
@@ -73,38 +69,34 @@ public class ComponentEditorPanel extends Composite {
      * @param config The configuration
      */
 	public void setConfig(EditableConfiguration config) {
-		this.config = config;
-		
+
 		components = config.getEditableComponents();
 		IObservableList selected = BeanProperties.list("selected").observe(components);
 		IObservableList unselected = BeanProperties.list("unselected").observe(components);
 		editor.bind(unselected, selected);
-		
-        allCurrentBlocks = getAllCurrentBlocks();
+
+        final ComponentDuplicateChecker duplicateChecker = new ComponentDuplicateChecker(config);
 
 		editor.addSelectionListenerForSelecting(new SelectionAdapter() {
 			@SuppressWarnings("unchecked")
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-                Map<String, Map<String, String>> allConflicts = new HashMap<String, Map<String, String>>();
                 Collection<Configuration> toToggle = editor.unselectedItems();
-                Iterator<Configuration> iter = toToggle.iterator();
 
+                Map<String, Map<String, String>> allConflicts = duplicateChecker.checkBlocks(toToggle);
+
+                Iterator<Configuration> iter = toToggle.iterator();
                 while (iter.hasNext()) {
                     Configuration comp = iter.next();
-                    Map<String, String> conflicts = getBlockConflicts(comp);
-                    if (!conflicts.isEmpty()) {
-                        allConflicts.put(comp.getName(), conflicts);
+                    if (allConflicts.keySet().contains(comp.getName())) {
                         iter.remove();
-                    } else {
-                        addCurrentBlocks(comp);
                     }
                 }
 
                 components.toggleSelection(toToggle);
 
                 if (!allConflicts.isEmpty()) {
-                    System.out.println("conflicts");
+                    System.out.println("conflicts: " + allConflicts.toString());
                     // error dialog
                 }
 			}
@@ -119,38 +111,4 @@ public class ComponentEditorPanel extends Composite {
 		});
 	}
 
-    private Map<String, String> getBlockConflicts(Configuration toCheck) {
-        Map<String, String> conflicts = new HashMap<String, String>();
-
-        for (Configuration comp : components.getSelected()) {
-            for (Block block : comp.getBlocks()) {
-                if (!allCurrentBlocks.containsKey(block.getName())) {
-                    allCurrentBlocks.put(block.getName(), comp.getName());
-                }
-            }
-        }
-        for (Block block : toCheck.getBlocks()) {
-            if (allCurrentBlocks.containsKey(block.getName())) {
-                conflicts.put(block.getName(), allCurrentBlocks.get(block.getName()));
-            }
-        }
-        return conflicts;
-    }
-
-    // TODO keep updated
-    private Map<String, String> getAllCurrentBlocks() {
-        Map<String, String> result = new HashMap<String, String>();
-        for (Block block : config.getAvailableBlocks()) {
-            String name = block.getName();
-            String source = block.hasComponent() ? block.getComponent() : config.getName();
-            result.put(name, source);
-        }
-        return result;
-    }
-
-    private void addCurrentBlocks(Configuration toAdd) {
-        for (Block block : toAdd.getBlocks()) {
-            allCurrentBlocks.put(block.getName(), toAdd.getName());
-        }
-    }
 }

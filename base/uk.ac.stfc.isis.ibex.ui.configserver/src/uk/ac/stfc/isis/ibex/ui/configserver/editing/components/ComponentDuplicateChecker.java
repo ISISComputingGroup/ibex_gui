@@ -1,0 +1,102 @@
+ /*
+ * This file is part of the ISIS IBEX application.
+ * Copyright (C) 2012-2016 Science & Technology Facilities Council.
+ * All rights reserved.
+ *
+ * This program is distributed in the hope that it will be useful.
+ * This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v1.0 which accompanies this distribution.
+ * EXCEPT AS EXPRESSLY SET FORTH IN THE ECLIPSE PUBLIC LICENSE V1.0, THE PROGRAM 
+ * AND ACCOMPANYING MATERIALS ARE PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES 
+ * OR CONDITIONS OF ANY KIND.  See the Eclipse Public License v1.0 for more details.
+ *
+ * You should have received a copy of the Eclipse Public License v1.0
+ * along with this program; if not, you can obtain a copy from
+ * https://www.eclipse.org/org/documents/epl-v10.php or 
+ * http://opensource.org/licenses/eclipse-1.0.php
+ */
+
+/**
+ * 
+ */
+package uk.ac.stfc.isis.ibex.ui.configserver.editing.components;
+
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+
+import uk.ac.stfc.isis.ibex.configserver.configuration.Block;
+import uk.ac.stfc.isis.ibex.configserver.configuration.Configuration;
+import uk.ac.stfc.isis.ibex.configserver.editing.EditableComponents;
+import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
+
+/**
+ *
+ */
+public class ComponentDuplicateChecker {
+
+    private EditableConfiguration config;
+    private EditableComponents components;
+    private Map<String, String> allCurrentBlocks;
+
+    /**
+     * Const.
+     * 
+     * @param config The currently edited configuration
+     */
+    public ComponentDuplicateChecker(EditableConfiguration config) {
+        this.config = config;
+        components = config.getEditableComponents();
+        allCurrentBlocks = getAllCurrentBlocks(); // TODO keep updated
+    }
+
+    public Map<String, Map<String, String>> checkBlocks(Collection<Configuration> toToggle) { 
+        
+        Map<String, Map<String, String>> allConflicts = new HashMap<String, Map<String, String>>();
+
+        for (Configuration comp : toToggle) {
+            Map<String, String> conflicts = getBlockConflicts(comp);
+            if (!conflicts.isEmpty()) {
+                allConflicts.put(comp.getName(), conflicts);
+            } else {
+                addCurrentBlocks(comp);
+            }
+        }
+        return allConflicts;
+
+    }
+
+    private Map<String, String> getBlockConflicts(Configuration toCheck) {
+        Map<String, String> conflicts = new HashMap<String, String>();
+
+        for (Configuration comp : components.getSelected()) {
+            for (Block block : comp.getBlocks()) {
+                if (!allCurrentBlocks.containsKey(block.getName())) {
+                    allCurrentBlocks.put(block.getName(), comp.getName());
+                }
+            }
+        }
+        for (Block block : toCheck.getBlocks()) {
+            if (allCurrentBlocks.containsKey(block.getName())) {
+                conflicts.put(block.getName(), allCurrentBlocks.get(block.getName()));
+            }
+        }
+        return conflicts;
+    }
+
+    private Map<String, String> getAllCurrentBlocks() {
+        Map<String, String> result = new HashMap<String, String>();
+        for (Block block : config.getAvailableBlocks()) {
+            String name = block.getName();
+            String source = block.hasComponent() ? block.getComponent() : config.getName();
+            result.put(name, source);
+        }
+        return result;
+    }
+
+    private void addCurrentBlocks(Configuration toAdd) {
+        for (Block block : toAdd.getBlocks()) {
+            allCurrentBlocks.put(block.getName(), toAdd.getName());
+        }
+    }
+}
