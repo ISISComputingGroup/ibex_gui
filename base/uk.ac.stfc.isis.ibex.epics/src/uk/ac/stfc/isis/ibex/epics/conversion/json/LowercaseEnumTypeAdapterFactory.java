@@ -32,9 +32,16 @@ import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonToken;
 import com.google.gson.stream.JsonWriter;
 
+/**
+ * A lowercase enum adapter factory.
+ */
 public class LowercaseEnumTypeAdapterFactory implements TypeAdapterFactory {
 	
-	public <T> TypeAdapter<T> create(Gson gson, TypeToken<T> type) {
+    /**
+     * {@inheritDoc}
+     */
+	@Override
+    public <T> TypeAdapter<T> create(Gson gson, TypeToken<T> type) {
 		@SuppressWarnings("unchecked")
 		Class<T> rawType = (Class<T>) type.getRawType();
 		if (!rawType.isEnum()) {
@@ -47,7 +54,8 @@ public class LowercaseEnumTypeAdapterFactory implements TypeAdapterFactory {
 	    }
 
 	    return new TypeAdapter<T>() {
-	    	public void write(JsonWriter out, T value) throws IOException {
+	    	@Override
+            public void write(JsonWriter out, T value) throws IOException {
 	    		if (value == null) {
 	    			out.nullValue();
 	    		} else {
@@ -55,7 +63,8 @@ public class LowercaseEnumTypeAdapterFactory implements TypeAdapterFactory {
 	    		}
 	      }
 	
-	      public T read(JsonReader reader) throws IOException {
+	      @Override
+        public T read(JsonReader reader) throws IOException {
 	    	  if (reader.peek() == JsonToken.NULL) {
 	    		  reader.nextNull();
 	    		  return null;

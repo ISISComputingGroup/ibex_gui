@@ -36,15 +36,38 @@ public class JsonDeserialisingConverter<T> extends Converter<String, T> {
 	protected final Gson gson;
 	private final Class<T> classOfT;
 
+    /**
+     * Constructor.
+     * 
+     * @param classOfT
+     *            the class of T
+     * @param gson
+     *            the gson
+     */
 	public JsonDeserialisingConverter(Class<T> classOfT, Gson gson) {
 		this.gson = gson;
 		this.classOfT = classOfT;
 	}
 	
+    /**
+     * Constructor.
+     * 
+     * @param outputType
+     *            the output type
+     */
 	public JsonDeserialisingConverter(Class<T> outputType) {
 		this(outputType, new Gson());
 	}
 	
+    /**
+     * Converts.
+     * 
+     * @param value
+     *            the value
+     * @return the parsed value
+     * @throws ConversionException
+     *             if there was an error
+     */
 	@Override
 	public T convert(String value) throws ConversionException {
 		try {
@@ -57,6 +80,13 @@ public class JsonDeserialisingConverter<T> extends Converter<String, T> {
 		}
 	}
 	
+    /**
+     * Parses json.
+     * 
+     * @param json
+     *            the json to parse
+     * @return the parsed json
+     */
     protected T parseJson(String json) {
 		return gson.fromJson(json, classOfT);
 	}

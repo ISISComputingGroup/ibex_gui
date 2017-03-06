@@ -22,17 +22,33 @@ package uk.ac.stfc.isis.ibex.epics.conversion.json;
 import com.google.gson.ExclusionStrategy;
 import com.google.gson.FieldAttributes;
 
+/**
+ * A specific class exclusion strategy.
+ */
 public class SpecificClassExclusionStrategy implements ExclusionStrategy {
     private final Class<?> excludedThisClass;
 
+    /**
+     * Constructor.
+     * 
+     * @param excludedThisClass
+     *            the excluded this class
+     */
     public SpecificClassExclusionStrategy(Class<?> excludedThisClass) {
         this.excludedThisClass = excludedThisClass;
     }
+
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean shouldSkipClass(Class<?> clazz) {
         return excludedThisClass.equals(clazz);
    }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
    public boolean shouldSkipField(FieldAttributes f) {
         return excludedThisClass.equals(f.getDeclaredClass());

@@ -21,13 +21,19 @@ package uk.ac.stfc.isis.ibex.epics.conversion.json;
 
 import java.beans.PropertyChangeSupport;
 
-import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
-import uk.ac.stfc.isis.ibex.epics.conversion.Converter;
-
 import com.google.gson.ExclusionStrategy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
+import uk.ac.stfc.isis.ibex.epics.conversion.Converter;
+
+/**
+ * Converter for serialising JSON into an object of type T.
+ * 
+ * @param <T>
+ *            The type to serialise to.
+ */
 public class JsonSerialisingConverter<T> extends Converter<T, String> {
 
 	private static final ExclusionStrategy EXCLUDE_PROPERTY_CHANGE_SUPPORT = 
@@ -39,7 +45,13 @@ public class JsonSerialisingConverter<T> extends Converter<T, String> {
 			.create();
 
 	private final Class<T> classOfT;
-	
+
+    /**
+     * Constructor.
+     * 
+     * @param classOfT
+     *            the class of T
+     */
 	public JsonSerialisingConverter(Class<T> classOfT) {
 		this.classOfT = classOfT;
 	}
