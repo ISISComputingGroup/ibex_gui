@@ -239,6 +239,12 @@ public class Instrument implements BundleActivator {
 
         final InstrumentInfo finalSelectedInstrument = selectedInstrument;
 
+        /*
+         * This needs to run on a separate thread because it starts all of the
+         * extending plugins. This uses a significant amount of time and eclipse
+         * will sometimes think that the plugin is deadlocked if it is allowed
+         * to run in the same thread.
+         */
         new Thread(new Runnable() {
             @Override
             public void run() {
