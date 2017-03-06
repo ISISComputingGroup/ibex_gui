@@ -17,7 +17,7 @@
 * http://opensource.org/licenses/eclipse-1.0.php
 */
 
-package uk.ac.stfc.isis.ibex.json;
+package uk.ac.stfc.isis.ibex.epics.conversion.json;
 
 import com.google.gson.ExclusionStrategy;
 import com.google.gson.FieldAttributes;

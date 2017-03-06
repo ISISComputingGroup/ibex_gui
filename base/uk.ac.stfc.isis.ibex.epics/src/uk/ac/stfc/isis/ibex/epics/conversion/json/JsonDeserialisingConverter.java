@@ -17,7 +17,7 @@
 * http://opensource.org/licenses/eclipse-1.0.php
 */
 
-package uk.ac.stfc.isis.ibex.json;
+package uk.ac.stfc.isis.ibex.epics.conversion.json;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
