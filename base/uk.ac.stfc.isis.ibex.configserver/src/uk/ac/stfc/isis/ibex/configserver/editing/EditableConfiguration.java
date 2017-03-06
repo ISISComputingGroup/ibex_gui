@@ -672,7 +672,7 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
     /**
      * Get whether this configuration is a component or not.
      * 
-     * @returns true if this is a component
+     * @return true if this is a component
      */
     public boolean getIsComponent() {
         return isComponent;
