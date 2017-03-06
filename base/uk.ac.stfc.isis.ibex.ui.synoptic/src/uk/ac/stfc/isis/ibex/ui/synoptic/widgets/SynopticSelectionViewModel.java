@@ -136,7 +136,7 @@ public class SynopticSelectionViewModel extends ModelObject {
 	}
 	
 	public void refreshSynoptic() {
-		SynopticInfo synopticToRefresh = synoptic.getSynopticInfo();
+        SynopticInfo synopticToRefresh = synoptic.currentObservingViewerModel().getSynopticInfo();
 		synoptic.setViewerSynoptic(synopticToRefresh);
 	}
 

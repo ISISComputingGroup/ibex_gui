@@ -20,6 +20,7 @@
 package uk.ac.stfc.isis.ibex.epics.adapters;
 
 import uk.ac.stfc.isis.ibex.epics.observing.BaseObserver;
+import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.Observable;
 import uk.ac.stfc.isis.ibex.epics.observing.Observer;
 import uk.ac.stfc.isis.ibex.epics.observing.Subscription;
@@ -47,7 +48,13 @@ public class UpdatedObservableAdapter<T> extends SettableUpdatedValue<T> impleme
 		}
 	};
 	
-    public UpdatedObservableAdapter(Observable<T> observable) {
+    /**
+     * Constructor.
+     * 
+     * @param observable
+     *            the observable
+     */
+	public UpdatedObservableAdapter(ForwardingObservable<T> observable) {
 		subscribeTo(observable);
 	}
 		

@@ -69,10 +69,6 @@ public class IocState extends ModelObject implements Comparable<IocState> {
 		return description;
 	}
 	
-	public void setDescription(String description) {
-		firePropertyChange("description", this.description, this.description = description);
-	}
-	
 	public boolean getAllowControl() {
 		return allowControl;
 	}

@@ -29,22 +29,50 @@ import java.beans.PropertyChangeSupport;
 public abstract class ModelObject implements IModelObject {
 	
 	private final PropertyChangeSupport changeSupport = new PropertyChangeSupport(this);
-		
+
+    /**
+     * Adds a property change listener.
+     * 
+     * @param listener
+     *            the listener
+     */
 	@Override
     public void addPropertyChangeListener(PropertyChangeListener listener) {
 		changeSupport.addPropertyChangeListener(listener);
 	}
 
+    /**
+     * Remove a property change listener.
+     * 
+     * @param listener
+     *            the listener
+     */
 	@Override
     public void removePropertyChangeListener(PropertyChangeListener listener) {
 		changeSupport.removePropertyChangeListener(listener);
 	}
 
+    /**
+     * Adds a property change listener.
+     * 
+     * @param propertyName
+     *            the property name
+     * @param listener
+     *            the listener
+     */
 	@Override
     public void addPropertyChangeListener(String propertyName, PropertyChangeListener listener) {
 		changeSupport.addPropertyChangeListener(propertyName, listener);
 	}
 
+    /**
+     * Removes a property change listener.
+     * 
+     * @param propertyName
+     *            the property name
+     * @param listener
+     *            the listener
+     */
     @Override
     public void removePropertyChangeListener(String propertyName, PropertyChangeListener listener) {
     	changeSupport.removePropertyChangeListener(propertyName, listener);

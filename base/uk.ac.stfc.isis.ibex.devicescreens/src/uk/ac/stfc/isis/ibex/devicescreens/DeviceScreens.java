@@ -19,17 +19,24 @@
 
 package uk.ac.stfc.isis.ibex.devicescreens;
 
+import org.apache.logging.log4j.Logger;
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
 
 import uk.ac.stfc.isis.ibex.devicescreens.desc.DeviceScreensDescription;
 import uk.ac.stfc.isis.ibex.epics.observing.Observable;
 import uk.ac.stfc.isis.ibex.epics.writing.Writable;
+import uk.ac.stfc.isis.ibex.logger.IsisLog;
 
 /**
  * Describes a set of screens associated with the device screens perspective.
  */
 public class DeviceScreens implements BundleActivator {
+
+    /**
+     * The logger to log device screens error messages.
+     */
+    public static final Logger LOG = IsisLog.getLogger(DeviceScreens.class);
 
     private static DeviceScreens instance;
     private static BundleContext context;
