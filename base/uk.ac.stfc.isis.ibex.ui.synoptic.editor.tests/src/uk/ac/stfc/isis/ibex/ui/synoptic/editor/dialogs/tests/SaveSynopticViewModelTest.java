@@ -43,28 +43,28 @@ public class SaveSynopticViewModelTest {
     
     @Test
     public void GIVEN_original_name_WHEN_view_model_created_THEN_synoptic_name_is_original_name() {
-        viewModel = new SaveSynopticViewModel(VALID, new ArrayList<>());
+        viewModel = new SaveSynopticViewModel(VALID, new ArrayList<String>());
 
         assertEquals(viewModel.getSynopticName(), VALID);
     }
 
     @Test
     public void GIVEN_valid_starting_name_WHEN_view_model_created_THEN_no_error() {
-        viewModel = new SaveSynopticViewModel(VALID, new ArrayList<>());
+        viewModel = new SaveSynopticViewModel(VALID, new ArrayList<String>());
 
         assertFalse(viewModel.getError().isError());
     }
 
     @Test
     public void GIVEN_valid_starting_name_WHEN_view_model_created_THEN_saving_allowed() {
-        viewModel = new SaveSynopticViewModel(VALID, new ArrayList<>());
+        viewModel = new SaveSynopticViewModel(VALID, new ArrayList<String>());
 
         assertTrue(viewModel.getSavingAllowed());
     }
 
     @Test
     public void WHEN_blank_name_set_THEN_error() {
-        viewModel = new SaveSynopticViewModel(VALID, new ArrayList<>());
+        viewModel = new SaveSynopticViewModel(VALID, new ArrayList<String>());
 
         viewModel.setSynopticName("");
 
@@ -73,7 +73,7 @@ public class SaveSynopticViewModelTest {
 
     @Test
     public void WHEN_null_name_set_THEN_error() {
-        viewModel = new SaveSynopticViewModel(VALID, new ArrayList<>());
+        viewModel = new SaveSynopticViewModel(VALID, new ArrayList<String>());
 
         viewModel.setSynopticName(null);
 
@@ -82,7 +82,7 @@ public class SaveSynopticViewModelTest {
 
     @Test
     public void WHEN_name_starting_with_lower_case_set_THEN_error() {
-        viewModel = new SaveSynopticViewModel(VALID, new ArrayList<>());
+        viewModel = new SaveSynopticViewModel(VALID, new ArrayList<String>());
 
         viewModel.setSynopticName(STARTS_WITH_LOWER);
 
@@ -91,7 +91,7 @@ public class SaveSynopticViewModelTest {
 
     @Test
     public void WHEN_name_containing_bad_chars_set_THEN_error() {
-        viewModel = new SaveSynopticViewModel(VALID, new ArrayList<>());
+        viewModel = new SaveSynopticViewModel(VALID, new ArrayList<String>());
 
         viewModel.setSynopticName(CONTAINS_BAD_CHAR);
 
@@ -100,7 +100,7 @@ public class SaveSynopticViewModelTest {
 
     @Test
     public void WHEN_invalid_name_set_THEN_saving_not_allowed() {
-        viewModel = new SaveSynopticViewModel(VALID, new ArrayList<>());
+        viewModel = new SaveSynopticViewModel(VALID, new ArrayList<String>());
 
         viewModel.setSynopticName(CONTAINS_BAD_CHAR);
 
@@ -109,7 +109,7 @@ public class SaveSynopticViewModelTest {
 
     @Test
     public void GIVEN_invalid_name_WHEN_valid_name_set_THEN_no_error() {
-        viewModel = new SaveSynopticViewModel(CONTAINS_BAD_CHAR, new ArrayList<>());
+        viewModel = new SaveSynopticViewModel(CONTAINS_BAD_CHAR, new ArrayList<String>());
 
         viewModel.setSynopticName(VALID);
 
@@ -118,7 +118,7 @@ public class SaveSynopticViewModelTest {
 
     @Test
     public void GIVEN_invalid_name_WHEN_valid_name_set_THEN_saving_allowed() {
-        viewModel = new SaveSynopticViewModel(CONTAINS_BAD_CHAR, new ArrayList<>());
+        viewModel = new SaveSynopticViewModel(CONTAINS_BAD_CHAR, new ArrayList<String>());
 
         viewModel.setSynopticName(VALID);
 
@@ -127,14 +127,14 @@ public class SaveSynopticViewModelTest {
 
     @Test
     public void GIVEN_invalid_starting_name_WHEN_view_model_created_THEN_error() {
-        viewModel = new SaveSynopticViewModel(STARTS_WITH_LOWER, new ArrayList<>());
+        viewModel = new SaveSynopticViewModel(STARTS_WITH_LOWER, new ArrayList<String>());
 
         assertTrue(viewModel.getError().isError());
     }
 
     @Test
     public void GIVEN_invalid_starting_name_WHEN_view_model_created_THEN_saving_not_allowed() {
-        viewModel = new SaveSynopticViewModel(STARTS_WITH_LOWER, new ArrayList<>());
+        viewModel = new SaveSynopticViewModel(STARTS_WITH_LOWER, new ArrayList<String>());
 
         assertFalse(viewModel.getSavingAllowed());
     }
