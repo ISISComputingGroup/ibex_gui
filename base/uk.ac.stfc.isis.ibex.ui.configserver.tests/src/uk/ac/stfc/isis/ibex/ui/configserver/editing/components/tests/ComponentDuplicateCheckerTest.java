@@ -35,6 +35,7 @@ import org.junit.Test;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Block;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Configuration;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableBlock;
+import uk.ac.stfc.isis.ibex.configserver.editing.EditableComponents;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.components.ComponentDuplicateChecker;
 
@@ -77,8 +78,13 @@ public class ComponentDuplicateCheckerTest {
         EditableBlock block1 = mockBlock(BLOCK_1_NAME, "");
         EditableBlock block2 = mockBlock(BLOCK_2_NAME, OTHER_COMP_NAME);
 
+        Configuration otherComponent = mockComp(OTHER_COMP_NAME, Arrays.asList(block2));
+        EditableComponents mockComponents = mock(EditableComponents.class);
+        when(mockComponents.getSelected()).thenReturn(Arrays.asList(otherComponent));
+
         Collection<EditableBlock> mockBlocks = Arrays.asList(block1, block2);
         when(mockConfig.getAvailableBlocks()).thenReturn(mockBlocks);
+        when(mockConfig.getEditableComponents()).thenReturn(mockComponents);
 
         duplicateChecker = new ComponentDuplicateChecker(mockConfig);
     }

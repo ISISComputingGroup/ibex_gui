@@ -31,7 +31,8 @@ import uk.ac.stfc.isis.ibex.configserver.editing.EditableComponents;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
 
 /**
- *
+ * Class used to check for conflicts caused by duplicate elements to decide if a
+ * given component can be added to a configuration.
  */
 public class ComponentDuplicateChecker {
 
@@ -40,14 +41,13 @@ public class ComponentDuplicateChecker {
     private Map<String, String> allCurrentBlocks;
 
     /**
-     * Const.
+     * Constructor.
      * 
      * @param config The currently edited configuration
      */
     public ComponentDuplicateChecker(EditableConfiguration config) {
         this.config = config;
         components = config.getEditableComponents();
-        refreshBlocks();
     }
 
     private void refreshBlocks() {
@@ -59,9 +59,11 @@ public class ComponentDuplicateChecker {
     private Map<String, String> getConfigBlocks() {
         Map<String, String> result = new HashMap<String, String>();
         for (Block block : config.getAvailableBlocks()) {
-            String name = block.getName();
-            String source = block.hasComponent() ? block.getComponent() : "Base Configuration";
-            result.put(name, source);
+            if (!block.hasComponent()) {
+                String name = block.getName();
+                String source = "Base Configuration";
+                result.put(name, source);
+            }
         }
         return result;
     }
