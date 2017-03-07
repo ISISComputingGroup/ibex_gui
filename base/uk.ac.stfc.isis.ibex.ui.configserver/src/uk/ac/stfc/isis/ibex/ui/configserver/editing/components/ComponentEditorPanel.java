@@ -112,7 +112,7 @@ public class ComponentEditorPanel extends Composite {
         boolean multi = (conflicts.size() > 1);
         StringBuilder sb = new StringBuilder();
         sb.append("The following component" + (multi ? "s" : "") + " contain" + (multi ? "" : "s")
-                + " blocks that conflict with existing blocks in this configuration\n\n");
+                + " blocks that conflict with existing blocks in this configuration or its components.\n\n");
 
         for (String comp : conflicts.keySet()) {
             sb.append("Component: " + comp + "\n");
