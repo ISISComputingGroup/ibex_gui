@@ -40,7 +40,7 @@ import org.eclipse.swt.widgets.Text;
 import uk.ac.stfc.isis.ibex.configserver.configuration.AvailablePV;
 import uk.ac.stfc.isis.ibex.configserver.configuration.PVDefaultValue;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableIoc;
-import uk.ac.stfc.isis.ibex.ui.configserver.editing.iocs.IocViewModel;
+import uk.ac.stfc.isis.ibex.ui.configserver.editing.iocs.dialog.IocViewModel;
 import uk.ac.stfc.isis.ibex.validators.MessageDisplayer;
 
 /**

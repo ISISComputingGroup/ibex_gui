@@ -19,7 +19,7 @@
 /**
  * 
  */
-package uk.ac.stfc.isis.ibex.ui.configserver.editing.iocs;
+package uk.ac.stfc.isis.ibex.ui.configserver.editing.iocs.dialog;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -30,6 +30,7 @@ import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.TitleAreaDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StackLayout;
+import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.GridData;
@@ -38,6 +39,8 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
+
+import com.google.common.base.Strings;
 
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableIoc;
@@ -54,35 +57,27 @@ public class IocDialog extends TitleAreaDialog implements MessageDisplayer {
     Button btnOk;
     Composite content;
     StackLayout stack;
-    IocDialogAddPanel addIocPanel;
-    IocDialogEditPanel editIocPanel;
+    AddPanel addIocPanel;
+    EditPanel editIocPanel;
     private IocViewModel viewModel;
+    private AddPanelViewModel addViewModel;
 
     /** Error messages that are displayed. <Source, message> */
     private Map<String, String> errorMessages = new HashMap<String, String>();
 
     private static final Display DISPLAY = Display.getCurrent();
 
-    SelectionListener nextListener = new SelectionListener() {
+    SelectionListener nextListener = new SelectionAdapter() {
         @Override
         public void widgetSelected(SelectionEvent e) {
-            viewModel.updateIoc();
             nextPage();
-        }
-
-        @Override
-        public void widgetDefaultSelected(SelectionEvent e) {
         }
     };
 
-    SelectionListener prevListener = new SelectionListener() {
+    SelectionListener prevListener = new SelectionAdapter() {
         @Override
         public void widgetSelected(SelectionEvent e) {
             previousPage();
-        }
-
-        @Override
-        public void widgetDefaultSelected(SelectionEvent e) {
         }
     };
 
@@ -101,7 +96,7 @@ public class IocDialog extends TitleAreaDialog implements MessageDisplayer {
      * Sets dialog content to the second page.
      */
     private void nextPage() {
-        editIocPanel.setViewModel(viewModel);
+        viewModel.setIoc(addViewModel.getSelectedIoc());
         updateStack(editIocPanel);
         btnPrev.setVisible(true);
         btnOk.removeSelectionListener(nextListener);
@@ -126,7 +121,8 @@ public class IocDialog extends TitleAreaDialog implements MessageDisplayer {
         super(parent);
         this.isNew = isNew;
         this.config = config;
-        this.viewModel = new IocViewModel(config);
+        this.addViewModel = new AddPanelViewModel(config.getAvailableIocs());
+        this.viewModel = new IocViewModel(ioc);
         viewModel.setIoc(ioc);
     }
 
@@ -150,11 +146,12 @@ public class IocDialog extends TitleAreaDialog implements MessageDisplayer {
         btnOk.setFocus();
 
         // Disable OK button if no IOC is selected.
-        viewModel.addPropertyChangeListener("name", new PropertyChangeListener() {
+        addViewModel.addPropertyChangeListener("selectedName", new PropertyChangeListener() {
 
             @Override
             public void propertyChange(PropertyChangeEvent evt) {
-                if (viewModel.getName().length() > 0) {
+                String name = (String) evt.getNewValue();
+                if (!Strings.isNullOrEmpty(name)) {
                     btnOk.setEnabled(true);
                     btnOk.setFocus();
                 } else {
@@ -164,7 +161,7 @@ public class IocDialog extends TitleAreaDialog implements MessageDisplayer {
         });
 
         // Enables selection by double click
-        viewModel.addPropertyChangeListener("ioc", new PropertyChangeListener() {
+        addViewModel.addPropertyChangeListener("confirmed", new PropertyChangeListener() {
 
             @Override
             public void propertyChange(PropertyChangeEvent evt) {
@@ -180,18 +177,17 @@ public class IocDialog extends TitleAreaDialog implements MessageDisplayer {
         stack = new StackLayout();
         content.setLayout(stack);
 
-        addIocPanel = new IocDialogAddPanel(content, SWT.NONE, config);
+        addIocPanel = new AddPanel(content, SWT.NONE, addViewModel);
         addIocPanel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 
-        editIocPanel = new IocDialogEditPanel(content, SWT.NONE, this);
+        editIocPanel = new EditPanel(content, SWT.NONE, this);
         editIocPanel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+        editIocPanel.setViewModel(viewModel);
 
         if (isNew) {
-            addIocPanel.setViewModel(viewModel);
             stack.topControl = addIocPanel;
             this.setTitle("Add IOC");
         } else {
-            editIocPanel.setViewModel(viewModel);
             stack.topControl = editIocPanel;
             this.setTitle("Edit IOC");
         }
