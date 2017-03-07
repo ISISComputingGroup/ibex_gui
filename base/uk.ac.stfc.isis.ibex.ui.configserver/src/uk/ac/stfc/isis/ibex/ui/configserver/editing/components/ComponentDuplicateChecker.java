@@ -61,7 +61,7 @@ public class ComponentDuplicateChecker {
         for (Block block : config.getAvailableBlocks()) {
             if (!block.hasComponent()) {
                 String name = block.getName();
-                String source = "Base Configuration";
+                String source = "base configuration";
                 result.put(name, source);
             }
         }

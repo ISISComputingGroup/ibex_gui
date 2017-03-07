@@ -26,6 +26,7 @@ import java.util.Map;
 
 import org.eclipse.core.databinding.beans.BeanProperties;
 import org.eclipse.core.databinding.observable.list.IObservableList;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -43,7 +44,6 @@ import uk.ac.stfc.isis.ibex.validators.MessageDisplayer;
  * Panel containing controls to add/remove components to/from a configuration.
  */
 public class ComponentEditorPanel extends Composite {
-	private MessageDisplayer messageDisplayer;
 	private DoubleListEditor editor;
 	private EditableComponents components;
 
@@ -56,7 +56,6 @@ public class ComponentEditorPanel extends Composite {
      */
 	public ComponentEditorPanel(Composite parent, int style, final MessageDisplayer messageDisplayer) {
 		super(parent, style);
-		this.messageDisplayer = messageDisplayer;
 		setLayout(new GridLayout(1, false));
 		
 		editor = new DoubleListEditor(this, SWT.NONE, "name", false);
@@ -82,7 +81,6 @@ public class ComponentEditorPanel extends Composite {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
                 Collection<Configuration> toToggle = editor.unselectedItems();
-
                 Map<String, Map<String, String>> allConflicts = duplicateChecker.checkBlocks(toToggle);
 
                 Iterator<Configuration> iter = toToggle.iterator();
@@ -92,12 +90,11 @@ public class ComponentEditorPanel extends Composite {
                         iter.remove();
                     }
                 }
-
                 components.toggleSelection(toToggle);
 
                 if (!allConflicts.isEmpty()) {
-                    System.out.println("conflicts: " + allConflicts.toString());
-                    // error dialog
+                    new MessageDialog(getShell(), "Component in Use", null, buildWarning(allConflicts),
+                            MessageDialog.WARNING, new String[] {"Ok"}, 0).open();
                 }
 			}
 		});
@@ -110,5 +107,25 @@ public class ComponentEditorPanel extends Composite {
 			}
 		});
 	}
+
+    private String buildWarning(Map<String, Map<String, String>> conflicts) {
+        boolean multi = (conflicts.size() > 1);
+        StringBuilder sb = new StringBuilder();
+        sb.append("The following component" + (multi ? "s" : "") + " contain" + (multi ? "" : "s")
+                + " blocks that conflict with existing blocks in this configuration\n\n");
+
+        for (String comp : conflicts.keySet()) {
+            sb.append("Component: " + comp + "\n");
+            Map<String, String> entry = conflicts.get(comp);
+            for (String blockName : entry.keySet()) {
+                sb.append("\u2022 Block with name \"" + blockName + "\" already contained in " + entry.get(blockName)
+                        + "\n");
+            }
+            sb.append("\n");
+        }
+        sb.append("Please rename or remove the duplicate blocks before adding "
+                + (multi ? "these components." : "this component."));
+        return sb.toString();
+    }
 
 }
