@@ -56,8 +56,8 @@ public class ComponentDuplicateCheckerTest {
     private final static String TEST_COMP_NAME_2 = "TEST_COMPONENT_2";
     private final static String BASE_CONFIG_STRING = "base configuration";
 
-    private EditableBlock mockBlock(String name, String component) {
-        EditableBlock block = mock(EditableBlock.class);
+    private Block mockBlock(String name, String component) {
+        Block block = mock(EditableBlock.class);
         when(block.getName()).thenReturn(name);
         when(block.getComponent()).thenReturn(component);
         when(block.hasComponent()).thenReturn(component == null ? false : component.length() > 0);
@@ -75,8 +75,8 @@ public class ComponentDuplicateCheckerTest {
     public void setUp() {
         mockConfig = mock(EditableConfiguration.class);
         
-        EditableBlock block1 = mockBlock(BLOCK_1_NAME, "");
-        EditableBlock block2 = mockBlock(BLOCK_2_NAME, OTHER_COMP_NAME);
+        EditableBlock block1 = (EditableBlock) mockBlock(BLOCK_1_NAME, "");
+        EditableBlock block2 = (EditableBlock) mockBlock(BLOCK_2_NAME, OTHER_COMP_NAME);
 
         Configuration otherComponent = mockComp(OTHER_COMP_NAME, Arrays.asList(block2));
         EditableComponents mockComponents = mock(EditableComponents.class);
@@ -106,7 +106,7 @@ public class ComponentDuplicateCheckerTest {
     @Test
     public void GIVEN_base_config_contains_block_WHEN_checking_component_with_block_of_same_name_THEN_checked_component_contained_in_conflicts() {
         // Arrange
-        EditableBlock duplicateBlock = mockBlock(BLOCK_1_NAME, null);
+        Block duplicateBlock = mockBlock(BLOCK_1_NAME, null);
         Configuration comp = mockComp(TEST_COMP_NAME_1, Arrays.asList(duplicateBlock));
 
         // Act
@@ -119,7 +119,7 @@ public class ComponentDuplicateCheckerTest {
     @Test
     public void GIVEN_base_config_contains_block_WHEN_checking_component_with_block_of_same_name_THEN_duplicate_block_contained_in_conflicts_for_checked_component() {
         // Arrange
-        EditableBlock duplicateBlock = mockBlock(BLOCK_1_NAME, null);
+        Block duplicateBlock = mockBlock(BLOCK_1_NAME, null);
         Configuration comp = mockComp(TEST_COMP_NAME_1, Arrays.asList(duplicateBlock));
 
         // Act
@@ -133,7 +133,7 @@ public class ComponentDuplicateCheckerTest {
     @Test
     public void GIVEN_base_config_contains_block_WHEN_checking_component_with_block_of_same_name_THEN_base_config_is_associated_as_source_of_block_conflict() {
         // Arrange
-        EditableBlock duplicateBlock = mockBlock(BLOCK_1_NAME, null);
+        Block duplicateBlock = mockBlock(BLOCK_1_NAME, null);
         Configuration comp = mockComp(TEST_COMP_NAME_1, Arrays.asList(duplicateBlock));
         String expected = BASE_CONFIG_STRING;
 
@@ -149,7 +149,7 @@ public class ComponentDuplicateCheckerTest {
     @Test
     public void GIVEN_other_component_contains_block_WHEN_checking_component_with_block_of_same_name_THEN_other_component_is_associated_as_source_of_block_conflict() {
         // Arrange
-        EditableBlock duplicateBlock = mockBlock(BLOCK_2_NAME, null);
+        Block duplicateBlock = mockBlock(BLOCK_2_NAME, null);
         Configuration comp = mockComp(TEST_COMP_NAME_1, Arrays.asList(duplicateBlock));
         String expected = OTHER_COMP_NAME;
 
@@ -165,10 +165,10 @@ public class ComponentDuplicateCheckerTest {
     @Test
     public void GIVEN_duplicates_between_two_components_WHEN_checking_those_two_components_THEN_conflict_is_reported_for_second_component() {
         // Arrange
-        EditableBlock duplicateBlock1 = mockBlock(BLOCK_3_NAME, null);
+        Block duplicateBlock1 = mockBlock(BLOCK_3_NAME, null);
         Configuration comp1 = mockComp(TEST_COMP_NAME_1, Arrays.asList(duplicateBlock1));
 
-        EditableBlock duplicateBlock2 = mockBlock(BLOCK_3_NAME, null);
+        Block duplicateBlock2 = mockBlock(BLOCK_3_NAME, null);
         Configuration comp2 = mockComp(TEST_COMP_NAME_2, Arrays.asList(duplicateBlock2));
 
 
@@ -183,10 +183,10 @@ public class ComponentDuplicateCheckerTest {
     @Test
     public void GIVEN_duplicates_between_two_components_WHEN_checking_those_two_components_THEN_first_checked_component_is_associated_as_source_of_block_conflict() {
         // Arrange
-        EditableBlock duplicateBlock1 = mockBlock(BLOCK_3_NAME, null);
+        Block duplicateBlock1 = mockBlock(BLOCK_3_NAME, null);
         Configuration comp1 = mockComp(TEST_COMP_NAME_1, Arrays.asList(duplicateBlock1));
 
-        EditableBlock duplicateBlock2 = mockBlock(BLOCK_3_NAME, null);
+        Block duplicateBlock2 = mockBlock(BLOCK_3_NAME, null);
         Configuration comp2 = mockComp(TEST_COMP_NAME_2, Arrays.asList(duplicateBlock2));
 
         String expected = TEST_COMP_NAME_1;
