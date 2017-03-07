@@ -28,7 +28,6 @@ import uk.ac.stfc.isis.ibex.configserver.configuration.Macro;
 import uk.ac.stfc.isis.ibex.configserver.configuration.PVDefaultValue;
 import uk.ac.stfc.isis.ibex.configserver.configuration.PVSet;
 import uk.ac.stfc.isis.ibex.configserver.configuration.SimLevel;
-import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableIoc;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 
@@ -228,7 +227,9 @@ public class IocViewModel extends ModelObject {
      *            the macros to set
      */
     public void setMacros(Collection<Macro> macros) {
-        firePropertyChange("macros", this.macros, this.macros = macros);
+        // Need to fire from null so event fired when emptylist -> emptylist,
+        // listeners are then sure to update correct list.
+        firePropertyChange("macros", null, this.macros = macros);
     }
 
     /**

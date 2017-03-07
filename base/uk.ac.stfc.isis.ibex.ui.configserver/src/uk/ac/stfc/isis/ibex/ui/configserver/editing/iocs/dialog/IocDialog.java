@@ -123,7 +123,6 @@ public class IocDialog extends TitleAreaDialog implements MessageDisplayer {
         this.config = config;
         this.addViewModel = new AddPanelViewModel(config.getAvailableIocs());
         this.viewModel = new IocViewModel(ioc);
-        viewModel.setIoc(ioc);
     }
 
     @Override
