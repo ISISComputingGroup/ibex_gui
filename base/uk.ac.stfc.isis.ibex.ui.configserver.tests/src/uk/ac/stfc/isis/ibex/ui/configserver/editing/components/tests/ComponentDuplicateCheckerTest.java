@@ -76,13 +76,13 @@ public class ComponentDuplicateCheckerTest {
         mockConfig = mock(EditableConfiguration.class);
         
         EditableBlock block1 = (EditableBlock) mockBlock(BLOCK_1_NAME, "");
-        EditableBlock block2 = (EditableBlock) mockBlock(BLOCK_2_NAME, OTHER_COMP_NAME);
+        Block block2 = mockBlock(BLOCK_2_NAME, OTHER_COMP_NAME);
 
         Configuration otherComponent = mockComp(OTHER_COMP_NAME, Arrays.asList(block2));
         EditableComponents mockComponents = mock(EditableComponents.class);
         when(mockComponents.getSelected()).thenReturn(Arrays.asList(otherComponent));
 
-        Collection<EditableBlock> mockBlocks = Arrays.asList(block1, block2);
+        Collection<EditableBlock> mockBlocks = Arrays.asList(block1);
         when(mockConfig.getAvailableBlocks()).thenReturn(mockBlocks);
         when(mockConfig.getEditableComponents()).thenReturn(mockComponents);
 
