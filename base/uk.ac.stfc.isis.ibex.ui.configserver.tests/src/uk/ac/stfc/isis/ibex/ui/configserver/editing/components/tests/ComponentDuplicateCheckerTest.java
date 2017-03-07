@@ -54,7 +54,7 @@ public class ComponentDuplicateCheckerTest {
     private final static String OTHER_COMP_NAME = "OTHER_COMPONENT";
     private final static String TEST_COMP_NAME_1 = "TEST_COMPONENT_1";
     private final static String TEST_COMP_NAME_2 = "TEST_COMPONENT_2";
-    private final static String BASE_CONFIG_STRING = "Base Configuration";
+    private final static String BASE_CONFIG_STRING = "base configuration";
 
     private EditableBlock mockBlock(String name, String component) {
         EditableBlock block = mock(EditableBlock.class);
