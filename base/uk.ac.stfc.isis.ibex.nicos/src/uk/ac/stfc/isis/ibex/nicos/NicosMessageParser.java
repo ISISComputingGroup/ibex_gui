@@ -21,24 +21,50 @@
  */
 package uk.ac.stfc.isis.ibex.nicos;
 
+import org.apache.logging.log4j.Logger;
+
+import uk.ac.stfc.isis.ibex.activemq.message.MessageDetails;
 import uk.ac.stfc.isis.ibex.activemq.message.MessageParser;
+import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
+import uk.ac.stfc.isis.ibex.json.JsonDeserialisingConverter;
+import uk.ac.stfc.isis.ibex.logger.IsisLog;
 
 /**
  * The class parses the data coming out of ActiveMQ into a NicosMessage.
  */
 public class NicosMessageParser extends MessageParser<NicosMessage> {
 
+    private static final Logger LOG = IsisLog.getLogger(NicosMessageParser.class);
+
+    private static final JsonDeserialisingConverter<NicosMessage> CONVERTER =
+            new JsonDeserialisingConverter<>(NicosMessage.class);
+
     /**
-     * Dummy parser, current just creates a new message that holds the activeMQ
-     * data as a string.
+     * Convert the ActiveMQ message to a Nicos message.
      * 
-     * @param content
-     *            The content of the message.
+     * @param rawMessage
+     *            The raw message from ActiveMQ.
      * @return A dummy message.
      */
     @Override
-    protected NicosMessage parseMessage(String content) {
-        return new NicosMessage(content);
+    protected NicosMessage parseMessage(MessageDetails rawMessage) {
+         
+
+        NicosMessage nicosMessage;
+        try {
+            nicosMessage = CONVERTER.convert(rawMessage.getText());
+            nicosMessage.setMessageId(rawMessage.getMessageID());            
+        } catch (ConversionException e) {
+            LOG.error("Error converting message from script server", e);
+            nicosMessage = new NicosMessage("Error converting message from the script server.",
+                    rawMessage.getMessageID(), false);
+        } catch (NullPointerException e) {
+            LOG.error("Error converting message from script server, text was null.", e);
+            nicosMessage =
+                    new NicosMessage("Blank message sent from the script server.", rawMessage.getMessageID(), false);
+        }
+        
+        return nicosMessage;
     }
 
 }

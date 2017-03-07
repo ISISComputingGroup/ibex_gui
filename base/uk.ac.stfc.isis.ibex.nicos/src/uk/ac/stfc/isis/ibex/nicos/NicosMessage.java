@@ -18,28 +18,73 @@
 
 package uk.ac.stfc.isis.ibex.nicos;
 
+import uk.ac.stfc.isis.ibex.activemq.SendMessageDetails;
 import uk.ac.stfc.isis.ibex.activemq.message.IMessage;
 
 /**
  * A Message that has been received from NICOS.
+ * 
+ * THIS IS DESERIALISED FROM JSON AND SO THE CONSTRUCTOR MAY NOT BE CALLED
  */
 public class NicosMessage implements IMessage {
-    private String data;
+    private String payload;
+    private String messageId;
+
+    private boolean success;
 
     /**
      * A constructor for a basic message.
      * 
-     * @param data
-     *            The data that the message contains.
+     * @param payload
+     *            The payload from the message.
+     * @param messageId
+     *            message id of the returned message, this can be correlated
+     *            with a sent id
+     * @param success
+     *            true if message is for a success; false otherwise
+     * 
      */
-    public NicosMessage(String data) {
-        this.data = data;
+    public NicosMessage(String payload, String messageId, boolean success) {
+        this.payload = payload;
+        this.messageId = messageId;
+        this.success = success;
     }
 
     /**
-     * @return The data that the NICOS message contained.
+     * @return true if the message is for success operation; false otherwise
      */
-    public String getData() {
-        return data;
+    public boolean isSuccess() {
+        return success;
     }
+
+    /**
+     * @return The payload that the NICOS message contained.
+     */
+    public String getPayload() {
+        return payload;
+    }
+
+    /**
+     * Matches the sent message details to this message to see if if this is a
+     * response from the original message.
+     * 
+     * @param scriptSendMessageStatus
+     *            the details from the send step
+     * @return true if this message if the reply to the sent message; false
+     *         otherwise
+     */
+    public boolean isReplyTo(SendMessageDetails scriptSendMessageStatus) {
+        return scriptSendMessageStatus.hasMessageId(this.messageId);
+    }
+
+    /**
+     * Set the message Id.
+     * 
+     * @param messageId
+     *            the messageId to set
+     */
+    public void setMessageId(String messageId) {
+        this.messageId = messageId;
+    }
+
 }

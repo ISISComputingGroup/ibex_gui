@@ -133,7 +133,12 @@ public class MQConnection extends ModelObject implements Runnable {
                     setJmsConnectionStatus(true);
                 } catch (Exception ex) {
                     if (!connectionWarnFlag) {
-                        LOG.warn("Problem connecting to JMS server. Will auto-attempt reconnection.");
+                        if (ex.getCause() != null && ex.getCause() instanceof SecurityException) {
+                            LOG.warn("Problem connecting to JMS server. '" + ex.getCause().getMessage()
+                                    + ".'  Will auto-attempt reconnection.");
+                        } else {
+                            LOG.warn("Problem connecting to JMS server. Will auto-attempt reconnection.");
+                        }
                         connectionWarnFlag = true;
                         setJmsConnectionStatus(false);
                     }
@@ -163,6 +168,9 @@ public class MQConnection extends ModelObject implements Runnable {
      */
     private void connect() throws JMSException {
 
+        if (connection != null) {
+            connection.close();
+        }
         ActiveMQConnectionFactory factory = new ActiveMQConnectionFactory(username,
                 password, jmsUrl);
         connection = factory.createConnection();

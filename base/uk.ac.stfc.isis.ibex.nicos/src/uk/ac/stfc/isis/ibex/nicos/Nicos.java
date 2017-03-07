@@ -21,6 +21,9 @@ package uk.ac.stfc.isis.ibex.nicos;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
+import uk.ac.stfc.isis.ibex.activemq.ActiveMQ;
+import uk.ac.stfc.isis.ibex.activemq.SendReceiveSession;
+
 /**
  * Constructor for the NICOS plugin, which provides a connection between NICOS
  * and the GUI.
@@ -50,7 +53,10 @@ public class Nicos extends AbstractUIPlugin {
      */
     public NicosModel getModel() {
         if (model == null) {
-            model = new NicosModel();
+            SendReceiveSession sendReceiveQueue =
+                    ActiveMQ.getInstance().getSendReceiveQueue("ss_admin", "username", "S2mQzcSPfaVu8KNie22s");
+            // TODO remove password and think about closing session
+            model = new NicosModel(sendReceiveQueue);
         }
         return model;
 	}

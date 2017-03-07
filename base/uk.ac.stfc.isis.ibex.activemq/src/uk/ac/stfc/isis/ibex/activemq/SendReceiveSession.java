@@ -23,6 +23,7 @@ package uk.ac.stfc.isis.ibex.activemq;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import javax.jms.DeliveryMode;
 import javax.jms.Destination;
@@ -109,17 +110,31 @@ public class SendReceiveSession extends ReceiveSession {
      * 
      * @param text
      *            The message to send.
+     * @return message details for sent message
      */
-    public void sendMessage(String text) {
+    public SendMessageDetails sendMessage(String text) {
         TextMessage txtMessage;
+        String messageId = getNextCorrelationID();
         try {
             txtMessage = session.createTextMessage();
             txtMessage.setText(text);
             txtMessage.setJMSReplyTo(tempQueue);
+            txtMessage.setJMSCorrelationID(messageId);
             producer.send(txtMessage);
+            return SendMessageDetails.createSendSuccess(messageId);
         } catch (JMSException e) {
             LOG.warn("Failed to send message " + text);
+            return SendMessageDetails.createSendFail(e.getLocalizedMessage(), messageId);
         }
+    }
+
+    /**
+     * @return a new correlation ID
+     */
+    private String getNextCorrelationID() {
+        Random random = new Random(System.currentTimeMillis());
+        long randomLong = random.nextLong();
+        return Long.toHexString(randomLong);
     }
 
     @Override
