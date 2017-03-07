@@ -86,6 +86,14 @@ public class ComponentDuplicateChecker {
         }
     }
 
+    /**
+     * Checks for block duplicates in the current configuration for a given set
+     * of components to be added, and returns a map of conflicts for each of
+     * those components.
+     * 
+     * @param toToggle The list of components to be added.
+     * @return A map of conflicts per component (empty if none).
+     */
     public Map<String, Map<String, String>> checkBlocks(Collection<Configuration> toToggle) {
         refreshBlocks();
         Map<String, Map<String, String>> allConflicts = new HashMap<String, Map<String, String>>();

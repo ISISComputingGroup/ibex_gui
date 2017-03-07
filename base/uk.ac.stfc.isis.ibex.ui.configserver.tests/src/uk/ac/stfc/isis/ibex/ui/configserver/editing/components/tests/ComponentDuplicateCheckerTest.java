@@ -48,10 +48,11 @@ public class ComponentDuplicateCheckerTest {
 
     private final static String BLOCK_1_NAME = "BLOCK_1";
     private final static String BLOCK_2_NAME = "BLOCK_2";
-    private final static String BLOCK_1_COMP_NAME = "";
-    private final static String BLOCK_2_COMP_NAME = "OTHER_COMPONENT";
+    private final static String BLOCK_3_NAME = "BLOCK_3";
 
-    private final static String TEST_COMP_NAME = "TEST_COMPONENT";
+    private final static String OTHER_COMP_NAME = "OTHER_COMPONENT";
+    private final static String TEST_COMP_NAME_1 = "TEST_COMPONENT_1";
+    private final static String TEST_COMP_NAME_2 = "TEST_COMPONENT_2";
     private final static String BASE_CONFIG_STRING = "Base Configuration";
 
     private EditableBlock mockBlock(String name, String component) {
@@ -73,8 +74,8 @@ public class ComponentDuplicateCheckerTest {
     public void setUp() {
         mockConfig = mock(EditableConfiguration.class);
         
-        EditableBlock block1 = mockBlock(BLOCK_1_NAME, BLOCK_1_COMP_NAME);
-        EditableBlock block2 = mockBlock(BLOCK_2_NAME, BLOCK_2_COMP_NAME);
+        EditableBlock block1 = mockBlock(BLOCK_1_NAME, "");
+        EditableBlock block2 = mockBlock(BLOCK_2_NAME, OTHER_COMP_NAME);
 
         Collection<EditableBlock> mockBlocks = Arrays.asList(block1, block2);
         when(mockConfig.getAvailableBlocks()).thenReturn(mockBlocks);
@@ -83,10 +84,10 @@ public class ComponentDuplicateCheckerTest {
     }
 
     @Test
-    public void GIVEN_component_is_blank_WHEN_adding_THEN_no_conflicts_reported() {
+    public void GIVEN_checked_component_is_blank_THEN_no_conflicts_reported() {
         // Arrange
         Collection<Block> blocks = Collections.emptyList();
-        Configuration comp = mockComp(TEST_COMP_NAME, blocks);
+        Configuration comp = mockComp(TEST_COMP_NAME_1, blocks);
 
         // Act
         Map<String, Map<String, String>> actual = duplicateChecker.checkBlocks(Arrays.asList(comp));
@@ -97,62 +98,100 @@ public class ComponentDuplicateCheckerTest {
     
 
     @Test
-    public void GIVEN_base_config_contains_block_WHEN_adding_component_with_block_of_same_name_THEN_conflict_is_reported() {
+    public void GIVEN_base_config_contains_block_WHEN_checking_component_with_block_of_same_name_THEN_conflict_is_reported_at_component_level() {
         // Arrange
-        EditableBlock duplicateBlock1 = mockBlock(BLOCK_1_NAME, null);
-        Configuration comp = mockComp(TEST_COMP_NAME, Arrays.asList(duplicateBlock1));
+        EditableBlock duplicateBlock = mockBlock(BLOCK_1_NAME, null);
+        Configuration comp = mockComp(TEST_COMP_NAME_1, Arrays.asList(duplicateBlock));
 
         // Act
         Map<String, Map<String, String>> conflicts = duplicateChecker.checkBlocks(Arrays.asList(comp));
 
         // Assert
-        assertTrue(!conflicts.get(TEST_COMP_NAME).isEmpty());
+        assertTrue(!conflicts.get(TEST_COMP_NAME_1).isEmpty());
     }
 
     @Test
-    public void GIVEN_base_config_contains_block_WHEN_adding_component_with_block_of_same_name_THEN_conflicts_contain_offending_block_name() {
+    public void GIVEN_base_config_contains_block_WHEN_checking_component_with_block_of_same_name_THEN_conflict_is_reported_at_block_level() {
         // Arrange
-        EditableBlock duplicateBlock1 = mock(EditableBlock.class);
-        when(duplicateBlock1.getName()).thenReturn(BLOCK_1_NAME);
-
-        Configuration comp = mock(Configuration.class);
-        when(comp.getName()).thenReturn(TEST_COMP_NAME);
-        when(comp.getBlocks()).thenReturn(Arrays.asList(duplicateBlock1));
+        EditableBlock duplicateBlock = mockBlock(BLOCK_1_NAME, null);
+        Configuration comp = mockComp(TEST_COMP_NAME_1, Arrays.asList(duplicateBlock));
 
         // Act
         Map<String, Map<String, String>> conflictedComponents = duplicateChecker.checkBlocks(Arrays.asList(comp));
-        Map<String, String> conflictedBlocks = conflictedComponents.get(TEST_COMP_NAME);
+        Map<String, String> conflictedBlocks = conflictedComponents.get(TEST_COMP_NAME_1);
 
         // Assert
         assertTrue(!conflictedBlocks.get(BLOCK_1_NAME).isEmpty());
     }
 
     @Test
-    public void GIVEN_base_config_contains_block_WHEN_adding_component_with_block_of_same_name_THEN_conflicts_cite_base_config_as_conflicting_source() {
+    public void GIVEN_base_config_contains_block_WHEN_checking_component_with_block_of_same_name_THEN_conflicts_at_block_level_cite_base_config_as_source_of_conflict() {
         // Arrange
-        EditableBlock duplicateBlock1 = mock(EditableBlock.class);
-        when(duplicateBlock1.getName()).thenReturn(BLOCK_1_NAME);
-
-        Configuration comp = mock(Configuration.class);
-        when(comp.getName()).thenReturn(TEST_COMP_NAME);
-        when(comp.getBlocks()).thenReturn(Arrays.asList(duplicateBlock1));
-
+        EditableBlock duplicateBlock = mockBlock(BLOCK_1_NAME, null);
+        Configuration comp = mockComp(TEST_COMP_NAME_1, Arrays.asList(duplicateBlock));
         String expected = BASE_CONFIG_STRING;
 
         // Act
         Map<String, Map<String, String>> conflictedComponents = duplicateChecker.checkBlocks(Arrays.asList(comp));
-        Map<String, String> conflictedBlocks = conflictedComponents.get(TEST_COMP_NAME);
+        Map<String, String> conflictedBlocks = conflictedComponents.get(TEST_COMP_NAME_1);
         String actual = conflictedBlocks.get(BLOCK_1_NAME);
 
         // Assert
         assertEquals(expected, actual);
     }
 
-    // TODO: conflict with block from component
-    // TODO: conflict with block from just added component
-    // TODO: if adding multiple components then only conflict-free ones should
-    // be added
-    // TODO: if adding then removing component then blocks should be removed
-    // TODO: adding comp with block after removing duplicate block from config
-    // should yield no conflicts
+    @Test
+    public void GIVEN_other_component_contains_block_WHEN_checking_component_with_block_of_same_name_THEN_conflicts_at_block_level_cite_other_component_as_source_of_conflict() {
+        // Arrange
+        EditableBlock duplicateBlock = mockBlock(BLOCK_2_NAME, null);
+        Configuration comp = mockComp(TEST_COMP_NAME_1, Arrays.asList(duplicateBlock));
+        String expected = OTHER_COMP_NAME;
+
+        // Act
+        Map<String, Map<String, String>> conflictedComponents = duplicateChecker.checkBlocks(Arrays.asList(comp));
+        Map<String, String> conflictedBlocks = conflictedComponents.get(TEST_COMP_NAME_1);
+        String actual = conflictedBlocks.get(BLOCK_2_NAME);
+
+        // Assert
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void
+            GIVEN_duplicates_between_two_components_WHEN_adding_those_two_components_THEN_conflict_is_reported_for_second_component() {
+        // Arrange
+        EditableBlock duplicateBlock1 = mockBlock(BLOCK_3_NAME, null);
+        Configuration comp1 = mockComp(TEST_COMP_NAME_1, Arrays.asList(duplicateBlock1));
+
+        EditableBlock duplicateBlock2 = mockBlock(BLOCK_3_NAME, null);
+        Configuration comp2 = mockComp(TEST_COMP_NAME_2, Arrays.asList(duplicateBlock2));
+
+
+        // Act
+        Map<String, Map<String, String>> conflictedComponents = duplicateChecker.checkBlocks(Arrays.asList(comp1, comp2));
+
+        // Assert
+        assertTrue(!conflictedComponents.containsKey(TEST_COMP_NAME_1));
+        assertTrue(conflictedComponents.containsKey(TEST_COMP_NAME_2));
+    }
+
+    @Test
+    public void GIVEN_duplicates_between_two_components_WHEN_adding_those_two_components_THEN_conflicts_at_block_level_cite_first_checked_component_as_source_of_conflict() {
+        // Arrange
+        EditableBlock duplicateBlock1 = mockBlock(BLOCK_3_NAME, null);
+        Configuration comp1 = mockComp(TEST_COMP_NAME_1, Arrays.asList(duplicateBlock1));
+
+        EditableBlock duplicateBlock2 = mockBlock(BLOCK_3_NAME, null);
+        Configuration comp2 = mockComp(TEST_COMP_NAME_2, Arrays.asList(duplicateBlock2));
+
+        String expected = TEST_COMP_NAME_1;
+
+        // Act
+        Map<String, Map<String, String>> conflictedComponents = duplicateChecker.checkBlocks(Arrays.asList(comp1, comp2));
+        Map<String, String> conflictedBlocks = conflictedComponents.get(TEST_COMP_NAME_2);
+        String actual = conflictedBlocks.get(BLOCK_3_NAME);
+
+        // Assert
+        assertEquals(expected, actual);
+    }
 }
