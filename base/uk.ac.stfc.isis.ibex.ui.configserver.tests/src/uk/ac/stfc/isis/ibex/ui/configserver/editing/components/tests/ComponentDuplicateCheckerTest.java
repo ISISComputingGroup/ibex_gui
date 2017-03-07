@@ -98,7 +98,7 @@ public class ComponentDuplicateCheckerTest {
     
 
     @Test
-    public void GIVEN_base_config_contains_block_WHEN_checking_component_with_block_of_same_name_THEN_conflict_is_reported_at_component_level() {
+    public void GIVEN_base_config_contains_block_WHEN_checking_component_with_block_of_same_name_THEN_checked_component_contained_in_conflicts() {
         // Arrange
         EditableBlock duplicateBlock = mockBlock(BLOCK_1_NAME, null);
         Configuration comp = mockComp(TEST_COMP_NAME_1, Arrays.asList(duplicateBlock));
@@ -111,7 +111,7 @@ public class ComponentDuplicateCheckerTest {
     }
 
     @Test
-    public void GIVEN_base_config_contains_block_WHEN_checking_component_with_block_of_same_name_THEN_conflict_is_reported_at_block_level() {
+    public void GIVEN_base_config_contains_block_WHEN_checking_component_with_block_of_same_name_THEN_duplicate_block_contained_in_conflicts_for_checked_component() {
         // Arrange
         EditableBlock duplicateBlock = mockBlock(BLOCK_1_NAME, null);
         Configuration comp = mockComp(TEST_COMP_NAME_1, Arrays.asList(duplicateBlock));
@@ -125,7 +125,7 @@ public class ComponentDuplicateCheckerTest {
     }
 
     @Test
-    public void GIVEN_base_config_contains_block_WHEN_checking_component_with_block_of_same_name_THEN_conflicts_at_block_level_cite_base_config_as_source_of_conflict() {
+    public void GIVEN_base_config_contains_block_WHEN_checking_component_with_block_of_same_name_THEN_base_config_is_associated_as_source_of_block_conflict() {
         // Arrange
         EditableBlock duplicateBlock = mockBlock(BLOCK_1_NAME, null);
         Configuration comp = mockComp(TEST_COMP_NAME_1, Arrays.asList(duplicateBlock));
@@ -141,7 +141,7 @@ public class ComponentDuplicateCheckerTest {
     }
 
     @Test
-    public void GIVEN_other_component_contains_block_WHEN_checking_component_with_block_of_same_name_THEN_conflicts_at_block_level_cite_other_component_as_source_of_conflict() {
+    public void GIVEN_other_component_contains_block_WHEN_checking_component_with_block_of_same_name_THEN_other_component_is_associated_as_source_of_block_conflict() {
         // Arrange
         EditableBlock duplicateBlock = mockBlock(BLOCK_2_NAME, null);
         Configuration comp = mockComp(TEST_COMP_NAME_1, Arrays.asList(duplicateBlock));
@@ -157,8 +157,7 @@ public class ComponentDuplicateCheckerTest {
     }
 
     @Test
-    public void
-            GIVEN_duplicates_between_two_components_WHEN_adding_those_two_components_THEN_conflict_is_reported_for_second_component() {
+    public void GIVEN_duplicates_between_two_components_WHEN_checking_those_two_components_THEN_conflict_is_reported_for_second_component() {
         // Arrange
         EditableBlock duplicateBlock1 = mockBlock(BLOCK_3_NAME, null);
         Configuration comp1 = mockComp(TEST_COMP_NAME_1, Arrays.asList(duplicateBlock1));
@@ -176,7 +175,7 @@ public class ComponentDuplicateCheckerTest {
     }
 
     @Test
-    public void GIVEN_duplicates_between_two_components_WHEN_adding_those_two_components_THEN_conflicts_at_block_level_cite_first_checked_component_as_source_of_conflict() {
+    public void GIVEN_duplicates_between_two_components_WHEN_checking_those_two_components_THEN_first_checked_component_is_associated_as_source_of_block_conflict() {
         // Arrange
         EditableBlock duplicateBlock1 = mockBlock(BLOCK_3_NAME, null);
         Configuration comp1 = mockComp(TEST_COMP_NAME_1, Arrays.asList(duplicateBlock1));

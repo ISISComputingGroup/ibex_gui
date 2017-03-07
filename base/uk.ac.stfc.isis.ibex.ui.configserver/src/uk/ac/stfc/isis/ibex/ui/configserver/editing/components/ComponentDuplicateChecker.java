@@ -37,7 +37,6 @@ public class ComponentDuplicateChecker {
 
     private EditableConfiguration config;
     private EditableComponents components;
-    private Map<String, String> blocksFromConfig;
     private Map<String, String> allCurrentBlocks;
 
     /**
