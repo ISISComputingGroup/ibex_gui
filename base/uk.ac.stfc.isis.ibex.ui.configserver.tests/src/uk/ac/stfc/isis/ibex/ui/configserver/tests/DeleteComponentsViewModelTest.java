@@ -53,6 +53,8 @@ public class DeleteComponentsViewModelTest {
     private final static List<String> CONFIGS_1 = Arrays.asList("CONFIG1");
     private final static List<String> CONFIGS_2 = Arrays.asList("CONFIG2", "CONFIG3");
 
+    private static final String BULLET_POINT = " \u2022";
+
     @Before
     public void setUp() {
         dependencies = new HashMap<>();
@@ -124,8 +126,8 @@ public class DeleteComponentsViewModelTest {
         StringBuilder expected = new StringBuilder();
         expected.append("The following component is currently in use and so cannot be deleted:\n");
         expected.append("\n");
-        expected.append("Component: " + DEPENDENT_COMP_1 + "\n");
-        expected.append("Used in configuration(s): " + CONFIGS_1.get(0) + "\n");
+        expected.append("Component \"" + DEPENDENT_COMP_1 + "\" used in configuration(s):\n");
+        expected.append(BULLET_POINT + " " + CONFIGS_1.get(0) + "\n");
         expected.append("\n");
         expected.append("Please remove the component from these configurations before deleting.");
         
@@ -139,16 +141,16 @@ public class DeleteComponentsViewModelTest {
     }
 
     @Test
-    public void
-            GIVEN_multiple_components_have_dependencies_WHEN_generating_warning_message_THEN_message_contains_those_dependencies_and_is_plural() {
+    public void GIVEN_multiple_components_have_dependencies_WHEN_generating_warning_message_THEN_message_contains_those_dependencies_and_is_plural() {
         StringBuilder expected = new StringBuilder();
         expected.append("The following components are currently in use and so cannot be deleted:\n");
         expected.append("\n");
-        expected.append("Component: " + DEPENDENT_COMP_1 + "\n");
-        expected.append("Used in configuration(s): " + CONFIGS_1.get(0) + "\n");
+        expected.append("Component \"" + DEPENDENT_COMP_1 + "\" used in configuration(s):\n");
+        expected.append(BULLET_POINT + " " + CONFIGS_1.get(0) + "\n");
         expected.append("\n");
-        expected.append("Component: " + DEPENDENT_COMP_2 + "\n");
-        expected.append("Used in configuration(s): " + CONFIGS_2.get(0) + ", " + CONFIGS_2.get(1) + "\n");
+        expected.append("Component \"" + DEPENDENT_COMP_2 + "\" used in configuration(s):\n");
+        expected.append(BULLET_POINT + " " + CONFIGS_2.get(0) + "\n");
+        expected.append(BULLET_POINT + " " + CONFIGS_2.get(1) + "\n");
         expected.append("\n");
         expected.append("Please remove the components from these configurations before deleting.");
 

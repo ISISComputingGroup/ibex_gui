@@ -34,6 +34,8 @@ public class DeleteComponentsViewModel extends ModelObject {
 
     private Map<String, Collection<String>> dependencies;
 
+    private static final String BULLET_POINT = " \u2022";
+
     /**
      * Constructor for the ViewModel.
      * 
@@ -75,16 +77,12 @@ public class DeleteComponentsViewModel extends ModelObject {
         sb.append("The following " + (multi ? "components are" : "component is")
                 + " currently in use and so cannot be deleted:\n\n");
         for (String comp : dependencies.keySet()) {
-            sb.append("Component: " + comp + "\nUsed in configuration(s): ");
-            boolean first = true;
+            sb.append("Component \"" + comp + "\" ");
+            sb.append("used in configuration(s):\n");
             for (String config : dependencies.get(comp)) {
-                if (!first) {
-                    sb.append(", ");
-                }
-                sb.append(config);
-                first = false;
+                sb.append(BULLET_POINT + " " + config + "\n");
             }
-            sb.append("\n\n");
+            sb.append("\n");
         }
         sb.append("Please remove the component" + (multi ? "s" : "") + " from these configurations before deleting.");
         return sb.toString();
