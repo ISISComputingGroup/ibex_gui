@@ -114,7 +114,7 @@ public class IocPVDetailsPanel extends Composite {
      * 
      * @param pv
      *            The default PV value
-     * @param viewModel
+     * @param ioc
      *            The IOC being edited
      */
     public void setPV(PVDefaultValue pv, EditableIoc ioc) {
