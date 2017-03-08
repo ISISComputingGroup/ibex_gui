@@ -21,6 +21,7 @@ package uk.ac.stfc.isis.ibex.model;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.Collection;
 
 /**
  * @param <T> Type of the value provided
@@ -47,6 +48,10 @@ public class UpdatedValue<T> extends ModelObject {
 
 		if (executeIfAlreadySet && isSet) {
 			listener.propertyChange(new PropertyChangeEvent(this, "value", value, value));
+            if (value instanceof Collection) {
+                System.out.println("update value on add listener " + ((Collection) value).size());
+            }
+
 		}
 	}
 	

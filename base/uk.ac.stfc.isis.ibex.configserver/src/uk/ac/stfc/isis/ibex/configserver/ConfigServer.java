@@ -21,13 +21,18 @@ package uk.ac.stfc.isis.ibex.configserver;
 
 import java.util.Collection;
 
+import com.google.common.collect.Lists;
+
 import uk.ac.stfc.isis.ibex.configserver.configuration.ComponentInfo;
 import uk.ac.stfc.isis.ibex.configserver.configuration.ConfigInfo;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Configuration;
 import uk.ac.stfc.isis.ibex.configserver.configuration.PV;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableIoc;
 import uk.ac.stfc.isis.ibex.configserver.internal.FilteredIocs;
+import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
+import uk.ac.stfc.isis.ibex.epics.conversion.Converter;
 import uk.ac.stfc.isis.ibex.epics.conversion.DoNothingConverter;
+import uk.ac.stfc.isis.ibex.epics.observing.ConvertingObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.epics.pv.Closer;
 import uk.ac.stfc.isis.ibex.epics.writing.LoggingForwardingWritable;
@@ -263,7 +268,18 @@ public class ConfigServer extends Closer {
 	 */
     public ForwardingObservable<Collection<IocState>> iocStates() {
         ForwardingObservable<Collection<IocState>> iocs = 
-                new ForwardingObservable<>(variables.iocStates);
+                new ForwardingObservable<>(
+                        new ConvertingObservable<Collection<IocState>, Collection<IocState>>(variables.iocStates,
+                                new Converter<Collection<IocState>, Collection<IocState>>() {
+
+                                @Override
+                                    public Collection<IocState> convert(Collection<IocState> value)
+                                            throws ConversionException {
+                                        System.out.println("Converting: ioc states " + value.size());
+
+                                    return Lists.newArrayList(value);
+                                    }
+                                }));
 		
 		return new ForwardingObservable<>(new FilteredIocs(iocs, variables.protectedIocs));
 	}
