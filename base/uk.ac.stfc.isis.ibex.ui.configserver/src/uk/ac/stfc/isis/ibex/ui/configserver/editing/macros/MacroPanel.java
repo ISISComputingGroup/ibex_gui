@@ -34,8 +34,8 @@ import org.eclipse.swt.widgets.Composite;
 import com.google.common.base.Strings;
 
 import uk.ac.stfc.isis.ibex.configserver.configuration.Macro;
+import uk.ac.stfc.isis.ibex.configserver.editing.EditableIoc;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.iocs.IIocDependentPanel;
-import uk.ac.stfc.isis.ibex.ui.configserver.editing.iocs.dialog.IocViewModel;
 
 /**
  * This panel shows the macros that have been set for a given IOC, and allows macros to be added
@@ -83,24 +83,22 @@ public class MacroPanel extends Composite implements IIocDependentPanel {
 	}
 
 	@Override
-    public void setViewModel(final IocViewModel viewModel) {
-        viewModel.addPropertyChangeListener("macros", new PropertyChangeListener() {
+    public void setViewModel(final EditableIoc editableIoc) {
+        editableIoc.addPropertyChangeListener("macros", new PropertyChangeListener() {
             @Override
             public void propertyChange(PropertyChangeEvent evt) {
-                setMacros(viewModel.getMacros(), viewModel.getIoc().getAvailableMacros(),
-                        viewModel.getIoc().isEditable());
+                setMacros(editableIoc.getMacros(), editableIoc.getAvailableMacros(), editableIoc.isEditable());
             }
         });
 
-        viewModel.addPropertyChangeListener("ioc", new PropertyChangeListener() {
+        editableIoc.addPropertyChangeListener("ioc", new PropertyChangeListener() {
             @Override
             public void propertyChange(PropertyChangeEvent evt) {
-                setMacros(viewModel.getMacros(), viewModel.getIoc().getAvailableMacros(),
-                        viewModel.getIoc().isEditable());
+                setMacros(editableIoc.getMacros(), editableIoc.getAvailableMacros(), editableIoc.isEditable());
             }
         });
 
-        setMacros(viewModel.getMacros(), viewModel.getIoc().getAvailableMacros(), viewModel.getIoc().isEditable());
+        setMacros(editableIoc.getMacros(), editableIoc.getAvailableMacros(), editableIoc.isEditable());
 	}
 	
     /**
