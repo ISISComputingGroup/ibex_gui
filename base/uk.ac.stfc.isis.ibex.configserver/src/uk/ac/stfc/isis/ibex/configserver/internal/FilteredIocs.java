@@ -32,7 +32,7 @@ import uk.ac.stfc.isis.ibex.epics.observing.ObservablePair;
 import uk.ac.stfc.isis.ibex.epics.observing.Pair;
 import uk.ac.stfc.isis.ibex.epics.observing.TransformingObservable;
 
-/*
+/**
  * Removes iocs that whose states should not be changed by the user.
  */
 public class FilteredIocs extends 

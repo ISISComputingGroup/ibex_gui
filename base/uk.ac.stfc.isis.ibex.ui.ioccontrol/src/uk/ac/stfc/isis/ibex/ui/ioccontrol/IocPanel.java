@@ -100,8 +100,7 @@ public class IocPanel extends Composite {
                 System.out.println("Panel " + rows.size());
 				table.setRows(rows);
 				resetLastSelectedIoc(selected, rows);
-			}			
-            else {
+            } else {
                 System.out.println("NO DATA!!!");
             }
 		}
