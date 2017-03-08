@@ -42,8 +42,8 @@ public class SynopticOpiTargetView extends OpiTargetView {
      * @param opiTarget the target
      * @throws OPIViewCreationException when opi can not be created
      */
-    public static void displayOpi(OpiTarget opiTarget) throws OPIViewCreationException {
-        OpiTargetView.displayOpi(opiTarget, ID);
+    public void displayOpi(OpiTarget opiTarget) throws OPIViewCreationException {
+        displayOpi(opiTarget, ID);
     }
 
 }

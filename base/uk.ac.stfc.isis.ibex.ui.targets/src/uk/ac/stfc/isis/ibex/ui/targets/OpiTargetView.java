@@ -113,14 +113,16 @@ public abstract class OpiTargetView extends OpiView {
 		}
 	}
 
-    private static List<IViewPart> openOPIs = new ArrayList<>();;
-    private static List<IPerspectiveDescriptor> openOPIsWorkbenchPage = new ArrayList<>();;
+    private List<IViewPart> openOPIs = new ArrayList<>();;
+    private List<IPerspectiveDescriptor> openOPIsWorkbenchPage = new ArrayList<>();;
 
     /**
      * Closes any OPIs that have been opened.
      */
-    public static void closeAllOPIs() {
+    public void closeAllOPIs() {
         ListIterator<IPerspectiveDescriptor> wbiter = openOPIsWorkbenchPage.listIterator();
+        final IPerspectiveDescriptor originalPerspective =
+                PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getPerspective();
         for (ListIterator<IViewPart> iter = openOPIs.listIterator(); iter.hasNext();) {
             final IViewPart vp = iter.next();
             final IPerspectiveDescriptor descriptor = wbiter.next();
@@ -134,6 +136,13 @@ public abstract class OpiTargetView extends OpiView {
                 }
             });
         }
+        Display.getDefault().asyncExec(new Runnable() {
+            @Override
+            public void run() {
+                PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage()
+                        .setPerspective(originalPerspective);
+            }
+        });
         openOPIs.clear();
         openOPIsWorkbenchPage.clear();
     }
@@ -148,7 +157,7 @@ public abstract class OpiTargetView extends OpiView {
      * @throws OPIViewCreationException
      *             when opi can not be created
      */
-    public static void displayOpi(OpiTarget opiTarget, String id) throws OPIViewCreationException {
+    public void displayOpi(OpiTarget opiTarget, String id) throws OPIViewCreationException {
         IWorkbenchPage workbenchPage = null;
         IViewPart view = null;
         try {
