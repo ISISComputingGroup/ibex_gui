@@ -94,6 +94,9 @@ public class SendMessageDetails {
      * @return true if has the same message id; false otherwise
      */
     public boolean hasMessageId(String messageId) {
+        if (messageId == null) {
+            return false;
+        }
         return this.messageId.equals(messageId);
     }
 

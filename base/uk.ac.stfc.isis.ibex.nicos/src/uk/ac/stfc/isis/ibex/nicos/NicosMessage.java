@@ -74,6 +74,9 @@ public class NicosMessage implements IMessage {
      *         otherwise
      */
     public boolean isReplyTo(SendMessageDetails scriptSendMessageStatus) {
+        if (scriptSendMessageStatus == null) {
+            return false;
+        }
         return scriptSendMessageStatus.hasMessageId(this.messageId);
     }
 

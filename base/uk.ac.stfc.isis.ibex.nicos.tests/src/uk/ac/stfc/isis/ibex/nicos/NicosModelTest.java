@@ -21,9 +21,10 @@
  */
 package uk.ac.stfc.isis.ibex.nicos;
 
-import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.assertThat;
-import static org.mockito.Matchers.*;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.contains;
 import static org.mockito.Mockito.*;
 
 import javax.jms.JMSException;
@@ -174,4 +175,25 @@ public class NicosModelTest {
         model.newMessage(nicosMessage);
     }
 
+    @Test
+    public void GIVEN_connection_WHEN_send_script_THEN_message_sender_recieves_script_as_queue_command() {
+        loginedInSessionSendMessage().thenReturn(SendMessageDetails.createSendSuccess("messageId"));
+
+        model.sendScript(SCRIPT);
+
+        verify(sendReceiveSession).sendMessage(contains(NicosModel.QUEUE_SCRIPT_COMMAND_TEMPLATE.substring(0, 20)));
+    }
+
+    @Test
+    public void GIVEN_connection_WHEN_send_script_that_needs_escaping_THEN_message_contains_escaped_script() {
+        loginedInSessionSendMessage().thenReturn(SendMessageDetails.createSendSuccess("messageId"));
+        String original = "backslash \\ formfeed \f newline \n cr \r tab \t quotes \" backspace \b";
+        String escaped = "backslash \\\\ formfeed \\f newline \\n cr \\r tab \\t quotes \\\" backspace \\b";
+
+        model.sendScript(original);
+
+        ArgumentCaptor<String> argument = ArgumentCaptor.forClass(String.class);
+        verify(sendReceiveSession, times(2)).sendMessage(argument.capture());
+        assertThat(argument.getValue(), containsString(escaped));
+    }
 }

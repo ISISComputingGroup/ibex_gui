@@ -34,7 +34,8 @@ import org.eclipse.ui.part.ViewPart;
 
 import uk.ac.stfc.isis.ibex.nicos.Nicos;
 import uk.ac.stfc.isis.ibex.nicos.NicosModel;
-import uk.ac.stfc.isis.ibex.ui.nicos.dialogs.CreateScriptDialog;
+import uk.ac.stfc.isis.ibex.ui.nicos.dialogs.QueueScriptDialog;
+import uk.ac.stfc.isis.ibex.ui.nicos.models.QueueScriptViewModel;
 
 /**
  * The main view for the NICOS scripting perspective.
@@ -49,18 +50,19 @@ public class NicosView extends ViewPart {
 	
 	private final Shell shell;
 	
-    @SuppressWarnings("unused")
-
     /**
-     * Currently unused, just forces the backend to connect.
+     * Nicos model.
      */
     private NicosModel model;
+
+    private QueueScriptViewModel queueScriptViewModel;
 
 	/**
 	 * The default constructor for the view.
 	 */
 	public NicosView() {
         model = Nicos.getDefault().getModel();
+        queueScriptViewModel = new QueueScriptViewModel(model, "sleep(10)");
 
 		shell = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
 	}
@@ -93,7 +95,7 @@ public class NicosView extends ViewPart {
 		btnCreateScript.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				CreateScriptDialog dialog = new CreateScriptDialog(shell);
+                QueueScriptDialog dialog = new QueueScriptDialog(shell, queueScriptViewModel);
 				dialog.open();
 			}
 		});

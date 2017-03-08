@@ -23,6 +23,8 @@ import java.beans.PropertyChangeListener;
 
 import org.apache.logging.log4j.Logger;
 
+import com.google.gson.Gson;
+
 import uk.ac.stfc.isis.ibex.activemq.SendMessageDetails;
 import uk.ac.stfc.isis.ibex.activemq.SendReceiveSession;
 import uk.ac.stfc.isis.ibex.activemq.message.IMessageConsumer;
@@ -40,14 +42,14 @@ public class NicosModel extends ModelObject implements IMessageConsumer<NicosMes
     /**
      * The command that allows you to log in to nicos.
      */
-    public static final String LOGIN =
+    static final String LOGIN =
             "{\"command\": \"authenticate\", \"login\": \"ibex\", \"passwd\": \"a2eed0a7fcb214a497052435191b5264cca5b687\", \"display\": \"TEST\"}";
 
     /**
      * A template for the command that allows you to queue a script in nicos.
-     * replace the sctring with the script you want to run.
+     * replace the string with the script you want to run.
      */
-    public static final String QUEUE_SCRIPT_COMMAND_TEMPLATE =
+    static final String QUEUE_SCRIPT_COMMAND_TEMPLATE =
             "{\"command\": \"start\", \"name\": \"script_from_gui\", \"code\": \"%s\"}";
 
     private static final String SCRIPT_SEND_FAIL_MESSAGE = "Failed to send script";
@@ -136,7 +138,9 @@ public class NicosModel extends ModelObject implements IMessageConsumer<NicosMes
     public void sendScript(String script) {
         setScriptSendStatus(ScriptSendStatus.SENDING);
 
-        String messageForNicos = String.format(QUEUE_SCRIPT_COMMAND_TEMPLATE, script);
+        Gson gson = new Gson();
+
+        String messageForNicos = String.format(QUEUE_SCRIPT_COMMAND_TEMPLATE, gson.toJson(script));
         SendMessageDetails sendMessageStatus = this.session.sendMessage(messageForNicos);
         if (sendMessageStatus.isSent()) {
             scriptSendMessageDetails = sendMessageStatus;

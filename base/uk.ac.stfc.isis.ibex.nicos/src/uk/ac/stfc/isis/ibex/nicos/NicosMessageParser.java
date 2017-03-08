@@ -51,11 +51,12 @@ public class NicosMessageParser extends MessageParser<NicosMessage> {
          
 
         NicosMessage nicosMessage;
+        String rawMessageText = rawMessage.getText();
         try {
-            nicosMessage = CONVERTER.convert(rawMessage.getText());
+            nicosMessage = CONVERTER.convert(rawMessageText);
             nicosMessage.setMessageId(rawMessage.getMessageID());            
         } catch (ConversionException e) {
-            LOG.error("Error converting message from script server", e);
+            LOG.error("Error converting message from script server. Text was '" + rawMessageText + "'", e);
             nicosMessage = new NicosMessage("Error converting message from the script server.",
                     rawMessage.getMessageID(), false);
         } catch (NullPointerException e) {
