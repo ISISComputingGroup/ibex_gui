@@ -21,7 +21,6 @@ package uk.ac.stfc.isis.ibex.ui.targets;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.ListIterator;
 import java.util.Map;
 
 import org.apache.logging.log4j.Logger;
@@ -39,6 +38,7 @@ import uk.ac.stfc.isis.ibex.logger.IsisLog;
 import uk.ac.stfc.isis.ibex.opis.OPIViewCreationException;
 import uk.ac.stfc.isis.ibex.opis.Opi;
 import uk.ac.stfc.isis.ibex.opis.OpiView;
+import uk.ac.stfc.isis.ibex.opis.OpiViewLocator;
 import uk.ac.stfc.isis.ibex.targets.OpiTarget;
 
 /**
@@ -113,38 +113,46 @@ public abstract class OpiTargetView extends OpiView {
 		}
 	}
 
-    private List<IViewPart> openOPIs = new ArrayList<>();;
-    private List<IPerspectiveDescriptor> openOPIsWorkbenchPage = new ArrayList<>();;
+    private List<OpiViewLocator> openOPIs = new ArrayList<>();
+
+    private void switchPerspective(IPerspectiveDescriptor newPerspective) {
+        // Must run on the GUI thread
+        if (newPerspective != null) {
+            Display.getDefault().asyncExec(new Runnable() {
+                @Override
+                public void run() {
+                    PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().setPerspective(newPerspective);
+                }
+            });
+        }
+    }
+
+    private void hideViewPart(IViewPart vp) {
+        // Must run on the GUI thread
+        Display.getDefault().asyncExec(new Runnable() {
+            @Override
+            public void run() {
+                IWorkbenchPage wp = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
+                wp.hideView(vp);
+            }
+        });
+    }
 
     /**
      * Closes any OPIs that have been opened.
      */
     public void closeAllOPIs() {
-        ListIterator<IPerspectiveDescriptor> wbiter = openOPIsWorkbenchPage.listIterator();
-        final IPerspectiveDescriptor originalPerspective =
-                PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getPerspective();
-        for (ListIterator<IViewPart> iter = openOPIs.listIterator(); iter.hasNext();) {
-            final IViewPart vp = iter.next();
-            final IPerspectiveDescriptor descriptor = wbiter.next();
-            // Must run on the GUI thread
-            Display.getDefault().asyncExec(new Runnable() {
-                @Override
-                public void run() {
-                    PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().setPerspective(descriptor);
-                    IWorkbenchPage wp = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
-                    wp.hideView(vp);
-                }
-            });
+        
+        final IWorkbenchPage activePage = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
+        final IPerspectiveDescriptor originalPerspective = activePage != null ? activePage.getPerspective() : null;
+        for (final OpiViewLocator locator : openOPIs) {
+            final IViewPart view = locator.viewPart();
+            final IPerspectiveDescriptor perspective = locator.perspective();
+            switchPerspective(perspective);
+            hideViewPart(view);
         }
-        Display.getDefault().asyncExec(new Runnable() {
-            @Override
-            public void run() {
-                PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage()
-                        .setPerspective(originalPerspective);
-            }
-        });
+        switchPerspective(originalPerspective);
         openOPIs.clear();
-        openOPIsWorkbenchPage.clear();
     }
 
     /**
@@ -165,8 +173,7 @@ public abstract class OpiTargetView extends OpiView {
             view = workbenchPage.showView(id, opiTarget.name(), IWorkbenchPage.VIEW_ACTIVATE);
             OpiTargetView viewAsOPITarget = (OpiTargetView) view;
             viewAsOPITarget.setOpi(opiTarget);
-            openOPIs.add(view);
-            openOPIsWorkbenchPage.add(workbenchPage.getPerspective());
+            openOPIs.add(new OpiViewLocator(view, workbenchPage.getPerspective()));
         } catch (PartInitException e) {
             LOG.catching(e);
         } catch (OPIViewCreationException e) {
