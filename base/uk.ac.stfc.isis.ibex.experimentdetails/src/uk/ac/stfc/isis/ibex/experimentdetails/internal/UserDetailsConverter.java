@@ -26,11 +26,11 @@ import com.google.gson.GsonBuilder;
 
 import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
 import uk.ac.stfc.isis.ibex.epics.conversion.Converter;
+import uk.ac.stfc.isis.ibex.epics.conversion.json.JsonDeserialisingConverter;
+import uk.ac.stfc.isis.ibex.epics.conversion.json.LowercaseEnumTypeAdapterFactory;
 import uk.ac.stfc.isis.ibex.experimentdetails.Role;
 import uk.ac.stfc.isis.ibex.experimentdetails.UserDetails;
 import uk.ac.stfc.isis.ibex.experimentdetails.UserDetailsList;
-import uk.ac.stfc.isis.ibex.json.JsonDeserialisingConverter;
-import uk.ac.stfc.isis.ibex.json.LowercaseEnumTypeAdapterFactory;
 
 /**
  * Converts JSON to UserDetails object.
