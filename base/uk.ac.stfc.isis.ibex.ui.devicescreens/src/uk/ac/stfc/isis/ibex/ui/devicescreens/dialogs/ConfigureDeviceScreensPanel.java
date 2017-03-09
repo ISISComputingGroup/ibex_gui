@@ -28,12 +28,11 @@ import org.eclipse.core.databinding.beans.BeanProperties;
 import org.eclipse.core.databinding.conversion.Converter;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.databinding.viewers.ObservableListContentProvider;
-import org.eclipse.jface.viewers.ISelectionChangedListener;
+import org.eclipse.jface.databinding.viewers.ViewersObservables;
 import org.eclipse.jface.viewers.ListViewer;
-import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.KeyAdapter;
 import org.eclipse.swt.events.KeyEvent;
-import org.eclipse.swt.events.KeyListener;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -107,15 +106,11 @@ public class ConfigureDeviceScreensPanel extends Composite {
         devicesList = devicesViewer.getList();
         GridData gdViewer = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
         devicesList.setLayoutData(gdViewer);
-        devicesList.addKeyListener(new KeyListener() {
-            @Override
-            public void keyReleased(KeyEvent e) {
-            }
-
+        devicesList.addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
                 if (e.keyCode == SWT.DEL) {
-                    deleteScreen();
+                    viewModel.deleteSelectedScreen();
                 }
             }
         });
@@ -137,7 +132,6 @@ public class ConfigureDeviceScreensPanel extends Composite {
             @Override
             public void widgetSelected(SelectionEvent e) {
                 viewModel.addScreen();
-                devicesViewer.refresh();
             }
         });
 
@@ -151,37 +145,12 @@ public class ConfigureDeviceScreensPanel extends Composite {
         btnDelete.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
-                deleteScreen();
+                viewModel.deleteSelectedScreen();
             }
         });
 
-        devicesViewer.addSelectionChangedListener(new ISelectionChangedListener() {
-            @Override
-            public void selectionChanged(SelectionChangedEvent arg0) {
-                int selectionIndex = devicesList.getSelectionIndex();
-                viewModel.setSelectedScreen(selectionIndex);
-            }
-        });
-    }
-
-    /**
-     * Deletes the screen and selects the previous item.
-     */
-    private void deleteScreen() {
-        if (viewModel.getCurrentEnabled()) {
-            int index = devicesList.getSelectionIndex();
-            viewModel.deleteScreen(devicesList.getSelectionIndex());
-
-            if (index > 0 && index < devicesList.getItemCount()) {
-                --index;
-            } else if (index >= devicesList.getItemCount()) {
-                index = devicesList.getItemCount() - 1;
-            }
-
-            devicesList.setSelection(index);
-            viewModel.setSelectedScreen(index);
-            devicesViewer.refresh();
-        }
+        bindingContext.bindValue(ViewersObservables.observeSingleSelection(devicesViewer),
+                BeanProperties.value("selectedScreen").observe(viewModel));
     }
 
     /**
@@ -265,7 +234,7 @@ public class ConfigureDeviceScreensPanel extends Composite {
                 "Remove this device screen when IBEX is closed");
 
         bindingContext.bindValue(BeanProperties.value("selected").observe(yesNoRadioButtons),
-                BeanProperties.value("currentPersistence").observe(viewModel), null, null);
+                BeanProperties.value("currentPersistence").observe(viewModel));
         yesNoRadioButtons.setSelected(viewModel.getCurrentPersistence());
         
         bindingContext.bindValue(BeanProperties.value("enabled").observe(yesNoRadioButtons),

@@ -137,36 +137,6 @@ public class EditDeviceScreensDescriptionViewModel extends ModelObject {
     }
 
     /**
-     * Changes the selected screen.
-     * 
-     * @param index the index of the selected screen
-     */
-    public void setSelectedScreen(int index) {
-        // As the screen is changing we need to update the stored previous value
-        if (selectedScreen != null) {
-            previousName = selectedScreen.getName();
-            previousKey = (selectedScreen.getKey() == null) ? "" : selectedScreen.getKey();
-            previousDesc = (selectedScreen.getDescription() == null) ? "" : selectedScreen.getDescription();
-            previousPersistence = selectedScreen.getPersistent();
-            previousEnabled = isScreenEnabled(selectedScreen.getPersistent());
-        } else {
-            previousName = "";
-            previousKey = "";
-            previousDesc = "";
-            previousPersistence = null;
-            previousEnabled = false;
-        }
-
-        if (index >= 0 && index < devices.size()) {
-            // Okay
-            changeSelectedScreen(devices.get(index));
-        } else {
-            // Clear the settings
-            changeSelectedScreen(null);
-        }
-    }
-
-    /**
      * Screen is editable and edabled when we can write remotely or the screen
      * is local
      * 
@@ -186,7 +156,7 @@ public class EditDeviceScreensDescriptionViewModel extends ModelObject {
      * 
      * @param screen the new screen
      */
-    private void changeSelectedScreen(DeviceDescriptionWrapper screen) {
+    public void setSelectedScreen(DeviceDescriptionWrapper screen) {
         firePropertyChange("selectedScreen", selectedScreen, selectedScreen = screen);
         // Update values for associated fields
         if (screen != null) {
@@ -334,7 +304,7 @@ public class EditDeviceScreensDescriptionViewModel extends ModelObject {
      * @param newPersistence
      *            the new persiststence setting.
      */
-    private void updateCurrentPersistence(boolean newPersistence) {
+    private void updateCurrentPersistence(Boolean newPersistence) {
         firePropertyChange("currentPersistence", previousPersistence, previousPersistence = newPersistence);
 
     }
@@ -435,15 +405,14 @@ public class EditDeviceScreensDescriptionViewModel extends ModelObject {
     /**
      * Deletes a screen.
      * 
-     * @param index the index of the screen to delete
+     * @param toDelete
+     *            the screen to delete
      */
-    public void deleteScreen(int index) {
-        if (index >= 0 && index < devices.size()) {
-            List<DeviceDescriptionWrapper> oldList = new ArrayList<>(devices);
-            // Delete it
-            devices.remove(index);
-            firePropertyChange("screens", oldList, devices);
-        }
+    public void deleteScreen(DeviceDescriptionWrapper toDelete) {
+        List<DeviceDescriptionWrapper> oldList = new ArrayList<>(devices);
+        // Delete it
+        devices.remove(toDelete);
+        firePropertyChange("screens", oldList, devices);
 
         checkScreensValid();
     }
@@ -573,5 +542,20 @@ public class EditDeviceScreensDescriptionViewModel extends ModelObject {
     private void setPersistenceEnabled() {
         firePropertyChange("persistenceEnabled", previousPersistenceEnabled,
                 previousPersistenceEnabled = this.canWriteRemote && selectedScreen != null);
+    }
+
+    /**
+     * Deletes the screen and selects the previous item.
+     */
+    public void deleteSelectedScreen() {
+        if (getCurrentEnabled()) {
+            int newIndex = devices.indexOf(selectedScreen) - 1;
+            if (newIndex < 0) {
+                newIndex = 0;
+            }
+
+            deleteScreen(selectedScreen);
+            setSelectedScreen(devices.get(newIndex));
+        }
     }
 }
