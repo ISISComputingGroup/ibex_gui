@@ -115,7 +115,7 @@ public abstract class OpiTargetView extends OpiView {
 
     private List<OpiViewLocator> openOPIs = new ArrayList<>();
 
-    private void switchPerspective(IPerspectiveDescriptor newPerspective) {
+    private void switchPerspective(final IPerspectiveDescriptor newPerspective) {
         // Must run on the GUI thread
         if (newPerspective != null) {
             Display.getDefault().asyncExec(new Runnable() {
@@ -127,7 +127,7 @@ public abstract class OpiTargetView extends OpiView {
         }
     }
 
-    private void hideViewPart(IViewPart vp) {
+    private void hideViewPart(final IViewPart vp) {
         // Must run on the GUI thread
         Display.getDefault().asyncExec(new Runnable() {
             @Override

@@ -73,7 +73,7 @@ public class DeviceScreenListPanel extends Composite {
      *            the view model to be used by this view
      */
     public DeviceScreenListPanel(final Composite parent, int style, ViewDeviceScreensDescriptionViewModel viewModel,
-            DevicesOpiTargetView targetView) {
+            final DevicesOpiTargetView targetView) {
         super(parent, style);
         setLayout(new FillLayout(SWT.HORIZONTAL));
 
