@@ -36,6 +36,7 @@ import uk.ac.stfc.isis.ibex.devicescreens.desc.PropertyDescription;
 import uk.ac.stfc.isis.ibex.opis.DescriptionsProvider;
 import uk.ac.stfc.isis.ibex.opis.desc.MacroInfo;
 import uk.ac.stfc.isis.ibex.opis.desc.OpiDescription;
+import uk.ac.stfc.isis.ibex.ui.devicescreens.models.DeviceDescriptionWrapper;
 import uk.ac.stfc.isis.ibex.ui.devicescreens.models.EditDeviceScreensDescriptionViewModel;
 import uk.ac.stfc.isis.ibex.validators.MessageDisplayer;
 
@@ -117,7 +118,8 @@ public class DeviceScreensDescriptionViewModelTest {
         // view model
 
         // Act
-        viewModel.setSelectedScreen(viewModel.getScreens().get(0));
+        List<DeviceDescriptionWrapper> first = viewModel.getScreens().subList(0, 1);
+        viewModel.setSelectedScreens(first);
         viewModel.setName("new name");
         viewModel.setCurrentKey(opiName2);
         viewModel.setSelectedProperty(0);
@@ -133,56 +135,97 @@ public class DeviceScreensDescriptionViewModelTest {
     @Test
     public void changing_the_selected_screen_updates_name_key_etc() {
         // Act
-        viewModel.setSelectedScreen(viewModel.getScreens().get(1));
+        List<DeviceDescriptionWrapper> first = viewModel.getScreens().subList(1, 2);
+        viewModel.setSelectedScreens(first);
         
         // Assert
         assertEquals(deviceName + "2", viewModel.getName());
         assertEquals(opiName1, viewModel.getCurrentKey());
-        assertEquals(opiDescription1, viewModel.getCurrentDescription());
-        assertEquals(deviceName + "2", viewModel.getSelectedScreen().getName());
+        assertEquals(opiDescription1, viewModel.getDescription());
     }
 
     @Test
     public void clearing_the_selected_screen_unsets_name_key_etc() {
         // Act
-        viewModel.setSelectedScreen(null);
+        viewModel.setSelectedScreens(null);
 
         // Assert
         assertEquals("", viewModel.getName());
         assertEquals("", viewModel.getCurrentKey());
-        assertEquals("", viewModel.getCurrentDescription());
-        assertEquals(null, viewModel.getSelectedScreen());
+        assertEquals("", viewModel.getDescription());
+    }
+
+    @Test
+    public void setting_multiple_screens_unsets_name_key_etc() {
+        // Act
+        List<DeviceDescriptionWrapper> screens = viewModel.getScreens().subList(0, 2);
+        viewModel.setSelectedScreens(screens);
+
+        // Assert
+        assertEquals("", viewModel.getName());
+        assertEquals("", viewModel.getCurrentKey());
+        assertEquals("", viewModel.getDescription());
+    }
+
+    @Test
+    public void setting_multiple_screens_disables_controls() {
+        // Act
+        List<DeviceDescriptionWrapper> screens = viewModel.getScreens().subList(0, 2);
+        viewModel.setSelectedScreens(screens);
+
+        // Assert
+        assertEquals(false, viewModel.getEnabled());
+    }
+
+    @Test
+    public void setting_multiple_screens_causes_null_target() {
+        // Act
+        List<DeviceDescriptionWrapper> screens = viewModel.getScreens().subList(0, 2);
+        viewModel.setSelectedScreens(screens);
+
+        // Assert
+        assertEquals(null, viewModel.getTargetScreen());
+    }
+
+    @Test
+    public void setting_singular_screen_sets_target() {
+        // Act
+        List<DeviceDescriptionWrapper> first = viewModel.getScreens().subList(0, 1);
+        viewModel.setSelectedScreens(first);
+
+        // Assert
+        assertEquals(first.get(0), viewModel.getTargetScreen());
     }
 
     @Test
     public void changing_the_name_propagates() {
         // Act
-        viewModel.setSelectedScreen(viewModel.getScreens().get(0));
-        ;
+        viewModel.setTargetScreen(viewModel.getScreens().get(0));
+
         viewModel.setName("NewName");
 
         // Assert
         assertEquals("NewName", viewModel.getName());
-        assertEquals("NewName", viewModel.getSelectedScreen().getName());
+        assertEquals("NewName", viewModel.getTargetScreen().getName());
     }
 
     @Test
     public void changing_the_key_propagates_and_wipes_stored_properties() {
         // Act
-        viewModel.setSelectedScreen(viewModel.getScreens().get(0));
+        viewModel.setTargetScreen(viewModel.getScreens().get(0));
         viewModel.setCurrentKey(opiName2);
 
         // Assert
         assertEquals(opiName2, viewModel.getCurrentKey());
-        assertEquals(opiDescription2, viewModel.getSelectedScreen().getDescription());
-        assertEquals("", viewModel.getSelectedScreen().getProperties().get(0).getValue());
-        assertEquals("", viewModel.getSelectedScreen().getProperties().get(1).getValue());
+        assertEquals(opiDescription2, viewModel.getTargetScreen().getDescription());
+        assertEquals("", viewModel.getTargetScreen().getProperties().get(0).getValue());
+        assertEquals("", viewModel.getTargetScreen().getProperties().get(1).getValue());
     }
 
     @Test
     public void selecting_property_allows_access_to_value_and_description() {
         // Act
-        viewModel.setSelectedScreen(viewModel.getScreens().get(0));
+        viewModel.setTargetScreen(viewModel.getScreens().get(0));
         viewModel.setSelectedProperty(0);
 
         // Assert
@@ -193,7 +236,7 @@ public class DeviceScreensDescriptionViewModelTest {
     @Test
     public void changing_selected_property_value_propagates() {
         // Act
-        viewModel.setSelectedScreen(viewModel.getScreens().get(0));
+        viewModel.setTargetScreen(viewModel.getScreens().get(0));
         viewModel.setSelectedProperty(0);
         viewModel.setSelectedPropertyValue("Hello");
 
@@ -203,15 +246,44 @@ public class DeviceScreensDescriptionViewModelTest {
     }
 
     @Test
-    public void delete_screen_works() {
+    public void delete_single_screen_works() {
         // Arrange
-        viewModel.setSelectedScreen(viewModel.getScreens().get(0));
+        List<DeviceDescriptionWrapper> firstScreen = viewModel.getScreens().subList(0, 1);
+        viewModel.setSelectedScreens(firstScreen);
 
         // Act
-        viewModel.deleteSelectedScreen();
+        viewModel.deleteSelectedScreens();
 
         // Assert
         assertEquals(1, viewModel.getScreens().size());
+    }
+
+    @Test
+    public void delete_all_screens_works() {
+        // Arrange
+        List<DeviceDescriptionWrapper> screens = viewModel.getScreens().subList(0, 2);
+        viewModel.setSelectedScreens(screens);
+
+        // Act
+        viewModel.deleteSelectedScreens();
+
+        // Assert
+        assertEquals(0, viewModel.getScreens().size());
+    }
+
+    @Test
+    public void delete_all_screens_causes_null_target() {
+        // Arrange
+        List<DeviceDescriptionWrapper> screens = viewModel.getScreens().subList(0, 2);
+        viewModel.setSelectedScreens(screens);
+
+        // Act
+        viewModel.deleteSelectedScreens();
+
+        // Assert
+        assertEquals(0, viewModel.getScreens().size());
+        assertEquals(null, viewModel.getTargetScreen());
+        assertEquals(false, viewModel.getEnabled());
     }
 
     @Test
@@ -232,7 +304,7 @@ public class DeviceScreensDescriptionViewModelTest {
         String expectedMsg = "Device 'Device1' is not pointing at a valid target. Please select a target OPI.";
 
         // Act
-        viewModel.setSelectedScreen(viewModel.getScreens().get(0));
+        viewModel.setTargetScreen(viewModel.getScreens().get(0));
         viewModel.setCurrentKey("");
 
         // Assert

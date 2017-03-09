@@ -508,16 +508,19 @@ public class EditDeviceScreensDescriptionViewModel extends ModelObject {
      * Deletes the screens and selects the previous item.
      */
     public void deleteSelectedScreens() {
-        int newIndex = devices.indexOf(targetScreen) - 1;
+        int newIndex = devices.indexOf(selectedScreens.get(0)) - 1;
         if (newIndex < 0) {
             newIndex = 0;
         }
 
         List<DeviceDescriptionWrapper> newList = new ArrayList<>(devices);
         // Delete it
-        newList.remove(targetScreen);
+        newList.removeAll(selectedScreens);
         setScreens(newList);
-
-        setSelectedScreens(new ArrayList<DeviceDescriptionWrapper>(Arrays.asList(devices.get(newIndex))));
+        if (newList.size() > 0) {
+            setSelectedScreens(new ArrayList<DeviceDescriptionWrapper>(Arrays.asList(devices.get(newIndex))));
+        } else {
+            setSelectedScreens(null);
+        }
     }
 }
