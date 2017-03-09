@@ -312,20 +312,29 @@ public class ConfigServer extends Closer {
      * @return the Collection<{@link EditableIocState}> observable object
      */
     public ForwardingObservable<Collection<IocState>> iocStates() {
+
+        // Set up a converter that just generates a new ArrayList
+        Converter<Collection<IocState>, Collection<IocState>> converter =
+                new Converter<Collection<IocState>, Collection<IocState>>() {
+
+            @Override
+            public Collection<IocState> convert(Collection<IocState> value) throws ConversionException {
+                return Lists.newArrayList(value);
+            }
+        };
+        
+        // Use the above converter in a converting observable
+        ConvertingObservable<Collection<IocState>, Collection<IocState>> convertingObservable =
+                new ConvertingObservable<Collection<IocState>, Collection<IocState>>(variables.iocStates,
+                        converter);
+
         ForwardingObservable<Collection<IocState>> iocs = 
-                new ForwardingObservable<>(
-                        new ConvertingObservable<Collection<IocState>, Collection<IocState>>(variables.iocStates,
-                                new Converter<Collection<IocState>, Collection<IocState>>() {
+                new ForwardingObservable<>(convertingObservable);
 
-                                    @Override
-                                    public Collection<IocState> convert(Collection<IocState> value)
-                                            throws ConversionException {
+        // Filter out the IOCs which you can't stop/restart (e.g. blockserver)
+        FilteredIocs filteredIocs = new FilteredIocs(iocs, variables.protectedIocs);
 
-                                        return Lists.newArrayList(value);
-                                    }
-                                }));
-
-        return new ForwardingObservable<>(new FilteredIocs(iocs, variables.protectedIocs));
+        return new ForwardingObservable<>(filteredIocs);
     }
 
     /**
