@@ -39,7 +39,7 @@ public class DeviceScreensInstrumentInfoReceiver implements InstrumentInfoReceiv
      */
     @Override
     public void preSetInstrument(InstrumentInfo instrument) {
-        DevicesOpiTargetView.closeAllOPIs();
+        Activator.getDefault().targetView().closeAllOPIs();
     }
 
     @Override

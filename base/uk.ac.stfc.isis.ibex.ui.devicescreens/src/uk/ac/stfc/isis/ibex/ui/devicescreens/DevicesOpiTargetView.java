@@ -45,9 +45,9 @@ public class DevicesOpiTargetView extends OpiTargetView {
      * @param opiTarget the opi target
      * @throws OPIViewCreationException when opi can not be created
      */
-    public static void displayOpi(OpiTarget opiTarget) throws OPIViewCreationException {
+    public void displayOpi(OpiTarget opiTarget) throws OPIViewCreationException {
         if (opiTarget.opiName().length() > 0) {
-            OpiTargetView.displayOpi(opiTarget, ID);
+            displayOpi(opiTarget, ID);
         } else {
             MessageDialog.openError(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), "Error",
                     "Unable to open OPI " + opiTarget.name()

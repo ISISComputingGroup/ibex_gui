@@ -38,6 +38,11 @@ public class Activator extends AbstractUIPlugin {
      */
     private static Activator plugin;
 
+    /**
+     * The target view for opening OPIs.
+     */
+    private final DevicesOpiTargetView targetView = new DevicesOpiTargetView();
+
 	/*
 	 * (non-Javadoc)
 	 * @see org.eclipse.ui.plugin.AbstractUIPlugin#start(org.osgi.framework.BundleContext)
@@ -76,5 +81,12 @@ public class Activator extends AbstractUIPlugin {
      */
     public static ImageDescriptor getImageDescriptor(String path) {
         return imageDescriptorFromPlugin(PLUGIN_ID, path);
+    }
+
+    /**
+     * @return The target view containing open OPIs
+     */
+    public DevicesOpiTargetView targetView() {
+        return targetView;
     }
 }
