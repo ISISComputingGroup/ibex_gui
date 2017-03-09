@@ -39,7 +39,10 @@ public class SynopticSettings implements InstrumentInfoReceiver {
      */
     @Override
     public void preSetInstrument(InstrumentInfo instrument) {
-        Activator.getDefault().presenter().closeAllOPIs();
+        final Activator activator = Activator.getDefault();
+        if (activator != null) {
+            activator.presenter().closeAllOPIs();
+        }
     }
 
     @Override
