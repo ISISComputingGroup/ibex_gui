@@ -27,8 +27,6 @@ import org.eclipse.core.databinding.beans.BeanProperties;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ComboViewer;
-import org.eclipse.jface.viewers.ISelectionChangedListener;
-import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -85,21 +83,13 @@ public class TargetNameWidget extends Composite {
         cmboOpiName.setInput(availableOPIs);
         cmboOpiName.getCombo().select(-1);
 
-        cmboOpiName.addSelectionChangedListener(new ISelectionChangedListener() {
-            @Override
-            public void selectionChanged(SelectionChangedEvent e) {
-
-            }
-        });
-
         DataBindingContext bindingContext = new DataBindingContext();
 
         bindingContext.bindValue(WidgetProperties.selection().observe(cmboOpiName.getCombo()),
                 BeanProperties.value("currentKey").observe(viewModel));
 
-
         bindingContext.bindValue(WidgetProperties.enabled().observe(cmboOpiName.getCombo()),
-                BeanProperties.value("currentEnabled").observe(viewModel));
-	}
+                BeanProperties.value("enabled").observe(viewModel));
+    }
 
 }

@@ -27,7 +27,6 @@ import java.beans.PropertyChangeListener;
 
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.beans.BeanProperties;
-import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.databinding.viewers.ObservableListContentProvider;
 import org.eclipse.jface.databinding.viewers.ViewersObservables;
 import org.eclipse.jface.viewers.ListViewer;
@@ -87,11 +86,11 @@ public class ConfigureDeviceScreensListPanel extends Composite {
         grpList.setText("Device Screens");
         grpList.setLayout(new GridLayout(2, false));
 
-        screensViewer = new ListViewer(grpList, SWT.BORDER | SWT.V_SCROLL | SWT.SINGLE);
+        screensViewer = new ListViewer(grpList, SWT.BORDER | SWT.V_SCROLL | SWT.MULTI);
         screensViewer.setContentProvider(new ObservableListContentProvider());
         screensViewer.setInput(BeanProperties.list("screens").observe(viewModel));
 
-        viewModel.addPropertyChangeListener("currentName", new PropertyChangeListener() {
+        viewModel.addPropertyChangeListener("name", new PropertyChangeListener() {
             @Override
             public void propertyChange(PropertyChangeEvent evt) {
                 screensViewer.refresh();
@@ -105,7 +104,7 @@ public class ConfigureDeviceScreensListPanel extends Composite {
             @Override
             public void keyPressed(KeyEvent e) {
                 if (e.keyCode == SWT.DEL) {
-                    viewModel.deleteSelectedScreen();
+                    viewModel.deleteSelectedScreens();
                 }
             }
         });
@@ -133,19 +132,17 @@ public class ConfigureDeviceScreensListPanel extends Composite {
         Button btnDelete = new Button(btnsComposite, SWT.NONE);
         btnDelete.setText("Delete");
         GridData gdBtnDelete = new GridData(SWT.LEFT, SWT.BOTTOM, false, false, 1, 1);
-        bindingContext.bindValue(WidgetProperties.enabled().observe(btnDelete),
-                BeanProperties.value("currentEnabled").observe(viewModel), null, null);
         gdBtnDelete.widthHint = 100;
         btnDelete.setLayoutData(gdBtnDelete);
         btnDelete.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
-                viewModel.deleteSelectedScreen();
+                viewModel.deleteSelectedScreens();
             }
         });
 
-        bindingContext.bindValue(ViewersObservables.observeSingleSelection(screensViewer),
-                BeanProperties.value("selectedScreen").observe(viewModel));
+        bindingContext.bindList(ViewersObservables.observeMultiSelection(screensViewer),
+                BeanProperties.list("selectedScreens").observe(viewModel));
     }
 
 }

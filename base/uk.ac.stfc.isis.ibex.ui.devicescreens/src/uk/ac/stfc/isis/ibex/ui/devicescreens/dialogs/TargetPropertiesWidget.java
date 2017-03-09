@@ -166,7 +166,7 @@ public class TargetPropertiesWidget extends Composite {
         viewModel.addPropertyChangeListener("screens", new PropertyChangeListener() {
             @Override
             public void propertyChange(PropertyChangeEvent evt) {
-                updatePropertyList(viewModel.getSelectedScreen());
+                updatePropertyList(viewModel.getTargetScreen());
                 table.setSelection(-1);
                 valueText.setEnabled(false);
             }
@@ -176,7 +176,7 @@ public class TargetPropertiesWidget extends Composite {
         viewModel.addPropertyChangeListener("selectedScreen", new PropertyChangeListener() {
             @Override
             public void propertyChange(PropertyChangeEvent evt) {
-                updatePropertyList(viewModel.getSelectedScreen());
+                updatePropertyList(viewModel.getTargetScreen());
                 table.setSelection(-1);
                 valueText.setEnabled(false);
             }
@@ -200,7 +200,7 @@ public class TargetPropertiesWidget extends Composite {
         viewModel.addPropertyChangeListener("selectedPropertyValue", new PropertyChangeListener() {
             @Override
             public void propertyChange(PropertyChangeEvent evt) {
-                updatePropertyList(viewModel.getSelectedScreen());
+                updatePropertyList(viewModel.getTargetScreen());
             }
         });
 
@@ -208,7 +208,7 @@ public class TargetPropertiesWidget extends Composite {
         viewModel.addPropertyChangeListener("currentKey", new PropertyChangeListener() {
             @Override
             public void propertyChange(PropertyChangeEvent evt) {
-                updatePropertyList(viewModel.getSelectedScreen());
+                updatePropertyList(viewModel.getTargetScreen());
                 table.setSelection(-1);
                 // Clear the property text and description
                 txtDescription.setText("");
@@ -218,7 +218,7 @@ public class TargetPropertiesWidget extends Composite {
         });
 
         // This updates when the OPI changes
-        viewModel.addPropertyChangeListener("currentEnabled", new PropertyChangeListener() {
+        viewModel.addPropertyChangeListener("enabled", new PropertyChangeListener() {
             @Override
             public void propertyChange(PropertyChangeEvent evt) {
                 currentEnabled = (boolean) evt.getNewValue();
@@ -258,6 +258,7 @@ public class TargetPropertiesWidget extends Composite {
             table.setEnabled(hasProperties);
         } else {
             table.setEnabled(false);
+            table.removeAll();
         }
     }
 

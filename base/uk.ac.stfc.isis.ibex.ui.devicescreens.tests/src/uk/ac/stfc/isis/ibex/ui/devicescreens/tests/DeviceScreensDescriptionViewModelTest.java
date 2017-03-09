@@ -118,11 +118,10 @@ public class DeviceScreensDescriptionViewModelTest {
 
         // Act
         viewModel.setSelectedScreen(viewModel.getScreens().get(0));
-        viewModel.setCurrentName("new name");
+        viewModel.setName("new name");
         viewModel.setCurrentKey(opiName2);
         viewModel.setSelectedProperty(0);
         viewModel.setSelectedPropertyValue("new value");
-        viewModel.deleteScreen(viewModel.getScreens().get(1));
 
         // Assert that nothing changed in the original
         assertEquals(2, description.getDevices().size());
@@ -137,7 +136,7 @@ public class DeviceScreensDescriptionViewModelTest {
         viewModel.setSelectedScreen(viewModel.getScreens().get(1));
         
         // Assert
-        assertEquals(deviceName + "2", viewModel.getCurrentName());
+        assertEquals(deviceName + "2", viewModel.getName());
         assertEquals(opiName1, viewModel.getCurrentKey());
         assertEquals(opiDescription1, viewModel.getCurrentDescription());
         assertEquals(deviceName + "2", viewModel.getSelectedScreen().getName());
@@ -149,7 +148,7 @@ public class DeviceScreensDescriptionViewModelTest {
         viewModel.setSelectedScreen(null);
 
         // Assert
-        assertEquals("", viewModel.getCurrentName());
+        assertEquals("", viewModel.getName());
         assertEquals("", viewModel.getCurrentKey());
         assertEquals("", viewModel.getCurrentDescription());
         assertEquals(null, viewModel.getSelectedScreen());
@@ -160,10 +159,10 @@ public class DeviceScreensDescriptionViewModelTest {
         // Act
         viewModel.setSelectedScreen(viewModel.getScreens().get(0));
         ;
-        viewModel.setCurrentName("NewName");
+        viewModel.setName("NewName");
 
         // Assert
-        assertEquals("NewName", viewModel.getCurrentName());
+        assertEquals("NewName", viewModel.getName());
         assertEquals("NewName", viewModel.getSelectedScreen().getName());
     }
 
@@ -205,8 +204,11 @@ public class DeviceScreensDescriptionViewModelTest {
 
     @Test
     public void delete_screen_works() {
+        // Arrange
+        viewModel.setSelectedScreen(viewModel.getScreens().get(0));
+
         // Act
-        viewModel.deleteScreen(viewModel.getScreens().get(0));
+        viewModel.deleteSelectedScreen();
 
         // Assert
         assertEquals(1, viewModel.getScreens().size());
