@@ -28,6 +28,16 @@ import uk.ac.stfc.isis.ibex.epics.writing.Writer;
  *
  */
 public class EditableIocState extends IocState {
+    /**
+     * Constructor.
+     * 
+     * @param iocState
+     *            the ioc state
+     * @param description
+     *            the description
+     * @param setDescription
+     *            the description setter
+     */
     public EditableIocState(IocState iocState, ForwardingObservable<String> description,
             Writer<String> setDescription) {
         super(iocState);
