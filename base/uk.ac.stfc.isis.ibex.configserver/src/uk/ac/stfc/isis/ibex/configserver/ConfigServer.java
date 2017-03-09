@@ -309,7 +309,7 @@ public class ConfigServer extends Closer {
     /**
      * Returns an observable to the states of all of the iocs.
      * 
-     * @return the Collection<{@link EditableIocState}> observable object
+     * @return the Collection<{@link IocState}> observable object
      */
     public ForwardingObservable<Collection<IocState>> iocStates() {
 
