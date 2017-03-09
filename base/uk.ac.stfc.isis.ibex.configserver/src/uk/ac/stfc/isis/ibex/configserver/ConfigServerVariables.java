@@ -183,14 +183,6 @@ public class ConfigServerVariables extends Closer {
 				
         iocStates = InstrumentUtils.convert(readCompressed(blockServerAddresses.iocs()), converters.toIocStates());
 
-        System.out.println("ConfigServerVariables " + System.nanoTime());
-
-        if (iocStates.getValue() != null) {
-            System.out.println("Creating configserver, number of iocStates is " + iocStates.getValue().size());
-        } else {
-            System.out.println("Creating configserver, iocStates.getValue() is NULL");
-        }
-
         protectedIocs =
                 InstrumentUtils.convert(readCompressed(blockServerAddresses.iocsNotToStop()), converters.toNames());
         bannerDescription =

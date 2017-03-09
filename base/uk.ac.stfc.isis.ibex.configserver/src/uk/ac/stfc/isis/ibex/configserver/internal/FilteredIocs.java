@@ -45,7 +45,7 @@ public class FilteredIocs extends
 
 	@Override
     protected Collection<IocState> transform(Pair<Collection<IocState>, Collection<String>> value) {
-        System.out.println("Converting: pair " + value.first.size() + "  " + value.second.size());
+
 		if (value.first == null || value.second == null) {
 			return Collections.emptyList();
 		}
