@@ -117,12 +117,12 @@ public class DeviceScreensDescriptionViewModelTest {
         // view model
 
         // Act
-        viewModel.changeSelectedScreen(0);
+        viewModel.setSelectedScreen(viewModel.getScreens().get(0));
         viewModel.setCurrentName("new name");
         viewModel.setCurrentKey(opiName2);
         viewModel.setSelectedProperty(0);
         viewModel.setSelectedPropertyValue("new value");
-        viewModel.deleteScreen(1);
+        viewModel.deleteScreen(viewModel.getScreens().get(1));
 
         // Assert that nothing changed in the original
         assertEquals(2, description.getDevices().size());
@@ -134,7 +134,7 @@ public class DeviceScreensDescriptionViewModelTest {
     @Test
     public void changing_the_selected_screen_updates_name_key_etc() {
         // Act
-        viewModel.changeSelectedScreen(1);
+        viewModel.setSelectedScreen(viewModel.getScreens().get(1));
         
         // Assert
         assertEquals(deviceName + "2", viewModel.getCurrentName());
@@ -146,7 +146,7 @@ public class DeviceScreensDescriptionViewModelTest {
     @Test
     public void clearing_the_selected_screen_unsets_name_key_etc() {
         // Act
-        viewModel.changeSelectedScreen(-1);
+        viewModel.setSelectedScreen(null);
 
         // Assert
         assertEquals("", viewModel.getCurrentName());
@@ -158,7 +158,8 @@ public class DeviceScreensDescriptionViewModelTest {
     @Test
     public void changing_the_name_propagates() {
         // Act
-        viewModel.changeSelectedScreen(0);
+        viewModel.setSelectedScreen(viewModel.getScreens().get(0));
+        ;
         viewModel.setCurrentName("NewName");
 
         // Assert
@@ -169,7 +170,7 @@ public class DeviceScreensDescriptionViewModelTest {
     @Test
     public void changing_the_key_propagates_and_wipes_stored_properties() {
         // Act
-        viewModel.changeSelectedScreen(0);
+        viewModel.setSelectedScreen(viewModel.getScreens().get(0));
         viewModel.setCurrentKey(opiName2);
 
         // Assert
@@ -182,7 +183,7 @@ public class DeviceScreensDescriptionViewModelTest {
     @Test
     public void selecting_property_allows_access_to_value_and_description() {
         // Act
-        viewModel.changeSelectedScreen(0);
+        viewModel.setSelectedScreen(viewModel.getScreens().get(0));
         viewModel.setSelectedProperty(0);
 
         // Assert
@@ -193,7 +194,7 @@ public class DeviceScreensDescriptionViewModelTest {
     @Test
     public void changing_selected_property_value_propagates() {
         // Act
-        viewModel.changeSelectedScreen(0);
+        viewModel.setSelectedScreen(viewModel.getScreens().get(0));
         viewModel.setSelectedProperty(0);
         viewModel.setSelectedPropertyValue("Hello");
 
@@ -205,7 +206,7 @@ public class DeviceScreensDescriptionViewModelTest {
     @Test
     public void delete_screen_works() {
         // Act
-        viewModel.deleteScreen(1);
+        viewModel.deleteScreen(viewModel.getScreens().get(0));
 
         // Assert
         assertEquals(1, viewModel.getScreens().size());
@@ -229,7 +230,7 @@ public class DeviceScreensDescriptionViewModelTest {
         String expectedMsg = "Device 'Device1' is not pointing at a valid target. Please select a target OPI.";
 
         // Act
-        viewModel.changeSelectedScreen(0);
+        viewModel.setSelectedScreen(viewModel.getScreens().get(0));
         viewModel.setCurrentKey("");
 
         // Assert

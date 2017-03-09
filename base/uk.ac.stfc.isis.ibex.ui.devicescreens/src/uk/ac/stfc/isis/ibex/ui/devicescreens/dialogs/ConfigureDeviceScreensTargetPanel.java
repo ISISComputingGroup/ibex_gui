@@ -27,23 +27,12 @@ import org.eclipse.core.databinding.UpdateValueStrategy;
 import org.eclipse.core.databinding.beans.BeanProperties;
 import org.eclipse.core.databinding.conversion.Converter;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
-import org.eclipse.jface.databinding.viewers.ObservableListContentProvider;
-import org.eclipse.jface.databinding.viewers.ViewersObservables;
-import org.eclipse.jface.viewers.ListViewer;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.KeyAdapter;
-import org.eclipse.swt.events.KeyEvent;
-import org.eclipse.swt.events.ModifyEvent;
-import org.eclipse.swt.events.ModifyListener;
-import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Text;
 
 import uk.ac.stfc.isis.ibex.ui.devicescreens.models.EditDeviceScreensDescriptionViewModel;
@@ -52,14 +41,7 @@ import uk.ac.stfc.isis.ibex.ui.devicescreens.models.EditDeviceScreensDescription
  * The main panel for the configure device screens dialog.
  */
 @SuppressWarnings("checkstyle:magicnumber")
-public class ConfigureDeviceScreensPanel extends Composite {
-
-    /** The groups viewer. */
-    private ListViewer devicesViewer;
-
-    /** The group list. */
-    private List devicesList;
-
+public class ConfigureDeviceScreensTargetPanel extends Composite {
     /** The view model. */
     private EditDeviceScreensDescriptionViewModel viewModel;
 
@@ -73,84 +55,13 @@ public class ConfigureDeviceScreensPanel extends Composite {
      * @param style the SWT style
      * @param viewModel the view model
      */
-    public ConfigureDeviceScreensPanel(Composite parent, int style, EditDeviceScreensDescriptionViewModel viewModel) {
+    public ConfigureDeviceScreensTargetPanel(Composite parent, int style, EditDeviceScreensDescriptionViewModel viewModel) {
         super(parent, style);
         this.viewModel = viewModel;
 
-        setLayout(new GridLayout(1, true));
+        setLayout(new GridLayout(1, false));
 
-        Composite mainComposite = new Composite(this, SWT.NONE);
-        mainComposite.setLayout(new GridLayout(2, false));
-        mainComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-
-        createListGroup(mainComposite);
-        createTargetGroup(mainComposite);
-    }
-
-    /**
-     * Creates the screens list part of the display.
-     * 
-     * @param mainComposite the parent composite
-     */
-    private void createListGroup(Composite mainComposite) {
-        Group grpList = new Group(mainComposite, SWT.NONE);
-        grpList.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, true, 1, 1));
-        grpList.setText("Device Screens");
-        grpList.setLayout(new GridLayout(2, false));
-
-        devicesViewer = new ListViewer(grpList, SWT.BORDER | SWT.V_SCROLL | SWT.SINGLE);
-        ObservableListContentProvider contentProvider = new ObservableListContentProvider();
-        devicesViewer.setContentProvider(contentProvider);
-        devicesViewer.setInput(BeanProperties.list("screens").observe(viewModel));
-
-        devicesList = devicesViewer.getList();
-        GridData gdViewer = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
-        devicesList.setLayoutData(gdViewer);
-        devicesList.addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyPressed(KeyEvent e) {
-                if (e.keyCode == SWT.DEL) {
-                    viewModel.deleteSelectedScreen();
-                }
-            }
-        });
-
-        Composite orderComposite = new Composite(grpList, SWT.NONE);
-        orderComposite.setLayout(new GridLayout(1, false));
-        orderComposite.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, true, 1, 1));
-
-        Composite btnsComposite = new Composite(grpList, SWT.NONE);
-        btnsComposite.setLayout(new GridLayout(2, false));
-        btnsComposite.setLayoutData(new GridData(SWT.FILL, SWT.TOP, false, false, 1, 1));
-
-        Button btnAdd = new Button(btnsComposite, SWT.NONE);
-        btnAdd.setText("Add");
-        GridData gdBtnAdd = new GridData(SWT.LEFT, SWT.BOTTOM, false, false, 1, 1);
-        gdBtnAdd.widthHint = 100;
-        btnAdd.setLayoutData(gdBtnAdd);
-        btnAdd.addSelectionListener(new SelectionAdapter() {
-            @Override
-            public void widgetSelected(SelectionEvent e) {
-                viewModel.addScreen();
-            }
-        });
-
-        Button btnDelete = new Button(btnsComposite, SWT.NONE);
-        btnDelete.setText("Delete");
-        GridData gdBtnDelete = new GridData(SWT.LEFT, SWT.BOTTOM, false, false, 1, 1);
-        bindingContext.bindValue(WidgetProperties.enabled().observe(btnDelete),
-                BeanProperties.value("currentEnabled").observe(viewModel), null, null);
-        gdBtnDelete.widthHint = 100;
-        btnDelete.setLayoutData(gdBtnDelete);
-        btnDelete.addSelectionListener(new SelectionAdapter() {
-            @Override
-            public void widgetSelected(SelectionEvent e) {
-                viewModel.deleteSelectedScreen();
-            }
-        });
-
-        bindingContext.bindValue(ViewersObservables.observeSingleSelection(devicesViewer),
-                BeanProperties.value("selectedScreen").observe(viewModel));
+        createTargetGroup(this);
     }
 
     /**
@@ -183,13 +94,6 @@ public class ConfigureDeviceScreensPanel extends Composite {
 
         bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(txtName),
                 BeanProperties.value("currentName").observe(viewModel));
-
-        txtName.addModifyListener(new ModifyListener() {
-            @Override
-            public void modifyText(ModifyEvent arg0) {
-                devicesViewer.refresh();
-            }
-        });
 
         // Disable the name box if there is no screen selected
         Converter isScreenSelectedConverter = new IsNullConverter();

@@ -30,8 +30,8 @@ import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
+import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
@@ -121,7 +121,6 @@ public class TargetPropertiesWidget extends Composite {
         table.setLinesVisible(true);
         table.setEnabled(false);
 
-
         TableViewerColumn colTesting = new TableViewerColumn(viewer, SWT.NONE);
         colTesting.getColumn().setText("Name");
 
@@ -131,15 +130,10 @@ public class TargetPropertiesWidget extends Composite {
         tableColumnLayout.setColumnData(colTesting.getColumn(), new ColumnWeightData(20, 20, true));
         tableColumnLayout.setColumnData(colTesting2.getColumn(), new ColumnWeightData(40, 20, false));
 
-        table.addSelectionListener(new SelectionListener() {
+        table.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
                 viewModel.setSelectedProperty(table.getSelectionIndex());
-            }
-
-            @Override
-            public void widgetDefaultSelected(SelectionEvent e) {
-                // Can add double click behaviour here...
             }
         });
 

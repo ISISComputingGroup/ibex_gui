@@ -27,6 +27,7 @@ import org.eclipse.jface.dialogs.TitleAreaDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
@@ -66,12 +67,21 @@ public class ConfigureDeviceScreensDialog extends TitleAreaDialog implements Mes
 
     @Override
     protected Control createDialogArea(Composite parent) {
-        ConfigureDeviceScreensPanel editor =
-                new ConfigureDeviceScreensPanel(parent, SWT.NONE, viewModel);
-        editor.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+        parent.setLayout(new GridLayout(1, true));
+        
+        Composite main = new Composite(parent, SWT.NONE);
+        main.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+        main.setLayout(new GridLayout(2, false));
+
+        ConfigureDeviceScreensListPanel list = new ConfigureDeviceScreensListPanel(main, SWT.NONE, viewModel);
+        list.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+
+        ConfigureDeviceScreensTargetPanel target = new ConfigureDeviceScreensTargetPanel(main, SWT.NONE, viewModel);
+        target.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+
         setTitle(TITLE);
 
-        return editor;
+        return main;
     }
 
     @Override
