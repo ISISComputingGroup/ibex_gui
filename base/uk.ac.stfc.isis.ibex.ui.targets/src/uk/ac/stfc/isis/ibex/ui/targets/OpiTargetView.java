@@ -146,10 +146,8 @@ public abstract class OpiTargetView extends OpiView {
         final IWorkbenchPage activePage = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
         final IPerspectiveDescriptor originalPerspective = activePage != null ? activePage.getPerspective() : null;
         for (final OpiViewLocator locator : openOPIs) {
-            final IViewPart view = locator.viewPart();
-            final IPerspectiveDescriptor perspective = locator.perspective();
-            switchPerspective(perspective);
-            hideViewPart(view);
+            switchPerspective(locator.perspective());
+            hideViewPart(locator.viewPart());
         }
         switchPerspective(originalPerspective);
         openOPIs.clear();
