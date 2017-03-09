@@ -670,11 +670,11 @@
 			</value>
 		</entry> 
 		<entry>
-			<key>LARMOR Goniometer</key>
+			<key>Goniometer</key>
 			<value>
 				<type>ZOOM_SAMPLE_STACK</type>
-				<path>larmor_goniometer/larmor_goniometer.opi</path>
-				<description>The OPI for the LARMOR goniometer. No properties required.</description>
+				<path>goniometer/goniometer.opi</path>
+				<description>The OPI for a goniometer. No properties required.</description>
 				<macros>
 				</macros>
 			</value>

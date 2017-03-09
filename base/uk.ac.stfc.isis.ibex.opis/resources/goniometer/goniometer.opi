@@ -220,7 +220,7 @@ $(pv_value)</tooltip>
         <keep_wh_ratio>false</keep_wh_ratio>
       </scale_options>
       <visible>true</visible>
-      <pv_name>$(P)MOT:STACK:X</pv_name>
+      <pv_name>$(P)MOT:RUPPER</pv_name>
       <vertical_alignment>1</vertical_alignment>
       <border_color>
         <color name="ISIS_Border" red="0" green="0" blue="0" />
@@ -260,7 +260,7 @@ $(pv_value)</tooltip>
       <multiline_input>false</multiline_input>
       <border_width>1</border_width>
       <visible>true</visible>
-      <pv_name>$(P)MOT:STACK:X:SP</pv_name>
+      <pv_name>$(P)MOT:RUPPER:SP</pv_name>
       <selector_type>0</selector_type>
       <border_color>
         <color name="ISIS_Border" red="0" green="0" blue="0" />
@@ -368,7 +368,7 @@ $(pv_value)</tooltip>
         <keep_wh_ratio>false</keep_wh_ratio>
       </scale_options>
       <visible>true</visible>
-      <pv_name>$(P)MOT:STACK:Y</pv_name>
+      <pv_name>$(P)MOT:RLOWER</pv_name>
       <vertical_alignment>1</vertical_alignment>
       <border_color>
         <color name="ISIS_Border" red="0" green="0" blue="0" />
@@ -408,7 +408,7 @@ $(pv_value)</tooltip>
       <multiline_input>false</multiline_input>
       <border_width>1</border_width>
       <visible>true</visible>
-      <pv_name>$(P)MOT:STACK:Y:SP</pv_name>
+      <pv_name>$(P)MOT:RLOWER:SP</pv_name>
       <selector_type>0</selector_type>
       <border_color>
         <color name="ISIS_Border" red="0" green="0" blue="0" />
@@ -516,7 +516,7 @@ $(pv_value)</tooltip>
         <keep_wh_ratio>false</keep_wh_ratio>
       </scale_options>
       <visible>true</visible>
-      <pv_name>$(P)MOT:STACK:ZHI</pv_name>
+      <pv_name>$(P)MOT:CX</pv_name>
       <vertical_alignment>1</vertical_alignment>
       <border_color>
         <color name="ISIS_Border" red="0" green="0" blue="0" />
@@ -556,7 +556,7 @@ $(pv_value)</tooltip>
       <multiline_input>false</multiline_input>
       <border_width>1</border_width>
       <visible>true</visible>
-      <pv_name>$(P)MOT:STACK:ZHI:SP</pv_name>
+      <pv_name>$(P)MOT:CX:SP</pv_name>
       <selector_type>0</selector_type>
       <border_color>
         <color name="ISIS_Border" red="0" green="0" blue="0" />
@@ -664,7 +664,7 @@ $(pv_value)</tooltip>
         <keep_wh_ratio>false</keep_wh_ratio>
       </scale_options>
       <visible>true</visible>
-      <pv_name>$(P)MOT:STACK:THETA</pv_name>
+      <pv_name>$(P)MOT:CY</pv_name>
       <vertical_alignment>1</vertical_alignment>
       <border_color>
         <color name="ISIS_Border" red="0" green="0" blue="0" />
@@ -704,7 +704,7 @@ $(pv_value)</tooltip>
       <multiline_input>false</multiline_input>
       <border_width>1</border_width>
       <visible>true</visible>
-      <pv_name>$(P)MOT:STACK:THETA:SP</pv_name>
+      <pv_name>$(P)MOT:CY:SP</pv_name>
       <selector_type>0</selector_type>
       <border_color>
         <color name="ISIS_Border" red="0" green="0" blue="0" />
@@ -812,7 +812,7 @@ $(pv_value)</tooltip>
         <keep_wh_ratio>false</keep_wh_ratio>
       </scale_options>
       <visible>true</visible>
-      <pv_name>$(P)MOT:STACK:PSI</pv_name>
+      <pv_name>$(P)MOT:Z</pv_name>
       <vertical_alignment>1</vertical_alignment>
       <border_color>
         <color name="ISIS_Border" red="0" green="0" blue="0" />
@@ -852,7 +852,7 @@ $(pv_value)</tooltip>
       <multiline_input>false</multiline_input>
       <border_width>1</border_width>
       <visible>true</visible>
-      <pv_name>$(P)MOT:STACK:PSI:SP</pv_name>
+      <pv_name>$(P)MOT:Z:SP</pv_name>
       <selector_type>0</selector_type>
       <border_color>
         <color name="ISIS_Border" red="0" green="0" blue="0" />
@@ -960,7 +960,7 @@ $(pv_value)</tooltip>
         <keep_wh_ratio>false</keep_wh_ratio>
       </scale_options>
       <visible>true</visible>
-      <pv_name>$(P)MOT:STACK:CHI</pv_name>
+      <pv_name>$(P)MOT:THETA</pv_name>
       <vertical_alignment>1</vertical_alignment>
       <border_color>
         <color name="ISIS_Border" red="0" green="0" blue="0" />
@@ -1000,7 +1000,7 @@ $(pv_value)</tooltip>
       <multiline_input>false</multiline_input>
       <border_width>1</border_width>
       <visible>true</visible>
-      <pv_name>$(P)MOT:STACK:CHI:SP</pv_name>
+      <pv_name>$(P)MOT:THETA:SP</pv_name>
       <selector_type>0</selector_type>
       <border_color>
         <color name="ISIS_Border" red="0" green="0" blue="0" />
@@ -1078,7 +1078,7 @@ $(pv_value)</tooltip>
       </foreground_color>
       <actions hook="false" hook_all="false">
         <action type="OPEN_DISPLAY">
-          <path>zoom_sample_stack_motors.opi</path>
+          <path>../Motor/mymotor.opi</path>
           <macros>
             <include_parent_macros>true</include_parent_macros>
           </macros>
