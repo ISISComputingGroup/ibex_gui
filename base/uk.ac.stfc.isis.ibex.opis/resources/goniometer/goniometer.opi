@@ -1081,6 +1081,7 @@ $(pv_value)</tooltip>
           <path>../Motor/mymotor.opi</path>
           <macros>
             <include_parent_macros>true</include_parent_macros>
+            <MM>MOT:MTR0206</MM>
           </macros>
           <replace>1</replace>
           <description></description>
@@ -1099,7 +1100,7 @@ $(pv_value)</tooltip>
       <push_action_index>0</push_action_index>
       <rules />
       <enabled>true</enabled>
-      <wuid>6d01c2b3:15ab3dab340:-7f35</wuid>
+      <wuid>6d01c2b3:15ab3dab340:-7e0d</wuid>
       <pv_value />
       <text>View motor...</text>
       <scripts />
@@ -1127,9 +1128,10 @@ $(pv_value)</tooltip>
       </foreground_color>
       <actions hook="false" hook_all="false">
         <action type="OPEN_DISPLAY">
-          <path>zoom_sample_stack_motors.opi</path>
+          <path>../Motor/mymotor.opi</path>
           <macros>
             <include_parent_macros>true</include_parent_macros>
+            <MM>MOT:MTR0205</MM>
           </macros>
           <replace>1</replace>
           <description></description>
@@ -1148,7 +1150,7 @@ $(pv_value)</tooltip>
       <push_action_index>0</push_action_index>
       <rules />
       <enabled>true</enabled>
-      <wuid>6d01c2b3:15ab3dab340:-7f2e</wuid>
+      <wuid>6d01c2b3:15ab3dab340:-7e06</wuid>
       <pv_value />
       <text>View motor...</text>
       <scripts />
@@ -1176,9 +1178,10 @@ $(pv_value)</tooltip>
       </foreground_color>
       <actions hook="false" hook_all="false">
         <action type="OPEN_DISPLAY">
-          <path>zoom_sample_stack_motors.opi</path>
+          <path>../Motor/mymotor.opi</path>
           <macros>
             <include_parent_macros>true</include_parent_macros>
+            <MM>MOT:MTR0204</MM>
           </macros>
           <replace>1</replace>
           <description></description>
@@ -1197,7 +1200,7 @@ $(pv_value)</tooltip>
       <push_action_index>0</push_action_index>
       <rules />
       <enabled>true</enabled>
-      <wuid>6d01c2b3:15ab3dab340:-7f27</wuid>
+      <wuid>6d01c2b3:15ab3dab340:-7dff</wuid>
       <pv_value />
       <text>View motor...</text>
       <scripts />
@@ -1225,9 +1228,10 @@ $(pv_value)</tooltip>
       </foreground_color>
       <actions hook="false" hook_all="false">
         <action type="OPEN_DISPLAY">
-          <path>zoom_sample_stack_motors.opi</path>
+          <path>../Motor/mymotor.opi</path>
           <macros>
             <include_parent_macros>true</include_parent_macros>
+            <MM>MOT:MTR0203</MM>
           </macros>
           <replace>1</replace>
           <description></description>
@@ -1246,7 +1250,7 @@ $(pv_value)</tooltip>
       <push_action_index>0</push_action_index>
       <rules />
       <enabled>true</enabled>
-      <wuid>6d01c2b3:15ab3dab340:-7f20</wuid>
+      <wuid>6d01c2b3:15ab3dab340:-7df8</wuid>
       <pv_value />
       <text>View motor...</text>
       <scripts />
@@ -1274,9 +1278,10 @@ $(pv_value)</tooltip>
       </foreground_color>
       <actions hook="false" hook_all="false">
         <action type="OPEN_DISPLAY">
-          <path>zoom_sample_stack_motors.opi</path>
+          <path>../Motor/mymotor.opi</path>
           <macros>
             <include_parent_macros>true</include_parent_macros>
+            <MM>MOT:MTR0201</MM>
           </macros>
           <replace>1</replace>
           <description></description>
@@ -1295,7 +1300,7 @@ $(pv_value)</tooltip>
       <push_action_index>0</push_action_index>
       <rules />
       <enabled>true</enabled>
-      <wuid>6d01c2b3:15ab3dab340:-7f19</wuid>
+      <wuid>6d01c2b3:15ab3dab340:-7df1</wuid>
       <pv_value />
       <text>View motor...</text>
       <scripts />
@@ -1323,9 +1328,10 @@ $(pv_value)</tooltip>
       </foreground_color>
       <actions hook="false" hook_all="false">
         <action type="OPEN_DISPLAY">
-          <path>zoom_sample_stack_motors.opi</path>
+          <path>../Motor/mymotor.opi</path>
           <macros>
             <include_parent_macros>true</include_parent_macros>
+            <MM>MOT:MTR0202</MM>
           </macros>
           <replace>1</replace>
           <description></description>
