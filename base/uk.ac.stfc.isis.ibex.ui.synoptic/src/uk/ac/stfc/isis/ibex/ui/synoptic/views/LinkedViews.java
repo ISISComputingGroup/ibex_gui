@@ -37,9 +37,6 @@ public final class LinkedViews {
 	private static final Logger LOG = IsisLog.getLogger("LinkedViews");
 	
 	private static final Map<String, String> VIEWS = new CaseInsensitiveMap<String>();
-	static {
-		VIEWS.put("goniometer", "uk.ac.stfc.isis.ibex.ui.goniometer");
-	}
 	
 	private LinkedViews() { }
 	

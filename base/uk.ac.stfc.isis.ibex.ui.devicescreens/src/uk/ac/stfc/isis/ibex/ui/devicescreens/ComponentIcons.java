@@ -41,8 +41,7 @@ public final class ComponentIcons {
      * @return the icon corresponding to the component type
      */
     public static Image iconForType(ComponentType componentType) {
-        String iconName = componentType == ComponentType.GONIOMETER ? "ALF Gonio" : getIconNameForType(componentType);
-        return icon(iconName + ".png");
+        return icon(getIconNameForType(componentType) + ".png");
     }
 
     /**
