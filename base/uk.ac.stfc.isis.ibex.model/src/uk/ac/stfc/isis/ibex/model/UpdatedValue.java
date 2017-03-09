@@ -44,9 +44,11 @@ public class UpdatedValue<T> extends ModelObject {
 	}
 	
 	public void addPropertyChangeListener(PropertyChangeListener listener, boolean executeIfAlreadySet) {
+
 		super.addPropertyChangeListener(listener);
 
 		if (executeIfAlreadySet && isSet) {
+
 			listener.propertyChange(new PropertyChangeEvent(this, "value", value, value));
             if (value instanceof Collection) {
                 System.out.println("update value on add listener " + ((Collection) value).size());

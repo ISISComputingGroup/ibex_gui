@@ -276,6 +276,8 @@ public class ConfigServer extends Closer {
                                     public Collection<IocState> convert(Collection<IocState> value)
                                             throws ConversionException {
                                         System.out.println("Converting: ioc states " + value.size());
+                                        System.out.println(System.nanoTime());
+
 
                                     return Lists.newArrayList(value);
                                     }
