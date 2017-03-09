@@ -28,6 +28,12 @@ public class OpiViewLocator {
     private final IViewPart viewPart;
     private final IPerspectiveDescriptor perspective;
 
+    /**
+     * @param viewPart
+     *            The view part used to display the OPI
+     * @param perspective
+     *            The perspective the view part belongs to
+     */
     public OpiViewLocator(IViewPart viewPart, IPerspectiveDescriptor perspective) {
         this.viewPart = viewPart;
         this.perspective = perspective;
