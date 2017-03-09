@@ -19,6 +19,10 @@
 
 package uk.ac.stfc.isis.ibex.ui.nicos;
 
+import org.eclipse.core.databinding.DataBindingContext;
+import org.eclipse.core.databinding.UpdateValueStrategy;
+import org.eclipse.core.databinding.beans.BeanProperties;
+import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -34,6 +38,7 @@ import org.eclipse.ui.part.ViewPart;
 
 import uk.ac.stfc.isis.ibex.nicos.Nicos;
 import uk.ac.stfc.isis.ibex.nicos.NicosModel;
+import uk.ac.stfc.isis.ibex.nicos.ScriptSendStatus;
 import uk.ac.stfc.isis.ibex.ui.nicos.dialogs.QueueScriptDialog;
 import uk.ac.stfc.isis.ibex.ui.nicos.models.QueueScriptViewModel;
 
@@ -49,6 +54,7 @@ public class NicosView extends ViewPart {
 	public static final String ID = "uk.ac.stfc.isis.ibex.ui.nicos.nicosview";
 	
 	private final Shell shell;
+    private DataBindingContext bindingContext = new DataBindingContext();
 	
     /**
      * Nicos model.
@@ -92,6 +98,38 @@ public class NicosView extends ViewPart {
 		Button btnCreateScript = new Button(parent, SWT.NONE);
 		btnCreateScript.setText("Create Script");
 		
+        Label lblQueueScriptStatus = new Label(parent, SWT.NONE);
+        lblQueueScriptStatus.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+        bindingContext.bindValue(WidgetProperties.text().observe(lblQueueScriptStatus),
+                BeanProperties.value("scriptSendStatus").observe(queueScriptViewModel), null, new UpdateValueStrategy() {
+                    /**
+                     * @param value
+                     * @return
+                     */
+                    @Override
+                    public Object convert(Object value) {
+                        if (value == null) {
+                            return "";
+                        }
+                        switch ((ScriptSendStatus) value) {
+                            case NONE:
+                                return "";
+                            case SEND_ERROR:
+                                return "Error";
+                            case SENDING:
+                                return "Sending";
+                            case SENT:
+                                return "Sent";
+                            default:
+                                return value.toString();
+                        }
+                    }
+                });
+        Label lblQueueScriptError = new Label(parent, SWT.NONE);
+        lblQueueScriptError.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+        bindingContext.bindValue(WidgetProperties.text().observe(lblQueueScriptError),
+                BeanProperties.value("scriptSendErrorMessage").observe(queueScriptViewModel));
+
 		btnCreateScript.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {

@@ -21,17 +21,23 @@
  */
 package uk.ac.stfc.isis.ibex.ui.nicos.models;
 
+import org.eclipse.core.databinding.DataBindingContext;
+import org.eclipse.core.databinding.beans.BeanProperties;
+
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 import uk.ac.stfc.isis.ibex.nicos.NicosModel;
+import uk.ac.stfc.isis.ibex.nicos.ScriptSendStatus;
 
 /**
  * View Model for queueing a script.
  */
 public class QueueScriptViewModel extends ModelObject {
 
-    NicosModel model;
-    String script = "";
-
+    private NicosModel model;
+    private String script = "";
+    private ScriptSendStatus scriptSendStatus;
+    private String scriptSendErrorMessage;
+    private DataBindingContext bindingContext = new DataBindingContext();
     /**
      * Constructor.
      * 
@@ -44,6 +50,11 @@ public class QueueScriptViewModel extends ModelObject {
         super();
         this.model = model;
         setScript(initialScript);
+        
+        bindingContext.bindValue(BeanProperties.value("scriptSendErrorMessage").observe(model),
+                BeanProperties.value("scriptSendErrorMessage").observe(this));
+        bindingContext.bindValue(BeanProperties.value("scriptSendStatus").observe(model),
+                BeanProperties.value("scriptSendStatus").observe(this));
     }
 
 
@@ -74,5 +85,46 @@ public class QueueScriptViewModel extends ModelObject {
         model.sendScript(script);
     }
 
+
+    /**
+     * Get the last error message received when queueing a script.
+     * 
+     * Blank for no error message.
+     * 
+     * @return the script send error message
+     */
+    public String getScriptSendErrorMessage() {
+        return scriptSendErrorMessage;
+    }
+
+    /**
+     * Set the script error message and fire a property change.
+     * 
+     * @param scriptSendErrorMessage
+     *            the new error message
+     */
+    public void setScriptSendErrorMessage(String scriptSendErrorMessage) {
+        firePropertyChange("scriptSendErrorMessage", this.scriptSendErrorMessage,
+                this.scriptSendErrorMessage = scriptSendErrorMessage);
+    }
+
+    /**
+     * Get the status of the last script that was sent.
+     * 
+     * @return the status of sending a script
+     */
+    public ScriptSendStatus getScriptSendStatus() {
+        return scriptSendStatus;
+    }
+
+    /**
+     * Sets the script send status; the status of the last script that was sent.
+     *
+     * @param scriptSendStatus
+     *            the new script send status
+     */
+    public void setScriptSendStatus(ScriptSendStatus scriptSendStatus) {
+        firePropertyChange("scriptSendStatus", this.scriptSendStatus, this.scriptSendStatus = scriptSendStatus);
+    }
 
 }

@@ -42,6 +42,6 @@ public enum ScriptSendStatus {
     /**
      * Script has been sent to nicos and nicos has acknowledged the send.
      */
-    SENT
+    SENT;
 
 }

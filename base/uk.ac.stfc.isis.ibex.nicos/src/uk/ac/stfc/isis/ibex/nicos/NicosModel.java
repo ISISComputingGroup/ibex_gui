@@ -50,7 +50,7 @@ public class NicosModel extends ModelObject implements IMessageConsumer<NicosMes
      * replace the string with the script you want to run.
      */
     static final String QUEUE_SCRIPT_COMMAND_TEMPLATE =
-            "{\"command\": \"start\", \"name\": \"script_from_gui\", \"code\": \"%s\"}";
+            "{\"command\": \"start\", \"name\": \"script_from_gui\", \"code\": %s}";
 
     private static final String SCRIPT_SEND_FAIL_MESSAGE = "Failed to send script";
 
@@ -172,4 +172,5 @@ public class NicosModel extends ModelObject implements IMessageConsumer<NicosMes
         firePropertyChange("scriptSendErrorMessage", this.scriptSendErrorMessage,
                 this.scriptSendErrorMessage = sciptSendErrorMessage);
     }
+
 }
