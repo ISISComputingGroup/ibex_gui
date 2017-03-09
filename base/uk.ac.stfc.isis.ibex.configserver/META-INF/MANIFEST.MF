@@ -15,7 +15,6 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.jface,
  uk.ac.stfc.isis.ibex.epics,
  uk.ac.stfc.isis.ibex.instrument,
- uk.ac.stfc.isis.ibex.json,
  uk.ac.stfc.isis.ibex.runcontrol,
  org.eclipse.core.databinding,
  uk.ac.stfc.isis.ibex.epics.switching
