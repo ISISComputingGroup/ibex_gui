@@ -231,7 +231,7 @@
       <macros>
         <include_parent_macros>true</include_parent_macros>
       </macros>
-      <visible>true</visible>
+      <visible>false</visible>
       <border_color>
         <color name="ISIS_Check_Border" red="0" green="128" blue="255" />
       </border_color>
@@ -726,7 +726,7 @@ $(trace_0_y_pv_value)</tooltip>
       <macros>
         <include_parent_macros>true</include_parent_macros>
       </macros>
-      <visible>false</visible>
+      <visible>true</visible>
       <border_color>
         <color red="0" green="128" blue="255" />
       </border_color>
@@ -746,16 +746,16 @@ $(trace_0_y_pv_value)</tooltip>
       <font>
         <opifont.name fontName="Segoe UI" height="9" style="0">Default</opifont.name>
       </font>
-      <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0">
-        <border_style>13</border_style>
+      <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0">
+        <opi_file>Lakeshore336_input.opi</opi_file>
+        <border_style>0</border_style>
         <tooltip></tooltip>
         <rules />
         <enabled>true</enabled>
-        <wuid>3c70a182:156ea885a6f:-6d85</wuid>
-        <transparent>false</transparent>
-        <lock_children>false</lock_children>
+        <wuid>-3732bf2b:15ab93d4f63:-74b7</wuid>
+        <auto_size>false</auto_size>
         <scripts />
-        <height>175</height>
+        <height>165</height>
         <border_width>1</border_width>
         <scale_options>
           <width_scalable>true</width_scalable>
@@ -764,80 +764,40 @@ $(trace_0_y_pv_value)</tooltip>
         </scale_options>
         <macros>
           <include_parent_macros>true</include_parent_macros>
+          <INPUT>B</INPUT>
         </macros>
         <visible>true</visible>
+        <group_name></group_name>
         <border_color>
           <color red="0" green="128" blue="255" />
         </border_color>
-        <widget_type>Grouping Container</widget_type>
+        <widget_type>Linking Container</widget_type>
         <background_color>
-          <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
+          <color red="240" green="240" blue="240" />
         </background_color>
-        <width>283</width>
-        <x>6</x>
-        <name>Measurement A</name>
+        <zoom_to_fit>false</zoom_to_fit>
+        <width>277</width>
+        <x>288</x>
+        <name>Linking Container</name>
         <y>10</y>
         <foreground_color>
           <color red="192" green="192" blue="192" />
         </foreground_color>
         <actions hook="false" hook_all="false" />
-        <show_scrollbar>true</show_scrollbar>
         <font>
           <opifont.name fontName="Segoe UI" height="9" style="0">Default</opifont.name>
         </font>
-        <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0">
-          <opi_file>Lakeshore336_input.opi</opi_file>
-          <border_style>0</border_style>
-          <tooltip></tooltip>
-          <rules />
-          <enabled>true</enabled>
-          <wuid>3c70a182:156ea885a6f:-7725</wuid>
-          <auto_size>false</auto_size>
-          <scripts />
-          <height>139</height>
-          <border_width>1</border_width>
-          <scale_options>
-            <width_scalable>true</width_scalable>
-            <height_scalable>true</height_scalable>
-            <keep_wh_ratio>false</keep_wh_ratio>
-          </scale_options>
-          <macros>
-            <include_parent_macros>true</include_parent_macros>
-            <INPUT>A</INPUT>
-          </macros>
-          <visible>true</visible>
-          <group_name></group_name>
-          <border_color>
-            <color red="0" green="128" blue="255" />
-          </border_color>
-          <widget_type>Linking Container</widget_type>
-          <background_color>
-            <color red="240" green="240" blue="240" />
-          </background_color>
-          <zoom_to_fit>false</zoom_to_fit>
-          <width>253</width>
-          <x>0</x>
-          <name>Linking Container</name>
-          <y>6</y>
-          <foreground_color>
-            <color red="192" green="192" blue="192" />
-          </foreground_color>
-          <actions hook="false" hook_all="false" />
-          <font>
-            <opifont.name fontName="Segoe UI" height="9" style="0">Default</opifont.name>
-          </font>
-        </widget>
       </widget>
-      <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0">
-        <border_style>13</border_style>
+      <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0">
+        <opi_file>Lakeshore336_input.opi</opi_file>
+        <border_style>0</border_style>
         <tooltip></tooltip>
         <rules />
         <enabled>true</enabled>
-        <wuid>3c70a182:156ea885a6f:-6cda</wuid>
-        <transparent>false</transparent>
-        <lock_children>false</lock_children>
+        <wuid>-3732bf2b:15ab93d4f63:-749a</wuid>
+        <auto_size>false</auto_size>
         <scripts />
-        <height>175</height>
+        <height>165</height>
         <border_width>1</border_width>
         <scale_options>
           <width_scalable>true</width_scalable>
@@ -846,233 +806,113 @@ $(trace_0_y_pv_value)</tooltip>
         </scale_options>
         <macros>
           <include_parent_macros>true</include_parent_macros>
+          <INPUT>C</INPUT>
         </macros>
         <visible>true</visible>
+        <group_name></group_name>
         <border_color>
           <color red="0" green="128" blue="255" />
         </border_color>
-        <widget_type>Grouping Container</widget_type>
+        <widget_type>Linking Container</widget_type>
         <background_color>
-          <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
+          <color red="240" green="240" blue="240" />
         </background_color>
-        <width>283</width>
-        <x>300</x>
-        <name>Measurement B</name>
+        <zoom_to_fit>false</zoom_to_fit>
+        <width>277</width>
+        <x>6</x>
+        <name>Linking Container</name>
+        <y>180</y>
+        <foreground_color>
+          <color red="192" green="192" blue="192" />
+        </foreground_color>
+        <actions hook="false" hook_all="false" />
+        <font>
+          <opifont.name fontName="Segoe UI" height="9" style="0">Default</opifont.name>
+        </font>
+      </widget>
+      <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0">
+        <opi_file>Lakeshore336_input.opi</opi_file>
+        <border_style>0</border_style>
+        <tooltip></tooltip>
+        <rules />
+        <enabled>true</enabled>
+        <wuid>-3732bf2b:15ab93d4f63:-747d</wuid>
+        <auto_size>false</auto_size>
+        <scripts />
+        <height>165</height>
+        <border_width>1</border_width>
+        <scale_options>
+          <width_scalable>true</width_scalable>
+          <height_scalable>true</height_scalable>
+          <keep_wh_ratio>false</keep_wh_ratio>
+        </scale_options>
+        <macros>
+          <include_parent_macros>true</include_parent_macros>
+          <INPUT>D</INPUT>
+        </macros>
+        <visible>true</visible>
+        <group_name></group_name>
+        <border_color>
+          <color red="0" green="128" blue="255" />
+        </border_color>
+        <widget_type>Linking Container</widget_type>
+        <background_color>
+          <color red="240" green="240" blue="240" />
+        </background_color>
+        <zoom_to_fit>false</zoom_to_fit>
+        <width>277</width>
+        <x>288</x>
+        <name>Linking Container</name>
+        <y>180</y>
+        <foreground_color>
+          <color red="192" green="192" blue="192" />
+        </foreground_color>
+        <actions hook="false" hook_all="false" />
+        <font>
+          <opifont.name fontName="Segoe UI" height="9" style="0">Default</opifont.name>
+        </font>
+      </widget>
+      <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0">
+        <opi_file>Lakeshore336_input.opi</opi_file>
+        <border_style>0</border_style>
+        <tooltip></tooltip>
+        <rules />
+        <enabled>true</enabled>
+        <wuid>-3732bf2b:15ab93d4f63:-7460</wuid>
+        <auto_size>false</auto_size>
+        <scripts />
+        <height>165</height>
+        <border_width>1</border_width>
+        <scale_options>
+          <width_scalable>true</width_scalable>
+          <height_scalable>true</height_scalable>
+          <keep_wh_ratio>false</keep_wh_ratio>
+        </scale_options>
+        <macros>
+          <include_parent_macros>true</include_parent_macros>
+          <INPUT>A</INPUT>
+        </macros>
+        <visible>true</visible>
+        <group_name></group_name>
+        <border_color>
+          <color red="0" green="128" blue="255" />
+        </border_color>
+        <widget_type>Linking Container</widget_type>
+        <background_color>
+          <color red="240" green="240" blue="240" />
+        </background_color>
+        <zoom_to_fit>false</zoom_to_fit>
+        <width>277</width>
+        <x>6</x>
+        <name>Linking Container</name>
         <y>10</y>
         <foreground_color>
           <color red="192" green="192" blue="192" />
         </foreground_color>
         <actions hook="false" hook_all="false" />
-        <show_scrollbar>true</show_scrollbar>
         <font>
           <opifont.name fontName="Segoe UI" height="9" style="0">Default</opifont.name>
         </font>
-        <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0">
-          <opi_file>Lakeshore336_input.opi</opi_file>
-          <border_style>0</border_style>
-          <tooltip></tooltip>
-          <rules />
-          <enabled>true</enabled>
-          <wuid>3c70a182:156ea885a6f:-7725</wuid>
-          <auto_size>false</auto_size>
-          <scripts />
-          <height>139</height>
-          <border_width>1</border_width>
-          <scale_options>
-            <width_scalable>true</width_scalable>
-            <height_scalable>true</height_scalable>
-            <keep_wh_ratio>false</keep_wh_ratio>
-          </scale_options>
-          <macros>
-            <include_parent_macros>true</include_parent_macros>
-            <INPUT>B</INPUT>
-          </macros>
-          <visible>true</visible>
-          <group_name></group_name>
-          <border_color>
-            <color red="0" green="128" blue="255" />
-          </border_color>
-          <widget_type>Linking Container</widget_type>
-          <background_color>
-            <color red="240" green="240" blue="240" />
-          </background_color>
-          <zoom_to_fit>false</zoom_to_fit>
-          <width>253</width>
-          <x>0</x>
-          <name>Linking Container</name>
-          <y>6</y>
-          <foreground_color>
-            <color red="192" green="192" blue="192" />
-          </foreground_color>
-          <actions hook="false" hook_all="false" />
-          <font>
-            <opifont.name fontName="Segoe UI" height="9" style="0">Default</opifont.name>
-          </font>
-        </widget>
-      </widget>
-      <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0">
-        <border_style>13</border_style>
-        <tooltip></tooltip>
-        <rules />
-        <enabled>true</enabled>
-        <wuid>3c70a182:156ea885a6f:-6ca4</wuid>
-        <transparent>false</transparent>
-        <lock_children>false</lock_children>
-        <scripts />
-        <height>175</height>
-        <border_width>1</border_width>
-        <scale_options>
-          <width_scalable>true</width_scalable>
-          <height_scalable>true</height_scalable>
-          <keep_wh_ratio>false</keep_wh_ratio>
-        </scale_options>
-        <macros>
-          <include_parent_macros>true</include_parent_macros>
-        </macros>
-        <visible>true</visible>
-        <border_color>
-          <color red="0" green="128" blue="255" />
-        </border_color>
-        <widget_type>Grouping Container</widget_type>
-        <background_color>
-          <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
-        </background_color>
-        <width>283</width>
-        <x>6</x>
-        <name>Measurement C</name>
-        <y>192</y>
-        <foreground_color>
-          <color red="192" green="192" blue="192" />
-        </foreground_color>
-        <actions hook="false" hook_all="false" />
-        <show_scrollbar>true</show_scrollbar>
-        <font>
-          <opifont.name fontName="Segoe UI" height="9" style="0">Default</opifont.name>
-        </font>
-        <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0">
-          <opi_file>Lakeshore336_input.opi</opi_file>
-          <border_style>0</border_style>
-          <tooltip></tooltip>
-          <rules />
-          <enabled>true</enabled>
-          <wuid>3c70a182:156ea885a6f:-7725</wuid>
-          <auto_size>false</auto_size>
-          <scripts />
-          <height>139</height>
-          <border_width>1</border_width>
-          <scale_options>
-            <width_scalable>true</width_scalable>
-            <height_scalable>true</height_scalable>
-            <keep_wh_ratio>false</keep_wh_ratio>
-          </scale_options>
-          <macros>
-            <include_parent_macros>true</include_parent_macros>
-            <INPUT>C</INPUT>
-          </macros>
-          <visible>true</visible>
-          <group_name></group_name>
-          <border_color>
-            <color red="0" green="128" blue="255" />
-          </border_color>
-          <widget_type>Linking Container</widget_type>
-          <background_color>
-            <color red="240" green="240" blue="240" />
-          </background_color>
-          <zoom_to_fit>false</zoom_to_fit>
-          <width>253</width>
-          <x>0</x>
-          <name>Linking Container</name>
-          <y>6</y>
-          <foreground_color>
-            <color red="192" green="192" blue="192" />
-          </foreground_color>
-          <actions hook="false" hook_all="false" />
-          <font>
-            <opifont.name fontName="Segoe UI" height="9" style="0">Default</opifont.name>
-          </font>
-        </widget>
-      </widget>
-      <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0">
-        <border_style>13</border_style>
-        <tooltip></tooltip>
-        <rules />
-        <enabled>true</enabled>
-        <wuid>3c70a182:156ea885a6f:-6c72</wuid>
-        <transparent>false</transparent>
-        <lock_children>false</lock_children>
-        <scripts />
-        <height>175</height>
-        <border_width>1</border_width>
-        <scale_options>
-          <width_scalable>true</width_scalable>
-          <height_scalable>true</height_scalable>
-          <keep_wh_ratio>false</keep_wh_ratio>
-        </scale_options>
-        <macros>
-          <include_parent_macros>true</include_parent_macros>
-        </macros>
-        <visible>true</visible>
-        <border_color>
-          <color red="0" green="128" blue="255" />
-        </border_color>
-        <widget_type>Grouping Container</widget_type>
-        <background_color>
-          <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
-        </background_color>
-        <width>283</width>
-        <x>300</x>
-        <name>Measurement D</name>
-        <y>192</y>
-        <foreground_color>
-          <color red="192" green="192" blue="192" />
-        </foreground_color>
-        <actions hook="false" hook_all="false" />
-        <show_scrollbar>true</show_scrollbar>
-        <font>
-          <opifont.name fontName="Segoe UI" height="9" style="0">Default</opifont.name>
-        </font>
-        <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0">
-          <opi_file>Lakeshore336_input.opi</opi_file>
-          <border_style>0</border_style>
-          <tooltip></tooltip>
-          <rules />
-          <enabled>true</enabled>
-          <wuid>3c70a182:156ea885a6f:-7725</wuid>
-          <auto_size>false</auto_size>
-          <scripts />
-          <height>139</height>
-          <border_width>1</border_width>
-          <scale_options>
-            <width_scalable>true</width_scalable>
-            <height_scalable>true</height_scalable>
-            <keep_wh_ratio>false</keep_wh_ratio>
-          </scale_options>
-          <macros>
-            <include_parent_macros>true</include_parent_macros>
-            <INPUT>D</INPUT>
-          </macros>
-          <visible>true</visible>
-          <group_name></group_name>
-          <border_color>
-            <color red="0" green="128" blue="255" />
-          </border_color>
-          <widget_type>Linking Container</widget_type>
-          <background_color>
-            <color red="240" green="240" blue="240" />
-          </background_color>
-          <zoom_to_fit>false</zoom_to_fit>
-          <width>253</width>
-          <x>0</x>
-          <name>Linking Container</name>
-          <y>6</y>
-          <foreground_color>
-            <color red="192" green="192" blue="192" />
-          </foreground_color>
-          <actions hook="false" hook_all="false" />
-          <font>
-            <opifont.name fontName="Segoe UI" height="9" style="0">Default</opifont.name>
-          </font>
-        </widget>
       </widget>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0">
