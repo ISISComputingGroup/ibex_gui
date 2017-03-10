@@ -61,7 +61,7 @@
     <background_color>
       <color name="ISIS_Title_Background_NEW" red="240" green="240" blue="240" />
     </background_color>
-    <width>691</width>
+    <width>673</width>
     <x>6</x>
     <name>Label</name>
     <y>6</y>
@@ -102,7 +102,7 @@
     <background_color>
       <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
     </background_color>
-    <width>691</width>
+    <width>673</width>
     <x>6</x>
     <name>Label_1</name>
     <y>42</y>
@@ -120,7 +120,7 @@
     <tooltip></tooltip>
     <tab_3_icon_path></tab_3_icon_path>
     <tab_4_enabled>true</tab_4_enabled>
-    <height>511</height>
+    <height>499</height>
     <tab_2_icon_path></tab_2_icon_path>
     <border_width>1</border_width>
     <border_color>
@@ -221,7 +221,7 @@
       <transparent>true</transparent>
       <lock_children>false</lock_children>
       <scripts />
-      <height>482</height>
+      <height>470</height>
       <border_width>1</border_width>
       <scale_options>
         <width_scalable>true</width_scalable>
@@ -260,7 +260,7 @@
         <wuid>3c70a182:156ea885a6f:-7685</wuid>
         <auto_size>false</auto_size>
         <scripts />
-        <height>415</height>
+        <height>445</height>
         <border_width>1</border_width>
         <scale_options>
           <width_scalable>true</width_scalable>
@@ -278,10 +278,10 @@
         </border_color>
         <widget_type>Linking Container</widget_type>
         <background_color>
-          <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
+          <color red="240" green="240" blue="240" />
         </background_color>
         <zoom_to_fit>false</zoom_to_fit>
-        <width>661</width>
+        <width>667</width>
         <x>6</x>
         <name>Linking Container</name>
         <y>6</y>
@@ -303,7 +303,7 @@
       <transparent>true</transparent>
       <lock_children>false</lock_children>
       <scripts />
-      <height>482</height>
+      <height>470</height>
       <border_width>1</border_width>
       <scale_options>
         <width_scalable>true</width_scalable>
@@ -385,7 +385,7 @@
       <transparent>true</transparent>
       <lock_children>false</lock_children>
       <scripts />
-      <height>482</height>
+      <height>470</height>
       <border_width>1</border_width>
       <scale_options>
         <width_scalable>true</width_scalable>
@@ -716,7 +716,7 @@ $(trace_0_y_pv_value)</tooltip>
       <transparent>true</transparent>
       <lock_children>false</lock_children>
       <scripts />
-      <height>482</height>
+      <height>470</height>
       <border_width>1</border_width>
       <scale_options>
         <width_scalable>true</width_scalable>
@@ -1084,7 +1084,7 @@ $(trace_0_y_pv_value)</tooltip>
       <transparent>true</transparent>
       <lock_children>false</lock_children>
       <scripts />
-      <height>482</height>
+      <height>470</height>
       <border_width>1</border_width>
       <scale_options>
         <width_scalable>true</width_scalable>
