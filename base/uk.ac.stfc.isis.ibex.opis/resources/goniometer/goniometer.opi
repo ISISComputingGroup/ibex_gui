@@ -1371,7 +1371,7 @@ $(pv_value)</tooltip>
     </background_color>
     <width>391</width>
     <x>408</x>
-    <name>Reference image</name>
+    <name>Reference Image</name>
     <y>78</y>
     <foreground_color>
       <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
