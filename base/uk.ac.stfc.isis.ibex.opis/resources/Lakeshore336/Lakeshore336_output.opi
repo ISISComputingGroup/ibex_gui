@@ -712,7 +712,7 @@ $(pv_value)</tooltip>
     <transparent>false</transparent>
     <lock_children>false</lock_children>
     <scripts />
-    <height>169</height>
+    <height>187</height>
     <border_width>1</border_width>
     <scale_options>
       <width_scalable>true</width_scalable>
@@ -730,10 +730,10 @@ $(pv_value)</tooltip>
     <background_color>
       <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
     </background_color>
-    <width>342</width>
-    <x>7</x>
+    <width>283</width>
+    <x>348</x>
     <name>Control Parameters</name>
-    <y>192</y>
+    <y>6</y>
     <foreground_color>
       <color red="192" green="192" blue="192" />
     </foreground_color>
@@ -1127,7 +1127,7 @@ $(pv_value)</tooltip>
       <wuid>-32b7f8d:156f9c2bdb9:-6455</wuid>
       <transparent>false</transparent>
       <points>
-        <point x="306" y="96" />
+        <point x="234" y="96" />
         <point x="0" y="96" />
       </points>
       <fill_arrow>true</fill_arrow>
@@ -1156,7 +1156,7 @@ $(pv_value)</tooltip>
       <background_color>
         <color red="30" green="144" blue="255" />
       </background_color>
-      <width>307</width>
+      <width>235</width>
       <x>0</x>
       <name>Polyline</name>
       <y>96</y>
@@ -1361,8 +1361,8 @@ $(pv_value)</tooltip>
     <background_color>
       <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
     </background_color>
-    <width>283</width>
-    <x>347</x>
+    <width>343</width>
+    <x>6</x>
     <name>Heater</name>
     <y>192</y>
     <foreground_color>
@@ -1610,127 +1610,11 @@ $(pv_value)</tooltip>
     <tooltip></tooltip>
     <rules />
     <enabled>true</enabled>
-    <wuid>41f48fdf:15ab778b511:-6510</wuid>
-    <transparent>false</transparent>
-    <lock_children>false</lock_children>
-    <scripts />
-    <height>187</height>
-    <border_width>1</border_width>
-    <scale_options>
-      <width_scalable>true</width_scalable>
-      <height_scalable>true</height_scalable>
-      <keep_wh_ratio>false</keep_wh_ratio>
-    </scale_options>
-    <macros>
-      <include_parent_macros>true</include_parent_macros>
-    </macros>
-    <visible>true</visible>
-    <border_color>
-      <color red="0" green="128" blue="255" />
-    </border_color>
-    <widget_type>Grouping Container</widget_type>
-    <background_color>
-      <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
-    </background_color>
-    <width>284</width>
-    <x>347</x>
-    <name>Measurement</name>
-    <y>6</y>
-    <foreground_color>
-      <color red="192" green="192" blue="192" />
-    </foreground_color>
-    <actions hook="false" hook_all="false" />
-    <show_scrollbar>true</show_scrollbar>
-    <font>
-      <opifont.name fontName="Segoe UI" height="9" style="0">Default</opifont.name>
-    </font>
-    <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0">
-      <opi_file>Lakeshore336_input.opi</opi_file>
-      <border_style>0</border_style>
-      <tooltip></tooltip>
-      <rules />
-      <enabled>true</enabled>
-      <wuid>3c70a182:156ea885a6f:-7725</wuid>
-      <auto_size>false</auto_size>
-      <scripts>
-        <path pathString="EmbeddedJs" checkConnect="true" sfe="false" seoe="false">
-          <scriptName>Dynamic Macros</scriptName>
-          <scriptText><![CDATA[importPackage(Packages.org.csstudio.opibuilder.scriptUtil);
-
-var value = PVUtil.getString(pvs[0]);
-var lastChar = value.substring(value.length() - 1);
-
-var inputViewOpi = "Lakeshore336_input_CSS_defaults.opi";
-var noInputViewOpi = "Lakeshore336_input_none.opi";
-var currentOpi =String(widgetController.getPropertyValue("opi_file"));
-
-if (lastChar == "A" || lastChar == "B" || lastChar == "C" || lastChar == "D") {
-	// Create a new Macro Input
-	var macroInput = DataUtil.createMacrosInput(true);
-	
-	// Put a macro in the new Macro Input	
-	macroInput.put("INPUT", lastChar);
-
-	// Set the Macro Input of the linking container to this new Macro Input
-	widgetController.setPropertyValue("macros", macroInput);
-
-	// Reload the OPI in the linking container
-	// by setting the value property with forcing fire option as true
-	var opiToLoad = currentOpi.replace(noInputViewOpi, inputViewOpi);
-	widgetController.setPropertyValue("opi_file", opiToLoad, true);
-	//widgetController.setPropertyValue("opi_file", widgetController.getPropertyValue("opi_file"), true);
-} 
-else if (value == "None") {
-	// Set the OPI for No Control Input
-	var opiToLoad = currentOpi.replace(inputViewOpi, noInputViewOpi);
-	widgetController.setPropertyValue("opi_file", opiToLoad, true);
-}]]></scriptText>
-          <pv trig="true">$(PV_ROOT):CTRL_IN$(OUT)</pv>
-        </path>
-      </scripts>
-      <height>151</height>
-      <border_width>1</border_width>
-      <scale_options>
-        <width_scalable>true</width_scalable>
-        <height_scalable>true</height_scalable>
-        <keep_wh_ratio>false</keep_wh_ratio>
-      </scale_options>
-      <macros>
-        <include_parent_macros>true</include_parent_macros>
-      </macros>
-      <visible>true</visible>
-      <group_name></group_name>
-      <border_color>
-        <color red="0" green="128" blue="255" />
-      </border_color>
-      <widget_type>Linking Container</widget_type>
-      <background_color>
-        <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
-      </background_color>
-      <zoom_to_fit>false</zoom_to_fit>
-      <width>252</width>
-      <x>0</x>
-      <name>Linking Container</name>
-      <y>6</y>
-      <foreground_color>
-        <color red="192" green="192" blue="192" />
-      </foreground_color>
-      <actions hook="false" hook_all="false" />
-      <font>
-        <opifont.name fontName="Segoe UI" height="9" style="0">Default</opifont.name>
-      </font>
-    </widget>
-  </widget>
-  <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0">
-    <border_style>13</border_style>
-    <tooltip></tooltip>
-    <rules />
-    <enabled>true</enabled>
     <wuid>41f48fdf:15ab778b511:-4bb6</wuid>
     <transparent>false</transparent>
     <lock_children>false</lock_children>
     <scripts />
-    <height>79</height>
+    <height>91</height>
     <border_width>1</border_width>
     <scale_options>
       <width_scalable>true</width_scalable>
@@ -1751,7 +1635,7 @@ else if (value == "None") {
     <width>283</width>
     <x>348</x>
     <name>Output Settings</name>
-    <y>282</y>
+    <y>192</y>
     <foreground_color>
       <color red="192" green="192" blue="192" />
     </foreground_color>
@@ -1791,7 +1675,7 @@ $(pv_value)</tooltip>
       <width>229</width>
       <x>12</x>
       <name>Button</name>
-      <y>12</y>
+      <y>18</y>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </foreground_color>
