@@ -36,9 +36,11 @@ import uk.ac.stfc.isis.ibex.model.ModelObject;
  */
 public class YesNoRadioButtons extends ModelObject {
 
-    private Boolean selected;
+    private Button yesButton;
 
-    private boolean enabled;
+    private Button noButton;
+
+    private Boolean selected;
 
     /**
      * @param parent
@@ -52,22 +54,18 @@ public class YesNoRadioButtons extends ModelObject {
 
         DataBindingContext bindingContext = new DataBindingContext();
         
-        Button yesButton = new Button(parent, SWT.RADIO);
-        Button noButton = new Button(parent, SWT.RADIO);
+        yesButton = new Button(parent, SWT.RADIO);
+        noButton = new Button(parent, SWT.RADIO);
         
         yesButton.setText(trueText);
         yesButton.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1));
         bindingContext.bindValue(WidgetProperties.selection().observe(yesButton),
                 BeanProperties.value("yesButtonSelected").observe(this));
-        bindingContext.bindValue(WidgetProperties.enabled().observe(yesButton),
-                BeanProperties.value("enabled").observe(this));
         
         noButton.setText(falseText);
         noButton.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1));
         bindingContext.bindValue(WidgetProperties.selection().observe(noButton),
                 BeanProperties.value("noButtonSelected").observe(this));
-        bindingContext.bindValue(WidgetProperties.enabled().observe(noButton),
-                BeanProperties.value("enabled").observe(this));
 
         setSelected(true);
     }
@@ -83,12 +81,10 @@ public class YesNoRadioButtons extends ModelObject {
 
     /**
      * @param noButtonSelected
-     *            the noButtonSelected to set
+     *            whether the no button has been selected
      */
     public void setNoButtonSelected(boolean noButtonSelected) {
-        if (noButtonSelected) {
-            setSelected(false);
-        }
+        setSelected(!noButtonSelected);
     }
 
 
@@ -103,12 +99,10 @@ public class YesNoRadioButtons extends ModelObject {
 
     /**
      * @param yesButtonSelected
-     *            the yesButtonSelected to set
+     *            whether the yes button has been selected
      */
     public void setYesButtonSelected(boolean yesButtonSelected) {
-        if (yesButtonSelected) {
-            setSelected(true);
-        }
+        setSelected(yesButtonSelected);
     }
 
     /**
@@ -116,16 +110,14 @@ public class YesNoRadioButtons extends ModelObject {
      *            if the radio buttons are selected
      */
     public void setSelected(Boolean selected) {
-
-        boolean previousSelected = this.selected == null ? false : this.selected.booleanValue();
         firePropertyChange("selected", this.selected, this.selected = selected);
 
         if (selected != null) {
-            firePropertyChange("yesButtonSelected", previousSelected, selected.booleanValue());
-            firePropertyChange("noButtonSelected", !previousSelected, !selected.booleanValue());
+            firePropertyChange("yesButtonSelected", yesButton.getSelection(), selected.booleanValue());
+            firePropertyChange("noButtonSelected", noButton.getSelection(), !selected.booleanValue());
         } else {
-            firePropertyChange("yesButtonSelected", previousSelected, false);
-            firePropertyChange("noButtonSelected", !previousSelected, false);
+            firePropertyChange("yesButtonSelected", yesButton.getSelection(), false);
+            firePropertyChange("noButtonSelected", noButton.getSelection(), false);
         }
 
     }
@@ -140,22 +132,23 @@ public class YesNoRadioButtons extends ModelObject {
     }
 
     /**
-     * Gets whether the radio button is in the "yes" state.
+     * Gets whether the radio buttons are enabled or not.
      * 
-     * @return true if yes is selected; false otherwise
+     * @return whether the radio buttons are enabled
      */
-    public boolean isEnabled() {
-        return enabled;
+    public boolean getEnabled() {
+        return yesButton.isEnabled() && noButton.isEnabled();
     }
 
     /**
-     * Sets whether the "yes" button is selected.
+     * Sets whether the radio buttons are enabled or not.
      * 
      * @param enabled
-     *            whether the "yes" button is selected
+     *            whether the radio buttons are enabled
      */
     public void setEnabled(boolean enabled) {
-        firePropertyChange("enabled", this.enabled, this.enabled = enabled);
+        yesButton.setEnabled(enabled);
+        noButton.setEnabled(enabled);
     }
 
 }

@@ -127,7 +127,7 @@ public class ConfigureDeviceScreensTargetPanel extends Composite {
                 BeanProperties.value("persistence").observe(viewModel));
         
         bindingContext.bindValue(BeanProperties.value("enabled").observe(yesNoRadioButtons),
-                BeanProperties.value("enabled").observe(viewModel));
+                BeanProperties.value("persistenceEnabled").observe(viewModel));
 
     }
 

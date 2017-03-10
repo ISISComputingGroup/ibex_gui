@@ -84,6 +84,8 @@ public class EditDeviceScreensDescriptionViewModel extends ModelObject {
 
     private boolean enabled;
 
+    private boolean persistenceEnabled;
+
     private Comparator<DeviceDescriptionWrapper> deviceSorter = new Comparator<DeviceDescriptionWrapper>() {
 
         @Override
@@ -149,7 +151,7 @@ public class EditDeviceScreensDescriptionViewModel extends ModelObject {
     }
 
     /**
-     * Screen is editable and edabled when we can write remotely or the screen
+     * Screen is editable and enabled when we can write remotely or the screen
      * is local
      * 
      * @param persistent
@@ -281,8 +283,22 @@ public class EditDeviceScreensDescriptionViewModel extends ModelObject {
 
     private void setEnabled(boolean newEnabled) {
         firePropertyChange("enabled", enabled, enabled = newEnabled);
+        updatePersistenceEnabled();
     }
     
+    /**
+     * 
+     * @return whether the persistence screen is enabled.
+     */
+    public boolean getPersistenceEnabled() {
+        return persistenceEnabled;
+    }
+
+    private void updatePersistenceEnabled() {
+        boolean newEnabled = enabled && canWriteRemote;
+        firePropertyChange("persistenceEnabled", persistenceEnabled, persistenceEnabled = newEnabled);
+    }
+
     /**
      * 
      * @return whether the target screen is enabled.
