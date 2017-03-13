@@ -26,7 +26,7 @@ import org.apache.logging.log4j.Logger;
 import uk.ac.stfc.isis.ibex.activemq.message.MessageDetails;
 import uk.ac.stfc.isis.ibex.activemq.message.MessageParser;
 import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
-import uk.ac.stfc.isis.ibex.json.JsonDeserialisingConverter;
+import uk.ac.stfc.isis.ibex.epics.conversion.json.JsonDeserialisingConverter;
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
 import uk.ac.stfc.isis.ibex.nicos.messages.ReceiveErrorMessage;
 import uk.ac.stfc.isis.ibex.nicos.messages.ReceiveLoginMessage;

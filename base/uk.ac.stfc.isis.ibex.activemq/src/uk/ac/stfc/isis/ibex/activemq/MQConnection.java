@@ -142,10 +142,9 @@ public class MQConnection extends ModelObject implements Runnable {
                         connectionWarnFlag = true;
                         setJmsConnectionStatus(false);
                     }
-
-                    sleep(ONE_SECOND);
                 }
             }
+            sleep(ONE_SECOND);
         }
     
         disconnect();

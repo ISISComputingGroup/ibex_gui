@@ -169,7 +169,7 @@
 		<module>../uk.ac.stfc.isis.ibex.product</module>
 		<module>../uk.ac.stfc.isis.ibex.preferences</module>
 		<module>../uk.ac.stfc.isis.ibex.model</module>
-		<module>../uk.ac.stfc.isis.ibex.json</module>
+		
 		<module>../uk.ac.stfc.isis.ibex.help</module>
 		<module>../uk.ac.stfc.isis.ibex.beamstatus</module>
 		<module>../uk.ac.stfc.isis.ibex.configserver</module>

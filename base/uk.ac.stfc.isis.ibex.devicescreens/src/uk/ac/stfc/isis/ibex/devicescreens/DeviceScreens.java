@@ -19,32 +19,42 @@
 
 package uk.ac.stfc.isis.ibex.devicescreens;
 
+import org.apache.logging.log4j.Logger;
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
 
 import uk.ac.stfc.isis.ibex.devicescreens.desc.DeviceScreensDescription;
-import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
+import uk.ac.stfc.isis.ibex.epics.observing.Observable;
 import uk.ac.stfc.isis.ibex.epics.writing.Writable;
+import uk.ac.stfc.isis.ibex.logger.IsisLog;
 
 /**
  * Describes a set of screens associated with the device screens perspective.
  */
 public class DeviceScreens implements BundleActivator {
 
+    /**
+     * The logger to log device screens error messages.
+     */
+    public static final Logger LOG = IsisLog.getLogger(DeviceScreens.class);
+
     private static DeviceScreens instance;
     private static BundleContext context;
 
     private final DeviceScreenVariables variables;
-    private ObservingSchemaHandler schemaHandler;
+
+    private DeviceScreensModel model;
 
     /**
      * Creates a new instance of the DevicesScreens class.
      */
     public DeviceScreens() {
+
         instance = this;
 
         variables = new DeviceScreenVariables();
-        schemaHandler = new ObservingSchemaHandler(variables);
+
+        model = new DeviceScreensModel(getDevices(), getDevicesSetter());
     }
 
     /**
@@ -70,7 +80,7 @@ public class DeviceScreens implements BundleActivator {
      * 
      * @return an observable to the get device screens PV
      */
-    public ForwardingObservable<DeviceScreensDescription> getDevices() {
+    private Observable<DeviceScreensDescription> getDevices() {
         return variables.getDeviceScreens();
     }
 
@@ -101,6 +111,24 @@ public class DeviceScreens implements BundleActivator {
     @Override
     public void stop(BundleContext context) throws Exception {
         DeviceScreens.context = null;
+    }
+
+    /**
+     * Getter for the device screen variables with persistence information.
+     * 
+     * @return the device screen variables with persistence information.
+     */
+    public DeviceScreenVariables getVariables() {
+        return variables;
+    }
+
+    /**
+     * Gets the view model.
+     * 
+     * @return the view model
+     */
+    public DeviceScreensModel getModel() {
+        return model;
     }
 
 }

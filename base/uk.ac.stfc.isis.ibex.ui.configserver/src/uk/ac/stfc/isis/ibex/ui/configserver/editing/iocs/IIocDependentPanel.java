@@ -19,6 +19,8 @@
 
 package uk.ac.stfc.isis.ibex.ui.configserver.editing.iocs;
 
+import uk.ac.stfc.isis.ibex.ui.configserver.editing.iocs.dialog.IocViewModel;
+
 /**
  * A panel that shows information relating to a specific IOC.
  */

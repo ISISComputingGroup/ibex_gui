@@ -23,12 +23,12 @@ import java.beans.PropertyChangeListener;
 
 import org.apache.logging.log4j.Logger;
 
-import com.google.gson.Gson;
-
 import uk.ac.stfc.isis.ibex.activemq.SendMessageDetails;
 import uk.ac.stfc.isis.ibex.activemq.SendReceiveSession;
 import uk.ac.stfc.isis.ibex.activemq.message.IMessageConsumer;
 import uk.ac.stfc.isis.ibex.activemq.message.MessageParser;
+import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
+import uk.ac.stfc.isis.ibex.epics.conversion.json.JsonSerialisingConverter;
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 import uk.ac.stfc.isis.ibex.nicos.messages.Login;
@@ -176,13 +176,21 @@ public class NicosModel extends ModelObject implements IMessageConsumer<ReceiveM
     }
 
     /**
+     * Send a message to Nicos
+     * 
      * @param nicosMessage
-     * @return
+     *            message to send
+     * @return details about the sending of that message
      */
     private SendMessageDetails sendMessageToNicos(NicosSendMessage nicosMessage) {
-        Gson gson = new Gson();
-        String messageForNicos = gson.toJson(nicosMessage);
-        return this.session.sendMessage(messageForNicos);
+        JsonSerialisingConverter<NicosSendMessage> serialiser =
+                new JsonSerialisingConverter<NicosSendMessage>(nicosMessage.getClass());
+        try {
+            return this.session.sendMessage(serialiser.convert(nicosMessage));
+        } catch (ConversionException e) {
+            LOG.error("Problem serialising the object before send a message to nicos.", e);
+            return SendMessageDetails.createSendFail("Can not convert message to json", "");
+        }
     }
 
     /**

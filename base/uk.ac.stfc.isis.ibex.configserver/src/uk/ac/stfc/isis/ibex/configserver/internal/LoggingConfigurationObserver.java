@@ -23,8 +23,8 @@ import org.apache.logging.log4j.Logger;
 
 import uk.ac.stfc.isis.ibex.configserver.configuration.Configuration;
 import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
+import uk.ac.stfc.isis.ibex.epics.conversion.json.JsonSerialisingConverter;
 import uk.ac.stfc.isis.ibex.epics.observing.LoggingObserver;
-import uk.ac.stfc.isis.ibex.json.JsonSerialisingConverter;
 
 public class LoggingConfigurationObserver extends LoggingObserver<Configuration> {
 

@@ -24,7 +24,7 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 
-import uk.ac.stfc.isis.ibex.ui.devicescreens.models.DeviceScreensDescriptionViewModel;
+import uk.ac.stfc.isis.ibex.ui.devicescreens.models.EditDeviceScreensDescriptionViewModel;
 
 /**
  * Shows the target properties editor part.
@@ -34,7 +34,7 @@ public class TargetPropertiesView extends Composite {
     /**
      * The view model.
      */
-    private DeviceScreensDescriptionViewModel viewModel;
+    private EditDeviceScreensDescriptionViewModel viewModel;
 
     /**
      * Creates a new instance of the target properties view.
@@ -42,7 +42,7 @@ public class TargetPropertiesView extends Composite {
      * @param parent this view's parent
      * @param viewModel the view model
      */
-    public TargetPropertiesView(Composite parent, DeviceScreensDescriptionViewModel viewModel) {
+    public TargetPropertiesView(Composite parent, EditDeviceScreensDescriptionViewModel viewModel) {
         super(parent, SWT.FILL);
 		
         setLayout(new GridLayout(2, false));

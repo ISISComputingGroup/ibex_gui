@@ -19,16 +19,12 @@
 
 package uk.ac.stfc.isis.ibex.epics.switching.tests;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.junit.Assert.*;
+import static org.mockito.Mockito.*;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mockito;
 
 import uk.ac.stfc.isis.ibex.epics.observing.ClosableObservable;
 import uk.ac.stfc.isis.ibex.epics.switching.InstrumentSwitchers;
@@ -116,7 +112,7 @@ public class ObservablePrefixChangingSwitcherTest {
         observablePrefixChangingSwitcher.switchInstrument(instrumentInfo);
 
         // Assert
-        verify(closableCachingObservable, times(1)).close();
+        verify(closableCachingObservable, Mockito.atLeast(1)).close();
     }
 
     @Test
