@@ -41,7 +41,7 @@
     <transparent>false</transparent>
     <lock_children>false</lock_children>
     <scripts />
-    <height>223</height>
+    <height>211</height>
     <border_width>1</border_width>
     <scale_options>
       <width_scalable>true</width_scalable>
@@ -102,7 +102,7 @@
       <width>67</width>
       <x>3</x>
       <name>Label</name>
-      <y>12</y>
+      <y>0</y>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </foreground_color>
@@ -141,7 +141,7 @@ $(trace_0_y_pv_value)</tooltip>
         <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
       </background_color>
       <x>96</x>
-      <y>12</y>
+      <y>0</y>
       <trace_0_x_axis_index>0</trace_0_x_axis_index>
       <axis_count>3</axis_count>
       <trace_1_point_size>4</trace_1_point_size>
@@ -329,7 +329,7 @@ $(trace_0_y_pv_value)</tooltip>
       <width>61</width>
       <x>3</x>
       <name>Label_1</name>
-      <y>72</y>
+      <y>60</y>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </foreground_color>
@@ -339,108 +339,86 @@ $(trace_0_y_pv_value)</tooltip>
         <opifont.name fontName="Segoe UI" height="9" style="1">ISIS_Label_NEW</opifont.name>
       </font>
     </widget>
-    <widget typeId="org.csstudio.opibuilder.widgets.spinner" version="1.0">
-      <border_style>3</border_style>
+    <widget typeId="org.csstudio.opibuilder.widgets.combo" version="1.0">
+      <border_style>0</border_style>
       <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
-      <precision>3</precision>
       <tooltip>$(pv_name)
 $(pv_value)</tooltip>
-      <horizontal_alignment>1</horizontal_alignment>
       <rules />
       <enabled>true</enabled>
-      <wuid>-4305d44c:15ac6d0a5c2:-692a</wuid>
-      <transparent>false</transparent>
+      <wuid>-4305d44c:15ac6d0a5c2:-5e85</wuid>
       <pv_value />
       <scripts />
-      <buttons_on_left>false</buttons_on_left>
       <border_alarm_sensitive>true</border_alarm_sensitive>
-      <height>25</height>
+      <height>27</height>
       <border_width>1</border_width>
       <scale_options>
         <width_scalable>true</width_scalable>
-        <height_scalable>true</height_scalable>
+        <height_scalable>false</height_scalable>
         <keep_wh_ratio>false</keep_wh_ratio>
       </scale_options>
+      <items_from_pv>true</items_from_pv>
       <visible>true</visible>
       <pv_name></pv_name>
-      <vertical_alignment>1</vertical_alignment>
-      <format>0</format>
       <border_color>
         <color name="ISIS_Border" red="0" green="0" blue="0" />
       </border_color>
-      <precision_from_pv>false</precision_from_pv>
-      <widget_type>Spinner</widget_type>
-      <step_increment>1.0</step_increment>
+      <widget_type>Combo</widget_type>
       <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
-      <limits_from_pv>true</limits_from_pv>
       <background_color>
         <color name="ISIS_Textbox_Background" red="255" green="255" blue="255" />
       </background_color>
-      <page_increment>10.0</page_increment>
-      <width>85</width>
+      <width>90</width>
       <x>3</x>
-      <name>Spinner</name>
-      <y>42</y>
-      <maximum>Infinity</maximum>
+      <name>Combo</name>
+      <y>24</y>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </foreground_color>
       <actions hook="false" hook_all="false" />
-      <minimum>-Infinity</minimum>
       <font>
-        <opifont.name fontName="Segoe UI" height="9" style="0">Default</opifont.name>
+        <opifont.name fontName="Segoe UI" height="9" style="0">ISIS_Value_NEW</opifont.name>
       </font>
     </widget>
-    <widget typeId="org.csstudio.opibuilder.widgets.spinner" version="1.0">
-      <border_style>3</border_style>
+    <widget typeId="org.csstudio.opibuilder.widgets.combo" version="1.0">
+      <border_style>0</border_style>
       <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
-      <precision>3</precision>
       <tooltip>$(pv_name)
 $(pv_value)</tooltip>
-      <horizontal_alignment>1</horizontal_alignment>
       <rules />
       <enabled>true</enabled>
-      <wuid>-4305d44c:15ac6d0a5c2:-68db</wuid>
-      <transparent>false</transparent>
+      <wuid>-4305d44c:15ac6d0a5c2:-5e7e</wuid>
       <pv_value />
       <scripts />
-      <buttons_on_left>false</buttons_on_left>
       <border_alarm_sensitive>true</border_alarm_sensitive>
-      <height>25</height>
+      <height>27</height>
       <border_width>1</border_width>
       <scale_options>
         <width_scalable>true</width_scalable>
-        <height_scalable>true</height_scalable>
+        <height_scalable>false</height_scalable>
         <keep_wh_ratio>false</keep_wh_ratio>
       </scale_options>
+      <items_from_pv>true</items_from_pv>
       <visible>true</visible>
       <pv_name></pv_name>
-      <vertical_alignment>1</vertical_alignment>
-      <format>0</format>
       <border_color>
         <color name="ISIS_Border" red="0" green="0" blue="0" />
       </border_color>
-      <precision_from_pv>false</precision_from_pv>
-      <widget_type>Spinner</widget_type>
-      <step_increment>1.0</step_increment>
+      <widget_type>Combo</widget_type>
       <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
-      <limits_from_pv>true</limits_from_pv>
       <background_color>
         <color name="ISIS_Textbox_Background" red="255" green="255" blue="255" />
       </background_color>
-      <page_increment>10.0</page_increment>
-      <width>85</width>
+      <width>90</width>
       <x>3</x>
-      <name>Spinner</name>
-      <y>102</y>
-      <maximum>1.7976931348623157E308</maximum>
+      <name>Combo_1</name>
+      <y>84</y>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </foreground_color>
       <actions hook="false" hook_all="false" />
-      <minimum>-1.7976931348623157E308</minimum>
       <font>
-        <opifont.name fontName="Segoe UI" height="9" style="0">Default</opifont.name>
+        <opifont.name fontName="Segoe UI" height="9" style="0">ISIS_Value_NEW</opifont.name>
       </font>
     </widget>
   </widget>
