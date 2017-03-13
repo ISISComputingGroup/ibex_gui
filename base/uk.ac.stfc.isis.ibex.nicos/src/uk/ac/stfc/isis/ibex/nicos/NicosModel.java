@@ -105,7 +105,7 @@ public class NicosModel extends ModelObject implements IMessageConsumer<ReceiveM
                 setConnectionErrorMessage("");
             } else {
                 LOG.error("Error returned from Nicos on login: " + nicosMessage.getMessage());
-                setConnectionStatus(ConnectionStatus.LOGIN_FAIL);
+                setConnectionStatus(ConnectionStatus.FAILED);
                 setConnectionErrorMessage("Can not log in: " + nicosMessage.getMessage());
             }
         }
@@ -123,12 +123,13 @@ public class NicosModel extends ModelObject implements IMessageConsumer<ReceiveM
         setScriptSendErrorMessage("");
 
         if (isConnected) {
+            LOG.info("Logging in to nicos");
             setConnectionStatus(ConnectionStatus.CONNECTING);
             loginSendMessageDetails = sendMessageToNicos(new Login());
             if (!loginSendMessageDetails.isSent()) {
                 LOG.error("Error when sending log in message to Nicos: \'" + loginSendMessageDetails.getFailureReason()
                         + "\'");
-                setConnectionStatus(ConnectionStatus.LOGIN_FAIL);
+                setConnectionStatus(ConnectionStatus.FAILED);
                 setConnectionErrorMessage("Can not send login message: " + loginSendMessageDetails.getFailureReason());
             }
         } else {
@@ -165,8 +166,13 @@ public class NicosModel extends ModelObject implements IMessageConsumer<ReceiveM
      *            to queue
      */
     public void sendScript(String script) {
+        setScriptSendStatus(ScriptSendStatus.SENDING);
         QueueScript nicosMessage = new QueueScript("ScriptFromGUI", script);
         this.scriptSendMessageDetails = sendMessageToNicos(nicosMessage);
+        if (!this.scriptSendMessageDetails.isSent()) {
+            setScriptSendStatus(ScriptSendStatus.SEND_ERROR);
+            setScriptSendErrorMessage(SCRIPT_SEND_FAIL_MESSAGE);
+        }
     }
 
     /**
@@ -174,15 +180,9 @@ public class NicosModel extends ModelObject implements IMessageConsumer<ReceiveM
      * @return
      */
     private SendMessageDetails sendMessageToNicos(NicosSendMessage nicosMessage) {
-        setScriptSendStatus(ScriptSendStatus.SENDING);
         Gson gson = new Gson();
         String messageForNicos = gson.toJson(nicosMessage);
-        SendMessageDetails sendMessageStatus = this.session.sendMessage(messageForNicos);
-        if (!sendMessageStatus.isSent()) {
-            setScriptSendStatus(ScriptSendStatus.SEND_ERROR);
-            setScriptSendErrorMessage(SCRIPT_SEND_FAIL_MESSAGE);
-        }
-        return sendMessageStatus;
+        return this.session.sendMessage(messageForNicos);
     }
 
     /**

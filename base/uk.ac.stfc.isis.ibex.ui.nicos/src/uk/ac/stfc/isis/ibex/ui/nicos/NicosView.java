@@ -38,6 +38,7 @@ import org.eclipse.ui.part.ViewPart;
 import uk.ac.stfc.isis.ibex.nicos.Nicos;
 import uk.ac.stfc.isis.ibex.nicos.NicosModel;
 import uk.ac.stfc.isis.ibex.ui.nicos.dialogs.QueueScriptDialog;
+import uk.ac.stfc.isis.ibex.ui.nicos.models.ConnectionStatusConverter;
 import uk.ac.stfc.isis.ibex.ui.nicos.models.QueueScriptViewModel;
 import uk.ac.stfc.isis.ibex.ui.nicos.models.ScriptSendStatusConverter;
 
@@ -79,6 +80,27 @@ public class NicosView extends ViewPart {
 		glParent.marginHeight = 10;
 		glParent.marginWidth = 10;
 		parent.setLayout(glParent);
+
+        // Connection info
+        Composite connectionGrp = new Composite(parent, SWT.NONE);
+        connectionGrp.setLayoutData(new GridData(SWT.FILL, SWT.BOTTOM, true, false, 2, 1));
+        GridLayout connLayout = new GridLayout(2, false);
+        connLayout.marginRight = 10;
+        connLayout.marginHeight = 10;
+        connLayout.marginWidth = 10;
+        connectionGrp.setLayout(connLayout);
+
+        Label lblConnectionStatus = new Label(connectionGrp, SWT.NONE);
+        GridData connStatusLayoutData = new GridData(SWT.BEGINNING, SWT.FILL, false, true, 1, 1);
+        connStatusLayoutData.widthHint = 100;
+        lblConnectionStatus.setLayoutData(connStatusLayoutData);
+        bindingContext.bindValue(WidgetProperties.text().observe(lblConnectionStatus),
+                BeanProperties.value("connectionStatus").observe(model), null, new ConnectionStatusConverter());
+
+        Label lblConnectionError = new Label(connectionGrp, SWT.NONE);
+        lblConnectionError.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+        bindingContext.bindValue(WidgetProperties.text().observe(lblConnectionError),
+                BeanProperties.value("connectionErrorMessage").observe(model));
 		
 		lblCurrentScript = new Label(parent, SWT.NONE);
 		lblCurrentScript.setText("Current Script");
@@ -126,6 +148,7 @@ public class NicosView extends ViewPart {
 				dialog.open();
 			}
 		});
+
 	}
 
     /**

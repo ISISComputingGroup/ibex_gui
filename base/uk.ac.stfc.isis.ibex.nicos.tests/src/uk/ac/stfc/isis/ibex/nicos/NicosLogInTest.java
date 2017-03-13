@@ -135,7 +135,7 @@ public class NicosLogInTest {
         ConnectionStatus result = model.getConnectionStatus();
         String message = model.getConnectionErrorMessage();
 
-        assertThat("Connection status", result, is(ConnectionStatus.LOGIN_FAIL));
+        assertThat("Connection status", result, is(ConnectionStatus.FAILED));
         assertThat("Connection error message", message, containsString(expectedError));
     }
 
@@ -151,7 +151,7 @@ public class NicosLogInTest {
         ConnectionStatus result = model.getConnectionStatus();
         String message = model.getConnectionErrorMessage();
 
-        assertThat("Connection status", result, is(ConnectionStatus.LOGIN_FAIL));
+        assertThat("Connection status", result, is(ConnectionStatus.FAILED));
         assertThat("Connection error message", message, containsString(LOGIN_FAIL_ERROR_MESSAGE));
     }
 

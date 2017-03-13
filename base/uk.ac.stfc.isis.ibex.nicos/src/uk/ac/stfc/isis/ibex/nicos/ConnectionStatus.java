@@ -36,6 +36,6 @@ public enum ConnectionStatus {
     CONNECTED,
 
     /** Login on the new connection has failed. */
-    LOGIN_FAIL
+    FAILED
 
 }

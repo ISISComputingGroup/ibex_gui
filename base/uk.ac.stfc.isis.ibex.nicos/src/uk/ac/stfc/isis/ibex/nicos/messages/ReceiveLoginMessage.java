@@ -64,6 +64,9 @@ public class ReceiveLoginMessage extends ReceiveMessage {
      * @return The user level of the logged in user.
      */
     public Integer getUserLevel() {
+        if (this.payload == null) {
+            return null;
+        }
         return this.payload.user_level;
     }
 
@@ -72,7 +75,11 @@ public class ReceiveLoginMessage extends ReceiveMessage {
      */
     @Override
     public String getMessage() {
-        return "Logged in";
+        if (getUserLevel() != null) {
+            return "Logged in";
+        } else {
+            return "Initial connect";
+        }
     }
 
 }
