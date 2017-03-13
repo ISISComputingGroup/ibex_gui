@@ -712,7 +712,7 @@ $(pv_value)</tooltip>
     <transparent>false</transparent>
     <lock_children>false</lock_children>
     <scripts />
-    <height>169</height>
+    <height>187</height>
     <border_width>1</border_width>
     <scale_options>
       <width_scalable>true</width_scalable>
@@ -730,10 +730,10 @@ $(pv_value)</tooltip>
     <background_color>
       <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
     </background_color>
-    <width>342</width>
-    <x>7</x>
+    <width>283</width>
+    <x>347</x>
     <name>Control Parameters</name>
-    <y>192</y>
+    <y>6</y>
     <foreground_color>
       <color red="192" green="192" blue="192" />
     </foreground_color>
@@ -1127,7 +1127,7 @@ $(pv_value)</tooltip>
       <wuid>-32b7f8d:156f9c2bdb9:-6455</wuid>
       <transparent>false</transparent>
       <points>
-        <point x="306" y="96" />
+        <point x="240" y="96" />
         <point x="0" y="96" />
       </points>
       <fill_arrow>true</fill_arrow>
@@ -1156,7 +1156,7 @@ $(pv_value)</tooltip>
       <background_color>
         <color red="30" green="144" blue="255" />
       </background_color>
-      <width>307</width>
+      <width>241</width>
       <x>0</x>
       <name>Polyline</name>
       <y>96</y>
@@ -1361,8 +1361,8 @@ $(pv_value)</tooltip>
     <background_color>
       <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
     </background_color>
-    <width>283</width>
-    <x>347</x>
+    <width>344</width>
+    <x>5</x>
     <name>Heater</name>
     <y>192</y>
     <foreground_color>
@@ -1503,8 +1503,8 @@ $(pv_value)</tooltip>
         <color red="0" green="128" blue="255" />
       </border_color>
       <widget_type>Button</widget_type>
-      <width>79</width>
-      <x>171</x>
+      <width>85</width>
+      <x>222</x>
       <name>Button</name>
       <y>32</y>
       <foreground_color>
@@ -1608,13 +1608,20 @@ $(pv_value)</tooltip>
   <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0">
     <border_style>13</border_style>
     <tooltip></tooltip>
-    <rules />
+    <rules>
+      <rule name="Visibility" prop_id="visible" out_exp="false">
+        <exp bool_exp="pvStr0 == &quot;None&quot;">
+          <value>false</value>
+        </exp>
+        <pv trig="true">$(PV_ROOT):CTRL_IN$(OUT)</pv>
+      </rule>
+    </rules>
     <enabled>true</enabled>
     <wuid>41f48fdf:15ab778b511:-6510</wuid>
     <transparent>false</transparent>
     <lock_children>false</lock_children>
     <scripts />
-    <height>187</height>
+    <height>169</height>
     <border_width>1</border_width>
     <scale_options>
       <width_scalable>true</width_scalable>
@@ -1635,7 +1642,7 @@ $(pv_value)</tooltip>
     <width>284</width>
     <x>347</x>
     <name>Measurement</name>
-    <y>6</y>
+    <y>192</y>
     <foreground_color>
       <color red="192" green="192" blue="192" />
     </foreground_color>
@@ -1648,7 +1655,14 @@ $(pv_value)</tooltip>
       <opi_file>Lakeshore336_input.opi</opi_file>
       <border_style>0</border_style>
       <tooltip></tooltip>
-      <rules />
+      <rules>
+        <rule name="Visiblity" prop_id="visible" out_exp="false">
+          <exp bool_exp="pvStr0 == &quot;None&quot;">
+            <value>true</value>
+          </exp>
+          <pv trig="true">$(PV_ROOT):CTRL_IN$(OUT)</pv>
+        </rule>
+      </rules>
       <enabled>true</enabled>
       <wuid>3c70a182:156ea885a6f:-7725</wuid>
       <auto_size>false</auto_size>
@@ -1688,7 +1702,7 @@ else if (value == "None") {
           <pv trig="true">$(PV_ROOT):CTRL_IN$(OUT)</pv>
         </path>
       </scripts>
-      <height>151</height>
+      <height>133</height>
       <border_width>1</border_width>
       <scale_options>
         <width_scalable>true</width_scalable>
@@ -1705,10 +1719,10 @@ else if (value == "None") {
       </border_color>
       <widget_type>Linking Container</widget_type>
       <background_color>
-        <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
+        <color red="240" green="240" blue="240" />
       </background_color>
       <zoom_to_fit>false</zoom_to_fit>
-      <width>252</width>
+      <width>253</width>
       <x>0</x>
       <name>Linking Container</name>
       <y>6</y>
@@ -1748,8 +1762,8 @@ else if (value == "None") {
     <background_color>
       <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
     </background_color>
-    <width>283</width>
-    <x>348</x>
+    <width>343</width>
+    <x>6</x>
     <name>Output Settings</name>
     <y>282</y>
     <foreground_color>
@@ -1788,7 +1802,7 @@ $(pv_value)</tooltip>
         <color red="0" green="128" blue="255" />
       </border_color>
       <widget_type>Button</widget_type>
-      <width>229</width>
+      <width>295</width>
       <x>12</x>
       <name>Button</name>
       <y>12</y>
@@ -1797,7 +1811,7 @@ $(pv_value)</tooltip>
       </foreground_color>
       <actions hook="false" hook_all="false">
         <action type="OPEN_DISPLAY">
-          <path>Lakeshore336_output_settings_CSS_defaults.opi</path>
+          <path>Lakeshore336_output_settings.opi</path>
           <macros>
             <include_parent_macros>true</include_parent_macros>
           </macros>
