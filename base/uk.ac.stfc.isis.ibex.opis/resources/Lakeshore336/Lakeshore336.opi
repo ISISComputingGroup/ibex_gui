@@ -278,7 +278,7 @@
         </border_color>
         <widget_type>Linking Container</widget_type>
         <background_color>
-          <color red="240" green="240" blue="240" />
+          <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
         </background_color>
         <zoom_to_fit>false</zoom_to_fit>
         <width>667</width>
@@ -360,7 +360,7 @@
         </border_color>
         <widget_type>Linking Container</widget_type>
         <background_color>
-          <color red="240" green="240" blue="240" />
+          <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
         </background_color>
         <zoom_to_fit>false</zoom_to_fit>
         <width>667</width>
@@ -732,7 +732,7 @@ $(trace_0_y_pv_value)</tooltip>
       </border_color>
       <widget_type>Grouping Container</widget_type>
       <background_color>
-        <color red="240" green="240" blue="240" />
+        <color red="240" green="240" blue="240" name="ISIS_OPI_Background"/>
       </background_color>
       <width>785</width>
       <x>1</x>
@@ -1100,7 +1100,7 @@ $(trace_0_y_pv_value)</tooltip>
       </border_color>
       <widget_type>Grouping Container</widget_type>
       <background_color>
-        <color red="240" green="240" blue="240" />
+        <color red="240" green="240" blue="240" name="ISIS_OPI_Background"/>
       </background_color>
       <width>785</width>
       <x>1</x>

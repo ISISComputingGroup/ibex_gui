@@ -41,7 +41,7 @@
     <wuid>-4305d44c:15ac6d0a5c2:-79f4</wuid>
     <transparent>false</transparent>
     <auto_size>false</auto_size>
-    <text>Lakeshore 336 temperature controller</text>
+    <text>Lakeshore 336 Temperature Controller</text>
     <scripts />
     <height>37</height>
     <border_width>1</border_width>
@@ -907,7 +907,7 @@ $(pv_value)</tooltip>
     <wuid>-4305d44c:15ac6d0a5c2:-74dc</wuid>
     <transparent>false</transparent>
     <auto_size>false</auto_size>
-    <text>Measurement $(INPUT) settings</text>
+    <text>Measurement $(INPUT) Settings</text>
     <scripts />
     <height>37</height>
     <border_width>1</border_width>
@@ -968,7 +968,7 @@ $(pv_value)</tooltip>
     </background_color>
     <width>331</width>
     <x>6</x>
-    <name>Curve settings</name>
+    <name>Curve Settings</name>
     <y>216</y>
     <foreground_color>
       <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
@@ -1788,7 +1788,7 @@ $(pv_value)</tooltip>
     </background_color>
     <width>331</width>
     <x>336</x>
-    <name>Sensor units</name>
+    <name>Sensor Units</name>
     <y>216</y>
     <foreground_color>
       <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
@@ -2338,7 +2338,7 @@ $(pv_value)</tooltip>
     </background_color>
     <width>331</width>
     <x>336</x>
-    <name>Alarm settings</name>
+    <name>Alarm Settings</name>
     <y>426</y>
     <foreground_color>
       <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
