@@ -62,9 +62,11 @@ public class MacroValueValidator extends ModelObject implements IValidator {
 		setShowWarningIcon(false);
 		
 		try {
-			if (macro == null || text.equals("")) {
-				returnStatus = setError(NO_MESSAGE);
-			} else if (!matchesPattern((String) text)) {
+            if (macro == null) {
+                returnStatus = setError(NO_MESSAGE);
+            } else if (text.equals("")) {
+                returnStatus = setNoError();
+            } else if (!matchesPattern((String) text)) {
 				setShowWarningIcon(true);
 				returnStatus = setError(PATTERN_MISMATCH_MESSAGE);
 			} else {
