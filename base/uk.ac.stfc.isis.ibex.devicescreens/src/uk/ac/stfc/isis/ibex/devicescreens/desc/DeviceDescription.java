@@ -29,6 +29,7 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 import uk.ac.stfc.isis.ibex.targets.OpiTarget;
@@ -38,6 +39,9 @@ import uk.ac.stfc.isis.ibex.targets.OpiTarget;
  * 
  * Note any changes here will require corresponding changes to
  * EPICS/schema/configurations/screens.xsd.
+ * 
+ * Note: the constructor of this class is NOT called! Instead, this class is
+ * instantiated via reflection.
  */
 @XmlRootElement(name = "device")
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -52,7 +56,15 @@ public class DeviceDescription extends ModelObject {
     /** The type is either an OPI or a custom screen. */
     private String type;
 
-    /** The properties that have been set. */
+    /**
+     * This stores the persistence setting. This is not sent to the blockserver.
+     */
+    @XmlTransient
+    private Boolean persist = null;
+
+    /**
+     * The properties that have been set.
+     */
     @XmlElement(name = "properties", type = PropertiesDescription.class)
     private PropertiesDescription properties = new PropertiesDescription();
 
@@ -60,17 +72,39 @@ public class DeviceDescription extends ModelObject {
      * Default constructor. Needed for parsing XML.
      */
     public DeviceDescription() {
+        this("", "", "", false);
+    }
+
+    /**
+     * Constructor.
+     * 
+     * @param name
+     *            the name of this device screen
+     * @param key
+     *            the key of this device screen
+     * @param type
+     *            the type of this device screen
+     * @param persist
+     *            whether this device screen is saved remotely
+     */
+    public DeviceDescription(String name, String key, String type, boolean persist) {
+        setName(name);
+        setPersist(persist);
+        setType(type);
+        setKey(key);
     }
 
     /**
      * A copy constructor.
      * 
-     * @param original the item to copy
+     * @param original
+     *            the item to copy
      */
     public DeviceDescription(DeviceDescription original) {
         key = original.getKey();
         name = original.getName();
         type = original.getType();
+        persist = original.getPersist();
 
         for (PropertyDescription p : original.getProperties()) {
             this.addProperty(new PropertyDescription(p.getKey(), p.getValue()));
@@ -117,6 +151,21 @@ public class DeviceDescription extends ModelObject {
      */
     public void setName(String name) {
         firePropertyChange("name", this.name, this.name = name);
+    }
+
+    /**
+     * @return the persistence setting
+     */
+    public boolean getPersist() {
+        return persist;
+    }
+
+    /**
+     * @param persist
+     *            the persistence setting to set
+     */
+    public void setPersist(boolean persist) {
+        firePropertyChange("persist", this.persist, this.persist = persist);
     }
 
     /**

@@ -24,7 +24,7 @@ import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
 
 import uk.ac.stfc.isis.ibex.devicescreens.desc.DeviceScreensDescription;
-import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
+import uk.ac.stfc.isis.ibex.epics.observing.Observable;
 import uk.ac.stfc.isis.ibex.epics.writing.Writable;
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
 
@@ -43,13 +43,18 @@ public class DeviceScreens implements BundleActivator {
 
     private final DeviceScreenVariables variables;
 
+    private DeviceScreensModel model;
+
     /**
      * Creates a new instance of the DevicesScreens class.
      */
     public DeviceScreens() {
+
         instance = this;
 
         variables = new DeviceScreenVariables();
+
+        model = new DeviceScreensModel(getDevices(), getDevicesSetter());
     }
 
     /**
@@ -75,7 +80,7 @@ public class DeviceScreens implements BundleActivator {
      * 
      * @return an observable to the get device screens PV
      */
-    public ForwardingObservable<DeviceScreensDescription> getDevices() {
+    private Observable<DeviceScreensDescription> getDevices() {
         return variables.getDeviceScreens();
     }
 
@@ -106,6 +111,24 @@ public class DeviceScreens implements BundleActivator {
     @Override
     public void stop(BundleContext context) throws Exception {
         DeviceScreens.context = null;
+    }
+
+    /**
+     * Getter for the device screen variables with persistence information.
+     * 
+     * @return the device screen variables with persistence information.
+     */
+    public DeviceScreenVariables getVariables() {
+        return variables;
+    }
+
+    /**
+     * Gets the view model.
+     * 
+     * @return the view model
+     */
+    public DeviceScreensModel getModel() {
+        return model;
     }
 
 }

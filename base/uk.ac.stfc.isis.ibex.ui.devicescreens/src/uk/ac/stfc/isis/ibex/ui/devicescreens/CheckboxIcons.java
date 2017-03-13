@@ -1,5 +1,4 @@
-
-/*
+ /*
  * This file is part of the ISIS IBEX application.
  * Copyright (C) 2012-2016 Science & Technology Facilities Council.
  * All rights reserved.
@@ -22,38 +21,38 @@
  */
 package uk.ac.stfc.isis.ibex.ui.devicescreens;
 
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.layout.FillLayout;
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.ui.part.ViewPart;
-
-import uk.ac.stfc.isis.ibex.devicescreens.DeviceScreens;
-import uk.ac.stfc.isis.ibex.ui.devicescreens.models.ViewDeviceScreensDescriptionViewModel;
+import org.eclipse.swt.graphics.Image;
+import org.eclipse.wb.swt.ResourceManager;
 
 /**
- * A view for the current available device screens.
+ * Provides a pair of checkbox icon images.
  */
-public class DeviceScreensView extends ViewPart {
+public final class CheckboxIcons {
+
+    /*
+     * This is a utility class and is never instantiated.
+     */
+    private CheckboxIcons() {
+    }
 
     /**
-     * Class ID.
+     * Gets a checkbox icon image.
+     * 
+     * @param checked
+     *            whether the checkbox should be checked
+     * @return a checkbox with or without a tick in it
      */
-    public static final String ID = "uk.ac.stfc.isis.ibex.ui.devicescreens.devicescreensview";
+    public static Image getCheckboxImage(boolean checked) {
+        String folder = "uk.ac.stfc.isis.ibex.ui.devicescreens";
+        String path = "icons/";
 
-    /**
-     * Default constructor.
-     */
-    public DeviceScreensView() {
+        if (checked) {
+            path += "checkbox.png";
+        } else {
+            path += "navigate_cross.png";
+        }
+
+        return ResourceManager.getPluginImage(folder, path);
     }
 
-    @Override
-    public void createPartControl(Composite parent) {
-        parent.setLayout(new FillLayout(SWT.HORIZONTAL));
-        new DeviceScreenListPanel(parent, SWT.NONE,
-                new ViewDeviceScreensDescriptionViewModel(DeviceScreens.getInstance().getModel()));
-    }
-
-    @Override
-    public void setFocus() {
-    }
 }

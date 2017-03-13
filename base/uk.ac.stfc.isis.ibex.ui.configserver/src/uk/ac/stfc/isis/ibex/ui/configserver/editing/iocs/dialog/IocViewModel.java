@@ -19,7 +19,7 @@
 /**
  * 
  */
-package uk.ac.stfc.isis.ibex.ui.configserver.editing.iocs;
+package uk.ac.stfc.isis.ibex.ui.configserver.editing.iocs.dialog;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -44,7 +44,6 @@ public class IocViewModel extends ModelObject {
     private SimLevel simLevel;
 
     private EditableIoc editingIoc;
-    private EditableConfiguration config;
     private Collection<Macro> macros;
     private Collection<PVDefaultValue> pvVals;
     private Collection<PVSet> pvSets;
@@ -52,11 +51,11 @@ public class IocViewModel extends ModelObject {
     /**
      * Constructor for the IOC view model.
      * 
-     * @param config
-     *            The configuration this IOC is part of.
+     * @param ioc
+     *            The IOC that this viewmodel is looking at.
      */
-    public IocViewModel(EditableConfiguration config) {
-        this.config = config;
+    public IocViewModel(EditableIoc ioc) {
+        this.editingIoc = ioc;
         init();
     }
 
@@ -64,23 +63,13 @@ public class IocViewModel extends ModelObject {
      * Initialises view model values.
      */
     private void init() {
-        if (editingIoc != null) {
-            setName(editingIoc.getName());
-            setAutoStart(editingIoc.getAutostart());
-            setAutoRestart(editingIoc.getRestart());
-            setSimLevel(editingIoc.getSimLevel().ordinal());
-            setMacros(copyMacros(editingIoc.getMacros()));
-            setPvVals(copyPvVals(editingIoc.getPvs()));
-            setPvSets(copyPvSets(editingIoc.getPvSets()));
-        } else {
-            setName("");
-            setAutoStart(false);
-            setAutoRestart(false);
-            setSimLevel(SimLevel.NONE.ordinal());
-            setMacros(new ArrayList<Macro>());
-            setPvVals(new ArrayList<PVDefaultValue>());
-            setPvSets(new ArrayList<PVSet>());
-        }
+        setName(editingIoc.getName());
+        setAutoStart(editingIoc.getAutostart());
+        setAutoRestart(editingIoc.getRestart());
+        setSimLevel(editingIoc.getSimLevel().ordinal());
+        setMacros(copyMacros(editingIoc.getMacros()));
+        setPvVals(copyPvVals(editingIoc.getPvs()));
+        setPvSets(copyPvSets(editingIoc.getPvSets()));
     }
 
     /**
@@ -156,35 +145,6 @@ public class IocViewModel extends ModelObject {
     public void setIoc(EditableIoc ioc) {
         firePropertyChange("ioc", this.editingIoc, this.editingIoc = ioc);
         init();
-    }
-
-    /**
-     * Sets the IOC by IOC name.
-     * 
-     * @param name
-     *            The IOC name
-     */
-    public void setIocByName(String name) {
-        for (EditableIoc ioc : config.getSelectedIocs()) {
-            if (ioc.getName().equals(name)) {
-                setIoc(ioc);
-                break;
-            }
-        }
-        for (EditableIoc ioc : config.getAvailableIocs()) {
-            if (ioc.getName().equals(name)) {
-                setIoc(new EditableIoc(ioc));
-                break;
-            }
-        }
-    }
-
-    /**
-     * Updates the IOC associated to the view model based on the currently set
-     * IOC name.
-     */
-    public void updateIoc() {
-        setIocByName(name);
     }
 
     /**

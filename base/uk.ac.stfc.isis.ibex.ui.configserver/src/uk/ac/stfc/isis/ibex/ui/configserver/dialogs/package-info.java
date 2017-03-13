@@ -17,6 +17,6 @@
  */
 
 /**
- * Provides the basic classes for the configuration dialogs.
+ * Provides the classes to show the configserver dialog boxes.
  */
 package uk.ac.stfc.isis.ibex.ui.configserver.dialogs;

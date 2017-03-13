@@ -19,7 +19,7 @@
 /**
  * 
  */
-package uk.ac.stfc.isis.ibex.ui.configserver.editing.iocs;
+package uk.ac.stfc.isis.ibex.ui.configserver.editing.iocs.dialog;
 
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.beans.BeanProperties;
@@ -46,7 +46,7 @@ import uk.ac.stfc.isis.ibex.validators.MessageDisplayer;
 /**
  * Dialog panel for editing the settings of an IOC.
  */
-public class IocDialogEditPanel extends Composite {
+public class EditPanel extends Composite {
 
     private static final int NUM_COLS = 6;
     private static final int SPACING = 10;
@@ -70,7 +70,7 @@ public class IocDialogEditPanel extends Composite {
      * @param dialog
      *            The dialog displaying error messages.
      */
-    public IocDialogEditPanel(Composite parent, int style, MessageDisplayer dialog) {
+    public EditPanel(Composite parent, int style, MessageDisplayer dialog) {
         super(parent, style);
         this.setLayout(new GridLayout());
 

@@ -40,9 +40,9 @@ import uk.ac.stfc.isis.ibex.configserver.internal.Converters;
 import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
 import uk.ac.stfc.isis.ibex.epics.conversion.Convert;
 import uk.ac.stfc.isis.ibex.epics.conversion.Converter;
-import uk.ac.stfc.isis.ibex.json.JsonDeserialisingConverter;
-import uk.ac.stfc.isis.ibex.json.JsonSerialisingConverter;
-import uk.ac.stfc.isis.ibex.json.LowercaseEnumTypeAdapterFactory;
+import uk.ac.stfc.isis.ibex.epics.conversion.json.JsonDeserialisingConverter;
+import uk.ac.stfc.isis.ibex.epics.conversion.json.JsonSerialisingConverter;
+import uk.ac.stfc.isis.ibex.epics.conversion.json.LowercaseEnumTypeAdapterFactory;
 import uk.ac.stfc.isis.ibex.validators.BlockServerNameValidator;
 
 /**

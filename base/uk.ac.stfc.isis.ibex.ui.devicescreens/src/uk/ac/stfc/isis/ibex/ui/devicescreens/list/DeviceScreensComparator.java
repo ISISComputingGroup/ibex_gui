@@ -33,14 +33,15 @@ import uk.ac.stfc.isis.ibex.devicescreens.desc.DeviceDescription;
  * device screen list.
  * 
  */
-public class DeviceScreensComparitor extends ViewerComparator {
+public class DeviceScreensComparator extends ViewerComparator {
 
     /**
      * The Enum SortedOnType which is what the list is sorted on.
      */
     enum SortedOnType {
         TYPE,
-        NAME
+        NAME,
+        PERSISTENCE
     };
 
     private SortedOnType sortedOn = SortedOnType.NAME;
@@ -88,6 +89,12 @@ public class DeviceScreensComparitor extends ViewerComparator {
                 rc = p1.getKey().compareToIgnoreCase(p2.getKey());
                 if (rc == 0) {
                     rc = p1.getName().compareToIgnoreCase(p2.getName());
+                }
+                break;
+            case PERSISTENCE:
+                rc = ((Boolean) p1.getPersist()).compareTo(p2.getPersist());
+                if (rc == 0) {
+                    rc = ((Boolean) p1.getPersist()).compareTo(p2.getPersist());
                 }
                 break;
             default:

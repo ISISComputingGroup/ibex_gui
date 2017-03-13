@@ -19,7 +19,7 @@
 /**
  * 
  */
-package uk.ac.stfc.isis.ibex.ui.configserver.editing.iocs;
+package uk.ac.stfc.isis.ibex.ui.configserver.editing.iocs.dialog;
 
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.beans.BeanProperties;
@@ -27,21 +27,20 @@ import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
-import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 
-import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.AvailableIocsTable;
 
 /**
  * Dialog panel for selecting a new IOC to add to a configuration.
  */
-public class IocDialogAddPanel extends Composite {
+public class AddPanel extends Composite {
     private AvailableIocsTable availableIocsTable;
     private Text selectedIocRb;
     private static final int TABLE_HEIGHT = 300;
@@ -55,10 +54,10 @@ public class IocDialogAddPanel extends Composite {
      *            The parent composite.
      * @param style
      *            The SWT style.
-     * @param config
-     *            The configuration currently being edited.
+     * @param viewModel
+     *            The view model that contains the data for this panel.
      */
-    public IocDialogAddPanel(Composite parent, int style, final EditableConfiguration config) {
+    public AddPanel(Composite parent, int style, final AddPanelViewModel viewModel) {
         super(parent, style);
         GridLayout glPanel = new GridLayout(2, false);
         glPanel.verticalSpacing = SPACING;
@@ -66,7 +65,7 @@ public class IocDialogAddPanel extends Composite {
 
         // Add selection table
         availableIocsTable = new AvailableIocsTable(this, SWT.NONE, SWT.FULL_SELECTION);
-        availableIocsTable.setRows(config.getAvailableIocs());
+        availableIocsTable.setRows(viewModel.getAvailableIocs());
 
         GridData gdIocTable = new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1);
         gdIocTable.heightHint = TABLE_HEIGHT;
@@ -80,40 +79,8 @@ public class IocDialogAddPanel extends Composite {
         selectedIocRb = new Text(this, SWT.BORDER);
         selectedIocRb.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
         selectedIocRb.setEditable(false);
-    }
 
-    /**
-     * Sets the IOC view model used by the panel.
-     * 
-     * @param viewModel
-     *            The view model.
-     */
-    public void setViewModel(final IocViewModel viewModel) {
         bind(viewModel);
-
-        availableIocsTable.addSelectionChangedListener(new ISelectionChangedListener() {
-            @Override
-            public void selectionChanged(SelectionChangedEvent event) {
-                String selectedIocName = availableIocsTable.firstSelectedRow().getName();
-                viewModel.setName(selectedIocName);
-            }
-        });
-        
-        // Enable selection by double click.
-        availableIocsTable.addMouseListener(new MouseListener() {
-            
-            @Override
-            public void mouseUp(MouseEvent e) {
-            }
-            @Override
-            public void mouseDown(MouseEvent e) {
-            }
-            @Override
-            public void mouseDoubleClick(MouseEvent e) {
-                String selectedIocName = availableIocsTable.firstSelectedRow().getName();
-                viewModel.setIocByName(selectedIocName);
-            }
-        });
     }
 
     /**
@@ -122,9 +89,26 @@ public class IocDialogAddPanel extends Composite {
      * @param viewModel
      *            The IOC view model.
      */
-    private void bind(IocViewModel viewModel) {
+    private void bind(final AddPanelViewModel viewModel) {
+
+        availableIocsTable.addSelectionChangedListener(new ISelectionChangedListener() {
+            @Override
+            public void selectionChanged(SelectionChangedEvent event) {
+                String selectedIocName = availableIocsTable.firstSelectedRow().getName();
+                viewModel.setSelectedName(selectedIocName);
+            }
+        });
+        
+        // Enable selection by double click.
+        availableIocsTable.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseDoubleClick(MouseEvent e) {
+                viewModel.iocConfirmed();
+            }
+        });
+
         DataBindingContext bindingContext = new DataBindingContext();
         bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(selectedIocRb),
-                BeanProperties.value("name").observe(viewModel));
+                BeanProperties.value("selectedName").observe(viewModel));
     }
 }
