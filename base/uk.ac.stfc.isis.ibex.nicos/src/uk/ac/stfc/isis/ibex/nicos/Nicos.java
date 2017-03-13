@@ -54,7 +54,7 @@ public class Nicos extends AbstractUIPlugin {
     public NicosModel getModel() {
         if (model == null) {
             SendReceiveSession sendReceiveQueue =
-                    ActiveMQ.getInstance().getSendReceiveQueue("ss_admin", "username", "S2mQzcSPfaVu8KNie22s");
+                    ActiveMQ.getInstance().getSendReceiveQueue("ss_admin", "username", "PASSWORD");
             // TODO remove password and think about closing session
             model = new NicosModel(sendReceiveQueue);
         }
