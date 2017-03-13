@@ -386,7 +386,6 @@ public class EditDeviceScreensDescriptionViewModel extends ModelObject {
     private void updateCurrentKey(String newKey) {
         firePropertyChange("currentKey", key, key = newKey);
 
-        // Must update to the corresponding description
         checkScreensValid();
     }
 
