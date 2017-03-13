@@ -22,6 +22,7 @@ package uk.ac.stfc.isis.ibex.configserver;
 import java.util.Collection;
 import java.util.Locale;
 import java.util.NoSuchElementException;
+import java.util.logging.Logger;
 
 import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
@@ -272,6 +273,9 @@ public class ConfigServerVariables extends Closer {
      * @return the new observable
      */
 	private ForwardingObservable<String> readCompressed(String address) {
+        if (address.contains("BLOCKSERVER:IOCS")) {
+            Logger.getGlobal().info("(Ticket 2161) Reading from " + address);
+        }
         return switchingObsFactory.getSwitchableObservable(new CompressedCharWaveformChannel(),
                 InstrumentUtils.addPrefix(address));
 	}

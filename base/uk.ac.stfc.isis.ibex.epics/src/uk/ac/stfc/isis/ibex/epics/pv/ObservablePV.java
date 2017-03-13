@@ -19,6 +19,8 @@
 
 package uk.ac.stfc.isis.ibex.epics.pv;
 
+import java.util.logging.Logger;
+
 import org.epics.vtype.VType;
 
 import uk.ac.stfc.isis.ibex.epics.observing.ClosableObservable;
@@ -33,6 +35,9 @@ public abstract class ObservablePV<T extends VType> extends ClosableObservable<T
 	private final PVInfo<T> info;
 
 	public ObservablePV(PVInfo<T> info) {
+        if (info.address().contains("BLOCKSERVER:IOCS")) {
+            Logger.getGlobal().info("(Ticket 2161) ObservablePV initialized looking at " + info.address());
+        }
 		this.info = info;
 	}
 	
