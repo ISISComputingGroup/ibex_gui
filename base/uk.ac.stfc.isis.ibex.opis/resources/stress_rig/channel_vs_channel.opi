@@ -126,7 +126,7 @@ $(trace_0_y_pv_value)</tooltip>
         <color name="ISIS_Textbox_Readonly_Background" red="200" green="200" blue="200" />
       </axis_0_grid_color>
       <axis_2_visible>false</axis_2_visible>
-      <trace_0_name>TEMPERATURE</trace_0_name>
+      <trace_0_name></trace_0_name>
       <axis_2_minimum>0.0</axis_2_minimum>
       <trace_0_update_mode>0</trace_0_update_mode>
       <trace_1_x_pv></trace_1_x_pv>
@@ -166,7 +166,7 @@ $(trace_0_y_pv_value)</tooltip>
       <axis_1_log_scale>false</axis_1_log_scale>
       <title></title>
       <trace_0_visible>true</trace_0_visible>
-      <trace_1_name>TEMPERATURE SETPOINT</trace_1_name>
+      <trace_1_name></trace_1_name>
       <trace_1_y_pv_value />
       <axis_2_auto_scale>false</axis_2_auto_scale>
       <show_legend>false</show_legend>
@@ -200,14 +200,14 @@ $(trace_0_y_pv_value)</tooltip>
         <height_scalable>true</height_scalable>
         <keep_wh_ratio>false</keep_wh_ratio>
       </scale_options>
-      <trace_1_y_pv>$(PV_ROOT_EURO):TEMP:SP:RBV</trace_1_y_pv>
+      <trace_1_y_pv></trace_1_y_pv>
       <trace_2_concatenate_data>true</trace_2_concatenate_data>
       <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
       <trace_2_y_pv_value />
       <trace_2_anti_alias>true</trace_2_anti_alias>
       <axis_0_maximum>120.0</axis_0_maximum>
       <trace_1_y_axis_index>1</trace_1_y_axis_index>
-      <trace_2_name>HEATER OUTPUT</trace_2_name>
+      <trace_2_name></trace_2_name>
       <height>181</height>
       <trace_2_visible>true</trace_2_visible>
       <trigger_pv_value />
@@ -230,7 +230,7 @@ $(trace_0_y_pv_value)</tooltip>
       <trace_1_trace_color>
         <color name="ISIS_Trace_2_NEW" red="196" green="0" blue="0" />
       </trace_1_trace_color>
-      <pv_name>$(PV_ROOT_EURO):TEMP</pv_name>
+      <pv_name></pv_name>
       <axis_2_log_scale>false</axis_2_log_scale>
       <axis_2_auto_scale_threshold>0.0</axis_2_auto_scale_threshold>
       <name></name>
@@ -244,7 +244,7 @@ $(trace_0_y_pv_value)</tooltip>
       <trace_2_x_pv_value />
       <axis_1_auto_scale>true</axis_1_auto_scale>
       <trace_1_line_width>1</trace_1_line_width>
-      <trace_2_y_pv>$(PV_ROOT_EURO):OUTPUT</trace_2_y_pv>
+      <trace_2_y_pv></trace_2_y_pv>
       <trace_1_plot_mode>0</trace_1_plot_mode>
       <border_color>
         <color name="ISIS_Border" red="0" green="0" blue="0" />
@@ -252,7 +252,7 @@ $(trace_0_y_pv_value)</tooltip>
       <axis_2_title_font>
         <opifont.name fontName="Segoe UI" height="9" style="1">ISIS_GraphLabels_NEW</opifont.name>
       </axis_2_title_font>
-      <trace_0_y_pv>$(PV_ROOT_EURO):TEMP</trace_0_y_pv>
+      <trace_0_y_pv></trace_0_y_pv>
       <trace_2_point_style>0</trace_2_point_style>
       <trace_0_plot_mode>0</trace_0_plot_mode>
       <enabled>true</enabled>
