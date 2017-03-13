@@ -95,11 +95,10 @@ public class IocPanel extends Composite {
             IocState selected = table.firstSelectedRow();
 			
             Collection<IocState> rows = control.iocs().getValue();
-
 			if (rows != null) {
 				table.setRows(rows);
 				resetLastSelectedIoc(selected, rows);
-            }
+			}			
 		}
 	}
 

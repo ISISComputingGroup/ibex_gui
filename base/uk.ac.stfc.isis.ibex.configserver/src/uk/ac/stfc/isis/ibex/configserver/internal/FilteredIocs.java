@@ -32,7 +32,7 @@ import uk.ac.stfc.isis.ibex.epics.observing.ObservablePair;
 import uk.ac.stfc.isis.ibex.epics.observing.Pair;
 import uk.ac.stfc.isis.ibex.epics.observing.TransformingObservable;
 
-/**
+/*
  * Removes iocs that whose states should not be changed by the user.
  */
 public class FilteredIocs extends 
@@ -45,7 +45,6 @@ public class FilteredIocs extends
 
 	@Override
     protected Collection<IocState> transform(Pair<Collection<IocState>, Collection<String>> value) {
-
 		if (value.first == null || value.second == null) {
 			return Collections.emptyList();
 		}

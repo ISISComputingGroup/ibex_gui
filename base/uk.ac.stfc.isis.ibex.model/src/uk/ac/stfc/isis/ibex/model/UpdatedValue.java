@@ -43,7 +43,6 @@ public class UpdatedValue<T> extends ModelObject {
 	}
 	
 	public void addPropertyChangeListener(PropertyChangeListener listener, boolean executeIfAlreadySet) {
-
 		super.addPropertyChangeListener(listener);
 
 		if (executeIfAlreadySet && isSet) {
