@@ -35,7 +35,7 @@ import org.eclipse.swt.widgets.Composite;
 
 import uk.ac.stfc.isis.ibex.configserver.configuration.PVDefaultValue;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.iocs.IIocDependentPanel;
-import uk.ac.stfc.isis.ibex.ui.configserver.editing.iocs.IocViewModel;
+import uk.ac.stfc.isis.ibex.ui.configserver.editing.iocs.dialog.IocViewModel;
 import uk.ac.stfc.isis.ibex.validators.MessageDisplayer;
 
 

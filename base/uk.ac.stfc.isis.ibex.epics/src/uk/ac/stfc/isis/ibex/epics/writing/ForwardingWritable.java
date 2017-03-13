@@ -25,12 +25,13 @@ import uk.ac.stfc.isis.ibex.epics.observing.Subscription;
 import uk.ac.stfc.isis.ibex.epics.pv.Closable;
 
 /**
- * A forwarding writable.
+ * Forwards the values written to it to another writable (only if the orginal
+ * and transformed values are not null. With conversion.
  *
  * @param <TIn>
- *            TIn the type to convert from
+ *            the type of data coming in
  * @param <TOut>
- *            TOut the type to convert to
+ *            the type of data to outpu
  */
 public class ForwardingWritable<TIn, TOut> extends BaseWritable<TIn> {
 
@@ -41,7 +42,7 @@ public class ForwardingWritable<TIn, TOut> extends BaseWritable<TIn> {
 		public void write(TIn value) {
             TOut tranformedValue = transform(value);
             if (tranformedValue != null) {
-                writeToWritables(transform(value));
+                writeToWritables(tranformedValue);
             }
 		}
 		
@@ -65,9 +66,9 @@ public class ForwardingWritable<TIn, TOut> extends BaseWritable<TIn> {
      * Constructor.
      * 
      * @param destination
-     *            destination writable
+     *            the destination
      * @param converter
-     *            the converter to use
+     *            converts types from In to Out
      */
     public ForwardingWritable(Writable<TOut> destination, Converter<TIn, TOut> converter) {
         this.converter = converter;

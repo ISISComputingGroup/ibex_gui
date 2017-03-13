@@ -21,11 +21,9 @@ package uk.ac.stfc.isis.ibex.devicescreens.desc;
 
 import javax.xml.bind.JAXBException;
 
-import org.xml.sax.SAXException;
-
-import uk.ac.stfc.isis.ibex.devicescreens.xml.XMLUtil;
 import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
 import uk.ac.stfc.isis.ibex.epics.conversion.Converter;
+import uk.ac.stfc.isis.ibex.epics.conversion.XMLUtil;
 
 /**
  * Parses device screens in XML format and returns them as
@@ -36,8 +34,8 @@ public class DeviceScreensDescriptionXmlParser extends Converter<String, DeviceS
     @Override
     public DeviceScreensDescription convert(String value) throws ConversionException {
         try {
-            return XMLUtil.fromXml(value);
-        } catch (JAXBException | SAXException e) {
+            return XMLUtil.fromXml(value, DeviceScreensDescription.class);
+        } catch (JAXBException e) {
             throw new ConversionException("Error parsing device screens", e);
         }
     }

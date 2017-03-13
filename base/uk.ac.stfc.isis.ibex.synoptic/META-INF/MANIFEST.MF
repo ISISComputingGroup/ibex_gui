@@ -12,11 +12,12 @@ Require-Bundle: org.eclipse.core.runtime,
  uk.ac.stfc.isis.ibex.opis;bundle-version="1.0.0",
  com.google.common,
  uk.ac.stfc.isis.ibex.instrument,
- uk.ac.stfc.isis.ibex.json;bundle-version="1.0.0",
  uk.ac.stfc.isis.ibex.configserver;bundle-version="1.0.0",
  uk.ac.stfc.isis.ibex.epics.switching;visibility:=reexport,
  uk.ac.stfc.isis.ibex.devicescreens;visibility:=reexport,
- uk.ac.stfc.isis.ibex.targets;bundle-version="1.0.0"
+ uk.ac.stfc.isis.ibex.targets;bundle-version="1.0.0",
+ uk.ac.stfc.isis.ibex.epics,
+ com.google.gson;bundle-version="2.1.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Bundle-ActivationPolicy: lazy
 Export-Package: uk.ac.stfc.isis.ibex.synoptic,
@@ -24,5 +25,4 @@ Export-Package: uk.ac.stfc.isis.ibex.synoptic,
  uk.ac.stfc.isis.ibex.synoptic.model,
  uk.ac.stfc.isis.ibex.synoptic.model.desc,
  uk.ac.stfc.isis.ibex.synoptic.model.targets,
- uk.ac.stfc.isis.ibex.synoptic.navigation,
- uk.ac.stfc.isis.ibex.synoptic.xml
+ uk.ac.stfc.isis.ibex.synoptic.navigation

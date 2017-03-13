@@ -32,8 +32,9 @@ import uk.ac.stfc.isis.ibex.devicescreens.components.ComponentType;
 import uk.ac.stfc.isis.ibex.devicescreens.desc.DeviceDescription;
 import uk.ac.stfc.isis.ibex.opis.Opi;
 import uk.ac.stfc.isis.ibex.opis.desc.OpiDescription;
+import uk.ac.stfc.isis.ibex.ui.devicescreens.CheckboxIcons;
 import uk.ac.stfc.isis.ibex.ui.devicescreens.ComponentIcons;
-import uk.ac.stfc.isis.ibex.ui.devicescreens.list.DeviceScreensComparitor.SortedOnType;
+import uk.ac.stfc.isis.ibex.ui.devicescreens.list.DeviceScreensComparator.SortedOnType;
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundCellLabelProvider;
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundTable;
 
@@ -44,7 +45,7 @@ import uk.ac.stfc.isis.ibex.ui.tables.DataboundTable;
 @SuppressWarnings("checkstyle:magicnumber")
 public class DeviceScreensTable extends DataboundTable<DeviceDescription> {
 
-    private DeviceScreensComparitor comparator;
+    private DeviceScreensComparator comparator;
 
     /**
      * Instantiates a new device screens table.
@@ -63,7 +64,7 @@ public class DeviceScreensTable extends DataboundTable<DeviceDescription> {
     protected void configureTable() {
         super.configureTable();
         table().setLinesVisible(false);
-        comparator = new DeviceScreensComparitor();
+        comparator = new DeviceScreensComparator();
         viewer().setComparator(comparator);
     }
 	
@@ -71,6 +72,7 @@ public class DeviceScreensTable extends DataboundTable<DeviceDescription> {
 	protected void addColumns() {
         type();
 		name();
+        persist();
 	}
 
 	private void name() {
@@ -81,7 +83,23 @@ public class DeviceScreensTable extends DataboundTable<DeviceDescription> {
 				return row.getName();
 			}
         });
-        setSortListener(name.getColumn(), DeviceScreensComparitor.SortedOnType.NAME);
+        setSortListener(name.getColumn(), DeviceScreensComparator.SortedOnType.NAME);
+    }
+
+    private void persist() {
+        TableViewerColumn persist = createColumn("Saved on server", 4);
+        persist.setLabelProvider(new DataboundCellLabelProvider<DeviceDescription>(observeProperty("persist")) {
+            @Override
+            protected Image imageFromRow(DeviceDescription row) {
+                return CheckboxIcons.getCheckboxImage(row.getPersist());
+            }
+
+            @Override
+            protected String valueFromRow(DeviceDescription row) {
+                return null;
+            }
+        });
+        setSortListener(persist.getColumn(), DeviceScreensComparator.SortedOnType.PERSISTENCE);
     }
 
     private void type() {
@@ -108,7 +126,7 @@ public class DeviceScreensTable extends DataboundTable<DeviceDescription> {
             }
         });
 
-        setSortListener(typeColumn.getColumn(), DeviceScreensComparitor.SortedOnType.TYPE);
+        setSortListener(typeColumn.getColumn(), DeviceScreensComparator.SortedOnType.TYPE);
     }
 
     /**

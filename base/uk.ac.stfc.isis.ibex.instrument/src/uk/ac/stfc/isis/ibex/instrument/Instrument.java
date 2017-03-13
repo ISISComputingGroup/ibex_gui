@@ -164,6 +164,7 @@ public class Instrument implements BundleActivator {
                 }
             }
         });
+
         setInstrumentForAllPlugins(initialInstrument());
     }
 
@@ -236,7 +237,21 @@ public class Instrument implements BundleActivator {
 
         instrumentName.setValue(selectedInstrument.name());
 
-        updateExtendingPlugins(selectedInstrument);
+        final InstrumentInfo finalSelectedInstrument = selectedInstrument;
+
+        /*
+         * This needs to run on a separate thread because it starts all of the
+         * extending plugins. This uses a significant amount of time and eclipse
+         * will sometimes think that the plugin is deadlocked if it is allowed
+         * to run in the same thread.
+         */
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                updateExtendingPlugins(finalSelectedInstrument);
+            }
+        }).start();
+
         logNumberOfChannels();
     }
 
@@ -263,6 +278,7 @@ public class Instrument implements BundleActivator {
     }
 
     private static void updateExtendingPlugins(InstrumentInfo selectedInstrument) {
+
         IExtensionRegistry registry = Platform.getExtensionRegistry();
         IConfigurationElement[] elements = registry.getConfigurationElementsFor("uk.ac.stfc.isis.ibex.instrument.info");
 

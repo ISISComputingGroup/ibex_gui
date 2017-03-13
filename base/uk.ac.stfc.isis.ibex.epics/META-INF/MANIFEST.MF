@@ -17,9 +17,11 @@ Require-Bundle: org.epics.vtype;bundle-version="2.7.1",
  uk.ac.stfc.isis.ibex.logger,
  org.eclipse.ui;bundle-version="3.8.2",
  com.google.common;bundle-version="10.0.1",
- uk.ac.stfc.isis.ibex.model;bundle-version="1.0.0"
+ uk.ac.stfc.isis.ibex.model;bundle-version="1.0.0",
+ com.google.gson
 Export-Package: uk.ac.stfc.isis.ibex.epics.adapters,
  uk.ac.stfc.isis.ibex.epics.conversion,
+ uk.ac.stfc.isis.ibex.epics.conversion.json,
  uk.ac.stfc.isis.ibex.epics.observing,
  uk.ac.stfc.isis.ibex.epics.pv,
  uk.ac.stfc.isis.ibex.epics.writing

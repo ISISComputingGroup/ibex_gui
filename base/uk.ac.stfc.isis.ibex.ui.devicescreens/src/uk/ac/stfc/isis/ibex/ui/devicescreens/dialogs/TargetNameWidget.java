@@ -20,13 +20,10 @@
 package uk.ac.stfc.isis.ibex.ui.devicescreens.dialogs;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import org.eclipse.core.databinding.DataBindingContext;
-import org.eclipse.core.databinding.UpdateValueStrategy;
 import org.eclipse.core.databinding.beans.BeanProperties;
-import org.eclipse.core.databinding.conversion.Converter;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ComboViewer;
@@ -38,7 +35,7 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 
-import uk.ac.stfc.isis.ibex.ui.devicescreens.models.DeviceScreensDescriptionViewModel;
+import uk.ac.stfc.isis.ibex.ui.devicescreens.models.EditDeviceScreensDescriptionViewModel;
 
 /**
  * The widget for setting the screen name and OPI.
@@ -47,7 +44,7 @@ import uk.ac.stfc.isis.ibex.ui.devicescreens.models.DeviceScreensDescriptionView
 public class TargetNameWidget extends Composite {
 
     /** The view model. */
-    private DeviceScreensDescriptionViewModel viewModel;
+    private EditDeviceScreensDescriptionViewModel viewModel;
 
     /** The OPI list. */
     private List<String> availableOPIs;
@@ -56,16 +53,14 @@ public class TargetNameWidget extends Composite {
      * The constructor.
      * 
      * @param parent the parent composite
-     * @param availableOPIs the OPIs available for selection
      * @param viewModel the view model
      */
-    public TargetNameWidget(Composite parent, Collection<String> availableOPIs,
-            DeviceScreensDescriptionViewModel viewModel) {
+    public TargetNameWidget(Composite parent, EditDeviceScreensDescriptionViewModel viewModel) {
 		super(parent, SWT.NONE);
 		
         this.viewModel = viewModel;
 		
-        this.availableOPIs = new ArrayList<>(availableOPIs);
+        this.availableOPIs = new ArrayList<>(viewModel.getAvailableOPIs());
         // Insert a blank option for the OPIs
         this.availableOPIs.add(0, "");
 		
@@ -100,16 +95,11 @@ public class TargetNameWidget extends Composite {
         DataBindingContext bindingContext = new DataBindingContext();
 
         bindingContext.bindValue(WidgetProperties.selection().observe(cmboOpiName.getCombo()),
-                BeanProperties.value("currentKey").observe(viewModel), null, null);
+                BeanProperties.value("currentKey").observe(viewModel));
 
-        // Disable the dropdown if there is no screen selected
-        Converter isScreenSelectedConverter = new IsNullConverter();
-
-        UpdateValueStrategy enabledStrategy = new UpdateValueStrategy();
-        enabledStrategy.setConverter(isScreenSelectedConverter);
 
         bindingContext.bindValue(WidgetProperties.enabled().observe(cmboOpiName.getCombo()),
-                BeanProperties.value("selectedScreen").observe(viewModel), null, enabledStrategy);
+                BeanProperties.value("currentEnabled").observe(viewModel));
 	}
 
 }

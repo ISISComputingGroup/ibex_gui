@@ -29,13 +29,14 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
+import uk.ac.stfc.isis.ibex.devicescreens.DeviceScreensModel;
 import uk.ac.stfc.isis.ibex.devicescreens.desc.DeviceDescription;
 import uk.ac.stfc.isis.ibex.devicescreens.desc.DeviceScreensDescription;
 import uk.ac.stfc.isis.ibex.devicescreens.desc.PropertyDescription;
 import uk.ac.stfc.isis.ibex.opis.DescriptionsProvider;
 import uk.ac.stfc.isis.ibex.opis.desc.MacroInfo;
 import uk.ac.stfc.isis.ibex.opis.desc.OpiDescription;
-import uk.ac.stfc.isis.ibex.ui.devicescreens.models.DeviceScreensDescriptionViewModel;
+import uk.ac.stfc.isis.ibex.ui.devicescreens.models.EditDeviceScreensDescriptionViewModel;
 import uk.ac.stfc.isis.ibex.validators.MessageDisplayer;
 
 /**
@@ -44,7 +45,7 @@ import uk.ac.stfc.isis.ibex.validators.MessageDisplayer;
 public class DeviceScreensDescriptionViewModelTest {
 
     private DeviceScreensDescription description;
-    private DeviceScreensDescriptionViewModel viewModel;
+    private EditDeviceScreensDescriptionViewModel viewModel;
     private String deviceName = "Device";
     private String opiName1 = "Test Opi 1";
     private String opiDescription1 = "This is OPI 1";
@@ -104,7 +105,10 @@ public class DeviceScreensDescriptionViewModelTest {
         when(provider.getDescription(opiName1)).thenReturn(opiDesc1);
         when(provider.getDescription(opiName2)).thenReturn(opiDesc2);
         
-        viewModel = new DeviceScreensDescriptionViewModel(description, displayer, provider);
+        DeviceScreensModel model = mock(DeviceScreensModel.class);
+        when(model.getDeviceScreensDescription()).thenReturn(description);
+
+        viewModel = new EditDeviceScreensDescriptionViewModel(model, provider, displayer);
     }
 
     @Test
@@ -196,30 +200,6 @@ public class DeviceScreensDescriptionViewModelTest {
         // Assert
         assertEquals("Hello", viewModel.getSelectedPropertyValue());
         assertEquals("Hello", viewModel.getScreens().get(0).getProperties().get(0).getValue());
-    }
-
-    @Test
-    public void move_screen_up_works_and_does_not_overshoot() {
-        // Act
-        // Move to first position
-        viewModel.moveScreenUp(1);
-        // Try to move again
-        viewModel.moveScreenUp(0);
-
-        // Assert
-        assertEquals(deviceName + "2", viewModel.getScreens().get(0).getName());
-    }
-
-    @Test
-    public void move_screen_down_works_and_does_not_overshoot() {
-        // Act
-        // Move to last position
-        viewModel.moveScreenDown(0);
-        // Try to move again
-        viewModel.moveScreenDown(1);
-
-        // Assert
-        assertEquals(deviceName + "1", viewModel.getScreens().get(1).getName());
     }
 
     @Test

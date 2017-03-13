@@ -22,19 +22,14 @@
 package uk.ac.stfc.isis.ibex.ui.configserver.editing.iocs.tests;
 
 import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
-
-import java.util.ArrayList;
-import java.util.Collection;
 
 import org.junit.Before;
 import org.junit.Test;
 
 import uk.ac.stfc.isis.ibex.configserver.configuration.Ioc;
 import uk.ac.stfc.isis.ibex.configserver.configuration.SimLevel;
-import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableIoc;
-import uk.ac.stfc.isis.ibex.ui.configserver.editing.iocs.IocViewModel;
+import uk.ac.stfc.isis.ibex.ui.configserver.editing.iocs.dialog.IocViewModel;
 
 /**
  *
@@ -43,19 +38,16 @@ import uk.ac.stfc.isis.ibex.ui.configserver.editing.iocs.IocViewModel;
 public class IocViewModelTest {
 
     private IocViewModel viewModel;
-    private EditableConfiguration config;
     private EditableIoc autostartIoc;
     private String autostartName = "autostart_ioc";
     private String autostartDescription = "autostart_description";
 
     @Before
     public void setUp() {
-        config = mock(EditableConfiguration.class);
-
         autostartIoc = new EditableIoc(new Ioc(autostartName), autostartDescription);
         autostartIoc.setAutostart(true);
 
-        viewModel = new IocViewModel(config);
+        viewModel = new IocViewModel(new EditableIoc(""));
     }
 
     @Test
@@ -167,21 +159,5 @@ public class IocViewModelTest {
 
         // Assert
         assertEquals(expected, actual);
-    }
-
-    @Test
-    public void GIVEN_ioc_name_set_WHEN_updating_ioc_THEN_correct_ioc_is_set_in_viewmodel() {
-        // Arrange
-        Collection<EditableIoc> iocs = new ArrayList<EditableIoc>();
-        iocs.add(autostartIoc);
-        when(config.getSelectedIocs()).thenReturn(iocs);
-
-        viewModel.setName(autostartName);
-        
-        // Act
-        viewModel.updateIoc();
-        
-        // Assert
-        assertEquals(autostartIoc, viewModel.getIoc());
     }
 }

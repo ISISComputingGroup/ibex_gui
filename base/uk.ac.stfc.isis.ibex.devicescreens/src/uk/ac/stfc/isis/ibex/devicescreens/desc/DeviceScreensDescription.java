@@ -30,7 +30,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import org.xml.sax.SAXException;
 
-import uk.ac.stfc.isis.ibex.devicescreens.xml.XMLUtil;
+import uk.ac.stfc.isis.ibex.epics.conversion.XMLUtil;
 
 /**
  * This class describes the devices element of the device screens XML format.
@@ -93,7 +93,7 @@ public class DeviceScreensDescription {
     @Override
     public String toString() {
         try {
-            return XMLUtil.toXml(this).replaceAll("><", ">\n<");
+            return XMLUtil.toXml(this, DeviceScreensDescription.class).replaceAll("><", ">\n<");
         } catch (JAXBException e) {
             e.printStackTrace();
             return e.toString();
@@ -101,6 +101,46 @@ public class DeviceScreensDescription {
             e.printStackTrace();
             return e.toString();
         }
+    }
+
+    /**
+     * @return the hashcode of this object.
+     */
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((devices == null) ? 0 : devices.hashCode());
+        return result;
+    }
+
+    /**
+     * @param obj
+     *            the object to compare to.
+     * @return true if the objects are equal, false otherwise
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+
+        DeviceScreensDescription other = (DeviceScreensDescription) obj;
+
+        if (devices == null) {
+            if (other.devices != null) {
+                return false;
+            }
+        } else if (!devices.equals(other.devices)) {
+            return false;
+        }
+        return true;
     }
 
 }

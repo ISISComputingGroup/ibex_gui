@@ -23,6 +23,7 @@
 
    <windowImages i16="/uk.ac.stfc.isis.ibex.product/icons/IBEX-icon-web16.gif" i32="/uk.ac.stfc.isis.ibex.product/icons/IBEX-icon-web32.gif" i48="/uk.ac.stfc.isis.ibex.product/icons/IBEX-icon-web48.gif" i64="/uk.ac.stfc.isis.ibex.product/icons/IBEX-icon-web64.gif"/>
 
+
    <launcher name="ibex-client">
       <solaris/>
       <win useIco="true">
@@ -37,6 +38,7 @@
             winExtraLargeHigh="/uk.ac.stfc.isis.ibex.product/icons/IBEX-icon-web256-32bit.bmp"/>
       </win>
    </launcher>
+
 
    <vm>
    </vm>

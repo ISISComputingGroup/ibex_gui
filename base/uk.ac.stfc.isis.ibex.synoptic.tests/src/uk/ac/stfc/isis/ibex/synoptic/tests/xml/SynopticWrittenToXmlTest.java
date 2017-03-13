@@ -19,29 +19,35 @@
 
 package uk.ac.stfc.isis.ibex.synoptic.tests.xml;
 
+import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.assertThat;
+import static org.junit.Assert.*;
 
 import java.net.MalformedURLException;
 import java.net.URL;
 
 import javax.xml.bind.JAXBException;
+import javax.xml.bind.MarshalException;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.xml.sax.SAXException;
+import org.xml.sax.SAXParseException;
 
+import uk.ac.stfc.isis.ibex.epics.conversion.XMLUtil;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.SynopticDescription;
-import uk.ac.stfc.isis.ibex.synoptic.xml.XMLUtil;
 
 @SuppressWarnings("checkstyle:methodname")
 public class SynopticWrittenToXmlTest extends FileReadingTest {
 
     private SynopticDescription instrument;
+
+    private String badSchema =
+            "<schema xmlns=\"http://www.w3.org/2001/XMLSchema\"> </schema>";
 	
 	@Before
 	public void setUp() throws Exception {
-		instrument = XMLUtil.fromXml(fileContent());
+        instrument = XMLUtil.fromXml(fileContent(), SynopticDescription.class);
 	}
 
 	@Override
@@ -50,12 +56,25 @@ public class SynopticWrittenToXmlTest extends FileReadingTest {
 	}
 	
     @Test
-    public void has_the_same_xml_content_when_unchanged() throws JAXBException, SAXException {
+    public void WHEN_passed_a_schema_that_does_not_match_xml_THEN_exception_thrown()
+            throws JAXBException, SAXException {
+        try {
+            XMLUtil.toXml(instrument, SynopticDescription.class, badSchema);
+        } catch (MarshalException e) {
+            assertThat(e.getCause(), instanceOf(SAXParseException.class));
+        } catch (Exception e) {
+            fail(e.getMessage());
+        }
+    }
+
+    @Test
+    public void GIVEN_a_synoptic_created_from_xml_WHEN_converted_back_to_xml_THEN_xml_unchanged()
+            throws JAXBException, SAXException {
 
         String input = fileContent();
         input = input.replace("\n", "").replace("\t", "");
 
-        String output = XMLUtil.toXml(instrument);
+        String output = XMLUtil.toXml(instrument, SynopticDescription.class);
         assertThat(output, is(input));
     }
 }

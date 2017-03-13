@@ -26,26 +26,47 @@ import javax.xml.bind.JAXBException;
 
 import org.xml.sax.SAXException;
 
-import uk.ac.stfc.isis.ibex.devicescreens.xml.XMLUtil;
+import com.google.common.base.Strings;
+
+import uk.ac.stfc.isis.ibex.devicescreens.DeviceScreens;
 import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
 import uk.ac.stfc.isis.ibex.epics.conversion.Converter;
+import uk.ac.stfc.isis.ibex.epics.conversion.XMLUtil;
+import uk.ac.stfc.isis.ibex.epics.observing.Observable;
 
 /**
  * Converts a DeviceScreenDescription into a string in XML format.
  */
 public class DeviceScreenDescriptionToXmlConverter extends Converter<DeviceScreensDescription, String> {
 
+    private final Observable<String> schema;
+
+    /**
+     * Constructor that takes the schema to check the device screens against.
+     * 
+     * @param schema
+     *            an observable to get the device screens schema from
+     */
+    public DeviceScreenDescriptionToXmlConverter(Observable<String> schema) {
+        this.schema = schema;
+    }
+
     /**
      * Returns the XML representation of a device screens.
      * 
-     * @param value the input device screens to convert
+     * @param value
+     *            the input device screens to convert
      * @return the XML representation of the input
-     * @throws ConversionException if a conversion error has occurred
+     * @throws ConversionException
+     *             if a conversion error has occurred
      */
     @Override
     public String convert(DeviceScreensDescription value) throws ConversionException {
+        if (Strings.isNullOrEmpty(schema.getValue())) {
+            DeviceScreens.LOG.debug("Device screens schema not found, attempting to save anyway.");
+        }
         try {
-            return XMLUtil.toXml(value);
+            return XMLUtil.toXml(value, DeviceScreensDescription.class, schema.getValue());
         } catch (JAXBException | SAXException e) {
             throw new ConversionException("Error converting device screens to XML", e);
         }

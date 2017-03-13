@@ -29,8 +29,8 @@ import org.eclipse.jface.viewers.ColumnWeightData;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
+import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
@@ -47,11 +47,11 @@ import org.eclipse.swt.widgets.TableItem;
 public abstract class SelectionDialog extends Dialog {
 
 	private String title;
-
-    /**
-     * The single column table for displaying the list of items to select from.
-     */
-    public Table items;
+  
+  /**
+   * The single column table for displaying the list of items to select from.
+   */
+  public Table items;
 	
 	/**
 	 * @param parentShell The shell to open the dialog from.
@@ -86,17 +86,12 @@ public abstract class SelectionDialog extends Dialog {
 			}
 		});
 		
-        items.addSelectionListener(new SelectionListener() {
+      items.addSelectionListener(new SelectionAdapter() {
 			
 			@Override
 			public void widgetSelected(SelectionEvent e) {
                 getButton(IDialogConstants.OK_ID).setEnabled(items.getSelection().length != 0);
 			}
-			
-			@Override
-            public void widgetDefaultSelected(SelectionEvent e) {
-
-            }
 		});
 		
 		return container;

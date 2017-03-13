@@ -31,7 +31,7 @@ import uk.ac.stfc.isis.ibex.synoptic.SynopticInfo;
 import uk.ac.stfc.isis.ibex.ui.dialogs.SelectionDialog;
 
 /**
- * Dialog for asking the user to select one or multiple synoptics from a list.
+ * A dialog for selecting multiple synoptics.
  */
 public class MultipleSynopticsSelectionDialog extends SelectionDialog {
 	
@@ -39,11 +39,17 @@ public class MultipleSynopticsSelectionDialog extends SelectionDialog {
 
 	private Collection<String> selected = new ArrayList<>();
 	
-	/**
-     * @param parentShell The shell to open the dialog from.
-     * @param title The title of the dialog box.
-     * @param available The list of synoptics that the user can choose from.
-	 */
+
+  /**
+   * Default constructor.
+   * 
+   * @param parentShell
+   *            The parent shell to open this dialog within.
+   * @param title
+   *            The title of the dialog.
+   * @param available
+   *            The synoptics that the user can choose from.
+   */
 	public MultipleSynopticsSelectionDialog(
 			Shell parentShell, 
 			String title,
@@ -52,9 +58,11 @@ public class MultipleSynopticsSelectionDialog extends SelectionDialog {
 		this.available = available;
 	}
 	
-    /**
-     * @return The collection of synoptics selected by the user
-     */
+  /**
+   * Get the synoptics that the user has chosen.
+   * 
+   * @return The list of the chosen synoptics.
+   */
 	public Collection<String> selectedSynoptics() {
 		return selected;
 	}

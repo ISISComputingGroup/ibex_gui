@@ -8,4 +8,4 @@ Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Require-Bundle: org.junit;bundle-version="4.10.0",
  uk.ac.stfc.isis.ibex.epics,
  org.mockito;bundle-version="1.9.5"
-Import-Package: uk.ac.stfc.isis.ibex.configserver.editing
+Import-Package: uk.ac.stfc.isis.ibex.configserver
