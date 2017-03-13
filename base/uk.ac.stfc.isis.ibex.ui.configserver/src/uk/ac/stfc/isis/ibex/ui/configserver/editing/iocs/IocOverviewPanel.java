@@ -27,10 +27,10 @@ import java.util.List;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
-import org.eclipse.swt.events.MouseListener;
+import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -43,6 +43,7 @@ import org.eclipse.swt.widgets.Text;
 
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableIoc;
+import uk.ac.stfc.isis.ibex.ui.configserver.editing.iocs.dialog.IocDialog;
 import uk.ac.stfc.isis.ibex.validators.MessageDisplayer;
 
 /**
@@ -127,40 +128,28 @@ public class IocOverviewPanel extends Composite {
         btnDeleteIoc.setLayoutData(gdButton);
 
         // Add listeners
-        btnAddIoc.addSelectionListener(new SelectionListener() {
+        btnAddIoc.addSelectionListener(new SelectionAdapter() {
 
             @Override
             public void widgetSelected(SelectionEvent e) {
                 EditableIoc added = new EditableIoc("");
                 openEditIocDialog(added, true);
             }
-
-            @Override
-            public void widgetDefaultSelected(SelectionEvent e) {
-            }
         });
 
-        btnEditIoc.addSelectionListener(new SelectionListener() {
+        btnEditIoc.addSelectionListener(new SelectionAdapter() {
 
             @Override
             public void widgetSelected(SelectionEvent e) {
                 openEditIocDialog(table.firstSelectedRow(), false);
             }
-
-            @Override
-            public void widgetDefaultSelected(SelectionEvent e) {
-            }
         });
         
-        btnDeleteIoc.addSelectionListener(new SelectionListener() {
+        btnDeleteIoc.addSelectionListener(new SelectionAdapter() {
             
             @Override
             public void widgetSelected(SelectionEvent e) {
                 deleteSelected();
-            }
-            
-            @Override
-            public void widgetDefaultSelected(SelectionEvent e) {
             }
         });
 
@@ -172,15 +161,7 @@ public class IocOverviewPanel extends Composite {
             }
         });
 
-        table.addMouseListener(new MouseListener() {
-            @Override
-            public void mouseUp(MouseEvent e) {
-            }
-
-            @Override
-            public void mouseDown(MouseEvent e) {
-            }
-
+        table.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseDoubleClick(MouseEvent e) {
                 if (table.getItemAtPoint(new Point(e.x, e.y)) != null) {

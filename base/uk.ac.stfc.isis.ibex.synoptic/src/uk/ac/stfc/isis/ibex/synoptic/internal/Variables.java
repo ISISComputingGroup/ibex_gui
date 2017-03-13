@@ -23,6 +23,8 @@ import java.util.Collection;
 
 import uk.ac.stfc.isis.ibex.epics.conversion.Convert;
 import uk.ac.stfc.isis.ibex.epics.conversion.Converter;
+import uk.ac.stfc.isis.ibex.epics.conversion.json.JsonDeserialisingConverter;
+import uk.ac.stfc.isis.ibex.epics.conversion.json.JsonSerialisingConverter;
 import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.epics.switching.ObservableFactory;
 import uk.ac.stfc.isis.ibex.epics.switching.OnInstrumentSwitch;
@@ -34,9 +36,8 @@ import uk.ac.stfc.isis.ibex.instrument.channels.CompressedCharWaveformChannel;
 import uk.ac.stfc.isis.ibex.instrument.channels.DefaultChannel;
 import uk.ac.stfc.isis.ibex.instrument.channels.DefaultChannelWithoutUnits;
 import uk.ac.stfc.isis.ibex.instrument.channels.StringChannel;
-import uk.ac.stfc.isis.ibex.json.JsonDeserialisingConverter;
-import uk.ac.stfc.isis.ibex.json.JsonSerialisingConverter;
 import uk.ac.stfc.isis.ibex.synoptic.SynopticInfo;
+import uk.ac.stfc.isis.ibex.synoptic.model.desc.SynopticDescription;
 
 /**
  * Holds all the PVs relating to the synoptic information.
@@ -121,13 +122,12 @@ public class Variables {
     /**
      * Parses all the information about a synoptic from its PV.
      * 
-     * @param <T> the type of the observable source
      * @param synopticPV synopticPV the PV for the synoptic
      * @return an object containing all the information about the synoptic
      */
-    public <T> ForwardingObservable<T> getSynopticDescription(String synopticPV) {
+    public ForwardingObservable<SynopticDescription> getSynopticDescription(String synopticPV) {
         return InstrumentUtils.convert(readCompressedClosing(getFullPV(synopticPV)),
-                new InstrumentDescriptionParser<T>());
+                new SynopticParser());
 	}
 	
     // The following readers/writers are for PVs on the synoptic

@@ -24,6 +24,8 @@ import org.eclipse.core.databinding.beans.BeanProperties;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.GC;
+import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
@@ -45,7 +47,7 @@ public class VersionPanel extends Composite {
     /** The version of Java that the client is using */
     private Label javaVersion;
     /** The path to the Java that the client is using */
-    private Label javaPath;
+    private Label javaPathLabel;
 
     /**
      * Construct a new version panel.
@@ -53,6 +55,7 @@ public class VersionPanel extends Composite {
      * @param parent The parent component
      * @param style The style to apply to the panel
      */
+    @SuppressWarnings("checkstyle:magicnumber")
 	public VersionPanel(Composite parent, int style) {
 		super(parent, style);
 		setLayout(new GridLayout(2, false));
@@ -91,13 +94,24 @@ public class VersionPanel extends Composite {
         lblJavaPath.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
         lblJavaPath.setText("Java Path:");
 
-        javaPath = new Label(this, SWT.NONE);
-        GridData javaPathGd = new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1);
-        // Not bound as fixed
-        javaPath.setText(System.getProperties().getProperty("java.home"));
-        javaPathGd.widthHint = AboutDialogBox.WIDTH;
-        javaPath.setLayoutData(javaPathGd);
+        javaPathLabel = new Label(this, SWT.NONE);
+        GridData javaPathGd = new GridData(SWT.LEFT, SWT.CENTER, true, true, 1, 1);
+        javaPathGd.widthHint = 200;
+        javaPathLabel.setLayoutData(javaPathGd);
 
+        // Not bound as fixed
+
+        String javaPath = System.getProperties().getProperty("java.home");
+        Point pathSize = new GC(javaPathLabel).stringExtent(javaPath);
+        if (pathSize.x > javaPathGd.widthHint) {
+            javaPathLabel.setToolTipText(javaPath);
+            // Assuming chars are the same width calculate how many can we fit
+            // on one line
+            int charsToPrint = javaPathGd.widthHint * javaPath.length() / pathSize.x;
+            javaPathLabel.setText(javaPath.substring(0, charsToPrint - 3) + "...");
+        } else {
+            javaPathLabel.setText(javaPath);
+        }
         bind(Help.getInstance());
 	}
 

@@ -151,7 +151,7 @@ public class EditableIocsTable extends DataboundTable<EditableIoc> {
 	private void description() {
 		TableViewerColumn desc = createColumn("Description", 2, false);
 		desc.setLabelProvider(new DecoratedCellLabelProvider<EditableIoc>(
-				observeProperty("name"), 
+                observeProperty("name"), 
 				Arrays.asList(rowDecorator)) {
 			@Override
 			protected String valueFromRow(EditableIoc row) {

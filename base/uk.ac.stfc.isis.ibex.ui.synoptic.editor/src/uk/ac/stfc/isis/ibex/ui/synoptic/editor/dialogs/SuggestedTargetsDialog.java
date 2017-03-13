@@ -112,10 +112,18 @@ public class SuggestedTargetsDialog extends Dialog {
         return names.toArray(new String[targetDescriptions.size()]);
     }
 
+    /**
+     * @return The name of the selected target.
+     */
     public String selectedTargetName() {
         return selectedTargetName;
     }
 
+    /**
+     * Get the target selected by the user.
+     * 
+     * @return The selected target.
+     */
     public TargetDescription selectedTarget() {
         TargetDescription targetDescription = new TargetDescription("NONE", TargetType.OPI);
         

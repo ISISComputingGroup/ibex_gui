@@ -23,8 +23,6 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.Collection;
 
-import javax.xml.bind.JAXBException;
-
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.TitleAreaDialog;
 import org.eclipse.jface.window.Window;
@@ -36,13 +34,10 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
-import org.xml.sax.SAXException;
 
 import uk.ac.stfc.isis.ibex.synoptic.Synoptic;
 import uk.ac.stfc.isis.ibex.synoptic.SynopticInfo;
-import uk.ac.stfc.isis.ibex.synoptic.xml.XMLUtil;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.instrument.SynopticPreview;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.SynopticViewModel;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.validators.ComponentListValidator;
@@ -55,7 +50,6 @@ import uk.ac.stfc.isis.ibex.validators.ErrorMessage;
  */
 @SuppressWarnings("checkstyle:magicnumber")
 public class EditSynopticDialog extends TitleAreaDialog {
-	
 	private static final Point INITIAL_SIZE = new Point(950, 800);
 	private final String title;
 	
@@ -123,16 +117,7 @@ public class EditSynopticDialog extends TitleAreaDialog {
 			saveBtn.addSelectionListener(new SelectionAdapter() {
 				@Override
 				public void widgetSelected(SelectionEvent e) {
-					// Check synoptic is valid
-					try {
-                        XMLUtil.toXml(synopticViewModel.getSynoptic());
-						okPressed();
-					} catch (JAXBException | SAXException e1) {
-						MessageBox dialog = new MessageBox(getShell(), SWT.ERROR | SWT.OK);
-						dialog.setText("Error saving synoptic");
-						dialog.setMessage("There was a problem saving the synoptic:" + e1);
-						dialog.open();
-					}
+                    okPressed();
 				}
 
 			});
@@ -142,21 +127,12 @@ public class EditSynopticDialog extends TitleAreaDialog {
 		saveAsBtn.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-                SaveSynopticDialog dlg = new SaveSynopticDialog(null, synopticViewModel.getSynoptic().name(),
+                SaveSynopticViewModel model = new SaveSynopticViewModel(synopticViewModel.getSynoptic().name(),
                         SynopticInfo.names(Synoptic.getInstance().availableSynoptics()));
+                SaveSynopticDialog dlg = new SaveSynopticDialog(null, model);
 				if (dlg.open() == Window.OK) {
-                    synopticViewModel.getSynoptic().setName(dlg.getNewName());
-					
-					// Check synoptic is valid
-					try {
-                        XMLUtil.toXml(synopticViewModel.getSynoptic());
-						okPressed();
-					} catch (JAXBException | SAXException e1) {
-						MessageBox dialog = new MessageBox(getShell(), SWT.ERROR | SWT.OK);
-						dialog.setText("Error saving synoptic");
-						dialog.setMessage("There was a problem saving the synoptic:" + e1);
-						dialog.open();
-					}
+                    synopticViewModel.getSynoptic().setName(model.getSynopticName());
+                    okPressed();
 				}
 			}
 		});

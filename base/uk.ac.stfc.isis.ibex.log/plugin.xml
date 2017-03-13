@@ -25,6 +25,9 @@
       <InstrumentInfoReceiver
             class="uk.ac.stfc.isis.ibex.log.OnInstrumentSwitch">
       </InstrumentInfoReceiver>
+      <InstrumentInfoReceiver
+            class="uk.ac.stfc.isis.ibex.activemq.OnInstrumentSwitch">
+      </InstrumentInfoReceiver>
    </extension>
 
 </plugin>

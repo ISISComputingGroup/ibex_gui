@@ -27,6 +27,9 @@ import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.part.ViewPart;
 
+import uk.ac.stfc.isis.ibex.devicescreens.DeviceScreens;
+import uk.ac.stfc.isis.ibex.ui.devicescreens.models.ViewDeviceScreensDescriptionViewModel;
+
 /**
  * A view for the current available device screens.
  */
@@ -46,7 +49,8 @@ public class DeviceScreensView extends ViewPart {
     @Override
     public void createPartControl(Composite parent) {
         parent.setLayout(new FillLayout(SWT.HORIZONTAL));
-        new DeviceSceenListPanel(parent, SWT.NONE);
+        new DeviceScreenListPanel(parent, SWT.NONE,
+                new ViewDeviceScreensDescriptionViewModel(DeviceScreens.getInstance().getModel()));
     }
 
     @Override

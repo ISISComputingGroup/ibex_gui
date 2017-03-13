@@ -32,13 +32,11 @@ import java.util.Map;
 import javax.xml.bind.JAXBException;
 
 import org.eclipse.core.runtime.Path;
-import org.xml.sax.SAXException;
 
+import uk.ac.stfc.isis.ibex.epics.conversion.XMLUtil;
 import uk.ac.stfc.isis.ibex.opis.desc.Descriptions;
 import uk.ac.stfc.isis.ibex.opis.desc.MacroInfo;
 import uk.ac.stfc.isis.ibex.opis.desc.OpiDescription;
-import uk.ac.stfc.isis.ibex.opis.desc.XmlUtil;
-
 /**
  * Provides the descriptions of the OPIs from a file.
  *
@@ -62,10 +60,22 @@ public class DescriptionsProvider extends Provider {
 		this.descriptions = descriptions;
 	}
 	
+    /**
+     * Get all of the OPI descriptions.
+     * 
+     * @return Descriptions for all of the OPIs.
+     */
 	public Descriptions getDescriptions() {
 		return descriptions;
 	}
 	
+    /**
+     * Get the description of a specific OPI given its name.
+     * 
+     * @param name
+     *            The name of the OPI to get the description for.
+     * @return The description of the named OPI.
+     */
 	public OpiDescription getDescription(String name) {
 		if (!descriptions.getOpis().containsKey(name)) {
             return new OpiDescription("", "", "", new ArrayList<MacroInfo>());
@@ -91,8 +101,8 @@ public class DescriptionsProvider extends Provider {
 		} 
 		
 		try {
-			return XmlUtil.fromXml(sb.toString());
-		} catch (JAXBException | SAXException e) {
+            return XMLUtil.fromXml(sb.toString(), Descriptions.class);
+        } catch (JAXBException e) {
 			e.printStackTrace();
 			return new Descriptions();
 		}
@@ -101,7 +111,7 @@ public class DescriptionsProvider extends Provider {
 	@Override
 	public Collection<String> getOpiList() {
         List<String> availableOPIs = new ArrayList<String>(descriptions.getOpis().keySet());
-        Collections.sort(availableOPIs);
+        Collections.sort(availableOPIs, String.CASE_INSENSITIVE_ORDER);
         return availableOPIs;
 	}
 

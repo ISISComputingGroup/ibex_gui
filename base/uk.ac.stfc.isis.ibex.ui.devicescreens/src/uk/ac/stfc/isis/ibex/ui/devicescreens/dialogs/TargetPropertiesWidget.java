@@ -42,7 +42,7 @@ import org.eclipse.swt.widgets.Text;
 
 import uk.ac.stfc.isis.ibex.devicescreens.desc.PropertyDescription;
 import uk.ac.stfc.isis.ibex.ui.devicescreens.models.DeviceDescriptionWrapper;
-import uk.ac.stfc.isis.ibex.ui.devicescreens.models.DeviceScreensDescriptionViewModel;
+import uk.ac.stfc.isis.ibex.ui.devicescreens.models.EditDeviceScreensDescriptionViewModel;
 
 /**
  * The target properties widget used to set the macros for an OPI.
@@ -54,10 +54,14 @@ public class TargetPropertiesWidget extends Composite {
     private static final int TABLE_HEIGHT = 150;
 	
     /** The view model. */
-    private DeviceScreensDescriptionViewModel viewModel;
+    private EditDeviceScreensDescriptionViewModel viewModel;
 
     /** The properties table. */
     private Table table;
+
+    private boolean hasProperties = false;
+
+    private boolean currentEnabled = false;
 	
     /**
      * Instantiates a new widget.
@@ -65,7 +69,7 @@ public class TargetPropertiesWidget extends Composite {
      * @param parent the parent
      * @param viewModel the view model
      */
-    public TargetPropertiesWidget(Composite parent, DeviceScreensDescriptionViewModel viewModel) {
+    public TargetPropertiesWidget(Composite parent, EditDeviceScreensDescriptionViewModel viewModel) {
 		super(parent, SWT.NONE);
 		
         this.viewModel = viewModel;
@@ -115,6 +119,8 @@ public class TargetPropertiesWidget extends Composite {
         table = viewer.getTable();
         table.setHeaderVisible(true);
         table.setLinesVisible(true);
+        table.setEnabled(false);
+
 
         TableViewerColumn colTesting = new TableViewerColumn(viewer, SWT.NONE);
         colTesting.getColumn().setText("Name");
@@ -216,6 +222,16 @@ public class TargetPropertiesWidget extends Composite {
                 valueText.setEnabled(false);
             }
         });
+
+        // This updates when the OPI changes
+        viewModel.addPropertyChangeListener("currentEnabled", new PropertyChangeListener() {
+            @Override
+            public void propertyChange(PropertyChangeEvent evt) {
+                currentEnabled = (boolean) evt.getNewValue();
+                enableTable();
+            }
+        });
+
 	}
 	
     /**
@@ -234,9 +250,22 @@ public class TargetPropertiesWidget extends Composite {
                 item.setText(0, p.getKey());
                 item.setText(1, p.getValue());
             }
+            hasProperties = properties.size() > 0;
+            enableTable();
 
-            table.setEnabled(properties.size() > 0);
         }
-	}
+    }
+
+    /**
+     * Sets whether the table is greyed out or not.
+     */
+    private void enableTable() {
+        if (currentEnabled) {
+            table.setEnabled(hasProperties);
+        } else {
+            table.setEnabled(false);
+        }
+    }
+
 
 }

@@ -35,7 +35,7 @@ import com.google.common.base.Strings;
 
 import uk.ac.stfc.isis.ibex.configserver.configuration.Macro;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.iocs.IIocDependentPanel;
-import uk.ac.stfc.isis.ibex.ui.configserver.editing.iocs.IocViewModel;
+import uk.ac.stfc.isis.ibex.ui.configserver.editing.iocs.dialog.IocViewModel;
 
 /**
  * This panel shows the macros that have been set for a given IOC, and allows macros to be added
@@ -83,7 +83,23 @@ public class MacroPanel extends Composite implements IIocDependentPanel {
 	}
 
 	@Override
-    public void setViewModel(IocViewModel viewModel) {
+    public void setViewModel(final IocViewModel viewModel) {
+        viewModel.addPropertyChangeListener("macros", new PropertyChangeListener() {
+            @Override
+            public void propertyChange(PropertyChangeEvent evt) {
+                setMacros(viewModel.getMacros(), viewModel.getIoc().getAvailableMacros(),
+                        viewModel.getIoc().isEditable());
+            }
+        });
+
+        viewModel.addPropertyChangeListener("ioc", new PropertyChangeListener() {
+            @Override
+            public void propertyChange(PropertyChangeEvent evt) {
+                setMacros(viewModel.getMacros(), viewModel.getIoc().getAvailableMacros(),
+                        viewModel.getIoc().isEditable());
+            }
+        });
+
         setMacros(viewModel.getMacros(), viewModel.getIoc().getAvailableMacros(), viewModel.getIoc().isEditable());
 	}
 	

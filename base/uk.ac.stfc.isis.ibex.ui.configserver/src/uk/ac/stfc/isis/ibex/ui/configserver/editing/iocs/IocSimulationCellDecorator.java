@@ -22,7 +22,6 @@ package uk.ac.stfc.isis.ibex.ui.configserver.editing.iocs;
 import org.eclipse.jface.viewers.ViewerCell;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Font;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.wb.swt.SWTResourceManager;
 
 import uk.ac.stfc.isis.ibex.configserver.configuration.SimLevel;
@@ -34,9 +33,6 @@ import uk.ac.stfc.isis.ibex.ui.configserver.editing.CellDecorator;
  * Controls the text formatting.
  */
 public class IocSimulationCellDecorator extends CellDecorator<EditableIoc> {
-
-	private static final Display DISPLAY = Display.getCurrent();
-
     private static final Font NORMAL_FONT = SWTResourceManager.getFont("Arial", 10, SWT.NORMAL);
     private static final Font BOLD_FONT = SWTResourceManager.getFont("Arial", 10, SWT.BOLD);
 

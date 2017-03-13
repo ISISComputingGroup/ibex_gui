@@ -13,10 +13,10 @@ import org.junit.Before;
 import org.junit.Test;
 import org.xml.sax.SAXException;
 
+import uk.ac.stfc.isis.ibex.epics.conversion.XMLUtil;
 import uk.ac.stfc.isis.ibex.opis.desc.Descriptions;
 import uk.ac.stfc.isis.ibex.opis.desc.MacroInfo;
 import uk.ac.stfc.isis.ibex.opis.desc.OpiDescription;
-import uk.ac.stfc.isis.ibex.opis.desc.XmlUtil;
 
 @SuppressWarnings({ "checkstyle:magicnumber", "checkstyle:localvariablename", "checkstyle:methodname" })
 public class XmlTest {
@@ -53,15 +53,15 @@ public class XmlTest {
 		opis.put(opi2.getPath(), opi2);
 
 		Descriptions desc = new Descriptions();
-		emptyDescriptionsXml = XmlUtil.toXml(desc);
+        emptyDescriptionsXml = XMLUtil.toXml(desc, Descriptions.class);
 		desc.setOpis(opis);
 
-		fullDescriptionsXml = XmlUtil.toXml(desc);
+        fullDescriptionsXml = XMLUtil.toXml(desc, Descriptions.class);
 	}
 
 	@Test
 	public void generate_full_description_from_xml() throws JAXBException, SAXException {
-		Descriptions desc = XmlUtil.fromXml(fullDescriptionsXml);
+        Descriptions desc = XMLUtil.fromXml(fullDescriptionsXml, Descriptions.class);
 
 		Map<String, OpiDescription> opis = desc.getOpis();
         assertEquals(opis.get(opiPath1).getType(), opiType1);
@@ -86,7 +86,7 @@ public class XmlTest {
 
 	@Test
 	public void generate_empty_description_from_xml() throws JAXBException, SAXException {
-		Descriptions desc = XmlUtil.fromXml(emptyDescriptionsXml);
+        Descriptions desc = XMLUtil.fromXml(emptyDescriptionsXml, Descriptions.class);
 		
 		Map<String, OpiDescription> opis = desc.getOpis();
 		assertEquals(opis.size(), 0);

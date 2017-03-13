@@ -219,13 +219,6 @@ public class SaveConfigDialog extends TitleAreaDialog {
 		gdTxtName.widthHint = 383;
 		txtName.setLayoutData(gdTxtName);
 		txtName.setBounds(0, 0, 76, 21);
-		new Label(composite, SWT.NONE);
-		
-		Label lblConfigurationNameCannot = new Label(composite, SWT.NONE);
-		lblConfigurationNameCannot.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1));
-		lblConfigurationNameCannot.setText("Name must start with a letter and contain only [A-Z], [0-9] and \"_\"");
-		new Label(composite, SWT.NONE);
-		new Label(composite, SWT.NONE);
 		
 		Label lblConfigurationDesc = new Label(composite, SWT.NONE);
 		lblConfigurationDesc.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
@@ -456,9 +449,13 @@ public class SaveConfigDialog extends TitleAreaDialog {
 			return "Name cannot be blank";
 		}
 		
-		if (!validate(name)) {
-			return "Name contains invalid characters";
-		}
+        if (!name.matches("^[a-zA-Z].*")) {
+            return "Name must start with a letter";
+        }
+
+        if (!name.matches("[a-zA-Z0-9_]*")) {
+            return "Name must only contain alphanumeric characters and underscores";
+        }
 		
         if (nameMatchesCurrentConfig(name)) {
             return "Name matches the current configuration";

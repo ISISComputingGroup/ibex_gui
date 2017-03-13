@@ -21,10 +21,7 @@ package uk.ac.stfc.isis.ibex.synoptic;
 
 import java.util.Collection;
 
-import org.apache.logging.log4j.Logger;
-
 import uk.ac.stfc.isis.ibex.epics.writing.Writable;
-import uk.ac.stfc.isis.ibex.logger.IsisLog;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 import uk.ac.stfc.isis.ibex.synoptic.internal.ObservableSynoptic;
 import uk.ac.stfc.isis.ibex.synoptic.internal.Variables;
@@ -33,8 +30,6 @@ import uk.ac.stfc.isis.ibex.synoptic.model.desc.SynopticDescription;
 import uk.ac.stfc.isis.ibex.synoptic.navigation.InstrumentNavigationGraph;
 
 public class SynopticModel extends ModelObject {
-	
-	private static final Logger LOG = IsisLog.getLogger("SynopticModel");
 	
 	private final Variables variables;
 
@@ -45,7 +40,7 @@ public class SynopticModel extends ModelObject {
 		this.variables = variables;
 		instrument = getInstrument(new SynopticDescription());
 		
-		setCurrentSynoptic = new SynopticWriter(variables.synopticSetter);
+        setCurrentSynoptic = new SynopticWriter(variables.synopticSetter, variables.synopticSchema);
 	}
 
 	public Synoptic instrument() {
@@ -54,10 +49,6 @@ public class SynopticModel extends ModelObject {
 	
 	public Writable<Collection<String>> deleteSynoptics() {
 		return variables.synopticsDeleter;
-	}
-	
-	public Writable<String> setSynoptic() {
-		return variables.synopticSetter;
 	}
 	
 	public SynopticWriter saveSynoptic() {
@@ -70,10 +61,6 @@ public class SynopticModel extends ModelObject {
 	
 	public InstrumentNavigationGraph instrumentGraph() {
 		return new InstrumentNavigationGraph(instrument);
-	}
-		
-	protected Logger logger() {
-		return LOG;
 	}
 	
 	private ObservableSynoptic getInstrument(SynopticDescription description) {

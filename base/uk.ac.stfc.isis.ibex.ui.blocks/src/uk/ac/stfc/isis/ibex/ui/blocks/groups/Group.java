@@ -146,9 +146,6 @@ public class Group extends Composite {
                 blockValue.setVisible(true);
                 valueContainer.pack();
 
-                LabelBorderListener borderListener = new LabelBorderListener(blockValue);
-                addPaintListener(borderListener);
-
                 Label blockStatus = labelMaker(this, SWT.CENTER, "", "Run Control Status", null);
                 FontDescriptor boldDescriptor = FontDescriptor.createFrom(blockStatus.getFont()).setStyle(SWT.BOLD);
                 Font boldFont = boldDescriptor.createFont(blockStatus.getDisplay());
@@ -190,7 +187,7 @@ public class Group extends Composite {
                 UpdateValueStrategy borderStrategy = new UpdateValueStrategy();
                 borderStrategy.setConverter(new BlockStatusBorderColourConverter());
 
-                bindingContext.bindValue(WidgetProperties.background().observe(borderListener.getBorder()),
+                bindingContext.bindValue(WidgetProperties.background().observe(valueContainer),
                         BeanProperties.value("blockState").observe(currentBlock), null, borderStrategy);
             }
         }

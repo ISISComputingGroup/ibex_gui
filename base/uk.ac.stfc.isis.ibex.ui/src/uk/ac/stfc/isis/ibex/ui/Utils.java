@@ -25,6 +25,7 @@ package uk.ac.stfc.isis.ibex.ui;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 
 /**
@@ -68,7 +69,12 @@ public final class Utils {
             return null;
         }
 
-        return PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
+        IWorkbenchWindow activeWorkbenchWindow = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
+        if (activeWorkbenchWindow == null) {
+            return null;
+        }
+
+        return activeWorkbenchWindow.getActivePage();
     }
 
 }
