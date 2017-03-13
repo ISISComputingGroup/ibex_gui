@@ -127,9 +127,9 @@ public class SaveSynopticViewModel extends ErrorMessageProvider {
         } else if (name.length() > MAX_SYNOPTIC_NAME_LENGTH) {
             setError(true, "Name cannot be more than " + MAX_SYNOPTIC_NAME_LENGTH + " characters long");
         } else if (!name.matches("^[a-zA-Z].*")) {
-            setError(true, "Name must start with a character");
+            setError(true, "Name must start with a letter");
         } else if (!name.matches("[a-zA-Z0-9_]*")) {
-            setError(true, "Name must only contain alphanumerics and underscores");
+            setError(true, "Name must only contain alphanumeric characters and underscores");
         }
         return getError().isError();
     }

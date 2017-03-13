@@ -450,11 +450,11 @@ public class SaveConfigDialog extends TitleAreaDialog {
 		}
 		
         if (!name.matches("^[a-zA-Z].*")) {
-            return "Name must start with a character";
+            return "Name must start with a letter";
         }
 
         if (!name.matches("[a-zA-Z0-9_]*")) {
-			return "Name must only contain alphanumerics and underscores";
+            return "Name must only contain alphanumeric characters and underscores";
         }
 		
         if (nameMatchesCurrentConfig(name)) {
