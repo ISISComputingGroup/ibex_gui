@@ -31,27 +31,21 @@ import uk.ac.stfc.isis.ibex.activemq.message.IMessageConsumer;
 import uk.ac.stfc.isis.ibex.activemq.message.MessageParser;
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
+import uk.ac.stfc.isis.ibex.nicos.messages.Login;
+import uk.ac.stfc.isis.ibex.nicos.messages.NicosSendMessage;
+import uk.ac.stfc.isis.ibex.nicos.messages.QueueScript;
+import uk.ac.stfc.isis.ibex.nicos.messages.ReceiveMessage;
 
 /**
  * The model that holds the connection to nicos.
  */
-public class NicosModel extends ModelObject implements IMessageConsumer<NicosMessage> {
+public class NicosModel extends ModelObject implements IMessageConsumer<ReceiveMessage> {
 
     private static final Logger LOG = IsisLog.getLogger(NicosModel.class);
 
     /**
      * The command that allows you to log in to nicos.
      */
-    static final String LOGIN =
-            "{\"command\": \"authenticate\", \"login\": \"ibex\", \"passwd\": \"a2eed0a7fcb214a497052435191b5264cca5b687\", \"display\": \"TEST\"}";
-
-    /**
-     * A template for the command that allows you to queue a script in nicos.
-     * replace the string with the script you want to run.
-     */
-    static final String QUEUE_SCRIPT_COMMAND_TEMPLATE =
-            "{\"command\": \"start\", \"name\": \"script_from_gui\", \"code\": %s}";
-
     private static final String SCRIPT_SEND_FAIL_MESSAGE = "Failed to send script";
 
     private final SendReceiveSession session;
@@ -59,9 +53,12 @@ public class NicosModel extends ModelObject implements IMessageConsumer<NicosMes
     private ScriptSendStatus scriptSendStatus = ScriptSendStatus.NONE;
 
     private SendMessageDetails scriptSendMessageDetails;
+    private SendMessageDetails loginSendMessageDetails;
 
-    private String scriptSendErrorMessage;
+    private String scriptSendErrorMessage = "";
 
+    private ConnectionStatus connectionStatus = ConnectionStatus.DISCONNECTED;
+    private String connectionErrorMessage = "";
 
     /**
      * Constructor for the model.
@@ -74,7 +71,7 @@ public class NicosModel extends ModelObject implements IMessageConsumer<NicosMes
      */
     public NicosModel(SendReceiveSession session) {
         this.session = session;
-        MessageParser<NicosMessage> parser = new NicosMessageParser();
+        MessageParser<ReceiveMessage> parser = new NicosMessageParser();
         parser.addMessageConsumer(this);
         this.session.addMessageParser(parser);
         this.session.addPropertyChangeListener("connection", passThrough());
@@ -82,19 +79,17 @@ public class NicosModel extends ModelObject implements IMessageConsumer<NicosMes
 
             @Override
             public void propertyChange(PropertyChangeEvent evt) {
-                if ((Boolean) evt.getNewValue()) {
-                    if (!session.sendMessage(LOGIN).isSent()) {
-                        LOG.error("Error when sending log in message to Nicos");
-                    }
-                }
+                Boolean isConnected = (Boolean) evt.getNewValue();
+                connectedChange(isConnected);
             }
+
         });
-        session.sendMessage(LOGIN);
+        connectedChange(this.session.isConnected());
     }
 
     @Override
-    public void newMessage(NicosMessage nicosMessage) {
-        System.out.println("New data on ss_admin: " + nicosMessage.getPayload());
+    public void newMessage(ReceiveMessage nicosMessage) {
+        LOG.info("New data on ss_admin: " + nicosMessage.toString());
 
         if (nicosMessage.isReplyTo(scriptSendMessageDetails)) {
             if (nicosMessage.isSuccess()) {
@@ -102,11 +97,45 @@ public class NicosModel extends ModelObject implements IMessageConsumer<NicosMes
                 setScriptSendErrorMessage("");
             } else {
                 setScriptSendStatus(ScriptSendStatus.SEND_ERROR);
-                setScriptSendErrorMessage(nicosMessage.getPayload());
+                setScriptSendErrorMessage(nicosMessage.getMessage());
+            }
+        } else if (nicosMessage.isReplyTo(loginSendMessageDetails)) {
+            if (nicosMessage.isSuccess()) {
+                setConnectionStatus(ConnectionStatus.CONNECTED);
+                setConnectionErrorMessage("");
+            } else {
+                LOG.error("Error returned from Nicos on login: " + nicosMessage.getMessage());
+                setConnectionStatus(ConnectionStatus.LOGIN_FAIL);
+                setConnectionErrorMessage("Can not log in: " + nicosMessage.getMessage());
             }
         }
     }
 
+    /**
+     * The connection status has changed. Login if connected.
+     * 
+     * @param isConnected
+     *            is the server connected
+     */
+    private void connectedChange(Boolean isConnected) {
+        // new connection so reset script send status
+        setScriptSendStatus(ScriptSendStatus.NONE);
+        setScriptSendErrorMessage("");
+
+        if (isConnected) {
+            setConnectionStatus(ConnectionStatus.CONNECTING);
+            loginSendMessageDetails = sendMessageToNicos(new Login());
+            if (!loginSendMessageDetails.isSent()) {
+                LOG.error("Error when sending log in message to Nicos: \'" + loginSendMessageDetails.getFailureReason()
+                        + "\'");
+                setConnectionStatus(ConnectionStatus.LOGIN_FAIL);
+                setConnectionErrorMessage("Can not send login message: " + loginSendMessageDetails.getFailureReason());
+            }
+        } else {
+            setConnectionStatus(ConnectionStatus.DISCONNECTED);
+            setConnectionErrorMessage("");
+        }
+    }
 
 
     @Override
@@ -129,26 +158,31 @@ public class NicosModel extends ModelObject implements IMessageConsumer<NicosMes
     }
 
     /**
-     * Send a script to nicos. Do not wait for a reply the acknowledgement can
+     * Send a script to Nicos. Do not wait for a reply the acknowledgement can
      * be found in script send status.
      * 
      * @param script
      *            to queue
      */
     public void sendScript(String script) {
+        QueueScript nicosMessage = new QueueScript("ScriptFromGUI", script);
+        this.scriptSendMessageDetails = sendMessageToNicos(nicosMessage);
+    }
+
+    /**
+     * @param nicosMessage
+     * @return
+     */
+    private SendMessageDetails sendMessageToNicos(NicosSendMessage nicosMessage) {
         setScriptSendStatus(ScriptSendStatus.SENDING);
-
         Gson gson = new Gson();
-
-        String messageForNicos = String.format(QUEUE_SCRIPT_COMMAND_TEMPLATE, gson.toJson(script));
+        String messageForNicos = gson.toJson(nicosMessage);
         SendMessageDetails sendMessageStatus = this.session.sendMessage(messageForNicos);
-        if (sendMessageStatus.isSent()) {
-            scriptSendMessageDetails = sendMessageStatus;
-            return;
+        if (!sendMessageStatus.isSent()) {
+            setScriptSendStatus(ScriptSendStatus.SEND_ERROR);
+            setScriptSendErrorMessage(SCRIPT_SEND_FAIL_MESSAGE);
         }
-
-        setScriptSendStatus(ScriptSendStatus.SEND_ERROR);
-        setScriptSendErrorMessage(SCRIPT_SEND_FAIL_MESSAGE);
+        return sendMessageStatus;
     }
 
     /**
@@ -173,4 +207,42 @@ public class NicosModel extends ModelObject implements IMessageConsumer<NicosMes
                 this.scriptSendErrorMessage = sciptSendErrorMessage);
     }
 
+    /**
+     * @return the Script Server connection status
+     */
+    public ConnectionStatus getConnectionStatus() {
+        return this.connectionStatus;
+    }
+
+    /**
+     * Set the connection status
+     * 
+     * @param connectionStatus
+     *            the new connection status
+     */
+    private void setConnectionStatus(ConnectionStatus connectionStatus) {
+        firePropertyChange("connectionStatus", this.connectionStatus, this.connectionStatus = connectionStatus);
+    }
+
+    /**
+     * Get the last error message received when connecting.
+     * 
+     * Blank for no error message.
+     * 
+     * @return the log in error message
+     */
+    public String getConnectionErrorMessage() {
+        return connectionErrorMessage;
+    }
+
+    /**
+     * Set the connection error message and fire a property change.
+     * 
+     * @param connectionErrorMessage
+     *            the new error message
+     */
+    private void setConnectionErrorMessage(String connectionErrorMessage) {
+        firePropertyChange("connectionErrorMessage", this.connectionErrorMessage,
+                this.connectionErrorMessage = connectionErrorMessage);
+    }
 }

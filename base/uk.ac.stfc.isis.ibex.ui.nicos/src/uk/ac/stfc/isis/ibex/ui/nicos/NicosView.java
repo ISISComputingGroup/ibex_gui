@@ -20,7 +20,6 @@
 package uk.ac.stfc.isis.ibex.ui.nicos;
 
 import org.eclipse.core.databinding.DataBindingContext;
-import org.eclipse.core.databinding.UpdateValueStrategy;
 import org.eclipse.core.databinding.beans.BeanProperties;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.swt.SWT;
@@ -38,9 +37,9 @@ import org.eclipse.ui.part.ViewPart;
 
 import uk.ac.stfc.isis.ibex.nicos.Nicos;
 import uk.ac.stfc.isis.ibex.nicos.NicosModel;
-import uk.ac.stfc.isis.ibex.nicos.ScriptSendStatus;
 import uk.ac.stfc.isis.ibex.ui.nicos.dialogs.QueueScriptDialog;
 import uk.ac.stfc.isis.ibex.ui.nicos.models.QueueScriptViewModel;
+import uk.ac.stfc.isis.ibex.ui.nicos.models.ScriptSendStatusConverter;
 
 /**
  * The main view for the NICOS scripting perspective.
@@ -52,23 +51,23 @@ public class NicosView extends ViewPart {
 	 * The public ID of this class.
 	 */
 	public static final String ID = "uk.ac.stfc.isis.ibex.ui.nicos.nicosview";
+
+    private static final String INITIAL_SCRIPT = "# Script\nprint(\"My Script\")";
 	
 	private final Shell shell;
     private DataBindingContext bindingContext = new DataBindingContext();
 	
-    /**
-     * Nicos model.
-     */
     private NicosModel model;
-
     private QueueScriptViewModel queueScriptViewModel;
+
+    private Label lblCurrentScript;
 
 	/**
 	 * The default constructor for the view.
 	 */
 	public NicosView() {
         model = Nicos.getDefault().getModel();
-        queueScriptViewModel = new QueueScriptViewModel(model, "sleep(10)");
+        queueScriptViewModel = new QueueScriptViewModel(model, INITIAL_SCRIPT);
 
 		shell = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
 	}
@@ -81,7 +80,7 @@ public class NicosView extends ViewPart {
 		glParent.marginWidth = 10;
 		parent.setLayout(glParent);
 		
-		Label lblCurrentScript = new Label(parent, SWT.NONE);
+		lblCurrentScript = new Label(parent, SWT.NONE);
 		lblCurrentScript.setText("Current Script");
 		
 		Label lblOutput = new Label(parent, SWT.NONE);
@@ -95,38 +94,28 @@ public class NicosView extends ViewPart {
 		txtOutput.setEditable(false);
 		txtOutput.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		
-		Button btnCreateScript = new Button(parent, SWT.NONE);
+        Composite scriptSendGrp = new Composite(parent, SWT.NONE);
+        scriptSendGrp.setLayoutData(new GridData(SWT.FILL, SWT.BOTTOM, true, false, 2, 1));
+        GridLayout ssgLayout = new GridLayout(3, false);
+        ssgLayout.marginRight = 10;
+        ssgLayout.marginHeight = 10;
+        ssgLayout.marginWidth = 10;
+        scriptSendGrp.setLayout(ssgLayout);
+
+        Button btnCreateScript = new Button(scriptSendGrp, SWT.NONE);
 		btnCreateScript.setText("Create Script");
+        btnCreateScript.setLayoutData(new GridData(SWT.BEGINNING, SWT.FILL, false, true, 1, 1));
 		
-        Label lblQueueScriptStatus = new Label(parent, SWT.NONE);
-        lblQueueScriptStatus.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+        Label lblQueueScriptStatus = new Label(scriptSendGrp, SWT.NONE);
+        GridData layoutData = new GridData(SWT.BEGINNING, SWT.FILL, false, true, 1, 1);
+        layoutData.widthHint = 80;
+        lblQueueScriptStatus.setLayoutData(layoutData);
         bindingContext.bindValue(WidgetProperties.text().observe(lblQueueScriptStatus),
-                BeanProperties.value("scriptSendStatus").observe(queueScriptViewModel), null, new UpdateValueStrategy() {
-                    /**
-                     * @param value
-                     * @return
-                     */
-                    @Override
-                    public Object convert(Object value) {
-                        if (value == null) {
-                            return "";
-                        }
-                        switch ((ScriptSendStatus) value) {
-                            case NONE:
-                                return "";
-                            case SEND_ERROR:
-                                return "Error";
-                            case SENDING:
-                                return "Sending";
-                            case SENT:
-                                return "Sent";
-                            default:
-                                return value.toString();
-                        }
-                    }
-                });
-        Label lblQueueScriptError = new Label(parent, SWT.NONE);
-        lblQueueScriptError.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+                BeanProperties.value("scriptSendStatus").observe(queueScriptViewModel), null, new ScriptSendStatusConverter());
+
+
+        Label lblQueueScriptError = new Label(scriptSendGrp, SWT.NONE);
+        lblQueueScriptError.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
         bindingContext.bindValue(WidgetProperties.text().observe(lblQueueScriptError),
                 BeanProperties.value("scriptSendErrorMessage").observe(queueScriptViewModel));
 
@@ -144,7 +133,7 @@ public class NicosView extends ViewPart {
      */
     @Override
     public void setFocus() {
-        //
+        lblCurrentScript.setFocus();
     }
 
 }

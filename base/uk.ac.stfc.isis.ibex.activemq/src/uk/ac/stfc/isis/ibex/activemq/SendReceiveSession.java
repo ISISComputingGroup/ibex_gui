@@ -113,10 +113,13 @@ public class SendReceiveSession extends ReceiveSession {
      * @return message details for sent message
      */
     public SendMessageDetails sendMessage(String text) {
-        TextMessage txtMessage;
+        if (session == null) {
+            return SendMessageDetails.createSendFail("No connection to script server.", "");
+        }
+
         String messageId = getNextCorrelationID();
         try {
-            txtMessage = session.createTextMessage();
+            TextMessage txtMessage = session.createTextMessage();
             txtMessage.setText(text);
             txtMessage.setJMSReplyTo(tempQueue);
             txtMessage.setJMSCorrelationID(messageId);

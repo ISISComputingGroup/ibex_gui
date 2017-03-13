@@ -28,7 +28,6 @@ import static org.mockito.Matchers.contains;
 import static org.mockito.Mockito.*;
 
 import javax.jms.JMSException;
-import javax.jms.MessageConsumer;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -38,8 +37,9 @@ import org.mockito.stubbing.OngoingStubbing;
 import uk.ac.stfc.isis.ibex.activemq.SendMessageDetails;
 import uk.ac.stfc.isis.ibex.activemq.SendReceiveSession;
 import uk.ac.stfc.isis.ibex.activemq.message.MessageDetails;
+import uk.ac.stfc.isis.ibex.nicos.messages.ReceiveMessage;
 
-public class NicosModelTest {
+public class NicosSendScriptTest {
 
     /**
      * 
@@ -53,7 +53,6 @@ public class NicosModelTest {
     private SendReceiveSession sendReceiveSession = mock(SendReceiveSession.class);
     private NicosModel model;
     private NicosMessageParser messageParser;
-    private MessageConsumer consumer = mock(MessageConsumer.class);
 
     /**
      * @return the stub after the send receive session has logged in
@@ -66,11 +65,15 @@ public class NicosModelTest {
 
     @Before
     public void setUp() {
+        loginedInSessionSendMessage().thenReturn(SendMessageDetails.createSendSuccess("messageId"));
+
         model = new NicosModel(sendReceiveSession);
         ArgumentCaptor<NicosMessageParser> captor = ArgumentCaptor.forClass(NicosMessageParser.class);
         verify(sendReceiveSession).addMessageParser(captor.capture());
         messageParser = captor.getValue();
-        messageParser.setActiveMQConsumer(consumer);
+
+
+
     }
 
     @Test
@@ -171,7 +174,7 @@ public class NicosModelTest {
      * @return
      */
     private void modelRecieveNewMessage(String rawMessage, String messageId) {
-        NicosMessage nicosMessage = messageParser.parseMessage(new MessageDetails(rawMessage, messageId));
+        ReceiveMessage nicosMessage = messageParser.parseMessage(new MessageDetails(rawMessage, messageId));
         model.newMessage(nicosMessage);
     }
 
@@ -181,7 +184,7 @@ public class NicosModelTest {
 
         model.sendScript(SCRIPT);
 
-        verify(sendReceiveSession).sendMessage(contains(NicosModel.QUEUE_SCRIPT_COMMAND_TEMPLATE.substring(0, 20)));
+        verify(sendReceiveSession).sendMessage(contains("queue"));
     }
 
     @Test
@@ -193,7 +196,7 @@ public class NicosModelTest {
         model.sendScript(original);
 
         ArgumentCaptor<String> argument = ArgumentCaptor.forClass(String.class);
-        verify(sendReceiveSession, times(2)).sendMessage(argument.capture());
+        verify(sendReceiveSession, times(1)).sendMessage(argument.capture());
         assertThat(argument.getValue(), containsString(escaped));
     }
 }

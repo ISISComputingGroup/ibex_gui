@@ -16,7 +16,7 @@
  * http://opensource.org/licenses/eclipse-1.0.php
  */
 
-package uk.ac.stfc.isis.ibex.nicos;
+package uk.ac.stfc.isis.ibex.nicos.messages;
 
 import uk.ac.stfc.isis.ibex.activemq.SendMessageDetails;
 import uk.ac.stfc.isis.ibex.activemq.message.IMessage;
@@ -26,8 +26,7 @@ import uk.ac.stfc.isis.ibex.activemq.message.IMessage;
  * 
  * THIS IS DESERIALISED FROM JSON AND SO THE CONSTRUCTOR MAY NOT BE CALLED
  */
-public class NicosMessage implements IMessage {
-    private String payload;
+public abstract class ReceiveMessage implements IMessage {
     private String messageId;
 
     private boolean success;
@@ -35,8 +34,6 @@ public class NicosMessage implements IMessage {
     /**
      * A constructor for a basic message.
      * 
-     * @param payload
-     *            The payload from the message.
      * @param messageId
      *            message id of the returned message, this can be correlated
      *            with a sent id
@@ -44,8 +41,7 @@ public class NicosMessage implements IMessage {
      *            true if message is for a success; false otherwise
      * 
      */
-    public NicosMessage(String payload, String messageId, boolean success) {
-        this.payload = payload;
+    public ReceiveMessage(String messageId, boolean success) {
         this.messageId = messageId;
         this.success = success;
     }
@@ -55,13 +51,6 @@ public class NicosMessage implements IMessage {
      */
     public boolean isSuccess() {
         return success;
-    }
-
-    /**
-     * @return The payload that the NICOS message contained.
-     */
-    public String getPayload() {
-        return payload;
     }
 
     /**
@@ -88,6 +77,19 @@ public class NicosMessage implements IMessage {
      */
     public void setMessageId(String messageId) {
         this.messageId = messageId;
+    }
+
+    /**
+     * @return generic message for this replay
+     */
+    public abstract String getMessage();
+    
+    /**
+     * @return string representation
+     */
+    @Override
+    public String toString() {
+        return "[ID " + this.messageId + "] '" + getMessage() + "'";
     }
 
 }

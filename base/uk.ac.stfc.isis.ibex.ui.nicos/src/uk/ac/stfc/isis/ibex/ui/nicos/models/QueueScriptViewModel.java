@@ -51,10 +51,10 @@ public class QueueScriptViewModel extends ModelObject {
         this.model = model;
         setScript(initialScript);
         
-        bindingContext.bindValue(BeanProperties.value("scriptSendErrorMessage").observe(model),
-                BeanProperties.value("scriptSendErrorMessage").observe(this));
-        bindingContext.bindValue(BeanProperties.value("scriptSendStatus").observe(model),
-                BeanProperties.value("scriptSendStatus").observe(this));
+        bindingContext.bindValue(BeanProperties.value("scriptSendErrorMessage").observe(this),
+                BeanProperties.value("scriptSendErrorMessage").observe(model));
+        bindingContext.bindValue(BeanProperties.value("scriptSendStatus").observe(this),
+                BeanProperties.value("scriptSendStatus").observe(model));
     }
 
 
