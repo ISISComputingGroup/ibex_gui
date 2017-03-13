@@ -268,20 +268,6 @@
 			</value>
 		</entry>
 		<entry>
-			<key>Lakeshore 336 OPI DEMO</key>
-			<value>
-				<type>LAKESHORE</type>
-				<path>Lakeshore336_OPI_demo/Lakeshore336_CSS_defaults.opi</path>
-				<description>The OPI for the Lakeshore 336 temperature controller.</description>
-				<macros>
-					<macro>
-						<name>LAKESHORE336</name>
- 						<description>The Lakeshore PV name (e.g. LKSH336_01).</description>  
-					</macro>
-				</macros>
-			</value>
-		</entry>
-		<entry>
 			<key>Mk3 Chopper</key>
 			<value>
 				<type>CHOPPER</type>
