@@ -24,13 +24,15 @@ package uk.ac.stfc.isis.ibex.ui.configserver.editing.iocs.dialog;
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.beans.BeanProperties;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
+import org.eclipse.jface.databinding.viewers.ViewersObservables;
 import org.eclipse.jface.resource.FontDescriptor;
+import org.eclipse.jface.viewers.ArrayContentProvider;
+import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
-import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.TabFolder;
@@ -38,6 +40,7 @@ import org.eclipse.swt.widgets.TabItem;
 import org.eclipse.swt.widgets.Text;
 
 import uk.ac.stfc.isis.ibex.configserver.configuration.SimLevel;
+import uk.ac.stfc.isis.ibex.configserver.editing.EditableIoc;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.macros.MacroPanel;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.pvs.IocPVsEditorPanel;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.pvsets.IocPVSetsEditorPanel;
@@ -54,7 +57,7 @@ public class EditPanel extends Composite {
     private Text selectedIoc;
     private Button autoStart;
     private Button autoRestart;
-    private Combo simLevel;
+    private ComboViewer simLevel;
 
     private MacroPanel macros;
     private IocPVsEditorPanel pvVals;
@@ -100,9 +103,10 @@ public class EditPanel extends Composite {
         lblSimLevel.setText("Sim. Level");
         lblSimLevel.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false));
 
-        simLevel = new Combo(cmpIocDetails, SWT.NONE);
-        simLevel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 2, 1));
-        simLevel.setItems(SimLevel.allToString().toArray(new String[0]));
+        simLevel = new ComboViewer(cmpIocDetails, SWT.READ_ONLY);
+        simLevel.getCombo().setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 2, 1));
+        simLevel.setContentProvider(new ArrayContentProvider());
+        simLevel.setInput(SimLevel.values());
 
         new Label(cmpIocDetails, SWT.NONE);
 
@@ -138,34 +142,34 @@ public class EditPanel extends Composite {
     /**
      * Sets the IOC view model used by the panel.
      * 
-     * @param viewModel
+     * @param editableIoc
      *            The view model.
      */
-    public void setViewModel(final IocViewModel viewModel) {
+    public void setViewModel(final EditableIoc editableIoc) {
 
-        macros.setViewModel(viewModel);
-        pvVals.setViewModel(viewModel);
-        pvSets.setViewModel(viewModel);
+        macros.setViewModel(editableIoc);
+        pvVals.setViewModel(editableIoc);
+        pvSets.setViewModel(editableIoc);
 
-        bind(viewModel);
+        bind(editableIoc);
     }
 
     /**
      * Binds view model values to widgets.
      * 
-     * @param viewModel
+     * @param editableIoc
      *            The IOC view model.
      */
-    private void bind(IocViewModel viewModel) {
+    private void bind(EditableIoc editableIoc) {
         DataBindingContext bindingContext = new DataBindingContext();
         bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(selectedIoc),
-                BeanProperties.value("name").observe(viewModel));
+                BeanProperties.value("name").observe(editableIoc));
         bindingContext.bindValue(WidgetProperties.selection().observe(autoStart),
-                BeanProperties.value("autoStart").observe(viewModel));
+                BeanProperties.value("autoStart").observe(editableIoc));
         bindingContext.bindValue(WidgetProperties.selection().observe(autoRestart),
-                BeanProperties.value("autoRestart").observe(viewModel));
-        bindingContext.bindValue(WidgetProperties.singleSelectionIndex().observe(simLevel),
-                BeanProperties.value("simLevel").observe(viewModel));
+                BeanProperties.value("autoRestart").observe(editableIoc));
+        bindingContext.bindValue(ViewersObservables.observeSingleSelection(simLevel),
+                BeanProperties.value("simLevel").observe(editableIoc));
     }
 
 }
