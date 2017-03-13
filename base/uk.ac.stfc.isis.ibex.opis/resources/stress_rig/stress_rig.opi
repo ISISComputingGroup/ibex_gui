@@ -281,20 +281,20 @@
     </font>
     <widget typeId="org.csstudio.opibuilder.widgets.NativeButton" version="1.0">
       <toggle_button>false</toggle_button>
-      <border_style>0</border_style>
+      <border_style>14</border_style>
       <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
       <tooltip>$(pv_name)
 $(pv_value)</tooltip>
       <push_action_index>0</push_action_index>
       <rules />
       <enabled>true</enabled>
-      <wuid>-4305d44c:15ac6d0a5c2:-6868</wuid>
+      <wuid>-4305d44c:15ac6d0a5c2:-6861</wuid>
       <pv_value />
-      <text>Stop rig</text>
+      <text>Panic stop</text>
       <scripts />
       <border_alarm_sensitive>false</border_alarm_sensitive>
-      <height>28</height>
-      <border_width>1</border_width>
+      <height>31</height>
+      <border_width>2</border_width>
       <scale_options>
         <width_scalable>true</width_scalable>
         <height_scalable>true</height_scalable>
@@ -304,11 +304,11 @@ $(pv_value)</tooltip>
       <visible>true</visible>
       <pv_name></pv_name>
       <border_color>
-        <color name="ISIS_Border" red="0" green="0" blue="0" />
+        <color name="ISIS_Red" red="255" green="0" blue="0" />
       </border_color>
       <widget_type>Button</widget_type>
       <width>139</width>
-      <x>24</x>
+      <x>186</x>
       <name>Button_1</name>
       <y>0</y>
       <foreground_color>
@@ -330,20 +330,20 @@ $(pv_value)</tooltip>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.NativeButton" version="1.0">
       <toggle_button>false</toggle_button>
-      <border_style>0</border_style>
+      <border_style>14</border_style>
       <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
       <tooltip>$(pv_name)
 $(pv_value)</tooltip>
       <push_action_index>0</push_action_index>
       <rules />
       <enabled>true</enabled>
-      <wuid>-4305d44c:15ac6d0a5c2:-6861</wuid>
+      <wuid>-4305d44c:15ac6d0a5c2:-6868</wuid>
       <pv_value />
-      <text>Panic stop</text>
+      <text>Stop rig</text>
       <scripts />
       <border_alarm_sensitive>false</border_alarm_sensitive>
-      <height>28</height>
-      <border_width>1</border_width>
+      <height>31</height>
+      <border_width>2</border_width>
       <scale_options>
         <width_scalable>true</width_scalable>
         <height_scalable>true</height_scalable>
@@ -353,11 +353,11 @@ $(pv_value)</tooltip>
       <visible>true</visible>
       <pv_name></pv_name>
       <border_color>
-        <color name="ISIS_Border" red="0" green="0" blue="0" />
+        <color name="ISIS_Shutter_Moving" red="255" green="150" blue="0" />
       </border_color>
       <widget_type>Button</widget_type>
       <width>139</width>
-      <x>198</x>
+      <x>24</x>
       <name>Button_1</name>
       <y>0</y>
       <foreground_color>
@@ -840,7 +840,7 @@ $(pv_value)</tooltip>
       <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
     </background_color>
     <width>403</width>
-    <x>405</x>
+    <x>408</x>
     <name>Logging Settings</name>
     <y>510</y>
     <foreground_color>
