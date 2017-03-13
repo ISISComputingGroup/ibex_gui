@@ -114,10 +114,20 @@ public class ComponentDuplicateChecker {
         Map<String, String> conflicts = new HashMap<String, String>();
 
         for (Block block : toCheck.getBlocks()) {
-            if (allCurrentBlocks.containsKey(block.getName())) {
-                conflicts.put(block.getName(), allCurrentBlocks.get(block.getName()));
+            String duplicate = findDuplicate(block.getName());
+            if (!(duplicate == null)) {
+                conflicts.put(duplicate, allCurrentBlocks.get(duplicate));
             }
         }
         return conflicts;
+    }
+
+    private String findDuplicate(String name) {
+        for (String key : allCurrentBlocks.keySet()) {
+            if (name.equalsIgnoreCase(key)) {
+                return key;
+            }
+        }
+        return null;
     }
 }
