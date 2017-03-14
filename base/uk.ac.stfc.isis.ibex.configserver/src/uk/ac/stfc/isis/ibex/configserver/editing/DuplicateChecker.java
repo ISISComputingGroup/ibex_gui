@@ -19,7 +19,7 @@
 /**
  * 
  */
-package uk.ac.stfc.isis.ibex.ui.configserver.editing.components;
+package uk.ac.stfc.isis.ibex.configserver.editing;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -27,14 +27,12 @@ import java.util.Map;
 
 import uk.ac.stfc.isis.ibex.configserver.configuration.Block;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Configuration;
-import uk.ac.stfc.isis.ibex.configserver.editing.EditableComponents;
-import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
 
 /**
  * Class used to check for conflicts caused by duplicate elements to decide if a
  * given component can be added to a configuration.
  */
-public class ComponentDuplicateChecker {
+public class DuplicateChecker {
 
     private EditableConfiguration config;
     private EditableComponents components;
@@ -45,9 +43,10 @@ public class ComponentDuplicateChecker {
      * 
      * @param config The currently edited configuration
      */
-    public ComponentDuplicateChecker(EditableConfiguration config) {
+    public DuplicateChecker(EditableConfiguration config) {
         this.config = config;
         components = config.getEditableComponents();
+        refreshBlocks();
     }
 
     private void refreshBlocks() {
@@ -96,9 +95,12 @@ public class ComponentDuplicateChecker {
      * @return A map of conflicts per component (empty if none).
      */
     public Map<String, Map<String, String>> checkBlocks(Collection<Configuration> toToggle) {
-        refreshBlocks();
         Map<String, Map<String, String>> allConflicts = new HashMap<String, Map<String, String>>();
+        if (this.config == null) {
+            return allConflicts;
+        }
 
+        refreshBlocks();
         for (Configuration comp : toToggle) {
             Map<String, String> conflicts = getBlockConflicts(comp);
             if (!conflicts.isEmpty()) {
@@ -122,7 +124,14 @@ public class ComponentDuplicateChecker {
         return conflicts;
     }
 
-    private String findDuplicate(String name) {
+    /**
+     * Finds if duplicates for a given name exist in the config to check.
+     * 
+     * @param name
+     *            The block name to check for.
+     * @return The name of duplicate blocks.
+     */
+    public String findDuplicate(String name) {
         for (String key : allCurrentBlocks.keySet()) {
             if (name.equalsIgnoreCase(key)) {
                 return key;

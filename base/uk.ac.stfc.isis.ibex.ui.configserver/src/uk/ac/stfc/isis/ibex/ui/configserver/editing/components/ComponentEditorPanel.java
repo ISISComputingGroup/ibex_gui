@@ -35,6 +35,7 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 
 import uk.ac.stfc.isis.ibex.configserver.configuration.Configuration;
+import uk.ac.stfc.isis.ibex.configserver.editing.DuplicateChecker;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableComponents;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.DoubleListEditor;
@@ -74,7 +75,7 @@ public class ComponentEditorPanel extends Composite {
 		IObservableList unselected = BeanProperties.list("unselected").observe(components);
 		editor.bind(unselected, selected);
 
-        final ComponentDuplicateChecker duplicateChecker = new ComponentDuplicateChecker(config);
+        final DuplicateChecker duplicateChecker = new DuplicateChecker(config);
 
 		editor.addSelectionListenerForSelecting(new SelectionAdapter() {
 			@SuppressWarnings("unchecked")

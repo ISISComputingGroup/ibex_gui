@@ -34,17 +34,17 @@ import org.junit.Test;
 
 import uk.ac.stfc.isis.ibex.configserver.configuration.Block;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Configuration;
+import uk.ac.stfc.isis.ibex.configserver.editing.DuplicateChecker;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableBlock;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableComponents;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
-import uk.ac.stfc.isis.ibex.ui.configserver.editing.components.ComponentDuplicateChecker;
 
 /**
  *
  */
 public class ComponentDuplicateCheckerTest {
 
-    private ComponentDuplicateChecker duplicateChecker;
+    private DuplicateChecker duplicateChecker;
     private EditableConfiguration mockConfig;
 
     private final static String BLOCK_1_NAME = "BLOCK_1";
@@ -86,7 +86,7 @@ public class ComponentDuplicateCheckerTest {
         when(mockConfig.getAvailableBlocks()).thenReturn(mockBlocks);
         when(mockConfig.getEditableComponents()).thenReturn(mockComponents);
 
-        duplicateChecker = new ComponentDuplicateChecker(mockConfig);
+        duplicateChecker = new DuplicateChecker(mockConfig);
     }
 
     @Test

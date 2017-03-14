@@ -31,14 +31,21 @@ import uk.ac.stfc.isis.ibex.configserver.configuration.Block;
  * 
  */
 public class BlockNameValidator {
-	
+    /**
+     * The error to display when the name of the block is already taken.
+     */
 	public static final String DUPLICATE_GROUP_MESSAGE = "Duplicate block name";
+    /**
+     * The error to display when the block name is empty.
+     */
 	public static final String EMPTY_NAME_MESSAGE = "Block name must not be empty";
+    /**
+     * The error to display when the block name is not allowed.
+     */
 	public static final String FORBIDDEN_NAME_MESSAGE = "Block name cannot be ";
 	private static final String NO_ERROR = "";
 	
-	private final EditableConfiguration config;
-	private final Block selectedBlock;
+    private final DuplicateChecker duplicateChecker;
 	
 	private String errorMessage;
 	
@@ -49,9 +56,8 @@ public class BlockNameValidator {
 	 * @param selectedBlock - The block being created or edited
 	 */
 	public BlockNameValidator(EditableConfiguration config, Block selectedBlock) {
-		this.config = config;
-		this.selectedBlock = selectedBlock;
 		this.errorMessage = NO_ERROR;
+        this.duplicateChecker = new DuplicateChecker(config);
 	}
 	
 	/**
@@ -86,6 +92,9 @@ public class BlockNameValidator {
 		this.errorMessage = errorMessage;
 	}
 	
+	/**
+	 * @return The current error message.
+	 */
 	public String getErrorMessage() {
 		return errorMessage;
 	}
@@ -112,15 +121,7 @@ public class BlockNameValidator {
 	}
 	
 	private boolean nameIsDuplicated(String text) {
-		for (EditableBlock block : config.getEditableBlocks()) {
-			if (isNotSelectedBlock(block) && block.getName().equals(text)) {
-				return true;
-			}
-		}		
-		return false;
-	}
-
-	private boolean isNotSelectedBlock(Block block) {
-		return !block.equals(selectedBlock);
+        boolean duplicate = duplicateChecker.findDuplicate(text) != null;
+        return duplicate;
 	}
 }
