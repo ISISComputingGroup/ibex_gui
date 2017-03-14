@@ -61,9 +61,8 @@ public class IocPVSetsEditorPanel extends Composite implements	IIocDependentPane
 	}
 
 	@Override
-    public void setViewModel(final EditableIoc viewModel) {
+    public void setIOC(final EditableIoc ioc) {
 		Collection<EditablePVSet> rows = new ArrayList<EditablePVSet>();
-        final EditableIoc ioc = viewModel;
 		
         for (AvailablePVSet pvset : ioc.getAvailablePVSets()) {
 			EditablePVSet editableSet;
@@ -87,10 +86,10 @@ public class IocPVSetsEditorPanel extends Composite implements	IIocDependentPane
                             if (existingSet != null) {
                                 existingSet.setEnabled(true);
                             } else {
-                                viewModel.getPvSets().add(new PVSet(pvset.getName(), true));
+                                ioc.getPvSets().add(new PVSet(pvset.getName(), true));
 							}
                         } else if (existingSet != null) {
-                            viewModel.getPvSets().remove(existingSet);
+                            ioc.getPvSets().remove(existingSet);
 						}
 					}
 				});

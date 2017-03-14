@@ -140,16 +140,16 @@ public class EditPanel extends Composite {
     }
 
     /**
-     * Sets the IOC view model used by the panel.
+     * Sets the IOC used by the panel.
      * 
      * @param editableIoc
-     *            The view model.
+     *            The IOC.
      */
-    public void setViewModel(final EditableIoc editableIoc) {
+    public void setIOC(final EditableIoc editableIoc) {
 
-        macros.setViewModel(editableIoc);
-        pvVals.setViewModel(editableIoc);
-        pvSets.setViewModel(editableIoc);
+        macros.setIOC(editableIoc);
+        pvVals.setIOC(editableIoc);
+        pvSets.setIOC(editableIoc);
 
         bind(editableIoc);
     }
