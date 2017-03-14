@@ -162,7 +162,7 @@ public class EditPanel extends Composite {
      */
     private void bind(EditableIoc editableIoc) {
         DataBindingContext bindingContext = new DataBindingContext();
-        bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(selectedIoc),
+        bindingContext.bindValue(WidgetProperties.text(SWT.NONE).observe(selectedIoc),
                 BeanProperties.value("name").observe(editableIoc));
         bindingContext.bindValue(WidgetProperties.selection().observe(autoStart),
                 BeanProperties.value("autoStart").observe(editableIoc));
