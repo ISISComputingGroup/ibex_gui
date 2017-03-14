@@ -668,6 +668,16 @@
 				<macros>
 				</macros>
 			</value>
+		</entry> 
+		<entry>
+			<key>Goniometer</key>
+			<value>
+				<type>GONIOMETER</type>
+				<path>goniometer/goniometer.opi</path>
+				<description>The OPI for a goniometer. No properties required.</description>
+				<macros>
+				</macros>
+			</value>
 		</entry> 		
 	</opis>
 </descriptions>
