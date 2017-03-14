@@ -44,9 +44,7 @@ import uk.ac.stfc.isis.ibex.synoptic.navigation.TargetNode;
 import uk.ac.stfc.isis.ibex.targets.OpiTarget;
 import uk.ac.stfc.isis.ibex.targets.PerspectiveTarget;
 import uk.ac.stfc.isis.ibex.targets.Target;
-import uk.ac.stfc.isis.ibex.targets.ViewTarget;
 import uk.ac.stfc.isis.ibex.ui.UI;
-import uk.ac.stfc.isis.ibex.ui.synoptic.views.LinkedViews;
 import uk.ac.stfc.isis.ibex.ui.synoptic.views.SynopticOpiTargetView;
 import uk.ac.stfc.isis.ibex.ui.synoptic.views.SynopticView;
 
@@ -164,11 +162,6 @@ public class SynopticPresenter extends ModelObject {
 				return;
 			}
 
-			if (target instanceof ViewTarget) {
-				displayView(target);
-				return;
-			}
-
 			navigator.setCurrentTarget(targets.get(targetName));
 		}
 	}
@@ -200,10 +193,6 @@ public class SynopticPresenter extends ModelObject {
 	 */
 	public List<? extends Component> components() {
 		return new ArrayList<>(components);
-	}
-
-	private void displayView(Target target) {
-		LinkedViews.openView(target.name());
 	}
 
 	private void displayTarget(Target currentTarget) {
