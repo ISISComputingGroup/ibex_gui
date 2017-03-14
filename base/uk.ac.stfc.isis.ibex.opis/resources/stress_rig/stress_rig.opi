@@ -92,6 +92,7 @@
     <macros>
       <include_parent_macros>true</include_parent_macros>
       <NAME>Position</NAME>
+      <CHAN>POS</CHAN>
     </macros>
     <visible>true</visible>
     <group_name></group_name>
@@ -134,6 +135,7 @@
     <macros>
       <include_parent_macros>true</include_parent_macros>
       <NAME>Stress</NAME>
+      <CHAN>STRESS</CHAN>
     </macros>
     <visible>true</visible>
     <group_name></group_name>
@@ -176,6 +178,7 @@
     <macros>
       <include_parent_macros>true</include_parent_macros>
       <NAME>Strain</NAME>
+      <CHAN>STRAIN</CHAN>
     </macros>
     <visible>true</visible>
     <group_name></group_name>
@@ -308,13 +311,20 @@ $(pv_value)</tooltip>
       </border_color>
       <widget_type>Button</widget_type>
       <width>139</width>
-      <x>186</x>
+      <x>198</x>
       <name>Button_1</name>
       <y>0</y>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </foreground_color>
-      <actions hook="false" hook_all="false" />
+      <actions hook="false" hook_all="false">
+        <action type="WRITE_PV">
+          <pv_name>$(P)PANIC</pv_name>
+          <value></value>
+          <timeout>10</timeout>
+          <description></description>
+        </action>
+      </actions>
       <font>
         <opifont.name fontName="Segoe UI" height="9" style="0">ISIS_Button_NEW</opifont.name>
       </font>
@@ -348,13 +358,20 @@ $(pv_value)</tooltip>
       </border_color>
       <widget_type>Button</widget_type>
       <width>139</width>
-      <x>24</x>
+      <x>36</x>
       <name>Button_1</name>
       <y>0</y>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </foreground_color>
-      <actions hook="false" hook_all="false" />
+      <actions hook="false" hook_all="false">
+        <action type="WRITE_PV">
+          <pv_name>$(P)STOP</pv_name>
+          <value>1</value>
+          <timeout>10</timeout>
+          <description></description>
+        </action>
+      </actions>
       <font>
         <opifont.name fontName="Segoe UI" height="9" style="0">ISIS_Button_NEW</opifont.name>
       </font>
@@ -407,7 +424,14 @@ $(pv_value)</tooltip>
       <tooltip>$(pv_name)
 $(pv_value)</tooltip>
       <horizontal_alignment>0</horizontal_alignment>
-      <rules />
+      <rules>
+        <rule name="BackgroundColour" prop_id="background_color" out_exp="true">
+          <exp bool_exp="pvStr0 != &quot;System OK&quot;">
+            <value>ColorFontUtil.getColorFromRGB(255,127,127)</value>
+          </exp>
+          <pv trig="true">$(P)STATUS</pv>
+        </rule>
+      </rules>
       <enabled>true</enabled>
       <wuid>-4305d44c:15ac6d0a5c2:-65a5</wuid>
       <show_h_scroll>false</show_h_scroll>
@@ -427,9 +451,9 @@ $(pv_value)</tooltip>
         <height_scalable>true</height_scalable>
         <keep_wh_ratio>false</keep_wh_ratio>
       </scale_options>
-      <show_v_scroll>false</show_v_scroll>
+      <show_v_scroll>true</show_v_scroll>
       <visible>true</visible>
-      <pv_name></pv_name>
+      <pv_name>$(P)STATUS</pv_name>
       <border_color>
         <color name="ISIS_Border" red="0" green="0" blue="0" />
       </border_color>
@@ -538,47 +562,6 @@ $(pv_value)</tooltip>
         <opifont.name fontName="Segoe UI" height="9" style="1">ISIS_Label_NEW</opifont.name>
       </font>
     </widget>
-    <widget typeId="org.csstudio.opibuilder.widgets.combo" version="1.0">
-      <border_style>0</border_style>
-      <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
-      <tooltip>$(pv_name)
-$(pv_value)</tooltip>
-      <rules />
-      <enabled>true</enabled>
-      <wuid>-4305d44c:15ac6d0a5c2:-6144</wuid>
-      <pv_value />
-      <scripts />
-      <border_alarm_sensitive>true</border_alarm_sensitive>
-      <height>27</height>
-      <border_width>1</border_width>
-      <scale_options>
-        <width_scalable>true</width_scalable>
-        <height_scalable>false</height_scalable>
-        <keep_wh_ratio>false</keep_wh_ratio>
-      </scale_options>
-      <items_from_pv>true</items_from_pv>
-      <visible>true</visible>
-      <pv_name></pv_name>
-      <border_color>
-        <color name="ISIS_Border" red="0" green="0" blue="0" />
-      </border_color>
-      <widget_type>Combo</widget_type>
-      <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
-      <background_color>
-        <color name="ISIS_Textbox_Background" red="255" green="255" blue="255" />
-      </background_color>
-      <width>90</width>
-      <x>121</x>
-      <name>Combo</name>
-      <y>6</y>
-      <foreground_color>
-        <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
-      </foreground_color>
-      <actions hook="false" hook_all="false" />
-      <font>
-        <opifont.name fontName="Segoe UI" height="9" style="0">ISIS_Value_NEW</opifont.name>
-      </font>
-    </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.LED" version="1.0">
       <border_style>0</border_style>
       <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
@@ -604,7 +587,7 @@ $(pv_value)</tooltip>
         <keep_wh_ratio>true</keep_wh_ratio>
       </scale_options>
       <visible>true</visible>
-      <pv_name></pv_name>
+      <pv_name>$(P)GOING</pv_name>
       <border_color>
         <color red="0" green="128" blue="255" />
       </border_color>
@@ -671,6 +654,52 @@ $(pv_value)</tooltip>
       <show_scrollbar>false</show_scrollbar>
       <font>
         <opifont.name fontName="Segoe UI" height="9" style="1">ISIS_Label_NEW</opifont.name>
+      </font>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.combo" version="1.0">
+      <border_style>0</border_style>
+      <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+      <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+      <rules />
+      <enabled>true</enabled>
+      <wuid>-4512a98b:15acc09f017:-7d56</wuid>
+      <pv_value />
+      <scripts />
+      <border_alarm_sensitive>true</border_alarm_sensitive>
+      <height>27</height>
+      <border_width>1</border_width>
+      <scale_options>
+        <width_scalable>true</width_scalable>
+        <height_scalable>false</height_scalable>
+        <keep_wh_ratio>false</keep_wh_ratio>
+      </scale_options>
+      <items_from_pv>false</items_from_pv>
+      <visible>true</visible>
+      <pv_name>$(P)CHANNEL:SP</pv_name>
+      <border_color>
+        <color name="ISIS_Border" red="0" green="0" blue="0" />
+      </border_color>
+      <widget_type>Combo</widget_type>
+      <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+      <background_color>
+        <color name="ISIS_Textbox_Background" red="255" green="255" blue="255" />
+      </background_color>
+      <width>90</width>
+      <x>121</x>
+      <name>Combo_1</name>
+      <y>5</y>
+      <foreground_color>
+        <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
+      </foreground_color>
+      <actions hook="false" hook_all="false" />
+      <items>
+        <s>Stress</s>
+        <s>Strain</s>
+        <s>Position</s>
+      </items>
+      <font>
+        <opifont.name fontName="Segoe UI" height="9" style="0">ISIS_Value_NEW</opifont.name>
       </font>
     </widget>
   </widget>
@@ -748,7 +777,14 @@ $(pv_value)</tooltip>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </foreground_color>
-      <actions hook="false" hook_all="false" />
+      <actions hook="false" hook_all="false">
+        <action type="WRITE_PV">
+          <pv_name>$(P)CLEAR_GRAPHS</pv_name>
+          <value>1</value>
+          <timeout>10</timeout>
+          <description></description>
+        </action>
+      </actions>
       <font>
         <opifont.name fontName="Segoe UI" height="9" style="0">ISIS_Button_NEW</opifont.name>
       </font>
@@ -1057,7 +1093,7 @@ $(pv_value)</tooltip>
         <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
       </background_color>
       <width>85</width>
-      <x>228</x>
+      <x>246</x>
       <name>Label_2</name>
       <y>6</y>
       <foreground_color>
@@ -1108,7 +1144,7 @@ $(pv_value)</tooltip>
       </background_color>
       <square_led>false</square_led>
       <width>25</width>
-      <x>330</x>
+      <x>348</x>
       <name>LED</name>
       <data_type>0</data_type>
       <y>6</y>
@@ -1150,8 +1186,8 @@ $(pv_value)</tooltip>
         <color name="ISIS_Border" red="0" green="0" blue="0" />
       </border_color>
       <widget_type>Button</widget_type>
-      <width>145</width>
-      <x>228</x>
+      <width>127</width>
+      <x>246</x>
       <name>Button</name>
       <y>36</y>
       <foreground_color>
@@ -1175,8 +1211,8 @@ $(pv_value)</tooltip>
       <wuid>-4305d44c:15ac6d0a5c2:-600a</wuid>
       <transparent>false</transparent>
       <points>
-        <point x="216" y="61" />
-        <point x="216" y="6" />
+        <point x="228" y="61" />
+        <point x="228" y="6" />
       </points>
       <fill_arrow>true</fill_arrow>
       <pv_value />
@@ -1205,7 +1241,7 @@ $(pv_value)</tooltip>
         <color name="ISIS_Border" red="0" green="0" blue="0" />
       </background_color>
       <width>1</width>
-      <x>216</x>
+      <x>228</x>
       <name>Polyline</name>
       <y>6</y>
       <fill_level>0.0</fill_level>
@@ -1471,8 +1507,8 @@ $(pv_value)</tooltip>
         <color name="ISIS_Border" red="0" green="0" blue="0" />
       </border_color>
       <widget_type>Button</widget_type>
-      <width>145</width>
-      <x>228</x>
+      <width>127</width>
+      <x>246</x>
       <name>Button</name>
       <y>5</y>
       <foreground_color>
@@ -1511,8 +1547,8 @@ $(pv_value)</tooltip>
         <color name="ISIS_Border" red="0" green="0" blue="0" />
       </border_color>
       <widget_type>Button</widget_type>
-      <width>145</width>
-      <x>228</x>
+      <width>127</width>
+      <x>246</x>
       <name>Button</name>
       <y>36</y>
       <foreground_color>

@@ -59,7 +59,7 @@
     <background_color>
       <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
     </background_color>
-    <width>397</width>
+    <width>403</width>
     <x>6</x>
     <name>Channel v Channel</name>
     <y>6</y>
@@ -125,9 +125,7 @@ $(trace_0_y_pv_value)</tooltip>
       <axis_0_grid_color>
         <color name="ISIS_Textbox_Readonly_Background" red="200" green="200" blue="200" />
       </axis_0_grid_color>
-      <axis_2_visible>false</axis_2_visible>
       <trace_0_name></trace_0_name>
-      <axis_2_minimum>0.0</axis_2_minimum>
       <trace_0_update_mode>0</trace_0_update_mode>
       <trace_1_x_pv></trace_1_x_pv>
       <wuid>-4305d44c:15ac6d0a5c2:-6d93</wuid>
@@ -143,13 +141,10 @@ $(trace_0_y_pv_value)</tooltip>
       <x>96</x>
       <y>0</y>
       <trace_0_x_axis_index>0</trace_0_x_axis_index>
-      <axis_count>3</axis_count>
+      <axis_count>2</axis_count>
       <trace_1_point_size>4</trace_1_point_size>
       <trace_1_anti_alias>true</trace_1_anti_alias>
       <pv_value />
-      <axis_2_grid_color>
-        <color name="ISIS_Textbox_Readonly_Background" red="200" green="200" blue="200" />
-      </axis_2_grid_color>
       <trace_0_buffer_size>1000</trace_0_buffer_size>
       <trace_2_buffer_size>100</trace_2_buffer_size>
       <axis_1_maximum>50.0</axis_1_maximum>
@@ -168,21 +163,16 @@ $(trace_0_y_pv_value)</tooltip>
       <trace_0_visible>true</trace_0_visible>
       <trace_1_name></trace_1_name>
       <trace_1_y_pv_value />
-      <axis_2_auto_scale>false</axis_2_auto_scale>
       <show_legend>false</show_legend>
       <axis_0_axis_title>Time</axis_0_axis_title>
       <axis_0_axis_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </axis_0_axis_color>
-      <axis_2_scale_font>
-        <opifont.name fontName="Segoe UI" height="9" style="0">ISIS_GraphScale_NEW</opifont.name>
-      </axis_2_scale_font>
       <trace_2_update_delay>100</trace_2_update_delay>
       <axis_0_dash_grid_line>true</axis_0_dash_grid_line>
       <trace_0_point_style>0</trace_0_point_style>
       <trace_1_point_style>0</trace_1_point_style>
       <trace_0_line_width>1</trace_0_line_width>
-      <axis_2_y_axis>false</axis_2_y_axis>
       <axis_0_time_format>5</axis_0_time_format>
       <trace_count>3</trace_count>
       <axis_1_show_grid>true</axis_1_show_grid>
@@ -216,30 +206,23 @@ $(trace_0_y_pv_value)</tooltip>
       </axis_1_grid_color>
       <actions hook="false" hook_all="false" />
       <trace_2_point_size>4</trace_2_point_size>
-      <axis_2_axis_color>
-        <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
-      </axis_2_axis_color>
       <axis_0_log_scale>false</axis_0_log_scale>
       <trace_0_x_pv_value />
       <axis_0_auto_scale_threshold>0.0</axis_0_auto_scale_threshold>
       <rules />
       <axis_1_visible>true</axis_1_visible>
-      <axis_2_show_grid>false</axis_2_show_grid>
       <trace_0_update_delay>100</trace_0_update_delay>
       <trace_1_concatenate_data>true</trace_1_concatenate_data>
       <trace_1_trace_color>
         <color name="ISIS_Trace_2_NEW" red="196" green="0" blue="0" />
       </trace_1_trace_color>
       <pv_name></pv_name>
-      <axis_2_log_scale>false</axis_2_log_scale>
-      <axis_2_auto_scale_threshold>0.0</axis_2_auto_scale_threshold>
       <name></name>
       <trace_1_trace_type>0</trace_1_trace_type>
       <axis_0_auto_scale>true</axis_0_auto_scale>
       <axis_0_minimum>0.0</axis_0_minimum>
       <trace_2_y_axis_index>2</trace_2_y_axis_index>
       <trace_1_update_delay>100</trace_1_update_delay>
-      <axis_2_dash_grid_line>true</axis_2_dash_grid_line>
       <axis_1_axis_title>$(NAME)</axis_1_axis_title>
       <trace_2_x_pv_value />
       <axis_1_auto_scale>true</axis_1_auto_scale>
@@ -249,9 +232,6 @@ $(trace_0_y_pv_value)</tooltip>
       <border_color>
         <color name="ISIS_Border" red="0" green="0" blue="0" />
       </border_color>
-      <axis_2_title_font>
-        <opifont.name fontName="Segoe UI" height="9" style="1">ISIS_GraphLabels_NEW</opifont.name>
-      </axis_2_title_font>
       <trace_0_y_pv></trace_0_y_pv>
       <trace_2_point_style>0</trace_2_point_style>
       <trace_0_plot_mode>0</trace_0_plot_mode>
@@ -261,10 +241,7 @@ $(trace_0_y_pv_value)</tooltip>
         <opifont.name fontName="Segoe UI" height="9" style="0">ISIS_GraphScale_NEW</opifont.name>
       </axis_1_scale_font>
       <axis_1_time_format>0</axis_1_time_format>
-      <axis_2_time_format>0</axis_2_time_format>
-      <axis_2_left_bottom_side>false</axis_2_left_bottom_side>
       <border_alarm_sensitive>false</border_alarm_sensitive>
-      <axis_2_maximum>100.0</axis_2_maximum>
       <show_plot_area_border>false</show_plot_area_border>
       <width>271</width>
       <trace_1_x_pv_value />
@@ -281,10 +258,8 @@ $(trace_0_y_pv_value)</tooltip>
         <opifont.name fontName="Segoe UI" height="9" style="1">ISIS_GraphLabels_NEW</opifont.name>
       </axis_1_title_font>
       <visible>true</visible>
-      <axis_2_axis_title>$(NAME)</axis_2_axis_title>
       <trace_1_buffer_size>1000</trace_1_buffer_size>
       <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
-      <axis_2_scale_format></axis_2_scale_format>
       <scripts />
       <trace_0_point_size>4</trace_0_point_size>
       <trace_0_trace_color>
@@ -399,7 +374,7 @@ $(pv_value)</tooltip>
       </scale_options>
       <items_from_pv>false</items_from_pv>
       <visible>true</visible>
-      <pv_name></pv_name>
+      <pv_name>$(P)CHAN_1</pv_name>
       <border_color>
         <color name="ISIS_Border" red="0" green="0" blue="0" />
       </border_color>
@@ -445,7 +420,7 @@ $(pv_value)</tooltip>
       </scale_options>
       <items_from_pv>false</items_from_pv>
       <visible>true</visible>
-      <pv_name></pv_name>
+      <pv_name>$(P)CHAN_2</pv_name>
       <border_color>
         <color name="ISIS_Border" red="0" green="0" blue="0" />
       </border_color>
