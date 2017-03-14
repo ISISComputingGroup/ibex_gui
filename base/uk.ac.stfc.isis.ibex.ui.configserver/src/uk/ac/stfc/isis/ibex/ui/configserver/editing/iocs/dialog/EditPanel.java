@@ -165,9 +165,9 @@ public class EditPanel extends Composite {
         bindingContext.bindValue(WidgetProperties.text(SWT.NONE).observe(selectedIoc),
                 BeanProperties.value("name").observe(editableIoc));
         bindingContext.bindValue(WidgetProperties.selection().observe(autoStart),
-                BeanProperties.value("autoStart").observe(editableIoc));
+                BeanProperties.value("autostart").observe(editableIoc));
         bindingContext.bindValue(WidgetProperties.selection().observe(autoRestart),
-                BeanProperties.value("autoRestart").observe(editableIoc));
+                BeanProperties.value("restart").observe(editableIoc));
         bindingContext.bindValue(ViewersObservables.observeSingleSelection(simLevel),
                 BeanProperties.value("simLevel").observe(editableIoc));
     }
