@@ -24,7 +24,6 @@ import java.util.List;
 
 import uk.ac.stfc.isis.ibex.targets.PerspectiveTarget;
 import uk.ac.stfc.isis.ibex.targets.Target;
-import uk.ac.stfc.isis.ibex.targets.ViewTarget;
 
 /**
  * The type of components available to the synoptic.
@@ -77,7 +76,7 @@ public enum ComponentType {
     /** Pinhole selector component type. */
 	PINHOLESELECTOR,
     /** Goniometer component type. */
-    GONIOMETER(new ViewTarget("Goniometer")),
+    GONIOMETER,
     /** Single stage component type. */
     SINGLESTAGE,
     /** Linkam95 component type. */

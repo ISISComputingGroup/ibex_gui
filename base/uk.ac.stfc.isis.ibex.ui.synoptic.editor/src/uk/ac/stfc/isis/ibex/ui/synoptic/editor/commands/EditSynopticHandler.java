@@ -30,17 +30,17 @@ import uk.ac.stfc.isis.ibex.synoptic.SynopticInfo;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.SynopticDescription;
 import uk.ac.stfc.isis.ibex.ui.synoptic.SynopticSelectionDialog;
 
-public class EditSynopticHandler extends SynopticHandler<String> {
+/**
+ * Handler for editing a synoptic.
+ */
+public class EditSynopticHandler extends SynopticEditorHandler {
 
 	private static final String TITLE = "Edit Synoptic";
 
-	public EditSynopticHandler() {
-		super(SYNOPTIC.editSynoptic());
-	}	
-	
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {		
-		SynopticSelectionDialog dialog = new SynopticSelectionDialog(shell(), TITLE, SYNOPTIC.availableEditableSynoptics());
+        SynopticSelectionDialog dialog =
+                new SynopticSelectionDialog(SHELL, TITLE, SYNOPTIC.availableEditableSynoptics());
 		if (dialog.open() == Window.OK) {
 			openDialog(load(dialog.selectedSynoptic()), TITLE, false);
 		}

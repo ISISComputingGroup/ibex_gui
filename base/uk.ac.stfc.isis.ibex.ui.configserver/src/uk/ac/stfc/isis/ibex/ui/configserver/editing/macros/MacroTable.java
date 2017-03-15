@@ -29,9 +29,22 @@ import uk.ac.stfc.isis.ibex.configserver.configuration.Macro;
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundCellLabelProvider;
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundTable;
 
+/**
+ * The table for editing IOC macros.
+ */
 @SuppressWarnings("checkstyle:magicnumber")
 public class MacroTable extends DataboundTable<Macro> {
 	
+    /**
+     * Constructor for the table.
+     * 
+     * @param parent
+     *            The composite to put the table in.
+     * @param style
+     *            The SWT style of this databound table.
+     * @param tableStyle
+     *            The SWT style of the inner table object.
+     */
 	public MacroTable(Composite parent, int style, int tableStyle) {
 		super(parent, style, Macro.class, tableStyle | SWT.BORDER);
 

@@ -210,4 +210,19 @@ public class DeviceDescriptionWrapper {
         return name;
     }
 
+    /**
+     * @return the persistence setting
+     */
+    public boolean getPersistent() {
+        return device.getPersist();
+    }
+
+    /**
+     * @param persistent
+     *            the persistence setting
+     */
+    public void setPersistent(boolean persistent) {
+        device.setPersist(persistent);
+    }
+
 }

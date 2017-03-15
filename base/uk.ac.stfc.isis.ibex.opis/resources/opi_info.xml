@@ -668,7 +668,8 @@
 				<macros>
 				</macros>
 			</value>
-		</entry>		<entry>
+		</entry>
+		<entry>
 			<key>Neocera LTC21</key>
 			<value>
 				<type>NEOCERA</type>
@@ -681,5 +682,16 @@
 					</macro>
 				</macros>
 			</value>
-		</entry>	</opis>
+		</entry>
+		<entry>
+			<key>Goniometer</key>
+			<value>
+				<type>GONIOMETER</type>
+				<path>goniometer/goniometer.opi</path>
+				<description>The OPI for a goniometer. No properties required.</description>
+				<macros>
+				</macros>
+			</value>
+		</entry> 		
+	</opis>
 </descriptions>

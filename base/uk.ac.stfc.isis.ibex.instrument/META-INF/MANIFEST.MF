@@ -4,13 +4,14 @@ Bundle-Name: Instrument
 Bundle-SymbolicName: uk.ac.stfc.isis.ibex.instrument;singleton:=true
 Bundle-Version: 1.0.0.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
-Require-Bundle: uk.ac.stfc.isis.ibex.epics;visibility:=reexport,
+Require-Bundle: org.eclipse.ui,
+ uk.ac.stfc.isis.ibex.epics;visibility:=reexport,
  org.eclipse.core.runtime,
  com.google.common,
  uk.ac.stfc.isis.ibex.model;bundle-version="1.0.0",
  uk.ac.stfc.isis.ibex.logger,
  org.csstudio.utility.pvmanager,
- uk.ac.stfc.isis.ibex.json;bundle-version="1.0.0"
+ com.google.gson;bundle-version="2.1.0"
 Bundle-ActivationPolicy: lazy
 Export-Package: uk.ac.stfc.isis.ibex.instrument,
  uk.ac.stfc.isis.ibex.instrument.channels,

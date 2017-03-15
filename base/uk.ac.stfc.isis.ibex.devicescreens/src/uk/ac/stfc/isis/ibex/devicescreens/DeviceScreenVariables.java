@@ -26,6 +26,7 @@ import uk.ac.stfc.isis.ibex.devicescreens.desc.DeviceScreenDescriptionToXmlConve
 import uk.ac.stfc.isis.ibex.devicescreens.desc.DeviceScreensDescription;
 import uk.ac.stfc.isis.ibex.devicescreens.desc.DeviceScreensDescriptionXmlParser;
 import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
+import uk.ac.stfc.isis.ibex.epics.observing.Observable;
 import uk.ac.stfc.isis.ibex.epics.switching.ObservableFactory;
 import uk.ac.stfc.isis.ibex.epics.switching.OnInstrumentSwitch;
 import uk.ac.stfc.isis.ibex.epics.switching.WritableFactory;
@@ -47,7 +48,7 @@ public class DeviceScreenVariables {
     private final ObservableFactory switchingObservableFactory;
     private final WritableFactory switchingWritableFactory;
 
-    private final ForwardingObservable<DeviceScreensDescription> deviceScreensObservable;
+    private final Observable<DeviceScreensDescription> deviceScreensObservable;
     private final Writable<DeviceScreensDescription> deviceScreensWritable;
     private final ForwardingObservable<String> deviceScreenSchema;
 
@@ -80,11 +81,11 @@ public class DeviceScreenVariables {
                 InstrumentUtils.convert(readCompressed(getPvPrefix() + BLOCKSERVER_ADDRESS + GET_SCREENS_SUFFIX),
                         new DeviceScreensDescriptionXmlParser());
         
+        deviceScreenSchema = readCompressed(getPvPrefix() + BLOCKSERVER_ADDRESS + SCHEMA_SUFFIX);
+
         deviceScreensWritable =
                 InstrumentUtils.convert(writeCompressed(getPvPrefix() + BLOCKSERVER_ADDRESS + SET_SCREENS_SUFFIX),
-                new DeviceScreenDescriptionToXmlConverter());
-
-        deviceScreenSchema = readCompressed(getPvPrefix() + BLOCKSERVER_ADDRESS + SCHEMA_SUFFIX);
+                        new DeviceScreenDescriptionToXmlConverter(deviceScreenSchema));
     }
 
     /**
@@ -92,7 +93,7 @@ public class DeviceScreenVariables {
      * 
      * @return an observable pointing at the get device screens PV
      */
-    public ForwardingObservable<DeviceScreensDescription> getDeviceScreens() {
+    public Observable<DeviceScreensDescription> getDeviceScreens() {
         return deviceScreensObservable;
     }
 
@@ -102,6 +103,7 @@ public class DeviceScreenVariables {
      * @return a writable pointing to the set device screens PV
      */
     public Writable<DeviceScreensDescription> getDeviceScreensSetter() {
+
         return deviceScreensWritable;
     }
 
@@ -135,5 +137,4 @@ public class DeviceScreenVariables {
             return pvPrefix;
         }
     }
-
 }

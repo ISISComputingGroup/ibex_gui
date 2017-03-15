@@ -25,7 +25,6 @@ import org.eclipse.core.runtime.IStatus;
 
 import uk.ac.stfc.isis.ibex.configserver.configuration.PVDefaultValue;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableIoc;
-import uk.ac.stfc.isis.ibex.ui.configserver.editing.iocs.IocViewModel;
 import uk.ac.stfc.isis.ibex.validators.MessageDisplayer;
 
 /**
@@ -36,7 +35,6 @@ public class PVNameValidator implements IValidator {
 	private static final String EMPTY_NAME_MESSAGE = "PV name must not be empty";
 	
 	private final EditableIoc ioc;
-    private final IocViewModel viewModel;
 	private final PVDefaultValue selectedPV;
 	private final MessageDisplayer messageDisplayer;
 	
@@ -50,9 +48,8 @@ public class PVNameValidator implements IValidator {
      * @param messageDisplayer
      *            The dialog used for displaying error messages.
      */
-    public PVNameValidator(IocViewModel viewModel, PVDefaultValue selectedPV, MessageDisplayer messageDisplayer) {
-        this.viewModel = viewModel;
-        this.ioc = viewModel.getIoc();
+    public PVNameValidator(EditableIoc viewModel, PVDefaultValue selectedPV, MessageDisplayer messageDisplayer) {
+        this.ioc = viewModel;
 		this.selectedPV = selectedPV;
 		this.messageDisplayer = messageDisplayer;
 	}
@@ -82,7 +79,7 @@ public class PVNameValidator implements IValidator {
 	}
 
     private boolean nameIsDuplicated(Object text) {
-        for (PVDefaultValue pv : viewModel.getPvVals()) {
+        for (PVDefaultValue pv : ioc.getPvs()) {
             if (isNotPVBeingEdited(pv) && pv.getName().equals(text)) {
                 return true;
             }

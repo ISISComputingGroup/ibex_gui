@@ -22,17 +22,13 @@ package uk.ac.stfc.isis.ibex.synoptic.model.desc;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.xml.bind.JAXBException;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.xml.sax.SAXException;
-
 import uk.ac.stfc.isis.ibex.model.ModelObject;
-import uk.ac.stfc.isis.ibex.synoptic.xml.XMLUtil;
 
 /**
  * This class is converted to XML, to be stored on the local file system and read 
@@ -147,17 +143,6 @@ public class SynopticDescription extends ModelObject implements SynopticParentDe
             cd.addPropertyChangeListener(passThrough());
 			cd.processChildComponents();
 		}
-	}
-	
-    /**
-     * Gets the description as XML.
-     * 
-     * @return an XML string
-     * @throws JAXBException standard XML parsing error
-     * @throws SAXException standard XML parsing error
-     */
-	public String getXmlDescription() throws JAXBException, SAXException {
-		return XMLUtil.toXml(this);
 	}
 
     /**

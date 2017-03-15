@@ -166,8 +166,10 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
         initMacros(iocMap);
 
         for (Ioc ioc : config.getIocs()) {
-            final String description = iocMap.get(ioc.getName()).getDescription();
-            addIoc(new EditableIoc(ioc, description));
+            final EditableIoc generalIOC = iocMap.get(ioc.getName());
+            EditableIoc editableIOC = new EditableIoc(ioc, generalIOC.getDescription());
+            editableIOC.setAvailableMacros(generalIOC.getAvailableMacros());
+            addIoc(editableIOC);
         }
 
         Collection<Configuration> selectedComponents = getComponentDetails(config.getComponents(), components);

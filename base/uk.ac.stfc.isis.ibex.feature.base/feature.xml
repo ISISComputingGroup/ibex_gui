@@ -297,13 +297,6 @@
          unpack="false"/>
 
    <plugin
-         id="uk.ac.stfc.isis.ibex.json"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
          id="uk.ac.stfc.isis.ibex.ui.synoptic"
          download-size="0"
          install-size="0"
@@ -312,20 +305,6 @@
 
    <plugin
          id="uk.ac.stfc.isis.ibex.synoptic"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="uk.ac.stfc.isis.ibex.goniometer"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="uk.ac.stfc.isis.ibex.ui.goniometer"
          download-size="0"
          install-size="0"
          version="0.0.0"

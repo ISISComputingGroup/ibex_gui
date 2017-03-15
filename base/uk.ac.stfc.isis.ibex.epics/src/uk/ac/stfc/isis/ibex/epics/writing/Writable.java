@@ -1,4 +1,3 @@
-
 /*
 * This file is part of the ISIS IBEX application.
 * Copyright (C) 2012-2015 Science & Technology Facilities Council.
@@ -22,17 +21,25 @@ package uk.ac.stfc.isis.ibex.epics.writing;
 import uk.ac.stfc.isis.ibex.epics.observing.Subscription;
 import uk.ac.stfc.isis.ibex.epics.pv.Closable;
 
+/**
+ * Allows writting to a value, with indication of whether the value can be
+ * written. For example if this is a PV writable the value is written to the PV
+ * and the can write state can be queried.
+ *
+ * @param <T>
+ *            Type that is written
+ */
 public interface Writable<T> extends Closable {
 
     /**
-     * Whether this writable can currently be written to.
      * 
-     * @return true if this writable can be written to, false otherwise
+     * @return True if value can be written; False otherwise. I.e. if this is PV
+     *         returns true if client is on the instrument
      */
 	boolean canWrite();
 
     /**
-     * Writes to the writable.
+     * Write the value to destination.
      * 
      * @param value
      *            the value to write
@@ -43,7 +50,7 @@ public interface Writable<T> extends Closable {
      * Allows the writer to receive updates from the writable.
      * 
      * @param writer
-     *            the writer
+     *            the writer to subscribe to
      * @return a subscription on which to listen
      */
 	Subscription subscribe(ConfigurableWriter<?, ?> writer);

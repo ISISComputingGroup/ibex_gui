@@ -23,6 +23,7 @@
 package uk.ac.stfc.isis.ibex.devicescreens.xml.tests;
 
 import static org.junit.Assert.*;
+import static org.mockito.Mockito.*;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -38,10 +39,13 @@ import org.junit.Test;
 import org.xml.sax.SAXException;
 
 import uk.ac.stfc.isis.ibex.devicescreens.desc.DeviceDescription;
+import uk.ac.stfc.isis.ibex.devicescreens.desc.DeviceScreenDescriptionToXmlConverter;
 import uk.ac.stfc.isis.ibex.devicescreens.desc.DeviceScreensDescription;
+import uk.ac.stfc.isis.ibex.devicescreens.desc.DeviceScreensDescriptionXmlParser;
 import uk.ac.stfc.isis.ibex.devicescreens.desc.PropertyDescription;
 import uk.ac.stfc.isis.ibex.devicescreens.tests.xmldata.DeviceScreensXmlProvider;
-import uk.ac.stfc.isis.ibex.devicescreens.xml.XMLUtil;
+import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
+import uk.ac.stfc.isis.ibex.epics.observing.Observable;
 
 /**
  * This class tests the loading and parsing of an xml by the XMLUtil class.
@@ -67,13 +71,21 @@ public class XmlUtilTest {
             + "</property>" + "<property>" + "<key>MACRO</key>" + "<value>VALUE</value>" + "</property>"
                     + "</properties>" + "</device>" + DeviceScreensXmlProvider.ENDING;
 
+    private Observable<String> mockSchemaObservable;
+    private DeviceScreenDescriptionToXmlConverter convertToXML;
+
     @Before
     public void set_up() throws Exception {
         // Arrange
         String singleXml =
                 DeviceScreensXmlProvider.getXML(deviceName, deviceKey, deviceType, propertyKey, propertyValue);
-        singleDeviceScreensDescription = XMLUtil.fromXml(singleXml);
-        multipleDeviceScreensDescription = XMLUtil.fromXml(xmlTextMultipleDescription);
+        DeviceScreensDescriptionXmlParser converterFromXML = new DeviceScreensDescriptionXmlParser();
+        singleDeviceScreensDescription = converterFromXML.convert(singleXml);
+        multipleDeviceScreensDescription = converterFromXML.convert(xmlTextMultipleDescription);
+        
+        mockSchemaObservable = mock(Observable.class);
+        when(mockSchemaObservable.getValue()).thenReturn(null);
+        convertToXML = new DeviceScreenDescriptionToXmlConverter(mockSchemaObservable);
     }
 
     @Test
@@ -132,11 +144,16 @@ public class XmlUtilTest {
     public void
             GIVEN_device_description_parsed_from_xml_WHEN_it_is_written_to_xml_THEN_output_xml_is_equal_to_input_xml()
                     throws JAXBException, SAXException {
-        // Act
-        String outputXml = XMLUtil.toXml(multipleDeviceScreensDescription);
-
-        // Assert
-        assertEquals(xmlTextMultipleDescription, outputXml);
+        try {
+            // Act
+            String outputXml = convertToXML.convert(multipleDeviceScreensDescription);
+            
+            // Assert
+            assertEquals(xmlTextMultipleDescription, outputXml);
+        }
+        catch (ConversionException e) {
+            fail(e.getMessage());
+        }
     }
 
     @Test
@@ -161,8 +178,8 @@ public class XmlUtilTest {
 
         // Act
         try {
-            XMLUtil.setSchema(schema);
-            String outputXml = XMLUtil.toXml(deviceScreensDescription);
+            when(mockSchemaObservable.getValue()).thenReturn(schema);
+            String outputXml = convertToXML.convert(deviceScreensDescription);
             assertEquals(expectedXml, outputXml);
         } catch (Exception e) {
             e.printStackTrace();

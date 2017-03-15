@@ -18,17 +18,16 @@
 
 package uk.ac.stfc.isis.ibex.ui.synoptic.editor.dialogs;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 
+import org.eclipse.core.databinding.DataBindingContext;
+import org.eclipse.core.databinding.beans.BeanProperties;
+import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.TitleAreaDialog;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.ModifyEvent;
-import org.eclipse.swt.events.ModifyListener;
-import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -39,34 +38,44 @@ import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
-import com.google.common.base.Predicate;
-import com.google.common.collect.Iterables;
-
+/**
+ * The dialog used to save a synoptic.
+ */
 @SuppressWarnings("checkstyle:magicnumber")
 public class SaveSynopticDialog extends TitleAreaDialog {
 
-    private static final int MAX_SYNOPTIC_NAME_LENGTH = 30;
-
+    private static final int DIALOG_WIDTH = 400;
+    private static final int DIALOG_HEIGHT = 230;
+    
     private Text txtName;
+    private Button okButton;
 
-    private String newName = "";
-    private List<String> existingSynoptics;
+    private SaveSynopticViewModel model;
 
-    public SaveSynopticDialog(Shell parent, String currentName,
-	    Collection<String> existingSynoptics) {
+    /**
+     * Constructor for a dialog box to ask the user what name they wish to save
+     * a synoptic under.
+     * 
+     * @param parent
+     *            The parent shell
+     * @param model
+     *            The view model for this dialog
+     */
+    public SaveSynopticDialog(Shell parent, SaveSynopticViewModel model) {
         super(parent);
+        this.model = model;
         setShellStyle(SWT.DIALOG_TRIM | SWT.APPLICATION_MODAL);
-        this.existingSynoptics = new ArrayList<>(existingSynoptics);
-    }
-
-    public String getNewName() {
-        return newName;
     }
 
     @Override
     protected void configureShell(Shell shell) {
         super.configureShell(shell);
         shell.setText("Save Synoptic As");
+    }
+    
+    @Override
+    protected Point getInitialSize() {
+        return new Point(DIALOG_WIDTH, DIALOG_HEIGHT);
     }
 
     @Override
@@ -91,25 +100,28 @@ public class SaveSynopticDialog extends TitleAreaDialog {
         gdTxtName.widthHint = 383;
         txtName.setLayoutData(gdTxtName);
         txtName.setBounds(0, 0, 76, 21);
-        new Label(composite, SWT.NONE);
 
-        Label lblConfigurationNameCannot = new Label(composite, SWT.NONE);
-        lblConfigurationNameCannot.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1));
-        lblConfigurationNameCannot
-                .setText("Name must start with a letter and contain only letters, numbers and underscores.");
-        new Label(composite, SWT.NONE);
-        new Label(composite, SWT.NONE);
+        return container;
+    }
 
-        txtName.addModifyListener(new ModifyListener() {
+    private void bind() {
+        DataBindingContext bindingContext = new DataBindingContext();
+
+        model.addPropertyChangeListener("error", new PropertyChangeListener() {
+
             @Override
-            public void modifyText(ModifyEvent arg0) {
-                update();
+            public void propertyChange(PropertyChangeEvent evt) {
+                setErrorMessage(model.getError().getMessage());
             }
         });
 
-        update();
+        setErrorMessage(model.getError().getMessage());
 
-        return container;
+        bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(txtName),
+                BeanProperties.value("synopticName").observe(model));
+
+        bindingContext.bindValue(WidgetProperties.enabled().observe(okButton),
+                BeanProperties.value("savingAllowed").observe(model));
     }
 
     /**
@@ -119,115 +131,33 @@ public class SaveSynopticDialog extends TitleAreaDialog {
      */
     @Override
     protected void createButtonsForButtonBar(Composite parent) {
-        Button button = createButton(parent, IDialogConstants.OK_ID, IDialogConstants.OK_LABEL, true);
-        button.setEnabled(false);
-        button.addSelectionListener(new SelectionAdapter() {
-            @Override
-            public void widgetSelected(SelectionEvent e) {
-            }
-        });
+        okButton = createButton(parent, IDialogConstants.OK_ID, IDialogConstants.OK_LABEL, true);
         createButton(parent, IDialogConstants.CANCEL_ID, IDialogConstants.CANCEL_LABEL, false);
+
+        bind(); // Need to bind after we create the buttons
     }
 
     @Override
     protected void okPressed() {
-        if (validate(name())) {
-            newName = name();
-            // Warn about overwriting if already exists
-            if (isDuplicate(newName)) {
-                boolean userCancelled = askUserWhetherToOverwrite(newName);
-                if (userCancelled) {
-                    return;
-                }
+        if (model.isDuplicate()) {
+            if (askUserWhetherToOverwrite()) {
+                super.okPressed();
             }
-
+        } else {
             super.okPressed();
-            close();
         }
-        // else ignore the click
     }
 
-    private boolean askUserWhetherToOverwrite(String newName) {
+    /**
+     * @return True if the user wishes to override.
+     */
+    private boolean askUserWhetherToOverwrite() {
         MessageBox box = new MessageBox(getShell(), SWT.ICON_WARNING | SWT.YES | SWT.NO);
-        box.setMessage("The synoptic \"" + newName + "\" already exists. \n Do you want to replace it?");
+        box.setMessage(
+                "The synoptic \"" + model.getSynopticName() + "\" already exists. \n Do you want to replace it?");
 
         // Message boxes return the ID of the button to close, so need to check
         // that value..
-        return box.open() != SWT.YES;
-    }
-
-    private String name() {
-        return txtName.getText().trim();
-    }
-
-    private void update() {
-        checkInput(name());
-    }
-
-    private void allowSaving(boolean canSave) {
-        Button ok = getButton(IDialogConstants.OK_ID);
-        if (ok != null) {
-            ok.setEnabled(canSave);
-        }
-    }
-
-    private boolean isDuplicate(final String name) {
-        return Iterables.any(existingSynoptics, new Predicate<String>() {
-            @Override
-            public boolean apply(String existing) {
-                return compareIgnoringCase(existing, name);
-            }
-        });
-    }
-
-    private boolean compareIgnoringCase(String text, String other) {
-        return text.toUpperCase().equals(other.toUpperCase());
-    }
-
-    private Boolean validate(String name) {
-        // Must start with a letter and contain no spaces
-        return name.matches("^[a-zA-Z][a-zA-Z0-9_]*$");
-    }
-
-    private void checkInput(String name) {
-        setErrorMessage(null);
-        setMessage(null);
-
-        String error = getErrorMessage(name);
-        if (error.length() > 0) {
-            setErrorMessage(error);
-            allowSaving(false);
-            return;
-        }
-
-        allowSaving(true);
-        String warning = getWarningMessage(name);
-        if (warning.length() > 0) {
-            setMessage(warning);
-        }
-    }
-
-    private String getErrorMessage(String name) {
-        if (name.length() == 0) {
-            return "Name cannot be blank";
-        }
-
-        if (name.length() > MAX_SYNOPTIC_NAME_LENGTH) {
-            return "Name cannot be more than " + MAX_SYNOPTIC_NAME_LENGTH + " characters long";
-        }
-
-        if (!validate(name)) {
-            return "Name contains invalid characters";
-        }
-
-        return "";
-    }
-
-    private String getWarningMessage(String name) {
-        if (isDuplicate(name)) {
-            return "A synoptic with this name already exists";
-        }
-
-        return "";
+        return box.open() == SWT.YES;
     }
 }
