@@ -59,7 +59,7 @@
     <background_color>
       <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
     </background_color>
-    <width>229</width>
+    <width>379</width>
     <x>6</x>
     <name>Waveform Settings</name>
     <y>66</y>
@@ -100,7 +100,7 @@
         <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
       </background_color>
       <width>67</width>
-      <x>12</x>
+      <x>78</x>
       <name>Label</name>
       <y>12</y>
       <foreground_color>
@@ -141,7 +141,7 @@
         <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
       </background_color>
       <width>67</width>
-      <x>12</x>
+      <x>78</x>
       <name>Label_1</name>
       <y>48</y>
       <foreground_color>
@@ -157,7 +157,20 @@
       <border_style>0</border_style>
       <tooltip></tooltip>
       <horizontal_alignment>2</horizontal_alignment>
-      <rules />
+      <rules>
+        <rule name="Label text" prop_id="text" out_exp="false">
+          <exp bool_exp="pvStr0 ==&quot;POS&quot;">
+            <value>Position Amplitude (mm)</value>
+          </exp>
+          <exp bool_exp="pvStr0 ==&quot;STRESS&quot;">
+            <value>Load Amplitude (MPa)</value>
+          </exp>
+          <exp bool_exp="pvStr0 ==&quot;STRAIN&quot;">
+            <value>Strain Amplitude (%)</value>
+          </exp>
+          <pv trig="true">$(P)CHANNEL</pv>
+        </rule>
+      </rules>
       <enabled>true</enabled>
       <wuid>-4305d44c:15ac6d0a5c2:-5c92</wuid>
       <transparent>false</transparent>
@@ -182,7 +195,7 @@
         <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
       </background_color>
       <width>67</width>
-      <x>12</x>
+      <x>78</x>
       <name>Label_2</name>
       <y>84</y>
       <foreground_color>
@@ -223,7 +236,7 @@
         <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
       </background_color>
       <width>67</width>
-      <x>12</x>
+      <x>78</x>
       <name>Label_3</name>
       <y>120</y>
       <foreground_color>
@@ -264,7 +277,7 @@
         <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
       </background_color>
       <width>67</width>
-      <x>12</x>
+      <x>78</x>
       <name>Label_4</name>
       <y>156</y>
       <foreground_color>
@@ -301,7 +314,7 @@ $(pv_value)</tooltip>
         <keep_wh_ratio>true</keep_wh_ratio>
       </scale_options>
       <visible>true</visible>
-      <pv_name></pv_name>
+      <pv_name>$(P)WAVE:RUNNING</pv_name>
       <border_color>
         <color red="0" green="128" blue="255" />
       </border_color>
@@ -315,7 +328,7 @@ $(pv_value)</tooltip>
       </background_color>
       <square_led>false</square_led>
       <width>25</width>
-      <x>96</x>
+      <x>162</x>
       <name>LED</name>
       <data_type>0</data_type>
       <y>156</y>
@@ -352,7 +365,7 @@ $(pv_value)</tooltip>
         <keep_wh_ratio>false</keep_wh_ratio>
       </scale_options>
       <visible>true</visible>
-      <pv_name></pv_name>
+      <pv_name>$(P)WAVE:QUART:SP</pv_name>
       <vertical_alignment>1</vertical_alignment>
       <format>0</format>
       <border_color>
@@ -368,7 +381,7 @@ $(pv_value)</tooltip>
       </background_color>
       <page_increment>10.0</page_increment>
       <width>85</width>
-      <x>96</x>
+      <x>162</x>
       <name>Spinner</name>
       <y>120</y>
       <maximum>1.7976931348623157E308</maximum>
@@ -404,7 +417,7 @@ $(pv_value)</tooltip>
         <keep_wh_ratio>false</keep_wh_ratio>
       </scale_options>
       <visible>true</visible>
-      <pv_name></pv_name>
+      <pv_name>$(P)WAVE:AMP:SP</pv_name>
       <vertical_alignment>1</vertical_alignment>
       <format>0</format>
       <border_color>
@@ -420,7 +433,7 @@ $(pv_value)</tooltip>
       </background_color>
       <page_increment>10.0</page_increment>
       <width>85</width>
-      <x>96</x>
+      <x>162</x>
       <name>Spinner_1</name>
       <y>84</y>
       <maximum>1.7976931348623157E308</maximum>
@@ -456,7 +469,7 @@ $(pv_value)</tooltip>
         <keep_wh_ratio>false</keep_wh_ratio>
       </scale_options>
       <visible>true</visible>
-      <pv_name></pv_name>
+      <pv_name>$(P)WAVE:FREQ:SP</pv_name>
       <vertical_alignment>1</vertical_alignment>
       <format>0</format>
       <border_color>
@@ -472,7 +485,7 @@ $(pv_value)</tooltip>
       </background_color>
       <page_increment>10.0</page_increment>
       <width>85</width>
-      <x>96</x>
+      <x>162</x>
       <name>Spinner_2</name>
       <y>48</y>
       <maximum>1.7976931348623157E308</maximum>
@@ -505,7 +518,7 @@ $(pv_value)</tooltip>
       </scale_options>
       <items_from_pv>true</items_from_pv>
       <visible>true</visible>
-      <pv_name></pv_name>
+      <pv_name>$(P)WAVE:TYPE:SP</pv_name>
       <border_color>
         <color name="ISIS_Border" red="0" green="0" blue="0" />
       </border_color>
@@ -515,7 +528,7 @@ $(pv_value)</tooltip>
         <color name="ISIS_Textbox_Background" red="255" green="255" blue="255" />
       </background_color>
       <width>85</width>
-      <x>96</x>
+      <x>162</x>
       <name>Combo_1</name>
       <y>11</y>
       <foreground_color>
