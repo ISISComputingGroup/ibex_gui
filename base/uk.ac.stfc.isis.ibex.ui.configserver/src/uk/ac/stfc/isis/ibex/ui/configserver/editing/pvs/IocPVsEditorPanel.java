@@ -34,8 +34,8 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 
 import uk.ac.stfc.isis.ibex.configserver.configuration.PVDefaultValue;
+import uk.ac.stfc.isis.ibex.configserver.editing.EditableIoc;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.iocs.IIocDependentPanel;
-import uk.ac.stfc.isis.ibex.ui.configserver.editing.iocs.dialog.IocViewModel;
 import uk.ac.stfc.isis.ibex.validators.MessageDisplayer;
 
 
@@ -46,7 +46,7 @@ import uk.ac.stfc.isis.ibex.validators.MessageDisplayer;
 public class IocPVsEditorPanel extends Composite implements IIocDependentPanel {
 	private IocPVsTable iocPVsTable;
 	private IocPVDetailsPanel details;
-    private IocViewModel viewModel;
+    private EditableIoc ioc;
 	private Button btnAdd;
     private Button btnRemove;
     private final String newPVName = "NEW_PV";
@@ -106,12 +106,12 @@ public class IocPVsEditorPanel extends Composite implements IIocDependentPanel {
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
                 PVDefaultValue selected = new PVDefaultValue(generateNewName(), "NEW_VALUE");
-                viewModel.getPvVals().add(selected);
-                iocPVsTable.setRows(viewModel.getPvVals());
-                iocPVsTable.setSelection(viewModel.getPvVals().size() - 1);
+                ioc.getPvs().add(selected);
+                iocPVsTable.setRows(ioc.getPvs());
+                iocPVsTable.setSelection(ioc.getPvs().size() - 1);
 
                 btnRemove.setEnabled(true);
-                details.setPV(selected, viewModel);
+                details.setPV(selected, ioc);
 			}
 		});
 
@@ -124,7 +124,7 @@ public class IocPVsEditorPanel extends Composite implements IIocDependentPanel {
 			public void selectionChanged(SelectionChangedEvent arg0) {
 				PVDefaultValue selected = iocPVsTable.firstSelectedRow();
 				btnRemove.setEnabled(selected != null);
-                details.setPV(selected, viewModel);
+                details.setPV(selected, ioc);
 			}
 		});
 		details.setEnabled(false);
@@ -133,7 +133,7 @@ public class IocPVsEditorPanel extends Composite implements IIocDependentPanel {
 
     private String generateNewName() {
         HashSet<String> names = new HashSet<String>();
-        for (PVDefaultValue pv : viewModel.getPvVals()) {
+        for (PVDefaultValue pv : ioc.getPvs()) {
             names.add(pv.getName());
         }
         String name;
@@ -149,18 +149,18 @@ public class IocPVsEditorPanel extends Composite implements IIocDependentPanel {
     }
 
 	@Override
-    public void setViewModel(IocViewModel viewModel) {
-        this.viewModel = viewModel;
-        iocPVsTable.setRows(viewModel != null ? viewModel.getPvVals() : null);
-        boolean enabled = viewModel != null && viewModel.getIoc().isEditable();
+    public void setIOC(EditableIoc ioc) {
+        this.ioc = ioc;
+        iocPVsTable.setRows(ioc != null ? ioc.getPvs() : null);
+        boolean enabled = ioc != null && ioc.isEditable();
 		setEnabled(enabled);
 		btnAdd.setEnabled(enabled);
 		details.setEnabled(enabled);
-        details.setPVs(viewModel.getIoc().getAvailablePVs());
+        details.setPVs(ioc.getAvailablePVs());
 	}
 
     private void removeSelectedPV() {
-        viewModel.getPvVals().remove(iocPVsTable.firstSelectedRow());
-        iocPVsTable.setRows(viewModel.getPvVals());
+        ioc.getPvs().remove(iocPVsTable.firstSelectedRow());
+        iocPVsTable.setRows(ioc.getPvs());
     }
 }

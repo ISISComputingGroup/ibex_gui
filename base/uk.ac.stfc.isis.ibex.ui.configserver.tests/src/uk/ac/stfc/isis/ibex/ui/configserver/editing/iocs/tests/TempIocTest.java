@@ -29,15 +29,16 @@ import org.junit.Test;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Ioc;
 import uk.ac.stfc.isis.ibex.configserver.configuration.SimLevel;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableIoc;
-import uk.ac.stfc.isis.ibex.ui.configserver.editing.iocs.dialog.IocViewModel;
+import uk.ac.stfc.isis.ibex.ui.configserver.editing.iocs.dialog.TempEditableIoc;
 
 /**
  *
  */
 @SuppressWarnings("checkstyle:methodname")
-public class IocViewModelTest {
+public class TempIocTest {
 
-    private IocViewModel viewModel;
+    private TempEditableIoc blankTempIoc;
+    private TempEditableIoc populatedTempIoc;
     private EditableIoc autostartIoc;
     private String autostartName = "autostart_ioc";
     private String autostartDescription = "autostart_description";
@@ -47,100 +48,98 @@ public class IocViewModelTest {
         autostartIoc = new EditableIoc(new Ioc(autostartName), autostartDescription);
         autostartIoc.setAutostart(true);
 
-        viewModel = new IocViewModel(new EditableIoc(""));
+        blankTempIoc = new TempEditableIoc(new EditableIoc(""));
+
+        populatedTempIoc = new TempEditableIoc(autostartIoc);
     }
 
     @Test
-    public void GIVEN_blank_viewmodel_THEN_contains_default_name() {
+    public void GIVEN_blank_temp_ioc_THEN_contains_default_name() {
         // Arrange
         String expected = "";
-        String actual = viewModel.getName();
+        String actual = blankTempIoc.getName();
 
         // Assert
         assertEquals(expected, actual);
     }
 
     @Test
-    public void GIVEN_blank_viewmodel_THEN_contains_default_auto_start() {
+    public void GIVEN_blank_temp_ioc_THEN_contains_default_auto_start() {
         // Arrange
         boolean expected = false;
-        boolean actual = viewModel.isAutoStart();
+        boolean actual = blankTempIoc.getAutostart();
 
         // Assert
         assertEquals(expected, actual);
     }
 
     @Test
-    public void GIVEN_blank_viewmodel_THEN_contains_default_auto_restart() {
+    public void GIVEN_blank_temp_ioc_THEN_contains_default_auto_restart() {
         // Arrange
         boolean expected = false;
-        boolean actual = viewModel.isAutoRestart();
+        boolean actual = blankTempIoc.getAutostart();
 
         // Assert
         assertEquals(expected, actual);
     }
 
     @Test
-    public void GIVEN_blank_viewmodel_THEN_contains_default_sim_level() {
+    public void GIVEN_blank_temp_ioc_THEN_contains_default_sim_level() {
         // Arrange
-        int expected = SimLevel.NONE.ordinal();
-        int actual = viewModel.getSimLevel();
+        SimLevel expected = SimLevel.NONE;
+        SimLevel actual = blankTempIoc.getSimLevel();
 
         // Assert
         assertEquals(expected, actual);
     }
 
     @Test
-    public void GIVEN_blank_viewmodel_THEN_contains_empty_macros() {
-        // Arrange
-        int expected = 0;
-        int actual = viewModel.getMacros().size();
-
-        // Assert
-        assertEquals(expected, actual);
-    }
-
-    @Test
-    public void GIVEN_blank_viewmodel_THEN_contains_empty_pv_values() {
+    public void GIVEN_blank_temp_ioc_THEN_contains_empty_macros() {
         // Arrange
         int expected = 0;
-        int actual = viewModel.getPvVals().size();
+        int actual = blankTempIoc.getMacros().size();
 
         // Assert
         assertEquals(expected, actual);
     }
 
     @Test
-    public void GIVEN_blank_viewmodel_THEN_contains_empty_pv_sets() {
+    public void GIVEN_blank_temp_ioc_THEN_contains_empty_pv_values() {
         // Arrange
         int expected = 0;
-        int actual = viewModel.getPvSets().size();
+        int actual = blankTempIoc.getPvs().size();
 
         // Assert
         assertEquals(expected, actual);
     }
 
     @Test
-    public void WHEN_ioc_set_on_viewmodel_THEN_viewmodel_initialised_with_values_from_ioc() {
+    public void GIVEN_blank_temp_ioc_THEN_contains_empty_pv_sets() {
         // Arrange
-        viewModel.setIoc(autostartIoc);
+        int expected = 0;
+        int actual = blankTempIoc.getPvSets().size();
 
+        // Assert
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void GIVEN_temp_ioc_based_on_populated_ioc_THEN_viewmodel_initialised_with_values_from_ioc() {
+        // Arrange
         boolean expected = true;
-        boolean actual = viewModel.isAutoStart();
+        boolean actual = populatedTempIoc.getAutostart();
         
         // Assert
         assertEquals(expected, actual);
     }
 
     @Test
-    public void GIVEN_ioc_set_WHEN_changing_viewmodel_values_without_saving_ioc_THEN_ioc_has_old_value() {
+    public void WHEN_changing_temp_ioc_values_without_saving_ioc_THEN_ioc_has_old_value() {
         // Arrange
         boolean expected = false;
-        viewModel.setIoc(autostartIoc);
-
         // Act
-        viewModel.setAutoStart(expected);
-        boolean actual = viewModel.getIoc().getAutostart();
+        populatedTempIoc.setAutostart(expected);
+        boolean actual = autostartIoc.getAutostart();
 
         // Assert
         assertNotEquals(expected, actual);
@@ -150,12 +149,11 @@ public class IocViewModelTest {
     public void GIVEN_ioc_set_WHEN_changing_viewmodel_values_and_saving_ioc_THEN_ioc_has_new_value() {
         // Arrange
         boolean expected = false;
-        viewModel.setIoc(autostartIoc);
 
         // Act
-        viewModel.setAutoStart(expected);
-        viewModel.saveIoc();
-        boolean actual = viewModel.getIoc().getAutostart();
+        populatedTempIoc.setAutostart(expected);
+        populatedTempIoc.saveIoc();
+        boolean actual = autostartIoc.getAutostart();
 
         // Assert
         assertEquals(expected, actual);
