@@ -19,11 +19,8 @@
 
 package uk.ac.stfc.isis.ibex.configserver.tests.editing;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.junit.Assert.*;
+import static org.mockito.Mockito.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -69,7 +66,7 @@ public class BlockNameValidatorTest {
 		blockList.add(testEditableBlock);
 		
 		mockConfig = mock(EditableConfiguration.class);
-		when(mockConfig.getEditableBlocks()).thenReturn(blockList);
+        when(mockConfig.getAvailableBlocks()).thenReturn(blockList);
 		
 		validator = new BlockNameValidator(mockConfig, testBlock);
 	}
