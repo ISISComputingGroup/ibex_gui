@@ -54,12 +54,15 @@ public class DisplayGroup {
 
     private void setBlocks(Collection<String> blockNames) {
         for (final String name : blockNames) {
-            blocks.add(block(name));
+            DisplayBlock block = block(name);
+            if (block != null) {
+                blocks.add(block);
+            }
         }
     }
 
     private DisplayBlock block(final String name) {
-        return Iterables.find(allBlocks, nameMatches(name));
+        return Iterables.find(allBlocks, nameMatches(name), null);
     }
 
     private Predicate<DisplayBlock> nameMatches(final String name) {
