@@ -224,7 +224,6 @@ public class LogDisplay extends Canvas {
 			@Override
 			public void run() {
 				tableViewer.setFilters(filters.toArray(new ViewerFilter[] {}));
-				tableViewer.refresh();
 			}
 		});		
 	}
@@ -240,7 +239,6 @@ public class LogDisplay extends Canvas {
 			public void run() {
                 if (!tableViewer.getControl().isDisposed()) {
                     tableViewer.setInput(messages);
-                    tableViewer.refresh();
                     asyncMessageModerator.releaseTaskLock();
                 }
 			}
@@ -404,7 +402,6 @@ public class LogDisplay extends Canvas {
 					int dir = comparator.getDirection();
 					table.setSortDirection(dir);
 					table.setSortColumn(column);
-					tableViewer.refresh();
 				}
 			};
 			column.addSelectionListener(selectionAdapter);
