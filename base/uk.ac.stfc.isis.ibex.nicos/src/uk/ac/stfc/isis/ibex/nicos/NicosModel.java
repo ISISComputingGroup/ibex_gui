@@ -141,7 +141,7 @@ public class NicosModel extends ModelObject implements IMessageConsumer<ReceiveM
 
     @Override
     public void clearMessages() {
-        //
+        // messages are not stored so there is no need to clear them.
     }
 
 

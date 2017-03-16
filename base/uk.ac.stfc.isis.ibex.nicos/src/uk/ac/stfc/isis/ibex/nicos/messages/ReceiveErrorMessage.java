@@ -40,7 +40,7 @@ public class ReceiveErrorMessage extends ReceiveMessage {
      */
     public ReceiveErrorMessage(String errorMessage, String messageId, boolean success) {
         super(messageId, success);
-        this.setErrorMessage(errorMessage);
+        setErrorMessage(errorMessage);
     }
 
     /**

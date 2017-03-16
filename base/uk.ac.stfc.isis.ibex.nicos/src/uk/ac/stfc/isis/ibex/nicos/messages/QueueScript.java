@@ -39,7 +39,6 @@ public class QueueScript implements NicosSendMessage {
      *            code in script
      */
     public QueueScript(String name, String code) {
-        super();
         this.name = name;
         this.code = code;
     }

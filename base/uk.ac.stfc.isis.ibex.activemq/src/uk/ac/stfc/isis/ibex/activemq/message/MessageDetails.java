@@ -33,7 +33,6 @@ public class MessageDetails {
      *            message id
      */
     public MessageDetails(String text, String messageID) {
-        super();
         this.text = text;
         this.messageID = messageID;
     }

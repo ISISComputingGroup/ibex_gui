@@ -47,7 +47,6 @@ public class QueueScriptViewModel extends ModelObject {
      *            an initial script to use
      */
     public QueueScriptViewModel(NicosModel model, String initialScript) {
-        super();
         this.model = model;
         setScript(initialScript);
         

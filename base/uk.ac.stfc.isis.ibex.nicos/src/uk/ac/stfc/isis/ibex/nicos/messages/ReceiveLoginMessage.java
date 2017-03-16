@@ -19,7 +19,10 @@
 package uk.ac.stfc.isis.ibex.nicos.messages;
 
 /**
- * A Login Message that has been received from NICOS.
+ * A Login Message that has been received from NICOS. There are two associated
+ * with the login command, the first is the initial connection and details nicos
+ * the second is the user connection.
+ * 
  * 
  * THIS IS DESERIALISED FROM JSON AND SO THE CONSTRUCTOR MAY NOT BE CALLED
  */
@@ -34,7 +37,6 @@ public class ReceiveLoginMessage extends ReceiveMessage {
          *            the user level
          */
         UserLevel(Integer userLevel) {
-            super();
             this.user_level = userLevel;
         }
 
@@ -71,7 +73,10 @@ public class ReceiveLoginMessage extends ReceiveMessage {
     }
 
     /**
-     * @return
+     * If this is the initial connect message print that, otherwise print logged
+     * in.
+     * 
+     * @return return login recieved
      */
     @Override
     public String getMessage() {

@@ -30,13 +30,5 @@ public class Login implements NicosSendMessage {
     String login = "ibex";
     String passwd = "a2eed0a7fcb214a497052435191b5264cca5b687";
     String display = "TEST";
-    
-    /**
-     * Constructor.
-     * 
-     */
-    public Login() {
-        super();
-    }
         
 }

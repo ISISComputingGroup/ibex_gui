@@ -33,6 +33,7 @@ public class Nicos extends AbstractUIPlugin {
 	private static BundleContext context;
 	private static Nicos instance;
     private NicosModel model;
+    private SendReceiveSession sendReceiveQueue;
 
     /**
      * @return The instance of this singleton.
@@ -53,9 +54,7 @@ public class Nicos extends AbstractUIPlugin {
      */
     public NicosModel getModel() {
         if (model == null) {
-            SendReceiveSession sendReceiveQueue =
-                    ActiveMQ.getInstance().getSendReceiveQueue("ss_admin", "username", "PASSWORD");
-            // TODO remove password and think about closing session
+            sendReceiveQueue = ActiveMQ.getInstance().openSendReceiveQueue("ss_admin", "username", "PASSWORD");
             model = new NicosModel(sendReceiveQueue);
         }
         return model;
@@ -87,6 +86,8 @@ public class Nicos extends AbstractUIPlugin {
      */
     @Override
     public void stop(BundleContext bundleContext) throws Exception {
+        ActiveMQ.getInstance().closeSendReceiveQueue(sendReceiveQueue);
+        sendReceiveQueue = null;
         Nicos.context = null;
     }
 }
