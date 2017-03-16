@@ -61,7 +61,7 @@
     </background_color>
     <width>511</width>
     <x>6</x>
-    <name>Jaws Manager - Jaw Set $(NUMBER)</name>
+    <name>Jaw Set $(NUMBER)</name>
     <y>6</y>
     <foreground_color>
       <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
@@ -614,7 +614,7 @@ $(pv_value)</tooltip>
       </font>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0">
-      <border_style>0</border_style>
+      <border_style>3</border_style>
       <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
       <precision>0</precision>
       <tooltip>$(pv_name)
@@ -623,7 +623,7 @@ $(pv_value)</tooltip>
       <rules />
       <enabled>true</enabled>
       <wuid>4cf9b5a4:15ad74ff055:-6c52</wuid>
-      <transparent>true</transparent>
+      <transparent>false</transparent>
       <pv_value />
       <auto_size>false</auto_size>
       <text>######</text>
@@ -665,7 +665,7 @@ $(pv_value)</tooltip>
       </font>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0">
-      <border_style>0</border_style>
+      <border_style>3</border_style>
       <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
       <precision>0</precision>
       <tooltip>$(pv_name)
@@ -674,7 +674,7 @@ $(pv_value)</tooltip>
       <rules />
       <enabled>true</enabled>
       <wuid>4cf9b5a4:15ad74ff055:-6c4b</wuid>
-      <transparent>true</transparent>
+      <transparent>false</transparent>
       <pv_value />
       <auto_size>false</auto_size>
       <text>######</text>
@@ -716,7 +716,7 @@ $(pv_value)</tooltip>
       </font>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0">
-      <border_style>0</border_style>
+      <border_style>3</border_style>
       <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
       <precision>0</precision>
       <tooltip>$(pv_name)
@@ -725,7 +725,7 @@ $(pv_value)</tooltip>
       <rules />
       <enabled>true</enabled>
       <wuid>4cf9b5a4:15ad74ff055:-6c3d</wuid>
-      <transparent>true</transparent>
+      <transparent>false</transparent>
       <pv_value />
       <auto_size>false</auto_size>
       <text>######</text>
@@ -1495,7 +1495,7 @@ $(pv_value)</tooltip>
       </font>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0">
-      <border_style>0</border_style>
+      <border_style>3</border_style>
       <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
       <precision>0</precision>
       <tooltip>$(pv_name)
@@ -1504,7 +1504,7 @@ $(pv_value)</tooltip>
       <rules />
       <enabled>true</enabled>
       <wuid>4cf9b5a4:15ad74ff055:-6068</wuid>
-      <transparent>true</transparent>
+      <transparent>false</transparent>
       <pv_value />
       <auto_size>false</auto_size>
       <text>######</text>
@@ -1558,8 +1558,8 @@ $(pv_value)</tooltip>
       <wuid>4cf9b5a4:15ad74ff055:-6034</wuid>
       <transparent>false</transparent>
       <points>
-        <point x="246" y="246" />
-        <point x="246" y="14" />
+        <point x="258" y="247" />
+        <point x="258" y="15" />
       </points>
       <fill_arrow>true</fill_arrow>
       <pv_value />
@@ -1588,9 +1588,9 @@ $(pv_value)</tooltip>
         <color name="ISIS_Border" red="0" green="0" blue="0" />
       </background_color>
       <width>1</width>
-      <x>246</x>
+      <x>258</x>
       <name>Polyline</name>
-      <y>14</y>
+      <y>15</y>
       <fill_level>0.0</fill_level>
       <foreground_color>
         <color red="255" green="0" blue="0" />

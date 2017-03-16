@@ -141,7 +141,7 @@
     <background_color>
       <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
     </background_color>
-    <width>203</width>
+    <width>216</width>
     <x>13</x>
     <name>Size of Beam at Sample</name>
     <y>511</y>
@@ -517,8 +517,8 @@ $(pv_value)</tooltip>
     <background_color>
       <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
     </background_color>
-    <width>203</width>
-    <x>216</x>
+    <width>204</width>
+    <x>228</x>
     <name>Stop Motion</name>
     <y>511</y>
     <foreground_color>
@@ -558,7 +558,7 @@ $(pv_value)</tooltip>
       </border_color>
       <widget_type>Button</widget_type>
       <width>127</width>
-      <x>24</x>
+      <x>30</x>
       <name>Button</name>
       <y>6</y>
       <foreground_color>
@@ -579,7 +579,7 @@ $(pv_value)</tooltip>
     <transparent>false</transparent>
     <lock_children>false</lock_children>
     <scripts />
-    <height>65</height>
+    <height>66</height>
     <border_width>1</border_width>
     <scale_options>
       <width_scalable>true</width_scalable>
@@ -598,7 +598,7 @@ $(pv_value)</tooltip>
       <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
     </background_color>
     <width>203</width>
-    <x>418</x>
+    <x>432</x>
     <name>Jaws Manager</name>
     <y>511</y>
     <foreground_color>
