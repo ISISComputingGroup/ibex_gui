@@ -32,8 +32,7 @@ import uk.ac.stfc.isis.ibex.log.ILogMessageProducer;
 import uk.ac.stfc.isis.ibex.log.message.LogMessage;
 import uk.ac.stfc.isis.ibex.log.message.LogMessageFields;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
-import uk.ac.stfc.isis.ibex.ui.AsyncMessageModeratorTask;
-import uk.ac.stfc.isis.ibex.ui.log.BufferedPropertyChanger;
+import uk.ac.stfc.isis.ibex.ui.BufferedPropertyChanger;
 import uk.ac.stfc.isis.ibex.ui.log.comparator.LogMessageComparator;
 import uk.ac.stfc.isis.ibex.ui.log.filter.LogMessageFilter;
 import uk.ac.stfc.isis.ibex.ui.log.save.LogMessageFileWriter;
@@ -45,7 +44,7 @@ import uk.ac.stfc.isis.ibex.ui.log.save.LogMessageFileWriter;
  * searching service.
  */
 public class LogDisplayModel extends ModelObject
-        implements IMessageConsumer<LogMessage>, ISearchModel, AsyncMessageModeratorTask {
+        implements IMessageConsumer<LogMessage>, ISearchModel {
     /**
      * The maximum number of recent messages to display; older messages are
      * dropped.
@@ -279,13 +278,5 @@ public class LogDisplayModel extends ModelObject
 		firePropertyChange("message", null, liveMessageCache);
 		firePropertyChange("displayMode", null, latestSearchResults);
 	}
-
-    /**
-     * Rerun the update task for the live message cache.
-     */
-    @Override
-    public void reQueueTask() {
-        firePropertyChange("message", null, liveMessageCache);
-    }
 
 }

@@ -19,7 +19,7 @@
 /**
  * 
  */
-package uk.ac.stfc.isis.ibex.ui.log;
+package uk.ac.stfc.isis.ibex.ui;
 
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 
