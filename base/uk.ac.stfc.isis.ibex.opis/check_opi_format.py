@@ -23,7 +23,7 @@ class CheckOpiFormat:
 
     # If a word contains any of the following, the whole word will be ignored
     ignore = \
-        ["$", "&", "#", '"', "'", "(", ")", "OPI", "PSU", "HW", "Hz", "LED", "A:", "B:", "C:", "D:", "CCD100", "ISIS", "JJ", "X-Ray"]
+        ["$", "&", "#", '"', "'", "(", ")", "OPI", "PSU", "HW", "Hz", "LED", "A:", "B:", "C:", "D:", "CCD100", "ISIS", "JJ", "X-Ray", "LTC"]
 
     # When checking capitalisation will ignore words <= this length
     # This is to avoid

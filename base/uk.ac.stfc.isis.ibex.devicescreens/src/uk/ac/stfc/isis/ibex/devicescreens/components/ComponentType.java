@@ -1,4 +1,3 @@
-
 /*
  * This file is part of the ISIS IBEX application. Copyright (C) 2012-2016
  * Science & Technology Facilities Council. All rights reserved.
@@ -104,6 +103,8 @@ public enum ComponentType {
     DETECTOR_MOTION_SYSTEM,
     /** Pixelman camera. */
     PIXELMAN,
+    /** Neocera temperature controller. */
+    NEOCERA,
     /** Keithley 2400 Source Meter. */
     KHLY2400,
     /** Zoom sample stack. */
