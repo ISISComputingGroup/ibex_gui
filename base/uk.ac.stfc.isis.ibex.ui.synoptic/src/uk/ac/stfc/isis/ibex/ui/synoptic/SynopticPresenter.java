@@ -44,9 +44,7 @@ import uk.ac.stfc.isis.ibex.synoptic.navigation.TargetNode;
 import uk.ac.stfc.isis.ibex.targets.OpiTarget;
 import uk.ac.stfc.isis.ibex.targets.PerspectiveTarget;
 import uk.ac.stfc.isis.ibex.targets.Target;
-import uk.ac.stfc.isis.ibex.targets.ViewTarget;
 import uk.ac.stfc.isis.ibex.ui.UI;
-import uk.ac.stfc.isis.ibex.ui.synoptic.views.LinkedViews;
 import uk.ac.stfc.isis.ibex.ui.synoptic.views.SynopticOpiTargetView;
 import uk.ac.stfc.isis.ibex.ui.synoptic.views.SynopticView;
 
@@ -96,6 +94,9 @@ public class SynopticPresenter extends ModelObject {
         }
     };
 
+    /**
+     * Presents synoptics.
+     */
 	public SynopticPresenter() {
 		model = Synoptic.getInstance().currentViewerModel();
         ObservingSynopticModel observingSynopticModel = Synoptic.getInstance().currentObservingViewerModel();
@@ -112,13 +113,20 @@ public class SynopticPresenter extends ModelObject {
 		navigator.setCurrentTarget(model.instrumentGraph().head());
 	}
 
+    /**
+     * Gets the navigator.
+     * 
+     * @return the navigator
+     */
 	public NavigationPresenter navigator() {
 		return navigator;
 	}
 
-	/*
-	 * The hierarchy of components above the current component
-	 */
+    /**
+     * The hierarchy of components above the current component.
+     * 
+     * @return the current trail
+     */
 	public List<String> currentTrail() {
 		return new ArrayList<>(trail);
 	}
@@ -128,9 +136,11 @@ public class SynopticPresenter extends ModelObject {
 				trail = climbInstrumentGraphAndExtractGroupNames(navigator.currentNode()));
 	}
 
-	/*
-	 * The names of available targets
-	 */
+    /**
+     * The names of available targets.
+     * 
+     * @return the names of available targets
+     */
 	public List<String> getTargets() {
 		return new ArrayList<>(targets.keySet());
 	}
@@ -141,6 +151,12 @@ public class SynopticPresenter extends ModelObject {
         firePropertyChange("targets", oldTargets, getTargets());
 	}
 
+    /**
+     * Navigates to a target.
+     * 
+     * @param targetName
+     *            the target to navigate to
+     */
 	public void navigateTo(final String targetName) {
 		LOG.info(targetName + " requested");
 		if (targets.containsKey(targetName)) {
@@ -164,15 +180,17 @@ public class SynopticPresenter extends ModelObject {
 				return;
 			}
 
-			if (target instanceof ViewTarget) {
-				displayView(target);
-				return;
-			}
-
 			navigator.setCurrentTarget(targets.get(targetName));
 		}
 	}
 
+    /**
+     * Whether this has target.
+     * 
+     * @param targetName
+     *            the target name
+     * @return true if this has the target
+     */
     public boolean hasTarget(String targetName) {
         boolean hasTarget = false;
 
@@ -195,15 +213,13 @@ public class SynopticPresenter extends ModelObject {
         return hasTarget;
     }
 
-	/*
-	 * The components for the instrument view to render
-	 */
+	/**
+     * The components for the instrument view to render.
+     * 
+     * @return the components
+     */
 	public List<? extends Component> components() {
 		return new ArrayList<>(components);
-	}
-
-	private void displayView(Target target) {
-		LinkedViews.openView(target.name());
 	}
 
 	private void displayTarget(Target currentTarget) {
@@ -265,6 +281,11 @@ public class SynopticPresenter extends ModelObject {
         firePropertyChange(SynopticView.COMPONENTS_CHANGE, null, components());
 	}
 	
+    /**
+     * Gets whether the beam is shown.
+     * 
+     * @return true if the beam is shown
+     */
 	public boolean showBeam() {
 		return model.instrument().showBeam();
 	}

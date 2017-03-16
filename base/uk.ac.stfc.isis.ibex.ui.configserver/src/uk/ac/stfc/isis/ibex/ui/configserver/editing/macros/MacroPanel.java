@@ -83,7 +83,7 @@ public class MacroPanel extends Composite implements IIocDependentPanel {
 	}
 
 	@Override
-    public void setViewModel(final EditableIoc editableIoc) {
+    public void setIOC(final EditableIoc editableIoc) {
         editableIoc.addPropertyChangeListener("macros", new PropertyChangeListener() {
             @Override
             public void propertyChange(PropertyChangeEvent evt) {

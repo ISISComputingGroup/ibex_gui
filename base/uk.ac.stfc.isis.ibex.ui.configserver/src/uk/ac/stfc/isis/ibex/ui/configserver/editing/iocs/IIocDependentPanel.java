@@ -26,10 +26,10 @@ import uk.ac.stfc.isis.ibex.configserver.editing.EditableIoc;
  */
 public interface IIocDependentPanel {
     /**
-     * Set the viewmodel to be based on a specific IOC.
+     * Set the IOC that the panel corresponds to.
      * 
      * @param editableIoc
      *            The IOC to set as the view model.
      */
-    void setViewModel(EditableIoc editableIoc);
+    void setIOC(EditableIoc editableIoc);
 }

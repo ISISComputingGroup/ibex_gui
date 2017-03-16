@@ -27,8 +27,18 @@ import uk.ac.stfc.isis.ibex.configserver.configuration.SimLevel;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableIoc;
 import uk.ac.stfc.isis.ibex.ui.widgets.EnumEditingSupport;
 
+/**
+ * Class to provide editing support for modifying the sim level of an IOC whilst
+ * it is in a table.
+ */
 public class SimLevelEditingSupport extends EnumEditingSupport<EditableIoc, SimLevel> {
 
+    /**
+     * The default constructor.
+     * 
+     * @param viewer
+     *            The column that this editing support applies to.
+     */
 	public SimLevelEditingSupport(ColumnViewer viewer) {
 		super(viewer, EditableIoc.class, SimLevel.class);
 	}

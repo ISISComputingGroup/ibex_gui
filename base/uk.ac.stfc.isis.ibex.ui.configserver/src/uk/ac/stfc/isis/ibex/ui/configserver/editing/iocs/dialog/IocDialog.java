@@ -97,7 +97,7 @@ public class IocDialog extends TitleAreaDialog implements MessageDisplayer {
      */
     private void nextPage() {
         tempIoc = addViewModel.getSelectedIoc();
-        editIocPanel.setViewModel(tempIoc);
+        editIocPanel.setIOC(tempIoc);
         updateStack(editIocPanel);
         btnPrev.setVisible(true);
         btnOk.removeSelectionListener(nextListener);
@@ -182,7 +182,7 @@ public class IocDialog extends TitleAreaDialog implements MessageDisplayer {
 
         editIocPanel = new EditPanel(content, SWT.NONE, this);
         editIocPanel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-        editIocPanel.setViewModel(tempIoc);
+        editIocPanel.setIOC(tempIoc);
 
         if (isNew) {
             stack.topControl = addIocPanel;
