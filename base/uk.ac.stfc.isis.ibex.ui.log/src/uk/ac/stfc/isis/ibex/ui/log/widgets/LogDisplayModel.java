@@ -33,6 +33,7 @@ import uk.ac.stfc.isis.ibex.log.message.LogMessage;
 import uk.ac.stfc.isis.ibex.log.message.LogMessageFields;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 import uk.ac.stfc.isis.ibex.ui.AsyncMessageModeratorTask;
+import uk.ac.stfc.isis.ibex.ui.log.BufferedPropertyChanger;
 import uk.ac.stfc.isis.ibex.ui.log.comparator.LogMessageComparator;
 import uk.ac.stfc.isis.ibex.ui.log.filter.LogMessageFilter;
 import uk.ac.stfc.isis.ibex.ui.log.save.LogMessageFileWriter;
@@ -50,6 +51,12 @@ public class LogDisplayModel extends ModelObject
      * dropped.
      */
     private static final int MAX_LIVE_MESSAGES = 10000;
+
+    /**
+     * The frequency at which the log message table will be updated in
+     * milliseconds.
+     */
+    private static final int UPDATE_PERIOD_MS = 1000;
 	
     /** The log message source. */
 	private ILogMessageProducer messageProducer;
@@ -72,6 +79,8 @@ public class LogDisplayModel extends ModelObject
      */
 	private boolean usingSearch;
 	
+    private BufferedPropertyChanger bufferedPropertyChanger = new BufferedPropertyChanger(UPDATE_PERIOD_MS);
+	
     /**
      * The constructor.
      * 
@@ -91,6 +100,14 @@ public class LogDisplayModel extends ModelObject
 		
 		liveMessageCache = new ArrayList<LogMessage>(messageProducer.getAllCachedMessages());
 		latestSearchResults = new ArrayList<LogMessage>();
+
+        bufferedPropertyChanger.addPropertyChangeListener("message", new PropertyChangeListener() {
+            @Override
+            public void propertyChange(PropertyChangeEvent event) {
+                firePropertyChange(event.getPropertyName(), event.getOldValue(), event.getNewValue());
+            }
+        });
+        bufferedPropertyChanger.start();
 	}
 	
 	/**
@@ -152,7 +169,7 @@ public class LogDisplayModel extends ModelObject
 		}
 
 		liveMessageCache.add(logMessage);
-		firePropertyChange("message", null, liveMessageCache);
+        bufferedPropertyChanger.add("message", null, liveMessageCache);
 	}
 
 	/**

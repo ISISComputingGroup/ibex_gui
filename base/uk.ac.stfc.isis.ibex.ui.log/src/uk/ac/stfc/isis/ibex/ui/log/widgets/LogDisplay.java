@@ -73,7 +73,6 @@ import org.eclipse.swt.widgets.TableColumn;
 
 import uk.ac.stfc.isis.ibex.log.message.LogMessage;
 import uk.ac.stfc.isis.ibex.log.message.LogMessageFields;
-import uk.ac.stfc.isis.ibex.ui.AsyncMessageModerator;
 import uk.ac.stfc.isis.ibex.ui.log.comparator.LogMessageComparator;
 import uk.ac.stfc.isis.ibex.ui.log.filter.LogMessageFilter;
 
@@ -118,7 +117,6 @@ public class LogDisplay extends Canvas {
 	private MenuItem mnuClearSelected;
 	private MenuItem mnuSaveAll;
 	private MenuItem mnuSaveSelected;
-    private AsyncMessageModerator asyncMessageModerator;
 
     /**
      * Default constructor.
@@ -147,7 +145,6 @@ public class LogDisplay extends Canvas {
 	public void setModel(final LogDisplayModel model) {
 		this.model = model;
 		this.searchControl.setSearcher(model);
-        this.asyncMessageModerator = new AsyncMessageModerator(model);
 
 		// Listen for updates to the list of messages to be displayed
 		final LogDisplay display = this;
@@ -155,9 +152,7 @@ public class LogDisplay extends Canvas {
 				new PropertyChangeListener() {
                     @Override
 					public void propertyChange(PropertyChangeEvent event) {
-                        if (asyncMessageModerator.requestTaskLock()) {
-                            display.setMessageData(model.getMessages());
-                        }
+                        display.setMessageData(model.getMessages());
 					}
 				});
 
@@ -239,7 +234,6 @@ public class LogDisplay extends Canvas {
 			public void run() {
                 if (!tableViewer.getControl().isDisposed()) {
                     tableViewer.setInput(messages);
-                    asyncMessageModerator.releaseTaskLock();
                 }
 			}
 		});
