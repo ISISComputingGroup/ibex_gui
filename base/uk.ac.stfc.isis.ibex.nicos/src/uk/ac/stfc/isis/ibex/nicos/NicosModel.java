@@ -74,7 +74,6 @@ public class NicosModel extends ModelObject implements IMessageConsumer<ReceiveM
         MessageParser<ReceiveMessage> parser = new NicosMessageParser();
         parser.addMessageConsumer(this);
         this.session.addMessageParser(parser);
-        this.session.addPropertyChangeListener("connection", passThrough());
         this.session.addPropertyChangeListener("connection", new PropertyChangeListener() {
 
             @Override
@@ -84,6 +83,16 @@ public class NicosModel extends ModelObject implements IMessageConsumer<ReceiveM
             }
 
         });
+        this.session.addPropertyChangeListener("connectionError", new PropertyChangeListener() {
+
+            @Override
+            public void propertyChange(PropertyChangeEvent evt) {
+                setConnectionErrorMessage((String) evt.getNewValue());
+            }
+
+        });
+
+        setConnectionErrorMessage(this.session.getConnectionError());
         connectedChange(this.session.isConnected());
     }
 
@@ -125,6 +134,7 @@ public class NicosModel extends ModelObject implements IMessageConsumer<ReceiveM
         if (isConnected) {
             LOG.info("Logging in to nicos");
             setConnectionStatus(ConnectionStatus.CONNECTING);
+            setConnectionErrorMessage("");
             loginSendMessageDetails = sendMessageToNicos(new Login());
             if (!loginSendMessageDetails.isSent()) {
                 LOG.error("Error when sending log in message to Nicos: \'" + loginSendMessageDetails.getFailureReason()
@@ -134,7 +144,6 @@ public class NicosModel extends ModelObject implements IMessageConsumer<ReceiveM
             }
         } else {
             setConnectionStatus(ConnectionStatus.DISCONNECTED);
-            setConnectionErrorMessage("");
         }
     }
 

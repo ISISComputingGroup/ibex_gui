@@ -24,7 +24,7 @@ package uk.ac.stfc.isis.ibex.nicos;
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyString;
+import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.*;
 
 import java.beans.PropertyChangeEvent;
@@ -53,6 +53,7 @@ public class NicosLogInTest {
     private NicosModel model;
     private NicosMessageParser messageParser;
     private PropertyChangeListener connectionPropertChange;
+    private PropertyChangeListener connectionErrorPropertChange;
 
     /**
      * @return the stub after the send receive session has logged in
@@ -73,8 +74,12 @@ public class NicosLogInTest {
         messageParser = captor.getValue();
         
         ArgumentCaptor<PropertyChangeListener> propertyChangeCaptor = ArgumentCaptor.forClass(PropertyChangeListener.class);
-        verify(sendReceiveSession, times(2)).addPropertyChangeListener(anyString(), propertyChangeCaptor.capture());
+        verify(sendReceiveSession).addPropertyChangeListener(eq("connection"),
+                propertyChangeCaptor.capture());
         connectionPropertChange = propertyChangeCaptor.getValue();
+
+        verify(sendReceiveSession).addPropertyChangeListener(eq("connectionError"), propertyChangeCaptor.capture());
+        connectionErrorPropertChange = propertyChangeCaptor.getValue();
     }
 
     @Test
@@ -94,6 +99,18 @@ public class NicosLogInTest {
         ConnectionStatus result = model.getConnectionStatus();
 
         assertThat("Connection status", result, is(ConnectionStatus.CONNECTING));
+    }
+
+    @Test
+    public void GIVEN_no_connection_error_WHEN_connection_error_from_session_THEN_error_is_set() {
+
+        String expectedError = "error expected";
+        connectionErrorPropertChange
+                .propertyChange(new PropertyChangeEvent(this, "connectionError", "", expectedError));
+
+        String result = model.getConnectionErrorMessage();
+
+        assertThat("Connection error", result, is(expectedError));
     }
 
     @Test
