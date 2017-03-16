@@ -24,22 +24,29 @@ package uk.ac.stfc.isis.ibex.ui;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 
 /**
- *
+ * This class implements a buffered property changer with a variable delay
+ * between property change events.
+ * 
+ * Property changes overwrite each other, and not all property changes will be
+ * fired. Therefore, <code>oldvalue</code> should not be relied on.
+ * 
+ * Only the latest property change is fired, and it is fired at a regular
+ * interval defined by <code>period</code>.
  */
 public class BufferedPropertyChanger extends ModelObject {
 
-    private class PropertyChangeDescriptor {
+    private final class PropertyChangeDescriptor {
         private String propertyName;
         private Object oldValue;
         private Object newValue;
 
-        public PropertyChangeDescriptor(String propertyName, Object oldValue, Object newValue) {
+        private PropertyChangeDescriptor(String propertyName, Object oldValue, Object newValue) {
             this.propertyName = propertyName;
             this.oldValue = oldValue;
             this.newValue = newValue;
         }
 
-        public void fire() {
+        private void fire() {
             firePropertyChange(propertyName, oldValue, newValue);
         }
     }
@@ -73,7 +80,7 @@ public class BufferedPropertyChanger extends ModelObject {
     }
 
     /**
-     * Starts this queue. Will fire the last property change received every
+     * Starts this queue. Will fire the latest property change received every
      * <code>period</code> milliseconds.
      */
     public void start() {
@@ -111,7 +118,7 @@ public class BufferedPropertyChanger extends ModelObject {
         try {
             Thread.sleep(period);
         } catch (InterruptedException e) {
-            stop = true;
+            stop();
         }
     }
 }
