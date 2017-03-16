@@ -41,7 +41,7 @@
     <transparent>false</transparent>
     <lock_children>false</lock_children>
     <scripts />
-    <height>283</height>
+    <height>253</height>
     <border_width>1</border_width>
     <scale_options>
       <width_scalable>true</width_scalable>
@@ -115,7 +115,7 @@ $(pv_value)</tooltip>
       <width>200</width>
       <x>30</x>
       <name>JawBackground</name>
-      <y>26</y>
+      <y>8</y>
       <fill_level>0.0</fill_level>
       <foreground_color>
         <color name="ISIS_Red" red="255" green="0" blue="0" />
@@ -192,7 +192,7 @@ widget.setPropertyValue("width", width)
       <width>100</width>
       <x>30</x>
       <name>Rectangle</name>
-      <y>26</y>
+      <y>8</y>
       <fill_level>0.0</fill_level>
       <foreground_color>
         <color name="ISIS_Red" red="255" green="0" blue="0" />
@@ -272,7 +272,7 @@ widget.setPropertyValue("x", TR_X - width)
       <width>100</width>
       <x>130</x>
       <name>Rectangle_1</name>
-      <y>26</y>
+      <y>8</y>
       <fill_level>0.0</fill_level>
       <foreground_color>
         <color name="ISIS_Red" red="255" green="0" blue="0" />
@@ -352,7 +352,7 @@ widget.setPropertyValue("height", height)
       <width>200</width>
       <x>30</x>
       <name>Rectangle_2</name>
-      <y>25</y>
+      <y>9</y>
       <fill_level>0.0</fill_level>
       <foreground_color>
         <color name="ISIS_Red" red="255" green="0" blue="0" />
@@ -432,7 +432,7 @@ widget.setPropertyValue("y", BL_Y - height)
       <width>200</width>
       <x>30</x>
       <name>Rectangle_3</name>
-      <y>125</y>
+      <y>109</y>
       <fill_level>0.0</fill_level>
       <foreground_color>
         <color name="ISIS_Red" red="255" green="0" blue="0" />
@@ -491,7 +491,7 @@ $(pv_value)</tooltip>
       </background_color>
       <width>64</width>
       <x>30</x>
-      <y>98</y>
+      <y>82</y>
       <maximum>1.7976931348623157E308</maximum>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
@@ -547,7 +547,7 @@ $(pv_value)</tooltip>
       </background_color>
       <width>64</width>
       <x>166</x>
-      <y>98</y>
+      <y>82</y>
       <maximum>1.7976931348623157E308</maximum>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
@@ -603,7 +603,7 @@ $(pv_value)</tooltip>
       </background_color>
       <width>64</width>
       <x>98</x>
-      <y>184</y>
+      <y>168</y>
       <maximum>1.7976931348623157E308</maximum>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
@@ -655,7 +655,7 @@ $(pv_value)</tooltip>
       <width>64</width>
       <x>166</x>
       <name>Text Update</name>
-      <y>122</y>
+      <y>106</y>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </foreground_color>
@@ -706,7 +706,7 @@ $(pv_value)</tooltip>
       <width>64</width>
       <x>30</x>
       <name>Text Update</name>
-      <y>122</y>
+      <y>106</y>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </foreground_color>
@@ -757,7 +757,7 @@ $(pv_value)</tooltip>
       <width>64</width>
       <x>98</x>
       <name>Text Update</name>
-      <y>203</y>
+      <y>187</y>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </foreground_color>
@@ -1484,7 +1484,7 @@ $(pv_value)</tooltip>
       </background_color>
       <width>64</width>
       <x>98</x>
-      <y>26</y>
+      <y>10</y>
       <maximum>1.7976931348623157E308</maximum>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
@@ -1536,7 +1536,7 @@ $(pv_value)</tooltip>
       <width>64</width>
       <x>98</x>
       <name>Text Update_9</name>
-      <y>45</y>
+      <y>29</y>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </foreground_color>
@@ -1558,8 +1558,8 @@ $(pv_value)</tooltip>
       <wuid>4cf9b5a4:15ad74ff055:-6034</wuid>
       <transparent>false</transparent>
       <points>
-        <point x="258" y="247" />
-        <point x="258" y="15" />
+        <point x="258" y="216" />
+        <point x="258" y="-1" />
       </points>
       <fill_arrow>true</fill_arrow>
       <pv_value />
@@ -1567,7 +1567,7 @@ $(pv_value)</tooltip>
       <rotation_angle>0.0</rotation_angle>
       <scripts />
       <border_alarm_sensitive>false</border_alarm_sensitive>
-      <height>233</height>
+      <height>218</height>
       <border_width>1</border_width>
       <scale_options>
         <width_scalable>true</width_scalable>
@@ -1590,7 +1590,7 @@ $(pv_value)</tooltip>
       <width>1</width>
       <x>258</x>
       <name>Polyline</name>
-      <y>15</y>
+      <y>-1</y>
       <fill_level>0.0</fill_level>
       <foreground_color>
         <color red="255" green="0" blue="0" />
