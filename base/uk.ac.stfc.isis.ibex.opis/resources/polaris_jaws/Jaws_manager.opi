@@ -63,7 +63,7 @@
     <width>775</width>
     <x>6</x>
     <name>Label</name>
-    <y>6</y>
+    <y>0</y>
     <foreground_color>
       <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
     </foreground_color>
@@ -106,7 +106,7 @@
     <width>512</width>
     <x>6</x>
     <name>A Linking Container That Looks Like a Group Box</name>
-    <y>42</y>
+    <y>36</y>
     <foreground_color>
       <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
     </foreground_color>
@@ -148,7 +148,7 @@
     <width>512</width>
     <x>516</x>
     <name>A Linking Container That Looks Like a Group Box_1</name>
-    <y>42</y>
+    <y>36</y>
     <foreground_color>
       <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
     </foreground_color>
@@ -190,7 +190,7 @@
     <width>512</width>
     <x>6</x>
     <name>A Linking Container That Looks Like a Group Box_2</name>
-    <y>295</y>
+    <y>289</y>
     <foreground_color>
       <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
     </foreground_color>
@@ -232,7 +232,7 @@
     <width>512</width>
     <x>516</x>
     <name>A Linking Container That Looks Like a Group Box_3</name>
-    <y>295</y>
+    <y>289</y>
     <foreground_color>
       <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
     </foreground_color>
@@ -274,7 +274,7 @@
     <width>512</width>
     <x>6</x>
     <name>A Linking Container That Looks Like a Group Box_4</name>
-    <y>548</y>
+    <y>542</y>
     <foreground_color>
       <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
     </foreground_color>
