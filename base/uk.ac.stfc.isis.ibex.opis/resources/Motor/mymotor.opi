@@ -1453,7 +1453,7 @@ $(pv_value)</tooltip>
       </font>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="1.0">
-      <toggle_button>false</toggle_button>
+      <toggle_button>true</toggle_button>
       <border_style>0</border_style>
       <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
       <tooltip>$(pv_name)
@@ -1462,6 +1462,7 @@ $(pv_value)</tooltip>
       <rules />
       <enabled>true</enabled>
       <wuid>4df0f4be:141fe78a52c:-79d2</wuid>
+      <release_action_index>1</release_action_index>
       <pv_value />
       <text>&lt;</text>
       <scripts />
@@ -1498,13 +1499,19 @@ $(pv_value)</tooltip>
           <timeout>10</timeout>
           <description></description>
         </action>
+        <action type="WRITE_PV">
+          <pv_name>$(P)$(MM).JOGR</pv_name>
+          <value>0</value>
+          <timeout>10</timeout>
+          <description></description>
+        </action>
       </actions>
       <font>
         <opifont.name fontName="Arial" height="14" style="1">ISIS_Label</opifont.name>
       </font>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="1.0">
-      <toggle_button>false</toggle_button>
+      <toggle_button>true</toggle_button>
       <border_style>0</border_style>
       <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
       <tooltip>$(pv_name)
@@ -1513,6 +1520,7 @@ $(pv_value)</tooltip>
       <rules />
       <enabled>true</enabled>
       <wuid>4df0f4be:141fe78a52c:-7948</wuid>
+      <release_action_index>1</release_action_index>
       <pv_value />
       <text>&gt;</text>
       <scripts />
@@ -1546,6 +1554,12 @@ $(pv_value)</tooltip>
         <action type="WRITE_PV">
           <pv_name>$(P)$(MM).JOGF</pv_name>
           <value>1</value>
+          <timeout>10</timeout>
+          <description></description>
+        </action>
+        <action type="WRITE_PV">
+          <pv_name>$(P)$(MM).JOGF</pv_name>
+          <value>0</value>
           <timeout>10</timeout>
           <description></description>
         </action>
