@@ -37,7 +37,6 @@ import uk.ac.stfc.isis.ibex.ui.configserver.editing.pvs.PVSelectorPanel;
 
 /**
  * A dialog for selecting a PV.
- *
  */
 public class PvSelectorDialog extends TitleAreaDialog {
 
@@ -46,6 +45,16 @@ public class PvSelectorDialog extends TitleAreaDialog {
 	private PV pv;
     private static final String SHELL_TITLE = "Select PV";
 	
+    /**
+     * Constructor for the dialog.
+     * 
+     * @param parentShell
+     *            The parent shell to display this dialog in.
+     * @param config
+     *            The config that this PV will belong to.
+     * @param address
+     *            The starting address for the PV.
+     */
 	public PvSelectorDialog(Shell parentShell, EditableConfiguration config, String address) {
 		super(parentShell);
 		setShellStyle(getShellStyle() | SWT.DIALOG_TRIM | SWT.RESIZE);
@@ -87,6 +96,11 @@ public class PvSelectorDialog extends TitleAreaDialog {
 				IDialogConstants.CANCEL_LABEL, false);
 	}
 	
+    /**
+     * Get the address for this PV.
+     * 
+     * @return The PV address.
+     */
 	public String getPVAddress() {
 		return pv.getAddress();
 	}

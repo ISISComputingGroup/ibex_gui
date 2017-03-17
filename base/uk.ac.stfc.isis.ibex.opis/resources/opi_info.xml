@@ -658,13 +658,37 @@
 				<macros>
 				</macros>
 			</value>
-		</entry>  	
+		</entry>
 		<entry>
 			<key>Zoom sample stack</key>
 			<value>
 				<type>ZOOM_SAMPLE_STACK</type>
 				<path>zoom_sample_stack/zoom_sample_stack.opi</path>
 				<description>The OPI for the ZOOM sample stack. No properties required.</description>
+				<macros>
+				</macros>
+			</value>
+		</entry>
+		<entry>
+			<key>Neocera LTC21</key>
+			<value>
+				<type>NEOCERA</type>
+				<path>neocera_ltc21.opi</path>
+				<description>The OPI for the Neocera LTC21.</description>
+				<macros>
+					<macro>
+						<name>NEOCERA</name>
+						<description>The neocera PV prefix (e.g. NEOCERA_01).</description>
+					</macro>
+				</macros>
+			</value>
+		</entry>
+		<entry>
+			<key>Goniometer</key>
+			<value>
+				<type>GONIOMETER</type>
+				<path>goniometer/goniometer.opi</path>
+				<description>The OPI for a goniometer. No properties required.</description>
 				<macros>
 				</macros>
 			</value>

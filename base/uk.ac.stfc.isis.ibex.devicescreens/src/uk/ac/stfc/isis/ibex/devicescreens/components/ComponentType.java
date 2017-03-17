@@ -1,4 +1,3 @@
-
 /*
  * This file is part of the ISIS IBEX application. Copyright (C) 2012-2016
  * Science & Technology Facilities Council. All rights reserved.
@@ -25,7 +24,6 @@ import java.util.List;
 
 import uk.ac.stfc.isis.ibex.targets.PerspectiveTarget;
 import uk.ac.stfc.isis.ibex.targets.Target;
-import uk.ac.stfc.isis.ibex.targets.ViewTarget;
 
 /**
  * The type of components available to the synoptic.
@@ -78,7 +76,7 @@ public enum ComponentType {
     /** Pinhole selector component type. */
 	PINHOLESELECTOR,
     /** Goniometer component type. */
-    GONIOMETER(new ViewTarget("Goniometer")),
+    GONIOMETER,
     /** Single stage component type. */
     SINGLESTAGE,
     /** Linkam95 component type. */
@@ -105,6 +103,8 @@ public enum ComponentType {
     DETECTOR_MOTION_SYSTEM,
     /** Pixelman camera. */
     PIXELMAN,
+    /** Neocera temperature controller. */
+    NEOCERA,
     /** Keithley 2400 Source Meter. */
     KHLY2400,
     /** Zoom sample stack. */

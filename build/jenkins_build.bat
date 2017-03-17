@@ -144,3 +144,6 @@ if %errorlevel% neq 0 (
 REM Delete local copies
 del installer.7z
 del ClientInstaller.exe
+
+REM build MSI kit
+call build_msi.bat %INSTALLDIR%

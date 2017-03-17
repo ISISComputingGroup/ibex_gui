@@ -59,7 +59,7 @@ public class IocDialog extends TitleAreaDialog implements MessageDisplayer {
     StackLayout stack;
     AddPanel addIocPanel;
     EditPanel editIocPanel;
-    private IocViewModel viewModel;
+    private TempEditableIoc tempIoc;
     private AddPanelViewModel addViewModel;
 
     /** Error messages that are displayed. <Source, message> */
@@ -96,7 +96,8 @@ public class IocDialog extends TitleAreaDialog implements MessageDisplayer {
      * Sets dialog content to the second page.
      */
     private void nextPage() {
-        viewModel.setIoc(addViewModel.getSelectedIoc());
+        tempIoc = addViewModel.getSelectedIoc();
+        editIocPanel.setIOC(tempIoc);
         updateStack(editIocPanel);
         btnPrev.setVisible(true);
         btnOk.removeSelectionListener(nextListener);
@@ -122,8 +123,7 @@ public class IocDialog extends TitleAreaDialog implements MessageDisplayer {
         this.isNew = isNew;
         this.config = config;
         this.addViewModel = new AddPanelViewModel(config.getAvailableIocs());
-        this.viewModel = new IocViewModel(ioc);
-        viewModel.setIoc(ioc);
+        this.tempIoc = new TempEditableIoc(ioc);
     }
 
     @Override
@@ -182,7 +182,7 @@ public class IocDialog extends TitleAreaDialog implements MessageDisplayer {
 
         editIocPanel = new EditPanel(content, SWT.NONE, this);
         editIocPanel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-        editIocPanel.setViewModel(viewModel);
+        editIocPanel.setIOC(tempIoc);
 
         if (isNew) {
             stack.topControl = addIocPanel;
@@ -246,9 +246,9 @@ public class IocDialog extends TitleAreaDialog implements MessageDisplayer {
      */
     @Override
     protected void okPressed() {
-        viewModel.saveIoc();
+        tempIoc.saveIoc();
         if (isNew) {
-            config.addIoc(viewModel.getIoc());
+            config.addIoc(tempIoc);
         }
         super.okPressed();
     }

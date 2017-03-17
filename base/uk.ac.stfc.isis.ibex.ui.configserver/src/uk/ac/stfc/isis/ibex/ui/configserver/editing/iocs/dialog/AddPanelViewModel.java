@@ -58,13 +58,13 @@ public class AddPanelViewModel extends ModelObject {
      * 
      * @return The selected IOC
      */
-    public EditableIoc getSelectedIoc() {
+    public TempEditableIoc getSelectedIoc() {
         for (EditableIoc ioc : availableIocs) {
             if (ioc.getName().equals(selectedName)) {
-                return new EditableIoc(ioc);
+                return new TempEditableIoc(ioc);
             }
         }
-        return new EditableIoc(selectedName);
+        return new TempEditableIoc(new EditableIoc(selectedName));
     }
 
     /**
