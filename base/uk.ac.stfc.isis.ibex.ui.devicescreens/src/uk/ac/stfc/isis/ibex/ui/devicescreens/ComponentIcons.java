@@ -27,16 +27,18 @@ import uk.ac.stfc.isis.ibex.devicescreens.components.ComponentType;
  * Given a component type, returns an icon appropriate for that type.
  */
 public final class ComponentIcons {
-	
+
     /**
      * An empty constructor required for check style.
      */
-	private ComponentIcons() { }
-	
+    private ComponentIcons() {
+    }
+
     /**
      * Gets the appropriate icon for a given component type.
      * 
-     * @param componentType the component type
+     * @param componentType
+     *            the component type
      * @return the icon corresponding to the component type
      */
     public static Image iconForType(ComponentType componentType) {
@@ -46,7 +48,8 @@ public final class ComponentIcons {
     /**
      * Gets the appropriate thumbnail icon for a given component type.
      * 
-     * @param componentType the input component type
+     * @param componentType
+     *            the input component type
      * @return the thumbnail icon corresponding to the component type
      */
     public static Image thumbnailForType(ComponentType componentType) {
@@ -131,5 +134,5 @@ public final class ComponentIcons {
             default:
                 return "cog";
         }
-	}
+    }
 }

@@ -9,8 +9,11 @@ Require-Bundle: uk.ac.stfc.isis.ibex.ui.perspectives,
  uk.ac.stfc.isis.ibex.model,
  uk.ac.stfc.isis.ibex.instrument;bundle-version="1.0.0",
  uk.ac.stfc.isis.ibex.configserver;bundle-version="1.0.0",
- uk.ac.stfc.isis.ibex.opis,
- uk.ac.stfc.isis.ibex.devicescreens
+ uk.ac.stfc.isis.ibex.devicescreens,
+ uk.ac.stfc.isis.ibex.validators,
+ uk.ac.stfc.isis.ibex.targets;bundle-version="1.0.0",
+ uk.ac.stfc.isis.ibex.logger,
+ uk.ac.stfc.isis.ibex.ui.targets
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Export-Package: uk.ac.stfc.isis.ibex.ui.devicescreens
