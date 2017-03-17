@@ -4,14 +4,8 @@ Bundle-Name: Editor
 Bundle-SymbolicName: uk.ac.stfc.isis.ibex.ui.synoptic.editor;singleton:=true
 Bundle-Version: 1.0.0.qualifier
 Bundle-Activator: uk.ac.stfc.isis.ibex.ui.synoptic.editor.Activator
-Require-Bundle: org.eclipse.ui,
- uk.ac.stfc.isis.ibex.synoptic;bundle-version="1.0.0",
- org.eclipse.core.runtime,
+Require-Bundle: uk.ac.stfc.isis.ibex.synoptic;bundle-version="1.0.0",
  uk.ac.stfc.isis.ibex.ui.synoptic,
- org.eclipse.core.databinding,
- org.eclipse.jface.databinding,
- org.eclipse.core.databinding.property;bundle-version="1.4.100",
- org.eclipse.core.databinding.beans,
  com.google.common;bundle-version="10.0.1",
  uk.ac.stfc.isis.ibex.model;bundle-version="1.0.0",
  uk.ac.stfc.isis.ibex.opis;bundle-version="1.0.0",
@@ -20,17 +14,7 @@ Require-Bundle: org.eclipse.ui,
  uk.ac.stfc.isis.ibex.instrument,
  uk.ac.stfc.isis.ibex.ui,
  uk.ac.stfc.isis.ibex.validators;bundle-version="1.0.0",
- org.eclipse.swt,
- uk.ac.stfc.isis.ibex.devicescreens,
  uk.ac.stfc.isis.ibex.ui.devicescreens;bundle-version="1.0.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Bundle-ActivationPolicy: lazy
-Import-Package: org.apache.logging.log4j,
- org.eclipse.wb.swt,
- uk.ac.stfc.isis.ibex.configserver.configuration,
- uk.ac.stfc.isis.ibex.epics.adapters,
- uk.ac.stfc.isis.ibex.epics.writing,
- uk.ac.stfc.isis.ibex.logger,
- uk.ac.stfc.isis.ibex.targets,
- uk.ac.stfc.isis.ibex.ui.perspectives
 Export-Package: uk.ac.stfc.isis.ibex.ui.synoptic.editor.commands
