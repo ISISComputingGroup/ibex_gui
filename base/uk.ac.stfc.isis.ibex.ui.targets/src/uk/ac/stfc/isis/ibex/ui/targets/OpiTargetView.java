@@ -115,42 +115,34 @@ public abstract class OpiTargetView extends OpiView {
 
     private List<OpiViewLocator> openOPIs = new ArrayList<>();
 
-    private void switchPerspective(final IPerspectiveDescriptor newPerspective) {
-        // Must run on the GUI thread
-        if (newPerspective != null) {
-            Display.getDefault().asyncExec(new Runnable() {
-                @Override
-                public void run() {
-                    PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().setPerspective(newPerspective);
-                }
-            });
-        }
-    }
-
-    private void hideViewPart(final IViewPart vp) {
-        // Must run on the GUI thread
-        Display.getDefault().asyncExec(new Runnable() {
-            @Override
-            public void run() {
-                IWorkbenchPage wp = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
-                wp.hideView(vp);
-            }
-        });
-    }
-
     /**
      * Closes any OPIs that have been opened.
      */
     public void closeAllOPIs() {
-        
-        final IWorkbenchPage activePage = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
-        final IPerspectiveDescriptor originalPerspective = activePage != null ? activePage.getPerspective() : null;
-        for (final OpiViewLocator locator : openOPIs) {
-            switchPerspective(locator.perspective());
-            hideViewPart(locator.viewPart());
-        }
-        switchPerspective(originalPerspective);
-        openOPIs.clear();
+        // Must run on the GUI thread
+        Display.getDefault().asyncExec(new Runnable() {
+            @Override
+            public void run() {
+                // Get the current perspective
+                final IPerspectiveDescriptor originalPerspective =
+                        PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getPerspective();
+
+                // Go through the OPI perspectives and close the OPI views
+                for (OpiViewLocator opiLocator : openOPIs) {
+                    PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage()
+                            .setPerspective(opiLocator.perspective());
+                    IWorkbenchPage wp = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
+                    wp.hideView(opiLocator.viewPart());
+                }
+
+                // Switch back to the original perspective
+                PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage()
+                        .setPerspective(originalPerspective);
+
+                // Once we've finished closing the OPIs, forget about them.
+                openOPIs.clear();
+            }
+        });
     }
 
     /**
