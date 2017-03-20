@@ -21,11 +21,17 @@
  */
 package uk.ac.stfc.isis.ibex.configserver.editing;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
+import uk.ac.stfc.isis.ibex.configserver.ConfigServer;
+import uk.ac.stfc.isis.ibex.configserver.Configurations;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Block;
+import uk.ac.stfc.isis.ibex.configserver.configuration.ComponentInfo;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Configuration;
 
 /**
@@ -34,94 +40,116 @@ import uk.ac.stfc.isis.ibex.configserver.configuration.Configuration;
  */
 public class DuplicateChecker {
 
-    private EditableConfiguration config;
-    private EditableComponents components;
-    private Map<String, String> allCurrentBlocks;
+    private Configuration baseConfig;
+    private Collection<Configuration> components;
+    private Map<String, Set<String>> allBlocks;
+
 
     /**
-     * Constructor.
+     * Sets the base configuration to check against.
      * 
-     * @param config The currently edited configuration
+     * @param base The base configuration
      */
-    public DuplicateChecker(EditableConfiguration config) {
-        this.config = config;
-        components = config.getEditableComponents();
-        refreshBlocks();
+    public void setBase(Configuration base) {
+        ConfigServer configServer = Configurations.getInstance().server();
+        this.baseConfig = base;
+        this.components = configServer.componentDetails().getValue();
+        init();
     }
 
-    private void refreshBlocks() {
-        allCurrentBlocks = new HashMap<String, String>();
-        allCurrentBlocks.putAll(getConfigBlocks());
-        allCurrentBlocks.putAll(getComponentBlocks());
+    /** Used for testing.
+     * 
+     * @param base The base configuration
+     * @param components The custom components.
+     */
+    public void setBase(Configuration base, Collection<Configuration> components) {
+        this.baseConfig = base;
+        this.components = components;
+        init();
     }
 
-    private Map<String, String> getConfigBlocks() {
-        Map<String, String> result = new HashMap<String, String>();
-        for (Block block : config.getAvailableBlocks()) {
+    private void init() {
+        allBlocks = new HashMap<String, Set<String>>();
+        addConfigBlocks();
+    }
+
+    private void addConfigBlocks() {
+        allBlocks = new HashMap<String, Set<String>>();
+        for (Block block : baseConfig.getBlocks()) {
             if (!block.hasComponent()) {
-                String name = block.getName();
-                String source = "base configuration";
-                result.put(name, source);
+                String name = block.getName().toUpperCase();
+                Set<String> source = new HashSet<>();
+                source.add("base configuration");
+                allBlocks.put(name, source);
             }
         }
-        return result;
     }
 
-    private Map<String, String> getComponentBlocks() {
-        Map<String, String> result = new HashMap<String, String>();
-        if (components == null) {
-            return result;
+    private void addComponents(Collection<Configuration> components) {
+        for (Configuration comp : components) {
+            addBlocks(comp.getBlocks(), comp.getName());
         }
-        for (Configuration comp : components.getSelected()) {
-            for (Block block : comp.getBlocks()) {
-                result.put(block.getName(), comp.getName());
+    }
+
+    private void addBlocks(Collection<Block> blocks, String compName) {
+        for (Block block : blocks) {
+            String name = block.getName().toUpperCase();
+            if (allBlocks.containsKey(name)) {
+                allBlocks.get(name).add(compName);
+            } else {
+                Set<String> source = new HashSet<>();
+                source.add(compName);
+                allBlocks.put(name, source);
             }
-        }
-        return result;
-    }
-
-    private void addCurrentBlocks(Configuration toAdd) {
-        for (Block block : toAdd.getBlocks()) {
-            allCurrentBlocks.put(block.getName(), toAdd.getName());
         }
     }
 
     /**
-     * Checks for block duplicates in the current configuration for a given set
-     * of components to be added, and returns a map of conflicts for each of
-     * those components.
+     * Checks the validity of the configuration set as base.
      * 
-     * @param toToggle The list of components to be added.
-     * @return A map of conflicts per component (empty if none).
+     * @return The map of duplicate blocks and their sources
      */
-    public Map<String, Map<String, String>> checkBlocks(Collection<Configuration> toToggle) {
-        Map<String, Map<String, String>> allConflicts = new HashMap<String, Map<String, String>>();
-        if (this.config == null) {
-            return allConflicts;
-        }
-
-        refreshBlocks();
-        for (Configuration comp : toToggle) {
-            Map<String, String> conflicts = getBlockConflicts(comp);
-            if (!conflicts.isEmpty()) {
-                allConflicts.put(comp.getName(), conflicts);
-            } else {
-                addCurrentBlocks(comp);
-            }
-        }
-        return allConflicts;
+    public Map<String, Set<String>> checkOnLoad() {
+        init();
+        addComponents(filterNative(components));
+        return getConflicts();
     }
 
-    private Map<String, String> getBlockConflicts(Configuration toCheck) {
-        Map<String, String> conflicts = new HashMap<String, String>();
+    /**
+     * Checks the validity of the configuration set as base after adding a set
+     * of components to it.
+     * 
+     * @param toAdd The components to be added to this config
+     * @return The map of duplicate blocks and their sources
+     */
+    public Map<String, Set<String>> checkOnAdd(Collection<Configuration> toAdd) {
+        init();
+        addComponents(filterNative(components));
+        addComponents(toAdd);
+        return getConflicts();
+    }
 
-        for (Block block : toCheck.getBlocks()) {
-            String duplicate = findDuplicate(block.getName());
-            if (!(duplicate == null)) {
-                conflicts.put(duplicate, allCurrentBlocks.get(duplicate));
+    /**
+     * Checks the validity of a configuration after one of its components has
+     * been edited.
+     * 
+     * @param edited The edited component.
+     * @return The map of duplicate blocks and their sources
+     */
+    public Map<String, Set<String>> checkOnEdit(Configuration edited) {
+        init();
+        addComponents(filterNative(replaceEdited(edited)));
+        return getConflicts();
+    }
+
+    private Map<String, Set<String>> getConflicts() {
+        Map<String, Set<String>> result = new HashMap<String, Set<String>>();
+        for (String key : allBlocks.keySet()) {
+            if (allBlocks.get(key).size() > 1) {
+                result.put(key, allBlocks.get(key));
             }
         }
-        return conflicts;
+        return result;
     }
 
     /**
@@ -132,11 +160,50 @@ public class DuplicateChecker {
      * @return The name of duplicate blocks.
      */
     public String findDuplicate(String name) {
-        for (String key : allCurrentBlocks.keySet()) {
+        addComponents(components);
+        for (String key : allBlocks.keySet()) {
             if (name.equalsIgnoreCase(key)) {
                 return key;
             }
         }
         return null;
+    }
+
+    /**
+     * Filters a list of components to only contain the ones that are part of
+     * the currently set base configuration.
+     * 
+     * @param components The list of all available components
+     * @return The list of currently selected components
+     */
+    private Collection<Configuration> filterNative(Collection<Configuration> components) {
+        Collection<Configuration> filtered = new ArrayList<>();
+        for (Configuration comp : components) {
+            for (ComponentInfo selectedComp : baseConfig.getComponents()) {
+                if (comp.getName().equals(selectedComp.getName())) {
+                    filtered.add(comp);
+                }
+            }
+        }
+        return filtered;
+    }
+
+    /**
+     * Replaces a component in the list of available components with an edited
+     * version.
+     * 
+     * @param edited The edited component to replace
+     * @return The list of all available components updated with the edited component
+     */
+    private Collection<Configuration> replaceEdited(Configuration edited) {
+        Collection<Configuration> result = new ArrayList<Configuration>();
+        for (Configuration comp : components) {
+            if (comp.getName() != edited.getName()) {
+                result.add(comp);
+            } else {
+                result.add(edited);
+            }
+        }
+        return result;
     }
 }
