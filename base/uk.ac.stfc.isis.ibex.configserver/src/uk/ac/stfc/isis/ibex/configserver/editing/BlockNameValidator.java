@@ -23,6 +23,7 @@ import java.util.List;
 
 import uk.ac.stfc.isis.ibex.configserver.BlockRules;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Block;
+import uk.ac.stfc.isis.ibex.configserver.configuration.Configuration;
 
 /**
  * This provides validation for block names. The validation checks for an empty block name, a name that starts with
@@ -45,9 +46,10 @@ public class BlockNameValidator {
 	public static final String FORBIDDEN_NAME_MESSAGE = "Block name cannot be ";
 	private static final String NO_ERROR = "";
 	
-    private final DuplicateChecker duplicateChecker;
-	
 	private String errorMessage;
+	
+    private final EditableConfiguration config;
+    private final Block selectedBlock;
 	
 	/**
 	 * Creates a block name validator for a specific config and block, initialised with no error message.
@@ -57,7 +59,8 @@ public class BlockNameValidator {
 	 */
 	public BlockNameValidator(EditableConfiguration config, Block selectedBlock) {
 		this.errorMessage = NO_ERROR;
-        this.duplicateChecker = new DuplicateChecker(config);
+		this.config = config;
+		this.selectedBlock = selectedBlock;
 	}
 	
 	/**
@@ -118,10 +121,36 @@ public class BlockNameValidator {
 			}
 		}
 		return sb.toString();
-	}
-	
-	private boolean nameIsDuplicated(String text) {
-        boolean duplicate = duplicateChecker.findDuplicate(text) != null;
-        return duplicate;
-	}
+    }
+
+    private boolean nameIsDuplicated(String name) {
+        return nameInBase(name) || nameInComps(name);
+    }
+
+    private boolean nameInBase(String name) {
+        for (EditableBlock block : config.getAvailableBlocks()) {
+            if (isNotSelectedBlock(block) && block.getName().equals(name)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean nameInComps(String name) {
+        if (config.getEditableComponents() == null) {
+            return false;
+        }
+        for (Configuration comp : config.getEditableComponents().getSelected()) {
+            for (Block block : comp.getBlocks()) {
+                if (block.getName().equals(name)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    private boolean isNotSelectedBlock(Block block) {
+        return !block.equals(selectedBlock);
+    }
 }
