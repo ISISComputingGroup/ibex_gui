@@ -116,7 +116,7 @@ public class ComponentEditorPanel extends Composite {
         boolean multi = (conflicts.size() > 1);
         StringBuilder sb = new StringBuilder();
         sb.append(
-                "Cannot add the selected components, as it would result in duplicate block names in this configuration.\n\n"
+                "Cannot add the selected components, as it would result in duplicate blocks in this configuration. "
                         + "Conflicts detected for the following block" + (multi ? "s" : "") + ":\n\n");
 
         for (String block : conflicts.keySet()) {
@@ -127,9 +127,8 @@ public class ComponentEditorPanel extends Composite {
             }
             sb.append("\n");
         }
-        sb.append("Please rename or remove the duplicate blocks before adding "
-                + (multi ? "these components." : "this component."));
+        sb.append("Please rename or remove the duplicate block" + (multi ? "s" : "")
+                + " before adding these components.");
         return sb.toString();
     }
-
 }
