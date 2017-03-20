@@ -1,6 +1,5 @@
-
 /*
- * This file is part of the ISIS IBEX application. Copyright (C) 2012-2016
+ * This file is part of the ISIS IBEX application. Copyright (C) 2012-2017
  * Science & Technology Facilities Council. All rights reserved.
  *
  * This program is distributed in the hope that it will be useful. This program
@@ -17,19 +16,7 @@
  * http://opensource.org/licenses/eclipse-1.0.php
  */
 
-package uk.ac.stfc.isis.ibex.targets;
-
 /**
- * Concrete implementation of the Target class.
+ * Provides the classes that hold the database connection preferences.
  */
-public class ViewTarget extends Target {
-
-    /**
-     * 
-     * @param name - Target name
-     */
-	public ViewTarget(String name) {
-		super(name);
-	}
-
-}
+package uk.ac.stfc.isis.ibex.databases.preferences;

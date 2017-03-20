@@ -1,6 +1,5 @@
-
 /*
- * This file is part of the ISIS IBEX application. Copyright (C) 2012-2016
+ * This file is part of the ISIS IBEX application. Copyright (C) 2012-2017
  * Science & Technology Facilities Council. All rights reserved.
  *
  * This program is distributed in the hope that it will be useful. This program
@@ -17,32 +16,7 @@
  * http://opensource.org/licenses/eclipse-1.0.php
  */
 
-package uk.ac.stfc.isis.ibex.targets;
-
 /**
- * A target customised for displaying OPIs in the view.
+ * Provides the classes used to connect to the alarm server.
  */
-public class OpiTarget extends Target {
-	
-    /**
-     * The OPI name. This is used to look up the OPI from the available list and
-     * is notably different from the 'name' field which is used more as a title.
-     */
-	private final String opiName;
-	
-    /**
-     * @param title - Used as the target's main name
-     * @param opiName - Used to look up the OPI with the corresponding name
-     */
-    public OpiTarget(String title, String opiName) {
-        super(title);
-		this.opiName = opiName;
-	}
-	
-    /**
-     * @return The name of the targeted OPI
-     */
-	public String opiName() {
-		return opiName;
-	}
-}
+package uk.ac.stfc.isis.ibex.alarm;
