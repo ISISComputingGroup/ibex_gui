@@ -30,8 +30,10 @@ import org.junit.Test;
 
 import uk.ac.stfc.isis.ibex.configserver.BlockRules;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Block;
+import uk.ac.stfc.isis.ibex.configserver.configuration.Configuration;
 import uk.ac.stfc.isis.ibex.configserver.editing.BlockNameValidator;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableBlock;
+import uk.ac.stfc.isis.ibex.configserver.editing.EditableComponents;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
 
 @SuppressWarnings("checkstyle:methodname")
@@ -151,5 +153,20 @@ public class BlockNameValidatorTest {
 		
 		// Assert
 		assertEquals(validator.getErrorMessage(), "");
+	}
+
+    @Test
+	public void duplicated_block_name_from_component_is_invalid() {
+        // Arrange
+        Configuration comp = mock(Configuration.class);
+        when(comp.getBlocks()).thenReturn(Arrays.asList(testBlock));
+        EditableComponents editableComp = mock(EditableComponents.class);
+        when(editableComp.getSelected()).thenReturn(Arrays.asList(comp));
+        when(mockConfig.getEditableComponents()).thenReturn(editableComp);
+        
+        // Assert
+        assertFalse(validator.isValidName(VALID_BLOCK_NAME, mockBlockRules));
+        assertEquals(validator.getErrorMessage(), BlockNameValidator.DUPLICATE_GROUP_MESSAGE + ": " + VALID_BLOCK_NAME);
+	    
 	}
 }
