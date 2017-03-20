@@ -23,6 +23,7 @@ package uk.ac.stfc.isis.ibex.ui.configserver.editing.components;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Set;
 
 import org.eclipse.core.databinding.beans.BeanProperties;
 import org.eclipse.core.databinding.observable.list.IObservableList;
@@ -68,21 +69,22 @@ public class ComponentEditorPanel extends Composite {
      * 
      * @param config The configuration
      */
-	public void setConfig(EditableConfiguration config) {
+    public void setConfig(final EditableConfiguration config) {
 
 		components = config.getEditableComponents();
 		IObservableList selected = BeanProperties.list("selected").observe(components);
 		IObservableList unselected = BeanProperties.list("unselected").observe(components);
 		editor.bind(unselected, selected);
 
-        final DuplicateChecker duplicateChecker = new DuplicateChecker(config);
+        final DuplicateChecker duplicateChecker = new DuplicateChecker();
 
 		editor.addSelectionListenerForSelecting(new SelectionAdapter() {
 			@SuppressWarnings("unchecked")
 			@Override
 			public void widgetSelected(SelectionEvent e) {
+                duplicateChecker.setBase(config.asConfiguration());
                 Collection<Configuration> toToggle = editor.unselectedItems();
-                Map<String, Map<String, String>> allConflicts = duplicateChecker.checkBlocks(toToggle);
+                Map<String, Set<String>> allConflicts = duplicateChecker.checkOnAdd(toToggle);
 
                 Iterator<Configuration> iter = toToggle.iterator();
                 while (iter.hasNext()) {
@@ -91,9 +93,10 @@ public class ComponentEditorPanel extends Composite {
                         iter.remove();
                     }
                 }
-                components.toggleSelection(toToggle);
 
-                if (!allConflicts.isEmpty()) {
+                if (allConflicts.isEmpty()) {
+                    components.toggleSelection(toToggle);
+                } else {
                     new MessageDialog(getShell(), "Component in Use", null, buildWarning(allConflicts),
                             MessageDialog.WARNING, new String[] {"Ok"}, 0).open();
                 }
@@ -109,18 +112,18 @@ public class ComponentEditorPanel extends Composite {
 		});
 	}
 
-    private String buildWarning(Map<String, Map<String, String>> conflicts) {
+    private String buildWarning(Map<String, Set<String>> conflicts) {
         boolean multi = (conflicts.size() > 1);
         StringBuilder sb = new StringBuilder();
-        sb.append("The following component" + (multi ? "s" : "") + " contain" + (multi ? "" : "s")
-                + " blocks that conflict with existing blocks in this configuration or its components.\n\n");
+        sb.append(
+                "Cannot add the selected components, as it would result in duplicate block names in this configuration.\n\n"
+                        + "Conflicts detected for the following block" + (multi ? "s" : "") + ":\n\n");
 
-        for (String comp : conflicts.keySet()) {
-            sb.append("Component: " + comp + "\n");
-            Map<String, String> entry = conflicts.get(comp);
-            for (String blockName : entry.keySet()) {
-                sb.append("\u2022 Block with name \"" + blockName + "\" already contained in " + entry.get(blockName)
-                        + "\n");
+        for (String block : conflicts.keySet()) {
+            sb.append("Block \"" + block + "\" contained in:\n");
+            Set<String> sources = conflicts.get(block);
+            for (String source : sources) {
+                sb.append("\u2022 " + source + "\n");
             }
             sb.append("\n");
         }
