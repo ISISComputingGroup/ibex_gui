@@ -160,9 +160,9 @@ elif width > 200:
 widget.setPropertyValue("width", width)
 
 ]]></scriptText>
-          <pv trig="true">$(P)$(J):JW</pv>
-          <pv trig="false">$(P)$(J):MAXE</pv>
-          <pv trig="false">$(P)$(J):MINW</pv>
+          <pv trig="true">$(P)MOT:JAWS$(NUMBER):JW</pv>
+          <pv trig="false">$(P)MOT:JAWS$(NUMBER):MAXE</pv>
+          <pv trig="false">$(P)MOT:JAWS$(NUMBER):MINW</pv>
         </path>
       </scripts>
       <border_alarm_sensitive>false</border_alarm_sensitive>
@@ -240,9 +240,9 @@ widget.setPropertyValue("width", width)
 widget.setPropertyValue("x", TR_X - width)
 
 ]]></scriptText>
-          <pv trig="true">$(P)$(J):JE</pv>
-          <pv trig="false">$(P)$(J):MAXE</pv>
-          <pv trig="true">$(P)$(J):MINW</pv>
+          <pv trig="true">$(P)MOT:JAWS$(NUMBER):JE</pv>
+          <pv trig="false">$(P)MOT:JAWS$(NUMBER):MAXE</pv>
+          <pv trig="true">$(P)MOT:JAWS$(NUMBER):MINW</pv>
         </path>
       </scripts>
       <border_alarm_sensitive>false</border_alarm_sensitive>
@@ -320,9 +320,9 @@ elif height > 200:
 widget.setPropertyValue("height", height)
 
 ]]></scriptText>
-          <pv trig="true">$(P)$(J):JN</pv>
-          <pv trig="false">$(P)$(J):MAXN</pv>
-          <pv trig="false">$(P)$(J):MINS</pv>
+          <pv trig="true">$(P)MOT:JAWS$(NUMBER):JN</pv>
+          <pv trig="false">$(P)MOT:JAWS$(NUMBER):MAXN</pv>
+          <pv trig="false">$(P)MOT:JAWS$(NUMBER):MINS</pv>
         </path>
       </scripts>
       <border_alarm_sensitive>false</border_alarm_sensitive>
@@ -400,9 +400,9 @@ widget.setPropertyValue("height", height)
 widget.setPropertyValue("y", BL_Y - height)
 
 ]]></scriptText>
-          <pv trig="true">$(P)$(J):JS</pv>
-          <pv trig="false">$(P)$(J):MAXN</pv>
-          <pv trig="true">$(P)$(J):MINS</pv>
+          <pv trig="true">$(P)MOT:JAWS$(NUMBER):JS</pv>
+          <pv trig="false">$(P)MOT:JAWS$(NUMBER):MAXN</pv>
+          <pv trig="true">$(P)MOT:JAWS$(NUMBER):MINS</pv>
         </path>
       </scripts>
       <border_alarm_sensitive>false</border_alarm_sensitive>
@@ -460,7 +460,7 @@ $(pv_value)</tooltip>
       <multiline_input>false</multiline_input>
       <border_width>1</border_width>
       <visible>true</visible>
-      <pv_name></pv_name>
+      <pv_name>$(P)MOT:JAWS$(NUMBER):JW:SP</pv_name>
       <selector_type>0</selector_type>
       <border_color>
         <color name="ISIS_Border" red="0" green="0" blue="0" />
@@ -516,7 +516,7 @@ $(pv_value)</tooltip>
       <multiline_input>false</multiline_input>
       <border_width>1</border_width>
       <visible>true</visible>
-      <pv_name></pv_name>
+      <pv_name>$(P)MOT:JAWS$(NUMBER):JE:SP</pv_name>
       <selector_type>0</selector_type>
       <border_color>
         <color name="ISIS_Border" red="0" green="0" blue="0" />
@@ -572,7 +572,7 @@ $(pv_value)</tooltip>
       <multiline_input>false</multiline_input>
       <border_width>1</border_width>
       <visible>true</visible>
-      <pv_name></pv_name>
+      <pv_name>$(P)MOT:JAWS$(NUMBER):JS:SP</pv_name>
       <selector_type>0</selector_type>
       <border_color>
         <color name="ISIS_Border" red="0" green="0" blue="0" />
@@ -639,7 +639,7 @@ $(pv_value)</tooltip>
         <keep_wh_ratio>false</keep_wh_ratio>
       </scale_options>
       <visible>true</visible>
-      <pv_name></pv_name>
+      <pv_name>$(P)MOT:JAWS$(NUMBER):JE</pv_name>
       <vertical_alignment>1</vertical_alignment>
       <border_color>
         <color name="ISIS_Border" red="0" green="0" blue="0" />
@@ -690,7 +690,7 @@ $(pv_value)</tooltip>
         <keep_wh_ratio>false</keep_wh_ratio>
       </scale_options>
       <visible>true</visible>
-      <pv_name></pv_name>
+      <pv_name>$(P)MOT:JAWS$(NUMBER):JW</pv_name>
       <vertical_alignment>1</vertical_alignment>
       <border_color>
         <color name="ISIS_Border" red="0" green="0" blue="0" />
@@ -741,7 +741,7 @@ $(pv_value)</tooltip>
         <keep_wh_ratio>false</keep_wh_ratio>
       </scale_options>
       <visible>true</visible>
-      <pv_name></pv_name>
+      <pv_name>$(P)MOT:JAWS$(NUMBER):JS</pv_name>
       <vertical_alignment>1</vertical_alignment>
       <border_color>
         <color name="ISIS_Border" red="0" green="0" blue="0" />
@@ -874,7 +874,7 @@ $(pv_value)</tooltip>
         <keep_wh_ratio>false</keep_wh_ratio>
       </scale_options>
       <visible>true</visible>
-      <pv_name></pv_name>
+      <pv_name>$(P)MOT:JAWS$(NUMBER):VGAP</pv_name>
       <vertical_alignment>1</vertical_alignment>
       <border_color>
         <color name="ISIS_Border" red="0" green="0" blue="0" />
@@ -966,7 +966,7 @@ $(pv_value)</tooltip>
         <keep_wh_ratio>false</keep_wh_ratio>
       </scale_options>
       <visible>true</visible>
-      <pv_name></pv_name>
+      <pv_name>$(P)MOT:JAWS$(NUMBER):VCENT</pv_name>
       <vertical_alignment>1</vertical_alignment>
       <border_color>
         <color name="ISIS_Border" red="0" green="0" blue="0" />
@@ -1006,7 +1006,7 @@ $(pv_value)</tooltip>
       <multiline_input>false</multiline_input>
       <border_width>1</border_width>
       <visible>true</visible>
-      <pv_name></pv_name>
+      <pv_name>$(P)MOT:JAWS$(NUMBER):VGAP:SP</pv_name>
       <selector_type>0</selector_type>
       <border_color>
         <color name="ISIS_Border" red="0" green="0" blue="0" />
@@ -1062,7 +1062,7 @@ $(pv_value)</tooltip>
       <multiline_input>false</multiline_input>
       <border_width>1</border_width>
       <visible>true</visible>
-      <pv_name></pv_name>
+      <pv_name>$(P)MOT:JAWS$(NUMBER):VCENT:SP</pv_name>
       <selector_type>0</selector_type>
       <border_color>
         <color name="ISIS_Border" red="0" green="0" blue="0" />
@@ -1134,7 +1134,7 @@ $(pv_value)</tooltip>
       <width>67</width>
       <x>267</x>
       <name>Label_2</name>
-      <y>122</y>
+      <y>137</y>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </foreground_color>
@@ -1170,7 +1170,7 @@ $(pv_value)</tooltip>
         <keep_wh_ratio>false</keep_wh_ratio>
       </scale_options>
       <visible>true</visible>
-      <pv_name></pv_name>
+      <pv_name>$(P)MOT:JAWS$(NUMBER):HGAP</pv_name>
       <vertical_alignment>1</vertical_alignment>
       <border_color>
         <color name="ISIS_Border" red="0" green="0" blue="0" />
@@ -1186,7 +1186,7 @@ $(pv_value)</tooltip>
       <width>64</width>
       <x>347</x>
       <name>Text Update_1</name>
-      <y>147</y>
+      <y>162</y>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </foreground_color>
@@ -1221,7 +1221,7 @@ $(pv_value)</tooltip>
         <keep_wh_ratio>false</keep_wh_ratio>
       </scale_options>
       <visible>true</visible>
-      <pv_name></pv_name>
+      <pv_name>$(P)MOT:JAWS$(NUMBER):HCENT</pv_name>
       <vertical_alignment>1</vertical_alignment>
       <border_color>
         <color name="ISIS_Border" red="0" green="0" blue="0" />
@@ -1237,7 +1237,7 @@ $(pv_value)</tooltip>
       <width>59</width>
       <x>410</x>
       <name>Text Update_6</name>
-      <y>147</y>
+      <y>162</y>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </foreground_color>
@@ -1261,7 +1261,7 @@ $(pv_value)</tooltip>
       <multiline_input>false</multiline_input>
       <border_width>1</border_width>
       <visible>true</visible>
-      <pv_name></pv_name>
+      <pv_name>$(P)MOT:JAWS$(NUMBER):HGAP:SP</pv_name>
       <selector_type>0</selector_type>
       <border_color>
         <color name="ISIS_Border" red="0" green="0" blue="0" />
@@ -1292,7 +1292,7 @@ $(pv_value)</tooltip>
       </background_color>
       <width>57</width>
       <x>347</x>
-      <y>122</y>
+      <y>137</y>
       <maximum>1.7976931348623157E308</maximum>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
@@ -1317,7 +1317,7 @@ $(pv_value)</tooltip>
       <multiline_input>false</multiline_input>
       <border_width>1</border_width>
       <visible>true</visible>
-      <pv_name></pv_name>
+      <pv_name>$(P)MOT:JAWS$(NUMBER):HCENT:SP</pv_name>
       <selector_type>0</selector_type>
       <border_color>
         <color name="ISIS_Border" red="0" green="0" blue="0" />
@@ -1348,7 +1348,7 @@ $(pv_value)</tooltip>
       </background_color>
       <width>57</width>
       <x>408</x>
-      <y>122</y>
+      <y>137</y>
       <maximum>1.7976931348623157E308</maximum>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
@@ -1356,86 +1356,6 @@ $(pv_value)</tooltip>
       <minimum>-1.7976931348623157E308</minimum>
       <font>
         <opifont.name fontName="Segoe UI" height="9" style="0">ISIS_Value_NEW</opifont.name>
-      </font>
-    </widget>
-    <widget typeId="org.csstudio.opibuilder.widgets.NativeButton" version="1.0">
-      <toggle_button>false</toggle_button>
-      <border_style>0</border_style>
-      <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
-      <tooltip>$(pv_name)
-$(pv_value)</tooltip>
-      <push_action_index>0</push_action_index>
-      <rules />
-      <enabled>true</enabled>
-      <wuid>4cf9b5a4:15ad74ff055:-6b14</wuid>
-      <pv_value />
-      <text>Set Gap</text>
-      <scripts />
-      <border_alarm_sensitive>false</border_alarm_sensitive>
-      <height>28</height>
-      <border_width>1</border_width>
-      <scale_options>
-        <width_scalable>true</width_scalable>
-        <height_scalable>true</height_scalable>
-        <keep_wh_ratio>false</keep_wh_ratio>
-      </scale_options>
-      <image></image>
-      <visible>true</visible>
-      <pv_name></pv_name>
-      <border_color>
-        <color name="ISIS_Border" red="0" green="0" blue="0" />
-      </border_color>
-      <widget_type>Button</widget_type>
-      <width>62</width>
-      <x>343</x>
-      <name>Button</name>
-      <y>177</y>
-      <foreground_color>
-        <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
-      </foreground_color>
-      <actions hook="false" hook_all="false" />
-      <font>
-        <opifont.name fontName="Segoe UI" height="9" style="0">ISIS_Button_NEW</opifont.name>
-      </font>
-    </widget>
-    <widget typeId="org.csstudio.opibuilder.widgets.NativeButton" version="1.0">
-      <toggle_button>false</toggle_button>
-      <border_style>0</border_style>
-      <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
-      <tooltip>$(pv_name)
-$(pv_value)</tooltip>
-      <push_action_index>0</push_action_index>
-      <rules />
-      <enabled>true</enabled>
-      <wuid>4cf9b5a4:15ad74ff055:-6aed</wuid>
-      <pv_value />
-      <text>Set Centre</text>
-      <scripts />
-      <border_alarm_sensitive>false</border_alarm_sensitive>
-      <height>28</height>
-      <border_width>1</border_width>
-      <scale_options>
-        <width_scalable>true</width_scalable>
-        <height_scalable>true</height_scalable>
-        <keep_wh_ratio>false</keep_wh_ratio>
-      </scale_options>
-      <image></image>
-      <visible>true</visible>
-      <pv_name></pv_name>
-      <border_color>
-        <color name="ISIS_Border" red="0" green="0" blue="0" />
-      </border_color>
-      <widget_type>Button</widget_type>
-      <width>62</width>
-      <x>409</x>
-      <name>Button</name>
-      <y>177</y>
-      <foreground_color>
-        <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
-      </foreground_color>
-      <actions hook="false" hook_all="false" />
-      <font>
-        <opifont.name fontName="Segoe UI" height="9" style="0">ISIS_Button_NEW</opifont.name>
       </font>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.TextInput" version="1.0">
@@ -1453,7 +1373,7 @@ $(pv_value)</tooltip>
       <multiline_input>false</multiline_input>
       <border_width>1</border_width>
       <visible>true</visible>
-      <pv_name></pv_name>
+      <pv_name>$(P)MOT:JAWS$(NUMBER):JN:SP</pv_name>
       <selector_type>0</selector_type>
       <border_color>
         <color name="ISIS_Border" red="0" green="0" blue="0" />
@@ -1520,7 +1440,7 @@ $(pv_value)</tooltip>
         <keep_wh_ratio>false</keep_wh_ratio>
       </scale_options>
       <visible>true</visible>
-      <pv_name></pv_name>
+      <pv_name>$(P)MOT:JAWS$(NUMBER):JN</pv_name>
       <vertical_alignment>1</vertical_alignment>
       <border_color>
         <color name="ISIS_Border" red="0" green="0" blue="0" />
@@ -1545,59 +1465,106 @@ $(pv_value)</tooltip>
         <opifont.name fontName="Segoe UI" height="9" style="0">ISIS_Value_NEW</opifont.name>
       </font>
     </widget>
-    <widget typeId="org.csstudio.opibuilder.widgets.polyline" version="1.0">
+    <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0">
       <border_style>0</border_style>
       <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
-      <line_width>1</line_width>
-      <horizontal_fill>true</horizontal_fill>
+      <precision>0</precision>
       <tooltip>$(pv_name)
 $(pv_value)</tooltip>
-      <arrows>0</arrows>
+      <horizontal_alignment>2</horizontal_alignment>
       <rules />
       <enabled>true</enabled>
-      <wuid>4cf9b5a4:15ad74ff055:-6034</wuid>
-      <transparent>false</transparent>
-      <points>
-        <point x="258" y="216" />
-        <point x="258" y="-1" />
-      </points>
-      <fill_arrow>true</fill_arrow>
+      <wuid>-78ac496e:15aebcd741a:-7d02</wuid>
+      <transparent>true</transparent>
       <pv_value />
-      <alpha>255</alpha>
+      <auto_size>false</auto_size>
+      <text>Readback:</text>
       <rotation_angle>0.0</rotation_angle>
       <scripts />
-      <border_alarm_sensitive>false</border_alarm_sensitive>
-      <height>218</height>
+      <border_alarm_sensitive>true</border_alarm_sensitive>
+      <show_units>true</show_units>
+      <height>20</height>
       <border_width>1</border_width>
       <scale_options>
         <width_scalable>true</width_scalable>
         <height_scalable>true</height_scalable>
-        <keep_wh_ratio>true</keep_wh_ratio>
+        <keep_wh_ratio>false</keep_wh_ratio>
       </scale_options>
       <visible>true</visible>
       <pv_name></pv_name>
+      <vertical_alignment>1</vertical_alignment>
       <border_color>
         <color name="ISIS_Border" red="0" green="0" blue="0" />
       </border_color>
-      <anti_alias>true</anti_alias>
-      <line_style>0</line_style>
-      <arrow_length>20</arrow_length>
-      <widget_type>Polyline</widget_type>
+      <precision_from_pv>true</precision_from_pv>
+      <widget_type>Text Update</widget_type>
       <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+      <wrap_words>false</wrap_words>
+      <format_type>0</format_type>
       <background_color>
-        <color name="ISIS_Border" red="0" green="0" blue="0" />
+        <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
       </background_color>
-      <width>1</width>
-      <x>258</x>
-      <name>Polyline</name>
-      <y>-1</y>
-      <fill_level>0.0</fill_level>
+      <width>64</width>
+      <x>269</x>
+      <name>Text Update_1</name>
+      <y>98</y>
       <foreground_color>
-        <color red="255" green="0" blue="0" />
+        <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </foreground_color>
       <actions hook="false" hook_all="false" />
       <font>
-        <opifont.name fontName="Segoe UI" height="9" style="0">Default</opifont.name>
+        <opifont.name fontName="Segoe UI" height="9" style="0">ISIS_Value_NEW</opifont.name>
+      </font>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0">
+      <border_style>0</border_style>
+      <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+      <precision>0</precision>
+      <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+      <horizontal_alignment>2</horizontal_alignment>
+      <rules />
+      <enabled>true</enabled>
+      <wuid>-78ac496e:15aebcd741a:-7cec</wuid>
+      <transparent>true</transparent>
+      <pv_value />
+      <auto_size>false</auto_size>
+      <text>Readback:</text>
+      <rotation_angle>0.0</rotation_angle>
+      <scripts />
+      <border_alarm_sensitive>true</border_alarm_sensitive>
+      <show_units>true</show_units>
+      <height>20</height>
+      <border_width>1</border_width>
+      <scale_options>
+        <width_scalable>true</width_scalable>
+        <height_scalable>true</height_scalable>
+        <keep_wh_ratio>false</keep_wh_ratio>
+      </scale_options>
+      <visible>true</visible>
+      <pv_name></pv_name>
+      <vertical_alignment>1</vertical_alignment>
+      <border_color>
+        <color name="ISIS_Border" red="0" green="0" blue="0" />
+      </border_color>
+      <precision_from_pv>true</precision_from_pv>
+      <widget_type>Text Update</widget_type>
+      <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+      <wrap_words>false</wrap_words>
+      <format_type>0</format_type>
+      <background_color>
+        <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
+      </background_color>
+      <width>64</width>
+      <x>269</x>
+      <name>Text Update_1</name>
+      <y>162</y>
+      <foreground_color>
+        <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
+      </foreground_color>
+      <actions hook="false" hook_all="false" />
+      <font>
+        <opifont.name fontName="Segoe UI" height="9" style="0">ISIS_Value_NEW</opifont.name>
       </font>
     </widget>
   </widget>
