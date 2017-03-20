@@ -19,16 +19,35 @@
 
 package uk.ac.stfc.isis.ibex.ui.configserver.commands;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
+
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.window.Window;
 
+import uk.ac.stfc.isis.ibex.configserver.configuration.Configuration;
+import uk.ac.stfc.isis.ibex.configserver.editing.DuplicateChecker;
+import uk.ac.stfc.isis.ibex.epics.observing.BaseObserver;
 import uk.ac.stfc.isis.ibex.ui.configserver.dialogs.ConfigSelectionDialog;
 
+/**
+ * Handler for loading configurations.
+ */
 public class LoadConfigHandler extends DisablingConfigHandler<String> {
+
+    private Map<String, Configuration> configs;
 			
+    /**
+     * Instantiates the handler object and adds observers on the values of all
+     * configurations available.
+     */
 	public LoadConfigHandler() {
 		super(SERVER.load());
+        configs = new HashMap<String, Configuration>();
+        addObservers();
 	}	
 	
 	@Override
@@ -36,9 +55,55 @@ public class LoadConfigHandler extends DisablingConfigHandler<String> {
         ConfigSelectionDialog dialog =
                 new ConfigSelectionDialog(shell(), "Load Configuration", SERVER.configsInfo().getValue(), false, false);
 		if (dialog.open() == Window.OK) {
-			configService.write(dialog.selectedConfig());
+            String config = dialog.selectedConfig();
+            Map<String, Set<String>> conflicts = getConflicts(config);
+            if (conflicts.isEmpty()) {
+                configService.write(config);
+            } else {
+                new MessageDialog(shell(), "Conflicts in selected configuration", null, buildWarning(conflicts),
+                        MessageDialog.WARNING, new String[] {"Ok"}, 0).open();
+                execute(event);
+            }
 		}
 		
 		return null;
 	}
+
+    private void addObservers() {
+        for (String name : SERVER.configNames()) {
+            SERVER.config(name).addObserver(new BaseObserver<Configuration>() {
+                @Override
+                public void onValue(Configuration value) {
+                    configs.put(value.getName(), value);
+                }
+            });
+        }
+	}
+
+    private Map<String, Set<String>> getConflicts(String name) {
+        Configuration config = configs.get(name);
+        DuplicateChecker duplicateChecker = new DuplicateChecker();
+        duplicateChecker.setBase(config);
+        return duplicateChecker.checkOnLoad();
+    }
+
+    private String buildWarning(Map<String, Set<String>> conflicts) {
+        boolean multi = (conflicts.size() > 1);
+        StringBuilder sb = new StringBuilder();
+        sb.append("Cannot load the selected configuration as it and its components contains duplicate blocks. "
+                + "Conflicts detected for the following block" + (multi ? "s" : "") + ":\n\n");
+
+        for (String block : conflicts.keySet()) {
+            sb.append("Block \"" + block + "\" contained in:\n");
+            Set<String> sources = conflicts.get(block);
+            for (String source : sources) {
+                sb.append("\u2022 " + source + "\n");
+            }
+            sb.append("\n");
+        }
+        sb.append(
+                "Please rename or remove the duplicate block" + (multi ? "s" : "")
+                        + " before loading this configuration.");
+        return sb.toString();
+    }
 }

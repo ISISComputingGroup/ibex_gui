@@ -116,8 +116,7 @@ public class EditComponentHandler extends DisablingConfigHandler<Configuration> 
     private String buildWarning(Map<String, Set<String>> conflicts) {
         boolean multi = (conflicts.size() > 1);
         StringBuilder sb = new StringBuilder();
-        sb.append(
-                "Cannot save this component as this would result in duplicate blocks in the current configuration. "
+        sb.append("Cannot save this component as it is used in the current configuration and would result in duplicate blocks. "
                         + "Conflicts detected for the following block" + (multi ? "s" : "") + ":\n\n");
 
         for (String block : conflicts.keySet()) {
