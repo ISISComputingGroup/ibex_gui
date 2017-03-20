@@ -23,8 +23,7 @@ package uk.ac.stfc.isis.ibex.nicos;
 
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.assertThat;
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.eq;
+import static org.mockito.Matchers.*;
 import static org.mockito.Mockito.*;
 
 import java.beans.PropertyChangeEvent;
@@ -60,7 +59,7 @@ public class NicosLogInTest {
      */
     private OngoingStubbing<SendMessageDetails> sessionSendMessage() {
 
-        return when(sendReceiveSession.sendMessage(any()));
+        return when(sendReceiveSession.sendMessage(anyString()));
 
     }
 
