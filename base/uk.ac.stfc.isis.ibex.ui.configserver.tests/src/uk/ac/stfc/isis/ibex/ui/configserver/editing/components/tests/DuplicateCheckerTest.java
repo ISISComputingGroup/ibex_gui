@@ -45,14 +45,16 @@ public class DuplicateCheckerTest {
 
     private DuplicateChecker duplicateChecker;
     private Configuration baseConfig;
-    private Collection<Configuration> comps;
+    private Collection<Configuration> allComps;
+    private Collection<Block> configBlocks;
+    private Collection<ComponentInfo> configComps;
 
     private final static String BLOCK_NAME_1 = "BLOCK_1";
     private final static String BLOCK_NAME_2 = "BLOCK_2";
-    private final static String BLOCK_NAME_3 = "BLOCK_3";
 
     private final static String BASE_CONFIG_NAME = "BASE";
-    private final static String COMP_NAME_1 = "COMPONENT";
+    private final static String COMP_NAME_1 = "COMPONENT_1";
+    private final static String COMP_NAME_2 = "COMPONENT_2";
     private final static String COMP_TOADD_NAME_1 = "TEST_COMPONENT_1";
     private final static String COMP_TOADD_NAME_2 = "TEST_COMPONENT_2";
 
@@ -90,7 +92,9 @@ public class DuplicateCheckerTest {
 
     @Before
     public void setUp() {
-        comps = new ArrayList<Configuration>();
+        configBlocks = new ArrayList<Block>();
+        configComps = new ArrayList<ComponentInfo>();
+        allComps = new ArrayList<Configuration>();
 
         duplicateChecker = new DuplicateChecker();
     }
@@ -98,12 +102,10 @@ public class DuplicateCheckerTest {
     @Test
     public void GIVEN_config_blank_WHEN_checking_config_THEN_no_conflicts_returned() {
         // Arrange
-        Collection<Block> configBlocks = new ArrayList<Block>();
-        Collection<ComponentInfo> configComps = new ArrayList<ComponentInfo>();
         baseConfig = mockConfig(BASE_CONFIG_NAME, configBlocks, configComps);
+        duplicateChecker.setBase(baseConfig, allComps);
 
         // Act
-        duplicateChecker.setBase(baseConfig, comps);
         Map<String, Set<String>> result = duplicateChecker.checkOnLoad();
 
         // Assert
@@ -113,12 +115,12 @@ public class DuplicateCheckerTest {
     @Test
     public void GIVEN_config_with_unique_native_blocks_WHEN_checking_config_THEN_no_conflicts_returned() {
         // Arrange
-        Collection<Block> configBlocks = Arrays.asList(block1, block2);
-        Collection<ComponentInfo> configComps = new ArrayList<ComponentInfo>();
+        configBlocks = Arrays.asList(block1, block2);
         baseConfig = mockConfig(BASE_CONFIG_NAME, configBlocks, configComps);
 
+        duplicateChecker.setBase(baseConfig, allComps);
+
         // Act
-        duplicateChecker.setBase(baseConfig, comps);
         Map<String, Set<String>> result = duplicateChecker.checkOnLoad();
 
         // Assert
@@ -128,14 +130,15 @@ public class DuplicateCheckerTest {
     @Test
     public void GIVEN_config_with_duplicate_block_in_component_WHEN_checking_config_THEN_conflict_returned() {
         // Arrange
-        Collection<Block> configBlocks = Arrays.asList(block1);
-        Collection<ComponentInfo> configComps = Arrays.asList(mockCompInfo(COMP_NAME_1));
+        configBlocks = Arrays.asList(block1);
+        configComps = Arrays.asList(mockCompInfo(COMP_NAME_1));
         baseConfig = mockConfig(BASE_CONFIG_NAME, configBlocks, configComps);
 
-        comps.add(mockComp(COMP_NAME_1, Arrays.asList(block1)));
+        allComps.add(mockComp(COMP_NAME_1, Arrays.asList(block1)));
+
+        duplicateChecker.setBase(baseConfig, allComps);
 
         // Act
-        duplicateChecker.setBase(baseConfig, comps);
         Map<String, Set<String>> result = duplicateChecker.checkOnLoad();
 
         // Assert
@@ -146,13 +149,10 @@ public class DuplicateCheckerTest {
     public void
             GIVEN_blank_config_WHEN_adding_another_component_with_unique_block_THEN_no_conflicts_returned() {
         // Arrange
-        Collection<Block> configBlocks = new ArrayList<Block>();
-        Collection<ComponentInfo> configComps = new ArrayList<ComponentInfo>();
         baseConfig = mockConfig(BASE_CONFIG_NAME, configBlocks, configComps);
+        duplicateChecker.setBase(baseConfig, allComps);
 
         // Act
-        duplicateChecker.setBase(baseConfig, comps);
-        
         Collection<Configuration> toAdd = Arrays.asList(mockComp(COMP_TOADD_NAME_1, Arrays.asList(block1)));
         Map<String, Set<String>> result = duplicateChecker.checkOnAdd(toAdd);
 
@@ -164,13 +164,12 @@ public class DuplicateCheckerTest {
     public void
             GIVEN_base_config_contains_block_WHEN_adding_another_component_with_unique_block_THEN_no_conflicts_returned() {
         // Arrange
-        Collection<Block> configBlocks = Arrays.asList(block1);
-        Collection<ComponentInfo> configComps = new ArrayList<ComponentInfo>();
+        configBlocks = Arrays.asList(block1);
         baseConfig = mockConfig(BASE_CONFIG_NAME, configBlocks, configComps);
 
-        // Act
-        duplicateChecker.setBase(baseConfig, comps);
+        duplicateChecker.setBase(baseConfig, allComps);
 
+        // Act
         Collection<Configuration> toAdd = Arrays.asList(mockComp(COMP_TOADD_NAME_1, Arrays.asList(block2)));
         Map<String, Set<String>> result = duplicateChecker.checkOnAdd(toAdd);
 
@@ -182,13 +181,12 @@ public class DuplicateCheckerTest {
     public void
             GIVEN_base_config_contains_block_WHEN_adding_another_component_with_duplicate_block_THEN_conflict_returned() {
         // Arrange
-        Collection<Block> configBlocks = Arrays.asList(block1);
-        Collection<ComponentInfo> configComps = new ArrayList<ComponentInfo>();
+        configBlocks = Arrays.asList(block1);
         baseConfig = mockConfig(BASE_CONFIG_NAME, configBlocks, configComps);
 
-        // Act
-        duplicateChecker.setBase(baseConfig, comps);
+        duplicateChecker.setBase(baseConfig, allComps);
 
+        // Act
         Collection<Configuration> toAdd = Arrays.asList(mockComp(COMP_TOADD_NAME_1, Arrays.asList(block1)));
         Map<String, Set<String>> result = duplicateChecker.checkOnAdd(toAdd);
 
@@ -200,15 +198,14 @@ public class DuplicateCheckerTest {
     public void
             GIVEN_component_in_config_contains_block_WHEN_adding_another_component_with_unique_block_THEN_no_conflicts_returned() {
         // Arrange
-        Collection<Block> configBlocks = new ArrayList<Block>();
-        Collection<ComponentInfo> configComps = Arrays.asList(mockCompInfo(COMP_NAME_1));
+        configComps = Arrays.asList(mockCompInfo(COMP_NAME_1));
         baseConfig = mockConfig(BASE_CONFIG_NAME, configBlocks, configComps);
 
-        comps.add(mockComp(COMP_NAME_1, Arrays.asList(block1)));
+        allComps.add(mockComp(COMP_NAME_1, Arrays.asList(block1)));
+
+        duplicateChecker.setBase(baseConfig, allComps);
 
         // Act
-        duplicateChecker.setBase(baseConfig, comps);
-
         Collection<Configuration> toAdd = Arrays.asList(mockComp(COMP_TOADD_NAME_1, Arrays.asList(block2)));
         Map<String, Set<String>> result = duplicateChecker.checkOnAdd(toAdd);
 
@@ -220,15 +217,14 @@ public class DuplicateCheckerTest {
     public void
             GIVEN_component_in_config_contains_block_WHEN_adding_another_component_with_duplicate_block_THEN_conflict_returned() {
         // Arrange
-        Collection<Block> configBlocks = new ArrayList<Block>();
-        Collection<ComponentInfo> configComps = Arrays.asList(mockCompInfo(COMP_NAME_1));
+        configComps = Arrays.asList(mockCompInfo(COMP_NAME_1));
         baseConfig = mockConfig(BASE_CONFIG_NAME, configBlocks, configComps);
 
-        comps.add(mockComp(COMP_NAME_1, Arrays.asList(block1)));
+        allComps.add(mockComp(COMP_NAME_1, Arrays.asList(block1)));
+
+        duplicateChecker.setBase(baseConfig, allComps);
 
         // Act
-        duplicateChecker.setBase(baseConfig, comps);
-
         Collection<Configuration> toAdd = Arrays.asList(mockComp(COMP_TOADD_NAME_1, Arrays.asList(block1)));
         Map<String, Set<String>> result = duplicateChecker.checkOnAdd(toAdd);
 
@@ -236,4 +232,99 @@ public class DuplicateCheckerTest {
         assertTrue(result.containsKey(BLOCK_NAME_1));
     }
 
+    @Test
+    public void
+            GIVEN_components_to_add_contain_duplicates_between_themselves_WHEN_adding_adding_components_to_config_THEN_conflict_returned() {
+        // Arrange
+        baseConfig = mockConfig(BASE_CONFIG_NAME, configBlocks, configComps);
+        duplicateChecker.setBase(baseConfig, allComps);
+
+        // Act
+        Configuration comp1 = mockComp(COMP_TOADD_NAME_1, Arrays.asList(block1));
+        Configuration comp2 = mockComp(COMP_TOADD_NAME_2, Arrays.asList(block1));
+        Collection<Configuration> toAdd = Arrays.asList(comp1, comp2);
+        Map<String, Set<String>> result = duplicateChecker.checkOnAdd(toAdd);
+
+        // Assert
+        assertTrue(result.containsKey(BLOCK_NAME_1));
+    }
+
+    @Test
+    public void
+            GIVEN_component_in_config_contains_no_duplicate_WHEN_adding_duplicate_to_component_THEN_conflict_returned() {
+        // Arrange
+        configBlocks = Arrays.asList(block1);
+        configComps = Arrays.asList(mockCompInfo(COMP_NAME_1));
+        baseConfig = mockConfig(BASE_CONFIG_NAME, configBlocks, configComps);
+
+        allComps.add(mockComp(COMP_NAME_1, Arrays.asList(block2)));
+
+        duplicateChecker.setBase(baseConfig, allComps);
+
+        // Act
+        Configuration edited = mockComp(COMP_NAME_1, Arrays.asList(block1));
+        Map<String, Set<String>> result = duplicateChecker.checkOnEdit(edited);
+
+        // Assert
+        assertTrue(result.containsKey(BLOCK_NAME_1));
+    }
+
+    @Test
+    public void
+            GIVEN_component_in_config_contains_duplicate_WHEN_duplicate_is_removed_from_component_THEN_no_conflicts_returned() {
+        // Arrange
+        configBlocks = Arrays.asList(block1);
+        configComps = Arrays.asList(mockCompInfo(COMP_NAME_1));
+        baseConfig = mockConfig(BASE_CONFIG_NAME, configBlocks, configComps);
+
+        allComps.add(mockComp(COMP_NAME_1, Arrays.asList(block1)));
+
+        duplicateChecker.setBase(baseConfig, allComps);
+
+        // Act
+        Configuration edited = mockComp(COMP_NAME_1, Arrays.asList(block2));
+        Map<String, Set<String>> result = duplicateChecker.checkOnEdit(edited);
+
+        // Assert
+        assertTrue(result.isEmpty());
+    }
+
+    @Test
+    public void GIVEN_component_not_in_config_WHEN_adding_duplicate_to_component_THEN_no_conflict_returned() {
+        // Arrange
+        configBlocks = Arrays.asList(block1);
+        configComps = Arrays.asList(mockCompInfo(COMP_NAME_1));
+        baseConfig = mockConfig(BASE_CONFIG_NAME, configBlocks, configComps);
+
+        allComps.add(mockComp(COMP_NAME_1, Arrays.asList(block2)));
+
+        duplicateChecker.setBase(baseConfig, allComps);
+
+        // Act
+        Configuration edited = mockComp(COMP_NAME_2, Arrays.asList(block1));
+        Map<String, Set<String>> result = duplicateChecker.checkOnEdit(edited);
+
+        // Assert
+        assertTrue(result.isEmpty());
+    }
+
+    @Test
+    public void
+            GIVEN_component_with_duplicate_in_config_WHEN_duplicate_is_removed_from_other_component_THEN_conflict_remains() {
+        // Arrange
+        configBlocks = Arrays.asList(block1);
+        configComps = Arrays.asList(mockCompInfo(COMP_NAME_1));
+        baseConfig = mockConfig(BASE_CONFIG_NAME, configBlocks, configComps);
+
+        allComps.add(mockComp(COMP_NAME_1, Arrays.asList(block1)));
+
+        duplicateChecker.setBase(baseConfig, allComps);
+
+        // Act
+        Configuration edited = mockComp(COMP_NAME_2, Arrays.asList(block2));
+        Map<String, Set<String>> result = duplicateChecker.checkOnEdit(edited);
+
+        // Assert
+        assertTrue(result.containsKey(BLOCK_NAME_1));
+    }
 }

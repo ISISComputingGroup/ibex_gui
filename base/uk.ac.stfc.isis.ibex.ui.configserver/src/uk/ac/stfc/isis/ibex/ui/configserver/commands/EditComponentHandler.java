@@ -128,7 +128,7 @@ public class EditComponentHandler extends DisablingConfigHandler<Configuration> 
             }
             sb.append("\n");
         }
-        sb.append("Please rename or remove the duplicate blocks before saving this component.");
+        sb.append("Please rename or remove the duplicate block" + (multi ? "s" : "") + " before saving this component.");
         return sb.toString();
     }
 }

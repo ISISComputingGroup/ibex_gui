@@ -44,7 +44,6 @@ public class DuplicateChecker {
     private Collection<Configuration> components;
     private Map<String, Set<String>> allBlocks;
 
-
     /**
      * Sets the base configuration to check against.
      * 
@@ -79,7 +78,7 @@ public class DuplicateChecker {
             if (!block.hasComponent()) {
                 String name = block.getName().toUpperCase();
                 Set<String> source = new HashSet<>();
-                source.add("base configuration");
+                source.add(baseConfig.getName() + " (base configuration)");
                 allBlocks.put(name, source);
             }
         }
@@ -160,7 +159,7 @@ public class DuplicateChecker {
      * @return The name of duplicate blocks.
      */
     public String findDuplicate(String name) {
-        addComponents(components);
+        addComponents(filterNative(components));
         for (String key : allBlocks.keySet()) {
             if (name.equalsIgnoreCase(key)) {
                 return key;
@@ -198,7 +197,7 @@ public class DuplicateChecker {
     private Collection<Configuration> replaceEdited(Configuration edited) {
         Collection<Configuration> result = new ArrayList<Configuration>();
         for (Configuration comp : components) {
-            if (comp.getName() != edited.getName()) {
+            if (!comp.getName().equals(edited.getName())) {
                 result.add(comp);
             } else {
                 result.add(edited);
