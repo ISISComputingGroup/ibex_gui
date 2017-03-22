@@ -83,16 +83,14 @@ public class EnterManagerModeDialog extends TitleAreaDialog {
     @Override
     protected void okPressed() {
 
-        if (!model.isPasswordValid()) {
-            model.setPassword(passwordEntryField.getText());
-        }
-
-        super.okPressed();
+        model.setPassword(passwordEntryField.getText());
 
         if (!model.isPasswordValid()) {
             MessageDialog error = new MessageDialog(this.getShell(), "Error", null, "The password was incorrect.",
                     MessageDialog.ERROR, new String[] { "OK" }, 0);
             error.open();
+        } else {
+            super.okPressed();
         }
     }
 

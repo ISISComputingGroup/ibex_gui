@@ -19,5 +19,6 @@ Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Bundle-ActivationPolicy: lazy
 Import-Package: org.eclipse.core.databinding.beans,
  org.eclipse.jface.databinding.swt,
+ uk.ac.stfc.isis.ibex.epics.switching,
  uk.ac.stfc.isis.ibex.model,
  uk.ac.stfc.isis.ibex.ui.alarm

@@ -30,6 +30,11 @@ import javax.crypto.SecretKey;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
 
+import uk.ac.stfc.isis.ibex.epics.switching.OnInstrumentSwitch;
+import uk.ac.stfc.isis.ibex.epics.switching.WritableFactory;
+import uk.ac.stfc.isis.ibex.epics.writing.Writable;
+import uk.ac.stfc.isis.ibex.instrument.InstrumentUtils;
+import uk.ac.stfc.isis.ibex.instrument.channels.StringChannel;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 
 /**
@@ -40,6 +45,7 @@ public class ManagerModeModel extends ModelObject {
     private static ManagerModeModel instance;
 
     private ManagerModeModel() {
+        setupPV();
     }
 
     /**
@@ -89,6 +95,9 @@ public class ManagerModeModel extends ModelObject {
 
     private boolean passwordValid;
 
+    private WritableFactory writeFactory;
+    private Writable<String> titleSP;
+
     /**
      * Sets the entered password.
      * 
@@ -98,6 +107,7 @@ public class ManagerModeModel extends ModelObject {
     public void setPassword(String password) {
         this.password = password;
         validate();
+        sendToPV();
     }
 
     /**
@@ -156,6 +166,21 @@ public class ManagerModeModel extends ModelObject {
      */
     private String getBase64StringFromByteArray(byte[] input) {
         return new String(Base64.getEncoder().encode(input));
+    }
+
+    private void setupPV() {
+        // TODO: Think carefully about how to handle instrument switching.
+        writeFactory = new WritableFactory(OnInstrumentSwitch.SWITCH);
+        titleSP =
+                writeFactory.getSwitchableWritable(new StringChannel(), InstrumentUtils.addPrefix("CS:MANAGER"));
+    }
+
+    private void sendToPV() {
+        if (isPasswordValid()) {
+            titleSP.write("1");
+        } else {
+            titleSP.write("0");
+        }
     }
 
 }
