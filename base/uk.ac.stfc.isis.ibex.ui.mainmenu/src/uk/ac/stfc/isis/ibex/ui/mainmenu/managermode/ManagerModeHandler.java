@@ -24,6 +24,7 @@ package uk.ac.stfc.isis.ibex.ui.mainmenu.managermode;
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.PlatformUI;
 
@@ -61,7 +62,18 @@ public class ManagerModeHandler extends AbstractHandler {
         Shell shell = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
         ManagerModeModel model = ManagerModeModel.getInstance();
 
-        if (model.isInManagerMode()) {
+        boolean managerMode;
+        try {
+            managerMode = model.isInManagerMode();
+        } catch (IllegalStateException exception) {
+            MessageDialog error = new MessageDialog(shell, "Error", null,
+                    "Manager mode PV not connected yet. Please retry in a few moments.", MessageDialog.ERROR,
+                    new String[] { "OK" }, 0);
+            error.open();
+            return;
+        }
+
+        if (managerMode) {
             (new ExitManagerModeDialog(shell, model)).open();
         } else {
             (new EnterManagerModeDialog(shell, model)).open();

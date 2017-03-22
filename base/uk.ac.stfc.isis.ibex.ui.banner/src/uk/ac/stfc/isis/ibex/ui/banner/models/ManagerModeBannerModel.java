@@ -39,7 +39,7 @@ public class ManagerModeBannerModel extends Closer implements IndicatorModel {
 
     public ManagerModeBannerModel() {
         ManagerModeObservable observable = new ManagerModeObservable();
-        managerModeObserver = registerForClose(new ManagerModeObserver(observable.pv, observable.self) {
+        managerModeObserver = registerForClose(new ManagerModeObserver(observable.observable, observable.self) {
 
             @Override
             protected void setManagerMode(Boolean value) {
