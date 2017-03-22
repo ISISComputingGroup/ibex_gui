@@ -1,7 +1,7 @@
 
 /*
 * This file is part of the ISIS IBEX application.
-* Copyright (C) 2012-2015 Science & Technology Facilities Council.
+* Copyright (C) 2012-2017 Science & Technology Facilities Council.
 * All rights reserved.
 *
 * This program is distributed in the hope that it will be useful.
@@ -47,6 +47,7 @@ import uk.ac.stfc.isis.ibex.model.SetCommand;
 public class ConfigServer extends Closer {
 
 	private final ConfigServerVariables variables;
+    private final ComponentDependenciesModel dependenciesModel;
 	
 	/**
 	 * The default constructor for the ConfigServer.
@@ -54,6 +55,7 @@ public class ConfigServer extends Closer {
 	 */
 	public ConfigServer(ConfigServerVariables variables) {
 		this.variables = variables;
+        this.dependenciesModel = new ComponentDependenciesModel(this);
 	}
 
 	/**
@@ -191,7 +193,19 @@ public class ConfigServer extends Closer {
 	public ForwardingObservable<Configuration> component(String componentName) {
 		return variables.component(componentName);
 	}
-	
+
+    /**
+     * Returns an observable to the list of configurations dependent on a given
+     * component.
+     * 
+     * @param componentName
+     *            the name of the component
+     * @return the {@code Collection<String>} observable object
+     */
+    public ForwardingObservable<Collection<String>> dependencies(String componentName) {
+        return variables.dependencies(componentName);
+    }
+
 	/**
 	 * Returns a writable to set the current configuration on the instrument.<br>
 	 * The writable expects a Configuration  with the name of the configuration to load.
@@ -328,4 +342,11 @@ public class ConfigServer extends Closer {
 	private <T> Writable<T> log(String id, Writable<T> destination) {
         return new LoggingForwardingWritable<>(Configurations.LOG, id, destination, new DoNothingConverter<T>());
 	}
+
+    /**
+     * @return the dependenciesModel
+     */
+    public ComponentDependenciesModel getDependenciesModel() {
+        return dependenciesModel;
+    }
 }
