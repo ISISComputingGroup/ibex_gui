@@ -523,10 +523,8 @@ public class EditDeviceScreensDescriptionViewModel extends ModelObject {
      * Deletes the screens and selects the previous item.
      */
     public void deleteSelectedScreens() {
-        int newIndex = devices.indexOf(selectedScreens.get(0)) - 1;
-        if (newIndex < 0) {
-            newIndex = 0;
-        }
+        // Get the screen before the one selected (or 0 if it's the first)
+        int newIndex = Math.max(devices.indexOf(selectedScreens.get(0)) - 1, 0);
 
         List<DeviceDescriptionWrapper> newList = new ArrayList<>(devices);
         // Delete it
