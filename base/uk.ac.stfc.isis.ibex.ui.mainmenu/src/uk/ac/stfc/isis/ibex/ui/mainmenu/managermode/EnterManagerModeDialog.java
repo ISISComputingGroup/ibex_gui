@@ -21,6 +21,8 @@
  */
 package uk.ac.stfc.isis.ibex.ui.mainmenu.managermode;
 
+import javax.security.auth.login.FailedLoginException;
+
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.dialogs.TitleAreaDialog;
 import org.eclipse.swt.SWT;
@@ -33,6 +35,8 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
+
+import uk.ac.stfc.isis.ibex.managermode.ManagerModeModel;
 
 /**
  *
@@ -83,15 +87,15 @@ public class EnterManagerModeDialog extends TitleAreaDialog {
     @Override
     protected void okPressed() {
 
-        model.setPassword(passwordEntryField.getText());
-
-        if (!model.isPasswordValid()) {
+        try{
+            model.login(passwordEntryField.getText());
+            super.okPressed();
+        } catch (FailedLoginException e) {
             MessageDialog error = new MessageDialog(this.getShell(), "Error", null, "The password was incorrect.",
                     MessageDialog.ERROR, new String[] { "OK" }, 0);
             error.open();
-        } else {
-            super.okPressed();
         }
+
     }
 
     @Override

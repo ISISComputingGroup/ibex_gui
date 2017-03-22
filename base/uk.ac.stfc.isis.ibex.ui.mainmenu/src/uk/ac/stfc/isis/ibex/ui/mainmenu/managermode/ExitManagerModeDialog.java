@@ -32,6 +32,8 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 
+import uk.ac.stfc.isis.ibex.managermode.ManagerModeModel;
+
 /**
  *
  */
@@ -78,7 +80,7 @@ public class ExitManagerModeDialog extends TitleAreaDialog {
 
     @Override
     protected void okPressed() {
-        model.setPassword("");
+        model.logout();
         super.okPressed();
     }
 

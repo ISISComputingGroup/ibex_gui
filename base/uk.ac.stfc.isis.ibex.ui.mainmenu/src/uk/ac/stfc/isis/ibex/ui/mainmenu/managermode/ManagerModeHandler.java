@@ -27,6 +27,8 @@ import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.PlatformUI;
 
+import uk.ac.stfc.isis.ibex.managermode.ManagerModeModel;
+
 /**
  *
  */
@@ -59,7 +61,7 @@ public class ManagerModeHandler extends AbstractHandler {
         Shell shell = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
         ManagerModeModel model = ManagerModeModel.getInstance();
 
-        if (model.isPasswordValid()) {
+        if (model.isInManagerMode()) {
             (new ExitManagerModeDialog(shell, model)).open();
         } else {
             (new EnterManagerModeDialog(shell, model)).open();

@@ -16,8 +16,11 @@ Require-Bundle: org.eclipse.ui,
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Bundle-ActivationPolicy: lazy
 Export-Package: uk.ac.stfc.isis.ibex.ui.banner;uses:="org.eclipse.jface.resource,org.eclipse.ui.plugin,org.osgi.framework",
+ uk.ac.stfc.isis.ibex.ui.banner.indicators,
  uk.ac.stfc.isis.ibex.ui.banner.views;uses:="org.eclipse.ui,org.eclipse.ui.part,org.eclipse.swt.widgets"
 Import-Package: com.google.common.base,
  uk.ac.stfc.isis.ibex.banner.motion,
  uk.ac.stfc.isis.ibex.configserver.configuration,
+ uk.ac.stfc.isis.ibex.epics.switching,
+ uk.ac.stfc.isis.ibex.managermode,
  uk.ac.stfc.isis.ibex.preferences
