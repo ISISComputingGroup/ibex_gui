@@ -174,7 +174,7 @@
 		<module>../uk.ac.stfc.isis.ibex.beamstatus</module>
 		<module>../uk.ac.stfc.isis.ibex.configserver</module>
 		<module>../uk.ac.stfc.isis.ibex.dashboard</module>
-		<module>../uk.ac.stfc.isis.ibex.goniometer</module>
+		
 		<module>../uk.ac.stfc.isis.ibex.dae</module>
 		<module>../uk.ac.stfc.isis.ibex.log</module>
 		<module>../uk.ac.stfc.isis.ibex.logger</module>
@@ -200,7 +200,6 @@
 		<module>../uk.ac.stfc.isis.ibex.ui.configserver</module>
 		<module>../uk.ac.stfc.isis.ibex.ui.ioccontrol</module>
 		<module>../uk.ac.stfc.isis.ibex.ui.beamstatus</module>
-		<module>../uk.ac.stfc.isis.ibex.ui.goniometer</module>
 		<module>../uk.ac.stfc.isis.ibex.users</module>
 		<module>../uk.ac.stfc.isis.ibex.instrument</module>
 		<module>../uk.ac.stfc.isis.ibex.epics</module>

@@ -30,6 +30,9 @@ import org.eclipse.wb.swt.SWTResourceManager;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableIoc;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.CellDecorator;
 
+/**
+ * The cell decorator used to put IOCs into italics if they are not editable.
+ */
 public class IocRowCellDecorator extends CellDecorator<EditableIoc> {
 	
 	private static final Color READONLY_COLOR = ResourceManager.getColor(SWT.COLOR_DARK_GRAY);
@@ -42,6 +45,13 @@ public class IocRowCellDecorator extends CellDecorator<EditableIoc> {
     	}
    	}
 
+    /**
+     * Get whether the specific cell (containing an IOC) is editable.
+     * 
+     * @param cell
+     *            the cell to check.
+     * @return true if is editable.
+     */
 	public boolean isEditable(ViewerCell cell) {
 		return getRow(cell).isEditable();
 	}
