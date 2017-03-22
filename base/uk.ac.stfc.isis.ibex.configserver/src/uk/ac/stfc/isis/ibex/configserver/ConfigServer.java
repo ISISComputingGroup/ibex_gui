@@ -21,13 +21,18 @@ package uk.ac.stfc.isis.ibex.configserver;
 
 import java.util.Collection;
 
+import com.google.common.collect.Lists;
+
 import uk.ac.stfc.isis.ibex.configserver.configuration.ComponentInfo;
 import uk.ac.stfc.isis.ibex.configserver.configuration.ConfigInfo;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Configuration;
 import uk.ac.stfc.isis.ibex.configserver.configuration.PV;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableIoc;
 import uk.ac.stfc.isis.ibex.configserver.internal.FilteredIocs;
+import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
+import uk.ac.stfc.isis.ibex.epics.conversion.Converter;
 import uk.ac.stfc.isis.ibex.epics.conversion.DoNothingConverter;
+import uk.ac.stfc.isis.ibex.epics.observing.ConvertingObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.epics.pv.Closer;
 import uk.ac.stfc.isis.ibex.epics.writing.LoggingForwardingWritable;
@@ -262,10 +267,27 @@ public class ConfigServer extends Closer {
 	 * @return the Collection<{@link EditableIocState}> observable object
 	 */
     public ForwardingObservable<Collection<IocState>> iocStates() {
+
+        // Set up a converter that just generates a new ArrayList
+        Converter<Collection<IocState>, Collection<IocState>> converter =
+                new Converter<Collection<IocState>, Collection<IocState>>() {
+
+                    @Override
+                    public Collection<IocState> convert(Collection<IocState> value) throws ConversionException {
+                        return Lists.newArrayList(value);
+                    }
+                };
+
+        // Use the above converter in a converting observable
+        ConvertingObservable<Collection<IocState>, Collection<IocState>> convertingObservable =
+                new ConvertingObservable<Collection<IocState>, Collection<IocState>>(variables.iocStates, converter);
+
         ForwardingObservable<Collection<IocState>> iocs = 
-                new ForwardingObservable<>(variables.iocStates);
+                new ForwardingObservable<>(convertingObservable);
+
+        FilteredIocs filteredIocs = new FilteredIocs(iocs, variables.protectedIocs);
 		
-		return new ForwardingObservable<>(new FilteredIocs(iocs, variables.protectedIocs));
+        return new ForwardingObservable<>(filteredIocs);
 	}
 	
 	/**
