@@ -113,7 +113,7 @@ public class DeviceScreensDescriptionViewModelTest {
     }
 
     @Test
-    public void constructor_produces_deep_copy_of_description() {
+    public void WHEN_view_model_constructed_THEN_produces_deep_copy_of_description() {
         // The original description is not modified by changes applied via the
         // view model
 
@@ -133,7 +133,7 @@ public class DeviceScreensDescriptionViewModelTest {
     }
 
     @Test
-    public void changing_the_selected_screen_updates_name_key_etc() {
+    public void WHEN_changing_the_selected_screen_THEN_edit_control_contents_changed() {
         // Act
         List<DeviceDescriptionWrapper> first = viewModel.getScreens().subList(1, 2);
         viewModel.setSelectedScreens(first);
@@ -145,7 +145,7 @@ public class DeviceScreensDescriptionViewModelTest {
     }
 
     @Test
-    public void clearing_the_selected_screen_unsets_name_key_etc() {
+    public void WHEN_clearing_the_selected_screen_THEN_edit_control_contents_cleared_to_blank() {
         // Act
         viewModel.setSelectedScreens(null);
 
@@ -156,7 +156,7 @@ public class DeviceScreensDescriptionViewModelTest {
     }
 
     @Test
-    public void setting_multiple_screens_unsets_name_key_etc() {
+    public void WHEN_setting_multiple_screens_THEN_edit_control_contents_cleared_to_blank() {
         // Act
         List<DeviceDescriptionWrapper> screens = viewModel.getScreens().subList(0, 2);
         viewModel.setSelectedScreens(screens);
@@ -168,7 +168,7 @@ public class DeviceScreensDescriptionViewModelTest {
     }
 
     @Test
-    public void setting_multiple_screens_disables_controls() {
+    public void WHEN_setting_multiple_screens_THEN_edit_controls_disabled() {
         // Act
         List<DeviceDescriptionWrapper> screens = viewModel.getScreens().subList(0, 2);
         viewModel.setSelectedScreens(screens);
@@ -178,7 +178,7 @@ public class DeviceScreensDescriptionViewModelTest {
     }
 
     @Test
-    public void setting_multiple_screens_causes_null_target() {
+    public void WHEN_setting_multiple_screens_THEN_target_is_null() {
         // Act
         List<DeviceDescriptionWrapper> screens = viewModel.getScreens().subList(0, 2);
         viewModel.setSelectedScreens(screens);
@@ -188,7 +188,7 @@ public class DeviceScreensDescriptionViewModelTest {
     }
 
     @Test
-    public void setting_singular_screen_sets_target() {
+    public void WHEN_setting_singular_screen_THEN_target_set() {
         // Act
         List<DeviceDescriptionWrapper> first = viewModel.getScreens().subList(0, 1);
         viewModel.setSelectedScreens(first);
@@ -198,7 +198,7 @@ public class DeviceScreensDescriptionViewModelTest {
     }
 
     @Test
-    public void changing_the_name_propagates() {
+    public void WHEN_the_name_is_changed_on_the_control_THEN_name_is_changed_on_the_target() {
         // Act
         viewModel.setTargetScreen(viewModel.getScreens().get(0));
 
@@ -210,7 +210,8 @@ public class DeviceScreensDescriptionViewModelTest {
     }
 
     @Test
-    public void changing_the_key_propagates_and_wipes_stored_properties() {
+    public void
+            WHEN_the_key_is_changed_on_the_control_THEN_key_is_changed_on_the_target_and_blank_properties_returned() {
         // Act
         viewModel.setTargetScreen(viewModel.getScreens().get(0));
         viewModel.setKey(opiName2);
@@ -223,7 +224,7 @@ public class DeviceScreensDescriptionViewModelTest {
     }
 
     @Test
-    public void selecting_property_allows_access_to_value_and_description() {
+    public void WHEN_property_is_selected_THEN_access_to_value_and_description_allowed() {
         // Act
         viewModel.setTargetScreen(viewModel.getScreens().get(0));
         viewModel.setSelectedProperty(0);
@@ -234,7 +235,7 @@ public class DeviceScreensDescriptionViewModelTest {
     }
 
     @Test
-    public void changing_selected_property_value_propagates() {
+    public void WHEN_changing_the_selected_property_on_the_viewmodel_THEN_value_chanegs_on_target() {
         // Act
         viewModel.setTargetScreen(viewModel.getScreens().get(0));
         viewModel.setSelectedProperty(0);
@@ -246,7 +247,7 @@ public class DeviceScreensDescriptionViewModelTest {
     }
 
     @Test
-    public void delete_single_screen_works() {
+    public void GIVEN_single_selected_screen_WHEN_delete_selection_called_THEN_screen_removed() {
         // Arrange
         List<DeviceDescriptionWrapper> firstScreen = viewModel.getScreens().subList(0, 1);
         viewModel.setSelectedScreens(firstScreen);
@@ -259,7 +260,7 @@ public class DeviceScreensDescriptionViewModelTest {
     }
 
     @Test
-    public void delete_all_screens_works() {
+    public void GIVEN_multiple_selected_screens_WHEN_delete_selection_called_THEN_screens_removed() {
         // Arrange
         List<DeviceDescriptionWrapper> screens = viewModel.getScreens().subList(0, 2);
         viewModel.setSelectedScreens(screens);
@@ -272,7 +273,7 @@ public class DeviceScreensDescriptionViewModelTest {
     }
 
     @Test
-    public void delete_all_screens_causes_null_target() {
+    public void GIVEN_all_screens_selected_WHEN_delete_selection_called_THEN_target_is_null() {
         // Arrange
         List<DeviceDescriptionWrapper> screens = viewModel.getScreens().subList(0, 2);
         viewModel.setSelectedScreens(screens);
@@ -287,7 +288,7 @@ public class DeviceScreensDescriptionViewModelTest {
     }
 
     @Test
-    public void add_screen_creates_screen_with_blank_key_and_description() {
+    public void WHEN_screen_added_THEN_new_scree_created_with_blank_key_and_description() {
         // Act
         viewModel.addScreen();
 
