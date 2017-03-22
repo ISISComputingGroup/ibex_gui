@@ -24,6 +24,7 @@ package uk.ac.stfc.isis.ibex.ui.banner.models;
 import org.eclipse.swt.graphics.Color;
 
 import uk.ac.stfc.isis.ibex.epics.pv.Closer;
+import uk.ac.stfc.isis.ibex.managermode.ManagerModeModel;
 import uk.ac.stfc.isis.ibex.managermode.ManagerModeObservable;
 import uk.ac.stfc.isis.ibex.managermode.ManagerModeObserver;
 import uk.ac.stfc.isis.ibex.model.UpdatedValue;
@@ -38,7 +39,7 @@ public class ManagerModeBannerModel extends Closer implements IndicatorModel {
     private ManagerModeObserver managerModeObserver;
 
     public ManagerModeBannerModel() {
-        ManagerModeObservable observable = new ManagerModeObservable();
+        ManagerModeObservable observable = ManagerModeModel.getInstance().getManagerModeObservable();
         managerModeObserver = registerForClose(new ManagerModeObserver(observable.observable, observable.self) {
 
             @Override
