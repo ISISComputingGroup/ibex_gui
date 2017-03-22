@@ -176,14 +176,14 @@ public class EditDeviceScreensDescriptionViewModel extends ModelObject {
         // Update values for associated fields
         if (screens == null || screens.size() > 1) {
             updateName("");
-            updateCurrentKey("");
+            updateKey("");
             setDescription("");
             updatePersistence(false);
             setEnabled(false);
         } else {
             setTargetScreen(screens.get(0));
             updateName(targetScreen.getName());
-            updateCurrentKey(targetScreen.getKey());
+            updateKey(targetScreen.getKey());
             setDescription(targetScreen.getDescription());
             updatePersistence(targetScreen.getPersistent());
             setEnabled(isScreenEnabled(targetScreen.getPersistent()));
@@ -362,7 +362,7 @@ public class EditDeviceScreensDescriptionViewModel extends ModelObject {
      *
      * @return the current key
      */
-    public String getCurrentKey() {
+    public String getKey() {
         return key;
     }
 
@@ -372,9 +372,9 @@ public class EditDeviceScreensDescriptionViewModel extends ModelObject {
      * @param key
      *            the new value to set
      */
-    public void setCurrentKey(String key) {
+    public void setKey(String key) {
         targetScreen.setKey(key);
-        updateCurrentKey(key);
+        updateKey(key);
         setDescription(targetScreen.getDescription());
     }
 
@@ -383,8 +383,8 @@ public class EditDeviceScreensDescriptionViewModel extends ModelObject {
      * 
      * @param newKey the new key
      */
-    private void updateCurrentKey(String newKey) {
-        firePropertyChange("currentKey", key, key = newKey);
+    private void updateKey(String newKey) {
+        firePropertyChange("key", key, key = newKey);
 
         checkScreensValid();
     }

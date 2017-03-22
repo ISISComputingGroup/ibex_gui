@@ -86,7 +86,7 @@ public class TargetNameWidget extends Composite {
         DataBindingContext bindingContext = new DataBindingContext();
 
         bindingContext.bindValue(WidgetProperties.selection().observe(cmboOpiName.getCombo()),
-                BeanProperties.value("currentKey").observe(viewModel));
+                BeanProperties.value("key").observe(viewModel));
 
         bindingContext.bindValue(WidgetProperties.enabled().observe(cmboOpiName.getCombo()),
                 BeanProperties.value("enabled").observe(viewModel));

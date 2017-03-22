@@ -205,7 +205,7 @@ public class TargetPropertiesWidget extends Composite {
         });
 
         // This updates when the OPI changes
-        viewModel.addPropertyChangeListener("currentKey", new PropertyChangeListener() {
+        viewModel.addPropertyChangeListener("key", new PropertyChangeListener() {
             @Override
             public void propertyChange(PropertyChangeEvent evt) {
                 updatePropertyList(viewModel.getTargetScreen());

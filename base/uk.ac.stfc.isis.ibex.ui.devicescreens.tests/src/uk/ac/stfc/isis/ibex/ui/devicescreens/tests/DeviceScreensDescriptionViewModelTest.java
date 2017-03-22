@@ -121,7 +121,7 @@ public class DeviceScreensDescriptionViewModelTest {
         List<DeviceDescriptionWrapper> first = viewModel.getScreens().subList(0, 1);
         viewModel.setSelectedScreens(first);
         viewModel.setName("new name");
-        viewModel.setCurrentKey(opiName2);
+        viewModel.setKey(opiName2);
         viewModel.setSelectedProperty(0);
         viewModel.setSelectedPropertyValue("new value");
 
@@ -140,7 +140,7 @@ public class DeviceScreensDescriptionViewModelTest {
         
         // Assert
         assertEquals(deviceName + "2", viewModel.getName());
-        assertEquals(opiName1, viewModel.getCurrentKey());
+        assertEquals(opiName1, viewModel.getKey());
         assertEquals(opiDescription1, viewModel.getDescription());
     }
 
@@ -151,7 +151,7 @@ public class DeviceScreensDescriptionViewModelTest {
 
         // Assert
         assertEquals("", viewModel.getName());
-        assertEquals("", viewModel.getCurrentKey());
+        assertEquals("", viewModel.getKey());
         assertEquals("", viewModel.getDescription());
     }
 
@@ -163,7 +163,7 @@ public class DeviceScreensDescriptionViewModelTest {
 
         // Assert
         assertEquals("", viewModel.getName());
-        assertEquals("", viewModel.getCurrentKey());
+        assertEquals("", viewModel.getKey());
         assertEquals("", viewModel.getDescription());
     }
 
@@ -213,10 +213,10 @@ public class DeviceScreensDescriptionViewModelTest {
     public void changing_the_key_propagates_and_wipes_stored_properties() {
         // Act
         viewModel.setTargetScreen(viewModel.getScreens().get(0));
-        viewModel.setCurrentKey(opiName2);
+        viewModel.setKey(opiName2);
 
         // Assert
-        assertEquals(opiName2, viewModel.getCurrentKey());
+        assertEquals(opiName2, viewModel.getKey());
         assertEquals(opiDescription2, viewModel.getTargetScreen().getDescription());
         assertEquals("", viewModel.getTargetScreen().getProperties().get(0).getValue());
         assertEquals("", viewModel.getTargetScreen().getProperties().get(1).getValue());
@@ -305,7 +305,7 @@ public class DeviceScreensDescriptionViewModelTest {
 
         // Act
         viewModel.setTargetScreen(viewModel.getScreens().get(0));
-        viewModel.setCurrentKey("");
+        viewModel.setKey("");
 
         // Assert
         verify(displayer, times(0)).setErrorMessage(expectedSource, "");
