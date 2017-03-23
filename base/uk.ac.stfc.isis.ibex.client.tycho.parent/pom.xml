@@ -252,12 +252,8 @@
 		<module>../uk.ac.stfc.isis.ibex.activemq</module>
 		<module>../uk.ac.stfc.isis.ibex.nicos</module>
 		<module>../uk.ac.stfc.isis.ibex.ui.weblinks.tests</module>
-		<module>
-			../../../Eclipse_v4/workspace/uk.ac.stfc.isis.ibex.managermode
-		</module>
-		<module>
-			../../../Eclipse_v4/workspace/uk.ac.stfc.isis.ibex.managermode.tests
-		</module>
+		
+		
 		<module>../uk.ac.stfc.isis.ibex.managermode</module>
 		<module>../uk.ac.stfc.isis.ibex.managermode.tests</module>
 	</modules>
