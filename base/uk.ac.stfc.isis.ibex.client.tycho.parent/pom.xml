@@ -258,6 +258,8 @@
 		<module>
 			../../../Eclipse_v4/workspace/uk.ac.stfc.isis.ibex.managermode.tests
 		</module>
+		<module>../uk.ac.stfc.isis.ibex.managermode</module>
+		<module>../uk.ac.stfc.isis.ibex.managermode.tests</module>
 	</modules>
 </project>
 
