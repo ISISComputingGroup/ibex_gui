@@ -66,10 +66,7 @@ public class ManagerModeHandler extends AbstractHandler {
         try {
             managerMode = model.isInManagerMode();
         } catch (IllegalStateException exception) {
-            MessageDialog error = new MessageDialog(shell, "Error", null,
-                    "Manager mode PV not connected yet. Please retry in a few moments.", MessageDialog.ERROR,
-                    new String[] { "OK" }, 0);
-            error.open();
+            displayError(shell, "Manager mode PV not connected yet. Please retry in a few moments.");
             return;
         }
 
@@ -79,6 +76,12 @@ public class ManagerModeHandler extends AbstractHandler {
             (new EnterManagerModeDialog(shell, model)).open();
         }
 
+    }
+
+    private static void displayError(Shell shell, String message) {
+        MessageDialog error = new MessageDialog(shell, "Error", null,
+                message, MessageDialog.ERROR, new String[] { "OK" }, 0);
+        error.open();
     }
 
 }

@@ -91,9 +91,7 @@ public class EnterManagerModeDialog extends TitleAreaDialog {
             model.login(passwordEntryField.getText());
             super.okPressed();
         } catch (FailedLoginException e) {
-            MessageDialog error = new MessageDialog(this.getShell(), "Error", null, "The password was incorrect.",
-                    MessageDialog.ERROR, new String[] { "OK" }, 0);
-            error.open();
+            displayError(this.getShell(), "The password was incorrect.");
         }
 
     }
@@ -114,6 +112,12 @@ public class EnterManagerModeDialog extends TitleAreaDialog {
         passwordEntryField.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 
         return container;
+    }
+
+    private static void displayError(Shell shell, String message) {
+        MessageDialog error = new MessageDialog(shell, "Error", null,
+                message, MessageDialog.ERROR, new String[] { "OK" }, 0);
+        error.open();
     }
 
 }
