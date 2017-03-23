@@ -1,7 +1,7 @@
 
 /*
 * This file is part of the ISIS IBEX application.
-* Copyright (C) 2012-2015 Science & Technology Facilities Council.
+* Copyright (C) 2012-2017 Science & Technology Facilities Council.
 * All rights reserved.
 *
 * This program is distributed in the hope that it will be useful.
@@ -17,16 +17,15 @@
 * http://opensource.org/licenses/eclipse-1.0.php
 */
 
+
 package uk.ac.stfc.isis.ibex.ui.synoptic;
 
 import java.util.Arrays;
 import java.util.Collection;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Shell;
 
 import uk.ac.stfc.isis.ibex.synoptic.SynopticInfo;
@@ -65,7 +64,7 @@ public class SynopticSelectionDialog extends SelectionDialog {
 	
 	@Override
 	protected void okPressed() {
-		selectedSynoptic = SynopticInfo.search(available, items.getSelection()[0]); 
+        selectedSynoptic = SynopticInfo.search(available, items.getSelection()[0].getText());
 		
 		super.okPressed();
 	}
@@ -75,11 +74,12 @@ public class SynopticSelectionDialog extends SelectionDialog {
 		Label lblSelect = new Label(container, SWT.NONE);
         lblSelect.setText("Select synoptic:");
 		
-		items = new List(container, SWT.BORDER | SWT.V_SCROLL);
-		items.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+        items = createTable(container, SWT.BORDER | SWT.V_SCROLL);
+
 		String[] names = SynopticInfo.names(available).toArray(new String[0]);
 		Arrays.sort(names, String.CASE_INSENSITIVE_ORDER);
-		items.setItems(names);
+
+        setItems(names);
 	}
 	
 }
