@@ -57,7 +57,7 @@ public class ManagerModeBannerModel extends Closer implements IndicatorModel {
             @Override
             protected void setUnknown() {
                 text.setValue("Manager mode: unknown");
-                color.setValue(IndicatorColours.BLACK);
+                color.setValue(IndicatorColours.RED);
             }
         });
     }

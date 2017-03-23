@@ -255,6 +255,9 @@
 		<module>
 			../../../Eclipse_v4/workspace/uk.ac.stfc.isis.ibex.managermode
 		</module>
+		<module>
+			../../../Eclipse_v4/workspace/uk.ac.stfc.isis.ibex.managermode.tests
+		</module>
 	</modules>
 </project>
 

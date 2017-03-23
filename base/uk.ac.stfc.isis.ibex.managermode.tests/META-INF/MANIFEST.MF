@@ -1,0 +1,12 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Tests
+Bundle-SymbolicName: uk.ac.stfc.isis.ibex.managermode.tests
+Bundle-Version: 1.0.0.qualifier
+Import-Package: junit.framework,
+ org.junit;version="4.11.0",
+ org.mockito,
+ org.mockito.stubbing,
+ uk.ac.stfc.isis.ibex.epics.observing,
+ uk.ac.stfc.isis.ibex.epics.writing,
+ uk.ac.stfc.isis.ibex.managermode
