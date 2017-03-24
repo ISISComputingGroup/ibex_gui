@@ -63,12 +63,18 @@ public final class ManagerModeModel extends ModelObject {
 
     private ManagerModeObservable managerModePv;
 
+    /**
+     * Private constructor, use ManagerModeModel.getInstance() instead.
+     */
     private ManagerModeModel() {
         setupPV();
         addObserver();
         passwordHasher = new PasswordHasher();
     }
 
+    /**
+     * Constructor only used for testing.
+     */
     private ManagerModeModel(PasswordHasher hasher, Writable<String> writable,
             ForwardingObservable<Boolean> observable) {
         managerPvWritable = writable;
@@ -94,8 +100,7 @@ public final class ManagerModeModel extends ModelObject {
      */
     public static ManagerModeModel getTestableInstance(PasswordHasher hasher, Writable<String> writable,
             ForwardingObservable<Boolean> observable) {
-        instance = new ManagerModeModel(hasher, writable, observable);
-        return instance;
+        return new ManagerModeModel(hasher, writable, observable);
     }
 
     /**
