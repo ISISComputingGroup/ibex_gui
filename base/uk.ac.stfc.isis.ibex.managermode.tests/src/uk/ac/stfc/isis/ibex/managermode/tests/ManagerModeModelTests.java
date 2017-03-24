@@ -21,11 +21,13 @@
  */
 package uk.ac.stfc.isis.ibex.managermode.tests;
 
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
+
 import javax.security.auth.login.FailedLoginException;
 
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.Matchers;
 import org.mockito.Mockito;
@@ -34,20 +36,12 @@ import uk.ac.stfc.isis.ibex.epics.observing.ClosableObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.epics.writing.Writable;
 import uk.ac.stfc.isis.ibex.managermode.ManagerModeModel;
+import uk.ac.stfc.isis.ibex.managermode.PasswordHasher;
 
 /**
  *
  */
 public class ManagerModeModelTests {
-
-    /*
-     * Tests needing this are ignored by default. If you need to test this in a
-     * development environment then comment out the @ignore annotation on the
-     * tests and insert the production password here.
-     * 
-     * Make sure not to commit those changes to git!
-     */
-    private static final String CORRECT_PASSWORD = "Insert the correct password here";
 
     private ManagerModeModel model;
 
@@ -59,44 +53,31 @@ public class ManagerModeModelTests {
 
     private ForwardingObservable<Boolean> forwardingObservable = new ForwardingObservable<>(mockObservable);
 
+    /**
+     * Always returns true when given any String as a password.
+     */
+    private PasswordHasher correctPasswordHasherMock = Mockito.mock(PasswordHasher.class);
+
+    /**
+     * Always returns false when given any String as a password.
+     */
+    private PasswordHasher incorrectPasswordHasherMock = Mockito.mock(PasswordHasher.class);
+
     @Before
-    public void setUp() {
+    public void setUp() throws InvalidKeySpecException, NoSuchAlgorithmException {
         Mockito.when(mockWritable.canWrite()).thenReturn(true);
         Mockito.when(mockObservable.getValue()).thenReturn(true);
 
-        model = ManagerModeModel.getTestableInstance(mockWritable, forwardingObservable);
-    }
+        Mockito.when(correctPasswordHasherMock.isCorrectPassword(Matchers.anyString())).thenReturn(true);
+        Mockito.when(incorrectPasswordHasherMock.isCorrectPassword(Matchers.anyString())).thenReturn(false);
 
-    @Test
-    public void given_a_blank_password_then_login_fails() {
-
-        // Act
-        try {
-            model.login("");
-            Assert.fail("Didn't throw an exception");
-        } catch (FailedLoginException e) {
-            // Assert: this is the only path that doesn't explicitly fail.
-        } catch (Exception e) {
-            Assert.fail("Threw an unexpected exception: " + e.toString());
-        }
-    }
-
-    @Test
-    public void given_a_null_password_then_login_fails() {
-
-        // Act
-        try {
-            model.login((String) null);
-            Assert.fail("Didn't throw an exception");
-        } catch (FailedLoginException e) {
-            // Assert: this is the only path that doesn't explicitly fail.
-        } catch (Exception e) {
-            Assert.fail("Threw an unexpected exception: " + e.toString());
-        }
     }
 
     @Test
     public void given_an_incorrect_password_then_login_fails() {
+
+        // Arrange
+        model = ManagerModeModel.getTestableInstance(incorrectPasswordHasherMock, mockWritable, forwardingObservable);
 
         // Act
         try {
@@ -109,19 +90,15 @@ public class ManagerModeModelTests {
         }
     }
 
-    /*
-     * Test is ignored by default. If you need to test this in a development
-     * environment then comment out the @ignore annotation and insert the
-     * production password in the constant at the top of the file.
-     * 
-     * Make sure not to commit those changes to git!
-     */
-    @Ignore
     @Test
     public void given_a_correct_password_then_login_doesnt_throw_an_exception() {
+
+        // Arrange
+        model = ManagerModeModel.getTestableInstance(correctPasswordHasherMock, mockWritable, forwardingObservable);
+
         // Act
         try {
-            model.login(CORRECT_PASSWORD);
+            model.login("");
         } catch (FailedLoginException e) {
             Assert.fail("Login didn't succeed: " + e.toString());
         } catch (Exception e) {
@@ -131,28 +108,29 @@ public class ManagerModeModelTests {
         // Assert: passes if no exceptions were thrown.
     }
 
-    /*
-     * Test is ignored by default. If you need to test this in a development
-     * environment then comment out the @ignore annotation and insert the
-     * production password in the constant at the top of the file.
-     * 
-     * Make sure not to commit those changes to git!
-     */
-    @Ignore
     @Test
     public void given_a_correct_password_then_writable_is_updated_with_one() {
+
+        // Arrange
+        model = ManagerModeModel.getTestableInstance(correctPasswordHasherMock, mockWritable, forwardingObservable);
+
         // Act
         try {
-            model.login(CORRECT_PASSWORD);
+            model.login("");
         } catch (FailedLoginException e) {
             Assert.fail("Login didn't succeed: " + e.toString());
         }
 
+        // Assert
         Mockito.verify(mockWritable, Mockito.times(1)).write("1");
     }
 
     @Test
     public void given_a_logout_command_then_the_writable_is_updated_with_zero() {
+
+        // Arrange
+        model = ManagerModeModel.getTestableInstance(correctPasswordHasherMock, mockWritable, forwardingObservable);
+
         // Act
         model.logout();
 
@@ -162,6 +140,10 @@ public class ManagerModeModelTests {
 
     @Test
     public void given_a_failed_login_then_the_writable_is_not_updated() {
+
+        // Arrange
+        model = ManagerModeModel.getTestableInstance(incorrectPasswordHasherMock, mockWritable, forwardingObservable);
+
         // Act
         try {
             model.login("This is definitely not the correct password");

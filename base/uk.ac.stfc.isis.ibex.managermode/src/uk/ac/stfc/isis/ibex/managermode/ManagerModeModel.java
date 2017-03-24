@@ -23,12 +23,7 @@ package uk.ac.stfc.isis.ibex.managermode;
 
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
-import java.util.Base64;
-import java.util.logging.Logger;
 
-import javax.crypto.SecretKey;
-import javax.crypto.SecretKeyFactory;
-import javax.crypto.spec.PBEKeySpec;
 import javax.security.auth.login.FailedLoginException;
 
 import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
@@ -48,32 +43,10 @@ public final class ManagerModeModel extends ModelObject {
     private static ManagerModeModel instance;
 
     /**
-     * Iterations of the PBKDF2WithHmacSHA512 hashing algorithm. This is an
-     * arbitrary "slowdown" factor to harden the hash againt brute force
-     * attacks.
+     * Using PBKDF2WithHmacSHA512 would be ideal, but it's not available in all
+     * java 1.7 environments, so use PBKDF2WithHmacSHA1 instead.
      */
-    private static final int ITERATIONS = 10000;
-
-    /**
-     * The key length used by the PBKDF2WithHmacSHA512 hashing algorithm.
-     */
-    private static final int KEY_LENGTH = 256;
-
-    /**
-     * Salt used by the PBKDF2WithHmacSHA512 hashing algorithm. This should be
-     * constant but random data, which helps against precomputed hash table
-     * attacks.
-     */
-    private static final String SALT =
-            "o0iLqI7Poq8KEWdYmaAS5ZsPRJSrgO27eusvDXZtWpTYnKiRW28Naf97c6KgHUHiHA7HdQ2jjPPEI7By";
-
-    /**
-     * The expected hash if the password is correct.
-     * 
-     * Changing any of iterations, key length or salt will cause this value to
-     * change!
-     */
-    private static final String EXPECTED = "vhvn76Ca6TP+fVCgRqlCgvN9SCoHGdrNwxw/6WU/ks4=";
+    private final PasswordHasher passwordHasher;
 
     /**
      * The password that was entered (as plain text).
@@ -93,11 +66,14 @@ public final class ManagerModeModel extends ModelObject {
     private ManagerModeModel() {
         setupPV();
         addObserver();
+        passwordHasher = new PasswordHasher();
     }
 
-    private ManagerModeModel(Writable<String> writable, ForwardingObservable<Boolean> observable) {
+    private ManagerModeModel(PasswordHasher hasher, Writable<String> writable,
+            ForwardingObservable<Boolean> observable) {
         managerPvWritable = writable;
         managerModePv = new ManagerModeObservable(observable);
+        passwordHasher = hasher;
     }
 
     /**
@@ -116,9 +92,9 @@ public final class ManagerModeModel extends ModelObject {
      * Used in unit tests to make sure there is a consistent start state for all
      * tests.
      */
-    public static ManagerModeModel getTestableInstance(Writable<String> writable,
+    public static ManagerModeModel getTestableInstance(PasswordHasher hasher, Writable<String> writable,
             ForwardingObservable<Boolean> observable) {
-        instance = new ManagerModeModel(writable, observable);
+        instance = new ManagerModeModel(hasher, writable, observable);
         return instance;
     }
 
@@ -133,7 +109,7 @@ public final class ManagerModeModel extends ModelObject {
     public void login(String password) throws FailedLoginException {
         this.password = password;
         validate();
-        sendToPV();
+        updatePV();
     }
 
     /**
@@ -142,62 +118,27 @@ public final class ManagerModeModel extends ModelObject {
     public void logout() {
         this.password = "";
         this.passwordValid = false;
-        sendToPV();
+        updatePV();
     }
 
     /**
-     * Validates the current password against the known password.
+     * Validates the current password against the known password. Throws an
+     * exception if the login was incorrect.
      * 
-     * @return true if the password matches, false otherwise
+     * @throws FailedLoginException
+     *             if the login failed
      */
-    private boolean validate() throws FailedLoginException {
-
-        if (password == null) {
-            throw new FailedLoginException("Login failed. Password was null.");
-        }
-
-        String hashedPassword = getBase64StringFromByteArray(getHashedPassword());
-        if (hashedPassword.equals(EXPECTED)) {
-            passwordValid = true;
-        } else {
-            passwordValid = false;
-            throw new FailedLoginException("Login failed.");
-        }
-        return passwordValid;
-    }
-
-    /**
-     * Hashes the password using the PBKDF2 algorithm.
-     * 
-     * @return the hashed password
-     */
-    private byte[] getHashedPassword() {
-
-        char[] password = this.password.toCharArray();
+    private void validate() throws FailedLoginException {
 
         try {
-            PBEKeySpec keySpecification = new PBEKeySpec(password, SALT.getBytes(), ITERATIONS, KEY_LENGTH);
-            SecretKey key = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA512").generateSecret(keySpecification);
-
-            return key.getEncoded();
-
+            passwordValid = passwordHasher.isCorrectPassword(password);
         } catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
-            Logger.getGlobal().severe("PBKDF2WithHmacSHA512 algorithm not found!");
-            throw new RuntimeException(e);
+            throw new FailedLoginException("Login failed: internal error\n" + e.getMessage());
         }
 
-    }
-
-    /**
-     * Converts an array of bytes to a base64 string. This is useful to get rid
-     * of some of the "nasty" characters that come out of the hashing algorithm.
-     * 
-     * @param input
-     *            an input byte array
-     * @return an output string
-     */
-    private String getBase64StringFromByteArray(byte[] input) {
-        return new String(Base64.getEncoder().encode(input));
+        if (!passwordValid) {
+            throw new FailedLoginException("Login failed: Password was incorrect.");
+        }
     }
 
     private void setupPV() {
@@ -229,7 +170,7 @@ public final class ManagerModeModel extends ModelObject {
         };
     }
 
-    private void sendToPV() {
+    private void updatePV() {
         if (passwordValid) {
             managerPvWritable.write("1");
         } else {

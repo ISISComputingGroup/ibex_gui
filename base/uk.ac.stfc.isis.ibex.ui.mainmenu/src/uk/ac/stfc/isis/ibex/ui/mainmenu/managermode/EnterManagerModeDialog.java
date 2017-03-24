@@ -90,8 +90,8 @@ public class EnterManagerModeDialog extends TitleAreaDialog {
         try{
             model.login(passwordEntryField.getText());
             super.okPressed();
-        } catch (FailedLoginException e) {
-            displayError(this.getShell(), "The password was incorrect.");
+        } catch (FailedLoginException ex) {
+            displayError(this.getShell(), ex.getMessage());
         }
 
     }
