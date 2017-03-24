@@ -51,8 +51,10 @@ public class ManagerModeModelTests {
 
     private ManagerModeModel model;
 
+    @SuppressWarnings("unchecked")
     private Writable<String> mockWritable = Mockito.mock(Writable.class);
 
+    @SuppressWarnings("unchecked")
     private ClosableObservable<Boolean> mockObservable = Mockito.mock(ClosableObservable.class);
 
     private ForwardingObservable<Boolean> forwardingObservable = new ForwardingObservable<>(mockObservable);

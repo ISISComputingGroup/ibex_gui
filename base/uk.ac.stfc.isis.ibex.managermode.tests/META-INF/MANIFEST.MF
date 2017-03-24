@@ -10,3 +10,4 @@ Import-Package: junit.framework,
  uk.ac.stfc.isis.ibex.epics.observing,
  uk.ac.stfc.isis.ibex.epics.writing,
  uk.ac.stfc.isis.ibex.managermode
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
