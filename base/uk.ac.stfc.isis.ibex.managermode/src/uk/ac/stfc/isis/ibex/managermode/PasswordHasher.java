@@ -30,7 +30,8 @@ import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
 
 /**
- *
+ * This class compares a password against a known hash to determine whether they
+ * match.
  */
 public class PasswordHasher {
 
@@ -125,6 +126,18 @@ public class PasswordHasher {
         return getBase64StringFromByteArray(getHashedPassword(password));
     }
 
+    /**
+     * Checks if a given password is correct.
+     * 
+     * @param password
+     *            the password to check
+     * @return true if the password is correct, false otherwise
+     * @throws InvalidKeySpecException
+     *             if the parameters of this class are invalid
+     * @throws NoSuchAlgorithmException
+     *             if there is no implementation of the requested algorithm
+     *             available
+     */
     public boolean isCorrectPassword(String password) throws InvalidKeySpecException, NoSuchAlgorithmException {
         return hash(password).equals(expectedHash);
     }
