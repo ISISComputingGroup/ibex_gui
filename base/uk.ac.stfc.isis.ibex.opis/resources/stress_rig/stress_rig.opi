@@ -430,7 +430,7 @@ $(pv_value)</tooltip>
           <exp bool_exp="pvStr0 != &quot;System OK&quot;">
             <value>ColorFontUtil.getColorFromRGB(255,127,127)</value>
           </exp>
-          <pv trig="true">$(P)STATUS</pv>
+          <pv trig="true">$(PV_ROOT)STATUS:DISP</pv>
         </rule>
       </rules>
       <enabled>true</enabled>
@@ -1036,7 +1036,7 @@ $(pv_value)</tooltip>
         <keep_wh_ratio>false</keep_wh_ratio>
       </scale_options>
       <visible>true</visible>
-      <pv_name></pv_name>
+      <pv_name>$(PV_ROOT)LOG:SCAN:SP</pv_name>
       <vertical_alignment>1</vertical_alignment>
       <format>0</format>
       <border_color>
@@ -1400,7 +1400,7 @@ $(pv_value)</tooltip>
 $(pv_value)</tooltip>
       <horizontal_alignment>1</horizontal_alignment>
       <rules />
-      <enabled>true</enabled>
+      <enabled>false</enabled>
       <wuid>-4305d44c:15ac6d0a5c2:-60a2</wuid>
       <transparent>false</transparent>
       <pv_value />
