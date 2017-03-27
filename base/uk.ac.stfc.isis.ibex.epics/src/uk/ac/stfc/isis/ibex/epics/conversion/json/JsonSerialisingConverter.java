@@ -1,4 +1,3 @@
-
 /*
 * This file is part of the ISIS IBEX application.
 * Copyright (C) 2012-2015 Science & Technology Facilities Council.
@@ -29,7 +28,7 @@ import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
 import uk.ac.stfc.isis.ibex.epics.conversion.Converter;
 
 /**
- * Converter for serialising JSON into an object of type T.
+ * Converter for serialising an object of type T into JSON.
  * 
  * @param <T>
  *            The type to serialise to.
@@ -44,7 +43,7 @@ public class JsonSerialisingConverter<T> extends Converter<T, String> {
 			.setExclusionStrategies(EXCLUDE_PROPERTY_CHANGE_SUPPORT)
 			.create();
 
-	private final Class<T> classOfT;
+    private final Class<? extends T> classOfT;
 
     /**
      * Constructor.
@@ -52,8 +51,8 @@ public class JsonSerialisingConverter<T> extends Converter<T, String> {
      * @param classOfT
      *            the class of T
      */
-	public JsonSerialisingConverter(Class<T> classOfT) {
-		this.classOfT = classOfT;
+    public JsonSerialisingConverter(Class<? extends T> classOfT) {
+        this.classOfT = classOfT;
 	}
 	
 	@Override

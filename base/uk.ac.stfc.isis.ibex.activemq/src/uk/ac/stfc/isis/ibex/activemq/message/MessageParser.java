@@ -28,6 +28,10 @@ import javax.jms.JMSException;
 import javax.jms.MessageConsumer;
 import javax.jms.TextMessage;
 
+import org.apache.logging.log4j.Logger;
+
+import uk.ac.stfc.isis.ibex.logger.IsisLog;
+
 /**
  * This class will listen for incoming active MQ messages, parse them into the
  * specified IMessage and then notify any consumers.
@@ -36,6 +40,8 @@ import javax.jms.TextMessage;
  *            the type to convert the active MQ messages into
  */
 public abstract class MessageParser<T extends IMessage> implements Runnable {
+
+    private static final Logger LOG = IsisLog.getLogger(MessageParser.class);
     private static final int TIMEOUT_50_MS = 50;
     private boolean running = true;
     private Thread thread;
@@ -96,7 +102,10 @@ public abstract class MessageParser<T extends IMessage> implements Runnable {
                 if (jmsConsumer != null) {
                     TextMessage textMessage = (TextMessage) jmsConsumer.receive(TIMEOUT_50_MS);
                     if (textMessage != null) {
-                        T message = parseMessage(textMessage.getText());
+                        LOG.trace("Script server message recieved [id: " + textMessage.getJMSCorrelationID() + "]: "
+                                + textMessage.getText());
+                        T message = parseMessage(
+                                new MessageDetails(textMessage.getText(), textMessage.getJMSCorrelationID()));
                         for (IMessageConsumer<T> c : convertedConsumers) {
                             c.newMessage(message);
                         }
@@ -124,9 +133,9 @@ public abstract class MessageParser<T extends IMessage> implements Runnable {
     /**
      * The method used to convert the ActiveMQ message into an IMessage.
      * 
-     * @param content
-     *            The string to convert into a message.
+     * @param rawMessage
+     *            The active MQ message string to convert into a IMessage.
      * @return The IMessage that has been produced.
      */
-    protected abstract T parseMessage(String content);
+    protected abstract T parseMessage(MessageDetails rawMessage);
 }

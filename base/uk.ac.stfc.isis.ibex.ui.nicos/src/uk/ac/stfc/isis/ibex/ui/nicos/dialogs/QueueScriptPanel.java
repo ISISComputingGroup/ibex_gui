@@ -1,4 +1,3 @@
-
 /*
 * This file is part of the ISIS IBEX application.
 * Copyright (C) 2012-2016 Science & Technology Facilities Council.
@@ -19,26 +18,41 @@
 
 package uk.ac.stfc.isis.ibex.ui.nicos.dialogs;
 
+import org.eclipse.core.databinding.DataBindingContext;
+import org.eclipse.core.databinding.beans.BeanProperties;
+import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
 
-/**
- * The view for the dialog that creates a new script to send to the script server.
- */
-public class CreateScriptPanel extends Composite {
+import uk.ac.stfc.isis.ibex.ui.nicos.models.QueueScriptViewModel;
 
-	/**
-	 * The constructor for this class.
-	 * @param parent The composite that this panel belongs to.
-	 * @param style The SWT style of this panel.
-	 */
-    @SuppressWarnings("unused")
-    public CreateScriptPanel(Composite parent, int style) {
+/**
+ * The view for the dialog that queues a new script to send to the script
+ * server.
+ */
+public class QueueScriptPanel extends Composite {
+
+    /**
+     * The constructor for this class.
+     * 
+     * @param parent
+     *            The composite that this panel belongs to.
+     * @param style
+     *            The SWT style of this panel.
+     * @param model
+     *            the view model for queueing a script
+     */
+    public QueueScriptPanel(Composite parent, int style, QueueScriptViewModel model) {
 		super(parent, style);
 		setLayout(new FillLayout(SWT.HORIZONTAL));
 		
-		StyledText styledText = new StyledText(this, SWT.BORDER);
+        StyledText styledText = new StyledText(this, SWT.BORDER);
+
+        bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(styledText),
+                BeanProperties.value("script").observe(model));
 	}
+    
+    private DataBindingContext bindingContext = new DataBindingContext();
 }

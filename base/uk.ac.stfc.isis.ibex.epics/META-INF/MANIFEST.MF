@@ -18,7 +18,7 @@ Require-Bundle: org.epics.vtype;bundle-version="2.7.1",
  org.eclipse.ui;bundle-version="3.8.2",
  com.google.common;bundle-version="10.0.1",
  uk.ac.stfc.isis.ibex.model;bundle-version="1.0.0",
- com.google.gson
+ com.google.gson;visibility:=reexport
 Export-Package: uk.ac.stfc.isis.ibex.epics.adapters,
  uk.ac.stfc.isis.ibex.epics.conversion,
  uk.ac.stfc.isis.ibex.epics.conversion.json,
