@@ -19,6 +19,8 @@
 
 package uk.ac.stfc.isis.ibex.configserver.displaying;
 
+import org.apache.logging.log4j.Logger;
+
 import com.google.common.base.Strings;
 
 import uk.ac.stfc.isis.ibex.configserver.AlarmState;
@@ -26,6 +28,7 @@ import uk.ac.stfc.isis.ibex.configserver.configuration.Block;
 import uk.ac.stfc.isis.ibex.epics.observing.BaseObserver;
 import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.instrument.Instrument;
+import uk.ac.stfc.isis.ibex.logger.IsisLog;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 
 /**
@@ -37,6 +40,7 @@ import uk.ac.stfc.isis.ibex.model.ModelObject;
  *
  */
 public class DisplayBlock extends ModelObject {
+    private static final Logger LOG = IsisLog.getLogger(DisplayBlock.class);
     private final String blockServerAlias;
     private final Block block;
     private String value;
@@ -99,6 +103,7 @@ public class DisplayBlock extends ModelObject {
 
         @Override
         public void onConnectionStatus(boolean isConnected) {
+            LOG.info("Ticket2162: " + blockServerAlias() + " - DisplayBlock connection " + isConnected);
             setDisconnected(!isConnected);
             if (!isConnected) {
                 setValue("disconnected");

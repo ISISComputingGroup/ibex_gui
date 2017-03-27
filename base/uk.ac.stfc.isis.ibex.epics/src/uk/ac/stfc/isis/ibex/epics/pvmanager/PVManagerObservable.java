@@ -22,6 +22,7 @@ package uk.ac.stfc.isis.ibex.epics.pvmanager;
 import static org.epics.pvmanager.ExpressionLanguage.channel;
 import static org.epics.util.time.TimeDuration.ofHertz;
 
+import org.apache.logging.log4j.Logger;
 import org.epics.pvmanager.PVManager;
 import org.epics.pvmanager.PVReader;
 import org.epics.pvmanager.PVReaderEvent;
@@ -30,6 +31,7 @@ import org.epics.vtype.VType;
 
 import uk.ac.stfc.isis.ibex.epics.pv.ObservablePV;
 import uk.ac.stfc.isis.ibex.epics.pv.PVInfo;
+import uk.ac.stfc.isis.ibex.logger.IsisLog;
 
 /**
  * A class for observing a PV via PVManager.
@@ -37,6 +39,8 @@ import uk.ac.stfc.isis.ibex.epics.pv.PVInfo;
  * @param <R> the PV type (must be a VType)
  */
 public class PVManagerObservable<R extends VType> extends ObservablePV<R> {
+
+    private static final Logger LOG = IsisLog.getLogger(PVManagerObservable.class);
 
     private static final int UPDATE_FREQUENCY = 10;
 
@@ -50,24 +54,34 @@ public class PVManagerObservable<R extends VType> extends ObservablePV<R> {
 		public void pvChanged(PVReaderEvent<R> evt) {
 			boolean isConnected = pv.isConnected();
 			if (evt.isConnectionChanged()) {
+                LOG.info("Ticket2162: " + pvaddress + " - PVManagerObservable connection " + isConnected);
                 setConnectionStatus(isConnected);
 			}
 			
 			if (evt.isExceptionChanged()) {
-				setError(pv.lastException());
+                Exception lastException = pv.lastException();
+                LOG.info("Ticket2162: " + pvaddress + " - PVManagerObservable exception " + lastException);
+                setError(lastException);
 			}
 			
-			if (evt.isValueChanged() && isConnected) {
-				setValue(pv.getValue());
+            if (evt.isValueChanged()) {
+                LOG.info("Ticket2162: " + pvaddress + " - PVManagerObservable valueChange " + isConnected);
+                if (isConnected) {
+                    setValue(pv.getValue());
+                }
             }
 		}
+
     };
+
+    private String pvaddress;
 	
 	public PVManagerObservable(PVInfo<R> info) {
 		super(info);
 		
-		pv = PVManager
-				.read(channel(info.address(), info.type(), Object.class))
+		pvaddress = info.address();
+        pv = PVManager
+				.read(channel(pvaddress, info.type(), Object.class))
 				.readListener(observingListener)
 				.notifyOn(new CurrentThreadExecutor())
                 .maxRate(ofHertz(UPDATE_FREQUENCY));

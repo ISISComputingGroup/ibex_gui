@@ -4,7 +4,7 @@ Bundle-Name: Logger
 Bundle-SymbolicName: uk.ac.stfc.isis.ibex.logger;singleton:=true
 Bundle-Version: 1.0.0.qualifier
 Bundle-Activator: uk.ac.stfc.isis.ibex.logger.IsisLog
-Require-Bundle: org.eclipse.ui,
+Require-Bundle: org.eclipse.ui;visibility:=reexport,
  org.eclipse.core.runtime,
  com.google.common
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7

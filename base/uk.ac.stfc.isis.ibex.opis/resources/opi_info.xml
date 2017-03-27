@@ -679,5 +679,43 @@
 				</macros>
 			</value>
 		</entry> 		
+			<entry>
+			<key>General OPI</key>
+			<value>
+				<type>UNCONFIRMED</type>
+				<path>OpenPVs.opi</path>
+				<description>Open random PVs.</description>
+				<macros>
+					<macro>
+						<name>DEVICE</name>
+						<description>The root for the device.</description>
+					</macro>
+					<macro>
+						<name>DEVPV1</name>
+						<description>The first PV on the device.</description>
+					</macro>
+					<macro>
+						<name>DEVPV2</name>
+						<description>The second PV on the device.</description>
+					</macro>
+					<macro>
+						<name>DEVPV3</name>
+						<description>The third PV on the device.</description>
+					</macro>
+					<macro>
+						<name>GENPV1</name>
+						<description>The first general PV.</description>
+					</macro>
+					<macro>
+						<name>GENPV2</name>
+						<description>The second general PV.</description>
+					</macro>
+					<macro>
+						<name>GENPV3</name>
+						<description>The third general PV.</description>
+					</macro>
+				</macros>
+			</value>
+		</entry> 
 	</opis>
 </descriptions>
