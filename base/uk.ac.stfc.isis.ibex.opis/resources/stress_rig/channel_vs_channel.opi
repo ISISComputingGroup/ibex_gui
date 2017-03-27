@@ -153,7 +153,7 @@ $(trace_0_y_pv_value)</tooltip>
       <title></title>
       <trace_0_visible>true</trace_0_visible>
       <show_legend>false</show_legend>
-      <axis_0_axis_title>$(CHAN1)</axis_0_axis_title>
+      <axis_0_axis_title>Channel 2</axis_0_axis_title>
       <axis_0_axis_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </axis_0_axis_color>
@@ -184,22 +184,47 @@ $(trace_0_y_pv_value)</tooltip>
       <axis_0_log_scale>false</axis_0_log_scale>
       <trace_0_x_pv_value />
       <axis_0_auto_scale_threshold>0.0</axis_0_auto_scale_threshold>
-      <rules />
+      <rules>
+        <rule name="Channel1Trace" prop_id="trace_0_y_pv" out_exp="false">
+          <exp bool_exp="pvStr0 == &quot;Position&quot;">
+            <value>$(PV_ROOT)POS</value>
+          </exp>
+          <exp bool_exp="pvStr0 == &quot;Stress&quot;">
+            <value>$(PV_ROOT)STRESS</value>
+          </exp>
+          <exp bool_exp="pvStr0 == &quot;Strain&quot;">
+            <value>$(PV_ROOT)STRAIN</value>
+          </exp>
+          <pv trig="true">loc://_LOCAL:INSTRON_01:CHANNEL1</pv>
+        </rule>
+        <rule name="Channel2Trace" prop_id="trace_0_x_pv" out_exp="false">
+          <exp bool_exp="pvStr0 == &quot;Position&quot;">
+            <value>$(PV_ROOT)POS</value>
+          </exp>
+          <exp bool_exp="pvStr0 == &quot;Stress&quot;">
+            <value>$(PV_ROOT)STRESS</value>
+          </exp>
+          <exp bool_exp="pvStr0 == &quot;Strain&quot;">
+            <value>$(PV_ROOT)STRAIN</value>
+          </exp>
+          <pv trig="true">loc://_LOCAL:INSTRON_01:CHANNEL2</pv>
+        </rule>
+      </rules>
       <axis_1_visible>true</axis_1_visible>
       <trace_0_update_delay>100</trace_0_update_delay>
       <pv_name></pv_name>
       <name></name>
       <axis_0_auto_scale>true</axis_0_auto_scale>
       <axis_0_minimum>0.0</axis_0_minimum>
-      <axis_1_axis_title>$(CHAN2)</axis_1_axis_title>
+      <axis_1_axis_title>Channel 1</axis_1_axis_title>
       <axis_1_auto_scale>true</axis_1_auto_scale>
       <border_color>
         <color name="ISIS_Border" red="0" green="0" blue="0" />
       </border_color>
-      <trace_0_y_pv>sim://noise</trace_0_y_pv>
+      <trace_0_y_pv></trace_0_y_pv>
       <trace_0_plot_mode>0</trace_0_plot_mode>
       <enabled>true</enabled>
-      <trace_0_x_pv>sim://noise</trace_0_x_pv>
+      <trace_0_x_pv></trace_0_x_pv>
       <axis_1_scale_font>
         <opifont.name fontName="Segoe UI" height="9" style="0">ISIS_GraphScale_NEW</opifont.name>
       </axis_1_scale_font>
@@ -339,7 +364,7 @@ $(pv_value)</tooltip>
       </scale_options>
       <items_from_pv>false</items_from_pv>
       <visible>true</visible>
-      <pv_name></pv_name>
+      <pv_name>loc://_LOCAL:INSTRON_01:CHANNEL1</pv_name>
       <border_color>
         <color name="ISIS_Border" red="0" green="0" blue="0" />
       </border_color>
@@ -385,7 +410,7 @@ $(pv_value)</tooltip>
       </scale_options>
       <items_from_pv>false</items_from_pv>
       <visible>true</visible>
-      <pv_name></pv_name>
+      <pv_name>loc://_LOCAL:INSTRON_01:CHANNEL2</pv_name>
       <border_color>
         <color name="ISIS_Border" red="0" green="0" blue="0" />
       </border_color>

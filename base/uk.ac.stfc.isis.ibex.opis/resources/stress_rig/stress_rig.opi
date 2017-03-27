@@ -444,10 +444,11 @@ $(pv_value)</tooltip>
       <scripts>
         <path pathString="EmbeddedPy" checkConnect="true" sfe="false" seoe="false">
           <scriptName>ConvertToString</scriptName>
-          <scriptText><![CDATA[from org.csstudio.opibuilder.scriptUtil import PVUtil
-var pvStr0 = PVUtil.getString(pvs[0])
-widget.setPropertyValue("text",str(pvStr0))
-]]></scriptText>
+          <scriptText><![CDATA[from org.csstudio.opibuilder.scriptUtil import PVUtil;
+
+var string_input = PVUtil.getString(pvs[0]);
+
+widget.setPropertyValue("text",str(string_input));]]></scriptText>
           <pv trig="true">$(PV_ROOT)STATUS:DISP</pv>
         </path>
       </scripts>
