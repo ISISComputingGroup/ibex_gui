@@ -306,7 +306,7 @@ $(pv_value)</tooltip>
       </scale_options>
       <image></image>
       <visible>true</visible>
-      <pv_name></pv_name>
+      <pv_name>$(PV_ROOT)PANIC:SP</pv_name>
       <border_color>
         <color name="ISIS_Red" red="255" green="0" blue="0" />
       </border_color>
@@ -319,10 +319,15 @@ $(pv_value)</tooltip>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </foreground_color>
       <actions hook="false" hook_all="false">
-        <action type="WRITE_PV">
-          <pv_name>$(PV_ROOT)PANIC:SP</pv_name>
-          <value>1</value>
-          <timeout>10</timeout>
+        <action type="EXECUTE_PYTHONSCRIPT">
+          <path></path>
+          <scriptText><![CDATA[from org.csstudio.opibuilder.scriptUtil import PVUtil
+
+pv = widget.getPV(); 
+value0 = PVUtil.getDouble(pv)
+
+pv.setValue(1)]]></scriptText>
+          <embedded>true</embedded>
           <description></description>
         </action>
       </actions>
@@ -353,7 +358,7 @@ $(pv_value)</tooltip>
       </scale_options>
       <image></image>
       <visible>true</visible>
-      <pv_name></pv_name>
+      <pv_name>$(PV_ROOT)STOP</pv_name>
       <border_color>
         <color name="ISIS_Shutter_Moving" red="255" green="150" blue="0" />
       </border_color>
@@ -366,10 +371,16 @@ $(pv_value)</tooltip>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </foreground_color>
       <actions hook="false" hook_all="false">
-        <action type="WRITE_PV">
-          <pv_name>$(PV_ROOT)STOP</pv_name>
-          <value>1</value>
-          <timeout>10</timeout>
+        <action type="EXECUTE_PYTHONSCRIPT">
+          <path></path>
+          <scriptText><![CDATA[from org.csstudio.opibuilder.scriptUtil import PVUtil
+
+pv = widget.getPV(); 
+value0 = PVUtil.getDouble(pv)
+
+pv.setValue(1)
+]]></scriptText>
+          <embedded>true</embedded>
           <description></description>
         </action>
       </actions>
@@ -776,7 +787,7 @@ $(pv_value)</tooltip>
       </scale_options>
       <image></image>
       <visible>true</visible>
-      <pv_name></pv_name>
+      <pv_name>$(PV_ROOT)CLEAR_GRAPHS</pv_name>
       <border_color>
         <color name="ISIS_Border" red="0" green="0" blue="0" />
       </border_color>
@@ -789,10 +800,16 @@ $(pv_value)</tooltip>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </foreground_color>
       <actions hook="false" hook_all="false">
-        <action type="WRITE_PV">
-          <pv_name>$(PV_ROOT)CLEAR_GRAPHS</pv_name>
-          <value>1</value>
-          <timeout>10</timeout>
+        <action type="EXECUTE_PYTHONSCRIPT">
+          <path></path>
+          <scriptText><![CDATA[from org.csstudio.opibuilder.scriptUtil import PVUtil
+
+pv = widget.getPV(); 
+value0 = PVUtil.getDouble(pv)
+
+pv.setValue(1)
+]]></scriptText>
+          <embedded>true</embedded>
           <description></description>
         </action>
       </actions>
@@ -1433,7 +1450,7 @@ $(pv_value)</tooltip>
       </scale_options>
       <image></image>
       <visible>true</visible>
-      <pv_name></pv_name>
+      <pv_name>$(PV_ROOT)$(STRESS_CHAN)AREA:SP:CALC</pv_name>
       <border_color>
         <color name="ISIS_Border" red="0" green="0" blue="0" />
       </border_color>
@@ -1446,10 +1463,16 @@ $(pv_value)</tooltip>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </foreground_color>
       <actions hook="false" hook_all="false">
-        <action type="WRITE_PV">
-          <pv_name>$(PV_ROOT)$(STRESS_CHAN)AREA:SP:CALC</pv_name>
-          <value>1</value>
-          <timeout>10</timeout>
+        <action type="EXECUTE_PYTHONSCRIPT">
+          <path></path>
+          <scriptText><![CDATA[from org.csstudio.opibuilder.scriptUtil import PVUtil
+
+pv = widget.getPV(); 
+value0 = PVUtil.getDouble(pv)
+
+pv.setValue(1)
+]]></scriptText>
+          <embedded>true</embedded>
           <description></description>
         </action>
       </actions>
@@ -1480,7 +1503,7 @@ $(pv_value)</tooltip>
       </scale_options>
       <image></image>
       <visible>true</visible>
-      <pv_name></pv_name>
+      <pv_name>$(PV_ROOT)$(STRESS_CHAN):AREA:SP:SET</pv_name>
       <border_color>
         <color name="ISIS_Border" red="0" green="0" blue="0" />
       </border_color>
@@ -1493,10 +1516,15 @@ $(pv_value)</tooltip>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </foreground_color>
       <actions hook="false" hook_all="false">
-        <action type="WRITE_PV">
-          <pv_name>$(PV_ROOT)$(STRESS_CHAN):AREA:SP:SET</pv_name>
-          <value>1</value>
-          <timeout>10</timeout>
+        <action type="EXECUTE_PYTHONSCRIPT">
+          <path></path>
+          <scriptText><![CDATA[from org.csstudio.opibuilder.scriptUtil import PVUtil
+
+pv = widget.getPV(); 
+value0 = PVUtil.getDouble(pv)
+
+pv.setValue(1)]]></scriptText>
+          <embedded>true</embedded>
           <description></description>
         </action>
       </actions>
@@ -1781,7 +1809,7 @@ $(pv_value)</tooltip>
       </scale_options>
       <image></image>
       <visible>true</visible>
-      <pv_name></pv_name>
+      <pv_name>$(PV_ROOT)WAVE:START</pv_name>
       <border_color>
         <color name="ISIS_Border" red="0" green="0" blue="0" />
       </border_color>
@@ -1794,10 +1822,16 @@ $(pv_value)</tooltip>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </foreground_color>
       <actions hook="false" hook_all="false">
-        <action type="WRITE_PV">
-          <pv_name>$(PV_ROOT)WAVE:START</pv_name>
-          <value>1</value>
-          <timeout>10</timeout>
+        <action type="EXECUTE_PYTHONSCRIPT">
+          <path></path>
+          <scriptText><![CDATA[from org.csstudio.opibuilder.scriptUtil import PVUtil
+
+pv = widget.getPV(); 
+value0 = PVUtil.getDouble(pv)
+
+pv.setValue(1)
+]]></scriptText>
+          <embedded>true</embedded>
           <description></description>
         </action>
       </actions>
@@ -1828,7 +1862,7 @@ $(pv_value)</tooltip>
       </scale_options>
       <image></image>
       <visible>true</visible>
-      <pv_name></pv_name>
+      <pv_name>$(PV_ROOT)WAVE:STOP</pv_name>
       <border_color>
         <color name="ISIS_Border" red="0" green="0" blue="0" />
       </border_color>
@@ -1841,10 +1875,17 @@ $(pv_value)</tooltip>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </foreground_color>
       <actions hook="false" hook_all="false">
-        <action type="WRITE_PV">
-          <pv_name>$(PV_ROOT)WAVE:STOP</pv_name>
-          <value>1</value>
-          <timeout>10</timeout>
+        <action type="EXECUTE_PYTHONSCRIPT">
+          <path></path>
+          <scriptText><![CDATA[from org.csstudio.opibuilder.scriptUtil import PVUtil
+
+pv = widget.getPV(); 
+value0 = PVUtil.getDouble(pv)
+
+pv.setValue(1)
+
+]]></scriptText>
+          <embedded>true</embedded>
           <description></description>
         </action>
       </actions>
