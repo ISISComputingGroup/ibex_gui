@@ -80,6 +80,7 @@ public class ReceiveSession extends ModelObject {
         });
 
         connection.addPropertyChangeListener("connection", passThrough());
+        connection.addPropertyChangeListener("connectionError", passThrough());
     }
 
     /**
@@ -135,6 +136,7 @@ public class ReceiveSession extends ModelObject {
      *             Thrown if the connection cannot be made.
      */
     protected void throwingConnect() throws JMSException {
+
         session = connection.getConnection().createSession(false, Session.AUTO_ACKNOWLEDGE);
 
         for (Map.Entry<String, MessageParser> e : messageParsers.entrySet()) {
@@ -172,4 +174,17 @@ public class ReceiveSession extends ModelObject {
     public boolean isConnected() {
         return connection.isConnected();
     }
+
+    /**
+     * Gets the connection error from the connection.
+     *
+     * @return the connection error or blank if no error or connection
+     */
+    public String getConnectionError() {
+        if (this.connection == null) {
+            return "";
+        }
+        return this.connection.getConnectionError();
+    }
+
 }

@@ -1,7 +1,7 @@
 
 /*
 * This file is part of the ISIS IBEX application.
-* Copyright (C) 2012-2015 Science & Technology Facilities Council.
+* Copyright (C) 2012-2017 Science & Technology Facilities Council.
 * All rights reserved.
 *
 * This program is distributed in the hope that it will be useful.
@@ -22,6 +22,7 @@ package uk.ac.stfc.isis.ibex.configserver;
 import java.util.Collection;
 import java.util.Locale;
 import java.util.NoSuchElementException;
+import java.util.logging.Logger;
 
 import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
@@ -53,7 +54,7 @@ import uk.ac.stfc.isis.ibex.validators.BlockServerNameValidator;
  * BlockServer.
  */
 public class ConfigServerVariables extends Closer {
-	private final BlockServerAddresses blockServerAddresses = new BlockServerAddresses();
+	private final BlockServerAddresses blockServerAddresses;
 	private final Converters converters;
 	private ObservableFactory switchingObsFactory = new ObservableFactory(OnInstrumentSwitch.SWITCH);
     private final WritableFactory switchingWriteFactory = new WritableFactory(OnInstrumentSwitch.SWITCH);
@@ -116,15 +117,27 @@ public class ConfigServerVariables extends Closer {
 	public final ForwardingObservable<Collection<String>> protectedIocs;
     /** Provides the description for the spangle banner. */
 	public final ForwardingObservable<Collection<BannerItem>> bannerDescription;
-	
+
     /**
-     * Set the configuration server variables from the block server using the
-     * converters.
+     * Default Constructor.
      * 
      * @param converters converters to use to convert values from block server
      *            to class instances for variables
      */
     public ConfigServerVariables(Converters converters) {
+        this(new BlockServerAddresses(), converters);
+    }
+
+    /**
+     * Set the configuration server variables from the block server using the
+     * converters.
+     * 
+     * @param addresses The BlockServerAddresses to use for PV lookup
+     * @param converters converters to use to convert values from block server
+     *            to class instances for variables
+     */
+    public ConfigServerVariables(BlockServerAddresses addresses, Converters converters) {
+        blockServerAddresses = addresses;
 		this.converters = converters;
 		
         serverStatus = InstrumentUtils.convert(readCompressed(blockServerAddresses.serverStatus()),
@@ -211,11 +224,24 @@ public class ConfigServerVariables extends Closer {
                 readCompressedClosing(blockServerAddresses.component(getComponentPV(componentName))),
                 converters.toConfig());
 	}
-	
+
+    /**
+     * Provides a monitor on the list of configurations dependent on the specified component.
+     * 
+     * @param componentName
+     *            the component name
+     * @return the corresponding observable
+     */
+    public ForwardingObservable<Collection<String>> dependencies(String componentName) {
+        return InstrumentUtils.convert(readCompressed(blockServerAddresses.componentDependencies(componentName)),
+                converters.toNames());
+    }
+
     /**
      * Provides a monitor on a specified block.
      * 
-     * @param blockName the block name
+     * @param blockName
+     *            the block name
      * @return the corresponding observable
      */
 	public ForwardingObservable<String> blockValue(String blockName) {
@@ -272,6 +298,9 @@ public class ConfigServerVariables extends Closer {
      * @return the new observable
      */
 	private ForwardingObservable<String> readCompressed(String address) {
+        if (address.contains("BLOCKSERVER:IOCS")) {
+            Logger.getGlobal().info("(Ticket 2161) Reading from " + address);
+        }
         return switchingObsFactory.getSwitchableObservable(new CompressedCharWaveformChannel(),
                 InstrumentUtils.addPrefix(address));
 	}
