@@ -19,7 +19,12 @@
 
 package uk.ac.stfc.isis.ibex.ui.alarm;
 
+import org.csstudio.alarm.beast.ui.alarmtree.Activator;
 import org.csstudio.alarm.beast.ui.alarmtree.AlarmTreeView;
+import org.csstudio.alarm.beast.ui.alarmtree.Messages;
+import org.eclipse.jface.action.Action;
+import org.eclipse.jface.action.IToolBarManager;
+import org.eclipse.swt.widgets.Composite;
 
 
 /**
@@ -41,4 +46,28 @@ public class AlarmView extends AlarmTreeView {
 	public void setFocus() {
 		// Set the focus
 	}
+
+    @Override
+    public void createPartControl(final Composite parent) {
+        super.createPartControl(parent);
+
+        IToolBarManager toolbar = getViewSite().getActionBars().getToolBarManager();
+        toolbar.add(new RefreshAction());
+    }
+
+    private class RefreshAction extends Action {
+
+        public RefreshAction() {
+            super("Refreshes the view");
+            setImageDescriptor(Activator.getImageDescriptor("icons/only_alarms.gif")); //$NON-NLS-1$
+            setToolTipText(Messages.OnlyAlarmsTT);
+        }
+
+        /** {@inheritDoc} */
+        @Override
+        public void run() {
+            // Refresh the model in this method!
+            System.out.println("The button was pressed.");
+        }
+    }
 }

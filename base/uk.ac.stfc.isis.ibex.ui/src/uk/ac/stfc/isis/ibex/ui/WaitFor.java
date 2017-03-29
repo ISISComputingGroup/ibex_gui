@@ -80,7 +80,7 @@ public class WaitFor {
 	private void stopWait() {
 		if (dialog != null) {
 			dialog.close();
-		}		
+        }
 	}
 	
 	// Must call from the UI thread.

@@ -63,7 +63,6 @@ public class Alarm extends Plugin implements InstrumentInfoReceiver {
 	}
 
     /**
-    /**
      * The default constructor for this singleton, sets up the backend model and
      * counter to monitor the alarms.
      */
@@ -71,6 +70,20 @@ public class Alarm extends Plugin implements InstrumentInfoReceiver {
 		super();
 		instance = this;
         setupAlarmModel();
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while (true) {
+                    try {
+                        Thread.sleep(10 * 1000);
+                        alarmModel.readConfig(null);
+                    } catch (Exception e) {
+                        break;
+                    }
+                }
+            }
+        }).start();
 
     }
 
