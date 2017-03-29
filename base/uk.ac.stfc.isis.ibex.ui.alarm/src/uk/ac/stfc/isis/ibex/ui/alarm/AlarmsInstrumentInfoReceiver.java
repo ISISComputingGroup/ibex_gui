@@ -84,7 +84,7 @@ public class AlarmsInstrumentInfoReceiver implements InstrumentInfoReceiver {
      */
     @Override
     public void postSetInstrument(InstrumentInfo instrument) {
-        // Must be run on the GUI thread as it won't close the perspective if
+        // Must be run on the GUI thread as it won't reopen the perspective if
         // called from a non-GUI thread.
         Display.getDefault().asyncExec(new Runnable() {
             @Override
