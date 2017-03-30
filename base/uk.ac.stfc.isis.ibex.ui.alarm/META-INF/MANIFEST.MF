@@ -11,7 +11,8 @@ Require-Bundle: org.eclipse.ui,
  uk.ac.stfc.isis.ibex.instrument,
  org.csstudio.alarm.beast.ui;bundle-version="3.2.0",
  org.csstudio.alarm.beast;bundle-version="3.2.3",
- uk.ac.stfc.isis.ibex.logger;bundle-version="1.0.0"
+ uk.ac.stfc.isis.ibex.logger;bundle-version="1.0.0",
+ uk.ac.stfc.isis.ibex.alarm
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Export-Package: uk.ac.stfc.isis.ibex.ui.alarm

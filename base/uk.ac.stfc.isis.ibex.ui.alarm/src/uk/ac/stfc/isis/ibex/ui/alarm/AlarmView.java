@@ -19,6 +19,7 @@
 
 package uk.ac.stfc.isis.ibex.ui.alarm;
 
+import org.apache.logging.log4j.Logger;
 import org.csstudio.alarm.beast.ui.alarmtree.AlarmTreeView;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IToolBarManager;
@@ -26,11 +27,16 @@ import org.eclipse.jface.action.Separator;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 
+import uk.ac.stfc.isis.ibex.alarm.Alarm;
+import uk.ac.stfc.isis.ibex.logger.IsisLog;
+
 
 /**
  * The Class AlarmView which is the view which contains the alarm tree.
  */
 public class AlarmView extends AlarmTreeView {
+
+    private static final Logger LOG = IsisLog.getLogger(AlarmView.class);
 
     /**
      * Class ID.
@@ -73,8 +79,8 @@ public class AlarmView extends AlarmTreeView {
          */
         @Override
         public void run() {
-            // Refresh the model in this method!
-            System.out.println("The button was pressed.");
+            LOG.info("Manual reload of alarms view triggered.");
+            Alarm.getInstance().reload();
         }
 
     }
