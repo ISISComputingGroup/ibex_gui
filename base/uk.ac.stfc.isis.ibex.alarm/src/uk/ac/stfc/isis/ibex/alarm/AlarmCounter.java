@@ -91,12 +91,19 @@ public class AlarmCounter extends ModelObject {
      * @param newCount the new count
      */
     private void fireCountChanged(final int prevCount, final int newCount) {
+
+        if (prevCount == newCount) {
+            return;
+        }
+
 		Display.getDefault().asyncExec(new Runnable() {  
 			@Override
             public void run() {
                 firePropertyChange("alarmCount", prevCount, newCount);
             }
 		});
+
+        AlarmViewReloadManager.queueDelayedUpdate();
 	}
 
 	/**
@@ -105,6 +112,33 @@ public class AlarmCounter extends ModelObject {
 	public int getCount() {
 		return count;
 	}
+
+    private static class AlarmViewReloadManager {
+        private static Thread thread;
+
+        private static void queueDelayedUpdate() {
+            if (thread != null && thread.isAlive()) {
+                thread.interrupt();
+            }
+
+            thread = new Thread(reloadRunnable);
+
+            thread.start();
+        }
+
+        private static final Runnable reloadRunnable = new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Thread.sleep(1000 * 30);
+                } catch (InterruptedException e) {
+                    return;
+                }
+                Alarm.getInstance().reload();
+            }
+        };
+
+    }
 
 
 }
