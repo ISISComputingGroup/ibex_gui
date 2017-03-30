@@ -71,7 +71,7 @@ public class Alarm extends Plugin implements InstrumentInfoReceiver {
 		instance = this;
         setupAlarmModel();
 
-        new Thread(new Runnable() {
+        Thread t = new Thread(new Runnable() {
             @Override
             public void run() {
                 while (true) {
@@ -83,7 +83,9 @@ public class Alarm extends Plugin implements InstrumentInfoReceiver {
                     }
                 }
             }
-        }).start();
+        });
+
+        // t.start();
 
     }
 

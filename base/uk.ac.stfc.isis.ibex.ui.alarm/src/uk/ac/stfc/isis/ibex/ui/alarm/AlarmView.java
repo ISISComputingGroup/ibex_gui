@@ -19,12 +19,12 @@
 
 package uk.ac.stfc.isis.ibex.ui.alarm;
 
-import org.csstudio.alarm.beast.ui.alarmtree.Activator;
 import org.csstudio.alarm.beast.ui.alarmtree.AlarmTreeView;
-import org.csstudio.alarm.beast.ui.alarmtree.Messages;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IToolBarManager;
+import org.eclipse.jface.action.Separator;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.ui.plugin.AbstractUIPlugin;
 
 
 /**
@@ -32,8 +32,13 @@ import org.eclipse.swt.widgets.Composite;
  */
 public class AlarmView extends AlarmTreeView {
 
-	public static final String ID = "uk.ac.stfc.isis.ibex.ui.test.views.TestView"; //$NON-NLS-1$
+    /**
+     * Class ID.
+     */
+    public static final String ID = "uk.ac.stfc.isis.ibex.ui.alarm"; //$NON-NLS-1$
 
+    private static final String REFRESH_BUTTON_TOOLTIP_TEXT = "Refresh this view";
+    private static final String REFRESH_ICON_LOCATION = "icons/refresh.png";
 	
     /**
      * Instantiates a new alarm view.
@@ -44,7 +49,7 @@ public class AlarmView extends AlarmTreeView {
 
 	@Override
 	public void setFocus() {
-		// Set the focus
+        // Do nothing.
 	}
 
     @Override
@@ -52,22 +57,25 @@ public class AlarmView extends AlarmTreeView {
         super.createPartControl(parent);
 
         IToolBarManager toolbar = getViewSite().getActionBars().getToolBarManager();
+        toolbar.add(new Separator());
         toolbar.add(new RefreshAction());
     }
 
     private class RefreshAction extends Action {
 
-        public RefreshAction() {
-            super("Refreshes the view");
-            setImageDescriptor(Activator.getImageDescriptor("icons/only_alarms.gif")); //$NON-NLS-1$
-            setToolTipText(Messages.OnlyAlarmsTT);
+        RefreshAction() {
+            setImageDescriptor(AbstractUIPlugin.imageDescriptorFromPlugin(ID, REFRESH_ICON_LOCATION)); // $NON-NLS-1$
+            setToolTipText(REFRESH_BUTTON_TOOLTIP_TEXT);
         }
 
-        /** {@inheritDoc} */
+        /**
+         * Called when the refresh button was pressed.
+         */
         @Override
         public void run() {
             // Refresh the model in this method!
             System.out.println("The button was pressed.");
         }
+
     }
 }
