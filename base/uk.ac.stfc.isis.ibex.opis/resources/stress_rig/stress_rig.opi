@@ -2358,14 +2358,14 @@ $(pv_value)</tooltip>
 $(pv_value)</tooltip>
       <push_action_index>0</push_action_index>
       <rules>
-        <rule name="Rule" prop_id="visible" out_exp="false">
+        <rule name="Rule" prop_id="enabled" out_exp="false">
           <exp bool_exp="pvStr0 == &quot;Position&quot;">
             <value>true</value>
           </exp>
           <pv trig="true">$(PV_ROOT)CHANNEL</pv>
         </rule>
       </rules>
-      <enabled>true</enabled>
+      <enabled>false</enabled>
       <wuid>-664b748d:15b244bd81b:-7c30</wuid>
       <pv_value />
       <text>Go</text>
@@ -2379,7 +2379,7 @@ $(pv_value)</tooltip>
         <keep_wh_ratio>false</keep_wh_ratio>
       </scale_options>
       <image></image>
-      <visible>false</visible>
+      <visible>true</visible>
       <pv_name>$(PV_ROOT)MOVE:GO:SP</pv_name>
       <border_color>
         <color name="ISIS_Border" red="0" green="0" blue="0" />
@@ -2864,14 +2864,14 @@ $(pv_value)</tooltip>
 $(pv_value)</tooltip>
       <push_action_index>0</push_action_index>
       <rules>
-        <rule name="Rule" prop_id="visible" out_exp="false">
+        <rule name="Rule" prop_id="enabled" out_exp="false">
           <exp bool_exp="pvStr0 == &quot;Stress&quot;">
             <value>true</value>
           </exp>
           <pv trig="true">$(PV_ROOT)CHANNEL</pv>
         </rule>
       </rules>
-      <enabled>true</enabled>
+      <enabled>false</enabled>
       <wuid>-664b748d:15b244bd81b:-7c37</wuid>
       <pv_value />
       <text>Go</text>
@@ -2885,7 +2885,7 @@ $(pv_value)</tooltip>
         <keep_wh_ratio>false</keep_wh_ratio>
       </scale_options>
       <image></image>
-      <visible>false</visible>
+      <visible>true</visible>
       <pv_name>$(PV_ROOT)MOVE:GO:SP</pv_name>
       <border_color>
         <color name="ISIS_Border" red="0" green="0" blue="0" />
@@ -3370,14 +3370,14 @@ $(pv_value)</tooltip>
 $(pv_value)</tooltip>
       <push_action_index>0</push_action_index>
       <rules>
-        <rule name="Rule" prop_id="visible" out_exp="false">
+        <rule name="Rule" prop_id="enabled" out_exp="false">
           <exp bool_exp="pvStr0 == &quot;Strain&quot;">
             <value>true</value>
           </exp>
           <pv trig="true">$(PV_ROOT)CHANNEL</pv>
         </rule>
       </rules>
-      <enabled>true</enabled>
+      <enabled>false</enabled>
       <wuid>-664b748d:15b244bd81b:-7c5e</wuid>
       <pv_value />
       <text>Go</text>
@@ -3391,7 +3391,7 @@ $(pv_value)</tooltip>
         <keep_wh_ratio>false</keep_wh_ratio>
       </scale_options>
       <image></image>
-      <visible>false</visible>
+      <visible>true</visible>
       <pv_name>$(PV_ROOT)MOVE:GO:SP</pv_name>
       <border_color>
         <color name="ISIS_Border" red="0" green="0" blue="0" />
