@@ -75,22 +75,6 @@ public class Alarm extends Plugin implements InstrumentInfoReceiver {
 		instance = this;
         setupAlarmModel();
 
-        Thread t = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                while (true) {
-                    try {
-                        Thread.sleep(10 * 1000);
-                        alarmModel.readConfig(null);
-                    } catch (Exception e) {
-                        break;
-                    }
-                }
-            }
-        });
-
-        // t.start();
-
     }
 
     /**
