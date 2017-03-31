@@ -33,6 +33,7 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.PlatformUI;
 
+import uk.ac.stfc.isis.ibex.alarm.AlarmReloadManager;
 import uk.ac.stfc.isis.ibex.ui.dialogs.WaitForDialog;
 
 public class WaitFor {
@@ -81,6 +82,7 @@ public class WaitFor {
 		if (dialog != null) {
 			dialog.close();
         }
+        AlarmReloadManager.getInstance().queueDelayedUpdate();
 	}
 	
 	// Must call from the UI thread.
