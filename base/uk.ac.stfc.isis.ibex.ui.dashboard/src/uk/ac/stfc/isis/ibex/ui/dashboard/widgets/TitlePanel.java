@@ -22,21 +22,37 @@ package uk.ac.stfc.isis.ibex.ui.dashboard.widgets;
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.UpdateValueStrategy;
 import org.eclipse.core.databinding.beans.BeanProperties;
+import org.eclipse.core.databinding.conversion.Converter;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.graphics.Font;
-import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Label;
 
 import uk.ac.stfc.isis.ibex.ui.dashboard.models.TitlePanelModel;
 
+/**
+ * The panel within the dashboard that contains the DAE title and the users.
+ */
 public class TitlePanel extends Composite {
 
 	private final Label title;
 	private final Label users;
 	
+    /**
+     * Default constructor, creates the panel.
+     * 
+     * @param parent
+     *            The composite that this panel is part of.
+     * @param style
+     *            The SWT style of the panel.
+     * @param model
+     *            The viewmodel that this panel is based on.
+     * @param font
+     *            The font for the labels on the panel.
+     */
 	public TitlePanel(Composite parent, int style, TitlePanelModel model, Font font) {
 		super(parent, style);
 		setLayout(new GridLayout(2, false));
@@ -68,11 +84,22 @@ public class TitlePanel extends Composite {
 	}
 
 	private void bind(TitlePanelModel model) {
+        UpdateValueStrategy literalAmpersands =
+                new UpdateValueStrategy().setConverter(new Converter(String.class, String.class) {
+            @Override
+            public Object convert(Object fromObject) {
+                String in = (String) fromObject;
+                return in.replaceAll("&", "&&");
+            }
+        });
+
 		DataBindingContext bindingContext = new DataBindingContext();
-		bindingContext.bindValue(WidgetProperties.text().observe(title), BeanProperties.value("value").observe(model.title()));
-		bindingContext.bindValue(WidgetProperties.tooltipText().observe(title), BeanProperties.value("value").observe(model.title()));
+        bindingContext.bindValue(WidgetProperties.text().observe(title),
+                BeanProperties.value("value").observe(model.title()), null, literalAmpersands);
+        bindingContext.bindValue(WidgetProperties.tooltipText().observe(title),
+                BeanProperties.value("value").observe(model.title()), null, literalAmpersands);
 		
-		UsersConverter deJsoner = new UsersConverter(String.class, String.class);
+        UsersConverter deJsoner = new UsersConverter();
 		bindingContext.bindValue(WidgetProperties.text().observe(users), BeanProperties.value("value").observe(model.users()), null, new UpdateValueStrategy().setConverter(deJsoner));	
 		bindingContext.bindValue(WidgetProperties.tooltipText().observe(users), BeanProperties.value("value").observe(model.users()), null, new UpdateValueStrategy().setConverter(deJsoner));
 	}

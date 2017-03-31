@@ -33,10 +33,14 @@ import com.google.gson.reflect.TypeToken;
  * names.
  */
 public class UsersConverter extends Converter {
-	
-    public UsersConverter(Object fromType, Object toType) {
-		super(fromType, toType);
-	}
+
+    /**
+     * The default constructor for the object, sets the convert to and convert
+     * from types to Strings
+     */
+    public UsersConverter() {
+        super(String.class, String.class);
+    }
 
 	@Override
 	public Object convert(Object arg0) {
@@ -66,7 +70,7 @@ public class UsersConverter extends Converter {
 			}
 		}
 		
-		return raw.trim();
+        return raw.trim().replaceAll("&", "&&");
 	}
 
 }
