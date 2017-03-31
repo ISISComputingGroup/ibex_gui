@@ -30,8 +30,8 @@ import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
+import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
@@ -121,7 +121,6 @@ public class TargetPropertiesWidget extends Composite {
         table.setLinesVisible(true);
         table.setEnabled(false);
 
-
         TableViewerColumn colTesting = new TableViewerColumn(viewer, SWT.NONE);
         colTesting.getColumn().setText("Name");
 
@@ -131,15 +130,10 @@ public class TargetPropertiesWidget extends Composite {
         tableColumnLayout.setColumnData(colTesting.getColumn(), new ColumnWeightData(20, 20, true));
         tableColumnLayout.setColumnData(colTesting2.getColumn(), new ColumnWeightData(40, 20, false));
 
-        table.addSelectionListener(new SelectionListener() {
+        table.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
                 viewModel.setSelectedProperty(table.getSelectionIndex());
-            }
-
-            @Override
-            public void widgetDefaultSelected(SelectionEvent e) {
-                // Can add double click behaviour here...
             }
         });
 
@@ -172,7 +166,7 @@ public class TargetPropertiesWidget extends Composite {
         viewModel.addPropertyChangeListener("screens", new PropertyChangeListener() {
             @Override
             public void propertyChange(PropertyChangeEvent evt) {
-                updatePropertyList(viewModel.getSelectedScreen());
+                updatePropertyList(viewModel.getTargetScreen());
                 table.setSelection(-1);
                 valueText.setEnabled(false);
             }
@@ -182,7 +176,7 @@ public class TargetPropertiesWidget extends Composite {
         viewModel.addPropertyChangeListener("selectedScreen", new PropertyChangeListener() {
             @Override
             public void propertyChange(PropertyChangeEvent evt) {
-                updatePropertyList(viewModel.getSelectedScreen());
+                updatePropertyList(viewModel.getTargetScreen());
                 table.setSelection(-1);
                 valueText.setEnabled(false);
             }
@@ -206,15 +200,15 @@ public class TargetPropertiesWidget extends Composite {
         viewModel.addPropertyChangeListener("selectedPropertyValue", new PropertyChangeListener() {
             @Override
             public void propertyChange(PropertyChangeEvent evt) {
-                updatePropertyList(viewModel.getSelectedScreen());
+                updatePropertyList(viewModel.getTargetScreen());
             }
         });
 
         // This updates when the OPI changes
-        viewModel.addPropertyChangeListener("currentKey", new PropertyChangeListener() {
+        viewModel.addPropertyChangeListener("key", new PropertyChangeListener() {
             @Override
             public void propertyChange(PropertyChangeEvent evt) {
-                updatePropertyList(viewModel.getSelectedScreen());
+                updatePropertyList(viewModel.getTargetScreen());
                 table.setSelection(-1);
                 // Clear the property text and description
                 txtDescription.setText("");
@@ -224,7 +218,7 @@ public class TargetPropertiesWidget extends Composite {
         });
 
         // This updates when the OPI changes
-        viewModel.addPropertyChangeListener("currentEnabled", new PropertyChangeListener() {
+        viewModel.addPropertyChangeListener("enabled", new PropertyChangeListener() {
             @Override
             public void propertyChange(PropertyChangeEvent evt) {
                 currentEnabled = (boolean) evt.getNewValue();
@@ -264,6 +258,7 @@ public class TargetPropertiesWidget extends Composite {
             table.setEnabled(hasProperties);
         } else {
             table.setEnabled(false);
+            table.removeAll();
         }
     }
 
