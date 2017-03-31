@@ -19,11 +19,7 @@
 
 package uk.ac.stfc.isis.ibex.synoptic.tests.model.desc;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotSame;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -118,16 +114,6 @@ public class ComponentDescriptionTest {
         // Assert
         assertSame(source.type(), copied.type());
 
-    }
-
-    @Test
-    public void copied_object_has_type_that_is_not_liked_to_source_object() {
-        // Act
-        ComponentDescription copied = new ComponentDescription(source);
-        copied.setType(ComponentType.GONIOMETER);
-
-        // Assert
-        assertNotSame(source.type(), copied.type());
     }
 
     @Test

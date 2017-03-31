@@ -82,6 +82,11 @@ public abstract class ModelObject implements IModelObject {
     	changeSupport.firePropertyChange(propertyName, oldValue, newValue);
     }     	    
     
+    /**
+     * Pass through change listener. Refires the event from the base value.
+     *
+     * @return the property change listener
+     */
     protected PropertyChangeListener passThrough() {
     	return new PropertyChangeListener() {
 			@Override

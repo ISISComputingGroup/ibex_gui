@@ -127,10 +127,11 @@ public class EditSynopticDialog extends TitleAreaDialog {
 		saveAsBtn.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-                SaveSynopticDialog dlg = new SaveSynopticDialog(null, synopticViewModel.getSynoptic().name(),
+                SaveSynopticViewModel model = new SaveSynopticViewModel(synopticViewModel.getSynoptic().name(),
                         SynopticInfo.names(Synoptic.getInstance().availableSynoptics()));
+                SaveSynopticDialog dlg = new SaveSynopticDialog(null, model);
 				if (dlg.open() == Window.OK) {
-                    synopticViewModel.getSynoptic().setName(dlg.getNewName());
+                    synopticViewModel.getSynoptic().setName(model.getSynopticName());
                     okPressed();
 				}
 			}

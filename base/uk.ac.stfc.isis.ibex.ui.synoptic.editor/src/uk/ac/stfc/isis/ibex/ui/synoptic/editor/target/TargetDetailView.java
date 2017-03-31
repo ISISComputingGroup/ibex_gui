@@ -38,8 +38,8 @@ import uk.ac.stfc.isis.ibex.ui.synoptic.editor.target.properties.TargetPropertie
 
 /**
  * Shows the synoptic editor part that allows selection of a target, normally an
- * OPI or a Java SWT screen for goniometers or DAEs. OPI can be chosen, but
- * goniometers and DAEs have a fixed target.
+ * OPI or a Java SWT screen for the DAE. OPI can be chosen, but DAE has a fixed
+ * target.
  *
  */
 @SuppressWarnings("checkstyle:magicnumber")

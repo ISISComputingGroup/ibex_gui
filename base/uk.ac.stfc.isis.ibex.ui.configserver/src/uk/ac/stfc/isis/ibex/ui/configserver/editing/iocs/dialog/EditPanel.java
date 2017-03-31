@@ -140,16 +140,16 @@ public class EditPanel extends Composite {
     }
 
     /**
-     * Sets the IOC view model used by the panel.
+     * Sets the IOC used by the panel.
      * 
      * @param editableIoc
-     *            The view model.
+     *            The IOC.
      */
-    public void setViewModel(final EditableIoc editableIoc) {
+    public void setIOC(final EditableIoc editableIoc) {
 
-        macros.setViewModel(editableIoc);
-        pvVals.setViewModel(editableIoc);
-        pvSets.setViewModel(editableIoc);
+        macros.setIOC(editableIoc);
+        pvVals.setIOC(editableIoc);
+        pvSets.setIOC(editableIoc);
 
         bind(editableIoc);
     }
@@ -162,12 +162,12 @@ public class EditPanel extends Composite {
      */
     private void bind(EditableIoc editableIoc) {
         DataBindingContext bindingContext = new DataBindingContext();
-        bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(selectedIoc),
+        bindingContext.bindValue(WidgetProperties.text(SWT.NONE).observe(selectedIoc),
                 BeanProperties.value("name").observe(editableIoc));
         bindingContext.bindValue(WidgetProperties.selection().observe(autoStart),
-                BeanProperties.value("autoStart").observe(editableIoc));
+                BeanProperties.value("autostart").observe(editableIoc));
         bindingContext.bindValue(WidgetProperties.selection().observe(autoRestart),
-                BeanProperties.value("autoRestart").observe(editableIoc));
+                BeanProperties.value("restart").observe(editableIoc));
         bindingContext.bindValue(ViewersObservables.observeSingleSelection(simLevel),
                 BeanProperties.value("simLevel").observe(editableIoc));
     }
