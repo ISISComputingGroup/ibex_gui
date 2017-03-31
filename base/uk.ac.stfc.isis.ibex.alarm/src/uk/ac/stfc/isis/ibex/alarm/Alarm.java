@@ -71,10 +71,8 @@ public class Alarm extends Plugin implements InstrumentInfoReceiver {
      * counter to monitor the alarms.
      */
     public Alarm() {
-		super();
 		instance = this;
         setupAlarmModel();
-
     }
 
     /**

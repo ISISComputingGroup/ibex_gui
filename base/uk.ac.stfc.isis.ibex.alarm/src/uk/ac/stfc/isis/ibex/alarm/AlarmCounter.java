@@ -92,6 +92,7 @@ public class AlarmCounter extends ModelObject {
      */
     private void fireCountChanged(final int prevCount, final int newCount) {
 
+        // If the count hasn't changed, don't do anything.
         if (prevCount == newCount) {
             return;
         }

@@ -19,16 +19,10 @@
 
 package uk.ac.stfc.isis.ibex.ui.alarm;
 
-import org.apache.logging.log4j.Logger;
 import org.csstudio.alarm.beast.ui.alarmtree.AlarmTreeView;
-import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.action.Separator;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.ui.plugin.AbstractUIPlugin;
-
-import uk.ac.stfc.isis.ibex.alarm.Alarm;
-import uk.ac.stfc.isis.ibex.logger.IsisLog;
 
 
 /**
@@ -36,15 +30,10 @@ import uk.ac.stfc.isis.ibex.logger.IsisLog;
  */
 public class AlarmView extends AlarmTreeView {
 
-    private static final Logger LOG = IsisLog.getLogger(AlarmView.class);
-
     /**
      * Class ID.
      */
     public static final String ID = "uk.ac.stfc.isis.ibex.ui.alarm"; //$NON-NLS-1$
-
-    private static final String REFRESH_BUTTON_TOOLTIP_TEXT = "Refresh this view";
-    private static final String REFRESH_ICON_LOCATION = "icons/refresh.png";
 	
     /**
      * Instantiates a new alarm view.
@@ -58,30 +47,23 @@ public class AlarmView extends AlarmTreeView {
         // Do nothing.
 	}
 
+    /**
+     * Creates the view.
+     * 
+     * The view comes from CSStudio, we just append our own button onto it in
+     * this method
+     */
     @Override
     public void createPartControl(final Composite parent) {
+        // Create the normal view (comes from CSStudio).
         super.createPartControl(parent);
 
+        // Get the toolbar of the CSStudio view.
         IToolBarManager toolbar = getViewSite().getActionBars().getToolBarManager();
+
+        // Append our new button to the toolbar.
         toolbar.add(new Separator());
         toolbar.add(new RefreshAction());
     }
 
-    private class RefreshAction extends Action {
-
-        RefreshAction() {
-            setImageDescriptor(AbstractUIPlugin.imageDescriptorFromPlugin(ID, REFRESH_ICON_LOCATION)); // $NON-NLS-1$
-            setToolTipText(REFRESH_BUTTON_TOOLTIP_TEXT);
-        }
-
-        /**
-         * Called when the refresh button was pressed.
-         */
-        @Override
-        public void run() {
-            LOG.info("Manual reload of alarms view triggered.");
-            Alarm.getInstance().reload();
-        }
-
-    }
 }
