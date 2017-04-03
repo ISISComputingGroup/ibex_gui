@@ -9,7 +9,7 @@
   <height>600</height>
   <macros>
     <include_parent_macros>true</include_parent_macros>
-    <PV_ROOT>$(P)MK2CHOPR_01</PV_ROOT>
+    <PV_ROOT>$(P)$(MK2CHOPR)</PV_ROOT>
   </macros>
   <boy_version>3.1.4.201301231545</boy_version>
   <show_edit_range>true</show_edit_range>
@@ -154,7 +154,7 @@ from org.csstudio.opibuilder.scriptUtil import ConsoleUtil
     <width>385</width>
     <x>6</x>
     <name>Controls</name>
-    <y>234</y>
+    <y>216</y>
     <foreground_color>
       <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
     </foreground_color>
@@ -787,7 +787,7 @@ sp_pv.setValue(stop if rbv=="On" else start)
     <width>265</width>
     <x>6</x>
     <name>Current state</name>
-    <y>102</y>
+    <y>84</y>
     <foreground_color>
       <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
     </foreground_color>
@@ -1195,7 +1195,7 @@ $(pv_value)</tooltip>
     <width>175</width>
     <x>6</x>
     <name>Chopper interlocks</name>
-    <y>384</y>
+    <y>348</y>
     <foreground_color>
       <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
     </foreground_color>
@@ -1420,7 +1420,7 @@ $(pv_value)</tooltip>
       <enabled>true</enabled>
       <wuid>2f70796b:15b334751c5:-7335</wuid>
       <on_color>
-        <color name="ISIS_Green_LED_On" red="0" green="255" blue="0" />
+        <color name="ISIS_Red_LED_On" red="255" green="100" blue="100" />
       </on_color>
       <pv_value />
       <scripts />
@@ -1440,7 +1440,7 @@ $(pv_value)</tooltip>
       </border_color>
       <widget_type>LED</widget_type>
       <off_color>
-        <color name="ISIS_Green_LED_Off" red="0" green="102" blue="0" />
+        <color name="ISIS_Red_LED_Off" red="102" green="0" blue="0" />
       </off_color>
       <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
       <background_color>
@@ -1473,7 +1473,7 @@ $(pv_value)</tooltip>
       <enabled>true</enabled>
       <wuid>2f70796b:15b334751c5:-72a6</wuid>
       <on_color>
-        <color name="ISIS_Green_LED_On" red="0" green="255" blue="0" />
+        <color name="ISIS_Red_LED_On" red="255" green="100" blue="100" />
       </on_color>
       <pv_value />
       <scripts />
@@ -1493,7 +1493,7 @@ $(pv_value)</tooltip>
       </border_color>
       <widget_type>LED</widget_type>
       <off_color>
-        <color name="ISIS_Green_LED_Off" red="0" green="102" blue="0" />
+        <color name="ISIS_Red_LED_Off" red="102" green="0" blue="0" />
       </off_color>
       <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
       <background_color>
@@ -1526,7 +1526,7 @@ $(pv_value)</tooltip>
       <enabled>true</enabled>
       <wuid>2f70796b:15b334751c5:-729f</wuid>
       <on_color>
-        <color name="ISIS_Green_LED_On" red="0" green="255" blue="0" />
+        <color name="ISIS_Red_LED_On" red="255" green="100" blue="100" />
       </on_color>
       <pv_value />
       <scripts />
@@ -1546,7 +1546,7 @@ $(pv_value)</tooltip>
       </border_color>
       <widget_type>LED</widget_type>
       <off_color>
-        <color name="ISIS_Green_LED_Off" red="0" green="102" blue="0" />
+        <color name="ISIS_Red_LED_Off" red="102" green="0" blue="0" />
       </off_color>
       <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
       <background_color>
@@ -1579,7 +1579,7 @@ $(pv_value)</tooltip>
       <enabled>true</enabled>
       <wuid>2f70796b:15b334751c5:-7291</wuid>
       <on_color>
-        <color name="ISIS_Green_LED_On" red="0" green="255" blue="0" />
+        <color name="ISIS_Red_LED_On" red="255" green="100" blue="100" />
       </on_color>
       <pv_value />
       <scripts />
@@ -1599,7 +1599,7 @@ $(pv_value)</tooltip>
       </border_color>
       <widget_type>LED</widget_type>
       <off_color>
-        <color name="ISIS_Green_LED_Off" red="0" green="102" blue="0" />
+        <color name="ISIS_Red_LED_Off" red="102" green="0" blue="0" />
       </off_color>
       <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
       <background_color>
@@ -1632,7 +1632,7 @@ $(pv_value)</tooltip>
       <enabled>true</enabled>
       <wuid>2f70796b:15b334751c5:-7283</wuid>
       <on_color>
-        <color name="ISIS_Green_LED_On" red="0" green="255" blue="0" />
+        <color name="ISIS_Red_LED_On" red="255" green="100" blue="100" />
       </on_color>
       <pv_value />
       <scripts />
@@ -1652,7 +1652,7 @@ $(pv_value)</tooltip>
       </border_color>
       <widget_type>LED</widget_type>
       <off_color>
-        <color name="ISIS_Green_LED_Off" red="0" green="102" blue="0" />
+        <color name="ISIS_Red_LED_Off" red="102" green="0" blue="0" />
       </off_color>
       <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
       <background_color>
@@ -1705,7 +1705,7 @@ $(pv_value)</tooltip>
     <width>151</width>
     <x>180</x>
     <name>Spectral Interlocks</name>
-    <y>384</y>
+    <y>348</y>
     <foreground_color>
       <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
     </foreground_color>
@@ -2024,10 +2024,10 @@ $(pv_value)</tooltip>
     <background_color>
       <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
     </background_color>
-    <width>163</width>
+    <width>271</width>
     <x>330</x>
     <name>Phase Errors</name>
-    <y>384</y>
+    <y>348</y>
     <foreground_color>
       <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
     </foreground_color>
@@ -2045,7 +2045,7 @@ $(pv_value)</tooltip>
       <wuid>2f70796b:15b334751c5:-7336</wuid>
       <transparent>false</transparent>
       <auto_size>false</auto_size>
-      <text>Delay:</text>
+      <text>Delay incompatible with frequency:</text>
       <scripts />
       <height>20</height>
       <border_width>1</border_width>
@@ -2064,7 +2064,7 @@ $(pv_value)</tooltip>
       <background_color>
         <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
       </background_color>
-      <width>103</width>
+      <width>211</width>
       <x>0</x>
       <name>Label_2</name>
       <y>6</y>
@@ -2086,7 +2086,7 @@ $(pv_value)</tooltip>
       <wuid>2f70796b:15b334751c5:-72ea</wuid>
       <transparent>false</transparent>
       <auto_size>false</auto_size>
-      <text>Delay correction:</text>
+      <text>Delay value not yet reached:</text>
       <scripts />
       <height>20</height>
       <border_width>1</border_width>
@@ -2105,7 +2105,7 @@ $(pv_value)</tooltip>
       <background_color>
         <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
       </background_color>
-      <width>103</width>
+      <width>211</width>
       <x>0</x>
       <name>Label_2</name>
       <y>30</y>
@@ -2127,7 +2127,7 @@ $(pv_value)</tooltip>
       <wuid>2f70796b:15b334751c5:-72d6</wuid>
       <transparent>false</transparent>
       <auto_size>false</auto_size>
-      <text>Accuracy window:</text>
+      <text>Phase error outside accuracy window:</text>
       <scripts />
       <height>20</height>
       <border_width>1</border_width>
@@ -2146,7 +2146,7 @@ $(pv_value)</tooltip>
       <background_color>
         <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
       </background_color>
-      <width>103</width>
+      <width>211</width>
       <x>0</x>
       <name>Label_3</name>
       <y>54</y>
@@ -2170,7 +2170,7 @@ $(pv_value)</tooltip>
       <enabled>true</enabled>
       <wuid>2f70796b:15b334751c5:-7335</wuid>
       <on_color>
-        <color name="ISIS_Green_LED_On" red="0" green="255" blue="0" />
+        <color name="ISIS_Red_LED_On" red="255" green="100" blue="100" />
       </on_color>
       <pv_value />
       <scripts />
@@ -2190,7 +2190,7 @@ $(pv_value)</tooltip>
       </border_color>
       <widget_type>LED</widget_type>
       <off_color>
-        <color name="ISIS_Green_LED_Off" red="0" green="102" blue="0" />
+        <color name="ISIS_Red_LED_Off" red="102" green="0" blue="0" />
       </off_color>
       <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
       <background_color>
@@ -2198,7 +2198,7 @@ $(pv_value)</tooltip>
       </background_color>
       <square_led>false</square_led>
       <width>25</width>
-      <x>108</x>
+      <x>216</x>
       <name>LED</name>
       <data_type>0</data_type>
       <y>3</y>
@@ -2223,7 +2223,7 @@ $(pv_value)</tooltip>
       <enabled>true</enabled>
       <wuid>2f70796b:15b334751c5:-72a6</wuid>
       <on_color>
-        <color name="ISIS_Green_LED_On" red="0" green="255" blue="0" />
+        <color name="ISIS_Red_LED_On" red="255" green="100" blue="100" />
       </on_color>
       <pv_value />
       <scripts />
@@ -2243,7 +2243,7 @@ $(pv_value)</tooltip>
       </border_color>
       <widget_type>LED</widget_type>
       <off_color>
-        <color name="ISIS_Green_LED_Off" red="0" green="102" blue="0" />
+        <color name="ISIS_Red_LED_Off" red="102" green="0" blue="0" />
       </off_color>
       <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
       <background_color>
@@ -2251,7 +2251,7 @@ $(pv_value)</tooltip>
       </background_color>
       <square_led>false</square_led>
       <width>25</width>
-      <x>108</x>
+      <x>216</x>
       <name>LED</name>
       <data_type>0</data_type>
       <y>27</y>
@@ -2276,7 +2276,7 @@ $(pv_value)</tooltip>
       <enabled>true</enabled>
       <wuid>2f70796b:15b334751c5:-729f</wuid>
       <on_color>
-        <color name="ISIS_Green_LED_On" red="0" green="255" blue="0" />
+        <color name="ISIS_Red_LED_On" red="255" green="100" blue="100" />
       </on_color>
       <pv_value />
       <scripts />
@@ -2296,7 +2296,7 @@ $(pv_value)</tooltip>
       </border_color>
       <widget_type>LED</widget_type>
       <off_color>
-        <color name="ISIS_Green_LED_Off" red="0" green="102" blue="0" />
+        <color name="ISIS_Red_LED_Off" red="102" green="0" blue="0" />
       </off_color>
       <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
       <background_color>
@@ -2304,7 +2304,7 @@ $(pv_value)</tooltip>
       </background_color>
       <square_led>false</square_led>
       <width>25</width>
-      <x>108</x>
+      <x>216</x>
       <name>LED</name>
       <data_type>0</data_type>
       <y>51</y>
