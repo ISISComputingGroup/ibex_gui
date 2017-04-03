@@ -334,14 +334,7 @@ else:
       <tooltip>$(pv_name)
 $(pv_value)</tooltip>
       <horizontal_alignment>0</horizontal_alignment>
-      <rules>
-        <rule name="BackgroundColour" prop_id="background_color" out_exp="true">
-          <exp bool_exp="pvStr0.trim() !== &quot;System OK&quot;">
-            <value>ColorFontUtil.getColorFromRGB(255,127,127)</value>
-          </exp>
-          <pv trig="true">$(PV_ROOT)STATUS:DISP</pv>
-        </rule>
-      </rules>
+      <rules />
       <enabled>true</enabled>
       <wuid>-4305d44c:15ac6d0a5c2:-65a5</wuid>
       <show_h_scroll>false</show_h_scroll>
@@ -352,9 +345,10 @@ $(pv_value)</tooltip>
       <text></text>
       <scripts>
         <path pathString="EmbeddedPy" checkConnect="true" sfe="false" seoe="false">
-          <scriptName>ConvertToString</scriptName>
+          <scriptName>ConvertToStringAndSetColour</scriptName>
           <scriptText><![CDATA[from org.csstudio.opibuilder.scriptUtil import PVUtil 
 from org.csstudio.opibuilder.scriptUtil import ConsoleUtil 
+from org.csstudio.opibuilder.scriptUtil import ColorFontUtil
 
 #Get characters as Long Int array 
 #This has form e.g. 'array('l',[70L,69L,45L])' sans quotes 
@@ -365,23 +359,28 @@ v = str(v).split("[")
 
 #if this is false it means '[' wasn't present 
 if len(v)>1: 
-        # Select part after '[' 
-        v = v[1]                 
+       # Select part after '[' 
+       v = v[1]                 
                                     
-        #Cut off end of array marked by "]" 
-        v = v.split("]")[0] 
+       #Cut off end of array marked by "]" 
+       v = v.split("]")[0] 
 
-        #Remove "L"'s from array (signifying long ints) 
-        v = v.replace("L","") 
+       #Remove "L"'s from array (signifying long ints) 
+       v = v.replace("L","") 
         
-        #split string on commas into list 
-        v=v.split(",") 
-        #rejoin characters into string 
-        strArray = "".join(chr(int(i)) for i in v) 
+       #split string on commas into list 
+       v=v.split(",") 
+       #rejoin characters into string 
+       strArray = "".join(chr(int(i)) for i in v) 
 
-print strArray
+status = str(strArray)
 
-widget.setPropertyValue("text",str(strArray))]]></scriptText>
+widget.setPropertyValue("text",status)
+
+if status == "System OK":
+    widget.setPropertyValue("background_color",ColorFontUtil.getColorFromRGB(255,255,255));
+else:
+    widget.setPropertyValue("background_color",ColorFontUtil.getColorFromRGB(255,127,127));]]></scriptText>
           <pv trig="true">$(PV_ROOT)STATUS:DISP</pv>
         </path>
       </scripts>
