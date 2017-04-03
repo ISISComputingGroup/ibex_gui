@@ -51,7 +51,7 @@ from org.csstudio.opibuilder.scriptUtil import ConsoleUtil
     <wuid>2f70796b:15b334751c5:-7a55</wuid>
     <transparent>false</transparent>
     <auto_size>false</auto_size>
-    <text>MK2 Chopper</text>
+    <text>Mk2 Chopper</text>
     <scripts />
     <height>37</height>
     <border_width>1</border_width>
@@ -152,9 +152,9 @@ from org.csstudio.opibuilder.scriptUtil import ConsoleUtil
       <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
     </background_color>
     <width>385</width>
-    <x>6</x>
+    <x>270</x>
     <name>Controls</name>
-    <y>216</y>
+    <y>84</y>
     <foreground_color>
       <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
     </foreground_color>
@@ -786,7 +786,7 @@ sp_pv.setValue(stop if rbv=="On" else start)
     </background_color>
     <width>265</width>
     <x>6</x>
-    <name>Current state</name>
+    <name>Current State</name>
     <y>84</y>
     <foreground_color>
       <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
@@ -1195,7 +1195,7 @@ $(pv_value)</tooltip>
     <width>175</width>
     <x>6</x>
     <name>Chopper Interlocks</name>
-    <y>348</y>
+    <y>216</y>
     <foreground_color>
       <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
     </foreground_color>
@@ -1705,7 +1705,7 @@ $(pv_value)</tooltip>
     <width>151</width>
     <x>180</x>
     <name>Spectral Interlocks</name>
-    <y>348</y>
+    <y>216</y>
     <foreground_color>
       <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
     </foreground_color>
@@ -2027,7 +2027,7 @@ $(pv_value)</tooltip>
     <width>271</width>
     <x>330</x>
     <name>Phase Errors</name>
-    <y>348</y>
+    <y>216</y>
     <foreground_color>
       <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
     </foreground_color>
