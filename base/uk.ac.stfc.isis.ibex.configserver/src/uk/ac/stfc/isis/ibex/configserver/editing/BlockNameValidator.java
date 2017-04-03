@@ -129,7 +129,7 @@ public class BlockNameValidator {
 
     private boolean nameInBase(String name) {
         for (EditableBlock block : config.getAvailableBlocks()) {
-            if (isNotSelectedBlock(block) && block.getName().equals(name)) {
+            if (isNotSelectedBlock(block) && block.getName().equalsIgnoreCase(name)) {
                 return true;
             }
         }
@@ -142,7 +142,7 @@ public class BlockNameValidator {
         }
         for (Configuration comp : config.getEditableComponents().getSelected()) {
             for (Block block : comp.getBlocks()) {
-                if (block.getName().equals(name)) {
+                if (block.getName().equalsIgnoreCase(name)) {
                     return true;
                 }
             }
