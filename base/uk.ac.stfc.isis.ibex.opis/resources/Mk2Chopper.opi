@@ -1194,7 +1194,7 @@ $(pv_value)</tooltip>
     </background_color>
     <width>175</width>
     <x>6</x>
-    <name>Chopper interlocks</name>
+    <name>Chopper Interlocks</name>
     <y>348</y>
     <foreground_color>
       <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
