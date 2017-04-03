@@ -359,21 +359,23 @@ v = str(v).split("[")
 
 #if this is false it means '[' wasn't present 
 if len(v)>1: 
-       # Select part after '[' 
-       v = v[1]                 
+    # Select part after '[' 
+    v = v[1]                 
                                     
-       #Cut off end of array marked by "]" 
-       v = v.split("]")[0] 
+    #Cut off end of array marked by "]" 
+    v = v.split("]")[0] 
 
-       #Remove "L"'s from array (signifying long ints) 
-       v = v.replace("L","") 
+    #Remove "L"'s from array (signifying long ints) 
+    v = v.replace("L","") 
         
-       #split string on commas into list 
-       v=v.split(",") 
-       #rejoin characters into string 
-       strArray = "".join(chr(int(i)) for i in v) 
+    #split string on commas into list 
+    v=v.split(",") 
+    #rejoin characters into string 
+    strArray = "".join(chr(int(i)) for i in v) 
 
-status = str(strArray)
+    status = str(strArray)
+else:
+    status = ""
 
 widget.setPropertyValue("text",status)
 
