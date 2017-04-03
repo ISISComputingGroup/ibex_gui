@@ -16,30 +16,19 @@
  * http://opensource.org/licenses/eclipse-1.0.php
  */
 
-package uk.ac.stfc.isis.ibex.nicos;
-
-import uk.ac.stfc.isis.ibex.activemq.message.IMessage;
+/**
+ * 
+ */
+package uk.ac.stfc.isis.ibex.nicos.messages;
 
 /**
- * A Message that has been received from NICOS.
+ * Serialisable class to log in to Nicos.
  */
-public class NicosMessage implements IMessage {
-    private String data;
-
-    /**
-     * A constructor for a basic message.
-     * 
-     * @param data
-     *            The data that the message contains.
-     */
-    public NicosMessage(String data) {
-        this.data = data;
-    }
-
-    /**
-     * @return The data that the NICOS message contained.
-     */
-    public String getData() {
-        return data;
-    }
+public class Login implements NicosSendMessage {
+    
+    String command = "authenticate";
+    String login = "ibex";
+    String passwd = "a2eed0a7fcb214a497052435191b5264cca5b687";
+    String display = "TEST";
+        
 }

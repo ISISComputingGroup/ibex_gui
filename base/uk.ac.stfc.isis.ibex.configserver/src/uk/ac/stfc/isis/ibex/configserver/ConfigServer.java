@@ -1,7 +1,7 @@
 
 /*
 * This file is part of the ISIS IBEX application.
-* Copyright (C) 2012-2015 Science & Technology Facilities Council.
+* Copyright (C) 2012-2017 Science & Technology Facilities Council.
 * All rights reserved.
 *
 * This program is distributed in the hope that it will be useful.
@@ -21,13 +21,18 @@ package uk.ac.stfc.isis.ibex.configserver;
 
 import java.util.Collection;
 
+import com.google.common.collect.Lists;
+
 import uk.ac.stfc.isis.ibex.configserver.configuration.ComponentInfo;
 import uk.ac.stfc.isis.ibex.configserver.configuration.ConfigInfo;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Configuration;
 import uk.ac.stfc.isis.ibex.configserver.configuration.PV;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableIoc;
 import uk.ac.stfc.isis.ibex.configserver.internal.FilteredIocs;
+import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
+import uk.ac.stfc.isis.ibex.epics.conversion.Converter;
 import uk.ac.stfc.isis.ibex.epics.conversion.DoNothingConverter;
+import uk.ac.stfc.isis.ibex.epics.observing.ConvertingObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.epics.pv.Closer;
 import uk.ac.stfc.isis.ibex.epics.writing.LoggingForwardingWritable;
@@ -42,6 +47,7 @@ import uk.ac.stfc.isis.ibex.model.SetCommand;
 public class ConfigServer extends Closer {
 
 	private final ConfigServerVariables variables;
+    private final ComponentDependenciesModel dependenciesModel;
 	
 	/**
 	 * The default constructor for the ConfigServer.
@@ -49,6 +55,7 @@ public class ConfigServer extends Closer {
 	 */
 	public ConfigServer(ConfigServerVariables variables) {
 		this.variables = variables;
+        this.dependenciesModel = new ComponentDependenciesModel(this);
 	}
 
 	/**
@@ -186,7 +193,19 @@ public class ConfigServer extends Closer {
 	public ForwardingObservable<Configuration> component(String componentName) {
 		return variables.component(componentName);
 	}
-	
+
+    /**
+     * Returns an observable to the list of configurations dependent on a given
+     * component.
+     * 
+     * @param componentName
+     *            the name of the component
+     * @return the {@code Collection<String>} observable object
+     */
+    public ForwardingObservable<Collection<String>> dependencies(String componentName) {
+        return variables.dependencies(componentName);
+    }
+
 	/**
 	 * Returns a writable to set the current configuration on the instrument.<br>
 	 * The writable expects a Configuration  with the name of the configuration to load.
@@ -262,10 +281,27 @@ public class ConfigServer extends Closer {
 	 * @return the Collection<{@link EditableIocState}> observable object
 	 */
     public ForwardingObservable<Collection<IocState>> iocStates() {
+
+        // Set up a converter that just generates a new ArrayList
+        Converter<Collection<IocState>, Collection<IocState>> converter =
+                new Converter<Collection<IocState>, Collection<IocState>>() {
+
+                    @Override
+                    public Collection<IocState> convert(Collection<IocState> value) throws ConversionException {
+                        return Lists.newArrayList(value);
+                    }
+                };
+
+        // Use the above converter in a converting observable
+        ConvertingObservable<Collection<IocState>, Collection<IocState>> convertingObservable =
+                new ConvertingObservable<Collection<IocState>, Collection<IocState>>(variables.iocStates, converter);
+
         ForwardingObservable<Collection<IocState>> iocs = 
-                new ForwardingObservable<>(variables.iocStates);
+                new ForwardingObservable<>(convertingObservable);
+
+        FilteredIocs filteredIocs = new FilteredIocs(iocs, variables.protectedIocs);
 		
-		return new ForwardingObservable<>(new FilteredIocs(iocs, variables.protectedIocs));
+        return new ForwardingObservable<>(filteredIocs);
 	}
 	
 	/**
@@ -306,4 +342,11 @@ public class ConfigServer extends Closer {
 	private <T> Writable<T> log(String id, Writable<T> destination) {
         return new LoggingForwardingWritable<>(Configurations.LOG, id, destination, new DoNothingConverter<T>());
 	}
+
+    /**
+     * @return the dependenciesModel
+     */
+    public ComponentDependenciesModel getDependenciesModel() {
+        return dependenciesModel;
+    }
 }

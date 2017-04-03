@@ -23,6 +23,7 @@ import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Button;
@@ -30,28 +31,38 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Shell;
 
+import uk.ac.stfc.isis.ibex.ui.nicos.models.QueueScriptViewModel;
+
 /**
- * The dialog for creating a new script to send to the script server.
+ * The dialog for queueing a new script to send to the script server.
  */
-public class CreateScriptDialog extends Dialog {
+public class QueueScriptDialog extends Dialog {
 
 	private static final Point INITIAL_SIZE = new Point(950, 800);
 	
-	private CreateScriptPanel creator;
+	private QueueScriptPanel creator;
     private Button sendBtn;
 
+    private QueueScriptViewModel model;
+
+
 	/**
-	 * The constructor for this class.
-	 * @param parentShell The shell that this dialog is created from.
-	 */
-    public CreateScriptDialog(Shell parentShell) {
+     * The constructor for this class.
+     * 
+     * @param parentShell
+     *            The shell that this dialog is created from.
+     * @param model
+     *            the model for queueing a script
+     */
+    public QueueScriptDialog(Shell parentShell, QueueScriptViewModel model) {
 		super(parentShell);
 		setShellStyle(SWT.DIALOG_TRIM | SWT.RESIZE);
+        this.model = model;
 	}
 	
 	@Override
 	protected Control createDialogArea(Composite parent) {
-        creator = new CreateScriptPanel(parent, SWT.NONE);
+        creator = new QueueScriptPanel(parent, SWT.NONE, model);
         creator.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		return creator;
 	}
@@ -60,8 +71,13 @@ public class CreateScriptDialog extends Dialog {
 	@Override
 	protected void createButtonsForButtonBar(Composite parent) {
         sendBtn = createButton(parent, IDialogConstants.OK_ID, "Send", false);
+
         sendBtn.addSelectionListener(new SelectionAdapter() {
-        	//TODO
+
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                model.queueScript();
+            }
         });
 		
 		createButton(parent, IDialogConstants.CANCEL_ID, "Cancel", true);
@@ -70,7 +86,7 @@ public class CreateScriptDialog extends Dialog {
 	@Override
 	protected void configureShell(Shell shell) {
 		super.configureShell(shell);
-		shell.setText("Create Script");
+        shell.setText("Queue Script");
 	}
 	
 	@Override

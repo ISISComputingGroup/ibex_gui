@@ -18,6 +18,8 @@
 
 package uk.ac.stfc.isis.ibex.activemq;
 
+import java.net.ConnectException;
+
 import javax.jms.Connection;
 import javax.jms.ExceptionListener;
 import javax.jms.JMSException;
@@ -68,6 +70,8 @@ public class MQConnection extends ModelObject implements Runnable {
     private boolean connectionWarnFlag;
 
     private Thread thread;
+
+    private String connectionError = "";
 
     /**
      * Creates an activeMQ connection.
@@ -126,23 +130,50 @@ public class MQConnection extends ModelObject implements Runnable {
                 // connection with JMS
                 try {
                     connect();
+                    setConnectionError("");
 
                     LOG.info("Connected to JMS server: " + jmsUrl);
                     // Use URL as server name.
                     jmsServer = jmsUrl;
                     setJmsConnectionStatus(true);
                 } catch (Exception ex) {
-                    if (!connectionWarnFlag) {
-                        LOG.warn("Problem connecting to JMS server. Will auto-attempt reconnection.");
-                        connectionWarnFlag = true;
-                        setJmsConnectionStatus(false);
+                    if (ex.getCause() != null && (ex.getCause() instanceof SecurityException
+                            || ex.getCause() instanceof ConnectException)) {
+                        setConnectionError("Problem connecting to JMS server. '" + ex.getCause().getMessage()
+                                + ".'  Will auto-attempt reconnection.");
+                    } else {
+                        setConnectionError("Problem connecting to JMS server. Will auto-attempt reconnection.");
                     }
+                    connectionWarnFlag = true;
+                    setJmsConnectionStatus(false);
                 }
             }
             sleep(ONE_SECOND);
         }
     
         disconnect();
+    }
+
+    /**
+     * Set the connection error, blank no error.
+     * 
+     * @param connectionError
+     *            connection error
+     */
+    private synchronized void setConnectionError(String connectionError) {
+        if (!connectionWarnFlag) {
+            LOG.warn(connectionError);
+        }
+        firePropertyChange("connectionError", this.connectionError, this.connectionError = connectionError);
+    }
+
+    /**
+     * Gets the current connection error, blank no error.
+     *
+     * @return the connection error
+     */
+    public String getConnectionError() {
+        return connectionError;
     }
 
     private void sleep(long millis) {
@@ -162,6 +193,9 @@ public class MQConnection extends ModelObject implements Runnable {
      */
     private void connect() throws JMSException {
 
+        if (connection != null) {
+            connection.close();
+        }
         ActiveMQConnectionFactory factory = new ActiveMQConnectionFactory(username,
                 password, jmsUrl);
         connection = factory.createConnection();
@@ -220,6 +254,7 @@ public class MQConnection extends ModelObject implements Runnable {
         if (oldjmsUrl != null && !jmsUrl.equals(oldjmsUrl)) {
             // Disconnect and reconnect
             disconnect();
+            connectionWarnFlag = false;
         }
     }
 }

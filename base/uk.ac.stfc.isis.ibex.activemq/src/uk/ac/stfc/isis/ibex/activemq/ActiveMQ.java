@@ -130,9 +130,21 @@ public class ActiveMQ extends AbstractUIPlugin {
      *            The password to connect with.
      * @return A queue for sending and receiving data.
      */
-    public SendReceiveSession getSendReceiveQueue(String sendTopic, String username, String password) {
+    public SendReceiveSession openSendReceiveQueue(String sendTopic, String username, String password) {
         SendReceiveSession queue = new SendReceiveSession(getConnection(username, password), sendTopic);
         queue.connect();
         return queue;
+    }
+
+    /**
+     * Close a send receive queue. If sent null nothing happens.
+     * 
+     * @param sendReceiveQueue
+     *            the send receive queue to close
+     */
+    public void closeSendReceiveQueue(SendReceiveSession sendReceiveQueue) {
+        if (sendReceiveQueue != null) {
+            sendReceiveQueue.disconnect();
+        }
     }
 }

@@ -252,6 +252,7 @@
 		<module>../uk.ac.stfc.isis.ibex.activemq</module>
 		<module>../uk.ac.stfc.isis.ibex.nicos</module>
 		<module>../uk.ac.stfc.isis.ibex.ui.weblinks.tests</module>
+		<module>../uk.ac.stfc.isis.ibex.nicos.tests</module>
 	</modules>
 </project>
 

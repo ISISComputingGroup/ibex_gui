@@ -7,5 +7,10 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  uk.ac.stfc.isis.ibex.ui.perspectives,
  org.csstudio.ui.util,
- uk.ac.stfc.isis.ibex.nicos
+ uk.ac.stfc.isis.ibex.nicos,
+ org.eclipse.core.databinding,
+ org.eclipse.jface.databinding,
+ uk.ac.stfc.isis.ibex.ui;bundle-version="1.0.0",
+ uk.ac.stfc.isis.ibex.model,
+ uk.ac.stfc.isis.ibex.logger;bundle-version="1.0.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
