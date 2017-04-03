@@ -692,6 +692,16 @@
 				<macros>
 				</macros>
 			</value>
-		</entry> 		
+		</entry> 	
+		<entry>
+			<key>Omron PLC</key>
+			<value>
+				<type>UNKNOWN</type>
+				<path>omron_plc.opi</path>
+				<description>The OPI for a PLC. No properties required.</description>
+				<macros>
+				</macros>
+			</value>
+		</entry> 	
 	</opis>
 </descriptions>

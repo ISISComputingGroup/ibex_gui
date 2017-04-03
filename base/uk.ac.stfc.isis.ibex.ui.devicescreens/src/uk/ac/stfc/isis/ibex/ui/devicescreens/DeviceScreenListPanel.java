@@ -144,10 +144,11 @@ public class DeviceScreenListPanel extends Composite {
      *            the new device screens description
      */
     protected void updateDeviceScreensDescriptions(final DeviceScreensDescription deviceScreensDescription) {
+
         Display.getDefault().asyncExec(new Runnable() {
             @Override
             public void run() {
-                if (deviceScreenList != null) {
+                if (deviceScreenList != null && deviceScreensDescription != null) {
                     deviceScreenList.setRows(deviceScreensDescription.getDevices());
                 }
             }
