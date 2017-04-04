@@ -123,9 +123,9 @@
     <wuid>6d1ee0a5:15b32d78fce:-7ef4</wuid>
     <transparent>false</transparent>
     <auto_size>false</auto_size>
-    <text>Not completed yet.</text>
+    <text>This functionality is not available yet. This is a stub to enable us to update easily once the Omron PLC becomes available.</text>
     <scripts />
-    <height>37</height>
+    <height>55</height>
     <border_width>1</border_width>
     <scale_options>
       <width_scalable>true</width_scalable>
