@@ -31,6 +31,7 @@ import org.eclipse.jface.window.Window;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Configuration;
 import uk.ac.stfc.isis.ibex.configserver.editing.DuplicateChecker;
 import uk.ac.stfc.isis.ibex.epics.observing.BaseObserver;
+import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.ui.configserver.dialogs.ConfigSelectionDialog;
 
 /**
@@ -47,11 +48,11 @@ public class LoadConfigHandler extends DisablingConfigHandler<String> {
 	public LoadConfigHandler() {
 		super(SERVER.load());
         configs = new HashMap<String, Configuration>();
-        addObservers();
 	}	
 	
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {		
+        updateObservers();
         ConfigSelectionDialog dialog =
                 new ConfigSelectionDialog(shell(), "Load Configuration", SERVER.configsInfo().getValue(), false, false);
 		if (dialog.open() == Window.OK) {
@@ -65,20 +66,22 @@ public class LoadConfigHandler extends DisablingConfigHandler<String> {
                 execute(event);
             }
 		}
-		
 		return null;
 	}
 
-    private void addObservers() {
+    private void updateObservers() {
         for (String name : SERVER.configNames()) {
-            SERVER.config(name).addObserver(new BaseObserver<Configuration>() {
-                @Override
-                public void onValue(Configuration value) {
-                    configs.put(value.getName(), value);
-                }
-            });
+            if (!configs.containsKey(name)) {
+                ForwardingObservable<Configuration> configObs = SERVER.config(name);
+                configObs.addObserver(new BaseObserver<Configuration>() {
+                    @Override
+                    public void onValue(Configuration value) {
+                        configs.put(value.getName(), value);
+                    }
+                });
+            }
         }
-	}
+    }
 
     private Map<String, Set<String>> getConflicts(String name) {
         Configuration config = configs.get(name);
