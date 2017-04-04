@@ -97,7 +97,8 @@ public class ComponentEditorPanel extends Composite {
                 if (allConflicts.isEmpty()) {
                     components.toggleSelection(toToggle);
                 } else {
-                    new MessageDialog(getShell(), "Component in Use", null, buildWarning(allConflicts),
+                    new MessageDialog(getShell(), "Conflicts with current configuration", null,
+                            buildWarning(allConflicts),
                             MessageDialog.WARNING, new String[] {"Ok"}, 0).open();
                 }
 			}
