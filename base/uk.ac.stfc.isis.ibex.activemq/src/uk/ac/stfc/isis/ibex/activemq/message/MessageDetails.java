@@ -1,5 +1,4 @@
-
-/*
+ /*
  * This file is part of the ISIS IBEX application.
  * Copyright (C) 2012-2016 Science & Technology Facilities Council.
  * All rights reserved.
@@ -17,36 +16,39 @@
  * http://opensource.org/licenses/eclipse-1.0.php
  */
 
-/**
- * 
- */
-package uk.ac.stfc.isis.ibex.ui.devicescreens.dialogs;
-
-import org.eclipse.core.databinding.conversion.Converter;
+package uk.ac.stfc.isis.ibex.activemq.message;
 
 /**
- * Converts a null to a boolean where true indicates not null.
- * 
- * For use in data-binding.
+ * Details of a message obtained from activemq.
  */
-public class IsNullConverter extends Converter {
+public class MessageDetails {
+
+    String text;
+    String messageID;
 
     /**
-     * The constructor.
+     * @param text
+     *            text of the message
+     * @param messageID
+     *            message id
      */
-    public IsNullConverter() {
-        super(Object.class, Boolean.class);
+    public MessageDetails(String text, String messageID) {
+        this.text = text;
+        this.messageID = messageID;
     }
 
     /**
-     * The conversion method.
-     * 
-     * @param fromObject any object
-     * @return true if not null.
+     * @return the text
      */
-    @Override
-    public Object convert(Object fromObject) {
-        return fromObject != null;
+    public String getText() {
+        return text;
+    }
+
+    /**
+     * @return the messageID
+     */
+    public String getMessageID() {
+        return messageID;
     }
 
 }

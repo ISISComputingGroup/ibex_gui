@@ -29,8 +29,8 @@ import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -111,7 +111,7 @@ public class DeviceScreenListPanel extends Composite {
         GridData gdconfigureDevScreensButton = new GridData(SWT.FILL, SWT.TOP, false, false, 1, 1);
         configureDevScreensButton.setLayoutData(gdconfigureDevScreensButton);
 
-        configureDevScreensButton.addSelectionListener(new SelectionListener() {
+        configureDevScreensButton.addSelectionListener(new SelectionAdapter() {
 
             @Override
             public void widgetSelected(SelectionEvent e) {
@@ -121,11 +121,6 @@ public class DeviceScreenListPanel extends Composite {
                     LOG.catching(ex);
                     MessageDialog.openError(parent.getShell(), "Error displaying config dialogue", ex.getMessage());
                 }
-            }
-
-            @Override
-            public void widgetDefaultSelected(SelectionEvent e) {
-
             }
         });
 
