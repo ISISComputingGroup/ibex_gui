@@ -36,7 +36,12 @@ net use p: \\isis\inst$ /user:isis\builder %BUILDERPW%
 python.exe purge_archive_client.py
 
 REM Don't group these. Bat expands whole if at once, not sequentially
-if "%RELEASE%" == "YES" set RELEASE_DIR=p:\Kits$\CompGroup\ICP\Releases\%GIT_BRANCH:~15%
+if "%RELEASE%" == "YES" (
+    set RELEASE_DIR=p:\Kits$\CompGroup\ICP\Releases\%GIT_BRANCH:~15%
+    set RELEASE_VERSION=%GIT_BRANCH:~15%
+) else (
+    set RELEASE_VERSION=devel
+)
 if "%RELEASE%" == "YES" set INSTALLBASEDIR=%RELEASE_DIR%\Client
 if "%RELEASE%" == "YES" set INSTALLDIR=%INSTALLBASEDIR%
 
@@ -93,7 +98,8 @@ if %errorlevel% neq 0 (
     exit /b %errorlevel%
 )
 
-
+@echo %BUILD_NUMBER%> %INSTALLDIR%\Client\BUILD_NUMBER.txt
+@echo %RELEASE_VERSION%> %INSTALLDIR%\Client\VERSION.txt
 
 REM Create the installer
 if exist C:\"Program Files (x86)"\7-Zip\7z.exe set ZIPEXE=C:\"Program Files (x86)"\7-Zip\7z.exe
