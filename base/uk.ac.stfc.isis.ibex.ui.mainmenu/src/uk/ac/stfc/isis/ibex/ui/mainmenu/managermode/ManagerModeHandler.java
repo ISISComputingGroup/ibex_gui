@@ -80,7 +80,7 @@ public class ManagerModeHandler extends AbstractHandler {
 
     private static void displayError(Shell shell, String message) {
         MessageDialog error = new MessageDialog(shell, "Error", null,
-                message, MessageDialog.ERROR, new String[] { "OK" }, 0);
+                message, MessageDialog.ERROR, new String[] {"OK"}, 0);
         error.open();
     }
 
