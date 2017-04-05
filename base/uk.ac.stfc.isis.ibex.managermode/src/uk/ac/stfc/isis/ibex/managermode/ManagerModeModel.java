@@ -42,10 +42,6 @@ public final class ManagerModeModel extends ModelObject {
 
     private static ManagerModeModel instance;
 
-    /**
-     * Using PBKDF2WithHmacSHA512 would be ideal, but it's not available in all
-     * java 1.7 environments, so use PBKDF2WithHmacSHA1 instead.
-     */
     private final PasswordHasher passwordHasher;
 
     /**

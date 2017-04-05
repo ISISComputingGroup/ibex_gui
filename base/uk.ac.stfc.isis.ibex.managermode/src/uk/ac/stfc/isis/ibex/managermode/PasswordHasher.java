@@ -65,19 +65,16 @@ public class PasswordHasher {
      * Changing any of algorithm, iterations, key length or salt will cause this
      * value to change!
      */
-    private final String expectedHash;
+    private String expectedHash = "uVpfg6gqCDPvluvcyQGVm06aN/t435TbfX7fnEDU0+4=";
 
     /**
-     * Constructor that instantiates this class with the hash of the expected
-     * password.
+     * Creates a password hasher that expects the default password.
      */
     public PasswordHasher() {
-        this("SK/biIexKuqcQW2zMFTyLYxPNyOqEt/nVzZibqAV+c4=");
     }
 
     /**
-     * Constructor that instantiates this class with a specific expected hash,
-     * used for tests.
+     * Creates a password hasher that expects a specific hash, used for unit tests.
      * 
      * @param expected
      *            the expected hash
@@ -105,7 +102,6 @@ public class PasswordHasher {
 
         PBEKeySpec keySpecification = new PBEKeySpec(password, SALT.getBytes(), ITERATIONS, KEY_LENGTH);
         SecretKey key = SecretKeyFactory.getInstance(HASHING_ALGORITHM).generateSecret(keySpecification);
-
         return key.getEncoded();
 
     }
@@ -139,6 +135,7 @@ public class PasswordHasher {
      *             available
      */
     public boolean isCorrectPassword(String password) throws InvalidKeySpecException, NoSuchAlgorithmException {
+        System.out.println(hash(password));
         return hash(password).equals(expectedHash);
     }
 }

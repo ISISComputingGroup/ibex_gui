@@ -31,7 +31,7 @@ import org.eclipse.ui.PlatformUI;
 import uk.ac.stfc.isis.ibex.managermode.ManagerModeModel;
 
 /**
- *
+ * Handler for manager mode being selected in the main menu.
  */
 public class ManagerModeHandler extends AbstractHandler {
 
