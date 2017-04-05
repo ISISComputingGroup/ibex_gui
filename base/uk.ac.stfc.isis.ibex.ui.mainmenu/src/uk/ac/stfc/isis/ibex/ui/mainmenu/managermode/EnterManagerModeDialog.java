@@ -87,7 +87,7 @@ public class EnterManagerModeDialog extends TitleAreaDialog {
     @Override
     protected void okPressed() {
 
-        try{
+        try {
             model.login(passwordEntryField.getText());
             super.okPressed();
         } catch (FailedLoginException ex) {
@@ -116,7 +116,7 @@ public class EnterManagerModeDialog extends TitleAreaDialog {
 
     private static void displayError(Shell shell, String message) {
         MessageDialog error = new MessageDialog(shell, "Error", null,
-                message, MessageDialog.ERROR, new String[] { "OK" }, 0);
+                message, MessageDialog.ERROR, new String[] {"OK"}, 0);
         error.open();
     }
 
