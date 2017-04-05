@@ -30,7 +30,6 @@ import uk.ac.stfc.isis.ibex.configserver.internal.DisplayUtils;
 
 /**
  * Contains the functionality to display a group and its blocks in a GUI.
- *
  */
 public class DisplayGroup {
 
@@ -38,28 +37,45 @@ public class DisplayGroup {
     private final List<DisplayBlock> blocks = new ArrayList<>();
     private final Collection<DisplayBlock> allBlocks;
 
+    /**
+     * Constructor.
+     * 
+     * @param group
+     *            The Group to display
+     * @param blocks
+     *            The blocks in this group
+     */
     public DisplayGroup(Group group, Collection<DisplayBlock> blocks) {
         this.allBlocks = blocks;
         name = group.getName();
         setBlocks(group.getBlocks());
     }
 
+    /**
+     * @return The name of the group
+     */
     public String name() {
         return DisplayUtils.renameGroup(name);
     }
 
+    /**
+     * @return The list of blocks in this group
+     */
     public Collection<DisplayBlock> blocks() {
         return new ArrayList<>(blocks);
     }
 
     private void setBlocks(Collection<String> blockNames) {
         for (final String name : blockNames) {
-            blocks.add(block(name));
+            DisplayBlock block = block(name);
+            if (block != null) {
+                blocks.add(block);
+            }
         }
     }
 
     private DisplayBlock block(final String name) {
-        return Iterables.find(allBlocks, nameMatches(name));
+        return Iterables.find(allBlocks, nameMatches(name), null);
     }
 
     private Predicate<DisplayBlock> nameMatches(final String name) {

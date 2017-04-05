@@ -20,49 +20,87 @@
 // Edit which components are included in this config
 package uk.ac.stfc.isis.ibex.ui.configserver.editing.components;
 
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Set;
+
 import org.eclipse.core.databinding.beans.BeanProperties;
 import org.eclipse.core.databinding.observable.list.IObservableList;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Composite;
 
+import uk.ac.stfc.isis.ibex.configserver.configuration.Configuration;
+import uk.ac.stfc.isis.ibex.configserver.editing.DuplicateChecker;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableComponents;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.DoubleListEditor;
 import uk.ac.stfc.isis.ibex.validators.MessageDisplayer;
 
+/**
+ * Panel containing controls to add/remove components to/from a configuration.
+ */
 public class ComponentEditorPanel extends Composite {
-	private MessageDisplayer messageDisplayer;
-	private EditableConfiguration config;
 	private DoubleListEditor editor;
 	private EditableComponents components;
 
+    /**
+     * Constructor for the panel.
+     * 
+     * @param parent The parent composite
+     * @param style The SWT style parameter
+     * @param messageDisplayer The message displayer
+     */
 	public ComponentEditorPanel(Composite parent, int style, final MessageDisplayer messageDisplayer) {
 		super(parent, style);
-		this.messageDisplayer = messageDisplayer;
 		setLayout(new GridLayout(1, false));
 		
 		editor = new DoubleListEditor(this, SWT.NONE, "name", false);
 		editor.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 	}
 
-	public void setConfig(EditableConfiguration config) {
-		this.config = config;
-		
+    /**
+     * Sets the configuration to edit.
+     * 
+     * @param config The configuration
+     */
+    public void setConfig(final EditableConfiguration config) {
+
 		components = config.getEditableComponents();
 		IObservableList selected = BeanProperties.list("selected").observe(components);
 		IObservableList unselected = BeanProperties.list("unselected").observe(components);
 		editor.bind(unselected, selected);
 
-		
+        final DuplicateChecker duplicateChecker = new DuplicateChecker();
+
 		editor.addSelectionListenerForSelecting(new SelectionAdapter() {
 			@SuppressWarnings("unchecked")
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				components.toggleSelection(editor.unselectedItems());
+                duplicateChecker.setBase(config.asConfiguration());
+                Collection<Configuration> toToggle = editor.unselectedItems();
+                Map<String, Set<String>> allConflicts = duplicateChecker.checkOnAdd(toToggle);
+
+                Iterator<Configuration> iter = toToggle.iterator();
+                while (iter.hasNext()) {
+                    Configuration comp = iter.next();
+                    if (allConflicts.keySet().contains(comp.getName())) {
+                        iter.remove();
+                    }
+                }
+
+                if (allConflicts.isEmpty()) {
+                    components.toggleSelection(toToggle);
+                } else {
+                    new MessageDialog(getShell(), "Conflicts with current configuration", null,
+                            buildWarning(allConflicts),
+                            MessageDialog.WARNING, new String[] {"Ok"}, 0).open();
+                }
 			}
 		});
 		
@@ -74,4 +112,24 @@ public class ComponentEditorPanel extends Composite {
 			}
 		});
 	}
+
+    private String buildWarning(Map<String, Set<String>> conflicts) {
+        boolean multi = (conflicts.size() > 1);
+        StringBuilder sb = new StringBuilder();
+        sb.append(
+                "Cannot add the selected components, as it would result in duplicate blocks in this configuration. "
+                        + "Conflicts detected for the following block" + (multi ? "s" : "") + ":\n\n");
+
+        for (String block : conflicts.keySet()) {
+            sb.append("Block \"" + block + "\" contained in:\n");
+            Set<String> sources = conflicts.get(block);
+            for (String source : sources) {
+                sb.append("\u2022 " + source + "\n");
+            }
+            sb.append("\n");
+        }
+        sb.append("Please rename or remove the duplicate block" + (multi ? "s" : "")
+                + " before adding these components.");
+        return sb.toString();
+    }
 }
