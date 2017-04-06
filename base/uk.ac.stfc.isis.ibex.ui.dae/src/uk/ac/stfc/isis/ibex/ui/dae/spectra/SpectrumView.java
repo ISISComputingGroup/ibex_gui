@@ -30,7 +30,7 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.Text;
+import org.eclipse.swt.widgets.Spinner;
 
 import uk.ac.stfc.isis.ibex.dae.spectra.UpdatableSpectrum;
 
@@ -39,8 +39,8 @@ import uk.ac.stfc.isis.ibex.dae.spectra.UpdatableSpectrum;
  */
 public class SpectrumView extends Composite {
 	
-	private Text number;
-	private Text period;
+    private Spinner number;
+    private Spinner period;
 	private SpectrumPlot spectrumFigure;
 	private Button update;
 
@@ -62,19 +62,24 @@ public class SpectrumView extends Composite {
 		lblSpectrum.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		lblSpectrum.setText("Spectrum:");
 		
-		number = new Text(this, SWT.BORDER);
+        number = new Spinner(this, SWT.BORDER);
 		GridData gd_number = new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1);
 		gd_number.widthHint = 30;
 		number.setLayoutData(gd_number);
+        number.setMinimum(0);
+        number.setMaximum(999);
 		
 		Label lblPeriod = new Label(this, SWT.NONE);
 		lblPeriod.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		lblPeriod.setText("Period:");
 		
-		period = new Text(this, SWT.BORDER);
+        period = new Spinner(this, SWT.BORDER);
 		GridData gd_period = new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1);
 		gd_period.widthHint = 30;
 		period.setLayoutData(gd_period);
+        period.setMinimum(0);
+        period.setMaximum(999);
+
 		new Label(this, SWT.NONE);
 		new Label(this, SWT.NONE);
 		
@@ -106,8 +111,8 @@ public class SpectrumView extends Composite {
 		spectrum = updatableSpectrum;
 		
 		bindingContext = new DataBindingContext();
-		bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(number), BeanProperties.value("number").observe(updatableSpectrum));
-		bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(period), BeanProperties.value("period").observe(updatableSpectrum));
+		bindingContext.bindValue(WidgetProperties.selection().observe(number), BeanProperties.value("number").observe(updatableSpectrum));
+		bindingContext.bindValue(WidgetProperties.selection().observe(period), BeanProperties.value("period").observe(updatableSpectrum));
 		bindingContext.bindValue(WidgetProperties.enabled().observe(update), BeanProperties.value("requiresUpdate").observe(updatableSpectrum));
 
 		spectrumFigure.setModel(updatableSpectrum);
