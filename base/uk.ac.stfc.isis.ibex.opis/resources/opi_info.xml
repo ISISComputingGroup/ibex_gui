@@ -703,5 +703,19 @@
 				</macros>
 			</value>
 		</entry> 	
+		<entry>
+			<key>SKF G5 Chopper (single)</key>
+			<value>
+				<type>CHOPPER</type>
+				<path>single_chopper.opi</path>
+				<description>The OPI for a single SKF G5 Chopper.</description>
+				<macros>
+					<macro>
+						<name>CHOP</name>
+						<description>The chopper PV prefix (e.g. SKFCHOPPER_01).</description>
+					</macro>
+				</macros>
+			</value>
+		</entry> 
 	</opis>
 </descriptions>
