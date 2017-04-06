@@ -47,6 +47,9 @@ public class SpectrumView extends Composite {
 	private DataBindingContext bindingContext;
 	private UpdatableSpectrum spectrum;
 	
+    private static final int MAXIMUM_MONITOR_SPECTRUM = 1000000;
+    private static final int SPINNER_WIDTH = 35;
+
     /**
      * Instantiates a new spectrum view.
      *
@@ -64,10 +67,10 @@ public class SpectrumView extends Composite {
 		
         number = new Spinner(this, SWT.BORDER);
 		GridData gd_number = new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1);
-		gd_number.widthHint = 30;
+        gd_number.widthHint = SPINNER_WIDTH;
 		number.setLayoutData(gd_number);
         number.setMinimum(0);
-        number.setMaximum(999);
+        number.setMaximum(MAXIMUM_MONITOR_SPECTRUM);
 		
 		Label lblPeriod = new Label(this, SWT.NONE);
 		lblPeriod.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
@@ -75,10 +78,10 @@ public class SpectrumView extends Composite {
 		
         period = new Spinner(this, SWT.BORDER);
 		GridData gd_period = new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1);
-		gd_period.widthHint = 30;
+        gd_period.widthHint = SPINNER_WIDTH;
 		period.setLayoutData(gd_period);
         period.setMinimum(0);
-        period.setMaximum(999);
+        period.setMaximum(MAXIMUM_MONITOR_SPECTRUM);
 
 		new Label(this, SWT.NONE);
 		new Label(this, SWT.NONE);
