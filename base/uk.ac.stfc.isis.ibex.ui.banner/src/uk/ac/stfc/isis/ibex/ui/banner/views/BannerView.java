@@ -42,6 +42,7 @@ import uk.ac.stfc.isis.ibex.ui.banner.indicators.IndicatorModel;
 import uk.ac.stfc.isis.ibex.ui.banner.models.BannerItemModel;
 import uk.ac.stfc.isis.ibex.ui.banner.models.BatonUserModel;
 import uk.ac.stfc.isis.ibex.ui.banner.models.InMotionModel;
+import uk.ac.stfc.isis.ibex.ui.banner.models.ManagerModeBannerModel;
 import uk.ac.stfc.isis.ibex.ui.banner.models.MotionControlModel;
 import uk.ac.stfc.isis.ibex.ui.banner.widgets.Control;
 import uk.ac.stfc.isis.ibex.ui.banner.widgets.Indicator;
@@ -69,6 +70,7 @@ public class BannerView extends ViewPart implements ISizeProvider {
 
     private final Banner banner = Banner.getInstance();
 
+    private final IndicatorModel managerModeModel = new ManagerModeBannerModel();
     private final IndicatorModel batonUserModel = new BatonUserModel(Baton.getInstance().baton());
     private final IndicatorModel inMotionModel = new InMotionModel(banner.observables());
     private final ControlModel motionModel = new MotionControlModel(banner.observables());
@@ -76,6 +78,7 @@ public class BannerView extends ViewPart implements ISizeProvider {
     private Composite bannerItemPanel;
     private GridLayout glBannerItemPanel;
 
+    private Indicator managerMode;
     private Indicator batonUser;
     private Indicator inMotion;
     private Control motionControl;
@@ -96,6 +99,11 @@ public class BannerView extends ViewPart implements ISizeProvider {
         glBannerItemPanel.horizontalSpacing = 15;
 
         banner.observables().bannerDescription.addObserver(modelAdapter);
+
+        managerMode = new Indicator(parent, SWT.NONE, managerModeModel, ALARM_FONT);
+        GridData gdManagerMode = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+        gdManagerMode.widthHint = 210;
+        managerMode.setLayoutData(gdManagerMode);
 
         batonUser = new Indicator(parent, SWT.NONE, batonUserModel, ALARM_FONT);
         GridData gdBatonUser = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
