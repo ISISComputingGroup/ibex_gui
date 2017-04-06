@@ -692,8 +692,18 @@
 				<macros>
 				</macros>
 			</value>
-		</entry> 
+		</entry> 	
 		<entry>
+			<key>Omron PLC</key>
+			<value>
+				<type>PLC</type>
+				<path>omron_plc.opi</path>
+				<description>The OPI for a PLC. No properties required.</description>
+				<macros>
+				</macros>
+			</value>
+		</entry> 	
+    <entry>
 			<key>Polaris jaw set</key>
 			<value>
 				<type>JAWS</type>
@@ -702,6 +712,6 @@
 				<macros>
 				</macros>
 			</value>
-		</entry> 		
+		</entry> 	
 	</opis>
 </descriptions>
