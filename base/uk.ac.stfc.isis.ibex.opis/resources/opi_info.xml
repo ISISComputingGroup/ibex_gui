@@ -703,5 +703,15 @@
 				</macros>
 			</value>
 		</entry> 	
+    <entry>
+			<key>Polaris jaw set</key>
+			<value>
+				<type>JAWS</type>
+				<path>polaris_jaws/Jaws_polaris.opi</path>
+				<description>The OPI for the Polaris jaw set. No properties required.</description>
+				<macros>
+				</macros>
+			</value>
+		</entry> 	
 	</opis>
 </descriptions>
