@@ -113,7 +113,7 @@ if %errorlevel% neq 0 (
 )
 
 REM Add EPICS_UTILS and the Client
-%ZIPEXE% a installer.7z P:\Kits$\CompGroup\ICP\Client\EPICS_UTILS
+%ZIPEXE% a installer.7z P:\Kits$\CompGroup\ICP\EPICS_UTILS
 if %errorlevel% neq 0 (
     @echo Could not add EPICS_UTILS to zip
     exit /b %errorlevel%
