@@ -699,6 +699,13 @@
 				<type>ROT_SAMPLE_CHANGER</type>
 				<path>rot_sample_changer.opi</path>
 				<description>The OPI for the rotating sample changer on HRPD/GEM/POLARIS. No properties required.</description>
+		</entry> 	
+		<entry>
+			<key>Omron PLC</key>
+			<value>
+				<type>PLC</type>
+				<path>omron_plc.opi</path>
+				<description>The OPI for a PLC. No properties required.</description>
 				<macros>
 				</macros>
 			</value>
