@@ -108,7 +108,9 @@ public enum ComponentType {
     /** Keithley 2400 Source Meter. */
     KHLY2400,
     /** Zoom sample stack. */
-    ZOOM_SAMPLE_STACK;
+    ZOOM_SAMPLE_STACK,
+    /** Sample changer for HRPD/POLARIS/GEM. */
+    ROT_SAMPLE_CHANGER;
 	
 	private Target target;
 

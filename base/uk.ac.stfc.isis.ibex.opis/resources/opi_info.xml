@@ -692,6 +692,16 @@
 				<macros>
 				</macros>
 			</value>
-		</entry> 		
+		</entry> 
+		<entry>
+			<key>Rotating Sample Changer</key>
+			<value>
+				<type>ROT_SAMPLE_CHANGER</type>
+				<path>hrpd_sample_changer.opi</path>
+				<description>The OPI for the rotating sample changer on HRPD/GEM/POLARIS. No properties required.</description>
+				<macros>
+				</macros>
+			</value>
+		</entry> 	
 	</opis>
 </descriptions>
