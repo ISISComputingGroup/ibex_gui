@@ -38,11 +38,27 @@ import uk.ac.stfc.isis.ibex.model.ModelObject;
  *
  */
 public class MacroValueValidator extends ModelObject implements IValidator {
-	public static final String NAME_IS_VALID = "nameIsValid";
+    /**
+     * Property change that is fired when the name validity changes.
+     */
+    public static final String NAME_IS_VALID = "nameIsValid";
+    /**
+     * Property change that is fired when the Show warning icon changes.
+     */
 	public static final String SHOW_WARNING_ICON = "showWarningIcon";
 	
+    /**
+     * The message that is displayed when there is no error.
+     */
 	public static final String NO_MESSAGE = "";
+    /**
+     * The message that is displayed when the macro does not match it's regex
+     * pattern.
+     */
 	public static final String PATTERN_MISMATCH_MESSAGE = "Macro value must match the pattern shown";
+    /**
+     * The message that is displayed when the regex pattern is invalid.
+     */
 	public static final String PATTERN_INVALID = "Macro regex pattern invalid";
 	
 	private final Label messageDisplayer;
@@ -50,6 +66,14 @@ public class MacroValueValidator extends ModelObject implements IValidator {
 	private boolean nameIsValid = true;
 	private boolean showWarningIcon = false;
 	
+    /**
+     * Constructor for the validator.
+     * 
+     * @param macro
+     *            The macro to validate.
+     * @param messageDisplayer
+     *            The label to display the error message on.
+     */
 	public MacroValueValidator(Macro macro, Label messageDisplayer) {
 		this.messageDisplayer = messageDisplayer;
 		this.macro = macro;
@@ -103,22 +127,50 @@ public class MacroValueValidator extends ModelObject implements IValidator {
 		return Pattern.matches(pattern, text);
 	}
 	
+    /**
+     * Set the macro that this validator is looking at.
+     * 
+     * @param macro
+     *            The macro to validate.
+     */
 	public void setMacro(Macro macro) {
 		this.macro = macro;
 	}
 	
+    /**
+     * Get whether the macro name is valid.
+     * 
+     * @return True if the macro name is valid
+     */
 	public boolean getNameIsValid() {
 		return nameIsValid;
 	}
 	
+    /**
+     * Set if the macro name is valid.
+     * 
+     * @param nameIsValid
+     *            True if the macro name is valid.
+     */
 	public void setNameIsValid(boolean nameIsValid) {
 		firePropertyChange(NAME_IS_VALID, this.nameIsValid, this.nameIsValid = nameIsValid);
 	}
 	
+    /**
+     * Get whether the warning icon should be shown.
+     * 
+     * @return True if the warning icon should be shown.
+     */
 	public boolean getShowWarningIcon() {
 		return showWarningIcon;
 	}
 	
+    /**
+     * Set whether the warning icon should be shown.
+     * 
+     * @param showWarningIcon
+     *            True if the warning icon should be shown.
+     */
 	public void setShowWarningIcon(boolean showWarningIcon) {
 		firePropertyChange(SHOW_WARNING_ICON, this.showWarningIcon, this.showWarningIcon = showWarningIcon);
 	}	
