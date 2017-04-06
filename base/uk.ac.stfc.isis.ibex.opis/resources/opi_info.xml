@@ -278,6 +278,20 @@
 			</value>
 		</entry>
 		<entry>
+			<key>Mk2 Chopper</key>
+			<value>
+				<type>CHOPPER</type>
+				<path>Mk2Chopper.opi</path>
+				<description>The OPI for the Mk2 chopper.</description>
+				<macros>
+                    <macro>
+						<name>MK2CHOPR</name>
+ 						<description>The Mk2 Chopper PV prefix (e.g. MK2CHOPR_01).</description>  
+					</macro>
+				</macros>
+			</value>
+		</entry> 
+		<entry>
 			<key>Monitor</key>
 			<value>
 				<type>MONITOR</type>
