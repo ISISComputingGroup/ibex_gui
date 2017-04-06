@@ -743,9 +743,6 @@ $(pv_value)</tooltip>
 sp_pv = widget.getPV()
 start = 1
 stop = 0
-#from org.csstudio.opibuilder.scriptUtil import ConsoleUtil
-#a = display.getWidget("chopper_on_rbv").getPV().getValue()
-#ConsoleUtil.writeInfo(str(dir(a)))
 sp_pv.setValue(stop if rbv=="On" else start)
 ]]></scriptText>
           <embedded>true</embedded>
