@@ -113,7 +113,7 @@ if %errorlevel% neq 0 (
 )
 
 REM Add EPICS_UTILS and the Client
-%ZIPEXE% a installer.7z P:\Kits$\CompGroup\ICP\Client\EPICS_UTILS
+%ZIPEXE% a installer.7z P:\Kits$\CompGroup\ICP\EPICS_UTILS
 if %errorlevel% neq 0 (
     @echo Could not add EPICS_UTILS to zip
     exit /b %errorlevel%
@@ -146,6 +146,10 @@ if %errorlevel% neq 0 (
 )
 
 @echo Copy complete>%INSTALLDIR%\COPY_COMPLETE.txt
+
+if not "%RELEASE%" == "YES" (
+    @echo %BUILD_NUMBER%>%INSTALLDIR%\..\LATEST_BUILD.txt 
+)
 
 REM Delete local copies
 del installer.7z

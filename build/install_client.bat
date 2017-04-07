@@ -20,7 +20,7 @@ if %errorlevel% neq 0 (
 REM Copy EPICS_UTILS across
 set UTILSDIR=%APPSDIR%\EPICS_UTILS
 mkdir %UTILSDIR%
-xcopy /q /s /e /h \\isis.cclrc.ac.uk\inst$\Kits$\CompGroup\ICP\Client\EPICS_UTILS %UTILSDIR%
+xcopy /q /s /e /h \\isis.cclrc.ac.uk\inst$\Kits$\CompGroup\ICP\EPICS_UTILS %UTILSDIR%
 if %errorlevel% neq 0 (
     @echo ERROR copying EPICS UTILS
 	goto FINISH

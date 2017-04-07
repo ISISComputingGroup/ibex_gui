@@ -20,6 +20,7 @@
 package uk.ac.stfc.isis.ibex.configserver.tests.editing;
 
 import static org.junit.Assert.*;
+import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.*;
 
 import java.beans.PropertyChangeEvent;
@@ -126,7 +127,7 @@ public class MacroValueValidatorTest {
 	}
 	
 	@Test
-	public void if_validation_string_empty_then_not_OK() {
+    public void if_validation_string_empty_then_OK() {
 		// Arrange
 		MacroValueValidator macroValidator = getValidator(macro);
 		
@@ -134,32 +135,7 @@ public class MacroValueValidatorTest {
 		IStatus status =  macroValidator.validate("");
 		
 		// Assert
-		assertFalse(status.isOK());
-	}
-	
-	@Test
-	public void if_validation_string_empty_then_blank_warning_message() {
-		// Arrange
-		MacroValueValidator macroValidator = getValidator(macro);
-		
-		// Act
-		IStatus status =  macroValidator.validate("");
-		
-		// Assert
-		assertEquals(MacroValueValidator.NO_MESSAGE, status.getMessage());
-	}
-	
-	@Test
-	public void if_validation_string_empty_then_nameIsValid_property_change_to_false() {
-		// Arrange
-		MacroValueValidator macroValidator = getValidator(macro);
-		
-		// Act
-		macroValidator.validate("");
-		
-		// Assert
-		verify(mockNameIsValidListener, times(1)).propertyChange(changeCaptor.capture());
-		assertEquals(false, changeCaptor.getValue().getNewValue());
+        assertTrue(status.isOK());
 	}
 	
 	@Test

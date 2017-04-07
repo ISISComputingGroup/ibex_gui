@@ -14,6 +14,11 @@
             name="Restore default perspective">
       </command>
       <command
+            defaultHandler="uk.ac.stfc.isis.ibex.ui.mainmenu.managermode.ManagerModeHandler"
+            id="uk.ac.stfc.isis.ibex.ui.mainmenu.managermode.ManagerModeHandler"
+            name="Manager mode">
+      </command>
+      <command
             defaultHandler="uk.ac.stfc.isis.ibex.ui.mainmenu.ExitHandler"
             id="uk.ac.stfc.isis.ibex.ui.mainmenu.ExitHandler"
             name="Exit IBEX Client">
@@ -43,6 +48,14 @@
                   mnemonic="R"
                   style="push"
                   tooltip="Swith the view back to the default.">
+            </command>
+            <command
+                  commandId="uk.ac.stfc.isis.ibex.ui.mainmenu.managermode.ManagerModeHandler"
+                  id="uk.ac.stfc.isis.ibex.ui.mainmenu.managermode.ManagerModeHandler"
+                  label="Manager mode"
+                  mnemonic="M"
+                  style="push"
+                  tooltip="Enter or exit manager mode.">
             </command>
             <command
                   commandId="uk.ac.stfc.isis.ibex.ui.mainmenu.ExitHandler"
