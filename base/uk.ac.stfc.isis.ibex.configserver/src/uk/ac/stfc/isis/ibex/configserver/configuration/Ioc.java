@@ -205,9 +205,24 @@ public class Ioc extends ModelObject implements Comparable<Ioc> {
 		firePropertyChange("pvSets", this.pvsets, this.pvsets = pvsets);
 	}
 
-	public String getComponent() {
-		return component;
-	}
+    /**
+     * @param component
+     *            Set the name of the component this block is part of.
+     */
+    public void setComponent(String component) {
+        firePropertyChange("component", this.component, this.component = component);
+    }
+
+    /**
+     * @return The name of the component this block is part of (if any).
+     */
+    public String getComponent() {
+        return component;
+    }
+
+    /**
+     * @return Whether this block is part of a component.
+     */
 	public boolean hasComponent() {
 		return !Strings.isNullOrEmpty(component);
 	}

@@ -36,7 +36,12 @@ net use p: \\isis\inst$ /user:isis\builder %BUILDERPW%
 python.exe purge_archive_client.py
 
 REM Don't group these. Bat expands whole if at once, not sequentially
-if "%RELEASE%" == "YES" set RELEASE_DIR=p:\Kits$\CompGroup\ICP\Releases\%GIT_BRANCH:~15%
+if "%RELEASE%" == "YES" (
+    set RELEASE_DIR=p:\Kits$\CompGroup\ICP\Releases\%GIT_BRANCH:~15%
+    set RELEASE_VERSION=%GIT_BRANCH:~15%
+) else (
+    set RELEASE_VERSION=devel
+)
 if "%RELEASE%" == "YES" set INSTALLBASEDIR=%RELEASE_DIR%\Client
 if "%RELEASE%" == "YES" set INSTALLDIR=%INSTALLBASEDIR%
 
@@ -93,7 +98,8 @@ if %errorlevel% neq 0 (
     exit /b %errorlevel%
 )
 
-
+@echo %BUILD_NUMBER%> %INSTALLDIR%\Client\BUILD_NUMBER.txt
+@echo %RELEASE_VERSION%> %INSTALLDIR%\Client\VERSION.txt
 
 REM Create the installer
 if exist C:\"Program Files (x86)"\7-Zip\7z.exe set ZIPEXE=C:\"Program Files (x86)"\7-Zip\7z.exe
@@ -107,7 +113,7 @@ if %errorlevel% neq 0 (
 )
 
 REM Add EPICS_UTILS and the Client
-%ZIPEXE% a installer.7z P:\Kits$\CompGroup\ICP\Client\EPICS_UTILS
+%ZIPEXE% a installer.7z P:\Kits$\CompGroup\ICP\EPICS_UTILS
 if %errorlevel% neq 0 (
     @echo Could not add EPICS_UTILS to zip
     exit /b %errorlevel%
@@ -140,6 +146,10 @@ if %errorlevel% neq 0 (
 )
 
 @echo Copy complete>%INSTALLDIR%\COPY_COMPLETE.txt
+
+if not "%RELEASE%" == "YES" (
+    @echo %BUILD_NUMBER%>%INSTALLDIR%\..\LATEST_BUILD.txt 
+)
 
 REM Delete local copies
 del installer.7z
