@@ -19,15 +19,15 @@
 
 package uk.ac.stfc.isis.ibex.ui.dae.spectra;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.beans.BeanProperties;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Spinner;
@@ -42,14 +42,13 @@ public class SpectrumView extends Composite {
     private Spinner number;
     private Spinner period;
 	private SpectrumPlot spectrumFigure;
-	private Button update;
 
 	private DataBindingContext bindingContext;
 	private UpdatableSpectrum spectrum;
 	
     private static final int MAXIMUM_MONITOR_SPECTRUM = 1000000;
-    private static final int SPINNER_WIDTH = 35;
-
+    private static final int SPINNER_WIDTH = 40;
+    
     /**
      * Instantiates a new spectrum view.
      *
@@ -59,7 +58,7 @@ public class SpectrumView extends Composite {
     @SuppressWarnings({ "checkstyle:magicnumber", "checkstyle:localvariablename" })
 	public SpectrumView(Composite parent, int style) {
 		super(parent, style);
-		setLayout(new GridLayout(7, false));
+        setLayout(new GridLayout(6, false));
 		
 		Label lblSpectrum = new Label(this, SWT.NONE);
 		lblSpectrum.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
@@ -85,24 +84,9 @@ public class SpectrumView extends Composite {
 
 		new Label(this, SWT.NONE);
 		new Label(this, SWT.NONE);
-		
-		update = new Button(this, SWT.NONE);
-		update.setText("Set plot");
-		GridData gd_update = new GridData(SWT.RIGHT, SWT.CENTER, true, false, 1, 1);
-		gd_update.widthHint = 60;
-		update.setLayoutData(gd_update);
-		update.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				if (spectrum != null) {
-					spectrum.update();
-                    spectrumFigure.updateData();
-				}
-			}
-		});
-		
+
 		spectrumFigure = new SpectrumPlot(this, SWT.NONE);
-		spectrumFigure.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 7, 1));
+        spectrumFigure.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 6, 1));
 	}
 
     /**
@@ -116,7 +100,16 @@ public class SpectrumView extends Composite {
 		bindingContext = new DataBindingContext();
 		bindingContext.bindValue(WidgetProperties.selection().observe(number), BeanProperties.value("number").observe(updatableSpectrum));
 		bindingContext.bindValue(WidgetProperties.selection().observe(period), BeanProperties.value("period").observe(updatableSpectrum));
-		bindingContext.bindValue(WidgetProperties.enabled().observe(update), BeanProperties.value("requiresUpdate").observe(updatableSpectrum));
+
+        spectrum.addPropertyChangeListener(new PropertyChangeListener() {
+            @Override
+            public void propertyChange(PropertyChangeEvent evt) {
+                if (spectrum.getRequiresUpdate()) {
+                    spectrumFigure.update();
+                    spectrum.update();
+                }
+            }
+        });
 
 		spectrumFigure.setModel(updatableSpectrum);
 	}
