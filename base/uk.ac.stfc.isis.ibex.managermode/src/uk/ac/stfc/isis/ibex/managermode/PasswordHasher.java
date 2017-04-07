@@ -76,7 +76,7 @@ public class PasswordHasher {
     /**
      * Creates a password hasher that expects a specific hash, used for unit tests.
      * 
-     * @param expected
+     * @param expectedHash
      *            the expected hash
      */
     public PasswordHasher(String expectedHash) {

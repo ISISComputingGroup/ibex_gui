@@ -29,6 +29,7 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.PlatformUI;
 
 import uk.ac.stfc.isis.ibex.managermode.ManagerModeModel;
+import uk.ac.stfc.isis.ibex.managermode.ManagerModePvNotConnectedException;
 
 /**
  * Handler for manager mode being selected in the main menu.
@@ -65,8 +66,8 @@ public class ManagerModeHandler extends AbstractHandler {
         boolean managerMode;
         try {
             managerMode = model.isInManagerMode();
-        } catch (IllegalStateException exception) {
-            displayError(shell, "Manager mode PV not connected yet. Please retry in a few moments.");
+        } catch (ManagerModePvNotConnectedException exception) {
+            displayError(shell, exception.getMessage());
             return;
         }
 
