@@ -21,10 +21,17 @@
  */
 package uk.ac.stfc.isis.ibex.managermode;
 
+/**
+ * This exception is thrown when the manager mode PV is disconnected but a client requests to update it.
+ */
 public class ManagerModePvNotConnectedException extends Exception {
 
     private static final long serialVersionUID = 1L;
 
+    /**
+     * Constructor for an exception thrown when the manager mode PV is disconnected.
+     * @param message the message
+     */
     public ManagerModePvNotConnectedException(String message){
         super(message);
     }
