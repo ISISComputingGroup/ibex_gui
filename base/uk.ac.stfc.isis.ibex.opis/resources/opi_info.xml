@@ -740,7 +740,8 @@
 				<macros>
 				</macros>
 			</value>
-		</entry>		<entry>
+		</entry>		
+		<entry>
 			<key>Instron stress rig</key>
 			<value>
 				<type>STRESS_RIG</type>
@@ -749,5 +750,6 @@
 				<macros>
 				</macros>
 			</value>
-		</entry>	</opis>
+		</entry>	
+	</opis>
 </descriptions>
