@@ -147,6 +147,10 @@ if %errorlevel% neq 0 (
 
 @echo Copy complete>%INSTALLDIR%\COPY_COMPLETE.txt
 
+if not "%RELEASE%" == "YES" (
+    @echo %BUILD_NUMBER%>%INSTALLDIR%\..\LATEST_BUILD.txt 
+)
+
 REM Delete local copies
 del installer.7z
 del ClientInstaller.exe
