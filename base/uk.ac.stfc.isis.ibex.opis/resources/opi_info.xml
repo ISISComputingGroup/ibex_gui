@@ -706,7 +706,8 @@
 				<macros>
 				</macros>
 			</value>
-		</entry> 				<entry>
+		</entry> 				
+		<entry>
 			<key>Omron PLC</key>
 			<value>
 				<type>PLC</type>
