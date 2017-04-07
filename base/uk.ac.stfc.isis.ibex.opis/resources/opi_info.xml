@@ -271,7 +271,7 @@
 			<key>Mk3 Chopper</key>
 			<value>
 				<type>CHOPPER</type>
-				<path>Mk3Chopper.opi</path>
+				<path>Mk3Chopper/multiple_choppers.opi</path>
 				<description>The OPI for the Mk3 chopper. No properties required.</description>
 				<macros>
 				</macros>
@@ -717,6 +717,20 @@
 				</macros>
 			</value>
 		</entry> 	
+		<entry>
+			<key>Mk3 Chopper (single)</key>
+			<value>
+				<type>CHOPPER</type>
+				<path>Mk3Chopper/single_chopper.opi</path>
+				<description>The OPI for a single Mk3 Chopper.</description>
+				<macros>
+					<macro>
+						<name>NUMBER</name>
+						<description>The chopper number (e.g. CH1).</description>
+					</macro>
+				</macros>
+			</value>
+		</entry> 
     <entry>
 			<key>Polaris jaw set</key>
 			<value>
