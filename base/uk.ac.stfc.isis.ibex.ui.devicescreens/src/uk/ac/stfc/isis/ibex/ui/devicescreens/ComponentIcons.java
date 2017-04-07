@@ -128,6 +128,8 @@ public final class ComponentIcons {
                 return "neocera";
             case KHLY2400:
                 return "keithley2400";
+            case STRESS_RIG:
+                return "stress_rig";
             default:
                 return "cog";
         }

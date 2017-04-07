@@ -696,7 +696,7 @@
  		<entry>
 			<key>Instron stress rig</key>
 			<value>
-				<type>INSTRON_STRESS_RIG</type>
+				<type>STRESS_RIG</type>
 				<path>stress_rig/stress_rig.opi</path>
 				<description>The OPI for the Instron stress rig. No properties required.</description>
 				<macros>
