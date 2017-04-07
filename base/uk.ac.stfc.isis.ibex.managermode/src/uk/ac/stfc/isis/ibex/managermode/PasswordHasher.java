@@ -135,7 +135,6 @@ public class PasswordHasher {
      *             available
      */
     public boolean isCorrectPassword(String password) throws InvalidKeySpecException, NoSuchAlgorithmException {
-        System.out.println(hash(password));
         return hash(password).equals(expectedHash);
     }
 }
