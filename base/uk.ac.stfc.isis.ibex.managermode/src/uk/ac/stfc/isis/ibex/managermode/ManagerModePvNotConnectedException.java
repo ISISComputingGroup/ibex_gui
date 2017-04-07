@@ -32,7 +32,7 @@ public class ManagerModePvNotConnectedException extends Exception {
      * Constructor for an exception thrown when the manager mode PV is disconnected.
      * @param message the message
      */
-    public ManagerModePvNotConnectedException(String message){
+    public ManagerModePvNotConnectedException(String message) {
         super(message);
     }
 }
