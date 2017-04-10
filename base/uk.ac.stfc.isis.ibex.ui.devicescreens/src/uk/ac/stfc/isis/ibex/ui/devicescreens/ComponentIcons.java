@@ -84,6 +84,7 @@ public final class ComponentIcons {
                 return "moving_monitor";
             case LINEARSAMPLECHANGER:
             case SAMPLECHANGER:
+            case ROT_SAMPLE_CHANGER:
                 return "sample_changer";
             case ANALYSER:
                 return "analyser";
