@@ -23,6 +23,7 @@ import java.util.List;
 
 import uk.ac.stfc.isis.ibex.configserver.BlockRules;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Block;
+import uk.ac.stfc.isis.ibex.configserver.configuration.Configuration;
 
 /**
  * This provides validation for block names. The validation checks for an empty block name, a name that starts with
@@ -31,16 +32,24 @@ import uk.ac.stfc.isis.ibex.configserver.configuration.Block;
  * 
  */
 public class BlockNameValidator {
-	
+    /**
+     * The error to display when the name of the block is already taken.
+     */
 	public static final String DUPLICATE_GROUP_MESSAGE = "Duplicate block name";
+    /**
+     * The error to display when the block name is empty.
+     */
 	public static final String EMPTY_NAME_MESSAGE = "Block name must not be empty";
+    /**
+     * The error to display when the block name is not allowed.
+     */
 	public static final String FORBIDDEN_NAME_MESSAGE = "Block name cannot be ";
 	private static final String NO_ERROR = "";
 	
-	private final EditableConfiguration config;
-	private final Block selectedBlock;
-	
 	private String errorMessage;
+	
+    private final EditableConfiguration config;
+    private final Block selectedBlock;
 	
 	/**
 	 * Creates a block name validator for a specific config and block, initialised with no error message.
@@ -49,9 +58,9 @@ public class BlockNameValidator {
 	 * @param selectedBlock - The block being created or edited
 	 */
 	public BlockNameValidator(EditableConfiguration config, Block selectedBlock) {
+		this.errorMessage = NO_ERROR;
 		this.config = config;
 		this.selectedBlock = selectedBlock;
-		this.errorMessage = NO_ERROR;
 	}
 	
 	/**
@@ -86,6 +95,9 @@ public class BlockNameValidator {
 		this.errorMessage = errorMessage;
 	}
 	
+	/**
+	 * @return The current error message.
+	 */
 	public String getErrorMessage() {
 		return errorMessage;
 	}
@@ -109,18 +121,36 @@ public class BlockNameValidator {
 			}
 		}
 		return sb.toString();
-	}
-	
-	private boolean nameIsDuplicated(String text) {
-		for (EditableBlock block : config.getEditableBlocks()) {
-			if (isNotSelectedBlock(block) && block.getName().equals(text)) {
-				return true;
-			}
-		}		
-		return false;
-	}
+    }
 
-	private boolean isNotSelectedBlock(Block block) {
-		return !block.equals(selectedBlock);
-	}
+    private boolean nameIsDuplicated(String name) {
+        return nameInBase(name) || nameInComps(name);
+    }
+
+    private boolean nameInBase(String name) {
+        for (EditableBlock block : config.getAvailableBlocks()) {
+            if (isNotSelectedBlock(block) && block.getName().equalsIgnoreCase(name)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean nameInComps(String name) {
+        if (config.getEditableComponents() == null) {
+            return false;
+        }
+        for (Configuration comp : config.getEditableComponents().getSelected()) {
+            for (Block block : comp.getBlocks()) {
+                if (block.getName().equalsIgnoreCase(name)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    private boolean isNotSelectedBlock(Block block) {
+        return !block.equals(selectedBlock);
+    }
 }
