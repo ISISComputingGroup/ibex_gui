@@ -395,7 +395,7 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
         List<EditableIoc> result = new ArrayList<EditableIoc>();
     
         List<String> selectedIocNames = new ArrayList<String>();
-        for (EditableIoc ioc : this.configIocs) {
+        for (EditableIoc ioc : getSelectedIocs()) {
             selectedIocNames.add(ioc.getName());
         }
     
