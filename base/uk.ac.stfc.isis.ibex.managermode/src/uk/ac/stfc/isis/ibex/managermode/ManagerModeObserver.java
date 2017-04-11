@@ -60,8 +60,12 @@ public abstract class ManagerModeObserver implements Closable {
     protected final SettableUpdatedValue<Color> color;
     protected final SettableUpdatedValue<Boolean> availability;
 
+    /**
+     * Constructor for a manager mode observer.
+     * @param observable the observable to use
+     */
     public ManagerModeObserver(
-            ForwardingObservable<Boolean> observable, String selfID) {
+            ForwardingObservable<Boolean> observable) {
         text = new SettableUpdatedValue<>();
         color = new SettableUpdatedValue<>();
         availability = new SettableUpdatedValue<>();
@@ -69,23 +73,45 @@ public abstract class ManagerModeObserver implements Closable {
         subscription = observable.addObserver(observer);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void close() {
         subscription.removeObserver();
     }
 
+    /**
+     * Called when the manager mode PV updates.
+     * @param value the new status of manager mode
+     */
     protected abstract void setManagerMode(Boolean value);
 
+    /**
+     * Called when the manager mode PV becomes disconnected.
+     */
     protected abstract void setUnknown();
 
+    /** 
+     * The updated value for the text.
+     * @return the updated value for the text
+     */
     public UpdatedValue<String> text() {
         return text;
     }
 
+    /**
+     * The updated value for the color.
+     * @return the updated value for the color
+     */
     public UpdatedValue<Color> color() {
         return color;
     }
 
+    /**
+     * The updated value for the availability.
+     * @return the updated value for the availability
+     */
     public UpdatedValue<Boolean> availability() {
         return availability;
     }

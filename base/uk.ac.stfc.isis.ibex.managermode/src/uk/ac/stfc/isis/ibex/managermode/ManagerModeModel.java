@@ -93,6 +93,11 @@ public final class ManagerModeModel extends ModelObject {
     /**
      * Used in unit tests to make sure there is a consistent start state for all
      * tests.
+     * 
+     * @param hasher an injected password hasher for unit tests
+     * @param writable an injected writable for unit tests
+     * @param observable an injected observable for unit tests
+     * @return an instance of the manager mode model with the given dependencies injected
      */
     public static ManagerModeModel getTestableInstance(PasswordHasher hasher, Writable<String> writable,
             ForwardingObservable<Boolean> observable) {
@@ -151,12 +156,16 @@ public final class ManagerModeModel extends ModelObject {
 
     }
 
+    /**
+     * Gets the manager mode observable.
+     * @return the manager mode observable
+     */
     public ManagerModeObservable getManagerModeObservable() {
         return managerModePv;
     }
 
     private void addObserver() {
-        new ManagerModeObserver(managerModePv.observable, managerModePv.self) {
+        new ManagerModeObserver(managerModePv.observable) {
 
             @Override
             protected void setManagerMode(Boolean value) {
@@ -183,12 +192,11 @@ public final class ManagerModeModel extends ModelObject {
      * Returns true if the instrument is in manager mode, false otherwise.
      * 
      * @return true if the instrument is in manager mode, false otherwise
-     * @throws IllegalStateException
-     *             if the PV isn't connected
+     * @throws ManagerModePvNotConnectedException if the manager mode pv is not connected
      */
-    public boolean isInManagerMode() {
+    public boolean isInManagerMode() throws ManagerModePvNotConnectedException {
         if (inManagerMode == null) {
-            throw new IllegalStateException("PV not connected. Please try again in a few moments.");
+            throw new ManagerModePvNotConnectedException("Manager mode PV not connected. Please try again in a few moments.");
         }
         return inManagerMode.booleanValue();
     }
