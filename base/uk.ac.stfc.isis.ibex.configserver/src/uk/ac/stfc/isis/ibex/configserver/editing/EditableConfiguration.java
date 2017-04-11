@@ -194,6 +194,8 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
     }
 
     private void updateComponents() {
+        Collection<EditableIoc> iocsBeforeUpdate = new ArrayList<EditableIoc>();
+        iocsBeforeUpdate.addAll(componentIocs);
         componentIocs.clear();
         for (Configuration comp : editableComponents.getSelected()) {
             for (Ioc ioc : comp.getIocs()) {
@@ -202,6 +204,7 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
                 componentIocs.add(compIoc);
             }
         }
+        firePropertyChange("iocs", componentIocs, iocsBeforeUpdate);
     }
 
     /**
@@ -412,7 +415,7 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
         Collection<EditableIoc> selectedIocs = new ArrayList<EditableIoc>();
         selectedIocs.addAll(configIocs);
         selectedIocs.addAll(componentIocs);
-        return selectedIocs;
+        return selectedIocs; // TODO actual getter and setter
     }
 
     // Add available macros to IOCs that are part of the configuration.
