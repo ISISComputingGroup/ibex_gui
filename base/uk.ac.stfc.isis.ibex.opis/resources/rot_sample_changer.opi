@@ -1154,7 +1154,7 @@ $(pv_value)</tooltip>
           <exp bool_exp="pv0===1">
             <value>true</value>
           </exp>
-          <pv trig="true">$(PV_ROOT):CALC_MOVE_FINISHED</pv>
+          <pv trig="true">$(PV_ROOT):STATUS_STRING</pv>
         </rule>
       </rules>
       <pv_value />
