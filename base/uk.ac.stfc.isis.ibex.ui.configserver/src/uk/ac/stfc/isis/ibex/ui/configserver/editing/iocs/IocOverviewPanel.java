@@ -164,7 +164,8 @@ public class IocOverviewPanel extends Composite {
         table.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseDoubleClick(MouseEvent e) {
-                if (table.getItemAtPoint(new Point(e.x, e.y)) != null) {
+                EditableIoc toEdit = table.getItemAtPoint(new Point(e.x, e.y));
+                if (toEdit != null && toEdit.isEditable()) {
                     openEditIocDialog(table.firstSelectedRow(), false);
                 }
             }
