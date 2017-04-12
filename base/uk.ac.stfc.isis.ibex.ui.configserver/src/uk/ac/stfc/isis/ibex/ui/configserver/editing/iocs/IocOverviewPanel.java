@@ -1,7 +1,7 @@
 
 /*
 * This file is part of the ISIS IBEX application.
-* Copyright (C) 2012-2015 Science & Technology Facilities Council.
+* Copyright (C) 2012-2017 Science & Technology Facilities Council.
 * All rights reserved.
 *
 * This program is distributed in the hope that it will be useful.
@@ -176,8 +176,10 @@ public class IocOverviewPanel extends Composite {
 
     private void setSelectedIocs(List<EditableIoc> selected) {
         if (selected.size() == 0) {
+            // No IOC selected
             return;
         } else if (selected.size() == 1) {
+            // Exactly one IOC selected
             btnEditIoc.setEnabled(true);
             if (editEnabled(selected)) {
                 readOnly = false;
@@ -188,6 +190,7 @@ public class IocOverviewPanel extends Composite {
             }
             selectedIocRb.setText(table.firstSelectedRow().getName());
         } else {
+            // Multiple IOCs selected
             btnEditIoc.setEnabled(false);
             selectedIocRb.setText("(Multiple)");
         }

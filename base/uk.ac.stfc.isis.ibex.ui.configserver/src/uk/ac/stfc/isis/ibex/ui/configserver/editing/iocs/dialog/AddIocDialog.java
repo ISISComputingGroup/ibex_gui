@@ -1,6 +1,6 @@
  /*
  * This file is part of the ISIS IBEX application.
- * Copyright (C) 2012-2016 Science & Technology Facilities Council.
+ * Copyright (C) 2012-2017 Science & Technology Facilities Council.
  * All rights reserved.
  *
  * This program is distributed in the hope that it will be useful.
@@ -41,7 +41,7 @@ import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableIoc;
 
 /**
- *
+ * Dialog for adding a new IOC to a config and initialising its settings.
  */
 public class AddIocDialog extends IocDialog {
 
@@ -50,23 +50,25 @@ public class AddIocDialog extends IocDialog {
     private AddPanelViewModel addViewModel;
 
     /**
-     * @param parent
-     * @param config
-     * @param ioc
+     * Constructor for the dialog.
+     * 
+     * @param parent The parent dialog
+     * @param config The configuration being edited
+     * @param ioc The IOC being edited
      */
     public AddIocDialog(Shell parent, EditableConfiguration config, EditableIoc ioc) {
         super(parent, config, ioc, false);
         this.addViewModel = new AddPanelViewModel(config.getAvailableIocs());
     }
 
-    SelectionListener nextListener = new SelectionAdapter() {
+    private SelectionListener nextListener = new SelectionAdapter() {
         @Override
         public void widgetSelected(SelectionEvent e) {
             nextPage();
         }
     };
 
-    SelectionListener prevListener = new SelectionAdapter() {
+    private SelectionListener prevListener = new SelectionAdapter() {
         @Override
         public void widgetSelected(SelectionEvent e) {
             previousPage();
