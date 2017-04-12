@@ -52,6 +52,8 @@ public class AlarmView extends AlarmTreeView {
      * 
      * The view comes from CSStudio, we just append our own button onto it in
      * this method
+     * 
+     * @param parent the parent composite
      */
     @Override
     public void createPartControl(final Composite parent) {
