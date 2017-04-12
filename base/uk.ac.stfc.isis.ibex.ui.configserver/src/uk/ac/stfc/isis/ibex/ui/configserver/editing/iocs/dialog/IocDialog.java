@@ -21,26 +21,20 @@
  */
 package uk.ac.stfc.isis.ibex.ui.configserver.editing.iocs.dialog;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.util.HashMap;
 import java.util.Map;
 
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.TitleAreaDialog;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.custom.StackLayout;
-import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
-
-import com.google.common.base.Strings;
+import org.eclipse.swt.widgets.TabFolder;
 
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableIoc;
@@ -50,60 +44,19 @@ import uk.ac.stfc.isis.ibex.validators.MessageDisplayer;
  * Dialog window for adding and editing IOCs.
  */
 public class IocDialog extends TitleAreaDialog implements MessageDisplayer {
-    EditableConfiguration config;
-    boolean isNew;
+    protected EditableConfiguration config;
 
-    Button btnPrev;
-    Button btnOk;
-    Composite content;
-    StackLayout stack;
-    AddPanel addIocPanel;
-    EditPanel editIocPanel;
-    private TempEditableIoc tempIoc;
-    private AddPanelViewModel addViewModel;
+    protected Button btnPrev;
+    protected Button btnOk;
+    protected Composite content;
+    protected EditPanel editIocPanel;
+    protected TempEditableIoc tempIoc;
 
     /** Error messages that are displayed. <Source, message> */
-    private Map<String, String> errorMessages = new HashMap<String, String>();
+    protected Map<String, String> errorMessages = new HashMap<String, String>();
 
-    private static final Display DISPLAY = Display.getCurrent();
-
-    SelectionListener nextListener = new SelectionAdapter() {
-        @Override
-        public void widgetSelected(SelectionEvent e) {
-            nextPage();
-        }
-    };
-
-    SelectionListener prevListener = new SelectionAdapter() {
-        @Override
-        public void widgetSelected(SelectionEvent e) {
-            previousPage();
-        }
-    };
-
-    /**
-     * Sets dialog content to the first page.
-     */
-    private void previousPage() {
-        updateStack(addIocPanel);
-        btnPrev.setVisible(false);
-        btnOk.addSelectionListener(nextListener);
-        btnOk.setData(IDialogConstants.NO_ID);
-        btnOk.setText("Next");
-    }
-
-    /**
-     * Sets dialog content to the second page.
-     */
-    private void nextPage() {
-        tempIoc = addViewModel.getSelectedIoc();
-        editIocPanel.setIOC(tempIoc);
-        updateStack(editIocPanel);
-        btnPrev.setVisible(true);
-        btnOk.removeSelectionListener(nextListener);
-        btnOk.setData(IDialogConstants.OK_ID);
-        btnOk.setText(IDialogConstants.OK_LABEL);
-    }
+    protected final boolean readOnly;
+    protected static final Display DISPLAY = Display.getCurrent();
 
     /**
      * Constructor for the IOC dialog.
@@ -114,87 +67,39 @@ public class IocDialog extends TitleAreaDialog implements MessageDisplayer {
      *            The configuration currently being edited.
      * @param ioc
      *            The IOC to add.
-     * @param isNew
-     *            Flag indicating whether IOC to edit is newly added or
-     *            pre-existing.
      */
-    public IocDialog(Shell parent, EditableConfiguration config, EditableIoc ioc, boolean isNew) {
+    public IocDialog(Shell parent, EditableConfiguration config, EditableIoc ioc, boolean readOnly) {
         super(parent);
-        this.isNew = isNew;
         this.config = config;
-        this.addViewModel = new AddPanelViewModel(config.getAvailableIocs());
         this.tempIoc = new TempEditableIoc(ioc);
+        this.readOnly = readOnly;
     }
 
     @Override
     protected void createButtonsForButtonBar(Composite parent) {
-        if (isNew) {
-            // Make IOC selection page available if new IOC.
-            btnPrev = createButton(parent, IDialogConstants.NO_ID, "Previous", false);
-            btnPrev.addSelectionListener(prevListener);
-            btnPrev.setVisible(false);
-
-            btnOk = createButton(parent, IDialogConstants.NO_ID, "Next", false);
-            btnOk.addSelectionListener(nextListener);
-            btnOk.setEnabled(false);
-        } else {
-            // Only edit page is relevant if pre-existing IOC.
-            btnOk = createButton(parent, IDialogConstants.OK_ID, IDialogConstants.OK_LABEL, false);
-        }
-
+        // Only edit page is relevant if pre-existing IOC.
+        btnOk = createButton(parent, IDialogConstants.OK_ID, IDialogConstants.OK_LABEL, false);
         createButton(parent, IDialogConstants.CANCEL_ID, IDialogConstants.CANCEL_LABEL, false);
         btnOk.setFocus();
-
-        // Disable OK button if no IOC is selected.
-        addViewModel.addPropertyChangeListener("selectedName", new PropertyChangeListener() {
-
-            @Override
-            public void propertyChange(PropertyChangeEvent evt) {
-                String name = (String) evt.getNewValue();
-                if (!Strings.isNullOrEmpty(name)) {
-                    btnOk.setEnabled(true);
-                    btnOk.setFocus();
-                } else {
-                    btnOk.setEnabled(false);
-                }
-            }
-        });
-
-        // Enables selection by double click
-        addViewModel.addPropertyChangeListener("confirmed", new PropertyChangeListener() {
-
-            @Override
-            public void propertyChange(PropertyChangeEvent evt) {
-                nextPage();
-            }
-        });
     }
 
     @Override
     protected Control createDialogArea(Composite parent) {
         content = new Composite(parent, SWT.NONE);
         content.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-        stack = new StackLayout();
-        content.setLayout(stack);
-
-        addIocPanel = new AddPanel(content, SWT.NONE, addViewModel);
-        addIocPanel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+        content.setLayout(new GridLayout(1, false));
 
         editIocPanel = new EditPanel(content, SWT.NONE, this);
         editIocPanel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
         editIocPanel.setIOC(tempIoc);
 
-        if (isNew) {
-            stack.topControl = addIocPanel;
-            this.setTitle("Add IOC");
-        } else {
-            stack.topControl = editIocPanel;
-            this.setTitle("Edit IOC");
-        }
+        this.setTitle("Edit IOC");
 
         content.layout();
 
-        return addIocPanel;
+        recursiveSetEnabled(this.editIocPanel, !readOnly);
+
+        return editIocPanel;
     }
 
     @Override
@@ -225,31 +130,23 @@ public class IocDialog extends TitleAreaDialog implements MessageDisplayer {
     }
 
     /**
-     * Method for swapping content in the dialog window when moving between
-     * pages.
-     * 
-     * @param top
-     *            The panel to be displayed.
-     */
-    private void updateStack(final Control top) {
-        DISPLAY.asyncExec(new Runnable() {
-            @Override
-            public void run() {
-                stack.topControl = top;
-                content.layout();
-            }
-        });
-    }
-
-    /**
      * Update IOC and add to configuration when confirming changes.
      */
     @Override
     protected void okPressed() {
         tempIoc.saveIoc();
-        if (isNew) {
-            config.addIoc(tempIoc);
-        }
         super.okPressed();
+    }
+
+    private void recursiveSetEnabled(Control control, boolean enabled) {
+        if (control instanceof Composite) {
+            Composite comp = (Composite) control;
+            for (Control c : comp.getChildren()) {
+                recursiveSetEnabled(c, enabled);
+            }
+        }
+        if (!(control.getParent() instanceof TabFolder)) {
+            control.setEnabled(enabled);
+        }
     }
 }

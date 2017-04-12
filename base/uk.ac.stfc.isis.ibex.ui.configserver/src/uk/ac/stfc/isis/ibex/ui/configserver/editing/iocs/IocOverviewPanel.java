@@ -43,6 +43,7 @@ import org.eclipse.swt.widgets.Text;
 
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableIoc;
+import uk.ac.stfc.isis.ibex.ui.configserver.editing.iocs.dialog.AddIocDialog;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.iocs.dialog.IocDialog;
 import uk.ac.stfc.isis.ibex.validators.MessageDisplayer;
 
@@ -224,8 +225,13 @@ public class IocOverviewPanel extends Composite {
 	}
 
     private void openEditIocDialog(EditableIoc toEdit, boolean isBlank) {
-        IocDialog dialog = new IocDialog(getShell(), config, toEdit, isBlank);
-        dialog.open();
+        if (isBlank) {
+            IocDialog dialog = new AddIocDialog(getShell(), config, toEdit);
+            dialog.open();
+        } else {
+            IocDialog dialog = new IocDialog(getShell(), config, toEdit, false);
+            dialog.open();
+        }
     }
     
     private void deleteSelected() {
