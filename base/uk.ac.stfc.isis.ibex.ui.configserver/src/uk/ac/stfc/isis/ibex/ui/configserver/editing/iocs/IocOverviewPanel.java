@@ -63,6 +63,7 @@ public class IocOverviewPanel extends Composite {
 	private final Display display = Display.getCurrent();
 
     private static final int BUTTON_WIDTH = 100;
+    private boolean readOnly;
 
 	private final PropertyChangeListener updateIocs = new PropertyChangeListener() {
 		@Override
@@ -134,7 +135,7 @@ public class IocOverviewPanel extends Composite {
             @Override
             public void widgetSelected(SelectionEvent e) {
                 EditableIoc added = new EditableIoc("");
-                openEditIocDialog(added, true);
+                openIocDialog(added, true);
             }
         });
 
@@ -142,7 +143,7 @@ public class IocOverviewPanel extends Composite {
 
             @Override
             public void widgetSelected(SelectionEvent e) {
-                openEditIocDialog(table.firstSelectedRow(), false);
+                openIocDialog(table.firstSelectedRow(), false);
             }
         });
         
@@ -166,8 +167,8 @@ public class IocOverviewPanel extends Composite {
             @Override
             public void mouseDoubleClick(MouseEvent e) {
                 EditableIoc toEdit = table.getItemAtPoint(new Point(e.x, e.y));
-                if (toEdit != null && toEdit.isEditable()) {
-                    openEditIocDialog(table.firstSelectedRow(), false);
+                if (toEdit != null) {
+                    openIocDialog(table.firstSelectedRow(), false);
                 }
             }
         });
@@ -177,7 +178,14 @@ public class IocOverviewPanel extends Composite {
         if (selected.size() == 0) {
             return;
         } else if (selected.size() == 1) {
-            btnEditIoc.setEnabled(editEnabled(selected));
+            btnEditIoc.setEnabled(true);
+            if (editEnabled(selected)) {
+                readOnly = false;
+                btnEditIoc.setText("Edit IOC");
+            } else {
+                readOnly = true;
+                btnEditIoc.setText("View IOC");
+            }
             selectedIocRb.setText(table.firstSelectedRow().getName());
         } else {
             btnEditIoc.setEnabled(false);
@@ -224,12 +232,12 @@ public class IocOverviewPanel extends Composite {
 		});
 	}
 
-    private void openEditIocDialog(EditableIoc toEdit, boolean isBlank) {
+    private void openIocDialog(EditableIoc toEdit, boolean isBlank) {
         if (isBlank) {
             IocDialog dialog = new AddIocDialog(getShell(), config, toEdit);
             dialog.open();
         } else {
-            IocDialog dialog = new IocDialog(getShell(), config, toEdit, false);
+            IocDialog dialog = new IocDialog(getShell(), config, toEdit, readOnly);
             dialog.open();
         }
     }
