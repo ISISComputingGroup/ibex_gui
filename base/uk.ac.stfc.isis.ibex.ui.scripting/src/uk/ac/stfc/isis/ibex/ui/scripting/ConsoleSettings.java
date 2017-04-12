@@ -22,51 +22,31 @@
  */
 package uk.ac.stfc.isis.ibex.ui.scripting;
 
-import org.eclipse.ui.IPerspectiveDescriptor;
-import org.eclipse.ui.IWorkbenchPage;
-import org.eclipse.ui.PlatformUI;
-import org.python.pydev.shared_interactive_console.console.ui.ScriptConsoleManager;
-
 import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
 import uk.ac.stfc.isis.ibex.instrument.InstrumentInfoReceiver;
-import uk.ac.stfc.isis.ibex.ui.Utils;
+import uk.ac.stfc.isis.ibex.ui.PerspectiveReopener;
 
 /**
  * 
  */
 public class ConsoleSettings implements InstrumentInfoReceiver {
-
-    private boolean reopenConsole;
+    
+    private PerspectiveReopener scriptingPerspectiveReopener = new PerspectiveReopener(Perspective.ID);
 
     /**
      * @param instrument
      */
     @Override
     public void setInstrument(InstrumentInfo instrument) {
-        if (reopenConsole) {
-            Consoles.getDefault().createConsole();
-        }
+        scriptingPerspectiveReopener.reopenPerspective();
     }
 
     /**
      * @param instrument
      */
     @Override
-    public void preSetInstrument(InstrumentInfo instrument) {
-        reopenConsole = false;
-        IWorkbenchPage activePage = Utils.getActivePage();
-        if (activePage == null) {
-            return;
-        }
-        ScriptConsoleManager.getInstance().closeAll();
-
-        IPerspectiveDescriptor scriptingPerspective =
-                PlatformUI.getWorkbench().getPerspectiveRegistry().findPerspectiveWithId(Perspective.ID);
-        if (activePage.getPerspective() == scriptingPerspective) {
-            reopenConsole = true;
-        } else {
-            activePage.closePerspective(scriptingPerspective, false, false);
-        }
+    public void preSetInstrument(InstrumentInfo instrument) {       
+        scriptingPerspectiveReopener.closePerspective();
     }
 
     /**
