@@ -20,7 +20,7 @@
 package uk.ac.stfc.isis.ibex.dae.tests.periods;
 
 import static org.hamcrest.CoreMatchers.*;
-import static org.junit.Assert.assertThat;
+import static org.junit.Assert.*;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -138,6 +138,16 @@ public class WritingXmlFromPeriodSettingsTest extends FileReadingTest {
 		
 		assertThat(periodSettings.getPeriodType(), is(newValue));		
 	}
+	
+	@Test
+    public void period_control_type_is_not_updated_if_null() {
+
+        assertNotEquals(periodSettings.getPeriodType(), null);
+        periodSettings.setPeriodType(null);
+        reloadSettingsFromCurrentValues();
+        
+        assertNotEquals(periodSettings.getPeriodType(), null);       
+    }
 	
 	@Test
 	public void software_periods_is_updated() {	

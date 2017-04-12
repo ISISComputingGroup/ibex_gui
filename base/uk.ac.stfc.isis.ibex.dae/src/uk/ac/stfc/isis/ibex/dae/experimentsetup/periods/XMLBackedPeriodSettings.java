@@ -91,6 +91,12 @@ public class XMLBackedPeriodSettings extends PeriodSettings {
 	
 	@Override
 	public void setPeriodType(PeriodControlType value) {
+	    if (value == null) {
+	        /**
+	         * If the XML gives us an unrecognisable period type that comes to us as null, ignore it.
+	         */
+	        return;
+	    }
 		super.setPeriodType(value);
 		periodType.setValue(value);
 	}
