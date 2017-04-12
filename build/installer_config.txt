@@ -1,6 +1,0 @@
-;!@Install@!UTF-8!
-Title="IBEX Client Installer"
-ExtractTitle="Installing IBEX Client..."
-OverwriteMode="2"
-RunProgram="install_client_zip.bat"
-;!@InstallEnd@!

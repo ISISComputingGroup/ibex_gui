@@ -23,6 +23,7 @@
 package uk.ac.stfc.isis.ibex.ui;
 
 import org.apache.logging.log4j.Logger;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IPerspectiveDescriptor;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PlatformUI;
@@ -50,41 +51,66 @@ public class PerspectiveReopener {
 
     /**
      * Close the perspective.
-     * 
      */
-    public void closePerspective() {
+    public synchronized void closePerspective() {
 
-        IWorkbenchPage activePage = Utils.getActivePage();
+        final Runnable closePerspectiveTask = new Runnable() {
+            @Override
+            public void run() {
+                
+                final IWorkbenchPage activePage = Utils.getActivePage();
+        
+                if (activePage == null) {
+                    // no active page so nothing to close
+                    perspectiveWasOpen = false;
+                    return;
+                }
+        
+                final IPerspectiveDescriptor descriptor =
+                        PlatformUI.getWorkbench().getPerspectiveRegistry().findPerspectiveWithId(perspectiveID);
+                IPerspectiveDescriptor alarmPerspective =
+                        PlatformUI.getWorkbench().getPerspectiveRegistry().findPerspectiveWithId(perspectiveID);
+                perspectiveWasOpen = (activePage.getPerspective() == alarmPerspective);
 
-        if (activePage == null) {
-            // no active page so nothing to close
-            perspectiveWasOpen = false;
-            return;
-        }
-
-        IPerspectiveDescriptor descriptor =
-                PlatformUI.getWorkbench().getPerspectiveRegistry().findPerspectiveWithId(perspectiveID);
-        IPerspectiveDescriptor alarmPerspective =
-                PlatformUI.getWorkbench().getPerspectiveRegistry().findPerspectiveWithId(perspectiveID);
-        perspectiveWasOpen = (activePage.getPerspective() == alarmPerspective);
-        activePage.closePerspective(descriptor, true, true);
+                activePage.closePerspective(descriptor, true, true);
+            }
+        };
+        
+        runOnGuiThread(closePerspectiveTask);
     }
 
     /**
      * If the last time close perspective was called it closed the perspective
      * then reopen it now.
      */
-    public void reopenPerspective() {
-        if (perspectiveWasOpen) {
-            try {
-                PlatformUI.getWorkbench().showPerspective(perspectiveID,
-                        PlatformUI.getWorkbench().getActiveWorkbenchWindow());
-            } catch (WorkbenchException ex) {
-                LOG.error("Error reopening alarm perspective.");
-                LOG.catching(ex);
-            }
-
+    public synchronized void reopenPerspective() {
+        
+        if (!perspectiveWasOpen) {
+            return;
         }
-
+            
+        final Runnable reopenPerspectiveTask = new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    PlatformUI.getWorkbench().showPerspective(perspectiveID,
+                            PlatformUI.getWorkbench().getActiveWorkbenchWindow());
+                } catch (WorkbenchException ex) {
+                    LOG.error("Error reopening alarm perspective.");
+                    LOG.catching(ex);
+                }  
+            }            
+        };
+        
+        runOnGuiThread(reopenPerspectiveTask);
+    }
+    
+    /**
+     * Helper method for running a task synchronously on the GUI thread.
+     * @param task a runnable representing the task to be executed
+     */
+    private static void runOnGuiThread(final Runnable task) {
+        // Run synchronously because we must finish closing before we reopen perspectives.
+        Display.getDefault().syncExec(task);
     }
 }

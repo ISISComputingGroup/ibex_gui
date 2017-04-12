@@ -1,4 +1,3 @@
-
 /*
 * This file is part of the ISIS IBEX application.
 * Copyright (C) 2012-2015 Science & Technology Facilities Council.
@@ -37,12 +36,13 @@ public class JsonDeserialisingConverter<T> extends Converter<String, T> {
 	private final Class<T> classOfT;
 
     /**
-     * Constructor.
-     * 
+     * Instantiates a new json deserialising converter where the gson instance
+     * is specified.
+     *
      * @param classOfT
-     *            the class of T
+     *            the class of the final converted json
      * @param gson
-     *            the gson
+     *            the gson deserialisation library
      */
 	public JsonDeserialisingConverter(Class<T> classOfT, Gson gson) {
 		this.gson = gson;
@@ -50,6 +50,9 @@ public class JsonDeserialisingConverter<T> extends Converter<String, T> {
 	}
 	
     /**
+     * Instantiates a new json deserialising converter using a new
+     * deserialisation library.
+     *
      * Constructor.
      * 
      * @param outputType
@@ -81,11 +84,13 @@ public class JsonDeserialisingConverter<T> extends Converter<String, T> {
 	}
 	
     /**
-     * Parses json.
-     * 
+     * Parses the json from a string to the class.
+     *
      * @param json
-     *            the json to parse
-     * @return the parsed json
+     *            the json text to parse
+     * @return parsed json as an object of the correct type T
+     * @throws JsonSyntaxException
+     *             if there is a problem converting the object
      */
     protected T parseJson(String json) {
 		return gson.fromJson(json, classOfT);

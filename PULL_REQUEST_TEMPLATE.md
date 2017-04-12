@@ -17,10 +17,12 @@
 - [ ] Is the code of an acceptable quality?
 - [ ] Does the code conform to the [coding standards](https://github.com/ISISComputingGroup/ibex_developers_manual/wiki/GUI-Coding-Conventions)? Is it well structured with small focussed classes/methods/functions?
 - [ ] Are there unit tests in place? Are the unit tests small and test the a class in isolation?
-- [ ] Are there [system tests](https://github.com/ISISComputingGroup/ibex_developers_manual/wiki/System-Testing-with-RCPTT) in place? Do they test a minimal set of functionality and leave the gui as close as possible to its original state?
+- [ ] Are there automated [system tests](https://github.com/ISISComputingGroup/ibex_developers_manual/wiki/System-Testing-with-RCPTT) in place? Do they test a minimal set of functionality and leave the gui as close as possible to its original state?
+- [ ] Has the [manual system tests spreadsheet](https://github.com/ISISComputingGroup/ibex_developers_manual/wiki/Manual-system-tests) been updated?
+    - Manual system tests for the functionality should be added if there are no automated tests
+    - Manual system tests can be removed from the template if they are covered by suitable automated tests
 - [ ] Did any existing system test break as a result of the current changes? 
 - [ ] Have the changes been documented in the [release notes](https://github.com/ISISComputingGroup/IBEX/wiki/ReleaseNotes_Dev). If so, do they describe the changes appropriately?
-- [ ] Has the [manual system tests spreadsheet](https://github.com/ISISComputingGroup/ibex_developers_manual/wiki/Manual-system-tests) been updated?
 - [ ] If an OPI has been modified, does it conform to the [style guidelines](https://github.com/ISISComputingGroup/ibex_developers_manual/wiki/OPI-Creation)? There is a script called `check_opi_format.py` to help with this.
 
 ### Functional Tests
