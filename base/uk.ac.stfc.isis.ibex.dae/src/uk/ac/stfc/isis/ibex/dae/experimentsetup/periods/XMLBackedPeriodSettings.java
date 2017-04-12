@@ -33,6 +33,9 @@ import uk.ac.stfc.isis.ibex.dae.xml.XmlFile;
 import uk.ac.stfc.isis.ibex.dae.xml.XmlNode;
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
 
+/**
+ * Gets the DAE period settings from XML.
+ */
 public class XMLBackedPeriodSettings extends PeriodSettings {
 
     private static final Logger LOG = IsisLog.getLogger(XMLBackedPeriodSettings.class);
@@ -51,6 +54,9 @@ public class XMLBackedPeriodSettings extends PeriodSettings {
 	
 	private final ArrayList<XmlBackedPeriod> periods = new ArrayList<>();
 	
+	/**
+	 * Constructor.
+	 */
 	public XMLBackedPeriodSettings() {
 		nodes.add(setupSource);
 		nodes.add(periodFile);
@@ -68,51 +74,75 @@ public class XMLBackedPeriodSettings extends PeriodSettings {
 		xmlFile = new XmlFile(nodes);
 	}
 	
+	/**
+	 * Sets the xml.
+	 * @param xml the xml to set
+	 */
 	public void setXml(String xml) {
 		xmlFile.setXml(xml);
 		initialiseFromXml();
 	}
 
+	/**
+	 * Gets the xml from file.
+	 * @return the xml
+	 */
 	public String xml() {
 		return xmlFile.toString();
 	}	
 	
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void setSetupSource(PeriodSetupSource value) {
 		super.setSetupSource(value);
 		setupSource.setValue(value);
 	}
 	
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void setNewPeriodFile(String value) {
 		super.setNewPeriodFile(value);
 		periodFile.setValue(value);
 	}
 	
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void setPeriodType(PeriodControlType value) {
 	    if (value == null) {
-	        /**
-	         * If the XML gives us an unrecognisable period type that comes to us as null, ignore it.
-	         */
+	        LOG.info("Error, attempted to set a null PeriodControlType.");
 	        return;
 	    }
 		super.setPeriodType(value);
 		periodType.setValue(value);
 	}
 	
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void setSoftwarePeriods(int value) {
 		super.setSoftwarePeriods(value);
 		softwarePeriods.setValue(value);
 	}
 	
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void setHardwarePeriods(double value) {
 		super.setHardwarePeriods(value);
 		hardwarePeriods.setValue(value);
 	}
 	
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void setOutputDelay(double value) {
 		super.setOutputDelay(value);

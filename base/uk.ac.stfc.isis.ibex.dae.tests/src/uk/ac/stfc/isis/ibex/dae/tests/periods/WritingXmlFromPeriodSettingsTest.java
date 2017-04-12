@@ -142,10 +142,14 @@ public class WritingXmlFromPeriodSettingsTest extends FileReadingTest {
 	@Test
     public void period_control_type_is_not_updated_if_null() {
 
+	    // Arrange: Check that null is not the current period type.
         assertNotEquals(periodSettings.getPeriodType(), null);
+        
+        // Act: Try to set a period type as null.
         periodSettings.setPeriodType(null);
         reloadSettingsFromCurrentValues();
         
+        // Assert: Check that null has been ignored.
         assertNotEquals(periodSettings.getPeriodType(), null);       
     }
 	
