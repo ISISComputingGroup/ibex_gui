@@ -19,8 +19,6 @@
 
 package uk.ac.stfc.isis.ibex.ui.alarm;
 
-import org.eclipse.swt.widgets.Display;
-
 import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
 import uk.ac.stfc.isis.ibex.instrument.InstrumentInfoReceiver;
 import uk.ac.stfc.isis.ibex.ui.PerspectiveReopener;
@@ -65,14 +63,7 @@ public class AlarmsInstrumentInfoReceiver implements InstrumentInfoReceiver {
      */
     @Override
     public void preSetInstrument(InstrumentInfo instrument) {
-        // Must be run on the GUI thread as it won't close the perspective if
-        // called from a non-GUI thread.
-        Display.getDefault().asyncExec(new Runnable() {
-            @Override
-            public void run() {
-                alarmPerspectiveReopener.closePerspective();
-            }
-        });
+        alarmPerspectiveReopener.closePerspective();
     }
 
 
@@ -84,13 +75,6 @@ public class AlarmsInstrumentInfoReceiver implements InstrumentInfoReceiver {
      */
     @Override
     public void postSetInstrument(InstrumentInfo instrument) {
-        // Must be run on the GUI thread as it won't reopen the perspective if
-        // called from a non-GUI thread.
-        Display.getDefault().asyncExec(new Runnable() {
-            @Override
-            public void run() {
-                alarmPerspectiveReopener.reopenPerspective();
-            }
-        });
+        alarmPerspectiveReopener.reopenPerspective();
     }
 }
