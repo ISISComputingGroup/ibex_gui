@@ -34,7 +34,7 @@ public class ConsoleSettings implements InstrumentInfoReceiver {
     private PerspectiveReopener scriptingPerspectiveReopener = new PerspectiveReopener(Perspective.ID);
 
     /**
-     * @param instrument
+     * {@inheritDoc}
      */
     @Override
     public void setInstrument(InstrumentInfo instrument) {
@@ -42,7 +42,7 @@ public class ConsoleSettings implements InstrumentInfoReceiver {
     }
 
     /**
-     * @param instrument
+     * {@inheritDoc}
      */
     @Override
     public void preSetInstrument(InstrumentInfo instrument) {       
@@ -50,11 +50,11 @@ public class ConsoleSettings implements InstrumentInfoReceiver {
     }
 
     /**
-     * @param instrument
+     * {@inheritDoc}
      */
     @Override
     public void postSetInstrument(InstrumentInfo instrument) {
-        // nothing left to do
+        // no action required.
     }
 
 }

@@ -51,7 +51,6 @@ public class PerspectiveReopener {
 
     /**
      * Close the perspective.
-     * 
      */
     public synchronized void closePerspective() {
 
@@ -106,6 +105,10 @@ public class PerspectiveReopener {
         runOnGuiThread(reopenPerspectiveTask);
     }
     
+    /**
+     * Helper method for running a task synchronously on the GUI thread.
+     * @param task a runnable representing the task to be executed
+     */
     private static void runOnGuiThread(final Runnable task) {
         // Run synchronously because we must finish closing before we reopen perspectives.
         Display.getDefault().syncExec(task);
