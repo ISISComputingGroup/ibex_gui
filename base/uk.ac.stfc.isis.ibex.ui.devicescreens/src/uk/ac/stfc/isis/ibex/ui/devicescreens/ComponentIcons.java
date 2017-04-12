@@ -84,7 +84,6 @@ public final class ComponentIcons {
                 return "moving_monitor";
             case LINEARSAMPLECHANGER:
             case SAMPLECHANGER:
-            case ROT_SAMPLE_CHANGER:
                 return "sample_changer";
             case ANALYSER:
                 return "analyser";
@@ -129,6 +128,8 @@ public final class ComponentIcons {
                 return "neocera";
             case KHLY2400:
                 return "keithley2400";
+            case ROT_SAMPLE_CHANGER:
+                return "rotating_sample_changer";
             default:
                 return "cog";
         }
