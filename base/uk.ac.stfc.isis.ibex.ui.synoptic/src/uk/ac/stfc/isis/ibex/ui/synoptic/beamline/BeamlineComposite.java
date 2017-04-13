@@ -101,7 +101,7 @@ public abstract class BeamlineComposite extends Composite  {
             @Override
             public void handleEvent(Event event) {
                 if (presenter.isValidTarget(target)) {
-                    presenter.navigateTo(target.name());
+                    presenter.navigateTo(target);
                 }
             }
         });

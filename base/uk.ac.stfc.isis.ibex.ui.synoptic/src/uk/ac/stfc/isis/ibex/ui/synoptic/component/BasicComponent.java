@@ -34,10 +34,11 @@ import uk.ac.stfc.isis.ibex.synoptic.model.Component;
 import uk.ac.stfc.isis.ibex.targets.Target;
 import uk.ac.stfc.isis.ibex.ui.synoptic.beamline.BeamlineComposite;
 
-@SuppressWarnings("checkstyle:magicnumber")
+
 /**
  * A basic beamline component that.
  */
+@SuppressWarnings("checkstyle:magicnumber")
 public class BasicComponent extends BeamlineComposite {
 
 	private Label image;

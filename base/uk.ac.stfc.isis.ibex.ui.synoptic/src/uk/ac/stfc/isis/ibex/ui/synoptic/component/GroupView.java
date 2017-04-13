@@ -30,6 +30,9 @@ import uk.ac.stfc.isis.ibex.synoptic.model.Component;
 import uk.ac.stfc.isis.ibex.ui.synoptic.beamline.BeamlineComposite;
 import uk.ac.stfc.isis.ibex.ui.synoptic.beamline.BeamlineCompositeContainer;
 
+/**
+ * A group view in a synoptic, that holds a number of components underneath it.
+ */
 @SuppressWarnings("checkstyle:magicnumber")
 public class GroupView extends BeamlineComposite {
 	private Composite groupPropertiesComposite;
@@ -44,6 +47,14 @@ public class GroupView extends BeamlineComposite {
 		this(parent, null);
 	}
 	
+    /**
+     * The constructor for this view.
+     * 
+     * @param parent
+     *            The parent composite that this belongs to.
+     * @param component
+     *            The component that this view points to.
+     */
 	public GroupView(Composite parent, Component component) {
 		super(parent, SWT.NONE);
 		GridLayout gridLayout = new GridLayout(1, false);

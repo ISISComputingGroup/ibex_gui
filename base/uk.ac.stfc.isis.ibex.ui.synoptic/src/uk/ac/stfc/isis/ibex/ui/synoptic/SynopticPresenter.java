@@ -152,37 +152,46 @@ public class SynopticPresenter extends ModelObject {
 	}
 
     /**
-     * Navigates to a target.
+     * Navigates to a target based on a name.
      * 
      * @param targetName
      *            the target to navigate to
      */
 	public void navigateTo(final String targetName) {
-		LOG.info(targetName + " requested");
 		if (targets.containsKey(targetName)) {
-			Target target = targets.get(targetName).item();
-			
-            LOG.info(target.name());
-
-			if (target instanceof OpiTarget) {
-				// Opi targets don't update the navigator.
-                try {
-                    SynopticOpiTargetView.displayOpi((OpiTarget) target);
-                } catch (OPIViewCreationException e) {
-                    LOG.catching(e);
-                }
-                return;
-			}
-
-			if (target instanceof PerspectiveTarget) {
-				// Perspective targets don't update the navigator.
-                switchPerspective((PerspectiveTarget) target);
-				return;
-			}
-
-			navigator.setCurrentTarget(targets.get(targetName));
+            navigateTo(targets.get(targetName).item());
 		}
 	}
+
+    /**
+     * Navigates to a target.
+     * 
+     * @param target
+     *            the target to navigate to.
+     */
+    public void navigateTo(final Target target) {
+        if (target instanceof GroupedComponentTarget) {
+            displayGroupTarget((GroupedComponentTarget) target);
+        }
+
+        if (target instanceof OpiTarget) {
+            // Opi targets don't update the navigator.
+            try {
+                SynopticOpiTargetView.displayOpi((OpiTarget) target);
+            } catch (OPIViewCreationException e) {
+                LOG.catching(e);
+            }
+            return;
+        }
+
+        if (target instanceof PerspectiveTarget) {
+            // Perspective targets don't update the navigator.
+            switchPerspective((PerspectiveTarget) target);
+            return;
+        }
+
+        navigator.setCurrentTarget(targets.get(target.name()));
+    }
 
     /**
      * Whether this target is valid.
