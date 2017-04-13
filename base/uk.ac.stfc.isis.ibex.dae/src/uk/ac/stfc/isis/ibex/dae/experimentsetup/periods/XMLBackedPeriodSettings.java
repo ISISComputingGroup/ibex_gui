@@ -96,6 +96,10 @@ public class XMLBackedPeriodSettings extends PeriodSettings {
 	 */
 	@Override
 	public void setSetupSource(PeriodSetupSource value) {
+	    if (value == null) {
+            LOG.info("Error, attempted to set a null PeriodSetupSource.");
+            return;
+        }
 		super.setSetupSource(value);
 		setupSource.setValue(value);
 	}

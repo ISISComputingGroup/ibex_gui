@@ -116,6 +116,20 @@ public class WritingXmlFromPeriodSettingsTest extends FileReadingTest {
 		assertThat(periodSettings.getSetupSource(), is(newValue));
 	}
 	
+	@Test
+    public void setup_source_is_not_updated_if_null() {
+
+        // Arrange: Check that null is not the current setup source.
+        assertNotEquals(periodSettings.getSetupSource(), null);
+        
+        // Act: Try to set a setup source as null.
+        periodSettings.setSetupSource(null);
+        reloadSettingsFromCurrentValues();
+        
+        // Assert: Check that null has been ignored.
+        assertNotEquals(periodSettings.getSetupSource(), null);       
+    }
+	
 
 	@Test
 	public void period_file_is_updated() {
