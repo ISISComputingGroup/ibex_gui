@@ -185,32 +185,24 @@ public class SynopticPresenter extends ModelObject {
 	}
 
     /**
-     * Whether this has target.
+     * Whether this target is valid.
      * 
-     * @param targetName
-     *            the target name
-     * @return true if this has the target
+     * @param target
+     *            the target to check
+     * @return true if this target is valid.
      */
-    public boolean hasTarget(String targetName) {
-        boolean hasTarget = false;
-
-        if (targets.containsKey(targetName)) {
-            Target target = targets.get(targetName).item();
-
-            if (target instanceof OpiTarget) {
-                // Empty targets are saved as "NONE" with an OpiTarget type.
-                // This is to keep track of if a target has been previously set,
-                // for the default selection.
-                String opiName = ((OpiTarget) target).opiName();
-                if (!opiName.equals("NONE")) {
-                    hasTarget = true;
-                }
-            } else if (target instanceof Target) {
-                hasTarget = true;
+    public boolean isValidTarget(Target target) {
+        if (target instanceof OpiTarget) {
+            // Empty targets are saved as "NONE" with an OpiTarget type.
+            // This is to keep track of if a target has been previously set,
+            // for the default selection.
+            String opiName = ((OpiTarget) target).opiName();
+            if (opiName.equals("NONE")) {
+                return false;
             }
         }
 
-        return hasTarget;
+        return true;
     }
 
 	/**

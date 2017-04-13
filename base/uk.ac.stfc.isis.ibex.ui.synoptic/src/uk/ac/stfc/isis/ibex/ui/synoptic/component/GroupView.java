@@ -21,30 +21,18 @@ package uk.ac.stfc.isis.ibex.ui.synoptic.component;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CLabel;
-import org.eclipse.swt.graphics.Cursor;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Event;
-import org.eclipse.swt.widgets.Listener;
 import org.eclipse.wb.swt.SWTResourceManager;
 
 import uk.ac.stfc.isis.ibex.synoptic.model.Component;
-import uk.ac.stfc.isis.ibex.ui.synoptic.Activator;
-import uk.ac.stfc.isis.ibex.ui.synoptic.SynopticPresenter;
 import uk.ac.stfc.isis.ibex.ui.synoptic.beamline.BeamlineComposite;
 import uk.ac.stfc.isis.ibex.ui.synoptic.beamline.BeamlineCompositeContainer;
 
 @SuppressWarnings("checkstyle:magicnumber")
 public class GroupView extends BeamlineComposite {
-
-    private final Cursor handCursor = SWTResourceManager.getCursor(SWT.CURSOR_HAND);
-
-	private SynopticPresenter presenter = Activator.getDefault().presenter();
-	private String targetName;
-
 	private Composite groupPropertiesComposite;
-	private CLabel groupName;
 	private BeamlineCompositeContainer groupComponents;
 	private Component component;
 	
@@ -68,53 +56,26 @@ public class GroupView extends BeamlineComposite {
 		groupPropertiesComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		groupPropertiesComposite.setLayout(new GridLayout(1, false));
 		
-		groupName = new CLabel(this, SWT.BORDER | SWT.CENTER);
-		groupName.setForeground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
-		groupName.setFont(SWTResourceManager.getFont("Arial", 12, SWT.BOLD));
+        nameLabel = new CLabel(this, SWT.BORDER | SWT.CENTER);
+        nameLabel.setForeground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
+        nameLabel.setFont(SWTResourceManager.getFont("Arial", 12, SWT.BOLD));
 		GridData gdGroupName = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
 		gdGroupName.heightHint = 30;
 		gdGroupName.minimumHeight = 30;
-		groupName.setLayoutData(gdGroupName);
-		groupName.setAlignment(SWT.CENTER);
-		groupName.setBackground(SWTResourceManager.getColor(111, 94, 230));
-		
-		groupName.addListener(SWT.MouseEnter, new Listener() {	
-			@Override
-			public void handleEvent(Event event) {
-				setCursor(targetName == null ? null : handCursor);
-			}
-		});
-
-		groupName.addListener(SWT.MouseExit, new Listener() {	
-			@Override
-			public void handleEvent(Event event) {
-				setCursor(null);
-			}
-		});
-				
-		groupName.addListener(SWT.MouseUp, new Listener() {		
-			@Override
-			public void handleEvent(Event event) {
-				presenter.navigateTo(targetName);
-			}
-		});
-		
+        nameLabel.setLayoutData(gdGroupName);
+        nameLabel.setAlignment(SWT.CENTER);
+        nameLabel.setBackground(SWTResourceManager.getColor(111, 94, 230));
 		
 		groupComponents = new BeamlineCompositeContainer(this, SWT.NONE);
 		
 		if (component != null) {
-			setName(component);
+            setName(component.name());
 			setProperties(component);
 			setComponents(component);
 			if (component.target() != null) {
-				setTargetName(component.target().name());
+                setTarget(component.target());
 			}
 		}
-	}
-
-	private void setTargetName(String name) {
-		targetName = component.target().name();
-		groupName.setToolTipText(targetName);
 	}
 
 	@Override
@@ -122,21 +83,17 @@ public class GroupView extends BeamlineComposite {
         return component.components().isEmpty() ? nameControlCentreLine()
                 : componentsTargetLineHeight() + nameControlBottomLine();
 	}
-	
-	private void setName(Component component) {
-		groupName.setText(component.name());
-	}
 
 	private int componentsTargetLineHeight() {       
 		return groupComponents.getBounds().y + groupComponents.beamLineHeight();
 	}
 
 	private int nameControlCentreLine() {
-		return groupName.getBounds().y + groupName.getBounds().height / 2;
+        return nameLabel.getBounds().y + nameLabel.getBounds().height / 2;
 	}
 	
     private int nameControlBottomLine() {
-        return groupName.getBounds().y + groupName.getBounds().height;
+        return nameLabel.getBounds().y + nameLabel.getBounds().height;
     }
 
 	private void setProperties(Component component) {		
