@@ -22,21 +22,16 @@ package uk.ac.stfc.isis.ibex.ui.dae;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.wb.swt.ResourceManager;
 
+import uk.ac.stfc.isis.ibex.dae.Dae;
 import uk.ac.stfc.isis.ibex.ui.perspectives.BasePerspective;
 
 /**
  * The perspective that allows communications with the instrument DAE.
  */
 public class Perspective extends BasePerspective {
-
-    /**
-     * The perspective ID.
-     */
-	public static final String ID = "uk.ac.stfc.isis.ibex.ui.dae.perspective"; //$NON-NLS-1$
-
 	@Override
 	public String id() {
-		return ID;
+        return Dae.ID;
 	}
 
 	@Override

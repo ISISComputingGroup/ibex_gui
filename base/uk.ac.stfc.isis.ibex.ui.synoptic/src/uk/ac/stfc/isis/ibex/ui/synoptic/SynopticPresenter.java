@@ -176,7 +176,7 @@ public class SynopticPresenter extends ModelObject {
 
 			if (target instanceof PerspectiveTarget) {
 				// Perspective targets don't update the navigator.
-				switchPerspective(target);
+                switchPerspective((PerspectiveTarget) target);
 				return;
 			}
 
@@ -226,7 +226,7 @@ public class SynopticPresenter extends ModelObject {
         LOG.info("Displaying target: " + currentTarget);
 
 		if (currentTarget instanceof GroupedComponentTarget) {
-			displayGroupTarget(currentTarget);
+            displayGroupTarget((GroupedComponentTarget) currentTarget);
 		}
 
 		if (currentTarget instanceof OpiTarget) {
@@ -238,14 +238,13 @@ public class SynopticPresenter extends ModelObject {
 		}
 	}
 
-	private void displayGroupTarget(Target currentTarget) {
-		GroupedComponentTarget target = (GroupedComponentTarget) currentTarget;
+    private void displayGroupTarget(GroupedComponentTarget currentTarget) {
+		GroupedComponentTarget target = currentTarget;
 		setComponents(target.components());
 	}
 
-	private void switchPerspective(Target target) {
-		String id = uk.ac.stfc.isis.ibex.ui.perspectives.Activator.getDefault().perspectives().getID(target.name());
-		UI.getDefault().switchPerspective(id);
+    private void switchPerspective(PerspectiveTarget target) {
+        UI.getDefault().switchPerspective(target.getId());
 	}
 
 	/**
