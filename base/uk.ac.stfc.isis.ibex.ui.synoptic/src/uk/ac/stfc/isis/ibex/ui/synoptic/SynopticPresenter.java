@@ -224,8 +224,6 @@ public class SynopticPresenter extends ModelObject {
 	}
 
 	private void displayTarget(Target currentTarget) {
-        LOG.info("Displaying target: " + currentTarget);
-
 		if (currentTarget instanceof GroupedComponentTarget) {
             displayGroupTarget((GroupedComponentTarget) currentTarget);
 		}
