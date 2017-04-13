@@ -64,6 +64,8 @@ public class IocDialog extends TitleAreaDialog implements MessageDisplayer {
      *            The configuration currently being edited.
      * @param ioc
      *            The IOC to add.
+     * @param readOnly
+     *            Specifies whether the settings are editable
      */
     public IocDialog(Shell parent, EditableConfiguration config, EditableIoc ioc, boolean readOnly) {
         super(parent);
@@ -78,6 +80,9 @@ public class IocDialog extends TitleAreaDialog implements MessageDisplayer {
         btnOk = createButton(parent, IDialogConstants.OK_ID, IDialogConstants.OK_LABEL, false);
         createButton(parent, IDialogConstants.CANCEL_ID, IDialogConstants.CANCEL_LABEL, false);
         btnOk.setFocus();
+        if (readOnly) {
+            btnOk.setVisible(false);
+        }
     }
 
     @Override
