@@ -379,7 +379,7 @@ else:
 
 widget.setPropertyValue("text",status)
 
-if status == "System OK":
+if status.startswith("System OK"):
     widget.setPropertyValue("background_color",ColorFontUtil.getColorFromRGB(255,255,255));
 else:
     widget.setPropertyValue("background_color",ColorFontUtil.getColorFromRGB(255,127,127));]]></scriptText>
