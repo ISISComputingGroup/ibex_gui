@@ -1,5 +1,4 @@
-
-/*
+ /*
  * This file is part of the ISIS IBEX application.
  * Copyright (C) 2012-2016 Science & Technology Facilities Council.
  * All rights reserved.
@@ -20,41 +19,21 @@
 /**
  * 
  */
-package uk.ac.stfc.isis.ibex.ui.scripting;
-
-import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
-import uk.ac.stfc.isis.ibex.instrument.InstrumentInfoReceiver;
-import uk.ac.stfc.isis.ibex.ui.PerspectiveReopener;
+package uk.ac.stfc.isis.ibex.managermode;
 
 /**
+ * This exception is thrown when the manager mode PV is disconnected but a client requests to update it.
  * 
+ * Exception is Serializable but we don't care so suppress serial warning.
  */
-public class ConsoleSettings implements InstrumentInfoReceiver {
-    
-    private PerspectiveReopener scriptingPerspectiveReopener = new PerspectiveReopener(Perspective.ID);
+@SuppressWarnings("serial")
+public class ManagerModePvNotConnectedException extends Exception {
 
     /**
-     * {@inheritDoc}
+     * Constructor for an exception thrown when the manager mode PV is disconnected.
+     * @param message the message
      */
-    @Override
-    public void setInstrument(InstrumentInfo instrument) {
-        scriptingPerspectiveReopener.reopenPerspective();
+    public ManagerModePvNotConnectedException(String message) {
+        super(message);
     }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void preSetInstrument(InstrumentInfo instrument) {       
-        scriptingPerspectiveReopener.closePerspective();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void postSetInstrument(InstrumentInfo instrument) {
-        // no action required.
-    }
-
 }

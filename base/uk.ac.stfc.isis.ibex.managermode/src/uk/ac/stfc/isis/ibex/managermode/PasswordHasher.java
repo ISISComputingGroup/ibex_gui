@@ -76,7 +76,7 @@ public class PasswordHasher {
     /**
      * Creates a password hasher that expects a specific hash, used for unit tests.
      * 
-     * @param expected
+     * @param expectedHash
      *            the expected hash
      */
     public PasswordHasher(String expectedHash) {
@@ -135,7 +135,6 @@ public class PasswordHasher {
      *             available
      */
     public boolean isCorrectPassword(String password) throws InvalidKeySpecException, NoSuchAlgorithmException {
-        System.out.println(hash(password));
         return hash(password).equals(expectedHash);
     }
 }

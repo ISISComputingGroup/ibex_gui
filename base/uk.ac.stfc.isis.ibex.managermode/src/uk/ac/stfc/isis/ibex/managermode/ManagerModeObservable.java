@@ -26,8 +26,6 @@ import uk.ac.stfc.isis.ibex.epics.switching.ObservableFactory;
 import uk.ac.stfc.isis.ibex.epics.switching.OnInstrumentSwitch;
 import uk.ac.stfc.isis.ibex.instrument.InstrumentUtils;
 import uk.ac.stfc.isis.ibex.instrument.channels.BooleanChannel;
-import uk.ac.stfc.isis.ibex.instrument.internal.MachineName;
-import uk.ac.stfc.isis.ibex.instrument.internal.UserName;
 
 /**
  *
@@ -35,9 +33,10 @@ import uk.ac.stfc.isis.ibex.instrument.internal.UserName;
 public class ManagerModeObservable {
     private final ObservableFactory obsFactory;
 
+    /**
+     * The observable.
+     */
     public final ForwardingObservable<Boolean> observable;
-
-    public final String self = UserName.get() + "@" + MachineName.get();
 
     /**
      * Only instantiated from within this package.
@@ -49,6 +48,13 @@ public class ManagerModeObservable {
         observable = obsFactory.getSwitchableObservable(new BooleanChannel(), InstrumentUtils.addPrefix("CS:MANAGER"));
     }
 
+    /**
+     * Only instantiated from within this package.
+     * 
+     * Get the shared instance from ManagerModeModel instead.
+     * 
+     * @param observable an observable to use
+     */
     ManagerModeObservable(ForwardingObservable<Boolean> observable) {
         obsFactory = null;
         this.observable = observable;
