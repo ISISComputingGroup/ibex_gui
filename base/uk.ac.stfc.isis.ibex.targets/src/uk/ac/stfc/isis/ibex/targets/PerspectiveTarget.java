@@ -28,14 +28,19 @@ public class PerspectiveTarget extends Target {
     /**
      * Instantiates a new perspective target.
      * 
+     * @param name
+     *            the user friendly name of the target
      * @param id
      *            the id of the perspective to switch to
      */
-    public PerspectiveTarget(String id) {
-        super(id);
+    public PerspectiveTarget(String name, String id) {
+        super(name);
         this.id = id;
 	}
 
+    /**
+     * @return The ID of the perspective to switch to.
+     */
     public String getId() {
         return id;
     }

@@ -43,7 +43,7 @@ public enum ComponentType {
     /** Sample stack component type. */
 	SAMPLESTACK,
     /** DAE component type. */
-    DAE(new PerspectiveTarget(Dae.ID)),
+    DAE(new PerspectiveTarget("DAE", Dae.ID)),
     /** Danfysik component type. */
     DANFYSIK,
     /** CAEN component type. */
