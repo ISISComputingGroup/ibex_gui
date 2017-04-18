@@ -64,14 +64,12 @@ public class IocDialog extends TitleAreaDialog implements MessageDisplayer {
      *            The configuration currently being edited.
      * @param ioc
      *            The IOC to add.
-     * @param readOnly
-     *            Specifies whether the settings are editable
      */
-    public IocDialog(Shell parent, EditableConfiguration config, EditableIoc ioc, boolean readOnly) {
+    public IocDialog(Shell parent, EditableConfiguration config, EditableIoc ioc) {
         super(parent);
         this.config = config;
         this.tempIoc = new TempEditableIoc(ioc);
-        this.readOnly = readOnly;
+        this.readOnly = !ioc.isEditable();
     }
 
     @Override

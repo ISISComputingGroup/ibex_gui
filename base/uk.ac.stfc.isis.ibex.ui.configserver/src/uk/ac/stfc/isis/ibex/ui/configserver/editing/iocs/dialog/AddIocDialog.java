@@ -57,7 +57,7 @@ public class AddIocDialog extends IocDialog {
      * @param ioc The IOC being edited
      */
     public AddIocDialog(Shell parent, EditableConfiguration config, EditableIoc ioc) {
-        super(parent, config, ioc, false);
+        super(parent, config, ioc);
         this.addViewModel = new AddPanelViewModel(config.getAvailableIocs());
     }
 
@@ -155,21 +155,15 @@ public class AddIocDialog extends IocDialog {
 
     @Override
     protected Control createDialogArea(Composite parent) {
-        content = new Composite(parent, SWT.NONE);
-        content.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+        super.createDialogArea(parent);
         stack = new StackLayout();
         content.setLayout(stack);
 
         addIocPanel = new AddPanel(content, SWT.NONE, addViewModel);
         addIocPanel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 
-        editIocPanel = new EditPanel(content, SWT.NONE, this);
-        editIocPanel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-        editIocPanel.setIOC(tempIoc);
-
         stack.topControl = addIocPanel;
         this.setTitle("Add IOC");
-
         content.layout();
 
         return addIocPanel;

@@ -112,7 +112,7 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
             String newName = (String) evt.getNewValue();
 
             // Recreate the collection before the rename occurred.
-            Collection<Block> blocksBeforeRename = getBlocks();
+            Collection<Block> blocksBeforeRename = transformBlocks();
             Block renamed = getBlockByName(blocksBeforeRename, newName);
             blocksBeforeRename.remove(renamed);
 
@@ -120,7 +120,7 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
             oldBlock.setName(oldName);
             blocksBeforeRename.add(oldBlock);
 
-            firePropertyChange("blocks", blocksBeforeRename, getBlocks());
+            firePropertyChange("blocks", blocksBeforeRename, transformBlocks());
         }
     };
 
@@ -303,7 +303,7 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
     /**
      * @return The blocks associated with the configuration
      */
-    Collection<Block> getBlocks() {
+    Collection<Block> transformBlocks() {
         return Lists.newArrayList(Iterables.transform(editableBlocks, new Function<EditableBlock, Block>() {
             @Override
             public Block apply(EditableBlock block) {
@@ -315,7 +315,7 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
     /**
      * @return The groups associated with the configuration
      */
-    private Collection<Group> getGroups() {
+    private Collection<Group> transformGroups() {
         return Lists.newArrayList(Iterables.transform(getEditableGroups(), new Function<EditableGroup, Group>() {
             @Override
             public Group apply(EditableGroup group) {
@@ -328,7 +328,7 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
     /**
      * @return The IOCs associated with the configuration
      */
-    private Collection<Ioc> getIocs() {
+    private Collection<Ioc> transformIocs() {
         return Lists.newArrayList(Iterables.transform(configIocs, new Function<EditableIoc, Ioc>() {
             @Override
             public Ioc apply(EditableIoc ioc) {
@@ -340,7 +340,7 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
     /**
      * @return The components associated with the configuration
      */
-	private Collection<ComponentInfo> getComponents() {
+	private Collection<ComponentInfo> transformComponents() {
         Collection<ComponentInfo> result = new ArrayList<ComponentInfo>();
         for (Configuration compDetails : editableComponents.getSelected()) {
             result.add(new ComponentInfo(compDetails));
@@ -369,9 +369,9 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
      *            The IOC to be added.
      */
     public void addIoc(EditableIoc ioc) {
-        Collection<Ioc> iocsBeforeAdd = getIocs();
+        Collection<Ioc> iocsBeforeAdd = transformIocs();
         configIocs.add(ioc);
-        firePropertyChange("iocs", iocsBeforeAdd, getIocs());
+        firePropertyChange("iocs", iocsBeforeAdd, transformIocs());
     }
 
     /**
@@ -381,11 +381,11 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
      *            the list of IOCs to remove
      */
     public void removeIocs(List<EditableIoc> iocs) {
-        Collection<EditableIoc> iocsBefore = getSelectedIocs();
+        Collection<EditableIoc> iocsBefore = getAddedIocs();
         for (EditableIoc ioc : iocs) {
             configIocs.remove(ioc);
         }
-        firePropertyChange("iocs", iocsBefore, getSelectedIocs());
+        firePropertyChange("iocs", iocsBefore, getAddedIocs());
     }
 
     /**
@@ -394,13 +394,13 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
     public Collection<EditableIoc> getAvailableIocs() {
         List<EditableIoc> result = new ArrayList<EditableIoc>();
     
-        List<String> selectedIocNames = new ArrayList<String>();
-        for (EditableIoc ioc : getSelectedIocs()) {
-            selectedIocNames.add(ioc.getName());
+        List<String> addedIocNames = new ArrayList<String>();
+        for (EditableIoc ioc : getAddedIocs()) {
+            addedIocNames.add(ioc.getName());
         }
     
         for (EditableIoc ioc : allIocs) {
-            if (!selectedIocNames.contains(ioc.getName())) {
+            if (!addedIocNames.contains(ioc.getName())) {
                 result.add(ioc);
             }
         }
@@ -409,13 +409,13 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
     }
 
     /**
-     * @return The editable IOCs associated with the configuration
+     * @return The IOCs added to the configuration
      */
-    public Collection<EditableIoc> getSelectedIocs() {
-        Collection<EditableIoc> selectedIocs = new ArrayList<EditableIoc>();
-        selectedIocs.addAll(configIocs);
-        selectedIocs.addAll(componentIocs);
-        return selectedIocs; // TODO actual getter and setter
+    public Collection<EditableIoc> getAddedIocs() {
+        Collection<EditableIoc> addedIocs = new ArrayList<EditableIoc>();
+        addedIocs.addAll(configIocs);
+        addedIocs.addAll(componentIocs);
+        return addedIocs;
     }
 
     // Add available macros to IOCs that are part of the configuration.
@@ -468,11 +468,11 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
      */
     public void addNewBlock(EditableBlock block) throws DuplicateBlockNameException {
         if (blockNameIsUnique(block.getName())) {
-            Collection<Block> blocksBeforeAdd = getBlocks();
+            Collection<Block> blocksBeforeAdd = transformBlocks();
             editableBlocks.add(0, block);
             makeBlockAvailable(block);
             addRenameListener(block);
-            firePropertyChange("blocks", blocksBeforeAdd, getBlocks());
+            firePropertyChange("blocks", blocksBeforeAdd, transformBlocks());
         } else {
             throw new DuplicateBlockNameException();
         }
@@ -524,10 +524,10 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
      *            the block to remove
      */
     public void removeBlock(EditableBlock block) {
-        Collection<Block> blocksBefore = getBlocks();
+        Collection<Block> blocksBefore = transformBlocks();
         editableBlocks.remove(block);
         makeBlockUnavailable(block);
-        firePropertyChange("blocks", blocksBefore, getBlocks());
+        firePropertyChange("blocks", blocksBefore, transformBlocks());
     }
 
     /**
@@ -537,12 +537,12 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
      *            the list of blocks to remove
      */
     public void removeBlocks(List<EditableBlock> blocks) {
-        Collection<Block> blocksBefore = getBlocks();
+        Collection<Block> blocksBefore = transformBlocks();
         for (EditableBlock block : blocks) {
             editableBlocks.remove(block);
             makeBlockUnavailable(block);
         }
-        firePropertyChange("blocks", blocksBefore, getBlocks());
+        firePropertyChange("blocks", blocksBefore, transformBlocks());
     }
 
     /**
@@ -553,14 +553,14 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
      */
     public EditableGroup addNewGroup() {
         Collection<EditableGroup> editableGroupsBefore = getEditableGroups();
-        Collection<Group> groupsBefore = getGroups();
+        Collection<Group> groupsBefore = transformGroups();
 
         String name = groupName.getUnique(getGroupNames());
         EditableGroup newGroup = new EditableGroup(this, new Group(name));
         editableGroups.add(newGroup);
 
         firePropertyChange(EDITABLE_GROUPS, editableGroupsBefore, getEditableGroups());
-        firePropertyChange("groups", groupsBefore, getGroups());
+        firePropertyChange("groups", groupsBefore, transformGroups());
 
         return newGroup;
     }
@@ -573,7 +573,7 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
      */
     public void removeGroup(EditableGroup group) {
         Collection<EditableGroup> editableGroupsBefore = getEditableGroups();
-        Collection<Group> groupsBefore = getGroups();
+        Collection<Group> groupsBefore = transformGroups();
 
         // Remove selected blocks
         group.toggleSelection(group.getSelectedBlocks());
@@ -581,7 +581,7 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
         editableGroups.remove(group);
 
         firePropertyChange(EDITABLE_GROUPS, editableGroupsBefore, getEditableGroups());
-		firePropertyChange("groups", groupsBefore, getGroups());
+		firePropertyChange("groups", groupsBefore, transformGroups());
     }
 
     /**
@@ -590,8 +590,8 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
      * @return the underlying configuration
      */
     public Configuration asConfiguration() {
-        Configuration config = new Configuration(getName(), getDescription(), getSynoptic(), getIocs(), getBlocks(),
-                getGroups(), getComponents(), getHistory());
+        Configuration config = new Configuration(getName(), getDescription(), getSynoptic(), transformIocs(), transformBlocks(),
+                transformGroups(), transformComponents(), getHistory());
         return new ComponentFilteredConfiguration(config);
     }
 
@@ -618,7 +618,7 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
      */
     public void swapGroups(EditableGroup group1, EditableGroup group2) {
         Collection<EditableGroup> editableGroupsBefore = getEditableGroups();
-        Collection<Group> groupsBefore = getGroups();
+        Collection<Group> groupsBefore = transformGroups();
 
         // Need to find indexes because the NONE group may throw result in
         // non-sequential numbers
@@ -628,7 +628,7 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
         Collections.swap(editableGroups, index1, index2);
 
         firePropertyChange("editableGroups", editableGroupsBefore, getEditableGroups());
-        firePropertyChange("groups", groupsBefore, getGroups());
+        firePropertyChange("groups", groupsBefore, transformGroups());
     }
 
     /**
@@ -667,7 +667,7 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
     @Override
     public List<String> getGroupNames() {
         List<String> names = new ArrayList<>();
-        for (Group group : getGroups()) {
+        for (Group group : transformGroups()) {
             names.add(group.getName());
         }
 

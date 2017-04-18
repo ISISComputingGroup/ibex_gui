@@ -69,7 +69,7 @@ public class IocOverviewPanel extends Composite {
 		@Override
 		public void propertyChange(PropertyChangeEvent evt) {
 			if (config != null) {
-				updateIocs(config.getSelectedIocs());
+				updateIocs(config.getAddedIocs());
 			}
 		}
 	};
@@ -213,7 +213,7 @@ public class IocOverviewPanel extends Composite {
      */
 	public void setConfig(EditableConfiguration config) {
 		this.config = config;
-		updateIocs(config.getSelectedIocs());	
+		updateIocs(config.getAddedIocs());	
 		config.addPropertyChangeListener(updateIocs);
 	}
 
@@ -240,7 +240,7 @@ public class IocOverviewPanel extends Composite {
             IocDialog dialog = new AddIocDialog(getShell(), config, toEdit);
             dialog.open();
         } else {
-            IocDialog dialog = new IocDialog(getShell(), config, toEdit, readOnly);
+            IocDialog dialog = new IocDialog(getShell(), config, toEdit);
             dialog.open();
         }
     }
@@ -266,7 +266,7 @@ public class IocOverviewPanel extends Composite {
         if (returnCode == SWT.OK) {
             int index = table.getSelectionIndex();
             config.removeIocs(toRemove);
-            table.setRows(config.getSelectedIocs());
+            table.setRows(config.getAddedIocs());
             table.refresh();
         
             // Update new selection
