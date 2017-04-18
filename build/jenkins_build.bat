@@ -40,7 +40,7 @@ if "%RELEASE%" == "YES" (
     set RELEASE_DIR=p:\Kits$\CompGroup\ICP\Releases\%GIT_BRANCH:~15%
     set RELEASE_VERSION=%GIT_BRANCH:~15%
 ) else (
-    set RELEASE_VERSION=devel
+    set RELEASE_VERSION=devel-%GIT_COMMIT:~0,7%
 )
 if "%RELEASE%" == "YES" set INSTALLBASEDIR=%RELEASE_DIR%\Client
 if "%RELEASE%" == "YES" set INSTALLDIR=%INSTALLBASEDIR%
@@ -101,55 +101,11 @@ if %errorlevel% neq 0 (
 @echo %BUILD_NUMBER%> %INSTALLDIR%\Client\BUILD_NUMBER.txt
 @echo %RELEASE_VERSION%> %INSTALLDIR%\Client\VERSION.txt
 
-REM Create the installer
-if exist C:\"Program Files (x86)"\7-Zip\7z.exe set ZIPEXE=C:\"Program Files (x86)"\7-Zip\7z.exe
-if exist C:\"Program Files"\7-Zip\7z.exe set ZIPEXE=C:\"Program Files"\7-Zip\7z.exe
-
-REM First copy the zip with genie_python already in it
-copy %ZIPLOCATION%\installer.7z .
-if %errorlevel% neq 0 (
-    @echo Could not find genie_python zip
-    exit /b %errorlevel%
-)
-
-REM Add EPICS_UTILS and the Client
-%ZIPEXE% a installer.7z P:\Kits$\CompGroup\ICP\Client\EPICS_UTILS
-if %errorlevel% neq 0 (
-    @echo Could not add EPICS_UTILS to zip
-    exit /b %errorlevel%
-)
-%ZIPEXE% a installer.7z %INSTALLDIR%\Client
-if %errorlevel% neq 0 (
-    @echo Could not add Client to zip
-    exit /b %errorlevel%
-)
-
-REM Add the install_client.bat to the archive
-%ZIPEXE% a installer.7z install_client_zip.bat
-if %errorlevel% neq 0 (
-    @echo Could not add install_client_zip.bat to zip
-    exit /b %errorlevel%
-)
-
-REM Build the installer
-copy /b 7zsd_All.sfx + installer_config.txt + installer.7z ClientInstaller.exe
-if %errorlevel% neq 0 (
-    @echo Installer build failed
-    exit /b %errorlevel%
-)
-
-REM Copy to Kits
-xcopy ClientInstaller.exe %INSTALLDIR%
-if %errorlevel% neq 0 (
-    @echo Installer copy failed
-    exit /b %errorlevel%
-)
-
 @echo Copy complete>%INSTALLDIR%\COPY_COMPLETE.txt
 
-REM Delete local copies
-del installer.7z
-del ClientInstaller.exe
+if not "%RELEASE%" == "YES" (
+    @echo %BUILD_NUMBER%>%INSTALLDIR%\..\LATEST_BUILD.txt 
+)
 
 REM build MSI kit
 call build_msi.bat %INSTALLDIR%

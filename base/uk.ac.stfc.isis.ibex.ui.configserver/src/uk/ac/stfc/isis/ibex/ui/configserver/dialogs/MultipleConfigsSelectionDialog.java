@@ -109,7 +109,7 @@ public class MultipleConfigsSelectionDialog extends SelectionDialog {
         } else {
             names = ConfigInfo.namesWithoutCurrent(available).toArray(new String[0]);
         }
-		Arrays.sort(names);
+		Arrays.sort(names, String.CASE_INSENSITIVE_ORDER);
         setItems(names);
 	}
 	

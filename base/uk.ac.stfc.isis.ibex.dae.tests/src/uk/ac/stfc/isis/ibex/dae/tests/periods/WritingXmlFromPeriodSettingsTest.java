@@ -20,7 +20,7 @@
 package uk.ac.stfc.isis.ibex.dae.tests.periods;
 
 import static org.hamcrest.CoreMatchers.*;
-import static org.junit.Assert.assertThat;
+import static org.junit.Assert.*;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -116,6 +116,20 @@ public class WritingXmlFromPeriodSettingsTest extends FileReadingTest {
 		assertThat(periodSettings.getSetupSource(), is(newValue));
 	}
 	
+	@Test
+    public void setup_source_is_not_updated_if_null() {
+
+        // Arrange: Check that null is not the current setup source.
+        assertNotEquals(periodSettings.getSetupSource(), null);
+        
+        // Act: Try to set a setup source as null.
+        periodSettings.setSetupSource(null);
+        reloadSettingsFromCurrentValues();
+        
+        // Assert: Check that null has been ignored.
+        assertNotEquals(periodSettings.getSetupSource(), null);       
+    }
+	
 
 	@Test
 	public void period_file_is_updated() {
@@ -138,6 +152,20 @@ public class WritingXmlFromPeriodSettingsTest extends FileReadingTest {
 		
 		assertThat(periodSettings.getPeriodType(), is(newValue));		
 	}
+	
+	@Test
+    public void period_control_type_is_not_updated_if_null() {
+
+	    // Arrange: Check that null is not the current period type.
+        assertNotEquals(periodSettings.getPeriodType(), null);
+        
+        // Act: Try to set a period type as null.
+        periodSettings.setPeriodType(null);
+        reloadSettingsFromCurrentValues();
+        
+        // Assert: Check that null has been ignored.
+        assertNotEquals(periodSettings.getPeriodType(), null);       
+    }
 	
 	@Test
 	public void software_periods_is_updated() {	
