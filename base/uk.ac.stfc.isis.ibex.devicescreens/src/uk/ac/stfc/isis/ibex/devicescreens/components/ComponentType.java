@@ -97,6 +97,8 @@ public enum ComponentType {
     PRESSURE_GAUGE,
     /** 3D magnet component type. */
     SCIMAG3D,
+    /** Stress rig component type. */
+    STRESS_RIG,
     /** Polarises, Guide and Collimation for MUONFE. */
     PGC,
     /** Detector motion system component type. */
@@ -110,7 +112,9 @@ public enum ComponentType {
     /** Omron PLC. */
     PLC,
     /** Zoom sample stack. */
-    ZOOM_SAMPLE_STACK;
+    ZOOM_SAMPLE_STACK,
+    /** Sample changer for HRPD/POLARIS/GEM. */
+    ROT_SAMPLE_CHANGER;
 	
 	private Target target;
 
