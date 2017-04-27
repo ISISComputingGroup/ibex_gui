@@ -19,6 +19,7 @@ Bundle-ActivationPolicy: lazy
 Export-Package: uk.ac.stfc.isis.ibex.dae,
  uk.ac.stfc.isis.ibex.dae.actions,
  uk.ac.stfc.isis.ibex.dae.dataacquisition,
+ uk.ac.stfc.isis.ibex.dae.detectordiagnostics,
  uk.ac.stfc.isis.ibex.dae.experimentsetup,
  uk.ac.stfc.isis.ibex.dae.experimentsetup.periods,
  uk.ac.stfc.isis.ibex.dae.experimentsetup.timechannels,
@@ -26,5 +27,6 @@ Export-Package: uk.ac.stfc.isis.ibex.dae,
  uk.ac.stfc.isis.ibex.dae.updatesettings
 Bundle-ClassPath: .
 Import-Package: org.apache.logging.log4j,
+ org.mockito.internal.util.collections,
  uk.ac.stfc.isis.ibex.log,
  uk.ac.stfc.isis.ibex.logger

@@ -21,19 +21,18 @@
  */
 package uk.ac.stfc.isis.ibex.ui.dae.detectordiagnostics;
 
-import java.util.ArrayList;
-import java.util.Collection;
-
 import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.swt.widgets.Composite;
 
+import uk.ac.stfc.isis.ibex.dae.detectordiagnostics.DetectorDiagnosticsModel;
+import uk.ac.stfc.isis.ibex.dae.detectordiagnostics.SpectrumInformation;
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundCellLabelProvider;
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundTable;
 
 /**
  *
  */
-public class Table extends DataboundTable<TableRow> {
+public class Table extends DataboundTable<SpectrumInformation> {
     
     /**
      * Instantiates a new device screens table.
@@ -43,15 +42,13 @@ public class Table extends DataboundTable<TableRow> {
      * @param tableStyle the table style
      */
     public Table(Composite parent, int style, int tableStyle) {
-        super(parent, style, TableRow.class, tableStyle);
+        super(parent, style, SpectrumInformation.class, tableStyle);
         
         initialise();
         
-        Collection<TableRow> rows = new ArrayList<>();
-        rows.add(new TableRow());
-        rows.add(new TableRow());
+        this.setRows(DetectorDiagnosticsModel.getInstance().getSpectra());
+        DetectorDiagnosticsModel.getInstance().startObserving();
         
-        this.setRows(rows);
     }
     
     @Override
@@ -62,21 +59,29 @@ public class Table extends DataboundTable<TableRow> {
 
     private void number() {
         TableViewerColumn number = createColumn("Spectrum number", 20);
-        number.setLabelProvider(new DataboundCellLabelProvider<TableRow>(observeProperty("number")) {
+        number.setLabelProvider(new DataboundCellLabelProvider<SpectrumInformation>(observeProperty("spectrumNumber")) {
             @Override
-            protected String valueFromRow(TableRow row) {
-                return row.getNumber();
+            protected String valueFromRow(SpectrumInformation row) {
+                try {
+                    return row.getSpectrumNumber().toString();
+                } catch (NullPointerException e) {
+                    return "None";
+                }
             }
         });
         // setSortListener(name.getColumn(), DeviceScreensComparator.SortedOnType.NAME);
     }
     
     private void value() {
-        TableViewerColumn value = createColumn("Value", 20);
-        value.setLabelProvider(new DataboundCellLabelProvider<TableRow>(observeProperty("value")) {
+        TableViewerColumn number = createColumn("Count rate", 20);
+        number.setLabelProvider(new DataboundCellLabelProvider<SpectrumInformation>(observeProperty("countRate")) {
             @Override
-            protected String valueFromRow(TableRow row) {
-                return row.getValue();
+            protected String valueFromRow(SpectrumInformation row) {
+                try {
+                    return row.getCountRate().toString();
+                } catch (NullPointerException e) {
+                    return "None";
+                }
             }
         });
         // setSortListener(name.getColumn(), DeviceScreensComparator.SortedOnType.NAME);

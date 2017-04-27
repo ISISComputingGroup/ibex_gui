@@ -19,24 +19,36 @@
 /**
  * 
  */
-package uk.ac.stfc.isis.ibex.ui.dae.detectordiagnostics;
+package uk.ac.stfc.isis.ibex.dae.detectordiagnostics;
 
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 
 /**
  *
  */
-public class TableRow extends ModelObject {
+public class SpectrumInformation extends ModelObject {
     
-    public String number = "2";
-    public String value = "2";
-    
-    public String getNumber(){
-        return number;
+    public SpectrumInformation(Integer number){
+        this.spectrumNumber = number;
     }
     
-    public String getValue(){
-        return value;
+    private Integer spectrumNumber;
+    
+    private Float countRate;
+    
+    public Integer getSpectrumNumber(){
+        return spectrumNumber;
+    }
+    
+    public Float getCountRate(){
+        return countRate;
     }
 
+    /**
+     * @param value
+     */
+    public void setCountRate(Float value) {
+        firePropertyChange("countRate", this.countRate, this.countRate = value);
+    }
+   
 }
