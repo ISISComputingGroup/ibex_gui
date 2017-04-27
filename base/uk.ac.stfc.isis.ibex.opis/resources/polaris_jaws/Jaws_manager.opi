@@ -322,10 +322,10 @@ $(pv_value)</tooltip>
     </background_color>
     <square_led>false</square_led>
     <width>24</width>
-    <x>534</x>
+    <x>523</x>
     <name>LED</name>
     <data_type>0</data_type>
-    <y>564</y>
+    <y>550</y>
     <foreground_color>
       <color red="192" green="192" blue="192" />
     </foreground_color>
@@ -347,7 +347,7 @@ $(pv_value)</tooltip>
     <auto_size>false</auto_size>
     <text>Manager mode enabled? (required for setting values)</text>
     <scripts />
-    <height>20</height>
+    <height>39</height>
     <border_width>1</border_width>
     <scale_options>
       <width_scalable>true</width_scalable>
@@ -364,10 +364,10 @@ $(pv_value)</tooltip>
     <background_color>
       <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
     </background_color>
-    <width>463</width>
-    <x>563</x>
+    <width>476</width>
+    <x>552</x>
     <name>Label_2</name>
-    <y>566</y>
+    <y>542</y>
     <foreground_color>
       <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
     </foreground_color>
