@@ -197,7 +197,11 @@ public class DaeView extends ViewPart {
 		CTabItem tbtmDiagnostics = new CTabItem(tabFolder, SWT.NONE);
 		tbtmDiagnostics.setImage(ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui.dae", "icons/monitor.png"));
 		tbtmDiagnostics.setText("Detector Diagnostics");
-		detectorDiagnostics = new DetectorDiagnosticsPanel();
+		
+		Composite diagnosticsComposite = new Composite(tabFolder, SWT.NONE);
+        tbtmDiagnostics.setControl(diagnosticsComposite);
+        diagnosticsComposite.setLayout(new GridLayout(1, false));
+		detectorDiagnostics = new DetectorDiagnosticsPanel(diagnosticsComposite);
 		
 		CTabItem tbtmVetos = new CTabItem(tabFolder, SWT.NONE);
 		tbtmVetos.setImage(ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui.dae", "icons/veto.png"));

@@ -21,12 +21,35 @@
  */
 package uk.ac.stfc.isis.ibex.ui.dae.detectordiagnostics;
 
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.layout.FillLayout;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Label;
+
 /**
  *
  */
-public class DetectorDiagnosticsPanel {
+public class DetectorDiagnosticsPanel extends Composite {
     
     private DetectorDiagnosticsViewModel viewModel;
+    
+    public DetectorDiagnosticsPanel(Composite parent){
+        super(parent, SWT.NONE);
+        
+        setLayout(new FillLayout(SWT.HORIZONTAL));
+                
+        Label lblSpectraTable = new Label(parent, SWT.NONE);
+        lblSpectraTable.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1));
+        lblSpectraTable.setText("Spectra:");
+        
+        Table table = new Table(parent, SWT.NONE, SWT.NONE);
+        
+        GridData layout = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
+        table.setLayoutData(layout);
+
+        
+    }
 
     /**
      * Sets a new view model to use.
