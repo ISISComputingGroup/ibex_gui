@@ -274,7 +274,7 @@ $(pv_value)</tooltip>
       <background_color>
         <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
       </background_color>
-      <width>97</width>
+      <width>55</width>
       <x>54</x>
       <name>Text Update</name>
       <y>6</y>
@@ -325,7 +325,7 @@ $(pv_value)</tooltip>
       <background_color>
         <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
       </background_color>
-      <width>97</width>
+      <width>55</width>
       <x>54</x>
       <name>Text Update</name>
       <y>36</y>
@@ -376,7 +376,7 @@ $(pv_value)</tooltip>
       <background_color>
         <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
       </background_color>
-      <width>97</width>
+      <width>55</width>
       <x>54</x>
       <name>Text Update</name>
       <y>66</y>
@@ -427,7 +427,7 @@ $(pv_value)</tooltip>
       <background_color>
         <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
       </background_color>
-      <width>97</width>
+      <width>55</width>
       <x>54</x>
       <name>Text Update</name>
       <y>96</y>
@@ -479,7 +479,7 @@ $(pv_value)</tooltip>
         <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
       </background_color>
       <width>31</width>
-      <x>108</x>
+      <x>114</x>
       <name>Text Update</name>
       <y>6</y>
       <foreground_color>
@@ -530,7 +530,7 @@ $(pv_value)</tooltip>
         <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
       </background_color>
       <width>31</width>
-      <x>108</x>
+      <x>114</x>
       <name>Text Update</name>
       <y>36</y>
       <foreground_color>
@@ -581,7 +581,7 @@ $(pv_value)</tooltip>
         <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
       </background_color>
       <width>31</width>
-      <x>108</x>
+      <x>114</x>
       <name>Text Update</name>
       <y>66</y>
       <foreground_color>
@@ -632,7 +632,7 @@ $(pv_value)</tooltip>
         <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
       </background_color>
       <width>31</width>
-      <x>108</x>
+      <x>114</x>
       <name>Text Update</name>
       <y>96</y>
       <foreground_color>
