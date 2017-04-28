@@ -71,8 +71,8 @@ public class DetectorDiagnosticsModel extends ModelObject {
      * @param page the page
      * @param valuesList the list of values for that page
      */
-    public void updateValues(Integer page, List<Float> valuesList) {
-        for (Float value : valuesList) {
+    public void updateValues(Integer page, List<Double> valuesList) {
+        for (Double value : valuesList) {
             for (SpectrumInformation spectrum : spectra) {
                 if (spectrum.getSpectrumNumber().equals(page * PAGE_SIZE + valuesList.indexOf(value))) {
                     spectrum.setCountRate(value);

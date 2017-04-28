@@ -29,7 +29,7 @@ import uk.ac.stfc.isis.ibex.epics.observing.Observer;
 import uk.ac.stfc.isis.ibex.epics.switching.ObservableFactory;
 import uk.ac.stfc.isis.ibex.epics.switching.OnInstrumentSwitch;
 import uk.ac.stfc.isis.ibex.instrument.InstrumentUtils;
-import uk.ac.stfc.isis.ibex.instrument.channels.FloatArrayChannel;
+import uk.ac.stfc.isis.ibex.instrument.channels.DoubleArrayChannel;
 
 /**
  *
@@ -43,7 +43,7 @@ public class SpectrumDiagnostics {
     /**
      * The observable.
      */
-    public List<ForwardingObservable<float[]>> countRatePages = new ArrayList<>();
+    public List<ForwardingObservable<double[]>> countRatePages = new ArrayList<>();
 
     /**
      * @param spectrumRange the spectrum range
@@ -58,13 +58,15 @@ public class SpectrumDiagnostics {
         
         for (final Integer page : spectrumRange.pagesRequired()) {
             
-            ForwardingObservable<float[]> countRate = obsFactory.getSwitchableObservable(new FloatArrayChannel(), InstrumentUtils.addPrefix("DAE:DIAG:TABLE:CNTRATE"));
+            ForwardingObservable<double[]> countRate = obsFactory.getSwitchableObservable(new DoubleArrayChannel(), InstrumentUtils.addPrefix("DAE:DIAG:TABLE:CNTRATE"));
             
             countRatePages.add(countRate);
             
-            countRate.addObserver(new Observer<float[]>() {
+            System.out.println("Count rate is " + ((countRate.getValue() == null) ? "null" : countRate.getValue().toString()));
+            
+            countRate.addObserver(new Observer<double[]>() {
                 @Override
-                public void onValue(float[] values) {
+                public void onValue(double[] values) {
                     
                     System.out.println("aaaaaaaaaaaaa " + values);
                     
@@ -73,8 +75,8 @@ public class SpectrumDiagnostics {
                     }
                     
                     // Convert to collection for ease of use
-                    List<Float> valuesList = new ArrayList<>(values.length);
-                    for (float value : values) {
+                    List<Double> valuesList = new ArrayList<>(values.length);
+                    for (double value : values) {
                         valuesList.add(value);
                     }
                     
@@ -84,17 +86,26 @@ public class SpectrumDiagnostics {
     
                 @Override
                 public void onError(Exception e) {
-                    // 
+                    System.out.println("error!");
+                    e.printStackTrace();
                 }
     
                 @Override
                 public void onConnectionStatus(boolean isConnected) {
-                    // 
+                    System.out.println("connection status is now " + isConnected); 
                 }
     
                 @Override
-                public void update(float[] value, Exception error, boolean isConnected) {
-                    // 
+                public void update(double[] value, Exception error, boolean isConnected) {
+                    if(value != null){
+                        onValue(value);
+                    }
+                    
+                    if(error != null){
+                        onError(error);
+                    }
+                    
+                    onConnectionStatus(isConnected);
                 }            
             });
         }

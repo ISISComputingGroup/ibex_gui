@@ -34,20 +34,20 @@ public class SpectrumInformation extends ModelObject {
     
     private Integer spectrumNumber;
     
-    private Float countRate;
+    private Double countRate;
     
     public Integer getSpectrumNumber(){
         return spectrumNumber;
     }
     
-    public Float getCountRate(){
+    public Double getCountRate(){
         return countRate;
     }
 
     /**
      * @param value
      */
-    public void setCountRate(Float value) {
+    public void setCountRate(Double value) {
         firePropertyChange("countRate", this.countRate, this.countRate = value);
     }
    

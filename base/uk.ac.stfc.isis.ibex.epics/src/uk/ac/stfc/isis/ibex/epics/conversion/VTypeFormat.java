@@ -23,10 +23,12 @@ import java.text.NumberFormat;
 import java.util.Arrays;
 
 import org.epics.util.array.IteratorByte;
+import org.epics.util.array.IteratorDouble;
 import org.epics.util.array.IteratorFloat;
 import org.epics.vtype.Display;
 import org.epics.vtype.VByteArray;
 import org.epics.vtype.VDouble;
+import org.epics.vtype.VDoubleArray;
 import org.epics.vtype.VEnum;
 import org.epics.vtype.VFloatArray;
 import org.epics.vtype.VInt;
@@ -128,6 +130,14 @@ public final class VTypeFormat {
 				.apply(extractFloats());
 	}
 	
+	/**
+     * @return Converter from a VDoubleArray to a double array
+     */
+    public static Converter<VType, double[]> fromVDoubleArray() {
+        return toVDoubleArray()
+                .apply(extractDoubles());
+    }
+	
     /**
      * @return Converter from a VByteArray of zipped, hexed values to a String
      */
@@ -150,6 +160,22 @@ public final class VTypeFormat {
 			}
 		};
 	}
+	
+	/**
+     * @return Converter from a VType to a VDoubleArray
+     */
+    public static Converter<VType, VDoubleArray> toVDoubleArray() {
+        return new Converter<VType, VDoubleArray>() {
+            @Override
+            public VDoubleArray convert(VType value) throws ConversionException {
+                try {
+                    return (VDoubleArray) value;
+                } catch (ClassCastException e) {
+                    throw new ConversionException(e.getMessage());
+                }
+            }
+        };
+    }
 	
     /**
      * @return Converter from a VType to a VByteArray
@@ -360,4 +386,29 @@ public final class VTypeFormat {
 			}
 		};
 	}
+	
+	/**
+     * @return A converter from a VDouble array to an array of doubles
+     */
+    public static Converter<VDoubleArray, double[]> extractDoubles() {
+        return new Converter<VDoubleArray, double[]>() {
+            @Override
+            public double[] convert(VDoubleArray value) throws ConversionException {
+                if (value == null) {
+                    throw new ConversionException("value to format was null");
+                }
+                
+                int length = value.getSizes().iterator().nextInt();
+                double[] doubles = new double[length];
+                int count = 0;
+                IteratorDouble doubleIterator = value.getData().iterator();
+                for (int i = 0; i < length; i++) {
+                    doubles[i] = doubleIterator.nextDouble();
+                    count++;
+                }
+                
+                return Arrays.copyOf(doubles, count);
+            }
+        };
+    }
 }

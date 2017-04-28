@@ -125,6 +125,10 @@ public class Channels {
         public static BaseWritable<Double> writer(String pvAddress) {
 			return new PVManagerWritable<>(new PVInfo<>(pvAddress, Double.class));
 		}
+        
+        public static ClosableObservable<double[]> arrayReader(String pvAddress) {
+            return convertObservablePV(pvAddress, VType.class, VTypeFormat.fromVDoubleArray());
+        }
 	}
 
 	/**
