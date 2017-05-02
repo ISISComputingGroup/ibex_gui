@@ -49,7 +49,7 @@ public class DetectorDiagnosticsPanel extends Composite {
 
             @Override
             public void execute() {
-                DetectorDiagnosticsModel.getInstance().setRange();
+                DetectorDiagnosticsModel.getInstance().setRange(0, 20);
             }
             
         });  

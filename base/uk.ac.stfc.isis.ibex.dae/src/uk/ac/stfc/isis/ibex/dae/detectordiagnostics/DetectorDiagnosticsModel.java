@@ -45,16 +45,9 @@ public class DetectorDiagnosticsModel extends ModelObject {
     
     private List<SpectrumInformation> spectra = new ArrayList<>();
     
-    {
-        spectra.add(new SpectrumInformation(0));
-        firePropertyChange("spectra", null, spectra);
-    }
-    
     public List<SpectrumInformation> getSpectra(){
         return spectra;
     }
-    
-    private boolean spectraChanged = false;
     
     /**
      * Instance of this singleton.
@@ -68,16 +61,20 @@ public class DetectorDiagnosticsModel extends ModelObject {
     }
 
     /**
-     * @param page the page
-     * @param valuesList the list of values for that page
+     * @param countRatesList the list of values for that page
      */
-    public void updateValues(Integer page, List<Double> valuesList) {
-        for (Double value : valuesList) {
-            for (SpectrumInformation spectrum : spectra) {
-                if (spectrum.getSpectrumNumber().equals(page * PAGE_SIZE + valuesList.indexOf(value))) {
-                    spectrum.setCountRate(value);
-                }
-            }
+    public void updateCountRates(final List<Double> countRatesList) {
+        for (int i = 0; i < countRatesList.size(); i++) {          
+            spectra.get(i).setCountRate(countRatesList.get(i));
+        }
+    }
+    
+    /**
+     * @param countRatesList the list of values for that page
+     */
+    public void updateMaxSpecBinCount(final List<Long> countRatesList) {
+        for (int i = 0; i < countRatesList.size(); i++) {          
+            spectra.get(i).setMaxSpecBinCount(countRatesList.get(i));
         }
     }
 
@@ -86,14 +83,19 @@ public class DetectorDiagnosticsModel extends ModelObject {
      */
     public void startObserving() {
         pvs = new SpectrumDiagnostics();
-        pvs.startObserving(new SpectrumRange(false)); 
+        setRange(0,1);
     }
 
     /**
      * 
      */
-    public void setRange() {
-        range = new SpectrumRange(true); 
+    public void setRange(int start, int numberOfSpectra) {
+        range = new SpectrumRange(start, numberOfSpectra);
+        
+        spectra.clear();
+        for(Integer spectrumNumber : range.spectraRequired()){
+            spectra.add(new SpectrumInformation(spectrumNumber));
+        }
         pvs.startObserving(range);
         firePropertyChange("spectra", null, spectra);
     }

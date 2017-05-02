@@ -25,6 +25,7 @@ import java.util.Arrays;
 import org.epics.util.array.IteratorByte;
 import org.epics.util.array.IteratorDouble;
 import org.epics.util.array.IteratorFloat;
+import org.epics.util.array.IteratorLong;
 import org.epics.vtype.Display;
 import org.epics.vtype.VByteArray;
 import org.epics.vtype.VDouble;
@@ -33,6 +34,7 @@ import org.epics.vtype.VEnum;
 import org.epics.vtype.VFloatArray;
 import org.epics.vtype.VInt;
 import org.epics.vtype.VLong;
+import org.epics.vtype.VLongArray;
 import org.epics.vtype.VNumber;
 import org.epics.vtype.VShort;
 import org.epics.vtype.VString;
@@ -137,6 +139,14 @@ public final class VTypeFormat {
         return toVDoubleArray()
                 .apply(extractDoubles());
     }
+    
+    /**
+     * @return Converter from a VDoubleArray to a double array
+     */
+    public static Converter<VType, long[]> fromVLongArray() {
+        return toVLongArray()
+                .apply(extractLongs());
+    }
 	
     /**
      * @return Converter from a VByteArray of zipped, hexed values to a String
@@ -170,6 +180,22 @@ public final class VTypeFormat {
             public VDoubleArray convert(VType value) throws ConversionException {
                 try {
                     return (VDoubleArray) value;
+                } catch (ClassCastException e) {
+                    throw new ConversionException(e.getMessage());
+                }
+            }
+        };
+    }
+    
+    /**
+     * @return Converter from a VType to a VLongArray
+     */
+    public static Converter<VType, VLongArray> toVLongArray() {
+        return new Converter<VType, VLongArray>() {
+            @Override
+            public VLongArray convert(VType value) throws ConversionException {
+                try {
+                    return (VLongArray) value;
                 } catch (ClassCastException e) {
                     throw new ConversionException(e.getMessage());
                 }
@@ -408,6 +434,31 @@ public final class VTypeFormat {
                 }
                 
                 return Arrays.copyOf(doubles, count);
+            }
+        };
+    }
+    
+    /**
+     * @return A converter from a VLong array to an array of longs
+     */
+    public static Converter<VLongArray, long[]> extractLongs() {
+        return new Converter<VLongArray, long[]>() {
+            @Override
+            public long[] convert(VLongArray value) throws ConversionException {
+                if (value == null) {
+                    throw new ConversionException("value to format was null");
+                }
+                
+                int length = value.getSizes().iterator().nextInt();
+                long[] longs = new long[length];
+                int count = 0;
+                IteratorLong longIterator = value.getData().iterator();
+                for (int i = 0; i < length; i++) {
+                    longs[i] = longIterator.nextLong();
+                    count++;
+                }
+                
+                return Arrays.copyOf(longs, count);
             }
         };
     }

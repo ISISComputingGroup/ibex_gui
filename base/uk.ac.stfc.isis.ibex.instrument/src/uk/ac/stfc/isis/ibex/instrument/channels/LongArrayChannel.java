@@ -19,28 +19,23 @@
 /**
  * 
  */
-package uk.ac.stfc.isis.ibex.dae.detectordiagnostics;
+package uk.ac.stfc.isis.ibex.instrument.channels;
 
-import java.util.ArrayList;
-import java.util.List;
+import uk.ac.stfc.isis.ibex.epics.observing.ClosableObservable;
+import uk.ac.stfc.isis.ibex.epics.pv.Channels;
+import uk.ac.stfc.isis.ibex.epics.writing.BaseWritable;
 
 /**
  *
  */
-public class SpectrumRange {
-    
-    private List<Integer> spectra;
-    
-    public SpectrumRange(int startingSpectrum, int range){
-        spectra = new ArrayList<>();
-        
-        for(int i=0; i<range; i++){
-            spectra.add(startingSpectrum + i);
-        }
+public class LongArrayChannel implements ChannelType<long[]>{
+    @Override
+    public ClosableObservable<long[]> reader(String address) {
+        return Channels.Longs.arrayReader(address);
     }
-    
-    public List<Integer> spectraRequired() {        
-        return spectra;
+
+    @Override
+    public BaseWritable<long[]> writer(String address) {
+        throw new UnsupportedOperationException();
     }
-    
 }

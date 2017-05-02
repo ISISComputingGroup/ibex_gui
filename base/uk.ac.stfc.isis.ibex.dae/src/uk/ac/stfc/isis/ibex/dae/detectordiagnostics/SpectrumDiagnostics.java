@@ -30,6 +30,7 @@ import uk.ac.stfc.isis.ibex.epics.switching.ObservableFactory;
 import uk.ac.stfc.isis.ibex.epics.switching.OnInstrumentSwitch;
 import uk.ac.stfc.isis.ibex.instrument.InstrumentUtils;
 import uk.ac.stfc.isis.ibex.instrument.channels.DoubleArrayChannel;
+import uk.ac.stfc.isis.ibex.instrument.channels.LongArrayChannel;
 
 /**
  *
@@ -41,9 +42,14 @@ public class SpectrumDiagnostics {
     private final DetectorDiagnosticsModel model;
 
     /**
-     * The observable.
+     * The observable for count rates.
      */
-    public List<ForwardingObservable<double[]>> countRatePages = new ArrayList<>();
+    public ForwardingObservable<double[]> countRate;
+    
+    /**
+     * The observable for the maximum spectrum bin count.
+     */
+    public ForwardingObservable<long[]> maxSpecBinCount;
 
     /**
      * @param spectrumRange the spectrum range
@@ -54,62 +60,81 @@ public class SpectrumDiagnostics {
     }
     
     public void startObserving(SpectrumRange spectrumRange){
+            
+        countRate = obsFactory.getSwitchableObservable(new DoubleArrayChannel(), InstrumentUtils.addPrefix("DAE:DIAG:TABLE:CNTRATE"));
         
+        countRate.addObserver(new SpectrumObserver<double[]>() {
+            @Override
+            public void onNonNullValue(double[] values) {
+                model.updateCountRates(convertPrimitiveDoubleArrayToList(values)); 
+            }         
+        });
         
-        for (final Integer page : spectrumRange.pagesRequired()) {
-            
-            ForwardingObservable<double[]> countRate = obsFactory.getSwitchableObservable(new DoubleArrayChannel(), InstrumentUtils.addPrefix("DAE:DIAG:TABLE:CNTRATE"));
-            
-            countRatePages.add(countRate);
-            
-            System.out.println("Count rate is " + ((countRate.getValue() == null) ? "null" : countRate.getValue().toString()));
-            
-            countRate.addObserver(new Observer<double[]>() {
-                @Override
-                public void onValue(double[] values) {
-                    
-                    System.out.println("aaaaaaaaaaaaa " + values);
-                    
-                    if (values == null || values.length == 0) {
-                        return;
-                    }
-                    
-                    // Convert to collection for ease of use
-                    List<Double> valuesList = new ArrayList<>(values.length);
-                    for (double value : values) {
-                        valuesList.add(value);
-                    }
-                    
-                    model.updateValues(page, valuesList);
-                    
-                }
+        maxSpecBinCount = obsFactory.getSwitchableObservable(new LongArrayChannel(), InstrumentUtils.addPrefix("DAE:DIAG:TABLE:MAX"));
+        
+        maxSpecBinCount.addObserver(new SpectrumObserver<long[]>() {
+            @Override
+            public void onNonNullValue(long[] values) {
+                model.updateMaxSpecBinCount(convertPrimitiveLongArrayToList(values)); 
+            }         
+        });
+        
+    }
     
-                @Override
-                public void onError(Exception e) {
-                    System.out.println("error!");
-                    e.printStackTrace();
-                }
+    private List<Double> convertPrimitiveDoubleArrayToList(double[] array){
+        // Convert to collection for ease of use
+        // Can't use Arrays.asList() because it's an array of primitives.
+        List<Double> valuesList = new ArrayList<>(array.length);
+        for (double value : array) {
+            valuesList.add(value);
+        }
+        return valuesList;
+    }
     
-                @Override
-                public void onConnectionStatus(boolean isConnected) {
-                    System.out.println("connection status is now " + isConnected); 
-                }
+    private List<Long> convertPrimitiveLongArrayToList(long[] array){
+        // Convert to collection for ease of use
+        // Can't use Arrays.asList() because it's an array of primitives.
+        List<Long> valuesList = new ArrayList<>(array.length);
+        for (long value : array) {
+            valuesList.add(value);
+        }
+        return valuesList;
+    }
     
-                @Override
-                public void update(double[] value, Exception error, boolean isConnected) {
-                    if(value != null){
-                        onValue(value);
-                    }
-                    
-                    if(error != null){
-                        onError(error);
-                    }
-                    
-                    onConnectionStatus(isConnected);
-                }            
-            });
+    private abstract class SpectrumObserver<T> implements Observer<T>{
+        
+        public abstract void onNonNullValue(T value);
+        
+        @Override
+        public void onValue(T value) {
+            if (value != null) {
+                onNonNullValue(value);
+            } 
         }
         
+        @Override
+        public void onError(Exception e) {
+            System.out.println("error!");
+            e.printStackTrace();
+        }
+
+        @Override
+        public void onConnectionStatus(boolean isConnected) {
+            System.out.println("connection status is now " + isConnected); 
+        }
+
+        @Override
+        public void update(T value, Exception error, boolean isConnected) {
+            if (value != null) {
+                onValue(value);
+            }
+            
+            if (error != null) {
+                onError(error);
+            }
+            
+            onConnectionStatus(isConnected);
+        }  
     }
 
 }

@@ -35,13 +35,18 @@ public class SpectrumInformation extends ModelObject {
     private Integer spectrumNumber;
     
     private Double countRate;
+    private Long maxSpecBinCount;
     
-    public Integer getSpectrumNumber(){
+    public Integer getSpectrumNumber() {
         return spectrumNumber;
     }
     
-    public Double getCountRate(){
+    public Double getCountRate() {
         return countRate;
+    }
+    
+    public Long getMaxSpecBinCount() {
+        return maxSpecBinCount;
     }
 
     /**
@@ -49,6 +54,13 @@ public class SpectrumInformation extends ModelObject {
      */
     public void setCountRate(Double value) {
         firePropertyChange("countRate", this.countRate, this.countRate = value);
+    }
+    
+    /**
+     * @param value
+     */
+    public void setMaxSpecBinCount(Long value) {
+        firePropertyChange("maxSpecBinCount", this.maxSpecBinCount, this.maxSpecBinCount = value);
     }
    
 }

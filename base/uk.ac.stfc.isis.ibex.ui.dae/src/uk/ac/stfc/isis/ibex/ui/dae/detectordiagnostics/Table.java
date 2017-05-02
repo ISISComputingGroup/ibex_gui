@@ -37,7 +37,7 @@ import uk.ac.stfc.isis.ibex.ui.tables.DataboundTable;
  */
 public class Table extends DataboundTable<SpectrumInformation> {
     
-    private DetectorDiagnosticsModel model; 
+    private final DetectorDiagnosticsModel model; 
     
     /**
      * Instantiates a new device screens table.
@@ -67,11 +67,12 @@ public class Table extends DataboundTable<SpectrumInformation> {
     
     @Override
     protected void addColumns() {
-        number();
-        value();
+        createSpectrumNumberColumn();
+        createCountRateColumn();
+        createMaxSpecBinCountColumn();
     }
 
-    private void number() {
+    private void createSpectrumNumberColumn() {
         TableViewerColumn number = createColumn("Spectrum number", 20);
         number.setLabelProvider(new DataboundCellLabelProvider<SpectrumInformation>(observeProperty("spectrumNumber")) {
             @Override
@@ -86,9 +87,24 @@ public class Table extends DataboundTable<SpectrumInformation> {
         // setSortListener(name.getColumn(), DeviceScreensComparator.SortedOnType.NAME);
     }
     
-    private void value() {
+    private void createCountRateColumn() {
         TableViewerColumn number = createColumn("Count rate", 20);
         number.setLabelProvider(new DataboundCellLabelProvider<SpectrumInformation>(observeProperty("countRate")) {
+            @Override
+            protected String valueFromRow(SpectrumInformation row) {
+                try {
+                    return row.getCountRate().toString();
+                } catch (NullPointerException e) {
+                    return "None";
+                }
+            }
+        });
+        // setSortListener(name.getColumn(), DeviceScreensComparator.SortedOnType.NAME);
+    }
+    
+    private void createMaxSpecBinCountColumn() {
+        TableViewerColumn number = createColumn("Maximum", 20);
+        number.setLabelProvider(new DataboundCellLabelProvider<SpectrumInformation>(observeProperty("maxSpecBinCount")) {
             @Override
             protected String valueFromRow(SpectrumInformation row) {
                 try {
