@@ -22,6 +22,7 @@
 package uk.ac.stfc.isis.ibex.dae.detectordiagnostics;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import uk.ac.stfc.isis.ibex.model.ModelObject;
@@ -126,19 +127,20 @@ public class DetectorDiagnosticsModel extends ModelObject {
     public void startObserving() {
         pvs = new SpectrumDiagnosticsPvConnections();
         pvs.startObserving();
+        firePropertyChange("spectra", Collections.EMPTY_LIST, spectra);
     }
 
     /**
      * @param size
      */
-    private void updateSpectraCount(int size) {
+    private synchronized void updateSpectraCount(int size) {
         spectra.clear();
         for (int i = 0; i < size; i++) {
             spectra.add(new SpectrumInformation());
         }
     }
     
-    private synchronized void applyFutureValuesIfValid() {
+    private void applyFutureValuesIfValid() {
         if (futureValues.spectrumNumbersList.size() == futureValues.countRatesList.size() 
                 && futureValues.countRatesList.size() == futureValues.maximumsList.size() 
                 && futureValues.maximumsList.size() == futureValues.integralsList.size()) {
@@ -150,7 +152,7 @@ public class DetectorDiagnosticsModel extends ModelObject {
             updateMaxSpecBinCount(futureValues.maximumsList);
             updateSpectrumNumbers(futureValues.spectrumNumbersList);
             
-            firePropertyChange("spectra", null, spectra);
+            firePropertyChange("spectra", Collections.EMPTY_LIST, spectra);
         }
     }
 

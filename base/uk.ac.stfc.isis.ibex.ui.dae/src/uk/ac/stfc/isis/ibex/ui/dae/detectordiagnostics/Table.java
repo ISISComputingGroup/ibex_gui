@@ -23,6 +23,7 @@ package uk.ac.stfc.isis.ibex.ui.dae.detectordiagnostics;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.List;
 
 import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.swt.widgets.Composite;
@@ -37,8 +38,6 @@ import uk.ac.stfc.isis.ibex.ui.tables.DataboundTable;
  */
 public class Table extends DataboundTable<SpectrumInformation> {
     
-    private final DetectorDiagnosticsModel model; 
-    
     /**
      * Instantiates a new device screens table.
      *
@@ -51,18 +50,6 @@ public class Table extends DataboundTable<SpectrumInformation> {
         
         initialise();
         
-        model = DetectorDiagnosticsModel.getInstance(); 
-        
-        model.addPropertyChangeListener("spectra", new PropertyChangeListener() {
-            
-            @Override
-            public void propertyChange(PropertyChangeEvent evt) {
-                setRows(model.getSpectra()); 
-            }
-        });
-        
-        model.startObserving();
-        
     }
     
     @Override
@@ -72,6 +59,29 @@ public class Table extends DataboundTable<SpectrumInformation> {
         createMaxSpecBinCountColumn();
         createIntegralColumn();
     }
+    
+    public void bind(){
+        
+        final DetectorDiagnosticsModel model = DetectorDiagnosticsModel.getInstance(); 
+        
+        model.addPropertyChangeListener("spectra", new PropertyChangeListener() {
+            
+            @Override
+            public void propertyChange(PropertyChangeEvent evt) {
+                try{
+                    final List<SpectrumInformation> newValue = model.getSpectra();
+                    System.out.println("Got update to rows. New row count is " + newValue.size());
+                    setRows(newValue);
+                    refresh();
+                    redraw();
+                } catch (Throwable t){
+                    t.printStackTrace();
+                }
+            }
+        });
+        
+        model.startObserving(); 
+    } 
 
     private void createSpectrumNumberColumn() {
         TableViewerColumn number = createColumn("Spectrum number", 20);

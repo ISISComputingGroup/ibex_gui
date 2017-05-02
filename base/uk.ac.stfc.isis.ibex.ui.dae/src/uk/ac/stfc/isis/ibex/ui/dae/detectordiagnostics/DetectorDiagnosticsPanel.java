@@ -60,6 +60,7 @@ public class DetectorDiagnosticsPanel extends Composite {
         lblSpectraTable.setText("Spectra:");
         
         Table table = new Table(parent, SWT.NONE, SWT.NONE);
+        table.bind();
         
         GridData layout = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
         table.setLayoutData(layout);
