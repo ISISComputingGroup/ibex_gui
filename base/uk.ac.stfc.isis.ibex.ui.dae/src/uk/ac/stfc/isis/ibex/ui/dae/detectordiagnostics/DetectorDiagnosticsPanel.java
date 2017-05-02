@@ -27,7 +27,6 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 
-import uk.ac.stfc.isis.ibex.dae.detectordiagnostics.DetectorDiagnosticsModel;
 import uk.ac.stfc.isis.ibex.model.Action;
 import uk.ac.stfc.isis.ibex.ui.dae.run.ActionButton;
 
@@ -49,7 +48,7 @@ public class DetectorDiagnosticsPanel extends Composite {
 
             @Override
             public void execute() {
-                DetectorDiagnosticsModel.getInstance().setRange(0, 20);
+                // DetectorDiagnosticsModel.getInstance().setRange(0, 256);
             }
             
         });  

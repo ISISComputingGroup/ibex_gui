@@ -35,17 +35,13 @@ public class DetectorDiagnosticsModel extends ModelObject {
     
     private static DetectorDiagnosticsModel instance;
     
-    private SpectrumDiagnostics pvs;
+    private SpectrumDiagnosticsPvConnections pvs;
     
-    private SpectrumRange range;
-    
-    private DetectorDiagnosticsModel() {
-        
-    }
+    private FutureValueHolder futureValues = new FutureValueHolder();
     
     private List<SpectrumInformation> spectra = new ArrayList<>();
     
-    public List<SpectrumInformation> getSpectra(){
+    public List<SpectrumInformation> getSpectra() {
         return spectra;
     }
     
@@ -59,29 +55,66 @@ public class DetectorDiagnosticsModel extends ModelObject {
         }
         return instance;
     }
+    
+    /**
+     * @param spectrumNumbersList the list of spectrum numbers
+     */
+    public synchronized void updateSpectrumNumbers(final List<Integer> spectrumNumbersList) {
+        
+        if(spectrumNumbersList.size() != spectra.size()){
+            futureValues.spectrumNumbersList = spectrumNumbersList;
+            applyFutureValuesIfValid();
+            return;
+        }
+        
+        for (int i = 0; i < spectrumNumbersList.size(); i++) {          
+            spectra.get(i).setSpectrumNumber(spectrumNumbersList.get(i));
+        }
+    }
 
     /**
-     * @param countRatesList the list of values for that page
+     * @param countRatesList the list of count rates
      */
-    public void updateCountRates(final List<Double> countRatesList) {
+    public synchronized void updateCountRates(final List<Double> countRatesList) {
+        
+        if(countRatesList.size() != spectra.size()){
+            futureValues.countRatesList = countRatesList;
+            applyFutureValuesIfValid();
+            return;
+        }
+        
         for (int i = 0; i < countRatesList.size(); i++) {          
             spectra.get(i).setCountRate(countRatesList.get(i));
         }
     }
     
     /**
-     * @param countRatesList the list of values for that page
+     * @param maxSpecBinCount the list of maximum counts
      */
-    public void updateMaxSpecBinCount(final List<Integer> countRatesList) {
-        for (int i = 0; i < countRatesList.size(); i++) {          
-            spectra.get(i).setMaxSpecBinCount(countRatesList.get(i));
+    public synchronized void updateMaxSpecBinCount(final List<Integer> maxSpecBinCount) {
+        
+        if(maxSpecBinCount.size() != spectra.size()){
+            futureValues.maximumsList = maxSpecBinCount;
+            applyFutureValuesIfValid();
+            return;
+        }
+        
+        for (int i = 0; i < maxSpecBinCount.size(); i++) {          
+            spectra.get(i).setMaxSpecBinCount(maxSpecBinCount.get(i));
         }
     }
     
     /**
-     * @param countRatesList the list of values for that page
+     * @param integralsList the list of integrals
      */
-    public void updateIntegrals(final List<Integer> integralsList) {
+    public synchronized void updateIntegrals(final List<Integer> integralsList) {
+        
+        if(integralsList.size() != spectra.size()){
+            futureValues.integralsList = integralsList;
+            applyFutureValuesIfValid();
+            return;
+        }
+        
         for (int i = 0; i < integralsList.size(); i++) {          
             spectra.get(i).setIntegral(integralsList.get(i));
         }
@@ -91,22 +124,34 @@ public class DetectorDiagnosticsModel extends ModelObject {
      * 
      */
     public void startObserving() {
-        pvs = new SpectrumDiagnostics();
-        setRange(0,1);
+        pvs = new SpectrumDiagnosticsPvConnections();
+        pvs.startObserving();
     }
 
     /**
-     * 
+     * @param size
      */
-    public void setRange(int start, int numberOfSpectra) {
-        range = new SpectrumRange(start, numberOfSpectra);
-        
+    private void updateSpectraCount(int size) {
         spectra.clear();
-        for(Integer spectrumNumber : range.spectraRequired()){
-            spectra.add(new SpectrumInformation(spectrumNumber));
+        for (int i = 0; i < size; i++) {
+            spectra.add(new SpectrumInformation());
         }
-        pvs.startObserving(range);
-        firePropertyChange("spectra", null, spectra);
+    }
+    
+    private synchronized void applyFutureValuesIfValid() {
+        if (futureValues.spectrumNumbersList.size() == futureValues.countRatesList.size() 
+                && futureValues.countRatesList.size() == futureValues.maximumsList.size() 
+                && futureValues.maximumsList.size() == futureValues.integralsList.size()) {
+            
+            updateSpectraCount(futureValues.spectrumNumbersList.size());
+            
+            updateCountRates(futureValues.countRatesList);
+            updateIntegrals(futureValues.integralsList);
+            updateMaxSpecBinCount(futureValues.maximumsList);
+            updateSpectrumNumbers(futureValues.spectrumNumbersList);
+            
+            firePropertyChange("spectra", null, spectra);
+        }
     }
 
 }

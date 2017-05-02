@@ -28,12 +28,7 @@ import uk.ac.stfc.isis.ibex.model.ModelObject;
  */
 public class SpectrumInformation extends ModelObject {
     
-    public SpectrumInformation(Integer number){
-        this.spectrumNumber = number;
-    }
-    
     private Integer spectrumNumber;
-    
     private Double countRate;
     private Integer integral;
     private Integer maxSpecBinCount;
@@ -53,6 +48,14 @@ public class SpectrumInformation extends ModelObject {
     public Integer getMaxSpecBinCount() {
         return maxSpecBinCount;
     }
+    
+    /**
+     * @param value
+     */
+    public void setSpectrumNumber(Integer value) {
+        firePropertyChange("spectrumNumber", this.spectrumNumber, this.spectrumNumber = value);
+    }
+    
 
     /**
      * @param value

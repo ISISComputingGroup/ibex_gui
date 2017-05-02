@@ -28,6 +28,7 @@ import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.Observer;
 import uk.ac.stfc.isis.ibex.epics.switching.ObservableFactory;
 import uk.ac.stfc.isis.ibex.epics.switching.OnInstrumentSwitch;
+import uk.ac.stfc.isis.ibex.epics.switching.SwitchableObservable;
 import uk.ac.stfc.isis.ibex.instrument.InstrumentUtils;
 import uk.ac.stfc.isis.ibex.instrument.channels.DoubleArrayChannel;
 import uk.ac.stfc.isis.ibex.instrument.channels.IntArrayChannel;
@@ -35,7 +36,7 @@ import uk.ac.stfc.isis.ibex.instrument.channels.IntArrayChannel;
 /**
  *
  */
-public class SpectrumDiagnostics {
+public class SpectrumDiagnosticsPvConnections {
     
     private final ObservableFactory obsFactory;
     
@@ -56,15 +57,26 @@ public class SpectrumDiagnostics {
      */
     public ForwardingObservable<int[]> integral;
 
+    private SwitchableObservable<int[]> spectrumNumbers;
+
     /**
      * @param spectrumRange the spectrum range
      */
-    public SpectrumDiagnostics() {    
+    public SpectrumDiagnosticsPvConnections() {    
         model = DetectorDiagnosticsModel.getInstance();
         obsFactory = new ObservableFactory(OnInstrumentSwitch.SWITCH);                   
     }
     
-    public void startObserving(SpectrumRange spectrumRange){
+    public void startObserving(){
+        
+        spectrumNumbers = obsFactory.getSwitchableObservable(new IntArrayChannel(), InstrumentUtils.addPrefix("DAE:DIAG:TABLE:SPEC"));
+        
+        spectrumNumbers.addObserver(new SpectrumObserver<int[]>() {
+            @Override
+            public void onNonNullValue(int[] values) {
+                model.updateSpectrumNumbers(convertPrimitiveIntArrayToList(values)); 
+            }         
+        });
             
         countRate = obsFactory.getSwitchableObservable(new DoubleArrayChannel(), InstrumentUtils.addPrefix("DAE:DIAG:TABLE:CNTRATE"));
         
@@ -134,7 +146,6 @@ public class SpectrumDiagnostics {
 
         @Override
         public void onConnectionStatus(boolean isConnected) {
-            System.out.println("connection status is now " + isConnected); 
         }
 
         @Override

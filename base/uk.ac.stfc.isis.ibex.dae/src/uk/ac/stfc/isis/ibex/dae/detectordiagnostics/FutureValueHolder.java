@@ -21,26 +21,16 @@
  */
 package uk.ac.stfc.isis.ibex.dae.detectordiagnostics;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
  *
  */
-public class SpectrumRange {
+public class FutureValueHolder {
     
-    private List<Integer> spectra;
-    
-    public SpectrumRange(int startingSpectrum, int range){
-        spectra = new ArrayList<>();
-        
-        for(int i=0; i<range; i++){
-            spectra.add(startingSpectrum + i);
-        }
-    }
-    
-    public List<Integer> spectraRequired() {        
-        return spectra;
-    }
+    List<Integer> spectrumNumbersList;
+    List<Double> countRatesList;
+    List<Integer> maximumsList;
+    List<Integer> integralsList;
     
 }
