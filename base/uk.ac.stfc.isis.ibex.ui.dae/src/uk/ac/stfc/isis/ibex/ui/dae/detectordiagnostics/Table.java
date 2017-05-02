@@ -21,6 +21,9 @@
  */
 package uk.ac.stfc.isis.ibex.ui.dae.detectordiagnostics;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+
 import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.swt.widgets.Composite;
 
@@ -34,6 +37,8 @@ import uk.ac.stfc.isis.ibex.ui.tables.DataboundTable;
  */
 public class Table extends DataboundTable<SpectrumInformation> {
     
+    private DetectorDiagnosticsModel model; 
+    
     /**
      * Instantiates a new device screens table.
      *
@@ -46,8 +51,17 @@ public class Table extends DataboundTable<SpectrumInformation> {
         
         initialise();
         
-        this.setRows(DetectorDiagnosticsModel.getInstance().getSpectra());
-        DetectorDiagnosticsModel.getInstance().startObserving();
+        model = DetectorDiagnosticsModel.getInstance(); 
+        
+        model.addPropertyChangeListener("spectra", new PropertyChangeListener() {
+            
+            @Override
+            public void propertyChange(PropertyChangeEvent evt) {
+                setRows(model.getSpectra()); 
+            }
+        });
+        
+        model.startObserving();
         
     }
     

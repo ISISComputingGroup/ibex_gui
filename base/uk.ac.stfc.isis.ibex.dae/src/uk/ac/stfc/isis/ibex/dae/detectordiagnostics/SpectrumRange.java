@@ -29,7 +29,17 @@ import java.util.List;
  */
 public class SpectrumRange {
     
-    public List<Integer> spectra = new ArrayList<>();
+    private List<Integer> spectra;
+    
+    public SpectrumRange(boolean a){
+        spectra = new ArrayList<>();
+        if(a){
+            spectra.add(0);
+            spectra.add(100);
+        } else {
+            spectra.add(0);
+        }
+    }
     
     public List<Integer> pagesRequired() {
         List<Integer> pagesRequired = new ArrayList<>();

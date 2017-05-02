@@ -27,6 +27,10 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 
+import uk.ac.stfc.isis.ibex.dae.detectordiagnostics.DetectorDiagnosticsModel;
+import uk.ac.stfc.isis.ibex.model.Action;
+import uk.ac.stfc.isis.ibex.ui.dae.run.ActionButton;
+
 /**
  *
  */
@@ -38,6 +42,19 @@ public class DetectorDiagnosticsPanel extends Composite {
         super(parent, SWT.NONE);
         
         setLayout(new FillLayout(SWT.HORIZONTAL));
+        
+
+        
+        ActionButton button = new ActionButton(this, SWT.CENTER, new Action(){
+
+            @Override
+            public void execute() {
+                DetectorDiagnosticsModel.getInstance().setRange();
+            }
+            
+        });  
+        button.setText("hi");
+        button.setEnabled(true);
                 
         Label lblSpectraTable = new Label(parent, SWT.NONE);
         lblSpectraTable.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1));

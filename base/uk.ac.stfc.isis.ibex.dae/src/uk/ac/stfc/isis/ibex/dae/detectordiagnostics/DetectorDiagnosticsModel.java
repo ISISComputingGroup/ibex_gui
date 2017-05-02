@@ -37,6 +37,8 @@ public class DetectorDiagnosticsModel extends ModelObject {
     
     private SpectrumDiagnostics pvs;
     
+    private SpectrumRange range;
+    
     private DetectorDiagnosticsModel() {
         
     }
@@ -45,8 +47,6 @@ public class DetectorDiagnosticsModel extends ModelObject {
     
     {
         spectra.add(new SpectrumInformation(0));
-        spectra.add(new SpectrumInformation(1));
-        spectra.add(new SpectrumInformation(2));
         firePropertyChange("spectra", null, spectra);
     }
     
@@ -86,7 +86,16 @@ public class DetectorDiagnosticsModel extends ModelObject {
      */
     public void startObserving() {
         pvs = new SpectrumDiagnostics();
-        pvs.startObserving(new SpectrumRange()); 
+        pvs.startObserving(new SpectrumRange(false)); 
+    }
+
+    /**
+     * 
+     */
+    public void setRange() {
+        range = new SpectrumRange(true); 
+        pvs.startObserving(range);
+        firePropertyChange("spectra", null, spectra);
     }
 
 }
