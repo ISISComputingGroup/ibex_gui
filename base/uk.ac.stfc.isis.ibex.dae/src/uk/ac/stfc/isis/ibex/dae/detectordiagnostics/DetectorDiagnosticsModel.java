@@ -72,9 +72,18 @@ public class DetectorDiagnosticsModel extends ModelObject {
     /**
      * @param countRatesList the list of values for that page
      */
-    public void updateMaxSpecBinCount(final List<Long> countRatesList) {
+    public void updateMaxSpecBinCount(final List<Integer> countRatesList) {
         for (int i = 0; i < countRatesList.size(); i++) {          
             spectra.get(i).setMaxSpecBinCount(countRatesList.get(i));
+        }
+    }
+    
+    /**
+     * @param countRatesList the list of values for that page
+     */
+    public void updateIntegrals(final List<Integer> integralsList) {
+        for (int i = 0; i < integralsList.size(); i++) {          
+            spectra.get(i).setIntegral(integralsList.get(i));
         }
     }
 

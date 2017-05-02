@@ -25,7 +25,7 @@ import java.util.Arrays;
 import org.epics.util.array.IteratorByte;
 import org.epics.util.array.IteratorDouble;
 import org.epics.util.array.IteratorFloat;
-import org.epics.util.array.IteratorLong;
+import org.epics.util.array.IteratorInt;
 import org.epics.vtype.Display;
 import org.epics.vtype.VByteArray;
 import org.epics.vtype.VDouble;
@@ -33,8 +33,8 @@ import org.epics.vtype.VDoubleArray;
 import org.epics.vtype.VEnum;
 import org.epics.vtype.VFloatArray;
 import org.epics.vtype.VInt;
+import org.epics.vtype.VIntArray;
 import org.epics.vtype.VLong;
-import org.epics.vtype.VLongArray;
 import org.epics.vtype.VNumber;
 import org.epics.vtype.VShort;
 import org.epics.vtype.VString;
@@ -141,11 +141,11 @@ public final class VTypeFormat {
     }
     
     /**
-     * @return Converter from a VDoubleArray to a double array
+     * @return Converter from a VIntArray to an int array
      */
-    public static Converter<VType, long[]> fromVLongArray() {
-        return toVLongArray()
-                .apply(extractLongs());
+    public static Converter<VType, int[]> fromVIntegerArray() {
+        return toVIntegerArray()
+                .apply(extractIntegers());
     }
 	
     /**
@@ -188,14 +188,14 @@ public final class VTypeFormat {
     }
     
     /**
-     * @return Converter from a VType to a VLongArray
+     * @return Converter from a VType to a VIntegerArray
      */
-    public static Converter<VType, VLongArray> toVLongArray() {
-        return new Converter<VType, VLongArray>() {
+    public static Converter<VType, VIntArray> toVIntegerArray() {
+        return new Converter<VType, VIntArray>() {
             @Override
-            public VLongArray convert(VType value) throws ConversionException {
+            public VIntArray convert(VType value) throws ConversionException {
                 try {
-                    return (VLongArray) value;
+                    return (VIntArray) value;
                 } catch (ClassCastException e) {
                     throw new ConversionException(e.getMessage());
                 }
@@ -439,26 +439,26 @@ public final class VTypeFormat {
     }
     
     /**
-     * @return A converter from a VLong array to an array of longs
+     * @return A converter from a VInteger array to an array of ints
      */
-    public static Converter<VLongArray, long[]> extractLongs() {
-        return new Converter<VLongArray, long[]>() {
+    public static Converter<VIntArray, int[]> extractIntegers() {
+        return new Converter<VIntArray, int[]>() {
             @Override
-            public long[] convert(VLongArray value) throws ConversionException {
+            public int[] convert(VIntArray value) throws ConversionException {
                 if (value == null) {
                     throw new ConversionException("value to format was null");
                 }
                 
                 int length = value.getSizes().iterator().nextInt();
-                long[] longs = new long[length];
+                int[] ints = new int[length];
                 int count = 0;
-                IteratorLong longIterator = value.getData().iterator();
+                IteratorInt intIterator = value.getData().iterator();
                 for (int i = 0; i < length; i++) {
-                    longs[i] = longIterator.nextLong();
+                    ints[i] = intIterator.nextInt();
                     count++;
                 }
                 
-                return Arrays.copyOf(longs, count);
+                return Arrays.copyOf(ints, count);
             }
         };
     }

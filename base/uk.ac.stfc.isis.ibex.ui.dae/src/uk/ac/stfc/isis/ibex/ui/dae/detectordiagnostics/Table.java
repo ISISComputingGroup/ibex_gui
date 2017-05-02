@@ -70,6 +70,7 @@ public class Table extends DataboundTable<SpectrumInformation> {
         createSpectrumNumberColumn();
         createCountRateColumn();
         createMaxSpecBinCountColumn();
+        createIntegralColumn();
     }
 
     private void createSpectrumNumberColumn() {
@@ -84,12 +85,11 @@ public class Table extends DataboundTable<SpectrumInformation> {
                 }
             }
         });
-        // setSortListener(name.getColumn(), DeviceScreensComparator.SortedOnType.NAME);
     }
     
     private void createCountRateColumn() {
-        TableViewerColumn number = createColumn("Count rate", 20);
-        number.setLabelProvider(new DataboundCellLabelProvider<SpectrumInformation>(observeProperty("countRate")) {
+        TableViewerColumn countRate = createColumn("Count rate", 20);
+        countRate.setLabelProvider(new DataboundCellLabelProvider<SpectrumInformation>(observeProperty("countRate")) {
             @Override
             protected String valueFromRow(SpectrumInformation row) {
                 try {
@@ -99,21 +99,33 @@ public class Table extends DataboundTable<SpectrumInformation> {
                 }
             }
         });
-        // setSortListener(name.getColumn(), DeviceScreensComparator.SortedOnType.NAME);
     }
     
     private void createMaxSpecBinCountColumn() {
-        TableViewerColumn number = createColumn("Maximum", 20);
-        number.setLabelProvider(new DataboundCellLabelProvider<SpectrumInformation>(observeProperty("maxSpecBinCount")) {
+        TableViewerColumn maximum = createColumn("Maximum", 20);
+        maximum.setLabelProvider(new DataboundCellLabelProvider<SpectrumInformation>(observeProperty("maxSpecBinCount")) {
             @Override
             protected String valueFromRow(SpectrumInformation row) {
                 try {
-                    return row.getCountRate().toString();
+                    return row.getMaxSpecBinCount().toString();
                 } catch (NullPointerException e) {
                     return "None";
                 }
             }
         });
-        // setSortListener(name.getColumn(), DeviceScreensComparator.SortedOnType.NAME);
+    }
+    
+    private void createIntegralColumn() {
+        TableViewerColumn integral = createColumn("Integral", 20);
+        integral.setLabelProvider(new DataboundCellLabelProvider<SpectrumInformation>(observeProperty("integral")) {
+            @Override
+            protected String valueFromRow(SpectrumInformation row) {
+                try {
+                    return row.getIntegral().toString();
+                } catch (NullPointerException e) {
+                    return "None";
+                }
+            }
+        });
     }
 }

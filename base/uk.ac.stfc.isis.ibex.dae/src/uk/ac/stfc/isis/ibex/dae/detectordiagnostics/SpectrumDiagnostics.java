@@ -30,7 +30,7 @@ import uk.ac.stfc.isis.ibex.epics.switching.ObservableFactory;
 import uk.ac.stfc.isis.ibex.epics.switching.OnInstrumentSwitch;
 import uk.ac.stfc.isis.ibex.instrument.InstrumentUtils;
 import uk.ac.stfc.isis.ibex.instrument.channels.DoubleArrayChannel;
-import uk.ac.stfc.isis.ibex.instrument.channels.LongArrayChannel;
+import uk.ac.stfc.isis.ibex.instrument.channels.IntArrayChannel;
 
 /**
  *
@@ -49,7 +49,12 @@ public class SpectrumDiagnostics {
     /**
      * The observable for the maximum spectrum bin count.
      */
-    public ForwardingObservable<long[]> maxSpecBinCount;
+    public ForwardingObservable<int[]> maxSpecBinCount;
+    
+    /**
+     * The observable for the integral.
+     */
+    public ForwardingObservable<int[]> integral;
 
     /**
      * @param spectrumRange the spectrum range
@@ -70,12 +75,21 @@ public class SpectrumDiagnostics {
             }         
         });
         
-        maxSpecBinCount = obsFactory.getSwitchableObservable(new LongArrayChannel(), InstrumentUtils.addPrefix("DAE:DIAG:TABLE:MAX"));
+        integral = obsFactory.getSwitchableObservable(new IntArrayChannel(), InstrumentUtils.addPrefix("DAE:DIAG:TABLE:SUM"));
         
-        maxSpecBinCount.addObserver(new SpectrumObserver<long[]>() {
+        integral.addObserver(new SpectrumObserver<int[]>() {
             @Override
-            public void onNonNullValue(long[] values) {
-                model.updateMaxSpecBinCount(convertPrimitiveLongArrayToList(values)); 
+            public void onNonNullValue(int[] values) {
+                model.updateIntegrals(convertPrimitiveIntArrayToList(values)); 
+            }         
+        });
+        
+        maxSpecBinCount = obsFactory.getSwitchableObservable(new IntArrayChannel(), InstrumentUtils.addPrefix("DAE:DIAG:TABLE:MAX"));
+        
+        maxSpecBinCount.addObserver(new SpectrumObserver<int[]>() {
+            @Override
+            public void onNonNullValue(int[] values) {
+                model.updateMaxSpecBinCount(convertPrimitiveIntArrayToList(values)); 
             }         
         });
         
@@ -91,11 +105,11 @@ public class SpectrumDiagnostics {
         return valuesList;
     }
     
-    private List<Long> convertPrimitiveLongArrayToList(long[] array){
+    private List<Integer> convertPrimitiveIntArrayToList(int[] array){
         // Convert to collection for ease of use
         // Can't use Arrays.asList() because it's an array of primitives.
-        List<Long> valuesList = new ArrayList<>(array.length);
-        for (long value : array) {
+        List<Integer> valuesList = new ArrayList<>(array.length);
+        for (int value : array) {
             valuesList.add(value);
         }
         return valuesList;

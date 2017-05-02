@@ -28,14 +28,14 @@ import uk.ac.stfc.isis.ibex.epics.writing.BaseWritable;
 /**
  *
  */
-public class LongArrayChannel implements ChannelType<long[]>{
+public class IntArrayChannel implements ChannelType<int[]>{
     @Override
-    public ClosableObservable<long[]> reader(String address) {
-        return Channels.Longs.arrayReader(address);
+    public ClosableObservable<int[]> reader(String address) {
+        return Channels.Integers.arrayReader(address);
     }
 
     @Override
-    public BaseWritable<long[]> writer(String address) {
+    public BaseWritable<int[]> writer(String address) {
         throw new UnsupportedOperationException();
     }
 }
