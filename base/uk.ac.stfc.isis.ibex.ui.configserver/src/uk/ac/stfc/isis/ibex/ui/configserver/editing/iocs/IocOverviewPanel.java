@@ -1,7 +1,7 @@
 
 /*
 * This file is part of the ISIS IBEX application.
-* Copyright (C) 2012-2015 Science & Technology Facilities Council.
+* Copyright (C) 2012-2017 Science & Technology Facilities Council.
 * All rights reserved.
 *
 * This program is distributed in the hope that it will be useful.
@@ -43,6 +43,7 @@ import org.eclipse.swt.widgets.Text;
 
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableIoc;
+import uk.ac.stfc.isis.ibex.ui.configserver.editing.iocs.dialog.AddIocDialog;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.iocs.dialog.IocDialog;
 import uk.ac.stfc.isis.ibex.validators.MessageDisplayer;
 
@@ -62,12 +63,13 @@ public class IocOverviewPanel extends Composite {
 	private final Display display = Display.getCurrent();
 
     private static final int BUTTON_WIDTH = 100;
+    private boolean readOnly;
 
 	private final PropertyChangeListener updateIocs = new PropertyChangeListener() {
 		@Override
 		public void propertyChange(PropertyChangeEvent evt) {
 			if (config != null) {
-				updateIocs(config.getSelectedIocs());
+				updateIocs(config.getAddedIocs());
 			}
 		}
 	};
@@ -133,7 +135,7 @@ public class IocOverviewPanel extends Composite {
             @Override
             public void widgetSelected(SelectionEvent e) {
                 EditableIoc added = new EditableIoc("");
-                openEditIocDialog(added, true);
+                openIocDialog(added, true);
             }
         });
 
@@ -141,7 +143,7 @@ public class IocOverviewPanel extends Composite {
 
             @Override
             public void widgetSelected(SelectionEvent e) {
-                openEditIocDialog(table.firstSelectedRow(), false);
+                openIocDialog(table.firstSelectedRow(), false);
             }
         });
         
@@ -164,8 +166,9 @@ public class IocOverviewPanel extends Composite {
         table.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseDoubleClick(MouseEvent e) {
-                if (table.getItemAtPoint(new Point(e.x, e.y)) != null) {
-                    openEditIocDialog(table.firstSelectedRow(), false);
+                EditableIoc toEdit = table.getItemAtPoint(new Point(e.x, e.y));
+                if (toEdit != null) {
+                    openIocDialog(table.firstSelectedRow(), false);
                 }
             }
         });
@@ -173,11 +176,21 @@ public class IocOverviewPanel extends Composite {
 
     private void setSelectedIocs(List<EditableIoc> selected) {
         if (selected.size() == 0) {
+            // No IOC selected
             return;
         } else if (selected.size() == 1) {
-            btnEditIoc.setEnabled(editEnabled(selected));
+            // Exactly one IOC selected
+            btnEditIoc.setEnabled(true);
+            if (editEnabled(selected)) {
+                readOnly = false;
+                btnEditIoc.setText("Edit IOC");
+            } else {
+                readOnly = true;
+                btnEditIoc.setText("View IOC");
+            }
             selectedIocRb.setText(table.firstSelectedRow().getName());
         } else {
+            // Multiple IOCs selected
             btnEditIoc.setEnabled(false);
             selectedIocRb.setText("(Multiple)");
         }
@@ -200,7 +213,7 @@ public class IocOverviewPanel extends Composite {
      */
 	public void setConfig(EditableConfiguration config) {
 		this.config = config;
-		updateIocs(config.getSelectedIocs());	
+		updateIocs(config.getAddedIocs());	
 		config.addPropertyChangeListener(updateIocs);
 	}
 
@@ -222,9 +235,14 @@ public class IocOverviewPanel extends Composite {
 		});
 	}
 
-    private void openEditIocDialog(EditableIoc toEdit, boolean isBlank) {
-        IocDialog dialog = new IocDialog(getShell(), config, toEdit, isBlank);
-        dialog.open();
+    private void openIocDialog(EditableIoc toEdit, boolean isBlank) {
+        if (isBlank) {
+            IocDialog dialog = new AddIocDialog(getShell(), config, toEdit);
+            dialog.open();
+        } else {
+            IocDialog dialog = new IocDialog(getShell(), config, toEdit);
+            dialog.open();
+        }
     }
     
     private void deleteSelected() {
@@ -248,7 +266,7 @@ public class IocOverviewPanel extends Composite {
         if (returnCode == SWT.OK) {
             int index = table.getSelectionIndex();
             config.removeIocs(toRemove);
-            table.setRows(config.getSelectedIocs());
+            table.setRows(config.getAddedIocs());
             table.refresh();
         
             // Update new selection

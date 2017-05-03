@@ -39,7 +39,7 @@ public class IocsTest extends EditableConfigurationTest {
         EditableConfiguration edited = edit(config());
 
         // Assert
-        assertTrue(edited.getSelectedIocs().size() == 0);
+        assertTrue(edited.getAddedIocs().size() == 0);
     }
 
     @Test
@@ -92,7 +92,7 @@ public class IocsTest extends EditableConfigurationTest {
         edited.removeIocs(toRemove);
 
         // Assert
-        assertDoesNotContain(edited.getSelectedIocs(), GALIL01);
+        assertDoesNotContain(edited.getAddedIocs(), GALIL01);
     }
 
     @Test
