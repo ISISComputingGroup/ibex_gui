@@ -40,8 +40,6 @@ public class DetectorDiagnosticsModel extends ModelObject {
     
     private SpectrumDiagnosticsPvConnections pvs;
     
-    private FutureValueHolder futureValues = new FutureValueHolder();
-    
     private List<SpectrumInformation> spectra = new ArrayList<>();
     
     public List<SpectrumInformation> getSpectra() {
@@ -68,12 +66,6 @@ public class DetectorDiagnosticsModel extends ModelObject {
         
         if(spectrumNumbersList.size() != spectra.size()){
             updateSpectraCount(spectrumNumbersList.size());
-        }
-        
-        if(spectrumNumbersList.size() != spectra.size()){
-            futureValues.spectrumNumbersList = spectrumNumbersList;
-            applyFutureValuesIfValid();
-            return;
         }
         
         for (int i = 0; i < spectrumNumbersList.size(); i++) {          
@@ -142,20 +134,7 @@ public class DetectorDiagnosticsModel extends ModelObject {
         }
         
         fireSpectraPropertyChangeOnGuiThread();
-    }
-    
-    private void applyFutureValuesIfValid() {
         
-        if (futureValues.countRatesList.size() == spectra.size() 
-                && futureValues.integralsList.size() == spectra.size() 
-                && futureValues.maximumsList.size() == spectra.size()) {
-
-            updateIntegrals(futureValues.integralsList);
-            updateMaxSpecBinCount(futureValues.maximumsList);
-            updateSpectrumNumbers(futureValues.spectrumNumbersList);
-            
-            fireSpectraPropertyChangeOnGuiThread();
-        }
     }
     
     private void fireSpectraPropertyChangeOnGuiThread(){

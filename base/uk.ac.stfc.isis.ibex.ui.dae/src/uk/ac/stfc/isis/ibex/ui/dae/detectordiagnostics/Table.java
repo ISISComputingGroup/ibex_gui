@@ -52,6 +52,8 @@ public class Table extends DataboundTable<SpectrumInformation> {
         
     }
     
+    private static final String DISPLAY_STRING_FOR_NULL_VALUE = "No data";
+    
     @Override
     protected void addColumns() {
         createSpectrumNumberColumn();
@@ -68,7 +70,7 @@ public class Table extends DataboundTable<SpectrumInformation> {
             
             @Override
             public void propertyChange(PropertyChangeEvent evt) {
-                try{
+                try {
                     final List<SpectrumInformation> newValue = model.getSpectra();
                     System.out.println("Got update to rows. New row count is " + newValue.size());
                     setRows(newValue);
@@ -91,7 +93,7 @@ public class Table extends DataboundTable<SpectrumInformation> {
                 try {
                     return row.getSpectrumNumber().toString();
                 } catch (NullPointerException e) {
-                    return "None";
+                    return DISPLAY_STRING_FOR_NULL_VALUE;
                 }
             }
         });
@@ -105,7 +107,7 @@ public class Table extends DataboundTable<SpectrumInformation> {
                 try {
                     return row.getCountRate().toString();
                 } catch (NullPointerException e) {
-                    return "None";
+                    return DISPLAY_STRING_FOR_NULL_VALUE;
                 }
             }
         });
@@ -119,7 +121,7 @@ public class Table extends DataboundTable<SpectrumInformation> {
                 try {
                     return row.getMaxSpecBinCount().toString();
                 } catch (NullPointerException e) {
-                    return "None";
+                    return DISPLAY_STRING_FOR_NULL_VALUE;
                 }
             }
         });
