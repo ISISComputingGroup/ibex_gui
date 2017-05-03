@@ -70,6 +70,9 @@ public class SpectrumDiagnosticsPvConnections {
     private Writable<Integer> period;
     private Writable<Integer> startingSpectrumNumber;
     private Writable<Integer> numberOfSpectra;
+    private Writable<Integer> integralTimeRangeTo;
+    private Writable<Integer> integralTimeRangeFrom;
+    private Writable<Integer> maxFrames;
 
     public SpectrumDiagnosticsPvConnections(DetectorDiagnosticsModel model) {    
         this.model = model;
@@ -81,6 +84,9 @@ public class SpectrumDiagnosticsPvConnections {
         period = writableFactory.getSwitchableWritable(new IntegerChannel(), InstrumentUtils.addPrefix("DAE:DIAG:PERIOD:SP"));
         startingSpectrumNumber = writableFactory.getSwitchableWritable(new IntegerChannel(), InstrumentUtils.addPrefix("DAE:DIAG:SPEC:START:SP")); 
         numberOfSpectra = writableFactory.getSwitchableWritable(new IntegerChannel(), InstrumentUtils.addPrefix("DAE:DIAG:SPEC:NUM:SP"));
+        integralTimeRangeTo = writableFactory.getSwitchableWritable(new IntegerChannel(), InstrumentUtils.addPrefix("DAE:DIAG:SPEC:INTHIGH:SP"));
+        integralTimeRangeFrom = writableFactory.getSwitchableWritable(new IntegerChannel(), InstrumentUtils.addPrefix("DAE:DIAG:SPEC:INTLOW:SP"));
+        maxFrames = writableFactory.getSwitchableWritable(new IntegerChannel(), InstrumentUtils.addPrefix("DAE:DIAG:FRAMES:SP"));
         
     }
     
@@ -102,6 +108,18 @@ public class SpectrumDiagnosticsPvConnections {
     
     public void setNumberOfSpectra(Integer value){
         numberOfSpectra.write(value);
+    }
+    
+    public void setIntegralTimeRangeFrom(Integer value) {
+        integralTimeRangeFrom.write(value);
+    }
+    
+    public void setIntegralTimeRangeTo(Integer value) {
+        integralTimeRangeTo.write(value);
+    }
+    
+    public void setMaxFrames(Integer value) {
+        maxFrames.write(value);
     }
     
     public void startObserving() {

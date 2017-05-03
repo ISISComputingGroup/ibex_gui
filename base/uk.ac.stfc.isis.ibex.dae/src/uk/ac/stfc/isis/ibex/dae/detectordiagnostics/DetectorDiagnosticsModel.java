@@ -160,20 +160,60 @@ public class DetectorDiagnosticsModel extends ModelObject {
         startObserving();
     }
     
-    public void setSpectraType(SpectraToDisplay type){
-        pvs.setSpectraToDisplay(type.ordinal());
+    public Integer getSpectraType(){
+        return 0;
+    }
+    
+    public void setSpectraType(Integer type){
+        pvs.setSpectraToDisplay(type);
+    }
+    
+    public Integer getPeriod(){
+        return 0;
     }
     
     public void setPeriod(Integer value){
         pvs.setPeriod(value);
     }
     
+    public Integer getStartingSpectrumNumber(){
+        return 0;
+    }
+    
     public void setStartingSpectrumNumber(Integer value){
         pvs.setStartingSpectrumNumber(value);
     }
     
+    public Integer getNumberOfSpectra(){
+        return 0;
+    }
+    
     public void setNumberOfSpectra(Integer value){
-        pvs.setSpectraToDisplay(value);
+        pvs.setNumberOfSpectra(value);
+    }
+    
+    public Integer getIntegralTimeRangeFrom(){
+        return 0;
+    }
+    
+    public void setIntegralTimeRangeFrom(Integer value){
+        pvs.setIntegralTimeRangeFrom(value);
+    }
+    
+    public Integer getIntegralTimeRangeTo(){
+        return 0;
+    }
+    
+    public void setIntegralTimeRangeTo(Integer value){
+        pvs.setIntegralTimeRangeTo(value);
+    }
+    
+    public Integer getMaxFrames(){
+        return 0;
+    }
+    
+    public void setMaxFrames(Integer value){
+        pvs.setMaxFrames(value);
     }
 
 }

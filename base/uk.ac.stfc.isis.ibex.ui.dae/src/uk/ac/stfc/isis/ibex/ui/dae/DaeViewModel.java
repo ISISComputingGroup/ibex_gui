@@ -28,7 +28,6 @@ import uk.ac.stfc.isis.ibex.epics.adapters.TextUpdatedObservableAdapter;
 import uk.ac.stfc.isis.ibex.epics.adapters.UpdatedObservableAdapter;
 import uk.ac.stfc.isis.ibex.epics.pv.Closer;
 import uk.ac.stfc.isis.ibex.model.UpdatedValue;
-import uk.ac.stfc.isis.ibex.ui.dae.detectordiagnostics.DetectorDiagnosticsViewModel;
 import uk.ac.stfc.isis.ibex.ui.dae.experimentsetup.ExperimentSetupViewModel;
 import uk.ac.stfc.isis.ibex.ui.dae.run.RunSummaryViewModel;
 import uk.ac.stfc.isis.ibex.ui.dae.runinformation.RunInformationViewModel;
@@ -44,7 +43,6 @@ public class DaeViewModel extends Closer {
 	private RunSummaryViewModel runSummary = registerForClose(new RunSummaryViewModel());
 	private ExperimentSetupViewModel experimentSetup = new ExperimentSetupViewModel();
 	private RunInformationViewModel runInformation = registerForClose(new RunInformationViewModel(Dae.getInstance().observables()));
-	private DetectorDiagnosticsViewModel detectorDiagnostics = new DetectorDiagnosticsViewModel();
 	
 	private UpdatedValue<String> vetos;
 	private UpdatedValue<Boolean> isRunning;
@@ -122,12 +120,4 @@ public class DaeViewModel extends Closer {
 		return runInformation;
 	}
 
-	/**
-     * Get a view model for the display logic of the detector diagnostics.
-     * 
-     * @return The detector diagnostics view model.
-     */
-    public DetectorDiagnosticsViewModel detectorDiagnostics() {
-        return detectorDiagnostics;
-    }
 }

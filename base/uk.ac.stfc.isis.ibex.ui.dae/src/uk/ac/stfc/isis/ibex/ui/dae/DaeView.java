@@ -98,7 +98,7 @@ public class DaeView extends ViewPart {
 		vetosPanel.setModel(viewModel);
 		runInformation.setModel(viewModel);
 		spectraPanel.setModel(viewModel.spectra());
-		detectorDiagnostics.setModel(viewModel.detectorDiagnostics());
+
 	}
 	
 	@Override

@@ -23,82 +23,88 @@ package uk.ac.stfc.isis.ibex.ui.dae.detectordiagnostics;
 
 import java.util.Arrays;
 
+import org.eclipse.core.databinding.DataBindingContext;
+import org.eclipse.core.databinding.beans.BeanProperties;
+import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Spinner;
 
 import uk.ac.stfc.isis.ibex.dae.detectordiagnostics.DetectorDiagnosticsModel;
 import uk.ac.stfc.isis.ibex.dae.detectordiagnostics.SpectraToDisplay;
-import uk.ac.stfc.isis.ibex.model.Action;
-import uk.ac.stfc.isis.ibex.ui.dae.run.ActionButton;
 
 /**
  *
  */
 public class DetectorDiagnosticsPanel extends Composite {
     
-    private DetectorDiagnosticsViewModel viewModel;
+    private DetectorDiagnosticsModel model = DetectorDiagnosticsModel.getInstance();
+    private DataBindingContext bindingContext = new DataBindingContext();
     
     public DetectorDiagnosticsPanel(Composite parent){
         super(parent, SWT.NONE);
         
-        setLayout(new FillLayout(SWT.HORIZONTAL));
+        setLayout(new GridLayout(7, false));
         
-        ActionButton button = new ActionButton(this, SWT.CENTER, new Action() {
-
-            @Override
-            public void execute() {
-                DetectorDiagnosticsModel.getInstance().refresh();
-            }
-            
-        });  
-        button.setText("Refresh all data");
-        button.setEnabled(true);
+        Label label1 = new Label(this, SWT.NONE);
+        label1.setText("Spectra to display");
         
-        Combo button1 = new Combo(this, SWT.CENTER); 
-        button1.setItems(
+        Label label2 = new Label(this, SWT.NONE);
+        label2.setText("Spectra periods");
+        
+        Label label3 = new Label(this, SWT.NONE);
+        label3.setText("Starting spectrum number");
+        
+        Label label4 = new Label(this, SWT.NONE);
+        label4.setText("Number of spectra to display");
+        
+        Label label5 = new Label(this, SWT.NONE);
+        label5.setText("Integral time range (from)");
+        
+        Label label6 = new Label(this, SWT.NONE);
+        label6.setText("Integral time range (to)");
+        
+        Label label7 = new Label(this, SWT.NONE);
+        label7.setText("Maximum frames for count rate");
+        
+        Combo comboSpectraTypeSelector = new Combo(this, SWT.READ_ONLY); 
+        comboSpectraTypeSelector.setItems(
                 Arrays.asList(SpectraToDisplay.values())
                 .stream()
                 .map(n -> n.toString())
                 .toArray(String[]::new));
         
-        button1.addSelectionListener(new SelectionAdapter() {
-            @Override
-            public void widgetSelected(SelectionEvent e) {
-                DetectorDiagnosticsModel.getInstance().setSpectraType(SpectraToDisplay.values()[button1.getSelectionIndex()]);
-            }
-            
-        });  
-        button1.setText("All spectra");
-        button1.setEnabled(true);
+        bindingContext.bindValue(WidgetProperties.singleSelectionIndex().observe(comboSpectraTypeSelector), BeanProperties.value("spectraType").observe(model));  
+        comboSpectraTypeSelector.setEnabled(true);
         
-        ActionButton button2 = new ActionButton(this, SWT.CENTER, new Action() {
-
-            @Override
-            public void execute() {
-                DetectorDiagnosticsModel.getInstance().setSpectraType(SpectraToDisplay.ZERO_ONLY);
-            }
-            
-        });  
-        button2.setText("zero spectra");
-        button2.setEnabled(true);
+        Spinner comboPeriodSelector = new Spinner(this, SWT.BORDER); 
+        bindingContext.bindValue(WidgetProperties.selection().observe(comboPeriodSelector), BeanProperties.value("period").observe(model));  
+        comboPeriodSelector.setEnabled(true);
         
-        ActionButton button3 = new ActionButton(this, SWT.CENTER, new Action() {
-
-            @Override
-            public void execute() {
-                DetectorDiagnosticsModel.getInstance().setSpectraType(SpectraToDisplay.NON_ZERO_ONLY);
-            }
-            
-        });  
-        button3.setText("non-zero spectra");
-        button3.setEnabled(true);
-                
+        Spinner comboStartingSpectrumNumber = new Spinner(this, SWT.BORDER); 
+        bindingContext.bindValue(WidgetProperties.selection().observe(comboStartingSpectrumNumber), BeanProperties.value("startingSpectrumNumber").observe(model));  
+        comboStartingSpectrumNumber.setEnabled(true);
+        
+        Spinner comboNumberOfSpectra = new Spinner(this, SWT.BORDER); 
+        bindingContext.bindValue(WidgetProperties.selection().observe(comboNumberOfSpectra), BeanProperties.value("numberOfSpectra").observe(model));  
+        comboNumberOfSpectra.setEnabled(true);
+        
+        Spinner comboIntegralTimeRangeFrom = new Spinner(this, SWT.BORDER); 
+        bindingContext.bindValue(WidgetProperties.selection().observe(comboIntegralTimeRangeFrom), BeanProperties.value("integralTimeRangeFrom").observe(model));  
+        comboIntegralTimeRangeFrom.setEnabled(true);
+        
+        Spinner comboIntegralTimeRangeTo = new Spinner(this, SWT.BORDER); 
+        bindingContext.bindValue(WidgetProperties.selection().observe(comboIntegralTimeRangeTo), BeanProperties.value("integralTimeRangeTo").observe(model));  
+        comboIntegralTimeRangeTo.setEnabled(true);
+        
+        Spinner comboMaximumFrames = new Spinner(this, SWT.BORDER); 
+        bindingContext.bindValue(WidgetProperties.selection().observe(comboMaximumFrames), BeanProperties.value("maximumFrames").observe(model));  
+        comboMaximumFrames.setEnabled(true);
+               
         Label lblSpectraTable = new Label(parent, SWT.NONE);
         lblSpectraTable.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1));
         lblSpectraTable.setText("Spectra:");
@@ -110,15 +116,6 @@ public class DetectorDiagnosticsPanel extends Composite {
         table.setLayoutData(layout);
 
         
-    }
-
-    /**
-     * Sets a new view model to use.
-     * 
-     * @param viewModel the new view model to use
-     */
-    public void setModel(DetectorDiagnosticsViewModel viewModel) {
-        this.viewModel = viewModel;
     }
 
 }
