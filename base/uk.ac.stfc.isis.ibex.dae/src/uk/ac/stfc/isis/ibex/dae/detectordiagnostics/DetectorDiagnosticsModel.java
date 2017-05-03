@@ -25,6 +25,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.eclipse.swt.widgets.Display;
+
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 
 /**
@@ -152,7 +154,12 @@ public class DetectorDiagnosticsModel extends ModelObject {
             updateMaxSpecBinCount(futureValues.maximumsList);
             updateSpectrumNumbers(futureValues.spectrumNumbersList);
             
-            firePropertyChange("spectra", Collections.EMPTY_LIST, spectra);
+            Display.getDefault().asyncExec(new Runnable() {
+                @Override
+                public void run() {
+                    firePropertyChange("spectra", Collections.EMPTY_LIST, spectra);
+                }
+            });
         }
     }
 
