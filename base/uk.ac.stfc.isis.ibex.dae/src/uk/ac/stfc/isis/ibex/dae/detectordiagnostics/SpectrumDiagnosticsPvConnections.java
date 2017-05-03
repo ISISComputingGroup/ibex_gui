@@ -65,21 +65,48 @@ public class SpectrumDiagnosticsPvConnections {
 
     private WritableFactory writableFactory;
     
+    private Writable<Integer> diagnosticsEnabled;
     private Writable<Integer> spectraToDisplay;
+    private Writable<Integer> period;
+    private Writable<Integer> startingSpectrumNumber;
+    private Writable<Integer> numberOfSpectra;
 
     public SpectrumDiagnosticsPvConnections(DetectorDiagnosticsModel model) {    
         this.model = model;
         obsFactory = new ObservableFactory(OnInstrumentSwitch.SWITCH); 
         writableFactory = new WritableFactory(OnInstrumentSwitch.SWITCH, InstrumentSwitchers.getDefault());
         
+        diagnosticsEnabled = writableFactory.getSwitchableWritable(new IntegerChannel(), InstrumentUtils.addPrefix("DAE:DIAG:ENABLE:SP"));
         spectraToDisplay = writableFactory.getSwitchableWritable(new IntegerChannel(), InstrumentUtils.addPrefix("DAE:DIAG:SPEC:SHOW:SP"));
+        period = writableFactory.getSwitchableWritable(new IntegerChannel(), InstrumentUtils.addPrefix("DAE:DIAG:PERIOD:SP"));
+        startingSpectrumNumber = writableFactory.getSwitchableWritable(new IntegerChannel(), InstrumentUtils.addPrefix("DAE:DIAG:SPEC:START:SP")); 
+        numberOfSpectra = writableFactory.getSwitchableWritable(new IntegerChannel(), InstrumentUtils.addPrefix("DAE:DIAG:SPEC:NUM:SP"));
+        
+    }
+    
+    private void setDiagnosticsEnabled() {
+        diagnosticsEnabled.write(1);
     }
     
     public void setSpectraToDisplay(Integer value){
         spectraToDisplay.write(value);
     }
     
+    public void setPeriod(Integer value){
+        period.write(value);
+    }
+    
+    public void setStartingSpectrumNumber(Integer value){
+        startingSpectrumNumber.write(value);
+    }
+    
+    public void setNumberOfSpectra(Integer value){
+        numberOfSpectra.write(value);
+    }
+    
     public void startObserving() {
+        
+        setDiagnosticsEnabled();
         
         spectrumNumbers = obsFactory.getSwitchableObservable(new IntArrayChannel(), InstrumentUtils.addPrefix("DAE:DIAG:TABLE:SPEC"));
         

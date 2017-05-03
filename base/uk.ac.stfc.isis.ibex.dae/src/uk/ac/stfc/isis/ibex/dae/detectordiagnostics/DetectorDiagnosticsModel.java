@@ -34,8 +34,6 @@ import uk.ac.stfc.isis.ibex.model.ModelObject;
  */
 public class DetectorDiagnosticsModel extends ModelObject {
     
-    public static final int PAGE_SIZE = 1000;
-    
     private static DetectorDiagnosticsModel instance;
     
     private SpectrumDiagnosticsPvConnections pvs;
@@ -64,7 +62,7 @@ public class DetectorDiagnosticsModel extends ModelObject {
         
         spectrumNumbersList = removeNegativeValues(spectrumNumbersList);
         
-        if(spectrumNumbersList.size() != spectra.size()){
+        if (spectrumNumbersList.size() != spectra.size()) {
             updateSpectraCount(spectrumNumbersList.size());
         }
         
@@ -78,7 +76,7 @@ public class DetectorDiagnosticsModel extends ModelObject {
      */
     public synchronized void updateCountRates(final List<Double> countRatesList) {
         
-        if(countRatesList.size() < spectra.size()){
+        if (countRatesList.size() < spectra.size()) {
             return;
         }
         
@@ -92,7 +90,7 @@ public class DetectorDiagnosticsModel extends ModelObject {
      */
     public synchronized void updateMaxSpecBinCount(final List<Integer> maxSpecBinCount) {
         
-        if(maxSpecBinCount.size() < spectra.size()){
+        if (maxSpecBinCount.size() < spectra.size()) {
             return;
         }
         
@@ -106,7 +104,7 @@ public class DetectorDiagnosticsModel extends ModelObject {
      */
     public synchronized void updateIntegrals(final List<Integer> integralsList) {
         
-        if(integralsList.size() < spectra.size()){
+        if (integralsList.size() < spectra.size()) {
             return;
         }
         
@@ -164,6 +162,18 @@ public class DetectorDiagnosticsModel extends ModelObject {
     
     public void setSpectraType(SpectraToDisplay type){
         pvs.setSpectraToDisplay(type.ordinal());
+    }
+    
+    public void setPeriod(Integer value){
+        pvs.setPeriod(value);
+    }
+    
+    public void setStartingSpectrumNumber(Integer value){
+        pvs.setStartingSpectrumNumber(value);
+    }
+    
+    public void setNumberOfSpectra(Integer value){
+        pvs.setSpectraToDisplay(value);
     }
 
 }

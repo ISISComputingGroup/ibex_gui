@@ -21,9 +21,14 @@
  */
 package uk.ac.stfc.isis.ibex.ui.dae.detectordiagnostics;
 
+import java.util.Arrays;
+
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 
@@ -55,11 +60,17 @@ public class DetectorDiagnosticsPanel extends Composite {
         button.setText("Refresh all data");
         button.setEnabled(true);
         
-        ActionButton button1 = new ActionButton(this, SWT.CENTER, new Action() {
-
+        Combo button1 = new Combo(this, SWT.CENTER); 
+        button1.setItems(
+                Arrays.asList(SpectraToDisplay.values())
+                .stream()
+                .map(n -> n.toString())
+                .toArray(String[]::new));
+        
+        button1.addSelectionListener(new SelectionAdapter() {
             @Override
-            public void execute() {
-                DetectorDiagnosticsModel.getInstance().setSpectraType(SpectraToDisplay.ALL);
+            public void widgetSelected(SelectionEvent e) {
+                DetectorDiagnosticsModel.getInstance().setSpectraType(SpectraToDisplay.values()[button1.getSelectionIndex()]);
             }
             
         });  
