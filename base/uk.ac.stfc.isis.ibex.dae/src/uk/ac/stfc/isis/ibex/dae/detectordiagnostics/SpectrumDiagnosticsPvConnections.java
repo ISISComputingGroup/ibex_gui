@@ -59,15 +59,12 @@ public class SpectrumDiagnosticsPvConnections {
 
     private SwitchableObservable<int[]> spectrumNumbers;
 
-    /**
-     * @param spectrumRange the spectrum range
-     */
     public SpectrumDiagnosticsPvConnections() {    
         model = DetectorDiagnosticsModel.getInstance();
         obsFactory = new ObservableFactory(OnInstrumentSwitch.SWITCH);                   
     }
     
-    public void startObserving(){
+    public void startObserving() {
         
         spectrumNumbers = obsFactory.getSwitchableObservable(new IntArrayChannel(), InstrumentUtils.addPrefix("DAE:DIAG:TABLE:SPEC"));
         
@@ -107,7 +104,7 @@ public class SpectrumDiagnosticsPvConnections {
         
     }
     
-    private List<Double> convertPrimitiveDoubleArrayToList(double[] array){
+    private List<Double> convertPrimitiveDoubleArrayToList(final double[] array) {
         // Convert to collection for ease of use
         // Can't use Arrays.asList() because it's an array of primitives.
         List<Double> valuesList = new ArrayList<>(array.length);
@@ -117,7 +114,7 @@ public class SpectrumDiagnosticsPvConnections {
         return valuesList;
     }
     
-    private List<Integer> convertPrimitiveIntArrayToList(int[] array){
+    private List<Integer> convertPrimitiveIntArrayToList(final int[] array) {
         // Convert to collection for ease of use
         // Can't use Arrays.asList() because it's an array of primitives.
         List<Integer> valuesList = new ArrayList<>(array.length);
@@ -127,7 +124,7 @@ public class SpectrumDiagnosticsPvConnections {
         return valuesList;
     }
     
-    private abstract class SpectrumObserver<T> implements Observer<T>{
+    private abstract class SpectrumObserver<T> implements Observer<T> {
         
         public abstract void onNonNullValue(T value);
         

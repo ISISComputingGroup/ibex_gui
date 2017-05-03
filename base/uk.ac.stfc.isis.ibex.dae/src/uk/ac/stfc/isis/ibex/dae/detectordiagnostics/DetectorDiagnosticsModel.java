@@ -62,7 +62,13 @@ public class DetectorDiagnosticsModel extends ModelObject {
     /**
      * @param spectrumNumbersList the list of spectrum numbers
      */
-    public synchronized void updateSpectrumNumbers(final List<Integer> spectrumNumbersList) {
+    public synchronized void updateSpectrumNumbers(List<Integer> spectrumNumbersList) {
+        
+        spectrumNumbersList = removeNegativeValues(spectrumNumbersList);
+        
+        if(spectrumNumbersList.size() != spectra.size()){
+            updateSpectraCount(spectrumNumbersList.size());
+        }
         
         if(spectrumNumbersList.size() != spectra.size()){
             futureValues.spectrumNumbersList = spectrumNumbersList;
@@ -80,9 +86,7 @@ public class DetectorDiagnosticsModel extends ModelObject {
      */
     public synchronized void updateCountRates(final List<Double> countRatesList) {
         
-        if(countRatesList.size() != spectra.size()){
-            futureValues.countRatesList = countRatesList;
-            applyFutureValuesIfValid();
+        if(countRatesList.size() < spectra.size()){
             return;
         }
         
@@ -96,9 +100,7 @@ public class DetectorDiagnosticsModel extends ModelObject {
      */
     public synchronized void updateMaxSpecBinCount(final List<Integer> maxSpecBinCount) {
         
-        if(maxSpecBinCount.size() != spectra.size()){
-            futureValues.maximumsList = maxSpecBinCount;
-            applyFutureValuesIfValid();
+        if(maxSpecBinCount.size() < spectra.size()){
             return;
         }
         
@@ -112,9 +114,7 @@ public class DetectorDiagnosticsModel extends ModelObject {
      */
     public synchronized void updateIntegrals(final List<Integer> integralsList) {
         
-        if(integralsList.size() != spectra.size()){
-            futureValues.integralsList = integralsList;
-            applyFutureValuesIfValid();
+        if(integralsList.size() < spectra.size()){
             return;
         }
         
@@ -140,27 +140,43 @@ public class DetectorDiagnosticsModel extends ModelObject {
         for (int i = 0; i < size; i++) {
             spectra.add(new SpectrumInformation());
         }
+        
+        fireSpectraPropertyChangeOnGuiThread();
     }
     
     private void applyFutureValuesIfValid() {
-        if (futureValues.spectrumNumbersList.size() == futureValues.countRatesList.size() 
-                && futureValues.countRatesList.size() == futureValues.maximumsList.size() 
-                && futureValues.maximumsList.size() == futureValues.integralsList.size()) {
-            
-            updateSpectraCount(futureValues.spectrumNumbersList.size());
-            
-            updateCountRates(futureValues.countRatesList);
+        
+        if (futureValues.countRatesList.size() == spectra.size() 
+                && futureValues.integralsList.size() == spectra.size() 
+                && futureValues.maximumsList.size() == spectra.size()) {
+
             updateIntegrals(futureValues.integralsList);
             updateMaxSpecBinCount(futureValues.maximumsList);
             updateSpectrumNumbers(futureValues.spectrumNumbersList);
             
-            Display.getDefault().asyncExec(new Runnable() {
-                @Override
-                public void run() {
-                    firePropertyChange("spectra", Collections.EMPTY_LIST, spectra);
-                }
-            });
+            fireSpectraPropertyChangeOnGuiThread();
         }
+    }
+    
+    private void fireSpectraPropertyChangeOnGuiThread(){
+        Display.getDefault().asyncExec(new Runnable() {
+            @Override
+            public void run() {
+                firePropertyChange("spectra", Collections.EMPTY_LIST, spectra);
+            }
+        });
+    }
+    
+    private List<Integer> removeNegativeValues(final List<Integer> initialList) {
+        List<Integer> result = new ArrayList<>();
+        
+        for (Integer value : initialList) {
+            if (value >= 0) {
+                result.add(value);
+            }
+        }
+        
+        return result;
     }
 
 }
