@@ -26,12 +26,16 @@ import java.util.List;
 
 import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.Observer;
+import uk.ac.stfc.isis.ibex.epics.switching.InstrumentSwitchers;
 import uk.ac.stfc.isis.ibex.epics.switching.ObservableFactory;
 import uk.ac.stfc.isis.ibex.epics.switching.OnInstrumentSwitch;
 import uk.ac.stfc.isis.ibex.epics.switching.SwitchableObservable;
+import uk.ac.stfc.isis.ibex.epics.switching.WritableFactory;
+import uk.ac.stfc.isis.ibex.epics.writing.Writable;
 import uk.ac.stfc.isis.ibex.instrument.InstrumentUtils;
 import uk.ac.stfc.isis.ibex.instrument.channels.DoubleArrayChannel;
 import uk.ac.stfc.isis.ibex.instrument.channels.IntArrayChannel;
+import uk.ac.stfc.isis.ibex.instrument.channels.IntegerChannel;
 
 /**
  *
@@ -59,9 +63,20 @@ public class SpectrumDiagnosticsPvConnections {
 
     private SwitchableObservable<int[]> spectrumNumbers;
 
-    public SpectrumDiagnosticsPvConnections() {    
-        model = DetectorDiagnosticsModel.getInstance();
-        obsFactory = new ObservableFactory(OnInstrumentSwitch.SWITCH);                   
+    private WritableFactory writableFactory;
+    
+    private Writable<Integer> spectraToDisplay;
+
+    public SpectrumDiagnosticsPvConnections(DetectorDiagnosticsModel model) {    
+        this.model = model;
+        obsFactory = new ObservableFactory(OnInstrumentSwitch.SWITCH); 
+        writableFactory = new WritableFactory(OnInstrumentSwitch.SWITCH, InstrumentSwitchers.getDefault());
+        
+        spectraToDisplay = writableFactory.getSwitchableWritable(new IntegerChannel(), InstrumentUtils.addPrefix("DAE:DIAG:SPEC:SHOW:SP"));
+    }
+    
+    public void setSpectraToDisplay(Integer value){
+        spectraToDisplay.write(value);
     }
     
     public void startObserving() {

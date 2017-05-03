@@ -118,10 +118,10 @@ public class DetectorDiagnosticsModel extends ModelObject {
     /**
      * 
      */
-    public void startObserving() {
-        pvs = new SpectrumDiagnosticsPvConnections();
+    public synchronized void startObserving() {
+        pvs = new SpectrumDiagnosticsPvConnections(this);
         pvs.startObserving();
-        firePropertyChange("spectra", Collections.EMPTY_LIST, spectra);
+        fireSpectraPropertyChangeOnGuiThread();
     }
 
     /**
@@ -133,11 +133,11 @@ public class DetectorDiagnosticsModel extends ModelObject {
             spectra.add(new SpectrumInformation());
         }
         
-        fireSpectraPropertyChangeOnGuiThread();
+        refresh();
         
     }
     
-    private void fireSpectraPropertyChangeOnGuiThread(){
+    private void fireSpectraPropertyChangeOnGuiThread() {
         Display.getDefault().asyncExec(new Runnable() {
             @Override
             public void run() {
@@ -156,6 +156,14 @@ public class DetectorDiagnosticsModel extends ModelObject {
         }
         
         return result;
+    }
+    
+    public void refresh(){
+        startObserving();
+    }
+    
+    public void setSpectraType(SpectraToDisplay type){
+        pvs.setSpectraToDisplay(type.ordinal());
     }
 
 }

@@ -135,7 +135,7 @@ public class Table extends DataboundTable<SpectrumInformation> {
                 try {
                     return row.getIntegral().toString();
                 } catch (NullPointerException e) {
-                    return "None";
+                    return DISPLAY_STRING_FOR_NULL_VALUE;
                 }
             }
         });

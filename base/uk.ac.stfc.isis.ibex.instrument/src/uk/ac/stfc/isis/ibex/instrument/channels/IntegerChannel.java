@@ -32,6 +32,6 @@ public class IntegerChannel implements ChannelType<Integer> {
 
 	@Override
     public BaseWritable<Integer> writer(String address) {
-		throw new UnsupportedOperationException();
+		return Channels.Integers.writer(address);
 	}
 }

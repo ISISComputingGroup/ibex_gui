@@ -27,6 +27,8 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 
+import uk.ac.stfc.isis.ibex.dae.detectordiagnostics.DetectorDiagnosticsModel;
+import uk.ac.stfc.isis.ibex.dae.detectordiagnostics.SpectraToDisplay;
 import uk.ac.stfc.isis.ibex.model.Action;
 import uk.ac.stfc.isis.ibex.ui.dae.run.ActionButton;
 
@@ -42,18 +44,49 @@ public class DetectorDiagnosticsPanel extends Composite {
         
         setLayout(new FillLayout(SWT.HORIZONTAL));
         
-
-        
-        ActionButton button = new ActionButton(this, SWT.CENTER, new Action(){
+        ActionButton button = new ActionButton(this, SWT.CENTER, new Action() {
 
             @Override
             public void execute() {
-                // DetectorDiagnosticsModel.getInstance().setRange(0, 256);
+                DetectorDiagnosticsModel.getInstance().refresh();
             }
             
         });  
-        button.setText("hi");
+        button.setText("Refresh all data");
         button.setEnabled(true);
+        
+        ActionButton button1 = new ActionButton(this, SWT.CENTER, new Action() {
+
+            @Override
+            public void execute() {
+                DetectorDiagnosticsModel.getInstance().setSpectraType(SpectraToDisplay.ALL);
+            }
+            
+        });  
+        button1.setText("All spectra");
+        button1.setEnabled(true);
+        
+        ActionButton button2 = new ActionButton(this, SWT.CENTER, new Action() {
+
+            @Override
+            public void execute() {
+                DetectorDiagnosticsModel.getInstance().setSpectraType(SpectraToDisplay.ZERO_ONLY);
+            }
+            
+        });  
+        button2.setText("zero spectra");
+        button2.setEnabled(true);
+        
+        ActionButton button3 = new ActionButton(this, SWT.CENTER, new Action() {
+
+            @Override
+            public void execute() {
+                DetectorDiagnosticsModel.getInstance().setSpectraType(SpectraToDisplay.NON_ZERO_ONLY);
+            }
+            
+        });  
+        button3.setText("non-zero spectra");
+        button3.setEnabled(true);
                 
         Label lblSpectraTable = new Label(parent, SWT.NONE);
         lblSpectraTable.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1));
