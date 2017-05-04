@@ -28,8 +28,8 @@ import org.eclipse.jface.databinding.viewers.ObservableMapLabelProvider;
 import org.eclipse.jface.databinding.viewers.ViewerProperties;
 import org.eclipse.jface.viewers.ListViewer;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
-import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
@@ -117,16 +117,7 @@ public class DoubleListEditor extends Composite {
 		selectedItems = ViewerProperties.multipleSelection().observe(selectedViewer);
 		unselectedItems = ViewerProperties.multipleSelection().observe(unselectedViewer);
 
-        selectedList.addMouseListener(new MouseListener() {
-
-            @Override
-            public void mouseUp(MouseEvent e) {
-            }
-
-            @Override
-            public void mouseDown(MouseEvent e) {
-            }
-
+        selectedList.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseDoubleClick(MouseEvent e) {
                 // Bit of a hack as actual selecting behaviour is done on
@@ -136,16 +127,7 @@ public class DoubleListEditor extends Composite {
             }
         });
 
-        unselectedList.addMouseListener(new MouseListener() {
-
-            @Override
-            public void mouseUp(MouseEvent e) {
-            }
-
-            @Override
-            public void mouseDown(MouseEvent e) {
-            }
-
+        unselectedList.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseDoubleClick(MouseEvent e) {
                 // Bit of a hack as actual selecting behaviour is done on
