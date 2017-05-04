@@ -63,7 +63,6 @@ public class IocOverviewPanel extends Composite {
 	private final Display display = Display.getCurrent();
 
     private static final int BUTTON_WIDTH = 100;
-    private boolean readOnly;
 
 	private final PropertyChangeListener updateIocs = new PropertyChangeListener() {
 		@Override
@@ -182,10 +181,8 @@ public class IocOverviewPanel extends Composite {
             // Exactly one IOC selected
             btnEditIoc.setEnabled(true);
             if (editEnabled(selected)) {
-                readOnly = false;
                 btnEditIoc.setText("Edit IOC");
             } else {
-                readOnly = true;
                 btnEditIoc.setText("View IOC");
             }
             selectedIocRb.setText(table.firstSelectedRow().getName());

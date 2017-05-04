@@ -30,8 +30,8 @@ import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.ListViewer;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.KeyAdapter;
 import org.eclipse.swt.events.KeyEvent;
-import org.eclipse.swt.events.KeyListener;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -115,11 +115,7 @@ public class GroupsEditorPanel extends Composite {
 		GridData gd_viewer = new GridData(SWT.FILL, SWT.FILL, true, true, 2, 6);
 		gd_viewer.widthHint = 125;
 		groupList.setLayoutData(gd_viewer);
-        groupList.addKeyListener(new KeyListener() {
-            @Override
-            public void keyReleased(KeyEvent e) {
-            }
-
+        groupList.addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
                 if (e.keyCode == SWT.DEL) {
