@@ -18,6 +18,8 @@
 
 package uk.ac.stfc.isis.ibex.epics.writing;
 
+import java.io.IOException;
+
 import uk.ac.stfc.isis.ibex.epics.observing.Subscription;
 import uk.ac.stfc.isis.ibex.epics.pv.Closable;
 
@@ -44,7 +46,7 @@ public interface Writable<T> extends Closable {
      * @param value
      *            the value to write
      */
-	void write(T value);
+	void write(T value) throws IOException;
 	
 	/**
      * Allows the writer to receive updates from the writable.

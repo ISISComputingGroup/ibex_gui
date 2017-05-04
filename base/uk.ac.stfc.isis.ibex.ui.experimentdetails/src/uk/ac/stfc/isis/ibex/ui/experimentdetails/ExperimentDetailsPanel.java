@@ -141,7 +141,7 @@ public class ExperimentDetailsPanel extends Composite {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				viewModel.model.removeUsers(userDetails.selectedRows());
-				viewModel.model.sendUserDetails();
+                viewModel.model.sendUserDetails();
 			}
 		});		
 		
@@ -153,7 +153,7 @@ public class ExperimentDetailsPanel extends Composite {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				viewModel.model.clearUserDetails();
-				viewModel.model.sendUserDetails();
+                viewModel.model.sendUserDetails();
 			}
 		});
 		btnClearUserDetails.setText("Clear");
@@ -163,7 +163,7 @@ public class ExperimentDetailsPanel extends Composite {
 		btnUpdateUserDetails.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				viewModel.model.sendUserDetails();
+                viewModel.model.sendUserDetails();
 			}
 		});
         btnUpdateUserDetails.setText("Set");

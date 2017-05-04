@@ -22,6 +22,8 @@
  */
 package uk.ac.stfc.isis.ibex.ui.configserver.commands.helpers;
 
+import java.io.IOException;
+
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.window.Window;
 import org.eclipse.swt.widgets.Shell;
@@ -94,7 +96,11 @@ public class EditBlockHelper {
         } else {
             EditBlockDialog dialog = new EditBlockDialog(shell, thisEditableBlock, config);
             if (dialog.open() == Window.OK) {
-                server.setCurrentConfig().write(config.asConfiguration());
+                try{
+                    server.setCurrentConfig().write(config.asConfiguration());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         }
     }

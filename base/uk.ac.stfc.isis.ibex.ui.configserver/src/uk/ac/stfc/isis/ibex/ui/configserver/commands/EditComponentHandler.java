@@ -19,6 +19,7 @@
 
 package uk.ac.stfc.isis.ibex.ui.configserver.commands;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -84,7 +85,11 @@ public class EditComponentHandler extends DisablingConfigHandler<Configuration> 
         if (editDialog.open() == Window.OK) {
             Map<String, Set<String>> conflicts = conflictsWithCurrent(config);
             if (conflicts.isEmpty()) {
-                configService.write(editDialog.getComponent());
+                try {
+                    configService.write(editDialog.getComponent());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             } else {
                 new MessageDialog(shell(), "Conflicts with current configuration", null, buildWarning(conflicts),
                         MessageDialog.WARNING, new String[] {"Ok"}, 0).open();

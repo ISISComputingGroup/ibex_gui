@@ -19,6 +19,8 @@
 
 package uk.ac.stfc.isis.ibex.ui.dae.experimentsetup;
 
+import java.io.IOException;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CTabFolder;
 import org.eclipse.swt.custom.CTabItem;
@@ -109,7 +111,12 @@ public class ExperimentSetup extends Composite {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				if (viewModel != null) {
-					viewModel.updateDae();
+					try {
+                        viewModel.updateDae();
+                    } catch (IOException ex) {
+                        ex.printStackTrace();
+                        return;
+                    }
 				}
 				sendingChanges.open();
 			}

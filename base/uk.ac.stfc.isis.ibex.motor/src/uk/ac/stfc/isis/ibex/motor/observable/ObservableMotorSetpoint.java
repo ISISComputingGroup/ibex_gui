@@ -19,6 +19,8 @@
 
 package uk.ac.stfc.isis.ibex.motor.observable;
 
+import java.io.IOException;
+
 import uk.ac.stfc.isis.ibex.epics.adapters.UpdatedObservableAdapter;
 import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.epics.writing.SameTypeWriter;
@@ -66,11 +68,19 @@ public class ObservableMotorSetpoint extends MotorSetpoint {
 
 	@Override
 	public void home() {
-		home.write(1.0);
+	    try {
+	        home.write(1.0);
+	    } catch (IOException e) {
+	        e.printStackTrace();
+	    }
 	}
 
 	@Override
 	public void setSetpoint(double value) {
-		setSetpoint.write(value);
+	    try {
+	        setSetpoint.write(value);
+	    } catch (IOException e) {
+	        e.printStackTrace();
+	    }
 	}
 }

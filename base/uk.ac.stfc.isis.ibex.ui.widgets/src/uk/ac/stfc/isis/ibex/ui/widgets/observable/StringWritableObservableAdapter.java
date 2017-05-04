@@ -19,6 +19,8 @@
 
 package uk.ac.stfc.isis.ibex.ui.widgets.observable;
 
+import java.io.IOException;
+
 import uk.ac.stfc.isis.ibex.epics.adapters.TextUpdatedObservableAdapter;
 import uk.ac.stfc.isis.ibex.epics.observing.ClosableObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.Subscription;
@@ -39,7 +41,7 @@ public class StringWritableObservableAdapter implements Closable {
 	private final SettableUpdatedValue<Boolean> canSetText;
 	private final BaseWriter<String, String> writer = new BaseWriter<String, String>() {
 		@Override
-		public void write(String value) {
+		public void write(String value) throws IOException {
 			writeToWritables(value);
 		}
 		
@@ -79,8 +81,9 @@ public class StringWritableObservableAdapter implements Closable {
      * 
      * @param text
      *            the new value
+     * @throws IOException 
      */
-	public void setText(String text) {
+	public void setText(String text) throws IOException {
 		if (text != writer.lastWritten()) {
 			writer.write(text);
 		}

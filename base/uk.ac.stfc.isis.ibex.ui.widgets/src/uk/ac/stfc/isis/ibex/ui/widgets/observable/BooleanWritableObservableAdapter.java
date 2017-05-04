@@ -19,6 +19,8 @@
 
 package uk.ac.stfc.isis.ibex.ui.widgets.observable;
 
+import java.io.IOException;
+
 import uk.ac.stfc.isis.ibex.epics.adapters.UpdatedObservableAdapter;
 import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.Subscription;
@@ -39,7 +41,7 @@ public class BooleanWritableObservableAdapter implements Closable {
     private final SettableUpdatedValue<Boolean> canSetValue;
     private final TransformingWriter<Boolean, Long> writer = new TransformingWriter<Boolean, Long>() {
         @Override
-        public void write(Boolean value) {
+        public void write(Boolean value) throws IOException {
             if (transform(value) != writer.lastWritten()) {
                 super.write(value);
             }
@@ -88,8 +90,9 @@ public class BooleanWritableObservableAdapter implements Closable {
      * Writes a new value to the associated PV.
      * 
      * @param value the new value
+     * @throws IOException 
      */
-    public void setValue(Boolean value) {
+    public void setValue(Boolean value) throws IOException {
         writer.write(value);
 	}
 

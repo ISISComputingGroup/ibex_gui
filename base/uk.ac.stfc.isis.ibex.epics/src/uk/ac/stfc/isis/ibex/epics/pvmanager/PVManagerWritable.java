@@ -19,6 +19,8 @@
 
 package uk.ac.stfc.isis.ibex.epics.pvmanager;
 
+import java.io.IOException;
+
 import org.epics.pvmanager.PVManager;
 import org.epics.pvmanager.PVWriter;
 import org.epics.pvmanager.PVWriterEvent;
@@ -70,7 +72,12 @@ public class PVManagerWritable<T> extends WritablePV<T> {
 	}
 	
 	@Override
-	public void write(T value) {
+	public void write(T value) throws IOException {
+	    
+	    if (!canWrite()) {
+	        throw new IOException("Couldn't write to PV.");
+	    }
+	    
 		pv.write(value);
 	}
 

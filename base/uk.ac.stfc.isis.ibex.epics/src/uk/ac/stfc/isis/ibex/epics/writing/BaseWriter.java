@@ -19,6 +19,7 @@
 
 package uk.ac.stfc.isis.ibex.epics.writing;
 
+import java.io.IOException;
 import java.util.Collection;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -74,7 +75,7 @@ public abstract class BaseWriter<TIn, TOut> implements ConfigurableWriter<TIn, T
 		this.canWrite = canWrite;
 	}
 	
-	protected void writeToWritables(TOut value) {
+	protected void writeToWritables(TOut value) throws IOException {
 		lastWritten = value;
 		for (Writable<TOut> writable : writables) {
 			writable.write(value);

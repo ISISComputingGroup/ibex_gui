@@ -19,6 +19,7 @@
 
 package uk.ac.stfc.isis.ibex.experimentdetails.internal;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -122,7 +123,11 @@ public class ObservableModel extends Model {
 	@Override
 	public void sendUserDetails() {
 		userDetails.combineSameUsers();
-		variables.userDetailsSetter.write(userDetails.toArray(new UserDetails[0]));
+		try {
+		    variables.userDetailsSetter.write(userDetails.toArray(new UserDetails[0]));
+		} catch (IOException ex) {
+            ex.printStackTrace();
+        }
 	}
 	
 	private String getDefaultUser() {

@@ -19,6 +19,7 @@
 
 package uk.ac.stfc.isis.ibex.ui.runcontrol;
 
+import java.io.IOException;
 import java.util.Collection;
 
 import uk.ac.stfc.isis.ibex.configserver.ConfigServer;
@@ -85,17 +86,29 @@ public class RunControlViewModel extends ErrorMessageProvider {
 
     private void resetLowLimit(Block configBlock) {
         Writer<String> writer = runControlServer.blockRunControlLowLimitSetter(configBlock.getName());
-        writer.write(Float.toString(configBlock.getRCLowLimit()));
+        try {
+            writer.write(Float.toString(configBlock.getRCLowLimit()));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void resetHighLimit(Block configBlock) {
         Writer<String> writer = runControlServer.blockRunControlHighLimitSetter(configBlock.getName());
-        writer.write(Float.toString(configBlock.getRCHighLimit()));
+        try {
+            writer.write(Float.toString(configBlock.getRCHighLimit()));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void resetEnabled(Block configBlock) {
         Writer<String> writer = runControlServer.blockRunControlEnabledSetter(configBlock.getName());
-        writer.write(configBlock.getRCEnabled() ? "YES" : "NO");
+        try {
+            writer.write(configBlock.getRCEnabled() ? "YES" : "NO");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
     
     public String getTxtLowLimit() {

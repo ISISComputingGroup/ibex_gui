@@ -19,6 +19,8 @@
 
 package uk.ac.stfc.isis.ibex.dae.experimentsetup.periods;
 
+import java.io.IOException;
+
 import uk.ac.stfc.isis.ibex.dae.internal.SettingsGateway;
 import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.epics.pv.Closable;
@@ -43,7 +45,7 @@ public class ObservingPeriodSettings extends XMLBackedPeriodSettings implements 
 		};
 	}
 	
-	public void sendUpdate() {
+	public void sendUpdate() throws IOException {
 		gateway.sendUpdate();
 	}
 

@@ -19,6 +19,8 @@
 
 package uk.ac.stfc.isis.ibex.banner.motion;
 
+import java.io.IOException;
+
 import uk.ac.stfc.isis.ibex.epics.adapters.ModelAdapter;
 import uk.ac.stfc.isis.ibex.epics.writing.SameTypeWriter;
 import uk.ac.stfc.isis.ibex.epics.writing.Writable;
@@ -34,6 +36,10 @@ public class ObservableMotionControl extends ModelAdapter {
 	}
 
 	public void stop() {
-		stop.write(STOP_VALUE);
+	    try {
+	        stop.write(STOP_VALUE);
+	    } catch (IOException e) {
+	        e.printStackTrace();
+	    }
 	}
 }

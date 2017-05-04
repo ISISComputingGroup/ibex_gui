@@ -19,6 +19,8 @@
 
 package uk.ac.stfc.isis.ibex.ui.dae.experimentsetup;
 
+import java.io.IOException;
+
 import uk.ac.stfc.isis.ibex.dae.experimentsetup.ExperimentSetup;
 import uk.ac.stfc.isis.ibex.ui.dae.experimentsetup.periods.PeriodsViewModel;
 import uk.ac.stfc.isis.ibex.ui.dae.experimentsetup.timechannels.TimeChannelsViewModel;
@@ -66,8 +68,9 @@ public class ExperimentSetupViewModel {
     /**
      * updates the experiment setup saved in the blockserver with changes made
      * in the frontend.
+     * @throws IOException 
      */
-	public void updateDae() {
+	public void updateDae() throws IOException {
 		model.sendAllSettings();
 	}
 	

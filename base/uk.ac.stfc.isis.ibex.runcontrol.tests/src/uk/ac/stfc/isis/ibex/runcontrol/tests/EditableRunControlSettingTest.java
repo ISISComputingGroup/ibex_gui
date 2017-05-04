@@ -18,10 +18,9 @@
 
 package uk.ac.stfc.isis.ibex.runcontrol.tests;
 
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
+
+import java.io.IOException;
 
 import org.junit.Test;
 
@@ -33,7 +32,7 @@ import uk.ac.stfc.isis.ibex.runcontrol.RunControlServer;
 @SuppressWarnings({ "unchecked", "checkstyle:methodname" })
 public class EditableRunControlSettingTest {
 	@Test
-	public void set_low_limit() {
+	public void set_low_limit() throws IOException {
 		// Arrange
 		String blockName = "blockname";
 
@@ -56,7 +55,7 @@ public class EditableRunControlSettingTest {
 	}
 	
 	@Test
-	public void set_high_limit() {
+	public void set_high_limit() throws IOException {
 		// Arrange
 		String blockName = "blockname";
 
@@ -79,7 +78,7 @@ public class EditableRunControlSettingTest {
 	}
 	
 	@Test
-	public void set_enabled_true() {
+	public void set_enabled_true() throws IOException {
 		// Arrange
 		String blockName = "blockname";
 
@@ -102,7 +101,7 @@ public class EditableRunControlSettingTest {
 	}
 	
 	@Test
-	public void set_enabled_false() {
+	public void set_enabled_false() throws IOException {
 		// Arrange
 		String blockName = "blockname";
 

@@ -19,6 +19,7 @@
 
 package uk.ac.stfc.isis.ibex.ui.ioccontrol;
 
+import java.io.IOException;
 import java.util.Arrays;
 
 import org.eclipse.core.databinding.DataBindingContext;
@@ -71,7 +72,11 @@ public class IocButtonPanel extends Composite {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				if (ioc != null) {
-					control.startIoc().send(Arrays.asList(ioc.getName()));
+					try {
+                        control.startIoc().send(Arrays.asList(ioc.getName()));
+                    } catch (IOException ex) {
+                        ex.printStackTrace();
+                    }
 				}
 			}
 		});
@@ -83,7 +88,11 @@ public class IocButtonPanel extends Composite {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				if (ioc != null) {
-					control.stopIoc().send(Arrays.asList(ioc.getName()));
+				    try {
+				        control.stopIoc().send(Arrays.asList(ioc.getName()));
+				    } catch (IOException ex) {
+                        ex.printStackTrace();
+                    }
 				}
 			}
 		});
@@ -95,7 +104,11 @@ public class IocButtonPanel extends Composite {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				if (ioc != null) {
-					control.restartIoc().send(Arrays.asList(ioc.getName()));
+				    try {
+				        control.restartIoc().send(Arrays.asList(ioc.getName()));
+				    } catch (IOException ex) {
+                        ex.printStackTrace();
+                    }
 				}
 			}
 		});

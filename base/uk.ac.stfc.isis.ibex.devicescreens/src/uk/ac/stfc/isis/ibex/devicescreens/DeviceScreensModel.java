@@ -21,6 +21,8 @@
  */
 package uk.ac.stfc.isis.ibex.devicescreens;
 
+import java.io.IOException;
+
 import uk.ac.stfc.isis.ibex.devicescreens.desc.DeviceDescription;
 import uk.ac.stfc.isis.ibex.devicescreens.desc.DeviceScreensDescription;
 import uk.ac.stfc.isis.ibex.epics.observing.Observable;
@@ -154,7 +156,11 @@ public class DeviceScreensModel extends ModelObject {
 
         }
 
-        writableDeviceScreenDescriptions.write(remoteDevices);
+        try {
+            writableDeviceScreenDescriptions.write(remoteDevices);
+        } catch (IOException e){
+            e.printStackTrace();
+        }
     }
 
 }

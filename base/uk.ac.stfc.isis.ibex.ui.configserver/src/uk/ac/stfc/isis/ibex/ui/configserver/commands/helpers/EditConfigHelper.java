@@ -22,6 +22,8 @@
  */
 package uk.ac.stfc.isis.ibex.ui.configserver.commands.helpers;
 
+import java.io.IOException;
+
 import org.eclipse.jface.window.Window;
 import org.eclipse.swt.widgets.Shell;
 
@@ -58,14 +60,18 @@ public class EditConfigHelper extends ConfigHelper {
         EditConfigDialog dialog =
                 new EditConfigDialog(shell, title, currentSubTitle, config, false, configurationViewModels);
         if (dialog.open() == Window.OK) {
-            if (dialog.doAsComponent()) {
-                server.saveAsComponent().write(dialog.getComponent());
-            } else {
-                if (isCurrent) {
-                    server.setCurrentConfig().write(dialog.getConfig());
+            try {
+                if (dialog.doAsComponent()) {
+                    server.saveAsComponent().write(dialog.getComponent());
                 } else {
-                    server.saveAs().write(dialog.getConfig());
+                    if (isCurrent) {
+                        server.setCurrentConfig().write(dialog.getConfig());
+                    } else {
+                        server.saveAs().write(dialog.getConfig());
+                    }
                 }
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         }
 

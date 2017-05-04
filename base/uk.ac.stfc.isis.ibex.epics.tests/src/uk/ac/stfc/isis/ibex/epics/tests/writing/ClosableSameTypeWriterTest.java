@@ -26,6 +26,8 @@ import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.*;
 
+import java.io.IOException;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -60,7 +62,7 @@ public class ClosableSameTypeWriterTest {
     }
 
     @Test
-    public void constructor_adds_input_writable_to_list_of_writables() {
+    public void constructor_adds_input_writable_to_list_of_writables() throws IOException {
         // Act
         ClosableSameTypeWriter<String> writer = new ClosableSameTypeWriter<>(mockWritable);
         writer.write(INPUT_VALUE);
@@ -91,7 +93,7 @@ public class ClosableSameTypeWriterTest {
     }
 
     @Test
-    public void closed_writer_can_still_write_to_writable() {
+    public void closed_writer_can_still_write_to_writable() throws IOException {
         // Arrange
         ClosableSameTypeWriter<String> writer = new ClosableSameTypeWriter<>(mockWritable);
 
