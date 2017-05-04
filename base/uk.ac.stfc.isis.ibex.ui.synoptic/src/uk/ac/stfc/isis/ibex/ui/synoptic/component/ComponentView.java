@@ -53,7 +53,7 @@ public final class ComponentView {
         componentView.setImage(ComponentIcons.iconForType(component.type()));
 		componentView.setProperties(component);
 		if (component.target() != null) {
-			componentView.setTargetName(component.target().name());
+            componentView.setTarget(component.target());
 		}
 		return componentView;
 	}
