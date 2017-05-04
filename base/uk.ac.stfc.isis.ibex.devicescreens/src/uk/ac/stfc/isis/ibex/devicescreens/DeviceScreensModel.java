@@ -156,11 +156,14 @@ public class DeviceScreensModel extends ModelObject {
 
         }
 
-        try {
-            writableDeviceScreenDescriptions.write(remoteDevices);
-        } catch (IOException e){
-            e.printStackTrace();
+        if (writableDeviceScreenDescriptions.canWrite()) {
+            try {
+                writableDeviceScreenDescriptions.write(remoteDevices);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
+        
     }
 
 }
