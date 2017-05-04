@@ -19,6 +19,8 @@
 
 package uk.ac.stfc.isis.ibex.ui.dae.run;
 
+import java.io.IOException;
+
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.beans.BeanProperties;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
@@ -136,7 +138,11 @@ public class RunSummary extends Composite {
             @Override
             public void widgetSelected(SelectionEvent e) {
                 super.widgetSelected(e);
-                model.displayTitle().setValue(btnDisplayTitle.getSelection());
+                try {
+                    model.displayTitle().setValue(btnDisplayTitle.getSelection());
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
             }
         });
 

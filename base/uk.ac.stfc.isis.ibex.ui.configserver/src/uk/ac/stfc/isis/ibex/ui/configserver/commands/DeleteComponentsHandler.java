@@ -60,7 +60,7 @@ public class DeleteComponentsHandler extends DisablingConfigHandler<Collection<S
                 try {
                     configService.write(toDelete);
                 } catch (IOException e) {
-                    throw new ExecutionException("Couldn't write to PV", e);
+                    throw new ExecutionException(e.getMessage(), e);
                 }
             } else {
                 displayWarning(selectedDependencies);

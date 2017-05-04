@@ -119,7 +119,7 @@ public final class ManagerModeModel extends ModelObject {
         try{
             updatePV();
         } catch (IOException e){
-            throw new FailedLoginException("Could not write to PV");
+            throw new FailedLoginException(e.getMessage());
         }
     }
 

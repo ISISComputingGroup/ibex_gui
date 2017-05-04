@@ -48,7 +48,7 @@ public class DeleteConfigsHandler extends DisablingConfigHandler<Collection<Stri
 		    try {
 		        configService.write((dialog.selectedConfigs()));
 		    } catch (IOException e) {
-                throw new ExecutionException("Couldn't write to PV", e);
+                throw new ExecutionException(e.getMessage(), e);
             }
 		}
 		
