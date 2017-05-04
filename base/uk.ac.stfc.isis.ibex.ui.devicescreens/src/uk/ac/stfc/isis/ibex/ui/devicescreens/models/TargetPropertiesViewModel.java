@@ -61,7 +61,7 @@ public class TargetPropertiesViewModel extends ModelObject {
             public void propertyChange(PropertyChangeEvent evt) {
                 DeviceDescriptionWrapper target = (DeviceDescriptionWrapper) evt.getNewValue();
                 if (target == null) {
-                    setPropeties(new ArrayList<>());
+                    setPropeties(new ArrayList<PropertyDescription>());
                 } else {
                     setPropeties(target.getProperties());
                 }
