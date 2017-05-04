@@ -90,8 +90,16 @@ public class SpectrumDiagnosticsPvConnections {
         
     }
     
-    private void setDiagnosticsEnabled() {
-        diagnosticsEnabled.write(1);
+    private void setDiagnosticsEnabled(final boolean enabled) {
+        
+        // Can't actually write to PV yet - write a "checked write" function that will throw an exception if it can't connect.
+        
+        System.out.println("Setting detector diagnostics enabled PV to " + enabled);
+        if(enabled) {
+            diagnosticsEnabled.write(1);
+        } else {
+            diagnosticsEnabled.write(0);
+        }
     }
     
     public void setSpectraToDisplay(Integer value){
@@ -124,7 +132,7 @@ public class SpectrumDiagnosticsPvConnections {
     
     public void startObserving() {
         
-        setDiagnosticsEnabled();
+        setDiagnosticsEnabled(true);
         
         spectrumNumbers = obsFactory.getSwitchableObservable(new IntArrayChannel(), InstrumentUtils.addPrefix("DAE:DIAG:TABLE:SPEC"));
         
@@ -162,6 +170,15 @@ public class SpectrumDiagnosticsPvConnections {
             }         
         });
         
+    }
+    
+    public void stopObserving(){
+        setDiagnosticsEnabled(false);
+        
+        spectrumNumbers.close();
+        countRate.close();
+        integral.close();
+        maxSpecBinCount.close();
     }
     
     private List<Double> convertPrimitiveDoubleArrayToList(final double[] array) {

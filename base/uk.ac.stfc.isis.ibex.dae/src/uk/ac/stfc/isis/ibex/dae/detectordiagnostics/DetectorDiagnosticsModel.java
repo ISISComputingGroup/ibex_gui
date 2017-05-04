@@ -117,9 +117,16 @@ public class DetectorDiagnosticsModel extends ModelObject {
      * 
      */
     public synchronized void startObserving() {
+        stopObserving();
         pvs = new SpectrumDiagnosticsPvConnections(this);
         pvs.startObserving();
         fireSpectraPropertyChangeOnGuiThread();
+    }
+    
+    public void stopObserving() {
+        if (pvs != null) {
+            pvs.stopObserving();
+        }
     }
 
     /**
@@ -157,6 +164,7 @@ public class DetectorDiagnosticsModel extends ModelObject {
     }
     
     public void refresh(){
+        stopObserving();
         startObserving();
     }
     
