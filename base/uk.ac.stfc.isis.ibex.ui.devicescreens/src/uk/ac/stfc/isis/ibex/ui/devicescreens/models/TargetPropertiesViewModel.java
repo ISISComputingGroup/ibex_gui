@@ -52,7 +52,7 @@ public class TargetPropertiesViewModel extends ModelObject {
      *            The general editor view model that contains information on
      *            which OPI is being looked at.
      */
-    public TargetPropertiesViewModel(EditDeviceScreensDescriptionViewModel viewModel) {
+    public TargetPropertiesViewModel(final EditDeviceScreensDescriptionViewModel viewModel) {
         this.viewModel = viewModel;
 
         viewModel.addPropertyChangeListener("targetScreen", new PropertyChangeListener() {
@@ -74,7 +74,7 @@ public class TargetPropertiesViewModel extends ModelObject {
             public void propertyChange(PropertyChangeEvent evt) {
                 String key = (String) evt.getNewValue();
                 if (key == null || key == "") {
-                    setPropeties(new ArrayList<>());
+                    setPropeties(new ArrayList<PropertyDescription>());
                 } else {
                     setPropeties(viewModel.getTargetScreen().getProperties());
                 }

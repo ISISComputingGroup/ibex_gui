@@ -80,7 +80,7 @@ public class TargetPropertiesViewModelTest {
     @Test
     public void WHEN_no_available_properties_THEN_table_and_text_box_are_disabled() {
         // Act
-        viewModel.setPropeties(new ArrayList<>());
+        viewModel.setPropeties(new ArrayList<PropertyDescription>());
 
         // Assert
         assertEquals(false, viewModel.getTableEnabled());
