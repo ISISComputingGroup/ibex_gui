@@ -64,7 +64,7 @@ public class AvailableIocsTable extends DataboundTable<EditableIoc> {
     }
 
     private void name() {
-        TableViewerColumn desc = createColumn("IOCs available to add:", 1);
+        TableViewerColumn desc = createColumn("Name", 1);
         desc.setLabelProvider(new DataboundCellLabelProvider<Ioc>(observeProperty("name")) {
             @Override
             protected String valueFromRow(Ioc row) {
@@ -74,7 +74,7 @@ public class AvailableIocsTable extends DataboundTable<EditableIoc> {
     }
 
     private void description() {
-        TableViewerColumn desc = createColumn("IOC description:", 2);
+        TableViewerColumn desc = createColumn("Description", 2);
         desc.setLabelProvider(new DataboundCellLabelProvider<EditableIoc>(observeProperty("description")) {
             @Override
             protected String valueFromRow(EditableIoc row) {
