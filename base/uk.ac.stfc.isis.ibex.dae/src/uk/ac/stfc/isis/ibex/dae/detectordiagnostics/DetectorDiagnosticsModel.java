@@ -39,6 +39,22 @@ public class DetectorDiagnosticsModel extends ModelObject {
     private SpectrumDiagnosticsPvConnections pvs;
     
     private List<SpectrumInformation> spectra = new ArrayList<>();
+
+    private List<Integer> integralsList;
+
+    private List<Integer> maxSpecBinCount;
+
+    private List<Double> countRatesList;
+
+    private List<Integer> spectrumNumbersList;
+
+    private Integer maxFrames;
+    private Double integralTimeRangeTo;
+    private Double integralTimeRangeFrom;
+    private Integer numberOfSpectra;
+    private Integer startingSpectrumNumber;
+    private Integer period;
+    private Integer spectraType;
     
     public List<SpectrumInformation> getSpectra() {
         return spectra;
@@ -58,12 +74,12 @@ public class DetectorDiagnosticsModel extends ModelObject {
     /**
      * @param spectrumNumbersList the list of spectrum numbers
      */
-    public synchronized void updateSpectrumNumbers(List<Integer> spectrumNumbersList) {
+    public synchronized void updateSpectrumNumbers(final List<Integer> spectrumNumbersList) {
         
-        spectrumNumbersList = removeNegativeValues(spectrumNumbersList);
+        this.spectrumNumbersList = spectrumNumbersList;
         
         if (spectrumNumbersList.size() != spectra.size()) {
-            updateSpectraCount(spectrumNumbersList.size());
+            return;
         }
         
         for (int i = 0; i < spectrumNumbersList.size(); i++) {          
@@ -76,7 +92,9 @@ public class DetectorDiagnosticsModel extends ModelObject {
      */
     public synchronized void updateCountRates(final List<Double> countRatesList) {
         
-        if (countRatesList.size() < spectra.size()) {
+        this.countRatesList = countRatesList;
+        
+        if (countRatesList.size() != spectra.size()) {
             return;
         }
         
@@ -90,7 +108,9 @@ public class DetectorDiagnosticsModel extends ModelObject {
      */
     public synchronized void updateMaxSpecBinCount(final List<Integer> maxSpecBinCount) {
         
-        if (maxSpecBinCount.size() < spectra.size()) {
+        this.maxSpecBinCount = maxSpecBinCount;
+        
+        if (maxSpecBinCount.size() != spectra.size()) {
             return;
         }
         
@@ -104,7 +124,9 @@ public class DetectorDiagnosticsModel extends ModelObject {
      */
     public synchronized void updateIntegrals(final List<Integer> integralsList) {
         
-        if (integralsList.size() < spectra.size()) {
+        this.integralsList = integralsList;
+        
+        if (integralsList.size() != spectra.size()) {
             return;
         }
         
@@ -132,96 +154,118 @@ public class DetectorDiagnosticsModel extends ModelObject {
     /**
      * @param size
      */
-    private synchronized void updateSpectraCount(int size) {
+    synchronized void updateSpectraCount(int size) {
         spectra.clear();
         for (int i = 0; i < size; i++) {
             spectra.add(new SpectrumInformation());
         }
         
-        refresh();
-        
+        refresh();       
+        fireSpectraPropertyChangeOnGuiThread();        
     }
     
     private void fireSpectraPropertyChangeOnGuiThread() {
+        firePropertyChangeOnGuiThread("spectra", Collections.EMPTY_LIST, spectra);
+    }
+    
+    private void firePropertyChangeOnGuiThread(final String key, final Object oldValue, final Object newValue) {
         Display.getDefault().asyncExec(new Runnable() {
             @Override
             public void run() {
-                firePropertyChange("spectra", Collections.EMPTY_LIST, spectra);
+                firePropertyChange(key, oldValue, newValue);
             }
         });
     }
     
-    private List<Integer> removeNegativeValues(final List<Integer> initialList) {
-        List<Integer> result = new ArrayList<>();
-        
-        for (Integer value : initialList) {
-            if (value >= 0) {
-                result.add(value);
-            }
-        }
-        
-        return result;
-    }
-    
-    public void refresh(){
-        stopObserving();
-        startObserving();
+    private void refresh() {
+        updateCountRates(countRatesList);
+        updateIntegrals(integralsList);
+        updateMaxSpecBinCount(maxSpecBinCount);
+        updateSpectrumNumbers(spectrumNumbersList);
     }
     
     public Integer getSpectraType(){
-        return 0;
+        return spectraType; 
     }
     
     public void setSpectraType(Integer type){
+        if (type == null) {
+            return;
+        }
         pvs.setSpectraToDisplay(type);
+        firePropertyChangeOnGuiThread("spectraType", this.spectraType, this.spectraType = type);
     }
     
     public Integer getPeriod(){
-        return 0;
+        return period;
     }
     
     public void setPeriod(Integer value){
+        if (value == null) {
+            return;
+        }
         pvs.setPeriod(value);
+        firePropertyChangeOnGuiThread("period", this.period, this.period = value);
     }
     
     public Integer getStartingSpectrumNumber(){
-        return 0;
+        return startingSpectrumNumber;
     }
     
     public void setStartingSpectrumNumber(Integer value){
+        if (value == null) {
+            return;
+        }
         pvs.setStartingSpectrumNumber(value);
+        firePropertyChangeOnGuiThread("startingSpectrumNumber", this.startingSpectrumNumber, this.startingSpectrumNumber = value);
     }
     
     public Integer getNumberOfSpectra(){
-        return 0;
+        return numberOfSpectra;
     }
     
     public void setNumberOfSpectra(Integer value){
+        if (value == null) {
+            return;
+        }
         pvs.setNumberOfSpectra(value);
+        firePropertyChangeOnGuiThread("numberOfSpectra", this.numberOfSpectra, this.numberOfSpectra = value);
     }
     
     public Integer getIntegralTimeRangeFrom(){
-        return 0;
+        return integralTimeRangeFrom != null ? integralTimeRangeFrom.intValue() : null;
     }
     
     public void setIntegralTimeRangeFrom(Integer value){
-        pvs.setIntegralTimeRangeFrom(value);
+        if (value == null) {
+            return;
+        }
+        pvs.setIntegralTimeRangeFrom(value.doubleValue());
+        firePropertyChangeOnGuiThread("integralTimeRangeFrom", this.integralTimeRangeFrom, this.integralTimeRangeFrom = value.doubleValue());
     }
     
     public Integer getIntegralTimeRangeTo(){
-        return 0;
+        return integralTimeRangeTo != null ? integralTimeRangeTo.intValue() : null;
     }
     
     public void setIntegralTimeRangeTo(Integer value){
-        pvs.setIntegralTimeRangeTo(value);
+        if (value == null) {
+            return;
+        }
+        pvs.setIntegralTimeRangeTo(value.doubleValue());
+        firePropertyChangeOnGuiThread("integralTimeRangeTo", this.integralTimeRangeTo, this.integralTimeRangeTo = value.doubleValue());
     }
     
     public Integer getMaxFrames(){
-        return 0;
+        return maxFrames;
     }
     
     public void setMaxFrames(Integer value){
+        if (value == null) {
+            return;
+        }
         pvs.setMaxFrames(value);
+        firePropertyChangeOnGuiThread("maxFrames", this.maxFrames, this.maxFrames = value);
     }
 
 }
