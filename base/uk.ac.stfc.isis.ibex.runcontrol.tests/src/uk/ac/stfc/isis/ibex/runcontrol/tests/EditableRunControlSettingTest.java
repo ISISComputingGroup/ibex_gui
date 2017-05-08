@@ -51,7 +51,7 @@ public class EditableRunControlSettingTest {
 
 		// Assert
 		// The writer's write method is called with the correct value
-		verify(mockWriter, times(1)).write("0");
+		verify(mockWriter, times(1)).uncheckedWrite("0");
 	}
 	
 	@Test
@@ -74,7 +74,7 @@ public class EditableRunControlSettingTest {
 
 		// Assert
 		// The writer's write method is called with the correct value
-		verify(mockWriter, times(1)).write("100");
+		verify(mockWriter, times(1)).uncheckedWrite("100");
 	}
 	
 	@Test
@@ -97,7 +97,7 @@ public class EditableRunControlSettingTest {
 
 		// Assert
 		// The writer's write method is called with the correct value
-		verify(mockWriter, times(1)).write("YES");
+		verify(mockWriter, times(1)).uncheckedWrite("YES");
 	}
 	
 	@Test
@@ -120,6 +120,6 @@ public class EditableRunControlSettingTest {
 
 		// Assert
 		// The writer's write method is called with the correct value
-		verify(mockWriter, times(1)).write("NO");
+		verify(mockWriter, times(1)).uncheckedWrite("NO");
 	}
 }
