@@ -23,7 +23,6 @@ package uk.ac.stfc.isis.ibex.ui.dae.detectordiagnostics;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.List;
 
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.beans.BeanProperties;
@@ -49,10 +48,8 @@ public class Table extends DataboundTable<SpectrumInformation> {
      * @param tableStyle the table style
      */
     public Table(Composite parent, int style, int tableStyle) {
-        super(parent, style, SpectrumInformation.class, tableStyle);
-        
-        initialise();
-        
+        super(parent, style, SpectrumInformation.class, tableStyle);       
+        initialise();        
     }
     
     private static final String DISPLAY_STRING_FOR_NULL_VALUE = "No data";
@@ -75,11 +72,7 @@ public class Table extends DataboundTable<SpectrumInformation> {
             
             @Override
             public void propertyChange(PropertyChangeEvent evt) {
-                final List<SpectrumInformation> newValue = model.getSpectra();
-                System.out.println("Got update to rows. New row count is " + newValue.size());
-                setRows(newValue);
-                refresh();
-                redraw();
+                setRows(model.getSpectra());
             }
         });
         
