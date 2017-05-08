@@ -22,7 +22,6 @@
 package uk.ac.stfc.isis.ibex.dae.detectordiagnostics;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import org.eclipse.swt.widgets.Display;
@@ -55,6 +54,8 @@ public class DetectorDiagnosticsModel extends ModelObject {
     private Integer startingSpectrumNumber;
     private Integer period;
     private Integer spectraType;
+
+    private boolean diagnosticsEnabled;
     
     public List<SpectrumInformation> getSpectra() {
         return spectra;
@@ -78,12 +79,12 @@ public class DetectorDiagnosticsModel extends ModelObject {
         
         this.spectrumNumbersList = spectrumNumbersList;
         
-        if (spectrumNumbersList.size() != spectra.size()) {
-            return;
-        }
-        
-        for (int i = 0; i < spectrumNumbersList.size(); i++) {          
-            spectra.get(i).setSpectrumNumber(spectrumNumbersList.get(i));
+        try {
+            for (int i = 0; i < spectrumNumbersList.size(); i++) {          
+                spectra.get(i).setSpectrumNumber(spectrumNumbersList.get(i));
+            }
+        } catch (IndexOutOfBoundsException e) {
+            // Ignore spectra that don't match the spectra count
         }
     }
 
@@ -94,12 +95,12 @@ public class DetectorDiagnosticsModel extends ModelObject {
         
         this.countRatesList = countRatesList;
         
-        if (countRatesList.size() != spectra.size()) {
-            return;
-        }
-        
-        for (int i = 0; i < countRatesList.size(); i++) {          
-            spectra.get(i).setCountRate(countRatesList.get(i));
+        try {    
+            for (int i = 0; i < countRatesList.size(); i++) {          
+                spectra.get(i).setCountRate(countRatesList.get(i));
+            }
+        } catch (IndexOutOfBoundsException e) {
+            // Ignore spectra that don't match the spectra count
         }
     }
     
@@ -110,12 +111,12 @@ public class DetectorDiagnosticsModel extends ModelObject {
         
         this.maxSpecBinCount = maxSpecBinCount;
         
-        if (maxSpecBinCount.size() != spectra.size()) {
-            return;
-        }
-        
-        for (int i = 0; i < maxSpecBinCount.size(); i++) {          
-            spectra.get(i).setMaxSpecBinCount(maxSpecBinCount.get(i));
+        try {
+            for (int i = 0; i < maxSpecBinCount.size(); i++) {          
+                spectra.get(i).setMaxSpecBinCount(maxSpecBinCount.get(i));
+            }
+        } catch (IndexOutOfBoundsException e) {
+            // Ignore spectra that don't match the spectra count
         }
     }
     
@@ -126,12 +127,12 @@ public class DetectorDiagnosticsModel extends ModelObject {
         
         this.integralsList = integralsList;
         
-        if (integralsList.size() != spectra.size()) {
-            return;
-        }
-        
-        for (int i = 0; i < integralsList.size(); i++) {          
-            spectra.get(i).setIntegral(integralsList.get(i));
+        try {
+            for (int i = 0; i < integralsList.size(); i++) {          
+                spectra.get(i).setIntegral(integralsList.get(i));
+            }
+        } catch (IndexOutOfBoundsException e) {
+            // Ignore spectra that don't match the spectra count
         }
     }
 
@@ -149,6 +150,7 @@ public class DetectorDiagnosticsModel extends ModelObject {
         if (pvs != null) {
             pvs.stopObserving();
         }
+        fireSpectraPropertyChangeOnGuiThread();
     }
 
     /**
@@ -165,7 +167,7 @@ public class DetectorDiagnosticsModel extends ModelObject {
     }
     
     private void fireSpectraPropertyChangeOnGuiThread() {
-        firePropertyChangeOnGuiThread("spectra", Collections.EMPTY_LIST, spectra);
+        firePropertyChangeOnGuiThread("spectra", null, spectra);
     }
     
     private void firePropertyChangeOnGuiThread(final String key, final Object oldValue, final Object newValue) {
@@ -266,6 +268,17 @@ public class DetectorDiagnosticsModel extends ModelObject {
         }
         pvs.setMaxFrames(value);
         firePropertyChangeOnGuiThread("maxFrames", this.maxFrames, this.maxFrames = value);
+    }
+
+    /**
+     * @param b
+     */
+    public void setDiagnosticsEnabled(boolean isEnabled) {
+        firePropertyChangeOnGuiThread("diagnosticsEnabled", this.diagnosticsEnabled, this.diagnosticsEnabled = isEnabled);
+    }
+    
+    public boolean isDiagnosticsEnabled(){
+        return diagnosticsEnabled;
     }
 
 }

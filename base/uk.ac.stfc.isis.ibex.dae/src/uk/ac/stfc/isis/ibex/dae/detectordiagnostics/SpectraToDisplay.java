@@ -26,8 +26,8 @@ package uk.ac.stfc.isis.ibex.dae.detectordiagnostics;
  */
 public enum SpectraToDisplay {
     ALL("All"),
-    ZERO_ONLY("Zero counts only"),
-    NON_ZERO_ONLY("Non zero counts only");
+    ZERO_COUNTS_ONLY("Zero Counts Only"),
+    NON_ZERO_COUNTS_ONLY("Non-zero counts only");
     
     private String displayName;
     

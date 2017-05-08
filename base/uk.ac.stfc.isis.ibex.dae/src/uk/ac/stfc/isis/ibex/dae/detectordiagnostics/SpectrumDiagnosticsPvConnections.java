@@ -21,6 +21,7 @@
  */
 package uk.ac.stfc.isis.ibex.dae.detectordiagnostics;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,8 +37,10 @@ import uk.ac.stfc.isis.ibex.epics.switching.WritableFactory;
 import uk.ac.stfc.isis.ibex.epics.writing.SameTypeWriter;
 import uk.ac.stfc.isis.ibex.epics.writing.Writable;
 import uk.ac.stfc.isis.ibex.instrument.InstrumentUtils;
+import uk.ac.stfc.isis.ibex.instrument.channels.BooleanChannel;
 import uk.ac.stfc.isis.ibex.instrument.channels.DoubleArrayChannel;
 import uk.ac.stfc.isis.ibex.instrument.channels.DoubleChannel;
+import uk.ac.stfc.isis.ibex.instrument.channels.EnumChannel;
 import uk.ac.stfc.isis.ibex.instrument.channels.IntArrayChannel;
 import uk.ac.stfc.isis.ibex.instrument.channels.IntegerChannel;
 
@@ -91,7 +94,9 @@ public class SpectrumDiagnosticsPvConnections {
 
     private ClosableObservable<Integer> spectraPeriodsObservable;
 
-    private ClosableObservable<Integer> spectraTypeObservable;
+    private ClosableObservable<SpectraToDisplay> spectraTypeObservable;
+
+    private SwitchableObservable<Boolean> diagnosticsEnabledObservable;
 
     public SpectrumDiagnosticsPvConnections(final DetectorDiagnosticsModel model) {    
         this.model = model;
@@ -122,14 +127,14 @@ public class SpectrumDiagnosticsPvConnections {
         if (enabled) {
             try {
                 diagnosticsEnabled.write(1);
-                throw new Exception();
+                throw new IOException();
                 // TODO: Replace below exception with IOException once #2298 is merged
-            } catch (Exception e) {
-                diagnosticsEnabled.subscribe(new SameTypeWriter<Integer>(){
+            } catch (IOException e) {
+                diagnosticsEnabled.subscribe(new SameTypeWriter<Integer>() {
 
                     @Override
                     public void write(Integer value) {
-                        diagnosticsEnabled.write(1);
+                        diagnosticsEnabled.write(value);
                     }
 
                     @Override
@@ -183,6 +188,25 @@ public class SpectrumDiagnosticsPvConnections {
         setDiagnosticsEnabled(true);
         
         observableFactory = new ObservableFactory(OnInstrumentSwitch.SWITCH, InstrumentSwitchers.getDefault());
+        
+        diagnosticsEnabledObservable = observableFactory.getSwitchableObservable(new BooleanChannel(), InstrumentUtils.addPrefix("DAE:DIAG:ENABLED"));       
+        diagnosticsEnabledObservable.addObserver(new SpectrumObserver<Boolean>() {
+            @Override
+            public void onNonNullValue(Boolean value) {
+                if (value != null) {
+                    model.setDiagnosticsEnabled(value);
+                } else {
+                    model.setDiagnosticsEnabled(false);
+                }
+            }  
+            
+            @Override
+            public void onConnectionStatus(boolean isConnected) {
+                if (!isConnected){
+                    model.setDiagnosticsEnabled(false);
+                }
+            }
+        });
           
         spectrumNumbers = observableFactory.getSwitchableObservable(new IntArrayChannel(), InstrumentUtils.addPrefix("DAE:DIAG:TABLE:SPEC"));       
         spectrumNumbers.addObserver(new SpectrumObserver<int[]>() {
@@ -272,11 +296,11 @@ public class SpectrumDiagnosticsPvConnections {
             }  
         });
         
-        spectraTypeObservable = observableFactory.getPVObservable(new IntegerChannel(), InstrumentUtils.addPrefix("DAE:DIAG:SPEC:SHOW:SP"));      
-        spectraTypeObservable.addObserver(new SpectrumObserver<Integer>() {
+        spectraTypeObservable = observableFactory.getPVObservable(new EnumChannel<SpectraToDisplay>(SpectraToDisplay.class), InstrumentUtils.addPrefix("DAE:DIAG:SPEC:SHOW"));      
+        spectraTypeObservable.addObserver(new SpectrumObserver<SpectraToDisplay>() {
             @Override
-            public void onNonNullValue(Integer value) {
-                model.setSpectraType(value);
+            public void onNonNullValue(SpectraToDisplay value) {
+                model.setSpectraType(value.ordinal());
             }  
         });
         

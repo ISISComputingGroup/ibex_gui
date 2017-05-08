@@ -25,6 +25,9 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.List;
 
+import org.eclipse.core.databinding.DataBindingContext;
+import org.eclipse.core.databinding.beans.BeanProperties;
+import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.swt.widgets.Composite;
 
@@ -66,19 +69,17 @@ public class Table extends DataboundTable<SpectrumInformation> {
         
         final DetectorDiagnosticsModel model = DetectorDiagnosticsModel.getInstance(); 
         
+        (new DataBindingContext()).bindValue(WidgetProperties.enabled().observe(this), BeanProperties.value("diagnosticsEnabled").observe(model)); 
+        
         model.addPropertyChangeListener("spectra", new PropertyChangeListener() {
             
             @Override
             public void propertyChange(PropertyChangeEvent evt) {
-                try {
-                    final List<SpectrumInformation> newValue = model.getSpectra();
-                    System.out.println("Got update to rows. New row count is " + newValue.size());
-                    setRows(newValue);
-                    refresh();
-                    redraw();
-                } catch (Throwable t){
-                    t.printStackTrace();
-                }
+                final List<SpectrumInformation> newValue = model.getSpectra();
+                System.out.println("Got update to rows. New row count is " + newValue.size());
+                setRows(newValue);
+                refresh();
+                redraw();
             }
         });
         

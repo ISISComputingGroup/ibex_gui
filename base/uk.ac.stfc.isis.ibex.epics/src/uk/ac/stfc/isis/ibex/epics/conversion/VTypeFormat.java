@@ -257,6 +257,11 @@ public final class VTypeFormat {
 			@Override
 			public E convert(VEnum value) throws ConversionException {
 				String text = value.getValue();
+				
+				// Replace characters which can't be used in java enums with underscores.
+				text = text.replace(" ", "_");
+				text = text.replace("-", "_");
+				
 				for (Enum<E> item : enumType.getEnumConstants()) {
 					if (text.equalsIgnoreCase(item.name())) {
 						return Enum.valueOf(enumType, item.name());
