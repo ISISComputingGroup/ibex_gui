@@ -30,6 +30,8 @@ public interface Writer<T> {
 
 	void write(T value) throws IOException;
 	
+	void uncheckedWrite(T value);
+	
 	void onError(Exception e);
 	
 	void onCanWriteChanged(boolean canWrite);

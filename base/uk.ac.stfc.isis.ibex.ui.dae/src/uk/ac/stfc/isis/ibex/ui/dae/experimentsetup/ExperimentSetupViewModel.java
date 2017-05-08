@@ -70,7 +70,7 @@ public class ExperimentSetupViewModel {
      * in the frontend.
      * @throws IOException 
      */
-	public void updateDae() throws IOException {
+	public void updateDae() {
 		model.sendAllSettings();
 	}
 	

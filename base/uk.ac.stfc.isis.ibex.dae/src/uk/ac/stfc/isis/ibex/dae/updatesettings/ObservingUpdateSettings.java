@@ -19,8 +19,6 @@
 
 package uk.ac.stfc.isis.ibex.dae.updatesettings;
 
-import java.io.IOException;
-
 import uk.ac.stfc.isis.ibex.dae.internal.SettingsGateway;
 import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.epics.pv.Closable;
@@ -45,7 +43,7 @@ public class ObservingUpdateSettings extends XMLBackedUpdateSettings implements 
 		};
 	}
 	
-	public void sendUpdate() throws IOException {
+	public void sendUpdate() {
 		gateway.sendUpdate();
 	}
 

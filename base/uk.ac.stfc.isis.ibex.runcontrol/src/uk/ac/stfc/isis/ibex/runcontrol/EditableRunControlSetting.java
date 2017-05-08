@@ -19,8 +19,6 @@
 
 package uk.ac.stfc.isis.ibex.runcontrol;
 
-import java.io.IOException;
-
 import uk.ac.stfc.isis.ibex.runcontrol.internal.RunControlSetting;
 
 /**
@@ -37,32 +35,20 @@ public class EditableRunControlSetting extends RunControlSetting {
 
 	@Override
     public void setLowLimit(String limit) {
-	    try {
-	        runControlServer.blockRunControlLowLimitSetter(blockName).write(limit);
-	    } catch (IOException e){
-	        e.printStackTrace();
-	    }
+	    runControlServer.blockRunControlLowLimitSetter(blockName).uncheckedWrite(limit);
 	}
 	
 	@Override
     public void setHighLimit(String limit) {
-	    try {
-	        runControlServer.blockRunControlHighLimitSetter(blockName).write(limit);
-	    } catch (IOException e){
-	        e.printStackTrace();
-	    }
+	    runControlServer.blockRunControlHighLimitSetter(blockName).uncheckedWrite(limit);
 	}
 	
 	@Override
     public void setEnabled(boolean enabled) {
-		try {
-    		if (enabled) {
-    			runControlServer.blockRunControlEnabledSetter(blockName).write("YES");
-    		} else {
-    			runControlServer.blockRunControlEnabledSetter(blockName).write("NO");
-    		}
-		} catch (IOException e) {
-		    e.printStackTrace();
+		if (enabled) {
+			runControlServer.blockRunControlEnabledSetter(blockName).uncheckedWrite("YES");
+		} else {
+			runControlServer.blockRunControlEnabledSetter(blockName).uncheckedWrite("NO");
 		}
 	}
 

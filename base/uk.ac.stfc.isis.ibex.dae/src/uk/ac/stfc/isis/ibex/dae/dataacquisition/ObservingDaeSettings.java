@@ -19,8 +19,6 @@
 
 package uk.ac.stfc.isis.ibex.dae.dataacquisition;
 
-import java.io.IOException;
-
 import uk.ac.stfc.isis.ibex.dae.internal.SettingsGateway;
 import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.epics.pv.Closable;
@@ -45,7 +43,7 @@ public class ObservingDaeSettings extends XmlBackedDaeSettings implements Closab
 		};
 	}
 	
-	public void sendUpdate() throws IOException {
+	public void sendUpdate() {
 		gateway.sendUpdate();
 	}
 

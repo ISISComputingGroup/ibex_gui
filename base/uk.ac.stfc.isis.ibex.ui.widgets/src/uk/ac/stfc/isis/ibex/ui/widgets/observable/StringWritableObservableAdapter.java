@@ -88,6 +88,18 @@ public class StringWritableObservableAdapter implements Closable {
 			writer.write(text);
 		}
 	}
+	
+	/**
+     * Writes a new string value to the associated PV.
+     * 
+     * @param text
+     *            the new value
+     */
+    public void uncheckedSetText(String text) {
+        if (text != writer.lastWritten()) {
+            writer.uncheckedWrite(text);
+        }
+    }
 
     /**
      * Returns whether writing value to PV is allowed.

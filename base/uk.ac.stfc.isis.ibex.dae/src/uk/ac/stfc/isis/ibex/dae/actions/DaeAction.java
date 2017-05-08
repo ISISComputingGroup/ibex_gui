@@ -106,11 +106,7 @@ public abstract class DaeAction extends Action implements Closable {
 
 	@Override
 	public void execute() {
-	    try {
-	        actionWriter.write("1");
-	    } catch (IOException e){
-	        e.printStackTrace();
-	    }
+	    actionWriter.uncheckedWrite("1");
 	}
 
 	@Override

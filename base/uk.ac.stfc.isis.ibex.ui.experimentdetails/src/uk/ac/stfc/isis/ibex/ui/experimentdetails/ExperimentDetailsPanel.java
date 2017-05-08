@@ -21,7 +21,6 @@ package uk.ac.stfc.isis.ibex.ui.experimentdetails;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.io.IOException;
 
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.beans.BeanProperties;
@@ -92,11 +91,7 @@ public class ExperimentDetailsPanel extends Composite {
 				RBLookupViewModel lookupViewModel = new RBLookupViewModel();
 				RBLookupDialog lookupDialog = new RBLookupDialog(shell, lookupViewModel);
 				if (lookupDialog.open() == Window.OK) {
-					try {
-                        viewModel.rbNumber.setText(lookupViewModel.getSelectedUser().getAssociatedExperimentID());
-                    } catch (IOException ex) {
-                        ex.printStackTrace();
-                    }
+                    viewModel.rbNumber.uncheckedSetText(lookupViewModel.getSelectedUser().getAssociatedExperimentID());
 				}
 			}
 		});

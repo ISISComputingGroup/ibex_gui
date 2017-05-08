@@ -19,8 +19,6 @@
 
 package uk.ac.stfc.isis.ibex.ui.synoptic.component;
 
-import java.io.IOException;
-
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.beans.BeanProperties;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
@@ -153,11 +151,7 @@ public class WritableComponentView extends Composite {
 	}
 	
 	private void sendValue() {
-	    try {
-	        property.writer().write(text.getText());
-	    } catch (IOException ex) {
-            ex.printStackTrace();
-        }
+	    property.writer().uncheckedWrite(text.getText());
 		parent.setFocus();
 		setButton.setEnabled(false);
 	}

@@ -90,11 +90,20 @@ public class BooleanWritableObservableAdapter implements Closable {
      * Writes a new value to the associated PV.
      * 
      * @param value the new value
-     * @throws IOException 
+     * @throws IOException if the write failed
      */
     public void setValue(Boolean value) throws IOException {
         writer.write(value);
 	}
+    
+    /**
+     * Writes a new value to the associated PV.
+     * 
+     * @param value the new value
+     */
+    public void uncheckedSetValue(Boolean value) {
+        writer.uncheckedWrite(value);
+    }
 
     /**
      * Returns whether writing value to PV is allowed.

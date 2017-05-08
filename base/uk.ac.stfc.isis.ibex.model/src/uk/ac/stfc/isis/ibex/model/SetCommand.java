@@ -32,6 +32,8 @@ public abstract class SetCommand<T> extends ModelObject {
 	
 	public abstract void send(T value) throws IOException;
 	
+	public abstract void uncheckedSend(T value);
+	
 	public boolean getCanSend() {
 		return canSend;
 	}

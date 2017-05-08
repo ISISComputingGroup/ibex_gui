@@ -19,8 +19,6 @@
 
 package uk.ac.stfc.isis.ibex.experimentdetails.internal;
 
-import java.io.IOException;
-
 import uk.ac.stfc.isis.ibex.epics.observing.BaseObserver;
 import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.epics.writing.Writable;
@@ -73,10 +71,6 @@ public class ObservableParameter extends Parameter {
 	
 	@Override
 	public void setValue(String value) {
-	    try {
-	        valueSetter.write(value);
-	    } catch (IOException e) {
-	        e.printStackTrace();
-	    }
+	    valueSetter.uncheckedWrite(value);
 	}
 }

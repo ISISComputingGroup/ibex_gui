@@ -160,7 +160,7 @@ public class ExperimentSetup extends Closer  {
      * Sends all changes made to the experiment setup in the GUI to the server.
      * @throws IOException 
      */
-	public void sendAllSettings() throws IOException {
+	public void sendAllSettings() {
 		daeSettings.sendUpdate();
 		periodSettings.sendUpdate();
 		updateSettings.sendUpdate();

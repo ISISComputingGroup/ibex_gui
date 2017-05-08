@@ -19,8 +19,6 @@
 
 package uk.ac.stfc.isis.ibex.ui.widgets.observable;
 
-import java.io.IOException;
-
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.beans.BeanProperties;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
@@ -82,11 +80,7 @@ public class WritableObservingTextBox extends Composite {
 	        @Override
 	        public void handleEvent(Event event) {
 	            if (event.detail == SWT.TRAVERSE_RETURN) {
-	                try {
-	                    setText(adapter);
-	                } catch (IOException ex) {
-	                    ex.printStackTrace();
-	                }
+	                uncheckedSetText(adapter);
 	            }
 	        }
 	    });
@@ -95,16 +89,12 @@ public class WritableObservingTextBox extends Composite {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				super.widgetSelected(e);
-				try {
-                    setText(adapter);
-                } catch (IOException ex) {
-                    ex.printStackTrace();
-                }
+                uncheckedSetText(adapter);
 			}
 		});
 	}
 	
-	private void setText(StringWritableObservableAdapter adapter) throws IOException {
-		adapter.setText(textbox.getText());
+	private void uncheckedSetText(StringWritableObservableAdapter adapter) {
+		adapter.uncheckedSetText(textbox.getText());
 	}
 }
