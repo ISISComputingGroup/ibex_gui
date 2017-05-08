@@ -21,9 +21,6 @@
  */
 package uk.ac.stfc.isis.ibex.ui.configserver.editing.iocs.dialog;
 
-import org.eclipse.core.databinding.DataBindingContext;
-import org.eclipse.core.databinding.beans.BeanProperties;
-import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.swt.SWT;
@@ -32,8 +29,6 @@ import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.Text;
 
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.AvailableIocsTable;
 
@@ -42,7 +37,6 @@ import uk.ac.stfc.isis.ibex.ui.configserver.editing.AvailableIocsTable;
  */
 public class AddPanel extends Composite {
     private AvailableIocsTable availableIocsTable;
-    private Text selectedIocRb;
     private static final int TABLE_HEIGHT = 300;
     private static final int SPACING = 25;
 
@@ -71,15 +65,6 @@ public class AddPanel extends Composite {
         gdIocTable.heightHint = TABLE_HEIGHT;
         availableIocsTable.setLayoutData(gdIocTable);
 
-        // Add selection readback
-        Label lblSelectedIoc = new Label(this, SWT.NONE);
-        lblSelectedIoc.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-        lblSelectedIoc.setText("Selected:");
-
-        selectedIocRb = new Text(this, SWT.BORDER);
-        selectedIocRb.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-        selectedIocRb.setEditable(false);
-
         bind(viewModel);
     }
 
@@ -106,9 +91,5 @@ public class AddPanel extends Composite {
                 viewModel.iocConfirmed();
             }
         });
-
-        DataBindingContext bindingContext = new DataBindingContext();
-        bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(selectedIocRb),
-                BeanProperties.value("selectedName").observe(viewModel));
     }
 }
