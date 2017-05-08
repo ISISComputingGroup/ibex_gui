@@ -81,4 +81,20 @@ public abstract class BaseWriter<TIn, TOut> implements ConfigurableWriter<TIn, T
 			writable.write(value);
 		}
 	}
+	
+	protected void uncheckedWriteToWritables(TOut value) {
+        lastWritten = value;
+        for (Writable<TOut> writable : writables) {
+            writable.uncheckedWrite(value);
+        }
+    }
+	
+	public void uncheckedWrite(TIn value){
+	    try {
+	        write(value);
+	    } catch (IOException e) {
+	        // Rethrow the exception as an unchecked (runtime) exception
+	        throw new RuntimeException("Unchecked write failed.", e);
+	    }
+	}
 }

@@ -19,7 +19,6 @@
 
 package uk.ac.stfc.isis.ibex.ui.configserver.commands;
 
-import java.io.IOException;
 import java.util.Collection;
 import java.util.Map;
 
@@ -57,11 +56,7 @@ public class DeleteComponentsHandler extends DisablingConfigHandler<Collection<S
             Map<String, Collection<String>> selectedDependencies = viewModel.filterSelected(toDelete);
 
             if (selectedDependencies.isEmpty()) {
-                try {
-                    configService.write(toDelete);
-                } catch (IOException e) {
-                    throw new ExecutionException(e.getMessage(), e);
-                }
+                configService.uncheckedWrite(toDelete);
             } else {
                 displayWarning(selectedDependencies);
                 execute(event); // Re-open selection dialog.

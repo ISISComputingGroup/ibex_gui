@@ -45,8 +45,18 @@ public interface Writable<T> extends Closable {
      * 
      * @param value
      *            the value to write
+     * @throws IOException
+     *              if the write failed
      */
 	void write(T value) throws IOException;
+	
+	/**
+	 * Write the value to destination.
+	 * 
+	 * @param value
+	 *             the value to write
+	 */
+	void uncheckedWrite(T value);
 	
 	/**
      * Allows the writer to receive updates from the writable.

@@ -19,8 +19,6 @@
 
 package uk.ac.stfc.isis.ibex.ui.configserver.commands;
 
-import java.io.IOException;
-
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.jface.window.Window;
@@ -66,14 +64,10 @@ public class NewComponentHandler extends DisablingConfigHandler<Configuration> {
         EditConfigDialog editDialog =
                 new EditConfigDialog(shell(), TITLE, SUB_TITLE, config, true, configurationViewModels);
         if (editDialog.open() == Window.OK) {
-            try {
-                if (editDialog.doAsComponent()) {
-                    SERVER.saveAsComponent().write(editDialog.getComponent());
-                } else {
-                    SERVER.saveAs().write(editDialog.getConfig());
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
+            if (editDialog.doAsComponent()) {
+                SERVER.saveAsComponent().uncheckedWrite(editDialog.getComponent());
+            } else {
+                SERVER.saveAs().uncheckedWrite(editDialog.getConfig());
             }
         }
 	}

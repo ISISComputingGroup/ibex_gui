@@ -19,7 +19,6 @@
 
 package uk.ac.stfc.isis.ibex.ui.configserver.commands;
 
-import java.io.IOException;
 import java.util.Collection;
 
 import org.eclipse.core.commands.ExecutionEvent;
@@ -45,11 +44,7 @@ public class DeleteConfigsHandler extends DisablingConfigHandler<Collection<Stri
         MultipleConfigsSelectionDialog dialog = new MultipleConfigsSelectionDialog(shell(), "Delete Configurations",
                 SERVER.configsInfo().getValue(), false, false);
 		if (dialog.open() == Window.OK) {
-		    try {
-		        configService.write((dialog.selectedConfigs()));
-		    } catch (IOException e) {
-                throw new ExecutionException(e.getMessage(), e);
-            }
+		    configService.uncheckedWrite((dialog.selectedConfigs()));
 		}
 		
 		return null;

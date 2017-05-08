@@ -132,7 +132,7 @@ public final class ManagerModeModel extends ModelObject {
         try{
             updatePV();
         } catch (IOException e){
-            
+            throw new RuntimeException("Failed to update PV (caused by: " + e.getMessage() + ")", e);
         }
     }
 
