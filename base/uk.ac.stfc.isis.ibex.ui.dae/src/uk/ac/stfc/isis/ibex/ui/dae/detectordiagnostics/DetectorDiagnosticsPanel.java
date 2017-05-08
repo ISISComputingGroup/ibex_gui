@@ -36,15 +36,16 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Spinner;
 import org.eclipse.swt.widgets.Text;
 
-import uk.ac.stfc.isis.ibex.dae.detectordiagnostics.DetectorDiagnosticsModel;
+import uk.ac.stfc.isis.ibex.dae.detectordiagnostics.DetectorDiagnosticsViewModel;
 import uk.ac.stfc.isis.ibex.dae.detectordiagnostics.SpectraToDisplay;
 
 /**
- *
+ * The panel containing the detector diagnostics table and controls.
  */
+@SuppressWarnings("checkstyle:magicnumber")
 public class DetectorDiagnosticsPanel extends Composite {
     
-    private DetectorDiagnosticsModel model = DetectorDiagnosticsModel.getInstance();
+    private DetectorDiagnosticsViewModel model = DetectorDiagnosticsViewModel.getInstance();
     private DataBindingContext bindingContext = new DataBindingContext();
     private Combo comboSpectraTypeSelector;
     private Spinner spinnerPeriodSelector;
@@ -54,7 +55,11 @@ public class DetectorDiagnosticsPanel extends Composite {
     private Text spinnerIntegralTimeRangeTo;
     private Spinner spinnerMaximumFrames;
     
-    public DetectorDiagnosticsPanel(Composite parent){
+    /**
+     * Constructor.
+     * @param parent the parent
+     */
+    public DetectorDiagnosticsPanel(Composite parent) {
         super(parent, SWT.NONE);
         
         setLayout(new GridLayout(7, true));
@@ -93,7 +98,7 @@ public class DetectorDiagnosticsPanel extends Composite {
         spinnerMaximumFrames.setMinimum(0);
         spinnerMaximumFrames.setMaximum(Integer.MAX_VALUE);
         
-        Table table = new Table(parent, SWT.NONE, SWT.NONE);
+        DetectorDiagnosticsTable table = new DetectorDiagnosticsTable(parent, SWT.NONE, SWT.NONE);
         table.bind();
         
         GridData layout = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);

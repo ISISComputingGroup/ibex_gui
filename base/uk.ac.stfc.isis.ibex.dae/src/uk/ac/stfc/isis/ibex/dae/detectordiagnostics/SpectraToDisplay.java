@@ -22,16 +22,29 @@
 package uk.ac.stfc.isis.ibex.dae.detectordiagnostics;
 
 /**
- *
+ * A list of options of spectra to display.
  */
 public enum SpectraToDisplay {
+    /**
+     * Display all spectra.
+     */
     ALL("All"),
+    /**
+     * Display only spectra with zero counts.
+     */
     ZERO_COUNTS_ONLY("Zero Counts Only"),
+    /**
+     * Display only spectra with non-zero counts.
+     */
     NON_ZERO_COUNTS_ONLY("Non-zero counts only");
     
     private String displayName;
     
-    private SpectraToDisplay(String displayName){
+    /**
+     * Constructor.
+     * @param displayName the display name used in e.g. dropdown menus
+     */
+    SpectraToDisplay(String displayName) {
         this.displayName = displayName;
     }
     

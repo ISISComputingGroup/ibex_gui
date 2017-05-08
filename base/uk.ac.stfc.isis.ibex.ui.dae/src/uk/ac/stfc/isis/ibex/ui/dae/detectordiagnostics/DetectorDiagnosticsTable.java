@@ -30,15 +30,16 @@ import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.swt.widgets.Composite;
 
-import uk.ac.stfc.isis.ibex.dae.detectordiagnostics.DetectorDiagnosticsModel;
+import uk.ac.stfc.isis.ibex.dae.detectordiagnostics.DetectorDiagnosticsViewModel;
 import uk.ac.stfc.isis.ibex.dae.detectordiagnostics.SpectrumInformation;
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundCellLabelProvider;
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundTable;
 
 /**
- *
+ * The Detector diagnostics table.
  */
-public class Table extends DataboundTable<SpectrumInformation> {
+@SuppressWarnings("checkstyle:magicnumber")
+public class DetectorDiagnosticsTable extends DataboundTable<SpectrumInformation> {
     
     /**
      * Instantiates a new device screens table.
@@ -47,7 +48,7 @@ public class Table extends DataboundTable<SpectrumInformation> {
      * @param style the style
      * @param tableStyle the table style
      */
-    public Table(Composite parent, int style, int tableStyle) {
+    public DetectorDiagnosticsTable(Composite parent, int style, int tableStyle) {
         super(parent, style, SpectrumInformation.class, tableStyle);       
         initialise();        
     }
@@ -62,9 +63,12 @@ public class Table extends DataboundTable<SpectrumInformation> {
         createIntegralColumn();
     }
     
-    public void bind(){
+    /**
+     * Binds this table to the underlying data.
+     */
+    public void bind() {
         
-        final DetectorDiagnosticsModel model = DetectorDiagnosticsModel.getInstance(); 
+        final DetectorDiagnosticsViewModel model = DetectorDiagnosticsViewModel.getInstance(); 
         
         (new DataBindingContext()).bindValue(WidgetProperties.enabled().observe(this), BeanProperties.value("diagnosticsEnabled").observe(model)); 
         

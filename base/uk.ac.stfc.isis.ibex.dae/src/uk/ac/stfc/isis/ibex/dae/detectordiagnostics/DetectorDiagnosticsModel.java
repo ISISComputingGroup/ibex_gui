@@ -21,266 +21,365 @@
  */
 package uk.ac.stfc.isis.ibex.dae.detectordiagnostics;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.eclipse.swt.widgets.Display;
-
-import uk.ac.stfc.isis.ibex.model.ModelObject;
+import uk.ac.stfc.isis.ibex.epics.observing.ClosableObservable;
+import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
+import uk.ac.stfc.isis.ibex.epics.observing.Observable;
+import uk.ac.stfc.isis.ibex.epics.switching.InstrumentSwitchers;
+import uk.ac.stfc.isis.ibex.epics.switching.ObservableFactory;
+import uk.ac.stfc.isis.ibex.epics.switching.OnInstrumentSwitch;
+import uk.ac.stfc.isis.ibex.epics.switching.SwitchableObservable;
+import uk.ac.stfc.isis.ibex.epics.switching.WritableFactory;
+import uk.ac.stfc.isis.ibex.epics.writing.SameTypeWriter;
+import uk.ac.stfc.isis.ibex.epics.writing.Writable;
+import uk.ac.stfc.isis.ibex.instrument.InstrumentUtils;
+import uk.ac.stfc.isis.ibex.instrument.channels.BooleanChannel;
+import uk.ac.stfc.isis.ibex.instrument.channels.DoubleArrayChannel;
+import uk.ac.stfc.isis.ibex.instrument.channels.DoubleChannel;
+import uk.ac.stfc.isis.ibex.instrument.channels.EnumChannel;
+import uk.ac.stfc.isis.ibex.instrument.channels.IntArrayChannel;
+import uk.ac.stfc.isis.ibex.instrument.channels.IntegerChannel;
 
 /**
- *
+ * The Class DetectorDiagnosticsModel.
  */
-public class DetectorDiagnosticsModel extends ModelObject {
+public class DetectorDiagnosticsModel {
     
-    private static DetectorDiagnosticsModel instance;
-    
-    private SpectrumDiagnosticsPvConnections pvs;
-    
-    private List<SpectrumInformation> spectra = new ArrayList<>();
+    private final DetectorDiagnosticsViewModel viewModel;
 
-    private List<Integer> integralsList;
-
-    private List<Integer> maxSpecBinCount;
-
-    private List<Double> countRatesList;
-
-    private List<Integer> spectrumNumbersList;
-
-    private Integer maxFrames;
-    private Double integralTimeRangeTo;
-    private Double integralTimeRangeFrom;
-    private Integer numberOfSpectra;
-    private Integer startingSpectrumNumber;
-    private Integer period;
-    private Integer spectraType;
-
-    private boolean diagnosticsEnabled;
-    
-    public List<SpectrumInformation> getSpectra() {
-        return spectra;
-    }
+    /**
+     * The observable for count rates.
+     */
+    public ForwardingObservable<double[]> countRate;
     
     /**
-     * Instance of this singleton.
-     * @return this singleton
+     * The observable for the maximum spectrum bin count.
      */
-    public static synchronized DetectorDiagnosticsModel getInstance() {
-        if (instance == null) {
-            instance = new DetectorDiagnosticsModel();
-        }
-        return instance;
-    }
+    public ForwardingObservable<int[]> maxSpecBinCount;
     
     /**
-     * @param spectrumNumbersList the list of spectrum numbers
+     * The observable for the integral.
      */
-    public synchronized void updateSpectrumNumbers(final List<Integer> spectrumNumbersList) {
+    public ForwardingObservable<int[]> integral;
+
+    private SwitchableObservable<int[]> spectrumNumbers;
+
+    private WritableFactory writableFactory;
+    private ObservableFactory observableFactory;
+    
+    private Writable<Integer> diagnosticsEnabled;
+    private Writable<Integer> spectraToDisplay;
+    private Writable<Integer> period;
+    private Writable<Integer> startingSpectrumNumber;
+    private Writable<Integer> numberOfSpectra;
+    private Writable<Double> integralTimeRangeTo;
+    private Writable<Double> integralTimeRangeFrom;
+    private Writable<Integer> maxFrames;
+    
+    private Observable<Integer> numberOfSpectraThatMatchedCriteria;
+
+    private ClosableObservable<Integer> maxFramesObservable;
+
+    private ClosableObservable<Double> integralLowLimitObservable;
+
+    private ClosableObservable<Double> integralHighLimitObservable;
+
+    private ClosableObservable<Integer> numberOfSpectraObservable;
+
+    private ClosableObservable<Integer> startingSpectrumNumberObservable;
+
+    private ClosableObservable<Integer> spectraPeriodsObservable;
+
+    private ClosableObservable<SpectraToDisplay> spectraTypeObservable;
+
+    private SwitchableObservable<Boolean> diagnosticsEnabledObservable;
+
+    /**
+     * Constructor.
+     * @param viewModel the view model
+     */
+    public DetectorDiagnosticsModel(final DetectorDiagnosticsViewModel viewModel) {    
+        this.viewModel = viewModel;
+
+        setUpWritables();  
+    }
+    
+    private void setUpWritables() {
         
-        this.spectrumNumbersList = spectrumNumbersList;
+        writableFactory = new WritableFactory(OnInstrumentSwitch.SWITCH, InstrumentSwitchers.getDefault());
+        
+        diagnosticsEnabled = writableFactory.getSwitchableWritable(new IntegerChannel(), InstrumentUtils.addPrefix("DAE:DIAG:ENABLE:SP"));
+        spectraToDisplay = writableFactory.getSwitchableWritable(new IntegerChannel(), InstrumentUtils.addPrefix("DAE:DIAG:SPEC:SHOW:SP"));
+        period = writableFactory.getSwitchableWritable(new IntegerChannel(), InstrumentUtils.addPrefix("DAE:DIAG:PERIOD:SP"));
+        startingSpectrumNumber = writableFactory.getSwitchableWritable(new IntegerChannel(), InstrumentUtils.addPrefix("DAE:DIAG:SPEC:START:SP")); 
+        numberOfSpectra = writableFactory.getSwitchableWritable(new IntegerChannel(), InstrumentUtils.addPrefix("DAE:DIAG:SPEC:NUM:SP"));
+        integralTimeRangeTo = writableFactory.getSwitchableWritable(new DoubleChannel(), InstrumentUtils.addPrefix("DAE:DIAG:SPEC:INTHIGH:SP"));
+        integralTimeRangeFrom = writableFactory.getSwitchableWritable(new DoubleChannel(), InstrumentUtils.addPrefix("DAE:DIAG:SPEC:INTLOW:SP"));
+        maxFrames = writableFactory.getSwitchableWritable(new IntegerChannel(), InstrumentUtils.addPrefix("DAE:DIAG:FRAMES:SP"));
+        
+    }
+    
+    private void setDiagnosticsEnabled(final boolean enabled) {
+        
+        // Can't actually write to PV yet - write a "checked write" function that will throw an exception if it can't connect.
         
         try {
-            for (int i = 0; i < spectrumNumbersList.size(); i++) {          
-                spectra.get(i).setSpectrumNumber(spectrumNumbersList.get(i));
+            if (enabled) {
+                diagnosticsEnabled.write(1);
+            } else {
+                diagnosticsEnabled.write(0);
             }
-        } catch (IndexOutOfBoundsException e) {
-            // Ignore spectra that don't match the spectra count
-        }
-    }
+            // Replace below exception with IOException once #2298 is merged
+            // The below is a hack so that the compiler doesn't complain about exceptions that are never thrown...
+            if (new Boolean(false)) {
+                throw new IOException();
+            }
+        } catch (IOException e) {
+            diagnosticsEnabled.subscribe(new SameTypeWriter<Integer>() {
 
-    /**
-     * @param countRatesList the list of count rates
-     */
-    public synchronized void updateCountRates(final List<Double> countRatesList) {
-        
-        this.countRatesList = countRatesList;
-        
-        try {    
-            for (int i = 0; i < countRatesList.size(); i++) {          
-                spectra.get(i).setCountRate(countRatesList.get(i));
-            }
-        } catch (IndexOutOfBoundsException e) {
-            // Ignore spectra that don't match the spectra count
-        }
-    }
-    
-    /**
-     * @param maxSpecBinCount the list of maximum counts
-     */
-    public synchronized void updateMaxSpecBinCount(final List<Integer> maxSpecBinCount) {
-        
-        this.maxSpecBinCount = maxSpecBinCount;
-        
-        try {
-            for (int i = 0; i < maxSpecBinCount.size(); i++) {          
-                spectra.get(i).setMaxSpecBinCount(maxSpecBinCount.get(i));
-            }
-        } catch (IndexOutOfBoundsException e) {
-            // Ignore spectra that don't match the spectra count
-        }
-    }
-    
-    /**
-     * @param integralsList the list of integrals
-     */
-    public synchronized void updateIntegrals(final List<Integer> integralsList) {
-        
-        this.integralsList = integralsList;
-        
-        try {
-            for (int i = 0; i < integralsList.size(); i++) {          
-                spectra.get(i).setIntegral(integralsList.get(i));
-            }
-        } catch (IndexOutOfBoundsException e) {
-            // Ignore spectra that don't match the spectra count
-        }
-    }
+                @Override
+                public void write(Integer value) {
+                    diagnosticsEnabled.write(value);
+                }
 
-    /**
-     * 
-     */
-    public synchronized void startObserving() {
-        stopObserving();
-        pvs = new SpectrumDiagnosticsPvConnections(this);
-        pvs.startObserving();
-        fireSpectraPropertyChangeOnGuiThread();
+                @Override
+                public void onError(Exception e) {
+                }
+ 
+                @Override
+                public void onCanWriteChanged(boolean canWrite) {
+                    if (canWrite) {
+                        write(1);
+                    }
+                }
+                    
+            });
+        }
     }
     
-    public void stopObserving() {
-        if (pvs != null) {
-            pvs.stopObserving();
-        }
-        fireSpectraPropertyChangeOnGuiThread();
-    }
-
     /**
-     * @param size
+     * Sets the spectra to display.
+     *
+     * @param value the new spectra to display
      */
-    synchronized void updateSpectraCount(int size) {
-        spectra.clear();
-        for (int i = 0; i < size; i++) {
-            spectra.add(new SpectrumInformation());
-        }
+    public void setSpectraToDisplay(Integer value) {
+        spectraToDisplay.write(value);
+    }
+    
+    /**
+     * Sets the period.
+     *
+     * @param value the new period
+     */
+    public void setPeriod(Integer value) {
+        period.write(value);
+    }
+    
+    /**
+     * Sets the starting spectrum number.
+     *
+     * @param value the new starting spectrum number
+     */
+    public void setStartingSpectrumNumber(Integer value) {
+        startingSpectrumNumber.write(value);
+    }
+    
+    /**
+     * Sets the number of spectra.
+     *
+     * @param value the new number of spectra
+     */
+    public void setNumberOfSpectra(Integer value) {
+        numberOfSpectra.write(value);
+    }
+    
+    /**
+     * Sets the integral time range from.
+     *
+     * @param value the new integral time range from
+     */
+    public void setIntegralTimeRangeFrom(Double value) {
+        integralTimeRangeFrom.write(value);
+    }
+    
+    /**
+     * Sets the integral time range to.
+     *
+     * @param value the new integral time range to
+     */
+    public void setIntegralTimeRangeTo(Double value) {
+        integralTimeRangeTo.write(value);
+    }
+    
+    /**
+     * Sets the max frames.
+     *
+     * @param value the new max frames
+     */
+    public void setMaxFrames(Integer value) {
+        maxFrames.write(value);
+    }
+    
+    /**
+     * Start observing.
+     */
+    public void startObserving() {
         
-        refresh();       
-        fireSpectraPropertyChangeOnGuiThread();        
-    }
-    
-    private void fireSpectraPropertyChangeOnGuiThread() {
-        firePropertyChangeOnGuiThread("spectra", null, spectra);
-    }
-    
-    private void firePropertyChangeOnGuiThread(final String key, final Object oldValue, final Object newValue) {
-        Display.getDefault().asyncExec(new Runnable() {
+        setDiagnosticsEnabled(true);
+        
+        observableFactory = new ObservableFactory(OnInstrumentSwitch.SWITCH, InstrumentSwitchers.getDefault());
+        
+        diagnosticsEnabledObservable = observableFactory.getSwitchableObservable(new BooleanChannel(), InstrumentUtils.addPrefix("DAE:DIAG:ENABLED"));       
+        diagnosticsEnabledObservable.addObserver(new SpectrumObserver<Boolean>() {
             @Override
-            public void run() {
-                firePropertyChange(key, oldValue, newValue);
+            public void onNonNullValue(Boolean value) {
+                if (value != null) {
+                    viewModel.setDiagnosticsEnabled(value);
+                } else {
+                    viewModel.setDiagnosticsEnabled(false);
+                }
+            }  
+            
+            @Override
+            public void onConnectionStatus(boolean isConnected) {
+                if (!isConnected) {
+                    viewModel.setDiagnosticsEnabled(false);
+                }
             }
         });
+          
+        spectrumNumbers = observableFactory.getSwitchableObservable(new IntArrayChannel(), InstrumentUtils.addPrefix("DAE:DIAG:TABLE:SPEC"));       
+        spectrumNumbers.addObserver(new SpectrumObserver<int[]>() {
+            @Override
+            public void onNonNullValue(int[] values) {
+                viewModel.updateSpectrumNumbers(convertPrimitiveIntArrayToList(values)); 
+            }         
+        });
+            
+        countRate = observableFactory.getSwitchableObservable(new DoubleArrayChannel(), InstrumentUtils.addPrefix("DAE:DIAG:TABLE:CNTRATE"));       
+        countRate.addObserver(new SpectrumObserver<double[]>() {
+            @Override
+            public void onNonNullValue(double[] values) {
+                viewModel.updateCountRates(convertPrimitiveDoubleArrayToList(values)); 
+            }         
+        });
+        
+        integral = observableFactory.getSwitchableObservable(new IntArrayChannel(), InstrumentUtils.addPrefix("DAE:DIAG:TABLE:SUM"));       
+        integral.addObserver(new SpectrumObserver<int[]>() {
+            @Override
+            public void onNonNullValue(int[] values) {
+                viewModel.updateIntegrals(convertPrimitiveIntArrayToList(values)); 
+            }         
+        });
+        
+        maxSpecBinCount = observableFactory.getSwitchableObservable(new IntArrayChannel(), InstrumentUtils.addPrefix("DAE:DIAG:TABLE:MAX"));       
+        maxSpecBinCount.addObserver(new SpectrumObserver<int[]>() {
+            @Override
+            public void onNonNullValue(int[] values) {
+                viewModel.updateMaxSpecBinCount(convertPrimitiveIntArrayToList(values)); 
+            }         
+        });
+        
+        numberOfSpectraThatMatchedCriteria = observableFactory.getPVObservable(new IntegerChannel(), InstrumentUtils.addPrefix("DAE:DIAG:SPEC:MATCH"));      
+        numberOfSpectraThatMatchedCriteria.addObserver(new SpectrumObserver<Integer>() {
+            @Override
+            public void onNonNullValue(Integer value) {
+                viewModel.updateSpectraCount(value);
+            }  
+        });
+        
+        maxFramesObservable = observableFactory.getPVObservable(new IntegerChannel(), InstrumentUtils.addPrefix("DAE:DIAG:FRAMES:SP"));      
+        maxFramesObservable.addObserver(new SpectrumObserver<Integer>() {
+            @Override
+            public void onNonNullValue(Integer value) {
+                viewModel.setMaxFrames(value);
+            }  
+        });
+        
+        integralLowLimitObservable = observableFactory.getPVObservable(new DoubleChannel(), InstrumentUtils.addPrefix("DAE:DIAG:SPEC:INTLOW:SP"));      
+        integralLowLimitObservable.addObserver(new SpectrumObserver<Double>() {
+            @Override
+            public void onNonNullValue(Double value) {
+                viewModel.setIntegralTimeRangeFrom(value.toString());
+            }  
+        });
+        
+        integralHighLimitObservable = observableFactory.getPVObservable(new DoubleChannel(), InstrumentUtils.addPrefix("DAE:DIAG:SPEC:INTHIGH:SP"));      
+        integralHighLimitObservable.addObserver(new SpectrumObserver<Double>() {
+            @Override
+            public void onNonNullValue(Double value) {
+                viewModel.setIntegralTimeRangeTo(value.toString());
+            }  
+        });
+        
+        numberOfSpectraObservable = observableFactory.getPVObservable(new IntegerChannel(), InstrumentUtils.addPrefix("DAE:DIAG:SPEC:NUM:SP"));      
+        numberOfSpectraObservable.addObserver(new SpectrumObserver<Integer>() {
+            @Override
+            public void onNonNullValue(Integer value) {
+                viewModel.setNumberOfSpectra(value);
+            }  
+        });
+        
+        startingSpectrumNumberObservable = observableFactory.getPVObservable(new IntegerChannel(), InstrumentUtils.addPrefix("DAE:DIAG:SPEC:START:SP"));      
+        startingSpectrumNumberObservable.addObserver(new SpectrumObserver<Integer>() {
+            @Override
+            public void onNonNullValue(Integer value) {
+                viewModel.setStartingSpectrumNumber(value);
+            }  
+        });
+        
+        spectraPeriodsObservable = observableFactory.getPVObservable(new IntegerChannel(), InstrumentUtils.addPrefix("DAE:DIAG:PERIOD:SP"));      
+        spectraPeriodsObservable.addObserver(new SpectrumObserver<Integer>() {
+            @Override
+            public void onNonNullValue(Integer value) {
+                viewModel.setPeriod(value);
+            }  
+        });
+        
+        spectraTypeObservable = observableFactory.getPVObservable(new EnumChannel<SpectraToDisplay>(SpectraToDisplay.class), InstrumentUtils.addPrefix("DAE:DIAG:SPEC:SHOW"));      
+        spectraTypeObservable.addObserver(new SpectrumObserver<SpectraToDisplay>() {
+            @Override
+            public void onNonNullValue(SpectraToDisplay value) {
+                viewModel.setSpectraType(value.ordinal());
+            }  
+        });
+        
     }
     
-    private void refresh() {
-        updateCountRates(countRatesList);
-        updateIntegrals(integralsList);
-        updateMaxSpecBinCount(maxSpecBinCount);
-        updateSpectrumNumbers(spectrumNumbersList);
-    }
-    
-    public Integer getSpectraType(){
-        return spectraType; 
-    }
-    
-    public void setSpectraType(Integer type){
-        if (type == null) {
-            return;
-        }
-        pvs.setSpectraToDisplay(type);
-        firePropertyChangeOnGuiThread("spectraType", this.spectraType, this.spectraType = type);
-    }
-    
-    public Integer getPeriod(){
-        return period;
-    }
-    
-    public void setPeriod(Integer value){
-        if (value == null) {
-            return;
-        }
-        pvs.setPeriod(value);
-        firePropertyChangeOnGuiThread("period", this.period, this.period = value);
-    }
-    
-    public Integer getStartingSpectrumNumber(){
-        return startingSpectrumNumber;
-    }
-    
-    public void setStartingSpectrumNumber(Integer value){
-        if (value == null) {
-            return;
-        }
-        pvs.setStartingSpectrumNumber(value);
-        firePropertyChangeOnGuiThread("startingSpectrumNumber", this.startingSpectrumNumber, this.startingSpectrumNumber = value);
-    }
-    
-    public Integer getNumberOfSpectra(){
-        return numberOfSpectra;
-    }
-    
-    public void setNumberOfSpectra(Integer value){
-        if (value == null) {
-            return;
-        }
-        pvs.setNumberOfSpectra(value);
-        firePropertyChangeOnGuiThread("numberOfSpectra", this.numberOfSpectra, this.numberOfSpectra = value);
-    }
-    
-    public String getIntegralTimeRangeFrom(){
-        return integralTimeRangeFrom != null ? integralTimeRangeFrom.toString() : "";
-    }
-    
-    public void setIntegralTimeRangeFrom(String value){
-        if (value == null) {
-            return;
-        }
-        Double doubleValue = Double.parseDouble(value);
-        pvs.setIntegralTimeRangeFrom(doubleValue);
-        firePropertyChangeOnGuiThread("integralTimeRangeFrom", this.integralTimeRangeFrom, this.integralTimeRangeFrom = doubleValue);
-    }
-    
-    public String getIntegralTimeRangeTo(){
-        return integralTimeRangeTo != null ? integralTimeRangeTo.toString() : "";
-    }
-    
-    public void setIntegralTimeRangeTo(String value){
-        if (value == null) {
-            return;
-        }
-        Double doubleValue = Double.parseDouble(value);
-        pvs.setIntegralTimeRangeTo(doubleValue);
-        firePropertyChangeOnGuiThread("integralTimeRangeTo", this.integralTimeRangeTo, this.integralTimeRangeTo = doubleValue);
-    }
-    
-    public Integer getMaxFrames(){
-        return maxFrames;
-    }
-    
-    public void setMaxFrames(Integer value){
-        if (value == null) {
-            return;
-        }
-        pvs.setMaxFrames(value);
-        firePropertyChangeOnGuiThread("maxFrames", this.maxFrames, this.maxFrames = value);
-    }
-
     /**
-     * @param b
+     * Stop observing.
      */
-    public void setDiagnosticsEnabled(boolean isEnabled) {
-        firePropertyChangeOnGuiThread("diagnosticsEnabled", this.diagnosticsEnabled, this.diagnosticsEnabled = isEnabled);
+    public void stopObserving() {
+        setDiagnosticsEnabled(false);
+        
+        spectrumNumbers.close();
+        countRate.close();
+        integral.close();
+        maxSpecBinCount.close();
+
     }
     
-    public boolean isDiagnosticsEnabled(){
-        return diagnosticsEnabled;
+    private List<Double> convertPrimitiveDoubleArrayToList(final double[] array) {
+        // Convert to collection for ease of use
+        // Can't use Arrays.asList() because it's an array of primitives.
+        List<Double> valuesList = new ArrayList<>(array.length);
+        for (Double value : array) {
+            valuesList.add(value);
+        }
+        return valuesList;
+    }
+    
+    private List<Integer> convertPrimitiveIntArrayToList(final int[] array) {
+        // Convert to collection for ease of use
+        // Can't use Arrays.asList() because it's an array of primitives.
+        List<Integer> valuesList = new ArrayList<>(array.length);
+        for (Integer value : array) {
+            valuesList.add(value);
+        }
+        return valuesList;
     }
 
 }

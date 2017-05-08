@@ -25,6 +25,9 @@ import org.eclipse.swt.events.VerifyEvent;
 import org.eclipse.swt.events.VerifyListener;
 import org.eclipse.swt.widgets.Text;
 
+/**
+ * SWT verifier that checks whether text input can be parsed as a double or not.
+ */
 class NumericalVerifyListener implements VerifyListener {
 
     /**

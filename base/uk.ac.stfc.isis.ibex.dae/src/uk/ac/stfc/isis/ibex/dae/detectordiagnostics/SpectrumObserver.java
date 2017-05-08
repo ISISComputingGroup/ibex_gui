@@ -23,10 +23,23 @@ package uk.ac.stfc.isis.ibex.dae.detectordiagnostics;
 
 import uk.ac.stfc.isis.ibex.epics.observing.Observer;
 
+/**
+ * An implementation of an observer that ignores nulls and prints stack traces on error.
+ * 
+ * @param <T> the type to observe
+ */
 public abstract class SpectrumObserver<T> implements Observer<T> {
     
+    /**
+     * This method is called when a non-null value is available.
+     *
+     * @param value the value
+     */
     public abstract void onNonNullValue(T value);
     
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void onValue(T value) {
         if (value != null) {
@@ -34,16 +47,25 @@ public abstract class SpectrumObserver<T> implements Observer<T> {
         } 
     }
     
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void onError(Exception e) {
         System.out.println("error!");
         e.printStackTrace();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void onConnectionStatus(boolean isConnected) {
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void update(T value, Exception error, boolean isConnected) {
         if (value != null) {
