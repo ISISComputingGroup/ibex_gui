@@ -202,7 +202,7 @@ public class SpectrumDiagnosticsPvConnections {
             
             @Override
             public void onConnectionStatus(boolean isConnected) {
-                if (!isConnected){
+                if (!isConnected) {
                     model.setDiagnosticsEnabled(false);
                 }
             }
@@ -320,7 +320,7 @@ public class SpectrumDiagnosticsPvConnections {
         // Convert to collection for ease of use
         // Can't use Arrays.asList() because it's an array of primitives.
         List<Double> valuesList = new ArrayList<>(array.length);
-        for (double value : array) {
+        for (Double value : array) {
             valuesList.add(value);
         }
         return valuesList;
@@ -330,7 +330,7 @@ public class SpectrumDiagnosticsPvConnections {
         // Convert to collection for ease of use
         // Can't use Arrays.asList() because it's an array of primitives.
         List<Integer> valuesList = new ArrayList<>(array.length);
-        for (int value : array) {
+        for (Integer value : array) {
             valuesList.add(value);
         }
         return valuesList;
@@ -360,7 +360,7 @@ public class SpectrumDiagnosticsPvConnections {
         @Override
         public void update(T value, Exception error, boolean isConnected) {
             if (value != null) {
-                onValue(value);
+                onNonNullValue(value);
             }
             
             if (error != null) {
