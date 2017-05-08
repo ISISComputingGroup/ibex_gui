@@ -21,7 +21,8 @@
  */
 package uk.ac.stfc.isis.ibex.ui.dae.detectordiagnostics;
 
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.beans.BeanProperties;
@@ -67,11 +68,7 @@ public class DetectorDiagnosticsPanel extends Composite {
         new Label(this, SWT.NONE).setText("Maximum frames");
         
         comboSpectraTypeSelector = new Combo(this, SWT.READ_ONLY); 
-        comboSpectraTypeSelector.setItems(
-                Arrays.asList(SpectraToDisplay.values())
-                .stream()
-                .map(n -> n.toString())
-                .toArray(String[]::new));
+        comboSpectraTypeSelector.setItems(getDropdownMenuItemsArray());
         
                  
         spinnerPeriodSelector = new Spinner(this, SWT.BORDER);          
@@ -127,6 +124,14 @@ public class DetectorDiagnosticsPanel extends Composite {
         
         bindingContext.bindValue(WidgetProperties.selection().observe(spinnerMaximumFrames), BeanProperties.value("maxFrames").observe(model));  
         bindingContext.bindValue(WidgetProperties.enabled().observe(spinnerMaximumFrames), BeanProperties.value("diagnosticsEnabled").observe(model)); 
+    }
+    
+    private String[] getDropdownMenuItemsArray() {
+        List<String> result = new ArrayList<>();
+        for (SpectraToDisplay s : SpectraToDisplay.values()) {
+            result.add(s.toString());
+        }
+        return result.toArray(new String[result.size()]);
     }
 
 }
