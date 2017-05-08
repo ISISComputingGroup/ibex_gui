@@ -234,28 +234,30 @@ public class DetectorDiagnosticsModel extends ModelObject {
         firePropertyChangeOnGuiThread("numberOfSpectra", this.numberOfSpectra, this.numberOfSpectra = value);
     }
     
-    public Integer getIntegralTimeRangeFrom(){
-        return integralTimeRangeFrom != null ? integralTimeRangeFrom.intValue() : null;
+    public String getIntegralTimeRangeFrom(){
+        return integralTimeRangeFrom != null ? integralTimeRangeFrom.toString() : "";
     }
     
-    public void setIntegralTimeRangeFrom(Integer value){
+    public void setIntegralTimeRangeFrom(String value){
         if (value == null) {
             return;
         }
-        pvs.setIntegralTimeRangeFrom(value.doubleValue());
-        firePropertyChangeOnGuiThread("integralTimeRangeFrom", this.integralTimeRangeFrom, this.integralTimeRangeFrom = value.doubleValue());
+        Double doubleValue = Double.parseDouble(value);
+        pvs.setIntegralTimeRangeFrom(doubleValue);
+        firePropertyChangeOnGuiThread("integralTimeRangeFrom", this.integralTimeRangeFrom, this.integralTimeRangeFrom = doubleValue);
     }
     
-    public Integer getIntegralTimeRangeTo(){
-        return integralTimeRangeTo != null ? integralTimeRangeTo.intValue() : null;
+    public String getIntegralTimeRangeTo(){
+        return integralTimeRangeTo != null ? integralTimeRangeTo.toString() : "";
     }
     
-    public void setIntegralTimeRangeTo(Integer value){
+    public void setIntegralTimeRangeTo(String value){
         if (value == null) {
             return;
         }
-        pvs.setIntegralTimeRangeTo(value.doubleValue());
-        firePropertyChangeOnGuiThread("integralTimeRangeTo", this.integralTimeRangeTo, this.integralTimeRangeTo = value.doubleValue());
+        Double doubleValue = Double.parseDouble(value);
+        pvs.setIntegralTimeRangeTo(doubleValue);
+        firePropertyChangeOnGuiThread("integralTimeRangeTo", this.integralTimeRangeTo, this.integralTimeRangeTo = doubleValue);
     }
     
     public Integer getMaxFrames(){

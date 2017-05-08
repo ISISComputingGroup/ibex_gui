@@ -33,6 +33,7 @@ import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Spinner;
+import org.eclipse.swt.widgets.Text;
 
 import uk.ac.stfc.isis.ibex.dae.detectordiagnostics.DetectorDiagnosticsModel;
 import uk.ac.stfc.isis.ibex.dae.detectordiagnostics.SpectraToDisplay;
@@ -80,53 +81,44 @@ public class DetectorDiagnosticsPanel extends Composite {
         
         bindingContext.bindValue(WidgetProperties.singleSelectionIndex().observe(comboSpectraTypeSelector), BeanProperties.value("spectraType").observe(model));
         bindingContext.bindValue(WidgetProperties.enabled().observe(comboSpectraTypeSelector), BeanProperties.value("diagnosticsEnabled").observe(model)); 
-        comboSpectraTypeSelector.setEnabled(true);
         
         Spinner spinnerPeriodSelector = new Spinner(this, SWT.BORDER); 
         bindingContext.bindValue(WidgetProperties.selection().observe(spinnerPeriodSelector), BeanProperties.value("period").observe(model)); 
         bindingContext.bindValue(WidgetProperties.enabled().observe(spinnerPeriodSelector), BeanProperties.value("diagnosticsEnabled").observe(model)); 
-        spinnerPeriodSelector.setEnabled(true);
         spinnerPeriodSelector.setMinimum(0);
-        spinnerPeriodSelector.setMaximum(Short.MAX_VALUE);
+        spinnerPeriodSelector.setMaximum(Integer.MAX_VALUE);
         
         Spinner spinnerStartingSpectrumNumber = new Spinner(this, SWT.BORDER); 
         bindingContext.bindValue(WidgetProperties.selection().observe(spinnerStartingSpectrumNumber), BeanProperties.value("startingSpectrumNumber").observe(model)); 
         bindingContext.bindValue(WidgetProperties.enabled().observe(spinnerStartingSpectrumNumber), BeanProperties.value("diagnosticsEnabled").observe(model)); 
-        spinnerStartingSpectrumNumber.setEnabled(true);
         spinnerStartingSpectrumNumber.setMinimum(0);
         spinnerStartingSpectrumNumber.setMaximum(Integer.MAX_VALUE);
         
         Spinner spinnerNumberOfSpectra = new Spinner(this, SWT.BORDER); 
         bindingContext.bindValue(WidgetProperties.selection().observe(spinnerNumberOfSpectra), BeanProperties.value("numberOfSpectra").observe(model)); 
         bindingContext.bindValue(WidgetProperties.enabled().observe(spinnerNumberOfSpectra), BeanProperties.value("diagnosticsEnabled").observe(model)); 
-        spinnerNumberOfSpectra.setEnabled(true);
         spinnerNumberOfSpectra.setMinimum(0);
-        spinnerNumberOfSpectra.setMaximum(Byte.MAX_VALUE * 2);
+        spinnerNumberOfSpectra.setMaximum(Integer.MAX_VALUE);
         
-        Spinner spinnerIntegralTimeRangeFrom = new Spinner(this, SWT.BORDER); 
-        bindingContext.bindValue(WidgetProperties.selection().observe(spinnerIntegralTimeRangeFrom), BeanProperties.value("integralTimeRangeFrom").observe(model));  
+        Text spinnerIntegralTimeRangeFrom = new Text(this, SWT.BORDER); 
+        bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(spinnerIntegralTimeRangeFrom), BeanProperties.value("integralTimeRangeFrom").observe(model));  
         bindingContext.bindValue(WidgetProperties.enabled().observe(spinnerIntegralTimeRangeFrom), BeanProperties.value("diagnosticsEnabled").observe(model)); 
-        spinnerIntegralTimeRangeFrom.setEnabled(true);
-        spinnerIntegralTimeRangeFrom.setMinimum(0);
-        spinnerIntegralTimeRangeFrom.setMaximum(Integer.MAX_VALUE);
+        spinnerIntegralTimeRangeFrom.addVerifyListener(new NumericalVerifyListener());
         
-        Spinner spinnerIntegralTimeRangeTo = new Spinner(this, SWT.BORDER); 
-        bindingContext.bindValue(WidgetProperties.selection().observe(spinnerIntegralTimeRangeTo), BeanProperties.value("integralTimeRangeTo").observe(model)); 
+        Text spinnerIntegralTimeRangeTo = new Text(this, SWT.BORDER); 
+        bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(spinnerIntegralTimeRangeTo), BeanProperties.value("integralTimeRangeTo").observe(model)); 
         bindingContext.bindValue(WidgetProperties.enabled().observe(spinnerIntegralTimeRangeTo), BeanProperties.value("diagnosticsEnabled").observe(model)); 
-        spinnerIntegralTimeRangeTo.setEnabled(true);
-        spinnerIntegralTimeRangeTo.setMinimum(0);
-        spinnerIntegralTimeRangeTo.setMaximum(Integer.MAX_VALUE);
+        spinnerIntegralTimeRangeTo.addVerifyListener(new NumericalVerifyListener());
         
         Spinner spinnerMaximumFrames = new Spinner(this, SWT.BORDER); 
         bindingContext.bindValue(WidgetProperties.selection().observe(spinnerMaximumFrames), BeanProperties.value("maxFrames").observe(model));  
         bindingContext.bindValue(WidgetProperties.enabled().observe(spinnerMaximumFrames), BeanProperties.value("diagnosticsEnabled").observe(model)); 
-        spinnerMaximumFrames.setEnabled(true);
         spinnerMaximumFrames.setMinimum(0);
         spinnerMaximumFrames.setMaximum(Integer.MAX_VALUE);
                
-        Label lblSpectraTable = new Label(parent, SWT.NONE);
-        lblSpectraTable.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1));
-        lblSpectraTable.setText("Spectra:");
+//        Label lblSpectraTable = new Label(parent, SWT.NONE);
+//        lblSpectraTable.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1));
+//        lblSpectraTable.setText("Spectra:");
         
         Table table = new Table(parent, SWT.NONE, SWT.NONE);
         table.bind();

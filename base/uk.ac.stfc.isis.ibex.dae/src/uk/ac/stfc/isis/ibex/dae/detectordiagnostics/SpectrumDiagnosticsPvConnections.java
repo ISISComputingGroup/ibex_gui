@@ -28,7 +28,6 @@ import java.util.List;
 import uk.ac.stfc.isis.ibex.epics.observing.ClosableObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.Observable;
-import uk.ac.stfc.isis.ibex.epics.observing.Observer;
 import uk.ac.stfc.isis.ibex.epics.switching.InstrumentSwitchers;
 import uk.ac.stfc.isis.ibex.epics.switching.ObservableFactory;
 import uk.ac.stfc.isis.ibex.epics.switching.OnInstrumentSwitch;
@@ -260,7 +259,7 @@ public class SpectrumDiagnosticsPvConnections {
         integralLowLimitObservable.addObserver(new SpectrumObserver<Double>() {
             @Override
             public void onNonNullValue(Double value) {
-                model.setIntegralTimeRangeFrom(value.intValue());
+                model.setIntegralTimeRangeFrom(value.toString());
             }  
         });
         
@@ -268,7 +267,7 @@ public class SpectrumDiagnosticsPvConnections {
         integralHighLimitObservable.addObserver(new SpectrumObserver<Double>() {
             @Override
             public void onNonNullValue(Double value) {
-                model.setIntegralTimeRangeTo(value.intValue());
+                model.setIntegralTimeRangeTo(value.toString());
             }  
         });
         
@@ -334,41 +333,6 @@ public class SpectrumDiagnosticsPvConnections {
             valuesList.add(value);
         }
         return valuesList;
-    }
-    
-    private abstract class SpectrumObserver<T> implements Observer<T> {
-        
-        public abstract void onNonNullValue(T value);
-        
-        @Override
-        public void onValue(T value) {
-            if (value != null) {
-                onNonNullValue(value);
-            } 
-        }
-        
-        @Override
-        public void onError(Exception e) {
-            System.out.println("error!");
-            e.printStackTrace();
-        }
-
-        @Override
-        public void onConnectionStatus(boolean isConnected) {
-        }
-
-        @Override
-        public void update(T value, Exception error, boolean isConnected) {
-            if (value != null) {
-                onNonNullValue(value);
-            }
-            
-            if (error != null) {
-                onError(error);
-            }
-            
-            onConnectionStatus(isConnected);
-        }  
     }
 
 }
