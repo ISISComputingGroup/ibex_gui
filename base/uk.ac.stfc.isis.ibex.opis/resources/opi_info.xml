@@ -271,12 +271,26 @@
 			<key>Mk3 Chopper</key>
 			<value>
 				<type>CHOPPER</type>
-				<path>Mk3Chopper.opi</path>
+				<path>Mk3Chopper/multiple_choppers.opi</path>
 				<description>The OPI for the Mk3 chopper. No properties required.</description>
 				<macros>
 				</macros>
 			</value>
 		</entry>
+		<entry>
+			<key>Mk2 Chopper</key>
+			<value>
+				<type>CHOPPER</type>
+				<path>Mk2Chopper.opi</path>
+				<description>The OPI for the Mk2 chopper.</description>
+				<macros>
+                    <macro>
+						<name>MK2CHOPR</name>
+ 						<description>The Mk2 Chopper PV prefix (e.g. MK2CHOPR_01).</description>  
+					</macro>
+				</macros>
+			</value>
+		</entry> 
 		<entry>
 			<key>Monitor</key>
 			<value>
@@ -692,6 +706,58 @@
 				<macros>
 				</macros>
 			</value>
-		</entry> 		
+		</entry> 
+		<entry>
+			<key>Rotating Sample Changer</key>
+			<value>
+				<type>ROT_SAMPLE_CHANGER</type>
+				<path>rot_sample_changer.opi</path>
+				<description>The OPI for the rotating sample changer on HRPD/GEM/POLARIS. No properties required.</description>
+			</value>
+		</entry> 	
+		<entry>
+			<key>Omron PLC</key>
+			<value>
+				<type>PLC</type>
+				<path>omron_plc.opi</path>
+				<description>The OPI for a PLC. No properties required.</description>
+				<macros>
+				</macros>
+			</value>
+		</entry> 	
+		<entry>
+			<key>Mk3 Chopper (single)</key>
+			<value>
+				<type>CHOPPER</type>
+				<path>Mk3Chopper/single_chopper.opi</path>
+				<description>The OPI for a single Mk3 Chopper.</description>
+				<macros>
+					<macro>
+						<name>NUMBER</name>
+						<description>The chopper number (e.g. CH1).</description>
+					</macro>
+				</macros>
+			</value>
+		</entry> 
+		<entry>
+			<key>Polaris jaw set</key>
+			<value>
+				<type>JAWS</type>
+				<path>polaris_jaws/Jaws_polaris.opi</path>
+				<description>The OPI for the Polaris jaw set. No properties required.</description>
+				<macros>
+				</macros>
+			</value>
+		</entry>		
+		<entry>
+			<key>Instron stress rig</key>
+			<value>
+				<type>STRESS_RIG</type>
+				<path>stress_rig/stress_rig.opi</path>
+				<description>The OPI for the Instron stress rig. No properties required.</description>
+				<macros>
+				</macros>
+			</value>
+		</entry>	
 	</opis>
 </descriptions>

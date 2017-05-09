@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import uk.ac.stfc.isis.ibex.dae.Dae;
 import uk.ac.stfc.isis.ibex.targets.PerspectiveTarget;
 import uk.ac.stfc.isis.ibex.targets.Target;
 
@@ -42,7 +43,7 @@ public enum ComponentType {
     /** Sample stack component type. */
 	SAMPLESTACK,
     /** DAE component type. */
-    DAE(new PerspectiveTarget("DAE")),
+    DAE(new PerspectiveTarget("DAE", Dae.ID)),
     /** Danfysik component type. */
     DANFYSIK,
     /** CAEN component type. */
@@ -97,6 +98,8 @@ public enum ComponentType {
     PRESSURE_GAUGE,
     /** 3D magnet component type. */
     SCIMAG3D,
+    /** Stress rig component type. */
+    STRESS_RIG,
     /** Polarises, Guide and Collimation for MUONFE. */
     PGC,
     /** Detector motion system component type. */
@@ -107,8 +110,12 @@ public enum ComponentType {
     NEOCERA,
     /** Keithley 2400 Source Meter. */
     KHLY2400,
+    /** Omron PLC. */
+    PLC,
     /** Zoom sample stack. */
-    ZOOM_SAMPLE_STACK;
+    ZOOM_SAMPLE_STACK,
+    /** Sample changer for HRPD/POLARIS/GEM. */
+    ROT_SAMPLE_CHANGER;
 	
 	private Target target;
 

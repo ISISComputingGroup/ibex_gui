@@ -23,14 +23,26 @@ package uk.ac.stfc.isis.ibex.targets;
  * Switch to a different Isis perspective from the synoptic.
  */
 public class PerspectiveTarget extends Target {
-	
+    private String id;
+
     /**
      * Instantiates a new perspective target.
-     *
-     * @param name the name of the perspective
+     * 
+     * @param name
+     *            the user friendly name of the target
+     * @param id
+     *            the id of the perspective to switch to
      */
-	public PerspectiveTarget(String name) {
-		super(name);
+    public PerspectiveTarget(String name, String id) {
+        super(name);
+        this.id = id;
 	}
+
+    /**
+     * @return The ID of the perspective to switch to.
+     */
+    public String getId() {
+        return id;
+    }
 	
 }

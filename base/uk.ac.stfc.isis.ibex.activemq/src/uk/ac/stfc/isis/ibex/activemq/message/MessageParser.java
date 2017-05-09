@@ -96,7 +96,6 @@ public abstract class MessageParser<T extends IMessage> implements Runnable {
     @Override
     @SuppressWarnings("checkstyle:emptyblock")
     public void run() {
-        System.out.println("Thread Running");
         while (running) {
             try {
                 if (jmsConsumer != null) {

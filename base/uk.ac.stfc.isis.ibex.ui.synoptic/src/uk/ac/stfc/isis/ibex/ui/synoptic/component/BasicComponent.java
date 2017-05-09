@@ -20,36 +20,36 @@
 package uk.ac.stfc.isis.ibex.ui.synoptic.component;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.graphics.Cursor;
+import org.eclipse.swt.custom.CLabel;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.Listener;
 import org.eclipse.wb.swt.ResourceManager;
 import org.eclipse.wb.swt.SWTResourceManager;
 
 import uk.ac.stfc.isis.ibex.synoptic.model.Component;
-import uk.ac.stfc.isis.ibex.ui.synoptic.Activator;
-import uk.ac.stfc.isis.ibex.ui.synoptic.SynopticPresenter;
+import uk.ac.stfc.isis.ibex.targets.Target;
 import uk.ac.stfc.isis.ibex.ui.synoptic.beamline.BeamlineComposite;
 
+
+/**
+ * A basic beamline component that.
+ */
 @SuppressWarnings("checkstyle:magicnumber")
 public class BasicComponent extends BeamlineComposite {
 
 	private Label image;
-	private Label componentName;
 	private Composite propertiesComposite;
 	
-	private SynopticPresenter presenter = Activator.getDefault().presenter();
-	
-	private String targetName;
-	
-    private final Cursor handCursor = SWTResourceManager.getCursor(SWT.CURSOR_HAND);
-	
+    /**
+     * Constructor for this component.
+     * 
+     * @param parent
+     *            The parent that holds the component.
+     */
 	public BasicComponent(Composite parent) {
 		super(parent, SWT.NONE);
 		
@@ -63,55 +63,32 @@ public class BasicComponent extends BeamlineComposite {
 		image = new Label(this, SWT.NONE);
 		image.setLayoutData(new GridData(SWT.CENTER, SWT.FILL, false, false, 1, 1));
 		image.setImage(ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui.synoptic", "icons/cog.png"));
+        addTargetListeners(image);
 		
-		image.addListener(SWT.MouseEnter, new Listener() {	
-			@Override
-			public void handleEvent(Event event) {
-                if (presenter.hasTarget(targetName)) {
-			        setCursor(targetName == null ? null : handCursor);
-			    }
-			}
-		});
-
-		image.addListener(SWT.MouseExit, new Listener() {	
-			@Override
-			public void handleEvent(Event event) {
-				setCursor(null);
-			}
-		});
-				
-		image.addListener(SWT.MouseUp, new Listener() {		
-			@Override
-			public void handleEvent(Event event) {
-				if (targetName != null) {
-                    if (presenter.hasTarget(targetName)) {
-                        presenter.navigateTo(targetName);
-                    }
-				}
-			}
-		});
-		
-		componentName = new Label(this, SWT.NONE);
-		componentName.setLayoutData(new GridData(SWT.CENTER, SWT.TOP, false, false, 1, 1));
-		componentName.setFont(SWTResourceManager.getFont("Arial", 12, SWT.NORMAL));
-		componentName.setText("Component name");
+        nameLabel = new CLabel(this, SWT.NONE);
+        nameLabel.setLayoutData(new GridData(SWT.CENTER, SWT.TOP, false, false, 1, 1));
+        nameLabel.setFont(SWTResourceManager.getFont("Arial", 12, SWT.NORMAL));
+        nameLabel.setText("Component name");
 		
 		propertiesComposite = new Composite(this, SWT.NONE);
 		propertiesComposite.setLayout(new GridLayout(1, false));
 		propertiesComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 	}
 	
-	public void setName(String name) {
-		componentName.setText(name);
-	}
-	
+    /**
+     * Set the image that represents this component.
+     * 
+     * @param icon
+     *            The image to set.
+     */
 	public void setImage(Image icon) {
 		image.setImage(icon);
 	}
 	
-	public void setTargetName(String targetName) {
-		this.targetName = targetName;
-		image.setToolTipText(targetName);
+    @Override
+    public void setTarget(Target target) {
+        super.setTarget(target);
+        image.setToolTipText(target.name());
 	}
 	
 	@Override
@@ -119,7 +96,13 @@ public class BasicComponent extends BeamlineComposite {
         final Rectangle imageBounds = image.getBounds();
 		return imageBounds.y + imageBounds.height / 2;
 	}
-		
+
+    /**
+     * Sets up the properties below a component.
+     * 
+     * @param component
+     *            the component to base the properties on.
+     */
 	public void setProperties(Component component) {
 		if (component.properties().isEmpty()) {
 			return;

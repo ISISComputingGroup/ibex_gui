@@ -17,3 +17,4 @@ Bundle-ActivationPolicy: lazy
 Export-Package: uk.ac.stfc.isis.ibex.devicescreens,
  uk.ac.stfc.isis.ibex.devicescreens.components,
  uk.ac.stfc.isis.ibex.devicescreens.desc
+Import-Package: uk.ac.stfc.isis.ibex.dae

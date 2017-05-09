@@ -1,5 +1,4 @@
-
-/*
+ /*
  * This file is part of the ISIS IBEX application.
  * Copyright (C) 2012-2016 Science & Technology Facilities Council.
  * All rights reserved.
@@ -20,33 +19,21 @@
 /**
  * 
  */
-package uk.ac.stfc.isis.ibex.ui.devicescreens.dialogs;
-
-import org.eclipse.core.databinding.conversion.Converter;
+package uk.ac.stfc.isis.ibex.managermode;
 
 /**
- * Converts a null to a boolean where true indicates not null.
+ * This exception is thrown when the manager mode PV is disconnected but a client requests to update it.
  * 
- * For use in data-binding.
+ * Exception is Serializable but we don't care so suppress serial warning.
  */
-public class IsNullConverter extends Converter {
+@SuppressWarnings("serial")
+public class ManagerModePvNotConnectedException extends Exception {
 
     /**
-     * The constructor.
+     * Constructor for an exception thrown when the manager mode PV is disconnected.
+     * @param message the message
      */
-    public IsNullConverter() {
-        super(Object.class, Boolean.class);
+    public ManagerModePvNotConnectedException(String message) {
+        super(message);
     }
-
-    /**
-     * The conversion method.
-     * 
-     * @param fromObject any object
-     * @return true if not null.
-     */
-    @Override
-    public Object convert(Object fromObject) {
-        return fromObject != null;
-    }
-
 }

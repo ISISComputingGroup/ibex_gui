@@ -29,8 +29,8 @@ import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -76,14 +76,10 @@ public class DeviceScreenListPanel extends Composite {
         super(parent, style);
         setLayout(new FillLayout(SWT.HORIZONTAL));
 
-        // TODO temporarily place list and button in control, remove when
-        // editing functionality is moved to configuration dialogue
-        Composite composite = new Composite(this, SWT.NONE);
-
         GridLayout compositeLayout = new GridLayout(1, true);
-        composite.setLayout(compositeLayout);
+        this.setLayout(compositeLayout);
 
-        deviceScreenList = new DeviceScreensTable(composite, SWT.BORDER, SWT.FULL_SELECTION);
+        deviceScreenList = new DeviceScreensTable(this, SWT.NONE, SWT.FULL_SELECTION);
         GridData devicesListLayout = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
         deviceScreenList.setLayoutData(devicesListLayout);
 
@@ -106,12 +102,12 @@ public class DeviceScreenListPanel extends Composite {
         });
 
 
-        configureDevScreensButton = new Button(composite, SWT.NONE);
+        configureDevScreensButton = new Button(this, SWT.NONE);
         configureDevScreensButton.setText("Edit Device Screens");
         GridData gdconfigureDevScreensButton = new GridData(SWT.FILL, SWT.TOP, false, false, 1, 1);
         configureDevScreensButton.setLayoutData(gdconfigureDevScreensButton);
 
-        configureDevScreensButton.addSelectionListener(new SelectionListener() {
+        configureDevScreensButton.addSelectionListener(new SelectionAdapter() {
 
             @Override
             public void widgetSelected(SelectionEvent e) {
@@ -121,11 +117,6 @@ public class DeviceScreenListPanel extends Composite {
                     LOG.catching(ex);
                     MessageDialog.openError(parent.getShell(), "Error displaying config dialogue", ex.getMessage());
                 }
-            }
-
-            @Override
-            public void widgetDefaultSelected(SelectionEvent e) {
-
             }
         });
 
@@ -149,10 +140,11 @@ public class DeviceScreenListPanel extends Composite {
      *            the new device screens description
      */
     protected void updateDeviceScreensDescriptions(final DeviceScreensDescription deviceScreensDescription) {
+
         Display.getDefault().asyncExec(new Runnable() {
             @Override
             public void run() {
-                if (deviceScreenList != null) {
+                if (deviceScreenList != null && deviceScreensDescription != null) {
                     deviceScreenList.setRows(deviceScreensDescription.getDevices());
                 }
             }
