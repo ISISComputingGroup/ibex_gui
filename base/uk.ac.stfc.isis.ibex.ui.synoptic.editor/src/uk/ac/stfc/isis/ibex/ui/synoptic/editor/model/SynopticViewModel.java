@@ -77,7 +77,7 @@ public class SynopticViewModel extends ModelObject {
         synoptic.processChildComponents();
 		editing.setSynopticFromDescription(description);
 		
-		setSelectedComponent(null);
+        setSelectedComponents(null);
 	}
 
     /**
@@ -138,7 +138,7 @@ public class SynopticViewModel extends ModelObject {
 		}
 
         refreshTreeView();
-		setSelectedComponent(Arrays.asList(component));
+        setSelectedComponents(Arrays.asList(component));
 
 	}
 
@@ -170,10 +170,10 @@ public class SynopticViewModel extends ModelObject {
         addComponentsInCorrectLocation(componentCopies);
         
         // Set selected component here, so that it is auto-expanded.
-        setSelectedComponent(componentCopies);
+        setSelectedComponents(componentCopies);
         broadcastInstrumentUpdate(UpdateTypes.COPY_COMPONENT);
         // Set selected component again here, so it is highlighted.
-        setSelectedComponent(componentCopies);
+        setSelectedComponents(componentCopies);
     }
 
     private void setUniqueChildNames(ComponentDescription component, List<String> allComponentNames) {
@@ -233,7 +233,7 @@ public class SynopticViewModel extends ModelObject {
 					SynopticParentDescription parent = getParent(selected);
 					parent.removeComponent(selected);
 				}
-				setSelectedComponent(null);
+                setSelectedComponents(null);
                 refreshTreeView();
 			}
 		}
@@ -276,8 +276,8 @@ public class SynopticViewModel extends ModelObject {
      * @param selected
      *            the selected component(s)
      */
-    public void setSelectedComponent(List<ComponentDescription> selected) {
-        firePropertyChange("compSelection", selectedComponents, selectedComponents = selected);
+    public void setSelectedComponents(List<ComponentDescription> selected) {
+        firePropertyChange("selectedComponents", selectedComponents, selectedComponents = selected);
         setSelectedProperty(null);
         refreshTreeView();
     }

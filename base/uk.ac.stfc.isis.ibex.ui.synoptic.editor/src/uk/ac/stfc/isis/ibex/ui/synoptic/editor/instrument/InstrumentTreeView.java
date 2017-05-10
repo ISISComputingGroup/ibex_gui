@@ -31,22 +31,21 @@ package uk.ac.stfc.isis.ibex.ui.synoptic.editor.instrument;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
 
-import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.jface.viewers.StructuredSelection;
+import org.eclipse.core.databinding.DataBindingContext;
+import org.eclipse.core.databinding.beans.BeanProperties;
+import org.eclipse.jface.databinding.viewers.ViewerProperties;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.dnd.DND;
+import org.eclipse.swt.dnd.DragSourceAdapter;
+import org.eclipse.swt.dnd.DragSourceEvent;
 import org.eclipse.swt.dnd.TextTransfer;
 import org.eclipse.swt.dnd.Transfer;
 import org.eclipse.swt.events.KeyAdapter;
 import org.eclipse.swt.events.KeyEvent;
-import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
@@ -58,7 +57,6 @@ import org.eclipse.swt.widgets.Tree;
 
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.ComponentDescription;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.component.ComponentContentProvider;
-import uk.ac.stfc.isis.ibex.ui.synoptic.editor.component.ComponentDragListener;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.component.ComponentDropListener;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.component.ComponentLabelProvider;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.IInstrumentUpdateListener;
@@ -89,17 +87,6 @@ public class InstrumentTreeView extends Composite {
                 refresh();
             }
         });
-				
-        synopticViewModel.addPropertyChangeListener("compSelection", new PropertyChangeListener() {
-            @Override
-            public void propertyChange(PropertyChangeEvent evt) {
-                @SuppressWarnings("unchecked")
-                List<ComponentDescription> newSelection = (List<ComponentDescription>) evt.getNewValue();
-                if (newSelection != null) {
-                    treeViewer.setSelection(new StructuredSelection(newSelection));
-                }
-			}
-		});
 
         synopticViewModel.addPropertyChangeListener("refreshTree", new PropertyChangeListener() {
             @Override
@@ -123,38 +110,27 @@ public class InstrumentTreeView extends Composite {
 		int operations = DND.DROP_MOVE;
 		Transfer[] transferTypes = new Transfer[] {TextTransfer.getInstance()};
 		treeViewer.addDragSupport(operations, transferTypes,
-				new ComponentDragListener(this));
+                new DragSourceAdapter() {
+                    @Override
+        		    public void dragStart(DragSourceEvent event) {
+                        currentDragSource = synopticViewModel.getSelectedComponents();
+        		    }
+
+        		    @Override
+        		    public void dragFinished(DragSourceEvent event) {
+                        currentDragSource = null;
+        		    }
+                });
+
 		treeViewer.addDropSupport(operations, transferTypes,
                 new ComponentDropListener(treeViewer, this, synopticViewModel));
 
 		treeViewer.setContentProvider(new ComponentContentProvider());
 		treeViewer.setLabelProvider(new ComponentLabelProvider());
-		setTreeInput();
+        treeViewer.setInput(synopticViewModel.getSynoptic());
+        treeViewer.expandAll();
 
 		Tree tree = treeViewer.getTree();
-
-		// Set viewModel selection when selection made
-		tree.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				List<ComponentDescription> selected = new ArrayList<ComponentDescription>(getSelected());
-				synopticViewModel.setSelectedComponent(selected);
-				mnuDeleteSelected.setEnabled(selected != null && !selected.isEmpty());
-				mnuCopySelected.setEnabled(selected != null && !selected.isEmpty() && synopticViewModel.selectedHaveSameParent());
-			}
-		});
-
-        // Delete and copy key
-        tree.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyPressed(KeyEvent e) {
-				if (e.keyCode == SWT.DEL) {
-					synopticViewModel.removeSelectedComponent();
-                } else if ((e.stateMask == SWT.CTRL) && (e.keyCode == 'c')) {
-                    synopticViewModel.copySelectedComponent();
-				}
-			}
-		});
 
 		// Right click context menu
 		Menu contextMenu = new Menu(this.getShell(), SWT.POP_UP);
@@ -177,18 +153,39 @@ public class InstrumentTreeView extends Composite {
 				synopticViewModel.removeSelectedComponent();
 			}
 		});
+
+        bind();
 	}
 
-	public Collection<ComponentDescription> getSelected() {
-		IStructuredSelection selection = (IStructuredSelection) treeViewer
-				.getSelection();
-		ArrayList<ComponentDescription> selected = new ArrayList<ComponentDescription>();
-        Iterator<?> it = selection.iterator();
-		while (it.hasNext()) {
-			selected.add((ComponentDescription) it.next());
-		}
-		return selected;
-	}
+    private void bind() {
+        DataBindingContext cnt = new DataBindingContext();
+
+        cnt.bindList(ViewerProperties.multipleSelection().observe(treeViewer),
+                BeanProperties.list("selectedComponents").observe(synopticViewModel));
+
+        // Set menu items to disabled under some selections
+        synopticViewModel.addPropertyChangeListener("selectedComponents", new PropertyChangeListener() {
+            @Override
+            public void propertyChange(PropertyChangeEvent evt) {
+                List<ComponentDescription> selected = synopticViewModel.getSelectedComponents();
+                mnuDeleteSelected.setEnabled(selected != null && !selected.isEmpty());
+                mnuCopySelected.setEnabled(
+                        selected != null && !selected.isEmpty() && synopticViewModel.selectedHaveSameParent());
+            }
+        });
+
+        // Delete and copy key
+        treeViewer.getTree().addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.keyCode == SWT.DEL) {
+                    synopticViewModel.removeSelectedComponent();
+                } else if ((e.stateMask == SWT.CTRL) && (e.keyCode == 'c')) {
+                    synopticViewModel.copySelectedComponent();
+                }
+            }
+        });
+    }
 
 	public Collection<ComponentDescription> getCurrentDragSource() {
 		return currentDragSource;
@@ -196,14 +193,5 @@ public class InstrumentTreeView extends Composite {
 
 	public void refresh() {
 		treeViewer.refresh();
-	}
-
-	private void setTreeInput() {
-		treeViewer.setInput(synopticViewModel.getSynoptic());
-		treeViewer.expandAll();
-	}
-
-	public void setCurrentDragSource(Collection<ComponentDescription> currentDragSource) {
-		this.currentDragSource = currentDragSource;
 	}
 }

@@ -54,7 +54,7 @@ public class PvListViewModel extends ErrorMessageProvider {
      *            selection.
      */
     public PvListViewModel(final SynopticViewModel synoptic) {
-        synoptic.addPropertyChangeListener("compSelection", new PropertyChangeListener() {
+        synoptic.addPropertyChangeListener("selectedComponents", new PropertyChangeListener() {
 
             @Override
             public void propertyChange(PropertyChangeEvent evt) {

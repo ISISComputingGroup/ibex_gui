@@ -62,7 +62,7 @@ public class TargetPropertyTable extends Composite {
 		
 		this.synopticViewModel = instrument;
 		
-        instrument.addPropertyChangeListener("compSelection", new PropertyChangeListener() {
+        instrument.addPropertyChangeListener("selectedComponents", new PropertyChangeListener() {
             @Override
             public void propertyChange(PropertyChangeEvent evt) {
                 showPropertyList(instrument.getSingleSelectedComp());
