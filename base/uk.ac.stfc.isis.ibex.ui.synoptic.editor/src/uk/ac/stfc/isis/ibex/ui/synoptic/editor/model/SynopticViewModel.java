@@ -56,8 +56,8 @@ import uk.ac.stfc.isis.ibex.ui.synoptic.editor.dialogs.SuggestedTargetsDialog;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.target.DefaultTargetForComponent;
 
 /**
- * Provides the model for the view of the synoptic. This is an observable model,
- * which various other classes subscribe to.
+ * Provides the model for the editing view of the synoptic. This is an
+ * observable model, which various other classes subscribe to.
  */
 public class SynopticViewModel extends ModelObject {
 	private SynopticModel editing = Synoptic.getInstance().edit();
@@ -67,28 +67,17 @@ public class SynopticViewModel extends ModelObject {
 	private List<IInstrumentUpdateListener> instrumentUpdateListeners = new CopyOnWriteArrayList<>();
 
     /**
-     * The constructor.
+     * The constructor, loads a new synoptic ready for editing.
      * 
      * @param description
-     *            The description of the synoptic to edit.
+     *            The underlying xml description of the synoptic to edit.
      */
     public SynopticViewModel(SynopticDescription description) {
-        loadSynopticDescription(description);
-	}
-	
-    /**
-     * Loads a synoptic description for editing etc.
-     * 
-     * @param description the description
-     */
-    public void loadSynopticDescription(SynopticDescription description) {
         synoptic = description;
         synoptic.processChildComponents();
 		editing.setSynopticFromDescription(description);
 		
 		setSelectedComponent(null);
-
-		broadcastInstrumentUpdate(UpdateTypes.NEW_INSTRUMENT);
 	}
 
     /**
@@ -123,7 +112,7 @@ public class SynopticViewModel extends ModelObject {
      *            The existing names
      * @return A unique name
      */
-    public String getUniqueName(String rootName, List<String> existingNames) {
+    private String getUniqueName(String rootName, List<String> existingNames) {
         DefaultName namer = new DefaultName(rootName, " ", true);
         return namer.getUnique(existingNames);
     }
