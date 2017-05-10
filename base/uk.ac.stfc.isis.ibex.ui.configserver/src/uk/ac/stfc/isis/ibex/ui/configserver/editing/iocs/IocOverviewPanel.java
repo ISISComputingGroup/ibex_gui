@@ -176,6 +176,7 @@ public class IocOverviewPanel extends Composite {
 
     private void setSelectedIocs(List<EditableIoc> selected) {
         if (selected.size() == 0) {
+            // No IOCs selected
             selectedIocRb.setText("");
             btnEditIoc.setEnabled(false);
             btnDeleteIoc.setEnabled(false);
