@@ -30,7 +30,7 @@
 - [ ] Do changes function as described? Add comments below that describe the tests performed.
 - [ ] How do the changes handle unexpected situations, e.g. bad input?
 - [ ] Has developer documentation been updated if required?
-- [ ] has any new plugin been added to the appropriate feature.xml ? You can check if this is needed by validating plugins as per method at  https://github.com/ISISComputingGroup/ibex_developers_manual/wiki/Common-Eclipse-Issues
+- [ ] Have any new plugins been added to the appropriate feature.xml? You can check if this is needed by validating plugins as per method at  https://github.com/ISISComputingGroup/ibex_developers_manual/wiki/Common-Eclipse-Issues
 
 ### Final Steps
 - [ ] Reviewer has moved the [release notes](https://github.com/ISISComputingGroup/IBEX/wiki/ReleaseNotes_Dev) entry for this ticket in the "Changes merged into master" section
