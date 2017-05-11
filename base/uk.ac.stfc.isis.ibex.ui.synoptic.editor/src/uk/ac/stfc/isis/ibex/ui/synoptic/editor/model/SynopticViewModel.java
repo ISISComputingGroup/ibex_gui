@@ -125,6 +125,7 @@ public class SynopticViewModel extends ModelObject {
 
         component.setName(getUniqueName("New Component", synoptic.getComponentNameListWithChildren()));
 		component.setType(ComponentType.UNKNOWN);
+        component.setTarget(new TargetDescription("NONE", TargetType.OPI));
 
 		int position = 0;
 		if (selectedComponents == null) {
@@ -261,7 +262,7 @@ public class SynopticViewModel extends ModelObject {
             target = dialog.selectedTarget();
         }
 		
-        if (component != null && (component.target() == null || !component.target().getUserSelected())) {
+        if (component != null && (component.target().name() == "NONE" || !component.target().getUserSelected())) {
             target.setUserSelected(isFinalEdit);
             component.setTarget(target);
             target.addProperties(getPropertyKeys(target.name()));
