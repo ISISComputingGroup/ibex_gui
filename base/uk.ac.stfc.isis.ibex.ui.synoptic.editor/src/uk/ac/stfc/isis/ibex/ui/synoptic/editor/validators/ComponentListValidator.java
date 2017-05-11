@@ -57,11 +57,15 @@ public class ComponentListValidator extends ErrorMessageProvider {
         }
     }
 
+    /**
+     * Starts listening to the synoptic so that any errors can be picked up.
+     * 
+     * @param synoptic
+     *            The synoptic to listen to.
+     */
     public ComponentListValidator(SynopticDescription synoptic) {
         this.synoptic = synoptic;
 
-        // This will add a listener to all underlying components as the property
-        // change from child components will pass through.
         synoptic.addPropertyChangeListener(componentNameListener);
 
         updateErrors();

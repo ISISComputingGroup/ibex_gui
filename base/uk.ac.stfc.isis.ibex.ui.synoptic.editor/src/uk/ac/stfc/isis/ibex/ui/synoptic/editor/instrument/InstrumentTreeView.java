@@ -63,6 +63,9 @@ import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.IInstrumentUpdateListener;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.SynopticViewModel;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.UpdateTypes;
 
+/**
+ * The view of the whole instrument within the editor.
+ */
 public class InstrumentTreeView extends Composite {
 	private SynopticViewModel synopticViewModel;
 	private Collection<ComponentDescription> currentDragSource;
@@ -71,6 +74,14 @@ public class InstrumentTreeView extends Composite {
 	private MenuItem mnuDeleteSelected;
     private MenuItem mnuCopySelected;
 
+    /**
+     * Constructor for the view.
+     * 
+     * @param parent
+     *            The parent composite that this view belongs to.
+     * @param synopticViewModel
+     *            The view model that this view is based on.
+     */
     public InstrumentTreeView(Composite parent, final SynopticViewModel synopticViewModel) {
 		super(parent, SWT.NONE);
 
@@ -101,6 +112,12 @@ public class InstrumentTreeView extends Composite {
 		createControls(this);
 	}
 
+    /**
+     * Creates the controls for the view.
+     * 
+     * @param parent
+     *            The parent composite that this is part of.
+     */
 	public void createControls(Composite parent) {
 		treeViewer = new TreeViewer(parent, SWT.MULTI | SWT.BORDER);
 		treeViewer.getTree().setLayoutData(

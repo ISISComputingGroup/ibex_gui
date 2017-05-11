@@ -21,7 +21,7 @@
  */
 package uk.ac.stfc.isis.ibex.ui.synoptic.editor.pv.tests;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
 import static org.mockito.Mockito.mock;
 
 import org.junit.Before;
@@ -38,9 +38,6 @@ public class PvDetailViewModelTest {
     private PvDetailViewModel viewModel;
     private PvListViewModel synoptic;
 
-    private static String VALID_ADDRESS = "TEST_DESC";
-    private static String INVALID_ADDRESS = "";
-
     @Before
     public void setUp() {
         synoptic = mock(PvListViewModel.class);
@@ -53,20 +50,5 @@ public class PvDetailViewModelTest {
         viewModel.showPV(null);
 
         assertFalse(viewModel.getSelectionVisible());
-        assertEquals(PvDetailViewModel.NO_SELECTION_TEXT, viewModel.getErrorText());
-    }
-
-    @Test
-    public void WHEN_valid_address_entered_THEN_no_error() {
-        viewModel.setPvAddress(VALID_ADDRESS);
-
-        assertEquals(true, viewModel.getErrorText().isEmpty());
-    }
-
-    @Test
-    public void WHEN_invalid_address_entered_THEN_error_text() {
-        viewModel.setPvAddress(INVALID_ADDRESS);
-
-        assertEquals(false, viewModel.getErrorText().isEmpty());
     }
 }

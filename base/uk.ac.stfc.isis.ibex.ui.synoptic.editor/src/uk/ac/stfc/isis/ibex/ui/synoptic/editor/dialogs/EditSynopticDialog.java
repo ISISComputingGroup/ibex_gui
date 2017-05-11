@@ -40,7 +40,7 @@ import uk.ac.stfc.isis.ibex.synoptic.Synoptic;
 import uk.ac.stfc.isis.ibex.synoptic.SynopticInfo;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.instrument.SynopticPreview;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.SynopticViewModel;
-import uk.ac.stfc.isis.ibex.ui.synoptic.editor.validators.ComponentListValidator;
+import uk.ac.stfc.isis.ibex.ui.synoptic.editor.validators.SynopticValidator;
 import uk.ac.stfc.isis.ibex.validators.ErrorMessage;
 
 /**
@@ -62,7 +62,7 @@ public class EditSynopticDialog extends TitleAreaDialog {
     private SynopticViewModel synopticViewModel;
     private Collection<String> availableOPIs;
 
-    private ComponentListValidator synopticValidator;
+    private SynopticValidator synopticValidator;
 
     /**
      * The constructor for the overall Synoptic editor dialog.
@@ -86,7 +86,7 @@ public class EditSynopticDialog extends TitleAreaDialog {
 		this.isBlank = isBlank;
         this.availableOPIs = availableOPIs;
         this.synopticViewModel = synopticViewModel;
-        this.synopticValidator = new ComponentListValidator(synopticViewModel.getSynoptic());
+        this.synopticValidator = new SynopticValidator(synopticViewModel.getSynoptic());
 	}
 	
 	@Override
