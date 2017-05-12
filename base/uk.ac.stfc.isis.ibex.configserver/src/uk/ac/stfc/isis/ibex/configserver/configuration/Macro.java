@@ -28,7 +28,7 @@ import uk.ac.stfc.isis.ibex.model.ModelObject;
  */
 public class Macro extends ModelObject {
 	private String name;
-	private String value;
+    private String value = "";
 	private String description;
 	private String pattern;
 

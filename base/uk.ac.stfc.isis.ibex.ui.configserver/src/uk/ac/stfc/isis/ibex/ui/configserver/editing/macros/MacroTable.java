@@ -28,6 +28,7 @@ import org.eclipse.swt.widgets.Composite;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Macro;
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundCellLabelProvider;
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundTable;
+import uk.ac.stfc.isis.ibex.ui.widgets.StringEditingSupport;
 
 /**
  * The table for editing IOC macros.
@@ -65,8 +66,8 @@ public class MacroTable extends DataboundTable<Macro> {
 	}
 	
 	private void name() {
-		TableViewerColumn desc = createColumn("Macro name", 6);
-		desc.setLabelProvider(new DataboundCellLabelProvider<Macro>(observeProperty("name")) {
+        TableViewerColumn name = createColumn("Macro name", 6);
+        name.setLabelProvider(new DataboundCellLabelProvider<Macro>(observeProperty("name")) {
 			@Override
 			protected String valueFromRow(Macro row) {
 				return row.getName();
@@ -75,13 +76,26 @@ public class MacroTable extends DataboundTable<Macro> {
 	}
 	
 	private void value() {
-		TableViewerColumn desc = createColumn("Value", 5);
-		desc.setLabelProvider(new DataboundCellLabelProvider<Macro>(observeProperty("value")) {
-			@Override
-			protected String valueFromRow(Macro row) {
-				return row.getValue();
-			}
-		});
+        TableViewerColumn val = createColumn("Value", 5);
+        val.setLabelProvider(new DataboundCellLabelProvider<Macro>(observeProperty("value")) {
+            @Override
+            protected String valueFromRow(Macro row) {
+                return row.getValue();
+            }
+        });
+
+        val.setEditingSupport(new StringEditingSupport<Macro>(viewer(), Macro.class) {
+
+            @Override
+            protected String valueFromRow(Macro row) {
+                return row.getValue();
+            }
+
+            @Override
+            protected void setValueForRow(Macro row, String value) {
+                row.setValue(value);
+            }
+        });
 	}
 	
 	private void description() {

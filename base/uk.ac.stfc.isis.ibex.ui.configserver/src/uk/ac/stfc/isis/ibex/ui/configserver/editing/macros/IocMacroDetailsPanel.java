@@ -26,7 +26,6 @@ import org.eclipse.core.databinding.UpdateValueStrategy;
 import org.eclipse.core.databinding.beans.BeanProperties;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
-import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -91,13 +90,13 @@ public class IocMacroDetailsPanel extends Composite {
         displayMacrosTable.addSelectionChangedListener(new ISelectionChangedListener() {
             @Override
             public void selectionChanged(SelectionChangedEvent arg0) {
-                IStructuredSelection selection = (IStructuredSelection) arg0.getSelection();
-                if (selection.size() > 0) {
-                    Macro macro = (Macro) selection.getFirstElement();
-                    name.setText(macro.getName());
-                    setMacro(macro, true);
-                    value.setFocus();
-                }
+                /*
+                 * IStructuredSelection selection = (IStructuredSelection)
+                 * arg0.getSelection(); if (selection.size() > 0) { Macro macro
+                 * = (Macro) selection.getFirstElement();
+                 * name.setText(macro.getName()); setMacro(macro, true);
+                 * value.setFocus(); }
+                 */
             }
         });
 
