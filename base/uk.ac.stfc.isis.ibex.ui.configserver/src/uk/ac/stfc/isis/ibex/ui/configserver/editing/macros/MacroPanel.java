@@ -61,7 +61,6 @@ public class MacroPanel extends Composite implements IIocDependentPanel {
 		setLayout(new FillLayout(SWT.HORIZONTAL));
 		
 		details = new IocMacroDetailsPanel(this, SWT.NONE);
-		details.setEnabled(false);
 	}
 	
     /**
