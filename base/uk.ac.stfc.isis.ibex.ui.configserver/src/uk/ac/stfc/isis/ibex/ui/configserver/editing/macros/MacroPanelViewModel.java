@@ -27,42 +27,30 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.layout.FillLayout;
-import org.eclipse.swt.widgets.Composite;
-
 import com.google.common.base.Strings;
 
 import uk.ac.stfc.isis.ibex.configserver.configuration.Macro;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableIoc;
+import uk.ac.stfc.isis.ibex.configserver.editing.MacroValueValidator;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.iocs.IIocDependentPanel;
+import uk.ac.stfc.isis.ibex.validators.ErrorAggregator;
+import uk.ac.stfc.isis.ibex.validators.ErrorMessage;
 
 /**
- * This panel shows the macros that have been set for a given IOC, and allows macros to be added
- * and removed.
+ * This is the view model for the panel shows the macros that have been set for
+ * a given IOC, and allows macros to be added and removed.
  *
  */
-public class MacroPanel extends Composite implements IIocDependentPanel {
+public class MacroPanelViewModel extends ErrorAggregator implements IIocDependentPanel {
 	private Collection<Macro> displayMacros;
-	private IocMacroDetailsPanel details;
-	
-	private boolean canEditMacros;
 	
     /**
-     * Constructor for the Macro panel.
-     * 
-     * @param parent
-     *            The parent composite.
-     * @param style
-     *            The SWT style.
+     * @return The macros to display.
      */
-	public MacroPanel(Composite parent, int style) {
-		super(parent, SWT.NONE);
-		setLayout(new FillLayout(SWT.HORIZONTAL));
-		
-		details = new IocMacroDetailsPanel(this, SWT.NONE);
-	}
-	
+    public Collection<Macro> getMacros() {
+        return displayMacros;
+    }
+
     /**
      * Sets the macros to be displayed by the panel.
      * 
@@ -70,15 +58,12 @@ public class MacroPanel extends Composite implements IIocDependentPanel {
      *            The macros that have been set.
      * @param availableMacros
      *            The list of all Macros available to this IOC.
-     * @param canEdit
-     *            Whether the macros can be edited.
      */
-	public void setMacros(final Collection<Macro> setMacros, Collection<Macro> availableMacros, boolean canEdit) {
-		this.canEditMacros = canEdit;
-		this.displayMacros = makeDisplayMacroList(setMacros, availableMacros);
+    public void setMacros(final Collection<Macro> setMacros, Collection<Macro> availableMacros) {
+        Collection<Macro> newMacros = makeDisplayMacroList(setMacros, availableMacros);
 		
-		displayMacros = sortMacroCollectionByName(displayMacros);
-		details.setMacros(displayMacros, canEditMacros);
+        newMacros = sortMacroCollectionByName(newMacros);
+        firePropertyChange("macros", this.displayMacros, this.displayMacros = newMacros);
 	}
 
 	@Override
@@ -86,18 +71,18 @@ public class MacroPanel extends Composite implements IIocDependentPanel {
         editableIoc.addPropertyChangeListener("macros", new PropertyChangeListener() {
             @Override
             public void propertyChange(PropertyChangeEvent evt) {
-                setMacros(editableIoc.getMacros(), editableIoc.getAvailableMacros(), editableIoc.isEditable());
+                setMacros(editableIoc.getMacros(), editableIoc.getAvailableMacros());
             }
         });
 
         editableIoc.addPropertyChangeListener("ioc", new PropertyChangeListener() {
             @Override
             public void propertyChange(PropertyChangeEvent evt) {
-                setMacros(editableIoc.getMacros(), editableIoc.getAvailableMacros(), editableIoc.isEditable());
+                setMacros(editableIoc.getMacros(), editableIoc.getAvailableMacros());
             }
         });
 
-        setMacros(editableIoc.getMacros(), editableIoc.getAvailableMacros(), editableIoc.isEditable());
+        setMacros(editableIoc.getMacros(), editableIoc.getAvailableMacros());
 	}
 	
     /**
@@ -138,16 +123,23 @@ public class MacroPanel extends Composite implements IIocDependentPanel {
 			for (final Macro setMacro : setMacros) {
 				if (setMacro.getName().equals(availableMacro.getName())) {
 					displayMacro.setValue(setMacro.getValue());
-					displayMacro.addPropertyChangeListener("value", updateValueListener(setMacro, setMacros));
+                    displayMacro.addPropertyChangeListener("value", updateValueListener(setMacro, setMacros));
 					macroCurrentlySet = true;
 				}
 			}
 
+            if (!macroCurrentlySet) {
+                Macro newMacro = new Macro(displayMacro);
+                newMacro.setValue(displayMacro.getValue());
+                setMacros.add(newMacro);
+                displayMacro.addPropertyChangeListener("value", updateValueListener(newMacro, setMacros));
+            }
+
+            MacroValueValidator validator = new MacroValueValidator(displayMacro);
+            validator.addPropertyChangeListener("error", errorListener);
+            childErrors.put(validator, new ErrorMessage(false, null));
+
 			displayMacros.add(displayMacro);
-			
-			if (!macroCurrentlySet) {
-				displayMacro.addPropertyChangeListener("value", addSetMacroListener(displayMacro, setMacros));
-			}
 		}
 		
 		return displayMacros;
@@ -162,20 +154,24 @@ public class MacroPanel extends Composite implements IIocDependentPanel {
 				if (Strings.isNullOrEmpty(updatedValue)) {
 					setMacros.remove(setMacro);
 				} else {
-					setMacro.setValue((String) newValue.getNewValue());
+                    setMacro.setValue(updatedValue);
 				}
+
 			}
 		};
 	}
-	
-	private PropertyChangeListener addSetMacroListener(final Macro displayMacro, final Collection<Macro> setMacros) {
-		return new PropertyChangeListener() {
-			@Override
-			public void propertyChange(PropertyChangeEvent newValue) {
-				Macro newMacro = new Macro(displayMacro);
-				displayMacro.setValue((String) newValue.getNewValue());
-				setMacros.add(newMacro);
-			}
-		};
-	}
+
+    /**
+     * @return
+     */
+    @Override
+    public String constructMessage() {
+        StringBuilder sb = new StringBuilder();
+        for (String message : getErrorMessages()) {
+            sb.append(message);
+            sb.append("; ");
+        }
+        sb.deleteCharAt(sb.length() - 2);
+        return sb.toString();
+    }
 }

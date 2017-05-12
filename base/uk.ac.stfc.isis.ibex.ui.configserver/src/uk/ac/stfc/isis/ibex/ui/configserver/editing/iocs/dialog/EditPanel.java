@@ -21,6 +21,9 @@
  */
 package uk.ac.stfc.isis.ibex.ui.configserver.editing.iocs.dialog;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.beans.BeanProperties;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
@@ -41,9 +44,11 @@ import org.eclipse.swt.widgets.Text;
 
 import uk.ac.stfc.isis.ibex.configserver.configuration.SimLevel;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableIoc;
-import uk.ac.stfc.isis.ibex.ui.configserver.editing.macros.MacroPanel;
+import uk.ac.stfc.isis.ibex.ui.configserver.editing.macros.IocMacroPanel;
+import uk.ac.stfc.isis.ibex.ui.configserver.editing.macros.MacroPanelViewModel;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.pvs.IocPVsEditorPanel;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.pvsets.IocPVSetsEditorPanel;
+import uk.ac.stfc.isis.ibex.validators.ErrorMessage;
 import uk.ac.stfc.isis.ibex.validators.MessageDisplayer;
 
 /**
@@ -59,7 +64,7 @@ public class EditPanel extends Composite {
     private Button autoRestart;
     private ComboViewer simLevel;
 
-    private MacroPanel macros;
+    private MacroPanelViewModel macrosViewModel;
     private IocPVsEditorPanel pvVals;
     private IocPVSetsEditorPanel pvSets;
 
@@ -73,7 +78,7 @@ public class EditPanel extends Composite {
      * @param dialog
      *            The dialog displaying error messages.
      */
-    public EditPanel(Composite parent, int style, MessageDisplayer dialog) {
+    public EditPanel(Composite parent, int style, final MessageDisplayer dialog) {
         super(parent, style);
         this.setLayout(new GridLayout());
 
@@ -122,13 +127,21 @@ public class EditPanel extends Composite {
         iocSettings.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 
         // Settings tabs
-        macros = new MacroPanel(iocSettings, SWT.NONE);
+        macrosViewModel = new MacroPanelViewModel();
+        macrosViewModel.addPropertyChangeListener("error", new PropertyChangeListener() {
+            @Override
+            public void propertyChange(PropertyChangeEvent evt) {
+                ErrorMessage err = (ErrorMessage) evt.getNewValue();
+                dialog.setErrorMessage(evt.getSource().toString(), err.getMessage());
+            }
+        });
+        IocMacroPanel macrosPanel = new IocMacroPanel(iocSettings, SWT.NONE, macrosViewModel);
         pvVals = new IocPVsEditorPanel(iocSettings, SWT.NONE, dialog);
-        pvSets = new IocPVSetsEditorPanel(iocSettings, SWT.NONE, dialog);
+        pvSets = new IocPVSetsEditorPanel(iocSettings, SWT.NONE);
 
         TabItem macrosTab = new TabItem(iocSettings, SWT.NONE);
         macrosTab.setText("Macros");
-        macrosTab.setControl(macros);
+        macrosTab.setControl(macrosPanel);
 
         TabItem pvValuesTab = new TabItem(iocSettings, SWT.NONE);
         pvValuesTab.setText("PV Values");
@@ -147,7 +160,7 @@ public class EditPanel extends Composite {
      */
     public void setIOC(final EditableIoc editableIoc) {
 
-        macros.setIOC(editableIoc);
+        macrosViewModel.setIOC(editableIoc);
         pvVals.setIOC(editableIoc);
         pvSets.setIOC(editableIoc);
 

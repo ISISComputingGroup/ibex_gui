@@ -19,15 +19,14 @@
 
 package uk.ac.stfc.isis.ibex.ui.configserver.editing.macros;
 
-import java.util.Collection;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
-
-import uk.ac.stfc.isis.ibex.configserver.configuration.Macro;
 
 /**
  * This panel allows macro names and values to be set, and shows a list of available macros for an
@@ -38,7 +37,7 @@ import uk.ac.stfc.isis.ibex.configserver.configuration.Macro;
  * 
  */
 @SuppressWarnings("checkstyle:magicnumber")
-public class IocMacroDetailsPanel extends Composite {
+public class IocMacroPanel extends Composite {
 	private MacroTable displayMacrosTable;
 	
     /**
@@ -48,8 +47,10 @@ public class IocMacroDetailsPanel extends Composite {
      *            The parent composite.
      * @param style
      *            The SWT style.
+     * @param viewModel
+     *            The view model which describes the macros.
      */
-	public IocMacroDetailsPanel(Composite parent, int style) {
+    public IocMacroPanel(Composite parent, int style, final MacroPanelViewModel viewModel) {
 		super(parent, style);
 		setLayout(new FillLayout(SWT.HORIZONTAL));
 		
@@ -61,26 +62,13 @@ public class IocMacroDetailsPanel extends Composite {
         gdAvailableMacrosTable.widthHint = 428;
         displayMacrosTable.setLayoutData(gdAvailableMacrosTable);
 
-	}
-	
-	/**
-     * Called when changing IOCs. Should reset everything such as name,
-     * selection etc.
-     * 
-     * @param macros
-     *            The macros to display of the current IOC
-     * @param canEdit
-     *            If the IOC is editable
-     */
-	public void setMacros(Collection<Macro> macros, boolean canEdit) {
-		displayMacrosTable.setRows(macros);
-		displayMacrosTable.deselectAll();
-		
-	}
-	
-	@Override
-	public void setEnabled(boolean enabled) {
-		super.setEnabled(enabled);
-		displayMacrosTable.setEnabled(enabled);
+        viewModel.addPropertyChangeListener("macros", new PropertyChangeListener() {
+
+            @Override
+            public void propertyChange(PropertyChangeEvent evt) {
+                displayMacrosTable.setRows(viewModel.getMacros());
+                displayMacrosTable.deselectAll();
+            }
+        });
 	}
 }

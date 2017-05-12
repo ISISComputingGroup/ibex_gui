@@ -55,6 +55,7 @@ public class MacroValueValidator extends ErrorMessageProvider {
      *            The macro to validate.
      */
     public MacroValueValidator(Macro macro) {
+        this.macro = macro;
         if (macro != null) {
             macro.addPropertyChangeListener("value", new PropertyChangeListener() {
 
@@ -67,16 +68,17 @@ public class MacroValueValidator extends ErrorMessageProvider {
 	}
 	
     private void validateValue(String value) {
+        String prefix = macro.getName() + ": ";
 		try {
             if (value.equals("")) {
                 setError(false, null);
             } else if (!matchesPattern(value)) {
-                setError(true, PATTERN_MISMATCH_MESSAGE);
+                setError(true, prefix + PATTERN_MISMATCH_MESSAGE);
 			} else {
                 setError(false, null);
 			}
 		} catch (PatternSyntaxException e) {
-            setError(true, PATTERN_INVALID);
+            setError(true, prefix + PATTERN_INVALID);
 		}			
 	}
 	

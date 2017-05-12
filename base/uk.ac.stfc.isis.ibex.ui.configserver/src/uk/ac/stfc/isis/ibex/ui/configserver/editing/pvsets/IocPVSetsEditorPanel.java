@@ -34,7 +34,6 @@ import uk.ac.stfc.isis.ibex.configserver.configuration.PVSet;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableIoc;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditablePVSet;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.iocs.IIocDependentPanel;
-import uk.ac.stfc.isis.ibex.validators.MessageDisplayer;
 
 /**
  * The panel for displaying and editing the PV sets for a given IOC.
@@ -49,10 +48,8 @@ public class IocPVSetsEditorPanel extends Composite implements	IIocDependentPane
      *            The parent composite that this panel belongs to.
      * @param style
      *            The SWT style of the panel.
-     * @param messageDisplayer
-     *            The message displayer to post errors to.
      */
-	public IocPVSetsEditorPanel(Composite parent, int style, final MessageDisplayer messageDisplayer) {
+    public IocPVSetsEditorPanel(Composite parent, int style) {
 		super(parent, style);
 		setLayout(new GridLayout(1, false));
 		
