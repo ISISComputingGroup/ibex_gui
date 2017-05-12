@@ -170,6 +170,8 @@ public class SynopticViewModel extends ModelObject {
         
         addComponentsInCorrectLocation(componentCopies);
         
+        refreshTreeView();
+
         // Set selected component here, so that it is auto-expanded.
         setSelectedComponents(componentCopies);
         broadcastInstrumentUpdate(UpdateTypes.COPY_COMPONENT);
