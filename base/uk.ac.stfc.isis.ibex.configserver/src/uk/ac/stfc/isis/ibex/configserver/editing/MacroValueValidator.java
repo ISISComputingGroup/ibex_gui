@@ -19,34 +19,19 @@
 
 package uk.ac.stfc.isis.ibex.configserver.editing;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 
-import org.eclipse.core.databinding.validation.IValidator;
-import org.eclipse.core.databinding.validation.ValidationStatus;
-import org.eclipse.core.runtime.IStatus;
-import org.eclipse.swt.widgets.Label;
-
 import uk.ac.stfc.isis.ibex.configserver.configuration.Macro;
-import uk.ac.stfc.isis.ibex.model.ModelObject;
+import uk.ac.stfc.isis.ibex.validators.ErrorMessageProvider;
 
 /**
- * Verifies an entered macro value. This implements the IValidator interface for setting
- * an error message, and extends model object to allow property changes on name is valid
- * and show warning icon. The warning icon is not shown if no macro is selected, even 
- * though the status will return error (but with no message displayed).
- *
+ * Verifies an entered macro value and provides an error message if it does not
+ * match the given macro.
  */
-public class MacroValueValidator extends ModelObject implements IValidator {
-    /**
-     * Property change that is fired when the name validity changes.
-     */
-    public static final String NAME_IS_VALID = "nameIsValid";
-    /**
-     * Property change that is fired when the Show warning icon changes.
-     */
-	public static final String SHOW_WARNING_ICON = "showWarningIcon";
-	
+public class MacroValueValidator extends ErrorMessageProvider {
     /**
      * The message that is displayed when there is no error.
      */
@@ -61,60 +46,38 @@ public class MacroValueValidator extends ModelObject implements IValidator {
      */
 	public static final String PATTERN_INVALID = "Macro regex pattern invalid";
 	
-	private final Label messageDisplayer;
 	private Macro macro;
-	private boolean nameIsValid = true;
-	private boolean showWarningIcon = false;
 	
     /**
      * Constructor for the validator.
      * 
      * @param macro
      *            The macro to validate.
-     * @param messageDisplayer
-     *            The label to display the error message on.
      */
-	public MacroValueValidator(Macro macro, Label messageDisplayer) {
-		this.messageDisplayer = messageDisplayer;
-		this.macro = macro;
+    public MacroValueValidator(Macro macro) {
+        if (macro != null) {
+            macro.addPropertyChangeListener("value", new PropertyChangeListener() {
+
+                @Override
+                public void propertyChange(PropertyChangeEvent evt) {
+                    validateValue((String) evt.getNewValue());
+                }
+            });
+        }
 	}
 	
-	@Override
-	public IStatus validate(Object text) {
-		IStatus returnStatus;
-		
-		setShowWarningIcon(false);
-		
+    private void validateValue(String value) {
 		try {
-            if (macro == null) {
-                returnStatus = setError(NO_MESSAGE);
-            } else if (text.equals("")) {
-                returnStatus = setNoError();
-            } else if (!matchesPattern((String) text)) {
-				setShowWarningIcon(true);
-				returnStatus = setError(PATTERN_MISMATCH_MESSAGE);
+            if (value.equals("")) {
+                setError(false, null);
+            } else if (!matchesPattern(value)) {
+                setError(true, PATTERN_MISMATCH_MESSAGE);
 			} else {
-				returnStatus = setNoError();
+                setError(false, null);
 			}
 		} catch (PatternSyntaxException e) {
-			setShowWarningIcon(true);
-			returnStatus = setError(PATTERN_INVALID);
+            setError(true, PATTERN_INVALID);
 		}			
-		
-		return returnStatus;
-	}
-
-	private IStatus setError(String message) {
-		messageDisplayer.setText(message);
-		setNameIsValid(false);
-		return ValidationStatus.error(message);	
-	}
-	
-	private IStatus setNoError() {
-		messageDisplayer.setText(NO_MESSAGE);
-		setNameIsValid(true);
-		setShowWarningIcon(false);
-		return ValidationStatus.ok();	
 	}
 	
     private boolean matchesPattern(String text) {
@@ -136,42 +99,4 @@ public class MacroValueValidator extends ModelObject implements IValidator {
 	public void setMacro(Macro macro) {
 		this.macro = macro;
 	}
-	
-    /**
-     * Get whether the macro name is valid.
-     * 
-     * @return True if the macro name is valid
-     */
-	public boolean getNameIsValid() {
-		return nameIsValid;
-	}
-	
-    /**
-     * Set if the macro name is valid.
-     * 
-     * @param nameIsValid
-     *            True if the macro name is valid.
-     */
-	public void setNameIsValid(boolean nameIsValid) {
-		firePropertyChange(NAME_IS_VALID, this.nameIsValid, this.nameIsValid = nameIsValid);
-	}
-	
-    /**
-     * Get whether the warning icon should be shown.
-     * 
-     * @return True if the warning icon should be shown.
-     */
-	public boolean getShowWarningIcon() {
-		return showWarningIcon;
-	}
-	
-    /**
-     * Set whether the warning icon should be shown.
-     * 
-     * @param showWarningIcon
-     *            True if the warning icon should be shown.
-     */
-	public void setShowWarningIcon(boolean showWarningIcon) {
-		firePropertyChange(SHOW_WARNING_ICON, this.showWarningIcon, this.showWarningIcon = showWarningIcon);
-	}	
 }
