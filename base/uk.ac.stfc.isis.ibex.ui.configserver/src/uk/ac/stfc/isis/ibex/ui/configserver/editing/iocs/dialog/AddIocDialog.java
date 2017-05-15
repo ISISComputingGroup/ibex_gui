@@ -80,6 +80,7 @@ public class AddIocDialog extends IocDialog {
      */
     private void previousPage() {
         updateStack(addIocPanel);
+        editViewModel.clearError();
         btnPrev.setVisible(false);
         btnOk.addSelectionListener(nextListener);
         btnOk.setData(IDialogConstants.NO_ID);
@@ -91,6 +92,7 @@ public class AddIocDialog extends IocDialog {
      */
     private void nextPage() {
         tempIoc = addViewModel.getSelectedIoc();
+        editViewModel.setIOC(tempIoc);
         editIocPanel.setIOC(tempIoc);
         updateStack(editIocPanel);
         btnPrev.setVisible(true);

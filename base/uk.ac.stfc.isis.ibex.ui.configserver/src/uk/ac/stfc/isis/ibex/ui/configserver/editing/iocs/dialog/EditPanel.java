@@ -21,9 +21,6 @@
  */
 package uk.ac.stfc.isis.ibex.ui.configserver.editing.iocs.dialog;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.beans.BeanProperties;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
@@ -45,10 +42,8 @@ import org.eclipse.swt.widgets.Text;
 import uk.ac.stfc.isis.ibex.configserver.configuration.SimLevel;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableIoc;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.macros.IocMacroPanel;
-import uk.ac.stfc.isis.ibex.ui.configserver.editing.macros.MacroPanelViewModel;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.pvs.IocPVsEditorPanel;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.pvsets.IocPVSetsEditorPanel;
-import uk.ac.stfc.isis.ibex.validators.ErrorMessage;
 import uk.ac.stfc.isis.ibex.validators.MessageDisplayer;
 
 /**
@@ -64,7 +59,6 @@ public class EditPanel extends Composite {
     private Button autoRestart;
     private ComboViewer simLevel;
 
-    private MacroPanelViewModel macrosViewModel;
     private IocPVsEditorPanel pvVals;
     private IocPVSetsEditorPanel pvSets;
 
@@ -77,8 +71,10 @@ public class EditPanel extends Composite {
      *            The SWT style
      * @param dialog
      *            The dialog displaying error messages.
+     * @param editViewModel
+     *            The view model for this panel.
      */
-    public EditPanel(Composite parent, int style, final MessageDisplayer dialog) {
+    public EditPanel(Composite parent, int style, final MessageDisplayer dialog, EditPanelViewModel editViewModel) {
         super(parent, style);
         this.setLayout(new GridLayout());
 
@@ -127,15 +123,7 @@ public class EditPanel extends Composite {
         iocSettings.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 
         // Settings tabs
-        macrosViewModel = new MacroPanelViewModel();
-        macrosViewModel.addPropertyChangeListener("error", new PropertyChangeListener() {
-            @Override
-            public void propertyChange(PropertyChangeEvent evt) {
-                ErrorMessage err = (ErrorMessage) evt.getNewValue();
-                dialog.setErrorMessage(evt.getSource().toString(), err.getMessage());
-            }
-        });
-        IocMacroPanel macrosPanel = new IocMacroPanel(iocSettings, SWT.NONE, macrosViewModel);
+        IocMacroPanel macrosPanel = new IocMacroPanel(iocSettings, SWT.NONE, editViewModel.getMacrosViewModel());
         pvVals = new IocPVsEditorPanel(iocSettings, SWT.NONE, dialog);
         pvSets = new IocPVSetsEditorPanel(iocSettings, SWT.NONE);
 
@@ -159,8 +147,6 @@ public class EditPanel extends Composite {
      *            The IOC.
      */
     public void setIOC(final EditableIoc editableIoc) {
-
-        macrosViewModel.setIOC(editableIoc);
         pvVals.setIOC(editableIoc);
         pvSets.setIOC(editableIoc);
 

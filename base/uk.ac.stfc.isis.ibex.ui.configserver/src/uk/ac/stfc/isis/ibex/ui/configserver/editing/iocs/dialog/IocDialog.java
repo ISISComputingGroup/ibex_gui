@@ -18,6 +18,8 @@
 
 package uk.ac.stfc.isis.ibex.ui.configserver.editing.iocs.dialog;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -35,6 +37,7 @@ import org.eclipse.swt.widgets.TabFolder;
 
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableIoc;
+import uk.ac.stfc.isis.ibex.validators.ErrorMessage;
 import uk.ac.stfc.isis.ibex.validators.MessageDisplayer;
 
 /**
@@ -46,6 +49,7 @@ public class IocDialog extends TitleAreaDialog implements MessageDisplayer {
     protected Button btnPrev;
     protected Button btnOk;
     protected Composite content;
+    protected EditPanelViewModel editViewModel;
     protected EditPanel editIocPanel;
     protected TempEditableIoc tempIoc;
 
@@ -70,6 +74,16 @@ public class IocDialog extends TitleAreaDialog implements MessageDisplayer {
         this.config = config;
         this.tempIoc = new TempEditableIoc(ioc);
         this.readOnly = !ioc.isEditable();
+        editViewModel = new EditPanelViewModel(tempIoc);
+
+        editViewModel.addPropertyChangeListener("error", new PropertyChangeListener() {
+
+            @Override
+            public void propertyChange(PropertyChangeEvent evt) {
+                ErrorMessage err = (ErrorMessage) evt.getNewValue();
+                setErrorMessage(evt.getSource().toString(), err.getMessage());
+            }
+        });
     }
 
     @Override
@@ -89,7 +103,7 @@ public class IocDialog extends TitleAreaDialog implements MessageDisplayer {
         content.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
         content.setLayout(new GridLayout(1, false));
 
-        editIocPanel = new EditPanel(content, SWT.NONE, this);
+        editIocPanel = new EditPanel(content, SWT.NONE, this, editViewModel);
         editIocPanel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
         editIocPanel.setIOC(tempIoc);
 

@@ -53,7 +53,7 @@ public abstract class ErrorAggregator extends ErrorMessageProvider {
             }
         }
 
-        clearError();
+        super.clearError();
     }
 
     /**
@@ -69,6 +69,15 @@ public abstract class ErrorAggregator extends ErrorMessageProvider {
             }
         }
         return errs;
+    }
+
+    @Override
+    public void clearError() {
+        for (ErrorMessageProvider e : childErrors.keySet()) {
+            e.clearError();
+        }
+        childErrors.clear();
+        super.clearError();
     }
 
     /**
