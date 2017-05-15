@@ -39,7 +39,7 @@ public class EditPanelViewModel extends ErrorAggregator {
      */
     public EditPanelViewModel(EditableIoc ioc) {
         macrosViewModel = new MacroPanelViewModel();
-        macrosViewModel.addPropertyChangeListener("error", errorListener);
+        registerChild(macrosViewModel);
         setIOC(ioc);
     }
 

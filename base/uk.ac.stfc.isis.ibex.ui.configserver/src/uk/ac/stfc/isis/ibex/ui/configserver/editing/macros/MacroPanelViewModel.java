@@ -34,7 +34,6 @@ import uk.ac.stfc.isis.ibex.configserver.editing.EditableIoc;
 import uk.ac.stfc.isis.ibex.configserver.editing.MacroValueValidator;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.iocs.IIocDependentPanel;
 import uk.ac.stfc.isis.ibex.validators.ErrorAggregator;
-import uk.ac.stfc.isis.ibex.validators.ErrorMessage;
 
 /**
  * This is the view model for the panel shows the macros that have been set for
@@ -135,9 +134,7 @@ public class MacroPanelViewModel extends ErrorAggregator implements IIocDependen
                 displayMacro.addPropertyChangeListener("value", updateValueListener(newMacro, setMacros));
             }
 
-            MacroValueValidator validator = new MacroValueValidator(displayMacro);
-            validator.addPropertyChangeListener("error", errorListener);
-            childErrors.put(validator, new ErrorMessage(false, null));
+            registerChild(new MacroValueValidator(displayMacro));
 
 			displayMacros.add(displayMacro);
 		}

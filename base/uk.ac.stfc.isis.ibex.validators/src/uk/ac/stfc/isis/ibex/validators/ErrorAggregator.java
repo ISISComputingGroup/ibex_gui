@@ -43,6 +43,17 @@ public abstract class ErrorAggregator extends ErrorMessageProvider {
     };
 
     /**
+     * Adds a child error to this aggregator.
+     * 
+     * @param child
+     *            The child error to add.
+     */
+    protected void registerChild(ErrorMessageProvider child) {
+        child.addPropertyChangeListener("error", errorListener);
+        childErrors.put(child, new ErrorMessage(false, null));
+    }
+
+    /**
      * Build a message made up of all the aggregate messages.
      */
     protected void updateErrors() {
