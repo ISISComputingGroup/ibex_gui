@@ -650,6 +650,17 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
     }
 
     /**
+     * Return a Block object associated to a given block name.
+     * 
+     * @param name
+     *            the name of the block in question
+     * @return the Block object
+     */
+    public Block getBlockByName(final String name) {
+        return getBlockByName(transformBlocks(), name);
+    }
+
+    /**
      * Add a block to the rename listener.
      * 
      * @param block

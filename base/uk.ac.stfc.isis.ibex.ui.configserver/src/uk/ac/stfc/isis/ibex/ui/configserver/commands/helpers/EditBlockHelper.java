@@ -27,6 +27,7 @@ import org.eclipse.jface.window.Window;
 import org.eclipse.swt.widgets.Shell;
 
 import uk.ac.stfc.isis.ibex.configserver.ConfigServer;
+import uk.ac.stfc.isis.ibex.configserver.configuration.Block;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableBlock;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
 import uk.ac.stfc.isis.ibex.model.Awaited;
@@ -102,35 +103,58 @@ public class EditBlockHelper {
     }
 
     /**
+     * Attempts to get a configuration or component to edit for the named block,
+     * starting with the current configuration.
+     * 
+     * @param blockName
+     *            The name of the block to look for
+     * @return The result of the request with details of the configuration and
+     *         any errors
+     */
+    private EditBlockRequestResult requestBlockEdit(String blockName) {
+        // Get the current configuration so we can assess who the block the
+        // belongs to
+        configurationViewModels.setModelAsCurrentConfig();
+        UpdatedValue<EditableConfiguration> config = configurationViewModels.getConfigModel();
+
+        EditBlockRequestResult result = new EditBlockRequestResult();
+
+        // Decide what to open
+        if (Awaited.returnedValue(config, 1)) {
+            Block block = config.getValue().getBlockByName(blockName);
+            if (block == null) {
+                result.setError("Cannot find block in current configuration or its components.");
+            } else if (block.hasComponent()) {
+                configurationViewModels.setModelAsComponent(block.getComponent());
+                UpdatedValue<EditableConfiguration> editableComponent = configurationViewModels.getConfigModel();
+                if (Awaited.returnedValue(editableComponent, 1)) {
+                    result.setConfig(editableComponent.getValue(), true);
+                } else {
+                    result.setError("Cannot edit component containing block.");
+                }
+            } else {
+                result.setConfig(config.getValue(), false);
+            }
+        } else {
+            result.setError("There is no current configuration, so it can not be edited.");
+        }
+        return result;
+    }
+
+    /**
      * Create a dialog box for editing the block.
      * 
      * @param blockName The name of the block to edit
      */
     public void createDialog(String blockName) {
-        configurationViewModels.setModelAsCurrentConfig();
-        UpdatedValue<EditableConfiguration> config = configurationViewModels.getConfigModel();
-        if (Awaited.returnedValue(config, 1)) {
-            // Try and find the block in the config
-            for (EditableBlock block : config.getValue().getEditableBlocks()) {
-                if (block.getName().equals(blockName)) {
-                    if (block.hasComponent()) {
-                        configurationViewModels.setModelAsComponent(block.getComponent());
-                        UpdatedValue<EditableConfiguration> editableComponent =
-                                configurationViewModels.getConfigModel();
-                        if (Awaited.returnedValue(config, 1)) {
-                            openDialog(editableComponent.getValue(), blockName, false);
-                        } else {
-                            MessageDialog.openError(shell, "Error", "Cannot edit component containing block.");
-                        }
-                    } else {
-                        openDialog(config.getValue(), blockName, true);
-                    }
-                    return;
-                }
-            }
-            MessageDialog.openError(shell, "Error", "Cannot find block in current configuration or its components.");
-        } else {
-            MessageDialog.openError(shell, "Error", "There is no current configuration, so it can not be edited.");
+        
+        EditBlockRequestResult result = requestBlockEdit(blockName);
+        
+        // Open the dialog or create an error as appropriate
+        if (result.hasError()) {
+            MessageDialog.openError(shell, "Error", result.getError());
+        } else if (result.hasConfig()) {
+            openDialog(result.getConfig(), blockName, !result.isComponent());
         }
     }
 }
