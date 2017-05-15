@@ -19,15 +19,12 @@
 
 package uk.ac.stfc.isis.ibex.configserver.tests.editing;
 
-import static org.junit.Assert.*;
-import static org.mockito.Matchers.any;
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
-import org.eclipse.core.runtime.IStatus;
-import org.eclipse.swt.widgets.Label;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
@@ -36,6 +33,7 @@ import org.mockito.MockitoAnnotations;
 
 import uk.ac.stfc.isis.ibex.configserver.configuration.Macro;
 import uk.ac.stfc.isis.ibex.configserver.editing.MacroValueValidator;
+import uk.ac.stfc.isis.ibex.validators.ErrorMessage;
 
 @SuppressWarnings("checkstyle:methodname")
 public class MacroValueValidatorTest {
@@ -44,14 +42,13 @@ public class MacroValueValidatorTest {
 	private static final String INVALID_VALUE = "123.123.123";
 	private static final String PATTERN = "^[0-9]+\\.[0-9]+$";
 	private static final String INVALID_PATTERN = "+++";
-	
-	Label messageDisplayer;
-	
-	PropertyChangeListener mockNameIsValidListener;
-	PropertyChangeListener showWarningIconListener;
+
+    PropertyChangeListener mockErrorListener;
 	
 	Macro macro;
 	Macro macroWithInvalidPattern;
+
+    String errorPrefix;
 
 	@Captor
 	private ArgumentCaptor<PropertyChangeEvent> changeCaptor;
@@ -60,241 +57,106 @@ public class MacroValueValidatorTest {
 	public void setUp() {
 		MockitoAnnotations.initMocks(this);
 		
-		messageDisplayer = mock(Label.class);
-		mockNameIsValidListener = mock(PropertyChangeListener.class);
-		showWarningIconListener = mock(PropertyChangeListener.class);
+        mockErrorListener = mock(PropertyChangeListener.class);
 		
 		macro = new Macro("name", "value", "description", PATTERN);
 		macroWithInvalidPattern = new Macro("name", "value", "description", INVALID_PATTERN);
+
+        errorPrefix = macro.getName() + ": ";
+    }
+
+    private void createValidator(Macro macro) {
+        MacroValueValidator validator = new MacroValueValidator(macro);
+
+        validator.addPropertyChangeListener("error", mockErrorListener);
 	}
 	
-	public MacroValueValidator getValidator(Macro macro) {
-		MacroValueValidator validator = new MacroValueValidator(macro, messageDisplayer);
-		
-		validator.addPropertyChangeListener(MacroValueValidator.NAME_IS_VALID, mockNameIsValidListener);
-		validator.addPropertyChangeListener(MacroValueValidator.SHOW_WARNING_ICON, showWarningIconListener);
-		
-		return validator;
-	}
-	
-	@Test
-	public void if_macro_is_null_then_not_OK() {
-		// Arrange
-		MacroValueValidator nullMacroValidator = getValidator(null);
-		
-		// Act
-		IStatus status =  nullMacroValidator.validate("");
-		
-		// Assert
-		assertFalse(status.isOK());
-	}
-	
-	@Test
-	public void if_macro_is_null_then_blank_warning_message() {
-		// Arrange
-		MacroValueValidator nullMacroValidator = getValidator(null);
-				
-		// Act
-		IStatus status =  nullMacroValidator.validate("");
-		
-		// Assert
-		assertEquals(MacroValueValidator.NO_MESSAGE, status.getMessage());
-	}
-	
-	@Test
-	public void if_macro_is_null_then_nameIsValid_property_change_to_false() {
-		// Arrange
-		MacroValueValidator nullMacroValidator = getValidator(null);
-		
-		// Act
-		nullMacroValidator.validate("");
-		
-		// Assert
-		verify(mockNameIsValidListener, times(1)).propertyChange(changeCaptor.capture());
-		assertEquals(false, changeCaptor.getValue().getNewValue());
-	}
-	
-	@Test
-	public void if_macro_is_null_then_showWarningIcon_property_left_as_false() {
-		// Arrange
-		MacroValueValidator nullMacroValidator = getValidator(null);
-		
-		// Act
-		nullMacroValidator.validate("");
-		
-		// Assert
-		verify(showWarningIconListener, times(0)).propertyChange(any(PropertyChangeEvent.class));
+    private ErrorMessage getErrorMessage() {
+        verify(mockErrorListener, times(1)).propertyChange(changeCaptor.capture());
+        return (ErrorMessage) changeCaptor.getValue().getNewValue();
 	}
 	
 	@Test
     public void if_validation_string_empty_then_OK() {
-		// Arrange
-		MacroValueValidator macroValidator = getValidator(macro);
-		
+	    // Arrange
+        createValidator(macro);
+	    
 		// Act
-		IStatus status =  macroValidator.validate("");
+        macro.setValue("");
 		
 		// Assert
-        assertTrue(status.isOK());
+        assertEquals(false, getErrorMessage().isError());
 	}
 	
 	@Test
-	public void if_validation_string_empty_then_showWarningIcon_property_left_as_false() {
-		// Arrange
-		MacroValueValidator macroValidator = getValidator(macro);
-		
+    public void if_validation_string_valid_then_OK() {
+        // Arrange
+        createValidator(macro);
+
 		// Act
-		macroValidator.validate("");
+        macro.setValue(VALID_VALUE);
 		
 		// Assert
-		verify(showWarningIconListener, times(0)).propertyChange(any(PropertyChangeEvent.class));
+        assertEquals(false, getErrorMessage().isError());
 	}
 	
 	@Test
-	public void if_validation_string_valid_then_OK() {
-		// Arrange
-		MacroValueValidator macroValidator = getValidator(macro);
-		
+    public void if_validation_string_valid_then_null_warning_message() {
+        // Arrange
+        createValidator(macro);
+
 		// Act
-		IStatus status =  macroValidator.validate(VALID_VALUE);
+        macro.setValue(VALID_VALUE);
 		
 		// Assert
-		assert (status.isOK());
-	}
-	
-	@Test
-	public void if_validation_string_valid_then_blank_warning_message() {
-		// Arrange
-		MacroValueValidator macroValidator = getValidator(macro);
-		
-		// Act
-		IStatus status =  macroValidator.validate(VALID_VALUE);
-		
-		// Assert
-		assertEquals("OK", status.getMessage());
-	}
-	
-	@Test
-	public void if_validation_string_valid_then_nameIsValid_property_stays_as_true() {
-		// Arrange
-		MacroValueValidator macroValidator = getValidator(macro);
-		
-		// Act
-		macroValidator.validate(VALID_VALUE);
-		
-		// Assert
-		verify(mockNameIsValidListener, times(0)).propertyChange(any(PropertyChangeEvent.class));
-	}
-	
-	@Test
-	public void if_validation_string_valid_then_showWarningIcon_property_stays_as_false() {
-		// Arrange
-		MacroValueValidator macroValidator = getValidator(macro);
-		
-		// Act
-		macroValidator.validate(VALID_VALUE);
-		
-		// Assert
-		verify(showWarningIconListener, times(0)).propertyChange(any(PropertyChangeEvent.class));
+        assertEquals(null, getErrorMessage().getMessage());
 	}
 	
 	@Test
 	public void if_validation_string_invalid_then_not_OK() {
-		// Arrange
-		MacroValueValidator macroValidator = getValidator(macro);
-		
-		// Act
-		IStatus status =  macroValidator.validate(INVALID_VALUE);
-		
-		// Assert
-		assertFalse(status.isOK());
+        // Arrange
+        createValidator(macro);
+
+        // Act
+        macro.setValue(INVALID_VALUE);
+
+        // Assert
+        assertEquals(true, getErrorMessage().isError());
 	}
 	
 	@Test
-	public void if_validation_string_invalid_then_blank_warning_message() {
-		// Arrange
-		MacroValueValidator macroValidator = getValidator(macro);
-		
-		// Act
-		IStatus status =  macroValidator.validate(INVALID_VALUE);
+    public void if_validation_string_invalid_then_pattern_mismatch_message() {
+        // Arrange
+        createValidator(macro);
+
+        // Act
+        macro.setValue(INVALID_VALUE);
 		
 		// Assert
-		assertEquals(MacroValueValidator.PATTERN_MISMATCH_MESSAGE, status.getMessage());
+        assertEquals(errorPrefix + MacroValueValidator.PATTERN_MISMATCH_MESSAGE, getErrorMessage().getMessage());
 	}
 	
 	@Test
-	public void if_validation_string_invalid_then_nameIsValid_property_change_to_false() {
-		// Arrange
-		MacroValueValidator macroValidator = getValidator(macro);
+    public void if_pattern_invalid_then_not_OK() {
+        // Arrange
+        createValidator(macroWithInvalidPattern);
 		
-		// Act
-		macroValidator.validate(INVALID_VALUE);
+        // Act
+        macroWithInvalidPattern.setValue(INVALID_VALUE);
 		
 		// Assert
-		verify(mockNameIsValidListener, times(1)).propertyChange(changeCaptor.capture());
-		assertEquals(false, changeCaptor.getValue().getNewValue());
+        assertEquals(true, getErrorMessage().isError());
 	}
 	
 	@Test
-	public void if_validation_string_invalid_then_showWarningIcon_property_change_to_true() {
+    public void if_pattern_invalid_then_pattern_invalid_message() {
 		// Arrange
-		MacroValueValidator macroValidator = getValidator(macro);
+        createValidator(macroWithInvalidPattern);
 		
 		// Act
-		macroValidator.validate(INVALID_VALUE);
+        macroWithInvalidPattern.setValue(INVALID_VALUE);
 		
 		// Assert
-		verify(showWarningIconListener, times(1)).propertyChange(changeCaptor.capture());
-		assertEquals(true, changeCaptor.getValue().getNewValue());
-	}
-	
-	@Test
-	public void if_pattern_invalid_invalid_then_not_OK() {
-		// Arrange
-		MacroValueValidator macroValidator = getValidator(macroWithInvalidPattern);
-		
-		// Act
-		IStatus status =  macroValidator.validate(INVALID_VALUE);
-		
-		// Assert
-		assertFalse(status.isOK());
-	}
-	
-	@Test
-	public void if_pattern_invalid_then_blank_warning_message() {
-		// Arrange
-		MacroValueValidator macroValidator = getValidator(macroWithInvalidPattern);
-		
-		// Act
-		IStatus status =  macroValidator.validate(INVALID_VALUE);
-		
-		// Assert
-		assertEquals(MacroValueValidator.PATTERN_INVALID, status.getMessage());
-	}
-	
-	@Test
-	public void if_pattern_invalid_then_nameIsValid_property_change_to_false() {
-		// Arrange
-		MacroValueValidator macroValidator = getValidator(macroWithInvalidPattern);
-		
-		// Act
-		macroValidator.validate(INVALID_VALUE);
-		
-		// Assert
-		verify(mockNameIsValidListener, times(1)).propertyChange(changeCaptor.capture());
-		assertEquals(false, changeCaptor.getValue().getNewValue());
-	}
-	
-	@Test
-	public void if_pattern_invalid_then_showWarningIcon_property_change_to_true() {
-		// Arrange
-		MacroValueValidator macroValidator = getValidator(macroWithInvalidPattern);
-		
-		// Act
-		macroValidator.validate(INVALID_VALUE);
-		
-		// Assert
-		verify(showWarningIconListener, times(1)).propertyChange(changeCaptor.capture());
-		assertEquals(true, changeCaptor.getValue().getNewValue());
+        assertEquals(errorPrefix + MacroValueValidator.PATTERN_INVALID, getErrorMessage().getMessage());
 	}
 }
