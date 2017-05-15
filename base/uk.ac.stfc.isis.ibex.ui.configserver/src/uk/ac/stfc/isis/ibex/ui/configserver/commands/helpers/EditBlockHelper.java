@@ -27,8 +27,6 @@ import org.eclipse.jface.window.Window;
 import org.eclipse.swt.widgets.Shell;
 
 import uk.ac.stfc.isis.ibex.configserver.ConfigServer;
-import uk.ac.stfc.isis.ibex.configserver.configuration.Block;
-import uk.ac.stfc.isis.ibex.configserver.configuration.Configuration;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableBlock;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
 import uk.ac.stfc.isis.ibex.model.Awaited;
@@ -113,16 +111,10 @@ public class EditBlockHelper {
         UpdatedValue<EditableConfiguration> config = configurationViewModels.getConfigModel();
         if (Awaited.returnedValue(config, 1)) {
             // Try and find the block in the config
-            for (EditableBlock block : config.getValue().getAvailableBlocks()) {
+            for (EditableBlock block : config.getValue().getEditableBlocks()) {
                 if (block.getName().equals(blockName)) {
-                    openDialog(config.getValue(), blockName, true);
-                    return;
-                }
-            }
-            for (Configuration component : config.getValue().getEditableComponents().getSelected()) {
-                for (Block block : component.getBlocks()) {
-                    if (block.getName().equals(blockName)) {
-                        configurationViewModels.setModelAsComponent(component.getName());
+                    if (block.hasComponent()) {
+                        configurationViewModels.setModelAsComponent(block.getComponent());
                         UpdatedValue<EditableConfiguration> editableComponent =
                                 configurationViewModels.getConfigModel();
                         if (Awaited.returnedValue(config, 1)) {
@@ -130,8 +122,10 @@ public class EditBlockHelper {
                         } else {
                             MessageDialog.openError(shell, "Error", "Cannot edit component containing block.");
                         }
-                        return;
+                    } else {
+                        openDialog(config.getValue(), blockName, true);
                     }
+                    return;
                 }
             }
             MessageDialog.openError(shell, "Error", "Cannot find block in current configuration or its components.");
