@@ -20,13 +20,40 @@ package uk.ac.stfc.isis.ibex.validators;
 
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 
+/**
+ * A class that fires an ErrorMessage.
+ */
 public abstract class ErrorMessageProvider extends ModelObject {
     protected ErrorMessage error = new ErrorMessage();
     
+    /**
+     * Clear the error messages in this provider.
+     */
+    public void clearError() {
+        setError(false, null);
+    }
+
+    /**
+     * Set the error and fire the property change under the property name
+     * "error".
+     * 
+     * @param inError
+     *            true if there has been an error.
+     * @param message
+     *            The error message (use null if no error)
+     */
     protected void setError(boolean inError, String message) {
+        if (!inError) {
+            message = null;
+        }
     	firePropertyChange("error", this.error, this.error = new ErrorMessage(inError, message));
     }
     
+    /**
+     * Get the last error message.
+     * 
+     * @return The last error message.
+     */
     public ErrorMessage getError() {
     	return error;
     }

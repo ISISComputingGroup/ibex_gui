@@ -62,7 +62,7 @@ public class CustomIntrumentViewModel extends ErrorMessageProvider {
         if (!prefixValidator.validatePvAddress(pvPrefix)) {
             setError(true, prefixValidator.getErrorMessage());
         } else {
-            setError(false, null);
+            clearError();
         }
     }
 }

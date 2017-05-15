@@ -190,7 +190,7 @@ public class BlockLogSettingsViewModel extends ErrorMessageProvider {
                 if (rate <= 0 && enabled) {
                     setError(true, SCAN_VALUE_ERROR);
                 } else {
-                    setError(false, null);
+                    clearError();
                 }
     		} catch (NumberFormatException e) {
     	    	if (text.isEmpty()) {
@@ -205,7 +205,7 @@ public class BlockLogSettingsViewModel extends ErrorMessageProvider {
                 if (deadband < 0) {
                     setError(true, DEADBAND_NEGATIVE);
                 } else {
-		            setError(false, null);
+                    clearError();
 		        }
 			} catch (NumberFormatException e) {
     	    	if (text.isEmpty()) {

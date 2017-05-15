@@ -109,7 +109,7 @@ public class SaveSynopticViewModel extends ErrorMessageProvider {
     }
 
     private void checkInput(String name) {
-        setError(false, null);
+        clearError();
 
         setSavingAllowed(!(checkNameForError(name)));
 

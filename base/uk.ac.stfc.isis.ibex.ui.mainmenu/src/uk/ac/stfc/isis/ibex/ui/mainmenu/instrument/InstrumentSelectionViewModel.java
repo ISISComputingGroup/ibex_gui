@@ -93,7 +93,7 @@ public class InstrumentSelectionViewModel extends ErrorMessageProvider {
         if (!nameValidator.validateInstrumentName(instrumentName)) {
             setError(true, nameValidator.getErrorMessage());
         } else {
-            setError(false, null);
+            clearError();
         }
     }
 

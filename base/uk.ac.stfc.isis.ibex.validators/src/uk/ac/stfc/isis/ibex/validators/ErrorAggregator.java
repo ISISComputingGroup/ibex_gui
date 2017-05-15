@@ -53,7 +53,7 @@ public abstract class ErrorAggregator extends ErrorMessageProvider {
             }
         }
 
-        setError(false, null);
+        clearError();
     }
 
     /**

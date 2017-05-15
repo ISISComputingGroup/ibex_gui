@@ -53,7 +53,7 @@ public class ComponentListValidator extends ErrorMessageProvider {
         if (!duplicate.isEmpty()) {
             setError(true, String.format(UNIQUE_COMPONENT_NAME, duplicate));
         } else {
-            setError(false, null);
+            clearError();
         }
     }
 

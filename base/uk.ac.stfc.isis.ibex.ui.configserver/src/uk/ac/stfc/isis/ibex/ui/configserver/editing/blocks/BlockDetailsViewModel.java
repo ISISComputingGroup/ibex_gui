@@ -141,7 +141,7 @@ public class BlockDetailsViewModel extends ErrorMessageProvider {
     	} else if (!(addressValid.validatePvAddress(pvAddress))) {
     		setError(true, addressValid.getErrorMessage());
     	} else {
-    		setError(false, null);
+            clearError();
     	}
     }
 

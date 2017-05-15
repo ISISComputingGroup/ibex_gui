@@ -71,11 +71,11 @@ public class MacroValueValidator extends ErrorMessageProvider {
         String prefix = macro.getName() + ": ";
 		try {
             if (value.equals("")) {
-                setError(false, null);
+                clearError();
             } else if (!matchesPattern(value)) {
                 setError(true, prefix + PATTERN_MISMATCH_MESSAGE);
 			} else {
-                setError(false, null);
+                clearError();
 			}
 		} catch (PatternSyntaxException e) {
             setError(true, prefix + PATTERN_INVALID);
