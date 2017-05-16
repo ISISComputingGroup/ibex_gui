@@ -54,9 +54,13 @@ public final class WritingSetCommand<T> extends SetCommand<T> implements Closabl
 		return new WritingSetCommand<T>(destination);
 	}
 	
+    /**
+     * {@inheritDoc}
+     * @param value
+     */
 	@Override
-	public void send(T value) {
-		destinationWriter.uncheckedWrite(value);
+	public void send(T value) throws IOException {
+		destinationWriter.write(value);
 	}
 	
 	/**

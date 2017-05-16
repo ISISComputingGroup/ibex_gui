@@ -42,12 +42,7 @@ public abstract class ForwardingWriter<TIn, TOut> implements ConfigurableWriter<
 	
 	@Override
 	public void uncheckedWrite(TIn value) {
-	    try {
-	        writer.write(value);
-	    } catch (IOException e) {
-	        e.printStackTrace();
-	        throw new RuntimeException(e);
-	    }
+	    writer.uncheckedWrite(value);
 	}
 
 	@Override

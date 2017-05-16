@@ -53,6 +53,11 @@ public interface Writable<T> extends Closable {
 	/**
 	 * Write the value to destination.
 	 * 
+	 * Does not throw an exception on failed write. 
+	 * 
+	 * This method should not be used unless you are 
+	 * certain that the write cannot possibly fail.
+	 * 
 	 * @param value
 	 *             the value to write
 	 */
