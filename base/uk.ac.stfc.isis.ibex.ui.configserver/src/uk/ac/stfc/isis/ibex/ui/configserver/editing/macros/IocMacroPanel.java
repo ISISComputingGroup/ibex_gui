@@ -61,14 +61,19 @@ public class IocMacroPanel extends Composite {
         GridData gdAvailableMacrosTable = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
         gdAvailableMacrosTable.widthHint = 428;
         displayMacrosTable.setLayoutData(gdAvailableMacrosTable);
+        updateTable(viewModel);
 
         viewModel.addPropertyChangeListener("macros", new PropertyChangeListener() {
 
             @Override
             public void propertyChange(PropertyChangeEvent evt) {
-                displayMacrosTable.setRows(viewModel.getMacros());
-                displayMacrosTable.deselectAll();
+                updateTable(viewModel);
             }
         });
 	}
+
+    private void updateTable(MacroPanelViewModel viewModel) {
+        displayMacrosTable.setRows(viewModel.getMacros());
+        displayMacrosTable.deselectAll();
+    }
 }

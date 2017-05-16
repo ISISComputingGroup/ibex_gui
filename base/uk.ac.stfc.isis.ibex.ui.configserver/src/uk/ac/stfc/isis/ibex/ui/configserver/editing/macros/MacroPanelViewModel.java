@@ -41,8 +41,8 @@ import uk.ac.stfc.isis.ibex.validators.ErrorAggregator;
  *
  */
 public class MacroPanelViewModel extends ErrorAggregator implements IIocDependentPanel {
-	private Collection<Macro> displayMacros;
-	
+    private Collection<Macro> displayMacros = new ArrayList<>();
+
     /**
      * @return The macros to display.
      */
@@ -68,13 +68,6 @@ public class MacroPanelViewModel extends ErrorAggregator implements IIocDependen
 	@Override
     public void setIOC(final EditableIoc editableIoc) {
         editableIoc.addPropertyChangeListener("macros", new PropertyChangeListener() {
-            @Override
-            public void propertyChange(PropertyChangeEvent evt) {
-                setMacros(editableIoc.getMacros(), editableIoc.getAvailableMacros());
-            }
-        });
-
-        editableIoc.addPropertyChangeListener("ioc", new PropertyChangeListener() {
             @Override
             public void propertyChange(PropertyChangeEvent evt) {
                 setMacros(editableIoc.getMacros(), editableIoc.getAvailableMacros());
