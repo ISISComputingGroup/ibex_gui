@@ -273,10 +273,7 @@ $(pv_value)</tooltip>
 pv = widget.getPV(); 
 value0 = PVUtil.getDouble(pv)
 
-if(value0 == 0):
-    pv.setValue(1)
-else:
-    pv.setValue(0)
+pv.setValue(1)
 ]]></scriptText>
           <embedded>true</embedded>
           <description></description>
