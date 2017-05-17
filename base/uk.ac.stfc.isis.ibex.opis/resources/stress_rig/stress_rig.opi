@@ -342,7 +342,7 @@ $(pv_value)</tooltip>
       <text></text>
       <scripts>
         <path pathString="EmbeddedPy" checkConnect="true" sfe="false" seoe="false">
-          <scriptName>ConvertToStringAndSetColour</scriptName>
+          <scriptName>setColour</scriptName>
           <scriptText><![CDATA[from org.csstudio.opibuilder.scriptUtil import PVUtil 
 from org.csstudio.opibuilder.scriptUtil import ConsoleUtil 
 from org.csstudio.opibuilder.scriptUtil import ColorFontUtil
@@ -357,7 +357,7 @@ if status.startswith("System OK"):
     widget.setPropertyValue("background_color",ColorFontUtil.getColorFromRGB(255,255,255));
 else:
     widget.setPropertyValue("background_color",ColorFontUtil.getColorFromRGB(255,127,127));]]></scriptText>
-          <pv trig="true">$(PV_ROOT)STATUS:DISP</pv>
+          <pv trig="true">$(PV_ROOT)STAT:DISP</pv>
         </path>
       </scripts>
       <show_units>true</show_units>
