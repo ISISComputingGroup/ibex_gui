@@ -73,7 +73,6 @@ public abstract class BaseWritable<T> implements Writable<T> {
 	    try {
 	        write(value);
 	    } catch (IOException e) {
-	        e.printStackTrace();
 	        throw new RuntimeException(e);
 	    }
 	}
