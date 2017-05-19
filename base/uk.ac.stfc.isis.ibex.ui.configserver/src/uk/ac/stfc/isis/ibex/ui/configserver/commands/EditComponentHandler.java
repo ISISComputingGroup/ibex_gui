@@ -84,7 +84,7 @@ public class EditComponentHandler extends DisablingConfigHandler<Configuration> 
         if (editDialog.open() == Window.OK) {
             Map<String, Set<String>> conflicts = conflictsWithCurrent(config);
             if (conflicts.isEmpty()) {
-                configService.write(editDialog.getComponent());
+                configService.uncheckedWrite(editDialog.getComponent());
             } else {
                 new MessageDialog(shell(), "Conflicts with current configuration", null, buildWarning(conflicts),
                         MessageDialog.WARNING, new String[] {"Ok"}, 0).open();

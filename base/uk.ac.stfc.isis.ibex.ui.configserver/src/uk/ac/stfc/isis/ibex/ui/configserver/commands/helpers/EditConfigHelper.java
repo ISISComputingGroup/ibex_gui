@@ -59,12 +59,12 @@ public class EditConfigHelper extends ConfigHelper {
                 new EditConfigDialog(shell, title, currentSubTitle, config, false, configurationViewModels);
         if (dialog.open() == Window.OK) {
             if (dialog.doAsComponent()) {
-                server.saveAsComponent().write(dialog.getComponent());
+                server.saveAsComponent().uncheckedWrite(dialog.getComponent());
             } else {
                 if (isCurrent) {
-                    server.setCurrentConfig().write(dialog.getConfig());
+                    server.setCurrentConfig().uncheckedWrite(dialog.getConfig());
                 } else {
-                    server.saveAs().write(dialog.getConfig());
+                    server.saveAs().uncheckedWrite(dialog.getConfig());
                 }
             }
         }

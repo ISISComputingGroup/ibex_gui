@@ -71,7 +71,7 @@ public class IocButtonPanel extends Composite {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				if (ioc != null) {
-					control.startIoc().send(Arrays.asList(ioc.getName()));
+                    control.startIoc().uncheckedSend(Arrays.asList(ioc.getName()));
 				}
 			}
 		});
@@ -83,7 +83,7 @@ public class IocButtonPanel extends Composite {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				if (ioc != null) {
-					control.stopIoc().send(Arrays.asList(ioc.getName()));
+				    control.stopIoc().uncheckedSend(Arrays.asList(ioc.getName()));
 				}
 			}
 		});
@@ -95,7 +95,7 @@ public class IocButtonPanel extends Composite {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				if (ioc != null) {
-					control.restartIoc().send(Arrays.asList(ioc.getName()));
+				    control.restartIoc().uncheckedSend(Arrays.asList(ioc.getName()));
 				}
 			}
 		});

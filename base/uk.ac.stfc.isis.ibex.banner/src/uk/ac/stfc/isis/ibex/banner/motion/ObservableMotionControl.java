@@ -34,6 +34,6 @@ public class ObservableMotionControl extends ModelAdapter {
 	}
 
 	public void stop() {
-		stop.write(STOP_VALUE);
+	    stop.uncheckedWrite(STOP_VALUE);
 	}
 }

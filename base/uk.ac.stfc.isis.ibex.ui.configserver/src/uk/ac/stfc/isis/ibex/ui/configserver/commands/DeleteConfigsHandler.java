@@ -44,7 +44,7 @@ public class DeleteConfigsHandler extends DisablingConfigHandler<Collection<Stri
         MultipleConfigsSelectionDialog dialog = new MultipleConfigsSelectionDialog(shell(), "Delete Configurations",
                 SERVER.configsInfo().getValue(), false, false);
 		if (dialog.open() == Window.OK) {
-			configService.write((dialog.selectedConfigs()));
+		    configService.uncheckedWrite((dialog.selectedConfigs()));
 		}
 		
 		return null;

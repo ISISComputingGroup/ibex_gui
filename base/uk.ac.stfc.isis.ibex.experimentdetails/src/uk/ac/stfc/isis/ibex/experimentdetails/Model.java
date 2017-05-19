@@ -19,6 +19,7 @@
 
 package uk.ac.stfc.isis.ibex.experimentdetails;
 
+import java.io.IOException;
 import java.util.Collection;
 import java.util.List;
 
@@ -62,6 +63,7 @@ public abstract class Model extends ModelObject {
 
 	/**
 	 * Send user details on to the DAE.
+	 * @throws IOException 
 	 */
 	public abstract void sendUserDetails();
 	

@@ -19,6 +19,7 @@
 
 package uk.ac.stfc.isis.ibex.ui.synoptic.editor.commands;
 
+import java.io.IOException;
 import java.util.Collection;
 
 import org.eclipse.core.commands.AbstractHandler;
@@ -67,7 +68,11 @@ public class DeleteSynopticHandler extends AbstractHandler {
         MultipleSynopticsSelectionDialog dialog =
                 new MultipleSynopticsSelectionDialog(SHELL, TITLE, SYNOPTIC.availableEditableSynoptics());
 		if (dialog.open() == Window.OK) {
-			synopticService.write(dialog.selectedSynoptics());
+			try {
+                synopticService.write(dialog.selectedSynoptics());
+            } catch (IOException e) {
+                throw new ExecutionException("Failed to write to PV", e);
+            }
 		}
 		return null;
 	}
