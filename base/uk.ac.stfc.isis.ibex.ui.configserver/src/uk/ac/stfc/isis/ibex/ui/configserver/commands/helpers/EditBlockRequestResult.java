@@ -39,12 +39,26 @@ public class EditBlockRequestResult {
      */
     private boolean isComponent = false;
     
+    /**
+     * Sets the config associated with a result. Removes existing error
+     * 
+     * @param config
+     *            Sets the config associated with the request
+     * @param isComponent
+     *            Is the new config a component
+     */
     public void setConfig(EditableConfiguration config, boolean isComponent) {
         this.error = null;
         this.config = config;
         this.isComponent = isComponent;
     }
 
+    /**
+     * Sets the error associated with a result. Removes existing config
+     * 
+     * @param error
+     *            The new error
+     */
     public void setError(String error) {
         this.config = null;
         this.error = error;
