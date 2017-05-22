@@ -273,11 +273,7 @@ public class DetectorDiagnosticsModel {
         diagnosticsEnabledObservable.addObserver(new SpectrumObserver<Boolean>() {
             @Override
             public void onNonNullValue(Boolean value) {
-                if (value != null) {
-                    viewModel.setDiagnosticsEnabled(value);
-                } else {
-                    viewModel.setDiagnosticsEnabled(false);
-                }
+                viewModel.setDiagnosticsEnabled(value);
             }  
             
             @Override
