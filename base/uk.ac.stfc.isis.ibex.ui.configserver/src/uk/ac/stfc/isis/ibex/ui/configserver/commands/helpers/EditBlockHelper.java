@@ -63,8 +63,28 @@ public class EditBlockHelper {
     }
 
     /**
-     * @param config the configuration to edit
-     * @param blockname the block name
+     * Opens the dialog.
+     * 
+     * @param subTitle
+     *            unused
+     * @param config
+     *            the configuration to edit
+     * @param blockname
+     *            the block name
+     * @param isCurrent
+     *            whether it is the current configuration
+     */
+    public void openDialog(String subTitle, EditableConfiguration config, String blockname, boolean isCurrent) {
+        // We only edit stand alone blocks as part of the current config
+        assert (isCurrent);
+        openDialog(config, blockname);
+    }
+
+    /**
+     * @param config
+     *            the configuration to edit
+     * @param blockname
+     *            the block name
      */
     private void openDialog(EditableConfiguration config, String blockname) {
         EditableBlock thisEditableBlock = null;
