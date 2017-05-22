@@ -31,6 +31,10 @@ public class EditBlockRequestResultHelperTest {
     public void GIVEN_new_result_WHEN_error_is_changed_THEN_result_still_has_no_config() {
        // Arrange
         EditBlockRequestResult result = new EditBlockRequestResult();
+        assertFalse(result.hasConfig());
+
+        // Act
+        result.setError("This is an error");
 
        // Assert
         assertFalse(result.hasConfig());
