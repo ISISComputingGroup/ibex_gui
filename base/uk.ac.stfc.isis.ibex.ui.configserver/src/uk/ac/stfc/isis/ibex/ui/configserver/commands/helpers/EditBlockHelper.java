@@ -155,7 +155,7 @@ public class EditBlockHelper {
         if (result.hasError()) {
             MessageDialog.openError(shell, "Error", result.getError());
         } else if (result.hasConfig()) {
-            // If the reesult has a component it is not the current config and
+            // If the result has a component it is not the current config and
             // vice versa.
             openDialog(result.getConfig(), blockName, !result.isComponent(), result.isComponent());
         }
