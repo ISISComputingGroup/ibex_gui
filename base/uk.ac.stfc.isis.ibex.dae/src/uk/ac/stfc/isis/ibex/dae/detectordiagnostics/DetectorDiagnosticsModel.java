@@ -25,6 +25,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.logging.log4j.Logger;
+
 import uk.ac.stfc.isis.ibex.epics.observing.ClosableObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.Observable;
@@ -42,11 +44,14 @@ import uk.ac.stfc.isis.ibex.instrument.channels.DoubleChannel;
 import uk.ac.stfc.isis.ibex.instrument.channels.EnumChannel;
 import uk.ac.stfc.isis.ibex.instrument.channels.IntArrayChannel;
 import uk.ac.stfc.isis.ibex.instrument.channels.IntegerChannel;
+import uk.ac.stfc.isis.ibex.logger.IsisLog;
 
 /**
  * The Class DetectorDiagnosticsModel.
  */
 public class DetectorDiagnosticsModel {
+    
+    private static final Logger LOG = IsisLog.getLogger(DetectorDiagnosticsModel.class);
     
     private final DetectorDiagnosticsViewModel viewModel;
 
@@ -123,40 +128,44 @@ public class DetectorDiagnosticsModel {
     }
     
     private void setDiagnosticsEnabled(final boolean enabled) {
-        
-        // Can't actually write to PV yet - write a "checked write" function that will throw an exception if it can't connect.
-        
+
         try {
-            if (enabled) {
-                diagnosticsEnabled.write(1);
-            } else {
-                diagnosticsEnabled.write(0);
-            }
-            // Replace below exception with IOException once #2298 is merged
-            // The below is a hack so that the compiler doesn't complain about exceptions that are never thrown...
-            if (new Boolean(false)) {
-                throw new IOException();
-            }
+            diagnosticsEnabled.write(booleanToInt(enabled));
         } catch (IOException e) {
             diagnosticsEnabled.subscribe(new SameTypeWriter<Integer>() {
 
                 @Override
                 public void write(Integer value) {
-                    diagnosticsEnabled.write(value);
+                    // This is only ever called once the PV is writable so can use uncheckedWrite
+                    diagnosticsEnabled.uncheckedWrite(value);
                 }
 
                 @Override
                 public void onError(Exception e) {
+                    handleWriteException(e);
                 }
  
                 @Override
                 public void onCanWriteChanged(boolean canWrite) {
                     if (canWrite) {
-                        write(1);
-                    }
+                        write(booleanToInt(enabled));
+                    }  
                 }
                     
             });
+        }
+    }
+    
+    /**
+     * Helper function that converts a boolean into 1 or 0.
+     * @param bool the boolean to convert
+     * @return 1 if bool evaluates to true, 0 otherwise
+     */
+    private Integer booleanToInt(Boolean bool) {
+        if (bool) {
+            return 1;
+        } else {
+            return 0;
         }
     }
     
@@ -166,7 +175,11 @@ public class DetectorDiagnosticsModel {
      * @param value the new spectra to display
      */
     public void setSpectraToDisplay(Integer value) {
-        spectraToDisplay.write(value);
+        try {
+            spectraToDisplay.write(value);
+        } catch (IOException e) {
+            handleWriteException(e);
+        }
     }
     
     /**
@@ -175,7 +188,11 @@ public class DetectorDiagnosticsModel {
      * @param value the new period
      */
     public void setPeriod(Integer value) {
-        period.write(value);
+        try {
+            period.write(value);
+        } catch (IOException e) {
+            handleWriteException(e);
+        }
     }
     
     /**
@@ -184,7 +201,11 @@ public class DetectorDiagnosticsModel {
      * @param value the new starting spectrum number
      */
     public void setStartingSpectrumNumber(Integer value) {
-        startingSpectrumNumber.write(value);
+        try {
+            startingSpectrumNumber.write(value);
+        } catch (IOException e) {
+            handleWriteException(e);
+        }
     }
     
     /**
@@ -193,7 +214,11 @@ public class DetectorDiagnosticsModel {
      * @param value the new number of spectra
      */
     public void setNumberOfSpectra(Integer value) {
-        numberOfSpectra.write(value);
+        try {
+            numberOfSpectra.write(value);
+        } catch (IOException e) {
+            handleWriteException(e);
+        }
     }
     
     /**
@@ -202,7 +227,11 @@ public class DetectorDiagnosticsModel {
      * @param value the new integral time range from
      */
     public void setIntegralTimeRangeFrom(Double value) {
-        integralTimeRangeFrom.write(value);
+        try {
+            integralTimeRangeFrom.write(value);
+        } catch (IOException e) {
+            handleWriteException(e);
+        }
     }
     
     /**
@@ -211,7 +240,11 @@ public class DetectorDiagnosticsModel {
      * @param value the new integral time range to
      */
     public void setIntegralTimeRangeTo(Double value) {
-        integralTimeRangeTo.write(value);
+        try {
+            integralTimeRangeTo.write(value);
+        } catch (IOException e) {
+            handleWriteException(e);
+        }
     }
     
     /**
@@ -220,7 +253,11 @@ public class DetectorDiagnosticsModel {
      * @param value the new max frames
      */
     public void setMaxFrames(Integer value) {
-        maxFrames.write(value);
+        try {
+            maxFrames.write(value);
+        } catch (IOException e) {
+            handleWriteException(e);
+        }
     }
     
     /**
@@ -380,6 +417,20 @@ public class DetectorDiagnosticsModel {
             valuesList.add(value);
         }
         return valuesList;
+    }
+    
+    /**
+     * Logs an exception when a write to a PV failed.
+     * 
+     * This should not be able to happen as the controls get greyed out when the PVs are unavailable.
+     * 
+     * @param error - the exception generated by the failed write
+     */
+    private void handleWriteException(Throwable error) {
+        if (error == null) {
+            return;
+        }
+        LOG.error(error.getMessage(), error);
     }
 
 }
