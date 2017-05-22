@@ -390,8 +390,6 @@ public class DetectorDiagnosticsModel {
      * Stop observing.
      */
     public void stopObserving() {
-        setDiagnosticsEnabled(false);
-        
         spectrumNumbers.close();
         countRate.close();
         integral.close();
