@@ -136,7 +136,7 @@ public class RunSummary extends Composite {
             @Override
             public void widgetSelected(SelectionEvent e) {
                 super.widgetSelected(e);
-                model.displayTitle().setValue(btnDisplayTitle.getSelection());
+                model.displayTitle().uncheckedSetValue(btnDisplayTitle.getSelection());
             }
         });
 

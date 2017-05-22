@@ -26,6 +26,8 @@ import static org.junit.Assert.*;
 import static org.mockito.Matchers.*;
 import static org.mockito.Mockito.*;
 
+import java.io.IOException;
+
 import org.apache.logging.log4j.Logger;
 import org.junit.Before;
 import org.junit.Test;
@@ -55,7 +57,7 @@ public class LoggingForwardingWriterTest {
     }
 
     @Test
-    public void write_logs_input_value() {
+    public void write_logs_input_value() throws IOException {
         // Act
         writer.write(VALUE);
         
@@ -65,7 +67,7 @@ public class LoggingForwardingWriterTest {
     }
 
     @Test
-    public void write_forwards_value_to_input_writer() {
+    public void write_forwards_value_to_input_writer() throws IOException {
         // Act
         writer.write(VALUE);
 

@@ -168,7 +168,7 @@ public class PVSelectorPanel extends Composite {
 	public void setConfig(EditableConfiguration config, PV pv) {
 		setPVs(config.pvs());
 		
-		filterFactory = new PVFilterFactory(config.getSelectedIocs());
+		filterFactory = new PVFilterFactory(config.getAddedIocs());
 		
 		//respond to changes in combo box
 		pvSource.addSelectionChangedListener(new ISelectionChangedListener() {

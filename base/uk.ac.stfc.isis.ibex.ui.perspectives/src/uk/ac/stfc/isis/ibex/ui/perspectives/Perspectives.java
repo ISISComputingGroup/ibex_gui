@@ -21,9 +21,7 @@ package uk.ac.stfc.isis.ibex.ui.perspectives;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
@@ -39,7 +37,6 @@ import uk.ac.stfc.isis.ibex.preferences.Preferences;
 public class Perspectives {
 
 	private final List<IsisPerspective> perspectives = new ArrayList<>();
-	private final Map<String, String> ids = new HashMap<>();
 	private IPreferenceStore store = Preferences.getDefault().getPreferenceStore();
 	
 	/**
@@ -53,7 +50,6 @@ public class Perspectives {
 				final Object obj = element.createExecutableExtension("class");
 				IsisPerspective perspective = (IsisPerspective) obj;
 				perspectives.add(perspective);
-				ids.put(perspective.name(), perspective.id());
 
 				store.setDefault(perspective.id(), perspective.isVisibleDefault());
 				
@@ -86,16 +82,5 @@ public class Perspectives {
 		}
 		
 		return newList;
-	}
-	
-	/**
-	 * Get the perspective id based on its name.
-	 * 
-	 * @param perspectiveName The name of an ISIS perspective
-	 * @return Its ID
-	 */
-	public String getID(String perspectiveName) {
-		return ids.get(perspectiveName);
-	}
-	
+    }
 }

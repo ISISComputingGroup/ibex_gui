@@ -23,6 +23,8 @@ import static org.junit.Assert.*;
 import static org.mockito.Matchers.*;
 import static org.mockito.Mockito.*;
 
+import java.io.IOException;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -54,7 +56,7 @@ public class ForwardingWritableTest {
     }
 
     @Test
-    public void a_null_value_is_not_written() {
+    public void a_null_value_is_not_written() throws IOException {
         // Arrange
         ForwardingWritable<String, String> forwardingWritable = createWritable();
 
@@ -96,7 +98,7 @@ public class ForwardingWritableTest {
     }
 
     @Test
-    public void closing_the_writable_stops_updating_the_destination_writable_on_further_writes() {
+    public void closing_the_writable_stops_updating_the_destination_writable_on_further_writes() throws IOException {
         // Act
         ForwardingWritable<String, String> forwardingWritable = createWritable();
         forwardingWritable.close();
@@ -202,7 +204,7 @@ public class ForwardingWritableTest {
     }
 
     @Test
-    public void setting_a_new_destination_writable_stops_writing_to_old_destination() {
+    public void setting_a_new_destination_writable_stops_writing_to_old_destination() throws IOException {
         // Arrange
         Writable<String> mockNewDestination = mock(Writable.class);
         ForwardingWritable<String, String> forwardingWritable = createWritable();
@@ -216,7 +218,7 @@ public class ForwardingWritableTest {
     }
 
     @Test
-    public void setting_a_new_destination_writable_allows_to_write_to_new_destination() throws ConversionException {
+    public void setting_a_new_destination_writable_allows_to_write_to_new_destination() throws ConversionException, IOException {
         // Arrange
         Writable<String> mockNewDestination = mock(Writable.class);
         when(mockConverter.convert(VALUE)).thenReturn(CONVERTED_VALUE);
@@ -243,7 +245,7 @@ public class ForwardingWritableTest {
     }
 
     @Test
-    public void write_writes_the_converted_value() throws ConversionException {
+    public void write_writes_the_converted_value() throws ConversionException, IOException {
         // Arrange
         when(mockConverter.convert(VALUE)).thenReturn(CONVERTED_VALUE);
         ForwardingWritable<String, String> forwardingWritable = createWritable();
@@ -258,7 +260,7 @@ public class ForwardingWritableTest {
     }
 
     @Test
-    public void value_conversion_error_is_stored_in_last_error() throws ConversionException {
+    public void value_conversion_error_is_stored_in_last_error() throws ConversionException, IOException {
         // Arrange
         ConversionException exception = new ConversionException("conversion error");
         when(mockConverter.convert(VALUE)).thenThrow(exception);
@@ -275,7 +277,7 @@ public class ForwardingWritableTest {
 
     @Test
     public void when_converter_throws_conversion_error_then_writable_does_not_write_to_destination()
-            throws ConversionException {
+            throws ConversionException, IOException {
         // Arrange
         ConversionException exception = new ConversionException("conversion error");
         when(mockConverter.convert(VALUE)).thenThrow(exception);

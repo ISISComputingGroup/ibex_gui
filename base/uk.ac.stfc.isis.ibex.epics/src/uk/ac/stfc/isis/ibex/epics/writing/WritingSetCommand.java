@@ -19,6 +19,8 @@
 
 package uk.ac.stfc.isis.ibex.epics.writing;
 
+import java.io.IOException;
+
 import uk.ac.stfc.isis.ibex.epics.observing.Subscription;
 import uk.ac.stfc.isis.ibex.epics.pv.Closable;
 import uk.ac.stfc.isis.ibex.model.SetCommand;
@@ -35,7 +37,7 @@ public final class WritingSetCommand<T> extends SetCommand<T> implements Closabl
 		}
 
 		@Override
-		public void write(T value) {
+		public void write(T value) throws IOException {
 			writeToWritables(value);
 		}
 		
@@ -52,9 +54,21 @@ public final class WritingSetCommand<T> extends SetCommand<T> implements Closabl
 		return new WritingSetCommand<T>(destination);
 	}
 	
+    /**
+     * {@inheritDoc}
+     * @param value
+     */
 	@Override
-	public void send(T value) {
+	public void send(T value) throws IOException {
 		destinationWriter.write(value);
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void uncheckedSend(T value) {
+	    destinationWriter.uncheckedWrite(value);
 	}
 	
 	@Override

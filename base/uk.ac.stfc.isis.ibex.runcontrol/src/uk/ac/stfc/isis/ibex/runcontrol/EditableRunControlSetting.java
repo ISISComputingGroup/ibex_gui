@@ -33,20 +33,22 @@ public class EditableRunControlSetting extends RunControlSetting {
 		this.runControlServer = runControlServer;
 	}
 
-	public void setLowLimit(String limit) {
-		runControlServer.blockRunControlLowLimitSetter(blockName).write(limit);
+	@Override
+    public void setLowLimit(String limit) {
+	    runControlServer.blockRunControlLowLimitSetter(blockName).uncheckedWrite(limit);
 	}
 	
-	public void setHighLimit(String limit) {
-		runControlServer.blockRunControlHighLimitSetter(blockName).write(limit);
+	@Override
+    public void setHighLimit(String limit) {
+	    runControlServer.blockRunControlHighLimitSetter(blockName).uncheckedWrite(limit);
 	}
 	
-	public void setEnabled(boolean enabled) {
-		
+	@Override
+    public void setEnabled(boolean enabled) {
 		if (enabled) {
-			runControlServer.blockRunControlEnabledSetter(blockName).write("YES");
+			runControlServer.blockRunControlEnabledSetter(blockName).uncheckedWrite("YES");
 		} else {
-			runControlServer.blockRunControlEnabledSetter(blockName).write("NO");
+			runControlServer.blockRunControlEnabledSetter(blockName).uncheckedWrite("NO");
 		}
 	}
 

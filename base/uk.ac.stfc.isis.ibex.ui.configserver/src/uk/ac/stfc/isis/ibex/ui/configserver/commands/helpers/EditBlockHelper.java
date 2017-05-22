@@ -94,7 +94,7 @@ public class EditBlockHelper {
         } else {
             EditBlockDialog dialog = new EditBlockDialog(shell, thisEditableBlock, config);
             if (dialog.open() == Window.OK) {
-                server.setCurrentConfig().write(config.asConfiguration());
+                server.setCurrentConfig().uncheckedWrite(config.asConfiguration());
             }
         }
     }

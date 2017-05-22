@@ -27,6 +27,11 @@ import uk.ac.stfc.isis.ibex.instrument.Instrument;
 
 public class Dae extends Plugin {
 
+    /**
+     * The perspective ID.
+     */
+    public static final String ID = "uk.ac.stfc.isis.ibex.ui.dae.perspective"; //$NON-NLS-1$
+
     private static Dae instance;
 	private static BundleContext context;
 

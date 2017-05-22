@@ -36,7 +36,7 @@ import uk.ac.stfc.isis.ibex.ui.configserver.dialogs.EditConfigDialog;
  */
 public class NewConfigHandler extends DisablingConfigHandler<Configuration> {
 
-	private static final String TITLE = "New configuration";
+    private static final String TITLE = "New Configuration";
 	private static final String SUB_TITLE = "Editing a new configuration";
 
     /**
@@ -66,9 +66,9 @@ public class NewConfigHandler extends DisablingConfigHandler<Configuration> {
                 new EditConfigDialog(shell(), TITLE, SUB_TITLE, config, true, configurationViewModels);
         if (editDialog.open() == Window.OK) {
             if (editDialog.doAsComponent()) {
-                SERVER.saveAsComponent().write(editDialog.getComponent());
+                SERVER.saveAsComponent().uncheckedWrite(editDialog.getComponent());
             } else {
-                SERVER.saveAs().write(editDialog.getConfig());
+                SERVER.saveAs().uncheckedWrite(editDialog.getConfig());
             }
         }
 	}

@@ -21,6 +21,7 @@
  */
 package uk.ac.stfc.isis.ibex.managermode.tests;
 
+import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 
@@ -109,7 +110,7 @@ public class ManagerModeModelTests {
     }
 
     @Test
-    public void given_a_correct_password_then_writable_is_updated_with_one() {
+    public void given_a_correct_password_then_writable_is_updated_with_one() throws IOException {
 
         // Arrange
         model = ManagerModeModel.getTestableInstance(correctPasswordHasherMock, mockWritable, forwardingObservable);
@@ -126,7 +127,7 @@ public class ManagerModeModelTests {
     }
 
     @Test
-    public void given_a_logout_command_then_the_writable_is_updated_with_zero() {
+    public void given_a_logout_command_then_the_writable_is_updated_with_zero() throws IOException {
 
         // Arrange
         model = ManagerModeModel.getTestableInstance(correctPasswordHasherMock, mockWritable, forwardingObservable);
@@ -139,7 +140,7 @@ public class ManagerModeModelTests {
     }
 
     @Test
-    public void given_a_failed_login_then_the_writable_is_not_updated() {
+    public void given_a_failed_login_then_the_writable_is_not_updated() throws IOException {
 
         // Arrange
         model = ManagerModeModel.getTestableInstance(incorrectPasswordHasherMock, mockWritable, forwardingObservable);
