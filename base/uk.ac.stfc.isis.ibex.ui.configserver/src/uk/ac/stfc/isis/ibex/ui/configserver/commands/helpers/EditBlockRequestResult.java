@@ -38,12 +38,6 @@ public class EditBlockRequestResult {
      * to tell you.
      */
     private boolean isComponent = false;
-
-    /**
-     * Create a new result with default values that will be set later.
-     */
-    public EditBlockRequestResult() {
-    }
     
     public void setConfig(EditableConfiguration config, boolean isComponent) {
         this.error = null;
