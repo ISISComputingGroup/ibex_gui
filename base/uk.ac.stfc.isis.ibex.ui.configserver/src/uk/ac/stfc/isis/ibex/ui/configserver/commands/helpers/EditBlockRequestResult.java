@@ -97,6 +97,6 @@ public class EditBlockRequestResult {
      *         be null
      */
     public EditableConfiguration getConfig() {
-        return hasConfig() ? config : null;
+        return config;
     }
 }
