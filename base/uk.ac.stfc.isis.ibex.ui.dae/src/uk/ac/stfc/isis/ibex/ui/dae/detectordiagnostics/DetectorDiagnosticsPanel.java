@@ -55,6 +55,11 @@ public class DetectorDiagnosticsPanel extends Composite {
     private Text spinnerIntegralTimeRangeTo;
     private Spinner spinnerMaximumFrames;
     
+    private static final int MAX_NUMBER_OF_SPECTRA = 256;
+    private static final int MAX_SPECTRA_NUMBER = 1000000;
+    private static final int MAX_SPECTRA_PERIODS = Integer.MAX_VALUE;
+    private static final int MAX_FRAMES = Integer.MAX_VALUE;
+    
     /**
      * Constructor.
      * @param parent the parent
@@ -78,15 +83,15 @@ public class DetectorDiagnosticsPanel extends Composite {
                  
         spinnerPeriodSelector = new Spinner(this, SWT.BORDER);          
         spinnerPeriodSelector.setMinimum(0);
-        spinnerPeriodSelector.setMaximum(Integer.MAX_VALUE);
+        spinnerPeriodSelector.setMaximum(MAX_SPECTRA_PERIODS);
         
         spinnerStartingSpectrumNumber = new Spinner(this, SWT.BORDER);          
         spinnerStartingSpectrumNumber.setMinimum(0);
-        spinnerStartingSpectrumNumber.setMaximum(Integer.MAX_VALUE);
+        spinnerStartingSpectrumNumber.setMaximum(MAX_SPECTRA_NUMBER);
         
         spinnerNumberOfSpectra = new Spinner(this, SWT.BORDER); 
         spinnerNumberOfSpectra.setMinimum(0);
-        spinnerNumberOfSpectra.setMaximum(Integer.MAX_VALUE);
+        spinnerNumberOfSpectra.setMaximum(MAX_NUMBER_OF_SPECTRA);
         
         spinnerIntegralTimeRangeFrom = new Text(this, SWT.BORDER);    
         spinnerIntegralTimeRangeFrom.addVerifyListener(new NumericalVerifyListener());
@@ -96,7 +101,7 @@ public class DetectorDiagnosticsPanel extends Composite {
         
         spinnerMaximumFrames = new Spinner(this, SWT.BORDER); 
         spinnerMaximumFrames.setMinimum(0);
-        spinnerMaximumFrames.setMaximum(Integer.MAX_VALUE);
+        spinnerMaximumFrames.setMaximum(MAX_FRAMES);
         
         DetectorDiagnosticsTable table = new DetectorDiagnosticsTable(parent, SWT.NONE, SWT.NONE);
         table.bind();
