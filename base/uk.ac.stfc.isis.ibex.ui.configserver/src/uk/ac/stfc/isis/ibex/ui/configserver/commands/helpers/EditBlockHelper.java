@@ -28,6 +28,7 @@ import org.eclipse.swt.widgets.Shell;
 
 import uk.ac.stfc.isis.ibex.configserver.ConfigServer;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Block;
+import uk.ac.stfc.isis.ibex.configserver.configuration.Configuration;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableBlock;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
 import uk.ac.stfc.isis.ibex.model.Awaited;
@@ -68,8 +69,15 @@ public class EditBlockHelper {
      *            the configuration to edit
      * @param blockname
      *            the block name
+     * @param isCurrent
+     *            is this the current configuration
+     * @param isComponent
+     *            is this a component
      */
-    private void openDialog(EditableConfiguration config, String blockname, Boolean isCurrent) {
+    private void openDialog(EditableConfiguration config, String blockname, Boolean isCurrent, Boolean isComponent) {
+        // Can't be both the current configuration and a component
+        assert !isCurrent || !isComponent;
+
         EditableBlock thisEditableBlock = null;
         for (EditableBlock block : config.getEditableBlocks()) {
             if (block.getName().equals(blockname)) {
@@ -83,10 +91,13 @@ public class EditBlockHelper {
         } else {
             EditBlockDialog dialog = new EditBlockDialog(shell, thisEditableBlock, config);
             if (dialog.open() == Window.OK) {
+                Configuration configToSave = config.asConfiguration();
                 if (isCurrent) {
-                    server.setCurrentConfig().uncheckedWrite(config.asConfiguration());
+                    server.setCurrentConfig().uncheckedWrite(configToSave);
+                } else if (isComponent) {
+                    server.saveAsComponent().uncheckedWrite(configToSave);
                 } else {
-                    server.saveAsComponent().uncheckedWrite(config.asConfiguration());
+                    server.saveAs().uncheckedWrite(configToSave);
                 }
             }
         }
@@ -144,7 +155,9 @@ public class EditBlockHelper {
         if (result.hasError()) {
             MessageDialog.openError(shell, "Error", result.getError());
         } else if (result.hasConfig()) {
-            openDialog(result.getConfig(), blockName, !result.isComponent());
+            // If the reesult has a component it is not the current config and
+            // vice versa.
+            openDialog(result.getConfig(), blockName, !result.isComponent(), result.isComponent());
         }
     }
 }
