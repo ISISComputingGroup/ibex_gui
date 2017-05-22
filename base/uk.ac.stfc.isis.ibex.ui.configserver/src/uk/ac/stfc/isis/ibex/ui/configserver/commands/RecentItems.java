@@ -77,7 +77,7 @@ public class RecentItems extends ContributionItem {
 					@Override
                     public void widgetSelected(SelectionEvent e) {
 						//what to do when menu is subsequently selected.
-						configs.server().load().write(target);
+                        configs.server().load().uncheckedWrite(target);
 					}	
 				});
 			}

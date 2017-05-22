@@ -59,7 +59,7 @@ public class LoadConfigHandler extends DisablingConfigHandler<String> {
             String config = dialog.selectedConfig();
             Map<String, Set<String>> conflicts = getConflicts(config);
             if (conflicts.isEmpty()) {
-                configService.write(config);
+                configService.uncheckedWrite(config);
             } else {
                 new MessageDialog(shell(), "Conflicts in selected configuration", null, buildWarning(conflicts),
                         MessageDialog.WARNING, new String[] {"Ok"}, 0).open();

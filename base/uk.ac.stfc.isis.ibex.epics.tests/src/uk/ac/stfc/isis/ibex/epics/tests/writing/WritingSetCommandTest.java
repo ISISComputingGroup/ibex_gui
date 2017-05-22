@@ -23,6 +23,8 @@ import static org.junit.Assert.*;
 import static org.mockito.Matchers.*;
 import static org.mockito.Mockito.*;
 
+import java.io.IOException;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -63,7 +65,7 @@ public class WritingSetCommandTest {
     }
 
     @Test
-    public void sending_a_value_writes_the_value_to_destination() {
+    public void sending_a_value_writes_the_value_to_destination() throws IOException {
         // Arrange
         WritingSetCommand<String> command = WritingSetCommand.forDestination(mockDestination);
         verify(mockDestination, never()).write(anyString());
@@ -93,7 +95,7 @@ public class WritingSetCommandTest {
     }
 
     @Test
-    public void closing_a_command_stops_sending_values_to_destination() {
+    public void closing_a_command_stops_sending_values_to_destination() throws IOException {
         // Arrange
         Subscription mockSubscription = mock(Subscription.class);
         when(mockDestination.subscribe(any(ConfigurableWriter.class))).thenReturn(mockSubscription);

@@ -122,7 +122,7 @@ public class ObservableModel extends Model {
 	@Override
 	public void sendUserDetails() {
 		userDetails.combineSameUsers();
-		variables.userDetailsSetter.write(userDetails.toArray(new UserDetails[0]));
+		variables.userDetailsSetter.uncheckedWrite(userDetails.toArray(new UserDetails[0]));
 	}
 	
 	private String getDefaultUser() {

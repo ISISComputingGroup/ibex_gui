@@ -66,18 +66,24 @@ public class EditBlockHelper {
     /**
      * Opens the dialog.
      * 
-     * @param subTitle unused
-     * @param config the configuration to edit
-     * @param blockname the block name
-     * @param isCurrent whether it is the current configuration
+     * @param subTitle
+     *            unused
+     * @param config
+     *            the configuration to edit
+     * @param blockname
+     *            the block name
+     * @param isCurrent
+     *            whether it is the current configuration
      */
     public void openDialog(String subTitle, EditableConfiguration config, String blockname, boolean isCurrent) {
         openDialog(config, blockname, isCurrent);
     }
 
     /**
-     * @param config the configuration to edit
-     * @param blockname the block name
+     * @param config
+     *            the configuration to edit
+     * @param blockname
+     *            the block name
      */
     private void openDialog(EditableConfiguration config, String blockname, Boolean isCurrent) {
         EditableBlock thisEditableBlock = null;
@@ -94,9 +100,9 @@ public class EditBlockHelper {
             EditBlockDialog dialog = new EditBlockDialog(shell, thisEditableBlock, config);
             if (dialog.open() == Window.OK) {
                 if (isCurrent) {
-                    server.setCurrentConfig().write(config.asConfiguration());
+                    server.setCurrentConfig().uncheckedWrite(config.asConfiguration());
                 } else {
-                    server.saveAsComponent().write(config.asConfiguration());
+                    server.saveAsComponent().uncheckedWrite(config.asConfiguration());
                 }
             }
         }

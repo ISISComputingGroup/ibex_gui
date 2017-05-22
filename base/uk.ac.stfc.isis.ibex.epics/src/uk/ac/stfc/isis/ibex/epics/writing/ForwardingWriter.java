@@ -19,6 +19,7 @@
 
 package uk.ac.stfc.isis.ibex.epics.writing;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -35,8 +36,13 @@ public abstract class ForwardingWriter<TIn, TOut> implements ConfigurableWriter<
 	}
 	
 	@Override
-	public void write(TIn value) {
+	public void write(TIn value) throws IOException {
 		writer.write(value);
+	}
+	
+	@Override
+	public void uncheckedWrite(TIn value) {
+	    writer.uncheckedWrite(value);
 	}
 
 	@Override

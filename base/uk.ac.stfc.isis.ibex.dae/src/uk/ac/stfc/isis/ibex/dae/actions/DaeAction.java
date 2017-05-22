@@ -19,6 +19,8 @@
 
 package uk.ac.stfc.isis.ibex.dae.actions;
 
+import java.io.IOException;
+
 import uk.ac.stfc.isis.ibex.dae.DaeRunState;
 import uk.ac.stfc.isis.ibex.epics.observing.BaseObserver;
 import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
@@ -34,8 +36,8 @@ public abstract class DaeAction extends Action implements Closable {
 	private final BaseWriter<String, String> actionWriter = new BaseWriter<String, String>() {
 
 		@Override
-		public void write(String value) {
-			writeToWritables(value);
+		public void write(String value) throws IOException {
+            writeToWritables(value);
 		}
 		
 		@Override
@@ -104,7 +106,7 @@ public abstract class DaeAction extends Action implements Closable {
 
 	@Override
 	public void execute() {
-		actionWriter.write("1");
+	    actionWriter.uncheckedWrite("1");
 	}
 
 	@Override

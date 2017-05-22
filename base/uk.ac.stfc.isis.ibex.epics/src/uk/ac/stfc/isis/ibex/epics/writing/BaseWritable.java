@@ -19,6 +19,7 @@
 
 package uk.ac.stfc.isis.ibex.epics.writing;
 
+import java.io.IOException;
 import java.util.Collection;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -65,5 +66,14 @@ public abstract class BaseWritable<T> implements Writable<T> {
 		for (ConfigurableWriter<?, ?> writer : writers) {
 			writer.onCanWriteChanged(canWrite);
 		}
+	}
+	
+	@Override
+    public void uncheckedWrite(T value) {
+	    try {
+	        write(value);
+	    } catch (IOException e) {
+	        throw new RuntimeException(e);
+	    }
 	}
 }

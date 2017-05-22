@@ -91,7 +91,7 @@ public class ExperimentDetailsPanel extends Composite {
 				RBLookupViewModel lookupViewModel = new RBLookupViewModel();
 				RBLookupDialog lookupDialog = new RBLookupDialog(shell, lookupViewModel);
 				if (lookupDialog.open() == Window.OK) {
-					viewModel.rbNumber.setText(lookupViewModel.getSelectedUser().getAssociatedExperimentID());
+                    viewModel.rbNumber.uncheckedSetText(lookupViewModel.getSelectedUser().getAssociatedExperimentID());
 				}
 			}
 		});
@@ -141,7 +141,7 @@ public class ExperimentDetailsPanel extends Composite {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				viewModel.model.removeUsers(userDetails.selectedRows());
-				viewModel.model.sendUserDetails();
+                viewModel.model.sendUserDetails();
 			}
 		});		
 		
@@ -153,7 +153,7 @@ public class ExperimentDetailsPanel extends Composite {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				viewModel.model.clearUserDetails();
-				viewModel.model.sendUserDetails();
+                viewModel.model.sendUserDetails();
 			}
 		});
 		btnClearUserDetails.setText("Clear");
@@ -163,7 +163,7 @@ public class ExperimentDetailsPanel extends Composite {
 		btnUpdateUserDetails.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				viewModel.model.sendUserDetails();
+                viewModel.model.sendUserDetails();
 			}
 		});
         btnUpdateUserDetails.setText("Set");
