@@ -55,6 +55,9 @@ public abstract class SettingsGateway implements Closable {
 		writerSubscription = updateWriter.writeTo(settingsDestination);
 	}
 	
+	/**
+	 * Sends the update.
+	 */
 	public void sendUpdate() {
 		updateWriter.uncheckedWrite(asText());
 	}

@@ -77,7 +77,7 @@ public class PVManagerWritable<T> extends WritablePV<T> {
 	    if (!canWrite()) {
 	        String message = "Can't write to PV '" + writeExpression.getName() + "'.";
 	        
-	        if (pv.lastWriteException()!=null) {
+	        if (pv.lastWriteException() != null) {
 	            message += " Caused by: " + pv.lastWriteException().toString();
 	            throw new IOException(message, pv.lastWriteException());
 	        } else {

@@ -42,6 +42,9 @@ public class BatonObservables {
     public final ForwardingObservable<String> controlPV;
     public final String self = UserName.get() + "@" + MachineName.get();
 
+    /**
+     * Creates the baton observables.
+     */
     public BatonObservables() {
         requestPV = writeFactory.getSwitchableWritable(new StringChannel(),
                 InstrumentUtils.addPrefix("CS:CONTROL:REQUEST"));
@@ -49,6 +52,10 @@ public class BatonObservables {
                 InstrumentUtils.addPrefix("CS:CONTROL"));
     }
 
+    /**
+     * Sends the request.
+     * @throws IOException if the write failed
+     */
     public void sendRequest() throws IOException {
         requestPV.write(self);
     }
