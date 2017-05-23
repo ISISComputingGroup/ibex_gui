@@ -161,25 +161,15 @@
       <tooltip>$(pv_name)
 $(pv_value)</tooltip>
       <push_action_index>0</push_action_index>
-      <rules>
-        <rule name="Rule" prop_id="text" out_exp="false">
-          <exp bool_exp="pvStr0 == &quot;STOP RIG&quot;">
-            <value>Stop rig</value>
-          </exp>
-          <exp bool_exp="pvStr0 == &quot;STOPPED&quot;">
-            <value>Stopped</value>
-          </exp>
-          <pv trig="true">$(PV_ROOT)STOP:SP</pv>
-        </rule>
-      </rules>
+      <rules />
       <enabled>true</enabled>
       <wuid>-4305d44c:15ac6d0a5c2:-6868</wuid>
       <pv_value />
-      <text>Disconnected</text>
+      <text>Stop rig</text>
       <scripts />
       <border_alarm_sensitive>false</border_alarm_sensitive>
       <height>31</height>
-      <border_width>2</border_width>
+      <border_width>0</border_width>
       <scale_options>
         <width_scalable>true</width_scalable>
         <height_scalable>true</height_scalable>
@@ -205,12 +195,8 @@ $(pv_value)</tooltip>
           <scriptText><![CDATA[from org.csstudio.opibuilder.scriptUtil import PVUtil
 
 pv = widget.getPV(); 
-value0 = PVUtil.getDouble(pv)
 
-if(value0 == 0):
-    pv.setValue(1)
-else:
-    pv.setValue(0)
+pv.setValue(1)
 ]]></scriptText>
           <embedded>true</embedded>
           <description></description>
@@ -227,25 +213,15 @@ else:
       <tooltip>$(pv_name)
 $(pv_value)</tooltip>
       <push_action_index>0</push_action_index>
-      <rules>
-        <rule name="Rule" prop_id="text" out_exp="false">
-          <exp bool_exp="pvStr0 == &quot;PANIC STOP&quot;">
-            <value>Panic stop</value>
-          </exp>
-          <exp bool_exp="pvStr0 == &quot;STOPPED&quot;">
-            <value>Stopped</value>
-          </exp>
-          <pv trig="true">$(PV_ROOT)PANIC:SP</pv>
-        </rule>
-      </rules>
+      <rules />
       <enabled>true</enabled>
       <wuid>3fd7c5ff:15b13de19c7:-7f65</wuid>
       <pv_value />
-      <text>Disconnected</text>
+      <text>Panic stop</text>
       <scripts />
       <border_alarm_sensitive>false</border_alarm_sensitive>
       <height>31</height>
-      <border_width>2</border_width>
+      <border_width>0</border_width>
       <scale_options>
         <width_scalable>true</width_scalable>
         <height_scalable>true</height_scalable>
