@@ -116,9 +116,9 @@ public final class ManagerModeModel extends ModelObject {
     public void login(String password) throws FailedLoginException {
         this.password = password;
         validate();
-        try{
+        try {
             updatePV();
-        } catch (IOException e){
+        } catch (IOException e) {
             throw new FailedLoginException(e.getMessage());
         }
     }
@@ -129,9 +129,9 @@ public final class ManagerModeModel extends ModelObject {
     public void logout() {
         this.password = "";
         this.passwordValid = false;
-        try{
+        try {
             updatePV();
-        } catch (IOException e){
+        } catch (IOException e) {
             throw new RuntimeException("Failed to update PV (caused by: " + e.getMessage() + ")", e);
         }
     }
