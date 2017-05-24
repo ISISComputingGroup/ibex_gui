@@ -27,6 +27,7 @@ import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Shell;
 
 import uk.ac.stfc.isis.ibex.configserver.ConfigServer;
@@ -41,6 +42,7 @@ import uk.ac.stfc.isis.ibex.ui.configserver.ConfigurationViewModels;
 public class EditConfigDialog extends ConfigDetailsDialog {
 
 	private Button saveAsBtn;
+    private String blockToEdit;
 	
     private ConfigServer server = Configurations.getInstance().server();
 
@@ -55,9 +57,19 @@ public class EditConfigDialog extends ConfigDetailsDialog {
      * @param configurationViewModels view model for the configuration
      */
     public EditConfigDialog(Shell parentShell, String title, String subTitle, EditableConfiguration config,
-            boolean isBlank, ConfigurationViewModels configurationViewModels) {
+            boolean isBlank, ConfigurationViewModels configurationViewModels, String blockName) {
         super(parentShell, title, subTitle, config, isBlank, configurationViewModels);
+        this.blockToEdit = blockName;
 	}
+
+    @Override
+    protected Control createDialogArea(Composite parent) {
+        Control c = super.createDialogArea(parent);
+        if (blockToEdit != null) {
+            editBlock(blockToEdit);
+        }
+        return c;
+    }
 
 	@Override
 	protected void createButtonsForButtonBar(Composite parent) {
@@ -107,6 +119,10 @@ public class EditConfigDialog extends ConfigDetailsDialog {
 		}
 		super.setErrorMessage(newErrorMessage);
 	}
+
+    public void editBlock(String blockname) {
+        editor.selectBlocksTab(blockname);
+    }
 
 	private void setOKEnabled(boolean value) {
 		Button okButton = getButton(IDialogConstants.OK_ID);

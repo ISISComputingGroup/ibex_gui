@@ -53,10 +53,11 @@ public class EditConfigHelper extends ConfigHelper {
     }
 
     @Override
-    protected void openDialog(String subTitle, EditableConfiguration config, boolean isCurrent) {
+    protected EditConfigDialog openDialog(String subTitle, EditableConfiguration config, boolean isCurrent,
+            String blockName) {
         config.setIsComponent(false);
         EditConfigDialog dialog =
-                new EditConfigDialog(shell, title, currentSubTitle, config, false, configurationViewModels);
+                new EditConfigDialog(shell, title, currentSubTitle, config, false, configurationViewModels, blockName);
         if (dialog.open() == Window.OK) {
             if (dialog.doAsComponent()) {
                 server.saveAsComponent().uncheckedWrite(dialog.getComponent());
@@ -68,6 +69,6 @@ public class EditConfigHelper extends ConfigHelper {
                 }
             }
         }
-
+        return dialog;
     }
 }

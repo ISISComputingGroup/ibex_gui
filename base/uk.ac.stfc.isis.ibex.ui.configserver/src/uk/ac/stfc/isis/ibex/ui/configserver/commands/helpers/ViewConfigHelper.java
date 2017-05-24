@@ -27,6 +27,7 @@ import org.eclipse.swt.widgets.Shell;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
 import uk.ac.stfc.isis.ibex.ui.configserver.ConfigurationServerUI;
 import uk.ac.stfc.isis.ibex.ui.configserver.dialogs.ConfigDetailsDialog;
+import uk.ac.stfc.isis.ibex.ui.configserver.dialogs.EditConfigDialog;
 
 /**
  * A helper class to open configuration editing dialog boxes.
@@ -53,10 +54,12 @@ public class ViewConfigHelper extends ConfigHelper {
      * @param isCurrent whether it is the current configuration
      */
     @Override
-    protected void openDialog(String subTitle, EditableConfiguration config, boolean isCurrent) {
+    protected EditConfigDialog openDialog(String subTitle, EditableConfiguration config, boolean isCurrent,
+            String blockName) {
         config.setIsComponent(false);
         ConfigDetailsDialog dialog =
                 new ConfigDetailsDialog(shell, title, currentSubTitle, config, false, configurationViewModels);
         dialog.open();
+        return null;
     }
 }

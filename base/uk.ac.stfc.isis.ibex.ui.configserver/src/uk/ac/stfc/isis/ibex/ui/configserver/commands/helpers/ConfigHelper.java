@@ -7,6 +7,7 @@ import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
 import uk.ac.stfc.isis.ibex.model.Awaited;
 import uk.ac.stfc.isis.ibex.model.UpdatedValue;
 import uk.ac.stfc.isis.ibex.ui.configserver.ConfigurationViewModels;
+import uk.ac.stfc.isis.ibex.ui.configserver.dialogs.EditConfigDialog;
 
 /**
  * An interface for a class that is able to open a dialog giving information on the current configuration.
@@ -30,23 +31,31 @@ public abstract class ConfigHelper {
         UpdatedValue<EditableConfiguration> config = configurationViewModels.getConfigModel();
 
         if (Awaited.returnedValue(config, 1)) {
-            openDialog(subTitle, config.getValue(), false);
+            openDialog(subTitle, config.getValue(), false, null);
         }
     }
     
     /**
-     * Create a dialog box for editing the current config.
+     * Create a dialog box for editing a block in the current config.
      */
-    public void createDialogCurrent() {
+    public void createDialogCurrent(String blockName) {
         configurationViewModels.setModelAsCurrentConfig();
         UpdatedValue<EditableConfiguration> config = configurationViewModels.getConfigModel();
 
         if (Awaited.returnedValue(config, 1)) {
-            openDialog(currentSubTitle, config.getValue(), true);
+            EditConfigDialog dialog = openDialog(currentSubTitle, config.getValue(), true, blockName);
         } else {
             MessageDialog.openError(shell, "Error", "There is no current configuration, so it can not be edited.");
         }
     }
+
+    /**
+     * Create a dialog box for editing the current config.
+     */
+    public void createDialogCurrent() {
+        createDialogCurrent(null);
+    }
     
-    protected abstract void openDialog(String subTitle, EditableConfiguration config, boolean isCurrent);
+    protected abstract EditConfigDialog openDialog(String subTitle, EditableConfiguration config, boolean isCurrent,
+            String blockName);
 }

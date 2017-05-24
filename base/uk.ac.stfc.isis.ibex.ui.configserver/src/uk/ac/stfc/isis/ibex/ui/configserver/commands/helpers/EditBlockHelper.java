@@ -93,7 +93,7 @@ public class EditBlockHelper {
             } else {
                 EditConfigHelper helper = new EditConfigHelper(shell, server);
                 if (isCurrent) {
-                    helper.createDialogCurrent();
+                    helper.createDialogCurrent(blockname);
                 } else {
                     helper.createDialog(config.getName());
                 }
