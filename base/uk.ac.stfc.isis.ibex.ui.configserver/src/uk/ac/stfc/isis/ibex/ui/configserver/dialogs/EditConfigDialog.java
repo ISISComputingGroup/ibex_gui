@@ -42,7 +42,7 @@ import uk.ac.stfc.isis.ibex.ui.configserver.ConfigurationViewModels;
 public class EditConfigDialog extends ConfigDetailsDialog {
 
 	private Button saveAsBtn;
-    private String blockToEdit;
+    private boolean editBlockFirst;
 	
     private ConfigServer server = Configurations.getInstance().server();
 
@@ -57,18 +57,19 @@ public class EditConfigDialog extends ConfigDetailsDialog {
      * @param configurationViewModels view model for the configuration
      */
     public EditConfigDialog(Shell parentShell, String title, String subTitle, EditableConfiguration config,
-            boolean isBlank, ConfigurationViewModels configurationViewModels, String blockName) {
+            boolean isBlank, ConfigurationViewModels configurationViewModels, boolean editBlockFirst) {
         super(parentShell, title, subTitle, config, isBlank, configurationViewModels);
-        this.blockToEdit = blockName;
+        this.editBlockFirst = editBlockFirst;
 	}
 
     @Override
     protected Control createDialogArea(Composite parent) {
-        Control c = super.createDialogArea(parent);
-        if (blockToEdit != null) {
-            editBlock(blockToEdit);
+        // We need to create the dialog first before selecting the blocks tab
+        Control control = super.createDialogArea(parent);
+        if (editBlockFirst) {
+            selectBlocksTab();
         }
-        return c;
+        return control;
     }
 
 	@Override
@@ -120,8 +121,8 @@ public class EditConfigDialog extends ConfigDetailsDialog {
 		super.setErrorMessage(newErrorMessage);
 	}
 
-    public void editBlock(String blockname) {
-        editor.selectBlocksTab(blockname);
+    public void selectBlocksTab() {
+        editor.selectBlocksTab();
     }
 
 	private void setOKEnabled(boolean value) {

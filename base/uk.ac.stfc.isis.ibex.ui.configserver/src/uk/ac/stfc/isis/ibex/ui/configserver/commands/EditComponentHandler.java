@@ -80,7 +80,7 @@ public class EditComponentHandler extends DisablingConfigHandler<Configuration> 
             ConfigurationViewModels configurationViewModels) {
         config.setIsComponent(true);
         EditConfigDialog editDialog =
-                new EditConfigDialog(shell(), TITLE, subTitle, config, false, configurationViewModels, null);
+                new EditConfigDialog(shell(), TITLE, subTitle, config, false, configurationViewModels, false);
         if (editDialog.open() == Window.OK) {
             Map<String, Set<String>> conflicts = conflictsWithCurrent(config);
             if (conflicts.isEmpty()) {

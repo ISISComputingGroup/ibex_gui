@@ -146,7 +146,10 @@ public class ConfigEditorPanel extends Composite {
         blocks.openEditBlockDialog(blockName);
     }
 
-    public void selectBlocksTab(String blockName) {
+    /**
+     * Selects the block tab within the configuration editor panel.
+     */
+    public void selectBlocksTab() {
         editorTabs.setSelection(blocksTab);
     }
 }

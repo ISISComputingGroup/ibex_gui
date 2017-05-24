@@ -68,13 +68,13 @@ public class EditBlockHelper {
      * @param isComponent
      *            is this a component
      */
-    private void openDialog(String config, Boolean isCurrent, Boolean isComponent) {
+    private void createConfigurationDialog(String config, Boolean isCurrent, Boolean isComponent) {
         if (isComponent) {
             (new EditComponentHandler()).edit(config);
         } else {
             EditConfigHelper helper = new EditConfigHelper(shell, server);
             if (isCurrent) {
-                helper.createDialogCurrent();
+                helper.createDialogCurrent(false);
             } else {
                 helper.createDialog(config);
             }
@@ -136,7 +136,7 @@ public class EditBlockHelper {
         } else if (result.hasConfig()) {
             // If the result has a component it is not the current configuration
             // and vice versa.
-            openDialog(result.getConfig(), !result.isComponent(), result.isComponent());
+            createConfigurationDialog(result.getConfig(), !result.isComponent(), result.isComponent());
         }
     }
 }
