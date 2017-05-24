@@ -23,19 +23,17 @@
 package uk.ac.stfc.isis.ibex.ui.configserver.commands.helpers;
 
 import org.eclipse.jface.dialogs.MessageDialog;
-import org.eclipse.jface.window.Window;
 import org.eclipse.swt.widgets.Shell;
 
 import uk.ac.stfc.isis.ibex.configserver.ConfigServer;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Block;
-import uk.ac.stfc.isis.ibex.configserver.configuration.Configuration;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableBlock;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
 import uk.ac.stfc.isis.ibex.model.Awaited;
 import uk.ac.stfc.isis.ibex.model.UpdatedValue;
 import uk.ac.stfc.isis.ibex.ui.configserver.ConfigurationServerUI;
 import uk.ac.stfc.isis.ibex.ui.configserver.ConfigurationViewModels;
-import uk.ac.stfc.isis.ibex.ui.configserver.editing.blocks.EditBlockDialog;
+import uk.ac.stfc.isis.ibex.ui.configserver.commands.EditComponentHandler;
 
 /**
  * A helper class to open a stand-alone block editing dialog.
@@ -89,15 +87,15 @@ public class EditBlockHelper {
             MessageDialog.openError(shell, "Error",
                     "Unable to find editable block with name " + blockname + " in configuration " + config.getName());
         } else {
-            EditBlockDialog dialog = new EditBlockDialog(shell, thisEditableBlock, config);
-            if (dialog.open() == Window.OK) {
-                Configuration configToSave = config.asConfiguration();
+            if (isComponent) {
+                EditComponentHandler handler = new EditComponentHandler();
+                handler.edit(config.getName());
+            } else {
+                EditConfigHelper helper = new EditConfigHelper(shell, server);
                 if (isCurrent) {
-                    server.setCurrentConfig().uncheckedWrite(configToSave);
-                } else if (isComponent) {
-                    server.saveAsComponent().uncheckedWrite(configToSave);
+                    helper.createDialogCurrent();
                 } else {
-                    server.saveAs().uncheckedWrite(configToSave);
+                    helper.createDialog(config.getName());
                 }
             }
         }
@@ -145,12 +143,13 @@ public class EditBlockHelper {
     /**
      * Create a dialog box for editing the block.
      * 
-     * @param blockName The name of the block to edit
+     * @param blockName
+     *            The name of the block to edit
      */
     public void createDialog(String blockName) {
-        
+
         EditBlockRequestResult result = requestBlockEdit(blockName);
-        
+
         // Open the dialog or create an error as appropriate
         if (result.hasError()) {
             MessageDialog.openError(shell, "Error", result.getError());

@@ -64,7 +64,7 @@ public class EditComponentHandler extends DisablingConfigHandler<Configuration> 
 		return null;
 	}
 		
-	private void edit(String componentName) {
+    public void edit(String componentName) {
 		String subTitle = "Editing " + componentName; 
 		
         ConfigurationViewModels configurationViewModels = ConfigurationServerUI.getDefault().configurationViewModels();
