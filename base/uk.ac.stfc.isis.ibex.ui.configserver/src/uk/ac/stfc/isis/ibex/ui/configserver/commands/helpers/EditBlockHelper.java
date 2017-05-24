@@ -27,7 +27,6 @@ import org.eclipse.swt.widgets.Shell;
 
 import uk.ac.stfc.isis.ibex.configserver.ConfigServer;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Block;
-import uk.ac.stfc.isis.ibex.configserver.editing.EditableBlock;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
 import uk.ac.stfc.isis.ibex.model.Awaited;
 import uk.ac.stfc.isis.ibex.model.UpdatedValue;
@@ -44,7 +43,6 @@ public class EditBlockHelper {
     protected ConfigurationViewModels configurationViewModels;
     /** The parent shell to load the dialog in. */
     protected Shell shell;
-
     /**
      * The configuration server used to save modifications to the configuration.
      */
@@ -65,38 +63,20 @@ public class EditBlockHelper {
     /**
      * @param config
      *            the configuration to edit
-     * @param blockname
-     *            the block name
      * @param isCurrent
      *            is this the current configuration
      * @param isComponent
      *            is this a component
      */
-    private void openDialog(EditableConfiguration config, String blockname, Boolean isCurrent, Boolean isComponent) {
-        // Can't be both the current configuration and a component
-        assert !isCurrent || !isComponent;
-
-        EditableBlock thisEditableBlock = null;
-        for (EditableBlock block : config.getEditableBlocks()) {
-            if (block.getName().equals(blockname)) {
-                thisEditableBlock = block;
-                break;
-            }
-        }
-        if (thisEditableBlock == null) {
-            MessageDialog.openError(shell, "Error",
-                    "Unable to find editable block with name " + blockname + " in configuration " + config.getName());
+    private void openDialog(String config, Boolean isCurrent, Boolean isComponent) {
+        if (isComponent) {
+            (new EditComponentHandler()).edit(config);
         } else {
-            if (isComponent) {
-                EditComponentHandler handler = new EditComponentHandler();
-                handler.edit(config.getName());
+            EditConfigHelper helper = new EditConfigHelper(shell, server);
+            if (isCurrent) {
+                helper.createDialogCurrent();
             } else {
-                EditConfigHelper helper = new EditConfigHelper(shell, server);
-                if (isCurrent) {
-                    helper.createDialogCurrent(blockname);
-                } else {
-                    helper.createDialog(config.getName());
-                }
+                helper.createDialog(config);
             }
         }
     }
@@ -110,9 +90,9 @@ public class EditBlockHelper {
      * @return The result of the request with details of the configuration and
      *         any errors
      */
-    private EditBlockRequestResult requestBlockEdit(String blockName) {
+    private EditBlockRequestResult findBlockHostConfiguration(String blockName) {
         // Get the current configuration so we can assess who the block the
-        // belongs to
+        // belongs to.
         configurationViewModels.setModelAsCurrentConfig();
         UpdatedValue<EditableConfiguration> config = configurationViewModels.getConfigModel();
 
@@ -127,12 +107,12 @@ public class EditBlockHelper {
                 configurationViewModels.setModelAsComponent(block.getComponent());
                 UpdatedValue<EditableConfiguration> editableComponent = configurationViewModels.getConfigModel();
                 if (Awaited.returnedValue(editableComponent, 1)) {
-                    result.setConfig(editableComponent.getValue(), true);
+                    result.setConfig(editableComponent.getValue().getName(), true);
                 } else {
                     result.setError("Cannot edit component containing block.");
                 }
             } else {
-                result.setConfig(config.getValue(), false);
+                result.setConfig(config.getValue().getName(), false);
             }
         } else {
             result.setError("There is no current configuration, so it can not be edited.");
@@ -148,15 +128,15 @@ public class EditBlockHelper {
      */
     public void createDialog(String blockName) {
 
-        EditBlockRequestResult result = requestBlockEdit(blockName);
+        EditBlockRequestResult result = findBlockHostConfiguration(blockName);
 
         // Open the dialog or create an error as appropriate
         if (result.hasError()) {
             MessageDialog.openError(shell, "Error", result.getError());
         } else if (result.hasConfig()) {
-            // If the result has a component it is not the current config and
-            // vice versa.
-            openDialog(result.getConfig(), blockName, !result.isComponent(), result.isComponent());
+            // If the result has a component it is not the current configuration
+            // and vice versa.
+            openDialog(result.getConfig(), !result.isComponent(), result.isComponent());
         }
     }
 }

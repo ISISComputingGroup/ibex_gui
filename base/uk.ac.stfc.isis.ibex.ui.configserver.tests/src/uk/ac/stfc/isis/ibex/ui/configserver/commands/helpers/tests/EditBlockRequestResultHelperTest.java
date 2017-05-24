@@ -1,21 +1,15 @@
 package uk.ac.stfc.isis.ibex.ui.configserver.commands.helpers.tests;
 
 import static org.junit.Assert.*;
-import static org.mockito.Mockito.mock;
 
 import org.junit.Test;
 
-import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
 import uk.ac.stfc.isis.ibex.ui.configserver.commands.helpers.EditBlockRequestResult;
 
 /**
 *
 */
 public class EditBlockRequestResultHelperTest {
-
-    private EditableConfiguration mockConfig() {
-        return mock(EditableConfiguration.class);
-   }
 
    @Test
     public void WHEN_new_resulted_created_THEN_has_error_and_no_config() {
@@ -57,7 +51,7 @@ public class EditBlockRequestResultHelperTest {
     public void GIVEN_result_with_config_WHEN_error_is_set_THEN_result_has_no_config() {
        // Arrange
         EditBlockRequestResult result = new EditBlockRequestResult();
-        result.setConfig(mockConfig(), false);
+        result.setConfig("Name", false);
         assertTrue(result.hasConfig());
 
         // Act
@@ -71,7 +65,7 @@ public class EditBlockRequestResultHelperTest {
     public void GIVEN_result_with_config_WHEN_error_is_set_THEN_result_has_error() {
         // Arrange
         EditBlockRequestResult result = new EditBlockRequestResult();
-        result.setConfig(mockConfig(), false);
+        result.setConfig("Name", false);
         assertTrue(result.hasConfig());
 
         // Act
@@ -85,7 +79,7 @@ public class EditBlockRequestResultHelperTest {
     public void GIVEN_new_result_WHEN_config_is_set_as_not_component_THEN_result_reports_not_a_component() {
         // Arrange
         EditBlockRequestResult result = new EditBlockRequestResult();
-        result.setConfig(mockConfig(), false);
+        result.setConfig("Name", false);
 
         // Assert
         assertFalse(result.isComponent());
@@ -95,7 +89,7 @@ public class EditBlockRequestResultHelperTest {
     public void GIVEN_new_result_WHEN_config_is_set_as_component_THEN_result_reports_is_component() {
         // Arrange
         EditBlockRequestResult result = new EditBlockRequestResult();
-        result.setConfig(mockConfig(), true);
+        result.setConfig("Name", true);
 
         // Assert
         assertTrue(result.isComponent());
@@ -109,7 +103,7 @@ public class EditBlockRequestResultHelperTest {
         assertTrue(result.hasError());
 
         // Act
-        result.setConfig(mockConfig(), true);
+        result.setConfig("Name", true);
 
         // Assert
         assertFalse(result.hasError());
@@ -121,7 +115,7 @@ public class EditBlockRequestResultHelperTest {
         EditBlockRequestResult result = new EditBlockRequestResult();
 
         // Act
-        EditableConfiguration expectedConfig = mockConfig();
+        String expectedConfig = "Name";
         result.setConfig(expectedConfig, true);
 
         // Assert

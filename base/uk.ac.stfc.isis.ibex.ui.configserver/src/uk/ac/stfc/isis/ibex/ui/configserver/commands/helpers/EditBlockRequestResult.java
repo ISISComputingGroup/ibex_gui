@@ -21,14 +21,12 @@
  */
 package uk.ac.stfc.isis.ibex.ui.configserver.commands.helpers;
 
-import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
-
 /**
  * The result of a request to edit a block.
  */
 public class EditBlockRequestResult {
     /** The configuration/component that a block belongs to. */
-    private EditableConfiguration config = null;
+    private String config = null;
 
     /** The error associated with the request to edit a block. */
     private String error = "An unspecified error has occurred finding the configuration associated with this block.";
@@ -40,21 +38,21 @@ public class EditBlockRequestResult {
     private boolean isComponent = false;
     
     /**
-     * Sets the config associated with a result. Removes existing error
+     * Sets the configuration associated with a result. Removes existing error
      * 
      * @param config
-     *            Sets the config associated with the request
+     *            Sets the configuration name associated with the request
      * @param isComponent
-     *            Is the new config a component
+     *            Is the new configuration a component
      */
-    public void setConfig(EditableConfiguration config, boolean isComponent) {
+    public void setConfig(String config, boolean isComponent) {
         this.error = null;
         this.config = config;
         this.isComponent = isComponent;
     }
 
     /**
-     * Sets the error associated with a result. Removes existing config
+     * Sets the error associated with a result. Removes existing configuration
      * 
      * @param error
      *            The new error
@@ -96,7 +94,7 @@ public class EditBlockRequestResult {
      * @return The configuration (or component) associated with the request. May
      *         be null
      */
-    public EditableConfiguration getConfig() {
+    public String getConfig() {
         return config;
     }
 }
