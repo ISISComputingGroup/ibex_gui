@@ -53,7 +53,7 @@ public class EditConfigHelper extends ConfigHelper {
     }
 
     @Override
-    protected EditConfigDialog openDialog(String subTitle, EditableConfiguration config, boolean isCurrent,
+    protected void openDialog(String subTitle, EditableConfiguration config, boolean isCurrent,
             boolean editBlockFirst) {
         config.setIsComponent(false);
         EditConfigDialog dialog =
@@ -70,6 +70,5 @@ public class EditConfigHelper extends ConfigHelper {
                 }
             }
         }
-        return dialog;
     }
 }

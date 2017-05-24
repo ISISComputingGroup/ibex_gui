@@ -7,7 +7,6 @@ import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
 import uk.ac.stfc.isis.ibex.model.Awaited;
 import uk.ac.stfc.isis.ibex.model.UpdatedValue;
 import uk.ac.stfc.isis.ibex.ui.configserver.ConfigurationViewModels;
-import uk.ac.stfc.isis.ibex.ui.configserver.dialogs.EditConfigDialog;
 
 /**
  * An interface for a class that is able to open a dialog giving information on the current configuration.
@@ -56,6 +55,6 @@ public abstract class ConfigHelper {
         createDialogCurrent(false);
     }
     
-    protected abstract EditConfigDialog openDialog(String subTitle, EditableConfiguration config, boolean isCurrent,
+    protected abstract void openDialog(String subTitle, EditableConfiguration config, boolean isCurrent,
             boolean blockEdit);
 }
