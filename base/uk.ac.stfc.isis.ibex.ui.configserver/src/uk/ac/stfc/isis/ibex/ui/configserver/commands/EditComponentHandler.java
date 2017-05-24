@@ -58,13 +58,21 @@ public class EditComponentHandler extends DisablingConfigHandler<Configuration> 
                 new ConfigSelectionDialog(shell(), TITLE, SERVER.componentsInfo().getValue(), true, true);
 		if (selectionDialog.open() == Window.OK) {
 			String componentName = selectionDialog.selectedConfig();
-			edit(componentName);
+            edit(componentName, false);
 		}
 		
 		return null;
 	}
 		
-    public void edit(String componentName) {
+    /**
+     * Open a dialog for editing a component of a given name.
+     * 
+     * @param componentName
+     *            The name of the component
+     * @param editBlockFirst
+     *            Whether to present the blocks tab first
+     */
+    public void edit(String componentName, boolean editBlockFirst) {
 		String subTitle = "Editing " + componentName; 
 		
         ConfigurationViewModels configurationViewModels = ConfigurationServerUI.getDefault().configurationViewModels();
@@ -72,15 +80,15 @@ public class EditComponentHandler extends DisablingConfigHandler<Configuration> 
         UpdatedValue<EditableConfiguration> config = configurationViewModels.getConfigModel();
 
 		if (Awaited.<EditableConfiguration>returnedValue(config, 1)) {
-            openDialog(subTitle, config.getValue(), configurationViewModels);
+            openDialog(subTitle, config.getValue(), configurationViewModels, editBlockFirst);
 		}
 	}
 
     private void openDialog(String subTitle, EditableConfiguration config,
-            ConfigurationViewModels configurationViewModels) {
+            ConfigurationViewModels configurationViewModels, boolean editBlockFirst) {
         config.setIsComponent(true);
         EditConfigDialog editDialog =
-                new EditConfigDialog(shell(), TITLE, subTitle, config, false, configurationViewModels, false);
+                new EditConfigDialog(shell(), TITLE, subTitle, config, false, configurationViewModels, editBlockFirst);
         if (editDialog.open() == Window.OK) {
             Map<String, Set<String>> conflicts = conflictsWithCurrent(config);
             if (conflicts.isEmpty()) {
@@ -88,7 +96,7 @@ public class EditComponentHandler extends DisablingConfigHandler<Configuration> 
             } else {
                 new MessageDialog(shell(), "Conflicts with current configuration", null, buildWarning(conflicts),
                         MessageDialog.WARNING, new String[] {"Ok"}, 0).open();
-                openDialog(subTitle, config, configurationViewModels);
+                openDialog(subTitle, config, configurationViewModels, editBlockFirst);
             }
         }
 	}

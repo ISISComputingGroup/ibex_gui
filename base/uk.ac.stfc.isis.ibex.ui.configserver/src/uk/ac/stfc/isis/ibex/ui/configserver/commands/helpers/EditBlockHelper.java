@@ -70,13 +70,13 @@ public class EditBlockHelper {
      */
     private void createConfigurationDialog(String config, Boolean isCurrent, Boolean isComponent) {
         if (isComponent) {
-            (new EditComponentHandler()).edit(config);
+            (new EditComponentHandler()).edit(config, true);
         } else {
             EditConfigHelper helper = new EditConfigHelper(shell, server);
             if (isCurrent) {
-                helper.createDialogCurrent(false);
+                helper.createDialogCurrent(true);
             } else {
-                helper.createDialog(config);
+                helper.createDialog(config, true);
             }
         }
     }

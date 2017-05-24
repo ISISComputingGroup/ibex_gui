@@ -21,16 +21,19 @@ public abstract class ConfigHelper {
     /**
      * Create a dialog box for editing a config other than the current one.
      * 
-     * @param configName The name of the config we wish to edit
+     * @param configName
+     *            The name of the config we wish to edit
+     * @param editBlockFirst
+     *            Whether to present the blocks tab first
      */
-    public void createDialog(String configName) {
+    public void createDialog(String configName, boolean editBlockFirst) {
         String subTitle = "Viewing " + configName;
 
         configurationViewModels.setModelAsConfig(configName);
         UpdatedValue<EditableConfiguration> config = configurationViewModels.getConfigModel();
 
         if (Awaited.returnedValue(config, 1)) {
-            openDialog(subTitle, config.getValue(), false, false);
+            openDialog(subTitle, config.getValue(), false, editBlockFirst);
         }
     }
     
