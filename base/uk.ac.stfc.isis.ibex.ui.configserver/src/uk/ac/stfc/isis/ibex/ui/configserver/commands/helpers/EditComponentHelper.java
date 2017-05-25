@@ -22,6 +22,7 @@
  */
 package uk.ac.stfc.isis.ibex.ui.configserver.commands.helpers;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -79,13 +80,28 @@ public class EditComponentHelper extends ConfigHelper {
         if (editDialog.open() == Window.OK) {
             Map<String, Set<String>> conflicts = conflictsWithCurrent(component);
             if (conflicts.isEmpty()) {
-                server.saveAsComponent().uncheckedWrite(editDialog.getComponent());
+                try {
+                    server.saveAsComponent().write(editDialog.getComponent());
+                } catch (IOException e) {
+                    openErrorSavingDialog(e);
+                }
             } else {
-                new MessageDialog(shell, "Conflicts with current configuration", null, buildWarning(conflicts),
-                        MessageDialog.WARNING, new String[] { "Ok" }, 0).open();
+                openConflictsDialog(buildWarning(conflicts));
                 openDialog(subTitle, component, false, editBlockFirst);
             }
         }
+    }
+
+    private void openErrorSavingDialog(IOException e) {
+        String title = "Error saving component";
+        String description = "Unable to save component: " + e.getMessage();
+        String[] button = new String[] { "OK" };
+        new MessageDialog(shell, title, null, description, MessageDialog.ERROR, button, 0).open();
+    }
+
+    private void openConflictsDialog(String warning) {
+        new MessageDialog(shell, "Conflicts with current configuration", null, warning,
+                MessageDialog.WARNING, new String[] { "Ok" }, 0).open();
     }
 
     @Override
