@@ -63,8 +63,6 @@ public class DaeView extends ViewPart {
 	private VetosPanel vetosPanel;
 	private RunInformationPanel runInformation;
 	private SpectraPlotsPanel spectraPanel;
-	private DetectorDiagnosticsPanel detectorDiagnostics;
-
 	private DaeViewModel model;
 
 	
@@ -135,7 +133,7 @@ public class DaeView extends ViewPart {
 		
 		GridData gdContainer = new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1);
 		container.setLayoutData(gdContainer);
-		GridLayout glContainer = new GridLayout(2, false);
+		GridLayout glContainer = new GridLayout(1, false);
 		glContainer.horizontalSpacing = 0;
 		glContainer.verticalSpacing = 0;
 		glContainer.marginWidth = 0;
@@ -200,8 +198,9 @@ public class DaeView extends ViewPart {
 		
 		Composite diagnosticsComposite = new Composite(tabFolder, SWT.NONE);
         tbtmDiagnostics.setControl(diagnosticsComposite);
-        diagnosticsComposite.setLayout(new GridLayout(1, false));
-		detectorDiagnostics = new DetectorDiagnosticsPanel(diagnosticsComposite);
+        diagnosticsComposite.setLayout(new FillLayout(SWT.HORIZONTAL));
+        
+		new DetectorDiagnosticsPanel(diagnosticsComposite, SWT.NONE);
 		
 		CTabItem tbtmVetos = new CTabItem(tabFolder, SWT.NONE);
 		tbtmVetos.setImage(ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui.dae", "icons/veto.png"));

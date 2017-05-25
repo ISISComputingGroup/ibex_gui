@@ -64,57 +64,64 @@ public class DetectorDiagnosticsPanel extends Composite {
      * Constructor.
      * 
      * @param parent the parent
+     * @param style the composite's style
      */
-    public DetectorDiagnosticsPanel(Composite parent) {
-        super(parent, SWT.NONE);
+    public DetectorDiagnosticsPanel(Composite parent, int style) {
+        super(parent, style);
         
-        setLayout(new GridLayout(7, true));
+        setLayout(new GridLayout(1, true));
+        // setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+        
+        Composite container = new Composite(this, SWT.NONE);
+        GridData layoutData = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
+        container.setLayoutData(layoutData);
+        container.setLayout(new GridLayout(7, true));
         
         GridData centeredGridItem = new GridData(SWT.CENTER, SWT.CENTER, true, true);
         centeredGridItem.minimumHeight = 20;
-        centeredGridItem.minimumWidth = 120;
+        centeredGridItem.minimumWidth = 105;
         
-        createLabel("Spectra to display", centeredGridItem);
-        createLabel("Spectra periods", centeredGridItem);      
-        createLabel("Starting spectrum", centeredGridItem);        
-        createLabel("Number of spectra", centeredGridItem);        
-        createLabel("Integral lower limit", centeredGridItem);        
-        createLabel("Integral upper limit", centeredGridItem);
-        createLabel("Maximum frames", centeredGridItem);
+        createLabel(container, "Spectra to display", centeredGridItem);
+        createLabel(container, "Spectra periods", centeredGridItem);      
+        createLabel(container, "Starting spectrum", centeredGridItem);        
+        createLabel(container, "Number of spectra", centeredGridItem);        
+        createLabel(container, "Integral lower limit", centeredGridItem);        
+        createLabel(container, "Integral upper limit", centeredGridItem);
+        createLabel(container, "Maximum frames", centeredGridItem);
         
-        comboSpectraTypeSelector = new Combo(this, SWT.READ_ONLY); 
+        comboSpectraTypeSelector = new Combo(container, SWT.READ_ONLY); 
         comboSpectraTypeSelector.setItems(getDropdownMenuItemsArray());
         comboSpectraTypeSelector.setLayoutData(centeredGridItem);
                  
-        spinnerPeriodSelector = new Spinner(this, SWT.BORDER);          
+        spinnerPeriodSelector = new Spinner(container, SWT.BORDER);          
         spinnerPeriodSelector.setMinimum(0);
         spinnerPeriodSelector.setMaximum(MAX_SPECTRA_PERIODS);
         spinnerPeriodSelector.setLayoutData(centeredGridItem);
         
-        spinnerStartingSpectrumNumber = new Spinner(this, SWT.BORDER);          
+        spinnerStartingSpectrumNumber = new Spinner(container, SWT.BORDER);          
         spinnerStartingSpectrumNumber.setMinimum(0);
         spinnerStartingSpectrumNumber.setMaximum(MAX_SPECTRA_NUMBER);
         spinnerStartingSpectrumNumber.setLayoutData(centeredGridItem);
         
-        spinnerNumberOfSpectra = new Spinner(this, SWT.BORDER); 
+        spinnerNumberOfSpectra = new Spinner(container, SWT.BORDER); 
         spinnerNumberOfSpectra.setMinimum(0);
         spinnerNumberOfSpectra.setMaximum(MAX_NUMBER_OF_SPECTRA);
         spinnerNumberOfSpectra.setLayoutData(centeredGridItem);
         
-        spinnerIntegralTimeRangeFrom = new Text(this, SWT.BORDER);    
+        spinnerIntegralTimeRangeFrom = new Text(container, SWT.BORDER);    
         spinnerIntegralTimeRangeFrom.addVerifyListener(new NumericalVerifyListener());
         spinnerIntegralTimeRangeFrom.setLayoutData(centeredGridItem);
         
-        spinnerIntegralTimeRangeTo = new Text(this, SWT.BORDER); 
+        spinnerIntegralTimeRangeTo = new Text(container, SWT.BORDER); 
         spinnerIntegralTimeRangeTo.addVerifyListener(new NumericalVerifyListener());
         spinnerIntegralTimeRangeTo.setLayoutData(centeredGridItem);
         
-        spinnerMaximumFrames = new Spinner(this, SWT.BORDER); 
+        spinnerMaximumFrames = new Spinner(container, SWT.BORDER); 
         spinnerMaximumFrames.setMinimum(0);
         spinnerMaximumFrames.setMaximum(MAX_FRAMES);
         spinnerMaximumFrames.setLayoutData(centeredGridItem);
         
-        DetectorDiagnosticsTable table = new DetectorDiagnosticsTable(parent, SWT.NONE, SWT.NONE);
+        DetectorDiagnosticsTable table = new DetectorDiagnosticsTable(this, SWT.NONE, SWT.NONE);
         table.bind();
         
         GridData layout = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
@@ -124,8 +131,8 @@ public class DetectorDiagnosticsPanel extends Composite {
  
     }
     
-    private void createLabel(String text, GridData layout) {
-        Label label = new Label(this, SWT.NONE);
+    private void createLabel(Composite parent, String text, GridData layout) {
+        Label label = new Label(parent, SWT.NONE);
         label.setText(text);
         label.setLayoutData(layout);
         label.setAlignment(SWT.CENTER);
