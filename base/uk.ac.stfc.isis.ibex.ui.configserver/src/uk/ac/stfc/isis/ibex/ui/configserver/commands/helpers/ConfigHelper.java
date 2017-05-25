@@ -38,7 +38,10 @@ public abstract class ConfigHelper {
     }
     
     /**
-     * Create a dialog box for editing a block in the current config.
+     * Create a dialog box for editing the current config.
+     * 
+     * @param editBlockFirst
+     *            Whether the first operation we want to do is edit a block
      */
     public void createDialogCurrent(boolean editBlockFirst) {
         configurationViewModels.setModelAsCurrentConfig();
@@ -59,5 +62,5 @@ public abstract class ConfigHelper {
     }
     
     protected abstract void openDialog(String subTitle, EditableConfiguration config, boolean isCurrent,
-            boolean blockEdit);
+            boolean editBlockFirst);
 }
