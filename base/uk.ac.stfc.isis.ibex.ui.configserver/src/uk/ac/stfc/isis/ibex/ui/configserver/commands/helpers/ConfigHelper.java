@@ -27,7 +27,7 @@ public abstract class ConfigHelper {
      *            Whether to present the blocks tab first
      */
     public void createDialog(String configName, boolean editBlockFirst) {
-        String subTitle = "Viewing " + configName;
+        String subTitle = "Viewing configuration " + configName;
 
         configurationViewModels.setModelAsConfig(configName);
         UpdatedValue<EditableConfiguration> config = configurationViewModels.getConfigModel();

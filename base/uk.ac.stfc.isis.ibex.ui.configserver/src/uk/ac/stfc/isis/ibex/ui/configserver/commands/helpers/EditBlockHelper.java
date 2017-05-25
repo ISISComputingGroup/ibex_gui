@@ -32,7 +32,6 @@ import uk.ac.stfc.isis.ibex.model.Awaited;
 import uk.ac.stfc.isis.ibex.model.UpdatedValue;
 import uk.ac.stfc.isis.ibex.ui.configserver.ConfigurationServerUI;
 import uk.ac.stfc.isis.ibex.ui.configserver.ConfigurationViewModels;
-import uk.ac.stfc.isis.ibex.ui.configserver.commands.EditComponentHandler;
 
 /**
  * A helper class to open a stand-alone block editing dialog.
@@ -69,15 +68,19 @@ public class EditBlockHelper {
      *            is this a component
      */
     private void createConfigurationDialog(String config, Boolean isCurrent, Boolean isComponent) {
+        // Pick a helper class who'll open the edit dialog
+        ConfigHelper helper;
         if (isComponent) {
-            (new EditComponentHandler()).edit(config, true);
+            helper = new EditComponentHelper(shell, server);
         } else {
-            EditConfigHelper helper = new EditConfigHelper(shell, server);
-            if (isCurrent) {
-                helper.createDialogCurrent(true);
-            } else {
-                helper.createDialog(config, true);
-            }
+            helper = new EditConfigHelper(shell, server);
+        }
+
+        // Open the appropriate edit dialog
+        if (isCurrent) {
+            helper.createDialogCurrent(true);
+        } else {
+            helper.createDialog(config, true);
         }
     }
 
