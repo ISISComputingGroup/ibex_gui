@@ -70,39 +70,49 @@ public class DetectorDiagnosticsPanel extends Composite {
         
         setLayout(new GridLayout(7, true));
         
-        new Label(this, SWT.NONE).setText("Spectra to display");
-        new Label(this, SWT.NONE).setText("Spectra periods");      
-        new Label(this, SWT.NONE).setText("Starting spectrum");        
-        new Label(this, SWT.NONE).setText("Number of spectra");        
-        new Label(this, SWT.NONE).setText("Integral lower limit");        
-        new Label(this, SWT.NONE).setText("Integral upper limit");
-        new Label(this, SWT.NONE).setText("Maximum frames");
+        GridData centeredGridItem = new GridData(SWT.CENTER, SWT.CENTER, true, true);
+        centeredGridItem.minimumHeight = 20;
+        centeredGridItem.minimumWidth = 120;
+        
+        createLabel("Spectra to display", centeredGridItem);
+        createLabel("Spectra periods", centeredGridItem);      
+        createLabel("Starting spectrum", centeredGridItem);        
+        createLabel("Number of spectra", centeredGridItem);        
+        createLabel("Integral lower limit", centeredGridItem);        
+        createLabel("Integral upper limit", centeredGridItem);
+        createLabel("Maximum frames", centeredGridItem);
         
         comboSpectraTypeSelector = new Combo(this, SWT.READ_ONLY); 
         comboSpectraTypeSelector.setItems(getDropdownMenuItemsArray());
-        
+        comboSpectraTypeSelector.setLayoutData(centeredGridItem);
                  
         spinnerPeriodSelector = new Spinner(this, SWT.BORDER);          
         spinnerPeriodSelector.setMinimum(0);
         spinnerPeriodSelector.setMaximum(MAX_SPECTRA_PERIODS);
+        spinnerPeriodSelector.setLayoutData(centeredGridItem);
         
         spinnerStartingSpectrumNumber = new Spinner(this, SWT.BORDER);          
         spinnerStartingSpectrumNumber.setMinimum(0);
         spinnerStartingSpectrumNumber.setMaximum(MAX_SPECTRA_NUMBER);
+        spinnerStartingSpectrumNumber.setLayoutData(centeredGridItem);
         
         spinnerNumberOfSpectra = new Spinner(this, SWT.BORDER); 
         spinnerNumberOfSpectra.setMinimum(0);
         spinnerNumberOfSpectra.setMaximum(MAX_NUMBER_OF_SPECTRA);
+        spinnerNumberOfSpectra.setLayoutData(centeredGridItem);
         
         spinnerIntegralTimeRangeFrom = new Text(this, SWT.BORDER);    
         spinnerIntegralTimeRangeFrom.addVerifyListener(new NumericalVerifyListener());
+        spinnerIntegralTimeRangeFrom.setLayoutData(centeredGridItem);
         
         spinnerIntegralTimeRangeTo = new Text(this, SWT.BORDER); 
         spinnerIntegralTimeRangeTo.addVerifyListener(new NumericalVerifyListener());
+        spinnerIntegralTimeRangeTo.setLayoutData(centeredGridItem);
         
         spinnerMaximumFrames = new Spinner(this, SWT.BORDER); 
         spinnerMaximumFrames.setMinimum(0);
         spinnerMaximumFrames.setMaximum(MAX_FRAMES);
+        spinnerMaximumFrames.setLayoutData(centeredGridItem);
         
         DetectorDiagnosticsTable table = new DetectorDiagnosticsTable(parent, SWT.NONE, SWT.NONE);
         table.bind();
@@ -112,6 +122,13 @@ public class DetectorDiagnosticsPanel extends Composite {
         
         bind();
  
+    }
+    
+    private void createLabel(String text, GridData layout) {
+        Label label = new Label(this, SWT.NONE);
+        label.setText(text);
+        label.setLayoutData(layout);
+        label.setAlignment(SWT.CENTER);
     }
     
     private void bind() {
