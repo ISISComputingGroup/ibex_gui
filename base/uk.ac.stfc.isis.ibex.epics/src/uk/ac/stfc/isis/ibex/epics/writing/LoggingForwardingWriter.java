@@ -21,11 +21,28 @@ package uk.ac.stfc.isis.ibex.epics.writing;
 
 import org.apache.logging.log4j.Logger;
 
+/**
+ * A Forwarding Writer but with the action of logging the new value and any
+ * errors.
+ *
+ * @param <T>
+ *            the generic type
+ */
 public class LoggingForwardingWriter<T> extends ForwardingWriter<T, T> {
 
 	protected final Logger log;
 	protected final String id;
 	
+    /**
+     * Instantiates a new logging forwarding writer.
+     *
+     * @param log
+     *            the logger to log to
+     * @param id
+     *            the id of what is being logged
+     * @param writer
+     *            the writer to write the value to
+     */
 	public LoggingForwardingWriter(Logger log, String id, ConfigurableWriter<T, T> writer) {
 
         checkPreconditions(log, writer);
@@ -51,6 +68,12 @@ public class LoggingForwardingWriter<T> extends ForwardingWriter<T, T> {
 		// do nothing
 	}
 
+    /**
+     * Log the value.
+     *
+     * @param value
+     *            the value to log
+     */
 	protected void logValue(T value) {
 		log(value.toString());
 	}
