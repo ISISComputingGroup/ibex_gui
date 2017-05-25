@@ -19,6 +19,8 @@
 
 package uk.ac.stfc.isis.ibex.epics.writing;
 
+import java.io.IOException;
+
 import org.apache.logging.log4j.Logger;
 
 import uk.ac.stfc.isis.ibex.epics.conversion.Converter;
@@ -35,7 +37,7 @@ public class LoggingForwardingWritable<T> extends ForwardingWritable<T, T> {
 	}
 	
 	@Override
-	public void write(T value) {
+	public void write(T value) throws IOException {
 		super.write(value);
 		log(value.toString());
 	}

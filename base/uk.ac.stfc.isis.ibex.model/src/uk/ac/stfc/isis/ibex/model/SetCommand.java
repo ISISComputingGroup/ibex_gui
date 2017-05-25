@@ -18,6 +18,8 @@
 
 package uk.ac.stfc.isis.ibex.model;
 
+import java.io.IOException;
+
 /**
  * A class for sending a command to a model (usually from the UI). <br>
  * The class allows for cases when the command cannot be set for whatever
@@ -30,19 +32,26 @@ public abstract class SetCommand<T> extends ModelObject {
 		
 	private boolean canSend;
 	
-    /**
-     * Send a value to the model.
-     *
-     * @param value
-     *            the value to send
-     */
-	public abstract void send(T value);
+	/**
+	 * Sends the command.
+	 * @param value the value to be sent
+	 * @throws IOException if the send failed
+	 */
+	public abstract void send(T value) throws IOException;
 	
-    /**
-     * Gets whether it is possible to send the command.
-     *
-     * @return True if can send; False otherwise
-     */
+	/**
+	 * Sends the command and does not throw a checked exception.
+	 * 
+	 * This method should be avoided unless you are certain that the send cannot fail
+	 * 
+	 * @param value the value to be sent
+	 */
+	public abstract void uncheckedSend(T value);
+	
+	/**
+	 * Whether values can be sent.
+	 * @return true if values can be sent, false otherwise
+	 */
 	public boolean getCanSend() {
 		return canSend;
 	}

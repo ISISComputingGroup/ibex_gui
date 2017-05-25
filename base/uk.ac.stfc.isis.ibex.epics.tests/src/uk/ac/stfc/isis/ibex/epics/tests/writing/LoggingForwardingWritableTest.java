@@ -25,6 +25,8 @@ package uk.ac.stfc.isis.ibex.epics.tests.writing;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.*;
 
+import java.io.IOException;
+
 import org.apache.logging.log4j.Logger;
 import org.junit.Test;
 
@@ -39,7 +41,7 @@ public class LoggingForwardingWritableTest {
     private static final String VALUE = "value";
 
     @Test
-    public void a_values_is_logged_when_written() {
+    public void a_values_is_logged_when_written() throws IOException {
         // Arrange
         Logger mockLogger = mock(Logger.class);
         Writable<String> mockDestination = mock(Writable.class);

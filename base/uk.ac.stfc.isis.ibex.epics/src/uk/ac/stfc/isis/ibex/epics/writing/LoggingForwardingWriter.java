@@ -19,6 +19,8 @@
 
 package uk.ac.stfc.isis.ibex.epics.writing;
 
+import java.io.IOException;
+
 import org.apache.logging.log4j.Logger;
 
 /**
@@ -53,7 +55,7 @@ public class LoggingForwardingWriter<T> extends ForwardingWriter<T, T> {
 	}
 
     @Override
-	public void write(T value) {
+	public void write(T value) throws IOException {
 		logValue(value);
 		super.write(value);
 	}

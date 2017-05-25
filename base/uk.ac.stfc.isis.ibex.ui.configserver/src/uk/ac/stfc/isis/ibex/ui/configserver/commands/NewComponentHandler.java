@@ -65,9 +65,9 @@ public class NewComponentHandler extends DisablingConfigHandler<Configuration> {
                 new EditConfigDialog(shell(), TITLE, SUB_TITLE, config, true, configurationViewModels);
         if (editDialog.open() == Window.OK) {
             if (editDialog.doAsComponent()) {
-                SERVER.saveAsComponent().write(editDialog.getComponent());
+                SERVER.saveAsComponent().uncheckedWrite(editDialog.getComponent());
             } else {
-                SERVER.saveAs().write(editDialog.getConfig());
+                SERVER.saveAs().uncheckedWrite(editDialog.getConfig());
             }
         }
 	}

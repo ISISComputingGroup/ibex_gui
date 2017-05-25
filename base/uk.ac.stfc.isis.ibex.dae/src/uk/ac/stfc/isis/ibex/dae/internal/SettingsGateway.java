@@ -19,6 +19,8 @@
 
 package uk.ac.stfc.isis.ibex.dae.internal;
 
+import java.io.IOException;
+
 import uk.ac.stfc.isis.ibex.epics.observing.BaseObserver;
 import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.Observer;
@@ -42,7 +44,7 @@ public abstract class SettingsGateway implements Closable {
 
 	private ConfigurableWriter<String, String> updateWriter = new BaseWriter<String, String>() {
 		@Override
-		public void write(String value) {
+		public void write(String value) throws IOException {
 			writeToWritables(value);
 		}
 	};
@@ -53,8 +55,11 @@ public abstract class SettingsGateway implements Closable {
 		writerSubscription = updateWriter.writeTo(settingsDestination);
 	}
 	
+	/**
+	 * Sends the update.
+	 */
 	public void sendUpdate() {
-		updateWriter.write(asText());
+		updateWriter.uncheckedWrite(asText());
 	}
 
 	protected abstract String asText();

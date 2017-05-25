@@ -200,7 +200,7 @@
 		<module>../uk.ac.stfc.isis.ibex.ui.configserver</module>
 		<module>../uk.ac.stfc.isis.ibex.ui.ioccontrol</module>
 		<module>../uk.ac.stfc.isis.ibex.ui.beamstatus</module>
-		<module>../uk.ac.stfc.isis.ibex.users</module>
+		
 		<module>../uk.ac.stfc.isis.ibex.instrument</module>
 		<module>../uk.ac.stfc.isis.ibex.epics</module>
 		<module>../uk.ac.stfc.isis.ibex.epics.switching</module>

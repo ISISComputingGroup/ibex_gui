@@ -109,7 +109,7 @@ public class ExperimentSetup extends Composite {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				if (viewModel != null) {
-					viewModel.updateDae();
+                    viewModel.updateDae();
 				}
 				sendingChanges.open();
 			}
