@@ -26,9 +26,9 @@ import uk.ac.stfc.isis.ibex.epics.pv.Channels;
 import uk.ac.stfc.isis.ibex.epics.writing.BaseWritable;
 
 /**
- *
+ * A channel type for reading arrays of integers.
  */
-public class IntArrayChannel implements ChannelType<int[]>{
+public class IntArrayChannel implements ChannelType<int[]> {
     @Override
     public ClosableObservable<int[]> reader(String address) {
         return Channels.Integers.arrayReader(address);

@@ -1,6 +1,6 @@
  /*
  * This file is part of the ISIS IBEX application.
- * Copyright (C) 2012-2016 Science & Technology Facilities Council.
+ * Copyright (C) 2012-2017 Science & Technology Facilities Council.
  * All rights reserved.
  *
  * This program is distributed in the hope that it will be useful.
@@ -16,9 +16,6 @@
  * http://opensource.org/licenses/eclipse-1.0.php
  */
 
-/**
- * 
- */
 package uk.ac.stfc.isis.ibex.ui.dae.detectordiagnostics;
 
 import org.eclipse.swt.events.VerifyEvent;
@@ -31,7 +28,7 @@ import org.eclipse.swt.widgets.Text;
 class NumericalVerifyListener implements VerifyListener {
 
     /**
-     * @param e
+     * {@inheritDoc}
      */
     @Override
     public void verifyText(VerifyEvent e) {

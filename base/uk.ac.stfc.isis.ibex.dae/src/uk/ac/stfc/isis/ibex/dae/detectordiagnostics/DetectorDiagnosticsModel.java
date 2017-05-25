@@ -1,6 +1,6 @@
  /*
  * This file is part of the ISIS IBEX application.
- * Copyright (C) 2012-2016 Science & Technology Facilities Council.
+ * Copyright (C) 2012-2017 Science & Technology Facilities Council.
  * All rights reserved.
  *
  * This program is distributed in the hope that it will be useful.
@@ -16,9 +16,6 @@
  * http://opensource.org/licenses/eclipse-1.0.php
  */
 
-/**
- * 
- */
 package uk.ac.stfc.isis.ibex.dae.detectordiagnostics;
 
 import java.io.IOException;
@@ -47,7 +44,8 @@ import uk.ac.stfc.isis.ibex.instrument.channels.IntegerChannel;
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
 
 /**
- * The Class DetectorDiagnosticsModel.
+ * The Detector diagnostics model, which provides connections 
+ * to the PVs holding the detector diagnostics data.
  */
 public class DetectorDiagnosticsModel {
     
@@ -104,6 +102,7 @@ public class DetectorDiagnosticsModel {
 
     /**
      * Constructor.
+     * 
      * @param viewModel the view model
      */
     public DetectorDiagnosticsModel(final DetectorDiagnosticsViewModel viewModel) {    
@@ -158,6 +157,7 @@ public class DetectorDiagnosticsModel {
     
     /**
      * Helper function that converts a boolean into 1 or 0.
+     * 
      * @param bool the boolean to convert
      * @return 1 if bool evaluates to true, 0 otherwise
      */

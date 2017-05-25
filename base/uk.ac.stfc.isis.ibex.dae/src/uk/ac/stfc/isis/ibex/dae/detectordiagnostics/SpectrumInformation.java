@@ -1,6 +1,6 @@
  /*
  * This file is part of the ISIS IBEX application.
- * Copyright (C) 2012-2016 Science & Technology Facilities Council.
+ * Copyright (C) 2012-2017 Science & Technology Facilities Council.
  * All rights reserved.
  *
  * This program is distributed in the hope that it will be useful.
@@ -16,15 +16,14 @@
  * http://opensource.org/licenses/eclipse-1.0.php
  */
 
-/**
- * 
- */
 package uk.ac.stfc.isis.ibex.dae.detectordiagnostics;
 
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 
 /**
- * The Class SpectrumInformation.
+ * This class holds information about one row in the detector diagnostics table.
+ * 
+ * It updates via databinding so fires property changes when it's data changes.
  */
 public class SpectrumInformation extends ModelObject {
     

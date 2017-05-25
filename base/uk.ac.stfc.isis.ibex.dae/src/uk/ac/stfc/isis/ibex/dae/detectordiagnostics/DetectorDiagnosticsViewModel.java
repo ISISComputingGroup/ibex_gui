@@ -1,6 +1,6 @@
  /*
  * This file is part of the ISIS IBEX application.
- * Copyright (C) 2012-2016 Science & Technology Facilities Council.
+ * Copyright (C) 2012-2017 Science & Technology Facilities Council.
  * All rights reserved.
  *
  * This program is distributed in the hope that it will be useful.
@@ -16,9 +16,6 @@
  * http://opensource.org/licenses/eclipse-1.0.php
  */
 
-/**
- * 
- */
 package uk.ac.stfc.isis.ibex.dae.detectordiagnostics;
 
 import java.util.ArrayList;
@@ -29,7 +26,9 @@ import org.eclipse.swt.widgets.Display;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 
 /**
- * The Class DetectorDiagnosticsModel.
+ * The detector diagnostics view model. 
+ * 
+ * Holds data coming from the PVs and is databound to the UI panel.
  */
 public class DetectorDiagnosticsViewModel extends ModelObject {
     
@@ -59,6 +58,7 @@ public class DetectorDiagnosticsViewModel extends ModelObject {
     
     /**
      * The list of all spectra that should be displayed.
+     * 
      * @return the list of all spectra that should be displayed
      */
     public List<SpectrumInformation> getSpectra() {
@@ -78,6 +78,7 @@ public class DetectorDiagnosticsViewModel extends ModelObject {
     
     /**
      * Updates the list of spectrum numbers.
+     * 
      * @param spectrumNumbersList the list of spectrum numbers
      */
     public synchronized void updateSpectrumNumbers(final List<Integer> spectrumNumbersList) {
@@ -95,6 +96,7 @@ public class DetectorDiagnosticsViewModel extends ModelObject {
 
     /**
      * Updates the list of count rates.
+     * 
      * @param countRatesList the list of count rates
      */
     public synchronized void updateCountRates(final List<Double> countRatesList) {
@@ -112,6 +114,7 @@ public class DetectorDiagnosticsViewModel extends ModelObject {
     
     /**
      * Updates the list of maximum counts.
+     * 
      * @param maxSpecBinCount the list of maximum counts
      */
     public synchronized void updateMaxSpecBinCount(final List<Integer> maxSpecBinCount) {
@@ -129,6 +132,7 @@ public class DetectorDiagnosticsViewModel extends ModelObject {
     
     /**
      * Updates the list of integrals.
+     * 
      * @param integralsList the list of integrals
      */
     public synchronized void updateIntegrals(final List<Integer> integralsList) {
@@ -166,6 +170,7 @@ public class DetectorDiagnosticsViewModel extends ModelObject {
 
     /**
      * Update the number of spectra that should be displayed.
+     * 
      * @param size the new number of spectra
      */
     synchronized void updateSpectraCount(int size) {
@@ -200,6 +205,7 @@ public class DetectorDiagnosticsViewModel extends ModelObject {
     
     /**
      * Returns the integer index of the spectra type.
+     * 
      * @return the integer index of the spectra type
      */
     public Integer getSpectraType() {
@@ -208,6 +214,7 @@ public class DetectorDiagnosticsViewModel extends ModelObject {
     
     /**
      * Sets the spectra type.
+     * 
      * @param type the type
      */
     public void setSpectraType(Integer type) {
@@ -220,6 +227,7 @@ public class DetectorDiagnosticsViewModel extends ModelObject {
     
     /**
      * Gets the period.
+     * 
      * @return the period
      */
     public Integer getPeriod() {
@@ -228,6 +236,7 @@ public class DetectorDiagnosticsViewModel extends ModelObject {
     
     /**
      * Sets the period.
+     * 
      * @param value the period
      */
     public void setPeriod(Integer value) {
