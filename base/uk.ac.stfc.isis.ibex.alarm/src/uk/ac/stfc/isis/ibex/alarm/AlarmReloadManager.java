@@ -36,7 +36,7 @@ public final class AlarmReloadManager {
      * The blockserver finishes it's operations before the alarm server is
      * ready.
      */
-    private static final int DELAY_IN_SECONDS = 30;
+    private static final int DELAY_IN_SECONDS = 40;
 
     /**
      * The instance of this singleton.
