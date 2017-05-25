@@ -72,7 +72,7 @@ public class DetectorDiagnosticsPanel extends Composite {
         
         new Label(this, SWT.NONE).setText("Spectra to display");
         new Label(this, SWT.NONE).setText("Spectra periods");      
-        new Label(this, SWT.NONE).setText("Starting spectrum number");        
+        new Label(this, SWT.NONE).setText("Starting spectrum");        
         new Label(this, SWT.NONE).setText("Number of spectra");        
         new Label(this, SWT.NONE).setText("Integral lower limit");        
         new Label(this, SWT.NONE).setText("Integral upper limit");

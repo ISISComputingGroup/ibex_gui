@@ -16,9 +16,6 @@
  * http://opensource.org/licenses/eclipse-1.0.php
  */
 
-/**
- * 
- */
 package uk.ac.stfc.isis.ibex.ui.dae.detectordiagnostics;
 
 import java.beans.PropertyChangeEvent;
