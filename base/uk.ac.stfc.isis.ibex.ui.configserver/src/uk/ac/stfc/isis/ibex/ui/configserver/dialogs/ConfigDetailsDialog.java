@@ -44,6 +44,7 @@ public class ConfigDetailsDialog extends TitleAreaDialog implements
 		MessageDisplayer {
 
 	private static final Point INITIAL_SIZE = new Point(650, 750);
+    private static final Point MINIMUM_SIZE = new Point(450, 700);
 	private final String title;
 	private final String subTitle;
 
@@ -71,7 +72,7 @@ public class ConfigDetailsDialog extends TitleAreaDialog implements
     public ConfigDetailsDialog(Shell parentShell, String title, String subTitle, EditableConfiguration config,
             boolean isBlank, ConfigurationViewModels configurationViewModels) {
 		super(parentShell);
-		setShellStyle(getShellStyle() | SWT.DIALOG_TRIM | SWT.RESIZE);
+        setShellStyle(getShellStyle() | SWT.DIALOG_TRIM | SWT.RESIZE);
 		this.title = title;
 		this.subTitle = subTitle;
 		this.config = config;
@@ -92,6 +93,7 @@ public class ConfigDetailsDialog extends TitleAreaDialog implements
 	protected void configureShell(Shell shell) {
 		super.configureShell(shell);
 		shell.setText(title);
+        shell.setMinimumSize(MINIMUM_SIZE);
 	}
 
 	@Override
