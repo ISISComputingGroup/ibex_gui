@@ -19,7 +19,6 @@
 
 package uk.ac.stfc.isis.ibex.dae.experimentsetup;
 
-import java.io.IOException;
 import java.util.Collection;
 
 import uk.ac.stfc.isis.ibex.dae.DaeObservables;
@@ -158,7 +157,6 @@ public class ExperimentSetup extends Closer  {
 	
     /**
      * Sends all changes made to the experiment setup in the GUI to the server.
-     * @throws IOException 
      */
 	public void sendAllSettings() {
 		daeSettings.sendUpdate();

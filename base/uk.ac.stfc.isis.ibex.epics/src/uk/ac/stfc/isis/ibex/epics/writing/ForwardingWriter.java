@@ -31,6 +31,10 @@ public abstract class ForwardingWriter<TIn, TOut> implements ConfigurableWriter<
 	private ConfigurableWriter<TIn, TOut> writer;
 	private Collection<Subscription> subscriptions = new ArrayList<>();
 	
+	/**
+	 * Sets the writer.
+	 * @param writer the writer
+	 */
 	protected void setWriter(ConfigurableWriter<TIn, TOut> writer) {
 		this.writer = writer;
 	}
