@@ -15,8 +15,7 @@
  * https://www.eclipse.org/org/documents/epl-v10.php or
  * http://opensource.org/licenses/eclipse-1.0.php
  */
-
 /**
- * Provides the classes necessary for the base UI device screens.
+ * Provides the classes necessary for displaying the devicescreens dialogs.
  */
-package uk.ac.stfc.isis.ibex.ui.devicescreens;
+package uk.ac.stfc.isis.ibex.ui.devicescreens.dialogs;
