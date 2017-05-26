@@ -46,7 +46,9 @@ public class BlocksMenu extends MenuManager {
 	
     private static final String BLOCK_MENU_GROUP = "Block";
 
-    private static final String EDIT_BLOCK = "Edit block";
+    private static final String EDIT_BLOCK_PREFIX = "Edit host ";
+    private static final String COMPONENT_SUFFIX = "component";
+    private static final String CONFIGURATION_SUFFIX = "configuration";
 	
 	private final IAction editBlockAction;
 	
@@ -95,7 +97,13 @@ public class BlocksMenu extends MenuManager {
 		
         appendToGroup(BLOCK_MENU_GROUP, displayHistory);
 
-        editBlockAction = new Action(EDIT_BLOCK) {
+        String editBlockLabel = EDIT_BLOCK_PREFIX;
+        if (this.block.hasComponent()) {
+            editBlockLabel += COMPONENT_SUFFIX;
+        } else {
+            editBlockLabel += CONFIGURATION_SUFFIX;
+        }
+        editBlockAction = new Action(editBlockLabel) {
             @Override
             public void run() {
                 try {

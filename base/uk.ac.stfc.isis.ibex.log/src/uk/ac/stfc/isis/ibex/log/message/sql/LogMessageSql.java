@@ -23,6 +23,7 @@ import uk.ac.stfc.isis.ibex.log.message.LogMessageFields;
 public class LogMessageSql {
     /**
      * @param searchField
+     *            The field to use when searching messages
      * @return the appropriate SQL for where lookups
      */
     public LogMessageFieldsWhereSql getWhereSqlTag(LogMessageFields searchField) {

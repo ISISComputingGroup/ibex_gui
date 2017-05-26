@@ -52,7 +52,7 @@ public class ConfigDetailsDialog extends TitleAreaDialog implements
 
 	protected EditableConfiguration config;
 
-	private ConfigEditorPanel editor;
+    protected ConfigEditorPanel editor;
 	protected boolean doAsComponent = false;
 	protected boolean isBlank;
 

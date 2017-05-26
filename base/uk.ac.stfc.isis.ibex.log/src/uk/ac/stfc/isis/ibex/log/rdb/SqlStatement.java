@@ -80,10 +80,15 @@ public class SqlStatement {
     /**
      * Set the limits in which to search in terms of event time. Null values
      * ignored.
+     * 
+     * @param startTime
+     *            The earliest time to include in the search
+     * @param endTime
+     *            The latest time to include in the search
      */
     public void setTimeRange(Calendar startTime, Calendar endTime) {
-	this.startTime = startTime;
-	this.endTime = endTime;
+        this.startTime = startTime;
+        this.endTime = endTime;
     }
 
     /**
