@@ -316,7 +316,7 @@ public class DetectorDiagnosticsModel {
             }         
         });
         
-        numberOfSpectraThatMatchedCriteria = observableFactory.getPVObservable(new IntegerChannel(), InstrumentUtils.addPrefix("DAE:DIAG:SPEC:MATCH"));      
+        numberOfSpectraThatMatchedCriteria = observableFactory.getSwitchableObservable(new IntegerChannel(), InstrumentUtils.addPrefix("DAE:DIAG:SPEC:MATCH"));      
         numberOfSpectraThatMatchedCriteria.addObserver(new SpectrumObserver<Integer>() {
             @Override
             public void onNonNullValue(Integer value) {
@@ -324,7 +324,7 @@ public class DetectorDiagnosticsModel {
             }  
         });
         
-        maxFramesObservable = observableFactory.getPVObservable(new IntegerChannel(), InstrumentUtils.addPrefix("DAE:DIAG:FRAMES:SP"));      
+        maxFramesObservable = observableFactory.getSwitchableObservable(new IntegerChannel(), InstrumentUtils.addPrefix("DAE:DIAG:FRAMES:SP"));      
         maxFramesObservable.addObserver(new SpectrumObserver<Integer>() {
             @Override
             public void onNonNullValue(Integer value) {
@@ -332,7 +332,7 @@ public class DetectorDiagnosticsModel {
             }  
         });
         
-        integralLowLimitObservable = observableFactory.getPVObservable(new DoubleChannel(), InstrumentUtils.addPrefix("DAE:DIAG:SPEC:INTLOW:SP"));      
+        integralLowLimitObservable = observableFactory.getSwitchableObservable(new DoubleChannel(), InstrumentUtils.addPrefix("DAE:DIAG:SPEC:INTLOW:SP"));      
         integralLowLimitObservable.addObserver(new SpectrumObserver<Double>() {
             @Override
             public void onNonNullValue(Double value) {
@@ -340,7 +340,7 @@ public class DetectorDiagnosticsModel {
             }  
         });
         
-        integralHighLimitObservable = observableFactory.getPVObservable(new DoubleChannel(), InstrumentUtils.addPrefix("DAE:DIAG:SPEC:INTHIGH:SP"));      
+        integralHighLimitObservable = observableFactory.getSwitchableObservable(new DoubleChannel(), InstrumentUtils.addPrefix("DAE:DIAG:SPEC:INTHIGH:SP"));      
         integralHighLimitObservable.addObserver(new SpectrumObserver<Double>() {
             @Override
             public void onNonNullValue(Double value) {
@@ -348,7 +348,7 @@ public class DetectorDiagnosticsModel {
             }  
         });
         
-        numberOfSpectraObservable = observableFactory.getPVObservable(new IntegerChannel(), InstrumentUtils.addPrefix("DAE:DIAG:SPEC:NUM:SP"));      
+        numberOfSpectraObservable = observableFactory.getSwitchableObservable(new IntegerChannel(), InstrumentUtils.addPrefix("DAE:DIAG:SPEC:NUM:SP"));      
         numberOfSpectraObservable.addObserver(new SpectrumObserver<Integer>() {
             @Override
             public void onNonNullValue(Integer value) {
@@ -356,7 +356,7 @@ public class DetectorDiagnosticsModel {
             }  
         });
         
-        startingSpectrumNumberObservable = observableFactory.getPVObservable(new IntegerChannel(), InstrumentUtils.addPrefix("DAE:DIAG:SPEC:START:SP"));      
+        startingSpectrumNumberObservable = observableFactory.getSwitchableObservable(new IntegerChannel(), InstrumentUtils.addPrefix("DAE:DIAG:SPEC:START:SP"));      
         startingSpectrumNumberObservable.addObserver(new SpectrumObserver<Integer>() {
             @Override
             public void onNonNullValue(Integer value) {
@@ -364,7 +364,7 @@ public class DetectorDiagnosticsModel {
             }  
         });
         
-        spectraPeriodsObservable = observableFactory.getPVObservable(new IntegerChannel(), InstrumentUtils.addPrefix("DAE:DIAG:PERIOD:SP"));      
+        spectraPeriodsObservable = observableFactory.getSwitchableObservable(new IntegerChannel(), InstrumentUtils.addPrefix("DAE:DIAG:PERIOD:SP"));      
         spectraPeriodsObservable.addObserver(new SpectrumObserver<Integer>() {
             @Override
             public void onNonNullValue(Integer value) {
@@ -372,7 +372,7 @@ public class DetectorDiagnosticsModel {
             }  
         });
         
-        spectraTypeObservable = observableFactory.getPVObservable(new EnumChannel<SpectraToDisplay>(SpectraToDisplay.class), InstrumentUtils.addPrefix("DAE:DIAG:SPEC:SHOW"));      
+        spectraTypeObservable = observableFactory.getSwitchableObservable(new EnumChannel<SpectraToDisplay>(SpectraToDisplay.class), InstrumentUtils.addPrefix("DAE:DIAG:SPEC:SHOW"));      
         spectraTypeObservable.addObserver(new SpectrumObserver<SpectraToDisplay>() {
             @Override
             public void onNonNullValue(SpectraToDisplay value) {
@@ -424,7 +424,11 @@ public class DetectorDiagnosticsModel {
         if (error == null) {
             return;
         }
-        LOG.error(error.getMessage(), error);
+        
+        // Only log errors if we should be able to write to the instrument.
+        if (diagnosticsEnabled.canWrite()) {
+            LOG.error(error.getMessage(), error);
+        }
     }
 
 }
