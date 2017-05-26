@@ -49,12 +49,20 @@ public class EditConfigDialog extends ConfigDetailsDialog {
     /**
      * @wbp.parser.constructor Constructor
      * 
-     * @param parentShell parent shell to run dialogue
-     * @param title title of dialogue
-     * @param subTitle action being taken, e.g. editing current configuration
-     * @param config configuration being edited
-     * @param isBlank is blank
-     * @param configurationViewModels view model for the configuration
+     * @param parentShell
+     *            parent shell to run dialogue
+     * @param title
+     *            title of dialogue
+     * @param subTitle
+     *            action being taken, e.g. editing current configuration
+     * @param config
+     *            configuration being edited
+     * @param isBlank
+     *            is blank
+     * @param configurationViewModels
+     *            view model for the configuration
+     * @param editBlockFirst
+     *            Open the dialog with blocks tab open
      */
     public EditConfigDialog(Shell parentShell, String title, String subTitle, EditableConfiguration config,
             boolean isBlank, ConfigurationViewModels configurationViewModels, boolean editBlockFirst) {
@@ -121,7 +129,7 @@ public class EditConfigDialog extends ConfigDetailsDialog {
 		super.setErrorMessage(newErrorMessage);
 	}
 
-    public void selectBlocksTab() {
+    private void selectBlocksTab() {
         editor.selectBlocksTab();
     }
 

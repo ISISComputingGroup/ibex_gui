@@ -24,6 +24,9 @@ import org.osgi.framework.BundleContext;
 
 import uk.ac.stfc.isis.ibex.instrument.Instrument;
 
+/**
+ * Provides and sets information about the Data Acquisition Electronics.
+ */
 public class Dae extends Plugin {
 
     /**
@@ -34,6 +37,9 @@ public class Dae extends Plugin {
     private static Dae instance;
 	private static BundleContext context;
 
+    /**
+     * @return The DAE singleton.
+     */
     public static Dae getInstance() { 
     	return instance; 
     }
@@ -44,6 +50,9 @@ public class Dae extends Plugin {
 	private final DaeWritables writables;
 	private final DaeObservables observables;
 
+    /**
+     * Default constructor.
+     */
     public Dae() {
 		super();
 		instance = this;
@@ -52,14 +61,23 @@ public class Dae extends Plugin {
 		model = new DaeModel(writables, observables);
 	}
     
+    /**
+     * @return The DAE model
+     */
 	public IDae model() {
 		return model;
 	}
 	
+    /**
+     * @return The observables to DAE information.
+     */
 	public DaeObservables observables() {
 		return observables;
 	}
 	
+    /**
+     * @return The current context.
+     */
 	static BundleContext getContext() {
 		return context;
 	}

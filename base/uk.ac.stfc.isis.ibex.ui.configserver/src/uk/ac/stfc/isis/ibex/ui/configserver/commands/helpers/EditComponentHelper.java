@@ -46,6 +46,7 @@ import uk.ac.stfc.isis.ibex.ui.configserver.dialogs.EditConfigDialog;
 public class EditComponentHelper extends ConfigHelper {
 
     private ConfigServer server;
+    private static final String[] OK = {"OK"};
 
     /**
      * The title of the dialog
@@ -95,13 +96,13 @@ public class EditComponentHelper extends ConfigHelper {
     private void openErrorSavingDialog(IOException e) {
         String title = "Error saving component";
         String description = "Unable to save component: " + e.getMessage();
-        String[] button = new String[] { "OK" };
-        new MessageDialog(shell, title, null, description, MessageDialog.ERROR, button, 0).open();
+        new MessageDialog(shell, title, null, description, MessageDialog.ERROR, OK, 0).open();
     }
 
     private void openConflictsDialog(String warning) {
+         
         new MessageDialog(shell, "Conflicts with current configuration", null, warning,
-                MessageDialog.WARNING, new String[] { "Ok" }, 0).open();
+                MessageDialog.WARNING, OK, 0).open();
     }
 
     @Override

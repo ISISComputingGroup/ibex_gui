@@ -61,6 +61,18 @@ public abstract class ConfigHelper {
         createDialogCurrent(false);
     }
     
+    /**
+     * Opens a view/edit configuration dialog for the specified configuration.
+     * 
+     * @param subTitle
+     *            The subtitle to add to the dialog
+     * @param config
+     *            The configuration to open
+     * @param isCurrent
+     *            Is this the current configuration
+     * @param editBlockFirst
+     *            Should the dialog open the blocks tab first
+     */
     protected abstract void openDialog(String subTitle, EditableConfiguration config, boolean isCurrent,
             boolean editBlockFirst);
 }
