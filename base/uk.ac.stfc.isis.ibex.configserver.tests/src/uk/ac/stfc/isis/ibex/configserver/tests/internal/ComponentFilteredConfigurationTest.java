@@ -54,15 +54,15 @@ public class ComponentFilteredConfigurationTest {
 
     @Test
     public void GIVEN_no_groups_WHEN_groups_filtered_THEN_filtered_groups_is_empty() {
-        List<Group> empty = new ArrayList<>();
+        List<Group> empty = new ArrayList<Group>();
         assertGroupListsAreEqual(empty, ComponentFilteredConfiguration.filterGroups(empty));
     }
 
     @Test
     public void GIVEN_one_non_component_group_WHEN_groups_filtered_THEN_filtered_groups_is_same_as_original() {
         // Arrange
-        List<Group> groups = new ArrayList<>();
-        List<String> blocks = new ArrayList<>();
+        List<Group> groups = new ArrayList<Group>();
+        List<String> blocks = new ArrayList<String>();
         blocks.add("block1");
         blocks.add("block2");
         groups.add(new Group("name", blocks, null));
@@ -74,11 +74,11 @@ public class ComponentFilteredConfigurationTest {
     @Test
     public void GIVEN_two_non_component_groups_WHEN_groups_filtered_THEN_filtered_groups_is_same_as_original() {
         // Arrange
-        List<String> blocks = new ArrayList<>();
+        List<String> blocks = new ArrayList<String>();
         blocks.add("block1");
         blocks.add("block2");
 
-        List<Group> groups = new ArrayList<>();
+        List<Group> groups = new ArrayList<Group>();
         groups.add(new Group("name1", blocks, null));
         groups.add(new Group("name2", blocks, null));
 
@@ -90,11 +90,11 @@ public class ComponentFilteredConfigurationTest {
     public void
             GIVEN_several_component_groups_WHYEN_groups_filtered_THEN_filtered_groups_are_the_same_but_without_blocks() {
         // Arrange
-        List<String> blocks = new ArrayList<>();
+        List<String> blocks = new ArrayList<String>();
         blocks.add("block1");
         blocks.add("block2");
 
-        List<String> groupNames = new ArrayList<>();
+        List<String> groupNames = new ArrayList<String>();
         groupNames.add("name1");
         groupNames.add("name2");
         
@@ -107,7 +107,7 @@ public class ComponentFilteredConfigurationTest {
 
         List<Group> expected = new ArrayList<Group>();
         for (String name : groupNames) {
-            expected.add(new Group(name, new ArrayList<>(), component));
+            expected.add(new Group(name, new ArrayList<String>(), component));
         }
 
         // Assert
@@ -123,7 +123,7 @@ public class ComponentFilteredConfigurationTest {
         blocks.add("block2");
 
         Group component_group = new Group("name1", blocks, "my_component");
-        Group component_group_no_blocks = new Group("name1", new ArrayList<>(), "my_component");
+        Group component_group_no_blocks = new Group("name1", new ArrayList<String>(), "my_component");
         Group non_component_group = new Group("name1", blocks, null);
 
         List<Group> groups = new ArrayList<Group>();
