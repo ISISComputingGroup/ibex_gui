@@ -95,7 +95,8 @@ public class ComponentFilteredConfiguration extends Configuration {
         return Lists.newArrayList(Iterables.transform(groups, new Function<Group, Group>() {
             @Override
             public Group apply(Group group) {
-                return new Group(group.getName(), new ArrayList<String>(), group.getComponent());
+                return group.getComponent() == null ? group
+                        : new Group(group.getName(), new ArrayList<String>(), null);
             }
         }));
 	}
