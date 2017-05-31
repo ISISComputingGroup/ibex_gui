@@ -19,8 +19,10 @@
 
 package uk.ac.stfc.isis.ibex.configserver.internal;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
+import com.google.common.base.Function;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
@@ -90,6 +92,11 @@ public class ComponentFilteredConfiguration extends Configuration {
      * @return The filtered collection of groups
      */
     public static Collection<Group> filterGroups(Collection<Group> groups) {
-        return groups;
+        return Lists.newArrayList(Iterables.transform(groups, new Function<Group, Group>() {
+            @Override
+            public Group apply(Group group) {
+                return new Group(group.getName(), new ArrayList<String>(), group.getComponent());
+            }
+        }));
 	}
 }
