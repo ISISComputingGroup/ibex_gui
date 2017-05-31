@@ -90,11 +90,6 @@ public class ComponentFilteredConfiguration extends Configuration {
      * @return The filtered collection of groups
      */
     public static Collection<Group> filterGroups(Collection<Group> groups) {
-        return Lists.newArrayList(Iterables.filter(groups, new Predicate<Group>() {
-			@Override
-			public boolean apply(Group group) {
-				return !group.hasComponent();
-			}
-		}));
+        return groups;
 	}
 }
