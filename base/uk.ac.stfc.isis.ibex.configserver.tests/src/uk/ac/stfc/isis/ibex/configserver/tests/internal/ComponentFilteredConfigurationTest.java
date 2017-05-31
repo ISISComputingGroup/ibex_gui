@@ -53,13 +53,13 @@ public class ComponentFilteredConfigurationTest {
     }
 
     @Test
-    public void WHEN_groups_empty_THEN_filtered_groups_is_empty() {
+    public void GIVEN_no_groups_WHEN_groups_filtered_THEN_filtered_groups_is_empty() {
         List<Group> empty = new ArrayList<>();
         assertGroupListsAreEqual(empty, ComponentFilteredConfiguration.filterGroups(empty));
     }
 
     @Test
-    public void WHEN_groups_contains_one_non_component_item_THEN_filtered_groups_is_same_as_original() {
+    public void GIVEN_one_non_component_group_WHEN_groups_filtered_THEN_filtered_groups_is_same_as_original() {
         // Arrange
         List<Group> groups = new ArrayList<>();
         List<String> blocks = new ArrayList<>();
@@ -72,7 +72,7 @@ public class ComponentFilteredConfigurationTest {
     }
 
     @Test
-    public void WHEN_groups_contains_two_non_component_items_THEN_filtered_groups_is_same_as_original() {
+    public void GIVEN_two_non_component_groups_WHEN_groups_filtered_THEN_filtered_groups_is_same_as_original() {
         // Arrange
         List<String> blocks = new ArrayList<>();
         blocks.add("block1");
@@ -87,7 +87,8 @@ public class ComponentFilteredConfigurationTest {
     }
 
     @Test
-    public void WHEN_groups_contains_several_component_items_THEN_filtered_groups_are_the_same_but_without_blocks() {
+    public void
+            GIVEN_several_component_groups_WHYEN_groups_filtered_THEN_filtered_groups_are_the_same_but_without_blocks() {
         // Arrange
         List<String> blocks = new ArrayList<>();
         blocks.add("block1");
@@ -115,7 +116,7 @@ public class ComponentFilteredConfigurationTest {
 
     @Test
     public void
-            WHEN_groups_contains_a_component_and_non_component_group_THEN_component_group_has_blocks_removed() {
+            GIVEN_a_component_and_non_component_group_WHEN_groups_filtered_THEN_component_group_has_blocks_removed() {
         // Arrange
         List<String> blocks = new ArrayList<String>();
         blocks.add("block1");
