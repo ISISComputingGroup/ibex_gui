@@ -158,7 +158,9 @@ public class GroupsPanel extends Composite {
 	
 	private void addGroups() {
 		for (DisplayGroup group : displayGroups) {
-			groups.add(groupWidget(group));
+		    if (group.containsAnyVisibleBlocks()) {
+		        groups.add(groupWidget(group));
+		    }
 		}
 	}
 	

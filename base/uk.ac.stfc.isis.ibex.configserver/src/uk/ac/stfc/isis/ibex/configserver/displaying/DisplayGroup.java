@@ -86,4 +86,18 @@ public class DisplayGroup {
             }
         };
     }
+
+    /**
+     * Whether or not group contains any visible blocks.
+     *  
+     * @return - true if group contains at least one visible block, false otherwise.
+     */
+    public boolean containsAnyVisibleBlocks() {
+        for (DisplayBlock block : blocks) {
+            if (block.getIsVisible()) {
+                return true;
+            }
+        }
+        return false;
+    }
 }
