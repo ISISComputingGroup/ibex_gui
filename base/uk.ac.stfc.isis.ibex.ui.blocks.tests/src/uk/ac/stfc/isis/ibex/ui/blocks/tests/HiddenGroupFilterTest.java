@@ -69,5 +69,43 @@ public class HiddenGroupFilterTest {
          // Assert
          assertTrue(result.contains(groupWithVisibleBlocks));
          assertFalse(result.contains(groupWithoutVisibleBlocks));
-    }  
+    }
+    
+    @Test
+    public void GIVEN_a_group_which_contains_visible_blocks_WHEN_groups_are_filtered_and_show_hidden_blocks_is_true_THEN_group_is_returned_unmodified() {
+         // Arrange
+         groups.add(groupWithVisibleBlocks);
+         
+         // Act
+         Collection<DisplayGroup> result = HiddenGroupFilter.getVisibleGroups(groups, true);
+         
+         // Assert
+         assertTrue(result.contains(groupWithVisibleBlocks));
+    }
+
+    @Test
+    public void GIVEN_a_group_which_contains_no_visible_blocks_WHEN_groups_are_filtered_and_show_hidden_blocks_is_true_THEN_group_is_returned_unmodified() {
+         // Arrange
+         groups.add(groupWithoutVisibleBlocks);
+         
+         // Act
+         Collection<DisplayGroup> result = HiddenGroupFilter.getVisibleGroups(groups, true);
+         
+         // Assert
+         assertTrue(result.contains(groupWithoutVisibleBlocks));
+    }
+
+    @Test
+    public void GIVEN_a_group_which_contains_visible_blocks_and_a_group_which_contains_no_visible_blocks_WHEN_groups_are_filtered_and_show_hidden_blocks_is_true_THEN_both_groups_are_returned() {
+         // Arrange
+         groups.add(groupWithVisibleBlocks); 
+         groups.add(groupWithoutVisibleBlocks);
+         
+         // Act
+         Collection<DisplayGroup> result = HiddenGroupFilter.getVisibleGroups(groups, true);
+         
+         // Assert
+         assertTrue(result.contains(groupWithVisibleBlocks));
+         assertTrue(result.contains(groupWithoutVisibleBlocks));
+    }
 }
