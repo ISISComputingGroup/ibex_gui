@@ -13,7 +13,7 @@ import uk.ac.stfc.isis.ibex.configserver.displaying.DisplayGroup;
 import uk.ac.stfc.isis.ibex.ui.blocks.groups.HiddenGroupFilter;
 
 /**
-*
+* Tests for Hidden group filter class.
 */
 public class HiddenGroupFilterTest {
     
