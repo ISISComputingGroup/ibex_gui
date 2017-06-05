@@ -112,7 +112,7 @@ public class InstrumentTreeControls extends Composite {
 			}
 		});
 
-        synopticViewModel.addPropertyChangeListener("compSelection", new PropertyChangeListener() {
+        synopticViewModel.addPropertyChangeListener("selectedComponents", new PropertyChangeListener() {
             @Override
             public void propertyChange(PropertyChangeEvent evt) {
                 @SuppressWarnings("unchecked")
