@@ -57,7 +57,7 @@ public class CustomInstrumentViewModelTest {
     public void selected_instrument_is_configured_correctly() {
         // Arrange
         String expectedName = "instrument_name";
-        String exptectedPVPrefix = "pv_prefix";
+        String exptectedPVPrefix = "pv_prefix:";
         CustomIntrumentViewModel viewModel = new CustomIntrumentViewModel(expectedName);
         viewModel.setPvPrefix(exptectedPVPrefix);
 
@@ -68,6 +68,23 @@ public class CustomInstrumentViewModelTest {
         assertEquals(expectedName, instrument.name());
         assertEquals(exptectedPVPrefix, instrument.pvPrefix());
     }
+    
+    @Test
+    public void selected_instrument_is_configured_correctly_with_no_trailing_colon() {
+        // Arrange
+        String expectedName = "instrument_name";
+        String exptectedPVPrefix = "pv_prefix:";
+        CustomIntrumentViewModel viewModel = new CustomIntrumentViewModel(expectedName);
+        viewModel.setPvPrefix("pv_prefix");
+
+        // Act
+        InstrumentInfo instrument = viewModel.getSelectedInstrument();
+
+        // Assert
+        assertEquals(expectedName, instrument.name());
+        assertEquals(exptectedPVPrefix, instrument.pvPrefix());
+    }
+
 
     @Test
     public void invalid_pv_prefix_is_validated_when_set() {
