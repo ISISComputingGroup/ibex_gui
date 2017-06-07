@@ -92,7 +92,7 @@ public class ObservedSpectrum extends UpdatableSpectrum implements Closable {
 	
 	private void updateSubscriptions() {
 
-        cancelSubscriptions();
+        close();
 
         xLengthObservable = observables.spectrumXDataLength(getNumber(), getPeriod());
         yLengthObservable = observables.spectrumYDataLength(getNumber(), getPeriod());
@@ -109,10 +109,12 @@ public class ObservedSpectrum extends UpdatableSpectrum implements Closable {
 
 	@Override
 	public void close() {
+        closeObservables();
 		cancelSubscriptions();
+        disconnectObservers();
 	}
 
-	private void cancelSubscriptions() {
+    private void closeObservables() {
 
         List<ClosableObservable<? extends Object>> oldObservables = new ArrayList<>();
         oldObservables.add(xData);
@@ -126,7 +128,9 @@ public class ObservedSpectrum extends UpdatableSpectrum implements Closable {
                 o.close();
             }
         }
+    }
 
+    private void cancelSubscriptions() {
         List<Subscription> oldSubscriptions = new ArrayList<>();
         oldSubscriptions.add(xSubscription);
         oldSubscriptions.add(ySubscription);
@@ -135,7 +139,9 @@ public class ObservedSpectrum extends UpdatableSpectrum implements Closable {
                 s.removeObserver();
             }
         }
+    }
 
+    private void disconnectObservers() {
         List<DataObserver> oldObservers = new ArrayList<>();
         oldObservers.add(xDataObserver);
         oldObservers.add(yDataObserver);
