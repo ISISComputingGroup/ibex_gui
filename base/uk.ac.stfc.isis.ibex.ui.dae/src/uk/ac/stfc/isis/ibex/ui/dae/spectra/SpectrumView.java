@@ -21,6 +21,8 @@ package uk.ac.stfc.isis.ibex.ui.dae.spectra;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.beans.BeanProperties;
@@ -42,12 +44,14 @@ public class SpectrumView extends Composite {
     private Spinner number;
     private Spinner period;
 	private SpectrumPlot spectrumFigure;
+    private Timer timer = new Timer();
 
 	private DataBindingContext bindingContext;
 	private UpdatableSpectrum spectrum;
 	
     private static final int MAXIMUM_MONITOR_SPECTRUM = 1000000;
     private static final int SPINNER_WIDTH = 40;
+    private static final int ONE_SECOND_IN_MILLISECONDS = 1000;
     
     /**
      * Instantiates a new spectrum view.
@@ -106,7 +110,17 @@ public class SpectrumView extends Composite {
             public void propertyChange(PropertyChangeEvent evt) {
                 if (spectrum.getRequiresUpdate()) {
                     spectrumFigure.update();
-                    spectrum.update();
+
+                    // Wait for a second before executing in case the user is
+                    // still scrolling through spectra numbers.
+                    timer.cancel();
+                    timer = new Timer();
+                    timer.schedule(new TimerTask() {
+                        @Override
+                        public void run() {
+                            spectrum.update();
+                        }
+                    }, ONE_SECOND_IN_MILLISECONDS);
                 }
             }
         });
