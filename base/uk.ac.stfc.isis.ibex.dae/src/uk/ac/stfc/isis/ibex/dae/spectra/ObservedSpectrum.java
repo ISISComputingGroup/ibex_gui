@@ -44,12 +44,10 @@ public class ObservedSpectrum extends UpdatableSpectrum implements Closable {
                 doubles[i] = value[i];
             }
             return doubles;
-
         }
 	}
 	
 	private final DataObserver xDataObserver = new DataObserver() {
-
 		@Override
         public void onValue(Pair<Integer, float[]> value) {
             setXData(toDoubleArray(value.second, value.first));
