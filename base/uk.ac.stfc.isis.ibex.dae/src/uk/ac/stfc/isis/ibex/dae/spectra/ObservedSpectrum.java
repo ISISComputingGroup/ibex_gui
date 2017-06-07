@@ -144,6 +144,5 @@ public class ObservedSpectrum extends UpdatableSpectrum implements Closable {
                 d.onConnectionStatus(false);
             }
         }
-        return;
 	}
 }
