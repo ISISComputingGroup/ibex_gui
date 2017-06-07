@@ -19,9 +19,13 @@
 
 package uk.ac.stfc.isis.ibex.dae.spectra;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import uk.ac.stfc.isis.ibex.dae.DaeObservables;
 import uk.ac.stfc.isis.ibex.epics.observing.BaseObserver;
 import uk.ac.stfc.isis.ibex.epics.observing.BufferedObservablePair;
+import uk.ac.stfc.isis.ibex.epics.observing.ClosableObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.Pair;
 import uk.ac.stfc.isis.ibex.epics.observing.Subscription;
@@ -84,11 +88,12 @@ public class ObservedSpectrum extends UpdatableSpectrum implements Closable {
 	
 	@Override
 	public void update() {
-		super.update();
 		updateSubscriptions();
+        super.update();
 	}
 	
 	private void updateSubscriptions() {
+
         cancelSubscriptions();
 
         xLengthObservable = observables.spectrumXDataLength(getNumber(), getPeriod());
@@ -96,7 +101,7 @@ public class ObservedSpectrum extends UpdatableSpectrum implements Closable {
         
         xValObservable = observables.spectrumXData(getNumber(), getPeriod());
         yValObservable = observables.spectrumYData(getNumber(), getPeriod());
-        
+
         xData = new BufferedObservablePair<>(xLengthObservable, xValObservable);
         yData = new BufferedObservablePair<>(yLengthObservable, yValObservable);
 
@@ -110,12 +115,37 @@ public class ObservedSpectrum extends UpdatableSpectrum implements Closable {
 	}
 
 	private void cancelSubscriptions() {
-		if (xSubscription != null) {
-			xSubscription.removeObserver();
-		}
-		
-		if (ySubscription != null) {
-			ySubscription.removeObserver();
-		}
+
+        List<ClosableObservable<? extends Object>> oldObservables = new ArrayList<>();
+        oldObservables.add(xData);
+        oldObservables.add(yData);
+        oldObservables.add(xLengthObservable);
+        oldObservables.add(xValObservable);
+        oldObservables.add(yLengthObservable);
+        oldObservables.add(yValObservable);
+        for (ClosableObservable<? extends Object> o : oldObservables) {
+            if (o != null) {
+                o.close();
+            }
+        }
+
+        List<Subscription> oldSubscriptions = new ArrayList<>();
+        oldSubscriptions.add(xSubscription);
+        oldSubscriptions.add(ySubscription);
+        for (Subscription s : oldSubscriptions) {
+            if (s != null) {
+                s.removeObserver();
+            }
+        }
+
+        List<DataObserver> oldObservers = new ArrayList<>();
+        oldObservers.add(xDataObserver);
+        oldObservers.add(yDataObserver);
+        for (DataObserver d : oldObservers) {
+            if (d != null) {
+                d.onConnectionStatus(false);
+            }
+        }
+        return;
 	}
 }
