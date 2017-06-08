@@ -19,6 +19,8 @@
 
 package uk.ac.stfc.isis.ibex.epics.writing;
 
+import java.io.IOException;
+
 import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
 import uk.ac.stfc.isis.ibex.epics.conversion.Converter;
 import uk.ac.stfc.isis.ibex.epics.observing.Subscription;
@@ -39,7 +41,7 @@ public class ForwardingWritable<TIn, TOut> extends BaseWritable<TIn> {
 
 	private ConfigurableWriter<TIn, TOut> forwardingWriter = new BaseWriter<TIn, TOut>() {
 		@Override
-		public void write(TIn value) {
+		public void write(TIn value) throws IOException {
             TOut tranformedValue = transform(value);
             if (tranformedValue != null) {
                 writeToWritables(tranformedValue);
@@ -76,7 +78,7 @@ public class ForwardingWritable<TIn, TOut> extends BaseWritable<TIn> {
     }
 
 	@Override
-	public void write(TIn value) {
+	public void write(TIn value) throws IOException {
 		if (value != null) {
 			forwardingWriter.write(value);
 		}

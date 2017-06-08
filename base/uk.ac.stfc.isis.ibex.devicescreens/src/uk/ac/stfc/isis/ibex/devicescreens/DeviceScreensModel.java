@@ -154,7 +154,10 @@ public class DeviceScreensModel extends ModelObject {
 
         }
 
-        writableDeviceScreenDescriptions.write(remoteDevices);
+        if (writableDeviceScreenDescriptions.canWrite()) {
+            writableDeviceScreenDescriptions.uncheckedWrite(remoteDevices);
+        }
+        
     }
 
 }

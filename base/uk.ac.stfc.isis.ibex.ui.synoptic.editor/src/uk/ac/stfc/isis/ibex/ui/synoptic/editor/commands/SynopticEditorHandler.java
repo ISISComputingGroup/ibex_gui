@@ -21,6 +21,7 @@ package uk.ac.stfc.isis.ibex.ui.synoptic.editor.commands;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.IOException;
 import java.util.Collection;
 
 import org.eclipse.core.commands.AbstractHandler;
@@ -82,21 +83,30 @@ public abstract class SynopticEditorHandler extends AbstractHandler {
         EditSynopticDialog editDialog =
                 new EditSynopticDialog(SHELL, title, isBlank, opis, viewModel);
 		if (editDialog.open() == Window.OK) {
-            writer.write(viewModel.getSynoptic());
+		    try {
+		        writer.write(viewModel.getSynoptic());
+		    } catch (IOException e) {
+		        handleError(e);
+		    }
+		    
             Exception error = writer.lastError();
             if (error != null) {
-                MessageBox dialog = new MessageBox(SHELL, SWT.ERROR | SWT.OK);
-                dialog.setText("Error saving synoptic");
-                if (error.getCause().getClass() == SAXParseException.class) {
-                    dialog.setMessage(
-                            "Synoptic incompatible with server, please check that you are using the latest version of IBEX");
-                } else {
-                    dialog.setMessage("Error in saving synoptic, please contact support team");
-                }
-                Synoptic.LOG.error("Error saving synoptic: " + error.getMessage());
-                dialog.open();
+                handleError(error);
             }
 		}
+	}
+	
+	private void handleError(Exception error) {
+        MessageBox dialog = new MessageBox(SHELL, SWT.ERROR | SWT.OK);
+        dialog.setText("Error saving synoptic");
+        if (error.getCause().getClass() == SAXParseException.class) {
+            dialog.setMessage(
+                    "Synoptic incompatible with server, please check that you are using the latest version of IBEX");
+        } else {
+            dialog.setMessage("Error in saving synoptic, please contact support team");
+        }
+        Synoptic.LOG.error("Error saving synoptic: " + error.getMessage());
+        dialog.open();
 	}
 	
 }

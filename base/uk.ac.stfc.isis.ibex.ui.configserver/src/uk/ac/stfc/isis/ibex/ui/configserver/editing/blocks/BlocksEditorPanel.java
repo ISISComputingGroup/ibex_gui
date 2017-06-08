@@ -90,7 +90,7 @@ public class BlocksEditorPanel extends Composite {
                 BlockFactory blockFactory = new BlockFactory(config);
                 EditableBlock added = blockFactory.createNewBlock();
                 EditBlockDialog dialog = new EditBlockDialog(getShell(), added, config);
-				dialog.open();
+                dialog.open();
 				setBlocks(config);
 				setSelectedBlocks(new ArrayList<EditableBlock>(Arrays.asList(added)));
 				table.setSelected(added);
@@ -135,7 +135,10 @@ public class BlocksEditorPanel extends Composite {
             @Override
             public void mouseDoubleClick(MouseEvent e) {
                 if (table.getItemAtPoint(new Point(e.x, e.y)) != null) {
-                    openEditBlockDialog(table.firstSelectedRow());
+                    EditableBlock block = table.firstSelectedRow();
+                    if (!block.hasComponent()) {
+                        openEditBlockDialog(block);
+                    }
                 }
             }
         });

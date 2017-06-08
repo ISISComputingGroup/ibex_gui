@@ -25,6 +25,8 @@ package uk.ac.stfc.isis.ibex.epics.tests.writing;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
+import java.io.IOException;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -83,7 +85,7 @@ public class SameTypeWriterTest {
     }
 
     @Test
-    public void last_written_contains_last_written_value() {
+    public void last_written_contains_last_written_value() throws IOException {
         // Arrange
         assertNotEquals(writer.lastWritten(), A_VALUE);
 
@@ -95,7 +97,7 @@ public class SameTypeWriterTest {
     }
 
     @Test
-    public void writing_a_value_pushes_the_value_to_all_writables() {
+    public void writing_a_value_pushes_the_value_to_all_writables() throws IOException {
         // Arrange
         Writable<String> mockWritable1 = mock(Writable.class);
         Writable<String> mockWritable2 = mock(Writable.class);
@@ -112,7 +114,7 @@ public class SameTypeWriterTest {
     }
 
     @Test
-    public void a_writable_is_added_only_once() {
+    public void a_writable_is_added_only_once() throws IOException {
         // Arrange
         Writable<String> mockWritable = mock(Writable.class);
 
@@ -126,7 +128,7 @@ public class SameTypeWriterTest {
     }
 
     @Test
-    public void adding_a_writable_returns_an_unsubscriber_that_removes_the_writable_from_the_list_of_writables() {
+    public void adding_a_writable_returns_an_unsubscriber_that_removes_the_writable_from_the_list_of_writables() throws IOException {
         // Arrange
         Writable<String> mockWritable = mock(Writable.class);
         Subscription returnedSubscription = writer.writeTo(mockWritable);

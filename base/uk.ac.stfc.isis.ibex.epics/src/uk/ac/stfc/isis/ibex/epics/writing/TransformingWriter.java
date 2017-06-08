@@ -19,6 +19,8 @@
 
 package uk.ac.stfc.isis.ibex.epics.writing;
 
+import java.io.IOException;
+
 /**
  * The abstract class for writers that need to transform data before writing it.
  * The SameTypeWriter is the contrast of this.
@@ -28,7 +30,8 @@ package uk.ac.stfc.isis.ibex.epics.writing;
  */
 public abstract class TransformingWriter<TIn, TOut> extends BaseWriter<TIn, TOut> {
 
-	public void write(TIn value) {
+	@Override
+    public void write(TIn value) throws IOException {
 		TOut transformed = transform(value);
 		if (transformed != null) {
 			super.writeToWritables(transformed);

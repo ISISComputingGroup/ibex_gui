@@ -23,6 +23,8 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import uk.ac.stfc.isis.ibex.model.ModelObject;
+
 /**
  * This class describes the property element of the device screens xml format.
  * 
@@ -31,7 +33,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @XmlRootElement(name = "property")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class PropertyDescription {
+public class PropertyDescription extends ModelObject {
 
     private String key;
     private String value;
@@ -59,7 +61,7 @@ public class PropertyDescription {
      * @param newKey the new key
      */
     public void setKey(String newKey) {
-        key = newKey;
+        firePropertyChange("key", key, key = newKey);
     }
 
     /**
@@ -68,7 +70,7 @@ public class PropertyDescription {
      * @param newValue the new value
      */
     public void setValue(String newValue) {
-        value = newValue;
+        firePropertyChange("value", value, value = newValue);
     }
 
     /**

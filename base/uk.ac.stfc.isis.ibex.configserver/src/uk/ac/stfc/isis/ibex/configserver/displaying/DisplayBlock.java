@@ -260,6 +260,13 @@ public class DisplayBlock extends ModelObject {
     }
 
     /**
+     * @return does the block belong to a component
+     */
+    public boolean hasComponent() {
+        return block.hasComponent();
+    }
+
+    /**
      * @return the block's current value
      */
     public String getValue() {

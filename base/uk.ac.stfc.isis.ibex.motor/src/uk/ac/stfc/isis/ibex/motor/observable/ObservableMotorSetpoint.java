@@ -66,11 +66,11 @@ public class ObservableMotorSetpoint extends MotorSetpoint {
 
 	@Override
 	public void home() {
-		home.write(1.0);
+	    home.uncheckedWrite(1.0);
 	}
 
 	@Override
 	public void setSetpoint(double value) {
-		setSetpoint.write(value);
+	    setSetpoint.uncheckedWrite(value);
 	}
 }

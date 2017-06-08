@@ -55,9 +55,6 @@ public class EditDeviceScreensDescriptionViewModel extends ModelObject {
     /** The screen that we are setting target details on. */
     private DeviceDescriptionWrapper targetScreen = null;
 
-    /** The currently selected property in the table. */
-    private PropertyDescription selectedProperty = null;
-
     /** The screens. */
     private List<DeviceDescriptionWrapper> devices;
 
@@ -175,6 +172,7 @@ public class EditDeviceScreensDescriptionViewModel extends ModelObject {
         firePropertyChange("selectedScreens", selectedScreens, selectedScreens = screens);
         // Update values for associated fields
         if (screens == null || screens.size() > 1) {
+            setTargetScreen(null);
             updateName("");
             updateKey("");
             setDescription("");
@@ -188,9 +186,6 @@ public class EditDeviceScreensDescriptionViewModel extends ModelObject {
             updatePersistence(targetScreen.getPersistent());
             setEnabled(isScreenEnabled(targetScreen.getPersistent()));
         }
-
-        // Clear out the stored property information
-        setSelectedProperty(-1);
     }
 
     /**
@@ -424,59 +419,6 @@ public class EditDeviceScreensDescriptionViewModel extends ModelObject {
 
         newList.add(new DeviceDescriptionWrapper(newScreen, provider));
         setScreens(newList);
-    }
-
-    /**
-     * Sets the currently selected property.
-     * 
-     * @param index the index
-     */
-    public void setSelectedProperty(int index) {
-        if (targetScreen != null && index != -1) {
-            firePropertyChange("selectedProperty", selectedProperty,
-                    selectedProperty = targetScreen.getProperties().get(index));
-        } else {
-            firePropertyChange("selectedProperty", selectedProperty, selectedProperty = null);
-        }
-    }
-
-    /**
-     * Gets the selected property value.
-     *
-     * @return the selected property value
-     */
-    public String getSelectedPropertyValue() {
-        if (selectedProperty != null) {
-            return selectedProperty.getValue();
-        }
-        return "";
-    }
-
-    /**
-     * Sets the selected property value.
-     *
-     * @param value
-     *            the value to set for the property
-     */
-    public void setSelectedPropertyValue(String value) {
-        if (selectedProperty != null) {
-            String oldVal = selectedProperty.getValue();
-            selectedProperty.setValue(value);
-
-            firePropertyChange("selectedPropertyValue", oldVal, value);
-        }
-    }
-
-    /**
-     * Gets the selected property description.
-     *
-     * @return the selected property's description
-     */
-    public String getSelectedPropertyDescription() {
-        if (targetScreen != null && selectedProperty != null) {
-            return targetScreen.getMacroDescription(selectedProperty.getKey());
-        }
-        return "";
     }
 
     /**

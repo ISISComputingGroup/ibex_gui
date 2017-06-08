@@ -85,17 +85,17 @@ public class RunControlViewModel extends ErrorMessageProvider {
 
     private void resetLowLimit(Block configBlock) {
         Writer<String> writer = runControlServer.blockRunControlLowLimitSetter(configBlock.getName());
-        writer.write(Float.toString(configBlock.getRCLowLimit()));
+        writer.uncheckedWrite(Float.toString(configBlock.getRCLowLimit()));
     }
 
     private void resetHighLimit(Block configBlock) {
         Writer<String> writer = runControlServer.blockRunControlHighLimitSetter(configBlock.getName());
-        writer.write(Float.toString(configBlock.getRCHighLimit()));
+        writer.uncheckedWrite(Float.toString(configBlock.getRCHighLimit()));
     }
 
     private void resetEnabled(Block configBlock) {
         Writer<String> writer = runControlServer.blockRunControlEnabledSetter(configBlock.getName());
-        writer.write(configBlock.getRCEnabled() ? "YES" : "NO");
+        writer.uncheckedWrite(configBlock.getRCEnabled() ? "YES" : "NO");
     }
     
     public String getTxtLowLimit() {
