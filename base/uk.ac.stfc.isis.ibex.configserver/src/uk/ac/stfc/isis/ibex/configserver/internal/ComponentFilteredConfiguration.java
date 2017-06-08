@@ -85,8 +85,10 @@ public class ComponentFilteredConfiguration extends Configuration {
 	}
 
     /**
-     * Takes a collection of groups and filters out the ones that are part of a
-     * component.
+     * Takes a collection of groups and returns a filtered list. Configuration
+     * groups are unaltered. Component groups are cleared of blocks and labelled
+     * as component groups. This assumes groups cannot be jointly members of
+     * configurations and components.
      * 
      * @param groups
      *            The groups
