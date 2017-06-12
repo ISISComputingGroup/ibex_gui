@@ -53,13 +53,11 @@ import uk.ac.stfc.isis.ibex.model.ModelObject;
  */
 public final class DetectorDiagnosticsModel extends ModelObject {
     
-    /**
-     * 
-     */
+    /** convert seconds to ms */
     private static final int S_TO_MS = 1000;
 
     /** Time to delay before telling server that we want diagnostic enabled */
-    private static final int TIME_TO_REFRESH_ENABLE_DIAGNOSTICS_IN_S = 5;
+    private static final int TIME_TO_REFRESH_ENABLE_DIAGNOSTICS_IN_S = 60;
 
     private static final Logger LOG = IsisLog.getLogger(DetectorDiagnosticsModel.class);
 
@@ -116,6 +114,8 @@ public final class DetectorDiagnosticsModel extends ModelObject {
 
     private String writeToEnableDiagnosticError = "";
 
+    protected boolean errorLoggedInJob;
+
     /**
      * Constructor.
      * 
@@ -167,9 +167,13 @@ public final class DetectorDiagnosticsModel extends ModelObject {
                 try {
                     diagnosticsEnabled.write(TIME_TO_REFRESH_ENABLE_DIAGNOSTICS_IN_S * 2);
                     setWriteToEnableDiagnosticError("");
+                    errorLoggedInJob = false;
                 } catch (IOException e) {
                     setWriteToEnableDiagnosticError("Can not enable detector diagnostics on this instrument.");
-                    LOG.info("Diagnostics can not be enabled because " + e.getMessage());
+                    if (!errorLoggedInJob) {
+                        LOG.info("Diagnostics can not be enabled because " + e.getMessage());
+                        errorLoggedInJob = true;
+                    }
                 }
                 schedule(TIME_TO_REFRESH_ENABLE_DIAGNOSTICS_IN_S * S_TO_MS);
                 return Status.OK_STATUS;
