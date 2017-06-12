@@ -149,4 +149,11 @@ public class DaeViewModel extends Closer {
                 throw new IllegalStateException("Active tab not understood in DAE View Model.");
         }
     }
+
+    /**
+     * @return the detector diagnostics view model
+     */
+    public DetectorDiagnosticsViewModel detectorDiagnostics() {
+        return detectorDiagnosticsViewModel;
+    }
 }

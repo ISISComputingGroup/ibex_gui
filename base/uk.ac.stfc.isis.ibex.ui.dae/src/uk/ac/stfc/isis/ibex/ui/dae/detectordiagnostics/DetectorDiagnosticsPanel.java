@@ -47,7 +47,6 @@ import uk.ac.stfc.isis.ibex.dae.detectordiagnostics.SpectraToDisplay;
 @SuppressWarnings("checkstyle:magicnumber")
 public class DetectorDiagnosticsPanel extends Composite {
     
-    private IDetectorDiagnosticsViewModelBinding model = DetectorDiagnosticsViewModel.getInstance();
     private DataBindingContext bindingContext = new DataBindingContext();
     private Combo comboSpectraTypeSelector;
     private Spinner spinnerPeriodSelector;
@@ -133,7 +132,6 @@ public class DetectorDiagnosticsPanel extends Composite {
         GridData layout = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
         table.setLayoutData(layout);
         
-        bind();
  
     }
     
@@ -144,7 +142,13 @@ public class DetectorDiagnosticsPanel extends Composite {
         label.setAlignment(SWT.CENTER);
     }
     
-    private void bind() {
+    /**
+     * Set the model to bind to for the panel.
+     * 
+     * @param model
+     *            the detector diagnostics model
+     */
+    public void setModel(IDetectorDiagnosticsViewModelBinding model) {
         bindingContext.bindValue(WidgetProperties.singleSelectionIndex().observe(comboSpectraTypeSelector), BeanProperties.value("spectraType").observe(model));
         bindingContext.bindValue(WidgetProperties.enabled().observe(comboSpectraTypeSelector), BeanProperties.value("diagnosticsEnabled").observe(model));
         
