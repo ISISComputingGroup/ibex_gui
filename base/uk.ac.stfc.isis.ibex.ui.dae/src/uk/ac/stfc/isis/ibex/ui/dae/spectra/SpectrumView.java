@@ -45,6 +45,7 @@ public class SpectrumView extends Composite {
     private Spinner period;
 	private SpectrumPlot spectrumFigure;
     private Timer timer = new Timer();
+    private TimerTask timerTask;
 
 	private DataBindingContext bindingContext;
 	private UpdatableSpectrum spectrum;
@@ -113,14 +114,16 @@ public class SpectrumView extends Composite {
 
                     // Wait for a second before executing in case the user is
                     // still scrolling through spectra numbers.
-                    timer.cancel();
-                    timer = new Timer();
-                    timer.schedule(new TimerTask() {
-                        @Override
-                        public void run() {
-                            spectrum.update();
-                        }
-                    }, ONE_SECOND_IN_MILLISECONDS);
+                    if (timerTask != null) {
+                        timerTask.cancel();
+                    }
+                    timerTask = new TimerTask() {
+                            @Override
+                            public void run() {
+                                spectrum.update();
+                            }
+                    };
+                    timer.schedule(timerTask, ONE_SECOND_IN_MILLISECONDS);
                 }
             }
         });
