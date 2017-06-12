@@ -70,7 +70,7 @@ from org.csstudio.opibuilder.scriptUtil import ConsoleUtil
     <background_color>
       <color name="ISIS_Title_Background_NEW" red="240" green="240" blue="240" />
     </background_color>
-    <width>775</width>
+    <width>223</width>
     <x>6</x>
     <name>Label</name>
     <y>6</y>
@@ -111,7 +111,7 @@ from org.csstudio.opibuilder.scriptUtil import ConsoleUtil
     <background_color>
       <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
     </background_color>
-    <width>775</width>
+    <width>661</width>
     <x>6</x>
     <name>Label_1</name>
     <y>42</y>
@@ -2330,5 +2330,53 @@ $(pv_value)</tooltip>
       </font>
       <off_label>OFF</off_label>
     </widget>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0">
+    <border_style>0</border_style>
+    <tooltip></tooltip>
+    <horizontal_alignment>0</horizontal_alignment>
+    <rules>
+      <rule name="Rule" prop_id="visible" out_exp="false">
+        <exp bool_exp="pv0 != 0">
+          <value>true</value>
+        </exp>
+        <pv trig="true">$(PV_ROOT):MANAGERMODE</pv>
+      </rule>
+    </rules>
+    <enabled>true</enabled>
+    <wuid>7f2c52c6:15c9c889162:-7f89</wuid>
+    <transparent>false</transparent>
+    <auto_size>false</auto_size>
+    <text>To control this device, enable manager mode!</text>
+    <scripts />
+    <height>37</height>
+    <border_width>1</border_width>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <visible>false</visible>
+    <vertical_alignment>1</vertical_alignment>
+    <border_color>
+      <color name="ISIS_Border" red="0" green="0" blue="0" />
+    </border_color>
+    <widget_type>Label</widget_type>
+    <wrap_words>true</wrap_words>
+    <background_color>
+      <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
+    </background_color>
+    <width>439</width>
+    <x>228</x>
+    <name>Label_2</name>
+    <y>6</y>
+    <foreground_color>
+      <color name="Major" red="255" green="0" blue="0" />
+    </foreground_color>
+    <actions hook="false" hook_all="false" />
+    <show_scrollbar>false</show_scrollbar>
+    <font>
+      <opifont.name fontName="Segoe UI" height="14" style="1">ISIS_Header2_NEW</opifont.name>
+    </font>
   </widget>
 </display>
