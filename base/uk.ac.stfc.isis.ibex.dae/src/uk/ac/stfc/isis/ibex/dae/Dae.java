@@ -22,7 +22,7 @@ package uk.ac.stfc.isis.ibex.dae;
 import org.eclipse.core.runtime.Plugin;
 import org.osgi.framework.BundleContext;
 
-import uk.ac.stfc.isis.ibex.dae.detectordiagnostics.DetectorDiagnosticsViewModel;
+import uk.ac.stfc.isis.ibex.dae.detectordiagnostics.DetectorDiagnosticsModel;
 
 /**
  * The DAE plugin.
@@ -104,6 +104,6 @@ public class Dae extends Plugin {
     public void stop(BundleContext bundleContext) throws Exception {
 		Dae.context = null;
 		model.close();
-		DetectorDiagnosticsViewModel.getInstance().stopObserving();
+        DetectorDiagnosticsModel.closeInstance();
 	}
 }

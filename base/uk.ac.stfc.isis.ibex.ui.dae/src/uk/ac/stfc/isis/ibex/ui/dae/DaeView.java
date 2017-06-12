@@ -28,6 +28,8 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CTabFolder;
 import org.eclipse.swt.custom.CTabItem;
 import org.eclipse.swt.custom.ScrolledComposite;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
@@ -35,6 +37,10 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Widget;
+import org.eclipse.ui.IPartListener2;
+import org.eclipse.ui.IWorkbenchPart;
+import org.eclipse.ui.IWorkbenchPartReference;
 import org.eclipse.ui.part.ViewPart;
 import org.eclipse.wb.swt.ResourceManager;
 import org.eclipse.wb.swt.SWTResourceManager;
@@ -52,6 +58,131 @@ import uk.ac.stfc.isis.ibex.ui.dae.vetos.VetosPanel;
  */
 @SuppressWarnings("checkstyle:magicnumber")
 public class DaeView extends ViewPart {
+
+    /**
+     * Listener to determine which tab is currently selected
+     */
+    private final class TabSelectionListener implements SelectionListener {
+        /**
+         * The tab item containing detector diagnostics
+         */
+        private final CTabItem tbtmDiagnostics;
+
+        /**
+         * Constructor.
+         * 
+         * @param tbtmDiagnostics
+         *            The tab item containing detector diagnostics
+         */
+        private TabSelectionListener(CTabItem tbtmDiagnostics) {
+            this.tbtmDiagnostics = tbtmDiagnostics;
+        }
+
+        @Override
+        public void widgetSelected(SelectionEvent e) {
+            Widget item = e.item;
+            onSelectionChanged(item);
+        }
+
+        /**
+         * Update the model with the tab that was just selected
+         * 
+         * @param item
+         *            the tab that was just selected; null means no tab is
+         *            selected or no tab is visible i.e. when a new perspective
+         *            is chosen
+         */
+        private void onSelectionChanged(Widget item) {
+            if (item == tbtmDiagnostics) {
+                model.setActiveTab(DaeViewModel.ActiveTab.DETECTOR_DIAGNOSTICS);
+            } else {
+                model.setActiveTab(DaeViewModel.ActiveTab.OTHER);
+            }
+        }
+
+        @Override
+        public void widgetDefaultSelected(SelectionEvent e) {
+            // do nothing
+        }
+    }
+
+    /**
+     * Listener for changes to a part, to see if it has become visible. When it
+     * is visible attach the selection listener.
+     */
+    class PartListener implements IPartListener2 {
+
+        private ViewPart daeViewPart;
+        private CTabFolder tabFolder;
+        private TabSelectionListener tabSelectionListener;
+
+
+        /**
+         * Instantiates a new part listener.
+         *
+         * @param daeViewPart
+         *            the dae view par
+         * @param tabFolder
+         *            the tab folder
+         * @param tabSelectionListener
+         *            the tab selection listener
+         */
+        PartListener(ViewPart daeViewPart, CTabFolder tabFolder, TabSelectionListener tabSelectionListener) {
+            this.daeViewPart = daeViewPart;
+            this.tabFolder = tabFolder;
+            this.tabSelectionListener = tabSelectionListener;
+        }
+
+        @Override
+        public void partVisible(IWorkbenchPartReference partRef) {
+            IWorkbenchPart part = partRef.getPart(false);
+            if (part == daeViewPart && tabSelectionListener != null) {
+                tabFolder.addSelectionListener(tabSelectionListener);
+                tabSelectionListener.onSelectionChanged(tabFolder.getSelection());
+            }
+        }
+
+        @Override
+        public void partHidden(IWorkbenchPartReference partRef) {
+            IWorkbenchPart part = partRef.getPart(false);
+            if (part == daeViewPart && tabSelectionListener != null) {
+                tabFolder.removeSelectionListener(tabSelectionListener);
+                tabSelectionListener.onSelectionChanged(null);
+            }
+
+        }
+
+        @Override
+        public void partActivated(IWorkbenchPartReference partRef) {
+            //
+        }
+
+        @Override
+        public void partBroughtToTop(IWorkbenchPartReference partRef) {
+            //
+        }
+
+        @Override
+        public void partClosed(IWorkbenchPartReference partRef) {
+            //
+        }
+
+        @Override
+        public void partDeactivated(IWorkbenchPartReference partRef) {
+            //
+        }
+
+        @Override
+        public void partOpened(IWorkbenchPartReference partRef) {
+            //
+        }
+
+        @Override
+        public void partInputChanged(IWorkbenchPartReference partRef) {
+            //
+        }
+
+    }
 	
     /**
      * The view ID.
@@ -73,7 +204,6 @@ public class DaeView extends ViewPart {
 
     /** Listener for changes in experimental change. **/
     private PropertyChangeListener experimentalChangeListener;
-    
 	
     /**
      * Sets the model for the DAE view.
@@ -101,7 +231,9 @@ public class DaeView extends ViewPart {
 	
 	@Override
 	public void dispose() {
-        modelIsRunningProperty.removePropertyChangeListener(experimentalChangeListener);
+        if (modelIsRunningProperty != null) {
+            modelIsRunningProperty.removePropertyChangeListener(experimentalChangeListener);
+        }
 		super.dispose();
 		model.close();
 	}
@@ -131,7 +263,7 @@ public class DaeView extends ViewPart {
 		Composite container = new Composite(scrolledComposite, SWT.NONE);
 		scrolledComposite.setContent(container);
 		
-		GridData gdContainer = new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1);
+        GridData gdContainer = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
 		container.setLayoutData(gdContainer);
 		GridLayout glContainer = new GridLayout(1, false);
 		glContainer.horizontalSpacing = 0;
@@ -192,7 +324,7 @@ public class DaeView extends ViewPart {
 		
 		spectraPanel = new SpectraPlotsPanel(spectraComposite, SWT.NONE);
 
-		CTabItem tbtmDiagnostics = new CTabItem(tabFolder, SWT.NONE);
+        final CTabItem tbtmDiagnostics = new CTabItem(tabFolder, SWT.NONE);
 		tbtmDiagnostics.setImage(ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui.dae", "icons/monitor.png"));
 		tbtmDiagnostics.setText("Detector Diagnostics");
 		
@@ -200,8 +332,14 @@ public class DaeView extends ViewPart {
         tbtmDiagnostics.setControl(diagnosticsComposite);
         diagnosticsComposite.setLayout(new FillLayout(SWT.HORIZONTAL));
         
+
 		new DetectorDiagnosticsPanel(diagnosticsComposite, SWT.NONE);
-		
+
+        TabSelectionListener tabSelectionListener = new TabSelectionListener(tbtmDiagnostics);
+        DaeView.PartListener innerObject = this.new PartListener(this, tabFolder, tabSelectionListener);
+        getSite().getPage().addPartListener(innerObject);
+
+
 		CTabItem tbtmVetos = new CTabItem(tabFolder, SWT.NONE);
 		tbtmVetos.setImage(ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui.dae", "icons/veto.png"));
 		tbtmVetos.setText("Vetos");
@@ -220,7 +358,7 @@ public class DaeView extends ViewPart {
 		
 		setModel(DaeUI.getDefault().viewModel());
 		tabFolder.setSelection(0);
-		scrolledComposite.setMinSize(new Point(600, 500));
+        scrolledComposite.setMinSize(new Point(600, 500));
 		
 		Composite composite = new Composite(container, SWT.NONE);
 		composite.setLayout(new GridLayout(1, false));
@@ -232,6 +370,7 @@ public class DaeView extends ViewPart {
 		label.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		new Label(container, SWT.NONE);
 		new Label(container, SWT.NONE);
+
 	}
 
 	/**
