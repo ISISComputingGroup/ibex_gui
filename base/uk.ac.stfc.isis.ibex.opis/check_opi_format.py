@@ -75,7 +75,7 @@ class CheckOpiFormat:
         for name in root.xpath(xpath):
             capitalisation_error = False
 
-			# Special case for the manager mode indicator
+            # Special case for the manager mode indicator
             if "manager mode" in name.text.lower():
                 continue;
 
