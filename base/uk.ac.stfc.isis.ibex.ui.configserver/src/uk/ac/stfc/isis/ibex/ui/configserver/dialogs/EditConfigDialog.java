@@ -27,6 +27,7 @@ import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Shell;
 
 import uk.ac.stfc.isis.ibex.configserver.ConfigServer;
@@ -41,23 +42,43 @@ import uk.ac.stfc.isis.ibex.ui.configserver.ConfigurationViewModels;
 public class EditConfigDialog extends ConfigDetailsDialog {
 
 	private Button saveAsBtn;
+    private boolean editBlockFirst;
 	
     private ConfigServer server = Configurations.getInstance().server();
 
     /**
      * @wbp.parser.constructor Constructor
      * 
-     * @param parentShell parent shell to run dialogue
-     * @param title title of dialogue
-     * @param subTitle action being taken, e.g. editing current configuration
-     * @param config configuration being edited
-     * @param isBlank is blank
-     * @param configurationViewModels view model for the configuration
+     * @param parentShell
+     *            parent shell to run dialogue
+     * @param title
+     *            title of dialogue
+     * @param subTitle
+     *            action being taken, e.g. editing current configuration
+     * @param config
+     *            configuration being edited
+     * @param isBlank
+     *            is blank
+     * @param configurationViewModels
+     *            view model for the configuration
+     * @param editBlockFirst
+     *            Open the dialog with blocks tab open
      */
     public EditConfigDialog(Shell parentShell, String title, String subTitle, EditableConfiguration config,
-            boolean isBlank, ConfigurationViewModels configurationViewModels) {
+            boolean isBlank, ConfigurationViewModels configurationViewModels, boolean editBlockFirst) {
         super(parentShell, title, subTitle, config, isBlank, configurationViewModels);
+        this.editBlockFirst = editBlockFirst;
 	}
+
+    @Override
+    protected Control createDialogArea(Composite parent) {
+        // We need to create the dialog first before selecting the blocks tab
+        Control control = super.createDialogArea(parent);
+        if (editBlockFirst) {
+            selectBlocksTab();
+        }
+        return control;
+    }
 
 	@Override
 	protected void createButtonsForButtonBar(Composite parent) {
@@ -107,6 +128,10 @@ public class EditConfigDialog extends ConfigDetailsDialog {
 		}
 		super.setErrorMessage(newErrorMessage);
 	}
+
+    private void selectBlocksTab() {
+        editor.selectBlocksTab();
+    }
 
 	private void setOKEnabled(boolean value) {
 		Button okButton = getButton(IDialogConstants.OK_ID);

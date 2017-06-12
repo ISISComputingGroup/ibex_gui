@@ -22,6 +22,8 @@ package uk.ac.stfc.isis.ibex.epics.tests.writing;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.*;
 
+import java.io.IOException;
+
 import org.junit.Test;
 
 import uk.ac.stfc.isis.ibex.epics.writing.Writable;
@@ -33,7 +35,7 @@ public class TransformingWriterTest {
     private static final String OUTPUT_VALUE = "output";
 
     @Test
-    public void write_writes_the_transformed_value_to_the_destination_writable() {
+    public void write_writes_the_transformed_value_to_the_destination_writable() throws IOException {
         // Arrange
         TestableTransformingWriter<String, String> writer = new TestableTransformingWriter<>();
         writer.associate(INPUT_VALUE, OUTPUT_VALUE);
@@ -52,7 +54,7 @@ public class TransformingWriterTest {
     }
 
     @Test
-    public void write_does_not_write_a_value_that_transforms_to_null() {
+    public void write_does_not_write_a_value_that_transforms_to_null() throws IOException {
         // Arrange
         TestableTransformingWriter<String, String> writer = new TestableTransformingWriter<>();
         writer.associate(INPUT_VALUE, null);

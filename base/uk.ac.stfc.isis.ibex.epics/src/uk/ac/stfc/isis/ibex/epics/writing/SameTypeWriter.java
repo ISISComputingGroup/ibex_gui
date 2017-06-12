@@ -19,6 +19,7 @@
 
 package uk.ac.stfc.isis.ibex.epics.writing;
 
+import java.io.IOException;
 
 /**
  * A class for writing data which does not require transformation before outputting.
@@ -28,7 +29,7 @@ package uk.ac.stfc.isis.ibex.epics.writing;
  */
 public class SameTypeWriter<T> extends BaseWriter<T, T> {
 	@Override
-	public void write(T value) {
+	public void write(T value) throws IOException {
 		writeToWritables(value);
 	}
 }

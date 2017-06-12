@@ -111,7 +111,12 @@ public class RecordSetter extends Composite {
 		initializeControls();
 	}
 	
-	/** Specify the SetterModel to be used and bind this object to its updates. */
+    /**
+     * Specify the SetterModel to be used and bind this object to its updates.
+     * 
+     * @param model
+     *            The new model
+     */
 	public void setModel(SetterModel model) {
 		if (model != null) {
 			this.model = model;
@@ -119,7 +124,9 @@ public class RecordSetter extends Composite {
 		}
 	}
 	
-	/** Gets the SetterModel currently associated with this object. */
+    /**
+     * @return The SetterModel currently associated with this object.
+     */
 	public SetterModel getModel() {
 		return model;
 	}

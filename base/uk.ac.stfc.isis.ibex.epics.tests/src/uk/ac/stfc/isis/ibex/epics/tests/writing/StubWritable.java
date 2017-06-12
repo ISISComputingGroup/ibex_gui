@@ -89,4 +89,9 @@ public class StubWritable<T> implements Writable<T> {
             writer.onCanWriteChanged(canWrite);
         }
     }
+    
+    @Override
+    public void uncheckedWrite(T value){
+        write(value);
+    }
 }

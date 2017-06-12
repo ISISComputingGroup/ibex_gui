@@ -56,7 +56,7 @@ public class DeleteComponentsHandler extends DisablingConfigHandler<Collection<S
             Map<String, Collection<String>> selectedDependencies = viewModel.filterSelected(toDelete);
 
             if (selectedDependencies.isEmpty()) {
-                configService.write(toDelete);
+                configService.uncheckedWrite(toDelete);
             } else {
                 displayWarning(selectedDependencies);
                 execute(event); // Re-open selection dialog.

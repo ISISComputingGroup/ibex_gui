@@ -72,7 +72,17 @@ public class DeviceDescription extends ModelObject {
      * Default constructor. Needed for parsing XML.
      */
     public DeviceDescription() {
-        this("", "", "", false);
+        this("");
+    }
+
+    /**
+     * Default constructor for a basic screen.
+     * 
+     * @param name
+     *            the name of the screen.
+     */
+    public DeviceDescription(String name) {
+        this(name, "", "", false);
     }
 
     /**

@@ -22,6 +22,7 @@ package uk.ac.stfc.isis.ibex.ui.synoptic.editor.component;
 import java.util.Collection;
 import java.util.List;
 
+import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.ViewerDropAdapter;
 import org.eclipse.swt.dnd.DropTargetEvent;
 import org.eclipse.swt.dnd.TransferData;
@@ -39,19 +40,23 @@ import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.UpdateTypes;
  * - performDrop drag - finishedDrag
  */
 public class ComponentDropListener extends ViewerDropAdapter {
-	private final InstrumentTreeView viewer;
+	private final InstrumentTreeView view;
 	private final SynopticViewModel instrument;
 
     /**
      * Instantiates a new component drop listener.
      *
-     * @param viewer the viewer that has this listener
-     * @param instrument the instrument synoptic
+     * @param viewer
+     *            the tree viewer that has this listener
+     * @param view
+     *            the overall view that contains the tree
+     * @param instrument
+     *            the instrument synoptic
      */
-	public ComponentDropListener(InstrumentTreeView viewer,
+    public ComponentDropListener(TreeViewer viewer, InstrumentTreeView view,
 			SynopticViewModel instrument) {
-		super(viewer.getTreeViewer());
-		this.viewer = viewer;
+        super(viewer);
+        this.view = view;
 		this.instrument = instrument;
 	}
 
@@ -62,7 +67,7 @@ public class ComponentDropListener extends ViewerDropAdapter {
 			return;
 		}
 
-		Collection<ComponentDescription> sourceComponents = viewer.getCurrentDragSource();
+		Collection<ComponentDescription> sourceComponents = view.getCurrentDragSource();
 		ComponentDescription targetComponent = (ComponentDescription) determineTarget(event);
 		int location = this.determineLocation(event);
 		
@@ -126,7 +131,7 @@ public class ComponentDropListener extends ViewerDropAdapter {
      */
 	public boolean validateDrop(DropTargetEvent event) {
 		// Fail if the component being dragged is null
-		Collection<ComponentDescription> sourceComponents = viewer.getCurrentDragSource();
+		Collection<ComponentDescription> sourceComponents = view.getCurrentDragSource();
 		if (sourceComponents == null) {
 			return false;
 		}
