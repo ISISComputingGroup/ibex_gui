@@ -19,9 +19,13 @@
 
 package uk.ac.stfc.isis.ibex.dae.spectra;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import uk.ac.stfc.isis.ibex.dae.DaeObservables;
 import uk.ac.stfc.isis.ibex.epics.observing.BaseObserver;
 import uk.ac.stfc.isis.ibex.epics.observing.BufferedObservablePair;
+import uk.ac.stfc.isis.ibex.epics.observing.ClosableObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.Pair;
 import uk.ac.stfc.isis.ibex.epics.observing.Subscription;
@@ -40,12 +44,10 @@ public class ObservedSpectrum extends UpdatableSpectrum implements Closable {
                 doubles[i] = value[i];
             }
             return doubles;
-
         }
 	}
 	
 	private final DataObserver xDataObserver = new DataObserver() {
-
 		@Override
         public void onValue(Pair<Integer, float[]> value) {
             setXData(toDoubleArray(value.second, value.first));
@@ -84,19 +86,20 @@ public class ObservedSpectrum extends UpdatableSpectrum implements Closable {
 	
 	@Override
 	public void update() {
-		super.update();
 		updateSubscriptions();
+        super.update();
 	}
 	
 	private void updateSubscriptions() {
-        cancelSubscriptions();
+
+        close();
 
         xLengthObservable = observables.spectrumXDataLength(getNumber(), getPeriod());
         yLengthObservable = observables.spectrumYDataLength(getNumber(), getPeriod());
         
         xValObservable = observables.spectrumXData(getNumber(), getPeriod());
         yValObservable = observables.spectrumYData(getNumber(), getPeriod());
-        
+
         xData = new BufferedObservablePair<>(xLengthObservable, xValObservable);
         yData = new BufferedObservablePair<>(yLengthObservable, yValObservable);
 
@@ -106,16 +109,46 @@ public class ObservedSpectrum extends UpdatableSpectrum implements Closable {
 
 	@Override
 	public void close() {
+        closeObservables();
 		cancelSubscriptions();
+        disconnectObservers();
 	}
 
-	private void cancelSubscriptions() {
-		if (xSubscription != null) {
-			xSubscription.removeObserver();
-		}
-		
-		if (ySubscription != null) {
-			ySubscription.removeObserver();
-		}
+    private void closeObservables() {
+
+        List<ClosableObservable<?>> oldObservables = new ArrayList<>();
+        oldObservables.add(xData);
+        oldObservables.add(yData);
+        oldObservables.add(xLengthObservable);
+        oldObservables.add(xValObservable);
+        oldObservables.add(yLengthObservable);
+        oldObservables.add(yValObservable);
+        for (ClosableObservable<?> o : oldObservables) {
+            if (o != null) {
+                o.close();
+            }
+        }
+    }
+
+    private void cancelSubscriptions() {
+        List<Subscription> oldSubscriptions = new ArrayList<>();
+        oldSubscriptions.add(xSubscription);
+        oldSubscriptions.add(ySubscription);
+        for (Subscription s : oldSubscriptions) {
+            if (s != null) {
+                s.removeObserver();
+            }
+        }
+    }
+
+    private void disconnectObservers() {
+        List<DataObserver> oldObservers = new ArrayList<>();
+        oldObservers.add(xDataObserver);
+        oldObservers.add(yDataObserver);
+        for (DataObserver d : oldObservers) {
+            if (d != null) {
+                d.onConnectionStatus(false);
+            }
+        }
 	}
 }

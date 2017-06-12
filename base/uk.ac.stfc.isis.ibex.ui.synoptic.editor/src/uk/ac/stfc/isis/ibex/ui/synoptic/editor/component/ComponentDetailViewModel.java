@@ -61,7 +61,7 @@ public class ComponentDetailViewModel extends ModelObject {
     public ComponentDetailViewModel(final SynopticViewModel synopticViewModel) {
         model = synopticViewModel;
 
-        synopticViewModel.addPropertyChangeListener("compSelection", new PropertyChangeListener() {
+        synopticViewModel.addPropertyChangeListener("selectedComponents", new PropertyChangeListener() {
             @Override
             public void propertyChange(PropertyChangeEvent evt) {
                 setComponent(synopticViewModel.getSingleSelectedComp());

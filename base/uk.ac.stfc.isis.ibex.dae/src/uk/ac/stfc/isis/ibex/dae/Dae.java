@@ -25,7 +25,7 @@ import org.osgi.framework.BundleContext;
 import uk.ac.stfc.isis.ibex.dae.detectordiagnostics.DetectorDiagnosticsModel;
 
 /**
- * The DAE plugin.
+ * Provides and sets information about the Data Acquisition Electronics.
  */
 public class Dae extends Plugin {
 
@@ -50,9 +50,9 @@ public class Dae extends Plugin {
 	private final DaeWritables writables;
 	private final DaeObservables observables;
 
-	/**
-	 * Constructor.
-	 */
+    /**
+     * Default constructor.
+     */
     public Dae() {
 		instance = this;
         writables = new DaeWritables();

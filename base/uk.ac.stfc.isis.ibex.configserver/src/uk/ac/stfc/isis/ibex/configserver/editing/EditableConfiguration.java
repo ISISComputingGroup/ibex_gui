@@ -27,6 +27,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.NoSuchElementException;
 
 import com.google.common.base.Function;
 import com.google.common.base.Predicate;
@@ -647,6 +648,21 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
                 return block.getName().equals(name);
             }
         });
+    }
+
+    /**
+     * Return a Block object associated to a given block name.
+     * 
+     * @param name
+     *            the name of the block in question
+     * @return the Block object
+     */
+    public Block getBlockByName(final String name) {
+        try {
+            return getBlockByName(transformBlocks(), name);
+        } catch (NoSuchElementException e) {
+            return null;
+        }
     }
 
     /**

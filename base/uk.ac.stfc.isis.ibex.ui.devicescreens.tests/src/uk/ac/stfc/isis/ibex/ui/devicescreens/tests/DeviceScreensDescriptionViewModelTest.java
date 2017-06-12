@@ -54,10 +54,8 @@ public class DeviceScreensDescriptionViewModelTest {
     private String opiDescription2 = "This is OPI 1";
     private String propertyName1 = "Property1";
     private String propertyValue1 = "Value1";
-    private String propertyDescription1 = "This is value 1";
     private String propertyName2 = "Property2";
     private String propertyValue2 = "Value2";
-    private String propertyDescription2 = "This is value 2";
     private List<MacroInfo> macros;
     MessageDisplayer displayer;
 
@@ -90,15 +88,11 @@ public class DeviceScreensDescriptionViewModelTest {
         when(opiDesc1.getMacros()).thenReturn(macros);
         when(opiDesc1.getDescription()).thenReturn(opiDescription1);
         when(opiDesc1.getKeys()).thenReturn(propertyNames);
-        when(opiDesc1.getMacroDescription(propertyName1)).thenReturn(propertyDescription1);
-        when(opiDesc1.getMacroDescription(propertyName2)).thenReturn(propertyDescription2);
 
         OpiDescription opiDesc2 = mock(OpiDescription.class);
         when(opiDesc2.getMacros()).thenReturn(macros);
         when(opiDesc2.getDescription()).thenReturn(opiDescription2);
         when(opiDesc2.getKeys()).thenReturn(propertyNames);
-        when(opiDesc2.getMacroDescription(propertyName1)).thenReturn(propertyDescription1);
-        when(opiDesc2.getMacroDescription(propertyName2)).thenReturn(propertyDescription2);
         
         DescriptionsProvider provider = mock(DescriptionsProvider.class);
         when(provider.guessOpiName(opiName1)).thenReturn(opiName1);
@@ -122,8 +116,6 @@ public class DeviceScreensDescriptionViewModelTest {
         viewModel.setSelectedScreens(first);
         viewModel.setName("new name");
         viewModel.setKey(opiName2);
-        viewModel.setSelectedProperty(0);
-        viewModel.setSelectedPropertyValue("new value");
 
         // Assert that nothing changed in the original
         assertEquals(2, description.getDevices().size());
@@ -221,29 +213,6 @@ public class DeviceScreensDescriptionViewModelTest {
         assertEquals(opiDescription2, viewModel.getTargetScreen().getDescription());
         assertEquals("", viewModel.getTargetScreen().getProperties().get(0).getValue());
         assertEquals("", viewModel.getTargetScreen().getProperties().get(1).getValue());
-    }
-
-    @Test
-    public void WHEN_property_is_selected_THEN_access_to_value_and_description_allowed() {
-        // Act
-        viewModel.setTargetScreen(viewModel.getScreens().get(0));
-        viewModel.setSelectedProperty(0);
-
-        // Assert
-        assertEquals(propertyValue1, viewModel.getSelectedPropertyValue());
-        assertEquals(propertyDescription1, viewModel.getSelectedPropertyDescription());
-    }
-
-    @Test
-    public void WHEN_changing_the_selected_property_on_the_viewmodel_THEN_value_chanegs_on_target() {
-        // Act
-        viewModel.setTargetScreen(viewModel.getScreens().get(0));
-        viewModel.setSelectedProperty(0);
-        viewModel.setSelectedPropertyValue("Hello");
-
-        // Assert
-        assertEquals("Hello", viewModel.getSelectedPropertyValue());
-        assertEquals("Hello", viewModel.getScreens().get(0).getProperties().get(0).getValue());
     }
 
     @Test

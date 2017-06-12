@@ -44,6 +44,7 @@ public class ConfigEditorPanel extends Composite {
 	private final GroupsEditorPanel groups;
 	private final ComponentEditorPanel components;
 	private final SummaryPanel summary;
+    private TabItem blocksTab;
 	
     private TabFolder editorTabs;
 
@@ -96,7 +97,7 @@ public class ConfigEditorPanel extends Composite {
 		iocsTab.setText("IOCs");
 		iocsTab.setControl(iocs);
 		
-		TabItem blocksTab = new TabItem(editorTabs, SWT.NONE);
+        blocksTab = new TabItem(editorTabs, SWT.NONE);
         blocksTab.setText("Blocks");
 		
 		blocks = new BlocksEditorPanel(editorTabs, SWT.NONE);
@@ -143,5 +144,12 @@ public class ConfigEditorPanel extends Composite {
      */
     public void openEditBlockDialog(String blockName) {
         blocks.openEditBlockDialog(blockName);
+    }
+
+    /**
+     * Selects the block tab within the configuration editor panel.
+     */
+    public void selectBlocksTab() {
+        editorTabs.setSelection(blocksTab);
     }
 }
