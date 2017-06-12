@@ -116,14 +116,14 @@ public class ObservedSpectrum extends UpdatableSpectrum implements Closable {
 
     private void closeObservables() {
 
-        List<ClosableObservable<? extends Object>> oldObservables = new ArrayList<>();
+        List<ClosableObservable<?>> oldObservables = new ArrayList<>();
         oldObservables.add(xData);
         oldObservables.add(yData);
         oldObservables.add(xLengthObservable);
         oldObservables.add(xValObservable);
         oldObservables.add(yLengthObservable);
         oldObservables.add(yValObservable);
-        for (ClosableObservable<? extends Object> o : oldObservables) {
+        for (ClosableObservable<?> o : oldObservables) {
             if (o != null) {
                 o.close();
             }
