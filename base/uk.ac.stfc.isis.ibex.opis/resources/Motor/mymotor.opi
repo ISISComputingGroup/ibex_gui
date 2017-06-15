@@ -36,8 +36,7 @@
     <border_style>0</border_style>
     <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
     <precision>0</precision>
-    <tooltip>$(pv_name)
-$(pv_value)</tooltip>
+    <tooltip>$(P)$(MM).DESC</tooltip>
     <horizontal_alignment>1</horizontal_alignment>
     <rules />
     <enabled>true</enabled>
@@ -47,7 +46,16 @@ $(pv_value)</tooltip>
     <auto_size>false</auto_size>
     <text>######</text>
     <rotation_angle>0.0</rotation_angle>
-    <scripts />
+    <scripts>
+      <path pathString="EmbeddedPy" checkConnect="true" sfe="false" seoe="false">
+        <scriptName>EmbeddedScript</scriptName>
+        <scriptText><![CDATA[max_length = 15
+full_text = pvs[0].getValue().getValue()
+printed_text = full_text if len(full_text)<=max_length else full_text[:max_length-3]+"..."
+widget.setValue(printed_text)]]></scriptText>
+        <pv trig="true">$(P)$(MM).DESC</pv>
+      </path>
+    </scripts>
     <border_alarm_sensitive>true</border_alarm_sensitive>
     <show_units>false</show_units>
     <height>31</height>
@@ -58,7 +66,7 @@ $(pv_value)</tooltip>
       <keep_wh_ratio>false</keep_wh_ratio>
     </scale_options>
     <visible>true</visible>
-    <pv_name>$(P)$(MM).DESC</pv_name>
+    <pv_name></pv_name>
     <vertical_alignment>1</vertical_alignment>
     <border_color>
       <color name="ISIS_Check_Border" red="0" green="128" blue="255" />

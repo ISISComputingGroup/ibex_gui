@@ -24,15 +24,11 @@ package uk.ac.stfc.isis.ibex.ui.synoptic.editor.pv;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
-import org.eclipse.swt.graphics.Color;
-import org.eclipse.wb.swt.SWTResourceManager;
-
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.IO;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.PV;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.RecordType;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.blockselector.BlockSelector;
-import uk.ac.stfc.isis.ibex.validators.PvValidator;
 
 /**
  * This is the view model that contains the logic for the pv details panel.
@@ -45,12 +41,7 @@ public class PvDetailViewModel extends ModelObject {
 
     private boolean selectionVisible;
     private String pvName = "";
-    private String errorText = NO_SELECTION_TEXT;
     private String pvAddress = "";
-    private final Color colorBlack = SWTResourceManager.getColor(0, 0, 0);
-    private final Color colorRed = SWTResourceManager.getColor(255, 0, 0);
-
-    private Color errorColor = colorBlack;
 
     private IO pvMode = IO.READ;
 
@@ -95,13 +86,8 @@ public class PvDetailViewModel extends ModelObject {
             firePropertyChange("pvAddress", pvAddress, pvAddress = pv.address());
 
             firePropertyChange("pvMode", pvMode, pvMode = pv.recordType().io());
-            
-            validatePV(new PV(pvName, pvAddress, pvMode));
-
         } else {
             setSelectionVisible(false);
-            setErrorText(NO_SELECTION_TEXT);
-            setErrorColor(colorBlack);
         }
     }
 
@@ -134,21 +120,6 @@ public class PvDetailViewModel extends ModelObject {
     public void setPvName(String name) {
         firePropertyChange("pvName", pvName, pvName = name);
         updateModel();
-    }
-
-    /**
-     * @return The error text to display.
-     */
-    public String getErrorText() {
-        return errorText;
-    }
-
-    /**
-     * @param text
-     *            The error text to display.
-     */
-    public void setErrorText(String text) {
-        firePropertyChange("errorText", errorText, errorText = text);
     }
 
     /**
@@ -185,7 +156,6 @@ public class PvDetailViewModel extends ModelObject {
 
     private void updateModel() {
         updateSelectedPV(pvName, pvAddress, pvMode);
-        validatePV(new PV(pvName, pvAddress, pvMode));
     }
 
     /**
@@ -213,24 +183,6 @@ public class PvDetailViewModel extends ModelObject {
         selectedPv.setAddress(addressToUse);
 
         model.updatePvList();
-    }
-
-    private void validatePV(PV pv) {
-        if (isPvValid(pv)) {
-            setErrorColor(colorBlack);
-        } else {
-            setErrorColor(colorRed);
-        }
-    }
-
-    private boolean isPvValid(PV pv) {
-        String address = pv.address();
-
-        PvValidator addressValidator = new PvValidator();
-        boolean addressValid = addressValidator.validatePvAddress(address);
-        setErrorText(addressValidator.getErrorMessage());
-
-        return addressValid;
     }
 
     /**
@@ -264,20 +216,5 @@ public class PvDetailViewModel extends ModelObject {
             setPvName(selectPV.getBlockName());
             setPvAddress(selectPV.getPvAddress());
         }
-    }
-
-    /**
-     * @param newColor
-     *            set the new color for the error text.
-     */
-    public void setErrorColor(Color newColor) {
-        firePropertyChange("errorColor", errorColor, errorColor = newColor);
-    }
-
-    /**
-     * @return get the color of the error text.
-     */
-    public Color getErrorColor() {
-        return errorColor;
     }
 }

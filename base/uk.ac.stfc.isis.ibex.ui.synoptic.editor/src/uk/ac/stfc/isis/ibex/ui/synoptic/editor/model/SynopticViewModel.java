@@ -56,8 +56,8 @@ import uk.ac.stfc.isis.ibex.ui.synoptic.editor.dialogs.SuggestedTargetsDialog;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.target.DefaultTargetForComponent;
 
 /**
- * Provides the model for the view of the synoptic. This is an observable model,
- * which various other classes subscribe to.
+ * Provides the model for the editing view of the synoptic. This is an
+ * observable model, which various other classes subscribe to.
  */
 public class SynopticViewModel extends ModelObject {
 	private SynopticModel editing = Synoptic.getInstance().edit();
@@ -67,28 +67,17 @@ public class SynopticViewModel extends ModelObject {
 	private List<IInstrumentUpdateListener> instrumentUpdateListeners = new CopyOnWriteArrayList<>();
 
     /**
-     * The constructor.
+     * The constructor, loads a new synoptic ready for editing.
      * 
      * @param description
-     *            The description of the synoptic to edit.
+     *            The underlying xml description of the synoptic to edit.
      */
     public SynopticViewModel(SynopticDescription description) {
-        loadSynopticDescription(description);
-	}
-	
-    /**
-     * Loads a synoptic description for editing etc.
-     * 
-     * @param description the description
-     */
-    public void loadSynopticDescription(SynopticDescription description) {
         synoptic = description;
         synoptic.processChildComponents();
 		editing.setSynopticFromDescription(description);
 		
-		setSelectedComponent(null);
-
-		broadcastInstrumentUpdate(UpdateTypes.NEW_INSTRUMENT);
+        setSelectedComponents(null);
 	}
 
     /**
@@ -123,7 +112,7 @@ public class SynopticViewModel extends ModelObject {
      *            The existing names
      * @return A unique name
      */
-    public String getUniqueName(String rootName, List<String> existingNames) {
+    private String getUniqueName(String rootName, List<String> existingNames) {
         DefaultName namer = new DefaultName(rootName, " ", true);
         return namer.getUnique(existingNames);
     }
@@ -136,6 +125,7 @@ public class SynopticViewModel extends ModelObject {
 
         component.setName(getUniqueName("New Component", synoptic.getComponentNameListWithChildren()));
 		component.setType(ComponentType.UNKNOWN);
+        component.setTarget(new TargetDescription("NONE", TargetType.OPI));
 
 		int position = 0;
 		if (selectedComponents == null) {
@@ -149,7 +139,7 @@ public class SynopticViewModel extends ModelObject {
 		}
 
         refreshTreeView();
-		setSelectedComponent(Arrays.asList(component));
+        setSelectedComponents(Arrays.asList(component));
 
 	}
 
@@ -180,11 +170,13 @@ public class SynopticViewModel extends ModelObject {
         
         addComponentsInCorrectLocation(componentCopies);
         
+        refreshTreeView();
+
         // Set selected component here, so that it is auto-expanded.
-        setSelectedComponent(componentCopies);
+        setSelectedComponents(componentCopies);
         broadcastInstrumentUpdate(UpdateTypes.COPY_COMPONENT);
         // Set selected component again here, so it is highlighted.
-        setSelectedComponent(componentCopies);
+        setSelectedComponents(componentCopies);
     }
 
     private void setUniqueChildNames(ComponentDescription component, List<String> allComponentNames) {
@@ -244,7 +236,7 @@ public class SynopticViewModel extends ModelObject {
 					SynopticParentDescription parent = getParent(selected);
 					parent.removeComponent(selected);
 				}
-				setSelectedComponent(null);
+                setSelectedComponents(null);
                 refreshTreeView();
 			}
 		}
@@ -272,7 +264,7 @@ public class SynopticViewModel extends ModelObject {
             target = dialog.selectedTarget();
         }
 		
-        if (component != null && (component.target() == null || !component.target().getUserSelected())) {
+        if (component != null && (component.target().name() == "NONE" || !component.target().getUserSelected())) {
             target.setUserSelected(isFinalEdit);
             component.setTarget(target);
             target.addProperties(getPropertyKeys(target.name()));
@@ -287,8 +279,8 @@ public class SynopticViewModel extends ModelObject {
      * @param selected
      *            the selected component(s)
      */
-    public void setSelectedComponent(List<ComponentDescription> selected) {
-        firePropertyChange("compSelection", selectedComponents, selectedComponents = selected);
+    public void setSelectedComponents(List<ComponentDescription> selected) {
+        firePropertyChange("selectedComponents", selectedComponents, selectedComponents = selected);
         setSelectedProperty(null);
         refreshTreeView();
     }
