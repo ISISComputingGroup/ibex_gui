@@ -90,4 +90,5 @@ public abstract class ConfigHandler<T> extends AbstractHandler {
      * @param canWrite whether can write or not
      */
 	public abstract void canWriteChanged(boolean canWrite);
+	
 }

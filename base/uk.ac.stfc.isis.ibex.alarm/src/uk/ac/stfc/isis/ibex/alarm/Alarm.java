@@ -52,39 +52,26 @@ public class Alarm extends Plugin implements InstrumentInfoReceiver {
      * @return the instance of this singleton.
      */
 	public static Alarm getInstance() {
-        if (instance == null) {
-            throw new RuntimeException(
-                    "Alarms view gets created by eclipse but getInstance was called before it was created.");
-        }
 		return instance;
-    }
+	    }
 
     /**
      * @return the default alarm instance
      */
 	public static Alarm getDefault() {
-        return getInstance();
+		return instance;
 	}
 
+    /**
     /**
      * The default constructor for this singleton, sets up the backend model and
      * counter to monitor the alarms.
      */
-    public Alarm() {
+	public Alarm() {
+		super();
 		instance = this;
         setupAlarmModel();
-    }
 
-    /**
-     * Reloads the information in the alarm tree view.
-     */
-    public void reload() {
-        try {
-            // Passing null reloads everything.
-            alarmModel.readConfig(null);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
     }
 
     /**

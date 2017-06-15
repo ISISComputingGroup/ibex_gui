@@ -21,28 +21,20 @@ package uk.ac.stfc.isis.ibex.ui.devicescreens.dialogs;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.List;
 
-import org.eclipse.jface.layout.TableColumnLayout;
-import org.eclipse.jface.viewers.ColumnWeightData;
-import org.eclipse.jface.viewers.TableViewer;
-import org.eclipse.jface.viewers.TableViewerColumn;
+import org.eclipse.core.databinding.DataBindingContext;
+import org.eclipse.core.databinding.beans.BeanProperties;
+import org.eclipse.jface.databinding.swt.SWTObservables;
+import org.eclipse.jface.viewers.ISelectionChangedListener;
+import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.ModifyEvent;
-import org.eclipse.swt.events.ModifyListener;
-import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.Table;
-import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
 
-import uk.ac.stfc.isis.ibex.devicescreens.desc.PropertyDescription;
-import uk.ac.stfc.isis.ibex.ui.devicescreens.models.DeviceDescriptionWrapper;
-import uk.ac.stfc.isis.ibex.ui.devicescreens.models.EditDeviceScreensDescriptionViewModel;
+import uk.ac.stfc.isis.ibex.ui.devicescreens.models.TargetPropertiesViewModel;
 
 /**
  * The target properties widget used to set the macros for an OPI.
@@ -54,14 +46,14 @@ public class TargetPropertiesWidget extends Composite {
     private static final int TABLE_HEIGHT = 150;
 	
     /** The view model. */
-    private EditDeviceScreensDescriptionViewModel viewModel;
+    private TargetPropertiesViewModel viewModel;
 
     /** The properties table. */
-    private Table table;
+    private TargetPropertiesTable table;
 
-    private boolean hasProperties = false;
+    private Text valueText;
 
-    private boolean currentEnabled = false;
+    private Text txtDescription;
 	
     /**
      * Instantiates a new widget.
@@ -69,7 +61,7 @@ public class TargetPropertiesWidget extends Composite {
      * @param parent the parent
      * @param viewModel the view model
      */
-    public TargetPropertiesWidget(Composite parent, EditDeviceScreensDescriptionViewModel viewModel) {
+    public TargetPropertiesWidget(Composite parent, TargetPropertiesViewModel viewModel) {
 		super(parent, SWT.NONE);
 		
         this.viewModel = viewModel;
@@ -106,161 +98,59 @@ public class TargetPropertiesWidget extends Composite {
         lblProperties.setText("Properties");
 
         // Build up the table
-        Composite tableComposite = new Composite(controlComposite, SWT.NONE);
+        table = new TargetPropertiesTable(controlComposite, SWT.NONE, SWT.SINGLE | SWT.V_SCROLL | SWT.FULL_SELECTION);
         GridData gdTable = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
         gdTable.minimumHeight = TABLE_HEIGHT;
-        tableComposite.setLayoutData(gdTable);
-
-        TableColumnLayout tableColumnLayout = new TableColumnLayout();
-        tableComposite.setLayout(tableColumnLayout);
-        TableViewer viewer =
-                new TableViewer(tableComposite, SWT.SINGLE | SWT.V_SCROLL | SWT.FULL_SELECTION | SWT.BORDER);
-
-        table = viewer.getTable();
-        table.setHeaderVisible(true);
-        table.setLinesVisible(true);
-        table.setEnabled(false);
-
-        TableViewerColumn colTesting = new TableViewerColumn(viewer, SWT.NONE);
-        colTesting.getColumn().setText("Name");
-
-        TableViewerColumn colTesting2 = new TableViewerColumn(viewer, SWT.NONE);
-        colTesting2.getColumn().setText("Value");
-
-        tableColumnLayout.setColumnData(colTesting.getColumn(), new ColumnWeightData(20, 20, true));
-        tableColumnLayout.setColumnData(colTesting2.getColumn(), new ColumnWeightData(40, 20, false));
-
-        table.addSelectionListener(new SelectionAdapter() {
-            @Override
-            public void widgetSelected(SelectionEvent e) {
-                viewModel.setSelectedProperty(table.getSelectionIndex());
-            }
-        });
+        table.setLayoutData(gdTable);
 
         Label lblValue = new Label(controlComposite, SWT.NONE);
         lblValue.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
         lblValue.setText("Value");
 
-        final Text valueText = new Text(controlComposite, SWT.BORDER);
+        valueText = new Text(controlComposite, SWT.BORDER);
         valueText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-        valueText.addModifyListener(new ModifyListener() {
-            @Override
-            public void modifyText(ModifyEvent e) {
-                if (valueText.isFocusControl()) {
-                    viewModel.setSelectedPropertyValue(valueText.getText());
-                }
-            }
-        });
-        valueText.setEnabled(false);
 
         Label lblPropertyDescription = new Label(controlComposite, SWT.NONE);
         lblPropertyDescription.setLayoutData(new GridData(SWT.RIGHT, SWT.TOP, false, false, 1, 1));
         lblPropertyDescription.setText("Description");
 
-        final Text txtDescription = new Text(controlComposite, SWT.BORDER | SWT.READ_ONLY | SWT.WRAP | SWT.MULTI);
+        txtDescription = new Text(controlComposite, SWT.BORDER | SWT.READ_ONLY | SWT.WRAP | SWT.MULTI);
         GridData gdDescription = new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1);
         gdDescription.heightHint = 70;
         txtDescription.setLayoutData(gdDescription);
 
-        // This updates when the screens change, e.g. if a screen is deleted
-        viewModel.addPropertyChangeListener("screens", new PropertyChangeListener() {
-            @Override
-            public void propertyChange(PropertyChangeEvent evt) {
-                updatePropertyList(viewModel.getTargetScreen());
-                table.setSelection(-1);
-                valueText.setEnabled(false);
-            }
-        });
-
-        // This updates when the user switches the selected screen
-        viewModel.addPropertyChangeListener("selectedScreen", new PropertyChangeListener() {
-            @Override
-            public void propertyChange(PropertyChangeEvent evt) {
-                updatePropertyList(viewModel.getTargetScreen());
-                table.setSelection(-1);
-                valueText.setEnabled(false);
-            }
-        });
-
-        // This updates when the property selected in the table changes
-        viewModel.addPropertyChangeListener("selectedProperty", new PropertyChangeListener() {
-            @Override
-            public void propertyChange(PropertyChangeEvent evt) {
-                valueText.setText(viewModel.getSelectedPropertyValue());
-                txtDescription.setText(viewModel.getSelectedPropertyDescription());
-                if (table.getSelectionIndex() == -1) {
-                    valueText.setEnabled(false);
-                } else {
-                    valueText.setEnabled(true);
-                }
-            }
-        });
-
-        // This updates when the user changes the property value
-        viewModel.addPropertyChangeListener("selectedPropertyValue", new PropertyChangeListener() {
-            @Override
-            public void propertyChange(PropertyChangeEvent evt) {
-                updatePropertyList(viewModel.getTargetScreen());
-            }
-        });
-
-        // This updates when the OPI changes
-        viewModel.addPropertyChangeListener("key", new PropertyChangeListener() {
-            @Override
-            public void propertyChange(PropertyChangeEvent evt) {
-                updatePropertyList(viewModel.getTargetScreen());
-                table.setSelection(-1);
-                // Clear the property text and description
-                txtDescription.setText("");
-                valueText.setText("");
-                valueText.setEnabled(false);
-            }
-        });
-
-        // This updates when the OPI changes
-        viewModel.addPropertyChangeListener("enabled", new PropertyChangeListener() {
-            @Override
-            public void propertyChange(PropertyChangeEvent evt) {
-                currentEnabled = (boolean) evt.getNewValue();
-                enableTable();
-            }
-        });
+        bind();
 
 	}
-	
-    /**
-     * Show the property list for target. This is the property values set which
-     * correspond to macro names in the OPI for the selected target.
-     * 
-     * @param deviceDescription selected component
-     */
-    private void updatePropertyList(DeviceDescriptionWrapper deviceDescription) {
-        table.removeAll();
 
-        if (deviceDescription != null) {
-            List<PropertyDescription> properties = deviceDescription.getProperties();
-            for (PropertyDescription p : properties) {
-                TableItem item = new TableItem(table, SWT.NULL);
-                item.setText(0, p.getKey());
-                item.setText(1, p.getValue());
+    private void bind() {
+        DataBindingContext bindingContext = new DataBindingContext();
+        
+        bindingContext.bindValue(SWTObservables.observeText(valueText, SWT.Modify),
+                BeanProperties.value("valueText").observe(viewModel));
+        bindingContext.bindValue(SWTObservables.observeEnabled(valueText),
+                BeanProperties.value("valueTextEnabled").observe(viewModel));
+
+        bindingContext.bindValue(SWTObservables.observeText(txtDescription),
+                BeanProperties.value("descriptionText").observe(viewModel));
+
+        bindingContext.bindValue(SWTObservables.observeEnabled(table),
+                BeanProperties.value("tableEnabled").observe(viewModel));
+
+        viewModel.addPropertyChangeListener("properties", new PropertyChangeListener() {
+
+            @Override
+            public void propertyChange(PropertyChangeEvent evt) {
+                table.setRows(viewModel.getProperties());
             }
-            hasProperties = properties.size() > 0;
-            enableTable();
+        });
 
-        }
+        table.addSelectionChangedListener(new ISelectionChangedListener() {
+            @Override
+            public void selectionChanged(SelectionChangedEvent event) {
+                viewModel.setTableSelection(table.firstSelectedRow());
+            }
+        });
     }
-
-    /**
-     * Sets whether the table is greyed out or not.
-     */
-    private void enableTable() {
-        if (currentEnabled) {
-            table.setEnabled(hasProperties);
-        } else {
-            table.setEnabled(false);
-            table.removeAll();
-        }
-    }
-
 
 }

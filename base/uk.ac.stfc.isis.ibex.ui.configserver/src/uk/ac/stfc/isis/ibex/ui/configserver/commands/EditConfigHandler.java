@@ -55,7 +55,7 @@ public class EditConfigHandler extends DisablingConfigHandler<Configuration> {
                     helper.createDialogCurrent();
                 }
             } else {
-                helper.createDialog(configName);
+                helper.createDialog(configName, false);
             }
 		}
 		

@@ -21,32 +21,58 @@ public abstract class ConfigHelper {
     /**
      * Create a dialog box for editing a config other than the current one.
      * 
-     * @param configName The name of the config we wish to edit
+     * @param configName
+     *            The name of the config we wish to edit
+     * @param editBlockFirst
+     *            Whether to present the blocks tab first
      */
-    public void createDialog(String configName) {
-        String subTitle = "Viewing " + configName;
+    public void createDialog(String configName, boolean editBlockFirst) {
+        String subTitle = "Viewing configuration " + configName;
 
         configurationViewModels.setModelAsConfig(configName);
         UpdatedValue<EditableConfiguration> config = configurationViewModels.getConfigModel();
 
         if (Awaited.returnedValue(config, 1)) {
-            openDialog(subTitle, config.getValue(), false);
+            openDialog(subTitle, config.getValue(), false, editBlockFirst);
         }
     }
     
     /**
      * Create a dialog box for editing the current config.
+     * 
+     * @param editBlockFirst
+     *            Whether the first operation we want to do is edit a block
      */
-    public void createDialogCurrent() {
+    public void createDialogCurrent(boolean editBlockFirst) {
         configurationViewModels.setModelAsCurrentConfig();
         UpdatedValue<EditableConfiguration> config = configurationViewModels.getConfigModel();
 
         if (Awaited.returnedValue(config, 1)) {
-            openDialog(currentSubTitle, config.getValue(), true);
+            openDialog(currentSubTitle, config.getValue(), true, editBlockFirst);
         } else {
             MessageDialog.openError(shell, "Error", "There is no current configuration, so it can not be edited.");
         }
     }
+
+    /**
+     * Create a dialog box for editing the current config.
+     */
+    public void createDialogCurrent() {
+        createDialogCurrent(false);
+    }
     
-    protected abstract void openDialog(String subTitle, EditableConfiguration config, boolean isCurrent);
+    /**
+     * Opens a view/edit configuration dialog for the specified configuration.
+     * 
+     * @param subTitle
+     *            The subtitle to add to the dialog
+     * @param config
+     *            The configuration to open
+     * @param isCurrent
+     *            Is this the current configuration
+     * @param editBlockFirst
+     *            Should the dialog open the blocks tab first
+     */
+    protected abstract void openDialog(String subTitle, EditableConfiguration config, boolean isCurrent,
+            boolean editBlockFirst);
 }
