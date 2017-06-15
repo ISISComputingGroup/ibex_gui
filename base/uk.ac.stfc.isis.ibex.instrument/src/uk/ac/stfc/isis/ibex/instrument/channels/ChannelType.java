@@ -22,9 +22,26 @@ package uk.ac.stfc.isis.ibex.instrument.channels;
 import uk.ac.stfc.isis.ibex.epics.observing.ClosableObservable;
 import uk.ac.stfc.isis.ibex.epics.writing.BaseWritable;
 
+/**
+ * A common interface for the channels implemented in this package.
+ *
+ * @param <T> the data type to read and write
+ */
 public interface ChannelType<T> {
 	
+    /**
+     * Gets a reader for this channel.
+     * 
+     * @param address the address to read from
+     * @return an observable which tracks the PV
+     */
 	ClosableObservable<T> reader(String address);
 	
+	/**
+	 * Gets a writer for this channel.
+	 * 
+	 * @param address the address to write to
+	 * @return a writable that writes to the PV
+	 */
     BaseWritable<T> writer(String address);
 }

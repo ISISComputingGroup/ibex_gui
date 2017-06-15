@@ -24,18 +24,17 @@ import uk.ac.stfc.isis.ibex.epics.pv.Channels;
 import uk.ac.stfc.isis.ibex.epics.writing.BaseWritable;
 
 /**
- * A channel type for reading a number with units.
+ * A channel type for reading arrays of doubles.
  */
-public class NumberWithUnitsChannel implements ChannelType<String> {
+public class DoubleArrayChannel implements ChannelType<double[]> {
 
 	@Override
-	public ClosableObservable<String> reader(String address) {
-		return Channels.Numbers.readerWithUnits(address);
+	public ClosableObservable<double[]> reader(String address) {
+		return Channels.Doubles.arrayReader(address);
 	}
 
 	@Override
-    public BaseWritable<String> writer(String address) {
+    public BaseWritable<double[]> writer(String address) {
 		throw new UnsupportedOperationException();
 	}
-
 }

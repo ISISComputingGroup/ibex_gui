@@ -23,6 +23,9 @@ import uk.ac.stfc.isis.ibex.epics.observing.ClosableObservable;
 import uk.ac.stfc.isis.ibex.epics.pv.Channels;
 import uk.ac.stfc.isis.ibex.epics.writing.BaseWritable;
 
+/**
+ * A channel type for reading a short integer.
+ */
 public class ShortChannel implements ChannelType<Short> {
 
 	@Override
