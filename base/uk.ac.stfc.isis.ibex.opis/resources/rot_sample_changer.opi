@@ -328,7 +328,7 @@ $(pv_value)</tooltip>
         <keep_wh_ratio>true</keep_wh_ratio>
       </scale_options>
       <visible>true</visible>
-      <pv_name>$(PV_ROOT):CARROUSEL_AT_IDX</pv_name>
+      <pv_name>$(PV_ROOT):CAROUSEL_AT_IDX</pv_name>
       <border_color>
         <color red="0" green="128" blue="255" />
       </border_color>
@@ -422,7 +422,7 @@ $(pv_value)</tooltip>
         <keep_wh_ratio>true</keep_wh_ratio>
       </scale_options>
       <visible>true</visible>
-      <pv_name>$(PV_ROOT):CARROUSEL_AT_POS_1</pv_name>
+      <pv_name>$(PV_ROOT):CAROUSEL_AT_POS_1</pv_name>
       <border_color>
         <color red="0" green="128" blue="255" />
       </border_color>
@@ -1119,7 +1119,7 @@ $(pv_value)</tooltip>
         <keep_wh_ratio>false</keep_wh_ratio>
       </scale_options>
       <visible>true</visible>
-      <pv_name>$(PV_ROOT):STATUS_STRING</pv_name>
+      <pv_name>$(PV_ROOT):STAT</pv_name>
       <vertical_alignment>1</vertical_alignment>
       <border_color>
         <color name="ISIS_Border" red="0" green="0" blue="0" />
@@ -1154,7 +1154,7 @@ $(pv_value)</tooltip>
           <exp bool_exp="pv0===1">
             <value>true</value>
           </exp>
-          <pv trig="true">$(PV_ROOT):STATUS_STRING</pv>
+          <pv trig="true">$(PV_ROOT):STAT</pv>
         </rule>
       </rules>
       <pv_value />
