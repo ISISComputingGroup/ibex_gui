@@ -21,19 +21,14 @@ package uk.ac.stfc.isis.ibex.configserver;
 
 import java.util.Collection;
 
-import com.google.common.collect.Lists;
-
 import uk.ac.stfc.isis.ibex.alarm.AlarmReloadManager;
 import uk.ac.stfc.isis.ibex.configserver.configuration.ComponentInfo;
 import uk.ac.stfc.isis.ibex.configserver.configuration.ConfigInfo;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Configuration;
 import uk.ac.stfc.isis.ibex.configserver.configuration.PV;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableIoc;
-import uk.ac.stfc.isis.ibex.configserver.internal.FilteredIocs;
-import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
-import uk.ac.stfc.isis.ibex.epics.conversion.Converter;
 import uk.ac.stfc.isis.ibex.epics.conversion.DoNothingConverter;
-import uk.ac.stfc.isis.ibex.epics.observing.ConvertingObservable;
+import uk.ac.stfc.isis.ibex.epics.observing.FilteredCollectionObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.epics.pv.Closer;
 import uk.ac.stfc.isis.ibex.epics.writing.ForwardingWritableAction;
@@ -168,7 +163,7 @@ public class ConfigServer extends Closer {
 	 * @return the Collection<{@link EditableIoc}> observable object
 	 */
 	public ForwardingObservable<Collection<EditableIoc>> iocs() {
-		return variables.iocs;
+        return FilteredCollectionObservable.createFilteredByNameObservable(variables.iocs, variables.protectedIocs);
 	}
 	
 	/**
@@ -291,28 +286,10 @@ public class ConfigServer extends Closer {
 	 * @return the Collection<{@link EditableIocState}> observable object
 	 */
     public ForwardingObservable<Collection<IocState>> iocStates() {
+        return FilteredCollectionObservable.createFilteredByNameObservable(variables.iocStates, variables.protectedIocs);
+    }
 
-        // Set up a converter that just generates a new ArrayList
-        Converter<Collection<IocState>, Collection<IocState>> converter =
-                new Converter<Collection<IocState>, Collection<IocState>>() {
 
-                    @Override
-                    public Collection<IocState> convert(Collection<IocState> value) throws ConversionException {
-                        return Lists.newArrayList(value);
-                    }
-                };
-
-        // Use the above converter in a converting observable
-        ConvertingObservable<Collection<IocState>, Collection<IocState>> convertingObservable =
-                new ConvertingObservable<Collection<IocState>, Collection<IocState>>(variables.iocStates, converter);
-
-        ForwardingObservable<Collection<IocState>> iocs = 
-                new ForwardingObservable<>(convertingObservable);
-
-        FilteredIocs filteredIocs = new FilteredIocs(iocs, variables.protectedIocs);
-		
-        return new ForwardingObservable<>(filteredIocs);
-	}
 	
 	/**
 	 * Returns a {@link SetCommand} object that can be used to start any ioc. <br>

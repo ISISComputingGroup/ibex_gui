@@ -24,6 +24,7 @@ import java.util.Collection;
 
 import com.google.common.base.Strings;
 
+import uk.ac.stfc.isis.ibex.epics.observing.INamed;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 
 /**
@@ -36,7 +37,7 @@ import uk.ac.stfc.isis.ibex.model.ModelObject;
  * reflection. Therefore variable names must reflect those expected from the
  * JSON.
  */
-public class Ioc extends ModelObject implements Comparable<Ioc> {
+public class Ioc extends ModelObject implements Comparable<Ioc>, INamed {
 
 	private final String name;	
 	
@@ -96,7 +97,8 @@ public class Ioc extends ModelObject implements Comparable<Ioc> {
     /**
      * @return The IOC name
      */
-	public String getName() {
+	@Override
+    public String getName() {
 		return name;
 	}
 		
