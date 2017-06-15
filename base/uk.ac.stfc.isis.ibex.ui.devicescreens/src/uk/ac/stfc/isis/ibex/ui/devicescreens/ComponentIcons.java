@@ -68,8 +68,9 @@ public final class ComponentIcons {
                 return "monitor";
             case SAMPLESTACK:
             case ZOOM_SAMPLE_STACK:
-            case GONIOMETER:
                 return "sample_stack";
+            case GONIOMETER:
+                return "goniometer";
             case DAE:
                 return "dae";
             case DANFYSIK:
