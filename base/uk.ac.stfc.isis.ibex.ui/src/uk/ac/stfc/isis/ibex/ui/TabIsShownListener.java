@@ -23,10 +23,9 @@ package uk.ac.stfc.isis.ibex.ui;
 
 import org.eclipse.swt.custom.CTabFolder;
 import org.eclipse.swt.custom.CTabItem;
+import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.widgets.Widget;
-import org.eclipse.ui.IPartListener2;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.IWorkbenchPartReference;
 import org.eclipse.ui.part.ViewPart;
@@ -35,11 +34,11 @@ import org.eclipse.ui.part.ViewPart;
  * Listener for changes to a part and tab folder to react when a tab becomes
  * visible. When it is visible then the tab shows action is called.
  */
-public class TabIsShownListener implements IPartListener2 {
+public class TabIsShownListener extends PartAdapter {
     /**
      * Listener to determine which tab is currently selected
      */
-    private final class TabSelectionListener implements SelectionListener {
+    private final class TabSelectionListener extends SelectionAdapter {
         /**
          * The tab item containing detector diagnostics
          */
@@ -58,28 +57,9 @@ public class TabIsShownListener implements IPartListener2 {
         @Override
         public void widgetSelected(SelectionEvent e) {
             Widget item = e.item;
-            onSelectionChanged((CTabItem) item);
-        }
-
-        /**
-         * Update the model with the tab that was just selected
-         * 
-         * @param item
-         *            the tab that was just selected; null means no tab is
-         *            selected or no tab is visible i.e. when a new
-         *            perspective is chosen
-         */
-        private void onSelectionChanged(CTabItem item) {
-            tabSelection.visibleTabChanged(item);
-
-        }
-
-        @Override
-        public void widgetDefaultSelected(SelectionEvent e) {
-            // do nothing
+            tabSelection.visibleTabChanged((CTabItem) item);
         }
     }
-
 
     private ViewPart viewPart;
     private CTabFolder tabFolder;
@@ -119,51 +99,29 @@ public class TabIsShownListener implements IPartListener2 {
 
     @Override
     public void partVisible(IWorkbenchPartReference partRef) {
-        IWorkbenchPart part = partRef.getPart(false);
-        if (part == viewPart && tabSelectionListener != null) {
+        if (shouldChangeListenerAndTab(partRef)) {
             tabFolder.addSelectionListener(tabSelectionListener);
-            tabSelectionListener.onSelectionChanged(tabFolder.getSelection());
+            tabSelectionListener.tabSelection.visibleTabChanged(tabFolder.getSelection());
         }
     }
 
     @Override
     public void partHidden(IWorkbenchPartReference partRef) {
-        IWorkbenchPart part = partRef.getPart(false);
-        if (part == viewPart && tabSelectionListener != null) {
+        if (shouldChangeListenerAndTab(partRef)) {
             tabFolder.removeSelectionListener(tabSelectionListener);
-            tabSelectionListener.onSelectionChanged(null);
+            tabSelectionListener.tabSelection.visibleTabChanged(null);
         }
-
     }
 
-    @Override
-    public void partActivated(IWorkbenchPartReference partRef) {
-        //
-    }
-
-    @Override
-    public void partBroughtToTop(IWorkbenchPartReference partRef) {
-        //
-    }
-
-    @Override
-    public void partClosed(IWorkbenchPartReference partRef) {
-        //
-    }
-
-    @Override
-    public void partDeactivated(IWorkbenchPartReference partRef) {
-        //
-    }
-
-    @Override
-    public void partOpened(IWorkbenchPartReference partRef) {
-        //
-    }
-
-    @Override
-    public void partInputChanged(IWorkbenchPartReference partRef) {
-        //
+    /**
+     * @param partRef
+     *            part reference
+     * @return True if it is the current part and there is a tab selection
+     *         listener; False otherwise
+     */
+    private boolean shouldChangeListenerAndTab(IWorkbenchPartReference partRef) {
+        IWorkbenchPart part = partRef.getPart(false);
+        return (part == viewPart && tabSelectionListener != null);
     }
 
 }
