@@ -99,7 +99,7 @@ public class AlarmButton extends PerspectiveButton {
 		super.mouseExitAction();
     }
 
-	@Override
+    @Override
 	protected void mouseClickAction() {
 	}
 	

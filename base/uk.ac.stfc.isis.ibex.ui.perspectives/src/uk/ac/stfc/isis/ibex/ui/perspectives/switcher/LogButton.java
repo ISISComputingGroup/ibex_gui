@@ -58,8 +58,13 @@ public class LogButton extends PerspectiveButton {
 		model.addPropertyChangeListener("hasMessages", new PropertyChangeListener() {			
 			@Override
 			public void propertyChange(PropertyChangeEvent arg0) {
-				updateFlashing();
-			}
+                Display.getDefault().asyncExec(new Runnable() {
+                    @Override
+                    public void run() {
+                        updateFlashing();
+                    }
+                });
+            }
 		});
 	}
 	
