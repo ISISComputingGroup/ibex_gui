@@ -74,6 +74,11 @@ class CheckOpiFormat:
     def check_title_case(self, root, xpath, error_message):
         for name in root.xpath(xpath):
             capitalisation_error = False
+
+            # Special case for the manager mode indicator
+            if "manager mode" in name.text.lower():
+                continue;
+
             words = name.text.split()
 
             # Handle special case of first word (which should be capitalised regardless of length)
