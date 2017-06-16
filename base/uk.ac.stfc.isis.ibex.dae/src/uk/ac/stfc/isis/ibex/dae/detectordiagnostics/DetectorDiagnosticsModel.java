@@ -148,7 +148,7 @@ public final class DetectorDiagnosticsModel extends ModelObject {
         writableFactory = new WritableFactory(OnInstrumentSwitch.SWITCH, InstrumentSwitchers.getDefault());
         
         diagnosticsEnabled = writableFactory.getSwitchableWritable(new IntegerChannel(),
-                InstrumentUtils.addPrefix("DAE:KEEP:DIAG:ENABLE:FOR"));
+                InstrumentUtils.addPrefix("DAE:DIAG:ENABLE:FOR"));
         spectraToDisplay = writableFactory.getSwitchableWritable(new IntegerChannel(), InstrumentUtils.addPrefix("DAE:DIAG:SPEC:SHOW:SP"));
         period = writableFactory.getSwitchableWritable(new IntegerChannel(), InstrumentUtils.addPrefix("DAE:DIAG:PERIOD:SP"));
         startingSpectrumNumber = writableFactory.getSwitchableWritable(new IntegerChannel(), InstrumentUtils.addPrefix("DAE:DIAG:SPEC:START:SP")); 
