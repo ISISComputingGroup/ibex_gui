@@ -31,11 +31,13 @@ import org.eclipse.core.runtime.jobs.Job;
 import uk.ac.stfc.isis.ibex.epics.observing.ClosableObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.Observable;
+import uk.ac.stfc.isis.ibex.epics.observing.Subscription;
 import uk.ac.stfc.isis.ibex.epics.switching.InstrumentSwitchers;
 import uk.ac.stfc.isis.ibex.epics.switching.ObservableFactory;
 import uk.ac.stfc.isis.ibex.epics.switching.OnInstrumentSwitch;
 import uk.ac.stfc.isis.ibex.epics.switching.SwitchableObservable;
 import uk.ac.stfc.isis.ibex.epics.switching.WritableFactory;
+import uk.ac.stfc.isis.ibex.epics.writing.ConfigurableWriter;
 import uk.ac.stfc.isis.ibex.epics.writing.Writable;
 import uk.ac.stfc.isis.ibex.instrument.InstrumentUtils;
 import uk.ac.stfc.isis.ibex.instrument.channels.BooleanChannel;
@@ -116,6 +118,8 @@ public final class DetectorDiagnosticsModel extends ModelObject {
 
     protected boolean errorLoggedInJob;
 
+    private Subscription diagnosticsEnabledSubscription;
+
     /**
      * Constructor.
      * 
@@ -179,6 +183,7 @@ public final class DetectorDiagnosticsModel extends ModelObject {
                 return Status.OK_STATUS;
             }
         };
+        rescheduleDetectirDiagnosticJobOnCanWriteChange();
     }
     
     /**
@@ -396,10 +401,11 @@ public final class DetectorDiagnosticsModel extends ModelObject {
     }
     
     /**
-     * Close the model.
+     * Close the model, use close instance instead
      */
-    public void close() {
+    private void close() {
         setDetectorDiagnosticsEnabled(false);
+        diagnosticsEnabledSubscription.removeObserver();
         spectrumNumbers.close();
         countRate.close();
         integral.close();
@@ -489,4 +495,52 @@ public final class DetectorDiagnosticsModel extends ModelObject {
         }
     }
 
+    /**
+     * Create a listener which will immediately reschedule the detector
+     * diagnostics job (if it is already scheduled) if the PV becomes writable.
+     * This means that the detector diagnostics will be immediately enabled if
+     * possible instead of having to wait for the scheduled job to run. This
+     * will happen on instrument change.
+     * 
+     */
+    private void rescheduleDetectirDiagnosticJobOnCanWriteChange() {
+        diagnosticsEnabledSubscription = diagnosticsEnabled.subscribe(new ConfigurableWriter<Integer, Integer>() {
+
+            @Override
+            public void write(Integer value) throws IOException {
+                //
+            }
+
+            @Override
+            public void uncheckedWrite(Integer value) {
+                //
+            }
+
+            @Override
+            public void onError(Exception e) {
+                //
+            }
+
+            @Override
+            public void onCanWriteChanged(boolean canWrite) {
+                if (canWrite) {
+                    if (detectorDiagnosticsEnabledJob.getState() == Job.WAITING
+                            || detectorDiagnosticsEnabledJob.getState() == Job.SLEEPING) {
+                        detectorDiagnosticsEnabledJob.cancel();
+                        detectorDiagnosticsEnabledJob.schedule();
+                    }
+                }
+            }
+
+            @Override
+            public boolean canWrite() {
+                return false;
+            }
+
+            @Override
+            public Subscription writeTo(Writable<Integer> writable) {
+                return null;
+            }
+        });
+    }
 }
