@@ -141,7 +141,7 @@
     <background_color>
       <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
     </background_color>
-    <width>1729</width>
+    <width>1609</width>
     <x>6</x>
     <name>Front End</name>
     <y>78</y>
@@ -167,7 +167,7 @@ $(pv_value)</tooltip>
       <transparent>false</transparent>
       <points>
         <point x="12" y="234" />
-        <point x="1692" y="234" />
+        <point x="1566" y="234" />
       </points>
       <fill_arrow>true</fill_arrow>
       <pv_value />
@@ -195,7 +195,7 @@ $(pv_value)</tooltip>
       <background_color>
         <color name="ISIS_Border" red="0" green="0" blue="0" />
       </background_color>
-      <width>1681</width>
+      <width>1555</width>
       <x>12</x>
       <name>Polyline_2</name>
       <y>234</y>
@@ -5910,7 +5910,7 @@ $(pv_value)</tooltip>
       </border_color>
       <widget_type>Button</widget_type>
       <width>115</width>
-      <x>1494</x>
+      <x>1464</x>
       <name>Button_3</name>
       <y>246</y>
       <foreground_color>
@@ -5950,7 +5950,7 @@ $(pv_value)</tooltip>
       <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
     </background_color>
     <width>517</width>
-    <x>1734</x>
+    <x>1614</x>
     <name>HIFI</name>
     <y>78</y>
     <foreground_color>
@@ -7561,7 +7561,7 @@ $(pv_value)</tooltip>
       <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
     </background_color>
     <width>517</width>
-    <x>1734</x>
+    <x>1614</x>
     <name>MUSR</name>
     <y>288</y>
     <foreground_color>
@@ -8448,7 +8448,7 @@ $(pv_value)</tooltip>
       <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
     </background_color>
     <width>517</width>
-    <x>1734</x>
+    <x>1614</x>
     <name>EMU</name>
     <y>498</y>
     <foreground_color>
