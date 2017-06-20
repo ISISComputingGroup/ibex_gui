@@ -777,7 +777,7 @@
 			<key>Muon Front End Overview</key>
 			<value>
 				<type>MUON_FRONT_END</type>
-				<path>muon_front_end_overview.opi</path>
+				<path>muon_front_end_overview/muon_front_end_overview.opi</path>
 				<description>The OPI for the Muon front end.</description>
 				<macros>
 				</macros>
