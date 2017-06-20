@@ -98,7 +98,7 @@ $(pv_value)</tooltip>
       <keep_wh_ratio>true</keep_wh_ratio>
     </scale_options>
     <visible>true</visible>
-    <pv_name>$(POWERPV)</pv_name>
+    <pv_name>$(PV_ROOT):POWER</pv_name>
     <border_color>
       <color red="0" green="128" blue="255" />
     </border_color>
@@ -131,10 +131,22 @@ $(pv_value)</tooltip>
     <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
     <tooltip>$(pv_name)
 $(pv_value)</tooltip>
-    <rules />
+    <rules>
+      <rule name="Rule" prop_id="pv_value" out_exp="true">
+        <exp bool_exp="pvInt0 != 0 || pvInt1 != 0 || pvInt2 != 0">
+          <value>1</value>
+        </exp>
+        <exp bool_exp="true">
+          <value>0</value>
+        </exp>
+        <pv trig="true">$(PV_ROOT):POWER.STAT</pv>
+        <pv trig="true">$(PV_ROOT):CURR.STAT</pv>
+        <pv trig="true">$(PV_ROOT):VOLT.STAT</pv>
+      </rule>
+    </rules>
     <effect_3d>true</effect_3d>
     <bit>-1</bit>
-    <enabled>true</enabled>
+    <enabled>false</enabled>
     <wuid>-7f86b513:15cbf58a3f3:-69a0</wuid>
     <on_color>
       <color name="ISIS_Red_LED_On" red="255" green="100" blue="100" />
@@ -151,7 +163,7 @@ $(pv_value)</tooltip>
       <keep_wh_ratio>true</keep_wh_ratio>
     </scale_options>
     <visible>true</visible>
-    <pv_name>$(ALARMPV)</pv_name>
+    <pv_name></pv_name>
     <border_color>
       <color red="0" green="128" blue="255" />
     </border_color>

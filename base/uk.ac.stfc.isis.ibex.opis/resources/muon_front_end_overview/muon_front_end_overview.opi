@@ -254,7 +254,7 @@
       <macros>
         <include_parent_macros>true</include_parent_macros>
         <PSNAME>UQ1</PSNAME>
-        <POWERPV>$(P)DFKPS_03:POWER</POWERPV>
+        <PV_ROOT>$(P)DFKPS_03</PV_ROOT>
       </macros>
       <visible>true</visible>
       <group_name></group_name>
@@ -297,7 +297,7 @@
       <macros>
         <include_parent_macros>true</include_parent_macros>
         <PSNAME>UQ2</PSNAME>
-        <POWERPV>$(P)DFKPS_04:POWER</POWERPV>
+        <PV_ROOT>$(P)DFKPS_04</PV_ROOT>
       </macros>
       <visible>true</visible>
       <group_name></group_name>
@@ -340,7 +340,7 @@
       <macros>
         <include_parent_macros>true</include_parent_macros>
         <PSNAME>UQ3</PSNAME>
-        <POWERPV>$(P)GENESYS_01:1:POWER</POWERPV>
+        <PV_ROOT>$(P)GENESYS_01:1</PV_ROOT>
       </macros>
       <visible>true</visible>
       <group_name></group_name>
@@ -383,7 +383,7 @@
       <macros>
         <include_parent_macros>true</include_parent_macros>
         <PSNAME>UB1</PSNAME>
-        <POWERPV>$(P)DFKPS_10:POWER</POWERPV>
+        <PV_ROOT>$(P)DFKPS_10</PV_ROOT>
       </macros>
       <visible>true</visible>
       <group_name></group_name>
@@ -426,7 +426,7 @@
       <macros>
         <include_parent_macros>true</include_parent_macros>
         <PSNAME>UQ4</PSNAME>
-        <POWERPV>$(P)GENESYS_01:2:POWER</POWERPV>
+        <PV_ROOT>$(P)GENESYS_01:2</PV_ROOT>
       </macros>
       <visible>true</visible>
       <group_name></group_name>
@@ -469,7 +469,7 @@
       <macros>
         <include_parent_macros>true</include_parent_macros>
         <PSNAME>UQ5</PSNAME>
-        <POWERPV>$(P)DFKPS_05:POWER</POWERPV>
+        <PV_ROOT>$(P)DFKPS_05</PV_ROOT>
       </macros>
       <visible>true</visible>
       <group_name></group_name>
@@ -512,7 +512,7 @@
       <macros>
         <include_parent_macros>true</include_parent_macros>
         <PSNAME>UQ6</PSNAME>
-        <POWERPV>$(P)GENESYS_01:3:POWER</POWERPV>
+        <PV_ROOT>$(P)GENESYS_01:3</PV_ROOT>
       </macros>
       <visible>true</visible>
       <group_name></group_name>
@@ -555,7 +555,7 @@
       <macros>
         <include_parent_macros>true</include_parent_macros>
         <PSNAME>UB2</PSNAME>
-        <POWERPV>$(P)DFKPS_11:POWER</POWERPV>
+        <PV_ROOT>$(P)DFKPS_11</PV_ROOT>
       </macros>
       <visible>true</visible>
       <group_name></group_name>
@@ -598,7 +598,7 @@
       <macros>
         <include_parent_macros>true</include_parent_macros>
         <PSNAME>UQ7</PSNAME>
-        <POWERPV>$(P)DFKPS_06:POWER</POWERPV>
+        <PV_ROOT>$(P)DFKPS_06</PV_ROOT>
       </macros>
       <visible>true</visible>
       <group_name></group_name>
@@ -641,7 +641,7 @@
       <macros>
         <include_parent_macros>true</include_parent_macros>
         <PSNAME>UQ8</PSNAME>
-        <POWERPV>$(P)DFKPS_07:POWER</POWERPV>
+        <PV_ROOT>$(P)DFKPS_07</PV_ROOT>
       </macros>
       <visible>true</visible>
       <group_name></group_name>
@@ -684,7 +684,7 @@
       <macros>
         <include_parent_macros>true</include_parent_macros>
         <PSNAME>UQ9</PSNAME>
-        <POWERPV>$(P)DFKPS_08:POWER</POWERPV>
+        <PV_ROOT>$(P)DFKPS_08</PV_ROOT>
       </macros>
       <visible>true</visible>
       <group_name></group_name>
@@ -727,7 +727,7 @@
       <macros>
         <include_parent_macros>true</include_parent_macros>
         <PSNAME>SEPARATOR</PSNAME>
-        <POWERPV>$(P)GENESYS_01:6:POWER</POWERPV>
+        <PV_ROOT>$(P)GENESYS_01:6</PV_ROOT>
       </macros>
       <visible>true</visible>
       <group_name></group_name>
@@ -770,7 +770,7 @@
       <macros>
         <include_parent_macros>true</include_parent_macros>
         <PSNAME>UQ10</PSNAME>
-        <POWERPV>$(P)GENESYS_01:4:POWER</POWERPV>
+        <PV_ROOT>$(P)GENESYS_01:4</PV_ROOT>
       </macros>
       <visible>true</visible>
       <group_name></group_name>
@@ -813,7 +813,7 @@
       <macros>
         <include_parent_macros>true</include_parent_macros>
         <PSNAME>UQ11</PSNAME>
-        <POWERPV>$(P)DFKPS_09:POWER</POWERPV>
+        <PV_ROOT>$(P)DFKPS_09</PV_ROOT>
       </macros>
       <visible>true</visible>
       <group_name></group_name>
@@ -856,7 +856,7 @@
       <macros>
         <include_parent_macros>true</include_parent_macros>
         <PSNAME>UQ12</PSNAME>
-        <POWERPV>$(P)GENESYS_01:5:POWER</POWERPV>
+        <PV_ROOT>$(P)GENESYS_01:5</PV_ROOT>
       </macros>
       <visible>true</visible>
       <group_name></group_name>
@@ -1777,7 +1777,7 @@ $(pv_value)</tooltip>
       <macros>
         <include_parent_macros>true</include_parent_macros>
         <PSNAME>SEPTUM_A</PSNAME>
-        <POWERPV>$(P)DFKPS_01:POWER</POWERPV>
+        <PV_ROOT>$(P)DFKPS_01</PV_ROOT>
       </macros>
       <visible>true</visible>
       <group_name></group_name>
@@ -1820,7 +1820,7 @@ $(pv_value)</tooltip>
       <macros>
         <include_parent_macros>true</include_parent_macros>
         <PSNAME>UQ13A</PSNAME>
-        <POWERPV>$(P)GENESYS_02:1:POWER</POWERPV>
+        <PV_ROOT>$(P)GENESYS_02:1</PV_ROOT>
       </macros>
       <visible>true</visible>
       <group_name></group_name>
@@ -1863,7 +1863,7 @@ $(pv_value)</tooltip>
       <macros>
         <include_parent_macros>true</include_parent_macros>
         <PSNAME>UQ14A</PSNAME>
-        <POWERPV>$(P)GENESYS_02:2:POWER</POWERPV>
+        <PV_ROOT>$(P)GENESYS_02:2</PV_ROOT>
       </macros>
       <visible>true</visible>
       <group_name></group_name>
@@ -1906,7 +1906,7 @@ $(pv_value)</tooltip>
       <macros>
         <include_parent_macros>true</include_parent_macros>
         <PSNAME>UQ15A</PSNAME>
-        <POWERPV>$(P)GENESYS_02:3:POWER</POWERPV>
+        <PV_ROOT>$(P)GENESYS_02:3</PV_ROOT>
       </macros>
       <visible>true</visible>
       <group_name></group_name>
@@ -1928,6 +1928,209 @@ $(pv_value)</tooltip>
       <actions hook="false" hook_all="false" />
       <font>
         <opifont.name fontName="Segoe UI" height="9" style="0">ISIS_GroupBox_NEW</opifont.name>
+      </font>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.NativeButton" version="1.0">
+      <toggle_button>false</toggle_button>
+      <border_style>0</border_style>
+      <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+      <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+      <push_action_index>0</push_action_index>
+      <rules />
+      <enabled>true</enabled>
+      <wuid>57b3c4b7:15cc49fbe68:-7caa</wuid>
+      <pv_value />
+      <text>Details...</text>
+      <scripts />
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+      <height>26</height>
+      <border_width>1</border_width>
+      <scale_options>
+        <width_scalable>true</width_scalable>
+        <height_scalable>true</height_scalable>
+        <keep_wh_ratio>false</keep_wh_ratio>
+      </scale_options>
+      <image></image>
+      <visible>true</visible>
+      <pv_name></pv_name>
+      <border_color>
+        <color name="ISIS_Border" red="0" green="0" blue="0" />
+      </border_color>
+      <widget_type>Button</widget_type>
+      <width>55</width>
+      <x>192</x>
+      <name>Button_1</name>
+      <y>30</y>
+      <foreground_color>
+        <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
+      </foreground_color>
+      <actions hook="false" hook_all="false">
+        <action type="OPEN_DISPLAY">
+          <path>../danfysik.opi</path>
+          <macros>
+            <include_parent_macros>true</include_parent_macros>
+            <DFKPS>DFKPS_01</DFKPS>
+          </macros>
+          <replace>1</replace>
+          <description></description>
+        </action>
+      </actions>
+      <font>
+        <opifont.name fontName="Segoe UI" height="9" style="0">ISIS_Button_NEW</opifont.name>
+      </font>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.NativeButton" version="1.0">
+      <toggle_button>false</toggle_button>
+      <border_style>0</border_style>
+      <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+      <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+      <push_action_index>0</push_action_index>
+      <rules />
+      <enabled>true</enabled>
+      <wuid>57b3c4b7:15cc49fbe68:-7ca0</wuid>
+      <pv_value />
+      <text>Details...</text>
+      <scripts />
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+      <height>26</height>
+      <border_width>1</border_width>
+      <scale_options>
+        <width_scalable>true</width_scalable>
+        <height_scalable>true</height_scalable>
+        <keep_wh_ratio>false</keep_wh_ratio>
+      </scale_options>
+      <image></image>
+      <visible>true</visible>
+      <pv_name></pv_name>
+      <border_color>
+        <color name="ISIS_Border" red="0" green="0" blue="0" />
+      </border_color>
+      <widget_type>Button</widget_type>
+      <width>55</width>
+      <x>192</x>
+      <name>Button_10</name>
+      <y>60</y>
+      <foreground_color>
+        <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
+      </foreground_color>
+      <actions hook="false" hook_all="false">
+        <action type="OPEN_DISPLAY">
+          <path>../genesys.opi</path>
+          <macros>
+            <include_parent_macros>true</include_parent_macros>
+            <IOC_NUM>02</IOC_NUM>
+            <PS_NUM>1</PS_NUM>
+          </macros>
+          <replace>1</replace>
+          <description></description>
+        </action>
+      </actions>
+      <font>
+        <opifont.name fontName="Segoe UI" height="9" style="0">ISIS_Button_NEW</opifont.name>
+      </font>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.NativeButton" version="1.0">
+      <toggle_button>false</toggle_button>
+      <border_style>0</border_style>
+      <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+      <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+      <push_action_index>0</push_action_index>
+      <rules />
+      <enabled>true</enabled>
+      <wuid>57b3c4b7:15cc49fbe68:-7c99</wuid>
+      <pv_value />
+      <text>Details...</text>
+      <scripts />
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+      <height>26</height>
+      <border_width>1</border_width>
+      <scale_options>
+        <width_scalable>true</width_scalable>
+        <height_scalable>true</height_scalable>
+        <keep_wh_ratio>false</keep_wh_ratio>
+      </scale_options>
+      <image></image>
+      <visible>true</visible>
+      <pv_name></pv_name>
+      <border_color>
+        <color name="ISIS_Border" red="0" green="0" blue="0" />
+      </border_color>
+      <widget_type>Button</widget_type>
+      <width>55</width>
+      <x>192</x>
+      <name>Button_10</name>
+      <y>90</y>
+      <foreground_color>
+        <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
+      </foreground_color>
+      <actions hook="false" hook_all="false">
+        <action type="OPEN_DISPLAY">
+          <path>../genesys.opi</path>
+          <macros>
+            <include_parent_macros>true</include_parent_macros>
+            <IOC_NUM>02</IOC_NUM>
+            <PS_NUM>2</PS_NUM>
+          </macros>
+          <replace>1</replace>
+          <description></description>
+        </action>
+      </actions>
+      <font>
+        <opifont.name fontName="Segoe UI" height="9" style="0">ISIS_Button_NEW</opifont.name>
+      </font>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.NativeButton" version="1.0">
+      <toggle_button>false</toggle_button>
+      <border_style>0</border_style>
+      <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+      <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+      <push_action_index>0</push_action_index>
+      <rules />
+      <enabled>true</enabled>
+      <wuid>57b3c4b7:15cc49fbe68:-7c92</wuid>
+      <pv_value />
+      <text>Details...</text>
+      <scripts />
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+      <height>26</height>
+      <border_width>1</border_width>
+      <scale_options>
+        <width_scalable>true</width_scalable>
+        <height_scalable>true</height_scalable>
+        <keep_wh_ratio>false</keep_wh_ratio>
+      </scale_options>
+      <image></image>
+      <visible>true</visible>
+      <pv_name></pv_name>
+      <border_color>
+        <color name="ISIS_Border" red="0" green="0" blue="0" />
+      </border_color>
+      <widget_type>Button</widget_type>
+      <width>55</width>
+      <x>192</x>
+      <name>Button_10</name>
+      <y>120</y>
+      <foreground_color>
+        <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
+      </foreground_color>
+      <actions hook="false" hook_all="false">
+        <action type="OPEN_DISPLAY">
+          <path>../genesys.opi</path>
+          <macros>
+            <include_parent_macros>true</include_parent_macros>
+            <IOC_NUM>02</IOC_NUM>
+            <PS_NUM>3</PS_NUM>
+          </macros>
+          <replace>1</replace>
+          <description></description>
+        </action>
+      </actions>
+      <font>
+        <opifont.name fontName="Segoe UI" height="9" style="0">ISIS_Button_NEW</opifont.name>
       </font>
     </widget>
   </widget>
@@ -2071,7 +2274,7 @@ $(pv_value)</tooltip>
       <macros>
         <include_parent_macros>true</include_parent_macros>
         <PSNAME>UQ13B</PSNAME>
-        <POWERPV>$(P)GENESYS_03:1:POWER</POWERPV>
+        <PV_ROOT>$(P)GENESYS_03:1</PV_ROOT>
       </macros>
       <visible>true</visible>
       <group_name></group_name>
@@ -2114,7 +2317,7 @@ $(pv_value)</tooltip>
       <macros>
         <include_parent_macros>true</include_parent_macros>
         <PSNAME>UQ14B</PSNAME>
-        <POWERPV>$(P)GENESYS_03:2:POWER</POWERPV>
+        <PV_ROOT>$(P)GENESYS_03:2</PV_ROOT>
       </macros>
       <visible>true</visible>
       <group_name></group_name>
@@ -2136,6 +2339,108 @@ $(pv_value)</tooltip>
       <actions hook="false" hook_all="false" />
       <font>
         <opifont.name fontName="Segoe UI" height="9" style="0">ISIS_GroupBox_NEW</opifont.name>
+      </font>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.NativeButton" version="1.0">
+      <toggle_button>false</toggle_button>
+      <border_style>0</border_style>
+      <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+      <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+      <push_action_index>0</push_action_index>
+      <rules />
+      <enabled>true</enabled>
+      <wuid>57b3c4b7:15cc49fbe68:-7c74</wuid>
+      <pv_value />
+      <text>Details...</text>
+      <scripts />
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+      <height>26</height>
+      <border_width>1</border_width>
+      <scale_options>
+        <width_scalable>true</width_scalable>
+        <height_scalable>true</height_scalable>
+        <keep_wh_ratio>false</keep_wh_ratio>
+      </scale_options>
+      <image></image>
+      <visible>true</visible>
+      <pv_name></pv_name>
+      <border_color>
+        <color name="ISIS_Border" red="0" green="0" blue="0" />
+      </border_color>
+      <widget_type>Button</widget_type>
+      <width>55</width>
+      <x>192</x>
+      <name>Button_10</name>
+      <y>30</y>
+      <foreground_color>
+        <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
+      </foreground_color>
+      <actions hook="false" hook_all="false">
+        <action type="OPEN_DISPLAY">
+          <path>../genesys.opi</path>
+          <macros>
+            <include_parent_macros>true</include_parent_macros>
+            <IOC_NUM>03</IOC_NUM>
+            <PS_NUM>1</PS_NUM>
+          </macros>
+          <replace>1</replace>
+          <description></description>
+        </action>
+      </actions>
+      <font>
+        <opifont.name fontName="Segoe UI" height="9" style="0">ISIS_Button_NEW</opifont.name>
+      </font>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.NativeButton" version="1.0">
+      <toggle_button>false</toggle_button>
+      <border_style>0</border_style>
+      <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+      <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+      <push_action_index>0</push_action_index>
+      <rules />
+      <enabled>true</enabled>
+      <wuid>57b3c4b7:15cc49fbe68:-7c73</wuid>
+      <pv_value />
+      <text>Details...</text>
+      <scripts />
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+      <height>26</height>
+      <border_width>1</border_width>
+      <scale_options>
+        <width_scalable>true</width_scalable>
+        <height_scalable>true</height_scalable>
+        <keep_wh_ratio>false</keep_wh_ratio>
+      </scale_options>
+      <image></image>
+      <visible>true</visible>
+      <pv_name></pv_name>
+      <border_color>
+        <color name="ISIS_Border" red="0" green="0" blue="0" />
+      </border_color>
+      <widget_type>Button</widget_type>
+      <width>55</width>
+      <x>192</x>
+      <name>Button_1</name>
+      <y>60</y>
+      <foreground_color>
+        <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
+      </foreground_color>
+      <actions hook="false" hook_all="false">
+        <action type="OPEN_DISPLAY">
+          <path>../genesys.opi</path>
+          <macros>
+            <include_parent_macros>true</include_parent_macros>
+            <IOC_NUM>03</IOC_NUM>
+            <PS_NUM>2</PS_NUM>
+          </macros>
+          <replace>1</replace>
+          <description></description>
+        </action>
+      </actions>
+      <font>
+        <opifont.name fontName="Segoe UI" height="9" style="0">ISIS_Button_NEW</opifont.name>
       </font>
     </widget>
   </widget>
@@ -2279,7 +2584,7 @@ $(pv_value)</tooltip>
       <macros>
         <include_parent_macros>true</include_parent_macros>
         <PSNAME>SEPTUM_C</PSNAME>
-        <POWERPV>$(P)DFKPS_02:POWER</POWERPV>
+        <PV_ROOT>$(P)DFKPS_02</PV_ROOT>
       </macros>
       <visible>true</visible>
       <group_name></group_name>
@@ -2322,7 +2627,7 @@ $(pv_value)</tooltip>
       <macros>
         <include_parent_macros>true</include_parent_macros>
         <PSNAME>UQ13C</PSNAME>
-        <POWERPV>$(P)GENESYS_04:1:POWER</POWERPV>
+        <PV_ROOT>$(P)GENESYS_04:1</PV_ROOT>
       </macros>
       <visible>true</visible>
       <group_name></group_name>
@@ -2365,7 +2670,7 @@ $(pv_value)</tooltip>
       <macros>
         <include_parent_macros>true</include_parent_macros>
         <PSNAME>UQ14C</PSNAME>
-        <POWERPV>$(P)GENESYS_04:2:POWER</POWERPV>
+        <PV_ROOT>$(P)GENESYS_04:2</PV_ROOT>
       </macros>
       <visible>true</visible>
       <group_name></group_name>
@@ -2408,7 +2713,7 @@ $(pv_value)</tooltip>
       <macros>
         <include_parent_macros>true</include_parent_macros>
         <PSNAME>UQ15C</PSNAME>
-        <POWERPV>$(P)GENESYS_04:3:POWER</POWERPV>
+        <PV_ROOT>$(P)GENESYS_04:3</PV_ROOT>
       </macros>
       <visible>true</visible>
       <group_name></group_name>
@@ -2430,6 +2735,209 @@ $(pv_value)</tooltip>
       <actions hook="false" hook_all="false" />
       <font>
         <opifont.name fontName="Segoe UI" height="9" style="0">ISIS_GroupBox_NEW</opifont.name>
+      </font>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.NativeButton" version="1.0">
+      <toggle_button>false</toggle_button>
+      <border_style>0</border_style>
+      <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+      <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+      <push_action_index>0</push_action_index>
+      <rules />
+      <enabled>true</enabled>
+      <wuid>57b3c4b7:15cc49fbe68:-7c32</wuid>
+      <pv_value />
+      <text>Details...</text>
+      <scripts />
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+      <height>26</height>
+      <border_width>1</border_width>
+      <scale_options>
+        <width_scalable>true</width_scalable>
+        <height_scalable>true</height_scalable>
+        <keep_wh_ratio>false</keep_wh_ratio>
+      </scale_options>
+      <image></image>
+      <visible>true</visible>
+      <pv_name></pv_name>
+      <border_color>
+        <color name="ISIS_Border" red="0" green="0" blue="0" />
+      </border_color>
+      <widget_type>Button</widget_type>
+      <width>55</width>
+      <x>192</x>
+      <name>Button_1</name>
+      <y>30</y>
+      <foreground_color>
+        <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
+      </foreground_color>
+      <actions hook="false" hook_all="false">
+        <action type="OPEN_DISPLAY">
+          <path>../danfysik.opi</path>
+          <macros>
+            <include_parent_macros>true</include_parent_macros>
+            <DFKPS>DFKPS_02</DFKPS>
+          </macros>
+          <replace>1</replace>
+          <description></description>
+        </action>
+      </actions>
+      <font>
+        <opifont.name fontName="Segoe UI" height="9" style="0">ISIS_Button_NEW</opifont.name>
+      </font>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.NativeButton" version="1.0">
+      <toggle_button>false</toggle_button>
+      <border_style>0</border_style>
+      <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+      <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+      <push_action_index>0</push_action_index>
+      <rules />
+      <enabled>true</enabled>
+      <wuid>57b3c4b7:15cc49fbe68:-7c31</wuid>
+      <pv_value />
+      <text>Details...</text>
+      <scripts />
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+      <height>26</height>
+      <border_width>1</border_width>
+      <scale_options>
+        <width_scalable>true</width_scalable>
+        <height_scalable>true</height_scalable>
+        <keep_wh_ratio>false</keep_wh_ratio>
+      </scale_options>
+      <image></image>
+      <visible>true</visible>
+      <pv_name></pv_name>
+      <border_color>
+        <color name="ISIS_Border" red="0" green="0" blue="0" />
+      </border_color>
+      <widget_type>Button</widget_type>
+      <width>55</width>
+      <x>192</x>
+      <name>Button_10</name>
+      <y>60</y>
+      <foreground_color>
+        <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
+      </foreground_color>
+      <actions hook="false" hook_all="false">
+        <action type="OPEN_DISPLAY">
+          <path>../genesys.opi</path>
+          <macros>
+            <include_parent_macros>true</include_parent_macros>
+            <IOC_NUM>04</IOC_NUM>
+            <PS_NUM>1</PS_NUM>
+          </macros>
+          <replace>1</replace>
+          <description></description>
+        </action>
+      </actions>
+      <font>
+        <opifont.name fontName="Segoe UI" height="9" style="0">ISIS_Button_NEW</opifont.name>
+      </font>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.NativeButton" version="1.0">
+      <toggle_button>false</toggle_button>
+      <border_style>0</border_style>
+      <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+      <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+      <push_action_index>0</push_action_index>
+      <rules />
+      <enabled>true</enabled>
+      <wuid>57b3c4b7:15cc49fbe68:-7c30</wuid>
+      <pv_value />
+      <text>Details...</text>
+      <scripts />
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+      <height>26</height>
+      <border_width>1</border_width>
+      <scale_options>
+        <width_scalable>true</width_scalable>
+        <height_scalable>true</height_scalable>
+        <keep_wh_ratio>false</keep_wh_ratio>
+      </scale_options>
+      <image></image>
+      <visible>true</visible>
+      <pv_name></pv_name>
+      <border_color>
+        <color name="ISIS_Border" red="0" green="0" blue="0" />
+      </border_color>
+      <widget_type>Button</widget_type>
+      <width>55</width>
+      <x>192</x>
+      <name>Button_11</name>
+      <y>90</y>
+      <foreground_color>
+        <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
+      </foreground_color>
+      <actions hook="false" hook_all="false">
+        <action type="OPEN_DISPLAY">
+          <path>../genesys.opi</path>
+          <macros>
+            <include_parent_macros>true</include_parent_macros>
+            <IOC_NUM>04</IOC_NUM>
+            <PS_NUM>2</PS_NUM>
+          </macros>
+          <replace>1</replace>
+          <description></description>
+        </action>
+      </actions>
+      <font>
+        <opifont.name fontName="Segoe UI" height="9" style="0">ISIS_Button_NEW</opifont.name>
+      </font>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.NativeButton" version="1.0">
+      <toggle_button>false</toggle_button>
+      <border_style>0</border_style>
+      <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+      <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+      <push_action_index>0</push_action_index>
+      <rules />
+      <enabled>true</enabled>
+      <wuid>57b3c4b7:15cc49fbe68:-7c2f</wuid>
+      <pv_value />
+      <text>Details...</text>
+      <scripts />
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+      <height>26</height>
+      <border_width>1</border_width>
+      <scale_options>
+        <width_scalable>true</width_scalable>
+        <height_scalable>true</height_scalable>
+        <keep_wh_ratio>false</keep_wh_ratio>
+      </scale_options>
+      <image></image>
+      <visible>true</visible>
+      <pv_name></pv_name>
+      <border_color>
+        <color name="ISIS_Border" red="0" green="0" blue="0" />
+      </border_color>
+      <widget_type>Button</widget_type>
+      <width>55</width>
+      <x>192</x>
+      <name>Button_12</name>
+      <y>120</y>
+      <foreground_color>
+        <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
+      </foreground_color>
+      <actions hook="false" hook_all="false">
+        <action type="OPEN_DISPLAY">
+          <path>../genesys.opi</path>
+          <macros>
+            <include_parent_macros>true</include_parent_macros>
+            <IOC_NUM>04</IOC_NUM>
+            <PS_NUM>3</PS_NUM>
+          </macros>
+          <replace>1</replace>
+          <description></description>
+        </action>
+      </actions>
+      <font>
+        <opifont.name fontName="Segoe UI" height="9" style="0">ISIS_Button_NEW</opifont.name>
       </font>
     </widget>
   </widget>
