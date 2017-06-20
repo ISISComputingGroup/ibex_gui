@@ -1,28 +1,33 @@
  /*
- * This file is part of the ISIS IBEX application.
- * Copyright (C) 2012-2017 Science & Technology Facilities Council.
- * All rights reserved.
+ * Copyright (C) 2012-2017 Science & Technology Facilities Council. This file is
+ * part of the ISIS IBEX application. All rights reserved.
  *
- * This program is distributed in the hope that it will be useful.
- * This program and the accompanying materials are made available under the
- * terms of the Eclipse Public License v1.0 which accompanies this distribution.
- * EXCEPT AS EXPRESSLY SET FORTH IN THE ECLIPSE PUBLIC LICENSE V1.0, THE PROGRAM 
- * AND ACCOMPANYING MATERIALS ARE PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES 
- * OR CONDITIONS OF ANY KIND.  See the Eclipse Public License v1.0 for more details.
+ * This program is distributed in the hope that it will be useful. This program
+ * and the accompanying materials are made available under the terms of the
+ * Eclipse Public License v1.0 which accompanies this distribution. EXCEPT AS
+ * EXPRESSLY SET FORTH IN THE ECLIPSE PUBLIC LICENSE V1.0, THE PROGRAM AND
+ * ACCOMPANYING MATERIALS ARE PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES
+ * OR CONDITIONS OF ANY KIND. See the Eclipse Public License v1.0 for more
+ * details.
  *
- * You should have received a copy of the Eclipse Public License v1.0
- * along with this program; if not, you can obtain a copy from
- * https://www.eclipse.org/org/documents/epl-v10.php or 
+ * You should have received a copy of the Eclipse Public License v1.0 along with
+ * this program; if not, you can obtain a copy from
+ * https://www.eclipse.org/org/documents/epl-v10.php or
  * http://opensource.org/licenses/eclipse-1.0.php
  */
 
-package uk.ac.stfc.isis.ibex.dae.detectordiagnostics;
+package uk.ac.stfc.isis.ibex.ui.dae.detectordiagnostics;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.core.databinding.DataBindingContext;
+import org.eclipse.core.databinding.beans.BeanProperties;
 import org.eclipse.swt.widgets.Display;
 
+import uk.ac.stfc.isis.ibex.dae.detectordiagnostics.DetectorDiagnosticsModel;
+import uk.ac.stfc.isis.ibex.dae.detectordiagnostics.IDetectorDiagnosticsViewModelBinding;
+import uk.ac.stfc.isis.ibex.dae.detectordiagnostics.SpectrumInformation;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 
 /**
@@ -30,11 +35,12 @@ import uk.ac.stfc.isis.ibex.model.ModelObject;
  * 
  * Holds data coming from the PVs and is databound to the UI panel.
  */
-public class DetectorDiagnosticsViewModel extends ModelObject {
+public class DetectorDiagnosticsViewModel extends ModelObject implements IDetectorDiagnosticsViewModelBinding {
     
     private static DetectorDiagnosticsViewModel instance;
+    private DataBindingContext bindingContext = new DataBindingContext();
     
-    private DetectorDiagnosticsModel pvs;
+    private DetectorDiagnosticsModel detectorDiagnosticsModel;
     
     private List<SpectrumInformation> spectra = new ArrayList<>();
 
@@ -54,8 +60,15 @@ public class DetectorDiagnosticsViewModel extends ModelObject {
     private Integer period;
     private Integer spectraType;
 
+    /** True if the diagnostics is enabled */
     private boolean diagnosticsEnabled;
-    
+
+    /** Set to true if the diagnostics should be enabled */
+    private boolean enableDiagnostics = true;
+
+    /** Error last time Enable Diagnostics was written; blank for no error */
+    private String writeToEnableDiagnosticError;
+
     /**
      * The list of all spectra that should be displayed.
      * 
@@ -77,10 +90,9 @@ public class DetectorDiagnosticsViewModel extends ModelObject {
     }
     
     /**
-     * Updates the list of spectrum numbers.
-     * 
-     * @param spectrumNumbersList the list of spectrum numbers
+     * @param spectrumNumbersList
      */
+    @Override
     public synchronized void updateSpectrumNumbers(final List<Integer> spectrumNumbersList) {
         
         this.spectrumNumbersList = spectrumNumbersList;
@@ -95,10 +107,9 @@ public class DetectorDiagnosticsViewModel extends ModelObject {
     }
 
     /**
-     * Updates the list of count rates.
-     * 
-     * @param countRatesList the list of count rates
+     * @param countRatesList
      */
+    @Override
     public synchronized void updateCountRates(final List<Double> countRatesList) {
         
         this.countRatesList = countRatesList;
@@ -113,10 +124,9 @@ public class DetectorDiagnosticsViewModel extends ModelObject {
     }
     
     /**
-     * Updates the list of maximum counts.
-     * 
-     * @param maxSpecBinCount the list of maximum counts
+     * @param maxSpecBinCount
      */
+    @Override
     public synchronized void updateMaxSpecBinCount(final List<Integer> maxSpecBinCount) {
         
         this.maxSpecBinCount = maxSpecBinCount;
@@ -131,10 +141,9 @@ public class DetectorDiagnosticsViewModel extends ModelObject {
     }
     
     /**
-     * Updates the list of integrals.
-     * 
-     * @param integralsList the list of integrals
+     * @param integralsList
      */
+    @Override
     public synchronized void updateIntegrals(final List<Integer> integralsList) {
         
         this.integralsList = integralsList;
@@ -152,28 +161,23 @@ public class DetectorDiagnosticsViewModel extends ModelObject {
      * Starts observing the relevant PVs.
      */
     public synchronized void startObserving() {
-        stopObserving();
-        pvs = new DetectorDiagnosticsModel(this);
-        pvs.startObserving();
+        detectorDiagnosticsModel = DetectorDiagnosticsModel.getInstance();
+        detectorDiagnosticsModel.bind(this);
         fireSpectraPropertyChangeOnGuiThread();
+        
+        bindingContext.bindValue(BeanProperties.value("writeToEnableDiagnosticError").observe(this),
+                BeanProperties.value("writeToEnableDiagnosticError").observe(detectorDiagnosticsModel));
+        
     }
     
-    /**
-     * Stops observing the relevant PVs.
-     */
-    public void stopObserving() {
-        if (pvs != null) {
-            pvs.stopObserving();
-        }
-        fireSpectraPropertyChangeOnGuiThread();
-    }
 
     /**
      * Update the number of spectra that should be displayed.
      * 
      * @param size the new number of spectra
      */
-    synchronized void updateSpectraCount(int size) {
+    @Override
+    public synchronized void updateSpectraCount(int size) {
         spectra.clear();
         for (int i = 0; i < size; i++) {
             spectra.add(new SpectrumInformation());
@@ -217,11 +221,12 @@ public class DetectorDiagnosticsViewModel extends ModelObject {
      * 
      * @param type the type
      */
+    @Override
     public void setSpectraType(Integer type) {
         if (type == null) {
             return;
         }
-        pvs.setSpectraToDisplay(type);
+        detectorDiagnosticsModel.setSpectraToDisplay(type);
         firePropertyChangeOnGuiThread("spectraType", this.spectraType, this.spectraType = type);
     }
     
@@ -235,15 +240,26 @@ public class DetectorDiagnosticsViewModel extends ModelObject {
     }
     
     /**
+     * Get the detector diagnostics Model.
+     * 
+     * @return the pvs
+     */
+    public DetectorDiagnosticsModel getDetectorDiagnosticsModel() {
+        return detectorDiagnosticsModel;
+    }
+
+    /**
      * Sets the period.
      * 
-     * @param value the period
+     * @param value
+     *            the period
      */
+    @Override
     public void setPeriod(Integer value) {
         if (value == null) {
             return;
         }
-        pvs.setPeriod(value);
+        detectorDiagnosticsModel.setPeriod(value);
         firePropertyChangeOnGuiThread("period", this.period, this.period = value);
     }
     
@@ -261,11 +277,12 @@ public class DetectorDiagnosticsViewModel extends ModelObject {
      *
      * @param value the new starting spectrum number
      */
+    @Override
     public void setStartingSpectrumNumber(Integer value) {
         if (value == null) {
             return;
         }
-        pvs.setStartingSpectrumNumber(value);
+        detectorDiagnosticsModel.setStartingSpectrumNumber(value);
         firePropertyChangeOnGuiThread("startingSpectrumNumber", this.startingSpectrumNumber, this.startingSpectrumNumber = value);
     }
     
@@ -283,11 +300,12 @@ public class DetectorDiagnosticsViewModel extends ModelObject {
      *
      * @param value the new number of spectra
      */
+    @Override
     public void setNumberOfSpectra(Integer value) {
         if (value == null) {
             return;
         }
-        pvs.setNumberOfSpectra(value);
+        detectorDiagnosticsModel.setNumberOfSpectra(value);
         firePropertyChangeOnGuiThread("numberOfSpectra", this.numberOfSpectra, this.numberOfSpectra = value);
     }
     
@@ -301,16 +319,15 @@ public class DetectorDiagnosticsViewModel extends ModelObject {
     }
     
     /**
-     * Sets the integral time range from.
-     *
-     * @param value the new integral time range from
+     * @param value
      */
+    @Override
     public void setIntegralTimeRangeFrom(String value) {
         if (value == null) {
             return;
         }
         Double doubleValue = Double.parseDouble(value);
-        pvs.setIntegralTimeRangeFrom(doubleValue);
+        detectorDiagnosticsModel.setIntegralTimeRangeFrom(doubleValue);
         firePropertyChangeOnGuiThread("integralTimeRangeFrom", this.integralTimeRangeFrom, this.integralTimeRangeFrom = doubleValue);
     }
     
@@ -324,16 +341,15 @@ public class DetectorDiagnosticsViewModel extends ModelObject {
     }
     
     /**
-     * Sets the integral time range to.
-     *
-     * @param value the new integral time range to
+     * @param value
      */
+    @Override
     public void setIntegralTimeRangeTo(String value) {
         if (value == null) {
             return;
         }
         Double doubleValue = Double.parseDouble(value);
-        pvs.setIntegralTimeRangeTo(doubleValue);
+        detectorDiagnosticsModel.setIntegralTimeRangeTo(doubleValue);
         firePropertyChangeOnGuiThread("integralTimeRangeTo", this.integralTimeRangeTo, this.integralTimeRangeTo = doubleValue);
     }
     
@@ -347,23 +363,25 @@ public class DetectorDiagnosticsViewModel extends ModelObject {
     }
     
     /**
-     * Sets the max frames.
-     *
-     * @param value the new max frames
+     * @param value
      */
+    @Override
     public void setMaxFrames(Integer value) {
         if (value == null) {
             return;
         }
-        pvs.setMaxFrames(value);
+        detectorDiagnosticsModel.setMaxFrames(value);
         firePropertyChangeOnGuiThread("maxFrames", this.maxFrames, this.maxFrames = value);
     }
 
     /**
-     * Sets the diagnostics enabled.
+     * Sets the diagnostics enabled. (This is the readback to set use the
+     * enabledDiagnostics property)
      *
-     * @param isEnabled the new diagnostics enabled
+     * @param isEnabled
+     *            the new diagnostics enabled
      */
+    @Override
     public void setDiagnosticsEnabled(boolean isEnabled) {
         firePropertyChangeOnGuiThread("diagnosticsEnabled", this.diagnosticsEnabled, this.diagnosticsEnabled = isEnabled);
     }
@@ -375,6 +393,56 @@ public class DetectorDiagnosticsViewModel extends ModelObject {
      */
     public boolean isDiagnosticsEnabled() {
         return diagnosticsEnabled;
+    }
+
+    /**
+     * Sets the enable diagnostics flag, this enables the diagnostics so it can
+     * be observed. The read back of whether it is enabled is diagnostics
+     * enabled.
+     *
+     * @param enableDiagnostics
+     *            set that the the detector diagnostics should be enabled.
+     */
+    public void setEnableDiagnostics(boolean enableDiagnostics) {
+        firePropertyChangeOnGuiThread("enableDiagnostics", this.enableDiagnostics,
+                this.enableDiagnostics = enableDiagnostics);
+    }
+
+    /**
+     * Checks the value of enable diagnostics.
+     *
+     * @return true, if is diagnostics will be enabled; false otherwise.
+     */
+    public boolean isEnableDiagnostics() {
+        return enableDiagnostics;
+    }
+
+    /**
+     * @return the write to enable diagnostic error count
+     */
+    public String getWriteToEnableDiagnosticError() {
+        return writeToEnableDiagnosticError;
+    }
+
+    /**
+     * Set the error that occurred when trying to write to Enable Diagnostic
+     * Error.
+     * 
+     * @param error
+     *            the last error that happened when Enable Diagnostics was
+     *            written to
+     */
+    public void setWriteToEnableDiagnosticError(String error) {
+        firePropertyChange("writeToEnableDiagnosticError", this.writeToEnableDiagnosticError,
+                this.writeToEnableDiagnosticError = error);
+    }
+
+    /**
+     * @param isShown
+     *            true if the detector diagnostics is shown; false otherwise
+     */
+    public void setVisible(boolean isShown) {
+        detectorDiagnosticsModel.setDetectorDiagnosticsEnabled(isShown);
     }
 
 }
