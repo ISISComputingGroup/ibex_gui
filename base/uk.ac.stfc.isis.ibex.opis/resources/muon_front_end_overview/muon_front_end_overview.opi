@@ -1021,6 +1021,7 @@
       <macros>
         <include_parent_macros>true</include_parent_macros>
         <PSNAME>SEPTUM_A</PSNAME>
+        <POWERPV>$(P)DFKPS_01:POWER</POWERPV>
       </macros>
       <visible>true</visible>
       <group_name></group_name>
@@ -1063,6 +1064,7 @@
       <macros>
         <include_parent_macros>true</include_parent_macros>
         <PSNAME>UQ13A</PSNAME>
+        <POWERPV>$(P)GENESYS_02:1:POWER</POWERPV>
       </macros>
       <visible>true</visible>
       <group_name></group_name>
@@ -1105,6 +1107,7 @@
       <macros>
         <include_parent_macros>true</include_parent_macros>
         <PSNAME>UQ14A</PSNAME>
+        <POWERPV>$(P)GENESYS_02:2:POWER</POWERPV>
       </macros>
       <visible>true</visible>
       <group_name></group_name>
@@ -1147,6 +1150,7 @@
       <macros>
         <include_parent_macros>true</include_parent_macros>
         <PSNAME>UQ15A</PSNAME>
+        <POWERPV>$(P)GENESYS_02:3:POWER</POWERPV>
       </macros>
       <visible>true</visible>
       <group_name></group_name>
@@ -1311,6 +1315,7 @@
       <macros>
         <include_parent_macros>true</include_parent_macros>
         <PSNAME>UQ13B</PSNAME>
+        <POWERPV>$(P)GENESYS_03:1:POWER</POWERPV>
       </macros>
       <visible>true</visible>
       <group_name></group_name>
@@ -1353,6 +1358,7 @@
       <macros>
         <include_parent_macros>true</include_parent_macros>
         <PSNAME>UQ14B</PSNAME>
+        <POWERPV>$(P)GENESYS_03:2:POWER</POWERPV>
       </macros>
       <visible>true</visible>
       <group_name></group_name>
@@ -1517,6 +1523,7 @@
       <macros>
         <include_parent_macros>true</include_parent_macros>
         <PSNAME>SEPTUM_C</PSNAME>
+        <POWERPV>$(P)DFKPS_02:POWER</POWERPV>
       </macros>
       <visible>true</visible>
       <group_name></group_name>
@@ -1559,6 +1566,7 @@
       <macros>
         <include_parent_macros>true</include_parent_macros>
         <PSNAME>UQ13C</PSNAME>
+        <POWERPV>$(P)GENESYS_04:1:POWER</POWERPV>
       </macros>
       <visible>true</visible>
       <group_name></group_name>
@@ -1601,6 +1609,7 @@
       <macros>
         <include_parent_macros>true</include_parent_macros>
         <PSNAME>UQ14C</PSNAME>
+        <POWERPV>$(P)GENESYS_04:2:POWER</POWERPV>
       </macros>
       <visible>true</visible>
       <group_name></group_name>
@@ -1643,6 +1652,7 @@
       <macros>
         <include_parent_macros>true</include_parent_macros>
         <PSNAME>UQ15C</PSNAME>
+        <POWERPV>$(P)GENESYS_04:3:POWER</POWERPV>
       </macros>
       <visible>true</visible>
       <group_name></group_name>
