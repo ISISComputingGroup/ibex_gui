@@ -183,7 +183,7 @@ public final class DetectorDiagnosticsModel extends ModelObject {
                 return Status.OK_STATUS;
             }
         };
-        rescheduleDetectirDiagnosticJobOnCanWriteChange();
+        rescheduleDetectorDiagnosticJobOnCanWriteChange();
     }
     
     /**
@@ -503,7 +503,7 @@ public final class DetectorDiagnosticsModel extends ModelObject {
      * will happen on instrument change.
      * 
      */
-    private void rescheduleDetectirDiagnosticJobOnCanWriteChange() {
+    private void rescheduleDetectorDiagnosticJobOnCanWriteChange() {
         diagnosticsEnabledSubscription = diagnosticsEnabled.subscribe(new ConfigurableWriter<Integer, Integer>() {
 
             @Override
