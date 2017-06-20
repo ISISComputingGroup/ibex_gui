@@ -21,20 +21,18 @@ package uk.ac.stfc.isis.ibex.configserver;
 
 import java.util.Collection;
 
-import com.google.common.collect.Lists;
-
+import uk.ac.stfc.isis.ibex.alarm.AlarmReloadManager;
 import uk.ac.stfc.isis.ibex.configserver.configuration.ComponentInfo;
 import uk.ac.stfc.isis.ibex.configserver.configuration.ConfigInfo;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Configuration;
 import uk.ac.stfc.isis.ibex.configserver.configuration.PV;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableIoc;
-import uk.ac.stfc.isis.ibex.configserver.internal.FilteredIocs;
-import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
-import uk.ac.stfc.isis.ibex.epics.conversion.Converter;
 import uk.ac.stfc.isis.ibex.epics.conversion.DoNothingConverter;
-import uk.ac.stfc.isis.ibex.epics.observing.ConvertingObservable;
+import uk.ac.stfc.isis.ibex.epics.observing.FilteredCollectionObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.epics.pv.Closer;
+import uk.ac.stfc.isis.ibex.epics.writing.ForwardingWritableAction;
+import uk.ac.stfc.isis.ibex.epics.writing.ForwardingWritableWithAction;
 import uk.ac.stfc.isis.ibex.epics.writing.LoggingForwardingWritable;
 import uk.ac.stfc.isis.ibex.epics.writing.Writable;
 import uk.ac.stfc.isis.ibex.epics.writing.WritingSetCommand;
@@ -48,6 +46,13 @@ public class ConfigServer extends Closer {
 
 	private final ConfigServerVariables variables;
     private final ComponentDependenciesModel dependenciesModel;
+
+    private final ForwardingWritableAction updateAlarmManager = new ForwardingWritableAction() {            
+        @Override
+        public void action() {
+            AlarmReloadManager.getInstance().queueDelayedUpdate();
+        }
+    };
 	
 	/**
 	 * The default constructor for the ConfigServer.
@@ -158,7 +163,7 @@ public class ConfigServer extends Closer {
 	 * @return the Collection<{@link EditableIoc}> observable object
 	 */
 	public ForwardingObservable<Collection<EditableIoc>> iocs() {
-		return variables.iocs;
+        return FilteredCollectionObservable.createFilteredByNameObservable(variables.iocs, variables.protectedIocs);
 	}
 	
 	/**
@@ -281,28 +286,10 @@ public class ConfigServer extends Closer {
 	 * @return the Collection<{@link EditableIocState}> observable object
 	 */
     public ForwardingObservable<Collection<IocState>> iocStates() {
+        return FilteredCollectionObservable.createFilteredByNameObservable(variables.iocStates, variables.protectedIocs);
+    }
 
-        // Set up a converter that just generates a new ArrayList
-        Converter<Collection<IocState>, Collection<IocState>> converter =
-                new Converter<Collection<IocState>, Collection<IocState>>() {
 
-                    @Override
-                    public Collection<IocState> convert(Collection<IocState> value) throws ConversionException {
-                        return Lists.newArrayList(value);
-                    }
-                };
-
-        // Use the above converter in a converting observable
-        ConvertingObservable<Collection<IocState>, Collection<IocState>> convertingObservable =
-                new ConvertingObservable<Collection<IocState>, Collection<IocState>>(variables.iocStates, converter);
-
-        ForwardingObservable<Collection<IocState>> iocs = 
-                new ForwardingObservable<>(convertingObservable);
-
-        FilteredIocs filteredIocs = new FilteredIocs(iocs, variables.protectedIocs);
-		
-        return new ForwardingObservable<>(filteredIocs);
-	}
 	
 	/**
 	 * Returns a {@link SetCommand} object that can be used to start any ioc. <br>
@@ -310,7 +297,7 @@ public class ConfigServer extends Closer {
 	 * @return the SetCommand for starting a number of iocs
 	 */
 	public SetCommand<Collection<String>> startIoc() {
-		return WritingSetCommand.forDestination(log("Start ioc", variables.startIoc));		
+        return WritingSetCommand.forDestination(logWithRestartAlarmConfig("Start ioc", variables.startIoc));
 	}
 
 	/**
@@ -319,7 +306,7 @@ public class ConfigServer extends Closer {
 	 * @return the SetCommand for stopping a number of iocs
 	 */
 	public SetCommand<Collection<String>> stopIoc() {
-		return WritingSetCommand.forDestination(log("Stop ioc", variables.stopIoc));		
+        return WritingSetCommand.forDestination(logWithRestartAlarmConfig("Stop ioc", variables.stopIoc));
 	}
 	
 	/**
@@ -328,19 +315,24 @@ public class ConfigServer extends Closer {
 	 * @return the SetCommand for restarting a number of iocs
 	 */
 	public SetCommand<Collection<String>> restartIoc() {
-		return WritingSetCommand.forDestination(log("Restart ioc", variables.restartIoc));		
+        return WritingSetCommand.forDestination(logWithRestartAlarmConfig("Restart ioc", variables.restartIoc));
 	}
 
     /**
-     * Provides a writable that logs when it is written to.
+     * Provides a writable that logs and restarts the alarm server when it is
+     * written to.
      * 
-     * @param <T> This is the type parameter
-     * @param id the message to write
-     * @param destination the writable being written to
+     * @param <T>
+     *            This is the type parameter
+     * @param id
+     *            the message to write
+     * @param destination
+     *            the writable being written to
      * @return the logging writable
      */
-	private <T> Writable<T> log(String id, Writable<T> destination) {
-        return new LoggingForwardingWritable<>(Configurations.LOG, id, destination, new DoNothingConverter<T>());
+    private <T> Writable<T> logWithRestartAlarmConfig(String id, Writable<T> destination) {
+        return new ForwardingWritableWithAction<>(updateAlarmManager,
+                new LoggingForwardingWritable<>(Configurations.LOG, id, destination, new DoNothingConverter<T>()));
 	}
 
     /**

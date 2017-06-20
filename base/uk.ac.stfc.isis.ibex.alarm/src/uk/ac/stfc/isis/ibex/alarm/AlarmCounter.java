@@ -91,6 +91,12 @@ public class AlarmCounter extends ModelObject {
      * @param newCount the new count
      */
     private void fireCountChanged(final int prevCount, final int newCount) {
+
+        // If the count hasn't changed, don't do anything.
+        if (prevCount == newCount) {
+            return;
+        }
+
 		Display.getDefault().asyncExec(new Runnable() {  
 			@Override
             public void run() {
@@ -105,6 +111,5 @@ public class AlarmCounter extends ModelObject {
 	public int getCount() {
 		return count;
 	}
-
 
 }

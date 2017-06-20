@@ -48,6 +48,7 @@ public class AlarmCountViewModel extends ModelObject {
 			public void propertyChange(PropertyChangeEvent arg0) {
 				update(alarmCounter.getCount());
 			}
+
 		});
 		
         update(alarmCounter.getCount());
