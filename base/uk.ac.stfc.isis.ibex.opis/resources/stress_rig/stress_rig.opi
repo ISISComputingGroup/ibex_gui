@@ -1865,7 +1865,7 @@ $(trace_0_y_pv_value)</tooltip>
         <color name="ISIS_Textbox_Readonly_Background" red="200" green="200" blue="200" />
       </axis_0_grid_color>
       <trace_0_name></trace_0_name>
-      <trace_0_update_mode>0</trace_0_update_mode>
+      <trace_0_update_mode>4</trace_0_update_mode>
       <wuid>-4305d44c:15ac6d0a5c2:-6d93</wuid>
       <transparent>false</transparent>
       <axis_0_title_font>
@@ -1884,7 +1884,7 @@ $(trace_0_y_pv_value)</tooltip>
       <axis_0_scale_font>
         <opifont.name fontName="Segoe UI" height="9" style="0">ISIS_GraphScale_NEW</opifont.name>
       </axis_0_scale_font>
-      <trigger_pv></trigger_pv>
+      <trigger_pv>$(PV_ROOT)READALL:COUNT</trigger_pv>
       <widget_type>XY Graph</widget_type>
       <axis_1_axis_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
@@ -2371,7 +2371,7 @@ $(trace_0_y_pv_value)</tooltip>
         <color name="ISIS_Textbox_Readonly_Background" red="200" green="200" blue="200" />
       </axis_0_grid_color>
       <trace_0_name></trace_0_name>
-      <trace_0_update_mode>0</trace_0_update_mode>
+      <trace_0_update_mode>4</trace_0_update_mode>
       <wuid>-4305d44c:15ac6d0a5c2:-6d93</wuid>
       <transparent>false</transparent>
       <axis_0_title_font>
@@ -2390,7 +2390,7 @@ $(trace_0_y_pv_value)</tooltip>
       <axis_0_scale_font>
         <opifont.name fontName="Segoe UI" height="9" style="0">ISIS_GraphScale_NEW</opifont.name>
       </axis_0_scale_font>
-      <trigger_pv></trigger_pv>
+      <trigger_pv>$(PV_ROOT)READALL:COUNT</trigger_pv>
       <widget_type>XY Graph</widget_type>
       <axis_1_axis_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
@@ -2877,7 +2877,7 @@ $(trace_0_y_pv_value)</tooltip>
         <color name="ISIS_Textbox_Readonly_Background" red="200" green="200" blue="200" />
       </axis_0_grid_color>
       <trace_0_name></trace_0_name>
-      <trace_0_update_mode>0</trace_0_update_mode>
+      <trace_0_update_mode>4</trace_0_update_mode>
       <wuid>-4305d44c:15ac6d0a5c2:-6d93</wuid>
       <transparent>false</transparent>
       <axis_0_title_font>
@@ -2896,7 +2896,7 @@ $(trace_0_y_pv_value)</tooltip>
       <axis_0_scale_font>
         <opifont.name fontName="Segoe UI" height="9" style="0">ISIS_GraphScale_NEW</opifont.name>
       </axis_0_scale_font>
-      <trigger_pv></trigger_pv>
+      <trigger_pv>$(PV_ROOT)READALL:COUNT</trigger_pv>
       <widget_type>XY Graph</widget_type>
       <axis_1_axis_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
