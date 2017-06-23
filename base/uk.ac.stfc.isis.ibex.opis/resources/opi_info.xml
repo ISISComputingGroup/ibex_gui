@@ -759,5 +759,19 @@
 				</macros>
 			</value>
 		</entry>	
+		<entry>
+			<key>Applied Measurements Int2-L</key>
+			<value>
+				<type>PRESSURE_GAUGE</type>
+				<path>amint2l/amint2l.opi</path>
+				<description>The OPI for the Applied Measurements Int2-L pressure measurement system.</description>
+				<macros>
+					<macro>
+						<name>AMINT2L</name>
+						<description>The AM Int2-L PV prefix (e.g. AMINT2L_01).</description>
+					</macro>
+				</macros>
+			</value>
+		</entry>
 	</opis>
 </descriptions>

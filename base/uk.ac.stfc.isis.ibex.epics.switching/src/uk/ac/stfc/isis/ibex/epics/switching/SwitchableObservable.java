@@ -55,7 +55,9 @@ public class SwitchableObservable<T> extends ForwardingObservable<T> implements 
         if (switcher != null) {
             switcher.unregsiterSwitchable(this);
         }
-        source.close();
+        if (source != null) {
+            source.close();
+        }
         super.close();
     }
 

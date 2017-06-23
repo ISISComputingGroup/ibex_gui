@@ -29,19 +29,32 @@
  */
 package uk.ac.stfc.isis.ibex.configserver;
 
+import uk.ac.stfc.isis.ibex.epics.observing.INamed;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 
 /**
- * Class to hold information about an IOC.
+ * Class to hold information about the state of an IOC.
  *
  */
-public class IocState extends ModelObject implements Comparable<IocState> {
+public class IocState extends ModelObject implements Comparable<IocState>, INamed {
 	private final String name;
 	private final boolean allowControl;
 
 	private boolean isRunning;
 	private String description;
 	
+    /**
+     * Instantiates a new IOC state.
+     *
+     * @param name
+     *            the name
+     * @param isRunning
+     *            whether the IOC is running
+     * @param description
+     *            description of the IOC
+     * @param allowControl
+     *            whether the user is allowed control it
+     */
 	public IocState(String name, boolean isRunning, String description, boolean allowControl) {
 		this.name = name;
 		this.isRunning = isRunning;
@@ -49,32 +62,57 @@ public class IocState extends ModelObject implements Comparable<IocState> {
 		this.allowControl = allowControl;
 	}
 	
+    /**
+     * Copy constructor.
+     *
+     * @param other
+     *            the value to copy
+     */
 	public IocState(IocState other) {
 		this(other.name, other.isRunning, other.description, other.allowControl);
 	}	
 
-	public String getName() {
+	@Override
+    public String getName() {
 		return name;
 	}
 	
+    /**
+     * 
+     * @return True if it is running; False otherwise
+     */
 	public boolean getIsRunning() {
 		return isRunning;
 	}
 	
+    /**
+     *
+     * @param isRunning
+     *            true if it is running; False if not running
+     */
 	public void setIsRunning(boolean isRunning) {
 		firePropertyChange("isRunning", this.isRunning, this.isRunning = isRunning);
 	}
 	
+    /**
+     * Gets the description.
+     *
+     * @return the description
+     */
 	public String getDescription() {
 		return description;
 	}
 	
+    /**
+     *
+     * @return true if user is allowed to control it; false otherwise
+     */
 	public boolean getAllowControl() {
 		return allowControl;
 	}
 
 	@Override
-	public int compareTo(IocState arg0) {
-		return name.compareTo(arg0.getName());
+	public int compareTo(IocState iocState) {
+		return name.compareTo(iocState.getName());
 	}
 }

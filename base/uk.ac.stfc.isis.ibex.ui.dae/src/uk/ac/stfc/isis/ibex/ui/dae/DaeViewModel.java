@@ -28,6 +28,7 @@ import uk.ac.stfc.isis.ibex.epics.adapters.TextUpdatedObservableAdapter;
 import uk.ac.stfc.isis.ibex.epics.adapters.UpdatedObservableAdapter;
 import uk.ac.stfc.isis.ibex.epics.pv.Closer;
 import uk.ac.stfc.isis.ibex.model.UpdatedValue;
+import uk.ac.stfc.isis.ibex.ui.dae.detectordiagnostics.DetectorDiagnosticsViewModel;
 import uk.ac.stfc.isis.ibex.ui.dae.experimentsetup.ExperimentSetupViewModel;
 import uk.ac.stfc.isis.ibex.ui.dae.run.RunSummaryViewModel;
 import uk.ac.stfc.isis.ibex.ui.dae.runinformation.RunInformationViewModel;
@@ -38,15 +39,25 @@ import uk.ac.stfc.isis.ibex.ui.dae.runinformation.RunInformationViewModel;
  */
 public class DaeViewModel extends Closer {
 	
+    /** What tab is active in the DAE view. */
+    enum ActiveTab {
+        /** Detector diagnostics is active tab. */
+        DETECTOR_DIAGNOSTICS,
+
+        /** Tab which we are not interested is active. */
+        OTHER;
+    }
+
 	private IDae model;
 	
 	private RunSummaryViewModel runSummary = registerForClose(new RunSummaryViewModel());
 	private ExperimentSetupViewModel experimentSetup = new ExperimentSetupViewModel();
 	private RunInformationViewModel runInformation = registerForClose(new RunInformationViewModel(Dae.getInstance().observables()));
+	private DetectorDiagnosticsViewModel detectorDiagnosticsViewModel = DetectorDiagnosticsViewModel.getInstance();
 	
 	private UpdatedValue<String> vetos;
 	private UpdatedValue<Boolean> isRunning;
-	
+
     /**
      * Binds a model to this view model.
      * 
@@ -119,4 +130,30 @@ public class DaeViewModel extends Closer {
 	public RunInformationViewModel runInformation() {
 		return runInformation;
 	}
+
+    /**
+     * Set the active tab.
+     * 
+     * @param activeTab
+     *            the active tab
+     */
+    public void setActiveTab(ActiveTab activeTab) {
+        switch (activeTab) {
+            case DETECTOR_DIAGNOSTICS:
+                detectorDiagnosticsViewModel.setVisible(true);
+                break;
+            case OTHER:
+                detectorDiagnosticsViewModel.setVisible(false);
+                break;
+            default:
+                throw new IllegalStateException("Active tab not understood in DAE View Model.");
+        }
+    }
+
+    /**
+     * @return the detector diagnostics view model
+     */
+    public DetectorDiagnosticsViewModel detectorDiagnostics() {
+        return detectorDiagnosticsViewModel;
+    }
 }

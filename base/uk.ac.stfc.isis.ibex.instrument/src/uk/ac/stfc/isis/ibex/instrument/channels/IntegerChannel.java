@@ -23,6 +23,9 @@ import uk.ac.stfc.isis.ibex.epics.observing.ClosableObservable;
 import uk.ac.stfc.isis.ibex.epics.pv.Channels;
 import uk.ac.stfc.isis.ibex.epics.writing.BaseWritable;
 
+/**
+ * A channel type for reading an integer.
+ */
 public class IntegerChannel implements ChannelType<Integer> {
 
 	@Override
@@ -32,6 +35,6 @@ public class IntegerChannel implements ChannelType<Integer> {
 
 	@Override
     public BaseWritable<Integer> writer(String address) {
-		throw new UnsupportedOperationException();
+		return Channels.Integers.writer(address);
 	}
 }

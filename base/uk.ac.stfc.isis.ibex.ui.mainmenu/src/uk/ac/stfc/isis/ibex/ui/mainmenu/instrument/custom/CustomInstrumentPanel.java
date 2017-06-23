@@ -66,7 +66,7 @@ public class CustomInstrumentPanel extends Composite {
     private void createWarningLabel(Composite parent, String instrumentName) {
         String warningMsg =
                 "Please configure a PV prefix for the unknown instrument \"" + instrumentName
-                        + "\"\n(e.g. \"IN:LARMOR:\". Do not forget the trailing colon!)";
+                        + "\"\n(e.g. \"IN:LARMOR:\".)";
         Label lblWarning = new Label(parent, SWT.WRAP | SWT.LEFT);
         lblWarning.setLayoutData(new GridData(SWT.HORIZONTAL, SWT.CENTER, true, false, 2, 1));
         lblWarning.setText(warningMsg);

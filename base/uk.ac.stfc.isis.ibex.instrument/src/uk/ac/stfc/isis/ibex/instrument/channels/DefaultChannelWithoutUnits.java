@@ -23,6 +23,9 @@ import uk.ac.stfc.isis.ibex.epics.observing.ClosableObservable;
 import uk.ac.stfc.isis.ibex.epics.pv.Channels;
 import uk.ac.stfc.isis.ibex.epics.writing.BaseWritable;
 
+/**
+ * A default channel which reads a string without units.
+ */
 public class DefaultChannelWithoutUnits implements ChannelType<String> {
 
 	@Override

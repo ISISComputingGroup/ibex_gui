@@ -23,6 +23,9 @@ import uk.ac.stfc.isis.ibex.epics.observing.ClosableObservable;
 import uk.ac.stfc.isis.ibex.epics.pv.Channels;
 import uk.ac.stfc.isis.ibex.epics.writing.BaseWritable;
 
+/**
+ * A channel type for reading arrays of floats.
+ */
 public class FloatArrayChannel implements ChannelType<float[]> {
 
 	@Override
