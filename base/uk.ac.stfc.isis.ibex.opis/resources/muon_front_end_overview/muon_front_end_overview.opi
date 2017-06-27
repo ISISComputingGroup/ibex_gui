@@ -141,7 +141,7 @@
     <background_color>
       <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
     </background_color>
-    <width>301</width>
+    <width>229</width>
     <x>6</x>
     <name>Front End</name>
     <y>78</y>
@@ -162,7 +162,7 @@
       <wuid>-7f86b513:15cbf58a3f3:-7792</wuid>
       <transparent>false</transparent>
       <auto_size>false</auto_size>
-      <text>Power:</text>
+      <text>Power</text>
       <scripts />
       <height>25</height>
       <border_width>1</border_width>
@@ -203,7 +203,7 @@
       <wuid>-7f86b513:15cbf58a3f3:-6bbc</wuid>
       <transparent>false</transparent>
       <auto_size>false</auto_size>
-      <text>Alarm:</text>
+      <text>Alarm</text>
       <scripts />
       <height>25</height>
       <border_width>1</border_width>
@@ -266,7 +266,7 @@
         <color red="240" green="240" blue="240" />
       </background_color>
       <zoom_to_fit>false</zoom_to_fit>
-      <width>170</width>
+      <width>176</width>
       <x>9</x>
       <name>A Linking Container That Looks Like a Group Box</name>
       <y>30</y>
@@ -309,7 +309,7 @@
         <color red="240" green="240" blue="240" />
       </background_color>
       <zoom_to_fit>false</zoom_to_fit>
-      <width>170</width>
+      <width>176</width>
       <x>9</x>
       <name>A Linking Container That Looks Like a Group Box_1</name>
       <y>60</y>
@@ -352,7 +352,7 @@
         <color red="240" green="240" blue="240" />
       </background_color>
       <zoom_to_fit>false</zoom_to_fit>
-      <width>170</width>
+      <width>176</width>
       <x>9</x>
       <name>A Linking Container That Looks Like a Group Box_2</name>
       <y>90</y>
@@ -395,7 +395,7 @@
         <color red="240" green="240" blue="240" />
       </background_color>
       <zoom_to_fit>false</zoom_to_fit>
-      <width>170</width>
+      <width>176</width>
       <x>9</x>
       <name>A Linking Container That Looks Like a Group Box_3</name>
       <y>120</y>
@@ -438,7 +438,7 @@
         <color red="240" green="240" blue="240" />
       </background_color>
       <zoom_to_fit>false</zoom_to_fit>
-      <width>170</width>
+      <width>176</width>
       <x>9</x>
       <name>A Linking Container That Looks Like a Group Box_4</name>
       <y>150</y>
@@ -481,7 +481,7 @@
         <color red="240" green="240" blue="240" />
       </background_color>
       <zoom_to_fit>false</zoom_to_fit>
-      <width>170</width>
+      <width>176</width>
       <x>9</x>
       <name>A Linking Container That Looks Like a Group Box_5</name>
       <y>180</y>
@@ -524,7 +524,7 @@
         <color red="240" green="240" blue="240" />
       </background_color>
       <zoom_to_fit>false</zoom_to_fit>
-      <width>170</width>
+      <width>176</width>
       <x>9</x>
       <name>A Linking Container That Looks Like a Group Box_6</name>
       <y>210</y>
@@ -567,7 +567,7 @@
         <color red="240" green="240" blue="240" />
       </background_color>
       <zoom_to_fit>false</zoom_to_fit>
-      <width>170</width>
+      <width>176</width>
       <x>9</x>
       <name>A Linking Container That Looks Like a Group Box_7</name>
       <y>240</y>
@@ -610,7 +610,7 @@
         <color red="240" green="240" blue="240" />
       </background_color>
       <zoom_to_fit>false</zoom_to_fit>
-      <width>170</width>
+      <width>176</width>
       <x>9</x>
       <name>A Linking Container That Looks Like a Group Box_8</name>
       <y>270</y>
@@ -653,7 +653,7 @@
         <color red="240" green="240" blue="240" />
       </background_color>
       <zoom_to_fit>false</zoom_to_fit>
-      <width>170</width>
+      <width>176</width>
       <x>9</x>
       <name>A Linking Container That Looks Like a Group Box_9</name>
       <y>300</y>
@@ -696,7 +696,7 @@
         <color red="240" green="240" blue="240" />
       </background_color>
       <zoom_to_fit>false</zoom_to_fit>
-      <width>170</width>
+      <width>176</width>
       <x>9</x>
       <name>A Linking Container That Looks Like a Group Box_10</name>
       <y>330</y>
@@ -739,7 +739,7 @@
         <color red="240" green="240" blue="240" />
       </background_color>
       <zoom_to_fit>false</zoom_to_fit>
-      <width>170</width>
+      <width>176</width>
       <x>9</x>
       <name>A Linking Container That Looks Like a Group Box_11</name>
       <y>360</y>
@@ -782,7 +782,7 @@
         <color red="240" green="240" blue="240" />
       </background_color>
       <zoom_to_fit>false</zoom_to_fit>
-      <width>170</width>
+      <width>176</width>
       <x>9</x>
       <name>A Linking Container That Looks Like a Group Box_12</name>
       <y>390</y>
@@ -825,7 +825,7 @@
         <color red="240" green="240" blue="240" />
       </background_color>
       <zoom_to_fit>false</zoom_to_fit>
-      <width>170</width>
+      <width>176</width>
       <x>9</x>
       <name>A Linking Container That Looks Like a Group Box_13</name>
       <y>420</y>
@@ -868,7 +868,7 @@
         <color red="240" green="240" blue="240" />
       </background_color>
       <zoom_to_fit>false</zoom_to_fit>
-      <width>170</width>
+      <width>176</width>
       <x>9</x>
       <name>A Linking Container That Looks Like a Group Box_14</name>
       <y>450</y>
@@ -878,777 +878,6 @@
       <actions hook="false" hook_all="false" />
       <font>
         <opifont.name fontName="Segoe UI" height="9" style="0">ISIS_GroupBox_NEW</opifont.name>
-      </font>
-    </widget>
-    <widget typeId="org.csstudio.opibuilder.widgets.NativeButton" version="1.0">
-      <toggle_button>false</toggle_button>
-      <border_style>0</border_style>
-      <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
-      <tooltip>$(pv_name)
-$(pv_value)</tooltip>
-      <push_action_index>0</push_action_index>
-      <rules />
-      <enabled>true</enabled>
-      <wuid>57b3c4b7:15cc49fbe68:-7dac</wuid>
-      <pv_value />
-      <text>Details...</text>
-      <scripts />
-      <border_alarm_sensitive>false</border_alarm_sensitive>
-      <height>26</height>
-      <border_width>1</border_width>
-      <scale_options>
-        <width_scalable>true</width_scalable>
-        <height_scalable>true</height_scalable>
-        <keep_wh_ratio>false</keep_wh_ratio>
-      </scale_options>
-      <image></image>
-      <visible>true</visible>
-      <pv_name></pv_name>
-      <border_color>
-        <color name="ISIS_Border" red="0" green="0" blue="0" />
-      </border_color>
-      <widget_type>Button</widget_type>
-      <width>55</width>
-      <x>192</x>
-      <name>Button_1</name>
-      <y>30</y>
-      <foreground_color>
-        <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
-      </foreground_color>
-      <actions hook="false" hook_all="false">
-        <action type="OPEN_DISPLAY">
-          <path>../danfysik.opi</path>
-          <macros>
-            <include_parent_macros>true</include_parent_macros>
-            <DFKPS>DFKPS_03</DFKPS>
-            <NAME>UQ1</NAME>
-          </macros>
-          <replace>1</replace>
-          <description></description>
-        </action>
-      </actions>
-      <font>
-        <opifont.name fontName="Segoe UI" height="9" style="0">ISIS_Button_NEW</opifont.name>
-      </font>
-    </widget>
-    <widget typeId="org.csstudio.opibuilder.widgets.NativeButton" version="1.0">
-      <toggle_button>false</toggle_button>
-      <border_style>0</border_style>
-      <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
-      <tooltip>$(pv_name)
-$(pv_value)</tooltip>
-      <push_action_index>0</push_action_index>
-      <rules />
-      <enabled>true</enabled>
-      <wuid>57b3c4b7:15cc49fbe68:-7d8d</wuid>
-      <pv_value />
-      <text>Details...</text>
-      <scripts />
-      <border_alarm_sensitive>false</border_alarm_sensitive>
-      <height>26</height>
-      <border_width>1</border_width>
-      <scale_options>
-        <width_scalable>true</width_scalable>
-        <height_scalable>true</height_scalable>
-        <keep_wh_ratio>false</keep_wh_ratio>
-      </scale_options>
-      <image></image>
-      <visible>true</visible>
-      <pv_name></pv_name>
-      <border_color>
-        <color name="ISIS_Border" red="0" green="0" blue="0" />
-      </border_color>
-      <widget_type>Button</widget_type>
-      <width>55</width>
-      <x>192</x>
-      <name>Button_1</name>
-      <y>60</y>
-      <foreground_color>
-        <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
-      </foreground_color>
-      <actions hook="false" hook_all="false">
-        <action type="OPEN_DISPLAY">
-          <path>../danfysik.opi</path>
-          <macros>
-            <include_parent_macros>true</include_parent_macros>
-            <DFKPS>DFKPS_04</DFKPS>
-            <NAME>UQ2</NAME>
-          </macros>
-          <replace>1</replace>
-          <description></description>
-        </action>
-      </actions>
-      <font>
-        <opifont.name fontName="Segoe UI" height="9" style="0">ISIS_Button_NEW</opifont.name>
-      </font>
-    </widget>
-    <widget typeId="org.csstudio.opibuilder.widgets.NativeButton" version="1.0">
-      <toggle_button>false</toggle_button>
-      <border_style>0</border_style>
-      <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
-      <tooltip>$(pv_name)
-$(pv_value)</tooltip>
-      <push_action_index>0</push_action_index>
-      <rules />
-      <enabled>true</enabled>
-      <wuid>57b3c4b7:15cc49fbe68:-7d5b</wuid>
-      <pv_value />
-      <text>Details...</text>
-      <scripts />
-      <border_alarm_sensitive>false</border_alarm_sensitive>
-      <height>26</height>
-      <border_width>1</border_width>
-      <scale_options>
-        <width_scalable>true</width_scalable>
-        <height_scalable>true</height_scalable>
-        <keep_wh_ratio>false</keep_wh_ratio>
-      </scale_options>
-      <image></image>
-      <visible>true</visible>
-      <pv_name></pv_name>
-      <border_color>
-        <color name="ISIS_Border" red="0" green="0" blue="0" />
-      </border_color>
-      <widget_type>Button</widget_type>
-      <width>55</width>
-      <x>192</x>
-      <name>Button_2</name>
-      <y>120</y>
-      <foreground_color>
-        <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
-      </foreground_color>
-      <actions hook="false" hook_all="false">
-        <action type="OPEN_DISPLAY">
-          <path>../danfysik.opi</path>
-          <macros>
-            <include_parent_macros>true</include_parent_macros>
-            <DFKPS>DFKPS_10</DFKPS>
-            <NAME>UB1</NAME>
-          </macros>
-          <replace>1</replace>
-          <description></description>
-        </action>
-      </actions>
-      <font>
-        <opifont.name fontName="Segoe UI" height="9" style="0">ISIS_Button_NEW</opifont.name>
-      </font>
-    </widget>
-    <widget typeId="org.csstudio.opibuilder.widgets.NativeButton" version="1.0">
-      <toggle_button>false</toggle_button>
-      <border_style>0</border_style>
-      <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
-      <tooltip>$(pv_name)
-$(pv_value)</tooltip>
-      <push_action_index>0</push_action_index>
-      <rules />
-      <enabled>true</enabled>
-      <wuid>57b3c4b7:15cc49fbe68:-7d50</wuid>
-      <pv_value />
-      <text>Details...</text>
-      <scripts />
-      <border_alarm_sensitive>false</border_alarm_sensitive>
-      <height>26</height>
-      <border_width>1</border_width>
-      <scale_options>
-        <width_scalable>true</width_scalable>
-        <height_scalable>true</height_scalable>
-        <keep_wh_ratio>false</keep_wh_ratio>
-      </scale_options>
-      <image></image>
-      <visible>true</visible>
-      <pv_name></pv_name>
-      <border_color>
-        <color name="ISIS_Border" red="0" green="0" blue="0" />
-      </border_color>
-      <widget_type>Button</widget_type>
-      <width>55</width>
-      <x>192</x>
-      <name>Button_3</name>
-      <y>180</y>
-      <foreground_color>
-        <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
-      </foreground_color>
-      <actions hook="false" hook_all="false">
-        <action type="OPEN_DISPLAY">
-          <path>../danfysik.opi</path>
-          <macros>
-            <include_parent_macros>true</include_parent_macros>
-            <DFKPS>DFKPS_05</DFKPS>
-            <NAME>UQ5</NAME>
-          </macros>
-          <replace>1</replace>
-          <description></description>
-        </action>
-      </actions>
-      <font>
-        <opifont.name fontName="Segoe UI" height="9" style="0">ISIS_Button_NEW</opifont.name>
-      </font>
-    </widget>
-    <widget typeId="org.csstudio.opibuilder.widgets.NativeButton" version="1.0">
-      <toggle_button>false</toggle_button>
-      <border_style>0</border_style>
-      <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
-      <tooltip>$(pv_name)
-$(pv_value)</tooltip>
-      <push_action_index>0</push_action_index>
-      <rules />
-      <enabled>true</enabled>
-      <wuid>57b3c4b7:15cc49fbe68:-7d3e</wuid>
-      <pv_value />
-      <text>Details...</text>
-      <scripts />
-      <border_alarm_sensitive>false</border_alarm_sensitive>
-      <height>26</height>
-      <border_width>1</border_width>
-      <scale_options>
-        <width_scalable>true</width_scalable>
-        <height_scalable>true</height_scalable>
-        <keep_wh_ratio>false</keep_wh_ratio>
-      </scale_options>
-      <image></image>
-      <visible>true</visible>
-      <pv_name></pv_name>
-      <border_color>
-        <color name="ISIS_Border" red="0" green="0" blue="0" />
-      </border_color>
-      <widget_type>Button</widget_type>
-      <width>55</width>
-      <x>192</x>
-      <name>Button_4</name>
-      <y>240</y>
-      <foreground_color>
-        <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
-      </foreground_color>
-      <actions hook="false" hook_all="false">
-        <action type="OPEN_DISPLAY">
-          <path>../danfysik.opi</path>
-          <macros>
-            <include_parent_macros>true</include_parent_macros>
-            <DFKPS>DFKPS_11</DFKPS>
-            <NAME>UB2</NAME>
-          </macros>
-          <replace>1</replace>
-          <description></description>
-        </action>
-      </actions>
-      <font>
-        <opifont.name fontName="Segoe UI" height="9" style="0">ISIS_Button_NEW</opifont.name>
-      </font>
-    </widget>
-    <widget typeId="org.csstudio.opibuilder.widgets.NativeButton" version="1.0">
-      <toggle_button>false</toggle_button>
-      <border_style>0</border_style>
-      <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
-      <tooltip>$(pv_name)
-$(pv_value)</tooltip>
-      <push_action_index>0</push_action_index>
-      <rules />
-      <enabled>true</enabled>
-      <wuid>57b3c4b7:15cc49fbe68:-7d2f</wuid>
-      <pv_value />
-      <text>Details...</text>
-      <scripts />
-      <border_alarm_sensitive>false</border_alarm_sensitive>
-      <height>26</height>
-      <border_width>1</border_width>
-      <scale_options>
-        <width_scalable>true</width_scalable>
-        <height_scalable>true</height_scalable>
-        <keep_wh_ratio>false</keep_wh_ratio>
-      </scale_options>
-      <image></image>
-      <visible>true</visible>
-      <pv_name></pv_name>
-      <border_color>
-        <color name="ISIS_Border" red="0" green="0" blue="0" />
-      </border_color>
-      <widget_type>Button</widget_type>
-      <width>55</width>
-      <x>192</x>
-      <name>Button_5</name>
-      <y>270</y>
-      <foreground_color>
-        <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
-      </foreground_color>
-      <actions hook="false" hook_all="false">
-        <action type="OPEN_DISPLAY">
-          <path>../danfysik.opi</path>
-          <macros>
-            <include_parent_macros>true</include_parent_macros>
-            <DFKPS>DFKPS_06</DFKPS>
-            <NAME>UQ7</NAME>
-          </macros>
-          <replace>1</replace>
-          <description></description>
-        </action>
-      </actions>
-      <font>
-        <opifont.name fontName="Segoe UI" height="9" style="0">ISIS_Button_NEW</opifont.name>
-      </font>
-    </widget>
-    <widget typeId="org.csstudio.opibuilder.widgets.NativeButton" version="1.0">
-      <toggle_button>false</toggle_button>
-      <border_style>0</border_style>
-      <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
-      <tooltip>$(pv_name)
-$(pv_value)</tooltip>
-      <push_action_index>0</push_action_index>
-      <rules />
-      <enabled>true</enabled>
-      <wuid>57b3c4b7:15cc49fbe68:-7d24</wuid>
-      <pv_value />
-      <text>Details...</text>
-      <scripts />
-      <border_alarm_sensitive>false</border_alarm_sensitive>
-      <height>26</height>
-      <border_width>1</border_width>
-      <scale_options>
-        <width_scalable>true</width_scalable>
-        <height_scalable>true</height_scalable>
-        <keep_wh_ratio>false</keep_wh_ratio>
-      </scale_options>
-      <image></image>
-      <visible>true</visible>
-      <pv_name></pv_name>
-      <border_color>
-        <color name="ISIS_Border" red="0" green="0" blue="0" />
-      </border_color>
-      <widget_type>Button</widget_type>
-      <width>55</width>
-      <x>192</x>
-      <name>Button_6</name>
-      <y>300</y>
-      <foreground_color>
-        <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
-      </foreground_color>
-      <actions hook="false" hook_all="false">
-        <action type="OPEN_DISPLAY">
-          <path>../danfysik.opi</path>
-          <macros>
-            <include_parent_macros>true</include_parent_macros>
-            <DFKPS>DFKPS_07</DFKPS>
-            <NAME>UQ8</NAME>
-          </macros>
-          <replace>1</replace>
-          <description></description>
-        </action>
-      </actions>
-      <font>
-        <opifont.name fontName="Segoe UI" height="9" style="0">ISIS_Button_NEW</opifont.name>
-      </font>
-    </widget>
-    <widget typeId="org.csstudio.opibuilder.widgets.NativeButton" version="1.0">
-      <toggle_button>false</toggle_button>
-      <border_style>0</border_style>
-      <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
-      <tooltip>$(pv_name)
-$(pv_value)</tooltip>
-      <push_action_index>0</push_action_index>
-      <rules />
-      <enabled>true</enabled>
-      <wuid>57b3c4b7:15cc49fbe68:-7d19</wuid>
-      <pv_value />
-      <text>Details...</text>
-      <scripts />
-      <border_alarm_sensitive>false</border_alarm_sensitive>
-      <height>26</height>
-      <border_width>1</border_width>
-      <scale_options>
-        <width_scalable>true</width_scalable>
-        <height_scalable>true</height_scalable>
-        <keep_wh_ratio>false</keep_wh_ratio>
-      </scale_options>
-      <image></image>
-      <visible>true</visible>
-      <pv_name></pv_name>
-      <border_color>
-        <color name="ISIS_Border" red="0" green="0" blue="0" />
-      </border_color>
-      <widget_type>Button</widget_type>
-      <width>55</width>
-      <x>192</x>
-      <name>Button_7</name>
-      <y>330</y>
-      <foreground_color>
-        <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
-      </foreground_color>
-      <actions hook="false" hook_all="false">
-        <action type="OPEN_DISPLAY">
-          <path>../danfysik.opi</path>
-          <macros>
-            <include_parent_macros>true</include_parent_macros>
-            <DFKPS>DFKPS_08</DFKPS>
-            <NAME>UQ9</NAME>
-          </macros>
-          <replace>1</replace>
-          <description></description>
-        </action>
-      </actions>
-      <font>
-        <opifont.name fontName="Segoe UI" height="9" style="0">ISIS_Button_NEW</opifont.name>
-      </font>
-    </widget>
-    <widget typeId="org.csstudio.opibuilder.widgets.NativeButton" version="1.0">
-      <toggle_button>false</toggle_button>
-      <border_style>0</border_style>
-      <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
-      <tooltip>$(pv_name)
-$(pv_value)</tooltip>
-      <push_action_index>0</push_action_index>
-      <rules />
-      <enabled>true</enabled>
-      <wuid>57b3c4b7:15cc49fbe68:-7d0e</wuid>
-      <pv_value />
-      <text>Details...</text>
-      <scripts />
-      <border_alarm_sensitive>false</border_alarm_sensitive>
-      <height>26</height>
-      <border_width>1</border_width>
-      <scale_options>
-        <width_scalable>true</width_scalable>
-        <height_scalable>true</height_scalable>
-        <keep_wh_ratio>false</keep_wh_ratio>
-      </scale_options>
-      <image></image>
-      <visible>true</visible>
-      <pv_name></pv_name>
-      <border_color>
-        <color name="ISIS_Border" red="0" green="0" blue="0" />
-      </border_color>
-      <widget_type>Button</widget_type>
-      <width>55</width>
-      <x>192</x>
-      <name>Button_8</name>
-      <y>420</y>
-      <foreground_color>
-        <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
-      </foreground_color>
-      <actions hook="false" hook_all="false">
-        <action type="OPEN_DISPLAY">
-          <path>../danfysik.opi</path>
-          <macros>
-            <include_parent_macros>true</include_parent_macros>
-            <DFKPS>DFKPS_09</DFKPS>
-            <NAME>UQ11</NAME>
-          </macros>
-          <replace>1</replace>
-          <description></description>
-        </action>
-      </actions>
-      <font>
-        <opifont.name fontName="Segoe UI" height="9" style="0">ISIS_Button_NEW</opifont.name>
-      </font>
-    </widget>
-    <widget typeId="org.csstudio.opibuilder.widgets.NativeButton" version="1.0">
-      <toggle_button>false</toggle_button>
-      <border_style>0</border_style>
-      <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
-      <tooltip>$(pv_name)
-$(pv_value)</tooltip>
-      <push_action_index>0</push_action_index>
-      <rules />
-      <enabled>true</enabled>
-      <wuid>57b3c4b7:15cc49fbe68:-7d00</wuid>
-      <pv_value />
-      <text>Details...</text>
-      <scripts />
-      <border_alarm_sensitive>false</border_alarm_sensitive>
-      <height>26</height>
-      <border_width>1</border_width>
-      <scale_options>
-        <width_scalable>true</width_scalable>
-        <height_scalable>true</height_scalable>
-        <keep_wh_ratio>false</keep_wh_ratio>
-      </scale_options>
-      <image></image>
-      <visible>true</visible>
-      <pv_name></pv_name>
-      <border_color>
-        <color name="ISIS_Border" red="0" green="0" blue="0" />
-      </border_color>
-      <widget_type>Button</widget_type>
-      <width>55</width>
-      <x>192</x>
-      <name>Button_9</name>
-      <y>90</y>
-      <foreground_color>
-        <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
-      </foreground_color>
-      <actions hook="false" hook_all="false">
-        <action type="OPEN_DISPLAY">
-          <path>../genesys.opi</path>
-          <macros>
-            <include_parent_macros>true</include_parent_macros>
-            <IOC_NUM>01</IOC_NUM>
-            <PS_NUM>1</PS_NUM>
-            <NAME>UQ3</NAME>
-          </macros>
-          <replace>1</replace>
-          <description></description>
-        </action>
-      </actions>
-      <font>
-        <opifont.name fontName="Segoe UI" height="9" style="0">ISIS_Button_NEW</opifont.name>
-      </font>
-    </widget>
-    <widget typeId="org.csstudio.opibuilder.widgets.NativeButton" version="1.0">
-      <toggle_button>false</toggle_button>
-      <border_style>0</border_style>
-      <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
-      <tooltip>$(pv_name)
-$(pv_value)</tooltip>
-      <push_action_index>0</push_action_index>
-      <rules />
-      <enabled>true</enabled>
-      <wuid>57b3c4b7:15cc49fbe68:-7ce7</wuid>
-      <pv_value />
-      <text>Details...</text>
-      <scripts />
-      <border_alarm_sensitive>false</border_alarm_sensitive>
-      <height>26</height>
-      <border_width>1</border_width>
-      <scale_options>
-        <width_scalable>true</width_scalable>
-        <height_scalable>true</height_scalable>
-        <keep_wh_ratio>false</keep_wh_ratio>
-      </scale_options>
-      <image></image>
-      <visible>true</visible>
-      <pv_name></pv_name>
-      <border_color>
-        <color name="ISIS_Border" red="0" green="0" blue="0" />
-      </border_color>
-      <widget_type>Button</widget_type>
-      <width>55</width>
-      <x>192</x>
-      <name>Button_10</name>
-      <y>150</y>
-      <foreground_color>
-        <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
-      </foreground_color>
-      <actions hook="false" hook_all="false">
-        <action type="OPEN_DISPLAY">
-          <path>../genesys.opi</path>
-          <macros>
-            <include_parent_macros>true</include_parent_macros>
-            <IOC_NUM>01</IOC_NUM>
-            <PS_NUM>2</PS_NUM>
-            <NAME>UQ4</NAME>
-          </macros>
-          <replace>1</replace>
-          <description></description>
-        </action>
-      </actions>
-      <font>
-        <opifont.name fontName="Segoe UI" height="9" style="0">ISIS_Button_NEW</opifont.name>
-      </font>
-    </widget>
-    <widget typeId="org.csstudio.opibuilder.widgets.NativeButton" version="1.0">
-      <toggle_button>false</toggle_button>
-      <border_style>0</border_style>
-      <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
-      <tooltip>$(pv_name)
-$(pv_value)</tooltip>
-      <push_action_index>0</push_action_index>
-      <rules />
-      <enabled>true</enabled>
-      <wuid>57b3c4b7:15cc49fbe68:-7cdc</wuid>
-      <pv_value />
-      <text>Details...</text>
-      <scripts />
-      <border_alarm_sensitive>false</border_alarm_sensitive>
-      <height>26</height>
-      <border_width>1</border_width>
-      <scale_options>
-        <width_scalable>true</width_scalable>
-        <height_scalable>true</height_scalable>
-        <keep_wh_ratio>false</keep_wh_ratio>
-      </scale_options>
-      <image></image>
-      <visible>true</visible>
-      <pv_name></pv_name>
-      <border_color>
-        <color name="ISIS_Border" red="0" green="0" blue="0" />
-      </border_color>
-      <widget_type>Button</widget_type>
-      <width>55</width>
-      <x>192</x>
-      <name>Button_9</name>
-      <y>210</y>
-      <foreground_color>
-        <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
-      </foreground_color>
-      <actions hook="false" hook_all="false">
-        <action type="OPEN_DISPLAY">
-          <path>../genesys.opi</path>
-          <macros>
-            <include_parent_macros>true</include_parent_macros>
-            <IOC_NUM>01</IOC_NUM>
-            <PS_NUM>3</PS_NUM>
-            <NAME>UQ6</NAME>
-          </macros>
-          <replace>1</replace>
-          <description></description>
-        </action>
-      </actions>
-      <font>
-        <opifont.name fontName="Segoe UI" height="9" style="0">ISIS_Button_NEW</opifont.name>
-      </font>
-    </widget>
-    <widget typeId="org.csstudio.opibuilder.widgets.NativeButton" version="1.0">
-      <toggle_button>false</toggle_button>
-      <border_style>0</border_style>
-      <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
-      <tooltip>$(pv_name)
-$(pv_value)</tooltip>
-      <push_action_index>0</push_action_index>
-      <rules />
-      <enabled>true</enabled>
-      <wuid>57b3c4b7:15cc49fbe68:-7cce</wuid>
-      <pv_value />
-      <text>Details...</text>
-      <scripts />
-      <border_alarm_sensitive>false</border_alarm_sensitive>
-      <height>26</height>
-      <border_width>1</border_width>
-      <scale_options>
-        <width_scalable>true</width_scalable>
-        <height_scalable>true</height_scalable>
-        <keep_wh_ratio>false</keep_wh_ratio>
-      </scale_options>
-      <image></image>
-      <visible>true</visible>
-      <pv_name></pv_name>
-      <border_color>
-        <color name="ISIS_Border" red="0" green="0" blue="0" />
-      </border_color>
-      <widget_type>Button</widget_type>
-      <width>55</width>
-      <x>192</x>
-      <name>Button_12</name>
-      <y>360</y>
-      <foreground_color>
-        <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
-      </foreground_color>
-      <actions hook="false" hook_all="false">
-        <action type="OPEN_DISPLAY">
-          <path>../genesys.opi</path>
-          <macros>
-            <include_parent_macros>true</include_parent_macros>
-            <IOC_NUM>01</IOC_NUM>
-            <PS_NUM>6</PS_NUM>
-            <NAME>SEPARATOR</NAME>
-          </macros>
-          <replace>1</replace>
-          <description></description>
-        </action>
-      </actions>
-      <font>
-        <opifont.name fontName="Segoe UI" height="9" style="0">ISIS_Button_NEW</opifont.name>
-      </font>
-    </widget>
-    <widget typeId="org.csstudio.opibuilder.widgets.NativeButton" version="1.0">
-      <toggle_button>false</toggle_button>
-      <border_style>0</border_style>
-      <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
-      <tooltip>$(pv_name)
-$(pv_value)</tooltip>
-      <push_action_index>0</push_action_index>
-      <rules />
-      <enabled>true</enabled>
-      <wuid>57b3c4b7:15cc49fbe68:-7cc3</wuid>
-      <pv_value />
-      <text>Details...</text>
-      <scripts />
-      <border_alarm_sensitive>false</border_alarm_sensitive>
-      <height>26</height>
-      <border_width>1</border_width>
-      <scale_options>
-        <width_scalable>true</width_scalable>
-        <height_scalable>true</height_scalable>
-        <keep_wh_ratio>false</keep_wh_ratio>
-      </scale_options>
-      <image></image>
-      <visible>true</visible>
-      <pv_name></pv_name>
-      <border_color>
-        <color name="ISIS_Border" red="0" green="0" blue="0" />
-      </border_color>
-      <widget_type>Button</widget_type>
-      <width>55</width>
-      <x>192</x>
-      <name>Button_13</name>
-      <y>390</y>
-      <foreground_color>
-        <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
-      </foreground_color>
-      <actions hook="false" hook_all="false">
-        <action type="OPEN_DISPLAY">
-          <path>../genesys.opi</path>
-          <macros>
-            <include_parent_macros>true</include_parent_macros>
-            <IOC_NUM>01</IOC_NUM>
-            <PS_NUM>4</PS_NUM>
-            <NAME>UQ10</NAME>
-          </macros>
-          <replace>1</replace>
-          <description></description>
-        </action>
-      </actions>
-      <font>
-        <opifont.name fontName="Segoe UI" height="9" style="0">ISIS_Button_NEW</opifont.name>
-      </font>
-    </widget>
-    <widget typeId="org.csstudio.opibuilder.widgets.NativeButton" version="1.0">
-      <toggle_button>false</toggle_button>
-      <border_style>0</border_style>
-      <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
-      <tooltip>$(pv_name)
-$(pv_value)</tooltip>
-      <push_action_index>0</push_action_index>
-      <rules />
-      <enabled>true</enabled>
-      <wuid>57b3c4b7:15cc49fbe68:-7cb8</wuid>
-      <pv_value />
-      <text>Details...</text>
-      <scripts />
-      <border_alarm_sensitive>false</border_alarm_sensitive>
-      <height>26</height>
-      <border_width>1</border_width>
-      <scale_options>
-        <width_scalable>true</width_scalable>
-        <height_scalable>true</height_scalable>
-        <keep_wh_ratio>false</keep_wh_ratio>
-      </scale_options>
-      <image></image>
-      <visible>true</visible>
-      <pv_name></pv_name>
-      <border_color>
-        <color name="ISIS_Border" red="0" green="0" blue="0" />
-      </border_color>
-      <widget_type>Button</widget_type>
-      <width>55</width>
-      <x>192</x>
-      <name>Button_9</name>
-      <y>450</y>
-      <foreground_color>
-        <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
-      </foreground_color>
-      <actions hook="false" hook_all="false">
-        <action type="OPEN_DISPLAY">
-          <path>../genesys.opi</path>
-          <macros>
-            <include_parent_macros>true</include_parent_macros>
-            <IOC_NUM>01</IOC_NUM>
-            <PS_NUM>5</PS_NUM>
-            <NAME>UQ12</NAME>
-          </macros>
-          <replace>1</replace>
-          <description></description>
-        </action>
-      </actions>
-      <font>
-        <opifont.name fontName="Segoe UI" height="9" style="0">ISIS_Button_NEW</opifont.name>
       </font>
     </widget>
   </widget>
@@ -1679,8 +908,8 @@ $(pv_value)</tooltip>
     <background_color>
       <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
     </background_color>
-    <width>307</width>
-    <x>306</x>
+    <width>229</width>
+    <x>234</x>
     <name>HIFI</name>
     <y>78</y>
     <foreground_color>
@@ -1700,7 +929,7 @@ $(pv_value)</tooltip>
       <wuid>-7f86b513:15cbf58a3f3:-7792</wuid>
       <transparent>false</transparent>
       <auto_size>false</auto_size>
-      <text>Power:</text>
+      <text>Power</text>
       <scripts />
       <height>25</height>
       <border_width>1</border_width>
@@ -1741,7 +970,7 @@ $(pv_value)</tooltip>
       <wuid>-7f86b513:15cbf58a3f3:-6bbc</wuid>
       <transparent>false</transparent>
       <auto_size>false</auto_size>
-      <text>Alarm:</text>
+      <text>Alarm</text>
       <scripts />
       <height>25</height>
       <border_width>1</border_width>
@@ -1804,7 +1033,7 @@ $(pv_value)</tooltip>
         <color red="240" green="240" blue="240" />
       </background_color>
       <zoom_to_fit>false</zoom_to_fit>
-      <width>170</width>
+      <width>176</width>
       <x>12</x>
       <name>A Linking Container That Looks Like a Group Box</name>
       <y>30</y>
@@ -1847,7 +1076,7 @@ $(pv_value)</tooltip>
         <color red="240" green="240" blue="240" />
       </background_color>
       <zoom_to_fit>false</zoom_to_fit>
-      <width>170</width>
+      <width>176</width>
       <x>12</x>
       <name>A Linking Container That Looks Like a Group Box_1</name>
       <y>60</y>
@@ -1890,7 +1119,7 @@ $(pv_value)</tooltip>
         <color red="240" green="240" blue="240" />
       </background_color>
       <zoom_to_fit>false</zoom_to_fit>
-      <width>170</width>
+      <width>176</width>
       <x>12</x>
       <name>A Linking Container That Looks Like a Group Box_2</name>
       <y>90</y>
@@ -1933,7 +1162,7 @@ $(pv_value)</tooltip>
         <color red="240" green="240" blue="240" />
       </background_color>
       <zoom_to_fit>false</zoom_to_fit>
-      <width>170</width>
+      <width>176</width>
       <x>12</x>
       <name>A Linking Container That Looks Like a Group Box_2</name>
       <y>120</y>
@@ -1943,213 +1172,6 @@ $(pv_value)</tooltip>
       <actions hook="false" hook_all="false" />
       <font>
         <opifont.name fontName="Segoe UI" height="9" style="0">ISIS_GroupBox_NEW</opifont.name>
-      </font>
-    </widget>
-    <widget typeId="org.csstudio.opibuilder.widgets.NativeButton" version="1.0">
-      <toggle_button>false</toggle_button>
-      <border_style>0</border_style>
-      <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
-      <tooltip>$(pv_name)
-$(pv_value)</tooltip>
-      <push_action_index>0</push_action_index>
-      <rules />
-      <enabled>true</enabled>
-      <wuid>57b3c4b7:15cc49fbe68:-7caa</wuid>
-      <pv_value />
-      <text>Details...</text>
-      <scripts />
-      <border_alarm_sensitive>false</border_alarm_sensitive>
-      <height>26</height>
-      <border_width>1</border_width>
-      <scale_options>
-        <width_scalable>true</width_scalable>
-        <height_scalable>true</height_scalable>
-        <keep_wh_ratio>false</keep_wh_ratio>
-      </scale_options>
-      <image></image>
-      <visible>true</visible>
-      <pv_name></pv_name>
-      <border_color>
-        <color name="ISIS_Border" red="0" green="0" blue="0" />
-      </border_color>
-      <widget_type>Button</widget_type>
-      <width>55</width>
-      <x>192</x>
-      <name>Button_1</name>
-      <y>30</y>
-      <foreground_color>
-        <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
-      </foreground_color>
-      <actions hook="false" hook_all="false">
-        <action type="OPEN_DISPLAY">
-          <path>../danfysik.opi</path>
-          <macros>
-            <include_parent_macros>true</include_parent_macros>
-            <DFKPS>DFKPS_01</DFKPS>
-            <NAME>SEPTUM_A</NAME>
-          </macros>
-          <replace>1</replace>
-          <description></description>
-        </action>
-      </actions>
-      <font>
-        <opifont.name fontName="Segoe UI" height="9" style="0">ISIS_Button_NEW</opifont.name>
-      </font>
-    </widget>
-    <widget typeId="org.csstudio.opibuilder.widgets.NativeButton" version="1.0">
-      <toggle_button>false</toggle_button>
-      <border_style>0</border_style>
-      <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
-      <tooltip>$(pv_name)
-$(pv_value)</tooltip>
-      <push_action_index>0</push_action_index>
-      <rules />
-      <enabled>true</enabled>
-      <wuid>57b3c4b7:15cc49fbe68:-7ca0</wuid>
-      <pv_value />
-      <text>Details...</text>
-      <scripts />
-      <border_alarm_sensitive>false</border_alarm_sensitive>
-      <height>26</height>
-      <border_width>1</border_width>
-      <scale_options>
-        <width_scalable>true</width_scalable>
-        <height_scalable>true</height_scalable>
-        <keep_wh_ratio>false</keep_wh_ratio>
-      </scale_options>
-      <image></image>
-      <visible>true</visible>
-      <pv_name></pv_name>
-      <border_color>
-        <color name="ISIS_Border" red="0" green="0" blue="0" />
-      </border_color>
-      <widget_type>Button</widget_type>
-      <width>55</width>
-      <x>192</x>
-      <name>Button_10</name>
-      <y>60</y>
-      <foreground_color>
-        <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
-      </foreground_color>
-      <actions hook="false" hook_all="false">
-        <action type="OPEN_DISPLAY">
-          <path>../genesys.opi</path>
-          <macros>
-            <include_parent_macros>true</include_parent_macros>
-            <IOC_NUM>02</IOC_NUM>
-            <PS_NUM>1</PS_NUM>
-            <NAME>UQ13A</NAME>
-          </macros>
-          <replace>1</replace>
-          <description></description>
-        </action>
-      </actions>
-      <font>
-        <opifont.name fontName="Segoe UI" height="9" style="0">ISIS_Button_NEW</opifont.name>
-      </font>
-    </widget>
-    <widget typeId="org.csstudio.opibuilder.widgets.NativeButton" version="1.0">
-      <toggle_button>false</toggle_button>
-      <border_style>0</border_style>
-      <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
-      <tooltip>$(pv_name)
-$(pv_value)</tooltip>
-      <push_action_index>0</push_action_index>
-      <rules />
-      <enabled>true</enabled>
-      <wuid>57b3c4b7:15cc49fbe68:-7c99</wuid>
-      <pv_value />
-      <text>Details...</text>
-      <scripts />
-      <border_alarm_sensitive>false</border_alarm_sensitive>
-      <height>26</height>
-      <border_width>1</border_width>
-      <scale_options>
-        <width_scalable>true</width_scalable>
-        <height_scalable>true</height_scalable>
-        <keep_wh_ratio>false</keep_wh_ratio>
-      </scale_options>
-      <image></image>
-      <visible>true</visible>
-      <pv_name></pv_name>
-      <border_color>
-        <color name="ISIS_Border" red="0" green="0" blue="0" />
-      </border_color>
-      <widget_type>Button</widget_type>
-      <width>55</width>
-      <x>192</x>
-      <name>Button_10</name>
-      <y>90</y>
-      <foreground_color>
-        <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
-      </foreground_color>
-      <actions hook="false" hook_all="false">
-        <action type="OPEN_DISPLAY">
-          <path>../genesys.opi</path>
-          <macros>
-            <include_parent_macros>true</include_parent_macros>
-            <IOC_NUM>02</IOC_NUM>
-            <PS_NUM>2</PS_NUM>
-            <NAME>UQ14A</NAME>
-          </macros>
-          <replace>1</replace>
-          <description></description>
-        </action>
-      </actions>
-      <font>
-        <opifont.name fontName="Segoe UI" height="9" style="0">ISIS_Button_NEW</opifont.name>
-      </font>
-    </widget>
-    <widget typeId="org.csstudio.opibuilder.widgets.NativeButton" version="1.0">
-      <toggle_button>false</toggle_button>
-      <border_style>0</border_style>
-      <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
-      <tooltip>$(pv_name)
-$(pv_value)</tooltip>
-      <push_action_index>0</push_action_index>
-      <rules />
-      <enabled>true</enabled>
-      <wuid>57b3c4b7:15cc49fbe68:-7c92</wuid>
-      <pv_value />
-      <text>Details...</text>
-      <scripts />
-      <border_alarm_sensitive>false</border_alarm_sensitive>
-      <height>26</height>
-      <border_width>1</border_width>
-      <scale_options>
-        <width_scalable>true</width_scalable>
-        <height_scalable>true</height_scalable>
-        <keep_wh_ratio>false</keep_wh_ratio>
-      </scale_options>
-      <image></image>
-      <visible>true</visible>
-      <pv_name></pv_name>
-      <border_color>
-        <color name="ISIS_Border" red="0" green="0" blue="0" />
-      </border_color>
-      <widget_type>Button</widget_type>
-      <width>55</width>
-      <x>192</x>
-      <name>Button_10</name>
-      <y>120</y>
-      <foreground_color>
-        <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
-      </foreground_color>
-      <actions hook="false" hook_all="false">
-        <action type="OPEN_DISPLAY">
-          <path>../genesys.opi</path>
-          <macros>
-            <include_parent_macros>true</include_parent_macros>
-            <IOC_NUM>02</IOC_NUM>
-            <PS_NUM>3</PS_NUM>
-            <NAME>UQ15A</NAME>
-          </macros>
-          <replace>1</replace>
-          <description></description>
-        </action>
-      </actions>
-      <font>
-        <opifont.name fontName="Segoe UI" height="9" style="0">ISIS_Button_NEW</opifont.name>
       </font>
     </widget>
   </widget>
@@ -2180,8 +1202,8 @@ $(pv_value)</tooltip>
     <background_color>
       <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
     </background_color>
-    <width>307</width>
-    <x>306</x>
+    <width>229</width>
+    <x>234</x>
     <name>MUSR</name>
     <y>270</y>
     <foreground_color>
@@ -2201,7 +1223,7 @@ $(pv_value)</tooltip>
       <wuid>-7f86b513:15cbf58a3f3:-7792</wuid>
       <transparent>false</transparent>
       <auto_size>false</auto_size>
-      <text>Power:</text>
+      <text>Power</text>
       <scripts />
       <height>25</height>
       <border_width>1</border_width>
@@ -2242,7 +1264,7 @@ $(pv_value)</tooltip>
       <wuid>-7f86b513:15cbf58a3f3:-6bbc</wuid>
       <transparent>false</transparent>
       <auto_size>false</auto_size>
-      <text>Alarm:</text>
+      <text>Alarm</text>
       <scripts />
       <height>25</height>
       <border_width>1</border_width>
@@ -2305,7 +1327,7 @@ $(pv_value)</tooltip>
         <color red="240" green="240" blue="240" />
       </background_color>
       <zoom_to_fit>false</zoom_to_fit>
-      <width>170</width>
+      <width>176</width>
       <x>12</x>
       <name>A Linking Container That Looks Like a Group Box</name>
       <y>30</y>
@@ -2348,7 +1370,7 @@ $(pv_value)</tooltip>
         <color red="240" green="240" blue="240" />
       </background_color>
       <zoom_to_fit>false</zoom_to_fit>
-      <width>170</width>
+      <width>176</width>
       <x>12</x>
       <name>A Linking Container That Looks Like a Group Box_1</name>
       <y>60</y>
@@ -2358,110 +1380,6 @@ $(pv_value)</tooltip>
       <actions hook="false" hook_all="false" />
       <font>
         <opifont.name fontName="Segoe UI" height="9" style="0">ISIS_GroupBox_NEW</opifont.name>
-      </font>
-    </widget>
-    <widget typeId="org.csstudio.opibuilder.widgets.NativeButton" version="1.0">
-      <toggle_button>false</toggle_button>
-      <border_style>0</border_style>
-      <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
-      <tooltip>$(pv_name)
-$(pv_value)</tooltip>
-      <push_action_index>0</push_action_index>
-      <rules />
-      <enabled>true</enabled>
-      <wuid>57b3c4b7:15cc49fbe68:-7c74</wuid>
-      <pv_value />
-      <text>Details...</text>
-      <scripts />
-      <border_alarm_sensitive>false</border_alarm_sensitive>
-      <height>26</height>
-      <border_width>1</border_width>
-      <scale_options>
-        <width_scalable>true</width_scalable>
-        <height_scalable>true</height_scalable>
-        <keep_wh_ratio>false</keep_wh_ratio>
-      </scale_options>
-      <image></image>
-      <visible>true</visible>
-      <pv_name></pv_name>
-      <border_color>
-        <color name="ISIS_Border" red="0" green="0" blue="0" />
-      </border_color>
-      <widget_type>Button</widget_type>
-      <width>55</width>
-      <x>192</x>
-      <name>Button_10</name>
-      <y>30</y>
-      <foreground_color>
-        <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
-      </foreground_color>
-      <actions hook="false" hook_all="false">
-        <action type="OPEN_DISPLAY">
-          <path>../genesys.opi</path>
-          <macros>
-            <include_parent_macros>true</include_parent_macros>
-            <IOC_NUM>03</IOC_NUM>
-            <PS_NUM>1</PS_NUM>
-            <NAME>UQ13B</NAME>
-          </macros>
-          <replace>1</replace>
-          <description></description>
-        </action>
-      </actions>
-      <font>
-        <opifont.name fontName="Segoe UI" height="9" style="0">ISIS_Button_NEW</opifont.name>
-      </font>
-    </widget>
-    <widget typeId="org.csstudio.opibuilder.widgets.NativeButton" version="1.0">
-      <toggle_button>false</toggle_button>
-      <border_style>0</border_style>
-      <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
-      <tooltip>$(pv_name)
-$(pv_value)</tooltip>
-      <push_action_index>0</push_action_index>
-      <rules />
-      <enabled>true</enabled>
-      <wuid>57b3c4b7:15cc49fbe68:-7c73</wuid>
-      <pv_value />
-      <text>Details...</text>
-      <scripts />
-      <border_alarm_sensitive>false</border_alarm_sensitive>
-      <height>26</height>
-      <border_width>1</border_width>
-      <scale_options>
-        <width_scalable>true</width_scalable>
-        <height_scalable>true</height_scalable>
-        <keep_wh_ratio>false</keep_wh_ratio>
-      </scale_options>
-      <image></image>
-      <visible>true</visible>
-      <pv_name></pv_name>
-      <border_color>
-        <color name="ISIS_Border" red="0" green="0" blue="0" />
-      </border_color>
-      <widget_type>Button</widget_type>
-      <width>55</width>
-      <x>192</x>
-      <name>Button_1</name>
-      <y>60</y>
-      <foreground_color>
-        <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
-      </foreground_color>
-      <actions hook="false" hook_all="false">
-        <action type="OPEN_DISPLAY">
-          <path>../genesys.opi</path>
-          <macros>
-            <include_parent_macros>true</include_parent_macros>
-            <IOC_NUM>03</IOC_NUM>
-            <PS_NUM>2</PS_NUM>
-            <NAME>UQ14B</NAME>
-          </macros>
-          <replace>1</replace>
-          <description></description>
-        </action>
-      </actions>
-      <font>
-        <opifont.name fontName="Segoe UI" height="9" style="0">ISIS_Button_NEW</opifont.name>
       </font>
     </widget>
   </widget>
@@ -2492,8 +1410,8 @@ $(pv_value)</tooltip>
     <background_color>
       <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
     </background_color>
-    <width>307</width>
-    <x>306</x>
+    <width>229</width>
+    <x>234</x>
     <name>EMU</name>
     <y>402</y>
     <foreground_color>
@@ -2513,7 +1431,7 @@ $(pv_value)</tooltip>
       <wuid>-7f86b513:15cbf58a3f3:-7792</wuid>
       <transparent>false</transparent>
       <auto_size>false</auto_size>
-      <text>Power:</text>
+      <text>Power</text>
       <scripts />
       <height>25</height>
       <border_width>1</border_width>
@@ -2554,7 +1472,7 @@ $(pv_value)</tooltip>
       <wuid>-7f86b513:15cbf58a3f3:-6bbc</wuid>
       <transparent>false</transparent>
       <auto_size>false</auto_size>
-      <text>Alarm:</text>
+      <text>Alarm</text>
       <scripts />
       <height>25</height>
       <border_width>1</border_width>
@@ -2617,7 +1535,7 @@ $(pv_value)</tooltip>
         <color red="240" green="240" blue="240" />
       </background_color>
       <zoom_to_fit>false</zoom_to_fit>
-      <width>170</width>
+      <width>176</width>
       <x>12</x>
       <name>A Linking Container That Looks Like a Group Box</name>
       <y>30</y>
@@ -2660,7 +1578,7 @@ $(pv_value)</tooltip>
         <color red="240" green="240" blue="240" />
       </background_color>
       <zoom_to_fit>false</zoom_to_fit>
-      <width>170</width>
+      <width>176</width>
       <x>12</x>
       <name>A Linking Container That Looks Like a Group Box_1</name>
       <y>60</y>
@@ -2703,7 +1621,7 @@ $(pv_value)</tooltip>
         <color red="240" green="240" blue="240" />
       </background_color>
       <zoom_to_fit>false</zoom_to_fit>
-      <width>170</width>
+      <width>176</width>
       <x>12</x>
       <name>A Linking Container That Looks Like a Group Box_2</name>
       <y>90</y>
@@ -2746,7 +1664,7 @@ $(pv_value)</tooltip>
         <color red="240" green="240" blue="240" />
       </background_color>
       <zoom_to_fit>false</zoom_to_fit>
-      <width>170</width>
+      <width>176</width>
       <x>12</x>
       <name>A Linking Container That Looks Like a Group Box_2</name>
       <y>120</y>
@@ -2756,213 +1674,6 @@ $(pv_value)</tooltip>
       <actions hook="false" hook_all="false" />
       <font>
         <opifont.name fontName="Segoe UI" height="9" style="0">ISIS_GroupBox_NEW</opifont.name>
-      </font>
-    </widget>
-    <widget typeId="org.csstudio.opibuilder.widgets.NativeButton" version="1.0">
-      <toggle_button>false</toggle_button>
-      <border_style>0</border_style>
-      <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
-      <tooltip>$(pv_name)
-$(pv_value)</tooltip>
-      <push_action_index>0</push_action_index>
-      <rules />
-      <enabled>true</enabled>
-      <wuid>57b3c4b7:15cc49fbe68:-7c32</wuid>
-      <pv_value />
-      <text>Details...</text>
-      <scripts />
-      <border_alarm_sensitive>false</border_alarm_sensitive>
-      <height>26</height>
-      <border_width>1</border_width>
-      <scale_options>
-        <width_scalable>true</width_scalable>
-        <height_scalable>true</height_scalable>
-        <keep_wh_ratio>false</keep_wh_ratio>
-      </scale_options>
-      <image></image>
-      <visible>true</visible>
-      <pv_name></pv_name>
-      <border_color>
-        <color name="ISIS_Border" red="0" green="0" blue="0" />
-      </border_color>
-      <widget_type>Button</widget_type>
-      <width>55</width>
-      <x>192</x>
-      <name>Button_1</name>
-      <y>30</y>
-      <foreground_color>
-        <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
-      </foreground_color>
-      <actions hook="false" hook_all="false">
-        <action type="OPEN_DISPLAY">
-          <path>../danfysik.opi</path>
-          <macros>
-            <include_parent_macros>true</include_parent_macros>
-            <DFKPS>DFKPS_02</DFKPS>
-            <NAME>SEPTUM_C</NAME>
-          </macros>
-          <replace>1</replace>
-          <description></description>
-        </action>
-      </actions>
-      <font>
-        <opifont.name fontName="Segoe UI" height="9" style="0">ISIS_Button_NEW</opifont.name>
-      </font>
-    </widget>
-    <widget typeId="org.csstudio.opibuilder.widgets.NativeButton" version="1.0">
-      <toggle_button>false</toggle_button>
-      <border_style>0</border_style>
-      <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
-      <tooltip>$(pv_name)
-$(pv_value)</tooltip>
-      <push_action_index>0</push_action_index>
-      <rules />
-      <enabled>true</enabled>
-      <wuid>57b3c4b7:15cc49fbe68:-7c31</wuid>
-      <pv_value />
-      <text>Details...</text>
-      <scripts />
-      <border_alarm_sensitive>false</border_alarm_sensitive>
-      <height>26</height>
-      <border_width>1</border_width>
-      <scale_options>
-        <width_scalable>true</width_scalable>
-        <height_scalable>true</height_scalable>
-        <keep_wh_ratio>false</keep_wh_ratio>
-      </scale_options>
-      <image></image>
-      <visible>true</visible>
-      <pv_name></pv_name>
-      <border_color>
-        <color name="ISIS_Border" red="0" green="0" blue="0" />
-      </border_color>
-      <widget_type>Button</widget_type>
-      <width>55</width>
-      <x>192</x>
-      <name>Button_10</name>
-      <y>60</y>
-      <foreground_color>
-        <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
-      </foreground_color>
-      <actions hook="false" hook_all="false">
-        <action type="OPEN_DISPLAY">
-          <path>../genesys.opi</path>
-          <macros>
-            <include_parent_macros>true</include_parent_macros>
-            <IOC_NUM>04</IOC_NUM>
-            <PS_NUM>1</PS_NUM>
-            <NAME>UQ13C</NAME>
-          </macros>
-          <replace>1</replace>
-          <description></description>
-        </action>
-      </actions>
-      <font>
-        <opifont.name fontName="Segoe UI" height="9" style="0">ISIS_Button_NEW</opifont.name>
-      </font>
-    </widget>
-    <widget typeId="org.csstudio.opibuilder.widgets.NativeButton" version="1.0">
-      <toggle_button>false</toggle_button>
-      <border_style>0</border_style>
-      <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
-      <tooltip>$(pv_name)
-$(pv_value)</tooltip>
-      <push_action_index>0</push_action_index>
-      <rules />
-      <enabled>true</enabled>
-      <wuid>57b3c4b7:15cc49fbe68:-7c30</wuid>
-      <pv_value />
-      <text>Details...</text>
-      <scripts />
-      <border_alarm_sensitive>false</border_alarm_sensitive>
-      <height>26</height>
-      <border_width>1</border_width>
-      <scale_options>
-        <width_scalable>true</width_scalable>
-        <height_scalable>true</height_scalable>
-        <keep_wh_ratio>false</keep_wh_ratio>
-      </scale_options>
-      <image></image>
-      <visible>true</visible>
-      <pv_name></pv_name>
-      <border_color>
-        <color name="ISIS_Border" red="0" green="0" blue="0" />
-      </border_color>
-      <widget_type>Button</widget_type>
-      <width>55</width>
-      <x>192</x>
-      <name>Button_11</name>
-      <y>90</y>
-      <foreground_color>
-        <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
-      </foreground_color>
-      <actions hook="false" hook_all="false">
-        <action type="OPEN_DISPLAY">
-          <path>../genesys.opi</path>
-          <macros>
-            <include_parent_macros>true</include_parent_macros>
-            <IOC_NUM>04</IOC_NUM>
-            <PS_NUM>2</PS_NUM>
-            <NAME>UQ14C</NAME>
-          </macros>
-          <replace>1</replace>
-          <description></description>
-        </action>
-      </actions>
-      <font>
-        <opifont.name fontName="Segoe UI" height="9" style="0">ISIS_Button_NEW</opifont.name>
-      </font>
-    </widget>
-    <widget typeId="org.csstudio.opibuilder.widgets.NativeButton" version="1.0">
-      <toggle_button>false</toggle_button>
-      <border_style>0</border_style>
-      <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
-      <tooltip>$(pv_name)
-$(pv_value)</tooltip>
-      <push_action_index>0</push_action_index>
-      <rules />
-      <enabled>true</enabled>
-      <wuid>57b3c4b7:15cc49fbe68:-7c2f</wuid>
-      <pv_value />
-      <text>Details...</text>
-      <scripts />
-      <border_alarm_sensitive>false</border_alarm_sensitive>
-      <height>26</height>
-      <border_width>1</border_width>
-      <scale_options>
-        <width_scalable>true</width_scalable>
-        <height_scalable>true</height_scalable>
-        <keep_wh_ratio>false</keep_wh_ratio>
-      </scale_options>
-      <image></image>
-      <visible>true</visible>
-      <pv_name></pv_name>
-      <border_color>
-        <color name="ISIS_Border" red="0" green="0" blue="0" />
-      </border_color>
-      <widget_type>Button</widget_type>
-      <width>55</width>
-      <x>192</x>
-      <name>Button_12</name>
-      <y>120</y>
-      <foreground_color>
-        <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
-      </foreground_color>
-      <actions hook="false" hook_all="false">
-        <action type="OPEN_DISPLAY">
-          <path>../genesys.opi</path>
-          <macros>
-            <include_parent_macros>true</include_parent_macros>
-            <IOC_NUM>04</IOC_NUM>
-            <PS_NUM>3</PS_NUM>
-            <NAME>UQ15C</NAME>
-          </macros>
-          <replace>1</replace>
-          <description></description>
-        </action>
-      </actions>
-      <font>
-        <opifont.name fontName="Segoe UI" height="9" style="0">ISIS_Button_NEW</opifont.name>
       </font>
     </widget>
   </widget>
