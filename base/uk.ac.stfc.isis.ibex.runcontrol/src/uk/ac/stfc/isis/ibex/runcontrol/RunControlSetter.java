@@ -24,7 +24,7 @@ import uk.ac.stfc.isis.ibex.epics.writing.Writer;
 /**
  * This class sets the run control on the blocks within the server.
  */
-public class EditableRunControlSetting {
+public class RunControlSetter {
     private Writer<String> lowLimitSetter;
     private Writer<String> highLimitSetter;
     private Writer<String> enabledSetter;
@@ -38,7 +38,7 @@ public class EditableRunControlSetting {
      * @param runControlServer
      *            The server object that creates the PVs for the run control.
      */
-	public EditableRunControlSetting(String blockName, RunControlServer runControlServer) {
+    public RunControlSetter(String blockName, RunControlServer runControlServer) {
         lowLimitSetter = runControlServer.blockRunControlLowLimitSetter(blockName);
         highLimitSetter = runControlServer.blockRunControlHighLimitSetter(blockName);
         enabledSetter = runControlServer.blockRunControlEnabledSetter(blockName);

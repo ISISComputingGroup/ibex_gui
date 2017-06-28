@@ -40,8 +40,6 @@ import uk.ac.stfc.isis.ibex.configserver.configuration.Configuration;
 import uk.ac.stfc.isis.ibex.configserver.displaying.DisplayBlock;
 import uk.ac.stfc.isis.ibex.epics.observing.Subscription;
 import uk.ac.stfc.isis.ibex.epics.writing.SameTypeWriter;
-import uk.ac.stfc.isis.ibex.runcontrol.EditableRunControlSetting;
-import uk.ac.stfc.isis.ibex.runcontrol.RunControlServer;
 import uk.ac.stfc.isis.ibex.ui.runcontrol.RunControlViewModel;
 
 /**
@@ -51,7 +49,6 @@ import uk.ac.stfc.isis.ibex.ui.runcontrol.RunControlViewModel;
 public class RunControlEditorPanel extends Composite {
     private static final String RESET_ALL_DIALOG_TITLE = "Confirm Run-Control Restore";
     private static final String RESET_ALL_DIALOG_MESSAGE = "Are you sure you want to restore all run-control settings to their configuration values?";
-	private final RunControlServer runControlServer;
     private final ConfigServer configServer;
 	private final Label name;
 	private final Text txtLowLimit;
@@ -66,23 +63,9 @@ public class RunControlEditorPanel extends Composite {
 	private DisplayBlock block;
     private boolean canSend;
 
-    private EditableRunControlSetting runControlSetter;
-
     private final RunControlViewModel viewModel;
 	
     private Subscription saveAsSubscription;
-
-	private SelectionAdapter sendChanges = new SelectionAdapter() {
-		@Override
-		public void widgetSelected(SelectionEvent e) {
-			if (block != null) {
-                runControlSetter.setLowLimit(txtLowLimit.getText());
-                runControlSetter.setHighLimit(txtHighLimit.getText());
-                runControlSetter.setEnabled(chkEnabled.getSelection());
-			}
-            viewModel.setSendEnabled(false);
-		}
-	};
 	
     private SelectionAdapter restoreBlockValues = new SelectionAdapter() {
         @Override
@@ -117,18 +100,14 @@ public class RunControlEditorPanel extends Composite {
      *            The SWT style of the panel.
      * @param configServer
      *            The config server object used to write to the instrument.
-     * @param runControlServer
-     *            The run control server object used to create run control PV
-     *            names.
      * @param viewModel
      *            The view model for this panel.
      */
     public RunControlEditorPanel(Composite parent, int style, ConfigServer configServer,
-            RunControlServer runControlServer, final RunControlViewModel viewModel) {
+            final RunControlViewModel viewModel) {
 		super(parent, style);
 		
 		this.configServer = configServer;
-		this.runControlServer = runControlServer;
         this.viewModel = viewModel;
 
         setLayout(new GridLayout(2, false));
@@ -174,14 +153,6 @@ public class RunControlEditorPanel extends Composite {
 		chkEnabled = new Button(grpSelectedSetting, SWT.CHECK);
 		chkEnabled.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1));
 		chkEnabled.setText("Enabled");
-        chkEnabled.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent arg0) {
-				if (viewModel.isCurrentlyValid()) {
-					viewModel.setSendEnabled(true);		
-				}
-			}
-		});
 		
         btnRestoreSingle = new Button(grpSelectedSetting, SWT.NONE);
         btnRestoreSingle.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 4, 1));
@@ -192,7 +163,12 @@ public class RunControlEditorPanel extends Composite {
 		btnSend = new Button(grpSelectedSetting, SWT.NONE);
 		btnSend.setText("Apply Changes");
         btnSend.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 3, 1));
-		btnSend.addSelectionListener(sendChanges);
+        btnSend.addSelectionListener(new SelectionAdapter() {
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                viewModel.sendChanges();
+            }
+        });
 		parent.getShell().setDefaultButton(btnSend);
 
         grpGlobalSettings = new Group(this, SWT.NONE);
@@ -232,9 +208,19 @@ public class RunControlEditorPanel extends Composite {
         bindingContext.bindValue(SWTObservables.observeText(txtLowLimit, SWT.Modify),
                 BeanProperties.value("txtLowLimit").observe(viewModel));
         bindingContext.bindValue(SWTObservables.observeText(txtHighLimit, SWT.Modify),
-                BeanProperties.value("txtHighLimit").observe(viewModel)); 
+                BeanProperties.value("txtHighLimit").observe(viewModel));
+        bindingContext.bindValue(WidgetProperties.selection().observe(chkEnabled),
+                BeanProperties.value("rcEnabled").observe(viewModel));
     }
 	
+    private void setAllEnabled(boolean enabled) {
+        txtLowLimit.setEnabled(enabled);
+        txtHighLimit.setEnabled(enabled);
+        chkEnabled.setEnabled(enabled);
+        btnRestoreSingle.setEnabled(enabled);
+        viewModel.setSendEnabled(enabled);
+    }
+
     /**
      * Change the block that we are examining the run controls of.
      * 
@@ -244,49 +230,24 @@ public class RunControlEditorPanel extends Composite {
 	public void setBlock(DisplayBlock block) {
 		this.block = block;
 
+        viewModel.setBlock(block);
+
 		if (block == null) {
 			name.setText("");
-			txtLowLimit.setText("");
-			txtLowLimit.setEnabled(false);
-			txtHighLimit.setText("");
-			txtHighLimit.setEnabled(false);	
-			chkEnabled.setEnabled(false);
-			viewModel.setSendEnabled(false);
+            setAllEnabled(false);
 			return;
 		}
 
-        runControlSetter = new EditableRunControlSetting(block.getName(), runControlServer);
-
-        txtLowLimit.setEnabled(canSend);
-        txtHighLimit.setEnabled(canSend);
-        chkEnabled.setEnabled(canSend);
-        btnRestoreSingle.setEnabled(canSend);
-		
-		// Okay to use current values
-        if (block.getLowLimit() != null) {
-            // If channel access is a bit slow the value may not have been
-            // retrieved yet
-            viewModel.setTxtLowLimit(block.getLowLimit().trim());
-        }
-
-        if (block.getHighLimit() != null) {
-            // If channel access is a bit slow the value may not have been
-            // retrieved yet
-        	viewModel.setTxtHighLimit(block.getHighLimit().trim());
-        }
-        
-		chkEnabled.setSelection(block.getEnabled());
+        setAllEnabled(canSend);
 
 		name.setText(block.getName());
-
-        viewModel.setSendEnabled(canSend);
 	}
 
     private SelectionAdapter restoreAllConfigurationValues = new SelectionAdapter() {
         @Override
         public void widgetSelected(SelectionEvent e) {
             if (MessageDialog.openConfirm(getShell(), RESET_ALL_DIALOG_TITLE, RESET_ALL_DIALOG_MESSAGE)) {
-                viewModel.resetRunControlSettings();
+                viewModel.resetAllRunControlSettings();
                 setBlock(null);
             }
         }
