@@ -25,11 +25,8 @@ import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.DisposeEvent;
-import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -69,6 +66,8 @@ public class RunControlEditorPanel extends Composite {
 	private DisplayBlock block;
     private boolean canSend;
 
+    private EditableRunControlSetting runControlSetter;
+
     private final RunControlViewModel viewModel;
 	
     private Subscription saveAsSubscription;
@@ -77,10 +76,9 @@ public class RunControlEditorPanel extends Composite {
 		@Override
 		public void widgetSelected(SelectionEvent e) {
 			if (block != null) {
-				EditableRunControlSetting setting = new EditableRunControlSetting(block.getName(), runControlServer);
-				setting.setLowLimit(txtLowLimit.getText());
-				setting.setHighLimit(txtHighLimit.getText());
-				setting.setEnabled(chkEnabled.getSelection());
+                runControlSetter.setLowLimit(txtLowLimit.getText());
+                runControlSetter.setHighLimit(txtHighLimit.getText());
+                runControlSetter.setEnabled(chkEnabled.getSelection());
 			}
             viewModel.setSendEnabled(false);
 		}
@@ -110,6 +108,21 @@ public class RunControlEditorPanel extends Composite {
 		};	
 	};
 
+    /**
+     * Creates the panel for editing the run control on one block.
+     * 
+     * @param parent
+     *            The parent composite.
+     * @param style
+     *            The SWT style of the panel.
+     * @param configServer
+     *            The config server object used to write to the instrument.
+     * @param runControlServer
+     *            The run control server object used to create run control PV
+     *            names.
+     * @param viewModel
+     *            The view model for this panel.
+     */
     public RunControlEditorPanel(Composite parent, int style, ConfigServer configServer,
             RunControlServer runControlServer, final RunControlViewModel viewModel) {
 		super(parent, style);
@@ -161,19 +174,13 @@ public class RunControlEditorPanel extends Composite {
 		chkEnabled = new Button(grpSelectedSetting, SWT.CHECK);
 		chkEnabled.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1));
 		chkEnabled.setText("Enabled");
-		chkEnabled.addSelectionListener(new SelectionListener() {
-			@Override
-			public void widgetDefaultSelected(SelectionEvent arg0) {
-				
-			}
-
+        chkEnabled.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
 				if (viewModel.isValid()) {
 					viewModel.setSendEnabled(true);		
 				}
 			}
-			
 		});
 		
         btnRestoreSingle = new Button(grpSelectedSetting, SWT.NONE);
@@ -204,19 +211,18 @@ public class RunControlEditorPanel extends Composite {
         // by seeing if we are able to edit the config.
         saveAsSubscription = this.configServer.saveAs().subscribe(configService);
 
-        btnRestoreAll.addDisposeListener(new DisposeListener() {
-            @Override
-            public void widgetDisposed(DisposeEvent arg0) {
-                // Must dispose of the subscription otherwise can get multiple
-                // subscriptions when swapping instruments
-                saveAsSubscription.removeObserver();
-            }
-        });
-
         setModel(viewModel);
         setBlock(null);
 	}
     
+    @Override
+    public void dispose() {
+        // Must dispose of the subscription otherwise can get multiple
+        // subscriptions when swapping instruments
+        saveAsSubscription.removeObserver();
+        super.dispose();
+    }
+
     private void setModel(RunControlViewModel viewModel) {
     	DataBindingContext bindingContext = new DataBindingContext();
     	
@@ -229,6 +235,12 @@ public class RunControlEditorPanel extends Composite {
                 BeanProperties.value("txtHighLimit").observe(viewModel)); 
     }
 	
+    /**
+     * Change the block that we are examining the run controls of.
+     * 
+     * @param block
+     *            The new block to examine.
+     */
 	public void setBlock(DisplayBlock block) {
 		this.block = block;
 
@@ -243,17 +255,12 @@ public class RunControlEditorPanel extends Composite {
 			return;
 		}
 
-		if (canSend) {
-			txtLowLimit.setEnabled(true);
-			txtHighLimit.setEnabled(true);
-			chkEnabled.setEnabled(true);
-            btnRestoreSingle.setEnabled(true);
-		} else {
-			txtLowLimit.setEnabled(false);
-			txtHighLimit.setEnabled(false);
-			chkEnabled.setEnabled(false);
-            btnRestoreSingle.setEnabled(false);
-		}
+        runControlSetter = new EditableRunControlSetting(block.getName(), runControlServer);
+
+        txtLowLimit.setEnabled(canSend);
+        txtHighLimit.setEnabled(canSend);
+        chkEnabled.setEnabled(canSend);
+        btnRestoreSingle.setEnabled(canSend);
 		
 		// Okay to use current values
         if (block.getLowLimit() != null) {

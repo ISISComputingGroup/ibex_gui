@@ -19,37 +19,59 @@
 
 package uk.ac.stfc.isis.ibex.runcontrol;
 
-import uk.ac.stfc.isis.ibex.runcontrol.internal.RunControlSetting;
+import uk.ac.stfc.isis.ibex.epics.writing.Writer;
 
 /**
- * This class allows the run-control settings to be changed.
- *
+ * This class sets the run control on the blocks within the server.
  */
-public class EditableRunControlSetting extends RunControlSetting {
-	private final RunControlServer runControlServer;
-		
+public class EditableRunControlSetting {
+    private Writer<String> lowLimitSetter;
+    private Writer<String> highLimitSetter;
+    private Writer<String> enabledSetter;
+
+    /**
+     * Creates a setter for the given block. The PVs are created at this time as
+     * they need some time to connect.
+     * 
+     * @param blockName
+     *            The name of the block to set the run control on.
+     * @param runControlServer
+     *            The server object that creates the PVs for the run control.
+     */
 	public EditableRunControlSetting(String blockName, RunControlServer runControlServer) {
-		super(blockName);
-		this.runControlServer = runControlServer;
+        lowLimitSetter = runControlServer.blockRunControlLowLimitSetter(blockName);
+        highLimitSetter = runControlServer.blockRunControlHighLimitSetter(blockName);
+        enabledSetter = runControlServer.blockRunControlEnabledSetter(blockName);
 	}
 
-	@Override
+    /**
+     * Set the low run control limit on the block.
+     * 
+     * @param limit
+     *            The limit to set
+     */
     public void setLowLimit(String limit) {
-	    runControlServer.blockRunControlLowLimitSetter(blockName).uncheckedWrite(limit);
+        lowLimitSetter.uncheckedWrite(limit);
 	}
 	
-	@Override
+    /**
+     * Set the high run control limit on the block.
+     * 
+     * @param limit
+     *            The high limit to set
+     */
     public void setHighLimit(String limit) {
-	    runControlServer.blockRunControlHighLimitSetter(blockName).uncheckedWrite(limit);
+        highLimitSetter.uncheckedWrite(limit);
 	}
 	
-	@Override
+    /**
+     * Enable run control on the block.
+     * 
+     * @param enabled
+     *            whether or not to enable the run control
+     */
     public void setEnabled(boolean enabled) {
-		if (enabled) {
-			runControlServer.blockRunControlEnabledSetter(blockName).uncheckedWrite("YES");
-		} else {
-			runControlServer.blockRunControlEnabledSetter(blockName).uncheckedWrite("NO");
-		}
+        enabledSetter.uncheckedWrite(enabled ? "YES" : "NO");
 	}
 
 }
