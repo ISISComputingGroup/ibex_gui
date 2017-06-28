@@ -177,7 +177,7 @@ public class RunControlEditorPanel extends Composite {
         chkEnabled.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
-				if (viewModel.isValid()) {
+				if (viewModel.isCurrentlyValid()) {
 					viewModel.setSendEnabled(true);		
 				}
 			}
@@ -278,6 +278,8 @@ public class RunControlEditorPanel extends Composite {
 		chkEnabled.setSelection(block.getEnabled());
 
 		name.setText(block.getName());
+
+        viewModel.setSendEnabled(canSend);
 	}
 
     private SelectionAdapter restoreAllConfigurationValues = new SelectionAdapter() {

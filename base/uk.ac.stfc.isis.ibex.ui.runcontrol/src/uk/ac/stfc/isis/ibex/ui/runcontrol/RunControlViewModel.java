@@ -25,14 +25,14 @@ import uk.ac.stfc.isis.ibex.configserver.ConfigServer;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Block;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Configuration;
 import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
-import uk.ac.stfc.isis.ibex.epics.writing.Writer;
+import uk.ac.stfc.isis.ibex.runcontrol.EditableRunControlSetting;
 import uk.ac.stfc.isis.ibex.runcontrol.RunControlServer;
 import uk.ac.stfc.isis.ibex.validators.ErrorMessageProvider;
 import uk.ac.stfc.isis.ibex.validators.RunControlValidator;
 
 /**
  * ViewModel for the run-control, allowing blocks to be obtained from the
- * configuration and run control server to be reset to configuraiton values.
+ * configuration and run control server to be reset to configuration values.
  */
 public class RunControlViewModel extends ErrorMessageProvider {
 
@@ -45,6 +45,15 @@ public class RunControlViewModel extends ErrorMessageProvider {
     private String txtLowLimit = "";
     private boolean sendEnabled;
     
+    /**
+     * Creates the view model for changing the run control settings outside of a
+     * configuration.
+     * 
+     * @param configServer
+     *            The object to get/send info to the block server.
+     * @param runControlServer
+     *            The object for creating the PV names for run control.
+     */
     public RunControlViewModel(final ConfigServer configServer, final RunControlServer runControlServer) {
         this.currentConfigObserver = configServer.currentConfig();
         this.runControlServer = runControlServer;
@@ -77,59 +86,85 @@ public class RunControlViewModel extends ErrorMessageProvider {
         Collection<Block> blocks = currentConfigObserver.getValue().getBlocks();
         
         for (Block block : blocks) {
-            resetLowLimit(block);
-            resetHighLimit(block);
-            resetEnabled(block);
+            EditableRunControlSetting setter = new EditableRunControlSetting(block.getName(), runControlServer);
+            setter.setLowLimit(Float.toString(block.getRCLowLimit()));
+            setter.setHighLimit(Float.toString(block.getRCHighLimit()));
+            setter.setEnabled(block.getRCEnabled());
         }
     }
-
-    private void resetLowLimit(Block configBlock) {
-        Writer<String> writer = runControlServer.blockRunControlLowLimitSetter(configBlock.getName());
-        writer.uncheckedWrite(Float.toString(configBlock.getRCLowLimit()));
-    }
-
-    private void resetHighLimit(Block configBlock) {
-        Writer<String> writer = runControlServer.blockRunControlHighLimitSetter(configBlock.getName());
-        writer.uncheckedWrite(Float.toString(configBlock.getRCHighLimit()));
-    }
-
-    private void resetEnabled(Block configBlock) {
-        Writer<String> writer = runControlServer.blockRunControlEnabledSetter(configBlock.getName());
-        writer.uncheckedWrite(configBlock.getRCEnabled() ? "YES" : "NO");
-    }
     
-    public String getTxtLowLimit() {
-		return txtLowLimit;
-	}
-    
-	public void setTxtLowLimit(String txtLowLimit) {
-		boolean isValid = runControlValidator.isValid(txtLowLimit, txtHighLimit);
+    private void checkIsValid(String lowLimit, String highLimit) {
+        boolean isValid = runControlValidator.isValid(lowLimit, highLimit);
 		setSendEnabled(isValid);
 		setError(!(isValid), runControlValidator.getErrorMessage());
+    }
+
+    /**
+     * Get the low limit for the block.
+     * 
+     * @return The low limit for the block.
+     */
+    public String getTxtLowLimit() {
+        return txtLowLimit;
+    }
+
+    /**
+     * Set the low limit for the block.
+     * 
+     * @param txtLowLimit
+     *            The new low limit for the block.
+     */
+    public void setTxtLowLimit(String txtLowLimit) {
+        checkIsValid(txtLowLimit, txtHighLimit);
 		
 		firePropertyChange("txtLowLimit", this.txtLowLimit, this.txtLowLimit = txtLowLimit);
 	}
 	
+    /**
+     * Get the high limit for the block.
+     * 
+     * @return The high limit for the block.
+     */
 	public String getTxtHighLimit() {
 		return txtHighLimit;
 	}
 
+    /**
+     * Set the high limit for the block.
+     * 
+     * @param txtHighLimit
+     *            The new high limit for the block.
+     */
 	public void setTxtHighLimit(String txtHighLimit) {
-		boolean isValid = runControlValidator.isValid(txtLowLimit, txtHighLimit);
-		setSendEnabled(isValid);
-		setError(!(isValid), runControlValidator.getErrorMessage());
+        checkIsValid(txtLowLimit, txtHighLimit);
 		
 		firePropertyChange("txtHighLimit", this.txtHighLimit, this.txtHighLimit = txtHighLimit);
 	}
 
-	public boolean isValid() {
+    /**
+     * Get whether the currently set values of low and high limit are valid.
+     * 
+     * @return True if they are valid.
+     */
+    public boolean isCurrentlyValid() {
 		return runControlValidator.isValid(txtLowLimit, txtHighLimit);
 	}
 	
+    /**
+     * Gets whether the send changes button is enabled or not.
+     * 
+     * @return True if the send button is enabled.
+     */
 	public boolean getSendEnabled() {
 		return sendEnabled;
 	}
 
+    /**
+     * Set whether the send changes button is enabled or not.
+     * 
+     * @param sendEnabled
+     *            True to enable the button.
+     */
 	public void setSendEnabled(boolean sendEnabled) {
 		firePropertyChange("sendEnabled", this.sendEnabled, this.sendEnabled = sendEnabled);
 	}	
