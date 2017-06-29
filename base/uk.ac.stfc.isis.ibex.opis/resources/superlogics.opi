@@ -1074,7 +1074,7 @@ $(trace_0_y_pv_value)</tooltip>
     <trace_1_anti_alias>true</trace_1_anti_alias>
     <pv_value />
     <trace_0_buffer_size>1000</trace_0_buffer_size>
-    <trace_2_buffer_size>100</trace_2_buffer_size>
+    <trace_2_buffer_size>1000</trace_2_buffer_size>
     <axis_1_maximum>50.0</axis_1_maximum>
     <trace_5_update_delay>100</trace_5_update_delay>
     <axis_0_scale_font>
@@ -1097,8 +1097,8 @@ $(trace_0_y_pv_value)</tooltip>
     <title></title>
     <trace_6_x_pv_value />
     <trace_0_visible>true</trace_0_visible>
-    <trace_4_buffer_size>100</trace_4_buffer_size>
-    <trace_6_buffer_size>100</trace_6_buffer_size>
+    <trace_4_buffer_size>1000</trace_4_buffer_size>
+    <trace_6_buffer_size>1000</trace_6_buffer_size>
     <trace_1_name>Temp 2</trace_1_name>
     <trace_3_anti_alias>true</trace_3_anti_alias>
     <trace_1_y_pv_value />
@@ -1140,7 +1140,7 @@ $(trace_0_y_pv_value)</tooltip>
     </trace_2_trace_color>
     <trace_4_visible>true</trace_4_visible>
     <axis_1_dash_grid_line>true</axis_1_dash_grid_line>
-    <trace_3_buffer_size>100</trace_3_buffer_size>
+    <trace_3_buffer_size>1000</trace_3_buffer_size>
     <trace_2_trace_type>0</trace_2_trace_type>
     <trace_6_y_pv>$(PV_ROOT):02:7:VALUE</trace_6_y_pv>
     <trace_6_trace_color>
@@ -1154,7 +1154,7 @@ $(trace_0_y_pv_value)</tooltip>
     <axis_0_show_grid>true</axis_0_show_grid>
     <trace_0_y_axis_index>1</trace_0_y_axis_index>
     <trace_5_concatenate_data>true</trace_5_concatenate_data>
-    <trace_7_buffer_size>100</trace_7_buffer_size>
+    <trace_7_buffer_size>1000</trace_7_buffer_size>
     <scale_options>
       <width_scalable>true</width_scalable>
       <height_scalable>true</height_scalable>
@@ -1270,7 +1270,7 @@ $(trace_0_y_pv_value)</tooltip>
     </trace_4_trace_color>
     <trace_1_buffer_size>1000</trace_1_buffer_size>
     <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
-    <trace_5_buffer_size>100</trace_5_buffer_size>
+    <trace_5_buffer_size>1000</trace_5_buffer_size>
     <trace_4_y_pv_value />
     <scripts />
     <trace_0_point_size>4</trace_0_point_size>
