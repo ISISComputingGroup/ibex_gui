@@ -24,8 +24,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import uk.ac.stfc.isis.ibex.configserver.displaying.DisplayBlock;
-import uk.ac.stfc.isis.ibex.runcontrol.RunControlSetter;
 import uk.ac.stfc.isis.ibex.runcontrol.RunControlServer;
+import uk.ac.stfc.isis.ibex.runcontrol.RunControlSetter;
 import uk.ac.stfc.isis.ibex.validators.ErrorMessageProvider;
 import uk.ac.stfc.isis.ibex.validators.RunControlValidator;
 
@@ -63,6 +63,17 @@ public class RunControlViewModel extends ErrorMessageProvider {
         for (DisplayBlock block : blocks) {
             setters.put(block, new RunControlSetter(block.getName(), runControlServer));
         }
+    }
+
+    /**
+     * Resets the current values to those of the current block's configuration.
+     */
+    public void resetCurrentBlock() {
+        setTxtHighLimit(currentBlock.getConfigurationHighLimit());
+        setTxtLowLimit(currentBlock.getConfigurationLowLimit());
+        setRcEnabled(currentBlock.getConfigurationEnabled());
+
+        setSendEnabled(true);
     }
 
     /**

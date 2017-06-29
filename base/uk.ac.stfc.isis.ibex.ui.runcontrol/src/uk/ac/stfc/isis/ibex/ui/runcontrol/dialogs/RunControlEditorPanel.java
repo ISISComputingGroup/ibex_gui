@@ -66,19 +66,6 @@ public class RunControlEditorPanel extends Composite {
     private final RunControlViewModel viewModel;
 	
     private Subscription saveAsSubscription;
-	
-    private SelectionAdapter restoreBlockValues = new SelectionAdapter() {
-        @Override
-        public void widgetSelected(SelectionEvent e) {
-            if (block != null) {
-                txtLowLimit.setText(block.getConfigurationLowLimit());
-                txtHighLimit.setText(block.getConfigurationHighLimit());
-                chkEnabled.setSelection(block.getConfigurationEnabled());
-            }
-
-            viewModel.setSendEnabled(true);
-        }
-    };
 
 	/**
 	 * Disable the send button if does not have permission to edit configs.
@@ -157,7 +144,12 @@ public class RunControlEditorPanel extends Composite {
         btnRestoreSingle = new Button(grpSelectedSetting, SWT.NONE);
         btnRestoreSingle.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 4, 1));
         btnRestoreSingle.setText("Restore Configuration Values");
-        btnRestoreSingle.addSelectionListener(restoreBlockValues);
+        btnRestoreSingle.addSelectionListener(new SelectionAdapter() {
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                viewModel.resetCurrentBlock();
+            }
+        });
         btnRestoreSingle.setEnabled(false);
 
 		btnSend = new Button(grpSelectedSetting, SWT.NONE);
