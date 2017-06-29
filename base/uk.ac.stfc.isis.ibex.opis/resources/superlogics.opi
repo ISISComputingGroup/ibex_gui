@@ -1051,24 +1051,25 @@ $(trace_0_y_pv_value)</tooltip>
     </axis_0_title_font>
     <trace_7_trace_type>0</trace_7_trace_type>
     <trace_5_y_pv>$(PV_ROOT):02:6:VALUE</trace_5_y_pv>
-    <trace_7_update_mode>0</trace_7_update_mode>
+    <trace_7_update_mode>4</trace_7_update_mode>
     <trace_6_plot_mode>0</trace_6_plot_mode>
-    <trace_2_update_mode>0</trace_2_update_mode>
+    <trace_2_update_mode>4</trace_2_update_mode>
     <trace_5_trace_type>0</trace_5_trace_type>
     <background_color>
       <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
     </background_color>
-    <trace_3_update_mode>0</trace_3_update_mode>
+    <trace_3_update_mode>4</trace_3_update_mode>
     <x>6</x>
-    <trace_6_update_mode>0</trace_6_update_mode>
+    <trace_6_update_mode>4</trace_6_update_mode>
     <y>90</y>
     <trace_7_y_axis_index>1</trace_7_y_axis_index>
-    <trace_4_update_mode>0</trace_4_update_mode>
+    <trace_4_update_mode>4</trace_4_update_mode>
     <trace_3_x_axis_index>0</trace_3_x_axis_index>
-    <trace_5_update_mode>0</trace_5_update_mode>
+    <trace_5_update_mode>4</trace_5_update_mode>
     <trace_0_x_axis_index>0</trace_0_x_axis_index>
     <axis_count>2</axis_count>
     <trace_4_x_pv></trace_4_x_pv>
+    <trace_3_y_pv_value />
     <trace_1_point_size>4</trace_1_point_size>
     <trace_1_anti_alias>true</trace_1_anti_alias>
     <pv_value />
@@ -1085,6 +1086,7 @@ $(trace_0_y_pv_value)</tooltip>
     <trace_2_line_width>1</trace_2_line_width>
     <trace_4_plot_mode>0</trace_4_plot_mode>
     <trace_3_concatenate_data>true</trace_3_concatenate_data>
+    <trace_4_x_pv_value />
     <axis_1_axis_color>
       <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
     </axis_1_axis_color>
@@ -1093,6 +1095,7 @@ $(trace_0_y_pv_value)</tooltip>
     <axis_1_log_scale>false</axis_1_log_scale>
     <trace_5_anti_alias>true</trace_5_anti_alias>
     <title></title>
+    <trace_6_x_pv_value />
     <trace_0_visible>true</trace_0_visible>
     <trace_4_buffer_size>100</trace_4_buffer_size>
     <trace_6_buffer_size>100</trace_6_buffer_size>
@@ -1114,6 +1117,7 @@ $(trace_0_y_pv_value)</tooltip>
     </axis_0_axis_color>
     <trace_3_update_delay>100</trace_3_update_delay>
     <trace_2_update_delay>100</trace_2_update_delay>
+    <trace_5_y_pv_value />
     <trace_4_point_style>0</trace_4_point_style>
     <trace_5_point_style>0</trace_5_point_style>
     <axis_0_dash_grid_line>true</axis_0_dash_grid_line>
@@ -1125,6 +1129,7 @@ $(trace_0_y_pv_value)</tooltip>
     <trace_5_point_size>4</trace_5_point_size>
     <trace_7_x_axis_index>0</trace_7_x_axis_index>
     <trace_0_line_width>1</trace_0_line_width>
+    <trace_3_x_pv_value />
     <axis_0_time_format>5</axis_0_time_format>
     <trace_count>8</trace_count>
     <axis_1_show_grid>true</axis_1_show_grid>
@@ -1141,6 +1146,7 @@ $(trace_0_y_pv_value)</tooltip>
     <trace_6_trace_color>
       <color red="255" green="0" blue="240" />
     </trace_6_trace_color>
+    <trace_6_y_pv_value />
     <trace_3_line_width>1</trace_3_line_width>
     <show_toolbar>false</show_toolbar>
     <axis_0_visible>true</axis_0_visible>
@@ -1154,12 +1160,15 @@ $(trace_0_y_pv_value)</tooltip>
       <height_scalable>true</height_scalable>
       <keep_wh_ratio>false</keep_wh_ratio>
     </scale_options>
+    <trace_7_x_pv_value />
     <trace_1_y_pv>$(PV_ROOT):02:2:VALUE</trace_1_y_pv>
     <trace_2_concatenate_data>true</trace_2_concatenate_data>
     <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+    <trace_2_y_pv_value />
     <trace_7_line_width>1</trace_7_line_width>
     <trace_2_anti_alias>true</trace_2_anti_alias>
     <axis_0_maximum>120.0</axis_0_maximum>
+    <trace_5_x_pv_value />
     <trace_1_y_axis_index>1</trace_1_y_axis_index>
     <trace_2_name>Temp 3</trace_2_name>
     <height>259</height>
@@ -1172,6 +1181,7 @@ $(trace_0_y_pv_value)</tooltip>
     <actions hook="false" hook_all="false" />
     <trace_2_point_size>4</trace_2_point_size>
     <trace_4_concatenate_data>true</trace_4_concatenate_data>
+    <trace_7_y_pv_value />
     <trace_6_x_pv></trace_6_x_pv>
     <trace_6_name>Temp 7</trace_6_name>
     <axis_0_log_scale>false</axis_0_log_scale>
@@ -1207,6 +1217,7 @@ $(trace_0_y_pv_value)</tooltip>
     <trace_2_y_axis_index>1</trace_2_y_axis_index>
     <trace_1_update_delay>100</trace_1_update_delay>
     <axis_1_axis_title>Temperature</axis_1_axis_title>
+    <trace_2_x_pv_value />
     <axis_1_auto_scale>true</axis_1_auto_scale>
     <trace_1_line_width>1</trace_1_line_width>
     <trace_3_trace_type>0</trace_3_trace_type>
@@ -1260,6 +1271,7 @@ $(trace_0_y_pv_value)</tooltip>
     <trace_1_buffer_size>1000</trace_1_buffer_size>
     <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
     <trace_5_buffer_size>100</trace_5_buffer_size>
+    <trace_4_y_pv_value />
     <scripts />
     <trace_0_point_size>4</trace_0_point_size>
     <trace_0_trace_color>
@@ -1268,7 +1280,7 @@ $(trace_0_y_pv_value)</tooltip>
     <trace_0_anti_alias>true</trace_0_anti_alias>
     <trace_4_name>Temp 5</trace_4_name>
     <axis_1_auto_scale_threshold>0.0</axis_1_auto_scale_threshold>
-    <trace_7_visible>false</trace_7_visible>
+    <trace_7_visible>true</trace_7_visible>
     <trace_4_y_axis_index>1</trace_4_y_axis_index>
     <trace_2_plot_mode>0</trace_2_plot_mode>
     <trace_2_x_pv></trace_2_x_pv>
