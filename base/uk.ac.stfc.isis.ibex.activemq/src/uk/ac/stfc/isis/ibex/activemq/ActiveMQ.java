@@ -34,6 +34,11 @@ public class ActiveMQ extends AbstractUIPlugin {
     private MQConnection connection;
 
     /**
+     * The port that active MQ connects on.
+     */
+    public static final int JMS_PORT = 61616;
+
+    /**
      * @return The singleton instance of this class.
      */
     public static ActiveMQ getInstance() {
