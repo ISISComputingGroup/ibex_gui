@@ -33,7 +33,6 @@ import org.eclipse.swt.custom.StackLayout;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
-import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -67,7 +66,6 @@ public class TimeChannelsPanel extends Composite {
     Button radioSpecifyParameters;
     Button radioUseTCBFile;
 
-    private FontData fontdata;
 	private static final Display DISPLAY = Display.getCurrent();
 
     private static final int TOP_MARGIN_WIDTH = 5;
@@ -272,7 +270,7 @@ public class TimeChannelsPanel extends Composite {
         timeChannelFileRB.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
         timeChannelFileRB.setFont(JFaceResources.getFontRegistry().getItalic(JFaceResources.DEFAULT_FONT));
 
-        Label lblTimeChannelSpacer = new Label(timeChannelFilePanel, SWT.NONE);
+        new Label(timeChannelFilePanel, SWT.NONE);
 
         Label lblTimeChannelChange = new Label(timeChannelFilePanel, SWT.NONE);
         lblTimeChannelChange.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
