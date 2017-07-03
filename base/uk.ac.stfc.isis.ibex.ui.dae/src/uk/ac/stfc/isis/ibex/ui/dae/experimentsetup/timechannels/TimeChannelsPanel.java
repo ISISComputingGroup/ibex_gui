@@ -30,6 +30,7 @@ import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StackLayout;
+import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.FontData;
@@ -221,7 +222,7 @@ public class TimeChannelsPanel extends Composite {
         radioUseTCBFile = new Button(methodSelectionPanel, SWT.RADIO);
         radioUseTCBFile.setText(CalculationMethod.USE_TCB_FILE.toString());
 
-        SelectionListener listener = new SelectionListener() {
+        SelectionListener listener = new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
                 if (radioUseTCBFile.getSelection()) {
@@ -230,10 +231,6 @@ public class TimeChannelsPanel extends Composite {
                     setCalculationMethod(CalculationMethod.SPECIFY_PARAMETERS);
                 }
                 tcbSettingsSwitchPanel.layout();
-            }
-
-            @Override
-            public void widgetDefaultSelected(SelectionEvent e) {
             }
         };
         radioSpecifyParameters.addSelectionListener(listener);
@@ -284,14 +281,10 @@ public class TimeChannelsPanel extends Composite {
         timeChannelFileSelector = new Combo(timeChannelFilePanel, SWT.DROP_DOWN | SWT.READ_ONLY);
         timeChannelFileSelector.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 
-        timeChannelFileSelector.addSelectionListener(new SelectionListener() {
+        timeChannelFileSelector.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
                 viewModel.setNewTimeChannelFile(timeChannelFileSelector.getText());
-            }
-
-            @Override
-            public void widgetDefaultSelected(SelectionEvent e) {
             }
         });
     }

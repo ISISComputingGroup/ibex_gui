@@ -29,6 +29,7 @@ import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StackLayout;
+import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.GridData;
@@ -179,7 +180,7 @@ public class PeriodsPanel extends Composite {
         lblSelectionMethod.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 5, 1));
         lblSelectionMethod.setText("Select Period Source: ");
 
-        SelectionListener sourceSelectionListener = new SelectionListener() {
+        SelectionListener sourceSelectionListener = new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
                 if (radioUsePeriodFile.getSelection()) {
@@ -187,10 +188,6 @@ public class PeriodsPanel extends Composite {
                 } else {
                     model.setSetupSource(PeriodSetupSource.PARAMETERS);
                 }
-            }
-
-            @Override
-            public void widgetDefaultSelected(SelectionEvent e) {
             }
         };
 
@@ -245,26 +242,18 @@ public class PeriodsPanel extends Composite {
         cmbPeriodFile = new Combo(cmpSwitchSourceFile, SWT.DROP_DOWN | SWT.READ_ONLY);
         cmbPeriodFile.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 
-        cmbPeriodFile.addSelectionListener(new SelectionListener() {
+        cmbPeriodFile.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
                 model.setNewPeriodFile(cmbPeriodFile.getText());
             }
-
-            @Override
-            public void widgetDefaultSelected(SelectionEvent e) {
-            }
         });
 
-        cmbPeriodType.addSelectionListener(new SelectionListener() {
+        cmbPeriodType.addSelectionListener(new SelectionAdapter() {
 
             @Override
             public void widgetSelected(SelectionEvent e) {
                 model.setPeriodType(cmbPeriodType.getSelectionIndex());
-            }
-
-            @Override
-            public void widgetDefaultSelected(SelectionEvent e) {
             }
         });
 	}
