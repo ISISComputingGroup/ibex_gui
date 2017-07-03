@@ -29,34 +29,52 @@ import java.util.Set;
  * Stores unique items in one of two sets. All items are initially added to the
  * first set.
  *
- * @param <T> the type
+ * @param <T>
+ *            the type of items to store
  */
 public class ExclusiveSetPair<T> {
 
 	private Set<T> selected = new HashSet<>();
 	private Set<T> unselected = new LinkedHashSet<>();
-	
-	public ExclusiveSetPair() {
-	}
-	
-	public ExclusiveSetPair(Collection<T> items) {
-		unselected.addAll(items);
-	}
 
+    /**
+     * Creates an exclusive pair based on a collection of selected items and a
+     * collection of unselected items.
+     * 
+     * @param unselectedItems
+     *            The unselected items for the pair.
+     * @param selectedItems
+     *            The selected items for the pair.
+     */
 	public ExclusiveSetPair(Collection<T> unselectedItems, Collection<T> selectedItems) {
 		unselected.addAll(unselectedItems);
 		unselected.addAll(selectedItems);
 		move(selectedItems);
 	}
 	
+    /**
+     * Get the set of unselected items.
+     * 
+     * @return The unselected items.
+     */
 	public Set<T> unselected() {
 		return Collections.unmodifiableSet(unselected);
 	}
 
+    /**
+     * Gets the set of selected items.
+     * 
+     * @return The selected items.
+     */
 	public Set<T> selected() {
 		return Collections.unmodifiableSet(selected);
 	}
-		
+
+    /**
+     * Gets the set that contains both selected and unselected items.
+     * 
+     * @return The set of all items.
+     */
 	public Set<T> all() {
 		Set<T> all = new LinkedHashSet<>();
 		all.addAll(selected);
@@ -65,6 +83,12 @@ public class ExclusiveSetPair<T> {
 		return Collections.unmodifiableSet(all);
 	}
 	
+    /**
+     * Moves a given item between sets.
+     * 
+     * @param item
+     *            The item to move between sets.
+     */
 	public void move(T item) {			
 		if (selected.contains(item)) {
 			move(item, selected, unselected);
@@ -79,16 +103,36 @@ public class ExclusiveSetPair<T> {
 		return;
 	}
 	
+    /**
+     * Moves a collection of items between sets.
+     * 
+     * @param items
+     *            The items to move between sets.
+     */
 	public void move(Collection<T> items) {
 		for (T item : items) {
 			move(item);
 		}
 	}
 	
+    /**
+     * Get whether the item is contained in either set.
+     * 
+     * @param item
+     *            The item to check for.
+     * @return True if the item is contained in one of the sets.
+     */
 	public boolean contains(T item) {
 		return selected.contains(item) || unselected.contains(item);
 	}
 	
+    /**
+     * Removes an item from the sets.
+     * 
+     * @param item
+     *            The item to remove.
+     * @return True if the item was removed.
+     */
 	public boolean remove(T item) {
 		return selected.remove(item) || unselected.remove(item);
 	}
@@ -99,6 +143,12 @@ public class ExclusiveSetPair<T> {
 		}
 	}
 	
+    /**
+     * Adds an item to the unselected set.
+     * 
+     * @param item
+     *            The item to add.
+     */
 	public void addUnselected(T item) {
 		if (contains(item)) {
 			return;
@@ -107,6 +157,12 @@ public class ExclusiveSetPair<T> {
 		unselected.add(item);
 	}
 
+    /**
+     * Adds an item to the selected set.
+     * 
+     * @param item
+     *            The item to add.
+     */
 	public void addSelected(T item) {
 		if (contains(item)) {
 			return;

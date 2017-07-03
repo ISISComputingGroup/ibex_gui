@@ -22,8 +22,17 @@ package uk.ac.stfc.isis.ibex.dae;
 import uk.ac.stfc.isis.ibex.epics.observing.ClosableObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.TransformingObservable;
 
+/**
+ * An observable on whether the DAE is in the running state.
+ */
 public class DaeIsRunning extends TransformingObservable<DaeRunState, Boolean> {
 
+    /**
+     * Constructor for the object that binds to the run state observable.
+     * 
+     * @param source
+     *            The run state observable.
+     */
 	public DaeIsRunning(ClosableObservable<DaeRunState> source) {
 		setSource(source);
 	}

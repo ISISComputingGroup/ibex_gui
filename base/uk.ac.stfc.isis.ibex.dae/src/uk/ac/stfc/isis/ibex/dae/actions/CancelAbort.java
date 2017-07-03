@@ -26,6 +26,9 @@ import uk.ac.stfc.isis.ibex.dae.DaeRunState;
 import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.epics.writing.Writable;
 
+/**
+ * This action will cancel the abort of the current run on the DAE.
+ */
 public final class CancelAbort extends DaeAction {
 
 	private static final Collection<DaeRunState> ALLOWED = new ArrayList<>();
@@ -34,6 +37,16 @@ public final class CancelAbort extends DaeAction {
         ALLOWED.add(DaeRunState.SETUP);
 	}
 	
+    /**
+     * Constructor for the cancel abort action.
+     * 
+     * @param target
+     *            The PV that must be written to to cancel the abort of the run.
+     * @param inStateTransition
+     *            An observable to check the DAE is not transitioning.
+     * @param runState
+     *            An observable on the current state of the PV.
+     */
 	public CancelAbort(Writable<String> target,
 			ForwardingObservable<Boolean> inStateTransition,
 			ForwardingObservable<DaeRunState> runState) {

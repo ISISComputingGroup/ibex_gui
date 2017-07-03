@@ -50,20 +50,53 @@ public class DaeWritables {
 
     private final WritableFactory writeFactory = new WritableFactory(OnInstrumentSwitch.SWITCH);
 
+    /**
+     * PV to write to to begin a run.
+     */
     public final Writable<String> begin;
+    /**
+     * PV to write to to end the current run.
+     */
     public final Writable<String> end;
+    /**
+     * PV to write to to pause the current run.
+     */
     public final Writable<String> pause;
+    /**
+     * PV to write to to resume the currently paused run.
+     */
     public final Writable<String> resume;
+    /**
+     * PV to write to to abort the current run.
+     */
     public final Writable<String> abort;
+    /**
+     * PV to write to to cancel the abort of the current run.
+     */
     public final Writable<String> recover;
+    /**
+     * PV to write to to save a snapshot of data from the current run to disk
+     * without ending the run.
+     */
     public final Writable<String> save;
+    /**
+     * The PV that contains the title of the current experiment.
+     */
     public final Writable<String> title;
+    /**
+     * A PV that, when set, will ensure the title and users are displayed on the
+     * web dashboard.
+     */
     public final Writable<Long> displayTitle;
     public final Writable<String> daeSettings;
     public final Writable<String> hardwarePeriods;
     public final Writable<String> updateSettings;
     public final Writable<String> timeChannelSettings;
 	
+    /**
+     * Constructor for the writables class. Creates the writables for all the
+     * DAE PVs.
+     */
     public DaeWritables() {
         begin = writeFactory.getSwitchableWritable(new StringChannel(), daeAddress(BEGIN_RUN));
         end = writeFactory.getSwitchableWritable(new StringChannel(), daeAddress(END_RUN));
