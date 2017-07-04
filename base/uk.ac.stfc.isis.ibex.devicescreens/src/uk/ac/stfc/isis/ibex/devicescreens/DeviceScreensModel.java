@@ -71,6 +71,7 @@ public class DeviceScreensModel extends ModelObject {
         this.writableDeviceScreenDescriptions = new SameTypeWriter<DeviceScreensDescription>() {
             @Override
             public void onCanWriteChanged(boolean canWrite) {
+                super.onCanWriteChanged(canWrite);
                 setCanWriteRemote(canWrite);
             };
         };
