@@ -36,7 +36,7 @@ public class UsersConverter extends Converter {
 
     /**
      * The default constructor for the object, sets the convert to and convert
-     * from types to Strings
+     * from types to Strings.
      */
     public UsersConverter() {
         super(String.class, String.class);

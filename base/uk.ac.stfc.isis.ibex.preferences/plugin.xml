@@ -11,8 +11,7 @@
          point="org.eclipse.ui.bindings">
          <key sequence="Ctrl+Alt+P"
          	schemeId="IBEX_key_scheme"
-         	commandId="org.eclipse.ui.window.preferences"
-         	name="Open Preferences"/>
+         	commandId="org.eclipse.ui.window.preferences"/>
          <!--
          Note: Overwrite the F11 binding as we don't want to use the Eclipse default
          -->
