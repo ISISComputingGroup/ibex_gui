@@ -1,9 +1,23 @@
 #!groovy​
 
-node {
-	stage 'Checkout'
-		checkout scm
+node ('windows'){
 
-	stage 'Build'
-		bat '\build\jenkins_build.bat'
+	stage('Checkout') {
+		checkout scm
+	}
+
+   stage('Preparation') { 
+
+   }
+   stage('Build') {
+            bat '''
+            cd build
+            jenkins_build.bat"
+            '''
+ 
+   }
+   stage('Test') {
+        echo 'Testing..'
+        junit '**/surefire-reports/TEST-*.xml'
+    }
 }
