@@ -51,7 +51,7 @@ pipeline {
   
   post {
     failure {
-      step([$class: 'Mailer', notifyEveryUnstableBuild: true, recipients: '', sendToIndividuals: true])
+      step([$class: 'Mailer', notifyEveryUnstableBuild: true, recipients: 'icp-buildserver@lists.isis.rl.ac.uk', sendToIndividuals: true])
     }
   }
   
@@ -71,4 +71,3 @@ def archiveCheckstyleResults() {
           pattern: "**/target/checkstyle-result.xml",
           unHealthy: ""])
 }
-
