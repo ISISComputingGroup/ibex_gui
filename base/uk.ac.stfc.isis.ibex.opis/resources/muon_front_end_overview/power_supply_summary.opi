@@ -72,10 +72,10 @@ $(pv_value)</tooltip>
     </background_color>
     <square_led>false</square_led>
     <width>25</width>
-    <x>30</x>
+    <x>96</x>
     <name>LED</name>
     <data_type>0</data_type>
-    <y>42</y>
+    <y>6</y>
     <foreground_color>
       <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
     </foreground_color>
@@ -137,10 +137,10 @@ $(pv_value)</tooltip>
     </background_color>
     <square_led>false</square_led>
     <width>25</width>
-    <x>30</x>
+    <x>150</x>
     <name>LED_1</name>
     <data_type>0</data_type>
-    <y>78</y>
+    <y>6</y>
     <foreground_color>
       <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
     </foreground_color>
