@@ -1,3 +1,5 @@
+#!groovy
+
 pipeline {
 
   // agent defines where the pipeline will run.
