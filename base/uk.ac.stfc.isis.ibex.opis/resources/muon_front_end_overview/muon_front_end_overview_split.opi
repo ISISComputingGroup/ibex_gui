@@ -123,7 +123,7 @@
     <transparent>false</transparent>
     <lock_children>false</lock_children>
     <scripts />
-    <height>211</height>
+    <height>193</height>
     <border_width>1</border_width>
     <scale_options>
       <width_scalable>true</width_scalable>
@@ -141,10 +141,10 @@
     <background_color>
       <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
     </background_color>
-    <width>1369</width>
-    <x>6</x>
+    <width>733</width>
+    <x>36</x>
     <name>Front End</name>
-    <y>237</y>
+    <y>102</y>
     <foreground_color>
       <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
     </foreground_color>
@@ -556,7 +556,7 @@ $(pv_value)</tooltip>
       <transparent>false</transparent>
       <points>
         <point x="18" y="150" />
-        <point x="1320" y="150" />
+        <point x="697" y="150" />
       </points>
       <fill_arrow>true</fill_arrow>
       <pv_value />
@@ -584,7 +584,7 @@ $(pv_value)</tooltip>
       <background_color>
         <color red="30" green="144" blue="255" />
       </background_color>
-      <width>1303</width>
+      <width>680</width>
       <x>18</x>
       <name>Polyline</name>
       <y>150</y>
@@ -637,356 +637,6 @@ $(pv_value)</tooltip>
         <opifont.name fontName="Segoe UI" height="9" style="0">Default</opifont.name>
       </font>
     </widget>
-    <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0">
-      <opi_file>power_supply_summary.opi</opi_file>
-      <border_style>0</border_style>
-      <tooltip></tooltip>
-      <rules />
-      <enabled>true</enabled>
-      <wuid>-7f86b513:15cbf58a3f3:-65cc</wuid>
-      <auto_size>true</auto_size>
-      <scripts />
-      <height>98</height>
-      <border_width>1</border_width>
-      <scale_options>
-        <width_scalable>true</width_scalable>
-        <height_scalable>true</height_scalable>
-        <keep_wh_ratio>false</keep_wh_ratio>
-      </scale_options>
-      <macros>
-        <include_parent_macros>true</include_parent_macros>
-        <PSNAME>SEPARATOR</PSNAME>
-        <PV_ROOT>$(P)GENESYS_01:6</PV_ROOT>
-        <IOC_NUM>01</IOC_NUM>
-        <PS_NUM>6</PS_NUM>
-      </macros>
-      <visible>true</visible>
-      <group_name></group_name>
-      <border_color>
-        <color name="ISIS_GroupBox_Border_NEW" red="0" green="128" blue="255" />
-      </border_color>
-      <widget_type>Linking Container</widget_type>
-      <background_color>
-        <color red="240" green="240" blue="240" />
-      </background_color>
-      <zoom_to_fit>false</zoom_to_fit>
-      <width>74</width>
-      <x>1098</x>
-      <name>A Linking Container That Looks Like a Group Box_11</name>
-      <y>30</y>
-      <foreground_color>
-        <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
-      </foreground_color>
-      <actions hook="false" hook_all="false" />
-      <font>
-        <opifont.name fontName="Segoe UI" height="9" style="0">ISIS_GroupBox_NEW</opifont.name>
-      </font>
-    </widget>
-    <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0">
-      <opi_file>power_supply_summary.opi</opi_file>
-      <border_style>0</border_style>
-      <tooltip></tooltip>
-      <rules />
-      <enabled>true</enabled>
-      <wuid>-7f86b513:15cbf58a3f3:-65bd</wuid>
-      <auto_size>true</auto_size>
-      <scripts />
-      <height>98</height>
-      <border_width>1</border_width>
-      <scale_options>
-        <width_scalable>true</width_scalable>
-        <height_scalable>true</height_scalable>
-        <keep_wh_ratio>false</keep_wh_ratio>
-      </scale_options>
-      <macros>
-        <include_parent_macros>true</include_parent_macros>
-        <PSNAME>UQ12</PSNAME>
-        <PV_ROOT>$(P)GENESYS_01:5</PV_ROOT>
-        <IOC_NUM>01</IOC_NUM>
-        <PS_NUM>5</PS_NUM>
-      </macros>
-      <visible>true</visible>
-      <group_name></group_name>
-      <border_color>
-        <color name="ISIS_GroupBox_Border_NEW" red="0" green="128" blue="255" />
-      </border_color>
-      <widget_type>Linking Container</widget_type>
-      <background_color>
-        <color red="240" green="240" blue="240" />
-      </background_color>
-      <zoom_to_fit>false</zoom_to_fit>
-      <width>74</width>
-      <x>1254</x>
-      <name>A Linking Container That Looks Like a Group Box_14</name>
-      <y>30</y>
-      <foreground_color>
-        <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
-      </foreground_color>
-      <actions hook="false" hook_all="false" />
-      <font>
-        <opifont.name fontName="Segoe UI" height="9" style="0">ISIS_GroupBox_NEW</opifont.name>
-      </font>
-    </widget>
-    <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0">
-      <opi_file>power_supply_summary.opi</opi_file>
-      <border_style>0</border_style>
-      <tooltip></tooltip>
-      <rules />
-      <enabled>true</enabled>
-      <wuid>-7f86b513:15cbf58a3f3:-65c2</wuid>
-      <auto_size>true</auto_size>
-      <scripts />
-      <height>98</height>
-      <border_width>1</border_width>
-      <scale_options>
-        <width_scalable>true</width_scalable>
-        <height_scalable>true</height_scalable>
-        <keep_wh_ratio>false</keep_wh_ratio>
-      </scale_options>
-      <macros>
-        <include_parent_macros>true</include_parent_macros>
-        <PSNAME>UQ11</PSNAME>
-        <PV_ROOT>$(P)DFKPS_09</PV_ROOT>
-      </macros>
-      <visible>true</visible>
-      <group_name></group_name>
-      <border_color>
-        <color name="ISIS_GroupBox_Border_NEW" red="0" green="128" blue="255" />
-      </border_color>
-      <widget_type>Linking Container</widget_type>
-      <background_color>
-        <color red="240" green="240" blue="240" />
-      </background_color>
-      <zoom_to_fit>false</zoom_to_fit>
-      <width>74</width>
-      <x>1176</x>
-      <name>A Linking Container That Looks Like a Group Box_13</name>
-      <y>30</y>
-      <foreground_color>
-        <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
-      </foreground_color>
-      <actions hook="false" hook_all="false" />
-      <font>
-        <opifont.name fontName="Segoe UI" height="9" style="0">ISIS_GroupBox_NEW</opifont.name>
-      </font>
-    </widget>
-    <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0">
-      <opi_file>power_supply_summary.opi</opi_file>
-      <border_style>0</border_style>
-      <tooltip></tooltip>
-      <rules />
-      <enabled>true</enabled>
-      <wuid>-7f86b513:15cbf58a3f3:-660d</wuid>
-      <auto_size>true</auto_size>
-      <scripts />
-      <height>98</height>
-      <border_width>1</border_width>
-      <scale_options>
-        <width_scalable>true</width_scalable>
-        <height_scalable>true</height_scalable>
-        <keep_wh_ratio>false</keep_wh_ratio>
-      </scale_options>
-      <macros>
-        <include_parent_macros>true</include_parent_macros>
-        <PSNAME>UQ8</PSNAME>
-        <PV_ROOT>$(P)DFKPS_07</PV_ROOT>
-      </macros>
-      <visible>true</visible>
-      <group_name></group_name>
-      <border_color>
-        <color name="ISIS_GroupBox_Border_NEW" red="0" green="128" blue="255" />
-      </border_color>
-      <widget_type>Linking Container</widget_type>
-      <background_color>
-        <color red="240" green="240" blue="240" />
-      </background_color>
-      <zoom_to_fit>false</zoom_to_fit>
-      <width>74</width>
-      <x>864</x>
-      <name>A Linking Container That Looks Like a Group Box_9</name>
-      <y>30</y>
-      <foreground_color>
-        <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
-      </foreground_color>
-      <actions hook="false" hook_all="false" />
-      <font>
-        <opifont.name fontName="Segoe UI" height="9" style="0">ISIS_GroupBox_NEW</opifont.name>
-      </font>
-    </widget>
-    <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0">
-      <opi_file>power_supply_summary.opi</opi_file>
-      <border_style>0</border_style>
-      <tooltip></tooltip>
-      <rules />
-      <enabled>true</enabled>
-      <wuid>-7f86b513:15cbf58a3f3:-6612</wuid>
-      <auto_size>true</auto_size>
-      <scripts />
-      <height>98</height>
-      <border_width>1</border_width>
-      <scale_options>
-        <width_scalable>true</width_scalable>
-        <height_scalable>true</height_scalable>
-        <keep_wh_ratio>false</keep_wh_ratio>
-      </scale_options>
-      <macros>
-        <include_parent_macros>true</include_parent_macros>
-        <PSNAME>UQ7</PSNAME>
-        <PV_ROOT>$(P)DFKPS_06</PV_ROOT>
-      </macros>
-      <visible>true</visible>
-      <group_name></group_name>
-      <border_color>
-        <color name="ISIS_GroupBox_Border_NEW" red="0" green="128" blue="255" />
-      </border_color>
-      <widget_type>Linking Container</widget_type>
-      <background_color>
-        <color red="240" green="240" blue="240" />
-      </background_color>
-      <zoom_to_fit>false</zoom_to_fit>
-      <width>74</width>
-      <x>786</x>
-      <name>A Linking Container That Looks Like a Group Box_8</name>
-      <y>30</y>
-      <foreground_color>
-        <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
-      </foreground_color>
-      <actions hook="false" hook_all="false" />
-      <font>
-        <opifont.name fontName="Segoe UI" height="9" style="0">ISIS_GroupBox_NEW</opifont.name>
-      </font>
-    </widget>
-    <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0">
-      <opi_file>power_supply_summary.opi</opi_file>
-      <border_style>0</border_style>
-      <tooltip></tooltip>
-      <rules />
-      <enabled>true</enabled>
-      <wuid>-7f86b513:15cbf58a3f3:-6617</wuid>
-      <auto_size>true</auto_size>
-      <scripts />
-      <height>98</height>
-      <border_width>1</border_width>
-      <scale_options>
-        <width_scalable>true</width_scalable>
-        <height_scalable>true</height_scalable>
-        <keep_wh_ratio>false</keep_wh_ratio>
-      </scale_options>
-      <macros>
-        <include_parent_macros>true</include_parent_macros>
-        <PSNAME>UB2</PSNAME>
-        <PV_ROOT>$(P)DFKPS_11</PV_ROOT>
-      </macros>
-      <visible>true</visible>
-      <group_name></group_name>
-      <border_color>
-        <color name="ISIS_GroupBox_Border_NEW" red="0" green="128" blue="255" />
-      </border_color>
-      <widget_type>Linking Container</widget_type>
-      <background_color>
-        <color red="240" green="240" blue="240" />
-      </background_color>
-      <zoom_to_fit>false</zoom_to_fit>
-      <width>74</width>
-      <x>708</x>
-      <name>A Linking Container That Looks Like a Group Box_7</name>
-      <y>30</y>
-      <foreground_color>
-        <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
-      </foreground_color>
-      <actions hook="false" hook_all="false" />
-      <font>
-        <opifont.name fontName="Segoe UI" height="9" style="0">ISIS_GroupBox_NEW</opifont.name>
-      </font>
-    </widget>
-    <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0">
-      <opi_file>power_supply_summary.opi</opi_file>
-      <border_style>0</border_style>
-      <tooltip></tooltip>
-      <rules />
-      <enabled>true</enabled>
-      <wuid>-7f86b513:15cbf58a3f3:-65c7</wuid>
-      <auto_size>true</auto_size>
-      <scripts />
-      <height>98</height>
-      <border_width>1</border_width>
-      <scale_options>
-        <width_scalable>true</width_scalable>
-        <height_scalable>true</height_scalable>
-        <keep_wh_ratio>false</keep_wh_ratio>
-      </scale_options>
-      <macros>
-        <include_parent_macros>true</include_parent_macros>
-        <PSNAME>UQ10</PSNAME>
-        <PV_ROOT>$(P)GENESYS_01:4</PV_ROOT>
-        <IOC_NUM>01</IOC_NUM>
-        <PS_NUM>4</PS_NUM>
-      </macros>
-      <visible>true</visible>
-      <group_name></group_name>
-      <border_color>
-        <color name="ISIS_GroupBox_Border_NEW" red="0" green="128" blue="255" />
-      </border_color>
-      <widget_type>Linking Container</widget_type>
-      <background_color>
-        <color red="240" green="240" blue="240" />
-      </background_color>
-      <zoom_to_fit>false</zoom_to_fit>
-      <width>74</width>
-      <x>1020</x>
-      <name>A Linking Container That Looks Like a Group Box_12</name>
-      <y>30</y>
-      <foreground_color>
-        <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
-      </foreground_color>
-      <actions hook="false" hook_all="false" />
-      <font>
-        <opifont.name fontName="Segoe UI" height="9" style="0">ISIS_GroupBox_NEW</opifont.name>
-      </font>
-    </widget>
-    <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0">
-      <opi_file>power_supply_summary.opi</opi_file>
-      <border_style>0</border_style>
-      <tooltip></tooltip>
-      <rules />
-      <enabled>true</enabled>
-      <wuid>-7f86b513:15cbf58a3f3:-6608</wuid>
-      <auto_size>true</auto_size>
-      <scripts />
-      <height>98</height>
-      <border_width>1</border_width>
-      <scale_options>
-        <width_scalable>true</width_scalable>
-        <height_scalable>true</height_scalable>
-        <keep_wh_ratio>false</keep_wh_ratio>
-      </scale_options>
-      <macros>
-        <include_parent_macros>true</include_parent_macros>
-        <PSNAME>UQ9</PSNAME>
-        <PV_ROOT>$(P)DFKPS_08</PV_ROOT>
-      </macros>
-      <visible>true</visible>
-      <group_name></group_name>
-      <border_color>
-        <color name="ISIS_GroupBox_Border_NEW" red="0" green="128" blue="255" />
-      </border_color>
-      <widget_type>Linking Container</widget_type>
-      <background_color>
-        <color red="240" green="240" blue="240" />
-      </background_color>
-      <zoom_to_fit>false</zoom_to_fit>
-      <width>74</width>
-      <x>942</x>
-      <name>A Linking Container That Looks Like a Group Box_10</name>
-      <y>30</y>
-      <foreground_color>
-        <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
-      </foreground_color>
-      <actions hook="false" hook_all="false" />
-      <font>
-        <opifont.name fontName="Segoe UI" height="9" style="0">ISIS_GroupBox_NEW</opifont.name>
-      </font>
-    </widget>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0">
     <border_style>13</border_style>
@@ -1016,9 +666,9 @@ $(pv_value)</tooltip>
       <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
     </background_color>
     <width>229</width>
-    <x>1458</x>
+    <x>798</x>
     <name>HIFI</name>
-    <y>84</y>
+    <y>78</y>
     <foreground_color>
       <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
     </foreground_color>
@@ -1316,9 +966,9 @@ $(pv_value)</tooltip>
       <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
     </background_color>
     <width>229</width>
-    <x>1458</x>
+    <x>798</x>
     <name>MUSR</name>
-    <y>276</y>
+    <y>270</y>
     <foreground_color>
       <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
     </foreground_color>
@@ -1528,9 +1178,9 @@ $(pv_value)</tooltip>
       <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
     </background_color>
     <width>229</width>
-    <x>1458</x>
+    <x>798</x>
     <name>EMU</name>
-    <y>408</y>
+    <y>402</y>
     <foreground_color>
       <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
     </foreground_color>
@@ -1800,61 +1450,532 @@ $(pv_value)</tooltip>
       </font>
     </widget>
   </widget>
-  <widget typeId="org.csstudio.opibuilder.widgets.polyline" version="1.0">
-    <border_style>0</border_style>
-    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
-    <line_width>2</line_width>
-    <horizontal_fill>true</horizontal_fill>
-    <tooltip>$(pv_name)
-$(pv_value)</tooltip>
-    <arrows>2</arrows>
+  <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0">
+    <border_style>13</border_style>
+    <tooltip></tooltip>
     <rules />
     <enabled>true</enabled>
-    <wuid>-2541c3ca:15d0d8c2cc6:-3c08</wuid>
+    <wuid>-2541c3ca:15d0d8c2cc6:-46f9</wuid>
     <transparent>false</transparent>
-    <points>
-      <point x="1392" y="353" />
-      <point x="1392" y="168" />
-      <point x="1458" y="168" />
-    </points>
-    <fill_arrow>true</fill_arrow>
-    <pv_value />
-    <alpha>255</alpha>
-    <rotation_angle>0.0</rotation_angle>
+    <lock_children>false</lock_children>
     <scripts />
-    <border_alarm_sensitive>false</border_alarm_sensitive>
-    <height>186</height>
+    <height>193</height>
     <border_width>1</border_width>
     <scale_options>
       <width_scalable>true</width_scalable>
       <height_scalable>true</height_scalable>
-      <keep_wh_ratio>true</keep_wh_ratio>
+      <keep_wh_ratio>false</keep_wh_ratio>
     </scale_options>
+    <macros>
+      <include_parent_macros>true</include_parent_macros>
+    </macros>
     <visible>true</visible>
-    <pv_name></pv_name>
     <border_color>
-      <color red="0" green="128" blue="255" />
+      <color name="ISIS_GroupBox_Border_NEW" red="0" green="128" blue="255" />
     </border_color>
-    <anti_alias>true</anti_alias>
-    <line_style>1</line_style>
-    <arrow_length>20</arrow_length>
-    <widget_type>Polyline</widget_type>
-    <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+    <widget_type>Grouping Container</widget_type>
     <background_color>
-      <color red="30" green="144" blue="255" />
+      <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
     </background_color>
-    <width>67</width>
-    <x>1392</x>
-    <name>Polyline_1</name>
-    <y>168</y>
-    <fill_level>0.0</fill_level>
+    <width>733</width>
+    <x>36</x>
+    <name>Front End Continued</name>
+    <y>330</y>
     <foreground_color>
-      <color red="255" green="0" blue="0" />
+      <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
     </foreground_color>
     <actions hook="false" hook_all="false" />
+    <show_scrollbar>true</show_scrollbar>
     <font>
-      <opifont.name fontName="Segoe UI" height="9" style="0">Default</opifont.name>
+      <opifont.name fontName="Segoe UI" height="9" style="0">ISIS_GroupBox_NEW</opifont.name>
     </font>
+    <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0">
+      <opi_file>power_supply_summary.opi</opi_file>
+      <border_style>0</border_style>
+      <tooltip></tooltip>
+      <rules />
+      <enabled>true</enabled>
+      <wuid>-7f86b513:15cbf58a3f3:-6617</wuid>
+      <auto_size>true</auto_size>
+      <scripts />
+      <height>98</height>
+      <border_width>1</border_width>
+      <scale_options>
+        <width_scalable>true</width_scalable>
+        <height_scalable>true</height_scalable>
+        <keep_wh_ratio>false</keep_wh_ratio>
+      </scale_options>
+      <macros>
+        <include_parent_macros>true</include_parent_macros>
+        <PSNAME>UB2</PSNAME>
+        <PV_ROOT>$(P)DFKPS_11</PV_ROOT>
+      </macros>
+      <visible>true</visible>
+      <group_name></group_name>
+      <border_color>
+        <color name="ISIS_GroupBox_Border_NEW" red="0" green="128" blue="255" />
+      </border_color>
+      <widget_type>Linking Container</widget_type>
+      <background_color>
+        <color red="240" green="240" blue="240" />
+      </background_color>
+      <zoom_to_fit>false</zoom_to_fit>
+      <width>74</width>
+      <x>60</x>
+      <name>A Linking Container That Looks Like a Group Box_7</name>
+      <y>18</y>
+      <foreground_color>
+        <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
+      </foreground_color>
+      <actions hook="false" hook_all="false" />
+      <font>
+        <opifont.name fontName="Segoe UI" height="9" style="0">ISIS_GroupBox_NEW</opifont.name>
+      </font>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0">
+      <opi_file>power_supply_summary.opi</opi_file>
+      <border_style>0</border_style>
+      <tooltip></tooltip>
+      <rules />
+      <enabled>true</enabled>
+      <wuid>-7f86b513:15cbf58a3f3:-6612</wuid>
+      <auto_size>true</auto_size>
+      <scripts />
+      <height>98</height>
+      <border_width>1</border_width>
+      <scale_options>
+        <width_scalable>true</width_scalable>
+        <height_scalable>true</height_scalable>
+        <keep_wh_ratio>false</keep_wh_ratio>
+      </scale_options>
+      <macros>
+        <include_parent_macros>true</include_parent_macros>
+        <PSNAME>UQ7</PSNAME>
+        <PV_ROOT>$(P)DFKPS_06</PV_ROOT>
+      </macros>
+      <visible>true</visible>
+      <group_name></group_name>
+      <border_color>
+        <color name="ISIS_GroupBox_Border_NEW" red="0" green="128" blue="255" />
+      </border_color>
+      <widget_type>Linking Container</widget_type>
+      <background_color>
+        <color red="240" green="240" blue="240" />
+      </background_color>
+      <zoom_to_fit>false</zoom_to_fit>
+      <width>74</width>
+      <x>138</x>
+      <name>A Linking Container That Looks Like a Group Box_8</name>
+      <y>18</y>
+      <foreground_color>
+        <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
+      </foreground_color>
+      <actions hook="false" hook_all="false" />
+      <font>
+        <opifont.name fontName="Segoe UI" height="9" style="0">ISIS_GroupBox_NEW</opifont.name>
+      </font>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0">
+      <opi_file>power_supply_summary.opi</opi_file>
+      <border_style>0</border_style>
+      <tooltip></tooltip>
+      <rules />
+      <enabled>true</enabled>
+      <wuid>-7f86b513:15cbf58a3f3:-660d</wuid>
+      <auto_size>true</auto_size>
+      <scripts />
+      <height>98</height>
+      <border_width>1</border_width>
+      <scale_options>
+        <width_scalable>true</width_scalable>
+        <height_scalable>true</height_scalable>
+        <keep_wh_ratio>false</keep_wh_ratio>
+      </scale_options>
+      <macros>
+        <include_parent_macros>true</include_parent_macros>
+        <PSNAME>UQ8</PSNAME>
+        <PV_ROOT>$(P)DFKPS_07</PV_ROOT>
+      </macros>
+      <visible>true</visible>
+      <group_name></group_name>
+      <border_color>
+        <color name="ISIS_GroupBox_Border_NEW" red="0" green="128" blue="255" />
+      </border_color>
+      <widget_type>Linking Container</widget_type>
+      <background_color>
+        <color red="240" green="240" blue="240" />
+      </background_color>
+      <zoom_to_fit>false</zoom_to_fit>
+      <width>74</width>
+      <x>216</x>
+      <name>A Linking Container That Looks Like a Group Box_9</name>
+      <y>18</y>
+      <foreground_color>
+        <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
+      </foreground_color>
+      <actions hook="false" hook_all="false" />
+      <font>
+        <opifont.name fontName="Segoe UI" height="9" style="0">ISIS_GroupBox_NEW</opifont.name>
+      </font>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0">
+      <opi_file>power_supply_summary.opi</opi_file>
+      <border_style>0</border_style>
+      <tooltip></tooltip>
+      <rules />
+      <enabled>true</enabled>
+      <wuid>-7f86b513:15cbf58a3f3:-6608</wuid>
+      <auto_size>true</auto_size>
+      <scripts />
+      <height>98</height>
+      <border_width>1</border_width>
+      <scale_options>
+        <width_scalable>true</width_scalable>
+        <height_scalable>true</height_scalable>
+        <keep_wh_ratio>false</keep_wh_ratio>
+      </scale_options>
+      <macros>
+        <include_parent_macros>true</include_parent_macros>
+        <PSNAME>UQ9</PSNAME>
+        <PV_ROOT>$(P)DFKPS_08</PV_ROOT>
+      </macros>
+      <visible>true</visible>
+      <group_name></group_name>
+      <border_color>
+        <color name="ISIS_GroupBox_Border_NEW" red="0" green="128" blue="255" />
+      </border_color>
+      <widget_type>Linking Container</widget_type>
+      <background_color>
+        <color red="240" green="240" blue="240" />
+      </background_color>
+      <zoom_to_fit>false</zoom_to_fit>
+      <width>74</width>
+      <x>294</x>
+      <name>A Linking Container That Looks Like a Group Box_10</name>
+      <y>18</y>
+      <foreground_color>
+        <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
+      </foreground_color>
+      <actions hook="false" hook_all="false" />
+      <font>
+        <opifont.name fontName="Segoe UI" height="9" style="0">ISIS_GroupBox_NEW</opifont.name>
+      </font>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0">
+      <opi_file>power_supply_summary.opi</opi_file>
+      <border_style>0</border_style>
+      <tooltip></tooltip>
+      <rules />
+      <enabled>true</enabled>
+      <wuid>-7f86b513:15cbf58a3f3:-65cc</wuid>
+      <auto_size>true</auto_size>
+      <scripts />
+      <height>98</height>
+      <border_width>1</border_width>
+      <scale_options>
+        <width_scalable>true</width_scalable>
+        <height_scalable>true</height_scalable>
+        <keep_wh_ratio>false</keep_wh_ratio>
+      </scale_options>
+      <macros>
+        <include_parent_macros>true</include_parent_macros>
+        <PSNAME>SEPARATOR</PSNAME>
+        <PV_ROOT>$(P)GENESYS_01:6</PV_ROOT>
+        <IOC_NUM>01</IOC_NUM>
+        <PS_NUM>6</PS_NUM>
+      </macros>
+      <visible>true</visible>
+      <group_name></group_name>
+      <border_color>
+        <color name="ISIS_GroupBox_Border_NEW" red="0" green="128" blue="255" />
+      </border_color>
+      <widget_type>Linking Container</widget_type>
+      <background_color>
+        <color red="240" green="240" blue="240" />
+      </background_color>
+      <zoom_to_fit>false</zoom_to_fit>
+      <width>74</width>
+      <x>372</x>
+      <name>A Linking Container That Looks Like a Group Box_11</name>
+      <y>18</y>
+      <foreground_color>
+        <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
+      </foreground_color>
+      <actions hook="false" hook_all="false" />
+      <font>
+        <opifont.name fontName="Segoe UI" height="9" style="0">ISIS_GroupBox_NEW</opifont.name>
+      </font>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0">
+      <opi_file>power_supply_summary.opi</opi_file>
+      <border_style>0</border_style>
+      <tooltip></tooltip>
+      <rules />
+      <enabled>true</enabled>
+      <wuid>-7f86b513:15cbf58a3f3:-65c7</wuid>
+      <auto_size>true</auto_size>
+      <scripts />
+      <height>98</height>
+      <border_width>1</border_width>
+      <scale_options>
+        <width_scalable>true</width_scalable>
+        <height_scalable>true</height_scalable>
+        <keep_wh_ratio>false</keep_wh_ratio>
+      </scale_options>
+      <macros>
+        <include_parent_macros>true</include_parent_macros>
+        <PSNAME>UQ10</PSNAME>
+        <PV_ROOT>$(P)GENESYS_01:4</PV_ROOT>
+        <IOC_NUM>01</IOC_NUM>
+        <PS_NUM>4</PS_NUM>
+      </macros>
+      <visible>true</visible>
+      <group_name></group_name>
+      <border_color>
+        <color name="ISIS_GroupBox_Border_NEW" red="0" green="128" blue="255" />
+      </border_color>
+      <widget_type>Linking Container</widget_type>
+      <background_color>
+        <color red="240" green="240" blue="240" />
+      </background_color>
+      <zoom_to_fit>false</zoom_to_fit>
+      <width>74</width>
+      <x>450</x>
+      <name>A Linking Container That Looks Like a Group Box_12</name>
+      <y>18</y>
+      <foreground_color>
+        <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
+      </foreground_color>
+      <actions hook="false" hook_all="false" />
+      <font>
+        <opifont.name fontName="Segoe UI" height="9" style="0">ISIS_GroupBox_NEW</opifont.name>
+      </font>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0">
+      <opi_file>power_supply_summary.opi</opi_file>
+      <border_style>0</border_style>
+      <tooltip></tooltip>
+      <rules />
+      <enabled>true</enabled>
+      <wuid>-7f86b513:15cbf58a3f3:-65c2</wuid>
+      <auto_size>true</auto_size>
+      <scripts />
+      <height>98</height>
+      <border_width>1</border_width>
+      <scale_options>
+        <width_scalable>true</width_scalable>
+        <height_scalable>true</height_scalable>
+        <keep_wh_ratio>false</keep_wh_ratio>
+      </scale_options>
+      <macros>
+        <include_parent_macros>true</include_parent_macros>
+        <PSNAME>UQ11</PSNAME>
+        <PV_ROOT>$(P)DFKPS_09</PV_ROOT>
+      </macros>
+      <visible>true</visible>
+      <group_name></group_name>
+      <border_color>
+        <color name="ISIS_GroupBox_Border_NEW" red="0" green="128" blue="255" />
+      </border_color>
+      <widget_type>Linking Container</widget_type>
+      <background_color>
+        <color red="240" green="240" blue="240" />
+      </background_color>
+      <zoom_to_fit>false</zoom_to_fit>
+      <width>74</width>
+      <x>528</x>
+      <name>A Linking Container That Looks Like a Group Box_13</name>
+      <y>18</y>
+      <foreground_color>
+        <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
+      </foreground_color>
+      <actions hook="false" hook_all="false" />
+      <font>
+        <opifont.name fontName="Segoe UI" height="9" style="0">ISIS_GroupBox_NEW</opifont.name>
+      </font>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0">
+      <opi_file>power_supply_summary.opi</opi_file>
+      <border_style>0</border_style>
+      <tooltip></tooltip>
+      <rules />
+      <enabled>true</enabled>
+      <wuid>-7f86b513:15cbf58a3f3:-65bd</wuid>
+      <auto_size>true</auto_size>
+      <scripts />
+      <height>98</height>
+      <border_width>1</border_width>
+      <scale_options>
+        <width_scalable>true</width_scalable>
+        <height_scalable>true</height_scalable>
+        <keep_wh_ratio>false</keep_wh_ratio>
+      </scale_options>
+      <macros>
+        <include_parent_macros>true</include_parent_macros>
+        <PSNAME>UQ12</PSNAME>
+        <PV_ROOT>$(P)GENESYS_01:5</PV_ROOT>
+        <IOC_NUM>01</IOC_NUM>
+        <PS_NUM>5</PS_NUM>
+      </macros>
+      <visible>true</visible>
+      <group_name></group_name>
+      <border_color>
+        <color name="ISIS_GroupBox_Border_NEW" red="0" green="128" blue="255" />
+      </border_color>
+      <widget_type>Linking Container</widget_type>
+      <background_color>
+        <color red="240" green="240" blue="240" />
+      </background_color>
+      <zoom_to_fit>false</zoom_to_fit>
+      <width>74</width>
+      <x>609</x>
+      <name>A Linking Container That Looks Like a Group Box_14</name>
+      <y>18</y>
+      <foreground_color>
+        <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
+      </foreground_color>
+      <actions hook="false" hook_all="false" />
+      <font>
+        <opifont.name fontName="Segoe UI" height="9" style="0">ISIS_GroupBox_NEW</opifont.name>
+      </font>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.polyline" version="1.0">
+      <border_style>0</border_style>
+      <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+      <line_width>1</line_width>
+      <horizontal_fill>false</horizontal_fill>
+      <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+      <arrows>2</arrows>
+      <rules />
+      <enabled>true</enabled>
+      <wuid>-2541c3ca:15d0d8c2cc6:-5061</wuid>
+      <transparent>false</transparent>
+      <points>
+        <point x="-6" y="138" />
+        <point x="678" y="138" />
+      </points>
+      <fill_arrow>true</fill_arrow>
+      <pv_value />
+      <alpha>255</alpha>
+      <rotation_angle>0.0</rotation_angle>
+      <scripts />
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+      <height>1</height>
+      <border_width>1</border_width>
+      <scale_options>
+        <width_scalable>true</width_scalable>
+        <height_scalable>true</height_scalable>
+        <keep_wh_ratio>true</keep_wh_ratio>
+      </scale_options>
+      <visible>true</visible>
+      <pv_name></pv_name>
+      <border_color>
+        <color red="0" green="128" blue="255" />
+      </border_color>
+      <anti_alias>true</anti_alias>
+      <line_style>0</line_style>
+      <arrow_length>20</arrow_length>
+      <widget_type>Polyline</widget_type>
+      <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+      <background_color>
+        <color red="30" green="144" blue="255" />
+      </background_color>
+      <width>685</width>
+      <x>-6</x>
+      <name>Polyline</name>
+      <y>138</y>
+      <fill_level>1.0</fill_level>
+      <foreground_color>
+        <color red="255" green="0" blue="0" />
+      </foreground_color>
+      <actions hook="false" hook_all="false" />
+      <font>
+        <opifont.name fontName="Segoe UI" height="9" style="0">Default</opifont.name>
+      </font>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0">
+      <border_style>0</border_style>
+      <tooltip></tooltip>
+      <horizontal_alignment>1</horizontal_alignment>
+      <rules />
+      <enabled>true</enabled>
+      <wuid>-2541c3ca:15d0d8c2cc6:-4f29</wuid>
+      <transparent>false</transparent>
+      <auto_size>false</auto_size>
+      <text>Power</text>
+      <scripts />
+      <height>25</height>
+      <border_width>1</border_width>
+      <scale_options>
+        <width_scalable>true</width_scalable>
+        <height_scalable>true</height_scalable>
+        <keep_wh_ratio>false</keep_wh_ratio>
+      </scale_options>
+      <visible>true</visible>
+      <vertical_alignment>1</vertical_alignment>
+      <border_color>
+        <color name="ISIS_Border" red="0" green="0" blue="0" />
+      </border_color>
+      <widget_type>Label</widget_type>
+      <wrap_words>true</wrap_words>
+      <background_color>
+        <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
+      </background_color>
+      <width>61</width>
+      <x>0</x>
+      <name>Label_6</name>
+      <y>54</y>
+      <foreground_color>
+        <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
+      </foreground_color>
+      <actions hook="false" hook_all="false" />
+      <show_scrollbar>false</show_scrollbar>
+      <font>
+        <opifont.name fontName="Segoe UI" height="9" style="1">ISIS_Label_NEW</opifont.name>
+      </font>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0">
+      <border_style>0</border_style>
+      <tooltip></tooltip>
+      <horizontal_alignment>1</horizontal_alignment>
+      <rules />
+      <enabled>true</enabled>
+      <wuid>-2541c3ca:15d0d8c2cc6:-4f28</wuid>
+      <transparent>false</transparent>
+      <auto_size>false</auto_size>
+      <text>Alarm</text>
+      <scripts />
+      <height>25</height>
+      <border_width>1</border_width>
+      <scale_options>
+        <width_scalable>true</width_scalable>
+        <height_scalable>true</height_scalable>
+        <keep_wh_ratio>false</keep_wh_ratio>
+      </scale_options>
+      <visible>true</visible>
+      <vertical_alignment>1</vertical_alignment>
+      <border_color>
+        <color name="ISIS_Border" red="0" green="0" blue="0" />
+      </border_color>
+      <widget_type>Label</widget_type>
+      <wrap_words>true</wrap_words>
+      <background_color>
+        <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
+      </background_color>
+      <width>61</width>
+      <x>0</x>
+      <name>Label_18</name>
+      <y>91</y>
+      <foreground_color>
+        <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
+      </foreground_color>
+      <actions hook="false" hook_all="false" />
+      <show_scrollbar>false</show_scrollbar>
+      <font>
+        <opifont.name fontName="Segoe UI" height="9" style="1">ISIS_Label_NEW</opifont.name>
+      </font>
+    </widget>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.polyline" version="1.0">
     <border_style>0</border_style>
@@ -1863,15 +1984,18 @@ $(pv_value)</tooltip>
     <horizontal_fill>true</horizontal_fill>
     <tooltip>$(pv_name)
 $(pv_value)</tooltip>
-    <arrows>2</arrows>
+    <arrows>0</arrows>
     <rules />
     <enabled>true</enabled>
-    <wuid>-2541c3ca:15d0d8c2cc6:-3b12</wuid>
+    <wuid>-2541c3ca:15d0d8c2cc6:-42c0</wuid>
     <transparent>false</transparent>
     <points>
-      <point x="1392" y="348" />
-      <point x="1392" y="522" />
-      <point x="1457" y="522" />
+      <point x="773" y="270" />
+      <point x="785" y="270" />
+      <point x="785" y="312" />
+      <point x="18" y="312" />
+      <point x="18" y="480" />
+      <point x="36" y="480" />
     </points>
     <fill_arrow>true</fill_arrow>
     <pv_value />
@@ -1879,7 +2003,7 @@ $(pv_value)</tooltip>
     <rotation_angle>0.0</rotation_angle>
     <scripts />
     <border_alarm_sensitive>false</border_alarm_sensitive>
-    <height>175</height>
+    <height>211</height>
     <border_width>1</border_width>
     <scale_options>
       <width_scalable>true</width_scalable>
@@ -1899,65 +2023,10 @@ $(pv_value)</tooltip>
     <background_color>
       <color red="30" green="144" blue="255" />
     </background_color>
-    <width>66</width>
-    <x>1392</x>
-    <name>Polyline_2</name>
-    <y>348</y>
-    <fill_level>0.0</fill_level>
-    <foreground_color>
-      <color red="255" green="0" blue="0" />
-    </foreground_color>
-    <actions hook="false" hook_all="false" />
-    <font>
-      <opifont.name fontName="Segoe UI" height="9" style="0">Default</opifont.name>
-    </font>
-  </widget>
-  <widget typeId="org.csstudio.opibuilder.widgets.polyline" version="1.0">
-    <border_style>0</border_style>
-    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
-    <line_width>2</line_width>
-    <horizontal_fill>true</horizontal_fill>
-    <tooltip>$(pv_name)
-$(pv_value)</tooltip>
-    <arrows>2</arrows>
-    <rules />
-    <enabled>true</enabled>
-    <wuid>-2541c3ca:15d0d8c2cc6:-392d</wuid>
-    <transparent>false</transparent>
-    <points>
-      <point x="1374" y="349" />
-      <point x="1458" y="349" />
-    </points>
-    <fill_arrow>true</fill_arrow>
-    <pv_value />
-    <alpha>255</alpha>
-    <rotation_angle>0.0</rotation_angle>
-    <scripts />
-    <border_alarm_sensitive>false</border_alarm_sensitive>
-    <height>1</height>
-    <border_width>1</border_width>
-    <scale_options>
-      <width_scalable>true</width_scalable>
-      <height_scalable>true</height_scalable>
-      <keep_wh_ratio>true</keep_wh_ratio>
-    </scale_options>
-    <visible>true</visible>
-    <pv_name></pv_name>
-    <border_color>
-      <color red="0" green="128" blue="255" />
-    </border_color>
-    <anti_alias>true</anti_alias>
-    <line_style>1</line_style>
-    <arrow_length>20</arrow_length>
-    <widget_type>Polyline</widget_type>
-    <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
-    <background_color>
-      <color red="30" green="144" blue="255" />
-    </background_color>
-    <width>85</width>
-    <x>1374</x>
+    <width>768</width>
+    <x>18</x>
     <name>Polyline</name>
-    <y>349</y>
+    <y>270</y>
     <fill_level>0.0</fill_level>
     <foreground_color>
       <color red="255" green="0" blue="0" />
