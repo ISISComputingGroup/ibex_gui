@@ -71,3 +71,4 @@ def archiveCheckstyleResults() {
           pattern: "**/target/checkstyle-result.xml",
           unHealthy: ""])
 }
+
