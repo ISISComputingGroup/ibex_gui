@@ -141,7 +141,7 @@
     <background_color>
       <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
     </background_color>
-    <width>1369</width>
+    <width>1339</width>
     <x>6</x>
     <name>Front End</name>
     <y>237</y>
@@ -556,7 +556,7 @@ $(pv_value)</tooltip>
       <transparent>false</transparent>
       <points>
         <point x="18" y="150" />
-        <point x="1320" y="150" />
+        <point x="1303" y="150" />
       </points>
       <fill_arrow>true</fill_arrow>
       <pv_value />
@@ -584,7 +584,7 @@ $(pv_value)</tooltip>
       <background_color>
         <color red="30" green="144" blue="255" />
       </background_color>
-      <width>1303</width>
+      <width>1286</width>
       <x>18</x>
       <name>Polyline</name>
       <y>150</y>
@@ -626,7 +626,7 @@ $(pv_value)</tooltip>
       </border_color>
       <widget_type>Button</widget_type>
       <width>80</width>
-      <x>618</x>
+      <x>601</x>
       <name>Button</name>
       <y>66</y>
       <foreground_color>
@@ -671,7 +671,7 @@ $(pv_value)</tooltip>
       </background_color>
       <zoom_to_fit>false</zoom_to_fit>
       <width>74</width>
-      <x>1098</x>
+      <x>1074</x>
       <name>A Linking Container That Looks Like a Group Box_11</name>
       <y>30</y>
       <foreground_color>
@@ -716,7 +716,7 @@ $(pv_value)</tooltip>
       </background_color>
       <zoom_to_fit>false</zoom_to_fit>
       <width>74</width>
-      <x>1254</x>
+      <x>1230</x>
       <name>A Linking Container That Looks Like a Group Box_14</name>
       <y>30</y>
       <foreground_color>
@@ -759,7 +759,7 @@ $(pv_value)</tooltip>
       </background_color>
       <zoom_to_fit>false</zoom_to_fit>
       <width>74</width>
-      <x>1176</x>
+      <x>1152</x>
       <name>A Linking Container That Looks Like a Group Box_13</name>
       <y>30</y>
       <foreground_color>
@@ -802,7 +802,7 @@ $(pv_value)</tooltip>
       </background_color>
       <zoom_to_fit>false</zoom_to_fit>
       <width>74</width>
-      <x>864</x>
+      <x>840</x>
       <name>A Linking Container That Looks Like a Group Box_9</name>
       <y>30</y>
       <foreground_color>
@@ -845,7 +845,7 @@ $(pv_value)</tooltip>
       </background_color>
       <zoom_to_fit>false</zoom_to_fit>
       <width>74</width>
-      <x>786</x>
+      <x>762</x>
       <name>A Linking Container That Looks Like a Group Box_8</name>
       <y>30</y>
       <foreground_color>
@@ -888,7 +888,7 @@ $(pv_value)</tooltip>
       </background_color>
       <zoom_to_fit>false</zoom_to_fit>
       <width>74</width>
-      <x>708</x>
+      <x>684</x>
       <name>A Linking Container That Looks Like a Group Box_7</name>
       <y>30</y>
       <foreground_color>
@@ -933,7 +933,7 @@ $(pv_value)</tooltip>
       </background_color>
       <zoom_to_fit>false</zoom_to_fit>
       <width>74</width>
-      <x>1020</x>
+      <x>996</x>
       <name>A Linking Container That Looks Like a Group Box_12</name>
       <y>30</y>
       <foreground_color>
@@ -976,7 +976,7 @@ $(pv_value)</tooltip>
       </background_color>
       <zoom_to_fit>false</zoom_to_fit>
       <width>74</width>
-      <x>942</x>
+      <x>918</x>
       <name>A Linking Container That Looks Like a Group Box_10</name>
       <y>30</y>
       <foreground_color>
@@ -1016,7 +1016,7 @@ $(pv_value)</tooltip>
       <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
     </background_color>
     <width>229</width>
-    <x>1458</x>
+    <x>1422</x>
     <name>HIFI</name>
     <y>84</y>
     <foreground_color>
@@ -1316,7 +1316,7 @@ $(pv_value)</tooltip>
       <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
     </background_color>
     <width>229</width>
-    <x>1458</x>
+    <x>1422</x>
     <name>MUSR</name>
     <y>276</y>
     <foreground_color>
@@ -1528,7 +1528,7 @@ $(pv_value)</tooltip>
       <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
     </background_color>
     <width>229</width>
-    <x>1458</x>
+    <x>1422</x>
     <name>EMU</name>
     <y>408</y>
     <foreground_color>
@@ -1813,9 +1813,9 @@ $(pv_value)</tooltip>
     <wuid>-2541c3ca:15d0d8c2cc6:-3c08</wuid>
     <transparent>false</transparent>
     <points>
-      <point x="1392" y="353" />
-      <point x="1392" y="168" />
-      <point x="1458" y="168" />
+      <point x="1368" y="353" />
+      <point x="1368" y="168" />
+      <point x="1422" y="168" />
     </points>
     <fill_arrow>true</fill_arrow>
     <pv_value />
@@ -1843,8 +1843,8 @@ $(pv_value)</tooltip>
     <background_color>
       <color red="30" green="144" blue="255" />
     </background_color>
-    <width>67</width>
-    <x>1392</x>
+    <width>55</width>
+    <x>1368</x>
     <name>Polyline_1</name>
     <y>168</y>
     <fill_level>0.0</fill_level>
@@ -1869,9 +1869,9 @@ $(pv_value)</tooltip>
     <wuid>-2541c3ca:15d0d8c2cc6:-3b12</wuid>
     <transparent>false</transparent>
     <points>
-      <point x="1392" y="348" />
-      <point x="1392" y="522" />
-      <point x="1457" y="522" />
+      <point x="1368" y="348" />
+      <point x="1368" y="522" />
+      <point x="1421" y="522" />
     </points>
     <fill_arrow>true</fill_arrow>
     <pv_value />
@@ -1899,8 +1899,8 @@ $(pv_value)</tooltip>
     <background_color>
       <color red="30" green="144" blue="255" />
     </background_color>
-    <width>66</width>
-    <x>1392</x>
+    <width>54</width>
+    <x>1368</x>
     <name>Polyline_2</name>
     <y>348</y>
     <fill_level>0.0</fill_level>
@@ -1925,8 +1925,8 @@ $(pv_value)</tooltip>
     <wuid>-2541c3ca:15d0d8c2cc6:-392d</wuid>
     <transparent>false</transparent>
     <points>
-      <point x="1374" y="349" />
-      <point x="1458" y="349" />
+      <point x="1350" y="349" />
+      <point x="1422" y="349" />
     </points>
     <fill_arrow>true</fill_arrow>
     <pv_value />
@@ -1954,8 +1954,8 @@ $(pv_value)</tooltip>
     <background_color>
       <color red="30" green="144" blue="255" />
     </background_color>
-    <width>85</width>
-    <x>1374</x>
+    <width>73</width>
+    <x>1350</x>
     <name>Polyline</name>
     <y>349</y>
     <fill_level>0.0</fill_level>
