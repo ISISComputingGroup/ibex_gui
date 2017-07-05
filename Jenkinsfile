@@ -6,45 +6,45 @@ pipeline {
   }
   
   triggers {
-        cron('H/2 * * * *')
+    pollSCM('H/2 * * * *')
   }
   
   stages {  
     stage("Checkout") {
       steps {
-	    git 'https://github.com/ISISComputingGroup/ibex_gui.git'
-	  }
-	}
-	
-	stage("Build") {
+        git 'https://github.com/ISISComputingGroup/ibex_gui.git'
+      }
+    }
+    
+    stage("Build") {
       steps {
-	    bat '''
+        bat '''
             cd build
-			set DEPLOY=YES
+            set DEPLOY=YES
             jenkins_build.bat"
             '''
-	  }
-	}
-	
-	stage("Unit Tests") {
+      }
+    }
+    
+    stage("Unit Tests") {
       steps {
-	    junit '**/surefire-reports/TEST-*.xml'
-	  }
-	}
-	
-	stage("Checkstyle") {
+        junit '**/surefire-reports/TEST-*.xml'
+      }
+    }
+    
+    stage("Checkstyle") {
       steps {
-	    archiveCheckstyleResults()
-	  }
-	}
-	
-	stage("Doxygen") {
+        archiveCheckstyleResults()
+      }
+    }
+    
+    stage("Doxygen") {
       steps {
-	    bat '''
+        bat '''
             "C:\\Program Files\\doxygen\\bin\\doxygen.exe" build\\ibex_gui_doxy.config
             '''
-	  }
-	}
+      }
+    }
   }
   
   post {
@@ -57,7 +57,7 @@ pipeline {
   options {
     buildDiscarder(logRotator(numToKeepStr:'10'))
     timeout(time: 60, unit: 'MINUTES')
-	disableConcurrentBuilds()
+    disableConcurrentBuilds()
   }
 }
 
