@@ -2,7 +2,7 @@ pipeline {
 
   // agent defines where the pipeline will run.
   agent {  
-    label "ibex_gui"
+    label "ndhspare53"
   }
   
   triggers {
@@ -12,7 +12,7 @@ pipeline {
   stages {  
     stage("Checkout") {
       steps {
-        git 'https://github.com/ISISComputingGroup/ibex_gui.git'
+        checkout scm
       }
     }
     
@@ -69,4 +69,3 @@ def archiveCheckstyleResults() {
           pattern: "**/target/checkstyle-result.xml",
           unHealthy: ""])
 }
-
