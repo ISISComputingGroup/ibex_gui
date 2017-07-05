@@ -23,8 +23,8 @@ package uk.ac.stfc.isis.ibex.devicescreens;
 
 import uk.ac.stfc.isis.ibex.devicescreens.desc.DeviceDescription;
 import uk.ac.stfc.isis.ibex.devicescreens.desc.DeviceScreensDescription;
+import uk.ac.stfc.isis.ibex.epics.observing.BaseObserver;
 import uk.ac.stfc.isis.ibex.epics.observing.Observable;
-import uk.ac.stfc.isis.ibex.epics.observing.Observer;
 import uk.ac.stfc.isis.ibex.epics.writing.SameTypeWriter;
 import uk.ac.stfc.isis.ibex.epics.writing.Writable;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
@@ -79,7 +79,7 @@ public class DeviceScreensModel extends ModelObject {
         this.writableDeviceScreenDescriptions.writeTo(writableDeviceScreenDescriptions);
         writableDeviceScreenDescriptions.subscribe(this.writableDeviceScreenDescriptions);
 
-        observableDeviceScreensDescription.addObserver(new Observer<DeviceScreensDescription>() {
+        observableDeviceScreensDescription.addObserver(new BaseObserver<DeviceScreensDescription>() {
 
             @Override
             public void update(DeviceScreensDescription value, Exception error, boolean isConnected) {
@@ -105,16 +105,6 @@ public class DeviceScreensModel extends ModelObject {
 
                 setDeviceScreensDescription(copy);
             }
-
-            @Override
-            public void onError(Exception e) {
-                // Do nothing
-            }
-
-            @Override
-            public void onConnectionStatus(boolean isConnected) {
-                // Do nothing
-            }
         });
     }
 
@@ -139,7 +129,14 @@ public class DeviceScreensModel extends ModelObject {
         updateDeviceScreensDescription(deviceScreensDescription);
     }
 
-    public void updateDeviceScreensDescription(DeviceScreensDescription deviceScreensDescription) {
+    /**
+     * Separates the device screens into local and remote and sets the remote on
+     * the server.
+     * 
+     * @param deviceScreensDescription
+     *            the device screens description to set
+     */
+    private void updateDeviceScreensDescription(DeviceScreensDescription deviceScreensDescription) {
 
         DeviceScreensDescription remoteDevices = new DeviceScreensDescription();
 
