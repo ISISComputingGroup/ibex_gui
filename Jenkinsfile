@@ -51,7 +51,7 @@ pipeline {
     failure {
       step([$class: 'Mailer', notifyEveryUnstableBuild: true, recipients: '', sendToIndividuals: true])
     }
-}
+  }
   
   // The options directive is for configuration that applies to the whole job.
   options {
