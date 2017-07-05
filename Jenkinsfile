@@ -1,6 +1,6 @@
 #!groovy​
 
-node ('windows' && 'ibex_gui'){
+node ('windows && ibex_gui'){
 
 	stage('Checkout') {
 		checkout scm
