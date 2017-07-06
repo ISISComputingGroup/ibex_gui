@@ -32,6 +32,7 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Shell;
 
 import uk.ac.stfc.isis.ibex.configserver.ConfigServer;
+import uk.ac.stfc.isis.ibex.configserver.Configurations;
 import uk.ac.stfc.isis.ibex.runcontrol.RunControlServer;
 import uk.ac.stfc.isis.ibex.ui.runcontrol.RunControlViewModel;
 import uk.ac.stfc.isis.ibex.validators.ErrorMessage;
@@ -51,7 +52,8 @@ public class EditRunControlDialog extends TitleAreaDialog {
 		this.title = title;
 		this.configServer = configServer;
 		this.runControlServer = runControlServer;
-		this.viewModel = new RunControlViewModel(configServer, runControlServer);
+        this.viewModel =
+                new RunControlViewModel(Configurations.getInstance().display().getDisplayBlocks(), runControlServer);
 		viewModel.addPropertyChangeListener("error", new PropertyChangeListener() {
 			@Override
 			public void propertyChange(PropertyChangeEvent evt) {

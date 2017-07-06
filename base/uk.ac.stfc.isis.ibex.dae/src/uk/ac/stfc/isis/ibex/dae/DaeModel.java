@@ -26,6 +26,9 @@ import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.epics.pv.Closer;
 import uk.ac.stfc.isis.ibex.epics.writing.Writable;
 
+/**
+ * The Class DaeModel is the back end model for the DAE perspective.
+ */
 public class DaeModel extends Closer implements IDae {
 		
 	private final ExperimentSetup experimentSetup;
@@ -36,6 +39,14 @@ public class DaeModel extends Closer implements IDae {
 	
 	private final ForwardingObservable<Boolean> isRunning;
 	
+    /**
+     * Instantiates a new DAE model.
+     *
+     * @param writables
+     *            the writables associated with the model
+     * @param observables
+     *            the observables associated with the model
+     */
 	public DaeModel(DaeWritables writables, DaeObservables observables) {		
 		this.observables = observables;
 		this.writables = writables;
@@ -47,7 +58,7 @@ public class DaeModel extends Closer implements IDae {
 		isRunning = registerForClose(new ForwardingObservable<>(new DaeIsRunning(observables.runState)));
 	}
 
-	@Override
+    @Override
 	public ForwardingObservable<String> instrument() {
 		return observables.instrumentName;
 	}

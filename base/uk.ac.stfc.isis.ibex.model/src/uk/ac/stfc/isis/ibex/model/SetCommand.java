@@ -1,4 +1,3 @@
-
 /*
 * This file is part of the ISIS IBEX application.
 * Copyright (C) 2012-2015 Science & Technology Facilities Council.
@@ -22,9 +21,12 @@ package uk.ac.stfc.isis.ibex.model;
 import java.io.IOException;
 
 /**
- * A class for sending a command from the UI. <br>
- * The class allows for cases when the command cannot be set for whatever reason.
- * @param <T> The type of the data that should be sent
+ * A class for sending a command to a model (usually from the UI). <br>
+ * The class allows for cases when the command cannot be set for whatever
+ * reason.
+ * 
+ * @param <T>
+ *            The type of the data that should be sent
  */
 public abstract class SetCommand<T> extends ModelObject {
 		
@@ -54,10 +56,12 @@ public abstract class SetCommand<T> extends ModelObject {
 		return canSend;
 	}
 
-	/**
-	 * Sets whether values can be sent or not.
-	 * @param canSend true if a value can be sent, false otherwise
-	 */
+    /**
+     * Sets whether a command can be sent.
+     *
+     * @param canSend
+     *            True if a command can be sent; False otherwise
+     */
 	protected void setCanSend(boolean canSend) {
 		firePropertyChange("canSend", this.canSend, this.canSend = canSend);
 	}

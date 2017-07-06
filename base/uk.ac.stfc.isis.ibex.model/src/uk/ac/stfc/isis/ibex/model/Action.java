@@ -19,17 +19,34 @@
 
 package uk.ac.stfc.isis.ibex.model;
 
-
+/**
+ * An abstract class for a generic action which may or may not be able to be
+ * executed.
+ */
 public abstract class Action extends ModelObject {
 	
 	private boolean canExecute;
 	
+    /**
+     * Execute the action.
+     */
 	public abstract void execute();
 	
+    /**
+     * Get whether or not the action can be executed.
+     * 
+     * @return True if the action can be executed.
+     */
 	public boolean getCanExecute() {
 		return canExecute;
 	}
 	
+    /**
+     * Set whether or not the action can be executed.
+     * 
+     * @param canExecute
+     *            True if the action can be executed.
+     */
 	protected void setCanExecute(boolean canExecute) {
 		firePropertyChange("canExecute", this.canExecute, this.canExecute = canExecute);
 	}

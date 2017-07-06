@@ -84,11 +84,36 @@ public class DaeObservables {
      * An observable on a integer giving the number of raw frames for this run.
      */
     public final ForwardingObservable<Integer> rawFrames;
+
+    /**
+     * An observable on the monitor counts for the run.
+     */
     public final ForwardingObservable<Integer> monitorCounts;
+
+    /**
+     * An observable on the good current for this run.
+     */
     public final ForwardingObservable<Number> goodCurrent;
+
+    /**
+     * An observable on the length of time that the current run has been going.
+     */
     public final ForwardingObservable<String> runTime;
+
+    /**
+     * An observable on the current period of the run.
+     */
     public final ForwardingObservable<Integer> currentPeriod;
+
+    /**
+     * An observable on the total periods in the run.
+     */
     public final ForwardingObservable<Integer> totalPeriods;
+
+    /**
+     * An observable on whether the DAE is currently transitioning between
+     * states.
+     */
     public final ForwardingObservable<Boolean> inStateTransition;
     public final ForwardingObservable<String> daeSettings;
     public final ForwardingObservable<String> hardwarePeriods;
@@ -262,21 +287,57 @@ public class DaeObservables {
                 InstrumentUtils.addPrefix(DAE.endWith("NPRATIO")));
     }
 
+    /**
+     * Gets the X data for a given DAE spectrum.
+     * 
+     * @param number
+     *            The spectrum number
+     * @param period
+     *            The period number
+     * @return The X data points related to the specified spectrum
+     */
     public ForwardingObservable<float[]> spectrumXData(int number, int period) {
         return obsFactory.getSwitchableObservable(new FloatArrayChannel(),
                 InstrumentUtils.addPrefix(spectrumData(number, period, "X")));
     }
 
+    /**
+     * Gets the length of the available X data for a given DAE spectrum.
+     * 
+     * @param number
+     *            The spectrum number
+     * @param period
+     *            The period number
+     * @return The number of X data points related to the specified spectrum
+     */
     public ForwardingObservable<Integer> spectrumXDataLength(int number, int period) {
         return obsFactory.getSwitchableObservable(new IntegerChannel(),
                 InstrumentUtils.addPrefix(spectrumDataLength(number, period, "X")));
     }
 
+    /**
+     * Gets the Y data for a given DAE spectrum.
+     * 
+     * @param number
+     *            The spectrum number
+     * @param period
+     *            The period number
+     * @return The Y data points related to the specified spectrum
+     */
     public ForwardingObservable<float[]> spectrumYData(int number, int period) {
         return obsFactory.getSwitchableObservable(new FloatArrayChannel(),
                 InstrumentUtils.addPrefix(spectrumData(number, period, "Y")));
     }
 
+    /**
+     * Gets the length of the available Y data for a given DAE spectrum.
+     * 
+     * @param number
+     *            The spectrum number
+     * @param period
+     *            The period number
+     * @return The number of Y data points related to the specified spectrum
+     */
     public ForwardingObservable<Integer> spectrumYDataLength(int number, int period) {
         return obsFactory.getSwitchableObservable(new IntegerChannel(),
                 InstrumentUtils.addPrefix(spectrumDataLength(number, period, "Y")));

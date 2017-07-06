@@ -23,10 +23,20 @@ import uk.ac.stfc.isis.ibex.epics.observing.ClosableObservable;
 import uk.ac.stfc.isis.ibex.epics.pv.Channels;
 import uk.ac.stfc.isis.ibex.epics.writing.BaseWritable;
 
+/**
+ * A channel type for reading enums.
+ * 
+ * @param <E> - the enum to read into
+ */
 public class EnumChannel<E extends Enum<E>> implements ChannelType<E> {
 
 	private final Class<E> enumType;
 	
+	/**
+	 * Constructor.
+	 * 
+	 * @param enumType the type of enum to read into
+	 */
 	public EnumChannel(Class<E> enumType) {
 		this.enumType = enumType;
 	}

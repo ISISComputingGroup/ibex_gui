@@ -19,8 +19,20 @@
 
 package uk.ac.stfc.isis.ibex.banner;
 
+/**
+ * Enum for the state of the motors.
+ */
 public enum InMotionState {
+    /**
+     * Motors are moving.
+     */
 	MOVING,
+    /**
+     * Motors are stationary.
+     */
 	STATIONARY,
+    /**
+     * Motor state is unknown.
+     */
 	UNKNOWN
 }

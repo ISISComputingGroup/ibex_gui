@@ -415,10 +415,12 @@ public class EditDeviceScreensDescriptionViewModel extends ModelObject {
             names.add(d.getName());
         }
 
-        DeviceDescription newScreen = new DeviceDescription(namer.getUnique(names), "", "", false);
-
-        newList.add(new DeviceDescriptionWrapper(newScreen, provider));
+        DeviceDescription newScreen = new DeviceDescription(namer.getUnique(names));
+        DeviceDescriptionWrapper wrappedScreen = new DeviceDescriptionWrapper(newScreen, provider);
+        newList.add(wrappedScreen);
         setScreens(newList);
+        
+        setSelectedScreens(Arrays.asList(wrappedScreen));
     }
 
     /**

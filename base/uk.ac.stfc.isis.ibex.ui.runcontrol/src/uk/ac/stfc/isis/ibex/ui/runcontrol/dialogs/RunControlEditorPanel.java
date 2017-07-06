@@ -25,11 +25,8 @@ import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.DisposeEvent;
-import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -43,8 +40,6 @@ import uk.ac.stfc.isis.ibex.configserver.configuration.Configuration;
 import uk.ac.stfc.isis.ibex.configserver.displaying.DisplayBlock;
 import uk.ac.stfc.isis.ibex.epics.observing.Subscription;
 import uk.ac.stfc.isis.ibex.epics.writing.SameTypeWriter;
-import uk.ac.stfc.isis.ibex.runcontrol.EditableRunControlSetting;
-import uk.ac.stfc.isis.ibex.runcontrol.RunControlServer;
 import uk.ac.stfc.isis.ibex.ui.runcontrol.RunControlViewModel;
 
 /**
@@ -54,7 +49,6 @@ import uk.ac.stfc.isis.ibex.ui.runcontrol.RunControlViewModel;
 public class RunControlEditorPanel extends Composite {
     private static final String RESET_ALL_DIALOG_TITLE = "Confirm Run-Control Restore";
     private static final String RESET_ALL_DIALOG_MESSAGE = "Are you sure you want to restore all run-control settings to their configuration values?";
-	private final RunControlServer runControlServer;
     private final ConfigServer configServer;
 	private final Label name;
 	private final Text txtLowLimit;
@@ -73,32 +67,6 @@ public class RunControlEditorPanel extends Composite {
 	
     private Subscription saveAsSubscription;
 
-	private SelectionAdapter sendChanges = new SelectionAdapter() {
-		@Override
-		public void widgetSelected(SelectionEvent e) {
-			if (block != null) {
-				EditableRunControlSetting setting = new EditableRunControlSetting(block.getName(), runControlServer);
-				setting.setLowLimit(txtLowLimit.getText());
-				setting.setHighLimit(txtHighLimit.getText());
-				setting.setEnabled(chkEnabled.getSelection());
-			}
-            viewModel.setSendEnabled(false);
-		}
-	};
-	
-    private SelectionAdapter restoreBlockValues = new SelectionAdapter() {
-        @Override
-        public void widgetSelected(SelectionEvent e) {
-            if (block != null) {
-                txtLowLimit.setText(block.getConfigurationLowLimit());
-                txtHighLimit.setText(block.getConfigurationHighLimit());
-                chkEnabled.setSelection(block.getConfigurationEnabled());
-            }
-
-            viewModel.setSendEnabled(true);
-        }
-    };
-
 	/**
 	 * Disable the send button if does not have permission to edit configs.
 	 */
@@ -110,12 +78,23 @@ public class RunControlEditorPanel extends Composite {
 		};	
 	};
 
+    /**
+     * Creates the panel for editing the run control on one block.
+     * 
+     * @param parent
+     *            The parent composite.
+     * @param style
+     *            The SWT style of the panel.
+     * @param configServer
+     *            The config server object used to write to the instrument.
+     * @param viewModel
+     *            The view model for this panel.
+     */
     public RunControlEditorPanel(Composite parent, int style, ConfigServer configServer,
-            RunControlServer runControlServer, final RunControlViewModel viewModel) {
+            final RunControlViewModel viewModel) {
 		super(parent, style);
 		
 		this.configServer = configServer;
-		this.runControlServer = runControlServer;
         this.viewModel = viewModel;
 
         setLayout(new GridLayout(2, false));
@@ -161,31 +140,27 @@ public class RunControlEditorPanel extends Composite {
 		chkEnabled = new Button(grpSelectedSetting, SWT.CHECK);
 		chkEnabled.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1));
 		chkEnabled.setText("Enabled");
-		chkEnabled.addSelectionListener(new SelectionListener() {
-			@Override
-			public void widgetDefaultSelected(SelectionEvent arg0) {
-				
-			}
-
-			@Override
-			public void widgetSelected(SelectionEvent arg0) {
-				if (viewModel.isValid()) {
-					viewModel.setSendEnabled(true);		
-				}
-			}
-			
-		});
 		
         btnRestoreSingle = new Button(grpSelectedSetting, SWT.NONE);
         btnRestoreSingle.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 4, 1));
         btnRestoreSingle.setText("Restore Configuration Values");
-        btnRestoreSingle.addSelectionListener(restoreBlockValues);
+        btnRestoreSingle.addSelectionListener(new SelectionAdapter() {
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                viewModel.resetCurrentBlock();
+            }
+        });
         btnRestoreSingle.setEnabled(false);
 
 		btnSend = new Button(grpSelectedSetting, SWT.NONE);
 		btnSend.setText("Apply Changes");
         btnSend.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 3, 1));
-		btnSend.addSelectionListener(sendChanges);
+        btnSend.addSelectionListener(new SelectionAdapter() {
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                viewModel.sendChanges();
+            }
+        });
 		parent.getShell().setDefaultButton(btnSend);
 
         grpGlobalSettings = new Group(this, SWT.NONE);
@@ -204,19 +179,18 @@ public class RunControlEditorPanel extends Composite {
         // by seeing if we are able to edit the config.
         saveAsSubscription = this.configServer.saveAs().subscribe(configService);
 
-        btnRestoreAll.addDisposeListener(new DisposeListener() {
-            @Override
-            public void widgetDisposed(DisposeEvent arg0) {
-                // Must dispose of the subscription otherwise can get multiple
-                // subscriptions when swapping instruments
-                saveAsSubscription.removeObserver();
-            }
-        });
-
         setModel(viewModel);
         setBlock(null);
 	}
     
+    @Override
+    public void dispose() {
+        // Must dispose of the subscription otherwise can get multiple
+        // subscriptions when swapping instruments
+        saveAsSubscription.removeObserver();
+        super.dispose();
+    }
+
     private void setModel(RunControlViewModel viewModel) {
     	DataBindingContext bindingContext = new DataBindingContext();
     	
@@ -226,49 +200,37 @@ public class RunControlEditorPanel extends Composite {
         bindingContext.bindValue(SWTObservables.observeText(txtLowLimit, SWT.Modify),
                 BeanProperties.value("txtLowLimit").observe(viewModel));
         bindingContext.bindValue(SWTObservables.observeText(txtHighLimit, SWT.Modify),
-                BeanProperties.value("txtHighLimit").observe(viewModel)); 
+                BeanProperties.value("txtHighLimit").observe(viewModel));
+        bindingContext.bindValue(WidgetProperties.selection().observe(chkEnabled),
+                BeanProperties.value("rcEnabled").observe(viewModel));
     }
 	
+    private void setAllEnabled(boolean enabled) {
+        txtLowLimit.setEnabled(enabled);
+        txtHighLimit.setEnabled(enabled);
+        chkEnabled.setEnabled(enabled);
+        btnRestoreSingle.setEnabled(enabled);
+        viewModel.setSendEnabled(enabled);
+    }
+
+    /**
+     * Change the block that we are examining the run controls of.
+     * 
+     * @param block
+     *            The new block to examine.
+     */
 	public void setBlock(DisplayBlock block) {
 		this.block = block;
 
+        viewModel.setBlock(block);
+
 		if (block == null) {
 			name.setText("");
-			txtLowLimit.setText("");
-			txtLowLimit.setEnabled(false);
-			txtHighLimit.setText("");
-			txtHighLimit.setEnabled(false);	
-			chkEnabled.setEnabled(false);
-			viewModel.setSendEnabled(false);
+            setAllEnabled(false);
 			return;
 		}
 
-		if (canSend) {
-			txtLowLimit.setEnabled(true);
-			txtHighLimit.setEnabled(true);
-			chkEnabled.setEnabled(true);
-            btnRestoreSingle.setEnabled(true);
-		} else {
-			txtLowLimit.setEnabled(false);
-			txtHighLimit.setEnabled(false);
-			chkEnabled.setEnabled(false);
-            btnRestoreSingle.setEnabled(false);
-		}
-		
-		// Okay to use current values
-        if (block.getLowLimit() != null) {
-            // If channel access is a bit slow the value may not have been
-            // retrieved yet
-            viewModel.setTxtLowLimit(block.getLowLimit().trim());
-        }
-
-        if (block.getHighLimit() != null) {
-            // If channel access is a bit slow the value may not have been
-            // retrieved yet
-        	viewModel.setTxtHighLimit(block.getHighLimit().trim());
-        }
-        
-		chkEnabled.setSelection(block.getEnabled());
+        setAllEnabled(canSend);
 
 		name.setText(block.getName());
 	}
@@ -277,7 +239,7 @@ public class RunControlEditorPanel extends Composite {
         @Override
         public void widgetSelected(SelectionEvent e) {
             if (MessageDialog.openConfirm(getShell(), RESET_ALL_DIALOG_TITLE, RESET_ALL_DIALOG_MESSAGE)) {
-                viewModel.resetRunControlSettings();
+                viewModel.resetAllRunControlSettings();
                 setBlock(null);
             }
         }

@@ -89,6 +89,9 @@ public class ForwardingObservable<T> extends ClosableObservable<T> {
 	public void close() {
 		cancelSubscription();
         sourceObserver.onConnectionStatus(false);
+        if (source != null) {
+            source.close();
+        }
         super.close();
 	}
 	

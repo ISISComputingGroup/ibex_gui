@@ -65,7 +65,7 @@ public class TargetDetailView extends Composite {
 				showTarget(synopticViewModel.getSingleSelectedComp());
 			}
 		});
-        synopticViewModel.addPropertyChangeListener("compSelection", new PropertyChangeListener() {
+        synopticViewModel.addPropertyChangeListener("selectedComponents", new PropertyChangeListener() {
             @Override
             public void propertyChange(PropertyChangeEvent evt) {
                 showTarget(synopticViewModel.getSingleSelectedComp());

@@ -24,6 +24,12 @@ import java.beans.PropertyChangeListener;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * Class to await on a value being valid before reading it.
+ *
+ * @param <T>
+ *            The type of the value to be waited on
+ */
 public class Awaited<T> extends UpdatedValue<T> {
 	
 	private final UpdatedValue<T> value;
@@ -37,6 +43,12 @@ public class Awaited<T> extends UpdatedValue<T> {
 		}
 	};
 	
+    /**
+     * Creates an object to wait on the specified value.
+     * 
+     * @param value
+     *            The value to wait upon.
+     */
 	public Awaited(final UpdatedValue<T> value) {
 		this.value = value;
 		if (value.isSet()) {
@@ -49,6 +61,8 @@ public class Awaited<T> extends UpdatedValue<T> {
     /**
      * Gets the awaited value.
      * 
+     * @param <T>
+     *            the type of the value
      * @param value
      *            the value
      * @param secondsToWait
