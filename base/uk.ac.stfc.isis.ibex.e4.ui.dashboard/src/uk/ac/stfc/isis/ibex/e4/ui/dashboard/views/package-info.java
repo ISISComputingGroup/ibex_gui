@@ -19,4 +19,4 @@
 /**
  * The view for the dashboard.
  */
-package uk.ac.stfc.isis.ibex.ui.e4.dashboard.views;
+package uk.ac.stfc.isis.ibex.e4.ui.dashboard.views;

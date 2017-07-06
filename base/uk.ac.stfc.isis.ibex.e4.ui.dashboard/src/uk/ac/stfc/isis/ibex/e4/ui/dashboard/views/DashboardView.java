@@ -17,7 +17,7 @@
 * http://opensource.org/licenses/eclipse-1.0.php
 */
 
-package uk.ac.stfc.isis.ibex.ui.e4.dashboard.views;
+package uk.ac.stfc.isis.ibex.e4.ui.dashboard.views;
 
 
 /**
