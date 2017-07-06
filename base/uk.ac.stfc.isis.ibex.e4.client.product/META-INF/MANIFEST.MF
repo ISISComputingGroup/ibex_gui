@@ -1,0 +1,8 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: IBEX
+Bundle-SymbolicName: uk.ac.stfc.isis.ibex.e4.client.product;singleton:=true
+Bundle-Version: 1.0.0.qualifier
+Bundle-Vendor: ISIS
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Require-Bundle: uk.ac.stfc.isis.ibex.ui.dashboard;bundle-version="1.0.0"
