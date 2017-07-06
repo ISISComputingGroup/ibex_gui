@@ -60,6 +60,7 @@ pipeline {
     buildDiscarder(logRotator(numToKeepStr:'10'))
     timeout(time: 60, unit: 'MINUTES')
     disableConcurrentBuilds()
+    pipelineTriggers([upstream(threshold: 'SUCCESS', upstreamProjects: 'genie_python_pipeline, ')])
   }
 }
 
