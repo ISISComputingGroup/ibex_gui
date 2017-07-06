@@ -6,9 +6,7 @@
         <children xsi:type="basic:PartSashContainer" xmi:id="_t4GxsGItEeeBJ_yF1PfHTw" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.1">
           <children xsi:type="advanced:Placeholder" xmi:id="_nkQ1EGItEeeBJ_yF1PfHTw" elementId="uk.ac.stfc.isis.ibex.e4.client.placeholder.0" ref="_shoY4GIrEeeBJ_yF1PfHTw"/>
           <children xsi:type="basic:PartSashContainer" xmi:id="_i2zuEGGWEee2EOm7UkHWHg" elementId="uk.ac.stfc.isis.ibex.client.e4.product.partsashcontainer.1" horizontal="true">
-            <children xsi:type="basic:PartStack" xmi:id="_CGdMQGIsEeeBJ_yF1PfHTw" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.2">
-              <children xsi:type="basic:Part" xmi:id="_TyXfQGIqEeeBJ_yF1PfHTw" elementId="uk.ac.stfc.isis.ibex.e4.client.part.perspectives" label="Available perspectives"/>
-            </children>
+            <children xsi:type="advanced:Placeholder" xmi:id="_611zcGItEeeBJ_yF1PfHTw" elementId="uk.ac.stfc.isis.ibex.e4.client.placeholder.1" ref="_CGdMQGIsEeeBJ_yF1PfHTw"/>
             <children xsi:type="basic:PartStack" xmi:id="_Cah-0GIsEeeBJ_yF1PfHTw" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.3">
               <children xsi:type="basic:Part" xmi:id="_UEDsMGIqEeeBJ_yF1PfHTw" elementId="uk.ac.stfc.isis.ibex.e4.client.part.activeperspective" label="Active perspective"/>
             </children>
@@ -23,6 +21,9 @@
       <children xsi:type="basic:PartStack" xmi:id="_u7qyYGIrEeeBJ_yF1PfHTw" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.1">
         <children xsi:type="basic:Part" xmi:id="_wYri8GIrEeeBJ_yF1PfHTw" elementId="uk.ac.stfc.isis.ibex.e4.client.part.blocks" label="Blocks"/>
       </children>
+    </sharedElements>
+    <sharedElements xsi:type="basic:PartStack" xmi:id="_CGdMQGIsEeeBJ_yF1PfHTw" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.2">
+      <children xsi:type="basic:Part" xmi:id="_TyXfQGIqEeeBJ_yF1PfHTw" elementId="uk.ac.stfc.isis.ibex.e4.client.part.perspectives" label="Available perspectives"/>
     </sharedElements>
   </children>
   <addons xmi:id="_2jV5MWGNEeeR5ozUwT3tEw" elementId="org.eclipse.e4.core.commands.service" contributionURI="bundleclass://org.eclipse.e4.core.commands/org.eclipse.e4.core.commands.CommandServiceAddon"/>
