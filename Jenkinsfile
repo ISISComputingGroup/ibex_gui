@@ -55,10 +55,6 @@ pipeline {
     }
   }
   
-  properties([
-    pipelineTriggers([upstream(threshold: 'SUCCESS', upstreamProjects: 'genie_python_pipeline, ')])
-  ])
-  
   // The options directive is for configuration that applies to the whole job.
   options {
     buildDiscarder(logRotator(numToKeepStr:'10'))
