@@ -3,17 +3,22 @@
   <children xsi:type="basic:TrimmedWindow" xmi:id="_X1-d4GGWEee2EOm7UkHWHg" elementId="uk.ac.stfc.isis.ibex.client.e4.product.trimmedwindow.0">
     <children xsi:type="advanced:PerspectiveStack" xmi:id="_YXsD0GGWEee2EOm7UkHWHg" elementId="uk.ac.stfc.isis.ibex.client.e4.product.perspectivestack.0">
       <children xsi:type="advanced:Perspective" xmi:id="_Zam5YGGWEee2EOm7UkHWHg" elementId="uk.ac.stfc.isis.ibex.client.e4.product.perspective.ibex" label="Ibex">
-        <children xsi:type="basic:PartSashContainer" xmi:id="_gujBEGGWEee2EOm7UkHWHg" elementId="uk.ac.stfc.isis.ibex.client.e4.product.partsashcontainer.0">
-          <children xsi:type="basic:PartStack" xmi:id="_iX1TEGGWEee2EOm7UkHWHg" elementId="uk.ac.stfc.isis.ibex.client.e4.product.partstack.0">
-            <children xsi:type="basic:Part" xmi:id="_kbX4IGGWEee2EOm7UkHWHg" elementId="uk.ac.stfc.isis.ibex.client.e4.product.part.0"/>
+        <children xsi:type="basic:PartSashContainer" xmi:id="_9kYIMGIrEeeBJ_yF1PfHTw" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.1">
+          <children xsi:type="basic:PartSashContainer" xmi:id="_shoY4GIrEeeBJ_yF1PfHTw" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.0" horizontal="true">
+            <children xsi:type="basic:PartStack" xmi:id="_unc14GIrEeeBJ_yF1PfHTw" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.0">
+              <children xsi:type="basic:Part" xmi:id="_wHSQ8GIrEeeBJ_yF1PfHTw" elementId="uk.ac.stfc.isis.ibex.e4.client.part.dashboard" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.dashboard/uk.ac.stfc.isis.ibex.e4.ui.dashboard.views.DashboardView" label="Dashboard"/>
+            </children>
+            <children xsi:type="basic:PartStack" xmi:id="_u7qyYGIrEeeBJ_yF1PfHTw" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.1">
+              <children xsi:type="basic:Part" xmi:id="_wYri8GIrEeeBJ_yF1PfHTw" elementId="uk.ac.stfc.isis.ibex.e4.client.part.blocks" label="Blocks"/>
+            </children>
           </children>
-        </children>
-        <children xsi:type="basic:PartSashContainer" xmi:id="_i2zuEGGWEee2EOm7UkHWHg" elementId="uk.ac.stfc.isis.ibex.client.e4.product.partsashcontainer.1">
-          <children xsi:type="basic:PartStack" xmi:id="_jZI_EGGWEee2EOm7UkHWHg" elementId="uk.ac.stfc.isis.ibex.client.e4.product.partstack.1">
-            <children xsi:type="basic:Part" xmi:id="_ko3hkGGWEee2EOm7UkHWHg" elementId="uk.ac.stfc.isis.ibex.client.e4.product.part.1"/>
-          </children>
-          <children xsi:type="basic:PartStack" xmi:id="_jpyDIGGWEee2EOm7UkHWHg" elementId="uk.ac.stfc.isis.ibex.client.e4.product.partstack.2">
-            <children xsi:type="basic:Part" xmi:id="_k26koGGWEee2EOm7UkHWHg" elementId="uk.ac.stfc.isis.ibex.client.e4.product.part.2"/>
+          <children xsi:type="basic:PartSashContainer" xmi:id="_i2zuEGGWEee2EOm7UkHWHg" elementId="uk.ac.stfc.isis.ibex.client.e4.product.partsashcontainer.1" horizontal="true">
+            <children xsi:type="basic:PartStack" xmi:id="_CGdMQGIsEeeBJ_yF1PfHTw" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.2">
+              <children xsi:type="basic:Part" xmi:id="_TyXfQGIqEeeBJ_yF1PfHTw" elementId="uk.ac.stfc.isis.ibex.e4.client.part.perspectives" label="Available perspectives"/>
+            </children>
+            <children xsi:type="basic:PartStack" xmi:id="_Cah-0GIsEeeBJ_yF1PfHTw" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.3">
+              <children xsi:type="basic:Part" xmi:id="_UEDsMGIqEeeBJ_yF1PfHTw" elementId="uk.ac.stfc.isis.ibex.e4.client.part.activeperspective" label="Active perspective"/>
+            </children>
           </children>
         </children>
       </children>

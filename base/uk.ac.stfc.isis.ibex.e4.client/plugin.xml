@@ -26,5 +26,17 @@
          </property>
       </product>
    </extension>
+   <extension
+         id="IBEX_client"
+         point="org.eclipse.core.runtime.products">
+      <product
+            application="org.eclipse.e4.ui.workbench.swt.E4Application"
+            name="IBEX">
+         <property
+               name="appName"
+               value="IBEX">
+         </property>
+      </product>
+   </extension>
 
 </plugin>
