@@ -22,11 +22,13 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
+import org.eclipse.core.runtime.Platform;
+import org.eclipse.jface.resource.CompositeImageDescriptor;
+import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
-import org.eclipse.jface.resource.CompositeImageDescriptor;
-import org.eclipse.jface.resource.ImageDescriptor;
+import org.osgi.framework.Bundle;
 
 /**
  * Utility class for managing OS resources associated with SWT/JFace controls such as colors, fonts, images,
@@ -212,7 +214,33 @@ public class ResourceManager extends SWTResourceManager {
 	public interface PluginResourceProvider {
 		URL getEntry(String symbolicName, String path);
 	}
-	
+	/**
+	 * Instance of {@link PluginResourceProvider}, used by WindowBuilder at design time.
+	 */
+	private static PluginResourceProvider mDesignTimePluginResourceProvider = null;
+	/**
+	 * Returns an {@link Image} based on a plugin and file path.
+	 * 
+	 * @param plugin
+	 *            the plugin {@link Object} containing the image
+	 * @param name
+	 *            the path to the image within the plugin
+	 * @return the {@link Image} stored in the file at the specified path
+	 * 
+	 * @deprecated Use {@link #getPluginImage(String, String)} instead.
+	 */
+	@Deprecated
+	public static Image getPluginImage(Object plugin, String name) {
+		try {
+			URL url = getPluginImageURL(plugin, name);
+			if (url != null) {
+				return getPluginImageFromUrl(url);
+			}
+		} catch (Throwable e) {
+			// Ignore any exceptions
+		}
+		return null;
+	}
 	/**
 	 * Returns an {@link Image} based on a {@link Bundle} and resource entry path.
 	 * 
@@ -229,7 +257,7 @@ public class ResourceManager extends SWTResourceManager {
 				return getPluginImageFromUrl(url);
 			}
 		} catch (Throwable e) {
-			System.out.println("Unable to load image " + path + ": " + e.toString());
+			// Ignore any exceptions
 		}
 		return null;
 	}
@@ -280,7 +308,23 @@ public class ResourceManager extends SWTResourceManager {
 		}
 		return null;
 	}
-	
+	/**
+	 * Returns an {@link URL} based on a {@link Bundle} and resource entry path.
+	 */
+	private static URL getPluginImageURL(String symbolicName, String path) {
+        // try runtime plugins
+        Bundle bundle = Platform.getBundle(symbolicName);
+        if (bundle != null) {
+            return bundle.getEntry(path);
+		}
+
+		// try design time provider
+		if (mDesignTimePluginResourceProvider != null) {
+			return mDesignTimePluginResourceProvider.getEntry(symbolicName, path);
+		}
+		// no such resource
+		return null;
+	}
 	/**
 	 * Returns an {@link URL} based on a plugin and file path.
 	 * 
