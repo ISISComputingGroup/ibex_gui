@@ -3,7 +3,7 @@
 <schema targetNamespace="uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher" xmlns="http://www.w3.org/2001/XMLSchema">
 <annotation>
       <appinfo>
-         <meta.schema plugin="uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher" id="uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher" name="uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher"/>
+         <meta.schema plugin="uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher" id="uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher" name="Perspective switcher"/>
       </appinfo>
       <documentation>
          [Enter description of this extension point.]

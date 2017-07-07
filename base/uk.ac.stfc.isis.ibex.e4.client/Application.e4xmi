@@ -43,9 +43,7 @@
       </children>
     </sharedElements>
     <trimBars xmi:id="_-fkTUGMWEeecC_eSNHqaWg" elementId="uk.ac.stfc.isis.ibex.e4.client.trimbar.0">
-      <children xsi:type="menu:ToolBar" xmi:id="_-5MUQGMWEeecC_eSNHqaWg" elementId="uk.ac.stfc.isis.ibex.e4.client.toolbar.0">
-        <children xsi:type="menu:ToolControl" xmi:id="__XZ6QGMWEeecC_eSNHqaWg" elementId="uk.ac.stfc.isis.ibex.e4.client.toolcontrol.0"/>
-      </children>
+      <children xsi:type="menu:ToolControl" xmi:id="__XZ6QGMWEeecC_eSNHqaWg" elementId="uk.ac.stfc.isis.ibex.e4.client.toolcontrol.0" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher/uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.views.PerspectiveSwitcherView"/>
     </trimBars>
   </children>
   <addons xmi:id="_2jV5MWGNEeeR5ozUwT3tEw" elementId="org.eclipse.e4.core.commands.service" contributionURI="bundleclass://org.eclipse.e4.core.commands/org.eclipse.e4.core.commands.CommandServiceAddon"/>
