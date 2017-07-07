@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: UI
-Bundle-SymbolicName: uk.ac.stfc.isis.ibex.ui;singleton:=true
+Bundle-SymbolicName: uk.ac.stfc.isis.ibex.e4.ui;singleton:=true
 Bundle-Version: 1.0.0.qualifier
 Require-Bundle: org.eclipse.swt;bundle-version="3.104.2",
  javax.inject;bundle-version="1.0.0",

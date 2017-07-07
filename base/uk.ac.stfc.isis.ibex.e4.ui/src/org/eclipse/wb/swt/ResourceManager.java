@@ -229,7 +229,7 @@ public class ResourceManager extends SWTResourceManager {
 				return getPluginImageFromUrl(url);
 			}
 		} catch (Throwable e) {
-			// Ignore any exceptions
+			System.out.println("Unable to load image " + path + ": " + e.toString());
 		}
 		return null;
 	}

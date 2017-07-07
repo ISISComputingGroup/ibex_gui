@@ -5,6 +5,7 @@ import javax.inject.Inject;
 import javax.annotation.PostConstruct;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
@@ -15,20 +16,23 @@ public class DashboardView {
     
 	@Inject
 	public DashboardView() {
-		System.out.println("Dashboard view initialised");
 	}
 	
 	@PostConstruct
 	public void createPartControl(Composite parent) {
-		System.out.println("Building dashboard");
-		GridLayout gridLayout = new GridLayout(1, false);
-		parent.setLayout(gridLayout);
+		System.out.println("Creating part...");
+        GridLayout glParent = new GridLayout(3, false);
+		glParent.marginHeight = 0;
+		glParent.marginWidth = 0;
+		glParent.horizontalSpacing = 1;
+		glParent.verticalSpacing = 0;
+		parent.setLayout(glParent);
 		
 		Label prototype = new Label(parent, SWT.NONE);
 		GridData gd_prototype = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+		Image img = ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.e4.ui", "icons/Dashboard.png");
+		prototype.setImage(img);
 		prototype.setLayoutData(gd_prototype);
-		prototype.setImage(ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ex.prototype", "resources/Dashboard.png"));
-		System.out.println("Dashboard construction complete");
 	}
 	
 }
