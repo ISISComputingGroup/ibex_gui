@@ -20,7 +20,6 @@ public abstract class PrototypeView {
 	protected abstract void draw(Composite parent);	
 	
 	protected void createPartControl(Composite parent, String pluginName, String imagePath) {
-		System.out.println("Creating part...");
         GridLayout glParent = new GridLayout(3, false);
 		glParent.marginHeight = 0;
 		glParent.marginWidth = 0;
