@@ -6,12 +6,13 @@ import javax.annotation.PostConstruct;
 
 import org.eclipse.swt.widgets.Composite;
 
-import uk.ac.stfc.isis.ibex.e4.ui.prototyping.PrototypeView;
+import uk.ac.stfc.isis.ibex.e4.ui.prototyping.PerspectiveView;
 
-public class BeamStatusView extends PrototypeView {
+public class BeamStatusView extends PerspectiveView {
     
 	@Inject
 	public BeamStatusView() {
+		name = "Beam status";
 	}
 
 	@Override @PostConstruct

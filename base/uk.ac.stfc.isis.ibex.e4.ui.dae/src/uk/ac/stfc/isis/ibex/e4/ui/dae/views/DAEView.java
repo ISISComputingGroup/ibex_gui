@@ -6,12 +6,13 @@ import javax.annotation.PostConstruct;
 
 import org.eclipse.swt.widgets.Composite;
 
-import uk.ac.stfc.isis.ibex.e4.ui.prototyping.PrototypeView;
+import uk.ac.stfc.isis.ibex.e4.ui.prototyping.PerspectiveView;
 
-public class DAEView extends PrototypeView {
-    
+public class DAEView extends PerspectiveView {
+	    
 	@Inject
 	public DAEView() {
+		name = "DAE";
 	}
 
 	@Override @PostConstruct

@@ -1,33 +1,47 @@
 package uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.views;
 
 import javax.inject.Inject;
+
 import javax.annotation.PostConstruct;
 
+import org.eclipse.core.runtime.IConfigurationElement;
+import org.eclipse.core.runtime.IExtensionRegistry;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.ToolBar;
+import org.eclipse.swt.widgets.ToolItem;
 
-import uk.ac.stfc.isis.ibex.e4.ui.prototyping.GridLayout;
-import uk.ac.stfc.isis.ibex.e4.ui.prototyping.PrototypeView;
+import uk.ac.stfc.isis.ibex.e4.ui.prototyping.PerspectiveView;
 
 public class PerspectiveSwitcherView {
-    
+	
+	private ToolBar toolBar;
+
 	@Inject
 	public PerspectiveSwitcherView() {
 	}
 
 	@PostConstruct
-	public void draw(Composite parent) {
-		System.out.println("Creating part...");
-        GridLayout glParent = new GridLayout(3, false);
-		glParent.marginHeight = 0;
-		glParent.marginWidth = 0;
-		glParent.horizontalSpacing = 1;
-		glParent.verticalSpacing = 0;
-		parent.setLayout(glParent);
+	public void draw(Composite parent, IExtensionRegistry registry) {
+		Composite composite = new Composite(parent, SWT.None);
+		RowLayout rowLayout = new RowLayout(SWT.HORIZONTAL);
+		rowLayout.marginLeft = rowLayout.marginRight = 8;
+		rowLayout.marginTop = 6;
+		rowLayout.marginBottom = 4;
+		composite.setLayout(rowLayout);
 		
-		Label prototype = new Label(parent, SWT.NONE);
-		GridData gd_prototype = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
-		Image img = ResourceManager.getPluginImage(pluginName, imagePath);
-		prototype.setImage(img);
-		prototype.setLayoutData(gd_prototype);
-	}	
-}
+		toolBar = new ToolBar(composite, SWT.FLAT | SWT.WRAP | SWT.RIGHT);
+		
+		IConfigurationElement[] a = registry.getConfigurationElementsFor("uk.ac.stfc.isis.ibex.e4.ui.UI");
+		for (Object o : a) {
+			System.out.println(o.toString());
+		}
+	}
+
+	public void addPerspectiveShortcut(PerspectiveView perspective) {
+		ToolItem shortcut = new ToolItem(toolBar, SWT.RADIO);
+		shortcut.setText(perspective.getName());
+		shortcut.setToolTipText(perspective.getName());
+	}
+};

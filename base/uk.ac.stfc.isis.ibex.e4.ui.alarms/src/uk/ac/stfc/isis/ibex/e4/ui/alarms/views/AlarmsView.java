@@ -6,12 +6,13 @@ import javax.annotation.PostConstruct;
 
 import org.eclipse.swt.widgets.Composite;
 
-import uk.ac.stfc.isis.ibex.e4.ui.prototyping.PrototypeView;
+import uk.ac.stfc.isis.ibex.e4.ui.prototyping.PerspectiveView;
 
-public class AlarmsView extends PrototypeView {
+public class AlarmsView extends PerspectiveView {
     
 	@Inject
 	public AlarmsView() {
+		name = "Alarms";
 	}
 
 	@Override @PostConstruct
