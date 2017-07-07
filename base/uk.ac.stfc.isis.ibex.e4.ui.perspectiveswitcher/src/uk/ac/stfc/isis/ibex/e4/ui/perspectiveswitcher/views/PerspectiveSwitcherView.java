@@ -17,6 +17,7 @@ import org.eclipse.e4.ui.workbench.modeling.EPartService;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.ToolBar;
@@ -38,9 +39,9 @@ public class PerspectiveSwitcherView {
 	public void draw(Composite parent, MApplication app, EPartService partService, EModelService modelService) {
 		System.out.println("Drawing perspective switcher...");
 		Composite composite = new Composite(parent, SWT.None);
-		composite.setLayout(new RowLayout(SWT.HORIZONTAL));
+		composite.setLayout(new GridLayout());
 		
-		toolBar = new ToolBar(composite, SWT.FLAT | SWT.WRAP | SWT.RIGHT);
+		toolBar = new ToolBar(composite, SWT.VERTICAL);
 		
 		addPerspectiveShortcut("Alarms", "uk.ac.stfc.isis.ibex.client.e4.product.perspective.alarms", app, partService, modelService);
 		addPerspectiveShortcut("Beam status", "uk.ac.stfc.isis.ibex.client.e4.product.perspective.beamstatus", app, partService, modelService);
