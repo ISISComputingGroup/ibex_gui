@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?eclipse version="3.4"?>
 <plugin>
-   <extension-point id="uk.ac.stfc.isis.ibex.e4.ui.dashboard" name="Dashboard" schema="schema/uk.ac.stfc.isis.ibex.e4.ui.dashboard.exsd"/>
+   <extension
+         point="uk.ac.stfc.isis.ibex.e4.ui.UI">
+   </extension>
 
 
 </plugin>

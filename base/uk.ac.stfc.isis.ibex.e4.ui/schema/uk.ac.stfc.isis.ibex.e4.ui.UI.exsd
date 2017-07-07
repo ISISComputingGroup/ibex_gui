@@ -1,12 +1,12 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <!-- Schema file written by PDE -->
-<schema targetNamespace="uk.ac.stfc.isis.ibex.ui.dashboard" xmlns="http://www.w3.org/2001/XMLSchema">
+<schema targetNamespace="uk.ac.stfc.isis.ibex.ui" xmlns="http://www.w3.org/2001/XMLSchema">
 <annotation>
       <appinfo>
-         <meta.schema plugin="uk.ac.stfc.isis.ibex.ui.dashboard" id="uk.ac.stfc.isis.ibex.e4.ui.dashboard" name="Dashboard"/>
+         <meta.schema plugin="uk.ac.stfc.isis.ibex.ui" id="uk.ac.stfc.isis.ibex.e4.ui.UI" name="UI views"/>
       </appinfo>
       <documentation>
-         IBEX dashboard
+         [Enter description of this extension point.]
       </documentation>
    </annotation>
 
