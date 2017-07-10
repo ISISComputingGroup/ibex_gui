@@ -33,7 +33,7 @@
   </foreground_color>
   <actions hook="false" hook_all="false" />
   <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0">
-    <opi_file>Motor/mymotor.opi</opi_file>
+    <opi_file>../Motor/mymotor.opi</opi_file>
     <border_style>3</border_style>
     <tooltip></tooltip>
     <rules />
@@ -75,7 +75,7 @@
     </font>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0">
-    <opi_file>Motor/mymotor.opi</opi_file>
+    <opi_file>../Motor/mymotor.opi</opi_file>
     <border_style>3</border_style>
     <tooltip></tooltip>
     <rules />
@@ -117,7 +117,7 @@
     </font>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0">
-    <opi_file>Motor/mymotor.opi</opi_file>
+    <opi_file>../Motor/mymotor.opi</opi_file>
     <border_style>3</border_style>
     <tooltip></tooltip>
     <rules />
@@ -159,7 +159,7 @@
     </font>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0">
-    <opi_file>Motor/mymotor.opi</opi_file>
+    <opi_file>../Motor/mymotor.opi</opi_file>
     <border_style>3</border_style>
     <tooltip></tooltip>
     <rules />
