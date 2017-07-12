@@ -8,7 +8,6 @@ Require-Bundle: uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher;bundle-version="1
  uk.ac.stfc.isis.ibex.e4.ui.alarms;bundle-version="1.0.0",
  uk.ac.stfc.isis.ibex.e4.ui.dae;bundle-version="1.0.0",
  uk.ac.stfc.isis.ibex.e4.ui.beamstatus;bundle-version="1.0.0",
- uk.ac.stfc.isis.ibex.e4.perspectiveswitcher;bundle-version="1.0.0",
  uk.ac.stfc.isis.ibex.e4.ui.handlers;bundle-version="1.0.0",
  uk.ac.stfc.isis.ibex.e4.ui.configeditor;bundle-version="1.0.0"
 Bundle-ManifestVersion: 2
