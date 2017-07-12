@@ -11,15 +11,18 @@ import org.eclipse.e4.ui.workbench.modeling.EPartService;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
 import org.eclipse.wb.swt.ResourceManager;
+import org.eclipse.wb.swt.SWTResourceManager;
 
 public class PerspectiveSwitcherView {
-	
+
+    private static final Font LABEL_FONT = SWTResourceManager.getFont("Arial", 16, SWT.NONE);
 	private ToolBar toolBar;
 
 	@Inject
@@ -33,18 +36,20 @@ public class PerspectiveSwitcherView {
 		composite.setLayout(new GridLayout());
 		
 		toolBar = new ToolBar(composite, SWT.VERTICAL);
+		toolBar.setFont(LABEL_FONT);
 		
-		addPerspectiveShortcut("Alarms", "uk.ac.stfc.isis.ibex.client.e4.product.perspective.alarms", "icons/AlarmIcon.png", app, partService, modelService);
-		addPerspectiveShortcut("Beam status", "uk.ac.stfc.isis.ibex.client.e4.product.perspective.beamstatus", "icons/BeamStatusIcon.png", app, partService, modelService);
-		addPerspectiveShortcut("DAE", "uk.ac.stfc.isis.ibex.client.e4.product.perspective.dae", "icons/DAEIcon.png", app, partService, modelService);
+		addPerspectiveShortcut("Alarms", "uk.ac.stfc.isis.ibex.client.e4.product.perspective.alarms", "icons/AlarmIcon.png", app, partService, modelService, true);
+		addPerspectiveShortcut("Beam status", "uk.ac.stfc.isis.ibex.client.e4.product.perspective.beamstatus", "icons/BeamStatusIcon.png", app, partService, modelService, false);
+		addPerspectiveShortcut("DAE", "uk.ac.stfc.isis.ibex.client.e4.product.perspective.dae", "icons/DAEIcon.png", app, partService, modelService, false);
 	}
 
-	public void addPerspectiveShortcut(String name, String partId, String iconPath, MApplication app, EPartService partService, EModelService modelService) {
+	public void addPerspectiveShortcut(String name, String partId, String iconPath, MApplication app, EPartService partService, EModelService modelService, boolean selected) {
 		ToolItem shortcut = new ToolItem(toolBar, SWT.RADIO);
 		shortcut.setText(name);
 		shortcut.setToolTipText(name);
 		Image img = ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.e4.ui", iconPath);
 		shortcut.setImage(img);
+		shortcut.setSelection(selected);
 		shortcut.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent event) {
