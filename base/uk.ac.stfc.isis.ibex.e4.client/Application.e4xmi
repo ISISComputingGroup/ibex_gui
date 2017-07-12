@@ -34,6 +34,11 @@
         </children>
       </children>
     </children>
+    <mainMenu xmi:id="_3TEoMGbLEeeM7uzkT_ViHQ" elementId="org.eclipse.ui.main.menu">
+      <children xsi:type="menu:Menu" xmi:id="_9gU0oGbLEeeM7uzkT_ViHQ" elementId="uk.ac.stfc.isis.ibex.e4.client.menu.vieweditconfigurations" label="View/edit configurations">
+        <children xsi:type="menu:HandledMenuItem" xmi:id="_Diw4MGbMEeeM7uzkT_ViHQ" elementId="uk.ac.stfc.isis.ibex.e4.client.handledmenuitem.editCurrentConfig" label="Edit current configuration" command="_y3b1QGbJEeeM7uzkT_ViHQ"/>
+      </children>
+    </mainMenu>
     <sharedElements xsi:type="basic:PartSashContainer" xmi:id="_shoY4GIrEeeBJ_yF1PfHTw" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.0" horizontal="true">
       <children xsi:type="basic:PartStack" xmi:id="_unc14GIrEeeBJ_yF1PfHTw" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.0" containerData="32">
         <children xsi:type="basic:Part" xmi:id="_wHSQ8GIrEeeBJ_yF1PfHTw" elementId="uk.ac.stfc.isis.ibex.e4.client.part.dashboard" containerData="" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.e4.ui.dashboard/uk.ac.stfc.isis.ibex.e4.ui.dashboard.views.DashboardView" label="Dashboard"/>
@@ -46,6 +51,11 @@
       <children xsi:type="menu:ToolControl" xmi:id="__XZ6QGMWEeecC_eSNHqaWg" elementId="uk.ac.stfc.isis.ibex.e4.client.toolcontrol.0" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher/uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.views.PerspectiveSwitcherView"/>
     </trimBars>
   </children>
+  <children xsi:type="basic:Dialog" xmi:id="_ysm88GbXEeeM7uzkT_ViHQ" elementId="uk.ac.stfc.isis.ibex.e4.client.dialog.editcurrentconfig" toBeRendered="false" label="Edit current configuration">
+    <children xsi:type="basic:Part" xmi:id="_uqpG4GbYEeeM7uzkT_ViHQ" elementId="uk.ac.stfc.isis.ibex.e4.client.part.editcurrentconfig" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.e4.ui.configeditor/uk.ac.stfc.isis.ibex.e4.ui.configeditor.ConfigEditorDialog" label="Edit current configuration (part)"/>
+  </children>
+  <handlers xmi:id="_WpVV4GbLEeeM7uzkT_ViHQ" elementId="uk.ac.stfc.isis.ibex.e4.client.handler.editCurrentConfiguration" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.e4.ui.handlers/uk.ac.stfc.isis.ibex.e4.ui.handlers.EditCurrentConfigHandler" command="_y3b1QGbJEeeM7uzkT_ViHQ"/>
+  <commands xmi:id="_y3b1QGbJEeeM7uzkT_ViHQ" elementId="uk.ac.stfc.isis.ibex.e4.client.command.editCurrentConfig" commandName="Edit current configuration"/>
   <addons xmi:id="_2jV5MWGNEeeR5ozUwT3tEw" elementId="org.eclipse.e4.core.commands.service" contributionURI="bundleclass://org.eclipse.e4.core.commands/org.eclipse.e4.core.commands.CommandServiceAddon"/>
   <addons xmi:id="_2jV5MmGNEeeR5ozUwT3tEw" elementId="org.eclipse.e4.ui.contexts.service" contributionURI="bundleclass://org.eclipse.e4.ui.services/org.eclipse.e4.ui.services.ContextServiceAddon"/>
   <addons xmi:id="_2jV5M2GNEeeR5ozUwT3tEw" elementId="org.eclipse.e4.ui.bindings.service" contributionURI="bundleclass://org.eclipse.e4.ui.bindings/org.eclipse.e4.ui.bindings.BindingServiceAddon"/>
