@@ -780,6 +780,22 @@
 				<path>muon_front_end_overview/muon_front_end_overview.opi</path>
 				<description>The OPI for the Muon front end.</description>
 				<macros>
+					<macro>
+						<name>MM_EMU</name>
+						<description>The motor PV relating to the EMU barndoors (e.g. MOT:MTR0101).</description>
+					</macro>
+					<macro>
+						<name>MM_MUSR</name>
+						<description>The motor PV relating to the MuSR barndoors (e.g. MOT:MTR0102).</description>
+					</macro>
+					<macro>
+						<name>MM_HIFI</name>
+						<description>The motor PV relating to the HiFi barndoors (e.g. MOT:MTR0103).</description>
+					</macro>
+					<macro>
+						<name>MM_MOMENTUM</name>
+						<description>The motor PV relating to the momentum slits (e.g. MOT:MTR0104).</description>
+					</macro>
 				</macros>
 			</value>
 		</entry>
