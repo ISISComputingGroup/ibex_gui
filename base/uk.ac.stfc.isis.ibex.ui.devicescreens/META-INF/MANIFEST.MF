@@ -23,8 +23,6 @@ Require-Bundle: org.eclipse.ui,
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Import-Package: org.apache.logging.log4j,
- org.csstudio.opibuilder.runmode,
- org.csstudio.opibuilder.util,
  uk.ac.stfc.isis.ibex.devicescreens,
  uk.ac.stfc.isis.ibex.devicescreens.desc,
  uk.ac.stfc.isis.ibex.epics.switching,

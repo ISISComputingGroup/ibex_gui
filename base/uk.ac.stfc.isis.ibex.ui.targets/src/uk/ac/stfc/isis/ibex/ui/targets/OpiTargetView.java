@@ -25,7 +25,6 @@ import java.util.ListIterator;
 import java.util.Map;
 
 import org.apache.logging.log4j.Logger;
-import org.csstudio.opibuilder.util.MacrosInput;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IPerspectiveDescriptor;

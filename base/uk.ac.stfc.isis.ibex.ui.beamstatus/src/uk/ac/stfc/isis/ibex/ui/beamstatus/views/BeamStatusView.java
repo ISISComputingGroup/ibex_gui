@@ -22,9 +22,6 @@ package uk.ac.stfc.isis.ibex.ui.beamstatus.views;
 import java.util.Calendar;
 
 import org.csstudio.apputil.time.AbsoluteTimeParser;
-import org.csstudio.swt.xygraph.figures.Trace;
-import org.csstudio.swt.xygraph.figures.Trace.PointStyle;
-import org.csstudio.swt.xygraph.figures.XYGraph;
 import org.csstudio.trends.databrowser2.Messages;
 import org.csstudio.trends.databrowser2.editor.DataBrowserAwareView;
 import org.csstudio.trends.databrowser2.model.ArchiveRescale;

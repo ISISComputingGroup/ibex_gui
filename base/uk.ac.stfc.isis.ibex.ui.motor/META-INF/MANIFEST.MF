@@ -25,4 +25,3 @@ Require-Bundle: uk.ac.stfc.isis.ibex.preferences,
 Export-Package: uk.ac.stfc.isis.ibex.ui.motor.displayoptions,
  uk.ac.stfc.isis.ibex.ui.motor.views
 Bundle-ClassPath: .
-Import-Package: org.csstudio.opibuilder.util
