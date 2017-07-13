@@ -19,6 +19,9 @@
 
 package uk.ac.stfc.isis.ibex.epics.pvmanager;
 
+import static org.diirt.datasource.ExpressionLanguage.channel;
+import static org.diirt.util.time.TimeDuration.ofHertz;
+
 import org.diirt.datasource.PVManager;
 import org.diirt.datasource.PVReader;
 import org.diirt.datasource.PVReaderEvent;
