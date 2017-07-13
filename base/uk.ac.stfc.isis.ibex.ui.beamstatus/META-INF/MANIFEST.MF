@@ -8,12 +8,14 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  uk.ac.stfc.isis.ibex.beamstatus;bundle-version="1.0.0",
  uk.ac.stfc.isis.ibex.ui.perspectives,
- org.eclipse.core.databinding,
  org.eclipse.jface.databinding,
  org.eclipse.core.databinding.beans;bundle-version="1.2.200",
  org.eclipse.nebula.visualization.xygraph;bundle-version="2.0.0",
  org.csstudio.diirt.util.preferences;bundle-version="1.0.1",
- org.csstudio.ui.util;bundle-version="4.0.2"
+ org.csstudio.ui.util;bundle-version="4.0.2",
+ org.eclipse.core.databinding,
+ org.eclipse.core.databinding.property;bundle-version="1.5.0",
+ uk.ac.stfc.isis.ibex.model
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Export-Package: uk.ac.stfc.isis.ibex.ui.beamstatus,
  uk.ac.stfc.isis.ibex.ui.beamstatus.views
