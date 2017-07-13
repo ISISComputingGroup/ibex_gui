@@ -17,7 +17,7 @@
  * http://opensource.org/licenses/eclipse-1.0.php
  */
 
-package uk.ac.stfc.isis.ibex.epics.switching;
+package uk.ac.stfc.isis.ibex.epics.tests.switching;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
@@ -27,6 +27,11 @@ import org.junit.Test;
 import org.mockito.Mockito;
 
 import uk.ac.stfc.isis.ibex.epics.observing.ClosableObservable;
+import uk.ac.stfc.isis.ibex.epics.switching.ClosingSwitcher;
+import uk.ac.stfc.isis.ibex.epics.switching.InstrumentSwitchers;
+import uk.ac.stfc.isis.ibex.epics.switching.ObservableFactory;
+import uk.ac.stfc.isis.ibex.epics.switching.OnInstrumentSwitch;
+import uk.ac.stfc.isis.ibex.epics.switching.SwitchableObservable;
 import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
 import uk.ac.stfc.isis.ibex.instrument.channels.ChannelType;
 
