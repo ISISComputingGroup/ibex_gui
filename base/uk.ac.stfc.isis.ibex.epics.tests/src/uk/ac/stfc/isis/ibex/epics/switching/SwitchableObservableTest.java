@@ -16,7 +16,7 @@
  * http://opensource.org/licenses/eclipse-1.0.php
  */
 
-package uk.ac.stfc.isis.ibex.epics.switching.tests;
+package uk.ac.stfc.isis.ibex.epics.switching;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.*;
@@ -29,6 +29,7 @@ import org.mockito.Mockito;
 import uk.ac.stfc.isis.ibex.epics.observing.ClosableObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.Observer;
 import uk.ac.stfc.isis.ibex.epics.switching.SwitchableObservable;
+import uk.ac.stfc.isis.ibex.epics.tests.observing.TestHelpers;
 
 // A lot of unchecked type conversions for mocking purposes
 public class SwitchableObservableTest {

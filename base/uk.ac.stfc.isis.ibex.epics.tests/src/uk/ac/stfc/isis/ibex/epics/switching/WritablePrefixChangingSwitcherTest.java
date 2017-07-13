@@ -17,7 +17,7 @@
  * http://opensource.org/licenses/eclipse-1.0.php
  */
 
-package uk.ac.stfc.isis.ibex.epics.switching.tests;
+package uk.ac.stfc.isis.ibex.epics.switching;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
