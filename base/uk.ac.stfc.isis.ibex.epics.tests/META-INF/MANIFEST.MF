@@ -5,7 +5,6 @@ Bundle-SymbolicName: uk.ac.stfc.isis.ibex.epics.tests
 Bundle-Version: 1.0.0.qualifier
 Fragment-Host: uk.ac.stfc.isis.ibex.epics;bundle-version="1.0.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
-Require-Bundle: org.epics.vtype,
  uk.ac.stfc.isis.ibex.epics,
  org.mockito;bundle-version="1.9.5",
  org.junit;bundle-version="4.11.0"
